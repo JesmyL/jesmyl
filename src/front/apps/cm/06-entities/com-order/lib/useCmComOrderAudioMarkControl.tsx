@@ -10,7 +10,7 @@ import { useMemo } from 'react';
 import { CmComAudioMarkSelector, CmComOrderWid } from 'shared/api';
 import { itIt } from 'shared/utils';
 
-export const useCmComOrderWidToPlayButtonNodeDict = (
+export const useCmComOrderAudioMarkControl = (
   isNeedCompute: boolean,
   com: CmCom,
   mapNode: (node: React.ReactNode, time: number, selector: CmComAudioMarkSelector) => React.ReactNode = itIt,
@@ -21,9 +21,12 @@ export const useCmComOrderWidToPlayButtonNodeDict = (
 
   return useMemo(() => {
     const ordwPlayButtonNodeDict: PRecord<CmComOrderWid, React.ReactNode[]> = {};
-    const afterOrdwOtherPlayButtonNodeDict: PRecord<'before' | CmComOrderWid, React.ReactNode[]> = {};
+    const afterTargetOrdwOtherPlayButtonNodeDict: PRecord<'before' | CmComOrderWid, React.ReactNode[]> = {};
 
-    const result = { ordwPlayButtonNodeDict, afterOrdwOtherPlayButtonNodeDict };
+    const result = {
+      ordwPlayButtonNodeDict,
+      afterTargetOrdwOtherPlayButtonNodeDict,
+    };
 
     if (!isNeedCompute || audioTrackMarks?.marks == null) return result;
 
@@ -33,8 +36,8 @@ export const useCmComOrderWidToPlayButtonNodeDict = (
       if (selector == null) return;
 
       if (mylib.isStr(selector)) {
-        afterOrdwOtherPlayButtonNodeDict[lastOrdwOrNull] ??= [];
-        afterOrdwOtherPlayButtonNodeDict[lastOrdwOrNull]?.push(
+        afterTargetOrdwOtherPlayButtonNodeDict[lastOrdwOrNull] ??= [];
+        afterTargetOrdwOtherPlayButtonNodeDict[lastOrdwOrNull]?.push(
           actualMapNodeRef.current(
             <Button
               key={time}
@@ -60,13 +63,14 @@ export const useCmComOrderWidToPlayButtonNodeDict = (
             selector,
           ),
         );
+
         return;
       }
 
       const ordw = com.getOrderBySelector(selector[0]).ord?.wid;
       if (ordw == null) return;
 
-      lastOrdwOrNull = ordw;
+      lastOrdwOrNull = Math.trunc(ordw);
 
       ordwPlayButtonNodeDict[ordw] ??= [];
       ordwPlayButtonNodeDict[ordw].push(
@@ -87,7 +91,7 @@ export const useCmComOrderWidToPlayButtonNodeDict = (
       );
     });
 
-    if (mylib.isArr(audioTrackMarks.marks?.[0])) delete afterOrdwOtherPlayButtonNodeDict.before;
+    if (mylib.isArr(audioTrackMarks.marks?.[0])) delete afterTargetOrdwOtherPlayButtonNodeDict.before;
 
     return result;
   }, [isNeedCompute, audioTrackMarks?.marks, com, actualMapNodeRef]);

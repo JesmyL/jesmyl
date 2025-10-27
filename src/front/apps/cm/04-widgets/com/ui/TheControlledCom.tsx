@@ -6,7 +6,7 @@ import { BibleTranslateModulesControl } from '$bible/ext';
 import { CmCom } from '$cm/entities/com';
 import { cmComAudioPlayerPlaySrcAtom, isCmComAudioPlayerOpenMoversAtom } from '$cm/entities/com-audio-player';
 import { useCmComCommentBlockCss, useCmComCommentBlockFastReactions } from '$cm/entities/com-comment';
-import { useCmComOrderWidToPlayButtonNodeDict } from '$cm/entities/com-order';
+import { useCmComOrderAudioMarkControl } from '$cm/entities/com-order';
 import { cmComFontSizeAtom, cmComIsComMiniAnchorAtom, cmComSpeedRollKfAtom } from '$cm/entities/index';
 import { ChordVisibleVariant } from '$cm/shared/model';
 import { Link } from '@tanstack/react-router';
@@ -37,20 +37,17 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
   const isOpenMoversButtons =
     useAtomValue(isCmComAudioPlayerOpenMoversAtom) && !!playSrc && com.audio.includes(playSrc);
 
-  const { afterOrdwOtherPlayButtonNodeDict, ordwPlayButtonNodeDict } = useCmComOrderWidToPlayButtonNodeDict(
-    isOpenMoversButtons,
-    com,
-    (node, time, selector) =>
-      mylib.isStr(selector) ? (
-        <div
-          key={time}
-          className="my-3"
-        >
-          {node}
-        </div>
-      ) : (
-        node
-      ),
+  const audioMarkControl = useCmComOrderAudioMarkControl(isOpenMoversButtons, com, (node, time, selector) =>
+    mylib.isStr(selector) ? (
+      <div
+        key={time}
+        className="my-3"
+      >
+        {node}
+      </div>
+    ) : (
+      node
+    ),
   );
 
   const comi = comList.findIndex(c => c.wid === com.wid);
@@ -102,7 +99,7 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
             className="relative h-full"
             $listHeight={listRef.current?.clientHeight}
           >
-            {isOpenMoversButtons && afterOrdwOtherPlayButtonNodeDict.before}
+            {isOpenMoversButtons && audioMarkControl.afterTargetOrdwOtherPlayButtonNodeDict.before}
 
             <TheCmCom
               com={com}
@@ -111,14 +108,16 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
               isMiniAnchor={isMiniAnchor}
               listRef={listRef}
               asContentAfterOrder={
-                isOpenMoversButtons ? ({ ord }) => afterOrdwOtherPlayButtonNodeDict[ord.makeSelector()] : undefined
+                isOpenMoversButtons
+                  ? ({ ord }) => audioMarkControl.afterTargetOrdwOtherPlayButtonNodeDict[ord.makeSelector()]
+                  : undefined
               }
               asHeaderComponent={
                 isOpenMoversButtons
                   ? ({ ord, headerNode }) => (
                       <div className="flex gap-1 flex-wrap max-w-[80%]">
                         {headerNode}
-                        {ordwPlayButtonNodeDict[ord.wid]}
+                        {audioMarkControl.ordwPlayButtonNodeDict[ord.wid]}
                       </div>
                     )
                   : undefined

@@ -20,7 +20,7 @@ export {
   CmComOrder,
   CmComOrderList,
   TheCmComOrder,
-  useCmComOrderWidToPlayButtonNodeDict,
+  useCmComOrderAudioMarkControl,
   type CmComOrderEditableRegion,
   type ICmComOrderExportableMe,
 } from '$cm/entities/com-order';

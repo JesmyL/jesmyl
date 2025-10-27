@@ -21,7 +21,7 @@ import {
   CmComOrderList,
   cmIDB,
   useCmComCommentBlockCss,
-  useCmComOrderWidToPlayButtonNodeDict,
+  useCmComOrderAudioMarkControl,
 } from '$cm/ext';
 import { atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
@@ -38,24 +38,26 @@ export const CmEditorComTabAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
   const marksOnUpdating = useAtomValue(cmComEditorAudioMarksEditPacksAtom);
   const { commentCss } = useCmComCommentBlockCss(ccom, true);
 
-  const { ordwPlayButtonNodeDict, afterOrdwOtherPlayButtonNodeDict } = useCmComOrderWidToPlayButtonNodeDict(
-    true,
-    ccom,
-    (playNode, time) =>
-      time === 0 ? (
-        playNode
-      ) : (
-        <div
-          key={time}
-          className="flex flex-col gap-2"
-        >
-          {playNode}
-          <Button
-            icon="Settings01"
-            onClick={() => cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.set(time)}
-          />
-        </div>
-      ),
+  const audioMarkControl = useCmComOrderAudioMarkControl(true, ccom, (playNode, time) =>
+    time === 0 ? (
+      <div
+        key={time}
+        className="my-3"
+      >
+        {playNode}
+      </div>
+    ) : (
+      <div
+        key={time}
+        className="flex flex-col gap-2"
+      >
+        {playNode}
+        <Button
+          icon="Settings01"
+          onClick={() => cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.set(time)}
+        />
+      </div>
+    ),
   );
 
   useEffect(() => {
@@ -158,14 +160,16 @@ export const CmEditorComTabAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                     );
                   })}
 
-                  {afterOrdwOtherPlayButtonNodeDict.before}
+                  {audioMarkControl.afterTargetOrdwOtherPlayButtonNodeDict.before}
 
                   <StyledComOrders
                     $commentStyles={commentCss}
                     chordVisibleVariant={ChordVisibleVariant.Maximal}
                     fontSize={20}
                     com={ccom}
-                    asContentAfterOrder={({ ord }) => afterOrdwOtherPlayButtonNodeDict[ord.makeSelector()]}
+                    asContentAfterOrder={({ ord }) =>
+                      audioMarkControl.afterTargetOrdwOtherPlayButtonNodeDict[ord.makeSelector()]
+                    }
                     asHeaderComponent={({ headerNode, ord }) =>
                       ord.isVisibleOrd() && (
                         <div className="flex flex-wrap gap-3">
@@ -198,7 +202,7 @@ export const CmEditorComTabAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                             />
                           )}
                           {headerNode}
-                          {ordwPlayButtonNodeDict[ord.wid]}
+                          {audioMarkControl.ordwPlayButtonNodeDict[ord.wid]}
                         </div>
                       )
                     }
