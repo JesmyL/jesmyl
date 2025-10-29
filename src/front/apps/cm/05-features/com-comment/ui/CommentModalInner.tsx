@@ -149,10 +149,10 @@ export const CmComCommentModalInner = ({ com }: { com: CmCom }) => {
           nullTitle={<span className="text-x7">Общ</span>}
           onSelectId={cmComCommentAltKeyAtom.set}
           items={Array.from(registeredAltKeys).map(key => ({ id: key, title: key }))}
-          renderItem={item => (
+          renderItem={({ node }) => (
             <>
               <LazyIcon icon="TextAlignLeft" />
-              {item}
+              {node}
             </>
           )}
           addContent={
