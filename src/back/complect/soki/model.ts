@@ -10,4 +10,5 @@ export type SokiServerClientSelector =
   | Map<unknown, WebSocket>
   | null
   | ((visit: SokiVisit | nil, auth: LocalSokiAuth | nil, client: WebSocket) => boolean)
-  | { login: SokiAuthLogin; ignoreClient?: WebSocket };
+  | { login: SokiAuthLogin; ignoreClient?: WebSocket }
+  | { logins: SokiAuthLogin[] };

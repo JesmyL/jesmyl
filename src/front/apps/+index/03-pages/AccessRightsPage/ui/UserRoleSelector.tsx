@@ -28,7 +28,7 @@ export const IndexAccessRightsUserRoleSelector = ({
           id={userRights.info.role ?? null}
           nullTitle="Без роли"
           items={MyLib.keys(userRightsAndRoles.roles).map(id => ({ id, title: id }))}
-          renderItem={(node, id, afterClickAction) => (
+          renderItem={({ node, id, afterClickAction }) => (
             <div className="flex gap-2 w-max">
               {node}
               {id && id !== 'TOP' && (

@@ -1,7 +1,6 @@
 import { Button } from '#shared/components/ui/button';
 import { DropdownMenu } from '#shared/components/ui/dropdown-menu';
 import { useEffect, useMemo, useState } from 'react';
-import { itIt } from 'shared/utils';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import { makeToastKOMoodConfig } from '../modal';
@@ -29,7 +28,7 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
     },
   );
 
-  const renderItem = props.renderItem ?? itIt;
+  const renderItem = props.renderItem ?? (({ node }) => node);
   const afterClickAction = () => setDropped(false);
 
   return (
@@ -37,7 +36,8 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
       onOpenChange={setDropped}
       open={isDropped}
     >
-      <DropdownMenu.Trigger>
+      <DropdownMenu.Trigger className="flex gap-2">
+        {props.label}
         <Button asSpan>
           {selectedItem?.title || (
             <span className="not-selected">
@@ -68,12 +68,12 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
       <DropdownMenu.Content onClick={() => setDropped(false)}>
         {props.undTitle && (
           <DropdownMenu.Item onClick={() => onClick({ id: undefined, title: props.undTitle })}>
-            {renderItem(props.undTitle, undefined!, afterClickAction)}
+            {renderItem({ node: props.undTitle, id: undefined!, afterClickAction })}
           </DropdownMenu.Item>
         )}
         {props.nullTitle && (
           <DropdownMenu.Item onClick={() => onClick({ id: null, title: props.nullTitle })}>
-            {renderItem(props.nullTitle, null!, afterClickAction)}
+            {renderItem({ node: props.nullTitle, id: null!, afterClickAction })}
           </DropdownMenu.Item>
         )}
         {!props.disabled &&
@@ -92,7 +92,7 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
                   onClick(item);
                 }}
               >
-                {renderItem(item.title, item.id, afterClickAction)}
+                {renderItem({ node: item.title, id: item.id, afterClickAction })}
               </DropdownMenu.Item>
             );
           })}

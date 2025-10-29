@@ -65,12 +65,7 @@ export function ScheduleWidgetCopy(props: { schw: IScheduleWidgetWid }) {
                         if (event.atts)
                           MyLib.entries(event.atts).forEach(([attKey, attValue]) => {
                             if (mylib.isArr(attValue) || !mylib.isArr(attValue.values)) {
-                              if (attKey === '[leader]:game') atts[attKey] = {};
-                              else if (
-                                attKey === '[SCH]:chlist' &&
-                                !mylib.isArr(attValue) &&
-                                mylib.isArr(attValue.list)
-                              )
+                              if (attKey === '[SCH]:chlist' && !mylib.isArr(attValue) && mylib.isArr(attValue.list))
                                 atts[attKey] = {
                                   ...attValue,
                                   list: attValue.list.map(att => {

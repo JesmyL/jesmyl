@@ -1,5 +1,5 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
-import { cmEditorInitialInvokes } from '$cm+editor/shared/lib/cm+editor-initial-invokes';
+import { cmEditorInitialInvokes } from '$cm+editor/ext';
 import { createLazyFileRoute, Outlet } from '@tanstack/react-router';
 
 export const Route = createLazyFileRoute('/cm/edit')({

@@ -1,6 +1,6 @@
 import { CurrentForceViweAppContext } from '#features/broadcast/Broadcast.contexts';
-import { BibleTranslatesContextProvider } from '$bible/shared/state/TranslatesContext';
-import BibleBroadcastControlled from '$bible/widgets/broadcast/ui/Controlled';
+import { BibleTranslatesContextProvider } from '$bible/ext';
+import { BibleBroadcastControlled } from '$bible/widgets/broadcast';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/bible/tran')({

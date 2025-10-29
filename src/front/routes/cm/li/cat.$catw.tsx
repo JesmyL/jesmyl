@@ -1,5 +1,5 @@
 import { useCmCat } from '$cm/entities/cat';
-import { CmComListContextValue } from '$cm/entities/com/lib/current-com-list';
+import { CmComListContextValue } from '$cm/entities/com';
 import { CmCatPage } from '$cm/pages/CatPage';
 import { makeCmComNestedRoute } from '$cm/shared/lib';
 import { createFileRoute } from '@tanstack/react-router';

@@ -184,6 +184,34 @@ export default () => [
     })
     .flat(15)
     .filter(it => it),
+
+  definePluginName('routes-path-limits', pluginName => {
+    const name = 'deep-limit';
+    const startAppNameSet = new Set(appNames.map(appName => `$${appName}`));
+
+    const rule = {
+      create(context) {
+        return {
+          ImportDeclaration(node) {
+            const pathParts = node.source.value.split('/');
+
+            if (startAppNameSet.has(pathParts[0]) && pathParts.length > 3) {
+              context.report({
+                node,
+                message: `Все папки в routes должны быть не глубже 3 уровня`,
+              });
+            }
+          },
+        };
+      },
+    };
+
+    return {
+      files: [`**/front/routes/**/*.{ts,tsx}`],
+      plugins: { [pluginName]: { meta, rules: { [name]: rule } } },
+      rules: { [`${pluginName}/${name}`]: 'error' },
+    };
+  }),
 ];
 
 const makeExportedNamePrefixController = (appName, pathPart, fileNameMapper = it => it) => {
