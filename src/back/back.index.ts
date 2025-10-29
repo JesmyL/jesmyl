@@ -6,6 +6,7 @@ import { initTgScheduleInform } from './apps/index/schedules/tg-bot-inform/tg-in
 import { indexServerTsjrpcBase } from './apps/index/tsjrpc.base';
 import { questionerAdminServerTsjrpcBase } from './apps/q/tsjrpc/admin.tsjrpc.base';
 import { questionerUserServerTsjrpcBase } from './apps/q/tsjrpc/user.tsjrpc.base';
+import { storagesServerTsjrpcBase } from './apps/storages/tsjrpc.base';
 import { sokiServer } from './complect/soki/SokiServer';
 import { baseMessagesCatcher } from './sides/telegram-bot/complect/message-catchers';
 
@@ -13,6 +14,7 @@ sokiServer.start();
 
 bibleTsjrpcBaseServer.$$register();
 cmServerTsjrpcBase.$$register();
+storagesServerTsjrpcBase.$$register();
 questionerAdminServerTsjrpcBase.$$register();
 questionerUserServerTsjrpcBase.$$register();
 indexServerTsjrpcBase.$$register();

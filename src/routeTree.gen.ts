@@ -14,6 +14,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './front/routes/__root'
 import { Route as TunerRouteImport } from './front/routes/tuner/route'
+import { Route as StoragesRouteImport } from './front/routes/storages/route'
 import { Route as QRouteImport } from './front/routes/q/route'
 import { Route as CmRouteImport } from './front/routes/cm/route'
 import { Route as BibleRouteImport } from './front/routes/bible/route'
@@ -27,6 +28,7 @@ import { Route as BibleTranImport } from './front/routes/bible/tran'
 import { Route as BibleSearchImport } from './front/routes/bible/search'
 import { Route as BibleIImport } from './front/routes/bible/i'
 import { Route as otherAppNameRouteImport } from './front/routes/!other.$appName/route'
+import { Route as StoragesIIndexImport } from './front/routes/storages/i/index'
 import { Route as ScheduleDaySchwIndexImport } from './front/routes/schedule-day/$schw/index'
 import { Route as QRIndexImport } from './front/routes/q/r/index'
 import { Route as QAIndexImport } from './front/routes/q/a/index'
@@ -44,6 +46,7 @@ import { Route as CmEditEventsImport } from './front/routes/cm/edit/events'
 import { Route as CmEditEEImport } from './front/routes/cm/edit/e-e'
 import { Route as CmEditConstantsImport } from './front/routes/cm/edit/constants'
 import { Route as CmEditChordImport } from './front/routes/cm/edit/chord'
+import { Route as StoragesIRackRouteImport } from './front/routes/storages/i/$rack/route'
 import { Route as CmEditComsIndexImport } from './front/routes/cm/edit/coms/index'
 import { Route as CmEditCatsIndexImport } from './front/routes/cm/edit/cats/index'
 import { Route as otherAppNameSettingsIndexImport } from './front/routes/!other.$appName/settings/index'
@@ -69,6 +72,12 @@ const CmEditIndexLazyImport = createFileRoute('/cm/edit/')()
 const TunerRouteRoute = TunerRouteImport.update({
   id: '/tuner',
   path: '/tuner',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const StoragesRouteRoute = StoragesRouteImport.update({
+  id: '/storages',
+  path: '/storages',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -174,6 +183,12 @@ const CmEditIndexLazyRoute = CmEditIndexLazyImport.update({
   import('./front/routes/cm/edit/index.lazy').then((d) => d.Route),
 )
 
+const StoragesIIndexRoute = StoragesIIndexImport.update({
+  id: '/i/',
+  path: '/i/',
+  getParentRoute: () => StoragesRouteRoute,
+} as any)
+
 const ScheduleDaySchwIndexRoute = ScheduleDaySchwIndexImport.update({
   id: '/schedule-day/$schw/',
   path: '/schedule-day/$schw/',
@@ -274,6 +289,12 @@ const CmEditChordRoute = CmEditChordImport.update({
   id: '/chord',
   path: '/chord',
   getParentRoute: () => CmEditRouteLazyRoute,
+} as any)
+
+const StoragesIRackRouteRoute = StoragesIRackRouteImport.update({
+  id: '/i/$rack',
+  path: '/i/$rack',
+  getParentRoute: () => StoragesRouteRoute,
 } as any)
 
 const CmEditComsIndexRoute = CmEditComsIndexImport.update({
@@ -390,6 +411,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QRouteImport
       parentRoute: typeof rootRoute
     }
+    '/storages': {
+      id: '/storages'
+      path: '/storages'
+      fullPath: '/storages'
+      preLoaderRoute: typeof StoragesRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/tuner': {
       id: '/tuner'
       path: '/tuner'
@@ -473,6 +501,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/schedule-day'
       preLoaderRoute: typeof ScheduleDayIndexLazyImport
       parentRoute: typeof rootRoute
+    }
+    '/storages/i/$rack': {
+      id: '/storages/i/$rack'
+      path: '/i/$rack'
+      fullPath: '/storages/i/$rack'
+      preLoaderRoute: typeof StoragesIRackRouteImport
+      parentRoute: typeof StoragesRouteImport
     }
     '/cm/edit/chord': {
       id: '/cm/edit/chord'
@@ -592,6 +627,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/schedule-day/$schw'
       preLoaderRoute: typeof ScheduleDaySchwIndexImport
       parentRoute: typeof rootRoute
+    }
+    '/storages/i/': {
+      id: '/storages/i/'
+      path: '/i'
+      fullPath: '/storages/i'
+      preLoaderRoute: typeof StoragesIIndexImport
+      parentRoute: typeof StoragesRouteImport
     }
     '/cm/edit/': {
       id: '/cm/edit/'
@@ -792,6 +834,20 @@ const QRouteRouteChildren: QRouteRouteChildren = {
 const QRouteRouteWithChildren =
   QRouteRoute._addFileChildren(QRouteRouteChildren)
 
+interface StoragesRouteRouteChildren {
+  StoragesIRackRouteRoute: typeof StoragesIRackRouteRoute
+  StoragesIIndexRoute: typeof StoragesIIndexRoute
+}
+
+const StoragesRouteRouteChildren: StoragesRouteRouteChildren = {
+  StoragesIRackRouteRoute: StoragesIRackRouteRoute,
+  StoragesIIndexRoute: StoragesIIndexRoute,
+}
+
+const StoragesRouteRouteWithChildren = StoragesRouteRoute._addFileChildren(
+  StoragesRouteRouteChildren,
+)
+
 interface TunerRouteRouteChildren {
   TunerIRoute: typeof TunerIRoute
   TunerIndexRoute: typeof TunerIndexRoute
@@ -836,6 +892,7 @@ export interface FileRoutesByFullPath {
   '/bible': typeof BibleRouteRouteWithChildren
   '/cm': typeof CmRouteRouteWithChildren
   '/q': typeof QRouteRouteWithChildren
+  '/storages': typeof StoragesRouteRouteWithChildren
   '/tuner': typeof TunerRouteRouteWithChildren
   '/!other/$appName': typeof otherAppNameRouteRouteWithChildren
   '/bible/i': typeof BibleIRoute
@@ -848,6 +905,7 @@ export interface FileRoutesByFullPath {
   '/cm/': typeof CmIndexRoute
   '/tuner/': typeof TunerIndexRoute
   '/schedule-day': typeof ScheduleDayIndexLazyRoute
+  '/storages/i/$rack': typeof StoragesIRackRouteRoute
   '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/edit/constants': typeof CmEditConstantsRoute
   '/cm/edit/e-e': typeof CmEditEERoute
@@ -865,6 +923,7 @@ export interface FileRoutesByFullPath {
   '/q/a': typeof QAIndexRoute
   '/q/r': typeof QRIndexRoute
   '/schedule-day/$schw': typeof ScheduleDaySchwIndexRoute
+  '/storages/i': typeof StoragesIIndexRoute
   '/cm/edit/': typeof CmEditIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
@@ -884,6 +943,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/q': typeof QRouteRouteWithChildren
+  '/storages': typeof StoragesRouteRouteWithChildren
   '/bible/i': typeof BibleIRoute
   '/bible/search': typeof BibleSearchRoute
   '/bible/tran': typeof BibleTranRoute
@@ -893,6 +953,7 @@ export interface FileRoutesByTo {
   '/cm': typeof CmIndexRoute
   '/tuner': typeof TunerIndexRoute
   '/schedule-day': typeof ScheduleDayIndexLazyRoute
+  '/storages/i/$rack': typeof StoragesIRackRouteRoute
   '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/edit/constants': typeof CmEditConstantsRoute
   '/cm/edit/e-e': typeof CmEditEERoute
@@ -910,6 +971,7 @@ export interface FileRoutesByTo {
   '/q/a': typeof QAIndexRoute
   '/q/r': typeof QRIndexRoute
   '/schedule-day/$schw': typeof ScheduleDaySchwIndexRoute
+  '/storages/i': typeof StoragesIIndexRoute
   '/cm/edit': typeof CmEditIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
@@ -932,6 +994,7 @@ export interface FileRoutesById {
   '/bible': typeof BibleRouteRouteWithChildren
   '/cm': typeof CmRouteRouteWithChildren
   '/q': typeof QRouteRouteWithChildren
+  '/storages': typeof StoragesRouteRouteWithChildren
   '/tuner': typeof TunerRouteRouteWithChildren
   '/!other/$appName': typeof otherAppNameRouteRouteWithChildren
   '/bible/i': typeof BibleIRoute
@@ -944,6 +1007,7 @@ export interface FileRoutesById {
   '/cm/': typeof CmIndexRoute
   '/tuner/': typeof TunerIndexRoute
   '/schedule-day/': typeof ScheduleDayIndexLazyRoute
+  '/storages/i/$rack': typeof StoragesIRackRouteRoute
   '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/edit/constants': typeof CmEditConstantsRoute
   '/cm/edit/e-e': typeof CmEditEERoute
@@ -961,6 +1025,7 @@ export interface FileRoutesById {
   '/q/a/': typeof QAIndexRoute
   '/q/r/': typeof QRIndexRoute
   '/schedule-day/$schw/': typeof ScheduleDaySchwIndexRoute
+  '/storages/i/': typeof StoragesIIndexRoute
   '/cm/edit/': typeof CmEditIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
@@ -984,6 +1049,7 @@ export interface FileRouteTypes {
     | '/bible'
     | '/cm'
     | '/q'
+    | '/storages'
     | '/tuner'
     | '/!other/$appName'
     | '/bible/i'
@@ -996,6 +1062,7 @@ export interface FileRouteTypes {
     | '/cm/'
     | '/tuner/'
     | '/schedule-day'
+    | '/storages/i/$rack'
     | '/cm/edit/chord'
     | '/cm/edit/constants'
     | '/cm/edit/e-e'
@@ -1013,6 +1080,7 @@ export interface FileRouteTypes {
     | '/q/a'
     | '/q/r'
     | '/schedule-day/$schw'
+    | '/storages/i'
     | '/cm/edit/'
     | '/!other/$appName/settings/console'
     | '/!other/$appName/settings/rights'
@@ -1031,6 +1099,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/q'
+    | '/storages'
     | '/bible/i'
     | '/bible/search'
     | '/bible/tran'
@@ -1040,6 +1109,7 @@ export interface FileRouteTypes {
     | '/cm'
     | '/tuner'
     | '/schedule-day'
+    | '/storages/i/$rack'
     | '/cm/edit/chord'
     | '/cm/edit/constants'
     | '/cm/edit/e-e'
@@ -1057,6 +1127,7 @@ export interface FileRouteTypes {
     | '/q/a'
     | '/q/r'
     | '/schedule-day/$schw'
+    | '/storages/i'
     | '/cm/edit'
     | '/!other/$appName/settings/console'
     | '/!other/$appName/settings/rights'
@@ -1077,6 +1148,7 @@ export interface FileRouteTypes {
     | '/bible'
     | '/cm'
     | '/q'
+    | '/storages'
     | '/tuner'
     | '/!other/$appName'
     | '/bible/i'
@@ -1089,6 +1161,7 @@ export interface FileRouteTypes {
     | '/cm/'
     | '/tuner/'
     | '/schedule-day/'
+    | '/storages/i/$rack'
     | '/cm/edit/chord'
     | '/cm/edit/constants'
     | '/cm/edit/e-e'
@@ -1106,6 +1179,7 @@ export interface FileRouteTypes {
     | '/q/a/'
     | '/q/r/'
     | '/schedule-day/$schw/'
+    | '/storages/i/'
     | '/cm/edit/'
     | '/!other/$appName/settings/console'
     | '/!other/$appName/settings/rights'
@@ -1128,6 +1202,7 @@ export interface RootRouteChildren {
   BibleRouteRoute: typeof BibleRouteRouteWithChildren
   CmRouteRoute: typeof CmRouteRouteWithChildren
   QRouteRoute: typeof QRouteRouteWithChildren
+  StoragesRouteRoute: typeof StoragesRouteRouteWithChildren
   TunerRouteRoute: typeof TunerRouteRouteWithChildren
   otherAppNameRouteRoute: typeof otherAppNameRouteRouteWithChildren
   ScheduleDayIndexLazyRoute: typeof ScheduleDayIndexLazyRoute
@@ -1139,6 +1214,7 @@ const rootRouteChildren: RootRouteChildren = {
   BibleRouteRoute: BibleRouteRouteWithChildren,
   CmRouteRoute: CmRouteRouteWithChildren,
   QRouteRoute: QRouteRouteWithChildren,
+  StoragesRouteRoute: StoragesRouteRouteWithChildren,
   TunerRouteRoute: TunerRouteRouteWithChildren,
   otherAppNameRouteRoute: otherAppNameRouteRouteWithChildren,
   ScheduleDayIndexLazyRoute: ScheduleDayIndexLazyRoute,
@@ -1159,6 +1235,7 @@ export const routeTree = rootRoute
         "/bible",
         "/cm",
         "/q",
+        "/storages",
         "/tuner",
         "/!other/$appName",
         "/schedule-day/",
@@ -1199,6 +1276,13 @@ export const routeTree = rootRoute
         "/q/r/$blank",
         "/q/a/",
         "/q/r/"
+      ]
+    },
+    "/storages": {
+      "filePath": "storages/route.tsx",
+      "children": [
+        "/storages/i/$rack",
+        "/storages/i/"
       ]
     },
     "/tuner": {
@@ -1273,6 +1357,10 @@ export const routeTree = rootRoute
     "/schedule-day/": {
       "filePath": "schedule-day/index.lazy.tsx"
     },
+    "/storages/i/$rack": {
+      "filePath": "storages/i/$rack/route.tsx",
+      "parent": "/storages"
+    },
     "/cm/edit/chord": {
       "filePath": "cm/edit/chord.tsx",
       "parent": "/cm/edit"
@@ -1339,6 +1427,10 @@ export const routeTree = rootRoute
     },
     "/schedule-day/$schw/": {
       "filePath": "schedule-day/$schw/index.tsx"
+    },
+    "/storages/i/": {
+      "filePath": "storages/i/index.tsx",
+      "parent": "/storages"
     },
     "/cm/edit/": {
       "filePath": "cm/edit/index.lazy.tsx",

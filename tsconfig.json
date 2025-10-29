@@ -70,6 +70,15 @@
       "$index/shared/*": ["./front/apps/+index/07-shared/*"],
       "$index/*": ["./front/components/+index/*"],
 
+      "$storages/app/*": ["./front/apps/storages/01-app/*"],
+      "$storages/processes/*": ["./front/apps/storages/02-processes/*"],
+      "$storages/pages/*": ["./front/apps/storages/03-pages/*"],
+      "$storages/widgets/*": ["./front/apps/storages/04-widgets/*"],
+      "$storages/features/*": ["./front/apps/storages/05-features/*"],
+      "$storages/entities/*": ["./front/apps/storages/06-entities/*"],
+      "$storages/shared/*": ["./front/apps/storages/07-shared/*"],
+      "$storages/*": ["./front/components/storages/*"],
+
       "$app/*": ["./front/app/*"],
 
       "shared/*": ["./shared/*"],

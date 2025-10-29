@@ -2,6 +2,7 @@ import { AppName } from '#basis/model/App.model';
 import { bibleRoutingApp } from '$bible/app/bibleRoutingApp';
 import { cmRoutingApp } from '$cm/shared/const';
 import { questionerRoutingApp } from '$q/app/questionerRoutingApp';
+import { storagesRoutingApp } from '$storages/app/storagesRoutingApp';
 import { tunerRoutingApp } from '$tuner/tunerRoutingApp';
 
 export type RoutingAppConfig = {
@@ -16,4 +17,5 @@ export const routingApps: Partial<Record<AppName, RoutingAppConfig>> = {
   bible: bibleRoutingApp,
   tuner: tunerRoutingApp,
   q: questionerRoutingApp,
+  storages: storagesRoutingApp,
 };
