@@ -141,6 +141,16 @@ export class SokiServer {
       return;
     }
 
+    if ('logins' in clientSelector) {
+      clientSelector.logins.forEach(login => {
+        this.clientsByLogin.get(login)?.forEach(client => {
+          client.send(stringEvent);
+        });
+      });
+
+      return;
+    }
+
     this.clientsByLogin.get(clientSelector.login)?.forEach(client => {
       if (clientSelector.ignoreClient !== client) client.send(stringEvent);
     });
