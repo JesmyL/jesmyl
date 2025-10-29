@@ -4,6 +4,7 @@ export * from './lib/Com';
 export * from './lib/com-selections';
 export * from './lib/coms-selections';
 export * from './lib/current-com-list';
+export { type CmComListContextValue } from './lib/current-com-list';
 export * from './lib/useChordVisibleVariant';
 export * from './lib/useLaterComList';
 export * from './lib/useSelectedComs';

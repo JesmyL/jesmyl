@@ -1,5 +1,5 @@
-import { useCmComFavouriteList } from '$cm/entities/com-favourite/lib/useFavouriteComs';
-import { CmComListContextValue } from '$cm/entities/com/lib/current-com-list';
+import { CmComListContextValue } from '$cm/entities/com';
+import { useCmComFavouriteList } from '$cm/entities/com-favourite';
 import { CmFavouriteComsPage } from '$cm/pages/FavouriteComsPage';
 import { makeCmComNestedRoute } from '$cm/shared/lib';
 import { createFileRoute } from '@tanstack/react-router';

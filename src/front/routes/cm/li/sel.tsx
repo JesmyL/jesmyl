@@ -1,4 +1,4 @@
-import { CmComListContextValue } from '$cm/entities/com/lib/current-com-list';
+import { CmComListContextValue } from '$cm/entities/com';
 import { useCmComSelectedList } from '$cm/ext';
 import { CmSelectedComs } from '$cm/pages/SelectedComsPage';
 import { makeCmComNestedRoute } from '$cm/shared/lib';
