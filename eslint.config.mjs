@@ -47,6 +47,7 @@ export default tseslint.config(
 
       'no-constant-condition': 'warn',
 
+      '@eslint-react/no-nested-component-definitions': 0,
       '@eslint-react/no-missing-key': 1,
       '@eslint-react/hooks-extra/no-unnecessary-use-prefix': 0,
       '@eslint-react/web-api/no-leaked-timeout': 0,

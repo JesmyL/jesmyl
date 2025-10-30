@@ -1,58 +1,36 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
-import { StoragesTsjrpcModel } from 'shared/api/tsjrpc/storages/tsjrpc.model';
+import {
+  StoragesTsjrpcModel,
+  StoragesTsjrpcRackCardFieldSelector,
+  StoragesTsjrpcRackCardSelector,
+  StoragesTsjrpcRackSelector,
+  StoragesTsjrpcRackStatusSelector,
+} from 'shared/api/tsjrpc/storages/tsjrpc.model';
 import {
   StoragesRack,
   StoragesRackCard,
   StoragesRackCardMi,
   StoragesRackMemberRole,
   StoragesRackStatus,
-  StoragesRackWid,
 } from 'shared/model/storages/list.model';
+import {
+  StoragesDatesFieldNestedDateFieldMi,
+  StoragesFieldNestedSelectors,
+  StoragesFieldType,
+  StoragesRackDefinitionField,
+  StoragesRackField,
+} from 'shared/model/storages/rack.model';
 import { SMyLib, smylib } from 'shared/utils';
+import {
+  storagesCheckRackCardFieldValueOnType,
+  storagesFieldValueDefaultValueDict,
+} from 'shared/utils/storages/checkRackCardFieldValueOnType';
 import { storagesDirStore } from './file-stores';
 import { storagesStoresSharesServerTsjrpcMethods } from './tsjrpc.shares';
 
 export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseServer<StoragesTsjrpcModel> {
   constructor() {
-    const updateRack =
-      <Props extends { rackw: StoragesRackWid }>(
-        updater: (rack: StoragesRack, props: Props) => void | nil | { description: string },
-      ) =>
-      async (props: Props) => {
-        let description: string | nil | void = null;
-
-        const { item: rack, mod } = storagesDirStore.updateItem(
-          props.rackw,
-          rack => (description = updater(rack, props)?.description),
-        );
-
-        storagesStoresSharesServerTsjrpcMethods.refreshRacks(
-          { maxMod: mod, racks: [rack] },
-          { logins: SMyLib.keys(rack.team) },
-        );
-
-        return { description };
-      };
-
-    const updateRackStatus = <Props extends { rackw: StoragesRackWid; statusi: number }>(
-      updater: (status: StoragesRackStatus, props: Props, rack: StoragesRack) => void | nil | { description: string },
-    ) =>
-      updateRack<Props>((rack, props) => {
-        const status = rack.statuses[props.statusi];
-        if (status == null) throw `There is no status by ${props.statusi} index`;
-        return updater(status, props, rack);
-      });
-
-    const updateRackCard = <Props extends { rackw: StoragesRackWid; cardMi: StoragesRackCardMi }>(
-      updater: (status: StoragesRackCard, props: Props, rack: StoragesRack) => void | nil | { description: string },
-    ) =>
-      updateRack<Props>((rack, props) => {
-        const card = rack.list.find(card => card.mi === props.cardMi);
-        if (card == null) throw `There is no card with mi === ${props.cardMi}`;
-        return updater(card, props, rack);
-      });
-
     super({
       scope: 'Storages',
       methods: {
@@ -98,8 +76,11 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           rack.statuses.push({ title });
         }),
 
-        createRackField: updateRack((rack, { title, type }) => {
-          rack.fields.push({ t: type, title });
+        createRackDefinitionField: updateRack((rack, { title, newFieldType, fieldi }) => {
+          if (fieldi != null) {
+            rack.fields[fieldi].fields ??= [];
+            rack.fields[fieldi].fields.push({ t: newFieldType, title });
+          } else rack.fields.push({ t: newFieldType, title });
         }),
 
         editRackStatusIcon: updateRackStatus((rackStatus, { icon }) => {
@@ -141,7 +122,149 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
         editRackCardMeta: updateRackCard((card, { meta }) => {
           card.meta = meta || undefined;
         }),
+
+        createRackCardDatesFieldDate: updateRackCardField((cardField, { timestamp }) => {
+          if (cardField.t !== StoragesFieldType.Dates) throw 'Field type error 761564128398';
+
+          timestamp ??= new Date().setHours(0, 0, 0, 0) / 100000;
+
+          cardField.val ??= [];
+          cardField.val.push({
+            fields: [],
+            mi: smylib.takeNextMi(cardField.val, StoragesDatesFieldNestedDateFieldMi.min),
+            ts: timestamp,
+          });
+        }),
+
+        editRackCardFieldValue: updateRackCardField((cardField, { value }) => {
+          cardField.val = storagesCheckRackCardFieldValueOnType(cardField.t, value);
+        }),
+
+        toggleRackCardListFieldValue: updateRackCardOrNestedField((fieldsHolder, fieldi, { title }, fieldType) => {
+          if (fieldType !== StoragesFieldType.List) return;
+
+          fieldsHolder.fields ??= [];
+          const cardField = (fieldsHolder.fields[fieldi] ??= { t: fieldType, val: [] });
+
+          if (cardField.t !== StoragesFieldType.List) return;
+          const titlesSet = new Set(cardField.val);
+
+          if (titlesSet.has(title)) titlesSet.delete(title);
+          else titlesSet.add(title);
+
+          cardField.val = Array.from(titlesSet).sort();
+        }),
+
+        addRackValue: updateRack((rack, { title }) => {
+          const valuesSet = new Set(rack.values);
+          valuesSet.add(title);
+          rack.values = Array.from(valuesSet).sort();
+        }),
       },
     });
   }
 })();
+
+type UpdaterReturnType<RetValue> = und | void | { description?: string; value: RetValue };
+
+function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret extends UpdaterReturnType<RetValue>>(
+  updater: (rack: StoragesRack, props: Props) => Ret,
+) {
+  return async (props: Props): Promise<Ret> => {
+    let ret: Ret = undefined!;
+
+    const { item: rack, mod } = storagesDirStore.updateItem(props.rackw, rack => {
+      ret = updater(rack, props);
+    });
+
+    storagesStoresSharesServerTsjrpcMethods.refreshRacks(
+      { maxMod: mod, racks: [rack] },
+      { logins: SMyLib.keys(rack.team) },
+    );
+
+    return ret;
+  };
+}
+
+function updateRackStatus<
+  Props extends StoragesTsjrpcRackStatusSelector,
+  RetValue,
+  Ret extends UpdaterReturnType<RetValue>,
+>(updater: (status: StoragesRackStatus, props: Props, rack: StoragesRack) => Ret) {
+  return updateRack<Props, RetValue, Ret>((rack, props) => {
+    const status = rack.statuses[props.statusi];
+    if (status == null) throw `There is no status by ${props.statusi} index`;
+    return updater(status, props, rack);
+  });
+}
+
+function updateRackCard<
+  Props extends StoragesTsjrpcRackCardSelector,
+  RetValue,
+  Ret extends UpdaterReturnType<RetValue>,
+>(updater: (card: StoragesRackCard, props: Props, rack: StoragesRack) => Ret) {
+  return updateRack<Props, RetValue, Ret>((rack, props) => {
+    const card = rack.list.find(card => card.mi === props.cardMi);
+    if (card == null) throw `There is no card with mi === ${props.cardMi}`;
+    return updater(card, props, rack);
+  });
+}
+
+function updateRackCardOrNestedField<
+  Props extends StoragesTsjrpcRackCardSelector & StoragesFieldNestedSelectors,
+  RetValue,
+  Ret extends UpdaterReturnType<RetValue>,
+>(
+  updater: (
+    fieldsHolder: { fields?: (StoragesRackField<StoragesFieldType> | nil)[] },
+    fieldi: number,
+    props: Props,
+    fieldType: StoragesFieldType,
+    card: StoragesRackCard,
+    rack: StoragesRack,
+  ) => Ret,
+) {
+  return updateRackCard<Props, RetValue, Ret>((card, props, rack) => {
+    if (props.fieldi == null) throw 'Error fieldi is missed in props';
+
+    if (props.nestedFieldi == null || props.nestedFieldMi == null)
+      return updater(card, props.fieldi, props, rack.fields[props.fieldi].t, card, rack);
+
+    const rackType = rack.fields[props.fieldi].fields?.[props.nestedFieldi].t;
+    if (rackType == null) throw 'Error 1920936712490123';
+
+    card.fields ??= [];
+    const cardField = card.fields[props.fieldi];
+    if (!smylib.isArr(cardField?.val)) throw 'Error 1872635415624';
+    const fieldsHolder = cardField.val.find(it => smylib.isObj(it) && it.mi === props.nestedFieldMi);
+    if (!smylib.isObj(fieldsHolder)) throw 'Error 192644527841210';
+
+    return updater(fieldsHolder, props.nestedFieldi, props, rackType, card, rack);
+  });
+}
+
+function updateRackCardField<
+  Props extends StoragesTsjrpcRackCardFieldSelector,
+  RetValue,
+  Ret extends UpdaterReturnType<RetValue>,
+>(
+  updater: (
+    cardField: StoragesRackField<StoragesFieldType>,
+    props: Props,
+    rackField: StoragesRackDefinitionField,
+    card: StoragesRackCard,
+    rack: StoragesRack,
+  ) => Ret,
+) {
+  return updateRackCard<Props, RetValue, Ret>((card, props, rack) => {
+    const rackField = rack.fields[props.fieldi];
+    if (rackField == null) throw 'Error 8156124357234';
+
+    card.fields ??= [];
+    const cardField = (card.fields[props.fieldi] ??= storagesFieldValueDefaultValueDict[rackField.t]);
+
+    if (rackField.t !== cardField.t) throw 'Incorrect card type 162535678729';
+
+    return updater(cardField, props, rackField, card, rack);
+  });
+}

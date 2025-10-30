@@ -1,5 +1,5 @@
 import { SokiAuthLogin } from 'shared/api';
-import { StoragesRackCardField, StoragesRackDefinitionField } from './rack.model';
+import { StoragesFieldType, StoragesRackDefinitionField, StoragesRackField } from './rack.model';
 
 export const enum StoragesRackWid {
   def = 0,
@@ -22,7 +22,7 @@ export type StoragesRackCard = {
   title: string;
   note?: string;
   meta?: string;
-  fields?: (StoragesRackCardField | nil)[];
+  fields?: (StoragesRackField<StoragesFieldType> | nil)[];
 };
 
 export enum StoragesRackMemberRole {
@@ -30,6 +30,7 @@ export enum StoragesRackMemberRole {
   Creator,
   Admin,
 }
+
 export type StoragesRackMember = {
   fio: string;
   role: StoragesRackMemberRole;

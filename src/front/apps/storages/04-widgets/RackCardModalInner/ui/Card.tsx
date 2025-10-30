@@ -2,18 +2,19 @@ import { Button } from '#shared/components/ui/button';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TextInput } from '#shared/ui/TextInput';
 import { StoragesRackStatusFace } from '$storages/entities/RackStatusFace';
-import { StoragesRackAddField } from '$storages/features/RackAddField';
+import { StoragesRackCardFields } from '$storages/features/RackCardFields';
 import { StoragesRackCardMetaInfoReader } from '$storages/features/RackCardMetaInfoReader';
 import {
   StoragesRackCardStatusSelector,
   storagesRackCardStatusSelectorRackEditStatusiAtom,
 } from '$storages/features/RackCardStatusSelector';
+import { StoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { StoragesRackStatusEditModalInner } from '$storages/widgets/RackStatusEditModalInner';
 import { useState } from 'react';
 import { StoragesRack, StoragesRackCard } from 'shared/model/storages/list.model';
 
-export const StoragesRackCardEditModalInner = ({ card, rack }: { card: StoragesRackCard; rack: StoragesRack }) => {
+export const StoragesRackCardModalInner = ({ card, rack }: { card: StoragesRackCard; rack: StoragesRack }) => {
   const [isEdit, setIsEditMode] = useState(false);
 
   return (
@@ -57,13 +58,20 @@ export const StoragesRackCardEditModalInner = ({ card, rack }: { card: StoragesR
           <pre>{card.note}</pre>
         )}
 
-        <StoragesRackCardMetaInfoReader
-          card={card}
-          rack={rack}
-          isEdit={isEdit}
-        />
+        {isEdit || card.meta ? (
+          <StoragesRackCardMetaInfoReader
+            card={card}
+            rack={rack}
+            isEdit={isEdit}
+          />
+        ) : null}
 
-        {isEdit && <StoragesRackAddField rack={rack} />}
+        <StoragesIsEditInnersContext value={isEdit}>
+          <StoragesRackCardFields
+            rack={rack}
+            card={card}
+          />
+        </StoragesIsEditInnersContext>
       </ModalBody>
 
       <Modal openAtom={storagesRackCardStatusSelectorRackEditStatusiAtom}>

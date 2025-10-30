@@ -15,8 +15,7 @@ export const usePrompt = () => {
   const setContent = useSetRootAnchoredContent(isOpenAtom);
 
   return useCallback(
-    (content: ReactNode, header?: ReactNode) => {
-      let value = '';
+    (content: ReactNode, header?: ReactNode, defaultValue = '') => {
       const resolvers = Promise.withResolvers<string | null>();
       isOpenAtom.set(true);
 
@@ -24,16 +23,23 @@ export const usePrompt = () => {
         <Modal
           isRenderHere
           openAtom={isOpenAtom}
+          onClose={() => {
+            resolvers.resolve(null);
+            isOpenAtom.set(false);
+          }}
         >
           <PromptListeners
             confirmationResolvers={resolvers}
             onClose={() => isOpenAtom.set(false)}
-            getValue={() => value}
+            getValue={() => defaultValue}
           />
           <ModalHeader>{header ?? 'Заполни'}</ModalHeader>
           <ModalBody>
             {content}
-            <TextInput onInput={eventValue => (value = eventValue)} />
+            <TextInput
+              defaultValue={defaultValue}
+              onInput={eventValue => (defaultValue = eventValue)}
+            />
           </ModalBody>
           <ModalFooter>
             <span className="flex gap-5">
@@ -42,7 +48,7 @@ export const usePrompt = () => {
                 className="pointer"
                 onClick={() => {
                   isOpenAtom.set(false);
-                  resolvers.resolve(value);
+                  resolvers.resolve(defaultValue);
                 }}
               >
                 Принять

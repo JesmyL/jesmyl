@@ -19,29 +19,32 @@ export const StoragesRackCardMetaInfoReader = ({
 }) => {
   return (
     <>
-      <div className="flex gap-3">
-        <Button
-          icon="QrCode"
-          onClick={isEdit ? isQrReaderOpenAtom.do.toggle : undefined}
-        >
-          {card.meta ? (
-            <EllipsisText
-              text={card.meta}
-              maxLength={10}
-              cantExtend
+      <div>
+        <div>Мета-данные</div>
+        <div className="flex gap-3">
+          <Button
+            icon="QrCode"
+            onClick={isEdit ? isQrReaderOpenAtom.do.toggle : undefined}
+          >
+            {card.meta ? (
+              <EllipsisText
+                text={card.meta}
+                maxLength={10}
+                cantExtend
+              />
+            ) : (
+              <span className="text-xKO">&times;</span>
+            )}
+          </Button>
+          {card.meta && isEdit && (
+            <TheIconButton
+              icon="Delete01"
+              className="text-xKO"
+              confirm="Удалить мета-информацию?"
+              onClick={() => storagesTsjrpcClient.editRackCardMeta({ rackw: rack.w, meta: '', cardMi: card.mi })}
             />
-          ) : (
-            <span className="text-xKO">&times;</span>
           )}
-        </Button>
-        {card.meta && isEdit && (
-          <TheIconButton
-            icon="Delete01"
-            className="text-xKO"
-            confirm="Удалить мета-информацию?"
-            onClick={() => storagesTsjrpcClient.editRackCardMeta({ rackw: rack.w, meta: '', cardMi: card.mi })}
-          />
-        )}
+        </div>
       </div>
 
       <QrReader

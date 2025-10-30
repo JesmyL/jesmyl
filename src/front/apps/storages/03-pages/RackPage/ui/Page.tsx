@@ -4,7 +4,7 @@ import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContaine
 import { StoragesRackStatusFace } from '$storages/entities/RackStatusFace';
 import { storagesIDB } from '$storages/shared/state/storagesIDB';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
-import { StoragesRackCardEditModalInner } from '$storages/widgets/RackCardEditModalInner';
+import { StoragesRackCardModalInner } from '$storages/widgets/RackCardModalInner';
 import { atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { StoragesRackCardMi, StoragesRackWid } from 'shared/model/storages/list.model';
@@ -52,7 +52,7 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
               return (
                 rack &&
                 card && (
-                  <StoragesRackCardEditModalInner
+                  <StoragesRackCardModalInner
                     card={card}
                     rack={rack}
                   />

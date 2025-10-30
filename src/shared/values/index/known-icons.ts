@@ -11,6 +11,7 @@ export const knownStameskaIconNames = [
   'Arrange',
   'DeliveryBox01',
   'Database',
+  'ArrowUpLeft01',
   'ArrowDataTransferDiagonal',
   'ArrowDataTransferVertical',
   'Hold01',
