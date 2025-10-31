@@ -44,7 +44,7 @@ type StoragesCellDict = TypeSatisfiesDict<{
     t: StoragesColumnType.Price;
     val: {
       /** amount */
-      am: string;
+      am: number;
     };
   };
 }>;

@@ -18,6 +18,6 @@ export const storagesCellDefaultValueDict: {
   },
   [StoragesColumnType.Price]: {
     t: StoragesColumnType.Price,
-    val: { am: '' },
+    val: { am: 0 },
   },
 };

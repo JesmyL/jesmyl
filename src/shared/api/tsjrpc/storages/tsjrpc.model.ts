@@ -37,6 +37,8 @@ export type StoragesTsjrpcModel = {
   editRackStatusColor: (args: StoragesTsjrpcRackStatusSelector & { color: string }) => void;
   toggleRackStatusNexti: (args: StoragesTsjrpcRackStatusSelector & { nextStatusi: number }) => void;
   editRackStatusTitle: (args: StoragesTsjrpcRackStatusSelector & { title: string }) => void;
+
+  setPrice: (args: StoragesTsjrpcCellSelector & { amount: number }) => void;
 };
 
 type RackSelector = StoragesTsjrpcRackSelector;

@@ -28,6 +28,7 @@ export const storagesTsjrpcClient = new (class Storages extends TsjrpcClient<Sto
         createDatesNestedCell: true,
         editCellValue: true,
         editNestedCellProp: true,
+        setPrice: true,
       },
     });
   }

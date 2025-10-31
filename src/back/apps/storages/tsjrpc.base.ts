@@ -183,6 +183,15 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           valuesSet.add(title);
           rack.values = Array.from(valuesSet).sort();
         }),
+
+        setPrice: updateCellOrNestedCell((rowHolder, index, props, colType) => {
+          if (colType != StoragesColumnType.Price) return;
+          rowHolder.row ??= [];
+          const cell = (rowHolder.row[index] ??= { t: colType, val: { am: 0 } });
+          if (cell?.t !== StoragesColumnType.Price) return;
+
+          cell.val.am = props.amount;
+        }),
       },
     });
   }
@@ -248,7 +257,7 @@ function updateCellOrNestedCell<
   ) => Ret,
 ) {
   return updateRackCard<Props, RetValue, Ret>((card, props, rack) => {
-    if (props.coli == null) throw 'Error: celli is missed in props';
+    if (props.coli == null) throw 'Error: coli is missed in props';
 
     if (props.nestedColi == null || props.nestedCellMi == null)
       return updater(card, props.coli, props, rack.cols[props.coli].t, card, rack);

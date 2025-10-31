@@ -33,6 +33,7 @@ export const StoragesCellOfTypeDates = (props: StoragesCellTypeProps<StoragesCol
           >
             <Button onClick={() => openDateMiAtom.set(dateCell.mi)}>
               <StoragesDateTimestampTitle timestamp={dateCell.ts} />
+              {dateCell.title && <span className="text-x7"> {dateCell.title}</span>}
               <LazyIcon icon="ArrowRight01" />
             </Button>
           </div>

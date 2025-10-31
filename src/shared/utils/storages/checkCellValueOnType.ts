@@ -10,5 +10,5 @@ const checkDict: {
   [StoragesColumnType.Date]: value => (smylib.isNum(value) ? value : undefined),
   [StoragesColumnType.Dates]: () => undefined,
   [StoragesColumnType.List]: value => (smylib.isArr(value) ? value : []),
-  [StoragesColumnType.Price]: value => (smylib.isObj(value) ? value : { am: '' }),
+  [StoragesColumnType.Price]: value => (smylib.isObj(value) ? value : { am: 0 }),
 };

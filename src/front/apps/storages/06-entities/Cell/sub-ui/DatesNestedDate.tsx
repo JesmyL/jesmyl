@@ -73,7 +73,15 @@ export const StoragesCellDatesNestedDateCell = (
                   label={`Описание (${maxTitleLength} символов)`}
                   defaultValue={cardCell?.title}
                   maxLength={maxTitleLength}
-                  onChanged={() => {}}
+                  onChanged={title =>
+                    storagesTsjrpcClient.editNestedCellProp({
+                      rackw: props.rack.w,
+                      coli: props.coli,
+                      cardMi: props.card.mi,
+                      partialProps: { title },
+                      ...props.nestedSelectors,
+                    })
+                  }
                 />
               </>
             ) : (
