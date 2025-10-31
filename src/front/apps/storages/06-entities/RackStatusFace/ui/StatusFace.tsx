@@ -12,6 +12,7 @@ export const StoragesRackStatusFace = ({
     <span className="inline-flex gap-2">
       <LazyIcon
         icon={rackStatus.icon ?? 'Cube'}
+        withoutAnimation
         style={{ color: rackStatus.color }}
       />
       {customTitile || (
