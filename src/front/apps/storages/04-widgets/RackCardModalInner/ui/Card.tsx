@@ -2,7 +2,7 @@ import { Button } from '#shared/components/ui/button';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TextInput } from '#shared/ui/TextInput';
 import { StoragesRackStatusFace } from '$storages/entities/RackStatusFace';
-import { StoragesRackCardFields } from '$storages/features/RackCardFields';
+import { StoragesCellList } from '$storages/features/CellList';
 import { StoragesRackCardMetaInfoReader } from '$storages/features/RackCardMetaInfoReader';
 import {
   StoragesRackCardStatusSelector,
@@ -67,7 +67,7 @@ export const StoragesRackCardModalInner = ({ card, rack }: { card: StoragesRackC
         ) : null}
 
         <StoragesIsEditInnersContext value={isEdit}>
-          <StoragesRackCardFields
+          <StoragesCellList
             rack={rack}
             card={card}
           />

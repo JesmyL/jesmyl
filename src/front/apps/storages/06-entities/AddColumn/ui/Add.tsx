@@ -2,24 +2,24 @@ import { Button } from '#shared/components/ui/button';
 import { MyLib } from '#shared/lib/my-lib';
 import { Modal, ModalBody, ModalHeader, usePrompt } from '#shared/ui/modal';
 import { Atom } from 'atomaric';
-import { StoragesFieldType } from 'shared/model/storages/rack.model';
+import { StoragesColumnType } from 'shared/model/storages/rack.model';
 
-export const StoragesRackAddField = ({
+export const StoragesAddColumn = ({
   onAdd,
   isOpenModalAtom,
-  excludeFieldTypes,
+  excludeColumnTypes,
 }: {
-  onAdd: (type: StoragesFieldType, title: string) => Promise<unknown>;
+  onAdd: (type: StoragesColumnType, title: string) => Promise<unknown>;
   isOpenModalAtom: Atom<boolean>;
-  excludeFieldTypes?: Set<StoragesFieldType>;
+  excludeColumnTypes?: Set<StoragesColumnType>;
 }) => {
   const prompt = usePrompt();
 
-  const typeDict: Record<StoragesFieldType, { typeTitle: string }> = {
-    [StoragesFieldType.Date]: { typeTitle: 'Дата' },
-    [StoragesFieldType.Dates]: { typeTitle: 'Даты' },
-    [StoragesFieldType.List]: { typeTitle: 'Список' },
-    [StoragesFieldType.Price]: { typeTitle: 'Стоимость' },
+  const typeDict: Record<StoragesColumnType, { typeTitle: string }> = {
+    [StoragesColumnType.Date]: { typeTitle: 'Дата' },
+    [StoragesColumnType.Dates]: { typeTitle: 'Даты' },
+    [StoragesColumnType.List]: { typeTitle: 'Список' },
+    [StoragesColumnType.Price]: { typeTitle: 'Стоимость' },
   };
 
   return (
@@ -35,7 +35,7 @@ export const StoragesRackAddField = ({
         <ModalHeader>Выберите тип нового поля</ModalHeader>
         <ModalBody className="flex flex-col gap-3 *:w-full">
           {MyLib.entries(typeDict).map(([type, { typeTitle }]) => {
-            if (excludeFieldTypes?.has(+type)) return;
+            if (excludeColumnTypes?.has(+type)) return;
 
             return (
               <Button

@@ -1,46 +1,47 @@
-export const enum StoragesFieldType {
+export const enum StoragesColumnType {
   Date = 12,
   Dates = 77,
   List = 62,
   Price = 93,
 }
 
-export const enum StoragesDatesFieldNestedDateFieldMi {
+export const enum StoragesNestedCellMi {
   min = 1,
 }
 
-export type StoragesRackField<Type extends StoragesFieldType> = StoragesRackCardFieldDict[Type];
+export type StoragesCell<Type extends StoragesColumnType> = StoragesCellDict[Type];
 
-export type StoragesRackDefinitionField = {
-  t: StoragesFieldType;
+export type StoragesRackColumn = {
+  t: StoragesColumnType;
   title: string;
-  fields?: StoragesRackDefinitionField[];
+  cols?: StoragesRackColumn[];
 };
 
-export type StoragesFieldNestedSelectors = {
-  nestedFieldMi?: StoragesDatesFieldNestedDateFieldMi;
-  nestedFieldi?: number;
-  fieldi?: number;
+export type StoragesNestedCellSelectors = {
+  nestedCellMi?: StoragesNestedCellMi;
+  nestedColi?: number;
+  coli?: number;
 };
 
-type StoragesRackCardFieldDict = TypeSatisfiesDict<{
-  [StoragesFieldType.Date]: {
-    t: StoragesFieldType.Date;
+type StoragesCellDict = TypeSatisfiesDict<{
+  [StoragesColumnType.Date]: {
+    t: StoragesColumnType.Date;
     val: number | nil;
   };
 
-  [StoragesFieldType.List]: {
-    t: StoragesFieldType.List;
+  [StoragesColumnType.List]: {
+    t: StoragesColumnType.List;
     val: string[];
   };
 
-  [StoragesFieldType.Dates]: {
-    t: StoragesFieldType.Dates;
-    val: (StoragesDatesFieldNestedDateField & { ts: number })[];
+  [StoragesColumnType.Dates]: {
+    t: StoragesColumnType.Dates;
+    val: und;
+    row: (StoragesNestedCell & { ts?: number })[];
   };
 
-  [StoragesFieldType.Price]: {
-    t: StoragesFieldType.Price;
+  [StoragesColumnType.Price]: {
+    t: StoragesColumnType.Price;
     val: {
       /** amount */
       am: string;
@@ -48,10 +49,14 @@ type StoragesRackCardFieldDict = TypeSatisfiesDict<{
   };
 }>;
 
-export type StoragesDatesFieldNestedDateField = {
-  mi: StoragesDatesFieldNestedDateFieldMi;
+export type StoragesNestedCell = {
+  mi: StoragesNestedCellMi;
   title?: string;
-  fields: (StoragesRackField<StoragesFieldType> | nil)[];
+  row: (StoragesCell<StoragesColumnType> | nil)[];
 };
 
-type TypeSatisfiesDict<T extends { [T in StoragesFieldType]: { t: T; val: unknown } }> = T;
+type TypeSatisfiesDict<
+  T extends {
+    [T in StoragesColumnType]: { t: T; val: unknown; row?: StoragesNestedCell[] };
+  },
+> = T;

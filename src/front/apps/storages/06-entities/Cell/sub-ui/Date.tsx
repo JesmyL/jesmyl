@@ -2,11 +2,11 @@ import { DatePicker } from '#shared/components/DatePicker';
 import { mylib } from '#shared/lib/my-lib';
 import { useStoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
-import { StoragesFieldType } from 'shared/model/storages/rack.model';
-import { StoragesRackCardFieldTypeProps } from '../model/model';
+import { StoragesColumnType } from 'shared/model/storages/rack.model';
+import { StoragesCellTypeProps } from '../model/model';
 
-export const StoragesRackCardFieldOfTypeDate = (props: StoragesRackCardFieldTypeProps<StoragesFieldType.Date>) => {
-  const date = new Date(props.cardField?.val ?? NaN);
+export const StoragesCellOfTypeDate = (props: StoragesCellTypeProps<StoragesColumnType.Date>) => {
+  const date = new Date(props.cell?.val ?? NaN);
   const isEdit = useStoragesIsEditInnersContext();
 
   if (mylib.isNaN(date.getTime())) return;
@@ -14,16 +14,16 @@ export const StoragesRackCardFieldOfTypeDate = (props: StoragesRackCardFieldType
   return (
     <>
       <div>
-        <div>{props.rackField.title}</div>
+        <div>{props.column.title}</div>
         {isEdit ? (
           <DatePicker
-            initValue={props.cardField?.val}
+            initValue={props.cell?.val}
             onSelect={async date => {
-              storagesTsjrpcClient.editRackCardFieldValue({
+              storagesTsjrpcClient.editCellValue({
                 ...props.nestedSelectors,
                 cardMi: props.card.mi,
                 rackw: props.rack.w,
-                fieldi: props.fieldi,
+                coli: props.coli,
                 value: mylib.isNaN(date?.getTime()) ? undefined : date?.getTime(),
               });
             }}

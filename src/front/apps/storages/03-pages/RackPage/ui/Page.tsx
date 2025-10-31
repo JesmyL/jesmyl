@@ -21,7 +21,7 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
       head={
         <Button
           icon="PlusSign"
-          disabled={rack?.list.some(rack => !rack.title)}
+          disabled={rack?.cards.some(rack => !rack.title)}
           onClick={() => storagesTsjrpcClient.createRackCard({ rackw })}
         >
           Карточка
@@ -29,7 +29,7 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
       }
       content={
         <>
-          {rack?.list.map(card => {
+          {rack?.cards.map(card => {
             return (
               <div
                 key={card.mi}
@@ -47,7 +47,7 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
 
           <Modal openAtom={editCardMiAtom}>
             {cardMi => {
-              const card = rack?.list.find(it => it.mi === cardMi);
+              const card = rack?.cards.find(it => it.mi === cardMi);
 
               return (
                 rack &&

@@ -1,5 +1,5 @@
-import { StoragesRackAddField } from '$storages/entities/RackAddField';
-import { TheStoragesRackCardField } from '$storages/entities/RackCardField';
+import { StoragesAddColumn } from '$storages/entities/AddColumn';
+import { TheStoragesCell } from '$storages/entities/Cell';
 import { useStoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { atom } from 'atomaric';
@@ -12,28 +12,26 @@ type Props = {
 
 const isOpenModalAtom = atom(false);
 
-export const StoragesRackCardFields = ({ rack, card }: Props) => {
+export const StoragesCellList = ({ rack, card }: Props) => {
   const isEdit = useStoragesIsEditInnersContext();
 
   return (
     <>
-      {rack.fields.map((_, fieldi) => {
+      {rack.cols.map((_, coli) => {
         return (
-          <TheStoragesRackCardField
-            key={fieldi}
+          <TheStoragesCell
+            key={coli}
             rack={rack}
             card={card}
-            fieldi={fieldi}
+            coli={coli}
           />
         );
       })}
 
       {isEdit && (
-        <StoragesRackAddField
+        <StoragesAddColumn
           isOpenModalAtom={isOpenModalAtom}
-          onAdd={(newFieldType, title) =>
-            storagesTsjrpcClient.createRackDefinitionField({ rackw: rack.w, title, newFieldType })
-          }
+          onAdd={(newColumnType, title) => storagesTsjrpcClient.createColumn({ rackw: rack.w, title, newColumnType })}
         />
       )}
     </>

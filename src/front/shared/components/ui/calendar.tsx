@@ -1,4 +1,3 @@
-/* eslint-disable @eslint-react/no-nested-component-definitions */
 import * as React from 'react';
 import { DayButton, DayPicker, getDefaultClassNames } from 'react-day-picker';
 

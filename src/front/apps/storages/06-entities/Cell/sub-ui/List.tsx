@@ -1,38 +1,38 @@
 import { Autocomplete } from '#shared/components/Autocomplete';
 import { useStoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
-import { StoragesFieldType } from 'shared/model/storages/rack.model';
-import { StoragesRackCardFieldTypeProps } from '../model/model';
+import { StoragesColumnType } from 'shared/model/storages/rack.model';
+import { StoragesCellTypeProps } from '../model/model';
 
-export const StoragesRackCardFieldOfTypeList = (props: StoragesRackCardFieldTypeProps<StoragesFieldType.List>) => {
+export const StoragesCellOfTypeList = (props: StoragesCellTypeProps<StoragesColumnType.List>) => {
   const isEdit = useStoragesIsEditInnersContext();
 
-  if (!isEdit && !props.cardField?.val.length) return;
+  if (!isEdit && !props.cell?.val.length) return;
 
   return (
     <>
       <div>
-        {props.rackField.title}
+        {props.column.title}
         <div className={isEdit ? undefined : 'font-bold'}>
           <Autocomplete
             isShowSelectedNodeOnly={!isEdit}
-            selected={props.cardField?.val}
+            selected={props.cell?.val}
             items={props.rack.values.map(value => ({ id: value, title: value }))}
             onNewItem={async title => {
               await storagesTsjrpcClient.addRackValue({ rackw: props.rack.w, title });
-              await storagesTsjrpcClient.toggleRackCardListFieldValue({
+              await storagesTsjrpcClient.toggleListCellValue({
                 ...props.nestedSelectors,
                 cardMi: props.card.mi,
-                fieldi: props.fieldi,
+                coli: props.coli,
                 rackw: props.rack.w,
                 title,
               });
             }}
             onSelect={({ id }) =>
-              storagesTsjrpcClient.toggleRackCardListFieldValue({
+              storagesTsjrpcClient.toggleListCellValue({
                 ...props.nestedSelectors,
                 cardMi: props.card.mi,
-                fieldi: props.fieldi,
+                coli: props.coli,
                 rackw: props.rack.w,
                 title: id,
               })

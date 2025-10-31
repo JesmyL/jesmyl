@@ -1,12 +1,13 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import {
+  StoragesTsjrpcCellSelector,
   StoragesTsjrpcModel,
-  StoragesTsjrpcRackCardFieldSelector,
   StoragesTsjrpcRackCardSelector,
   StoragesTsjrpcRackSelector,
   StoragesTsjrpcRackStatusSelector,
 } from 'shared/api/tsjrpc/storages/tsjrpc.model';
+import { storagesCellDefaultValueDict } from 'shared/const/storages/cellDefaultValueDict';
 import {
   StoragesRack,
   StoragesRackCard,
@@ -15,17 +16,14 @@ import {
   StoragesRackStatus,
 } from 'shared/model/storages/list.model';
 import {
-  StoragesDatesFieldNestedDateFieldMi,
-  StoragesFieldNestedSelectors,
-  StoragesFieldType,
-  StoragesRackDefinitionField,
-  StoragesRackField,
+  StoragesCell,
+  StoragesColumnType,
+  StoragesNestedCellMi,
+  StoragesNestedCellSelectors,
+  StoragesRackColumn,
 } from 'shared/model/storages/rack.model';
 import { SMyLib, smylib } from 'shared/utils';
-import {
-  storagesCheckRackCardFieldValueOnType,
-  storagesFieldValueDefaultValueDict,
-} from 'shared/utils/storages/checkRackCardFieldValueOnType';
+import { storagesCheckCellValueOnType } from 'shared/utils/storages/checkCellValueOnType';
 import { storagesDirStore } from './file-stores';
 import { storagesStoresSharesServerTsjrpcMethods } from './tsjrpc.shares';
 
@@ -66,8 +64,8 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
         },
 
         createRackCard: updateRack(rack => {
-          rack.list.push({
-            mi: smylib.takeNextMi(rack.list, StoragesRackCardMi.min),
+          rack.cards.push({
+            mi: smylib.takeNextMi(rack.cards, StoragesRackCardMi.min),
             title: 'Новая карточка',
           });
         }),
@@ -76,11 +74,11 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           rack.statuses.push({ title });
         }),
 
-        createRackDefinitionField: updateRack((rack, { title, newFieldType, fieldi }) => {
-          if (fieldi != null) {
-            rack.fields[fieldi].fields ??= [];
-            rack.fields[fieldi].fields.push({ t: newFieldType, title });
-          } else rack.fields.push({ t: newFieldType, title });
+        createColumn: updateRack((rack, { title, newColumnType, coli: coli }) => {
+          if (coli != null) {
+            rack.cols[coli].cols ??= [];
+            rack.cols[coli].cols.push({ t: newColumnType, title });
+          } else rack.cols.push({ t: newColumnType, title });
         }),
 
         editRackStatusIcon: updateRackStatus((rackStatus, { icon }) => {
@@ -123,36 +121,61 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           card.meta = meta || undefined;
         }),
 
-        createRackCardDatesFieldDate: updateRackCardField((cardField, { timestamp }) => {
-          if (cardField.t !== StoragesFieldType.Dates) throw 'Field type error 761564128398';
+        createDatesNestedCell: updateCell(cell => {
+          if (cell.t !== StoragesColumnType.Dates) throw 'Cell type error 761564128398';
 
-          timestamp ??= new Date().setHours(0, 0, 0, 0) / 100000;
+          cell.row ??= [];
+          let ts = undefined;
 
-          cardField.val ??= [];
-          cardField.val.push({
-            fields: [],
-            mi: smylib.takeNextMi(cardField.val, StoragesDatesFieldNestedDateFieldMi.min),
-            ts: timestamp,
+          const todayTs = new Date().setHours(0, 0, 0, 0) / 100000;
+          if (!cell.row.some(it => it.ts === todayTs)) {
+            ts = Math.trunc(new Date().setHours(0, 0, 0, 0) / 100000);
+          }
+
+          cell.row.push({
+            row: [],
+            mi: smylib.takeNextMi(cell.row, StoragesNestedCellMi.min),
+            ts,
           });
         }),
 
-        editRackCardFieldValue: updateRackCardField((cardField, { value }) => {
-          cardField.val = storagesCheckRackCardFieldValueOnType(cardField.t, value);
+        editNestedCellProp: updateCell((cell, props) => {
+          if (!('row' in cell) || !smylib.isArr(cell.row) || props.nestedCellMi == null) return;
+
+          const nestedCell = cell.row.find(cell => cell.mi === props.nestedCellMi);
+          if (nestedCell == null) return;
+
+          smylib.keys(props.partialProps).forEach(key => {
+            nestedCell[key] = props.partialProps[key];
+          });
+
+          if (props.sortRow != null) {
+            const by = props.sortRow.prop as never;
+            cell.row.sort(
+              props.sortRow
+                ? (b, a) => +a[by] - +b[by] || (`${a}` > `${b}` ? 1 : `${a}` < `${b}` ? -1 : 0)
+                : (a, b) => +a[by] - +b[by] || (`${a}` > `${b}` ? 1 : `${a}` < `${b}` ? -1 : 0),
+            );
+          }
         }),
 
-        toggleRackCardListFieldValue: updateRackCardOrNestedField((fieldsHolder, fieldi, { title }, fieldType) => {
-          if (fieldType !== StoragesFieldType.List) return;
+        editCellValue: updateCell((cell, { value }) => {
+          cell.val = storagesCheckCellValueOnType(cell.t, value);
+        }),
 
-          fieldsHolder.fields ??= [];
-          const cardField = (fieldsHolder.fields[fieldi] ??= { t: fieldType, val: [] });
+        toggleListCellValue: updateCellOrNestedCell((rowHolder, index, { title }, colType) => {
+          if (colType !== StoragesColumnType.List) return;
 
-          if (cardField.t !== StoragesFieldType.List) return;
-          const titlesSet = new Set(cardField.val);
+          rowHolder.row ??= [];
+          const cell = (rowHolder.row[index] ??= { t: colType, val: [] });
+
+          if (cell.t !== StoragesColumnType.List) return;
+          const titlesSet = new Set(cell.val);
 
           if (titlesSet.has(title)) titlesSet.delete(title);
           else titlesSet.add(title);
 
-          cardField.val = Array.from(titlesSet).sort();
+          cell.val = Array.from(titlesSet).sort();
         }),
 
         addRackValue: updateRack((rack, { title }) => {
@@ -204,67 +227,64 @@ function updateRackCard<
   Ret extends UpdaterReturnType<RetValue>,
 >(updater: (card: StoragesRackCard, props: Props, rack: StoragesRack) => Ret) {
   return updateRack<Props, RetValue, Ret>((rack, props) => {
-    const card = rack.list.find(card => card.mi === props.cardMi);
+    const card = rack.cards.find(card => card.mi === props.cardMi);
     if (card == null) throw `There is no card with mi === ${props.cardMi}`;
     return updater(card, props, rack);
   });
 }
 
-function updateRackCardOrNestedField<
-  Props extends StoragesTsjrpcRackCardSelector & StoragesFieldNestedSelectors,
+function updateCellOrNestedCell<
+  Props extends StoragesTsjrpcRackCardSelector & StoragesNestedCellSelectors,
   RetValue,
   Ret extends UpdaterReturnType<RetValue>,
 >(
   updater: (
-    fieldsHolder: { fields?: (StoragesRackField<StoragesFieldType> | nil)[] },
-    fieldi: number,
+    rowHolder: { row?: (StoragesCell<StoragesColumnType> | nil)[] },
+    celli: number,
     props: Props,
-    fieldType: StoragesFieldType,
+    colType: StoragesColumnType,
     card: StoragesRackCard,
     rack: StoragesRack,
   ) => Ret,
 ) {
   return updateRackCard<Props, RetValue, Ret>((card, props, rack) => {
-    if (props.fieldi == null) throw 'Error fieldi is missed in props';
+    if (props.coli == null) throw 'Error: celli is missed in props';
 
-    if (props.nestedFieldi == null || props.nestedFieldMi == null)
-      return updater(card, props.fieldi, props, rack.fields[props.fieldi].t, card, rack);
+    if (props.nestedColi == null || props.nestedCellMi == null)
+      return updater(card, props.coli, props, rack.cols[props.coli].t, card, rack);
 
-    const rackType = rack.fields[props.fieldi].fields?.[props.nestedFieldi].t;
+    const rackType = rack.cols[props.coli].cols?.[props.nestedColi].t;
     if (rackType == null) throw 'Error 1920936712490123';
 
-    card.fields ??= [];
-    const cardField = card.fields[props.fieldi];
-    if (!smylib.isArr(cardField?.val)) throw 'Error 1872635415624';
-    const fieldsHolder = cardField.val.find(it => smylib.isObj(it) && it.mi === props.nestedFieldMi);
-    if (!smylib.isObj(fieldsHolder)) throw 'Error 192644527841210';
+    card.row ??= [];
+    const cardCell = card.row[props.coli];
+    if (cardCell == null || !('row' in cardCell)) throw 'Error 1862531839123';
 
-    return updater(fieldsHolder, props.nestedFieldi, props, rackType, card, rack);
+    const rowHolder = cardCell.row.find(it => it.mi === props.nestedCellMi);
+    if (!smylib.isObj(rowHolder)) throw 'Error 192644527841210';
+
+    return updater(rowHolder, props.nestedColi, props, rackType, card, rack);
   });
 }
 
-function updateRackCardField<
-  Props extends StoragesTsjrpcRackCardFieldSelector,
-  RetValue,
-  Ret extends UpdaterReturnType<RetValue>,
->(
+function updateCell<Props extends StoragesTsjrpcCellSelector, RetValue, Ret extends UpdaterReturnType<RetValue>>(
   updater: (
-    cardField: StoragesRackField<StoragesFieldType>,
+    cell: StoragesCell<StoragesColumnType>,
     props: Props,
-    rackField: StoragesRackDefinitionField,
+    column: StoragesRackColumn,
     card: StoragesRackCard,
     rack: StoragesRack,
   ) => Ret,
 ) {
   return updateRackCard<Props, RetValue, Ret>((card, props, rack) => {
-    const rackField = rack.fields[props.fieldi];
-    if (rackField == null) throw 'Error 8156124357234';
+    const column = rack.cols[props.coli];
+    if (column == null) throw 'Error 8156124357234';
 
-    card.fields ??= [];
-    const cardField = (card.fields[props.fieldi] ??= storagesFieldValueDefaultValueDict[rackField.t]);
+    card.row ??= [];
+    const cell = (card.row[props.coli] ??= storagesCellDefaultValueDict[column.t]);
 
-    if (rackField.t !== cardField.t) throw 'Incorrect card type 162535678729';
+    if (column.t !== cell.t) throw 'Incorrect card type 162535678729';
 
-    return updater(cardField, props, rackField, card, rack);
+    return updater(cell, props, column, card, rack);
   });
 }

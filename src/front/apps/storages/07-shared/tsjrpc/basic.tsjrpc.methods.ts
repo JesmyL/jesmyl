@@ -22,11 +22,12 @@ export const storagesTsjrpcClient = new (class Storages extends TsjrpcClient<Sto
         editRackCardTitle: true,
         editRackCardNote: true,
         editRackCardMeta: true,
-        createRackDefinitionField: true,
+        createColumn: true,
         addRackValue: true,
-        toggleRackCardListFieldValue: true,
-        createRackCardDatesFieldDate: true,
-        editRackCardFieldValue: true,
+        toggleListCellValue: true,
+        createDatesNestedCell: true,
+        editCellValue: true,
+        editNestedCellProp: true,
       },
     });
   }

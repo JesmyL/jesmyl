@@ -7,9 +7,9 @@ export const storagesDirStore = new DirStore({
     w: Date.now() + Math.random(),
     title: '',
     team: {},
-    list: [],
+    cards: [],
     statuses: [{ title: 'Новый' }],
-    fields: [],
+    cols: [],
     values: [],
   }),
 });

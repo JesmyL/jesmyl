@@ -1,5 +1,5 @@
 import { StoragesRack, StoragesRackCardMi, StoragesRackWid } from 'shared/model/storages/list.model';
-import { StoragesFieldNestedSelectors, StoragesFieldType, StoragesRackField } from 'shared/model/storages/rack.model';
+import { StoragesCell, StoragesColumnType, StoragesNestedCellSelectors } from 'shared/model/storages/rack.model';
 
 export type StoragesTsjrpcModel = {
   requestFreshes: (args: { lastModfiedAt: number }) => void;
@@ -11,24 +11,26 @@ export type StoragesTsjrpcModel = {
   setRackCardStatus: (args: StoragesTsjrpcRackStatusSelector & StoragesTsjrpcRackCardSelector) => void;
   editRackCardTitle: (args: StoragesTsjrpcRackCardSelector & { title: string }) => void;
 
-  toggleRackCardListFieldValue: (
-    args: StoragesTsjrpcRackCardFieldSelector & StoragesFieldNestedSelectors & { title: string },
-  ) => void;
+  toggleListCellValue: (args: StoragesTsjrpcCellSelector & StoragesNestedCellSelectors & { title: string }) => void;
 
   editRackCardNote: (args: StoragesTsjrpcRackCardSelector & { note: string }) => void;
   editRackCardMeta: (args: StoragesTsjrpcRackCardSelector & { meta: string }) => void;
 
-  createRackCardDatesFieldDate: (args: StoragesTsjrpcRackCardFieldSelector & { timestamp?: number }) => void;
+  createDatesNestedCell: (args: StoragesTsjrpcCellSelector) => void;
 
-  editRackCardFieldValue: (
-    args: StoragesTsjrpcRackCardFieldSelector &
-      StoragesFieldNestedSelectors & { value: StoragesRackField<StoragesFieldType>['val'] },
+  editNestedCellProp: (
+    args: StoragesTsjrpcCellSelector &
+      StoragesNestedCellSelectors & { partialProps: object; sortRow?: { prop: string; asc: boolean } },
+  ) => void;
+
+  editCellValue: (
+    args: StoragesTsjrpcCellSelector & StoragesNestedCellSelectors & { value: StoragesCell<StoragesColumnType>['val'] },
   ) => void;
 
   createRackStatus: (args: RackSelector & { title: string }) => void;
 
-  createRackDefinitionField: (
-    args: RackSelector & StoragesFieldNestedSelectors & { title: string; newFieldType: StoragesFieldType },
+  createColumn: (
+    args: RackSelector & StoragesNestedCellSelectors & { title: string; newColumnType: StoragesColumnType },
   ) => void;
 
   editRackStatusIcon: (args: StoragesTsjrpcRackStatusSelector & { icon: KnownStameskaIconName }) => void;
@@ -41,5 +43,5 @@ type RackSelector = StoragesTsjrpcRackSelector;
 
 export type StoragesTsjrpcRackSelector = { rackw: StoragesRackWid };
 export type StoragesTsjrpcRackCardSelector = StoragesTsjrpcRackSelector & { cardMi: StoragesRackCardMi };
-export type StoragesTsjrpcRackCardFieldSelector = StoragesTsjrpcRackCardSelector & { fieldi: number };
+export type StoragesTsjrpcCellSelector = StoragesTsjrpcRackCardSelector & { coli: number };
 export type StoragesTsjrpcRackStatusSelector = StoragesTsjrpcRackSelector & { statusi: number };

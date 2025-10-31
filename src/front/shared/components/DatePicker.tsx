@@ -2,6 +2,7 @@ import { mylib } from '#shared/lib/my-lib';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover';
 import { useState } from 'react';
+import { Matcher } from 'react-day-picker';
 import { Button } from './ui/button';
 import { Calendar } from './ui/calendar';
 
@@ -9,10 +10,12 @@ export const DatePicker = ({
   initValue,
   onSelect,
   placeholder = 'Дата',
+  disabled,
 }: {
   initValue: string | number | Date | nil;
   onSelect?: (date: Date | und) => Promise<unknown> | nil;
   placeholder?: React.ReactNode;
+  disabled?: Matcher[];
 }) => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -49,6 +52,7 @@ export const DatePicker = ({
           captionLayout="label"
           className="h-[330px]"
           defaultMonth={date}
+          disabled={disabled}
           formatters={{
             formatWeekdayName: weekdate => weekdate.toLocaleDateString('ru', { weekday: 'short' }),
           }}
