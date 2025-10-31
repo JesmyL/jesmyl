@@ -11,13 +11,13 @@ type Props = OmitOwn<
   onInput?: (value: string) => void;
   multiline?: boolean;
   strongDefaultValue?: boolean;
-  type?: 'text' | 'tel' | 'email';
+  type?: 'text' | 'tel' | 'email' | 'number';
   label?: React.ReactNode;
 };
 
 export const TextInput = ({ onChanged, onInput, multiline, label, strongDefaultValue, ...props }: Props) => {
   const Comp = multiline ? Textarea : Input;
-  const [firstValue, setFirstValue] = useState(props.defaultValue ?? props.value);
+  const [firstValue, setFirstValue] = useState(`${props.defaultValue ?? props.value}`);
 
   const attrs: AllHTMLAttributes<HTMLInputElement & HTMLTextAreaElement> = {
     ...props,
@@ -67,7 +67,7 @@ const StrongDefaultValueInput = ({
   const inputRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null);
   useEffect(() => {
     if (inputRef.current === null) return;
-    inputRef.current.value = '' + (props.defaultValue || '');
+    inputRef.current.value = '' + (props.defaultValue ?? '');
   }, [props.defaultValue]);
 
   return (
