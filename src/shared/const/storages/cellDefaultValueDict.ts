@@ -1,8 +1,8 @@
 import { StoragesCell, StoragesColumnType } from 'shared/model/storages/rack.model';
 
-export const storagesCellDefaultValueDict: {
+export const storagesCellDefaultValueDict: () => {
   [Type in StoragesColumnType]: StoragesCell<Type>;
-} = {
+} = () => ({
   [StoragesColumnType.Date]: {
     t: StoragesColumnType.Date,
     val: undefined,
@@ -20,4 +20,4 @@ export const storagesCellDefaultValueDict: {
     t: StoragesColumnType.Price,
     val: { am: 0 },
   },
-};
+});

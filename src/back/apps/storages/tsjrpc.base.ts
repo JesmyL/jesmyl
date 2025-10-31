@@ -290,7 +290,7 @@ function updateCell<Props extends StoragesTsjrpcCellSelector, RetValue, Ret exte
     if (column == null) throw 'Error 8156124357234';
 
     card.row ??= [];
-    const cell = (card.row[props.coli] ??= storagesCellDefaultValueDict[column.t]);
+    const cell = (card.row[props.coli] ??= storagesCellDefaultValueDict()[column.t]);
 
     if (column.t !== cell.t) throw 'Incorrect card type 162535678729';
 

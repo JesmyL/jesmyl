@@ -41,7 +41,7 @@ export const StoragesCellOfTypeDates = (props: StoragesCellTypeProps<StoragesCol
       }
     : () => null;
 
-  const moreCells = props.cell?.row.slice(3, firstUndatedCelli).map(mapCellNode);
+  const moreCells = firstUndatedCelli > 0 ? props.cell?.row.slice(3, firstUndatedCelli).map(mapCellNode) : null;
 
   return (
     <div>
@@ -56,9 +56,9 @@ export const StoragesCellOfTypeDates = (props: StoragesCellTypeProps<StoragesCol
         value={props.cell?.row.length}
         render={() => (
           <>
-            {props.cell?.row.slice(0, 3).map(mapCellNode)}
+            {props.cell?.row.slice(0, firstUndatedCelli < 0 ? 3 : Math.min(3, firstUndatedCelli)).map(mapCellNode)}
             {!moreCells?.length || (isExpand ? moreCells : <div>...</div>)}
-            {isEdit && props.cell?.row.slice(firstUndatedCelli).map(mapCellNode)}
+            {isEdit && firstUndatedCelli > 0 && props.cell?.row.slice(firstUndatedCelli).map(mapCellNode)}
           </>
         )}
         else={<div className="opacity-50 text-x7">Дат нет</div>}

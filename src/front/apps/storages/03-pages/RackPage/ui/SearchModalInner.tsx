@@ -36,19 +36,21 @@ export const StoragesRackSearchModalInner = ({
             value={term}
             onInput={event => termAtom.set(event.currentTarget.value)}
           />
-          <Command.List className="w-full">
+          <Command.List className="w-full max-h-[calc(100cqh-300px)]">
             {rack.cards.map(card => {
               return (
                 <Command.Item
                   key={card.mi}
                   value={`${card.title} ${card.note ?? ''}`}
                   className="bg-x2 data-[selected=true]:bg-x2"
-                  onClick={() => onCardClick(card)}
+                  onSelect={() => onCardClick(card)}
                 >
-                  <StoragesRackStatusFace
-                    rackStatus={rack.statuses[card.status ?? 0]}
-                    customTitile={card.title}
-                  />
+                  <Button className="w-full flex justify-start">
+                    <StoragesRackStatusFace
+                      rackStatus={rack.statuses[card.status ?? 0]}
+                      customTitile={card.title}
+                    />
+                  </Button>
                 </Command.Item>
               );
             })}
@@ -66,6 +68,7 @@ export const StoragesRackSearchModalInner = ({
             toast('Такой карточки нет', makeToastKOMoodConfig());
             return;
           }
+
           onCardClick(card);
         }}
       />
