@@ -47,7 +47,9 @@ export const StoragesRackSearchModalInner = ({
                 >
                   <Button className="w-full flex justify-start">
                     <StoragesRackStatusFace
-                      rackStatus={rack.statuses[card.status ?? 0]}
+                      rack={rack}
+                      card={card}
+                      statusi={card.status}
                       customTitile={card.title}
                     />
                   </Button>

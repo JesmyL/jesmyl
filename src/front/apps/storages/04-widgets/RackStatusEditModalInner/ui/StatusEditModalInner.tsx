@@ -21,7 +21,11 @@ export const StoragesRackStatusEditModalInner = ({ rack, statusi }: { statusi: n
   return (
     <>
       <ModalHeader>
-        <StoragesRackStatusFace rackStatus={rackStatus} />
+        <StoragesRackStatusFace
+          rack={rack}
+          card={null}
+          statusi={statusi}
+        />
       </ModalHeader>
       <ModalBody>
         <TextInput
