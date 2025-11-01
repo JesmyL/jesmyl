@@ -36,68 +36,73 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
       onOpenChange={setDropped}
       open={isDropped}
     >
-      <DropdownMenu.Trigger className="flex gap-2">
-        {props.label}
-        <Button asSpan>
-          {selectedItem?.title || (
-            <span className="not-selected">
-              {props.undTitle ?? props.nullTitle ?? props.placeholder ?? 'Не выбрано'}
-            </span>
-          )}
+      {props.triggerNode || (
+        <DropdownMenu.Trigger className="flex gap-2">
+          {props.label}
+          <Button asSpan>
+            {selectedItem?.title || (
+              <span className="not-selected">
+                {props.undTitle ?? props.nullTitle ?? props.placeholder ?? 'Не выбрано'}
+              </span>
+            )}
 
-          {error ? (
-            <LazyIcon
-              icon="Alert01"
-              className="text-xKO"
-            />
-          ) : isLoading ? (
-            <LazyIcon
-              icon="Loading03"
-              className="rotate"
-            />
-          ) : (
-            props.hiddenArrow || (
+            {error ? (
               <LazyIcon
-                icon="ArrowDown01"
-                className={twMerge(isDropped && 'rotate-180', 'transition-[rotate]')}
+                icon="Alert01"
+                className="text-xKO"
               />
-            )
-          )}
-        </Button>
-      </DropdownMenu.Trigger>
-      <DropdownMenu.Content onClick={() => setDropped(false)}>
-        {props.undTitle && (
-          <DropdownMenu.Item onClick={() => onClick({ id: undefined, title: props.undTitle })}>
-            {renderItem({ node: props.undTitle, id: undefined!, afterClickAction })}
-          </DropdownMenu.Item>
-        )}
-        {props.nullTitle && (
-          <DropdownMenu.Item onClick={() => onClick({ id: null, title: props.nullTitle })}>
-            {renderItem({ node: props.nullTitle, id: null!, afterClickAction })}
-          </DropdownMenu.Item>
-        )}
-        {!props.disabled &&
-          props.items.map(item => {
-            if (!item) return null;
-            if (props.hiddenIds?.includes(item.id)) return null;
+            ) : isLoading ? (
+              <LazyIcon
+                icon="Loading03"
+                className="rotate"
+              />
+            ) : (
+              props.hiddenArrow || (
+                <LazyIcon
+                  icon="ArrowDown01"
+                  className={twMerge(isDropped && 'rotate-180', 'transition-[rotate]')}
+                />
+              )
+            )}
+          </Button>
+        </DropdownMenu.Trigger>
+      )}
 
-            return (
-              <DropdownMenu.Item
-                key={JSON.stringify(item.id)}
-                disabled={item.disabled}
-                className={item.color ? ` colored color_${item.color} ` : ''}
-                onClick={event => {
-                  event.stopPropagation();
-                  setId(item.id);
-                  onClick(item);
-                }}
-              >
-                {renderItem({ node: item.title, id: item.id, afterClickAction })}
-              </DropdownMenu.Item>
-            );
-          })}
-        {props.addContent}
-      </DropdownMenu.Content>
+      {isDropped && (
+        <DropdownMenu.Content onClick={() => setDropped(false)}>
+          {props.undTitle && (
+            <DropdownMenu.Item onClick={() => onClick({ id: undefined, title: props.undTitle })}>
+              {renderItem({ node: props.undTitle, id: undefined!, afterClickAction })}
+            </DropdownMenu.Item>
+          )}
+          {props.nullTitle && (
+            <DropdownMenu.Item onClick={() => onClick({ id: null, title: props.nullTitle })}>
+              {renderItem({ node: props.nullTitle, id: null!, afterClickAction })}
+            </DropdownMenu.Item>
+          )}
+          {!props.disabled &&
+            props.items.map(item => {
+              if (!item) return null;
+              if (props.hiddenIds?.includes(item.id)) return null;
+
+              return (
+                <DropdownMenu.Item
+                  key={JSON.stringify(item.id)}
+                  disabled={item.disabled}
+                  className={item.color ? ` colored color_${item.color} ` : ''}
+                  onClick={event => {
+                    event.stopPropagation();
+                    setId(item.id);
+                    onClick(item);
+                  }}
+                >
+                  {renderItem({ node: item.title, id: item.id, afterClickAction })}
+                </DropdownMenu.Item>
+              );
+            })}
+          {props.addContent}
+        </DropdownMenu.Content>
+      )}
     </DropdownMenu.Root>
   );
 }
