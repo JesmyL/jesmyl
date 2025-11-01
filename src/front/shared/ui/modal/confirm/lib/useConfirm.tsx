@@ -23,6 +23,10 @@ export const useConfirm = () => {
         <Modal
           isRenderHere
           openAtom={isOpenConfirmAtom}
+          onClose={() => {
+            resolvers.resolve(false);
+            isOpenConfirmAtom.reset();
+          }}
         >
           <ConfirmListeners
             confirmationResolvers={resolvers}

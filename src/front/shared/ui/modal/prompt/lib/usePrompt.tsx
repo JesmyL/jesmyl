@@ -25,7 +25,7 @@ export const usePrompt = () => {
           openAtom={isOpenAtom}
           onClose={() => {
             resolvers.resolve(null);
-            isOpenAtom.set(false);
+            isOpenAtom.reset();
           }}
         >
           <PromptListeners
