@@ -2,7 +2,7 @@ export const enum StoragesColumnType {
   Date = 12,
   Dates = 77,
   List = 62,
-  Price = 93,
+  Number = 93,
 }
 
 export const enum StoragesNestedCellMi {
@@ -40,12 +40,9 @@ type StoragesCellDict = TypeSatisfiesDict<{
     row: (StoragesNestedCell & { ts?: number })[];
   };
 
-  [StoragesColumnType.Price]: {
-    t: StoragesColumnType.Price;
-    val: {
-      /** amount */
-      am: number;
-    };
+  [StoragesColumnType.Number]: {
+    t: StoragesColumnType.Number;
+    val: number;
   };
 }>;
 

@@ -16,8 +16,8 @@ export const storagesCellDefaultValueDict: () => {
     t: StoragesColumnType.List,
     val: [],
   },
-  [StoragesColumnType.Price]: {
-    t: StoragesColumnType.Price,
-    val: { am: 0 },
+  [StoragesColumnType.Number]: {
+    t: StoragesColumnType.Number,
+    val: 0,
   },
 });

@@ -4,15 +4,15 @@ import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.metho
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
 import { StoragesCellTypeProps } from '../model/model';
 
-export const StoragesCellOfTypePrice = (props: StoragesCellTypeProps<StoragesColumnType.Price>) => {
+export const StoragesCellOfTypeNumber = (props: StoragesCellTypeProps<StoragesColumnType.Number>) => {
   const isEdit = useStoragesIsEditInnersContext();
 
   if (!isEdit)
     return (
-      !props.cell?.val.am || (
+      !props.cell?.val || (
         <div className="flex gap-2">
           <span>{props.column.title}</span>
-          <span className="font-bold">{props.cell?.val.am}</span>
+          <span className="font-bold">{props.cell?.val}</span>
           <span>₽</span>
         </div>
       )
@@ -25,10 +25,10 @@ export const StoragesCellOfTypePrice = (props: StoragesCellTypeProps<StoragesCol
 
         <TextInput
           type="number"
-          defaultValue={props.cell?.val.am}
+          defaultValue={props.cell?.val}
           strongDefaultValue
           onChanged={amount =>
-            storagesTsjrpcClient.setPrice({
+            storagesTsjrpcClient.setNumber({
               amount: Math.abs(+amount),
               cardMi: props.card.mi,
               rackw: props.rack.w,

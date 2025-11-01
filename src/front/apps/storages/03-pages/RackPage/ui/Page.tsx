@@ -11,19 +11,23 @@ import { atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useState } from 'react';
 import { StoragesRackCardMi, StoragesRackWid } from 'shared/model/storages/list.model';
+import { StoragesRackImportFromExcelModalInner } from './ImportFromExcelModalInner';
 import { StoragesRackSearchModalInner } from './SearchModalInner';
 
 const editCardMiAtom = atom<StoragesRackCardMi | nil>(null);
 const isOpenSearchModal = atom(false);
+const isOpenImportFromExcelModal = atom(false);
 
 export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
   const rack = useLiveQuery(() => storagesIDB.tb.racks.get(rackw), [rackw]);
   const [isMoreOpen, setIsMoreOpen] = useState(false);
 
+  if (rack == null) return;
+
   return (
     <PageContainerConfigurer
       className="StoragesRackPage"
-      headTitle="Стеллаж"
+      headTitle={rack.title ?? 'Стеллаж'}
       head={
         <Button
           icon="SearchVisual"
@@ -33,27 +37,25 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
       onMoreClick={setIsMoreOpen}
       content={
         <>
-          {rack?.cards.map(card => {
+          {rack.cards.map(card => {
             return (
-              rack && (
-                <div
-                  key={card.mi}
-                  className="my-3"
-                >
-                  <Button onClick={() => editCardMiAtom.set(card.mi)}>
-                    <StoragesRackStatusFace
-                      rackStatus={rack.statuses[card.status ?? 0]}
-                      customTitile={card.title}
-                    />
-                  </Button>
-                </div>
-              )
+              <div
+                key={card.mi}
+                className="my-3"
+              >
+                <Button onClick={() => editCardMiAtom.set(card.mi)}>
+                  <StoragesRackStatusFace
+                    rackStatus={rack.statuses[card.status ?? 0]}
+                    customTitile={card.title}
+                  />
+                </Button>
+              </div>
             );
           })}
 
           <Modal openAtom={editCardMiAtom}>
             {cardMi => {
-              const card = rack?.cards.find(it => it.mi === cardMi);
+              const card = rack.cards.find(it => it.mi === cardMi);
 
               return (
                 rack &&
@@ -76,15 +78,25 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
             )}
           </Modal>
 
+          <Modal openAtom={isOpenImportFromExcelModal}>
+            <StoragesRackImportFromExcelModalInner rack={rack} />
+          </Modal>
+
           {isMoreOpen && (
             <BottomPopup onClose={setIsMoreOpen}>
-              {!rack?.cards.some(rack => !rack.title) && (
+              {!rack.cards.some(rack => !rack.title) && (
                 <BottomPopupItem
                   icon="PlusSign"
                   onClick={() => storagesTsjrpcClient.createRackCard({ rackw })}
                   title="Создать карточку"
                 />
               )}
+
+              <BottomPopupItem
+                icon="FileImport"
+                onClick={isOpenImportFromExcelModal.do.toggle}
+                title="Импорт из Excel"
+              />
             </BottomPopup>
           )}
         </>

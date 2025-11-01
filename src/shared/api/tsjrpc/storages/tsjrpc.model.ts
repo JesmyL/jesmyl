@@ -1,4 +1,4 @@
-import { StoragesRack, StoragesRackCardMi, StoragesRackWid } from 'shared/model/storages/list.model';
+import { StoragesRack, StoragesRackCard, StoragesRackCardMi, StoragesRackWid } from 'shared/model/storages/list.model';
 import { StoragesCell, StoragesColumnType, StoragesNestedCellSelectors } from 'shared/model/storages/rack.model';
 
 export type StoragesTsjrpcModel = {
@@ -7,6 +7,7 @@ export type StoragesTsjrpcModel = {
   createRack: (args: { title: string }) => { rack: StoragesRack; lastModfiedAt: number };
 
   createRackCard: (args: RackSelector) => void;
+  addManyCards: (args: RackSelector & { cards: StoragesRackCard[] }) => void;
   addRackValue: (args: RackSelector & { title: string }) => void;
   setRackCardStatus: (args: StoragesTsjrpcRackStatusSelector & StoragesTsjrpcRackCardSelector) => void;
   editRackCardTitle: (args: StoragesTsjrpcRackCardSelector & { title: string }) => void;
@@ -38,7 +39,7 @@ export type StoragesTsjrpcModel = {
   toggleRackStatusNexti: (args: StoragesTsjrpcRackStatusSelector & { nextStatusi: number }) => void;
   editRackStatusTitle: (args: StoragesTsjrpcRackStatusSelector & { title: string }) => void;
 
-  setPrice: (args: StoragesTsjrpcCellSelector & { amount: number }) => void;
+  setNumber: (args: StoragesTsjrpcCellSelector & { amount: number }) => void;
 };
 
 type RackSelector = StoragesTsjrpcRackSelector;

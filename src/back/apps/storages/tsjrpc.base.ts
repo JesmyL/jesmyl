@@ -33,7 +33,12 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
       scope: 'Storages',
       methods: {
         requestFreshes: async ({ lastModfiedAt }, { client, auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'storages', 'LIST')) throw '';
+          try {
+            if (throwIfNoUserScopeAccessRight(auth?.login, 'storages', 'LIST')) throw '';
+          } catch (_e) {
+            return;
+          }
+
           const login = auth.login;
           const { items, maxMod } = storagesDirStore.getFreshItems(lastModfiedAt);
 
@@ -68,6 +73,34 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
             mi: smylib.takeNextMi(rack.cards, StoragesRackCardMi.min),
             title: 'Новая карточка',
           });
+        }),
+
+        addManyCards: updateRack((rack, { cards }) => {
+          let maxMi = smylib.takeNextMi(rack.cards, StoragesRackCardMi.min);
+          const prevTitlesSet = new Set(rack.cards.map(card => card.title));
+          let unsavedCards = 0;
+
+          cards.forEach(card => {
+            if (!card.title || prevTitlesSet.has(card.title)) {
+              unsavedCards++;
+              return;
+            }
+
+            prevTitlesSet.add(card.title);
+            card.mi = maxMi++;
+            rack.cards.push(card);
+          });
+
+          if (unsavedCards) {
+            if (unsavedCards === cards.length) throw 'Не добавлено ни одной карточки';
+
+            throw smylib.declension(
+              unsavedCards,
+              `Не добавлена ${unsavedCards} карточка`,
+              `Не добавлено ${unsavedCards} карточки`,
+              `Не добавлено ${unsavedCards} карточек`,
+            );
+          }
         }),
 
         createRackStatus: updateRack((rack, { title }) => {
@@ -151,11 +184,16 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
 
           if (props.sortRow != null) {
             const by = props.sortRow.prop as never;
-            cell.row.sort(
-              props.sortRow
-                ? (b, a) => +a[by] - +b[by] || (`${a}` > `${b}` ? 1 : `${a}` < `${b}` ? -1 : 0)
-                : (a, b) => +a[by] - +b[by] || (`${a}` > `${b}` ? 1 : `${a}` < `${b}` ? -1 : 0),
-            );
+            const sort = (a: object, b: object) =>
+              a[by] == null
+                ? b[by] == null
+                  ? 0
+                  : -1
+                : b[by] == null
+                  ? 1
+                  : +a[by] - +b[by] || (`${a}` > `${b}` ? 1 : `${a}` < `${b}` ? -1 : 0);
+
+            cell.row.sort(props.sortRow.asc ? (b, a) => sort(a, b) : (a, b) => sort(b, a));
           }
         }),
 
@@ -184,13 +222,13 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           rack.values = Array.from(valuesSet).sort();
         }),
 
-        setPrice: updateCellOrNestedCell((rowHolder, index, props, colType) => {
-          if (colType != StoragesColumnType.Price) return;
+        setNumber: updateCellOrNestedCell((rowHolder, index, props, colType) => {
+          if (colType != StoragesColumnType.Number) return;
           rowHolder.row ??= [];
-          const cell = (rowHolder.row[index] ??= { t: colType, val: { am: 0 } });
-          if (cell?.t !== StoragesColumnType.Price) return;
+          const cell = (rowHolder.row[index] ??= { t: colType, val: 0 });
+          if (cell?.t !== StoragesColumnType.Number) return;
 
-          cell.val.am = props.amount;
+          cell.val = props.amount;
         }),
       },
     });
