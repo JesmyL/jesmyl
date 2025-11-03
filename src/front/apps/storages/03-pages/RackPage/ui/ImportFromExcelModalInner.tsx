@@ -6,8 +6,8 @@ import { EllipsisText } from '#shared/ui/EllipsisText';
 import { ModalBody, ModalFooter, ModalHeader, useConfirm } from '#shared/ui/modal';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { useState } from 'react';
+import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
 import { StoragesRack, StoragesRackCard, StoragesRackCardMi } from 'shared/model/storages/list.model';
-import { storagesCellIncorrectValueNode } from 'shared/utils/storages/cellIncorrectValueNode';
 
 type AssociationKey = keyof StoragesRackCard | number;
 
@@ -72,7 +72,7 @@ export const StoragesRackImportFromExcelModalInner = (props: { rack: StoragesRac
                     valueList
                       .map((value, valuei) => {
                         if (value[associatedField] == null) return;
-                        const error = storagesCellIncorrectValueNode[col.t].checkType(value[associatedField]);
+                        const error = storagesColumnConfigDict[col.t].checkType(value[associatedField]);
 
                         return (
                           error && (
@@ -116,7 +116,7 @@ export const StoragesRackImportFromExcelModalInner = (props: { rack: StoragesRac
                   const asCol = associations[coli];
                   if (asCol == null) continue;
 
-                  const cell = storagesCellIncorrectValueNode[props.rack.cols[coli].t].mapStringToCell(dict[asCol]);
+                  const cell = storagesColumnConfigDict[props.rack.cols[coli].t].mapStringToCell(dict[asCol]);
                   if (cell == null) continue;
                   card.row[coli] = cell;
                 }

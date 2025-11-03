@@ -7,7 +7,7 @@ import {
   StoragesTsjrpcRackSelector,
   StoragesTsjrpcRackStatusSelector,
 } from 'shared/api/tsjrpc/storages/tsjrpc.model';
-import { storagesCellDefaultValueDict } from 'shared/const/storages/cellDefaultValueDict';
+import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
 import {
   StoragesRack,
   StoragesRackCard,
@@ -23,7 +23,6 @@ import {
   StoragesRackColumn,
 } from 'shared/model/storages/rack.model';
 import { SMyLib, smylib } from 'shared/utils';
-import { storagesCheckCellValueOnType } from 'shared/utils/storages/checkCellValueOnType';
 import { storagesDirStore } from './file-stores';
 import { storagesStoresSharesServerTsjrpcMethods } from './tsjrpc.shares';
 
@@ -201,7 +200,7 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
         }),
 
         editCellValue: updateCell((cell, { value }) => {
-          cell.val = storagesCheckCellValueOnType(cell.t, value);
+          cell.val = storagesColumnConfigDict[cell.t].retCorrectTypeValue(value);
         }),
 
         toggleListCellValue: updateCellOrNestedCell((rowHolder, index, { title }, colType) => {
@@ -354,7 +353,7 @@ function updateCell<Props extends StoragesTsjrpcCellSelector, RetValue, Ret exte
     if (column == null) throw 'Error 8156124357234';
 
     card.row ??= [];
-    const cell = (card.row[props.coli] ??= storagesCellDefaultValueDict()[column.t]);
+    const cell = (card.row[props.coli] ??= storagesColumnConfigDict[column.t].def());
 
     if (column.t !== cell.t) throw 'Incorrect card type 162535678729';
 

@@ -2,6 +2,7 @@ import { Button } from '#shared/components/ui/button';
 import { MyLib } from '#shared/lib/my-lib';
 import { Modal, ModalBody, ModalHeader, usePrompt } from '#shared/ui/modal';
 import { Atom } from 'atomaric';
+import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
 
 export const StoragesAddColumn = ({
@@ -15,28 +16,19 @@ export const StoragesAddColumn = ({
 }) => {
   const prompt = usePrompt();
 
-  const typeDict: Record<StoragesColumnType, { typeTitle: string }> = {
-    [StoragesColumnType.Date]: { typeTitle: 'Дата' },
-    [StoragesColumnType.Dates]: { typeTitle: 'Даты' },
-    [StoragesColumnType.List]: { typeTitle: 'Список' },
-    [StoragesColumnType.Number]: { typeTitle: 'Цифра' },
-    [StoragesColumnType.String]: { typeTitle: 'Строка' },
-    [StoragesColumnType.Link]: { typeTitle: 'Ссылка' },
-  };
-
   return (
     <>
       <Button
         icon="PlusSign"
         onClick={isOpenModalAtom.do.toggle}
       >
-        Создать новое поле
+        Создать новое специальное поле
       </Button>
 
       <Modal openAtom={isOpenModalAtom}>
-        <ModalHeader>Выберите тип нового поля</ModalHeader>
+        <ModalHeader>Выберите тип нового специального поля</ModalHeader>
         <ModalBody className="flex flex-col gap-3 *:w-full">
-          {MyLib.entries(typeDict).map(([type, { typeTitle }]) => {
+          {MyLib.entries(storagesColumnConfigDict).map(([type, { typeTitle }]) => {
             if (excludeColumnTypes?.has(+type)) return;
 
             return (

@@ -13,8 +13,8 @@ export const enum StoragesNestedCellMi {
 
 export type StoragesCell<Type extends StoragesColumnType> = StoragesCellDict[Type];
 
-export type StoragesRackColumn = {
-  t: StoragesColumnType;
+export type StoragesRackColumn<Type extends StoragesColumnType = StoragesColumnType> = {
+  t: Type;
   title: string;
   cols?: StoragesRackColumn[];
 };
