@@ -41,6 +41,7 @@ export const StoragesRackEditPage = ({ rackw }: { rackw: StoragesRackWid }) => {
 
             <Button
               icon="Copy02"
+              className="my-3"
               onClick={isOpenCopyStatusesModalAtom.do.toggle}
             >
               Копировать статусы из другого стеллажа

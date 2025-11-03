@@ -4,7 +4,7 @@ import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.metho
 import { useState } from 'react';
 import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
 import { StoragesRack } from 'shared/model/storages/list.model';
-import { itNIt } from 'shared/utils';
+import { itNIt, itNNil } from 'shared/utils';
 import { storagesColumnEditComponents } from '../const/columnComponents';
 import { StoragesColumnEditStyleConfigurer } from './StyleConfigurer';
 
@@ -33,21 +33,34 @@ export const TheStoragesColumnEditColumn = (props: Props) => {
 
       <div>
         Значения:
-        {props.rack.cards.map(card => {
-          const value = storagesColumnConfigDict[column.t].makeStringValue(card.row?.[props.coli] as never);
-
-          return (
-            value && (
-              <span
-                key={card.mi}
-                className="bg-x2 m-0.5 px-1 rounded-sm"
-              >
-                {value}
-              </span>
-            )
-          );
-        })}
+        {Array.from(
+          new Set(
+            props.rack.cards.map(card =>
+              storagesColumnConfigDict[column.t].makeStringValue(card.row?.[props.coli] as never),
+            ),
+          ),
+        )
+          .filter(itNNil)
+          .slice(0, 3)
+          .map(value => {
+            return (
+              value && (
+                <span
+                  key={value}
+                  className="bg-x2 m-0.5 px-1 rounded-sm"
+                >
+                  {value}
+                </span>
+              )
+            );
+          })}
       </div>
+
+      <Component
+        column={column as never}
+        rack={props.rack}
+        coli={props.coli}
+      />
 
       <div className="flex gap-2">
         Стили
@@ -62,12 +75,6 @@ export const TheStoragesColumnEditColumn = (props: Props) => {
           coli={props.coli}
         />
       )}
-
-      <Component
-        column={column as never}
-        rack={props.rack}
-        coli={props.coli}
-      />
     </div>
   );
 };

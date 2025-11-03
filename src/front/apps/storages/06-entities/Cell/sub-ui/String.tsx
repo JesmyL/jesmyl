@@ -10,9 +10,9 @@ export const StoragesCellOfTypeString = (props: StoragesCellTypeProps<StoragesCo
   if (!isEdit)
     return (
       !props.cell?.val || (
-        <div className="flex gap-2">
-          <span>{props.column.title}</span>
-          <span className="font-bold">{props.cell?.val}</span>
+        <div>
+          <span> {props.column.title} </span>
+          <span className="font-bold"> {props.cell?.val} </span>
         </div>
       )
     );

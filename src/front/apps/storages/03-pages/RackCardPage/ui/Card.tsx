@@ -47,7 +47,7 @@ const Card = ({ card, rack }: { rack: StoragesRack; card: StoragesRackCard }) =>
         </div>
       }
       content={
-        <div className="m-3 *:my-4 *:block">
+        <div className="*:my-4 *:block">
           {isEdit && (
             <>
               <TextInput

@@ -14,11 +14,11 @@ const classNameMapsDict: Record<StoragesColumnUiListKey, string> = {
   [StoragesColumnUiListKey.FontSizeBig]: 'text-xl **:text-xl',
   [StoragesColumnUiListKey.FontSizeLarge]: 'text-3xl **:text-3xl',
 
-  [StoragesColumnUiListKey.MarginTopSmall]: 'mt-2!',
+  [StoragesColumnUiListKey.MarginTopSmall]: 'mt-0!',
   [StoragesColumnUiListKey.MarginTopBig]: 'mt-5!',
   [StoragesColumnUiListKey.MarginTopLarge]: 'mt-20!',
 
-  [StoragesColumnUiListKey.MarginBottomSmall]: 'mb-2!',
+  [StoragesColumnUiListKey.MarginBottomSmall]: 'mb-0!',
   [StoragesColumnUiListKey.MarginBottomBig]: 'mb-5!',
   [StoragesColumnUiListKey.MarginBottomLarge]: 'mb-20!',
 };

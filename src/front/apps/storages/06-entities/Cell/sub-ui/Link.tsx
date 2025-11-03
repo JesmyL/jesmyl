@@ -10,9 +10,14 @@ export const StoragesCellOfTypeLink = (props: StoragesCellTypeProps<StoragesColu
   if (!isEdit)
     return (
       !props.cell?.val || (
-        <div className="flex gap-2">
-          <span>{props.column.title}</span>
-          <span className="font-bold">{props.cell?.val}</span>
+        <div>
+          <span>{props.column.title} </span>
+          <a
+            href={props.cell.val}
+            className="font-bold italic text-x7/80! underline!"
+          >
+            {` ${props.cell.val} `}
+          </a>
         </div>
       )
     );
