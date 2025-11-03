@@ -6,7 +6,7 @@ import { itNNil, smylib } from 'shared/utils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { makeCmComHttpToNumLeadAudioLinks, makeCmComNumLeadToHttpAudioLinks } from './complect/com-http-links';
 import { mapCmExportableToImportableCom, mapCmImportableToExportableCom } from './complect/tools';
-import { cmConstantsConfigFileStore, comsFileStore } from './file-stores';
+import { cmConstantsConfigFileStore, comsDirStore } from './file-stores';
 import { cmShareServerTsjrpcMethods } from './tsjrpc.shares';
 
 export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBaseServer<CmEditComTsjrpcModel> {
@@ -169,8 +169,10 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
             m: Date.now(),
             t: newCom.t?.map(text => CmComUtils.transformToClearText(text)),
           };
-          comsFileStore.getValue().push(mapCmExportableToImportableCom(com));
-          comsFileStore.saveValue();
+
+          comsDirStore.createItem(() => mapCmExportableToImportableCom(com), com.w);
+          comsDirStore.saveItem(com.w);
+
           cmShareServerTsjrpcMethods.editedCom({ com }, null);
 
           return { value: com, description: `Добавлена новая песня ${getCmComNameInBrackets(com)}` };
@@ -196,8 +198,8 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'C')) throw '';
 
           return {
-            value: comsFileStore
-              .getValue()
+            value: comsDirStore
+              .getAllItems()
               .filter(com => com.isRemoved)
               .map(mapCmImportableToExportableCom),
             description: '',
@@ -209,13 +211,10 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'D')) throw '';
 
-          const coms = comsFileStore.getValueWithAutoSave();
-          const index = coms.findIndex(com => com.w === comw);
-          if (index < 0) return { value: '', description: null };
-          const name = coms[index].n;
-          coms.splice(index, 1);
+          const com = comsDirStore.getItem(comw);
+          comsDirStore.deleteItem(comw);
 
-          return { value: name, description: `Песня ${name} уничтожена` };
+          return { value: com.n, description: `Песня ${com.n} НЕ уничтожена` };
         },
       },
     });
@@ -224,7 +223,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
 
 export const getCmComNameInBrackets = (comScalar: CmComWid | IServerSideCom | IExportableCom) => {
   if (smylib.isNum(comScalar)) {
-    const com = comsFileStore.getValue().find(com => com.w === comScalar);
+    const com = comsDirStore.getItem(comScalar);
     if (com == null) return '[Неизвестная песня]';
     return `"${com.n}"`;
   }
@@ -238,14 +237,14 @@ export function modifyInvocableCom<Props extends { comw: CmComWid }>(
   return async (props: Props, tool: ServerTSJRPCTool) => {
     if (throwIfNoUserScopeAccessRight(tool.auth?.login, 'cm', 'COM', 'U')) throw '';
 
-    const com = comsFileStore.getValue().find(com => com.w === props.comw);
+    const com = comsDirStore.getItem(props.comw);
 
     if (com === undefined) throw new Error(`Песня не найдена`);
 
     const description = mapper(com, props, tool);
     com.m = Date.now();
 
-    comsFileStore.saveValue();
+    comsDirStore.saveItem(props.comw);
     const expCom = mapCmImportableToExportableCom(com);
 
     cmShareServerTsjrpcMethods.editedCom({ com: expCom }, null);

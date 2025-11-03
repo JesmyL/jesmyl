@@ -17,7 +17,7 @@ import {
   cmComAudioMarkPacksFileStore,
   cmConstantsConfigFileStore,
   comCommentBlocksFileStore,
-  comsFileStore,
+  comsDirStore,
   comwVisitsFileStore,
   eventPacksFileStore,
 } from './file-stores';
@@ -33,13 +33,20 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
       scope: 'Cm',
       methods: {
         requestFreshes: async ({ lastModfiedAt }, { client, auth, visitInfo }) => {
-          sendBasicModifiedableList(lastModfiedAt, comsFileStore, comsFileStore.getValue, (coms, modifiedAt) => {
-            const existComws = comsFileStore.getValue().filter(filterNotRemoved).map(extractItemw);
+          const freshComs = comsDirStore.getFreshItems(lastModfiedAt);
+
+          if (freshComs.items.length) {
+            const existComws = freshComs.items.filter(filterNotRemoved).map(extractItemw);
+
             cmShareServerTsjrpcMethods.refreshComList(
-              { coms: coms.map(mapCmImportableToExportableCom), modifiedAt, existComws },
+              {
+                coms: freshComs.items.map(mapCmImportableToExportableCom),
+                modifiedAt: freshComs.maxMod,
+                existComws,
+              },
               client,
             );
-          });
+          }
 
           sendBasicModifiedableList(lastModfiedAt, catsFileStore, catsFileStore.getValue, (cats, modifiedAt) => {
             const existCatws = catsFileStore.getValue().filter(filterNotRemoved).map(extractItemw);

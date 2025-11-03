@@ -1,3 +1,4 @@
+import { DirStore } from 'back/complect/DirStore';
 import { FileStore } from 'back/complect/FileStore';
 import {
   ChordPack,
@@ -19,7 +20,16 @@ import {
 import { smylib } from 'shared/utils';
 import { cmConstantsDefaultConfig } from 'shared/values/cm/cmConstantsDefaultConfig';
 
-export const comsFileStore = new FileStore<IServerSideCom[]>('/apps/cm/coms.json', []);
+export const comsDirStore = new DirStore<IServerSideCom, CmComWid>({
+  dirPath: '/apps/cm/coms/',
+  makeNewItem: () => ({
+    m: Date.now(),
+    n: '',
+    w: +`${Date.now() + Math.random()}`,
+  }),
+  cacheTime: 30 * 60 * 60 * 1000,
+});
+
 export const catsFileStore = new FileStore<IExportableCat[]>('/apps/cm/cats.json', []);
 
 export const eventPacksFileStore = new FileStore(

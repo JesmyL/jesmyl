@@ -15,6 +15,7 @@ import { exec } from 'child_process';
     ['apps/index', 'schedules'],
     ['apps/index', 'rights'],
     ['apps/cm'],
+    ['apps/cm/coms'],
     ['apps/q'],
     ['apps/storages/list'],
   ];

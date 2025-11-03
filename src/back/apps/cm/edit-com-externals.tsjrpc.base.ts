@@ -8,7 +8,7 @@ import { schedulesFileStore } from '../index/schedules/file-stores';
 import { makeCmComNumLeadLinkFromHttp } from './complect/com-http-links';
 import {
   cmComAudioMarkPacksFileStore,
-  comsFileStore,
+  comsDirStore,
   eventPackHistoryFileStore,
   eventPacksFileStore,
 } from './file-stores';
@@ -45,13 +45,13 @@ export const cmEditComExternalsTsjrpcBaseServer =
             dayHistory.unshift({ s: list, w: m, e: eventMi, fio });
 
             cmShareServerTsjrpcMethods.refreshScheduleEventComPacks({ packs: [packs[schw]], modifiedAt: m }, null);
+            const coms = comsDirStore.getAllItems().filter(com => !com.isRemoved);
 
             return {
               description:
                 `Обновлён список песен в расписании ` +
                 `"${schedulesFileStore.getValue().find(sch => sch.w === schw)?.title ?? '??'}":\n\n${list
                   .map(comw => {
-                    const coms = comsFileStore.getValue().filter(com => !com.isRemoved);
                     const comi = coms.findIndex(com => com.w === comw);
                     if (comi < 0) return `<s>Нет песни</s>`;
                     return `${CmComUtils.takeCorrectComNumber(comi + 1)}. ${coms[comi].n}`;

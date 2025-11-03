@@ -8,6 +8,7 @@ deployTheCode(
     targetDir: 'jesmyl.ru',
     loadToDirFiles: {
       'apps/cm': ['./src/back/apps/cm/*.json'],
+      'apps/cm/coms': ['./src/back/apps/cm/coms/*.json'],
       'apps/bible': ['./src/back/apps/bible/*.json'],
       // 'apps/bible': ['./src/bibles/*.json'],
       'apps/index': ['./src/back/apps/index/*.json'],
