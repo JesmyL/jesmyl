@@ -1,0 +1,24 @@
+{
+  "c": ["D\nHm\nG\nG\nA A7", "G A\nD H7\nEm\nA .D-D7..D"],
+  "n": "Я буду на небе",
+  "o": [
+    { "c": 0, "p": [[3], [2], [2], [2], [1, -2]], "m": 1, "s": "one", "t": 0, "w": 0 },
+    { "c": 1, "p": [[2, 10], [1, 9], [1], [2, 9]], "m": 1, "s": "two", "t": 1, "w": 1, "r": 2 },
+    { "c": 0, "p": [[2], [2], [1], [1], [3, -2]], "s": "one", "t": 2, "w": 2 },
+    { "c": 1, "p": [[2, 11], [1, 9], [3], [2, 11]], "s": "two", "t": 3, "w": 3, "r": 2 },
+    { "c": 0, "p": [[3], [2], [1], [3], [1, -2]], "s": "one", "t": 4, "w": 4 },
+    { "w": 6, "a": 1 }
+  ],
+  "t": [
+    "Я буду на небе\nПеть песни победы!\nТак хочется верить,\nЧто райские двери\nОткроются мне!",
+    "Как хочется быть нам вместе,\nХвалебные петь там песни,\nЗабыть насовсем\nО старой своей земле!",
+    "Как хочется в небо,\nВ лазурную даль!\nПрозрачное небо\nМеня приглашает\nВ заоблачный край.",
+    "Мы верим, что есть на свете, -\nПоверим, как верят дети,\nЧто в небе чертог\nПриготовил для нас Сам Бог.",
+    "Я новое небо\nИ новую землю\nХотел бы увидеть\nИ в город святой\nВратами войти.",
+    "Как хочется быть нам вместе,\nХвалебные петь там песни,\nЗабыть насовсем \nО старой своей земле!"
+  ],
+  "w": 1520009148000,
+  "a": "https://ps.vkuseraudio.net/audio/ee/jwmUl-JHgq_DrSrWT5hgmKVetLj9zzFN9MbKBw/32XzhbNTFHWUxpNlc.mp3?extra=H8WjSv9kmTI3fzqHQNZeICFwbprwBVBJmSVJ37ZjFNQlXYizqWdv_P-jlM-XG97cm6sBc0rvl5CeR2z1SvVSE-hfH4pyHO5lZm9kLPYJCcbYu8iMBmwCxyEVLWBwuTI2VYLQg-lRzXgN60J2qz_fd6Wpqi8i\n",
+  "m": 1759573010367,
+  "al": "3~jwmUl-JHgq_DrSrWT5hgmKVetLj9zzFN9MbKBw/32XzhbNTFHWUxpNlc.mp3?extra=H8WjSv9kmTI3fzqHQNZeICFwbprwBVBJmSVJ37ZjFNQlXYizqWdv_P-jlM-XG97cm6sBc0rvl5CeR2z1SvVSE-hfH4pyHO5lZm9kLPYJCcbYu8iMBmwCxyEVLWBwuTI2VYLQg-lRzXgN60J2qz_fd6Wpqi8i"
+}

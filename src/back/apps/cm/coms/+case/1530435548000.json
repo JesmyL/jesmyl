@@ -1,0 +1,70 @@
+{
+  "c": ["Em Am\nH7 Em\nC Am\nH7 Em", "E Am\nD G\nC Am\nH7 .Em ..Em"],
+  "n": "Ты не один идёшь по жизни",
+  "o": [
+    { "w": 0, "c": 0, "s": "enter" },
+    {
+      "c": 0,
+      "p": [
+        [0, 8],
+        [1, 8],
+        [0, 9],
+        [10, 0]
+      ],
+      "m": 1,
+      "s": "one",
+      "t": 0,
+      "w": 1
+    },
+    {
+      "c": 1,
+      "p": [
+        [0, 8],
+        [0, 8],
+        [0, 8],
+        [2, 9, 12]
+      ],
+      "m": 1,
+      "s": "two",
+      "t": 1,
+      "w": 2,
+      "r": 2
+    },
+    {
+      "c": 0,
+      "p": [
+        [0, 7],
+        [8, 0],
+        [9, 0],
+        [7, 0]
+      ],
+      "s": "one",
+      "t": 2,
+      "w": 3
+    },
+    { "a": 2, "w": 4 },
+    {
+      "c": 0,
+      "p": [
+        [0, 8],
+        [1, 9],
+        [8, 1],
+        [1, 8]
+      ],
+      "s": " one",
+      "t": 3,
+      "w": 5
+    },
+    { "a": 2, "w": 6 }
+  ],
+  "t": [
+    "Ты не один идёшь по жизни.\nВ мире людей никто не лишний,\nВсе мы в одной семье у Бога,\nВсе мы с тобой, и нас так много.",
+    "Ты не один, всегда Бог рядом!\nТы не один, грустить не надо!\nТы не один, пойдём со мною\nВ страну чудес, в страну святую!",
+    "Если порою одиноко, \nТучи скорбей, и их так много, \nЗнай, что всегда за облаками \nСолнце любви горит над нами.",
+    "Божья любовь нас согревает, \nВ трудные дни Бог утешает. \nВ Его семье никто не лишний! \nС Богом иди всегда по жизни."
+  ],
+  "w": 1530435548000,
+  "a": "https://data.ipleer.com/listen/180100001/THYrQkNiVCtWR3JKbUdnVGdPV1VlNEVVeHE3NnNuY3FuR2tJWHE2bFpLbndXamd4aVQ3bXgwYXlibGdLK1dNZjI5T0MxMjRIRGJLL2dTRzZMMFh3MDFRSlZ3WVdPTFA2bDE3UDJmVlRrTnllWWdWdFlhL0J0QXNTSXE5UXV1Q3c/Hristianskaya_molodezh_-_Ty_ne_odin_idesh_po_zhizni._(iPleer.com).mp3\n",
+  "m": 1759573010368,
+  "al": "https://data.ipleer.com/listen/180100001/THYrQkNiVCtWR3JKbUdnVGdPV1VlNEVVeHE3NnNuY3FuR2tJWHE2bFpLbndXamd4aVQ3bXgwYXlibGdLK1dNZjI5T0MxMjRIRGJLL2dTRzZMMFh3MDFRSlZ3WVdPTFA2bDE3UDJmVlRrTnllWWdWdFlhL0J0QXNTSXE5UXV1Q3c/Hristianskaya_molodezh_-_Ty_ne_odin_idesh_po_zhizni._(iPleer.com).mp3"
+}
