@@ -128,6 +128,10 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           if (!rack.colsOrd.some(i => i !== expectedi++)) delete rack.colsOrd;
         }),
 
+        editColumnFields: updateRack((rack, props) => {
+          rack.cols[props.coli] = { ...rack.cols[props.coli], ...props.data };
+        }),
+
         editRackStatusIcon: updateRackStatus((rackStatus, { icon }) => {
           rackStatus.icon = icon;
         }),

@@ -58,6 +58,7 @@ export type StoragesTsjrpcModel = {
 
   renameColumn: (args: StoragesTsjrpcRackSelector & { title: string; coli: number }) => void;
   moveColumn: (args: StoragesTsjrpcRackSelector & { coli: number; newi: number | nil }) => void;
+  editColumnFields: (args: StoragesTsjrpcRackSelector & { coli: number; data: object }) => void;
 };
 
 type RackSelector = StoragesTsjrpcRackSelector;

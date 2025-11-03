@@ -11,7 +11,7 @@ export type StoragesCellComponents = {
 };
 
 export type StoragesCellTypeProps<Type extends StoragesColumnType> = {
-  column: StoragesRackColumn;
+  column: StoragesRackColumn<Type>;
   cell: StoragesCell<Type> | nil;
   card: StoragesRackCard;
   rack: StoragesRack;

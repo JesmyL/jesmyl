@@ -13,7 +13,7 @@ export const StoragesCellOfTypeNumber = (props: StoragesCellTypeProps<StoragesCo
         <div className="flex gap-2">
           <span>{props.column.title}</span>
           <span className="font-bold">{props.cell?.val}</span>
-          <span>₽</span>
+          <span>{props.column.mt}</span>
         </div>
       )
     );

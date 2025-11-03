@@ -21,12 +21,25 @@ export type StoragesRackColumn<Type extends StoragesColumnType = StoragesColumnT
   cols?: StoragesRackColumn[];
   uil?: StoragesColumnUiListKey[];
   uid?: StoragesColumnUiDict;
-};
+} & ColumnCustoms[Type];
 
 export type StoragesNestedCellSelectors = {
   nestedCellMi?: StoragesNestedCellMi;
   nestedColi?: number;
   coli?: number;
+};
+
+type ColumnCustoms = {
+  [StoragesColumnType.Date]: object;
+  [StoragesColumnType.Dates]: object;
+  [StoragesColumnType.Link]: object;
+  [StoragesColumnType.List]: object;
+  [StoragesColumnType.String]: object;
+
+  [StoragesColumnType.Number]: {
+    /** metric */
+    mt: string;
+  };
 };
 
 type StoragesCellDict = TypeSatisfiesDict<{
