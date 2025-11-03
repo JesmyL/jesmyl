@@ -35,6 +35,7 @@ export const StoragesRackSearchModalInner = ({
             className="w-full ring-3 ring-x1 px-1"
             value={term}
             onInput={event => termAtom.set(event.currentTarget.value)}
+            onFocus={event => event.currentTarget.select()}
           />
           <Command.List className="w-full max-h-[calc(100cqh-300px)]">
             {rack.cards.map(card => {
@@ -45,14 +46,13 @@ export const StoragesRackSearchModalInner = ({
                   className="bg-x2 data-[selected=true]:bg-x2"
                   onSelect={() => onCardClick(card)}
                 >
-                  <Button className="w-full flex justify-start">
-                    <StoragesRackStatusFace
-                      rack={rack}
-                      card={card}
-                      statusi={card.status}
-                      customTitile={card.title}
-                    />
-                  </Button>
+                  <StoragesRackStatusFace
+                    rack={rack}
+                    card={card}
+                    statusi={card.status}
+                    customTitile
+                  />
+                  <Button className="w-full flex justify-start w-[80cqw] ellipsis">{card.title}</Button>
                 </Command.Item>
               );
             })}

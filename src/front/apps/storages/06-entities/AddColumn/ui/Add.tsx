@@ -20,6 +20,8 @@ export const StoragesAddColumn = ({
     [StoragesColumnType.Dates]: { typeTitle: 'Даты' },
     [StoragesColumnType.List]: { typeTitle: 'Список' },
     [StoragesColumnType.Number]: { typeTitle: 'Цифра' },
+    [StoragesColumnType.String]: { typeTitle: 'Строка' },
+    [StoragesColumnType.Link]: { typeTitle: 'Ссылка' },
   };
 
   return (

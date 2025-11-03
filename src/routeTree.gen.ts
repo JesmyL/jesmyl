@@ -46,7 +46,7 @@ import { Route as CmEditEventsImport } from './front/routes/cm/edit/events'
 import { Route as CmEditEEImport } from './front/routes/cm/edit/e-e'
 import { Route as CmEditConstantsImport } from './front/routes/cm/edit/constants'
 import { Route as CmEditChordImport } from './front/routes/cm/edit/chord'
-import { Route as StoragesIRackRouteImport } from './front/routes/storages/i/$rack/route'
+import { Route as StoragesIRackwIndexImport } from './front/routes/storages/i/$rackw/index'
 import { Route as CmEditComsIndexImport } from './front/routes/cm/edit/coms/index'
 import { Route as CmEditCatsIndexImport } from './front/routes/cm/edit/cats/index'
 import { Route as otherAppNameSettingsIndexImport } from './front/routes/!other.$appName/settings/index'
@@ -57,6 +57,8 @@ import { Route as CmLiCatCatwImport } from './front/routes/cm/li/cat.$catw'
 import { Route as CmEditCatsCatwImport } from './front/routes/cm/edit/cats/$catw'
 import { Route as otherAppNameSettingsRightsImport } from './front/routes/!other.$appName/settings/rights'
 import { Route as otherAppNameSettingsConsoleImport } from './front/routes/!other.$appName/settings/console'
+import { Route as StoragesIRackwEditIndexImport } from './front/routes/storages/i/$rackw/edit/index'
+import { Route as StoragesIRackwCardMiIndexImport } from './front/routes/storages/i/$rackw/$cardMi/index'
 import { Route as CmEditComsComwIndexImport } from './front/routes/cm/edit/coms/$comw/index'
 import { Route as otherAppNameActionsFilesIndexImport } from './front/routes/!other.$appName/actions/files/index'
 import { Route as CmEditComsComwTabRouteImport } from './front/routes/cm/edit/coms/$comw/$tab/route'
@@ -291,9 +293,9 @@ const CmEditChordRoute = CmEditChordImport.update({
   getParentRoute: () => CmEditRouteLazyRoute,
 } as any)
 
-const StoragesIRackRouteRoute = StoragesIRackRouteImport.update({
-  id: '/i/$rack',
-  path: '/i/$rack',
+const StoragesIRackwIndexRoute = StoragesIRackwIndexImport.update({
+  id: '/i/$rackw/',
+  path: '/i/$rackw/',
   getParentRoute: () => StoragesRouteRoute,
 } as any)
 
@@ -359,6 +361,18 @@ const otherAppNameSettingsConsoleRoute =
     path: '/settings/console',
     getParentRoute: () => otherAppNameRouteRoute,
   } as any)
+
+const StoragesIRackwEditIndexRoute = StoragesIRackwEditIndexImport.update({
+  id: '/i/$rackw/edit/',
+  path: '/i/$rackw/edit/',
+  getParentRoute: () => StoragesRouteRoute,
+} as any)
+
+const StoragesIRackwCardMiIndexRoute = StoragesIRackwCardMiIndexImport.update({
+  id: '/i/$rackw/$cardMi/',
+  path: '/i/$rackw/$cardMi/',
+  getParentRoute: () => StoragesRouteRoute,
+} as any)
 
 const CmEditComsComwIndexRoute = CmEditComsComwIndexImport.update({
   id: '/coms/$comw/',
@@ -501,13 +515,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/schedule-day'
       preLoaderRoute: typeof ScheduleDayIndexLazyImport
       parentRoute: typeof rootRoute
-    }
-    '/storages/i/$rack': {
-      id: '/storages/i/$rack'
-      path: '/i/$rack'
-      fullPath: '/storages/i/$rack'
-      preLoaderRoute: typeof StoragesIRackRouteImport
-      parentRoute: typeof StoragesRouteImport
     }
     '/cm/edit/chord': {
       id: '/cm/edit/chord'
@@ -712,6 +719,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CmEditComsIndexImport
       parentRoute: typeof CmEditRouteLazyImport
     }
+    '/storages/i/$rackw/': {
+      id: '/storages/i/$rackw/'
+      path: '/i/$rackw'
+      fullPath: '/storages/i/$rackw'
+      preLoaderRoute: typeof StoragesIRackwIndexImport
+      parentRoute: typeof StoragesRouteImport
+    }
     '/cm/edit/coms/$comw/$tab': {
       id: '/cm/edit/coms/$comw/$tab'
       path: '/coms/$comw/$tab'
@@ -732,6 +746,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/cm/edit/coms/$comw'
       preLoaderRoute: typeof CmEditComsComwIndexImport
       parentRoute: typeof CmEditRouteLazyImport
+    }
+    '/storages/i/$rackw/$cardMi/': {
+      id: '/storages/i/$rackw/$cardMi/'
+      path: '/i/$rackw/$cardMi'
+      fullPath: '/storages/i/$rackw/$cardMi'
+      preLoaderRoute: typeof StoragesIRackwCardMiIndexImport
+      parentRoute: typeof StoragesRouteImport
+    }
+    '/storages/i/$rackw/edit/': {
+      id: '/storages/i/$rackw/edit/'
+      path: '/i/$rackw/edit'
+      fullPath: '/storages/i/$rackw/edit'
+      preLoaderRoute: typeof StoragesIRackwEditIndexImport
+      parentRoute: typeof StoragesRouteImport
     }
   }
 }
@@ -835,13 +863,17 @@ const QRouteRouteWithChildren =
   QRouteRoute._addFileChildren(QRouteRouteChildren)
 
 interface StoragesRouteRouteChildren {
-  StoragesIRackRouteRoute: typeof StoragesIRackRouteRoute
   StoragesIIndexRoute: typeof StoragesIIndexRoute
+  StoragesIRackwIndexRoute: typeof StoragesIRackwIndexRoute
+  StoragesIRackwCardMiIndexRoute: typeof StoragesIRackwCardMiIndexRoute
+  StoragesIRackwEditIndexRoute: typeof StoragesIRackwEditIndexRoute
 }
 
 const StoragesRouteRouteChildren: StoragesRouteRouteChildren = {
-  StoragesIRackRouteRoute: StoragesIRackRouteRoute,
   StoragesIIndexRoute: StoragesIIndexRoute,
+  StoragesIRackwIndexRoute: StoragesIRackwIndexRoute,
+  StoragesIRackwCardMiIndexRoute: StoragesIRackwCardMiIndexRoute,
+  StoragesIRackwEditIndexRoute: StoragesIRackwEditIndexRoute,
 }
 
 const StoragesRouteRouteWithChildren = StoragesRouteRoute._addFileChildren(
@@ -905,7 +937,6 @@ export interface FileRoutesByFullPath {
   '/cm/': typeof CmIndexRoute
   '/tuner/': typeof TunerIndexRoute
   '/schedule-day': typeof ScheduleDayIndexLazyRoute
-  '/storages/i/$rack': typeof StoragesIRackRouteRoute
   '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/edit/constants': typeof CmEditConstantsRoute
   '/cm/edit/e-e': typeof CmEditEERoute
@@ -935,9 +966,12 @@ export interface FileRoutesByFullPath {
   '/!other/$appName/settings': typeof otherAppNameSettingsIndexRoute
   '/cm/edit/cats': typeof CmEditCatsIndexRoute
   '/cm/edit/coms': typeof CmEditComsIndexRoute
+  '/storages/i/$rackw': typeof StoragesIRackwIndexRoute
   '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabRouteRoute
   '/!other/$appName/actions/files': typeof otherAppNameActionsFilesIndexRoute
   '/cm/edit/coms/$comw': typeof CmEditComsComwIndexRoute
+  '/storages/i/$rackw/$cardMi': typeof StoragesIRackwCardMiIndexRoute
+  '/storages/i/$rackw/edit': typeof StoragesIRackwEditIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -953,7 +987,6 @@ export interface FileRoutesByTo {
   '/cm': typeof CmIndexRoute
   '/tuner': typeof TunerIndexRoute
   '/schedule-day': typeof ScheduleDayIndexLazyRoute
-  '/storages/i/$rack': typeof StoragesIRackRouteRoute
   '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/edit/constants': typeof CmEditConstantsRoute
   '/cm/edit/e-e': typeof CmEditEERoute
@@ -983,9 +1016,12 @@ export interface FileRoutesByTo {
   '/!other/$appName/settings': typeof otherAppNameSettingsIndexRoute
   '/cm/edit/cats': typeof CmEditCatsIndexRoute
   '/cm/edit/coms': typeof CmEditComsIndexRoute
+  '/storages/i/$rackw': typeof StoragesIRackwIndexRoute
   '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabRouteRoute
   '/!other/$appName/actions/files': typeof otherAppNameActionsFilesIndexRoute
   '/cm/edit/coms/$comw': typeof CmEditComsComwIndexRoute
+  '/storages/i/$rackw/$cardMi': typeof StoragesIRackwCardMiIndexRoute
+  '/storages/i/$rackw/edit': typeof StoragesIRackwEditIndexRoute
 }
 
 export interface FileRoutesById {
@@ -1007,7 +1043,6 @@ export interface FileRoutesById {
   '/cm/': typeof CmIndexRoute
   '/tuner/': typeof TunerIndexRoute
   '/schedule-day/': typeof ScheduleDayIndexLazyRoute
-  '/storages/i/$rack': typeof StoragesIRackRouteRoute
   '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/edit/constants': typeof CmEditConstantsRoute
   '/cm/edit/e-e': typeof CmEditEERoute
@@ -1037,9 +1072,12 @@ export interface FileRoutesById {
   '/!other/$appName/settings/': typeof otherAppNameSettingsIndexRoute
   '/cm/edit/cats/': typeof CmEditCatsIndexRoute
   '/cm/edit/coms/': typeof CmEditComsIndexRoute
+  '/storages/i/$rackw/': typeof StoragesIRackwIndexRoute
   '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabRouteRoute
   '/!other/$appName/actions/files/': typeof otherAppNameActionsFilesIndexRoute
   '/cm/edit/coms/$comw/': typeof CmEditComsComwIndexRoute
+  '/storages/i/$rackw/$cardMi/': typeof StoragesIRackwCardMiIndexRoute
+  '/storages/i/$rackw/edit/': typeof StoragesIRackwEditIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -1062,7 +1100,6 @@ export interface FileRouteTypes {
     | '/cm/'
     | '/tuner/'
     | '/schedule-day'
-    | '/storages/i/$rack'
     | '/cm/edit/chord'
     | '/cm/edit/constants'
     | '/cm/edit/e-e'
@@ -1092,9 +1129,12 @@ export interface FileRouteTypes {
     | '/!other/$appName/settings'
     | '/cm/edit/cats'
     | '/cm/edit/coms'
+    | '/storages/i/$rackw'
     | '/cm/edit/coms/$comw/$tab'
     | '/!other/$appName/actions/files'
     | '/cm/edit/coms/$comw'
+    | '/storages/i/$rackw/$cardMi'
+    | '/storages/i/$rackw/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -1109,7 +1149,6 @@ export interface FileRouteTypes {
     | '/cm'
     | '/tuner'
     | '/schedule-day'
-    | '/storages/i/$rack'
     | '/cm/edit/chord'
     | '/cm/edit/constants'
     | '/cm/edit/e-e'
@@ -1139,9 +1178,12 @@ export interface FileRouteTypes {
     | '/!other/$appName/settings'
     | '/cm/edit/cats'
     | '/cm/edit/coms'
+    | '/storages/i/$rackw'
     | '/cm/edit/coms/$comw/$tab'
     | '/!other/$appName/actions/files'
     | '/cm/edit/coms/$comw'
+    | '/storages/i/$rackw/$cardMi'
+    | '/storages/i/$rackw/edit'
   id:
     | '__root__'
     | '/'
@@ -1161,7 +1203,6 @@ export interface FileRouteTypes {
     | '/cm/'
     | '/tuner/'
     | '/schedule-day/'
-    | '/storages/i/$rack'
     | '/cm/edit/chord'
     | '/cm/edit/constants'
     | '/cm/edit/e-e'
@@ -1191,9 +1232,12 @@ export interface FileRouteTypes {
     | '/!other/$appName/settings/'
     | '/cm/edit/cats/'
     | '/cm/edit/coms/'
+    | '/storages/i/$rackw/'
     | '/cm/edit/coms/$comw/$tab'
     | '/!other/$appName/actions/files/'
     | '/cm/edit/coms/$comw/'
+    | '/storages/i/$rackw/$cardMi/'
+    | '/storages/i/$rackw/edit/'
   fileRoutesById: FileRoutesById
 }
 
@@ -1281,8 +1325,10 @@ export const routeTree = rootRoute
     "/storages": {
       "filePath": "storages/route.tsx",
       "children": [
-        "/storages/i/$rack",
-        "/storages/i/"
+        "/storages/i/",
+        "/storages/i/$rackw/",
+        "/storages/i/$rackw/$cardMi/",
+        "/storages/i/$rackw/edit/"
       ]
     },
     "/tuner": {
@@ -1356,10 +1402,6 @@ export const routeTree = rootRoute
     },
     "/schedule-day/": {
       "filePath": "schedule-day/index.lazy.tsx"
-    },
-    "/storages/i/$rack": {
-      "filePath": "storages/i/$rack/route.tsx",
-      "parent": "/storages"
     },
     "/cm/edit/chord": {
       "filePath": "cm/edit/chord.tsx",
@@ -1476,6 +1518,10 @@ export const routeTree = rootRoute
       "filePath": "cm/edit/coms/index.tsx",
       "parent": "/cm/edit"
     },
+    "/storages/i/$rackw/": {
+      "filePath": "storages/i/$rackw/index.tsx",
+      "parent": "/storages"
+    },
     "/cm/edit/coms/$comw/$tab": {
       "filePath": "cm/edit/coms/$comw/$tab/route.tsx",
       "parent": "/cm/edit"
@@ -1487,6 +1533,14 @@ export const routeTree = rootRoute
     "/cm/edit/coms/$comw/": {
       "filePath": "cm/edit/coms/$comw/index.tsx",
       "parent": "/cm/edit"
+    },
+    "/storages/i/$rackw/$cardMi/": {
+      "filePath": "storages/i/$rackw/$cardMi/index.tsx",
+      "parent": "/storages"
+    },
+    "/storages/i/$rackw/edit/": {
+      "filePath": "storages/i/$rackw/edit/index.tsx",
+      "parent": "/storages"
     }
   }
 }

@@ -6,11 +6,10 @@ import { EllipsisText } from '#shared/ui/EllipsisText';
 import { ModalBody, ModalFooter, ModalHeader, useConfirm } from '#shared/ui/modal';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { useState } from 'react';
-import { storagesCellIncorrectValueNode } from 'shared/const/storages/cellIncorrectValueNode';
 import { StoragesRack, StoragesRackCard, StoragesRackCardMi } from 'shared/model/storages/list.model';
-import { StoragesColumnType } from 'shared/model/storages/rack.model';
+import { storagesCellIncorrectValueNode } from 'shared/utils/storages/cellIncorrectValueNode';
 
-type AssociationKey = keyof StoragesRack | StoragesColumnType;
+type AssociationKey = keyof StoragesRackCard | number;
 
 export const StoragesRackImportFromExcelModalInner = (props: { rack: StoragesRack }) => {
   const [associations, setAssociations] = useState<PRecord<AssociationKey, string>>({});
@@ -55,14 +54,19 @@ export const StoragesRackImportFromExcelModalInner = (props: { rack: StoragesRac
               {keysDropdown('title')}
             </div>
 
+            <div className="flex gap-3">
+              <span className="text-x7">Описание</span>
+              {keysDropdown('note')}
+            </div>
+
             {props.rack.cols.map((col, coli) => {
-              const associatedField = associations[col.t];
+              const associatedField = associations[coli];
 
               return (
                 <div key={coli}>
                   <div className="flex gap-3">
                     <span className="text-x7">{col.title}</span>
-                    {keysDropdown(col.t)}
+                    {keysDropdown(coli)}
                   </div>
                   {associatedField &&
                     valueList
@@ -94,23 +98,25 @@ export const StoragesRackImportFromExcelModalInner = (props: { rack: StoragesRac
             const titleField = associations.title;
             if (valueList == null || titleField == null) return;
             const usetTitlesSet = new Set<string>();
-            const isNoColFields = mylib.keys(associations).length === 1;
 
             const cards: StoragesRackCard[] = valueList
               .map(dict => {
                 if (!dict[titleField] || usetTitlesSet.has(dict[titleField])) return null;
                 usetTitlesSet.add(dict[titleField]);
 
-                const card: StoragesRackCard = { title: dict[titleField], mi: StoragesRackCardMi.min };
-                if (isNoColFields) return card;
+                const card: StoragesRackCard = {
+                  title: dict[titleField],
+                  note: associations.note != null ? dict[associations.note] : undefined,
+                  mi: StoragesRackCardMi.min,
+                };
 
                 card.row = [];
 
                 for (let coli = 0; coli < props.rack.cols.length; coli++) {
-                  const colType = props.rack.cols[coli].t;
-                  if (associations[colType] == null) continue;
+                  const asCol = associations[coli];
+                  if (asCol == null) continue;
 
-                  const cell = storagesCellIncorrectValueNode[colType].mapStringToCell(dict[associations[colType]]);
+                  const cell = storagesCellIncorrectValueNode[props.rack.cols[coli].t].mapStringToCell(dict[asCol]);
                   if (cell == null) continue;
                   card.row[coli] = cell;
                 }

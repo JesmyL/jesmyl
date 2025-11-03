@@ -36,8 +36,8 @@ export const StoragesListPage = () => {
                 className="my-3"
               >
                 <Link
-                  to="/storages/i/$rack"
-                  params={{ rack: '' + rack.w }}
+                  to="/storages/i/$rackw"
+                  params={{ rackw: '' + rack.w }}
                 >
                   <Button icon={rack.icon ?? 'DeliveryBox01'}>{rack.title}</Button>
                 </Link>

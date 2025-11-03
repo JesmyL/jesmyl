@@ -32,7 +32,10 @@ export const StoragesRackStatusFace = (props: {
                   className="flex gap-2 max-w-[80vw]"
                   style={{ color: props.rack.statuses[status].color }}
                 >
-                  <LazyIcon icon={props.rack.statuses[status].icon ?? 'Cube'} />
+                  <LazyIcon
+                    icon={props.rack.statuses[status].icon ?? 'Cube'}
+                    style={{ color: props.rack.statuses[status].color }}
+                  />
                   <span className="ellipsis">{props.rack.statuses[status].title}</span>
                 </span>
               ),
@@ -43,10 +46,14 @@ export const StoragesRackStatusFace = (props: {
           <>
             <Button
               asSpan
-              icon={rackStatus.icon ?? 'Cube'}
+              size={'icon'}
               withoutAnimation
-              style={{ color: rackStatus.color }}
-            />
+            >
+              <LazyIcon
+                icon={rackStatus.icon ?? 'Cube'}
+                style={{ color: rackStatus.color }}
+              />
+            </Button>
             {props.customTitile || (
               <span
                 className="font-bold"

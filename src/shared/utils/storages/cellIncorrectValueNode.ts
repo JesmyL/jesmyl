@@ -57,4 +57,24 @@ export const storagesCellIncorrectValueNode: {
       return { t: StoragesColumnType.Number, val: +value };
     },
   },
+  [StoragesColumnType.String]: {
+    checkType: value => (mylib.isStr(value) ? null : 'Это не строка'),
+    mapStringToCell: value => {
+      if (!mylib.isStr(value)) return null;
+
+      return { t: StoragesColumnType.String, val: value };
+    },
+  },
+
+  [StoragesColumnType.Link]: {
+    checkType: value => (storagesCheckStringValueIsLink(value) ? null : 'Это не ссылка'),
+    mapStringToCell: value => {
+      if (!storagesCheckStringValueIsLink(value)) return null;
+
+      return { t: StoragesColumnType.Link, val: value };
+    },
+  },
 };
+
+export const storagesCheckStringValueIsLink = (value: unknown) =>
+  mylib.isStr(value) && value.trim().startsWith('https://');

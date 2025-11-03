@@ -20,4 +20,12 @@ export const storagesCellDefaultValueDict: () => {
     t: StoragesColumnType.Number,
     val: 0,
   },
+  [StoragesColumnType.String]: {
+    t: StoragesColumnType.String,
+    val: '',
+  },
+  [StoragesColumnType.Link]: {
+    t: StoragesColumnType.Link,
+    val: '',
+  },
 });
