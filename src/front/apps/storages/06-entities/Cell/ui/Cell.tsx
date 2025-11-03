@@ -43,7 +43,7 @@ export const TheStoragesCell = (props: Props) => {
     <div {...uiAttrs}>
       <Component
         cell={props.card.row?.[props.coli] as never}
-        column={column}
+        column={column as never}
         card={props.card}
         rack={props.rack}
         coli={props.coli}

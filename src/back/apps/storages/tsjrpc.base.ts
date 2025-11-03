@@ -110,7 +110,7 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           rack.statuses.push({ title });
         }),
 
-        createColumn: updateRack((rack, { title, newColumnType, coli: coli }) => {
+        createColumn: updateRack((rack, { title, newColumnType, coli }) => {
           if (coli != null) {
             rack.cols[coli].cols ??= [];
             rack.cols[coli].cols.push({ t: newColumnType, title });

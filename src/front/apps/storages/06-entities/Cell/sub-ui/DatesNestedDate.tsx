@@ -106,7 +106,7 @@ export const StoragesCellDatesNestedDateCell = (
                   coli={props.coli}
                   cell={cardCell?.row?.[nestedColumni] as null}
                   rack={props.rack}
-                  column={column}
+                  column={column as never}
                   nestedSelectors={{
                     nestedCellMi: props.dateMi,
                     nestedColi: nestedColumni,
