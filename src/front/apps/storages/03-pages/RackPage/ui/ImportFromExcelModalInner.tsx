@@ -59,7 +59,8 @@ export const StoragesRackImportFromExcelModalInner = (props: { rack: StoragesRac
               {keysDropdown('note')}
             </div>
 
-            {props.rack.cols.map((col, coli) => {
+            {(props.rack.colsOrd ?? props.rack.cols.map((_, i) => i)).map(coli => {
+              const col = props.rack.cols[coli];
               const associatedField = associations[coli];
 
               return (

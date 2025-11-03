@@ -17,7 +17,7 @@ export const StoragesCellList = ({ rack, card }: Props) => {
 
   return (
     <>
-      {rack.cols.map((_, coli) => {
+      {(rack.colsOrd ?? rack.cols.map((_, i) => i)).map(coli => {
         return (
           <TheStoragesCell
             key={coli}

@@ -23,6 +23,7 @@ export const storagesColumnConfigDict: {
     checkType: (value: unknown) => null | string;
     mapStringToCell: (value: string) => StoragesCell<Type> | null;
     retCorrectTypeValue: (value: unknown) => StoragesCell<Type>['val'];
+    makeStringValue: (cell: StoragesCell<Type> | nil) => string | nil;
   };
 } = {
   [StoragesColumnType.Date]: {
@@ -40,9 +41,17 @@ export const storagesColumnConfigDict: {
       return { t: StoragesColumnType.Date, val };
     },
     retCorrectTypeValue: value => (smylib.isNum(value) || smylib.isStr(value) ? +value : undefined),
+    makeStringValue: cell => (cell?.val == null ? null : new Date(cell.val).toLocaleDateString('ru')),
   },
   [StoragesColumnType.Dates]: {
     typeTitle: 'Даты',
+    makeStringValue: cell => {
+      if (cell?.row == null) return;
+      const firstCell = cell.row.find(cell => cell.ts != null);
+      if (firstCell?.ts == null) return;
+
+      return new Date(firstCell.ts * 100000).toLocaleDateString('ru');
+    },
     def: () => ({
       t: StoragesColumnType.Dates,
       val: undefined,
@@ -64,6 +73,7 @@ export const storagesColumnConfigDict: {
   },
   [StoragesColumnType.List]: {
     typeTitle: 'Список',
+    makeStringValue: cell => cell?.val.find(it => it),
     def: () => ({
       t: StoragesColumnType.List,
       val: [],
@@ -76,6 +86,7 @@ export const storagesColumnConfigDict: {
   },
   [StoragesColumnType.Number]: {
     typeTitle: 'Цифра',
+    makeStringValue: cell => cell && '' + cell.val,
     def: () => ({
       t: StoragesColumnType.Number,
       val: 0,
@@ -90,6 +101,7 @@ export const storagesColumnConfigDict: {
   },
   [StoragesColumnType.String]: {
     typeTitle: 'Строка',
+    makeStringValue: cell => cell?.val,
     def: () => ({
       t: StoragesColumnType.String,
       val: '',
@@ -104,6 +116,7 @@ export const storagesColumnConfigDict: {
   },
   [StoragesColumnType.Link]: {
     typeTitle: 'Ссылка',
+    makeStringValue: cell => cell?.val,
     def: () => ({
       t: StoragesColumnType.Link,
       val: '',

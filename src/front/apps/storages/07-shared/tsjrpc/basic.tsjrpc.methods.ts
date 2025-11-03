@@ -31,6 +31,10 @@ export const storagesTsjrpcClient = new (class Storages extends TsjrpcClient<Sto
         setNumber: true,
         addManyCards: true,
         copyRackStatuses: true,
+        editColumnType: true,
+        renameColumn: true,
+        renameRack: true,
+        moveColumn: true,
       },
     });
   }

@@ -8,6 +8,7 @@ import {
   StoragesTsjrpcRackStatusSelector,
 } from 'shared/api/tsjrpc/storages/tsjrpc.model';
 import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
+import { storagesStylePropKeysMatrix } from 'shared/const/storages/styleProps.config';
 import {
   StoragesRack,
   StoragesRackCard,
@@ -113,7 +114,18 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           if (coli != null) {
             rack.cols[coli].cols ??= [];
             rack.cols[coli].cols.push({ t: newColumnType, title });
-          } else rack.cols.push({ t: newColumnType, title });
+          } else {
+            rack.cols.push({ t: newColumnType, title });
+            rack.colsOrd?.push(rack.cols.length - 1);
+          }
+        }),
+
+        moveColumn: updateRack((rack, props) => {
+          rack.colsOrd ??= rack.cols.map((_, i) => i);
+          rack.colsOrd = smylib.withInsertedBeforei(rack.colsOrd, props.newi ?? rack.colsOrd.length, props.coli);
+
+          let expectedi = 0;
+          if (!rack.colsOrd.some(i => i !== expectedi++)) delete rack.colsOrd;
         }),
 
         editRackStatusIcon: updateRackStatus((rackStatus, { icon }) => {
@@ -241,10 +253,51 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
             rack.statuses[statusi] = smylib.clone(status);
           });
         }),
+
+        editColumnType: updateRack((rack, props) => {
+          if (props.list) {
+            const uilSet = new Set(rack.cols[props.coli].uil);
+            storagesStylePropKeysMatrix[props.list.key].forEach(key => uilSet.delete(key));
+            if (props.list.value != null) uilSet.add(props.list.value);
+            rack.cols[props.coli].uil = uilSet.size ? Array.from(uilSet) : undefined;
+          }
+
+          if (props.dict) {
+            const uid = (rack.cols[props.coli].uid = { ...rack.cols[props.coli].uid, ...props.dict });
+
+            smylib.keys(uid).forEach(key => {
+              if (uid[key] == null) delete uid[key];
+            });
+
+            if (!smylib.keys(uid).length) delete rack.cols[props.coli].uid;
+          }
+        }),
+
+        renameColumn: updateRack((rack, props) => {
+          rack.cols[props.coli].title = props.title || rack.cols[props.coli].title;
+        }),
+
+        renameRack: updateRack((rack, props) => {
+          rack.title = props.title || rack.title;
+        }),
       },
     });
   }
 })();
+
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 
 type UpdaterReturnType<RetValue> = und | void | { description?: string; value: RetValue };
 
@@ -266,20 +319,6 @@ function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret exte
     return ret;
   };
 }
-
-///////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
 
 function updateRackStatus<
   Props extends StoragesTsjrpcRackStatusSelector,

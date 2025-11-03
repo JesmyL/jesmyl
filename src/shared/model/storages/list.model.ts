@@ -45,4 +45,5 @@ export type StoragesRack = {
   values: string[];
   cards: StoragesRackCard[];
   cols: StoragesRackColumn[];
+  colsOrd?: number[];
 };

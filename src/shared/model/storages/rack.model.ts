@@ -1,3 +1,5 @@
+import { StoragesColumnUiDict, StoragesColumnUiListKey } from './ui.model';
+
 export const enum StoragesColumnType {
   Date = 12,
   Dates = 77,
@@ -17,6 +19,8 @@ export type StoragesRackColumn<Type extends StoragesColumnType = StoragesColumnT
   t: Type;
   title: string;
   cols?: StoragesRackColumn[];
+  uil?: StoragesColumnUiListKey[];
+  uid?: StoragesColumnUiDict;
 };
 
 export type StoragesNestedCellSelectors = {

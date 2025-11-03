@@ -1,10 +1,13 @@
+import { storagesStylePropKeysMatrix } from 'shared/const/storages/styleProps.config';
 import { StoragesRack, StoragesRackCard, StoragesRackCardMi, StoragesRackWid } from 'shared/model/storages/list.model';
 import { StoragesCell, StoragesColumnType, StoragesNestedCellSelectors } from 'shared/model/storages/rack.model';
+import { StoragesColumnUiDict, StoragesColumnUiListKey } from 'shared/model/storages/ui.model';
 
 export type StoragesTsjrpcModel = {
   requestFreshes: (args: { lastModfiedAt: number }) => void;
 
   createRack: (args: { title: string }) => { rack: StoragesRack; lastModfiedAt: number };
+  renameRack: (args: RackSelector & { title: string }) => void;
 
   createRackCard: (args: RackSelector) => StoragesRackCardMi;
   addManyCards: (args: RackSelector & { cards: StoragesRackCard[] }) => void;
@@ -41,6 +44,20 @@ export type StoragesTsjrpcModel = {
 
   setNumber: (args: StoragesTsjrpcCellSelector & { amount: number }) => void;
   copyRackStatuses: (args: StoragesTsjrpcRackSelector & { fromRackw: StoragesRackWid }) => void;
+
+  editColumnType: (
+    args: StoragesTsjrpcRackSelector & {
+      list?: {
+        key: keyof typeof storagesStylePropKeysMatrix;
+        value: StoragesColumnUiListKey | nil;
+      };
+      dict?: Partial<StoragesColumnUiDict>;
+      coli: number;
+    },
+  ) => void;
+
+  renameColumn: (args: StoragesTsjrpcRackSelector & { title: string; coli: number }) => void;
+  moveColumn: (args: StoragesTsjrpcRackSelector & { coli: number; newi: number | nil }) => void;
 };
 
 type RackSelector = StoragesTsjrpcRackSelector;
