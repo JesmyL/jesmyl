@@ -107,7 +107,7 @@ const WithoutStaticProps = ({ icon, className, kind = 'StrokeRounded', withoutAn
 
       fetchTimeout = setTimeout(async () => {
         updatePack((await (packFetches[icon] ??= indexTsjrpcClientMethods.getIconPack({ icon }))).pack, emptyFunc);
-      }, 3000);
+      }, 300);
 
       const updatePack = (pack: StameskaIconPack | nil, elseCb: () => void) => {
         if (pack) {

@@ -2,6 +2,7 @@ import { tokenSecretFileStore } from 'back/complect/soki/file-stores';
 import { prodTelegramBot } from 'back/sides/telegram-bot/prod/prod-bot';
 import { supportTelegramBot } from 'back/sides/telegram-bot/support/support-bot';
 import { JesmylTelegramBot } from 'back/sides/telegram-bot/tg-bot';
+import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
 import jwt from 'jsonwebtoken';
 import TelegramBot from 'node-telegram-bot-api';
 import { LocalSokiAuth, TelegramNativeAuthUserData } from 'shared/api';
@@ -33,7 +34,7 @@ const makeAuthFromUser = async (user: OmitOwn<TelegramBot.User, 'is_bot'>) => {
 
 export const indexAuthByTgUser =
   (title: string) =>
-  async ({ user }: { user: TelegramNativeAuthUserData }) => {
+  async ({ user }: { user: TelegramNativeAuthUserData }, { visitInfo }: ServerTSJRPCTool) => {
     const auth = await makeAuthFromUser(user);
 
     return {
@@ -43,6 +44,7 @@ export const indexAuthByTgUser =
       },
       description:
         `Авторизация ${auth?.fio} (@${auth?.nick ?? '??'}) ${title}\n\n` +
-        `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
+        `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>\n\n` +
+        `<blockquote expandable>${JSON.stringify(visitInfo, null, 1)}</blockquote>`,
     };
   };

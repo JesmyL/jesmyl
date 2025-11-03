@@ -35,7 +35,7 @@ export class SokiServer {
       });
 
       client.on('message', async (data: WebSocket.RawData) => {
-        const event: TsjrpcClientEvent = JSON.parse('' + data);
+        const event: TsjrpcClientEvent = JSON.parse('' + data, parseReciever);
 
         if (event.ping) {
           this.send({ pong: 1, requestId: event.requestId }, client);
@@ -185,3 +185,17 @@ function sendToEachClient(this: string, client: WebSocket) {
 }
 
 export const sokiServer = new SokiServer();
+
+const parseReciever = (() => {
+  const nlSplitRegexp = makeRegExp('/\\s*?\n\\s*?/');
+  const recieveString = (value: string) => {
+    value = value.trim();
+    if (value.includes('\n')) value = value.split(nlSplitRegexp).join('\n');
+    return value;
+  };
+
+  return (_key: string, value: unknown) => {
+    if (typeof value === 'string') return recieveString(value);
+    return value;
+  };
+})();

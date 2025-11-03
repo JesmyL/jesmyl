@@ -143,12 +143,12 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         authMeByTelegramMiniButton: indexAuthByTgUser('через TG-mini-icon кнопку'),
         authMeByTelegramInScheduleDay: indexAuthByTgUser('в расписании дня'),
 
-        authMeByTelegramBotNumber: async ({ secretNumber }) => {
+        authMeByTelegramBotNumber: async ({ secretNumber }, tool) => {
           const user = supportTelegramAuthorizations[secretNumber]?.().from;
 
           if (user == null) throw 'Не верный код авторизации';
 
-          return await indexAuthByTgUser('через TG-код')({ user });
+          return await indexAuthByTgUser('через TG-код')({ user }, tool);
         },
 
         getFreshAppVersion: async () => ({ value: appVersionFileStore.getValue().num }),
