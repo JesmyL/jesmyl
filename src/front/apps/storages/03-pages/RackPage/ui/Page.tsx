@@ -105,13 +105,21 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
 
           {isMoreOpen && (
             <BottomPopup onClose={setIsMoreOpen}>
-              {!rack.cards.some(rack => !rack.title) && (
-                <BottomPopupItem
-                  icon="PlusSign"
-                  onClick={() => storagesTsjrpcClient.createRackCard({ rackw })}
-                  title="Создать карточку"
-                />
-              )}
+              <BottomPopupItem
+                icon="PlusSign"
+                title="Создать карточку"
+                onClick={async () => {
+                  const cardMi = await storagesTsjrpcClient.createRackCard({ rackw });
+
+                  navigate({
+                    to: '/storages/i/$rackw/$cardMi',
+                    params: {
+                      cardMi: '' + cardMi,
+                      rackw: '' + rackw,
+                    },
+                  });
+                }}
+              />
 
               <BottomPopupItem
                 icon="Cube"

@@ -6,7 +6,7 @@ export type StoragesTsjrpcModel = {
 
   createRack: (args: { title: string }) => { rack: StoragesRack; lastModfiedAt: number };
 
-  createRackCard: (args: RackSelector) => void;
+  createRackCard: (args: RackSelector) => StoragesRackCardMi;
   addManyCards: (args: RackSelector & { cards: StoragesRackCard[] }) => void;
   addRackValue: (args: RackSelector & { title: string }) => void;
   setRackCardStatus: (args: StoragesTsjrpcRackStatusSelector & StoragesTsjrpcRackCardSelector) => void;

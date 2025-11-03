@@ -69,10 +69,13 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
         },
 
         createRackCard: updateRack(rack => {
-          rack.cards.unshift({
-            mi: smylib.takeNextMi(rack.cards, StoragesRackCardMi.min),
-            title: '',
-          });
+          const emptyTitleCard = rack.cards.find(card => !card.title);
+          if (emptyTitleCard != null) return { value: emptyTitleCard.mi };
+
+          const mi = smylib.takeNextMi(rack.cards, StoragesRackCardMi.min);
+          rack.cards.unshift({ mi, title: '' });
+
+          return { value: mi };
         }),
 
         addManyCards: updateRack((rack, { cards }) => {
