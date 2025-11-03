@@ -110,6 +110,7 @@ export class DirStore<Item extends Record<IdKey, Id>, Id extends string | number
   }
 
   getItem = (id: Id) => this.getFileStore(id).getValue();
+  deleteItem = (id: Id) => this.getFileStore(id).deleteFile();
 
   saveItem = (id: Id) => {
     this.getFileStore(id).saveValue();
@@ -117,6 +118,12 @@ export class DirStore<Item extends Record<IdKey, Id>, Id extends string | number
   };
 
   getItemModTime = (id: Id) => this.getFileStore(id).fileModifiedAt();
+
+  getAllItems = () => {
+    const items = [];
+    for (const id of this.ids) items.push(this.getItem(id));
+    return items;
+  };
 
   getFreshItems = (lastModfiedAt: number) => {
     const items: Item[] = [];

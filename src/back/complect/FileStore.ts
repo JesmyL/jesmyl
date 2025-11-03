@@ -94,6 +94,8 @@ export class FileStore<Value> {
     }
   };
 
+  deleteFile = () => fs.rmSync(this.filePath);
+
   private watchFileTries = 2;
 
   watchFile = (cb: (value: Value, ...args: Parameters<StatsListener>) => void) => {
