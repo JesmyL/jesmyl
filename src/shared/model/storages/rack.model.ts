@@ -7,6 +7,7 @@ export const enum StoragesColumnType {
   Number = 93,
   String = 30,
   Link = 74,
+  Formula = 88,
 }
 
 export const enum StoragesNestedCellMi {
@@ -35,6 +36,7 @@ type ColumnCustoms = {
   [StoragesColumnType.Link]: object;
   [StoragesColumnType.List]: object;
   [StoragesColumnType.String]: object;
+  [StoragesColumnType.Formula]: object;
 
   [StoragesColumnType.Number]: {
     /** metric */
@@ -71,6 +73,11 @@ type StoragesCellDict = TypeSatisfiesDict<{
 
   [StoragesColumnType.Link]: {
     t: StoragesColumnType.Link;
+    val: string;
+  };
+
+  [StoragesColumnType.Formula]: {
+    t: StoragesColumnType.Formula;
     val: string;
   };
 }>;

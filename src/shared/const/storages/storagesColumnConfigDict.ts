@@ -129,4 +129,19 @@ export const storagesColumnConfigDict: {
     },
     retCorrectTypeValue: value => (storagesCheckStringValueIsLink(value) ? value : ''),
   },
+  [StoragesColumnType.Formula]: {
+    typeTitle: 'Формула',
+    makeStringValue: cell => cell?.val,
+    def: () => ({
+      t: StoragesColumnType.Formula,
+      val: '',
+    }),
+    checkType: value => (smylib.isStr(value) ? null : 'Это не формула'),
+    mapStringToCell: value => {
+      if (!smylib.isStr(value)) return null;
+
+      return { t: StoragesColumnType.Formula, val: value };
+    },
+    retCorrectTypeValue: value => (smylib.isStr(value) ? value : ''),
+  },
 };
