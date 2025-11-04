@@ -1,7 +1,7 @@
 import fs from 'fs';
 
-export const walkAllFiles = (path, cb) => {
-  const walk = path => {
+export const walkAllFiles = (path, cb, deep = -1) => {
+  const walk = (path, deep) => {
     const line = fs.readdirSync(path);
     for (let linei = 0; linei < line.length; linei++) {
       const name = line[linei];
@@ -12,11 +12,11 @@ export const walkAllFiles = (path, cb) => {
 
       if (!isDir) continue;
 
-      walk(wholePath);
+      if (deep) walk(wholePath, deep < 0 ? deep : deep - 1);
     }
   };
 
-  walk(path);
+  walk(path, deep);
 };
 
 walkAllFiles('src/front', (filePath, name, path, isDir) => {

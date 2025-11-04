@@ -8,14 +8,14 @@ const errorsToPass = new Set([
 ]);
 
 if (!'is need update files') {
-  ['cm', 'index', 'storages/list'].forEach(appName => {
+  ['cm', 'cm/coms', 'index', 'storages/list'].forEach(appName => {
     const cb = (filePath, name) => {
       if (!name.endsWith('.json')) return;
       fs.writeFileSync(`src/back/file-stores/apps/${appName}/${name}`, '' + fs.readFileSync(filePath));
     };
 
-    walkAllFiles(`src/back/apps/${appName}/+case`, cb);
-    walkAllFiles(`src/back/apps/${appName}`, cb);
+    walkAllFiles(`src/back/apps/${appName}/+case`, cb, 1);
+    walkAllFiles(`src/back/apps/${appName}`, cb, 1);
   });
 }
 
