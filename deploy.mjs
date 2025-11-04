@@ -6,14 +6,26 @@ deployTheCode(
   },
   {
     targetDir: 'jesmyl.ru',
-    loadToDirFiles: {
-      'apps/cm': ['./src/back/apps/cm/*.json'],
-      'apps/cm/coms': ['./src/back/apps/cm/coms/*.json'],
-      'apps/bible': ['./src/back/apps/bible/*.json'],
+    loadToDirFiles: makePaths('./src/back', {
+      'apps/cm': ['~/#/*.json'],
+      'apps/cm/coms': ['~/#/*.json'],
+      'apps/bible': ['~/#/*.json'],
       // 'apps/bible': ['./src/bibles/*.json'],
-      'apps/index': ['./src/back/apps/index/*.json'],
-      'apps/q': ['./src/back/apps/q/*.json'],
-      'apps/storages/list': ['./src/back/apps/storages/list/*.json'],
-    },
+      'apps/index': ['~/#/*.json'],
+      'apps/q': ['~/#/*.json'],
+      'apps/storages/list': ['~/#/*.json'],
+    }),
   },
 );
+
+function makePaths(prefix, dict) {
+  const newDict = {};
+  Object.keys(dict).forEach(key => {
+    const replace = str => str.replace('#', key).replace('~', prefix);
+
+    newDict[key] = dict[key].map(replace);
+  });
+
+  console.log(newDict);
+  return newDict;
+}
