@@ -6,22 +6,22 @@ const initialFileDir = `${__dirname}${backConfig.fileStoreDir}`;
 
 export class DirStore<Item extends Record<IdKey, Id>, Id extends string | number, IdKey extends string = 'w'> {
   ids: Id[];
-  createItem: (mapper?: (item: Item) => Item, id?: Id) => { item: Item; mod: number };
-  updateItem: (id: Id, updater: (item: Item) => void) => { item: Item; mod: number };
+  createItem: (mapper?: ((item: Item) => Item) | nil, id?: Id) => { item: Item; mod: number };
+  updateItem: (id: Id, updater: (item: Item) => void) => { item: Item; mod: number } | nil;
 
-  private getFileStore: (id: Id) => FileStore<Item>;
+  private getFileStore: (id: Id) => FileStore<Item> | nil;
   private updateCahceTime: (id: Id) => void = () => {};
 
   constructor({
     makeNewItem,
     dirPath,
     cacheTime = 3 * 60 * 60 * 60 * 1000,
-    idKey = 'w' as never as IdKey,
+    idKey,
   }: {
     dirPath: `/${string}/`;
     makeNewItem: () => Item;
     cacheTime?: number;
-    idKey?: IdKey;
+    idKey: IdKey;
   }) {
     const first = makeNewItem();
     const second = makeNewItem();
@@ -50,15 +50,15 @@ export class DirStore<Item extends Record<IdKey, Id>, Id extends string | number
 
       if (fileStores[id] !== undefined) return fileStores[id];
 
-      if (!fs.existsSync(`${absoluteDirPath}${id}.json`)) throw `No id ${id} in ${dirPath}`;
+      if (!fs.existsSync(`${absoluteDirPath}${id}.json`)) return null;
 
       fileStores[id] = new FileStore(`${dirPath}${id}.json`, makeNewItem());
 
       return fileStores[id];
     };
 
-    this.createItem = (newItemMapper = retItem, id) => {
-      const newItem = newItemMapper(makeNewItem());
+    this.createItem = (newItemMapper, id) => {
+      const newItem = (newItemMapper ?? retItem)(makeNewItem());
 
       id ??= newItem[idKey];
       id = (typeof id === 'number' ? +`${id}` : id) as Id;
@@ -70,15 +70,16 @@ export class DirStore<Item extends Record<IdKey, Id>, Id extends string | number
 
       return {
         item: item.getValue(),
-        mod: this.saveItem(id),
+        mod: this.saveItem(id)!,
       };
     };
 
     this.updateItem = (id, updater) => {
       const item = this.getItem(id);
+      if (item == null) return null;
       updater(item);
 
-      return { item, mod: this.saveItem(id) };
+      return { item, mod: this.saveItem(id)! };
     };
 
     if (cacheTime < 0) {
@@ -109,15 +110,30 @@ export class DirStore<Item extends Record<IdKey, Id>, Id extends string | number
     this.ids.forEach(this.getItemModTime);
   }
 
-  getItem = (id: Id) => this.getFileStore(id).getValue();
-  deleteItem = (id: Id) => this.getFileStore(id).deleteFile();
+  getItem = (id: Id) => {
+    try {
+      return this.getFileStore(id)?.getValue();
+    } catch (_) {
+      return null;
+    }
+  };
+
+  getOrCreateItem = (id: Id, ...createArgs: Parameters<typeof this.createItem>) => {
+    try {
+      return this.getFileStore(id)!.getValue();
+    } catch (_) {
+      return this.createItem(...createArgs).item;
+    }
+  };
+
+  deleteItem = (id: Id) => this.getFileStore(id)?.deleteFile();
 
   saveItem = (id: Id) => {
-    this.getFileStore(id).saveValue();
+    this.getFileStore(id)?.saveValue();
     return this.getItemModTime(id);
   };
 
-  getItemModTime = (id: Id) => this.getFileStore(id).fileModifiedAt();
+  getItemModTime = (id: Id) => this.getFileStore(id)?.fileModifiedAt();
 
   getAllItems = () => {
     const items = [];
@@ -132,10 +148,11 @@ export class DirStore<Item extends Record<IdKey, Id>, Id extends string | number
     for (const id of this.ids) {
       const itemModTime = this.getItemModTime(id);
 
-      if (itemModTime > lastModfiedAt) {
-        if (itemModTime > maxMod) maxMod = itemModTime;
-        items.push(this.getItem(id));
-      }
+      if (itemModTime == null || itemModTime <= lastModfiedAt) continue;
+
+      if (itemModTime > maxMod) maxMod = itemModTime;
+      const item = this.getItem(id);
+      if (item != null) items.push(item);
     }
 
     return { items: items, maxMod };

@@ -16,6 +16,7 @@ import { exec } from 'child_process';
     ['apps/index', 'rights'],
     ['apps/cm'],
     ['apps/cm/coms'],
+    ['apps/cm/comComments'],
     ['apps/q'],
     ['apps/storages/list'],
   ];

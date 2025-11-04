@@ -16,7 +16,7 @@ import {
   chordPackFileStore,
   cmComAudioMarkPacksFileStore,
   cmConstantsConfigFileStore,
-  comCommentBlocksFileStore,
+  comCommentsDirStore,
   comsDirStore,
   comwVisitsFileStore,
   eventPacksFileStore,
@@ -87,27 +87,35 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
 
           if (auth?.login != null) {
             const login = auth.login;
+            const commentsLastModified = comCommentsDirStore.getItemModTime(login);
 
-            sendBasicModifiedableList(
-              lastModfiedAt,
-              comCommentBlocksFileStore,
-              () => {
-                const blocks = comCommentBlocksFileStore.getValue()[login];
-                if (blocks == null) return [];
+            if (commentsLastModified != null && commentsLastModified > lastModfiedAt) {
+              do {
+                const commentsHolder = comCommentsDirStore.getItem(login);
 
-                return SMyLib.keys(blocks).map(strComw => ({
+                const blocks = commentsHolder?.b;
+                if (commentsHolder && (commentsHolder.fio == null || commentsHolder.fio !== auth.fio)) {
+                  commentsHolder.fio = auth.fio;
+                  comCommentsDirStore.saveItem(login);
+                }
+
+                if (blocks == null) break;
+
+                const comments = SMyLib.keys(blocks).map(strComw => ({
                   m: 0,
                   d: emptyObject,
                   comw: +strComw,
                   ...blocks[strComw],
                 }));
-              },
-              (comments, modifiedAt) => {
+
                 if (comments.length > 0) {
-                  cmShareServerTsjrpcMethods.refreshComCommentBlocks({ comments, modifiedAt }, client);
+                  cmShareServerTsjrpcMethods.refreshComCommentBlocks(
+                    { comments, modifiedAt: commentsLastModified },
+                    client,
+                  );
                 }
-              },
-            );
+              } while (Math.ceil(0));
+            }
 
             const favoriteItem = aboutComFavoritesFileStore.getValue()[login];
             if (favoriteItem != null && favoriteItem.m > lastModfiedAt)
@@ -117,7 +125,7 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
 
         replaceUserAltCommentBlocks: async ({ from: transferAltFrom, to: transferAltTo, comw }, { auth, client }) => {
           if (!auth?.login) throw 'Для обмена специальными комментариями нужна авторизация';
-          const commentBlock = comCommentBlocksFileStore.getValue()[auth.login]?.[comw];
+          const commentBlock = comCommentsDirStore.getItem(auth.login)?.b[comw];
           if (commentBlock == null) return;
 
           const fromAlt = transferAltFrom == null ? commentBlock.d : commentBlock.alt?.[transferAltFrom];
@@ -143,11 +151,11 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
 
           commentBlock.m = Date.now();
 
-          comCommentBlocksFileStore.saveValue();
+          comCommentsDirStore.saveItem(auth.login);
         },
 
         pullUserAltCommentBlock: async ({ comw, login }) => {
-          return { value: comCommentBlocksFileStore.getValue()[login]?.[comw] ?? null };
+          return { value: comCommentsDirStore.getItem(login)?.b[comw] ?? null };
         },
 
         exchangeFreshComCommentBlocks: async ({ modifiedComments, clientDateNow }, { auth }) => {
@@ -155,8 +163,10 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
 
           const withClientTimeDelta = Date.now() - clientDateNow;
 
-          const commentBlocks = comCommentBlocksFileStore.getValue();
-          const userServerComments = (commentBlocks[auth.login] ??= {});
+          const commentsHolder = comCommentsDirStore.getOrCreateItem(auth.login, null, auth.login);
+          commentsHolder.fio = auth.fio;
+          const userServerComments = commentsHolder.b;
+
           let localSavedCommentsMaxModifiedAt = 0;
           const freshComments: ICmComCommentBlock[] = [];
           const resultComments: ICmComCommentBlock[] = [];
@@ -222,7 +232,7 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
           });
 
           if (localSavedCommentsMaxModifiedAt) {
-            comCommentBlocksFileStore.saveValue();
+            comCommentsDirStore.saveItem(auth.login);
 
             cmShareServerTsjrpcMethods.refreshComCommentBlocks(
               { comments: freshComments, modifiedAt: localSavedCommentsMaxModifiedAt },

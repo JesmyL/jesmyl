@@ -28,6 +28,7 @@ export const comsDirStore = new DirStore<IServerSideCom, CmComWid>({
     w: +`${Date.now() + Math.random()}`,
   }),
   cacheTime: 30 * 60 * 60 * 1000,
+  idKey: 'w',
 });
 
 export const catsFileStore = new FileStore<IExportableCat[]>('/apps/cm/cats.json', []);
@@ -48,10 +49,22 @@ export const mp3ResourcesData = new FileStore<CmMp3Rule[]>('/apps/cm/mp3Rules.js
 export const chordPackFileStore = new FileStore<ChordPack>('/apps/cm/chordTracks.json', {});
 export const eePackFileStore = new FileStore<EeStorePack>('/apps/cm/eeStorage.json', {});
 
-type TCommentBlocksStore = PRecord<SokiAuthLogin, PRecord<CmComWid, OmitOwn<ICmComCommentBlock, 'comw'>>>;
 type TUserFavoritesStore = Partial<Record<string, TAboutComFavoriteItem>>;
 
-export const comCommentBlocksFileStore = new FileStore<TCommentBlocksStore>('/apps/cm/comCommentBlocks.json', {});
+export const comCommentsDirStore = new DirStore<
+  {
+    l: SokiAuthLogin;
+    fio?: string;
+    b: PRecord<CmComWid, OmitOwn<ICmComCommentBlock, 'comw'>>;
+  },
+  SokiAuthLogin,
+  'l'
+>({
+  dirPath: '/apps/cm/comComments/',
+  makeNewItem: () => ({ l: SokiAuthLogin.other, fio: '', b: {} }),
+  idKey: 'l',
+});
+
 export const aboutComFavoritesFileStore = new FileStore<TUserFavoritesStore>('/apps/cm/aboutComFavorites.json', {});
 
 export const cmConstantsConfigFileStore = new FileStore<CmConstantsConfig>(
