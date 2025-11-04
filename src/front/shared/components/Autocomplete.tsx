@@ -30,14 +30,13 @@ export function Autocomplete<Id extends string, Multiple extends boolean>({
   const selectedSet = new Set<Id>([selected ?? []].flat() as never);
 
   const selectedNode = mylib.isArr(selected) ? (
-    <span className="flex flex-wrap gap-x-1 max-w-[calc(100cqw-30px)]">
-      {selected.map((id, idi, ida) => (
+    <span className="flex flex-wrap gap-x-1.5 max-w-[calc(100cqw-30px)]">
+      {selected.map(id => (
         <span
           key={id}
-          className="ellipsis bg-x2 px-1"
+          className="ellipsis bg-x2/50 px-1 rounded-sm"
         >
           {items.find(it => it.id === id)?.title}
-          {ida.length > 1 && idi < ida.length - 1 ? ',' : ''}
         </span>
       ))}
     </span>
