@@ -2,7 +2,7 @@ import { tsjrpcBaseClientNext } from '#basis/tsjrpc/TsjrpcBase.client';
 import { authIDB, indexDeviceIdAtom } from '$index/shared/state';
 import { makeRegExp } from 'regexpert';
 import { SokiError, TsjrpcClientEvent, TsjrpcClientTool, TsjrpcServerEvent } from 'shared/api';
-import { Eventer } from 'shared/utils';
+import { Eventer, smylib } from 'shared/utils';
 import { jversion } from 'shared/values';
 import { environment } from './environment';
 
@@ -12,7 +12,14 @@ export class SokiTrip {
 
   private isConnected = false;
   private connectionState = Eventer.createValue<boolean>();
-  private requests = {} as PRecord<string, (event: TsjrpcClientEvent) => void>;
+  private requests: PRecord<
+    string,
+    {
+      action: (event: TsjrpcClientEvent) => void;
+      promise: Promise<unknown>;
+      event: string;
+    }
+  > = {};
 
   private isOpened = false;
 
@@ -92,7 +99,7 @@ export class SokiTrip {
           if (event.errorMessage && !event.errorMessage.startsWith('#'))
             this.onInvokeErrorMessageEvent.invoke(event.errorMessage);
 
-          this.requests[event.requestId]!(event);
+          this.requests[event.requestId]!.action(event);
           delete this.requests[event.requestId];
         }
 
@@ -124,14 +131,16 @@ export class SokiTrip {
     this.onConnectionOpenEvent.listen(cb);
   };
 
-  private async sendForce(event: TsjrpcClientEvent) {
+  private async sendForce(requestId: string) {
+    const event = this.requests[requestId]?.event;
+    if (event == null) return;
     let tries = 20;
 
     const trySend = async () => {
       if (tries-- < 0) return;
       try {
         if (this.ws && this.ws.readyState === this.ws.OPEN) {
-          this.ws.send(JSON.stringify(event));
+          this.ws.send(event);
         } else setTimeout(trySend, 100);
       } catch (_error) {
         setTimeout(trySend, 100);
@@ -145,19 +154,28 @@ export class SokiTrip {
     event: OmitOwn<TsjrpcClientEvent, 'requestId'>,
     tool?: TsjrpcClientTool | nil | void,
   ) => {
-    const requestId = '' + Date.now() + Math.random();
-    const fullEvent = { ...event, requestId };
+    const strEvent = JSON.stringify(event);
+    const requestId = smylib.md5(strEvent);
 
-    if (this.ws && this.ws.readyState === this.ws.OPEN && (this.isTokenSent || 'token' in fullEvent)) {
-      this.sendForce(fullEvent);
-    } else this.onConnectionOpenEvent.listenFirst(() => this.sendForce(fullEvent));
+    if (this.requests[requestId] != null) {
+      return this.requests[requestId].promise;
+    }
 
-    const result = Promise.withResolvers<InvokedResult>();
+    const fullEvent = `${strEvent.slice(0, -1)},"requestId":"${requestId}"}`;
+    const withResolvers = Promise.withResolvers<InvokedResult>();
 
-    this.requests[requestId] = event => {
-      if (event.errorMessage) result.reject(event.errorMessage);
-      else result.resolve(event.invokedResult as never);
+    this.requests[requestId] = {
+      action: event => {
+        if (event.errorMessage) withResolvers.reject(event.errorMessage);
+        else withResolvers.resolve(event.invokedResult as never);
+      },
+      event: fullEvent,
+      promise: withResolvers.promise,
     };
+
+    if (this.ws && this.ws.readyState === this.ws.OPEN && (this.isTokenSent || 'token' in event)) {
+      this.sendForce(requestId);
+    } else this.onConnectionOpenEvent.listenFirst(() => this.sendForce(requestId));
 
     if (tool?.aborter != null) {
       const aborter = tool.aborter;
@@ -166,7 +184,7 @@ export class SokiTrip {
 
       const onAbort = () => {
         removeListener();
-        result.reject(reason);
+        withResolvers.reject(reason);
         delete this.requests[requestId];
         this.send({ abort: requestId });
       };
@@ -177,11 +195,11 @@ export class SokiTrip {
           onAbort();
         }, tool.timeout);
 
-      result.promise.then(removeListener).catch(removeListener);
+      withResolvers.promise.then(removeListener).catch(removeListener);
       aborter.signal.addEventListener('abort', onAbort);
     }
 
-    return result.promise;
+    return withResolvers.promise;
   };
 
   private pingTimeout: TimeOut;
