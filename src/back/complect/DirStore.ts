@@ -137,7 +137,11 @@ export class DirStore<Item extends Record<IdKey, Id>, Id extends string | number
 
   getAllItems = () => {
     const items = [];
-    for (const id of this.ids) items.push(this.getItem(id));
+    for (const id of this.ids) {
+      const item = this.getItem(id);
+      if (item == null) continue;
+      items.push(item);
+    }
     return items;
   };
 

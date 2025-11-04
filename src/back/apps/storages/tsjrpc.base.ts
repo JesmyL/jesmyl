@@ -306,9 +306,12 @@ function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret exte
   return async (props: Props): Promise<Ret> => {
     let ret: Ret = undefined!;
 
-    const { item: rack, mod } = storagesDirStore.updateItem(props.rackw, rack => {
+    const updated = storagesDirStore.updateItem(props.rackw, rack => {
       ret = updater(rack, props);
     });
+
+    if (updated == null) throw 'Error 10961237652345683910';
+    const { item: rack, mod } = updated;
 
     storagesStoresSharesServerTsjrpcMethods.refreshRacks(
       { maxMod: mod, racks: [rack] },

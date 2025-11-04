@@ -3,6 +3,7 @@ import { StoragesRack } from 'shared/model/storages/list.model';
 
 export const storagesDirStore = new DirStore({
   dirPath: '/apps/storages/list/',
+  idKey: 'w',
   makeNewItem: (): StoragesRack => ({
     w: Date.now() + Math.random(),
     title: '',

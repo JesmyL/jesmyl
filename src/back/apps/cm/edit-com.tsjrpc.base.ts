@@ -212,6 +212,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'D')) throw '';
 
           const com = comsDirStore.getItem(comw);
+          if (com == null) throw '';
           comsDirStore.deleteItem(comw);
 
           return { value: com.n, description: `Песня ${com.n} НЕ уничтожена` };
@@ -239,7 +240,7 @@ export function modifyInvocableCom<Props extends { comw: CmComWid }>(
 
     const com = comsDirStore.getItem(props.comw);
 
-    if (com === undefined) throw new Error(`Песня не найдена`);
+    if (com == undefined) throw new Error(`Песня не найдена`);
 
     const description = mapper(com, props, tool);
     com.m = Date.now();
