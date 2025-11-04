@@ -14,13 +14,13 @@ const classNameMapsDict: Record<StoragesColumnUiListKey, string> = {
   [StoragesColumnUiListKey.FontSizeBig]: 'text-xl **:text-xl',
   [StoragesColumnUiListKey.FontSizeLarge]: 'text-3xl **:text-3xl',
 
-  [StoragesColumnUiListKey.MarginTopSmall]: 'mt-0!',
-  [StoragesColumnUiListKey.MarginTopBig]: 'mt-5!',
-  [StoragesColumnUiListKey.MarginTopLarge]: 'mt-20!',
+  [StoragesColumnUiListKey.MarginTopSmall]: '-mt-2!',
+  [StoragesColumnUiListKey.MarginTopBig]: 'mt-10!',
+  [StoragesColumnUiListKey.MarginTopLarge]: 'mt-25!',
 
-  [StoragesColumnUiListKey.MarginBottomSmall]: 'mb-0!',
-  [StoragesColumnUiListKey.MarginBottomBig]: 'mb-5!',
-  [StoragesColumnUiListKey.MarginBottomLarge]: 'mb-20!',
+  [StoragesColumnUiListKey.MarginBottomSmall]: '-mb-2!',
+  [StoragesColumnUiListKey.MarginBottomBig]: 'mb-10!',
+  [StoragesColumnUiListKey.MarginBottomLarge]: 'mb-25!',
 };
 
 export const TheStoragesCell = (props: Props) => {
@@ -31,7 +31,7 @@ export const TheStoragesCell = (props: Props) => {
 
   if (!isEdit) {
     uiAttrs = {
-      className: 'p-2 ' + (column.uil?.map(key => classNameMapsDict[key]).join(' ') ?? ''),
+      className: 'empty:hidden p-2 ' + (column.uil?.map(key => classNameMapsDict[key]).join(' ') ?? ''),
       style: column.uid && {
         color: column.uid.text,
         backgroundColor: column.uid.bg,

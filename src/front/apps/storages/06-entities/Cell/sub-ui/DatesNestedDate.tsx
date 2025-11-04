@@ -36,7 +36,6 @@ export const StoragesCellDatesNestedDateCell = (
       <ModalHeader className="flex justify-between">
         <span className="text-x7 flex gap-2">
           <StoragesDateTimestampTitle timestamp={cardCell?.ts} />
-          <span>{props.card.title}</span>
         </span>
 
         {isCardEdit || (

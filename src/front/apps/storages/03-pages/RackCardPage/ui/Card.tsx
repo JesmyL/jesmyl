@@ -30,7 +30,11 @@ const Card = ({ card, rack }: { rack: StoragesRack; card: StoragesRackCard }) =>
   return (
     <PageContainerConfigurer
       className=""
-      headTitle={card.title || 'Новая карточка'}
+      headTitle={
+        <div className="max-w-[calc(100vw-155px)]">
+          <span className="ellipsis">{card.title || 'Новая карточка'}</span>
+        </div>
+      }
       head={
         <div className="flex justify-between gap-3">
           <StoragesRackStatusFace
@@ -48,7 +52,7 @@ const Card = ({ card, rack }: { rack: StoragesRack; card: StoragesRackCard }) =>
       }
       content={
         <div className="*:my-4 *:block">
-          {isEdit && (
+          {isEdit ? (
             <>
               <TextInput
                 label="Название"
@@ -57,6 +61,8 @@ const Card = ({ card, rack }: { rack: StoragesRack; card: StoragesRackCard }) =>
                 onChanged={title => storagesTsjrpcClient.editRackCardTitle({ rackw: rack.w, title, cardMi: card.mi })}
               />
             </>
+          ) : (
+            <span className="text-x7">{card.title}</span>
           )}
 
           {isEdit ? (
@@ -68,7 +74,7 @@ const Card = ({ card, rack }: { rack: StoragesRack; card: StoragesRackCard }) =>
               onChanged={note => storagesTsjrpcClient.editRackCardNote({ rackw: rack.w, note, cardMi: card.mi })}
             />
           ) : (
-            <div className="whitespace-pre-line">{card.note}</div>
+            card.note && <div className="bg-x2 p-3">{card.note}</div>
           )}
 
           {isEdit || card.meta ? (

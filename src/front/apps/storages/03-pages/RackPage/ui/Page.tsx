@@ -82,17 +82,17 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
           })}
 
           <Modal openAtom={isOpenSearchModal}>
-            {rack && (
-              <StoragesRackSearchModalInner
-                rack={rack}
-                onCardClick={card =>
-                  navigate({
-                    to: '/storages/i/$rackw/$cardMi',
-                    params: { cardMi: '' + card.mi, rackw: '' + rack.w },
-                  })
-                }
-              />
-            )}
+            <StoragesRackSearchModalInner
+              rack={rack}
+              onCardClick={async card => {
+                await navigate({
+                  to: '/storages/i/$rackw/$cardMi',
+                  params: { cardMi: '' + card.mi, rackw: '' + rack.w },
+                });
+
+                isOpenSearchModal.reset();
+              }}
+            />
           </Modal>
 
           <Modal openAtom={isOpenImportFromExcelModal}>

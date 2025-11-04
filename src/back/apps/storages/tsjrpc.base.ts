@@ -41,14 +41,9 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
 
           const login = auth.login;
           const { items, maxMod } = storagesDirStore.getFreshItems(lastModfiedAt);
+          const racks = items.filter(rack => rack.team[login]?.role);
 
-          storagesStoresSharesServerTsjrpcMethods.refreshRacks(
-            {
-              racks: items.filter(rack => rack.team[login]?.role),
-              maxMod,
-            },
-            client,
-          );
+          if (racks.length) storagesStoresSharesServerTsjrpcMethods.refreshRacks({ racks, maxMod }, client);
         },
         createRack: async ({ title }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth?.login, 'storages', 'LIST', 'C')) throw '';
