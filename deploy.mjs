@@ -26,6 +26,5 @@ function makePaths(prefix, dict) {
     newDict[key] = dict[key].map(replace);
   });
 
-  console.log(newDict);
   return newDict;
 }
