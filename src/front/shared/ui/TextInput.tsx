@@ -13,9 +13,14 @@ type Props = OmitOwn<
   strongDefaultValue?: boolean;
   type?: 'text' | 'tel' | 'email' | 'number';
   label?: React.ReactNode;
+  inputRef?: React.RefObject<(HTMLInputElement & HTMLTextAreaElement) | null>;
 };
 
 export const TextInput = ({ onChanged, onInput, multiline, label, strongDefaultValue, ...props }: Props) => {
+  const inputRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null);
+  if (props.inputRef) {
+    props.inputRef.current = inputRef.current;
+  }
   const Comp = multiline ? Textarea : Input;
   const [firstValue, setFirstValue] = useState(`${props.defaultValue ?? props.value}`);
 
@@ -62,13 +67,13 @@ const StrongDefaultValueInput = ({
   label,
   strongDefaultValue,
   Comp,
+  inputRef,
   ...props
 }: Props & { Comp: typeof Textarea | typeof Input }) => {
-  const inputRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null);
   useEffect(() => {
-    if (inputRef.current === null) return;
+    if (inputRef?.current == null) return;
     inputRef.current.value = '' + (props.defaultValue ?? '');
-  }, [props.defaultValue]);
+  }, [props.defaultValue, inputRef]);
 
   return (
     <Comp
