@@ -8,7 +8,6 @@ import { twMerge } from 'tailwind-merge';
 type Props<ChangedValue> = {
   onChanged: (value: string) => Promise<ChangedValue>;
   onInput?: (value: string) => void;
-  type?: 'email' | 'tel' | 'text';
   defaultValue?: string;
   value?: string;
   label?: string;
@@ -28,6 +27,7 @@ type Props<ChangedValue> = {
       iconNode: React.ReactNode;
     }
 ) &
+  Parameters<typeof TextInput>[0] &
   OmitOwn<HTMLAttributes<HTMLInputElement>, 'onInput'>;
 
 export const InputWithLoadingIcon = <ChangedValue,>({

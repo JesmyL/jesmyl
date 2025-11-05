@@ -1,29 +1,47 @@
 import { useConfirm } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
+import { QrCodeFullScreen } from '#shared/ui/qr-code/QrCodeFullScreen';
 import { cmOnUserLogout } from '$cm/ext';
-import { authIDB, indexUserAccessRightsAtom } from '$index/shared/state';
+import { authIDB, indexUserAccessRightsAtom, useAuth } from '$index/shared/state';
+import { atom } from 'atomaric';
+
+const isOpenQrAtom = atom(false);
 
 export const IndexUserMore = ({ onClose }: { onClose: (isOpen: false) => void }) => {
   const confirm = useConfirm();
+  const auth = useAuth();
 
   return (
-    <BottomPopupItem
-      id="log-out-button"
-      title="Выйти из системы"
-      icon="User"
-      onClick={async () => {
-        if (await confirm('Произвести выход из системы?', 'Разлогиниться')) {
-          await authIDB.remove.auth();
-          await authIDB.remove.token();
+    <>
+      <BottomPopupItem
+        id="log-out-button"
+        title="Показать мой QR"
+        icon="QrCode"
+        onClick={isOpenQrAtom.do.toggle}
+      />
+      <BottomPopupItem
+        id="log-out-button"
+        title="Выйти из системы"
+        icon="User"
+        onClick={async () => {
+          if (await confirm('Произвести выход из системы?', 'Разлогиниться')) {
+            await authIDB.remove.auth();
+            await authIDB.remove.token();
 
-          indexUserAccessRightsAtom.reset();
+            indexUserAccessRightsAtom.reset();
 
-          cmOnUserLogout();
+            cmOnUserLogout();
 
-          window.location.reload();
-          onClose(false);
-        }
-      }}
-    />
+            window.location.reload();
+            onClose(false);
+          }
+        }}
+      />
+
+      <QrCodeFullScreen
+        openAtom={isOpenQrAtom}
+        text={JSON.stringify(auth)}
+      />
+    </>
   );
 };

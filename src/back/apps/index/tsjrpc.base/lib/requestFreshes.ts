@@ -61,7 +61,7 @@ export const indexTSJRPCBaseRequestFreshes: typeof indexServerTsjrpcBase.request
 
   if (userIconsMd5Hash !== knownStameskaIconNamesMd5Hash || !userIconPacks?.length || !!schedules.length) {
     const userActualIconDict: PRecord<KnownStameskaIconName, StameskaIconPack | null> = {};
-    const knownIconNamesSet = new Set(knownStameskaIconNames);
+    const knownIconNamesSet = new Set(smylib.keys(knownStameskaIconNames));
 
     userIconPacks?.forEach(iconName => {
       if (knownIconNamesSet.has(iconName)) {
