@@ -124,7 +124,9 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
         }),
 
         editColumnFields: updateRack((rack, props) => {
-          rack.cols[props.coli] = { ...rack.cols[props.coli], ...props.data };
+          const col = rack.cols[props.coli];
+          if (props.data[col.t] == null) return;
+          rack.cols[props.coli] = { ...col, ...props.data[col.t] };
         }),
 
         editRackStatusIcon: updateRackStatus((rackStatus, { icon }) => {
@@ -384,7 +386,7 @@ function updateCell<Props extends StoragesTsjrpcCellSelector, RetValue, Ret exte
   updater: (
     cell: StoragesCell<StoragesColumnType>,
     props: Props,
-    column: StoragesRackColumn,
+    column: StoragesRackColumn<StoragesColumnType>,
     card: StoragesRackCard,
     rack: StoragesRack,
   ) => Ret,

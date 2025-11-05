@@ -47,6 +47,22 @@ export const TheStoragesCell = (props: Props) => {
         card={props.card}
         rack={props.rack}
         coli={props.coli}
+        columnTitleNode={
+          isEdit ? (
+            <div>
+              <span
+                className="text-x7"
+                storages-coli-nn={props.coli}
+                storages-col-type={props.rack.cols[props.coli].t}
+              >
+                #{props.coli + 1}{' '}
+              </span>
+              {column.title}
+            </div>
+          ) : (
+            column.title
+          )
+        }
       />
     </div>
   );

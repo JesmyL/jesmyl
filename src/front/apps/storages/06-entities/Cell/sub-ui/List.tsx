@@ -12,7 +12,7 @@ export const StoragesCellOfTypeList = (props: StoragesCellTypeProps<StoragesColu
   return (
     <>
       <div>
-        {props.column.title}
+        {props.columnTitleNode}
         <div className={isEdit ? undefined : 'font-bold'}>
           <Autocomplete
             isShowSelectedNodeOnly={!isEdit}

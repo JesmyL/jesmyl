@@ -25,7 +25,7 @@ export const StoragesCellOfTypeLink = (props: StoragesCellTypeProps<StoragesColu
   return (
     <>
       <div>
-        {props.column.title}
+        {props.columnTitleNode}
 
         <TextInput
           defaultValue={props.cell?.val}

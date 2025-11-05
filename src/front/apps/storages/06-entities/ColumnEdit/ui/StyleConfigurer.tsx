@@ -5,7 +5,7 @@ import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.metho
 import { atom } from 'atomaric';
 import { storagesStylePropKeysMatrix, storagesStypePropTitles } from 'shared/const/storages/styleProps.config';
 import { StoragesRack } from 'shared/model/storages/list.model';
-import { StoragesRackColumn } from 'shared/model/storages/rack.model';
+import { StoragesColumnType, StoragesRackColumn } from 'shared/model/storages/rack.model';
 import { StoragesColumnUiDict } from 'shared/model/storages/ui.model';
 
 const colorChangeAtom = atom<Parameters<typeof storagesTsjrpcClient.editColumnType>[0] | null>(null);
@@ -68,9 +68,9 @@ export const StoragesColumnEditStyleConfigurer = (props: { rack: StoragesRack; c
   );
 };
 
-const ColorChanger = (props: {
+const ColorChanger = <Type extends StoragesColumnType>(props: {
   title: string;
-  column: StoragesRackColumn;
+  column: StoragesRackColumn<Type>;
   coli: number;
   rack: StoragesRack;
   propKey: keyof StoragesColumnUiDict;

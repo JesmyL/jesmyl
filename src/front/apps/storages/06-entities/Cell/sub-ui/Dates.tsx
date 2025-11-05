@@ -46,7 +46,7 @@ export const StoragesCellOfTypeDates = (props: StoragesCellTypeProps<StoragesCol
   return (
     <div>
       <div className="flex gap-2">
-        {props.column.title}
+        {props.columnTitleNode}
         <Button
           icon={isExpand ? 'ArrowUp01' : 'ArrowDown01'}
           onClick={() => setIsExpand(is => !is)}

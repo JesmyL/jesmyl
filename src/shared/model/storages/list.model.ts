@@ -44,6 +44,6 @@ export type StoragesRack = {
   team: PRecord<SokiAuthLogin, StoragesRackMember>;
   values: string[];
   cards: StoragesRackCard[];
-  cols: StoragesRackColumn[];
+  cols: StoragesRackColumn<StoragesColumnType>[];
   colsOrd?: number[];
 };

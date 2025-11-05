@@ -14,7 +14,7 @@ export const StoragesCellOfTypeDate = (props: StoragesCellTypeProps<StoragesColu
   return (
     <>
       <div>
-        <div>{props.column.title}</div>
+        {props.columnTitleNode}
         {isEdit ? (
           <DatePicker
             initValue={props.cell?.val}

@@ -13,7 +13,11 @@ export const StoragesColumnEditOfTypeNumber = (props: StoragesColumnEditTypeProp
         id={props.column.mt}
         items={metrics.map(id => ({ id, title: id }))}
         onSelectId={id =>
-          storagesTsjrpcClient.editColumnFields({ coli: props.coli, data: { mt: id }, rackw: props.rack.w })
+          storagesTsjrpcClient.editColumnFields({
+            coli: props.coli,
+            data: { [StoragesColumnType.Number]: { mt: id } },
+            rackw: props.rack.w,
+          })
         }
       />
     </div>

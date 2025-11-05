@@ -16,10 +16,10 @@ export const enum StoragesNestedCellMi {
 
 export type StoragesCell<Type extends StoragesColumnType> = StoragesCellDict[Type];
 
-export type StoragesRackColumn<Type extends StoragesColumnType = StoragesColumnType> = {
+export type StoragesRackColumn<Type extends StoragesColumnType> = {
   t: Type;
   title: string;
-  cols?: StoragesRackColumn[];
+  cols?: StoragesRackColumn<StoragesColumnType>[];
   uil?: StoragesColumnUiListKey[];
   uid?: StoragesColumnUiDict;
 } & ColumnCustoms[Type];
@@ -36,7 +36,12 @@ type ColumnCustoms = {
   [StoragesColumnType.Link]: object;
   [StoragesColumnType.List]: object;
   [StoragesColumnType.String]: object;
-  [StoragesColumnType.Formula]: object;
+  [StoragesColumnType.Formula]: {
+    /** formula string */
+    val?: string;
+    /** toFixed sign */
+    fx?: number;
+  };
 
   [StoragesColumnType.Number]: {
     /** metric */

@@ -1,6 +1,11 @@
 import { storagesStylePropKeysMatrix } from 'shared/const/storages/styleProps.config';
 import { StoragesRack, StoragesRackCard, StoragesRackCardMi, StoragesRackWid } from 'shared/model/storages/list.model';
-import { StoragesCell, StoragesColumnType, StoragesNestedCellSelectors } from 'shared/model/storages/rack.model';
+import {
+  StoragesCell,
+  StoragesColumnType,
+  StoragesNestedCellSelectors,
+  StoragesRackColumn,
+} from 'shared/model/storages/rack.model';
 import { StoragesColumnUiDict, StoragesColumnUiListKey } from 'shared/model/storages/ui.model';
 
 export type StoragesTsjrpcModel = {
@@ -58,7 +63,14 @@ export type StoragesTsjrpcModel = {
 
   renameColumn: (args: StoragesTsjrpcRackSelector & { title: string; coli: number }) => void;
   moveColumn: (args: StoragesTsjrpcRackSelector & { coli: number; newi: number | nil }) => void;
-  editColumnFields: (args: StoragesTsjrpcRackSelector & { coli: number; data: object }) => void;
+  editColumnFields: (
+    args: StoragesTsjrpcRackSelector & {
+      coli: number;
+      data: Partial<{
+        [Type in StoragesColumnType]: Partial<OmitOwn<StoragesRackColumn<Type>, 'cols' | 't' | 'uid' | 'uil'>>;
+      }>;
+    },
+  ) => void;
 };
 
 type RackSelector = StoragesTsjrpcRackSelector;

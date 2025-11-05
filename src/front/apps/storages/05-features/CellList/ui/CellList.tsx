@@ -16,7 +16,10 @@ export const StoragesCellList = ({ rack, card }: Props) => {
   const isEdit = useStoragesIsEditInnersContext();
 
   return (
-    <>
+    <div
+      className="*:my-4"
+      storages-cell-list=""
+    >
       {(rack.colsOrd ?? rack.cols.map((_, i) => i)).map(coli => {
         return (
           <TheStoragesCell
@@ -34,6 +37,6 @@ export const StoragesCellList = ({ rack, card }: Props) => {
           onAdd={(newColumnType, title) => storagesTsjrpcClient.createColumn({ rackw: rack.w, title, newColumnType })}
         />
       )}
-    </>
+    </div>
   );
 };

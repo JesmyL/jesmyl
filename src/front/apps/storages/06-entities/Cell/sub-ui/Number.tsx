@@ -21,7 +21,7 @@ export const StoragesCellOfTypeNumber = (props: StoragesCellTypeProps<StoragesCo
   return (
     <>
       <div>
-        {props.column.title}
+        {props.columnTitleNode}
 
         <TextInput
           type="number"

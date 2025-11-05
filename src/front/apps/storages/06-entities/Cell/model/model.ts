@@ -16,6 +16,7 @@ export type StoragesCellTypeProps<Type extends StoragesColumnType> = {
   card: StoragesRackCard;
   rack: StoragesRack;
   coli: number;
+  columnTitleNode: React.ReactNode;
 
   nestedSelectors?: StoragesNestedCellSelectors;
 };
