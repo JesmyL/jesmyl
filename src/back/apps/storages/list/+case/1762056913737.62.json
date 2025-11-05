@@ -3,7 +3,7 @@
   "title": "cm",
   "team": { "T166cbf17596a0c2919e4df1a6d54e66": { "fio": "Павел 👨‍💻", "role": 1 } },
   "cards": [
-    { "mi": 12, "title": "com comments -> DirStorage" },
+    { "mi": 12, "title": "com comments -> DirStorage", "status": 1 },
     {
       "mi": 11,
       "title": "стирать удалённые песни по-умному",
