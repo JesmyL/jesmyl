@@ -1,4 +1,5 @@
 import { useStoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
+import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
 import { StoragesRack, StoragesRackCard } from 'shared/model/storages/list.model';
 import { StoragesColumnUiListKey } from 'shared/model/storages/ui.model';
 import { storagesCellComponents } from '../const/cellComponents';
@@ -42,6 +43,7 @@ export const TheStoragesCell = (props: Props) => {
   return (
     <div {...uiAttrs}>
       <Component
+        icon={storagesColumnConfigDict[column.t].icon}
         cell={props.card.row?.[props.coli] as never}
         column={column as never}
         card={props.card}
@@ -52,7 +54,7 @@ export const TheStoragesCell = (props: Props) => {
             <div>
               <span
                 className="text-x7"
-                storages-coli-nn={props.coli}
+                storages-coli={props.coli}
                 storages-col-type={props.rack.cols[props.coli].t}
               >
                 #{props.coli + 1}{' '}

@@ -1,4 +1,5 @@
 import { Autocomplete } from '#shared/components/Autocomplete';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useStoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
@@ -14,6 +15,7 @@ export const StoragesCellOfTypeList = (props: StoragesCellTypeProps<StoragesColu
       <div>
         {props.columnTitleNode}
         <div className={isEdit ? undefined : 'font-bold'}>
+          {isEdit && <LazyIcon icon={props.icon} />}
           <Autocomplete
             isShowSelectedNodeOnly={!isEdit}
             selected={props.cell?.val}

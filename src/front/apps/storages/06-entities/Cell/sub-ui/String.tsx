@@ -1,4 +1,4 @@
-import { TextInput } from '#shared/ui/TextInput';
+import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { useStoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
@@ -22,7 +22,8 @@ export const StoragesCellOfTypeString = (props: StoragesCellTypeProps<StoragesCo
       <div>
         {props.columnTitleNode}
 
-        <TextInput
+        <InputWithLoadingIcon
+          icon={props.icon}
           defaultValue={props.cell?.val}
           strongDefaultValue
           onChanged={value =>

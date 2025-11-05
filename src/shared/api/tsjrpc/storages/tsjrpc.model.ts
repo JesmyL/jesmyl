@@ -1,5 +1,12 @@
+import { SokiAuthLogin } from 'shared/api/complect/soki.model';
 import { storagesStylePropKeysMatrix } from 'shared/const/storages/styleProps.config';
-import { StoragesRack, StoragesRackCard, StoragesRackCardMi, StoragesRackWid } from 'shared/model/storages/list.model';
+import {
+  StoragesRack,
+  StoragesRackCard,
+  StoragesRackCardMi,
+  StoragesRackMember,
+  StoragesRackWid,
+} from 'shared/model/storages/list.model';
 import {
   StoragesCell,
   StoragesColumnType,
@@ -15,6 +22,7 @@ export type StoragesTsjrpcModel = {
   renameRack: (args: RackSelector & { title: string }) => void;
 
   createRackCard: (args: RackSelector) => StoragesRackCardMi;
+  addRackMember: (args: RackSelector & { member: StoragesRackMember; login: SokiAuthLogin }) => void;
   addManyCards: (args: RackSelector & { cards: StoragesRackCard[] }) => void;
   addRackValue: (args: RackSelector & { title: string }) => void;
   setRackCardStatus: (args: StoragesTsjrpcRackStatusSelector & StoragesTsjrpcRackCardSelector) => void;

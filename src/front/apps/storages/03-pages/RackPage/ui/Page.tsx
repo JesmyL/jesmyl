@@ -1,8 +1,10 @@
 import { Button } from '#shared/components/ui/button';
+import { mylib } from '#shared/lib/my-lib';
 import { Modal } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
+import { QrReader } from '#shared/ui/qr-code/QrReader';
 import { useAuth } from '$index/shared/state';
 import { StoragesRackStatusFace } from '$storages/entities/RackStatusFace';
 import { StoragesStatusManagerModalInner } from '$storages/features/StatusManager';
@@ -19,6 +21,7 @@ import { StoragesRackSearchModalInner } from './SearchModalInner';
 const isOpenSearchModal = atom(false);
 const isOpenImportFromExcelModal = atom(false);
 const isOpenStatusesRedactorModal = atom(false);
+const isOpenMemberAdderModal = atom(false);
 
 export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
   const rack = useLiveQuery(() => storagesIDB.tb.racks.get(rackw), [rackw]);
@@ -103,6 +106,28 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
             <StoragesStatusManagerModalInner rack={rack} />
           </Modal>
 
+          <QrReader
+            openAtom={isOpenMemberAdderModal}
+            onReadData={value => {
+              const auth = JSON.parse(value) as unknown;
+
+              if (
+                !mylib.isObj(auth) ||
+                !('fio' in auth) ||
+                !('login' in auth) ||
+                !mylib.isStr(auth.fio) ||
+                !mylib.isStr(auth.login)
+              )
+                return;
+
+              return storagesTsjrpcClient.addRackMember({
+                member: { fio: auth.fio, role: StoragesRackMemberRole.Admin },
+                login: auth.login as never,
+                rackw,
+              });
+            }}
+          />
+
           {isMoreOpen && (
             <BottomPopup onClose={setIsMoreOpen}>
               <BottomPopupItem
@@ -145,6 +170,12 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
                 icon="FileImport"
                 onClick={isOpenImportFromExcelModal.do.toggle}
                 title="Сформировать карточки из Excel"
+              />
+
+              <BottomPopupItem
+                icon="QrCode"
+                onClick={isOpenMemberAdderModal.do.toggle}
+                title="Добавить участника"
               />
             </BottomPopup>
           )}

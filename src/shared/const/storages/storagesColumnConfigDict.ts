@@ -18,6 +18,7 @@ const mapStrOrNumToTimestamp = (value: string | number) => {
 
 export const storagesColumnConfigDict: {
   [Type in StoragesColumnType]: {
+    icon: KnownStameskaIconName;
     def: () => StoragesCell<Type>;
     typeTitle: string;
     checkType: (value: unknown) => null | string;
@@ -27,6 +28,7 @@ export const storagesColumnConfigDict: {
   };
 } = {
   [StoragesColumnType.Date]: {
+    icon: 'Calendar01',
     typeTitle: 'Дата',
     def: () => ({
       t: StoragesColumnType.Date,
@@ -44,6 +46,7 @@ export const storagesColumnConfigDict: {
     makeStringValue: cell => (cell?.val == null ? null : new Date(cell.val).toLocaleDateString('ru')),
   },
   [StoragesColumnType.Dates]: {
+    icon: 'Calendar02',
     typeTitle: 'Даты',
     makeStringValue: cell => {
       if (cell?.row == null) return;
@@ -72,6 +75,7 @@ export const storagesColumnConfigDict: {
     retCorrectTypeValue: () => undefined,
   },
   [StoragesColumnType.List]: {
+    icon: 'Scroll',
     typeTitle: 'Список',
     makeStringValue: cell => cell?.val.find(it => it),
     def: () => ({
@@ -85,6 +89,7 @@ export const storagesColumnConfigDict: {
     retCorrectTypeValue: value => (smylib.isArr(value) ? (value as string[]) : []),
   },
   [StoragesColumnType.Number]: {
+    icon: 'Absolute',
     typeTitle: 'Цифра',
     makeStringValue: cell => cell && '' + cell.val,
     def: () => ({
@@ -100,6 +105,7 @@ export const storagesColumnConfigDict: {
     retCorrectTypeValue: value => (smylib.isNum(value) ? value : 0),
   },
   [StoragesColumnType.String]: {
+    icon: 'BorderFull',
     typeTitle: 'Строка',
     makeStringValue: cell => cell?.val,
     def: () => ({
@@ -115,6 +121,7 @@ export const storagesColumnConfigDict: {
     retCorrectTypeValue: value => (smylib.isStr(value) ? value.trim() : ''),
   },
   [StoragesColumnType.Link]: {
+    icon: 'Link01',
     typeTitle: 'Ссылка',
     makeStringValue: cell => cell?.val,
     def: () => ({
@@ -130,6 +137,7 @@ export const storagesColumnConfigDict: {
     retCorrectTypeValue: value => (storagesCheckStringValueIsLink(value) ? value : ''),
   },
   [StoragesColumnType.Formula]: {
+    icon: 'Math',
     typeTitle: 'Формула',
     makeStringValue: cell => cell?.val,
     def: () => ({

@@ -1,6 +1,6 @@
+import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Button } from '#shared/components/ui/button';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
-import { TextInput } from '#shared/ui/TextInput';
 import { StoragesRackStatusFace } from '$storages/entities/RackStatusFace';
 import { StoragesCellList } from '$storages/features/CellList';
 import { StoragesRackCardMetaInfoReader } from '$storages/features/RackCardMetaInfoReader';
@@ -54,7 +54,8 @@ const Card = ({ card, rack }: { rack: StoragesRack; card: StoragesRackCard }) =>
         <div className="*:my-4 *:block">
           {isEdit ? (
             <>
-              <TextInput
+              <InputWithLoadingIcon
+                icon="BorderFull"
                 label="Название"
                 defaultValue={card.title}
                 strongDefaultValue
@@ -66,7 +67,8 @@ const Card = ({ card, rack }: { rack: StoragesRack; card: StoragesRackCard }) =>
           )}
 
           {isEdit ? (
-            <TextInput
+            <InputWithLoadingIcon
+              icon="TextAlignLeft"
               label="Заметки"
               defaultValue={card.note}
               multiline

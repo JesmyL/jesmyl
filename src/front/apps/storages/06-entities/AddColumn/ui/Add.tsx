@@ -28,15 +28,17 @@ export const StoragesAddColumn = ({
       <Modal openAtom={isOpenModalAtom}>
         <ModalHeader>Выберите тип нового специального поля</ModalHeader>
         <ModalBody className="flex flex-col gap-3 *:w-full">
-          {MyLib.entries(storagesColumnConfigDict).map(([type, { typeTitle }]) => {
+          {MyLib.entries(storagesColumnConfigDict).map(([type, { typeTitle, icon }]) => {
             if (excludeColumnTypes?.has(+type)) return;
 
             return (
               <Button
                 key={type}
+                icon={icon}
                 onClick={async () => {
                   const title = await prompt(`Название для нового поля с типом ${typeTitle}`, 'Новое поле', typeTitle);
                   if (!title) return;
+                  isOpenModalAtom.reset();
 
                   return onAdd(+type, title);
                 }}

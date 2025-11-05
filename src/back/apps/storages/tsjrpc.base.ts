@@ -63,6 +63,10 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           return { value: { rack: item, lastModfiedAt: mod } };
         },
 
+        addRackMember: updateRack((rack, { login, member }) => {
+          rack.team[login] = member;
+        }),
+
         createRackCard: updateRack(rack => {
           const emptyTitleCard = rack.cards.find(card => !card.title);
           if (emptyTitleCard != null) return { value: emptyTitleCard.mi };

@@ -1,31 +1,42 @@
-import { TextInput } from '#shared/ui/TextInput';
+import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
+import { useStoragesHighlighUsedFormulaRefs } from '$storages/shared/lib/useHighlighUsedFormulaRefs';
 import { useStoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
+import { useRef } from 'react';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
 import { StoragesCellTypeProps } from '../model/model';
 
 export const StoragesCellOfTypeNumber = (props: StoragesCellTypeProps<StoragesColumnType.Number>) => {
   const isEdit = useStoragesIsEditInnersContext();
 
-  if (!isEdit)
-    return (
-      !props.cell?.val || (
-        <div>
-          <span>{props.column.title} </span>
-          <span className="font-bold"> {props.cell?.val} </span>
-          <span> {props.column.mt}</span>
-        </div>
-      )
-    );
+  if (isEdit) return <Edit {...props} />;
+
+  return (
+    !props.cell?.val || (
+      <div>
+        <span>{props.column.title} </span>
+        <span className="font-bold"> {props.cell?.val} </span>
+        <span> {props.column.mt}</span>
+      </div>
+    )
+  );
+};
+
+const Edit = (props: StoragesCellTypeProps<StoragesColumnType.Number>) => {
+  const inputRef = useRef<(HTMLInputElement & HTMLTextAreaElement) | null>(null);
+
+  useStoragesHighlighUsedFormulaRefs(inputRef, props.coli, props.rack.cols);
 
   return (
     <>
       <div>
         {props.columnTitleNode}
 
-        <TextInput
+        <InputWithLoadingIcon
+          icon={props.icon}
           type="number"
-          defaultValue={props.cell?.val}
+          inputRef={inputRef}
+          defaultValue={props.cell ? '' + props.cell.val : ''}
           strongDefaultValue
           onChanged={amount =>
             storagesTsjrpcClient.setNumber({
