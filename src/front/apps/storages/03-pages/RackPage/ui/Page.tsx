@@ -120,6 +120,8 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
               )
                 return;
 
+              isOpenMemberAdderModal.reset();
+
               return storagesTsjrpcClient.addRackMember({
                 member: { fio: auth.fio, role: StoragesRackMemberRole.Admin },
                 login: auth.login as never,
