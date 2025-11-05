@@ -163,7 +163,7 @@ const replaceNumbers = <Ret extends unknown | string = unknown | string>(
   if (innerCall > 100 || props.formula?.includes(`#${props.coli + 1}`)) return ['%Рекурсия!%'] as never;
 
   return props.formula
-    ?.replace(makeRegExp('/\\b([a-z.]+)\\s*(\\(?)/gi'), (_all, prop, bracket) => {
+    ?.replace(makeRegExp('/\\b([a-z.][a-z.0-9]*)\\s*(\\(?)/gi'), (_all, prop, bracket) => {
       if (!(prop in Math)) return bracket || (prop === prop.toUpperCase() ? prop : '0');
       return `${props.funcPrefix ?? 'Math.'}${prop}${bracket || (prop === prop.toUpperCase() ? '' : '0')}`;
     })
