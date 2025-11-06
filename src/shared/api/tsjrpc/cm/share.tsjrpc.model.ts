@@ -12,7 +12,12 @@ import {
 
 export type CmShareTsjrpcModel = {
   editedCom: (args: { com: IExportableCom }) => unknown;
-  refreshComList: (args: { coms: IExportableCom[]; modifiedAt: number; existComws: CmComWid[] }) => unknown;
+  refreshComList: (args: {
+    coms: IExportableCom[];
+    modifiedAt: number;
+    /** @deprecated */
+    existComws: CmComWid[];
+  }) => unknown;
 
   editedCat: (args: { cat: IExportableCat }) => unknown;
   refreshCatList: (args: { cats: IExportableCat[]; modifiedAt: number; existCatws: CmCatWid[] }) => unknown;

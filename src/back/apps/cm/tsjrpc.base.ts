@@ -36,13 +36,11 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
           const freshComs = comsDirStore.getFreshItems(lastModfiedAt);
 
           if (freshComs.items.length) {
-            const existComws = freshComs.items.filter(filterNotRemoved).map(extractItemw);
-
             cmShareServerTsjrpcMethods.refreshComList(
               {
                 coms: freshComs.items.map(mapCmImportableToExportableCom),
                 modifiedAt: freshComs.maxMod,
-                existComws,
+                existComws: comsDirStore.getAllIds(),
               },
               client,
             );
@@ -101,12 +99,14 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
 
                 if (blocks == null) break;
 
-                const comments = SMyLib.keys(blocks).map(strComw => ({
-                  m: 0,
-                  d: emptyObject,
-                  comw: +strComw,
-                  ...blocks[strComw],
-                }));
+                const comments = SMyLib.keys(blocks)
+                  .filter(comw => blocks[comw] != null && blocks[comw].m > lastModfiedAt)
+                  .map(strComw => ({
+                    m: 0,
+                    d: emptyObject,
+                    comw: +strComw,
+                    ...blocks[strComw],
+                  }));
 
                 if (comments.length > 0) {
                   cmShareServerTsjrpcMethods.refreshComCommentBlocks(

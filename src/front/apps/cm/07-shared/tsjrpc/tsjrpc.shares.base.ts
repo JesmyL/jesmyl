@@ -19,10 +19,10 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
           cmIDB.updateLastModifiedAt(com.m ?? com.w);
         },
 
-        refreshComList: async ({ coms, modifiedAt, existComws }) => {
-          await cmIDB.db.coms.bulkPut(coms);
-          cmIDB.db.coms.where('w').noneOf(existComws).delete();
+        refreshComList: async ({ coms, modifiedAt }) => {
           cmIDB.updateLastModifiedAt(modifiedAt);
+          await cmIDB.db.coms.bulkPut(coms);
+          cmIDB.db.coms.where({ isRemoved: 1 }).delete();
         },
 
         editedCat: async ({ cat }) => {
