@@ -4,6 +4,7 @@ import { QrReader } from '#shared/ui/qr-code/QrReader';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { atom } from 'atomaric';
+import { useState } from 'react';
 import { StoragesRack, StoragesRackCard } from 'shared/model/storages/list.model';
 
 const isQrReaderOpenAtom = atom(false);
@@ -17,6 +18,8 @@ export const StoragesRackCardMetaInfoReader = ({
   rack: StoragesRack;
   isEdit: boolean;
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <>
       <div>
@@ -24,6 +27,7 @@ export const StoragesRackCardMetaInfoReader = ({
         <div className="flex gap-3">
           <Button
             icon="QrCode"
+            isLoading={isLoading}
             onClick={isEdit ? isQrReaderOpenAtom.do.toggle : undefined}
           >
             {card.meta ? (
@@ -50,8 +54,10 @@ export const StoragesRackCardMetaInfoReader = ({
       <QrReader
         openAtom={isQrReaderOpenAtom}
         formats={['any']}
-        onReadData={meta => {
-          storagesTsjrpcClient.editRackCardMeta({ rackw: rack.w, meta, cardMi: card.mi });
+        onReadData={async meta => {
+          setIsLoading(true);
+          await storagesTsjrpcClient.editRackCardMeta({ rackw: rack.w, meta, cardMi: card.mi });
+          setIsLoading(false);
           isQrReaderOpenAtom.reset();
         }}
       />
