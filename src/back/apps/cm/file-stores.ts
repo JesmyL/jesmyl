@@ -1,4 +1,4 @@
-import { DirStore } from 'back/complect/DirStore';
+import { DirStorage } from 'back/complect/DirStore';
 import { FileStore } from 'back/complect/FileStore';
 import {
   ChordPack,
@@ -20,7 +20,7 @@ import {
 import { smylib } from 'shared/utils';
 import { cmConstantsDefaultConfig } from 'shared/values/cm/cmConstantsDefaultConfig';
 
-export const comsDirStore = new DirStore<IServerSideCom, CmComWid>({
+export const comsDirStore = new DirStorage<IServerSideCom, CmComWid>({
   dirPath: '/apps/cm/coms/',
   makeNewItem: () => ({
     m: Date.now(),
@@ -51,7 +51,7 @@ export const eePackFileStore = new FileStore<EeStorePack>('/apps/cm/eeStorage.js
 
 type TUserFavoritesStore = Partial<Record<string, TAboutComFavoriteItem>>;
 
-export const comCommentsDirStore = new DirStore<
+export const comCommentsDirStore = new DirStorage<
   {
     l: SokiAuthLogin;
     fio?: string;

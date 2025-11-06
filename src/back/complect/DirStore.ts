@@ -1,10 +1,11 @@
 import { backConfig } from 'back/config/backConfig';
 import fs from 'fs';
+import { smylib } from 'shared/utils';
 import { FileStore } from './FileStore';
 
 const initialFileDir = `${__dirname}${backConfig.fileStoreDir}`;
 
-export class DirStore<Item extends Record<IdKey, Id>, Id extends string | number, IdKey extends string = 'w'> {
+export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | number, IdKey extends string = 'w'> {
   ids: Id[];
   createItem: (mapper?: ((item: Item) => Item) | nil, id?: Id) => { item: Item; mod: number };
   updateItem: (id: Id, updater: (item: Item) => void) => { item: Item; mod: number } | nil;
@@ -23,12 +24,12 @@ export class DirStore<Item extends Record<IdKey, Id>, Id extends string | number
     cacheTime?: number;
     idKey: IdKey;
   }) {
-    const first = makeNewItem();
+    const firstCreatedItem = makeNewItem();
     const second = makeNewItem();
 
     if (
-      first === second ||
-      Object.entries(first).some(
+      firstCreatedItem === second ||
+      Object.entries(firstCreatedItem).some(
         ([key, val]) =>
           typeof second === 'object' &&
           key in second &&
@@ -107,6 +108,7 @@ export class DirStore<Item extends Record<IdKey, Id>, Id extends string | number
       }
     }
 
+    if (smylib.isNum(firstCreatedItem[idKey])) this.ids = this.ids.map(id => (smylib.isNaN(+id) ? id : +id)) as never;
     this.ids.forEach(this.getItemModTime);
   }
 
@@ -161,4 +163,6 @@ export class DirStore<Item extends Record<IdKey, Id>, Id extends string | number
 
     return { items: items, maxMod };
   };
+
+  getAllIds = () => this.ids;
 }
