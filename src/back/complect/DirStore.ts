@@ -69,6 +69,8 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
         [idKey]: id,
       }));
 
+      this.ids.push(id);
+
       return {
         item: item.getValue(),
         mod: this.saveItem(id)!,
@@ -128,7 +130,10 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
     }
   };
 
-  deleteItem = (id: Id) => this.getFileStore(id)?.deleteFile();
+  deleteItem = (id: Id) => {
+    this.getFileStore(id)?.deleteFile();
+    this.ids = this.ids.filter(it => it != id);
+  };
 
   saveItem = (id: Id) => {
     this.getFileStore(id)?.saveValue();
