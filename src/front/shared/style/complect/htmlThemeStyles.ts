@@ -2,17 +2,18 @@ import { cursors } from '#shared/const/cursorsBase64';
 import { css } from 'styled-components';
 
 export const htmlThemeStyles = css`
-  --color--1: var(--color-x1);
-  --color--2: var(--color-x2);
-  --color--3: var(--color-x3);
-  --color--4: var(--color-x4);
-  --color--5: var(--color-x5);
-  --color--6: var(--color-x6);
-  --color--7: var(--color-x7);
-  --color--8: var(--color-x8);
-  --color--ko: var(--color-xKO);
-  --color--ok: var(--color-xOK);
+--color--1: var(--color-x1);
+--color--2: var(--color-x2);
+--color--3: var(--color-x3);
+--color--4: var(--color-x4);
+--color--5: var(--color-x5);
+--color--6: var(--color-x6);
+--color--7: var(--color-x7);
+--color--8: var(--color-x8);
+--color--ko: var(--color-xKO);
+--color--ok: var(--color-xOK);
 
+&:not(.dark) {
   --color-x1: #eaf1e9;
   --color-x2: #d5e8d5;
   --color-x3: #122217;
@@ -30,9 +31,9 @@ export const htmlThemeStyles = css`
   &,
   * {
     ${cursors.defaultDark}
-  }
-
-  ${pointer(cursors.pointerDark)}
+}
+${pointer(cursors.pointerDark)}
+}
 
   &.dark {
     --color-x1: #242a26;
@@ -53,9 +54,9 @@ export const htmlThemeStyles = css`
     * {
       ${cursors.defaultLight}
     }
+    ${pointer(cursors.pointerLight)}
   }
 
-  ${pointer(cursors.pointerLight)}
 `;
 
 function pointer(style: string) {
