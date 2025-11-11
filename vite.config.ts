@@ -1,6 +1,5 @@
 import tailwindcss from '@tailwindcss/vite';
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
-import basicSsl from '@vitejs/plugin-basic-ssl';
 import react from '@vitejs/plugin-react';
 import { attrStylerVitePlugin } from 'attr-styler';
 import dns from 'dns';
@@ -25,7 +24,7 @@ Object.entries(tsConfig.compilerOptions.paths).forEach(([aliasKey, [path]]) => {
 export default defineConfig(() => {
   return {
     build: { outDir: 'build' },
-    server: { https: {} },
+    server: { port: 3627 },
     plugins: [
       regExpertVitePlugin(),
       TanStackRouterVite({ target: 'react', autoCodeSplitting: true, routesDirectory: 'src/front/routes' }),
@@ -38,7 +37,6 @@ export default defineConfig(() => {
       }),
       VitePWA(vitePWAOptions),
       tailwindcss(),
-      basicSsl(),
       react(),
       attrStylerVitePlugin({
         fileExtToAnalize: ['.css', '.scss', '.styler.ts'],
