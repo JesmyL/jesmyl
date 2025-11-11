@@ -72,7 +72,7 @@ export type StoragesTsjrpcModel = {
   renameColumn: (args: StoragesTsjrpcRackSelector & { title: string; coli: number }) => void;
   moveColumn: (args: StoragesTsjrpcRackSelector & { coli: number; newi: number | nil }) => void;
   editColumnFields: (
-    args: StoragesTsjrpcRackSelector & {
+    args: StoragesTsjrpcRackSelector & StoragesNestedCellSelectors & {
       coli: number;
       data: Partial<{
         [Type in StoragesColumnType]: Partial<OmitOwn<StoragesRackColumn<Type>, 'cols' | 't' | 'uid' | 'uil'>>;

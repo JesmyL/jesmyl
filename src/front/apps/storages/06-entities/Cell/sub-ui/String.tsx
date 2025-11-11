@@ -10,9 +10,9 @@ export const StoragesCellOfTypeString = (props: StoragesCellTypeProps<StoragesCo
   if (!isEdit)
     return (
       !props.cell?.val || (
-        <div>
-          <span> {props.column.title} </span>
-          <span className="font-bold"> {props.cell?.val} </span>
+        <div className='flex gap-2'>
+          <span>{props.column.title}</span>
+          <span className="font-bold">{props.cell?.val}</span>
         </div>
       )
     );
@@ -21,7 +21,6 @@ export const StoragesCellOfTypeString = (props: StoragesCellTypeProps<StoragesCo
     <>
       <div>
         {props.columnTitleNode}
-
         <InputWithLoadingIcon
           icon={props.icon}
           defaultValue={props.cell?.val}

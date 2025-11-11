@@ -5,6 +5,10 @@ import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.metho
 import { useRef } from 'react';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
 import { StoragesCellTypeProps } from '../model/model';
+import { storagesMakeActualFormulaProps } from '$storages/shared/lib/formulaComputing';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
+
+const metrics = ['₽', '$', '€', '£', 'шт', 'м', 'мин'];
 
 export const StoragesCellOfTypeNumber = (props: StoragesCellTypeProps<StoragesColumnType.Number>) => {
   const isEdit = useStoragesIsEditInnersContext();
@@ -13,10 +17,10 @@ export const StoragesCellOfTypeNumber = (props: StoragesCellTypeProps<StoragesCo
 
   return (
     !props.cell?.val || (
-      <div>
-        <span>{props.column.title} </span>
-        <span className="font-bold"> {props.cell?.val} </span>
-        <span> {props.column.mt}</span>
+      <div className='flex gap-2'>
+        <span>{props.column.title}</span>
+        <span className="font-bold">{props.cell?.val}</span>
+        <span>{props.column.mt}</span>
       </div>
     )
   );
@@ -24,30 +28,53 @@ export const StoragesCellOfTypeNumber = (props: StoragesCellTypeProps<StoragesCo
 
 const Edit = (props: StoragesCellTypeProps<StoragesColumnType.Number>) => {
   const inputRef = useRef<(HTMLInputElement & HTMLTextAreaElement) | null>(null);
+  const { coli, cols } = storagesMakeActualFormulaProps({
+    coli: props.coli,
+    nestedColi: props.nestedSelectors?.nestedColi,
+    nestedCellMi: props.nestedSelectors?.nestedCellMi,
+    rackCols: props.rack.cols,
+    cardRow: props.card.row,
+  });
 
-  useStoragesHighlighUsedFormulaRefs(inputRef, props.coli, props.rack.cols);
+  useStoragesHighlighUsedFormulaRefs(inputRef, coli, cols);
 
   return (
     <>
       <div>
         {props.columnTitleNode}
-
-        <InputWithLoadingIcon
-          icon={props.icon}
-          type="number"
-          inputRef={inputRef}
-          defaultValue={props.cell ? '' + props.cell.val : ''}
-          strongDefaultValue
-          onChanged={amount =>
-            storagesTsjrpcClient.setNumber({
-              amount: Math.abs(+amount),
-              cardMi: props.card.mi,
-              rackw: props.rack.w,
-              coli: props.coli,
-              ...props.nestedSelectors,
-            })
-          }
-        />
+        <div className='flex gap-3'>
+          <InputWithLoadingIcon
+            icon={props.icon}
+            type="number"
+            inputRef={inputRef}
+            defaultValue={props.cell ? '' + props.cell.val : ''}
+            strongDefaultValue
+            onChanged={amount =>
+              storagesTsjrpcClient.setNumber({
+                amount: Math.abs(+amount),
+                cardMi: props.card.mi,
+                rackw: props.rack.w,
+                coli: props.coli,
+                ...props.nestedSelectors,
+              })
+            }
+          />
+          <Dropdown
+            id={props.column.mt}
+            nullTitle='-'
+            hiddenArrow
+            items={metrics.map(id => ({ id, title: id }))}
+            onSelectId={id =>
+              storagesTsjrpcClient.editColumnFields({
+                coli: props.coli,
+                data: { [StoragesColumnType.Number]: { mt: id } },
+                rackw: props.rack.w,
+                nestedCellMi: props.nestedSelectors?.nestedCellMi,
+                nestedColi: props.nestedSelectors?.nestedColi,
+              })
+            }
+          />
+        </div>
       </div>
     </>
   );

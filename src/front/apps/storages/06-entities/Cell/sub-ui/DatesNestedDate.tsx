@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { StoragesColumnType, StoragesNestedCellMi } from 'shared/model/storages/rack.model';
 import { storagesCellComponents } from '../const/cellComponents';
 import { StoragesCellTypeProps } from '../model/model';
+import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
 
 const isOpenAddColumnModalAtom = atom(false);
 
@@ -106,6 +107,22 @@ export const StoragesCellDatesNestedDateCell = (
                   cell={cardCell?.row?.[nestedColumni] as null}
                   rack={props.rack}
                   column={column as never}
+                  columnTitleNode={
+                    isEdit ? (
+                      <div>
+                        <span
+                          className="text-x7"
+                          storages-coli={nestedColumni}
+                          storages-col-type={props.rack.cols[props.coli].cols?.[nestedColumni].t}
+                        >
+                          #{nestedColumni + 1}{' '}
+                        </span>
+                        {column.title}
+                      </div>
+                    ) : (
+                      column.title
+                    )}
+                  icon={storagesColumnConfigDict[column.t].icon}
                   nestedSelectors={{
                     nestedCellMi: props.dateMi,
                     nestedColi: nestedColumni,

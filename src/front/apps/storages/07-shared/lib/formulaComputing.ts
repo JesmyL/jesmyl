@@ -1,15 +1,37 @@
 import { mylib } from '#shared/lib/my-lib';
 import { makeRegExp } from 'regexpert';
-import { StoragesCell, StoragesColumnType, StoragesRackColumn } from 'shared/model/storages/rack.model';
+import { StoragesCell, StoragesColumnType, StoragesNestedCellMi, StoragesRackColumn } from 'shared/model/storages/rack.model';
 import { itIt } from 'shared/utils';
 
 type UtilProps = {
   formula: string | nil;
   cells: (StoragesCell<StoragesColumnType> | nil)[] | nil;
-  cols: (StoragesRackColumn<StoragesColumnType> | nil)[];
+  cols: (StoragesRackColumn<StoragesColumnType> | nil)[] | nil;
   numFix: number | nil;
   coli: number;
   funcPrefix?: string;
+};
+
+export const storagesMakeActualFormulaProps = ({ cardRow, coli, nestedCellMi, nestedColi, rackCols, }: {
+  coli: number,
+  nestedColi: number | nil,
+  nestedCellMi: StoragesNestedCellMi | nil,
+  rackCols: StoragesRackColumn<StoragesColumnType>[],
+  cardRow: (nil | StoragesCell<StoragesColumnType>)[] | nil
+}
+) => {
+  const cols = nestedCellMi == null ? rackCols : rackCols[coli]?.cols;
+
+  return {
+    cols,
+    coli: nestedColi ?? coli,
+    innerCall: -(cols?.length ?? 0),
+    cells: nestedCellMi == null || cardRow == null || cardRow[coli] == null
+      ? cardRow
+      : 'row' in cardRow[coli]
+        ? cardRow[coli].row.find(cell => cell.mi === nestedCellMi)?.row
+        : null,
+  }
 };
 
 export const storagesReplaceFormulaNumbers = <Ret extends unknown | string = unknown | string>(
@@ -37,7 +59,7 @@ export const storagesReplaceFormulaNumbers = <Ret extends unknown | string = unk
         const cell = props.cells?.[index];
         if (cell?.t === StoragesColumnType.Number) return '' + cell.val;
 
-        const col = props.cols[index] as StoragesRackColumn<StoragesColumnType.Formula>;
+        const col = props.cols?.[index] as StoragesRackColumn<StoragesColumnType.Formula>;
         if (col?.t === StoragesColumnType.Formula) {
           if (props.coli === index) return '%Рекурсия%';
           if (col?.t !== StoragesColumnType.Formula) return '0';

@@ -5,13 +5,13 @@ import { StoragesColumnType, StoragesRackColumn } from 'shared/model/storages/ra
 export const useStoragesHighlighUsedFormulaRefs = (
   inputRef: RefObject<(HTMLInputElement & HTMLTextAreaElement) | null>,
   coli: number,
-  cols: StoragesRackColumn<StoragesColumnType>[],
+  cols: (StoragesRackColumn<StoragesColumnType> | nil)[] | nil,
 ) => {
   useEffect(() => {
     let elemCollection: NodeListOf<Element> | nil;
     const className = 'opacity-50!';
     const notSelector =
-      cols[coli].t === StoragesColumnType.Number
+      cols?.[coli]?.t === StoragesColumnType.Number
         ? '[storages-col-type],'
         : `[storages-col-type]:not([storages-col-type="${StoragesColumnType.Number}"]):not([storages-col-type="${StoragesColumnType.Formula}"]),`;
 
