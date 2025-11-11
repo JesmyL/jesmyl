@@ -128,8 +128,17 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
         }),
 
         editColumnFields: updateRack((rack, props) => {
+          if (props.nestedColi != null) {
+            const nestedCols = rack.cols[props.coli].cols;
+            if (nestedCols == null) return;
+            const col = nestedCols[props.nestedColi];
+
+            nestedCols[props.nestedColi] = { ...col, ...(col && props.data[col.t]) };
+
+            return;
+          }
+
           const col = rack.cols[props.coli];
-          if (props.data[col.t] == null) return;
           rack.cols[props.coli] = { ...col, ...props.data[col.t] };
         }),
 
@@ -216,8 +225,11 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           }
         }),
 
-        editCellValue: updateCell((cell, { value }) => {
-          cell.val = storagesColumnConfigDict[cell.t].retCorrectTypeValue(value);
+        editCellValue: updateCellOrNestedCell((rowHolder, index, { value }, colType) => {
+          rowHolder.row ??= [];
+          const cell = (rowHolder.row[index] ??= storagesColumnConfigDict[colType].def());
+
+          cell.val = storagesColumnConfigDict[colType].retCorrectTypeValue(value);
         }),
 
         toggleListCellValue: updateCellOrNestedCell((rowHolder, index, { title }, colType) => {

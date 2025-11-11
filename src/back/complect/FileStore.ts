@@ -42,18 +42,7 @@ export class FileStore<Value> {
       return true;
     } catch (_error) {
       try {
-        const splits = this.filePath.split('/');
-        let prev = splits[0] === '' ? '/' : '';
-
-        splits
-          .filter(it => it)
-          .slice(0, -1)
-          .forEach(pathPart => {
-            const path = `${prev}${pathPart}`;
-            if (!fs.existsSync(path)) fs.mkdirSync(path);
-            prev = `${path}/`;
-          });
-
+        this.makePath();
         fs.writeFileSync(this.filePath, JSON.stringify(value));
 
         return true;
@@ -61,6 +50,20 @@ export class FileStore<Value> {
         return false;
       }
     }
+  };
+
+  makePath = () => {
+    const splits = this.filePath.split('/');
+    let prev = splits[0] === '' ? '/' : '';
+
+    splits
+      .filter(it => it)
+      .slice(0, -1)
+      .forEach(pathPart => {
+        const path = `${prev}${pathPart}`;
+        if (!fs.existsSync(path)) fs.mkdirSync(path);
+        prev = `${path}/`;
+      });
   };
 
   getValueWithAutoSave = (): Value => {

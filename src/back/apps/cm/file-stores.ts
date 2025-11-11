@@ -1,4 +1,4 @@
-import { DirStorage } from 'back/complect/DirStore';
+import { DirStorage } from 'back/complect/DirStorage';
 import { FileStore } from 'back/complect/FileStore';
 import {
   ChordPack,
