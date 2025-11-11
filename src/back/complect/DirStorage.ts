@@ -6,12 +6,12 @@ import { FileStore } from './FileStore';
 const initialFileDir = `${__dirname}${backConfig.fileStoreDir}`;
 
 export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | number, IdKey extends string = 'w'> {
-  ids: Id[];
+  ids: Id[] = [];
   createItem: (mapper?: ((item: Item) => Item) | nil, id?: Id) => { item: Item; mod: number };
   updateItem: (id: Id, updater: (item: Item) => void) => { item: Item; mod: number } | nil;
 
   private getFileStore: (id: Id) => FileStore<Item> | nil;
-  private updateCahceTime: (id: Id) => void = () => {};
+  private updateCahceTime: (id: Id) => void = () => { };
 
   constructor({
     makeNewItem,
@@ -69,7 +69,7 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
         [idKey]: id,
       }));
 
-      this.ids.push(id);
+      refillIds();
 
       return {
         item: item.getValue(),
@@ -95,24 +95,26 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
       };
     }
 
-    try {
-      this.ids = fs.readdirSync(absoluteDirPath).map(makeIdFromFileName) as Id[];
-    } catch (_e) {
-      const createdId = this.createItem(undefined, '--NEW_ID--' as never).item[idKey];
-
-      setTimeout(() => delete fileStores[createdId]);
-      fs.unlinkSync(`${absoluteDirPath}${createdId}.json`);
-
+    const refillIds = () => {
       try {
         this.ids = fs.readdirSync(absoluteDirPath).map(makeIdFromFileName) as Id[];
       } catch (_e) {
-        this.ids = [];
-      }
-    }
 
-    if (smylib.isNum(firstCreatedItem[idKey])) this.ids = this.ids.map(id => (smylib.isNaN(+id) ? id : +id)) as never;
-    this.ids.forEach(this.getItemModTime);
-  }
+        new FileStore(`${dirPath}file`, {}).makePath();
+
+        try {
+          this.ids = fs.readdirSync(absoluteDirPath).map(makeIdFromFileName) as Id[];
+        } catch (_e) {
+          this.ids = [];
+        }
+      }
+
+      if (smylib.isNum(firstCreatedItem[idKey])) this.ids = this.ids.map(id => (smylib.isNaN(+id) ? id : +id)) as never;
+      this.ids.forEach(this.getItemModTime);
+    };
+
+    refillIds();
+}
 
   getItem = (id: Id) => {
     try {
