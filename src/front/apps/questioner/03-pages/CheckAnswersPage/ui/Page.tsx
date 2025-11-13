@@ -2,7 +2,6 @@ import { Accordion } from '#shared/components/ui/accordion';
 import { Button } from '#shared/components/ui/button';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
-import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { useQuestionerCheckAnswersQuery } from '$q/pages/CheckAnswersPage/api/useQuestionerUserAnswersQuery';
 import { questionerCardContents } from '$q/shared/const/cardContents';
 import { questionerIDB } from '$q/shared/state/qIdb';

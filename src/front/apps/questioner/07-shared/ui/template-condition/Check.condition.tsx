@@ -1,7 +1,3 @@
-import { mylib } from '#shared/lib/my-lib';
-import { Dropdown } from '#shared/ui/dropdown/Dropdown';
-import { questionerIfConditionOperatorDescriptionDict } from '$q/shared/const/ifConditionDescriptions';
-import { questionerAdminTsjrpcClient } from '$q/shared/tsjrpc/admin.tsjrpc';
 import { QuestionerType } from 'shared/model/q';
 import { QuestionerConditionContentProps } from 'shared/model/q/answer';
 import { QuestionerTemplateConditionOperator, QuestionerTemplateTypeConditionDict } from 'shared/model/q/condition';

@@ -2,7 +2,6 @@ import { Button } from '#shared/components/ui/button';
 import { questionerAdminTsjrpcClient } from '$q/shared/tsjrpc/admin.tsjrpc';
 import { QuestionerBlankWid, QuestionerTemplateId } from 'shared/model/q';
 import { QuestionerTemplateVisibilityRedactorModalBodyInner } from './ModalBodyInner';
-import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { mylib } from '#shared/lib/my-lib';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { questionerIDB } from '$q/shared/state/qIdb';

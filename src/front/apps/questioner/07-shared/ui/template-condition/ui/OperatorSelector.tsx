@@ -4,7 +4,7 @@ import { questionerIfConditionOperatorDescriptionDict } from "$q/shared/const/if
 import { questionerAdminTsjrpcClient } from "$q/shared/tsjrpc/admin.tsjrpc";
 import { QuestionerType } from "shared/model/q";
 import { QuestionerConditionContentProps } from "shared/model/q/answer";
-import { QuestionerTemplateConditionOperator, QuestionerTemplateTypeConditionDict } from "shared/model/q/condition";
+import { QuestionerTemplateTypeConditionDict } from "shared/model/q/condition";
 
 export const QuestionerTemplateConditionCardOperatorSelector = <
     Type extends QuestionerType,

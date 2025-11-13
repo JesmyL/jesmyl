@@ -11,7 +11,6 @@ import { QuestionerTextIncludeResultText } from '../-inner-ui/TextIncludeResultT
 
 export const QuestionerAdminTextIncludeTemplateCardContent = ({
   blank,
-  onUpdate,
   template,
   templateId,
 }: QuestionerAdminTemplateContentProps<QuestionerType.TextInclude>) => {
@@ -46,7 +45,6 @@ export const QuestionerAdminTextIncludeTemplateCardContent = ({
                     //
                   }
                   setIsSymbolsUpdate(false);
-                  onUpdate();
                 }}
               >
                 {symbol}
@@ -62,7 +60,7 @@ export const QuestionerAdminTextIncludeTemplateCardContent = ({
         defaultValue={template.text}
         strongDefaultValue
         onChanged={text =>
-          questionerAdminTsjrpcClient.switchTemplateTextValue({ blankw: blank.w, templateId, text }).then(onUpdate)
+          questionerAdminTsjrpcClient.switchTemplateTextValue({ blankw: blank.w, templateId, text })
         }
       />
       <div>Для обновления результата уберите фокус из текстового поля</div>
@@ -92,7 +90,6 @@ export const QuestionerAdminTextIncludeTemplateCardContent = ({
                     textValue,
                     textCode,
                   })
-                  .then(onUpdate)
               }
             />
           );
@@ -110,7 +107,6 @@ export const QuestionerAdminTextIncludeTemplateCardContent = ({
             onChanged={text =>
               questionerAdminTsjrpcClient
                 .changeTemplateTextValue({ blankw: blank.w, templateId, text, texti })
-                .then(onUpdate)
             }
           />
         );
@@ -121,7 +117,7 @@ export const QuestionerAdminTextIncludeTemplateCardContent = ({
         className="mt-5"
         disabled={template.addTexts?.some(itNIt)}
         disabledReason="Есть варианты без названия"
-        onClick={() => questionerAdminTsjrpcClient.addTemplateTextValue({ blankw: blank.w, templateId }).then(onUpdate)}
+        onClick={() => questionerAdminTsjrpcClient.addTemplateTextValue({ blankw: blank.w, templateId })}
       >
         Добавить дополнительный вариант
       </Button>

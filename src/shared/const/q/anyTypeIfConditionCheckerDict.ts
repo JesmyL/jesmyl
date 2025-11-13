@@ -1,4 +1,4 @@
-import { QuestionerBlank, QuestionerType } from "shared/model/q";
+import { QuestionerBlank } from "shared/model/q";
 import { QuestionerUserAnswer } from "shared/model/q/answer";
 import { questionerTypeIfConditionCheckerDict } from "./typeIfConditionCheckerDict";
 import { QuestionerTemplateIfCondition } from "shared/model/q/condition";

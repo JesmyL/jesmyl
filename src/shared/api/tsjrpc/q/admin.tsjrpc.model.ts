@@ -6,7 +6,7 @@ import {
   QuestionerTemplateSelector,
   QuestionerType,
 } from 'shared/model/q';
-import { QuestionerTemplateConditionOperator, QuestionerTemplateConditionType, QuestionerTemplateTypeConditionDict } from 'shared/model/q/condition';
+import { QuestionerTemplateConditionType, QuestionerTemplateTypeConditionDict } from 'shared/model/q/condition';
 
 export type QuestionerAdminTsjrpcModel = {
   requestFreshes: (args: { lastModfiedAt: number }) => void,

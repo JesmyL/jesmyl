@@ -20,7 +20,6 @@ export const QuestionerAdminCheckTemplateCardContent = (
             onChanged={value =>
               questionerAdminTsjrpcClient
                 .changeTemplateMinSign({ blankw: props.blank.w, templateId: props.templateId, value: +value })
-                .then(props.onUpdate)
             }
           />
           <InputWithLoadingIcon
@@ -32,7 +31,6 @@ export const QuestionerAdminCheckTemplateCardContent = (
             onChanged={value =>
               questionerAdminTsjrpcClient
                 .changeTemplateMaxSign({ blankw: props.blank.w, templateId: props.templateId, value: +value })
-                .then(props.onUpdate)
             }
           />
         </div>

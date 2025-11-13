@@ -9,7 +9,6 @@ import { StameskaIconKind } from 'stameska-icon/utils';
 
 export const QuestionerAdminVariantedTemplateCardContent = ({
   blank,
-  onUpdate,
   template,
   templateId,
   addIcon,
@@ -28,9 +27,7 @@ export const QuestionerAdminVariantedTemplateCardContent = ({
         checked={!!template.rSort}
         postfix="Показывать варианты в случайном порядке"
         onChange={value =>
-          questionerAdminTsjrpcClient
-            .changeTemplateRandomSortSign({ blankw: blank.w, templateId, value })
-            .then(onUpdate)
+          questionerAdminTsjrpcClient.changeTemplateRandomSortSign({ blankw: blank.w, templateId, value })
         }
       />
       {preContent}
@@ -46,16 +43,12 @@ export const QuestionerAdminVariantedTemplateCardContent = ({
                 <LazyIcon
                   {...makeVariantIconProps(+answerId)}
                   onClick={() =>
-                    questionerAdminTsjrpcClient
-                      .changeTemplateCorrectAnswerSign({ blankw: blank.w, templateId, answerId: +answerId })
-                      .then(onUpdate)
+                    questionerAdminTsjrpcClient.changeTemplateCorrectAnswerSign({ blankw: blank.w, templateId, answerId: +answerId })
                   }
                 />
               }
               onChanged={value =>
-                questionerAdminTsjrpcClient
-                  .changeTemplateAnswerVariantTitle({ blankw: blank.w, templateId, answerId, value })
-                  .then(onUpdate)
+                questionerAdminTsjrpcClient.changeTemplateAnswerVariantTitle({ blankw: blank.w, templateId, answerId, value })
               }
             />
           );
@@ -66,7 +59,7 @@ export const QuestionerAdminVariantedTemplateCardContent = ({
           disabled={variantKeys.some(key => !template.variants[key]?.title)}
           disabledReason="Есть варианты без названия"
           onClick={() =>
-            questionerAdminTsjrpcClient.addTemplateAnswerVariant({ blankw: blank.w, templateId }).then(onUpdate)
+            questionerAdminTsjrpcClient.addTemplateAnswerVariant({ blankw: blank.w, templateId })
           }
         >
           Добавить вариант

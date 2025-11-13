@@ -9,7 +9,6 @@ import { QuestionerAdminTemplateContentProps, QuestionerAnswerId, QuestionerType
 
 export const QuestionerAdminSorterTemplateCardContent = ({
   blank,
-  onUpdate,
   template,
   templateId,
 }: QuestionerAdminTemplateContentProps<QuestionerType.Sorter>) => {
@@ -28,7 +27,7 @@ export const QuestionerAdminSorterTemplateCardContent = ({
           checked={!!template.noCorrect}
           postfix="Нет правильного порядка"
           onChange={() =>
-            questionerAdminTsjrpcClient.switchTemplateNoCorrectsSign({ blankw: blank.w, templateId }).then(onUpdate)
+            questionerAdminTsjrpcClient.switchTemplateNoCorrectsSign({ blankw: blank.w, templateId })
           }
         />
         <IconCheckbox
@@ -36,7 +35,7 @@ export const QuestionerAdminSorterTemplateCardContent = ({
           disabled={!!template.noCorrect}
           postfix="Нужно выбрать подходящие варианты"
           onChange={() =>
-            questionerAdminTsjrpcClient.switchTemplateNeedSelectSign({ blankw: blank.w, templateId }).then(onUpdate)
+            questionerAdminTsjrpcClient.switchTemplateNeedSelectSign({ blankw: blank.w, templateId })
           }
         />
 
@@ -46,7 +45,7 @@ export const QuestionerAdminSorterTemplateCardContent = ({
           label="Верхняя ремарка"
           strongDefaultValue
           onChanged={text =>
-            questionerAdminTsjrpcClient.changeTemplateAboveText({ blankw: blank.w, templateId, text }).then(onUpdate)
+            questionerAdminTsjrpcClient.changeTemplateAboveText({ blankw: blank.w, templateId, text })
           }
         />
 
@@ -56,7 +55,7 @@ export const QuestionerAdminSorterTemplateCardContent = ({
           label="Нижняя ремарка"
           strongDefaultValue
           onChanged={text =>
-            questionerAdminTsjrpcClient.changeTemplateBelowText({ blankw: blank.w, templateId, text }).then(onUpdate)
+            questionerAdminTsjrpcClient.changeTemplateBelowText({ blankw: blank.w, templateId, text })
           }
         />
       </div>
@@ -75,9 +74,7 @@ export const QuestionerAdminSorterTemplateCardContent = ({
                 <Button
                   icon="ArrowDataTransferVertical"
                   onClick={() =>
-                    questionerAdminTsjrpcClient
-                      .changeTemplateCorrectAnswerIndex({ blankw: blank.w, templateId, answerId: +answerId })
-                      .then(onUpdate)
+                    questionerAdminTsjrpcClient.changeTemplateCorrectAnswerIndex({ blankw: blank.w, templateId, answerId: +answerId })
                   }
                 />
               )}
@@ -94,15 +91,12 @@ export const QuestionerAdminSorterTemplateCardContent = ({
                       onClick={() =>
                         questionerAdminTsjrpcClient
                           .changeTemplateCorrectAnswerSign({ blankw: blank.w, templateId, answerId: +answerId })
-                          .then(onUpdate)
                       }
                     />
                   )
                 }
                 onChanged={value =>
-                  questionerAdminTsjrpcClient
-                    .changeTemplateAnswerVariantTitle({ blankw: blank.w, templateId, answerId, value })
-                    .then(onUpdate)
+                  questionerAdminTsjrpcClient.changeTemplateAnswerVariantTitle({ blankw: blank.w, templateId, answerId, value })
                 }
               />
             </div>
@@ -115,7 +109,7 @@ export const QuestionerAdminSorterTemplateCardContent = ({
           disabled={variantKeys.some(key => !template.variants[key]?.title)}
           disabledReason="Есть пункты без названия"
           onClick={() =>
-            questionerAdminTsjrpcClient.addTemplateAnswerVariant({ blankw: blank.w, templateId }).then(onUpdate)
+            questionerAdminTsjrpcClient.addTemplateAnswerVariant({ blankw: blank.w, templateId })
           }
         >
           Добавить пункт
