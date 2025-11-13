@@ -18,10 +18,6 @@ export const questionerBlanksDirStorage = new DirStorage<QuestionerBlank, Questi
 }
 );
 
-// SMyLib.entries(questionerBlanksFileStore.getValue()).forEach(([key, val]) => {
-//   questionerBlanksDirStorage.createItem(() => val, +key);
-// });
-
 export const questionerUserAnswersFileStore = new FileStore<
   PRecord<QuestionerBlankWid, { answers: QuestionerUserAnswer[] }>
 >('/apps/q/userAnswers.json', {});

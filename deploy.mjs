@@ -9,10 +9,12 @@ deployTheCode(
     loadToDirFiles: makePaths('./src/back', {
       'apps/cm': ['~/#/*.json'],
       'apps/cm/coms': ['~/#/*.json'],
+      'apps/cm/comComments': ['~/#/*.json'],
       'apps/bible': ['~/#/*.json'],
       // 'apps/bible': ['./src/bibles/*.json'],
       'apps/index': ['~/#/*.json'],
       'apps/q': ['~/#/*.json'],
+      'apps/q/blanks': ['~/#/*.json'],
       'apps/storages/list': ['~/#/*.json'],
     }),
   },
