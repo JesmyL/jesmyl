@@ -116,19 +116,19 @@ export class SMyLib {
     typeof structuredClone === 'function'
       ? <Val>(obj: Val, options?: Parameters<typeof structuredClone>[1]): Val => structuredClone(obj, options)
       : <Val>(what: Val): Val => {
-          if (what === null || what === undefined) return what;
-          else if (this.isArr(what)) {
-            const arr: unknown[] = [];
-            for (const key in what) arr[key] = this.clone(what[key]);
-            return arr as Val;
-          } else if (what.constructor === Object) {
-            const obj: Record<string, unknown> = {};
-            for (const key in what) obj[key] = this.clone(what[key]);
-            return obj as Val;
-          }
+        if (what === null || what === undefined) return what;
+        else if (this.isArr(what)) {
+          const arr: unknown[] = [];
+          for (const key in what) arr[key] = this.clone(what[key]);
+          return arr as Val;
+        } else if (what.constructor === Object) {
+          const obj: Record<string, unknown> = {};
+          for (const key in what) obj[key] = this.clone(what[key]);
+          return obj as Val;
+        }
 
-          return what;
-        };
+        return what;
+      };
 
   takeNextMi<Mi extends number, Item extends { [k in MiKey]: Mi }, MiKey extends string = 'mi'>(
     list: Item[],
@@ -143,12 +143,6 @@ export class SMyLib {
     let id: number = minId;
     for (; id in prev; id++);
     return id as Id;
-  }
-
-  takeNewWid<Wid extends number>(prev: PRecord<Wid, unknown>): Wid {
-    let wid = Date.now() + Math.random();
-    for (; wid in prev; wid += 0.1);
-    return wid as Wid;
   }
 
   isEq(base: unknown, source: unknown, isIgnoreArrayItemsOrder?: boolean) {
