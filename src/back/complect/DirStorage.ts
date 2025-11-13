@@ -114,7 +114,7 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
     };
 
     refillIds();
-}
+  }
 
   getItem = (id: Id) => {
     try {
@@ -154,7 +154,7 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
     return items;
   };
 
-  getFreshItems = (lastModfiedAt: number) => {
+  getFreshItems = (lastModfiedAt: number, filter: (item: Item) => boolean = retTrue) => {
     const items: Item[] = [];
     let maxMod = lastModfiedAt;
 
@@ -162,10 +162,11 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
       const itemModTime = this.getItemModTime(id);
 
       if (itemModTime == null || itemModTime <= lastModfiedAt) continue;
+      const item = this.getItem(id);
+      if (item == null || !filter(item)) continue;
 
       if (itemModTime > maxMod) maxMod = itemModTime;
-      const item = this.getItem(id);
-      if (item != null) items.push(item);
+      items.push(item);
     }
 
     return { items: items, maxMod };
@@ -173,3 +174,5 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
 
   getAllIds = () => this.ids;
 }
+
+const retTrue = () => true
