@@ -1,4 +1,4 @@
-import { questionerBlanksFileStore } from 'back/apps/q/file-stores';
+import { questionerBlanksDirStorage } from 'back/apps/q/file-stores';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import {
   QuestionerCheckTemplate,
@@ -19,8 +19,8 @@ export const questionerTSJRPCAddBlankTemplate: typeof questionerAdminServerTsjrp
 ) => {
   if (throwIfNoUserScopeAccessRight(auth, 'q', 'EDIT', 'R')) throw '';
 
-  const blanks = questionerBlanksFileStore.getValue();
-  if (blanks[blankw] == null) throw 'Not Found';
+  const blank = questionerBlanksDirStorage.getItem(blankw);
+  if (blank == null) throw 'Not Found';
 
   let blankTmp: QuestionerTemplate;
 
@@ -48,10 +48,10 @@ export const questionerTSJRPCAddBlankTemplate: typeof questionerAdminServerTsjrp
       break;
   }
 
-  const keyId = smylib.takeKeyId(blanks[blankw].tmp, QuestionerTemplateId.min);
-  blanks[blankw].ord.push(keyId);
-  blanks[blankw].tmp[keyId] = blankTmp;
-  questionerBlanksFileStore.saveValue();
+  const keyId = smylib.takeKeyId(blank.tmp, QuestionerTemplateId.min);
+  blank.ord.push(keyId);
+  blank.tmp[keyId] = blankTmp;
+  questionerBlanksDirStorage.saveItem(blankw);
 
-  return { value: { ...blanks[blankw], w: blankw } };
+  return { value: { ...blank, w: blankw } };
 };

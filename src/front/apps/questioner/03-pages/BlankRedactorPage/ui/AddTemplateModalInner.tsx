@@ -13,11 +13,9 @@ import { useQuestionerBlankRedactorAddBlankTemplateMutation } from '../api/useQu
 export const QuestionerBlankRedactorAddTemplateModalInner = ({
   blank,
   openAtom,
-  onAdd,
 }: {
   blank: QuestionerBlank;
   openAtom: Atom<boolean>;
-  onAdd: () => void;
 }) => {
   const addTemplate = useQuestionerBlankRedactorAddBlankTemplateMutation(openAtom.reset);
 
@@ -42,7 +40,7 @@ export const QuestionerBlankRedactorAddTemplateModalInner = ({
                   <Button
                     size="icon"
                     disabled={addTemplate.isPending}
-                    onClick={() => addTemplate.mutateAsync({ blankw: blank.w, type }).then(onAdd)}
+                    onClick={() => addTemplate.mutateAsync({ blankw: blank.w, type })}
                   >
                     <TheIconLoading
                       icon="Add02"

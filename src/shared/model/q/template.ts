@@ -1,5 +1,6 @@
 import { QuestionerAnswerVariant } from './answer';
 import { QuestionerBlank, QuestionerBlankSelector } from './blank';
+import { QuestionerTemplateIfCondition } from './condition';
 import { QuestionerAnswerId, QuestionerTemplateId, QuestionerType } from './enums';
 
 type QuestionerTemplateBox = {
@@ -39,7 +40,7 @@ type QuestionerTemplateBox = {
     needSelect?: 1;
     len?: number;
   }> &
-    QuestionerVariantedTemplate;
+  QuestionerVariantedTemplate;
   [QuestionerType.Comment]: Implement<{
     type: QuestionerType.Comment;
     correct?: string;
@@ -53,7 +54,6 @@ export type QuestionerAdminTemplateContentProps<Type extends QuestionerType> = {
   blank: QuestionerBlank;
   template: QuestionerTemplateByItsType<Type>;
   templateId: RKey<QuestionerTemplateId>;
-  onUpdate: () => void;
 };
 
 /////////////////////////////
@@ -77,6 +77,7 @@ type TemplateDefaults = {
   req: 1 | und;
   hidden?: 1;
   correct?: unknown;
+  if?: QuestionerTemplateIfCondition,
 };
 
 type Implement<

@@ -13,75 +13,43 @@ import {
   QuestionerType,
 } from 'shared/model/q';
 import { smylib, SMyLib } from 'shared/utils';
-import { questionerBlanksFileStore } from '../../file-stores';
+import { questionerBlanksDirStorage } from '../../file-stores';
 import { questionerTSJRPCAddBlankTemplate } from './lib/addBlankTemplate';
 import { questionerTSJRPCCreateBlank } from './lib/createBlank';
 import { questionerTSJRPCFixTextIncludeTemplateTextValue } from './lib/fixTextIncludeTemplateTextValue';
+import { questionerTypeDefaultIfConditionOperatorDict } from 'shared/const/q/typeDefaultIfConditionOperator';
+import { questionerAdminServerTsjrpcShare } from '../admin.tsjrpc.share';
 
 export const questionerAdminServerTsjrpcBase =
   new (class QuestionerAdmin extends TsjrpcBaseServer<QuestionerAdminTsjrpcModel> {
     constructor() {
-      const adminRoles = new Set([QuestionerBlankRole.Owner, QuestionerBlankRole.Admin, undefined, null]);
-      adminRoles.delete(undefined);
-      adminRoles.delete(null);
-
-      const updateBlank = <Args extends QuestionerBlankSelector>(
-        updater: (args: Args, blank: OmitOwn<QuestionerBlank, 'w'>) => void,
-      ): ((args: Args, tool: ServerTSJRPCTool) => void) => {
-        return async (args, tool) => {
-          if (throwIfNoUserScopeAccessRight(tool.auth?.login, 'q', 'EDIT', 'U')) throw '';
-
-          const blanks = questionerBlanksFileStore.getValue();
-          const blankw = args.blankw;
-
-          if (!blanks[blankw]) throw `Blank ${blankw} not found`;
-          if (!adminRoles.has(blanks[blankw].team[tool.auth.login]?.r)) throw 'Нет прав на это действие 63412393';
-
-          updater(args, blanks[blankw]);
-          blanks[blankw].m = Date.now();
-
-          questionerBlanksFileStore.saveValue();
-        };
-      };
-
-      const updateTemplate = <Args extends QuestionerTemplateSelector>(
-        updater: (args: Args, template: QuestionerTemplate, blank: OmitOwn<QuestionerBlank, 'w'>) => void,
-      ): ((args: Args, tool: ServerTSJRPCTool) => void) => {
-        return updateBlank((args, blank) => {
-          const template = blank.tmp[args.templateId];
-          if (template == null) throw `The template ${args.templateId} of blank ${blank.title} is not found`;
-
-          updater(args, template, blank);
-        });
-      };
-
       super({
         scope: 'QuestionerAdmin',
         methods: {
           createBlank: questionerTSJRPCCreateBlank,
           addBlankTemplate: questionerTSJRPCAddBlankTemplate,
 
-          getAdminBlanks: async (_, { auth: { login } = {} }) => {
-            if (throwIfNoUserScopeAccessRight(login, 'q', 'EDIT', 'R')) throw '';
+          requestFreshes: ({ lastModfiedAt }, { client, auth }) => {
+            if (auth?.login == null) return;
+            const login = auth?.login;
+            const { items, maxMod } = questionerBlanksDirStorage.getFreshItems(lastModfiedAt, item => adminRoles.has(item.team[login]?.r));
 
-            return {
-              value: SMyLib.entries(questionerBlanksFileStore.getValue())
-                .filter(blank => adminRoles.has(blank[1]?.team[login]?.r))
-                .map(bla => ({ ...bla[1]!, w: +bla[0] })),
-            };
+            if (items.length)
+              questionerAdminServerTsjrpcShare.updateBlanks({ blanks: items, maxMod }, client);
           },
+
           getAdminBlank: async ({ blankw }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'q', 'EDIT', 'U')) throw '';
-            const blank = questionerBlanksFileStore.getValue()[blankw];
+            const blank = questionerBlanksDirStorage.getItem(blankw);
 
             return { value: blank ? { ...blank, w: blankw } : null };
           },
 
-          changeBlankTitle: updateBlank(({ value }, blank) => (blank.title = value)),
-          changeBlankDescription: updateBlank(({ value }, blank) => (blank.dsc = value)),
-          switchBlankIsAnonymous: updateBlank((_, blank) => (blank.anon = blank.anon ? undefined : 1)),
+          changeBlankTitle: updateBlank((blank, { value },) => (blank.title = value)),
+          changeBlankDescription: updateBlank((blank, { value }) => (blank.dsc = value)),
+          switchBlankIsAnonymous: updateBlank((blank) => (blank.anon = blank.anon ? undefined : 1)),
 
-          changeTemplatePosition: updateBlank(({ templateId }, blank) => {
+          changeTemplatePosition: updateBlank((blank, { templateId },) => {
             const templateKeys: QuestionerTemplateId[] = Array.from(
               new Set([...blank.ord, ...smylib.keys(blank.tmp).map(Number)]),
             );
@@ -89,30 +57,30 @@ export const questionerAdminServerTsjrpcBase =
             blank.ord = smylib.withInsertedBeforei(templateKeys, index - 1, index);
           }),
 
-          changeTemplateTitle: updateTemplate(({ value }, template) => (template.title = value)),
-          changeTemplateDescription: updateTemplate(({ value }, template) => (template.dsc = value)),
-          changeTemplateRequiredSign: updateTemplate(({ value }, template) => (template.req = value ? 1 : undefined)),
+          changeTemplateTitle: updateTemplate((template, { value },) => (template.title = value)),
+          changeTemplateDescription: updateTemplate((template, { value },) => (template.dsc = value)),
+          changeTemplateRequiredSign: updateTemplate((template, { value },) => (template.req = value ? 1 : undefined)),
           switchTemplateHiddenSign: updateTemplate(
-            (_, template) => (template.hidden = template.hidden ? undefined : 1),
+            (template) => (template.hidden = template.hidden ? undefined : 1),
           ),
-          changeTemplateRandomSortSign: updateTemplate(({ value }, template) => {
+          changeTemplateRandomSortSign: updateTemplate((template, { value },) => {
             if (template.type === QuestionerType.Check || template.type === QuestionerType.Radio) {
               template.rSort = value ? 1 : undefined;
             }
           }),
-          changeTemplateAboveText: updateTemplate(({ text }, template) => {
+          changeTemplateAboveText: updateTemplate((template, { text }) => {
             if (template.type === QuestionerType.Sorter) template.above = text || undefined;
           }),
-          changeTemplateBelowText: updateTemplate(({ text }, template) => {
+          changeTemplateBelowText: updateTemplate((template, { text },) => {
             if (template.type === QuestionerType.Sorter) template.below = text || undefined;
           }),
-          switchTemplateNoCorrectsSign: updateTemplate((_, template) => {
+          switchTemplateNoCorrectsSign: updateTemplate((template) => {
             if (template.type === QuestionerType.Sorter) {
               template.noCorrect = template.noCorrect ? undefined : 1;
               template.needSelect = undefined;
             }
           }),
-          switchTemplateNeedSelectSign: updateTemplate((_, template) => {
+          switchTemplateNeedSelectSign: updateTemplate((template) => {
             if (template.type === QuestionerType.Sorter) {
               template.needSelect = template.needSelect ? undefined : 1;
 
@@ -124,26 +92,26 @@ export const questionerAdminServerTsjrpcBase =
               }
             }
           }),
-          changeTemplateMinSign: updateTemplate(({ value }, template) => {
+          changeTemplateMinSign: updateTemplate((template, { value },) => {
             if (template.type === QuestionerType.Check) {
               template.min = value > 1 ? value : undefined;
               if (template.max! < template.min!) template.min = template.max;
             }
           }),
-          changeTemplateMaxSign: updateTemplate(({ value }, template) => {
+          changeTemplateMaxSign: updateTemplate((template, { value },) => {
             if (template.type === QuestionerType.Check) {
               template.max = value > 0 ? value : undefined;
               if (template.max! < template.min!) template.max = template.min;
             }
           }),
 
-          changeTemplateAnswerVariantTitle: updateTemplate(({ value, answerId }, template) => {
+          changeTemplateAnswerVariantTitle: updateTemplate((template, { value, answerId },) => {
             if ('variants' in template && template.variants[answerId]) {
               template.variants[answerId].title = value;
             }
           }),
 
-          addTemplateAnswerVariant: updateTemplate((_, template) => {
+          addTemplateAnswerVariant: updateTemplate((template) => {
             if (
               template.type === QuestionerType.Check ||
               template.type === QuestionerType.Radio ||
@@ -157,7 +125,7 @@ export const questionerAdminServerTsjrpcBase =
             }
           }),
 
-          changeTemplateCorrectAnswerSign: updateTemplate(({ answerId }, template) => {
+          changeTemplateCorrectAnswerSign: updateTemplate((template, { answerId },) => {
             if (template.type === QuestionerType.Check || template.type === QuestionerType.Sorter) {
               template.correct = template.correct?.includes(answerId)
                 ? template.correct.filter(id => id !== answerId)
@@ -173,7 +141,7 @@ export const questionerAdminServerTsjrpcBase =
             }
           }),
 
-          changeTemplateCorrectAnswerIndex: updateTemplate(({ answerId }, template) => {
+          changeTemplateCorrectAnswerIndex: updateTemplate((template, { answerId },) => {
             if (template.type === QuestionerType.Sorter) {
               template.correct ??= smylib.keys(template.variants).map(Number);
               const answeri = template.correct.indexOf(+answerId);
@@ -183,33 +151,33 @@ export const questionerAdminServerTsjrpcBase =
             }
           }),
 
-          switchTemplateReplacementTextValue: updateTemplate(({ textValue, textCode }, template) => {
+          switchTemplateReplacementTextValue: updateTemplate((template, { textValue, textCode },) => {
             if (template.type === QuestionerType.TextInclude) {
               template.correct ??= {};
               template.correct[textCode] = textValue || '';
             }
           }),
-          switchTemplateTextValue: updateTemplate(({ text }, template) => {
+          switchTemplateTextValue: updateTemplate((template, { text },) => {
             if (template.type === QuestionerType.TextInclude) {
               questionerTSJRPCFixTextIncludeTemplateTextValue(text, template);
             }
           }),
 
-          addTemplateTextValue: updateTemplate((_, template) => {
+          addTemplateTextValue: updateTemplate((template) => {
             if (template.type === QuestionerType.TextInclude) {
               template.addTexts ??= [];
               template.addTexts.push('');
             }
           }),
 
-          changeTemplateTextValue: updateTemplate(({ text, texti }, template) => {
+          changeTemplateTextValue: updateTemplate((template, { text, texti },) => {
             if (template.type === QuestionerType.TextInclude) {
               template.addTexts ??= [];
               template.addTexts[texti] = text;
             }
           }),
 
-          switchTemplateSymbolExistance: updateTemplate(({ symbol }, template) => {
+          switchTemplateSymbolExistance: updateTemplate((template, { symbol },) => {
             if (template.type === QuestionerType.TextInclude) {
               const allSymbolsSet = new Set((template.symbols || questionerTextIncludeSymbols).split(''));
 
@@ -229,7 +197,105 @@ export const questionerAdminServerTsjrpcBase =
               questionerTSJRPCFixTextIncludeTemplateTextValue(template.text, template);
             }
           }),
+          setTemplateConditionOperator: updateTemplate((template, { operator, nexti },) => {
+            template.if ??= { next: [] };
+            if (nexti != null) {
+              template.if.next[nexti].t = operator || undefined;
+              return;
+            }
+
+            template.if.t = operator || undefined;
+          }),
+          addTemplateConditionNext: updateTemplate((template) => {
+            template.if ??= { next: [] };
+            template.if.next.push({ next: [] });
+          }),
+          addTemplateConditionNextNext: updateTemplate((template, { nexti, templateId }, blank) => {
+            const ids = smylib.keys(blank.tmp);
+            const tmpId = +ids[0] === +templateId ? ids[1] : ids[0];
+
+
+            if (tmpId == null) return;
+
+            template.if ??= { next: [] };
+            template.if.next[nexti].next.push({ tmpId: +tmpId });
+          }),
+          removeTemplateCondition: updateTemplate((template, { nexti, nextNexti },) => {
+            if (template.if == null) return;
+
+            if (nextNexti != null) {
+              template.if.next[nexti].next.splice(nextNexti, 1);
+              if (!template.if.next[nexti].next.length) template.if.next.splice(nexti, 1);
+            } else template.if.next.splice(nexti, 1);
+
+            if (!template.if.next.length) delete template.if;
+          }),
+          setTemplateConditionNextTemplateId: updateTemplate((template, { nexti, conditionTemplateId, nextNexti },) => {
+            if (template.if == null) return;
+            template.if.next[nexti].next[nextNexti] = { tmpId: conditionTemplateId };
+          }),
+          setTemplateConditionNextValue: updateTemplate((template, { nexti, nextNexti, match }, blank) => {
+            if (template.if == null) return;
+            const nextTemplateCondition = template.if.next[nexti].next[nextNexti];
+            const nextTemplate = blank.tmp[nextTemplateCondition.tmpId];
+            if (nextTemplate == null) return;
+            const operator = nextTemplateCondition.op ?? questionerTypeDefaultIfConditionOperatorDict[nextTemplate.type];
+            const value = match[nextTemplate.type]?.[operator as never];
+
+
+            if (value === undefined) return;
+            nextTemplateCondition.val = value;
+
+          }),
+          setTemplateConditionNextOperator: updateTemplate((template, { nexti, nextNexti, match }, blank) => {
+            if (template.if == null) return;
+            const nextTemplateCondition = template.if.next[nexti].next[nextNexti];
+            const nextTemplate = blank.tmp[nextTemplateCondition.tmpId];
+            if (nextTemplate == null) return;
+            const operator = match[nextTemplate.type];
+            if (operator === undefined) return;
+            nextTemplateCondition.op = operator;
+
+          })
         },
       });
     }
   })();
+
+
+const adminRoles = new Set([QuestionerBlankRole.Owner, QuestionerBlankRole.Admin, undefined, null]);
+adminRoles.delete(undefined);
+adminRoles.delete(null);
+
+function updateBlank<Args extends QuestionerBlankSelector>(
+  updater: (blank: OmitOwn<QuestionerBlank, 'w'>, args: Args,) => void,
+): ((args: Args, tool: ServerTSJRPCTool) => void) {
+  return async (args, tool) => {
+    if (throwIfNoUserScopeAccessRight(tool.auth?.login, 'q', 'EDIT', 'U')) throw '';
+
+    const blank = questionerBlanksDirStorage.getItem(args.blankw);
+
+    if (!blank) throw `Blank ${args.blankw} not found`;
+    if (!adminRoles.has(blank.team[tool.auth.login]?.r)) throw 'Нет прав на это действие 63412393';
+
+    updater(blank, args);
+    blank.m = Date.now();
+
+    const maxMod = questionerBlanksDirStorage.saveItem(args.blankw);
+
+
+    if (maxMod != null)
+      questionerAdminServerTsjrpcShare.updateBlanks({ blanks: [blank], maxMod }, { logins: SMyLib.keys(blank.team) });
+  };
+};
+
+function updateTemplate<Args extends QuestionerTemplateSelector>(
+  updater: (template: QuestionerTemplate, args: Args, blank: OmitOwn<QuestionerBlank, 'w'>) => void,
+): ((args: Args, tool: ServerTSJRPCTool) => void) {
+  return updateBlank((blank, args,) => {
+    const template = blank.tmp[args.templateId];
+    if (template == null) throw `The template ${args.templateId} of blank ${blank.title} is not found`;
+
+    updater(template, args, blank);
+  });
+};

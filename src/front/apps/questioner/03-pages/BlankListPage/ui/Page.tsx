@@ -7,15 +7,16 @@ import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
-import { useQuestionerBlankListAdminBlanksQuery } from '../api/useQuestionerAdminBlanksQuery';
 import { useQuestionerBlankListCreateBlankMutation } from '../api/useQuestionerCreateBlankMutation';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { questionerIDB } from '$q/shared/state/qIdb';
 
 export const QuestionerBlankListPage = () => {
   const checkAccess = useCheckUserAccessRightsInScope();
   const [isOpenTools, setIsOpenTools] = useState(false);
   const navigate = useNavigate();
   const createBlankMutation = useQuestionerBlankListCreateBlankMutation();
-  const blanksQuery = useQuestionerBlankListAdminBlanksQuery();
+  const blanks = useLiveQuery(() => questionerIDB.tb.blanks.toArray());
 
   return (
     <PageContainerConfigurer
@@ -25,7 +26,7 @@ export const QuestionerBlankListPage = () => {
       withoutBackButton
       content={
         <>
-          {blanksQuery.data?.map(blank => {
+          {blanks?.map(blank => {
             return (
               <Link
                 key={blank.w}

@@ -1,4 +1,5 @@
-import { QuestionerBlankSelector } from './blank';
+import { QuestionerBlank, QuestionerBlankSelector } from './blank';
+import { QuestionerTemplateTypeConditionDict } from './condition';
 import { QuestionerAnswerId, QuestionerTemplateId, QuestionerType } from './enums';
 import { QuestionerTemplateByItsType } from './template';
 
@@ -36,6 +37,16 @@ export type QuestionerUserAnswerContentProps<Type extends QuestionerType> = {
 export type QuestionerResultContentProps<Type extends QuestionerType> = {
   template: QuestionerTemplateByItsType<Type>;
   userAnswer: QuestionerUserAnswerValueBox[Type] | nil;
+};
+
+export type QuestionerConditionContentProps<Type extends QuestionerType> = {
+  blank: QuestionerBlank;
+  templateId: RKey<QuestionerTemplateId>;
+  template: QuestionerTemplateByItsType<Type>;
+  ifCondition: QuestionerTemplateTypeConditionDict[Type] | nil,
+  operator: Exclude<QuestionerTemplateTypeConditionDict[Type]['op'], nil>,
+  nexti: number,
+  nextNexti: number,
 };
 
 export type QuestionerUserAnswer = {

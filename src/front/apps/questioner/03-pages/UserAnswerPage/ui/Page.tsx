@@ -20,6 +20,9 @@ import { itNIt } from 'shared/utils';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import { useQuestionerUserAnswerDetailsQuery } from '../api/useQuestionerUserBlankDetailsQuery';
+import { questionerAnyTypeIfConditionCheckerDict } from 'shared/const/q/anyTypeIfConditionCheckerDict';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { questionerIDB } from '$q/shared/state/qIdb';
 
 const answersAtomBox: PRecord<QuestionerBlankWid, ReturnType<typeof initAtom>> = {};
 
@@ -35,7 +38,9 @@ const initAtom = (blankw: QuestionerBlankWid) => {
 export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWid }) => {
   const answersAtom = (answersAtomBox[blankw] ??= initAtom(blankw));
 
-  const questionBlank = useQuestionerUserAnswerDetailsQuery(blankw);
+  const adminBlank = useLiveQuery(() => questionerIDB.tb.blanks.get(blankw), [blankw]);
+  const questionBlank = useQuestionerUserAnswerDetailsQuery(blankw, adminBlank);
+  const blank = adminBlank ?? questionBlank.data;
   const userAnswer = useAtomValue(answersAtom);
   const answerErrorsSet = new Set<string | null>();
   const [isOpenAllItems, setIsOpenAllItems] = useState(true);
@@ -43,7 +48,7 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
   return (
     <PageContainerConfigurer
       className="QuestionerAnswersPage"
-      headTitle={questionBlank.data?.title || 'Мои ответы'}
+      headTitle={blank?.title || 'Мои ответы'}
       withoutBackButton
       head={
         <div className="flex gap-3">
@@ -61,7 +66,7 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
       }
       content={
         <ConditionalRender
-          value={questionBlank.data}
+          value={blank}
           render={blank => {
             if (!blank.anon && !userAnswer.fio) answerErrorsSet.add('Не вписаны Фамилия и Имя');
 
@@ -128,6 +133,7 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
                         };
 
                         if (contentProps.takeShowError?.(props as never)) return null;
+                        if (questionerAnyTypeIfConditionCheckerDict(template.if, userAnswer, blank)) return;
 
                         const {
                           check: answerCheckError,

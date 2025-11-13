@@ -4,9 +4,10 @@ import { ConditionalRender } from '#shared/ui/ConditionalRender';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { useQuestionerCheckAnswersQuery } from '$q/pages/CheckAnswersPage/api/useQuestionerUserAnswersQuery';
-import { useQuestionerAdminBlankDetailsQuery } from '$q/shared/api/useQuestionerAdminBlankDetailsQuery';
 import { questionerCardContents } from '$q/shared/const/cardContents';
+import { questionerIDB } from '$q/shared/state/qIdb';
 import { QuestionerAnswerCard } from '$q/shared/ui/AnswerCard';
+import { useLiveQuery } from 'dexie-react-hooks';
 import { useState } from 'react';
 import { QuestionerBlankWid } from 'shared/model/q';
 import { itNIt } from 'shared/utils';
@@ -14,17 +15,16 @@ import { twMerge } from 'tailwind-merge';
 
 export const QuestionerCheckAnswersPage = ({ blankw }: { blankw: QuestionerBlankWid }) => {
   const userAnswers = useQuestionerCheckAnswersQuery(blankw);
-  const questionBlank = useQuestionerAdminBlankDetailsQuery(blankw);
+  const questionBlank = useLiveQuery(() => questionerIDB.tb.blanks.get(blankw), [blankw]);
   const [isOpenAllItems, setIsOpenAllItems] = useState(false);
 
   return (
     <PageContainerConfigurer
       className="QuestionerAnswersPage"
-      headTitle={<>{questionBlank.data?.title || 'Ответы'} - проверка</>}
+      headTitle={<>{questionBlank?.title || 'Ответы'} - проверка</>}
       withoutBackButton
       head={
         <div className="flex gap-3">
-          {questionBlank.isLoading && <TheIconLoading />}
           <Button
             icon="ArrowDownDouble"
             className={twMerge(isOpenAllItems && 'rotate-180')}
@@ -34,7 +34,7 @@ export const QuestionerCheckAnswersPage = ({ blankw }: { blankw: QuestionerBlank
       }
       content={
         <ConditionalRender
-          value={questionBlank.data}
+          value={questionBlank}
           render={blank => {
             return (
               <ConditionalRender

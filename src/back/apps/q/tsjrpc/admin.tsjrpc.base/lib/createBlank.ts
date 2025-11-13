@@ -1,31 +1,26 @@
-import { questionerBlanksFileStore } from 'back/apps/q/file-stores';
+import { questionerBlanksDirStorage } from 'back/apps/q/file-stores';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
-import { QuestionerBlank, QuestionerBlankRole, QuestionerBlankWid } from 'shared/model/q';
-import { smylib } from 'shared/utils';
+import { QuestionerBlankRole } from 'shared/model/q';
 import { questionerAdminServerTsjrpcBase } from '..';
 
 export const questionerTSJRPCCreateBlank: typeof questionerAdminServerTsjrpcBase.createBlank = async (_, { auth }) => {
   if (throwIfNoUserScopeAccessRight(auth?.login, 'q', 'EDIT', 'C')) throw '';
+  const login = auth.login;
 
-  const blanks = questionerBlanksFileStore.getValueWithAutoSave();
-
-  const newBlank: QuestionerBlank = {
-    w: smylib.takeNewWid<QuestionerBlankWid>(blanks),
+  const { item } = questionerBlanksDirStorage.createItem(() => ({
+    w: Date.now() + Math.random(),
     m: Date.now(),
     title: 'Новый опрос',
     dsc: '',
     tmp: {},
     ord: [],
     team: {
-      [auth.login]: {
+      [login]: {
         fio: auth.fio ?? 'Неизвестный',
         r: QuestionerBlankRole.Owner,
       },
     },
-  };
+  }));
 
-  const { w, ...savedBlank } = newBlank;
-  blanks[w] = savedBlank;
-
-  return { value: newBlank };
+  return { value: item };
 };

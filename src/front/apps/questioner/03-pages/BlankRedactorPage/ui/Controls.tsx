@@ -4,11 +4,9 @@ import { questionerAdminTsjrpcClient } from '$q/shared/tsjrpc/admin.tsjrpc';
 import { QuestionerBlank, QuestionerBlankWid } from 'shared/model/q';
 
 export const QuestionerBlankRedactorControls = ({
-  onUpdate,
   blankw,
   blank,
 }: {
-  onUpdate: () => void;
   blankw: QuestionerBlankWid;
   blank: QuestionerBlank;
 }) => {
@@ -17,8 +15,9 @@ export const QuestionerBlankRedactorControls = ({
       <InputWithLoadingIcon
         icon="TextFont"
         label="Название"
+        strongDefaultValue
         defaultValue={blank.title}
-        onChanged={value => questionerAdminTsjrpcClient.changeBlankTitle({ blankw, value }).then(onUpdate)}
+        onChanged={value => questionerAdminTsjrpcClient.changeBlankTitle({ blankw, value })}
       />
 
       <InputWithLoadingIcon
@@ -26,7 +25,8 @@ export const QuestionerBlankRedactorControls = ({
         label="Описание"
         defaultValue={blank.dsc}
         multiline
-        onChanged={value => questionerAdminTsjrpcClient.changeBlankDescription({ blankw, value }).then(onUpdate)}
+        strongDefaultValue
+        onChanged={value => questionerAdminTsjrpcClient.changeBlankDescription({ blankw, value })}
       />
 
       <Dropdown
@@ -41,7 +41,7 @@ export const QuestionerBlankRedactorControls = ({
             title: 'Запрашивать Фамилию/Имя',
           },
         ]}
-        onSelectId={() => questionerAdminTsjrpcClient.switchBlankIsAnonymous({ blankw }).then(onUpdate)}
+        onSelectId={() => questionerAdminTsjrpcClient.switchBlankIsAnonymous({ blankw })}
       />
     </>
   );

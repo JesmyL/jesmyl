@@ -4,7 +4,7 @@ import { QuestionerUserTsjrpcModel } from 'shared/api/tsjrpc/q/user.tsjrpc.model
 import { QuestionerTemplate, QuestionerTemplateId, QuestionerType, QuestionerVariatedType } from 'shared/model/q';
 import { QuestionerUserAnswerValueBox } from 'shared/model/q/answer';
 import { itIt, SMyLib, smylib } from 'shared/utils';
-import { questionerBlanksFileStore, questionerUserAnswersFileStore } from '../file-stores';
+import { questionerBlanksDirStorage, questionerUserAnswersFileStore } from '../file-stores';
 
 export const questionerUserServerTsjrpcBase =
   new (class QuestionerUser extends TsjrpcBaseServer<QuestionerUserTsjrpcModel> {
@@ -13,7 +13,7 @@ export const questionerUserServerTsjrpcBase =
         scope: 'QuestionerUser',
         methods: {
           getUserBlank: async ({ blankw }) => {
-            const blank = questionerBlanksFileStore.getValue()[blankw];
+            const blank = questionerBlanksDirStorage.getItem(blankw);
             if (blank == null) return { value: null };
 
             const tmp: PRecord<QuestionerTemplateId, QuestionerTemplate> = { ...blank.tmp };
@@ -57,7 +57,7 @@ export const questionerUserServerTsjrpcBase =
 
           publicUserAnswer: ({ blankw, answer }) => {
             const totalAnswers = questionerUserAnswersFileStore.getValueWithAutoSave();
-            const blank = questionerBlanksFileStore.getValue()[blankw];
+            const blank = questionerBlanksDirStorage.getItem(blankw);
 
             totalAnswers[blankw] ??= { answers: [] };
             totalAnswers[blankw].answers.push(answer);

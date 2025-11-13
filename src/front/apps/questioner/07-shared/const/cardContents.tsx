@@ -1,7 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { JSX } from 'react';
 import { QuestionerAdminTemplateContentProps, QuestionerType } from 'shared/model/q';
-import { QuestionerResultContentProps, QuestionerUserAnswerContentProps } from 'shared/model/q/answer';
+import { QuestionerConditionContentProps, QuestionerResultContentProps, QuestionerUserAnswerContentProps } from 'shared/model/q/answer';
 import { QuestionerAdminCheckTemplateCardContent } from '../ui/admin-templates/Check.admin';
 import { QuestionerAdminCommentTemplateCardContent } from '../ui/admin-templates/Comment.admin';
 import { QuestionerAdminRadioTemplateCardContent } from '../ui/admin-templates/Radio.admin';
@@ -18,14 +18,34 @@ import { QuestionerUserRadioTemplateCardContent } from '../ui/user-templates/Rad
 import { QuestionerUserSorterTemplateCardContent } from '../ui/user-templates/Sorter.user';
 import { QuestionerUserTextIncludeTemplateCardContent } from '../ui/user-templates/TextInclude.user';
 import { questionerTemplateDescriptions } from './templateDescriptions';
+import { QuestionerTemplateConditionCheckCardContent } from '../ui/template-condition/Check.condition';
+import { QuestionerTemplateConditionSorterCardContent } from '../ui/template-condition/Sorter.condition';
+import { QuestionerTemplateConditionTextIncludeCardContent } from '../ui/template-condition/TextInclude.condition';
+import { QuestionerTemplateConditionCommentCardContent } from '../ui/template-condition/Comment.condition';
+import { QuestionerTemplateConditionRadioCardContent } from '../ui/template-condition/Radio.condition';
 
 export const questionerCardContents = <Type extends QuestionerType>(type: Type) =>
   (
-    ({
-      [QuestionerType.Radio]: {
+    (): {
+      [Type in QuestionerType]: () => {
+        userRender: (props: QuestionerUserAnswerContentProps<Type>) => JSX.Element;
+        adminRender: (props: QuestionerAdminTemplateContentProps<Type>) => JSX.Element;
+        resultRender: (props: QuestionerResultContentProps<Type>) => JSX.Element;
+        conditionConfigureRender: (props: QuestionerConditionContentProps<Type>) => JSX.Element;
+        takeShowError?: (props: QuestionerUserAnswerContentProps<Type>) => string;
+        takeUserAnswerError: (props: QuestionerUserAnswerContentProps<Type>) => {
+          check: string | nil;
+          info: string | nil;
+          isFill: boolean;
+        };
+        customRequireMessage: React.ReactNode;
+      };
+    } => ({
+      [QuestionerType.Radio]: () => ({
         userRender: props => <QuestionerUserRadioTemplateCardContent {...props} />,
         adminRender: props => <QuestionerAdminRadioTemplateCardContent {...props} />,
         resultRender: props => <QuestionerResultRadioTemplateCardContent {...props} />,
+        conditionConfigureRender: props => <QuestionerTemplateConditionRadioCardContent {...props} />,
         takeShowError: takeShowErrorVarianted,
         customRequireMessage: null,
         takeUserAnswerError: props => {
@@ -40,11 +60,12 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
             isFill,
           };
         },
-      },
-      [QuestionerType.Check]: {
+      }),
+      [QuestionerType.Check]: () => ({
         userRender: props => <QuestionerUserCheckTemplateCardContent {...props} />,
         adminRender: props => <QuestionerAdminCheckTemplateCardContent {...props} />,
         resultRender: props => <QuestionerResultCheckTemplateCardContent {...props} />,
+        conditionConfigureRender: props => <QuestionerTemplateConditionCheckCardContent {...props} />,
         takeShowError: takeShowErrorVarianted,
         customRequireMessage: null,
         takeUserAnswerError: props => {
@@ -81,11 +102,12 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
             }),
           };
         },
-      },
-      [QuestionerType.Comment]: {
+      }),
+      [QuestionerType.Comment]: () => ({
         adminRender: props => <QuestionerAdminCommentTemplateCardContent {...props} />,
         userRender: props => <QuestionerUserCommentTemplateCardContent {...props} />,
         resultRender: props => <QuestionerResultCommentTemplateCardContent {...props} />,
+        conditionConfigureRender: props => <QuestionerTemplateConditionCommentCardContent {...props} />,
         takeUserAnswerError: props => {
           return {
             check:
@@ -97,11 +119,12 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
           };
         },
         customRequireMessage: <>Этот комментарий обязателен к заполнению</>,
-      },
-      [QuestionerType.Sorter]: {
+      }),
+      [QuestionerType.Sorter]: () => ({
         adminRender: props => <QuestionerAdminSorterTemplateCardContent {...props} />,
         userRender: props => <QuestionerUserSorterTemplateCardContent {...props} />,
         resultRender: props => <QuestionerResultSorterTemplateCardContent {...props} />,
+        conditionConfigureRender: props => <QuestionerTemplateConditionSorterCardContent {...props} />,
         takeUserAnswerError: props => {
           const isFill = !!props.template.len && props.userAnswer?.v.length === props.template.len;
 
@@ -113,11 +136,12 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
           };
         },
         customRequireMessage: <>Сортировка в этом блоке обязательна</>,
-      },
-      [QuestionerType.TextInclude]: {
+      }),
+      [QuestionerType.TextInclude]: () => ({
         adminRender: props => <QuestionerAdminTextIncludeTemplateCardContent {...props} />,
         userRender: props => <QuestionerUserTextIncludeTemplateCardContent {...props} />,
         resultRender: props => <QuestionerResultTextIncludeTemplateCardContent {...props} />,
+        conditionConfigureRender: props => <QuestionerTemplateConditionTextIncludeCardContent {...props} />,
         takeUserAnswerError: props => {
           const isFill = mylib.keys(props.userAnswer?.v ?? {}).length === props.template.len;
 
@@ -131,22 +155,9 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
           };
         },
         customRequireMessage: <>Нужно восстановить все недостающие слова</>,
-      },
-    }) satisfies {
-      [Type in QuestionerType]: {
-        userRender: (props: QuestionerUserAnswerContentProps<Type>) => JSX.Element;
-        adminRender: (props: QuestionerAdminTemplateContentProps<Type>) => JSX.Element;
-        resultRender: (props: QuestionerResultContentProps<Type>) => JSX.Element;
-        takeShowError?: (props: QuestionerUserAnswerContentProps<Type>) => string;
-        takeUserAnswerError: (props: QuestionerUserAnswerContentProps<Type>) => {
-          check: string | nil;
-          info: string | nil;
-          isFill: boolean;
-        };
-        customRequireMessage: React.ReactNode;
-      };
-    }
-  )[type];
+      }),
+    })
+  )()[type]();
 
 const takeShowErrorVarianted = (props: { template: { variants: Record<string, { title: string }> } }) =>
   mylib.values(props.template.variants).filter(v => v?.title).length ? '' : 'Нет варианотов ответа';

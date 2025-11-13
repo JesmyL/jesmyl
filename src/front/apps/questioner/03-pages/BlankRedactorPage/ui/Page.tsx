@@ -8,32 +8,37 @@ import { Modal } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useQuestionerAdminBlankDetailsQuery } from '$q/shared/api/useQuestionerAdminBlankDetailsQuery';
 import { questionerCardContents } from '$q/shared/const/cardContents';
 import { questionerTemplateDescriptions } from '$q/shared/const/templateDescriptions';
 import { questionerAdminTsjrpcClient } from '$q/shared/tsjrpc/admin.tsjrpc';
 import { QuestionerTemplateCard } from '$q/shared/ui/TemplateCard';
 import { Link } from '@tanstack/react-router';
 import { atom } from 'atomaric';
-import { QuestionerAdminTemplateContentProps, QuestionerBlankWid, QuestionerType } from 'shared/model/q';
+import { QuestionerAdminTemplateContentProps, QuestionerBlankWid, QuestionerTemplateId, QuestionerType } from 'shared/model/q';
 import { itIt } from 'shared/utils';
 import { QuestionerBlankRedactorAddTemplateModalInner } from './AddTemplateModalInner';
 import { QuestionerBlankRedactorControls } from './Controls';
+import { QuestionerTemplateVisibilityRedactor } from '$q/widgets/TemplateVisibilityRedactor/ui/Redactor';
+import { WithAtomTruthfulValue } from '#shared/ui/WithAtomTruthfulValue';
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import { questionerIDB } from '$q/shared/state/qIdb';
+import { useLiveQuery } from 'dexie-react-hooks';
 
 const isOpenAddModalAtom = atom(false);
+const openVisibilityTemplateIdModalAtom = atom<QuestionerTemplateId | null>(null);
 
 export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlankWid }) => {
-  const blankQuery = useQuestionerAdminBlankDetailsQuery(blankw);
+  const blank = useLiveQuery(() => questionerIDB.tb.blanks.get(blankw), [blankw]);
 
   return (
     <PageContainerConfigurer
       className="QuestionerRedactorPage"
-      headTitle={blankQuery.data?.title ?? 'Опрос'}
+      headTitle={blank?.title ?? 'Опрос'}
       head={
         <>
           <Link
             to="/q/i"
-            search={{ q: blankQuery.data?.w }}
+            search={{ q: blank?.w }}
           >
             <Button
               icon="BubbleChat"
@@ -42,7 +47,7 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
           </Link>
           <Link
             to="/q/a/$blank"
-            params={{ blank: '' + blankQuery.data?.w }}
+            params={{ blank: '' + blank?.w }}
           >
             <Button
               icon="MessageUser01"
@@ -59,11 +64,10 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
       content={
         <>
           <ConditionalRender
-            value={blankQuery.data}
+            value={blank}
             render={blank => (
               <>
                 <QuestionerBlankRedactorControls
-                  onUpdate={blankQuery.refetch}
                   blank={blank}
                   blankw={blankw}
                 />
@@ -78,7 +82,6 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
                         template: template as never,
                         blank,
                         templateId,
-                        onUpdate: blankQuery.refetch,
                       };
 
                       const contentProps = questionerCardContents(type);
@@ -141,7 +144,6 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
 
                                     return questionerAdminTsjrpcClient
                                       .changeTemplatePosition({ blankw, templateId })
-                                      .then(() => blankQuery.refetch());
                                   }}
                                 />
                               )}
@@ -151,11 +153,7 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
                             <Button
                               icon={template.hidden ? 'ViewOffSlash' : 'View'}
                               className={template.hidden ? 'text-x7' : undefined}
-                              onClick={() =>
-                                questionerAdminTsjrpcClient
-                                  .switchTemplateHiddenSign({ blankw, templateId })
-                                  .then(() => blankQuery.refetch())
-                              }
+                              onClick={() => openVisibilityTemplateIdModalAtom.set(templateId)}
                             />
                           }
                           requiredSign={
@@ -166,7 +164,6 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
                               onChange={value =>
                                 questionerAdminTsjrpcClient
                                   .changeTemplateRequiredSign({ blankw, value, templateId })
-                                  .then(() => blankQuery.refetch())
                               }
                             />
                           }
@@ -178,7 +175,6 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
                               onChanged={value =>
                                 questionerAdminTsjrpcClient
                                   .changeTemplateTitle({ blankw, value, templateId })
-                                  .then(() => blankQuery.refetch())
                               }
                             />
                           }
@@ -191,7 +187,6 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
                               onChanged={value =>
                                 questionerAdminTsjrpcClient
                                   .changeTemplateDescription({ blankw, value, templateId })
-                                  .then(() => blankQuery.refetch())
                               }
                             />
                           }
@@ -204,12 +199,17 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
             )}
           />
 
+          <FullContent openAtom={openVisibilityTemplateIdModalAtom}>
+            <WithAtomTruthfulValue atom={openVisibilityTemplateIdModalAtom}>{
+              (templateId) => <QuestionerTemplateVisibilityRedactor blankw={blankw} templateId={templateId} />
+            }</WithAtomTruthfulValue>
+          </FullContent>
+
           <Modal openAtom={isOpenAddModalAtom}>
-            {blankQuery.data && (
+            {blank && (
               <QuestionerBlankRedactorAddTemplateModalInner
-                blank={blankQuery.data}
+                blank={blank}
                 openAtom={isOpenAddModalAtom}
-                onAdd={blankQuery.refetch}
               />
             )}
           </Modal>
