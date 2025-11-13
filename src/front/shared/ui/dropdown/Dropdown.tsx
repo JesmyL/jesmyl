@@ -39,7 +39,7 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
       {props.triggerNode || (
         <DropdownMenu.Trigger className="flex gap-2">
           {props.label}
-          <Button asSpan>
+          <Button asSpan disabled={props.disabled}>
             {selectedItem?.title ?? (
               <span className="not-selected">
                 {props.undTitle ?? props.nullTitle ?? props.placeholder ?? 'Не выбрано'}

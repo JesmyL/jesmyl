@@ -9,7 +9,6 @@ export const resetStyles = css`
   * {
     -webkit-tap-highlight-color: transparent;
     outline: 0;
-    border: none;
     scrollbar-gutter: stable;
   }
 
