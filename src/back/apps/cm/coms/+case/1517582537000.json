@@ -1,8 +1,13 @@
 {
-  "c": ["D A Em Hm\nG A\nD A Em Hm\nG A", "G D A\nG D A\nD A Em Hm\nG A D", "D\nD A Em Hm\nG A D\nD"],
+  "c": [
+    "D A Em Hm\nG A\nD A Em Hm\nG A",
+    "D A Em Hm\nG A\nD/H A/C# Em/D Hm/F#\nG A",
+    "G D A\nG D A\nD A Em Hm\nG A D",
+    "|D |D|\n|D A Em Hm|\n|G A|\n|D A Em Hm|\n|G A D|\n|D|"
+  ],
   "n": "Душу мою к Тебе возношу",
   "o": [
-    { "w": 4, "s": "enter", "c": 2 },
+    { "w": 4, "s": "enter", "c": 3 },
     {
       "c": 0,
       "p": [
@@ -17,7 +22,7 @@
       "w": 0
     },
     {
-      "c": 1,
+      "c": 2,
       "p": [
         [0, 9, 13],
         [0, 9, 13],
@@ -30,7 +35,7 @@
       "w": 1
     },
     {
-      "c": 0,
+      "c": 1,
       "p": [
         [0, 9, 15, 5],
         [0, 10],
@@ -51,6 +56,6 @@
   "w": 1517582537000,
   "a": "https://holychords.pro/uploads/music/20210208/20210208092053.mp3\n",
   "bpm": 123,
-  "m": 1762405896061,
+  "m": 1762887837938,
   "al": "1~20210208//092053.mp3"
 }
