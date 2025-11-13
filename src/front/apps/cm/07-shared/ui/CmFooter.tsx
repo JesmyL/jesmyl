@@ -1,11 +1,10 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { AppFooter } from '$app/AppFooter';
 import { AppFooterItem } from '$app/AppFooterItem';
-import { indexIsShowPlayerInFooterAtom, useAuth } from '$index/shared/state';
+import { indexIsShowPlayerInFooterAtom } from '$index/shared/state';
 import { useAtomValue } from 'atomaric';
 
 export const CmFooter = () => {
-  const auth = useAuth();
   const isShowPlayer = useAtomValue(indexIsShowPlayerInFooterAtom);
   const checkAccess = useCheckUserAccessRightsInScope();
 
@@ -23,7 +22,7 @@ export const CmFooter = () => {
         title="Списки"
         icon="Playlist01"
       />
-      {isShowPlayer && auth.level >= 3 && (
+      {isShowPlayer && (
         <AppFooterItem
           idPostfix="cm-player"
           to="/cm/player/"

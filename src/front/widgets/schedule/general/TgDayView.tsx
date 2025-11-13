@@ -2,7 +2,6 @@ import { TelegramWebAppApiOr } from '#basis/ui/tg-app/getTgApi';
 import { TelegramWebApp, TelegramWebAppInitData } from '#basis/ui/tg-app/model';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
-import { useAuth } from '$index/shared/state';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useEffect } from 'react';
 import { IScheduleWidgetWid } from 'shared/api';
@@ -39,7 +38,6 @@ type Props = {
 };
 
 const Child = ({ api, initData }: Props) => {
-  const auth = useAuth();
   const { schedule, error, isLoading } = useGetScheduleOrPull(initData.chat_instance);
 
   useEffect(() => api?.disableVerticalSwipes(), [api]);
@@ -48,12 +46,11 @@ const Child = ({ api, initData }: Props) => {
     return hookEffectPipe()
       .pipe(
         setTimeoutPipe(() => {
-          if (auth.level) return;
           indexTsjrpcClientMethods.authMeByTelegramInScheduleDay({ user: initData.user });
         }, 300),
       )
       .effect();
-  }, [auth.level, initData.user]);
+  }, [initData.user]);
 
   return (
     <ScheduleCurrentSchwContext value={schedule?.w ?? IScheduleWidgetWid.def}>

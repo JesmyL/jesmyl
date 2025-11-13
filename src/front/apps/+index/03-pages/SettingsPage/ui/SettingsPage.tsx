@@ -1,3 +1,4 @@
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { useConnectionState } from '#basis/lib/useConnectionState';
 import { useAppNameContext } from '#basis/state/contexts';
 import { MyLib } from '#shared/lib/my-lib';
@@ -10,7 +11,6 @@ import {
   indexIsPlayAnimationsAtom,
   indexIsShowPlayerInFooterAtom,
   useAppFontFamily,
-  useAuth,
 } from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
 import React from 'react';
@@ -30,13 +30,13 @@ const styles = {
 };
 
 export function IndexSettingsPage() {
-  const auth = useAuth();
   const appName = useAppNameContext();
   const [appFontFamily, setAppFontFamily] = useAppFontFamily();
   const connectionNode = useConnectionState('m-2');
+  const checkAccess = useCheckUserAccessRightsInScope();
 
   const settingsList = [
-    auth.level === 100 && (
+    checkAccess('general', 'ALL') && (
       <Link
         key="consol.e"
         to="/!other/$appName/settings/console"
@@ -48,7 +48,7 @@ export function IndexSettingsPage() {
         />
       </Link>
     ),
-    auth.level === 100 && (
+    checkAccess('general', 'ALL') && (
       <Link
         key="access-rights"
         to="/!other/$appName/settings/rights"

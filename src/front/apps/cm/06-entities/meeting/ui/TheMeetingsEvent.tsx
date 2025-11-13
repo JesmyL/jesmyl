@@ -46,7 +46,7 @@ export const CmMeetingEvent = ({ dayi, eventMi, schw }: Props) => {
         <div className="flex gap-3 pr-3">
           {isMobileDevice ? (
             <ScheduleWidgetWatchLiveBroadcastButton schw={schedule.w} />
-          ) : auth.level ? (
+          ) : auth.login ? (
             linkToCom({
               children: <TheIconButton icon="Computer" />,
               search: {

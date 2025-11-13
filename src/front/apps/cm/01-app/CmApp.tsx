@@ -1,3 +1,4 @@
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { useCurrentAppSetter } from '#basis/lib/useCurrentAppSetter';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
@@ -7,7 +8,6 @@ import { CmComSharedListActionInterpretator } from '$cm/features/com';
 import { CmComCommentSharePull } from '$cm/features/com-comment';
 import { cmAppActions } from '$cm/shared/const';
 import { cmConstantsConfigAtom } from '$cm/shared/state';
-import { useAuth } from '$index/shared/state';
 import { Outlet } from '@tanstack/react-router';
 import { atom, useAtomValue } from 'atomaric';
 import React, { memo, Suspense, useEffect, useState } from 'react';
@@ -21,8 +21,8 @@ export const CmApp = () => {
   useCurrentAppSetter('cm');
   const { maxSelectedComsCount } = useAtomValue(cmConstantsConfigAtom);
   const comCommentShareProps = useAtomValue(cmComShareComCommentPropsAtom);
+  const checkAccess = useCheckUserAccessRightsInScope();
 
-  const auth = useAuth();
   const { selectedComws, setSelectedComws } = useCmComSelectedList();
 
   cmAppActions.useOnAction(({ props, navigateFromRoot }) => {
@@ -57,7 +57,7 @@ export const CmApp = () => {
     <>
       <Outlet />
 
-      {auth.level >= 50 && <RenderEditorOnce />}
+      {checkAccess('cm', 'EDIT') && <RenderEditorOnce />}
 
       <CmComSharedListActionInterpretator comListOnActionAtom={comListOnActionAtom} />
       {comCommentShareProps && <CmComCommentSharePull shareProps={comCommentShareProps} />}

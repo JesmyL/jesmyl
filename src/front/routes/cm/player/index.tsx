@@ -1,5 +1,4 @@
 import { CmPlayerPage } from '$cm/pages/PlayerPage';
-import { useAuth } from '$index/shared/state';
 import { createFileRoute } from '@tanstack/react-router';
 import { CmComWid } from 'shared/api';
 
@@ -13,7 +12,5 @@ export const Route = createFileRoute('/cm/player/')({
 });
 
 function RouteComponent() {
-  const auth = useAuth();
-  if (auth.level < 3) return null;
   return <CmPlayerPage />;
 }

@@ -7,7 +7,6 @@ import { QrCodeFullScreen } from '#shared/ui/qr-code/QrCodeFullScreen';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useAuth } from '$index/shared/state';
 import { atom } from 'atomaric';
 import { useEffect, useMemo, useState } from 'react';
 import { makeRegExp } from 'regexpert';
@@ -27,6 +26,7 @@ import { ScheduleWidgetWatchLiveBroadcastButton } from './live-broadcast/WatchLi
 import { ScheduleWidgetMyUserTgInform } from './tg-inform/UserTgInform';
 import { schDaysTsjrpcClient, schGeneralTsjrpcClient, schUsersTsjrpcClient } from './tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetRights, useScheduleWidgetRights } from './useScheduleWidget';
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 
 const msInMin = mylib.howMs.inMin;
 const isOpenInviteQrAtom = atom(false);
@@ -38,8 +38,9 @@ export function ScheduleWidget({
   schedule?: IScheduleWidget;
   rights?: ScheduleWidgetRights;
 }) {
-  const auth = useAuth();
   const rights = useScheduleWidgetRights(schedule, topRights);
+  const checkAccess = useCheckUserAccessRightsInScope();
+
   const scheduleScopeProps: ScheduleScopeProps = useMemo(
     () => ({ schw: schedule?.w ?? IScheduleWidgetWid.def }),
     [schedule?.w],
@@ -252,7 +253,7 @@ export function ScheduleWidget({
                         onSend={() => schDaysTsjrpcClient.addDay({ props: scheduleScopeProps })}
                       />
                     )}
-                    {auth && auth.level >= 80 && (
+                    {checkAccess('sch', 'SCH', 'D') && (
                       <TheIconSendButton
                         className="text-xKO"
                         icon="Delete02"
@@ -264,7 +265,7 @@ export function ScheduleWidget({
                   </>
                 )}
                 {rights.myUser === undefined &&
-                  (rights.auth.level > 0 ? (
+                  (rights.auth.login ? (
                     <SendButton
                       title="Хочу комментить события"
                       className="mt-10"

@@ -1,3 +1,4 @@
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { useConnectionState } from '#basis/lib/useConnectionState';
 import { appNames } from '#basis/model/App.model';
 import { useAppNameContext } from '#basis/state/contexts';
@@ -22,6 +23,7 @@ const isAboutOpenAtom = atom(false);
 export const IndexOtherPage = () => {
   const currentAppName = useAppNameContext();
   const linkParams = { appName: currentAppName };
+  const checkAccess = useCheckUserAccessRightsInScope();
 
   const auth = useAuth();
   const connectionStateNode = useConnectionState();
@@ -62,7 +64,7 @@ export const IndexOtherPage = () => {
       contentClass="flex column p-2"
       content={
         <>
-          <ScheduleWidgetAlarm isForceShow={auth.level >= 50} />
+          <ScheduleWidgetAlarm isForceShow={checkAccess('cm', 'EDIT')} />
           {!auth.nick && <IndexAuthorizeTelegramInlineAuthButton />}
           <Link
             to="/!other/$appName/settings"
