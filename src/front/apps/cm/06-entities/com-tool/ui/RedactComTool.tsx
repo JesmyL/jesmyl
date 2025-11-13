@@ -2,13 +2,14 @@ import { useCmComCurrent } from '$cm/entities/com';
 import { useAuth } from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
 import { CmComTool } from '../ComTool';
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 
 export default function CmComToolRedact() {
-  const auth = useAuth();
+  const checkAccess = useCheckUserAccessRightsInScope();
   const ccom = useCmComCurrent();
 
   return (
-    auth.level > 49 && (
+    checkAccess('cm', 'EDIT') && (
       <Link
         to="/cm/edit/coms/$comw/$tab"
         params={{ comw: `${ccom?.wid ?? 0}`, tab: 'watch' }}

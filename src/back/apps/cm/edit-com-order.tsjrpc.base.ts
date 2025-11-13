@@ -100,7 +100,11 @@ export const cmEditComOrderServerTsjrpcBase =
           }),
 
           remove: modifyInvocableCom((com, { ordw, isAnchor, orderTitle }, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'D')) throw '';
+            try {
+              if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'D')) throw '';
+            } catch (_) {
+              if (com.w > Date.now() - (24 * 60 * 60 * 1000) && throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
+            }
 
             com.o ??= [];
             com.o = com.o.filter(ord => ord.w !== ordw && ord.a !== ordw);
