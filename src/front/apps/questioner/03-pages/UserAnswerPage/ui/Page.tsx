@@ -10,19 +10,19 @@ import { TextInput } from '#shared/ui/TextInput';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { questionerCardContents } from '$q/shared/const/cardContents';
 import { questionerTemplateDescriptions } from '$q/shared/const/templateDescriptions';
+import { questionerIDB } from '$q/shared/state/qIdb';
 import { questionerUserTsjrpcClient } from '$q/shared/tsjrpc/user.tsjrpc';
 import { QuestionerTemplateCard } from '$q/shared/ui/TemplateCard';
 import { atom, useAtomValue } from 'atomaric';
+import { useLiveQuery } from 'dexie-react-hooks';
 import { useState } from 'react';
+import { questionerAnyTypeIfConditionCheckerDict } from 'shared/const/q/anyTypeIfConditionCheckerDict';
 import { QuestionerBlankWid, QuestionerType } from 'shared/model/q';
 import { QuestionerUserAnswer, QuestionerUserAnswerContentProps } from 'shared/model/q/answer';
 import { itNIt } from 'shared/utils';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import { useQuestionerUserAnswerDetailsQuery } from '../api/useQuestionerUserBlankDetailsQuery';
-import { questionerAnyTypeIfConditionCheckerDict } from 'shared/const/q/anyTypeIfConditionCheckerDict';
-import { useLiveQuery } from 'dexie-react-hooks';
-import { questionerIDB } from '$q/shared/state/qIdb';
 
 const answersAtomBox: PRecord<QuestionerBlankWid, ReturnType<typeof initAtom>> = {};
 
