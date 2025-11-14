@@ -10,6 +10,7 @@ export const useCmComCompositionControls = (ccom: CmCom | nil) => {
 
   useEffect(() => {
     if (ccom?.wid == null) return;
+    if (comListRef.current) comListRef.current.scrollTop = 0;
 
     return hookEffectPipe()
       .pipe(
@@ -20,12 +21,10 @@ export const useCmComCompositionControls = (ccom: CmCom | nil) => {
   }, [addLaterComw, ccom?.wid]);
 
   useEffect(() => {
-    if (comListRef.current) comListRef.current.scrollTop = 0;
-
     if (!cmComAudioPlayerIsPlayAtom.get() && !ccom?.audio.includes(cmComAudioPlayerPlaySrcAtom.get()!)) {
       if (ccom?.audio[0]) cmComAudioPlayerPlaySrcAtom.set(ccom.audio[0]);
     }
-  }, [ccom?.audio, ccom?.wid]);
+  }, [ccom?.audio]);
 
   return { laterComws, comListRef };
 };
