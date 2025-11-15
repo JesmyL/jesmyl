@@ -8,32 +8,35 @@ import { useAtomValue } from 'atomaric';
 import { SokiAppName } from 'shared/api';
 import styled from 'styled-components';
 
-export default function AppFooterSwipeable({
-  currentAppName,
-  Div,
-  children,
-}: {
+type Props = {
   currentAppName: SokiAppName | nil;
   Div: ReturnType<typeof styled.div>;
   children: React.ReactNode;
-}) {
-  const favouriteAppsSet = useAtomValue(indexFavouriteAppsAtom);
+};
+
+export default function AppFooterSwipeable(props: Props) {
+  const favouriteApps = useAtomValue(indexFavouriteAppsAtom);
   const navigate = useNavigate();
 
-  if (favouriteAppsSet.size < 2) return <Div>{children}</Div>;
+  if (favouriteApps.length < 2) return <props.Div>{props.children}</props.Div>;
 
-  const favouriteApps = Array.from(favouriteAppsSet);
-
-  const currentAppi = currentAppName == null ? -1 : favouriteApps.indexOf(currentAppName);
+  const currentAppi = props.currentAppName == null ? -1 : favouriteApps.indexOf(props.currentAppName);
   let prevAppName = null;
   let nextAppName = null;
 
-  if (currentAppi < 0) {
+  if (currentAppi < 0 || props.currentAppName == null) {
     prevAppName = favouriteApps[0];
-    nextAppName = favouriteApps[1];
+    nextAppName = favouriteApps[favouriteApps.length - 1];
+  } else if (favouriteApps.length === 2) {
+    prevAppName = favouriteApps[+!currentAppi];
+    nextAppName = favouriteApps[+!currentAppi];
   } else {
-    prevAppName = favouriteApps[currentAppi - 1] ?? favouriteApps[favouriteApps.length - 1];
-    nextAppName = favouriteApps[currentAppi + 1] ?? favouriteApps[0];
+    const appNameCarousel = favouriteApps.concat(favouriteApps);
+
+    prevAppName =
+      appNameCarousel[currentAppi - 1] ?? appNameCarousel[appNameCarousel.lastIndexOf(props.currentAppName) - 1];
+
+    nextAppName = appNameCarousel[currentAppi + 1];
   }
 
   const prevApp = routingApps[prevAppName];
@@ -43,7 +46,7 @@ export default function AppFooterSwipeable({
     onPrevApp = () => {};
     onNextApp = () => {};
 
-    return <Div>{children}</Div>;
+    return <props.Div>{props.children}</props.Div>;
   }
 
   onPrevApp = () => {
@@ -67,7 +70,7 @@ export default function AppFooterSwipeable({
             withoutAnimation
           />
         </div>
-        <Div>{children}</Div>
+        <props.Div>{props.children}</props.Div>
         <div className={nextIconClassName}>
           <LazyIcon
             icon={nextApp.icon}

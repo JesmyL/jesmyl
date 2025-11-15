@@ -35,4 +35,4 @@ export const indexAppUserAccessRightsMatrixAtom = atom<IndexAppUserAccessRightsA
 export const indexUserAccessRightsAtom = atom<IndexAppUserAccessRightsWithoutInfo>({}, 'index:myAccessRights');
 export const indexOpenAccessRoleRedactorAtom = atom<UserAccessRole | null>(null);
 
-export const indexFavouriteAppsAtom = atom(new Set<SokiAppName>(), 'index:favouriteApps');
+export const indexFavouriteAppsAtom = atom<SokiAppName[]>([], 'index:favouriteApps');

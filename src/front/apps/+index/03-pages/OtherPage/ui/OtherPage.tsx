@@ -12,10 +12,10 @@ import { routingApps } from '$app/lib/configs';
 import { IndexAppFace } from '$index/entities/AppFace/ui/AppFace';
 import { IndexAuthorizeTelegramInlineAuthButton } from '$index/entities/Authorize/ui/IndexTelegramInlineAuthButton';
 import { IndexProfileInfo } from '$index/entities/ProfileInfo/ui/ProfileInfo';
-import { useAuth } from '$index/shared/state';
+import { indexFavouriteAppsAtom, useAuth } from '$index/shared/state';
 import { IndexAbout } from '$index/widgets/About/ui/IndexAbout';
 import { Link } from '@tanstack/react-router';
-import { atom } from 'atomaric';
+import { atom, useAtomValue } from 'atomaric';
 import { itNNull } from 'shared/utils';
 
 const isAboutOpenAtom = atom(false);
@@ -24,10 +24,12 @@ export const IndexOtherPage = () => {
   const currentAppName = useAppNameContext();
   const linkParams = { appName: currentAppName };
   const checkAccess = useCheckUserAccessRightsInScope();
+  const favouriteApps = useAtomValue(indexFavouriteAppsAtom);
 
   const auth = useAuth();
   const connectionStateNode = useConnectionState();
-  const appList = appNames
+  const appList = favouriteApps
+    .concat(appNames.filter(appName => !favouriteApps.includes(appName)))
     .map(appName => {
       if (appName === 'index' || routingApps[appName] == null || auth == null) return null;
 

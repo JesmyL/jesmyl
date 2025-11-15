@@ -27,7 +27,7 @@ export const IndexAppFace = ({ config: { appName, icon, title } }: Props) => {
       <WithAtomValue atom={indexFavouriteAppsAtom}>
         {favouriteApps => (
           <IconCheckbox
-            checked={favouriteApps.has(appName)}
+            checked={favouriteApps.includes(appName)}
             onChange={() => indexFavouriteAppsAtom.do.toggle(appName)}
           />
         )}

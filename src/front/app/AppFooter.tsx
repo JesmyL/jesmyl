@@ -12,7 +12,8 @@ const AppFooterSwipeable = React.lazy(() => import('#features/app-footer-swipeab
 export function AppFooter({ children }: { children: React.ReactNode; appName: AppName }) {
   const loc = useLocation();
 
-  const [, appName, place] = loc.pathname.split('/', 3) as [string, AppName | und, string | und];
+  let [, appName, place] = loc.pathname.split('/', 3) as [string, AppName | und, string | und];
+  if (appName?.startsWith('!')) [appName, place] = [place as never, appName];
 
   useEffect(() => {
     if ((isTouchDevice && loc.pathname.includes('-!-')) || !appName || !place) return;
