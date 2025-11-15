@@ -1,5 +1,6 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
+import { MyLib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -12,14 +13,11 @@ import { removedCompositionsAtom } from '$cm+editor/shared/state/com';
 import { ChordVisibleVariant, TheCmCom } from '$cm/ext';
 import { useAtomSet } from 'atomaric';
 import { useState } from 'react';
+import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
+import { CmComMetricNums } from 'shared/model/cm/com-metric-nums';
 import { emptyFunc } from 'shared/utils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { CmEditorComEditTransposition } from '../../com/ui/ComEditTransposition';
-
-const meterSizeItems: DropdownItem<3 | 4>[] = [
-  { id: 4, title: '4/4' },
-  { id: 3, title: '3/4' },
-];
 
 export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
   const setRemovedComs = useAtomSet(removedCompositionsAtom);
@@ -59,11 +57,18 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
         onInput={emptyFunc}
       />
       <div className="flex w-full between my-2">
-        <LazyIcon icon="DashboardSpeed02" />
-        <div className="mx-2 nowrap">Размерность</div>
+        <span className="flex gap-3">
+          <LazyIcon icon="DashboardSpeed02" />
+          <div className="mx-2 nowrap">Размерность</div>
+        </span>
         <Dropdown
           id={ccom.meterSize}
-          items={meterSizeItems}
+          items={
+            MyLib.entries(cmComMetricNumTitles).map(([idStr, title]) => ({
+              id: +idStr,
+              title,
+            })) as DropdownItem<CmComMetricNums>[]
+          }
           onSelectId={value => {
             cmEditComClientTsjrpcMethods.setMeterSize({ comw: ccom.wid, value });
           }}

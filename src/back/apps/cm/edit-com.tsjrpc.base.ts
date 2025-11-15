@@ -2,6 +2,7 @@ import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeA
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { CmComWid, IExportableCom, IServerSideCom } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
+import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
 import { itNNil, smylib } from 'shared/utils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { makeCmComHttpToNumLeadAudioLinks, makeCmComNumLeadToHttpAudioLinks } from './complect/com-http-links';
@@ -38,7 +39,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           const prev = com.s;
           com.s = value;
 
-          return `Размерность песни ${getCmComNameInBrackets(com)} установлено в значение ${value}/4 (было ${prev}/4)`;
+          return `Размерность песни ${getCmComNameInBrackets(com)} установлено в значение ${cmComMetricNumTitles[value]} (было ${cmComMetricNumTitles[prev ?? 4]}/4)`;
         }),
 
         changeLanguage: modifyInvocableCom((com, { value }, { auth }) => {

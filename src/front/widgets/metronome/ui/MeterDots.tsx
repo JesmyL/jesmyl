@@ -1,5 +1,6 @@
 import { useAtom } from 'atomaric';
 import { memo } from 'react';
+import { cmComMetricNumTitles, cmComNextMetricSize } from 'shared/const/cm/com-metric-nums';
 import styled, { css, keyframes } from 'styled-components';
 import { metronomeUserAccentsAtom, metronomeUserMeterSizeAtom } from '../lib/atoms';
 
@@ -11,7 +12,8 @@ export const MetronomeMeterDots = memo(function MetronomeMeterDots() {
     <StyledContainer className="flex gap-2 column">
       <StyledMeterDots
         id="metronome-dotts"
-        className="flex"
+        className="flex flex-wrap"
+        meter-size={userMeterSize}
       >
         {Array(userMeterSize)
           .fill(1)
@@ -20,20 +22,23 @@ export const MetronomeMeterDots = memo(function MetronomeMeterDots() {
               <i
                 key={doti}
                 className={`strong-size${accents[doti] === '1' ? ' accent' : ''}`}
-                onClick={() =>
-                  setAccents(
-                    accents
-                      .split('')
-                      .map((num, numi) => (numi === doti ? (num === '1' ? '0' : '1') : num))
-                      .join(''),
-                  )
-                }
+                onClick={() => {
+                  const news = accents
+                    .padEnd(userMeterSize, '0')
+                    .split('')
+                    .map((num, numi) => (numi === doti ? (num === '0' ? '1' : '0') : num || '0'))
+                    .join('');
+
+                  setAccents(news);
+                }}
               />
             );
           })}
       </StyledMeterDots>
 
-      <div onClick={() => setUserMeterSize(userMeterSize === 3 ? 4 : 3)}>{userMeterSize}/4</div>
+      <div onClick={() => setUserMeterSize(cmComNextMetricSize[userMeterSize])}>
+        {cmComMetricNumTitles[userMeterSize]}
+      </div>
     </StyledContainer>
   );
 });
@@ -57,11 +62,18 @@ const scalePulse2 = keyframes`${css`
 `}`;
 
 const StyledMeterDots = styled.div`
+  --size: 5cqmin;
   gap: 2cqmin;
 
-  > * {
-    --size: 5cqmin;
+  &[meter-size='6'] {
+    width: calc(3 * (var(--size) + 2cqmin));
+  }
 
+  &[meter-size='8'] {
+    width: calc(4 * (var(--size) + 2cqmin));
+  }
+
+  > * {
     background-color: var(--color--7);
     border-radius: var(--size);
     opacity: 0.7;

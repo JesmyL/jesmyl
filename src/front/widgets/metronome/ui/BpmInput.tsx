@@ -34,11 +34,11 @@ export const MetronomeBpmInput = memo(function MetronomeBpmInput() {
 });
 
 const StyledBpmInput = styled(TextInput)`
-  width: 3em;
+  width: 4em;
   text-align: center;
 `;
 
 const StyledBox = styled.label`
   margin: 20px 0;
-  max-width: 50px;
+  max-width: 60px;
 `;

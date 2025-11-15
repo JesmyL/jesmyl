@@ -1,4 +1,5 @@
 import { CmComWid, HttpLink, IExportableCom } from 'shared/api/complect/apps';
+import { CmComMetricNums } from 'shared/model/cm/com-metric-nums';
 
 type SimpleComValueSetter<Value> = (args: { comw: CmComWid; value: Value }) => IExportableCom;
 
@@ -8,7 +9,7 @@ export type CmEditComTsjrpcModel = {
   rename: SimpleComValueSetter<string>;
   destroy: (args: { comw: CmComWid }) => string;
   setBpM: SimpleComValueSetter<number>;
-  setMeterSize: SimpleComValueSetter<3 | 4>;
+  setMeterSize: SimpleComValueSetter<CmComMetricNums>;
   changeLanguage: SimpleComValueSetter<number>;
   changeTon: SimpleComValueSetter<number>;
   makeBemoled: SimpleComValueSetter<num>;

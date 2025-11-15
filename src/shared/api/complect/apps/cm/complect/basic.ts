@@ -1,4 +1,5 @@
 import { StrRegExp } from 'regexpert';
+import { CmComMetricNums } from 'shared/model/cm/com-metric-nums';
 import { CmBlockStyleKey } from 'shared/values/cm/block-styles/BlockStyles.model';
 import { CmCatWid, CmComMod, CmComOrderWid, CmComWid, CmMeetingEventWid } from './enums';
 
@@ -83,7 +84,7 @@ export interface IExportableCom {
   /** ударов в минуту */
   bpm?: number;
   /** размерность песни */
-  s?: 3 | 4;
+  s?: CmComMetricNums;
 
   ton?: number;
 

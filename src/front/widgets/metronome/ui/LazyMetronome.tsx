@@ -1,6 +1,7 @@
 import { Modal, ModalBody } from '#shared/ui/modal';
 import { useAtomSet, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
+import { CmComMetricNums } from 'shared/model/cm/com-metric-nums';
 import styled from 'styled-components';
 import { metronomeIsOpenAtom, metronomeUserBpmAtom, metronomeUserMeterSizeAtom } from '../lib/atoms';
 import { useMetronomePlayStateController } from '../lib/useMetronomePlayStateController';
@@ -10,7 +11,7 @@ import { MetronomePlayButton } from './PlayButton';
 import { MetronomeTouchBpmButton } from './TouchBpmButton';
 
 interface Props {
-  meterSize: 3 | 4 | und;
+  meterSize: CmComMetricNums | und;
   bpm?: number;
 }
 
