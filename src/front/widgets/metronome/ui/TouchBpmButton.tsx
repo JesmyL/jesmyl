@@ -18,7 +18,7 @@ export const MetronomeTouchBpmButton = memo(function MetronomeTouchBpmButton() {
 
   return (
     <StyledTapButton
-      className={'strong-size'}
+      className={'w-20 rounded-full! aspect-1/1'}
       onMouseDown={isTouchDevice ? undefined : touchBpm}
       onTouchStart={isTouchDevice ? touchBpm : undefined}
     />

@@ -1,20 +1,30 @@
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useAtom } from 'atomaric';
-import { memo } from 'react';
+import { memo, useRef } from 'react';
 import { itNIt } from 'shared/utils';
 import styled from 'styled-components';
 import { metronomeIsPlayAtom } from '../lib/atoms';
+import audioSrc from './silent.wav';
 
 export const MetronomePlayButton = memo(function MetronomePlayButton() {
+  const elemRef = useRef<HTMLAudioElement>(null);
   const [isPlay, setIsPlay] = useAtom(metronomeIsPlayAtom);
+  const togglePlay = () => {
+    if (!isPlay) elemRef.current?.play();
+    setIsPlay(itNIt);
+  };
 
   return (
     <div
       className={'pointer'}
-      onMouseDown={isTouchDevice ? undefined : () => setIsPlay(itNIt)}
-      onTouchStart={isTouchDevice ? () => setIsPlay(itNIt) : undefined}
+      onMouseDown={isTouchDevice ? undefined : togglePlay}
+      onTouchStart={isTouchDevice ? togglePlay : undefined}
     >
+      <audio
+        ref={elemRef}
+        src={audioSrc}
+      />
       {isPlay ? (
         <StyledIcon
           icon="Pause"

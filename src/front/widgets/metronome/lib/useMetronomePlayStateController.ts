@@ -4,15 +4,15 @@ import { useEffect } from 'react';
 import { Loop, LoopOptions, Sampler, getTransport } from 'tone';
 import {
   metronomeIsPlayAtom,
-  metronomeUserAccentsAtom,
   metronomeUserBpmAtom,
+  metronomeUserMeterAccentsAtom,
   metronomeUserMeterSizeAtom,
 } from './atoms';
 
 export const useMetronomePlayStateController = () => {
   const userBpm = useDebounceValue(useAtomValue(metronomeUserBpmAtom), 500);
   const userMeterSize = useAtomValue(metronomeUserMeterSizeAtom);
-  const accents = useAtomValue(metronomeUserAccentsAtom);
+  const accents = useAtomValue(metronomeUserMeterAccentsAtom)[userMeterSize] ?? '1' + '0'.repeat(userMeterSize - 1);
   const isPlay = useAtomValue(metronomeIsPlayAtom);
 
   useEffect(() => {

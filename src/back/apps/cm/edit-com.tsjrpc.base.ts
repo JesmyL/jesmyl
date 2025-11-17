@@ -39,7 +39,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           const prev = com.s;
           com.s = value;
 
-          return `Размерность песни ${getCmComNameInBrackets(com)} установлено в значение ${cmComMetricNumTitles[value]} (было ${cmComMetricNumTitles[prev ?? 4]}/4)`;
+          return `Размерность песни ${getCmComNameInBrackets(com)} установлено в значение ${cmComMetricNumTitles[value]} (было ${cmComMetricNumTitles[prev ?? 4]})`;
         }),
 
         changeLanguage: modifyInvocableCom((com, { value }, { auth }) => {

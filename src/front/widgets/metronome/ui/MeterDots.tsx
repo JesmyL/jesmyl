@@ -1,12 +1,12 @@
-import { useAtom } from 'atomaric';
+import { useAtom, useAtomValue } from 'atomaric';
 import { memo } from 'react';
 import { cmComMetricNumTitles, cmComNextMetricSize } from 'shared/const/cm/com-metric-nums';
 import styled, { css, keyframes } from 'styled-components';
-import { metronomeUserAccentsAtom, metronomeUserMeterSizeAtom } from '../lib/atoms';
+import { metronomeUserMeterAccentsAtom, metronomeUserMeterSizeAtom } from '../lib/atoms';
 
 export const MetronomeMeterDots = memo(function MetronomeMeterDots() {
   const [userMeterSize, setUserMeterSize] = useAtom(metronomeUserMeterSizeAtom);
-  const [accents, setAccents] = useAtom(metronomeUserAccentsAtom);
+  const accents = useAtomValue(metronomeUserMeterAccentsAtom)[userMeterSize] ?? '1' + '0'.repeat(userMeterSize - 1);
 
   return (
     <StyledContainer className="flex gap-2 column">
@@ -21,15 +21,15 @@ export const MetronomeMeterDots = memo(function MetronomeMeterDots() {
             return (
               <i
                 key={doti}
-                className={`strong-size${accents[doti] === '1' ? ' accent' : ''}`}
+                className={`metronome-dot rounded-full! ${accents[doti] === '1' ? ' accent' : ''}`}
                 onClick={() => {
-                  const news = accents
+                  const newAccents = accents
                     .padEnd(userMeterSize, '0')
                     .split('')
                     .map((num, numi) => (numi === doti ? (num === '0' ? '1' : '0') : num || '0'))
                     .join('');
 
-                  setAccents(news);
+                  metronomeUserMeterAccentsAtom.do.setPartial({ [userMeterSize]: newAccents });
                 }}
               />
             );
@@ -62,15 +62,21 @@ const scalePulse2 = keyframes`${css`
 `}`;
 
 const StyledMeterDots = styled.div`
-  --size: 5cqmin;
-  gap: 2cqmin;
+  --size: 17px;
+  --gap: 5px;
+  gap: var(--gap);
 
   &[meter-size='6'] {
-    width: calc(3 * (var(--size) + 2cqmin));
+    width: calc(3 * (var(--size) + var(--gap)));
   }
 
   &[meter-size='8'] {
-    width: calc(4 * (var(--size) + 2cqmin));
+    width: calc(4 * (var(--size) + var(--gap)));
+  }
+
+  .metronome-dot {
+    width: var(--size);
+    height: var(--size);
   }
 
   > * {
@@ -90,7 +96,7 @@ const StyledMeterDots = styled.div`
 `;
 
 const StyledContainer = styled.div`
-  width: 30cqmin;
+  width: 30%;
   font-size: 1.3em;
   font-weight: bold;
 `;
