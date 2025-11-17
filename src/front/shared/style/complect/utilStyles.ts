@@ -185,13 +185,4 @@ export const utilStyles = css`
       page-break-inside: avoid;
     }
   }
-
-  .strong-size {
-    width: var(--size);
-    min-width: var(--size);
-    max-width: var(--size);
-    height: var(--size);
-    min-height: var(--size);
-    max-height: var(--size);
-  }
 `;
