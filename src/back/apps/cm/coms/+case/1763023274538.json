@@ -1,13 +1,13 @@
 {
-  "m": 1763030443382,
-  "n": "Если, день встречая, ты сделал вдох",
+  "m": 1763294700787,
+  "n": "Воспой",
   "w": 1763023274538,
   "l": 0,
   "c": [
     "A# A#sus\nA# F/A#\nA#/D D#\nA#/D D# F A#",
     "A# A#sus\nA# F/A#\nA#/D D#\nA#/D D# F Gm7",
-    "A# A#sus A# A#sus",
-    "A# A#sus A# A#maj7",
+    "|A# |A#sus |A# |A#sus|",
+    "|A# A#sus |A# A#maj7|",
     "|Gm7 |F/A |A# A#/D |D#|\n|Gm7 |F/A |A# A#/D |D# |D#|",
     "D# Gm7 F\nD# Gm7 F\nD# Gm7 F\nD# Gm7 F\nA#",
     "D# Gm7 F\nD# Gm7 F\nD# Gm7 F\nD# Gm7 F\nGm7",
@@ -85,5 +85,6 @@
     { "w": 15, "s": "final", "c": 8 }
   ],
   "bpm": 174,
-  "b": 1
+  "b": 1,
+  "s": 6
 }

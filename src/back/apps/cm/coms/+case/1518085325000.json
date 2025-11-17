@@ -2,15 +2,16 @@
   "c": [
     "Em Hm\nEm Hm\nC Am\nD H/D#\nEm Hm\nEm Hm\nC\nAm D H/D#",
     "Em7-Em7/D Csus2 D7 Gsus2\nC H Em Am7-H7\nEm7-Em7/D Csus2\nD7 Gsus2\nAm7 H Em",
+    "Em7-Em7/D Csus2 D7 Gsus2\nC H Em Am7-H7\nEm7-Em7/D Csus2\nD7 Gsus2\nAm7 H7 C-D",
     "Em Hm\nEm Hm\nC Am\nD H/D#\nEm7 Hm/D\nA9/C# Asus4/C\nAm7\nEdim/A# F#dim7 Hsus2/D#-H/D#",
-    "Em7-Em7/D Cmaj7 D7 Gmaj7\nAm7 H7 Em F#dim-H7\nEm7-Em7/D#-Em7/D C#dim\nF#dim Gmaj7\nAm7 H7 .C-D..C-H7",
+    "Em7-Em7/D Cmaj7 D7 Gmaj7\nAm7 H7 Em F#dim-H7\nEm7-Em7/D#-Em7/D C#dim\nF#dim Gmaj7\nAm7 H7 C-H7",
     "Am7 H7 Em6",
-    "Em Hm Em Hm\nC-C/H Am H\nEm Hm Em/C# Hm\nC F#dim H",
+    "|Em |Hm |Em |Hm|\n|C-C/H |Am |H4| H|\n|Em |Hm |Em/C# |Hm|\n|C |F#dim |H4| H|",
     "Am Am/F# Em C2\nAm H Em"
   ],
   "n": "Создатель всей Вселенной",
   "o": [
-    { "w": 4, "c": 5, "s": "enter" },
+    { "w": 4, "c": 6, "s": "enter" },
     {
       "c": 0,
       "p": [[1, 7], [0, 5], [2, 8], [5, 11], [2, 9], [2, 8], [2], [2, 7, 11]],
@@ -33,10 +34,23 @@
       "t": 1,
       "w": 1
     },
-    { "w": 5, "c": 6, "s": "play" },
-    { "c": 2, "p": [[1, 7], [0, 5], [1, 8], [4, 7], [3, 10], [1, 8], [1], [2, 8, 11]], "s": "one", "t": 2, "w": 2 },
-    { "w": 6, "a": 1, "r": 2, "c": 3 },
-    { "w": 7, "s": "final", "c": 4, "t": 3, "p": [[1, 7, 13]] }
+    { "w": 5, "c": 7, "s": "play" },
+    { "c": 3, "p": [[1, 7], [0, 5], [1, 8], [4, 7], [3, 10], [1, 8], [1], [2, 8, 11]], "s": "one", "t": 2, "w": 2 },
+    { "w": 6, "a": 1, "r": 0, "c": 2 },
+    {
+      "w": 9,
+      "s": "two",
+      "c": 4,
+      "t": 1,
+      "p": [
+        [1, 4, 7, 13],
+        [-2, 1, 8, 13],
+        [1, 4],
+        [1, 8],
+        [1, 7, 13]
+      ]
+    },
+    { "w": 7, "s": "+", "c": 5, "t": 3, "p": [[1, 7, 13]] }
   ],
   "t": [
     "Создатель всей Вселенной,\nВсемогущий Бог,\nИ жизнь мою другой\nлишь только Ты соделать смог.\nЯ петь хочу о том,\nчто подарил мне Ты,\nО той любви,\nчто бесконечна как и Ты.",
@@ -46,6 +60,8 @@
   ],
   "w": 1518085325000,
   "a": "https://holychords.pro/uploads/music/20210113/20210113072715.mp3\n",
-  "m": 1762405896074,
-  "al": "1~20210113//072715.mp3"
+  "m": 1763296326157,
+  "al": "1~20210113//072715.mp3",
+  "bpm": 110,
+  "s": 4
 }
