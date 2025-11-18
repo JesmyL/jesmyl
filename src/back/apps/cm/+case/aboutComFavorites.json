@@ -65,8 +65,8 @@
   },
   "T6558fe287d2ea93be3e19bbe64b5dfc": {
     "comws": [1718543236522, 1741883251071, 1612878728464],
-    "m": 1761160704191,
-    "tools": ["edit-com", "com-comment", "cats-binds", "hide-metronome", "chords-variant"]
+    "m": 1763402393509,
+    "tools": ["edit-com", "com-comment", "cats-binds", "hide-metronome", "chords-variant", "chord-hard-level"]
   },
   "T8574ab57c74159d39de20665af3eebe": { "comws": [1634188046492], "m": 1761160704191 },
   "T8656fec3ec9f81c86770b916f7503fc": {
