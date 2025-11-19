@@ -257,6 +257,7 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
         }),
 
         editCellValue: updateCellOrNestedCell(({ rowHolder, columni, colType, colsHolder }, { value }, _, rack) => {
+          if (colType == null) return;
           rowHolder.row ??= [];
           const cell = (rowHolder.row[columni] ??= storagesColumnConfigDict[colType].def());
           const typeCell = storagesColumnConfigDict[colType].retCorrectTypeValue(value);
@@ -290,9 +291,14 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
               titlesSet.add(dictList[titlei]);
             });
 
-            rack.dicts[column.di ?? 0].li.forEach((title, titlei) => {
+            dictList.forEach((title, titlei) => {
               titleIndexDict[title] = titlei;
             });
+
+            if (titleIndexDict[title] == null) {
+              titleIndexDict[title] = dictList.length;
+              dictList.push(title);
+            }
 
             if (titlesSet.has(title)) titlesSet.delete(title);
             else titlesSet.add(title);
@@ -426,7 +432,7 @@ function updateCellOrNestedCell<
       rowHolder: { row?: (StoragesCell<StoragesColumnType> | nil)[] };
       colsHolder: { cols?: StoragesRackColumn<StoragesColumnType>[] };
       columni: number;
-      colType: StoragesColumnType;
+      colType?: StoragesColumnType;
     },
     props: Props,
     card: StoragesRackCard,
@@ -444,7 +450,7 @@ function updateCellOrNestedCell<
         rack,
       );
 
-    const column = rack.cols[props.coli].cols?.[props.nestedColi];
+    const column = rack.cols[props.coli];
     if (column == null) throw 'Error 1920936712490123';
 
     card.row ??= [];
@@ -454,7 +460,12 @@ function updateCellOrNestedCell<
     const rowHolder = cardCell.row.find(it => it.mi === props.nestedCellMi);
     if (!smylib.isObj(rowHolder)) throw 'Error 192644527841210';
 
-    return updater({ rowHolder, columni: props.nestedColi, colType: column.t, colsHolder: column }, props, card, rack);
+    return updater(
+      { rowHolder, columni: props.nestedColi, colType: column.cols?.[props.nestedColi].t, colsHolder: column },
+      props,
+      card,
+      rack,
+    );
   });
 }
 
