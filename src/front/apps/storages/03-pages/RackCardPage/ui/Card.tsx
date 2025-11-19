@@ -76,7 +76,7 @@ const Card = ({ card, rack }: { rack: StoragesRack; card: StoragesRackCard }) =>
               onChanged={note => storagesTsjrpcClient.editRackCardNote({ rackw: rack.w, note, cardMi: card.mi })}
             />
           ) : (
-            card.note && <div className="bg-x2 p-3">{card.note}</div>
+            card.note && <div className="bg-x2 p-3 pre-text">{card.note}</div>
           )}
 
           {isEdit || card.meta ? (

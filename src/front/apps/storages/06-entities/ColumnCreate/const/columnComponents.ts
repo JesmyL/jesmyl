@@ -7,6 +7,7 @@ import { StoragesColumnCreateOfTypeLink } from '../types-ui/Link';
 import { StoragesColumnCreateOfTypeList } from '../types-ui/List';
 import { StoragesColumnCreateOfTypeNumber } from '../types-ui/Number';
 import { StoragesColumnCreateOfTypeString } from '../types-ui/String';
+import { StoragesColumnCreateOfTypeText } from '../types-ui/Text';
 
 export const storagesColumnCreateComponents: StoragesColumnCreateComponents = {
   [StoragesColumnType.Date]: StoragesColumnCreateOfTypeDate,
@@ -15,5 +16,6 @@ export const storagesColumnCreateComponents: StoragesColumnCreateComponents = {
   [StoragesColumnType.Number]: StoragesColumnCreateOfTypeNumber,
   [StoragesColumnType.String]: StoragesColumnCreateOfTypeString,
   [StoragesColumnType.Link]: StoragesColumnCreateOfTypeLink,
+  [StoragesColumnType.Text]: StoragesColumnCreateOfTypeText,
   [StoragesColumnType.Formula]: StoragesColumnCreateOfTypeFormula,
 };

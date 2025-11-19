@@ -7,7 +7,7 @@ import { QrReader } from '#shared/ui/qr-code/QrReader';
 import { StoragesRackStatusFace } from '$storages/entities/RackStatusFace';
 import { atom, useAtomValue } from 'atomaric';
 import { StoragesRack, StoragesRackCard } from 'shared/model/storages/list.model';
-import { StoragesColumnType } from 'shared/model/storages/rack.model';
+import { StoragesColumnType, StoragesRackColumn } from 'shared/model/storages/rack.model';
 import { toast } from 'sonner';
 
 const termAtom = atom('', 'storages:searchTerm');
@@ -49,6 +49,7 @@ export const StoragesRackSearchModalInner = ({
                   if (
                     mylib.isNum(key) &&
                     rack.cols[key].t !== StoragesColumnType.Link &&
+                    rack.cols[key].t !== StoragesColumnType.Text &&
                     rack.cols[key].t !== StoragesColumnType.String
                   )
                     return;
@@ -56,7 +57,6 @@ export const StoragesRackSearchModalInner = ({
                   return (
                     <Badge
                       key={key}
-                      className=""
                       variant={searchByKeySet.has(key) ? undefined : 'secondary'}
                       onClick={() => {
                         if (searchByKeySet.size === 1 && searchByKeySet.has(key)) return;
@@ -78,15 +78,26 @@ export const StoragesRackSearchModalInner = ({
           <Command.List className="w-full max-h-[calc(100cqh-300px)]">
             {term.length > 2 &&
               rack.cards.map(card => {
+                const fieldsText = Array.from(searchByKeySet)
+                  .map(coli => {
+                    if (!mylib.isNum(coli)) return '';
+                    const cell = card.row?.[coli];
+
+                    if (cell == null) return '';
+                    if (cell.t !== StoragesColumnType.String) return cell.val ?? '';
+
+                    const column = rack.cols[coli] as StoragesRackColumn<StoragesColumnType.String>;
+                    if (column == null || column.t !== StoragesColumnType.String) return '';
+                    return rack.dicts[column.di ?? 0].li[cell.val] ?? '';
+                  })
+                  .join(' ');
+
                 return (
                   <Command.Item
                     key={card.mi}
                     className="bg-x2 data-[selected=true]:bg-x2"
                     onSelect={() => onCardClick(card)}
-                    value={`${searchByKeySet.has('title') ? card.title : ''} ${searchByKeySet.has('note') ? (card.note ?? '') : ''}\
-                      ${Array.from(searchByKeySet)
-                        .map(i => (mylib.isNum(i) ? (card.row?.[i]?.val ?? '') : ''))
-                        .join(' ')}`}
+                    value={`${searchByKeySet.has('title') ? card.title : ''} ${searchByKeySet.has('note') ? (card.note ?? '') : ''} ${fieldsText}`}
                   >
                     <StoragesRackStatusFace
                       rack={rack}

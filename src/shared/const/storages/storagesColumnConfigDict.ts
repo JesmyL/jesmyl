@@ -137,14 +137,12 @@ export const storagesColumnConfigDict: {
     },
     retCorrectTypeValue: value => ({ t: StoragesColumnType.String, val: smylib.isStr(value) ? value.trim() : '' }),
   },
+
   [StoragesColumnType.Link]: {
     icon: 'Link01',
     typeTitle: 'Ссылка',
     makeStringValue: cell => cell?.val,
-    def: () => ({
-      t: StoragesColumnType.Link,
-      val: '',
-    }),
+    def: () => ({ t: StoragesColumnType.Link, val: '' }),
     checkType: value => (storagesCheckStringValueIsLink(value) ? null : 'Это не ссылка'),
     mapStringToCell: value => {
       if (!storagesCheckStringValueIsLink(value)) return null;
@@ -156,6 +154,24 @@ export const storagesColumnConfigDict: {
       val: storagesCheckStringValueIsLink(value) ? value : '',
     }),
   },
+
+  [StoragesColumnType.Text]: {
+    icon: 'Text',
+    typeTitle: 'Текст',
+    makeStringValue: cell => cell?.val,
+    def: () => ({ t: StoragesColumnType.Text, val: '' }),
+    checkType: value => (smylib.isStr(value) ? null : 'Это не текст'),
+    mapStringToCell: value => {
+      if (smylib.isStr(value)) return null;
+
+      return { t: StoragesColumnType.Text, val: value };
+    },
+    retCorrectTypeValue: value => ({
+      t: StoragesColumnType.Text,
+      val: smylib.isStr(value) ? value : '',
+    }),
+  },
+
   [StoragesColumnType.Formula]: {
     icon: 'Math',
     typeTitle: 'Формула',

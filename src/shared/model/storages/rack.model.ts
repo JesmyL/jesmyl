@@ -6,6 +6,7 @@ export const enum StoragesColumnType {
   List = 62,
   Number = 93,
   String = 30,
+  Text = 35,
   Link = 74,
   Formula = 88,
 }
@@ -45,6 +46,7 @@ export type StoragesColumnCustomProperties<Type extends StoragesColumnType> = {
   [StoragesColumnType.Date]: { und?: und };
   [StoragesColumnType.Dates]: { und?: und };
   [StoragesColumnType.Link]: { und?: und };
+  [StoragesColumnType.Text]: { und?: und };
   [StoragesColumnType.List]: {
     di?: StoragesDicti;
   };
@@ -93,6 +95,11 @@ type StoragesCellDict<DictItem extends string | StoragesDictItemi> = TypeSatisfi
 
   [StoragesColumnType.Link]: {
     t: StoragesColumnType.Link;
+    val: string;
+  };
+
+  [StoragesColumnType.Text]: {
+    t: StoragesColumnType.Text;
     val: string;
   };
 
