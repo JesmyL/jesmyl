@@ -32,5 +32,6 @@
     { "title": "проблема", "icon": "Alert02", "color": "#e22400", "next": [1, 2, 3, 4] }
   ],
   "cols": [],
-  "values": []
+  "values": [],
+  "dicts": [{ "li": [""], "title": "База" }]
 }

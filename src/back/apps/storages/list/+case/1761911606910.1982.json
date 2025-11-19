@@ -305,7 +305,7 @@
     },
     { "t": 93, "title": "колво 2", "mt": "шт" },
     { "t": 93, "title": "Цифра 1" },
-    { "t": 62, "title": "Список 4" },
+    { "t": 62, "title": "Список 4", "di": 1 },
     { "t": 74, "title": "Ссылка 5" },
     { "t": 93, "title": "Цифра 6" },
     { "t": 12, "title": "Дата 7", "uid": { "text": "#e63b7a" } },
@@ -328,5 +328,19 @@
     "нононоvv",
     "теги"
   ],
-  "colsOrd": [2, 1, 0, 3, 4, 5, 6, 7, 8, 9, 10]
+  "colsOrd": [2, 1, 0, 3, 4, 5, 6, 7, 8, 9, 10],
+  "dicts": [
+    {
+      "li": [
+        "",
+        "tughgbgvvgg fcfcf ctrcvtvtvtgthbttvbybbttbttbbgbgbggbgbgngngnnggybhhchchvjvuvuvvuuv",
+        "нононо",
+        "нононо3",
+        "нононоvv",
+        "теги"
+      ],
+      "title": "База"
+    },
+    { "li": [""], "title": "Список 4" }
+  ]
 }

@@ -19,5 +19,6 @@
   ],
   "statuses": [{ "title": "Новый" }],
   "cols": [],
-  "values": []
+  "values": [],
+  "dicts": [{ "li": [""], "title": "База" }]
 }
