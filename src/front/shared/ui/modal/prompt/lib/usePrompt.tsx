@@ -38,6 +38,7 @@ export const usePrompt = () => {
             {content}
             <TextInput
               defaultValue={defaultValue}
+              selectOnFocus
               onInput={eventValue => (defaultValue = eventValue)}
             />
           </ModalBody>
