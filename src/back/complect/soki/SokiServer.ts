@@ -187,10 +187,10 @@ function sendToEachClient(this: string, client: WebSocket) {
 export const sokiServer = new SokiServer();
 
 const parseReciever = (() => {
-  const nlSplitRegexp = makeRegExp('/\\s*?\n\\s*?/');
+  const nlSplitRegexp = makeRegExp('/\\s*?\\n/');
   const recieveString = (value: string) => {
-    value = value.trim();
-    if (value.includes('\n')) value = value.split(nlSplitRegexp).join('\n');
+    value = value.trimEnd();
+    if (value.includes('\n')) value = value.trim().split(nlSplitRegexp).join('\n');
     return value;
   };
 
