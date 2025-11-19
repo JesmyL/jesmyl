@@ -185,4 +185,9 @@ export const utilStyles = css`
       page-break-inside: avoid;
     }
   }
+
+  .pre-text {
+    word-wrap: break-word;
+    white-space: break-spaces;
+  }
 `;
