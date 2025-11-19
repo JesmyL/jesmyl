@@ -12,6 +12,7 @@ type Props = OmitOwn<
   onInput?: (value: string) => void;
   multiline?: boolean;
   strongDefaultValue?: boolean;
+  selectOnFocus?: boolean;
   type?: 'text' | 'tel' | 'email' | 'number';
   label?: React.ReactNode;
   inputRef?:
@@ -19,7 +20,15 @@ type Props = OmitOwn<
     | React.RefCallback<(HTMLInputElement & HTMLTextAreaElement) | null>;
 };
 
-export const TextInput = ({ onChanged, onInput, multiline, label, strongDefaultValue, ...props }: Props) => {
+export const TextInput = ({
+  onChanged,
+  onInput,
+  multiline,
+  label,
+  strongDefaultValue,
+  selectOnFocus,
+  ...props
+}: Props) => {
   const localInputRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null);
   const Comp = multiline ? Textarea : Input;
   const [firstValue, setFirstValue] = useState(`${props.defaultValue ?? props.value}`);
@@ -28,6 +37,12 @@ export const TextInput = ({ onChanged, onInput, multiline, label, strongDefaultV
     ...props,
     onKeyDown: propagationStopper,
     onChange: onInput ? event => onInput(event.currentTarget.value) : undefined,
+    onFocus: selectOnFocus
+      ? event => {
+          props.onFocus?.(event);
+          event.currentTarget.select();
+        }
+      : props.onFocus,
     onBlur: onChanged
       ? event => {
           const value = event.currentTarget.value.trim();
