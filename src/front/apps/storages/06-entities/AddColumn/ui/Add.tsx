@@ -1,11 +1,21 @@
 import { Button } from '#shared/components/ui/button';
-import { MyLib } from '#shared/lib/my-lib';
 import { Modal, ModalBody, ModalHeader, usePrompt } from '#shared/ui/modal';
 import { TheStoragesColumnCreateColumn } from '$storages/entities/ColumnCreate';
 import { Atom } from 'atomaric';
 import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
 import { StoragesRack } from 'shared/model/storages/list.model';
 import { StoragesColumnCustomProperties, StoragesColumnType } from 'shared/model/storages/rack.model';
+
+const columnTypeOrder = [
+  StoragesColumnType.String,
+  StoragesColumnType.List,
+  StoragesColumnType.Link,
+  StoragesColumnType.Number,
+  StoragesColumnType.Text,
+  StoragesColumnType.Date,
+  StoragesColumnType.Dates,
+  StoragesColumnType.Formula,
+];
 
 export const StoragesAddColumn = (props: {
   onAdd: <Type extends StoragesColumnType>(props: {
@@ -31,19 +41,20 @@ export const StoragesAddColumn = (props: {
       <Modal openAtom={props.isOpenModalAtom}>
         <ModalHeader>Выберите тип нового специального поля</ModalHeader>
         <ModalBody className="flex flex-col gap-3 *:w-full">
-          {MyLib.entries(storagesColumnConfigDict).map(([type, { typeTitle, icon }]) => {
-            if (props.excludeColumnTypes?.has(+type)) return;
+          {columnTypeOrder.map(colType => {
+            if (props.excludeColumnTypes?.has(colType)) return;
+            const { typeTitle, icon } = storagesColumnConfigDict[colType];
 
             return (
               <Button
-                key={type}
+                key={colType}
                 icon={icon}
                 onClick={async () => {
                   const colCustomProps = {};
                   const title = await prompt(
                     <>
                       <TheStoragesColumnCreateColumn
-                        colType={+type}
+                        colType={colType}
                         rack={props.rack}
                         colCustomProps={colCustomProps}
                       />
@@ -58,7 +69,7 @@ export const StoragesAddColumn = (props: {
                   if (!title) return;
                   props.isOpenModalAtom.reset();
 
-                  return props.onAdd({ newColumnType: +type, title, colCustomProps: { [type]: colCustomProps } });
+                  return props.onAdd({ newColumnType: +colType, title, colCustomProps: { [colType]: colCustomProps } });
                 }}
               >
                 {typeTitle}
