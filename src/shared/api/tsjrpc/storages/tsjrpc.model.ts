@@ -9,6 +9,7 @@ import {
 } from 'shared/model/storages/list.model';
 import {
   StoragesCell,
+  StoragesColumnCustomProperties,
   StoragesColumnType,
   StoragesNestedCellSelectors,
   StoragesRackColumn,
@@ -23,8 +24,7 @@ export type StoragesTsjrpcModel = {
 
   createRackCard: (args: RackSelector) => StoragesRackCardMi;
   addRackMember: (args: RackSelector & { member: StoragesRackMember; login: SokiAuthLogin }) => void;
-  addManyCards: (args: RackSelector & { cards: StoragesRackCard[] }) => void;
-  addRackValue: (args: RackSelector & { title: string }) => void;
+  addManyCards: (args: RackSelector & { cards: StoragesRackCard<string>[] }) => void;
   setRackCardStatus: (args: StoragesTsjrpcRackStatusSelector & StoragesTsjrpcRackCardSelector) => void;
   editRackCardTitle: (args: StoragesTsjrpcRackCardSelector & { title: string }) => void;
 
@@ -34,6 +34,7 @@ export type StoragesTsjrpcModel = {
   editRackCardMeta: (args: StoragesTsjrpcRackCardSelector & { meta: string }) => void;
 
   createDatesNestedCell: (args: StoragesTsjrpcCellSelector) => void;
+  createRackDict: (args: RackSelector & { title: string }) => void;
 
   editNestedCellProp: (
     args: StoragesTsjrpcCellSelector &
@@ -47,7 +48,12 @@ export type StoragesTsjrpcModel = {
   createRackStatus: (args: RackSelector & { title: string }) => void;
 
   createColumn: (
-    args: RackSelector & StoragesNestedCellSelectors & { title: string; newColumnType: StoragesColumnType },
+    args: RackSelector &
+      StoragesNestedCellSelectors & {
+        title: string;
+        newColumnType: StoragesColumnType;
+        colCustomProps: Partial<{ [Type in StoragesColumnType]: StoragesColumnCustomProperties<Type> }>;
+      },
   ) => void;
 
   editRackStatusIcon: (args: StoragesTsjrpcRackStatusSelector & { icon: KnownStameskaIconName }) => void;
@@ -72,12 +78,13 @@ export type StoragesTsjrpcModel = {
   renameColumn: (args: StoragesTsjrpcRackSelector & { title: string; coli: number }) => void;
   moveColumn: (args: StoragesTsjrpcRackSelector & { coli: number; newi: number | nil }) => void;
   editColumnFields: (
-    args: StoragesTsjrpcRackSelector & StoragesNestedCellSelectors & {
-      coli: number;
-      data: Partial<{
-        [Type in StoragesColumnType]: Partial<OmitOwn<StoragesRackColumn<Type>, 'cols' | 't' | 'uid' | 'uil'>>;
-      }>;
-    },
+    args: StoragesTsjrpcRackSelector &
+      StoragesNestedCellSelectors & {
+        coli: number;
+        data: Partial<{
+          [Type in StoragesColumnType]: Partial<OmitOwn<StoragesRackColumn<Type>, 'cols' | 't' | 'uid' | 'uil'>>;
+        }>;
+      },
   ) => void;
 };
 

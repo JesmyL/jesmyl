@@ -1,12 +1,12 @@
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
+import { storagesMakeActualFormulaProps } from '$storages/shared/lib/formulaComputing';
 import { useStoragesHighlighUsedFormulaRefs } from '$storages/shared/lib/useHighlighUsedFormulaRefs';
 import { useStoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { useRef } from 'react';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
 import { StoragesCellTypeProps } from '../model/model';
-import { storagesMakeActualFormulaProps } from '$storages/shared/lib/formulaComputing';
-import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 
 const metrics = ['₽', '$', '€', '£', 'шт', 'м', 'мин'];
 
@@ -17,7 +17,7 @@ export const StoragesCellOfTypeNumber = (props: StoragesCellTypeProps<StoragesCo
 
   return (
     !props.cell?.val || (
-      <div className='flex gap-2'>
+      <div className="flex gap-2">
         <span>{props.column.title}</span>
         <span className="font-bold">{props.cell?.val}</span>
         <span>{props.column.mt}</span>
@@ -41,8 +41,8 @@ const Edit = (props: StoragesCellTypeProps<StoragesColumnType.Number>) => {
   return (
     <>
       <div>
-        {props.columnTitleNode}
-        <div className='flex gap-3'>
+        {props.columnTitleNode()}
+        <div className="flex gap-3">
           <InputWithLoadingIcon
             icon={props.icon}
             type="number"
@@ -61,7 +61,7 @@ const Edit = (props: StoragesCellTypeProps<StoragesColumnType.Number>) => {
           />
           <Dropdown
             id={props.column.mt}
-            nullTitle='-'
+            nullTitle="-"
             hiddenArrow
             items={metrics.map(id => ({ id, title: id }))}
             onSelectId={id =>

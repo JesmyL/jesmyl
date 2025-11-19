@@ -114,9 +114,15 @@ export const StoragesRackEditPage = ({ rackw }: { rackw: StoragesRackWid }) => {
 
             <StoragesAddColumn
               isOpenModalAtom={isOpenAddColumnModalAtom}
-              onAdd={(newColumnType, title) =>
-                storagesTsjrpcClient.createColumn({ rackw: rack.w, title, newColumnType })
+              onAdd={({ newColumnType, title, colCustomProps }) =>
+                storagesTsjrpcClient.createColumn({
+                  rackw: rack.w,
+                  title,
+                  newColumnType,
+                  colCustomProps,
+                })
               }
+              rack={rack}
             />
 
             <Modal openAtom={isOpenCopyStatusesModalAtom}>

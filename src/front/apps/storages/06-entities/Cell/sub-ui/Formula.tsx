@@ -1,14 +1,18 @@
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
-import { storagesComputeFormula, storagesMakeActualFormulaProps, storagesReplaceFormulaNumbers } from '$storages/shared/lib/formulaComputing';
+import {
+  storagesComputeFormula,
+  storagesMakeActualFormulaProps,
+  storagesReplaceFormulaNumbers,
+} from '$storages/shared/lib/formulaComputing';
 import { useStoragesHighlighUsedFormulaRefs } from '$storages/shared/lib/useHighlighUsedFormulaRefs';
 import { useStoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { useRef } from 'react';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
-import { StoragesCellTypeProps } from '../model/model';
 import { twMerge } from 'tailwind-merge';
+import { StoragesCellTypeProps } from '../model/model';
 
 export const StoragesCellOfTypeFormula = (props: StoragesCellTypeProps<StoragesColumnType.Formula>) => {
   const isEdit = useStoragesIsEditInnersContext();
@@ -23,8 +27,6 @@ export const StoragesCellOfTypeFormula = (props: StoragesCellTypeProps<StoragesC
     nestedCellMi: props.nestedSelectors?.nestedCellMi,
   });
 
-
-
   const result = storagesComputeFormula(
     {
       formula: props.column?.val,
@@ -38,9 +40,9 @@ export const StoragesCellOfTypeFormula = (props: StoragesCellTypeProps<StoragesC
 
   return (
     !result || (
-      <div className='flex gap-2'>
+      <div className="flex gap-2">
         <span>{props.column.title} =</span>
-        <span className={twMerge('font-bold', mylib.isStr(result) ? 'text-xKO' : "text-x3")}>{result}</span>
+        <span className={twMerge('font-bold', mylib.isStr(result) ? 'text-xKO' : 'text-x3')}>{result}</span>
       </div>
     )
   );
@@ -66,15 +68,12 @@ const Edit = (props: StoragesCellTypeProps<StoragesColumnType.Formula>) => {
     coli,
   };
 
-  const result = storagesComputeFormula(
-    formulaProps,
-    innerCall,
-  );
+  const result = storagesComputeFormula(formulaProps, innerCall);
 
   return (
     <>
       <div>
-        {props.columnTitleNode}
+        {props.columnTitleNode()}
 
         <div className="flex gap-3">
           <InputWithLoadingIcon
@@ -138,7 +137,9 @@ const Edit = (props: StoragesCellTypeProps<StoragesColumnType.Formula>) => {
                 ),
               )}
               {' = '}
-              <span className='font-bold'>{mylib.isStr(result) ? <span className="text-xKO">{result}</span> : result}</span>
+              <span className="font-bold">
+                {mylib.isStr(result) ? <span className="text-xKO">{result}</span> : result}
+              </span>
             </span>
           </div>
         )}

@@ -100,12 +100,12 @@ export const StoragesRackImportFromExcelModalInner = (props: { rack: StoragesRac
             if (valueList == null || titleField == null) return;
             const usetTitlesSet = new Set<string>();
 
-            const cards: StoragesRackCard[] = valueList
+            const cards: StoragesRackCard<string>[] = valueList
               .map(dict => {
                 if (!dict[titleField] || usetTitlesSet.has(dict[titleField])) return null;
                 usetTitlesSet.add(dict[titleField]);
 
-                const card: StoragesRackCard = {
+                const card: StoragesRackCard<string> = {
                   title: dict[titleField],
                   note: associations.note != null ? dict[associations.note] : undefined,
                   mi: StoragesRackCardMi.min,

@@ -12,35 +12,32 @@ export const StoragesCellOfTypeList = (props: StoragesCellTypeProps<StoragesColu
 
   return (
     <>
-      <div>
-        {props.columnTitleNode}
-        <div className={isEdit ? undefined : 'font-bold'}>
-          {isEdit && <LazyIcon icon={props.icon} />}
-          <Autocomplete
-            isShowSelectedNodeOnly={!isEdit}
-            selected={props.cell?.val}
-            items={props.rack.values.map(value => ({ id: value, title: value }))}
-            onNewItem={async title => {
-              await storagesTsjrpcClient.addRackValue({ rackw: props.rack.w, title });
-              await storagesTsjrpcClient.toggleListCellValue({
-                ...props.nestedSelectors,
-                cardMi: props.card.mi,
-                coli: props.coli,
-                rackw: props.rack.w,
-                title,
-              });
-            }}
-            onSelect={({ id }) =>
-              storagesTsjrpcClient.toggleListCellValue({
-                ...props.nestedSelectors,
-                cardMi: props.card.mi,
-                coli: props.coli,
-                rackw: props.rack.w,
-                title: id,
-              })
-            }
-          />
-        </div>
+      {props.columnTitleNode(<> ({props.rack.dicts[props.column.di ?? 0].title})</>)}
+      <div className={isEdit ? undefined : 'font-bold'}>
+        {isEdit && <LazyIcon icon={props.icon} />}
+        <Autocomplete
+          isShowSelectedNodeOnly={!isEdit}
+          selected={props.cell?.val}
+          items={props.rack.dicts[props.column.di ?? 0].li.map(value => ({ value, title: value }))}
+          onNewItem={async title => {
+            await storagesTsjrpcClient.toggleListCellValue({
+              ...props.nestedSelectors,
+              cardMi: props.card.mi,
+              coli: props.coli,
+              rackw: props.rack.w,
+              title,
+            });
+          }}
+          onSelect={(_index, title) =>
+            storagesTsjrpcClient.toggleListCellValue({
+              ...props.nestedSelectors,
+              cardMi: props.card.mi,
+              coli: props.coli,
+              rackw: props.rack.w,
+              title,
+            })
+          }
+        />
       </div>
     </>
   );

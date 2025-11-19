@@ -16,7 +16,7 @@ export type StoragesCellTypeProps<Type extends StoragesColumnType> = {
   card: StoragesRackCard;
   rack: StoragesRack;
   coli: number;
-  columnTitleNode: React.ReactNode;
+  columnTitleNode: (editPostfix?: React.ReactNode) => React.ReactNode;
   icon: KnownStameskaIconName;
 
   nestedSelectors?: StoragesNestedCellSelectors;

@@ -23,7 +23,6 @@ export const storagesTsjrpcClient = new (class Storages extends TsjrpcClient<Sto
         editRackCardNote: true,
         editRackCardMeta: true,
         createColumn: true,
-        addRackValue: true,
         toggleListCellValue: true,
         createDatesNestedCell: true,
         editCellValue: true,
@@ -37,6 +36,7 @@ export const storagesTsjrpcClient = new (class Storages extends TsjrpcClient<Sto
         moveColumn: true,
         editColumnFields: true,
         addRackMember: true,
+        createRackDict: true,
       },
     });
   }

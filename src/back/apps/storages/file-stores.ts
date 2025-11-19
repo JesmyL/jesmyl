@@ -11,6 +11,6 @@ export const storagesDirStore = new DirStorage({
     cards: [],
     statuses: [{ title: 'Новый' }],
     cols: [],
-    values: [],
+    dicts: [{ li: [''], title: 'База' }],
   }),
 });

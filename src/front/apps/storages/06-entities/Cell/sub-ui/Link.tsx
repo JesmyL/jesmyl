@@ -25,7 +25,7 @@ export const StoragesCellOfTypeLink = (props: StoragesCellTypeProps<StoragesColu
   return (
     <>
       <div>
-        {props.columnTitleNode}
+        {props.columnTitleNode()}
 
         <InputWithLoadingIcon
           icon={props.icon}

@@ -36,7 +36,11 @@ export const TheStoragesColumnEditColumn = (props: Props) => {
         {Array.from(
           new Set(
             props.rack.cards.map(card =>
-              storagesColumnConfigDict[column.t].makeStringValue(card.row?.[props.coli] as never),
+              storagesColumnConfigDict[column.t].makeStringValue(
+                card.row?.[props.coli] as never,
+                column as never,
+                props.rack,
+              ),
             ),
           ),
         )

@@ -14,7 +14,18 @@ export const enum StoragesNestedCellMi {
   min = 1,
 }
 
-export type StoragesCell<Type extends StoragesColumnType> = StoragesCellDict[Type];
+export const enum StoragesDicti {
+  zIndex = 0,
+}
+
+export const enum StoragesDictItemi {
+  zIndex = 0,
+}
+
+export type StoragesCell<
+  Type extends StoragesColumnType,
+  DictItem extends string | StoragesDictItemi = StoragesDictItemi,
+> = StoragesCellDict<DictItem>[Type];
 
 export type StoragesRackColumn<Type extends StoragesColumnType> = {
   t: Type;
@@ -22,7 +33,7 @@ export type StoragesRackColumn<Type extends StoragesColumnType> = {
   cols?: StoragesRackColumn<StoragesColumnType>[];
   uil?: StoragesColumnUiListKey[];
   uid?: StoragesColumnUiDict;
-} & ColumnCustoms[Type];
+} & StoragesColumnCustomProperties<Type>;
 
 export type StoragesNestedCellSelectors = {
   nestedCellMi?: StoragesNestedCellMi;
@@ -30,12 +41,16 @@ export type StoragesNestedCellSelectors = {
   coli?: number;
 };
 
-type ColumnCustoms = {
-  [StoragesColumnType.Date]: object;
-  [StoragesColumnType.Dates]: object;
-  [StoragesColumnType.Link]: object;
-  [StoragesColumnType.List]: object;
-  [StoragesColumnType.String]: object;
+export type StoragesColumnCustomProperties<Type extends StoragesColumnType> = {
+  [StoragesColumnType.Date]: { und?: und };
+  [StoragesColumnType.Dates]: { und?: und };
+  [StoragesColumnType.Link]: { und?: und };
+  [StoragesColumnType.List]: {
+    di?: StoragesDicti;
+  };
+  [StoragesColumnType.String]: {
+    di?: StoragesDicti;
+  };
   [StoragesColumnType.Formula]: {
     /** formula string */
     val?: string;
@@ -47,9 +62,9 @@ type ColumnCustoms = {
     /** metric */
     mt: string;
   };
-};
+}[Type];
 
-type StoragesCellDict = TypeSatisfiesDict<{
+type StoragesCellDict<DictItem extends string | StoragesDictItemi> = TypeSatisfiesDict<{
   [StoragesColumnType.Date]: {
     t: StoragesColumnType.Date;
     val: number | nil;
@@ -57,7 +72,7 @@ type StoragesCellDict = TypeSatisfiesDict<{
 
   [StoragesColumnType.List]: {
     t: StoragesColumnType.List;
-    val: string[];
+    val: DictItem[];
   };
 
   [StoragesColumnType.Dates]: {
@@ -73,7 +88,7 @@ type StoragesCellDict = TypeSatisfiesDict<{
 
   [StoragesColumnType.String]: {
     t: StoragesColumnType.String;
-    val: string;
+    val: DictItem;
   };
 
   [StoragesColumnType.Link]: {

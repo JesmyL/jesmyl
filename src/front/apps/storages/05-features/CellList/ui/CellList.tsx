@@ -34,7 +34,10 @@ export const StoragesCellList = ({ rack, card }: Props) => {
       {isEdit && (
         <StoragesAddColumn
           isOpenModalAtom={isOpenModalAtom}
-          onAdd={(newColumnType, title) => storagesTsjrpcClient.createColumn({ rackw: rack.w, title, newColumnType })}
+          onAdd={({ newColumnType, title, colCustomProps }) =>
+            storagesTsjrpcClient.createColumn({ rackw: rack.w, title, newColumnType, colCustomProps })
+          }
+          rack={rack}
         />
       )}
     </div>

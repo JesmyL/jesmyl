@@ -10,10 +10,10 @@ import { StoragesIsEditInnersContext, useStoragesIsEditInnersContext } from '$st
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { atom } from 'atomaric';
 import { useState } from 'react';
+import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
 import { StoragesColumnType, StoragesNestedCellMi } from 'shared/model/storages/rack.model';
 import { storagesCellComponents } from '../const/cellComponents';
 import { StoragesCellTypeProps } from '../model/model';
-import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
 
 const isOpenAddColumnModalAtom = atom(false);
 
@@ -107,7 +107,7 @@ export const StoragesCellDatesNestedDateCell = (
                   cell={cardCell?.row?.[nestedColumni] as null}
                   rack={props.rack}
                   column={column as never}
-                  columnTitleNode={
+                  columnTitleNode={editPostfix =>
                     isEdit ? (
                       <div>
                         <span
@@ -118,10 +118,12 @@ export const StoragesCellDatesNestedDateCell = (
                           #{nestedColumni + 1}{' '}
                         </span>
                         {column.title}
+                        {editPostfix}
                       </div>
                     ) : (
                       column.title
-                    )}
+                    )
+                  }
                   icon={storagesColumnConfigDict[column.t].icon}
                   nestedSelectors={{
                     nestedCellMi: props.dateMi,
@@ -139,14 +141,16 @@ export const StoragesCellDatesNestedDateCell = (
           <StoragesAddColumn
             isOpenModalAtom={isOpenAddColumnModalAtom}
             excludeColumnTypes={storagesExcludeColumnTypesForDatedNestedCell}
-            onAdd={async (type, title) => {
-              if (type === StoragesColumnType.Date || type === StoragesColumnType.Dates) return;
+            rack={props.rack}
+            onAdd={async ({ newColumnType, title, colCustomProps }) => {
+              if (newColumnType === StoragesColumnType.Date || newColumnType === StoragesColumnType.Dates) return;
 
               return storagesTsjrpcClient.createColumn({
                 rackw: props.rack.w,
                 title,
-                newColumnType: type,
+                newColumnType,
                 coli: props.coli,
+                colCustomProps,
               });
             }}
           />

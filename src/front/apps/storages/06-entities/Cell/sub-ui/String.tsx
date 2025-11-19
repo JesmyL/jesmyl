@@ -1,4 +1,4 @@
-import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
+import { Autocomplete } from '#shared/components/Autocomplete';
 import { useStoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
@@ -6,13 +6,15 @@ import { StoragesCellTypeProps } from '../model/model';
 
 export const StoragesCellOfTypeString = (props: StoragesCellTypeProps<StoragesColumnType.String>) => {
   const isEdit = useStoragesIsEditInnersContext();
+  const dict = props.rack.dicts[props.column.di ?? 0];
+  const value = props.cell && dict.li[props.cell.val];
 
   if (!isEdit)
     return (
-      !props.cell?.val || (
-        <div className='flex gap-2'>
+      !value || (
+        <div className="flex gap-2">
           <span>{props.column.title}</span>
-          <span className="font-bold">{props.cell?.val}</span>
+          <span className="font-bold">{value}</span>
         </div>
       )
     );
@@ -20,18 +22,26 @@ export const StoragesCellOfTypeString = (props: StoragesCellTypeProps<StoragesCo
   return (
     <>
       <div>
-        {props.columnTitleNode}
-        <InputWithLoadingIcon
-          icon={props.icon}
-          defaultValue={props.cell?.val}
-          strongDefaultValue
-          onChanged={value =>
-            storagesTsjrpcClient.editCellValue({
-              value,
-              cardMi: props.card.mi,
-              rackw: props.rack.w,
-              coli: props.coli,
+        {props.columnTitleNode(<> ({props.rack.dicts[props.column.di ?? 0].title})</>)}
+        <Autocomplete
+          selected={props.cell?.val}
+          items={dict.li.map(value => ({ value, title: value }))}
+          onNewItem={async value => {
+            await storagesTsjrpcClient.editCellValue({
               ...props.nestedSelectors,
+              cardMi: props.card.mi,
+              coli: props.coli,
+              rackw: props.rack.w,
+              value,
+            });
+          }}
+          onSelect={(_index, value) =>
+            storagesTsjrpcClient.editCellValue({
+              ...props.nestedSelectors,
+              cardMi: props.card.mi,
+              coli: props.coli,
+              rackw: props.rack.w,
+              value,
             })
           }
         />

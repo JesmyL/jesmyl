@@ -1,5 +1,5 @@
 import { SokiAuthLogin } from 'shared/api';
-import { StoragesCell, StoragesColumnType, StoragesRackColumn } from './rack.model';
+import { StoragesCell, StoragesColumnType, StoragesDictItemi, StoragesRackColumn } from './rack.model';
 
 export const enum StoragesRackWid {
   def = 0,
@@ -16,13 +16,13 @@ export type StoragesRackStatus = {
   color?: string;
 };
 
-export type StoragesRackCard = {
+export type StoragesRackCard<DictItem extends string | StoragesDictItemi = StoragesDictItemi> = {
   mi: StoragesRackCardMi;
   status?: number;
   title: string;
   note?: string;
   meta?: string;
-  row?: (StoragesCell<StoragesColumnType> | nil)[];
+  row?: (StoragesCell<StoragesColumnType, DictItem> | nil)[];
 };
 
 export enum StoragesRackMemberRole {
@@ -42,8 +42,15 @@ export type StoragesRack = {
   title: string;
   statuses: StoragesRackStatus[];
   team: PRecord<SokiAuthLogin, StoragesRackMember>;
-  values: string[];
   cards: StoragesRackCard[];
   cols: StoragesRackColumn<StoragesColumnType>[];
   colsOrd?: number[];
+  /** StoragesDicti indexed */
+  dicts: [StoragesDict, ...StoragesDict[]];
+};
+
+export type StoragesDict = {
+  title: string;
+  /** StoragesDictItemi indexed */
+  li: [string, ...string[]];
 };

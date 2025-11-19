@@ -49,7 +49,7 @@ export const TheStoragesCell = (props: Props) => {
         card={props.card}
         rack={props.rack}
         coli={props.coli}
-        columnTitleNode={
+        columnTitleNode={editPostfix =>
           isEdit ? (
             <div>
               <span
@@ -57,9 +57,10 @@ export const TheStoragesCell = (props: Props) => {
                 storages-coli={props.coli}
                 storages-col-type={props.rack.cols[props.coli].t}
               >
-                #{props.coli + 1}{' '}
+                #{props.coli + 1}
               </span>
-              {column.title}
+              <span className="text-x3 font-bold"> {column.title}</span>
+              {editPostfix}
             </div>
           ) : (
             column.title
