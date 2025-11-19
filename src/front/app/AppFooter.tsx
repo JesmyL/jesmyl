@@ -11,9 +11,7 @@ const AppFooterSwipeable = React.lazy(() => import('#features/app-footer-swipeab
 
 export function AppFooter({ children }: { children: React.ReactNode; appName: AppName }) {
   const loc = useLocation();
-
-  let [, appName, place] = loc.pathname.split('/', 3) as [string, AppName | und, string | und];
-  if (appName?.startsWith('!')) [appName, place] = [place as never, appName];
+  const [, appName, place] = loc.pathname.split('/', 3) as [string, AppName | '!other' | und, string | und];
 
   useEffect(() => {
     if ((isTouchDevice && loc.pathname.includes('-!-')) || !appName || !place) return;
@@ -28,7 +26,7 @@ export function AppFooter({ children }: { children: React.ReactNode; appName: Ap
       <StyledFooter>
         <AppFooterSwipeable
           Div={StyledAppFooter}
-          currentAppName={appName}
+          currentAppName={appName === '!other' ? (place as never) : appName}
         >
           {children}
         </AppFooterSwipeable>
@@ -37,7 +35,7 @@ export function AppFooter({ children }: { children: React.ReactNode; appName: Ap
           <AppFooterItem
             icon="CircleArrowRight02"
             title="Другое"
-            to={`/!other/${(appName?.startsWith('!') ? place : appName) as never}`}
+            to={`/!other/${(appName === '!other' ? place : appName) as never}`}
             idPostfix="other"
           />
         </div>
