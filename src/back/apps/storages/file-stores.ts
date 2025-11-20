@@ -1,10 +1,10 @@
 import { DirStorage } from 'back/complect/DirStorage';
-import { StoragesRack } from 'shared/model/storages/list.model';
+import { StoragesRackStorageSaved } from 'shared/model/storages/list.model';
 
 export const storagesDirStore = new DirStorage({
   dirPath: '/apps/storages/list/',
   idKey: 'w',
-  makeNewItem: (): StoragesRack => ({
+  makeNewItem: (): StoragesRackStorageSaved => ({
     w: Date.now() + Math.random(),
     title: '',
     team: {},
