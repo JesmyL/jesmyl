@@ -36,18 +36,29 @@ export type StoragesRackMember = {
   role: StoragesRackMemberRole;
 };
 
-export type StoragesRack = {
+export type StoragesRackStorageSaved = StoragesRackCore & (StoragesRackTrail | StoragesRackChild);
+
+export type StoragesRackChild = {
+  parent: StoragesRackWid;
+};
+
+export type StoragesRackCore = {
   w: StoragesRackWid;
   icon?: KnownStameskaIconName;
-  title: string;
-  statuses: StoragesRackStatus[];
   team: PRecord<SokiAuthLogin, StoragesRackMember>;
+  title: string;
   cards: StoragesRackCard[];
+};
+
+export type StoragesRackTrail = {
+  statuses: StoragesRackStatus[];
   cols: StoragesRackColumn<StoragesColumnType>[];
   colsOrd?: number[];
   /** StoragesDicti indexed */
   dicts: [StoragesDict, ...StoragesDict[]];
 };
+
+export type StoragesRack = StoragesRackTrail & StoragesRackCore & Partial<StoragesRackChild>;
 
 export type StoragesDict = {
   title: string;

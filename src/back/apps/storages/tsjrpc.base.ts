@@ -13,8 +13,12 @@ import {
   StoragesRack,
   StoragesRackCard,
   StoragesRackCardMi,
+  StoragesRackCore,
   StoragesRackMemberRole,
   StoragesRackStatus,
+  StoragesRackStorageSaved,
+  StoragesRackTrail,
+  StoragesRackWid,
 } from 'shared/model/storages/list.model';
 import {
   StoragesCell,
@@ -24,7 +28,7 @@ import {
   StoragesNestedCellSelectors,
   StoragesRackColumn,
 } from 'shared/model/storages/rack.model';
-import { SMyLib, smylib } from 'shared/utils';
+import { itNNull, SMyLib, smylib } from 'shared/utils';
 import { storagesDirStore } from './file-stores';
 import { storagesStoresSharesServerTsjrpcMethods } from './tsjrpc.shares';
 
@@ -43,8 +47,27 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           const login = auth.login;
           const { items, maxMod } = storagesDirStore.getFreshItems(lastModfiedAt);
           const racks = items.filter(rack => rack.team[login]?.role);
+          let rackwRack: Partial<Record<StoragesRackWid, StoragesRackStorageSaved[]>>;
 
-          if (racks.length) storagesStoresSharesServerTsjrpcMethods.refreshRacks({ racks, maxMod }, client);
+          if (racks.length)
+            storagesStoresSharesServerTsjrpcMethods.refreshRacks(
+              {
+                racks: racks
+                  .map(rack => {
+                    if ('parent' in rack) {
+                      rackwRack ??= SMyLib.groupBy(racks, rack => rack.w);
+
+                      const parentRack = rackwRack[rack.parent]?.[0] ?? storagesDirStore.getItem(rack.parent);
+                      if (!parentRack || 'parent' in parentRack) return null;
+                      return { ...parentRack, ...rack };
+                    }
+                    return rack;
+                  })
+                  .filter(itNNull),
+                maxMod,
+              },
+              client,
+            );
         },
         createRack: async ({ title }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth?.login, 'storages', 'LIST', 'C')) throw '';
@@ -60,6 +83,8 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
               },
             },
           }));
+
+          if ('parent' in item) throw '';
 
           return { value: { rack: item, lastModfiedAt: mod } };
         },
@@ -318,13 +343,18 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           cell.val = props.amount;
         }),
 
-        copyRackStatuses: updateRack((rack, { fromRackw }) => {
-          const fromRack = storagesDirStore.getItem(fromRackw);
-          if (fromRack == null) return;
+        setRackAsParent: updateRack((rack, { parentRackw }) => {
+          if (rack.statuses.length > 1) throw 'Уже существуют собственные статусы';
+          if (rack.dicts.length > 1) throw 'Уже существуют собственные словари';
+          if (rack.cols.length > 1) throw 'Уже существуют собственные спец. поля';
 
-          fromRack.statuses.forEach((status, statusi) => {
-            rack.statuses[statusi] = smylib.clone(status);
-          });
+          rack.parent = parentRackw;
+          const partialRack: Partial<StoragesRackTrail> = rack;
+
+          delete partialRack.statuses;
+          delete partialRack.dicts;
+          delete partialRack.cols;
+          delete partialRack.colsOrd;
         }),
 
         editColumnType: updateRack((rack, props) => {
@@ -374,20 +404,61 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
 
 type UpdaterReturnType<RetValue> = und | void | { description?: string; value: RetValue };
 
+const rackCore: PRecord<keyof OmitOwn<StoragesRackCore, 'w'>, 0> = {
+  cards: 0,
+  icon: 0,
+  team: 0,
+  title: 0,
+};
+
 function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret extends UpdaterReturnType<RetValue>>(
   updater: (rack: StoragesRack, props: Props) => Ret,
 ) {
   return async (props: Props, tool: ServerTSJRPCTool): Promise<Ret> => {
     if (throwIfNoUserScopeAccessRight(tool.auth?.login, 'storages', 'LIST', 'U')) throw '';
-
+    const login = tool.auth?.login;
     let ret: Ret = undefined!;
+    let parentRack = null as StoragesRackStorageSaved | nil;
 
     const updated = storagesDirStore.updateItem(props.rackw, rack => {
+      if ('parent' in rack) {
+        const proxyRack = new Proxy(rack, {
+          get: (rack, key) => {
+            if (key in rackCore) return rack[key as never];
+            parentRack ??= storagesDirStore.getItem(rack.parent) as never;
+
+            if (!parentRack.team[login]?.role) throw 'Нет прав на это действие (изменение в родительском стеллаже)';
+
+            return parentRack?.[key as never];
+          },
+        });
+
+        ret = updater(proxyRack as never, props);
+        if (parentRack != null) storagesDirStore.saveItem(parentRack.w);
+
+        return;
+      }
+
       ret = updater(rack, props);
     });
 
     if (updated == null) throw 'Error 10961237652345683910';
-    const { item: rack, mod } = updated;
+    const { item, mod } = updated;
+
+    let rack: StoragesRack = null!;
+
+    if (parentRack != null && !('parent' in parentRack))
+      storagesStoresSharesServerTsjrpcMethods.refreshRacks(
+        { maxMod: mod, racks: [parentRack] },
+        { logins: SMyLib.keys(parentRack.team) },
+      );
+
+    if ('parent' in item) {
+      parentRack ??= storagesDirStore.getItem(item.parent);
+      if (parentRack == null || 'parent' in parentRack)
+        throw 'Во время формирования дочернего стеллажа обнаружено наследование от другого дочернего стеллажа';
+      rack = { ...parentRack, ...item };
+    } else rack = item;
 
     storagesStoresSharesServerTsjrpcMethods.refreshRacks(
       { maxMod: mod, racks: [rack] },

@@ -62,7 +62,7 @@ export type StoragesTsjrpcModel = {
   editRackStatusTitle: (args: StoragesTsjrpcRackStatusSelector & { title: string }) => void;
 
   setNumber: (args: StoragesTsjrpcCellSelector & { amount: number }) => void;
-  copyRackStatuses: (args: StoragesTsjrpcRackSelector & { fromRackw: StoragesRackWid }) => void;
+  setRackAsParent: (args: StoragesTsjrpcRackSelector & { parentRackw: StoragesRackWid }) => void;
 
   editColumnType: (
     args: StoragesTsjrpcRackSelector & {

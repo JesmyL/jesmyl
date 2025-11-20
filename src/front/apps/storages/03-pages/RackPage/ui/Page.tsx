@@ -7,7 +7,6 @@ import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { QrReader } from '#shared/ui/qr-code/QrReader';
 import { useAuth } from '$index/shared/state';
 import { StoragesRackStatusFace } from '$storages/entities/RackStatusFace';
-import { StoragesStatusManagerModalInner } from '$storages/features/StatusManager';
 import { storagesIDB } from '$storages/shared/state/storagesIDB';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { Link, useNavigate } from '@tanstack/react-router';
@@ -20,7 +19,6 @@ import { StoragesRackSearchModalInner } from './SearchModalInner';
 
 const isOpenSearchModal = atom(false);
 const isOpenImportFromExcelModal = atom(false);
-const isOpenStatusesRedactorModal = atom(false);
 const isOpenMemberAdderModal = atom(false);
 
 export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
@@ -102,10 +100,6 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
             <StoragesRackImportFromExcelModalInner rack={rack} />
           </Modal>
 
-          <Modal openAtom={isOpenStatusesRedactorModal}>
-            <StoragesStatusManagerModalInner rack={rack} />
-          </Modal>
-
           <QrReader
             openAtom={isOpenMemberAdderModal}
             onReadData={value => {
@@ -146,12 +140,6 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
                     },
                   });
                 }}
-              />
-
-              <BottomPopupItem
-                icon="Cube"
-                onClick={isOpenStatusesRedactorModal.do.toggle}
-                title="Редактироввать статусы"
               />
 
               <Link

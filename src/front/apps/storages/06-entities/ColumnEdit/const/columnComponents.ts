@@ -1,5 +1,5 @@
+import { StoragesColumnEditComponents } from '$storages/shared/model/model';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
-import { StoragesColumnEditComponents } from '../model/model';
 import { StoragesColumnEditOfTypeDate } from '../sub-ui/Date';
 import { StoragesColumnEditOfTypeDates } from '../sub-ui/Dates';
 import { StoragesColumnEditOfTypeFormula } from '../sub-ui/Formula';

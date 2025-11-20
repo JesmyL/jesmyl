@@ -1,25 +1,12 @@
-import { Dropdown } from '#shared/ui/dropdown/Dropdown';
-import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
+import { StoragesNumberColumnMetricSelector } from '$storages/entities/NumberColumnMetricSelector';
+import { StoragesColumnEditTypeProps } from '$storages/shared/model/model';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
-import { StoragesColumnEditTypeProps } from '../model/model';
-
-const metrics = ['₽', '$', '€', '£', 'шт', 'м', 'мин'];
 
 export const StoragesColumnEditOfTypeNumber = (props: StoragesColumnEditTypeProps<StoragesColumnType.Number>) => {
   return (
     <div className="flex gap-3">
       Единица измерения:
-      <Dropdown
-        id={props.column.mt}
-        items={metrics.map(id => ({ id, title: id }))}
-        onSelectId={id =>
-          storagesTsjrpcClient.editColumnFields({
-            coli: props.coli,
-            data: { [StoragesColumnType.Number]: { mt: id } },
-            rackw: props.rack.w,
-          })
-        }
-      />
+      <StoragesNumberColumnMetricSelector {...props} />
     </div>
   );
 };

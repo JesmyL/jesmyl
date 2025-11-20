@@ -29,7 +29,7 @@ export const storagesTsjrpcClient = new (class Storages extends TsjrpcClient<Sto
         editNestedCellProp: true,
         setNumber: true,
         addManyCards: true,
-        copyRackStatuses: true,
+        setRackAsParent: true,
         editColumnType: true,
         renameColumn: true,
         renameRack: true,

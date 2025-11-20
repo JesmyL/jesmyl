@@ -1,5 +1,5 @@
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
-import { Dropdown } from '#shared/ui/dropdown/Dropdown';
+import { StoragesNumberColumnMetricSelector } from '$storages/entities/NumberColumnMetricSelector';
 import { storagesMakeActualFormulaProps } from '$storages/shared/lib/formulaComputing';
 import { useStoragesHighlighUsedFormulaRefs } from '$storages/shared/lib/useHighlighUsedFormulaRefs';
 import { useStoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
@@ -7,8 +7,6 @@ import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.metho
 import { useRef } from 'react';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
 import { StoragesCellTypeProps } from '../model/model';
-
-const metrics = ['₽', '$', '€', '£', 'шт', 'м', 'мин'];
 
 export const StoragesCellOfTypeNumber = (props: StoragesCellTypeProps<StoragesColumnType.Number>) => {
   const isEdit = useStoragesIsEditInnersContext();
@@ -59,21 +57,7 @@ const Edit = (props: StoragesCellTypeProps<StoragesColumnType.Number>) => {
               })
             }
           />
-          <Dropdown
-            id={props.column.mt}
-            nullTitle="-"
-            hiddenArrow
-            items={metrics.map(id => ({ id, title: id }))}
-            onSelectId={id =>
-              storagesTsjrpcClient.editColumnFields({
-                coli: props.coli,
-                data: { [StoragesColumnType.Number]: { mt: id } },
-                rackw: props.rack.w,
-                nestedCellMi: props.nestedSelectors?.nestedCellMi,
-                nestedColi: props.nestedSelectors?.nestedColi,
-              })
-            }
-          />
+          <StoragesNumberColumnMetricSelector {...props} />
         </div>
       </div>
     </>
