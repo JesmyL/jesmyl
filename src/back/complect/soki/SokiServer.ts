@@ -187,15 +187,17 @@ function sendToEachClient(this: string, client: WebSocket) {
 export const sokiServer = new SokiServer();
 
 const parseReciever = (() => {
-  const nlSplitRegexp = makeRegExp('/\\s*?\\n/');
-  const recieveString = (value: string) => {
-    value = value.trimEnd();
-    if (value.includes('\n')) value = value.trim().split(nlSplitRegexp).join('\n');
-    return value;
-  };
+  const nlSplitRegexp = makeRegExp('/\\s*\\n/');
 
-  return (_key: string, value: unknown) => {
-    if (typeof value === 'string') return recieveString(value);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (_key: string, value: any) => {
+    if (typeof value === 'string') {
+      if (value.trim().includes('\n')) {
+        for (value = value.trimEnd().split(nlSplitRegexp); value[0] === ''; value.shift());
+        value = value.join('\n');
+      } else value = value.trim();
+    }
+
     return value;
   };
 })();
