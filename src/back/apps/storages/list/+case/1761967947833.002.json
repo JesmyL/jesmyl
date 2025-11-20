@@ -70,6 +70,5 @@
     { "title": "вернул", "icon": "Replay", "color": "#fff994", "next": [1, 4, 5] }
   ],
   "cols": [{ "t": 74, "title": "Ссылка" }],
-  "values": [],
   "dicts": [{ "li": [""], "title": "База" }]
 }
