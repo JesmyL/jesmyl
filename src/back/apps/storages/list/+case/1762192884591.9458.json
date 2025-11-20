@@ -7,14 +7,6 @@
     { "mi": 2, "title": "stringify *" },
     { "mi": 1, "title": "игнор-комменты", "note": "удалять ненужные комменты игноров" }
   ],
-  "statuses": [
-    { "title": "Новый", "color": "#74a7ff", "icon": "AiInnovation03", "next": [1, 3] },
-    { "title": "тестируется", "color": "#be38f3", "icon": "TestTube01", "next": [2, 3] },
-    { "title": "Готово", "icon": "CheckmarkCircle03", "color": "#96d35f", "next": [1, 4] },
-    { "title": "идея не очень", "next": [1, 2, 4], "icon": "Confused", "color": "#fdc700" },
-    { "title": "вернул с багом", "next": [1, 3], "icon": "Bug02", "color": "#ff6250" }
-  ],
-  "cols": [],
   "values": [],
-  "dicts": [{ "li": [""], "title": "База" }]
+  "parent": 1761967947833.002
 }
