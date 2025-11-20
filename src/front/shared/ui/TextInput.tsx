@@ -45,7 +45,7 @@ export const TextInput = ({
       : props.onFocus,
     onBlur: onChanged
       ? event => {
-          const value = event.currentTarget.value.trim();
+          const value = event.currentTarget.value;
 
           if (value !== firstValue) {
             onChanged(value);

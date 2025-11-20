@@ -83,8 +83,8 @@ export const InputWithLoadingIcon = <ChangedValue,>({
               setIsLoading(true);
 
               try {
-                await onChanged(value.trim());
-                setFirstValue(value.trim());
+                await onChanged(value);
+                setFirstValue(value);
               } catch (_error) {
                 //
               }
