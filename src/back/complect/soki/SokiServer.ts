@@ -187,7 +187,7 @@ function sendToEachClient(this: string, client: WebSocket) {
 export const sokiServer = new SokiServer();
 
 const parseReciever = (() => {
-  const nlSplitRegexp = makeRegExp('/\\s*\\n/');
+  const nlSplitRegexp = makeRegExp('/\\s*?\\n/');
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (_key: string, value: any) => {
