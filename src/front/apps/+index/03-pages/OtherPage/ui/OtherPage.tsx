@@ -16,6 +16,7 @@ import { indexFavouriteAppsAtom, useAuth } from '$index/shared/state';
 import { IndexAbout } from '$index/widgets/About/ui/IndexAbout';
 import { Link } from '@tanstack/react-router';
 import { atom, useAtomValue } from 'atomaric';
+import React from 'react';
 import { itNNull } from 'shared/utils';
 
 const isAboutOpenAtom = atom(false);
@@ -34,10 +35,13 @@ export const IndexOtherPage = () => {
       if (appName === 'index' || routingApps[appName] == null || auth == null) return null;
 
       return (
-        <IndexAppFace
-          key={appName}
-          config={routingApps[appName]}
-        />
+        <React.Fragment key={appName}>
+          <IndexAppFace
+            config={routingApps[appName]}
+            favouriteApps={favouriteApps}
+          />
+          {appName === favouriteApps[favouriteApps.length - 1] && <div className="h-5" />}
+        </React.Fragment>
       );
     })
     .filter(itNNull);
