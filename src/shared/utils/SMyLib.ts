@@ -86,6 +86,18 @@ export class SMyLib {
     return items;
   };
 
+  static groupBy: typeof Object.groupBy = (iterable, keySelector) => {
+    const result: Record<string, unknown[]> = {};
+    iterable = Array.from(iterable);
+    for (let i = 0; i < (iterable as []).length; i++) {
+      const key = keySelector(iterable[i as never] as never, i);
+      result[key as never] ??= [];
+      result[key as never].push(iterable[i as never]);
+    }
+
+    return result as never;
+  };
+
   randomOf = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
   randomIndex = (arr: unknown[] | string, sliceEnd?: number) =>
     this.randomOf(0, arr.length - 1 + (sliceEnd === undefined ? 0 : sliceEnd));
@@ -116,19 +128,19 @@ export class SMyLib {
     typeof structuredClone === 'function'
       ? <Val>(obj: Val, options?: Parameters<typeof structuredClone>[1]): Val => structuredClone(obj, options)
       : <Val>(what: Val): Val => {
-        if (what === null || what === undefined) return what;
-        else if (this.isArr(what)) {
-          const arr: unknown[] = [];
-          for (const key in what) arr[key] = this.clone(what[key]);
-          return arr as Val;
-        } else if (what.constructor === Object) {
-          const obj: Record<string, unknown> = {};
-          for (const key in what) obj[key] = this.clone(what[key]);
-          return obj as Val;
-        }
+          if (what === null || what === undefined) return what;
+          else if (this.isArr(what)) {
+            const arr: unknown[] = [];
+            for (const key in what) arr[key] = this.clone(what[key]);
+            return arr as Val;
+          } else if (what.constructor === Object) {
+            const obj: Record<string, unknown> = {};
+            for (const key in what) obj[key] = this.clone(what[key]);
+            return obj as Val;
+          }
 
-        return what;
-      };
+          return what;
+        };
 
   takeNextMi<Mi extends number, Item extends { [k in MiKey]: Mi }, MiKey extends string = 'mi'>(
     list: Item[],
