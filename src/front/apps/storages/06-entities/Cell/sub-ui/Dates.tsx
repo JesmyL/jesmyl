@@ -13,6 +13,8 @@ import { StoragesCellTypeProps } from '../model/model';
 import { StoragesCellDatesNestedDateCell } from './DatesNestedDate';
 
 const openDateMiAtom = atom<StoragesNestedCellMi | null>(null);
+const minShowCount = 3;
+const maxLimCount = 5;
 
 export const StoragesCellOfTypeDates = (props: StoragesCellTypeProps<StoragesColumnType.Dates>) => {
   const isEdit = useStoragesIsEditInnersContext();
@@ -20,7 +22,9 @@ export const StoragesCellOfTypeDates = (props: StoragesCellTypeProps<StoragesCol
 
   if (!isEdit && !props.cell?.row?.length) return;
 
-  const firstUndatedCelli = props.cell?.row.findIndex(cell => cell.ts == null) ?? Number.MAX_SAFE_INTEGER;
+  let firstUndatedCelli = props.cell?.row.findIndex(cell => cell.ts == null) ?? Number.MAX_SAFE_INTEGER;
+  if (firstUndatedCelli < 0) firstUndatedCelli = props.cell?.row.length ?? 0;
+  const isNeedExpand = firstUndatedCelli >= maxLimCount;
 
   const mapCellNode = props.cell?.row
     ? (dateCell: (typeof props.cell.row)[number], dateCelli: number) => {
@@ -41,26 +45,42 @@ export const StoragesCellOfTypeDates = (props: StoragesCellTypeProps<StoragesCol
       }
     : () => null;
 
-  const moreCells = firstUndatedCelli > 0 ? props.cell?.row.slice(3, firstUndatedCelli).map(mapCellNode) : null;
+  const headCells = props.cell?.row.slice(
+    0,
+    firstUndatedCelli < 0 ? minShowCount : Math.min(minShowCount, firstUndatedCelli),
+  );
+  const moreCells = firstUndatedCelli > 0 ? props.cell?.row.slice(minShowCount, firstUndatedCelli) : null;
 
   return (
     <div>
       <div className="flex gap-2">
         {props.columnTitleNode()}
-        <Button
-          icon={isExpand ? 'ArrowUp01' : 'ArrowDown01'}
-          onClick={() => setIsExpand(is => !is)}
-        />
+        {isNeedExpand && (
+          <Button
+            icon={isExpand ? 'ArrowUp01' : 'ArrowDown01'}
+            onClick={() => setIsExpand(is => !is)}
+          />
+        )}
       </div>
       <ConditionalRender
         value={props.cell?.row.length}
-        render={() => (
-          <>
-            {props.cell?.row.slice(0, firstUndatedCelli < 0 ? 3 : Math.min(3, firstUndatedCelli)).map(mapCellNode)}
-            {!moreCells?.length || (isExpand ? moreCells : <div>...</div>)}
-            {isEdit && firstUndatedCelli > 0 && props.cell?.row.slice(firstUndatedCelli).map(mapCellNode)}
-          </>
-        )}
+        render={() =>
+          isNeedExpand ? (
+            <>
+              {headCells?.map(mapCellNode)}
+              {!moreCells?.length ||
+                (isExpand ? moreCells.map(mapCellNode) : <Button onClick={() => setIsExpand(is => !is)}>...</Button>)}
+              {isEdit && firstUndatedCelli > 0 && props.cell?.row.slice(firstUndatedCelli).map(mapCellNode)}
+            </>
+          ) : isEdit ? (
+            props.cell?.row.map(mapCellNode)
+          ) : (
+            <>
+              {headCells?.map(mapCellNode)}
+              {moreCells?.map(mapCellNode)}
+            </>
+          )
+        }
         else={<div className="opacity-50 text-x7">Дат нет</div>}
       />
 
