@@ -6,16 +6,8 @@
       1551768058548, 1551770021776, 1605353683636, 1607345768420, 1609761208284, 1609953328330, 1609955214660,
       1534249035184, 1536945317452, 1534006585256, 1538320243090
     ],
-    "m": 1763212182243,
-    "tools": [
-      "edit-com",
-      "chord-images",
-      "com-comment",
-      "open-player",
-      "selected-toggle",
-      "chords-variant",
-      "hide-metronome"
-    ]
+    "m": 1763664105820,
+    "tools": ["edit-com", "com-comment", "selected-toggle", "hide-metronome"]
   },
   "08a0e6ba7792e902569816a81b846b25": {
     "comws": [
@@ -65,8 +57,8 @@
   },
   "T6558fe287d2ea93be3e19bbe64b5dfc": {
     "comws": [1718543236522, 1741883251071, 1612878728464],
-    "m": 1763402393509,
-    "tools": ["edit-com", "com-comment", "cats-binds", "hide-metronome", "chords-variant", "chord-hard-level"]
+    "m": 1763662697079,
+    "tools": ["edit-com", "com-comment", "cats-binds", "hide-metronome", "chord-hard-level"]
   },
   "T8574ab57c74159d39de20665af3eebe": { "comws": [1634188046492], "m": 1761160704191 },
   "T8656fec3ec9f81c86770b916f7503fc": {
@@ -126,7 +118,7 @@
       1534249035184, 1620741822264
     ]
   },
-  "T60edfeab425f12df682be8cddcfbdd4": { "m": 1763275318571, "comws": [1605192922220, 1625035474064, 1609796817370] },
+  "T60edfeab425f12df682be8cddcfbdd4": { "m": 1763652110324, "comws": [1517639268000] },
   "T7f21a14d3133065ca2e48254f87ecf3": {
     "m": 1762358424347,
     "comws": [1534141476440, 1610397311852, 1621451185856, 1749885445760],
