@@ -162,7 +162,8 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
         }),
 
         createRackStatus: updateRack((rack, { title }) => {
-          rack.statuses.push({ title });
+          const statusi = rack.statuses.push({ title }) - 1;
+          rack.statuses.forEach(status => status.next?.push(statusi));
         }),
 
         createColumn: updateRack((rack, { title, newColumnType, coli, colCustomProps }) => {
