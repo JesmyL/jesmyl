@@ -4,7 +4,7 @@ import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { useCmCom } from '$cm/entities/com';
-import { cmComCommentAltKeyAtom, cmComCommentRegisteredAltKeysAtom } from '$cm/entities/com-comment';
+import { cmComCommentCurrentOpenedAltKeyAtom, cmComCommentRegisteredAltKeysAtom } from '$cm/entities/com-comment';
 import { cmComShareComCommentPropsAtom } from '$cm/entities/index';
 import { cmIDB } from '$cm/shared/state';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
@@ -89,7 +89,7 @@ export const CmComCommentSharePull = memo(function CmComCommentSharePull({
 
             if (!fromBlock) return;
             cmComShareComCommentPropsAtom.reset();
-            cmComCommentAltKeyAtom.set(altKeyTo ?? null);
+            cmComCommentCurrentOpenedAltKeyAtom.do.setPartial({ last: altKeyTo ?? null });
 
             const newCommentBlock: ICmComCommentBlock = { comw: shareProps.comw, m: Date.now() };
 

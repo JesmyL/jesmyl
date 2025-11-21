@@ -1,14 +1,16 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { isMobileDevice } from '#shared/lib/device-differences';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
+import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ScheduleWidgetWatchLiveBroadcastButton } from '#widgets/schedule/live-broadcast/WatchLiveButton';
 import { ScheduleDayEventPathProps } from '#widgets/schedule/ScheduleWidget.model';
 import { CmEditorMeetingEventEdits } from '$cm+editor/ext';
-import { useCmComOpenComLinkRendererContext } from '$cm/entities/com';
+import { CmComLocalListToolsPopup, useCmComOpenComLinkRendererContext } from '$cm/entities/com';
 import { indexIDB, useAuth } from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { useState } from 'react';
 import { useCmMeetingComFaceList } from '../lib/useMeetingComFaceList';
 
 type Props = Required<ScheduleDayEventPathProps>;
@@ -19,6 +21,7 @@ export const CmMeetingEvent = ({ dayi, eventMi, schw }: Props) => {
   const auth = useAuth();
   const linkToCom = useCmComOpenComLinkRendererContext();
   const checkAccess = useCheckUserAccessRightsInScope();
+  const [isToolsOpen, setIsToolsOpen] = useState(false);
 
   if (schedule == null) return;
 
@@ -28,6 +31,7 @@ export const CmMeetingEvent = ({ dayi, eventMi, schw }: Props) => {
     <PageContainerConfigurer
       className="meeting-container"
       headTitle={`${schedule.title} - ${schedule.types[typei]?.title ?? ''}`}
+      onMoreClick={setIsToolsOpen}
       backButtonRender={(linkRef, children) => (
         <Link
           ref={linkRef}
@@ -55,17 +59,27 @@ export const CmMeetingEvent = ({ dayi, eventMi, schw }: Props) => {
               },
             })
           ) : null}
-          {checkAccess('cm', 'EVENT', 'U') && (
-            <CmEditorMeetingEventEdits
-              packComws={packComws}
-              dayi={dayi}
-              eventMi={eventMi}
-              schw={schw}
-            />
-          )}
         </div>
       }
-      content={comFaceListNode}
+      content={
+        <>
+          {comFaceListNode}
+          {isToolsOpen && (
+            <BottomPopup onClose={setIsToolsOpen}>
+              <CmComLocalListToolsPopup coms={coms}>
+                {checkAccess('cm', 'EVENT', 'U') && (
+                  <CmEditorMeetingEventEdits
+                    packComws={packComws}
+                    dayi={dayi}
+                    eventMi={eventMi}
+                    schw={schw}
+                  />
+                )}
+              </CmComLocalListToolsPopup>
+            </BottomPopup>
+          )}
+        </>
+      }
     />
   );
 };

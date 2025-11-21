@@ -18,6 +18,9 @@ export class CmComCommentMakerCleans {
 
   static makePseudoCommentContentCss = (text: string) => css`
     content: '${this.makePseudoComment(text)}';
+  `;
+
+  static pseudoCommentStaticPropsCss = css`
     opacity: var(--comment-opacity-accent);
     display: block;
     white-space: break-spaces;
@@ -66,115 +69,121 @@ export class CmComCommentMakerCleans {
 
     const accentsCss = this.makePseudoCommentContentAccentsCss(startComment);
     let isThereUnsettedTranslate = false;
+    let isThereCorrectBibleText = false;
 
-    startComment = startComment.replace(this.commentHeadBibleAddressRegExp.regExp, (...args) => {
-      const addr = this.commentHeadBibleAddressRegExp.transform(args);
+    const makeStartComment = (isWithoutText?: boolean) =>
+      startComment.replace(this.commentHeadBibleAddressRegExp.regExp, (...args) => {
+        const addr = this.commentHeadBibleAddressRegExp.transform(args);
 
-      if (!addr.translate || !addr.translate.slice(0, -1)) isThereUnsettedTranslate ||= true;
+        if (!addr.translate || !addr.translate.slice(0, -1)) isThereUnsettedTranslate ||= true;
 
-      const tName = (
-        addr.translate?.slice(0, -1) ||
-        currentBibleTranslate ||
-        'rst'
-      ).toLowerCase() as BibleTranslateName;
+        const tName = (
+          addr.translate?.slice(0, -1) ||
+          currentBibleTranslate ||
+          'rst'
+        ).toLowerCase() as BibleTranslateName;
 
-      const tNameUpper = tName.toUpperCase() as BibleTranslateName;
+        const tNameUpper = tName.toUpperCase() as BibleTranslateName;
 
-      const translate = translates[tName];
-      if (translate == null || translate.chapters == null) {
-        return `\n<ПЕРЕВОД ${tNameUpper} НЕ УСТАНОВЛЕН>:${addr.book} ${addr.chapter}:${addr.verseDiapason}`;
-      }
-
-      let booki = undefined as number | und;
-
-      if (addr.bookTitle !== undefined) {
-        const lowerBookTitle = addr.bookTitle.toLowerCase();
-
-        booki =
-          titlesMap.get(`${addr.bookNumber ?? ''}${lowerBookTitle}`) ??
-          titlesMap.get(`${addr.bookNumber}-я ${lowerBookTitle}`) ??
-          titlesMap.get(`${addr.bookNumber}-е ${lowerBookTitle}`) ??
-          titlesMap.get(`от ${lowerBookTitle}`) ??
-          titlesMap.get(`к ${lowerBookTitle}`) ??
-          titlesMap.get(`1${lowerBookTitle}`) ??
-          titlesMap.get(`1-е ${lowerBookTitle}`) ??
-          titlesMap.get(`1-я ${lowerBookTitle}`);
-
-        if (booki === undefined) {
-          titlesLine = Array.from(titlesMap.keys());
-          const titleName =
-            titlesLine.find(title => title.startsWith(lowerBookTitle)) ??
-            titlesLine.find(title => title.includes(lowerBookTitle));
-
-          if (titleName !== undefined) booki = titlesMap.get(titleName);
+        const translate = translates[tName];
+        if (translate == null || translate.chapters == null) {
+          return `\n<ПЕРЕВОД ${tNameUpper} НЕ УСТАНОВЛЕН>:${addr.book} ${addr.chapter}:${addr.verseDiapason}`;
         }
-      }
 
-      const bookTitle =
-        (addr.bookNumber ? `${addr.bookNumber}${addr.bookNumberSuffix ? `-${addr.bookNumberSuffix}` : ''} ` : '') +
-        addr.bookTitle;
+        let booki = undefined as number | und;
 
-      if (booki === undefined)
-        return `\n${tNameUpper}:<КНИГА ${bookTitle} НЕ НАЙДЕНА> ${addr.chapter}:${addr.verseDiapason}`;
+        if (addr.bookTitle !== undefined) {
+          const lowerBookTitle = addr.bookTitle.toLowerCase();
 
-      const fullBibleTitle = bibleTitles.titles[booki]?.full || bookTitle;
-      const book = translate.chapters[booki];
+          booki =
+            titlesMap.get(`${addr.bookNumber ?? ''}${lowerBookTitle}`) ??
+            titlesMap.get(`${addr.bookNumber}-я ${lowerBookTitle}`) ??
+            titlesMap.get(`${addr.bookNumber}-е ${lowerBookTitle}`) ??
+            titlesMap.get(`от ${lowerBookTitle}`) ??
+            titlesMap.get(`к ${lowerBookTitle}`) ??
+            titlesMap.get(`1${lowerBookTitle}`) ??
+            titlesMap.get(`1-е ${lowerBookTitle}`) ??
+            titlesMap.get(`1-я ${lowerBookTitle}`);
 
-      if (book == null)
-        return (
-          `\n${tNameUpper}:<КНИГИ "${fullBibleTitle}" В ПЕРЕВОДЕ ${tNameUpper} ` +
-          `${translateDescriptions[tName] || ''} НЕТ> ${addr.chapter}:${addr.verseDiapason}`
-        );
+          if (booki === undefined) {
+            titlesLine = Array.from(titlesMap.keys());
+            const titleName =
+              titlesLine.find(title => title.startsWith(lowerBookTitle)) ??
+              titlesLine.find(title => title.includes(lowerBookTitle));
 
-      const chapteri = +addr.chapter! - 1;
+            if (titleName !== undefined) booki = titlesMap.get(titleName);
+          }
+        }
 
-      if (mylib.isNaN(chapteri) || chapteri == null) return addr.$0;
+        const bookTitle =
+          (addr.bookNumber ? `${addr.bookNumber}${addr.bookNumberSuffix ? `-${addr.bookNumberSuffix}` : ''} ` : '') +
+          addr.bookTitle;
 
-      if (book[chapteri] == null)
-        return `\n${tNameUpper}:${fullBibleTitle} <${addr.chapter} ГЛАВЫ НЕТ>:${addr.verseDiapason}`;
+        if (booki === undefined)
+          return `\n${tNameUpper}:<КНИГА ${bookTitle} НЕ НАЙДЕНА> ${addr.chapter}:${addr.verseDiapason}`;
 
-      let text = '';
+        const fullBibleTitle = bibleTitles.titles[booki]?.full || bookTitle;
+        const book = translate.chapters[booki];
 
-      if (addr.verseDiapason) {
-        const [verseFromStr, verseToStr] = addr.verseDiapason.split('-');
-        const fromVersei = +verseFromStr - 1;
-
-        if (mylib.isNaN(fromVersei) || book[chapteri][fromVersei] == null)
+        if (book == null)
           return (
-            `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:<${addr.verseFrom} СТИХА НЕТ>` + (addr.verseTail || '')
+            `\n${tNameUpper}:<КНИГИ "${fullBibleTitle}" В ПЕРЕВОДЕ ${tNameUpper} ` +
+            `${translateDescriptions[tName] || ''} НЕТ> ${addr.chapter}:${addr.verseDiapason}`
           );
 
-        if (verseToStr != null) {
-          const toVersei = +verseToStr - 1;
+        const chapteri = +addr.chapter! - 1;
 
-          if (mylib.isNaN(toVersei) || book[chapteri][toVersei] == null)
-            return `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:${addr.verseFrom}-<${verseToStr} СТИХА НЕТ>`;
+        if (mylib.isNaN(chapteri) || chapteri == null) return addr.$0;
 
-          if (toVersei <= fromVersei)
+        if (book[chapteri] == null)
+          return `\n${tNameUpper}:${fullBibleTitle} <${addr.chapter} ГЛАВЫ НЕТ>:${addr.verseDiapason}`;
+
+        let text = '';
+
+        if (!isWithoutText && addr.verseDiapason) {
+          const [verseFromStr, verseToStr] = addr.verseDiapason.split('-');
+          const fromVersei = +verseFromStr - 1;
+
+          if (mylib.isNaN(fromVersei) || book[chapteri][fromVersei] == null)
             return (
-              `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:<${addr.verseFrom}` +
-              `${addr.verseTail || ''} ОШИБКА ДИАПАЗОНА>`
+              `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:<${addr.verseFrom} СТИХА НЕТ>` + (addr.verseTail || '')
             );
 
-          for (let versei = fromVersei; versei <= toVersei; versei++) {
-            text += `\n${versei + 1}. ${book[chapteri][versei]}`;
-          }
-        } else text += `\n${book[chapteri][fromVersei]}`;
-      }
+          if (verseToStr != null) {
+            const toVersei = +verseToStr - 1;
 
-      return (
-        `\n${fullBibleTitle} ${addr.chapter}:${addr.verseFrom}${addr.verseTo ? `-${addr.verseTo}` : ''} ` +
-        `${tNameUpper} (${translateDescriptions[tName]})` +
-        text.replace(makeRegExp('/</?[^>]+>/g'), '')
-      );
-    });
+            if (mylib.isNaN(toVersei) || book[chapteri][toVersei] == null)
+              return `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:${addr.verseFrom}-<${verseToStr} СТИХА НЕТ>`;
+
+            if (toVersei <= fromVersei)
+              return (
+                `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:<${addr.verseFrom}` +
+                `${addr.verseTail || ''} ОШИБКА ДИАПАЗОНА>`
+              );
+
+            for (let versei = fromVersei; versei <= toVersei; versei++) {
+              text += `\n${versei + 1}. ${book[chapteri][versei]}`;
+            }
+          } else text += `\n${book[chapteri][fromVersei]}`;
+
+          text = text.replace(makeRegExp('/</?[^>]+>/g'), '');
+        }
+
+        isThereCorrectBibleText = true;
+
+        return (
+          `\n${fullBibleTitle} ${addr.chapter}:${addr.verseFrom}${addr.verseTo ? `-${addr.verseTo}` : ''} ` +
+          `${tNameUpper} (${translateDescriptions[tName]})` +
+          text
+        );
+      });
 
     return {
+      commentWithTextCss: this.makePseudoCommentContentCss(makeStartComment()),
+      commentWithTextLinksOnlyCss: this.makePseudoCommentContentCss(makeStartComment(true)),
       isThereUnsettedTranslate,
-      startCommentCss: css`
-        ${this.makePseudoCommentContentCss(startComment)}
-        ${accentsCss}
-      `,
+      isThereCorrectBibleText,
+      accentsCss,
     };
   };
 }

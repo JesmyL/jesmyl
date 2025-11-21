@@ -1,7 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
+import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ScheduleDayEventPathProps } from '#widgets/schedule/ScheduleWidget.model';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { CmComFaceList, CmComMoveSelectedButton, useCmComSelectedList } from '$cm/ext';
@@ -29,13 +29,15 @@ export const CmEditorMeetingEventEdits = ({
   return (
     <>
       {!selectedComs.length || mylib.isEq(selectedComws, packComws) || (
-        <TheIconButton
+        <BottomPopupItem
           icon="Sent"
+          title="Отправить выбранные песни"
           onClick={isOpenSendModalAtom.do.toggle}
         />
       )}
 
-      <TheIconButton
+      <BottomPopupItem
+        title="История"
         icon="WorkHistory"
         onClick={isOpenHistoryModalAtom.do.toggle}
       />

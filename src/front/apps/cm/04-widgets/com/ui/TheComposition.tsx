@@ -3,7 +3,6 @@ import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { DocTitle } from '#shared/ui/tags/DocTitle';
 import { WithAtomTruthfulValue } from '#shared/ui/WithAtomTruthfulValue';
 import { Metronome } from '#widgets/metronome';
-import { BibleTranslatesContextProvider } from '$bible/ext';
 import {
   CmComCatMentions,
   CmComNotFoundPage,
@@ -12,10 +11,7 @@ import {
   useCmComCurrentComPackContext,
   useCmComCurrentFixedCom,
 } from '$cm/entities/com';
-import {
-  cmComCommentRedactOrdSelectorIdAtom,
-  useCmComCommentCheckIsIncludesBibleAddress,
-} from '$cm/entities/com-comment';
+import { cmComCommentRedactOrdSelectorIdAtom } from '$cm/entities/com-comment';
 import { CmComToolList, useCmComToolMigratableTop } from '$cm/entities/com-tool';
 import { cmComIsShowCatBindsInCompositionAtom } from '$cm/entities/index';
 import { CmComCommentModalInner } from '$cm/features/com-comment';
@@ -34,22 +30,8 @@ export function TheCmComComposition() {
   const [chordVisibleVariant] = useCmComChordVisibleVariant();
   const comToolsNode = useCmComToolMigratableTop();
   const { list } = useCmComCurrentComPackContext();
-  const isComCommentIncludesBibleAddress = useCmComCommentCheckIsIncludesBibleAddress(ccom);
 
   if (ccom == null) return <CmComNotFoundPage />;
-
-  let controlledComNode = (
-    <TheCmComControlled
-      com={ccom}
-      comList={list}
-      chordVisibleVariant={chordVisibleVariant}
-    />
-  );
-
-  if (isComCommentIncludesBibleAddress)
-    controlledComNode = (
-      <BibleTranslatesContextProvider isSetAllTranslates>{controlledComNode}</BibleTranslatesContextProvider>
-    );
 
   return (
     <StyledCmComCompositionContainer
@@ -89,7 +71,11 @@ export function TheCmComComposition() {
             </div>
           </WithAtomTruthfulValue>
 
-          {controlledComNode}
+          <TheCmComControlled
+            com={ccom}
+            comList={list}
+            chordVisibleVariant={chordVisibleVariant}
+          />
 
           <Modal
             key="com-comment"

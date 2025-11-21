@@ -1,28 +1,34 @@
 import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
+import { cmComCommentCurrentOpenedAltKeyAtom } from '$cm/entities/com-comment';
 import { CmComOrderList } from '$cm/entities/com-order';
+import { TheCmComWithComments } from '$cm/widgets/com';
 import { useAtomValue } from 'atomaric';
+import React from 'react';
 import styled from 'styled-components';
 import { CmCom } from '../lib/Com';
-import { cmComFontSizeAtom, cmComSpeedRollKfAtom } from '../state/atoms';
+import { cmComSpeedRollKfAtom } from '../state/atoms';
 import { CmComNumber } from './ComNumber';
 
 export function CmComFullscreenExpandList({ coms }: { coms: CmCom[] }) {
-  const fontSize = useAtomValue(cmComFontSizeAtom);
+  const altCommentKeys = useAtomValue(cmComCommentCurrentOpenedAltKeyAtom);
 
   return (
     <ExpandContent className="com-expand-content h-full">
       <RolledContent speedKfAtom={cmComSpeedRollKfAtom}>
         <div className="inner-content">
           {coms?.map(com => (
-            <div key={com.wid}>
+            <React.Fragment key={com.wid}>
               <div className="com-number">#{<CmComNumber comw={com.wid} />}</div>
-              <CmComOrderList
-                com={com}
-                fontSize={fontSize}
-                chordVisibleVariant={2}
-                isMiniAnchor={false}
-              />
-            </div>
+              <div className="uppercase">{altCommentKeys[com.wid] ?? altCommentKeys.last}</div>
+              <TheCmComWithComments com={com}>
+                <CmComOrderList
+                  com={com}
+                  fontSize={-1}
+                  chordVisibleVariant={2}
+                  isMiniAnchor={false}
+                />
+              </TheCmComWithComments>
+            </React.Fragment>
           ))}
         </div>
       </RolledContent>

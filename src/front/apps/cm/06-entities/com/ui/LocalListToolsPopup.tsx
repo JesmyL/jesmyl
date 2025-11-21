@@ -10,7 +10,7 @@ import { CmComFullscreenExpandList } from './FullscreenExpandComList';
 const isOpenQrAtom = atom(false);
 const isOpenListAtom = atom(false);
 
-export const CmComLocalListToolsPopup = ({ coms }: { coms: CmCom[] | und }) => {
+export const CmComLocalListToolsPopup = ({ coms, children }: { coms: CmCom[] | und; children?: React.ReactNode }) => {
   const linkToCom = useCmComOpenComLinkRendererContext();
 
   return !coms || !coms.length ? (
@@ -39,6 +39,8 @@ export const CmComLocalListToolsPopup = ({ coms }: { coms: CmCom[] | und }) => {
         title="Поделиться списком"
         onClick={isOpenQrAtom.do.toggle}
       />
+
+      {children}
 
       <CmComListQrShare
         openAtom={isOpenQrAtom}

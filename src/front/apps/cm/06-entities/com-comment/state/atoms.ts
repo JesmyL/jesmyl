@@ -1,10 +1,13 @@
 import { mylib } from '#shared/lib/my-lib';
 import { cmConstantsConfigAtom, cmIDB } from '$cm/shared/state';
 import { atom } from 'atomaric';
-import { CmComCommentBlockSelector } from 'shared/api';
+import { CmComCommentBlockSelector, CmComWid } from 'shared/api';
 
 export const cmComCommentRedactOrdSelectorIdAtom = atom<CmComCommentBlockSelector | null>(null);
-export const cmComCommentAltKeyAtom = atom<string | null>(null, 'cm:comCurrentCommentAltKey');
+export const cmComCommentCurrentOpenedAltKeyAtom = atom(
+  {} as PRecord<CmComWid, string> & { last: string | null },
+  'cm:cmComCommentCurrentOpenedAltKey',
+);
 
 export const cmComCommentRegisteredAltKeysAtom = atom(new Set<string>(), {
   do: (set, get, self) => ({

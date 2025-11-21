@@ -9,7 +9,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { WithAtom } from '#shared/ui/WithAtom';
 import { CmCom } from '$cm/entities/com';
 import {
-  cmComCommentAltKeyAtom,
+  cmComCommentCurrentOpenedAltKeyAtom,
   cmComCommentRedactOrdSelectorIdAtom,
   cmComCommentRegisteredAltKeysAtom,
   TheCmComCommentInfo,
@@ -32,7 +32,9 @@ const isOpenTransferModalAtom = atom(false);
 
 export const CmComCommentModalInner = ({ com }: { com: CmCom }) => {
   const ordSelectorId = useAtomValue(cmComCommentRedactOrdSelectorIdAtom);
-  const altCommentKey = useAtomValue(cmComCommentAltKeyAtom);
+  const altCommentKeys = useAtomValue(cmComCommentCurrentOpenedAltKeyAtom);
+  const altCommentKey = altCommentKeys[com.wid] ?? altCommentKeys.last;
+
   const deferredCallback = useDeferredCallback();
   const { takeCommentTexts, localCommentBlock, maxComCommentAlternativesCount } = useCmComCommentBlock(com.wid);
   const prompt = usePrompt();
@@ -147,7 +149,7 @@ export const CmComCommentModalInner = ({ com }: { com: CmCom }) => {
         <Dropdown<string | null>
           id={altCommentKey}
           nullTitle={<span className="text-x7">Общ</span>}
-          onSelectId={cmComCommentAltKeyAtom.set}
+          onSelectId={last => cmComCommentCurrentOpenedAltKeyAtom.do.setPartial({ last, [com.wid]: last ?? undefined })}
           items={Array.from(registeredAltKeys).map(key => ({ id: key, title: key }))}
           renderItem={({ node }) => (
             <>

@@ -2,18 +2,18 @@ import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMak
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
-import { BibleTranslateModulesControl } from '$bible/ext';
 import { CmCom } from '$cm/entities/com';
 import { cmComAudioPlayerPlaySrcAtom, isCmComAudioPlayerOpenMoversAtom } from '$cm/entities/com-audio-player';
-import { useCmComCommentBlockCss, useCmComCommentBlockFastReactions } from '$cm/entities/com-comment';
+import { cmComCommentCurrentOpenedAltKeyAtom, useCmComCommentBlockFastReactions } from '$cm/entities/com-comment';
 import { useCmComOrderAudioMarkControl } from '$cm/entities/com-order';
 import { cmComFontSizeAtom, cmComIsComMiniAnchorAtom, cmComSpeedRollKfAtom } from '$cm/entities/index';
 import { ChordVisibleVariant } from '$cm/shared/model';
 import { Link } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useRef } from 'react';
-import styled, { RuleSet, css } from 'styled-components';
+import styled, { css } from 'styled-components';
 import { TheCmCom } from './TheCom';
+import { TheCmComWithComments } from './TheComWithComments';
 
 let onPrevCom: () => void;
 let onNextCom: () => void;
@@ -31,8 +31,9 @@ interface Props {
 export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props) => {
   const fontSize = useAtomValue(cmComFontSizeAtom);
   const isMiniAnchor = useAtomValue(cmComIsComMiniAnchorAtom);
+  const altCommentKeys = useAtomValue(cmComCommentCurrentOpenedAltKeyAtom);
+  const altCommentKey = altCommentKeys[com.wid] ?? altCommentKeys.last;
   const listRef = useRef<HTMLDivElement>(null);
-  const { commentCss, isThereUnsettedTranslate } = useCmComCommentBlockCss(com);
   const playSrc = useAtomValue(cmComAudioPlayerPlaySrcAtom);
   const isOpenMoversButtons =
     useAtomValue(isCmComAudioPlayerOpenMoversAtom) && !!playSrc && com.audio.includes(playSrc);
@@ -77,30 +78,21 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
 
   return (
     <>
-      {isThereUnsettedTranslate && (
-        <div className="flex gap-3">
-          Выбрать перевод
-          <BibleTranslateModulesControl />
-        </div>
-      )}
       <StyledRollControled
         speedKfAtom={cmComSpeedRollKfAtom}
-        $commentStyles={commentCss}
         className="composition-content"
       >
-        <div className="com-orders-with-comments">
-          <span className="alt-key-holder" />
-          <span className="comment-holder" />
-          <span className="comment-holder" />
-          <span className="comment-holder" />
-          <span className="comment-holder" />
-          <WithScrollProgress
-            {...swiper}
-            className="relative h-full"
-            $listHeight={listRef.current?.clientHeight}
-          >
-            {isOpenMoversButtons && audioMarkControl.afterTargetOrdwOtherPlayButtonNodeDict.before}
+        <WithScrollProgress
+          {...swiper}
+          className="relative h-full"
+          $listHeight={listRef.current?.clientHeight}
+        >
+          {isOpenMoversButtons && audioMarkControl.afterTargetOrdwOtherPlayButtonNodeDict.before}
 
+          <TheCmComWithComments
+            com={com}
+            beforeCommentsNode={<div className="sticky uppercase -top-30!">{altCommentKey}</div>}
+          >
             <TheCmCom
               com={com}
               fontSize={isOpenMoversButtons ? Math.abs(fontSize) : fontSize}
@@ -123,8 +115,8 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
                   : undefined
               }
             />
-          </WithScrollProgress>
-        </div>
+          </TheCmComWithComments>
+        </WithScrollProgress>
       </StyledRollControled>
       <div hidden>
         <Link
@@ -175,9 +167,7 @@ const WithScrollProgress = styled.div<{ $listHeight: number | null | und }>`
   }};
 `;
 
-const StyledRollControled = styled(RolledContent)<{ $commentStyles?: RuleSet<object> | string }>`
-  ${props => props.$commentStyles}
-
+const StyledRollControled = styled(RolledContent)`
   [st-hide-footer-menu] & ${WithScrollProgress} {
     padding-bottom: var(--footer-initial-height);
   }

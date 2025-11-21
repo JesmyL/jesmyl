@@ -6,16 +6,15 @@ import { makeRegExp } from 'regexpert';
 import { emptyFunc } from 'shared/utils';
 import { RuleSet, css } from 'styled-components';
 import { StyledCmComOrderLine } from '../../com-order-line/style/StyledComLine.styler';
-import { cmComCommentAltKeyAtom } from '../state/atoms';
 import { CmComCommentMakerCleans } from './Cleans';
 import { useCmComCommentBlock } from './useCmComCommentBlock';
 
 export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = false) => {
-  const altCommentKey = useAtomValue(cmComCommentAltKeyAtom);
   const [styles, setStyles] = useState<
     Partial<{
       commentCss: RuleSet<object> | '';
       isThereUnsettedTranslate: boolean;
+      isThereCorrectBibleText: boolean;
     }>
   >({});
   const translates = useBibleTranslatesContext();
@@ -41,6 +40,7 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
 
               return css`
                 .styled-header ${commentHolderSelectors[linei] || '::after'} {
+                  ${CmComCommentMakerCleans.pseudoCommentStaticPropsCss}
                   ${CmComCommentMakerCleans.makePseudoCommentContentCss(line)}
                   ${CmComCommentMakerCleans.makePseudoCommentContentAccentsCss(line)}
                 }
@@ -87,17 +87,36 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
         `;
       });
       let isThereUnsettedTranslate = false;
+      let isThereCorrectBibleText = false;
 
       const headCommentContents = await Promise.all(
         (takeCommentTexts('head') ?? []).map(async (line, linei) => {
-          const { startCommentCss, isThereUnsettedTranslate: isUnset } =
-            await CmComCommentMakerCleans.makeStartCommentCss(currentBibleTranslate, line, translates);
+          const {
+            isThereUnsettedTranslate: isUnset,
+            isThereCorrectBibleText: isWithText,
+            accentsCss,
+            commentWithTextCss,
+            commentWithTextLinksOnlyCss,
+          } = await CmComCommentMakerCleans.makeStartCommentCss(currentBibleTranslate, line, translates);
 
           isThereUnsettedTranslate ||= isUnset;
+          isThereCorrectBibleText ||= isWithText;
+          const selector = `> ${commentHolderSelectors[linei + 1]}`;
 
           return css`
-            ${`.com-orders-with-comments > ${commentHolderSelectors[linei + 1]}`} {
-              ${startCommentCss}
+            .com-orders-with-comments {
+              ${selector} {
+                ${CmComCommentMakerCleans.pseudoCommentStaticPropsCss}
+                ${accentsCss}
+              }
+
+              &.expand-first-comment-bible-texts ${selector} {
+                ${commentWithTextCss}
+              }
+
+              &:not(.expand-first-comment-bible-texts) ${selector} {
+                ${commentWithTextLinksOnlyCss}
+              }
             }
           `;
         }),
@@ -105,18 +124,12 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
 
       return {
         isThereUnsettedTranslate,
+        isThereCorrectBibleText,
         commentCss: css`
           --comment-opacity: 0.5;
           --comment-opacity-accent: 0.8;
 
           ${headCommentContents}
-
-          ${altCommentKey &&
-          css`
-            .com-orders-with-comments > .alt-key-holder::before {
-              ${CmComCommentMakerCleans.makePseudoCommentContentCss(`${altCommentKey.toUpperCase()}\n`)}
-            }
-          `}
 
           .styled-header {
             &::after,
@@ -149,7 +162,7 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
     })()
       .then(styles => setStyles(styles))
       .catch(emptyFunc);
-  }, [altCommentKey, currentBibleTranslate, takeCommentTexts, translates, com, isSetHashesOnly]);
+  }, [currentBibleTranslate, takeCommentTexts, translates, com, isSetHashesOnly]);
 
   return styles;
 };

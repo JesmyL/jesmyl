@@ -3,13 +3,14 @@ import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useCallback } from 'react';
 import { CmComCommentBlockSelector, CmComWid } from 'shared/api';
-import { cmComCommentAltKeyAtom } from '../state/atoms';
+import { cmComCommentCurrentOpenedAltKeyAtom } from '../state/atoms';
 
 export const useCmComCommentBlock = (comw: CmComWid) => {
   const { maxComCommentAlternativesCount } = useAtomValue(cmConstantsConfigAtom);
   const localCommentBlock = useLiveQuery(() => cmIDB.tb.localComCommentBlocks.get(comw), [comw]);
   const commentBlock = useLiveQuery(() => cmIDB.tb.comCommentBlocks.get(comw), [comw]);
-  const altCommentKey = useAtomValue(cmComCommentAltKeyAtom);
+  const altCommentKeys = useAtomValue(cmComCommentCurrentOpenedAltKeyAtom);
+  const altCommentKey = altCommentKeys[comw] ?? altCommentKeys.last;
 
   return {
     localCommentBlock,
