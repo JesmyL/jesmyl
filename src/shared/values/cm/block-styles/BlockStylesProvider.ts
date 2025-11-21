@@ -36,7 +36,7 @@ export const BlockStylesProvider = styled.div`
 
       &${makeStartsBlockStyleSelector(CmBlockStyleKey.Enter)},
         &${makeStartsBlockStyleSelector(CmBlockStyleKey.Modulation)} {
-        margin-left: 0.5em;
+        --styled-block-margin-left: 0.5rem;
       }
 
       &${makeStartsBlockStyleSelector(CmBlockStyleKey.PTwo)} {
@@ -82,18 +82,22 @@ export const BlockStylesProvider = styled.div`
         &${makeStartsBlockStyleSelector(CmBlockStyleKey.PTwo)},
         &${makeStartsBlockStyleSelector(CmBlockStyleKey.Two)},
         &${makeStartsBlockStyleSelector(CmBlockStyleKey.Thirdo)} {
-        --styled-block-margin-left: 0.5em;
+        --styled-block-margin-left: 0.5rem;
       }
 
       &${makeStartsBlockStyleSelector(CmBlockStyleKey.OneWithShift)},
         &${makeStartsBlockStyleSelector(CmBlockStyleKey.Final)},
         &${makeEndsBlockStyleSelector(CmBlockStyleKey.Shift)},
         &${makeEndsBlockStyleSelector(CmBlockStyleKey.PlusPlusShift)} {
-        --styled-block-margin-left: 1em;
+        --styled-block-margin-left: 1rem;
       }
 
       &${makeStartsBlockStyleSelector(CmBlockStyleKey.Bridge)} {
-        --styled-block-margin-left: 1.5em;
+        --styled-block-margin-left: 1.5rem;
+      }
+
+      &${makeStartsBlockStyleSelector(CmBlockStyleKey.One)} {
+        --styled-block-margin-left: 0.1rem;
       }
 
       &${makeStartsBlockStyleSelector(CmBlockStyleKey.PTwo)},

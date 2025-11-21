@@ -22,7 +22,7 @@ export class CmComCommentMakerCleans {
     display: block;
     white-space: break-spaces;
     word-wrap: break-word;
-    max-width: calc(100vw - var(--comment-margin-left) - var(--styled-block-margin-left) - 40px);
+    max-width: calc(100vw - var(--comment-margin-left) - var(--styled-block-margin-left) - 45px);
   `;
 
   static makePseudoCommentContentAccentsCss = (text: string) => {
