@@ -69,7 +69,10 @@ function Content() {
             />
           )}
 
-          <FullContent openAtom={isOpenBookSelectorAtom}>
+          <FullContent
+            openAtom={isOpenBookSelectorAtom}
+            containerClassName="p-0 pt-15"
+          >
             <div className="grid grid-cols-6 gap-1 @container h-full">
               {bookTitles.map(({ short: bookTitle, textColor }, booki) => {
                 return (
@@ -94,7 +97,10 @@ function Content() {
             </div>
           </FullContent>
 
-          <FullContent openAtom={isOpenChapterSelectorAtom}>
+          <FullContent
+            openAtom={isOpenChapterSelectorAtom}
+            containerClassName="p-0 pt-15"
+          >
             {chapters?.[selectedBooki]?.map((chapter, chapteri) => {
               return (
                 <ItemFace
@@ -116,7 +122,10 @@ function Content() {
             })}
           </FullContent>
 
-          <FullContent openAtom={isOpenVerseSelectorAtom}>
+          <FullContent
+            openAtom={isOpenVerseSelectorAtom}
+            containerClassName="p-0 pt-15"
+          >
             {chapters?.[selectedBooki]?.[selectedChapteri]?.map((_, versei) => {
               return (
                 <ItemFace
@@ -147,7 +156,7 @@ function Content() {
 }
 
 const ItemFace = styled.div`
-  --size: calc((100vw - var(--main-5-gap) * 2 - 12 * 3px) / 5);
+  --size: calc((100vw - 12 * 3px) / 5);
 
   position: relative;
 
