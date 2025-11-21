@@ -11,7 +11,7 @@
       "status": 1
     },
     { "mi": 14, "title": "biome", "note": "вместо prettier и linter" },
-    { "mi": 13, "title": "селект в каждый инпут", "note": "при фокусе в инпуты делать селекты" },
+    { "mi": 13, "title": "селект в каждый инпут", "note": "при фокусе в инпуты делать селекты", "status": 3 },
     {
       "mi": 12,
       "title": "i-страницы всегда загружены",
@@ -62,13 +62,14 @@
     { "mi": 6, "title": "управление noun/prons в приложении" }
   ],
   "statuses": [
-    { "title": "Новый", "color": "#74a7ff", "icon": "AiInnovation03", "next": [1, 3, 5] },
+    { "title": "Новый", "color": "#74a7ff", "icon": "AiInnovation03", "next": [1, 3, 5, 7] },
     { "title": "тестируется", "color": "#be38f3", "icon": "TestTube01", "next": [2, 3, 6] },
     { "title": "Готово", "icon": "CheckmarkCircle03", "color": "#96d35f", "next": [1, 4, 6] },
-    { "title": "идея не очень", "next": [1, 2, 4], "icon": "Confused", "color": "#fdc700" },
-    { "title": "вернул с багом", "next": [1, 3], "icon": "Bug02", "color": "#ff8c82" },
+    { "title": "идея не очень", "next": [1, 2, 4, 7], "icon": "Confused", "color": "#fdc700" },
+    { "title": "вернул с багом", "next": [1, 3, 7], "icon": "Bug02", "color": "#ff8c82" },
     { "title": "проблема", "icon": "Alert02", "color": "#e22400", "next": [1, 2, 3, 4] },
-    { "title": "вернул", "icon": "Replay", "color": "#fff994", "next": [1, 4, 5] }
+    { "title": "вернул", "icon": "Replay", "color": "#fff994", "next": [1, 4, 5] },
+    { "title": "на уточнении", "color": "#f4a4c0", "icon": "FileUnknown", "next": [0, 2, 3, 4, 5, 6] }
   ],
   "cols": [{ "t": 74, "title": "Ссылка" }],
   "dicts": [{ "li": [""], "title": "База" }]

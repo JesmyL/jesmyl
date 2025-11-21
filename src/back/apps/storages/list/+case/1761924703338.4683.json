@@ -21,7 +21,8 @@
           "t": 74,
           "val": "https://www.ozon.ru/product/zashchitnaya-samokleyashchayasya-prozrachnaya-plenka-dlya-mebeli-i-sten-kogtetochka-1398867449/"
         }
-      ]
+      ],
+      "status": 3
     },
     {
       "mi": 24,
@@ -95,7 +96,8 @@
             { "row": [{ "t": 93, "val": 100 }], "mi": 3, "ts": 17630676, "title": "сахар" },
             { "row": [{ "t": 93, "val": 373 }], "mi": 2, "ts": 17627220, "title": "еда-вода" },
             { "row": [{ "t": 93, "val": 1150 }], "mi": 1, "ts": 17621172, "title": "магаз" },
-            { "row": [], "mi": 5 }
+            { "row": [], "mi": 5 },
+            { "row": [{ "t": 93, "val": 350 }], "mi": 6, "ts": 17636724, "title": "Сливки" }
           ]
         },
         { "t": 74, "val": "https://" }
