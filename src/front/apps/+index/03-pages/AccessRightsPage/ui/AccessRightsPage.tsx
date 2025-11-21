@@ -1,5 +1,5 @@
 import { Accordion } from '#shared/components/ui/accordion';
-import { MyLib } from '#shared/lib/my-lib';
+import { mylib, MyLib } from '#shared/lib/my-lib';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
@@ -45,7 +45,9 @@ export function IndexAccessRightsPage() {
                     >
                       <Accordion.Trigger>
                         <span className="flex gap-3">
-                          {userRights.info.fio}
+                          <span className={mylib.keys(userRights).length < 2 ? 'opacity-70' : undefined}>
+                            {userRights.info.fio}
+                          </span>
                           {userRights.info.role && <span className="text-x7">({userRights.info.role})</span>}
                         </span>
                       </Accordion.Trigger>
