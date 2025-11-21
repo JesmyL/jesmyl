@@ -20,8 +20,9 @@ export class CmComCommentMakerCleans {
     content: '${this.makePseudoComment(text)}';
     opacity: var(--comment-opacity-accent);
     display: block;
-    white-space: pre-line;
+    white-space: break-spaces;
     word-wrap: break-word;
+    max-width: calc(100vw - var(--comment-margin-left) - var(--styled-block-margin-left) - 40px);
   `;
 
   static makePseudoCommentContentAccentsCss = (text: string) => {

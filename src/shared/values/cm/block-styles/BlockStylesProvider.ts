@@ -50,6 +50,8 @@ export const BlockStylesProvider = styled.div`
     }
 
     .styled-block {
+      margin-left: var(--styled-block-margin-left);
+
       .chords-block {
         margin-bottom: 0.5em;
         margin-left: 2em;
@@ -80,18 +82,18 @@ export const BlockStylesProvider = styled.div`
         &${makeStartsBlockStyleSelector(CmBlockStyleKey.PTwo)},
         &${makeStartsBlockStyleSelector(CmBlockStyleKey.Two)},
         &${makeStartsBlockStyleSelector(CmBlockStyleKey.Thirdo)} {
-        margin-left: 0.5em;
+        --styled-block-margin-left: 0.5em;
       }
 
       &${makeStartsBlockStyleSelector(CmBlockStyleKey.OneWithShift)},
         &${makeStartsBlockStyleSelector(CmBlockStyleKey.Final)},
         &${makeEndsBlockStyleSelector(CmBlockStyleKey.Shift)},
         &${makeEndsBlockStyleSelector(CmBlockStyleKey.PlusPlusShift)} {
-        margin-left: 1em;
+        --styled-block-margin-left: 1em;
       }
 
       &${makeStartsBlockStyleSelector(CmBlockStyleKey.Bridge)} {
-        margin-left: 1.5em;
+        --styled-block-margin-left: 1.5em;
       }
 
       &${makeStartsBlockStyleSelector(CmBlockStyleKey.PTwo)},

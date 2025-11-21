@@ -134,9 +134,11 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
             &:after,
             > ::after,
             > ::before {
+              --comment-margin-left: 1rem;
+
               display: block;
               text-decoration: underline;
-              margin-left: 1rem;
+              margin-left: var(--comment-margin-left);
             }
           }
 
