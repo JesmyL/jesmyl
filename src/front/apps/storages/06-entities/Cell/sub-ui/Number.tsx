@@ -57,7 +57,10 @@ const Edit = (props: StoragesCellTypeProps<StoragesColumnType.Number>) => {
               })
             }
           />
-          <StoragesNumberColumnMetricSelector {...props} />
+          <StoragesNumberColumnMetricSelector
+            {...props}
+            nestedSelectors={props.nestedSelectors}
+          />
         </div>
       </div>
     </>
