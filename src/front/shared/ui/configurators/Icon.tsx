@@ -25,6 +25,7 @@ interface Props {
   header: ReactNode;
   used?: (KnownStameskaIconName | und)[];
   onSend: (icon: KnownStameskaIconName) => Promise<unknown>;
+  className?: string;
 }
 
 export default function IconConfigurator(props: Props) {
@@ -32,7 +33,7 @@ export default function IconConfigurator(props: Props) {
 
   return (
     <>
-      <div>
+      <div className={props.className}>
         <Button
           onClick={isOpenModalAtom.do.toggle}
           isLoading={loadingIcon != null}
