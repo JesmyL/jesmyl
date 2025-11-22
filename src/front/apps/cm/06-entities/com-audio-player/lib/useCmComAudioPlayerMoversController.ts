@@ -148,5 +148,6 @@ export const useCmComAudioPlayerMoversController = (
     prevRef,
     repeatRef,
     nextRef,
+    audioTrackMarks,
   };
 };

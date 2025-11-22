@@ -29,6 +29,7 @@ export const CmComAudioPlayerWithMarks = (props: Props) => {
             src={src}
             com={props.com}
             preSwitchTimeAtom={preSwitchTimeAtom}
+            isHidePanelOnEmptyMarks
           />
         )
       }

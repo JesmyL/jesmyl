@@ -1,5 +1,6 @@
 import { Slider } from '#shared/components/ui/slider';
 import { mylib } from '#shared/lib/my-lib';
+import { ReactNode } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { HttpLink } from 'shared/api';
 import {
@@ -23,7 +24,7 @@ export const CmComAudioPlayerTrack = (props: Props) => {
 
   if (!playSrc || playSrc === props.src) return <TrackWithCurrents {...props} />;
 
-  const time = <code>{mylib.convertSecondsInStrTime(0)}</code>;
+  const time = <TimeRender time={mylib.convertSecondsInStrTime(0)} />;
 
   return (
     <Track
@@ -34,15 +35,29 @@ export const CmComAudioPlayerTrack = (props: Props) => {
   );
 };
 
+const TimeRender = ({ time }: { time: ReactNode }) => {
+  return (
+    <code
+      onTouchStart={event => {
+        event.preventDefault();
+        cmComAudioPlayerHTMLElement.playbackRate = 2;
+      }}
+      onTouchEnd={() => (cmComAudioPlayerHTMLElement.playbackRate = 1)}
+    >
+      {time}
+    </code>
+  );
+};
+
 const TrackWithCurrents = (props: Props) => {
   const currentTime = useCmComAudioPlayerCurrentTime();
-  const time = <code>{mylib.convertSecondsInStrTime(currentTime)}</code>;
+  const time = <TimeRender time={mylib.convertSecondsInStrTime(currentTime)} />;
 
   return (
     <Track
       currentTime={currentTime}
       duration={useCmComAudioPlayerDuration()}
-      time={props.timeRender?.(time, props.src) ?? time}
+      time={props.timeRender?.(<TimeRender time={time} />, props.src) ?? time}
     />
   );
 };

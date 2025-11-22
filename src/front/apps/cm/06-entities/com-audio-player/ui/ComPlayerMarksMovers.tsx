@@ -13,6 +13,7 @@ interface Props {
   repeatButtonClassName?: string;
   preSwitchTimeAtom: Atom<number>;
   win?: Window | nil;
+  isHidePanelOnEmptyMarks?: boolean;
 }
 
 const preSwitchTimeSelectItems = [-1, 0, 1, 2, 3, 4].map(id => ({
@@ -25,12 +26,14 @@ export const CmComAudioPlayerMarksMovers = (props: Props) => {
 
   useFetchFreshComAudioMarksPack(props.com);
 
-  const { nextRef, prevRef, repeatRef, titleRef } = useCmComAudioPlayerMoversController(
+  const { nextRef, prevRef, repeatRef, titleRef, audioTrackMarks } = useCmComAudioPlayerMoversController(
     props.src,
     props.com,
     preSwitchTime,
     props.win,
   );
+
+  if (audioTrackMarks == null && props.isHidePanelOnEmptyMarks) return null;
 
   return (
     <div className="flex gap-3 w-full justify-center">
