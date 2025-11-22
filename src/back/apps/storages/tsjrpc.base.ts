@@ -29,6 +29,7 @@ import {
   StoragesRackColumn,
 } from 'shared/model/storages/rack.model';
 import { itNNull, SMyLib, smylib } from 'shared/utils';
+import { makeDeepProxyObject } from 'shared/utils/makeDeepProxyObject';
 import { storagesDirStore } from './file-stores';
 import { storagesStoresSharesServerTsjrpcMethods } from './tsjrpc.shares';
 
@@ -429,27 +430,31 @@ function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret exte
     const login = tool.auth?.login;
     let ret: Ret = undefined!;
     let parentRack = null as StoragesRackStorageSaved | nil;
+    const updates: unknown[] = [];
 
     const updated = storagesDirStore.updateItem(props.rackw, rack => {
-      if ('parent' in rack) {
-        const proxyRack = new Proxy(rack, {
-          get: (rack, key) => {
-            if (key in rackCore) return rack[key as never];
-            parentRack ??= storagesDirStore.getItem(rack.parent) as never;
-
-            if (!parentRack.team[login]?.role) throw 'Нет прав на это действие (изменение в родительском стеллаже)';
-
-            return parentRack?.[key as never];
-          },
-        });
-
-        ret = updater(proxyRack as never, props);
-        if (parentRack != null) storagesDirStore.saveItem(parentRack.w);
-
+      if (!('parent' in rack)) {
+        ret = updater(rack, props);
         return;
       }
 
-      ret = updater(rack, props);
+      const proxyRack = makeDeepProxyObject(rack, {
+        get: (_, key) => {
+          if (key in rackCore) return rack[key as never];
+          parentRack ??= storagesDirStore.getItem(rack.parent);
+          return parentRack?.[key as never];
+        },
+        onSet: (_, keys, key, value) => {
+          updates.push({ keys, key, value });
+          if (keys[0] in rackCore) return true;
+          if (!parentRack?.team[login]?.role) throw 'Нет прав на это действие (изменение в родительском стеллаже)';
+          return true;
+        },
+      });
+
+      ret = updater(proxyRack as never, props);
+
+      if (parentRack != null) storagesDirStore.saveItem(parentRack.w);
     });
 
     if (updated == null) throw 'Error 10961237652345683910';
