@@ -6,16 +6,7 @@ import { Button } from './ui/button';
 import { Command } from './ui/command';
 import { Popover } from './ui/popover';
 
-export function Autocomplete<Item extends { title: React.ReactNode; value: string }>({
-  onSelect,
-  items,
-  selected,
-  placeholder,
-  emptyMessage,
-  onNewItem,
-  isShowSelectedNodeOnly,
-  termMinLenghtToShowList = 3,
-}: {
+type Props<Item> = {
   onSelect?: (index: number, value: string) => Promise<unknown> | nil | void;
   items: (Item | nil)[];
   /** selected indexes */
@@ -25,31 +16,37 @@ export function Autocomplete<Item extends { title: React.ReactNode; value: strin
   onNewItem?: (title: string) => Promise<unknown> | nil | void;
   isShowSelectedNodeOnly?: boolean;
   termMinLenghtToShowList?: number;
-}) {
+};
+
+export function Autocomplete<Item extends { title: React.ReactNode; value: string }>({
+  onNewItem,
+  termMinLenghtToShowList = 3,
+  ...props
+}: Props<Item>) {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [term, setTerm] = useState('');
 
-  const selectedSet = new Set([selected ?? []].flat());
-
   const selectedNode =
-    selected != null &&
-    (mylib.isArr(selected) ? (
+    props.selected != null &&
+    (mylib.isArr(props.selected) ? (
       <span className="flex flex-wrap gap-x-1.5 max-w-[calc(100cqw-30px)]">
-        {selected.map(index => (
+        {props.selected.map(index => (
           <span
             key={index}
             className="ellipsis bg-x2/50 px-1 rounded-sm"
           >
-            {items[index]?.title}
+            {props.items[index]?.title}
           </span>
         ))}
       </span>
     ) : (
-      items[selected]?.title
+      props.items[props.selected]?.title
     ));
 
-  if (isShowSelectedNodeOnly) return <div className="@container *:max-w-full">{selectedNode}</div>;
+  if (props.isShowSelectedNodeOnly) return <div className="@container *:max-w-full">{selectedNode}</div>;
+
+  const selectedSet = new Set([props.selected ?? []].flat());
 
   return (
     <Popover.Root
@@ -63,7 +60,7 @@ export function Autocomplete<Item extends { title: React.ReactNode; value: strin
           aria-expanded={open}
           className="h-auto @container w-full"
         >
-          {(selected ? selectedNode : placeholder) || <span />}
+          {(props.selected ? selectedNode : props.placeholder) || <span />}
 
           <TheIconLoading
             icon={open ? 'ArrowUp01' : 'ArrowDown01'}
@@ -79,34 +76,38 @@ export function Autocomplete<Item extends { title: React.ReactNode; value: strin
             value={term}
             onInput={event => setTerm(event.currentTarget.value)}
           />
-          {term.length >= termMinLenghtToShowList && (
+          {
             <Command.List className="w-full">
-              {emptyMessage && <Command.Empty>{emptyMessage}</Command.Empty>}
-              {!!term && !items.some(id => id?.value.toUpperCase() === term.toUpperCase()) && onNewItem && (
-                <Button
-                  icon="PlusSign"
-                  className="max-w-[300px] m-1 w-full"
-                  isLoading={isLoading}
-                  onClick={async () => {
-                    setIsLoading(true);
-                    const result = await onNewItem(term);
-                    setIsLoading(false);
-                    setOpen(false);
-                    setTerm('');
+              {props.emptyMessage && <Command.Empty>{props.emptyMessage}</Command.Empty>}
+              {!!term.trim() &&
+                !props.items.some(id => id?.value.toUpperCase() === term.toUpperCase()) &&
+                onNewItem && (
+                  <Button
+                    icon="PlusSign"
+                    className="max-w-[300px] m-1 w-full"
+                    isLoading={isLoading}
+                    onClick={async () => {
+                      setIsLoading(true);
+                      const result = await onNewItem(term);
+                      setIsLoading(false);
+                      setOpen(false);
+                      setTerm('');
 
-                    return result;
-                  }}
-                >
-                  <span className="ellipsis">{term}</span>
-                </Button>
-              )}
+                      return result;
+                    }}
+                  >
+                    <span className="ellipsis">{term}</span>
+                  </Button>
+                )}
               <Command.Group className="w-full">
-                {items.map(
+                {props.items.map(
                   (item, itemi) =>
-                    !item || (
+                    !item ||
+                    term.length >= termMinLenghtToShowList ||
+                    !selectedSet.has(itemi) || (
                       <Command.Item
-                        key={item?.value ?? itemi}
-                        value={item?.value}
+                        key={item.value}
+                        value={item.value}
                         className={twMerge(
                           'w-full flex justify-between my-2',
                           selectedSet.has(itemi) ? 'bg-x3/10! hover:bg-x3/15!' : '',
@@ -115,9 +116,9 @@ export function Autocomplete<Item extends { title: React.ReactNode; value: strin
                           setOpen(false);
                           let result;
 
-                          if (onSelect != null) {
+                          if (props.onSelect != null) {
                             setIsLoading(true);
-                            result = await onSelect(itemi, value);
+                            result = await props.onSelect(itemi, value);
                           }
 
                           setIsLoading(false);
@@ -138,7 +139,7 @@ export function Autocomplete<Item extends { title: React.ReactNode; value: strin
                 )}
               </Command.Group>
             </Command.List>
-          )}
+          }
         </Command.Root>
       </Popover.Content>
     </Popover.Root>
