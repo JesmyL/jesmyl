@@ -430,7 +430,6 @@ function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret exte
     const login = tool.auth?.login;
     let ret: Ret = undefined!;
     let parentRack = null as StoragesRackStorageSaved | nil;
-    const updates: unknown[] = [];
 
     const updated = storagesDirStore.updateItem(props.rackw, rack => {
       if (!('parent' in rack)) {
@@ -444,9 +443,8 @@ function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret exte
           parentRack ??= storagesDirStore.getItem(rack.parent);
           return parentRack?.[key as never];
         },
-        onSet: (_, keys, key, value) => {
-          updates.push({ keys, key, value });
-          if (keys[0] in rackCore) return true;
+        onSet: (_, keys, key) => {
+          if ((keys[0] ?? key) in rackCore) return true;
           if (!parentRack?.team[login]?.role) throw 'Нет прав на это действие (изменение в родительском стеллаже)';
           return true;
         },
