@@ -1,3 +1,4 @@
+import IconConfigurator from '#shared/ui/configurators/Icon';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { TextInput } from '#shared/ui/TextInput';
 import { storagesIDB } from '$storages/shared/state/storagesIDB';
@@ -26,6 +27,14 @@ export const StoragesRackEditPage = ({ rackw }: { rackw: StoragesRackWid }) => {
               strongDefaultValue
               label="Название стеллажа"
               onChanged={title => storagesTsjrpcClient.renameRack({ rackw, title })}
+            />
+
+            <IconConfigurator
+              header
+              icon={rack.icon ?? 'DeliveryBox01'}
+              onSend={icon => storagesTsjrpcClient.setRackIcon({ icon, rackw })}
+              used={rack.icon && [rack.icon]}
+              className="mt-5"
             />
 
             {(rack.statuses.length < 2 || rack.parent != null) && <StoragesRackEditParentRackSelector rack={rack} />}

@@ -21,6 +21,7 @@ export type StoragesTsjrpcModel = {
 
   createRack: (args: { title: string }) => { rack: StoragesRack; lastModfiedAt: number };
   renameRack: (args: RackSelector & { title: string }) => void;
+  setRackIcon: (args: RackSelector & { icon: KnownStameskaIconName }) => void;
 
   createRackCard: (args: RackSelector) => StoragesRackCardMi;
   addRackMember: (args: RackSelector & { member: StoragesRackMember; login: SokiAuthLogin }) => void;
