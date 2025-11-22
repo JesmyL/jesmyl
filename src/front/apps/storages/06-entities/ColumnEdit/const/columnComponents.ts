@@ -1,4 +1,4 @@
-import { StoragesColumnEditComponents } from '$storages/shared/model/model';
+import { StoragesColumnEditComponents } from '$storages/shared/model/col-edit';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
 import { StoragesColumnEditOfTypeDate } from '../sub-ui/Date';
 import { StoragesColumnEditOfTypeDates } from '../sub-ui/Dates';

@@ -92,6 +92,7 @@ export const StoragesRackEditColumnsRedactor = ({ rack }: { rack: StoragesRack }
 
       <StoragesAddColumn
         isOpenModalAtom={isOpenAddColumnModalAtom}
+        rack={rack}
         onAdd={({ newColumnType, title, colCustomProps }) =>
           storagesTsjrpcClient.createColumn({
             rackw: rack.w,
@@ -100,7 +101,6 @@ export const StoragesRackEditColumnsRedactor = ({ rack }: { rack: StoragesRack }
             colCustomProps,
           })
         }
-        rack={rack}
       />
 
       <Modal openAtom={isOpenStatusesRedactorModal}>

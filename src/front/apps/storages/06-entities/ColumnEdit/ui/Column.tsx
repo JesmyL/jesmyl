@@ -1,39 +1,34 @@
-import { Button } from '#shared/components/ui/button';
 import { TextInput } from '#shared/ui/TextInput';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
-import { useState } from 'react';
 import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
 import { StoragesRack } from 'shared/model/storages/list.model';
-import { itNIt, itNNil } from 'shared/utils';
+import { StoragesNestedCellSelectors } from 'shared/model/storages/rack.model';
+import { itNNil } from 'shared/utils';
 import { storagesColumnEditComponents } from '../const/columnComponents';
+import { StoragesColumnEditNestedFields } from './NestedFields';
 import { StoragesColumnEditStyleConfigurer } from './StyleConfigurer';
 
 type Props = {
   coli: number;
   rack: StoragesRack;
   grabNode: React.ReactNode;
+  nestedSelectors?: StoragesNestedCellSelectors;
 };
 
 export const TheStoragesColumnEditColumn = (props: Props) => {
-  const column = props.rack.cols[props.coli];
+  const column =
+    props.nestedSelectors?.nestedColi == null
+      ? props.rack.cols[props.coli]
+      : props.rack.cols[props.coli].cols?.[props.nestedSelectors.nestedColi];
+
+  if (column == null) return;
+
   const Component = storagesColumnEditComponents[column.t];
-  const [isOpenStypesConfig, setIsOpenStypesConfig] = useState(false);
-
-  return (
-    <div className="ring-2 rounded-sm my-5 p-2">
-      <div className="flex justify-end w-full">{props.grabNode}</div>
-      <TextInput
-        label="Название"
-        defaultValue={column.title}
-        strongDefaultValue
-        onChanged={title => storagesTsjrpcClient.renameColumn({ coli: props.coli, rackw: props.rack.w, title })}
-      />
-
-      <div>Тип поля: {storagesColumnConfigDict[column.t].typeTitle}</div>
-
-      <div>
-        Значения:
-        {Array.from(
+  const usedValues =
+    props.nestedSelectors?.nestedColi != null
+      ? []
+      : Array.from(
           new Set(
             props.rack.cards.map(card =>
               storagesColumnConfigDict[column.t].makeStringValue(
@@ -57,24 +52,56 @@ export const TheStoragesColumnEditColumn = (props: Props) => {
                 </span>
               )
             );
-          })}
+          });
+
+  return (
+    <div className="ring-2 rounded-sm my-5 p-2">
+      <div className="flex justify-between w-full">
+        <div className="flex gap-2">
+          <LazyIcon icon={storagesColumnConfigDict[column.t].icon} />
+          {storagesColumnConfigDict[column.t].typeTitle}
+        </div>
+        {props.grabNode}
       </div>
 
-      <Component
-        column={column as never}
+      <TextInput
+        label="Название"
+        defaultValue={column.title}
+        strongDefaultValue
+        onChanged={title =>
+          storagesTsjrpcClient.renameColumn({
+            coli: props.coli,
+            rackw: props.rack.w,
+            title,
+            ...props.nestedSelectors,
+          })
+        }
+      />
+
+      {!usedValues.length || (
+        <div className="mt-5">
+          Значения:
+          {usedValues}
+        </div>
+      )}
+
+      <div className="mt-5">
+        <Component
+          column={column as never}
+          rack={props.rack}
+          coli={props.coli}
+          nestedSelectors={props.nestedSelectors}
+        />
+      </div>
+
+      <StoragesColumnEditStyleConfigurer
         rack={props.rack}
         coli={props.coli}
       />
 
-      <div className="flex gap-2">
-        Стили
-        <Button
-          icon={isOpenStypesConfig ? 'ArrowUp01' : 'ArrowDown01'}
-          onClick={() => setIsOpenStypesConfig(itNIt)}
-        />
-      </div>
-      {isOpenStypesConfig && (
-        <StoragesColumnEditStyleConfigurer
+      {column.cols && (
+        <StoragesColumnEditNestedFields
+          column={column}
           rack={props.rack}
           coli={props.coli}
         />

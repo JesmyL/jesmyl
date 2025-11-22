@@ -3,10 +3,12 @@ import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { atom } from 'atomaric';
+import { useState } from 'react';
 import { storagesStylePropKeysMatrix, storagesStypePropTitles } from 'shared/const/storages/styleProps.config';
 import { StoragesRack } from 'shared/model/storages/list.model';
 import { StoragesColumnType, StoragesRackColumn } from 'shared/model/storages/rack.model';
 import { StoragesColumnUiDict } from 'shared/model/storages/ui.model';
+import { itNIt } from 'shared/utils';
 
 const colorChangeAtom = atom<Parameters<typeof storagesTsjrpcClient.editColumnType>[0] | null>(null);
 
@@ -16,54 +18,66 @@ colorChangeAtom.subscribe(props => {
 });
 
 export const StoragesColumnEditStyleConfigurer = (props: { rack: StoragesRack; coli: number }) => {
+  const [isOpenStypesConfig, setIsOpenStypesConfig] = useState(false);
   const column = props.rack.cols[props.coli];
 
   return (
     <>
-      {mylib.keys(storagesStypePropTitles).map(propKey => {
-        const styleKeyList = Array.from(storagesStylePropKeysMatrix[propKey]);
-        const styleKey = column.uil?.find(key => storagesStylePropKeysMatrix[propKey].has(+key));
+      <Button
+        icon={isOpenStypesConfig ? 'ArrowUp01' : 'ArrowDown01'}
+        onClick={() => setIsOpenStypesConfig(itNIt)}
+      >
+        Стили
+      </Button>
 
-        return (
-          <div
-            key={propKey}
-            className="flex gap-3 my-3 ml-3"
-          >
-            {storagesStypePropTitles[propKey]}
-            <Dropdown
-              id={!mylib.isStr(styleKey) ? styleKey : null}
-              nullTitle="Обычный"
-              items={styleKeyList.map((id, idi) => ({
-                id,
-                title: <span className="text-x7">{['Маленький', 'Большой', 'Огромный'][idi]}</span>,
-              }))}
-              onSelectId={styleKey =>
-                storagesTsjrpcClient.editColumnType({
-                  rackw: props.rack.w,
-                  coli: props.coli,
-                  list: { key: propKey, value: styleKey },
-                })
-              }
-            />
-          </div>
-        );
-      })}
+      {isOpenStypesConfig && (
+        <>
+          {mylib.keys(storagesStypePropTitles).map(propKey => {
+            const styleKeyList = Array.from(storagesStylePropKeysMatrix[propKey]);
+            const styleKey = column.uil?.find(key => storagesStylePropKeysMatrix[propKey].has(+key));
 
-      <ColorChanger
-        title="Цвет текста:"
-        propKey="text"
-        coli={props.coli}
-        column={column}
-        rack={props.rack}
-      />
+            return (
+              <div
+                key={propKey}
+                className="flex gap-3 my-3 ml-3"
+              >
+                {storagesStypePropTitles[propKey]}
+                <Dropdown
+                  id={!mylib.isStr(styleKey) ? styleKey : null}
+                  nullTitle="Обычный"
+                  items={styleKeyList.map((id, idi) => ({
+                    id,
+                    title: <span className="text-x7">{['Маленький', 'Большой', 'Огромный'][idi]}</span>,
+                  }))}
+                  onSelectId={styleKey =>
+                    storagesTsjrpcClient.editColumnType({
+                      rackw: props.rack.w,
+                      coli: props.coli,
+                      list: { key: propKey, value: styleKey },
+                    })
+                  }
+                />
+              </div>
+            );
+          })}
 
-      <ColorChanger
-        title="Цвет фона:"
-        propKey="bg"
-        coli={props.coli}
-        column={column}
-        rack={props.rack}
-      />
+          <ColorChanger
+            title="Цвет текста:"
+            propKey="text"
+            coli={props.coli}
+            column={column}
+            rack={props.rack}
+          />
+
+          <ColorChanger
+            title="Цвет фона:"
+            propKey="bg"
+            coli={props.coli}
+            column={column}
+            rack={props.rack}
+          />
+        </>
+      )}
     </>
   );
 };

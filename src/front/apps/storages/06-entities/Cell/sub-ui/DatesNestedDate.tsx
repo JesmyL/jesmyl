@@ -90,16 +90,16 @@ export const StoragesCellDatesNestedDateCell = (
           </>
         )}
 
-        {props.column.cols?.map((nestedColumn, nestedColumni) => {
-          const Component = storagesCellComponents[nestedColumn.t];
+        <StoragesIsEditInnersContext value={isEdit}>
+          {props.column.cols?.map((nestedColumn, nestedColumni) => {
+            const Component = storagesCellComponents[nestedColumn.t];
 
-          const column = props.column?.cols?.[nestedColumni];
+            const column = props.column?.cols?.[nestedColumni];
 
-          if (column == null) return;
+            if (column == null || column.t === props.column.t) return;
 
-          return (
-            <div key={nestedColumni}>
-              <StoragesIsEditInnersContext value={isEdit}>
+            return (
+              <div key={nestedColumni}>
                 <Component
                   {...props}
                   card={props.card}
@@ -107,6 +107,7 @@ export const StoragesCellDatesNestedDateCell = (
                   cell={cardCell?.row?.[nestedColumni] as null}
                   rack={props.rack}
                   column={column as never}
+                  icon={storagesColumnConfigDict[column.t].icon}
                   columnTitleNode={editPostfix =>
                     isEdit ? (
                       <div>
@@ -124,16 +125,15 @@ export const StoragesCellDatesNestedDateCell = (
                       column.title
                     )
                   }
-                  icon={storagesColumnConfigDict[column.t].icon}
                   nestedSelectors={{
                     nestedCellMi: props.dateMi,
                     nestedColi: nestedColumni,
                   }}
                 />
-              </StoragesIsEditInnersContext>
-            </div>
-          );
-        })}
+              </div>
+            );
+          })}
+        </StoragesIsEditInnersContext>
       </ModalBody>
 
       <ModalFooter>
@@ -142,6 +142,7 @@ export const StoragesCellDatesNestedDateCell = (
             isOpenModalAtom={isOpenAddColumnModalAtom}
             excludeColumnTypes={storagesExcludeColumnTypesForDatedNestedCell}
             rack={props.rack}
+            andTextButton={<>во все {props.column.title} во всех карточках</>}
             onAdd={async ({ newColumnType, title, colCustomProps }) => {
               if (newColumnType === StoragesColumnType.Date || newColumnType === StoragesColumnType.Dates) return;
 

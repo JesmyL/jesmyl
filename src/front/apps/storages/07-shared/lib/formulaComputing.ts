@@ -1,37 +1,44 @@
 import { mylib } from '#shared/lib/my-lib';
 import { makeRegExp } from 'regexpert';
-import { StoragesCell, StoragesColumnType, StoragesNestedCellMi, StoragesRackColumn } from 'shared/model/storages/rack.model';
+import {
+  StoragesCell,
+  StoragesColumnType,
+  StoragesNestedCellMi,
+  StoragesRackColumn,
+} from 'shared/model/storages/rack.model';
 import { itIt } from 'shared/utils';
 
 type UtilProps = {
   formula: string | nil;
   cells: (StoragesCell<StoragesColumnType> | nil)[] | nil;
   cols: (StoragesRackColumn<StoragesColumnType> | nil)[] | nil;
-  numFix: number | nil;
+  resultFix: number | nil;
   coli: number;
   funcPrefix?: string;
 };
 
-export const storagesMakeActualFormulaProps = ({ cardRow, coli, nestedCellMi, nestedColi, rackCols, }: {
-  coli: number,
-  nestedColi: number | nil,
-  nestedCellMi: StoragesNestedCellMi | nil,
-  rackCols: StoragesRackColumn<StoragesColumnType>[],
-  cardRow: (nil | StoragesCell<StoragesColumnType>)[] | nil
-}
-) => {
+type Props = {
+  coli: number;
+  nestedColi: number | nil;
+  nestedCellMi: StoragesNestedCellMi | nil;
+  rackCols: StoragesRackColumn<StoragesColumnType>[];
+  cardRow: (nil | StoragesCell<StoragesColumnType>)[] | nil;
+};
+
+export const storagesMakeActualFormulaProps = ({ cardRow, coli, nestedCellMi, nestedColi, rackCols }: Props) => {
   const cols = nestedCellMi == null ? rackCols : rackCols[coli]?.cols;
 
   return {
     cols,
     coli: nestedColi ?? coli,
     innerCall: -(cols?.length ?? 0),
-    cells: nestedCellMi == null || cardRow == null || cardRow[coli] == null
-      ? cardRow
-      : 'row' in cardRow[coli]
-        ? cardRow[coli].row.find(cell => cell.mi === nestedCellMi)?.row
-        : null,
-  }
+    cells:
+      nestedCellMi == null || cardRow == null || cardRow[coli] == null
+        ? cardRow
+        : 'row' in cardRow[coli]
+          ? cardRow[coli].row.find(cell => cell.mi === nestedCellMi)?.row
+          : null,
+  };
 };
 
 export const storagesReplaceFormulaNumbers = <Ret extends unknown | string = unknown | string>(
@@ -66,7 +73,7 @@ export const storagesReplaceFormulaNumbers = <Ret extends unknown | string = unk
 
           try {
             const result = storagesComputeFormula(
-              { ...props, formula: col.val, funcPrefix: undefined, numFix: col.fx },
+              { ...props, formula: col.val, funcPrefix: undefined, resultFix: col.fx },
               innerCall + 1,
             );
 
@@ -108,7 +115,7 @@ export const storagesComputeFormula = (props: UtilProps, innerCall: number) => {
       `return dict.res = ${storagesReplaceFormulaNumbers(props, innerCall + 1).join('')};`,
     )(dict);
 
-    return mylib.isNum(dict.res) ? +dict.res.toFixed(props.numFix ?? 2) : 0;
+    return mylib.isNum(dict.res) ? +dict.res.toFixed(props.resultFix ?? 2) : 0;
   } catch (_e) {
     return 'Ошибка';
   }

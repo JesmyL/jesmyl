@@ -26,17 +26,21 @@ export const StoragesAddColumn = (props: {
   isOpenModalAtom: Atom<boolean>;
   excludeColumnTypes?: Set<StoragesColumnType>;
   rack: StoragesRack;
+  andTextButton?: React.ReactNode;
 }) => {
   const prompt = usePrompt();
 
   return (
     <>
-      <Button
-        icon="PlusSign"
-        onClick={props.isOpenModalAtom.do.toggle}
-      >
-        Создать новое специальное поле
-      </Button>
+      <div className="flex justify-items-end custom-align-items flex-col">
+        <Button
+          icon="PlusSign"
+          onClick={props.isOpenModalAtom.do.toggle}
+        >
+          Новое поле
+        </Button>
+        <div className="text-xs text-x3/70">Будет добавлено {props.andTextButton ?? 'во все карточки'}</div>
+      </div>
 
       <Modal openAtom={props.isOpenModalAtom}>
         <ModalHeader>Выберите тип нового специального поля</ModalHeader>

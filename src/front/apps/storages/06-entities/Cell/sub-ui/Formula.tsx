@@ -1,15 +1,8 @@
-import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { mylib } from '#shared/lib/my-lib';
-import { Dropdown } from '#shared/ui/dropdown/Dropdown';
-import {
-  storagesComputeFormula,
-  storagesMakeActualFormulaProps,
-  storagesReplaceFormulaNumbers,
-} from '$storages/shared/lib/formulaComputing';
-import { useStoragesHighlighUsedFormulaRefs } from '$storages/shared/lib/useHighlighUsedFormulaRefs';
+import { StoragesFormulaEditValue } from '$storages/entities/FormulaEdit';
+import { StoragesFormulaTexted } from '$storages/entities/FormulaTexted';
+import { storagesComputeFormula, storagesMakeActualFormulaProps } from '$storages/shared/lib/formulaComputing';
 import { useStoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
-import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
-import { useRef } from 'react';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
 import { twMerge } from 'tailwind-merge';
 import { StoragesCellTypeProps } from '../model/model';
@@ -30,7 +23,7 @@ export const StoragesCellOfTypeFormula = (props: StoragesCellTypeProps<StoragesC
   const result = storagesComputeFormula(
     {
       formula: props.column?.val,
-      numFix: props.column.fx,
+      resultFix: props.column.fx,
       cells,
       coli,
       cols,
@@ -49,61 +42,6 @@ export const StoragesCellOfTypeFormula = (props: StoragesCellTypeProps<StoragesC
 };
 
 const Edit = (props: StoragesCellTypeProps<StoragesColumnType.Formula>) => {
-  const inputRef = useRef<(HTMLInputElement & HTMLTextAreaElement) | null>(null);
-  const { coli, cols } = storagesMakeActualFormulaProps({
-    coli: props.coli,
-    cardRow: props.card.row,
-    rackCols: props.rack.cols,
-    nestedColi: props.nestedSelectors?.nestedColi,
-    nestedCellMi: props.nestedSelectors?.nestedCellMi,
-  });
-
-  useStoragesHighlighUsedFormulaRefs(inputRef, coli, cols);
-
-  return (
-    <>
-      <div>
-        {props.columnTitleNode()}
-
-        <div className="flex gap-3">
-          <InputWithLoadingIcon
-            icon={props.icon}
-            inputRef={inputRef}
-            defaultValue={props.column.val}
-            strongDefaultValue
-            multiline
-            onChanged={value =>
-              storagesTsjrpcClient.editColumnFields({
-                rackw: props.rack.w,
-                coli: props.coli,
-                data: { [StoragesColumnType.Formula]: { val: value } },
-                ...props.nestedSelectors,
-              })
-            }
-          />
-          <Dropdown
-            id={props.column.fx ?? 2}
-            hiddenArrow
-            items={[0, 1, 2, 3, 4, 5].map(fx => ({ id: fx, title: fx }))}
-            renderItem={({ node }) => <div>После запятой - {node} зн.</div>}
-            onSelectId={fx =>
-              storagesTsjrpcClient.editColumnFields({
-                rackw: props.rack.w,
-                coli: props.coli,
-                data: { [StoragesColumnType.Formula]: { fx } },
-                ...props.nestedSelectors,
-              })
-            }
-          />
-        </div>
-      </div>
-
-      <TextedFormula {...props} />
-    </>
-  );
-};
-
-const TextedFormula = (props: StoragesCellTypeProps<StoragesColumnType.Formula>) => {
   const { coli, cols, cells, innerCall } = storagesMakeActualFormulaProps({
     coli: props.coli,
     cardRow: props.card.row,
@@ -112,53 +50,27 @@ const TextedFormula = (props: StoragesCellTypeProps<StoragesColumnType.Formula>)
     nestedCellMi: props.nestedSelectors?.nestedCellMi,
   });
 
-  const formulaProps: Parameters<typeof storagesComputeFormula>[0] = {
-    formula: props.column.val,
-    numFix: props.column.fx,
-    cells,
-    cols,
-    coli,
-  };
-
-  const result = storagesComputeFormula(formulaProps, innerCall);
-
   return (
     <>
+      <div>{props.columnTitleNode()}</div>
+
+      <StoragesFormulaEditValue
+        coli={coli}
+        column={props.column}
+        nestedSelectors={props.nestedSelectors}
+        rack={props.rack}
+      />
+
       {props.column && props.card.row && props.column.val && (
-        <div className="my-3">
-          Итог:{' '}
-          <span className="text-x3">
-            {storagesReplaceFormulaNumbers(
-              {
-                ...formulaProps,
-                funcPrefix: '',
-              },
-              innerCall,
-              (value, i, coli) => (
-                <span
-                  key={i}
-                  className="text-xKO"
-                  storages-formula-used-coli={coli}
-                >
-                  {value}
-                </span>
-              ),
-              (value, i, coli) => (
-                <span
-                  key={i}
-                  className="text-x7"
-                  storages-formula-used-coli={coli}
-                >
-                  {value}
-                </span>
-              ),
-            )}
-            {' = '}
-            <span className="font-bold">
-              {mylib.isStr(result) ? <span className="text-xKO">{result}</span> : result}
-            </span>
-          </span>
-        </div>
+        <StoragesFormulaTexted
+          {...props}
+          cells={cells}
+          cols={cols}
+          formula={props.column.val}
+          innerCall={innerCall}
+          resultFix={props.column.fx}
+          coli={coli}
+        />
       )}
     </>
   );

@@ -75,7 +75,9 @@ export type StoragesTsjrpcModel = {
     },
   ) => void;
 
-  renameColumn: (args: StoragesTsjrpcRackSelector & { title: string; coli: number }) => void;
+  renameColumn: (
+    args: StoragesTsjrpcRackSelector & StoragesNestedCellSelectors & { title: string; coli: number },
+  ) => void;
   moveColumn: (args: StoragesTsjrpcRackSelector & { coli: number; newi: number | nil }) => void;
   editColumnFields: (
     args: StoragesTsjrpcRackSelector &

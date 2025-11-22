@@ -378,7 +378,12 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
         }),
 
         renameColumn: updateRack((rack, props) => {
-          rack.cols[props.coli].title = props.title || rack.cols[props.coli].title;
+          let column = rack.cols[props.coli] as StoragesRackColumn<StoragesColumnType> | nil;
+
+          if (props.nestedColi != null) column = column?.cols?.[props.nestedColi];
+          if (column == null) return;
+
+          column.title = props.title || column.title;
         }),
 
         renameRack: updateRack((rack, props) => {

@@ -1,5 +1,5 @@
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
-import { StoragesColumnEditTypeProps } from '$storages/shared/model/model';
+import { StoragesColumnEditTypeProps } from '$storages/shared/model/col-edit';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
 
@@ -17,6 +17,7 @@ export const StoragesNumberColumnMetricSelector = (props: StoragesColumnEditType
           coli: props.coli,
           data: { [StoragesColumnType.Number]: { mt: id } },
           rackw: props.rack.w,
+          ...props.nestedSelectors,
         })
       }
     />
