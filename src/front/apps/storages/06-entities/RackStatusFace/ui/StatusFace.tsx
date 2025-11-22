@@ -1,5 +1,4 @@
 import { Button } from '#shared/components/ui/button';
-import { DropdownMenu } from '#shared/components/ui/dropdown-menu';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
@@ -22,49 +21,46 @@ export const StoragesRackStatusFace = (props: {
           ? statusi => storagesTsjrpcClient.setRackCardStatus({ rackw: props.rack.w, statusi, cardMi: props.card!.mi })
           : undefined
       }
-      items={(rackStatus.next ?? props.rack.statuses.map((_, i) => i)).map(status => {
-        return cardStatusi === status
+      items={(rackStatus.next ?? props.rack.statuses.map((_, i) => i)).map(statusIndex => {
+        const status = props.rack.statuses[statusIndex];
+
+        return cardStatusi === statusIndex
           ? null
           : {
-              id: status,
+              id: statusIndex,
               title: (
                 <span
                   className="flex gap-2 max-w-[80vw]"
-                  style={{ color: props.rack.statuses[status].color }}
+                  style={{ color: status.color }}
                 >
                   <LazyIcon
-                    icon={props.rack.statuses[status].icon ?? 'Cube'}
-                    style={{ color: props.rack.statuses[status].color }}
+                    icon={status.icon ?? 'Cube'}
+                    style={{ color: status.color }}
                   />
-                  <span className="ellipsis">{props.rack.statuses[status].title}</span>
+                  <span className="ellipsis">{status.title}</span>
                 </span>
               ),
             };
       })}
-      triggerNode={
-        <DropdownMenu.Trigger className="flex gap-2">
-          <>
-            <Button
-              asSpan
-              size={'icon'}
-              withoutAnimation
+      triggerNode={isLoading => (
+        <>
+          <Button
+            asSpan
+            withoutAnimation
+            isLoading={isLoading}
+            icon={rackStatus.icon ?? 'Cube'}
+            style={{ color: rackStatus.color }}
+          />
+          {props.customTitile || (
+            <span
+              className="font-bold"
+              style={{ color: rackStatus.color }}
             >
-              <LazyIcon
-                icon={rackStatus.icon ?? 'Cube'}
-                style={{ color: rackStatus.color }}
-              />
-            </Button>
-            {props.customTitile || (
-              <span
-                className="font-bold"
-                style={{ color: rackStatus.color }}
-              >
-                {rackStatus.title}
-              </span>
-            )}
-          </>
-        </DropdownMenu.Trigger>
-      }
+              {rackStatus.title}
+            </span>
+          )}
+        </>
+      )}
     />
   );
 };

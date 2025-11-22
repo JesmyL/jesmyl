@@ -36,37 +36,44 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
       onOpenChange={setDropped}
       open={isDropped}
     >
-      {props.triggerNode || (
-        <DropdownMenu.Trigger className="flex gap-2">
-          {props.label}
-          <Button asSpan disabled={props.disabled}>
-            {selectedItem?.title ?? (
-              <span className="not-selected">
-                {props.undTitle ?? props.nullTitle ?? props.placeholder ?? 'Не выбрано'}
-              </span>
-            )}
+      <DropdownMenu.Trigger className="flex gap-2">
+        {props.triggerNode ? (
+          props.triggerNode(isLoading)
+        ) : (
+          <>
+            {props.label}
+            <Button
+              asSpan
+              disabled={props.disabled}
+            >
+              {selectedItem?.title ?? (
+                <span className="not-selected">
+                  {props.undTitle ?? props.nullTitle ?? props.placeholder ?? 'Не выбрано'}
+                </span>
+              )}
 
-            {error ? (
-              <LazyIcon
-                icon="Alert01"
-                className="text-xKO"
-              />
-            ) : isLoading ? (
-              <LazyIcon
-                icon="Loading03"
-                className="rotate"
-              />
-            ) : (
-              props.hiddenArrow || (
+              {error ? (
                 <LazyIcon
-                  icon="ArrowDown01"
-                  className={twMerge(isDropped && 'rotate-180', 'transition-[rotate]')}
+                  icon="Alert01"
+                  className="text-xKO"
                 />
-              )
-            )}
-          </Button>
-        </DropdownMenu.Trigger>
-      )}
+              ) : isLoading ? (
+                <LazyIcon
+                  icon="Loading03"
+                  className="rotate"
+                />
+              ) : (
+                props.hiddenArrow || (
+                  <LazyIcon
+                    icon="ArrowDown01"
+                    className={twMerge(isDropped && 'rotate-180', 'transition-[rotate]')}
+                  />
+                )
+              )}
+            </Button>
+          </>
+        )}
+      </DropdownMenu.Trigger>
 
       {isDropped && (
         <DropdownMenu.Content onClick={() => setDropped(false)}>

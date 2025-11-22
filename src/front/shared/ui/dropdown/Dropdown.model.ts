@@ -15,7 +15,7 @@ export interface DropdownProps<Id, Item extends DropdownItem<Id>> {
   disabled?: boolean;
   hiddenIds?: (Id | null)[];
   hiddenArrow?: boolean;
-  triggerNode?: React.ReactNode;
+  triggerNode?: (isLoading: boolean) => React.ReactNode;
 }
 
 export interface DropdownItem<Id> {
