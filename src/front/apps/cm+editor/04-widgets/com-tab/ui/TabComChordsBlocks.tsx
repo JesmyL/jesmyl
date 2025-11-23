@@ -5,7 +5,12 @@ import { CmEditorChordBlockRedactor } from '$cm+editor/entities/chord';
 import { CmEditorComOrderAddTextableBlockAnchorTitles } from '$cm+editor/features/com-order';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
+import { cmEditorComChordEditsHistoryAtom } from '$cm+editor/shared/state/atoms';
 import { makeRegExp } from 'regexpert';
+import {
+  CmEditorComTabTextBlockPrevValueButton,
+  CmEditorComTabTextBlockPrevValueUpdateModal,
+} from '../sub-ui/TextBlockPrevValueHistory';
 
 export const CmEditorComTabChordsBlocks = ({ ccom }: { ccom: EditableCom }) => {
   const checkAccess = useCheckUserAccessRightsInScope();
@@ -40,6 +45,13 @@ export const CmEditorComTabChordsBlocks = ({ ccom }: { ccom: EditableCom }) => {
               />
 
               <span className="flex gap-2">
+                {checkAccess('cm', 'COM_CH', 'U') && (
+                  <CmEditorComTabTextBlockPrevValueButton
+                    historyAtom={cmEditorComChordEditsHistoryAtom}
+                    comw={ccom.wid}
+                    texti={texti}
+                  />
+                )}
                 {makeRegExp('/[A-H]b/').exec(text) && (
                   <LazyIcon
                     className="pointer"
@@ -84,6 +96,13 @@ export const CmEditorComTabChordsBlocks = ({ ccom }: { ccom: EditableCom }) => {
           </div>
         );
       })}
+
+      <CmEditorComTabTextBlockPrevValueUpdateModal
+        historyAtom={cmEditorComChordEditsHistoryAtom}
+        comw={ccom.wid}
+        onPaste={(value, texti) => ccom.changeChordsBlock(texti, value)}
+        texts={ccom.chords}
+      />
     </>
   );
 };
