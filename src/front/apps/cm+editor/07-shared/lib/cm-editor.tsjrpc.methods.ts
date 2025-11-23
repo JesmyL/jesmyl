@@ -44,7 +44,15 @@ export const cmEditComClientTsjrpcMethods = new (class CmEditCom extends TsjrpcC
           beforeSend: async args => cmEditorComTextsEditsHistoryAtom.do.setPartial({ [args.comw]: {} }),
         },
 
+        removeTextBlock: {
+          beforeSend: async args => cmEditorComTextsEditsHistoryAtom.do.setPartial({ [args.comw]: {} }),
+        },
+
         insertChordBlock: {
+          beforeSend: async args => cmEditorComChordEditsHistoryAtom.do.setPartial({ [args.comw]: {} }),
+        },
+
+        removeChordBlock: {
           beforeSend: async args => cmEditorComChordEditsHistoryAtom.do.setPartial({ [args.comw]: {} }),
         },
       },
