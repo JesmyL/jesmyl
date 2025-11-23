@@ -7,17 +7,11 @@ export const cmTsjrpcClient = new (class Cm extends TsjrpcClient<CmTsjrpcModel> 
     super({
       scope: 'Cm',
       methods: {
-        requestFreshes: true,
-        exchangeFreshComCommentBlocks: true,
-        getComwVisits: true,
-        printComwVisit: true,
-        takeComwVisitsCount: true,
-        replaceUserAltCommentBlocks: true,
-        pullUserAltCommentBlock: true,
-
-        takeFreshComAudioMarksPack: pack => {
-          if (pack == null) return;
-          cmIDB.tb.audioTrackMarks.put(pack);
+        takeFreshComAudioMarksPack: {
+          onResponse: pack => {
+            if (pack == null) return;
+            cmIDB.tb.audioTrackMarks.put(pack);
+          },
         },
       },
     });

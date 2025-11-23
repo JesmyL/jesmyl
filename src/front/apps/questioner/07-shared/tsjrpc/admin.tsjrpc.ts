@@ -25,45 +25,6 @@ export const questionerAdminTsjrpcClient = new (class Questioner extends TsjrpcC
   constructor() {
     super({
       scope: 'QuestionerAdmin',
-      methods: {
-        createBlank: true,
-        addBlankTemplate: true,
-
-        requestFreshes: true,
-        getAdminBlank: true,
-
-        changeBlankTitle: true,
-        changeBlankDescription: true,
-        changeTemplateTitle: true,
-        changeTemplateDescription: true,
-        changeTemplateRequiredSign: true,
-        addTemplateAnswerVariant: true,
-        changeTemplateCorrectAnswerSign: true,
-        changeTemplateAnswerVariantTitle: true,
-        changeTemplateRandomSortSign: true,
-        switchTemplateHiddenSign: true,
-        switchBlankIsAnonymous: true,
-        changeTemplateMinSign: true,
-        changeTemplateMaxSign: true,
-        changeTemplateAboveText: true,
-        changeTemplateBelowText: true,
-        switchTemplateNoCorrectsSign: true,
-        changeTemplatePosition: true,
-        changeTemplateCorrectAnswerIndex: true,
-        switchTemplateNeedSelectSign: true,
-        switchTemplateSymbolExistance: true,
-        switchTemplateTextValue: true,
-        switchTemplateReplacementTextValue: true,
-        addTemplateTextValue: true,
-        changeTemplateTextValue: true,
-        setTemplateConditionOperator: true,
-        addTemplateConditionNext: true,
-        addTemplateConditionNextNext: true,
-        removeTemplateCondition: true,
-        setTemplateConditionNextTemplateId: true,
-        setTemplateConditionNextOperator: true,
-        setTemplateConditionNextValue: true,
-      },
     });
   }
 })();

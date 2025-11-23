@@ -5,9 +5,6 @@ export const cmUserStoreTsjrpcClient = new (class CmUserStore extends TsjrpcClie
   constructor() {
     super({
       scope: 'CmUserStore',
-      methods: {
-        setAboutComFavorites: true,
-      },
     });
   }
 })();

@@ -109,10 +109,6 @@ export const schLiveTsjrpcSharesServer = new (class SchLive extends TsjrpcServer
   constructor() {
     super({
       scope: 'SchLive',
-      methods: {
-        updateData: true,
-        streamersList: true,
-      },
     });
   }
 })();

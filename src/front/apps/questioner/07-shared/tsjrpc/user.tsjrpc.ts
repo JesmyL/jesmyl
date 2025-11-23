@@ -5,11 +5,6 @@ export const questionerUserTsjrpcClient = new (class Questioner extends TsjrpcCl
   constructor() {
     super({
       scope: 'QuestionerUser',
-      methods: {
-        getUserAnswers: true,
-        getUserBlank: true,
-        publicUserAnswer: true,
-      },
     });
   }
 })();

@@ -6,9 +6,6 @@ export const storagesStoresSharesServerTsjrpcMethods =
     constructor() {
       super({
         scope: 'StoragesStoresShares',
-        methods: {
-          refreshRacks: true,
-        },
       });
     }
   })();

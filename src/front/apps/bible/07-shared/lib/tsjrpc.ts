@@ -9,10 +9,6 @@ export const bibleTsjrpcClient = new (class Bible extends TsjrpcClient<BibleTsjr
   constructor() {
     super({
       scope: 'Bible',
-      methods: {
-        requestFreshes: true,
-        requestTranslate: true,
-      },
     });
   }
 })();

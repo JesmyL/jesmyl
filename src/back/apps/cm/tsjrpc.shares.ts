@@ -5,22 +5,6 @@ export const cmShareServerTsjrpcMethods = new (class CmShare extends TsjrpcServe
   constructor() {
     super({
       scope: 'CmShare',
-      methods: {
-        editedCom: true,
-        refreshComList: true,
-
-        editedCat: true,
-        refreshCatList: true,
-
-        editedChords: true,
-        refreshChordPack: true,
-
-        refreshComCommentBlocks: true,
-        refreshAboutComFavorites: true,
-
-        refreshScheduleEventComPacks: true,
-        refreshConstantsConfig: true,
-      },
     });
   }
 })();

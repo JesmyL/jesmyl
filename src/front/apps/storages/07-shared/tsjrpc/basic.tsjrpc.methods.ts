@@ -7,37 +7,12 @@ export const storagesTsjrpcClient = new (class Storages extends TsjrpcClient<Sto
     super({
       scope: 'Storages',
       methods: {
-        requestFreshes: true,
-        createRack: ({ lastModfiedAt, rack }) => {
-          storagesIDB.tb.racks.put(rack);
-          storagesIDB.updateLastModifiedAt(lastModfiedAt);
+        createRack: {
+          onResponse: ({ lastModfiedAt, rack }) => {
+            storagesIDB.tb.racks.put(rack);
+            storagesIDB.updateLastModifiedAt(lastModfiedAt);
+          },
         },
-        createRackCard: true,
-        editRackStatusIcon: true,
-        editRackStatusTitle: true,
-        createRackStatus: true,
-        toggleRackStatusNexti: true,
-        editRackStatusColor: true,
-        setRackCardStatus: true,
-        editRackCardTitle: true,
-        editRackCardNote: true,
-        editRackCardMeta: true,
-        createColumn: true,
-        toggleListCellValue: true,
-        createDatesNestedCell: true,
-        editCellValue: true,
-        editNestedCellProp: true,
-        setNumber: true,
-        addManyCards: true,
-        setRackAsParent: true,
-        editColumnType: true,
-        renameColumn: true,
-        renameRack: true,
-        moveColumn: true,
-        editColumnFields: true,
-        addRackMember: true,
-        createRackDict: true,
-        setRackIcon: true,
       },
     });
   }

@@ -14,7 +14,6 @@ export const cmEditCatClientTsjrpcMethods = new (class CmEditCat extends TsjrpcC
   constructor() {
     super({
       scope: 'CmEditCat',
-      methods: {},
     });
   }
 })();
@@ -82,7 +81,6 @@ export const cmEditComOrderClientTsjrpcMethods =
     constructor() {
       super({
         scope: 'CmEditComOrder',
-        methods: {},
       });
     }
   })();
@@ -91,7 +89,6 @@ export const cmEditorClientTsjrpcMethods = new (class CmEditor extends TsjrpcCli
   constructor() {
     super({
       scope: 'CmEditor',
-      methods: {},
     });
   }
 })();

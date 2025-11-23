@@ -7,13 +7,6 @@ export const schLiveTsjrpcClient = new (class SchLive extends TsjrpcClient<SchLi
   constructor() {
     super({
       scope: 'SchLive',
-      methods: {
-        next: true,
-        reset: true,
-        watch: true,
-        unwatch: true,
-        requestStreamers: true,
-      },
     });
   }
 })();

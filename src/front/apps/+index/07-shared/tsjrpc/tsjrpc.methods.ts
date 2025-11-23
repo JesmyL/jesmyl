@@ -17,40 +17,40 @@ export const indexTsjrpcClientMethods = new (class Index extends TsjrpcClient<In
     super({
       scope: 'Index',
       methods: {
-        requestFreshes: true,
-        getDeviceId: true,
+        authMeByTelegramNativeButton: { onResponse: tgAuthorize },
+        authMeByTelegramBotNumber: { onResponse: tgAuthorize },
+        authMeByTelegramMiniButton: { onResponse: tgAuthorize },
+        authMeByTelegramInScheduleDay: { onResponse: tgAuthorize },
 
-        authMeByTelegramNativeButton: tgAuthorize,
-        authMeByTelegramBotNumber: tgAuthorize,
-        authMeByTelegramMiniButton: tgAuthorize,
-        authMeByTelegramInScheduleDay: tgAuthorize,
-
-        getFreshAppVersion: true,
-        getIndexValues: true,
-        getIconExistsPacks: true,
-
-        getAccessRightTitles: true,
-        getUserAccessRightsAndRoles: true,
-
-        updateUserAccessRight: async rightsAndRoles => {
-          if (rightsAndRoles == null) return;
-          indexAppUserAccessRightsMatrixAtom.set(rightsAndRoles);
+        updateUserAccessRight: {
+          onResponse: async rightsAndRoles => {
+            if (rightsAndRoles == null) return;
+            indexAppUserAccessRightsMatrixAtom.set(rightsAndRoles);
+          },
         },
-        updateUserAccessRole: async rightsAndRoles => {
-          if (rightsAndRoles == null) return;
-          indexAppUserAccessRightsMatrixAtom.set(rightsAndRoles);
+        updateUserAccessRole: {
+          onResponse: async rightsAndRoles => {
+            if (rightsAndRoles == null) return;
+            indexAppUserAccessRightsMatrixAtom.set(rightsAndRoles);
+          },
         },
-        addNewAccessRole: async rightsAndRoles => {
-          if (rightsAndRoles == null) return;
-          indexAppUserAccessRightsMatrixAtom.set(rightsAndRoles);
+        addNewAccessRole: {
+          onResponse: async rightsAndRoles => {
+            if (rightsAndRoles == null) return;
+            indexAppUserAccessRightsMatrixAtom.set(rightsAndRoles);
+          },
         },
-        updateRoleAccessRight: async rightsAndRoles => {
-          if (rightsAndRoles == null) return;
-          indexAppUserAccessRightsMatrixAtom.set(rightsAndRoles);
+        updateRoleAccessRight: {
+          onResponse: async rightsAndRoles => {
+            if (rightsAndRoles == null) return;
+            indexAppUserAccessRightsMatrixAtom.set(rightsAndRoles);
+          },
         },
 
-        getIconPack: ({ pack }) => {
-          indexIDB.tb.iconPacks.put({ key: pack[0] as never, pack });
+        getIconPack: {
+          onResponse: ({ pack }) => {
+            indexIDB.tb.iconPacks.put({ key: pack[0] as never, pack });
+          },
         },
       },
     });

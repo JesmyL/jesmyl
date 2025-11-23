@@ -108,7 +108,7 @@ export class SokiTrip {
         tsjrpcBaseClientNext({
           invoke: event.invoke,
           sendResponse: this.send,
-          tool: null,
+          tool: undefined,
           requestId: event.requestId,
         });
       } catch (_error) {

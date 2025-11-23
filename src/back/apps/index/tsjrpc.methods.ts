@@ -3,14 +3,6 @@ import { IndexTsjrpcSharesModel } from 'shared/api/tsjrpc/index/tsjrpc.methods.m
 
 export const indexServerTsjrpcShareMethods = new (class Sch extends TsjrpcServerMethods<IndexTsjrpcSharesModel> {
   constructor() {
-    super({
-      scope: 'Index',
-      methods: {
-        refreshAccessRights: true,
-        updateKnownIconPacks: true,
-        userModal: true,
-        userToast: true,
-      },
-    });
+    super({ scope: 'Index' });
   }
 })();

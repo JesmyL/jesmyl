@@ -5,10 +5,6 @@ export const schServerTsjrpcShareMethods = new (class Sch extends TsjrpcServerMe
   constructor() {
     super({
       scope: 'Sch',
-      methods: {
-        editedSchedule: true,
-        refreshSchedules: true,
-      },
     });
   }
 })();

@@ -6,11 +6,6 @@ export const cmShareEditorServerTsjrpcMethods =
     constructor() {
       super({
         scope: 'CmShareEditor',
-        methods: {
-          editedEEWords: true,
-          refreshEEPack: true,
-          comBusies: true,
-        },
       });
     }
   })();

@@ -54,9 +54,6 @@ export const bibleTsjrpcServer = new (class Bible extends TsjrpcServerMethods<Bi
   constructor() {
     super({
       scope: 'Bible',
-      methods: {
-        refreshTranslate: true,
-      },
     });
   }
 })();
