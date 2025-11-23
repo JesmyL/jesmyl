@@ -29,7 +29,6 @@ export const TextInput = ({
   selectOnFocus,
   ...props
 }: Props) => {
-  const localInputRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null);
   const Comp = multiline ? Textarea : Input;
   const [firstValue, setFirstValue] = useState(`${props.defaultValue ?? props.value}`);
 
@@ -60,20 +59,16 @@ export const TextInput = ({
     <StrongDefaultValueInput
       Comp={Comp}
       {...(attrs as object)}
-      inputRef={elem => {
-        localInputRef.current = elem;
-        if (mylib.isFunc(props.inputRef)) props.inputRef(elem);
-        else if (props.inputRef) props.inputRef.current = localInputRef.current;
-      }}
+      inputRef={props.inputRef}
     />
   ) : (
     <Comp
       {...(attrs as object)}
       ref={
-        ((elem: HTMLInputElement & HTMLTextAreaElement) => {
-          localInputRef.current = elem;
+        ((elem: (HTMLInputElement & HTMLTextAreaElement) | nil) => {
+          if (elem == null) return;
           if (mylib.isFunc(props.inputRef)) props.inputRef(elem);
-          else if (props.inputRef) props.inputRef.current = localInputRef.current;
+          else if (props.inputRef) props.inputRef.current = elem;
         }) as never
       }
     />
@@ -96,18 +91,27 @@ const StrongDefaultValueInput = ({
   label,
   strongDefaultValue,
   Comp,
-  inputRef,
   ...props
 }: Props & { Comp: typeof Textarea | typeof Input }) => {
+  const localInputRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null);
+
   useEffect(() => {
-    if (mylib.isFunc(inputRef) || inputRef?.current == null) return;
-    inputRef.current.value = '' + (props.defaultValue ?? '');
-  }, [props.defaultValue, inputRef]);
+    if (localInputRef?.current == null) return;
+    localInputRef.current.value = '' + (props.defaultValue ?? '');
+  }, [props.defaultValue, props.inputRef]);
 
   return (
     <Comp
       {...props}
-      ref={inputRef}
+      ref={
+        ((elem: (HTMLInputElement & HTMLTextAreaElement) | nil) => {
+          if (elem == null) return;
+
+          localInputRef.current = elem;
+          if (mylib.isFunc(props.inputRef)) props.inputRef(elem);
+          else if (props.inputRef) props.inputRef.current = localInputRef.current;
+        }) as never
+      }
     />
   );
 };
