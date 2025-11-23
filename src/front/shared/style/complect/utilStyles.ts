@@ -190,4 +190,9 @@ export const utilStyles = css`
     word-wrap: break-word;
     white-space: break-spaces;
   }
+
+  .pointers-none {
+    pointer-events: none !important;
+    opacity: 0.7 !important;
+  }
 `;
