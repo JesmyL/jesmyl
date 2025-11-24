@@ -283,5 +283,6 @@
     { "t": 74, "title": "Ссылка на товар" }
   ],
   "colsOrd": [1, 0],
-  "dicts": [{ "li": [""], "title": "База" }]
+  "dicts": [{ "li": [""], "title": "База" }],
+  "icon": "ShoppingCartFavorite01"
 }

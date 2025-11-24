@@ -1,5 +1,10 @@
 {
-  "c": ["C F/C C\nC Em\nF G Am\nF G C", "F C G\nF G Am\nF G Am\nF G .Am..C", "C G Am F\nC G Am F"],
+  "c": [
+    "C F/C C\nC Em\nF G Am\nF G C",
+    "F C G\nF G Am\nF G Am\nF G .Am..C",
+    "|C| G| Am F|\n|C| G| Am F|",
+    "C F C G\nAm F C Gsus4-G"
+  ],
   "n": "На небесах Ходатай мой",
   "o": [
     { "w": 6, "s": "enter", "c": 2, "r": 2 },
@@ -56,7 +61,7 @@
       "w": 3,
       "r": { "3": 2 }
     },
-    { "w": 7, "s": "play", "c": 2 },
+    { "w": 7, "s": "play", "c": 3 },
     {
       "c": 0,
       "p": [
@@ -94,7 +99,7 @@
   ],
   "w": 1530436801570,
   "a": "https://holychords.pro/uploads/music/20191101/2019110122415173.mp3\n",
-  "m": 1763667510015,
+  "m": 1763906840581,
   "al": "1~20191101//22415173.mp3",
   "bpm": 145,
   "s": 4
