@@ -17,7 +17,13 @@ import styled, { css, keyframes } from 'styled-components';
 import './App.scss';
 import './tw.css';
 
-configureAtomaric({ useSyncExternalStore });
+configureAtomaric({ useSyncExternalStore, keyPathSeparator: '/' });
+
+declare module 'atomaric' {
+  interface Register {
+    keyPathSeparator: '/';
+  }
+}
 
 const router = createRouter({ routeTree });
 

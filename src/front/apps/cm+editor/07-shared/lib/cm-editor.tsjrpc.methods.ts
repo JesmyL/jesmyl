@@ -18,18 +18,19 @@ export const cmEditCatClientTsjrpcMethods = new (class CmEditCat extends TsjrpcC
   }
 })();
 
-const makeOnChangeBlock = (atom: typeof cmEditorComTextsEditsHistoryAtom, col: 't' | 'c') => {
-  return async (args: { texti: number; comw: CmComWid; value: string }) => {
+const makeOnChangeBlock = (atom: typeof cmEditorComTextsEditsHistoryAtom, col: 'c' | 't') => {
+  return async (args: { texti: number; comw: CmComWid }) => {
     const text = (await cmIDB.tb.coms.get(args.comw))?.[col]?.[args.texti];
     if (!text) return;
 
-    atom.do.setPartial(prev => ({
-      [args.comw]: {
-        ...prev[args.comw],
-        [args.texti]: Array.from(new Set([text].concat(prev[args.comw]?.[args.texti] ?? []))),
-      },
-    }));
+    atom.do.setDeepPartial(`value/${args.comw}/${args.texti}`, prev => Array.from(new Set([text].concat(prev ?? []))), {
+      value: { [args.comw]: {} },
+    });
   };
+};
+
+const makeCleaner = (atom: typeof cmEditorComTextsEditsHistoryAtom) => {
+  return (args: { comw: CmComWid }) => atom.do.setDeepPartial(`value/${args.comw}`, {}, { value: {} });
 };
 
 export const cmEditComClientTsjrpcMethods = new (class CmEditCom extends TsjrpcClient<CmEditComTsjrpcModel> {
@@ -38,23 +39,12 @@ export const cmEditComClientTsjrpcMethods = new (class CmEditCom extends TsjrpcC
       scope: 'CmEditCom',
       methods: {
         changeTextBlock: { beforeSend: makeOnChangeBlock(cmEditorComTextsEditsHistoryAtom, 't') },
+        insertTextBlock: { beforeSend: makeCleaner(cmEditorComTextsEditsHistoryAtom) },
+        removeTextBlock: { beforeSend: makeCleaner(cmEditorComTextsEditsHistoryAtom) },
+
         changeChordBlock: { beforeSend: makeOnChangeBlock(cmEditorComChordEditsHistoryAtom, 'c') },
-
-        insertTextBlock: {
-          beforeSend: async args => cmEditorComTextsEditsHistoryAtom.do.setPartial({ [args.comw]: {} }),
-        },
-
-        removeTextBlock: {
-          beforeSend: async args => cmEditorComTextsEditsHistoryAtom.do.setPartial({ [args.comw]: {} }),
-        },
-
-        insertChordBlock: {
-          beforeSend: async args => cmEditorComChordEditsHistoryAtom.do.setPartial({ [args.comw]: {} }),
-        },
-
-        removeChordBlock: {
-          beforeSend: async args => cmEditorComChordEditsHistoryAtom.do.setPartial({ [args.comw]: {} }),
-        },
+        insertChordBlock: { beforeSend: makeCleaner(cmEditorComChordEditsHistoryAtom) },
+        removeChordBlock: { beforeSend: makeCleaner(cmEditorComChordEditsHistoryAtom) },
       },
     });
   }
