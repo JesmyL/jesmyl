@@ -10,6 +10,7 @@ export const IndexNounPronsRedactorPronRedactor = () => {
       <IndexNounPronsRedactorWordRedactor
         atom={pronAtom}
         wirdKey="pron"
+        checkIsDisabled={term => !term.endsWith('й')}
       />
     </>
   );

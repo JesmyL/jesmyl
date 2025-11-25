@@ -7,7 +7,11 @@ import { useQuery } from '@tanstack/react-query';
 import { Atom, useAtomValue } from 'atomaric';
 import styled from 'styled-components';
 
-export const IndexNounPronsRedactorWordRedactor = (props: { atom: Atom<string>; wirdKey: 'noun' | 'pron' }) => {
+export const IndexNounPronsRedactorWordRedactor = (props: {
+  atom: Atom<string>;
+  wirdKey: 'noun' | 'pron';
+  checkIsDisabled?: (term: string) => boolean;
+}) => {
   const term = useAtomValue(props.atom);
   const deb = useDebounceValue(term);
 
@@ -33,7 +37,7 @@ export const IndexNounPronsRedactorWordRedactor = (props: { atom: Atom<string>; 
           />
           <TheIconSendButton
             icon="Sent"
-            disabled={query.data?.[`${props.wirdKey}s`]?.includes(term)}
+            disabled={query.data?.[`${props.wirdKey}s`]?.includes(term) || props.checkIsDisabled?.(term)}
             confirm={
               <>
                 Для отправки убедись в адекватности словосочетания
