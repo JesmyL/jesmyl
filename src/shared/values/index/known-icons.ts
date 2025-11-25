@@ -29,6 +29,7 @@ export const knownStameskaIconNames = {
   Attachment: 0,
   Attachment01: 0,
   Attachment02: 0,
+  DiceFaces03: 0,
   Authorized: 0,
   Basketball01: 0,
   BatteryFull: 0,
