@@ -6,7 +6,7 @@ const pronAtom = atom('', 'index:twice-pron');
 export const IndexNounPronsRedactorPronRedactor = () => {
   return (
     <>
-      <div>Прилагательное</div>
+      <div>Прилагательное (как стена{'<'}белый)</div>
       <IndexNounPronsRedactorWordRedactor
         atom={pronAtom}
         wirdKey="pron"
