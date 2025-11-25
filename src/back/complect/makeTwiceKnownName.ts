@@ -95,7 +95,7 @@ const fixNoun = (() => {
 
 const fixPronoun = (() => {
   return (noun: string) =>
-    noun.split('<').reverse().join('').replace(makeRegExp('/ /g'), '_') + (noun.startsWith('"') ? '"' : '');
+    noun.split('<').reverse().join(' ').replace(makeRegExp('/ /g'), '_') + (noun.startsWith('"') ? '"' : '');
 })();
 
 const boolItems = [true, false, false, false, false, false, false, false, false, false];
