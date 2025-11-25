@@ -14,6 +14,8 @@ import { exec } from 'child_process';
     ['', 'package'],
     ['apps/index', 'schedules'],
     ['apps/index', 'rights'],
+    ['apps/index', 'nouns'],
+    ['apps/index', 'pronouns'],
     ['apps/cm'],
     ['apps/cm/coms'],
     ['apps/cm/comComments'],
