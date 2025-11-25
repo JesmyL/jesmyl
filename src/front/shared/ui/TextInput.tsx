@@ -91,6 +91,7 @@ const StrongDefaultValueInput = ({
   label,
   strongDefaultValue,
   Comp,
+  inputRef,
   ...props
 }: Props & { Comp: typeof Textarea | typeof Input }) => {
   const localInputRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null);
@@ -98,19 +99,21 @@ const StrongDefaultValueInput = ({
   useEffect(() => {
     if (localInputRef?.current == null) return;
     localInputRef.current.value = '' + (props.defaultValue ?? '');
-  }, [props.defaultValue, props.inputRef]);
+  }, [props.defaultValue]);
 
   return (
     <Comp
       {...props}
       ref={
-        ((elem: (HTMLInputElement & HTMLTextAreaElement) | nil) => {
-          if (elem == null) return;
+        (inputRef == null
+          ? localInputRef
+          : (elem: (HTMLInputElement & HTMLTextAreaElement) | nil) => {
+              if (elem == null) return;
 
-          localInputRef.current = elem;
-          if (mylib.isFunc(props.inputRef)) props.inputRef(elem);
-          else if (props.inputRef) props.inputRef.current = localInputRef.current;
-        }) as never
+              localInputRef.current = elem;
+              if (mylib.isFunc(inputRef)) inputRef(elem);
+              else inputRef.current = localInputRef.current;
+            }) as never
       }
     />
   );
