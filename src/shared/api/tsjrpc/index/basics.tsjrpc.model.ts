@@ -63,6 +63,6 @@ export type IndexTsjrpcModel = {
   getNounPron: (args: { noun?: string; pron?: string }) => {
     nouns?: string[];
     prons?: string[];
-    result?: string;
+    result: string;
   };
 };
