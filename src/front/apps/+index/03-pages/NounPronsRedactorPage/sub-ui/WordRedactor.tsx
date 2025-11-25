@@ -5,6 +5,7 @@ import { TextInput } from '#shared/ui/TextInput';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useQuery } from '@tanstack/react-query';
 import { Atom, useAtomValue } from 'atomaric';
+import { itIt } from 'shared/utils';
 import styled from 'styled-components';
 
 export const IndexNounPronsRedactorWordRedactor = (props: {
@@ -13,12 +14,13 @@ export const IndexNounPronsRedactorWordRedactor = (props: {
   checkIsDisabled?: (term: string) => boolean;
 }) => {
   const term = useAtomValue(props.atom);
-  const deb = useDebounceValue(term);
+  const debounceTerm = useDebounceValue(term);
 
   const query = useQuery({
-    queryKey: ['IndexNounPronsRedactorWordRedactor', props.wirdKey, term],
-    queryFn: () => indexTsjrpcClientMethods.getNounPron({ [props.wirdKey]: term }),
-    enabled: () => deb.length > 2,
+    queryKey: ['IndexNounPronsRedactorWordRedactor', props.wirdKey, debounceTerm],
+    queryFn: () => indexTsjrpcClientMethods.getNounPron({ [props.wirdKey]: debounceTerm }),
+    enabled: () => term.length > 2,
+    placeholderData: itIt,
   });
 
   return (
@@ -33,6 +35,7 @@ export const IndexNounPronsRedactorWordRedactor = (props: {
           />
           <Button
             icon="DiceFaces03"
+            disabled={term.length < 3}
             onClick={() => query.refetch()}
           />
           <TheIconSendButton
