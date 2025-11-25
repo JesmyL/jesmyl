@@ -11,6 +11,8 @@ import {
   accessRightTitlesFileStore,
   appVersionFileStore,
   indexStameskaIconsFileStore,
+  nounsFileStore,
+  pronounsFileStore,
   userAccessRightsAndRolesFileStore,
   valuesFileStore,
 } from '../file-stores';
@@ -157,6 +159,53 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         getAccessRightTitles: async () => ({ value: accessRightTitlesFileStore.getValue() }),
         getUserAccessRightsAndRoles: async () => ({ value: userAccessRightsAndRolesFileStore.getValue() }),
         getIconPack: async ({ icon }) => ({ value: { pack: indexStameskaIconsFileStore.getValue()[icon] } }),
+
+        getNounPron: args => {
+          const allNouns = smylib.keys(nounsFileStore.getValue().words);
+          const allProns = smylib.keys(pronounsFileStore.getValue().words);
+          let nouns: string[] | und = undefined;
+          let prons: string[] | und = undefined;
+          let result: string | und = undefined;
+
+          if (args.noun && args.noun.length > 2) {
+            const reg = makeRegExp(`/${args.noun.split('').join('.*?')}/`);
+            nouns = allNouns
+              .filter(key => key.match(reg))
+              .sort((a, b) => a.length - b.length || a.localeCompare(b))
+              .slice(0, 10);
+            result = makeTwiceKnownName(' ', undefined, args.noun, false);
+          }
+
+          if (args.pron && args.pron.length > 2) {
+            const reg = makeRegExp(`/${args.pron.split('').join('.*?')}/`);
+            prons = allProns
+              .filter(key => key.match(reg))
+              .sort((a, b) => a.length - b.length || a.localeCompare(b))
+              .slice(0, 10);
+            result = makeTwiceKnownName(' ', args.pron, undefined, false);
+          }
+
+          return { value: { nouns, prons, result } };
+        },
+
+        writeNounPron: ({ noun, pron }) => {
+          if (noun) {
+            const { words } = nounsFileStore.getValue();
+            delete words[''];
+            words[noun] = 1;
+            words[''] = 0;
+
+            nounsFileStore.saveValue();
+          }
+          if (pron) {
+            const { words } = pronounsFileStore.getValue();
+            delete words[''];
+            words[pron] = 1;
+            words[''] = 0;
+
+            pronounsFileStore.saveValue();
+          }
+        },
       },
     });
   }

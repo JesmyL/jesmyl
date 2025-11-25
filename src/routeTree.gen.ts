@@ -60,6 +60,7 @@ import { Route as otherAppNameSettingsConsoleImport } from './front/routes/!othe
 import { Route as StoragesIRackwEditIndexImport } from './front/routes/storages/i/$rackw/edit/index'
 import { Route as StoragesIRackwCardMiIndexImport } from './front/routes/storages/i/$rackw/$cardMi/index'
 import { Route as CmEditComsComwIndexImport } from './front/routes/cm/edit/coms/$comw/index'
+import { Route as otherAppNameSettingsNounpronsIndexImport } from './front/routes/!other.$appName/settings/noun_prons/index'
 import { Route as otherAppNameActionsFilesIndexImport } from './front/routes/!other.$appName/actions/files/index'
 import { Route as CmEditComsComwTabRouteImport } from './front/routes/cm/edit/coms/$comw/$tab/route'
 
@@ -379,6 +380,13 @@ const CmEditComsComwIndexRoute = CmEditComsComwIndexImport.update({
   path: '/coms/$comw/',
   getParentRoute: () => CmEditRouteLazyRoute,
 } as any)
+
+const otherAppNameSettingsNounpronsIndexRoute =
+  otherAppNameSettingsNounpronsIndexImport.update({
+    id: '/settings/noun_prons/',
+    path: '/settings/noun_prons/',
+    getParentRoute: () => otherAppNameRouteRoute,
+  } as any)
 
 const otherAppNameActionsFilesIndexRoute =
   otherAppNameActionsFilesIndexImport.update({
@@ -740,6 +748,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof otherAppNameActionsFilesIndexImport
       parentRoute: typeof otherAppNameRouteImport
     }
+    '/!other/$appName/settings/noun_prons/': {
+      id: '/!other/$appName/settings/noun_prons/'
+      path: '/settings/noun_prons'
+      fullPath: '/!other/$appName/settings/noun_prons'
+      preLoaderRoute: typeof otherAppNameSettingsNounpronsIndexImport
+      parentRoute: typeof otherAppNameRouteImport
+    }
     '/cm/edit/coms/$comw/': {
       id: '/cm/edit/coms/$comw/'
       path: '/coms/$comw'
@@ -903,6 +918,7 @@ interface otherAppNameRouteRouteChildren {
   otherAppNameSchsIndexRoute: typeof otherAppNameSchsIndexRoute
   otherAppNameSettingsIndexRoute: typeof otherAppNameSettingsIndexRoute
   otherAppNameActionsFilesIndexRoute: typeof otherAppNameActionsFilesIndexRoute
+  otherAppNameSettingsNounpronsIndexRoute: typeof otherAppNameSettingsNounpronsIndexRoute
 }
 
 const otherAppNameRouteRouteChildren: otherAppNameRouteRouteChildren = {
@@ -914,6 +930,8 @@ const otherAppNameRouteRouteChildren: otherAppNameRouteRouteChildren = {
   otherAppNameSchsIndexRoute: otherAppNameSchsIndexRoute,
   otherAppNameSettingsIndexRoute: otherAppNameSettingsIndexRoute,
   otherAppNameActionsFilesIndexRoute: otherAppNameActionsFilesIndexRoute,
+  otherAppNameSettingsNounpronsIndexRoute:
+    otherAppNameSettingsNounpronsIndexRoute,
 }
 
 const otherAppNameRouteRouteWithChildren =
@@ -969,6 +987,7 @@ export interface FileRoutesByFullPath {
   '/storages/i/$rackw': typeof StoragesIRackwIndexRoute
   '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabRouteRoute
   '/!other/$appName/actions/files': typeof otherAppNameActionsFilesIndexRoute
+  '/!other/$appName/settings/noun_prons': typeof otherAppNameSettingsNounpronsIndexRoute
   '/cm/edit/coms/$comw': typeof CmEditComsComwIndexRoute
   '/storages/i/$rackw/$cardMi': typeof StoragesIRackwCardMiIndexRoute
   '/storages/i/$rackw/edit': typeof StoragesIRackwEditIndexRoute
@@ -1019,6 +1038,7 @@ export interface FileRoutesByTo {
   '/storages/i/$rackw': typeof StoragesIRackwIndexRoute
   '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabRouteRoute
   '/!other/$appName/actions/files': typeof otherAppNameActionsFilesIndexRoute
+  '/!other/$appName/settings/noun_prons': typeof otherAppNameSettingsNounpronsIndexRoute
   '/cm/edit/coms/$comw': typeof CmEditComsComwIndexRoute
   '/storages/i/$rackw/$cardMi': typeof StoragesIRackwCardMiIndexRoute
   '/storages/i/$rackw/edit': typeof StoragesIRackwEditIndexRoute
@@ -1075,6 +1095,7 @@ export interface FileRoutesById {
   '/storages/i/$rackw/': typeof StoragesIRackwIndexRoute
   '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabRouteRoute
   '/!other/$appName/actions/files/': typeof otherAppNameActionsFilesIndexRoute
+  '/!other/$appName/settings/noun_prons/': typeof otherAppNameSettingsNounpronsIndexRoute
   '/cm/edit/coms/$comw/': typeof CmEditComsComwIndexRoute
   '/storages/i/$rackw/$cardMi/': typeof StoragesIRackwCardMiIndexRoute
   '/storages/i/$rackw/edit/': typeof StoragesIRackwEditIndexRoute
@@ -1132,6 +1153,7 @@ export interface FileRouteTypes {
     | '/storages/i/$rackw'
     | '/cm/edit/coms/$comw/$tab'
     | '/!other/$appName/actions/files'
+    | '/!other/$appName/settings/noun_prons'
     | '/cm/edit/coms/$comw'
     | '/storages/i/$rackw/$cardMi'
     | '/storages/i/$rackw/edit'
@@ -1181,6 +1203,7 @@ export interface FileRouteTypes {
     | '/storages/i/$rackw'
     | '/cm/edit/coms/$comw/$tab'
     | '/!other/$appName/actions/files'
+    | '/!other/$appName/settings/noun_prons'
     | '/cm/edit/coms/$comw'
     | '/storages/i/$rackw/$cardMi'
     | '/storages/i/$rackw/edit'
@@ -1235,6 +1258,7 @@ export interface FileRouteTypes {
     | '/storages/i/$rackw/'
     | '/cm/edit/coms/$comw/$tab'
     | '/!other/$appName/actions/files/'
+    | '/!other/$appName/settings/noun_prons/'
     | '/cm/edit/coms/$comw/'
     | '/storages/i/$rackw/$cardMi/'
     | '/storages/i/$rackw/edit/'
@@ -1348,7 +1372,8 @@ export const routeTree = rootRoute
         "/!other/$appName/auth/",
         "/!other/$appName/schs/",
         "/!other/$appName/settings/",
-        "/!other/$appName/actions/files/"
+        "/!other/$appName/actions/files/",
+        "/!other/$appName/settings/noun_prons/"
       ]
     },
     "/bible/i": {
@@ -1528,6 +1553,10 @@ export const routeTree = rootRoute
     },
     "/!other/$appName/actions/files/": {
       "filePath": "!other.$appName/actions/files/index.tsx",
+      "parent": "/!other/$appName"
+    },
+    "/!other/$appName/settings/noun_prons/": {
+      "filePath": "!other.$appName/settings/noun_prons/index.tsx",
       "parent": "/!other/$appName"
     },
     "/cm/edit/coms/$comw/": {

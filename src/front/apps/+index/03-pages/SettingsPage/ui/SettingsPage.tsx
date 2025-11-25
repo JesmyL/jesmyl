@@ -7,11 +7,7 @@ import { FontFamilySelector } from '#shared/ui/configurators/selectors/FontFamil
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import {
-  indexIsPlayAnimationsAtom,
-  indexIsShowPlayerInFooterAtom,
-  useAppFontFamily,
-} from '$index/shared/state';
+import { indexIsPlayAnimationsAtom, indexIsShowPlayerInFooterAtom, useAppFontFamily } from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
 import React from 'react';
 import { itIt } from 'shared/utils';
@@ -55,8 +51,20 @@ export function IndexSettingsPage() {
         params={{ appName }}
       >
         <BrutalItem
-          iconNode={<LazyIcon icon="SourceCodeCircle" />}
+          iconNode={<LazyIcon icon="UserGroup" />}
           title="Права доступа"
+        />
+      </Link>
+    ),
+    checkAccess('general', 'ALL') && (
+      <Link
+        key="noun-prons"
+        to="/!other/$appName/settings/noun_prons"
+        params={{ appName }}
+      >
+        <BrutalItem
+          iconNode={<LazyIcon icon="TextFont" />}
+          title="Сущ/прил редактор"
         />
       </Link>
     ),
