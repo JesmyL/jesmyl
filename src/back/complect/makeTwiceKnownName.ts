@@ -100,11 +100,14 @@ const fixPronoun = (() => {
 
 const boolItems = [true, false, false, false, false, false, false, false, false, false];
 
-export const makeTwiceKnownName = (joinBy = ' ', fixedPronoun?: string, fixedNoun?: string): string => {
+export const makeTwiceKnownName = (
+  joinBy = ' ',
+  fixedPronoun?: string,
+  fixedNoun?: string,
+  isReverse = smylib.randomItem(boolItems),
+): string => {
   const pronoun = fixedPronoun ?? smylib.randomItem(smylib.keys(pronounsFileStore.getValue().words), -1);
   const noun = fixedNoun ?? smylib.randomItem(smylib.keys(nounsFileStore.getValue().words), -1);
-
-  const isReverse = smylib.randomItem(boolItems);
 
   for (let i = 0; i < regEnds.length; i++) {
     const match = regEnds[i][0].exec(noun);
