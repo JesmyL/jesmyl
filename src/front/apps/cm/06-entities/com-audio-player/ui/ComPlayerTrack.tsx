@@ -35,14 +35,19 @@ export const CmComAudioPlayerTrack = (props: Props) => {
   );
 };
 
+let playbackRateTimeout: TimeOut;
 const TimeRender = ({ time }: { time: ReactNode }) => {
   return (
     <code
       onTouchStart={event => {
         event.preventDefault();
-        cmComAudioPlayerHTMLElement.playbackRate = 2;
+        clearTimeout(playbackRateTimeout);
+        playbackRateTimeout = setTimeout(() => (cmComAudioPlayerHTMLElement.playbackRate = 2), 100);
       }}
-      onTouchEnd={() => (cmComAudioPlayerHTMLElement.playbackRate = 1)}
+      onTouchEnd={() => {
+        clearTimeout(playbackRateTimeout);
+        cmComAudioPlayerHTMLElement.playbackRate = 1;
+      }}
     >
       {time}
     </code>
