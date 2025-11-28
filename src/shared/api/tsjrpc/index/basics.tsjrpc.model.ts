@@ -59,7 +59,7 @@ export type IndexTsjrpcModel = {
   };
   getIconPack: (args: { icon: KnownStameskaIconName }) => { pack: StameskaIconPack };
 
-  writeNounPron: (args: { noun?: string; pron?: string }) => void;
+  writeNounPron: (args: { noun?: string; pron?: string; level: number }) => void;
   getNounPron: (args: { noun?: string; pron?: string }) => {
     nouns?: string[];
     prons?: string[];

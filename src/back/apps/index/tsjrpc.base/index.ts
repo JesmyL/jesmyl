@@ -3,7 +3,7 @@ import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { supportTelegramAuthorizations } from 'back/sides/telegram-bot/prod/authorize';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { exec } from 'child_process';
-import { makeRegExp } from 'regexpert';
+import { escapeRegExpSymbols, makeRegExp } from 'regexpert';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { smylib } from 'shared/utils';
 import { switchCRUDAccesRightValue } from 'shared/utils/index/utils';
@@ -167,37 +167,51 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
           let prons: string[] | und = undefined;
 
           if (args.noun && args.noun.length > 2) {
-            const reg = makeRegExp(`/${args.noun.split('').join('.*?')}/`);
+            const reg = makeRegExp(
+              `/${args.noun
+                .split('')
+                .map(letter => e$e[letter] ?? escapeRegExpSymbols(letter))
+                .join('.*?')}/i`,
+            );
             nouns = allNouns
               .filter(key => key.match(reg))
               .sort((a, b) => a.length - b.length || a.localeCompare(b))
-              .slice(0, 10);
+              .slice(0, 10)
+              .map(word => word.toUpperCase());
           }
 
           if (args.pron && args.pron.length > 2) {
-            const reg = makeRegExp(`/${args.pron.split('').join('.*?')}/`);
+            const reg = makeRegExp(
+              `/${args.pron
+                .split('')
+                .map(letter => e$e[letter] ?? escapeRegExpSymbols(letter))
+                .join('.*?')}/i`,
+            );
             prons = allProns
               .filter(key => key.match(reg))
               .sort((a, b) => a.length - b.length || a.localeCompare(b))
-              .slice(0, 10);
+              .slice(0, 10)
+              .map(word => word.toUpperCase());
           }
 
           return { value: { nouns, prons, result: makeTwiceKnownName(' ', args.pron, args.noun, false) } };
         },
 
-        writeNounPron: ({ noun, pron }) => {
+        writeNounPron: ({ noun, pron, level }) => {
           if (noun) {
             const { words } = nounsFileStore.getValue();
             delete words[''];
-            words[noun] = 1;
+            words[noun] = level || 1;
             words[''] = 0;
 
             nounsFileStore.saveValue();
           }
           if (pron) {
+            if (!pron.endsWith('й') && !pron.endsWith('йся')) throw 'Прилагательное должно заканчиваться на й или йся';
+
             const { words } = pronounsFileStore.getValue();
             delete words[''];
-            words[pron] = 1;
+            words[pron] = level || 1;
             words[''] = 0;
 
             pronounsFileStore.saveValue();
@@ -209,3 +223,5 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
 })();
 
 schGeneralTsjrpcBaseServer.$$register();
+
+const e$e: Record<string, string> = { е: '[её]', ё: '[её]', Е: '[её]', Ё: '[её]' };

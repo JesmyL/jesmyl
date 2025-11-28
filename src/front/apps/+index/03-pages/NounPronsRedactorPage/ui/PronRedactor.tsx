@@ -9,8 +9,8 @@ export const IndexNounPronsRedactorPronRedactor = () => {
       <div>Прилагательное (как стена{'<'}белый)</div>
       <IndexNounPronsRedactorWordRedactor
         atom={pronAtom}
-        wirdKey="pron"
-        checkIsDisabled={term => !term.endsWith('й')}
+        wordKey="pron"
+        checkIsDisabled={term => !term.endsWith('й') && !term.endsWith('йся')}
       />
     </>
   );

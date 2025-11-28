@@ -36,9 +36,9 @@ const wordRegEnds: Record<string, Record<string, EndVariantsDict>> = {
       // охотничий
       pronoun: 'ичья', // охотничья
     },
-    щийся$: {
-      // заботящийся
-      pronoun: 'щаяся', // заботящаяся
+    '([щш])ийся$': {
+      // заботящийся образовавшееся
+      pronoun: '$1аяся', // заботящаяся образовавшаяся
     },
     '([жшчщ])[иоы]й$': {
       // большой
@@ -62,9 +62,9 @@ const wordRegEnds: Record<string, Record<string, EndVariantsDict>> = {
       // птичий
       pronoun: 'ичье', // птичье
     },
-    щийся$: {
-      // заботящийся
-      pronoun: 'щееся', // заботящееся
+    '([щш])ийся$': {
+      // заботящийся образовавшийся
+      pronoun: '$1ееся', // заботящееся образовавшееся
     },
     '([жчщ])[иоы]й$': {
       // поющий
@@ -140,4 +140,6 @@ if (false) {
   console.info(makeTwiceKnownName(' ', 'медленный', 'бро!'));
   console.info(makeTwiceKnownName(' ', 'покрасивевший', 'учреждение'));
   console.info(makeTwiceKnownName(' ', 'больший', 'учреждение'));
+  console.info(makeTwiceKnownName(' ', 'образовавшийся', 'следствие'));
+  console.info(makeTwiceKnownName(' ', 'образовавшийся', 'причина'));
 }

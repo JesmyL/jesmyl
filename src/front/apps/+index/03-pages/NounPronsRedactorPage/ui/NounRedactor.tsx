@@ -9,7 +9,7 @@ export const IndexNounPronsRedactorNounRedactor = () => {
       <div>Существительное (М! Ж: Ср. мн, "к)</div>
       <IndexNounPronsRedactorWordRedactor
         atom={nounAtom}
-        wirdKey="noun"
+        wordKey="noun"
       />
     </>
   );
