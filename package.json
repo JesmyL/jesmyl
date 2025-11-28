@@ -51,7 +51,7 @@
     "@testing-library/user-event": "^12.8.3",
     "@vitejs/plugin-basic-ssl": "^2.0.0",
     "@yudiel/react-qr-scanner": "^2.3.1",
-    "atomaric": "^0.0.37",
+    "atomaric": "^0.0.38",
     "attr-styler": "^0.0.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
