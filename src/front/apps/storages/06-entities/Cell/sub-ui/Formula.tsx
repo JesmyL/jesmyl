@@ -12,7 +12,7 @@ export const StoragesCellOfTypeFormula = (props: StoragesCellTypeProps<StoragesC
 
   if (isEdit) return <Edit {...props} />;
 
-  const { cells, coli, cols, innerCall } = storagesMakeActualFormulaProps({
+  const { cells, cols, innerCall } = storagesMakeActualFormulaProps({
     coli: props.coli,
     cardRow: props.card.row,
     rackCols: props.rack.cols,
@@ -25,8 +25,8 @@ export const StoragesCellOfTypeFormula = (props: StoragesCellTypeProps<StoragesC
       formula: props.column?.val,
       resultFix: props.column.fx,
       cells,
-      coli,
       cols,
+      onNestedColi: () => 0,
     },
     innerCall,
   );
@@ -42,7 +42,7 @@ export const StoragesCellOfTypeFormula = (props: StoragesCellTypeProps<StoragesC
 };
 
 const Edit = (props: StoragesCellTypeProps<StoragesColumnType.Formula>) => {
-  const { coli, cols, cells, innerCall } = storagesMakeActualFormulaProps({
+  const { cols, cells, innerCall } = storagesMakeActualFormulaProps({
     coli: props.coli,
     cardRow: props.card.row,
     rackCols: props.rack.cols,
@@ -55,7 +55,7 @@ const Edit = (props: StoragesCellTypeProps<StoragesColumnType.Formula>) => {
       <div>{props.columnTitleNode()}</div>
 
       <StoragesFormulaEditValue
-        coli={coli}
+        coli={props.coli}
         column={props.column}
         nestedSelectors={props.nestedSelectors}
         rack={props.rack}
@@ -69,7 +69,8 @@ const Edit = (props: StoragesCellTypeProps<StoragesColumnType.Formula>) => {
           formula={props.column.val}
           innerCall={innerCall}
           resultFix={props.column.fx}
-          coli={coli}
+          coli={props.coli}
+          onNestedColi={() => 0}
         />
       )}
     </>

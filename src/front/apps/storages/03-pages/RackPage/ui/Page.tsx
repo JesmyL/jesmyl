@@ -156,6 +156,16 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
                 />
               </Link>
 
+              <Link
+                to="/storages/i/$rackw/sum"
+                params={{ rackw: '' + rack.w }}
+              >
+                <BottomPopupItem
+                  icon="CheckList"
+                  titleNode={<>Сводки</>}
+                />
+              </Link>
+
               <BottomPopupItem
                 icon="FileImport"
                 onClick={isOpenImportFromExcelModal.do.toggle}

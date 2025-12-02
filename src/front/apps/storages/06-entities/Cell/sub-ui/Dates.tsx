@@ -12,7 +12,7 @@ import { StoragesColumnType, StoragesNestedCellMi } from 'shared/model/storages/
 import { StoragesCellTypeProps } from '../model/model';
 import { StoragesCellDatesNestedDateCell } from './DatesNestedDate';
 
-const openDateMiAtom = atom<StoragesNestedCellMi | null>(null);
+const openDateMiAtom = atom<{ mi: StoragesNestedCellMi; coli: number } | null>(null);
 const minShowCount = 3;
 const maxLimCount = 5;
 
@@ -35,7 +35,7 @@ export const StoragesCellOfTypeDates = (props: StoragesCellTypeProps<StoragesCol
             key={dateCell.ts ?? dateCelli}
             className="my-3"
           >
-            <Button onClick={() => openDateMiAtom.set(dateCell.mi)}>
+            <Button onClick={() => openDateMiAtom.set({ coli: props.coli, mi: dateCell.mi })}>
               <StoragesDateTimestampTitle timestamp={dateCell.ts} />
               {dateCell.title && <span className="text-x7"> {dateCell.title}</span>}
               <LazyIcon icon="ArrowRight01" />
@@ -103,9 +103,10 @@ export const StoragesCellOfTypeDates = (props: StoragesCellTypeProps<StoragesCol
 
       <Modal
         openAtom={openDateMiAtom}
+        checkIsOpen={val => val?.coli === props.coli}
         isRenderHere
       >
-        {dateMi => (
+        {({ mi: dateMi }) => (
           <StoragesCellDatesNestedDateCell
             {...props}
             dateMi={dateMi}

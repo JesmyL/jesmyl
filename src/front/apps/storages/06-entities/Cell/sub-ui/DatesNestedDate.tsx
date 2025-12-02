@@ -47,47 +47,43 @@ export const StoragesCellDatesNestedDateCell = (
         )}
       </ModalHeader>
       <ModalBody className="flex flex-col gap-5 custom-align-items">
-        {cardCell && (
+        {isEdit ? (
           <>
-            {isEdit ? (
-              <>
-                <DatePicker
-                  initValue={(cardCell?.ts ?? Number.MAX_SAFE_INTEGER) * 100000}
-                  disabled={disabledDates}
-                  onSelect={date => {
-                    const dateTime = date?.getTime();
-                    if (!dateTime || mylib.isNaN(dateTime)) return;
+            <DatePicker
+              initValue={(cardCell?.ts ?? Number.MAX_SAFE_INTEGER) * 100000}
+              disabled={disabledDates}
+              onSelect={date => {
+                const dateTime = date?.getTime();
+                if (!dateTime || mylib.isNaN(dateTime)) return;
 
-                    return storagesTsjrpcClient.editNestedCellProp({
-                      rackw: props.rack.w,
-                      coli: props.coli,
-                      cardMi: props.card.mi,
-                      partialProps: { ts: Math.trunc(dateTime / 100000) },
-                      sortRow: { prop: 'ts', asc: false },
-                      ...props.nestedSelectors,
-                    });
-                  }}
-                />
+                return storagesTsjrpcClient.editNestedCellProp({
+                  ...props.nestedSelectors,
+                  rackw: props.rack.w,
+                  coli: props.coli,
+                  cardMi: props.card.mi,
+                  partialProps: { ts: Math.trunc(dateTime / 100000) },
+                  sortRow: { prop: 'ts', asc: false },
+                });
+              }}
+            />
 
-                <TextInput
-                  label={`Описание (${maxTitleLength} символов)`}
-                  defaultValue={cardCell?.title}
-                  maxLength={maxTitleLength}
-                  onChanged={title =>
-                    storagesTsjrpcClient.editNestedCellProp({
-                      rackw: props.rack.w,
-                      coli: props.coli,
-                      cardMi: props.card.mi,
-                      partialProps: { title },
-                      ...props.nestedSelectors,
-                    })
-                  }
-                />
-              </>
-            ) : (
-              cardCell?.title
-            )}
+            <TextInput
+              label={`Описание (${maxTitleLength} символов)`}
+              defaultValue={cardCell?.title}
+              maxLength={maxTitleLength}
+              onChanged={title =>
+                storagesTsjrpcClient.editNestedCellProp({
+                  ...props.nestedSelectors,
+                  rackw: props.rack.w,
+                  coli: props.coli,
+                  cardMi: props.card.mi,
+                  partialProps: { title },
+                })
+              }
+            />
           </>
+        ) : (
+          cardCell?.title
         )}
 
         <StoragesIsEditInnersContext value={isEdit}>

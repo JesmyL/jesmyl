@@ -17,6 +17,9 @@ import {
   StoragesRackMemberRole,
   StoragesRackStatus,
   StoragesRackStorageSaved,
+  StoragesRackSummary,
+  StoragesRackSummaryMi,
+  StoragesRackSummaryType,
   StoragesRackTrail,
   StoragesRackWid,
 } from 'shared/model/storages/list.model';
@@ -251,9 +254,7 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           let ts = undefined;
 
           const todayTs = new Date().setHours(0, 0, 0, 0) / 100000;
-          if (!cell.row.some(it => it.ts === todayTs)) {
-            ts = Math.trunc(new Date().setHours(0, 0, 0, 0) / 100000);
-          }
+          if (!cell.row.some(it => it.ts === todayTs)) ts = todayTs;
 
           cell.row.push({
             row: [],
@@ -393,6 +394,26 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
 
         renameRack: updateRack((rack, props) => {
           rack.title = props.title || rack.title;
+        }),
+
+        addRackSummary: updateRack((rack, props) => {
+          rack.sum ??= [];
+
+          rack.sum.push({
+            mi: smylib.takeNextMi(rack.sum, StoragesRackSummaryMi.min),
+            formula: '',
+            title: props.title,
+            type: StoragesRackSummaryType.Total,
+            date: new Date().setHours(0, 0, 0, 0) / 100000,
+          });
+        }),
+
+        putAtRackSummary: updateRackSummary((summary, props) => {
+          if (props.put.date) props.put.date = props.put.date / 100000;
+
+          for (const key in props.put) {
+            summary[key as never] = props.put[key as never];
+          }
         }),
       },
     });
@@ -572,5 +593,17 @@ function updateCell<Props extends StoragesTsjrpcCellSelector, RetValue, Ret exte
     if (column.t !== cell.t) throw 'Incorrect card type 162535678729';
 
     return updater(cell, props, column, card, rack);
+  });
+}
+
+function updateRackSummary<
+  Props extends StoragesTsjrpcRackSelector & { summaryMi: StoragesRackSummaryMi },
+  RetValue,
+  Ret extends UpdaterReturnType<RetValue>,
+>(updater: (status: StoragesRackSummary, props: Props, rack: StoragesRack) => Ret) {
+  return updateRack<Props, RetValue, Ret>((rack, props) => {
+    const summary = rack.sum?.find(sum => sum.mi === props.summaryMi);
+    if (summary == null) throw 'Сводка не найдена';
+    return updater(summary, props, rack);
   });
 }

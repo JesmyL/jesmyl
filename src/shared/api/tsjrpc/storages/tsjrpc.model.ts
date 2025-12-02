@@ -5,6 +5,8 @@ import {
   StoragesRackCard,
   StoragesRackCardMi,
   StoragesRackMember,
+  StoragesRackSummary,
+  StoragesRackSummaryMi,
   StoragesRackWid,
 } from 'shared/model/storages/list.model';
 import {
@@ -88,6 +90,11 @@ export type StoragesTsjrpcModel = {
           [Type in StoragesColumnType]: Partial<OmitOwn<StoragesRackColumn<Type>, 'cols' | 't' | 'uid' | 'uil'>>;
         }>;
       },
+  ) => void;
+
+  addRackSummary: (args: RackSelector & { title: string }) => void;
+  putAtRackSummary: (
+    args: RackSelector & { put: Partial<OmitOwn<StoragesRackSummary, 'mi'>>; summaryMi: StoragesRackSummaryMi },
   ) => void;
 };
 

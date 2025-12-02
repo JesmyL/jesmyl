@@ -9,6 +9,7 @@ type Props = {
   cols: StoragesRackColumn<StoragesColumnType>[] | nil;
   coli: number;
   innerCall: number;
+  onNestedColi: (coli: number, nestedColi: number) => number;
 };
 
 export const StoragesFormulaTexted = (props: Props) => {
@@ -24,20 +25,20 @@ export const StoragesFormulaTexted = (props: Props) => {
             funcPrefix: '',
           },
           props.innerCall,
-          (value, i, coli) => (
+          (value, i) => (
             <span
               key={i}
               className="text-xKO"
-              storages-formula-used-coli={coli}
+              storages-formula-used-coli={value}
             >
               {value}
             </span>
           ),
-          (value, i, coli) => (
+          (value, i) => (
             <span
               key={i}
               className="text-x7"
-              storages-formula-used-coli={coli}
+              storages-formula-used-coli={value}
             >
               {value}
             </span>

@@ -18,7 +18,7 @@ export const useStoragesHighlighUsedFormulaRefs = (
     const selector = `
         ${notSelector}
         [storages-coli="${coli}"],
-        [storages-formula-used-coli]:not([storages-formula-used-coli="${coli}"])`;
+        [storages-formula-used-coli]:not([storages-formula-used-coli="#${coli}"])`;
 
     return hookEffectPipe()
       .pipe(

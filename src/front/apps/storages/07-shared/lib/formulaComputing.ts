@@ -13,7 +13,7 @@ type UtilProps = {
   cells: (StoragesCell<StoragesColumnType> | nil)[] | nil;
   cols: (StoragesRackColumn<StoragesColumnType> | nil)[] | nil;
   resultFix: number | nil;
-  coli: number;
+  onNestedColi: (coli: number, nestedColi: number) => number;
   funcPrefix?: string;
 };
 
@@ -44,10 +44,10 @@ export const storagesMakeActualFormulaProps = ({ cardRow, coli, nestedCellMi, ne
 export const storagesReplaceFormulaNumbers = <Ret extends unknown | string = unknown | string>(
   props: UtilProps,
   innerCall: number,
-  mapError: (value: string, index: number, coli: number) => Ret = itIt as never,
-  mapRefs: (value: string, index: number, coli: number) => Ret = itIt as never,
+  mapError: (value: string, index: number) => Ret = itIt as never,
+  mapRefs: (value: string, index: number) => Ret = itIt as never,
 ): Ret[] => {
-  if (innerCall > 100 || props.formula?.includes(`#${props.coli + 1}`)) return ['%Рекурсия!%'] as never;
+  if (innerCall > 100) return ['%Рекурсия!%'] as never;
 
   return props.formula
     ?.replace(makeRegExp('/(\\n|^) */{2}.*/g'), '')
@@ -56,19 +56,21 @@ export const storagesReplaceFormulaNumbers = <Ret extends unknown | string = unk
       if (!(prop in Math)) return bracket || (prop === prop.toUpperCase() ? prop : '0');
       return `${props.funcPrefix ?? 'Math.'}${prop}${bracket || (prop === prop.toUpperCase() ? '' : '0')}`;
     })
-    .split(makeRegExp('/(#\\d+)/g'))
+    .split(makeRegExp('/(#\\d+(?:\\.#\\d+)?)/g'))
     .map((value, valuei) => {
-      const index = +value.slice(1) - 1;
-      if (value.startsWith('%') && value.endsWith('%')) return mapError(value, valuei, index);
+      if (value.startsWith('%') && value.endsWith('%')) return mapError(value, valuei);
       if (!value.startsWith('#')) return value;
 
-      const retRef = () => {
-        const cell = props.cells?.[index];
+      const indexes = value.slice(1).split('.#');
+      const coli = +indexes[0] - 1;
+      const nestedColi = indexes[1] ? +indexes[1] - 1 : null;
+
+      let result = (() => {
+        const cell = props.cells?.[coli];
         if (cell?.t === StoragesColumnType.Number) return '' + cell.val;
 
-        const col = props.cols?.[index] as StoragesRackColumn<StoragesColumnType.Formula>;
+        const col = props.cols?.[coli] as StoragesRackColumn<StoragesColumnType.Formula>;
         if (col?.t === StoragesColumnType.Formula) {
-          if (props.coli === index) return '%Рекурсия%';
           if (col?.t !== StoragesColumnType.Formula) return '0';
 
           try {
@@ -86,16 +88,16 @@ export const storagesReplaceFormulaNumbers = <Ret extends unknown | string = unk
         }
 
         return '0';
-      };
+      })();
 
-      const ref = retRef();
+      if (nestedColi !== null) result = '' + props.onNestedColi(coli, nestedColi);
 
-      return (ref.startsWith('%') && ref.endsWith('%') ? mapError : mapRefs)(ref, valuei, index);
+      return (result.startsWith('%') && result.endsWith('%') ? mapError : mapRefs)(result, valuei);
     }) as never;
 };
 
 export const storagesComputeFormula = (props: UtilProps, innerCall: number) => {
-  if (innerCall > 100 || props.formula?.includes(`#${props.coli + 1}`)) return '!Рекурсия';
+  if (innerCall > 100) return '!Рекурсия';
   if (!props.cells || !props.formula) return 0;
 
   try {
@@ -112,7 +114,7 @@ export const storagesComputeFormula = (props: UtilProps, innerCall: number) => {
       'CacheStorage',
       'sessionStorage',
       /////
-      `return dict.res = ${storagesReplaceFormulaNumbers(props, innerCall + 1).join('')};`,
+      `return dict.res = ${storagesReplaceFormulaNumbers(props, innerCall + 1, retZero).join('')};`,
     )(dict);
 
     return mylib.isNum(dict.res) ? +dict.res.toFixed(props.resultFix ?? 2) : 0;
@@ -120,3 +122,5 @@ export const storagesComputeFormula = (props: UtilProps, innerCall: number) => {
     return 'Ошибка';
   }
 };
+
+const retZero = () => 0;

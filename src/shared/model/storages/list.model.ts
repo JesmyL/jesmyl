@@ -9,6 +9,16 @@ export const enum StoragesRackCardMi {
   min = 1,
 }
 
+export const enum StoragesRackSummaryMi {
+  min = 1,
+}
+
+export const enum StoragesRackSummaryType {
+  Total = 81,
+  ByMonth = 41,
+  ByYear = 97,
+}
+
 export type StoragesRackStatus = {
   title: string;
   icon?: KnownStameskaIconName;
@@ -42,12 +52,21 @@ export type StoragesRackChild = {
   parent: StoragesRackWid;
 };
 
+export type StoragesRackSummary = {
+  mi: StoragesRackSummaryMi;
+  title: string;
+  formula: string;
+  type: StoragesRackSummaryType;
+  date: number;
+};
+
 export type StoragesRackCore = {
   w: StoragesRackWid;
   icon?: KnownStameskaIconName;
   team: PRecord<SokiAuthLogin, StoragesRackMember>;
   title: string;
   cards: StoragesRackCard[];
+  sum?: StoragesRackSummary[];
 };
 
 export type StoragesRackTrail = {
