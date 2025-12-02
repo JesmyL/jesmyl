@@ -5,7 +5,7 @@ import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { ChordVisibleVariant, CmComOrderLine, TheCmCom, TheCmComOrder } from '$cm/ext';
 import React from 'react';
 import { makeRegExp } from 'regexpert';
-import { emptyArray, itIt } from 'shared/utils';
+import { itIt } from 'shared/utils';
 import { useCmEditorComTabUpdateLinePositions } from '../lib/useUpdateChordLinePositions';
 import { CmEditorComTabChordApplicationsStyledContent } from '../style/CmEditorTabComChordApplicationsStyledContent.styled';
 
@@ -46,7 +46,7 @@ export const CmEditorComTabChordApplications = ({ ccom }: { ccom: EditableCom })
               asLineComponent={props => {
                 const { com, textLine, textLinei } = props;
                 const linePositions =
-                  ordLinePositionsOnSend[`${ord.wid}/${textLinei}`] ?? ord.positions?.[textLinei] ?? emptyArray;
+                  ordLinePositionsOnSend[`${ord.wid}/${textLinei}`] ?? ord.positions?.[textLinei] ?? [];
                 const diffCount = (chords[textLinei]?.filter(itIt).length || 0) - (linePositions?.length || 0);
 
                 return (

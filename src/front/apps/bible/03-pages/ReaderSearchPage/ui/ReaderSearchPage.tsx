@@ -11,7 +11,6 @@ import { useBibleBookList } from '$bible/shared/hooks/texts';
 import { useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
-import { emptyArray } from 'shared/utils';
 
 export function BibleReaderSearchPage() {
   const navigate = useNavigate();
@@ -23,7 +22,7 @@ export function BibleReaderSearchPage() {
   const setResultSelected = useBibleBroadcastSearchResultSelectedSet();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => setResultSelected(null), emptyArray);
+  useEffect(() => setResultSelected(null), []);
 
   const inputRef = useRef<HTMLInputElement>(null);
 

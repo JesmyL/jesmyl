@@ -14,7 +14,7 @@ import {
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
 import { SchGeneralTsjrpcModel } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
-import { emptyArray, smylib } from 'shared/utils';
+import { smylib } from 'shared/utils';
 import { schedulesFileStore } from '../file-stores';
 import { schLiveTsjrpcServer } from '../live.tsjrpc';
 import { modifySchedule } from '../schedule-modificators';
@@ -28,55 +28,6 @@ import { schListsTsjrpcBaseServer } from './lists.tsjrpc.base';
 import { schPhotosTsjrpcBaseServer } from './photos.tsjrpc.base';
 import { schRolesTsjrpcBaseServer } from './roles.tsjrpc.base';
 import { schUsersTsjrpcBaseServer } from './users.tsjrpc.base';
-
-export const newSchedule: IScheduleWidget = {
-  w: IScheduleWidgetWid.def,
-  m: IScheduleWidgetUserCati.def,
-  title: '',
-  app: 'index',
-  dsc: '',
-  topic: '',
-  days: emptyArray,
-  tatts: emptyArray,
-  types: emptyArray,
-  tgInformTime: 5,
-  start: 0,
-  ctrl: {
-    cats: ['Основное'],
-    users: [],
-    roles: [
-      {
-        mi: 0,
-        title: 'Координатор',
-        icon: 'Teacher',
-        userMi: IScheduleWidgetUserMi.def,
-      },
-    ],
-    type: scheduleWidgetRegTypeRights.collectRights(),
-    defu: scheduleWidgetUserRights.collectRights(ScheduleWidgetUserRoleRight.Read),
-  },
-  games: {
-    criterias: [{ title: 'Сила', sorts: {} as never }],
-    list: [],
-  },
-  lists: {
-    cats: [
-      {
-        icon: 'UserGroup',
-        title: 'Группа',
-        titles: ['Наставники', 'Участники'],
-      },
-    ],
-    units: [
-      {
-        cati: IScheduleWidgetUserCati.def,
-        mi: 1,
-        title: 'Группа 1',
-        dsc: '',
-      },
-    ],
-  },
-};
 
 onScheduleUserTgInformSetEvent.listen(async ({ isNotInform, schProps, userLogin }) => {
   let description = '';
@@ -125,7 +76,54 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
         create: async ({ title }, { auth }) => {
           if (auth == null) throw new Error('no auth');
 
-          const sch = smylib.clone(newSchedule);
+          const sch: IScheduleWidget = smylib.clone({
+            w: IScheduleWidgetWid.def,
+            m: IScheduleWidgetUserCati.def,
+            title: '',
+            app: 'index',
+            dsc: '',
+            topic: '',
+            days: [],
+            tatts: [],
+            types: [],
+            tgInformTime: 5,
+            start: 0,
+            ctrl: {
+              cats: ['Основное'],
+              users: [],
+              roles: [
+                {
+                  mi: 0,
+                  title: 'Координатор',
+                  icon: 'Teacher',
+                  userMi: IScheduleWidgetUserMi.def,
+                },
+              ],
+              type: scheduleWidgetRegTypeRights.collectRights(),
+              defu: scheduleWidgetUserRights.collectRights(ScheduleWidgetUserRoleRight.Read),
+            },
+            games: {
+              criterias: [{ title: 'Сила', sorts: {} as never }],
+              list: [],
+            },
+            lists: {
+              cats: [
+                {
+                  icon: 'UserGroup',
+                  title: 'Группа',
+                  titles: ['Наставники', 'Участники'],
+                },
+              ],
+              units: [
+                {
+                  cati: IScheduleWidgetUserCati.def,
+                  mi: 1,
+                  title: 'Группа 1',
+                  dsc: '',
+                },
+              ],
+            },
+          });
 
           const date = new Date();
           sch.m = sch.w = date.getTime();

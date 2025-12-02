@@ -2,7 +2,7 @@ import { FileStore } from 'back/complect/FileStore';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { ICmComCommentBlock } from 'shared/api';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
-import { emptyObject, SMyLib, smylib } from 'shared/utils';
+import { SMyLib, smylib } from 'shared/utils';
 import { makeCmComNumLeadLinkFromHttp } from './complect/com-http-links';
 import { mapCmImportableToExportableCom } from './complect/tools';
 import { cmEditCatServerTsjrpcBase } from './edit-cat.tsjrpc.base';
@@ -103,7 +103,7 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
                   .filter(comw => blocks[comw] != null && blocks[comw].m > lastModfiedAt)
                   .map(strComw => ({
                     m: 0,
-                    d: emptyObject,
+                    d: {},
                     comw: +strComw,
                     ...blocks[strComw],
                   }));

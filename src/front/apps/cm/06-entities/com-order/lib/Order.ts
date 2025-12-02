@@ -11,7 +11,7 @@ import {
   OrderRepeats,
   SpecialOrderRepeats,
 } from 'shared/api';
-import { emptyArray, itIt } from 'shared/utils';
+import { itIt } from 'shared/utils';
 import { CmComOrderUtils } from 'shared/utils/cm/ComOrderUtils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { CmCom } from '../../com/lib/Com';
@@ -336,7 +336,7 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
                 count,
               };
             } else {
-              const letter: string | undefined = (makeRegExp('/[a-z]/i').exec(key) ?? emptyArray)[0];
+              const letter: string | undefined = (makeRegExp('/[a-z]/i').exec(key) ?? [])[0];
 
               if (letter !== undefined) {
                 const [first, second, third] = key.split(makeRegExp('/[:a-z]/i')).map(num => parseInt(num));

@@ -6,7 +6,7 @@ import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { memo, useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { BibleTranslateName, EeStorePack } from 'shared/api';
-import { emptyArray, itIt } from 'shared/utils';
+import { itIt } from 'shared/utils';
 
 type Props = {
   isCheckBible: boolean;
@@ -23,7 +23,7 @@ export const CmEditorEERulesListComputer = memo(function ListComputer({
 }: Props) {
   const cats = useEditableCats();
   const coms = useEditableComs();
-  const [storeWords, setStoreWords] = useState<string[]>(emptyArray);
+  const [storeWords, setStoreWords] = useState<string[]>([]);
   const [etap, setEtap] = useState('Подготовка');
   const ignoredWordsSet = cmEditorIDB.useValue.ignoredEESet();
 
@@ -40,13 +40,11 @@ export const CmEditorEERulesListComputer = memo(function ListComputer({
 
     etap('Считывание текстов', async () => {
       const texts: string[] = [
-        cats?.map(col => col.name) ?? emptyArray,
-        coms?.map(col => (col.texts ? [col.name, ...col.texts] : col.name)) ?? emptyArray,
-        isCheckBible ? ((await bibleTranslatesIDB.get[BibleTranslateName.rst]())?.chapters ?? emptyArray) : emptyArray,
-        isCheckBible ? ((await bibleTranslatesIDB.get[BibleTranslateName.nrt]())?.chapters ?? emptyArray) : emptyArray,
-        isCheckBible
-          ? ((await bibleTranslatesIDB.get[BibleTranslateName.kas]())?.chapters?.filter(itIt) ?? emptyArray)
-          : emptyArray,
+        cats?.map(col => col.name) ?? [],
+        coms?.map(col => (col.texts ? [col.name, ...col.texts] : col.name)) ?? [],
+        isCheckBible ? ((await bibleTranslatesIDB.get[BibleTranslateName.rst]())?.chapters ?? []) : [],
+        isCheckBible ? ((await bibleTranslatesIDB.get[BibleTranslateName.nrt]())?.chapters ?? []) : [],
+        isCheckBible ? ((await bibleTranslatesIDB.get[BibleTranslateName.kas]())?.chapters?.filter(itIt) ?? []) : [],
       ].flat(10);
 
       etap('Преобразование в монолит', () => {

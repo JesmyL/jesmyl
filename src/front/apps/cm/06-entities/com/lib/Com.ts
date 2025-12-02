@@ -3,7 +3,7 @@ import { BaseNamed } from '$cm/shared/lib';
 import { cmIDB } from '$cm/shared/state';
 import { makeRegExp } from 'regexpert';
 import { CmComOrderSelector, IExportableCom, IExportableOrder } from 'shared/api';
-import { emptyArray, itIt } from 'shared/utils';
+import { itIt } from 'shared/utils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { comBlockStyles } from 'shared/values/cm/block-styles/BlockStyles';
 import { StyleBlock } from 'shared/values/cm/block-styles/StyleBlock';
@@ -57,7 +57,7 @@ export class CmCom extends BaseNamed<IExportableCom> {
   }
 
   get audio() {
-    return this.getBasicOr('al', emptyArray);
+    return this.getBasicOr('al', []);
   }
   set audio(val) {
     this.setExportable('al', val);

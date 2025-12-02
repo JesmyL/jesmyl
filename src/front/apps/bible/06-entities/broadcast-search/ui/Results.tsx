@@ -6,7 +6,7 @@ import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
 import { JSX, useCallback, useEffect, useState } from 'react';
 import { escapeRegExpSymbols, makeRegExp } from 'regexpert';
-import { emptyArray, transcriptEnToRuText } from 'shared/utils';
+import { transcriptEnToRuText } from 'shared/utils';
 import styled from 'styled-components';
 import { useBibleBroadcastSearchResultSelectedValue, useBibleBroadcastSearchSearchResultList } from '../lib/results';
 import { bibleBroadcastSearchTermAtom, bibleBroadcastSearchZoneAtom } from '../state/atoms';
@@ -94,8 +94,7 @@ export function BibleBroadcastSearchResults({ inputRef, height = '100px', innerZ
             searchInChapter(currentBooki, chapteri, book[chapteri]);
             if (lastFounds.length > maxItems) break;
           }
-      } else
-        searchInChapter(currentBooki, currentChapteri, lowerChapters[currentBooki]?.[currentChapteri] ?? emptyArray);
+      } else searchInChapter(currentBooki, currentChapteri, lowerChapters[currentBooki]?.[currentChapteri] ?? []);
     }
 
     const list = founds

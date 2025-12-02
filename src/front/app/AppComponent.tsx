@@ -14,7 +14,6 @@ import { schLinkAction } from '#widgets/schedule/links';
 import { Outlet, ParsedLocation, useLocation, useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
-import { emptyArray } from 'shared/utils';
 import { toast } from 'sonner';
 import { appInitialInvokes } from './app-initial-invokes';
 import { AppFooter } from './AppFooter';
@@ -54,8 +53,7 @@ export const AppComponent = () => {
     return hookEffectPipe()
       .pipe(setTimeoutPipe(setIsShowLogo, 1200, false))
       .effect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, emptyArray);
+  }, []);
 
   return (
     <>

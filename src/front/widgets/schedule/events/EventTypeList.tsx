@@ -6,7 +6,6 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { atom, useAtomValue } from 'atomaric';
 import { ReactNode, useMemo } from 'react';
 import { IScheduleWidget, ScheduleWidgetCleans, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
-import { emptyArray } from 'shared/utils';
 import styled from 'styled-components';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { schEventTypesTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
@@ -22,6 +21,7 @@ type Props = {
 };
 
 const isModalOpenAtom = atom(false);
+const emptyArray: [] = [];
 
 const itemIt = <Item,>({ item }: { item: Item }) => item;
 const eqByTitle = (a: { title: string }, b: { title: string }) => (a.title > b.title ? 1 : b.title < a.title ? -1 : 0);

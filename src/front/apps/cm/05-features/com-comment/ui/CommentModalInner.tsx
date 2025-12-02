@@ -21,7 +21,6 @@ import { cmIDB } from '$cm/shared/state';
 import { useAuth } from '$index/shared/state';
 import { atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
-import { emptyArray } from 'shared/utils';
 import { useDeferredCallback } from 'shared/utils/useDeferredCallback';
 import { toast } from 'sonner';
 import { CmComCommentTransferAltModalInner } from './TransferAltCommentModalInner';
@@ -105,7 +104,7 @@ export const CmComCommentModalInner = ({ com }: { com: CmCom }) => {
               onInput={value => {
                 deferredCallback(
                   async () => {
-                    const texts = [...(takeCommentTexts(ordSelectorId) ?? emptyArray)];
+                    const texts = [...(takeCommentTexts(ordSelectorId) ?? [])];
                     const isAltComment =
                       altCommentKey != null &&
                       (localCommentBlock?.alt?.[altCommentKey] != null ||

@@ -162,8 +162,6 @@ export const itNumSort = (a: number, b: number) => a - b;
 export const itNumSortReverse = (a: number, b: number) => b - a;
 export const emptyFunc = () => {};
 export const emptyAsyncFunc = async () => {};
-export const emptyArray = [];
-export const emptyObject = {} as const;
 export const retUnd = () => undefined;
 export const itNUnd = <It>(it: It) => it !== undefined;
 export const retNull = () => null;

@@ -1,7 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
 import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
-import { emptyArray } from '../utils';
 
 export class CmComOrderUtils {
   private static _insertRepeats(
@@ -82,7 +81,7 @@ export class CmComOrderUtils {
 
           const repldLine = words
             .map((word, wordi) => {
-              const counts = poss[linei]?.[wordi] ?? emptyArray;
+              const counts = poss[linei]?.[wordi] ?? [];
 
               return counts.length === 0
                 ? word
@@ -93,9 +92,7 @@ export class CmComOrderUtils {
             })
             .join(' ');
 
-          const counts = ((poss[linei] ?? emptyArray)[-1] ?? emptyArray).concat(
-            (poss[linei] ?? emptyArray)[-2] ?? emptyArray,
-          );
+          const counts = poss[linei]?.[-1]?.concat(poss[linei][-2] ?? []) ?? [];
 
           return counts.length > 0
             ? counts.reduce(
