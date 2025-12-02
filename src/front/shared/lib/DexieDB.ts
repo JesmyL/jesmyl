@@ -3,7 +3,7 @@ import Dexie, { EntityTable, TableHooks } from 'dexie';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useCallback } from 'react';
 
-import { emptyArray, smylib, SMyLib } from 'shared/utils';
+import { smylib, SMyLib } from 'shared/utils';
 import { mylib } from './my-lib';
 
 const keyvalues = '%keyvalues%';
@@ -91,7 +91,7 @@ export class DexieDB<Store> {
     this.useSet = new Proxy(this.useSet, {
       get: (_, key) =>
         returnIfKeyInDefaults(key, () =>
-          justUseCallback((value: unknown) => this.set[key as keyof Store](value as never), emptyArray),
+          justUseCallback((value: unknown) => this.set[key as keyof Store](value as never), []),
         ),
     });
 
