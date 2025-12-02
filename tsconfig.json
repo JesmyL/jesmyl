@@ -79,6 +79,15 @@
       "$storages/shared/*": ["./front/apps/storages/07-shared/*"],
       "$storages/*": ["./front/components/storages/*"],
 
+      "$gamer/app/*": ["./front/apps/gamer/01-app/*"],
+      "$gamer/processes/*": ["./front/apps/gamer/02-processes/*"],
+      "$gamer/pages/*": ["./front/apps/gamer/03-pages/*"],
+      "$gamer/widgets/*": ["./front/apps/gamer/04-widgets/*"],
+      "$gamer/features/*": ["./front/apps/gamer/05-features/*"],
+      "$gamer/entities/*": ["./front/apps/gamer/06-entities/*"],
+      "$gamer/shared/*": ["./front/apps/gamer/07-shared/*"],
+      "$gamer/*": ["./front/components/gamer/*"],
+
       "$app/*": ["./front/app/*"],
 
       "shared/*": ["./shared/*"],

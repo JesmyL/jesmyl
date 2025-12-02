@@ -16,10 +16,12 @@ import { Route as rootRoute } from './front/routes/__root'
 import { Route as TunerRouteImport } from './front/routes/tuner/route'
 import { Route as StoragesRouteImport } from './front/routes/storages/route'
 import { Route as QRouteImport } from './front/routes/q/route'
+import { Route as GamerRouteImport } from './front/routes/gamer/route'
 import { Route as CmRouteImport } from './front/routes/cm/route'
 import { Route as BibleRouteImport } from './front/routes/bible/route'
 import { Route as IndexImport } from './front/routes/index'
 import { Route as TunerIndexImport } from './front/routes/tuner/index'
+import { Route as GamerIndexImport } from './front/routes/gamer/index'
 import { Route as CmIndexImport } from './front/routes/cm/index'
 import { Route as BibleIndexImport } from './front/routes/bible/index'
 import { Route as TunerIImport } from './front/routes/tuner/i'
@@ -32,6 +34,7 @@ import { Route as StoragesIIndexImport } from './front/routes/storages/i/index'
 import { Route as ScheduleDaySchwIndexImport } from './front/routes/schedule-day/$schw/index'
 import { Route as QRIndexImport } from './front/routes/q/r/index'
 import { Route as QAIndexImport } from './front/routes/q/a/index'
+import { Route as GamerIIndexImport } from './front/routes/gamer/i/index'
 import { Route as CmPlayerIndexImport } from './front/routes/cm/player/index'
 import { Route as CmLiIndexImport } from './front/routes/cm/li/index'
 import { Route as CmIIndexImport } from './front/routes/cm/i/index'
@@ -47,6 +50,7 @@ import { Route as CmEditEEImport } from './front/routes/cm/edit/e-e'
 import { Route as CmEditConstantsImport } from './front/routes/cm/edit/constants'
 import { Route as CmEditChordImport } from './front/routes/cm/edit/chord'
 import { Route as StoragesIRackwIndexImport } from './front/routes/storages/i/$rackw/index'
+import { Route as GamerIMemoryGiantIndexImport } from './front/routes/gamer/i/memory-giant/index'
 import { Route as CmEditComsIndexImport } from './front/routes/cm/edit/coms/index'
 import { Route as CmEditCatsIndexImport } from './front/routes/cm/edit/cats/index'
 import { Route as otherAppNameSettingsIndexImport } from './front/routes/!other.$appName/settings/index'
@@ -57,6 +61,7 @@ import { Route as CmLiCatCatwImport } from './front/routes/cm/li/cat.$catw'
 import { Route as CmEditCatsCatwImport } from './front/routes/cm/edit/cats/$catw'
 import { Route as otherAppNameSettingsRightsImport } from './front/routes/!other.$appName/settings/rights'
 import { Route as otherAppNameSettingsConsoleImport } from './front/routes/!other.$appName/settings/console'
+import { Route as StoragesIRackwSumIndexImport } from './front/routes/storages/i/$rackw/sum/index'
 import { Route as StoragesIRackwEditIndexImport } from './front/routes/storages/i/$rackw/edit/index'
 import { Route as StoragesIRackwCardMiIndexImport } from './front/routes/storages/i/$rackw/$cardMi/index'
 import { Route as CmEditComsComwIndexImport } from './front/routes/cm/edit/coms/$comw/index'
@@ -90,6 +95,12 @@ const QRouteRoute = QRouteImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const GamerRouteRoute = GamerRouteImport.update({
+  id: '/gamer',
+  path: '/gamer',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const CmRouteRoute = CmRouteImport.update({
   id: '/cm',
   path: '/cm',
@@ -120,6 +131,12 @@ const TunerIndexRoute = TunerIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => TunerRouteRoute,
+} as any)
+
+const GamerIndexRoute = GamerIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => GamerRouteRoute,
 } as any)
 
 const CmIndexRoute = CmIndexImport.update({
@@ -208,6 +225,12 @@ const QAIndexRoute = QAIndexImport.update({
   id: '/a/',
   path: '/a/',
   getParentRoute: () => QRouteRoute,
+} as any)
+
+const GamerIIndexRoute = GamerIIndexImport.update({
+  id: '/i/',
+  path: '/i/',
+  getParentRoute: () => GamerRouteRoute,
 } as any)
 
 const CmPlayerIndexRoute = CmPlayerIndexImport.update({
@@ -300,6 +323,12 @@ const StoragesIRackwIndexRoute = StoragesIRackwIndexImport.update({
   getParentRoute: () => StoragesRouteRoute,
 } as any)
 
+const GamerIMemoryGiantIndexRoute = GamerIMemoryGiantIndexImport.update({
+  id: '/i/memory-giant/',
+  path: '/i/memory-giant/',
+  getParentRoute: () => GamerRouteRoute,
+} as any)
+
 const CmEditComsIndexRoute = CmEditComsIndexImport.update({
   id: '/coms/',
   path: '/coms/',
@@ -363,6 +392,12 @@ const otherAppNameSettingsConsoleRoute =
     getParentRoute: () => otherAppNameRouteRoute,
   } as any)
 
+const StoragesIRackwSumIndexRoute = StoragesIRackwSumIndexImport.update({
+  id: '/i/$rackw/sum/',
+  path: '/i/$rackw/sum/',
+  getParentRoute: () => StoragesRouteRoute,
+} as any)
+
 const StoragesIRackwEditIndexRoute = StoragesIRackwEditIndexImport.update({
   id: '/i/$rackw/edit/',
   path: '/i/$rackw/edit/',
@@ -424,6 +459,13 @@ declare module '@tanstack/react-router' {
       path: '/cm'
       fullPath: '/cm'
       preLoaderRoute: typeof CmRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/gamer': {
+      id: '/gamer'
+      path: '/gamer'
+      fullPath: '/gamer'
+      preLoaderRoute: typeof GamerRouteImport
       parentRoute: typeof rootRoute
     }
     '/q': {
@@ -509,6 +551,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/cm/'
       preLoaderRoute: typeof CmIndexImport
       parentRoute: typeof CmRouteImport
+    }
+    '/gamer/': {
+      id: '/gamer/'
+      path: '/'
+      fullPath: '/gamer/'
+      preLoaderRoute: typeof GamerIndexImport
+      parentRoute: typeof GamerRouteImport
     }
     '/tuner/': {
       id: '/tuner/'
@@ -622,6 +671,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CmPlayerIndexImport
       parentRoute: typeof CmRouteImport
     }
+    '/gamer/i/': {
+      id: '/gamer/i/'
+      path: '/i'
+      fullPath: '/gamer/i'
+      preLoaderRoute: typeof GamerIIndexImport
+      parentRoute: typeof GamerRouteImport
+    }
     '/q/a/': {
       id: '/q/a/'
       path: '/a'
@@ -727,6 +783,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CmEditComsIndexImport
       parentRoute: typeof CmEditRouteLazyImport
     }
+    '/gamer/i/memory-giant/': {
+      id: '/gamer/i/memory-giant/'
+      path: '/i/memory-giant'
+      fullPath: '/gamer/i/memory-giant'
+      preLoaderRoute: typeof GamerIMemoryGiantIndexImport
+      parentRoute: typeof GamerRouteImport
+    }
     '/storages/i/$rackw/': {
       id: '/storages/i/$rackw/'
       path: '/i/$rackw'
@@ -774,6 +837,13 @@ declare module '@tanstack/react-router' {
       path: '/i/$rackw/edit'
       fullPath: '/storages/i/$rackw/edit'
       preLoaderRoute: typeof StoragesIRackwEditIndexImport
+      parentRoute: typeof StoragesRouteImport
+    }
+    '/storages/i/$rackw/sum/': {
+      id: '/storages/i/$rackw/sum/'
+      path: '/i/$rackw/sum'
+      fullPath: '/storages/i/$rackw/sum'
+      preLoaderRoute: typeof StoragesIRackwSumIndexImport
       parentRoute: typeof StoragesRouteImport
     }
   }
@@ -858,6 +928,22 @@ const CmRouteRouteChildren: CmRouteRouteChildren = {
 const CmRouteRouteWithChildren =
   CmRouteRoute._addFileChildren(CmRouteRouteChildren)
 
+interface GamerRouteRouteChildren {
+  GamerIndexRoute: typeof GamerIndexRoute
+  GamerIIndexRoute: typeof GamerIIndexRoute
+  GamerIMemoryGiantIndexRoute: typeof GamerIMemoryGiantIndexRoute
+}
+
+const GamerRouteRouteChildren: GamerRouteRouteChildren = {
+  GamerIndexRoute: GamerIndexRoute,
+  GamerIIndexRoute: GamerIIndexRoute,
+  GamerIMemoryGiantIndexRoute: GamerIMemoryGiantIndexRoute,
+}
+
+const GamerRouteRouteWithChildren = GamerRouteRoute._addFileChildren(
+  GamerRouteRouteChildren,
+)
+
 interface QRouteRouteChildren {
   QIRoute: typeof QIRoute
   QABlankRoute: typeof QABlankRoute
@@ -882,6 +968,7 @@ interface StoragesRouteRouteChildren {
   StoragesIRackwIndexRoute: typeof StoragesIRackwIndexRoute
   StoragesIRackwCardMiIndexRoute: typeof StoragesIRackwCardMiIndexRoute
   StoragesIRackwEditIndexRoute: typeof StoragesIRackwEditIndexRoute
+  StoragesIRackwSumIndexRoute: typeof StoragesIRackwSumIndexRoute
 }
 
 const StoragesRouteRouteChildren: StoragesRouteRouteChildren = {
@@ -889,6 +976,7 @@ const StoragesRouteRouteChildren: StoragesRouteRouteChildren = {
   StoragesIRackwIndexRoute: StoragesIRackwIndexRoute,
   StoragesIRackwCardMiIndexRoute: StoragesIRackwCardMiIndexRoute,
   StoragesIRackwEditIndexRoute: StoragesIRackwEditIndexRoute,
+  StoragesIRackwSumIndexRoute: StoragesIRackwSumIndexRoute,
 }
 
 const StoragesRouteRouteWithChildren = StoragesRouteRoute._addFileChildren(
@@ -941,6 +1029,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bible': typeof BibleRouteRouteWithChildren
   '/cm': typeof CmRouteRouteWithChildren
+  '/gamer': typeof GamerRouteRouteWithChildren
   '/q': typeof QRouteRouteWithChildren
   '/storages': typeof StoragesRouteRouteWithChildren
   '/tuner': typeof TunerRouteRouteWithChildren
@@ -953,6 +1042,7 @@ export interface FileRoutesByFullPath {
   '/cm/edit': typeof CmEditRouteLazyRouteWithChildren
   '/bible/': typeof BibleIndexRoute
   '/cm/': typeof CmIndexRoute
+  '/gamer/': typeof GamerIndexRoute
   '/tuner/': typeof TunerIndexRoute
   '/schedule-day': typeof ScheduleDayIndexLazyRoute
   '/cm/edit/chord': typeof CmEditChordRoute
@@ -969,6 +1059,7 @@ export interface FileRoutesByFullPath {
   '/cm/i': typeof CmIIndexRoute
   '/cm/li': typeof CmLiIndexRoute
   '/cm/player': typeof CmPlayerIndexRoute
+  '/gamer/i': typeof GamerIIndexRoute
   '/q/a': typeof QAIndexRoute
   '/q/r': typeof QRIndexRoute
   '/schedule-day/$schw': typeof ScheduleDaySchwIndexRoute
@@ -984,6 +1075,7 @@ export interface FileRoutesByFullPath {
   '/!other/$appName/settings': typeof otherAppNameSettingsIndexRoute
   '/cm/edit/cats': typeof CmEditCatsIndexRoute
   '/cm/edit/coms': typeof CmEditComsIndexRoute
+  '/gamer/i/memory-giant': typeof GamerIMemoryGiantIndexRoute
   '/storages/i/$rackw': typeof StoragesIRackwIndexRoute
   '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabRouteRoute
   '/!other/$appName/actions/files': typeof otherAppNameActionsFilesIndexRoute
@@ -991,6 +1083,7 @@ export interface FileRoutesByFullPath {
   '/cm/edit/coms/$comw': typeof CmEditComsComwIndexRoute
   '/storages/i/$rackw/$cardMi': typeof StoragesIRackwCardMiIndexRoute
   '/storages/i/$rackw/edit': typeof StoragesIRackwEditIndexRoute
+  '/storages/i/$rackw/sum': typeof StoragesIRackwSumIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -1004,6 +1097,7 @@ export interface FileRoutesByTo {
   '/tuner/i': typeof TunerIRoute
   '/bible': typeof BibleIndexRoute
   '/cm': typeof CmIndexRoute
+  '/gamer': typeof GamerIndexRoute
   '/tuner': typeof TunerIndexRoute
   '/schedule-day': typeof ScheduleDayIndexLazyRoute
   '/cm/edit/chord': typeof CmEditChordRoute
@@ -1020,6 +1114,7 @@ export interface FileRoutesByTo {
   '/cm/i': typeof CmIIndexRoute
   '/cm/li': typeof CmLiIndexRoute
   '/cm/player': typeof CmPlayerIndexRoute
+  '/gamer/i': typeof GamerIIndexRoute
   '/q/a': typeof QAIndexRoute
   '/q/r': typeof QRIndexRoute
   '/schedule-day/$schw': typeof ScheduleDaySchwIndexRoute
@@ -1035,6 +1130,7 @@ export interface FileRoutesByTo {
   '/!other/$appName/settings': typeof otherAppNameSettingsIndexRoute
   '/cm/edit/cats': typeof CmEditCatsIndexRoute
   '/cm/edit/coms': typeof CmEditComsIndexRoute
+  '/gamer/i/memory-giant': typeof GamerIMemoryGiantIndexRoute
   '/storages/i/$rackw': typeof StoragesIRackwIndexRoute
   '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabRouteRoute
   '/!other/$appName/actions/files': typeof otherAppNameActionsFilesIndexRoute
@@ -1042,6 +1138,7 @@ export interface FileRoutesByTo {
   '/cm/edit/coms/$comw': typeof CmEditComsComwIndexRoute
   '/storages/i/$rackw/$cardMi': typeof StoragesIRackwCardMiIndexRoute
   '/storages/i/$rackw/edit': typeof StoragesIRackwEditIndexRoute
+  '/storages/i/$rackw/sum': typeof StoragesIRackwSumIndexRoute
 }
 
 export interface FileRoutesById {
@@ -1049,6 +1146,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/bible': typeof BibleRouteRouteWithChildren
   '/cm': typeof CmRouteRouteWithChildren
+  '/gamer': typeof GamerRouteRouteWithChildren
   '/q': typeof QRouteRouteWithChildren
   '/storages': typeof StoragesRouteRouteWithChildren
   '/tuner': typeof TunerRouteRouteWithChildren
@@ -1061,6 +1159,7 @@ export interface FileRoutesById {
   '/cm/edit': typeof CmEditRouteLazyRouteWithChildren
   '/bible/': typeof BibleIndexRoute
   '/cm/': typeof CmIndexRoute
+  '/gamer/': typeof GamerIndexRoute
   '/tuner/': typeof TunerIndexRoute
   '/schedule-day/': typeof ScheduleDayIndexLazyRoute
   '/cm/edit/chord': typeof CmEditChordRoute
@@ -1077,6 +1176,7 @@ export interface FileRoutesById {
   '/cm/i/': typeof CmIIndexRoute
   '/cm/li/': typeof CmLiIndexRoute
   '/cm/player/': typeof CmPlayerIndexRoute
+  '/gamer/i/': typeof GamerIIndexRoute
   '/q/a/': typeof QAIndexRoute
   '/q/r/': typeof QRIndexRoute
   '/schedule-day/$schw/': typeof ScheduleDaySchwIndexRoute
@@ -1092,6 +1192,7 @@ export interface FileRoutesById {
   '/!other/$appName/settings/': typeof otherAppNameSettingsIndexRoute
   '/cm/edit/cats/': typeof CmEditCatsIndexRoute
   '/cm/edit/coms/': typeof CmEditComsIndexRoute
+  '/gamer/i/memory-giant/': typeof GamerIMemoryGiantIndexRoute
   '/storages/i/$rackw/': typeof StoragesIRackwIndexRoute
   '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabRouteRoute
   '/!other/$appName/actions/files/': typeof otherAppNameActionsFilesIndexRoute
@@ -1099,6 +1200,7 @@ export interface FileRoutesById {
   '/cm/edit/coms/$comw/': typeof CmEditComsComwIndexRoute
   '/storages/i/$rackw/$cardMi/': typeof StoragesIRackwCardMiIndexRoute
   '/storages/i/$rackw/edit/': typeof StoragesIRackwEditIndexRoute
+  '/storages/i/$rackw/sum/': typeof StoragesIRackwSumIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -1107,6 +1209,7 @@ export interface FileRouteTypes {
     | '/'
     | '/bible'
     | '/cm'
+    | '/gamer'
     | '/q'
     | '/storages'
     | '/tuner'
@@ -1119,6 +1222,7 @@ export interface FileRouteTypes {
     | '/cm/edit'
     | '/bible/'
     | '/cm/'
+    | '/gamer/'
     | '/tuner/'
     | '/schedule-day'
     | '/cm/edit/chord'
@@ -1135,6 +1239,7 @@ export interface FileRouteTypes {
     | '/cm/i'
     | '/cm/li'
     | '/cm/player'
+    | '/gamer/i'
     | '/q/a'
     | '/q/r'
     | '/schedule-day/$schw'
@@ -1150,6 +1255,7 @@ export interface FileRouteTypes {
     | '/!other/$appName/settings'
     | '/cm/edit/cats'
     | '/cm/edit/coms'
+    | '/gamer/i/memory-giant'
     | '/storages/i/$rackw'
     | '/cm/edit/coms/$comw/$tab'
     | '/!other/$appName/actions/files'
@@ -1157,6 +1263,7 @@ export interface FileRouteTypes {
     | '/cm/edit/coms/$comw'
     | '/storages/i/$rackw/$cardMi'
     | '/storages/i/$rackw/edit'
+    | '/storages/i/$rackw/sum'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -1169,6 +1276,7 @@ export interface FileRouteTypes {
     | '/tuner/i'
     | '/bible'
     | '/cm'
+    | '/gamer'
     | '/tuner'
     | '/schedule-day'
     | '/cm/edit/chord'
@@ -1185,6 +1293,7 @@ export interface FileRouteTypes {
     | '/cm/i'
     | '/cm/li'
     | '/cm/player'
+    | '/gamer/i'
     | '/q/a'
     | '/q/r'
     | '/schedule-day/$schw'
@@ -1200,6 +1309,7 @@ export interface FileRouteTypes {
     | '/!other/$appName/settings'
     | '/cm/edit/cats'
     | '/cm/edit/coms'
+    | '/gamer/i/memory-giant'
     | '/storages/i/$rackw'
     | '/cm/edit/coms/$comw/$tab'
     | '/!other/$appName/actions/files'
@@ -1207,11 +1317,13 @@ export interface FileRouteTypes {
     | '/cm/edit/coms/$comw'
     | '/storages/i/$rackw/$cardMi'
     | '/storages/i/$rackw/edit'
+    | '/storages/i/$rackw/sum'
   id:
     | '__root__'
     | '/'
     | '/bible'
     | '/cm'
+    | '/gamer'
     | '/q'
     | '/storages'
     | '/tuner'
@@ -1224,6 +1336,7 @@ export interface FileRouteTypes {
     | '/cm/edit'
     | '/bible/'
     | '/cm/'
+    | '/gamer/'
     | '/tuner/'
     | '/schedule-day/'
     | '/cm/edit/chord'
@@ -1240,6 +1353,7 @@ export interface FileRouteTypes {
     | '/cm/i/'
     | '/cm/li/'
     | '/cm/player/'
+    | '/gamer/i/'
     | '/q/a/'
     | '/q/r/'
     | '/schedule-day/$schw/'
@@ -1255,6 +1369,7 @@ export interface FileRouteTypes {
     | '/!other/$appName/settings/'
     | '/cm/edit/cats/'
     | '/cm/edit/coms/'
+    | '/gamer/i/memory-giant/'
     | '/storages/i/$rackw/'
     | '/cm/edit/coms/$comw/$tab'
     | '/!other/$appName/actions/files/'
@@ -1262,6 +1377,7 @@ export interface FileRouteTypes {
     | '/cm/edit/coms/$comw/'
     | '/storages/i/$rackw/$cardMi/'
     | '/storages/i/$rackw/edit/'
+    | '/storages/i/$rackw/sum/'
   fileRoutesById: FileRoutesById
 }
 
@@ -1269,6 +1385,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BibleRouteRoute: typeof BibleRouteRouteWithChildren
   CmRouteRoute: typeof CmRouteRouteWithChildren
+  GamerRouteRoute: typeof GamerRouteRouteWithChildren
   QRouteRoute: typeof QRouteRouteWithChildren
   StoragesRouteRoute: typeof StoragesRouteRouteWithChildren
   TunerRouteRoute: typeof TunerRouteRouteWithChildren
@@ -1281,6 +1398,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BibleRouteRoute: BibleRouteRouteWithChildren,
   CmRouteRoute: CmRouteRouteWithChildren,
+  GamerRouteRoute: GamerRouteRouteWithChildren,
   QRouteRoute: QRouteRouteWithChildren,
   StoragesRouteRoute: StoragesRouteRouteWithChildren,
   TunerRouteRoute: TunerRouteRouteWithChildren,
@@ -1302,6 +1420,7 @@ export const routeTree = rootRoute
         "/",
         "/bible",
         "/cm",
+        "/gamer",
         "/q",
         "/storages",
         "/tuner",
@@ -1336,6 +1455,14 @@ export const routeTree = rootRoute
         "/cm/li/cat/$catw"
       ]
     },
+    "/gamer": {
+      "filePath": "gamer/route.tsx",
+      "children": [
+        "/gamer/",
+        "/gamer/i/",
+        "/gamer/i/memory-giant/"
+      ]
+    },
     "/q": {
       "filePath": "q/route.tsx",
       "children": [
@@ -1352,7 +1479,8 @@ export const routeTree = rootRoute
         "/storages/i/",
         "/storages/i/$rackw/",
         "/storages/i/$rackw/$cardMi/",
-        "/storages/i/$rackw/edit/"
+        "/storages/i/$rackw/edit/",
+        "/storages/i/$rackw/sum/"
       ]
     },
     "/tuner": {
@@ -1421,6 +1549,10 @@ export const routeTree = rootRoute
       "filePath": "cm/index.tsx",
       "parent": "/cm"
     },
+    "/gamer/": {
+      "filePath": "gamer/index.tsx",
+      "parent": "/gamer"
+    },
     "/tuner/": {
       "filePath": "tuner/index.tsx",
       "parent": "/tuner"
@@ -1484,6 +1616,10 @@ export const routeTree = rootRoute
       "filePath": "cm/player/index.tsx",
       "parent": "/cm"
     },
+    "/gamer/i/": {
+      "filePath": "gamer/i/index.tsx",
+      "parent": "/gamer"
+    },
     "/q/a/": {
       "filePath": "q/a/index.tsx",
       "parent": "/q"
@@ -1543,6 +1679,10 @@ export const routeTree = rootRoute
       "filePath": "cm/edit/coms/index.tsx",
       "parent": "/cm/edit"
     },
+    "/gamer/i/memory-giant/": {
+      "filePath": "gamer/i/memory-giant/index.tsx",
+      "parent": "/gamer"
+    },
     "/storages/i/$rackw/": {
       "filePath": "storages/i/$rackw/index.tsx",
       "parent": "/storages"
@@ -1569,6 +1709,10 @@ export const routeTree = rootRoute
     },
     "/storages/i/$rackw/edit/": {
       "filePath": "storages/i/$rackw/edit/index.tsx",
+      "parent": "/storages"
+    },
+    "/storages/i/$rackw/sum/": {
+      "filePath": "storages/i/$rackw/sum/index.tsx",
       "parent": "/storages"
     }
   }

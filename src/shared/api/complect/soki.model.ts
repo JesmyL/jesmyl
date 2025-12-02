@@ -1,7 +1,7 @@
 import { User } from 'node-telegram-bot-api';
 import { DeviceId } from './enums';
 
-export const sokiAppNames = ['index', 'cm', 'tuner', 'q', 'bible', 'storages'] as const;
+export const sokiAppNames = ['index', 'cm', 'tuner', 'q', 'bible', 'storages', 'gamer'] as const;
 export type SokiAppName = (typeof sokiAppNames)[number];
 
 export const enum SokiError {
