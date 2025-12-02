@@ -11,23 +11,24 @@ export const TheCmComOrderSolid = (
   const lineCounts: number[] = [0, props.ord.text.split('\n').length];
 
   while (nextOrd?.isInSolidLineWithInvisibles()) {
-    if (nextOrd.isVisible) {
-      lineCounts.push(lineCounts[lineCounts.length - 1] + nextOrd.text.split('\n').length);
-      ords.push(nextOrd);
-    }
+    lineCounts.push(lineCounts[lineCounts.length - 1] + nextOrd.text.split('\n').length);
+    ords.push(nextOrd);
 
     nextOrd = nextOrd.me.next;
   }
 
   return (
     <div solid-com-order-selector={props.ord.wid}>
-      {ords.map((ord, ordi) => {
+      {ords.map((ord, ordIndex) => {
+        if (!ord.isVisible) return;
+        const ordi = ordIndex + props.ordi;
+
         return (
           <React.Fragment key={ord.wid}>
             <TheCmComOrder
               {...props}
               ord={ord}
-              ordi={ordi + props.ordi}
+              ordi={ordi}
               asHeaderComponent={
                 props.asHeaderComponent ? headerProps => props.asHeaderComponent?.({ ...headerProps, ord }) : undefined
               }
@@ -36,13 +37,15 @@ export const TheCmComOrderSolid = (
                   ? lineProps =>
                       props.asLineComponent?.({
                         ...lineProps,
-                        solidTextLinei: lineProps.textLinei + lineCounts[ordi],
+                        ordi,
+                        solidTextLinei: lineProps.textLinei + lineCounts[ordIndex],
                       })
                   : lineProps => {
                       return (
                         <CmComOrderLine
                           {...lineProps}
-                          solid-order-text-linei={lineProps.textLinei + lineCounts[ordi]}
+                          ordi={ordi}
+                          solid-order-text-linei={lineProps.textLinei + lineCounts[ordIndex]}
                         />
                       );
                     }

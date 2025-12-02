@@ -58,8 +58,8 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
   let chordIndex = 0;
   let points = vowelPositions;
 
-  const chordsLabels = props.ord.lineChordLabels(chordHardLevel, props.textLinei, props.ordi);
-  const linePositions = props.positions ?? props.ord.positions?.[props.textLinei] ?? [];
+  const chordsLabels = ord.lineChordLabels(chordHardLevel, textLinei, ordi);
+  const linePositions = props.positions ?? ord.positions?.[textLinei] ?? [];
 
   if (props.isJoinLetters !== false)
     points = vowelPositions.filter(
