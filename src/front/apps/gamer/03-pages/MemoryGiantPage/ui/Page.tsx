@@ -3,9 +3,11 @@ import { convertFileToBase64 } from '#shared/lib/convertFileToBase64';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { renderComponentInNewWindow } from '#shared/lib/renders';
 import { FileInput } from '#shared/ui/FileInput';
+import { useConfirm } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { WithAtomValue } from '#shared/ui/WithAtomValue';
 import { gamerIDB } from '$gamer/shared/state/gamerIDB';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -13,7 +15,11 @@ import md5Func from 'md5';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
-import { gamerMemoryGiantBoardImageisAtom, gamerMemoryGiantUsedImagesAtom } from '../state/atoms';
+import {
+  gamerMemoryGiantBoardImageisAtom,
+  gamerMemoryGiantShowImagesAtom,
+  gamerMemoryGiantUsedImagesAtom,
+} from '../state/atoms';
 import { GamerMemoryGiantBoard } from '../sub-ui/Board';
 import { GamerMemoryGiantImageCard } from '../sub-ui/ImageCard';
 
@@ -21,10 +27,10 @@ let localWin: Window | null = null;
 
 export const GamerMemoryGiantPage = () => {
   const [win, setWin] = useState(localWin);
-  const [widthHeight, setWidthHeight] = useState<{ w: number; h: number }>();
   const allImages = useLiveQuery(() => gamerIDB.tb.memoryGiantImages.toArray());
   const usedImagesSet = new Set(useAtomValue(gamerMemoryGiantUsedImagesAtom));
   const boardImages = useAtomValue(gamerMemoryGiantBoardImageisAtom);
+  const confirm = useConfirm();
 
   useEffect(() => {
     if (win == null) return;
@@ -34,9 +40,6 @@ export const GamerMemoryGiantPage = () => {
 
     return hookEffectPipe()
       .pipe(
-        addEventListenerPipe(win, 'resize', () => {
-          setWidthHeight({ w: win.innerWidth, h: win.innerHeight });
-        }),
         addEventListenerPipe(win, 'unload' as never, () => {
           localWin = null;
           setWin(null);
@@ -56,20 +59,19 @@ export const GamerMemoryGiantPage = () => {
       className="GamerMemoryGiantPage"
       headTitle="Мемори-гигант"
       head={
-        boardImages && win ? (
+        <div className="flex gap-3">
+          <WithAtomValue atom={gamerMemoryGiantShowImagesAtom}>
+            {isShow => (
+              <Button
+                icon={isShow ? 'ViewOff' : 'View'}
+                onClick={gamerMemoryGiantShowImagesAtom.do.toggle}
+              />
+            )}
+          </WithAtomValue>
+
           <Button
-            variant={'destructive'}
-            onClick={() => {
-              gamerMemoryGiantBoardImageisAtom.do.abort();
-              setWin(null);
-            }}
-          >
-            Закончить игру
-          </Button>
-        ) : (
-          <Button
-            className="w-full"
             variant="ok"
+            icon={win ? 'Computer' : 'Play'}
             onClick={() => {
               if (win) {
                 win.focus();
@@ -88,17 +90,25 @@ export const GamerMemoryGiantPage = () => {
                 ),
               );
             }}
-          >
-            {boardImages ? 'Продолжить' : 'Начать'} игру
-          </Button>
-        )
+          />
+
+          <Button
+            icon="Cancel01"
+            disabled={!boardImages}
+            variant="destructive"
+            onClick={async () => {
+              if (!(await confirm('Закончить игру?'))) return;
+
+              gamerMemoryGiantBoardImageisAtom.do.abort();
+              setWin(null);
+            }}
+          />
+        </div>
       }
       content={
         boardImages ? (
-          // <div className="max-w-[100vmin] max-h-[100vmin] aspect-[1/1]">
-          <GamerMemoryGiantBoard widthHeight={widthHeight} />
+          <GamerMemoryGiantBoard />
         ) : (
-          // </div>
           <div className="flex flex-col gap-10">
             <FileInput
               accept=".png, .svg, .jpg, .jpeg"

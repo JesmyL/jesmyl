@@ -3,22 +3,21 @@ import styled, { css } from 'styled-components';
 import {
   gamerMemoryGiantBoardImageisAtom,
   gamerMemoryGiantGuessedImageisAtom,
+  gamerMemoryGiantShowImagesAtom,
   gamerMemoryGiantShownImageisAtom,
   gamerMemoryGiantUsedImagesAtom,
 } from '../state/atoms';
 import { GamerMemoryGiantImageCardByMd5 } from './ImageCardByMd5';
 
-export const GamerMemoryGiantBoard = (props: { widthHeight?: { w: number; h: number } }) => {
+export const GamerMemoryGiantBoard = () => {
   const imageis = useAtomValue(gamerMemoryGiantBoardImageisAtom);
   const images = useAtomValue(gamerMemoryGiantUsedImagesAtom);
   const shownImageiSet = useAtomValue(gamerMemoryGiantShownImageisAtom);
   const guessedImageiSet = useAtomValue(gamerMemoryGiantGuessedImageisAtom);
+  const isShowAll = useAtomValue(gamerMemoryGiantShowImagesAtom);
 
   return (
-    <StyledBoard
-      $widthHeight={props.widthHeight}
-      $shownImageiSet={shownImageiSet}
-    >
+    <StyledBoard $shownImageiSet={shownImageiSet}>
       {imageis?.map((index, indexi) => {
         const imageMd5 = images[index];
 
@@ -26,12 +25,12 @@ export const GamerMemoryGiantBoard = (props: { widthHeight?: { w: number; h: num
           imageMd5 && (
             <StyledCard
               key={indexi}
-              $isShown={shownImageiSet.has(indexi)}
+              $isShown={isShowAll || shownImageiSet.has(indexi)}
               $isGuessed={guessedImageiSet.has(indexi)}
             >
               <StyledCardFrontSide
                 imageMd5={imageMd5}
-                size={`calc((100cqw + 100cqh) / (${imageis?.length ?? 0} * .7))`}
+                size={`calc((100cqw + 100cqh) / (${imageis.length - imageis.length / 5.5} * .7))`}
                 onClick={() => gamerMemoryGiantShownImageisAtom.do.toggle(indexi)}
               />
               <StyledCardBackSide>{indexi + 1}</StyledCardBackSide>
@@ -54,7 +53,6 @@ const StyledCardBackSide = styled.div`
   transition: color 0.3s;
   position: absolute;
   background-color: black;
-  pointer-events: none;
   top: 0;
   left: 0;
   width: 100%;
@@ -85,7 +83,7 @@ const StyledCard = styled.div<{ $isShown: boolean; $isGuessed: boolean }>`
   ${props =>
     props.$isShown || props.$isGuessed
       ? css`
-          pointer-events: none;
+          /* pointer-events: none; */
           transform: rotateY(0);
 
           ${StyledCardFrontSide} {
@@ -104,7 +102,7 @@ const StyledCard = styled.div<{ $isShown: boolean; $isGuessed: boolean }>`
         `}
 `;
 
-const StyledBoard = styled.div<{ $widthHeight: { w: number; h: number } | und; $shownImageiSet: Set<number> }>`
+const StyledBoard = styled.div<{ $shownImageiSet: Set<number> }>`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -115,14 +113,4 @@ const StyledBoard = styled.div<{ $widthHeight: { w: number; h: number } | und; $
     css`
       pointer-events: none;
     `}
-
-  ${props => {
-    if (props.$widthHeight == null) return;
-    const proportion = props.$widthHeight.h / props.$widthHeight.w;
-
-    return css`
-      width: ${proportion < 1 ? `calc(100% * ${proportion})` : '100%'};
-      height: ${proportion < 1 ? '100%' : `calc(100% / ${proportion})`};
-    `;
-  }}
 `;

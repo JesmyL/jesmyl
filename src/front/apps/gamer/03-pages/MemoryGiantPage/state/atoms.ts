@@ -2,6 +2,7 @@ import { mylib } from '#shared/lib/my-lib';
 import { atom } from 'atomaric';
 
 export const gamerMemoryGiantShownImageisAtom = atom(new Set<number>(), 'gamer:MemoryGiant:shownImageis');
+export const gamerMemoryGiantShowImagesAtom = atom(false);
 export const gamerMemoryGiantGuessedImageisAtom = atom(new Set<number>(), 'gamer:MemoryGiant:guessedImageis');
 export const gamerMemoryGiantUsedImagesAtom = atom<string[]>([], 'gamer:MemoryGiant:usedImages');
 
