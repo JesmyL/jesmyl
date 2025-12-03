@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import {
   gamerMemoryGiantBoardImageisAtom,
   gamerMemoryGiantGuessedImageisAtom,
-  gamerMemoryGiantShowImagesAtom,
+  gamerMemoryGiantShowAllImagesAtom,
   gamerMemoryGiantShownImageisAtom,
   gamerMemoryGiantUsedImagesAtom,
 } from '../state/atoms';
@@ -14,7 +14,7 @@ export const GamerMemoryGiantBoard = () => {
   const images = useAtomValue(gamerMemoryGiantUsedImagesAtom);
   const shownImageiSet = useAtomValue(gamerMemoryGiantShownImageisAtom);
   const guessedImageiSet = useAtomValue(gamerMemoryGiantGuessedImageisAtom);
-  const isShowAll = useAtomValue(gamerMemoryGiantShowImagesAtom);
+  const isShowAll = useAtomValue(gamerMemoryGiantShowAllImagesAtom);
 
   return (
     <StyledBoard $shownImageiSet={shownImageiSet}>

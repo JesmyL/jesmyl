@@ -2,7 +2,7 @@ import { mylib } from '#shared/lib/my-lib';
 import { atom } from 'atomaric';
 
 export const gamerMemoryGiantShownImageisAtom = atom(new Set<number>(), 'gamer:MemoryGiant:shownImageis');
-export const gamerMemoryGiantShowImagesAtom = atom(false);
+export const gamerMemoryGiantShowAllImagesAtom = atom(false);
 export const gamerMemoryGiantGuessedImageisAtom = atom(new Set<number>(), 'gamer:MemoryGiant:guessedImageis');
 export const gamerMemoryGiantUsedImagesAtom = atom<string[]>([], 'gamer:MemoryGiant:usedImages');
 
@@ -34,6 +34,7 @@ export const gamerMemoryGiantBoardImageisAtom = atom(null as number[] | null, {
       self.reset();
       gamerMemoryGiantShownImageisAtom.reset();
       gamerMemoryGiantGuessedImageisAtom.reset();
+      gamerMemoryGiantShowAllImagesAtom.reset();
     },
     fillBoard: () => {
       if (get()) return;

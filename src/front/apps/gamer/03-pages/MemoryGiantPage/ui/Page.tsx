@@ -17,7 +17,7 @@ import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 import {
   gamerMemoryGiantBoardImageisAtom,
-  gamerMemoryGiantShowImagesAtom,
+  gamerMemoryGiantShowAllImagesAtom,
   gamerMemoryGiantUsedImagesAtom,
 } from '../state/atoms';
 import { GamerMemoryGiantBoard } from '../sub-ui/Board';
@@ -60,11 +60,11 @@ export const GamerMemoryGiantPage = () => {
       headTitle="Мемори-гигант"
       head={
         <div className="flex gap-3">
-          <WithAtomValue atom={gamerMemoryGiantShowImagesAtom}>
+          <WithAtomValue atom={gamerMemoryGiantShowAllImagesAtom}>
             {isShow => (
               <Button
                 icon={isShow ? 'ViewOff' : 'View'}
-                onClick={gamerMemoryGiantShowImagesAtom.do.toggle}
+                onClick={gamerMemoryGiantShowAllImagesAtom.do.toggle}
               />
             )}
           </WithAtomValue>
