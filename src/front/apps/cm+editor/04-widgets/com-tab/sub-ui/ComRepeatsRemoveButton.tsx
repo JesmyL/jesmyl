@@ -94,7 +94,8 @@ export const CmEditorComTabRepeatsRemoveButton = ({
                   key={flashi}
                   className="flex gap-3 flex-wrap justify-center"
                 >
-                  <pre
+                  <div
+                    className="pre-text"
                     dangerouslySetInnerHTML={{
                       __html:
                         startFlash.repeat(count || 0) +

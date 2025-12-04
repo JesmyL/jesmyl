@@ -20,6 +20,7 @@ import { useCmComFavouriteList } from '$cm/entities/com-favourite';
 import { cmComLastOpenComwAtom } from '$cm/entities/index';
 import { CmComAudioPlayerMarksMovers } from '$cm/ext';
 import { getCmComFreshAudioMarksPack } from '$cm/shared/lib/getFresh';
+import { cmComTrackPreSwitchTimeAtom } from '$cm/shared/state';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { atom, useAtomValue } from 'atomaric';
 import { useEffect, useMemo } from 'react';
@@ -32,7 +33,6 @@ import { CmPlayerBroadcast } from './Broadcast';
 let isCanPlay = false;
 const openComListModeAtom = atom<'all' | 'fav' | 'sel'>('all', 'com-player:openComListMode');
 const comsWithErrorAtom = atom<Set<CmComWid>>(new Set());
-const preSwitchTimeAtom = atom(2);
 
 const resetIsCanPlayEffect = () => {
   return () => {
@@ -168,7 +168,7 @@ export const CmPlayerPage = () => {
             <div className="mb-10">
               <CmComAudioPlayerMarksMovers
                 com={com}
-                preSwitchTimeAtom={preSwitchTimeAtom}
+                preSwitchTimeAtom={cmComTrackPreSwitchTimeAtom}
                 src={broadcastSrc}
                 win={openWin}
               />

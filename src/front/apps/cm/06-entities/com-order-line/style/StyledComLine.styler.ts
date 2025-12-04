@@ -48,7 +48,7 @@ export const StyledCmComOrderLine = styled.div`
         font-size: 1em;
       }
 
-      .fragment {
+      [word-fragment] {
         &::before {
           content: attr(attr-pchord);
           position: absolute;
@@ -87,7 +87,7 @@ export const StyledCmComOrderLine = styled.div`
     }
 
     &[com-letter-chorded='post'] {
-      .fragment {
+      [word-fragment] {
         display: inline-block;
         position: relative;
 
@@ -124,20 +124,18 @@ export const StyledCmComOrderLine = styled.div`
 
   .whole-word {
     [attr-chord] {
-      &:has(+ [attr-chord]) {
-        .fragment {
-          position: relative;
+      &:has(+ [attr-chord]) [word-fragment] {
+        position: relative;
 
-          > span:has(span) {
-            display: inline-flex;
-            justify-content: space-between;
-            width: 100%;
+        > span:has(span) {
+          display: inline-flex;
+          justify-content: space-between;
+          width: 100%;
 
-            [dash-divider]::before {
-              content: ' - ';
-              display: inline-block;
-              color: var(--color--7);
-            }
+          [dash-divider]::before {
+            content: ' - ';
+            display: inline-block;
+            color: var(--color--7);
           }
         }
       }

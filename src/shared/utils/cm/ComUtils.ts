@@ -22,7 +22,7 @@ export class CmComUtils {
   static chordLikeStr = chordLikeStr;
   static displayableTextBlockSingleWritedSymbolsStr = `(),":;'?` as const;
   static displayableTextBlockSymbolsStr = `-.!\\s${this.displayableTextBlockSingleWritedSymbolsStr}` as const;
-  static displayableTextBlockCharsStr = `${this.displayableTextBlockSymbolsStr}${this.slavicLowerLettersStr}`;
+  static displayableTextBlockCharsStr = `${this.displayableTextBlockSymbolsStr}${this.slavicLowerLettersStr}` as const;
 
   static textedChordRegs = makeNamedRegExp(
     // regexpert:
@@ -125,38 +125,29 @@ export class CmComUtils {
   };
 
   static transformToDisplayedText = (() => {
-    const backBrackets = ['`', '`'];
-    const dashReg = makeRegExp(`/((?=\\S)-+(?=\\S))|( ?-+\n)|( ?-+ ?)/g`);
+    let level = 0;
     const dashReplacer: (...args: string[]) => string = (_, $1, $2) => ($2 ? ' —\n' : $1 || ' —&nbsp;');
-    const openBracketReg = makeRegExp(`/(\\( ?)?("+)( ?\\)?)/g`);
-    const closeBracketReg = makeRegExp(`/\\("+ \\)$|^\\( "+\\)/g`);
-    const spacesLikeReg = makeRegExp(`/\\s/`);
+
+    const replaceNestedBrackets = (all: string, index: number, text: string) => {
+      const pre = text[index - 1];
+      const isOpen = !pre || pre.match(makeRegExp(`/\\s/`));
+
+      const brLevel = level - (isOpen ? 0 : 1);
+      level -= (isOpen ? -1 : 1) * all.length;
+
+      return all
+        .split('')
+        .map((_, bri) => this.openAndClosedQuotes[brLevel - (isOpen ? -bri : bri)]?.[isOpen ? 0 : 1] ?? '`')
+        .join('');
+    };
 
     return (text = '') => {
-      let level = 0;
+      level = 0;
 
       const str = text
         .replace(makeRegExp(`/[^${this.displayableTextBlockCharsStr}]+/gi`), '')
-        .replace(dashReg, dashReplacer)
-        .replace(openBracketReg, (_, pref = '', all: string, post = '', index, text) => {
-          const pre = text[index - 1];
-          const isOpen = !pre || pre.search(spacesLikeReg) + 1;
-          const brLevel = level - (isOpen ? 0 : 1);
-          level -= (isOpen ? -1 : 1) * all.length;
-
-          return pref[0] === '(' && post.endsWith(')')
-            ? ''
-            : (pref || '') +
-                all
-                  .split('')
-                  .map(
-                    (_, bri) =>
-                      (this.openAndClosedQuotes[brLevel - (isOpen ? -bri : bri)] ?? backBrackets)[isOpen ? 0 : 1],
-                  )
-                  .join('') +
-                (post || '');
-        })
-        .replace(closeBracketReg, '');
+        .replace(makeRegExp(`/"+/g`), replaceNestedBrackets)
+        .replace(makeRegExp(`/((?=\\S)-+(?=\\S))|( ?-+\n)|( ?-+ ?)/g`), dashReplacer);
 
       return { text: str, level };
     };

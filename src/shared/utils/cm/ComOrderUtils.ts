@@ -20,90 +20,88 @@ export class CmComOrderUtils {
     if (mylib.isNum(repeats)) return this._insertRepeats(text, repeats, true, true);
     else {
       const poss: PRecord<number, PRecord<number, number[]>> = {};
-
-      mylib
+      const parts: PRecord<string, number> = {};
+      const sortedKeys = mylib
         .keys(repeats)
-        .sort((a, b) => {
-          let acount = 0,
-            bcount = 0;
-          const [abeg = '', aend = ''] = a.split('-');
-          const [, abegWord] = abeg.split(':');
-          const [aendLine, aendWord] = aend.split(':');
+        .sort((a, b) => calculateRepeatKeyWeight(parts, a) - calculateRepeatKeyWeight(parts, b));
 
-          const [bbeg = '', bend = ''] = b.split('-');
-          const [, bbegWord] = bbeg.split(':');
-          const [bendLine, bendWord] = bend.split(':');
+      for (const key of sortedKeys) {
+        if (key === '.') continue;
 
-          if (abegWord) acount++;
-          if (aendWord) acount++;
-          if (aendLine) acount++;
+        const pushRep = (linei: number, wordi: number, fix = 1) => {
+          ((poss[linei] ??= {})[wordi] ??= []).push(fix * repeats[key]);
+        };
 
-          if (bbegWord) bcount++;
-          if (bendWord) bcount++;
-          if (bendLine) bcount++;
+        if (key.match(makeRegExp('/[a-z]$/i'))) {
+          const [linei, wordi] = key.split(makeRegExp('/[:a-z]/i'));
+          pushRep(+linei, +wordi, -1);
+          continue;
+        }
 
-          return acount - bcount;
-        })
-        .forEach(key => {
-          if (key === '.') return;
+        if (key.startsWith('~') || key.match(makeRegExp('/^[a-z]/i'))) {
+          const [, linei, wordi] = key.split(makeRegExp('/[~:a-z]/i'));
+          pushRep(+linei, +wordi);
+          continue;
+        }
 
-          const pushRep = (linei: number, wordi: number, fix = 1) => {
-            const tr = (poss[linei] = mylib.typ({}, poss[linei]));
-            const td = (tr[wordi] = mylib.typ([], tr[wordi]));
-            td.push(fix * repeats[key]);
-          };
+        const limits = key.split('-');
+        const [begLine, begWord = -1] = limits[0].split(':');
+        const [endSplitLine, endWord = -1] = (limits[1] ?? '').split(':');
+        const endLine = endSplitLine || begLine;
 
-          if (key.match(makeRegExp('/[a-z]$/i'))) {
-            const [linei, wordi] = key.split(makeRegExp('/[:a-z]/i'));
-            pushRep(+linei, +wordi, -1);
-            return;
-          }
+        if (begLine) pushRep(+begLine, +begWord);
+        if (endLine) pushRep(+endLine, +endWord, -1);
+      }
 
-          if (key.startsWith('~') || key.match(makeRegExp('/^[a-z]/i'))) {
-            const [, linei, wordi] = key.split(makeRegExp('/[~:a-z]/i'));
-            pushRep(+linei, +wordi);
-            return;
-          }
+      const repld: string[] = [];
+      const lines = text.split(makeRegExp('/\\n+/'));
 
-          const [beg = '', end = ''] = key.split('-');
-          const [begLine, begWord = -1] = beg.split(':');
-          const [endSplitLine, endWord = -2] = end.split(':');
-          const endLine = endSplitLine || begLine;
+      for (let linei = 0; linei < lines.length; linei++) {
+        const words = lines[linei].split(makeRegExp('/ +/'));
 
-          if (begLine) pushRep(+begLine, +begWord);
-          if (endLine) pushRep(+endLine, +endWord, -1);
-        });
+        const repldLine: string[] = [];
 
-      const repld = text
-        .split(makeRegExp('/\\n+/'))
-        .map((line, linei) => {
-          const words = line.split(makeRegExp('/ +/'));
+        for (let wordi = 0; wordi < words.length; wordi++) {
+          const counts = poss[linei]?.[wordi] ?? [];
 
-          const repldLine = words
-            .map((word, wordi) => {
-              const counts = poss[linei]?.[wordi] ?? [];
+          repldLine.push(
+            counts.length === 0
+              ? words[wordi]
+              : counts.reduceRight(
+                  (prev, count) => this._insertRepeats(prev, Math.abs(count), count > 0, count < 0),
+                  words[wordi],
+                ),
+          );
+        }
 
-              return counts.length === 0
-                ? word
-                : counts.reduce(
-                    (prev, count) => this._insertRepeats(prev, Math.abs(count), count > 0, count < 0),
-                    word,
-                  );
-            })
-            .join(' ');
+        const counts = poss[linei]?.[-1];
 
-          const counts = poss[linei]?.[-1]?.concat(poss[linei][-2] ?? []) ?? [];
-
-          return counts.length > 0
-            ? counts.reduce(
+        repld.push(
+          counts !== undefined && counts.length > 0
+            ? counts.reduceRight(
                 (prev, count) => this._insertRepeats(prev, Math.abs(count), count > 0, count < 0),
-                repldLine,
+                repldLine.join(' '),
               )
-            : repldLine;
-        })
-        .join('\n');
+            : repldLine.join(' '),
+        );
+      }
 
-      return mylib.isNum(repeats['.']) ? this._insertRepeats(repld, repeats['.'], true, true) : repld;
+      return mylib.isNum(repeats['.'])
+        ? this._insertRepeats(repld.join('\n'), repeats['.'], true, true)
+        : repld.join('\n');
     }
   }
 }
+
+const split = (str: string | nil, by: string): (string | nil)[] | nil => str?.split(by);
+
+const calculateRepeatKeyWeight = (parts: PRecord<string, number>, key: string) => {
+  if (parts[key] != null) return parts[key];
+
+  const keyLimits = split(key, '-');
+  const begDigits = split(keyLimits?.[0], ':');
+  const endDigits = split(keyLimits?.[1], ':');
+
+  return (parts[key] =
+    (endDigits?.[0] ? 1 : 0) + (endDigits?.[1] ? 1 : 0) + (begDigits?.[0] ? 1 : 0) + (begDigits?.[1] ? 1 : 0));
+};

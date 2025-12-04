@@ -16,11 +16,6 @@ interface Props {
   isHidePanelOnEmptyMarks?: boolean;
 }
 
-const preSwitchTimeSelectItems = [-1, 0, 1, 2, 3, 4].map(id => ({
-  id,
-  title: <span className="w-[.7em]">{id < 0 ? '×' : id}</span>,
-}));
-
 export const CmComAudioPlayerMarksMovers = (props: Props) => {
   const preSwitchTime = useAtomValue(props.preSwitchTimeAtom);
 
@@ -44,7 +39,7 @@ export const CmComAudioPlayerMarksMovers = (props: Props) => {
 
       <Dropdown
         id={preSwitchTime}
-        items={preSwitchTimeSelectItems}
+        items={[-1, 0, 1, 2, 3, 4].map(id => ({ id, title: <span className="w-[.7em]">{id < 0 ? '×' : id}</span> }))}
         onSelectId={props.preSwitchTimeAtom.set}
         hiddenArrow
       />

@@ -145,7 +145,7 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
         >
           {isChorded || isChordedLast ? (
             <span
-              className="fragment"
+              word-fragment=""
               attr-chord={chord}
               attr-pchord={pchord}
             >
@@ -181,37 +181,35 @@ const consonantLettersStr = '[йцкнгшщзхъфвпрлджчсмтьб]';
 const splitLettersReg = makeRegExp(`/([а-яё](?:${consonantLettersStr}(?=${consonantLettersStr}{2}))?[?!,.)-:;]?)/`);
 
 const insertDividedBits = (lettersText: string, chord: string | und) => {
-  if (chord == null || chord.length < lettersText.length)
+  if (chord === undefined || chord.length < lettersText.length)
     return <span dangerouslySetInnerHTML={{ __html: lettersText }} />;
 
-  const text = lettersText.split(splitLettersReg);
-  const nodes = [];
+  const letters = lettersText.split(splitLettersReg);
+  let node: React.ReactNode = null;
 
-  for (let txti = 0; txti < text.length; txti++) {
-    if (text[txti] === ' ') break;
-    if (text[txti] === '') continue;
+  for (let txti = 0; txti < letters.length; txti++) {
+    if (letters[txti] === ' ') break;
+    if (letters[txti] === '') continue;
 
-    nodes.push(
-      <span
-        key={0}
-        dangerouslySetInnerHTML={{
-          __html: text[txti][text[txti].length - 1] === '-' ? text[txti].slice(0, -1) : text[txti],
-        }}
-      />,
-      <span
-        key={1}
-        dash-divider=""
-      />,
+    node = (
+      <>
+        <span
+          dangerouslySetInnerHTML={{
+            __html: letters[txti][letters[txti].length - 1] === '-' ? letters[txti].slice(0, -1) : letters[txti],
+          }}
+        />
+        <span dash-divider="" />
+      </>
     );
 
-    text[txti] = '';
+    letters[txti] = '';
     break;
   }
 
   return (
     <span>
-      {nodes}
-      <span dangerouslySetInnerHTML={{ __html: text.join('') }} />
+      {node}
+      <span dangerouslySetInnerHTML={{ __html: letters.join('') }} />
     </span>
   );
 };

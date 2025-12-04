@@ -1,5 +1,6 @@
 import { Badge } from '#shared/components/ui/badge';
-import { atom, useAtomValue } from 'atomaric';
+import { cmComTrackPreSwitchTimeAtom } from '$cm/shared/state';
+import { useAtomValue } from 'atomaric';
 import { HttpLink } from 'shared/api';
 import { twMerge } from 'tailwind-merge';
 import { CmCom } from '../../com/lib/Com';
@@ -13,7 +14,6 @@ interface Props {
   className?: string;
   hideMarksForce?: boolean;
 }
-const preSwitchTimeAtom = atom(2, 'cm:comAudioPreSwitchTime');
 
 export const CmComAudioPlayerWithMarks = (props: Props) => {
   const isOpenButtons = useAtomValue(isCmComAudioPlayerOpenMoversAtom);
@@ -28,7 +28,7 @@ export const CmComAudioPlayerWithMarks = (props: Props) => {
           <CmComAudioPlayerMarksMovers
             src={src}
             com={props.com}
-            preSwitchTimeAtom={preSwitchTimeAtom}
+            preSwitchTimeAtom={cmComTrackPreSwitchTimeAtom}
             isHidePanelOnEmptyMarks
           />
         )

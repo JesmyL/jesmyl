@@ -4,7 +4,7 @@ import { MyLib, mylib } from '#shared/lib/my-lib';
 import { CmCom } from '$cm/entities/com';
 import { cmComAudioPlayerHTMLElement, cmComAudioPlayerPlaySrcAtom } from '$cm/entities/com-audio-player';
 import { makeCmComAudioMarkTitleBySelector } from '$cm/ext';
-import { cmIDB } from '$cm/shared/state';
+import { cmComTrackPreSwitchTimeAtom, cmIDB } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { CmComAudioMarkSelector, CmComOrderWid } from 'shared/api';
@@ -31,6 +31,8 @@ export const useCmComOrderAudioMarkControl = (
     if (!isNeedCompute || audioTrackMarks?.marks == null) return result;
 
     let lastOrdwOrNull: 'before' | CmComOrderWid = 'before';
+    let minusTime = cmComTrackPreSwitchTimeAtom.get();
+    minusTime = minusTime < 0 ? 0 : minusTime;
 
     MyLib.entries(audioTrackMarks.marks).forEach(([time, selector]) => {
       if (selector == null) return;
@@ -45,7 +47,7 @@ export const useCmComOrderAudioMarkControl = (
               com-audio-mark-time-selector={time}
               onClick={event => {
                 event.stopPropagation();
-                cmComAudioPlayerHTMLElement.currentTime = +time;
+                cmComAudioPlayerHTMLElement.currentTime = +time - minusTime;
                 cmComAudioPlayerHTMLElement.play();
               }}
             >
@@ -81,7 +83,7 @@ export const useCmComOrderAudioMarkControl = (
             com-audio-mark-time-selector={time}
             onClick={event => {
               event.stopPropagation();
-              cmComAudioPlayerHTMLElement.currentTime = +time;
+              cmComAudioPlayerHTMLElement.currentTime = +time - minusTime;
               cmComAudioPlayerHTMLElement.play();
             }}
           />,

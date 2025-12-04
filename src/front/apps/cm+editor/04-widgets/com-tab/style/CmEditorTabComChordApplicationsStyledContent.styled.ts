@@ -41,7 +41,7 @@ export const CmEditorComTabChordApplicationsStyledContent = styled.div`
     }
 
     &[com-letter-chorded]:not([com-letter-chorded='pre']):not([com-letter-chorded='post']) {
-      > .fragment > * {
+      > [word-fragment] > * {
         display: inline-block;
 
         &[com-letter-space-word] {
@@ -55,11 +55,11 @@ export const CmEditorComTabChordApplicationsStyledContent = styled.div`
 
       &:first-letter,
       &[com-letter-spaced-word]:after,
-      &[attr-chord] > .fragment > *:first-letter {
+      &[attr-chord] > [word-fragment] > *:first-letter {
         background-color: rgba(255, 209, 0, 0.3);
       }
 
-      &[attr-chord][com-letter-spaced-word] > .fragment > *:first-letter {
+      &[attr-chord][com-letter-spaced-word] > [word-fragment] > *:first-letter {
         background-color: transparent;
       }
     }
