@@ -1,5 +1,3 @@
-import { mylib } from './my-lib';
-
 export class SourceBased<T> {
   top: T;
   basics: T;
@@ -16,9 +14,9 @@ export class SourceBased<T> {
     return this.basics[fieldn] as T[K];
   }
 
-  getBasicOr<K extends keyof T>(fieldn: K, typ: NonNullable<T[K]>): NonNullable<T[K]> {
+  getBasicOr<K extends keyof T>(fieldn: K, defaultValue: NonNullable<T[K]>): NonNullable<T[K]> {
     if (this.basics[fieldn] === undefined) {
-      if (typ !== undefined) this.basics[fieldn] = mylib.typ(typ, this.top[fieldn] as never) as never;
+      if (defaultValue !== undefined) this.basics[fieldn] = this.top[fieldn] ?? defaultValue;
       else return this.top[fieldn] as NonNullable<T[K]>;
     }
     return this.basics[fieldn] as NonNullable<T[K]>;

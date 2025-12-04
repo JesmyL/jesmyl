@@ -90,22 +90,22 @@ export class CmCom extends BaseNamed<IExportableCom> {
     return this.initial.p ?? this.getBasic('p');
   }
   set initialTransPosition(val) {
-    if (this.initial.p == null) this.initial.p = mylib.typ(0, val);
-    this.initialTransPos = mylib.typ(0, val);
+    if (this.initial.p == null) this.initial.p = val || 0;
+    this.initialTransPos = val || 0;
   }
 
   get initialTransPos() {
     return this.initial.pos ?? this.initial.p ?? this.getBasic('p');
   }
   set initialTransPos(val) {
-    if (this.initial.pos == null) this.initial.pos = mylib.typ(0, val);
+    if (this.initial.pos == null) this.initial.pos = val || 0;
   }
 
   get transPosition() {
     return this.getBasic('p');
   }
   set transPosition(value) {
-    const v: number = mylib.typ(0, value) as number;
+    const v = value || 0;
     const val = v > 11 ? v % 12 : v < 0 ? 12 + v : v;
     this.setExportable('p', val);
     this.initialTransPosition = val;
