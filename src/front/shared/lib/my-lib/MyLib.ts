@@ -32,14 +32,6 @@ export class MyLib extends SMyLib {
   dayFullTitles = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
   dayShortTitles = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 
-  typ<T>(...args: (T | null | undefined)[]): T {
-    if (args[0] == null || args.length < 2) return args[0] as T;
-
-    const type = this.typeOf(args[0]);
-    const arg = args.find((arg, argi) => argi && this.typeOf(arg) === type);
-    return arg == null ? args[0] : arg;
-  }
-
   findLastIndex<Value>(arr?: Value[], cb: (val: Value, index: number, array: Value[]) => unknown = () => false) {
     if (!Array.isArray(arr)) return null;
     if (!this.isFunc(cb)) return arr.length - 1;
