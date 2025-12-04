@@ -11,3 +11,4 @@ declare module 'react' {
     'com-word-index'?: number | string;
   }
 }
+
