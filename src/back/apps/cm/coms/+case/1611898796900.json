@@ -6,7 +6,7 @@
     "A/C# G D\nA Hm G D\nA/C# Hm A G\nEm A D",
     "Em A\nD Hm\nEm Hm\nA G",
     "Em A Hm\nEm A Hm\nEm A D",
-    "A G Em",
+    "A G Em\nA G Em",
     "D Hm Em A/D\nHm Em A/F#"
   ],
   "t": [
@@ -76,7 +76,7 @@
       "c": 2,
       "p": [
         [1, 10],
-        [2, 10],
+        [2, 9],
         [0, 7],
         [-2, 4]
       ],
@@ -99,7 +99,7 @@
     }
   ],
   "bpm": 66,
-  "m": 1762405896121,
+  "m": 1764869832272,
   "a": "https://holychords.pro/uploads/music/20200701/20200701164140_58.mp3",
   "al": "1~20200701//164140_58.mp3"
 }
