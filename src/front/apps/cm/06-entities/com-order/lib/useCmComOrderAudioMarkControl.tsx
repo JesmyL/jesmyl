@@ -31,8 +31,7 @@ export const useCmComOrderAudioMarkControl = (
     if (!isNeedCompute || audioTrackMarks?.marks == null) return result;
 
     let lastOrdwOrNull: 'before' | CmComOrderWid = 'before';
-    let minusTime = cmComTrackPreSwitchTimeAtom.get();
-    minusTime = minusTime < 0 ? 0 : minusTime;
+    const takeMinusTime = () => (cmComTrackPreSwitchTimeAtom.get() < 0 ? 0 : cmComTrackPreSwitchTimeAtom.get());
 
     MyLib.entries(audioTrackMarks.marks).forEach(([time, selector]) => {
       if (selector == null) return;
@@ -47,7 +46,7 @@ export const useCmComOrderAudioMarkControl = (
               com-audio-mark-time-selector={time}
               onClick={event => {
                 event.stopPropagation();
-                cmComAudioPlayerHTMLElement.currentTime = +time - minusTime;
+                cmComAudioPlayerHTMLElement.currentTime = +time - takeMinusTime();
                 cmComAudioPlayerHTMLElement.play();
               }}
             >
@@ -83,7 +82,7 @@ export const useCmComOrderAudioMarkControl = (
             com-audio-mark-time-selector={time}
             onClick={event => {
               event.stopPropagation();
-              cmComAudioPlayerHTMLElement.currentTime = +time - minusTime;
+              cmComAudioPlayerHTMLElement.currentTime = +time - takeMinusTime();
               cmComAudioPlayerHTMLElement.play();
             }}
           />,
