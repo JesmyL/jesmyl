@@ -23,7 +23,6 @@ import { cmConstantsDefaultConfig } from 'shared/values/cm/cmConstantsDefaultCon
 export const comsDirStore = new DirStorage<IServerSideCom, CmComWid>({
   dirPath: '/apps/cm/coms/',
   makeNewItem: () => ({
-    m: Date.now(),
     n: '',
     w: +`${Date.now() + Math.random()}`,
   }),
