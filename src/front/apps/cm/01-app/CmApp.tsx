@@ -2,8 +2,9 @@ import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRi
 import { useCurrentAppSetter } from '#basis/lib/useCurrentAppSetter';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
-import { useCmComSelectedList } from '$cm/entities/com';
-import { cmComShareComCommentPropsAtom } from '$cm/entities/index';
+import { Metronome } from '#widgets/metronome';
+import { useCmCom, useCmComSelectedList } from '$cm/entities/com';
+import { cmComLastOpenComwAtom, cmComShareComCommentPropsAtom } from '$cm/entities/index';
 import { CmComSharedListActionInterpretator } from '$cm/features/com';
 import { CmComCommentSharePull } from '$cm/features/com-comment';
 import { cmAppActions } from '$cm/shared/const';
@@ -22,6 +23,8 @@ export const CmApp = () => {
   const { maxSelectedComsCount } = useAtomValue(cmConstantsConfigAtom);
   const comCommentShareProps = useAtomValue(cmComShareComCommentPropsAtom);
   const checkAccess = useCheckUserAccessRightsInScope();
+  const ccomw = useAtomValue(cmComLastOpenComwAtom);
+  const ccom = useCmCom(ccomw);
 
   const { selectedComws, setSelectedComws } = useCmComSelectedList();
 
@@ -61,6 +64,13 @@ export const CmApp = () => {
 
       <CmComSharedListActionInterpretator comListOnActionAtom={comListOnActionAtom} />
       {comCommentShareProps && <CmComCommentSharePull shareProps={comCommentShareProps} />}
+
+      {ccom && (
+        <Metronome
+          meterSize={ccom.meterSize}
+          bpm={ccom.beatsPerMinute}
+        />
+      )}
     </>
   );
 };

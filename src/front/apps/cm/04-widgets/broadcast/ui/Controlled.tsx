@@ -2,6 +2,7 @@ import { BroadcastSlidePreview } from '#features/broadcast/controls/Preview';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { CmCom, useCmComOpenComLinkRendererContext } from '$cm/entities/com';
 import { CmComFaceList } from '$cm/entities/com-face';
+import { CmComToolHideMetronome } from '$cm/entities/com-tool';
 import { cmComIsShowFavouritesInBroadcastsAtom } from '$cm/entities/index';
 import { useCmBroadcastScreenComNavigations, useCmBroadcastScreenComTextNavigations } from '$cm/features/broadcast';
 import { useAtom } from 'atomaric';
@@ -76,7 +77,9 @@ export function CmBroadcastControlled(props: Props) {
               />
             </div>
           </div>
-
+          <div className="mt-5">
+            <CmComToolHideMetronome />
+          </div>
           <CmBroadcastSlideLine />
           <CmBroadcastControlPanel />
           <CmBroadcastScreenConfigurations />

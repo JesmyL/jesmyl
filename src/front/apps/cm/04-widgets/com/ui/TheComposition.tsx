@@ -2,7 +2,6 @@ import { Modal } from '#shared/ui/modal';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { DocTitle } from '#shared/ui/tags/DocTitle';
 import { WithAtomTruthfulValue } from '#shared/ui/WithAtomTruthfulValue';
-import { Metronome } from '#widgets/metronome';
 import {
   CmComCatMentions,
   CmComNotFoundPage,
@@ -83,11 +82,6 @@ export function TheCmComComposition() {
           >
             <CmComCommentModalInner com={ccom} />
           </Modal>
-
-          <Metronome
-            meterSize={ccom.meterSize}
-            bpm={ccom.beatsPerMinute}
-          />
 
           <BottomPopup
             id="com-tools-bottom-popup"
