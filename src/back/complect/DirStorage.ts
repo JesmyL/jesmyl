@@ -11,7 +11,8 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
   updateItem: (id: Id, updater: (item: Item) => void) => { item: Item; mod: number } | nil;
 
   private getFileStore: (id: Id) => FileStore<Item> | nil;
-  private updateCahceTime: (id: Id) => void = () => { };
+  private updateCahceTime: (id: Id) => void = retTrue;
+  private refillIds: () => void = retTrue;
 
   constructor({
     makeNewItem,
@@ -69,7 +70,7 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
         [idKey]: id,
       }));
 
-      refillIds();
+      this.refillIds();
 
       return {
         item: item.getValue(),
@@ -95,11 +96,10 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
       };
     }
 
-    const refillIds = () => {
+    this.refillIds = () => {
       try {
         this.ids = fs.readdirSync(absoluteDirPath).map(makeIdFromFileName) as Id[];
       } catch (_e) {
-
         new FileStore(`${dirPath}file`, {}).makePath();
 
         try {
@@ -113,7 +113,7 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
       this.ids.forEach(this.getItemModTime);
     };
 
-    refillIds();
+    this.refillIds();
   }
 
   getItem = (id: Id) => {
@@ -134,7 +134,7 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
 
   deleteItem = (id: Id) => {
     this.getFileStore(id)?.deleteFile();
-    this.ids = this.ids.filter(it => it != id);
+    this.refillIds();
   };
 
   saveItem = (id: Id) => {
@@ -175,4 +175,4 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
   getAllIds = () => this.ids;
 }
 
-const retTrue = () => true
+const retTrue = () => true;
