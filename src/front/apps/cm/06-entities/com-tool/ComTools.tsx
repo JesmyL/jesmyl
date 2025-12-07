@@ -6,20 +6,19 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ChordVisibleVariant } from '$cm/shared/model';
 import { cmIDB } from '$cm/shared/state';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
-import { useAtom } from 'atomaric';
+import { useAtom, useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { useCmComCurrentFixedCom } from '../com/lib/com-selections';
-import { useCmComChordVisibleVariant } from '../com/lib/useChordVisibleVariant';
-import { cmComFontSizeAtom } from '../com/state/atoms';
+import { cmComChordVisibleVariantAtom, cmComFontSizeAtom } from '../com/state/atoms';
 import { CmComCatMentions } from '../com/ui/ComCatMentions';
 import { useCmComToolMigratableList } from './lib/useMigratableComTools';
 
 export const CmComToolList = () => {
   const ccom = useCmComCurrentFixedCom();
   const [fontSize, setFontSize] = useAtom(cmComFontSizeAtom);
-  const [chordVisibleVariant] = useCmComChordVisibleVariant();
+  const chordVisibleVariant = useAtomValue(cmComChordVisibleVariantAtom);
   const comToolsNode = useCmComToolMigratableList();
   const ifixedCom = useLiveQuery(() => ccom && cmIDB.tb.fixedComs.get(ccom.wid), [ccom?.wid]);
   const [visitsCount, setVisitsCount] = useState<null | number>(null);

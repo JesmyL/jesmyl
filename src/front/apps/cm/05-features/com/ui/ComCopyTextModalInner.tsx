@@ -2,13 +2,13 @@ import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { CopyTextButton } from '#shared/ui/CopyTextButton';
 import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { CmCom, useCmComChordVisibleVariant } from '$cm/entities/com';
+import { CmCom } from '$cm/entities/com';
 import {
   CmComToolChordsVariant,
   CmComToolIsComToolIconItemsContext,
   CmComToolMiniAnchorSwitch,
 } from '$cm/entities/com-tool';
-import { cmComIsComMiniAnchorAtom } from '$cm/entities/index';
+import { cmComChordVisibleVariantAtom, cmComIsComMiniAnchorAtom } from '$cm/entities/index';
 import { TheCmComCurrent } from '$cm/widgets/com';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
@@ -16,7 +16,7 @@ import { makeRegExp } from 'regexpert';
 
 export const CmComCopyTextModalInner = ({ com }: { com: CmCom }) => {
   const [text, setText] = useState('');
-  const [chordVisibleVariant] = useCmComChordVisibleVariant();
+  const chordVisibleVariant = useAtomValue(cmComChordVisibleVariantAtom);
   const isMiniAnchor = useAtomValue(cmComIsComMiniAnchorAtom);
 
   useEffect(() => {

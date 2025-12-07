@@ -6,15 +6,15 @@ import {
   CmComCatMentions,
   CmComNotFoundPage,
   CmComNumber,
-  useCmComChordVisibleVariant,
   useCmComCurrentComPackContext,
   useCmComCurrentFixedCom,
 } from '$cm/entities/com';
 import { cmComCommentRedactOrdSelectorIdAtom } from '$cm/entities/com-comment';
 import { CmComToolList, useCmComToolMigratableTop } from '$cm/entities/com-tool';
-import { cmComIsShowCatBindsInCompositionAtom } from '$cm/entities/index';
+import { cmComChordVisibleVariantAtom, cmComIsShowCatBindsInCompositionAtom } from '$cm/entities/index';
 import { CmComCommentModalInner } from '$cm/features/com-comment';
 import { Link } from '@tanstack/react-router';
+import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
 import { useCmComCompositionControls } from '../lib/useComCompositionControls';
 import { StyledCmComCompositionContainer } from '../style/Composition';
@@ -26,7 +26,7 @@ export function TheCmComComposition() {
 
   const ccom = useCmComCurrentFixedCom();
   const { laterComws, comListRef } = useCmComCompositionControls(ccom);
-  const [chordVisibleVariant] = useCmComChordVisibleVariant();
+  const chordVisibleVariant = useAtomValue(cmComChordVisibleVariantAtom);
   const comToolsNode = useCmComToolMigratableTop();
   const { list } = useCmComCurrentComPackContext();
 

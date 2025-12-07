@@ -1,8 +1,9 @@
 import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
-import { useCmCom, useCmComChordVisibleVariant } from '$cm/entities/com';
+import { useCmCom } from '$cm/entities/com';
 import { CmComOrderList } from '$cm/entities/com-order';
 import { CmComOrderLine } from '$cm/entities/com-order-line';
-import { cmComSpeedRollKfAtom } from '$cm/entities/index';
+import { cmComChordVisibleVariantAtom, cmComSpeedRollKfAtom } from '$cm/entities/index';
+import { useAtomValue } from 'atomaric';
 import { useEffect, useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
 import styled from 'styled-components';
@@ -12,7 +13,7 @@ const _lineNamePrefix = 'live-broadcast-line';
 
 export const CmBroadcastLiveList = (props: CmBroadcastSchWgtLiveDataValue) => {
   const com = useCmCom(props.comw);
-  const [chordVisibleVariant] = useCmComChordVisibleVariant();
+  const chordVisibleVariant = useAtomValue(cmComChordVisibleVariantAtom);
   const lineVolumes = useMemo(() => {
     const sum: number[] = [0];
     const counts = [] as number[];
