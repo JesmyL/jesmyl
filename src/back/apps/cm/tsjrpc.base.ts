@@ -118,6 +118,12 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
             }
 
             const favoriteItem = aboutComFavoritesFileStore.getValue()[login];
+
+            if (favoriteItem && !favoriteItem.fio) {
+              favoriteItem.fio = auth.fio ?? '?';
+              aboutComFavoritesFileStore.saveValue();
+            }
+
             if (favoriteItem != null && favoriteItem.m > lastModfiedAt)
               cmShareServerTsjrpcMethods.refreshAboutComFavorites({ value: favoriteItem }, client);
           }

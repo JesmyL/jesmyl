@@ -106,6 +106,7 @@ export type ICmComCommentBlock = {
 
 export type TAboutComFavoriteItem = {
   m: number;
+  fio: string;
   comws?: CmComWid[];
   tools?: MigratableComToolName[];
 };

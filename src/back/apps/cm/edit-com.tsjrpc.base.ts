@@ -202,7 +202,6 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
               .getAllItems()
               .filter(com => com.isRemoved)
               .map(mapCmImportableToExportableCom),
-            description: '',
           };
         },
         destroy: async ({ comw }, { auth }) => {
