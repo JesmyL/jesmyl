@@ -15,7 +15,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
     super({
       scope: 'CmEditCom',
       methods: {
-        rename: modifyInvocableCom((com, { value }, { auth }) => {
+        rename: modifyCom((com, { value }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_MAIN', 'U')) throw '';
 
           const prev = com.n;
@@ -24,7 +24,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           return `Песня "${prev}" переименована на ${getCmComNameInBrackets(com)}`;
         }),
 
-        setBpM: modifyInvocableCom((com, { value }, { auth }) => {
+        setBpM: modifyCom((com, { value }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_MAIN', 'U')) throw '';
 
           const prev = com.bpm;
@@ -33,7 +33,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           return `Значение ударов в минуту для песни ${getCmComNameInBrackets(com)} установлено в ${value} (было ${prev})`;
         }),
 
-        setMeterSize: modifyInvocableCom((com, { value }, { auth }) => {
+        setMeterSize: modifyCom((com, { value }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_MAIN', 'U')) throw '';
 
           const prev = com.s;
@@ -42,7 +42,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           return `Размерность песни ${getCmComNameInBrackets(com)} установлено в значение ${cmComMetricNumTitles[value]} (было ${cmComMetricNumTitles[prev ?? 4]})`;
         }),
 
-        changeLanguage: modifyInvocableCom((com, { value }, { auth }) => {
+        changeLanguage: modifyCom((com, { value }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_MAIN', 'U')) throw '';
 
           const prev = com.l;
@@ -51,7 +51,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           return `Язык песни ${getCmComNameInBrackets(com)} изменён на ${CmComUtils.cmComLanguages[value]} (было ${prev == null ? null : CmComUtils.cmComLanguages[prev]})`;
         }),
 
-        changeTon: modifyInvocableCom((com, { value }, { auth }) => {
+        changeTon: modifyCom((com, { value }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_MAIN', 'U')) throw '';
 
           const prev = com.p;
@@ -60,7 +60,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           return `Тональность песни ${getCmComNameInBrackets(com)} изменена на ${value} (было ${prev})`;
         }),
 
-        makeBemoled: modifyInvocableCom((com, { value }, { auth }) => {
+        makeBemoled: modifyCom((com, { value }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_MAIN', 'U')) throw '';
 
           com.b = value;
@@ -68,7 +68,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           return `Песня ${getCmComNameInBrackets(com)} теперь ${value ? 'бемольная' : 'диезная'}`;
         }),
 
-        changePushKind: modifyInvocableCom((com, { value }, { auth }) => {
+        changePushKind: modifyCom((com, { value }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_TR', 'U')) throw '';
 
           const prev = com.k;
@@ -77,7 +77,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           return `Изменено значение правила группировок для слайдов в песне ${getCmComNameInBrackets(com)} - ${value} (было ${prev})`;
         }),
 
-        toggleAudioLink: modifyInvocableCom((com, { link }, { auth }) => {
+        toggleAudioLink: modifyCom((com, { link }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_AUDIO', 'U')) throw '';
 
           const prev = makeCmComNumLeadToHttpAudioLinks(com.al);
@@ -90,7 +90,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           return `Изменение аудио-ссылок для песни ${getCmComNameInBrackets(com)}:\n\n${isThereInPrev ? 'удалено' : 'добавлено'}:\n${link}\n\nбыло:\n${prev}`;
         }),
 
-        changeChordBlock: modifyInvocableCom((com, { texti: coli, value }, { auth }) => {
+        changeChordBlock: modifyCom((com, { texti: coli, value }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_CH', 'U')) throw '';
 
           com.c ??= [];
@@ -99,7 +99,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
 
           return `Изменён аккордный блок в песне ${getCmComNameInBrackets(com)}:\n\n${value}\n\nбыло:\n${prev}`;
         }),
-        changeTextBlock: modifyInvocableCom((com, { texti: coli, value }, { auth }) => {
+        changeTextBlock: modifyCom((com, { texti: coli, value }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_TXT', 'U')) throw '';
 
           const incorrects = CmComUtils.textLinesLengthIncorrects(
@@ -167,7 +167,6 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           const com = {
             ...newCom,
             w: Date.now(),
-            m: Date.now(),
             t: newCom.t?.map(text => CmComUtils.transformToClearText(text)),
           };
 
@@ -179,7 +178,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           return { value: com, description: `Добавлена новая песня ${getCmComNameInBrackets(com)}` };
         },
 
-        remove: modifyInvocableCom((com, _, { auth }) => {
+        remove: modifyCom((com, _, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'D')) throw '';
 
           com.isRemoved = 1;
@@ -187,7 +186,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           return `Песня ${getCmComNameInBrackets(com)} удалена`;
         }),
 
-        bringBackToLife: modifyInvocableCom((com, _, { auth }) => {
+        bringBackToLife: modifyCom((com, _, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'C')) throw '';
 
           delete com.isRemoved;
@@ -233,7 +232,7 @@ export const getCmComNameInBrackets = (comScalar: CmComWid | IServerSideCom | IE
   return `"${comScalar.n}"`;
 };
 
-export function modifyInvocableCom<Props extends { comw: CmComWid }>(
+export function modifyCom<Props extends { comw: CmComWid }>(
   mapper: (com: IServerSideCom, props: Props, tool: ServerTSJRPCTool) => string | null,
 ) {
   return async (props: Props, tool: ServerTSJRPCTool) => {
@@ -258,7 +257,7 @@ function insertInTextableBlock<Props extends { value: string; comw: CmComWid; in
   coln: 'c' | 't',
   text: (com: IServerSideCom, props: Props, tool: ServerTSJRPCTool) => string,
 ) {
-  return modifyInvocableCom<Props>((com, props, tool) => {
+  return modifyCom<Props>((com, props, tool) => {
     if (com[coln] == null) return '';
     const list = com[coln];
 
@@ -275,7 +274,7 @@ function removeTextableBlock<Props extends { comw: CmComWid; removei: number }>(
   coln: 'c' | 't',
   text: (com: IServerSideCom, props: Props, tool: ServerTSJRPCTool) => string,
 ) {
-  return modifyInvocableCom<Props>((com, props, tool) => {
+  return modifyCom<Props>((com, props, tool) => {
     if (com[coln] == null) return null;
     const list = com[coln];
 

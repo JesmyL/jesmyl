@@ -4,7 +4,7 @@ import { makeRegExp } from 'regexpert';
 import { CmComOrderWid, CmComWid, IExportableOrder, IServerSideCom } from 'shared/api';
 import { CmEditComOrderTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-order.tsjrpc.model';
 import { itNNil, smylib } from 'shared/utils';
-import { getCmComNameInBrackets, modifyInvocableCom } from './edit-com.tsjrpc.base';
+import { getCmComNameInBrackets, modifyCom } from './edit-com.tsjrpc.base';
 
 export const cmEditComOrderServerTsjrpcBase =
   new (class CmEditComOrder extends TsjrpcBaseServer<CmEditComOrderTsjrpcModel> {
@@ -82,7 +82,7 @@ export const cmEditComOrderServerTsjrpcBase =
             );
           }),
 
-          moveOrdAfter: modifyInvocableCom((com, { insertAfterOrdwOrFirst, ordw, orderTitle }, { auth }) => {
+          moveOrdAfter: modifyCom((com, { insertAfterOrdwOrFirst, ordw, orderTitle }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
             com.o ??= [];
@@ -99,11 +99,12 @@ export const cmEditComOrderServerTsjrpcBase =
             return `Перемещён порядковый блок ${orderTitle} в песне ${getCmComNameInBrackets(com)}`;
           }),
 
-          remove: modifyInvocableCom((com, { ordw, isAnchor, orderTitle }, { auth }) => {
+          remove: modifyCom((com, { ordw, isAnchor, orderTitle }, { auth }) => {
             try {
               if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'D')) throw '';
             } catch (_) {
-              if (com.w > Date.now() - (24 * 60 * 60 * 1000) && throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
+              if (com.w > Date.now() - 24 * 60 * 60 * 1000 && throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U'))
+                throw '';
             }
 
             com.o ??= [];
@@ -112,7 +113,7 @@ export const cmEditComOrderServerTsjrpcBase =
             return `В песне ${getCmComNameInBrackets(com)} ${isAnchor ? 'удалена ссылка на' : 'удалён'} ${orderTitle}`;
           }),
 
-          addAnchorOrder: modifyInvocableCom((com, { insertAfterOrdw, targetOrdw, orderTitle }, { auth }) => {
+          addAnchorOrder: modifyCom((com, { insertAfterOrdw, targetOrdw, orderTitle }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
             com.o ??= [];
@@ -162,28 +163,26 @@ export const cmEditComOrderServerTsjrpcBase =
             );
           }),
 
-          insertNewBlock: modifyInvocableCom(
-            (com, { insertAfterOrdwOrFirst, type, chordi, texti, orderTitle }, { auth }) => {
-              if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'C')) throw '';
+          insertNewBlock: modifyCom((com, { insertAfterOrdwOrFirst, type, chordi, texti, orderTitle }, { auth }) => {
+            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'C')) throw '';
 
-              com.o ??= [];
-              const afterOrdi =
-                insertAfterOrdwOrFirst == null ? -1 : com.o.findIndex(ord => ord.w === insertAfterOrdwOrFirst);
+            com.o ??= [];
+            const afterOrdi =
+              insertAfterOrdwOrFirst == null ? -1 : com.o.findIndex(ord => ord.w === insertAfterOrdwOrFirst);
 
-              const ord: IExportableOrder = {
-                w: getNextOrdWid(com.o),
-                s: type,
-                c: chordi,
-                t: texti,
-              };
+            const ord: IExportableOrder = {
+              w: getNextOrdWid(com.o),
+              s: type,
+              c: chordi,
+              t: texti,
+            };
 
-              if (afterOrdi < 1) {
-                com.o.unshift(ord);
-              } else com.o.splice(afterOrdi + 1, 0, ord);
+            if (afterOrdi < 1) {
+              com.o.unshift(ord);
+            } else com.o.splice(afterOrdi + 1, 0, ord);
 
-              return `В песне ${getCmComNameInBrackets(com)} добавлен новый порядковый блок ${orderTitle}`;
-            },
-          ),
+            return `В песне ${getCmComNameInBrackets(com)} добавлен новый порядковый блок ${orderTitle}`;
+          }),
 
           setPositionsLine: modifyOrd((ord, { linei, line, lineChangesText, orderTitle }, com, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_APPS', 'U')) throw '';
@@ -243,7 +242,7 @@ export const cmEditComOrderServerTsjrpcBase =
 function modifyOrd<Props extends { ordw: CmComOrderWid; comw: CmComWid }>(
   modifier: (ord: IExportableOrder, props: Props, com: IServerSideCom, tool: ServerTSJRPCTool) => string | null,
 ) {
-  return modifyInvocableCom<Props>((com, props, tool) => {
+  return modifyCom<Props>((com, props, tool) => {
     const ord = com.o?.find(ord => ord.w === props.ordw);
 
     if (ord == null) throw new Error('Ord not found');

@@ -6,6 +6,6 @@ export const mapCmImportableToExportableCom = (com: IServerSideCom): IExportable
   return { ...com, al: makeCmComNumLeadToHttpAudioLinks(com.al), m: comsDirStore.getItemModTime(com.w) ?? 0 };
 };
 
-export const mapCmExportableToImportableCom = (com: IExportableCom): IServerSideCom => {
-  return { ...com, al: makeCmComHttpToNumLeadAudioLinks(com.al) };
+export const mapCmExportableToImportableCom = (com: OmitOwn<IExportableCom, 'm'>): IServerSideCom => {
+  return { ...com, al: makeCmComHttpToNumLeadAudioLinks(com.al), ['m' as 'w']: undefined! };
 };
