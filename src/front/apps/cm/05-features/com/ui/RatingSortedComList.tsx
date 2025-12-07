@@ -4,7 +4,6 @@ import { CmComFaceList } from '$cm/entities/com-face';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
-import { emptyFunc } from 'shared/utils';
 
 interface Props {
   coms: CmCom[];
@@ -28,7 +27,6 @@ export const CmComRatingSortedComList = ({ coms }: Props) => {
       <CmComFaceList
         list={sortedComs}
         className="min-h-[110%]"
-        importantOnClick={emptyFunc}
         isPutCcomFaceOff
         comDescription={com => <span className="nowrap">{visits[com.wid] ?? 0}</span>}
       />

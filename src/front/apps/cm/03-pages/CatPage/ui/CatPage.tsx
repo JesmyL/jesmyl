@@ -118,7 +118,11 @@ export const CmCatPage = (props: Props) => {
                       </CmComSetListLimitsExtracterContext>
                     </div>
 
-                    <FullContent openAtom={isOpenRatingSortedComsAtom}>
+                    <FullContent
+                      openAtom={isOpenRatingSortedComsAtom}
+                      closable
+                      containerClassName="pt-0"
+                    >
                       <div className="sticky top-0 py-5 bg-x5">Рейтинг</div>
                       <CmComRatingSortedComList coms={props.coms} />
                     </FullContent>
