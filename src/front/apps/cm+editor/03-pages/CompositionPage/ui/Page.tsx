@@ -40,7 +40,7 @@ export const CmEditorCompositionPage = () => {
     return hookEffectPipe()
       .pipe(
         setTimeoutPipe(() => {
-          if (!ccom && (mylib.isNaN(ccomw) || removedComs[ccomw] == null)) navigate({ to: '..' });
+          if (!ccom && (mylib.isNaN(ccomw) || removedComs[ccomw] == null)) navigate({ to: '/cm/edit/coms' });
         }, 500),
       )
       .effect();
