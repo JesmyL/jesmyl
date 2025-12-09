@@ -31,7 +31,7 @@ export const cmUserStoreTsjrpcBaseServer = new (class CmUserStore extends Tsjrpc
           const favorites = aboutComFavoritesFileStore.getValueWithAutoSave();
 
           const modifiedAt = Date.now();
-          favorites[authLogin] ??= { m: modifiedAt };
+          favorites[authLogin] ??= { m: modifiedAt, fio: '' };
           favorites[authLogin].m = modifiedAt;
           if (userFavorites.comws != null) favorites[authLogin].comws = userFavorites.comws;
           if (userFavorites.tools != null) favorites[authLogin].tools = userFavorites.tools;
