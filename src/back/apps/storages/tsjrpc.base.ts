@@ -228,7 +228,7 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
 
           if (!status.next.length || status.next.length === rack.statuses.length - 1) {
             delete status.next;
-          }
+          } else status.next.sort((a, b) => a - b);
         }),
 
         setRackCardStatus: updateRackCard((card, { statusi }) => {
