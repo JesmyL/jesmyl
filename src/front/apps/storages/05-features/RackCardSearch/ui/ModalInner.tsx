@@ -19,7 +19,7 @@ const searchFields: { key: keyof StoragesRackCard | number; title: string }[] = 
   { key: 'note', title: 'Заметка' },
 ];
 
-export const StoragesRackSearchModalInner = ({
+export const StoragesRackCardSearchModalInner = ({
   rack,
   onCardClick,
 }: {
@@ -74,6 +74,10 @@ export const StoragesRackSearchModalInner = ({
             value={term}
             onInput={event => termAtom.set(event.currentTarget.value)}
             onFocus={event => event.currentTarget.select()}
+            autoFocus
+            ref={elem => {
+              setTimeout(() => elem?.focus(), 100);
+            }}
           />
           <Command.List className="w-full max-h-[calc(100cqh-300px)]">
             {term.length > 2 &&

@@ -335,6 +335,8 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
             if (titlesSet.has(title)) titlesSet.delete(title);
             else titlesSet.add(title);
 
+            titlesSet.delete('');
+
             cell.val = Array.from(titlesSet)
               .sort()
               .map(title => titleIndexDict[title]);

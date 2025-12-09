@@ -9,16 +9,17 @@ export const StoragesCellOfTypeList = (props: StoragesCellTypeProps<StoragesColu
   const isEdit = useStoragesIsEditInnersContext();
 
   if (!isEdit && !props.cell?.val.length) return;
+  const dict = props.rack.dicts[props.column.di ?? 0];
 
   return (
     <>
-      {props.columnTitleNode(<> ({props.rack.dicts[props.column.di ?? 0].title})</>)}
+      {props.columnTitleNode(<> ({dict.title})</>)}
       <div className={isEdit ? undefined : 'font-bold'}>
         {isEdit && <LazyIcon icon={props.icon} />}
         <Autocomplete
           isShowSelectedNodeOnly={!isEdit}
           selected={props.cell?.val}
-          items={props.rack.dicts[props.column.di ?? 0].li.map(value => ({ value, title: value }))}
+          items={dict.li.map(value => ({ value, title: value }))}
           onNewItem={async title => {
             await storagesTsjrpcClient.toggleListCellValue({
               ...props.nestedSelectors,

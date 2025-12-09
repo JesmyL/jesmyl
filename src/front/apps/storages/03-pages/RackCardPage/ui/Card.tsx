@@ -4,6 +4,7 @@ import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContaine
 import { StoragesRackStatusFace } from '$storages/entities/RackStatusFace';
 import { StoragesCellList } from '$storages/features/CellList';
 import { StoragesRackCardMetaInfoReader } from '$storages/features/RackCardMetaInfoReader';
+import { StoragesRackCardSearch } from '$storages/features/RackCardSearch';
 import { StoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
 import { storagesIDB } from '$storages/shared/state/storagesIDB';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
@@ -31,12 +32,13 @@ const Card = ({ card, rack }: { rack: StoragesRack; card: StoragesRackCard }) =>
     <PageContainerConfigurer
       className=""
       headTitle={
-        <div className="max-w-[calc(100vw-155px)]">
+        <div className="max-w-[calc(100vw-198px)]">
           <span className="ellipsis">{card.title || 'Новая карточка'}</span>
         </div>
       }
       head={
         <div className="flex justify-between gap-3">
+          <StoragesRackCardSearch rack={rack} />
           <StoragesRackStatusFace
             rack={rack}
             card={card}

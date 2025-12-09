@@ -7,6 +7,7 @@ import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { QrReader } from '#shared/ui/qr-code/QrReader';
 import { useAuth } from '$index/shared/state';
 import { StoragesRackStatusFace } from '$storages/entities/RackStatusFace';
+import { StoragesRackCardSearch } from '$storages/features/RackCardSearch';
 import { storagesIDB } from '$storages/shared/state/storagesIDB';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { Link, useNavigate } from '@tanstack/react-router';
@@ -15,9 +16,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
 import { StoragesRackMemberRole, StoragesRackWid } from 'shared/model/storages/list.model';
 import { StoragesRackImportFromExcelModalInner } from './ImportFromExcelModalInner';
-import { StoragesRackSearchModalInner } from './SearchModalInner';
 
-const isOpenSearchModal = atom(false);
 const isOpenImportFromExcelModal = atom(false);
 const isOpenMemberAdderModal = atom(false);
 
@@ -45,12 +44,7 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
     <PageContainerConfigurer
       className="StoragesRackPage"
       headTitle={rack.title ?? 'Стеллаж'}
-      head={
-        <Button
-          icon="SearchVisual"
-          onClick={isOpenSearchModal.do.toggle}
-        />
-      }
+      head={<StoragesRackCardSearch rack={rack} />}
       onMoreClick={setIsMoreOpen}
       content={
         <>
@@ -81,20 +75,6 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
               </div>
             );
           })}
-
-          <Modal openAtom={isOpenSearchModal}>
-            <StoragesRackSearchModalInner
-              rack={rack}
-              onCardClick={async card => {
-                await navigate({
-                  to: '/storages/i/$rackw/$cardMi',
-                  params: { cardMi: '' + card.mi, rackw: '' + rack.w },
-                });
-
-                isOpenSearchModal.reset();
-              }}
-            />
-          </Modal>
 
           <Modal openAtom={isOpenImportFromExcelModal}>
             <StoragesRackImportFromExcelModalInner rack={rack} />
