@@ -60,7 +60,7 @@ export const StoragesCellDatesNestedDateCell = (
                   ...props.nestedSelectors,
                   rackw: props.rack.w,
                   coli: props.coli,
-                  cardMi: props.card.mi,
+                  cardi: props.card.i,
                   partialProps: { ts: Math.trunc(dateTime / 100000) },
                   sortRow: { prop: 'ts', asc: false },
                 });
@@ -76,7 +76,7 @@ export const StoragesCellDatesNestedDateCell = (
                   ...props.nestedSelectors,
                   rackw: props.rack.w,
                   coli: props.coli,
-                  cardMi: props.card.mi,
+                  cardi: props.card.i,
                   partialProps: { title },
                 })
               }

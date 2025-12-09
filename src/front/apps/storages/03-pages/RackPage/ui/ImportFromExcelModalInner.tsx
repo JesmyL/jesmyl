@@ -7,7 +7,7 @@ import { ModalBody, ModalFooter, ModalHeader, useConfirm } from '#shared/ui/moda
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { useState } from 'react';
 import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
-import { StoragesRack, StoragesRackCard, StoragesRackCardMi } from 'shared/model/storages/list.model';
+import { StoragesRack, StoragesRackCard } from 'shared/model/storages/list.model';
 
 type AssociationKey = keyof StoragesRackCard | number;
 
@@ -108,7 +108,7 @@ export const StoragesRackImportFromExcelModalInner = (props: { rack: StoragesRac
                 const card: StoragesRackCard<string> = {
                   title: dict[titleField],
                   note: associations.note != null ? dict[associations.note] : undefined,
-                  mi: StoragesRackCardMi.min,
+                  i: 0,
                 };
 
                 card.row = [];

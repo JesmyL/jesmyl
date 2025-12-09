@@ -92,7 +92,7 @@ export const StoragesCellOfTypeDates = (props: StoragesCellTypeProps<StoragesCol
               storagesTsjrpcClient.createDatesNestedCell({
                 rackw: props.rack.w,
                 coli: props.coli,
-                cardMi: props.card.mi,
+                cardi: props.card.i,
               })
             }
           >

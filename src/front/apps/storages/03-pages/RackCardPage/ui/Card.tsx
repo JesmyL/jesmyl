@@ -10,12 +10,13 @@ import { storagesIDB } from '$storages/shared/state/storagesIDB';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useState } from 'react';
-import { StoragesRack, StoragesRackCard, StoragesRackCardMi, StoragesRackWid } from 'shared/model/storages/list.model';
+import { StoragesRack, StoragesRackCard, StoragesRackWid } from 'shared/model/storages/list.model';
 
-export const StoragesRackCardPage = ({ cardMi, rackw }: { cardMi: StoragesRackCardMi; rackw: StoragesRackWid }) => {
+export const StoragesRackCardPage = ({ cardi, rackw }: { cardi: number; rackw: StoragesRackWid }) => {
   const rack = useLiveQuery(() => storagesIDB.tb.racks.get(rackw), [rackw]);
-  const card = rack?.cards.find(card => card.mi === cardMi);
-  if (rack == null || card == null) return;
+  const card = rack?.cards[rack.cards.length - 1 - cardi];
+
+  if (rack == null || card == null || card.i !== cardi) return;
 
   return (
     <Card
@@ -61,7 +62,7 @@ const Card = ({ card, rack }: { rack: StoragesRack; card: StoragesRackCard }) =>
                 label="Название"
                 defaultValue={card.title}
                 strongDefaultValue
-                onChanged={title => storagesTsjrpcClient.editRackCardTitle({ rackw: rack.w, title, cardMi: card.mi })}
+                onChanged={title => storagesTsjrpcClient.editRackCardTitle({ rackw: rack.w, title, cardi: card.i })}
               />
             </>
           ) : (
@@ -75,7 +76,7 @@ const Card = ({ card, rack }: { rack: StoragesRack; card: StoragesRackCard }) =>
               defaultValue={card.note}
               multiline
               strongDefaultValue
-              onChanged={note => storagesTsjrpcClient.editRackCardNote({ rackw: rack.w, note, cardMi: card.mi })}
+              onChanged={note => storagesTsjrpcClient.editRackCardNote({ rackw: rack.w, note, cardi: card.i })}
             />
           ) : (
             card.note && <div className="bg-x2 p-3 pre-text">{card.note}</div>

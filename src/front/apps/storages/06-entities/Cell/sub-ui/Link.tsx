@@ -34,7 +34,7 @@ export const StoragesCellOfTypeLink = (props: StoragesCellTypeProps<StoragesColu
           onChanged={value =>
             storagesTsjrpcClient.editCellValue({
               value,
-              cardMi: props.card.mi,
+              cardi: props.card.i,
               rackw: props.rack.w,
               coli: props.coli,
               ...props.nestedSelectors,

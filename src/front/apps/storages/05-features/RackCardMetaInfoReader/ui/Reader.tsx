@@ -45,7 +45,7 @@ export const StoragesRackCardMetaInfoReader = ({
               icon="Delete01"
               className="text-xKO"
               confirm="Удалить мета-информацию?"
-              onClick={() => storagesTsjrpcClient.editRackCardMeta({ rackw: rack.w, meta: '', cardMi: card.mi })}
+              onClick={() => storagesTsjrpcClient.editRackCardMeta({ rackw: rack.w, meta: '', cardi: card.i })}
             />
           )}
         </div>
@@ -56,7 +56,7 @@ export const StoragesRackCardMetaInfoReader = ({
         formats={['any']}
         onReadData={async meta => {
           setIsLoading(true);
-          await storagesTsjrpcClient.editRackCardMeta({ rackw: rack.w, meta, cardMi: card.mi });
+          await storagesTsjrpcClient.editRackCardMeta({ rackw: rack.w, meta, cardi: card.i });
           setIsLoading(false);
           isQrReaderOpenAtom.reset();
         }}

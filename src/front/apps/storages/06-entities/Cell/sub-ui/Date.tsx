@@ -21,7 +21,7 @@ export const StoragesCellOfTypeDate = (props: StoragesCellTypeProps<StoragesColu
             onSelect={async date => {
               storagesTsjrpcClient.editCellValue({
                 ...props.nestedSelectors,
-                cardMi: props.card.mi,
+                cardi: props.card.i,
                 rackw: props.rack.w,
                 coli: props.coli,
                 value: mylib.isNaN(date?.getTime()) ? undefined : date?.getTime(),

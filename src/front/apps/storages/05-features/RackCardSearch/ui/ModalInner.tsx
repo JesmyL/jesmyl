@@ -98,7 +98,7 @@ export const StoragesRackCardSearchModalInner = ({
 
                 return (
                   <Command.Item
-                    key={card.mi}
+                    key={card.i}
                     className="bg-x2 data-[selected=true]:bg-x2"
                     onSelect={() => onCardClick(card)}
                     value={`${searchByKeySet.has('title') ? card.title : ''} ${searchByKeySet.has('note') ? (card.note ?? '') : ''} ${fieldsText}`}

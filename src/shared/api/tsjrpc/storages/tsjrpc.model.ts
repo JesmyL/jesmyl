@@ -3,7 +3,6 @@ import { storagesStylePropKeysMatrix } from 'shared/const/storages/styleProps.co
 import {
   StoragesRack,
   StoragesRackCard,
-  StoragesRackCardMi,
   StoragesRackMember,
   StoragesRackSummary,
   StoragesRackSummaryMi,
@@ -25,7 +24,7 @@ export type StoragesTsjrpcModel = {
   renameRack: (args: RackSelector & { title: string }) => void;
   setRackIcon: (args: RackSelector & { icon: KnownStameskaIconName }) => void;
 
-  createRackCard: (args: RackSelector) => StoragesRackCardMi;
+  createRackCard: (args: RackSelector) => number;
   addRackMember: (args: RackSelector & { member: StoragesRackMember; login: SokiAuthLogin }) => void;
   addManyCards: (args: RackSelector & { cards: StoragesRackCard<string>[] }) => void;
   setRackCardStatus: (args: StoragesTsjrpcRackStatusSelector & StoragesTsjrpcRackCardSelector) => void;
@@ -101,6 +100,6 @@ export type StoragesTsjrpcModel = {
 type RackSelector = StoragesTsjrpcRackSelector;
 
 export type StoragesTsjrpcRackSelector = { rackw: StoragesRackWid };
-export type StoragesTsjrpcRackCardSelector = StoragesTsjrpcRackSelector & { cardMi: StoragesRackCardMi };
+export type StoragesTsjrpcRackCardSelector = StoragesTsjrpcRackSelector & { cardi: number };
 export type StoragesTsjrpcCellSelector = StoragesTsjrpcRackCardSelector & { coli: number };
 export type StoragesTsjrpcRackStatusSelector = StoragesTsjrpcRackSelector & { statusi: number };

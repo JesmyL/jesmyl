@@ -29,7 +29,7 @@ export const StoragesCellOfTypeString = (props: StoragesCellTypeProps<StoragesCo
           onNewItem={async value => {
             await storagesTsjrpcClient.editCellValue({
               ...props.nestedSelectors,
-              cardMi: props.card.mi,
+              cardi: props.card.i,
               coli: props.coli,
               rackw: props.rack.w,
               value,
@@ -38,7 +38,7 @@ export const StoragesCellOfTypeString = (props: StoragesCellTypeProps<StoragesCo
           onSelect={(_index, value) =>
             storagesTsjrpcClient.editCellValue({
               ...props.nestedSelectors,
-              cardMi: props.card.mi,
+              cardi: props.card.i,
               coli: props.coli,
               rackw: props.rack.w,
               value,

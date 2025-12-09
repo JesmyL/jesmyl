@@ -18,7 +18,7 @@ export const StoragesRackStatusFace = (props: {
       id={cardStatusi}
       onSelectId={
         props.card
-          ? statusi => storagesTsjrpcClient.setRackCardStatus({ rackw: props.rack.w, statusi, cardMi: props.card!.mi })
+          ? statusi => storagesTsjrpcClient.setRackCardStatus({ rackw: props.rack.w, statusi, cardi: props.card!.i })
           : undefined
       }
       items={(rackStatus.next ?? props.rack.statuses.map((_, i) => i)).map(statusIndex => {

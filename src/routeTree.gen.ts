@@ -63,7 +63,7 @@ import { Route as otherAppNameSettingsRightsImport } from './front/routes/!other
 import { Route as otherAppNameSettingsConsoleImport } from './front/routes/!other.$appName/settings/console'
 import { Route as StoragesIRackwSumIndexImport } from './front/routes/storages/i/$rackw/sum/index'
 import { Route as StoragesIRackwEditIndexImport } from './front/routes/storages/i/$rackw/edit/index'
-import { Route as StoragesIRackwCardMiIndexImport } from './front/routes/storages/i/$rackw/$cardMi/index'
+import { Route as StoragesIRackwCardiIndexImport } from './front/routes/storages/i/$rackw/$cardi/index'
 import { Route as CmEditComsComwIndexImport } from './front/routes/cm/edit/coms/$comw/index'
 import { Route as otherAppNameSettingsNounpronsIndexImport } from './front/routes/!other.$appName/settings/noun_prons/index'
 import { Route as otherAppNameActionsFilesIndexImport } from './front/routes/!other.$appName/actions/files/index'
@@ -404,9 +404,9 @@ const StoragesIRackwEditIndexRoute = StoragesIRackwEditIndexImport.update({
   getParentRoute: () => StoragesRouteRoute,
 } as any)
 
-const StoragesIRackwCardMiIndexRoute = StoragesIRackwCardMiIndexImport.update({
-  id: '/i/$rackw/$cardMi/',
-  path: '/i/$rackw/$cardMi/',
+const StoragesIRackwCardiIndexRoute = StoragesIRackwCardiIndexImport.update({
+  id: '/i/$rackw/$cardi/',
+  path: '/i/$rackw/$cardi/',
   getParentRoute: () => StoragesRouteRoute,
 } as any)
 
@@ -825,11 +825,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CmEditComsComwIndexImport
       parentRoute: typeof CmEditRouteLazyImport
     }
-    '/storages/i/$rackw/$cardMi/': {
-      id: '/storages/i/$rackw/$cardMi/'
-      path: '/i/$rackw/$cardMi'
-      fullPath: '/storages/i/$rackw/$cardMi'
-      preLoaderRoute: typeof StoragesIRackwCardMiIndexImport
+    '/storages/i/$rackw/$cardi/': {
+      id: '/storages/i/$rackw/$cardi/'
+      path: '/i/$rackw/$cardi'
+      fullPath: '/storages/i/$rackw/$cardi'
+      preLoaderRoute: typeof StoragesIRackwCardiIndexImport
       parentRoute: typeof StoragesRouteImport
     }
     '/storages/i/$rackw/edit/': {
@@ -966,7 +966,7 @@ const QRouteRouteWithChildren =
 interface StoragesRouteRouteChildren {
   StoragesIIndexRoute: typeof StoragesIIndexRoute
   StoragesIRackwIndexRoute: typeof StoragesIRackwIndexRoute
-  StoragesIRackwCardMiIndexRoute: typeof StoragesIRackwCardMiIndexRoute
+  StoragesIRackwCardiIndexRoute: typeof StoragesIRackwCardiIndexRoute
   StoragesIRackwEditIndexRoute: typeof StoragesIRackwEditIndexRoute
   StoragesIRackwSumIndexRoute: typeof StoragesIRackwSumIndexRoute
 }
@@ -974,7 +974,7 @@ interface StoragesRouteRouteChildren {
 const StoragesRouteRouteChildren: StoragesRouteRouteChildren = {
   StoragesIIndexRoute: StoragesIIndexRoute,
   StoragesIRackwIndexRoute: StoragesIRackwIndexRoute,
-  StoragesIRackwCardMiIndexRoute: StoragesIRackwCardMiIndexRoute,
+  StoragesIRackwCardiIndexRoute: StoragesIRackwCardiIndexRoute,
   StoragesIRackwEditIndexRoute: StoragesIRackwEditIndexRoute,
   StoragesIRackwSumIndexRoute: StoragesIRackwSumIndexRoute,
 }
@@ -1081,7 +1081,7 @@ export interface FileRoutesByFullPath {
   '/!other/$appName/actions/files': typeof otherAppNameActionsFilesIndexRoute
   '/!other/$appName/settings/noun_prons': typeof otherAppNameSettingsNounpronsIndexRoute
   '/cm/edit/coms/$comw': typeof CmEditComsComwIndexRoute
-  '/storages/i/$rackw/$cardMi': typeof StoragesIRackwCardMiIndexRoute
+  '/storages/i/$rackw/$cardi': typeof StoragesIRackwCardiIndexRoute
   '/storages/i/$rackw/edit': typeof StoragesIRackwEditIndexRoute
   '/storages/i/$rackw/sum': typeof StoragesIRackwSumIndexRoute
 }
@@ -1136,7 +1136,7 @@ export interface FileRoutesByTo {
   '/!other/$appName/actions/files': typeof otherAppNameActionsFilesIndexRoute
   '/!other/$appName/settings/noun_prons': typeof otherAppNameSettingsNounpronsIndexRoute
   '/cm/edit/coms/$comw': typeof CmEditComsComwIndexRoute
-  '/storages/i/$rackw/$cardMi': typeof StoragesIRackwCardMiIndexRoute
+  '/storages/i/$rackw/$cardi': typeof StoragesIRackwCardiIndexRoute
   '/storages/i/$rackw/edit': typeof StoragesIRackwEditIndexRoute
   '/storages/i/$rackw/sum': typeof StoragesIRackwSumIndexRoute
 }
@@ -1198,7 +1198,7 @@ export interface FileRoutesById {
   '/!other/$appName/actions/files/': typeof otherAppNameActionsFilesIndexRoute
   '/!other/$appName/settings/noun_prons/': typeof otherAppNameSettingsNounpronsIndexRoute
   '/cm/edit/coms/$comw/': typeof CmEditComsComwIndexRoute
-  '/storages/i/$rackw/$cardMi/': typeof StoragesIRackwCardMiIndexRoute
+  '/storages/i/$rackw/$cardi/': typeof StoragesIRackwCardiIndexRoute
   '/storages/i/$rackw/edit/': typeof StoragesIRackwEditIndexRoute
   '/storages/i/$rackw/sum/': typeof StoragesIRackwSumIndexRoute
 }
@@ -1261,7 +1261,7 @@ export interface FileRouteTypes {
     | '/!other/$appName/actions/files'
     | '/!other/$appName/settings/noun_prons'
     | '/cm/edit/coms/$comw'
-    | '/storages/i/$rackw/$cardMi'
+    | '/storages/i/$rackw/$cardi'
     | '/storages/i/$rackw/edit'
     | '/storages/i/$rackw/sum'
   fileRoutesByTo: FileRoutesByTo
@@ -1315,7 +1315,7 @@ export interface FileRouteTypes {
     | '/!other/$appName/actions/files'
     | '/!other/$appName/settings/noun_prons'
     | '/cm/edit/coms/$comw'
-    | '/storages/i/$rackw/$cardMi'
+    | '/storages/i/$rackw/$cardi'
     | '/storages/i/$rackw/edit'
     | '/storages/i/$rackw/sum'
   id:
@@ -1375,7 +1375,7 @@ export interface FileRouteTypes {
     | '/!other/$appName/actions/files/'
     | '/!other/$appName/settings/noun_prons/'
     | '/cm/edit/coms/$comw/'
-    | '/storages/i/$rackw/$cardMi/'
+    | '/storages/i/$rackw/$cardi/'
     | '/storages/i/$rackw/edit/'
     | '/storages/i/$rackw/sum/'
   fileRoutesById: FileRoutesById
@@ -1478,7 +1478,7 @@ export const routeTree = rootRoute
       "children": [
         "/storages/i/",
         "/storages/i/$rackw/",
-        "/storages/i/$rackw/$cardMi/",
+        "/storages/i/$rackw/$cardi/",
         "/storages/i/$rackw/edit/",
         "/storages/i/$rackw/sum/"
       ]
@@ -1703,8 +1703,8 @@ export const routeTree = rootRoute
       "filePath": "cm/edit/coms/$comw/index.tsx",
       "parent": "/cm/edit"
     },
-    "/storages/i/$rackw/$cardMi/": {
-      "filePath": "storages/i/$rackw/$cardMi/index.tsx",
+    "/storages/i/$rackw/$cardi/": {
+      "filePath": "storages/i/$rackw/$cardi/index.tsx",
       "parent": "/storages"
     },
     "/storages/i/$rackw/edit/": {

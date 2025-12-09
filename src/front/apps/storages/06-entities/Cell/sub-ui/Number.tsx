@@ -50,7 +50,7 @@ const Edit = (props: StoragesCellTypeProps<StoragesColumnType.Number>) => {
             onChanged={amount =>
               storagesTsjrpcClient.setNumber({
                 amount: Math.abs(+amount),
-                cardMi: props.card.mi,
+                cardi: props.card.i,
                 rackw: props.rack.w,
                 coli: props.coli,
                 ...props.nestedSelectors,

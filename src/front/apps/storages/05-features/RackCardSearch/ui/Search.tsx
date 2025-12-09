@@ -37,8 +37,8 @@ export const StoragesRackCardSearch = ({ rack }: { rack: StoragesRack }) => {
           rack={rack}
           onCardClick={async card => {
             await navigate({
-              to: '/storages/i/$rackw/$cardMi',
-              params: { cardMi: '' + card.mi, rackw: '' + rack.w },
+              to: '/storages/i/$rackw/$cardi',
+              params: { cardi: '' + card.i, rackw: '' + rack.w },
             });
 
             isOpenSearchModal.reset();

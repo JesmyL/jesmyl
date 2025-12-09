@@ -23,7 +23,7 @@ export const StoragesCellOfTypeList = (props: StoragesCellTypeProps<StoragesColu
           onNewItem={async title => {
             await storagesTsjrpcClient.toggleListCellValue({
               ...props.nestedSelectors,
-              cardMi: props.card.mi,
+              cardi: props.card.i,
               coli: props.coli,
               rackw: props.rack.w,
               title,
@@ -32,7 +32,7 @@ export const StoragesCellOfTypeList = (props: StoragesCellTypeProps<StoragesColu
           onSelect={(_index, title) =>
             storagesTsjrpcClient.toggleListCellValue({
               ...props.nestedSelectors,
-              cardMi: props.card.mi,
+              cardi: props.card.i,
               coli: props.coli,
               rackw: props.rack.w,
               title,

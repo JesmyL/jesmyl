@@ -9,6 +9,7 @@ export const storagesStoresSharesTsjrpcBaseClient =
         scope: 'StoragesStoresShares',
         methods: {
           refreshRacks: async ({ racks, maxMod }) => {
+            racks.forEach(rack => rack.cards.reverse());
             storagesIDB.tb.racks.bulkPut(racks);
             storagesIDB.updateLastModifiedAt(maxMod);
           },

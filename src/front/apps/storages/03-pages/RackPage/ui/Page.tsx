@@ -51,7 +51,7 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
           {rack.cards.map(card => {
             return (
               <div
-                key={card.mi}
+                key={card.i}
                 className="flex gap-2 my-3"
               >
                 <StoragesRackStatusFace
@@ -63,8 +63,8 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
                 <Button
                   onClick={() => {
                     navigate({
-                      to: '/storages/i/$rackw/$cardMi',
-                      params: { cardMi: '' + card.mi, rackw: '' + rack.w },
+                      to: '/storages/i/$rackw/$cardi',
+                      params: { cardi: '' + card.i, rackw: '' + rack.w },
                     });
                   }}
                 >
@@ -110,12 +110,12 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
                 icon="PlusSign"
                 title="Создать карточку"
                 onClick={async () => {
-                  const cardMi = await storagesTsjrpcClient.createRackCard({ rackw });
+                  const cardi = await storagesTsjrpcClient.createRackCard({ rackw });
 
                   navigate({
-                    to: '/storages/i/$rackw/$cardMi',
+                    to: '/storages/i/$rackw/$cardi',
                     params: {
-                      cardMi: '' + cardMi,
+                      cardi: '' + cardi,
                       rackw: '' + rackw,
                     },
                   });

@@ -9,6 +9,7 @@ export const storagesTsjrpcClient = new (class Storages extends TsjrpcClient<Sto
       methods: {
         createRack: {
           onResponse: ({ lastModfiedAt, rack }) => {
+            rack.cards.reverse();
             storagesIDB.tb.racks.put(rack);
             storagesIDB.updateLastModifiedAt(lastModfiedAt);
           },

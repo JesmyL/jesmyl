@@ -12,7 +12,6 @@ import { storagesStylePropKeysMatrix } from 'shared/const/storages/styleProps.co
 import {
   StoragesRack,
   StoragesRackCard,
-  StoragesRackCardMi,
   StoragesRackCore,
   StoragesRackMemberRole,
   StoragesRackStatus,
@@ -103,19 +102,19 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
 
         createRackCard: updateRack(rack => {
           const emptyTitleCard = rack.cards.find(card => !card.title);
-          if (emptyTitleCard != null) return { value: emptyTitleCard.mi };
+          if (emptyTitleCard != null) return { value: emptyTitleCard.i };
 
-          const mi = smylib.takeNextMi(rack.cards, StoragesRackCardMi.min);
-          rack.cards.unshift({ mi, title: '' });
+          const i = rack.cards.length;
+          rack.cards.push({ i, title: '' });
 
-          return { value: mi };
+          return { value: i };
         }),
 
         createRackDict: updateRack((rack, { title }) => {
           rack.dicts.push({ li: [''], title });
         }),
         addManyCards: updateRack((rack, { cards }) => {
-          let maxMi = smylib.takeNextMi(rack.cards, StoragesRackCardMi.min);
+          let i = rack.cards.length;
           const prevTitlesSet = new Set(rack.cards.map(card => card.title));
           let unsavedCards = 0;
 
@@ -126,7 +125,7 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
             }
 
             prevTitlesSet.add(card.title);
-            card.mi = maxMi++;
+            card.i = i++;
             rack.cards.push({
               ...card,
               row: card.row?.map((cell, celli): StoragesCell<StoragesColumnType> => {
@@ -523,8 +522,9 @@ function updateRackCard<
   Ret extends UpdaterReturnType<RetValue>,
 >(updater: (card: StoragesRackCard, props: Props, rack: StoragesRack) => Ret) {
   return updateRack<Props, RetValue, Ret>((rack, props) => {
-    const card = rack.cards.find(card => card.mi === props.cardMi);
-    if (card == null) throw `There is no card with mi === ${props.cardMi}`;
+    const card = rack.cards[props.cardi];
+    if (card == null) throw `Карточка не найдена`;
+    if (card.i !== props.cardi) throw `Карточка имеет некорректную ссылку`;
     return updater(card, props, rack);
   });
 }

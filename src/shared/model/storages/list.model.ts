@@ -5,10 +5,6 @@ export const enum StoragesRackWid {
   def = 0,
 }
 
-export const enum StoragesRackCardMi {
-  min = 1,
-}
-
 export const enum StoragesRackSummaryMi {
   min = 1,
 }
@@ -27,7 +23,7 @@ export type StoragesRackStatus = {
 };
 
 export type StoragesRackCard<DictItem extends string | StoragesDictItemi = StoragesDictItemi> = {
-  mi: StoragesRackCardMi;
+  i: number;
   status?: number;
   title: string;
   note?: string;
