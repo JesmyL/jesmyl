@@ -47,6 +47,7 @@ export function Autocomplete<Item extends { title: React.ReactNode; value: strin
   if (props.isShowSelectedNodeOnly) return <div className="@container *:max-w-full">{selectedNode}</div>;
 
   const selectedSet = new Set([props.selected ?? []].flat());
+  const trimmedTerm = term.trim();
 
   return (
     <Popover.Root
@@ -75,12 +76,14 @@ export function Autocomplete<Item extends { title: React.ReactNode; value: strin
             className="w-full"
             value={term}
             onInput={event => setTerm(event.currentTarget.value)}
+            onFocus={event => event.currentTarget.select()}
           />
           {
             <Command.List className="w-full">
               {props.emptyMessage && <Command.Empty>{props.emptyMessage}</Command.Empty>}
-              {!!term.trim() &&
-                !props.items.some(id => id?.value.toUpperCase() === term.toUpperCase()) &&
+              {!!trimmedTerm &&
+                !props.items.some(id => id?.value.toUpperCase() === trimmedTerm.toUpperCase()) &&
+                trimmedTerm.length >= termMinLenghtToShowList &&
                 onNewItem && (
                   <Button
                     icon="PlusSign"
@@ -88,7 +91,7 @@ export function Autocomplete<Item extends { title: React.ReactNode; value: strin
                     isLoading={isLoading}
                     onClick={async () => {
                       setIsLoading(true);
-                      const result = await onNewItem(term);
+                      const result = await onNewItem(trimmedTerm);
                       setIsLoading(false);
                       setOpen(false);
                       setTerm('');
@@ -96,15 +99,14 @@ export function Autocomplete<Item extends { title: React.ReactNode; value: strin
                       return result;
                     }}
                   >
-                    <span className="ellipsis">{term}</span>
+                    <span className="ellipsis">{trimmedTerm}</span>
                   </Button>
                 )}
               <Command.Group className="w-full">
-                {props.items.map(
-                  (item, itemi) =>
-                    !item ||
-                    term.length >= termMinLenghtToShowList ||
-                    !selectedSet.has(itemi) || (
+                {props.items.map((item, itemi) => {
+                  return (
+                    item &&
+                    (trimmedTerm.length >= termMinLenghtToShowList || selectedSet.has(itemi)) && (
                       <Command.Item
                         key={item.value}
                         value={item.value}
@@ -135,8 +137,9 @@ export function Autocomplete<Item extends { title: React.ReactNode; value: strin
                           }}
                         />
                       </Command.Item>
-                    ),
-                )}
+                    )
+                  );
+                })}
               </Command.Group>
             </Command.List>
           }
