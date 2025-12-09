@@ -45,7 +45,7 @@ export const storagesReplaceFormulaNumbers = <Ret extends unknown | string = unk
   props: UtilProps,
   innerCall: number,
   mapError: (value: string, index: number) => Ret = itIt as never,
-  mapRefs: (value: string, index: number) => Ret = itIt as never,
+  mapRefs: (value: string, index: number, selector: string) => Ret = itIt as never,
 ): Ret[] => {
   if (innerCall > 100) return ['%Рекурсия!%'] as never;
 
@@ -92,7 +92,7 @@ export const storagesReplaceFormulaNumbers = <Ret extends unknown | string = unk
 
       if (nestedColi !== null) result = '' + props.onNestedColi(coli, nestedColi);
 
-      return (result.startsWith('%') && result.endsWith('%') ? mapError : mapRefs)(result, valuei);
+      return (result.startsWith('%') && result.endsWith('%') ? mapError : mapRefs)(result, valuei, value);
     }) as never;
 };
 

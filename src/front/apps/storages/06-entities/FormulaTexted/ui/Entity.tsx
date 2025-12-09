@@ -34,11 +34,11 @@ export const StoragesFormulaTexted = (props: Props) => {
               {value}
             </span>
           ),
-          (value, i) => (
+          (value, i, selector) => (
             <span
               key={i}
               className="text-x7"
-              storages-formula-used-coli={value}
+              storages-formula-used-coli={selector}
             >
               {value}
             </span>
