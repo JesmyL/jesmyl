@@ -1,4 +1,3 @@
-import { Button } from '#shared/components/ui/button';
 import { mylib } from '#shared/lib/my-lib';
 import { Modal } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
@@ -6,10 +5,11 @@ import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { QrReader } from '#shared/ui/qr-code/QrReader';
 import { useAuth } from '$index/shared/state';
-import { StoragesRackStatusFace } from '$storages/entities/RackStatusFace';
 import { StoragesRackCardSearch } from '$storages/features/RackCardSearch';
 import { storagesIDB } from '$storages/shared/state/storagesIDB';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
+import { StoragesRackCardListWidget } from '$storages/widgets/RackCardListWidget';
+import { StoragesRackCardSortAndGroupsModalInner } from '$storages/widgets/RackCardSortAndGroupsModalInner';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -18,6 +18,7 @@ import { StoragesRackMemberRole, StoragesRackWid } from 'shared/model/storages/l
 import { StoragesRackImportFromExcelModalInner } from './ImportFromExcelModalInner';
 
 const isOpenImportFromExcelModal = atom(false);
+const isOpenGroupAnsSortingModal = atom(false);
 const isOpenMemberAdderModal = atom(false);
 
 export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
@@ -48,33 +49,7 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
       onMoreClick={setIsMoreOpen}
       content={
         <>
-          {rack.cards.map(card => {
-            return (
-              <div
-                key={card.i}
-                className="flex gap-2 my-3"
-              >
-                <StoragesRackStatusFace
-                  statusi={card.status}
-                  rack={rack}
-                  card={card}
-                  customTitile
-                />
-                <Button
-                  onClick={() => {
-                    navigate({
-                      to: '/storages/i/$rackw/$cardi',
-                      params: { cardi: '' + card.i, rackw: '' + rack.w },
-                    });
-                  }}
-                >
-                  <span className="max-w-[calc(100vw-100px)]">
-                    <span className="ellipsis">{card.title || <span className="text-xKO">Новая карточка</span>}</span>
-                  </span>
-                </Button>
-              </div>
-            );
-          })}
+          <StoragesRackCardListWidget rack={rack} />
 
           <Modal openAtom={isOpenImportFromExcelModal}>
             <StoragesRackImportFromExcelModalInner rack={rack} />
@@ -104,6 +79,10 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
             }}
           />
 
+          <Modal openAtom={isOpenGroupAnsSortingModal}>
+            <StoragesRackCardSortAndGroupsModalInner rack={rack} />
+          </Modal>
+
           {isMoreOpen && (
             <BottomPopup onClose={setIsMoreOpen}>
               <BottomPopupItem
@@ -120,6 +99,12 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
                     },
                   });
                 }}
+              />
+
+              <BottomPopupItem
+                icon="SortingAZ01"
+                title="Сортировка и группировка карточек"
+                onClick={isOpenGroupAnsSortingModal.do.toggle}
               />
 
               <Link
