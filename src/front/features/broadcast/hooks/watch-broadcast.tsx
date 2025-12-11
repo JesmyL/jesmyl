@@ -84,16 +84,6 @@ const styles = css`
         ${cursors.defaultLight}
       }
     }
-
-    &:not(:fullscreen) * * * {
-      filter: blur(50px);
-      opacity: 0;
-    }
-
-    &:fullscreen * * * {
-      filter: blur(0px);
-      opacity: 1;
-    }
   }
 `;
 

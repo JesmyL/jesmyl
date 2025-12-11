@@ -3,6 +3,7 @@ import { styledDefaultTheme } from '#shared/style/styledTheme';
 import { ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
+import { TWProvider } from './TWProvider';
 
 export const renderComponentInNewWindow = (
   reactNode: ReactNode | ((win: typeof window) => ReactNode),
@@ -23,6 +24,7 @@ export const renderComponentInNewWindow = (
         <StyleSheetManager target={win.document.head}>
           <StyledGlobalStyles />
           {typeof reactNode === 'function' ? reactNode(win as never) : reactNode}
+          <TWProvider />
         </StyleSheetManager>,
         div,
       );
@@ -36,6 +38,7 @@ export const renderApplication = (reactNode: ReactNode, node: HTMLElement | null
     <ThemeProvider theme={styledDefaultTheme}>
       <StyledGlobalStyles />
       {reactNode}
+      <TWProvider />
     </ThemeProvider>,
   );
 };
