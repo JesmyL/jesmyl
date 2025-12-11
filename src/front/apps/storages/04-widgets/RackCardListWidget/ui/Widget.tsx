@@ -44,12 +44,12 @@ export const StoragesRackCardListWidget = memo((props: { rack: StoragesRack }) =
     );
   };
 
-  if (props.rack.cards == null || props.rack.cards.length < 2 || sort == null || !dir) {
+  if (props.rack.cards.length < 2 || (group == null && (sort == null || !dir))) {
     return props.rack.cards.map(cardMapper);
   }
 
   const sortCards = <Cards extends StoragesRackCard<StoragesDictItemi>[] | nil>(cards: Cards) => {
-    if (cards == null) return cards;
+    if (cards == null || cards.length < 2 || sort == null || !dir) return cards;
 
     return cards.sort(
       mylib.isStr(sort)
