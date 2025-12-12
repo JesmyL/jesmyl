@@ -39,14 +39,14 @@ export class SokiTrip {
     this.onBeforeAuthorizeEvent.listen(() => this.sendRegistrationToken());
   }
 
+  private makeSignal = () => ({ signal: AbortSignal.timeout(5000) });
+
   private sendRegistrationToken = async () => {
     try {
       let location: object | null = null;
 
       try {
-        const aborter = new AbortController();
-        setTimeout(() => aborter.abort(), 5000);
-        location = await (await fetch('https://api.db-ip.com/v2/free/self', aborter)).json();
+        location = await (await fetch('https://api.db-ip.com/v2/free/self', this.makeSignal())).json();
       } catch (_e) {
         //
       }
