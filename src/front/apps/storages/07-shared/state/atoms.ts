@@ -6,7 +6,8 @@ export const storagesSortAndGroupAtom = atom<
   Partial<
     Record<
       StoragesRackWid,
-      { group: keyof StoragesRackCard | number; sort: keyof StoragesRackCard | number; dir: SortDirection }
+      | StoragesRackWid
+      | { group: keyof StoragesRackCard | number; sort: keyof StoragesRackCard | number; dir: SortDirection }
     >
   >
 >({}, 'storages:sortAndGroupingCards');

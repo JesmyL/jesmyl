@@ -14,7 +14,13 @@ const noValue = '<Без значения>';
 
 export const StoragesRackCardListWidget = memo((props: { rack: StoragesRack }) => {
   const navigate = useNavigate();
-  const { dir, group, sort } = useAtomValue(storagesSortAndGroupAtom)[props.rack.w] ?? {};
+
+  const allSortRules = useAtomValue(storagesSortAndGroupAtom);
+  let rackSortRules = allSortRules[props.rack.w];
+  if (mylib.isNum(rackSortRules)) rackSortRules = allSortRules[rackSortRules];
+  if (mylib.isNum(rackSortRules)) return;
+
+  const { dir, group, sort } = rackSortRules ?? {};
 
   const cardMapper = (card: StoragesRackCard<StoragesDictItemi>) => {
     return (

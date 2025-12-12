@@ -1,6 +1,9 @@
+import { mylib } from '#shared/lib/my-lib';
 import { SortDirection } from '#shared/model/sortDirection';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
+import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
+import { StoragesWithRack } from '$storages/entities/WithRack';
 import { storagesSortAndGroupAtom } from '$storages/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
 import { StoragesRack, StoragesRackCard } from 'shared/model/storages/list.model';
@@ -22,7 +25,7 @@ const sortableColumnTypesSet = new Set([
 ]);
 
 export const StoragesRackCardSortAndGroupsModalInner = (props: { rack: StoragesRack }) => {
-  const sorts = useAtomValue(storagesSortAndGroupAtom)[props.rack.w];
+  const rackSortRules = useAtomValue(storagesSortAndGroupAtom)[props.rack.w];
   const columnFields = props.rack.cols
     .map((col, coli) => (sortableColumnTypesSet.has(col.t) ? { title: col.title, id: coli } : null))
     .filter(itNNull);
@@ -33,39 +36,62 @@ export const StoragesRackCardSortAndGroupsModalInner = (props: { rack: StoragesR
         Сортировка и группировка в стеллаже <span className="text-x7">{props.rack.title}</span>
       </ModalHeader>
       <ModalBody className="flex flex-col gap-4 custom-align-items">
-        <Dropdown
-          label="Группировка"
-          id={sorts?.group}
-          undTitle="Нет"
-          items={groupFields.concat(columnFields)}
-          onSelectId={value => {
-            storagesSortAndGroupAtom.do.setDeepPartial(`${props.rack.w}/group`, value, { [props.rack.w]: {} });
-          }}
-        />
+        {props.rack.parent != null && (
+          <IconCheckbox
+            checked={mylib.isNum(rackSortRules)}
+            postfix={
+              <>
+                Использовать правила
+                <span className="text-x7">
+                  <StoragesWithRack rackw={props.rack.parent}>{rack => rack.title}</StoragesWithRack>
+                </span>
+              </>
+            }
+            onChange={() =>
+              storagesSortAndGroupAtom.do.setPartial({
+                [props.rack.w]: mylib.isNum(rackSortRules) ? undefined : props.rack.parent,
+              })
+            }
+          />
+        )}
 
-        <Dropdown
-          label="Сортировка"
-          id={sorts?.sort}
-          undTitle="Нет"
-          items={sortFields.concat(groupFields, columnFields)}
-          onSelectId={value => {
-            storagesSortAndGroupAtom.do.setDeepPartial(`${props.rack.w}/sort`, value, { [props.rack.w]: {} });
-          }}
-        />
+        {mylib.isNum(rackSortRules) || (
+          <>
+            <Dropdown
+              label="Группировка"
+              id={rackSortRules?.group}
+              undTitle="Нет"
+              items={groupFields.concat(columnFields)}
+              onSelectId={value => {
+                storagesSortAndGroupAtom.do.setDeepPartial(`${props.rack.w}/group`, value, { [props.rack.w]: {} });
+              }}
+            />
 
-        <Dropdown
-          label="Направление сортировки"
-          id={sorts?.dir}
-          disabled={sorts?.sort == null}
-          undTitle="Нет"
-          items={[
-            { id: SortDirection.Asc, title: 'По возрастанию' },
-            { id: SortDirection.Desc, title: 'По убыванию' },
-          ]}
-          onSelectId={value => {
-            storagesSortAndGroupAtom.do.setDeepPartial(`${props.rack.w}/dir`, value, { [props.rack.w]: {} });
-          }}
-        />
+            <Dropdown
+              label="Сортировка"
+              id={rackSortRules?.sort}
+              undTitle="Нет"
+              items={sortFields.concat(groupFields, columnFields)}
+              onSelectId={value => {
+                storagesSortAndGroupAtom.do.setDeepPartial(`${props.rack.w}/sort`, value, { [props.rack.w]: {} });
+              }}
+            />
+
+            <Dropdown
+              label="Направление сортировки"
+              id={rackSortRules?.dir}
+              disabled={rackSortRules?.sort == null}
+              undTitle="Нет"
+              items={[
+                { id: SortDirection.Asc, title: 'По возрастанию' },
+                { id: SortDirection.Desc, title: 'По убыванию' },
+              ]}
+              onSelectId={value => {
+                storagesSortAndGroupAtom.do.setDeepPartial(`${props.rack.w}/dir`, value, { [props.rack.w]: {} });
+              }}
+            />
+          </>
+        )}
       </ModalBody>
     </>
   );
