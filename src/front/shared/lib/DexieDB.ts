@@ -39,7 +39,7 @@ export class DexieDB<Store> {
 
   constructor(
     storageName: string,
-    private defaults: Required<{
+    defaults: Required<{
       [K in keyof Store]: Store[K] extends any[]
         ?
             | Omit<Partial<Record<'_', '++'> & Record<keyof Store[K][number], true | '++'>>, ByDefaultField>
@@ -54,30 +54,29 @@ export class DexieDB<Store> {
       if (key in defaults) return cb;
     };
 
-    const gget = (_: unknown, key: keyof Store) =>
+    const takeValueFromDefaults = (key: keyof Store) => {
+      if (mylib.isFunc(defaults[key][byDefaultField])) {
+        return defaults[key][byDefaultField]();
+      }
+
+      return defaults[key][byDefaultField];
+    };
+
+    const proxyGetForGet = (_: unknown, key: keyof Store) =>
       returnIfKeyInDefaults(key, async () => {
         const store = await this.getKeyvalues().get({ key });
-        if (store === undefined) {
-          if (mylib.isFunc(this.defaults[key][byDefaultField])) {
-            this.defaults[key][byDefaultField] = this.defaults[key][byDefaultField]();
-          }
-
-          return this.defaults[key as keyof Store][byDefaultField];
-        }
+        if (store === undefined) return takeValueFromDefaults(key);
         return store.val;
       });
 
-    this.get = new Proxy(this.get, { get: gget as never });
+    this.get = new Proxy(this.get, { get: proxyGetForGet as never });
 
-    this.useValue = new Proxy(this.useValue, {
-      get: (_, key) =>
-        returnIfKeyInDefaults(key, () => {
-          return (
-            justUseLiveQuery(() => this.getKeyvalues().get({ key }) as never as { val: never })?.val ??
-            (this.defaults[key as keyof Store][byDefaultField] as never)
-          );
-        }),
-    });
+    const proxyGetForUseValue = (_: unknown, key: keyof Store) =>
+      returnIfKeyInDefaults(key, () => {
+        return justUseLiveQuery(() => this.getKeyvalues().get({ key }))?.val ?? takeValueFromDefaults(key);
+      });
+
+    this.useValue = new Proxy(this.useValue, { get: proxyGetForUseValue as never });
 
     this.remove = new Proxy(this.remove, {
       get: (_, key) => returnIfKeyInDefaults(key, () => this.getKeyvalues().where({ key }).delete()),
@@ -124,7 +123,7 @@ export class DexieDB<Store> {
 
     this.db.version(version).stores(stores);
 
-    if ('lastModifiedAt' in this.defaults) {
+    if ('lastModifiedAt' in defaults) {
       (async () => {
         type WithLastModifiedAt = { lastModifiedAt(set?: number): Promise<number> };
 
