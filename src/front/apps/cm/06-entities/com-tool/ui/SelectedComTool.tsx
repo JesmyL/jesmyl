@@ -1,17 +1,17 @@
-import { useCmComCurrent, useCmComSelectedList } from '$cm/entities/com';
+import { cmComSelectedComwsAtom, useCmComCurrent, useCmComSelectedList } from '$cm/entities/com';
 import { CmComTool } from '../ComTool';
 
 export const CmComToolSelected = () => {
   const ccom = useCmComCurrent();
-  const { toggleSelectedCom, selectedComPosition: isSelected } = useCmComSelectedList();
+  const { selectedComPosition } = useCmComSelectedList();
 
   return (
     ccom && (
       <CmComTool
-        title={isSelected(ccom.wid) ? 'Убрать из выбранных' : 'Выбрать песню'}
+        title={selectedComPosition(ccom.wid) ? 'Убрать из выбранных' : 'Выбрать песню'}
         icon="CheckmarkBadge01"
-        iconKind={isSelected(ccom.wid) ? 'SolidRounded' : 'StrokeRounded'}
-        onClick={() => toggleSelectedCom(ccom.wid)}
+        iconKind={selectedComPosition(ccom.wid) ? 'SolidRounded' : 'StrokeRounded'}
+        onClick={() => cmComSelectedComwsAtom.do.toggle(ccom.wid)}
       />
     )
   );

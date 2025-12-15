@@ -38,7 +38,12 @@ const Inner = memo((props: Props & { onClose: (isRender: false) => void }) => {
       const div = document.createElement('div');
       parentNode.insertBefore(div, blockNode);
 
-      const win = renderComponentInNewWindow(null, undefined, props.target, props.features, blockNode);
+      const win = renderComponentInNewWindow({
+        reactNode: null,
+        target: props.target,
+        features: props.features,
+        htmlNode: blockNode,
+      });
 
       if (win) {
         props.onInit?.(win);

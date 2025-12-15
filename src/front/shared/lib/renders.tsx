@@ -5,13 +5,19 @@ import { createRoot } from 'react-dom/client';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import { TWProvider } from './TWProvider';
 
-export const renderComponentInNewWindow = (
-  reactNode: ReactNode | ((win: typeof window) => ReactNode),
-  url?: string | URL,
-  target?: string,
+export const renderComponentInNewWindow = ({
+  reactNode,
   features = `top=100,left=300,width=300,height=300,directories=no,titlebar=no,menubar=no,toolbar=no,location=no,status=no,scrollbars=no`,
-  htmlNode?: HTMLElement,
-) => {
+  htmlNode,
+  target,
+  url,
+}: {
+  reactNode: ReactNode | ((win: typeof window) => ReactNode);
+  target?: string;
+  url?: string | URL;
+  features?: string;
+  htmlNode?: HTMLElement;
+}) => {
   const win = window.open(url, target, features);
   if (win) {
     const div = document.createElement('div');

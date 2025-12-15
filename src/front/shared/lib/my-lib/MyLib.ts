@@ -563,9 +563,33 @@ export class MyLib extends SMyLib {
 
     return { check: null, info: null };
   };
+
+  binarySearch = <Item>(arr: Item[], compare: (item: Item, index: number, compare: typeof compareDict) => number) => {
+    let m = 0;
+    let n = arr.length - 1;
+
+    while (m <= n) {
+      const k = (n + m) >> 1;
+      const result = compare(arr[k], k, compareDict);
+
+      if (result > 0) {
+        m = k + 1;
+      } else if (result < 0) {
+        n = k - 1;
+      } else return k;
+    }
+
+    return ~m;
+  };
 }
 
 export const mylib = new MyLib();
+
+const compareDict = {
+  lt: -1,
+  gt: 1,
+  eq: 0,
+} as const;
 
 if (typeof window !== 'undefined') {
   const win: { MyLib: unknown; mylib: unknown } = window as never;

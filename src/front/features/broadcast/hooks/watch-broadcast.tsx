@@ -20,8 +20,10 @@ export const useWatchScreenBroadcast = () => {
     const newWindows = [...windows];
 
     const watch = (windowi: number) =>
-      renderComponentInNewWindow(
-        win => {
+      renderComponentInNewWindow({
+        target: `cm/broadcast/${windowi}`,
+        features: `top=10000,left=30000,width=30000,height=30000,directories=no,titlebar=no,menubar=no,toolbar=no,location=no,status=no,scrollbars=no`,
+        reactNode: win => {
           newWindows[windowi] = {
             win,
             blur: () => win.document.exitFullscreen(),
@@ -56,10 +58,7 @@ export const useWatchScreenBroadcast = () => {
             </>
           );
         },
-        undefined,
-        undefined,
-        `top=10000,left=30000,width=30000,height=30000,directories=no,titlebar=no,menubar=no,toolbar=no,location=no,status=no,scrollbars=no`,
-      );
+      });
 
     const len = configs.length - windows.length;
 
@@ -83,6 +82,16 @@ const styles = css`
       &:not(.any) {
         ${cursors.defaultLight}
       }
+    }
+
+    &:not(:fullscreen) * * * {
+      filter: blur(50px) !important;
+      opacity: 0 !important;
+    }
+
+    &:fullscreen * * * {
+      filter: blur(0px) !important;
+      opacity: 1 !important;
     }
   }
 `;

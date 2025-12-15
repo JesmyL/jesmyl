@@ -39,8 +39,9 @@ export const CmComAudioPlayerMarksMovers = (props: Props) => {
 
       <Dropdown
         id={preSwitchTime}
-        items={[-1, 0, 1, 2, 3, 4].map(id => ({ id, title: <span className="w-[.7em]">{id < 0 ? '×' : id}</span> }))}
+        items={[-1, 0, 1, 2, 3, 4].map(id => ({ id, title: id }))}
         onSelectId={props.preSwitchTimeAtom.set}
+        renderItem={attrs => (attrs.id < 0 ? '×' : `${attrs.id} сек.`)}
         hiddenArrow
       />
 

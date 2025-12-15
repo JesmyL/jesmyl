@@ -4,7 +4,7 @@ import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { Metronome } from '#widgets/metronome';
 import { useCmCom, useCmComSelectedList } from '$cm/entities/com';
-import { cmComLastOpenComwAtom, cmComShareComCommentPropsAtom } from '$cm/entities/index';
+import { cmComLastOpenComwAtom, cmComSelectedComwsAtom, cmComShareComCommentPropsAtom } from '$cm/entities/index';
 import { CmComSharedListActionInterpretator } from '$cm/features/com';
 import { CmComCommentSharePull } from '$cm/features/com-comment';
 import { cmAppActions } from '$cm/shared/const';
@@ -26,7 +26,7 @@ export const CmApp = () => {
   const ccomw = useAtomValue(cmComLastOpenComwAtom);
   const ccom = useCmCom(ccomw);
 
-  const { selectedComws, setSelectedComws } = useCmComSelectedList();
+  const { selectedComws } = useCmComSelectedList();
 
   cmAppActions.useOnAction(({ props, navigateFromRoot }) => {
     if ('comws' in props && props.comws?.length) {
@@ -51,10 +51,10 @@ export const CmApp = () => {
     if (selectedComws.length > maxSelectedComsCount) {
       const copySelected = [...selectedComws];
       copySelected.length = maxSelectedComsCount;
-      setSelectedComws(copySelected);
+      cmComSelectedComwsAtom.set(copySelected);
       toast(`Можно выбрать максимум ${maxSelectedComsCount} песен`, makeToastKOMoodConfig());
     }
-  }, [maxSelectedComsCount, selectedComws, setSelectedComws]);
+  }, [maxSelectedComsCount, selectedComws]);
 
   return (
     <>

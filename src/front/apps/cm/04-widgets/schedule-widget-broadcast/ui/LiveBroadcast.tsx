@@ -1,5 +1,5 @@
 import { useScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
-import { useBroadcastInitialSlideSet } from '#features/broadcast/initial-slide-context';
+import { cmInitialSlideAtom } from '#features/broadcast/initial-slide-context';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { BibleTranslatesContextProvider } from '$bible/ext';
 import { CmBroadcastFollowInitialSlide } from '$cm/features/broadcast';
@@ -18,13 +18,12 @@ export const CmScheduleWidgetBroadcast = ({ schw }: { schw: IScheduleWidgetWid |
   const isCm = complectIDB.useValue.currentBroadcastTextApp() === 'cm';
   const [isCantTranslateLive, setIsCantTranslateLive] = useState(true);
   const schedule = useLiveQuery(() => schw && indexIDB.db.schs.get(schw), [schw]);
-  const setInitialSlide = useBroadcastInitialSlideSet();
 
   useEffect(() => {
     if (!schedule) return;
 
-    setInitialSlide(<CmBroadcastFollowInitialSlide schw={schedule.w} />);
-  }, [schedule, setInitialSlide]);
+    cmInitialSlideAtom.set(<CmBroadcastFollowInitialSlide schw={schedule.w} />);
+  }, [schedule]);
 
   useEffect(() => {
     if (schedule?.w == null) return;

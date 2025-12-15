@@ -39,15 +39,17 @@ export function ScheduleWidgetDayEditPanel({ day, dayi, schedule, scheduleScopeP
         className="flex-max my-2"
         postfix="Распечатать распорядок дня"
         onClick={() =>
-          renderComponentInNewWindow(win => (
-            <ScheduleWidgetPrintableDay
-              scheduleScopeProps={scheduleScopeProps}
-              day={day}
-              dayi={dayi}
-              schedule={schedule}
-              win={win}
-            />
-          ))
+          renderComponentInNewWindow({
+            reactNode: win => (
+              <ScheduleWidgetPrintableDay
+                scheduleScopeProps={scheduleScopeProps}
+                day={day}
+                dayi={dayi}
+                schedule={schedule}
+                win={win}
+              />
+            ),
+          })
         }
       />
       <TheIconButton

@@ -1,7 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { TheButton } from '#shared/ui/TheButton';
-import { useCmComSelectedList } from '$cm/entities/com';
+import { cmComSelectedComwsAtom, useCmComSelectedList } from '$cm/entities/com';
 import { CmComFaceList } from '$cm/entities/com-face';
 import { useNavigate } from '@tanstack/react-router';
 import { Atom, useAtomValue } from 'atomaric';
@@ -16,9 +16,9 @@ export const CmComSharedListActionInterpretator = ({
 }) => {
   const comws = useAtomValue(comListOnActionAtom);
   const navigate = useNavigate();
-  const { setSelectedComws, selectedComws } = useCmComSelectedList();
+  const selected = useCmComSelectedList();
   const incomingComwsSet = new Set(comws);
-  const localComwsSet = new Set(selectedComws);
+  const localComwsSet = new Set(selected.selectedComws);
   const close = (isNavigate: boolean) => {
     comListOnActionAtom.set(null);
     if (isNavigate) navigate({ to: '/cm/li/sel' });
@@ -44,7 +44,7 @@ export const CmComSharedListActionInterpretator = ({
               <TheButton
                 disabled={addComsCount === 0}
                 onClick={() => {
-                  setSelectedComws(Array.from(localComwsSet.union(incomingComwsSet)));
+                  cmComSelectedComwsAtom.set(Array.from(localComwsSet.union(incomingComwsSet)));
                   close(true);
                 }}
               >
@@ -57,7 +57,7 @@ export const CmComSharedListActionInterpretator = ({
               <TheButton
                 disabled={lessComsCount === 0 && addComsCount === 0}
                 onClick={() => {
-                  setSelectedComws(comws);
+                  cmComSelectedComwsAtom.set(comws);
                   close(true);
                 }}
               >

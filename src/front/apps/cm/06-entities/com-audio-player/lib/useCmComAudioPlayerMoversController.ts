@@ -9,6 +9,7 @@ import {
   makeCmComAudioMarkTitleBySelector,
 } from '$cm/ext';
 import { makeCmComAudioMarkLineiFromSelector } from '$cm/shared/lib/makeCmComAudioMarkTitleBySelector';
+import { takeCmComTrackCurrentTimeMark } from '$cm/shared/lib/takeCmComTrackCurrentTimeMark';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useRef } from 'react';
 import { HttpLink } from 'shared/api';
@@ -40,17 +41,11 @@ export const useCmComAudioPlayerMoversController = (
     const titleNode = titleRef.current;
     const marks = mylib.keys(audioMarkPack).map(Number);
     const selectorToTitlePropsDict: PRecord<number, { title: string; ord: CmComOrder | nil }> = {};
-
-    let prevMarkTime = 0;
-    let currentMarkTime = 0;
-    let nextMarkTime = 0;
+    const timePositions = { prev: 0, current: 0, next: 0 };
 
     let lastMarkTime = 0;
     let prevButton: Element | nil = null;
     let isInitialButtonClassNameNeedSet = true;
-
-    const findNextMarkTime = (num: number) => num > cmComAudioPlayerHTMLElement.currentTime;
-    const findCurrentMarkTime = (num: number) => num <= cmComAudioPlayerHTMLElement.currentTime;
 
     const updateMarkBlockView =
       audioMarkPack == null || preSwitchTime < 0
@@ -58,10 +53,10 @@ export const useCmComAudioPlayerMoversController = (
         : () => {
             const actualMarkTime =
               preSwitchTime !== 0 &&
-              cmComAudioPlayerHTMLElement.currentTime < nextMarkTime &&
-              cmComAudioPlayerHTMLElement.currentTime > nextMarkTime - preSwitchTime
-                ? nextMarkTime
-                : currentMarkTime;
+              cmComAudioPlayerHTMLElement.currentTime < timePositions.next &&
+              cmComAudioPlayerHTMLElement.currentTime > timePositions.next - preSwitchTime
+                ? timePositions.next
+                : timePositions.current;
 
             if (isInitialButtonClassNameNeedSet || lastMarkTime !== actualMarkTime) {
               isInitialButtonClassNameNeedSet = false;
@@ -100,11 +95,7 @@ export const useCmComAudioPlayerMoversController = (
           };
 
     const updatePoints = () => {
-      const currentMarkTimei = marks.findLastIndex(findCurrentMarkTime);
-
-      prevMarkTime = marks[currentMarkTimei - 1] ?? 0;
-      currentMarkTime = marks[currentMarkTimei] ?? 0;
-      nextMarkTime = marks.find(findNextMarkTime) ?? 0;
+      const currentMarkTimei = takeCmComTrackCurrentTimeMark(marks, timePositions);
 
       if (nextRef.current !== null) {
         nextRef.current.disabled = currentMarkTimei === marks.length - 1;
@@ -124,15 +115,15 @@ export const useCmComAudioPlayerMoversController = (
       .pipe(
         addEventListenerPipe(prevRef.current, 'click', () => {
           cmComAudioPlayerHTMLElement.play();
-          cmComAudioPlayerHTMLElement.currentTime = prevMarkTime;
+          cmComAudioPlayerHTMLElement.currentTime = timePositions.prev;
         }),
         addEventListenerPipe(repeatRef.current, 'click', () => {
           cmComAudioPlayerHTMLElement.play();
-          cmComAudioPlayerHTMLElement.currentTime = currentMarkTime;
+          cmComAudioPlayerHTMLElement.currentTime = timePositions.current;
         }),
         addEventListenerPipe(nextRef.current, 'click', () => {
           cmComAudioPlayerHTMLElement.play();
-          cmComAudioPlayerHTMLElement.currentTime = nextMarkTime;
+          cmComAudioPlayerHTMLElement.currentTime = timePositions.next;
         }),
         addEventListenerPipe(cmComAudioPlayerHTMLElement, 'timeupdate', updatePoints),
         addEventListenerPipe(cmComAudioPlayerHTMLElement, 'ended', () => {

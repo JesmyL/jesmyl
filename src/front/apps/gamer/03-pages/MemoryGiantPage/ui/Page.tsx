@@ -79,15 +79,14 @@ export const GamerMemoryGiantPage = () => {
               }
 
               setWin(
-                renderComponentInNewWindow(
-                  () => (
+                renderComponentInNewWindow({
+                  reactNode: () => (
                     <StyledContainer>
                       <GamerMemoryGiantBoard />
                     </StyledContainer>
                   ),
-                  undefined,
-                  'gamer/memory-giant/board',
-                ),
+                  target: 'gamer/memory-giant/board',
+                }),
               );
             }}
           />

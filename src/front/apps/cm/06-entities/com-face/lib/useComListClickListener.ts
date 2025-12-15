@@ -1,7 +1,7 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
-import { useCmComSelectedList } from '$cm/entities/com';
-import { useRouter } from '@tanstack/react-router';
+import { cmComSelectedComwsAtom } from '$cm/entities/com';
+import { useNavigate } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { CmCom } from '../../com/lib/Com';
 import { cmComFaceCurrentComwIdPrefix, cmComFaceItemDescriptionClassName } from '../const/ids';
@@ -12,8 +12,7 @@ export const useCmComFaceListClickListener = (
   importantOnClick: ICmComFaceList['importantOnClick'],
   list: CmCom[],
 ) => {
-  const { toggleSelectedCom } = useCmComSelectedList();
-  const router = useRouter();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (listRef.current === null) return;
@@ -49,12 +48,12 @@ export const useCmComFaceListClickListener = (
           if (isFaceLogo) {
             event.stopPropagation();
             event.preventDefault();
-            toggleSelectedCom(comw);
+            cmComSelectedComwsAtom.do.toggle(comw);
             return;
           }
 
           const defaultClick = () => {
-            router.navigate({
+            navigate({
               to: '.',
               search: prev => ({ ...(prev as object), comw }) as object,
             });
@@ -72,5 +71,5 @@ export const useCmComFaceListClickListener = (
         }),
       )
       .effect();
-  }, [importantOnClick, list, listRef, router, toggleSelectedCom]);
+  }, [importantOnClick, list, listRef, navigate]);
 };

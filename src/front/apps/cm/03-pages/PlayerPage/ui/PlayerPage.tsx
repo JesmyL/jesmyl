@@ -1,6 +1,6 @@
-import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { Button } from '#shared/components/ui/button';
 import { ButtonGroup } from '#shared/components/ui/button-group';
+import { isMobileDevice } from '#shared/lib/device-differences';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { renderComponentInNewWindow } from '#shared/lib/renders';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
@@ -18,7 +18,7 @@ import {
 import { CmComFaceList } from '$cm/entities/com-face';
 import { useCmComFavouriteList } from '$cm/entities/com-favourite';
 import { cmComLastOpenComwAtom } from '$cm/entities/index';
-import { CmComAudioPlayerMarksMovers } from '$cm/ext';
+import { CmComAudioPlayerMarksMovers, CmComNumber } from '$cm/ext';
 import { getCmComFreshAudioMarksPack } from '$cm/shared/lib/getFresh';
 import { cmComTrackPreSwitchTimeAtom } from '$cm/shared/state';
 import { useNavigate, useSearch } from '@tanstack/react-router';
@@ -52,7 +52,6 @@ export const CmPlayerPage = () => {
   const endedTick = useAtomValue(cmComAudioPlayerEndedTickAtom);
   const errorTick = useAtomValue(cmComAudioPlayerErrorTickAtom);
   const broadcastSrc = useAtomValue(cmPlayerBroadcastAudioSrcAtom);
-  const checkAccess = useCheckUserAccessRightsInScope();
 
   const coms = useMemo(
     () =>
@@ -124,7 +123,13 @@ export const CmPlayerPage = () => {
       className="com-player"
       withoutBackButton
       withoutBackSwipe
-      headTitle={com?.name}
+      headTitle={
+        com && (
+          <>
+            #<CmComNumber comw={com.wid} /> {com.name}
+          </>
+        )
+      }
       headClass="mr-3"
       contentClass="p-0"
       head={
@@ -184,7 +189,7 @@ export const CmPlayerPage = () => {
               cmComAudioPlayerIsPlayAtom.do.toggle();
             }}
             comDescription={
-              checkAccess('general', 'ALL')
+              !isMobileDevice
                 ? com => {
                     return com.audio.map(src => (
                       <Button
@@ -211,16 +216,18 @@ export const CmPlayerPage = () => {
                             return;
                           }
 
-                          renderComponentInNewWindow(win => {
-                            openWin = win;
+                          renderComponentInNewWindow({
+                            reactNode: win => {
+                              openWin = win;
 
-                            window.addEventListener('unload', () => win.close());
-                            win.addEventListener('unload', () => {
-                              openWin = null;
-                              cmPlayerBroadcastAudioSrcAtom.set(null);
-                            });
+                              window.addEventListener('unload', () => win.close());
+                              win.addEventListener('unload', () => {
+                                openWin = null;
+                                cmPlayerBroadcastAudioSrcAtom.set(null);
+                              });
 
-                            return <CmPlayerBroadcast />;
+                              return <CmPlayerBroadcast />;
+                            },
                           });
                         }}
                       />
