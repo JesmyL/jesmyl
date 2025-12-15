@@ -1,4 +1,4 @@
-import { ScreenBroadcastPositionConfig } from '#features/broadcast/complect/model';
+import { BroadcastResizeBorderPositions, ScreenBroadcastPositionConfig } from '#features/broadcast/complect/model';
 import { ScreenTranslateCurrentPositionConfigurators } from '#features/broadcast/complect/position/Position';
 import { useScreenBroadcastCurrentConfigi } from '#features/broadcast/hooks/configs';
 import { useBibleBroadcastScreenConfig, useBibleBroadcastUpdateCurrentConfig } from '$bible/entities/broadcast';
@@ -35,7 +35,7 @@ export const BibleBroadcastScreenAddressPanel = (props: {
         config={currentConfig.addressPanel}
         updateConfig={updateConfigAddressPanel}
         wrapperRef={props.wrapperRef}
-        resizeOnly="top"
+        resizeOnly={[BroadcastResizeBorderPositions.Top]}
         isCantMove
       />
     </>

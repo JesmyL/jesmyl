@@ -1,10 +1,12 @@
+import { broadcastCurrentTextAppAtom } from '#features/broadcast/atoms';
 import { useScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
 import { cmInitialSlideAtom } from '#features/broadcast/initial-slide-context';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { BibleTranslatesContextProvider } from '$bible/ext';
 import { CmBroadcastFollowInitialSlide } from '$cm/features/broadcast';
-import { complectIDB, indexIDB, useAuth } from '$index/shared/state';
+import { indexIDB, useAuth } from '$index/shared/state';
 import { schLiveTsjrpcClient } from '$index/shared/tsjrpc';
+import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
 import { IScheduleWidgetWid } from 'shared/api';
@@ -15,7 +17,7 @@ import { CmScheduleWidgetBroadcastLiveCm } from './LiveCm';
 export const CmScheduleWidgetBroadcast = ({ schw }: { schw: IScheduleWidgetWid | und }) => {
   const auth = useAuth();
   const windows = useScreenBroadcastWindows();
-  const isCm = complectIDB.useValue.currentBroadcastTextApp() === 'cm';
+  const isCm = useAtomValue(broadcastCurrentTextAppAtom) === 'cm';
   const [isCantTranslateLive, setIsCantTranslateLive] = useState(true);
   const schedule = useLiveQuery(() => schw && indexIDB.db.schs.get(schw), [schw]);
 

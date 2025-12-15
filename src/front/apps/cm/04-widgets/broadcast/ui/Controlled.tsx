@@ -1,14 +1,31 @@
 import { BroadcastSlidePreview } from '#features/broadcast/controls/Preview';
+import { useWatchScreenBroadcast } from '#features/broadcast/hooks/watch-broadcast';
+import { Button } from '#shared/components/ui/button';
+import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
-import { CmCom, useCmComOpenComLinkRendererContext } from '$cm/entities/com';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { CmCom, useCmComCurrent, useCmComOpenComLinkRendererContext } from '$cm/entities/com';
+import {
+  CmComAudioPlayerPlayButton,
+  cmComAudioPlayerPlaySrcAtom,
+  CmComAudioPlayerTrack,
+} from '$cm/entities/com-audio-player';
 import { CmComFaceList } from '$cm/entities/com-face';
 import { CmComToolHideMetronome } from '$cm/entities/com-tool';
 import { cmComIsShowFavouritesInBroadcastsAtom } from '$cm/entities/index';
+import { CmComAudioPlayerMarksMovers } from '$cm/ext';
 import { useCmBroadcastScreenComNavigations, useCmBroadcastScreenComTextNavigations } from '$cm/features/broadcast';
-import { useAtom } from 'atomaric';
+import { getCmComFreshAudioMarksPack } from '$cm/shared/lib/getFresh';
+import { cmComTrackPreSwitchTimeAtom, cmIsTrackBroadcastAtom } from '$cm/shared/state';
+import { cmPlayerBroadcastAudioSrcAtom, cmPlayerBroadcastComwAtom } from '$cm/shared/state/broadcast.atoms';
+import { useNavigate } from '@tanstack/react-router';
+import { useAtom, useAtomValue } from 'atomaric';
 import { ReactNode } from 'react';
+import { CmComWid, HttpLink } from 'shared/api';
 import { itNIt } from 'shared/utils';
+import { toast } from 'sonner';
 import styled from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 import { useCmBroadcastScreenKeyDownListen } from '../lib/keydown-listen';
 import { CmBroadcastControlPanel } from './ControllPanel';
 import { CmBroadcastScreenConfigurations } from './ScreenConfigurations';
@@ -23,10 +40,38 @@ interface Props {
 
 export function CmBroadcastControlled(props: Props) {
   const [isShowFavouritesList, setIsShowFavouritesList] = useAtom(cmComIsShowFavouritesInBroadcastsAtom);
+  const isTrackBroadcast = useAtomValue(cmIsTrackBroadcastAtom);
+  const broadcastSrc = useAtomValue(cmPlayerBroadcastAudioSrcAtom);
+  const navigate = useNavigate();
 
   const { comPack, coms } = useCmBroadcastScreenComNavigations();
   const setTexti = useCmBroadcastScreenComTextNavigations().setTexti;
   const linkToCom = useCmComOpenComLinkRendererContext();
+  let comList = props.comList ?? coms;
+  if (isTrackBroadcast) comList = comList.filter(com => com.audio.length);
+  const com = useCmComCurrent();
+
+  const watchBroadcast = useWatchScreenBroadcast();
+
+  const onStartBroadcast = async (comw: CmComWid, src: HttpLink) => {
+    const pack = await getCmComFreshAudioMarksPack(src);
+
+    if (pack == null) {
+      toast('Для этого трека маркеры не установлены', makeToastKOMoodConfig());
+      return;
+    }
+
+    navigate({
+      to: '.',
+      search: prev => ({ ...(prev as object), comw }) as object,
+    });
+
+    cmPlayerBroadcastComwAtom.set(comw);
+    cmComAudioPlayerPlaySrcAtom.set(src);
+    cmPlayerBroadcastAudioSrcAtom.set(src);
+
+    watchBroadcast();
+  };
 
   useCmBroadcastScreenKeyDownListen();
 
@@ -38,7 +83,7 @@ export function CmBroadcastControlled(props: Props) {
           linkRef,
           children: backButtonNode,
           search: {
-            comw: coms[0]?.wid,
+            comw: comList[0]?.wid,
             tran: undefined,
           },
         })
@@ -53,7 +98,16 @@ export function CmBroadcastControlled(props: Props) {
           'Трансляция' + (comPack.pageTitlePostfix || '')
         )
       }
-      head={props.head}
+      head={
+        <div className="flex gap-2">
+          <LazyIcon
+            icon="MusicNote01"
+            className={twMerge('pointer mr-2', isTrackBroadcast && 'text-x7')}
+            onClick={cmIsTrackBroadcastAtom.do.toggle}
+          />
+          {props.head}
+        </div>
+      }
       content={
         <Container>
           <div className="flex">
@@ -68,20 +122,66 @@ export function CmBroadcastControlled(props: Props) {
                 <span className={isShowFavouritesList ? 'text-x7' : undefined}>Избранные</span>
               </div>
               <StyledComFaceList
-                list={props.comList ?? coms}
+                list={comList}
                 titles={comPack.titles}
-                importantOnClick={({ defaultClick }) => {
-                  defaultClick();
-                  setTexti(0);
+                importantOnClick={({ defaultClick, com }) => {
+                  if (!isTrackBroadcast) {
+                    setTexti(0);
+                    defaultClick();
+                    return;
+                  }
+
+                  onStartBroadcast(com.wid, com.audio[0] ?? '');
                 }}
+                comDescription={
+                  isTrackBroadcast
+                    ? com => {
+                        return com.audio.map(src => (
+                          <Button
+                            key={src}
+                            icon="ComputerVideo"
+                            withoutAnimation
+                            className={broadcastSrc === src ? 'text-x7' : undefined}
+                            onClick={() => onStartBroadcast(com.wid, src)}
+                          />
+                        ));
+                      }
+                    : undefined
+                }
               />
             </div>
           </div>
-          <div className="mt-5">
-            <CmComToolHideMetronome />
-          </div>
-          <CmBroadcastSlideLine />
-          <CmBroadcastControlPanel />
+          {isTrackBroadcast ? (
+            <>
+              {broadcastSrc && (
+                <div className="mt-5 bg-x2 flex min-h-20 gap-3 px-3 mb-3">
+                  <CmComAudioPlayerPlayButton
+                    src={broadcastSrc}
+                    className="mx-5 scale-300!"
+                  />
+
+                  <CmComAudioPlayerTrack src={broadcastSrc} />
+                </div>
+              )}
+              {com && broadcastSrc && (
+                <div className="mb-10">
+                  <CmComAudioPlayerMarksMovers
+                    com={com}
+                    preSwitchTimeAtom={cmComTrackPreSwitchTimeAtom}
+                    src={broadcastSrc}
+                  />
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              <div className="mt-5">
+                <CmComToolHideMetronome />
+              </div>
+              <CmBroadcastSlideLine />
+              <CmBroadcastControlPanel />
+            </>
+          )}
           <CmBroadcastScreenConfigurations />
         </Container>
       }

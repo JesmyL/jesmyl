@@ -1,10 +1,12 @@
 import { BibleBroadcastScreenCurrentScreen } from '$bible/entities/broadcast-screen/ui/BibleBroadcastCurrentScreen';
 import { BibleCurrentTextsContext } from '$bible/shared/state/CurrentTextsContext';
 import { BibleTranslatesContextProvider } from '$bible/shared/state/TranslatesContext';
+import { cmIsTrackBroadcastAtom } from '$cm/shared/state';
+import { CmBroadcastCurrentComTrackScreen } from '$cm/widgets/broadcast/ui/CurrentComTrackScreen';
 import { CmBroadcastCurrentScreen } from '$cm/widgets/broadcast/ui/CurrentScreen';
-import { complectIDB } from '$index/shared/state';
 import { useAtomValue } from 'atomaric';
 import styled, { css } from 'styled-components';
+import { broadcastCurrentTextAppAtom } from './atoms';
 import { useCurrentForceViweAppContext } from './Broadcast.contexts';
 import { BroadcastScreenProps } from './Broadcast.model';
 import { BroadcastTextScreen } from './BroadcastTextScreen';
@@ -12,10 +14,11 @@ import { AlertLineSlideText } from './controls/alert-line/AlertLineSlideText';
 import { isShowTranslatedTextAtom, useBroadcastInitialSlideValue } from './initial-slide-context';
 
 export const BroadcastScreen = (props: BroadcastScreenProps) => {
-  const app = complectIDB.useValue.currentBroadcastTextApp();
+  const app = useAtomValue(broadcastCurrentTextAppAtom);
   const forceViewApp = useCurrentForceViweAppContext();
   const initialSlide = useBroadcastInitialSlideValue();
   const isShowTranslatedText = useAtomValue(isShowTranslatedTextAtom);
+  const isTrackBroadcast = useAtomValue(cmIsTrackBroadcastAtom);
 
   return (
     <>
@@ -39,14 +42,16 @@ export const BroadcastScreen = (props: BroadcastScreenProps) => {
         $isShowTranslatedText={isShowTranslatedText && !initialSlide}
       >
         <BroadcastTextScreen key="BroadcastTextScreen">
-          {(forceViewApp ?? props.forceViewApp ?? app) === 'cm' ? (
-            <CmBroadcastCurrentScreen {...props} />
-          ) : (
+          {(forceViewApp ?? props.forceViewApp ?? app) === 'bible' ? (
             <BibleTranslatesContextProvider>
               <BibleCurrentTextsContext isPreview={props.isPreview}>
                 <BibleBroadcastScreenCurrentScreen {...props} />
               </BibleCurrentTextsContext>
             </BibleTranslatesContextProvider>
+          ) : isTrackBroadcast ? (
+            <CmBroadcastCurrentComTrackScreen {...props} />
+          ) : (
+            <CmBroadcastCurrentScreen {...props} />
           )}
         </BroadcastTextScreen>
       </StyledNextSiblingVisibiliter>

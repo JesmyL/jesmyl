@@ -18,6 +18,7 @@ interface Props {
   wrapperRef: React.RefObject<HTMLDivElement | null>;
   parentConfig: CmBroadcastScreenConfig;
   isVisible: boolean;
+  isChordedBlockText?: boolean;
 }
 
 export const CmBroadcastSubScreen = ({
@@ -29,6 +30,7 @@ export const CmBroadcastSubScreen = ({
   parentConfig,
   wrapperRef,
   isVisible,
+  isChordedBlockText,
 }: Props & Partial<FontSizeContainProps>) => {
   const style = useCmBroadcastScreenStyle(isVisible, config);
   const updateConfig = useCmBroadcastUpdateCurrentConfig();
@@ -49,7 +51,7 @@ export const CmBroadcastSubScreen = ({
     <>
       <FontSizeContain
         className="inline-flex white-pre-children"
-        style={style}
+        style={isChordedBlockText ? { ...style, opacity: Math.min(+(style.opacity ?? 1), 0.3) } : style}
         html={text}
         subUpdates={'' + subUpdates + config.width + config.height}
       />

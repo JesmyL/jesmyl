@@ -27,3 +27,10 @@ export interface FixedResizerLines {
   type: 'vert' | 'horz';
   value: number;
 }
+
+export const enum BroadcastResizeBorderPositions {
+  Top,
+  Right,
+  Bottom,
+  Left,
+}

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled, { RuleSet, css } from 'styled-components';
 import { useFixedResizerLines } from '../atoms';
 import { defaultScreenBroadcastPositionConfig } from '../defaults';
-import { FixedResizerLines, ScreenBroadcastPositionConfig } from '../model';
+import { BroadcastResizeBorderPositions, FixedResizerLines, ScreenBroadcastPositionConfig } from '../model';
 import { PositionConfiguratorsResizersHalfWrapperFixer } from './complect/HalfWrapperFixer';
 import { ShowHalfFixersKeyActiveMode } from './complect/model';
 import { PositionConfiguratorsResizers } from './complect/Resizers';
@@ -19,7 +19,7 @@ export type ScreenResizerResizeOnly = `${Top}${Right}${Bottom}${Left}`;
 interface Props {
   config: ScreenBroadcastPositionConfig;
   updateConfig?: (config: Partial<ScreenBroadcastPositionConfig>) => void;
-  resizeOnly?: ScreenResizerResizeOnly;
+  resizeOnly?: BroadcastResizeBorderPositions[];
   isCantMove?: boolean;
   wrapperRef: React.RefObject<HTMLDivElement | null>;
 }
@@ -158,8 +158,8 @@ const targetBorderColor = 'blue';
 const anchorBorderColor = 'yellow';
 
 const borderColorInclude = (
-  inc: ScreenResizerResizeOnly,
-  param: 'top' | 'right' | 'bottom' | 'left',
+  inc: BroadcastResizeBorderPositions[],
+  param: BroadcastResizeBorderPositions,
   borderColor?: string,
 ) => (inc.includes(param) ? `border-${param}-color: ${borderColor ?? visibleBorderColor};` : '');
 
@@ -168,7 +168,7 @@ const Rect = styled.div<{
   $left: number;
   $width: number;
   $height: number;
-  $resizeOnly: ScreenResizerResizeOnly | und;
+  $resizeOnly: BroadcastResizeBorderPositions[] | und;
   $isCantMove: boolean | und;
   $fixedResizerLines: FixedResizerLines | null;
   $config: ScreenBroadcastPositionConfig;
@@ -191,7 +191,7 @@ const Rect = styled.div<{
             return props.$resizeOnly
               ? css`
                   border-color: transparent;
-                  ${borderColorInclude(props.$resizeOnly, 'left', anchorBorderColor)};
+                  ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Left, anchorBorderColor)};
                 `
               : css`
                   border-color: ${visibleBorderColor};
@@ -203,7 +203,7 @@ const Rect = styled.div<{
             return props.$resizeOnly
               ? css`
                   border-color: transparent;
-                  ${borderColorInclude(props.$resizeOnly, 'right', anchorBorderColor)};
+                  ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Right, anchorBorderColor)};
                 `
               : css`
                   border-color: ${visibleBorderColor};
@@ -215,10 +215,10 @@ const Rect = styled.div<{
             ${props.$resizeOnly
               ? css`
                   border-color: transparent;
-                  ${borderColorInclude(props.$resizeOnly, 'bottom')}
-                  ${borderColorInclude(props.$resizeOnly, 'top')}
-                  ${borderColorInclude(props.$resizeOnly, 'left', targetBorderColor)}
-                  ${borderColorInclude(props.$resizeOnly, 'right', targetBorderColor)}
+                  ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Bottom)}
+                  ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Top)}
+                  ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Left, targetBorderColor)}
+                  ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Right, targetBorderColor)}
                 `
               : css`
                   border-color: ${visibleBorderColor};
@@ -231,7 +231,7 @@ const Rect = styled.div<{
             return props.$resizeOnly
               ? css`
                   border-color: transparent;
-                  ${borderColorInclude(props.$resizeOnly, 'top', anchorBorderColor)};
+                  ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Top, anchorBorderColor)};
                 `
               : css`
                   border-color: ${visibleBorderColor};
@@ -242,7 +242,7 @@ const Rect = styled.div<{
             return props.$resizeOnly
               ? css`
                   border-color: transparent;
-                  ${borderColorInclude(props.$resizeOnly, 'bottom', anchorBorderColor)};
+                  ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Bottom, anchorBorderColor)};
                 `
               : css`
                   border-color: ${visibleBorderColor};
@@ -254,10 +254,10 @@ const Rect = styled.div<{
             ${props.$resizeOnly
               ? css`
                   border-color: transparent;
-                  ${borderColorInclude(props.$resizeOnly, 'right')}
-                  ${borderColorInclude(props.$resizeOnly, 'left')}
-                  ${borderColorInclude(props.$resizeOnly, 'top', targetBorderColor)};
-                  ${borderColorInclude(props.$resizeOnly, 'bottom', targetBorderColor)};
+                  ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Right)}
+                  ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Left)}
+                  ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Top, targetBorderColor)};
+                  ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Bottom, targetBorderColor)};
                 `
               : css`
                   border-color: ${visibleBorderColor};
@@ -275,10 +275,10 @@ const Rect = styled.div<{
     if (props.$resizeOnly === undefined) return `border-color: ${visibleBorderColor};`;
 
     return `
-      ${borderColorInclude(props.$resizeOnly, 'top')}
-      ${borderColorInclude(props.$resizeOnly, 'right')}
-      ${borderColorInclude(props.$resizeOnly, 'bottom')}
-      ${borderColorInclude(props.$resizeOnly, 'left')}
+      ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Top)}
+      ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Right)}
+      ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Bottom)}
+      ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Left)}
     `;
   }}
 

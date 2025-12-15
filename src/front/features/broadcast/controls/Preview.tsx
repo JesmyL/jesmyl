@@ -89,7 +89,7 @@ const Wrapper = styled.div`
   max-height: var(--max-size);
 
   overflow: hidden;
-  color: var(--color-far);
+  color: var(--color-x3);
   font-size: 14px;
   user-select: none;
   white-space: pre;

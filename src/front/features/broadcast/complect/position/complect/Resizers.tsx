@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components';
-import { FixedResizerLines, ScreenBroadcastPositionConfig } from '../../model';
-import { ScreenResizerResizeOnly } from '../Position';
+import { BroadcastResizeBorderPositions, FixedResizerLines, ScreenBroadcastPositionConfig } from '../../model';
 import { PositionConfiguratorsResizersHalfFixer } from './HalfFixer';
 import { usePositionConfiguratorResizerBorderMaker } from './hooks/border-maker';
 import { ShowHalfFixersKeyActiveMode } from './model';
@@ -10,7 +9,7 @@ interface Props {
   updateConfig: (config: Partial<ScreenBroadcastPositionConfig>) => void;
   rectRef: React.RefObject<HTMLDivElement | null>;
   wrapperRef: React.RefObject<HTMLDivElement | null>;
-  resizeOnly?: ScreenResizerResizeOnly;
+  resizeOnly?: BroadcastResizeBorderPositions[];
   config: ScreenBroadcastPositionConfig;
   fixedResizerLines: FixedResizerLines | null;
   showHalfFixersKeyActiveMode: ShowHalfFixersKeyActiveMode;
@@ -41,10 +40,10 @@ export const PositionConfiguratorsResizers = ({
   );
 
   if (resizeOnly !== undefined) {
-    top = resizeOnly.includes('top');
-    right = resizeOnly.includes('right');
-    bottom = resizeOnly.includes('bottom');
-    left = resizeOnly.includes('left');
+    top = resizeOnly.includes(BroadcastResizeBorderPositions.Top);
+    right = resizeOnly.includes(BroadcastResizeBorderPositions.Right);
+    bottom = resizeOnly.includes(BroadcastResizeBorderPositions.Bottom);
+    left = resizeOnly.includes(BroadcastResizeBorderPositions.Left);
   }
 
   return (

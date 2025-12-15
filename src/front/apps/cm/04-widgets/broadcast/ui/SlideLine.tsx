@@ -1,5 +1,6 @@
 import { useCmBroadcastCurrentComTexts, useCmBroadcastScreenComTextNavigations } from '$cm/features/broadcast';
 import styled from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 import { useCmBroadcastCurrentScreenConfig } from '../hooks/configs';
 
 export const CmBroadcastSlideLine = () => {
@@ -7,54 +8,52 @@ export const CmBroadcastSlideLine = () => {
   const currentConfig = useCmBroadcastCurrentScreenConfig();
   const texts = useCmBroadcastCurrentComTexts(currentConfig?.pushKind);
 
+  if (!texts) return;
+
   return (
-    <>
-      {texts && (
-        <Line className="no-scrollbar">
-          {texts.map((text, texti) => {
-            return (
-              <LineItem
-                key={texti}
-                id={`broadcast-window-line-${texti}`}
-                onClick={() => setTexti(texti)}
-              >
-                <div>{texti + 1}</div>
-                <CmSlideLineItemInnerStyle className={'pointer ' + (currTexti === texti ? 'active' : '')}>
-                  <div dangerouslySetInnerHTML={{ __html: text }} />
-                </CmSlideLineItemInnerStyle>
-              </LineItem>
-            );
-          })}
-        </Line>
-      )}
-    </>
+    <StyledLine className="no-scrollbar">
+      {texts.map((text, texti) => {
+        return (
+          <StyledItem
+            key={texti}
+            id={`broadcast-window-line-${texti}`}
+            onClick={() => setTexti(texti)}
+          >
+            <div>{texti + 1}</div>
+            <StyledItemInner className={twMerge('pointer', currTexti === texti && 'active')}>
+              <div dangerouslySetInnerHTML={{ __html: text }} />
+            </StyledItemInner>
+          </StyledItem>
+        );
+      })}
+    </StyledLine>
   );
 };
 
-const CmSlideLineItemInnerStyle = styled.div`
+const StyledItemInner = styled.div`
   display: flex;
   border: solid 1px transparent;
   background: black;
   padding: 5px;
   height: calc(100% - 1.5em);
   overflow: hidden;
-  color: var(--color-far);
+  color: var(--color-x3);
   font-size: 14px;
   user-select: none;
   text-align: center;
   white-space: pre;
 
   &.active {
-    border-color: var(--color-far);
+    border-color: var(--color-x3);
   }
 `;
 
-const LineItem = styled.div`
+const StyledItem = styled.div`
   margin: 0 7px;
   scroll-snap-align: center;
 `;
 
-const Line = styled.div`
+const StyledLine = styled.div`
   display: flex;
   margin: 1em 0;
   border-radius: var(--radius);

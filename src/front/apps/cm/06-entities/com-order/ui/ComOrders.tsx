@@ -99,6 +99,6 @@ const StyledOrdList = styled.div<{ $fontSize: number | und }>`
   padding-top: 0.06em;
   padding-bottom: 100px;
   min-height: 100%;
-  color: var(--color-far);
+  color: var(--color-x3);
   font-size: ${props => props.$fontSize}px;
 `;

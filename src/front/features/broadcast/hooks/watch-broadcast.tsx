@@ -22,7 +22,6 @@ export const useWatchScreenBroadcast = () => {
     const watch = (windowi: number) =>
       renderComponentInNewWindow({
         target: `cm/broadcast/${windowi}`,
-        features: `top=10000,left=30000,width=30000,height=30000,directories=no,titlebar=no,menubar=no,toolbar=no,location=no,status=no,scrollbars=no`,
         reactNode: win => {
           newWindows[windowi] = {
             win,

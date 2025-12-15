@@ -1,4 +1,4 @@
-import { useSwitchCurrentBroadcastTextApp } from '#features/broadcast/hooks/current-app';
+import { broadcastCurrentTextAppAtom } from '#features/broadcast/atoms';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { BibleBroadcastLive } from '$bible/ext';
 import { LiveBroadcastAppProps } from '$cm/shared/model';
@@ -14,7 +14,6 @@ export const CmScheduleWidgetBroadcastBibleControlled: React.FC<LiveBroadcastApp
   headTitle,
   schedule,
 }) {
-  const switchCurrApp = useSwitchCurrentBroadcastTextApp();
   const onSend = useCallback(
     (liveData: IndexSchWBroadcastLiveDataValue) => schLiveTsjrpcClient.next({ schw: schedule.w, data: liveData }),
     [schedule.w],
@@ -33,7 +32,7 @@ export const CmScheduleWidgetBroadcastBibleControlled: React.FC<LiveBroadcastApp
           <LazyIcon
             icon="Book02"
             className="pointer mr-2"
-            onClick={() => switchCurrApp()}
+            onClick={broadcastCurrentTextAppAtom.do.switch}
           />
         }
         headTitle={headTitle}

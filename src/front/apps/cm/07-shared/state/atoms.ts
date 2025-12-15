@@ -4,3 +4,4 @@ import { cmConstantsDefaultConfig } from 'shared/values/cm/cmConstantsDefaultCon
 export const cmConstantsConfigAtom = atom(cmConstantsDefaultConfig, 'cm:constantsConfig');
 
 export const cmComTrackPreSwitchTimeAtom = atom(2, 'cm:comAudioPreSwitchTime');
+export const cmIsTrackBroadcastAtom = atom(false, 'cm:cmIsTrackBroadcast');

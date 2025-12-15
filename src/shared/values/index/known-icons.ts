@@ -65,6 +65,7 @@ export const knownStameskaIconNames = {
   Computer: 0,
   ComputerPhoneSync: 0,
   ComputerSettings: 0,
+  ComputerVideo: 0,
   CongruentToSquare: 0,
   Copy01: 0,
   Copy02: 0,

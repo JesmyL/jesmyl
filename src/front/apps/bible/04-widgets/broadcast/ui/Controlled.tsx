@@ -47,15 +47,13 @@ export default function BibleBroadcastControlled({ head, headTitle }: Props): JS
       className=""
       headTitle={headTitle ?? 'Библия'}
       head={head}
-      // withoutBackButton
-      // withoutBackSwipe
       content={
         <Container>
           <BibleBroadcastControlledTopPanel />
           <BibleTranslateModulesControl />
           <ScreenBroadcastControlPanel
-            onPrev={() => bibleVerseiAtom.set(v => v - 1)}
-            onNext={() => bibleVerseiAtom.set(v => v + 1)}
+            onPrev={() => bibleVerseiAtom.do.increment(-1)}
+            onNext={() => bibleVerseiAtom.do.increment(1)}
           />
           <BibleBroadcastSearchPanel />
           <BibleBroadcastControlledBottomPanel />

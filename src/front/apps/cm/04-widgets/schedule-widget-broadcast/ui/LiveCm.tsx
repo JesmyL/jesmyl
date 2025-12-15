@@ -1,29 +1,45 @@
-import { useSwitchCurrentBroadcastTextApp } from '#features/broadcast/hooks/current-app';
+import { broadcastCurrentTextAppAtom } from '#features/broadcast/atoms';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmBroadcastBlockAtom } from '$cm/entities/broadcast';
 import { useCmComCurrent } from '$cm/entities/com';
 import { useCmBroadcastScreenComNavigations } from '$cm/features/broadcast';
 import { LiveBroadcastAppProps } from '$cm/shared/model';
+import { cmIsTrackBroadcastAtom } from '$cm/shared/state';
 import { CmBroadcastControlled, useCmBroadcastScreenConfigs } from '$cm/widgets/broadcast';
 import { IndexSchWBroadcastLiveDataValue } from '$index/shared/model/Index.model';
 import { schLiveTsjrpcClient } from '$index/shared/tsjrpc/live.tsjrpc';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 
-export const CmScheduleWidgetBroadcastLiveCm = ({
-  isCantTranslateLive,
-  fio,
-  headTitle,
-  schedule,
-}: LiveBroadcastAppProps) => {
+export const CmScheduleWidgetBroadcastLiveCm = (props: LiveBroadcastAppProps) => {
+  const { coms } = useCmBroadcastScreenComNavigations();
+  const isTrackBroadcast = useAtomValue(cmIsTrackBroadcastAtom);
+
+  return (
+    <>
+      {isTrackBroadcast || <LiveReport {...props} />}
+      <CmBroadcastControlled
+        comList={coms}
+        headTitle={props.headTitle}
+        head={
+          <LazyIcon
+            icon="BookOpen02"
+            className="pointer mr-2"
+            onClick={broadcastCurrentTextAppAtom.do.switch}
+          />
+        }
+      />
+    </>
+  );
+};
+
+const LiveReport = (props: LiveBroadcastAppProps) => {
   const ccom = useCmComCurrent();
   const [config] = useCmBroadcastScreenConfigs();
-  const switchCurrApp = useSwitchCurrentBroadcastTextApp();
   const currTexti = useAtomValue(cmBroadcastBlockAtom);
-  const { coms } = useCmBroadcastScreenComNavigations();
 
   useEffect(() => {
-    if (isCantTranslateLive || !ccom) return;
+    if (props.isCantTranslateLive || !ccom) return;
 
     return setTimeoutEffect(() => {
       const blockLengths = ccom.broadcastMap(config.pushKind, true);
@@ -43,7 +59,7 @@ export const CmScheduleWidgetBroadcastLiveCm = ({
       const texts = ccom.getOrderedTexts(true, config.pushKind);
 
       const liveData: IndexSchWBroadcastLiveDataValue = {
-        fio,
+        fio: props.fio,
         cm: {
           comw: ccom.wid,
           texti: currTexti,
@@ -55,21 +71,9 @@ export const CmScheduleWidgetBroadcastLiveCm = ({
         },
       };
 
-      schLiveTsjrpcClient.next({ schw: schedule.w, data: liveData });
+      schLiveTsjrpcClient.next({ schw: props.schedule.w, data: liveData });
     }, 100);
-  }, [ccom, config, currTexti, fio, isCantTranslateLive, schedule.w]);
+  }, [ccom, config, currTexti, props.fio, props.isCantTranslateLive, props.schedule.w]);
 
-  return (
-    <CmBroadcastControlled
-      head={
-        <LazyIcon
-          icon="BookOpen02"
-          className="pointer mr-2"
-          onClick={() => switchCurrApp()}
-        />
-      }
-      comList={coms}
-      headTitle={headTitle}
-    />
-  );
+  return <></>;
 };

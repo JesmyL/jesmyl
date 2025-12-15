@@ -21,13 +21,13 @@ import { cmComLastOpenComwAtom } from '$cm/entities/index';
 import { CmComAudioPlayerMarksMovers, CmComNumber } from '$cm/ext';
 import { getCmComFreshAudioMarksPack } from '$cm/shared/lib/getFresh';
 import { cmComTrackPreSwitchTimeAtom } from '$cm/shared/state';
+import { cmPlayerBroadcastAudioSrcAtom, cmPlayerBroadcastComwAtom } from '$cm/shared/state/broadcast.atoms';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { atom, useAtomValue } from 'atomaric';
 import { useEffect, useMemo } from 'react';
 import { CmComWid } from 'shared/api';
 import { toast } from 'sonner';
 import styled from 'styled-components';
-import { cmPlayerBroadcastAudioSrcAtom, cmPlayerBroadcastComwAtom } from '../state/atoms';
 import { CmPlayerBroadcast } from './Broadcast';
 
 let isCanPlay = false;
