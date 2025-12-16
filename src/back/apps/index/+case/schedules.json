@@ -637,7 +637,7 @@
   },
   {
     "w": 1737866590786,
-    "m": 1763903983746,
+    "m": 1765785777197,
     "title": "Мои задачи",
     "app": "index",
     "dsc": "",
@@ -819,16 +819,7 @@
         "mi": 5,
         "use": 5
       },
-      {
-        "title": "q",
-        "description": "q",
-        "icon": "MessageQuestion",
-        "initVal": {},
-        "R": 47,
-        "U": 47,
-        "mi": 6,
-        "use": 5
-      },
+      { "title": "q", "description": "q", "icon": "ComputerVideo", "initVal": {}, "R": 47, "U": 47, "mi": 6, "use": 5 },
       {
         "title": "Склад",
         "description": "storages",
