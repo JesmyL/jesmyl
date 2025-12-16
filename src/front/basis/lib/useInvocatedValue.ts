@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 export const useInvocatedValue = <Value, InitialValue extends Value>(
   initialValue: InitialValue,
-  invocation: (props: { aborter: AbortController }, initialValue: InitialValue) => Promise<Value>,
+  invocation: (props: { aborter: { signal: AbortSignal } }, initialValue: InitialValue) => Promise<Value>,
   deps: unknown[],
 ) => {
   const [value, setValue] = useState<Value>(initialValue);

@@ -423,8 +423,10 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
   };
 
   repeatedText = (repeats: OrderRepeats | null = this.repeats) => {
-    return CmComOrderUtils.makeRepeatedText(CmComUtils.transformToDisplayedText(this.text).text, repeats);
+    return CmComOrderUtils.makeRepeatedText(this.transformedText(), repeats);
   };
+
+  transformedText = () => CmComUtils.transformToDisplayedText(this.text).text;
 
   makeSelector = (): CmComOrderSelector => this.wid;
 

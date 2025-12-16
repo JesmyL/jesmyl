@@ -89,8 +89,8 @@ const styles = css`
     }
 
     &:fullscreen * * * {
-      filter: blur(0px) !important;
-      opacity: 1 !important;
+      filter: blur(0px);
+      opacity: 1;
     }
   }
 `;

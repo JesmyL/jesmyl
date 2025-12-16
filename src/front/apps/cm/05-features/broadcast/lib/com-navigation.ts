@@ -1,15 +1,16 @@
-import { CmCom, useCmComCurrent, useCmComCurrentComPackContext } from '$cm/entities/com';
+import { CmCom, useCmComCurrent, useCmComCurrentComPackContext, useCmComSelectedList } from '$cm/entities/com';
 import { cmComFaceCurrentComwIdPrefix } from '$cm/entities/com-face';
 import { useCmComFavouriteList } from '$cm/entities/com-favourite';
-import { cmComIsShowFavouritesInBroadcastsAtom } from '$cm/entities/index';
+import { cmOpenComListModeAtom } from '$cm/shared/state';
 import { useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
 import { useCmBroadcastScreenComTextNavigations } from './com-texts';
 
 export const useCmBroadcastScreenComNavigations = () => {
-  const { favouriteComs } = useCmComFavouriteList();
-  const isShowFavouritesList = useAtomValue(cmComIsShowFavouritesInBroadcastsAtom);
+  const favourite = useCmComFavouriteList();
+  const selected = useCmComSelectedList();
+  const openListMode = useAtomValue(cmOpenComListModeAtom);
   const ccom = useCmComCurrent();
   const navigate = useNavigate();
   const setCom: (com: CmCom) => void = useCallback(
@@ -26,7 +27,8 @@ export const useCmBroadcastScreenComNavigations = () => {
   );
 
   const comPack = useCmComCurrentComPackContext();
-  const coms = isShowFavouritesList ? favouriteComs : comPack.list;
+  const coms =
+    openListMode === 'fav' ? favourite.favouriteComs : openListMode === 'sel' ? selected.selectedComs : comPack.list;
   const { setTexti } = useCmBroadcastScreenComTextNavigations();
 
   return {

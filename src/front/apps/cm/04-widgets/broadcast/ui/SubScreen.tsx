@@ -51,7 +51,7 @@ export const CmBroadcastSubScreen = ({
     <>
       <FontSizeContain
         className="inline-flex white-pre-children"
-        style={isChordedBlockText ? { ...style, opacity: Math.min(+(style.opacity ?? 1), 0.3) } : style}
+        style={isChordedBlockText ? { ...style, opacity: Math.min(+(style.opacity || 1) || 1, 0.3) } : style}
         html={text}
         subUpdates={'' + subUpdates + config.width + config.height}
       />

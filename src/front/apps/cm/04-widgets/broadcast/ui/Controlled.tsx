@@ -12,17 +12,16 @@ import {
 } from '$cm/entities/com-audio-player';
 import { CmComFaceList } from '$cm/entities/com-face';
 import { CmComToolHideMetronome } from '$cm/entities/com-tool';
-import { cmComIsShowFavouritesInBroadcastsAtom } from '$cm/entities/index';
+import { CmComListPackKindSelector } from '$cm/entities/ComListPackKindSelector';
 import { CmComAudioPlayerMarksMovers } from '$cm/ext';
 import { useCmBroadcastScreenComNavigations, useCmBroadcastScreenComTextNavigations } from '$cm/features/broadcast';
 import { getCmComFreshAudioMarksPack } from '$cm/shared/lib/getFresh';
 import { cmComTrackPreSwitchTimeAtom, cmIsTrackBroadcastAtom } from '$cm/shared/state';
 import { cmPlayerBroadcastAudioSrcAtom, cmPlayerBroadcastComwAtom } from '$cm/shared/state/broadcast.atoms';
 import { useNavigate } from '@tanstack/react-router';
-import { useAtom, useAtomValue } from 'atomaric';
+import { useAtomValue } from 'atomaric';
 import { ReactNode } from 'react';
 import { CmComWid, HttpLink } from 'shared/api';
-import { itNIt } from 'shared/utils';
 import { toast } from 'sonner';
 import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
@@ -39,7 +38,6 @@ interface Props {
 }
 
 export function CmBroadcastControlled(props: Props) {
-  const [isShowFavouritesList, setIsShowFavouritesList] = useAtom(cmComIsShowFavouritesInBroadcastsAtom);
   const isTrackBroadcast = useAtomValue(cmIsTrackBroadcastAtom);
   const broadcastSrc = useAtomValue(cmPlayerBroadcastAudioSrcAtom);
   const navigate = useNavigate();
@@ -54,12 +52,14 @@ export function CmBroadcastControlled(props: Props) {
   const watchBroadcast = useWatchScreenBroadcast();
 
   const onStartBroadcast = async (comw: CmComWid, src: HttpLink) => {
-    const pack = await getCmComFreshAudioMarksPack(src);
+    getCmComFreshAudioMarksPack(src).then(pack => {
+      if (pack != null) return;
 
-    if (pack == null) {
+      cmPlayerBroadcastComwAtom.reset();
+      cmComAudioPlayerPlaySrcAtom.reset();
+      cmPlayerBroadcastAudioSrcAtom.reset();
       toast('Для этого трека маркеры не установлены', makeToastKOMoodConfig());
-      return;
-    }
+    });
 
     navigate({
       to: '.',
@@ -114,13 +114,10 @@ export function CmBroadcastControlled(props: Props) {
             <BroadcastSlidePreview />
 
             <div className="broadcast-com-list">
-              <div
-                className="flex gap-2  pl-5 py-2 sticky pointer bg-x5"
-                onClick={() => setIsShowFavouritesList(itNIt)}
-              >
-                <span className={isShowFavouritesList ? undefined : 'text-x7'}>Список</span>/
-                <span className={isShowFavouritesList ? 'text-x7' : undefined}>Избранные</span>
+              <div className="m-5">
+                <CmComListPackKindSelector />
               </div>
+
               <StyledComFaceList
                 list={comList}
                 titles={comPack.titles}

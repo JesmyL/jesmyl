@@ -66,7 +66,7 @@ export const CmBroadcastScreen = (props: Props) => {
       {subScreens}
       <FontSizeContain
         className="inline-flex white-pre-children"
-        style={props.isChordedBlockText ? { ...style, opacity: Math.min(+(style.opacity ?? 1), 0.3) } : style}
+        style={props.isChordedBlockText ? { ...style, opacity: Math.min(+(style.opacity || 1) || 1, 0.3) } : style}
         html={props.text}
         subUpdates={
           '' + props.subUpdates + (props.cmConfig === undefined ? '' : props.cmConfig.width + props.cmConfig.height)

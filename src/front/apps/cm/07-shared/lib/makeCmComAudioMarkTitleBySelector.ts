@@ -9,6 +9,22 @@ export const makeCmComAudioMarkLineiFromSelector = (selector: string) => +select
 export const checkIsCmComAudioMarkTitleIsLineSelector = (selector: CmComAudioMarkSelector | nil): selector is string =>
   mylib.isStr(selector) && selector.startsWith('~') && !mylib.isNaN(+selector.slice(1));
 
+export const makeCmComAudioMarkTitleEmptySelector = (
+  selector: string | nil,
+  marks: (number | `${number}`)[] | CmComAudioMarkPack | nil,
+  time: number,
+) => {
+  if (selector) return selector;
+
+  if (+time === 0) return 'Вступление';
+
+  marks = marks != null ? (mylib.isArr(marks) ? marks : mylib.keys(marks)) : (marks ?? []);
+
+  if (+marks[marks.length - 1] === +time) return 'Финал';
+
+  return 'Проигрыш';
+};
+
 export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | React.ReactNode = string>(
   time: number,
   com: CmCom,
@@ -44,11 +60,11 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
     });
   }
 
-  const ord = com.getOrderBySelector(lastSelector).ord;
-  let title = `${selector || (time === 0 ? 'Начало' : '...')}`;
+  const { ord, visibleOrdi } = com.getOrderBySelector(lastSelector);
+  let title = makeCmComAudioMarkTitleEmptySelector(selector, marks, time);
 
   if (checkIsCmComAudioMarkTitleIsLineSelector(selector) && ord) {
-    let lines = ord.repeatedText().split('\n');
+    let lines = ord.transformedText().split('\n');
     const linei = makeCmComAudioMarkLineiFromSelector(selector);
     let lineText = lines[linei];
 
@@ -56,14 +72,16 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
       let nextOrd: CmComOrder | nil = ord.me.next;
 
       while (nextOrd?.isInSolidLineWithInvisibles()) {
-        if (nextOrd.isVisible) lines = lines.concat(nextOrd.repeatedText().split('\n'));
+        if (nextOrd.isVisible) lines = lines.concat(nextOrd.transformedText().split('\n'));
 
         if ((lineText = lines[linei]) != null) break;
         nextOrd = nextOrd?.me.next;
       }
     }
 
-    title = lineText ? `${linei + 1} ${lineText.replace(makeRegExp('/ *([/\\\\]|&nbsp;)+ */g'), ' ').trim()}` : title;
+    title = lineText
+      ? `#${visibleOrdi + 1}:${linei + 1} ${lineText.replace(makeRegExp('/ *([/\\\\]|&nbsp;)+ */g'), ' ').trim()}`
+      : title;
   }
 
   const repeatsText = `${repeats > 1 ? `${'/'.repeat(repeats)} ` : ''}`;

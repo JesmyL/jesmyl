@@ -1,5 +1,4 @@
 import { Button } from '#shared/components/ui/button';
-import { ButtonGroup } from '#shared/components/ui/button-group';
 import { isMobileDevice } from '#shared/lib/device-differences';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { renderComponentInNewWindow } from '#shared/lib/renders';
@@ -17,10 +16,11 @@ import {
 } from '$cm/entities/com-audio-player';
 import { CmComFaceList } from '$cm/entities/com-face';
 import { useCmComFavouriteList } from '$cm/entities/com-favourite';
+import { CmComListPackKindSelector } from '$cm/entities/ComListPackKindSelector';
 import { cmComLastOpenComwAtom } from '$cm/entities/index';
 import { CmComAudioPlayerMarksMovers, CmComNumber } from '$cm/ext';
 import { getCmComFreshAudioMarksPack } from '$cm/shared/lib/getFresh';
-import { cmComTrackPreSwitchTimeAtom } from '$cm/shared/state';
+import { cmComTrackPreSwitchTimeAtom, cmOpenComListModeAtom } from '$cm/shared/state';
 import { cmPlayerBroadcastAudioSrcAtom, cmPlayerBroadcastComwAtom } from '$cm/shared/state/broadcast.atoms';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { atom, useAtomValue } from 'atomaric';
@@ -31,7 +31,6 @@ import styled from 'styled-components';
 import { CmPlayerBroadcast } from './Broadcast';
 
 let isCanPlay = false;
-const openComListModeAtom = atom<'all' | 'fav' | 'sel'>('all', 'com-player:openComListMode');
 const comsWithErrorAtom = atom<Set<CmComWid>>(new Set());
 
 const resetIsCanPlayEffect = () => {
@@ -44,7 +43,7 @@ export const CmPlayerPage = () => {
   const favouriteComs = useCmComFavouriteList().favouriteComs;
   const selectedComs = useCmComSelectedList().selectedComs;
   const allComs = useCmComList();
-  const openComListMode = useAtomValue(openComListModeAtom);
+  const openComListMode = useAtomValue(cmOpenComListModeAtom);
   const debouncedOpenComListMode = useDebounceValue(openComListMode);
   const search = useSearch({ from: '/cm/player/' });
   const lastOpenComw = useAtomValue(cmComLastOpenComwAtom);
@@ -132,30 +131,7 @@ export const CmPlayerPage = () => {
       }
       headClass="mr-3"
       contentClass="p-0"
-      head={
-        <ButtonGroup.Root>
-          <Button
-            icon="LeftToRightListBullet"
-            iconKind="TwotoneRounded"
-            className={openComListMode === 'all' ? 'text-x7' : undefined}
-            onClick={() => openComListModeAtom.set('all')}
-          />
-
-          <Button
-            icon="Star"
-            iconKind="DuotoneRounded"
-            className={openComListMode === 'fav' ? 'text-x7' : undefined}
-            onClick={() => openComListModeAtom.set('fav')}
-          />
-
-          <Button
-            icon="CheckmarkBadge01"
-            iconKind="DuotoneRounded"
-            className={openComListMode === 'sel' ? 'text-x7' : undefined}
-            onClick={() => openComListModeAtom.set('sel')}
-          />
-        </ButtonGroup.Root>
-      }
+      head={<CmComListPackKindSelector />}
       content={
         <>
           <DocTitle title={com?.name} />

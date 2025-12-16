@@ -18,7 +18,6 @@ precacheAndRoute(self.__WB_MANIFEST);
 
 registerRoute(
   props =>
-    !props.url.pathname.endsWith('.mp3') &&
     !props.url.pathname.endsWith('.png') &&
     !props.url.pathname.endsWith('.svg') &&
     !props.url.pathname.endsWith('.jpg'),

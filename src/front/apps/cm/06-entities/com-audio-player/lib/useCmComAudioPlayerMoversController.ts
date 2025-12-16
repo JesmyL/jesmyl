@@ -41,7 +41,7 @@ export const useCmComAudioPlayerMoversController = (
     const titleNode = titleRef.current;
     const marks = mylib.keys(audioMarkPack).map(Number);
     const selectorToTitlePropsDict: PRecord<number, { title: string; ord: CmComOrder | nil }> = {};
-    const timePositions = { prev: 0, current: 0, next: 0 };
+    const timePositions$ = { prev: 0, current: 0, next: 0 };
 
     let lastMarkTime = 0;
     let prevButton: Element | nil = null;
@@ -53,10 +53,10 @@ export const useCmComAudioPlayerMoversController = (
         : () => {
             const actualMarkTime =
               preSwitchTime !== 0 &&
-              cmComAudioPlayerHTMLElement.currentTime < timePositions.next &&
-              cmComAudioPlayerHTMLElement.currentTime > timePositions.next - preSwitchTime
-                ? timePositions.next
-                : timePositions.current;
+              cmComAudioPlayerHTMLElement.currentTime < timePositions$.next &&
+              cmComAudioPlayerHTMLElement.currentTime > timePositions$.next - preSwitchTime
+                ? timePositions$.next
+                : timePositions$.current;
 
             if (isInitialButtonClassNameNeedSet || lastMarkTime !== actualMarkTime) {
               isInitialButtonClassNameNeedSet = false;
@@ -95,7 +95,7 @@ export const useCmComAudioPlayerMoversController = (
           };
 
     const updatePoints = () => {
-      const currentMarkTimei = takeCmComTrackCurrentTimeMark(marks, timePositions);
+      const currentMarkTimei = takeCmComTrackCurrentTimeMark(marks, timePositions$);
 
       if (nextRef.current !== null) {
         nextRef.current.disabled = currentMarkTimei === marks.length - 1;
@@ -115,15 +115,15 @@ export const useCmComAudioPlayerMoversController = (
       .pipe(
         addEventListenerPipe(prevRef.current, 'click', () => {
           cmComAudioPlayerHTMLElement.play();
-          cmComAudioPlayerHTMLElement.currentTime = timePositions.prev;
+          cmComAudioPlayerHTMLElement.currentTime = timePositions$.prev;
         }),
         addEventListenerPipe(repeatRef.current, 'click', () => {
           cmComAudioPlayerHTMLElement.play();
-          cmComAudioPlayerHTMLElement.currentTime = timePositions.current;
+          cmComAudioPlayerHTMLElement.currentTime = timePositions$.current;
         }),
         addEventListenerPipe(nextRef.current, 'click', () => {
           cmComAudioPlayerHTMLElement.play();
-          cmComAudioPlayerHTMLElement.currentTime = timePositions.next;
+          cmComAudioPlayerHTMLElement.currentTime = timePositions$.next;
         }),
         addEventListenerPipe(cmComAudioPlayerHTMLElement, 'timeupdate', updatePoints),
         addEventListenerPipe(cmComAudioPlayerHTMLElement, 'ended', () => {

@@ -5,3 +5,5 @@ export const cmConstantsConfigAtom = atom(cmConstantsDefaultConfig, 'cm:constant
 
 export const cmComTrackPreSwitchTimeAtom = atom(2, 'cm:comAudioPreSwitchTime');
 export const cmIsTrackBroadcastAtom = atom(false, 'cm:cmIsTrackBroadcast');
+
+export const cmOpenComListModeAtom = atom<'all' | 'fav' | 'sel'>('all', 'com-player:openComListMode');

@@ -25,4 +25,4 @@ export type TsjrpcClientEvent = TsjrpcBaseEvent & {
   ping?: 1;
 };
 
-export type TsjrpcClientTool = { aborter?: AbortController; timeout?: number };
+export type TsjrpcClientTool = { aborter?: { signal: AbortSignal }; timeout?: number };

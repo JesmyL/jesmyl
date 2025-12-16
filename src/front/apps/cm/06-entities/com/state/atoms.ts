@@ -15,7 +15,6 @@ export const cmComTopToolsAtom = atom<MigratableComToolName[]>(
   'cm:comTopTools',
 );
 
-export const cmComIsShowFavouritesInBroadcastsAtom = atom(false, 'cm:isShowFavouritesInBroadcast');
 export const cmComFontSizeAtom = atom(14, 'cm:comFontSize');
 export const cmComSpeedRollKfAtom = atom(10, 'cm:speedRollKf');
 export const cmComIsAudioPlayerHiddenAtom = atom(false, 'cm:isAudioPlayerHidden');
