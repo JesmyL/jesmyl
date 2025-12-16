@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { emptyFunc } from 'shared/utils';
 import { RuleSet, css } from 'styled-components';
-import { StyledCmComOrderLine } from '../../com-order-line/style/StyledComLine.styler';
 import { CmComCommentMakerCleans } from './Cleans';
 import { useCmComCommentBlock } from './useCmComCommentBlock';
 
@@ -32,11 +31,15 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
             const commentLines = takeCommentTexts(ordSelectorId);
             if (commentLines == null) return '';
 
-            let isNumeredLines = false;
+            const lineComments: (string[] | nil)[] = [];
 
             const linesStyle = commentLines.map((line, linei) => {
               if (!line) return;
-              isNumeredLines ||= !!line.match(makeRegExp(`/(?<=^|\\n)[^а-я]*\\d/`));
+
+              line = line.replace(makeRegExp(`/(?<=^|\\n) *(/*)( *\\d+ *)(.*)/`), (_all, pre, num, rest) => {
+                (lineComments[num.trim()] ??= []).push(`${pre} ${rest}`);
+                return '';
+              });
 
               return css`
                 .styled-header ${commentHolderSelectors[linei] || '::after'} {
@@ -48,29 +51,22 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
             });
 
             return css`
-              [ord-selector='${ordSelectorId}'] {
+              [solid-com-order-selector]:has([ord-selector='${ordSelectorId}']) {
                 ${linesStyle}
 
-                &:has(.styled-header) {
-                  counter-reset: com-line;
-                }
+                ${lineComments.map(
+                  (comment, commenti) =>
+                    comment &&
+                    css`
+                      [solid-order-text-linei='${commenti - 1}']:before {
+                        margin-left: var(--comment-margin-left);
 
-                ${isNumeredLines &&
-                css`
-                  ${plusInheritBlockStyleSelector.repeat(0)} ${StyledCmComOrderLine},
-                ${plusInheritBlockStyleSelector.repeat(1)} ${StyledCmComOrderLine},
-                ${plusInheritBlockStyleSelector.repeat(2)} ${StyledCmComOrderLine},
-                ${plusInheritBlockStyleSelector.repeat(3)} ${StyledCmComOrderLine},
-                ${plusInheritBlockStyleSelector.repeat(4)} ${StyledCmComOrderLine},
-                ${plusInheritBlockStyleSelector.repeat(5)} ${StyledCmComOrderLine} {
-                    counter-increment: com-line;
-
-                    &::before {
-                      content: counter(com-line) '_';
-                      opacity: 0.7;
-                    }
-                  }
-                `}
+                        ${CmComCommentMakerCleans.pseudoCommentStaticPropsCss}
+                        ${CmComCommentMakerCleans.makePseudoCommentContentCss(comment.join('\n'))}
+                        ${CmComCommentMakerCleans.makePseudoCommentContentAccentsCss(comment.join('\n'))}
+                      }
+                    `,
+                )}
               }
             `;
           }) ?? []);
@@ -128,6 +124,7 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
         commentCss: css`
           --comment-opacity: 0.5;
           --comment-opacity-accent: 0.8;
+          --comment-margin-left: 1rem;
 
           ${headCommentContents}
 
@@ -147,8 +144,6 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
             &:after,
             > ::after,
             > ::before {
-              --comment-margin-left: 1rem;
-
               display: block;
               text-decoration: underline;
               margin-left: var(--comment-margin-left);
@@ -166,8 +161,6 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
 
   return styles;
 };
-
-const plusInheritBlockStyleSelector = ` + [inherit-block-style]:not(:has(.styled-header))`;
 
 const commentHolderSelectors = [
   '.comment-holder:nth-child(2)::before',

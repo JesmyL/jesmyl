@@ -8,7 +8,7 @@ import styled from 'styled-components';
 export const CmPlayerBroadcast = () => {
   const comw = useAtomValue(cmPlayerBroadcastComwAtom);
   const com = useCmCom(comw);
-  const { html, isChordedBlock } = useCmComCurrentMarkValues(com);
+  const { html, isTechnicalText } = useCmComCurrentMarkValues(com);
 
   return (
     <StyledBroadcast className="flex justify-center">
@@ -18,7 +18,7 @@ export const CmPlayerBroadcast = () => {
         style={{
           width: '90vw',
           height: '90vh',
-          opacity: isChordedBlock ? '.3' : undefined,
+          opacity: isTechnicalText ? '.3' : undefined,
         }}
       />
     </StyledBroadcast>
