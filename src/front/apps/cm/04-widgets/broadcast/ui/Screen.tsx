@@ -16,8 +16,8 @@ type Props = BroadcastScreenProps &
     text: string;
     nextText: string;
     isVisible: boolean;
-    isChordedBlockText?: boolean;
-    isChordedBlockNextText?: boolean;
+    isTechnicalText?: boolean;
+    isNextTechnicalText?: boolean;
   };
 
 export const CmBroadcastScreen = (props: Props) => {
@@ -45,7 +45,7 @@ export const CmBroadcastScreen = (props: Props) => {
         isTech={props.isTech}
         parentConfig={props.cmConfig}
         isVisible={props.isVisible}
-        isChordedBlockText={props.isChordedBlockNextText}
+        isTechnicalText={props.isNextTechnicalText}
       />
     );
   }
@@ -66,7 +66,7 @@ export const CmBroadcastScreen = (props: Props) => {
       {subScreens}
       <FontSizeContain
         className="inline-flex white-pre-children"
-        style={props.isChordedBlockText ? { ...style, opacity: Math.min(+(style.opacity || 1) || 1, 0.3) } : style}
+        style={props.isTechnicalText ? { ...style, opacity: Math.min(+(style.opacity || 1) || 1, 0.3) } : style}
         html={props.text}
         subUpdates={
           '' + props.subUpdates + (props.cmConfig === undefined ? '' : props.cmConfig.width + props.cmConfig.height)

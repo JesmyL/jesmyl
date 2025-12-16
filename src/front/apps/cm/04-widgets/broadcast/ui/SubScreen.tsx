@@ -18,48 +18,41 @@ interface Props {
   wrapperRef: React.RefObject<HTMLDivElement | null>;
   parentConfig: CmBroadcastScreenConfig;
   isVisible: boolean;
-  isChordedBlockText?: boolean;
+  isTechnicalText?: boolean;
 }
 
-export const CmBroadcastSubScreen = ({
-  config,
-  win,
-  text,
-  subUpdates,
-  isTech,
-  parentConfig,
-  wrapperRef,
-  isVisible,
-  isChordedBlockText,
-}: Props & Partial<FontSizeContainProps>) => {
-  const style = useCmBroadcastScreenStyle(isVisible, config);
+export const CmBroadcastSubScreen = (props: Props & Partial<FontSizeContainProps>) => {
+  const style = useCmBroadcastScreenStyle(props.isVisible, props.config);
   const updateConfig = useCmBroadcastUpdateCurrentConfig();
 
   const updateSubConfig = useCallback(
     (config: Partial<ScreenBroadcastPositionConfig>) => {
       updateConfig({
-        ...parentConfig,
-        subs: { ...parentConfig.subs, next: { ...cmBroadcastSubConfigNext, ...parentConfig.subs?.next, ...config } },
+        ...props.parentConfig,
+        subs: {
+          ...props.parentConfig.subs,
+          next: { ...cmBroadcastSubConfigNext, ...props.parentConfig.subs?.next, ...config },
+        },
       });
     },
-    [parentConfig, updateConfig],
+    [props.parentConfig, updateConfig],
   );
 
-  useApplyScreenFontFamilyEffect(config?.fontFamily, win);
+  useApplyScreenFontFamilyEffect(props.config?.fontFamily, props.win);
 
   return (
     <>
       <FontSizeContain
         className="inline-flex white-pre-children"
-        style={isChordedBlockText ? { ...style, opacity: Math.min(+(style.opacity || 1) || 1, 0.3) } : style}
-        html={text}
-        subUpdates={'' + subUpdates + config.width + config.height}
+        style={props.isTechnicalText ? { ...style, opacity: Math.min(+(style.opacity || 1) || 1, 0.3) } : style}
+        html={props.text}
+        subUpdates={'' + props.subUpdates + props.config.width + props.config.height}
       />
-      {isTech && config && (
+      {props.isTech && props.config && (
         <ScreenTranslateCurrentPositionConfigurators
-          config={config}
+          config={props.config}
           updateConfig={updateSubConfig}
-          wrapperRef={wrapperRef}
+          wrapperRef={props.wrapperRef}
         />
       )}
     </>

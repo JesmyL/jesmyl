@@ -19,7 +19,7 @@ export const CmBroadcastCurrentComTrackScreen = (props: BroadcastScreenProps & P
 
   const comw = useAtomValue(cmPlayerBroadcastComwAtom);
   const com = useCmCom(comw);
-  const { html, nextHtml, isChordedBlock, isNextChordedBlock } = useCmComCurrentMarkValues(com);
+  const { html, nextHtml, isNextTechnicalText, isTechnicalText } = useCmComCurrentMarkValues(com);
 
   return (
     <CmBroadcastScreen
@@ -29,8 +29,8 @@ export const CmBroadcastCurrentComTrackScreen = (props: BroadcastScreenProps & P
       nextText={nextHtml ?? ''}
       isVisible={isVisible}
       subUpdates={'' + currentConfigi + forceUpdates + getCurrentConfig(currentConfigi)?.proportion}
-      isChordedBlockText={isChordedBlock}
-      isChordedBlockNextText={isNextChordedBlock}
+      isTechnicalText={isTechnicalText}
+      isNextTechnicalText={isNextTechnicalText}
     />
   );
 };
