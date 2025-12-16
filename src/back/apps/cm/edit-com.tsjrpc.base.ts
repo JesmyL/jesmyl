@@ -241,6 +241,7 @@ export function modifyCom<Props extends { comw: CmComWid }>(
 
     if (com == null) throw new Error(`Песня не найдена`);
 
+    delete com.a;
     const description = mapper(com, props, tool);
 
     comsDirStore.saveItem(props.comw);

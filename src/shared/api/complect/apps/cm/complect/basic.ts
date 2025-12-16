@@ -75,6 +75,8 @@ export interface IExportableCom {
   b?: num;
   /** аудио файлы */
   al?: HttpLink[];
+  /** @deprecated */
+  a?: string;
   /** список текстов */
   t?: string[];
   /** список аккорлов */
