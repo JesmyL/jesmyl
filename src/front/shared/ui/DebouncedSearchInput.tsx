@@ -2,7 +2,7 @@ import { isNumberSearchAtom } from '#basis/state/isNumberSearchAtom';
 import { UsedWid, useWid } from '#shared/lib/hooks/useWid';
 import { atom, Atom, useAtom, useAtomSet, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 import { LazyIcon } from './the-icon/LazyIcon';
 
@@ -59,15 +59,7 @@ export const DebouncedSearchInput = ({ debounce = 300, className = '', placehold
           clearTimeout(timeouts[wid]);
           timeouts[wid] = setTimeout(setDebouncedTerm, debounce, term);
         }}
-      />
-      <StyledCloseIcon
-        $term={term}
-        className="pointer"
-        icon="Cancel01"
-        onClick={() => {
-          setTerm('');
-          setDebouncedTerm('');
-        }}
+        onFocus={event => event.currentTarget.select()}
       />
     </label>
   );
@@ -79,18 +71,4 @@ const StyledInput = styled.input`
   &::placeholder {
     color: var(--color--4);
   }
-`;
-
-const StyledCloseIcon = styled(LazyIcon)<{ $term: string }>`
-  opacity: 0;
-  pointer-events: none;
-  scale: 0.8;
-  transition: opacity 0.1s;
-
-  ${props =>
-    props.$term &&
-    css`
-      opacity: 1;
-      pointer-events: all;
-    `}
 `;
