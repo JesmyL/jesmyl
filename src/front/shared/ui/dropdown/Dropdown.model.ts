@@ -22,8 +22,7 @@ export interface DropdownItem<Id> {
   title: ReactNode;
   id: Id;
   disabled?: boolean;
-  color?: DropdownItemColor | null;
+  className?: string;
 }
 
 export const DropdownItemList = <Id>(list: DropdownItem<Id>[]) => list;
-export type DropdownItemColor = 'ko';

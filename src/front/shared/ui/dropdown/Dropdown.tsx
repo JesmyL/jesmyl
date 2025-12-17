@@ -95,8 +95,8 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
               return (
                 <DropdownMenu.Item
                   key={JSON.stringify(item.id)}
-                  disabled={item.disabled}
-                  className={item.color ? ` colored color_${item.color} ` : ''}
+                  disabled={item.disabled || item.id === selectedId}
+                  className={item.className}
                   onClick={event => {
                     event.stopPropagation();
                     setId(item.id);
