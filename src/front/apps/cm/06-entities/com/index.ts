@@ -12,8 +12,6 @@ export * from './model/com';
 
 export * from './state/atoms';
 
-export * from './const/broadcastPushKinds';
-
 export * from './ui/CmComListSearchFilterInput';
 export * from './ui/ComCatMentions';
 export * from './ui/ComListShare';

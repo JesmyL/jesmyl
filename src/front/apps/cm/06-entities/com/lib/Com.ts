@@ -3,6 +3,7 @@ import { BaseNamed } from '$cm/shared/lib';
 import { cmIDB } from '$cm/shared/state';
 import { makeRegExp } from 'regexpert';
 import { CmComOrderSelector, IExportableCom, IExportableOrder } from 'shared/api';
+import { CmComLineGroupingKind, cmComLineGroupingDefaultKinds } from 'shared/const/cm/comLineGroupingKind';
 import { itIt } from 'shared/utils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { comBlockStyles } from 'shared/values/cm/block-styles/BlockStyles';
@@ -10,7 +11,6 @@ import { StyleBlock } from 'shared/values/cm/block-styles/StyleBlock';
 import { CmCat } from '../../cat/lib/Cat';
 import { CmComOrder } from '../../com-order/lib/Order';
 import { CmComOrderTopHeaderBag, ICmComOrderExportableMe } from '../../com-order/model/Order.model';
-import { cmComBroadcastPushKinds } from '../const/broadcastPushKinds';
 
 export class CmCom extends BaseNamed<IExportableCom> {
   initial: Partial<IExportableCom & { pos: number }>;
@@ -214,7 +214,10 @@ export class CmCom extends BaseNamed<IExportableCom> {
   };
 
   broadcastMap(kind: number | und, isPushChordedBlocks = false) {
-    const kinds = cmComBroadcastPushKinds[kind ?? this.broadcastPushKind];
+    const kindScalar = kind ?? this.broadcastPushKind;
+    const slideKind = new CmComLineGroupingKind(
+      mylib.isStr(kindScalar) ? kindScalar : cmComLineGroupingDefaultKinds[kindScalar],
+    );
     let curr = 0;
     const orders = this.orders ?? [];
     const len = orders.length;
@@ -225,7 +228,7 @@ export class CmCom extends BaseNamed<IExportableCom> {
 
       if (!ord.isRealText()) {
         ordi++;
-        if (isPushChordedBlocks && !ord.text) kinds.push(-1);
+        if (isPushChordedBlocks && !ord.text) slideKind.fix(-1);
         continue;
       }
 
@@ -238,11 +241,11 @@ export class CmCom extends BaseNamed<IExportableCom> {
         nextOrd = orders[++ordi];
       }
 
-      kinds.push(curr);
+      slideKind.fix(curr);
       curr = 0;
     }
 
-    return kinds.clearList();
+    return slideKind.list;
   }
 
   get chordLabels(): string[][][] {

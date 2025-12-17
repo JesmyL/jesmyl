@@ -5,7 +5,6 @@ export { CmChordCard } from '$cm/entities/chord-card/ui/ChordCard';
 export { CmChordCardTracked } from '$cm/entities/chord-card/ui/ChordCardTracked';
 export {
   CmCom,
-  cmComBroadcastPushKinds,
   CmComMoveSelectedButton,
   CmComNumber,
   CmComWithComListSearchFilterInput,
@@ -36,4 +35,5 @@ export { cmOnUserLogout } from '$cm/shared/lib/onUserLogout';
 export { ChordVisibleVariant } from '$cm/shared/model';
 export { cmConstantsConfigAtom, cmIDB } from '$cm/shared/state';
 export { useCmBroadcastCurrentScreenConfig } from '$cm/widgets/broadcast';
+export { CmBroadcastScreenConfigurationPushKind } from '$cm/widgets/broadcast/ui/PushKind';
 export { TheCmCom } from '$cm/widgets/com';

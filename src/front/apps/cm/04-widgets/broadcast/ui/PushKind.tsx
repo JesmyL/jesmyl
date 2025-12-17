@@ -1,10 +1,8 @@
 import { ConfiguratorEditProps } from '#shared/ui/configurators/model';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
-import { cmComBroadcastPushKinds } from '$cm/entities/com';
+import { cmComLineGroupingDefaultKinds } from 'shared/const/cm/comLineGroupingKind';
 
 type Props = ConfiguratorEditProps<{ pushKind?: number }>;
-
-const ExtractTitels = ({ title }: { title: string }, id: number) => ({ title, id });
 
 export const CmBroadcastScreenConfigurationPushKind = ({ config, updateConfig }: Props) => {
   return (
@@ -13,7 +11,7 @@ export const CmBroadcastScreenConfigurationPushKind = ({ config, updateConfig }:
         Строчки
         <Dropdown
           id={config.pushKind}
-          items={cmComBroadcastPushKinds.map(ExtractTitels)}
+          items={cmComLineGroupingDefaultKinds.map((title, id) => ({ title, id }))}
           onSelectId={pushKind => updateConfig({ pushKind })}
         />
       </div>

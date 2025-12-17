@@ -1,7 +1,10 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
+import { mylib } from '#shared/lib/my-lib';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { cmComBroadcastPushKinds, useCmBroadcastCurrentScreenConfig } from '$cm/ext';
+import { CmBroadcastScreenConfigurationPushKind, useCmBroadcastCurrentScreenConfig } from '$cm/ext';
+import { cmComLineGroupingDefaultKinds } from 'shared/const/cm/comLineGroupingKind';
 
 export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) => {
   const currentConfig = useCmBroadcastCurrentScreenConfig();
@@ -10,20 +13,30 @@ export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) =>
   return (
     <>
       <div className="my-3">
-        {checkAccess('cm', 'COM_TR', 'U') &&
-          cmComBroadcastPushKinds.map(({ title }, kindi) => (
-            <button
-              key={kindi}
-              className={'text-x1 px-2 mr-1 mt-1 ' + (ccom.broadcastPushKind === kindi ? 'bg-x7' : 'bg-x3')}
-              onClick={() => {
-                if (ccom.broadcastPushKind === kindi) return;
-                cmEditComClientTsjrpcMethods.changePushKind({ comw: ccom.wid, value: kindi });
+        {checkAccess('cm', 'COM_TR', 'U') && (
+          <>
+            <CmBroadcastScreenConfigurationPushKind
+              config={{ pushKind: mylib.isStr(ccom.broadcastPushKind) ? -100 : ccom.broadcastPushKind }}
+              updateConfig={({ pushKind }) => {
+                if (pushKind == null || ccom.broadcastPushKind === pushKind) return;
+                return cmEditComClientTsjrpcMethods.changePushKind({ comw: ccom.wid, value: pushKind });
               }}
-            >
-              {title}
-            </button>
-          ))}
+            />
+
+            <InputWithLoadingIcon
+              icon="ListView"
+              strongDefaultValue
+              defaultValue={
+                mylib.isStr(ccom.broadcastPushKind)
+                  ? ccom.broadcastPushKind
+                  : cmComLineGroupingDefaultKinds[ccom.broadcastPushKind]
+              }
+              onChanged={value => cmEditComClientTsjrpcMethods.changePushKind({ comw: ccom.wid, value })}
+            />
+          </>
+        )}
       </div>
+
       {ccom.getOrderedBlocks(currentConfig?.pushKind).map((lines, linesi) => {
         return (
           <div

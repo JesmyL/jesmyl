@@ -3,6 +3,7 @@ import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { CmComWid, IExportableCom, IServerSideCom } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
 import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
+import { cmComLineGroupingDefaultKinds } from 'shared/const/cm/comLineGroupingKind';
 import { itNNil, smylib } from 'shared/utils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { makeCmComHttpToNumLeadAudioLinks, makeCmComNumLeadToHttpAudioLinks } from './complect/com-http-links';
@@ -72,7 +73,10 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_TR', 'U')) throw '';
 
           const prev = com.k;
-          com.k = value;
+          const index = smylib.isNum(value) ? value : cmComLineGroupingDefaultKinds.indexOf(value);
+          com.k = index < 0 ? value : index;
+
+          if (com.k === '') com.k = prev;
 
           return `Изменено значение правила группировок для слайдов в песне ${getCmComNameInBrackets(com)} - ${value} (было ${prev})`;
         }),

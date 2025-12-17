@@ -66,7 +66,7 @@ export interface IExportableCom {
   /** время изменения */
   m: CmComMod;
   /** вариант группировки строк для трансляций */
-  k?: number;
+  k?: number | string;
   /** уровень модулирования */
   p?: number;
   /** язык песни */
