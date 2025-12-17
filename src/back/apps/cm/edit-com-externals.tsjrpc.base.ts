@@ -134,7 +134,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
               srcPackMarks[time] = selector;
             });
 
-            if (smylib.keys(srcPackMarks).length) {
+            if (smylib.keys(srcPackMarks).length > 1) {
               const sortedMarksPack: CmComAudioMarkPack = {};
 
               smylib
