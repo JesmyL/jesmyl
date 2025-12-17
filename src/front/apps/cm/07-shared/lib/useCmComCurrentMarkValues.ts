@@ -40,7 +40,6 @@ export const useCmComCurrentMarkValues = (com: CmCom | und) => {
     for (let timei = 0; timei < times.length; timei++) {
       const selector = trackMarks[times[timei]];
       const nextSelector = trackMarks[times[timei + 1]];
-      let blockText;
 
       if (mylib.isArr(selector)) {
         const ord = com?.getOrderBySelector(selector[0]);
@@ -63,7 +62,7 @@ export const useCmComCurrentMarkValues = (com: CmCom | und) => {
             } else {
               const chordedText = `${technicalTextPrefix}${ord.ord.me.header()}`;
               ordwTextDict[ordw] = [chordedText];
-              blockText = chordedText;
+              markTextDict[times[timei]] = chordedText;
             }
           }
 
@@ -71,10 +70,13 @@ export const useCmComCurrentMarkValues = (com: CmCom | und) => {
           prevLinei = 0;
         }
       } else if (!selector) {
-        blockText = `${technicalTextPrefix}${makeCmComAudioMarkTitleEmptySelector(selector, marks?.marks, +times[timei])}`;
+        markTextDict[times[timei]] =
+          `${technicalTextPrefix}${makeCmComAudioMarkTitleEmptySelector(selector, marks?.marks, +times[timei])}`;
 
         continue;
       }
+
+      let blockText;
 
       if (checkIsCmComAudioMarkTitleIsLineSelector(nextSelector)) {
         const linei = makeCmComAudioMarkLineiFromSelector(nextSelector);
