@@ -8,17 +8,12 @@ export const tgBotUrlController = async (
   adminBot: JesmylTelegramBot,
   keyPrefix?: string,
 ) => {
-  let chat: TelegramBot.Chat | null = null;
   let knownUrls: string[] = [];
 
   const urlWordParts = '-\\w@_%';
-  const domainRegStr = `[a-z][${urlWordParts}]+\\.[${urlWordParts}./]{2,}`;
-  const urlRegStr = `${domainRegStr}[${urlWordParts}?.#=$&]*`;
+  const domainRegStr = `[a-z][${urlWordParts}]*\\.[${urlWordParts}./]{2,}`;
 
-  const urlReg = makeRegExp(`/(${urlRegStr})/`);
   const domainReg = makeRegExp(`/(${domainRegStr})/g`);
-
-  const knownUrlsSet: Set<string> = new Set();
 
   const keys: (TelegramBot.InlineKeyboardButton & { cb: JTgBotCallbackQuery })[][] = [
     [
@@ -68,7 +63,9 @@ export const tgBotUrlController = async (
   const botOptions: SendMessageOptions = adminBot.makeSendMessageOptions(keys, keyPrefix);
 
   const refreshDescription = async () => {
-    chat = await targetBot.getChat();
+    const chat = await targetBot.getChat();
+    const knownUrlsSet: Set<string> = new Set();
+
     chat.description?.replace(domainReg, (all, address) => {
       knownUrlsSet.add(address);
       return all;
@@ -80,29 +77,44 @@ export const tgBotUrlController = async (
 
   refreshDescription();
 
+  const cutUrlPrefix = (url: string | nil) =>
+    !url ? url : url.startsWith('https://') ? url.slice(8) : url.startsWith('http://') ? url.slice(7) : url;
+  const boundUrlLettersSet = new Set([undefined, '/', '?', '#'] as const);
+
   targetBot.onChatMessages(async (bot, message) => {
     if (message.from == null || message.from.is_bot) return;
 
     const senderId = message.from.id;
     if ((await bot.getAdmins()).some(admin => admin.user.id === senderId)) return;
 
-    const sendText = message.text ?? message.caption;
+    const text = message.text ?? message.caption ?? '';
 
-    if (sendText === undefined) return;
+    let isThereNoUnknownUrl = true;
 
-    const usedUnknownUrls: string[] = [];
-    const urlParts = sendText.split(urlReg);
+    const urls =
+      (message.caption_entities ?? []).concat(message.entities ?? []).map(entity => {
+        if (entity.type === 'url') {
+          return cutUrlPrefix(text.slice(entity.offset, entity.offset + entity.length));
+        }
 
-    if (urlParts == null) return;
+        return cutUrlPrefix(entity.url);
+      }) ?? [];
 
-    for (let i = 0; i < urlParts.length; i += 2) {
-      const url = urlParts[i + 1];
-      if (url == null || knownUrls.some(knownUrl => url.startsWith(knownUrl))) continue;
+    for (let i = 0; i < urls.length; i++) {
+      const url = urls[i];
+      if (
+        !url ||
+        knownUrls.some(
+          knownUrl => url.startsWith(knownUrl) && boundUrlLettersSet.has(url.slice(knownUrl.length)[0] as '/'),
+        )
+      )
+        continue;
 
-      usedUnknownUrls.push(url);
+      isThereNoUnknownUrl = false;
+      break;
     }
 
-    if (usedUnknownUrls.length === 0) return;
+    if (isThereNoUnknownUrl) return;
 
     const forwardedSentMessage = await adminBot.forwardMessage(bot.chatId, message.message_id);
 

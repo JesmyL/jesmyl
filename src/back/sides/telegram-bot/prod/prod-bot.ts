@@ -4,6 +4,7 @@ import { backConfig } from 'back/config/backConfig';
 import { SendMessageOptions } from 'node-telegram-bot-api';
 import { hosts } from 'shared/api';
 import { jesmylTgBot } from '../bot';
+import { controlTelegramBot } from '../control/control-bot';
 import { jesmylChangesBot } from '../control/jesmylChangesBot';
 import { gul94iAdminTelegramBot, gul94iTelegramBot } from '../gul94i/gul94i-bot';
 import { tglogger } from '../log/log-bot';
@@ -58,3 +59,4 @@ if (!+!+'change message')
 gul94iTelegramBot.register();
 gul94iAdminTelegramBot.register();
 jesmylChangesBot.register();
+controlTelegramBot.register();
