@@ -2,8 +2,8 @@ import { useScheduleCurrentSchwContext } from '#widgets/schedule/complect/lib/co
 import { useBibleBroadcastScreenConfigs } from '$bible/entities/broadcast';
 import { useBibleAddressTextContext, useBibleTextContentContext } from '$bible/shared/contexts/texts';
 import { BibleCurrentTextsContext } from '$bible/shared/state/CurrentTextsContext';
-import { IndexSchWBroadcastLiveDataValue } from '$index/shared/model/Index.model';
 import { JSX, useEffect } from 'react';
+import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 
 interface Props {
   fio: string;

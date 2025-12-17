@@ -1,5 +1,5 @@
-import { takeQuestionerTextIncludeSymbols } from '#shared/lib/const/q/textIncludeSymbols';
 import { escapeRegExpSymbols, makeRegExp } from 'regexpert';
+import { takeQuestionerTextIncludeSymbols } from 'shared/const/q/textIncludeSymbols';
 import { QuestionerTextIncludeTemplate } from 'shared/model/q';
 
 export const questionerTSJRPCFixTextIncludeTemplateTextValue = (

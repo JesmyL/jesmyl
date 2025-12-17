@@ -1,4 +1,3 @@
-import { IndexSchWBroadcastLiveDataValue } from '$index/shared/model/Index.model';
 import { atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { DeviceId, SokiAppName, SokiAuthLogin } from 'shared/api';
@@ -7,6 +6,7 @@ import {
   IndexAppUserAccessRightsWithoutInfo,
   UserAccessRole,
 } from 'shared/model/index/access-rights';
+import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 import { authIDB } from './auth-idb';
 import { indexIDB } from './index-idb';
 

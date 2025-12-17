@@ -1,8 +1,8 @@
-import { IndexSchWBroadcastLiveDataValue } from '$index/shared/model/Index.model';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { TsjrpcServerMethods } from 'back/tsjrpc.server';
 import { IScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
 import { SchLiveTsjrpcModel, SchLiveTsjrpcSharesModel } from 'shared/api/tsjrpc/schedules/live.tsjrpc.model';
+import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 import { itNNull, SMyLib } from 'shared/utils';
 import { WebSocket } from 'ws';
 

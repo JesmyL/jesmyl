@@ -1,10 +1,10 @@
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Badge } from '#shared/components/ui/badge';
 import { Button } from '#shared/components/ui/button';
-import { questionerTextIncludeSymbols, takeQuestionerTextIncludeSymbols } from '#shared/lib/const/q/textIncludeSymbols';
 import { MyLib } from '#shared/lib/my-lib';
 import { questionerAdminTsjrpcClient } from '$q/shared/tsjrpc/admin.tsjrpc';
 import { useState } from 'react';
+import { questionerTextIncludeSymbols, takeQuestionerTextIncludeSymbols } from 'shared/const/q/textIncludeSymbols';
 import { QuestionerAdminTemplateContentProps, QuestionerType } from 'shared/model/q';
 import { itNIt } from 'shared/utils';
 import { QuestionerTextIncludeResultText } from '../-inner-ui/TextIncludeResultText';
@@ -59,9 +59,7 @@ export const QuestionerAdminTextIncludeTemplateCardContent = ({
         multiline
         defaultValue={template.text}
         strongDefaultValue
-        onChanged={text =>
-          questionerAdminTsjrpcClient.switchTemplateTextValue({ blankw: blank.w, templateId, text })
-        }
+        onChanged={text => questionerAdminTsjrpcClient.switchTemplateTextValue({ blankw: blank.w, templateId, text })}
       />
       <div>Для обновления результата уберите фокус из текстового поля</div>
 
@@ -83,13 +81,12 @@ export const QuestionerAdminTextIncludeTemplateCardContent = ({
               onFocus={() => setTimeout(setFocusedVariant, 100, textCode)}
               onBlur={() => setFocusedVariant(null)}
               onChanged={textValue =>
-                questionerAdminTsjrpcClient
-                  .switchTemplateReplacementTextValue({
-                    blankw: blank.w,
-                    templateId,
-                    textValue,
-                    textCode,
-                  })
+                questionerAdminTsjrpcClient.switchTemplateReplacementTextValue({
+                  blankw: blank.w,
+                  templateId,
+                  textValue,
+                  textCode,
+                })
               }
             />
           );
@@ -105,8 +102,7 @@ export const QuestionerAdminTextIncludeTemplateCardContent = ({
             icon="Text"
             defaultValue={text}
             onChanged={text =>
-              questionerAdminTsjrpcClient
-                .changeTemplateTextValue({ blankw: blank.w, templateId, text, texti })
+              questionerAdminTsjrpcClient.changeTemplateTextValue({ blankw: blank.w, templateId, text, texti })
             }
           />
         );

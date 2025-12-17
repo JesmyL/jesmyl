@@ -1,9 +1,9 @@
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
+import React from 'react';
 import {
   makeQuestionerTextIncludeSymbolSplitRegExp,
   takeQuestionerTextIncludeSymbols,
-} from '#shared/lib/const/q/textIncludeSymbols';
-import { Dropdown } from '#shared/ui/dropdown/Dropdown';
-import React from 'react';
+} from 'shared/const/q/textIncludeSymbols';
 import { QuestionerType } from 'shared/model/q';
 import { QuestionerUserAnswerContentProps } from 'shared/model/q/answer';
 import { QuestionerTextIncludeResultText } from '../-inner-ui/TextIncludeResultText';

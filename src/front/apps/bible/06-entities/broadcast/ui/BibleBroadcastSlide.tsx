@@ -1,8 +1,8 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { BibleBroadcastScreenScreen } from '$bible/entities/broadcast-screen';
 import { BibleBroadcastScreenKnownTextsContext } from '$bible/shared/state/KnownTextsContext';
-import { IndexSchWBroadcastLiveDataValue } from '$index/shared/model/Index.model';
 import { JSX, useEffect, useState } from 'react';
+import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 import styled from 'styled-components';
 
 export function BibleBroadcastSlide({

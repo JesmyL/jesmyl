@@ -6,10 +6,10 @@ import { useCmBroadcastScreenComNavigations } from '$cm/features/broadcast';
 import { LiveBroadcastAppProps } from '$cm/shared/model';
 import { cmIsTrackBroadcastAtom } from '$cm/shared/state';
 import { CmBroadcastControlled, useCmBroadcastScreenConfigs } from '$cm/widgets/broadcast';
-import { IndexSchWBroadcastLiveDataValue } from '$index/shared/model/Index.model';
 import { schLiveTsjrpcClient } from '$index/shared/tsjrpc/live.tsjrpc';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
+import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 
 export const CmScheduleWidgetBroadcastLiveCm = (props: LiveBroadcastAppProps) => {
   const { coms } = useCmBroadcastScreenComNavigations();

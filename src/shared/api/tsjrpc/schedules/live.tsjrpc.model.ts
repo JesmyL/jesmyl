@@ -1,6 +1,6 @@
-import { IndexSchWBroadcastLiveDataValue } from '$index/shared/model/Index.model';
 import { IScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
 import { SokiAuthLogin } from 'shared/api/complect/soki.model';
+import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 
 export type SchLiveTsjrpcModel = {
   next: (args: { schw: IScheduleWidgetWid; data: IndexSchWBroadcastLiveDataValue }) => void;

@@ -69,6 +69,42 @@ export default () => [
     };
   }),
 
+  ...[
+    ['back', 'front'],
+    ['front', 'back'],
+  ].map(([from, to]) => {
+    const pluginName = 'import-between-chapters';
+    const name = `${to}-in-${from}`;
+
+    return {
+      files: [`**/${from}/**/*.{ts,tsx}`],
+      rules: { [`${pluginName}/${name}`]: 'error' },
+      plugins: {
+        [pluginName]: {
+          meta,
+          rules: {
+            [name]: {
+              create(context) {
+                return {
+                  ImportDeclaration(node) {
+                    if (
+                      node.source.value.includes(`${to}/`) ||
+                      (from === 'back' && (node.source.value.startsWith('$') || node.source.value.startsWith('#')))
+                    )
+                      context.report({
+                        node,
+                        message: `Импорты ${to} в разделе ${from} запрещены`,
+                      });
+                  },
+                };
+              },
+            },
+          },
+        },
+      },
+    };
+  }),
+
   ...appNames
     .map(appName => {
       return [

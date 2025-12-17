@@ -1,5 +1,5 @@
-import { makeQuestionerTextIncludeSymbolSplitRegExp } from '#shared/lib/const/q/textIncludeSymbols';
 import React from 'react';
+import { makeQuestionerTextIncludeSymbolSplitRegExp } from 'shared/const/q/textIncludeSymbols';
 import { QuestionerTextIncludeTemplate } from 'shared/model/q';
 
 export const QuestionerTextIncludeResultText = ({

@@ -2,9 +2,9 @@ import { broadcastCurrentTextAppAtom } from '#features/broadcast/atoms';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { BibleBroadcastLive } from '$bible/ext';
 import { LiveBroadcastAppProps } from '$cm/shared/model';
-import { IndexSchWBroadcastLiveDataValue } from '$index/shared/model/Index.model';
 import { schLiveTsjrpcClient } from '$index/shared/tsjrpc/live.tsjrpc';
 import React, { memo, useCallback } from 'react';
+import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 
 const BibleBroadcastControlled = React.lazy(() => import('$bible/widgets/broadcast/ui/Controlled'));
 
