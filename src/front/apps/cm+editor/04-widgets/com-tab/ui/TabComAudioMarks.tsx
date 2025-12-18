@@ -18,6 +18,7 @@ import {
   CmComAudioPlayer,
   cmComAudioPlayerHTMLElement,
   CmComAudioPlayerMarksMovers,
+  CmComOrderLine,
   CmComOrderList,
   cmIDB,
   useCmComCommentBlockCss,
@@ -164,12 +165,18 @@ export const CmEditorComTabAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
 
                   <StyledComOrders
                     $commentStyles={commentCss}
-                    chordVisibleVariant={ChordVisibleVariant.Maximal}
+                    chordVisibleVariant={ChordVisibleVariant.None}
                     fontSize={20}
                     com={ccom}
                     asContentAfterOrder={({ ord }) =>
                       audioMarkControl.afterTargetOrdwOtherPlayButtonNodeDict[ord.makeSelector()]
                     }
+                    asLineComponent={props => (
+                      <div className="flex gap-2 custom-align-items">
+                        <span className="text-x7">{props.solidTextLinei + 1}</span>
+                        <CmComOrderLine {...props} />
+                      </div>
+                    )}
                     asHeaderComponent={({ headerNode, ord }) =>
                       ord.isVisibleOrd() && (
                         <div className="flex flex-wrap gap-3">

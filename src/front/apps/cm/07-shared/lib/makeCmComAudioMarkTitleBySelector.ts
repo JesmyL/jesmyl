@@ -85,12 +85,18 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
   }
 
   const repeatsText = `${repeats > 1 ? `${'/'.repeat(repeats)} ` : ''}`;
+  const isMultilineTitle = title.includes('\n');
+  const fullTitle = title;
+
+  if (isMultilineTitle) title = title.split('\n', 1)[0];
 
   return {
+    ord,
+    fullTitle,
+    isMultilineTitle,
     title: checkIsCmComAudioMarkTitleIsLineSelector(selector)
       ? mapLineTitle(repeatsText, title)
       : `${repeatsText} ${title}`,
-    ord,
   };
 };
 
