@@ -5,15 +5,21 @@ import { SortDirection } from '#shared/model/sortDirection';
 import { StoragesRackStatusFace } from '$storages/entities/RackStatusFace';
 import { storagesSortAndGroupAtom } from '$storages/shared/state/atoms';
 import { useNavigate } from '@tanstack/react-router';
-import { useAtomValue } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { memo } from 'react';
-import { StoragesRack, StoragesRackCard } from 'shared/model/storages/list.model';
+import { StoragesRack, StoragesRackCard, StoragesRackWid } from 'shared/model/storages/list.model';
 import { StoragesColumnType, StoragesDictItemi, StoragesRackColumn } from 'shared/model/storages/rack.model';
 
 const noValue = '<Без значения>';
+const openGroupsAtoms: PRecord<StoragesRackWid, Atom<string[]>> = {};
 
 export const StoragesRackCardListWidget = memo((props: { rack: StoragesRack }) => {
   const navigate = useNavigate();
+  const openGroupsAtom = (openGroupsAtoms[props.rack.w] ??= atom<string[]>([], {
+    storeKey: `storages:openCardGroups/${props.rack.w}`,
+    exp: () => new Date(Date.now() + 10 * 24 * 60 * 60 * 999),
+  }));
+  const openGroups = useAtomValue(openGroupsAtom);
 
   const allSortRules = useAtomValue(storagesSortAndGroupAtom);
   let rackSortRules = allSortRules[props.rack.w];
@@ -100,7 +106,11 @@ export const StoragesRackCardListWidget = memo((props: { rack: StoragesRack }) =
   return (
     <>
       {
-        <Accordion.Root type="multiple">
+        <Accordion.Root
+          type="multiple"
+          defaultValue={openGroups}
+          onValueChange={value => openGroupsAtom.set(value)}
+        >
           {mylib
             .keys(groupedCards)
             .sort(
