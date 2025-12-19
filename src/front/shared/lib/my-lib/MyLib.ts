@@ -87,6 +87,7 @@ export class MyLib extends SMyLib {
     searchWord: string,
     places: (Trace[] | Trace)[],
     isNumberSearch?: boolean,
+    mapNumListItem: (num: number) => number = itIt,
   ): RetItem[] {
     const normalWords = isNumberSearch
       ? searchWord.split(makeRegExp('/0+/')).filter(itIt)
@@ -108,7 +109,7 @@ export class MyLib extends SMyLib {
             if (
               words.some(word =>
                 word && words.length > 1
-                  ? (itemi + num).toString() === word
+                  ? mapNumListItem(itemi + num).toString() === word
                   : (itemi + num).toString().startsWith(word),
               )
             ) {
