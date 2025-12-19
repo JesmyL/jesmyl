@@ -1,5 +1,5 @@
 {
-  "c": ["D G D\nHm C#/A E A\nD G D/F#\nHm Em A D", "A D G D\nHm E A\nA D G D/F#\nHm Em A D", "D Hm A/C# G"],
+  "c": ["D G D\nHm A/C# E A\nD G D/F#\nHm Em A D", "A D G D\nHm E A\nA D G D/F#\nHm Em A D", "D Hm A/C# G"],
   "n": "Твёрдо я верю мой Иисус",
   "o": [
     { "w": 0, "c": 2, "t": "texti", "s": "enter", "m": "min" },
@@ -78,7 +78,6 @@
     "Чудный и полный мир и покой\nДух мой находит в союзе с Тобой;\nДай, чтоб Тебе я сердце отдал;\nЯ б умалялся, Ты б возрастал."
   ],
   "w": 1544723267670,
-  "a": "https://holychords.pro/uploads/music/20200311/202003112012493.mp3\nhttps://holychords.pro/uploads/music/20191002/2019100212474332.mp3",
   "bpm": 55,
   "s": 3,
   "p": 10,
