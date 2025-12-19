@@ -36,7 +36,10 @@ const isOpenRatingSortedComsAtom = atom(false);
 const termAtoms: PRecord<CmCatWid, Atom<string>> = {};
 
 export const CmCatPage = (props: Props) => {
-  const termAtom = (termAtoms[props.cat?.wid ?? CmCatWid.def] ??= atom(''));
+  const termAtom = (termAtoms[props.cat?.wid ?? CmCatWid.def] ??= atom(
+    '',
+    `cm:comListSearch:${props.cat?.wid ?? CmCatWid.def}`,
+  ));
 
   const term = useAtomValue(termAtom);
   const debouncedTerm = useDebounceValue(term);
@@ -62,7 +65,7 @@ export const CmCatPage = (props: Props) => {
         coms={props.coms}
         termAtom={termAtom}
       >
-        {({ inputNode, catNumberSearch, searchedComs, limitedComs }) => {
+        {({ inputNode, catNumberSearch, limitedComs, foundComsLength }) => {
           return (
             <StyledCatPhaseContainer
               className="cat-content"
@@ -87,12 +90,10 @@ export const CmCatPage = (props: Props) => {
                       ref={categoryTitleRef}
                     >
                       <div>{props.cat.name}:</div>
-                      {searchedComs && (
-                        <div>
-                          {props.comsCount === searchedComs.length ? '' : `${searchedComs.length} / `}
-                          {props.comsCount}
-                        </div>
-                      )}
+                      <div>
+                        {props.comsCount === foundComsLength ? '' : `${foundComsLength} из `}
+                        {props.comsCount}
+                      </div>
                     </div>
                     <div className="com-list">
                       <CmComSetListLimitsExtracterContext
@@ -113,7 +114,6 @@ export const CmCatPage = (props: Props) => {
                         <CmComFaceList
                           isPutCcomFaceOff={!!term}
                           list={limitedComs}
-                          {...props}
                         />
                       </CmComSetListLimitsExtracterContext>
                     </div>

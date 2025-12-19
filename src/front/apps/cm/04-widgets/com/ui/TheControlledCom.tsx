@@ -38,7 +38,7 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
   const isOpenMoversButtons =
     useAtomValue(isCmComAudioPlayerOpenMoversAtom) && !!playSrc && com.audio.includes(playSrc);
 
-  const audioMarkControl = useCmComOrderAudioMarkControl(isOpenMoversButtons, com, (node, time, selector) =>
+  const audioMarkControl = useCmComOrderAudioMarkControl(isOpenMoversButtons, com, true, (node, time, selector) =>
     mylib.isStr(selector) ? (
       <div
         key={time}

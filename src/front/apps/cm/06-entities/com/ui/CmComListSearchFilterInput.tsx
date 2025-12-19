@@ -11,13 +11,7 @@ import { CmCom } from '../lib/Com';
 const mapExtractItem = <Item,>({ item }: { item: Item }): Item => item;
 const sortItemsByRate = (a: { rate: number }, b: { rate: number }) => a.rate - b.rate;
 
-export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>({
-  Constructor,
-  coms,
-  termAtom,
-  children,
-  comsMapper,
-}: {
+export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(props: {
   comsMapper?: ((coms: CmCom[], term: string) => Promise<CmCom[]>) | null;
   coms?: CmCom[];
   Constructor: new (icom: IExportableCom) => ComConstructor;
@@ -26,17 +20,20 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
     inputNode: React.ReactNode;
     searchedComs: ComConstructor[];
     limitedComs: ComConstructor[];
+    foundComsLength: number;
     catNumberSearch: {
       comws: CmComWid[];
       descriptions: PRecord<CmComWid, string>;
     } | null;
   }) => React.ReactNode;
 }) => {
-  const term = useAtomValue(termAtom);
+  type CatNumberSearch = Parameters<typeof props.children>[0]['catNumberSearch'];
+
+  const term = useAtomValue(props.termAtom);
   const isNumberSearch = useAtomValue(isNumberSearchAtom);
   const cats = useCmCatList();
 
-  const catNumberSearch = useMemo((): Parameters<typeof children>[0]['catNumberSearch'] => {
+  const catNumberSearch = useMemo((): CatNumberSearch => {
     const descriptions: PRecord<CmComWid, string> = {};
     const comws: CmComWid[] = [];
     const result = { descriptions, comws };
@@ -59,12 +56,12 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
   }, [cats, term]);
 
   const mappedComs = useLiveQuery(
-    async () => (term && coms && comsMapper ? comsMapper(coms, term) : null),
-    [coms, term, comsMapper],
+    async () => (term && props.coms && props.comsMapper ? props.comsMapper(props.coms, term) : null),
+    [props.coms, term, props.comsMapper],
   ) as ComConstructor[] | nil;
 
   const searchedComs = useMemo(() => {
-    const comList = coms?.map(com => new Constructor(com.top)) ?? [];
+    const comList = props.coms?.map(com => new props.Constructor(com.top)) ?? [];
     if (term === '404' || !term) return comList;
 
     const numCheckedTerm = isNumberSearch || isNaN(+term) ? term : +term > 403 ? `${+term - 1}` : term;
@@ -75,10 +72,11 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
         numCheckedTerm,
         ['name', mylib.c.POSITION, ['orders', mylib.c.INDEX, 'text']],
         isNumberSearch,
+        num => (num > 403 ? num + 1 : num),
       )
       .sort(sortItemsByRate)
       .map(mapExtractItem);
-  }, [Constructor, coms, isNumberSearch, term]);
+  }, [props.Constructor, props.coms, isNumberSearch, term]);
 
   const limitedComs = useMemo(() => {
     if (!term.length) return searchedComs;
@@ -86,17 +84,18 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
     return searchedComs?.slice(0, 30);
   }, [searchedComs, term.length]);
 
-  return children({
+  return props.children({
     inputNode: (
       <DebouncedSearchInput
         placeholder="Песни"
         className="com-search debounced-searcher round-styled"
         debounce={500}
-        termAtom={termAtom}
+        termAtom={props.termAtom}
       />
     ),
-    searchedComs: mappedComs ?? searchedComs,
     catNumberSearch,
     limitedComs,
+    searchedComs: mappedComs ?? searchedComs,
+    foundComsLength: (catNumberSearch?.comws.length ?? 0) + (mappedComs ?? searchedComs).length,
   });
 };

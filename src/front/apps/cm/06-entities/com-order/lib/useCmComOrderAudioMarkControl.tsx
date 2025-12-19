@@ -13,6 +13,7 @@ import { itIt } from 'shared/utils';
 export const useCmComOrderAudioMarkControl = (
   isNeedCompute: boolean,
   com: CmCom,
+  isHideShortTime: boolean,
   mapNode: (node: React.ReactNode, time: number, selector: CmComAudioMarkSelector) => React.ReactNode = itIt,
 ) => {
   const src = useAtomValue(cmComAudioPlayerPlaySrcAtom);
@@ -20,6 +21,7 @@ export const useCmComOrderAudioMarkControl = (
   const actualMapNodeRef = useActualRef(mapNode);
 
   return useMemo(() => {
+    const marks = audioTrackMarks?.marks;
     const ordwPlayButtonNodeDict: PRecord<CmComOrderWid, React.ReactNode[]> = {};
     const afterTargetOrdwOtherPlayButtonNodeDict: PRecord<'before' | CmComOrderWid, React.ReactNode[]> = {};
 
@@ -28,13 +30,20 @@ export const useCmComOrderAudioMarkControl = (
       afterTargetOrdwOtherPlayButtonNodeDict,
     };
 
-    if (!isNeedCompute || audioTrackMarks?.marks == null) return result;
+    if (!isNeedCompute || marks == null) return result;
 
     let lastOrdwOrNull: 'before' | CmComOrderWid = 'before';
     const takeMinusTime = () => (cmComTrackPreSwitchTimeAtom.get() < 0 ? 0 : cmComTrackPreSwitchTimeAtom.get());
 
-    MyLib.entries(audioTrackMarks.marks).forEach(([time, selector]) => {
-      if (selector == null) return;
+    MyLib.entries(marks).forEach(([time, selector]) => {
+      const titleProps = makeCmComAudioMarkTitleBySelector(+time, com, selector, marks, (repeats, title) => (
+        <span className="text-x7">
+          {repeats} {title}
+        </span>
+      ));
+
+      if (selector == null || (isHideShortTime && titleProps.isShortTime)) return;
+      const className = titleProps.isShortTime ? 'text-xKO' : undefined;
 
       if (mylib.isStr(selector)) {
         afterTargetOrdwOtherPlayButtonNodeDict[lastOrdwOrNull] ??= [];
@@ -44,21 +53,14 @@ export const useCmComOrderAudioMarkControl = (
               key={time}
               icon="PlayCircle"
               com-audio-mark-time-selector={time}
+              className={className}
               onClick={event => {
                 event.stopPropagation();
                 cmComAudioPlayerHTMLElement.currentTime = +time - takeMinusTime();
                 cmComAudioPlayerHTMLElement.play();
               }}
             >
-              <span className="text-x3">
-                {
-                  makeCmComAudioMarkTitleBySelector(+time, com, selector, audioTrackMarks.marks, (repeats, title) => (
-                    <span className="text-x7">
-                      {repeats} {title}
-                    </span>
-                  )).title
-                }
-              </span>
+              <span className={className ?? 'text-x3'}>{titleProps.title}</span>
             </Button>,
             +time,
             selector,
@@ -80,6 +82,7 @@ export const useCmComOrderAudioMarkControl = (
             key={time}
             icon="PlayCircle"
             com-audio-mark-time-selector={time}
+            className={className}
             onClick={event => {
               event.stopPropagation();
               cmComAudioPlayerHTMLElement.currentTime = +time - takeMinusTime();
@@ -92,8 +95,8 @@ export const useCmComOrderAudioMarkControl = (
       );
     });
 
-    if (mylib.isArr(audioTrackMarks.marks?.[0])) delete afterTargetOrdwOtherPlayButtonNodeDict.before;
+    if (mylib.isArr(marks[0])) delete afterTargetOrdwOtherPlayButtonNodeDict.before;
 
     return result;
-  }, [isNeedCompute, audioTrackMarks?.marks, com, actualMapNodeRef]);
+  }, [isNeedCompute, audioTrackMarks?.marks, isHideShortTime, com, actualMapNodeRef]);
 };

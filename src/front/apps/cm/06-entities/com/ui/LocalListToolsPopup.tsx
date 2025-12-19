@@ -10,11 +10,11 @@ import { CmComFullscreenExpandList } from './FullscreenExpandComList';
 const isOpenQrAtom = atom(false);
 const isOpenListAtom = atom(false);
 
-export const CmComLocalListToolsPopup = ({ coms, children }: { coms: CmCom[] | und; children?: React.ReactNode }) => {
+export const CmComLocalListToolsPopup = (props: { coms: CmCom[] | und; children?: React.ReactNode }) => {
   const linkToCom = useCmComOpenComLinkRendererContext();
 
-  return !coms || !coms.length ? (
-    <div className="flex justify-center">Список пуст</div>
+  return !props.coms?.length ? (
+    props.children
   ) : (
     <>
       <BottomPopupItem
@@ -30,7 +30,7 @@ export const CmComLocalListToolsPopup = ({ coms, children }: { coms: CmCom[] | u
           />
         ),
         search: {
-          comw: coms[0].wid,
+          comw: props.coms[0].wid,
           tran: '-!-',
         },
       })}
@@ -40,18 +40,18 @@ export const CmComLocalListToolsPopup = ({ coms, children }: { coms: CmCom[] | u
         onClick={isOpenQrAtom.do.toggle}
       />
 
-      {children}
+      {props.children}
 
       <CmComListQrShare
         openAtom={isOpenQrAtom}
-        coms={coms}
+        coms={props.coms}
       />
 
       <FullContent
         openAtom={isOpenListAtom}
         containerClassName="p-0"
       >
-        <CmComFullscreenExpandList coms={coms} />
+        <CmComFullscreenExpandList coms={props.coms} />
       </FullContent>
     </>
   );

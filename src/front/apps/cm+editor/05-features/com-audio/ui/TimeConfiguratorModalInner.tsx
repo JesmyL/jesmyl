@@ -21,7 +21,7 @@ interface Props {
 export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ time, com, src }: Props) => {
   const trackMarks = cmIDB.useAudioTrackMarks(src);
   const selector = trackMarks?.marks?.[time];
-  const { title, ord, isMultilineTitle, fullTitle } = makeCmComAudioMarkTitleBySelector(
+  const { title, ord, isMultilineTitle, fullTitle, isShortTime } = makeCmComAudioMarkTitleBySelector(
     time,
     com,
     selector,
@@ -51,7 +51,9 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
   return (
     <>
       <ModalHeader className="flex w-full justify-between">
-        {isMultilineTitle ? title.split('\n', 1)[0] : title}
+        <span className={isShortTime ? 'text-xKO' : undefined}>
+          {isMultilineTitle ? title.split('\n', 1)[0] : title}
+        </span>
         <span className="flex gap-3">
           {isTextEdit || (
             <Button

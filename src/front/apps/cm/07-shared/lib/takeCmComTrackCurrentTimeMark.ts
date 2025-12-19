@@ -3,7 +3,7 @@ import { cmComAudioPlayerHTMLElement } from '$cm/ext';
 
 export const takeCmComTrackCurrentTimeMark = (
   timeMarks: number[],
-  timePositions$: Record<'prev' | 'current' | 'next', number>,
+  timePositions$: Record<'prev' | 'current' | 'next' | 'preprev', number>,
   extraTime = 0,
 ) => {
   const pivotTime = cmComAudioPlayerHTMLElement.currentTime + (extraTime < 0 ? 0 : extraTime);
@@ -15,6 +15,7 @@ export const takeCmComTrackCurrentTimeMark = (
 
   if (currentMarkTimei < 0) return 0;
 
+  timePositions$.preprev = timeMarks[currentMarkTimei - 2] ?? 0;
   timePositions$.prev = timeMarks[currentMarkTimei - 1] ?? 0;
   timePositions$.current = timeMarks[currentMarkTimei] ?? 0;
   timePositions$.next = timeMarks[currentMarkTimei + 1] ?? 0;

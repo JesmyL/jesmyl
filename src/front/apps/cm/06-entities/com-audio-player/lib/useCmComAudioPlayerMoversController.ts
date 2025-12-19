@@ -35,13 +35,13 @@ export const useCmComAudioPlayerMoversController = (
   const nextRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (titleRef.current === null || audioTrackMarks == null) return;
+    if (titleRef.current === null || audioTrackMarks?.marks == null) return;
     const audioMarkPack = audioTrackMarks.marks;
 
     const titleNode = titleRef.current;
     const marks = mylib.keys(audioMarkPack).map(Number);
     const selectorToTitlePropsDict: PRecord<number, { title: string; ord: CmComOrder | nil }> = {};
-    const timePositions$ = { prev: 0, current: 0, next: 0 };
+    const timePositions$ = { prev: 0, current: 0, next: 0, preprev: 0 };
 
     let lastMarkTime = 0;
     let prevButton: Element | nil = null;
@@ -115,7 +115,9 @@ export const useCmComAudioPlayerMoversController = (
       .pipe(
         addEventListenerPipe(prevRef.current, 'click', () => {
           cmComAudioPlayerHTMLElement.play();
-          cmComAudioPlayerHTMLElement.currentTime = timePositions$.prev;
+
+          cmComAudioPlayerHTMLElement.currentTime =
+            Math.abs(timePositions$.current - timePositions$.prev) < 1 ? timePositions$.preprev : timePositions$.prev;
         }),
         addEventListenerPipe(repeatRef.current, 'click', () => {
           cmComAudioPlayerHTMLElement.play();

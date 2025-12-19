@@ -108,7 +108,7 @@ export const useCmComCurrentMarkValues = (com: CmCom | und) => {
 
   useEffect(() => {
     if (markTimes == null) return;
-    const timePositions$ = { prev: 0, current: 0, next: 0 };
+    const timePositions$ = { prev: 0, current: 0, next: 0, preprev: 0 };
 
     return hookEffectPipe()
       .pipe(
@@ -134,8 +134,12 @@ export const useCmComCurrentMarkValues = (com: CmCom | und) => {
   const nextTimeMark =
     markTimes
       .slice(currentMarkTimei + 1)
-      .find(time => markTextDict[currentTimeMark] != null && markTextDict[time] !== markTextDict[currentTimeMark]) ??
-    markTimes[currentMarkTimei + 1];
+      .find(
+        (time, timei, timea) =>
+          markTextDict[currentTimeMark] != null &&
+          markTextDict[time] !== markTextDict[currentTimeMark] &&
+          Math.abs(time - timea[timei + 1]) > 1,
+      ) ?? markTimes[currentMarkTimei + 1];
 
   const nextText = markTextDict[nextTimeMark];
   const isNextTechnicalText = nextText?.startsWith(technicalTextPrefix);

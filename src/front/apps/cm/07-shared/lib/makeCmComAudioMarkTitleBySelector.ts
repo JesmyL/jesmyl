@@ -31,16 +31,27 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
   selector: CmComAudioMarkSelector | nil,
   marks: CmComAudioMarkPack | nil,
   mapLineTitle: (repeats: string, text: string) => LineTitle = (repeats, text) => `${repeats} ${text}` as never,
-) => {
+): {
+  ord: CmComOrder | nil;
+  title: LineTitle;
+  fullTitle?: LineTitle;
+  isMultilineTitle?: boolean;
+  isShortTime: boolean;
+} => {
+  const markKeys = mylib.keys(marks ?? {});
+  const isShortTime = Math.abs(time - +(markKeys[markKeys.indexOf(`${time}`) + 1] ?? 0)) < 1;
+
   if (mylib.isArr(selector)) {
     const { ord, visibleOrdi } = com.getOrderBySelector(selector[0]);
-    if (marks == null || ord == null) return { title: '?', ord: null };
+    if (marks == null || ord == null) return { title: '?' as never, ord: null, isShortTime };
 
     const repeats = computeOrdRepeats(time, marks, selector[0]);
 
     return {
-      title: `#${visibleOrdi + 1} ${ord.me.header()}${Math.trunc(selector[0]) === selector[0] ? '' : '+'}${repeats > 1 ? ` ×${repeats}` : ''}`,
       ord,
+      isShortTime,
+      title:
+        `#${visibleOrdi + 1} ${ord.me.header()}${Math.trunc(selector[0]) === selector[0] ? '' : '+'}${repeats > 1 ? ` ×${repeats}` : ''}` as never,
     };
   }
 
@@ -48,7 +59,7 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
   let lastSelector: CmComAudioMarkSelector[0] = CmComOrderWid.never;
 
   if (marks != null) {
-    mylib.keys(marks).find(itTime => {
+    markKeys.find(itTime => {
       if (marks[itTime] == null || mylib.isStr(marks[itTime])) return time === +itTime;
 
       if (lastSelector !== marks[itTime][0]) repeats = 1;
@@ -92,11 +103,12 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
 
   return {
     ord,
-    fullTitle,
+    isShortTime,
     isMultilineTitle,
-    title: checkIsCmComAudioMarkTitleIsLineSelector(selector)
+    fullTitle: fullTitle as never,
+    title: (checkIsCmComAudioMarkTitleIsLineSelector(selector)
       ? mapLineTitle(repeatsText, title)
-      : `${repeatsText} ${title}`,
+      : `${repeatsText} ${title}`) as never,
   };
 };
 

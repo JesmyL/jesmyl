@@ -39,7 +39,7 @@ export const CmEditorComTabAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
   const marksOnUpdating = useAtomValue(cmComEditorAudioMarksEditPacksAtom);
   const { commentCss } = useCmComCommentBlockCss(ccom, true);
 
-  const audioMarkControl = useCmComOrderAudioMarkControl(true, ccom, (playNode, time) =>
+  const audioMarkControl = useCmComOrderAudioMarkControl(true, ccom, false, (playNode, time) =>
     time === 0 ? (
       <div
         key={time}
