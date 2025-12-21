@@ -3,10 +3,10 @@
   "w": 1765624643924,
   "l": 0,
   "c": [
-    "D E C#m F#m E",
-    "A\nD A\nF#m Esus4 D2",
-    "D2 F#m\nE\nF#m D2\nD2 F#m\nE\nF#m Hm7",
-    "D2 F#m E\nC#m F#m\nHm7 E\nA",
+    "|A| Dmaj9| E| C#m7|\n|F#m| Hm7| E|",
+    "A\nAsus4 A\nF#m Esus4 D2",
+    "D F#m\nE\nF#m Dmaj7\nD F#m\nE\nF#m Hm7",
+    "D2 F#m E\nA/C# F#m\nHm7 E\nA-Asus2-A",
     "F#m Esus4 D2"
   ],
   "t": [

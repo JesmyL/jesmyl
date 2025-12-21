@@ -1,7 +1,7 @@
 {
   "c": [
-    "Em7 C7 G6 D2",
-    "Em7 C7 G6 D2/H Em\nC G D\nEm C\nG D/H C",
+    "Em7 C2 G6 D2",
+    "Em7 C2 G6 D2/H Em\nC2 G6 D/H\nEm7 C2\nG6 D/H Cmaj",
     "D Em\nCmaj\nG\nD\nCmaj\nEm Cmaj",
     "G D\nAm C\nG\nF\nAm C"
   ],
@@ -26,6 +26,7 @@
     { "a": 1, "w": 4 },
     { "a": 2, "w": 5 },
     { "a": 3, "w": 6, "r": 2 },
+    { "w": 8, "s": "play", "c": 0 },
     { "w": 7, "a": 1, "s": "final" }
   ],
   "t": [
