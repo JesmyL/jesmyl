@@ -62,9 +62,11 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
   ) as ComConstructor[] | nil;
 
   const searchedComs = useMemo(() => {
-    if (term === '404' || !term) return [];
+    if (term === '404') return [];
 
     const comList = props.coms?.map(com => new props.Constructor(com.top)) ?? [];
+    if (!term) return comList;
+
     const numCheckedTerm = isNumberSearch || isNaN(+term) ? term : `${CmComUtils.takeCorrectComIndex(+term)}`;
 
     return mylib
