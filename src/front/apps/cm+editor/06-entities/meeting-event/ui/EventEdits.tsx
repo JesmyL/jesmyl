@@ -21,14 +21,14 @@ export const CmEditorMeetingEventEdits = ({
   schw,
 }: { packComws: CmComWid[] } & Required<ScheduleDayEventPathProps>) => {
   const auth = useAuth();
-  const { selectedComs, selectedComws } = useCmComSelectedList();
-
-  if (auth.fio == null || mylib.isNaN(schw) || mylib.isNaN(dayi) || mylib.isNaN(eventMi)) return null;
   const fio = auth.fio;
+  const selectedComws = useCmComSelectedList().selectedComws;
+
+  if (fio == null || mylib.isNaN(schw) || mylib.isNaN(dayi) || mylib.isNaN(eventMi)) return null;
 
   return (
     <>
-      {!selectedComs.length || mylib.isEq(selectedComws, packComws) || (
+      {!selectedComws.length || mylib.isEq(selectedComws, packComws) || (
         <BottomPopupItem
           icon="Sent"
           title="Отправить выбранные песни"
@@ -52,11 +52,7 @@ export const CmEditorMeetingEventEdits = ({
       <Modal openAtom={isOpenSendModalAtom}>
         <ModalHeader>Отправить в это событие песни:</ModalHeader>
         <ModalBody>
-          <CmComFaceList
-            list={selectedComws}
-            importantOnClick={emptyFunc}
-            comDescription={(_, comi) => <CmComMoveSelectedButton comi={comi} />}
-          />
+          <List />
         </ModalBody>
         <ModalFooter>
           <TheIconSendButton
@@ -76,5 +72,17 @@ export const CmEditorMeetingEventEdits = ({
         </ModalFooter>
       </Modal>
     </>
+  );
+};
+
+const List = () => {
+  const selectedComs = useCmComSelectedList().selectedComs;
+
+  return (
+    <CmComFaceList
+      list={selectedComs}
+      importantOnClick={emptyFunc}
+      comDescription={(_, comi) => <CmComMoveSelectedButton comi={comi} />}
+    />
   );
 };

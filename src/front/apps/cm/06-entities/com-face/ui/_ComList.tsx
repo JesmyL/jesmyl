@@ -53,10 +53,8 @@ export const CmComFaceListComList = (props: CmComFaceListProps) => {
             id={`${cmComFaceCurrentComwIdPrefix}${com.wid}`}
             className={`flex between pointer ${comi}-comi`}
           >
-            <FaceItem.Logo>
-              <CmComNumber comw={com.wid} />
-            </FaceItem.Logo>
-            <FaceItem.Title>{com.name}</FaceItem.Title>
+            <FaceItem.Logo>{!com.name || <CmComNumber comw={com.wid} />}</FaceItem.Logo>
+            <FaceItem.Title>{com.name || <span className="text-xKO">Неизвестная песня</span>}</FaceItem.Title>
             {setComDescription(com, comi)}
           </FaceItem.Root>
         );

@@ -107,8 +107,10 @@ export class CmComUtils {
     }
   };
 
-  static takeCorrectComNumber = (comPositionNumber: number) =>
-    comPositionNumber > 403 || comPositionNumber > 665 ? comPositionNumber + 1 : comPositionNumber;
+  static takeCorrectComNumber = (comIndex: number) => (comIndex > 403 || comIndex > 665 ? comIndex + 1 : comIndex);
+
+  static takeCorrectComIndex = (comPosition: number) =>
+    comPosition > 403 || comPosition > 665 ? comPosition - 1 : comPosition;
 
   static trimTextLines = (text: string) => text.trim().split(makeRegExp('/\n/')).map(itTrim).join('\n');
 

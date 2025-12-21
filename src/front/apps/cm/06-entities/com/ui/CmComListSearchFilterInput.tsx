@@ -6,6 +6,7 @@ import { Atom, useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { CmComWid, IExportableCom } from 'shared/api';
+import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { CmCom } from '../lib/Com';
 
 const mapExtractItem = <Item,>({ item }: { item: Item }): Item => item;
@@ -61,10 +62,10 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
   ) as ComConstructor[] | nil;
 
   const searchedComs = useMemo(() => {
-    const comList = props.coms?.map(com => new props.Constructor(com.top)) ?? [];
-    if (term === '404' || !term) return comList;
+    if (term === '404' || !term) return [];
 
-    const numCheckedTerm = isNumberSearch || isNaN(+term) ? term : +term > 403 ? `${+term - 1}` : term;
+    const comList = props.coms?.map(com => new props.Constructor(com.top)) ?? [];
+    const numCheckedTerm = isNumberSearch || isNaN(+term) ? term : `${CmComUtils.takeCorrectComIndex(+term)}`;
 
     return mylib
       .searchRate(
@@ -72,7 +73,7 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
         numCheckedTerm,
         ['name', mylib.c.POSITION, ['orders', mylib.c.INDEX, 'text']],
         isNumberSearch,
-        num => (num > 403 ? num + 1 : num),
+        CmComUtils.takeCorrectComNumber,
       )
       .sort(sortItemsByRate)
       .map(mapExtractItem);
