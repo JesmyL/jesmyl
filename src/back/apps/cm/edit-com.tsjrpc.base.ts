@@ -4,8 +4,10 @@ import { CmComWid, IExportableCom, IServerSideCom } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
 import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
 import { cmComLineGroupingDefaultKinds } from 'shared/const/cm/comLineGroupingKind';
-import { itNNil, smylib } from 'shared/utils';
-import { CmComUtils } from 'shared/utils/cm/ComUtils';
+import { itNNil, smylib, trimTextLines } from 'shared/utils';
+import { cmComLanguages } from 'shared/utils/cm/com/const';
+import { textLinesLengthIncorrects } from 'shared/utils/cm/com/textLinesLengthIncorrects';
+import { transformToClearText } from 'shared/utils/cm/com/transformToClearText';
 import { makeCmComHttpToNumLeadAudioLinks, makeCmComNumLeadToHttpAudioLinks } from './complect/com-http-links';
 import { mapCmExportableToImportableCom, mapCmImportableToExportableCom } from './complect/tools';
 import { cmConstantsConfigFileStore, comsDirStore } from './file-stores';
@@ -49,7 +51,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           const prev = com.l;
           com.l = value;
 
-          return `Язык песни ${getCmComNameInBrackets(com)} изменён на ${CmComUtils.cmComLanguages[value]} (было ${prev == null ? null : CmComUtils.cmComLanguages[prev]})`;
+          return `Язык песни ${getCmComNameInBrackets(com)} изменён на ${cmComLanguages[value]} (было ${prev == null ? null : cmComLanguages[prev]})`;
         }),
 
         changeTon: modifyCom((com, { value }, { auth }) => {
@@ -99,14 +101,14 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
 
           com.c ??= [];
           const prev = com.c[coli];
-          com.c[coli] = CmComUtils.trimTextLines(value);
+          com.c[coli] = trimTextLines(value);
 
           return `Изменён аккордный блок в песне ${getCmComNameInBrackets(com)}:\n\n${value}\n\nбыло:\n${prev}`;
         }),
         changeTextBlock: modifyCom((com, { texti: coli, value }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_TXT', 'U')) throw '';
 
-          const incorrects = CmComUtils.textLinesLengthIncorrects(
+          const incorrects = textLinesLengthIncorrects(
             value,
             cmConstantsConfigFileStore.getValue().maxAvailableComLineLength,
           );
@@ -115,7 +117,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
 
           com.t ??= [];
           const prev = com.t[coli];
-          com.t[coli] = CmComUtils.transformToClearText(value);
+          com.t[coli] = transformToClearText(value);
 
           return `Изменён текстовый блок в песне ${getCmComNameInBrackets(com)}:\n\n${value}\n\nбыло:\n${prev}`;
         }),
@@ -159,10 +161,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
 
           const incorrects = newCom.t
             ?.map(text =>
-              CmComUtils.textLinesLengthIncorrects(
-                text,
-                cmConstantsConfigFileStore.getValue().maxAvailableComLineLength,
-              ),
+              textLinesLengthIncorrects(text, cmConstantsConfigFileStore.getValue().maxAvailableComLineLength),
             )
             .filter(itNNil);
 
@@ -171,7 +170,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           const com = {
             ...newCom,
             w: Date.now(),
-            t: newCom.t?.map(text => CmComUtils.transformToClearText(text)),
+            t: newCom.t?.map(text => transformToClearText(text)),
           };
 
           comsDirStore.createItem(() => mapCmExportableToImportableCom(com), com.w);

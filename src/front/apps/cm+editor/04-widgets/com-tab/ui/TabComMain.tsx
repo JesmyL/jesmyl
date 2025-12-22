@@ -10,19 +10,19 @@ import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { removedCompositionsAtom } from '$cm+editor/shared/state/com';
+import { CmEditorComEditTransposition } from '$cm+editor/widgets/com';
 import { ChordVisibleVariant, TheCmCom } from '$cm/ext';
 import { useState } from 'react';
 import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
 import { CmComMetricNums } from 'shared/model/cm/com-metric-nums';
 import { emptyFunc } from 'shared/utils';
-import { CmComUtils } from 'shared/utils/cm/ComUtils';
-import { CmEditorComEditTransposition } from '../../com/ui/ComEditTransposition';
+import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 
 export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
   const [name, setName] = useState('');
   const eeStore = cmEditorIDB.useValue.eeStore();
   const checkAccess = useCheckUserAccessRightsInScope();
-  const nameCorrects = CmComUtils.takeTextBlockIncorrects(name, eeStore);
+  const nameCorrects = takeTextBlockIncorrects(name, eeStore);
 
   const comNode = (
     <TheCmCom

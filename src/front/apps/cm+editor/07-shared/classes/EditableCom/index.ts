@@ -1,6 +1,6 @@
 import { ICmComOrderExportableMe } from '$cm/ext';
 import { makeRegExp } from 'regexpert';
-import { CmComUtils } from 'shared/utils/cm/ComUtils';
+import { chordDiezEquivalent, simpleBemoleChordReg_g } from 'shared/utils/cm/com/const';
 import { cmEditComClientTsjrpcMethods } from '../../lib/cm-editor.tsjrpc.methods';
 import { EditableComOrder } from '../EditableComOrder';
 import { EditableComParseBlocks } from './lib/31-ParseBlocks';
@@ -16,7 +16,7 @@ export class EditableCom extends EditableComParseBlocks {
     const col = this.chords[coli];
     if (!col) return;
 
-    const val = col.replace(CmComUtils.simpleBemoleChordReg_g, chord => CmComUtils.chordDiezEquivalent[chord] || chord);
+    const val = col.replace(simpleBemoleChordReg_g, chord => chordDiezEquivalent[chord] || chord);
 
     cmEditComClientTsjrpcMethods.changeChordBlock({ texti: coli, comw: this.wid, value: val });
   }

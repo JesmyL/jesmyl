@@ -78,6 +78,8 @@ export const transcriptEnToRuText = (text: string) => {
   return transcriptedText;
 };
 
+export const trimTextLines = (text: string) => text.trim().split(makeRegExp('/\n/')).map(itTrim).join('\n');
+
 /////////////////////////////////////
 /////////////////////////////////////
 /////////////////////////////////////

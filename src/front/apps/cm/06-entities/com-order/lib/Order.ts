@@ -12,8 +12,9 @@ import {
   SpecialOrderRepeats,
 } from 'shared/api';
 import { itIt } from 'shared/utils';
+import { chordInterpretedRegs } from 'shared/utils/cm/com/const';
+import { transformToDisplayedText } from 'shared/utils/cm/com/transformToDisplayedText';
 import { CmComOrderUtils } from 'shared/utils/cm/ComOrderUtils';
-import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { CmCom } from '../../com/lib/Com';
 import { CmComOrderEditableRegion, ICmComOrderExportableMe } from '../model/Order.model';
 
@@ -226,8 +227,8 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
 
         return chordsList
           .map(chord => {
-            return chord.replace(CmComUtils.chordInterpretedRegs.regExp, (...args) => {
-              const chips = CmComUtils.chordInterpretedRegs.transform(args);
+            return chord.replace(chordInterpretedRegs.regExp, (...args) => {
+              const chips = chordInterpretedRegs.transform(args);
 
               if (chordHardLevel === 1)
                 return `${chips.simpleChord}${chips.simpleChord_bass ? '/' : ''}${chips.simpleChord_bass ?? ''}`;
@@ -426,7 +427,7 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
     return CmComOrderUtils.makeRepeatedText(this.transformedText(), repeats);
   };
 
-  transformedText = () => CmComUtils.transformToDisplayedText(this.text).text;
+  transformedText = () => transformToDisplayedText(this.text).text;
 
   makeSelector = (): CmComOrderSelector => this.wid;
 

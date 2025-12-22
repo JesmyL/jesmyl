@@ -3,7 +3,7 @@ import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { CmComAudioMarkPack, CmComWid } from 'shared/api';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
 import { itNumSort, SMyLib, smylib } from 'shared/utils';
-import { CmComUtils } from 'shared/utils/cm/ComUtils';
+import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
 import { schedulesFileStore } from '../index/schedules/file-stores';
 import { makeCmComNumLeadLinkFromHttp } from './complect/com-http-links';
 import {
@@ -54,7 +54,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
                   .map(comw => {
                     const comi = coms.findIndex(com => com.w === comw);
                     if (comi < 0) return `<s>Нет песни</s>`;
-                    return `${CmComUtils.takeCorrectComNumber(comi + 1)}. ${coms[comi].n}`;
+                    return `${takeCorrectComNumber(comi + 1)}. ${coms[comi].n}`;
                   })
                   .join('\n')}`,
             };

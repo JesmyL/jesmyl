@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { CmComWid } from 'shared/api';
-import { CmComUtils } from 'shared/utils/cm/ComUtils';
+import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
 import { cmIDB } from '../state/cmIDB';
 
 const numbersStore: PRecord<CmComWid, number> = {};
@@ -24,7 +24,7 @@ export const useComNumbers = (comw: CmComWid | CmComWid[], numbers = numbersStor
         newNumbers[comw] =
           numbers[comw] =
           numbersStore[comw] =
-            CmComUtils.takeCorrectComNumber(await cmIDB.db.coms.where('w').belowOrEqual(comw).count());
+            takeCorrectComNumber(await cmIDB.db.coms.where('w').belowOrEqual(comw).count());
       }
 
       if (isThereNews) setNumbersState(newNumbers);

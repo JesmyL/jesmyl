@@ -16,7 +16,9 @@ import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmComMod, CmComWid, CmMp3Rule, HttpLink, IExportableCom } from 'shared/api';
 import { itIt, itNNil } from 'shared/utils';
-import { CmComUtils } from 'shared/utils/cm/ComUtils';
+import { chordsBlockIncorrectMessage } from 'shared/utils/cm/com/chordsBlockIncorrectMessage';
+import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
+import { textLinesLengthIncorrects } from 'shared/utils/cm/com/textLinesLengthIncorrects';
 import styled from 'styled-components';
 import { CmEditorComCreateNameChange } from './NameChangeWithCorrects';
 import { CmEditorComCreateComTextableListRedactor } from './TextableListRedactor';
@@ -73,11 +75,9 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
 
   const textsErrors =
     newCom.t?.map(
-      text =>
-        CmComUtils.textLinesLengthIncorrects(text, maxAvailableComLineLength) ??
-        CmComUtils.takeTextBlockIncorrects(text, eeStore),
+      text => textLinesLengthIncorrects(text, maxAvailableComLineLength) ?? takeTextBlockIncorrects(text, eeStore),
     ) ?? [];
-  const chordsErrors = newCom.c?.map(text => CmComUtils.chordsBlockIncorrectMessage(text)) ?? [];
+  const chordsErrors = newCom.c?.map(text => chordsBlockIncorrectMessage(text)) ?? [];
 
   return (
     <>

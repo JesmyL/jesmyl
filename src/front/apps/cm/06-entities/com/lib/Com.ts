@@ -5,7 +5,14 @@ import { makeRegExp } from 'regexpert';
 import { CmComOrderSelector, IExportableCom, IExportableOrder } from 'shared/api';
 import { CmComLineGroupingKind, cmComLineGroupingDefaultKinds } from 'shared/const/cm/comLineGroupingKind';
 import { itIt } from 'shared/utils';
-import { CmComUtils } from 'shared/utils/cm/ComUtils';
+import {
+  chordBemoleEquivalent,
+  cmComLanguages,
+  ruUaReg_i,
+  simpleHashChordReg_g,
+  simpleHashChords,
+  simpleHashedEachLetterChordReg_g,
+} from 'shared/utils/cm/com/const';
 import { comBlockStyles } from 'shared/values/cm/block-styles/BlockStyles';
 import { StyleBlock } from 'shared/values/cm/block-styles/StyleBlock';
 import { CmCat } from '../../cat/lib/Cat';
@@ -136,32 +143,29 @@ export class CmCom extends BaseNamed<IExportableCom> {
   }
 
   get langn() {
-    return CmCom.langs[this.langi || 0];
+    return cmComLanguages[this.langi || 0];
   }
   get nextLangn() {
-    return CmCom.langs[(this.langi || 0) + 1] || CmCom.langs[0];
-  }
-  static get langs() {
-    return CmComUtils.cmComLanguages;
+    return cmComLanguages[(this.langi || 0) + 1] || cmComLanguages[0];
   }
 
   getVowelPositions(textLine: string) {
     const R = [];
-    for (let i = 0; i < textLine.length; i++) if (CmComUtils.ruUaReg_i.test(textLine[i])) R.push(i);
+    for (let i = 0; i < textLine.length; i++) if (ruUaReg_i.test(textLine[i])) R.push(i);
     return R;
   }
 
   transposeChord(chord: string, delta: number = 1) {
-    const cindex = CmComUtils.simpleHashChords.indexOf(chord);
+    const cindex = simpleHashChords.indexOf(chord);
     const di = cindex - -delta;
-    const len = CmComUtils.simpleHashChords.length;
+    const len = simpleHashChords.length;
     const nindex = di < 0 ? len - -di : di > len ? di % len : di === len || -di === len ? 0 : di;
 
-    return CmComUtils.simpleHashChords[nindex];
+    return simpleHashChords[nindex];
   }
 
   transposeBlock(cblock: string, delta = this.transPosition) {
-    return cblock?.replace(CmComUtils.simpleHashChordReg_g, chord => this.transposeChord(chord, delta));
+    return cblock?.replace(simpleHashChordReg_g, chord => this.transposeChord(chord, delta));
   }
 
   transposedBlocks(delta?: number) {
@@ -327,12 +331,7 @@ export class CmCom extends BaseNamed<IExportableCom> {
 
   static withBemoles(chords?: string, isSet: num = 0) {
     return (
-      isSet
-        ? chords?.replace(
-            CmComUtils.simpleHashedEachLetterChordReg_g,
-            all => CmComUtils.chordBemoleEquivalent[all] || all,
-          )
-        : chords
+      isSet ? chords?.replace(simpleHashedEachLetterChordReg_g, all => chordBemoleEquivalent[all] || all) : chords
     )?.replace(makeRegExp('/A#/g'), 'B');
   }
 

@@ -2,7 +2,7 @@ import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { CmEditorTextCorrectMessages } from '$cm+editor/entities/text';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { useState } from 'react';
-import { CmComUtils } from 'shared/utils/cm/ComUtils';
+import { chordsBlockIncorrectMessage } from 'shared/utils/cm/com/chordsBlockIncorrectMessage';
 
 interface Props {
   texti: number;
@@ -13,7 +13,7 @@ interface Props {
 
 export const CmEditorChordBlockRedactor = ({ text, texti, ccom, isDisabled }: Props) => {
   const [value, setValue] = useState(text);
-  const corrects = CmComUtils.chordsBlockIncorrectMessage(value);
+  const corrects = chordsBlockIncorrectMessage(value);
 
   return (
     <>

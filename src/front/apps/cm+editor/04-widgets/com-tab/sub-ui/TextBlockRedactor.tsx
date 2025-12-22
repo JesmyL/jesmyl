@@ -5,7 +5,8 @@ import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { cmConstantsConfigAtom } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
-import { CmComUtils } from 'shared/utils/cm/ComUtils';
+import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
+import { textLinesLengthIncorrects } from 'shared/utils/cm/com/textLinesLengthIncorrects';
 
 interface Props {
   texti: number;
@@ -18,8 +19,8 @@ export const CmEditorComTabTextBlockRedactor = ({ texti, text, ccom, disabled }:
   const [value, setValue] = useState(text);
   const eeStore = cmEditorIDB.useValue.eeStore();
   const { maxAvailableComLineLength } = useAtomValue(cmConstantsConfigAtom);
-  const lineLengthCorrects = CmComUtils.textLinesLengthIncorrects(value, maxAvailableComLineLength);
-  const corrects = lineLengthCorrects ?? CmComUtils.takeTextBlockIncorrects(value, eeStore);
+  const lineLengthCorrects = textLinesLengthIncorrects(value, maxAvailableComLineLength);
+  const corrects = lineLengthCorrects ?? takeTextBlockIncorrects(value, eeStore);
 
   return (
     <>

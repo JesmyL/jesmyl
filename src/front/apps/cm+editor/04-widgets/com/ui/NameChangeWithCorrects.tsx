@@ -2,7 +2,7 @@ import { TextInput } from '#shared/ui/TextInput';
 import { CmEditorTextCorrectMessages } from '$cm+editor/entities/text';
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { IExportableCom } from 'shared/api';
-import { CmComUtils } from 'shared/utils/cm/ComUtils';
+import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 
 export const CmEditorComCreateNameChange = ({
   name,
@@ -29,7 +29,7 @@ export const CmEditorComCreateNameChange = ({
           />
         </div>
       </div>
-      <CmEditorTextCorrectMessages corrects={CmComUtils.takeTextBlockIncorrects(name, eeStore)} />
+      <CmEditorTextCorrectMessages corrects={takeTextBlockIncorrects(name, eeStore)} />
     </>
   );
 };

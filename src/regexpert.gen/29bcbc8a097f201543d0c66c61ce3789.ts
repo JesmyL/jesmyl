@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-namespace */
-import('../shared/utils/cm/ComUtils');
+import('../shared/utils/cm/com/const');
 
-namespace N65bd67bbcbd7186a7d10a038bb18fd15_1 {
+namespace N29bcbc8a097f201543d0c66c61ce3789_1 {
   type $0 = string; // `${`|` | ''}${OptRepeatingString<`.`>}${`-` | ''}${$simpleChord}${$lightModificators}${$hardModificators | ''}${$bassChord | ''}${$repeats}${`|` | ''}`;
   type $simpleChord = `${U1}${`m` | ''}${`7` | ''}`;
   type $lightModificators = `+` | U2;
@@ -89,7 +89,7 @@ namespace N65bd67bbcbd7186a7d10a038bb18fd15_1 {
   > { '': '' }
 }
 
-namespace N65bd67bbcbd7186a7d10a038bb18fd15_2 {
+namespace N29bcbc8a097f201543d0c66c61ce3789_2 {
   type $0 = string; // `${$simpleChord}${$lightModificators}${$hardModificators | ''}${U12 | ''}`;
   type $simpleChord = `${U1}${`m` | ''}${`7` | ''}`;
   type $lightModificators = `+` | U2;
@@ -136,7 +136,7 @@ namespace N65bd67bbcbd7186a7d10a038bb18fd15_2 {
   > { '': '' }
 }
 
-namespace N65bd67bbcbd7186a7d10a038bb18fd15_3 {
+namespace N29bcbc8a097f201543d0c66c61ce3789_3 {
   type $0 = string; // `${$simpleChord}${$lightModificators}${$hardModificators | ''}${U12 | ''}`;
   type $simpleChord = `${U1}${`m` | ''}${`7` | ''}`;
   type $lightModificators = `+` | U2;
@@ -184,8 +184,8 @@ namespace N65bd67bbcbd7186a7d10a038bb18fd15_3 {
 }
 
 interface _GlobalScopedNamedRegExpMakerGeneratedTypes
-  extends N65bd67bbcbd7186a7d10a038bb18fd15_1.I,
-    N65bd67bbcbd7186a7d10a038bb18fd15_2.I,
-    N65bd67bbcbd7186a7d10a038bb18fd15_3.I {
+  extends N29bcbc8a097f201543d0c66c61ce3789_1.I,
+    N29bcbc8a097f201543d0c66c61ce3789_2.I,
+    N29bcbc8a097f201543d0c66c61ce3789_3.I {
     '': ''
 }

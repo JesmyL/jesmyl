@@ -1,7 +1,12 @@
 import { mylib } from '#shared/lib/my-lib';
 import { makeRegExp } from 'regexpert';
 import { IExportableOrder } from 'shared/api';
-import { CmComUtils } from 'shared/utils/cm/ComUtils';
+import {
+  checkIsChordLineReg,
+  ruDifferentLowerLettersStr,
+  slavicLowerLettersStr,
+  uaDifferentLowerLettersStr,
+} from 'shared/utils/cm/com/const';
 import { comBlockStyles } from 'shared/values/cm/block-styles/BlockStyles';
 import { StyleBlock } from 'shared/values/cm/block-styles/StyleBlock';
 import { EditableComBlocks } from './30-Blocks';
@@ -51,8 +56,8 @@ export class EditableComParseBlocks extends EditableComBlocks {
         const freeLine = line.replace(makeRegExp('/\\s+/g'), ' ').trim();
 
         if (languagei !== null) {
-          setLanguagei(makeRegExp(`/[${CmComUtils.ruDifferentLowerLettersStr}]/`), freeLine, 0);
-          setLanguagei(makeRegExp(`/[${CmComUtils.uaDifferentLowerLettersStr}]/`), freeLine, 1);
+          setLanguagei(makeRegExp(`/[${ruDifferentLowerLettersStr}]/`), freeLine, 0);
+          setLanguagei(makeRegExp(`/[${uaDifferentLowerLettersStr}]/`), freeLine, 1);
         }
 
         if (linei === 0) {
@@ -60,7 +65,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
           if (unit.style) return;
         }
 
-        if (freeLine.match(CmComUtils.checkIsChordLineReg)) {
+        if (freeLine.match(checkIsChordLineReg)) {
           chordLines.push(freeLine);
         } else {
           if (textLines.length === 0) {
@@ -110,7 +115,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
 
       unitTextLines.forEach((lines, linesi) => {
         const currUnit = linesi === 0 ? unit : {};
-        const reg = makeRegExp(`/[^${CmComUtils.slavicLowerLettersStr} ]/gi`);
+        const reg = makeRegExp(`/[^${slavicLowerLettersStr} ]/gi`);
 
         currUnit.text = lines.join('\n');
         currUnit.chords = chords;

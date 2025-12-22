@@ -13,7 +13,7 @@ import { useNavigate, useSearch } from '@tanstack/react-router';
 import { atom, useAtom } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { ChordPack, ChordTrack } from 'shared/api';
-import { CmComUtils } from 'shared/utils/cm/ComUtils';
+import { correctChordRegs } from 'shared/utils/cm/com/const';
 import { cmEditorChordRedactableChordsAtom } from '../state/atoms';
 import { StyledCmEditorChordPageContainer } from '../style/Page';
 import { CmEditorChordChordNodes } from './ChordNodes';
@@ -54,7 +54,7 @@ export const CmEditorChordPage = () => {
 
     setNewNameError(
       isNewChord
-        ? CmComUtils.correctChordRegs.regExp.exec(newChordName)
+        ? correctChordRegs.regExp.exec(newChordName)
           ? chords[newChordName] || redactableChords[newChordName]
             ? 'Такой аккорд существует'
             : ''

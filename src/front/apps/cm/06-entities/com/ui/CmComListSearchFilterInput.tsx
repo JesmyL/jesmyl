@@ -6,7 +6,7 @@ import { Atom, useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { CmComWid, IExportableCom } from 'shared/api';
-import { CmComUtils } from 'shared/utils/cm/ComUtils';
+import { takeCorrectComIndex, takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
 import { CmCom } from '../lib/Com';
 
 const mapExtractItem = <Item,>({ item }: { item: Item }): Item => item;
@@ -67,7 +67,7 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
     const comList = props.coms?.map(com => new props.Constructor(com.top)) ?? [];
     if (!term) return comList;
 
-    const numCheckedTerm = isNumberSearch || isNaN(+term) ? term : `${CmComUtils.takeCorrectComIndex(+term)}`;
+    const numCheckedTerm = isNumberSearch || isNaN(+term) ? term : `${takeCorrectComIndex(+term)}`;
 
     return mylib
       .searchRate(
@@ -75,7 +75,7 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
         numCheckedTerm,
         ['name', mylib.c.POSITION, ['orders', mylib.c.INDEX, 'text']],
         isNumberSearch,
-        CmComUtils.takeCorrectComNumber,
+        takeCorrectComNumber,
       )
       .sort(sortItemsByRate)
       .map(mapExtractItem);

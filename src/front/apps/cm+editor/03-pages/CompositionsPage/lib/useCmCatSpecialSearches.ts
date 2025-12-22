@@ -5,7 +5,7 @@ import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
 import { itIt } from 'shared/utils';
-import { CmComUtils } from 'shared/utils/cm/ComUtils';
+import { takeTextLineOverLengthIndex } from 'shared/utils/cm/com/takeTextLineOverLengthIndex';
 import { ICmEditorCompositionsCatSpecialSearches } from '../model';
 
 const delayedValueSetDefiner = <Value, RetValue>(
@@ -72,9 +72,7 @@ export const useCmEditorCompositionsCatSpecialSearches = (): Record<
         map: async (coms, term) => {
           const maxLength = +term.split(':')[1] || maxAvailableComLineLength;
 
-          return coms.filter(com =>
-            com.texts?.some(text => CmComUtils.takeTextLineOverLengthIndex(text, maxLength) > -1),
-          );
+          return coms.filter(com => com.texts?.some(text => takeTextLineOverLengthIndex(text, maxLength) > -1));
         },
       },
       '@repeatsMatch:': {
