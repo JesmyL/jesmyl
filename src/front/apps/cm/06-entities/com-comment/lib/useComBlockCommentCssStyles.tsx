@@ -5,7 +5,10 @@ import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { emptyFunc } from 'shared/utils';
 import { RuleSet, css } from 'styled-components';
-import { CmComCommentMakerCleans } from './Cleans';
+import { cmComCommentMakePseudoCommentContentAccentsCss } from '../utils/makePseudoCommentContentAccentsCss';
+import { cmComCommentMakePseudoCommentContentPropCss } from '../utils/makePseudoCommentContentPropCss';
+import { cmComCommentMakeStartCommentCss } from '../utils/makeStartCommentCss';
+import { cmComCommentPseudoCommentStaticPropsCss } from '../utils/pseudoCommentStaticPropsCss';
 import { useCmComCommentBlock } from './useCmComCommentBlock';
 
 export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = false) => {
@@ -36,16 +39,16 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
             const linesStyle = commentLines.map((line, linei) => {
               if (!line) return;
 
-              line = line.replace(makeRegExp(`/(?<=^|\\n) *(/*)( *\\d+ *)(.*)/`), (_all, pre, num, rest) => {
+              line = line.replace(makeRegExp(`/(?<=^|\\n) *(/*)( *\\d+ *)(.*)/g`), (_all, pre, num, rest) => {
                 (lineComments[num.trim()] ??= []).push(`${pre} ${rest}`);
                 return '';
               });
 
               return css`
                 .styled-header ${commentHolderSelectors[linei] || '::after'} {
-                  ${CmComCommentMakerCleans.pseudoCommentStaticPropsCss}
-                  ${CmComCommentMakerCleans.makePseudoCommentContentCss(line)}
-                  ${CmComCommentMakerCleans.makePseudoCommentContentAccentsCss(line)}
+                  ${cmComCommentPseudoCommentStaticPropsCss}
+                  ${cmComCommentMakePseudoCommentContentPropCss(line)}
+                  ${cmComCommentMakePseudoCommentContentAccentsCss(line)}
                 }
               `;
             });
@@ -58,12 +61,10 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
                   (comment, commenti) =>
                     comment &&
                     css`
+                      &:not(:has([solid-order-text-linei='${commenti - 1}'])):after,
                       [solid-order-text-linei='${commenti - 1}']:before {
-                        margin-left: var(--comment-margin-left);
-
-                        ${CmComCommentMakerCleans.pseudoCommentStaticPropsCss}
-                        ${CmComCommentMakerCleans.makePseudoCommentContentCss(comment.join('\n'))}
-                        ${CmComCommentMakerCleans.makePseudoCommentContentAccentsCss(comment.join('\n'))}
+                        ${cmComCommentMakePseudoCommentContentPropCss(comment.join('\n'))}
+                        ${cmComCommentMakePseudoCommentContentAccentsCss(comment.join('\n'))}
                       }
                     `,
                 )}
@@ -93,7 +94,7 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
             accentsCss,
             commentWithTextCss,
             commentWithTextLinksOnlyCss,
-          } = await CmComCommentMakerCleans.makeStartCommentCss(currentBibleTranslate, line, translates);
+          } = await cmComCommentMakeStartCommentCss(currentBibleTranslate, line, translates);
 
           isThereUnsettedTranslate ||= isUnset;
           isThereCorrectBibleText ||= isWithText;
@@ -102,7 +103,7 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
           return css`
             .com-orders-with-comments {
               ${selector} {
-                ${CmComCommentMakerCleans.pseudoCommentStaticPropsCss}
+                ${cmComCommentPseudoCommentStaticPropsCss}
                 ${accentsCss}
               }
 
@@ -130,9 +131,9 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
 
           .styled-header {
             &::after,
-            &::before,
             > ::after,
-            > ::before {
+            > ::before,
+            &::before {
               opacity: var(--comment-opacity);
               text-decoration: none;
             }
@@ -152,6 +153,21 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
 
           ${cssContentList}
           ${numeredOrderHeaders}
+
+          [solid-com-order-selector] {
+            &:after,
+            [solid-order-text-linei]:before {
+              ${cmComCommentPseudoCommentStaticPropsCss}
+            }
+
+            [solid-order-text-linei]:before {
+              margin-left: var(--comment-margin-left);
+            }
+
+            &:after {
+              margin-left: calc(var(--comment-margin-left) * 2);
+            }
+          }
         `,
       };
     })()

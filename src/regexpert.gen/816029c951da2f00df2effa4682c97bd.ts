@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import('../front/apps/cm/06-entities/com-comment/lib/Cleans');
+import('../front/apps/cm/06-entities/com-comment/utils/commentHeadBibleAddressRegExp');
 
-namespace N6919875af70bbcb2cef09ae314751706_1 {
+namespace N816029c951da2f00df2effa4682c97bd_1 {
   type $0 = `${$translate | ''}${$book}${OptRepeatingString<` `>}${$chapter}:${$verseDiapason}`;
   type $translate = `${string}:`;
   type $book = `${$bookPrefix | ''}${$bookTitle}`;
@@ -41,6 +41,6 @@ namespace N6919875af70bbcb2cef09ae314751706_1 {
   }
 }
 
-interface _GlobalScopedNamedRegExpMakerGeneratedTypes extends N6919875af70bbcb2cef09ae314751706_1.I {
+interface _GlobalScopedNamedRegExpMakerGeneratedTypes extends N816029c951da2f00df2effa4682c97bd_1.I {
   '': '';
 }

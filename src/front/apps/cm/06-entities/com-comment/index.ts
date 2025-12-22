@@ -1,4 +1,3 @@
-export * from './lib/Cleans';
 export * from './lib/useCheckIsComCommentIncludesBibleAddress';
 export * from './lib/useCmComCommentBlock';
 export * from './lib/useComBlockCommentCssStyles';

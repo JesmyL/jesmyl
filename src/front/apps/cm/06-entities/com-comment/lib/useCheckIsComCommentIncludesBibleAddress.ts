@@ -1,6 +1,6 @@
 import { CmComWid } from 'shared/api';
 import { CmCom } from '../../com/lib/Com';
-import { CmComCommentMakerCleans } from './Cleans';
+import { cmComCommentHeadBibleAddressRegExp } from '../utils/commentHeadBibleAddressRegExp';
 import { useCmComCommentBlock } from './useCmComCommentBlock';
 
 let isWasOpenComWithBibleAddressInComment = false;
@@ -11,9 +11,7 @@ export const useCmComCommentCheckIsIncludesBibleAddress = (com: CmCom | und) => 
   if (isWasOpenComWithBibleAddressInComment) return true;
   const comment = takeCommentTexts('head')?.join('\n') || '';
 
-  isWasOpenComWithBibleAddressInComment = !!(
-    com && comment?.match(CmComCommentMakerCleans.commentHeadBibleAddressRegExp.regExp)
-  );
+  isWasOpenComWithBibleAddressInComment = !!(com && comment?.match(cmComCommentHeadBibleAddressRegExp.regExp));
 
   return isWasOpenComWithBibleAddressInComment;
 };
