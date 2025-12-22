@@ -11,9 +11,9 @@ export interface CmEditorIDBStorage {
 class CmEditorIDB extends DexieDB<CmEditorIDBStorage> {
   constructor() {
     super('cm+editor', {
-      lastModifiedAt: { $byDefault: 0 },
-      eeStore: { $byDefault: {} },
-      ignoredEESet: { $byDefault: new Set() },
+      lastModifiedAt: [0],
+      eeStore: [{}],
+      ignoredEESet: [new Set()],
     });
   }
 }

@@ -12,8 +12,8 @@ type Store = {
 
 export const complectIDB = new DexieDB<Store>('complect', {
   alertLineConfigs: { id: '++' },
-  isDarkMode: { $byDefault: false },
-  broadcastAlertLine: { $byDefault: null },
-  screenBroadcastConfigs: { $byDefault: [defaultComplectConfig] },
-  expands: { $byDefault: new Set() },
+  isDarkMode: [false],
+  broadcastAlertLine: [null],
+  screenBroadcastConfigs: [[defaultComplectConfig]],
+  expands: [new Set()],
 });

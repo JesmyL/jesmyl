@@ -40,25 +40,25 @@ interface BibleTranslatesIDBStorage extends Record<BibleTranslateName, null | Bi
 
 class BibleTranslatesIDB extends DexieDB<BibleTranslatesIDBStorage> {}
 export const bibleTranslatesIDB = new BibleTranslatesIDB('bibleTranslates', {
-  lastModifiedAt: { $byDefault: 0 },
+  lastModifiedAt: [0],
 
-  rst: { $byDefault: { chapters: [] } },
-  nrt: { $byDefault: null },
-  kas: { $byDefault: null },
+  rst: [{ chapters: [] }],
+  nrt: [null],
+  kas: [null],
 });
 
 class BibleIDB extends DexieDB<BibleIDBStorage> {}
 export const bibleIDB = new BibleIDB('bible', {
-  booki: { $byDefault: null },
-  chapteri: { $byDefault: null },
-  versei: { $byDefault: null },
-  joinAddress: { $byDefault: null },
-  showTranslates: { $byDefault: null },
-  myTranslates: { $byDefault: null },
+  booki: [null],
+  chapteri: [null],
+  versei: [null],
+  joinAddress: [null],
+  showTranslates: [null],
+  myTranslates: [null],
 
-  broadcastPlan: { $byDefault: [] },
-  broadcastHistory: { $byDefault: [] },
-  broadcastScreenConfigs: { $byDefault: [] },
+  broadcastPlan: [[]],
+  broadcastHistory: [[]],
+  broadcastScreenConfigs: [[]],
 });
 
 (async () => {

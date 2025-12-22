@@ -10,7 +10,7 @@ export interface CmIDBStorage {
 class StoragesIDB extends DexieDB<CmIDBStorage> {
   constructor() {
     super('storages', {
-      lastModifiedAt: { $byDefault: 0 },
+      lastModifiedAt: [0],
 
       racks: { w: '++' },
     });

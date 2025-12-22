@@ -45,19 +45,19 @@ export interface CmIDBStorage {
 class CmIDB extends DexieDB<CmIDBStorage> {
   constructor() {
     super('cm', {
-      chordPack: { $byDefault: {} },
-      lastModifiedAt: { $byDefault: 0 },
-      broadcastScreenConfigs: { $byDefault: () => [cmBroadcastDefaultConfig] },
+      chordPack: [{}],
+      lastModifiedAt: [0],
+      broadcastScreenConfigs: [() => [cmBroadcastDefaultConfig]],
 
-      selectedComws: { $byDefault: null },
-      comTopTools: { $byDefault: null },
-      chordVisibleVariant: { $byDefault: null },
-      comFontSize: { $byDefault: null },
-      laterComwList: { $byDefault: null },
-      speedRollKf: { $byDefault: null },
-      lastOpenComw: { $byDefault: null },
-      isShowFavouritesInBroadcast: { $byDefault: null },
-      constantsConfig: { $byDefault: null },
+      selectedComws: [null],
+      comTopTools: [null],
+      chordVisibleVariant: [null],
+      comFontSize: [null],
+      laterComwList: [null],
+      speedRollKf: [null],
+      lastOpenComw: [null],
+      isShowFavouritesInBroadcast: [null],
+      constantsConfig: [null],
 
       coms: {
         w: '++',

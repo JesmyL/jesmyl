@@ -7,8 +7,6 @@ import { smylib, SMyLib } from 'shared/utils';
 import { mylib } from './my-lib';
 
 const keyvalues = '%keyvalues%';
-const byDefaultField = '$byDefault';
-type ByDefaultField = typeof byDefaultField;
 
 export type DexiedValueSetter<Store, K extends keyof Store, RetVal = void> = (
   value: Store[K] | ((val: Store[K]) => Store[K]),
@@ -41,10 +39,8 @@ export class DexieDB<Store> {
     storageName: string,
     defaults: Required<{
       [K in keyof Store]: Store[K] extends any[]
-        ?
-            | Omit<Partial<Record<'_', '++'> & Record<keyof Store[K][number], true | '++'>>, ByDefaultField>
-            | Record<ByDefaultField, (() => Store[K]) | Store[K]>
-        : Record<ByDefaultField, (() => Store[K]) | Store[K]>;
+        ? Partial<Record<'_', '++'> & Record<keyof Store[K][number], true | '++'>> | [(() => Store[K]) | Store[K]]
+        : [(() => Store[K]) | Store[K]];
     }>,
     version = 1,
   ) {
@@ -55,11 +51,11 @@ export class DexieDB<Store> {
     };
 
     const takeValueFromDefaults = (key: keyof Store) => {
-      if (mylib.isFunc(defaults[key][byDefaultField])) {
-        return defaults[key][byDefaultField]();
+      if (mylib.isArr(defaults[key]) && mylib.isFunc(defaults[key][0])) {
+        return defaults[key][0]();
       }
 
-      return defaults[key][byDefaultField];
+      return defaults[key][0];
     };
 
     const proxyGetForGet = (_: unknown, key: keyof Store) =>
@@ -112,7 +108,7 @@ export class DexieDB<Store> {
     const stores = {} as Record<keyof Store, string>;
 
     smylib.keys(defaults).forEach(key => {
-      if (byDefaultField in defaults[key]) return;
+      if (mylib.isArr(defaults[key])) return;
 
       stores[key] = SMyLib.entries(defaults[key])
         .map(([key, val]) => `${val === '++' ? val : ''}${key as never}`)

@@ -21,12 +21,12 @@ interface Storage {
 class IndexIDB extends DexieDB<Storage> {
   constructor() {
     super('index', {
-      lastModifiedAt: { $byDefault: 0 },
-      appFontFamily: { $byDefault: null },
-      currentApp: { $byDefault: 'cm' },
-      fileAssociations: { $byDefault: {} as never },
-      deviceId: { $byDefault: null },
-      lastScheduleWid: { $byDefault: NaN },
+      lastModifiedAt: [0],
+      appFontFamily: [null],
+      currentApp: ['cm'],
+      fileAssociations: [{} as never],
+      deviceId: [null],
+      lastScheduleWid: [NaN],
 
       schs: {
         w: '++',
