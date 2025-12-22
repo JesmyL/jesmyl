@@ -1,8 +1,9 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
 import styled from 'styled-components';
-import { useCurrentBroadcastConfigiSet, useScreenBroadcastConfigsValue } from '../../atoms';
-import { useAddScreenBroadcastConfig, useScreenBroadcastCurrentConfigi } from '../../hooks/configs';
+import { currentBroadcastConfigiAtom, useScreenBroadcastConfigsValue } from '../../atoms';
+import { useAddScreenBroadcastConfig } from '../../hooks/configs';
 import { useWatchScreenBroadcast } from '../../hooks/watch-broadcast';
 import { useScreenBroadcastWindows } from '../../hooks/windows';
 import { useUpdateScreenBroadcastConfig } from '../../hooks/with-config';
@@ -19,21 +20,14 @@ export const ScreenBroadcastFaceLine = <Config,>(props: Props<Config>) => {
   const configs: ScreenBroadcastConfig[] = useScreenBroadcastConfigsValue();
   const windows = useScreenBroadcastWindows();
   const updateConfig = useUpdateScreenBroadcastConfig();
-  const setCurrentConfigi = useCurrentBroadcastConfigiSet();
   const addConfig = useAddScreenBroadcastConfig();
 
-  const currentConfigi = useScreenBroadcastCurrentConfigi();
+  const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
   const watchBroadcast = useWatchScreenBroadcast();
 
-  useScreenBroadcastFaceLineListeners(configs, currentConfigi, setCurrentConfigi, updateConfig, windows);
+  useScreenBroadcastFaceLineListeners(configs, currentConfigi, updateConfig, windows);
 
-  const putOnFaceClose = useScreenBroadcastPutOnFaceClose(
-    configs,
-    currentConfigi,
-    setCurrentConfigi,
-    windows,
-    props.updateConfig,
-  );
+  const putOnFaceClose = useScreenBroadcastPutOnFaceClose(configs, currentConfigi, windows, props.updateConfig);
 
   const putOnFaceClick = useCallback(
     (configi: number) => {
@@ -43,13 +37,13 @@ export const ScreenBroadcastFaceLine = <Config,>(props: Props<Config>) => {
           return;
         }
 
-        setCurrentConfigi(configi);
+        currentBroadcastConfigiAtom.set(configi);
       };
     },
-    [setCurrentConfigi, watchBroadcast, windows],
+    [watchBroadcast, windows],
   );
 
-  const onAdd = useCallback(() => setCurrentConfigi(addConfig()), [addConfig, setCurrentConfigi]);
+  const onAdd = useCallback(() => currentBroadcastConfigiAtom.set(addConfig()), [addConfig]);
 
   return (
     <div className="mt-5">

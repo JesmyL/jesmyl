@@ -1,3 +1,4 @@
+import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
 import { useCallback } from 'react';
 import { useRemoveScreenBroadcastConfig } from '../../../hooks/configs';
 import { BroadcastWindow, useUpdateScreenBroadcastWindows } from '../../../hooks/windows';
@@ -7,7 +8,6 @@ import { ScreenBroadcastConfig } from '../../../model';
 export const useScreenBroadcastPutOnFaceClose = <Config>(
   configs: ScreenBroadcastConfig[],
   currentConfigi: number,
-  setCurrentConfigi: (configi: number) => void,
   windows: readonly (nil | BroadcastWindow)[],
   updateExternalConfig: (config: Config | null, configi: number) => void,
 ) => {
@@ -34,24 +34,15 @@ export const useScreenBroadcastPutOnFaceClose = <Config>(
         });
 
         if (currentConfigi === configs.length - 1) {
-          setCurrentConfigi(configs.length - 2);
+          currentBroadcastConfigiAtom.set(configs.length - 2);
           return;
         }
 
         if (currentConfigi > configi) {
-          setCurrentConfigi(currentConfigi - 1);
+          currentBroadcastConfigiAtom.set(currentConfigi - 1);
         }
       };
     },
-    [
-      removeConfig,
-      updateConfig,
-      updateExternalConfig,
-      windows,
-      currentConfigi,
-      configs.length,
-      updateWindows,
-      setCurrentConfigi,
-    ],
+    [removeConfig, updateConfig, updateExternalConfig, windows, currentConfigi, configs.length, updateWindows],
   );
 };

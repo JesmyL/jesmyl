@@ -1,6 +1,7 @@
-import { useIsScreenBroadcastTextVisible } from '#features/broadcast/atoms';
+import { isBroadcastTextVisibleAtom } from '#features/broadcast/atoms';
 import { useBibleBroadcastScreenFontSizeAdapter } from '#shared/lib/hooks/useFontSizeAdapter';
 import { BibleBroadcastScreenConfig } from '$bible/entities/broadcast';
+import { useAtomValue } from 'atomaric';
 
 export const useBibleBroadcastScreenFontSizeAddressAdapter = (
   content: string,
@@ -11,7 +12,7 @@ export const useBibleBroadcastScreenFontSizeAddressAdapter = (
     content,
     '' +
       windowResizeUpdatesNum +
-      useIsScreenBroadcastTextVisible() +
+      useAtomValue(isBroadcastTextVisibleAtom) +
       (currentConfig === undefined
         ? '-'
         : currentConfig.address.height +

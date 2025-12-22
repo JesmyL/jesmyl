@@ -1,6 +1,6 @@
-import { useIsScreenBroadcastTextVisible } from '#features/broadcast/atoms';
+import { currentBroadcastConfigiAtom, isBroadcastTextVisibleAtom } from '#features/broadcast/atoms';
 import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
-import { useGetScreenBroadcastConfig, useScreenBroadcastCurrentConfigi } from '#features/broadcast/hooks/configs';
+import { useGetScreenBroadcastConfig } from '#features/broadcast/hooks/configs';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
 import { useCmCom } from '$cm/entities/com';
 import { useCmComCurrentMarkValues } from '$cm/shared/lib/useCmComCurrentMarkValues';
@@ -12,10 +12,10 @@ import { CmBroadcastScreen } from './Screen';
 
 export const CmBroadcastCurrentComTrackScreen = (props: BroadcastScreenProps & Partial<FontSizeContainProps>) => {
   const getCurrentConfig = useGetScreenBroadcastConfig();
-  const currentConfigi = useScreenBroadcastCurrentConfigi();
+  const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
   const currentConfig = useCmBroadcastScreenConfig(props.screeni ?? currentConfigi);
   const forceUpdates = useCmBroadcastScreenWinResizeListen(props.win);
-  const isVisible = useIsScreenBroadcastTextVisible();
+  const isVisible = useAtomValue(isBroadcastTextVisibleAtom);
 
   const comw = useAtomValue(cmPlayerBroadcastComwAtom);
   const com = useCmCom(comw);

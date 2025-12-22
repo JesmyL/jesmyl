@@ -1,14 +1,13 @@
+import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
 import {
   defaultScreenBroadcastBackgroundConfig,
   defaultScreenBroadcastPositionConfig,
   defaultScreenBroadcastTextConfig,
 } from '#features/broadcast/complect/defaults';
-import {
-  useMakeScreenBroadcastConfigsFillPack,
-  useScreenBroadcastCurrentConfigi,
-} from '#features/broadcast/hooks/configs';
+import { useMakeScreenBroadcastConfigsFillPack } from '#features/broadcast/hooks/configs';
 import { BackgroundConfigProps } from '#shared/ui/configurators/model';
 import { cmIDB } from '$cm/shared/state';
+import { useAtomValue } from 'atomaric';
 import { CmBroadcastScreenConfig } from '../model/model';
 
 export const cmBroadcastDefaultConfig: CmBroadcastScreenConfig & BackgroundConfigProps = {
@@ -27,4 +26,4 @@ export const useCmBroadcastScreenConfig = (configi: number | und): CmBroadcastSc
 };
 
 export const useCmBroadcastCurrentScreenConfig = (): CmBroadcastScreenConfig | und =>
-  useCmBroadcastScreenConfigs()[useScreenBroadcastCurrentConfigi()];
+  useCmBroadcastScreenConfigs()[useAtomValue(currentBroadcastConfigiAtom)];

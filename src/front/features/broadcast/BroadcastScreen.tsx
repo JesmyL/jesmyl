@@ -11,13 +11,13 @@ import { useCurrentForceViweAppContext } from './Broadcast.contexts';
 import { BroadcastScreenProps } from './Broadcast.model';
 import { BroadcastTextScreen } from './BroadcastTextScreen';
 import { AlertLineSlideText } from './controls/alert-line/AlertLineSlideText';
-import { isShowTranslatedTextAtom, useBroadcastInitialSlideValue } from './initial-slide-context';
+import { isShowBroadcastTextAtom, useBroadcastInitialSlideValue } from './initial-slide-context';
 
 export const BroadcastScreen = (props: BroadcastScreenProps) => {
   const app = useAtomValue(broadcastCurrentTextAppAtom);
   const forceViewApp = useCurrentForceViweAppContext();
   const initialSlide = useBroadcastInitialSlideValue();
-  const isShowTranslatedText = useAtomValue(isShowTranslatedTextAtom);
+  const isShowTranslatedText = useAtomValue(isShowBroadcastTextAtom);
   const isTrackBroadcast = useAtomValue(cmIsTrackBroadcastAtom);
 
   return (

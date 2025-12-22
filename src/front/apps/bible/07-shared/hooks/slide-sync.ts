@@ -1,7 +1,7 @@
+import { isBroadcastTextVisibleAtom } from '#features/broadcast/atoms';
 import { useBibleBroadcastHistoryAddToHistory } from '$bible/entities/broadcast-history';
 import { atom, useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
-import { useSetIsScreenBroadcastTextVisible } from '../../../../features/broadcast/atoms';
 import { BibleBroadcastAnyAddress } from '../model/base';
 import { bibleBookiAtom, bibleChapteriAtom, bibleJoinAddressAtom, bibleVerseiAtom } from '../state/atoms';
 
@@ -18,12 +18,11 @@ export const useBibleShowSlideAddressCode = () => useAtomValue(showAddressCodeAt
 
 export const useBibleBroadcastSlideSyncContentSetter = () => {
   const addToHistory = useBibleBroadcastHistoryAddToHistory();
-  const setIsVisible = useSetIsScreenBroadcastTextVisible();
   const printShowAddress = useBiblePrintShowSlideAddressCode();
 
   return useCallback(
     (isReplaceFirstNearVersei = false) => {
-      setIsVisible(true);
+      isBroadcastTextVisibleAtom.set(true);
 
       setTimeout(() => {
         addToHistory(
@@ -33,6 +32,6 @@ export const useBibleBroadcastSlideSyncContentSetter = () => {
         printShowAddress();
       });
     },
-    [addToHistory, printShowAddress, setIsVisible],
+    [addToHistory, printShowAddress],
   );
 };

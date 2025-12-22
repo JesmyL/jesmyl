@@ -1,13 +1,12 @@
+import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
 import {
   defaultScreenBroadcastBackgroundConfig,
   defaultScreenBroadcastPositionConfig,
   defaultScreenBroadcastTextConfig,
 } from '#features/broadcast/complect/defaults';
-import {
-  useMakeScreenBroadcastConfigsFillPack,
-  useScreenBroadcastCurrentConfigi,
-} from '#features/broadcast/hooks/configs';
+import { useMakeScreenBroadcastConfigsFillPack } from '#features/broadcast/hooks/configs';
 import { bibleIDB } from '$bible/shared/state/bibleIDB';
+import { useAtomValue } from 'atomaric';
 import { BibleBroadcastScreenConfig } from '../model/model';
 
 export const bibleBroadcastDefaultConfig: BibleBroadcastScreenConfig = {
@@ -38,4 +37,4 @@ export const useBibleBroadcastScreenConfig = (configi: number | und): BibleBroad
 };
 
 export const useBibleBroadcastScreenCurrentConfig = (): BibleBroadcastScreenConfig | und =>
-  useBibleBroadcastScreenConfigs()[useScreenBroadcastCurrentConfigi()];
+  useBibleBroadcastScreenConfigs()[useAtomValue(currentBroadcastConfigiAtom)];

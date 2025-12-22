@@ -1,5 +1,6 @@
-import { useScreenBroadcastCurrentConfigi } from '#features/broadcast/hooks/configs';
+import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
 import { cmIDB } from '$cm/shared/state';
+import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
 import { CmBroadcastScreenConfig } from '../model/model';
 import { cmBroadcastDefaultConfig } from './configs';
@@ -21,7 +22,7 @@ export const useCmBroadcastUpdateConfig = () => {
 
 export const useCmBroadcastUpdateCurrentConfig = (): ((config: Partial<CmBroadcastScreenConfig> | null) => void) => {
   const update = useCmBroadcastUpdateConfig();
-  const currentConfigi = useScreenBroadcastCurrentConfigi();
+  const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
 
   return useCallback(
     (config: Partial<CmBroadcastScreenConfig> | null) => update(config, currentConfigi),

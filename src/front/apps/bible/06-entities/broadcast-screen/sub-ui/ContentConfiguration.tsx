@@ -1,14 +1,15 @@
+import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
 import { ScreenBroadcastPositionConfig } from '#features/broadcast/complect/model';
 import { ScreenTranslateCurrentPositionConfigurators } from '#features/broadcast/complect/position/Position';
-import { useScreenBroadcastCurrentConfigi } from '#features/broadcast/hooks/configs';
 import { useBibleBroadcastScreenConfig, useBibleBroadcastUpdateCurrentConfig } from '$bible/entities/broadcast';
+import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
 
 export const BibleBroadcastScreenContentConfiguration = (props: {
   screeni: number | und;
   wrapperRef: React.RefObject<HTMLDivElement | null>;
 }) => {
-  const currentConfigi = useScreenBroadcastCurrentConfigi();
+  const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
   const updateConfig = useBibleBroadcastUpdateCurrentConfig();
 
   const currentConfig = useBibleBroadcastScreenConfig(props.screeni ?? currentConfigi);

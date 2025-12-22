@@ -2,7 +2,6 @@ import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { NewWindow } from '#shared/ui/tags/NewWindow';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { useAuth } from '$index/shared/state';
-import { useAtomSet } from 'atomaric';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { markdownBroadcastAtom } from './atoms';
@@ -16,16 +15,15 @@ export const ScheduleWidgetMarkdownBroadcast = ({ md = '' }: Props) => {
   const rights = useScheduleWidgetRightsContext();
   const auth = useAuth();
   const [markdown, setMarkdown] = useState(md);
-  const setMd = useAtomSet(markdownBroadcastAtom);
   const subscribeData = `index-sch-${rights.schedule.w}:${auth.login}` as const;
 
   useEffect(() => setMarkdown(md), [md]);
 
   useEffect(() => {
     return hookEffectPipe()
-      .pipe(setTimeoutPipe(() => setMd(markdown), 300))
+      .pipe(setTimeoutPipe(() => markdownBroadcastAtom.set(markdown), 300))
       .effect();
-  }, [markdown, setMd]);
+  }, [markdown]);
 
   useEffect(() => {
     return setTimeoutEffect(() => {

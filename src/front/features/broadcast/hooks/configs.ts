@@ -1,9 +1,6 @@
+import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
-import {
-  useCurrentBroadcastConfigiValue,
-  useScreenBroadcastConfigsSet,
-  useScreenBroadcastConfigsValue,
-} from '../atoms';
+import { currentBroadcastConfigiAtom, useScreenBroadcastConfigsSet, useScreenBroadcastConfigsValue } from '../atoms';
 import { defaultComplectConfig } from '../consts';
 import { ScreenBroadcastConfig } from '../model';
 
@@ -34,7 +31,5 @@ export const useGetScreenBroadcastConfig = () => {
   return useCallback((configi: number): ScreenBroadcastConfig | nil => configs[configi], [configs]);
 };
 
-export const useScreenBroadcastCurrentConfigi: () => number = () => useCurrentBroadcastConfigiValue();
-
 export const useScreenBroadcastCurrentConfig = (): ScreenBroadcastConfig | und =>
-  useScreenBroadcastConfigsValue()[useScreenBroadcastCurrentConfigi()];
+  useScreenBroadcastConfigsValue()[useAtomValue(currentBroadcastConfigiAtom)];

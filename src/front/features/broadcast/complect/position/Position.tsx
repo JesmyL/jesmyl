@@ -1,7 +1,8 @@
 import { useCmBroadcastUpdateCurrentConfig } from '$cm/widgets/broadcast/hooks/update-config';
+import { useAtomValue } from 'atomaric';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled, { RuleSet, css } from 'styled-components';
-import { useFixedResizerLines } from '../atoms';
+import { fixedResizerLinesAtom } from '../atoms';
 import { defaultScreenBroadcastPositionConfig } from '../defaults';
 import { BroadcastResizeBorderPositions, FixedResizerLines, ScreenBroadcastPositionConfig } from '../model';
 import { PositionConfiguratorsResizersHalfWrapperFixer } from './complect/HalfWrapperFixer';
@@ -39,7 +40,7 @@ export const ScreenTranslateCurrentPositionConfigurators = ({
   const [width, setWidth] = useState(config.width);
   const [height, setHeight] = useState(config.height);
   const rectRef = useRef<HTMLDivElement>(null);
-  const fixedResizerLines = useFixedResizerLines();
+  const fixedResizerLines = useAtomValue(fixedResizerLinesAtom);
   const [showHalfFixersKeyActiveMode, setShowHalfFixersKeyActiveMode] = useState<ShowHalfFixersKeyActiveMode>(null);
 
   useEffect(() => {

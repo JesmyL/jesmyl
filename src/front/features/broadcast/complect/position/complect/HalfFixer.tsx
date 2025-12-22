@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useFixedResizerLinesSet } from '../../atoms';
+import { fixedResizerLinesAtom } from '../../atoms';
 import { FixedResizerLines, ScreenBroadcastPositionConfig } from '../../model';
 
 interface Props {
@@ -10,7 +10,6 @@ interface Props {
 }
 
 export const PositionConfiguratorsResizersHalfFixer = ({ prop, config, fixedResizerLines, updateConfig }: Props) => {
-  const setLines = useFixedResizerLinesSet();
   const positionProp = prop === 'horz' ? 'left' : 'top';
   const sizeProp = prop === 'horz' ? 'width' : 'height';
 
@@ -19,14 +18,14 @@ export const PositionConfiguratorsResizersHalfFixer = ({ prop, config, fixedResi
       className={prop}
       onClick={event => {
         if (event.ctrlKey) {
-          setLines({
+          fixedResizerLinesAtom.set({
             type: prop,
             value: config[positionProp] + config[sizeProp] / 2,
           });
           return;
         }
 
-        setLines(null);
+        fixedResizerLinesAtom.set(null);
 
         if (!event.shiftKey || fixedResizerLines === null) return;
         const newPosition = fixedResizerLines.value;

@@ -11,7 +11,6 @@ import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.ts
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { removedCompositionsAtom } from '$cm+editor/shared/state/com';
 import { ChordVisibleVariant, TheCmCom } from '$cm/ext';
-import { useAtomSet } from 'atomaric';
 import { useState } from 'react';
 import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
 import { CmComMetricNums } from 'shared/model/cm/com-metric-nums';
@@ -20,7 +19,6 @@ import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { CmEditorComEditTransposition } from '../../com/ui/ComEditTransposition';
 
 export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
-  const setRemovedComs = useAtomSet(removedCompositionsAtom);
   const [name, setName] = useState('');
   const eeStore = cmEditorIDB.useValue.eeStore();
   const checkAccess = useCheckUserAccessRightsInScope();
@@ -119,7 +117,7 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
           }
           postfix="Удалить песню"
           onClick={async () => {
-            setRemovedComs(prev => ({ ...prev, [ccom.wid]: ccom.name }));
+            removedCompositionsAtom.set(prev => ({ ...prev, [ccom.wid]: ccom.name }));
             cmEditComClientTsjrpcMethods.remove({ comw: ccom.wid });
           }}
         />

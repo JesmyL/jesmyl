@@ -1,4 +1,4 @@
-import { useFixedResizerLinesSet } from '../../../atoms';
+import { fixedResizerLinesAtom } from '#features/broadcast/complect/atoms';
 import { FixedResizerLines, ScreenBroadcastPositionConfig } from '../../../model';
 
 const minSize = 2;
@@ -11,8 +11,6 @@ export const usePositionConfiguratorResizerBorderMaker = (
   config: ScreenBroadcastPositionConfig,
   fixedResizerLines: FixedResizerLines | null,
 ) => {
-  const setLines = useFixedResizerLinesSet();
-
   return (vert: 'top' | 'bottom' | null, horz: 'left' | 'right' | null) => (
     <div
       className={`resizer resizer${(vert === null ? '' : '-' + vert) + (horz === null ? '' : '-' + horz)}`}
@@ -24,7 +22,7 @@ export const usePositionConfiguratorResizerBorderMaker = (
               const bottomLim = config.top + config.height;
 
               if (event.ctrlKey) {
-                setLines({
+                fixedResizerLinesAtom.set({
                   type: vert ? 'vert' : 'horz',
                   value:
                     vert === 'top'
@@ -43,7 +41,7 @@ export const usePositionConfiguratorResizerBorderMaker = (
               const newPosition = fixedResizerLines.value;
 
               if (fixedResizerLines.type === 'horz') {
-                setLines(null);
+                fixedResizerLinesAtom.set(null);
 
                 if ((newPosition === config.left && horz === 'left') || (newPosition === rightLim && horz === 'right'))
                   return;
@@ -76,7 +74,7 @@ export const usePositionConfiguratorResizerBorderMaker = (
                     });
                 }
               } else {
-                setLines(null);
+                fixedResizerLinesAtom.set(null);
 
                 if ((newPosition === config.top && vert === 'top') || (newPosition === bottomLim && vert === 'bottom'))
                   return;

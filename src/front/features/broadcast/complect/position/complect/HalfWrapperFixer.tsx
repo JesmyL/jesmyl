@@ -1,19 +1,17 @@
 import styled from 'styled-components';
-import { useFixedResizerLinesSet } from '../../atoms';
+import { fixedResizerLinesAtom } from '../../atoms';
 
 interface Props {
   prop: 'vert' | 'horz';
 }
 
 export const PositionConfiguratorsResizersHalfWrapperFixer = ({ prop }: Props) => {
-  const setLines = useFixedResizerLinesSet();
-
   return (
     <Fixer
       className={prop}
       onClick={event => {
-        if (event.ctrlKey) setLines({ type: prop, value: 50 });
-        else setLines(null);
+        if (event.ctrlKey) fixedResizerLinesAtom.set({ type: prop, value: 50 });
+        else fixedResizerLinesAtom.set(null);
       }}
     />
   );

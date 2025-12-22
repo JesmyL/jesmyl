@@ -1,15 +1,12 @@
-import { atom, useAtomSet, useAtomValue } from 'atomaric';
+import { atom, useAtomValue } from 'atomaric';
 
-export const isShowTranslatedTextAtom = atom(true);
-const isShowAtom = atom(true);
+export const isShowBroadcastTextAtom = atom(true);
+export const isShowBroadcastInitialSlideAtom = atom(true);
 export const cmInitialSlideAtom = atom<React.ReactNode>(null);
-
-export const useBroadcastIsInitialSlideShowSet = () => useAtomSet(isShowAtom);
-export const useBroadcastIsInitialSlideShow = () => useAtomValue(isShowAtom);
 
 export const useBroadcastInitialSlideValue = () => {
   const initialSlide = useAtomValue(cmInitialSlideAtom);
-  const isShow = useAtomValue(isShowAtom);
+  const isShow = useAtomValue(isShowBroadcastInitialSlideAtom);
 
   if (isShow && initialSlide) return initialSlide;
 

@@ -1,12 +1,14 @@
 import { propagationStopper } from '#shared/lib/event-funcs';
-import { useScreenBroadcastCurrentConfig, useScreenBroadcastCurrentConfigi } from '../hooks/configs';
+import { useAtomValue } from 'atomaric';
+import { currentBroadcastConfigiAtom } from '../atoms';
+import { useScreenBroadcastCurrentConfig } from '../hooks/configs';
 import { useScreenBroadcastWindows } from '../hooks/windows';
 import { useUpdateScreenBroadcastConfig } from '../hooks/with-config';
 
 export const ScreenTranslateConfigurationNameChanger = () => {
   const config = useScreenBroadcastCurrentConfig();
   const updateConfig = useUpdateScreenBroadcastConfig();
-  const currentConfigi = useScreenBroadcastCurrentConfigi();
+  const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
   const windows = useScreenBroadcastWindows();
 
   if (config == null) return null;

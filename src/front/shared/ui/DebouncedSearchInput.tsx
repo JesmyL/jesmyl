@@ -1,6 +1,6 @@
 import { isNumberSearchAtom } from '#basis/state/isNumberSearchAtom';
 import { UsedWid, useWid } from '#shared/lib/hooks/useWid';
-import { atom, Atom, useAtom, useAtomSet, useAtomValue } from 'atomaric';
+import { atom, Atom, useAtom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
@@ -23,7 +23,6 @@ export const DebouncedSearchInput = ({ debounce = 300, className = '', placehold
   const debouncedTermAtom = props.debouncedTermAtom ?? props.termAtom ?? (defaultTermAtoms[wid] ??= atom(''));
 
   const [term, setTerm] = useAtom(termAtom);
-  const setDebouncedTerm = useAtomSet(debouncedTermAtom);
 
   const isNumberSearch = useAtomValue(isNumberSearchAtom);
 
@@ -57,7 +56,7 @@ export const DebouncedSearchInput = ({ debounce = 300, className = '', placehold
           if (!debounce || debouncedTermAtom === termAtom) return;
 
           clearTimeout(timeouts[wid]);
-          timeouts[wid] = setTimeout(setDebouncedTerm, debounce, term);
+          timeouts[wid] = setTimeout(debouncedTermAtom.set, debounce, term);
         }}
         onFocus={event => event.currentTarget.select()}
       />

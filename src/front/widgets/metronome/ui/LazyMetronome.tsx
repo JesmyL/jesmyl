@@ -1,5 +1,5 @@
 import { Modal, ModalBody } from '#shared/ui/modal';
-import { useAtomSet, useAtomValue } from 'atomaric';
+import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { CmComMetricNums } from 'shared/model/cm/com-metric-nums';
 import styled from 'styled-components';
@@ -16,14 +16,12 @@ interface Props {
 }
 
 export default function LazyMetronome({ meterSize = 4, bpm = 120 }: Props) {
-  const setUserBpm = useAtomSet(metronomeUserBpmAtom);
-  const setUserMeterSize = useAtomSet(metronomeUserMeterSizeAtom);
   const isOpen = useAtomValue(metronomeIsOpenAtom);
 
   useMetronomePlayStateController();
 
-  useEffect(() => setUserMeterSize(meterSize), [meterSize, setUserMeterSize]);
-  useEffect(() => setUserBpm(bpm), [bpm, setUserBpm]);
+  useEffect(() => metronomeUserMeterSizeAtom.set(meterSize), [meterSize]);
+  useEffect(() => metronomeUserBpmAtom.set(bpm), [bpm]);
 
   return (
     <div hidden={!isOpen}>

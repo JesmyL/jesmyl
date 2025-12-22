@@ -1,25 +1,20 @@
+import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
+import { BroadcastWindow } from '#features/broadcast/hooks/windows';
+import { isShowBroadcastInitialSlideAtom, isShowBroadcastTextAtom } from '#features/broadcast/initial-slide-context';
+import { ScreenBroadcastConfig } from '#features/broadcast/model';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
-import { useAtomSet } from 'atomaric';
 import { useEffect } from 'react';
-import { isNIs, itNNull } from 'shared/utils';
-import { useSetIsScreenBroadcastTextVisible } from '../../../atoms';
-import { BroadcastWindow } from '../../../hooks/windows';
-import { isShowTranslatedTextAtom, useBroadcastIsInitialSlideShowSet } from '../../../initial-slide-context';
-import { ScreenBroadcastConfig } from '../../../model';
+import { itNNull } from 'shared/utils';
 
 const invokeEach = (cb: () => void) => cb();
 
 export const useScreenBroadcastFaceLineListeners = (
   configs: ScreenBroadcastConfig[],
   currentConfigi: number,
-  setCurrentConfigi: (configi: number) => void,
   updateConfig: (configi: number, config: Partial<ScreenBroadcastConfig> | null) => void,
   windows: readonly (nil | BroadcastWindow)[],
 ) => {
-  const switchIsVisible = useSetIsScreenBroadcastTextVisible();
   const currentConfigiRef = useActualRef(currentConfigi);
-  const isInitialSlideShowSet = useBroadcastIsInitialSlideShowSet();
-  const setIsShowTranslatedText = useAtomSet(isShowTranslatedTextAtom);
 
   useEffect(() => {
     const listeners = windows
@@ -39,7 +34,7 @@ export const useScreenBroadcastFaceLineListeners = (
         const onKeyDown = (win.onkeydown = async event => {
           switch (event.code) {
             case 'Tab':
-              setCurrentConfigi(
+              currentBroadcastConfigiAtom.set(
                 event.shiftKey
                   ? currentConfigiRef.current === 0
                     ? configs.length - 1
@@ -59,16 +54,16 @@ export const useScreenBroadcastFaceLineListeners = (
               break;
 
             case 'Space':
-              setIsShowTranslatedText(isNIs);
+              isShowBroadcastTextAtom.do.toggle();
               break;
 
             case 'Backspace':
-              isInitialSlideShowSet(isNIs);
+              isShowBroadcastInitialSlideAtom.do.toggle();
               break;
           }
         });
 
-        win.onfocus = () => setCurrentConfigi(wini);
+        win.onfocus = () => currentBroadcastConfigiAtom.set(wini);
         // eslint-disable-next-line @eslint-react/web-api/no-leaked-event-listener
         window.addEventListener('keydown', onKeyDown);
 
@@ -82,14 +77,5 @@ export const useScreenBroadcastFaceLineListeners = (
       .filter(itNNull);
 
     return () => listeners.forEach(invokeEach);
-  }, [
-    configs,
-    currentConfigiRef,
-    isInitialSlideShowSet,
-    setCurrentConfigi,
-    setIsShowTranslatedText,
-    switchIsVisible,
-    updateConfig,
-    windows,
-  ]);
+  }, [configs, currentConfigiRef, updateConfig, windows]);
 };

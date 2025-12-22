@@ -1,10 +1,11 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { useAtomValue } from 'atomaric';
 import { memo } from 'react';
 import styled from 'styled-components';
 import { useScreenBroadcastConfigsValue } from '../atoms';
 import { useWatchScreenBroadcast } from '../hooks/watch-broadcast';
 import { useScreenBroadcastCurrentWindow, useScreenBroadcastWindows } from '../hooks/windows';
-import { useBroadcastIsInitialSlideShow, useBroadcastIsInitialSlideShowSet } from '../initial-slide-context';
+import { isShowBroadcastInitialSlideAtom } from '../initial-slide-context';
 import { AlertLineInput } from './alert-line/AlertLineInput';
 import { ScreenBroadcastControlPanelShowMdButton } from './ShowMdButton';
 
@@ -18,8 +19,7 @@ export const ScreenBroadcastControlPanel = memo(function ControlPanel({ onNext, 
   const windows = useScreenBroadcastWindows();
   const currWin = useScreenBroadcastCurrentWindow();
   const watchBroadcast = useWatchScreenBroadcast();
-  const setIsInitialSlideShow = useBroadcastIsInitialSlideShowSet();
-  const isInitialSlideShow = useBroadcastIsInitialSlideShow();
+  const isInitialSlideShow = useAtomValue(isShowBroadcastInitialSlideAtom);
 
   return (
     <div>
@@ -48,7 +48,7 @@ export const ScreenBroadcastControlPanel = memo(function ControlPanel({ onNext, 
         <ControlButton
           className="pointer"
           title="Backspace"
-          onClick={() => setIsInitialSlideShow(is => !is)}
+          onClick={isShowBroadcastInitialSlideAtom.do.toggle}
         >
           {isInitialSlideShow ? (
             <LazyIcon
