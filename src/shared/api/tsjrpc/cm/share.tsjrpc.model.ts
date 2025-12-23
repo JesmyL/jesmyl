@@ -11,7 +11,7 @@ import {
 } from 'shared/api/complect/apps';
 
 export type CmShareTsjrpcModel = {
-  editedCom: (args: { com: IExportableCom }) => unknown;
+  editedCom: (args: { com: IExportableCom; mod: number }) => unknown;
   refreshComList: (args: {
     coms: IExportableCom[];
     modifiedAt: number;

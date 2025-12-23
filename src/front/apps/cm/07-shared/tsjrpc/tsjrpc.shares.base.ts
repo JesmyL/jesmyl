@@ -9,14 +9,14 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
     super({
       scope: 'CmShare',
       methods: {
-        editedCom: async ({ com }) => {
+        editedCom: async ({ com, mod }) => {
           if (com.isRemoved) {
             await cmIDB.db.coms.where('w').equals(com.w).delete();
           } else {
             await cmIDB.db.coms.put(com);
           }
 
-          cmIDB.updateLastModifiedAt(com.m ?? com.w);
+          if (mod) cmIDB.updateLastModifiedAt(mod);
         },
 
         refreshComList: async ({ coms, modifiedAt }) => {

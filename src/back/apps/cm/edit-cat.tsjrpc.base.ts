@@ -1,9 +1,9 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
-import { CmCatWid, IExportableCat } from 'shared/api';
+import { CmCatWid, CmComWid, IExportableCat, IExportableCom, IServerSideCom } from 'shared/api';
 import { CmEditCatTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-cat.tsjrpc.model';
-import { getCmComNameInBrackets } from './edit-com.tsjrpc.base';
-import { catsFileStore } from './file-stores';
+import { smylib } from 'shared/utils';
+import { catsFileStore, comsDirStore } from './file-stores';
 import { cmShareServerTsjrpcMethods } from './tsjrpc.shares';
 
 export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBaseServer<CmEditCatTsjrpcModel> {
@@ -83,6 +83,16 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
     });
   }
 })();
+
+function getCmComNameInBrackets(comScalar: CmComWid | IServerSideCom | IExportableCom) {
+  if (smylib.isNum(comScalar)) {
+    const com = comsDirStore.getItem(comScalar);
+    if (com == null) return '[Неизвестная песня]';
+    return `"${com.n}"`;
+  }
+
+  return `"${comScalar.n}"`;
+}
 
 function modifyCat<Props extends { catw: CmCatWid }, Tools>(
   modifier: (cat: IExportableCat, props: Props, tools: Tools) => string | null,

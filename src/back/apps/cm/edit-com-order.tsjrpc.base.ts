@@ -4,7 +4,7 @@ import { makeRegExp } from 'regexpert';
 import { CmComOrderWid, CmComWid, IExportableOrder, IServerSideCom } from 'shared/api';
 import { CmEditComOrderTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-order.tsjrpc.model';
 import { itNNil, smylib } from 'shared/utils';
-import { getCmComNameInBrackets, modifyCom } from './edit-com.tsjrpc.base';
+import { modifyCom } from './edit-com.tsjrpc.base';
 
 export const cmEditComOrderServerTsjrpcBase =
   new (class CmEditComOrder extends TsjrpcBaseServer<CmEditComOrderTsjrpcModel> {
@@ -12,14 +12,14 @@ export const cmEditComOrderServerTsjrpcBase =
       super({
         scope: 'CmEditComOrder',
         methods: {
-          clearOwnRepeats: modifyOrd((ord, { orderTitle }, com, { auth }) => {
+          clearOwnRepeats: modifyOrd((ord, { orderTitle }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_REP', 'U')) throw '';
 
             delete ord.r;
 
-            return `Сброшено значение повторений для блока ${orderTitle} в песне ${getCmComNameInBrackets(com)}`;
+            return `сброшено значение повторений для блока ${orderTitle}`;
           }),
-          setRepeats: modifyOrd((ord, { value, inhIndex, orderTitle, textValue }, com, { auth }) => {
+          setRepeats: modifyOrd((ord, { value, inhIndex, orderTitle, textValue }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_REP', 'U')) throw '';
 
             if (inhIndex !== undefined) {
@@ -32,40 +32,34 @@ export const cmEditComOrderServerTsjrpcBase =
               if (!smylib.values(ord.inh).filter(itNNil).length) delete ord.inh;
             } else ord.r = value;
 
-            return `Изменены повторения для блока ${orderTitle} в песне ${getCmComNameInBrackets(com)}:\n\n${textValue}`;
+            return `изменены повторения для блока ${orderTitle}:\n\n${textValue}`;
           }),
-          setType: modifyOrd((ord, { type, newTypeTitle, orderTitle }, com, { auth }) => {
+          setType: modifyOrd((ord, { type, newTypeTitle, orderTitle }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
             ord.s = type;
 
-            return `В песне ${getCmComNameInBrackets(com)} название блока ${orderTitle} изменено на ${newTypeTitle}`;
+            return `название блока ${orderTitle} изменено на ${newTypeTitle}`;
           }),
-          bindChordBlock: modifyOrd((ord, { chordi, isAnchor, orderTitle }, com, { auth }) => {
+          bindChordBlock: modifyOrd((ord, { chordi, isAnchor, orderTitle }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
             ord.c = chordi;
 
-            return (
-              `В песне ${getCmComNameInBrackets(com)} к ${isAnchor ? 'ссылке на блок' : 'блоку'} ` +
-              `${orderTitle} прикреплён ${chordi + 1}-й блок Аккордов`
-            );
+            return `к ${isAnchor ? 'ссылке на блок' : 'блоку'} ${orderTitle} прикреплён ${chordi + 1}-й блок Аккордов`;
           }),
 
-          toggleVisibility: modifyOrd((ord, { orderTitle }, com, { auth }) => {
+          toggleVisibility: modifyOrd((ord, { orderTitle }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
             ord.v ??= 1;
             ord.v = ord.v ? 0 : 1;
             if (ord.v === 1) delete ord.v;
 
-            return (
-              `В песне ${getCmComNameInBrackets(com)} порядковый блок ` +
-              `${orderTitle} сделан ${ord.v ? '' : 'не'}видимым`
-            );
+            return `порядковый блок ${orderTitle} сделан ${ord.v ? '' : 'не'}видимым`;
           }),
 
-          toggleAnchorInheritVisibility: modifyOrd((ord, { anchorInheritIndex, leadOrderTitle }, com, { auth }) => {
+          toggleAnchorInheritVisibility: modifyOrd((ord, { anchorInheritIndex, leadOrderTitle }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
             ord.inh ??= {};
@@ -77,7 +71,7 @@ export const cmEditComOrderServerTsjrpcBase =
             if (!smylib.values(ord.inh).filter(itNNil).length) delete ord.inh;
 
             return (
-              `В песне ${getCmComNameInBrackets(com)} ${anchorInheritIndex + 2}-я часть ссылки на ${leadOrderTitle}` +
+              `${anchorInheritIndex + 2}-я часть ссылки на ${leadOrderTitle}` +
               ` сделана ${ord.inh?.v?.[anchorInheritIndex] == null ? '' : 'не'}видимой`
             );
           }),
@@ -96,7 +90,7 @@ export const cmEditComOrderServerTsjrpcBase =
             const [ord] = com.o.splice(movableOrdi, 1);
             com.o.splice(insertAfterOrdi + (movableOrdi < insertAfterOrdi ? 0 : 1), 0, ord);
 
-            return `Перемещён порядковый блок ${orderTitle} в песне ${getCmComNameInBrackets(com)}`;
+            return `перемещён порядковый блок ${orderTitle}`;
           }),
 
           remove: modifyCom((com, { ordw, isAnchor, orderTitle }, { auth }) => {
@@ -110,7 +104,7 @@ export const cmEditComOrderServerTsjrpcBase =
             com.o ??= [];
             com.o = com.o.filter(ord => ord.w !== ordw && ord.a !== ordw);
 
-            return `В песне ${getCmComNameInBrackets(com)} ${isAnchor ? 'удалена ссылка на' : 'удалён'} ${orderTitle}`;
+            return `${isAnchor ? 'удалена ссылка на' : 'удалён'} ${orderTitle}`;
           }),
 
           addAnchorOrder: modifyCom((com, { insertAfterOrdw, targetOrdw, orderTitle }, { auth }) => {
@@ -130,37 +124,31 @@ export const cmEditComOrderServerTsjrpcBase =
               a: targetOrdw,
             });
 
-            return `В песне ${getCmComNameInBrackets(com)} создана ссылка ${orderTitle}`;
+            return `создана ссылка ${orderTitle}`;
           }),
 
-          setTexti: modifyOrd((ord, { texti, orderTitle }, com, { auth }) => {
+          setTexti: modifyOrd((ord, { texti, orderTitle }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
             ord.t = texti;
 
-            return `В песне ${getCmComNameInBrackets(com)} к порядковому блоку ${orderTitle} прикреплён ${texti + 1} текст`;
+            return `к порядковому блоку ${orderTitle} прикреплён ${texti + 1} текст`;
           }),
 
-          toggleVisibilityInMiniMode: modifyOrd((ord, { orderTitle }, com, { auth }) => {
+          toggleVisibilityInMiniMode: modifyOrd((ord, { orderTitle }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
             ord.o = ord.o ? undefined : 1;
 
-            return (
-              `В песне ${getCmComNameInBrackets(com)} ссылка на блок ${orderTitle} сделана ` +
-              `${ord.o ? 'видимой' : 'невидимой'} в мини-режиме`
-            );
+            return `ссылка на блок ${orderTitle} сделана ${ord.o ? 'видимой' : 'невидимой'} в мини-режиме`;
           }),
 
-          toggleTitleVisibility: modifyOrd((ord, { orderTitle }, com, { auth }) => {
+          toggleTitleVisibility: modifyOrd((ord, { orderTitle }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
             ord.e = ord.e ? undefined : 1;
 
-            return (
-              `В песне ${getCmComNameInBrackets(com)} заголовок в порядковом блоке ${orderTitle} сделан ` +
-              `${ord.e ? 'видимым' : 'невидимым'}`
-            );
+            return `заголовок в порядковом блоке ${orderTitle} сделан ${ord.e ? 'видимым' : 'невидимым'}`;
           }),
 
           insertNewBlock: modifyCom((com, { insertAfterOrdwOrFirst, type, chordi, texti, orderTitle }, { auth }) => {
@@ -181,10 +169,10 @@ export const cmEditComOrderServerTsjrpcBase =
               com.o.unshift(ord);
             } else com.o.splice(afterOrdi + 1, 0, ord);
 
-            return `В песне ${getCmComNameInBrackets(com)} добавлен новый порядковый блок ${orderTitle}`;
+            return `добавлен новый порядковый блок ${orderTitle}`;
           }),
 
-          setPositionsLine: modifyOrd((ord, { linei, line, lineChangesText, orderTitle }, com, { auth }) => {
+          setPositionsLine: modifyOrd((ord, { linei, line, lineChangesText, orderTitle }, { auth }, com) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_APPS', 'U')) throw '';
 
             let targetOrd = ord;
@@ -196,13 +184,10 @@ export const cmEditComOrderServerTsjrpcBase =
             targetOrd.p ??= [];
             targetOrd.p[linei] = line;
 
-            return (
-              `В песне ${getCmComNameInBrackets(com)} в блоке ${orderTitle} изменена аппликатура в ` +
-              `${linei + 1}-й строке: ${lineChangesText}`
-            );
+            return `в блоке ${orderTitle} изменена аппликатура в ${linei + 1}-й строке: ${lineChangesText}`;
           }),
 
-          trimOverPositions: modifyOrd((ord, { orderTitle }, com, { auth }) => {
+          trimOverPositions: modifyOrd((ord, { orderTitle }, { auth }, com) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_APPS', 'U')) throw '';
 
             if (com.t == null) throw 'В песне нет текстов';
@@ -219,20 +204,20 @@ export const cmEditComOrderServerTsjrpcBase =
             const textLinesCount = com.t[targetOrd.t].split(makeRegExp('/\n/')).length;
             if (textLinesCount < targetOrd.p.length) targetOrd.p.length = textLinesCount;
 
-            return `В песне ${getCmComNameInBrackets(com)} в блоке ${orderTitle} удалены лишние строки аппликатуры`;
+            return `в блоке ${orderTitle} удалены лишние строки аппликатуры`;
           }),
 
-          setModulationValue: modifyOrd((ord, { value, orderTitle }, com) => {
+          setModulationValue: modifyOrd((ord, { value, orderTitle }) => {
             ord.f ??= {};
             ord.f.md = value;
 
-            return `В песне ${getCmComNameInBrackets(com)} установлено значение модулирования блока ${orderTitle} - ${value}`;
+            return `установлено значение модулирования блока ${orderTitle} - ${value}`;
           }),
 
-          removeRepeats: modifyOrd((ord, { orderTitle }, com) => {
+          removeRepeats: modifyOrd((ord, { orderTitle }) => {
             delete ord.r;
 
-            return `В песне ${getCmComNameInBrackets(com)} убраны повторения в блоке ${orderTitle}`;
+            return `убраны повторения в блоке ${orderTitle}`;
           }),
         },
       });
@@ -240,14 +225,14 @@ export const cmEditComOrderServerTsjrpcBase =
   })();
 
 function modifyOrd<Props extends { ordw: CmComOrderWid; comw: CmComWid }>(
-  modifier: (ord: IExportableOrder, props: Props, com: IServerSideCom, tool: ServerTSJRPCTool) => string | null,
+  modifier: (ord: IExportableOrder, props: Props, tool: ServerTSJRPCTool, com: IServerSideCom) => string | null,
 ) {
   return modifyCom<Props>((com, props, tool) => {
     const ord = com.o?.find(ord => ord.w === props.ordw);
 
     if (ord == null) throw new Error('Ord not found');
 
-    return modifier(ord, props, com, tool);
+    return modifier(ord, props, tool, com);
   });
 }
 
