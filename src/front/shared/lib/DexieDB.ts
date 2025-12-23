@@ -127,7 +127,7 @@ export class DexieDB<Store> {
         let timeout: TimeOut;
 
         this.updateLastModifiedAt = (async (modifiedAt: number) => {
-          if (lastModifiedLocal >= modifiedAt) return;
+          if (!modifiedAt || lastModifiedLocal >= modifiedAt) return;
           lastModifiedLocal = modifiedAt;
 
           clearTimeout(timeout);
