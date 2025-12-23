@@ -60,7 +60,10 @@
     "Tb7a9d498077d63d588ae56bcea8dbcb": { "info": { "fio": "Filipp", "m": 1765104964317 } },
     "T5319cc8d2fac5dfc7ec1b69f97c5c7b": { "info": { "fio": "Arttop1gg/", "m": 1765730211711 } },
     "Tc2514a8ac8b521f0fe38375b7454956": { "info": { "fio": "Benjamin Yukhimets", "m": 1765730238775 } },
-    "Tdd97e410eed61b005345b0af58d11c8": { "info": { "fio": "Pavel Ponomarenko", "m": 1766304430500 } },
+    "Tdd97e410eed61b005345b0af58d11c8": {
+      "info": { "fio": "Pavel Ponomarenko", "m": 1766406830557 },
+      "cm": { "EDIT": 4, "COM": 6, "COM_AUDIO": 6, "COM_AMARK": 6 }
+    },
     "Tb21203600ee559664d6ca188acd3b0e": { "info": { "fio": "Александра Соломка", "m": 1766326823542 } }
   }
 }
