@@ -83,8 +83,8 @@ export class FileStore<Value> {
     this.writeValue(this.getValue());
   };
 
-  saveValue = () => {
-    this.writeValue(this.getValue());
+  saveValue = (value?: Value) => {
+    this.writeValue(value ?? this.getValue());
   };
 
   fileModifiedAt = (): number => {

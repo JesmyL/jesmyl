@@ -137,8 +137,8 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
     this.refillIds();
   };
 
-  saveItem = (id: Id) => {
-    this.getFileStore(id)?.saveValue();
+  saveItem = (id: Id, item?: Item) => {
+    this.getFileStore(id)?.saveValue(item);
     return this.getItemModTime(id);
   };
 
