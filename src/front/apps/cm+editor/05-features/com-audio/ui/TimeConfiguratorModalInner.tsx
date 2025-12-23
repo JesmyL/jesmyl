@@ -1,12 +1,19 @@
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Button } from '#shared/components/ui/button';
+import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom } from '$cm+editor/entities/com-audio';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/shared/state/com';
-import { cmComAudioPlayerHTMLElement, cmIDB, makeCmComAudioMarkTitleBySelector } from '$cm/ext';
+import {
+  cmComAudioPlayerHTMLElement,
+  cmComAudioPlayerIsPlayAtom,
+  cmIDB,
+  makeCmComAudioMarkTitleBySelector,
+} from '$cm/ext';
+import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { HttpLink } from 'shared/api';
@@ -19,6 +26,8 @@ interface Props {
 }
 
 export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ time, com, src }: Props) => {
+  const disabledReason = 'Песня не проигрывается';
+
   const trackMarks = cmIDB.useAudioTrackMarks(src);
   const selector = trackMarks?.marks?.[time];
   const { title, ord, isMultilineTitle, fullTitle, isShortTime } = makeCmComAudioMarkTitleBySelector(
@@ -29,13 +38,15 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
   );
   const [currentTime, setCurrentTime] = useState(+time);
   const [isTextEdit, setIsTextEdit] = useState(false);
+  const isPlayState = useAtomValue(cmComAudioPlayerIsPlayAtom);
+  const isPause = useDebounceValue(!isPlayState, 500);
 
   const addMaker = (add: number) => () => {
     setCurrentTime(prev => {
-      let result = (prev + add).toFixed(3);
+      let result = (prev + add).toFixed(2);
 
-      if (result.endsWith('.000')) {
-        result = add > 0 ? `${result.slice(0, -4)}.100` : `${+result.slice(0, -4) - 1}.900`;
+      if (result.endsWith('.00')) {
+        result = add > 0 ? `${result.slice(0, -3)}.10` : `${+result.slice(0, -3) - 1}.90`;
       }
 
       if (+result < 0) return prev;
@@ -86,39 +97,43 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
               <Button
                 icon="PlusSign"
                 onClick={addMaker(1)}
+                disabled={isPause}
+                disabledReason={disabledReason}
               />
               .
               <Button
                 icon="PlusSign"
                 onClick={addMaker(0.1)}
+                disabled={isPause}
+                disabledReason={disabledReason}
               />
               <Button
                 icon="PlusSign"
                 onClick={addMaker(0.01)}
-              />
-              <Button
-                icon="PlusSign"
-                onClick={addMaker(0.001)}
+                disabled={isPause}
+                disabledReason={disabledReason}
               />
             </div>
-            <div className="flex justify-center text-2xl">{currentTime.toFixed(3)}</div>
+            <div className="flex justify-center text-2xl">{currentTime.toFixed(2)}</div>
             <div className="flex gap-2 justify-center">
               <Button
                 icon="MinusSign"
                 onClick={addMaker(-1)}
+                disabled={isPause}
+                disabledReason={disabledReason}
               />
               .
               <Button
                 icon="MinusSign"
                 onClick={addMaker(-0.1)}
+                disabled={isPause}
+                disabledReason={disabledReason}
               />
               <Button
                 icon="MinusSign"
                 onClick={addMaker(-0.01)}
-              />
-              <Button
-                icon="MinusSign"
-                onClick={addMaker(-0.001)}
+                disabled={isPause}
+                disabledReason={disabledReason}
               />
             </div>
           </div>

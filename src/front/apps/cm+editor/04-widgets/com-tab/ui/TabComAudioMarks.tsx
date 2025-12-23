@@ -113,7 +113,7 @@ export const CmEditorComTabAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                               return;
                             }
 
-                            const fixedTime = +cmComAudioPlayerHTMLElement.currentTime.toFixed(3);
+                            const fixedTime = +cmComAudioPlayerHTMLElement.currentTime.toFixed(2);
                             cmComEditorAudioMarksEditPacksAtom.do.putMarks(editSrc, { [fixedTime]: `+${fixedTime}+` });
                           }}
                         />
@@ -189,7 +189,7 @@ export const CmEditorComTabAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                                   return;
                                 }
 
-                                const fixedTime = +cmComAudioPlayerHTMLElement.currentTime.toFixed(3);
+                                const fixedTime = +cmComAudioPlayerHTMLElement.currentTime.toFixed(2);
                                 cmComEditorAudioMarksEditPacksAtom.do.putMarks(editSrc, {
                                   [fixedTime]: [ord.makeSelector()] as CmComAudioMarkSelector,
                                 });

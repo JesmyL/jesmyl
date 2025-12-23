@@ -11,7 +11,11 @@ export {
   useCmComList,
   useCmComSelectedList,
 } from '$cm/entities/com';
-export { CmComAudioPlayer, cmComAudioPlayerHTMLElement } from '$cm/entities/com-audio-player';
+export {
+  CmComAudioPlayer,
+  cmComAudioPlayerHTMLElement,
+  cmComAudioPlayerIsPlayAtom,
+} from '$cm/entities/com-audio-player';
 export { CmComAudioPlayerMarksMovers } from '$cm/entities/com-audio-player/ui/ComPlayerMarksMovers';
 export { useCmComCommentBlockCss } from '$cm/entities/com-comment';
 export { CmComFaceList } from '$cm/entities/com-face';

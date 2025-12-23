@@ -119,7 +119,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
 
             SMyLib.entries(marks).forEach(([time, selector]) => {
               const addTime = `+${time}+`;
-              time = +(+time).toFixed(3);
+              time = +(+time).toFixed(2);
 
               if (selector == null) {
                 delete srcPackMarks[time];
