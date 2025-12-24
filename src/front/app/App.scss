@@ -1,18 +1,4 @@
 body {
-  --full-height: 100%;
-  --header-padding-top: 23px;
-  --header-padding: var(--header-padding-top) var(--main-gap) var(--main-gap) var(--main-gap);
-  --header-content-height: 50px;
-  --footer-initial-height: 85px;
-  --footer-height: var(--footer-initial-height);
-  --fullscreen-transition: top 0.3s, bottom 0.3s, height 0.3s, margin-top 0.3s;
-  --header-top: 0px;
-  --header-height: calc(var(--header-padding-top) + var(--header-content-height));
-  --footer-bottom: 0px;
-  --content-height: calc(100% - var(--footer-height));
-  --content-top: var(--header-content-height);
-  --phase-container-height: calc(100% - var(--header-height));
-  --footer-opacity: 1;
 
   overflow: hidden;
 

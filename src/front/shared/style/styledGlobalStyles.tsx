@@ -9,12 +9,14 @@ import { attrStylerStyles } from './complect/styles.styler';
 import { svgUrlsVariables } from './complect/svgUrlsVariables';
 import { twStyles } from './complect/twStyles';
 import { utilStyles } from './complect/utilStyles';
+import { cssVariableStyles } from './complect/variableStyles';
 
 const styles = css`
   ${initialStyles}
 
   html {
     ${htmlThemeStyles}
+    ${cssVariableStyles}
   }
 
   ${colorStyles}
