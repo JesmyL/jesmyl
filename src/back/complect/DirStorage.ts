@@ -1,13 +1,13 @@
 import { backConfig } from 'back/config/backConfig';
 import fs from 'fs';
-import { smylib } from 'shared/utils';
+import { smylib, wait } from 'shared/utils';
 import { FileStore } from './FileStore';
 
 const initialFileDir = `${__dirname}${backConfig.fileStoreDir}`;
 
 export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | number, IdKey extends string = 'w'> {
   ids: Id[] = [];
-  createItem: (mapper?: ((item: Item) => Item) | nil, id?: Id) => { item: Item; mod: number };
+  createItem: (mapper?: ((item: Item) => Item) | nil, id?: Id) => Promise<{ item: Item; mod: number }>;
   updateItem: (id: Id, updater: (item: Item) => void) => { item: Item; mod: number } | nil;
 
   private getFileStore: (id: Id) => FileStore<Item> | nil;
@@ -59,7 +59,7 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
       return fileStores[id];
     };
 
-    this.createItem = (newItemMapper, id) => {
+    this.createItem = async (newItemMapper, id) => {
       const newItem = (newItemMapper ?? retItem)(makeNewItem());
 
       id ??= newItem[idKey];
@@ -68,14 +68,12 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
       const item = (fileStores[id] = new FileStore(`${dirPath}${id}.json`, {
         ...newItem,
         [idKey]: id,
-      }));
+      })).getValue();
 
+      await wait(100);
       this.refillIds();
 
-      return {
-        item: item.getValue(),
-        mod: this.saveItem(id)!,
-      };
+      return { item, mod: this.saveItem(id)! };
     };
 
     this.updateItem = (id, updater) => {
@@ -110,6 +108,7 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
       }
 
       if (smylib.isNum(firstCreatedItem[idKey])) this.ids = this.ids.map(id => (smylib.isNaN(+id) ? id : +id)) as never;
+
       this.ids.forEach(this.getItemModTime);
     };
 
@@ -124,11 +123,11 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
     }
   };
 
-  getOrCreateItem = (id: Id, ...createArgs: Parameters<typeof this.createItem>) => {
+  getOrCreateItem = async (id: Id, ...createArgs: Parameters<typeof this.createItem>) => {
     try {
       return this.getFileStore(id)!.getValue();
     } catch (_) {
-      return this.createItem(...createArgs).item;
+      return (await this.createItem(...createArgs)).item;
     }
   };
 

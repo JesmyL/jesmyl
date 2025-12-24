@@ -241,6 +241,7 @@ export function modifyCom<Props extends { comw: CmComWid }>(
     const com = comsDirStore.getItem(props.comw);
 
     if (com == null) throw new Error(`Песня не найдена`);
+    if (!com.n) throw new Error(`У песни нет названия`);
 
     delete com.a;
     delete (com as { m?: 0 }).m;

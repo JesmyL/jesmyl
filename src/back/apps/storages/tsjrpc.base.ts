@@ -76,7 +76,7 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           if (throwIfNoUserScopeAccessRight(auth?.login, 'storages', 'LIST', 'C')) throw '';
           const login = auth.login;
 
-          const { item, mod } = storagesDirStore.createItem(store => ({
+          const { item, mod } = await storagesDirStore.createItem(store => ({
             ...store,
             title,
             team: {

@@ -7,7 +7,7 @@ export const questionerTSJRPCCreateBlank: typeof questionerAdminServerTsjrpcBase
   if (throwIfNoUserScopeAccessRight(auth?.login, 'q', 'EDIT', 'C')) throw '';
   const login = auth.login;
 
-  const { item } = questionerBlanksDirStorage.createItem(() => ({
+  const { item } = await questionerBlanksDirStorage.createItem(() => ({
     w: Date.now() + Math.random(),
     m: Date.now(),
     title: 'Новый опрос',

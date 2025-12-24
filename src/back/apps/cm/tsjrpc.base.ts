@@ -169,7 +169,7 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
 
           const withClientTimeDelta = Date.now() - clientDateNow;
 
-          const commentsHolder = comCommentsDirStore.getOrCreateItem(auth.login, null, auth.login);
+          const commentsHolder = await comCommentsDirStore.getOrCreateItem(auth.login, null, auth.login);
           commentsHolder.fio = auth.fio;
           const userServerComments = commentsHolder.b;
 
