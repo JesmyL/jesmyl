@@ -8,7 +8,7 @@ export const GamerMemoryGiantImageCard = ({
   ...attrs
 }: {
   image: GamerMemoryGiantImage;
-  size?: string;
+  size: number;
   className?: string;
 } & HTMLAttributes<HTMLDivElement>) => {
   return (
@@ -25,14 +25,14 @@ const StyledCard = styled.div<{ $imageSrc: string }>`
   background-image: url(${props => `'${props.$imageSrc}'`});
 `;
 
-const StyledContainer = styled.div<{ $size?: string }>`
+const StyledContainer = styled.div<{ $size: number }>`
   --padding: 20px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  width: ${props => props.$size ?? '300px'};
+  width: ${props => `calc(${props.$size}px - 2vmin)`};
   aspect-ratio: 1/1;
   border: var(--color-x3) 2px solid;
   border-radius: 3%;

@@ -1,14 +1,28 @@
 import { mylib } from '#shared/lib/my-lib';
 import { atom } from 'atomaric';
 
-export const gamerMemoryGiantShownImageisAtom = atom(new Set<number>(), 'gamer:MemoryGiant:shownImageis');
 export const gamerMemoryGiantShowAllImagesAtom = atom(false);
 export const gamerMemoryGiantGuessedImageisAtom = atom(new Set<number>(), 'gamer:MemoryGiant:guessedImageis');
 export const gamerMemoryGiantUsedImagesAtom = atom<string[]>([], 'gamer:MemoryGiant:usedImages');
+export const gamerMemoryGiantShowTimeSecondsAtom = atom(1, 'gamer:MemoryGiant:showTimeSeconds');
+export const gamerMemoryGiantCurrentKeyNumberAtom = atom('');
 
-if (gamerMemoryGiantShownImageisAtom.get().size > 1) {
-  gamerMemoryGiantShownImageisAtom.do.clear();
-}
+export const gamerMemoryGiantShownImageisAtom = atom(new Set<number>(), {
+  do: (_, __, self) => ({
+    touch: (index: number) => {
+      if (
+        mylib.isNaN(index) ||
+        index < 0 ||
+        self.get().size > 1 ||
+        gamerMemoryGiantGuessedImageisAtom.get().has(index)
+      ) {
+        return;
+      }
+
+      self.do.toggle(index);
+    },
+  }),
+});
 
 gamerMemoryGiantShownImageisAtom.subscribe(shownImagesSet => {
   if (shownImagesSet.size < 2) return;
@@ -22,9 +36,22 @@ gamerMemoryGiantShownImageisAtom.subscribe(shownImagesSet => {
     return;
   }
 
-  setTimeout(() => {
+  startShowTimer();
+});
+
+let showTimeout: TimeOut | null = null;
+
+const startShowTimer = () => {
+  const showTime = gamerMemoryGiantShowTimeSecondsAtom.get();
+
+  showTimeout = setTimeout(() => {
     gamerMemoryGiantShownImageisAtom.reset();
-  }, 1000);
+    showTimeout = null;
+  }, showTime * 1000);
+};
+
+gamerMemoryGiantShowTimeSecondsAtom.subscribe(() => {
+  if (showTimeout !== null) startShowTimer();
 });
 
 export const gamerMemoryGiantBoardImageisAtom = atom(null as number[] | null, {
@@ -38,14 +65,9 @@ export const gamerMemoryGiantBoardImageisAtom = atom(null as number[] | null, {
     },
     fillBoard: () => {
       if (get()) return;
-      set(
-        mylib.toRandomSorted(
-          gamerMemoryGiantUsedImagesAtom
-            .get()
-            .map((_, i) => [i, i])
-            .flat(),
-        ),
-      );
+
+      const indexes = gamerMemoryGiantUsedImagesAtom.get().map((_, i) => i);
+      set(mylib.toRandomSorted(indexes.concat(indexes)));
     },
   }),
 });

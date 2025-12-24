@@ -2,6 +2,8 @@ import { Button } from '#shared/components/ui/button';
 import { convertFileToBase64 } from '#shared/lib/convertFileToBase64';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { renderComponentInNewWindow } from '#shared/lib/renders';
+import { appFooterInitialHeight, appHeaderHeight } from '#shared/style/complect/variableStyles';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { FileInput } from '#shared/ui/FileInput';
 import { useConfirm } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
@@ -17,7 +19,9 @@ import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 import {
   gamerMemoryGiantBoardImageisAtom,
+  gamerMemoryGiantCurrentKeyNumberAtom,
   gamerMemoryGiantShowAllImagesAtom,
+  gamerMemoryGiantShowTimeSecondsAtom,
   gamerMemoryGiantUsedImagesAtom,
 } from '../state/atoms';
 import { GamerMemoryGiantBoard } from '../sub-ui/Board';
@@ -31,6 +35,8 @@ export const GamerMemoryGiantPage = () => {
   const usedImagesSet = new Set(useAtomValue(gamerMemoryGiantUsedImagesAtom));
   const boardImages = useAtomValue(gamerMemoryGiantBoardImageisAtom);
   const confirm = useConfirm();
+  const showTimeSeconds = useAtomValue(gamerMemoryGiantShowTimeSecondsAtom);
+  const currentKeyNumber = useAtomValue(gamerMemoryGiantCurrentKeyNumberAtom);
 
   useEffect(() => {
     if (win == null) return;
@@ -60,6 +66,16 @@ export const GamerMemoryGiantPage = () => {
       headTitle="Мемори-гигант"
       head={
         <div className="flex gap-3">
+          {currentKeyNumber}
+
+          <Dropdown
+            id={showTimeSeconds}
+            hiddenArrow
+            items={[1, 3, 5, 8, 10].map(num => ({ id: num, title: num }))}
+            onSelectId={gamerMemoryGiantShowTimeSecondsAtom.set}
+            renderItem={({ id }) => <>{id} сек.</>}
+          />
+
           <WithAtomValue atom={gamerMemoryGiantShowAllImagesAtom}>
             {isShow => (
               <Button
@@ -80,9 +96,9 @@ export const GamerMemoryGiantPage = () => {
 
               setWin(
                 renderComponentInNewWindow({
-                  reactNode: () => (
+                  reactNode: win => (
                     <StyledContainer>
-                      <GamerMemoryGiantBoard />
+                      <GamerMemoryGiantBoard win={win} />
                     </StyledContainer>
                   ),
                   target: 'gamer/memory-giant/board',
@@ -106,7 +122,10 @@ export const GamerMemoryGiantPage = () => {
       }
       content={
         boardImages ? (
-          <GamerMemoryGiantBoard />
+          <GamerMemoryGiantBoard
+            win={window}
+            minusWinHeight={appFooterInitialHeight + appHeaderHeight}
+          />
         ) : (
           <div className="flex flex-col gap-10">
             <FileInput
@@ -148,7 +167,10 @@ export const GamerMemoryGiantPage = () => {
                         />
                       </div>
                       <div className={twMerge('transition-all', !usedImagesSet.has(image.md5) && 'grayscale scale-70')}>
-                        <GamerMemoryGiantImageCard image={image} />
+                        <GamerMemoryGiantImageCard
+                          image={image}
+                          size={200}
+                        />
                       </div>
                     </div>
                   );

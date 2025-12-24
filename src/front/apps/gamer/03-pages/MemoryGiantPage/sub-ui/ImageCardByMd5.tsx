@@ -6,7 +6,7 @@ import { GamerMemoryGiantImageCard } from './ImageCard';
 export const GamerMemoryGiantImageCardByMd5 = ({
   imageMd5,
   ...attrs
-}: { imageMd5: string; size?: string } & HTMLAttributes<HTMLDivElement>) => {
+}: { imageMd5: string; size: number } & HTMLAttributes<HTMLDivElement>) => {
   const image = useLiveQuery(() => gamerIDB.tb.memoryGiantImages.get(imageMd5), [imageMd5]);
   return (
     image && (
