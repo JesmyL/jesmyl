@@ -1,7 +1,7 @@
 {
   "maxFavouritesCount": 50,
   "maxAvailableComLineLength": 47,
-  "maxSelectedComsCount": 25,
+  "maxSelectedComsCount": 30,
   "maxLaterComsVizitedCount": 4,
   "maxComCommentAlternativesCount": 2
 }
