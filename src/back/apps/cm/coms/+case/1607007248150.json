@@ -1,13 +1,14 @@
 {
-  "n": "Последние дни",
   "w": 1607007248150,
-  "c": ["F G Am\nAm F G\nC F\nG Am\nAm F\nG Am", "F G Am\nF G Am-C\nF G Am\nF G Am", "F E\nAm G F E\nAm"],
+  "n": "Последние дни",
+  "al": "https://cdn.mp3xa.me/IYxkdvlY2cNWt6ELIBCToQ/1744662151/L29ubGluZS9tcDMvMjAyMC8wMi_QndCe0K3QnCAtINCf0L7RgdC70LXQtNC90LjQtSDQlNC90LgubXAz",
   "t": [
     "Мир разлетелся по кускам,\nМы под дулом у виска. Мы на краю.\nЭто наш последний круг,\nветром унесённый звук.\nОтпечатки наших рук\nи наших душ видны вокруг.",
     "Последние дни, небесные сны.\nКрылья готовим мы в последний полёт.\nПоследние дни, всё ярче огни.\nВремя включило нам обратный отсчёт!",
     "Нам, нам бы всех успеть простить,\nВсё забыть и отпустить, как по волнам.\nЧтобы легче света стать,\nчтобы выше звёзд летать,\nВыше пламени огня\nВ последний миг на склоне дня...",
     "Только б не сдаться\nи не сломаться, и продержаться\nДо конца!"
   ],
+  "c": ["F G Am\nAm F G\nC F\nG Am\nAm F\nG Am", "F G Am\nF G Am-C\nF G Am\nF G Am", "F E\nAm G F E\nAm"],
   "o": [
     {
       "t": 0,
@@ -54,7 +55,5 @@
     { "a": 1, "w": 3 },
     { "t": 3, "c": 2, "s": "bridge", "m": 1, "p": [[-1, 6], [0, 5, 8, 12], [0]], "w": 4 },
     { "a": 1, "r": 2, "w": 5 }
-  ],
-  "a": "https://cdn.mp3xa.me/IYxkdvlY2cNWt6ELIBCToQ/1744662151/L29ubGluZS9tcDMvMjAyMC8wMi_QndCe0K3QnCAtINCf0L7RgdC70LXQtNC90LjQtSDQlNC90LgubXAz",
-  "al": "https://cdn.mp3xa.me/IYxkdvlY2cNWt6ELIBCToQ/1744662151/L29ubGluZS9tcDMvMjAyMC8wMi_QndCe0K3QnCAtINCf0L7RgdC70LXQtNC90LjQtSDQlNC90LgubXAz"
+  ]
 }
