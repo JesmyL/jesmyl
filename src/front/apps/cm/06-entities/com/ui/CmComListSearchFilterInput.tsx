@@ -5,9 +5,11 @@ import { useCmCatList } from '$cm/entities/cat';
 import { Atom, useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
+import { makeRegExp } from 'regexpert';
 import { CmComWid, IExportableCom } from 'shared/api';
 import { takeCorrectComIndex, takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
 import { CmCom } from '../lib/Com';
+import { cmComWidNumberDictAtom } from '../state/atoms';
 
 const mapExtractItem = <Item,>({ item }: { item: Item }): Item => item;
 const sortItemsByRate = (a: { rate: number }, b: { rate: number }) => a.rate - b.rate;
@@ -33,14 +35,16 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
   const term = useAtomValue(props.termAtom);
   const isNumberSearch = useAtomValue(isNumberSearchAtom);
   const cats = useCmCatList();
+  const comwNumberDict = useAtomValue(cmComWidNumberDictAtom);
 
   const catNumberSearch = useMemo((): CatNumberSearch => {
-    const descriptions: PRecord<CmComWid, string> = {};
-    const comws: CmComWid[] = [];
-    const result = { descriptions, comws };
     const termNumber = +term;
 
     if (mylib.isNaN(termNumber)) return null;
+
+    const descriptions: PRecord<CmComWid, string> = {};
+    const comws: CmComWid[] = [];
+    const result = { descriptions, comws };
 
     cats.forEach(cat => {
       const catDict = cat.dict;
@@ -68,6 +72,17 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
     if (!term) return comList;
 
     const numCheckedTerm = isNumberSearch || isNaN(+term) ? term : `${takeCorrectComIndex(+term)}`;
+    const multiNums = term.split(makeRegExp('/[ ,]+/'));
+    const isMultiNumSearch = !multiNums.some(numStr => mylib.isNaN(+numStr));
+
+    if (isMultiNumSearch) {
+      const searchNumberIndexDict: Record<number, number> = {};
+      for (const numi in multiNums) searchNumberIndexDict[+multiNums[numi]] = +numi;
+
+      return comList
+        .filter(com => comwNumberDict[com.wid]! in searchNumberIndexDict)
+        .sort((a, b) => searchNumberIndexDict[comwNumberDict[a.wid]!] - searchNumberIndexDict[comwNumberDict[b.wid]!]);
+    }
 
     return mylib
       .searchRate(
@@ -79,7 +94,7 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
       )
       .sort(sortItemsByRate)
       .map(mapExtractItem);
-  }, [props.Constructor, props.coms, isNumberSearch, term]);
+  }, [comwNumberDict, isNumberSearch, props.Constructor, props.coms, term]);
 
   const limitedComs = useMemo(() => {
     if (!term.length) return searchedComs;

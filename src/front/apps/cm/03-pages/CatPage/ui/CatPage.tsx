@@ -36,10 +36,7 @@ const isOpenRatingSortedComsAtom = atom(false);
 const termAtoms: PRecord<CmCatWid, Atom<string>> = {};
 
 export const CmCatPage = (props: Props) => {
-  const termAtom = (termAtoms[props.cat?.wid ?? CmCatWid.def] ??= atom(
-    '',
-    `cm:comListSearch:${props.cat?.wid ?? CmCatWid.def}`,
-  ));
+  const termAtom = (termAtoms[props.cat?.wid ?? CmCatWid.def] ??= atom('', `cm:comListSearch:${props.cat?.wid}`));
 
   const term = useAtomValue(termAtom);
   const debouncedTerm = useDebounceValue(term);
