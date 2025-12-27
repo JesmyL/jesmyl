@@ -1,6 +1,5 @@
 import { DexieDB } from '#shared/lib/DexieDB';
 import { BibleBroadcastScreenConfig } from '$bible/entities/broadcast';
-import { Atom } from 'atomaric';
 import { BibleTranslateName } from 'shared/api';
 import {
   BibleBooki,
@@ -10,14 +9,6 @@ import {
   BibleTranslate,
   BibleVersei,
 } from '../model/base';
-import {
-  bibleBookiAtom,
-  bibleChapteriAtom,
-  bibleJoinAddressAtom,
-  bibleMyTranslatesAtom,
-  bibleShowTranslatesAtom,
-  bibleVerseiAtom,
-} from './atoms';
 
 export interface BibleIDBStorage {
   booki: BibleBooki | null;
@@ -60,25 +51,3 @@ export const bibleIDB = new BibleIDB('bible', {
   broadcastHistory: [[]],
   broadcastScreenConfigs: [[]],
 });
-
-(async () => {
-  const removeWithAtomSet = async <
-    Key extends keyof typeof bibleIDB.tb,
-    Value extends Awaited<ReturnType<(typeof bibleIDB.get)[Key]>>,
-  >(
-    key: Key,
-    atom: Atom<Value>,
-  ) => {
-    const value = (await bibleIDB.get[key]()) as Value;
-    if (value == null) return;
-    atom.set(value);
-    bibleIDB.remove[key]();
-  };
-
-  await removeWithAtomSet('booki', bibleBookiAtom);
-  await removeWithAtomSet('chapteri', bibleChapteriAtom);
-  await removeWithAtomSet('versei', bibleVerseiAtom);
-  await removeWithAtomSet('showTranslates', bibleShowTranslatesAtom);
-  await removeWithAtomSet('myTranslates', bibleMyTranslatesAtom);
-  await removeWithAtomSet('joinAddress', bibleJoinAddressAtom);
-})();
