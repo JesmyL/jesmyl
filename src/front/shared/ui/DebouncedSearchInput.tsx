@@ -1,10 +1,10 @@
 import { isNumberSearchAtom } from '#basis/state/isNumberSearchAtom';
-import { UsedWid, useWid } from '#shared/lib/hooks/useWid';
-import { atom, Atom, useAtom, useAtomValue } from 'atomaric';
-import { useEffect } from 'react';
+import { atom, Atom, useAtomValue } from 'atomaric';
+import { useEffect, useId } from 'react';
 import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 import { LazyIcon } from './the-icon/LazyIcon';
+import { WithAtomValue } from './WithAtomValue';
 
 interface Props {
   termAtom?: Atom<string>;
@@ -14,26 +14,24 @@ interface Props {
   className?: string;
 }
 
-const timeouts: PRecord<UsedWid, TimeOut> = {};
-const defaultTermAtoms: PRecord<UsedWid, Atom<string>> = {};
+const timeouts: PRecord<string, TimeOut> = {};
+const defaultTermAtoms: PRecord<string, Atom<string>> = {};
 
 export const DebouncedSearchInput = ({ debounce = 300, className = '', placeholder, ...props }: Props) => {
-  const wid = useWid();
-  const termAtom = props.termAtom ?? (defaultTermAtoms[wid] ??= atom(''));
-  const debouncedTermAtom = props.debouncedTermAtom ?? props.termAtom ?? (defaultTermAtoms[wid] ??= atom(''));
-
-  const [term, setTerm] = useAtom(termAtom);
-
+  const id = useId();
   const isNumberSearch = useAtomValue(isNumberSearchAtom);
+  const termAtom = props.termAtom ?? (defaultTermAtoms[id] ??= atom(''));
+  const debouncedTermAtom = props.debouncedTermAtom ?? props.termAtom ?? (defaultTermAtoms[id] ??= atom(''));
+
+  const iconName = isNumberSearch ? 'GridTable' : 'SearchVisual';
 
   useEffect(
     () => () => {
-      delete defaultTermAtoms[wid];
-      delete timeouts[wid];
+      delete defaultTermAtoms[id];
+      delete timeouts[id];
     },
-    [wid],
+    [id],
   );
-  const iconName = isNumberSearch ? 'GridTable' : 'SearchVisual';
 
   return (
     <label className={twMerge('debounced-input flex gap-2', className)}>
@@ -42,24 +40,28 @@ export const DebouncedSearchInput = ({ debounce = 300, className = '', placehold
         icon={iconName}
         onClick={isNumberSearchAtom.do.toggle}
       />
-      <StyledInput
-        key={iconName}
-        id="debounced-input"
-        type={isNumberSearch ? 'tel' : 'text'}
-        value={term}
-        className="input"
-        placeholder={placeholder}
-        onChange={event => {
-          const term = event.currentTarget.value;
-          setTerm(term);
+      <WithAtomValue atom={termAtom}>
+        {term => (
+          <StyledInput
+            key={iconName}
+            id="debounced-input"
+            type={isNumberSearch ? 'tel' : 'text'}
+            value={term}
+            className="input"
+            placeholder={placeholder}
+            onFocus={event => event.currentTarget.select()}
+            onChange={event => {
+              const term = event.currentTarget.value;
+              termAtom.set(term);
 
-          if (!debounce || debouncedTermAtom === termAtom) return;
+              if (!debounce || debouncedTermAtom === termAtom) return;
 
-          clearTimeout(timeouts[wid]);
-          timeouts[wid] = setTimeout(debouncedTermAtom.set, debounce, term);
-        }}
-        onFocus={event => event.currentTarget.select()}
-      />
+              clearTimeout(timeouts[id]);
+              timeouts[id] = setTimeout(debouncedTermAtom.set, debounce, term);
+            }}
+          />
+        )}
+      </WithAtomValue>
     </label>
   );
 };
