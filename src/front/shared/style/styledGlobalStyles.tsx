@@ -16,6 +16,9 @@ const styles = css`
 
   html {
     ${htmlThemeStyles}
+  }
+
+  body {
     ${cssVariableStyles}
   }
 
