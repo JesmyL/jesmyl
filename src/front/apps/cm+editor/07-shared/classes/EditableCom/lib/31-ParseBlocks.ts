@@ -175,7 +175,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
 
       const ord: IExportableOrder = { w: wid++ };
 
-      const similarOrd = orders.find(ord => ord.c === unit.chordsi && ord.t === unit.texti && ord.s === unit.kind?.key);
+      const similarOrd = orders.find(ord => ord.c === unit.chordsi && ord.t === unit.texti && ord.k === unit.kind?.key);
       if (similarOrd) {
         ord.a = similarOrd.w;
       } else {
