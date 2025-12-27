@@ -8,6 +8,8 @@ const constants = {
   INDEX: ['INDEX'] as const,
 };
 
+const constantPositions = [constants.INDEX, constants.POSITION];
+
 type Trace = string | (typeof constants)[keyof typeof constants];
 
 export type AddRestMode = 'strong' | 'weak' | 'random';
@@ -94,26 +96,24 @@ export class MyLib extends SMyLib {
       : searchWord.split(makeRegExp("/[^а-яёa-z0-9ґї'ʼє]+/i")).filter(itIt);
     const words = normalWords.map(word => word.toLowerCase());
     const wordRegs = normalWords.map(word => this.internationalWordReg(word, isNumberSearch));
-    const constants = [this.c.INDEX, this.c.POSITION];
 
     return items.reduce((ferries: RetItem[], item, itemi) => {
-      let rate = 0;
-      let deep = 0;
-      const ferry = (): RetItem => ({ item, deep, rate }) as never;
+      const ferry = { item, deep: 0, rate: 0 };
 
       if (
         places.some((place, placei) => {
-          deep = placei;
-          const num = constants.indexOf(place as never);
-          if (num > -1) {
+          ferry.deep = placei;
+          const index = constantPositions.indexOf(place as never);
+
+          if (index > -1) {
             if (
               words.some(word =>
                 word && words.length > 1
-                  ? mapNumListItem(itemi + num).toString() === word
-                  : (itemi + num).toString().startsWith(word),
+                  ? `${mapNumListItem(itemi + index)}` === word
+                  : `${itemi + index}`.startsWith(word),
               )
             ) {
-              rate = 1;
+              ferry.rate = 1;
               return true;
             }
             return false;
@@ -124,7 +124,7 @@ export class MyLib extends SMyLib {
             let noWord = false;
 
             const currRate = words.reduce((accRate: number | null, _word, wordi) => {
-              if (noWord) return null;
+              if (noWord || !wordRegs[wordi]) return null;
               const index = str.search(wordRegs[wordi]);
               if (index < 0) {
                 noWord = true;
@@ -135,7 +135,7 @@ export class MyLib extends SMyLib {
 
             if (noWord || currRate == null) return false;
 
-            rate = currRate;
+            ferry.rate = currRate;
             return true;
           };
 
@@ -157,7 +157,7 @@ export class MyLib extends SMyLib {
           return search(place, item, placei);
         })
       )
-        ferries.push(ferry());
+        ferries.push(ferry as never);
 
       return ferries;
     }, []);
