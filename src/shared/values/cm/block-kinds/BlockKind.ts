@@ -1,18 +1,18 @@
 import { mylib } from '#shared/lib/my-lib';
-import { IExportableStyleProp } from './BlockStyles.model';
-import { comBlockStylesConfig } from './comBlockStyles.config';
-import { StyleBlock } from './StyleBlock';
+import { IExportableKindProp } from './BlockKind.model';
+import { comBlockKindsConfig } from './comBlockKinds.config';
+import { KindBlock } from './KindBlock';
 
-export class BlockStyles {
-  styles: StyleBlock[];
-  levelSorted: StyleBlock[][];
-  forChordedBlock: StyleBlock[];
+export class BlockKind {
+  kinds: KindBlock[];
+  levelSorted: KindBlock[][];
+  forChordedBlock: KindBlock[];
 
-  constructor(styles: IExportableStyleProp[]) {
-    this.styles = styles.map(st => new StyleBlock(st));
+  constructor(styles: IExportableKindProp[]) {
+    this.kinds = styles.map(st => new KindBlock(st));
 
-    const levelStyles: Record<number, StyleBlock[]> = {};
-    this.styles
+    const levelStyles: Record<number, KindBlock[]> = {};
+    this.kinds
       .filter(style => style.group !== undefined)
       .forEach(style => {
         if (levelStyles[style.group!] === undefined) levelStyles[style.group!] = [];
@@ -20,12 +20,12 @@ export class BlockStyles {
       });
 
     this.levelSorted = Object.values(levelStyles).sort((a, b) => (a[0]?.group || 0) - (b[0]?.group || 0));
-    this.forChordedBlock = this.styles
+    this.forChordedBlock = this.kinds
       .filter(style => style.forChordedBlock)
       .sort((a, b) => a.forChordedBlock! - b.forChordedBlock!);
   }
 
-  getNextLevelSortedStyle(style: StyleBlock | number) {
+  getNextLevelSortedStyle(style: KindBlock | number) {
     const styles = mylib.isNum(style)
       ? this.levelSorted[style]
       : this.levelSorted.find(styles => styles.includes(style));
@@ -40,4 +40,4 @@ export class BlockStyles {
   }
 }
 
-export const comBlockStyles = new BlockStyles(comBlockStylesConfig);
+export const comBlockKinds = new BlockKind(comBlockKindsConfig);

@@ -38,25 +38,25 @@ export const CmEditorComAddOrderRedactorAdditions = ({ com, setClickBetweenOrds 
             com={com}
             firstEtap={firstEtap}
             onClose={selectFirstEtapAtom.reset}
-            onOrderBuilt={(styleBlock, chordi, texti) => {
+            onOrderBuilt={(kindBlock, chordi, texti) => {
               selectFirstEtapAtom.set(null);
               setClickBetweenOrds({
                 buttonTitle: (
                   <>
-                    Новый блок <span className="text-x7">{styleBlock.title[com.langi]}</span>
+                    Новый блок <span className="text-x7">{kindBlock.title[com.langi]}</span>
                   </>
                 ),
                 checkIsShowButton: ({ ordAbove }) => {
-                  if (ordAbove == null && styleBlock.isInherit) return false;
+                  if (ordAbove == null && kindBlock.isInherit) return false;
                   return true;
                 },
                 onClick: async ({ aboveLeadOrdw }) => {
                   cmEditComOrderClientTsjrpcMethods.insertNewBlock({
                     comw: com.wid,
-                    orderTitle: styleBlock.title[com.langi],
+                    orderTitle: kindBlock.title[com.langi],
                     insertAfterOrdwOrFirst: aboveLeadOrdw,
                     chordi: chordi,
-                    type: styleBlock.key,
+                    kind: kindBlock.key,
                     texti: texti,
                   });
                 },

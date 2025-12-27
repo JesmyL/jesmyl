@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { IExportableOrder, IExportableOrderFieldValues, OrderRepeats } from 'shared/api';
-import { StyleBlock } from 'shared/values/cm/block-styles/StyleBlock';
+import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';
 import { CmCom } from '../../com/lib/Com';
 import { CmComOrder } from '../lib/Order';
 
@@ -55,7 +55,7 @@ export type ICmComOrderExportableMe = {
   anchorInheritIndex: number;
   sourceIndex: number;
   viewIndex: number;
-  style: StyleBlock;
+  kind: KindBlock;
 }>;
 
 export interface CmComOrderTopHeaderBag {

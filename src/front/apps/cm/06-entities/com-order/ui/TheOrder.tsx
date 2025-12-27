@@ -33,7 +33,7 @@ export function TheCmComOrder(props: Props) {
     return null;
 
   const { ordi, com } = props;
-  const styleAttributes = ord.me.style?.takeBlockAttributes(ord.me.leadOrd?.me.style?.key);
+  const styleAttributes = ord.me.kind?.takeBlockAttributes(ord.me.leadOrd?.me.kind?.key);
 
   if (props.isMiniAnchor && ord.isAnchor && !ord.isOpened) {
     return (
@@ -81,7 +81,7 @@ export function TheCmComOrder(props: Props) {
       <span className="comment-holder" />
     </div>
   ) : (
-    !ord.me.style?.isHeaderNoneForce && (
+    !ord.me.kind?.isHeaderNoneForce && (
       <div className="styled-header empty">
         <span className="comment-holder" />
         <span className="comment-holder" />

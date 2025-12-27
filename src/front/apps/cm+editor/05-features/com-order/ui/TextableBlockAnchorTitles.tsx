@@ -37,7 +37,7 @@ export const CmEditorComOrderAddTextableBlockAnchorTitles = ({ texti, com, chord
               ordersUsedText.map(
                 o =>
                   (o.me.isAnchor || o.me.isAnchorInherit || o.me.isAnchorInheritPlus ? '&#9875;' : '') +
-                  `${o.me.header()}${o.me.style?.isInherit ? ` ${o.me.style.key}` : ''}`,
+                  `${o.me.header()}${o.me.kind?.isInherit ? ` ${o.me.kind.key}` : ''}`,
               ),
               itIt,
             )

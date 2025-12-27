@@ -35,7 +35,7 @@ export function CmComOrderList(props: ICmComOrderListProps) {
             ordi={ordi}
             asContentAfterOrder={props.asContentAfterOrder}
             asHeaderComponent={headerProps => {
-              const node = ord.me.style?.isModulation ? (
+              const node = ord.me.kind?.isModulation ? (
                 <span
                   className={'pointer flex ' + (isExcludedModulation ? 'text-xKO' : 'text-x7')}
                   onClick={event => {

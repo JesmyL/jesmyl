@@ -91,8 +91,8 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
     );
   }
 
-  get type() {
-    return this.getBasic('s');
+  get kind() {
+    return this.getBasic('k');
   }
 
   get text() {
@@ -119,7 +119,7 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
   }
 
   get isHeaderNoneForce() {
-    return this.me.style?.isHeaderNoneForce;
+    return this.me.kind?.isHeaderNoneForce;
   }
 
   get fieldValues(): IExportableOrderFieldValues | und {

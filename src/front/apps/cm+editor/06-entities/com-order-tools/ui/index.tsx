@@ -2,7 +2,7 @@ import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRi
 import { CmEditorComOrderToolsProps } from '../model';
 import { CmEditorComOrderToolsAnchor } from './Anchor';
 import { CmEditorComOrderToolsAnchorDelete } from './AnchorDelete';
-import { CmEditorComOrderToolsBlockType } from './BlockType';
+import { CmEditorComOrderToolsBlockKind } from './BlockKind';
 import { CmEditorComOrderToolsChangeText } from './ChangeText';
 import { CmEditorComOrderToolsChordBind } from './ChordBind';
 import { CmEditorComOrderToolsEmptyHeader } from './EmptyHeader';
@@ -16,7 +16,7 @@ export const CmEditorComOrderToolsRedactorOrderTools = (props: CmEditorComOrderT
 
   return (
     <>
-      <CmEditorComOrderToolsBlockType {...props} />
+      <CmEditorComOrderToolsBlockKind {...props} />
       <CmEditorComOrderToolsChordBind {...props} />
       {!props.ord.isAnchor ? (
         <>
@@ -29,12 +29,14 @@ export const CmEditorComOrderToolsRedactorOrderTools = (props: CmEditorComOrderT
         </>
       )}
       <CmEditorComOrderToolsOrderVisibility {...props} />
-      {props.ord.me.style?.isModulation && <CmEditorComOrderToolsModulation {...props} />}
+      {props.ord.me.kind?.isModulation && <CmEditorComOrderToolsModulation {...props} />}
 
       <CmEditorComOrderToolsEmptyHeader {...props} />
       <CmEditorComOrderToolsMoveBlock {...props} />
-      {(checkAccess('cm', 'COM_ORD', 'D') || (checkAccess('cm', 'COM_ORD', 'U') && props.com.wid > Date.now() - (24 * 60 * 60 * 1000))) &&
-        <CmEditorComOrderToolsAnchorDelete {...props} />}
+      {(checkAccess('cm', 'COM_ORD', 'D') ||
+        (checkAccess('cm', 'COM_ORD', 'U') && props.com.wid > Date.now() - 24 * 60 * 60 * 1000)) && (
+        <CmEditorComOrderToolsAnchorDelete {...props} />
+      )}
     </>
   );
 };

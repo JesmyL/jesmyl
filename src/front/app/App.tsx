@@ -10,7 +10,7 @@ import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { configureAtomaric } from 'atomaric';
 import { useSyncExternalStore } from 'react';
 import { routeTree } from 'routeTree.gen';
-import { BlockStylesProvider } from 'shared/values/cm/block-styles/BlockStylesProvider';
+import { BlockKindProvider } from 'shared/values/cm/block-kinds/BlockKindsProvider';
 import { Toaster } from 'sonner';
 import { makeStameskaIconStyledProvider } from 'stameska-icon/provider';
 import styled, { css, keyframes } from 'styled-components';
@@ -37,7 +37,7 @@ export const App = () => {
   return (
     <QueryClientProvider client={defaultQueryClient}>
       <StyledIconProvider>
-        <BlockStylesProvider>
+        <BlockKindProvider>
           <AppDialogProvider title="app">
             <RouterProvider router={router} />
 
@@ -56,7 +56,7 @@ export const App = () => {
               </WithAtomValue>
             </Modal>
           </AppDialogProvider>
-        </BlockStylesProvider>
+        </BlockKindProvider>
       </StyledIconProvider>
       <Toaster
         position="bottom-center"

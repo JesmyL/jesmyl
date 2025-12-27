@@ -4,8 +4,8 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { CmEditorComOrderAddTextableBlockAnchorTitles } from '$cm+editor/features/com-order';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { useEffect, useState } from 'react';
-import { comBlockStyles } from 'shared/values/cm/block-styles/BlockStyles';
-import { StyleBlock } from 'shared/values/cm/block-styles/StyleBlock';
+import { comBlockKinds } from 'shared/values/cm/block-kinds/BlockKind';
+import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';
 import { cmEditorComAddOrderNewOrderMakeEtapQueue } from '../lib/consts';
 import { CmEditorComAddOrderNewOrderMakeEtap } from '../model';
 
@@ -13,7 +13,7 @@ type Props = {
   com: EditableCom;
   onClose: (is: false) => void;
   firstEtap: CmEditorComAddOrderNewOrderMakeEtap;
-  onOrderBuilt: (styleBlock: StyleBlock, chordi: number, texti?: number) => void;
+  onOrderBuilt: (kindBlock: KindBlock, chordi: number, texti?: number) => void;
 };
 
 export const CmEditorComAddOrderAdditionsEtapsModalInner = ({ com, onClose, firstEtap, onOrderBuilt }: Props) => {
@@ -21,7 +21,7 @@ export const CmEditorComAddOrderAdditionsEtapsModalInner = ({ com, onClose, firs
 
   const [selectedTexti, setTexti] = useState<number | und>();
   const [selectedChordi, setChordi] = useState(0);
-  const [selectedStyleBlock, setStyleBlock] = useState<StyleBlock | null>(null);
+  const [selectedStyleBlock, setStyleBlock] = useState<KindBlock | null>(null);
 
   useEffect(() => {
     if (etap !== CmEditorComAddOrderNewOrderMakeEtap.Off || selectedStyleBlock === null) return;
@@ -106,7 +106,7 @@ export const CmEditorComAddOrderAdditionsEtapsModalInner = ({ com, onClose, firs
         <>
           <ModalHeader>Тип нового блока</ModalHeader>
           <ModalBody>
-            {comBlockStyles.styles.map(styleBlock => {
+            {comBlockKinds.kinds.map(styleBlock => {
               if (selectedTexti == null ? styleBlock.isBlockForTextableOnly : styleBlock.isBlockForChordedOnly)
                 return null;
               const typeTitle = styleBlock.title[com.langi || 0];

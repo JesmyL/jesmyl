@@ -1,27 +1,27 @@
-import { CmBlockStyleKey, IExportableStyleProp } from './BlockStyles.model';
+import { CmComBlockKindKey, IExportableKindProp } from './BlockKind.model';
 
-export const comBlockStylesConfig: IExportableStyleProp[] = [
+export const comBlockKindsConfig: IExportableKindProp[] = [
   {
-    key: CmBlockStyleKey.Enter,
+    key: CmComBlockKindKey.Enter,
     title: ['Вступление', 'Вступ'],
     tags: ['вступление', 'вступ', 'интро', 'intro'],
     forChordedBlock: 1,
   },
   {
-    key: CmBlockStyleKey.OneWithShift,
+    key: CmComBlockKindKey.OneWithShift,
     title: ['Куплет', 'Куплет'],
     group: 1,
     isBlockForTextableOnly: true,
   },
   {
-    key: CmBlockStyleKey.One,
+    key: CmComBlockKindKey.One,
     title: ['Куплет', 'Куплет'],
     tags: ['куплет', 'купліт', 'куплєт'],
     group: 1,
     isBlockForTextableOnly: true,
   },
   {
-    key: CmBlockStyleKey.PTwo,
+    key: CmComBlockKindKey.PTwo,
     title: ['Предприпев', 'Передприспів'],
     tags: [
       'пред припев',
@@ -36,70 +36,70 @@ export const comBlockStylesConfig: IExportableStyleProp[] = [
     isBlockForTextableOnly: true,
   },
   {
-    key: CmBlockStyleKey.Two,
+    key: CmComBlockKindKey.Two,
     title: ['Припев', 'Приспів'],
     tags: ['припев', 'приспів', 'припів'],
     group: 2,
     isBlockForTextableOnly: true,
   },
   {
-    key: CmBlockStyleKey.Bridge,
+    key: CmComBlockKindKey.Bridge,
     title: ['Мост', 'Мост'],
     tags: ['мост', 'бридж', 'брідж', 'міст', 'bridge'],
     group: 3,
     isBlockForTextableOnly: true,
   },
   {
-    key: CmBlockStyleKey.Play,
+    key: CmComBlockKindKey.Play,
     title: ['Проигрыш', 'Програш'],
     tags: ['проигрыш', 'програш'],
     forChordedBlock: 2,
     isBlockForChordedOnly: true,
   },
   {
-    key: CmBlockStyleKey.Modulation,
+    key: CmComBlockKindKey.Modulation,
     title: ['Модуляция', 'Модуляція'],
     tags: ['модуляция', 'модуляція'],
     isModulation: true,
   },
   {
-    key: CmBlockStyleKey.Final,
+    key: CmComBlockKindKey.Final,
     title: ['Финал', 'Фінал'],
     tags: ['финал', 'фінал', 'фiнал', 'конец', 'концовка', 'кінець', 'final'],
   },
   {
-    key: CmBlockStyleKey.Thirdo,
+    key: CmComBlockKindKey.Thirdo,
     title: ['Запев', 'Заспів'],
     tags: ['запев', 'заспів', 'запів'],
     group: 4,
     isBlockForTextableOnly: true,
   },
   {
-    key: CmBlockStyleKey.Insert,
+    key: CmComBlockKindKey.Insert,
     title: ['Вставка', 'Вставка'],
     tags: ['вставка'],
   },
   {
-    key: CmBlockStyleKey.Plus,
+    key: CmComBlockKindKey.Plus,
     title: [':ПРОДОЛЖЕНИЕ:', ':ПРОДОВЖЕННЯ:'],
     isInherit: true,
     isHeaderNoneForce: true,
     isBlockForTextableOnly: true,
   },
   {
-    key: CmBlockStyleKey.PlusPlus,
+    key: CmComBlockKindKey.PlusPlus,
     title: [':ПРОДОЛЖЕНИЕ С ОТСТУПОМ:', ':ПРОДОВЖЕННЯ З ВІДСТУПОМ:'],
     isInherit: true,
     isBlockForTextableOnly: true,
   },
   {
-    key: CmBlockStyleKey.Shift,
+    key: CmComBlockKindKey.Shift,
     title: [':ПРОДОЛЖЕНИЕ СО СМЕЩЕНИЕМ:', ':ПРОДОВЖЕННЯ З ЗМІЩЕННЯМ:'],
     isInherit: true,
     isBlockForTextableOnly: true,
   },
   {
-    key: CmBlockStyleKey.PlusPlusShift,
+    key: CmComBlockKindKey.PlusPlusShift,
     title: [':ПРОДОЛЖЕНИЕ СО СМЕЩЕНИЕМ И ОТСТУПОМ:', ':ПРОДОВЖЕННЯ З ЗМІЩЕННЯМ ТА ВІДСТУПОМ:'],
     isInherit: true,
     isBlockForTextableOnly: true,

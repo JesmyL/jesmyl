@@ -4,12 +4,12 @@ import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { ChordVisibleVariant, TheCmComOrder } from '$cm/ext';
 import { atom } from 'atomaric';
-import { comBlockStyles } from 'shared/values/cm/block-styles/BlockStyles';
+import { comBlockKinds } from 'shared/values/cm/block-kinds/BlockKind';
 import { CmEditorComOrderToolsProps } from '../model';
 
 const isModalOpenAtom = atom(false);
 
-export const CmEditorComOrderToolsBlockType = ({ com, ord, ordi }: CmEditorComOrderToolsProps) => {
+export const CmEditorComOrderToolsBlockKind = ({ com, ord, ordi }: CmEditorComOrderToolsProps) => {
   return (
     <>
       <BottomPopupItem
@@ -27,28 +27,28 @@ export const CmEditorComOrderToolsBlockType = ({ com, ord, ordi }: CmEditorComOr
             chordVisibleVariant={ChordVisibleVariant.Maximal}
             com={com}
           />
-          {comBlockStyles?.styles.map(styleBlock => {
-            if ((ordi === 0 || ord.me.isTarget) && styleBlock.isInherit) return null;
-            if (ord.texti == null ? styleBlock.isBlockForTextableOnly : styleBlock.isBlockForChordedOnly) return null;
+          {comBlockKinds?.kinds.map(kindBlock => {
+            if ((ordi === 0 || ord.me.isTarget) && kindBlock.isInherit) return null;
+            if (ord.texti == null ? kindBlock.isBlockForTextableOnly : kindBlock.isBlockForChordedOnly) return null;
 
-            const newBlockn = styleBlock.title[com.langi || 0];
+            const newBlockn = kindBlock.title[com.langi || 0];
             return (
               <IconCheckbox
-                key={styleBlock.key}
-                checked={styleBlock.key === ord.type}
-                disabled={styleBlock.key === ord.type}
+                key={kindBlock.key}
+                checked={kindBlock.key === ord.kind}
+                disabled={kindBlock.key === ord.kind}
                 className="mt-2"
                 onChange={isModalOpenAtom.reset}
+                postfix={newBlockn}
                 onClick={() =>
-                  cmEditComOrderClientTsjrpcMethods.setType({
+                  cmEditComOrderClientTsjrpcMethods.setKind({
                     ordw: ord.wid,
                     orderTitle: ord.me.header(),
                     comw: com.wid,
-                    type: styleBlock.key,
-                    newTypeTitle: styleBlock.title[com.langi],
+                    kind: kindBlock.key,
+                    newTypeTitle: kindBlock.title[com.langi],
                   })
                 }
-                postfix={newBlockn}
               />
             );
           })}

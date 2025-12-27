@@ -1,19 +1,19 @@
 import { SourceBased } from '#shared/lib/SourceBased';
-import { CmBlockStyleKey, IExportableStyleProp } from './BlockStyles.model';
+import { CmComBlockKindKey, IExportableKindProp } from './BlockKind.model';
 
-export class StyleBlock extends SourceBased<IExportableStyleProp> {
-  static blockStyleAttribute = 'block-style' as const;
-  static inheritBlockStyleAttribute = 'inherit-block-style' as const;
+export class KindBlock extends SourceBased<IExportableKindProp> {
+  static blockKindAttribute = 'block-kind' as const;
+  static inheritBlockKindAttribute = 'inherit-block-kind' as const;
 
-  takeBlockAttributes(leadKey: CmBlockStyleKey | und) {
+  takeBlockAttributes(leadKey: CmComBlockKindKey | und) {
     return {
-      [StyleBlock.blockStyleAttribute]: leadKey === undefined ? this.key : `${leadKey} ${this.key}`,
-      [StyleBlock.inheritBlockStyleAttribute]: this.isInherit ? '' : undefined,
+      [KindBlock.blockKindAttribute]: leadKey === undefined ? this.key : `${leadKey} ${this.key}`,
+      [KindBlock.inheritBlockKindAttribute]: this.isInherit ? '' : undefined,
     };
   }
 
   get key() {
-    return this.getBasicOr('key', CmBlockStyleKey.One);
+    return this.getBasicOr('key', CmComBlockKindKey.One);
   }
 
   get title() {

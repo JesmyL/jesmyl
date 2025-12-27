@@ -34,10 +34,11 @@ export const cmEditComOrderServerTsjrpcBase =
 
             return `изменены повторения для блока ${orderTitle}:\n\n${textValue}`;
           }),
-          setType: modifyOrd((ord, { type, newTypeTitle, orderTitle }, { auth }) => {
+          setKind: modifyOrd((ord, { kind, newTypeTitle, orderTitle }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
+            if (kind == null) throw 'Неизвестный тип';
 
-            ord.s = type;
+            ord.k = kind;
 
             return `название блока ${orderTitle} изменено на ${newTypeTitle}`;
           }),
@@ -151,7 +152,7 @@ export const cmEditComOrderServerTsjrpcBase =
             return `заголовок в порядковом блоке ${orderTitle} сделан ${ord.e ? 'видимым' : 'невидимым'}`;
           }),
 
-          insertNewBlock: modifyCom((com, { insertAfterOrdwOrFirst, type, chordi, texti, orderTitle }, { auth }) => {
+          insertNewBlock: modifyCom((com, { insertAfterOrdwOrFirst, kind, chordi, texti, orderTitle }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'C')) throw '';
 
             com.o ??= [];
@@ -160,7 +161,7 @@ export const cmEditComOrderServerTsjrpcBase =
 
             const ord: IExportableOrder = {
               w: getNextOrdWid(com.o),
-              s: type,
+              k: kind,
               c: chordi,
               t: texti,
             };

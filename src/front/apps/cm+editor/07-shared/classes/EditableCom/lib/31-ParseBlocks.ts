@@ -7,8 +7,8 @@ import {
   slavicLowerLettersStr,
   uaDifferentLowerLettersStr,
 } from 'shared/utils/cm/com/const';
-import { comBlockStyles } from 'shared/values/cm/block-styles/BlockStyles';
-import { StyleBlock } from 'shared/values/cm/block-styles/StyleBlock';
+import { comBlockKinds } from 'shared/values/cm/block-kinds/BlockKind';
+import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';
 import { EditableComBlocks } from './30-Blocks';
 
 export class EditableComParseBlocks extends EditableComBlocks {
@@ -20,7 +20,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
 
   static parseBlocks(blocks: string[] | string) {
     type Unit = {
-      style?: StyleBlock;
+      kind?: KindBlock;
       chords?: string;
       text?: string;
       chordLinesCount?: number;
@@ -43,7 +43,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
         } else languagei = langi;
       }
     };
-    const inheritStyle = comBlockStyles?.styles.find(({ isInherit }) => isInherit);
+    const inheritStyle = comBlockKinds?.kinds.find(({ isInherit }) => isInherit);
 
     (typeof blocks === 'string' ? blocks.split(makeRegExp('/\\n+\\s*\\n+/')) : blocks).forEach(block => {
       if (!block) return;
@@ -61,8 +61,8 @@ export class EditableComParseBlocks extends EditableComBlocks {
         }
 
         if (linei === 0) {
-          unit.style = this.takeStyleByTitle(freeLine);
-          if (unit.style) return;
+          unit.kind = this.takeStyleByTitle(freeLine);
+          if (unit.kind) return;
         }
 
         if (freeLine.match(checkIsChordLineReg)) {
@@ -93,9 +93,9 @@ export class EditableComParseBlocks extends EditableComBlocks {
       };
 
       if (chordLinesCount === 0) {
-        const unitStyle = unit.style;
+        const unitStyle = unit.kind;
         if (unitStyle) {
-          const sameUnit = units.find(({ style }) => unitStyle === style);
+          const sameUnit = units.find(({ kind: style }) => unitStyle === style);
 
           if (sameUnit) {
             if (sameUnit.chordLinesCount) pushTextLines(sameUnit.chordLinesCount);
@@ -122,7 +122,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
         currUnit.cleanText = lines.map(line => line.replace(reg, '')).join('\n');
 
         if (linesi > 0) {
-          currUnit.style = inheritStyle;
+          currUnit.kind = inheritStyle;
           units.push(currUnit);
         }
       });
@@ -135,20 +135,20 @@ export class EditableComParseBlocks extends EditableComBlocks {
     const orders: IExportableOrder[] = [];
 
     units.forEach((unit, uniti) => {
-      if (unit.style === undefined && comBlockStyles) {
+      if (unit.kind === undefined && comBlockKinds) {
         if (!unit.text) {
-          if (uniti === 0) unit.style = comBlockStyles.forChordedBlock[0];
-          else unit.style = comBlockStyles.forChordedBlock[1];
+          if (uniti === 0) unit.kind = comBlockKinds.forChordedBlock[0];
+          else unit.kind = comBlockKinds.forChordedBlock[1];
         }
         const prevUnit = units[uniti - 1];
-        if (prevUnit?.style && prevUnit.text && unit.firstLineSlogs === prevUnit.firstLineSlogs) {
-          const style = comBlockStyles.getNextLevelSortedStyle(prevUnit.style);
-          if (style) unit.style = style;
+        if (prevUnit?.kind && prevUnit.text && unit.firstLineSlogs === prevUnit.firstLineSlogs) {
+          const style = comBlockKinds.getNextLevelSortedStyle(prevUnit.kind);
+          if (style) unit.kind = style;
         } else {
           const uniti = unitSlogGroups.findIndex(units => units.includes(unit));
           if (uniti !== undefined) {
-            const style = comBlockStyles.getNextLevelSortedStyle(uniti);
-            if (style) unit.style = style;
+            const style = comBlockKinds.getNextLevelSortedStyle(uniti);
+            if (style) unit.kind = style;
           }
         }
       }
@@ -175,15 +175,13 @@ export class EditableComParseBlocks extends EditableComBlocks {
 
       const ord: IExportableOrder = { w: wid++ };
 
-      const similarOrd = orders.find(
-        ord => ord.c === unit.chordsi && ord.t === unit.texti && ord.s === unit.style?.key,
-      );
+      const similarOrd = orders.find(ord => ord.c === unit.chordsi && ord.t === unit.texti && ord.s === unit.kind?.key);
       if (similarOrd) {
         ord.a = similarOrd.w;
       } else {
         if (unit.chordsi !== undefined) ord.c = unit.chordsi;
         if (unit.texti !== undefined) ord.t = unit.texti;
-        if (unit.style !== undefined) ord.s = unit.style.key;
+        if (unit.kind !== undefined) ord.k = unit.kind.key;
       }
 
       orders.push(ord);

@@ -13,8 +13,8 @@ import {
   simpleHashChords,
   simpleHashedEachLetterChordReg_g,
 } from 'shared/utils/cm/com/const';
-import { comBlockStyles } from 'shared/values/cm/block-styles/BlockStyles';
-import { StyleBlock } from 'shared/values/cm/block-styles/StyleBlock';
+import { comBlockKinds } from 'shared/values/cm/block-kinds/BlockKind';
+import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';
 import { CmCat } from '../../cat/lib/Cat';
 import { CmComOrder } from '../../com-order/lib/Order';
 import { CmComOrderTopHeaderBag, ICmComOrderExportableMe } from '../../com-order/model/Order.model';
@@ -311,7 +311,7 @@ export class CmCom extends BaseNamed<IExportableCom> {
       this._chordLabels?.push(ordLabels);
       const chords = this.actualChords(ord.chordsi, currTransPosition);
 
-      if (!this.excludedModulations.includes(ord.wid) && ord.me.style?.isModulation) {
+      if (!this.excludedModulations.includes(ord.wid) && ord.me.kind?.isModulation) {
         currTransPosition = (this.transPosition || 0) + (ord.fieldValues?.md || 0);
       }
 
@@ -359,28 +359,28 @@ export class CmCom extends BaseNamed<IExportableCom> {
     return this._o || this.setOrders();
   }
   setOrders() {
-    if (!comBlockStyles) return null;
+    if (!comBlockKinds) return null;
     const ords = this.ords;
     const orders: ReturnType<typeof this.orderConstructor>[] = [];
-    let minimals: [string?, number?][] = [];
-    const styles = comBlockStyles.styles;
+    let minimals: [number?, number?][] = [];
+    const styles = comBlockKinds.kinds;
     const groups: Record<string, number> = {};
     let viewIndex = 0;
     let prev, prevOrd;
 
     const getStyle = (ord: ICmComOrderExportableMe | nil) => {
-      return ord?.top.s != null ? styles.find((prop: StyleBlock) => prop.key === ord.top.s) : null;
+      return ord?.top.k != null ? styles.find((prop: KindBlock) => prop.key === ord.top.k) : null;
     };
 
     const setMin = (src: ICmComOrderExportableMe) => {
-      const styleName = src.style?.key.trim();
-      if (src.style?.isModulation) minimals = [];
+      const styleName = Math.abs(src.kind?.key ?? 0);
+      if (src.kind?.isModulation) minimals = [];
       src.top.m = minimals.some(([s, c]) => styleName === s && src.top.c === c) ? undefined : 1;
       minimals.push([styleName, src.top.c]);
     };
 
-    const header = (ord: ICmComOrderExportableMe, style: StyleBlock, numered = true) => {
-      const type = style.key.trim();
+    const header = (ord: ICmComOrderExportableMe, style: KindBlock, numered = true) => {
+      const type = Math.abs(style.key);
       const number =
         numered && ord.top.v !== 0
           ? (groups[type] = groups[type] == null ? 1 : ord.top.a == null ? groups[type] + 1 : groups[type])
@@ -418,7 +418,7 @@ export class CmCom extends BaseNamed<IExportableCom> {
 
       if (style.isInherit) continue;
 
-      me.style = style;
+      me.kind = style;
       me.source = ordMe;
       me.isNextInherit = !!getStyle(ords[topi + 1])?.isInherit;
       me.isNextAnchorOrd = !!(ords[topi + 1] && ords[topi + 1].top.a === ordMe.top.w);
@@ -437,7 +437,7 @@ export class CmCom extends BaseNamed<IExportableCom> {
 
       me.header = newOrder.isEmptyHeader
         ? (bag, isRequired) => (isRequired ? header(ordMe, style, false)(bag) : '')
-        : targetOrd && targetOrd.me.header! && !me.source.top.s
+        : targetOrd && targetOrd.me.header! && !me.source.top.k
           ? targetOrd.me.header
           : header(ordMe, style);
 
@@ -467,7 +467,7 @@ export class CmCom extends BaseNamed<IExportableCom> {
 
           ancMe.isAnchorInherit = true;
           ancMe.isInherit = true;
-          ancMe.style = ancStyle;
+          ancMe.kind = ancStyle;
           ancMe.source = anc;
           ancMe.header = me.header;
           ancMe.init = me.top;
@@ -500,7 +500,7 @@ export class CmCom extends BaseNamed<IExportableCom> {
         const nextMe = CmComOrder.getWithExtendableFields(targetOrd?.me.source, next);
 
         nextMe.isInherit = true;
-        nextMe.style = nextStyle;
+        nextMe.kind = nextStyle;
         nextMe.leadOrd = newOrder;
         nextMe.prev = prev;
         nextMe.init = me.top;

@@ -1,5 +1,5 @@
 import { CmComOrderWid, CmComWid, IExportableCom, OrderRepeats } from 'shared/api/complect/apps';
-import { CmBlockStyleKey } from 'shared/values/cm/block-styles/BlockStyles.model';
+import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 
 export type CmEditComOrderTsjrpcModel = {
   setRepeats: (args: {
@@ -13,11 +13,11 @@ export type CmEditComOrderTsjrpcModel = {
 
   clearOwnRepeats: (args: { ordw: CmComOrderWid; orderTitle: string; comw: CmComWid }) => IExportableCom;
 
-  setType: (args: {
+  setKind: (args: {
     ordw: CmComOrderWid;
     orderTitle: string;
     comw: CmComWid;
-    type: CmBlockStyleKey;
+    kind: CmComBlockKindKey;
     newTypeTitle: string;
   }) => IExportableCom;
 
@@ -62,7 +62,7 @@ export type CmEditComOrderTsjrpcModel = {
     orderTitle: string;
     insertAfterOrdwOrFirst: CmComOrderWid | nil;
     chordi: number;
-    type: CmBlockStyleKey;
+    kind: CmComBlockKindKey;
     texti: number | und;
   }) => IExportableCom;
 

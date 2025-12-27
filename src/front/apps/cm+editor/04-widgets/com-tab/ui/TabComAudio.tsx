@@ -8,6 +8,7 @@ import { CmEditorComAudioControlledList } from '$cm+editor/widgets/com-audio';
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmMp3Rule, HttpLink } from 'shared/api';
+import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 
 export const CmEditorComTabAudio = ({ ccom }: { ccom: EditableCom }) => {
   const [innerHTML, setInnerHTML] = useState('');
@@ -65,11 +66,11 @@ export const CmEditorComTabAudio = ({ ccom }: { ccom: EditableCom }) => {
                 }}
                 onGoogleSearch={[
                   () => {
-                    const ord = ccom.orders?.find(ord => ord.type === 'two');
+                    const ord = ccom.orders?.find(ord => ord.kind === CmComBlockKindKey.Two);
                     return `"${ccom.name}" ${ord?.text.replace(makeRegExp('/\\n+/g'), ' ') ?? ''}`;
                   },
                   () => {
-                    const ord = ccom.orders?.find(ord => ord.type === 'one');
+                    const ord = ccom.orders?.find(ord => ord.kind === CmComBlockKindKey.One);
                     return `"${ccom.name}" ${ord?.text.replace(makeRegExp('/\\n+/g'), ' ') ?? ''}`;
                   },
                   () => `"${ccom.name}"`,
