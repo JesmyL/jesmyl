@@ -196,6 +196,7 @@ export const knownStameskaIconNames = {
   Telegram: 0,
   Text: 0,
   TextAlignLeft: 0,
+  TextFirstlineRight: 0,
   TextFont: 0,
   TextVerticalAlignment: 0,
   ToggleOff: 0,
