@@ -1,10 +1,8 @@
 import { Button } from '#shared/components/ui/button';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { Modal, ModalBody, ModalFooter, ModalHeader, usePrompt } from '#shared/ui/modal';
 import { QrCodeFullScreen } from '#shared/ui/qr-code/QrCodeFullScreen';
-import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { WithAtom } from '#shared/ui/WithAtom';
 import { CmCom } from '$cm/entities/com';
@@ -17,25 +15,29 @@ import {
 } from '$cm/entities/com-comment';
 import { CmComOrder } from '$cm/entities/com-order';
 import { cmAppActions } from '$cm/shared/const';
-import { cmIDB } from '$cm/shared/state';
+import { cmConstantsConfigAtom, cmIDB } from '$cm/shared/state';
 import { useAuth } from '$index/shared/state';
 import { atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
-import { useDeferredCallback } from 'shared/utils/useDeferredCallback';
+import { CmComCommentBlockSpecialSelector } from 'shared/api';
 import { toast } from 'sonner';
+import { CmComCommentKindComments } from './KindComments';
+import { CmComCommentSimpleComments } from './SimpleComments';
 import { CmComCommentTransferAltModalInner } from './TransferAltCommentModalInner';
 
 const HashSwitcherIcon = 'Note03';
 const isShowInfoModalAtom = atom(false);
 const isOpenTransferModalAtom = atom(false);
+const isKindCommentsAtom = atom(false);
 
 export const CmComCommentModalInner = ({ com }: { com: CmCom }) => {
   const ordSelectorId = useAtomValue(cmComCommentRedactOrdSelectorIdAtom);
   const altCommentKeys = useAtomValue(cmComCommentCurrentOpenedAltKeyAtom);
   const altCommentKey = altCommentKeys[com.wid] ?? altCommentKeys.last;
+  const isKindComments = useAtomValue(isKindCommentsAtom);
 
-  const deferredCallback = useDeferredCallback();
-  const { takeCommentTexts, localCommentBlock, maxComCommentAlternativesCount } = useCmComCommentBlock(com.wid);
+  const { localCommentBlock } = useCmComCommentBlock(com.wid);
+  const { maxComCommentAlternativesCount } = useAtomValue(cmConstantsConfigAtom);
   const prompt = usePrompt();
   const registeredAltKeys = useAtomValue(cmComCommentRegisteredAltKeysAtom);
   const auth = useAuth();
@@ -44,12 +46,10 @@ export const CmComCommentModalInner = ({ com }: { com: CmCom }) => {
 
   cmComCommentRegisteredAltKeysAtom.do.init();
 
-  const comCommentBlockTexts = takeCommentTexts(ordSelectorId) ?? [];
-
   let ord: CmComOrder | und;
   let ordNN = 0;
 
-  if (ordSelectorId !== 'head') {
+  if (ordSelectorId !== CmComCommentBlockSpecialSelector.Head) {
     const { ord: ordBySelector, visibleOrdi } = com.getOrderBySelector(ordSelectorId);
 
     ord = ordBySelector;
@@ -62,84 +62,59 @@ export const CmComCommentModalInner = ({ com }: { com: CmCom }) => {
         <span className="flex gap-2 w-[calc(100cqw-23px*2)]">
           <LazyIcon icon="TextAlignLeft" />
           <span className="text-x7 nowrap">
-            #{ordNN} {ord?.me.header()}
+            {isKindComments || <>#{ordNN} </>}
+            {ord?.me.header()}
           </span>
           <span className="text-x3 ellipsis">{com.name}</span>
         </span>
 
-        {ordSelectorId === 'head' ? (
-          auth.login && (
-            <WithAtom init={false}>
-              {atom =>
-                auth.login && (
-                  <>
-                    <Button
-                      icon="QrCode"
-                      onClick={atom.do.toggle}
-                    />
-                    <QrCodeFullScreen
-                      openAtom={atom}
-                      text={cmAppActions.makeLink({ shareCommentComw: com.wid, login: auth.login })}
-                    />
-                  </>
-                )
-              }
-            </WithAtom>
-          )
+        {ordSelectorId === CmComCommentBlockSpecialSelector.Head ? (
+          <>
+            {auth.login && (
+              <WithAtom init={false}>
+                {atom =>
+                  auth.login && (
+                    <>
+                      <Button
+                        icon="QrCode"
+                        onClick={atom.do.toggle}
+                      />
+                      <QrCodeFullScreen
+                        openAtom={atom}
+                        text={cmAppActions.makeLink({ shareCommentComw: com.wid, login: auth.login })}
+                      />
+                    </>
+                  )
+                }
+              </WithAtom>
+            )}
+            <Button
+              icon="TextFirstlineRight"
+              iconKind={isKindComments ? 'BulkRounded' : undefined}
+              className={isKindComments ? 'text-x7' : undefined}
+              onClick={isKindCommentsAtom.do.toggle}
+            />
+          </>
         ) : (
           <Button
             icon="TextFont"
-            onClick={() => cmComCommentRedactOrdSelectorIdAtom.set('head')}
+            onClick={() => cmComCommentRedactOrdSelectorIdAtom.set(CmComCommentBlockSpecialSelector.Head)}
           />
         )}
       </ModalHeader>
-      <ModalBody key={ordSelectorId}>
-        {comCommentBlockTexts.concat(comCommentBlockTexts.length < 7 ? '' : [])?.map((line, linei) => {
-          return (
-            <TextInput
-              key={`${altCommentKey}${linei}`}
-              defaultValue={line}
-              multiline
-              className="mb-3"
-              onInput={value => {
-                deferredCallback(
-                  async () => {
-                    const texts = [...(takeCommentTexts(ordSelectorId) ?? [])];
-                    const isAltComment =
-                      altCommentKey != null &&
-                      (localCommentBlock?.alt?.[altCommentKey] != null ||
-                        mylib.keys(localCommentBlock?.alt ?? []).length < maxComCommentAlternativesCount);
-
-                    texts[linei] = value;
-
-                    cmIDB.tb.localComCommentBlocks.put({
-                      ...localCommentBlock,
-                      comw: com.wid,
-                      m: Date.now(),
-                      d: isAltComment
-                        ? localCommentBlock?.d
-                        : {
-                            ...localCommentBlock?.d,
-                            [ordSelectorId]: texts,
-                          },
-                      alt: isAltComment
-                        ? {
-                            ...localCommentBlock?.alt,
-                            [altCommentKey]: {
-                              ...localCommentBlock?.alt?.[altCommentKey],
-                              [ordSelectorId]: texts,
-                            },
-                          }
-                        : localCommentBlock?.alt,
-                    });
-                  },
-                  1000,
-                  false,
-                );
-              }}
-            />
-          );
-        })}
+      <ModalBody>
+        {isKindComments ? (
+          <CmComCommentKindComments
+            altCommentKey={altCommentKey}
+            com={com}
+          />
+        ) : (
+          <CmComCommentSimpleComments
+            altCommentKey={altCommentKey}
+            ordSelectorId={ordSelectorId}
+            comw={com.wid}
+          />
+        )}
       </ModalBody>
       <ModalFooter className="flex gap-2">
         {(localCommentBlock?.d?.[ordSelectorId] != null ||
@@ -235,11 +210,7 @@ const SavedLocalLabel = () => {
 
   useEffect(() => {
     return hookEffectPipe()
-      .pipe(
-        setTimeoutPipe(() => {
-          setIsShow(true);
-        }, 2500),
-      )
+      .pipe(setTimeoutPipe(() => setIsShow(true), 2500))
       .effect();
   }, []);
 

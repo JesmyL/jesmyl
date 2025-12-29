@@ -1,9 +1,9 @@
 import { mylib } from '#shared/lib/my-lib';
 import { cmConstantsConfigAtom, cmIDB } from '$cm/shared/state';
 import { atom } from 'atomaric';
-import { CmComCommentBlockSelector, CmComWid } from 'shared/api';
+import { CmComCommentBlockSimpleSelector, CmComWid } from 'shared/api';
 
-export const cmComCommentRedactOrdSelectorIdAtom = atom<CmComCommentBlockSelector | null>(null);
+export const cmComCommentRedactOrdSelectorIdAtom = atom<CmComCommentBlockSimpleSelector | null>(null);
 export const cmComCommentCurrentOpenedAltKeyAtom = atom(
   {} as PRecord<CmComWid, string> & { last: string | null },
   'cm:cmComCommentCurrentOpenedAltKey',

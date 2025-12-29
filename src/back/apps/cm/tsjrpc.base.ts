@@ -1,6 +1,11 @@
 import { FileStore } from 'back/complect/FileStore';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
-import { ICmComCommentBlock } from 'shared/api';
+import {
+  CmComCommentBlockAnySelector,
+  CmComCommentBlockDict,
+  CmComCommentBlockSpecialSelector,
+  ICmComCommentBlock,
+} from 'shared/api';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
 import { SMyLib, smylib } from 'shared/utils';
 import { makeCmComNumLeadLinkFromHttp } from './complect/com-http-links';
@@ -185,9 +190,56 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
               return;
             }
 
+            const checkKindsFull = (commentBlockDict: CmComCommentBlockDict | nil) => {
+              if (commentBlockDict == null) return;
+
+              const altKindsDict = commentBlockDict[CmComCommentBlockSpecialSelector.Kinds];
+              if (altKindsDict == null) return;
+
+              smylib.keys(altKindsDict).forEach(key => {
+                if (!altKindsDict[key]) delete altKindsDict[key];
+              });
+
+              if (!smylib.keys(altKindsDict).length) {
+                delete commentBlockDict[CmComCommentBlockSpecialSelector.Kinds];
+              }
+            };
+
+            const checkSimpleFull = (
+              key: keyof CmComCommentBlockDict,
+              block: CmComCommentBlockDict[CmComCommentBlockAnySelector],
+              userServerCommentDict: CmComCommentBlockDict | nil,
+            ) => {
+              if (block == null) return;
+
+              if (smylib.isArr(block)) {
+                for (let blocki = block.length - 1; blocki >= 0; blocki--) {
+                  if (block[blocki]) break;
+                  block.splice(-1);
+                }
+
+                if (!block.length && userServerCommentDict) delete userServerCommentDict[key];
+              } else {
+                smylib.keys(block).forEach(key => {
+                  if (!block[key]) delete block[key];
+                });
+              }
+            };
+
+            const newCommentDict: CmComCommentBlockDict = {
+              ...userServerComments[comw]?.d,
+              ...d,
+              [CmComCommentBlockSpecialSelector.Kinds]: {
+                ...userServerComments[comw]?.d?.[CmComCommentBlockSpecialSelector.Kinds],
+                ...d?.[CmComCommentBlockSpecialSelector.Kinds],
+              },
+            };
+
+            checkKindsFull(newCommentDict);
+
             userServerComments[comw] = {
               ...userServerComments[comw],
-              d: { ...userServerComments[comw]?.d, ...d },
+              d: newCommentDict,
               m: commentModifiedAt,
             };
 
@@ -199,37 +251,45 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
                 cmConstantsConfigFileStore.getValue().maxComCommentAlternativesCount
               )
                 SMyLib.entries(alt).forEach(([altCommentKey, altValue]) => {
-                  userAlt[altCommentKey] = { ...userAlt[altCommentKey], ...altValue };
+                  userAlt[altCommentKey] = {
+                    ...userAlt[altCommentKey],
+                    ...altValue,
+                    [CmComCommentBlockSpecialSelector.Kinds]: {
+                      ...userAlt[altCommentKey]?.[CmComCommentBlockSpecialSelector.Kinds],
+                      ...altValue?.[CmComCommentBlockSpecialSelector.Kinds],
+                    },
+                  };
+
+                  checkKindsFull(userAlt[altCommentKey]);
                 });
             }
 
-            SMyLib.entries(userServerComments[comw].d ?? {}).forEach(([key, block]) => {
-              if (!block) return;
+            if (newCommentDict)
+              SMyLib.entries(newCommentDict).forEach(([key, block]) => {
+                if (!block) return;
 
-              for (let blocki = block.length - 1; blocki >= 0; blocki--) {
-                if (block[blocki]) break;
-                block.splice(-1);
-              }
+                if (key === CmComCommentBlockSpecialSelector.Kinds) {
+                  checkKindsFull(newCommentDict);
+                } else checkSimpleFull(key, block, newCommentDict);
 
-              if (!block.length && userServerComments[comw]?.d) delete userServerComments[comw].d[key];
-              // TODO: uncomment soon
-              // if (userServerComments[comw]?.d && !smylib.keys(userServerComments[comw].d).length) delete userServerComments[comw].d
-            });
-
-            SMyLib.entries(userServerComments[comw].alt ?? {}).forEach(([altCommentKey, altBlock]) => {
-              if (!altBlock) return;
-              SMyLib.entries(altBlock).forEach(([key, block]) => {
-                if (block == null) return;
-
-                for (let blocki = block.length - 1; blocki >= 0; blocki--) {
-                  if (block[blocki]) break;
-                  block.splice(-1);
-                }
-
-                if (!block.length && userServerComments[comw]?.alt?.[altCommentKey])
-                  delete userServerComments[comw].alt[altCommentKey][key];
+                if (userServerComments[comw] && !smylib.keys(newCommentDict).length) delete userServerComments[comw].d;
               });
-            });
+
+            const userServerAltCommentDict = userServerComments[comw].alt;
+
+            if (userServerAltCommentDict != null)
+              SMyLib.keys(userServerAltCommentDict).forEach(altCommentKey => {
+                const altBlock = userServerAltCommentDict[altCommentKey];
+
+                if (!altBlock) return;
+                SMyLib.entries(altBlock).forEach(([key, block]) => {
+                  if (block == null) return;
+
+                  if (key === CmComCommentBlockSpecialSelector.Kinds) {
+                    checkKindsFull(newCommentDict);
+                  } else checkSimpleFull(key, block, userServerAltCommentDict[altCommentKey]);
+                });
+              });
 
             const block: ICmComCommentBlock = { ...userServerComments[comw], comw };
             resultComments.push(block);

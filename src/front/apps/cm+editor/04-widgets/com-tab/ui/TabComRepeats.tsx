@@ -10,6 +10,7 @@ import { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
 import styled from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 import { CmEditorComTabRepeatsRemoveButton } from '../sub-ui/ComRepeatsRemoveButton';
 
 export const CmEditorComTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
@@ -254,7 +255,7 @@ export const CmEditorComTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
 
                 return (
                   <div
-                    className={`float-button-panel z-300${start && ord === start.orderUnit ? '' : ' hidden'}`}
+                    className={twMerge('float-button-panel z-1300', start && ord === start.orderUnit ? '' : 'hidden')}
                     style={pos as CSSProperties}
                   >
                     <div
@@ -277,7 +278,7 @@ export const CmEditorComTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
                         wordi={wordi}
                       />
                     )}
-                    {[2, 3, 4, 5].map(currFlashCount => {
+                    {[1, 2, 3, 4, 5].map(currFlashCount => {
                       return (
                         <div
                           key={currFlashCount}

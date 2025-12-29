@@ -3,13 +3,19 @@ import { CmCom } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
+import { CmComCommentBlockSpecialSelector } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
+import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 import { RuleSet, css } from 'styled-components';
 import { cmComCommentMakePseudoCommentContentAccentsCss } from '../utils/makePseudoCommentContentAccentsCss';
 import { cmComCommentMakePseudoCommentContentPropCss } from '../utils/makePseudoCommentContentPropCss';
 import { cmComCommentMakeStartCommentCss } from '../utils/makeStartCommentCss';
 import { cmComCommentPseudoCommentStaticPropsCss } from '../utils/pseudoCommentStaticPropsCss';
-import { useCmComCommentBlock } from './useCmComCommentBlock';
+import {
+  useCmComCommentBlock,
+  useCmComCommentKindBlockTaker,
+  useCmComCommentTextBlockTaker,
+} from './useCmComCommentBlock';
 
 export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = false) => {
   const [styles, setStyles] = useState<
@@ -20,7 +26,9 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
     }>
   >({});
   const translates = useBibleTranslatesContext();
-  const { takeCommentTexts } = useCmComCommentBlock(com.wid);
+  const { localCommentBlock, commentBlock } = useCmComCommentBlock(com.wid);
+  const takeCommentTexts = useCmComCommentTextBlockTaker(com.wid, localCommentBlock, commentBlock);
+  const commentKindsBlock = useCmComCommentKindBlockTaker(com.wid, localCommentBlock, commentBlock);
   const currentBibleTranslate = useAtomValue(bibleShowTranslatesAtom)[0];
 
   useEffect(() => {
@@ -31,8 +39,13 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
         : (visibleOrders?.map(ord => {
             const ordSelectorId = ord.makeSelector();
 
-            const commentLines = takeCommentTexts(ordSelectorId);
-            if (commentLines == null) return '';
+            let commentLines = takeCommentTexts(ordSelectorId);
+            const kindComment = ord.kind && commentKindsBlock?.[Math.abs(ord.kind) as CmComBlockKindKey];
+
+            if (!commentLines?.length && !kindComment) return '';
+
+            commentLines ??= [];
+            if (kindComment) commentLines = [kindComment].concat(commentLines);
 
             const lineComments: (string[] | nil)[] = [];
 
@@ -87,7 +100,7 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
       let isThereCorrectBibleText = false;
 
       const headCommentContents = await Promise.all(
-        (takeCommentTexts('head') ?? []).map(async (line, linei) => {
+        (takeCommentTexts(CmComCommentBlockSpecialSelector.Head) ?? []).map(async (line, linei) => {
           const {
             isThereUnsettedTranslate: isUnset,
             isThereCorrectBibleText: isWithText,
@@ -173,7 +186,7 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
     })()
       .then(styles => setStyles(styles))
       .catch(emptyFunc);
-  }, [currentBibleTranslate, takeCommentTexts, translates, com, isSetHashesOnly]);
+  }, [currentBibleTranslate, takeCommentTexts, translates, com, isSetHashesOnly, commentKindsBlock]);
 
   return styles;
 };

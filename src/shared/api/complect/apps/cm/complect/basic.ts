@@ -95,14 +95,23 @@ export interface IExportableCom {
 
 export type IServerSideCom = OmitOwn<IExportableCom, 'al' | 'm'> & { al?: HttpNumLeadLink[] | HttpNumLeadLink };
 
-export type CmComCommentBlockSelector = CmComOrderSelector | 'head';
+export const enum CmComCommentBlockSpecialSelector {
+  Head = 'head',
+  Kinds = 'k',
+}
+
+export type CmComCommentBlockSimpleSelector = CmComOrderSelector | CmComCommentBlockSpecialSelector.Head;
+export type CmComCommentBlockAnySelector = CmComOrderSelector | CmComCommentBlockSpecialSelector;
 export type CmComOrderSelector = CmComOrderWid;
+
+export type CmComCommentBlockDict = PRecord<CmComCommentBlockSimpleSelector, string[]> &
+  PRecord<CmComCommentBlockSpecialSelector.Kinds, PRecord<CmComBlockKindKey, string>>;
 
 export type ICmComCommentBlock = {
   comw: CmComWid;
   /** comment block dict */
-  d?: PRecord<CmComCommentBlockSelector, string[]>;
-  alt?: PRecord<string, PRecord<CmComCommentBlockSelector, string[]>>;
+  d?: CmComCommentBlockDict;
+  alt?: PRecord<string, CmComCommentBlockDict>;
   m: number;
 };
 
