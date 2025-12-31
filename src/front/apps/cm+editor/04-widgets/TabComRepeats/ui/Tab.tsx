@@ -6,14 +6,14 @@ import { EditableComOrder } from '$cm+editor/shared/classes/EditableComOrder';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { IEditableComLineProps } from '$cm+editor/shared/model/Repeats';
 import { ChordVisibleVariant, CmComOrderLine, TheCmComOrder } from '$cm/ext';
-import { CSSProperties, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
 import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
-import { CmEditorComTabRepeatsRemoveButton } from '../sub-ui/ComRepeatsRemoveButton';
+import { CmEditorTabComRepeatsCountButtonPanel } from './CountButtonPanel';
 
-export const CmEditorComTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
+export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
   const [start, setStart] = useState<IEditableComLineProps | null>(null);
   const [pos, setPos] = useState({ '--x': 0, '--y': 0 });
   const [isChordBlock, setIsChordBlock] = useState(false);
@@ -70,9 +70,7 @@ export const CmEditorComTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
   }, [flashCount, isReadySetChordBlock, reset, setField, startOrd]);
 
   return (
-    <Content
-      className={`com-repeats-editor ${start == null ? '' : 'active'}${isCantRedact ? ' disabled pointers-none' : ''}`}
-    >
+    <Content className={twMerge(start != null && 'active', isCantRedact && 'disabled pointers-none')}>
       {ccom?.orders?.map((ord, ordi) => {
         if (!ord.isVisible) return null;
 
@@ -243,66 +241,21 @@ export const CmEditorComTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
               }}
             />
 
-            {!isCantRedact &&
-              start &&
-              start.orderUnit === ord &&
-              (() => {
-                const { orderUnit: startOrd, textLinei, wordi } = start;
-
-                const flashes = (ord.regions || []).filter(
-                  ({ startLinei, startWordi }) => startLinei === textLinei && startWordi === wordi,
-                );
-
-                return (
-                  <div
-                    className={twMerge('float-button-panel z-1300', start && ord === start.orderUnit ? '' : 'hidden')}
-                    style={pos as CSSProperties}
-                  >
-                    <div
-                      className="button close pointer"
-                      onClick={event => {
-                        event.stopPropagation();
-                        reset();
-                      }}
-                    >
-                      <LazyIcon icon="Cancel01" />
-                    </div>
-                    {!flashes.length || (
-                      <CmEditorComTabRepeatsRemoveButton
-                        isChordBlock={isChordBlock}
-                        ord={ord}
-                        reset={reset}
-                        setField={setField}
-                        startOrd={startOrd}
-                        textLinei={textLinei}
-                        wordi={wordi}
-                      />
-                    )}
-                    {[1, 2, 3, 4, 5].map(currFlashCount => {
-                      return (
-                        <div
-                          key={currFlashCount}
-                          className={`button pointer numeric${flashCount === currFlashCount ? ' active' : ''}`}
-                          onClick={() => setFlashCount(currFlashCount)}
-                        >
-                          {currFlashCount}
-                        </div>
-                      );
-                    })}
-                    {isChordBlock || (
-                      <div
-                        className="button flag pointer"
-                        onClick={() => {
-                          setField(startOrd, { [`~${startLinei}:${startWordi}`]: flashCount - 1 }, startOrd.repeats);
-                          reset();
-                        }}
-                      >
-                        <LazyIcon icon="Flag03" />
-                      </div>
-                    )}
-                  </div>
-                );
-              })()}
+            {!isCantRedact && start && start.orderUnit === ord && (
+              <CmEditorTabComRepeatsCountButtonPanel
+                flashCount={flashCount}
+                isChordBlock={isChordBlock}
+                ord={ord}
+                pos={pos as never}
+                setField={setField}
+                setFlashCount={setFlashCount}
+                start={start}
+                startLinei={startLinei}
+                startOrd={startOrd}
+                startWordi={startWordi}
+                reset={reset}
+              />
+            )}
           </div>
         );
       })}
@@ -319,61 +272,6 @@ const Content = styled.div`
     &.inactive-word {
       pointer-events: none;
       color: grey;
-    }
-  }
-
-  .float-button-panel {
-    --size: ${window.innerWidth / 2 / 7}px;
-
-    position: absolute;
-    display: flex;
-    top: calc(var(--y) * 1px - var(--size) * 1.2);
-    left: calc(var(--x) * 1px);
-    transition: 0.5s;
-
-    &.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 1;
-      margin-left: 0.2em;
-      border-radius: 0.3em;
-      padding: 5px;
-
-      width: var(--size);
-      height: var(--size);
-
-      &.close {
-        --icon-color: var(--color--1);
-
-        background: var(--color--6);
-      }
-
-      &.remove {
-        --icon-color: white;
-
-        background: var(--color--ko);
-      }
-
-      &.flag {
-        --icon-color: var(--color--6);
-
-        background: var(--color--2);
-      }
-
-      &.numeric {
-        background: var(--color--3);
-        color: var(--color--1);
-
-        &.active {
-          background: var(--color--7);
-        }
-      }
     }
   }
 `;

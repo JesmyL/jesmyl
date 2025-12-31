@@ -1,5 +1,6 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
+import { CmEditorTabComRepeats } from '$cm+editor/widgets/TabComRepeats';
 import { CmEditorComTabAudio } from '../ui/TabComAudio';
 import { CmEditorComTabAudioMarks } from '../ui/TabComAudioMarks';
 import { CmEditorComTabCategoryBinds } from '../ui/TabComCategoryBinds';
@@ -8,7 +9,6 @@ import { CmEditorComTabChordsBlocks } from '../ui/TabComChordsBlocks';
 import { CmEditorComTabMain } from '../ui/TabComMain';
 import { CmEditorComTabComOnBroadcast } from '../ui/TabComOnBroadcast';
 import { CmEditorComTabComOrders } from '../ui/TabComOrders';
-import { CmEditorComTabComRepeats } from '../ui/TabComRepeats';
 import { CmEditorComTabTextBlocks } from '../ui/TabComTextBlocks';
 import { CmEditorComTabWatch } from '../ui/TabComWatch';
 
@@ -54,7 +54,7 @@ export const cmEditorComTabCompositionNavs = {
     checkTabAccess: checkAccess => checkAccess('cm', 'COM_CAT'),
   },
   rep: {
-    Component: CmEditorComTabComRepeats,
+    Component: CmEditorTabComRepeats,
     icon: 'Layers01',
     checkTabAccess: checkAccess => checkAccess('cm', 'COM_REP'),
   },

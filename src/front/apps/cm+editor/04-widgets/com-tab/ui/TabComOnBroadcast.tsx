@@ -41,8 +41,7 @@ export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) =>
         return (
           <div
             key={linesi}
-            className="my-5"
-            style={{ whiteSpace: 'pre-wrap' }}
+            className="my-5 pre-text"
           >
             {lines?.map((text, texti) => (
               <div

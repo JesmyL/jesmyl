@@ -25,7 +25,7 @@ const flashDivider = '&nbsp;';
 
 const isOpenModalAtom = atom(false);
 
-export const CmEditorComTabRepeatsRemoveButton = ({
+export const CmEditorTabComRepeatsRemoveButton = ({
   isChordBlock,
   startOrd,
   ord,
