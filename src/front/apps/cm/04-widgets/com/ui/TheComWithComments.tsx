@@ -29,7 +29,7 @@ export const TheCmComWithComments = (props: Props) => {
 
 const Content = (props: Props) => {
   const { commentCss, isThereUnsettedTranslate, isThereCorrectBibleText } = useCmComCommentBlockCss(props.com);
-  const [isExpandFirstComment, setIsExpandFirstComment] = useState(false);
+  const [isExpandFirstComment, setIsExpandFirstComment] = useState(true);
 
   return (
     <>
