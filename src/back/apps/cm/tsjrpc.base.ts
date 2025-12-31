@@ -108,7 +108,6 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
                   .filter(comw => blocks[comw] != null && blocks[comw].m > lastModfiedAt)
                   .map(strComw => ({
                     m: 0,
-                    d: {},
                     comw: +strComw,
                     ...blocks[strComw],
                   }));
