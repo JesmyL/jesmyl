@@ -14,18 +14,18 @@ import {
 } from './makeCmComAudioMarkTitleBySelector';
 import { takeCmComTrackCurrentTimeMark } from './takeCmComTrackCurrentTimeMark';
 
-const technicalTextPrefix = '##@@';
+const technicalTextPrefix = `##${Date.now()}@@`;
+type TotalRepeatsCount = { r: number };
 
 export const useCmComCurrentMarkValues = (com: CmCom | und) => {
   const link = useAtomValue(cmPlayerBroadcastAudioSrcAtom);
   const marks = cmIDB.useAudioTrackMarks(link);
   const [currentMarkTimei, setCurrentMarkTimei] = useState(0);
-  const markTimes = useMemo(() => mylib.keys(marks?.marks).map(Number), [marks?.marks]);
 
   const { markTextDict, timeMarkTextRepeatDict } = useMemo(() => {
     const trackMarks = marks?.marks;
     const markTextDict: PRecord<number, string> = {};
-    const timeMarkTextRepeatDict: PRecord<number, { r: number }> = {};
+    const timeMarkTextRepeatDict: PRecord<number, { index: number; total: TotalRepeatsCount }> = {};
     const result = { markTextDict, timeMarkTextRepeatDict };
 
     if (trackMarks == null) return result;
@@ -34,8 +34,8 @@ export const useCmComCurrentMarkValues = (com: CmCom | und) => {
     const times = mylib.keys(trackMarks);
     let prevLinei = 0;
     let currentLines: string[] = [];
-    let prevTextForRepeats = '&&&';
-    let repeatTimeMark: { r: number } = { r: 1 };
+    let prevTextForRepeats = technicalTextPrefix;
+    let repeatTimeMark: TotalRepeatsCount = { r: 1 };
 
     for (let timei = 0; timei < times.length; timei++) {
       const selector = trackMarks[times[timei]];
@@ -78,17 +78,31 @@ export const useCmComCurrentMarkValues = (com: CmCom | und) => {
 
       let blockText;
 
-      if (checkIsCmComAudioMarkTitleIsLineSelector(nextSelector)) {
+      if (checkIsCmComAudioMarkTitleIsLineSelector(selector)) {
+        const linei = makeCmComAudioMarkLineiFromSelector(selector);
+
+        if (mylib.isNaN(linei)) continue;
+
+        let nextLinei = checkIsCmComAudioMarkTitleIsLineSelector(nextSelector)
+          ? makeCmComAudioMarkLineiFromSelector(nextSelector)
+          : undefined;
+
+        if (linei === nextLinei) nextLinei = undefined;
+
+        blockText = currentLines.slice(linei, nextLinei).join('\n');
+      } else if (!checkIsCmComAudioMarkTitleIsLineSelector(selector) && mylib.isStr(selector)) {
+        const selectorText = selector.trim();
+
+        blockText = selectorText.startsWith('+')
+          ? selectorText.slice(1).trim()
+          : `${technicalTextPrefix}${selectorText}`;
+      } else if (checkIsCmComAudioMarkTitleIsLineSelector(nextSelector)) {
         const linei = makeCmComAudioMarkLineiFromSelector(nextSelector);
 
         if (mylib.isNaN(linei)) continue;
 
         blockText = currentLines.slice(prevLinei, linei).join('\n');
         prevLinei = linei;
-      } else if (!checkIsCmComAudioMarkTitleIsLineSelector(selector) && mylib.isStr(selector)) {
-        const selectorText = selector.trim();
-
-        blockText = selectorText.includes('\n') ? selectorText : `${technicalTextPrefix}${selectorText}`;
       } else blockText = currentLines.slice(prevLinei).join('\n');
 
       markTextDict[times[timei]] = blockText;
@@ -99,7 +113,7 @@ export const useCmComCurrentMarkValues = (com: CmCom | und) => {
         repeatTimeMark.r++;
       } else repeatTimeMark = { r: 1 };
 
-      timeMarkTextRepeatDict[times[timei]] = repeatTimeMark;
+      timeMarkTextRepeatDict[times[timei]] = { index: repeatTimeMark.r - 1, total: repeatTimeMark };
       prevTextForRepeats = blockText;
     }
 
@@ -107,7 +121,10 @@ export const useCmComCurrentMarkValues = (com: CmCom | und) => {
   }, [com, marks?.marks]);
 
   useEffect(() => {
-    if (markTimes == null) return;
+    if (marks?.marks == null) return;
+
+    const markPack = marks.marks;
+    const markTimes = mylib.keys(markPack).map(Number);
     const timePositions$ = { prev: 0, current: 0, next: 0, preprev: 0 };
 
     return hookEffectPipe()
@@ -123,8 +140,9 @@ export const useCmComCurrentMarkValues = (com: CmCom | und) => {
         }),
       )
       .effect();
-  }, [markTimes]);
+  }, [marks?.marks]);
 
+  const markTimes = mylib.keys(marks?.marks).map(Number);
   const currentTimeMark = markTimes[currentMarkTimei];
   const isTechnicalText = markTextDict[currentTimeMark]?.startsWith(technicalTextPrefix);
   const currentText = isTechnicalText
@@ -145,9 +163,17 @@ export const useCmComCurrentMarkValues = (com: CmCom | und) => {
   const isNextTechnicalText = nextText?.startsWith(technicalTextPrefix);
 
   const makeRepeatedText = <Text extends string | nil>(text: Text, timeMark: number) => {
-    if (!text || timeMarkTextRepeatDict[timeMark] == null || timeMarkTextRepeatDict[timeMark].r < 2) return text;
+    if (!text || timeMarkTextRepeatDict[timeMark] == null) return text;
+    const markTotalRepeatsCount = timeMarkTextRepeatDict[timeMark].total.r;
+    if (markTotalRepeatsCount < 2) return text;
 
-    return `${'/'.repeat(timeMarkTextRepeatDict[timeMark].r)}&nbsp;${text}&nbsp;${'\\'.repeat(timeMarkTextRepeatDict[timeMark].r)}`;
+    if (markTotalRepeatsCount < 4) {
+      return `${'/'.repeat(markTotalRepeatsCount)}${nbsp}${text}${nbsp}${'\\'.repeat(markTotalRepeatsCount)}`;
+    }
+
+    const repeatsCount = markTotalRepeatsCount - timeMarkTextRepeatDict[timeMark].index;
+
+    return `${makeFadeRepeats('/', markTotalRepeatsCount, repeatsCount)}${text}${makeFadeRepeats('\\', markTotalRepeatsCount, repeatsCount)}`;
   };
 
   return {
@@ -159,4 +185,14 @@ export const useCmComCurrentMarkValues = (com: CmCom | und) => {
       nextTimeMark,
     ),
   };
+};
+
+const nbsp = '&nbsp;';
+
+const makeFadeRepeats = (slash: '\\' | '/', total: number, current: number) => {
+  const invisibleSlash = `<span class="opacity-40">${slash.repeat(total - current)}</span>`;
+
+  return slash === '/'
+    ? `${invisibleSlash}${slash.repeat(current)}${nbsp}`
+    : `${nbsp}${slash.repeat(current)}${invisibleSlash}`;
 };

@@ -30,7 +30,7 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
 
   const trackMarks = cmIDB.useAudioTrackMarks(src);
   const selector = trackMarks?.marks?.[time];
-  const { title, ord, isMultilineTitle, fullTitle, isShortTime } = makeCmComAudioMarkTitleBySelector(
+  const { title, ord, isReplaceBlockText, fullTitle, isShortTime } = makeCmComAudioMarkTitleBySelector(
     time,
     com,
     selector,
@@ -63,7 +63,7 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
     <>
       <ModalHeader className="flex w-full justify-between">
         <span className={isShortTime ? 'text-xKO' : undefined}>
-          {isMultilineTitle ? title.split('\n', 1)[0] : title}
+          {isReplaceBlockText ? title.split('\n', 1)[0] : title}
         </span>
         <span className="flex gap-3">
           {isTextEdit || (
@@ -143,7 +143,9 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
           <InputWithLoadingIcon
             icon="TextAlignLeft"
             multiline
-            defaultValue={isMultilineTitle ? fullTitle : ord?.transformedText().replace(makeRegExp('/&nbsp;/g'), '')}
+            defaultValue={
+              isReplaceBlockText ? fullTitle : `+${ord?.transformedText().replace(makeRegExp('/&nbsp;/g'), '')}`
+            }
             strongDefaultValue
             onChanged={value =>
               cmEditComExternalsClientTsjrpcMethods
@@ -151,7 +153,7 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
                 .then(() => setIsTextEdit(false))
             }
           />
-        ) : isMultilineTitle ? (
+        ) : isReplaceBlockText ? (
           <div className="pre-text my-5">{fullTitle}</div>
         ) : (
           ord && (

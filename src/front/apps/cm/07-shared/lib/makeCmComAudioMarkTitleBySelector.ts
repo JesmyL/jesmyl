@@ -31,11 +31,12 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
   selector: CmComAudioMarkSelector | nil,
   marks: CmComAudioMarkPack | nil,
   mapLineTitle: (repeats: string, text: string) => LineTitle = (repeats, text) => `${repeats} ${text}` as never,
+  mapStringTitle?: (title: string) => string,
 ): {
   ord: CmComOrder | nil;
   title: LineTitle;
   fullTitle?: LineTitle;
-  isMultilineTitle?: boolean;
+  isReplaceBlockText?: boolean;
   isShortTime: boolean;
 } => {
   const markKeys = mylib.keys(marks ?? {});
@@ -96,15 +97,16 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
   }
 
   const repeatsText = `${repeats > 1 ? `${'/'.repeat(repeats)} ` : ''}`;
-  const isMultilineTitle = title.includes('\n');
+  const isReplaceBlockText = title.startsWith('+');
   const fullTitle = title;
 
-  if (isMultilineTitle) title = title.split('\n', 1)[0];
+  if (isReplaceBlockText) title = title.split('\n', 1)[0];
+  if (mapStringTitle) title = mapStringTitle(title);
 
   return {
     ord,
     isShortTime,
-    isMultilineTitle,
+    isReplaceBlockText,
     fullTitle: fullTitle as never,
     title: (checkIsCmComAudioMarkTitleIsLineSelector(selector)
       ? mapLineTitle(repeatsText, title)

@@ -36,11 +36,18 @@ export const useCmComOrderAudioMarkControl = (
     const takeMinusTime = () => (cmComTrackPreSwitchTimeAtom.get() < 0 ? 0 : cmComTrackPreSwitchTimeAtom.get());
 
     MyLib.entries(marks).forEach(([time, selector]) => {
-      const titleProps = makeCmComAudioMarkTitleBySelector(+time, com, selector, marks, (repeats, title) => (
-        <span className="text-x7">
-          {repeats} {title}
-        </span>
-      ));
+      const titleProps = makeCmComAudioMarkTitleBySelector(
+        +time,
+        com,
+        selector,
+        marks,
+        (repeats, title) => (
+          <span className="text-x7">
+            {repeats} {title}
+          </span>
+        ),
+        title => (title.startsWith('+') ? title.slice(1) : title),
+      );
 
       if (selector == null || (isHideShortTime && titleProps.isShortTime)) return;
       const className = titleProps.isShortTime ? 'text-xKO' : undefined;
