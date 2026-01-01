@@ -1,4 +1,5 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
 import { isMobileDevice } from '#shared/lib/device-differences';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
@@ -63,21 +64,23 @@ export const CmMeetingEvent = ({ dayi, eventMi, schw }: Props) => {
       }
       content={
         <>
-          {comFaceListNode}
-          {isToolsOpen && (
-            <BottomPopup onClose={setIsToolsOpen}>
-              <CmComLocalListToolsPopup coms={coms}>
-                {checkAccess('cm', 'EVENT', 'U') && (
-                  <CmEditorMeetingEventEdits
-                    packComws={packComws}
-                    dayi={dayi}
-                    eventMi={eventMi}
-                    schw={schw}
-                  />
-                )}
-              </CmComLocalListToolsPopup>
-            </BottomPopup>
-          )}
+          <AppDialogProvider title="cm-meeting-event-coms">
+            {comFaceListNode}
+            {isToolsOpen && (
+              <BottomPopup onClose={setIsToolsOpen}>
+                <CmComLocalListToolsPopup coms={coms}>
+                  {checkAccess('cm', 'EVENT', 'U') && (
+                    <CmEditorMeetingEventEdits
+                      packComws={packComws}
+                      dayi={dayi}
+                      eventMi={eventMi}
+                      schw={schw}
+                    />
+                  )}
+                </CmComLocalListToolsPopup>
+              </BottomPopup>
+            )}
+          </AppDialogProvider>
         </>
       }
     />

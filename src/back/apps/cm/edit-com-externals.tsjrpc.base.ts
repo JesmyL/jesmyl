@@ -118,8 +118,12 @@ export const cmEditComExternalsTsjrpcBaseServer =
             const srcPackMarks = allMarkPacks[numLeadSrc].marks;
 
             SMyLib.entries(marks).forEach(([time, selector]) => {
+              if (+time === 0.11) time = 0;
+              if (selector === `+0.11+`) selector = `+0+`;
+
               const addTime = `+${time}+`;
               time = +(+time).toFixed(2);
+              if (time !== 0 && Math.trunc(time) === time) time += 0.11;
 
               if (selector == null) {
                 delete srcPackMarks[time];
