@@ -12,6 +12,7 @@ export const knownStameskaIconNames = {
   ArrowDataTransferDiagonal: 0,
   ArrowDataTransferHorizontal: 0,
   ArrowDataTransferVertical: 0,
+  Snow: 0,
   ArrowDown01: 0,
   ArrowDownDouble: 0,
   ArrowExpand01: 0,
