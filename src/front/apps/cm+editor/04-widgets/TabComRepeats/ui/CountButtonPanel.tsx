@@ -1,4 +1,5 @@
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { Button } from '#shared/components/ui/button';
+import { ButtonGroup } from '#shared/components/ui/button-group';
 import { EditableComOrder } from '$cm+editor/shared/classes/EditableComOrder';
 import { IEditableComLineProps } from '$cm+editor/shared/model/Repeats';
 import { CSSProperties, Dispatch, SetStateAction } from 'react';
@@ -26,18 +27,17 @@ export const CmEditorTabComRepeatsCountButtonPanel = (props: {
 
   return (
     <StyledPanel
-      className={twMerge('z-1300', props.start && props.ord === props.start.orderUnit && 'hidden')}
-      style={props.pos as CSSProperties}
+      className={twMerge('absolute flex z-1300', (!props.start || props.ord !== props.start.orderUnit) && 'hidden')}
+      style={props.pos}
     >
-      <div
-        className="button close pointer"
+      <Button
+        icon="Cancel01"
+        className="button pointer bg-x6! text-x1!"
         onClick={event => {
           event.stopPropagation();
           props.reset();
         }}
-      >
-        <LazyIcon icon="Cancel01" />
-      </div>
+      />
       {!flashes?.length || (
         <CmEditorTabComRepeatsRemoveButton
           isChordBlock={props.isChordBlock}
@@ -49,20 +49,23 @@ export const CmEditorTabComRepeatsCountButtonPanel = (props: {
           wordi={props.start.wordi}
         />
       )}
-      {[1, 2, 3, 4, 5].map(currFlashCount => {
-        return (
-          <div
-            key={currFlashCount}
-            className={twMerge('button pointer numeric', props.flashCount === currFlashCount && 'active')}
-            onClick={() => props.setFlashCount(currFlashCount)}
-          >
-            {currFlashCount}
-          </div>
-        );
-      })}
-      {props.isChordBlock || (
-        <div
-          className="button flag pointer"
+      <ButtonGroup.Root>
+        {[1, 2, 3, 4, 5].map(currFlashCount => {
+          return (
+            <Button
+              key={currFlashCount}
+              className={twMerge('button pointer text-x1!', props.flashCount === currFlashCount ? 'bg-x7!' : 'bg-x3!')}
+              onClick={() => props.setFlashCount(currFlashCount)}
+            >
+              {currFlashCount}
+            </Button>
+          );
+        })}
+      </ButtonGroup.Root>
+      {props.isChordBlock || props.flashCount === 1 || (
+        <Button
+          icon="Flag03"
+          className="button text-x6! bg-x2!"
           onClick={() => {
             props.setField(
               props.startOrd,
@@ -71,19 +74,15 @@ export const CmEditorTabComRepeatsCountButtonPanel = (props: {
             );
             props.reset();
           }}
-        >
-          <LazyIcon icon="Flag03" />
-        </div>
+        />
       )}
     </StyledPanel>
   );
 };
 
 const StyledPanel = styled.div`
-  --size: ${window.innerWidth / 2 / 7}px;
+  --size: min(calc(100vw / 10), 70px);
 
-  position: absolute;
-  display: flex;
   top: calc(var(--y) * 1px - var(--size) * 1.2);
   left: calc(var(--x) * 1px);
   transition: 0.5s;
@@ -104,32 +103,5 @@ const StyledPanel = styled.div`
 
     width: var(--size);
     height: var(--size);
-
-    &.close {
-      --icon-color: var(--color--1);
-
-      background: var(--color--6);
-    }
-
-    &.remove {
-      --icon-color: white;
-
-      background: var(--color--ko);
-    }
-
-    &.flag {
-      --icon-color: var(--color--6);
-
-      background: var(--color--2);
-    }
-
-    &.numeric {
-      background: var(--color--3);
-      color: var(--color--1);
-
-      &.active {
-        background: var(--color--7);
-      }
-    }
   }
 `;

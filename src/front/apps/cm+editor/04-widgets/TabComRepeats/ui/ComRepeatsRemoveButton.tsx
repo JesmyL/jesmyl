@@ -1,6 +1,6 @@
+import { Button } from '#shared/components/ui/button';
 import { mylib } from '#shared/lib/my-lib';
 import { Modal, ModalBody, ModalHeader, useConfirm } from '#shared/ui/modal';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheButton } from '#shared/ui/TheButton';
 import { EditableComOrder } from '$cm+editor/shared/classes/EditableComOrder';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
@@ -38,8 +38,9 @@ export const CmEditorTabComRepeatsRemoveButton = ({
 
   return (
     <>
-      <div
-        className="button remove"
+      <Button
+        icon="Delete01"
+        className="button text-white! bg-xKO!"
         onClick={async event => {
           event.stopPropagation();
 
@@ -57,9 +58,7 @@ export const CmEditorTabComRepeatsRemoveButton = ({
 
           isOpenModalAtom.set(true);
         }}
-      >
-        <LazyIcon icon="Delete01" />
-      </div>
+      />
 
       <Modal openAtom={isOpenModalAtom}>
         <ModalHeader>Сброс границ</ModalHeader>
