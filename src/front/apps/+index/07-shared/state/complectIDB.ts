@@ -4,7 +4,6 @@ import { DexieDB } from '#shared/lib/DexieDB';
 
 type Store = {
   alertLineConfigs: AlertLineConfig[];
-  isDarkMode: boolean;
   broadcastAlertLine: null | string;
   screenBroadcastConfigs: ScreenBroadcastConfig[];
   expands: Set<string>;
@@ -12,7 +11,6 @@ type Store = {
 
 export const complectIDB = new DexieDB<Store>('complect', {
   alertLineConfigs: { id: '++' },
-  isDarkMode: [false],
   broadcastAlertLine: [null],
   screenBroadcastConfigs: [[defaultComplectConfig]],
   expands: [new Set()],

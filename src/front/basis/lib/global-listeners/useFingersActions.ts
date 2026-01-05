@@ -1,14 +1,14 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { complectIDB } from '$index/shared/state';
+import { indexIsDarkModeAtom } from '$index/shared/state';
+import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import { isNIs } from 'shared/utils';
 
 const classList = document.querySelector('html')?.classList;
 const minTouches = 3;
 const maxTouches = 3;
 
 export const useFingersActions = () => {
-  const isDarkMode = complectIDB.useValue.isDarkMode();
+  const isDarkMode = useAtomValue(indexIsDarkModeAtom);
 
   useEffect(() => {
     if (isDarkMode) classList?.add('dark');
@@ -24,7 +24,7 @@ export const useFingersActions = () => {
           if (event.touches.length === 4) {
             timeout = setTimeout(() => window.navigator.clipboard.writeText(window.location.href), 500);
           } else if (event.touches.length >= minTouches && event.touches.length <= maxTouches) {
-            timeout = setTimeout(complectIDB.set.isDarkMode, 500, isNIs);
+            timeout = setTimeout(indexIsDarkModeAtom.do.toggle, 500);
           } else {
             clearTimeout(timeout);
           }
@@ -34,7 +34,7 @@ export const useFingersActions = () => {
         }),
         addEventListenerPipe(document.body, 'keyup', event => {
           if (event.code === 'Space' && event.ctrlKey && event.altKey && event.shiftKey)
-            complectIDB.set.isDarkMode(isNIs);
+            indexIsDarkModeAtom.do.toggle();
         }),
       )
       .effect();

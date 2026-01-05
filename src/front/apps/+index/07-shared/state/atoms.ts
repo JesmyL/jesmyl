@@ -30,6 +30,7 @@ export const useAppFontFamily = () => indexIDB.use.appFontFamily();
 
 export const indexIsPlayAnimationsAtom = atom(false, 'index:isPlayAnimations');
 export const indexIsShowPlayerInFooterAtom = atom(false, 'index:isShowPlayerInFooter');
+export const indexIsDarkModeAtom = atom(false, 'index:isDarkMode');
 
 export const indexAppUserAccessRightsMatrixAtom = atom<IndexAppUserAccessRightsAndRoles | null>(null);
 export const indexUserAccessRightsAtom = atom<IndexAppUserAccessRightsWithoutInfo>({}, 'index:myAccessRights');
