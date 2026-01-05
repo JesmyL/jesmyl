@@ -34,7 +34,6 @@ export const CmComCommentKindComments = ({ altCommentKey, com }: { altCommentKey
               }
               className="mb-3"
               defaultValue={kindCommentTexts?.[kind.key]}
-              strongDefaultValue
               multiline
               onInput={(value: string) => {
                 deferredCallback(
