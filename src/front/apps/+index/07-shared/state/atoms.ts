@@ -1,3 +1,4 @@
+import { cmSecureAtomLevel } from '#shared/const/values';
 import { atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { DeviceId, SokiAppName, SokiAuthLogin } from 'shared/api';
@@ -33,7 +34,14 @@ export const indexIsShowPlayerInFooterAtom = atom(false, 'index:isShowPlayerInFo
 export const indexIsDarkModeAtom = atom(false, 'index:isDarkMode');
 
 export const indexAppUserAccessRightsMatrixAtom = atom<IndexAppUserAccessRightsAndRoles | null>(null);
-export const indexUserAccessRightsAtom = atom<IndexAppUserAccessRightsWithoutInfo>({}, 'index:myAccessRights');
+export const indexUserAccessRightsAtom = atom<IndexAppUserAccessRightsWithoutInfo>(
+  {},
+  {
+    storeKey: 'index:myAccessRights',
+    securifyKeyLevel: cmSecureAtomLevel,
+    securifyValueLevel: cmSecureAtomLevel,
+  },
+);
 export const indexOpenAccessRoleRedactorAtom = atom<UserAccessRole | null>(null);
 
 export const indexFavouriteAppsAtom = atom<SokiAppName[]>([], 'index:favouriteApps');
