@@ -1,0 +1,33 @@
+{
+  "w": 1754238649615,
+  "m": 1754290145517.4106,
+  "title": "Семейный конгресс",
+  "app": "index",
+  "dsc": "",
+  "topic": "",
+  "days": [
+    { "list": [{ "type": 0, "mi": 1, "atts": { "[cm]:coms": {} }, "tgInform": 0, "secret": 1 }], "mi": 0, "wup": 7 },
+    { "list": [{ "type": 0, "mi": 1, "atts": { "[cm]:coms": {} } }], "mi": 1, "wup": 7 },
+    { "list": [{ "type": 0, "mi": 1, "atts": { "[cm]:coms": {} } }], "mi": 2, "wup": 7 },
+    { "list": [{ "type": 0, "mi": 1, "atts": { "[cm]:coms": {} } }], "mi": 3, "wup": 7 },
+    { "list": [{ "type": 0, "mi": 1, "atts": { "[cm]:coms": {} } }], "mi": 4, "wup": 7 }
+  ],
+  "tatts": [],
+  "types": [{ "title": "Собрание", "tm": 60 }],
+  "tgInformTime": 5,
+  "start": 1754254800000,
+  "ctrl": {
+    "cats": ["Основное"],
+    "users": [{ "mi": 0, "fio": "Руслан", "login": "T6558fe287d2ea93be3e19bbe64b5dfc", "tgId": 521630606, "R": 127 }],
+    "roles": [{ "mi": 0, "title": "Координатор", "icon": "Teacher", "userMi": 0 }],
+    "type": 3,
+    "defu": 5
+  },
+  "games": { "criterias": [{ "title": "Сила", "sorts": {} }], "list": [] },
+  "lists": {
+    "cats": [{ "icon": "UserGroup", "title": "Группа", "titles": ["Наставники", "Участники"] }],
+    "units": [{ "cati": 0, "mi": 1, "title": "Группа 1", "dsc": "" }]
+  },
+  "prevStart": 1756846800000,
+  "tgInform": 0
+}

@@ -3,7 +3,7 @@ import { jesmylTgBot } from 'back/sides/telegram-bot/bot';
 import { makeRegExp } from 'regexpert';
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleWidgetCleans } from 'shared/api';
 import { itNNull } from 'shared/utils';
-import { schedulesFileStore } from '../file-stores';
+import { schedulesDirStore } from '../file-stores';
 import {
   onScheduleDayBeginTimeSetEvent,
   onScheduleDayEventListSetEvent,
@@ -45,7 +45,7 @@ export const makeScheduleWidgetJoinTitle = (
 };
 
 const getScheduleByRequisit = (requisit: `${number}/` | `/${string}`) =>
-  schedulesFileStore.getValue().find(sch => sch.tgChatReqs?.includes(requisit));
+  schedulesDirStore.getAllItems().find(sch => sch.tgChatReqs?.includes(requisit));
 
 const getScheduleAndTodayiByRequisit = (requisit: `${number}/` | `/${string}`) => {
   const schedule = getScheduleByRequisit(requisit);

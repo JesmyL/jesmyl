@@ -1,0 +1,57 @@
+{
+  "w": 1749052926374,
+  "m": 1749225300110.9578,
+  "title": "Выпуск МГ",
+  "app": "index",
+  "dsc": "",
+  "topic": "",
+  "days": [
+    {
+      "list": [
+        { "type": 0, "mi": 6, "tgInform": 0 },
+        { "type": 1, "mi": 5, "atts": { "[cm]:coms": {} } }
+      ],
+      "mi": 0,
+      "wup": 19
+    },
+    {
+      "list": [
+        { "type": 2, "mi": 1 },
+        { "type": 1, "mi": 2, "atts": { "[cm]:coms": {} } },
+        { "type": 1, "mi": 3, "atts": { "[cm]:coms": {} } }
+      ],
+      "mi": 1,
+      "wup": 7
+    }
+  ],
+  "tatts": [],
+  "types": [
+    { "title": "Заезд", "tm": 60 },
+    { "title": "Собрание", "tm": 60 },
+    { "title": "Завтрак", "tm": 30 }
+  ],
+  "tgInformTime": 5,
+  "start": 1749157200000,
+  "ctrl": {
+    "cats": ["Основное"],
+    "users": [
+      {
+        "mi": 0,
+        "fio": "Павел 👨‍💻",
+        "login": "T166cbf17596a0c2919e4df1a6d54e66",
+        "nick": "gfirf",
+        "tgId": 958383738,
+        "R": 127
+      }
+    ],
+    "roles": [{ "mi": 0, "title": "Координатор", "icon": "Teacher", "userMi": 0 }],
+    "type": 3,
+    "defu": 5
+  },
+  "games": { "criterias": [{ "title": "Сила", "sorts": {} }], "list": [] },
+  "lists": {
+    "cats": [{ "icon": "UserGroup", "title": "Группа", "titles": ["Наставники", "Участники"] }],
+    "units": [{ "cati": 0, "mi": 1, "title": "Группа 1", "dsc": "" }]
+  },
+  "prevStart": 1717621200000
+}

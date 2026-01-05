@@ -11,28 +11,12 @@ import {
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
+import { takeDefaultScheduleWidget } from 'shared/const/schedule-widget/const';
 import { ScheduleWidgetAppAtts, ScheduleWidgetAttRefs } from './ScheduleWidget.model';
 
 export const [ScheduleWidgetAppAttsContext, useScheduleWidgetAppAttsContext] = contextCreator<
   [ScheduleWidgetAppAtts, ScheduleWidgetAttRefs]
 >([{}, {}]);
-
-export const defaultScheduleWidget: IScheduleWidget = {
-  w: 0 as never,
-  m: 0,
-  start: 0,
-  title: '',
-  topic: '',
-  dsc: '',
-  days: [],
-  tatts: [],
-  types: [],
-  app: 'index',
-  tgInformTime: 5,
-  ctrl: { cats: [], roles: [], type: ScheduleWidgetRegType.Private, users: [], defu: ScheduleWidgetUserRoleRight.Read },
-  games: { criterias: [], list: [] },
-  lists: { cats: [], units: [] },
-};
 
 export interface ScheduleWidgetRights extends ScheduleWidgetUserRights, ScheduleWidgetScheduleWidgetRegType {
   myUser: IScheduleWidgetUser | undefined;
@@ -71,7 +55,7 @@ export const useScheduleWidgetRights = (schedule: IScheduleWidget | nil, rights?
         isSwPublic: false,
         isSwPrivate: false,
         myUser: undefined,
-        schedule: defaultScheduleWidget,
+        schedule: takeDefaultScheduleWidget(),
       };
 
     const myUser = schedule.ctrl.users.find(user => user.login === auth.login);

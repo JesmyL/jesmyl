@@ -4,7 +4,7 @@ import { CmComAudioMarkPack, CmComWid } from 'shared/api';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
 import { itNumSort, SMyLib, smylib } from 'shared/utils';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
-import { schedulesFileStore } from '../index/schedules/file-stores';
+import { schedulesDirStore } from '../index/schedules/file-stores';
 import { makeCmComNumLeadLinkFromHttp } from './complect/com-http-links';
 import {
   cmComAudioMarkPacksFileStore,
@@ -50,7 +50,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
             return {
               description:
                 `Обновлён список песен в расписании ` +
-                `"${schedulesFileStore.getValue().find(sch => sch.w === schw)?.title ?? '??'}":\n\n${list
+                `"${schedulesDirStore.getItem(schw)?.title ?? '??'}":\n\n${list
                   .map(comw => {
                     const comi = coms.findIndex(com => com.w === comw);
                     if (comi < 0) return `<s>Нет песни</s>`;
@@ -98,7 +98,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
               value: history[schw]?.[dayi] ?? [],
               description:
                 `Удалена пачка песен из истории события в расписании ` +
-                `"${schedulesFileStore.getValue().find(sch => sch.w === schw)?.title ?? '??'}"`,
+                `"${schedulesDirStore.getItem(schw)?.title ?? '??'}"`,
             };
           },
 

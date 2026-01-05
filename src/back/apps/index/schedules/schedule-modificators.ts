@@ -1,6 +1,6 @@
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleDayScopeProps, ScheduleScopeProps } from 'shared/api';
-import { schedulesFileStore } from './file-stores';
+import { schedulesDirStore } from './file-stores';
 import { scheduleTgInformer } from './tg-bot-inform/tg-inform';
 import { schServerTsjrpcShareMethods } from './tsjrpc.shares';
 
@@ -10,12 +10,12 @@ export const modifySchedule =
     modifier: (sch: IScheduleWidget, props: Props, tool: ServerTSJRPCTool) => string | null,
   ) =>
   async (props: Props, tool: ServerTSJRPCTool) => {
-    const sch = schedulesFileStore.getValue().find(sch => sch.w === props.props.schw);
-    if (sch === undefined) throw new Error('schedule not found');
+    const sch = schedulesDirStore.getItem(props.props.schw);
+    if (sch == null) throw new Error('schedule not found');
 
     const description = modifier(sch, props, tool);
     sch.m = Date.now();
-    schedulesFileStore.saveValue();
+    schedulesDirStore.saveItem(sch.w);
 
     schServerTsjrpcShareMethods.editedSchedule({ sch }, null);
     if (isNeedRefreshTgInformTime) scheduleTgInformer.inform(sch.w);

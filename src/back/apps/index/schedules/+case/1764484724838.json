@@ -1,0 +1,35 @@
+{
+  "w": 1764484724838,
+  "m": 1764484837501,
+  "title": "С детками",
+  "app": "index",
+  "dsc": "",
+  "topic": "",
+  "days": [{ "list": [], "mi": 0, "wup": 7 }],
+  "tatts": [{ "list": [], "mi": 0, "wup": 7 }],
+  "types": [{ "list": [], "mi": 0, "wup": 7 }],
+  "tgInformTime": 5,
+  "start": 1767042000000,
+  "ctrl": {
+    "cats": ["Основное"],
+    "users": [
+      {
+        "mi": 0,
+        "fio": "Павел 👨‍💻",
+        "login": "T166cbf17596a0c2919e4df1a6d54e66",
+        "nick": "gfirf",
+        "tgId": 958383738,
+        "R": 127
+      }
+    ],
+    "roles": [{ "mi": 0, "title": "Координатор", "icon": "Teacher", "userMi": 0 }],
+    "type": 1,
+    "defu": 5
+  },
+  "games": { "criterias": [{ "title": "Сила", "sorts": {} }], "list": [] },
+  "lists": {
+    "cats": [{ "icon": "UserGroup", "title": "Группа", "titles": ["Наставники", "Участники"] }],
+    "units": [{ "cati": 0, "mi": 1, "title": "Группа 1", "dsc": "" }]
+  },
+  "isRemoved": 1
+}

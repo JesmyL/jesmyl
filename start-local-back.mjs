@@ -8,7 +8,7 @@ const errorsToPass = new Set([
 ]);
 
 if (!'is need update files') {
-  ['cm', 'cm/coms', 'cm/comComments', 'index', 'storages/list'].forEach(appName => {
+  ['cm', 'cm/coms', 'cm/comComments', 'index/schedules', 'index', 'storages/list'].forEach(appName => {
     const cb = (filePath, name) => {
       if (!name.endsWith('.json')) return;
       fs.writeFileSync(`src/back/file-stores/apps/${appName}/${name}`, '' + fs.readFileSync(filePath));

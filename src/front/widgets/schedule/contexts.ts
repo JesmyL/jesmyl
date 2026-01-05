@@ -1,5 +1,6 @@
 import React, { use } from 'react';
-import { ScheduleWidgetRights, defScheduleWidgetUserRights, defaultScheduleWidget } from './useScheduleWidget';
+import { takeDefaultScheduleWidget } from 'shared/const/schedule-widget/const';
+import { ScheduleWidgetRights, defScheduleWidgetUserRights } from './useScheduleWidget';
 
 export const ScheduleWidgetRightsContext = React.createContext<ScheduleWidgetRights>({
   ...defScheduleWidgetUserRights,
@@ -9,6 +10,6 @@ export const ScheduleWidgetRightsContext = React.createContext<ScheduleWidgetRig
   isSwHideContent: false,
   isSwPublic: false,
   auth: { level: 0 },
-  schedule: defaultScheduleWidget,
+  schedule: takeDefaultScheduleWidget(),
 });
 export const useScheduleWidgetRightsContext = () => use(ScheduleWidgetRightsContext);

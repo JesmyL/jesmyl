@@ -15,7 +15,7 @@ import {
 } from 'shared/api';
 import { SchGeneralTsjrpcModel } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
 import { smylib } from 'shared/utils';
-import { schedulesFileStore } from '../file-stores';
+import { schedulesDirStore } from '../file-stores';
 import { schLiveTsjrpcServer } from '../live.tsjrpc';
 import { modifySchedule } from '../schedule-modificators';
 import { onScheduleUserTgInformSetEvent } from '../specific-modify-events';
@@ -144,8 +144,7 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
             },
           ];
 
-          schedulesFileStore.getValue().push(sch);
-          schedulesFileStore.saveValue();
+          schedulesDirStore.createItem(() => sch, sch.w);
 
           return {
             value: sch,
@@ -271,8 +270,8 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
 
 export const scheduleTitleInBrackets = (schScalar: IScheduleWidget | IScheduleWidgetWid) => {
   if (smylib.isNum(schScalar)) {
-    const sch = schedulesFileStore.getValue().find(sch => sch.w === schScalar);
-    if (sch === undefined) throw new Error('schedule not found');
+    const sch = schedulesDirStore.getItem(schScalar);
+    if (sch == null) throw new Error('schedule not found');
     return `"${sch.title}"`;
   }
   return `"${schScalar.title}"`;

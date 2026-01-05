@@ -1,0 +1,34 @@
+{
+  "w": 1751532792744,
+  "m": 1754193300115.0593,
+  "title": "Молитвенное собрание",
+  "app": "index",
+  "dsc": "",
+  "topic": "",
+  "days": [{ "list": [{ "type": 0, "mi": 1, "atts": { "[cm]:coms": {} }, "tgInform": 0 }], "mi": 0, "wup": 7 }],
+  "tatts": [],
+  "types": [{ "title": "Пение", "tm": 30 }],
+  "tgInformTime": 5,
+  "start": 1754168400000,
+  "ctrl": {
+    "cats": ["Основное"],
+    "users": [
+      {
+        "mi": 0,
+        "fio": "Павел 👨‍💻",
+        "login": "T166cbf17596a0c2919e4df1a6d54e66",
+        "nick": "gfirf",
+        "tgId": 958383738,
+        "R": 127
+      }
+    ],
+    "roles": [{ "mi": 0, "title": "Координатор", "icon": "Teacher", "userMi": 0 }],
+    "type": 3,
+    "defu": 5
+  },
+  "games": { "criterias": [{ "title": "Сила", "sorts": {} }], "list": [] },
+  "lists": {
+    "cats": [{ "icon": "UserGroup", "title": "Группа", "titles": ["Наставники", "Участники"] }],
+    "units": [{ "cati": 0, "mi": 1, "title": "Группа 1", "dsc": "" }]
+  }
+}

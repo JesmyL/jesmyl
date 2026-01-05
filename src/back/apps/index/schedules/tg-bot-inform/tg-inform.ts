@@ -17,12 +17,12 @@ import {
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
 import { convertMd2HTMLMaker, SMyLib, smylib } from 'shared/utils';
-import { schedulesFileStore } from '../file-stores';
+import { schedulesDirStore } from '../file-stores';
 import { onScheduleDayEventIsNeedTgInformSetEvent, onScheduleUserTgInformSetEvent } from '../specific-modify-events';
 import { makeScheduleWidgetJoinTitle } from './message-catchers';
 
 const getSchedule = (scheduleScalar: number | IScheduleWidget) =>
-  smylib.isNum(scheduleScalar) ? schedulesFileStore.getValue().find(sch => sch.w === scheduleScalar) : scheduleScalar;
+  smylib.isNum(scheduleScalar) ? schedulesDirStore.getAllItems().find(sch => sch.w === scheduleScalar) : scheduleScalar;
 
 const jobs: Record<number, nodeSchedule.Job> = {};
 const unsubscribeQueryDataNamePrefix = 'sch-wdgt-unsub:';
@@ -50,7 +50,7 @@ class TgInformer {
   inform = (scheduleScalar: number | IScheduleWidget, invokeDayi?: number) => {
     const schedule = getSchedule(scheduleScalar);
 
-    if (schedule === undefined) return;
+    if (schedule == null) return;
 
     if (invokeDayi === undefined || !indexScheduleCheckIsDayIsPast(schedule, invokeDayi)) jobs[schedule.w]?.cancel();
 
@@ -405,5 +405,5 @@ class TgInformer {
 export const scheduleTgInformer = new TgInformer();
 
 export const initTgScheduleInform = () => {
-  schedulesFileStore.getValue().forEach(scheduleTgInformer.inform);
+  schedulesDirStore.getAllItems().forEach(scheduleTgInformer.inform);
 };

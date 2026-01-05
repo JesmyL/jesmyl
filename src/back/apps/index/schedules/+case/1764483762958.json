@@ -1,0 +1,45 @@
+{
+  "w": 1764483762958,
+  "m": 1764484704695,
+  "title": "С детьми",
+  "app": "index",
+  "dsc": "",
+  "topic": "",
+  "days": [{ "list": [], "mi": 0, "wup": 7 }],
+  "tatts": [{ "list": [], "mi": 0, "wup": 7 }],
+  "types": [{ "list": [], "mi": 0, "wup": 7 }],
+  "tgInformTime": 5,
+  "start": 1767042000000,
+  "ctrl": {
+    "cats": ["Основное"],
+    "users": [
+      {
+        "mi": 0,
+        "fio": "Павел 👨‍💻",
+        "login": "T166cbf17596a0c2919e4df1a6d54e66",
+        "nick": "gfirf",
+        "tgId": 958383738,
+        "R": 127
+      },
+      {
+        "nick": "Evgenia_Slob",
+        "tgId": 1086988826,
+        "login": "T2844a791f6cb5702a875a0bad8e9397",
+        "fio": "Джексон_С",
+        "iat": 1761928781,
+        "exp": 1770568781,
+        "mi": 1,
+        "R": 127
+      }
+    ],
+    "roles": [{ "mi": 0, "title": "Координатор", "icon": "Teacher", "userMi": 0 }],
+    "type": 5,
+    "defu": 5
+  },
+  "games": { "criterias": [{ "title": "Сила", "sorts": {} }], "list": [] },
+  "lists": {
+    "cats": [{ "icon": "UserGroup", "title": "Группа", "titles": ["Наставники", "Участники"] }],
+    "units": [{ "cati": 0, "mi": 1, "title": "Группа 1", "dsc": "" }]
+  },
+  "isRemoved": 1
+}

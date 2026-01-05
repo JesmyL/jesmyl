@@ -1,0 +1,90 @@
+{
+  "title": "Пасторская конференция",
+  "app": "index",
+  "dsc": "",
+  "topic": "",
+  "days": [
+    {
+      "list": [
+        { "type": 0, "mi": 0, "tgAlert": 1, "atts": {}, "tgInform": 0, "tm": 30 },
+        { "type": 4, "mi": 4, "tgInform": 0 },
+        {
+          "type": 1,
+          "mi": 1,
+          "tgAlert": 1,
+          "atts": { "[cm]:coms": { "comws": [1611851960664, 1611851960664, 1517518975000], "eventw": 1611496603426 } },
+          "tgInform": 0,
+          "tm": 5
+        },
+        { "type": 2, "mi": 2, "tgAlert": 1, "atts": {}, "tgInform": 0, "dsc": "", "tm": 30, "topic": "" },
+        { "type": 5, "mi": 6, "tgInform": 0 },
+        { "type": 5, "mi": 9, "tm": 20, "tgInform": 0 },
+        { "type": 6, "mi": 8, "tgInform": 0 }
+      ],
+      "wup": 18,
+      "mi": 0
+    }
+  ],
+  "tatts": [
+    {
+      "description": "",
+      "icon": "LeftToRightListDash",
+      "initVal": {},
+      "title": "Ход события",
+      "R": 105,
+      "U": 105,
+      "mi": 0,
+      "use": 113,
+      "titles": ["лоывар", "ыволарыва"]
+    }
+  ],
+  "types": [
+    { "title": "Общение", "tm": 15 },
+    { "title": "Пение", "tm": 5, "atts": {} },
+    { "title": "Проповедь", "tm": 90 },
+    { "title": "Разъезд", "tm": 5 },
+    { "tm": 5, "title": "Введение" },
+    { "tm": 45, "title": "Свидетельства" },
+    { "tm": 15, "title": "Молитва" }
+  ],
+  "tgInformTime": 5,
+  "start": 1747429200000,
+  "ctrl": {
+    "cats": ["Основное"],
+    "users": [
+      {
+        "fio": "danikpon",
+        "login": "T7f21a14d3133065ca2e48254f87ecf3",
+        "nick": "danikpon",
+        "tgId": 370756745,
+        "mi": 1,
+        "tgInform": 1,
+        "R": 127
+      },
+      {
+        "fio": "Павел 👨‍💻",
+        "login": "T166cbf17596a0c2919e4df1a6d54e66",
+        "nick": "gfirf",
+        "tgId": 958383738,
+        "mi": 2,
+        "R": 127
+      }
+    ],
+    "roles": [
+      { "mi": 0, "title": "Координатор", "icon": "Github" },
+      { "title": "", "mi": 1 }
+    ],
+    "type": 3,
+    "defu": 21
+  },
+  "games": { "criterias": [{ "title": "Сила", "sorts": {} }], "list": [] },
+  "lists": {
+    "cats": [{ "icon": "UserGroup03", "title": "Группа", "titles": ["Наставники", "Участники"] }],
+    "units": [{ "cat": 0, "mi": 1, "title": "Первая", "dsc": "" }]
+  },
+  "w": 1728975804442.541,
+  "tgAlertsTime": 30,
+  "tgInform": 1,
+  "m": 1747470580807.3726,
+  "prevStart": 1741899600000
+}

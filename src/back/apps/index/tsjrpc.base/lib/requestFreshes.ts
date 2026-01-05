@@ -13,7 +13,7 @@ import { StameskaIconPack } from 'stameska-icon/utils';
 import { WebSocket } from 'ws';
 import { indexServerTsjrpcBase } from '..';
 import { indexStameskaIconsFileStore, userAccessRightsAndRolesFileStore } from '../../file-stores';
-import { schedulesFileStore } from '../../schedules/file-stores';
+import { schedulesDirStore } from '../../schedules/file-stores';
 import { schServerTsjrpcShareMethods } from '../../schedules/tsjrpc.shares';
 import { indexServerTsjrpcShareMethods } from '../../tsjrpc.methods';
 import { makeUserAccessRights } from './makeUserAccessRights';
@@ -43,7 +43,7 @@ export const indexTSJRPCBaseRequestFreshes: typeof indexServerTsjrpcBase.request
 
   const schedules: IScheduleWidget[] = [];
 
-  schedulesFileStore.getValue().forEach((sch): number | null => {
+  schedulesDirStore.getAllItems().forEach((sch): number | null => {
     const removedSch = { w: sch.w, isRemoved: 1 } as IScheduleWidget;
 
     if (scheduleWidgetRegTypeRights.checkIsHasRights(sch.ctrl.type, ScheduleWidgetRegType.Public)) {
@@ -83,7 +83,7 @@ export const indexTSJRPCBaseRequestFreshes: typeof indexServerTsjrpcBase.request
     const userIconPacksSet = new Set(userIconPacks);
     const userAccessSchedules: IScheduleWidget[] = [];
 
-    schedulesFileStore.getValue().forEach(sch => {
+    schedulesDirStore.getAllItems().forEach(sch => {
       if (scheduleWidgetRegTypeRights.checkIsHasRights(sch.ctrl.type, ScheduleWidgetRegType.Public)) {
         userAccessSchedules.push(sch);
       } else {
