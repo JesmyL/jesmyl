@@ -1,7 +1,8 @@
 {
   "w": 1612341943490,
   "n": "Он так любит всех нас",
-  "s": 3,
+  "bpm": 130,
+  "s": 6,
   "p": 7,
   "al": "1~20201119//121848.mp3",
   "t": [
@@ -11,10 +12,10 @@
     "Он так любит всех нас,\nчто оставил небо,\nИ нет больше той цены,\nчто за тебя Он дал,\nТак иди сегодня\nна призыв Господний,\nОтзовись, ведь Он тебя\nтак долго-долго ждал."
   ],
   "c": [
-    "Am\nCmaj7/G\nF#dim\nA7 Dm\nHdim E7\nAm9/C Fmaj7\nH\nEsus E7",
+    "Am\nCmaj7/G\nFmaj\nA7 Dm\nHdim E7\nAm9/C Fmaj7\nH\nEsus E7",
     "Am-Am/G Am/F#\nDm Hdim\nE7\nA/C# C6\nF\nDm Hdim\nE7\nE7/D Am",
     "Am Cmaj/G Fmaj7 Hdim E7\nAm Cmaj/G Fmaj7 Hdim E7-Fmaj7#11-E7",
-    "Am Cmaj/G Fmaj7 Hdim Am/C Fdim/G# E\nFmaj7 Am/E Dm E7\nFmaj7 Am/E Dm E7"
+    "Am\nCmaj/G Fmaj7\nHdim Am/C Fdim/G# E\nFmaj7 Am/E Dm E7\nFmaj7 Am/E Dm E7"
   ],
   "o": [
     { "w": 6, "c": 2, "s": "enter", "k": 15 },

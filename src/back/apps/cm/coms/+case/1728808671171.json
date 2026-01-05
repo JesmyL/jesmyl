@@ -12,6 +12,7 @@
   ],
   "c": ["H C#m\nE F#\nH C#m\nE F#", "E F# H", "E F#\nH C#m\nE F#\n.H-C#m..H", "E F#\nH C#m\nE\nF# .H-C#m..H"],
   "o": [
+    { "w": 8, "k": 15, "c": 2 },
     {
       "w": 0,
       "t": 0,
