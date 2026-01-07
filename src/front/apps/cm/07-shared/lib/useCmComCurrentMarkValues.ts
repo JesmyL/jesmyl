@@ -93,6 +93,8 @@ export const useCmComCurrentMarkValues = (com: CmCom | und) => {
       } else if (!checkIsCmComAudioMarkTitleIsLineSelector(selector) && mylib.isStr(selector)) {
         const selectorText = selector.trim();
 
+        if (selectorText === '-') continue;
+
         blockText = selectorText.startsWith('+')
           ? selectorText.slice(1).trim()
           : `${technicalTextPrefix}${selectorText}`;

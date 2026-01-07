@@ -23,7 +23,7 @@ export {
   CmComOrder,
   CmComOrderList,
   TheCmComOrder,
-  useCmComOrderAudioMarkControl,
+  useCmComOrderAudioMarkControlButtons,
   type CmComOrderEditableRegion,
   type ICmComOrderExportableMe,
 } from '$cm/entities/com-order';

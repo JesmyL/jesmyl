@@ -22,7 +22,7 @@ import {
   CmComOrderList,
   cmIDB,
   useCmComCommentBlockCss,
-  useCmComOrderAudioMarkControl,
+  useCmComOrderAudioMarkControlButtons,
 } from '$cm/ext';
 import { atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
@@ -39,26 +39,31 @@ export const CmEditorComTabAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
   const marksOnUpdating = useAtomValue(cmComEditorAudioMarksEditPacksAtom);
   const { commentCss } = useCmComCommentBlockCss(ccom, true);
 
-  const audioMarkControl = useCmComOrderAudioMarkControl(true, ccom, false, (playNode, time) =>
-    time === 0 ? (
-      <div
-        key={time}
-        className="my-3"
-      >
-        {playNode}
-      </div>
-    ) : (
-      <div
-        key={time}
-        className="flex flex-col gap-2"
-      >
-        {playNode}
-        <Button
-          icon="Settings01"
-          onClick={() => cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.set(time)}
-        />
-      </div>
-    ),
+  const audioMarkControl = useCmComOrderAudioMarkControlButtons(
+    preSwitchTimeAtom,
+    true,
+    ccom,
+    false,
+    (playNode, time) =>
+      time === 0 ? (
+        <div
+          key={time}
+          className="my-3"
+        >
+          {playNode}
+        </div>
+      ) : (
+        <div
+          key={time}
+          className="flex flex-col gap-2"
+        >
+          {playNode}
+          <Button
+            icon="Settings01"
+            onClick={() => cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.set(time)}
+          />
+        </div>
+      ),
   );
 
   useEffect(() => {

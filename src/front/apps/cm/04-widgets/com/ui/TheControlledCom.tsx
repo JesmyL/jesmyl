@@ -5,9 +5,10 @@ import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
 import { CmCom } from '$cm/entities/com';
 import { cmComAudioPlayerPlaySrcAtom, isCmComAudioPlayerOpenMoversAtom } from '$cm/entities/com-audio-player';
 import { cmComCommentCurrentOpenedAltKeyAtom, useCmComCommentBlockFastReactions } from '$cm/entities/com-comment';
-import { useCmComOrderAudioMarkControl } from '$cm/entities/com-order';
+import { useCmComOrderAudioMarkControlButtons } from '$cm/entities/com-order';
 import { cmComFontSizeAtom, cmComIsComMiniAnchorAtom, cmComSpeedRollKfAtom } from '$cm/entities/index';
 import { ChordVisibleVariant } from '$cm/shared/model';
+import { cmComTrackPreSwitchTimeAtom } from '$cm/shared/state';
 import { Link } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useRef } from 'react';
@@ -38,17 +39,22 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
   const isOpenMoversButtons =
     useAtomValue(isCmComAudioPlayerOpenMoversAtom) && !!playSrc && com.audio.includes(playSrc);
 
-  const audioMarkControl = useCmComOrderAudioMarkControl(isOpenMoversButtons, com, true, (node, time, selector) =>
-    mylib.isStr(selector) ? (
-      <div
-        key={time}
-        className="my-3"
-      >
-        {node}
-      </div>
-    ) : (
-      node
-    ),
+  const audioMarkControl = useCmComOrderAudioMarkControlButtons(
+    cmComTrackPreSwitchTimeAtom,
+    isOpenMoversButtons,
+    com,
+    true,
+    (node, time, selector) =>
+      mylib.isStr(selector) ? (
+        <div
+          key={time}
+          className="my-3"
+        >
+          {node}
+        </div>
+      ) : (
+        node
+      ),
   );
 
   const comi = comList.findIndex(c => c.wid === com.wid);

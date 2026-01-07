@@ -4,13 +4,14 @@ import { MyLib, mylib } from '#shared/lib/my-lib';
 import { CmCom } from '$cm/entities/com';
 import { cmComAudioPlayerHTMLElement, cmComAudioPlayerPlaySrcAtom } from '$cm/entities/com-audio-player';
 import { makeCmComAudioMarkTitleBySelector } from '$cm/ext';
-import { cmComTrackPreSwitchTimeAtom, cmIDB } from '$cm/shared/state';
-import { useAtomValue } from 'atomaric';
+import { cmIDB } from '$cm/shared/state';
+import { Atom, useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { CmComAudioMarkSelector, CmComOrderWid } from 'shared/api';
 import { itIt } from 'shared/utils';
 
-export const useCmComOrderAudioMarkControl = (
+export const useCmComOrderAudioMarkControlButtons = (
+  preTimeAtom: Atom<number>,
   isNeedCompute: boolean,
   com: CmCom,
   isHideShortTime: boolean,
@@ -33,7 +34,7 @@ export const useCmComOrderAudioMarkControl = (
     if (!isNeedCompute || marks == null) return result;
 
     let lastOrdwOrNull: 'before' | CmComOrderWid = 'before';
-    const takeMinusTime = () => (cmComTrackPreSwitchTimeAtom.get() < 0 ? 0 : cmComTrackPreSwitchTimeAtom.get());
+    const takeMinusTime = () => (preTimeAtom.get() < 0 ? 0 : preTimeAtom.get());
 
     MyLib.entries(marks).forEach(([time, selector]) => {
       const titleProps = makeCmComAudioMarkTitleBySelector(
@@ -53,6 +54,8 @@ export const useCmComOrderAudioMarkControl = (
       const className = titleProps.isShortTime ? 'text-xKO' : undefined;
 
       if (mylib.isStr(selector)) {
+        if (selector === '-') return;
+
         afterTargetOrdwOtherPlayButtonNodeDict[lastOrdwOrNull] ??= [];
         afterTargetOrdwOtherPlayButtonNodeDict[lastOrdwOrNull]?.push(
           actualMapNodeRef.current(
@@ -105,5 +108,5 @@ export const useCmComOrderAudioMarkControl = (
     if (mylib.isArr(marks[0])) delete afterTargetOrdwOtherPlayButtonNodeDict.before;
 
     return result;
-  }, [isNeedCompute, audioTrackMarks?.marks, isHideShortTime, com, actualMapNodeRef]);
+  }, [audioTrackMarks?.marks, isNeedCompute, preTimeAtom, com, isHideShortTime, actualMapNodeRef]);
 };
