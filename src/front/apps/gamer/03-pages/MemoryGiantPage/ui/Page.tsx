@@ -162,7 +162,7 @@ export const GamerMemoryGiantPage = () => {
                           confirm="Удалить изображение?"
                           onClick={async () => {
                             await gamerIDB.tb.memoryGiantImages.delete(image.md5);
-                            gamerMemoryGiantUsedImagesAtom.do.remove(image.md5);
+                            gamerMemoryGiantUsedImagesAtom.do.removeFirst(image.md5);
                           }}
                         />
                       </div>

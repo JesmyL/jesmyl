@@ -17,7 +17,7 @@ export const MetronomePlayButton = memo(function MetronomePlayButton() {
 
   return (
     <div
-      className={'pointer'}
+      className="pointer"
       onMouseDown={isTouchDevice ? undefined : togglePlay}
       onTouchStart={isTouchDevice ? togglePlay : undefined}
     >

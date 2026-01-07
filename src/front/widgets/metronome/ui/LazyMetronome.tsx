@@ -8,6 +8,7 @@ import { useMetronomePlayStateController } from '../lib/useMetronomePlayStateCon
 import { MetronomeBpmInput } from './BpmInput';
 import { MetronomeMeterDots } from './MeterDots';
 import { MetronomePlayButton } from './PlayButton';
+import { MetronomeToolsMenu } from './ToolsMenu';
 import { MetronomeTouchBpmButton } from './TouchBpmButton';
 
 interface Props {
@@ -29,6 +30,13 @@ export default function LazyMetronome({ meterSize = 4, bpm = 120 }: Props) {
         openAtom={metronomeIsOpenAtom}
         onClose={openAtom => openAtom.set(false)}
       >
+        <ModalBody className="flex w-full justify-between">
+          Метроном
+          <div className="flex gap-1">
+            <MetronomeToolsMenu />
+          </div>
+        </ModalBody>
+
         <StyledModalBody className="flex column between">
           <div className="flex between w-full">
             <MetronomeTouchBpmButton />
@@ -46,5 +54,5 @@ export default function LazyMetronome({ meterSize = 4, bpm = 120 }: Props) {
 
 const StyledModalBody = styled(ModalBody)`
   aspect-ratio: 1 / 1;
-  container: metronome / size;
+  container: metronome/size;
 `;

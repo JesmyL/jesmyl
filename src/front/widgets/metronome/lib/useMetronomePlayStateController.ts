@@ -1,7 +1,13 @@
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
+import { myTimeStampAtom } from '#shared/state/atoms';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import { Loop, LoopOptions, Sampler, getTransport } from 'tone';
+import { Loop, Sampler, getTransport } from 'tone';
+import {
+  metronomeIsSyncWithGroupAtom,
+  metronomeJoinedToLeaderAtom,
+  metronomeLeaderTimeStampDictAtom,
+} from '../state/atoms';
 import {
   metronomeIsPlayAtom,
   metronomeUserBpmAtom,
@@ -14,28 +20,43 @@ export const useMetronomePlayStateController = () => {
   const userMeterSize = useAtomValue(metronomeUserMeterSizeAtom);
   const accents = useAtomValue(metronomeUserMeterAccentsAtom)[userMeterSize] ?? '1' + '0'.repeat(userMeterSize - 1);
   const isPlay = useAtomValue(metronomeIsPlayAtom);
+  const joinedToLeader = useAtomValue(metronomeJoinedToLeaderAtom);
+  const leaderTimeStamp = useAtomValue(metronomeLeaderTimeStampDictAtom)[joinedToLeader];
 
   useEffect(() => {
-    if (!isPlay) return retOnPlayStop();
+    if (!isPlay) {
+      Transport.pause();
+      Transport.stop();
+      loops.forEach(loop => loop.stop());
 
-    for (let beati = 0; beati < userMeterSize; beati++) {
-      const note = accents[beati] === '1' ? 'A1' : 'A2';
-      const diff = 60 / userBpm;
-      const loopDuration = diff * userMeterSize;
-      const beatDiffTime = diff * beati;
-
-      loops.push(
-        new Loop(time => {
-          sampler.triggerAttackRelease(note, '8n', time + beatDiffTime);
-        }, loopDuration),
-      );
+      return cleanupEffectHook;
     }
 
-    loops.forEach(startEachLoop);
+    const deltaNow = Date.now() - (leaderTimeStamp || myTimeStampAtom.get());
+    const betweenBeats = (60 / userBpm) * 1000;
+    const loopDuration = betweenBeats * userMeterSize;
+
+    const beatsWasPlayRest = deltaNow % betweenBeats;
+    const loopsWasPlayRest = deltaNow % loopDuration;
+
+    let currentAccentIndex = (loopsWasPlayRest - beatsWasPlayRest) / betweenBeats - 1;
+
+    const startDelay = metronomeIsSyncWithGroupAtom.get()
+      ? (betweenBeats - beatsWasPlayRest) / 1000 + (leaderTimeStamp ? 0.02 : 0)
+      : 0;
+
+    loops.push(
+      new Loop(() => {
+        if (++currentAccentIndex === accents.length) currentAccentIndex = 0;
+        sampler.triggerAttackRelease(accents[currentAccentIndex] === '1' ? 'A3' : 'A1', '8n');
+      }, 60 / userBpm),
+    );
+
+    loops.forEach(loop => loop.start(startDelay));
     Transport.start();
 
     return cleanupEffectHook;
-  }, [accents, isPlay, userBpm, userMeterSize]);
+  }, [accents, isPlay, leaderTimeStamp, userBpm, userMeterSize]);
 };
 
 //
@@ -51,16 +72,9 @@ const sampler = new Sampler({
 
 const loops: Loop[] = [];
 const cleanupEffectHook = () => {
-  loops.forEach(stopEachLoop);
+  Transport.pause();
+  Transport.stop();
+  loops.forEach(loop => loop.stop());
   loops.length = 0;
 };
 const Transport = getTransport();
-
-const retOnPlayStop = () => {
-  Transport.stop();
-  loops.forEach(stopEachLoop);
-  return cleanupEffectHook;
-};
-
-const startEachLoop = (loop: Loop<LoopOptions>) => loop.start(0);
-const stopEachLoop = (loop: Loop<LoopOptions>) => loop.stop();
