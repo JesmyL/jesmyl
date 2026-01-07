@@ -1,22 +1,12 @@
 import { Button, DropdownMenu } from '#shared/components';
-import { mylib } from '#shared/lib/my-lib';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
-import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
-import {
-  metronomeIsSyncWithGroupAtom,
-  metronomeJoinedToLeaderAtom,
-  metronomeLeaderTimeStampDictAtom,
-} from '../state/atoms';
-import { MetronomeQrShow } from './QrShow';
-import { MetronomeReaderQr } from './ReaderQr';
+import { metronomeIsSyncModeAtom } from '../state/atoms';
 
 export const MetronomeToolsMenu = () => {
   const [isDropped, setDropped] = useState(false);
-  const joinedToLeaderName = useAtomValue(metronomeJoinedToLeaderAtom);
-  const leaders = useAtomValue(metronomeLeaderTimeStampDictAtom);
-  const isSyncWithGroup = useAtomValue(metronomeIsSyncWithGroupAtom);
+  const isSyncWithGroup = useAtomValue(metronomeIsSyncModeAtom);
 
   return (
     <DropdownMenu.Root
@@ -34,48 +24,10 @@ export const MetronomeToolsMenu = () => {
         <DropdownMenu.Item>
           <IconCheckbox
             checked={isSyncWithGroup}
-            onChange={metronomeIsSyncWithGroupAtom.do.toggle}
-            postfix="Синхронизироваться группой"
+            onChange={metronomeIsSyncModeAtom.do.toggle}
+            postfix="Синхронный режим"
           />
         </DropdownMenu.Item>
-
-        {isSyncWithGroup && (
-          <>
-            <DropdownMenu.Item>
-              <MetronomeReaderQr />
-            </DropdownMenu.Item>
-
-            <DropdownMenu.Item>
-              <MetronomeQrShow />
-            </DropdownMenu.Item>
-
-            {mylib.keys(leaders).map(leaderName => {
-              return (
-                <DropdownMenu.Item key={leaderName}>
-                  <IconCheckbox
-                    checked={joinedToLeaderName === leaderName}
-                    onChange={() =>
-                      metronomeJoinedToLeaderAtom.set(
-                        metronomeJoinedToLeaderAtom.get() === leaderName ? '' : leaderName,
-                      )
-                    }
-                    postfix={
-                      <>
-                        {leaderName}
-                        <TheIconButton
-                          confirm="Удалить ориентировку на лидера?"
-                          className="text-xKO!"
-                          icon="Delete02"
-                          onClick={() => metronomeLeaderTimeStampDictAtom.do.setPartial({ [leaderName]: undefined })}
-                        />
-                      </>
-                    }
-                  />
-                </DropdownMenu.Item>
-              );
-            })}
-          </>
-        )}
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   );

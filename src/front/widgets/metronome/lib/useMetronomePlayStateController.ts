@@ -1,13 +1,8 @@
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
-import { myTimeStampAtom } from '#shared/state/atoms';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { Loop, Sampler, getTransport } from 'tone';
-import {
-  metronomeIsSyncWithGroupAtom,
-  metronomeJoinedToLeaderAtom,
-  metronomeLeaderTimeStampDictAtom,
-} from '../state/atoms';
+import { metronomeIsSyncModeAtom } from '../state/atoms';
 import {
   metronomeIsPlayAtom,
   metronomeUserBpmAtom,
@@ -15,13 +10,13 @@ import {
   metronomeUserMeterSizeAtom,
 } from './atoms';
 
+const globalTimeStamp = 1777777777777;
+
 export const useMetronomePlayStateController = () => {
   const userBpm = useDebounceValue(useAtomValue(metronomeUserBpmAtom), 500);
   const userMeterSize = useAtomValue(metronomeUserMeterSizeAtom);
   const accents = useAtomValue(metronomeUserMeterAccentsAtom)[userMeterSize] ?? '1' + '0'.repeat(userMeterSize - 1);
   const isPlay = useAtomValue(metronomeIsPlayAtom);
-  const joinedToLeader = useAtomValue(metronomeJoinedToLeaderAtom);
-  const leaderTimeStamp = useAtomValue(metronomeLeaderTimeStampDictAtom)[joinedToLeader];
 
   useEffect(() => {
     if (!isPlay) {
@@ -32,7 +27,7 @@ export const useMetronomePlayStateController = () => {
       return cleanupEffectHook;
     }
 
-    const deltaNow = Date.now() - (leaderTimeStamp || myTimeStampAtom.get());
+    const deltaNow = Date.now() - globalTimeStamp;
     const betweenBeats = (60 / userBpm) * 1000;
     const loopDuration = betweenBeats * userMeterSize;
 
@@ -41,9 +36,7 @@ export const useMetronomePlayStateController = () => {
 
     let currentAccentIndex = (loopsWasPlayRest - beatsWasPlayRest) / betweenBeats - 1;
 
-    const startDelay = metronomeIsSyncWithGroupAtom.get()
-      ? (betweenBeats - beatsWasPlayRest) / 1000 + (leaderTimeStamp ? 0.02 : 0)
-      : 0;
+    const startDelay = metronomeIsSyncModeAtom.get() ? (betweenBeats - beatsWasPlayRest) / 1000 : 0;
 
     loops.push(
       new Loop(() => {
@@ -56,7 +49,7 @@ export const useMetronomePlayStateController = () => {
     Transport.start();
 
     return cleanupEffectHook;
-  }, [accents, isPlay, leaderTimeStamp, userBpm, userMeterSize]);
+  }, [accents, isPlay, userBpm, userMeterSize]);
 };
 
 //
