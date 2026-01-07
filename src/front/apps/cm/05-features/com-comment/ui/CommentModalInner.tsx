@@ -59,10 +59,10 @@ export const CmComCommentModalInner = ({ com }: { com: CmCom }) => {
   return (
     <>
       <ModalHeader className="flex gap-2 justify-between @container">
-        <span className="flex gap-2 w-[calc(100cqw-23px*2)]">
+        <span className="flex gap-2 w-[calc(100cqw-44px*2)]">
           <LazyIcon icon="TextAlignLeft" />
           <span className="text-x7 nowrap">
-            {isKindComments || <>#{ordNN} </>}
+            {isKindComments || !ordNN || <>#{ordNN} </>}
             {ord?.me.header()}
           </span>
           <span className="text-x3 ellipsis">{com.name}</span>
@@ -103,7 +103,7 @@ export const CmComCommentModalInner = ({ com }: { com: CmCom }) => {
         )}
       </ModalHeader>
       <ModalBody>
-        {isKindComments ? (
+        {isKindComments && !ordNN ? (
           <CmComCommentKindComments
             altCommentKey={altCommentKey}
             com={com}
