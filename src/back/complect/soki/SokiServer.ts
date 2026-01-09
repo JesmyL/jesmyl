@@ -34,11 +34,11 @@ export class SokiServer {
         this.clientsByLogin.get(auth.login)?.delete(client);
       });
 
-      client.on('message', async (data: WebSocket.RawData) => {
+      client.on('message', async (data: Buffer) => {
         const event: TsjrpcClientEvent = JSON.parse('' + data, parseReciever);
 
         if (event.ping) {
-          this.send({ pong: 1, requestId: event.requestId }, client);
+          this.send({ pong: 1, requestId: event.requestId, invokedResult: { serverTimeStamp: Date.now() } }, client);
           return;
         }
 
