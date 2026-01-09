@@ -11,7 +11,7 @@ const versionFilePath = 'src/shared/values/+version.json';
  * @returns
  */
 export const deployTheCode = async (front, back) => {
-  if (~process.argv.indexOf('--front')) {
+  if (process.argv.includes('-f')) {
     const builtFiles = [`./${front.builtFolder}/*`];
 
     console.info('Files to load: ', builtFiles);
@@ -47,7 +47,7 @@ export const deployTheCode = async (front, back) => {
     }
   }
 
-  if (~process.argv.indexOf('--back')) {
+  if (process.argv.includes('-b')) {
     console.info('back.index file build is running...');
 
     const filePath = await buildBackIndexFile();
