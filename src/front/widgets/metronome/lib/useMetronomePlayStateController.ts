@@ -1,4 +1,5 @@
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
+import { serverTimeStampDeltaAtom } from '#shared/state/atoms';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { Loop, Sampler, getTransport } from 'tone';
@@ -17,6 +18,7 @@ export const useMetronomePlayStateController = () => {
   const userMeterSize = useAtomValue(metronomeUserMeterSizeAtom);
   const accents = useAtomValue(metronomeUserMeterAccentsAtom)[userMeterSize] ?? '1' + '0'.repeat(userMeterSize - 1);
   const isPlay = useAtomValue(metronomeIsPlayAtom);
+  const serverTimeStampDelta = useAtomValue(serverTimeStampDeltaAtom);
 
   useEffect(() => {
     if (!isPlay) {
@@ -27,21 +29,24 @@ export const useMetronomePlayStateController = () => {
       return cleanupEffectHook;
     }
 
-    const deltaNow = Date.now() - globalTimeStamp;
+    const deltaNow = Date.now() - globalTimeStamp + serverTimeStampDelta.delta;
+
     const betweenBeats = (60 / userBpm) * 1000;
     const loopDuration = betweenBeats * userMeterSize;
 
     const beatsWasPlayRest = deltaNow % betweenBeats;
     const loopsWasPlayRest = deltaNow % loopDuration;
 
-    let currentAccentIndex = (loopsWasPlayRest - beatsWasPlayRest) / betweenBeats - 1;
+    let currentAccentIndex = metronomeIsSyncModeAtom.get()
+      ? Math.floor((loopsWasPlayRest - beatsWasPlayRest) / betweenBeats)
+      : -1;
 
     const startDelay = metronomeIsSyncModeAtom.get() ? (betweenBeats - beatsWasPlayRest) / 1000 : 0;
 
     loops.push(
       new Loop(() => {
         if (++currentAccentIndex === accents.length) currentAccentIndex = 0;
-        sampler.triggerAttackRelease(accents[currentAccentIndex] === '1' ? 'A3' : 'A1', '8n');
+        sampler.triggerAttackRelease(accents[currentAccentIndex] === '1' ? 'B1' : 'G1', '8n');
       }, 60 / userBpm),
     );
 
@@ -49,7 +54,7 @@ export const useMetronomePlayStateController = () => {
     Transport.start();
 
     return cleanupEffectHook;
-  }, [accents, isPlay, userBpm, userMeterSize]);
+  }, [accents, isPlay, serverTimeStampDelta.delta, userBpm, userMeterSize]);
 };
 
 //

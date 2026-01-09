@@ -1,3 +1,4 @@
+import { useSyncServerTimeStamp } from '#shared/lib/useSyncServerTimeStamp';
 import { Modal, ModalBody } from '#shared/ui/modal';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
@@ -20,6 +21,7 @@ export default function LazyMetronome({ meterSize = 4, bpm = 120 }: Props) {
   const isOpen = useAtomValue(metronomeIsOpenAtom);
 
   useMetronomePlayStateController();
+  useSyncServerTimeStamp();
 
   useEffect(() => metronomeUserMeterSizeAtom.set(meterSize), [meterSize]);
   useEffect(() => metronomeUserBpmAtom.set(bpm), [bpm]);

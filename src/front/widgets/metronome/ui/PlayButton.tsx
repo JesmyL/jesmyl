@@ -1,18 +1,17 @@
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useAtom } from 'atomaric';
+import { useAtomValue } from 'atomaric';
 import { memo, useRef } from 'react';
-import { itNIt } from 'shared/utils';
 import styled from 'styled-components';
 import { metronomeIsPlayAtom } from '../lib/atoms';
 import audioSrc from './silent.wav';
 
 export const MetronomePlayButton = memo(function MetronomePlayButton() {
   const elemRef = useRef<HTMLAudioElement>(null);
-  const [isPlay, setIsPlay] = useAtom(metronomeIsPlayAtom);
+  const isPlay = useAtomValue(metronomeIsPlayAtom);
   const togglePlay = () => {
     if (!isPlay) elemRef.current?.play();
-    setIsPlay(itNIt);
+    metronomeIsPlayAtom.do.toggle();
   };
 
   return (
