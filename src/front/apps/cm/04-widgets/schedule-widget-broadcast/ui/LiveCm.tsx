@@ -42,21 +42,22 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
     if (props.isCantTranslateLive || !ccom) return;
 
     return setTimeoutEffect(() => {
-      const blockLengths = ccom.broadcastMap(config.pushKind, true);
+      const list = ccom.groupSlideLinesByKind(ccom.takeSolidTextLines(), config.pushKind);
+      const textLines = list.flatMap(({ list }) => list);
+
       let toLinei = 0;
       let chordedBlocksCount = 0;
 
       for (let blocki = 0; blocki <= currTexti + chordedBlocksCount; blocki++) {
-        if (blockLengths[blocki] < 0) {
+        if (textLines[blocki].length < 0) {
           toLinei += 1;
           chordedBlocksCount++;
           continue;
         }
-        toLinei += blockLengths[blocki];
+        toLinei += textLines[blocki].length;
       }
 
-      const fromLinei = toLinei - blockLengths[currTexti + chordedBlocksCount];
-      const texts = ccom.makeSlideTexts(true, config.pushKind);
+      const fromLinei = toLinei - textLines[currTexti + chordedBlocksCount].length;
 
       const liveData: IndexSchWBroadcastLiveDataValue = {
         fio: props.fio,
@@ -65,8 +66,8 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
           texti: currTexti,
           fromLinei,
           toLinei,
-          text: texts[currTexti],
-          nextText: texts[currTexti + 1] || '',
+          text: textLines[currTexti].join('\n'),
+          nextText: textLines[currTexti + 1]?.join('\n') || '',
           config,
         },
       };

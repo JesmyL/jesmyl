@@ -1,4 +1,5 @@
 import { StrRegExp } from 'regexpert';
+import { CmBroadcastSlideGrouperKind } from 'shared/model/cm/broadcast';
 import { CmComMetricNums } from 'shared/model/cm/com-metric-nums';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 import { CmCatWid, CmComMod, CmComOrderWid, CmComWid, CmMeetingEventWid } from './enums';
@@ -80,7 +81,7 @@ export interface IExportableCom {
   /** время изменения */
   m: CmComMod;
   /** вариант группировки строк для трансляций */
-  k?: number | string;
+  k?: CmBroadcastSlideGrouperKind;
   /** уровень модулирования */
   p?: number;
   /** язык песни */

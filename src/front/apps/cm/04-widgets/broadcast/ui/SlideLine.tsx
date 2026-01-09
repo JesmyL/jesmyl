@@ -1,5 +1,4 @@
 import { useCmBroadcastCurrentComTexts, useCmBroadcastScreenComTextNavigations } from '$cm/features/broadcast';
-import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 import { useCmBroadcastCurrentScreenConfig } from '../hooks/configs';
 
@@ -11,56 +10,26 @@ export const CmBroadcastSlideLine = () => {
   if (!texts) return;
 
   return (
-    <StyledLine className="no-scrollbar">
+    <div className="no-scrollbar snap-x snap-mandatory flex my-2 bg-x1 py-2 overflow-auto nowrap rounded-md">
       {texts.map((text, texti) => {
         return (
-          <StyledItem
+          <div
             key={texti}
             id={`broadcast-window-line-${texti}`}
             onClick={() => setTexti(texti)}
+            className="mx-3 snap-center"
           >
             <div>{texti + 1}</div>
-            <StyledItemInner className={twMerge('pointer', currTexti === texti && 'active')}>
-              <div dangerouslySetInnerHTML={{ __html: text }} />
-            </StyledItemInner>
-          </StyledItem>
+            <div
+              className={twMerge(
+                'pointer text-x3 flex p-3 h-[calc(100%-1.5em)] overflow-hidden text-[14px] text-center white-pre rounded-md',
+                currTexti === texti && 'text-x7 bg-x2',
+              )}
+              dangerouslySetInnerHTML={{ __html: text }}
+            />
+          </div>
         );
       })}
-    </StyledLine>
+    </div>
   );
 };
-
-const StyledItemInner = styled.div`
-  display: flex;
-  border: solid 1px transparent;
-  background: black;
-  padding: 5px;
-  height: calc(100% - 1.5em);
-  overflow: hidden;
-  color: var(--color-x3);
-  font-size: 14px;
-  user-select: none;
-  text-align: center;
-  white-space: pre;
-
-  &.active {
-    border-color: var(--color-x3);
-  }
-`;
-
-const StyledItem = styled.div`
-  margin: 0 7px;
-  scroll-snap-align: center;
-`;
-
-const StyledLine = styled.div`
-  display: flex;
-  margin: 1em 0;
-  border-radius: var(--radius);
-  background: black;
-  padding: 1em 0;
-  overflow: auto;
-  scroll-snap-type: x mandatory;
-  color: white;
-  white-space: nowrap;
-`;

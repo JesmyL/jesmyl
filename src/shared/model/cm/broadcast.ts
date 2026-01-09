@@ -1,0 +1,22 @@
+import { CmComOrder } from '$cm/ext';
+import { CmComOrderWid } from 'shared/api';
+
+export type CmBroadcastSlideGrouperKindSingleValue = CmBroadcastSlideGrouperOrdCombiner | number | string;
+
+export type CmBroadcastSlideGrouperKindCombiner = { s?: string; n?: number; d: CmBroadcastSlideGrouperOrdCombiner };
+
+export type CmBroadcastSlideGrouperKind = number | string | CmBroadcastSlideGrouperKindCombiner;
+
+export type CmBroadcastSlideGrouperOrdCombiner = PRecord<CmComOrderWid, number>;
+
+export type CmBroadcastSlideGrouperOrdWithList = {
+  ord: CmComOrder;
+  list: string[];
+}[];
+
+export type CmBroadcastSlideGrouperOrdWithListAndRule = {
+  ord: CmComOrder;
+  list: string[][];
+  rule: number;
+  defaultRule: number;
+}[];

@@ -1,63 +1,108 @@
 import { mylib } from '#shared/lib/my-lib';
 import { makeRegExp } from 'regexpert';
-import { CmComLineGroupingKind, cmComLineGroupingDefaultKinds } from 'shared/const/cm/comLineGroupingKind';
-import { itIt } from 'shared/utils';
+import { cmComLineGroupingDefaultKinds } from 'shared/const/cm/comLineGroupingKind';
+import {
+  CmBroadcastSlideGrouperOrdCombiner,
+  CmBroadcastSlideGrouperOrdWithList,
+  CmBroadcastSlideGrouperOrdWithListAndRule,
+} from 'shared/model/cm/broadcast';
 import { CmComTexts } from './40-Texts';
 
 export class CmComBroadcast extends CmComTexts {
-  makeSlideTexts(isIncluseEndStars = true, kind: number | und) {
-    return this.makeSlideBlocks(kind).map(
-      (lines, linesi, linesa) =>
-        lines?.join('\n') + (isIncluseEndStars && linesa.length - 1 === linesi ? '\n* * *' : ''),
-    );
-  }
+  groupSlideLinesByKind = (ordLines: CmBroadcastSlideGrouperOrdWithList, rule = this.broadcastPushKind) => {
+    if (rule == null) return [];
 
-  makeSlideBlocks(kind: number | und) {
-    const textBeats = this.orders
-      ?.reduce((text, ord) => text + (!ord.isRealText() ? '' : (text ? '\n' : '') + ord.repeatedText()), '')
-      .split(makeRegExp('/\\n/'));
+    let str = '';
+    let ordComb: CmBroadcastSlideGrouperOrdCombiner = {};
 
-    const texts = this.broadcastMap(kind)
-      .map(peaceSize => textBeats?.splice(0, peaceSize))
-      .filter(itIt);
+    if (mylib.isStr(rule)) str = rule;
+    else if (mylib.isNum(rule)) str = cmComLineGroupingDefaultKinds[rule];
+    else {
+      if (mylib.isStr(rule.s)) str = rule.s;
+      else if (mylib.isNum(rule.n)) str = cmComLineGroupingDefaultKinds[rule.n];
 
-    return texts;
-  }
-
-  broadcastMap = (kind: number | und, isPushChordedBlocks = false) => {
-    const kindScalar = kind ?? this.broadcastPushKind;
-
-    const slideKind = new CmComLineGroupingKind(
-      mylib.isStr(kindScalar) ? kindScalar : cmComLineGroupingDefaultKinds[kindScalar],
-    );
-
-    let curr = 0;
-    const orders = this.orders ?? [];
-    const ordersLength = orders.length;
-    const newlineReg = makeRegExp('/\\n/');
-
-    for (let ordi = 0; ordi < ordersLength; ) {
-      const ord = orders[ordi];
-
-      if (!ord.isRealText()) {
-        ordi++;
-        if (isPushChordedBlocks && !ord.text) slideKind.fix(-1);
-        continue;
-      }
-
-      curr += ord.text.split(newlineReg).length;
-      let nextOrd = orders[++ordi];
-
-      while (nextOrd?.me.isInherit) {
-        if (nextOrd.isRealText()) curr += nextOrd.text.split(newlineReg).length;
-
-        nextOrd = orders[++ordi];
-      }
-
-      slideKind.fix(curr);
-      curr = 0;
+      ordComb = rule.d;
     }
 
-    return slideKind.list;
+    if (!str) return [];
+
+    const divDict: Record<string, string> = {};
+
+    str.split(makeRegExp('/[ ,]+/')).forEach(str => {
+      const [key, value] = str.split(':');
+
+      if (!value) divDict[0] = key;
+      else divDict[key] = value;
+    });
+
+    return ordLines.map(({ list, ord }): CmBroadcastSlideGrouperOrdWithListAndRule[number] => {
+      const ordw = ord.wid;
+
+      let defaultRule = 0;
+      let defaultDict: CmBroadcastSlideGrouperOrdWithListAndRule[number] | null = null;
+
+      for (let i = list.length; i >= 0; i--) {
+        if (divDict[i]) {
+          defaultRule = +divDict[i];
+          defaultDict = {
+            ord,
+            list: this.divideLinesByRule(list, +divDict[i]),
+            rule: defaultRule,
+            defaultRule,
+          };
+
+          break;
+        }
+      }
+
+      if (ordComb[ordw] != null)
+        return {
+          ord,
+          list: this.divideLinesByRule(list, ordComb[ordw]),
+          rule: ordComb[ordw],
+          defaultRule,
+        };
+
+      if (divDict[`=${list.length}`] != null) {
+        const rule = +divDict[`=${list.length}`];
+
+        return {
+          ord,
+          list: this.divideLinesByRule(list, rule),
+          rule,
+          defaultRule,
+        };
+      }
+
+      return defaultDict ?? { ord, list: [list], rule: 0, defaultRule };
+    });
+  };
+
+  private divideLinesByRule = (lines: string[], rule: number) => {
+    const ruleStr = `${rule}`;
+    const newLines: string[][] = [];
+
+    if (ruleStr.length === 1) {
+      for (; lines.length; ) {
+        if (!+rule) break;
+
+        newLines.push(lines.slice(0, rule));
+        lines = lines.slice(rule);
+      }
+    } else {
+      let index = 0;
+
+      for (; lines.length; ) {
+        if (!+ruleStr[index]) break;
+
+        newLines.push(lines.slice(0, +ruleStr[index]));
+        lines = lines.slice(+ruleStr[index]);
+
+        index++;
+        if (index >= ruleStr.length) index = 0;
+      }
+    }
+
+    return newLines;
   };
 }

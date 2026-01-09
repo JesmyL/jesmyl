@@ -1,4 +1,5 @@
 import { CmComWid, HttpLink, IExportableCom } from 'shared/api/complect/apps';
+import { CmBroadcastSlideGrouperKindSingleValue } from 'shared/model/cm/broadcast';
 import { CmComMetricNums } from 'shared/model/cm/com-metric-nums';
 
 type SimpleComValueSetter<Value> = (args: { comw: CmComWid; value: Value }) => IExportableCom;
@@ -13,7 +14,7 @@ export type CmEditComTsjrpcModel = {
   changeLanguage: SimpleComValueSetter<number>;
   changeTon: SimpleComValueSetter<number>;
   makeBemoled: SimpleComValueSetter<num>;
-  changePushKind: SimpleComValueSetter<number | string>;
+  changePushKind: SimpleComValueSetter<CmBroadcastSlideGrouperKindSingleValue>;
   toggleAudioLink: (args: { comw: CmComWid; link: HttpLink }) => void;
 
   changeChordBlock: (args: { texti: number; comw: CmComWid; value: string }) => IExportableCom;

@@ -4,6 +4,7 @@ import { CmComWid, IExportableCom, IServerSideCom } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
 import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
 import { cmComLineGroupingDefaultKinds } from 'shared/const/cm/comLineGroupingKind';
+import { CmBroadcastSlideGrouperKindCombiner } from 'shared/model/cm/broadcast';
 import { itNNil, smylib, trimTextLines } from 'shared/utils';
 import { cmComLanguages } from 'shared/utils/cm/com/const';
 import { textLinesLengthIncorrects } from 'shared/utils/cm/com/textLinesLengthIncorrects';
@@ -75,12 +76,38 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_TR', 'U')) throw '';
 
           const prev = com.k;
-          const index = smylib.isNum(value) ? value : cmComLineGroupingDefaultKinds.indexOf(value);
-          com.k = (index < 0 ? value : index) || undefined;
+          let next = com.k;
 
-          if (com.k === '') com.k = prev;
+          const newKind: CmBroadcastSlideGrouperKindCombiner =
+            smylib.isNum(prev) || smylib.isNil(prev)
+              ? { d: {}, n: prev || 0 }
+              : smylib.isStr(prev)
+                ? { d: {}, s: prev }
+                : prev;
 
-          return `изменено значение правила группировок для слайдов - ${value} (было ${prev})`;
+          if (smylib.isStr(value)) {
+            newKind.s = value;
+            delete newKind.n;
+          } else if (smylib.isNum(value)) {
+            newKind.n = value;
+            delete newKind.s;
+          } else newKind.d = { ...newKind.d, ...value };
+
+          smylib.keys(newKind.d).forEach(key => {
+            newKind.d[key] = +newKind.d[key]!;
+            if (!newKind.d[key]) delete newKind.d[key];
+          });
+
+          if (!smylib.keys(newKind.d).length) next = newKind.n ?? newKind.s;
+          else next = newKind;
+
+          if (smylib.isStr(next)) {
+            const index = cmComLineGroupingDefaultKinds.indexOf(next);
+
+            com.k = (index < 0 ? next : index) || undefined;
+          } else com.k = next;
+
+          return `изменено значение правила группировок для слайдов - ${JSON.stringify(com.k)} (было ${JSON.stringify(prev)})`;
         }),
 
         toggleAudioLink: modifyCom((com, { link }, { auth }) => {

@@ -16,7 +16,13 @@ export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) =>
         {checkAccess('cm', 'COM_TR', 'U') && (
           <>
             <CmBroadcastScreenConfigurationPushKind
-              config={{ pushKind: mylib.isStr(ccom.broadcastPushKind) ? -100 : ccom.broadcastPushKind }}
+              config={{
+                pushKind: mylib.isNum(ccom.broadcastPushKind)
+                  ? ccom.broadcastPushKind
+                  : mylib.isStr(ccom.broadcastPushKind)
+                    ? -100
+                    : ccom.broadcastPushKind.n,
+              }}
               updateConfig={({ pushKind }) => {
                 if (pushKind == null || ccom.broadcastPushKind === pushKind) return;
                 return cmEditComClientTsjrpcMethods.changePushKind({ comw: ccom.wid, value: pushKind });
@@ -29,7 +35,11 @@ export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) =>
               defaultValue={
                 mylib.isStr(ccom.broadcastPushKind)
                   ? ccom.broadcastPushKind
-                  : cmComLineGroupingDefaultKinds[ccom.broadcastPushKind]
+                  : mylib.isNum(ccom.broadcastPushKind)
+                    ? cmComLineGroupingDefaultKinds[ccom.broadcastPushKind]
+                    : ccom.broadcastPushKind.n != null
+                      ? cmComLineGroupingDefaultKinds[ccom.broadcastPushKind.n]
+                      : ccom.broadcastPushKind.s
               }
               onChanged={value => cmEditComClientTsjrpcMethods.changePushKind({ comw: ccom.wid, value })}
             />
@@ -37,21 +47,36 @@ export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) =>
         )}
       </div>
 
-      {ccom.getOrderedBlocks(currentConfig?.pushKind).map((lines, linesi) => {
-        return (
-          <div
-            key={linesi}
-            className="my-5 pre-text"
-          >
-            {lines?.map((text, texti) => (
-              <div
-                key={texti}
-                dangerouslySetInnerHTML={{ __html: text }}
+      {ccom
+        .groupSlideLinesByKind(ccom.takeSolidTextLines(true), currentConfig?.pushKind)
+        .map(({ list, ord, rule, defaultRule }, linesi) => {
+          return (
+            <div
+              key={linesi}
+              className="border border-x2 my-2 pl-3"
+            >
+              <InputWithLoadingIcon
+                icon="TextNumberSign"
+                defaultValue={`${rule}`}
+                className="max-w-20"
+                strongDefaultValue
+                onChanged={value => {
+                  return cmEditComClientTsjrpcMethods.changePushKind({
+                    comw: ccom.wid,
+                    value: { [ord.wid]: +value === defaultRule ? 0 : +value },
+                  });
+                }}
               />
-            ))}
-          </div>
-        );
-      })}
+              {list?.map((text, texti) => (
+                <div
+                  key={texti}
+                  className="my-5 pre-text"
+                  dangerouslySetInnerHTML={{ __html: text.join('\n') }}
+                />
+              ))}
+            </div>
+          );
+        })}
     </>
   );
 };
