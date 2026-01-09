@@ -7,7 +7,7 @@ import { jversion } from 'shared/values';
 import { environment } from './environment';
 
 export class SokiTrip {
-  private ws?: WebSocket;
+  private ws = new WebSocket(environment.sokiLink);
   private isTokenSent = false;
 
   private isConnected = false;
@@ -74,9 +74,8 @@ export class SokiTrip {
   };
 
   start() {
-    this.ws = new WebSocket(environment.sokiLink);
-
     this.ws.onclose = () => {
+      this.ws = new WebSocket(environment.sokiLink);
       setTimeout(() => this.start(), 500);
       this.isOpened = false;
       this.isTokenSent = false;
@@ -88,12 +87,6 @@ export class SokiTrip {
       try {
         const event: TsjrpcServerEvent = JSON.parse(data);
 
-        if (event.pong) {
-          this.setIsConnected(true);
-          clearTimeout(this.pingDisconnectedSetterTimeout);
-          return;
-        }
-
         if (this.requests[event.requestId] !== undefined) {
           console.info(event);
           if (event.errorMessage && !event.errorMessage.startsWith('#'))
@@ -101,6 +94,12 @@ export class SokiTrip {
 
           this.requests[event.requestId]!.action(event);
           delete this.requests[event.requestId];
+        }
+
+        if (event.pong) {
+          this.setIsConnected(true);
+          clearTimeout(this.pingDisconnectedSetterTimeout);
+          return;
         }
 
         if (event.invoke === undefined) return;
@@ -134,31 +133,29 @@ export class SokiTrip {
   private async sendForce(requestId: string) {
     const event = this.requests[requestId]?.event;
     if (event == null) return;
-    let tries = 20;
 
-    const trySend = async () => {
-      if (tries-- < 0) return;
-      try {
-        if (this.ws && this.ws.readyState === this.ws.OPEN) {
-          this.ws.send(event);
-        } else setTimeout(trySend, 100);
-      } catch (_error) {
-        setTimeout(trySend, 100);
-      }
+    if (this.ws.readyState === this.ws.OPEN) {
+      this.ws.send(event);
+      return;
+    }
+
+    const send = async () => {
+      this.ws.send(event);
+      this.ws.removeEventListener('open', send);
     };
 
-    trySend();
+    this.ws.addEventListener('open', send);
   }
 
   send = <InvokedResult = unknown>(
     event: OmitOwn<TsjrpcClientEvent, 'requestId'>,
     tool?: TsjrpcClientTool | nil | void,
-  ) => {
+  ): Promise<InvokedResult> => {
     const strEvent = JSON.stringify(event);
     const requestId = smylib.md5(strEvent);
 
     if (this.requests[requestId] != null) {
-      return this.requests[requestId].promise;
+      return this.requests[requestId].promise as never;
     }
 
     const fullEvent = `${strEvent.slice(0, -1)},"requestId":"${requestId}"}`;
@@ -173,7 +170,7 @@ export class SokiTrip {
       promise: withResolvers.promise,
     };
 
-    if (this.ws && this.ws.readyState === this.ws.OPEN && (this.isTokenSent || 'token' in event)) {
+    if (this.ws.readyState === this.ws.OPEN && (this.isTokenSent || 'token' in event)) {
       this.sendForce(requestId);
     } else this.onConnectionOpenEvent.listenFirst(() => this.sendForce(requestId));
 
@@ -204,17 +201,33 @@ export class SokiTrip {
 
   private pingTimeout: TimeOut;
   private pingDisconnectedSetterTimeout: TimeOut;
-  ping = () => {
-    if (this.pingTimeout === undefined) {
-      clearTimeout(this.pingDisconnectedSetterTimeout);
-      this.pingDisconnectedSetterTimeout = setTimeout(() => this.setIsConnected(false), 500);
-    }
+  ping = (timeout?: number) => {
+    return new Promise<{ start: number; finish: number; ts: number }>(resolve => {
+      if (this.pingTimeout === undefined) {
+        clearTimeout(this.pingDisconnectedSetterTimeout);
+        this.pingDisconnectedSetterTimeout = setTimeout(() => this.setIsConnected(false), 500);
+      }
 
-    clearTimeout(this.pingTimeout);
-    this.pingTimeout = setTimeout(() => {
-      this.send({ ping: 1 });
-      this.pingTimeout = undefined;
-    }, 0);
+      clearTimeout(this.pingTimeout);
+      this.pingTimeout = setTimeout(async () => {
+        this.pingTimeout = undefined;
+        const start = Date.now();
+        const result = await this.send({ ping: 1 }, { timeout });
+
+        if (
+          result &&
+          typeof result === 'object' &&
+          'serverTimeStamp' in result &&
+          typeof result.serverTimeStamp === 'number'
+        ) {
+          resolve({
+            start,
+            ts: result.serverTimeStamp,
+            finish: Date.now(),
+          });
+        }
+      }, 0);
+    });
   };
 }
 
