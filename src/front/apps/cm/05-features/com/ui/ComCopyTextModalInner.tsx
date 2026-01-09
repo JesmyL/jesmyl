@@ -2,13 +2,13 @@ import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { CopyTextButton } from '#shared/ui/CopyTextButton';
 import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { CmCom } from '$cm/entities/com';
 import {
   CmComToolChordsVariant,
   CmComToolIsComToolIconItemsContext,
   CmComToolMiniAnchorSwitch,
 } from '$cm/entities/com-tool';
 import { cmComChordVisibleVariantAtom, cmComIsComMiniAnchorAtom } from '$cm/entities/index';
+import { CmCom } from '$cm/ext';
 import { TheCmComCurrent } from '$cm/widgets/com';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';

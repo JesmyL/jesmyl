@@ -4,9 +4,9 @@ import { useListInfiniteScrollController } from '#shared/lib/hooks/useListInfini
 import { mylib } from '#shared/lib/my-lib';
 import { useCmComLastOpenComw } from '$cm/entities/com';
 import { useCmComSetListLimitsExtracterContext } from '$cm/entities/index';
+import { CmCom } from '$cm/ext';
 import { useRef } from 'react';
 import { retNull } from 'shared/utils';
-import { CmCom } from '../../com/lib/Com';
 import { CmComNumber } from '../../com/ui/ComNumber';
 import { cmComFaceCurrentComwIdPrefix, cmComFaceItemDescriptionClassName } from '../const/ids';
 import { useCmComFaceListClickListener } from '../lib/useComListClickListener';

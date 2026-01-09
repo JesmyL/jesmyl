@@ -4,7 +4,6 @@ export { type CmCatTracker } from '$cm/entities/cat/model/Cat.model';
 export { CmChordCard } from '$cm/entities/chord-card/ui/ChordCard';
 export { CmChordCardTracked } from '$cm/entities/chord-card/ui/ChordCardTracked';
 export {
-  CmCom,
   CmComMoveSelectedButton,
   CmComNumber,
   CmComWithComListSearchFilterInput,
@@ -30,6 +29,7 @@ export {
 export { CmComOrderLine } from '$cm/entities/com-order-line';
 export { TheCmComOrderSolid } from '$cm/entities/com-order/ui/TheOrderSolid';
 export { type CmBroadcastSchWgtLiveDataValue } from '$cm/features/broadcast/model/model';
+export { CmCom } from '$cm/shared/lib/Com';
 export {
   checkIsCmComAudioMarkTitleIsLineSelector,
   makeCmComAudioMarkTitleAsLineSelector,

@@ -5,7 +5,6 @@ import { Modal, ModalBody, ModalFooter, ModalHeader, usePrompt } from '#shared/u
 import { QrCodeFullScreen } from '#shared/ui/qr-code/QrCodeFullScreen';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { WithAtom } from '#shared/ui/WithAtom';
-import { CmCom } from '$cm/entities/com';
 import {
   cmComCommentCurrentOpenedAltKeyAtom,
   cmComCommentRedactOrdSelectorIdAtom,
@@ -14,6 +13,7 @@ import {
   useCmComCommentBlock,
 } from '$cm/entities/com-comment';
 import { CmComOrder } from '$cm/entities/com-order';
+import { CmCom } from '$cm/ext';
 import { cmAppActions } from '$cm/shared/const';
 import { cmConstantsConfigAtom, cmIDB } from '$cm/shared/state';
 import { useAuth } from '$index/shared/state';

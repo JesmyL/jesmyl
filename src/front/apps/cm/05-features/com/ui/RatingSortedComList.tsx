@@ -1,6 +1,6 @@
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
-import { CmCom } from '$cm/entities/com';
 import { CmComFaceList } from '$cm/entities/com-face';
+import { CmCom } from '$cm/ext';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';

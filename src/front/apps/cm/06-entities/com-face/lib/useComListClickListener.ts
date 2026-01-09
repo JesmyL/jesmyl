@@ -1,9 +1,9 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { cmComSelectedComwsAtom } from '$cm/entities/com';
+import { CmCom } from '$cm/ext';
 import { useNavigate } from '@tanstack/react-router';
 import { useEffect } from 'react';
-import { CmCom } from '../../com/lib/Com';
 import { cmComFaceCurrentComwIdPrefix, cmComFaceItemDescriptionClassName } from '../const/ids';
 import { ICmComFaceList } from '../model/model';
 

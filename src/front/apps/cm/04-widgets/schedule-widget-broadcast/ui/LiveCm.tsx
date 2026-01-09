@@ -56,7 +56,7 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
       }
 
       const fromLinei = toLinei - blockLengths[currTexti + chordedBlocksCount];
-      const texts = ccom.getOrderedTexts(true, config.pushKind);
+      const texts = ccom.makeSlideTexts(true, config.pushKind);
 
       const liveData: IndexSchWBroadcastLiveDataValue = {
         fio: props.fio,

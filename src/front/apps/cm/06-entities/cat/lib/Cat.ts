@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { CmCom } from '$cm/entities/com';
+import { CmCom } from '$cm/ext';
 import { BaseNamed } from '$cm/shared/lib';
 import { CmComWid, IExportableCat } from 'shared/api';
 

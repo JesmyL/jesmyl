@@ -1,11 +1,11 @@
 import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
 import { cmComCommentCurrentOpenedAltKeyAtom } from '$cm/entities/com-comment';
 import { CmComOrderList } from '$cm/entities/com-order';
+import { CmCom } from '$cm/ext';
 import { TheCmComWithComments } from '$cm/widgets/com';
 import { useAtomValue } from 'atomaric';
 import React from 'react';
 import styled from 'styled-components';
-import { CmCom } from '../lib/Com';
 import { cmComSpeedRollKfAtom } from '../state/atoms';
 import { CmComNumber } from './ComNumber';
 

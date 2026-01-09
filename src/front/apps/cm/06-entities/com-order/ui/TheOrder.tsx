@@ -1,11 +1,11 @@
 import { ICmComOrderLineProps } from '$cm/entities/com-order-line';
 import { cmComChordHardLevelAtom } from '$cm/entities/index';
+import { CmCom } from '$cm/ext';
 import { ChordVisibleVariant } from '$cm/shared/model';
 import { useAtomValue } from 'atomaric';
 import React from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmComOrderLine } from '../../com-order-line/ui/ComLine';
-import { CmCom } from '../../com/lib/Com';
 import { CmComOrder } from '../lib/Order';
 import { ICmComOrderHeaderProps } from '../model/Order.model';
 

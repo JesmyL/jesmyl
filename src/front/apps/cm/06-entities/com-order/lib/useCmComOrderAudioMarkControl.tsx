@@ -1,9 +1,8 @@
 import { Button } from '#shared/components/ui/button';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { MyLib, mylib } from '#shared/lib/my-lib';
-import { CmCom } from '$cm/entities/com';
 import { cmComAudioPlayerHTMLElement, cmComAudioPlayerPlaySrcAtom } from '$cm/entities/com-audio-player';
-import { makeCmComAudioMarkTitleBySelector } from '$cm/ext';
+import { CmCom, makeCmComAudioMarkTitleBySelector } from '$cm/ext';
 import { cmIDB } from '$cm/shared/state';
 import { Atom, useAtomValue } from 'atomaric';
 import { useMemo } from 'react';

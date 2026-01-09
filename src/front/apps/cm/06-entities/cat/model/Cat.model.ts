@@ -1,4 +1,4 @@
-import { CmCom } from '../../com/lib/Com';
+import { CmCom } from '$cm/ext';
 import { CmCat } from '../lib/Cat';
 
 export interface CmCatComWrap<C = CmCom> {

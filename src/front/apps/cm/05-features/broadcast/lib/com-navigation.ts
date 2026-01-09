@@ -1,6 +1,7 @@
-import { CmCom, useCmComCurrent, useCmComCurrentComPackContext, useCmComSelectedList } from '$cm/entities/com';
+import { useCmComCurrent, useCmComCurrentComPackContext } from '$cm/entities/com';
 import { cmComFaceCurrentComwIdPrefix } from '$cm/entities/com-face';
 import { useCmComFavouriteList } from '$cm/entities/com-favourite';
+import { CmCom, useCmComSelectedList } from '$cm/ext';
 import { cmOpenComListModeAtom } from '$cm/shared/state';
 import { useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';

@@ -1,7 +1,7 @@
 import { QrCodeFullScreen } from '#shared/ui/qr-code/QrCodeFullScreen';
+import { CmCom } from '$cm/ext';
 import { cmAppActions } from '$cm/shared/const';
 import { Atom, useAtomValue } from 'atomaric';
-import { CmCom } from '../lib/Com';
 import { cmComWidNumberDictAtom } from '../state/atoms';
 
 export const CmComListQrShare = ({ coms, openAtom }: { openAtom: Atom<boolean>; coms: CmCom[] }) => {

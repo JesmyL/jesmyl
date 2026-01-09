@@ -1,5 +1,5 @@
+import { CmCom } from '$cm/ext';
 import { itIt } from 'shared/utils';
-import { CmCom } from '../../com/lib/Com';
 import { CmChordCard } from './ChordCard';
 import { CmChordCardUndefined } from './UndefinedChordCard';
 

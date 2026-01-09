@@ -1,6 +1,7 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { CmCom, useCmComLaterList } from '$cm/entities/com';
+import { useCmComLaterList } from '$cm/entities/com';
 import { cmComAudioPlayerIsPlayAtom, cmComAudioPlayerPlaySrcAtom } from '$cm/entities/com-audio-player';
+import { CmCom } from '$cm/ext';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useEffect, useRef } from 'react';
 

@@ -1,5 +1,6 @@
-import { CmCom, CmComNotFoundPage, useCmComCurrent } from '$cm/entities/com';
+import { CmComNotFoundPage, useCmComCurrent } from '$cm/entities/com';
 import { CmComOrderList } from '$cm/entities/com-order';
+import { CmCom } from '$cm/ext';
 import { ChordVisibleVariant } from '$cm/shared/model';
 import { RefObject } from 'react';
 

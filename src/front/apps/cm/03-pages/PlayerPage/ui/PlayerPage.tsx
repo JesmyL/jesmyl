@@ -5,7 +5,7 @@ import { renderComponentInNewWindow } from '#shared/lib/renders';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { DocTitle } from '#shared/ui/tags/DocTitle';
-import { CmCom, useCmCom, useCmComList, useCmComSelectedList } from '$cm/entities/com';
+import { useCmCom } from '$cm/entities/com';
 import {
   cmComAudioPlayerEndedTickAtom,
   cmComAudioPlayerErrorTickAtom,
@@ -18,7 +18,7 @@ import { CmComFaceList } from '$cm/entities/com-face';
 import { useCmComFavouriteList } from '$cm/entities/com-favourite';
 import { CmComListPackKindSelector } from '$cm/entities/ComListPackKindSelector';
 import { cmComLastOpenComwAtom } from '$cm/entities/index';
-import { CmComAudioPlayerMarksMovers, CmComNumber } from '$cm/ext';
+import { CmCom, CmComAudioPlayerMarksMovers, CmComNumber, useCmComList, useCmComSelectedList } from '$cm/ext';
 import { getCmComFreshAudioMarksPack } from '$cm/shared/lib/getFresh';
 import { cmComTrackPreSwitchTimeAtom, cmOpenComListModeAtom } from '$cm/shared/state';
 import { cmPlayerBroadcastAudioSrcAtom, cmPlayerBroadcastComwAtom } from '$cm/shared/state/broadcast.atoms';

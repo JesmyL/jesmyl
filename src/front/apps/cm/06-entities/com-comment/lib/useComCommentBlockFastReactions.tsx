@@ -3,10 +3,10 @@ import { addEventListenerWithDelayPipe, hookEffectPipe } from '#shared/lib/hookE
 import { mylib } from '#shared/lib/my-lib';
 import { isCmComAudioPlayerOpenMoversAtom } from '$cm/entities/com-audio-player';
 import { cmComIsComMiniAnchorAtom } from '$cm/entities/index';
+import { CmCom } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { wait } from 'shared/utils';
-import { CmCom } from '../../com/lib/Com';
 import { cmComCommentRedactOrdSelectorIdAtom } from '../state/atoms';
 
 export const useCmComCommentBlockFastReactions = (listRef: React.RefObject<HTMLDivElement | null>, com: CmCom) => {

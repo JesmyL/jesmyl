@@ -2,13 +2,13 @@ import { isNumberSearchAtom } from '#basis/state/isNumberSearchAtom';
 import { mylib } from '#shared/lib/my-lib';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { useCmCatList } from '$cm/entities/cat';
+import { CmCom } from '$cm/ext';
 import { Atom, useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmComWid, IExportableCom } from 'shared/api';
 import { takeCorrectComIndex, takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
-import { CmCom } from '../lib/Com';
 import { cmComWidNumberDictAtom } from '../state/atoms';
 
 const mapExtractItem = <Item,>({ item }: { item: Item }): Item => item;

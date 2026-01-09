@@ -1,6 +1,6 @@
-import { CmCom } from '$cm/entities/com';
 import { CmComOrderList } from '$cm/entities/com-order';
 import { cmComChordVisibleVariantAtom, cmComFontSizeAtom, cmComIsComMiniAnchorAtom } from '$cm/entities/index';
+import { CmCom } from '$cm/ext';
 import { ChordVisibleVariant } from '$cm/shared/model';
 import { useAtomValue } from 'atomaric';
 

@@ -2,11 +2,11 @@ import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMak
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
-import { CmCom } from '$cm/entities/com';
 import { cmComAudioPlayerPlaySrcAtom, isCmComAudioPlayerOpenMoversAtom } from '$cm/entities/com-audio-player';
 import { cmComCommentCurrentOpenedAltKeyAtom, useCmComCommentBlockFastReactions } from '$cm/entities/com-comment';
 import { useCmComOrderAudioMarkControlButtons } from '$cm/entities/com-order';
 import { cmComFontSizeAtom, cmComIsComMiniAnchorAtom, cmComSpeedRollKfAtom } from '$cm/entities/index';
+import { CmCom } from '$cm/ext';
 import { ChordVisibleVariant } from '$cm/shared/model';
 import { cmComTrackPreSwitchTimeAtom } from '$cm/shared/state';
 import { Link } from '@tanstack/react-router';

@@ -1,7 +1,6 @@
 import { ICmComOrderLineProps } from '$cm/entities/com-order-line';
-import { CmComOrder } from '$cm/ext';
+import { CmCom, CmComOrder } from '$cm/ext';
 import { ChordVisibleVariant } from '$cm/shared/model';
-import { CmCom } from '../../com/lib/Com';
 import { ICmComOrderHeaderProps } from './Order.model';
 
 export interface ICmComOrderListProps {

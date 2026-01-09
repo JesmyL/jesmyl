@@ -1,5 +1,5 @@
-import { CmCom, useCmComList } from '$cm/entities/com';
 import { CmComFaceList } from '$cm/entities/com-face';
+import { CmCom, useCmComList } from '$cm/ext';
 import { cmIDB } from '$cm/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { IScheduleWidgetDayEventMi, IScheduleWidgetWid } from 'shared/api';

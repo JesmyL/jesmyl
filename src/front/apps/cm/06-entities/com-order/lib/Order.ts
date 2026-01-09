@@ -1,5 +1,6 @@
 import { mylib, MyLib } from '#shared/lib/my-lib';
 import { SourceBased } from '#shared/lib/SourceBased';
+import { CmCom } from '$cm/ext';
 import { ChordVisibleVariant } from '$cm/shared/model';
 import { makeRegExp } from 'regexpert';
 import {
@@ -15,7 +16,6 @@ import { itIt } from 'shared/utils';
 import { chordInterpretedRegs } from 'shared/utils/cm/com/const';
 import { transformToDisplayedText } from 'shared/utils/cm/com/transformToDisplayedText';
 import { CmComOrderUtils } from 'shared/utils/cm/ComOrderUtils';
-import { CmCom } from '../../com/lib/Com';
 import { CmComOrderEditableRegion, ICmComOrderExportableMe } from '../model/Order.model';
 
 export class CmComOrder extends SourceBased<IExportableOrder> {

@@ -1,17 +1,12 @@
-export * from './ui/CmComListSearchFilterInput';
-
-export * from './lib/Com';
 export * from './lib/com-selections';
 export * from './lib/coms-selections';
 export * from './lib/current-com-list';
 export { type CmComListContextValue } from './lib/current-com-list';
 export * from './lib/useLaterComList';
 export * from './lib/useSelectedComs';
-
 export * from './model/com';
-
 export * from './state/atoms';
-
+export { cmComSelectedComwsAtom } from './state/atoms';
 export * from './ui/CmComListSearchFilterInput';
 export * from './ui/ComCatMentions';
 export * from './ui/ComListShare';

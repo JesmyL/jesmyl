@@ -1,9 +1,9 @@
 import { useBibleBroadcastScreenFontSizeAdapter } from '#shared/lib/hooks/useFontSizeAdapter';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { CmCom } from '$cm/ext';
 import { ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
-import { CmCom } from '../../com/lib/Com';
 import { ICmComOrderListProps } from '../model/ComOrders.model';
 import { TheCmComOrderSolid } from './TheOrderSolid';
 

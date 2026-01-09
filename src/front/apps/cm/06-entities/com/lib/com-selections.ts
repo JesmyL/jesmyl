@@ -1,12 +1,12 @@
 import { contextCreator } from '#shared/lib/contextCreator';
 import { mylib } from '#shared/lib/my-lib';
+import { CmCom } from '$cm/ext';
 import { cmIDB } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { CmComWid } from 'shared/api';
 import { cmComLastOpenComwAtom } from '../state/atoms';
-import { CmCom } from './Com';
 
 export const useCmComCurrentFixedCom = (): CmCom | und => {
   const ccom = useCmComCurrent();

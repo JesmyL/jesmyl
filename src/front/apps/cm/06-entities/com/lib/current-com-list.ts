@@ -1,7 +1,7 @@
 import { contextCreator } from '#shared/lib/contextCreator';
+import { CmCom } from '$cm/ext';
 import { retNull } from 'shared/utils';
 import { CmComOpenLinkRenderer } from '../model/com';
-import { CmCom } from './Com';
 
 type Titles = Record<number, string>;
 

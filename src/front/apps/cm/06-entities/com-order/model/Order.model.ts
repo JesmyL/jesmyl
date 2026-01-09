@@ -1,7 +1,7 @@
+import { CmCom } from '$cm/ext';
 import { ReactNode } from 'react';
 import { IExportableOrder, IExportableOrderFieldValues, OrderRepeats } from 'shared/api';
 import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';
-import { CmCom } from '../../com/lib/Com';
 import { CmComOrder } from '../lib/Order';
 
 export type CmComOrderEditableRegion<Ord extends CmComOrder> = {

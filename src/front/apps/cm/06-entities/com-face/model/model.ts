@@ -1,4 +1,4 @@
-import { CmCom } from '../../com/lib/Com';
+import { CmCom } from '$cm/ext';
 import { CmComFaceInheritProps } from './ComFace.model';
 
 export interface ICmComFaceList extends CmComFaceInheritProps {

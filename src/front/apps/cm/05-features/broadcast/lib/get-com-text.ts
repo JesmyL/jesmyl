@@ -5,5 +5,5 @@ export const useCmBroadcastCurrentComTexts = (pushKind: number | und) => {
   const lastOpenComw = useCmComLastOpenComw();
   const com = useCmCom(lastOpenComw);
 
-  return useMemo(() => com?.getOrderedTexts(true, pushKind), [com, pushKind]);
+  return useMemo(() => com?.makeSlideTexts(true, pushKind), [com, pushKind]);
 };

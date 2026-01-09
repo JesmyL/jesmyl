@@ -1,8 +1,8 @@
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
+import { CmCom } from '$cm/ext';
 import { atom } from 'atomaric';
-import { CmCom } from '../lib/Com';
 import { useCmComOpenComLinkRendererContext } from '../lib/current-com-list';
 import { CmComListQrShare } from './ComListShare';
 import { CmComFullscreenExpandList } from './FullscreenExpandComList';
