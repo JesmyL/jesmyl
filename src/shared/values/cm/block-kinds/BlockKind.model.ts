@@ -1,6 +1,7 @@
 export interface IExportableKindProp {
   key: CmComBlockKindKey;
   title: [ru: string, ua: string];
+  alt?: string;
   isInherit?: boolean;
   group?: number;
   tags?: string[];

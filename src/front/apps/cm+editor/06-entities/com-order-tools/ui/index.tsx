@@ -29,7 +29,7 @@ export const CmEditorComOrderToolsRedactorOrderTools = (props: CmEditorComOrderT
         </>
       )}
       <CmEditorComOrderToolsOrderVisibility {...props} />
-      {props.ord.me.kind?.isModulation && <CmEditorComOrderToolsModulation {...props} />}
+      <CmEditorComOrderToolsModulation {...props} />
 
       <CmEditorComOrderToolsEmptyHeader {...props} />
       <CmEditorComOrderToolsMoveBlock {...props} />

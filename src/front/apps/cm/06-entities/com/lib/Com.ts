@@ -22,7 +22,7 @@ import { CmComOrderTopHeaderBag, ICmComOrderExportableMe } from '../../com-order
 export class CmCom extends BaseNamed<IExportableCom> {
   initial: Partial<IExportableCom & { pos: number }>;
   ton?: number;
-  excludedModulations: number[] = [];
+  excludedModulations = new Set<number>();
 
   protected _o?: CmComOrder[];
   protected _ords?: ICmComOrderExportableMe[];
@@ -156,12 +156,12 @@ export class CmCom extends BaseNamed<IExportableCom> {
   }
 
   transposeChord(chord: string, delta: number = 1) {
-    const cindex = simpleHashChords.indexOf(chord);
-    const di = cindex - -delta;
+    const currentIndex = simpleHashChords.indexOf(chord);
+    const di = currentIndex + delta;
     const len = simpleHashChords.length;
-    const nindex = di < 0 ? len - -di : di > len ? di % len : di === len || -di === len ? 0 : di;
+    const nextIndex = di < 0 ? len - -di : di > len ? di % len : di === len || -di === len ? 0 : di;
 
-    return simpleHashChords[nindex];
+    return simpleHashChords[nextIndex];
   }
 
   transposeBlock(cblock: string, delta = this.transPosition) {
@@ -269,13 +269,11 @@ export class CmCom extends BaseNamed<IExportableCom> {
     delete this._chordLabels;
   }
 
-  toggleModulationInclusion(order: CmComOrder) {
-    const orderWid = order.wid;
-    const isExcluded = this.excludedModulations.includes(orderWid);
+  toggleModulationExclusion(order: CmComOrder) {
+    this.excludedModulations = new Set(this.excludedModulations);
 
-    this.excludedModulations = isExcluded
-      ? this.excludedModulations.filter(ordWid => ordWid !== orderWid)
-      : [...this.excludedModulations, orderWid];
+    if (this.excludedModulations.has(order.wid)) this.excludedModulations.delete(order.wid);
+    else this.excludedModulations.add(order.wid);
 
     this.updateChordLabels();
 
@@ -304,16 +302,18 @@ export class CmCom extends BaseNamed<IExportableCom> {
   private updateChordLabels() {
     this._chordLabels = [];
     this._usedChords = {};
-    let currTransPosition = this.transPosition;
+    let currTransPosition = this.transPosition || 0;
 
     this.orders?.forEach(ord => {
       const ordLabels: string[][] = [];
       this._chordLabels?.push(ordLabels);
-      const chords = this.actualChords(ord.chordsi, currTransPosition);
+      const prevTransPosition = currTransPosition;
 
-      if (!this.excludedModulations.includes(ord.wid) && ord.me.kind?.isModulation) {
-        currTransPosition = (this.transPosition || 0) + (ord.fieldValues?.md || 0);
+      if (!this.excludedModulations.has(ord.wid) && ord.isModulated) {
+        currTransPosition = currTransPosition + (ord.fieldValues?.md || 0);
       }
+
+      const chords = this.actualChords(ord.chordsi, ord.me.kind?.isModulation ? prevTransPosition : currTransPosition);
 
       (chords || '').split(makeRegExp('/\\n/')).forEach(line => {
         const lineLabels: string[] = [];
@@ -372,11 +372,11 @@ export class CmCom extends BaseNamed<IExportableCom> {
       return ord?.top.k != null ? styles.find((prop: KindBlock) => prop.key === ord.top.k) : null;
     };
 
-    const setMin = (src: ICmComOrderExportableMe) => {
-      const styleName = Math.abs(src.kind?.key ?? 0);
-      if (src.kind?.isModulation) minimals = [];
-      src.top.m = minimals.some(([s, c]) => styleName === s && src.top.c === c) ? undefined : 1;
-      minimals.push([styleName, src.top.c]);
+    const setMin = (me: ICmComOrderExportableMe) => {
+      const styleName = Math.abs(me.kind?.key ?? 0);
+      if (me.top.f?.md) minimals = [];
+      me.top.m = minimals.some(([s, c]) => styleName === s && me.top.c === c) ? undefined : 1;
+      minimals.push([styleName, me.top.c]);
     };
 
     const header = (ord: ICmComOrderExportableMe, style: KindBlock, numered = true) => {

@@ -28,14 +28,19 @@ export type SpecialOrderRepeats = Record<string, number>;
 export type OrderRepeats = number | SpecialOrderRepeats;
 
 export interface InheritancableOrder {
-  w: CmComOrderWid; // Уникальный айди
-  r?: OrderRepeats | null; // Повторения
-  p?: (number[] | null)[] | nil; // Позиции аккордов
-  v?: num; // Видимость блока
+  /** Уникальный айди */
+  w: CmComOrderWid;
+  /** Повторения */
+  r?: OrderRepeats | null;
+  /** Позиции аккордов */
+  p?: (number[] | null)[] | nil;
+  /** Видимость блока */
+  v?: num;
 }
 
 export interface IExportableOrderFieldValues {
-  md?: number; // Значение модуляции
+  /** Значение модуляции */
+  md?: number;
 }
 
 type Inheritancables<K extends keyof InheritancableOrder = keyof InheritancableOrder> = Partial<
@@ -43,15 +48,24 @@ type Inheritancables<K extends keyof InheritancableOrder = keyof InheritancableO
 >;
 
 export interface IExportableOrder extends InheritancableOrder {
-  a?: CmComOrderWid; // Ссылка на блок
-  t?: number; // Текстовый блок
-  c?: number; // Блок аккордов
-  e?: 1; // Без названия
-  f?: IExportableOrderFieldValues; // Особые значения
-  m?: 1; // Минималка
-  o?: 1; // Открыто в полном режиме
-  k?: CmComBlockKindKey; // Тип блока
-  inh?: Inheritancables; //
+  /** Ссылка на блок */
+  a?: CmComOrderWid;
+  /** Текстовый блок */
+  t?: number;
+  /** Блок аккордов */
+  c?: number;
+  /** Без названия */
+  e?: 1;
+  /** Особые значения */
+  f?: IExportableOrderFieldValues;
+  /** Минималка */
+  m?: 1;
+  /** Открыто в полном режиме */
+  o?: 1;
+  /** Тип блока */
+  k?: CmComBlockKindKey;
+  /** Значения наследников */
+  inh?: Inheritancables;
 }
 
 export type IFixedCom = { w: CmComWid } & Partial<{

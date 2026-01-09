@@ -8,7 +8,7 @@ import { ICmComOrderListProps } from '../model/ComOrders.model';
 import { TheCmComOrderSolid } from './TheOrderSolid';
 
 export function CmComOrderList(props: ICmComOrderListProps) {
-  const [exMods, updateExMods] = useState<number[]>(props.com.excludedModulations);
+  const [excludedModulations, setExcludedModulations] = useState(props.com.excludedModulations);
 
   let specChordedi = 0;
   let specTextedi = 0;
@@ -22,7 +22,6 @@ export function CmComOrderList(props: ICmComOrderListProps) {
       {props.com.orders?.map((ord, ordi) => {
         if (ord.isInSolidLineWithInvisibles()) return;
 
-        const isExcludedModulation = exMods.includes(ord.wid);
         const specialClassId =
           ord.texti == null ? ` com-chorded-block-${specChordedi++} ` : ` com-texted-block-${specTextedi++} `;
 
@@ -35,26 +34,31 @@ export function CmComOrderList(props: ICmComOrderListProps) {
             ordi={ordi}
             asContentAfterOrder={props.asContentAfterOrder}
             asHeaderComponent={headerProps => {
-              const node = ord.me.kind?.isModulation ? (
-                <span
-                  className={'pointer flex ' + (isExcludedModulation ? 'text-xKO' : 'text-x7')}
-                  onClick={event => {
-                    event.stopPropagation();
-                    updateExMods(props.com.toggleModulationInclusion(ord));
-                  }}
+              const headerNode = headerProps.ord.isModulated ? (
+                <div
+                  className={
+                    'pointer flex gap-2 min-h-[1lh] ' +
+                    (excludedModulations.has(headerProps.ord.wid) ? 'text-xKO' : 'text-x7')
+                  }
                 >
-                  <LazyIcon
-                    className="pointer"
-                    icon={isExcludedModulation ? 'View' : 'ViewOffSlash'}
-                  />
+                  <span
+                    className="relative -mt-[1em]"
+                    onClick={event => {
+                      event.stopPropagation();
+                      setExcludedModulations(props.com.toggleModulationExclusion(headerProps.ord));
+                    }}
+                  >
+                    <span className="absolute top-[2.2em] w-[100%] text-[.7em] opacity-50 text-center">Мод</span>
+                    <LazyIcon icon={excludedModulations.has(headerProps.ord.wid) ? 'View' : 'ViewOffSlash'} />
+                  </span>
                   {headerProps.headerNode}
-                </span>
+                </div>
               ) : (
                 headerProps.headerNode
               );
 
-              if (props.asHeaderComponent === undefined) return node;
-              return props.asHeaderComponent({ ...headerProps, headerNode: node });
+              if (props.asHeaderComponent === undefined) return headerNode;
+              return props.asHeaderComponent({ ...headerProps, headerNode });
             }}
           />
         );

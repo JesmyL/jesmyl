@@ -64,6 +64,14 @@ export const openAndClosedQuotes = [
   ["'", "'"],
 ];
 
+export const aSharpToBChord: Record<string, string> = {
+  'A#': 'B',
+};
+
+export const bToASharpChord: Record<string, string> = {
+  B: 'A#',
+};
+
 export const chordBemoleEquivalent: Record<string, string> = {
   'A#': 'B',
   'C#': 'Db',

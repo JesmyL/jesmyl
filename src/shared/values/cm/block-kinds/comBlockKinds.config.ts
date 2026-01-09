@@ -82,6 +82,7 @@ export const comBlockKindsConfig: IExportableKindProp[] = [
   {
     key: CmComBlockKindKey.Plus,
     title: [':ПРОДОЛЖЕНИЕ:', ':ПРОДОВЖЕННЯ:'],
+    alt: '+',
     isInherit: true,
     isHeaderNoneForce: true,
     isBlockForTextableOnly: true,
@@ -89,18 +90,21 @@ export const comBlockKindsConfig: IExportableKindProp[] = [
   {
     key: CmComBlockKindKey.PlusPlus,
     title: [':ПРОДОЛЖЕНИЕ С ОТСТУПОМ:', ':ПРОДОВЖЕННЯ З ВІДСТУПОМ:'],
+    alt: '++',
     isInherit: true,
     isBlockForTextableOnly: true,
   },
   {
     key: CmComBlockKindKey.Shift,
     title: [':ПРОДОЛЖЕНИЕ СО СМЕЩЕНИЕМ:', ':ПРОДОВЖЕННЯ З ЗМІЩЕННЯМ:'],
+    alt: '+>',
     isInherit: true,
     isBlockForTextableOnly: true,
   },
   {
     key: CmComBlockKindKey.PlusPlusShift,
     title: [':ПРОДОЛЖЕНИЕ СО СМЕЩЕНИЕМ И ОТСТУПОМ:', ':ПРОДОВЖЕННЯ З ЗМІЩЕННЯМ ТА ВІДСТУПОМ:'],
+    alt: '++>',
     isInherit: true,
     isBlockForTextableOnly: true,
   },

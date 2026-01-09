@@ -52,6 +52,10 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
     return this.me.source?.top.w ?? this.top.w;
   }
 
+  get isModulated() {
+    return !!this.me.source?.top.f?.md && !this.me.isAnchorInherit && !this.me.isAnchorInheritPlus;
+  }
+
   get isAnchor() {
     return this.getBasic('a') != null;
   }
