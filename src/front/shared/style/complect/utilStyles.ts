@@ -191,6 +191,10 @@ export const utilStyles = css`
     white-space: break-spaces;
   }
 
+  .white-pre {
+    white-space: pre;
+  }
+
   .pointers-none {
     pointer-events: none !important;
     opacity: 0.7 !important;
