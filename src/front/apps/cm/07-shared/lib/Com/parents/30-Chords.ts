@@ -20,12 +20,18 @@ export class CmComChords extends CmComOrders {
     )?.replace(makeRegExp('/A#/g'), 'B');
   }
 
+  get isBemoled() {
+    return this.getBasicOr('b', 0);
+  }
   set isBemoled(val: num) {
     this.setExportable('b', val ? 1 : 0);
     this.resetChordLabels();
   }
 
-  set chords(val: string[]) {
+  get chords() {
+    return this.getBasic('c');
+  }
+  set chords(val: string[] | und) {
     this.setExportable('c', val);
     this.resetChordLabels();
   }

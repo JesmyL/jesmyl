@@ -47,19 +47,11 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
     this.setExportable('al', val);
   }
 
-  get chords() {
-    return this.getBasic('c');
-  }
-
   get broadcastPushKind() {
     return this.getBasicOr('k', 0);
   }
   set broadcastPushKind(val) {
     this.setExportable('k', val);
-  }
-
-  get isBemoled() {
-    return this.getBasicOr('b', 0);
   }
 
   get initialTransPosition() {
