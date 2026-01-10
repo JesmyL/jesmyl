@@ -38,7 +38,7 @@ export const eventPacksFileStore = new FileStore(
 );
 export const eventPackHistoryFileStore = new FileStore<ScheduleComPackHistory>('/apps/cm/schEventPackHistory.json', {});
 export const cmComAudioMarkPacksFileStore = new FileStore<
-  PRecord<HttpNumLeadLink, { m: number; marks?: CmComAudioMarkPack }>
+  PRecord<HttpNumLeadLink, { m: number; cMarks?: CmComAudioMarkPack }>
 >('/apps/cm/comAudioMarkPacks.json', {});
 
 export const comwVisitsFileStore = new FileStore<PRecord<CmComWid, number>>('/apps/cm/comwVisits.json', {});

@@ -309,9 +309,9 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
         },
 
         printComwVisit: async ({ comw }) => {
-          const marks = comwVisitsFileStore.getValueWithAutoSave();
-          marks[comw] ??= 0;
-          marks[comw]++;
+          const visitMarks = comwVisitsFileStore.getValueWithAutoSave();
+          visitMarks[comw] ??= 0;
+          visitMarks[comw]++;
         },
 
         takeComwVisitsCount: async ({ comw }) => ({ value: comwVisitsFileStore.getValue()[comw] ?? 0 }),
@@ -321,7 +321,7 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
           const allMarkPacks = cmComAudioMarkPacksFileStore.getValue();
           const srcMarksPack = allMarkPacks[makeCmComNumLeadLinkFromHttp(src)];
 
-          return { value: !srcMarksPack || srcMarksPack.m <= lastModfiedAt ? null : { ...srcMarksPack, src } };
+          return { value: !srcMarksPack?.cMarks || srcMarksPack.m <= lastModfiedAt ? null : { ...srcMarksPack, src } };
         },
       },
     });

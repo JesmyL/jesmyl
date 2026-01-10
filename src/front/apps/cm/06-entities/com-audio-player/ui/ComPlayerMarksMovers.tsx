@@ -28,7 +28,7 @@ export const CmComAudioPlayerMarksMovers = (props: Props) => {
     props.win,
   );
 
-  if (audioTrackMarks?.marks == null && props.isHidePanelOnEmptyMarks) return null;
+  if (audioTrackMarks?.cMarks == null && props.isHidePanelOnEmptyMarks) return null;
 
   return (
     <div className="flex gap-3 w-full justify-center">

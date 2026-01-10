@@ -1,6 +1,7 @@
 import {
   CmComAudioMarkEditPack,
   CmComAudioMarkPack,
+  CmComAudioMarkPackTime,
   CmComWid,
   HttpLink,
   ScheduleComPackHistoryItem,
@@ -28,13 +29,18 @@ export type CmEditComExternalsTsjrpcModel = {
     writedAt: number;
   }) => ScheduleComPackHistoryItem[];
 
-  updateAudioMarks: (args: { src: HttpLink; marks: CmComAudioMarkEditPack }) => {
+  updateAudioMarks: (args: { src: HttpLink; cMarks: CmComAudioMarkEditPack }) => {
     src: HttpLink;
-    marks?: CmComAudioMarkPack;
+    cMarks?: CmComAudioMarkPack;
   };
 
-  changeAudioMarkTime: (args: { src: HttpLink; time: number; newTime: number }) => null | {
+  changeAudioMarkTime: (args: {
     src: HttpLink;
-    marks?: CmComAudioMarkPack;
+    time: CmComAudioMarkPackTime;
+    newTime: CmComAudioMarkPackTime;
+    comw: CmComWid;
+  }) => null | {
+    src: HttpLink;
+    cMarks?: CmComAudioMarkPack;
   };
 };

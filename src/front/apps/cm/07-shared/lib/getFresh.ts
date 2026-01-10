@@ -3,7 +3,7 @@ import { HttpLink } from 'shared/api';
 import { cmTsjrpcClient } from '../tsjrpc';
 
 export const getCmComFreshAudioMarksPack = async (src: HttpLink) => {
-  const markPack = await cmIDB.tb.audioTrackMarks.get(src);
+  const markPack = await cmIDB.tb.comAudioTrackMarks.get(src);
   try {
     return (
       (
@@ -11,9 +11,9 @@ export const getCmComFreshAudioMarksPack = async (src: HttpLink) => {
           { lastModfiedAt: markPack?.m || 0, src },
           { aborter: { signal: AbortSignal.timeout(5000) } },
         )
-      )?.marks ?? (await cmIDB.tb.audioTrackMarks.get(src))?.marks
+      )?.cMarks ?? (await cmIDB.tb.comAudioTrackMarks.get(src))?.cMarks
     );
   } catch (_e) {
-    return (await cmIDB.tb.audioTrackMarks.get(src))?.marks;
+    return (await cmIDB.tb.comAudioTrackMarks.get(src))?.cMarks;
   }
 };

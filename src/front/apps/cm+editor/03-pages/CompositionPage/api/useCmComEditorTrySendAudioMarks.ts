@@ -11,9 +11,9 @@ export const useCmEditorCompositionTrySendAudioMarks = () => {
     if (!mylib.keys(marksOnLoad).length) return;
 
     const timeout = setTimeout(() => {
-      MyLib.entries(marksOnLoad).forEach(([src, marks]) => {
-        if (marks == null) return;
-        cmEditComExternalsClientTsjrpcMethods.updateAudioMarks({ src, marks });
+      MyLib.entries(marksOnLoad).forEach(([src, cMarks]) => {
+        if (cMarks == null) return;
+        cmEditComExternalsClientTsjrpcMethods.updateAudioMarks({ src, cMarks });
       });
     }, 200);
 

@@ -1,5 +1,4 @@
 import { TsjrpcClient } from '#basis/tsjrpc/Tsjrpc.client';
-import { mylib } from '#shared/lib/my-lib';
 import { cmIDB } from '$cm/ext';
 import { CmComWid } from 'shared/api';
 import { CmEditCatTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-cat.tsjrpc.model';
@@ -57,16 +56,16 @@ export const cmEditComExternalsClientTsjrpcMethods =
         scope: 'CmEditComExternals',
         methods: {
           updateAudioMarks: {
-            onResponse: ({ marks, src }) => {
-              cmIDB.tb.audioTrackMarks.put({ marks, src });
-              cmComEditorAudioMarksEditPacksAtom.do.removeMarks(src, mylib.keys(marks));
+            onResponse: ({ cMarks, src }) => {
+              cmIDB.tb.comAudioTrackMarks.put({ cMarks, src });
+              cmComEditorAudioMarksEditPacksAtom.do.removeMarks(src, cMarks);
             },
           },
           changeAudioMarkTime: {
             onResponse: pack => {
               if (pack == null) return;
-              cmIDB.tb.audioTrackMarks.put({ marks: pack.marks, src: pack.src });
-              cmComEditorAudioMarksEditPacksAtom.do.removeMarks(pack.src, mylib.keys(pack.marks));
+              cmIDB.tb.comAudioTrackMarks.put({ cMarks: pack.cMarks, src: pack.src });
+              cmComEditorAudioMarksEditPacksAtom.do.removeMarks(pack.src, pack.cMarks);
             },
           },
         },

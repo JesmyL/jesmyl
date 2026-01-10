@@ -23,7 +23,7 @@ export const useCmComCurrentMarkValues = (com: CmCom | und) => {
   const [currentMarkTimei, setCurrentMarkTimei] = useState(0);
 
   const { markTextDict, timeMarkTextRepeatDict } = useMemo(() => {
-    const trackMarks = marks?.marks;
+    const trackMarks = com && marks?.cMarks?.[com.wid];
     const markTextDict: PRecord<number, string> = {};
     const timeMarkTextRepeatDict: PRecord<number, { index: number; total: TotalRepeatsCount }> = {};
     const result = { markTextDict, timeMarkTextRepeatDict };
@@ -71,7 +71,7 @@ export const useCmComCurrentMarkValues = (com: CmCom | und) => {
         }
       } else if (!selector) {
         markTextDict[times[timei]] =
-          `${technicalTextPrefix}${makeCmComAudioMarkTitleEmptySelector(selector, marks?.marks, +times[timei])}`;
+          `${technicalTextPrefix}${makeCmComAudioMarkTitleEmptySelector(selector, com && marks?.cMarks?.[com.wid], +times[timei])}`;
 
         continue;
       }
@@ -120,12 +120,12 @@ export const useCmComCurrentMarkValues = (com: CmCom | und) => {
     }
 
     return result;
-  }, [com, marks?.marks]);
+  }, [com, marks?.cMarks]);
 
   useEffect(() => {
-    if (marks?.marks == null) return;
+    if (marks?.cMarks == null) return;
 
-    const markPack = marks.marks;
+    const markPack = marks.cMarks;
     const markTimes = mylib.keys(markPack).map(Number);
     const timePositions$ = { prev: 0, current: 0, next: 0, preprev: 0 };
 
@@ -142,9 +142,9 @@ export const useCmComCurrentMarkValues = (com: CmCom | und) => {
         }),
       )
       .effect();
-  }, [marks?.marks]);
+  }, [marks?.cMarks]);
 
-  const markTimes = mylib.keys(marks?.marks).map(Number);
+  const markTimes = mylib.keys(marks?.cMarks).map(Number);
   const currentTimeMark = markTimes[currentMarkTimei];
   const isTechnicalText = markTextDict[currentTimeMark]?.startsWith(technicalTextPrefix);
   const currentText = isTechnicalText

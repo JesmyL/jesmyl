@@ -16,11 +16,11 @@ import {
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
-import { HttpLink } from 'shared/api';
+import { CmComAudioMarkPackTime, HttpLink } from 'shared/api';
 import { CmEditorComAudioSolidOrdTextController } from './SolidOrdText';
 
 interface Props {
-  time: number;
+  time: CmComAudioMarkPackTime;
   com: EditableCom;
   src: HttpLink;
 }
@@ -29,12 +29,12 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
   const disabledReason = 'Песня не проигрывается';
 
   const trackMarks = cmIDB.useAudioTrackMarks(src);
-  const selector = trackMarks?.marks?.[time];
+  const selector = trackMarks?.cMarks?.[com.wid]?.[time];
   const { title, ord, isReplaceBlockText, fullTitle, isShortTime } = makeCmComAudioMarkTitleBySelector(
     time,
     com,
     selector,
-    trackMarks?.marks,
+    trackMarks?.cMarks?.[com.wid],
   );
   const [currentTime, setCurrentTime] = useState(+time);
   const [isTextEdit, setIsTextEdit] = useState(false);
@@ -77,7 +77,7 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
             className="text-xKO"
             confirm={<>Удалить точку {title}?</>}
             onClick={() => {
-              cmComEditorAudioMarksEditPacksAtom.do.removeMark(src, time);
+              cmComEditorAudioMarksEditPacksAtom.do.removeMark(com.wid, src, time);
               cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.reset();
             }}
           />
@@ -149,7 +149,7 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
             strongDefaultValue
             onChanged={value =>
               cmEditComExternalsClientTsjrpcMethods
-                .updateAudioMarks({ src, marks: { [time]: value.trim() } })
+                .updateAudioMarks({ src, cMarks: { [com.wid]: { [time]: value.trim() } } })
                 .then(() => setIsTextEdit(false))
             }
           />
@@ -173,7 +173,7 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
           disabled={time === currentTime || currentTime < 0}
           onClick={() =>
             cmEditComExternalsClientTsjrpcMethods
-              .changeAudioMarkTime({ newTime: currentTime, src, time })
+              .changeAudioMarkTime({ newTime: currentTime, src, time, comw: com.wid })
               .then(() => cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.reset())
           }
         >

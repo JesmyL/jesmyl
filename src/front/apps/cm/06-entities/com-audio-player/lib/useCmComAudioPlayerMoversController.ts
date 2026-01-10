@@ -12,7 +12,7 @@ import { makeCmComAudioMarkLineiFromSelector } from '$cm/shared/lib/makeCmComAud
 import { takeCmComTrackCurrentTimeMark } from '$cm/shared/lib/takeCmComTrackCurrentTimeMark';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useRef } from 'react';
-import { HttpLink } from 'shared/api';
+import { CmComAudioMarkPackTime, HttpLink } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import { cmComAudioPlayerPlaySrcAtom } from '../state/current-play-com';
 
@@ -35,11 +35,11 @@ export const useCmComAudioPlayerMoversController = (
   const nextRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (titleRef.current === null || audioTrackMarks?.marks == null) return;
-    const audioMarkPack = audioTrackMarks.marks;
+    if (titleRef.current === null || audioTrackMarks?.cMarks == null) return;
+    const audioMarkPack = audioTrackMarks.cMarks?.[com.wid];
 
     const titleNode = titleRef.current;
-    const marks = mylib.keys(audioMarkPack).map(Number);
+    const markTimeList = mylib.keys(audioMarkPack).map(Number);
     const selectorToTitlePropsDict: PRecord<number, { title: string; ord: CmComOrder | nil }> = {};
     const timePositions$ = { prev: 0, current: 0, next: 0, preprev: 0 };
 
@@ -51,7 +51,7 @@ export const useCmComAudioPlayerMoversController = (
       audioMarkPack == null || preSwitchTime < 0
         ? emptyFunc
         : () => {
-            const actualMarkTime =
+            const actualMarkTime: CmComAudioMarkPackTime =
               preSwitchTime !== 0 &&
               cmComAudioPlayerHTMLElement.currentTime < timePositions$.next &&
               cmComAudioPlayerHTMLElement.currentTime > timePositions$.next - preSwitchTime
@@ -95,10 +95,10 @@ export const useCmComAudioPlayerMoversController = (
           };
 
     const updatePoints = () => {
-      const currentMarkTimei = takeCmComTrackCurrentTimeMark(marks, timePositions$);
+      const currentMarkTimei = takeCmComTrackCurrentTimeMark(markTimeList, timePositions$);
 
       if (nextRef.current !== null) {
-        nextRef.current.disabled = currentMarkTimei === marks.length - 1;
+        nextRef.current.disabled = currentMarkTimei === markTimeList.length - 1;
       }
 
       if (prevRef.current !== null) {

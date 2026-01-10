@@ -168,10 +168,17 @@ export type HttpNumLeadLinkKey = `${number}~`;
 export type HttpNumLeadLink = `${HttpNumLeadLinkKey}${string}`;
 
 export type CmComAudioMarkSelector = [CmComOrderSelector] | string;
-export type CmComAudioMarkPack = PRecord<number, CmComAudioMarkSelector>;
+export const enum CmComAudioMarkPackTime {
+  def = 12.3,
+  zero = 0,
+}
 
-type MarkAddKey = number;
-export type CmComAudioMarkEditPack = PRecord<MarkAddKey, CmComAudioMarkSelector | `+${MarkAddKey}+` | null>;
+export type CmComAudioMarkPack = PRecord<CmComWid, PRecord<CmComAudioMarkPackTime, CmComAudioMarkSelector>>;
+
+export type CmComAudioMarkEditPack = PRecord<
+  CmComWid,
+  PRecord<CmComAudioMarkPackTime, CmComAudioMarkSelector | `+${CmComAudioMarkPackTime}+` | null>
+>;
 
 export type MenuComToolNameList =
   | 'fullscreen-mode'

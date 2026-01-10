@@ -1,7 +1,13 @@
 import { mylib } from '#shared/lib/my-lib';
 import { CmCom, CmComOrder } from '$cm/ext';
 import { makeRegExp } from 'regexpert';
-import { CmComAudioMarkPack, CmComAudioMarkSelector, CmComOrderWid } from 'shared/api';
+import {
+  CmComAudioMarkPack,
+  CmComAudioMarkPackTime,
+  CmComAudioMarkSelector,
+  CmComOrderWid,
+  CmComWid,
+} from 'shared/api';
 
 export const makeCmComAudioMarkTitleAsLineSelector = (linei: number) => `~${linei + 1}`;
 export const makeCmComAudioMarkLineiFromSelector = (selector: string) => +selector.slice(1) - 1;
@@ -11,25 +17,25 @@ export const checkIsCmComAudioMarkTitleIsLineSelector = (selector: CmComAudioMar
 
 export const makeCmComAudioMarkTitleEmptySelector = (
   selector: string | nil,
-  marks: (number | `${number}`)[] | CmComAudioMarkPack | nil,
-  time: number,
+  cMarks: (number | `${number}`)[] | CmComAudioMarkPack[CmComWid] | nil,
+  time: CmComAudioMarkPackTime,
 ) => {
   if (selector) return selector;
 
   if (+time === 0) return 'Вступление';
 
-  marks = marks != null ? (mylib.isArr(marks) ? marks : mylib.keys(marks)) : (marks ?? []);
+  cMarks = cMarks != null ? (mylib.isArr(cMarks) ? cMarks : mylib.keys(cMarks)) : (cMarks ?? []);
 
-  if (+marks[marks.length - 1] === +time) return 'Финал';
+  if (+cMarks[cMarks.length - 1] === +time) return 'Финал';
 
   return 'Проигрыш';
 };
 
 export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | React.ReactNode = string>(
-  time: number,
+  time: CmComAudioMarkPackTime,
   com: CmCom,
   selector: CmComAudioMarkSelector | nil,
-  marks: CmComAudioMarkPack | nil,
+  comMarks: CmComAudioMarkPack[CmComWid] | nil,
   mapLineTitle: (repeats: string, text: string) => LineTitle = (repeats, text) => `${repeats} ${text}` as never,
   mapStringTitle?: (title: string) => string,
 ): {
@@ -39,14 +45,14 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
   isReplaceBlockText?: boolean;
   isShortTime: boolean;
 } => {
-  const markKeys = mylib.keys(marks ?? {});
-  const isShortTime = Math.abs(time - +(markKeys[markKeys.indexOf(`${time}`) + 1] ?? 0)) < 1;
+  const comMarkKeys = mylib.keys(comMarks ?? {});
+  const isShortTime = Math.abs(time - +(comMarkKeys[comMarkKeys.indexOf(`${time}`) + 1] ?? 0)) < 1;
 
   if (mylib.isArr(selector)) {
     const { ord, visibleOrdi } = com.getOrderBySelector(selector[0]);
-    if (marks == null || ord == null) return { title: '?' as never, ord: null, isShortTime };
+    if (comMarks == null || ord == null) return { title: '?' as never, ord: null, isShortTime };
 
-    const repeats = computeOrdRepeats(time, marks, selector[0]);
+    const repeats = computeOrdRepeats(time, comMarks, selector[0]);
 
     return {
       ord,
@@ -59,21 +65,21 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
   let repeats = 1;
   let lastSelector: CmComAudioMarkSelector[0] = CmComOrderWid.never;
 
-  if (marks != null) {
-    markKeys.find(itTime => {
-      if (marks[itTime] == null || mylib.isStr(marks[itTime])) return time === +itTime;
+  if (comMarks != null) {
+    comMarkKeys.find(itTime => {
+      if (comMarks[itTime] == null || mylib.isStr(comMarks[itTime])) return time === +itTime;
 
-      if (lastSelector !== marks[itTime][0]) repeats = 1;
+      if (lastSelector !== comMarks[itTime][0]) repeats = 1;
       else repeats++;
 
-      lastSelector = marks[itTime][0];
+      lastSelector = comMarks[itTime][0];
 
       return time === +itTime;
     });
   }
 
   const { ord, visibleOrdi } = com.getOrderBySelector(lastSelector);
-  let title = makeCmComAudioMarkTitleEmptySelector(selector, marks, time);
+  let title = makeCmComAudioMarkTitleEmptySelector(selector, comMarks, time);
 
   if (checkIsCmComAudioMarkTitleIsLineSelector(selector) && ord) {
     let lines = ord.transformedText().split('\n');
@@ -114,17 +120,22 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
   };
 };
 
-const computeOrdRepeats = (time: number, marks: CmComAudioMarkPack, selector: CmComAudioMarkSelector[0]) => {
+const computeOrdRepeats = (
+  time: CmComAudioMarkPackTime,
+  cMarks: CmComAudioMarkPack[CmComWid],
+  selector: CmComAudioMarkSelector[0],
+) => {
   let repeats = 0;
 
-  mylib.keys(marks).find(itTime => {
-    if (marks[itTime] == null || mylib.isStr(marks[itTime])) return false;
+  if (cMarks)
+    mylib.keys(cMarks).find(itTime => {
+      if (cMarks[itTime] == null || mylib.isStr(cMarks[itTime])) return false;
 
-    if (selector === marks[itTime][0]) repeats++;
-    else repeats = 0;
+      if (selector === cMarks[itTime][0]) repeats++;
+      else repeats = 0;
 
-    return time === +itTime;
-  });
+      return time === +itTime;
+    });
 
   return repeats;
 };

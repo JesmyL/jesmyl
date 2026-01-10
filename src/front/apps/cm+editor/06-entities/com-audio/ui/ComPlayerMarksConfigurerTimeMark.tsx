@@ -9,22 +9,28 @@ import {
   cmIDB,
   makeCmComAudioMarkTitleBySelector,
 } from '$cm/ext';
-import { CmComAudioMarkSelector, HttpLink } from 'shared/api';
+import { CmComAudioMarkPackTime, CmComAudioMarkSelector, HttpLink } from 'shared/api';
 import { twMerge } from 'tailwind-merge';
 import { cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom } from '../state/atoms';
 
 interface Props {
-  time: number;
+  time: CmComAudioMarkPackTime;
   com: EditableCom;
   selector: CmComAudioMarkSelector | nil;
   src: HttpLink;
-  pinTime: RKey<number> | null;
-  onPin: (time: RKey<number> | null) => void;
+  pinTime: RKey<CmComAudioMarkPackTime> | null;
+  onPin: (time: RKey<CmComAudioMarkPackTime> | null) => void;
 }
 
 export const CmEditorComAudioMarksConfigurerTimeMark = ({ selector, time, src, com, onPin, pinTime }: Props) => {
   const trackMarks = cmIDB.useAudioTrackMarks(src);
-  const titleProps = makeCmComAudioMarkTitleBySelector(time, com, selector, trackMarks?.marks, (_, title) => title);
+  const titleProps = makeCmComAudioMarkTitleBySelector(
+    time,
+    com,
+    selector,
+    trackMarks?.cMarks?.[com.wid],
+    (_, title) => title,
+  );
 
   return (
     <div className="py-3">
@@ -53,7 +59,7 @@ export const CmEditorComAudioMarksConfigurerTimeMark = ({ selector, time, src, c
           maxLength={20}
           onChanged={value =>
             cmEditComExternalsClientTsjrpcMethods
-              .updateAudioMarks({ src, marks: { [time]: value } })
+              .updateAudioMarks({ src, cMarks: { [com.wid]: { [time]: value } } })
               .then(() => onPin(null))
           }
         />

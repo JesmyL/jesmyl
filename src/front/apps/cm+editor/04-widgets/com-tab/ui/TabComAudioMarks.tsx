@@ -26,7 +26,7 @@ import {
 } from '$cm/ext';
 import { atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import { CmComAudioMarkSelector, HttpLink } from 'shared/api';
+import { CmComAudioMarkPackTime, HttpLink } from 'shared/api';
 import { toast } from 'sonner';
 import styled, { RuleSet } from 'styled-components';
 
@@ -98,7 +98,7 @@ export const CmEditorComTabAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
           ))}
       </ButtonGroup.Root>
 
-      <WithState<RKey<number> | null> init={null}>
+      <WithState<RKey<CmComAudioMarkPackTime> | null> init={null}>
         {(pinTime, setPinTime) => (
           <ConditionalRender
             value={editSrc}
@@ -118,10 +118,12 @@ export const CmEditorComTabAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                               return;
                             }
 
-                            let fixedTime = +cmComAudioPlayerHTMLElement.currentTime.toFixed(2);
+                            let fixedTime: CmComAudioMarkPackTime = +cmComAudioPlayerHTMLElement.currentTime.toFixed(2);
                             if (Math.trunc(fixedTime) === fixedTime) fixedTime += 0.11;
 
-                            cmComEditorAudioMarksEditPacksAtom.do.putMarks(editSrc, { [fixedTime]: `+${fixedTime}+` });
+                            cmComEditorAudioMarksEditPacksAtom.do.putMarks(ccom.wid, editSrc, {
+                              [fixedTime]: `+${fixedTime}+`,
+                            });
                           }}
                         />
                         <CmComAudioPlayerMarksMovers
@@ -134,7 +136,7 @@ export const CmEditorComTabAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                     )}
                   />
 
-                  {MyLib.entries(marksOnUpdating[editSrc] ?? {}).map(([time, selector]) => {
+                  {MyLib.entries(marksOnUpdating[editSrc]?.[ccom.wid] ?? {}).map(([time, selector]) => {
                     return (
                       !selector || (
                         <div
@@ -147,14 +149,14 @@ export const CmEditorComTabAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                           <TheIconLoading />
                           <Button
                             icon="Cancel01"
-                            onClick={() => cmComEditorAudioMarksEditPacksAtom.do.removeMark(editSrc, time)}
+                            onClick={() => cmComEditorAudioMarksEditPacksAtom.do.removeMark(ccom.wid, editSrc, time)}
                           />
                         </div>
                       )
                     );
                   })}
 
-                  {MyLib.entries({ ...(trackMarks?.marks ?? {}) }).map(([time, selector]) => {
+                  {MyLib.entries(trackMarks?.cMarks?.[ccom.wid] ?? {}).map(([time, selector]) => {
                     return (
                       <CmEditorComAudioMarksConfigurerTimeMark
                         key={time}
@@ -196,11 +198,12 @@ export const CmEditorComTabAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                                   return;
                                 }
 
-                                let fixedTime = +cmComAudioPlayerHTMLElement.currentTime.toFixed(2);
+                                let fixedTime: CmComAudioMarkPackTime =
+                                  +cmComAudioPlayerHTMLElement.currentTime.toFixed(2);
                                 if (Math.trunc(fixedTime) === fixedTime) fixedTime += 0.11;
 
-                                cmComEditorAudioMarksEditPacksAtom.do.putMarks(editSrc, {
-                                  [fixedTime]: [ord.makeSelector()] as CmComAudioMarkSelector,
+                                cmComEditorAudioMarksEditPacksAtom.do.putMarks(ccom.wid, editSrc, {
+                                  [fixedTime]: [ord.makeSelector()],
                                 });
                               }}
                             />
@@ -211,7 +214,7 @@ export const CmEditorComTabAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                                 cmEditComExternalsClientTsjrpcMethods
                                   .updateAudioMarks({
                                     src: editSrc,
-                                    marks: { [pinTime]: [ord.makeSelector()] as CmComAudioMarkSelector },
+                                    cMarks: { [ccom.wid]: { [pinTime]: [ord.makeSelector()] } },
                                   })
                                   .then(() => setPinTime(null))
                               }

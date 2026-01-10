@@ -18,7 +18,7 @@ export type CmTsjrpcModel = {
   getComwVisits: () => PRecord<CmComWid, number>;
 
   takeFreshComAudioMarksPack: (args: { src: HttpLink; lastModfiedAt: number }) => null | {
-    marks?: CmComAudioMarkPack;
+    cMarks?: CmComAudioMarkPack;
     src: HttpLink;
     m: number;
   };

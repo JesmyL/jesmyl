@@ -6,7 +6,7 @@ import { CmCom, makeCmComAudioMarkTitleBySelector } from '$cm/ext';
 import { cmIDB } from '$cm/shared/state';
 import { Atom, useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
-import { CmComAudioMarkSelector, CmComOrderWid } from 'shared/api';
+import { CmComAudioMarkPackTime, CmComAudioMarkSelector, CmComOrderWid } from 'shared/api';
 import { itIt } from 'shared/utils';
 
 export const useCmComOrderAudioMarkControlButtons = (
@@ -14,14 +14,18 @@ export const useCmComOrderAudioMarkControlButtons = (
   isNeedCompute: boolean,
   com: CmCom,
   isHideShortTime: boolean,
-  mapNode: (node: React.ReactNode, time: number, selector: CmComAudioMarkSelector) => React.ReactNode = itIt,
+  mapNode: (
+    node: React.ReactNode,
+    time: CmComAudioMarkPackTime,
+    selector: CmComAudioMarkSelector,
+  ) => React.ReactNode = itIt,
 ) => {
   const src = useAtomValue(cmComAudioPlayerPlaySrcAtom);
   const audioTrackMarks = cmIDB.useAudioTrackMarks(src);
   const actualMapNodeRef = useActualRef(mapNode);
 
   return useMemo(() => {
-    const marks = audioTrackMarks?.marks;
+    const comMarks = audioTrackMarks?.cMarks?.[com.wid];
     const ordwPlayButtonNodeDict: PRecord<CmComOrderWid, React.ReactNode[]> = {};
     const afterTargetOrdwOtherPlayButtonNodeDict: PRecord<'before' | CmComOrderWid, React.ReactNode[]> = {};
 
@@ -30,17 +34,17 @@ export const useCmComOrderAudioMarkControlButtons = (
       afterTargetOrdwOtherPlayButtonNodeDict,
     };
 
-    if (!isNeedCompute || marks == null) return result;
+    if (!isNeedCompute || comMarks == null) return result;
 
     let lastOrdwOrNull: 'before' | CmComOrderWid = 'before';
     const takeMinusTime = () => (preTimeAtom.get() < 0 ? 0 : preTimeAtom.get());
 
-    MyLib.entries(marks).forEach(([time, selector]) => {
+    MyLib.entries(comMarks).forEach(([time, selector]) => {
       const titleProps = makeCmComAudioMarkTitleBySelector(
         +time,
         com,
         selector,
-        marks,
+        comMarks,
         (repeats, title) => (
           <span className="text-x7">
             {repeats} {title}
@@ -104,8 +108,8 @@ export const useCmComOrderAudioMarkControlButtons = (
       );
     });
 
-    if (mylib.isArr(marks[0])) delete afterTargetOrdwOtherPlayButtonNodeDict.before;
+    if (mylib.isArr(comMarks[0])) delete afterTargetOrdwOtherPlayButtonNodeDict.before;
 
     return result;
-  }, [audioTrackMarks?.marks, isNeedCompute, preTimeAtom, com, isHideShortTime, actualMapNodeRef]);
+  }, [audioTrackMarks?.cMarks, isNeedCompute, preTimeAtom, com, isHideShortTime, actualMapNodeRef]);
 };
