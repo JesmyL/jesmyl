@@ -55,18 +55,20 @@ export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) =>
               key={linesi}
               className="border border-x2 my-2 pl-3"
             >
-              <InputWithLoadingIcon
-                icon="TextNumberSign"
-                defaultValue={`${rule}`}
-                className="max-w-20"
-                strongDefaultValue
-                onChanged={value => {
-                  return cmEditComClientTsjrpcMethods.changePushKind({
-                    comw: ccom.wid,
-                    value: { [ord.wid]: +value === defaultRule ? 0 : +value },
-                  });
-                }}
-              />
+              {checkAccess('cm', 'COM_TR', 'U') && (
+                <InputWithLoadingIcon
+                  icon="TextNumberSign"
+                  defaultValue={`${rule}`}
+                  className="max-w-20"
+                  strongDefaultValue
+                  onChanged={value => {
+                    return cmEditComClientTsjrpcMethods.changePushKind({
+                      comw: ccom.wid,
+                      value: { [ord.wid]: +value === defaultRule ? 0 : +value },
+                    });
+                  }}
+                />
+              )}
               {list?.map((text, texti) => (
                 <div
                   key={texti}
