@@ -74,6 +74,8 @@ export class SokiTrip {
   };
 
   start() {
+    this.ws = new WebSocket(environment.sokiLink);
+
     this.ws.onclose = () => {
       this.ws = new WebSocket(environment.sokiLink);
       setTimeout(() => this.start(), 500);
