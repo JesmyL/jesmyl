@@ -42,17 +42,17 @@ export class CmComBroadcast extends CmComTexts {
       let defaultDict: CmBroadcastSlideGrouperOrdWithListAndRule[number] | null = null;
 
       for (let i = list.length; i >= 0; i--) {
-        if (divDict[i]) {
-          defaultRule = +divDict[i];
-          defaultDict = {
-            ord,
-            list: this.divideLinesByRule(list, +divDict[i]),
-            rule: defaultRule,
-            defaultRule,
-          };
+        if (!divDict[i]) continue;
 
-          break;
-        }
+        defaultRule = +divDict[i];
+        defaultDict = {
+          ord,
+          list: this.divideLinesByRule(list, +divDict[i]),
+          rule: defaultRule,
+          defaultRule,
+        };
+
+        break;
       }
 
       if (ordComb[ordw] != null)
@@ -84,7 +84,10 @@ export class CmComBroadcast extends CmComTexts {
 
     if (ruleStr.length === 1) {
       for (; lines.length; ) {
-        if (!+rule) break;
+        if (!+rule) {
+          newLines.push(lines);
+          break;
+        }
 
         newLines.push(lines.slice(0, rule));
         lines = lines.slice(rule);
@@ -93,7 +96,10 @@ export class CmComBroadcast extends CmComTexts {
       let index = 0;
 
       for (; lines.length; ) {
-        if (!+ruleStr[index]) break;
+        if (!+ruleStr[index]) {
+          newLines.push(lines);
+          break;
+        }
 
         newLines.push(lines.slice(0, +ruleStr[index]));
         lines = lines.slice(+ruleStr[index]);

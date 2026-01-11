@@ -1,11 +1,12 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
+import { makeRegExp } from 'regexpert';
 import { CmComWid, IExportableCom, IServerSideCom } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
 import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
 import { cmComLineGroupingDefaultKinds } from 'shared/const/cm/comLineGroupingKind';
 import { CmBroadcastSlideGrouperKindCombiner } from 'shared/model/cm/broadcast';
-import { itNNil, smylib, trimTextLines } from 'shared/utils';
+import { itNNil, SMyLib, smylib, trimTextLines } from 'shared/utils';
 import { cmComLanguages } from 'shared/utils/cm/com/const';
 import { textLinesLengthIncorrects } from 'shared/utils/cm/com/textLinesLengthIncorrects';
 import { transformToClearText } from 'shared/utils/cm/com/transformToClearText';
@@ -92,6 +93,40 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
             newKind.n = value;
             delete newKind.s;
           } else newKind.d = { ...newKind.d, ...value };
+
+          if (newKind.s) {
+            const stringValuesDict: Record<string, number> = {};
+            const keyValues = newKind.s.split(makeRegExp('/[ ,]+/'));
+
+            const makeNumber = (numValue: number) => {
+              if (!`${numValue}`.includes('0')) return +numValue;
+              return +`${`${numValue}`.split('0')[0]}0`;
+            };
+
+            keyValues.forEach(keyValue => {
+              if (!keyValue.includes(':')) {
+                if (+keyValue) stringValuesDict[0] = makeNumber(+keyValue);
+                return;
+              }
+
+              const [key, value] = keyValue.split(':');
+              if (key.startsWith('-') || (!+key && !key.startsWith('='))) return;
+
+              stringValuesDict[key] = makeNumber(+value);
+            });
+
+            newKind.s = SMyLib.entries(stringValuesDict)
+              .sort(([a], [b]) => {
+                if (b.startsWith('=')) b = b.slice(1);
+                if (a.startsWith('=')) return +b - +a.slice(1) || -1;
+
+                return +b - +a || 1;
+              })
+              .map(([key, value]) => (+key === 0 ? value : `${key}:${value}`))
+              .join(' ');
+          }
+
+          if (!newKind.n) delete newKind.n;
 
           smylib.keys(newKind.d).forEach(key => {
             newKind.d[key] = +newKind.d[key]!;
