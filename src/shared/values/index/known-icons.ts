@@ -199,7 +199,6 @@ export const knownStameskaIconNames = {
   TextAlignLeft: 0,
   TextFirstlineRight: 0,
   TextFont: 0,
-  TextNumberSign: 0,
   TextVerticalAlignment: 0,
   ToggleOff: 0,
   ToggleOn: 0,
