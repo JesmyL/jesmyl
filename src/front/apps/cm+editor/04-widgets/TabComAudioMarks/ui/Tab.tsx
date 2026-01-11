@@ -29,11 +29,12 @@ import { useEffect } from 'react';
 import { CmComAudioMarkPackTime, HttpLink } from 'shared/api';
 import { toast } from 'sonner';
 import styled, { RuleSet } from 'styled-components';
+import { CmEditorTabComAudioMarksShowSlideListButton } from './ShowSlideListButton';
 
 const srcOnEditAtom = atom<null | HttpLink>(null, 'cm+editor:srcOnMarkEdit');
 const preSwitchTimeAtom = atom(-1, 'cm+editor:comAudioPreSwitchTime');
 
-export const CmEditorComTabAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
+export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
   const editSrc = useAtomValue(srcOnEditAtom);
   const trackMarks = cmIDB.useAudioTrackMarks(editSrc);
   const marksOnUpdating = useAtomValue(cmComEditorAudioMarksEditPacksAtom);
@@ -97,6 +98,11 @@ export const CmEditorComTabAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
             </Button>
           ))}
       </ButtonGroup.Root>
+
+      <CmEditorTabComAudioMarksShowSlideListButton
+        ccom={ccom}
+        src={editSrc}
+      />
 
       <WithState<RKey<CmComAudioMarkPackTime> | null> init={null}>
         {(pinTime, setPinTime) => (

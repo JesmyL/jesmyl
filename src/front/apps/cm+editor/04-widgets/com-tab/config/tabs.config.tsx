@@ -1,8 +1,8 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
+import { CmEditorTabComAudioMarks } from '$cm+editor/widgets/TabComAudioMarks';
 import { CmEditorTabComRepeats } from '$cm+editor/widgets/TabComRepeats';
 import { CmEditorComTabAudio } from '../ui/TabComAudio';
-import { CmEditorComTabAudioMarks } from '../ui/TabComAudioMarks';
 import { CmEditorComTabCategoryBinds } from '../ui/TabComCategoryBinds';
 import { CmEditorComTabChordApplications } from '../ui/TabComChordApplications';
 import { CmEditorComTabChordsBlocks } from '../ui/TabComChordsBlocks';
@@ -44,7 +44,7 @@ export const cmEditorComTabCompositionNavs = {
     checkTabAccess: checkAccess => checkAccess('cm', 'COM_AUDIO'),
   },
   points: {
-    Component: CmEditorComTabAudioMarks,
+    Component: CmEditorTabComAudioMarks,
     icon: 'PinLocation01',
     checkTabAccess: checkAccess => checkAccess('cm', 'COM_AMARK'),
   },
