@@ -7,7 +7,7 @@ import { jversion } from 'shared/values';
 import { environment } from './environment';
 
 export class SokiTrip {
-  private ws = new WebSocket(environment.sokiLink);
+  private ws: WebSocket = null!;
   private isTokenSent = false;
 
   private isConnected = false;
