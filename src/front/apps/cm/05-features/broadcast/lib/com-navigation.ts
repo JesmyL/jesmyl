@@ -6,7 +6,7 @@ import { cmOpenComListModeAtom } from '$cm/shared/state';
 import { useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
-import { useCmBroadcastScreenComTextNavigations } from './com-texts';
+import { useCmBroadcastScreenComTextNavigations } from './useCmBroadcastScreenComTextNavigations';
 
 export const useCmBroadcastScreenComNavigations = () => {
   const favourite = useCmComFavouriteList();

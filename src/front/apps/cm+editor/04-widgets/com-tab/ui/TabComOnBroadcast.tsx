@@ -9,6 +9,12 @@ import { cmComLineGroupingDefaultKinds } from 'shared/const/cm/comLineGroupingKi
 export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) => {
   const checkAccess = useCheckUserAccessRightsInScope();
 
+  const textsWithNumeredLines = ccom.takeSolidTextLines(true).map(lineProps => ({
+    ...lineProps,
+    ord: lineProps.ord,
+    list: lineProps.list.map((line, linei) => `${linei + 1}: ${line}`),
+  }));
+
   return (
     <>
       <div className="my-3">
@@ -20,10 +26,10 @@ export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) =>
                   ? ccom.broadcastPushKind
                   : mylib.isStr(ccom.broadcastPushKind)
                     ? -100
-                    : ccom.broadcastPushKind.n,
+                    : ccom.broadcastPushKind.n || 0,
               }}
               updateConfig={({ pushKind }) => {
-                if (pushKind == null || ccom.broadcastPushKind === pushKind) return;
+                if (pushKind == null || (ccom.broadcastPushKind || 0) === pushKind) return;
                 return cmEditComClientTsjrpcMethods.changePushKind({ comw: ccom.wid, value: pushKind });
               }}
             />
@@ -46,7 +52,7 @@ export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) =>
         )}
       </div>
 
-      {ccom.groupSlideLinesByKind(ccom.takeSolidTextLines(true)).map(({ list, ord, rule, defaultRule }, linesi) => {
+      {ccom.groupTextLinesByKind(textsWithNumeredLines).map(({ list, ord, rule, defaultRule }, linesi) => {
         return (
           <div
             key={linesi}

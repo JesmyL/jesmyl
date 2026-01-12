@@ -1,3 +1,5 @@
+import { defaultScreenBroadcastTextConfig } from '#features/broadcast/complect/defaults';
+import { ScreenBroadcastTextConfig } from '#features/broadcast/complect/model';
 import { ScreenTranslateConfigurationNameChanger } from '#features/broadcast/complect/NameChanger';
 import { useDebounceAction } from '#shared/lib/hooks/useDebounceAction';
 import { BackgroundConfigurator } from '#shared/ui/configurators/Background';
@@ -5,13 +7,17 @@ import { ColorConfigurator } from '#shared/ui/configurators/Color';
 import { FontFamilyConfigurator } from '#shared/ui/configurators/FontFamily';
 import { FontWeightConfigurator } from '#shared/ui/configurators/FontWeight/ui';
 import { ScreenTranslateConfigurationTextAlign } from '#shared/ui/configurators/TextAlign';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
-import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useCallback } from 'react';
 import { cmBroadcastSubConfigNext } from '../const/defaults';
 import { useCmBroadcastUpdateCurrentConfig } from '../hooks/update-config';
-import { CmBroadcastScreenConfig, CmBroadcastTextScreenConfig } from '../model/model';
-import { CmBroadcastScreenConfigurationPushKind } from './PushKind';
+import {
+  CmBroadcastScreenConfig,
+  CmBroadcastScreenConfigSubConfigs,
+  CmBroadcastTextScreenConfig,
+} from '../model/model';
+import { CmBroadcastSubBlockConfigurator } from './SubBlockConfigurator';
 
 interface Props {
   currentConfig: CmBroadcastScreenConfig;
@@ -22,33 +28,39 @@ export const CmBroadcastCurrentScreenConfigurations = ({ currentConfig }: Props)
   const update = useDebounceAction(updateConfig);
 
   const putSubConfigUpdate = useCallback(
-    (config: Partial<CmBroadcastTextScreenConfig> | null) => {
-      const next = config === null ? null : { ...cmBroadcastSubConfigNext, ...currentConfig.subs?.next, ...config };
+    (
+      field: keyof CmBroadcastScreenConfigSubConfigs,
+      defaultConfig: ScreenBroadcastTextConfig | nil,
+      config: Partial<CmBroadcastTextScreenConfig> | null,
+    ) => {
+      const updatedConfig = config === null ? null : { ...defaultConfig, ...currentConfig.subs?.[field], ...config };
 
-      const newConfig: CmBroadcastScreenConfig = {
+      const newConfig = {
         ...currentConfig,
         subs: {
           ...currentConfig.subs,
-          next: next!,
+          [field]: updatedConfig!,
         },
-      };
+      } satisfies CmBroadcastScreenConfig;
 
-      if (config === null) delete newConfig.subs!.next;
+      if (config === null) delete newConfig.subs[field];
 
       updateConfig(newConfig);
     },
     [currentConfig, updateConfig],
   );
-  const onAddSubConfig = useCallback(() => putSubConfigUpdate(cmBroadcastSubConfigNext), [putSubConfigUpdate]);
 
   return (
     <ExpandableContent title="Настроить">
       <div className="ml-2">
         <ScreenTranslateConfigurationNameChanger />
 
-        <CmBroadcastScreenConfigurationPushKind
-          config={currentConfig}
-          updateConfig={updateConfig}
+        <Dropdown
+          id={currentConfig.pushKind}
+          label="Разбивка строк"
+          undTitle="так как есть"
+          items={[{ id: '2', title: 'по 2 строки' }]}
+          onSelectId={pushKind => updateConfig({ pushKind })}
         />
 
         <ColorConfigurator
@@ -71,45 +83,26 @@ export const CmBroadcastCurrentScreenConfigurations = ({ currentConfig }: Props)
           config={currentConfig}
           updateConfig={update}
         />
-        <ExpandableContent title="Доп. блоки">
-          <div className="ml-2">
-            {currentConfig.subs?.next ? (
-              <>
-                <TheIconButton
-                  icon="Cancel01"
-                  className="text-xKO"
-                  postfix="Убрать текст следующего блока"
-                  confirm="Убрать текст следующего блока?"
-                  onClick={() => putSubConfigUpdate(null)}
-                />
-                <ColorConfigurator
-                  config={currentConfig.subs.next}
-                  updateConfig={putSubConfigUpdate}
-                />
-                <FontWeightConfigurator
-                  config={currentConfig.subs.next}
-                  updateConfig={putSubConfigUpdate}
-                />
-                <ScreenTranslateConfigurationTextAlign
-                  config={currentConfig.subs.next}
-                  updateConfig={putSubConfigUpdate}
-                />
-                <FontFamilyConfigurator
-                  config={currentConfig.subs.next}
-                  updateConfig={putSubConfigUpdate}
-                />
-              </>
-            ) : (
-              <div>
-                <TheIconButton
-                  icon="PlusSign"
-                  className="my-5"
-                  postfix="Вставить окно следующего блока"
-                  onClick={onAddSubConfig}
-                />
-              </div>
-            )}
-          </div>
+        <ExpandableContent title="Блоки">
+          <CmBroadcastSubBlockConfigurator
+            blockTitle="Конфиг следующего блока"
+            subKey="next"
+            plusButtonPostfix="Вставить окно следующего блока"
+            deleteButtonPostfix="Убрать текст следующего блока"
+            putSubConfigUpdate={putSubConfigUpdate}
+            currentConfig={currentConfig}
+            defaultConfig={cmBroadcastSubConfigNext}
+          />
+
+          <CmBroadcastSubBlockConfigurator
+            blockTitle="Конфиг аккордного блока"
+            subKey="chorded"
+            plusButtonPostfix="Добавить конфиг аккордного блока"
+            deleteButtonPostfix="Убрать конфиг аккордного блока"
+            putSubConfigUpdate={putSubConfigUpdate}
+            currentConfig={currentConfig}
+            defaultConfig={defaultScreenBroadcastTextConfig}
+          />
         </ExpandableContent>
       </div>
     </ExpandableContent>

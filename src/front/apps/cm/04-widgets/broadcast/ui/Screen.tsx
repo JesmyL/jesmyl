@@ -18,26 +18,36 @@ type Props = BroadcastScreenProps &
     isVisible: boolean;
     isTechnicalText?: boolean;
     isNextTechnicalText?: boolean;
+    isChorded: boolean;
+    isNextChorded: boolean;
   };
 
 export const CmBroadcastScreen = (props: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  const style = useCmBroadcastScreenStyle(props.isVisible, props.cmConfig);
+  const style = useCmBroadcastScreenStyle(
+    props.isVisible,
+    props.isChorded ? (props.cmConfig?.subs?.chorded ?? props.cmConfig) : props.cmConfig,
+  );
+
   const wrapperStyle = useCmBroadcastScreenWrapperStyle(props.cmConfig);
   const background = useSetBroadcastScreenInteractiveBackground(
     props.cmConfig?.isWithBackground ? props.cmConfig.backgroundInteractive : undefined,
   );
 
   useApplyScreenFontFamilyEffect(props.cmConfig?.fontFamily, props.win);
-  let subScreens = null;
+  let nextSlideNode = null;
 
   if (props.cmConfig?.subs?.next !== undefined) {
-    const config = props.cmConfig.subs.next;
-
-    subScreens = (
+    nextSlideNode = (
       <CmBroadcastSubScreen
-        config={config}
+        config={
+          props.isNextChorded
+            ? props.cmConfig.subs.chorded
+              ? { ...props.cmConfig.subs.next, ...props.cmConfig.subs.chorded }
+              : props.cmConfig.subs.next
+            : props.cmConfig.subs.next
+        }
         win={props.win}
         subUpdates={props.subUpdates}
         text={props.nextText}
@@ -63,14 +73,12 @@ export const CmBroadcastScreen = (props: Props) => {
           wrapperRef={wrapperRef}
         />
       )}
-      {subScreens}
+      {nextSlideNode}
       <FontSizeContain
         className="inline-flex white-pre-children"
         style={props.isTechnicalText ? { ...style, opacity: Math.min(+(style.opacity || 1) || 1, 0.3) } : style}
         html={props.text}
-        subUpdates={
-          '' + props.subUpdates + (props.cmConfig === undefined ? '' : props.cmConfig.width + props.cmConfig.height)
-        }
+        subUpdates={`${props.subUpdates}${props.cmConfig == null ? '' : props.cmConfig.width + props.cmConfig.height}`}
       />
     </div>
   );

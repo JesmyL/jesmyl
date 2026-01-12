@@ -12,11 +12,19 @@ export type CmBroadcastSlideGrouperOrdCombiner = PRecord<CmComOrderWid, number>;
 export type CmBroadcastSlideGrouperOrdWithList = {
   ord: CmComOrder;
   list: string[];
+  isLastSlide?: boolean;
 }[];
+
+export type CmBroadcastSlideGrouperLinesDiapason = {
+  ord: CmComOrder;
+  lines: string[];
+  toLinei: number;
+  fromLinei: number;
+};
 
 export type CmBroadcastSlideGrouperOrdWithListAndRule = {
   ord: CmComOrder;
   list: string[][];
   rule: number;
   defaultRule: number;
-}[];
+};

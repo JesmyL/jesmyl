@@ -2,6 +2,7 @@ import { mylib } from '#shared/lib/my-lib';
 import { makeRegExp } from 'regexpert';
 import { cmComLineGroupingDefaultKinds } from 'shared/const/cm/comLineGroupingKind';
 import {
+  CmBroadcastSlideGrouperLinesDiapason,
   CmBroadcastSlideGrouperOrdCombiner,
   CmBroadcastSlideGrouperOrdWithList,
   CmBroadcastSlideGrouperOrdWithListAndRule,
@@ -9,7 +10,30 @@ import {
 import { CmComTexts } from './40-Texts';
 
 export class CmComBroadcast extends CmComTexts {
-  groupSlideLinesByKind = (ordLines: CmBroadcastSlideGrouperOrdWithList, rule = this.broadcastPushKind) => {
+  groupSlideListByKind = (
+    groupedLines: CmBroadcastSlideGrouperOrdWithListAndRule[] | und,
+  ): CmBroadcastSlideGrouperLinesDiapason[] => {
+    let fromLinei = 0;
+    let toLinei = 0;
+
+    return (
+      groupedLines
+        ?.map(({ list, ord }) => {
+          return list.map(lines => {
+            toLinei += lines.length;
+            fromLinei = toLinei - lines.length;
+
+            return { ord, lines, toLinei, fromLinei };
+          });
+        })
+        .flat() ?? []
+    );
+  };
+
+  groupTextLinesByKind = (
+    ordLines: CmBroadcastSlideGrouperOrdWithList,
+    rule = this.broadcastPushKind,
+  ): CmBroadcastSlideGrouperOrdWithListAndRule[] => {
     if (rule == null) return [];
 
     let str = '';
@@ -19,7 +43,7 @@ export class CmComBroadcast extends CmComTexts {
     else if (mylib.isNum(rule)) str = cmComLineGroupingDefaultKinds[rule];
     else {
       if (mylib.isStr(rule.s)) str = rule.s;
-      else if (mylib.isNum(rule.n)) str = cmComLineGroupingDefaultKinds[rule.n];
+      else str = cmComLineGroupingDefaultKinds[rule.n || 0];
 
       ordComb = rule.d;
     }
@@ -35,11 +59,11 @@ export class CmComBroadcast extends CmComTexts {
       else divDict[key] = value;
     });
 
-    return ordLines.map(({ list, ord }): CmBroadcastSlideGrouperOrdWithListAndRule[number] => {
+    return ordLines.map(({ list, ord }) => {
       const ordw = ord.wid;
 
       let defaultRule = 0;
-      let defaultDict: CmBroadcastSlideGrouperOrdWithListAndRule[number] | null = null;
+      let defaultDict: CmBroadcastSlideGrouperOrdWithListAndRule | null = null;
 
       for (let i = list.length; i >= 0; i--) {
         if (!divDict[i]) continue;

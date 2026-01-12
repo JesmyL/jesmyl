@@ -29,19 +29,16 @@ export const ScreenBroadcastFaceLine = <Config,>(props: Props<Config>) => {
 
   const putOnFaceClose = useScreenBroadcastPutOnFaceClose(configs, currentConfigi, windows, props.updateConfig);
 
-  const putOnFaceClick = useCallback(
-    (configi: number) => {
-      return () => {
-        if (windows.length && windows[configi] == null) {
-          watchBroadcast();
-          return;
-        }
+  const putOnFaceClick = (configi: number) => {
+    return () => {
+      if (windows.length && windows[configi] == null) {
+        watchBroadcast();
+        return;
+      }
 
-        currentBroadcastConfigiAtom.set(configi);
-      };
-    },
-    [watchBroadcast, windows],
-  );
+      currentBroadcastConfigiAtom.set(configi);
+    };
+  };
 
   const onAdd = useCallback(() => currentBroadcastConfigiAtom.set(addConfig()), [addConfig]);
 

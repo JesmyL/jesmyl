@@ -76,15 +76,15 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         changePushKind: modifyCom((com, { value }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_TR', 'U')) throw '';
 
-          const prev = com.k;
+          const prevStr = JSON.stringify(com.k);
           let next = com.k;
 
           const newKind: CmBroadcastSlideGrouperKindCombiner =
-            smylib.isNum(prev) || smylib.isNil(prev)
-              ? { d: {}, n: prev || 0 }
-              : smylib.isStr(prev)
-                ? { d: {}, s: prev }
-                : prev;
+            smylib.isNum(next) || smylib.isNil(next)
+              ? { d: {}, n: next || 0 }
+              : smylib.isStr(next)
+                ? { d: {}, s: next }
+                : next;
 
           if (smylib.isStr(value)) {
             newKind.s = value;
@@ -94,14 +94,14 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
             delete newKind.s;
           } else newKind.d = { ...newKind.d, ...value };
 
+          const makeNumber = (numValue: number) => {
+            if (!`${numValue}`.includes('0')) return +numValue;
+            return +`${`${numValue}`.split('0')[0]}0`;
+          };
+
           if (newKind.s) {
             const stringValuesDict: Record<string, number> = {};
             const keyValues = newKind.s.split(makeRegExp('/[ ,]+/'));
-
-            const makeNumber = (numValue: number) => {
-              if (!`${numValue}`.includes('0')) return +numValue;
-              return +`${`${numValue}`.split('0')[0]}0`;
-            };
 
             keyValues.forEach(keyValue => {
               if (!keyValue.includes(':')) {
@@ -127,10 +127,11 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           }
 
           if (!newKind.n) delete newKind.n;
+          if (!newKind.s) delete newKind.s;
 
           smylib.keys(newKind.d).forEach(key => {
-            newKind.d[key] = +newKind.d[key]!;
-            if (!newKind.d[key]) delete newKind.d[key];
+            if (!+newKind.d[key]!) delete newKind.d[key];
+            else newKind.d[key] = makeNumber(+newKind.d[key]!);
           });
 
           if (!smylib.keys(newKind.d).length) next = newKind.n ?? newKind.s;
@@ -142,7 +143,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
             com.k = (index < 0 ? next : index) || undefined;
           } else com.k = next;
 
-          return `изменено значение правила группировок для слайдов - ${JSON.stringify(com.k)} (было ${JSON.stringify(prev)})`;
+          return `изменено значение правила группировок для слайдов - ${JSON.stringify(com.k)} (было ${prevStr})`;
         }),
 
         toggleAudioLink: modifyCom((com, { link }, { auth }) => {

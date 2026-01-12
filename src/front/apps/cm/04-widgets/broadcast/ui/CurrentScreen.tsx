@@ -2,8 +2,7 @@ import { currentBroadcastConfigiAtom, isBroadcastTextVisibleAtom } from '#featur
 import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
 import { useGetScreenBroadcastConfig } from '#features/broadcast/hooks/configs';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
-import { cmBroadcastBlockAtom } from '$cm/entities/broadcast';
-import { useCmBroadcastCurrentComTexts } from '$cm/features/broadcast';
+import { useCmBroadcastMinimalConfigLines } from '$cm/features/broadcast';
 import { useAtomValue } from 'atomaric';
 import { useCmBroadcastScreenConfig } from '../hooks/configs';
 import { useCmBroadcastScreenWinResizeListen } from '../lib/win-resize-lesten';
@@ -13,19 +12,21 @@ export const CmBroadcastCurrentScreen = (props: BroadcastScreenProps & Partial<F
   const getCurrentConfig = useGetScreenBroadcastConfig();
   const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
   const currentConfig = useCmBroadcastScreenConfig(props.screeni ?? currentConfigi);
-  const texts = useCmBroadcastCurrentComTexts(currentConfig?.pushKind);
-  const currTexti = useAtomValue(cmBroadcastBlockAtom);
   const forceUpdates = useCmBroadcastScreenWinResizeListen(props.win);
   const isVisible = useAtomValue(isBroadcastTextVisibleAtom);
+
+  const { selfLines, blocki } = useCmBroadcastMinimalConfigLines(props.screeni ?? currentConfigi);
 
   return (
     <CmBroadcastScreen
       {...props}
       cmConfig={currentConfig}
-      text={texts ? texts[currTexti] : ''}
-      nextText={texts ? texts[currTexti + 1] || '' : ''}
+      text={selfLines[blocki]?.lines.join('\n') ?? ''}
+      nextText={selfLines[blocki + 1]?.lines.join('\n') ?? ''}
+      isChorded={!selfLines[blocki]?.ord.isRealText()}
+      isNextChorded={!selfLines[blocki + 1]?.ord.isRealText()}
       isVisible={isVisible}
-      subUpdates={'' + currentConfigi + forceUpdates + getCurrentConfig(currentConfigi)?.proportion}
+      subUpdates={`${currentConfigi}${forceUpdates}${getCurrentConfig(currentConfigi)?.proportion}`}
     />
   );
 };

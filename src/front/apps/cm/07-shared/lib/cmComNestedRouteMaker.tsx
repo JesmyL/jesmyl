@@ -1,7 +1,6 @@
 import { CmBroadcast } from '$cm/entities/broadcast';
 import {
   CmComCurrentComPackContext,
-  CmComCurrentContext,
   CmComListContextValue,
   CmComOpenComLinkRendererContext,
   CmComOpenLinkRenderer,
@@ -33,19 +32,17 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>(props:
     return (
       <CmComOpenComLinkRendererContext value={goToComLinkRenderer}>
         <CmComCurrentComPackContext value={comList}>
-          <CmComCurrentContext value={com}>
-            {tran ? (
-              props.BroadcastComponent ? (
-                <props.BroadcastComponent />
-              ) : (
-                <CmBroadcast />
-              )
-            ) : com || comw !== undefined ? (
-              <TheCmComComposition />
+          {tran ? (
+            props.BroadcastComponent ? (
+              <props.BroadcastComponent />
             ) : (
-              <props.RouteComponent />
-            )}
-          </CmComCurrentContext>
+              <CmBroadcast />
+            )
+          ) : com || comw !== undefined ? (
+            <TheCmComComposition />
+          ) : (
+            <props.RouteComponent />
+          )}
         </CmComCurrentComPackContext>
       </CmComOpenComLinkRendererContext>
     );

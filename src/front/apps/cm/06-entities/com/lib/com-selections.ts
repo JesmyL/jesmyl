@@ -1,4 +1,3 @@
-import { contextCreator } from '#shared/lib/contextCreator';
 import { mylib } from '#shared/lib/my-lib';
 import { CmCom } from '$cm/ext';
 import { cmIDB } from '$cm/shared/state';
@@ -23,5 +22,4 @@ export const useCmCom = (comw: CmComWid | und): CmCom | und => {
 };
 
 export const useCmComLastOpenComw = () => useAtomValue(cmComLastOpenComwAtom);
-
-export const [CmComCurrentContext, useCmComCurrent] = contextCreator<CmCom | und>(undefined);
+export const useCmComCurrent = () => useCmCom(useAtomValue(cmComLastOpenComwAtom));

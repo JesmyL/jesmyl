@@ -6,6 +6,8 @@ export interface CmBroadcastSchWgtLiveDataValue {
   comw: CmComWid;
   fromLinei: number;
   toLinei: number;
+  isChorded: boolean;
+  isNextChorded: boolean;
   text: string;
   nextText: string;
   config: CmBroadcastScreenConfig;

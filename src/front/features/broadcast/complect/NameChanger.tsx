@@ -1,4 +1,5 @@
 import { propagationStopper } from '#shared/lib/event-funcs';
+import { TextInput } from '#shared/ui/TextInput';
 import { useAtomValue } from 'atomaric';
 import { currentBroadcastConfigiAtom } from '../atoms';
 import { useScreenBroadcastCurrentConfig } from '../hooks/configs';
@@ -16,12 +17,11 @@ export const ScreenTranslateConfigurationNameChanger = () => {
   return (
     <div className="flex gap-2">
       Название
-      <input
-        value={config.title}
-        className="bg-x2"
+      <TextInput
+        defaultValue={config.title}
+        className="bg-x2 mb-3"
         onKeyDown={propagationStopper}
-        onChange={event => {
-          const title = event.target.value;
+        onChanged={title => {
           updateConfig(currentConfigi, { title });
           const win = windows[currentConfigi];
           if (win == null) return;

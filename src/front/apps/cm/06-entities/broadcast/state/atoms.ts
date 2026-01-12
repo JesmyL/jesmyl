@@ -1,4 +1,3 @@
-import { atom, useAtom } from 'atomaric';
+import { atom } from 'atomaric';
 
 export const cmBroadcastBlockAtom = atom(0);
-export const useCmBroadcastBlock = () => useAtom(cmBroadcastBlockAtom);
