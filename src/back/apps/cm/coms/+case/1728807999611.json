@@ -10,9 +10,11 @@
   ],
   "c": [
     "Cm D# G# D#\nG# Cm\nCm Fm A# D#\nFm Cm-C\nG# D#\nFm A# D#\nG# H7 Cm\nA# F A#",
-    "D# A# D#\nFm D#\nCm Fm Gm\nCm Fm D#"
+    "D# A# D#\nFm D#\nCm Fm Gm\nCm Fm D#",
+    "G# Fm A# D#\nG# G\nCm A# G# Gm\nFm G"
   ],
   "o": [
+    { "w": 9, "k": 15, "c": 2 },
     {
       "w": 0,
       "t": 0,

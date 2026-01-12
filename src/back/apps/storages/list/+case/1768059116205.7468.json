@@ -1,0 +1,28 @@
+{
+  "w": 1768059116205.7468,
+  "title": "Закупки",
+  "team": {
+    "T166cbf17596a0c2919e4df1a6d54e66": { "fio": "Павел 👨‍💻", "role": 1 },
+    "T2844a791f6cb5702a875a0bad8e9397": { "fio": "Джексон_С", "role": 2 }
+  },
+  "cards": [
+    { "i": 0, "title": "Гречка", "status": 2 },
+    { "i": 1, "title": "Рис", "status": 2 },
+    { "i": 2, "title": "Макароны", "status": 2 },
+    { "i": 3, "title": "Картошка", "status": 2 },
+    { "i": 4, "title": "Лук", "status": 2 },
+    { "i": 5, "title": "Морковь", "status": 2 },
+    { "i": 6, "title": "Айран", "status": 2 },
+    { "i": 7, "title": "Хлеб", "status": 2 },
+    { "i": 8, "title": "Яйца", "status": 2 },
+    { "i": 9, "title": "" }
+  ],
+  "statuses": [
+    { "title": "Все позиции", "color": "#01c7fc", "icon": "ArrangeByLettersAZ" },
+    { "title": "Нужно купить", "icon": "Archive", "color": "#fefb41" },
+    { "title": "В корзине", "icon": "ShoppingBasketCheckOut02", "color": "#d19d01" }
+  ],
+  "cols": [],
+  "dicts": [{ "li": [""], "title": "База" }],
+  "icon": "ShoppingBasketCheckOut02"
+}
