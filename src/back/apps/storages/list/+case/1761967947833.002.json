@@ -81,12 +81,7 @@
       "status": 2,
       "i": 21
     },
-    {
-      "title": "тг аудио в текст",
-      "note": "https://github.com/rn0x/audio2textjs",
-      "row": [{ "t": 74, "val": "" }],
-      "i": 22
-    },
+    { "title": "тг аудио в текст", "row": [{ "t": 74, "val": "https://github.com/rn0x/audio2textjs" }], "i": 22 },
     {
       "title": "styled -> tw",
       "note": "максимально заменить styled-components на tw\n\nне забыть про  cm трансляции",
@@ -114,7 +109,7 @@
     { "i": 29, "title": "при вводе курсор сбрасывает в конец", "status": 1 },
     { "i": 30, "title": "spellcheck=true", "note": "::spelling-error\n\nдля подчёркивания ошибок в инпутах" },
     { "i": 31, "title": "каждый 10й запрос без инета - тостер" },
-    { "i": 32, "title": "" }
+    { "i": 32, "title": "." }
   ],
   "statuses": [
     { "title": "Новый", "color": "#74a7ff", "icon": "AiInnovation03", "next": [1, 3, 5, 7, 8] },
