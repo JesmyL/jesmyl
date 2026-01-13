@@ -2,9 +2,13 @@ import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
 import { ScreenTranslateCurrentPositionConfigurators } from '#features/broadcast/complect/position/Position';
 import { useSetBroadcastScreenInteractiveBackground } from '#features/broadcast/hooks/interactive-back';
 import { useApplyScreenFontFamilyEffect } from '#features/broadcast/hooks/set-font-family';
+import { HorizontalDirection } from '#shared/model/Direction';
 import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
+import { cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
+import { useAtomValue } from 'atomaric';
 import { useRef } from 'react';
+import styled, { css, keyframes } from 'styled-components';
 import { useCmBroadcastScreenStyle } from '../lib/get-style';
 import { useCmBroadcastScreenWrapperStyle } from '../lib/get-wrapper-style';
 import { CmBroadcastScreenConfig } from '../model/model';
@@ -24,6 +28,7 @@ type Props = BroadcastScreenProps &
 
 export const CmBroadcastScreen = (props: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const switchDirection = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
 
   const style = useCmBroadcastScreenStyle(
     props.isVisible,
@@ -74,7 +79,9 @@ export const CmBroadcastScreen = (props: Props) => {
         />
       )}
       {nextSlideNode}
-      <FontSizeContain
+      <StyledFontSizeContain
+        key={props.text + switchDirection}
+        $dir={switchDirection}
         className="inline-flex white-pre-children"
         style={props.isTechnicalText ? { ...style, opacity: Math.min(+(style.opacity || 1) || 1, 0.3) } : style}
         html={props.text}
@@ -83,3 +90,22 @@ export const CmBroadcastScreen = (props: Props) => {
     </div>
   );
 };
+
+const anims = [1, -1].map(
+  num =>
+    keyframes`${css`
+      from {
+        opacity: 0.1;
+        transform: translate(${num}vw, 0);
+      }
+
+      to {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    `}`,
+) as never as ['', '', ''];
+
+const StyledFontSizeContain = styled(FontSizeContain)<{ $dir: HorizontalDirection }>`
+  animation: ${props => anims[props.$dir]} 0.5s ease-in-out;
+`;

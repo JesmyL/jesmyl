@@ -1,5 +1,6 @@
 import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
-import { cmBroadcastBlockAtom } from '$cm/entities/broadcast';
+import { HorizontalDirection } from '#shared/model/Direction';
+import { cmBroadcastBlockAtom, cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
 import { useAtomValue } from 'atomaric';
 import { useCmBroadcastMinimalConfigLines } from './useCmBroadcastMinimalConfigLines';
 
@@ -18,6 +19,10 @@ export const useCmBroadcastScreenComTextNavigations = () => {
       if (currTexti > 0) state.setTexti(currTexti - 1);
     },
     setTexti: (texti: number) => {
+      cmBroadcastSwitchBlockDirectionAtom.set(
+        cmBroadcastBlockAtom.get() > texti ? HorizontalDirection.RightToLeft : HorizontalDirection.LeftToRight,
+      );
+
       cmBroadcastBlockAtom.set(texti);
       const nextd = window.document.getElementById(`broadcast-window-line-${texti}`);
 

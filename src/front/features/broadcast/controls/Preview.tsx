@@ -15,7 +15,7 @@ export const BroadcastSlidePreview = ({ isPreview = true }: Props) => {
   const currentConfig = useScreenBroadcastCurrentConfig();
 
   return (
-    <Wrapper className="pointer">
+    <div className="pointer relative inline-block w-[var(--size)] min-w-[var(--min-size)] max-w-[var(--max-size)] h-[var(--size)] min-h-[var(--min-size)] max-h-[var(--max-size)] overflow-hidden text-x3 text-[14px] align-middle select-none whitespace-pre rounded-[20px]">
       {currentConfig === undefined ? (
         <BroadcastScreen
           win={window}
@@ -31,7 +31,9 @@ export const BroadcastSlidePreview = ({ isPreview = true }: Props) => {
               />
             </ScreenWithBackground>
           </div>
-          <FullButton
+
+          <TheIconButton
+            className="absolute top-[5px] right-[5px] z-101"
             icon="PencilEdit02"
             onClick={isSettingsOpenAtom.do.toggle}
           />
@@ -52,7 +54,7 @@ export const BroadcastSlidePreview = ({ isPreview = true }: Props) => {
           </FullContainer>
         </div>
       </FullContent>
-    </Wrapper>
+    </div>
   );
 };
 
@@ -66,35 +68,6 @@ const FullContainer = styled.div`
   width: ${size};
   min-width: ${size};
   max-width: ${size};
-`;
-
-const FullButton = styled(TheIconButton)`
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  z-index: 101;
-`;
-
-const Wrapper = styled.div`
-  --radius: 20px;
-
-  position: relative;
-  display: inline-block;
-  vertical-align: middle;
-  width: var(--size);
-  min-width: var(--min-size);
-  max-width: var(--max-size);
-  height: var(--size);
-  min-height: var(--min-size);
-  max-height: var(--max-size);
-
-  overflow: hidden;
-  color: var(--color-x3);
-  font-size: 14px;
-  user-select: none;
-  white-space: pre;
-
-  border-radius: var(--radius);
 `;
 
 const ScreenWithBackground = styled.div<{ $proportion: number }>`
