@@ -64,6 +64,7 @@ export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) =>
                 defaultValue={`${rule}`}
                 className="max-w-20"
                 strongDefaultValue
+                type="tel"
                 onChanged={value => {
                   return cmEditComClientTsjrpcMethods.changePushKind({
                     comw: ccom.wid,
