@@ -22,13 +22,13 @@ export const useCmBroadcastMinimalConfigLines = (selfConfigi: number) => {
   const minimalConfigi =
     (configs.findIndex(config => config.pushKind === '2') + 1 || currentBroadcastConfigiAtom.get() + 1) - 1;
 
-  const minimalGroupedTexts = com.groupTextLinesByKind(com.takeSolidTextLines(), configs[minimalConfigi]?.pushKind);
+  const minimalGroupedTexts = com.groupTextLinesByKind(com.takeSolidTextLines(true), configs[minimalConfigi]?.pushKind);
   const minimalGroupedLines = (result.minimalLines = result.selfLines = com.groupSlideListByKind(minimalGroupedTexts));
 
   if (selfConfigi === minimalConfigi) {
     result.blocki = currentBlocki;
   } else {
-    const currentGroupedTexts = com.groupTextLinesByKind(com.takeSolidTextLines(), configs[selfConfigi]?.pushKind);
+    const currentGroupedTexts = com.groupTextLinesByKind(com.takeSolidTextLines(true), configs[selfConfigi]?.pushKind);
     const currentGroupedLines = (result.selfLines = com.groupSlideListByKind(currentGroupedTexts));
     const minimalFromLinei = minimalGroupedLines[currentBlocki].fromLinei;
 

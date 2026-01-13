@@ -15,15 +15,19 @@ export class CmComBroadcast extends CmComTexts {
   ): CmBroadcastSlideGrouperLinesDiapason[] => {
     let fromLinei = 0;
     let toLinei = 0;
+    let currentLinesCount = 0;
 
     return (
       groupedLines
-        ?.map(({ list, ord }) => {
-          return list.map(lines => {
+        ?.map(({ list, ord }, blocki) => {
+          const preLinesCount = currentLinesCount;
+          currentLinesCount += list.flat().length;
+
+          return list.map((lines): CmBroadcastSlideGrouperLinesDiapason => {
             toLinei += lines.length;
             fromLinei = toLinei - lines.length;
 
-            return { ord, lines, toLinei, fromLinei };
+            return { ord, lines, toLinei, fromLinei, blocki, preLinesCount };
           });
         })
         .flat() ?? []

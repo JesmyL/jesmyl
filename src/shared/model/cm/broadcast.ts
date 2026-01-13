@@ -20,6 +20,8 @@ export type CmBroadcastSlideGrouperLinesDiapason = {
   lines: string[];
   toLinei: number;
   fromLinei: number;
+  preLinesCount: number;
+  blocki: number;
 };
 
 export type CmBroadcastSlideGrouperOrdWithListAndRule = {
