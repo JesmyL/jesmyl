@@ -1,7 +1,7 @@
 import { broadcastCurrentTextAppAtom } from '#features/broadcast/atoms';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useCmComCurrent } from '$cm/entities/com';
-import { useCmBroadcastMinimalConfigLines, useCmBroadcastScreenComNavigations } from '$cm/features/broadcast';
+import { useCmBroadcastMinimalConfigSlides, useCmBroadcastScreenComNavigations } from '$cm/features/broadcast';
 import { LiveBroadcastAppProps } from '$cm/shared/model';
 import { cmIsTrackBroadcastAtom } from '$cm/shared/state';
 import { CmBroadcastControlled } from '$cm/widgets/broadcast';
@@ -34,36 +34,36 @@ export const CmScheduleWidgetBroadcastLiveCm = (props: LiveBroadcastAppProps) =>
 
 const LiveReport = (props: LiveBroadcastAppProps) => {
   const ccom = useCmComCurrent();
-  const { blocki, selfLines, config } = useCmBroadcastMinimalConfigLines(0);
+  const { currentBlocki, selfSlides, selfConfig } = useCmBroadcastMinimalConfigSlides(0);
 
   useEffect(() => {
     if (props.isCantTranslateLive || !ccom) return;
 
     return setTimeoutEffect(() => {
-      const currentGroup = selfLines[blocki];
-      const nextGroup = selfLines[blocki + 1];
+      const currentSlide = selfSlides[currentBlocki];
+      const nextSlide = selfSlides[currentBlocki + 1];
 
       const liveData: IndexSchWBroadcastLiveDataValue = {
         fio: props.fio,
         cm: {
-          config,
+          config: selfConfig,
           comw: ccom.wid,
-          texti: blocki,
+          texti: currentBlocki,
 
-          fromLinei: currentGroup.fromLinei,
-          toLinei: currentGroup.toLinei,
+          fromLinei: currentSlide.fromLinei,
+          toLinei: currentSlide.toLinei,
 
-          text: currentGroup?.lines.join('\n'),
-          isChorded: !currentGroup?.ord.isRealText(),
+          text: currentSlide?.lines.join('\n'),
+          isChorded: !currentSlide?.ord.isRealText(),
 
-          nextText: nextGroup?.lines.join('\n') || '',
-          isNextChorded: !nextGroup?.ord.isRealText(),
+          nextText: nextSlide?.lines.join('\n') || '',
+          isNextChorded: !nextSlide?.ord.isRealText(),
         },
       };
 
       schLiveTsjrpcClient.next({ schw: props.schedule.w, data: liveData });
     }, 100);
-  }, [blocki, ccom, config, props.fio, props.isCantTranslateLive, props.schedule.w, selfLines]);
+  }, [currentBlocki, ccom, selfConfig, props.fio, props.isCantTranslateLive, props.schedule.w, selfSlides]);
 
   return <></>;
 };

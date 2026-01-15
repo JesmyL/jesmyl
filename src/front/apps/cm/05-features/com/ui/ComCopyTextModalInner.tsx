@@ -13,6 +13,7 @@ import { TheCmComCurrent } from '$cm/widgets/com';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
+import { nbsp } from 'shared/utils/cm/com/const';
 
 export const CmComCopyTextModalInner = ({ com }: { com: CmCom }) => {
   const [text, setText] = useState('');
@@ -38,7 +39,7 @@ export const CmComCopyTextModalInner = ({ com }: { com: CmCom }) => {
                 if (!ord.text)
                   return `\n${ord.me.header()}.${isShowChordsInText ? `\n${chordLabels?.map(line => line.join(' ')).join('\n') ?? ''}` : ''}`;
 
-                const preparedText = ord.repeatedText().replace(makeRegExp('/&nbsp;/g'), ' ');
+                const preparedText = ord.repeatedText().replace(makeRegExp(`/${nbsp}/g`), ' ');
                 if (!isShowChordsInText) return `${header && `\n${header}\n`}${preparedText}`;
 
                 const textLines = preparedText.split('\n');

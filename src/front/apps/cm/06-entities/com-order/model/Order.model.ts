@@ -20,6 +20,7 @@ export type CmComOrderEditableRegion<Ord extends CmComOrder> = {
 
   startOrd: Ord | null;
   endOrd: Ord | null;
+  /** [endLinei, endWordi] in other order */
   others: number[] | null;
 };
 

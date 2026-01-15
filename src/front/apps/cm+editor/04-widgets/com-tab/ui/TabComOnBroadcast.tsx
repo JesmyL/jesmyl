@@ -9,10 +9,10 @@ import { cmComLineGroupingDefaultKinds } from 'shared/const/cm/comLineGroupingKi
 export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) => {
   const checkAccess = useCheckUserAccessRightsInScope();
 
-  const textsWithNumeredLines = ccom.takeSolidTextLines(true).map(lineProps => ({
-    ...lineProps,
-    ord: lineProps.ord,
-    list: lineProps.list.map((line, linei) => `${linei + 1}: ${line}`),
+  const textsWithNumeredLines = ccom.takeSolidTextLines().map(slideProps => ({
+    ...slideProps,
+    ord: slideProps.ord,
+    list: slideProps.lines.map((line, linei) => `${linei + 1}: ${line}`),
   }));
 
   return (
@@ -52,7 +52,7 @@ export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) =>
         )}
       </div>
 
-      {ccom.groupTextLinesByKind(textsWithNumeredLines).map(({ list, ord, rule, defaultRule }, linesi) => {
+      {ccom.groupTextLinesByKind(textsWithNumeredLines).map(({ lines, ord, rule, defaultRule }, linesi) => {
         return (
           <div
             key={linesi}
@@ -73,7 +73,7 @@ export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) =>
                 }}
               />
             )}
-            {list?.map((text, texti) => (
+            {lines?.map((text, texti) => (
               <div
                 key={texti}
                 className="my-5 pre-text"

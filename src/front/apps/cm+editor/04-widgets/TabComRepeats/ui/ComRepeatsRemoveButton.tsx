@@ -8,6 +8,7 @@ import { CmComOrder } from '$cm/ext';
 import { atom } from 'atomaric';
 import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
+import { nbsp } from 'shared/utils/cm/com/const';
 
 interface Props {
   isChordBlock: boolean;
@@ -21,7 +22,6 @@ interface Props {
 
 const startFlash = '/';
 const finishFlash = '\\';
-const flashDivider = '&nbsp;';
 
 const isOpenModalAtom = atom(false);
 
@@ -98,7 +98,7 @@ export const CmEditorTabComRepeatsRemoveButton = ({
                     dangerouslySetInnerHTML={{
                       __html:
                         startFlash.repeat(count || 0) +
-                        flashDivider +
+                        nbsp +
                         ((startKey || '').startsWith('~')
                           ? fill(
                               startOrd,
@@ -116,7 +116,7 @@ export const CmEditorTabComRepeatsRemoveButton = ({
                                 startWordi,
                                 false,
                               )}`) +
-                        ((startKey || '').startsWith('~') ? '' : flashDivider + finishFlash.repeat(count || 0)),
+                        ((startKey || '').startsWith('~') ? '' : nbsp + finishFlash.repeat(count || 0)),
                     }}
                   />
                   <TheButton

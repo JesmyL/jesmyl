@@ -1,8 +1,8 @@
 import { makeRegExp } from 'regexpert';
-import { anyQuotesStr, displayableTextBlockCharsStr, openAndClosedQuotes } from './const';
+import { anyQuotesStr, displayableTextBlockCharsStr, nbsp, openAndClosedQuotes, slavicLowerLettersStr } from './const';
 
 let level = 0;
-const dashReplacer: (...args: string[]) => string = (_, $1, $2) => ($2 ? ' —\n' : $1 || ' —&nbsp;');
+const dashReplacer: (...args: string[]) => string = (_, $1, $2) => ($2 ? ' —\n' : $1 || `${nbsp}— `);
 
 const replaceNestedBrackets = (all: string, index: number, text: string) => {
   const pre = text[index - 1];
@@ -17,7 +17,7 @@ const replaceNestedBrackets = (all: string, index: number, text: string) => {
     .join('');
 };
 
-export const transformToDisplayedText = (text = '') => {
+export const transformToDisplayedText = (text = '', isSetFirstLetterUpperCase = true) => {
   level = 0;
 
   const str = text
@@ -26,5 +26,10 @@ export const transformToDisplayedText = (text = '') => {
     .replace(makeRegExp(`/((?=\\S)-+(?=\\S))|( ?-+\n)|( ?-+ ?)/g`), dashReplacer)
     .replace(makeRegExp(`/\\( [${anyQuotesStr}]\\)|\\([${anyQuotesStr}] \\)/g`), '');
 
-  return { text: str, level };
+  return {
+    text: isSetFirstLetterUpperCase
+      ? str.replace(makeRegExp(`/(?:^|\\n)[${slavicLowerLettersStr}]/g`), all => all.toUpperCase())
+      : str,
+    level,
+  };
 };

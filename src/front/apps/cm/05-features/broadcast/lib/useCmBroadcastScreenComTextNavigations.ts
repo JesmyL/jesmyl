@@ -2,18 +2,18 @@ import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
 import { HorizontalDirection } from '#shared/model/Direction';
 import { cmBroadcastBlockAtom, cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
 import { useAtomValue } from 'atomaric';
-import { useCmBroadcastMinimalConfigLines } from './useCmBroadcastMinimalConfigLines';
+import { useCmBroadcastMinimalConfigSlides } from './useCmBroadcastMinimalConfigLines';
 
 export const useCmBroadcastScreenComTextNavigations = () => {
   const currTexti = useAtomValue(cmBroadcastBlockAtom);
   const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
-  const { minimalLines } = useCmBroadcastMinimalConfigLines(currentConfigi);
+  const { minimalSlides } = useCmBroadcastMinimalConfigSlides(currentConfigi);
 
   const state = {
-    text: minimalLines[currTexti]?.lines.join('\n'),
+    text: minimalSlides[currTexti]?.lines.join('\n'),
     currTexti,
     nextText: () => {
-      if (currTexti < minimalLines.length - 1) state.setTexti(currTexti + 1);
+      if (currTexti < minimalSlides.length - 1) state.setTexti(currTexti + 1);
     },
     prevText: () => {
       if (currTexti > 0) state.setTexti(currTexti - 1);

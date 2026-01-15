@@ -9,24 +9,19 @@ export type CmBroadcastSlideGrouperKind = number | string | CmBroadcastSlideGrou
 
 export type CmBroadcastSlideGrouperOrdCombiner = PRecord<CmComOrderWid, number>;
 
-export type CmBroadcastSlideGrouperOrdWithList = {
+export type CmBroadcastGroupedSlide = {
   ord: CmComOrder;
-  list: string[];
-  isLastSlide?: boolean;
-}[];
-
-export type CmBroadcastSlideGrouperLinesDiapason = {
-  ord: CmComOrder;
-  lines: string[];
-  toLinei: number;
-  fromLinei: number;
-  preLinesCount: number;
   blocki: number;
+  lines: string[];
+  fromLinei: number;
+  toLinei: number;
+  preLinesCount: number;
+  isLastSlide?: boolean;
 };
 
 export type CmBroadcastSlideGrouperOrdWithListAndRule = {
   ord: CmComOrder;
-  list: string[][];
+  lines: string[][];
   rule: number;
   defaultRule: number;
 };

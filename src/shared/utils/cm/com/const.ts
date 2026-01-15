@@ -22,6 +22,8 @@ export const displayableTextBlockSingleWritedSymbolsStr = `(),":;'?` as const;
 export const displayableTextBlockSymbolsStr = `-.!\\s${displayableTextBlockSingleWritedSymbolsStr}` as const;
 export const displayableTextBlockCharsStr = `${displayableTextBlockSymbolsStr}${slavicLowerLettersStr}` as const;
 
+export const nbsp = '&nbsp;';
+
 export const textedChordRegs = makeNamedRegExp(
   // regexpert:
   // stringify $0 U23

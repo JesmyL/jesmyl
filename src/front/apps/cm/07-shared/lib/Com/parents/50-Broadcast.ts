@@ -2,9 +2,8 @@ import { mylib } from '#shared/lib/my-lib';
 import { makeRegExp } from 'regexpert';
 import { cmComLineGroupingDefaultKinds } from 'shared/const/cm/comLineGroupingKind';
 import {
-  CmBroadcastSlideGrouperLinesDiapason,
+  CmBroadcastGroupedSlide,
   CmBroadcastSlideGrouperOrdCombiner,
-  CmBroadcastSlideGrouperOrdWithList,
   CmBroadcastSlideGrouperOrdWithListAndRule,
 } from 'shared/model/cm/broadcast';
 import { CmComTexts } from './40-Texts';
@@ -12,22 +11,27 @@ import { CmComTexts } from './40-Texts';
 export class CmComBroadcast extends CmComTexts {
   groupSlideListByKind = (
     groupedLines: CmBroadcastSlideGrouperOrdWithListAndRule[] | und,
-  ): CmBroadcastSlideGrouperLinesDiapason[] => {
-    let fromLinei = 0;
+  ): CmBroadcastGroupedSlide[] => {
     let toLinei = 0;
     let currentLinesCount = 0;
 
     return (
       groupedLines
-        ?.map(({ list, ord }, blocki) => {
+        ?.map(({ lines, ord }, blocki) => {
           const preLinesCount = currentLinesCount;
-          currentLinesCount += list.flat().length;
+          currentLinesCount += lines.flat().length;
 
-          return list.map((lines): CmBroadcastSlideGrouperLinesDiapason => {
+          return lines.map((lines): CmBroadcastGroupedSlide => {
             toLinei += lines.length;
-            fromLinei = toLinei - lines.length;
 
-            return { ord, lines, toLinei, fromLinei, blocki, preLinesCount };
+            return {
+              ord,
+              blocki,
+              lines,
+              fromLinei: toLinei - lines.length,
+              toLinei,
+              preLinesCount,
+            };
           });
         })
         .flat() ?? []
@@ -35,7 +39,7 @@ export class CmComBroadcast extends CmComTexts {
   };
 
   groupTextLinesByKind = (
-    ordLines: CmBroadcastSlideGrouperOrdWithList,
+    slides: CmBroadcastGroupedSlide[],
     rule = this.broadcastPushKind,
   ): CmBroadcastSlideGrouperOrdWithListAndRule[] => {
     if (rule == null) return [];
@@ -63,19 +67,19 @@ export class CmComBroadcast extends CmComTexts {
       else divDict[key] = value;
     });
 
-    return ordLines.map(({ list, ord }) => {
+    return slides.map(({ lines, ord }) => {
       const ordw = ord.wid;
 
       let defaultRule = 0;
       let defaultDict: CmBroadcastSlideGrouperOrdWithListAndRule | null = null;
 
-      for (let i = list.length; i >= 0; i--) {
+      for (let i = lines.length; i >= 0; i--) {
         if (!divDict[i]) continue;
 
         defaultRule = +divDict[i];
         defaultDict = {
           ord,
-          list: this.divideLinesByRule(list, +divDict[i]),
+          lines: this.divideLinesByRule(lines, +divDict[i]),
           rule: defaultRule,
           defaultRule,
         };
@@ -86,23 +90,23 @@ export class CmComBroadcast extends CmComTexts {
       if (ordComb[ordw] != null)
         return {
           ord,
-          list: this.divideLinesByRule(list, ordComb[ordw]),
+          lines: this.divideLinesByRule(lines, ordComb[ordw]),
           rule: ordComb[ordw],
           defaultRule,
         };
 
-      if (divDict[`=${list.length}`] != null) {
-        const rule = +divDict[`=${list.length}`];
+      if (divDict[`=${lines.length}`] != null) {
+        const rule = +divDict[`=${lines.length}`];
 
         return {
           ord,
-          list: this.divideLinesByRule(list, rule),
+          lines: this.divideLinesByRule(lines, rule),
           rule,
           defaultRule,
         };
       }
 
-      return defaultDict ?? { ord, list: [list], rule: 0, defaultRule };
+      return defaultDict ?? { ord, lines: [lines], rule: 0, defaultRule };
     });
   };
 

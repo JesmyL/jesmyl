@@ -8,6 +8,7 @@ import {
   CmComOrderWid,
   CmComWid,
 } from 'shared/api';
+import { nbsp } from 'shared/utils/cm/com/const';
 
 export const makeCmComAudioMarkTitleAsLineSelector = (linei: number) => `~${linei + 1}`;
 export const makeCmComAudioMarkLineiFromSelector = (selector: string) => +selector.slice(1) - 1;
@@ -98,7 +99,7 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
     }
 
     title = lineText
-      ? `#${visibleOrdi + 1}:${linei + 1} ${lineText.replace(makeRegExp('/ *([/\\\\]|&nbsp;)+ */g'), ' ').trim()}`
+      ? `#${visibleOrdi + 1}:${linei + 1} ${lineText.replace(makeRegExp(`/ *([/\\\\]|${nbsp})+ */g`), ' ').trim()}`
       : title;
   }
 

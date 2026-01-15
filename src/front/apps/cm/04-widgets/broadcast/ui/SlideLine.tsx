@@ -1,28 +1,28 @@
 import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
-import { useCmBroadcastMinimalConfigLines, useCmBroadcastScreenComTextNavigations } from '$cm/features/broadcast';
+import { useCmBroadcastMinimalConfigSlides, useCmBroadcastScreenComTextNavigations } from '$cm/features/broadcast';
 import { useAtomValue } from 'atomaric';
 import { twMerge } from 'tailwind-merge';
 
 export const CmBroadcastSlideLine = () => {
   const { currTexti, setTexti } = useCmBroadcastScreenComTextNavigations();
   const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
-  const { minimalLines, selfLines } = useCmBroadcastMinimalConfigLines(currentConfigi);
+  const { minimalSlides, selfSlides, isBeats } = useCmBroadcastMinimalConfigSlides(currentConfigi);
 
   return (
     <div className="no-scrollbar snap-x snap-mandatory flex my-2 bg-x1 py-2 overflow-auto nowrap rounded-md">
-      {minimalLines.map((text, texti) => {
+      {minimalSlides.map((text, texti) => {
         let linesNode;
 
-        if (minimalLines.length === selfLines.length) {
+        if (isBeats || minimalSlides.length === selfSlides.length || !minimalSlides[texti]?.ord.isRealText()) {
           linesNode = <div dangerouslySetInnerHTML={{ __html: text.lines.join('\n') }} />;
         } else {
-          const blocki = minimalLines[texti].blocki;
-          const fromLinei = minimalLines[texti].fromLinei - minimalLines[texti].preLinesCount;
-          const toLinei = minimalLines[texti].toLinei - minimalLines[texti].preLinesCount;
+          const blocki = minimalSlides[texti].blocki;
+          const fromLinei = minimalSlides[texti].fromLinei - minimalSlides[texti].preLinesCount;
+          const toLinei = minimalSlides[texti].toLinei - minimalSlides[texti].preLinesCount;
 
-          const before = selfLines[blocki].lines.slice(0, fromLinei);
-          const lines = selfLines[blocki].lines.slice(fromLinei, toLinei);
-          const after = selfLines[blocki].lines.slice(toLinei);
+          const before = selfSlides[blocki].lines.slice(0, fromLinei);
+          const lines = selfSlides[blocki].lines.slice(fromLinei, toLinei);
+          const after = selfSlides[blocki].lines.slice(toLinei);
 
           linesNode = (
             <>

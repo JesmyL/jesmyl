@@ -1,6 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
+import { nbsp } from './com/const';
 
 export class CmComOrderUtils {
   private static _insertRepeats(
@@ -9,8 +10,8 @@ export class CmComOrderUtils {
     insetrStartRepeatSign: boolean,
     insetrFinishRepeatSign: boolean,
   ) {
-    return `${!insetrStartRepeatSign || repeatsCount < 1 ? '' : `${'/'.repeat(repeatsCount)}&nbsp;`}${txt || ''}${
-      !insetrFinishRepeatSign || repeatsCount < 2 ? '' : `&nbsp;${'\\'.repeat(repeatsCount)}`
+    return `${!insetrStartRepeatSign || repeatsCount < 1 ? '' : `${'/'.repeat(repeatsCount)}${nbsp}`}${txt || ''}${
+      !insetrFinishRepeatSign || repeatsCount < 2 ? '' : `${nbsp}${'\\'.repeat(repeatsCount)}`
     }`;
   }
 

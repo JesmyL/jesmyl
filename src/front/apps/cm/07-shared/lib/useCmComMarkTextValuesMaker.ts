@@ -3,6 +3,7 @@ import { CmCom, CmComOrder, cmIDB } from '$cm/ext';
 import { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmComAudioMarkPackTime, CmComOrderWid, HttpLink } from 'shared/api';
+import { nbsp } from 'shared/utils/cm/com/const';
 import {
   checkIsCmComAudioMarkTitleIsLineSelector,
   makeCmComAudioMarkLineiFromSelector,
@@ -144,8 +145,6 @@ export const useCmComMarkTextValuesMaker = (com: CmCom | und, link: HttpLink | n
     },
   };
 };
-
-const nbsp = '&nbsp;';
 
 const makeFadeRepeats = (slash: '\\' | '/', total: number, current: number) => {
   const invisibleSlash = `<span class="opacity-40">${slash.repeat(total - current)}</span>`;

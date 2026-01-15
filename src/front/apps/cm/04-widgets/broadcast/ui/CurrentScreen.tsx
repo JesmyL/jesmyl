@@ -2,7 +2,7 @@ import { currentBroadcastConfigiAtom, isBroadcastTextVisibleAtom } from '#featur
 import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
 import { useGetScreenBroadcastConfig } from '#features/broadcast/hooks/configs';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
-import { useCmBroadcastMinimalConfigLines } from '$cm/features/broadcast';
+import { useCmBroadcastMinimalConfigSlides } from '$cm/features/broadcast';
 import { useAtomValue } from 'atomaric';
 import { useCmBroadcastScreenConfig } from '../hooks/configs';
 import { useCmBroadcastScreenWinResizeListen } from '../lib/win-resize-lesten';
@@ -15,16 +15,16 @@ export const CmBroadcastCurrentScreen = (props: BroadcastScreenProps & Partial<F
   const forceUpdates = useCmBroadcastScreenWinResizeListen(props.win);
   const isVisible = useAtomValue(isBroadcastTextVisibleAtom);
 
-  const { selfLines, blocki } = useCmBroadcastMinimalConfigLines(props.screeni ?? currentConfigi);
+  const { selfSlides, currentBlocki } = useCmBroadcastMinimalConfigSlides(props.screeni ?? currentConfigi);
 
   return (
     <CmBroadcastScreen
       {...props}
       cmConfig={currentConfig}
-      text={selfLines[blocki]?.lines.join('\n') ?? ''}
-      nextText={selfLines[blocki + 1]?.lines.join('\n') ?? ''}
-      isChorded={!selfLines[blocki]?.ord.isRealText()}
-      isNextChorded={!selfLines[blocki + 1]?.ord.isRealText()}
+      text={selfSlides[currentBlocki]?.lines.join('\n') ?? ''}
+      nextText={selfSlides[currentBlocki + 1]?.lines.join('\n') ?? ''}
+      isChorded={!selfSlides[currentBlocki]?.ord.isRealText()}
+      isNextChorded={!selfSlides[currentBlocki + 1]?.ord.isRealText()}
       isVisible={isVisible}
       subUpdates={`${currentConfigi}${forceUpdates}${getCurrentConfig(currentConfigi)?.proportion}`}
     />

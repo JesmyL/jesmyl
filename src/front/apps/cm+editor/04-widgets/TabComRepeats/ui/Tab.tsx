@@ -9,9 +9,11 @@ import { ChordVisibleVariant, CmComOrderLine, TheCmComOrder } from '$cm/ext';
 import { useCallback, useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
+import { nbsp } from 'shared/utils/cm/com/const';
 import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 import { CmEditorTabComRepeatsCountButtonPanel } from './CountButtonPanel';
+import { CmEditorTabComRepeatsShowBeatSlidesButton } from './ShowBeatSlidesButton';
 
 export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
   const [start, setStart] = useState<IEditableComLineProps | null>(null);
@@ -48,7 +50,7 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
         comw: ccom.wid,
         value: (keys.length ? (keys.length === 1 && keys[0] === '.' ? repeats['.'] : repeats) : 0) ?? 0,
         textValue: ord.text
-          ? ord.repeatedText(repeats).replace(makeRegExp('/&nbsp;/g'), ' ')
+          ? ord.repeatedText(repeats).replace(makeRegExp(`/${nbsp}/g`), ' ')
           : ord.me.header({ repeats: ord.repeatsTitle }),
       });
     },
@@ -71,7 +73,9 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
 
   return (
     <Content className={twMerge(start != null && 'active', isCantRedact && 'disabled pointers-none')}>
-      {ccom?.orders?.map((ord, ordi) => {
+      <CmEditorTabComRepeatsShowBeatSlidesButton com={ccom} />
+
+      {ccom.orders?.map((ord, ordi) => {
         if (!ord.isVisible) return null;
 
         return (
@@ -270,8 +274,8 @@ const Content = styled.div`
     cursor: pointer;
 
     &.inactive-word {
-      pointer-events: none;
-      color: grey;
+      /* pointer-events: none;
+      color: grey; */
     }
   }
 `;
