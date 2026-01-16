@@ -1,11 +1,16 @@
 import { useAtomValue } from 'atomaric';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { currentBroadcastConfigiAtom, useScreenBroadcastConfigsSet, useScreenBroadcastConfigsValue } from '../atoms';
 import { defaultComplectConfig } from '../consts';
 import { ScreenBroadcastConfig } from '../model';
 
 export const useMakeScreenBroadcastConfigsFillPack = <Config>(configs: Config[], defaultConfig: Config) => {
-  return useScreenBroadcastConfigsValue().map((_, configi) => configs[configi] ?? defaultConfig);
+  const coreConfigs = useScreenBroadcastConfigsValue();
+
+  return useMemo(
+    () => coreConfigs.map((_, configi) => configs[configi] ?? defaultConfig),
+    [coreConfigs, configs, defaultConfig],
+  );
 };
 
 export const useAddScreenBroadcastConfig = () => {

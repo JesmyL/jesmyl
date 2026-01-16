@@ -43,7 +43,7 @@ export function CmBroadcastControlled(props: Props) {
   const navigate = useNavigate();
 
   const { comPack, coms } = useCmBroadcastScreenComNavigations();
-  const setTexti = useCmBroadcastScreenComTextNavigations().setTexti;
+  const setSlidei = useCmBroadcastScreenComTextNavigations().setSlidei;
   const linkToCom = useCmComOpenComLinkRendererContext();
   let comList = props.comList ?? coms;
   if (isTrackBroadcast) comList = comList.filter(com => com.audio.length);
@@ -123,7 +123,7 @@ export function CmBroadcastControlled(props: Props) {
                 titles={comPack.titles}
                 importantOnClick={({ defaultClick, com }) => {
                   if (!isTrackBroadcast) {
-                    setTexti(0);
+                    setSlidei(0);
                     defaultClick();
                     return;
                   }

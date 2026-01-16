@@ -1,4 +1,4 @@
-import { CmConstantsConfig } from 'shared/api';
+import { CmComIntensityLevel, CmConstantsConfig } from 'shared/api';
 
 export const cmConstantsDefaultConfig: CmConstantsConfig = {
   maxFavouritesCount: 30,
@@ -6,4 +6,5 @@ export const cmConstantsDefaultConfig: CmConstantsConfig = {
   maxSelectedComsCount: 50,
   maxLaterComsVizitedCount: 4,
   maxComCommentAlternativesCount: 3,
+  showFragmentSlidesBelow: CmComIntensityLevel.Medium,
 };

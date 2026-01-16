@@ -3,6 +3,7 @@ import { makeRegExp } from 'regexpert';
 import { cmComLineGroupingDefaultKinds } from 'shared/const/cm/comLineGroupingKind';
 import {
   CmBroadcastGroupedSlide,
+  CmBroadcastSlideGrouperKind,
   CmBroadcastSlideGrouperOrdCombiner,
   CmBroadcastSlideGrouperOrdWithListAndRule,
 } from 'shared/model/cm/broadcast';
@@ -40,7 +41,7 @@ export class CmComBroadcast extends CmComTexts {
 
   groupTextLinesByKind = (
     slides: CmBroadcastGroupedSlide[],
-    rule = this.broadcastPushKind,
+    rule: CmBroadcastSlideGrouperKind,
   ): CmBroadcastSlideGrouperOrdWithListAndRule[] => {
     if (rule == null) return [];
 

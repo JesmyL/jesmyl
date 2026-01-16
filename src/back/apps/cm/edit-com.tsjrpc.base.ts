@@ -1,8 +1,9 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { makeRegExp } from 'regexpert';
-import { CmComWid, IExportableCom, IServerSideCom } from 'shared/api';
+import { CmComIntensityLevel, CmComWid, IExportableCom, IServerSideCom } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
+import { cmComIntensityLevelTitleDict } from 'shared/const/cm/cmComDriveLevelTitleDict';
 import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
 import { cmComLineGroupingDefaultKinds } from 'shared/const/cm/comLineGroupingKind';
 import { CmBroadcastSlideGrouperKindCombiner } from 'shared/model/cm/broadcast';
@@ -56,6 +57,16 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           return `язык изменён на ${cmComLanguages[value]} (было ${prev == null ? null : cmComLanguages[prev]})`;
         }),
 
+        changeDrive: modifyCom((com, { value }, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_MAIN', 'U')) throw '';
+
+          const prev = com.d;
+          com.d = value;
+          if (com.d === CmComIntensityLevel.Medium) delete com.d;
+
+          return `уровень интенсивности установлен как "${cmComIntensityLevelTitleDict[com.d ?? CmComIntensityLevel.Medium]}" (было ${cmComIntensityLevelTitleDict[prev ?? CmComIntensityLevel.Medium]})`;
+        }),
+
         changeTon: modifyCom((com, { value }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_MAIN', 'U')) throw '';
 
@@ -73,11 +84,12 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           return `теперь ${value ? 'бемольная' : 'диезная'}`;
         }),
 
-        changePushKind: modifyCom((com, { value }, { auth }) => {
+        changePushKind: modifyCom((com, { value, isK2 }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_TR', 'U')) throw '';
+          const key = isK2 ? 'k2' : 'k';
 
-          const prevStr = JSON.stringify(com.k);
-          let next = com.k;
+          const prevStr = JSON.stringify(com[key]);
+          let next = com[key];
 
           const newKind: CmBroadcastSlideGrouperKindCombiner =
             smylib.isNum(next) || smylib.isNil(next)
@@ -140,10 +152,10 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           if (smylib.isStr(next)) {
             const index = cmComLineGroupingDefaultKinds.indexOf(next);
 
-            com.k = (index < 0 ? next : index) || undefined;
-          } else com.k = next;
+            com[key] = (index < 0 ? next : index) || undefined;
+          } else com[key] = next;
 
-          return `изменено значение правила группировок для слайдов - ${JSON.stringify(com.k)} (было ${prevStr})`;
+          return `изменено значение правила группировок для слайдов${isK2 ? ` (K2)` : ''} - ${JSON.stringify(com[key])} (было ${prevStr})`;
         }),
 
         toggleAudioLink: modifyCom((com, { link }, { auth }) => {
@@ -282,8 +294,10 @@ const comBlank: Record<keyof IExportableCom, und> = {
   n: und,
   b: und,
   bpm: und,
+  d: und,
   s: und,
   k: und,
+  k2: und,
   l: und,
   p: und,
   al: und,

@@ -29,11 +29,11 @@ export const useCmBroadcastScreenKeyDownListen = () => {
           break;
 
         case 'ArrowLeft':
-          comTextActionsRef.current.prevText();
+          comTextActionsRef.current.prevSlide();
           break;
 
         case 'ArrowRight':
-          comTextActionsRef.current.nextText();
+          comTextActionsRef.current.nextSlide();
           break;
 
         default:

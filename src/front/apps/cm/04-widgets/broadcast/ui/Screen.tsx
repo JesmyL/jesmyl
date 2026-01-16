@@ -2,7 +2,7 @@ import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
 import { ScreenTranslateCurrentPositionConfigurators } from '#features/broadcast/complect/position/Position';
 import { useSetBroadcastScreenInteractiveBackground } from '#features/broadcast/hooks/interactive-back';
 import { useApplyScreenFontFamilyEffect } from '#features/broadcast/hooks/set-font-family';
-import { HorizontalDirection } from '#shared/model/Direction';
+import { mylib } from '#shared/lib/my-lib';
 import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
 import { cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
@@ -17,13 +17,14 @@ import { CmBroadcastSubScreen } from './SubScreen';
 type Props = BroadcastScreenProps &
   Partial<FontSizeContainProps> & {
     cmConfig: CmBroadcastScreenConfig | und;
-    text: string;
+    text: string | string[];
     nextText: string;
     isVisible: boolean;
     isTechnicalText?: boolean;
     isNextTechnicalText?: boolean;
     isChorded: boolean;
     isNextChorded: boolean;
+    freshSlideKey: string;
   };
 
 export const CmBroadcastScreen = (props: Props) => {
@@ -67,7 +68,7 @@ export const CmBroadcastScreen = (props: Props) => {
 
   return (
     <div
-      className="relative full-size bg-black"
+      className="relative full-size bg-black overflow-hidden"
       style={wrapperStyle}
       ref={wrapperRef}
     >
@@ -80,32 +81,90 @@ export const CmBroadcastScreen = (props: Props) => {
       )}
       {nextSlideNode}
       <StyledFontSizeContain
-        key={props.text + switchDirection}
-        $dir={switchDirection}
+        key={props.freshSlideKey}
         className="inline-flex white-pre-children"
-        style={props.isTechnicalText ? { ...style, opacity: Math.min(+(style.opacity || 1) || 1, 0.3) } : style}
-        html={props.text}
+        style={{
+          ['--direction' as 'left']: switchDirection,
+          ...(props.isTechnicalText ? { ...style, opacity: Math.min(+(style.opacity || 1) || 1, 0.3) } : style),
+        }}
+        html={mylib.isArr(props.text) ? undefined : props.text}
+        content={
+          mylib.isArr(props.text)
+            ? props.text.map((line, linei) => (
+                <div
+                  key={linei}
+                  className="fragmented-slide-line"
+                  fragmented-slide-linei={linei}
+                  dangerouslySetInnerHTML={{ __html: line }}
+                />
+              ))
+            : undefined
+        }
         subUpdates={`${props.subUpdates}${props.cmConfig == null ? '' : props.cmConfig.width + props.cmConfig.height}`}
       />
     </div>
   );
 };
 
-const anims = [1, -1].map(
-  num =>
-    keyframes`${css`
-      from {
-        opacity: 0.1;
-        transform: translate(${num}vw, 0);
-      }
+const simpleAnimation = keyframes`${css`
+  from {
+    opacity: 0.1;
+    transform: translate(calc(var(--direction) * 1vw), 0);
+  }
 
-      to {
-        opacity: 1;
-        transform: translate(0, 0);
-      }
-    `}`,
-) as never as ['', '', ''];
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+`}`;
 
-const StyledFontSizeContain = styled(FontSizeContain)<{ $dir: HorizontalDirection }>`
-  animation: ${props => anims[props.$dir]} 0.5s ease-in-out;
+const lineEnterAnimation = keyframes`${css`
+  from {
+    opacity: 0.1;
+  }
+
+  to {
+    opacity: 1;
+  }
+`}`;
+
+const lineFlyAnimation = keyframes`${css`
+  from {
+    translate: calc(var(--direction) * -1vw) 0;
+  }
+
+  to {
+    translate: calc(var(--direction) * 1vw) 0;
+  }
+`}`;
+
+const StyledFontSizeContain = styled(FontSizeContain)`
+  line-height: 1;
+
+  &:not(:has(.fragmented-slide-line)) {
+    animation: ${simpleAnimation} 0.5s ease-in-out;
+  }
+
+  &:has(.fragmented-slide-line) {
+    scale: 0.7;
+
+    .fragmented-slide-line {
+      translate: calc(var(--direction) * 1vw) 0;
+      animation:
+        ${lineEnterAnimation} 0.3s linear forwards,
+        ${lineFlyAnimation} 40s linear forwards;
+    }
+
+    [fragmented-slide-linei='0'] {
+      --direction: 1;
+
+      text-align: left;
+    }
+
+    [fragmented-slide-linei='1'] {
+      --direction: -1;
+
+      text-align: right;
+    }
+  }
 `;

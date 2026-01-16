@@ -1,29 +1,29 @@
 import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
 import { HorizontalDirection } from '#shared/model/Direction';
-import { cmBroadcastBlockAtom, cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
+import { cmBroadcastCurrentSlideiAtom, cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
 import { useAtomValue } from 'atomaric';
 import { useCmBroadcastMinimalConfigSlides } from './useCmBroadcastMinimalConfigLines';
 
 export const useCmBroadcastScreenComTextNavigations = () => {
-  const currTexti = useAtomValue(cmBroadcastBlockAtom);
+  const currentSlidei = useAtomValue(cmBroadcastCurrentSlideiAtom);
   const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
   const { minimalSlides } = useCmBroadcastMinimalConfigSlides(currentConfigi);
 
   const state = {
-    text: minimalSlides[currTexti]?.lines.join('\n'),
-    currTexti,
-    nextText: () => {
-      if (currTexti < minimalSlides.length - 1) state.setTexti(currTexti + 1);
+    text: minimalSlides[currentSlidei]?.lines.join('\n'),
+    currentSlidei: currentSlidei,
+    nextSlide: () => {
+      if (currentSlidei < minimalSlides.length - 1) state.setSlidei(currentSlidei + 1);
     },
-    prevText: () => {
-      if (currTexti > 0) state.setTexti(currTexti - 1);
+    prevSlide: () => {
+      if (currentSlidei > 0) state.setSlidei(currentSlidei - 1);
     },
-    setTexti: (texti: number) => {
+    setSlidei: (texti: number) => {
       cmBroadcastSwitchBlockDirectionAtom.set(
-        cmBroadcastBlockAtom.get() > texti ? HorizontalDirection.RightToLeft : HorizontalDirection.LeftToRight,
+        cmBroadcastCurrentSlideiAtom.get() > texti ? HorizontalDirection.RightToLeft : HorizontalDirection.LeftToRight,
       );
 
-      cmBroadcastBlockAtom.set(texti);
+      cmBroadcastCurrentSlideiAtom.set(texti);
       const nextd = window.document.getElementById(`broadcast-window-line-${texti}`);
 
       if (nextd) {

@@ -30,7 +30,7 @@ export const useCmBroadcastScreenComNavigations = () => {
   const comPack = useCmComCurrentComPackContext();
   const coms =
     openListMode === 'fav' ? favourite.favouriteComs : openListMode === 'sel' ? selected.selectedComs : comPack.list;
-  const { setTexti } = useCmBroadcastScreenComTextNavigations();
+  const { setSlidei } = useCmBroadcastScreenComTextNavigations();
 
   return {
     coms,
@@ -41,18 +41,18 @@ export const useCmBroadcastScreenComNavigations = () => {
       const nextCom = coms[comi === 0 ? coms.length - 1 : comi - 1];
 
       setCom(nextCom);
-      setTexti(0);
+      setSlidei(0);
       scrollToView(nextCom);
-    }, [ccom?.wid, coms, setCom, setTexti]),
+    }, [ccom?.wid, coms, setCom, setSlidei]),
     nextCom: useCallback(() => {
       const comi = getComi(ccom?.wid, coms);
       if (comi < 0) return;
       const nextCom = coms[comi === coms.length - 1 ? 0 : comi + 1];
 
       setCom(nextCom);
-      setTexti(0);
+      setSlidei(0);
       scrollToView(nextCom);
-    }, [ccom?.wid, coms, setCom, setTexti]),
+    }, [ccom?.wid, coms, setCom, setSlidei]),
   };
 };
 

@@ -15,6 +15,8 @@ export class CmComTexts extends CmComChords {
     let currentLinesCount = 0;
 
     this.orders?.forEach(ord => {
+      if (!ord.isVisible) return;
+
       if (ord.me.isInherit) {
         const lastOrdLinesi = ordLines.length - 1;
         ordLines[lastOrdLinesi].lines = ordLines[lastOrdLinesi].lines.concat(ord.repeatedText().split('\n'));
@@ -65,13 +67,10 @@ export class CmComTexts extends CmComChords {
           let minDiffi = 1;
 
           for (let i = 1; i < beats.length; i++) {
-            const before = beats.slice(0, i);
-            const after = beats.slice(i);
+            const beforeCount = beats.slice(0, i).reduce(wordsSumReduce, 0);
+            const afterCount = beats.slice(i).reduce(wordsSumReduce, 0);
 
-            const beforeCount = (word2SeparatesDict[before.join(' ')] ??= before.reduce(wordsSumReduce, 0));
-            const afterCount = (word2SeparatesDict[after.join(' ')] ??= after.reduce(wordsSumReduce, 0));
-
-            if (minDiff > Math.abs(beforeCount - afterCount)) {
+            if (minDiff >= Math.abs(beforeCount - afterCount)) {
               minDiff = Math.abs(beforeCount - afterCount);
               minDiffi = i;
             }
@@ -99,6 +98,8 @@ export class CmComTexts extends CmComChords {
 
       const heapText = comOrders
         .map(ord => {
+          if (!ord.isVisible) return;
+
           const ordLines = (ord.isRealText() ? ord.repeatedText(undefined, false) : ord.me.header()).split('\n');
 
           if (!ord.me.isInherit) {
@@ -110,11 +111,7 @@ export class CmComTexts extends CmComChords {
           blockLength += ordLines.length;
 
           return ordLines
-            .map(line => {
-              // ordwSlashLinei2TotalLineiDict[`${ord.wid}/${linei}`] = totalLinei++;
-
-              return `\n${seperator}${blocki}${seperator}${totalLinei++}${seperator}${line}`;
-            })
+            .map(line => `\n${seperator}${blocki}${seperator}${totalLinei++}${seperator}${line}`)
             .join('\n');
         })
         .join('\n')
@@ -209,8 +206,6 @@ export class CmComTexts extends CmComChords {
 }
 
 const seperator = `#@>`;
-/** @deprecated */
-const word2SeparatesDict: Record<string, number> = {};
 
 const repeatsRegBox = makeNamedRegExp(
   // regexpert:

@@ -1,13 +1,18 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
+import { Button, ButtonGroup } from '#shared/components';
 import { mylib } from '#shared/lib/my-lib';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { CmBroadcastScreenConfigurationPushKind } from '$cm/ext';
+import { useState } from 'react';
 import { cmComLineGroupingDefaultKinds } from 'shared/const/cm/comLineGroupingKind';
+import { itNIt } from 'shared/utils';
 
 export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) => {
   const checkAccess = useCheckUserAccessRightsInScope();
+  const [isK2, setIsK2] = useState(false);
+  const comPushKind = ccom.broadcastPushKind(isK2 ? 'k2' : 'k', 0);
 
   const textsWithNumeredLines = ccom.takeSolidTextLines().map(slideProps => ({
     ...slideProps,
@@ -20,17 +25,20 @@ export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) =>
       <div className="my-3">
         {checkAccess('cm', 'COM_TR', 'U') && (
           <>
+            <ButtonGroup.Root
+              className="my-5"
+              onClick={() => setIsK2(itNIt)}
+            >
+              <Button className={isK2 ? '' : 'text-x7'}>Обычная версия</Button>
+              <Button className={isK2 ? 'text-x7' : ''}>Минимальная версия</Button>
+            </ButtonGroup.Root>
             <CmBroadcastScreenConfigurationPushKind
               config={{
-                pushKind: mylib.isNum(ccom.broadcastPushKind)
-                  ? ccom.broadcastPushKind
-                  : mylib.isStr(ccom.broadcastPushKind)
-                    ? -100
-                    : ccom.broadcastPushKind.n || 0,
+                pushKind: mylib.isNum(comPushKind) ? comPushKind : mylib.isStr(comPushKind) ? -100 : comPushKind.n || 0,
               }}
               updateConfig={({ pushKind }) => {
-                if (pushKind == null || (ccom.broadcastPushKind || 0) === pushKind) return;
-                return cmEditComClientTsjrpcMethods.changePushKind({ comw: ccom.wid, value: pushKind });
+                if (pushKind == null || (comPushKind || 0) === pushKind) return;
+                return cmEditComClientTsjrpcMethods.changePushKind({ comw: ccom.wid, value: pushKind, isK2 });
               }}
             />
 
@@ -38,51 +46,54 @@ export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) =>
               icon="ListView"
               strongDefaultValue
               defaultValue={
-                mylib.isStr(ccom.broadcastPushKind)
-                  ? ccom.broadcastPushKind
-                  : mylib.isNum(ccom.broadcastPushKind)
-                    ? cmComLineGroupingDefaultKinds[ccom.broadcastPushKind]
-                    : ccom.broadcastPushKind.s != null
-                      ? ccom.broadcastPushKind.s
-                      : cmComLineGroupingDefaultKinds[ccom.broadcastPushKind.n ?? 0]
+                mylib.isStr(comPushKind)
+                  ? comPushKind
+                  : mylib.isNum(comPushKind)
+                    ? cmComLineGroupingDefaultKinds[comPushKind]
+                    : comPushKind.s != null
+                      ? comPushKind.s
+                      : cmComLineGroupingDefaultKinds[comPushKind.n ?? 0]
               }
-              onChanged={value => cmEditComClientTsjrpcMethods.changePushKind({ comw: ccom.wid, value })}
+              onChanged={value => cmEditComClientTsjrpcMethods.changePushKind({ comw: ccom.wid, value, isK2 })}
             />
           </>
         )}
       </div>
 
-      {ccom.groupTextLinesByKind(textsWithNumeredLines).map(({ lines, ord, rule, defaultRule }, linesi) => {
-        return (
-          <div
-            key={linesi}
-            className="border border-x2 my-2 pl-3"
-          >
-            {checkAccess('cm', 'COM_TR', 'U') && (
-              <InputWithLoadingIcon
-                icon="ListView"
-                defaultValue={`${rule}`}
-                className="max-w-20"
-                strongDefaultValue
-                type="tel"
-                onChanged={value => {
-                  return cmEditComClientTsjrpcMethods.changePushKind({
-                    comw: ccom.wid,
-                    value: { [ord.wid]: +value === defaultRule ? 0 : +value },
-                  });
-                }}
-              />
-            )}
-            {lines?.map((text, texti) => (
-              <div
-                key={texti}
-                className="my-5 pre-text"
-                dangerouslySetInnerHTML={{ __html: text.join('\n') }}
-              />
-            ))}
-          </div>
-        );
-      })}
+      {ccom
+        .groupTextLinesByKind(textsWithNumeredLines, comPushKind)
+        .map(({ lines, ord, rule, defaultRule }, linesi) => {
+          return (
+            <div
+              key={linesi}
+              className="border border-x2 my-2 pl-3"
+            >
+              {checkAccess('cm', 'COM_TR', 'U') && (
+                <InputWithLoadingIcon
+                  icon="ListView"
+                  defaultValue={`${rule}`}
+                  className="max-w-20"
+                  strongDefaultValue
+                  type="tel"
+                  onChanged={value => {
+                    return cmEditComClientTsjrpcMethods.changePushKind({
+                      comw: ccom.wid,
+                      value: { [ord.wid]: +value === defaultRule ? 0 : +value },
+                      isK2,
+                    });
+                  }}
+                />
+              )}
+              {lines?.map((text, texti) => (
+                <div
+                  key={texti}
+                  className="my-5 pre-text"
+                  dangerouslySetInnerHTML={{ __html: text.join('\n') }}
+                />
+              ))}
+            </div>
+          );
+        })}
     </>
   );
 };

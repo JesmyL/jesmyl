@@ -2,6 +2,14 @@ export const enum CmComWid {
   def = -1,
 }
 
+export const enum CmComIntensityLevel {
+  TooSlow = 1,
+  Slow = 2,
+  Medium = 3,
+  Fast = 4,
+  TooFast = 5,
+}
+
 export const enum CmComMod {
   def = -1,
 }

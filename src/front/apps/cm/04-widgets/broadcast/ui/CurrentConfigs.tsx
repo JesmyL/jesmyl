@@ -61,7 +61,7 @@ export const CmBroadcastCurrentScreenConfigurations = ({ currentConfig }: Props)
           undTitle="так как есть"
           items={[
             { id: '1', title: 'фрагменты' },
-            { id: '2', title: 'по 2 строки' },
+            { id: '2', title: 'минимальный' },
           ]}
           onSelectId={pushKind => updateConfig({ pushKind })}
         />

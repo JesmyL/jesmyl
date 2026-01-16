@@ -2,12 +2,12 @@ import { ScreenBroadcastControlPanel } from '#features/broadcast/controls/Contro
 import { useCmBroadcastScreenComTextNavigations } from '$cm/features/broadcast';
 
 export const CmBroadcastControlPanel = () => {
-  const { nextText, prevText } = useCmBroadcastScreenComTextNavigations();
+  const { nextSlide, prevSlide } = useCmBroadcastScreenComTextNavigations();
 
   return (
     <ScreenBroadcastControlPanel
-      onNext={nextText}
-      onPrev={prevText}
+      onNext={nextSlide}
+      onPrev={prevSlide}
     />
   );
 };

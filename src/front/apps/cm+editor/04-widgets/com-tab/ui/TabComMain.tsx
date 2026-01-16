@@ -13,6 +13,8 @@ import { removedCompositionsAtom } from '$cm+editor/shared/state/com';
 import { CmEditorComEditTransposition } from '$cm+editor/widgets/com';
 import { ChordVisibleVariant, TheCmCom } from '$cm/ext';
 import { useState } from 'react';
+import { CmComIntensityLevel } from 'shared/api';
+import { cmComIntensityLevelTitleDict } from 'shared/const/cm/cmComDriveLevelTitleDict';
 import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
 import { CmComMetricNums } from 'shared/model/cm/com-metric-nums';
 import { emptyFunc } from 'shared/utils';
@@ -54,24 +56,35 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
         onChanged={value => cmEditComClientTsjrpcMethods.setBpM({ comw: ccom.wid, value: +value })}
         onInput={emptyFunc}
       />
-      <div className="flex w-full between my-2">
-        <span className="flex gap-3">
-          <LazyIcon icon="DashboardSpeed02" />
-          <div className="mx-2 nowrap">Размерность</div>
-        </span>
-        <Dropdown
-          id={ccom.meterSize}
-          items={
-            MyLib.entries(cmComMetricNumTitles).map(([idStr, title]) => ({
-              id: +idStr,
-              title,
-            })) as DropdownItem<CmComMetricNums>[]
-          }
-          onSelectId={value => {
-            cmEditComClientTsjrpcMethods.setMeterSize({ comw: ccom.wid, value });
-          }}
-        />
-      </div>
+      <Dropdown
+        label={
+          <>
+            <LazyIcon icon="Ruler" />
+            Размерность
+          </>
+        }
+        id={ccom.meterSize}
+        items={
+          MyLib.entries(cmComMetricNumTitles).map(([idStr, title]) => ({
+            id: +idStr,
+            title,
+          })) as DropdownItem<CmComMetricNums>[]
+        }
+        onSelectId={value => {
+          cmEditComClientTsjrpcMethods.setMeterSize({ comw: ccom.wid, value });
+        }}
+      />
+      <Dropdown
+        label={
+          <>
+            <LazyIcon icon="SpeedTrain01" />
+            Интенсивность
+          </>
+        }
+        id={ccom.top.d ?? CmComIntensityLevel.Medium}
+        items={MyLib.entries(cmComIntensityLevelTitleDict).map(([id, title]) => ({ id: +id, title }))}
+        onSelectId={value => cmEditComClientTsjrpcMethods.changeDrive({ comw: ccom.wid, value })}
+      />
       <TheIconButton
         icon="Flag03"
         confirm={

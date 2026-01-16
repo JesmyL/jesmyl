@@ -20,7 +20,7 @@ export const CmBroadcastFullscreen = () => {
   const [forceUpdates, forceUpdate] = useReducer(forceUpdater, 0);
   const [isShowInfo, setIsShowInfo] = useAtom(isShowInfoAtom);
 
-  const { text, nextText, prevText } = useCmBroadcastScreenComTextNavigations();
+  const { text, nextSlide, prevSlide } = useCmBroadcastScreenComTextNavigations();
   const { nextCom, prevCom } = useCmBroadcastScreenComNavigations();
   const closeBroadcast = useCmBroadcastClose();
 
@@ -74,7 +74,7 @@ export const CmBroadcastFullscreen = () => {
           />
           <div
             className="bottom-area info-area left pointer"
-            onClick={prevText}
+            onClick={prevSlide}
           >
             <div className="description">
               клик&nbsp;-
@@ -84,7 +84,7 @@ export const CmBroadcastFullscreen = () => {
           </div>
           <div
             className="bottom-area info-area right pointer"
-            onClick={nextText}
+            onClick={nextSlide}
           >
             <div className="description">
               клик&nbsp;-

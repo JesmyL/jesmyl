@@ -1,4 +1,4 @@
-import { cmBroadcastBlockAtom } from '$cm/entities/broadcast';
+import { cmBroadcastCurrentSlideiAtom } from '$cm/entities/broadcast';
 import { useCmComCurrent, useCmComOpenComLinkRendererContext } from '$cm/entities/com';
 import { CmComTool } from '../ComTool';
 
@@ -13,7 +13,7 @@ export const CmComToolBroadcast = () => {
         <CmComTool
           title="Слайды"
           icon="Computer"
-          onClick={cmBroadcastBlockAtom.reset}
+          onClick={cmBroadcastCurrentSlideiAtom.reset}
         />
       ),
       search: {

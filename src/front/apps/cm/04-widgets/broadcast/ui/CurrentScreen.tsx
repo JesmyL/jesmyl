@@ -15,18 +15,22 @@ export const CmBroadcastCurrentScreen = (props: BroadcastScreenProps & Partial<F
   const forceUpdates = useCmBroadcastScreenWinResizeListen(props.win);
   const isVisible = useAtomValue(isBroadcastTextVisibleAtom);
 
-  const { selfSlides, currentBlocki } = useCmBroadcastMinimalConfigSlides(props.screeni ?? currentConfigi);
+  const { selfSlides, currentSlidei, isFragments } = useCmBroadcastMinimalConfigSlides(props.screeni ?? currentConfigi);
+  const isRealText = selfSlides[currentSlidei]?.ord.isRealText();
+  const text =
+    (isFragments && isRealText ? selfSlides[currentSlidei]?.lines : selfSlides[currentSlidei]?.lines.join('\n')) ?? '';
 
   return (
     <CmBroadcastScreen
       {...props}
       cmConfig={currentConfig}
-      text={selfSlides[currentBlocki]?.lines.join('\n') ?? ''}
-      nextText={selfSlides[currentBlocki + 1]?.lines.join('\n') ?? ''}
-      isChorded={!selfSlides[currentBlocki]?.ord.isRealText()}
-      isNextChorded={!selfSlides[currentBlocki + 1]?.ord.isRealText()}
+      text={text}
+      nextText={selfSlides[currentSlidei + 1]?.lines.join(isFragments ? ' ' : '\n') ?? ''}
+      isChorded={!isRealText}
+      isNextChorded={!selfSlides[currentSlidei + 1]?.ord.isRealText()}
       isVisible={isVisible}
       subUpdates={`${currentConfigi}${forceUpdates}${getCurrentConfig(currentConfigi)?.proportion}`}
+      freshSlideKey={`${text}//${currentSlidei}`}
     />
   );
 };

@@ -1,11 +1,11 @@
 export const enum VerticalDirection {
-  TopToDown,
-  DownToTop,
-  Center,
+  TopToDown = 1,
+  Center = 0,
+  DownToTop = -1,
 }
 
 export const enum HorizontalDirection {
-  LeftToRight,
-  RightToLeft,
-  Center,
+  LeftToRight = 1,
+  Center = 0,
+  RightToLeft = -1,
 }

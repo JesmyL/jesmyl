@@ -1,6 +1,5 @@
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { Button } from '#shared/components';
 import { useAtomValue } from 'atomaric';
-import { useCallback } from 'react';
 import styled from 'styled-components';
 import { currentBroadcastConfigiAtom, useScreenBroadcastConfigsValue } from '../../atoms';
 import { useAddScreenBroadcastConfig } from '../../hooks/configs';
@@ -40,8 +39,6 @@ export const ScreenBroadcastFaceLine = <Config,>(props: Props<Config>) => {
     };
   };
 
-  const onAdd = useCallback(() => currentBroadcastConfigiAtom.set(addConfig()), [addConfig]);
-
   return (
     <div className="mt-5">
       <ConfigLine className="mb-2 no-scrollbar children-middle">
@@ -57,11 +54,12 @@ export const ScreenBroadcastFaceLine = <Config,>(props: Props<Config>) => {
             />
           );
         })}
-        <LazyIcon
+        <Button
           icon="PlusSign"
           className="ml-2"
-          onClick={onAdd}
+          onClick={() => currentBroadcastConfigiAtom.set(addConfig())}
         />
+        {!configs.length && <div className="text-x1 bg-xKO w-full ml-3 pl-2">Конфигураций нет</div>}
       </ConfigLine>
     </div>
   );

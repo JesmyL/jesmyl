@@ -1,4 +1,5 @@
 import { IExportableCom } from 'shared/api';
+import { CmBroadcastSlideGrouperKind } from 'shared/model/cm/broadcast';
 import { cmComLanguages } from 'shared/utils/cm/com/const';
 import { BaseNamed } from '../../BaseNamed';
 
@@ -47,11 +48,8 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
     this.setExportable('al', val);
   }
 
-  get broadcastPushKind() {
-    return this.getBasicOr('k', 0);
-  }
-  set broadcastPushKind(val) {
-    this.setExportable('k', val);
+  broadcastPushKind(version: 'k' | 'k2', def: CmBroadcastSlideGrouperKind = 0) {
+    return this.getBasicOr(version, def);
   }
 
   get initialTransPosition() {

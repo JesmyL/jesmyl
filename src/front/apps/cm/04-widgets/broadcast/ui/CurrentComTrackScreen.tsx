@@ -33,6 +33,7 @@ export const CmBroadcastCurrentComTrackScreen = (props: BroadcastScreenProps & P
       subUpdates={'' + currentConfigi + forceUpdates + getCurrentConfig(currentConfigi)?.proportion}
       isTechnicalText={isTechnicalText}
       isNextTechnicalText={isNextTechnicalText}
+      freshSlideKey={html ?? ''}
     />
   );
 };
