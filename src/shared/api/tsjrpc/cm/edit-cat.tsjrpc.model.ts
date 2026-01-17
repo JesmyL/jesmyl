@@ -1,8 +1,9 @@
+import { CmCatKind } from '$cm/entities/cat/model/Cat.model';
 import { CmCatWid, CmComWid, IExportableCat } from 'shared/api/complect/apps';
 
 export type CmEditCatTsjrpcModel = {
   rename: (args: { catw: CmCatWid; name: string }) => IExportableCat;
-  setKind: (args: { catw: CmCatWid; kind: string }) => IExportableCat;
+  setKind: (args: { catw: CmCatWid; kind: CmCatKind }) => IExportableCat;
   clearStack: (args: { catw: CmCatWid }) => IExportableCat;
 
   toggleComExistence: (args: { comw: CmComWid; catw: CmCatWid }) => IExportableCat;

@@ -1,3 +1,4 @@
+import { CmCatKind } from '$cm/entities/cat/model/Cat.model';
 import { StrRegExp } from 'regexpert';
 import { CmBroadcastSlideGrouperKind } from 'shared/model/cm/broadcast';
 import { CmComMetricNums } from 'shared/model/cm/com-metric-nums';
@@ -152,7 +153,7 @@ export interface IExportableCat {
   /** номера песен */
   d?: PRecord<CmComWid, number>;
   /** вид категории (список, по номерам из сборника, итд) */
-  k: string;
+  k: CmCatKind;
 
   isRemoved?: 1;
 }

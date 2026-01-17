@@ -1,4 +1,5 @@
 import { CmCom } from '$cm/ext';
+import { CmComIntensityLevel } from 'shared/api';
 import { CmCat } from '../lib/Cat';
 
 export interface CmCatComWrap<C = CmCom> {
@@ -8,10 +9,12 @@ export interface CmCatComWrap<C = CmCom> {
   rate?: number;
 }
 
-export type CmCatKind = string;
+export type CmCatKind = 'full' | 'dict' | 'list' | `lang:${'ru' | 'ua'}` | `int:${CmComIntensityLevel}`;
 
-export interface CmCatTracker {
-  title: string;
-  id: CmCatKind;
-  select: (com: CmCom, cat: CmCat) => boolean;
-}
+export type CmCatTracker = Record<
+  CmCatKind,
+  {
+    title: string;
+    select: (com: CmCom, cat: CmCat) => boolean;
+  }
+>;

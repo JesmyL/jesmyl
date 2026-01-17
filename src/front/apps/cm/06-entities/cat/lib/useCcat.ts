@@ -12,7 +12,7 @@ export const useCmCat = (catw: CmCatWid) => {
   const coms = useCmComList(comws);
 
   return useMemo(() => {
-    if (catw === CmCatWid.zero) return new CmCat({ k: 'all', m: 0, n: 'Все песни', w: 0 }, coms);
+    if (catw === CmCatWid.zero) return new CmCat({ k: 'full', m: 0, n: 'Все песни', w: 0 }, coms);
 
     return icat && coms && new CmCat(icat, coms);
   }, [catw, coms, icat]);

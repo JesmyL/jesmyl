@@ -52,13 +52,11 @@ import { Route as CmEditChordImport } from './front/routes/cm/edit/chord'
 import { Route as StoragesIRackwIndexImport } from './front/routes/storages/i/$rackw/index'
 import { Route as GamerIMemoryGiantIndexImport } from './front/routes/gamer/i/memory-giant/index'
 import { Route as CmEditComsIndexImport } from './front/routes/cm/edit/coms/index'
-import { Route as CmEditCatsIndexImport } from './front/routes/cm/edit/cats/index'
 import { Route as otherAppNameSettingsIndexImport } from './front/routes/!other.$appName/settings/index'
 import { Route as otherAppNameSchsIndexImport } from './front/routes/!other.$appName/schs/index'
 import { Route as otherAppNameAuthIndexImport } from './front/routes/!other.$appName/auth/index'
 import { Route as otherAppNameActionsIndexImport } from './front/routes/!other.$appName/actions/index'
 import { Route as CmLiCatCatwImport } from './front/routes/cm/li/cat.$catw'
-import { Route as CmEditCatsCatwImport } from './front/routes/cm/edit/cats/$catw'
 import { Route as otherAppNameSettingsRightsImport } from './front/routes/!other.$appName/settings/rights'
 import { Route as otherAppNameSettingsConsoleImport } from './front/routes/!other.$appName/settings/console'
 import { Route as StoragesIRackwSumIndexImport } from './front/routes/storages/i/$rackw/sum/index'
@@ -335,12 +333,6 @@ const CmEditComsIndexRoute = CmEditComsIndexImport.update({
   getParentRoute: () => CmEditRouteLazyRoute,
 } as any)
 
-const CmEditCatsIndexRoute = CmEditCatsIndexImport.update({
-  id: '/cats/',
-  path: '/cats/',
-  getParentRoute: () => CmEditRouteLazyRoute,
-} as any)
-
 const otherAppNameSettingsIndexRoute = otherAppNameSettingsIndexImport.update({
   id: '/settings/',
   path: '/settings/',
@@ -369,12 +361,6 @@ const CmLiCatCatwRoute = CmLiCatCatwImport.update({
   id: '/li/cat/$catw',
   path: '/li/cat/$catw',
   getParentRoute: () => CmRouteRoute,
-} as any)
-
-const CmEditCatsCatwRoute = CmEditCatsCatwImport.update({
-  id: '/cats/$catw',
-  path: '/cats/$catw',
-  getParentRoute: () => CmEditRouteLazyRoute,
 } as any)
 
 const otherAppNameSettingsRightsRoute = otherAppNameSettingsRightsImport.update(
@@ -727,13 +713,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof otherAppNameSettingsRightsImport
       parentRoute: typeof otherAppNameRouteImport
     }
-    '/cm/edit/cats/$catw': {
-      id: '/cm/edit/cats/$catw'
-      path: '/cats/$catw'
-      fullPath: '/cm/edit/cats/$catw'
-      preLoaderRoute: typeof CmEditCatsCatwImport
-      parentRoute: typeof CmEditRouteLazyImport
-    }
     '/cm/li/cat/$catw': {
       id: '/cm/li/cat/$catw'
       path: '/li/cat/$catw'
@@ -768,13 +747,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/!other/$appName/settings'
       preLoaderRoute: typeof otherAppNameSettingsIndexImport
       parentRoute: typeof otherAppNameRouteImport
-    }
-    '/cm/edit/cats/': {
-      id: '/cm/edit/cats/'
-      path: '/cats'
-      fullPath: '/cm/edit/cats'
-      preLoaderRoute: typeof CmEditCatsIndexImport
-      parentRoute: typeof CmEditRouteLazyImport
     }
     '/cm/edit/coms/': {
       id: '/cm/edit/coms/'
@@ -876,8 +848,6 @@ interface CmEditRouteLazyRouteChildren {
   CmEditEventsRoute: typeof CmEditEventsRoute
   CmEditMp3RulesRoute: typeof CmEditMp3RulesRoute
   CmEditIndexLazyRoute: typeof CmEditIndexLazyRoute
-  CmEditCatsCatwRoute: typeof CmEditCatsCatwRoute
-  CmEditCatsIndexRoute: typeof CmEditCatsIndexRoute
   CmEditComsIndexRoute: typeof CmEditComsIndexRoute
   CmEditComsComwTabRouteRoute: typeof CmEditComsComwTabRouteRoute
   CmEditComsComwIndexRoute: typeof CmEditComsComwIndexRoute
@@ -890,8 +860,6 @@ const CmEditRouteLazyRouteChildren: CmEditRouteLazyRouteChildren = {
   CmEditEventsRoute: CmEditEventsRoute,
   CmEditMp3RulesRoute: CmEditMp3RulesRoute,
   CmEditIndexLazyRoute: CmEditIndexLazyRoute,
-  CmEditCatsCatwRoute: CmEditCatsCatwRoute,
-  CmEditCatsIndexRoute: CmEditCatsIndexRoute,
   CmEditComsIndexRoute: CmEditComsIndexRoute,
   CmEditComsComwTabRouteRoute: CmEditComsComwTabRouteRoute,
   CmEditComsComwIndexRoute: CmEditComsComwIndexRoute,
@@ -1067,13 +1035,11 @@ export interface FileRoutesByFullPath {
   '/cm/edit/': typeof CmEditIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
-  '/cm/edit/cats/$catw': typeof CmEditCatsCatwRoute
   '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
   '/!other/$appName/actions': typeof otherAppNameActionsIndexRoute
   '/!other/$appName/auth': typeof otherAppNameAuthIndexRoute
   '/!other/$appName/schs': typeof otherAppNameSchsIndexRoute
   '/!other/$appName/settings': typeof otherAppNameSettingsIndexRoute
-  '/cm/edit/cats': typeof CmEditCatsIndexRoute
   '/cm/edit/coms': typeof CmEditComsIndexRoute
   '/gamer/i/memory-giant': typeof GamerIMemoryGiantIndexRoute
   '/storages/i/$rackw': typeof StoragesIRackwIndexRoute
@@ -1122,13 +1088,11 @@ export interface FileRoutesByTo {
   '/cm/edit': typeof CmEditIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
-  '/cm/edit/cats/$catw': typeof CmEditCatsCatwRoute
   '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
   '/!other/$appName/actions': typeof otherAppNameActionsIndexRoute
   '/!other/$appName/auth': typeof otherAppNameAuthIndexRoute
   '/!other/$appName/schs': typeof otherAppNameSchsIndexRoute
   '/!other/$appName/settings': typeof otherAppNameSettingsIndexRoute
-  '/cm/edit/cats': typeof CmEditCatsIndexRoute
   '/cm/edit/coms': typeof CmEditComsIndexRoute
   '/gamer/i/memory-giant': typeof GamerIMemoryGiantIndexRoute
   '/storages/i/$rackw': typeof StoragesIRackwIndexRoute
@@ -1184,13 +1148,11 @@ export interface FileRoutesById {
   '/cm/edit/': typeof CmEditIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
-  '/cm/edit/cats/$catw': typeof CmEditCatsCatwRoute
   '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
   '/!other/$appName/actions/': typeof otherAppNameActionsIndexRoute
   '/!other/$appName/auth/': typeof otherAppNameAuthIndexRoute
   '/!other/$appName/schs/': typeof otherAppNameSchsIndexRoute
   '/!other/$appName/settings/': typeof otherAppNameSettingsIndexRoute
-  '/cm/edit/cats/': typeof CmEditCatsIndexRoute
   '/cm/edit/coms/': typeof CmEditComsIndexRoute
   '/gamer/i/memory-giant/': typeof GamerIMemoryGiantIndexRoute
   '/storages/i/$rackw/': typeof StoragesIRackwIndexRoute
@@ -1247,13 +1209,11 @@ export interface FileRouteTypes {
     | '/cm/edit/'
     | '/!other/$appName/settings/console'
     | '/!other/$appName/settings/rights'
-    | '/cm/edit/cats/$catw'
     | '/cm/li/cat/$catw'
     | '/!other/$appName/actions'
     | '/!other/$appName/auth'
     | '/!other/$appName/schs'
     | '/!other/$appName/settings'
-    | '/cm/edit/cats'
     | '/cm/edit/coms'
     | '/gamer/i/memory-giant'
     | '/storages/i/$rackw'
@@ -1301,13 +1261,11 @@ export interface FileRouteTypes {
     | '/cm/edit'
     | '/!other/$appName/settings/console'
     | '/!other/$appName/settings/rights'
-    | '/cm/edit/cats/$catw'
     | '/cm/li/cat/$catw'
     | '/!other/$appName/actions'
     | '/!other/$appName/auth'
     | '/!other/$appName/schs'
     | '/!other/$appName/settings'
-    | '/cm/edit/cats'
     | '/cm/edit/coms'
     | '/gamer/i/memory-giant'
     | '/storages/i/$rackw'
@@ -1361,13 +1319,11 @@ export interface FileRouteTypes {
     | '/cm/edit/'
     | '/!other/$appName/settings/console'
     | '/!other/$appName/settings/rights'
-    | '/cm/edit/cats/$catw'
     | '/cm/li/cat/$catw'
     | '/!other/$appName/actions/'
     | '/!other/$appName/auth/'
     | '/!other/$appName/schs/'
     | '/!other/$appName/settings/'
-    | '/cm/edit/cats/'
     | '/cm/edit/coms/'
     | '/gamer/i/memory-giant/'
     | '/storages/i/$rackw/'
@@ -1534,8 +1490,6 @@ export const routeTree = rootRoute
         "/cm/edit/events",
         "/cm/edit/mp3Rules",
         "/cm/edit/",
-        "/cm/edit/cats/$catw",
-        "/cm/edit/cats/",
         "/cm/edit/coms/",
         "/cm/edit/coms/$comw/$tab",
         "/cm/edit/coms/$comw/"
@@ -1647,10 +1601,6 @@ export const routeTree = rootRoute
       "filePath": "!other.$appName/settings/rights.tsx",
       "parent": "/!other/$appName"
     },
-    "/cm/edit/cats/$catw": {
-      "filePath": "cm/edit/cats/$catw.tsx",
-      "parent": "/cm/edit"
-    },
     "/cm/li/cat/$catw": {
       "filePath": "cm/li/cat.$catw.tsx",
       "parent": "/cm"
@@ -1670,10 +1620,6 @@ export const routeTree = rootRoute
     "/!other/$appName/settings/": {
       "filePath": "!other.$appName/settings/index.tsx",
       "parent": "/!other/$appName"
-    },
-    "/cm/edit/cats/": {
-      "filePath": "cm/edit/cats/index.tsx",
-      "parent": "/cm/edit"
     },
     "/cm/edit/coms/": {
       "filePath": "cm/edit/coms/index.tsx",

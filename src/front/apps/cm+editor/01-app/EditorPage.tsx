@@ -14,20 +14,6 @@ export const CmEditorPage = () => {
       headTitle="Редактор"
       content={
         <>
-          {checkAccess('cm', 'CAT', 'R') && (
-            <Link to="/cm/edit/cats">
-              <BrutalItem
-                iconNode={
-                  <LazyIcon
-                    icon="BookOpen01"
-                    kind="TwotoneRounded"
-                  />
-                }
-                title="Категории"
-                idPostfix="cats"
-              />
-            </Link>
-          )}
           {checkAccess('cm', 'COM') && (
             <Link to="/cm/edit/coms">
               <BrutalItem

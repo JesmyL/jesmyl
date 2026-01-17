@@ -1,7 +1,9 @@
+import { cmEditorCategoryTrackers } from '#shared/const/cm/cmEditorCategoryTrackers';
 import { mylib } from '#shared/lib/my-lib';
 import { CmCom } from '$cm/ext';
 import { BaseNamed } from '$cm/shared/lib';
 import { CmComWid, IExportableCat } from 'shared/api';
+import { CmCatKind } from '../model/Cat.model';
 
 export class CmCat extends BaseNamed<IExportableCat> {
   term?: string;
@@ -12,12 +14,16 @@ export class CmCat extends BaseNamed<IExportableCat> {
   ) {
     super(top);
 
-    if (this.kind === 'lang:ru') this.coms = coms.filter(com => com.langi === 0);
-    else if (this.kind === 'lang:ua') this.coms = coms.filter(com => com.langi === 1);
+    if (this.kind === 'full') this.coms = coms;
     else {
-      const comwsSet = new Set(this.top.s ?? mylib.keys(this.top.d ?? {}).map(Number));
-      this.coms = coms.filter(com => comwsSet.has(com.wid));
+      const { select } = cmEditorCategoryTrackers[this.kind];
+      this.coms = coms.filter(com => select(com, this));
     }
+  }
+
+  private _stackSet: Set<number> | null = null;
+  get stackSet() {
+    return (this._stackSet ??= new Set(this.stack));
   }
 
   get stack() {
@@ -34,10 +40,10 @@ export class CmCat extends BaseNamed<IExportableCat> {
     this.setExportable('d', val);
   }
 
-  get kind(): string {
+  get kind(): CmCatKind {
     return this.getBasic('k');
   }
-  set kind(val: string) {
+  set kind(val: CmCatKind) {
     this.setExportable('k', val);
   }
 
