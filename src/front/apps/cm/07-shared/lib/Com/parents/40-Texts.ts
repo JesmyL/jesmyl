@@ -232,7 +232,7 @@ const repeatsRegBox = makeNamedRegExp(
 
 const somePrep = `[.,:;!?${doubleQuotesStr}]*`;
 const someRuBeat = `[${doubleQuotesStr}]*[${slavicLowerLettersStr}]{1,2}${somePrep}`;
-const slavicLetter = `[${doubleQuotesStr}]*[${slavicLowerLettersStr}]+${somePrep}(?: \\d+)?`;
+const slavicLetter = `[${doubleQuotesStr}]*[${slavicLowerLettersStr}]+${somePrep}(?: \\d+|(?: [${slavicLowerLettersStr}—]{1,2}){1,2}$)?`;
 const lineBeatsSplitReg = makeRegExp(
   `/([${slavicLowerLettersStr}]+-${slavicLetter})|(${someRuBeat} ${someRuBeat} ${slavicLetter})|(${someRuBeat} ${slavicLetter})|(${slavicLetter})|[ ]+/i`,
 );

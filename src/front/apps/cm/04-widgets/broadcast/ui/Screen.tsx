@@ -146,13 +146,13 @@ const StyledFontSizeContain = styled(FontSizeContain)`
   }
 
   &:has(.fragmented-slide-line) {
-    scale: 0.7;
+    scale: 0.5;
 
     .fragmented-slide-line {
       translate: calc(var(--direction) * 1vw) 0;
       animation:
         ${lineEnterAnimation} 0.3s linear forwards,
-        ${lineFlyAnimation} 40s linear forwards;
+        ${lineFlyAnimation} 60s linear forwards;
     }
 
     [fragmented-slide-linei='0'] {
