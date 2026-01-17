@@ -36,7 +36,10 @@ export const useCmBroadcastMinimalConfigSlides = (selfConfigi: number) => {
     if (minimalConfig.pushKind === '1') {
       result.minimalSlides = com.makeExpandedSolidFragmentedSlides(com.makeExpandedSolidTextLines());
     } else {
-      const minimalGroupedTexts = com.groupTextLinesByKind(com.takeSolidTextLines(true), '3'); // minimalConfig.pushKind);
+      const minimalGroupedTexts = com.groupTextLinesByKind(
+        com.takeSolidTextLines(true),
+        com.broadcastPushKind('k2', null!) ?? com.broadcastPushKind('k'),
+      );
       result.minimalSlides = com.groupSlideListByKind(minimalGroupedTexts);
     }
 

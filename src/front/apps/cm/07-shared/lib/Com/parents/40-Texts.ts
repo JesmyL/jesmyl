@@ -1,12 +1,29 @@
 import { CmComOrder } from '$cm/ext';
 import { escapeRegExpSymbols, makeNamedRegExp, makeRegExp } from 'regexpert';
-import { CmComOrderWid } from 'shared/api';
+import { CmComAudioMarkPackTime, CmComOrderWid } from 'shared/api';
 import { CmBroadcastGroupedSlide } from 'shared/model/cm/broadcast';
 import { itIt } from 'shared/utils';
 import { doubleQuotesStr, nbsp, slavicLowerLettersStr } from 'shared/utils/cm/com/const';
+import { makeCmComAudioMarkTitleEmptySelector } from '../../makeCmComAudioMarkTitleBySelector';
 import { CmComChords } from './30-Chords';
 
 export class CmComTexts extends CmComChords {
+  get ordersWithFinalChordedOrd() {
+    const orders = this.orders;
+    if (orders == null || orders[orders.length - 1].texti == null) return orders;
+
+    return orders.concat(
+      new CmComOrder(
+        {
+          top: { w: CmComOrderWid.never, c: 0 },
+          header: () =>
+            makeCmComAudioMarkTitleEmptySelector('', [0, CmComAudioMarkPackTime.def], CmComAudioMarkPackTime.def),
+        },
+        this as never,
+      ),
+    );
+  }
+
   takeSolidTextLines = (isAddLastSlideStars = false) => {
     const ordLines: CmBroadcastGroupedSlide[] = [];
     let isLastTextedLinei = 0;
@@ -14,7 +31,7 @@ export class CmComTexts extends CmComChords {
     let toLinei = 0;
     let currentLinesCount = 0;
 
-    this.orders?.forEach(ord => {
+    this.ordersWithFinalChordedOrd?.forEach(ord => {
       if (!ord.isVisible) return;
 
       if (ord.me.isInherit) {
@@ -88,7 +105,7 @@ export class CmComTexts extends CmComChords {
 
   makeExpandedSolidTextLines = (): CmBroadcastGroupedSlide[] => {
     try {
-      const comOrders = this.orders;
+      const comOrders = this.ordersWithFinalChordedOrd;
       if (comOrders == null) return [];
       let totalLinei = 0;
       let blocki = -1;

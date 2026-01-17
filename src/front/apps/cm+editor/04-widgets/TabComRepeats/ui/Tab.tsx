@@ -274,8 +274,8 @@ const Content = styled.div`
     cursor: pointer;
 
     &.inactive-word {
-      /* pointer-events: none;
-      color: grey; */
+      pointer-events: none;
+      color: grey;
     }
   }
 `;
