@@ -3,13 +3,11 @@ import { Modal, ModalBody } from '#shared/ui/modal';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { CmComMetricNums } from 'shared/model/cm/com-metric-nums';
-import styled from 'styled-components';
 import { metronomeIsOpenAtom, metronomeUserBpmAtom, metronomeUserMeterSizeAtom } from '../lib/atoms';
 import { useMetronomePlayStateController } from '../lib/useMetronomePlayStateController';
 import { MetronomeBpmInput } from './BpmInput';
 import { MetronomeMeterDots } from './MeterDots';
 import { MetronomePlayButton } from './PlayButton';
-import { MetronomeToolsMenu } from './ToolsMenu';
 import { MetronomeTouchBpmButton } from './TouchBpmButton';
 
 interface Props {
@@ -32,14 +30,7 @@ export default function LazyMetronome({ meterSize = 4, bpm = 120 }: Props) {
         openAtom={metronomeIsOpenAtom}
         onClose={openAtom => openAtom.set(false)}
       >
-        <ModalBody className="flex w-full justify-between">
-          Метроном
-          <div className="flex gap-1">
-            <MetronomeToolsMenu />
-          </div>
-        </ModalBody>
-
-        <StyledModalBody className="flex column between">
+        <ModalBody className="flex column between aspect-1/1">
           <div className="flex between w-full">
             <MetronomeTouchBpmButton />
             <MetronomeMeterDots />
@@ -48,13 +39,8 @@ export default function LazyMetronome({ meterSize = 4, bpm = 120 }: Props) {
             <MetronomeBpmInput />
             <MetronomePlayButton />
           </div>
-        </StyledModalBody>
+        </ModalBody>
       </Modal>
     </div>
   );
 }
-
-const StyledModalBody = styled(ModalBody)`
-  aspect-ratio: 1 / 1;
-  container: metronome/size;
-`;
