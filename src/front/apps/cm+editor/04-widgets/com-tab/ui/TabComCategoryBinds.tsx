@@ -22,52 +22,55 @@ export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => 
     <>
       <div className="cat-list-title">Сборники</div>
       {cats.map(cat => {
-        return cat.kind !== 'dict' ? null : (
-          <React.Fragment key={cat.wid}>
-            <InputWithLoadingIcon
-              icon="BookOpen02"
-              label={cat.name}
-              type="tel"
-              className="bg-x1!"
-              disabled={!checkAccess('cm', 'COM_CAT', 'U')}
-              defaultValue={`${cat.dict?.[ccom.wid] || ''}`}
-              onChanged={value => {
-                if (!+value) {
-                  return cmEditCatClientTsjrpcMethods.removeNativeComNum({ comw: ccom.wid, catw: cat.wid });
-                }
-
-                if (value.match(makeRegExp('/\\D/'))) return Promise.reject();
-
-                return cmEditCatClientTsjrpcMethods.setNativeComNum({
-                  comw: ccom.wid,
-                  catw: cat.wid,
-                  value: +value,
-                });
-              }}
-            />
-            {cat.dict?.[ccom.wid] != null && (
-              <TheIconButton
-                icon="Cancel01"
-                postfix={isNaN(cat.dict?.[ccom.wid as never]) ? 'Корректно очистить' : 'Удалить'}
-                confirm={`Очистить номер из сборника ${cat.name}?`}
-                className="pointer text-xKO ml-5 mb-2"
+        return (
+          cat.kind === 'dict' && (
+            <React.Fragment key={cat.wid}>
+              <InputWithLoadingIcon
+                icon="BookOpen02"
+                label={cat.name}
+                type="tel"
+                className="bg-x1!"
                 disabled={!checkAccess('cm', 'COM_CAT', 'U')}
-                disabledReason="Заперщено"
-                onClick={() =>
-                  cmEditCatClientTsjrpcMethods.removeNativeComNum({
+                defaultValue={`${cat.dict?.[ccom.wid] || ''}`}
+                strongDefaultValue
+                onChanged={value => {
+                  if (!+value) {
+                    return cmEditCatClientTsjrpcMethods.removeNativeComNum({ comw: ccom.wid, catw: cat.wid });
+                  }
+
+                  if (value.match(makeRegExp('/\\D/'))) return Promise.reject();
+
+                  return cmEditCatClientTsjrpcMethods.setNativeComNum({
                     comw: ccom.wid,
                     catw: cat.wid,
-                  })
-                }
+                    value: +value,
+                  });
+                }}
               />
-            )}
-          </React.Fragment>
+              {cat.dict?.[ccom.wid] != null && (
+                <TheIconButton
+                  icon="Cancel01"
+                  postfix={isNaN(cat.dict?.[ccom.wid as never]) ? 'Корректно очистить' : 'Удалить'}
+                  confirm={`Очистить номер из сборника ${cat.name}?`}
+                  className="pointer text-xKO ml-5 mb-2"
+                  disabled={!checkAccess('cm', 'COM_CAT', 'U')}
+                  disabledReason="Заперщено"
+                  onClick={() =>
+                    cmEditCatClientTsjrpcMethods.removeNativeComNum({
+                      comw: ccom.wid,
+                      catw: cat.wid,
+                    })
+                  }
+                />
+              )}
+            </React.Fragment>
+          )
         );
       })}
       <div className="cat-list-title">Списки</div>
       {cats.map(cat => {
         return (
-          cat.kind !== 'list' || (
+          cat.kind === 'list' && (
             <div
               key={cat.wid}
               className="my-5"
