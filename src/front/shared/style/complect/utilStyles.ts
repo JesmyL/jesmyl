@@ -197,6 +197,5 @@ export const utilStyles = css`
 
   .pointers-none {
     pointer-events: none !important;
-    opacity: 0.7 !important;
   }
 `;

@@ -2,7 +2,6 @@ import { FooterPlacementManager } from '#basis/lib/FooterPlacementManager';
 import { useCurrentAppFooterItemPlaceContext } from '#basis/state/App.contexts';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { FileRoutesByPath, Link } from '@tanstack/react-router';
-import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 
 interface Props {
@@ -21,12 +20,16 @@ export function AppFooterItem({ to, icon, title, className, children, idPostfix:
   if (!isActive && place) to = FooterPlacementManager.makePlaceLink(to);
 
   return (
-    <StyledLink
+    <Link
       id={`footer-button-${id}`}
-      to={to}
-      className={twMerge('pointer', isActive && 'active', className)}
+      to={to as never}
+      className={twMerge(
+        'pointer flex flex-col items-center w-[25%] scale-100 transition-[scale] duration-500 starting:scale-0',
+        isActive && '[&>.icon-container]:bg-x2 [&>.icon-container]:w-[50px] [&>.icon-container]:text-x3',
+        className,
+      )}
     >
-      <div className="icon-container">
+      <div className="icon-container flex justify-center items-center transition-[width,background] duration-100 rounded-[30px] w-[24px] h-[30px]">
         {isActive ? (
           <LazyIcon
             icon={icon}
@@ -41,40 +44,6 @@ export function AppFooterItem({ to, icon, title, className, children, idPostfix:
       </div>
       <div className="title">{title}</div>
       {children}
-    </StyledLink>
+    </Link>
   );
 }
-
-const StyledLink = styled(Link)`
-  @starting-style {
-    scale: 0;
-  }
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 25%;
-  scale: 1;
-
-  transition: scale 0.5s;
-
-  > .icon-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition:
-      width 0.1s,
-      background-color 0.05s;
-    border-radius: 30px;
-    width: 24px;
-    height: 30px;
-  }
-
-  &.active {
-    > .icon-container {
-      background-color: var(--color--2);
-      width: 50px;
-      color: var(--color--3);
-    }
-  }
-`;

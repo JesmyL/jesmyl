@@ -44,25 +44,12 @@ export function AppFooter({ children }: { children: React.ReactNode; appName: Ap
   );
 }
 
-const StyledAppFooter = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-`;
+const StyledAppFooter = styled.div.attrs({ className: 'flex custom-align-items justify-around items-start' })``;
 
-const StyledFooter = styled.div.attrs({ className: 'footer-menu' })`
-  display: grid;
-
-  position: absolute;
-  bottom: var(--footer-bottom);
-  padding-top: 10px;
-  opacity: var(--footer-opacity);
-  transition: var(--fullscreen-transition);
-  background-color: var(--color--1);
-  width: 100vw;
-  height: var(--footer-height);
-  overflow: hidden;
-
+const StyledFooter = styled.div.attrs({
+  className:
+    'footer-menu grid absolute bottom-[var(--footer-bottom)] pt-[10px] opacity-[var(--footer-opacity)] transition-[var(--fullscreen-transition)] bg-x1 w-[100vw] h-[var(--footer-height)] overflow-hidden',
+})`
   ${[1, 2, 3, 4, 5, 6, 7].map(
     num => css`
       &:has(${StyledAppFooter} > :nth-child(${num})) {

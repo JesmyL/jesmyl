@@ -85,7 +85,7 @@ export const IndexNounPronsRedactorWordRedactor = (props: {
         </div>
         <div className="text-x7 my-3 h-3">{query.data?.result}</div>
       </div>
-      <div className="drops-list relative">
+      <div className="drops-list relative opacity-0 pointers-none">
         {!query.data?.[`${props.wordKey}s`]?.length || (
           <div className="absolute bg-x2 p-3 rounded-sm">
             {query.data?.[`${props.wordKey}s`]?.map(word => <div key={word}>{word}</div>)}
@@ -120,11 +120,6 @@ const Buttons = ({ onLevelChange, initLevel }: { onLevelChange: (level: number) 
 };
 
 const DropStyled = styled.div`
-  .drops-list {
-    opacity: 0;
-    pointer-events: none;
-  }
-
   .drops:has(.word-input:focus) + .drops-list {
     opacity: 1;
   }
