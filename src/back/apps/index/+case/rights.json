@@ -2,7 +2,7 @@
   "roles": {
     "TOP": { "info": { "m": 0 } },
     "ADMIN": {
-      "info": { "m": 1764351847100 },
+      "info": { "m": 1768794815174 },
       "cm": {
         "EDIT": 4,
         "COM": 14,
@@ -18,15 +18,16 @@
         "COM_MAIN": 6,
         "CHORD": 6,
         "EVENT": 6,
-        "MP3": 4
+        "MP3": 4,
+        "CAT": 6
       },
       "q": { "EDIT": 14 },
       "sch": { "SCH": 14 }
     }
   },
   "rights": {
-    "T166cbf17596a0c2919e4df1a6d54e66": { "info": { "role": "TOP", "fio": "Павел 👨‍💻", "m": 1767990037922 } },
-    "T6558fe287d2ea93be3e19bbe64b5dfc": { "info": { "fio": "Руслан", "m": 1762444178917, "role": "ADMIN" } },
+    "T166cbf17596a0c2919e4df1a6d54e66": { "info": { "role": "TOP", "fio": "Павел 👨‍💻", "m": 1768712370354 } },
+    "T6558fe287d2ea93be3e19bbe64b5dfc": { "info": { "fio": "Руслан", "m": 1768712207761, "role": "ADMIN" } },
     "T7f21a14d3133065ca2e48254f87ecf3": { "info": { "fio": "danikpon", "m": 1762760874457, "role": "ADMIN" } },
     "T88eae2a48675aa330a3438b156799d8": { "info": { "fio": "Кирилл", "m": 1757905644600 } },
     "Tcd1de434b6554eaa585d6cbb6901d2a": { "info": { "fio": "Маша", "m": 1758121708642 } },
@@ -61,8 +62,8 @@
     "T5319cc8d2fac5dfc7ec1b69f97c5c7b": { "info": { "fio": "Arttop1gg/", "m": 1765730211711 } },
     "Tc2514a8ac8b521f0fe38375b7454956": { "info": { "fio": "Benjamin Yukhimets", "m": 1765730238775 } },
     "Tdd97e410eed61b005345b0af58d11c8": {
-      "info": { "fio": "Pavel Ponomarenko", "m": 1766406830557 },
-      "cm": { "EDIT": 4, "COM": 6, "COM_AUDIO": 6, "COM_AMARK": 6 }
+      "info": { "fio": "Pavel Ponomarenko", "m": 1768794837834 },
+      "cm": { "COM": 6, "COM_AUDIO": 6, "COM_AMARK": 6 }
     },
     "Tb21203600ee559664d6ca188acd3b0e": { "info": { "fio": "Александра Соломка", "m": 1766326823542 } },
     "T5e1300aec5d968ec6027eb3daa7b545": { "info": { "fio": "Егор Слободской", "m": 1767223426386 } }
