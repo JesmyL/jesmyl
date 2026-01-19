@@ -11,30 +11,9 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
     super({
       scope: 'CmEditCat',
       methods: {
-        rename: modifyCat((cat, { name }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
-
-          const prevName = cat.n;
-          cat.n = name;
-
-          return `Категория "${prevName}" переименована на "${cat.n}"`;
-        }),
-        setKind: modifyCat((cat, { kind }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
-
-          cat.k = kind;
-
-          return `Тип категории "${cat.n}" - ${kind}`;
-        }),
-        clearStack: modifyCat((cat, _, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
-          delete cat.s;
-
-          return `Список песен, принадлежащих категории "${cat.n}", очищен`;
-        }),
-
         toggleComExistence: modifyCat((cat, { comw }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
+          if (cat.k !== 'list') throw 'Категория не является списком';
 
           const stackSet = new Set(cat.s);
 
@@ -54,30 +33,19 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
           if (cat.d == null) return null;
           delete cat.d[comw];
 
+          if (!smylib.keys(cat.d).length) delete cat.d;
+
           return `Из сборника "${cat.n}" удалён номер песни ${getCmComNameInBrackets(comw)}`;
         }),
 
         setNativeComNum: modifyCat((cat, { comw, value }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
 
+          if (cat.k !== 'dict') throw 'Категория не является сборником';
+
           cat.d = { ...cat.d, [comw]: value };
 
           return `Для категории "${cat.n}" номер песни ${getCmComNameInBrackets(comw)} установлен в значение ${value}`;
-        }),
-
-        remove: modifyCat((cat, _, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'D')) throw '';
-
-          cat.isRemoved = 1;
-
-          return `Категория "${cat.n}" удалена`;
-        }),
-        bringBackToLife: modifyCat((cat, _, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'D')) throw '';
-
-          delete cat.isRemoved;
-
-          return `Удалённая категория "${cat.n}" восстановлена`;
         }),
       },
     });
