@@ -2,8 +2,10 @@ import { Accordion } from '#shared/components/ui/accordion';
 import { Button } from '#shared/components/ui/button';
 import { mylib } from '#shared/lib/my-lib';
 import { SortDirection } from '#shared/model/sortDirection';
+import { useConfirm } from '#shared/ui/modal';
 import { StoragesRackStatusFace } from '$storages/entities/RackStatusFace';
 import { storagesSortAndGroupAtom } from '$storages/shared/state/atoms';
+import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { useNavigate } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { memo } from 'react';
@@ -15,6 +17,7 @@ const openGroupsAtoms: PRecord<StoragesRackWid, Atom<string[]>> = {};
 
 export const StoragesRackCardListWidget = memo((props: { rack: StoragesRack }) => {
   const navigate = useNavigate();
+  const confirm = useConfirm();
   const openGroupsAtom = (openGroupsAtoms[props.rack.w] ??= atom<string[]>([], {
     storeKey: `storages:openCardGroups/${props.rack.w}`,
     exp: () => new Date(Date.now() + 10 * 24 * 60 * 60 * 999),
@@ -63,21 +66,65 @@ export const StoragesRackCardListWidget = memo((props: { rack: StoragesRack }) =
   const sortCards = <Cards extends StoragesRackCard<StoragesDictItemi>[] | nil>(cards: Cards) => {
     if (cards == null || cards.length < 2 || sort == null || !dir) return cards;
 
-    return cards.sort(
-      mylib.isStr(sort)
-        ? (aCard, bCard) => {
-            if (mylib.isStr(aCard[sort]) && mylib.isStr(bCard[sort]))
-              return dir === SortDirection.Asc
-                ? aCard[sort].toUpperCase().localeCompare(bCard[sort].toUpperCase())
-                : bCard[sort].toUpperCase().localeCompare(aCard[sort].toUpperCase());
+    const isAsc = dir === SortDirection.Asc;
+    const compareNumbers = (a: number, b: number) => (isAsc ? a - b : b - a);
+    const compareStrings = (a: string, b: string) =>
+      isAsc ? a.toUpperCase().localeCompare(b.toUpperCase()) : b.toUpperCase().localeCompare(a.toUpperCase());
 
-            if (mylib.isNum(aCard[sort]) && mylib.isNum(bCard[sort]))
-              return dir === SortDirection.Asc ? aCard[sort] - bCard[sort] : bCard[sort] - aCard[sort];
+    if (sort === 'status') {
+      const ord = props.rack.statusOrd;
 
-            return 0;
-          }
-        : () => 0,
-    );
+      if (ord == null) {
+        return cards
+          .slice()
+          .sort(
+            (aCard, bCard) =>
+              compareNumbers(aCard.status ?? 0, bCard.status ?? 0) || compareStrings(aCard.title, bCard.title),
+          );
+      }
+
+      const statusIndexDict: Record<number, number> = {};
+
+      return cards.slice().sort((aCard, bCard) => {
+        const aIndex = (statusIndexDict[aCard.status ?? 0] ??= ord.indexOf(aCard.status ?? 0));
+        const bIndex = (statusIndexDict[bCard.status ?? 0] ??= ord.indexOf(bCard.status ?? 0));
+
+        return compareNumbers(aIndex, bIndex) || compareStrings(aCard.title, bCard.title);
+      });
+    }
+
+    if (mylib.isStr(sort)) {
+      return cards.slice().sort((aCard, bCard) => {
+        let result = 0;
+
+        if (mylib.isStr(aCard[sort]) && mylib.isStr(bCard[sort])) {
+          result = compareStrings(aCard[sort], bCard[sort]);
+        } else if (mylib.isNum(aCard[sort]) && mylib.isNum(bCard[sort])) {
+          result = compareNumbers(aCard[sort], bCard[sort]);
+        }
+
+        result = compareStrings(aCard.title, bCard.title);
+
+        return result;
+      });
+    }
+
+    return cards.slice().sort((aCard, bCard) => {
+      const aVal = aCard.row?.[sort]?.val;
+      const bVal = bCard.row?.[sort]?.val;
+
+      let result = 0;
+
+      if (mylib.isNum(aVal) && mylib.isNum(bVal)) {
+        result = compareNumbers(aVal, bVal);
+      } else if (mylib.isStr(aVal) && mylib.isStr(bVal)) {
+        result = compareStrings(aVal, bVal);
+      }
+
+      if (result === 0) result = compareStrings(aCard.title, bCard.title);
+
+      return result;
+    });
   };
 
   if (group == null) return sortCards(props.rack.cards).map(cardMapper);
@@ -111,26 +158,45 @@ export const StoragesRackCardListWidget = memo((props: { rack: StoragesRack }) =
           defaultValue={openGroups}
           onValueChange={value => openGroupsAtom.set(value)}
         >
-          {mylib
-            .keys(groupedCards)
-            .sort(
-              dir === SortDirection.Asc
-                ? (a, b) => `${a}`.toUpperCase().localeCompare(`${b}`.toUpperCase())
-                : (a, b) => `${b}`.toUpperCase().localeCompare(`${a}`.toUpperCase()),
-            )
-            .map(groupKey => {
-              return (
-                <Accordion.Item
-                  key={groupKey}
-                  value={`${groupKey}`}
-                >
+          {mylib.keys(groupedCards).map(groupKey => {
+            return (
+              <Accordion.Item
+                key={groupKey}
+                value={`${groupKey}`}
+              >
+                <div className="flex gap-3">
+                  {group === 'status' && (
+                    <StoragesRackStatusFace
+                      statusi={groupedCards[groupKey]?.[0].status}
+                      rack={props.rack}
+                      card={null}
+                      customTitile
+                      onChange={async statusi => {
+                        if (groupedCards[groupKey] == null) return;
+
+                        if (
+                          !(await confirm(
+                            'Будут изменены статусы для всех карточек этого списка.\nВнести такие изменения?',
+                          ))
+                        )
+                          return;
+
+                        return storagesTsjrpcClient.setRackManyCardsStatus({
+                          cardis: groupedCards[groupKey].map(card => card.i),
+                          rackw: props.rack.w,
+                          statusi,
+                        });
+                      }}
+                    />
+                  )}
                   <Accordion.Trigger>
                     {groupKey} ({groupedCards[groupKey]?.length ?? 0})
                   </Accordion.Trigger>
-                  <Accordion.Content>{sortCards(groupedCards[groupKey])?.map(cardMapper)}</Accordion.Content>
-                </Accordion.Item>
-              );
-            })}
+                </div>
+                <Accordion.Content>{sortCards(groupedCards[groupKey])?.map(cardMapper)}</Accordion.Content>
+              </Accordion.Item>
+            );
+          })}
         </Accordion.Root>
       }
     </>

@@ -28,6 +28,7 @@ export type StoragesTsjrpcModel = {
   addRackMember: (args: RackSelector & { member: StoragesRackMember; login: SokiAuthLogin }) => void;
   addManyCards: (args: RackSelector & { cards: StoragesRackCard<string>[] }) => void;
   setRackCardStatus: (args: StoragesTsjrpcRackStatusSelector & StoragesTsjrpcRackCardSelector) => void;
+  setRackManyCardsStatus: (args: StoragesTsjrpcRackStatusSelector & { cardis: number[] }) => void;
   editRackCardTitle: (args: StoragesTsjrpcRackCardSelector & { title: string }) => void;
 
   toggleListCellValue: (args: StoragesTsjrpcCellSelector & StoragesNestedCellSelectors & { title: string }) => void;
@@ -48,6 +49,7 @@ export type StoragesTsjrpcModel = {
   ) => void;
 
   createRackStatus: (args: RackSelector & { title: string }) => void;
+  resortRackStatuses: (args: RackSelector & StoragesTsjrpcRackStatusSelector) => void;
 
   createColumn: (
     args: RackSelector &

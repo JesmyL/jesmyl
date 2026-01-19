@@ -67,6 +67,7 @@ export type StoragesRackCore = {
 
 export type StoragesRackTrail = {
   statuses: StoragesRackStatus[];
+  statusOrd?: number[];
   cols: StoragesRackColumn<StoragesColumnType>[];
   colsOrd?: number[];
   /** StoragesDicti indexed */

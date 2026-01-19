@@ -171,6 +171,7 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
         createRackStatus: updateRack((rack, { title }) => {
           const statusi = rack.statuses.push({ title }) - 1;
           rack.statuses.forEach(status => status.next?.push(statusi));
+          rack.statusOrd?.push(statusi);
         }),
 
         createColumn: updateRack((rack, { title, newColumnType, coli, colCustomProps }) => {
@@ -227,11 +228,41 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
 
           if (!status.next.length || status.next.length === rack.statuses.length - 1) {
             delete status.next;
+          } else if (rack.statusOrd != null) {
+            const ord = rack.statusOrd;
+            status.next.sort((a, b) => ord.indexOf(a) - ord.indexOf(b));
           } else status.next.sort((a, b) => a - b);
+        }),
+
+        resortRackStatuses: updateRack((rack, { statusi }) => {
+          rack.statusOrd ??= rack.statuses.map((_, i) => i);
+          const index = rack.statusOrd.indexOf(statusi);
+          rack.statusOrd = smylib.withInsertedBeforei(rack.statusOrd, index - 1, index);
+
+          let expectedi = 0;
+          if (!rack.statusOrd.some(i => i !== expectedi++)) delete rack.statusOrd;
+          else {
+            const ord = rack.statusOrd;
+            const indexOrdIndexDict: Record<number, number> = {};
+
+            rack.statuses.forEach(status => {
+              status.next?.sort(
+                (a, b) => (indexOrdIndexDict[a] ??= ord.indexOf(a)) - (indexOrdIndexDict[b] ??= ord.indexOf(b)),
+              );
+            });
+          }
         }),
 
         setRackCardStatus: updateRackCard((card, { statusi }) => {
           card.status = statusi || undefined;
+        }),
+
+        setRackManyCardsStatus: updateRack((rack, { cardis, statusi }) => {
+          cardis.forEach(cardi => {
+            if (rack.cards[cardi] == null || rack.cards[cardi].i !== cardi) return;
+
+            rack.cards[cardi].status = statusi || undefined;
+          });
         }),
 
         editRackCardTitle: updateRackCard((card, { title }) => {
