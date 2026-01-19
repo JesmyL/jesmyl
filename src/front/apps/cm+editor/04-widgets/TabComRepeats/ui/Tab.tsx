@@ -136,9 +136,10 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
 
                             if (isClear)
                               cmEditComOrderClientTsjrpcMethods.clearOwnRepeats({
-                                ordw: ord.wid,
+                                ordw: ord.me.leadOrd?.wid ?? ord.wid,
                                 orderTitle: ord.me.header(),
                                 comw: ccom.wid,
+                                inhIndex: ord.me.anchorInheritIndex ?? -1,
                               });
                           }}
                         />

@@ -11,7 +11,12 @@ export type CmEditComOrderTsjrpcModel = {
     textValue: string;
   }) => IExportableCom;
 
-  clearOwnRepeats: (args: { ordw: CmComOrderWid; orderTitle: string; comw: CmComWid }) => IExportableCom;
+  clearOwnRepeats: (args: {
+    ordw: CmComOrderWid;
+    orderTitle: string;
+    comw: CmComWid;
+    inhIndex: number;
+  }) => IExportableCom;
 
   setKind: (args: {
     ordw: CmComOrderWid;

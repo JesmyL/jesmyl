@@ -12,10 +12,16 @@ export const cmEditComOrderServerTsjrpcBase =
       super({
         scope: 'CmEditComOrder',
         methods: {
-          clearOwnRepeats: modifyOrd((ord, { orderTitle }, { auth }) => {
+          clearOwnRepeats: modifyOrd((ord, { orderTitle, inhIndex }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_REP', 'U')) throw '';
 
-            delete ord.r;
+            if (inhIndex < 0) delete ord.r;
+            else if (ord.inh?.r != null) {
+              delete ord.inh.r[inhIndex];
+
+              if (!smylib.keys(ord.inh.r).length) delete ord.inh.r;
+              if (!smylib.keys(ord.inh).length) delete ord.inh;
+            }
 
             return `сброшено значение повторений для блока ${orderTitle}`;
           }),
