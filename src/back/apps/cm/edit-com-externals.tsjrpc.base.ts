@@ -108,13 +108,23 @@ export const cmEditComExternalsTsjrpcBaseServer =
             let description: string | null = null;
 
             if (allMarkPacks[numLeadSrc] == null) {
-              description = `Создан новый пак аудио-маркеров для песни ${src}`;
+              description = `Создан новый пак аудио-маркеров для ссылки ${src}`;
               allMarkPacks[numLeadSrc] = { m: Date.now() };
             } else allMarkPacks[numLeadSrc].m = Date.now();
 
             if (allMarkPacks[numLeadSrc].cMarks == null) {
               const comMarks = (allMarkPacks[numLeadSrc].cMarks ??= {});
-              smylib.keys(cMarks).forEach(comw => (comMarks[comw] = { 0: '' }));
+              const comNames: string[] = [];
+
+              smylib.keys(cMarks).forEach(comw => {
+                comMarks[comw] = { 0: '' };
+                if (description) {
+                  const com = comsDirStore.getItem(+comw);
+                  if (com) comNames.push(com.n);
+                }
+              });
+
+              if (description) description += `\n\nпесня ${comNames.join(', ')}`;
             }
 
             const srcPackMarks = allMarkPacks[numLeadSrc].cMarks;
