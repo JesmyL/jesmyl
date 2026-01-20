@@ -23,9 +23,8 @@ export const CmEditorTabComRepeatsShowBeatSlidesButton = ({ com }: { com: CmCom 
               <div
                 key={linei}
                 className={linei ? '' : 'mt-4'}
-              >
-                {line}
-              </div>
+                dangerouslySetInnerHTML={{ __html: line }}
+              />
             ));
           })}
         </ModalBody>

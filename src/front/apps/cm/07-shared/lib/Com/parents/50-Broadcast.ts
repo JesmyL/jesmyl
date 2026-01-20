@@ -1,37 +1,29 @@
 import { mylib } from '#shared/lib/my-lib';
 import { makeRegExp } from 'regexpert';
+import { CmComOrderWid } from 'shared/api';
 import { cmComLineGroupingDefaultKinds } from 'shared/const/cm/comLineGroupingKind';
 import {
   CmBroadcastGroupedSlide,
+  CmBroadcastMonolineSlide,
   CmBroadcastSlideGrouperKind,
   CmBroadcastSlideGrouperOrdCombiner,
-  CmBroadcastSlideGrouperOrdWithListAndRule,
 } from 'shared/model/cm/broadcast';
 import { CmComTexts } from './40-Texts';
 
 export class CmComBroadcast extends CmComTexts {
-  groupSlideListByKind = (
-    groupedLines: CmBroadcastSlideGrouperOrdWithListAndRule[] | und,
-  ): CmBroadcastGroupedSlide[] => {
-    let toLinei = 0;
-    let currentLinesCount = 0;
-
+  groupSlideListByKind = (groupedLines: CmBroadcastGroupedSlide[] | und): CmBroadcastMonolineSlide[] => {
     return (
       groupedLines
-        ?.map(({ lines, ord }, blocki) => {
-          const preLinesCount = currentLinesCount;
-          currentLinesCount += lines.flat().length;
-
-          return lines.map((lines): CmBroadcastGroupedSlide => {
-            toLinei += lines.length;
+        ?.map(({ slides, ord }, blocki) => {
+          return slides.map((slides): CmBroadcastMonolineSlide => {
+            const slide = slides[0];
 
             return {
               ord,
               blocki,
-              lines,
-              fromLinei: toLinei - lines.length,
-              toLinei,
-              preLinesCount,
+              lines: slides.map(slide => slide.lines.join('/***/')),
+              fromLinei: slide.fromLinei,
+              toLinei: slide.fromLinei + slides.length,
             };
           });
         })
@@ -39,27 +31,28 @@ export class CmComBroadcast extends CmComTexts {
     );
   };
 
-  groupTextLinesByKind = (
-    slides: CmBroadcastGroupedSlide[],
-    rule: CmBroadcastSlideGrouperKind,
-  ): CmBroadcastSlideGrouperOrdWithListAndRule[] => {
-    if (rule == null) return [];
+  groupSlideLinesByKind = (
+    slides: CmBroadcastMonolineSlide[][],
+    ruleKind: CmBroadcastSlideGrouperKind,
+  ): CmBroadcastGroupedSlide[] => {
+    if (ruleKind == null) return [];
 
     let str = '';
     let ordComb: CmBroadcastSlideGrouperOrdCombiner = {};
 
-    if (mylib.isStr(rule)) str = rule;
-    else if (mylib.isNum(rule)) str = cmComLineGroupingDefaultKinds[rule];
+    if (mylib.isStr(ruleKind)) str = ruleKind;
+    else if (mylib.isNum(ruleKind)) str = cmComLineGroupingDefaultKinds[ruleKind];
     else {
-      if (mylib.isStr(rule.s)) str = rule.s;
-      else str = cmComLineGroupingDefaultKinds[rule.n || 0];
+      if (mylib.isStr(ruleKind.s)) str = ruleKind.s;
+      else str = cmComLineGroupingDefaultKinds[ruleKind.n || 0];
 
-      ordComb = rule.d;
+      ordComb = ruleKind.d;
     }
 
     if (!str) return [];
 
     const divDict: Record<string, string> = {};
+    const ordwRepeatCountDict: PRecord<CmComOrderWid, number> = {};
 
     str.split(makeRegExp('/[ ,]+/')).forEach(str => {
       const [key, value] = str.split(':');
@@ -68,52 +61,63 @@ export class CmComBroadcast extends CmComTexts {
       else divDict[key] = value;
     });
 
-    return slides.map(({ lines, ord }) => {
+    return slides.map((slideGroup): CmBroadcastGroupedSlide => {
+      const ord = slideGroup[0].ord;
       const ordw = ord.wid;
 
-      let defaultRule = 0;
-      let defaultDict: CmBroadcastSlideGrouperOrdWithListAndRule | null = null;
+      ordwRepeatCountDict[ordw] ??= 0;
+      ordwRepeatCountDict[ordw]++;
 
-      for (let i = lines.length; i >= 0; i--) {
+      const repeat = ordwRepeatCountDict[ordw] < 2 ? ('' as const) : (`/${ordwRepeatCountDict[ordw]}` as const);
+
+      let defaultRule = 0;
+      let defaultDict: CmBroadcastGroupedSlide | null = null;
+
+      for (let i = slideGroup.length; i >= 0; i--) {
         if (!divDict[i]) continue;
 
         defaultRule = +divDict[i];
         defaultDict = {
           ord,
-          lines: this.divideLinesByRule(lines, +divDict[i]),
+          slides: this.divideLinesByRule(slideGroup, +divDict[i]),
           rule: defaultRule,
           defaultRule,
+          repeat,
         };
 
         break;
       }
 
-      if (ordComb[ordw] != null)
+      const combKey = `${ordw}${repeat}` as const;
+
+      if (ordComb[combKey] != null)
         return {
           ord,
-          lines: this.divideLinesByRule(lines, ordComb[ordw]),
-          rule: ordComb[ordw],
+          slides: this.divideLinesByRule(slideGroup, ordComb[combKey]),
+          rule: ordComb[combKey],
           defaultRule,
+          repeat,
         };
 
-      if (divDict[`=${lines.length}`] != null) {
-        const rule = +divDict[`=${lines.length}`];
+      if (divDict[`=${slideGroup.length}`] != null) {
+        const rule = +divDict[`=${slideGroup.length}`];
 
         return {
           ord,
-          lines: this.divideLinesByRule(lines, rule),
+          slides: this.divideLinesByRule(slideGroup, rule),
           rule,
           defaultRule,
+          repeat,
         };
       }
 
-      return defaultDict ?? { ord, lines: [lines], rule: 0, defaultRule };
+      return defaultDict ?? { ord, slides: [slideGroup], rule: 0, defaultRule, repeat };
     });
   };
 
-  private divideLinesByRule = (lines: string[], rule: number) => {
+  private divideLinesByRule = (lines: CmBroadcastMonolineSlide[], rule: number): CmBroadcastMonolineSlide[][] => {
     const ruleStr = `${rule}`;
-    const newLines: string[][] = [];
+    const newLines: CmBroadcastMonolineSlide[][] = [];
 
     if (ruleStr.length === 1) {
       for (; lines.length; ) {

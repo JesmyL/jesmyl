@@ -9,27 +9,21 @@ import { makeRegExp } from 'regexpert';
 import styled from 'styled-components';
 import { CmBroadcastSchWgtLiveDataValue } from '../model/model';
 
-const _lineNamePrefix = 'live-broadcast-line';
+const _lineNamePrefix = 'live-broadcast-line-';
 
 export const CmBroadcastLiveList = (props: CmBroadcastSchWgtLiveDataValue) => {
   const com = useCmCom(props.comw);
   const chordVisibleVariant = useAtomValue(cmComChordVisibleVariantAtom);
-  const lineVolumes = useMemo(() => {
-    const sum: number[] = [0];
-    const counts = [] as number[];
+  const lineSum = useMemo(() => {
     let lastSum = 0;
+    const sum = [lastSum];
 
-    com?.orders?.forEach(unit => {
-      if (unit.texti === null || !unit.isVisible) {
-        sum.push(lastSum);
-        return;
-      }
-      const count = unit.text.split(makeRegExp('/\\n/')).length;
-      counts.push(count);
+    com?.orders?.forEach(order => {
+      const count = order.text.split(makeRegExp('/\\n/')).length;
       sum.push((lastSum += count));
     });
 
-    return { sum, counts };
+    return sum;
   }, [com]);
 
   const querySelector = useMemo(() => {
@@ -61,21 +55,11 @@ export const CmBroadcastLiveList = (props: CmBroadcastSchWgtLiveDataValue) => {
             asHeaderComponent={props => {
               if (props.ord.isRealText()) return props.headerNode;
 
-              return (
-                <div
-                  className={_lineNamePrefix}
-                  id={`${_lineNamePrefix}${lineVolumes.sum[props.ordi]}`}
-                >
-                  {props.headerNode}
-                </div>
-              );
+              return <div id={`${_lineNamePrefix}${lineSum[props.ordi]}`}>{props.headerNode}</div>;
             }}
             asLineComponent={props => {
               return (
-                <div
-                  className={_lineNamePrefix}
-                  id={`${_lineNamePrefix}${lineVolumes.sum[props.ordi] + props.textLinei}`}
-                >
+                <div id={`${_lineNamePrefix}${lineSum[props.ordi] + props.textLinei}`}>
                   <CmComOrderLine {...props} />
                 </div>
               );

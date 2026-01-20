@@ -6,7 +6,7 @@ import { useCmBroadcastScreenConfigs } from '$cm/widgets/broadcast';
 import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { CmComIntensityLevel } from 'shared/api';
-import { CmBroadcastGroupedSlide } from 'shared/model/cm/broadcast';
+import { CmBroadcastMonolineSlide } from 'shared/model/cm/broadcast';
 
 export const useCmBroadcastMinimalConfigSlides = (selfConfigi: number) => {
   const currentSlidei = useAtomValue(cmBroadcastCurrentSlideiAtom);
@@ -18,7 +18,7 @@ export const useCmBroadcastMinimalConfigSlides = (selfConfigi: number) => {
 
   const { minimalSlides, minimalConfigi } = useMemo(() => {
     const result = {
-      minimalSlides: [] as CmBroadcastGroupedSlide[],
+      minimalSlides: [] as CmBroadcastMonolineSlide[],
       minimalConfigi: 0,
     };
 
@@ -36,8 +36,8 @@ export const useCmBroadcastMinimalConfigSlides = (selfConfigi: number) => {
     if (minimalConfig.pushKind === '1') {
       result.minimalSlides = com.makeExpandedSolidFragmentedSlides(com.makeExpandedSolidTextLines());
     } else {
-      const minimalGroupedTexts = com.groupTextLinesByKind(
-        com.takeSolidTextLines(true),
+      const minimalGroupedTexts = com.groupSlideLinesByKind(
+        com.makeExpandedSolidSlides(),
         com.broadcastPushKind('k2', null!) ?? com.broadcastPushKind('k'),
       );
       result.minimalSlides = com.groupSlideListByKind(minimalGroupedTexts);
@@ -49,7 +49,7 @@ export const useCmBroadcastMinimalConfigSlides = (selfConfigi: number) => {
   const result = {
     currentSlidei,
     minimalSlides,
-    selfSlides: [] as CmBroadcastGroupedSlide[],
+    selfSlides: [] as CmBroadcastMonolineSlide[],
     selfConfig: configs[selfConfigi],
     isFragments: false,
   };
@@ -57,12 +57,13 @@ export const useCmBroadcastMinimalConfigSlides = (selfConfigi: number) => {
   if (com == null) return result;
 
   if (isCantShowFragments || selfConfigi !== minimalConfigi) {
-    const currentGroupedTexts = com.groupTextLinesByKind(
-      com.takeSolidTextLines(true),
+    const currentGroupedTexts = com.groupSlideLinesByKind(
+      com.makeExpandedSolidSlides(),
       configs[selfConfigi]?.pushKind === '2'
         ? (com.broadcastPushKind('k2', null!) ?? com.broadcastPushKind('k'))
         : com.broadcastPushKind('k'),
     );
+
     const currentGroupedLines = (result.selfSlides = com.groupSlideListByKind(currentGroupedTexts));
     const minimalFromLinei = minimalSlides[currentSlidei]?.fromLinei;
 

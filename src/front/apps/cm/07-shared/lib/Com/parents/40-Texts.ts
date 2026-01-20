@@ -1,9 +1,9 @@
 import { CmComOrder } from '$cm/ext';
 import { escapeRegExpSymbols, makeNamedRegExp, makeRegExp } from 'regexpert';
 import { CmComAudioMarkPackTime, CmComOrderWid } from 'shared/api';
-import { CmBroadcastGroupedSlide } from 'shared/model/cm/broadcast';
+import { CmBroadcastMonolineSlide } from 'shared/model/cm/broadcast';
 import { itIt } from 'shared/utils';
-import { doubleQuotesStr, nbsp, slavicLowerLettersStr } from 'shared/utils/cm/com/const';
+import { doubleQuotesStr, slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 import { makeCmComAudioMarkTitleEmptySelector } from '../../makeCmComAudioMarkTitleBySelector';
 import { CmComChords } from './30-Chords';
 
@@ -24,61 +24,12 @@ export class CmComTexts extends CmComChords {
     );
   }
 
-  takeSolidTextLines = (isAddLastSlideStars = false) => {
-    const ordLines: CmBroadcastGroupedSlide[] = [];
-    let isLastTextedLinei = 0;
-    let blocki = -1;
-    let toLinei = 0;
-    let currentLinesCount = 0;
-
-    this.ordersWithFinalChordedOrd?.forEach(ord => {
-      if (!ord.isVisible) return;
-
-      if (ord.me.isInherit) {
-        const lastOrdLinesi = ordLines.length - 1;
-        ordLines[lastOrdLinesi].lines = ordLines[lastOrdLinesi].lines.concat(ord.repeatedText().split('\n'));
-        return;
-      }
-
-      const isRealText = ord.isRealText();
-      const lines = isRealText ? ord.repeatedText().split('\n') : [ord.me.header()];
-
-      const preLinesCount = currentLinesCount;
-      currentLinesCount += lines.flat().length;
-
-      blocki++;
-      if (isRealText) isLastTextedLinei = blocki;
-
-      toLinei += lines.length;
-
-      ordLines.push({
-        ord,
-        blocki,
-        lines,
-        preLinesCount,
-        fromLinei: toLinei - lines.length,
-        toLinei,
-      });
-    });
-
-    if (ordLines[isLastTextedLinei] == null) return ordLines;
-
-    ordLines[isLastTextedLinei].isLastSlide = true;
-
-    if (isAddLastSlideStars) {
-      const list = ordLines[isLastTextedLinei].lines;
-      list[list.length - 1] += `\n* * *`;
-    }
-
-    return ordLines;
-  };
-
-  makeExpandedSolidFragmentedSlides = (expandedSlides: CmBroadcastGroupedSlide[]): CmBroadcastGroupedSlide[] => {
+  makeExpandedSolidFragmentedSlides = (expandedSlides: CmBroadcastMonolineSlide[]): CmBroadcastMonolineSlide[] => {
     const wordsSumReduce = (sum: number, word: string) => sum + word.length;
 
     return expandedSlides
-      .map(({ lines, ord, ...props }): CmBroadcastGroupedSlide[] => {
-        return lines.map((line): CmBroadcastGroupedSlide => {
+      .map(({ lines, ord, ...props }): CmBroadcastMonolineSlide[] => {
+        return lines.map((line): CmBroadcastMonolineSlide => {
           const beats = line.split(lineBeatsSplitReg).filter(itIt);
           let minDiff = line.length;
           let minDiffi = 1;
@@ -103,14 +54,29 @@ export class CmComTexts extends CmComChords {
       .flat();
   };
 
-  makeExpandedSolidTextLines = (): CmBroadcastGroupedSlide[] => {
+  makeExpandedSolidSlides = (): CmBroadcastMonolineSlide[][] => {
+    let prevOrd: CmComOrder | null = null;
+    let prevFromLinei = -1;
+
+    const slides: CmBroadcastMonolineSlide[][] = [];
+
+    this.makeExpandedSolidTextLines().forEach(slide => {
+      if (slide.ord !== prevOrd || slide.fromLinei < prevFromLinei) slides.push([]);
+      slides[slides.length - 1].push(slide);
+
+      prevOrd = slide.ord;
+      prevFromLinei = slide.fromLinei;
+    });
+
+    return slides;
+  };
+
+  makeExpandedSolidTextLines = (): CmBroadcastMonolineSlide[] => {
     try {
       const comOrders = this.ordersWithFinalChordedOrd;
       if (comOrders == null) return [];
       let totalLinei = 0;
       let blocki = -1;
-      let blockLength = 0;
-      const solidOrderLinesCountDict: PRecord<CmComOrderWid, number> = {};
       const headSolidOrders: CmComOrder[] = [];
 
       const heapText = comOrders
@@ -120,22 +86,18 @@ export class CmComTexts extends CmComChords {
           const ordLines = (ord.isRealText() ? ord.repeatedText(undefined, false) : ord.me.header()).split('\n');
 
           if (!ord.me.isInherit) {
-            solidOrderLinesCountDict[ord.wid] = blockLength;
             blocki++;
             headSolidOrders.push(ord);
           }
-
-          blockLength += ordLines.length;
 
           return ordLines
             .map(line => `\n${seperator}${blocki}${seperator}${totalLinei++}${seperator}${line}`)
             .join('\n');
         })
-        .join('\n')
-        .replace(makeRegExp(`/${nbsp}/g`), '');
+        .join('\n');
 
       const allRepeatedLines = this._replaceRepeats(heapText).split(makeRegExp('/\\s*\n\\s*/'));
-      const slides: CmBroadcastGroupedSlide[] = [];
+      const slides: CmBroadcastMonolineSlide[] = [];
 
       for (let i = 0; i < allRepeatedLines.length; i++) {
         if (!allRepeatedLines[i]) continue;
@@ -148,7 +110,6 @@ export class CmComTexts extends CmComChords {
           blocki: +blockiStr,
           fromLinei: +totalLineiStr,
           toLinei: +totalLineiStr + 1,
-          preLinesCount: solidOrderLinesCountDict[ord.wid] ?? 0,
         });
       }
 
@@ -165,7 +126,9 @@ export class CmComTexts extends CmComChords {
     const escapedStartFlagContent = escapeRegExpSymbols(startFlagContent);
     const escapedEndFlagContent = escapeRegExpSymbols(endFlagContent);
 
-    const flagsReg = makeRegExp(`/((?:${escapedStartFlagContent})+)([\\w\\W]+?)((?:${escapedEndFlagContent})+)/g`);
+    const flagsReg = makeRegExp(
+      `/(, ?)?((?:${escapedStartFlagContent})+)([\\w\\W]+?)((?:${escapedEndFlagContent})+)/g`,
+    );
     const startEndFlagReg = makeRegExp(`/${escapedStartFlagContent}|${escapedEndFlagContent}/g`);
 
     return (text: string) => {
@@ -200,12 +163,12 @@ export class CmComTexts extends CmComChords {
           const isNlStart = (!beforeContent && endNl) || content.includes('\n');
 
           for (let i = startSlashes.length; i > 0; i--) {
-            flagedContent = flagedContent.replace(flagsReg, (_all, start, content, end) => {
+            flagedContent = flagedContent.replace(flagsReg, (_all, comma, start, content, end) => {
               start = start.slice(0, -startFlagContent.length);
 
               if (!start) return '';
 
-              return `${start}${content}${end.slice(0, -endFlagContent.length)}`;
+              return `${comma ?? ''}${start}${content}${end.slice(0, -endFlagContent.length)}`;
             });
 
             repeatedContent += `${i !== startSlashes.length && isNlStart ? `\n${leadMark}` : ''}${flagedContent} `;
@@ -227,7 +190,7 @@ const seperator = `#@>`;
 const repeatsRegBox = makeNamedRegExp(
   // regexpert:
   // stringify $0
-  `/(?<lead>(^|\\n)${seperator}\\d+${seperator}\\d+${seperator})(?<before>.*?)(?<start>/+)(?<content>[^\\\\/]*?)(?<end>\\\\+)(?<endNl>\\n?)/g`,
+  `/(?<lead>(^|\\n)${seperator}\\d+${seperator}\\d+${seperator})(?<before>.*?)(?<start>/+)(?:&nbsp;)?(?<content>[^\\\\/]*?)(?:&nbsp;)?(?<end>\\\\+)(?<endNl>\\n?)/g`,
 );
 
 const somePrep = `[.,:;!?${doubleQuotesStr}]*`;

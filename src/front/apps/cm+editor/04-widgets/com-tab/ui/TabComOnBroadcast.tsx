@@ -7,6 +7,7 @@ import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.ts
 import { CmBroadcastScreenConfigurationPushKind } from '$cm/ext';
 import { useState } from 'react';
 import { cmComLineGroupingDefaultKinds } from 'shared/const/cm/comLineGroupingKind';
+import { CmBroadcastMonolineSlide, CmBroadcastSlideGrouperOrdCombiner } from 'shared/model/cm/broadcast';
 import { itNIt } from 'shared/utils';
 
 export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) => {
@@ -14,11 +15,12 @@ export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) =>
   const [isK2, setIsK2] = useState(false);
   const comPushKind = ccom.broadcastPushKind(isK2 ? 'k2' : 'k', 0);
 
-  const textsWithNumeredLines = ccom.takeSolidTextLines().map(slideProps => ({
-    ...slideProps,
-    ord: slideProps.ord,
-    list: slideProps.lines.map((line, linei) => `${linei + 1}: ${line}`),
-  }));
+  const textsWithNumeredLines = ccom.makeExpandedSolidSlides().map((slides): CmBroadcastMonolineSlide[] =>
+    slides.map((slide, slidei) => ({
+      ...slide,
+      lines: slide.lines.map(line => `${slidei + 1}: ${line}`),
+    })),
+  );
 
   return (
     <>
@@ -61,8 +63,10 @@ export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) =>
       </div>
 
       {ccom
-        .groupTextLinesByKind(textsWithNumeredLines, comPushKind)
-        .map(({ lines, ord, rule, defaultRule }, linesi) => {
+        .groupSlideLinesByKind(textsWithNumeredLines, comPushKind)
+        .map(({ slides, ord, rule, defaultRule, repeat }, linesi) => {
+          const key: keyof CmBroadcastSlideGrouperOrdCombiner = `${ord.wid}${repeat}`;
+
           return (
             <div
               key={linesi}
@@ -78,17 +82,17 @@ export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) =>
                   onChanged={value => {
                     return cmEditComClientTsjrpcMethods.changePushKind({
                       comw: ccom.wid,
-                      value: { [ord.wid]: +value === defaultRule ? 0 : +value },
+                      value: { [key]: +value === defaultRule ? 0 : +value },
                       isK2,
                     });
                   }}
                 />
               )}
-              {lines?.map((text, texti) => (
+              {slides?.map((text, texti) => (
                 <div
                   key={texti}
                   className="my-5 pre-text"
-                  dangerouslySetInnerHTML={{ __html: text.join('\n') }}
+                  dangerouslySetInnerHTML={{ __html: text.map(slide => slide.lines).join('\n') }}
                 />
               ))}
             </div>

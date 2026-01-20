@@ -7,21 +7,21 @@ export type CmBroadcastSlideGrouperKindCombiner = { s?: string; n?: number; d: C
 
 export type CmBroadcastSlideGrouperKind = number | string | CmBroadcastSlideGrouperKindCombiner;
 
-export type CmBroadcastSlideGrouperOrdCombiner = PRecord<CmComOrderWid, number>;
+export type CmBroadcastSlideGrouperOrdCombiner = PRecord<`${CmComOrderWid}${'' | `/${number}`}`, number>;
 
-export type CmBroadcastGroupedSlide = {
+export type CmBroadcastMonolineSlide = {
   ord: CmComOrder;
   blocki: number;
   lines: string[];
   fromLinei: number;
   toLinei: number;
-  preLinesCount: number;
   isLastSlide?: boolean;
 };
 
-export type CmBroadcastSlideGrouperOrdWithListAndRule = {
+export type CmBroadcastGroupedSlide = {
   ord: CmComOrder;
-  lines: string[][];
+  slides: CmBroadcastMonolineSlide[][];
   rule: number;
   defaultRule: number;
+  repeat: '' | `/${number}`;
 };
