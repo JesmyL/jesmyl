@@ -1,5 +1,6 @@
 import tailwindcss from '@tailwindcss/vite';
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
+import basicSsl from '@vitejs/plugin-basic-ssl';
 import react from '@vitejs/plugin-react';
 import { attrStylerVitePlugin } from 'attr-styler';
 import dns from 'dns';
@@ -8,6 +9,7 @@ import { defineConfig } from 'vite';
 import eslint from 'vite-plugin-eslint';
 import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import { isHttpsOnLocalhost } from './is.https';
 import * as tsconf from './tsconfig.json';
 import { vitePWAOptions } from './vite-pwa.options';
 
@@ -35,6 +37,7 @@ export default defineConfig(() => {
         // failOnWarning: false,
         // lintOnStart: false,
       }),
+      ...(isHttpsOnLocalhost ? [basicSsl()] : []),
       VitePWA(vitePWAOptions),
       tailwindcss(),
       react(),
