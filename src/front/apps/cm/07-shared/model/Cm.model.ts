@@ -15,3 +15,10 @@ export interface LiveBroadcastAppProps {
   headTitle: ReactNode;
   schedule: IScheduleWidget;
 }
+
+export const enum CmBroadcastShowChordedSlideMode {
+  Show,
+  Pass,
+  Hide,
+  Blind,
+}

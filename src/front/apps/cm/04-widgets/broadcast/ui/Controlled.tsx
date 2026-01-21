@@ -28,6 +28,7 @@ import { twMerge } from 'tailwind-merge';
 import { useCmBroadcastScreenKeyDownListen } from '../lib/keydown-listen';
 import { CmBroadcastControlPanel } from './ControllPanel';
 import { CmBroadcastScreenConfigurations } from './ScreenConfigurations';
+import { CmBroadcastShowChordedSlideModeSelector } from './ShowChordedSlideModeSelector';
 import { CmBroadcastSlideLine } from './SlideLine';
 
 interface Props {
@@ -95,7 +96,7 @@ export function CmBroadcastControlled(props: Props) {
             {comPack.pageTitlePostfix}
           </>
         ) : (
-          'Трансляция' + (comPack.pageTitlePostfix || '')
+          <>Трансляция{comPack.pageTitlePostfix}</>
         )
       }
       head={
@@ -172,11 +173,14 @@ export function CmBroadcastControlled(props: Props) {
             </>
           ) : (
             <>
-              <div className="mt-5">
-                <CmComToolHideMetronome />
-              </div>
               <CmBroadcastSlideLine />
               <CmBroadcastControlPanel />
+              <div className="flex w-full justify-between mt-5">
+                <CmBroadcastShowChordedSlideModeSelector />
+                <div className="w-53">
+                  <CmComToolHideMetronome />
+                </div>
+              </div>
             </>
           )}
           <CmBroadcastScreenConfigurations />

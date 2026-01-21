@@ -6,6 +6,8 @@ import { mylib } from '#shared/lib/my-lib';
 import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
 import { cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
+import { CmBroadcastShowChordedSlideMode } from '$cm/shared/model';
+import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useRef } from 'react';
 import styled, { css, keyframes } from 'styled-components';
@@ -30,6 +32,8 @@ type Props = BroadcastScreenProps &
 export const CmBroadcastScreen = (props: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const switchDirection = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
+  const showChordedSlideMode = useAtomValue(cmShowChordedSlideModeAtom);
+  const isBlindMode = showChordedSlideMode === CmBroadcastShowChordedSlideMode.Blind;
 
   const style = useCmBroadcastScreenStyle(
     props.isVisible,
@@ -56,7 +60,7 @@ export const CmBroadcastScreen = (props: Props) => {
         }
         win={props.win}
         subUpdates={props.subUpdates}
-        text={props.nextText}
+        text={isBlindMode && props.isNextChorded ? '' : props.nextText}
         wrapperRef={wrapperRef}
         isTech={props.isTech}
         parentConfig={props.cmConfig}
@@ -85,9 +89,10 @@ export const CmBroadcastScreen = (props: Props) => {
         className="inline-flex white-pre-children"
         style={{
           ['--direction' as 'left']: switchDirection,
-          ...(props.isTechnicalText ? { ...style, opacity: Math.min(+(style.opacity || 1) || 1, 0.3) } : style),
+          ...style,
+          opacity: props.isTechnicalText ? Math.min(+(style.opacity || 1) || 1, 0.3) : style.opacity,
         }}
-        html={mylib.isArr(props.text) ? undefined : props.text}
+        html={(isBlindMode && props.isChorded) || mylib.isArr(props.text) ? undefined : props.text}
         content={
           mylib.isArr(props.text)
             ? props.text.map((line, linei) => (

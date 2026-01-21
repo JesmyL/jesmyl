@@ -2,6 +2,8 @@ import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
 import { cmBroadcastCurrentSlideiAtom } from '$cm/entities/broadcast';
 import { useCmComCurrent } from '$cm/entities/com';
 import { cmConstantsConfigAtom } from '$cm/ext';
+import { CmBroadcastShowChordedSlideMode } from '$cm/shared/model';
+import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { useCmBroadcastScreenConfigs } from '$cm/widgets/broadcast';
 import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
@@ -12,6 +14,7 @@ export const useCmBroadcastMinimalConfigSlides = (selfConfigi: number) => {
   const currentSlidei = useAtomValue(cmBroadcastCurrentSlideiAtom);
   const com = useCmComCurrent();
   const configs = useCmBroadcastScreenConfigs();
+  const showChordedSlideMode = useAtomValue(cmShowChordedSlideModeAtom);
 
   const { showFragmentSlidesBelow } = useAtomValue(cmConstantsConfigAtom);
   const isCantShowFragments = (com?.top.d ?? CmComIntensityLevel.Medium) >= showFragmentSlidesBelow;
@@ -48,6 +51,7 @@ export const useCmBroadcastMinimalConfigSlides = (selfConfigi: number) => {
 
   const result = {
     currentSlidei,
+    nextSlidei: currentSlidei + 1,
     minimalSlides,
     selfSlides: [] as CmBroadcastMonolineSlide[],
     selfConfig: configs[selfConfigi],
@@ -79,6 +83,19 @@ export const useCmBroadcastMinimalConfigSlides = (selfConfigi: number) => {
   }
 
   if (!isCantShowFragments) result.isFragments = configs[selfConfigi]?.pushKind === '1';
+
+  const currentSlides = result.minimalSlides.length ? result.minimalSlides : result.selfSlides;
+
+  if (
+    (showChordedSlideMode === CmBroadcastShowChordedSlideMode.Hide ||
+      showChordedSlideMode === CmBroadcastShowChordedSlideMode.Pass) &&
+    currentSlides[result.nextSlidei] != null &&
+    !currentSlides[result.nextSlidei].ord.isRealText()
+  ) {
+    result.nextSlidei = currentSlides.findIndex(
+      (slide, slidei) => slidei > result.nextSlidei && slide.ord.isRealText(),
+    );
+  }
 
   return result;
 };

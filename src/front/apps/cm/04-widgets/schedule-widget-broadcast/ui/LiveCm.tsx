@@ -34,14 +34,14 @@ export const CmScheduleWidgetBroadcastLiveCm = (props: LiveBroadcastAppProps) =>
 
 const LiveReport = (props: LiveBroadcastAppProps) => {
   const ccom = useCmComCurrent();
-  const { currentSlidei, selfSlides, selfConfig } = useCmBroadcastMinimalConfigSlides(0);
+  const { currentSlidei, selfSlides, selfConfig, nextSlidei } = useCmBroadcastMinimalConfigSlides(0);
 
   useEffect(() => {
     if (props.isCantTranslateLive || !ccom) return;
 
     return setTimeoutEffect(() => {
       const currentSlide = selfSlides[currentSlidei];
-      const nextSlide = selfSlides[currentSlidei + 1];
+      const nextSlide = selfSlides[nextSlidei];
 
       const liveData: IndexSchWBroadcastLiveDataValue = {
         fio: props.fio,
@@ -63,7 +63,7 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
 
       schLiveTsjrpcClient.next({ schw: props.schedule.w, data: liveData });
     }, 100);
-  }, [currentSlidei, ccom, selfConfig, props.fio, props.isCantTranslateLive, props.schedule.w, selfSlides]);
+  }, [currentSlidei, ccom, selfConfig, props.fio, props.isCantTranslateLive, props.schedule.w, selfSlides, nextSlidei]);
 
   return <></>;
 };
