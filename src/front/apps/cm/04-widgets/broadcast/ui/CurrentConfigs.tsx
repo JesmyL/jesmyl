@@ -1,3 +1,5 @@
+import { broadcastFirstPresentationModeAtom, currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
+import { BroadcastFirstPresentationMode } from '#features/broadcast/Broadcast.model';
 import { defaultScreenBroadcastTextConfig } from '#features/broadcast/complect/defaults';
 import { ScreenBroadcastTextConfig } from '#features/broadcast/complect/model';
 import { ScreenTranslateConfigurationNameChanger } from '#features/broadcast/complect/NameChanger';
@@ -9,6 +11,7 @@ import { FontWeightConfigurator } from '#shared/ui/configurators/FontWeight/ui';
 import { ScreenTranslateConfigurationTextAlign } from '#shared/ui/configurators/TextAlign';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
+import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
 import { cmBroadcastSubConfigNext } from '../const/defaults';
 import { useCmBroadcastUpdateCurrentConfig } from '../hooks/update-config';
@@ -26,6 +29,8 @@ interface Props {
 export const CmBroadcastCurrentScreenConfigurations = ({ currentConfig }: Props) => {
   const updateConfig = useCmBroadcastUpdateCurrentConfig();
   const update = useDebounceAction(updateConfig);
+  const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
+  const firstPresentationMode = useAtomValue(broadcastFirstPresentationModeAtom);
 
   const putSubConfigUpdate = useCallback(
     (
@@ -65,6 +70,19 @@ export const CmBroadcastCurrentScreenConfigurations = ({ currentConfig }: Props)
           ]}
           onSelectId={pushKind => updateConfig({ pushKind })}
         />
+
+        {currentConfigi === 0 && (
+          <Dropdown
+            id={firstPresentationMode}
+            label="Презентация"
+            items={[
+              { id: BroadcastFirstPresentationMode.None, title: 'не презентация' },
+              { id: BroadcastFirstPresentationMode.Hiddify, title: 'скрываемая' },
+              { id: BroadcastFirstPresentationMode.Reclosable, title: 'переоткрываемая' },
+            ]}
+            onSelectId={broadcastFirstPresentationModeAtom.set}
+          />
+        )}
 
         <ColorConfigurator
           config={currentConfig}

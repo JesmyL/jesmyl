@@ -1,4 +1,5 @@
 import { HorizontalDirection } from '#shared/model/Direction';
+import { CmBroadcastShowChordedSlideMode } from '$cm/shared/model';
 import { CmBroadcastScreenConfig } from '$cm/widgets/broadcast';
 import { CmComWid } from 'shared/api';
 
@@ -9,9 +10,9 @@ export interface CmBroadcastSchWgtLiveDataValue {
   toLinei: number;
   isChorded: boolean;
   isNextChorded: boolean;
-  text: string;
+  text: string | string[];
   nextText: string;
   config: CmBroadcastScreenConfig;
   dir: HorizontalDirection;
-  isForceSlideMode?: boolean;
+  chordedMode: CmBroadcastShowChordedSlideMode;
 }

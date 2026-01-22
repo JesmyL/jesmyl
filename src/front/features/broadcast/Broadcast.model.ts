@@ -7,3 +7,9 @@ export type BroadcastScreenProps = {
 };
 
 export type BroadcastViewApp = 'cm' | 'bible';
+
+export const enum BroadcastFirstPresentationMode {
+  None,
+  Reclosable,
+  Hiddify,
+}

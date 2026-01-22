@@ -1,20 +1,17 @@
 import { cursors } from '#shared/const/cursorsBase64';
 import { renderComponentInNewWindow } from '#shared/lib/renders';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
+import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
 import { toast } from 'sonner';
 import { createGlobalStyle, css } from 'styled-components';
-import {
-  broadcastNextLiveDataAtom,
-  broadcastPresentationConnectionAtom,
-  useScreenBroadcastConfigsValue,
-} from '../atoms';
+import { broadcastFirstPresentationModeAtom, useScreenBroadcastConfigsValue } from '../atoms';
 import { useCurrentForceViweAppContext } from '../Broadcast.contexts';
+import { BroadcastFirstPresentationMode } from '../Broadcast.model';
 import { BroadcastScreen } from '../BroadcastScreen';
+import { broadcastConnectionDto } from '../lib/connection.dto';
 import { useGetScreenBroadcastConfig } from './configs';
 import { useScreenBroadcastWindows, useUpdateScreenBroadcastWindows } from './windows';
-
-let session: PresentationRequest | null = null;
 
 export const useWatchScreenBroadcast = () => {
   const getCurrentConfig = useGetScreenBroadcastConfig();
@@ -22,6 +19,7 @@ export const useWatchScreenBroadcast = () => {
   const configs = useScreenBroadcastConfigsValue();
   const updateWindows = useUpdateScreenBroadcastWindows();
   const forceViewApp = useCurrentForceViweAppContext();
+  const firstPresentationMode = useAtomValue(broadcastFirstPresentationModeAtom);
 
   const watchBroadcast = useCallback(async () => {
     if (configs.length === windows.length) return;
@@ -71,27 +69,9 @@ export const useWatchScreenBroadcast = () => {
     const len = configs.length - windows.length;
 
     for (let windowi = 0; windowi < len; windowi++) {
-      if (windowi === 0) {
-        let connection: PresentationConnection;
-
+      if (windowi === 0 && firstPresentationMode !== BroadcastFirstPresentationMode.None) {
         try {
-          const solidSession = (session ??= new PresentationRequest('/presentation'));
-          connection = await session.start();
-          broadcastPresentationConnectionAtom.set(connection);
-
-          connection.onmessage = () => {
-            connection.send(JSON.stringify(broadcastNextLiveDataAtom.get().data));
-          };
-
-          newWindows[windowi] = {
-            conn: connection,
-            blur: () => {
-              connection.close();
-            },
-            focus: async () => {
-              connection = await solidSession.start();
-            },
-          };
+          newWindows[windowi] = await broadcastConnectionDto.init();
 
           continue;
         } catch (_) {
@@ -102,7 +82,7 @@ export const useWatchScreenBroadcast = () => {
     }
 
     updateWindows(newWindows);
-  }, [configs.length, forceViewApp, getCurrentConfig, updateWindows, windows]);
+  }, [configs.length, firstPresentationMode, forceViewApp, getCurrentConfig, updateWindows, windows]);
 
   return watchBroadcast;
 };

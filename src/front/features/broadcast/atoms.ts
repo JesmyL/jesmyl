@@ -3,14 +3,17 @@ import { schLiveTsjrpcClient } from '$index/shared/tsjrpc';
 import { atom, useAtom } from 'atomaric';
 import { IScheduleWidgetWid } from 'shared/api';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
-import { BroadcastViewApp } from './Broadcast.model';
+import { BroadcastFirstPresentationMode, BroadcastViewApp } from './Broadcast.model';
 
 const isCanShowTextBroadcastAtom = atom(false);
 export const useIsCanShowTextBroadcast = () => useAtom(isCanShowTextBroadcastAtom);
 
 export const currentBroadcastConfigiAtom = atom(0);
 export const isBroadcastTextVisibleAtom = atom(true);
-export const broadcastPresentationConnectionAtom = atom((): PresentationConnection | null => null);
+export const broadcastFirstPresentationModeAtom = atom(
+  BroadcastFirstPresentationMode.None,
+  'broadcast:firstPresentationMode',
+);
 
 export const useScreenBroadcastConfigsSet = () => complectIDB.useSet.screenBroadcastConfigs();
 export const useScreenBroadcastConfigsValue = () => complectIDB.useValue.screenBroadcastConfigs();
@@ -27,11 +30,4 @@ export const broadcastNextLiveDataAtom = atom(
   }),
 );
 
-broadcastNextLiveDataAtom.subscribe(value => {
-  schLiveTsjrpcClient.next(value);
-
-  const presentationConnection = broadcastPresentationConnectionAtom.get();
-
-  if (presentationConnection == null || presentationConnection.state !== 'connected') return;
-  presentationConnection.send(JSON.stringify(value.data));
-});
+broadcastNextLiveDataAtom.subscribe(value => schLiveTsjrpcClient.next(value));

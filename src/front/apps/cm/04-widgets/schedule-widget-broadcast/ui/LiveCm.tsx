@@ -34,7 +34,14 @@ export const CmScheduleWidgetBroadcastLiveCm = (props: LiveBroadcastAppProps) =>
 
 const LiveReport = (props: LiveBroadcastAppProps) => {
   const ccom = useCmComCurrent();
-  const { currentSlidei, selfSlides, selfConfig, nextSlidei } = useCmBroadcastMinimalConfigSlides(0);
+  const {
+    currentSlidei,
+    selfSlides,
+    selfConfig,
+    nextSlidei,
+    showChordedSlideMode: chordedMode,
+    isFragments,
+  } = useCmBroadcastMinimalConfigSlides(0);
   const dir = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
 
   useEffect(() => {
@@ -51,15 +58,16 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
           comw: ccom.wid,
           slidei: currentSlidei,
 
-          fromLinei: currentSlide.fromLinei,
-          toLinei: currentSlide.toLinei,
+          fromLinei: currentSlide?.fromLinei,
+          toLinei: currentSlide?.toLinei,
 
-          text: currentSlide?.lines.join('\n'),
+          text: isFragments ? currentSlide?.lines : currentSlide?.lines.join('\n'),
           isChorded: !currentSlide?.ord.isRealText(),
 
           nextText: nextSlide?.lines.join('\n') || '',
           isNextChorded: !nextSlide?.ord.isRealText(),
           dir,
+          chordedMode,
         },
       };
 
@@ -75,6 +83,8 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
     selfSlides,
     nextSlidei,
     dir,
+    chordedMode,
+    isFragments,
   ]);
 
   return <></>;

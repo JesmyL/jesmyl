@@ -4,7 +4,7 @@ import { isShowBroadcastInitialSlideAtom, isShowBroadcastTextAtom } from '#featu
 import { ScreenBroadcastConfig } from '#features/broadcast/model';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { useEffect } from 'react';
-import { itNNull } from 'shared/utils';
+import { itNNil } from 'shared/utils';
 
 const invokeEach = (cb: () => void) => cb();
 
@@ -19,19 +19,9 @@ export const useScreenBroadcastFaceLineListeners = (
   useEffect(() => {
     const listeners = windows
       .map((parentWin, wini) => {
-        if (parentWin?.win == null) return null!;
-        const win = parentWin.win;
+        if (parentWin == null) return null;
 
-        let timeout: TimeOut;
-
-        const resize = () => updateConfig(wini, { proportion: win.innerWidth / win.innerHeight });
-
-        win.onresize = () => {
-          clearTimeout(timeout);
-          timeout = setTimeout(resize);
-        };
-
-        const onKeyDown = (win.onkeydown = async event => {
+        const onKeyDown = async (event: KeyboardEvent) => {
           switch (event.code) {
             case 'Tab':
               currentBroadcastConfigiAtom.set(
@@ -61,11 +51,32 @@ export const useScreenBroadcastFaceLineListeners = (
               isShowBroadcastInitialSlideAtom.do.toggle();
               break;
           }
-        });
+        };
+
+        if (parentWin.win == null) {
+          if (parentWin.conn == null) return;
+
+          // eslint-disable-next-line @eslint-react/web-api/no-leaked-event-listener
+          window.addEventListener('keydown', onKeyDown);
+
+          return () => window.removeEventListener('keydown', onKeyDown);
+        }
+
+        const win = parentWin.win;
+
+        let timeout: TimeOut;
+
+        const resize = () => updateConfig(wini, { proportion: win.innerWidth / win.innerHeight });
+
+        win.onresize = () => {
+          clearTimeout(timeout);
+          timeout = setTimeout(resize);
+        };
 
         win.onfocus = () => currentBroadcastConfigiAtom.set(wini);
         // eslint-disable-next-line @eslint-react/web-api/no-leaked-event-listener
         window.addEventListener('keydown', onKeyDown);
+        win.onkeydown = onKeyDown;
 
         return () => {
           win.onresize = null;
@@ -74,7 +85,7 @@ export const useScreenBroadcastFaceLineListeners = (
           window.removeEventListener('keydown', onKeyDown);
         };
       })
-      .filter(itNNull);
+      .filter(itNNil);
 
     return () => listeners.forEach(invokeEach);
   }, [configs, currentConfigiRef, updateConfig, windows]);
