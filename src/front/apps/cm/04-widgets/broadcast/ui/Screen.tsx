@@ -3,9 +3,9 @@ import { ScreenTranslateCurrentPositionConfigurators } from '#features/broadcast
 import { useSetBroadcastScreenInteractiveBackground } from '#features/broadcast/hooks/interactive-back';
 import { useApplyScreenFontFamilyEffect } from '#features/broadcast/hooks/set-font-family';
 import { mylib } from '#shared/lib/my-lib';
+import { HorizontalDirection } from '#shared/model/Direction';
 import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
-import { cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
 import { CmBroadcastShowChordedSlideMode } from '$cm/shared/model';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
@@ -27,11 +27,11 @@ type Props = BroadcastScreenProps &
     isChorded: boolean;
     isNextChorded: boolean;
     freshSlideKey: string;
+    slideSwitchDir: HorizontalDirection;
   };
 
 export const CmBroadcastScreen = (props: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const switchDirection = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
   const showChordedSlideMode = useAtomValue(cmShowChordedSlideModeAtom);
   const isBlindMode = showChordedSlideMode === CmBroadcastShowChordedSlideMode.Blind;
 
@@ -88,7 +88,7 @@ export const CmBroadcastScreen = (props: Props) => {
         key={props.freshSlideKey}
         className="inline-flex white-pre-children"
         style={{
-          ['--direction' as 'left']: switchDirection,
+          ['--direction' as 'left']: props.slideSwitchDir,
           ...style,
           opacity: props.isTechnicalText ? Math.min(+(style.opacity || 1) || 1, 0.3) : style.opacity,
         }}

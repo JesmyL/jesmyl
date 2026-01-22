@@ -1,12 +1,20 @@
 import { cursors } from '#shared/const/cursorsBase64';
 import { renderComponentInNewWindow } from '#shared/lib/renders';
+import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { useCallback } from 'react';
+import { toast } from 'sonner';
 import { createGlobalStyle, css } from 'styled-components';
-import { useScreenBroadcastConfigsValue } from '../atoms';
+import {
+  broadcastNextLiveDataAtom,
+  broadcastPresentationConnectionAtom,
+  useScreenBroadcastConfigsValue,
+} from '../atoms';
 import { useCurrentForceViweAppContext } from '../Broadcast.contexts';
 import { BroadcastScreen } from '../BroadcastScreen';
 import { useGetScreenBroadcastConfig } from './configs';
 import { useScreenBroadcastWindows, useUpdateScreenBroadcastWindows } from './windows';
+
+let session: PresentationRequest | null = null;
 
 export const useWatchScreenBroadcast = () => {
   const getCurrentConfig = useGetScreenBroadcastConfig();
@@ -15,8 +23,9 @@ export const useWatchScreenBroadcast = () => {
   const updateWindows = useUpdateScreenBroadcastWindows();
   const forceViewApp = useCurrentForceViweAppContext();
 
-  const watchBroadcast = useCallback(() => {
+  const watchBroadcast = useCallback(async () => {
     if (configs.length === windows.length) return;
+
     const newWindows = [...windows];
 
     const watch = (windowi: number) =>
@@ -61,7 +70,37 @@ export const useWatchScreenBroadcast = () => {
 
     const len = configs.length - windows.length;
 
-    for (let windowi = 0; windowi < len; windowi++) watch(windowi);
+    for (let windowi = 0; windowi < len; windowi++) {
+      if (windowi === 0) {
+        let connection: PresentationConnection;
+
+        try {
+          const solidSession = (session ??= new PresentationRequest('/presentation'));
+          connection = await session.start();
+          broadcastPresentationConnectionAtom.set(connection);
+
+          connection.onmessage = () => {
+            connection.send(JSON.stringify(broadcastNextLiveDataAtom.get().data));
+          };
+
+          newWindows[windowi] = {
+            conn: connection,
+            blur: () => {
+              connection.close();
+            },
+            focus: async () => {
+              connection = await solidSession.start();
+            },
+          };
+
+          continue;
+        } catch (_) {
+          toast('Не удалось подключить режим презентации', makeToastKOMoodConfig());
+        }
+      }
+      watch(windowi);
+    }
+
     updateWindows(newWindows);
   }, [configs.length, forceViewApp, getCurrentConfig, updateWindows, windows]);
 

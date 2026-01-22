@@ -1,8 +1,9 @@
+import { HorizontalDirection } from '#shared/model/Direction';
 import { CmBroadcastScreenConfig } from '$cm/widgets/broadcast';
 import { CmComWid } from 'shared/api';
 
 export interface CmBroadcastSchWgtLiveDataValue {
-  texti: number;
+  slidei: number;
   comw: CmComWid;
   fromLinei: number;
   toLinei: number;
@@ -11,4 +12,6 @@ export interface CmBroadcastSchWgtLiveDataValue {
   text: string;
   nextText: string;
   config: CmBroadcastScreenConfig;
+  dir: HorizontalDirection;
+  isForceSlideMode?: boolean;
 }

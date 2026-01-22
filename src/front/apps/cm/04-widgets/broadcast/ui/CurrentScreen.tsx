@@ -2,6 +2,7 @@ import { currentBroadcastConfigiAtom, isBroadcastTextVisibleAtom } from '#featur
 import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
 import { useGetScreenBroadcastConfig } from '#features/broadcast/hooks/configs';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
+import { cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
 import { useCmBroadcastMinimalConfigSlides } from '$cm/features/broadcast';
 import { useAtomValue } from 'atomaric';
 import { useCmBroadcastScreenConfig } from '../hooks/configs';
@@ -21,6 +22,7 @@ export const CmBroadcastCurrentScreen = (props: BroadcastScreenProps & Partial<F
   const isRealText = selfSlides[currentSlidei]?.ord.isRealText();
   const text =
     (isFragments && isRealText ? selfSlides[currentSlidei]?.lines : selfSlides[currentSlidei]?.lines.join('\n')) ?? '';
+  const switchDirection = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
 
   return (
     <CmBroadcastScreen
@@ -33,6 +35,7 @@ export const CmBroadcastCurrentScreen = (props: BroadcastScreenProps & Partial<F
       isVisible={isVisible}
       subUpdates={`${currentConfigi}${forceUpdates}${getCurrentConfig(currentConfigi)?.proportion}`}
       freshSlideKey={`${text}//${currentSlidei}`}
+      slideSwitchDir={switchDirection}
     />
   );
 };

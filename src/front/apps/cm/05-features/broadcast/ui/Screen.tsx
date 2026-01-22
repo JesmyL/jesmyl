@@ -15,7 +15,7 @@ export const CmBroadcastLiveScreen = (props: CmBroadcastSchWgtLiveDataValue) => 
       .effect();
   }, []);
 
-  return window.innerWidth > window.innerHeight ? (
+  return props.isForceSlideMode || window.innerWidth > window.innerHeight ? (
     <CmBroadcastLiveSlide
       {...props}
       subUpdates={subUpdates}

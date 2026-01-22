@@ -26,7 +26,7 @@ export const ScreenTranslateConfigurationNameChanger = () => {
           const win = windows[currentConfigi];
           if (win == null) return;
 
-          win.win.document.title = title;
+          if (win.win) win.win.document.title = title;
         }}
       />
     </div>

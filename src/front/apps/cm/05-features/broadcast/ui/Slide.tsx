@@ -18,7 +18,8 @@ export const CmBroadcastLiveSlide = (props: Props) => {
         html={props.text}
         cmConfig={props.config}
         isVisible
-        freshSlideKey={props.text}
+        freshSlideKey={`${props.text}//${props.slidei}`}
+        slideSwitchDir={props.dir}
       />
     </Container>
   );

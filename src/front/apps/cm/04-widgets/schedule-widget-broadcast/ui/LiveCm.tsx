@@ -1,11 +1,11 @@
-import { broadcastCurrentTextAppAtom } from '#features/broadcast/atoms';
+import { broadcastCurrentTextAppAtom, broadcastNextLiveDataAtom } from '#features/broadcast/atoms';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
 import { useCmComCurrent } from '$cm/entities/com';
 import { useCmBroadcastMinimalConfigSlides, useCmBroadcastScreenComNavigations } from '$cm/features/broadcast';
 import { LiveBroadcastAppProps } from '$cm/shared/model';
 import { cmIsTrackBroadcastAtom } from '$cm/shared/state';
 import { CmBroadcastControlled } from '$cm/widgets/broadcast';
-import { schLiveTsjrpcClient } from '$index/shared/tsjrpc/live.tsjrpc';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
@@ -35,6 +35,7 @@ export const CmScheduleWidgetBroadcastLiveCm = (props: LiveBroadcastAppProps) =>
 const LiveReport = (props: LiveBroadcastAppProps) => {
   const ccom = useCmComCurrent();
   const { currentSlidei, selfSlides, selfConfig, nextSlidei } = useCmBroadcastMinimalConfigSlides(0);
+  const dir = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
 
   useEffect(() => {
     if (props.isCantTranslateLive || !ccom) return;
@@ -48,7 +49,7 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
         cm: {
           config: selfConfig,
           comw: ccom.wid,
-          texti: currentSlidei,
+          slidei: currentSlidei,
 
           fromLinei: currentSlide.fromLinei,
           toLinei: currentSlide.toLinei,
@@ -58,12 +59,23 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
 
           nextText: nextSlide?.lines.join('\n') || '',
           isNextChorded: !nextSlide?.ord.isRealText(),
+          dir,
         },
       };
 
-      schLiveTsjrpcClient.next({ schw: props.schedule.w, data: liveData });
+      broadcastNextLiveDataAtom.set({ schw: props.schedule.w, data: liveData });
     }, 100);
-  }, [currentSlidei, ccom, selfConfig, props.fio, props.isCantTranslateLive, props.schedule.w, selfSlides, nextSlidei]);
+  }, [
+    currentSlidei,
+    ccom,
+    selfConfig,
+    props.fio,
+    props.isCantTranslateLive,
+    props.schedule.w,
+    selfSlides,
+    nextSlidei,
+    dir,
+  ]);
 
   return <></>;
 };

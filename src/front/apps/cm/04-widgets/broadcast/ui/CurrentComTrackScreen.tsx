@@ -2,6 +2,7 @@ import { currentBroadcastConfigiAtom, isBroadcastTextVisibleAtom } from '#featur
 import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
 import { useGetScreenBroadcastConfig } from '#features/broadcast/hooks/configs';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
+import { cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
 import { useCmCom } from '$cm/entities/com';
 import { useCmComCurrentMarkValues } from '$cm/shared/lib/useCmComCurrentMarkValues';
 import { cmPlayerBroadcastComwAtom } from '$cm/shared/state/broadcast.atoms';
@@ -20,6 +21,7 @@ export const CmBroadcastCurrentComTrackScreen = (props: BroadcastScreenProps & P
   const comw = useAtomValue(cmPlayerBroadcastComwAtom);
   const com = useCmCom(comw);
   const { html, nextHtml, isNextTechnicalText, isTechnicalText } = useCmComCurrentMarkValues(com);
+  const switchDirection = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
 
   return (
     <CmBroadcastScreen
@@ -34,6 +36,7 @@ export const CmBroadcastCurrentComTrackScreen = (props: BroadcastScreenProps & P
       isTechnicalText={isTechnicalText}
       isNextTechnicalText={isNextTechnicalText}
       freshSlideKey={html ?? ''}
+      slideSwitchDir={switchDirection}
     />
   );
 };

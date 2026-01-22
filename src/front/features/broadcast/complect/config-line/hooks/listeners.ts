@@ -19,7 +19,7 @@ export const useScreenBroadcastFaceLineListeners = (
   useEffect(() => {
     const listeners = windows
       .map((parentWin, wini) => {
-        if (parentWin == null) return null!;
+        if (parentWin?.win == null) return null!;
         const win = parentWin.win;
 
         let timeout: TimeOut;
