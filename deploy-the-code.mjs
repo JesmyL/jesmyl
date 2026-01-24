@@ -40,6 +40,8 @@ export const deployTheCode = async (front, back) => {
       await sendFilesOnServer([`./${versionFilePath}`], back);
 
       console.info('Front files sent on server');
+
+      await execAsync('rm -rf build');
     } catch (error) {
       console.error('Build failure');
       console.error(error);
@@ -51,10 +53,11 @@ export const deployTheCode = async (front, back) => {
     console.info('back.index file build is running...');
 
     const filePath = await buildBackIndexFile();
+    const backIndexFilePath = `./${filePath}.cjs`;
 
     console.info('...sending back files on server');
 
-    await sendFilesOnServer([`./${filePath}.cjs`], back);
+    await sendFilesOnServer([backIndexFilePath], back);
 
     if (back.loadToDirFiles != null) {
       const loadToDirFiles = Object.entries(back.loadToDirFiles);
@@ -67,6 +70,7 @@ export const deployTheCode = async (front, back) => {
         }
     }
 
+    await execAsync(`rm ${backIndexFilePath}`);
     console.info('Back files sent on server');
   }
 };
