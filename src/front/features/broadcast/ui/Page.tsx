@@ -4,6 +4,7 @@ import { configureAtomaric } from 'atomaric';
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 import { broadcastConnectionDto } from '../lib/connection.dto';
+import '../style/style.css';
 
 configureAtomaric({ useSyncExternalStore, keyPathSeparator: '/' });
 
