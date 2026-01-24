@@ -5,12 +5,12 @@ import { routingApps } from '$app/lib/configs';
 import { indexFavouriteAppsAtom } from '$index/shared/state';
 import { useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
+import { FC } from 'react';
 import { SokiAppName } from 'shared/api';
-import styled from 'styled-components';
 
 type Props = {
   currentAppName: SokiAppName | nil;
-  Div: ReturnType<typeof styled.div>;
+  Div: FC<object>;
   children: React.ReactNode;
 };
 

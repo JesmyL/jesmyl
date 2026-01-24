@@ -1,6 +1,5 @@
 import { Slider } from '#shared/components/ui/slider';
 import { mylib } from '#shared/lib/my-lib';
-import { ReactNode } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { HttpLink } from 'shared/api';
 import {
@@ -36,7 +35,7 @@ export const CmComAudioPlayerTrack = (props: Props) => {
 };
 
 let playbackRateTimeout: TimeOut;
-const TimeRender = ({ time }: { time: ReactNode }) => {
+const TimeRender = ({ time }: { time: React.ReactNode }) => {
   return (
     <code
       onTouchStart={event => {
