@@ -34,8 +34,8 @@ deployTheCode(
   {
     targetDir: 'jesmyl.ru',
     loadToDirFiles: makePaths('./src/back', {
-      assets: ['~/*.exe'],
-      './assets': ['~/*.AppImage'],
+      down: ['~/*.exe'],
+      './down': ['~/*.AppImage'],
       'apps/cm': ['~/#/*.json'],
       'apps/cm/coms': ['~/#/*.json'],
       'apps/cm/comComments': ['~/#/*.json'],
