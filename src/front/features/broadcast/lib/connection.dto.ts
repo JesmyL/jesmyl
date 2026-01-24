@@ -1,8 +1,12 @@
-import { presentationBroadcastChannel } from '#shared/lib/presentationBroadcastChannel';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 import { broadcastNextLiveDataAtom } from '../atoms';
 
 const cookieEventName = 'PRESENTATION_EVENT';
+let presentationBroadcastChannel = () => {
+  const channel = new BroadcastChannel('presentationBroadcastChannel');
+  presentationBroadcastChannel = () => channel;
+  return channel;
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const cookieStore: any;
@@ -12,7 +16,7 @@ class BroadcastConnectionDto {
   private isDesctop = false;
 
   private sendLiveData = (liveData: IndexSchWBroadcastLiveDataValue) => {
-    presentationBroadcastChannel.postMessage(liveData);
+    presentationBroadcastChannel().postMessage(liveData);
   };
 
   focus = () => {
@@ -40,11 +44,11 @@ class BroadcastConnectionDto {
     };
 
     const unsubscribe = broadcastNextLiveDataAtom.subscribe(value => this.sendLiveData(value.data));
-    presentationBroadcastChannel.addEventListener('message', onMessage);
+    presentationBroadcastChannel().addEventListener('message', onMessage);
 
     this.unsubscribe = () => {
       unsubscribe();
-      presentationBroadcastChannel.removeEventListener('message', onMessage);
+      presentationBroadcastChannel().removeEventListener('message', onMessage);
     };
 
     return this;
@@ -61,10 +65,10 @@ class BroadcastConnectionDto {
       if (data.isHide != null) setIsHide(data.isHide);
       onLiveData(data);
     };
-    presentationBroadcastChannel.addEventListener('message', onMessage);
-    presentationBroadcastChannel.postMessage(null);
+    presentationBroadcastChannel().addEventListener('message', onMessage);
+    presentationBroadcastChannel().postMessage(null);
 
-    return () => presentationBroadcastChannel.removeEventListener('message', onMessage);
+    return () => presentationBroadcastChannel().removeEventListener('message', onMessage);
   };
 }
 
