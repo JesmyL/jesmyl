@@ -24,7 +24,7 @@ export const useScreenBroadcastPutOnFaceClose = <Config>(
         updateConfig(configi, null);
         updateExternalConfig(null, configi);
 
-        windows[configi]?.win.close();
+        windows[configi]?.win?.close();
 
         setTimeout(() => {
           const newWindows = [...windows];

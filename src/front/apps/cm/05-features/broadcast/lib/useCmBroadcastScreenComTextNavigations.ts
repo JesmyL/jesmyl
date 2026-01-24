@@ -10,8 +10,13 @@ import { useCmBroadcastMinimalConfigSlides } from './useCmBroadcastMinimalConfig
 export const useCmBroadcastScreenComTextNavigations = () => {
   const currentSlidei = useAtomValue(cmBroadcastCurrentSlideiAtom);
   const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
-  const { minimalSlides } = useCmBroadcastMinimalConfigSlides(currentConfigi);
+  const { minimalSlides, com } = useCmBroadcastMinimalConfigSlides(currentConfigi);
   const showChordedSlideMode = useAtomValue(cmShowChordedSlideModeAtom);
+
+  useEffect(() => {
+    if (com?.wid == null) return;
+    cmBroadcastCurrentSlideiAtom.reset();
+  }, [com?.wid]);
 
   useEffect(() => {
     if (
@@ -43,7 +48,7 @@ export const useCmBroadcastScreenComTextNavigations = () => {
     nextSlide: () => state.setSlidei(currentSlidei + 1),
     prevSlide: () => state.setSlidei(currentSlidei - 1),
     setSlidei: (nextSlidei: number) => {
-      const isRtL = cmBroadcastCurrentSlideiAtom.get() > nextSlidei;
+      const isRtL = currentSlidei > nextSlidei;
 
       if (
         (showChordedSlideMode === CmBroadcastShowChordedSlideMode.Pass ||

@@ -56,6 +56,8 @@ export const useCmBroadcastMinimalConfigSlides = (selfConfigi: number) => {
     selfSlides: [] as CmBroadcastMonolineSlide[],
     selfConfig: configs[selfConfigi],
     isFragments: false,
+    showChordedSlideMode,
+    com,
   };
 
   if (com == null) return result;

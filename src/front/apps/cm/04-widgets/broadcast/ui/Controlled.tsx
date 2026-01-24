@@ -1,5 +1,10 @@
+import { currentBroadcastConfigiAtom, useScreenBroadcastConfigsValue } from '#features/broadcast/atoms';
+import { useScreenBroadcastFaceLineListeners } from '#features/broadcast/complect/config-line/hooks/listeners';
 import { BroadcastSlidePreview } from '#features/broadcast/controls/Preview';
 import { useWatchScreenBroadcast } from '#features/broadcast/hooks/watch-broadcast';
+import { useScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
+import { useUpdateScreenBroadcastConfig } from '#features/broadcast/hooks/with-config';
+import { ScreenBroadcastConfig } from '#features/broadcast/model';
 import { Button } from '#shared/components/ui/button';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
@@ -49,6 +54,12 @@ export function CmBroadcastControlled(props: Props) {
   let comList = props.comList ?? coms;
   if (isTrackBroadcast) comList = comList.filter(com => com.audio.length);
   const com = useCmComCurrent();
+  const updateConfig = useUpdateScreenBroadcastConfig();
+  const configs: ScreenBroadcastConfig[] = useScreenBroadcastConfigsValue();
+  const windows = useScreenBroadcastWindows();
+  const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
+
+  useScreenBroadcastFaceLineListeners(configs, currentConfigi, updateConfig, windows);
 
   const watchBroadcast = useWatchScreenBroadcast();
 

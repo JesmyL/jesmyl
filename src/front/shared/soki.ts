@@ -39,18 +39,8 @@ export class SokiTrip {
     this.onBeforeAuthorizeEvent.listen(() => this.sendRegistrationToken());
   }
 
-  private makeSignal = () => ({ signal: AbortSignal.timeout(5000) });
-
   private sendRegistrationToken = async () => {
     try {
-      let location: object | null = null;
-
-      try {
-        location = await (await fetch('https://api.db-ip.com/v2/free/self', this.makeSignal())).json();
-      } catch (_e) {
-        //
-      }
-
       await this.send({
         token: await authIDB.get.token(),
         visitInfo: {
@@ -58,7 +48,7 @@ export class SokiTrip {
           version: jversion.num,
           urls: this.urls.length ? this.urls : [this.getCurrentUrl()],
           clientTm: Date.now(),
-          location,
+          agent: navigator.userAgent,
         },
       });
 

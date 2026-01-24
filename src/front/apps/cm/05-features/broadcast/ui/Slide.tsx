@@ -1,11 +1,8 @@
 import { CmBroadcastSchWgtLiveDataValue } from '$cm/ext';
-import { CmBroadcastScreen, CmBroadcastScreenConfig } from '$cm/widgets/broadcast';
+import { CmBroadcastScreen } from '$cm/widgets/broadcast';
 import styled from 'styled-components';
 
 type Props = CmBroadcastSchWgtLiveDataValue & {
-  text: string;
-  nextText: string;
-  config: CmBroadcastScreenConfig;
   subUpdates: number | string | und;
 };
 
@@ -15,10 +12,11 @@ export const CmBroadcastLiveSlide = (props: Props) => {
       <CmBroadcastScreen
         {...props}
         className="inline-flex center white-pre-children"
-        html={props.text}
+        text={props.text}
         cmConfig={props.config}
         isVisible
-        freshSlideKey={props.text}
+        freshSlideKey={`${props.text}//${props.slidei}`}
+        slideSwitchDir={props.dir}
       />
     </Container>
   );

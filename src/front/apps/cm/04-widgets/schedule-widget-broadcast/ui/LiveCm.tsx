@@ -1,11 +1,12 @@
-import { broadcastCurrentTextAppAtom } from '#features/broadcast/atoms';
+import { broadcastCurrentTextAppAtom, broadcastNextLiveDataAtom } from '#features/broadcast/atoms';
+import { isShowBroadcastTextAtom } from '#features/broadcast/initial-slide-context';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
 import { useCmComCurrent } from '$cm/entities/com';
 import { useCmBroadcastMinimalConfigSlides, useCmBroadcastScreenComNavigations } from '$cm/features/broadcast';
 import { LiveBroadcastAppProps } from '$cm/shared/model';
 import { cmIsTrackBroadcastAtom } from '$cm/shared/state';
 import { CmBroadcastControlled } from '$cm/widgets/broadcast';
-import { schLiveTsjrpcClient } from '$index/shared/tsjrpc/live.tsjrpc';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
@@ -34,7 +35,16 @@ export const CmScheduleWidgetBroadcastLiveCm = (props: LiveBroadcastAppProps) =>
 
 const LiveReport = (props: LiveBroadcastAppProps) => {
   const ccom = useCmComCurrent();
-  const { currentSlidei, selfSlides, selfConfig, nextSlidei } = useCmBroadcastMinimalConfigSlides(0);
+  const {
+    currentSlidei,
+    selfSlides,
+    selfConfig,
+    nextSlidei,
+    showChordedSlideMode: chordedMode,
+    isFragments,
+  } = useCmBroadcastMinimalConfigSlides(0);
+  const dir = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
+  const isHide = !useAtomValue(isShowBroadcastTextAtom);
 
   useEffect(() => {
     if (props.isCantTranslateLive || !ccom) return;
@@ -45,25 +55,41 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
 
       const liveData: IndexSchWBroadcastLiveDataValue = {
         fio: props.fio,
+        isHide,
         cm: {
           config: selfConfig,
           comw: ccom.wid,
-          texti: currentSlidei,
+          slidei: currentSlidei,
 
-          fromLinei: currentSlide.fromLinei,
-          toLinei: currentSlide.toLinei,
+          fromLinei: currentSlide?.fromLinei,
+          toLinei: currentSlide?.toLinei,
 
-          text: currentSlide?.lines.join('\n'),
+          text: isFragments ? currentSlide?.lines : currentSlide?.lines.join('\n'),
           isChorded: !currentSlide?.ord.isRealText(),
 
           nextText: nextSlide?.lines.join('\n') || '',
           isNextChorded: !nextSlide?.ord.isRealText(),
+          dir,
+          chordedMode,
         },
       };
 
-      schLiveTsjrpcClient.next({ schw: props.schedule.w, data: liveData });
+      broadcastNextLiveDataAtom.set({ schw: props.schedule.w, data: liveData });
     }, 100);
-  }, [currentSlidei, ccom, selfConfig, props.fio, props.isCantTranslateLive, props.schedule.w, selfSlides, nextSlidei]);
+  }, [
+    currentSlidei,
+    ccom,
+    selfConfig,
+    props.fio,
+    props.isCantTranslateLive,
+    props.schedule.w,
+    selfSlides,
+    nextSlidei,
+    dir,
+    chordedMode,
+    isFragments,
+    isHide,
+  ]);
 
   return <></>;
 };

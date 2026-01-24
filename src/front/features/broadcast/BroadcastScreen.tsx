@@ -32,7 +32,16 @@ export const BroadcastScreen = (props: BroadcastScreenProps) => {
             {initialSlide}
           </StyledInitialSlide>
 
-          {props.isPreview && info}
+          {props.isPreview && (
+            <StyledInfo
+              key="StyledInitialSlide-info"
+              className="full-size flex center text-center"
+            >
+              Начальный слайд закрывается
+              <br />
+              по клавише Backspace
+            </StyledInfo>
+          )}
         </>
       )}
 
@@ -83,14 +92,3 @@ const StyledInfo = styled.div`
     visibility: hidden;
   }
 `;
-
-const info = (
-  <StyledInfo
-    key="StyledInitialSlide-info"
-    className="full-size flex center text-center"
-  >
-    Начальный слайд закрывается
-    <br />
-    по клавише Backspace
-  </StyledInfo>
-);

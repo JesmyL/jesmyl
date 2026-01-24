@@ -45,10 +45,10 @@ export const useCmBroadcastScreenKeyDownListen = () => {
     };
 
     const winsSet = new Set([windows, win].flat());
-    winsSet.forEach(win => win?.win.addEventListener('keydown', onKeyBroadcast));
+    winsSet.forEach(win => win?.win?.addEventListener('keydown', onKeyBroadcast));
 
     return () => {
-      winsSet.forEach(win => win?.win.removeEventListener('keydown', onKeyBroadcast));
+      winsSet.forEach(win => win?.win?.removeEventListener('keydown', onKeyBroadcast));
     };
   }, [comActionsRef, comTextActionsRef, windows]);
 };

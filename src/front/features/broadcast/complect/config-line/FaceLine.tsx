@@ -5,10 +5,8 @@ import { currentBroadcastConfigiAtom, useScreenBroadcastConfigsValue } from '../
 import { useAddScreenBroadcastConfig } from '../../hooks/configs';
 import { useWatchScreenBroadcast } from '../../hooks/watch-broadcast';
 import { useScreenBroadcastWindows } from '../../hooks/windows';
-import { useUpdateScreenBroadcastConfig } from '../../hooks/with-config';
 import { ScreenBroadcastConfig } from '../../model';
 import { ScreenBroadcastFace } from './Face';
-import { useScreenBroadcastFaceLineListeners } from './hooks/listeners';
 import { useScreenBroadcastPutOnFaceClose } from './hooks/put-on-face-close';
 
 interface Props<Config> {
@@ -18,13 +16,10 @@ interface Props<Config> {
 export const ScreenBroadcastFaceLine = <Config,>(props: Props<Config>) => {
   const configs: ScreenBroadcastConfig[] = useScreenBroadcastConfigsValue();
   const windows = useScreenBroadcastWindows();
-  const updateConfig = useUpdateScreenBroadcastConfig();
   const addConfig = useAddScreenBroadcastConfig();
 
   const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
   const watchBroadcast = useWatchScreenBroadcast();
-
-  useScreenBroadcastFaceLineListeners(configs, currentConfigi, updateConfig, windows);
 
   const putOnFaceClose = useScreenBroadcastPutOnFaceClose(configs, currentConfigi, windows, props.updateConfig);
 

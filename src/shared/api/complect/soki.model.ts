@@ -13,7 +13,7 @@ export interface SokiVisit {
   urls: string[];
   version: number;
   clientTm: number;
-  location: object | null;
+  agent: string;
 }
 
 export interface TelegramNativeAuthUserData extends OmitOwn<User, 'language_code' | 'is_bot'> {

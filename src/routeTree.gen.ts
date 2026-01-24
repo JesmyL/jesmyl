@@ -21,6 +21,7 @@ import { Route as CmRouteImport } from './front/routes/cm/route'
 import { Route as BibleRouteImport } from './front/routes/bible/route'
 import { Route as IndexImport } from './front/routes/index'
 import { Route as TunerIndexImport } from './front/routes/tuner/index'
+import { Route as PresentationIndexImport } from './front/routes/presentation/index'
 import { Route as GamerIndexImport } from './front/routes/gamer/index'
 import { Route as CmIndexImport } from './front/routes/cm/index'
 import { Route as BibleIndexImport } from './front/routes/bible/index'
@@ -129,6 +130,12 @@ const TunerIndexRoute = TunerIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => TunerRouteRoute,
+} as any)
+
+const PresentationIndexRoute = PresentationIndexImport.update({
+  id: '/presentation/',
+  path: '/presentation/',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const GamerIndexRoute = GamerIndexImport.update({
@@ -544,6 +551,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/gamer/'
       preLoaderRoute: typeof GamerIndexImport
       parentRoute: typeof GamerRouteImport
+    }
+    '/presentation/': {
+      id: '/presentation/'
+      path: '/presentation'
+      fullPath: '/presentation'
+      preLoaderRoute: typeof PresentationIndexImport
+      parentRoute: typeof rootRoute
     }
     '/tuner/': {
       id: '/tuner/'
@@ -1011,6 +1025,7 @@ export interface FileRoutesByFullPath {
   '/bible/': typeof BibleIndexRoute
   '/cm/': typeof CmIndexRoute
   '/gamer/': typeof GamerIndexRoute
+  '/presentation': typeof PresentationIndexRoute
   '/tuner/': typeof TunerIndexRoute
   '/schedule-day': typeof ScheduleDayIndexLazyRoute
   '/cm/edit/chord': typeof CmEditChordRoute
@@ -1064,6 +1079,7 @@ export interface FileRoutesByTo {
   '/bible': typeof BibleIndexRoute
   '/cm': typeof CmIndexRoute
   '/gamer': typeof GamerIndexRoute
+  '/presentation': typeof PresentationIndexRoute
   '/tuner': typeof TunerIndexRoute
   '/schedule-day': typeof ScheduleDayIndexLazyRoute
   '/cm/edit/chord': typeof CmEditChordRoute
@@ -1124,6 +1140,7 @@ export interface FileRoutesById {
   '/bible/': typeof BibleIndexRoute
   '/cm/': typeof CmIndexRoute
   '/gamer/': typeof GamerIndexRoute
+  '/presentation/': typeof PresentationIndexRoute
   '/tuner/': typeof TunerIndexRoute
   '/schedule-day/': typeof ScheduleDayIndexLazyRoute
   '/cm/edit/chord': typeof CmEditChordRoute
@@ -1185,6 +1202,7 @@ export interface FileRouteTypes {
     | '/bible/'
     | '/cm/'
     | '/gamer/'
+    | '/presentation'
     | '/tuner/'
     | '/schedule-day'
     | '/cm/edit/chord'
@@ -1237,6 +1255,7 @@ export interface FileRouteTypes {
     | '/bible'
     | '/cm'
     | '/gamer'
+    | '/presentation'
     | '/tuner'
     | '/schedule-day'
     | '/cm/edit/chord'
@@ -1295,6 +1314,7 @@ export interface FileRouteTypes {
     | '/bible/'
     | '/cm/'
     | '/gamer/'
+    | '/presentation/'
     | '/tuner/'
     | '/schedule-day/'
     | '/cm/edit/chord'
@@ -1346,6 +1366,7 @@ export interface RootRouteChildren {
   StoragesRouteRoute: typeof StoragesRouteRouteWithChildren
   TunerRouteRoute: typeof TunerRouteRouteWithChildren
   otherAppNameRouteRoute: typeof otherAppNameRouteRouteWithChildren
+  PresentationIndexRoute: typeof PresentationIndexRoute
   ScheduleDayIndexLazyRoute: typeof ScheduleDayIndexLazyRoute
   ScheduleDaySchwIndexRoute: typeof ScheduleDaySchwIndexRoute
 }
@@ -1359,6 +1380,7 @@ const rootRouteChildren: RootRouteChildren = {
   StoragesRouteRoute: StoragesRouteRouteWithChildren,
   TunerRouteRoute: TunerRouteRouteWithChildren,
   otherAppNameRouteRoute: otherAppNameRouteRouteWithChildren,
+  PresentationIndexRoute: PresentationIndexRoute,
   ScheduleDayIndexLazyRoute: ScheduleDayIndexLazyRoute,
   ScheduleDaySchwIndexRoute: ScheduleDaySchwIndexRoute,
 }
@@ -1381,6 +1403,7 @@ export const routeTree = rootRoute
         "/storages",
         "/tuner",
         "/!other/$appName",
+        "/presentation/",
         "/schedule-day/",
         "/schedule-day/$schw/"
       ]
@@ -1506,6 +1529,9 @@ export const routeTree = rootRoute
     "/gamer/": {
       "filePath": "gamer/index.tsx",
       "parent": "/gamer"
+    },
+    "/presentation/": {
+      "filePath": "presentation/index.tsx"
     },
     "/tuner/": {
       "filePath": "tuner/index.tsx",

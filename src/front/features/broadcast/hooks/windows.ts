@@ -2,7 +2,8 @@ import { atom, useAtomSet, useAtomValue } from 'atomaric';
 import { currentBroadcastConfigiAtom } from '../atoms';
 
 export type BroadcastWindow = {
-  win: Window;
+  win?: Window;
+  conn?: PresentationConnection;
   focus: () => void;
   blur: () => void;
 };

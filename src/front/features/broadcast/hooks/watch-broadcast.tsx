@@ -1,10 +1,13 @@
 import { cursors } from '#shared/const/cursorsBase64';
 import { renderComponentInNewWindow } from '#shared/lib/renders';
+import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { useCallback } from 'react';
+import { toast } from 'sonner';
 import { createGlobalStyle, css } from 'styled-components';
 import { useScreenBroadcastConfigsValue } from '../atoms';
 import { useCurrentForceViweAppContext } from '../Broadcast.contexts';
 import { BroadcastScreen } from '../BroadcastScreen';
+import { broadcastConnectionDto } from '../lib/connection.dto';
 import { useGetScreenBroadcastConfig } from './configs';
 import { useScreenBroadcastWindows, useUpdateScreenBroadcastWindows } from './windows';
 
@@ -15,8 +18,9 @@ export const useWatchScreenBroadcast = () => {
   const updateWindows = useUpdateScreenBroadcastWindows();
   const forceViewApp = useCurrentForceViweAppContext();
 
-  const watchBroadcast = useCallback(() => {
+  const watchBroadcast = useCallback(async () => {
     if (configs.length === windows.length) return;
+
     const newWindows = [...windows];
 
     const watch = (windowi: number) =>
@@ -61,7 +65,19 @@ export const useWatchScreenBroadcast = () => {
 
     const len = configs.length - windows.length;
 
-    for (let windowi = 0; windowi < len; windowi++) watch(windowi);
+    for (let windowi = 0; windowi < len; windowi++) {
+      if (windowi === 0) {
+        try {
+          newWindows[windowi] = await broadcastConnectionDto.init();
+
+          continue;
+        } catch (_) {
+          toast('Не удалось подключить режим презентации', makeToastKOMoodConfig());
+        }
+      }
+      watch(windowi);
+    }
+
     updateWindows(newWindows);
   }, [configs.length, forceViewApp, getCurrentConfig, updateWindows, windows]);
 
