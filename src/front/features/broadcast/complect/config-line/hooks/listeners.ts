@@ -17,24 +17,39 @@ export const useScreenBroadcastFaceLineListeners = (
   const currentConfigiRef = useActualRef(currentConfigi);
 
   useEffect(() => {
+    const onKeyDown = async (event: KeyboardEvent) => {
+      switch (event.code) {
+        case 'Tab':
+          event.preventDefault();
+          currentBroadcastConfigiAtom.set(
+            event.shiftKey
+              ? currentConfigiRef.current === 0
+                ? configs.length - 1
+                : currentConfigiRef.current - 1
+              : currentConfigiRef.current === configs.length - 1
+                ? 0
+                : currentConfigiRef.current + 1,
+          );
+          break;
+
+        case 'Space':
+          event.preventDefault();
+          isShowBroadcastTextAtom.do.toggle();
+          break;
+
+        case 'Backspace':
+          event.preventDefault();
+          isShowBroadcastInitialSlideAtom.do.toggle();
+          break;
+      }
+    };
+
     const listeners = windows
       .map((parentWin, wini) => {
         if (parentWin == null) return null;
 
-        const onKeyDown = async (event: KeyboardEvent) => {
+        const onSubWinKeyDown = async (event: KeyboardEvent) => {
           switch (event.code) {
-            case 'Tab':
-              currentBroadcastConfigiAtom.set(
-                event.shiftKey
-                  ? currentConfigiRef.current === 0
-                    ? configs.length - 1
-                    : currentConfigiRef.current - 1
-                  : currentConfigiRef.current === configs.length - 1
-                    ? 0
-                    : currentConfigiRef.current + 1,
-              );
-              break;
-
             case 'Enter':
               parentWin.focus();
               break;
@@ -42,25 +57,13 @@ export const useScreenBroadcastFaceLineListeners = (
             case 'Escape':
               parentWin.blur();
               break;
-
-            case 'Space':
-              isShowBroadcastTextAtom.do.toggle();
-              break;
-
-            case 'Backspace':
-              isShowBroadcastInitialSlideAtom.do.toggle();
-              break;
           }
         };
 
-        if (parentWin.win == null) {
-          if (parentWin.conn == null) return;
+        // eslint-disable-next-line @eslint-react/web-api/no-leaked-event-listener
+        window.addEventListener('keydown', onSubWinKeyDown);
 
-          // eslint-disable-next-line @eslint-react/web-api/no-leaked-event-listener
-          window.addEventListener('keydown', onKeyDown);
-
-          return () => window.removeEventListener('keydown', onKeyDown);
-        }
+        if (parentWin.win == null) return;
 
         const win = parentWin.win;
 
@@ -74,19 +77,22 @@ export const useScreenBroadcastFaceLineListeners = (
         };
 
         win.onfocus = () => currentBroadcastConfigiAtom.set(wini);
-        // eslint-disable-next-line @eslint-react/web-api/no-leaked-event-listener
-        window.addEventListener('keydown', onKeyDown);
-        win.onkeydown = onKeyDown;
+        win.onkeydown = onSubWinKeyDown;
 
         return () => {
           win.onresize = null;
           win.onkeydown = null;
           win.onfocus = null;
-          window.removeEventListener('keydown', onKeyDown);
+          window.removeEventListener('keydown', onSubWinKeyDown);
         };
       })
       .filter(itNNil);
 
-    return () => listeners.forEach(invokeEach);
+    window.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      listeners.forEach(invokeEach);
+      window.removeEventListener('keydown', onKeyDown);
+    };
   }, [configs, currentConfigiRef, updateConfig, windows]);
 };

@@ -5,6 +5,7 @@ type Environment = {
   sokiLink: string;
   authIDBStoreName: string;
   initialUrl: URL;
+  isPresentationMode: boolean;
 };
 
 const isTest = import.meta.env.MODE === 'test';
@@ -19,6 +20,7 @@ export const environment: Environment = {
   isTest,
   sokiLink,
   initialUrl,
+  isPresentationMode: initialUrl.pathname.startsWith('/presentation'),
   authIDBStoreName:
     isTest || initialUrl.hostname !== localhost
       ? import.meta.env.VITE_AUTH_IDB_STORE_NAME

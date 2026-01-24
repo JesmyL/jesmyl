@@ -1,13 +1,11 @@
 import { cursors } from '#shared/const/cursorsBase64';
 import { renderComponentInNewWindow } from '#shared/lib/renders';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
-import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
 import { toast } from 'sonner';
 import { createGlobalStyle, css } from 'styled-components';
-import { broadcastFirstPresentationModeAtom, useScreenBroadcastConfigsValue } from '../atoms';
+import { useScreenBroadcastConfigsValue } from '../atoms';
 import { useCurrentForceViweAppContext } from '../Broadcast.contexts';
-import { BroadcastFirstPresentationMode } from '../Broadcast.model';
 import { BroadcastScreen } from '../BroadcastScreen';
 import { broadcastConnectionDto } from '../lib/connection.dto';
 import { useGetScreenBroadcastConfig } from './configs';
@@ -19,7 +17,6 @@ export const useWatchScreenBroadcast = () => {
   const configs = useScreenBroadcastConfigsValue();
   const updateWindows = useUpdateScreenBroadcastWindows();
   const forceViewApp = useCurrentForceViweAppContext();
-  const firstPresentationMode = useAtomValue(broadcastFirstPresentationModeAtom);
 
   const watchBroadcast = useCallback(async () => {
     if (configs.length === windows.length) return;
@@ -69,7 +66,7 @@ export const useWatchScreenBroadcast = () => {
     const len = configs.length - windows.length;
 
     for (let windowi = 0; windowi < len; windowi++) {
-      if (windowi === 0 && firstPresentationMode !== BroadcastFirstPresentationMode.None) {
+      if (windowi === 0) {
         try {
           newWindows[windowi] = await broadcastConnectionDto.init();
 
@@ -82,7 +79,7 @@ export const useWatchScreenBroadcast = () => {
     }
 
     updateWindows(newWindows);
-  }, [configs.length, firstPresentationMode, forceViewApp, getCurrentConfig, updateWindows, windows]);
+  }, [configs.length, forceViewApp, getCurrentConfig, updateWindows, windows]);
 
   return watchBroadcast;
 };

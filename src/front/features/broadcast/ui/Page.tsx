@@ -1,11 +1,14 @@
 import { BibleBroadcastSlide } from '$bible/entities/broadcast';
 import { CmBroadcastLiveScreen } from '$cm/features/broadcast/ui/Screen';
-import { useEffect, useState } from 'react';
+import { configureAtomaric } from 'atomaric';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 import { broadcastConnectionDto } from '../lib/connection.dto';
 
+configureAtomaric({ useSyncExternalStore, keyPathSeparator: '/' });
+
 export const PresentationPage = () => {
-  const [liveData, setLiveData] = useState<IndexSchWBroadcastLiveDataValue>({ fio: '' });
+  const [liveData, setLiveData] = useState<IndexSchWBroadcastLiveDataValue>({ fio: '', isHide: true });
   const [isHide, setIsHide] = useState(false);
 
   useEffect(() => broadcastConnectionDto.subscribeEffect(setLiveData, setIsHide), []);

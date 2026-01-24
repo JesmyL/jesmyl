@@ -3,17 +3,13 @@ import { schLiveTsjrpcClient } from '$index/shared/tsjrpc';
 import { atom, useAtom } from 'atomaric';
 import { IScheduleWidgetWid } from 'shared/api';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
-import { BroadcastFirstPresentationMode, BroadcastViewApp } from './Broadcast.model';
+import { BroadcastViewApp } from './Broadcast.model';
 
 const isCanShowTextBroadcastAtom = atom(false);
 export const useIsCanShowTextBroadcast = () => useAtom(isCanShowTextBroadcastAtom);
 
 export const currentBroadcastConfigiAtom = atom(0);
 export const isBroadcastTextVisibleAtom = atom(true);
-export const broadcastFirstPresentationModeAtom = atom(
-  BroadcastFirstPresentationMode.None,
-  'broadcast:firstPresentationMode',
-);
 
 export const useScreenBroadcastConfigsSet = () => complectIDB.useSet.screenBroadcastConfigs();
 export const useScreenBroadcastConfigsValue = () => complectIDB.useValue.screenBroadcastConfigs();
@@ -25,7 +21,7 @@ export const broadcastCurrentTextAppAtom = atom('cm' as BroadcastViewApp, {
 
 export const broadcastNextLiveDataAtom = atom(
   (): { schw: IScheduleWidgetWid; data: IndexSchWBroadcastLiveDataValue } => ({
-    data: { fio: '' },
+    data: { fio: '', isHide: false },
     schw: IScheduleWidgetWid.def,
   }),
 );

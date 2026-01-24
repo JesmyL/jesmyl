@@ -1,46 +1,51 @@
+import { presentationBroadcastChannel } from '#shared/lib/presentationBroadcastChannel';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
-import { itInvokeIt } from 'shared/utils';
-import { broadcastFirstPresentationModeAtom, broadcastNextLiveDataAtom } from '../atoms';
-import { BroadcastFirstPresentationMode } from '../Broadcast.model';
+import { broadcastNextLiveDataAtom } from '../atoms';
+
+const cookieEventName = 'PRESENTATION_EVENT';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+declare const cookieStore: any;
 
 class BroadcastConnectionDto {
-  conn: PresentationConnection | und;
-  private session: PresentationRequest | null = null;
   private unsubscribe = () => {};
+  private isDesctop = false;
 
   private sendLiveData = (liveData: IndexSchWBroadcastLiveDataValue) => {
-    if (this.conn == null || this.conn.state !== 'connected') return;
-    this.conn.send(JSON.stringify(liveData));
+    presentationBroadcastChannel.postMessage(liveData);
   };
 
   focus = () => {
-    if (broadcastFirstPresentationModeAtom.get() === BroadcastFirstPresentationMode.Hiddify)
-      this.sendLiveData({ ...broadcastNextLiveDataAtom.get().data, isHide: false });
-    else this.init();
+    if (!this.isDesctop) return;
+
+    this.sendLiveData({ ...broadcastNextLiveDataAtom.get().data });
+    cookieStore.set(this.makeCookieValue('SHOW'));
   };
-  blur = () => {
-    if (broadcastFirstPresentationModeAtom.get() === BroadcastFirstPresentationMode.Hiddify)
-      this.sendLiveData({ fio: '', isHide: true });
-    else this.conn?.terminate();
+  blur = () => cookieStore.set(this.makeCookieValue('CLOSE'));
+
+  private makeCookieValue = (value: unknown) => {
+    return {
+      name: cookieEventName,
+      value: `${`${Date.now()}`.padStart(20, '0')}${JSON.stringify(value)}`,
+    };
   };
 
   init = async () => {
+    if (!(await cookieStore.get(cookieEventName))) throw '';
+    this.isDesctop = true;
     this.unsubscribe();
 
-    const createConnection = async () => {
-      this.session ??= new PresentationRequest('/presentation');
-      this.conn = await this.session.start();
-
-      this.unsubscribe = broadcastNextLiveDataAtom.subscribe(value => this.sendLiveData(value.data));
-
-      this.conn.onmessage = () => {
-        this.sendLiveData(broadcastNextLiveDataAtom.get().data);
-      };
-
-      return this.conn;
+    const onMessage = (event: MessageEvent) => {
+      if (event.data === null) this.sendLiveData(broadcastNextLiveDataAtom.get().data);
     };
 
-    this.conn = await createConnection();
+    const unsubscribe = broadcastNextLiveDataAtom.subscribe(value => this.sendLiveData(value.data));
+    presentationBroadcastChannel.addEventListener('message', onMessage);
+
+    this.unsubscribe = () => {
+      unsubscribe();
+      presentationBroadcastChannel.removeEventListener('message', onMessage);
+    };
 
     return this;
   };
@@ -49,23 +54,17 @@ class BroadcastConnectionDto {
     onLiveData: (data: IndexSchWBroadcastLiveDataValue) => void,
     setIsHide: (isHide: boolean) => void,
   ) => {
-    let clears: (() => void)[] = [];
+    const onMessage = (event: MessageEvent) => {
+      const data: IndexSchWBroadcastLiveDataValue | nil = event.data;
+      if (data == null) return;
 
-    (async () => {
-      const list = await navigator.presentation?.receiver?.connectionList;
-      clears = list.connections.map(connection => {
-        connection.onmessage = e => {
-          const data: IndexSchWBroadcastLiveDataValue = JSON.parse(e.data);
-          onLiveData(data);
-          if (data.isHide != null) setIsHide(data.isHide);
-        };
-        connection.send('');
+      if (data.isHide != null) setIsHide(data.isHide);
+      onLiveData(data);
+    };
+    presentationBroadcastChannel.addEventListener('message', onMessage);
+    presentationBroadcastChannel.postMessage(null);
 
-        return () => (connection.onmessage = null);
-      });
-    })();
-
-    return () => clears.forEach(itInvokeIt);
+    return () => presentationBroadcastChannel.removeEventListener('message', onMessage);
   };
 }
 

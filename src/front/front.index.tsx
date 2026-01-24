@@ -1,4 +1,6 @@
 import { logFrontErrors } from '#basis/lib/error-catcher';
+import { PresentationPage } from '#features/broadcast/ui/Page';
+import { environment } from '#shared/environment';
 import { setPolyfills } from '#shared/lib/polyfills';
 import { renderApplication } from '#shared/lib/renders';
 import { App } from '$app/App';
@@ -11,9 +13,20 @@ reportWebVitals();
 setPolyfills();
 logFrontErrors();
 
-renderApplication(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root'),
-);
+if (environment.isPresentationMode) {
+  renderApplication(
+    <React.StrictMode>
+      <PresentationPage />
+    </React.StrictMode>,
+    document.getElementById('root'),
+  );
+} else {
+  document.getElementById('black-bg-style')?.remove();
+
+  renderApplication(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+    document.getElementById('root'),
+  );
+}

@@ -7,7 +7,7 @@ export type IndexErrorScope = keyof ClientRegisterData;
 
 export type IndexSchWBroadcastLiveDataValue = {
   fio: string;
-  isHide?: boolean;
+  isHide: boolean;
   cm?: CmBroadcastSchWgtLiveDataValue;
   bible?: { text: string; addressText: string; config: BibleBroadcastScreenConfig };
   markdown?: string;

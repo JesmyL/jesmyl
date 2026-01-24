@@ -1,4 +1,5 @@
 import { broadcastCurrentTextAppAtom, broadcastNextLiveDataAtom } from '#features/broadcast/atoms';
+import { isShowBroadcastTextAtom } from '#features/broadcast/initial-slide-context';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
 import { useCmComCurrent } from '$cm/entities/com';
@@ -43,6 +44,7 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
     isFragments,
   } = useCmBroadcastMinimalConfigSlides(0);
   const dir = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
+  const isHide = !useAtomValue(isShowBroadcastTextAtom);
 
   useEffect(() => {
     if (props.isCantTranslateLive || !ccom) return;
@@ -53,6 +55,7 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
 
       const liveData: IndexSchWBroadcastLiveDataValue = {
         fio: props.fio,
+        isHide,
         cm: {
           config: selfConfig,
           comw: ccom.wid,
@@ -85,6 +88,7 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
     dir,
     chordedMode,
     isFragments,
+    isHide,
   ]);
 
   return <></>;

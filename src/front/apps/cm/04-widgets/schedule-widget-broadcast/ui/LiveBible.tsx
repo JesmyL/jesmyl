@@ -7,12 +7,12 @@ import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model'
 
 const BibleBroadcastControlled = React.lazy(() => import('$bible/widgets/broadcast/ui/Controlled'));
 
-export const CmScheduleWidgetBroadcastBibleControlled: React.FC<LiveBroadcastAppProps> = memo(function BibleTr({
+export const CmScheduleWidgetBroadcastBibleControlled = memo(function BibleTr({
   isCantTranslateLive,
   fio,
   headTitle,
   schedule,
-}) {
+}: LiveBroadcastAppProps) {
   const onSend = useCallback(
     (liveData: IndexSchWBroadcastLiveDataValue) => broadcastNextLiveDataAtom.set({ schw: schedule.w, data: liveData }),
     [schedule.w],
