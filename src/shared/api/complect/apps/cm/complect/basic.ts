@@ -66,6 +66,8 @@ export interface IExportableOrder extends InheritancableOrder {
   o?: 1;
   /** Тип блока */
   k?: CmComBlockKindKey;
+  /** @deprecated */
+  s?: string;
   /** Значения наследников */
   inh?: Inheritancables;
 }
