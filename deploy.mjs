@@ -34,13 +34,14 @@ deployTheCode(
   {
     targetDir: 'jesmyl.ru',
     loadToDirFiles: makePaths('./src/back', {
-      down: ['~/*.exe'],
-      './down': ['~/*.AppImage'],
+      // down: ['~/*.exe'],
+      // './down': ['~/*.AppImage'],
+      // 'apps/bible': ['./src/bibles/*.json'],
+
       'apps/cm': ['~/#/*.json'],
       'apps/cm/coms': ['~/#/*.json'],
       'apps/cm/comComments': ['~/#/*.json'],
       'apps/bible': ['~/#/*.json'],
-      // 'apps/bible': ['./src/bibles/*.json'],
       'apps/index': ['~/#/*.json'],
       'apps/q': ['~/#/*.json'],
       'apps/q/blanks': ['~/#/*.json'],
