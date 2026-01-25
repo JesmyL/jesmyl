@@ -51,6 +51,8 @@ class BroadcastConnectionDto {
       presentationBroadcastChannel().removeEventListener('message', onMessage);
     };
 
+    this.focus();
+
     return this;
   };
 

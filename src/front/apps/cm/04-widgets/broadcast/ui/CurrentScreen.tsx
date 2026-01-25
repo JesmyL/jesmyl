@@ -21,7 +21,10 @@ export const CmBroadcastCurrentScreen = (props: BroadcastScreenProps & Partial<F
   );
   const isRealText = selfSlides[currentSlidei]?.ord.isRealText();
   const text =
-    (isFragments && isRealText ? selfSlides[currentSlidei]?.lines : selfSlides[currentSlidei]?.lines.join('\n')) ?? '';
+    (isFragments && isRealText
+      ? selfSlides[currentSlidei]?.lines
+      : selfSlides[currentSlidei]?.lines.map(line => line && `${line[0].toUpperCase()}${line.slice(1)}`).join('\n')) ??
+    '';
   const switchDirection = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
 
   return (
