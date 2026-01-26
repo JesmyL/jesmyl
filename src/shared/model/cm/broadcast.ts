@@ -24,4 +24,7 @@ export type CmBroadcastGroupedSlide = {
   rule: number;
   defaultRule: number;
   repeat: '' | `/${number}`;
+  ownRule?: number;
+  takeSameGroupKeys?: () => (keyof CmBroadcastSlideGrouperOrdCombiner)[] | null;
+  linesLen: number;
 };

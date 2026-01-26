@@ -1,5 +1,5 @@
 import { CmComIntensityLevel, CmComWid, HttpLink, IExportableCom } from 'shared/api/complect/apps';
-import { CmBroadcastSlideGrouperKindSingleValue } from 'shared/model/cm/broadcast';
+import { CmBroadcastSlideGrouperKindSingleValue, CmBroadcastSlideGrouperOrdCombiner } from 'shared/model/cm/broadcast';
 import { CmComMetricNums } from 'shared/model/cm/com-metric-nums';
 
 type SimpleComValueSetter<Value> = (args: { comw: CmComWid; value: Value }) => IExportableCom;
@@ -19,6 +19,7 @@ export type CmEditComTsjrpcModel = {
   changePushKind: (args: {
     comw: CmComWid;
     value: CmBroadcastSlideGrouperKindSingleValue;
+    setGroupValue?: { linesLen: number; rule: number; keys: (keyof CmBroadcastSlideGrouperOrdCombiner)[] };
     isK2: boolean;
   }) => IExportableCom;
   toggleAudioLink: (args: { comw: CmComWid; link: HttpLink }) => void;

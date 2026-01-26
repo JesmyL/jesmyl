@@ -84,7 +84,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           return `теперь ${value ? 'бемольная' : 'диезная'}`;
         }),
 
-        changePushKind: modifyCom((com, { value, isK2 }, { auth }) => {
+        changePushKind: modifyCom((com, { value, isK2, setGroupValue }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_TR', 'U')) throw '';
           const key = isK2 ? 'k2' : 'k';
 
@@ -106,6 +106,20 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
             delete newKind.s;
           } else newKind.d = { ...newKind.d, ...value };
 
+          if (setGroupValue != null) {
+            const { keys, linesLen, rule } = setGroupValue;
+
+            if (!newKind.s && newKind.n) {
+              newKind.s = cmComLineGroupingDefaultKinds[newKind.n];
+              delete newKind.n;
+            }
+
+            newKind.s ??= '';
+            newKind.s += ` =${linesLen}:${rule}`;
+
+            keys.forEach(key => delete newKind.d[key]);
+          }
+
           const makeNumber = (numValue: number) => {
             if (!`${numValue}`.includes('0')) return +numValue;
             return +`${`${numValue}`.split('0')[0]}0`;
@@ -124,7 +138,10 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
               const [key, value] = keyValue.split(':');
               if (key.startsWith('-') || (!+key && !key.startsWith('='))) return;
 
-              stringValuesDict[key] = makeNumber(+value);
+              const correctKey = key.startsWith('=')
+                ? `=${+(key.match(makeRegExp('/\\d+$/')) ?? key.slice(1)) || key.slice(1)}`
+                : +key;
+              stringValuesDict[correctKey] = makeNumber(+value);
             });
 
             newKind.s = SMyLib.entries(stringValuesDict)
