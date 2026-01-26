@@ -16,7 +16,7 @@ export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) =>
   const checkAccess = useCheckUserAccessRightsInScope();
   const [isK2, setIsK2] = useState(true);
   const comPushKind = ccom.broadcastPushKind(isK2 ? 'k2' : 'k', 0);
-  const minOverLimit = isK2 ? 3 : 5;
+  const minOverLimit = isK2 ? 3 : 6;
 
   const textsWithNumeredLines = ccom.makeExpandedSolidSlides().map((slides): CmBroadcastMonolineSlide[] =>
     slides.map((slide, slidei) => ({
