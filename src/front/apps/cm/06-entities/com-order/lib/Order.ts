@@ -427,12 +427,19 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
         );
   };
 
-  repeatedText = (repeats: OrderRepeats | null = this.repeats, isSetFirstLetterUpperCase?: boolean) => {
-    return CmComOrderUtils.makeRepeatedText(this.transformedText(isSetFirstLetterUpperCase), repeats);
+  repeatedText = (
+    repeats: OrderRepeats | null = this.repeats,
+    isSetFirstLetterUpperCase?: boolean,
+    isHideNewLineSeparator?: boolean,
+  ) => {
+    return CmComOrderUtils.makeRepeatedText(
+      this.transformedText(isSetFirstLetterUpperCase, isHideNewLineSeparator),
+      repeats,
+    );
   };
 
-  transformedText = (isSetFirstLetterUpperCase?: boolean) =>
-    transformToDisplayedText(this.text, isSetFirstLetterUpperCase).text;
+  transformedText = (isSetFirstLetterUpperCase?: boolean, isHideNewLineSeparator?: boolean) =>
+    transformToDisplayedText(this.text, isSetFirstLetterUpperCase, isHideNewLineSeparator).text;
 
   makeSelector = (): CmComOrderSelector => this.wid;
 

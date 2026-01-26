@@ -3,6 +3,7 @@ import { isShowBroadcastTextAtom } from '#features/broadcast/initial-slide-conte
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
 import { useCmComCurrent } from '$cm/entities/com';
+import { CmCom } from '$cm/ext';
 import { useCmBroadcastMinimalConfigSlides, useCmBroadcastScreenComNavigations } from '$cm/features/broadcast';
 import { LiveBroadcastAppProps } from '$cm/shared/model';
 import { cmIsTrackBroadcastAtom } from '$cm/shared/state';
@@ -64,10 +65,12 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
           fromLinei: currentSlide?.fromLinei,
           toLinei: currentSlide?.toLinei,
 
-          text: isFragments ? currentSlide?.lines : currentSlide?.lines.join('\n'),
+          text: isFragments
+            ? CmCom.makeLinesWithoutNlMarker(currentSlide?.lines, false)
+            : CmCom.makeLinesWithoutNlMarker(currentSlide?.lines).join('\n'),
           isChorded: !currentSlide?.ord.isRealText(),
 
-          nextText: nextSlide?.lines.join('\n') || '',
+          nextText: CmCom.makeLinesWithoutNlMarker(nextSlide?.lines, !isFragments).join(isFragments ? ' ' : '\n'),
           isNextChorded: !nextSlide?.ord.isRealText(),
           dir,
           chordedMode,

@@ -11,7 +11,7 @@ export const takeTextBlockIncorrects = (text: string | und = '', eeStore: EeStor
 
   const textWithIncorrects = text.replace(
     makeRegExp(
-      `/[^${displayableTextBlockCharsStr}${doubleQuotesStr}${singleQuotesStr}${replacableAvailableCharsStr}]+/gi`,
+      `/[^${displayableTextBlockCharsStr}${doubleQuotesStr}${singleQuotesStr}${replacableAvailableCharsStr}|]+/gi`,
     ),
     all => {
       mistakes += all;

@@ -4,7 +4,7 @@ import { Button, ButtonGroup } from '#shared/components';
 import { mylib } from '#shared/lib/my-lib';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { CmBroadcastScreenConfigurationPushKind } from '$cm/ext';
+import { CmBroadcastScreenConfigurationPushKind, CmCom } from '$cm/ext';
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { cmComLineGroupingDefaultKinds } from 'shared/const/cm/comLineGroupingKind';
@@ -21,7 +21,7 @@ export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) =>
   const textsWithNumeredLines = ccom.makeExpandedSolidSlides().map((slides): CmBroadcastMonolineSlide[] =>
     slides.map((slide, slidei) => ({
       ...slide,
-      lines: slide.lines.map(line => `${slidei + 1}: ${line}`),
+      lines: CmCom.makeLinesWithoutNlMarker(slide.lines).map(line => `${slidei + 1}: ${line}`),
     })),
   );
 

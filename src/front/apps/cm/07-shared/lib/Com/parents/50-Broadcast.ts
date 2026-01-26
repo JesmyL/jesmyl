@@ -38,9 +38,9 @@ export class CmComBroadcast extends CmComTexts {
             return {
               ord,
               blocki,
-              lines: slides.map(slide => slide.lines.join('/***/')),
+              lines: slides.map(slide => slide.lines.join('\n')),
               fromLinei: slide.fromLinei,
-              toLinei: slide.fromLinei + slides.length,
+              toLinei: slide.fromLinei + (slides.filter(line => !line.lines[0]?.startsWith('|')).length || 1),
             };
           });
         })

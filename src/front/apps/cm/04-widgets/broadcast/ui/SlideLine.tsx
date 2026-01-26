@@ -1,4 +1,5 @@
 import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
+import { CmCom } from '$cm/ext';
 import { useCmBroadcastMinimalConfigSlides, useCmBroadcastScreenComTextNavigations } from '$cm/features/broadcast';
 import { CmBroadcastShowChordedSlideMode } from '$cm/shared/model';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
@@ -8,7 +9,7 @@ import { twMerge } from 'tailwind-merge';
 export const CmBroadcastSlideLine = () => {
   const { currentSlidei, setSlidei } = useCmBroadcastScreenComTextNavigations();
   const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
-  const { minimalSlides } = useCmBroadcastMinimalConfigSlides(currentConfigi);
+  const { minimalSlides, isFragments } = useCmBroadcastMinimalConfigSlides(currentConfigi);
   const showChordedSlideMode = useAtomValue(cmShowChordedSlideModeAtom);
 
   return (
@@ -36,7 +37,11 @@ export const CmBroadcastSlideLine = () => {
                       : 'italic underline'),
               )}
             >
-              <div dangerouslySetInnerHTML={{ __html: slide.lines.join('\n') }} />
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: CmCom.makeLinesWithoutNlMarker(slide.lines, !isFragments).join('\n'),
+                }}
+              />
             </div>
           </div>
         );

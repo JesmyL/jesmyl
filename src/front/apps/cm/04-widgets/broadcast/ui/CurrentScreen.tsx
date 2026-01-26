@@ -3,6 +3,7 @@ import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
 import { useGetScreenBroadcastConfig } from '#features/broadcast/hooks/configs';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
 import { cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
+import { CmCom } from '$cm/ext';
 import { useCmBroadcastMinimalConfigSlides } from '$cm/features/broadcast';
 import { useAtomValue } from 'atomaric';
 import { useCmBroadcastScreenConfig } from '../hooks/configs';
@@ -21,10 +22,9 @@ export const CmBroadcastCurrentScreen = (props: BroadcastScreenProps & Partial<F
   );
   const isRealText = selfSlides[currentSlidei]?.ord.isRealText();
   const text =
-    (isFragments && isRealText
-      ? selfSlides[currentSlidei]?.lines
-      : selfSlides[currentSlidei]?.lines.map(line => line && `${line[0].toUpperCase()}${line.slice(1)}`).join('\n')) ??
-    '';
+    isFragments && isRealText
+      ? CmCom.makeLinesWithoutNlMarker(selfSlides[currentSlidei]?.lines, false)
+      : CmCom.makeLinesWithoutNlMarker(selfSlides[currentSlidei]?.lines).join('\n');
   const switchDirection = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
 
   return (
@@ -32,7 +32,9 @@ export const CmBroadcastCurrentScreen = (props: BroadcastScreenProps & Partial<F
       {...props}
       cmConfig={currentConfig}
       text={text}
-      nextText={selfSlides[nextSlidei]?.lines.join(isFragments ? ' ' : '\n') ?? ''}
+      nextText={CmCom.makeLinesWithoutNlMarker(selfSlides[nextSlidei]?.lines, !isFragments).join(
+        isFragments ? ' ' : '\n',
+      )}
       isChorded={!isRealText}
       isNextChorded={!selfSlides[nextSlidei]?.ord.isRealText()}
       isVisible={isVisible}

@@ -71,11 +71,26 @@ export class CmComTexts extends CmComChords {
     return slides;
   };
 
+  static makeLinesWithoutNlMarker = (lines: string[] | nil, firstLineLetterToUpperCase = true) => {
+    if (lines == null) return [];
+
+    return lines
+      .map(line => {
+        if (!line) return line;
+        line = line[0] === '|' ? line.slice(1) : line;
+
+        if (firstLineLetterToUpperCase) return `${line[0]?.toUpperCase() ?? ''}${line.slice(1)}`;
+
+        return line;
+      })
+      .filter(itIt);
+  };
+
   makeExpandedSolidTextLines = (): CmBroadcastMonolineSlide[] => {
     try {
       const comOrders = this.ordersWithFinalChordedOrd;
       if (comOrders == null) return [];
-      let totalLinei = 0;
+      let totalLinei = -1;
       let blocki = -1;
       const headSolidOrders: CmComOrder[] = [];
 
@@ -83,7 +98,7 @@ export class CmComTexts extends CmComChords {
         .map(ord => {
           if (!ord.isVisible) return;
 
-          const ordLines = (ord.isRealText() ? ord.repeatedText(undefined, false) : ord.me.header()).split('\n');
+          const ordLines = (ord.isRealText() ? ord.repeatedText(undefined, false, false) : ord.me.header()).split('\n');
 
           if (!ord.me.isInherit) {
             blocki++;
@@ -91,7 +106,17 @@ export class CmComTexts extends CmComChords {
           }
 
           return ordLines
-            .map(line => `\n${seperator}${blocki}${seperator}${totalLinei++}${seperator}${line}`)
+            .map(line => {
+              totalLinei++;
+
+              return line
+                .split(makeRegExp('/ *\\| */'))
+                .map(
+                  (lineLn, lineLni) =>
+                    `\n${seperator}${blocki}${seperator}${totalLinei}${seperator}${lineLni ? '|' : ''}${lineLn}`,
+                );
+            })
+            .flat()
             .join('\n');
         })
         .join('\n');
