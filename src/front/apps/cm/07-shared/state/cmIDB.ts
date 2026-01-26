@@ -86,7 +86,9 @@ class CmIDB extends DexieDB<CmIDBStorage> {
   }
 
   useAudioTrackMarks = (src: string | nil) =>
-    useLiveQuery(async () => (src ? this.tb.comAudioTrackMarks.get({ src }) : undefined), [src]);
+    justUseLiveQuery(async () => (src ? this.tb.comAudioTrackMarks.get({ src }) : undefined), [src]);
 }
+
+const justUseLiveQuery = useLiveQuery;
 
 export const cmIDB = new CmIDB();

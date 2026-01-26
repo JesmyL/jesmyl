@@ -7,6 +7,12 @@ import { MyLib } from '../my-lib';
 
 type ActionFor = SokiAppName | `*/${string}`;
 
+const justUseAtomValue = useAtomValue;
+const justUseActualRef = useActualRef;
+const justUseEffect = useEffect;
+const justUseNavigate = useNavigate;
+const justUseCallback = useCallback;
+
 export type LinkActionEvent<Props extends Record<string, unknown> = Record<string, unknown>> = {
   props: Props;
   navigateFromRoot: UseNavigateResult<string>;
@@ -30,10 +36,10 @@ export class LinkAppActionFabric<Props extends Record<string, unknown> = Record<
   }
 
   useOnAction = (cb: (props: LinkActionEvent<Props>) => boolean) => {
-    const props = useAtomValue(actionAtom);
-    const cbActualRef = useActualRef(cb);
+    const props = justUseAtomValue(actionAtom);
+    const cbActualRef = justUseActualRef(cb);
 
-    useEffect(() => {
+    justUseEffect(() => {
       if (props === null) return;
 
       if (cbActualRef.current(props as never)) actionAtom.reset();
@@ -50,9 +56,9 @@ export class LinkAppActionFabric<Props extends Record<string, unknown> = Record<
   register() {}
 
   static useOnHrefData = () => {
-    const navigate = useNavigate();
+    const navigate = justUseNavigate();
 
-    return useCallback(
+    return justUseCallback(
       (href: string) => {
         try {
           const url = new URL(href);
