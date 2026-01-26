@@ -22,10 +22,6 @@ interface Props {
 }
 
 export const TheIconButton = (props: Props) => {
-  const className =
-    `${props.className || ''}${(!props.disabled && props.onClick) || props.disabledReason ? ' pointer' : ''}` +
-    `${props.disabled ? ' disabled' + (props.disabledReason ? ' clickable' : '') : ''}`;
-
   return (
     <>
       <ConfirmContent
@@ -34,7 +30,12 @@ export const TheIconButton = (props: Props) => {
           return (
             <>
               <span
-                className={twMerge('flex gap-2 flex-max', className)}
+                className={twMerge(
+                  'flex gap-2 flex-max',
+                  props.className,
+                  (!props.disabled && props.onClick) || props.disabledReason ? 'pointer' : null,
+                  props.disabled && `disabled${props.disabledReason ? ' clickable' : ''}`,
+                )}
                 onClick={
                   props.onClick
                     ? async event => {

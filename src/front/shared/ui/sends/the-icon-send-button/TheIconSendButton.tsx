@@ -24,15 +24,10 @@ export function TheIconSendButton<Value>({ className = '', ...props }: Props<Val
       content={(onClick, error, isLoading) => {
         return (
           <TheIconButton
+            {...props}
             isLoading={isLoading}
-            className={className + (error ? ' text-xKO ' : '')}
-            onClick={props.disabled ? undefined : onClick}
-            icon={props.icon}
-            disabled={props.disabled}
-            disabledReason={props.disabledReason}
-            postfix={props.postfix}
-            prefix={props.prefix}
-            withoutAnimation={props.withoutAnimation}
+            className={`${className}${error ? ' text-xKO' : ''}`}
+            onClick={onClick}
           />
         );
       }}
