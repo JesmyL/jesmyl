@@ -124,7 +124,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
                 }
               });
 
-              if (description) description += `\n\nпесня ${comNames.join(', ')}`;
+              if (description) description += `\n\nпесни:\n${comNames.join('\n')}`;
             }
 
             const srcPackMarks = allMarkPacks[numLeadSrc].cMarks;
