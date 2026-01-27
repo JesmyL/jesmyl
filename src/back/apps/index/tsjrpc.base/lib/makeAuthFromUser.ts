@@ -1,12 +1,10 @@
 import { tokenSecretFileStore } from 'back/complect/soki/file-stores';
 import { prodTelegramBot } from 'back/sides/telegram-bot/prod/prod-bot';
-import { supportTelegramBot } from 'back/sides/telegram-bot/support/support-bot';
 import { JesmylTelegramBot } from 'back/sides/telegram-bot/tg-bot';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
 import jwt from 'jsonwebtoken';
 import TelegramBot from 'node-telegram-bot-api';
 import { LocalSokiAuth, TelegramNativeAuthUserData } from 'shared/api';
-import { smylib } from 'shared/utils';
 
 const makeAuthFromUser = async (user: OmitOwn<TelegramBot.User, 'is_bot'>) => {
   try {
@@ -15,16 +13,7 @@ const makeAuthFromUser = async (user: OmitOwn<TelegramBot.User, 'is_bot'>) => {
     throw new Error('Не состоит в канале');
   }
 
-  const admin = (await supportTelegramBot.getAdmins()).find(admin => admin.user.id === user.id);
-
   return {
-    level: admin
-      ? admin.status === 'creator'
-        ? 100
-        : 'custom_title' in admin && smylib.isStr(admin.custom_title)
-          ? +admin.custom_title || 3
-          : 3
-      : 3,
     nick: user.username,
     tgId: user.id,
     login: JesmylTelegramBot.makeLoginFromId(user.id),

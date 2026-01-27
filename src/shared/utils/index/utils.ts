@@ -39,7 +39,7 @@ export const checkUserScopeAccessRight = <
     for (const ruleItem of rule) {
       const accessBinary = (
         (userRights?.[scope]?.[ruleItem as never] ??
-          (userRights?.general?.ALL ? 15 : (roleRights?.[scope]?.[ruleItem as never] ?? 0))) >>> 0
+          (userRights?.info?.role === 'TOP' ? 15 : (roleRights?.[scope]?.[ruleItem as never] ?? 0))) >>> 0
       )
         .toString(2)
         .padStart(4, '0');

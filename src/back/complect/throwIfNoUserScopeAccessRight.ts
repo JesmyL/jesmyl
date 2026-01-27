@@ -2,7 +2,7 @@ import { userAccessRightsAndRolesFileStore } from 'back/apps/index/file-stores';
 import { LocalSokiAuth, SokiAuthLogin } from 'shared/api';
 import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
 import { smylib } from 'shared/utils';
-import { checkUserScopeAccessRight, CRUDOperation } from 'shared/utils/index/utils';
+import { accessRightsCRUDOperations, checkUserScopeAccessRight, CRUDOperation } from 'shared/utils/index/utils';
 import WebSocket from 'ws';
 import { sokiServer } from './soki/SokiServer';
 
@@ -19,8 +19,7 @@ export const throwIfNoUserScopeAccessRight = <
     if (selector == null) break;
     let login: SokiAuthLogin | nil;
 
-    if (typeof selector === 'object' && 'level' in selector) {
-      if (selector?.level === 100) return false;
+    if (typeof selector === 'object' && 'login' in selector) {
       if (selector.login) login = selector.login;
     }
 
@@ -30,12 +29,9 @@ export const throwIfNoUserScopeAccessRight = <
       const client = sokiServer.clientsByLogin.get(login)?.values().next().value;
 
       if (client == null) break;
-      if (sokiServer.auths.get(client)?.level === 100) return false;
     }
 
     if (selector instanceof WebSocket) {
-      if (sokiServer.auths.get(selector)?.level === 100) return false;
-
       login = sokiServer.auths.get(selector)?.login;
     }
 
@@ -54,4 +50,26 @@ export const throwIfNoUserScopeAccessRight = <
   } while (false);
 
   throw 'Нет прав на это действие';
+};
+
+export const checkWhatOfUserScopeOperationAccessRight = <
+  Scope extends keyof IndexAppAccessRightTitles,
+  Rule extends keyof OmitOwn<IndexAppAccessRightTitles[Scope], 'info'>,
+>(
+  selector: SokiAuthLogin | LocalSokiAuth | WebSocket | nil,
+  scope: Scope,
+  rule: Rule,
+): Record<CRUDOperation, boolean> => {
+  const result = {} as Record<CRUDOperation, boolean>;
+
+  accessRightsCRUDOperations.forEach(operation => {
+    try {
+      if (throwIfNoUserScopeAccessRight(selector, scope, rule, operation)) throw '';
+      result[operation] = true;
+    } catch (_e) {
+      result[operation] = false;
+    }
+  });
+
+  return result;
 };

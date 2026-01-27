@@ -9,7 +9,7 @@ export const ScheduleWidgetRightsContext = React.createContext<ScheduleWidgetRig
   isSwBeforeRegistration: false,
   isSwHideContent: false,
   isSwPublic: false,
-  auth: { level: 0 },
+  auth: {},
   schedule: takeDefaultScheduleWidget(),
 });
 export const useScheduleWidgetRightsContext = () => use(ScheduleWidgetRightsContext);

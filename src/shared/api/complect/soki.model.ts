@@ -28,7 +28,6 @@ export const enum SokiAuthLogin {
 }
 
 export interface LocalSokiAuth {
-  level: number;
   fio?: string;
   nick?: string;
   login?: SokiAuthLogin;

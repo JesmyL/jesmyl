@@ -10,7 +10,7 @@ interface Storage {
 class AuthIDB extends DexieDB<Storage> {
   constructor() {
     super(environment.authIDBStoreName, {
-      auth: [{ level: 0 }],
+      auth: [{}],
       token: [null],
     });
   }
