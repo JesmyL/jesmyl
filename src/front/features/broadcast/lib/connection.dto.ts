@@ -13,14 +13,14 @@ declare const cookieStore: any;
 
 class BroadcastConnectionDto {
   private unsubscribe = () => {};
-  private isDesctop = false;
+  private isDesktop = false;
 
   private sendLiveData = (liveData: IndexSchWBroadcastLiveDataValue) => {
     presentationBroadcastChannel().postMessage(liveData);
   };
 
   focus = () => {
-    if (!this.isDesctop) return;
+    if (!this.isDesktop) return;
 
     this.sendLiveData({ ...broadcastNextLiveDataAtom.get().data });
     cookieStore.set(this.makeCookieValue('SHOW'));
@@ -36,7 +36,7 @@ class BroadcastConnectionDto {
 
   init = async () => {
     if (!(await cookieStore.get(cookieEventName))) throw '';
-    this.isDesctop = true;
+    this.isDesktop = true;
     this.unsubscribe();
 
     const onMessage = (event: MessageEvent) => {
