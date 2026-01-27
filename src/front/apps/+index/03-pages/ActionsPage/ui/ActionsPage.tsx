@@ -37,6 +37,17 @@ export function IndexActionsPage() {
               idPostfix="files"
             />
           </Link>
+          <Link
+            to="/!other/$appName/actions/down"
+            params={{ appName }}
+            className="w-full"
+          >
+            <BrutalItem
+              iconNode={<LazyIcon icon="CloudDownload" />}
+              title="Загрузки"
+              idPostfix="down"
+            />
+          </Link>
 
           <QrReader
             openAtom={isOpenAtom}

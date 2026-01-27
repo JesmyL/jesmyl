@@ -66,6 +66,7 @@ import { Route as StoragesIRackwCardiIndexImport } from './front/routes/storages
 import { Route as CmEditComsComwIndexImport } from './front/routes/cm/edit/coms/$comw/index'
 import { Route as otherAppNameSettingsNounpronsIndexImport } from './front/routes/!other.$appName/settings/noun_prons/index'
 import { Route as otherAppNameActionsFilesIndexImport } from './front/routes/!other.$appName/actions/files/index'
+import { Route as otherAppNameActionsDownIndexImport } from './front/routes/!other.$appName/actions/down/index'
 import { Route as CmEditComsComwTabRouteImport } from './front/routes/cm/edit/coms/$comw/$tab/route'
 
 // Create Virtual Routes
@@ -420,6 +421,13 @@ const otherAppNameActionsFilesIndexRoute =
   otherAppNameActionsFilesIndexImport.update({
     id: '/actions/files/',
     path: '/actions/files/',
+    getParentRoute: () => otherAppNameRouteRoute,
+  } as any)
+
+const otherAppNameActionsDownIndexRoute =
+  otherAppNameActionsDownIndexImport.update({
+    id: '/actions/down/',
+    path: '/actions/down/',
     getParentRoute: () => otherAppNameRouteRoute,
   } as any)
 
@@ -790,6 +798,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CmEditComsComwTabRouteImport
       parentRoute: typeof CmEditRouteLazyImport
     }
+    '/!other/$appName/actions/down/': {
+      id: '/!other/$appName/actions/down/'
+      path: '/actions/down'
+      fullPath: '/!other/$appName/actions/down'
+      preLoaderRoute: typeof otherAppNameActionsDownIndexImport
+      parentRoute: typeof otherAppNameRouteImport
+    }
     '/!other/$appName/actions/files/': {
       id: '/!other/$appName/actions/files/'
       path: '/actions/files'
@@ -987,6 +1002,7 @@ interface otherAppNameRouteRouteChildren {
   otherAppNameAuthIndexRoute: typeof otherAppNameAuthIndexRoute
   otherAppNameSchsIndexRoute: typeof otherAppNameSchsIndexRoute
   otherAppNameSettingsIndexRoute: typeof otherAppNameSettingsIndexRoute
+  otherAppNameActionsDownIndexRoute: typeof otherAppNameActionsDownIndexRoute
   otherAppNameActionsFilesIndexRoute: typeof otherAppNameActionsFilesIndexRoute
   otherAppNameSettingsNounpronsIndexRoute: typeof otherAppNameSettingsNounpronsIndexRoute
 }
@@ -999,6 +1015,7 @@ const otherAppNameRouteRouteChildren: otherAppNameRouteRouteChildren = {
   otherAppNameAuthIndexRoute: otherAppNameAuthIndexRoute,
   otherAppNameSchsIndexRoute: otherAppNameSchsIndexRoute,
   otherAppNameSettingsIndexRoute: otherAppNameSettingsIndexRoute,
+  otherAppNameActionsDownIndexRoute: otherAppNameActionsDownIndexRoute,
   otherAppNameActionsFilesIndexRoute: otherAppNameActionsFilesIndexRoute,
   otherAppNameSettingsNounpronsIndexRoute:
     otherAppNameSettingsNounpronsIndexRoute,
@@ -1059,6 +1076,7 @@ export interface FileRoutesByFullPath {
   '/gamer/i/memory-giant': typeof GamerIMemoryGiantIndexRoute
   '/storages/i/$rackw': typeof StoragesIRackwIndexRoute
   '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabRouteRoute
+  '/!other/$appName/actions/down': typeof otherAppNameActionsDownIndexRoute
   '/!other/$appName/actions/files': typeof otherAppNameActionsFilesIndexRoute
   '/!other/$appName/settings/noun_prons': typeof otherAppNameSettingsNounpronsIndexRoute
   '/cm/edit/coms/$comw': typeof CmEditComsComwIndexRoute
@@ -1113,6 +1131,7 @@ export interface FileRoutesByTo {
   '/gamer/i/memory-giant': typeof GamerIMemoryGiantIndexRoute
   '/storages/i/$rackw': typeof StoragesIRackwIndexRoute
   '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabRouteRoute
+  '/!other/$appName/actions/down': typeof otherAppNameActionsDownIndexRoute
   '/!other/$appName/actions/files': typeof otherAppNameActionsFilesIndexRoute
   '/!other/$appName/settings/noun_prons': typeof otherAppNameSettingsNounpronsIndexRoute
   '/cm/edit/coms/$comw': typeof CmEditComsComwIndexRoute
@@ -1174,6 +1193,7 @@ export interface FileRoutesById {
   '/gamer/i/memory-giant/': typeof GamerIMemoryGiantIndexRoute
   '/storages/i/$rackw/': typeof StoragesIRackwIndexRoute
   '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabRouteRoute
+  '/!other/$appName/actions/down/': typeof otherAppNameActionsDownIndexRoute
   '/!other/$appName/actions/files/': typeof otherAppNameActionsFilesIndexRoute
   '/!other/$appName/settings/noun_prons/': typeof otherAppNameSettingsNounpronsIndexRoute
   '/cm/edit/coms/$comw/': typeof CmEditComsComwIndexRoute
@@ -1236,6 +1256,7 @@ export interface FileRouteTypes {
     | '/gamer/i/memory-giant'
     | '/storages/i/$rackw'
     | '/cm/edit/coms/$comw/$tab'
+    | '/!other/$appName/actions/down'
     | '/!other/$appName/actions/files'
     | '/!other/$appName/settings/noun_prons'
     | '/cm/edit/coms/$comw'
@@ -1289,6 +1310,7 @@ export interface FileRouteTypes {
     | '/gamer/i/memory-giant'
     | '/storages/i/$rackw'
     | '/cm/edit/coms/$comw/$tab'
+    | '/!other/$appName/actions/down'
     | '/!other/$appName/actions/files'
     | '/!other/$appName/settings/noun_prons'
     | '/cm/edit/coms/$comw'
@@ -1348,6 +1370,7 @@ export interface FileRouteTypes {
     | '/gamer/i/memory-giant/'
     | '/storages/i/$rackw/'
     | '/cm/edit/coms/$comw/$tab'
+    | '/!other/$appName/actions/down/'
     | '/!other/$appName/actions/files/'
     | '/!other/$appName/settings/noun_prons/'
     | '/cm/edit/coms/$comw/'
@@ -1479,6 +1502,7 @@ export const routeTree = rootRoute
         "/!other/$appName/auth/",
         "/!other/$appName/schs/",
         "/!other/$appName/settings/",
+        "/!other/$appName/actions/down/",
         "/!other/$appName/actions/files/",
         "/!other/$appName/settings/noun_prons/"
       ]
@@ -1662,6 +1686,10 @@ export const routeTree = rootRoute
     "/cm/edit/coms/$comw/$tab": {
       "filePath": "cm/edit/coms/$comw/$tab/route.tsx",
       "parent": "/cm/edit"
+    },
+    "/!other/$appName/actions/down/": {
+      "filePath": "!other.$appName/actions/down/index.tsx",
+      "parent": "/!other/$appName"
     },
     "/!other/$appName/actions/files/": {
       "filePath": "!other.$appName/actions/files/index.tsx",

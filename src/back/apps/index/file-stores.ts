@@ -27,4 +27,6 @@ export const valuesFileStore = new FileStore<IndexValues>('/values', {});
 //   ...prev,
 //   // chatUrl: '',
 //   // iconSearchLink: '',
+//   // desktopLinuxDownLink: `${hosts.host}/down/JESMYL_PRO.AppImage`,
+//   // desktopWindowsDownLink: `${hosts.host}/down/JESMYL_PRO.exe`,
 // }));
