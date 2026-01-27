@@ -1,4 +1,7 @@
-import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
+import {
+  checkWhatOfUserScopeOperationAccessRight,
+  throwIfNoUserScopeAccessRight,
+} from 'back/complect/throwIfNoUserScopeAccessRight';
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { makeRegExp } from 'regexpert';
 import { CmComIntensityLevel, CmComWid, IExportableCom, IServerSideCom } from 'shared/api';
@@ -209,7 +212,41 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
 
           com.t ??= [];
           const prev = com.t[coli];
-          com.t[coli] = transformToClearText(value);
+          const clearValue = transformToClearText(value);
+
+          if (prev != null && (prev.includes('|') || clearValue.includes('|'))) {
+            const canDict = checkWhatOfUserScopeOperationAccessRight(auth, 'cm', 'COM_TXT_NL');
+            const throwText = (details: string) =>
+              `Нет прав изменять конструкцию текстов (${details} новой строки "|")`;
+
+            const takeNlPositions = (text: string | nil): number[] => {
+              if (!text) return [];
+              const indexes: number[] = [];
+              text.split(makeRegExp('/ |([|])/')).forEach((symbol, symboli) => symbol === '|' && indexes.push(symboli));
+              return indexes;
+            };
+
+            const prevLines = prev.split('\n');
+            const valueLines = clearValue.split('\n');
+            const maxLen = Math.max(prevLines.length, valueLines.length);
+
+            for (let linei = 0; linei < maxLen; linei++) {
+              const prevLineNlIndexes = takeNlPositions(prevLines[linei]);
+              const valueLineNlIndexes = takeNlPositions(valueLines[linei]);
+
+              if (prevLineNlIndexes.length < valueLineNlIndexes.length) {
+                if (!canDict.C) throw throwText('добавлять новые символы');
+              } else if (prevLineNlIndexes.length > valueLineNlIndexes.length) {
+                if (!canDict.D) throw throwText('удалять символы');
+              } else if (!canDict.U) {
+                prevLineNlIndexes.forEach((prevNlIndex, prevNlIndexi) => {
+                  if (valueLineNlIndexes[prevNlIndexi] !== prevNlIndex) throw throwText('менять положение символов');
+                });
+              }
+            }
+          }
+
+          com.t[coli] = clearValue;
 
           return `изменён текстовый блок:\n\n${value}\n\nбыло:\n${prev}`;
         }),
