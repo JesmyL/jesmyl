@@ -45,6 +45,10 @@ const doubleNl = '\n\n';
 class TgInformer {
   constructor() {
     this.listenUserPersonalTgQueries();
+
+    nodeSchedule.scheduleJob('1 0 * * *', () => {
+      schedulesDirStore.getAllItems().forEach(sch => this.inform(sch.w));
+    });
   }
 
   inform = (scheduleScalar: number | IScheduleWidget, invokeDayi?: number) => {
@@ -115,7 +119,6 @@ class TgInformer {
 
         this.setJob(
           schedule.w,
-          invokeDayi,
           dayi,
           day,
           eventi,
@@ -135,7 +138,6 @@ class TgInformer {
 
   private setJob(
     schw: IScheduleWidgetWid,
-    invokeDayi: number | und,
     dayi: number,
     day: IScheduleWidgetDay,
     eventi: number,
@@ -147,11 +149,12 @@ class TgInformer {
     times: number[],
     tgChatId: number | null,
   ) {
+    jobs[schw]?.cancel();
     jobs[schw] = nodeSchedule.scheduleJob(time, async () => {
       const schedule = getSchedule(schw);
-      if (!schedule) return;
+      if (!schedule?.days[dayi]?.list[eventi]) return;
 
-      const event = day.list[eventi];
+      const event = schedule.days[dayi].list[eventi];
       const timeToEvent = Math.ceil((eventStartMs - Date.now()) / smylib.howMs.inMin);
       const isWithDelay = event.tgInform !== 0 && timeToEvent > 0;
 
@@ -329,7 +332,7 @@ class TgInformer {
         if (text) sendUserMessage(user.tgId);
       }
 
-      setTimeout(() => this.inform(schedule.w, invokeDayi));
+      setTimeout(() => this.inform(schedule.w));
 
       if (event.tgInform !== 0) {
         onScheduleDayEventIsNeedTgInformSetEvent.invoke({
@@ -351,7 +354,7 @@ class TgInformer {
         const schw = +event.value.data.split(':')[1];
 
         const schedule = getSchedule(schw);
-        if (schedule === undefined) return;
+        if (schedule == null) return;
 
         const userTgId = event.value.from.id;
         const user = schedule.ctrl.users.find(user => user.tgId === userTgId);
