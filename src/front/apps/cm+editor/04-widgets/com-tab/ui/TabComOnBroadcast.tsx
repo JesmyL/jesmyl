@@ -97,7 +97,7 @@ export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) =>
                       icon="ListView"
                       defaultValue={`${rule}`}
                       className={twMerge(
-                        'max-w-20',
+                        'max-w-40',
                         ownRule === defaultRule ? 'border-xKO' : ownRule != null && 'border-x7',
                         (sameGroupKeys || !ord.isRealText()) && 'bg-xKO! text-x1!',
                       )}

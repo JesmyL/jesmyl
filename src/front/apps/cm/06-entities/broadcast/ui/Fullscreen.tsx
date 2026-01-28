@@ -2,6 +2,7 @@ import { propsOfClicker } from '#shared/lib/clicker/propsOfClicker';
 import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { CmCom } from '$cm/ext';
 import {
   useCmBroadcastClose,
   useCmBroadcastScreenComNavigations,
@@ -23,6 +24,7 @@ export const CmBroadcastFullscreen = () => {
   const { text, nextSlide, prevSlide } = useCmBroadcastScreenComTextNavigations();
   const { nextCom, prevCom } = useCmBroadcastScreenComNavigations();
   const closeBroadcast = useCmBroadcastClose();
+  const html = CmCom.makeLinesWithoutNlMarker([text])[0];
 
   useEffect(() => {
     window.addEventListener('resize', forceUpdate);
@@ -37,18 +39,20 @@ export const CmBroadcastFullscreen = () => {
       onClose={closeBroadcast}
     >
       <StyledContainer
-        className="BroadcastFullscreen"
+        className="BroadcastFullscreen relative z-300 justify-center items-center bg-black w-[100vw] h-[100vh]"
         $isShowInfo={isShowInfo}
       >
-        <StyledWrapper>
-          <StyledScreen
-            className="flex center"
-            html={text}
+        <div className="absolute rotate-[-90deg] text-xKO top-[4em] left-[-3.5em] z-200">⇣ Закрыть ⇣</div>
+
+        <StyledWrapper className="bg-black z-1000 transition-transform duration-100 text-white w-[100vw] h-[100vh]">
+          <FontSizeContain
+            className="flex center w-[100%] h-[100%] text-white font-bold bg-black text-center whitespace-pre [&_.shadow-child]:p-[10px]"
+            html={html}
             style={style}
             subUpdates={forceUpdates}
           />
           <div
-            className="top-area info-area left pointer"
+            className="top-area info-area top-(--safe-gap) left-(--safe-gap) pointer"
             {...propsOfClicker({ onDblClick: prevCom })}
           >
             <div className="description">
@@ -58,7 +62,7 @@ export const CmBroadcastFullscreen = () => {
             </div>
           </div>
           <div
-            className="top-area info-area right pointer"
+            className="top-area info-area top-(--safe-gap) right-(--safe-gap) pointer"
             {...propsOfClicker({ onDblClick: nextCom })}
           >
             <div className="description">
@@ -69,11 +73,11 @@ export const CmBroadcastFullscreen = () => {
           </div>
           <LazyIcon
             icon="Cancel01"
-            className="close-info-button pointer"
+            className="close-info-button pointer absolute top-(--half-safe-gap) right-(--half-safe-gap) opacity-0"
             onClick={() => setIsShowInfo(false)}
           />
           <div
-            className="bottom-area info-area left pointer"
+            className="bottom-area info-area bottom-(--safe-gap) left-(--safe-gap) pointer"
             onClick={prevSlide}
           >
             <div className="description">
@@ -83,7 +87,7 @@ export const CmBroadcastFullscreen = () => {
             </div>
           </div>
           <div
-            className="bottom-area info-area right pointer"
+            className="bottom-area info-area bottom-(--safe-gap) right-(--safe-gap) pointer"
             onClick={nextSlide}
           >
             <div className="description">
@@ -97,20 +101,6 @@ export const CmBroadcastFullscreen = () => {
     </FullContent>
   );
 };
-
-const StyledScreen = styled(FontSizeContain)`
-  width: 100%;
-  height: 100%;
-  color: white;
-  font-weight: bold;
-  background-color: black;
-  text-align: center;
-  white-space: pre;
-
-  .shadow-child {
-    padding: 10px;
-  }
-`;
 
 const closeInfoAnimation = keyframes`${css`
   from {
@@ -140,25 +130,6 @@ const closeInfoAnimation = keyframes`${css`
 `}`;
 
 const StyledContainer = styled.div<{ $isShowInfo: boolean }>`
-  position: relative;
-  z-index: 300;
-  justify-content: center;
-  align-items: center;
-  background-color: black;
-  width: 100vw;
-  height: 100vh;
-
-  &:before {
-    content: '⇣ Закрыть ⇣';
-    position: absolute;
-    rotate: -90deg;
-    color: var(--color--ko);
-    top: 4em;
-    left: -3.5em;
-
-    z-index: 200;
-  }
-
   ${props =>
     props.$isShowInfo &&
     css`
@@ -171,10 +142,6 @@ const StyledContainer = styled.div<{ $isShowInfo: boolean }>`
         .close-info-button {
           opacity: 1;
           pointer-events: all;
-        }
-
-        .open-info-button {
-          opacity: 0;
         }
 
         > .info-area {
@@ -195,6 +162,7 @@ const StyledContainer = styled.div<{ $isShowInfo: boolean }>`
 const area = (bgArea: 'first' | 'second') => {
   return css`
     --gradient-color: var(--${bgArea}-bg);
+
     background: repeating-linear-gradient(
       -60deg,
       var(--gradient-color) 0,
@@ -212,26 +180,6 @@ const StyledWrapper = styled.div`
   --half-safe-gap: calc(var(--safe-gap) / 3);
   --block-width: calc((100% - var(--safe-gap) * 2 - var(--center-width)) / 2);
   --center-left: calc(var(--safe-gap) + var(--block-width));
-  z-index: 1000;
-  transition: transform 0.1s;
-
-  background: black;
-  width: 100vw;
-  height: 100vh;
-  color: white;
-
-  .close-info-button {
-    position: absolute;
-    top: var(--half-safe-gap);
-    right: var(--half-safe-gap);
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .open-info-button {
-    opacity: 1;
-    transition: opacity 0.4s;
-  }
 
   > .info-area {
     display: flex;
@@ -246,21 +194,5 @@ const StyledWrapper = styled.div`
     position: absolute;
     width: var(--block-width);
     height: var(--block-height);
-
-    &.left {
-      left: var(--safe-gap);
-    }
-
-    &.right {
-      right: var(--safe-gap);
-    }
-  }
-
-  > .top-area {
-    top: var(--safe-gap);
-  }
-
-  > .bottom-area {
-    bottom: var(--safe-gap);
   }
 `;
