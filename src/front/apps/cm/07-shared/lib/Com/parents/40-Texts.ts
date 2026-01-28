@@ -76,8 +76,8 @@ export class CmComTexts extends CmComChords {
 
     return lines
       .map(line => {
-        if (!line) return line;
-        line = line[0] === '|' ? line.slice(1) : line;
+        if (!line?.length) return line;
+        line = line[0] === '|' ? line.slice(1).trim() : line.trim();
 
         if (firstLineLetterToUpperCase) return `${line[0]?.toUpperCase() ?? ''}${line.slice(1)}`;
 
