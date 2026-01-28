@@ -30,6 +30,7 @@ interface Props {
   backButtonPath?: keyof FileRoutesByPath;
   withoutBackButton?: boolean;
   coms: CmCom[];
+  comDescription?: (com: CmCom, comi: number) => ReactNode;
 }
 
 const isOpenRatingSortedComsAtom = atom(false);
@@ -111,6 +112,7 @@ export const CmCatPage = (props: Props) => {
                         <CmComFaceList
                           isPutCcomFaceOff={!!term}
                           list={limitedComs}
+                          comDescription={props.comDescription}
                         />
                       </CmComSetListLimitsExtracterContext>
                     </div>
