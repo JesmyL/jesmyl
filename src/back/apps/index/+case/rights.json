@@ -2,7 +2,7 @@
   "roles": {
     "TOP": { "info": { "m": 0 } },
     "ADMIN": {
-      "info": { "m": 1768794815174 },
+      "info": { "m": 1769508373020 },
       "cm": {
         "EDIT": 4,
         "COM": 14,
@@ -19,7 +19,8 @@
         "CHORD": 6,
         "EVENT": 6,
         "MP3": 4,
-        "CAT": 6
+        "CAT": 6,
+        "COM_TXT_NL": 10
       },
       "q": { "EDIT": 14 },
       "sch": { "SCH": 14 }
