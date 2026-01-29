@@ -1,8 +1,8 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { QuestionerBlankListPage } from '$q/pages/BlankListPage/ui/Page';
-import { createFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/q/r/')({
+export const Route = createLazyFileRoute('/q/r/')({
   component: RouteComponent,
 });
 

@@ -1,8 +1,8 @@
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
 import { QuestionerApp } from '$q/app/QuestionerApp';
-import { createFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/q')({
+export const Route = createLazyFileRoute('/q')({
   component: RouteComponent,
 });
 

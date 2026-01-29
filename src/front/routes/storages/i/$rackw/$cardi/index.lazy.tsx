@@ -1,7 +1,7 @@
 import { StoragesRackCardPage } from '$storages/pages/RackCardPage';
-import { createFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/storages/i/$rackw/$cardi/')({
+export const Route = createLazyFileRoute('/storages/i/$rackw/$cardi/')({
   component: RouteComponent,
 });
 

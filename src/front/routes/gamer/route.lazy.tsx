@@ -1,8 +1,8 @@
 import { useCurrentAppSetter } from '#basis/lib/useCurrentAppSetter';
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
-import { createFileRoute, Outlet } from '@tanstack/react-router';
+import { createLazyFileRoute, Outlet } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/gamer')({ component: RouteComponent });
+export const Route = createLazyFileRoute('/gamer')({ component: RouteComponent });
 
 function RouteComponent() {
   useCurrentAppSetter('gamer');

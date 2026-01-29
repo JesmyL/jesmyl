@@ -1,9 +1,9 @@
 import { makeScheduleRoute } from '#widgets/schedule/complect/makeScheduleRoute';
 import { indexIDB } from '$index/shared/state';
-import { createFileRoute, Navigate } from '@tanstack/react-router';
+import { createLazyFileRoute, Navigate } from '@tanstack/react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
 
-export const Route = createFileRoute('/schedule-day/$schw/')(makeScheduleRoute((() => Route) as never, RouteComponent));
+export const Route = createLazyFileRoute('/schedule-day/$schw/')(makeScheduleRoute((() => Route) as never, RouteComponent));
 
 function RouteComponent() {
   const { schw } = Route.useParams();

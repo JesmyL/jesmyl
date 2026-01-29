@@ -1,7 +1,7 @@
 import { StoragesRackEditPage } from '$storages/pages/RackEditPage';
-import { createFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/storages/i/$rackw/edit/')({
+export const Route = createLazyFileRoute('/storages/i/$rackw/edit/')({
   component: RouteComponent,
 });
 

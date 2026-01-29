@@ -1,7 +1,7 @@
 import { GamerGamesListPage } from '$gamer/pages/GamesListPage';
-import { createFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/gamer/i/')({
+export const Route = createLazyFileRoute('/gamer/i/')({
   component: RouteComponent,
 });
 

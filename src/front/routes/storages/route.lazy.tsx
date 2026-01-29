@@ -1,9 +1,9 @@
 import { useCurrentAppSetter } from '#basis/lib/useCurrentAppSetter';
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
 import { storagesInitialInvokes } from '$storages/shared/tsjrpc';
-import { createFileRoute, Outlet } from '@tanstack/react-router';
+import { createLazyFileRoute, Outlet } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/storages')({
+export const Route = createLazyFileRoute('/storages')({
   component: RouteComponent,
 });
 

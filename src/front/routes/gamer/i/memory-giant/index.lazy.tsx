@@ -1,7 +1,7 @@
 import { GamerMemoryGiantPage } from '$gamer/pages/MemoryGiantPage';
-import { createFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/gamer/i/memory-giant/')({
+export const Route = createLazyFileRoute('/gamer/i/memory-giant/')({
   component: RouteComponent,
 });
 

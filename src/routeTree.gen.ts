@@ -8,855 +8,843 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router';
 
 // Import Routes
 
-import { Route as rootRoute } from './front/routes/__root'
-import { Route as TunerRouteImport } from './front/routes/tuner/route'
-import { Route as StoragesRouteImport } from './front/routes/storages/route'
-import { Route as QRouteImport } from './front/routes/q/route'
-import { Route as GamerRouteImport } from './front/routes/gamer/route'
-import { Route as CmRouteImport } from './front/routes/cm/route'
-import { Route as BibleRouteImport } from './front/routes/bible/route'
-import { Route as IndexImport } from './front/routes/index'
-import { Route as TunerIndexImport } from './front/routes/tuner/index'
-import { Route as PresentationIndexImport } from './front/routes/presentation/index'
-import { Route as GamerIndexImport } from './front/routes/gamer/index'
-import { Route as CmIndexImport } from './front/routes/cm/index'
-import { Route as BibleIndexImport } from './front/routes/bible/index'
-import { Route as TunerIImport } from './front/routes/tuner/i'
-import { Route as QIImport } from './front/routes/q/i'
-import { Route as BibleTranImport } from './front/routes/bible/tran'
-import { Route as BibleSearchImport } from './front/routes/bible/search'
-import { Route as BibleIImport } from './front/routes/bible/i'
-import { Route as otherAppNameRouteImport } from './front/routes/!other.$appName/route'
-import { Route as StoragesIIndexImport } from './front/routes/storages/i/index'
-import { Route as ScheduleDaySchwIndexImport } from './front/routes/schedule-day/$schw/index'
-import { Route as QRIndexImport } from './front/routes/q/r/index'
-import { Route as QAIndexImport } from './front/routes/q/a/index'
-import { Route as GamerIIndexImport } from './front/routes/gamer/i/index'
-import { Route as CmPlayerIndexImport } from './front/routes/cm/player/index'
-import { Route as CmLiIndexImport } from './front/routes/cm/li/index'
-import { Route as CmIIndexImport } from './front/routes/cm/i/index'
-import { Route as otherAppNameIndexImport } from './front/routes/!other.$appName/index'
-import { Route as QRBlankImport } from './front/routes/q/r/$blank'
-import { Route as QABlankImport } from './front/routes/q/a/$blank'
-import { Route as CmLiSelImport } from './front/routes/cm/li/sel'
-import { Route as CmLiFavImport } from './front/routes/cm/li/fav'
-import { Route as CmLiEventsImport } from './front/routes/cm/li/events'
-import { Route as CmEditMp3RulesImport } from './front/routes/cm/edit/mp3Rules'
-import { Route as CmEditEventsImport } from './front/routes/cm/edit/events'
-import { Route as CmEditEEImport } from './front/routes/cm/edit/e-e'
-import { Route as CmEditConstantsImport } from './front/routes/cm/edit/constants'
-import { Route as CmEditChordImport } from './front/routes/cm/edit/chord'
-import { Route as StoragesIRackwIndexImport } from './front/routes/storages/i/$rackw/index'
-import { Route as GamerIMemoryGiantIndexImport } from './front/routes/gamer/i/memory-giant/index'
-import { Route as CmEditComsIndexImport } from './front/routes/cm/edit/coms/index'
-import { Route as otherAppNameSettingsIndexImport } from './front/routes/!other.$appName/settings/index'
-import { Route as otherAppNameSchsIndexImport } from './front/routes/!other.$appName/schs/index'
-import { Route as otherAppNameAuthIndexImport } from './front/routes/!other.$appName/auth/index'
-import { Route as otherAppNameActionsIndexImport } from './front/routes/!other.$appName/actions/index'
-import { Route as CmLiCatCatwImport } from './front/routes/cm/li/cat.$catw'
-import { Route as otherAppNameSettingsRightsImport } from './front/routes/!other.$appName/settings/rights'
-import { Route as otherAppNameSettingsConsoleImport } from './front/routes/!other.$appName/settings/console'
-import { Route as StoragesIRackwSumIndexImport } from './front/routes/storages/i/$rackw/sum/index'
-import { Route as StoragesIRackwEditIndexImport } from './front/routes/storages/i/$rackw/edit/index'
-import { Route as StoragesIRackwCardiIndexImport } from './front/routes/storages/i/$rackw/$cardi/index'
-import { Route as CmEditComsComwIndexImport } from './front/routes/cm/edit/coms/$comw/index'
-import { Route as otherAppNameSettingsNounpronsIndexImport } from './front/routes/!other.$appName/settings/noun_prons/index'
-import { Route as otherAppNameActionsFilesIndexImport } from './front/routes/!other.$appName/actions/files/index'
-import { Route as otherAppNameActionsDownIndexImport } from './front/routes/!other.$appName/actions/down/index'
-import { Route as CmEditComsComwTabRouteImport } from './front/routes/cm/edit/coms/$comw/$tab/route'
+import { Route as otherAppNameActionsDownIndexImport } from './front/routes/!other.$appName/actions/down/index';
+import { Route as otherAppNameActionsFilesIndexImport } from './front/routes/!other.$appName/actions/files/index';
+import { Route as otherAppNameActionsIndexImport } from './front/routes/!other.$appName/actions/index';
+import { Route as otherAppNameAuthIndexImport } from './front/routes/!other.$appName/auth/index';
+import { Route as otherAppNameIndexImport } from './front/routes/!other.$appName/index';
+import { Route as otherAppNameRouteImport } from './front/routes/!other.$appName/route';
+import { Route as otherAppNameSchsIndexImport } from './front/routes/!other.$appName/schs/index';
+import { Route as otherAppNameSettingsConsoleImport } from './front/routes/!other.$appName/settings/console';
+import { Route as otherAppNameSettingsIndexImport } from './front/routes/!other.$appName/settings/index';
+import { Route as otherAppNameSettingsNounpronsIndexImport } from './front/routes/!other.$appName/settings/noun_prons/index';
+import { Route as otherAppNameSettingsRightsImport } from './front/routes/!other.$appName/settings/rights';
+import { Route as rootRoute } from './front/routes/__root';
+import { Route as BibleIImport } from './front/routes/bible/i';
+import { Route as BibleIndexImport } from './front/routes/bible/index';
+import { Route as BibleRouteImport } from './front/routes/bible/route';
+import { Route as BibleSearchImport } from './front/routes/bible/search';
+import { Route as BibleTranImport } from './front/routes/bible/tran';
+import { Route as CmEditChordImport } from './front/routes/cm/edit/chord';
+import { Route as CmEditComsComwTabRouteImport } from './front/routes/cm/edit/coms/$comw/$tab/route';
+import { Route as CmEditComsComwIndexImport } from './front/routes/cm/edit/coms/$comw/index';
+import { Route as CmEditComsIndexImport } from './front/routes/cm/edit/coms/index';
+import { Route as CmEditConstantsImport } from './front/routes/cm/edit/constants';
+import { Route as CmEditEEImport } from './front/routes/cm/edit/e-e';
+import { Route as CmEditEventsImport } from './front/routes/cm/edit/events';
+import { Route as CmEditMp3RulesImport } from './front/routes/cm/edit/mp3Rules';
+import { Route as CmIIndexImport } from './front/routes/cm/i/index';
+import { Route as CmIndexImport } from './front/routes/cm/index';
+import { Route as CmLiCatCatwImport } from './front/routes/cm/li/cat.$catw';
+import { Route as CmLiEventsImport } from './front/routes/cm/li/events';
+import { Route as CmLiFavImport } from './front/routes/cm/li/fav';
+import { Route as CmLiIndexImport } from './front/routes/cm/li/index';
+import { Route as CmLiSelImport } from './front/routes/cm/li/sel';
+import { Route as CmPlayerIndexImport } from './front/routes/cm/player/index';
+import { Route as CmRouteImport } from './front/routes/cm/route';
+import { Route as IndexImport } from './front/routes/index';
+import { Route as StoragesIRackwSumIndexImport } from './front/routes/storages/i/$rackw/sum/index';
+import { Route as TunerIImport } from './front/routes/tuner/i';
+import { Route as TunerIndexImport } from './front/routes/tuner/index';
+import { Route as TunerRouteImport } from './front/routes/tuner/route';
 
 // Create Virtual Routes
 
-const ScheduleDayIndexLazyImport = createFileRoute('/schedule-day/')()
-const CmEditRouteLazyImport = createFileRoute('/cm/edit')()
-const CmEditIndexLazyImport = createFileRoute('/cm/edit/')()
+const StoragesRouteLazyImport = createFileRoute('/storages')();
+const QRouteLazyImport = createFileRoute('/q')();
+const GamerRouteLazyImport = createFileRoute('/gamer')();
+const ScheduleDayIndexLazyImport = createFileRoute('/schedule-day/')();
+const PresentationIndexLazyImport = createFileRoute('/presentation/')();
+const GamerIndexLazyImport = createFileRoute('/gamer/')();
+const QILazyImport = createFileRoute('/q/i')();
+const CmEditRouteLazyImport = createFileRoute('/cm/edit')();
+const StoragesIIndexLazyImport = createFileRoute('/storages/i/')();
+const ScheduleDaySchwIndexLazyImport = createFileRoute('/schedule-day/$schw/')();
+const QRIndexLazyImport = createFileRoute('/q/r/')();
+const QAIndexLazyImport = createFileRoute('/q/a/')();
+const GamerIIndexLazyImport = createFileRoute('/gamer/i/')();
+const CmEditIndexLazyImport = createFileRoute('/cm/edit/')();
+const QRBlankLazyImport = createFileRoute('/q/r/$blank')();
+const QABlankLazyImport = createFileRoute('/q/a/$blank')();
+const StoragesIRackwIndexLazyImport = createFileRoute('/storages/i/$rackw/')();
+const GamerIMemoryGiantIndexLazyImport = createFileRoute('/gamer/i/memory-giant/')();
+const StoragesIRackwEditIndexLazyImport = createFileRoute('/storages/i/$rackw/edit/')();
+const StoragesIRackwCardiIndexLazyImport = createFileRoute('/storages/i/$rackw/$cardi/')();
 
 // Create/Update Routes
+
+const StoragesRouteLazyRoute = StoragesRouteLazyImport.update({
+  id: '/storages',
+  path: '/storages',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./front/routes/storages/route.lazy').then(d => d.Route));
+
+const QRouteLazyRoute = QRouteLazyImport.update({
+  id: '/q',
+  path: '/q',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./front/routes/q/route.lazy').then(d => d.Route));
+
+const GamerRouteLazyRoute = GamerRouteLazyImport.update({
+  id: '/gamer',
+  path: '/gamer',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./front/routes/gamer/route.lazy').then(d => d.Route));
 
 const TunerRouteRoute = TunerRouteImport.update({
   id: '/tuner',
   path: '/tuner',
   getParentRoute: () => rootRoute,
-} as any)
-
-const StoragesRouteRoute = StoragesRouteImport.update({
-  id: '/storages',
-  path: '/storages',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const QRouteRoute = QRouteImport.update({
-  id: '/q',
-  path: '/q',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const GamerRouteRoute = GamerRouteImport.update({
-  id: '/gamer',
-  path: '/gamer',
-  getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const CmRouteRoute = CmRouteImport.update({
   id: '/cm',
   path: '/cm',
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const BibleRouteRoute = BibleRouteImport.update({
   id: '/bible',
   path: '/bible',
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const ScheduleDayIndexLazyRoute = ScheduleDayIndexLazyImport.update({
   id: '/schedule-day/',
   path: '/schedule-day/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./front/routes/schedule-day/index.lazy').then((d) => d.Route),
-)
+} as any).lazy(() => import('./front/routes/schedule-day/index.lazy').then(d => d.Route));
+
+const PresentationIndexLazyRoute = PresentationIndexLazyImport.update({
+  id: '/presentation/',
+  path: '/presentation/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./front/routes/presentation/index.lazy').then(d => d.Route));
+
+const GamerIndexLazyRoute = GamerIndexLazyImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => GamerRouteLazyRoute,
+} as any).lazy(() => import('./front/routes/gamer/index.lazy').then(d => d.Route));
 
 const TunerIndexRoute = TunerIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => TunerRouteRoute,
-} as any)
-
-const PresentationIndexRoute = PresentationIndexImport.update({
-  id: '/presentation/',
-  path: '/presentation/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const GamerIndexRoute = GamerIndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => GamerRouteRoute,
-} as any)
+} as any);
 
 const CmIndexRoute = CmIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => CmRouteRoute,
-} as any)
+} as any);
 
 const BibleIndexRoute = BibleIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => BibleRouteRoute,
-} as any)
+} as any);
+
+const QILazyRoute = QILazyImport.update({
+  id: '/i',
+  path: '/i',
+  getParentRoute: () => QRouteLazyRoute,
+} as any).lazy(() => import('./front/routes/q/i.lazy').then(d => d.Route));
 
 const CmEditRouteLazyRoute = CmEditRouteLazyImport.update({
   id: '/edit',
   path: '/edit',
   getParentRoute: () => CmRouteRoute,
-} as any).lazy(() =>
-  import('./front/routes/cm/edit/route.lazy').then((d) => d.Route),
-)
+} as any).lazy(() => import('./front/routes/cm/edit/route.lazy').then(d => d.Route));
 
 const TunerIRoute = TunerIImport.update({
   id: '/i',
   path: '/i',
   getParentRoute: () => TunerRouteRoute,
-} as any)
-
-const QIRoute = QIImport.update({
-  id: '/i',
-  path: '/i',
-  getParentRoute: () => QRouteRoute,
-} as any)
+} as any);
 
 const BibleTranRoute = BibleTranImport.update({
   id: '/tran',
   path: '/tran',
   getParentRoute: () => BibleRouteRoute,
-} as any)
+} as any);
 
 const BibleSearchRoute = BibleSearchImport.update({
   id: '/search',
   path: '/search',
   getParentRoute: () => BibleRouteRoute,
-} as any)
+} as any);
 
 const BibleIRoute = BibleIImport.update({
   id: '/i',
   path: '/i',
   getParentRoute: () => BibleRouteRoute,
-} as any)
+} as any);
 
 const otherAppNameRouteRoute = otherAppNameRouteImport.update({
   id: '/!other/$appName',
   path: '/!other/$appName',
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
+
+const StoragesIIndexLazyRoute = StoragesIIndexLazyImport.update({
+  id: '/i/',
+  path: '/i/',
+  getParentRoute: () => StoragesRouteLazyRoute,
+} as any).lazy(() => import('./front/routes/storages/i/index.lazy').then(d => d.Route));
+
+const ScheduleDaySchwIndexLazyRoute = ScheduleDaySchwIndexLazyImport.update({
+  id: '/schedule-day/$schw/',
+  path: '/schedule-day/$schw/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./front/routes/schedule-day/$schw/index.lazy').then(d => d.Route));
+
+const QRIndexLazyRoute = QRIndexLazyImport.update({
+  id: '/r/',
+  path: '/r/',
+  getParentRoute: () => QRouteLazyRoute,
+} as any).lazy(() => import('./front/routes/q/r/index.lazy').then(d => d.Route));
+
+const QAIndexLazyRoute = QAIndexLazyImport.update({
+  id: '/a/',
+  path: '/a/',
+  getParentRoute: () => QRouteLazyRoute,
+} as any).lazy(() => import('./front/routes/q/a/index.lazy').then(d => d.Route));
+
+const GamerIIndexLazyRoute = GamerIIndexLazyImport.update({
+  id: '/i/',
+  path: '/i/',
+  getParentRoute: () => GamerRouteLazyRoute,
+} as any).lazy(() => import('./front/routes/gamer/i/index.lazy').then(d => d.Route));
 
 const CmEditIndexLazyRoute = CmEditIndexLazyImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => CmEditRouteLazyRoute,
-} as any).lazy(() =>
-  import('./front/routes/cm/edit/index.lazy').then((d) => d.Route),
-)
-
-const StoragesIIndexRoute = StoragesIIndexImport.update({
-  id: '/i/',
-  path: '/i/',
-  getParentRoute: () => StoragesRouteRoute,
-} as any)
-
-const ScheduleDaySchwIndexRoute = ScheduleDaySchwIndexImport.update({
-  id: '/schedule-day/$schw/',
-  path: '/schedule-day/$schw/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const QRIndexRoute = QRIndexImport.update({
-  id: '/r/',
-  path: '/r/',
-  getParentRoute: () => QRouteRoute,
-} as any)
-
-const QAIndexRoute = QAIndexImport.update({
-  id: '/a/',
-  path: '/a/',
-  getParentRoute: () => QRouteRoute,
-} as any)
-
-const GamerIIndexRoute = GamerIIndexImport.update({
-  id: '/i/',
-  path: '/i/',
-  getParentRoute: () => GamerRouteRoute,
-} as any)
+} as any).lazy(() => import('./front/routes/cm/edit/index.lazy').then(d => d.Route));
 
 const CmPlayerIndexRoute = CmPlayerIndexImport.update({
   id: '/player/',
   path: '/player/',
   getParentRoute: () => CmRouteRoute,
-} as any)
+} as any);
 
 const CmLiIndexRoute = CmLiIndexImport.update({
   id: '/li/',
   path: '/li/',
   getParentRoute: () => CmRouteRoute,
-} as any)
+} as any);
 
 const CmIIndexRoute = CmIIndexImport.update({
   id: '/i/',
   path: '/i/',
   getParentRoute: () => CmRouteRoute,
-} as any)
+} as any);
 
 const otherAppNameIndexRoute = otherAppNameIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => otherAppNameRouteRoute,
-} as any)
+} as any);
 
-const QRBlankRoute = QRBlankImport.update({
+const QRBlankLazyRoute = QRBlankLazyImport.update({
   id: '/r/$blank',
   path: '/r/$blank',
-  getParentRoute: () => QRouteRoute,
-} as any)
+  getParentRoute: () => QRouteLazyRoute,
+} as any).lazy(() => import('./front/routes/q/r/$blank.lazy').then(d => d.Route));
 
-const QABlankRoute = QABlankImport.update({
+const QABlankLazyRoute = QABlankLazyImport.update({
   id: '/a/$blank',
   path: '/a/$blank',
-  getParentRoute: () => QRouteRoute,
-} as any)
+  getParentRoute: () => QRouteLazyRoute,
+} as any).lazy(() => import('./front/routes/q/a/$blank.lazy').then(d => d.Route));
 
 const CmLiSelRoute = CmLiSelImport.update({
   id: '/li/sel',
   path: '/li/sel',
   getParentRoute: () => CmRouteRoute,
-} as any)
+} as any);
 
 const CmLiFavRoute = CmLiFavImport.update({
   id: '/li/fav',
   path: '/li/fav',
   getParentRoute: () => CmRouteRoute,
-} as any)
+} as any);
 
 const CmLiEventsRoute = CmLiEventsImport.update({
   id: '/li/events',
   path: '/li/events',
   getParentRoute: () => CmRouteRoute,
-} as any)
+} as any);
 
 const CmEditMp3RulesRoute = CmEditMp3RulesImport.update({
   id: '/mp3Rules',
   path: '/mp3Rules',
   getParentRoute: () => CmEditRouteLazyRoute,
-} as any)
+} as any);
 
 const CmEditEventsRoute = CmEditEventsImport.update({
   id: '/events',
   path: '/events',
   getParentRoute: () => CmEditRouteLazyRoute,
-} as any)
+} as any);
 
 const CmEditEERoute = CmEditEEImport.update({
   id: '/e-e',
   path: '/e-e',
   getParentRoute: () => CmEditRouteLazyRoute,
-} as any)
+} as any);
 
 const CmEditConstantsRoute = CmEditConstantsImport.update({
   id: '/constants',
   path: '/constants',
   getParentRoute: () => CmEditRouteLazyRoute,
-} as any)
+} as any);
 
 const CmEditChordRoute = CmEditChordImport.update({
   id: '/chord',
   path: '/chord',
   getParentRoute: () => CmEditRouteLazyRoute,
-} as any)
+} as any);
 
-const StoragesIRackwIndexRoute = StoragesIRackwIndexImport.update({
+const StoragesIRackwIndexLazyRoute = StoragesIRackwIndexLazyImport.update({
   id: '/i/$rackw/',
   path: '/i/$rackw/',
-  getParentRoute: () => StoragesRouteRoute,
-} as any)
+  getParentRoute: () => StoragesRouteLazyRoute,
+} as any).lazy(() => import('./front/routes/storages/i/$rackw/index.lazy').then(d => d.Route));
 
-const GamerIMemoryGiantIndexRoute = GamerIMemoryGiantIndexImport.update({
+const GamerIMemoryGiantIndexLazyRoute = GamerIMemoryGiantIndexLazyImport.update({
   id: '/i/memory-giant/',
   path: '/i/memory-giant/',
-  getParentRoute: () => GamerRouteRoute,
-} as any)
+  getParentRoute: () => GamerRouteLazyRoute,
+} as any).lazy(() => import('./front/routes/gamer/i/memory-giant/index.lazy').then(d => d.Route));
 
 const CmEditComsIndexRoute = CmEditComsIndexImport.update({
   id: '/coms/',
   path: '/coms/',
   getParentRoute: () => CmEditRouteLazyRoute,
-} as any)
+} as any);
 
 const otherAppNameSettingsIndexRoute = otherAppNameSettingsIndexImport.update({
   id: '/settings/',
   path: '/settings/',
   getParentRoute: () => otherAppNameRouteRoute,
-} as any)
+} as any);
 
 const otherAppNameSchsIndexRoute = otherAppNameSchsIndexImport.update({
   id: '/schs/',
   path: '/schs/',
   getParentRoute: () => otherAppNameRouteRoute,
-} as any)
+} as any);
 
 const otherAppNameAuthIndexRoute = otherAppNameAuthIndexImport.update({
   id: '/auth/',
   path: '/auth/',
   getParentRoute: () => otherAppNameRouteRoute,
-} as any)
+} as any);
 
 const otherAppNameActionsIndexRoute = otherAppNameActionsIndexImport.update({
   id: '/actions/',
   path: '/actions/',
   getParentRoute: () => otherAppNameRouteRoute,
-} as any)
+} as any);
 
 const CmLiCatCatwRoute = CmLiCatCatwImport.update({
   id: '/li/cat/$catw',
   path: '/li/cat/$catw',
   getParentRoute: () => CmRouteRoute,
-} as any)
+} as any);
 
-const otherAppNameSettingsRightsRoute = otherAppNameSettingsRightsImport.update(
-  {
-    id: '/settings/rights',
-    path: '/settings/rights',
-    getParentRoute: () => otherAppNameRouteRoute,
-  } as any,
-)
+const otherAppNameSettingsRightsRoute = otherAppNameSettingsRightsImport.update({
+  id: '/settings/rights',
+  path: '/settings/rights',
+  getParentRoute: () => otherAppNameRouteRoute,
+} as any);
 
-const otherAppNameSettingsConsoleRoute =
-  otherAppNameSettingsConsoleImport.update({
-    id: '/settings/console',
-    path: '/settings/console',
-    getParentRoute: () => otherAppNameRouteRoute,
-  } as any)
+const otherAppNameSettingsConsoleRoute = otherAppNameSettingsConsoleImport.update({
+  id: '/settings/console',
+  path: '/settings/console',
+  getParentRoute: () => otherAppNameRouteRoute,
+} as any);
+
+const StoragesIRackwEditIndexLazyRoute = StoragesIRackwEditIndexLazyImport.update({
+  id: '/i/$rackw/edit/',
+  path: '/i/$rackw/edit/',
+  getParentRoute: () => StoragesRouteLazyRoute,
+} as any).lazy(() => import('./front/routes/storages/i/$rackw/edit/index.lazy').then(d => d.Route));
+
+const StoragesIRackwCardiIndexLazyRoute = StoragesIRackwCardiIndexLazyImport.update({
+  id: '/i/$rackw/$cardi/',
+  path: '/i/$rackw/$cardi/',
+  getParentRoute: () => StoragesRouteLazyRoute,
+} as any).lazy(() => import('./front/routes/storages/i/$rackw/$cardi/index.lazy').then(d => d.Route));
 
 const StoragesIRackwSumIndexRoute = StoragesIRackwSumIndexImport.update({
   id: '/i/$rackw/sum/',
   path: '/i/$rackw/sum/',
-  getParentRoute: () => StoragesRouteRoute,
-} as any)
-
-const StoragesIRackwEditIndexRoute = StoragesIRackwEditIndexImport.update({
-  id: '/i/$rackw/edit/',
-  path: '/i/$rackw/edit/',
-  getParentRoute: () => StoragesRouteRoute,
-} as any)
-
-const StoragesIRackwCardiIndexRoute = StoragesIRackwCardiIndexImport.update({
-  id: '/i/$rackw/$cardi/',
-  path: '/i/$rackw/$cardi/',
-  getParentRoute: () => StoragesRouteRoute,
-} as any)
+  getParentRoute: () => StoragesRouteLazyRoute,
+} as any);
 
 const CmEditComsComwIndexRoute = CmEditComsComwIndexImport.update({
   id: '/coms/$comw/',
   path: '/coms/$comw/',
   getParentRoute: () => CmEditRouteLazyRoute,
-} as any)
+} as any);
 
-const otherAppNameSettingsNounpronsIndexRoute =
-  otherAppNameSettingsNounpronsIndexImport.update({
-    id: '/settings/noun_prons/',
-    path: '/settings/noun_prons/',
-    getParentRoute: () => otherAppNameRouteRoute,
-  } as any)
+const otherAppNameSettingsNounpronsIndexRoute = otherAppNameSettingsNounpronsIndexImport.update({
+  id: '/settings/noun_prons/',
+  path: '/settings/noun_prons/',
+  getParentRoute: () => otherAppNameRouteRoute,
+} as any);
 
-const otherAppNameActionsFilesIndexRoute =
-  otherAppNameActionsFilesIndexImport.update({
-    id: '/actions/files/',
-    path: '/actions/files/',
-    getParentRoute: () => otherAppNameRouteRoute,
-  } as any)
+const otherAppNameActionsFilesIndexRoute = otherAppNameActionsFilesIndexImport.update({
+  id: '/actions/files/',
+  path: '/actions/files/',
+  getParentRoute: () => otherAppNameRouteRoute,
+} as any);
 
-const otherAppNameActionsDownIndexRoute =
-  otherAppNameActionsDownIndexImport.update({
-    id: '/actions/down/',
-    path: '/actions/down/',
-    getParentRoute: () => otherAppNameRouteRoute,
-  } as any)
+const otherAppNameActionsDownIndexRoute = otherAppNameActionsDownIndexImport.update({
+  id: '/actions/down/',
+  path: '/actions/down/',
+  getParentRoute: () => otherAppNameRouteRoute,
+} as any);
 
 const CmEditComsComwTabRouteRoute = CmEditComsComwTabRouteImport.update({
   id: '/coms/$comw/$tab',
   path: '/coms/$comw/$tab',
   getParentRoute: () => CmEditRouteLazyRoute,
-} as any)
+} as any);
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
+      id: '/';
+      path: '/';
+      fullPath: '/';
+      preLoaderRoute: typeof IndexImport;
+      parentRoute: typeof rootRoute;
+    };
     '/bible': {
-      id: '/bible'
-      path: '/bible'
-      fullPath: '/bible'
-      preLoaderRoute: typeof BibleRouteImport
-      parentRoute: typeof rootRoute
-    }
+      id: '/bible';
+      path: '/bible';
+      fullPath: '/bible';
+      preLoaderRoute: typeof BibleRouteImport;
+      parentRoute: typeof rootRoute;
+    };
     '/cm': {
-      id: '/cm'
-      path: '/cm'
-      fullPath: '/cm'
-      preLoaderRoute: typeof CmRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/gamer': {
-      id: '/gamer'
-      path: '/gamer'
-      fullPath: '/gamer'
-      preLoaderRoute: typeof GamerRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/q': {
-      id: '/q'
-      path: '/q'
-      fullPath: '/q'
-      preLoaderRoute: typeof QRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/storages': {
-      id: '/storages'
-      path: '/storages'
-      fullPath: '/storages'
-      preLoaderRoute: typeof StoragesRouteImport
-      parentRoute: typeof rootRoute
-    }
+      id: '/cm';
+      path: '/cm';
+      fullPath: '/cm';
+      preLoaderRoute: typeof CmRouteImport;
+      parentRoute: typeof rootRoute;
+    };
     '/tuner': {
-      id: '/tuner'
-      path: '/tuner'
-      fullPath: '/tuner'
-      preLoaderRoute: typeof TunerRouteImport
-      parentRoute: typeof rootRoute
-    }
+      id: '/tuner';
+      path: '/tuner';
+      fullPath: '/tuner';
+      preLoaderRoute: typeof TunerRouteImport;
+      parentRoute: typeof rootRoute;
+    };
+    '/gamer': {
+      id: '/gamer';
+      path: '/gamer';
+      fullPath: '/gamer';
+      preLoaderRoute: typeof GamerRouteLazyImport;
+      parentRoute: typeof rootRoute;
+    };
+    '/q': {
+      id: '/q';
+      path: '/q';
+      fullPath: '/q';
+      preLoaderRoute: typeof QRouteLazyImport;
+      parentRoute: typeof rootRoute;
+    };
+    '/storages': {
+      id: '/storages';
+      path: '/storages';
+      fullPath: '/storages';
+      preLoaderRoute: typeof StoragesRouteLazyImport;
+      parentRoute: typeof rootRoute;
+    };
     '/!other/$appName': {
-      id: '/!other/$appName'
-      path: '/!other/$appName'
-      fullPath: '/!other/$appName'
-      preLoaderRoute: typeof otherAppNameRouteImport
-      parentRoute: typeof rootRoute
-    }
+      id: '/!other/$appName';
+      path: '/!other/$appName';
+      fullPath: '/!other/$appName';
+      preLoaderRoute: typeof otherAppNameRouteImport;
+      parentRoute: typeof rootRoute;
+    };
     '/bible/i': {
-      id: '/bible/i'
-      path: '/i'
-      fullPath: '/bible/i'
-      preLoaderRoute: typeof BibleIImport
-      parentRoute: typeof BibleRouteImport
-    }
+      id: '/bible/i';
+      path: '/i';
+      fullPath: '/bible/i';
+      preLoaderRoute: typeof BibleIImport;
+      parentRoute: typeof BibleRouteImport;
+    };
     '/bible/search': {
-      id: '/bible/search'
-      path: '/search'
-      fullPath: '/bible/search'
-      preLoaderRoute: typeof BibleSearchImport
-      parentRoute: typeof BibleRouteImport
-    }
+      id: '/bible/search';
+      path: '/search';
+      fullPath: '/bible/search';
+      preLoaderRoute: typeof BibleSearchImport;
+      parentRoute: typeof BibleRouteImport;
+    };
     '/bible/tran': {
-      id: '/bible/tran'
-      path: '/tran'
-      fullPath: '/bible/tran'
-      preLoaderRoute: typeof BibleTranImport
-      parentRoute: typeof BibleRouteImport
-    }
-    '/q/i': {
-      id: '/q/i'
-      path: '/i'
-      fullPath: '/q/i'
-      preLoaderRoute: typeof QIImport
-      parentRoute: typeof QRouteImport
-    }
+      id: '/bible/tran';
+      path: '/tran';
+      fullPath: '/bible/tran';
+      preLoaderRoute: typeof BibleTranImport;
+      parentRoute: typeof BibleRouteImport;
+    };
     '/tuner/i': {
-      id: '/tuner/i'
-      path: '/i'
-      fullPath: '/tuner/i'
-      preLoaderRoute: typeof TunerIImport
-      parentRoute: typeof TunerRouteImport
-    }
+      id: '/tuner/i';
+      path: '/i';
+      fullPath: '/tuner/i';
+      preLoaderRoute: typeof TunerIImport;
+      parentRoute: typeof TunerRouteImport;
+    };
     '/cm/edit': {
-      id: '/cm/edit'
-      path: '/edit'
-      fullPath: '/cm/edit'
-      preLoaderRoute: typeof CmEditRouteLazyImport
-      parentRoute: typeof CmRouteImport
-    }
+      id: '/cm/edit';
+      path: '/edit';
+      fullPath: '/cm/edit';
+      preLoaderRoute: typeof CmEditRouteLazyImport;
+      parentRoute: typeof CmRouteImport;
+    };
+    '/q/i': {
+      id: '/q/i';
+      path: '/i';
+      fullPath: '/q/i';
+      preLoaderRoute: typeof QILazyImport;
+      parentRoute: typeof QRouteLazyImport;
+    };
     '/bible/': {
-      id: '/bible/'
-      path: '/'
-      fullPath: '/bible/'
-      preLoaderRoute: typeof BibleIndexImport
-      parentRoute: typeof BibleRouteImport
-    }
+      id: '/bible/';
+      path: '/';
+      fullPath: '/bible/';
+      preLoaderRoute: typeof BibleIndexImport;
+      parentRoute: typeof BibleRouteImport;
+    };
     '/cm/': {
-      id: '/cm/'
-      path: '/'
-      fullPath: '/cm/'
-      preLoaderRoute: typeof CmIndexImport
-      parentRoute: typeof CmRouteImport
-    }
-    '/gamer/': {
-      id: '/gamer/'
-      path: '/'
-      fullPath: '/gamer/'
-      preLoaderRoute: typeof GamerIndexImport
-      parentRoute: typeof GamerRouteImport
-    }
-    '/presentation/': {
-      id: '/presentation/'
-      path: '/presentation'
-      fullPath: '/presentation'
-      preLoaderRoute: typeof PresentationIndexImport
-      parentRoute: typeof rootRoute
-    }
+      id: '/cm/';
+      path: '/';
+      fullPath: '/cm/';
+      preLoaderRoute: typeof CmIndexImport;
+      parentRoute: typeof CmRouteImport;
+    };
     '/tuner/': {
-      id: '/tuner/'
-      path: '/'
-      fullPath: '/tuner/'
-      preLoaderRoute: typeof TunerIndexImport
-      parentRoute: typeof TunerRouteImport
-    }
+      id: '/tuner/';
+      path: '/';
+      fullPath: '/tuner/';
+      preLoaderRoute: typeof TunerIndexImport;
+      parentRoute: typeof TunerRouteImport;
+    };
+    '/gamer/': {
+      id: '/gamer/';
+      path: '/';
+      fullPath: '/gamer/';
+      preLoaderRoute: typeof GamerIndexLazyImport;
+      parentRoute: typeof GamerRouteLazyImport;
+    };
+    '/presentation/': {
+      id: '/presentation/';
+      path: '/presentation';
+      fullPath: '/presentation';
+      preLoaderRoute: typeof PresentationIndexLazyImport;
+      parentRoute: typeof rootRoute;
+    };
     '/schedule-day/': {
-      id: '/schedule-day/'
-      path: '/schedule-day'
-      fullPath: '/schedule-day'
-      preLoaderRoute: typeof ScheduleDayIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
+      id: '/schedule-day/';
+      path: '/schedule-day';
+      fullPath: '/schedule-day';
+      preLoaderRoute: typeof ScheduleDayIndexLazyImport;
+      parentRoute: typeof rootRoute;
+    };
     '/cm/edit/chord': {
-      id: '/cm/edit/chord'
-      path: '/chord'
-      fullPath: '/cm/edit/chord'
-      preLoaderRoute: typeof CmEditChordImport
-      parentRoute: typeof CmEditRouteLazyImport
-    }
+      id: '/cm/edit/chord';
+      path: '/chord';
+      fullPath: '/cm/edit/chord';
+      preLoaderRoute: typeof CmEditChordImport;
+      parentRoute: typeof CmEditRouteLazyImport;
+    };
     '/cm/edit/constants': {
-      id: '/cm/edit/constants'
-      path: '/constants'
-      fullPath: '/cm/edit/constants'
-      preLoaderRoute: typeof CmEditConstantsImport
-      parentRoute: typeof CmEditRouteLazyImport
-    }
+      id: '/cm/edit/constants';
+      path: '/constants';
+      fullPath: '/cm/edit/constants';
+      preLoaderRoute: typeof CmEditConstantsImport;
+      parentRoute: typeof CmEditRouteLazyImport;
+    };
     '/cm/edit/e-e': {
-      id: '/cm/edit/e-e'
-      path: '/e-e'
-      fullPath: '/cm/edit/e-e'
-      preLoaderRoute: typeof CmEditEEImport
-      parentRoute: typeof CmEditRouteLazyImport
-    }
+      id: '/cm/edit/e-e';
+      path: '/e-e';
+      fullPath: '/cm/edit/e-e';
+      preLoaderRoute: typeof CmEditEEImport;
+      parentRoute: typeof CmEditRouteLazyImport;
+    };
     '/cm/edit/events': {
-      id: '/cm/edit/events'
-      path: '/events'
-      fullPath: '/cm/edit/events'
-      preLoaderRoute: typeof CmEditEventsImport
-      parentRoute: typeof CmEditRouteLazyImport
-    }
+      id: '/cm/edit/events';
+      path: '/events';
+      fullPath: '/cm/edit/events';
+      preLoaderRoute: typeof CmEditEventsImport;
+      parentRoute: typeof CmEditRouteLazyImport;
+    };
     '/cm/edit/mp3Rules': {
-      id: '/cm/edit/mp3Rules'
-      path: '/mp3Rules'
-      fullPath: '/cm/edit/mp3Rules'
-      preLoaderRoute: typeof CmEditMp3RulesImport
-      parentRoute: typeof CmEditRouteLazyImport
-    }
+      id: '/cm/edit/mp3Rules';
+      path: '/mp3Rules';
+      fullPath: '/cm/edit/mp3Rules';
+      preLoaderRoute: typeof CmEditMp3RulesImport;
+      parentRoute: typeof CmEditRouteLazyImport;
+    };
     '/cm/li/events': {
-      id: '/cm/li/events'
-      path: '/li/events'
-      fullPath: '/cm/li/events'
-      preLoaderRoute: typeof CmLiEventsImport
-      parentRoute: typeof CmRouteImport
-    }
+      id: '/cm/li/events';
+      path: '/li/events';
+      fullPath: '/cm/li/events';
+      preLoaderRoute: typeof CmLiEventsImport;
+      parentRoute: typeof CmRouteImport;
+    };
     '/cm/li/fav': {
-      id: '/cm/li/fav'
-      path: '/li/fav'
-      fullPath: '/cm/li/fav'
-      preLoaderRoute: typeof CmLiFavImport
-      parentRoute: typeof CmRouteImport
-    }
+      id: '/cm/li/fav';
+      path: '/li/fav';
+      fullPath: '/cm/li/fav';
+      preLoaderRoute: typeof CmLiFavImport;
+      parentRoute: typeof CmRouteImport;
+    };
     '/cm/li/sel': {
-      id: '/cm/li/sel'
-      path: '/li/sel'
-      fullPath: '/cm/li/sel'
-      preLoaderRoute: typeof CmLiSelImport
-      parentRoute: typeof CmRouteImport
-    }
+      id: '/cm/li/sel';
+      path: '/li/sel';
+      fullPath: '/cm/li/sel';
+      preLoaderRoute: typeof CmLiSelImport;
+      parentRoute: typeof CmRouteImport;
+    };
     '/q/a/$blank': {
-      id: '/q/a/$blank'
-      path: '/a/$blank'
-      fullPath: '/q/a/$blank'
-      preLoaderRoute: typeof QABlankImport
-      parentRoute: typeof QRouteImport
-    }
+      id: '/q/a/$blank';
+      path: '/a/$blank';
+      fullPath: '/q/a/$blank';
+      preLoaderRoute: typeof QABlankLazyImport;
+      parentRoute: typeof QRouteLazyImport;
+    };
     '/q/r/$blank': {
-      id: '/q/r/$blank'
-      path: '/r/$blank'
-      fullPath: '/q/r/$blank'
-      preLoaderRoute: typeof QRBlankImport
-      parentRoute: typeof QRouteImport
-    }
+      id: '/q/r/$blank';
+      path: '/r/$blank';
+      fullPath: '/q/r/$blank';
+      preLoaderRoute: typeof QRBlankLazyImport;
+      parentRoute: typeof QRouteLazyImport;
+    };
     '/!other/$appName/': {
-      id: '/!other/$appName/'
-      path: '/'
-      fullPath: '/!other/$appName/'
-      preLoaderRoute: typeof otherAppNameIndexImport
-      parentRoute: typeof otherAppNameRouteImport
-    }
+      id: '/!other/$appName/';
+      path: '/';
+      fullPath: '/!other/$appName/';
+      preLoaderRoute: typeof otherAppNameIndexImport;
+      parentRoute: typeof otherAppNameRouteImport;
+    };
     '/cm/i/': {
-      id: '/cm/i/'
-      path: '/i'
-      fullPath: '/cm/i'
-      preLoaderRoute: typeof CmIIndexImport
-      parentRoute: typeof CmRouteImport
-    }
+      id: '/cm/i/';
+      path: '/i';
+      fullPath: '/cm/i';
+      preLoaderRoute: typeof CmIIndexImport;
+      parentRoute: typeof CmRouteImport;
+    };
     '/cm/li/': {
-      id: '/cm/li/'
-      path: '/li'
-      fullPath: '/cm/li'
-      preLoaderRoute: typeof CmLiIndexImport
-      parentRoute: typeof CmRouteImport
-    }
+      id: '/cm/li/';
+      path: '/li';
+      fullPath: '/cm/li';
+      preLoaderRoute: typeof CmLiIndexImport;
+      parentRoute: typeof CmRouteImport;
+    };
     '/cm/player/': {
-      id: '/cm/player/'
-      path: '/player'
-      fullPath: '/cm/player'
-      preLoaderRoute: typeof CmPlayerIndexImport
-      parentRoute: typeof CmRouteImport
-    }
-    '/gamer/i/': {
-      id: '/gamer/i/'
-      path: '/i'
-      fullPath: '/gamer/i'
-      preLoaderRoute: typeof GamerIIndexImport
-      parentRoute: typeof GamerRouteImport
-    }
-    '/q/a/': {
-      id: '/q/a/'
-      path: '/a'
-      fullPath: '/q/a'
-      preLoaderRoute: typeof QAIndexImport
-      parentRoute: typeof QRouteImport
-    }
-    '/q/r/': {
-      id: '/q/r/'
-      path: '/r'
-      fullPath: '/q/r'
-      preLoaderRoute: typeof QRIndexImport
-      parentRoute: typeof QRouteImport
-    }
-    '/schedule-day/$schw/': {
-      id: '/schedule-day/$schw/'
-      path: '/schedule-day/$schw'
-      fullPath: '/schedule-day/$schw'
-      preLoaderRoute: typeof ScheduleDaySchwIndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/storages/i/': {
-      id: '/storages/i/'
-      path: '/i'
-      fullPath: '/storages/i'
-      preLoaderRoute: typeof StoragesIIndexImport
-      parentRoute: typeof StoragesRouteImport
-    }
+      id: '/cm/player/';
+      path: '/player';
+      fullPath: '/cm/player';
+      preLoaderRoute: typeof CmPlayerIndexImport;
+      parentRoute: typeof CmRouteImport;
+    };
     '/cm/edit/': {
-      id: '/cm/edit/'
-      path: '/'
-      fullPath: '/cm/edit/'
-      preLoaderRoute: typeof CmEditIndexLazyImport
-      parentRoute: typeof CmEditRouteLazyImport
-    }
+      id: '/cm/edit/';
+      path: '/';
+      fullPath: '/cm/edit/';
+      preLoaderRoute: typeof CmEditIndexLazyImport;
+      parentRoute: typeof CmEditRouteLazyImport;
+    };
+    '/gamer/i/': {
+      id: '/gamer/i/';
+      path: '/i';
+      fullPath: '/gamer/i';
+      preLoaderRoute: typeof GamerIIndexLazyImport;
+      parentRoute: typeof GamerRouteLazyImport;
+    };
+    '/q/a/': {
+      id: '/q/a/';
+      path: '/a';
+      fullPath: '/q/a';
+      preLoaderRoute: typeof QAIndexLazyImport;
+      parentRoute: typeof QRouteLazyImport;
+    };
+    '/q/r/': {
+      id: '/q/r/';
+      path: '/r';
+      fullPath: '/q/r';
+      preLoaderRoute: typeof QRIndexLazyImport;
+      parentRoute: typeof QRouteLazyImport;
+    };
+    '/schedule-day/$schw/': {
+      id: '/schedule-day/$schw/';
+      path: '/schedule-day/$schw';
+      fullPath: '/schedule-day/$schw';
+      preLoaderRoute: typeof ScheduleDaySchwIndexLazyImport;
+      parentRoute: typeof rootRoute;
+    };
+    '/storages/i/': {
+      id: '/storages/i/';
+      path: '/i';
+      fullPath: '/storages/i';
+      preLoaderRoute: typeof StoragesIIndexLazyImport;
+      parentRoute: typeof StoragesRouteLazyImport;
+    };
     '/!other/$appName/settings/console': {
-      id: '/!other/$appName/settings/console'
-      path: '/settings/console'
-      fullPath: '/!other/$appName/settings/console'
-      preLoaderRoute: typeof otherAppNameSettingsConsoleImport
-      parentRoute: typeof otherAppNameRouteImport
-    }
+      id: '/!other/$appName/settings/console';
+      path: '/settings/console';
+      fullPath: '/!other/$appName/settings/console';
+      preLoaderRoute: typeof otherAppNameSettingsConsoleImport;
+      parentRoute: typeof otherAppNameRouteImport;
+    };
     '/!other/$appName/settings/rights': {
-      id: '/!other/$appName/settings/rights'
-      path: '/settings/rights'
-      fullPath: '/!other/$appName/settings/rights'
-      preLoaderRoute: typeof otherAppNameSettingsRightsImport
-      parentRoute: typeof otherAppNameRouteImport
-    }
+      id: '/!other/$appName/settings/rights';
+      path: '/settings/rights';
+      fullPath: '/!other/$appName/settings/rights';
+      preLoaderRoute: typeof otherAppNameSettingsRightsImport;
+      parentRoute: typeof otherAppNameRouteImport;
+    };
     '/cm/li/cat/$catw': {
-      id: '/cm/li/cat/$catw'
-      path: '/li/cat/$catw'
-      fullPath: '/cm/li/cat/$catw'
-      preLoaderRoute: typeof CmLiCatCatwImport
-      parentRoute: typeof CmRouteImport
-    }
+      id: '/cm/li/cat/$catw';
+      path: '/li/cat/$catw';
+      fullPath: '/cm/li/cat/$catw';
+      preLoaderRoute: typeof CmLiCatCatwImport;
+      parentRoute: typeof CmRouteImport;
+    };
     '/!other/$appName/actions/': {
-      id: '/!other/$appName/actions/'
-      path: '/actions'
-      fullPath: '/!other/$appName/actions'
-      preLoaderRoute: typeof otherAppNameActionsIndexImport
-      parentRoute: typeof otherAppNameRouteImport
-    }
+      id: '/!other/$appName/actions/';
+      path: '/actions';
+      fullPath: '/!other/$appName/actions';
+      preLoaderRoute: typeof otherAppNameActionsIndexImport;
+      parentRoute: typeof otherAppNameRouteImport;
+    };
     '/!other/$appName/auth/': {
-      id: '/!other/$appName/auth/'
-      path: '/auth'
-      fullPath: '/!other/$appName/auth'
-      preLoaderRoute: typeof otherAppNameAuthIndexImport
-      parentRoute: typeof otherAppNameRouteImport
-    }
+      id: '/!other/$appName/auth/';
+      path: '/auth';
+      fullPath: '/!other/$appName/auth';
+      preLoaderRoute: typeof otherAppNameAuthIndexImport;
+      parentRoute: typeof otherAppNameRouteImport;
+    };
     '/!other/$appName/schs/': {
-      id: '/!other/$appName/schs/'
-      path: '/schs'
-      fullPath: '/!other/$appName/schs'
-      preLoaderRoute: typeof otherAppNameSchsIndexImport
-      parentRoute: typeof otherAppNameRouteImport
-    }
+      id: '/!other/$appName/schs/';
+      path: '/schs';
+      fullPath: '/!other/$appName/schs';
+      preLoaderRoute: typeof otherAppNameSchsIndexImport;
+      parentRoute: typeof otherAppNameRouteImport;
+    };
     '/!other/$appName/settings/': {
-      id: '/!other/$appName/settings/'
-      path: '/settings'
-      fullPath: '/!other/$appName/settings'
-      preLoaderRoute: typeof otherAppNameSettingsIndexImport
-      parentRoute: typeof otherAppNameRouteImport
-    }
+      id: '/!other/$appName/settings/';
+      path: '/settings';
+      fullPath: '/!other/$appName/settings';
+      preLoaderRoute: typeof otherAppNameSettingsIndexImport;
+      parentRoute: typeof otherAppNameRouteImport;
+    };
     '/cm/edit/coms/': {
-      id: '/cm/edit/coms/'
-      path: '/coms'
-      fullPath: '/cm/edit/coms'
-      preLoaderRoute: typeof CmEditComsIndexImport
-      parentRoute: typeof CmEditRouteLazyImport
-    }
+      id: '/cm/edit/coms/';
+      path: '/coms';
+      fullPath: '/cm/edit/coms';
+      preLoaderRoute: typeof CmEditComsIndexImport;
+      parentRoute: typeof CmEditRouteLazyImport;
+    };
     '/gamer/i/memory-giant/': {
-      id: '/gamer/i/memory-giant/'
-      path: '/i/memory-giant'
-      fullPath: '/gamer/i/memory-giant'
-      preLoaderRoute: typeof GamerIMemoryGiantIndexImport
-      parentRoute: typeof GamerRouteImport
-    }
+      id: '/gamer/i/memory-giant/';
+      path: '/i/memory-giant';
+      fullPath: '/gamer/i/memory-giant';
+      preLoaderRoute: typeof GamerIMemoryGiantIndexLazyImport;
+      parentRoute: typeof GamerRouteLazyImport;
+    };
     '/storages/i/$rackw/': {
-      id: '/storages/i/$rackw/'
-      path: '/i/$rackw'
-      fullPath: '/storages/i/$rackw'
-      preLoaderRoute: typeof StoragesIRackwIndexImport
-      parentRoute: typeof StoragesRouteImport
-    }
+      id: '/storages/i/$rackw/';
+      path: '/i/$rackw';
+      fullPath: '/storages/i/$rackw';
+      preLoaderRoute: typeof StoragesIRackwIndexLazyImport;
+      parentRoute: typeof StoragesRouteLazyImport;
+    };
     '/cm/edit/coms/$comw/$tab': {
-      id: '/cm/edit/coms/$comw/$tab'
-      path: '/coms/$comw/$tab'
-      fullPath: '/cm/edit/coms/$comw/$tab'
-      preLoaderRoute: typeof CmEditComsComwTabRouteImport
-      parentRoute: typeof CmEditRouteLazyImport
-    }
+      id: '/cm/edit/coms/$comw/$tab';
+      path: '/coms/$comw/$tab';
+      fullPath: '/cm/edit/coms/$comw/$tab';
+      preLoaderRoute: typeof CmEditComsComwTabRouteImport;
+      parentRoute: typeof CmEditRouteLazyImport;
+    };
     '/!other/$appName/actions/down/': {
-      id: '/!other/$appName/actions/down/'
-      path: '/actions/down'
-      fullPath: '/!other/$appName/actions/down'
-      preLoaderRoute: typeof otherAppNameActionsDownIndexImport
-      parentRoute: typeof otherAppNameRouteImport
-    }
+      id: '/!other/$appName/actions/down/';
+      path: '/actions/down';
+      fullPath: '/!other/$appName/actions/down';
+      preLoaderRoute: typeof otherAppNameActionsDownIndexImport;
+      parentRoute: typeof otherAppNameRouteImport;
+    };
     '/!other/$appName/actions/files/': {
-      id: '/!other/$appName/actions/files/'
-      path: '/actions/files'
-      fullPath: '/!other/$appName/actions/files'
-      preLoaderRoute: typeof otherAppNameActionsFilesIndexImport
-      parentRoute: typeof otherAppNameRouteImport
-    }
+      id: '/!other/$appName/actions/files/';
+      path: '/actions/files';
+      fullPath: '/!other/$appName/actions/files';
+      preLoaderRoute: typeof otherAppNameActionsFilesIndexImport;
+      parentRoute: typeof otherAppNameRouteImport;
+    };
     '/!other/$appName/settings/noun_prons/': {
-      id: '/!other/$appName/settings/noun_prons/'
-      path: '/settings/noun_prons'
-      fullPath: '/!other/$appName/settings/noun_prons'
-      preLoaderRoute: typeof otherAppNameSettingsNounpronsIndexImport
-      parentRoute: typeof otherAppNameRouteImport
-    }
+      id: '/!other/$appName/settings/noun_prons/';
+      path: '/settings/noun_prons';
+      fullPath: '/!other/$appName/settings/noun_prons';
+      preLoaderRoute: typeof otherAppNameSettingsNounpronsIndexImport;
+      parentRoute: typeof otherAppNameRouteImport;
+    };
     '/cm/edit/coms/$comw/': {
-      id: '/cm/edit/coms/$comw/'
-      path: '/coms/$comw'
-      fullPath: '/cm/edit/coms/$comw'
-      preLoaderRoute: typeof CmEditComsComwIndexImport
-      parentRoute: typeof CmEditRouteLazyImport
-    }
-    '/storages/i/$rackw/$cardi/': {
-      id: '/storages/i/$rackw/$cardi/'
-      path: '/i/$rackw/$cardi'
-      fullPath: '/storages/i/$rackw/$cardi'
-      preLoaderRoute: typeof StoragesIRackwCardiIndexImport
-      parentRoute: typeof StoragesRouteImport
-    }
-    '/storages/i/$rackw/edit/': {
-      id: '/storages/i/$rackw/edit/'
-      path: '/i/$rackw/edit'
-      fullPath: '/storages/i/$rackw/edit'
-      preLoaderRoute: typeof StoragesIRackwEditIndexImport
-      parentRoute: typeof StoragesRouteImport
-    }
+      id: '/cm/edit/coms/$comw/';
+      path: '/coms/$comw';
+      fullPath: '/cm/edit/coms/$comw';
+      preLoaderRoute: typeof CmEditComsComwIndexImport;
+      parentRoute: typeof CmEditRouteLazyImport;
+    };
     '/storages/i/$rackw/sum/': {
-      id: '/storages/i/$rackw/sum/'
-      path: '/i/$rackw/sum'
-      fullPath: '/storages/i/$rackw/sum'
-      preLoaderRoute: typeof StoragesIRackwSumIndexImport
-      parentRoute: typeof StoragesRouteImport
-    }
+      id: '/storages/i/$rackw/sum/';
+      path: '/i/$rackw/sum';
+      fullPath: '/storages/i/$rackw/sum';
+      preLoaderRoute: typeof StoragesIRackwSumIndexImport;
+      parentRoute: typeof StoragesRouteLazyImport;
+    };
+    '/storages/i/$rackw/$cardi/': {
+      id: '/storages/i/$rackw/$cardi/';
+      path: '/i/$rackw/$cardi';
+      fullPath: '/storages/i/$rackw/$cardi';
+      preLoaderRoute: typeof StoragesIRackwCardiIndexLazyImport;
+      parentRoute: typeof StoragesRouteLazyImport;
+    };
+    '/storages/i/$rackw/edit/': {
+      id: '/storages/i/$rackw/edit/';
+      path: '/i/$rackw/edit';
+      fullPath: '/storages/i/$rackw/edit';
+      preLoaderRoute: typeof StoragesIRackwEditIndexLazyImport;
+      parentRoute: typeof StoragesRouteLazyImport;
+    };
   }
 }
 
 // Create and export the route tree
 
 interface BibleRouteRouteChildren {
-  BibleIRoute: typeof BibleIRoute
-  BibleSearchRoute: typeof BibleSearchRoute
-  BibleTranRoute: typeof BibleTranRoute
-  BibleIndexRoute: typeof BibleIndexRoute
+  BibleIRoute: typeof BibleIRoute;
+  BibleSearchRoute: typeof BibleSearchRoute;
+  BibleTranRoute: typeof BibleTranRoute;
+  BibleIndexRoute: typeof BibleIndexRoute;
 }
 
 const BibleRouteRouteChildren: BibleRouteRouteChildren = {
@@ -864,22 +852,20 @@ const BibleRouteRouteChildren: BibleRouteRouteChildren = {
   BibleSearchRoute: BibleSearchRoute,
   BibleTranRoute: BibleTranRoute,
   BibleIndexRoute: BibleIndexRoute,
-}
+};
 
-const BibleRouteRouteWithChildren = BibleRouteRoute._addFileChildren(
-  BibleRouteRouteChildren,
-)
+const BibleRouteRouteWithChildren = BibleRouteRoute._addFileChildren(BibleRouteRouteChildren);
 
 interface CmEditRouteLazyRouteChildren {
-  CmEditChordRoute: typeof CmEditChordRoute
-  CmEditConstantsRoute: typeof CmEditConstantsRoute
-  CmEditEERoute: typeof CmEditEERoute
-  CmEditEventsRoute: typeof CmEditEventsRoute
-  CmEditMp3RulesRoute: typeof CmEditMp3RulesRoute
-  CmEditIndexLazyRoute: typeof CmEditIndexLazyRoute
-  CmEditComsIndexRoute: typeof CmEditComsIndexRoute
-  CmEditComsComwTabRouteRoute: typeof CmEditComsComwTabRouteRoute
-  CmEditComsComwIndexRoute: typeof CmEditComsComwIndexRoute
+  CmEditChordRoute: typeof CmEditChordRoute;
+  CmEditConstantsRoute: typeof CmEditConstantsRoute;
+  CmEditEERoute: typeof CmEditEERoute;
+  CmEditEventsRoute: typeof CmEditEventsRoute;
+  CmEditMp3RulesRoute: typeof CmEditMp3RulesRoute;
+  CmEditIndexLazyRoute: typeof CmEditIndexLazyRoute;
+  CmEditComsIndexRoute: typeof CmEditComsIndexRoute;
+  CmEditComsComwTabRouteRoute: typeof CmEditComsComwTabRouteRoute;
+  CmEditComsComwIndexRoute: typeof CmEditComsComwIndexRoute;
 }
 
 const CmEditRouteLazyRouteChildren: CmEditRouteLazyRouteChildren = {
@@ -892,22 +878,20 @@ const CmEditRouteLazyRouteChildren: CmEditRouteLazyRouteChildren = {
   CmEditComsIndexRoute: CmEditComsIndexRoute,
   CmEditComsComwTabRouteRoute: CmEditComsComwTabRouteRoute,
   CmEditComsComwIndexRoute: CmEditComsComwIndexRoute,
-}
+};
 
-const CmEditRouteLazyRouteWithChildren = CmEditRouteLazyRoute._addFileChildren(
-  CmEditRouteLazyRouteChildren,
-)
+const CmEditRouteLazyRouteWithChildren = CmEditRouteLazyRoute._addFileChildren(CmEditRouteLazyRouteChildren);
 
 interface CmRouteRouteChildren {
-  CmEditRouteLazyRoute: typeof CmEditRouteLazyRouteWithChildren
-  CmIndexRoute: typeof CmIndexRoute
-  CmLiEventsRoute: typeof CmLiEventsRoute
-  CmLiFavRoute: typeof CmLiFavRoute
-  CmLiSelRoute: typeof CmLiSelRoute
-  CmIIndexRoute: typeof CmIIndexRoute
-  CmLiIndexRoute: typeof CmLiIndexRoute
-  CmPlayerIndexRoute: typeof CmPlayerIndexRoute
-  CmLiCatCatwRoute: typeof CmLiCatCatwRoute
+  CmEditRouteLazyRoute: typeof CmEditRouteLazyRouteWithChildren;
+  CmIndexRoute: typeof CmIndexRoute;
+  CmLiEventsRoute: typeof CmLiEventsRoute;
+  CmLiFavRoute: typeof CmLiFavRoute;
+  CmLiSelRoute: typeof CmLiSelRoute;
+  CmIIndexRoute: typeof CmIIndexRoute;
+  CmLiIndexRoute: typeof CmLiIndexRoute;
+  CmPlayerIndexRoute: typeof CmPlayerIndexRoute;
+  CmLiCatCatwRoute: typeof CmLiCatCatwRoute;
 }
 
 const CmRouteRouteChildren: CmRouteRouteChildren = {
@@ -920,91 +904,83 @@ const CmRouteRouteChildren: CmRouteRouteChildren = {
   CmLiIndexRoute: CmLiIndexRoute,
   CmPlayerIndexRoute: CmPlayerIndexRoute,
   CmLiCatCatwRoute: CmLiCatCatwRoute,
-}
+};
 
-const CmRouteRouteWithChildren =
-  CmRouteRoute._addFileChildren(CmRouteRouteChildren)
-
-interface GamerRouteRouteChildren {
-  GamerIndexRoute: typeof GamerIndexRoute
-  GamerIIndexRoute: typeof GamerIIndexRoute
-  GamerIMemoryGiantIndexRoute: typeof GamerIMemoryGiantIndexRoute
-}
-
-const GamerRouteRouteChildren: GamerRouteRouteChildren = {
-  GamerIndexRoute: GamerIndexRoute,
-  GamerIIndexRoute: GamerIIndexRoute,
-  GamerIMemoryGiantIndexRoute: GamerIMemoryGiantIndexRoute,
-}
-
-const GamerRouteRouteWithChildren = GamerRouteRoute._addFileChildren(
-  GamerRouteRouteChildren,
-)
-
-interface QRouteRouteChildren {
-  QIRoute: typeof QIRoute
-  QABlankRoute: typeof QABlankRoute
-  QRBlankRoute: typeof QRBlankRoute
-  QAIndexRoute: typeof QAIndexRoute
-  QRIndexRoute: typeof QRIndexRoute
-}
-
-const QRouteRouteChildren: QRouteRouteChildren = {
-  QIRoute: QIRoute,
-  QABlankRoute: QABlankRoute,
-  QRBlankRoute: QRBlankRoute,
-  QAIndexRoute: QAIndexRoute,
-  QRIndexRoute: QRIndexRoute,
-}
-
-const QRouteRouteWithChildren =
-  QRouteRoute._addFileChildren(QRouteRouteChildren)
-
-interface StoragesRouteRouteChildren {
-  StoragesIIndexRoute: typeof StoragesIIndexRoute
-  StoragesIRackwIndexRoute: typeof StoragesIRackwIndexRoute
-  StoragesIRackwCardiIndexRoute: typeof StoragesIRackwCardiIndexRoute
-  StoragesIRackwEditIndexRoute: typeof StoragesIRackwEditIndexRoute
-  StoragesIRackwSumIndexRoute: typeof StoragesIRackwSumIndexRoute
-}
-
-const StoragesRouteRouteChildren: StoragesRouteRouteChildren = {
-  StoragesIIndexRoute: StoragesIIndexRoute,
-  StoragesIRackwIndexRoute: StoragesIRackwIndexRoute,
-  StoragesIRackwCardiIndexRoute: StoragesIRackwCardiIndexRoute,
-  StoragesIRackwEditIndexRoute: StoragesIRackwEditIndexRoute,
-  StoragesIRackwSumIndexRoute: StoragesIRackwSumIndexRoute,
-}
-
-const StoragesRouteRouteWithChildren = StoragesRouteRoute._addFileChildren(
-  StoragesRouteRouteChildren,
-)
+const CmRouteRouteWithChildren = CmRouteRoute._addFileChildren(CmRouteRouteChildren);
 
 interface TunerRouteRouteChildren {
-  TunerIRoute: typeof TunerIRoute
-  TunerIndexRoute: typeof TunerIndexRoute
+  TunerIRoute: typeof TunerIRoute;
+  TunerIndexRoute: typeof TunerIndexRoute;
 }
 
 const TunerRouteRouteChildren: TunerRouteRouteChildren = {
   TunerIRoute: TunerIRoute,
   TunerIndexRoute: TunerIndexRoute,
+};
+
+const TunerRouteRouteWithChildren = TunerRouteRoute._addFileChildren(TunerRouteRouteChildren);
+
+interface GamerRouteLazyRouteChildren {
+  GamerIndexLazyRoute: typeof GamerIndexLazyRoute;
+  GamerIIndexLazyRoute: typeof GamerIIndexLazyRoute;
+  GamerIMemoryGiantIndexLazyRoute: typeof GamerIMemoryGiantIndexLazyRoute;
 }
 
-const TunerRouteRouteWithChildren = TunerRouteRoute._addFileChildren(
-  TunerRouteRouteChildren,
-)
+const GamerRouteLazyRouteChildren: GamerRouteLazyRouteChildren = {
+  GamerIndexLazyRoute: GamerIndexLazyRoute,
+  GamerIIndexLazyRoute: GamerIIndexLazyRoute,
+  GamerIMemoryGiantIndexLazyRoute: GamerIMemoryGiantIndexLazyRoute,
+};
+
+const GamerRouteLazyRouteWithChildren = GamerRouteLazyRoute._addFileChildren(GamerRouteLazyRouteChildren);
+
+interface QRouteLazyRouteChildren {
+  QILazyRoute: typeof QILazyRoute;
+  QABlankLazyRoute: typeof QABlankLazyRoute;
+  QRBlankLazyRoute: typeof QRBlankLazyRoute;
+  QAIndexLazyRoute: typeof QAIndexLazyRoute;
+  QRIndexLazyRoute: typeof QRIndexLazyRoute;
+}
+
+const QRouteLazyRouteChildren: QRouteLazyRouteChildren = {
+  QILazyRoute: QILazyRoute,
+  QABlankLazyRoute: QABlankLazyRoute,
+  QRBlankLazyRoute: QRBlankLazyRoute,
+  QAIndexLazyRoute: QAIndexLazyRoute,
+  QRIndexLazyRoute: QRIndexLazyRoute,
+};
+
+const QRouteLazyRouteWithChildren = QRouteLazyRoute._addFileChildren(QRouteLazyRouteChildren);
+
+interface StoragesRouteLazyRouteChildren {
+  StoragesIIndexLazyRoute: typeof StoragesIIndexLazyRoute;
+  StoragesIRackwIndexLazyRoute: typeof StoragesIRackwIndexLazyRoute;
+  StoragesIRackwSumIndexRoute: typeof StoragesIRackwSumIndexRoute;
+  StoragesIRackwCardiIndexLazyRoute: typeof StoragesIRackwCardiIndexLazyRoute;
+  StoragesIRackwEditIndexLazyRoute: typeof StoragesIRackwEditIndexLazyRoute;
+}
+
+const StoragesRouteLazyRouteChildren: StoragesRouteLazyRouteChildren = {
+  StoragesIIndexLazyRoute: StoragesIIndexLazyRoute,
+  StoragesIRackwIndexLazyRoute: StoragesIRackwIndexLazyRoute,
+  StoragesIRackwSumIndexRoute: StoragesIRackwSumIndexRoute,
+  StoragesIRackwCardiIndexLazyRoute: StoragesIRackwCardiIndexLazyRoute,
+  StoragesIRackwEditIndexLazyRoute: StoragesIRackwEditIndexLazyRoute,
+};
+
+const StoragesRouteLazyRouteWithChildren = StoragesRouteLazyRoute._addFileChildren(StoragesRouteLazyRouteChildren);
 
 interface otherAppNameRouteRouteChildren {
-  otherAppNameIndexRoute: typeof otherAppNameIndexRoute
-  otherAppNameSettingsConsoleRoute: typeof otherAppNameSettingsConsoleRoute
-  otherAppNameSettingsRightsRoute: typeof otherAppNameSettingsRightsRoute
-  otherAppNameActionsIndexRoute: typeof otherAppNameActionsIndexRoute
-  otherAppNameAuthIndexRoute: typeof otherAppNameAuthIndexRoute
-  otherAppNameSchsIndexRoute: typeof otherAppNameSchsIndexRoute
-  otherAppNameSettingsIndexRoute: typeof otherAppNameSettingsIndexRoute
-  otherAppNameActionsDownIndexRoute: typeof otherAppNameActionsDownIndexRoute
-  otherAppNameActionsFilesIndexRoute: typeof otherAppNameActionsFilesIndexRoute
-  otherAppNameSettingsNounpronsIndexRoute: typeof otherAppNameSettingsNounpronsIndexRoute
+  otherAppNameIndexRoute: typeof otherAppNameIndexRoute;
+  otherAppNameSettingsConsoleRoute: typeof otherAppNameSettingsConsoleRoute;
+  otherAppNameSettingsRightsRoute: typeof otherAppNameSettingsRightsRoute;
+  otherAppNameActionsIndexRoute: typeof otherAppNameActionsIndexRoute;
+  otherAppNameAuthIndexRoute: typeof otherAppNameAuthIndexRoute;
+  otherAppNameSchsIndexRoute: typeof otherAppNameSchsIndexRoute;
+  otherAppNameSettingsIndexRoute: typeof otherAppNameSettingsIndexRoute;
+  otherAppNameActionsDownIndexRoute: typeof otherAppNameActionsDownIndexRoute;
+  otherAppNameActionsFilesIndexRoute: typeof otherAppNameActionsFilesIndexRoute;
+  otherAppNameSettingsNounpronsIndexRoute: typeof otherAppNameSettingsNounpronsIndexRoute;
 }
 
 const otherAppNameRouteRouteChildren: otherAppNameRouteRouteChildren = {
@@ -1017,213 +993,211 @@ const otherAppNameRouteRouteChildren: otherAppNameRouteRouteChildren = {
   otherAppNameSettingsIndexRoute: otherAppNameSettingsIndexRoute,
   otherAppNameActionsDownIndexRoute: otherAppNameActionsDownIndexRoute,
   otherAppNameActionsFilesIndexRoute: otherAppNameActionsFilesIndexRoute,
-  otherAppNameSettingsNounpronsIndexRoute:
-    otherAppNameSettingsNounpronsIndexRoute,
-}
+  otherAppNameSettingsNounpronsIndexRoute: otherAppNameSettingsNounpronsIndexRoute,
+};
 
-const otherAppNameRouteRouteWithChildren =
-  otherAppNameRouteRoute._addFileChildren(otherAppNameRouteRouteChildren)
+const otherAppNameRouteRouteWithChildren = otherAppNameRouteRoute._addFileChildren(otherAppNameRouteRouteChildren);
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/bible': typeof BibleRouteRouteWithChildren
-  '/cm': typeof CmRouteRouteWithChildren
-  '/gamer': typeof GamerRouteRouteWithChildren
-  '/q': typeof QRouteRouteWithChildren
-  '/storages': typeof StoragesRouteRouteWithChildren
-  '/tuner': typeof TunerRouteRouteWithChildren
-  '/!other/$appName': typeof otherAppNameRouteRouteWithChildren
-  '/bible/i': typeof BibleIRoute
-  '/bible/search': typeof BibleSearchRoute
-  '/bible/tran': typeof BibleTranRoute
-  '/q/i': typeof QIRoute
-  '/tuner/i': typeof TunerIRoute
-  '/cm/edit': typeof CmEditRouteLazyRouteWithChildren
-  '/bible/': typeof BibleIndexRoute
-  '/cm/': typeof CmIndexRoute
-  '/gamer/': typeof GamerIndexRoute
-  '/presentation': typeof PresentationIndexRoute
-  '/tuner/': typeof TunerIndexRoute
-  '/schedule-day': typeof ScheduleDayIndexLazyRoute
-  '/cm/edit/chord': typeof CmEditChordRoute
-  '/cm/edit/constants': typeof CmEditConstantsRoute
-  '/cm/edit/e-e': typeof CmEditEERoute
-  '/cm/edit/events': typeof CmEditEventsRoute
-  '/cm/edit/mp3Rules': typeof CmEditMp3RulesRoute
-  '/cm/li/events': typeof CmLiEventsRoute
-  '/cm/li/fav': typeof CmLiFavRoute
-  '/cm/li/sel': typeof CmLiSelRoute
-  '/q/a/$blank': typeof QABlankRoute
-  '/q/r/$blank': typeof QRBlankRoute
-  '/!other/$appName/': typeof otherAppNameIndexRoute
-  '/cm/i': typeof CmIIndexRoute
-  '/cm/li': typeof CmLiIndexRoute
-  '/cm/player': typeof CmPlayerIndexRoute
-  '/gamer/i': typeof GamerIIndexRoute
-  '/q/a': typeof QAIndexRoute
-  '/q/r': typeof QRIndexRoute
-  '/schedule-day/$schw': typeof ScheduleDaySchwIndexRoute
-  '/storages/i': typeof StoragesIIndexRoute
-  '/cm/edit/': typeof CmEditIndexLazyRoute
-  '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
-  '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
-  '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
-  '/!other/$appName/actions': typeof otherAppNameActionsIndexRoute
-  '/!other/$appName/auth': typeof otherAppNameAuthIndexRoute
-  '/!other/$appName/schs': typeof otherAppNameSchsIndexRoute
-  '/!other/$appName/settings': typeof otherAppNameSettingsIndexRoute
-  '/cm/edit/coms': typeof CmEditComsIndexRoute
-  '/gamer/i/memory-giant': typeof GamerIMemoryGiantIndexRoute
-  '/storages/i/$rackw': typeof StoragesIRackwIndexRoute
-  '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabRouteRoute
-  '/!other/$appName/actions/down': typeof otherAppNameActionsDownIndexRoute
-  '/!other/$appName/actions/files': typeof otherAppNameActionsFilesIndexRoute
-  '/!other/$appName/settings/noun_prons': typeof otherAppNameSettingsNounpronsIndexRoute
-  '/cm/edit/coms/$comw': typeof CmEditComsComwIndexRoute
-  '/storages/i/$rackw/$cardi': typeof StoragesIRackwCardiIndexRoute
-  '/storages/i/$rackw/edit': typeof StoragesIRackwEditIndexRoute
-  '/storages/i/$rackw/sum': typeof StoragesIRackwSumIndexRoute
+  '/': typeof IndexRoute;
+  '/bible': typeof BibleRouteRouteWithChildren;
+  '/cm': typeof CmRouteRouteWithChildren;
+  '/tuner': typeof TunerRouteRouteWithChildren;
+  '/gamer': typeof GamerRouteLazyRouteWithChildren;
+  '/q': typeof QRouteLazyRouteWithChildren;
+  '/storages': typeof StoragesRouteLazyRouteWithChildren;
+  '/!other/$appName': typeof otherAppNameRouteRouteWithChildren;
+  '/bible/i': typeof BibleIRoute;
+  '/bible/search': typeof BibleSearchRoute;
+  '/bible/tran': typeof BibleTranRoute;
+  '/tuner/i': typeof TunerIRoute;
+  '/cm/edit': typeof CmEditRouteLazyRouteWithChildren;
+  '/q/i': typeof QILazyRoute;
+  '/bible/': typeof BibleIndexRoute;
+  '/cm/': typeof CmIndexRoute;
+  '/tuner/': typeof TunerIndexRoute;
+  '/gamer/': typeof GamerIndexLazyRoute;
+  '/presentation': typeof PresentationIndexLazyRoute;
+  '/schedule-day': typeof ScheduleDayIndexLazyRoute;
+  '/cm/edit/chord': typeof CmEditChordRoute;
+  '/cm/edit/constants': typeof CmEditConstantsRoute;
+  '/cm/edit/e-e': typeof CmEditEERoute;
+  '/cm/edit/events': typeof CmEditEventsRoute;
+  '/cm/edit/mp3Rules': typeof CmEditMp3RulesRoute;
+  '/cm/li/events': typeof CmLiEventsRoute;
+  '/cm/li/fav': typeof CmLiFavRoute;
+  '/cm/li/sel': typeof CmLiSelRoute;
+  '/q/a/$blank': typeof QABlankLazyRoute;
+  '/q/r/$blank': typeof QRBlankLazyRoute;
+  '/!other/$appName/': typeof otherAppNameIndexRoute;
+  '/cm/i': typeof CmIIndexRoute;
+  '/cm/li': typeof CmLiIndexRoute;
+  '/cm/player': typeof CmPlayerIndexRoute;
+  '/cm/edit/': typeof CmEditIndexLazyRoute;
+  '/gamer/i': typeof GamerIIndexLazyRoute;
+  '/q/a': typeof QAIndexLazyRoute;
+  '/q/r': typeof QRIndexLazyRoute;
+  '/schedule-day/$schw': typeof ScheduleDaySchwIndexLazyRoute;
+  '/storages/i': typeof StoragesIIndexLazyRoute;
+  '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute;
+  '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute;
+  '/cm/li/cat/$catw': typeof CmLiCatCatwRoute;
+  '/!other/$appName/actions': typeof otherAppNameActionsIndexRoute;
+  '/!other/$appName/auth': typeof otherAppNameAuthIndexRoute;
+  '/!other/$appName/schs': typeof otherAppNameSchsIndexRoute;
+  '/!other/$appName/settings': typeof otherAppNameSettingsIndexRoute;
+  '/cm/edit/coms': typeof CmEditComsIndexRoute;
+  '/gamer/i/memory-giant': typeof GamerIMemoryGiantIndexLazyRoute;
+  '/storages/i/$rackw': typeof StoragesIRackwIndexLazyRoute;
+  '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabRouteRoute;
+  '/!other/$appName/actions/down': typeof otherAppNameActionsDownIndexRoute;
+  '/!other/$appName/actions/files': typeof otherAppNameActionsFilesIndexRoute;
+  '/!other/$appName/settings/noun_prons': typeof otherAppNameSettingsNounpronsIndexRoute;
+  '/cm/edit/coms/$comw': typeof CmEditComsComwIndexRoute;
+  '/storages/i/$rackw/sum': typeof StoragesIRackwSumIndexRoute;
+  '/storages/i/$rackw/$cardi': typeof StoragesIRackwCardiIndexLazyRoute;
+  '/storages/i/$rackw/edit': typeof StoragesIRackwEditIndexLazyRoute;
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/q': typeof QRouteRouteWithChildren
-  '/storages': typeof StoragesRouteRouteWithChildren
-  '/bible/i': typeof BibleIRoute
-  '/bible/search': typeof BibleSearchRoute
-  '/bible/tran': typeof BibleTranRoute
-  '/q/i': typeof QIRoute
-  '/tuner/i': typeof TunerIRoute
-  '/bible': typeof BibleIndexRoute
-  '/cm': typeof CmIndexRoute
-  '/gamer': typeof GamerIndexRoute
-  '/presentation': typeof PresentationIndexRoute
-  '/tuner': typeof TunerIndexRoute
-  '/schedule-day': typeof ScheduleDayIndexLazyRoute
-  '/cm/edit/chord': typeof CmEditChordRoute
-  '/cm/edit/constants': typeof CmEditConstantsRoute
-  '/cm/edit/e-e': typeof CmEditEERoute
-  '/cm/edit/events': typeof CmEditEventsRoute
-  '/cm/edit/mp3Rules': typeof CmEditMp3RulesRoute
-  '/cm/li/events': typeof CmLiEventsRoute
-  '/cm/li/fav': typeof CmLiFavRoute
-  '/cm/li/sel': typeof CmLiSelRoute
-  '/q/a/$blank': typeof QABlankRoute
-  '/q/r/$blank': typeof QRBlankRoute
-  '/!other/$appName': typeof otherAppNameIndexRoute
-  '/cm/i': typeof CmIIndexRoute
-  '/cm/li': typeof CmLiIndexRoute
-  '/cm/player': typeof CmPlayerIndexRoute
-  '/gamer/i': typeof GamerIIndexRoute
-  '/q/a': typeof QAIndexRoute
-  '/q/r': typeof QRIndexRoute
-  '/schedule-day/$schw': typeof ScheduleDaySchwIndexRoute
-  '/storages/i': typeof StoragesIIndexRoute
-  '/cm/edit': typeof CmEditIndexLazyRoute
-  '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
-  '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
-  '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
-  '/!other/$appName/actions': typeof otherAppNameActionsIndexRoute
-  '/!other/$appName/auth': typeof otherAppNameAuthIndexRoute
-  '/!other/$appName/schs': typeof otherAppNameSchsIndexRoute
-  '/!other/$appName/settings': typeof otherAppNameSettingsIndexRoute
-  '/cm/edit/coms': typeof CmEditComsIndexRoute
-  '/gamer/i/memory-giant': typeof GamerIMemoryGiantIndexRoute
-  '/storages/i/$rackw': typeof StoragesIRackwIndexRoute
-  '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabRouteRoute
-  '/!other/$appName/actions/down': typeof otherAppNameActionsDownIndexRoute
-  '/!other/$appName/actions/files': typeof otherAppNameActionsFilesIndexRoute
-  '/!other/$appName/settings/noun_prons': typeof otherAppNameSettingsNounpronsIndexRoute
-  '/cm/edit/coms/$comw': typeof CmEditComsComwIndexRoute
-  '/storages/i/$rackw/$cardi': typeof StoragesIRackwCardiIndexRoute
-  '/storages/i/$rackw/edit': typeof StoragesIRackwEditIndexRoute
-  '/storages/i/$rackw/sum': typeof StoragesIRackwSumIndexRoute
+  '/': typeof IndexRoute;
+  '/q': typeof QRouteLazyRouteWithChildren;
+  '/storages': typeof StoragesRouteLazyRouteWithChildren;
+  '/bible/i': typeof BibleIRoute;
+  '/bible/search': typeof BibleSearchRoute;
+  '/bible/tran': typeof BibleTranRoute;
+  '/tuner/i': typeof TunerIRoute;
+  '/q/i': typeof QILazyRoute;
+  '/bible': typeof BibleIndexRoute;
+  '/cm': typeof CmIndexRoute;
+  '/tuner': typeof TunerIndexRoute;
+  '/gamer': typeof GamerIndexLazyRoute;
+  '/presentation': typeof PresentationIndexLazyRoute;
+  '/schedule-day': typeof ScheduleDayIndexLazyRoute;
+  '/cm/edit/chord': typeof CmEditChordRoute;
+  '/cm/edit/constants': typeof CmEditConstantsRoute;
+  '/cm/edit/e-e': typeof CmEditEERoute;
+  '/cm/edit/events': typeof CmEditEventsRoute;
+  '/cm/edit/mp3Rules': typeof CmEditMp3RulesRoute;
+  '/cm/li/events': typeof CmLiEventsRoute;
+  '/cm/li/fav': typeof CmLiFavRoute;
+  '/cm/li/sel': typeof CmLiSelRoute;
+  '/q/a/$blank': typeof QABlankLazyRoute;
+  '/q/r/$blank': typeof QRBlankLazyRoute;
+  '/!other/$appName': typeof otherAppNameIndexRoute;
+  '/cm/i': typeof CmIIndexRoute;
+  '/cm/li': typeof CmLiIndexRoute;
+  '/cm/player': typeof CmPlayerIndexRoute;
+  '/cm/edit': typeof CmEditIndexLazyRoute;
+  '/gamer/i': typeof GamerIIndexLazyRoute;
+  '/q/a': typeof QAIndexLazyRoute;
+  '/q/r': typeof QRIndexLazyRoute;
+  '/schedule-day/$schw': typeof ScheduleDaySchwIndexLazyRoute;
+  '/storages/i': typeof StoragesIIndexLazyRoute;
+  '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute;
+  '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute;
+  '/cm/li/cat/$catw': typeof CmLiCatCatwRoute;
+  '/!other/$appName/actions': typeof otherAppNameActionsIndexRoute;
+  '/!other/$appName/auth': typeof otherAppNameAuthIndexRoute;
+  '/!other/$appName/schs': typeof otherAppNameSchsIndexRoute;
+  '/!other/$appName/settings': typeof otherAppNameSettingsIndexRoute;
+  '/cm/edit/coms': typeof CmEditComsIndexRoute;
+  '/gamer/i/memory-giant': typeof GamerIMemoryGiantIndexLazyRoute;
+  '/storages/i/$rackw': typeof StoragesIRackwIndexLazyRoute;
+  '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabRouteRoute;
+  '/!other/$appName/actions/down': typeof otherAppNameActionsDownIndexRoute;
+  '/!other/$appName/actions/files': typeof otherAppNameActionsFilesIndexRoute;
+  '/!other/$appName/settings/noun_prons': typeof otherAppNameSettingsNounpronsIndexRoute;
+  '/cm/edit/coms/$comw': typeof CmEditComsComwIndexRoute;
+  '/storages/i/$rackw/sum': typeof StoragesIRackwSumIndexRoute;
+  '/storages/i/$rackw/$cardi': typeof StoragesIRackwCardiIndexLazyRoute;
+  '/storages/i/$rackw/edit': typeof StoragesIRackwEditIndexLazyRoute;
 }
 
 export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/bible': typeof BibleRouteRouteWithChildren
-  '/cm': typeof CmRouteRouteWithChildren
-  '/gamer': typeof GamerRouteRouteWithChildren
-  '/q': typeof QRouteRouteWithChildren
-  '/storages': typeof StoragesRouteRouteWithChildren
-  '/tuner': typeof TunerRouteRouteWithChildren
-  '/!other/$appName': typeof otherAppNameRouteRouteWithChildren
-  '/bible/i': typeof BibleIRoute
-  '/bible/search': typeof BibleSearchRoute
-  '/bible/tran': typeof BibleTranRoute
-  '/q/i': typeof QIRoute
-  '/tuner/i': typeof TunerIRoute
-  '/cm/edit': typeof CmEditRouteLazyRouteWithChildren
-  '/bible/': typeof BibleIndexRoute
-  '/cm/': typeof CmIndexRoute
-  '/gamer/': typeof GamerIndexRoute
-  '/presentation/': typeof PresentationIndexRoute
-  '/tuner/': typeof TunerIndexRoute
-  '/schedule-day/': typeof ScheduleDayIndexLazyRoute
-  '/cm/edit/chord': typeof CmEditChordRoute
-  '/cm/edit/constants': typeof CmEditConstantsRoute
-  '/cm/edit/e-e': typeof CmEditEERoute
-  '/cm/edit/events': typeof CmEditEventsRoute
-  '/cm/edit/mp3Rules': typeof CmEditMp3RulesRoute
-  '/cm/li/events': typeof CmLiEventsRoute
-  '/cm/li/fav': typeof CmLiFavRoute
-  '/cm/li/sel': typeof CmLiSelRoute
-  '/q/a/$blank': typeof QABlankRoute
-  '/q/r/$blank': typeof QRBlankRoute
-  '/!other/$appName/': typeof otherAppNameIndexRoute
-  '/cm/i/': typeof CmIIndexRoute
-  '/cm/li/': typeof CmLiIndexRoute
-  '/cm/player/': typeof CmPlayerIndexRoute
-  '/gamer/i/': typeof GamerIIndexRoute
-  '/q/a/': typeof QAIndexRoute
-  '/q/r/': typeof QRIndexRoute
-  '/schedule-day/$schw/': typeof ScheduleDaySchwIndexRoute
-  '/storages/i/': typeof StoragesIIndexRoute
-  '/cm/edit/': typeof CmEditIndexLazyRoute
-  '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
-  '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
-  '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
-  '/!other/$appName/actions/': typeof otherAppNameActionsIndexRoute
-  '/!other/$appName/auth/': typeof otherAppNameAuthIndexRoute
-  '/!other/$appName/schs/': typeof otherAppNameSchsIndexRoute
-  '/!other/$appName/settings/': typeof otherAppNameSettingsIndexRoute
-  '/cm/edit/coms/': typeof CmEditComsIndexRoute
-  '/gamer/i/memory-giant/': typeof GamerIMemoryGiantIndexRoute
-  '/storages/i/$rackw/': typeof StoragesIRackwIndexRoute
-  '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabRouteRoute
-  '/!other/$appName/actions/down/': typeof otherAppNameActionsDownIndexRoute
-  '/!other/$appName/actions/files/': typeof otherAppNameActionsFilesIndexRoute
-  '/!other/$appName/settings/noun_prons/': typeof otherAppNameSettingsNounpronsIndexRoute
-  '/cm/edit/coms/$comw/': typeof CmEditComsComwIndexRoute
-  '/storages/i/$rackw/$cardi/': typeof StoragesIRackwCardiIndexRoute
-  '/storages/i/$rackw/edit/': typeof StoragesIRackwEditIndexRoute
-  '/storages/i/$rackw/sum/': typeof StoragesIRackwSumIndexRoute
+  __root__: typeof rootRoute;
+  '/': typeof IndexRoute;
+  '/bible': typeof BibleRouteRouteWithChildren;
+  '/cm': typeof CmRouteRouteWithChildren;
+  '/tuner': typeof TunerRouteRouteWithChildren;
+  '/gamer': typeof GamerRouteLazyRouteWithChildren;
+  '/q': typeof QRouteLazyRouteWithChildren;
+  '/storages': typeof StoragesRouteLazyRouteWithChildren;
+  '/!other/$appName': typeof otherAppNameRouteRouteWithChildren;
+  '/bible/i': typeof BibleIRoute;
+  '/bible/search': typeof BibleSearchRoute;
+  '/bible/tran': typeof BibleTranRoute;
+  '/tuner/i': typeof TunerIRoute;
+  '/cm/edit': typeof CmEditRouteLazyRouteWithChildren;
+  '/q/i': typeof QILazyRoute;
+  '/bible/': typeof BibleIndexRoute;
+  '/cm/': typeof CmIndexRoute;
+  '/tuner/': typeof TunerIndexRoute;
+  '/gamer/': typeof GamerIndexLazyRoute;
+  '/presentation/': typeof PresentationIndexLazyRoute;
+  '/schedule-day/': typeof ScheduleDayIndexLazyRoute;
+  '/cm/edit/chord': typeof CmEditChordRoute;
+  '/cm/edit/constants': typeof CmEditConstantsRoute;
+  '/cm/edit/e-e': typeof CmEditEERoute;
+  '/cm/edit/events': typeof CmEditEventsRoute;
+  '/cm/edit/mp3Rules': typeof CmEditMp3RulesRoute;
+  '/cm/li/events': typeof CmLiEventsRoute;
+  '/cm/li/fav': typeof CmLiFavRoute;
+  '/cm/li/sel': typeof CmLiSelRoute;
+  '/q/a/$blank': typeof QABlankLazyRoute;
+  '/q/r/$blank': typeof QRBlankLazyRoute;
+  '/!other/$appName/': typeof otherAppNameIndexRoute;
+  '/cm/i/': typeof CmIIndexRoute;
+  '/cm/li/': typeof CmLiIndexRoute;
+  '/cm/player/': typeof CmPlayerIndexRoute;
+  '/cm/edit/': typeof CmEditIndexLazyRoute;
+  '/gamer/i/': typeof GamerIIndexLazyRoute;
+  '/q/a/': typeof QAIndexLazyRoute;
+  '/q/r/': typeof QRIndexLazyRoute;
+  '/schedule-day/$schw/': typeof ScheduleDaySchwIndexLazyRoute;
+  '/storages/i/': typeof StoragesIIndexLazyRoute;
+  '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute;
+  '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute;
+  '/cm/li/cat/$catw': typeof CmLiCatCatwRoute;
+  '/!other/$appName/actions/': typeof otherAppNameActionsIndexRoute;
+  '/!other/$appName/auth/': typeof otherAppNameAuthIndexRoute;
+  '/!other/$appName/schs/': typeof otherAppNameSchsIndexRoute;
+  '/!other/$appName/settings/': typeof otherAppNameSettingsIndexRoute;
+  '/cm/edit/coms/': typeof CmEditComsIndexRoute;
+  '/gamer/i/memory-giant/': typeof GamerIMemoryGiantIndexLazyRoute;
+  '/storages/i/$rackw/': typeof StoragesIRackwIndexLazyRoute;
+  '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabRouteRoute;
+  '/!other/$appName/actions/down/': typeof otherAppNameActionsDownIndexRoute;
+  '/!other/$appName/actions/files/': typeof otherAppNameActionsFilesIndexRoute;
+  '/!other/$appName/settings/noun_prons/': typeof otherAppNameSettingsNounpronsIndexRoute;
+  '/cm/edit/coms/$comw/': typeof CmEditComsComwIndexRoute;
+  '/storages/i/$rackw/sum/': typeof StoragesIRackwSumIndexRoute;
+  '/storages/i/$rackw/$cardi/': typeof StoragesIRackwCardiIndexLazyRoute;
+  '/storages/i/$rackw/edit/': typeof StoragesIRackwEditIndexLazyRoute;
 }
 
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
     | '/'
     | '/bible'
     | '/cm'
+    | '/tuner'
     | '/gamer'
     | '/q'
     | '/storages'
-    | '/tuner'
     | '/!other/$appName'
     | '/bible/i'
     | '/bible/search'
     | '/bible/tran'
-    | '/q/i'
     | '/tuner/i'
     | '/cm/edit'
+    | '/q/i'
     | '/bible/'
     | '/cm/'
+    | '/tuner/'
     | '/gamer/'
     | '/presentation'
-    | '/tuner/'
     | '/schedule-day'
     | '/cm/edit/chord'
     | '/cm/edit/constants'
@@ -1239,12 +1213,12 @@ export interface FileRouteTypes {
     | '/cm/i'
     | '/cm/li'
     | '/cm/player'
+    | '/cm/edit/'
     | '/gamer/i'
     | '/q/a'
     | '/q/r'
     | '/schedule-day/$schw'
     | '/storages/i'
-    | '/cm/edit/'
     | '/!other/$appName/settings/console'
     | '/!other/$appName/settings/rights'
     | '/cm/li/cat/$catw'
@@ -1260,10 +1234,10 @@ export interface FileRouteTypes {
     | '/!other/$appName/actions/files'
     | '/!other/$appName/settings/noun_prons'
     | '/cm/edit/coms/$comw'
-    | '/storages/i/$rackw/$cardi'
-    | '/storages/i/$rackw/edit'
     | '/storages/i/$rackw/sum'
-  fileRoutesByTo: FileRoutesByTo
+    | '/storages/i/$rackw/$cardi'
+    | '/storages/i/$rackw/edit';
+  fileRoutesByTo: FileRoutesByTo;
   to:
     | '/'
     | '/q'
@@ -1271,13 +1245,13 @@ export interface FileRouteTypes {
     | '/bible/i'
     | '/bible/search'
     | '/bible/tran'
-    | '/q/i'
     | '/tuner/i'
+    | '/q/i'
     | '/bible'
     | '/cm'
+    | '/tuner'
     | '/gamer'
     | '/presentation'
-    | '/tuner'
     | '/schedule-day'
     | '/cm/edit/chord'
     | '/cm/edit/constants'
@@ -1293,12 +1267,12 @@ export interface FileRouteTypes {
     | '/cm/i'
     | '/cm/li'
     | '/cm/player'
+    | '/cm/edit'
     | '/gamer/i'
     | '/q/a'
     | '/q/r'
     | '/schedule-day/$schw'
     | '/storages/i'
-    | '/cm/edit'
     | '/!other/$appName/settings/console'
     | '/!other/$appName/settings/rights'
     | '/cm/li/cat/$catw'
@@ -1314,30 +1288,30 @@ export interface FileRouteTypes {
     | '/!other/$appName/actions/files'
     | '/!other/$appName/settings/noun_prons'
     | '/cm/edit/coms/$comw'
-    | '/storages/i/$rackw/$cardi'
-    | '/storages/i/$rackw/edit'
     | '/storages/i/$rackw/sum'
+    | '/storages/i/$rackw/$cardi'
+    | '/storages/i/$rackw/edit';
   id:
     | '__root__'
     | '/'
     | '/bible'
     | '/cm'
+    | '/tuner'
     | '/gamer'
     | '/q'
     | '/storages'
-    | '/tuner'
     | '/!other/$appName'
     | '/bible/i'
     | '/bible/search'
     | '/bible/tran'
-    | '/q/i'
     | '/tuner/i'
     | '/cm/edit'
+    | '/q/i'
     | '/bible/'
     | '/cm/'
+    | '/tuner/'
     | '/gamer/'
     | '/presentation/'
-    | '/tuner/'
     | '/schedule-day/'
     | '/cm/edit/chord'
     | '/cm/edit/constants'
@@ -1353,12 +1327,12 @@ export interface FileRouteTypes {
     | '/cm/i/'
     | '/cm/li/'
     | '/cm/player/'
+    | '/cm/edit/'
     | '/gamer/i/'
     | '/q/a/'
     | '/q/r/'
     | '/schedule-day/$schw/'
     | '/storages/i/'
-    | '/cm/edit/'
     | '/!other/$appName/settings/console'
     | '/!other/$appName/settings/rights'
     | '/cm/li/cat/$catw'
@@ -1374,43 +1348,41 @@ export interface FileRouteTypes {
     | '/!other/$appName/actions/files/'
     | '/!other/$appName/settings/noun_prons/'
     | '/cm/edit/coms/$comw/'
-    | '/storages/i/$rackw/$cardi/'
-    | '/storages/i/$rackw/edit/'
     | '/storages/i/$rackw/sum/'
-  fileRoutesById: FileRoutesById
+    | '/storages/i/$rackw/$cardi/'
+    | '/storages/i/$rackw/edit/';
+  fileRoutesById: FileRoutesById;
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  BibleRouteRoute: typeof BibleRouteRouteWithChildren
-  CmRouteRoute: typeof CmRouteRouteWithChildren
-  GamerRouteRoute: typeof GamerRouteRouteWithChildren
-  QRouteRoute: typeof QRouteRouteWithChildren
-  StoragesRouteRoute: typeof StoragesRouteRouteWithChildren
-  TunerRouteRoute: typeof TunerRouteRouteWithChildren
-  otherAppNameRouteRoute: typeof otherAppNameRouteRouteWithChildren
-  PresentationIndexRoute: typeof PresentationIndexRoute
-  ScheduleDayIndexLazyRoute: typeof ScheduleDayIndexLazyRoute
-  ScheduleDaySchwIndexRoute: typeof ScheduleDaySchwIndexRoute
+  IndexRoute: typeof IndexRoute;
+  BibleRouteRoute: typeof BibleRouteRouteWithChildren;
+  CmRouteRoute: typeof CmRouteRouteWithChildren;
+  TunerRouteRoute: typeof TunerRouteRouteWithChildren;
+  GamerRouteLazyRoute: typeof GamerRouteLazyRouteWithChildren;
+  QRouteLazyRoute: typeof QRouteLazyRouteWithChildren;
+  StoragesRouteLazyRoute: typeof StoragesRouteLazyRouteWithChildren;
+  otherAppNameRouteRoute: typeof otherAppNameRouteRouteWithChildren;
+  PresentationIndexLazyRoute: typeof PresentationIndexLazyRoute;
+  ScheduleDayIndexLazyRoute: typeof ScheduleDayIndexLazyRoute;
+  ScheduleDaySchwIndexLazyRoute: typeof ScheduleDaySchwIndexLazyRoute;
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BibleRouteRoute: BibleRouteRouteWithChildren,
   CmRouteRoute: CmRouteRouteWithChildren,
-  GamerRouteRoute: GamerRouteRouteWithChildren,
-  QRouteRoute: QRouteRouteWithChildren,
-  StoragesRouteRoute: StoragesRouteRouteWithChildren,
   TunerRouteRoute: TunerRouteRouteWithChildren,
+  GamerRouteLazyRoute: GamerRouteLazyRouteWithChildren,
+  QRouteLazyRoute: QRouteLazyRouteWithChildren,
+  StoragesRouteLazyRoute: StoragesRouteLazyRouteWithChildren,
   otherAppNameRouteRoute: otherAppNameRouteRouteWithChildren,
-  PresentationIndexRoute: PresentationIndexRoute,
+  PresentationIndexLazyRoute: PresentationIndexLazyRoute,
   ScheduleDayIndexLazyRoute: ScheduleDayIndexLazyRoute,
-  ScheduleDaySchwIndexRoute: ScheduleDaySchwIndexRoute,
-}
+  ScheduleDaySchwIndexLazyRoute: ScheduleDaySchwIndexLazyRoute,
+};
 
-export const routeTree = rootRoute
-  ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+export const routeTree = rootRoute._addFileChildren(rootRouteChildren)._addFileTypes<FileRouteTypes>();
 
 /* ROUTE_MANIFEST_START
 {
@@ -1421,10 +1393,10 @@ export const routeTree = rootRoute
         "/",
         "/bible",
         "/cm",
+        "/tuner",
         "/gamer",
         "/q",
         "/storages",
-        "/tuner",
         "/!other/$appName",
         "/presentation/",
         "/schedule-day/",
@@ -1457,8 +1429,15 @@ export const routeTree = rootRoute
         "/cm/li/cat/$catw"
       ]
     },
+    "/tuner": {
+      "filePath": "tuner/route.tsx",
+      "children": [
+        "/tuner/i",
+        "/tuner/"
+      ]
+    },
     "/gamer": {
-      "filePath": "gamer/route.tsx",
+      "filePath": "gamer/route.lazy.tsx",
       "children": [
         "/gamer/",
         "/gamer/i/",
@@ -1466,7 +1445,7 @@ export const routeTree = rootRoute
       ]
     },
     "/q": {
-      "filePath": "q/route.tsx",
+      "filePath": "q/route.lazy.tsx",
       "children": [
         "/q/i",
         "/q/a/$blank",
@@ -1476,20 +1455,13 @@ export const routeTree = rootRoute
       ]
     },
     "/storages": {
-      "filePath": "storages/route.tsx",
+      "filePath": "storages/route.lazy.tsx",
       "children": [
         "/storages/i/",
         "/storages/i/$rackw/",
+        "/storages/i/$rackw/sum/",
         "/storages/i/$rackw/$cardi/",
-        "/storages/i/$rackw/edit/",
-        "/storages/i/$rackw/sum/"
-      ]
-    },
-    "/tuner": {
-      "filePath": "tuner/route.tsx",
-      "children": [
-        "/tuner/i",
-        "/tuner/"
+        "/storages/i/$rackw/edit/"
       ]
     },
     "/!other/$appName": {
@@ -1519,10 +1491,6 @@ export const routeTree = rootRoute
       "filePath": "bible/tran.tsx",
       "parent": "/bible"
     },
-    "/q/i": {
-      "filePath": "q/i.tsx",
-      "parent": "/q"
-    },
     "/tuner/i": {
       "filePath": "tuner/i.tsx",
       "parent": "/tuner"
@@ -1542,6 +1510,10 @@ export const routeTree = rootRoute
         "/cm/edit/coms/$comw/"
       ]
     },
+    "/q/i": {
+      "filePath": "q/i.lazy.tsx",
+      "parent": "/q"
+    },
     "/bible/": {
       "filePath": "bible/index.tsx",
       "parent": "/bible"
@@ -1550,16 +1522,16 @@ export const routeTree = rootRoute
       "filePath": "cm/index.tsx",
       "parent": "/cm"
     },
-    "/gamer/": {
-      "filePath": "gamer/index.tsx",
-      "parent": "/gamer"
-    },
-    "/presentation/": {
-      "filePath": "presentation/index.tsx"
-    },
     "/tuner/": {
       "filePath": "tuner/index.tsx",
       "parent": "/tuner"
+    },
+    "/gamer/": {
+      "filePath": "gamer/index.lazy.tsx",
+      "parent": "/gamer"
+    },
+    "/presentation/": {
+      "filePath": "presentation/index.lazy.tsx"
     },
     "/schedule-day/": {
       "filePath": "schedule-day/index.lazy.tsx"
@@ -1597,11 +1569,11 @@ export const routeTree = rootRoute
       "parent": "/cm"
     },
     "/q/a/$blank": {
-      "filePath": "q/a/$blank.tsx",
+      "filePath": "q/a/$blank.lazy.tsx",
       "parent": "/q"
     },
     "/q/r/$blank": {
-      "filePath": "q/r/$blank.tsx",
+      "filePath": "q/r/$blank.lazy.tsx",
       "parent": "/q"
     },
     "/!other/$appName/": {
@@ -1620,28 +1592,28 @@ export const routeTree = rootRoute
       "filePath": "cm/player/index.tsx",
       "parent": "/cm"
     },
-    "/gamer/i/": {
-      "filePath": "gamer/i/index.tsx",
-      "parent": "/gamer"
-    },
-    "/q/a/": {
-      "filePath": "q/a/index.tsx",
-      "parent": "/q"
-    },
-    "/q/r/": {
-      "filePath": "q/r/index.tsx",
-      "parent": "/q"
-    },
-    "/schedule-day/$schw/": {
-      "filePath": "schedule-day/$schw/index.tsx"
-    },
-    "/storages/i/": {
-      "filePath": "storages/i/index.tsx",
-      "parent": "/storages"
-    },
     "/cm/edit/": {
       "filePath": "cm/edit/index.lazy.tsx",
       "parent": "/cm/edit"
+    },
+    "/gamer/i/": {
+      "filePath": "gamer/i/index.lazy.tsx",
+      "parent": "/gamer"
+    },
+    "/q/a/": {
+      "filePath": "q/a/index.lazy.tsx",
+      "parent": "/q"
+    },
+    "/q/r/": {
+      "filePath": "q/r/index.lazy.tsx",
+      "parent": "/q"
+    },
+    "/schedule-day/$schw/": {
+      "filePath": "schedule-day/$schw/index.lazy.tsx"
+    },
+    "/storages/i/": {
+      "filePath": "storages/i/index.lazy.tsx",
+      "parent": "/storages"
     },
     "/!other/$appName/settings/console": {
       "filePath": "!other.$appName/settings/console.tsx",
@@ -1676,11 +1648,11 @@ export const routeTree = rootRoute
       "parent": "/cm/edit"
     },
     "/gamer/i/memory-giant/": {
-      "filePath": "gamer/i/memory-giant/index.tsx",
+      "filePath": "gamer/i/memory-giant/index.lazy.tsx",
       "parent": "/gamer"
     },
     "/storages/i/$rackw/": {
-      "filePath": "storages/i/$rackw/index.tsx",
+      "filePath": "storages/i/$rackw/index.lazy.tsx",
       "parent": "/storages"
     },
     "/cm/edit/coms/$comw/$tab": {
@@ -1703,16 +1675,16 @@ export const routeTree = rootRoute
       "filePath": "cm/edit/coms/$comw/index.tsx",
       "parent": "/cm/edit"
     },
+    "/storages/i/$rackw/sum/": {
+      "filePath": "storages/i/$rackw/sum/index.tsx",
+      "parent": "/storages"
+    },
     "/storages/i/$rackw/$cardi/": {
-      "filePath": "storages/i/$rackw/$cardi/index.tsx",
+      "filePath": "storages/i/$rackw/$cardi/index.lazy.tsx",
       "parent": "/storages"
     },
     "/storages/i/$rackw/edit/": {
-      "filePath": "storages/i/$rackw/edit/index.tsx",
-      "parent": "/storages"
-    },
-    "/storages/i/$rackw/sum/": {
-      "filePath": "storages/i/$rackw/sum/index.tsx",
+      "filePath": "storages/i/$rackw/edit/index.lazy.tsx",
       "parent": "/storages"
     }
   }

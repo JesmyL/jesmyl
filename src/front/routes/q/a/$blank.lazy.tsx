@@ -1,7 +1,7 @@
 import { QuestionerCheckAnswersPage } from '$q/pages/CheckAnswersPage/ui/Page';
-import { createFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/q/a/$blank')({
+export const Route = createLazyFileRoute('/q/a/$blank')({
   component: RouteComponent,
 });
 

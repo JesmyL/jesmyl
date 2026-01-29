@@ -1,7 +1,7 @@
 import { PresentationPage } from '#features/broadcast/ui/Page';
-import { createFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/presentation/')({
+export const Route = createLazyFileRoute('/presentation/')({
   component: RouteComponent,
 });
 
