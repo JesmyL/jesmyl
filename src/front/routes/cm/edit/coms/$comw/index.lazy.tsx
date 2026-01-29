@@ -1,6 +1,6 @@
-import { createFileRoute, Navigate } from '@tanstack/react-router';
+import { createLazyFileRoute, Navigate } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/cm/edit/coms/$comw/')({
+export const Route = createLazyFileRoute('/cm/edit/coms/$comw/')({
   component: RouteComponent,
 });
 

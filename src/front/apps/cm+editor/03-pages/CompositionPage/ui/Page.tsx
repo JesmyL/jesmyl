@@ -4,14 +4,15 @@ import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { MyLib, mylib } from '#shared/lib/my-lib';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { useCcomw, useEditableCcom } from '$cm+editor/shared/lib/useEditableCom';
+import { useEditableCcom } from '$cm+editor/shared/lib/useEditableCom';
 import { removedCompositionsAtom } from '$cm+editor/shared/state/com';
 import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContainer';
 import { cmEditorComTabCompositionNavs } from '$cm+editor/widgets/com-tab';
 import { CmComAudioPlayer, CmComNumber } from '$cm/ext';
-import { Link, useNavigate, useParams } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
+import { CmComWid } from 'shared/api';
 import styled from 'styled-components';
 import { useCmEditorCompositionTrySendAudioMarks } from '../api/useCmComEditorTrySendAudioMarks';
 import {
@@ -19,14 +20,18 @@ import {
   StyledCmEditorCompositionIsThereOtherFirstRedactorUserDetect,
 } from './EditCompositionBusyInfo';
 
-export const CmEditorCompositionPage = () => {
-  const ccom = useEditableCcom();
-  const ccomw = useCcomw();
+export const CmEditorCompositionPage = ({
+  tab,
+  ccomw,
+}: {
+  tab: keyof typeof cmEditorComTabCompositionNavs;
+  ccomw: CmComWid;
+}) => {
+  const ccom = useEditableCcom(ccomw);
   const removedComs = useAtomValue(removedCompositionsAtom);
   const [isOpenPlayer, setIsOpenPlayer] = useState(false);
   const connectionNode = useConnectionState('m-2');
   const navigate = useNavigate();
-  const { tab }: { tab: keyof typeof cmEditorComTabCompositionNavs } = useParams({ from: '/cm/edit/coms/$comw/$tab' });
   const checkAccess = useCheckUserAccessRightsInScope();
   const TabComponent =
     (tab &&

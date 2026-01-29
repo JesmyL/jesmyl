@@ -1,15 +1,11 @@
 import { cmIDB } from '$cm/ext';
-import { useParams } from '@tanstack/react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { CmComWid } from 'shared/api';
 import { EditableCom } from '../classes/EditableCom';
 
-export const useCcomw = () => +useParams({ from: '/cm/edit/coms/$comw/$tab' }).comw as CmComWid | NaN;
-
-export const useEditableCcom = (): EditableCom | und => {
-  const ccomw = useCcomw();
-  const icom = useLiveQuery(() => cmIDB.db.coms.where({ w: ccomw }).first(), [ccomw]);
+export const useEditableCcom = (comw: CmComWid): EditableCom | und => {
+  const icom = useLiveQuery(() => cmIDB.db.coms.where({ w: comw }).first(), [comw]);
 
   return useMemo(() => icom && new EditableCom(icom), [icom]);
 };

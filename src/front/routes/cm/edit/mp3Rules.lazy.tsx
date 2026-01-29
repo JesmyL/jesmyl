@@ -1,8 +1,8 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { CmEditorMp3RulesPage } from '$cm+editor/pages/Mp3RulesPage';
-import { createFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/cm/edit/mp3Rules')({
+export const Route = createLazyFileRoute('/cm/edit/mp3Rules')({
   component: RouteComponent,
 });
 

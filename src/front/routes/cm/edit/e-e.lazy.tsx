@@ -1,8 +1,8 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { CmEditorEERulesPage } from '$cm+editor/pages/EERulesPage';
-import { createFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/cm/edit/e-e')({
+export const Route = createLazyFileRoute('/cm/edit/e-e')({
   component: RouteComponent,
 });
 
