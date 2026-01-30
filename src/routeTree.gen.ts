@@ -21,6 +21,7 @@ import { Route as TunerIndexImport } from './front/routes/tuner/index'
 import { Route as CmIndexImport } from './front/routes/cm/index'
 import { Route as BibleIndexImport } from './front/routes/bible/index'
 import { Route as TunerIImport } from './front/routes/tuner/i'
+import { Route as QIImport } from './front/routes/q/i'
 import { Route as BibleTranImport } from './front/routes/bible/tran'
 import { Route as BibleSearchImport } from './front/routes/bible/search'
 import { Route as BibleIImport } from './front/routes/bible/i'
@@ -32,6 +33,7 @@ import { Route as otherAppNameIndexImport } from './front/routes/!other.$appName
 import { Route as CmLiSelImport } from './front/routes/cm/li/sel'
 import { Route as CmLiFavImport } from './front/routes/cm/li/fav'
 import { Route as CmLiEventsImport } from './front/routes/cm/li/events'
+import { Route as CmEditChordImport } from './front/routes/cm/edit/chord'
 import { Route as otherAppNameSettingsIndexImport } from './front/routes/!other.$appName/settings/index'
 import { Route as otherAppNameSchsIndexImport } from './front/routes/!other.$appName/schs/index'
 import { Route as otherAppNameAuthIndexImport } from './front/routes/!other.$appName/auth/index'
@@ -52,7 +54,6 @@ const GamerRouteLazyImport = createFileRoute('/gamer')()
 const ScheduleDayIndexLazyImport = createFileRoute('/schedule-day/')()
 const PresentationIndexLazyImport = createFileRoute('/presentation/')()
 const GamerIndexLazyImport = createFileRoute('/gamer/')()
-const QILazyImport = createFileRoute('/q/i')()
 const CmEditRouteLazyImport = createFileRoute('/cm/edit')()
 const StoragesIIndexLazyImport = createFileRoute('/storages/i/')()
 const ScheduleDaySchwIndexLazyImport = createFileRoute('/schedule-day/$schw/')()
@@ -66,7 +67,6 @@ const CmEditMp3RulesLazyImport = createFileRoute('/cm/edit/mp3Rules')()
 const CmEditEventsLazyImport = createFileRoute('/cm/edit/events')()
 const CmEditEELazyImport = createFileRoute('/cm/edit/e-e')()
 const CmEditConstantLazyImport = createFileRoute('/cm/edit/constant')()
-const CmEditChordLazyImport = createFileRoute('/cm/edit/chord')()
 const StoragesIRackwIndexLazyImport = createFileRoute('/storages/i/$rackw/')()
 const GamerIMemoryGiantIndexLazyImport = createFileRoute(
   '/gamer/i/memory-giant/',
@@ -173,12 +173,6 @@ const BibleIndexRoute = BibleIndexImport.update({
   getParentRoute: () => BibleRouteRoute,
 } as any)
 
-const QILazyRoute = QILazyImport.update({
-  id: '/i',
-  path: '/i',
-  getParentRoute: () => QRouteLazyRoute,
-} as any).lazy(() => import('./front/routes/q/i.lazy').then((d) => d.Route))
-
 const CmEditRouteLazyRoute = CmEditRouteLazyImport.update({
   id: '/edit',
   path: '/edit',
@@ -191,6 +185,12 @@ const TunerIRoute = TunerIImport.update({
   id: '/i',
   path: '/i',
   getParentRoute: () => TunerRouteRoute,
+} as any)
+
+const QIRoute = QIImport.update({
+  id: '/i',
+  path: '/i',
+  getParentRoute: () => QRouteLazyRoute,
 } as any)
 
 const BibleTranRoute = BibleTranImport.update({
@@ -337,14 +337,6 @@ const CmEditConstantLazyRoute = CmEditConstantLazyImport.update({
   import('./front/routes/cm/edit/constant.lazy').then((d) => d.Route),
 )
 
-const CmEditChordLazyRoute = CmEditChordLazyImport.update({
-  id: '/chord',
-  path: '/chord',
-  getParentRoute: () => CmEditRouteLazyRoute,
-} as any).lazy(() =>
-  import('./front/routes/cm/edit/chord.lazy').then((d) => d.Route),
-)
-
 const CmLiSelRoute = CmLiSelImport.update({
   id: '/li/sel',
   path: '/li/sel',
@@ -361,6 +353,12 @@ const CmLiEventsRoute = CmLiEventsImport.update({
   id: '/li/events',
   path: '/li/events',
   getParentRoute: () => CmRouteRoute,
+} as any)
+
+const CmEditChordRoute = CmEditChordImport.update({
+  id: '/chord',
+  path: '/chord',
+  getParentRoute: () => CmEditRouteLazyRoute,
 } as any)
 
 const StoragesIRackwIndexLazyRoute = StoragesIRackwIndexLazyImport.update({
@@ -584,6 +582,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BibleTranImport
       parentRoute: typeof BibleRouteImport
     }
+    '/q/i': {
+      id: '/q/i'
+      path: '/i'
+      fullPath: '/q/i'
+      preLoaderRoute: typeof QIImport
+      parentRoute: typeof QRouteLazyImport
+    }
     '/tuner/i': {
       id: '/tuner/i'
       path: '/i'
@@ -597,13 +602,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/cm/edit'
       preLoaderRoute: typeof CmEditRouteLazyImport
       parentRoute: typeof CmRouteImport
-    }
-    '/q/i': {
-      id: '/q/i'
-      path: '/i'
-      fullPath: '/q/i'
-      preLoaderRoute: typeof QILazyImport
-      parentRoute: typeof QRouteLazyImport
     }
     '/bible/': {
       id: '/bible/'
@@ -647,6 +645,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ScheduleDayIndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/cm/edit/chord': {
+      id: '/cm/edit/chord'
+      path: '/chord'
+      fullPath: '/cm/edit/chord'
+      preLoaderRoute: typeof CmEditChordImport
+      parentRoute: typeof CmEditRouteLazyImport
+    }
     '/cm/li/events': {
       id: '/cm/li/events'
       path: '/li/events'
@@ -667,13 +672,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/cm/li/sel'
       preLoaderRoute: typeof CmLiSelImport
       parentRoute: typeof CmRouteImport
-    }
-    '/cm/edit/chord': {
-      id: '/cm/edit/chord'
-      path: '/chord'
-      fullPath: '/cm/edit/chord'
-      preLoaderRoute: typeof CmEditChordLazyImport
-      parentRoute: typeof CmEditRouteLazyImport
     }
     '/cm/edit/constant': {
       id: '/cm/edit/constant'
@@ -937,7 +935,7 @@ const BibleRouteRouteWithChildren = BibleRouteRoute._addFileChildren(
 )
 
 interface CmEditRouteLazyRouteChildren {
-  CmEditChordLazyRoute: typeof CmEditChordLazyRoute
+  CmEditChordRoute: typeof CmEditChordRoute
   CmEditConstantLazyRoute: typeof CmEditConstantLazyRoute
   CmEditEELazyRoute: typeof CmEditEELazyRoute
   CmEditEventsLazyRoute: typeof CmEditEventsLazyRoute
@@ -949,7 +947,7 @@ interface CmEditRouteLazyRouteChildren {
 }
 
 const CmEditRouteLazyRouteChildren: CmEditRouteLazyRouteChildren = {
-  CmEditChordLazyRoute: CmEditChordLazyRoute,
+  CmEditChordRoute: CmEditChordRoute,
   CmEditConstantLazyRoute: CmEditConstantLazyRoute,
   CmEditEELazyRoute: CmEditEELazyRoute,
   CmEditEventsLazyRoute: CmEditEventsLazyRoute,
@@ -1022,7 +1020,7 @@ const GamerRouteLazyRouteWithChildren = GamerRouteLazyRoute._addFileChildren(
 )
 
 interface QRouteLazyRouteChildren {
-  QILazyRoute: typeof QILazyRoute
+  QIRoute: typeof QIRoute
   QABlankLazyRoute: typeof QABlankLazyRoute
   QRBlankLazyRoute: typeof QRBlankLazyRoute
   QAIndexLazyRoute: typeof QAIndexLazyRoute
@@ -1030,7 +1028,7 @@ interface QRouteLazyRouteChildren {
 }
 
 const QRouteLazyRouteChildren: QRouteLazyRouteChildren = {
-  QILazyRoute: QILazyRoute,
+  QIRoute: QIRoute,
   QABlankLazyRoute: QABlankLazyRoute,
   QRBlankLazyRoute: QRBlankLazyRoute,
   QAIndexLazyRoute: QAIndexLazyRoute,
@@ -1102,19 +1100,19 @@ export interface FileRoutesByFullPath {
   '/bible/i': typeof BibleIRoute
   '/bible/search': typeof BibleSearchRoute
   '/bible/tran': typeof BibleTranRoute
+  '/q/i': typeof QIRoute
   '/tuner/i': typeof TunerIRoute
   '/cm/edit': typeof CmEditRouteLazyRouteWithChildren
-  '/q/i': typeof QILazyRoute
   '/bible/': typeof BibleIndexRoute
   '/cm/': typeof CmIndexRoute
   '/tuner/': typeof TunerIndexRoute
   '/gamer/': typeof GamerIndexLazyRoute
   '/presentation': typeof PresentationIndexLazyRoute
   '/schedule-day': typeof ScheduleDayIndexLazyRoute
+  '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
   '/cm/li/sel': typeof CmLiSelRoute
-  '/cm/edit/chord': typeof CmEditChordLazyRoute
   '/cm/edit/constant': typeof CmEditConstantLazyRoute
   '/cm/edit/e-e': typeof CmEditEELazyRoute
   '/cm/edit/events': typeof CmEditEventsLazyRoute
@@ -1158,18 +1156,18 @@ export interface FileRoutesByTo {
   '/bible/i': typeof BibleIRoute
   '/bible/search': typeof BibleSearchRoute
   '/bible/tran': typeof BibleTranRoute
+  '/q/i': typeof QIRoute
   '/tuner/i': typeof TunerIRoute
-  '/q/i': typeof QILazyRoute
   '/bible': typeof BibleIndexRoute
   '/cm': typeof CmIndexRoute
   '/tuner': typeof TunerIndexRoute
   '/gamer': typeof GamerIndexLazyRoute
   '/presentation': typeof PresentationIndexLazyRoute
   '/schedule-day': typeof ScheduleDayIndexLazyRoute
+  '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
   '/cm/li/sel': typeof CmLiSelRoute
-  '/cm/edit/chord': typeof CmEditChordLazyRoute
   '/cm/edit/constant': typeof CmEditConstantLazyRoute
   '/cm/edit/e-e': typeof CmEditEELazyRoute
   '/cm/edit/events': typeof CmEditEventsLazyRoute
@@ -1219,19 +1217,19 @@ export interface FileRoutesById {
   '/bible/i': typeof BibleIRoute
   '/bible/search': typeof BibleSearchRoute
   '/bible/tran': typeof BibleTranRoute
+  '/q/i': typeof QIRoute
   '/tuner/i': typeof TunerIRoute
   '/cm/edit': typeof CmEditRouteLazyRouteWithChildren
-  '/q/i': typeof QILazyRoute
   '/bible/': typeof BibleIndexRoute
   '/cm/': typeof CmIndexRoute
   '/tuner/': typeof TunerIndexRoute
   '/gamer/': typeof GamerIndexLazyRoute
   '/presentation/': typeof PresentationIndexLazyRoute
   '/schedule-day/': typeof ScheduleDayIndexLazyRoute
+  '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
   '/cm/li/sel': typeof CmLiSelRoute
-  '/cm/edit/chord': typeof CmEditChordLazyRoute
   '/cm/edit/constant': typeof CmEditConstantLazyRoute
   '/cm/edit/e-e': typeof CmEditEELazyRoute
   '/cm/edit/events': typeof CmEditEventsLazyRoute
@@ -1282,19 +1280,19 @@ export interface FileRouteTypes {
     | '/bible/i'
     | '/bible/search'
     | '/bible/tran'
+    | '/q/i'
     | '/tuner/i'
     | '/cm/edit'
-    | '/q/i'
     | '/bible/'
     | '/cm/'
     | '/tuner/'
     | '/gamer/'
     | '/presentation'
     | '/schedule-day'
+    | '/cm/edit/chord'
     | '/cm/li/events'
     | '/cm/li/fav'
     | '/cm/li/sel'
-    | '/cm/edit/chord'
     | '/cm/edit/constant'
     | '/cm/edit/e-e'
     | '/cm/edit/events'
@@ -1337,18 +1335,18 @@ export interface FileRouteTypes {
     | '/bible/i'
     | '/bible/search'
     | '/bible/tran'
-    | '/tuner/i'
     | '/q/i'
+    | '/tuner/i'
     | '/bible'
     | '/cm'
     | '/tuner'
     | '/gamer'
     | '/presentation'
     | '/schedule-day'
+    | '/cm/edit/chord'
     | '/cm/li/events'
     | '/cm/li/fav'
     | '/cm/li/sel'
-    | '/cm/edit/chord'
     | '/cm/edit/constant'
     | '/cm/edit/e-e'
     | '/cm/edit/events'
@@ -1396,19 +1394,19 @@ export interface FileRouteTypes {
     | '/bible/i'
     | '/bible/search'
     | '/bible/tran'
+    | '/q/i'
     | '/tuner/i'
     | '/cm/edit'
-    | '/q/i'
     | '/bible/'
     | '/cm/'
     | '/tuner/'
     | '/gamer/'
     | '/presentation/'
     | '/schedule-day/'
+    | '/cm/edit/chord'
     | '/cm/li/events'
     | '/cm/li/fav'
     | '/cm/li/sel'
-    | '/cm/edit/chord'
     | '/cm/edit/constant'
     | '/cm/edit/e-e'
     | '/cm/edit/events'
@@ -1585,6 +1583,10 @@ export const routeTree = rootRoute
       "filePath": "bible/tran.tsx",
       "parent": "/bible"
     },
+    "/q/i": {
+      "filePath": "q/i.tsx",
+      "parent": "/q"
+    },
     "/tuner/i": {
       "filePath": "tuner/i.tsx",
       "parent": "/tuner"
@@ -1603,10 +1605,6 @@ export const routeTree = rootRoute
         "/cm/edit/coms/$comw/",
         "/cm/edit/coms/$comw/$tab/"
       ]
-    },
-    "/q/i": {
-      "filePath": "q/i.lazy.tsx",
-      "parent": "/q"
     },
     "/bible/": {
       "filePath": "bible/index.tsx",
@@ -1630,6 +1628,10 @@ export const routeTree = rootRoute
     "/schedule-day/": {
       "filePath": "schedule-day/index.lazy.tsx"
     },
+    "/cm/edit/chord": {
+      "filePath": "cm/edit/chord.tsx",
+      "parent": "/cm/edit"
+    },
     "/cm/li/events": {
       "filePath": "cm/li/events.tsx",
       "parent": "/cm"
@@ -1641,10 +1643,6 @@ export const routeTree = rootRoute
     "/cm/li/sel": {
       "filePath": "cm/li/sel.tsx",
       "parent": "/cm"
-    },
-    "/cm/edit/chord": {
-      "filePath": "cm/edit/chord.lazy.tsx",
-      "parent": "/cm/edit"
     },
     "/cm/edit/constant": {
       "filePath": "cm/edit/constant.lazy.tsx",

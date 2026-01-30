@@ -1,10 +1,10 @@
 import { QuestionerUserAnswerPage } from '$q/pages/UserAnswerPage/ui/Page';
-import { createLazyFileRoute } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { QuestionerBlankWid } from 'shared/model/q';
 
-export const Route = createLazyFileRoute('/q/i')({
+export const Route = createFileRoute('/q/i')({
   component: RouteComponent,
   validateSearch: (search: PRecord<string, unknown>): { q?: QuestionerBlankWid } => {
     return {
