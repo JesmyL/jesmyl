@@ -71,7 +71,7 @@ export type IExportableOrder = InheritancableOrder & {
   /** Минималка */
   m?: 1;
 
-  /** Открыто в полном режиме */
+  /** Открыто в свёрнутом режиме */
   o?: 1;
 
   /** Тип блока */
