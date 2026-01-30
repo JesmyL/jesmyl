@@ -6,7 +6,7 @@ export type CmEditComOrderTsjrpcModel = {
     ordw: CmComOrderWid;
     orderTitle: string;
     comw: CmComWid;
-    inhIndex?: number;
+    inhi?: number;
     value: OrderRepeats;
     textValue: string;
   }) => IExportableCom;
@@ -15,7 +15,7 @@ export type CmEditComOrderTsjrpcModel = {
     ordw: CmComOrderWid;
     orderTitle: string;
     comw: CmComWid;
-    inhIndex: number;
+    inhi: number | nil;
   }) => IExportableCom;
 
   setKind: (args: {
@@ -39,7 +39,7 @@ export type CmEditComOrderTsjrpcModel = {
   toggleAnchorInheritVisibility: (args: {
     comw: CmComWid;
     ordw: CmComOrderWid;
-    anchorInheritIndex: number;
+    inhi: number;
     leadOrderTitle: string;
   }) => IExportableCom;
 

@@ -1,8 +1,9 @@
-import { CmComWid } from 'shared/api';
+import { CmComWid, IScheduleWidgetWid } from 'shared/api';
 
 export interface CmComOpenRouteProps {
   comw?: CmComWid;
   tran?: '-!-';
+  schw?: IScheduleWidgetWid;
 }
 
 export type CmComOpenLinkRenderer = (props: {

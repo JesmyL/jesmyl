@@ -88,7 +88,7 @@ export const CmEditorPage = () => {
             </Link>
           )}
           {checkAccess('cm', 'CONST', 'R') && (
-            <Link to="/cm/edit/constants">
+            <Link to="/cm/edit/constant">
               <BrutalItem
                 iconNode={
                   <LazyIcon

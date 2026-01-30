@@ -11,6 +11,7 @@ import { cmComLastOpenComwAtom } from '$cm/entities/index';
 import { TheCmComComposition } from '$cm/widgets/com';
 import { FileRoutesByPath, Link, useSearch } from '@tanstack/react-router';
 import { JSX, useEffect } from 'react';
+import { CmComInScheduleWid } from '../state/contexts';
 
 interface Props<Path extends keyof FileRoutesByPath> {
   path: Path;
@@ -21,7 +22,7 @@ interface Props<Path extends keyof FileRoutesByPath> {
 
 export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>(props: Props<Path>) => {
   const ComRouteComponent = () => {
-    const { comw, tran } = useSearch({ from: props.path }) as CmComOpenRouteProps;
+    const { comw, tran, schw } = useSearch({ from: props.path }) as CmComOpenRouteProps;
     const com = useCmCom(comw);
     const comList = props.useComListPack();
 
@@ -39,7 +40,9 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>(props:
               <CmBroadcast />
             )
           ) : com || comw !== undefined ? (
-            <TheCmComComposition />
+            <CmComInScheduleWid value={schw}>
+              <TheCmComComposition />
+            </CmComInScheduleWid>
           ) : (
             <props.RouteComponent />
           )}

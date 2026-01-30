@@ -98,7 +98,7 @@ export const CmEditorComTabComOrders = ({ ccom }: { ccom: EditableCom }) => {
                       <>
                         Сделать {ord.me.anchorInheritIndex + 2}-ю часть ссылки на
                         <span className="text-x7"> {ord.me.leadOrd.me.header()} </span>
-                        {ord.me.leadOrd.top.inh?.v?.[ord.me.anchorInheritIndex] == null ? 'не' : ''}видимой?
+                        {ord.me.leadOrd.top._v?.[ord.me.anchorInheritIndex] == null ? 'не' : ''}видимой?
                       </>
                     }
                     onClick={() => {
@@ -107,7 +107,7 @@ export const CmEditorComTabComOrders = ({ ccom }: { ccom: EditableCom }) => {
                       return cmEditComOrderClientTsjrpcMethods.toggleAnchorInheritVisibility({
                         comw: ord.com.wid,
                         ordw: ord.me.leadOrd.wid,
-                        anchorInheritIndex: ord.me.anchorInheritIndex,
+                        inhi: ord.me.anchorInheritIndex,
                         leadOrderTitle: ord.me.leadOrd.me.header(),
                       });
                     }}

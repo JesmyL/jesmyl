@@ -1,7 +1,14 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { makeRegExp } from 'regexpert';
-import { CmComOrderWid, CmComWid, IExportableOrder, IServerSideCom } from 'shared/api';
+import {
+  CmComOrderWid,
+  CmComWid,
+  IExportableOrder,
+  IServerSideCom,
+  OrderRepeats,
+  SpecialOrderRepeats,
+} from 'shared/api';
 import { CmEditComOrderTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-order.tsjrpc.model';
 import { itNNil, smylib } from 'shared/utils';
 import { modifyCom } from './edit-com.tsjrpc.base';
@@ -12,30 +19,80 @@ export const cmEditComOrderServerTsjrpcBase =
       super({
         scope: 'CmEditComOrder',
         methods: {
-          clearOwnRepeats: modifyOrd((ord, { orderTitle, inhIndex }, { auth }) => {
+          clearOwnRepeats: modifyOrd((ord, { orderTitle, inhi }, { auth }, com) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_REP', 'U')) throw '';
 
-            if (inhIndex < 0) delete ord.r;
-            else if (ord.inh?.r != null) {
-              delete ord.inh.r[inhIndex];
+            const removeAllJoinRepeats = (ordRepeats: OrderRepeats | nil) => {
+              if (!smylib.isObj(ordRepeats)) return;
 
-              if (!smylib.keys(ord.inh.r).length) delete ord.inh.r;
-              if (!smylib.keys(ord.inh).length) delete ord.inh;
+              smylib.keys(ordRepeats).forEach(repeatKey => {
+                const letter = repeatKey.match(makeRegExp('/[a-z]/'))?.[0];
+
+                if (!letter) return;
+
+                const deleteKeysWithLetter = (reps: SpecialOrderRepeats | nil) => {
+                  if (reps == null || !smylib.isObj(reps)) return;
+
+                  smylib.keys(reps).forEach(key => {
+                    if (key.includes(letter)) delete reps[key];
+                  });
+                };
+
+                com.o?.forEach(ord => {
+                  if (smylib.isObj(ord.r)) {
+                    deleteKeysWithLetter(ord.r);
+
+                    if (!smylib.keys(ord.r).length) delete ord.r;
+                  }
+
+                  if (ord._r) {
+                    const inheritRepeats = ord._r;
+                    ord._r.forEach((inheritReps, inheritRepsi) => {
+                      if (!smylib.isObj(inheritReps)) return;
+
+                      deleteKeysWithLetter(inheritReps);
+
+                      if (!smylib.keys(inheritReps).length) {
+                        delete inheritRepeats[inheritRepsi];
+                      }
+                    });
+
+                    while (ord._r.length && ord._r[ord._r.length - 1] == null) {
+                      ord._r.pop();
+                    }
+
+                    if (!ord._r.length) delete ord._r;
+                  }
+                });
+              });
+            };
+
+            if (inhi == null) {
+              removeAllJoinRepeats(ord.r);
+              clearNullableOrderInheritRepeats(ord);
+
+              delete ord.r;
+            } else if (ord._r?.[inhi] != null) {
+              removeAllJoinRepeats(ord._r[inhi]);
+
+              if (ord._r) {
+                delete ord._r[inhi];
+
+                clearNullableOrderInheritRepeats(ord);
+              }
             }
 
             return `сброшено значение повторений для блока ${orderTitle}`;
           }),
-          setRepeats: modifyOrd((ord, { value, inhIndex, orderTitle, textValue }, { auth }) => {
+
+          setRepeats: modifyOrd((ord, { value, inhi, orderTitle, textValue }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_REP', 'U')) throw '';
 
-            if (inhIndex !== undefined) {
-              ord.inh ??= {};
-              ord.inh.r ??= {};
+            if (inhi != null) {
+              ord._r ??= [];
+              ord._r[inhi] = value;
 
-              ord.inh.r[inhIndex] = value;
-
-              if (!smylib.values(ord.inh.v).filter(itNNil).length) delete ord.inh.v;
-              if (!smylib.values(ord.inh).filter(itNNil).length) delete ord.inh;
+              clearNullableOrderInheritRepeats(ord);
             } else ord.r = value;
 
             return `изменены повторения для блока ${orderTitle}:\n\n${textValue}`;
@@ -66,21 +123,15 @@ export const cmEditComOrderServerTsjrpcBase =
             return `порядковый блок ${orderTitle} сделан ${ord.v ? '' : 'не'}видимым`;
           }),
 
-          toggleAnchorInheritVisibility: modifyOrd((ord, { anchorInheritIndex, leadOrderTitle }, { auth }) => {
+          toggleAnchorInheritVisibility: modifyOrd((ord, { leadOrderTitle, inhi }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
-            ord.inh ??= {};
-            ord.inh.v ??= {};
+            ord._v ??= [];
+            ord._v[inhi] = ord._v[inhi] === undefined ? 0 : undefined;
 
-            ord.inh.v[anchorInheritIndex] = ord.inh.v[anchorInheritIndex] === undefined ? 0 : undefined;
+            if (!smylib.values(ord._v).filter(itNNil).length) delete ord._v;
 
-            if (!smylib.values(ord.inh.v).filter(itNNil).length) delete ord.inh.v;
-            if (!smylib.values(ord.inh).filter(itNNil).length) delete ord.inh;
-
-            return (
-              `${anchorInheritIndex + 2}-я часть ссылки на ${leadOrderTitle}` +
-              ` сделана ${ord.inh?.v?.[anchorInheritIndex] == null ? '' : 'не'}видимой`
-            );
+            return `часть ссылки на ${leadOrderTitle} сделана ${ord._v?.[inhi] == null ? '' : 'не'}видимой`;
           }),
 
           moveOrdAfter: modifyCom((com, { insertAfterOrdwOrFirst, ordw, orderTitle }, { auth }) => {
@@ -247,3 +298,11 @@ function modifyOrd<Props extends { ordw: CmComOrderWid; comw: CmComWid }>(
 
 const getNextOrdWid = (ords: { w: CmComOrderWid }[]) =>
   ords.reduce((max, curr) => (curr.w > max ? curr.w : max), CmComOrderWid.def) + 1;
+
+const clearNullableOrderInheritRepeats = (ord: IExportableOrder) => {
+  if (ord._r == null) return;
+
+  while (ord._r.length && ord._r[ord._r.length - 1] == null) ord._r.pop();
+
+  if (!ord._r.length) delete ord._r;
+};

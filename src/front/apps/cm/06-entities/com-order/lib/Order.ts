@@ -147,7 +147,7 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
 
   get repeats(): OrderRepeats | null {
     if (this.me.isAnchorInherit) {
-      return (this.me.leadOrd?.me.source?.top.inh?.r?.[this.me.anchorInheritIndex || 0] ?? 0) as never;
+      return (this.me.leadOrd?.me.source?.top._r?.[this.me.anchorInheritIndex || 0] ?? 0) as never;
     } else if (this.me && this.me.source && this.me.source.top.r != null) return this.me.source.top.r;
     else {
       const repeats =
@@ -166,18 +166,6 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
     }
   }
 
-  set repeats(val: OrderRepeats | null) {
-    if (this.me.isAnchorInherit && this.me.leadOrd?.me.source) {
-      const inh = this.me.leadOrd.me.source.top.inh || { r: {} };
-      const repeats = (inh.r = (inh.r || {}) as Record<number, OrderRepeats | null>);
-
-      if (this.me.anchorInheritIndex != null) repeats[this.me.anchorInheritIndex] = val;
-      this.me.leadOrd.me.source.top.inh = inh as never;
-    } else if (this.me.source) this.me.source.top.r = val;
-  }
-
-  setRepeats = (val: OrderRepeats | null) => (this.repeats = val);
-
   get regions(): CmComOrderEditableRegion<CmComOrder>[] | und {
     if (this._regions === undefined) this.setRegions();
 
@@ -195,18 +183,18 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
     return (this.me.isInherit || this.me.isAnchorInherit || this.me.isAnchorInheritPlus) && this.isHeaderNoneForce;
   }
 
-  getWatchInheritance = <Key extends keyof InheritancableOrder>(fieldn: Key) => {
+  getWatchInheritance = <Key extends keyof Required<InheritancableOrder>>(key: Key) => {
     return (
       this.me.isAnchorInherit
-        ? (this.me.watchOrd?.me.source?.top.inh?.[fieldn]?.[this.me.anchorInheritIndex || 0] ??
-          this.me.watchOrd?.getBasic(fieldn))
+        ? (this.me.watchOrd?.me.source?.top[`_${key}`]?.[this.me.anchorInheritIndex || 0] ??
+          this.me.watchOrd?.getBasic(key))
         : null
     ) as InheritancableOrder[Key] | nil;
   };
 
-  getLeadInheritance = <Key extends keyof InheritancableOrder>(fieldn: Key) => {
+  getLeadInheritance = <Key extends keyof InheritancableOrder>(key: Key) => {
     return (
-      this.me.isAnchorInherit ? this.me.leadOrd?.me.source?.top.inh?.[fieldn]?.[this.me.anchorInheritIndex || 0] : null
+      this.me.isAnchorInherit ? this.me.leadOrd?.me.source?.top[`_${key}`]?.[this.me.anchorInheritIndex || 0] : null
     ) as InheritancableOrder[Key] | nil;
   };
 

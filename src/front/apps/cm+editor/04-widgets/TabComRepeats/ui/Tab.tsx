@@ -45,7 +45,7 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
 
       cmEditComOrderClientTsjrpcMethods.setRepeats({
         ordw,
-        inhIndex: ord.me.anchorInheritIndex,
+        inhi: ord.me.anchorInheritIndex,
         orderTitle: ord.me.header(),
         comw: ccom.wid,
         value: (keys.length ? (keys.length === 1 && keys[0] === '.' ? repeats['.'] : repeats) : 0) ?? 0,
@@ -139,7 +139,7 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
                                 ordw: ord.me.leadOrd?.wid ?? ord.wid,
                                 orderTitle: ord.me.header(),
                                 comw: ccom.wid,
-                                inhIndex: ord.me.anchorInheritIndex ?? -1,
+                                inhi: ord.me.anchorInheritIndex,
                               });
                           }}
                         />

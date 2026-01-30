@@ -30,8 +30,6 @@ export type SpecialOrderRepeats = Record<string, number>;
 export type OrderRepeats = number | SpecialOrderRepeats;
 
 export interface InheritancableOrder {
-  /** Уникальный айди */
-  w: CmComOrderWid;
   /** Повторения */
   r?: OrderRepeats | null;
   /** Позиции аккордов */
@@ -49,27 +47,48 @@ type Inheritancables<K extends keyof InheritancableOrder = keyof InheritancableO
   Record<K, Record<number, InheritancableOrder[K]>>
 >;
 
+type WatchInherited<K extends keyof InheritancableOrder> = (InheritancableOrder[K] | nil)[];
+
 export interface IExportableOrder extends InheritancableOrder {
+  /** Уникальный айди */
+  w: CmComOrderWid;
+
   /** Ссылка на блок */
   a?: CmComOrderWid;
+
   /** Текстовый блок */
   t?: number;
+
   /** Блок аккордов */
   c?: number;
+
   /** Без названия */
   e?: 1;
+
   /** Особые значения */
   f?: IExportableOrderFieldValues;
+
   /** Минималка */
   m?: 1;
+
   /** Открыто в полном режиме */
   o?: 1;
+
   /** Тип блока */
   k?: CmComBlockKindKey;
+
   /** @deprecated */
   s?: string;
-  /** Значения наследников */
+
+  /**
+   * @deprecated
+   * Значения наследников
+   * */
   inh?: Inheritancables;
+
+  _v?: WatchInherited<'v'>;
+  _r?: WatchInherited<'r'>;
+  _p?: WatchInherited<'p'>;
 }
 
 export type IFixedCom = { w: CmComWid } & Partial<{

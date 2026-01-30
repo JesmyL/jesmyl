@@ -383,8 +383,6 @@ export function modifyCom<Props extends { comw: CmComWid }>(
     const mod = comsDirStore.saveItem(props.comw, { ...comBlank, ...com }) ?? 0;
     const expCom = mapCmImportableToExportableCom(com);
 
-    com.o?.forEach(ord => delete ord.s);
-
     cmShareServerTsjrpcMethods.editedCom({ com: expCom, mod }, null);
 
     return { value: expCom, description: description ? `Песня "${comName}" - ${description}` : null };

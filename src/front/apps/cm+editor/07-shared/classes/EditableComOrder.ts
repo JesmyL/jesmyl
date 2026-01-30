@@ -1,5 +1,5 @@
 import { CmComOrder, CmComOrderEditableRegion, ICmComOrderExportableMe } from '$cm/ext';
-import { InheritancableOrder, OrderRepeats } from 'shared/api';
+import { InheritancableOrder } from 'shared/api';
 import { cmEditComOrderClientTsjrpcMethods } from '../lib/cm-editor.tsjrpc.methods';
 import { EditableCom } from './EditableCom';
 
@@ -20,8 +20,6 @@ export class EditableComOrder extends CmComOrder {
     return this._regions;
   }
 
-  setRepeats = (val?: OrderRepeats | null) => val ?? null;
-
   get fieldValues() {
     return this.getBasicOr('f', {});
   }
@@ -41,7 +39,7 @@ export class EditableComOrder extends CmComOrder {
   isInheritValue<Key extends keyof InheritancableOrder>(key: Key) {
     return this.me.isAnchorInherit
       ? this.me.anchorInheritIndex != null &&
-          this.me.leadOrd?.me.source?.top.inh?.[key]?.[this.me.anchorInheritIndex] == null
+          this.me.leadOrd?.me.source?.top[`_${key}`]?.[this.me.anchorInheritIndex] == null
       : this.me.isAnchor && this.me.source?.top[key] == null;
   }
 
