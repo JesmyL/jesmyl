@@ -13,7 +13,7 @@ const initialUrl = new URL(location.href);
 const localhost = 'localhost';
 
 const sokiLink = isTest
-  ? `ws://${isHttpsOnLocalhost ? localhost : import.meta.env.VITE_DNS}${import.meta.env.VITE_SOKI_POSTFIX}`
+  ? `ws://${isHttpsOnLocalhost ? localhost : import.meta.env.VITE_DNS || localhost}${import.meta.env.VITE_SOKI_POSTFIX}`
   : `wss://${import.meta.env.VITE_DNS}${import.meta.env.VITE_SOKI_POSTFIX}`;
 
 export const environment: Environment = {
