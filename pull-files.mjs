@@ -19,6 +19,8 @@ import { exec } from 'child_process';
     ['apps/cm'],
     ['apps/cm/coms'],
     ['apps/cm/comComments'],
+    ['apps/cm/comsInSchEvent'],
+    ['apps/cm/comsInSchEventHistory'],
     ['apps/q'],
     ['apps/q/blanks'],
     ['apps/storages/list'],
