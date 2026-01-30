@@ -4,7 +4,7 @@ import { useEditableCcom } from '$cm+editor/shared/lib/useEditableCom';
 import { ChordVisibleVariant, cmIDB, TheCmComOrder } from '$cm/ext';
 import { indexIDB } from '$index/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { CmComOrderWid, CmComWid, IScheduleWidgetWid } from 'shared/api';
+import { CmComWid, IScheduleWidgetWid } from 'shared/api';
 
 export const CmEditorEditComForSchEventFullContentInner = ({
   comw,
@@ -18,7 +18,7 @@ export const CmEditorEditComForSchEventFullContentInner = ({
   const schPack = useLiveQuery(() => cmIDB.tb.scheduleComPacks.get(schw), [schw]);
   const com = useEditableCcom(comw ?? CmComWid.def);
   const schedule = useLiveQuery(() => indexIDB.db.schs.get(schw), [schw]);
-  const comInterpretation = schPack?.intp?.[comw];
+  const ordsInterpretation = schPack?.intp?.[comw]?.o;
 
   return (
     <>
@@ -29,9 +29,11 @@ export const CmEditorEditComForSchEventFullContentInner = ({
       {linkNode}
 
       {com?.orders?.map((ord, ordi) => {
-        const isInvisible =
-          comInterpretation?.o?.[ord.wid]?.v === 0 ||
-          comInterpretation?.o?.[ord.me.leadOrd?.wid ?? CmComOrderWid.never]?.v === 0;
+        const visibleValue = ord.me.leadOrd
+          ? ordsInterpretation?.[ord.me.leadOrd.wid]?.v
+          : ordsInterpretation?.[ord.wid]?.v;
+
+        const isInvisible = visibleValue === 1 ? false : visibleValue === 0 || !ord.isVisible;
 
         return (
           <div
@@ -43,6 +45,7 @@ export const CmEditorEditComForSchEventFullContentInner = ({
               ordi={ordi}
               com={com}
               chordVisibleVariant={ChordVisibleVariant.Maximal}
+              showInvisibles
               asHeaderComponent={({ headerNode, ord }) => {
                 if (ord.me.isInherit) return headerNode;
 
@@ -56,6 +59,7 @@ export const CmEditorEditComForSchEventFullContentInner = ({
                           comw,
                           ordw: ord.wid,
                           schw,
+                          isOrdInvisible: !ord.isVisible,
                         })
                       }
                     />

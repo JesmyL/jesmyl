@@ -6,6 +6,7 @@ import { makeRegExp } from 'regexpert';
 import {
   CmComOrderSelector,
   CmComOrderWid,
+  IExportableComInterpretation,
   IExportableOrder,
   IExportableOrderFieldValues,
   InheritancableOrder,
@@ -112,15 +113,24 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
   }
 
   get isVisible(): boolean {
-    return this.me.isAnchorInheritPlus || this.me.isAnchorInherit
-      ? !(
-          !this.me.leadOrd?.isVisible ||
-          (this.getWatchInheritance('v') ?? this.getLeadInheritance('v') ?? this.me.source?.top.v) === 0
-        )
-      : this.me.isInherit
-        ? !(this.getBasic('v') === 0 || (this.me.leadOrd && !this.me.leadOrd.isVisible))
-        : this.getBasic('v') !== 0 && this.com.intp?.o?.[this.wid]?.v !== 0;
+    if (this.me.isAnchorInheritPlus || this.me.isAnchorInherit)
+      return !(
+        !this.me.leadOrd?.isVisible ||
+        (this.getWatchInheritance('v') ?? this.getLeadInheritance('v') ?? this.me.source?.top.v) === 0
+      );
+
+    if (this.me.isInherit) return !(this.getBasic('v') === 0 || (this.me.leadOrd && !this.me.leadOrd.isVisible));
+
+    return CmComOrder.checkIsOrdVisibleInInterpretation(this.top, this.com.intp);
   }
+
+  static checkIsOrdVisibleInInterpretation = (
+    ordTop: IExportableOrder,
+    comInterpretation: IExportableComInterpretation | nil,
+  ) => {
+    const visibilityValue = comInterpretation?.o?.[ordTop.w]?.v;
+    return visibilityValue === 1 ? true : ordTop.v !== 0 && visibilityValue !== 0;
+  };
 
   get isHeaderNoneForce() {
     return this.me.kind?.isHeaderNoneForce;

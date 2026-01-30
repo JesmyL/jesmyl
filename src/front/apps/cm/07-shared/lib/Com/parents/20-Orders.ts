@@ -69,7 +69,7 @@ export class CmComOrders extends CmComBasic {
     const header = (ord: ICmComOrderExportableMe, style: KindBlock, numered = true) => {
       const type = Math.abs(style.key);
       const number =
-        numered && ord.top.v !== 0
+        numered && CmComOrder.checkIsOrdVisibleInInterpretation(ord.top, this.intp)
           ? (groups[type] = groups[type] == null ? 1 : ord.top.a == null ? groups[type] + 1 : groups[type])
           : '';
 

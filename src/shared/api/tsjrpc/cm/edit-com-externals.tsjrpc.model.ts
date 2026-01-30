@@ -22,6 +22,7 @@ export type CmEditComExternalsTsjrpcModel = {
     schw: IScheduleWidgetWid;
     comw: CmComWid;
     ordw: CmComOrderWid;
+    isOrdInvisible: boolean;
   }) => void;
 
   getScheduleEventHistory: (args: { schw: IScheduleWidgetWid; dayi: number }) => ScheduleComPackHistoryItem[];

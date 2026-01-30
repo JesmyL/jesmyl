@@ -111,7 +111,7 @@ export function TheCmComOrder(props: Props) {
         id={`com-block-${ordi}`}
         ord-selector={ord.makeSelector()}
         className={
-          (props.specialClassId || '') + 'composition-block styled-block' + (ord.isVisible ? '' : ' ord-invisible')
+          (props.specialClassId || '') + 'composition-block styled-block' + (ord.isVisible ? '' : ' opacity-30')
         }
         ref={el => {
           if (el) ord.element = el;
@@ -155,7 +155,7 @@ export function TheCmComOrder(props: Props) {
       className={
         (props.specialClassId || '') +
         `composition-block styled-block` +
-        (ord.isVisible ? '' : ' ord-invisible') +
+        (ord.isVisible ? '' : ' opacity-30') +
         (chordedOrd ? ' chorded-block' : ' without-chords')
       }
       ref={el => {

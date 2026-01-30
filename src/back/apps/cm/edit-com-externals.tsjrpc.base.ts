@@ -221,19 +221,20 @@ export const cmEditComExternalsTsjrpcBaseServer =
           },
 
           // interpretations
-          switchComOrdVisiblityInterpretation: async ({ comw, ordw, schw }, { auth }) => {
+          switchComOrdVisiblityInterpretation: async ({ comw, ordw, schw, isOrdInvisible }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'U')) throw '';
 
             const pack = await comsInSchEventDirStorage.getOrCreateItem(schw);
             pack.intp ??= {};
             pack.intp[comw] ??= {};
             pack.intp[comw].o ??= {};
-            const ord = (pack.intp[comw].o[ordw] ??= {});
+            const ordInterpretation = (pack.intp[comw].o[ordw] ??= {});
 
-            if (ord.v == null) ord.v = 0;
-            else delete ord.v;
+            if (ordInterpretation.v == null || ordInterpretation.v === 1) ordInterpretation.v = 0;
+            else if (isOrdInvisible) ordInterpretation.v = 1;
+            else delete ordInterpretation.v;
 
-            if (!smylib.keys(ord).length) delete pack.intp[comw].o[ordw];
+            if (!smylib.keys(ordInterpretation).length) delete pack.intp[comw].o[ordw];
             if (!smylib.keys(pack.intp[comw].o).length) delete pack.intp[comw].o;
             if (!smylib.keys(pack.intp[comw]).length) delete pack.intp[comw];
             if (!smylib.keys(pack.intp).length) delete pack.intp;
