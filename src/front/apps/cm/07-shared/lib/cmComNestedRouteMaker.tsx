@@ -33,19 +33,19 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>(props:
     return (
       <CmComOpenComLinkRendererContext value={goToComLinkRenderer}>
         <CmComCurrentComPackContext value={comList}>
-          {tran ? (
-            props.BroadcastComponent ? (
-              <props.BroadcastComponent />
-            ) : (
-              <CmBroadcast />
-            )
-          ) : com || comw !== undefined ? (
-            <CmComInScheduleWid value={schw}>
+          <CmComInScheduleWid value={schw}>
+            {tran ? (
+              props.BroadcastComponent ? (
+                <props.BroadcastComponent />
+              ) : (
+                <CmBroadcast />
+              )
+            ) : com || comw !== undefined ? (
               <TheCmComComposition />
-            </CmComInScheduleWid>
-          ) : (
-            <props.RouteComponent />
-          )}
+            ) : (
+              <props.RouteComponent />
+            )}
+          </CmComInScheduleWid>
         </CmComCurrentComPackContext>
       </CmComOpenComLinkRendererContext>
     );

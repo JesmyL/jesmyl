@@ -24,6 +24,7 @@ export interface CmIDBStorage {
   localComCommentBlocks: ICmComCommentBlock[];
 
   coms: IExportableCom[];
+  /** user com interpretation */
   fixedComs: IFixedCom[];
   cats: IExportableCat[];
   comAudioTrackMarks: { src: string; cMarks?: CmComAudioMarkPack; m: number }[];

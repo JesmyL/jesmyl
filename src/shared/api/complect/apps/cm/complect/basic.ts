@@ -49,7 +49,7 @@ type Inheritancables<K extends keyof InheritancableOrder = keyof InheritancableO
 
 type WatchInherited<K extends keyof InheritancableOrder> = (InheritancableOrder[K] | nil)[];
 
-export interface IExportableOrder extends InheritancableOrder {
+export type IExportableOrder = InheritancableOrder & {
   /** Уникальный айди */
   w: CmComOrderWid;
 
@@ -77,9 +77,6 @@ export interface IExportableOrder extends InheritancableOrder {
   /** Тип блока */
   k?: CmComBlockKindKey;
 
-  /** @deprecated */
-  s?: string;
-
   /**
    * @deprecated
    * Значения наследников
@@ -89,13 +86,31 @@ export interface IExportableOrder extends InheritancableOrder {
   _v?: WatchInherited<'v'>;
   _r?: WatchInherited<'r'>;
   _p?: WatchInherited<'p'>;
-}
+};
 
 export type IFixedCom = { w: CmComWid } & Partial<{
   ton: number;
 }>;
 
-export interface IExportableCom {
+export type IExportableComInterpretationSimpleValues = {
+  /** бемольная ли песня */
+  b?: num;
+
+  /** ударов в минуту */
+  bpm?: number;
+};
+
+export type IExportableOrderInterpretation = {
+  /** видимость блока **в специальной интерпритации** */
+  v?: num;
+};
+
+export type IExportableComInterpretation = IExportableComInterpretationSimpleValues & {
+  /** порядковые блоки **в специальной интерпритации** */
+  o?: { [ordi: number]: IExportableOrderInterpretation | nil };
+};
+
+export type IExportableCom = IExportableComInterpretationSimpleValues & {
   /** название песни */
   n: string;
   /** время создания - уникальный ID */
@@ -109,8 +124,6 @@ export interface IExportableCom {
   p?: number;
   /** язык песни */
   l?: number;
-  /** бемольная ли песня */
-  b?: num;
   /** аудио файлы */
   al?: HttpLink[];
   /** @deprecated */
@@ -121,8 +134,6 @@ export interface IExportableCom {
   c?: string[];
   /** порядковые блоки */
   o?: IExportableOrder[];
-  /** ударов в минуту */
-  bpm?: number;
   /** размерность песни */
   s?: CmComMetricNums;
   /** интенсивность песни */
@@ -131,7 +142,7 @@ export interface IExportableCom {
   ton?: number;
 
   isRemoved?: 1;
-}
+};
 
 export type IServerSideCom = OmitOwn<IExportableCom, 'al' | 'm'> & { al?: HttpNumLeadLink[] | HttpNumLeadLink };
 

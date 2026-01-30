@@ -28,7 +28,7 @@ export const CmEditorComOrderToolsRedactorOrderTools = (props: CmEditorComOrderT
           <CmEditorComOrderToolsHiddenOnMin {...props} />
         </>
       )}
-      <CmEditorComOrderToolsOrderVisibility {...props} />
+      {checkAccess('cm', 'COM_ORD', 'D') || <CmEditorComOrderToolsOrderVisibility {...props} />}
       <CmEditorComOrderToolsModulation {...props} />
 
       <CmEditorComOrderToolsEmptyHeader {...props} />

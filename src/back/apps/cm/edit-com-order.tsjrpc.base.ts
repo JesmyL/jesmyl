@@ -10,7 +10,7 @@ import {
   SpecialOrderRepeats,
 } from 'shared/api';
 import { CmEditComOrderTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-order.tsjrpc.model';
-import { itNNil, smylib } from 'shared/utils';
+import { smylib } from 'shared/utils';
 import { modifyCom } from './edit-com.tsjrpc.base';
 
 export const cmEditComOrderServerTsjrpcBase =
@@ -69,7 +69,7 @@ export const cmEditComOrderServerTsjrpcBase =
 
             if (inhi == null) {
               removeAllJoinRepeats(ord.r);
-              clearNullableOrderInheritRepeats(ord);
+              clearNullableOrderInheritValues(ord, '_r');
 
               delete ord.r;
             } else if (ord._r?.[inhi] != null) {
@@ -78,7 +78,7 @@ export const cmEditComOrderServerTsjrpcBase =
               if (ord._r) {
                 delete ord._r[inhi];
 
-                clearNullableOrderInheritRepeats(ord);
+                clearNullableOrderInheritValues(ord, '_r');
               }
             }
 
@@ -92,7 +92,7 @@ export const cmEditComOrderServerTsjrpcBase =
               ord._r ??= [];
               ord._r[inhi] = value;
 
-              clearNullableOrderInheritRepeats(ord);
+              clearNullableOrderInheritValues(ord, '_r');
             } else ord.r = value;
 
             return `изменены повторения для блока ${orderTitle}:\n\n${textValue}`;
@@ -114,11 +114,11 @@ export const cmEditComOrderServerTsjrpcBase =
           }),
 
           toggleVisibility: modifyOrd((ord, { orderTitle }, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
+            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'D')) throw '';
 
             ord.v ??= 1;
             ord.v = ord.v ? 0 : 1;
-            if (ord.v === 1) delete ord.v;
+            if (ord.v) delete ord.v;
 
             return `порядковый блок ${orderTitle} сделан ${ord.v ? '' : 'не'}видимым`;
           }),
@@ -129,7 +129,7 @@ export const cmEditComOrderServerTsjrpcBase =
             ord._v ??= [];
             ord._v[inhi] = ord._v[inhi] === undefined ? 0 : undefined;
 
-            if (!smylib.values(ord._v).filter(itNNil).length) delete ord._v;
+            clearNullableOrderInheritValues(ord, '_v');
 
             return `часть ссылки на ${leadOrderTitle} сделана ${ord._v?.[inhi] == null ? '' : 'не'}видимой`;
           }),
@@ -299,10 +299,10 @@ function modifyOrd<Props extends { ordw: CmComOrderWid; comw: CmComWid }>(
 const getNextOrdWid = (ords: { w: CmComOrderWid }[]) =>
   ords.reduce((max, curr) => (curr.w > max ? curr.w : max), CmComOrderWid.def) + 1;
 
-const clearNullableOrderInheritRepeats = (ord: IExportableOrder) => {
-  if (ord._r == null) return;
+const clearNullableOrderInheritValues = (ord: IExportableOrder, key: '_r' | '_v') => {
+  if (ord[key] == null) return;
 
-  while (ord._r.length && ord._r[ord._r.length - 1] == null) ord._r.pop();
+  while (ord[key].length && ord[key][ord[key].length - 1] == null) ord[key].pop();
 
-  if (!ord._r.length) delete ord._r;
+  if (!ord[key].length) delete ord[key];
 };

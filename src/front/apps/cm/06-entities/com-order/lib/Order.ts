@@ -119,7 +119,7 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
         )
       : this.me.isInherit
         ? !(this.getBasic('v') === 0 || (this.me.leadOrd && !this.me.leadOrd.isVisible))
-        : this.getBasic('v') !== 0;
+        : this.getBasic('v') !== 0 && this.com.intp?.o?.[this.wid]?.v !== 0;
   }
 
   get isHeaderNoneForce() {

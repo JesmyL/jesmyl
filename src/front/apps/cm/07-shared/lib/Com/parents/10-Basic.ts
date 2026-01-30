@@ -1,4 +1,4 @@
-import { IExportableCom } from 'shared/api';
+import { IExportableCom, IExportableComInterpretation } from 'shared/api';
 import { CmBroadcastSlideGrouperKind } from 'shared/model/cm/broadcast';
 import { cmComLanguages } from 'shared/utils/cm/com/const';
 import { BaseNamed } from '../../BaseNamed';
@@ -6,10 +6,12 @@ import { BaseNamed } from '../../BaseNamed';
 export class CmComBasic extends BaseNamed<IExportableCom> {
   initial: Partial<IExportableCom & { pos: number }>;
   ton?: number;
+  intp: IExportableComInterpretation | nil;
 
-  constructor(top: IExportableCom) {
+  constructor(top: IExportableCom, interpretation?: IExportableComInterpretation | nil) {
     super(top);
     this.ton = top.ton;
+    this.intp = interpretation;
 
     this.initial = {};
 
@@ -28,24 +30,15 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
   }
 
   get beatsPerMinute() {
-    return this.getBasic('bpm');
-  }
-  set beatsPerMinute(val) {
-    this.setExportable('bpm', val);
+    return this.intp?.bpm ?? this.getBasic('bpm');
   }
 
   get meterSize() {
     return this.getBasic('s');
   }
-  set meterSize(val) {
-    this.setExportable('s', val);
-  }
 
   get audio() {
     return this.getBasicOr('al', []);
-  }
-  set audio(val) {
-    this.setExportable('al', val);
   }
 
   broadcastPushKind(version: 'k' | 'k2', def: CmBroadcastSlideGrouperKind = 0) {
@@ -79,9 +72,6 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
 
   get langi() {
     return this.getBasicOr('l', 0);
-  }
-  set langi(val: number) {
-    this.setExportable('l', val);
   }
 
   get langn() {

@@ -2,6 +2,7 @@ import {
   CmComAudioMarkEditPack,
   CmComAudioMarkPack,
   CmComAudioMarkPackTime,
+  CmComOrderWid,
   CmComWid,
   HttpLink,
   ScheduleComPackHistoryItem,
@@ -15,6 +16,12 @@ export type CmEditComExternalsTsjrpcModel = {
     eventMi: IScheduleWidgetDayEventMi;
     list: CmComWid[];
     fio: string;
+  }) => void;
+
+  switchComOrdVisiblityInterpretation: (args: {
+    schw: IScheduleWidgetWid;
+    comw: CmComWid;
+    ordw: CmComOrderWid;
   }) => void;
 
   getScheduleEventHistory: (args: { schw: IScheduleWidgetWid; dayi: number }) => ScheduleComPackHistoryItem[];
