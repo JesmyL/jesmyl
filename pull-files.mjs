@@ -12,7 +12,6 @@ import { exec } from 'child_process';
 
   const paths = [
     ['', 'package'],
-    ['apps/index', 'schedules'],
     ['apps/index/schedules'],
     ['apps/index', 'rights'],
     ['apps/index', 'nouns'],
