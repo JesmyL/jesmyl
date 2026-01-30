@@ -9,8 +9,8 @@ import { makeCmComNumLeadLinkFromHttp } from './complect/com-http-links';
 import {
   cmComAudioMarkPacksFileStore,
   comsDirStore,
-  eventPackHistoryFileStore,
-  eventPacksFileStore,
+  comsInSchEventDirStorage,
+  comsInSchEventHistoryDirStorage,
 } from './file-stores';
 import { cmShareServerTsjrpcMethods } from './tsjrpc.shares';
 
@@ -23,18 +23,14 @@ export const cmEditComExternalsTsjrpcBaseServer =
           setInScheduleEvent: async ({ schw, dayi, eventMi, list, fio }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'U')) throw '';
 
-            const packs = eventPacksFileStore.getValueWithAutoSave();
-            const history = eventPackHistoryFileStore.getValueWithAutoSave();
+            const pack = await comsInSchEventDirStorage.getOrCreateItem(schw);
+            const packHistory = await comsInSchEventHistoryDirStorage.getOrCreateItem(schw);
 
-            const m = Date.now();
-            packs[schw] ??= { pack: {}, m, schw };
-            packs[schw].m = m;
-            packs[schw].pack[dayi] ??= {};
-            packs[schw].pack[dayi][eventMi] = list;
+            pack.pack[dayi] ??= {};
+            pack.pack[dayi][eventMi] = list;
 
-            history[schw] ??= {};
-            let dayHistory = history[schw][dayi];
-            if (!smylib.isArr(dayHistory)) dayHistory = history[schw][dayi] = [];
+            let dayHistory = packHistory.d[dayi];
+            if (!smylib.isArr(dayHistory)) dayHistory = packHistory.d[dayi] = [];
 
             if (dayHistory.length) {
               const today = new Date().setHours(0, 0, 0, 0);
@@ -42,9 +38,15 @@ export const cmEditComExternalsTsjrpcBaseServer =
               if (prevPachi > -1) dayHistory.splice(prevPachi, 1);
             }
 
-            dayHistory.unshift({ s: list, w: m, e: eventMi, fio });
+            dayHistory.unshift({ s: list, w: Date.now(), e: eventMi, fio });
 
-            cmShareServerTsjrpcMethods.refreshScheduleEventComPacks({ packs: [packs[schw]], modifiedAt: m }, null);
+            const mod = comsInSchEventDirStorage.saveItem(pack.schw);
+            comsInSchEventHistoryDirStorage.saveItem(pack.schw);
+
+            cmShareServerTsjrpcMethods.refreshScheduleEventComPacks(
+              { packs: [pack], modifiedAt: mod ?? Date.now() },
+              null,
+            );
             const coms = comsDirStore.getAllItems().filter(com => !com.isRemoved);
 
             return {
@@ -63,16 +65,16 @@ export const cmEditComExternalsTsjrpcBaseServer =
           getScheduleEventHistory: async ({ schw, dayi }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'R')) throw '';
 
-            const history = eventPackHistoryFileStore.getValue();
+            const history = comsInSchEventHistoryDirStorage.getItem(schw);
 
-            return { value: history[schw]?.[dayi] ?? [] };
+            return { value: history?.d?.[dayi] ?? [] };
           },
           getScheduleEventHistoryStatistic: async ({ schw, dayi }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'R')) throw '';
 
             const comwCount = {} as Record<CmComWid, number>;
             let totalCount = 0;
-            const packs = eventPackHistoryFileStore.getValue()[schw]?.[dayi];
+            const packs = comsInSchEventHistoryDirStorage.getItem(schw)?.d?.[dayi];
 
             if (packs === undefined) return { value: { comwCount, totalCount } };
 
@@ -87,15 +89,16 @@ export const cmEditComExternalsTsjrpcBaseServer =
           },
 
           removeScheduleEventHistoryItem: async ({ schw, dayi, writedAt }) => {
-            const history = eventPackHistoryFileStore.getValue();
-            const itemi = history[schw]?.[dayi]?.findIndex(item => item.w === writedAt);
+            const history = comsInSchEventHistoryDirStorage.getItem(schw);
+            const itemi = history?.d?.[dayi]?.findIndex(item => item.w === writedAt);
 
             if (itemi == null || itemi < 0) throw new Error('item not found');
 
-            history[schw]?.[dayi]?.splice(itemi, 1);
+            history?.d?.[dayi]?.splice(itemi, 1);
+            comsInSchEventHistoryDirStorage.saveItem(schw);
 
             return {
-              value: history[schw]?.[dayi] ?? [],
+              value: history?.d?.[dayi] ?? [],
               description:
                 `Удалена пачка песен из истории события в расписании ` +
                 `"${schedulesDirStore.getItem(schw)?.title ?? '??'}"`,

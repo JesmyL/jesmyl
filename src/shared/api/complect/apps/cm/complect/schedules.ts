@@ -10,10 +10,11 @@ export type ScheduleComPackHistoryItem = {
   fio: string;
 };
 
-export type ScheduleComPack = {
+export type ComsInSchEvent = {
   schw: IScheduleWidgetWid;
-  m: number;
   pack: PRecord<number, PRecord<IScheduleWidgetDayEventMi, CmComWid[]>>;
 };
 
 export type ScheduleComPackHistory = PRecord<IScheduleWidgetWid, PRecord<number, ScheduleComPackHistoryItem[]>>;
+
+export type ComsInSchEventHistory = { schw: IScheduleWidgetWid; d: PRecord<number, ScheduleComPackHistoryItem[]> };

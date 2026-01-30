@@ -6,14 +6,14 @@ import {
   CmComWid,
   CmConstantsConfig,
   CmMp3Rule,
+  ComsInSchEvent,
+  ComsInSchEventHistory,
   EeStorePack,
   HttpNumLeadLink,
   ICmComCommentBlock,
   IExportableCat,
   IScheduleWidgetWid,
   IServerSideCom,
-  ScheduleComPack,
-  ScheduleComPackHistory,
   SokiAuthLogin,
   TAboutComFavoriteItem,
 } from 'shared/api';
@@ -32,11 +32,18 @@ export const comsDirStore = new DirStorage<IServerSideCom, CmComWid>({
 
 export const catsFileStore = new FileStore<IExportableCat[]>('/apps/cm/cats.json', []);
 
-export const eventPacksFileStore = new FileStore(
-  '/apps/cm/schEventPacks.json',
-  {} as Record<IScheduleWidgetWid, ScheduleComPack>,
-);
-export const eventPackHistoryFileStore = new FileStore<ScheduleComPackHistory>('/apps/cm/schEventPackHistory.json', {});
+export const comsInSchEventDirStorage = new DirStorage<ComsInSchEvent, IScheduleWidgetWid, 'schw'>({
+  dirPath: '/apps/cm/comsInSchEvent/',
+  idKey: 'schw',
+  makeNewItem: () => ({ pack: {}, schw: Date.now() + Math.random() }),
+});
+
+export const comsInSchEventHistoryDirStorage = new DirStorage<ComsInSchEventHistory, IScheduleWidgetWid, 'schw'>({
+  dirPath: '/apps/cm/comsInSchEventHistory/',
+  idKey: 'schw',
+  makeNewItem: () => ({ d: {}, schw: Date.now() + Math.random() }),
+});
+
 export const cmComAudioMarkPacksFileStore = new FileStore<
   PRecord<HttpNumLeadLink, { m: number; cMarks?: CmComAudioMarkPack }>
 >('/apps/cm/comAudioMarkPacks.json', {});

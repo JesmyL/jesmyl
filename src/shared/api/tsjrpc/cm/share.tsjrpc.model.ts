@@ -3,10 +3,10 @@ import {
   CmCatWid,
   CmComWid,
   CmConstantsConfig,
+  ComsInSchEvent,
   ICmComCommentBlock,
   IExportableCat,
   IExportableCom,
-  ScheduleComPack,
   TAboutComFavoriteItem,
 } from 'shared/api/complect/apps';
 
@@ -28,6 +28,6 @@ export type CmShareTsjrpcModel = {
   refreshComCommentBlocks: (args: { comments: ICmComCommentBlock[]; modifiedAt: number }) => void;
   refreshAboutComFavorites: (args: { value: TAboutComFavoriteItem }) => void;
 
-  refreshScheduleEventComPacks: (args: { packs: ScheduleComPack[]; modifiedAt: number }) => void;
+  refreshScheduleEventComPacks: (args: { packs: ComsInSchEvent[]; modifiedAt: number }) => void;
   refreshConstantsConfig: (args: { config: Partial<CmConstantsConfig>; modifiedAt: number }) => unknown;
 };

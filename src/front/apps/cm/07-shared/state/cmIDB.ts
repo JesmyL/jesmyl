@@ -6,12 +6,12 @@ import {
   CmComAudioMarkPack,
   CmComWid,
   CmConstantsConfig,
+  ComsInSchEvent,
   ICmComCommentBlock,
   IExportableCat,
   IExportableCom,
   IFixedCom,
   MigratableComToolName,
-  ScheduleComPack,
 } from 'shared/api';
 import { ChordVisibleVariant } from '../model/Cm.model';
 
@@ -27,7 +27,7 @@ export interface CmIDBStorage {
   fixedComs: IFixedCom[];
   cats: IExportableCat[];
   comAudioTrackMarks: { src: string; cMarks?: CmComAudioMarkPack; m: number }[];
-  scheduleComPacks: ScheduleComPack[];
+  scheduleComPacks: ComsInSchEvent[];
 
   broadcastScreenConfigs: CmBroadcastScreenConfig[];
 

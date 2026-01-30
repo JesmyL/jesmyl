@@ -23,8 +23,8 @@ import {
   cmConstantsConfigFileStore,
   comCommentsDirStore,
   comsDirStore,
+  comsInSchEventDirStorage,
   comwVisitsFileStore,
-  eventPacksFileStore,
 } from './file-stores';
 import { cmShareServerTsjrpcMethods } from './tsjrpc.shares';
 import { cmUserStoreTsjrpcBaseServer } from './user-store.tsjrpc.base';
@@ -66,16 +66,14 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
             );
           }
 
-          sendBasicModifiedableList(
-            lastModfiedAt,
-            eventPacksFileStore,
-            () => smylib.values(eventPacksFileStore.getValue()),
-            (packs, modifiedAt) => {
-              if (packs.length > 0) {
-                cmShareServerTsjrpcMethods.refreshScheduleEventComPacks({ packs, modifiedAt }, client);
-              }
-            },
-          );
+          const freshComsInSchEvent = comsInSchEventDirStorage.getFreshItems(lastModfiedAt);
+
+          if (freshComsInSchEvent.items.length) {
+            cmShareServerTsjrpcMethods.refreshScheduleEventComPacks(
+              { packs: freshComsInSchEvent.items, modifiedAt: freshComsInSchEvent.maxMod },
+              client,
+            );
+          }
 
           if (visitInfo && visitInfo.version > 1039)
             if (cmConstantsConfigFileStore.fileModifiedAt() > lastModfiedAt) {
