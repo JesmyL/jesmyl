@@ -6,8 +6,8 @@
       1551768058548, 1551770021776, 1605353683636, 1607345768420, 1609761208284, 1609953328330, 1609955214660,
       1534249035184, 1536945317452, 1534006585256, 1538320243090
     ],
-    "m": 1769514839113,
-    "tools": ["edit-com", "com-comment", "chords-variant", "qr-share"],
+    "m": 1769834280532,
+    "tools": ["edit-com", "com-comment", "chords-variant", "qr-share", "hide-metronome", "selected-toggle"],
     "fio": "Павел 👨‍💻"
   },
   "08a0e6ba7792e902569816a81b846b25": {
@@ -56,7 +56,8 @@
       1647252965570, 1706870792872, 1713042559913
     ],
     "m": 1761160704191,
-    "tools": ["mark-com", "chords-variant", "chord-images"]
+    "tools": ["mark-com", "chords-variant", "chord-images"],
+    "fio": "David Shmardin"
   },
   "T6558fe287d2ea93be3e19bbe64b5dfc": {
     "comws": [1718543236522, 1741883251071, 1612878728464],

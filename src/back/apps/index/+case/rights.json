@@ -29,7 +29,28 @@
   "rights": {
     "T166cbf17596a0c2919e4df1a6d54e66": { "info": { "role": "TOP", "fio": "Павел 👨‍💻", "m": 1768712370354 } },
     "T6558fe287d2ea93be3e19bbe64b5dfc": { "info": { "fio": "Руслан", "m": 1768712207761, "role": "ADMIN" } },
-    "T7f21a14d3133065ca2e48254f87ecf3": { "info": { "fio": "danikpon", "m": 1762760874457, "role": "ADMIN" } },
+    "T7f21a14d3133065ca2e48254f87ecf3": {
+      "info": { "fio": "danikpon", "m": 1769798454318, "role": "ADMIN" },
+      "cm": {
+        "CHORD": 4,
+        "COM_TR": 4,
+        "COM_AMARK": 4,
+        "COM_CAT": 4,
+        "COM_REP": 4,
+        "COM_AUDIO": 4,
+        "COM_CH": 4,
+        "COM_TXT_NL": 4,
+        "COM_TXT": 4,
+        "COM_ORD": 4,
+        "COM_APPS": 4,
+        "COM_MAIN": 4,
+        "COM": 4,
+        "CAT": 4,
+        "MP3": 4
+      },
+      "sch": { "SCH": 4 },
+      "q": { "EDIT": 4 }
+    },
     "T88eae2a48675aa330a3438b156799d8": { "info": { "fio": "Кирилл", "m": 1757905644600 } },
     "Tcd1de434b6554eaa585d6cbb6901d2a": { "info": { "fio": "Маша", "m": 1758121708642 } },
     "T1c9464bf7af18f1807c1b72a0963764": { "info": { "fio": "Zhanna", "m": 1758958231966 } },
@@ -63,11 +84,12 @@
     "T5319cc8d2fac5dfc7ec1b69f97c5c7b": { "info": { "fio": "Arttop1gg/", "m": 1765730211711 } },
     "Tc2514a8ac8b521f0fe38375b7454956": { "info": { "fio": "Benjamin Yukhimets", "m": 1765730238775 } },
     "Tdd97e410eed61b005345b0af58d11c8": {
-      "info": { "fio": "Pavel Ponomarenko", "m": 1768794837834 },
-      "cm": { "COM": 6, "COM_AUDIO": 6, "COM_AMARK": 6 }
+      "info": { "fio": "Pavel Ponomarenko", "m": 1769827752041 },
+      "cm": { "COM": 2, "COM_AUDIO": 6, "COM_AMARK": 6 }
     },
     "Tb21203600ee559664d6ca188acd3b0e": { "info": { "fio": "Александра Соломка", "m": 1766326823542 } },
     "T5e1300aec5d968ec6027eb3daa7b545": { "info": { "fio": "Егор Слободской", "m": 1767223426386 } },
-    "T0f69cadeb031aecd1e022c429d18d28": { "info": { "fio": "Лиля", "m": 1769710212639 } }
+    "T0f69cadeb031aecd1e022c429d18d28": { "info": { "fio": "Лиля", "m": 1769710212639 } },
+    "T62fc6796b8398263cfa29e59ba149bc": { "info": { "fio": "David Shmardin", "m": 1769883055730 } }
   }
 }
