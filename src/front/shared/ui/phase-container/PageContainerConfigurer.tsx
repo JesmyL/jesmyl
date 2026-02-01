@@ -102,6 +102,7 @@ export const StyledPhaseContainerConfigurerContent = styled.div`
   height: var(--content-height);
   overflow-x: hidden;
   overflow-y: auto;
+  padding-bottom: calc(var(--footer-height) + 15px);
 
   &.no-padding-top {
     padding-top: 0;

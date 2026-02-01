@@ -10,7 +10,7 @@ export function Portal({ children, classNames = [] }: Props) {
   const [container] = useState(() => {
     const div = document.createElement('div');
 
-    div.classList.add('portal-node', 'full-size', 'absolute', 'top-0', ...classNames);
+    div.classList.add('portal-node', 'full-size', 'absolute', 'top-0', 'z-300', ...classNames);
     return div;
   });
 

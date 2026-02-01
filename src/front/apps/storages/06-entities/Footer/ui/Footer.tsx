@@ -4,12 +4,15 @@ import { AppFooterItem } from '$app/AppFooterItem';
 export const StoragesFooter = () => {
   return (
     <AppFooter appName="storages">
-      <AppFooterItem
-        idPostfix="main"
-        to="/storages/i/"
-        title="Склад"
-        icon="Database"
-      />
+      {() => [
+        <AppFooterItem
+          key="main"
+          idPostfix="main"
+          to="/storages/i/"
+          title="Склад"
+          icon="Database"
+        />,
+      ]}
     </AppFooter>
   );
 };

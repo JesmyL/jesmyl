@@ -91,7 +91,14 @@ export const AppComponent = () => {
         (routingApps[appName]?.footer ?? (
           <AppFooter
             appName={appName}
-            children={<div className="size-full flex justify-center items-center pb-3">Выберите программу</div>}
+            children={() => [
+              <div
+                key="choose"
+                className="size-full flex justify-center items-center pb-3"
+              >
+                Выберите программу
+              </div>,
+            ]}
           />
         ))}
     </>
