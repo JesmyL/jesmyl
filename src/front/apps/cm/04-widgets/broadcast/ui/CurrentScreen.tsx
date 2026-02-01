@@ -21,10 +21,11 @@ export const CmBroadcastCurrentScreen = (props: BroadcastScreenProps & Partial<F
     props.screeni ?? currentConfigi,
   );
   const isRealText = selfSlides[currentSlidei]?.ord.isRealText();
+
   const text =
     isFragments && isRealText
-      ? CmCom.makeLinesWithoutNlMarker(selfSlides[currentSlidei]?.lines, false)
-      : CmCom.makeLinesWithoutNlMarker(selfSlides[currentSlidei]?.lines).join('\n');
+      ? selfSlides[currentSlidei]?.lines
+      : CmCom.makeEachLineFirstLetterUpperCase(selfSlides[currentSlidei]?.lines).join('\n');
   const switchDirection = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
 
   return (
@@ -32,7 +33,7 @@ export const CmBroadcastCurrentScreen = (props: BroadcastScreenProps & Partial<F
       {...props}
       cmConfig={currentConfig}
       text={text}
-      nextText={CmCom.makeLinesWithoutNlMarker(selfSlides[nextSlidei]?.lines, !isFragments).join(
+      nextText={CmCom.makeEachLineFirstLetterUpperCase(selfSlides[nextSlidei]?.lines, !isFragments).join(
         isFragments ? ' ' : '\n',
       )}
       isChorded={!isRealText}

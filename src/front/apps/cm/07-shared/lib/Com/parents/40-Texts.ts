@@ -71,15 +71,13 @@ export class CmComTexts extends CmComChords {
     return slides;
   };
 
-  static makeLinesWithoutNlMarker = (lines: string[] | nil, firstLineLetterToUpperCase = true) => {
+  static makeEachLineFirstLetterUpperCase = (lines: string[] | nil, firstLineLetterToUpperCase = true) => {
     if (lines == null) return [];
+    if (!firstLineLetterToUpperCase) return lines;
 
     return lines
       .map(line => {
-        if (!line?.length) return line;
-        line = line[0] === '|' ? line.slice(1).trim() : line.trim();
-
-        if (firstLineLetterToUpperCase) return `${line[0]?.toUpperCase() ?? ''}${line.slice(1)}`;
+        if (line?.length) return `${line[0].toUpperCase()}${line.slice(1)}`;
 
         return line;
       })
@@ -108,13 +106,16 @@ export class CmComTexts extends CmComChords {
           return ordLines
             .map(line => {
               totalLinei++;
+              let prevVert = '';
 
-              return line
-                .split(makeRegExp('/ *\\| */'))
-                .map(
-                  (lineLn, lineLni) =>
-                    `\n${seperator}${blocki}${seperator}${totalLinei}${seperator}${lineLni ? '|' : ''}${lineLn}`,
-                );
+              return line.split(makeRegExp('/ *((?:/+&nbsp;)? *[|]) */')).map(lineLn => {
+                if (lineLn.trimEnd().endsWith('|')) {
+                  prevVert = lineLn;
+                  return '';
+                }
+
+                return lineLn && `\n${seperator}${blocki}${seperator}${totalLinei}${seperator}${prevVert}${lineLn}`;
+              });
             })
             .flat()
             .join('\n');
@@ -130,7 +131,7 @@ export class CmComTexts extends CmComChords {
         const ord = headSolidOrders[+blockiStr];
 
         slides.push({
-          lines: [line.trim().replace(makeRegExp('/\\s{2,}/'), ' ')],
+          lines: [line.trim().replace(makeRegExp('/\\s{2,}/'), ' ').replace(makeRegExp('/[|]+/g'), '')],
           ord,
           blocki: +blockiStr,
           fromLinei: +totalLineiStr,

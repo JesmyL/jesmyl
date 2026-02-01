@@ -39,7 +39,7 @@ export const CmBroadcastSlideLine = () => {
             >
               <div
                 dangerouslySetInnerHTML={{
-                  __html: CmCom.makeLinesWithoutNlMarker(slide.lines, !isFragments).join('\n'),
+                  __html: CmCom.makeEachLineFirstLetterUpperCase(slide.lines, !isFragments).join('\n'),
                 }}
               />
             </div>

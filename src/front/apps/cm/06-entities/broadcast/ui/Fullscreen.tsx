@@ -24,7 +24,7 @@ export const CmBroadcastFullscreen = () => {
   const { text, nextSlide, prevSlide } = useCmBroadcastScreenComTextNavigations();
   const { nextCom, prevCom } = useCmBroadcastScreenComNavigations();
   const closeBroadcast = useCmBroadcastClose();
-  const html = CmCom.makeLinesWithoutNlMarker([text])[0];
+  const html = CmCom.makeEachLineFirstLetterUpperCase([text])[0];
 
   useEffect(() => {
     window.addEventListener('resize', forceUpdate);
