@@ -25,6 +25,8 @@ export type CmEditComExternalsTsjrpcModel = {
     isOrdInvisible: boolean;
   }) => void;
 
+  switchComTonInterpretation: (args: { schw: IScheduleWidgetWid; comw: CmComWid; ton: number }) => void;
+
   getScheduleEventHistory: (args: { schw: IScheduleWidgetWid; dayi: number }) => ScheduleComPackHistoryItem[];
   getScheduleEventHistoryStatistic: (args: { schw: IScheduleWidgetWid; dayi: number }) => {
     comwCount: Record<CmComWid, number>;

@@ -5,7 +5,7 @@ import { useCmComInScheduleWid } from '$cm/shared/state/contexts';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
-import { CmComWid } from 'shared/api';
+import { CmComWid, IScheduleWidgetWid } from 'shared/api';
 import { cmComLastOpenComwAtom } from '../state/atoms';
 
 export const useCmComCurrentFixedCom = (): CmCom | und => {
@@ -21,9 +21,9 @@ export const useCmComCurrentFixedCom = (): CmCom | und => {
   );
 };
 
-export const useCmCom = (comw: CmComWid | und): CmCom | und => {
+export const useCmCom = (comw: CmComWid | und, interpretationSchw?: IScheduleWidgetWid): CmCom | und => {
   const icom = useLiveQuery(() => mylib.isNNlButUnd(comw) && cmIDB.tb.coms.get(comw), [comw]);
-  const schw = useCmComInScheduleWid();
+  const schw = useCmComInScheduleWid() ?? interpretationSchw;
   const schInterpretation = useLiveQuery(async () => schw && cmIDB.tb.scheduleComPacks.get(schw), [schw])?.intp;
 
   return useMemo(() => icom && new CmCom(icom, schInterpretation?.[icom.w]), [schInterpretation, icom]);

@@ -85,8 +85,8 @@ export class CmComChords extends CmComOrders {
     if (this.transPosition !== undefined) this.transPosition -= -delta;
     else this.transPosition = delta;
 
-    const isUpdated = await cmIDB.tb.fixedComs.update(this.wid, { ton: (this.ton ?? 0) + delta });
-    if (!isUpdated) await cmIDB.tb.fixedComs.put({ w: this.wid, ton: (this.ton ?? 0) + delta });
+    const isUpdated = await cmIDB.tb.fixedComs.update(this.wid, { ton: this.transPosition + delta });
+    if (!isUpdated) await cmIDB.tb.fixedComs.put({ w: this.wid, ton: this.transPosition + delta });
   }
 
   private updateChordLabels() {

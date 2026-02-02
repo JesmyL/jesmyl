@@ -6,11 +6,11 @@ import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { CmEditorTextCorrectMessages } from '$cm+editor/entities/text';
+import { CmEditorComEditTransposition } from '$cm+editor/features/ComEditTransposition';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { removedCompositionsAtom } from '$cm+editor/shared/state/com';
-import { CmEditorComEditTransposition } from '$cm+editor/widgets/com';
 import { ChordVisibleVariant, TheCmCom } from '$cm/ext';
 import { useState } from 'react';
 import { CmComIntensityLevel } from 'shared/api';
@@ -102,7 +102,10 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
           cmEditComClientTsjrpcMethods.changeLanguage({ comw: ccom.wid, value: ccom.langi ? 0 : 1 });
         }}
       />
-      <CmEditorComEditTransposition ccom={ccom} />
+      <CmEditorComEditTransposition
+        ccom={ccom}
+        onChange={position => cmEditComClientTsjrpcMethods.changeTon({ comw: ccom.wid, value: position })}
+      />
       <TheIconButton
         icon="Grid"
         confirm={

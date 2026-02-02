@@ -98,11 +98,8 @@ export type IFixedCom = { w: CmComWid } & Partial<{
 }>;
 
 export type IExportableComInterpretationSimpleValues = {
-  /** бемольная ли песня */
-  b?: num;
-
-  /** ударов в минуту */
-  bpm?: number;
+  /** уровень транспозиции песни */
+  p?: number;
 };
 
 export type IExportableOrderInterpretation = {
@@ -118,29 +115,44 @@ export type IExportableComInterpretation = IExportableComInterpretationSimpleVal
 export type IExportableCom = IExportableComInterpretationSimpleValues & {
   /** название песни */
   n: string;
+
   /** время создания - уникальный ID */
   w: CmComWid;
+
   /** время изменения */
   m: CmComMod;
+
   /** вариант группировки строк для трансляций */
   k?: CmBroadcastSlideGrouperKind;
   k2?: CmBroadcastSlideGrouperKind;
-  /** уровень модулирования */
-  p?: number;
+
+  /** бемольная ли песня */
+  b?: num;
+
+  /** ударов в минуту */
+  bpm?: number;
+
   /** язык песни */
   l?: number;
+
   /** аудио файлы */
   al?: HttpLink[];
+
   /** @deprecated */
   a?: string;
+
   /** список текстов */
   t?: string[];
+
   /** список аккорлов */
   c?: string[];
+
   /** порядковые блоки */
   o?: IExportableOrder[];
+
   /** размерность песни */
   s?: CmComMetricNums;
+
   /** интенсивность песни */
   d?: CmComIntensityLevel;
 

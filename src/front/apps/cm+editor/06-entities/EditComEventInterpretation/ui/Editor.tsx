@@ -1,11 +1,11 @@
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { Atom, atom } from 'atomaric';
 import { CmComWid, IScheduleWidgetWid } from 'shared/api';
-import { CmEditorEditComForSchEventFullContentInner } from './EditorFullContentInner';
+import { CmEditorEditComEventInterpretationFullContentInner } from './EditorFullContentInner';
 
 let openAtom: Atom<boolean>;
 
-export const CmEditorEditComForSchEvent = ({
+export const CmEditorEditComEventInterpretation = ({
   schw,
   comw,
   toolNode,
@@ -23,7 +23,7 @@ export const CmEditorEditComForSchEvent = ({
       <span onClick={openAtom.do.toggle}>{toolNode}</span>
       <FullContent openAtom={openAtom}>
         {!comw || (
-          <CmEditorEditComForSchEventFullContentInner
+          <CmEditorEditComEventInterpretationFullContentInner
             comw={comw}
             schw={schw}
             linkNode={

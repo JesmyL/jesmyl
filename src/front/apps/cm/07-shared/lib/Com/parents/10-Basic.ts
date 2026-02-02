@@ -10,12 +10,11 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
 
   constructor(top: IExportableCom, interpretation?: IExportableComInterpretation | nil) {
     super(top);
-    this.ton = top.ton;
     this.intp = interpretation;
 
     this.initial = {};
 
-    this.pullTransPosition(top);
+    this.transPosition = top.ton ?? interpretation?.p ?? top.p;
   }
 
   get mod() {
@@ -30,7 +29,7 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
   }
 
   get beatsPerMinute() {
-    return this.intp?.bpm ?? this.getBasic('bpm');
+    return this.getBasic('bpm');
   }
 
   get meterSize() {
@@ -79,12 +78,5 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
   }
   get nextLangn() {
     return cmComLanguages[(this.langi || 0) + 1] || cmComLanguages[0];
-  }
-
-  pullTransPosition(obj: IExportableCom) {
-    if (obj) {
-      if (obj.ton != null) this.initialTransPosition = obj.p;
-      this.transPosition = obj.ton ?? obj.p;
-    }
   }
 }

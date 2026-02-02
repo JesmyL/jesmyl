@@ -7,6 +7,7 @@ export {
   CmComMoveSelectedButton,
   CmComNumber,
   CmComWithComListSearchFilterInput,
+  useCmCom,
   useCmComList,
   useCmComSelectedList,
 } from '$cm/entities/com';

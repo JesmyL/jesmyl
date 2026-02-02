@@ -1,6 +1,6 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
-import { CmComAudioMarkPack, CmComAudioMarkPackTime, CmComWid } from 'shared/api';
+import { CmComAudioMarkPack, CmComAudioMarkPackTime, CmComWid, ComsInSchEvent } from 'shared/api';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
 import { itNumSort, SMyLib, smylib } from 'shared/utils';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
@@ -226,18 +226,37 @@ export const cmEditComExternalsTsjrpcBaseServer =
 
             const pack = await comsInSchEventDirStorage.getOrCreateItem(schw);
             pack.intp ??= {};
-            pack.intp[comw] ??= {};
-            pack.intp[comw].o ??= {};
-            const ordInterpretation = (pack.intp[comw].o[ordw] ??= {});
+            const comIntp = (pack.intp[comw] ??= {});
+            const ordsIntp = (comIntp.o ??= {});
+            const ordInterpretation = (ordsIntp[ordw] ??= {});
 
             if (ordInterpretation.v == null || ordInterpretation.v === 1) ordInterpretation.v = 0;
             else if (isOrdInvisible) ordInterpretation.v = 1;
             else delete ordInterpretation.v;
 
-            if (!smylib.keys(ordInterpretation).length) delete pack.intp[comw].o[ordw];
-            if (!smylib.keys(pack.intp[comw].o).length) delete pack.intp[comw].o;
-            if (!smylib.keys(pack.intp[comw]).length) delete pack.intp[comw];
-            if (!smylib.keys(pack.intp).length) delete pack.intp;
+            if (!smylib.keys(ordInterpretation).length) delete ordsIntp[ordw];
+            if (!smylib.keys(ordsIntp).length) delete comIntp.o;
+
+            deleteEmptyComInterpretation(pack, comw);
+
+            const mod = comsInSchEventDirStorage.saveItem(schw);
+
+            if (mod) {
+              cmShareServerTsjrpcMethods.refreshScheduleEventComPacks({ packs: [pack], modifiedAt: mod }, null);
+            }
+          },
+
+          switchComTonInterpretation: async ({ comw, schw, ton }, { auth }) => {
+            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'U')) throw '';
+
+            const pack = await comsInSchEventDirStorage.getOrCreateItem(schw);
+            pack.intp ??= {};
+            const comIntp = (pack.intp[comw] ??= {});
+
+            comIntp.p = ton;
+            if (!comIntp.p) delete comIntp.p;
+
+            deleteEmptyComInterpretation(pack, comw);
 
             const mod = comsInSchEventDirStorage.saveItem(schw);
 
@@ -249,3 +268,10 @@ export const cmEditComExternalsTsjrpcBaseServer =
       });
     }
   })();
+
+const deleteEmptyComInterpretation = (pack: ComsInSchEvent, comw: CmComWid) => {
+  if (pack.intp == null) return;
+
+  if (!smylib.keys(pack.intp[comw]).length) delete pack.intp[comw];
+  if (!smylib.keys(pack.intp).length) delete pack.intp;
+};
