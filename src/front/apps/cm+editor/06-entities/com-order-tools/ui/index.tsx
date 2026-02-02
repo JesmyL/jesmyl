@@ -34,7 +34,8 @@ export const CmEditorComOrderToolsRedactorOrderTools = (props: CmEditorComOrderT
       <CmEditorComOrderToolsEmptyHeader {...props} />
       <CmEditorComOrderToolsMoveBlock {...props} />
       {(checkAccess('cm', 'COM_ORD', 'D') ||
-        (checkAccess('cm', 'COM_ORD', 'U') && props.com.wid > Date.now() - 24 * 60 * 60 * 1000)) && (
+        (checkAccess('cm', 'COM_ORD', 'U') &&
+          (props.ord.top.cre ?? props.com.wid) > Date.now() - 24 * 60 * 60 * 1000)) && (
         <CmEditorComOrderToolsAnchorDelete {...props} />
       )}
     </>

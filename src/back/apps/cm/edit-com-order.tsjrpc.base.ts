@@ -151,13 +151,12 @@ export const cmEditComOrderServerTsjrpcBase =
             return `перемещён порядковый блок ${orderTitle}`;
           }),
 
-          remove: modifyCom((com, { ordw, isAnchor, orderTitle }, { auth }) => {
-            try {
-              if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'D')) throw '';
-            } catch (_) {
-              if (com.w > Date.now() - 24 * 60 * 60 * 1000 && throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U'))
-                throw '';
-            }
+          remove: modifyOrd((ord, { ordw, isAnchor, orderTitle }, { auth }, com) => {
+            if (
+              (ord.cre ?? com.w) < Date.now() - 24 * 60 * 60 * 1000 &&
+              throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'D')
+            )
+              throw '';
 
             com.o ??= [];
             com.o = com.o.filter(ord => ord.w !== ordw && ord.a !== ordw);
@@ -180,6 +179,7 @@ export const cmEditComOrderServerTsjrpcBase =
             com.o.splice(insertAfterOrdi + 1, 0, {
               w: getNextOrdWid(com.o),
               a: targetOrdw,
+              cre: Date.now(),
             });
 
             return `создана ссылка ${orderTitle}`;
@@ -221,6 +221,7 @@ export const cmEditComOrderServerTsjrpcBase =
               k: kind,
               c: chordi,
               t: texti,
+              cre: Date.now(),
             };
 
             if (afterOrdi < 1) {
@@ -288,11 +289,16 @@ function modifyOrd<Props extends { ordw: CmComOrderWid; comw: CmComWid }>(
   modifier: (ord: IExportableOrder, props: Props, tool: ServerTSJRPCTool, com: IServerSideCom) => string | null,
 ) {
   return modifyCom<Props>((com, props, tool) => {
-    const ord = com.o?.find(ord => ord.w === props.ordw);
+    let foundOrd: IExportableOrder | null = null;
 
-    if (ord == null) throw new Error('Ord not found');
+    com.o?.forEach(ord => {
+      if (ord.w === props.ordw) foundOrd = ord;
+      if (ord.cre != null && ord.cre < Date.now() - 24 * 60 * 60 * 1000) delete ord.cre;
+    });
 
-    return modifier(ord, props, tool, com);
+    if (foundOrd == null) throw new Error('Ord not found');
+
+    return modifier(foundOrd, props, tool, com);
   });
 }
 

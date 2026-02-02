@@ -86,6 +86,11 @@ export type IExportableOrder = InheritancableOrder & {
   _v?: WatchInherited<'v'>;
   _r?: WatchInherited<'r'>;
   _p?: WatchInherited<'p'>;
+
+  /**
+   * время создания (существует при времени жизни менее суток)
+   */
+  cre?: number;
 };
 
 export type IFixedCom = { w: CmComWid } & Partial<{
