@@ -105,7 +105,7 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           if (emptyTitleCard != null) return { value: emptyTitleCard.i };
 
           const i = rack.cards.length;
-          rack.cards.push({ i, title: '' });
+          rack.cards.push({ i, title: '', status: rack.statusOrd?.[0] });
 
           return { value: i };
         }),
