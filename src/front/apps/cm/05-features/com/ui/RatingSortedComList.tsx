@@ -1,3 +1,4 @@
+import { mylib } from '#shared/lib/my-lib';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { CmComFaceList } from '$cm/entities/com-face';
 import { CmCom } from '$cm/ext';
@@ -20,16 +21,23 @@ export const CmComRatingSortedComList = ({ coms }: Props) => {
     [coms, visits],
   );
 
-  return isLoading ? (
-    <TheIconLoading />
-  ) : (
-    !sortedComs.length || (
-      <CmComFaceList
-        list={sortedComs}
-        className="min-h-[110%]"
-        isPutCcomFaceOff
-        comDescription={com => <span className="nowrap">{visits[com.wid] ?? 0}</span>}
-      />
-    )
+  return (
+    <>
+      <div className="sticky top-0 py-5 bg-x5">
+        Просмотры песен (общ. {mylib.values(visits).reduce((sum, curr) => (sum ?? 0) + (curr ?? 0), 0)})
+      </div>
+      {isLoading ? (
+        <TheIconLoading />
+      ) : (
+        !sortedComs.length || (
+          <CmComFaceList
+            list={sortedComs}
+            className="min-h-[110%]"
+            isPutCcomFaceOff
+            comDescription={com => <span className="nowrap">{visits[com.wid] ?? 0}</span>}
+          />
+        )
+      )}
+    </>
   );
 };
