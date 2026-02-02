@@ -10,35 +10,43 @@ export const CmFooter = () => {
 
   return (
     <AppFooter appName="cm">
-      <AppFooterItem
-        idPostfix="cm-all"
-        to="/cm/i/"
-        title="Все"
-        icon="LeftToRightListBullet"
-      />
-      <AppFooterItem
-        idPostfix="cm-lists"
-        to="/cm/li/"
-        title="Списки"
-        icon="Playlist01"
-      />
-      {isShowPlayer && (
+      {() => [
         <AppFooterItem
-          idPostfix="cm-player"
-          to="/cm/player/"
-          title="Плеер"
-          icon="PlayListFavourite02"
-        />
-      )}
+          key="all"
+          idPostfix="cm-all"
+          to="/cm/i/"
+          title="Все"
+          icon="LeftToRightListBullet"
+        />,
 
-      {checkAccess('cm', 'EDIT') && (
         <AppFooterItem
-          idPostfix="cm-edit"
-          to="/cm/edit/"
-          title="Редактор"
-          icon="Edit02"
-        />
-      )}
+          key="lists"
+          idPostfix="cm-lists"
+          to="/cm/li/"
+          title="Списки"
+          icon="Playlist01"
+        />,
+
+        isShowPlayer && (
+          <AppFooterItem
+            key="player"
+            idPostfix="cm-player"
+            to="/cm/player/"
+            title="Плеер"
+            icon="PlayListFavourite02"
+          />
+        ),
+
+        checkAccess('cm', 'EDIT') && (
+          <AppFooterItem
+            key="edit"
+            idPostfix="cm-edit"
+            to="/cm/edit/"
+            title="Админ"
+            icon="Edit02"
+          />
+        ),
+      ]}
     </AppFooter>
   );
 };

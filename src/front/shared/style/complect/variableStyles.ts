@@ -15,10 +15,10 @@ export const cssVariableStyles = css`
   --footer-initial-height: ${appFooterInitialHeight}px;
   --footer-height: var(--footer-initial-height);
   --footer-opacity: 1;
-  --footer-bottom: 0px;
+  --footer-bottom: 5px;
 
   --fullscreen-transition: top 0.3s, bottom 0.3s, height 0.3s, margin-top 0.3s;
-  --content-height: calc(100% - var(--footer-height));
+  --content-height: 100%;
   --content-top: var(--header-content-height);
   --phase-container-height: calc(100% - var(--header-height));
 `;

@@ -5,26 +5,32 @@ import { AppFooterItem } from '$app/AppFooterItem';
 export const BibleFooter = () => {
   return (
     <AppFooter appName="bible">
-      <AppFooterItem
-        idPostfix="main"
-        to="/bible/i"
-        title="Глава"
-        icon="File02"
-      />
-      <AppFooterItem
-        idPostfix="search"
-        to="/bible/search"
-        title="Поиск"
-        icon="FileSearch"
-      />
-      {isMobileDevice || (
+      {() => [
         <AppFooterItem
-          idPostfix="tran"
-          to="/bible/tran"
-          title="Трансляция"
-          icon="Computer"
-        />
-      )}
+          key="main"
+          idPostfix="main"
+          to="/bible/i"
+          title="Глава"
+          icon="File02"
+        />,
+        <AppFooterItem
+          key="search"
+          idPostfix="search"
+          to="/bible/search"
+          title="Поиск"
+          icon="FileSearch"
+        />,
+
+        isMobileDevice || (
+          <AppFooterItem
+            key="tran"
+            idPostfix="tran"
+            to="/bible/tran"
+            title="Трансляция"
+            icon="Computer"
+          />
+        ),
+      ]}
     </AppFooter>
   );
 };

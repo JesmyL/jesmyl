@@ -1,7 +1,7 @@
 import { FooterPlacementManager } from '#basis/lib/FooterPlacementManager';
 import { useCurrentAppFooterItemPlaceContext } from '#basis/state/App.contexts';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { FileRoutesByPath, Link } from '@tanstack/react-router';
+import { FileRoutesByPath } from '@tanstack/react-router';
 import { twMerge } from 'tailwind-merge';
 
 interface Props {
@@ -17,33 +17,22 @@ export function AppFooterItem({ to, icon, title, className, children, idPostfix:
   const place = useCurrentAppFooterItemPlaceContext();
   const isActive = to === place || `${to}/` === place;
 
-  if (!isActive && place) to = FooterPlacementManager.makePlaceLink(to);
-
   return (
-    <Link
+    <div
       id={`footer-button-${id}`}
-      to={to as never}
+      link-to={!isActive && place ? FooterPlacementManager.makePlaceLink(to) : to}
       className={twMerge(
-        'pointer flex flex-col items-center w-[25%] scale-100 transition-[scale] duration-500 starting:scale-0',
-        isActive && '[&>.icon-container]:bg-x2 [&>.icon-container]:w-[50px] [&>.icon-container]:text-x3',
+        'footer-item relative z-10 pointer px-3 py-1 min-w-17 h-(--item-s) flex flex-col text-sm',
+        isActive && 'active bg-x2 rounded-full',
         className,
       )}
     >
-      <div className="icon-container flex justify-center items-center transition-[width,background] duration-100 rounded-[30px] w-[24px] h-[30px]">
-        {isActive ? (
-          <LazyIcon
-            icon={icon}
-            kind="TwotoneRounded"
-          />
-        ) : (
-          <LazyIcon
-            icon={icon}
-            kind="BulkRounded"
-          />
-        )}
-      </div>
+      <LazyIcon
+        icon={icon}
+        kind={isActive ? 'TwotoneRounded' : 'BulkRounded'}
+      />
       <div className="title">{title}</div>
       {children}
-    </Link>
+    </div>
   );
 }

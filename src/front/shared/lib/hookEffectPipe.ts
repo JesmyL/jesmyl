@@ -17,9 +17,11 @@ export const addEventListenerPipe = <
 >(
   elem: Elem,
   eventName: EventName,
-  callback: (event: Event) => void,
+  callback: ((event: Event) => void) | nil,
   options?: EventListenerOptions,
 ) => {
+  if (callback == null) return;
+
   if (elem == null) return new EffectPipeMember(() => {});
   elem.addEventListener(eventName, callback as never, options);
 
