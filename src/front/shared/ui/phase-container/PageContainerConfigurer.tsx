@@ -46,8 +46,8 @@ export const PageContainerConfigurer = (props: PageContainerConfigurerProps) => 
       {...(props.withoutBackButton || props.withoutBackSwipe || focusedInput ? {} : swiper)}
       className={twMerge('phase-container relative', props.className)}
     >
-      <StyledPhaseContainerConfigurerHeader
-        className="header flex between w-full"
+      <div
+        className="header flex between w-full bg-x1 mt-(--header-top) p-(--header-padding) w-[100vw] h-(--header-height) transition-(--fullscreen-transition)"
         st-hide-footer-menu={props.hideFooterMenu || (isMobileDevice && focusedInput) ? '' : undefined}
       >
         {props.withoutBackButton
@@ -69,10 +69,13 @@ export const PageContainerConfigurer = (props: PageContainerConfigurerProps) => 
             </button>
           )}
         </StyledPhaseContainerConfigurerHeadWithMoreIcon>
-      </StyledPhaseContainerConfigurerHeader>
+      </div>
 
       <StyledPhaseContainerConfigurerContent
-        className={twMerge('content p-2', props.contentClass)}
+        className={twMerge(
+          'content p-2 static bg-x5 w-[100vw] h-(--content-height) overflow-x-hidden  overflow-y-auto pb-(--footer-height) transition-(--fullscreen-transition)',
+          props.contentClass,
+        )}
         ref={props.contentRef}
       >
         {props.content}
@@ -84,27 +87,4 @@ export const PageContainerConfigurer = (props: PageContainerConfigurerProps) => 
 export const StyledPhaseContainerConfigurerHeadTitle = styled.span``;
 export const StyledPhaseContainerConfigurerHeadWithMoreIcon = styled.div``;
 export const StyledPhaseContainerConfigurerHead = styled.div``;
-
-export const StyledPhaseContainerConfigurerHeader = styled.div`
-  transition: var(--fullscreen-transition);
-  margin-top: var(--header-top);
-  background-color: var(--color--1);
-  padding: var(--header-padding);
-  width: 100vw;
-  height: var(--header-height);
-`;
-
-export const StyledPhaseContainerConfigurerContent = styled.div`
-  position: static;
-  transition: var(--fullscreen-transition);
-  background-color: var(--color--5);
-  width: 100vw;
-  height: var(--content-height);
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding-bottom: calc(var(--footer-height) + 15px);
-
-  &.no-padding-top {
-    padding-top: 0;
-  }
-`;
+export const StyledPhaseContainerConfigurerContent = styled.div``;

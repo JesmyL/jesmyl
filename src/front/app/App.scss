@@ -5,10 +5,12 @@ body {
   &:has([st-hide-footer-menu]),
   &:has([st-fullscreen]) {
     --footer-height: 0px;
+    --footer-bottom: 0px;
     --footer-opacity: 0;
 
     .footer-menu {
       padding: 0;
+      pointer-events: none;
     }
   }
 
