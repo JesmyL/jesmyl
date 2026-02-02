@@ -246,7 +246,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
             }
           },
 
-          switchComTonInterpretation: async ({ comw, schw, ton }, { auth }) => {
+          setComTonInterpretation: async ({ comw, schw, ton }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'U')) throw '';
 
             const pack = await comsInSchEventDirStorage.getOrCreateItem(schw);

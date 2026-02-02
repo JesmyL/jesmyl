@@ -33,7 +33,7 @@ export const CmEditorEditComEventInterpretationFullContentInner = ({
           <CmEditorComEditTransposition
             ccom={com}
             onChange={ton =>
-              cmEditComExternalsClientTsjrpcMethods.switchComTonInterpretation({ comw: com.wid, ton, schw })
+              cmEditComExternalsClientTsjrpcMethods.setComTonInterpretation({ comw: com.wid, ton, schw })
             }
           />
 
