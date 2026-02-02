@@ -5,7 +5,7 @@ import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { SendableDropdown } from '#shared/ui/sends/dropdown/SendableDropdown';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useMemo, useState } from 'react';
 import { AttTranslatorType, attTranslatorTypes, IScheduleWidget, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
 import styled from 'styled-components';
@@ -14,7 +14,7 @@ import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { schEventTypesTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { useAttTypeTitleError } from './useAttTypeTitleError';
 
-const isRedactTypeiModalOpenAtom = atom<number | null>(null);
+let isRedactTypeiModalOpenAtom: Atom<number | null>;
 
 export function ScheduleWidgetEventType(props: {
   schedule: IScheduleWidget;
@@ -24,6 +24,8 @@ export function ScheduleWidgetEventType(props: {
   isRedact?: boolean;
   onItemSelectSend?: (typei: number) => Promise<unknown>;
 }) {
+  isRedactTypeiModalOpenAtom ??= atom<number | null>(null);
+
   const [title, setTitle] = useState(props.typeBox.title);
   const error = useAttTypeTitleError(title, props.schedule, props.isRedact, props.typei);
   const [attTranslatorType, setAttTranslatorType] = useState(AttTranslatorType.Today);

@@ -7,7 +7,7 @@ import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/con
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { ScheduleWidgetRightControlList } from '#widgets/schedule/control/RightControlList';
 import { schAttachmentTypesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
-import { atom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import React, { ReactNode, useMemo } from 'react';
 import {
   CustomAttUseRights,
@@ -32,9 +32,6 @@ enum WhoCan {
   No,
 }
 
-const whoCaniAtom = atom<WhoCan>(WhoCan.No);
-const openAttRedactorAtom = atom<IScheduleWidgetAttachmentTypeMi | null>(null);
-
 const whoCanUnits: { action: string; rule: 'R' | 'U'; icon: KnownStameskaIconName }[] = [
   {
     action: 'видит',
@@ -48,11 +45,17 @@ const whoCanUnits: { action: string; rule: 'R' | 'U'; icon: KnownStameskaIconNam
   },
 ];
 
+let whoCaniAtom: Atom<WhoCan>;
+let openAttRedactorAtom: Atom<IScheduleWidgetAttachmentTypeMi | null>;
+
 export function ScheduleWidgetCustomAtt(props: {
   tatt: ScheduleWidgetAppAttCustomized;
   isRedact?: boolean;
   topContent?: ReactNode;
 }) {
+  whoCaniAtom ??= atom<WhoCan>(WhoCan.No);
+  openAttRedactorAtom ??= atom<IScheduleWidgetAttachmentTypeMi | null>(null);
+
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
   const attachmentTypeScopeProps: ScheduleAttachmentTypeScopeProps = useMemo(

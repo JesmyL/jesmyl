@@ -4,15 +4,17 @@ import { Modal } from '#shared/ui/modal';
 import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { complectIDB } from '$index/shared/state';
-import { atom, useAtom } from 'atomaric';
+import { Atom, atom, useAtom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React from 'react';
 import { AlertLineSettingsModalInner } from './AlertLineSettings';
 
 const LazyAlertLineConfigIcon = React.lazy(() => import('./AlertLineConfigIcon'));
-const isOpenSettingsModalAtom = atom(false);
+let isOpenSettingsModalAtom: Atom<boolean>;
 
 export const AlertLineInput = () => {
+  isOpenSettingsModalAtom ??= atom(false);
+
   const configs = useLiveQuery(() => complectIDB.tb.alertLineConfigs.toArray());
   const [alertLine, setAlertLine] = complectIDB.use.broadcastAlertLine();
   const [showAlertConfigId, setShowAlertConfigId] = useAtom(broadcastShowAlertLineConfigIdAtom);

@@ -2,10 +2,10 @@ import { Button } from '#shared/components';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { useCmComCurrentMarkTimei, useCmComMarkTextValuesMaker } from '$cm/ext';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { HttpLink } from 'shared/api';
 
-const openSlidesAtom = atom(false);
+let openSlidesAtom: Atom<boolean>;
 
 export const CmEditorTabComAudioMarksShowSlideListButton = ({
   ccom,
@@ -14,6 +14,8 @@ export const CmEditorTabComAudioMarksShowSlideListButton = ({
   ccom: EditableCom;
   src: HttpLink | nil;
 }) => {
+  openSlidesAtom ??= atom(false);
+
   const { makeText, markTimes } = useCmComMarkTextValuesMaker(ccom, src);
   const currentMarkTimei = useCmComCurrentMarkTimei(markTimes);
 

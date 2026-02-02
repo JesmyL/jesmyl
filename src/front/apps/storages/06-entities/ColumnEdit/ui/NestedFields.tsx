@@ -2,20 +2,22 @@ import { Button } from '#shared/components/ui/button';
 import { StoragesAddColumn } from '$storages/entities/AddColumn';
 import { storagesExcludeColumnTypesForDatedNestedCell } from '$storages/shared/const/exclude.const';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
 import { StoragesRack } from 'shared/model/storages/list.model';
 import { StoragesColumnType, StoragesRackColumn } from 'shared/model/storages/rack.model';
 import { itNIt } from 'shared/utils';
 import { TheStoragesColumnEditColumn } from './Column';
 
-const isOpenAddColumnModalAtom = atom(false);
+let isOpenAddColumnModalAtom: Atom<boolean>;
 
 export const StoragesColumnEditNestedFields = (props: {
   column: StoragesRackColumn<StoragesColumnType>;
   rack: StoragesRack;
   coli: number;
 }) => {
+  isOpenAddColumnModalAtom ??= atom(false);
+
   const [isExpand, setIsExpand] = useState(false);
 
   return (

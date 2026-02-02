@@ -3,13 +3,16 @@ import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { Modal } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { CmEditorComCreate, CmEditorComRemovedComsModalInner } from '$cm+editor/widgets/com';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useEffect } from 'react';
 
-const isRemovedComsOpenAtom = atom(false);
-const isComCreatorOpenAtom = atom(false);
+let isRemovedComsOpenAtom: Atom<boolean>;
+let isComCreatorOpenAtom: Atom<boolean>;
 
 export const CmEditorComListEditMore = ({ onClose }: { onClose(is: boolean): void }) => {
+  isRemovedComsOpenAtom ??= atom(false);
+  isComCreatorOpenAtom ??= atom(false);
+
   const checkAccess = useCheckUserAccessRightsInScope();
 
   useEffect(() => isComCreatorOpenAtom.subscribe(onClose), [onClose]);

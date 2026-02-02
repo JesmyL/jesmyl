@@ -6,17 +6,20 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { StoragesDateTimestampTitle } from '$storages/entities/DateTimestampTitle';
 import { useStoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
 import { StoragesColumnType, StoragesNestedCellMi } from 'shared/model/storages/rack.model';
 import { StoragesCellTypeProps } from '../model/model';
 import { StoragesCellDatesNestedDateCell } from './DatesNestedDate';
 
-const openDateMiAtom = atom<{ mi: StoragesNestedCellMi; coli: number } | null>(null);
 const minShowCount = 3;
 const maxLimCount = 5;
+type CellContain = { mi: StoragesNestedCellMi; coli: number } | null;
+let openDateMiAtom: Atom<CellContain>;
 
 export const StoragesCellOfTypeDates = (props: StoragesCellTypeProps<StoragesColumnType.Dates>) => {
+  openDateMiAtom ??= atom<CellContain>(null);
+
   const isEdit = useStoragesIsEditInnersContext();
   const [isExpand, setIsExpand] = useState(false);
 

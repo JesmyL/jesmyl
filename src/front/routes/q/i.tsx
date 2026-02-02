@@ -1,6 +1,6 @@
 import { QuestionerUserAnswerPage } from '$q/pages/UserAnswerPage/ui/Page';
 import { createFileRoute } from '@tanstack/react-router';
-import { atom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { QuestionerBlankWid } from 'shared/model/q';
 
@@ -13,9 +13,11 @@ export const Route = createFileRoute('/q/i')({
   },
 });
 
-const lastBlankwAtom = atom(QuestionerBlankWid.empty, 'q:lastUserBlankw');
+let lastBlankwAtom: Atom<QuestionerBlankWid>;
 
 function RouteComponent() {
+  lastBlankwAtom ??= atom(QuestionerBlankWid.empty, 'q:lastUserBlankw');
+
   const { q } = Route.useSearch();
   const lastBlankw = useAtomValue(lastBlankwAtom);
 

@@ -2,16 +2,18 @@ import { Button } from '#shared/components/ui/button';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import { TextInput } from '#shared/ui/TextInput';
 import { useSetRootAnchoredContent } from '#shared/ui/useSetRootAnchoredContent';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { ReactNode, useCallback, useEffect } from 'react';
 import { Modal } from '../../modal/ui/Modal';
 import { ModalBody } from '../../modal/ui/ModalBody';
 import { ModalFooter } from '../../modal/ui/ModalFooter';
 import { ModalHeader } from '../../modal/ui/ModalHeader';
 
-const isOpenAtom = atom(false);
+let isOpenAtom: Atom<boolean>;
 
 export const usePrompt = () => {
+  isOpenAtom ??= atom(false);
+
   const setContent = useSetRootAnchoredContent(isOpenAtom);
 
   return useCallback(

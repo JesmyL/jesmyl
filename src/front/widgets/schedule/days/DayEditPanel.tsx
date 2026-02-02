@@ -2,7 +2,7 @@ import { StrongInputDateTimeExtracter } from '#basis/ui/strong-control/StrongDat
 import { renderComponentInNewWindow } from '#shared/lib/renders';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { makeRegExp } from 'regexpert';
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleScopeProps } from 'shared/api';
 import { useScheduleDayScopePropsContext } from '../complect/lib/contexts';
@@ -17,9 +17,11 @@ interface Props {
   schedule: IScheduleWidget;
 }
 
-const isOpenDayListUpdaterAtom = atom(false);
+let isOpenDayListUpdaterAtom: Atom<boolean>;
 
 export function ScheduleWidgetDayEditPanel({ day, dayi, schedule, scheduleScopeProps }: Props) {
+  isOpenDayListUpdaterAtom ??= atom(false);
+
   const dayScopeProps = useScheduleDayScopePropsContext();
 
   return (

@@ -24,17 +24,20 @@ import {
   useCmComCommentBlockCss,
   useCmComOrderAudioMarkControlButtons,
 } from '$cm/ext';
-import { atom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { CmComAudioMarkPackTime, HttpLink } from 'shared/api';
 import { toast } from 'sonner';
 import styled, { RuleSet } from 'styled-components';
 import { CmEditorTabComAudioMarksShowSlideListButton } from './ShowSlideListButton';
 
-const srcOnEditAtom = atom<null | HttpLink>(null, 'cm+editor:srcOnMarkEdit');
-const preSwitchTimeAtom = atom(-1, 'cm+editor:comAudioPreSwitchTime');
+let srcOnEditAtom: Atom<null | HttpLink>;
+let preSwitchTimeAtom: Atom<number>;
 
 export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
+  srcOnEditAtom ??= atom<null | HttpLink>(null, 'cm+editor:srcOnMarkEdit');
+  preSwitchTimeAtom ??= atom(-1, 'cm+editor:comAudioPreSwitchTime');
+
   const editSrc = useAtomValue(srcOnEditAtom);
   const trackMarks = cmIDB.useAudioTrackMarks(editSrc);
   const marksOnUpdating = useAtomValue(cmComEditorAudioMarksEditPacksAtom);

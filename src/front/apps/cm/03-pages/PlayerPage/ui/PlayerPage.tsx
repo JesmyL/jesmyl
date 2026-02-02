@@ -23,7 +23,7 @@ import { getCmComFreshAudioMarksPack } from '$cm/shared/lib/getFresh';
 import { cmComTrackPreSwitchTimeAtom, cmOpenComListModeAtom } from '$cm/shared/state';
 import { cmPlayerBroadcastAudioSrcAtom, cmPlayerBroadcastComwAtom } from '$cm/shared/state/broadcast.atoms';
 import { useNavigate, useSearch } from '@tanstack/react-router';
-import { atom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useMemo } from 'react';
 import { CmComWid } from 'shared/api';
 import { toast } from 'sonner';
@@ -31,15 +31,17 @@ import styled from 'styled-components';
 import { CmPlayerBroadcast } from './Broadcast';
 
 let isCanPlay = false;
-const comsWithErrorAtom = atom<Set<CmComWid>>(new Set());
 
 const resetIsCanPlayEffect = () => {
   return () => {
     isCanPlay = false;
   };
 };
+let comsWithErrorAtom: Atom<Set<CmComWid>>;
 
 export const CmPlayerPage = () => {
+  comsWithErrorAtom ??= atom(new Set());
+
   const favouriteComs = useCmComFavouriteList().favouriteComs;
   const selectedComs = useCmComSelectedList().selectedComs;
   const allComs = useCmComList();

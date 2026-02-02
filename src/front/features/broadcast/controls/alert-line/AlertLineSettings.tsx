@@ -2,16 +2,18 @@ import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { complectIDB } from '$index/shared/state';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React from 'react';
 import { defaultAlertLineConfig } from '../../consts';
 import { AlertLineConfigSettingsInner } from './AlertLineConfigSettings';
 
 const LazyAlertLineConfigIcon = React.lazy(() => import('./AlertLineConfigIcon'));
-const editConfigIdAtom = atom<number | null>(null);
+let editConfigIdAtom: Atom<number | null>;
 
 export const AlertLineSettingsModalInner = () => {
+  editConfigIdAtom ??= atom<number | null>(null);
+
   const configs = useLiveQuery(() => complectIDB.tb.alertLineConfigs.toArray());
 
   return (

@@ -8,15 +8,14 @@ import { StoragesDateTimestampTitle } from '$storages/entities/DateTimestampTitl
 import { storagesExcludeColumnTypesForDatedNestedCell } from '$storages/shared/const/exclude.const';
 import { StoragesIsEditInnersContext, useStoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
 import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
 import { StoragesColumnType, StoragesNestedCellMi } from 'shared/model/storages/rack.model';
 import { storagesCellComponents } from '../const/cellComponents';
 import { StoragesCellTypeProps } from '../model/model';
 
-const isOpenAddColumnModalAtom = atom(false);
-
+let isOpenAddColumnModalAtom: Atom<boolean>;
 const maxTitleLength = 10;
 
 export const StoragesCellDatesNestedDateCell = (
@@ -24,6 +23,8 @@ export const StoragesCellDatesNestedDateCell = (
     dateMi: StoragesNestedCellMi;
   },
 ) => {
+  isOpenAddColumnModalAtom ??= atom(false);
+
   const [isSelfEdit, setIsSelfEdit] = useState(false);
   const isCardEdit = useStoragesIsEditInnersContext();
   const cardCell = props.cell?.row?.find(it => it.mi === props.dateMi);

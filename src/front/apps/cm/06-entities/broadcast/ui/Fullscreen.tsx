@@ -8,16 +8,18 @@ import {
   useCmBroadcastScreenComNavigations,
   useCmBroadcastScreenComTextNavigations,
 } from '$cm/features/broadcast';
-import { atom, useAtom } from 'atomaric';
+import { Atom, atom, useAtom } from 'atomaric';
 import { useEffect, useReducer } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
 const forceUpdater = (it: number) => it + 1;
 const style = { padding: '5px' };
 
-const isShowInfoAtom = atom(true);
+let isShowInfoAtom: Atom<boolean>;
 
 export const CmBroadcastFullscreen = () => {
+  isShowInfoAtom ??= atom(true);
+
   const [forceUpdates, forceUpdate] = useReducer(forceUpdater, 0);
   const [isShowInfo, setIsShowInfo] = useAtom(isShowInfoAtom);
 

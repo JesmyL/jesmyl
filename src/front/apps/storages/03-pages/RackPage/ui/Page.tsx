@@ -11,17 +11,21 @@ import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.metho
 import { StoragesRackCardListWidget } from '$storages/widgets/RackCardListWidget';
 import { StoragesRackCardSortAndGroupsModalInner } from '$storages/widgets/RackCardSortAndGroupsModalInner';
 import { Link, useNavigate } from '@tanstack/react-router';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
 import { StoragesRackMemberRole, StoragesRackWid } from 'shared/model/storages/list.model';
 import { StoragesRackImportFromExcelModalInner } from './ImportFromExcelModalInner';
 
-const isOpenImportFromExcelModal = atom(false);
-const isOpenGroupAnsSortingModal = atom(false);
-const isOpenMemberAdderModal = atom(false);
+let isOpenImportFromExcelModalAtom: Atom<boolean>;
+let isOpenGroupAnsSortingModalAtom: Atom<boolean>;
+let isOpenMemberAdderModalAtom: Atom<boolean>;
 
 export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
+  isOpenImportFromExcelModalAtom ??= atom(false);
+  isOpenGroupAnsSortingModalAtom ??= atom(false);
+  isOpenMemberAdderModalAtom ??= atom(false);
+
   const rack = useLiveQuery(() => storagesIDB.tb.racks.get(rackw), [rackw]);
   const [isMoreOpen, setIsMoreOpen] = useState(false);
   const auth = useAuth();
@@ -51,12 +55,12 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
         <>
           <StoragesRackCardListWidget rack={rack} />
 
-          <Modal openAtom={isOpenImportFromExcelModal}>
+          <Modal openAtom={isOpenImportFromExcelModalAtom}>
             <StoragesRackImportFromExcelModalInner rack={rack} />
           </Modal>
 
           <QrReader
-            openAtom={isOpenMemberAdderModal}
+            openAtom={isOpenMemberAdderModalAtom}
             onReadData={value => {
               const auth = JSON.parse(value) as unknown;
 
@@ -69,7 +73,7 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
               )
                 return;
 
-              isOpenMemberAdderModal.reset();
+              isOpenMemberAdderModalAtom.reset();
 
               return storagesTsjrpcClient.addRackMember({
                 member: { fio: auth.fio, role: StoragesRackMemberRole.Admin },
@@ -79,7 +83,7 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
             }}
           />
 
-          <Modal openAtom={isOpenGroupAnsSortingModal}>
+          <Modal openAtom={isOpenGroupAnsSortingModalAtom}>
             <StoragesRackCardSortAndGroupsModalInner rack={rack} />
           </Modal>
 
@@ -104,7 +108,7 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
               <BottomPopupItem
                 icon="SortingAZ01"
                 title="Сортировка и группировка карточек"
-                onClick={isOpenGroupAnsSortingModal.do.toggle}
+                onClick={isOpenGroupAnsSortingModalAtom.do.toggle}
               />
 
               <Link
@@ -133,13 +137,13 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
 
               <BottomPopupItem
                 icon="FileImport"
-                onClick={isOpenImportFromExcelModal.do.toggle}
+                onClick={isOpenImportFromExcelModalAtom.do.toggle}
                 title="Сформировать карточки из Excel"
               />
 
               <BottomPopupItem
                 icon="QrCode"
-                onClick={isOpenMemberAdderModal.do.toggle}
+                onClick={isOpenMemberAdderModalAtom.do.toggle}
                 title="Добавить участника"
               />
             </BottomPopup>

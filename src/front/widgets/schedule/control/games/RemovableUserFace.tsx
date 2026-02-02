@@ -4,7 +4,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { schGamesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { IScheduleWidgetUser } from 'shared/api';
 import { ScheduleWidgetUserTakePhoto } from '../users/TakePhoto';
 import { ScheduleWidgetUserPhoto } from '../users/UserPhoto';
@@ -15,9 +15,11 @@ interface Props {
   buttons?: React.ReactNode;
 }
 
-const isPhotoOpenAtom = atom(false);
+let isPhotoOpenAtom: Atom<boolean>;
 
 export function ScheduleWidgetRemovableUserFace({ user, isStriked, buttons }: Props) {
+  isPhotoOpenAtom ??= atom(false);
+
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
   const isUserStriked = isStriked ?? rights.schedule.games?.strikedUsers?.includes(user.mi);

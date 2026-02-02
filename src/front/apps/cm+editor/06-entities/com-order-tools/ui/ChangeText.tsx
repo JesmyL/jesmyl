@@ -3,11 +3,14 @@ import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { ChordVisibleVariant, TheCmComOrder } from '$cm/ext';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { CmEditorComOrderToolsProps } from '../model';
 
-const isModalOpenAtom = atom(false);
+let isModalOpenAtom: Atom<boolean>;
+
 export const CmEditorComOrderToolsChangeText = ({ com, ord, ordi }: CmEditorComOrderToolsProps) => {
+  isModalOpenAtom ??= atom(false);
+
   const blockHeaderHtml = (textPre = '') =>
     `${textPre && `${textPre} `}${ord.isEmptyHeader ? <s>{ord.me.header()}</s> : ord.me.header()}`;
 

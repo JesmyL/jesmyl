@@ -15,13 +15,15 @@ import { IndexProfileInfo } from '$index/entities/ProfileInfo/ui/ProfileInfo';
 import { indexFavouriteAppsAtom, useAuth } from '$index/shared/state';
 import { IndexAbout } from '$index/widgets/About/ui/IndexAbout';
 import { Link } from '@tanstack/react-router';
-import { atom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import React from 'react';
 import { itNNull } from 'shared/utils';
 
-const isAboutOpenAtom = atom(false);
+let isAboutOpenAtom: Atom<boolean>;
 
 export const IndexOtherPage = () => {
+  isAboutOpenAtom ??= atom(false);
+
   const currentAppName = useAppNameContext();
   const linkParams = { appName: currentAppName };
   const checkAccess = useCheckUserAccessRightsInScope();

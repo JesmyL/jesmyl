@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { atom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode } from 'react';
 import { Modal, ModalBody, ModalHeader } from './modal';
 import { TheIconButton } from './the-icon/TheIconButton';
@@ -10,7 +10,7 @@ type PrepareResult = {
   text?: string | (() => string | und);
 };
 
-const bodyNodeAtom = atom<React.ReactNode>(null);
+let bodyNodeAtom: Atom<React.ReactNode>;
 
 export function TheIconShareButton({
   text,
@@ -26,6 +26,8 @@ export function TheIconShareButton({
   className?: string;
   prepare?: () => und | PrepareResult;
 }) {
+  bodyNodeAtom ??= atom<React.ReactNode>(null);
+
   const bodyNode = useAtomValue(bodyNodeAtom);
 
   return (

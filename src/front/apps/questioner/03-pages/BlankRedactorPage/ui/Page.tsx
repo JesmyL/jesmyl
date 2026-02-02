@@ -17,7 +17,7 @@ import { questionerAdminTsjrpcClient } from '$q/shared/tsjrpc/admin.tsjrpc';
 import { QuestionerTemplateCard } from '$q/shared/ui/TemplateCard';
 import { QuestionerTemplateVisibilityRedactor } from '$q/widgets/TemplateVisibilityRedactor/ui/Redactor';
 import { Link } from '@tanstack/react-router';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import {
   QuestionerAdminTemplateContentProps,
@@ -29,10 +29,13 @@ import { itIt } from 'shared/utils';
 import { QuestionerBlankRedactorAddTemplateModalInner } from './AddTemplateModalInner';
 import { QuestionerBlankRedactorControls } from './Controls';
 
-const isOpenAddModalAtom = atom(false);
-const openVisibilityTemplateIdModalAtom = atom<QuestionerTemplateId | null>(null);
+let openVisibilityTemplateIdModalAtom: Atom<QuestionerTemplateId | null>;
+let isOpenAddModalAtom: Atom<boolean>;
 
 export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlankWid }) => {
+  openVisibilityTemplateIdModalAtom ??= atom<QuestionerTemplateId | null>(null);
+  isOpenAddModalAtom ??= atom(false);
+
   const blank = useLiveQuery(() => questionerIDB.tb.blanks.get(blankw), [blankw]);
 
   return (

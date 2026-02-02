@@ -1,4 +1,4 @@
-import { atom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { useBibleBroadcastSearchTransformAddressTermToAddress } from '../lib/transformers';
 import { BibleBroadcastSearchPanelInput } from './Input';
 
@@ -6,10 +6,12 @@ interface Props {
   inputRef: React.RefObject<HTMLInputElement | null>;
 }
 
-const termAtom = atom('', 'bible:addressTerm');
+let termAtom: Atom<string>;
 const onChange = (event: React.ChangeEvent<HTMLInputElement | null>) => termAtom.set(event.target.value);
 
 export const BibleBroadcastSearchPanelAddressInput = ({ inputRef }: Props) => {
+  termAtom ??= atom('', 'bible:addressTerm');
+
   const addressTerm = useAtomValue(termAtom);
   const address = useBibleBroadcastSearchTransformAddressTermToAddress(addressTerm, inputRef);
 

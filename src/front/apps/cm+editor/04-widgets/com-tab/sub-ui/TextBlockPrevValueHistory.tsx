@@ -10,9 +10,11 @@ type Props = {
   comw: CmComWid;
 };
 
-const openHistoryAtom = atom(null as null | number);
+let openHistoryAtom: Atom<null | number>;
 
 export const CmEditorComTabTextBlockPrevValueButton = (props: Props & { texti: number }) => {
+  openHistoryAtom ??= atom<null | number>(null);
+
   const history = useAtomValue(props.historyAtom).value?.[props.comw];
 
   return (

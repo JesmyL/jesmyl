@@ -9,7 +9,7 @@ import { useBibleAddressBooki, useBibleAddressChapteri, useBibleAddressVersei } 
 import { useBibleBookList } from '$bible/shared/hooks/texts';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
 import { BibleReaderBookText } from '$bible/widgets/reader';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
 import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
@@ -23,11 +23,15 @@ export function BibleReaderCurrentBookPage() {
   );
 }
 
-const isOpenBookSelectorAtom = atom(false);
-const isOpenChapterSelectorAtom = atom(false);
-const isOpenVerseSelectorAtom = atom(false);
+let isOpenBookSelectorAtom: Atom<boolean>;
+let isOpenChapterSelectorAtom: Atom<boolean>;
+let isOpenVerseSelectorAtom: Atom<boolean>;
 
 function Content() {
+  isOpenVerseSelectorAtom ??= atom(false);
+  isOpenChapterSelectorAtom ??= atom(false);
+  isOpenBookSelectorAtom ??= atom(false);
+
   const currentBooki = useBibleAddressBooki();
   const currentChapteri = useBibleAddressChapteri();
   const currentVersei = useBibleAddressVersei();

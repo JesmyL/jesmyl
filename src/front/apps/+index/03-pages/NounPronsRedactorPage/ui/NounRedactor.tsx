@@ -1,9 +1,11 @@
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { IndexNounPronsRedactorWordRedactor } from '../sub-ui/WordRedactor';
 
-const nounAtom = atom('', 'index:twice-noun');
+let nounAtom: Atom<string>;
 
 export const IndexNounPronsRedactorNounRedactor = () => {
+  nounAtom ??= atom('', 'index:twice-noun');
+
   return (
     <>
       <div>Существительное (М! Ж: Ср. мн, "к)</div>

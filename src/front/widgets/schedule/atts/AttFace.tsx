@@ -1,7 +1,7 @@
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { ReactNode } from 'react';
 import { ScheduleWidgetAttKey, scheduleWidgetUserRights } from 'shared/api';
 import styled from 'styled-components';
@@ -19,7 +19,7 @@ type Props = {
   onRemoveAttSend: (attKey: ScheduleWidgetAttKey) => Promise<unknown>;
 };
 
-const tattOnRedactAtom = atom<ScheduleWidgetAttKey | null>(null);
+let tattOnRedactAtom: Atom<ScheduleWidgetAttKey | null>;
 
 export function ScheduleWidgetAttFace({
   tatt,
@@ -30,6 +30,8 @@ export function ScheduleWidgetAttFace({
   customAttTopContent,
   onRemoveAttSend,
 }: Props) {
+  tattOnRedactAtom ??= atom<ScheduleWidgetAttKey | null>(null);
+
   const rights = useScheduleWidgetRightsContext();
   const myUserR = rights.myUser?.R ?? rights.schedule.ctrl.defu;
 

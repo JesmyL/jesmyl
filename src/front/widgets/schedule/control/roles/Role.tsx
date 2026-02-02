@@ -9,7 +9,7 @@ import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { schRolesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { extractScheduleWidgetRoleUser } from '#widgets/schedule/useScheduleWidget';
 import { useAuth } from '$index/shared/state';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import React, { useMemo } from 'react';
 import { IScheduleWidgetRole, ScheduleRoleScopeProps, scheduleWidgetUserRights } from 'shared/api';
 import { ScheduleWidgetRoleFace } from './RoleFace';
@@ -17,11 +17,15 @@ import { ScheduleWidgetRoleFace } from './RoleFace';
 const mainRoleRights = scheduleWidgetUserRights.getAllRights();
 const LazyIconConfigurator = React.lazy(() => import('../../../../shared/ui/configurators/Icon'));
 
-const isUserSetModalOpenAtom = atom(false);
-const isCatSetModalOpenAtom = atom(false);
-const isCatRedactModalOpenAtom = atom(false);
+let isUserSetModalOpenAtom: Atom<boolean>;
+let isCatSetModalOpenAtom: Atom<boolean>;
+let isCatRedactModalOpenAtom: Atom<boolean>;
 
 export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
+  isUserSetModalOpenAtom ??= atom(false);
+  isCatSetModalOpenAtom ??= atom(false);
+  isCatRedactModalOpenAtom ??= atom(false);
+
   const rights = useScheduleWidgetRightsContext();
   const auth = useAuth();
   const roleUser = extractScheduleWidgetRoleUser(rights.schedule, 0, role);

@@ -5,19 +5,19 @@ import { mylib } from '#shared/lib/my-lib';
 import { makeToastKOMoodConfig, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { QrReader } from '#shared/ui/qr-code/QrReader';
 import { StoragesRackStatusFace } from '$storages/entities/RackStatusFace';
-import { atom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { StoragesRack, StoragesRackCard } from 'shared/model/storages/list.model';
 import { StoragesColumnType, StoragesRackColumn } from 'shared/model/storages/rack.model';
 import { toast } from 'sonner';
-
-const termAtom = atom('', 'storages:searchTerm');
-const isOpenQrSearchAtom = atom(false);
-const searchByAtom = atom(new Set<keyof StoragesRackCard | number>(['title']), 'storages:searchByFields');
 
 const searchFields: { key: keyof StoragesRackCard | number; title: string }[] = [
   { key: 'title', title: 'Название' },
   { key: 'note', title: 'Заметка' },
 ];
+
+let termAtom: Atom<string>;
+let isOpenQrSearchAtom: Atom<boolean>;
+let searchByAtom: Atom<Set<keyof StoragesRackCard | number>>;
 
 export const StoragesRackCardSearchModalInner = ({
   rack,
@@ -26,6 +26,10 @@ export const StoragesRackCardSearchModalInner = ({
   rack: StoragesRack;
   onCardClick: (card: StoragesRackCard) => void;
 }) => {
+  termAtom ??= atom('', 'storages:searchTerm');
+  isOpenQrSearchAtom ??= atom(false);
+  searchByAtom ??= atom(new Set<keyof StoragesRackCard | number>(['title']), 'storages:searchByFields');
+
   const term = useAtomValue(termAtom);
   const searchByKeySet = useAtomValue(searchByAtom);
 

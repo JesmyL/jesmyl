@@ -3,7 +3,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ScheduleUserScopePropsContext, useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { ReactNode, useMemo } from 'react';
 import {
   IScheduleWidgetUser,
@@ -36,9 +36,11 @@ export const ScheduleWidgetUser = (props: Props) => {
   );
 };
 
-const isRedactModalOpenAtom = atom<IScheduleWidgetUserMi | null>(null);
+let isRedactModalOpenAtom: Atom<IScheduleWidgetUserMi | null>;
 
 const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props) => {
+  isRedactModalOpenAtom ??= atom<IScheduleWidgetUserMi | null>(null);
+
   const rights = useScheduleWidgetRightsContext();
 
   const userName =

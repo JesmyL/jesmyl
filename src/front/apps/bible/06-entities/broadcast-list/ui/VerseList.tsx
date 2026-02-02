@@ -1,15 +1,17 @@
 import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
 import { useBibleAddressBooki, useBibleAddressChapteri } from '$bible/shared/hooks';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { JSX, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { bibleBroadcastListVerseiIdPrefix } from '../const/ids';
 import { useBibleBroadcastListVerseListeners } from '../lib/useVerseListListeners';
 
-const fastVerses = atom<string[]>([], 'bible:fastVerses');
+let fastVersesAtom: Atom<string[]>;
 
 export function BibleBroadcastListVerseList(): JSX.Element {
+  fastVersesAtom ??= atom<string[]>([], 'bible:fastVerses');
+
   const verseListRef = useRef<HTMLOListElement>(null);
 
   const currentBooki = useBibleAddressBooki();
@@ -21,14 +23,14 @@ export function BibleBroadcastListVerseList(): JSX.Element {
 
   useEffect(() => {
     if (verses === undefined || !verses.length) return;
-    fastVerses.set(verses);
+    fastVersesAtom.set(verses);
   }, [verses]);
 
   useBibleBroadcastListVerseListeners(verseListRef, currentBooki, currentChapteri);
 
   return (
     <StyledContainer ref={verseListRef}>
-      {(verses ?? fastVerses.get())?.map((__html, versei) => {
+      {(verses ?? fastVersesAtom.get())?.map((__html, versei) => {
         return (
           <StyledFace
             key={versei}

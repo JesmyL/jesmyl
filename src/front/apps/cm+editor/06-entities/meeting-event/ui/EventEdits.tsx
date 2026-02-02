@@ -2,15 +2,18 @@ import { mylib } from '#shared/lib/my-lib';
 import { Modal } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { useCmComSelectedList } from '$cm/ext';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { CmEditorMeetingEventEditProps } from '../model/model';
 import { CmEditorMeetingEventEditsHistoryModalInner } from './EventEditsHistoryModal';
 import { CmEditorMeetingEventSendComsModalInner } from './SendComsInEventModalInner';
 
-const isOpenHistoryModalAtom = atom(false);
-const isOpenSendModalAtom = atom(false);
+let isOpenHistoryModalAtom: Atom<boolean>;
+let isOpenSendModalAtom: Atom<boolean>;
 
 export const CmEditorMeetingEventEdits = (props: CmEditorMeetingEventEditProps) => {
+  isOpenHistoryModalAtom ??= atom(false);
+  isOpenSendModalAtom ??= atom(false);
+
   const selectedComws = useCmComSelectedList().selectedComws;
 
   return (

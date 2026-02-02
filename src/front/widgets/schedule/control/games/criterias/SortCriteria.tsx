@@ -8,7 +8,7 @@ import { TheButton } from '#shared/ui/TheButton';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { schGamesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
-import { atom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { useMemo, useState } from 'react';
 import { IScheduleWidgetTeamCriteria, IScheduleWidgetUser, ScheduleGameCriteriaScopeProps } from 'shared/api';
 import { isNIs } from 'shared/utils';
@@ -22,10 +22,14 @@ interface Props {
 }
 
 const itemIt = <Item,>({ item }: { item: Item }) => item;
-const termAtom = atom('');
-const isOpenAtom = atom(false);
+
+let termAtom: Atom<string>;
+let isOpenAtom: Atom<boolean>;
 
 export function ScheduleWidgetSortCriteria({ criteria, criteriai }: Props) {
+  termAtom ??= atom('');
+  isOpenAtom ??= atom(false);
+
   const term = useAtomValue(termAtom);
   const rights = useScheduleWidgetRightsContext();
   const [isRenaming, setIsRenaming] = useState(false);

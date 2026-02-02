@@ -3,7 +3,7 @@ import { propagationStopper } from '#shared/lib/event-funcs';
 import { MyLib, mylib } from '#shared/lib/my-lib';
 import { Modal, ModalBody, ModalFooter } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { ReactNode } from 'react';
 import {
   IScheduleWidget,
@@ -35,7 +35,7 @@ type Props = {
   ) => React.ReactNode;
 };
 
-const isModalOpenAtom = atom(false);
+let isModalOpenAtom: Atom<boolean>;
 
 export const ScheduleWidgetBindAtts = ({
   atts,
@@ -47,6 +47,8 @@ export const ScheduleWidgetBindAtts = ({
   onRemoveAttSend,
   inAttNodeAdds,
 }: Props) => {
+  isModalOpenAtom ??= atom(false);
+
   const [appAtts, attRefs] = useScheduleWidgetAppAttsContext();
   const appAttList = MyLib.entries(appAtts);
   const rights = useScheduleWidgetRightsContext();

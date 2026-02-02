@@ -3,7 +3,7 @@ import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import React, { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
 import { IScheduleWidgetListCat } from 'shared/api';
@@ -16,9 +16,12 @@ const LazyIconConfigurator = React.lazy(() => import('../../../shared/ui/configu
 
 const reg = makeRegExp('/([а-яё]?[йуеъыаоэяиью]+[а-яё]).+/i');
 const cutTitle = (title: string) => title.replace(reg, '$1.');
-const isModalOpenAtom = atom(false);
+
+let isModalOpenAtom: Atom<boolean>;
 
 export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidgetListCat; cati: number }) {
+  isModalOpenAtom ??= atom(false);
+
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
   const catScopeProps = useMemo(() => ({ ...scheduleScopeProps, cati }), [cati, scheduleScopeProps]);

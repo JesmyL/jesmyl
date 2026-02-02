@@ -10,7 +10,7 @@ import { CmEditorChordRedactableTrack } from '$cm+editor/entities/chord';
 import { cmEditorClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { CmChordCard, cmIDB } from '$cm/ext';
 import { useNavigate, useSearch } from '@tanstack/react-router';
-import { atom, useAtom } from 'atomaric';
+import { Atom, atom, useAtom } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { ChordPack, ChordTrack } from 'shared/api';
 import { correctChordRegs } from 'shared/utils/cm/com/const';
@@ -19,9 +19,11 @@ import { StyledCmEditorChordPageContainer } from '../style/Page';
 import { CmEditorChordChordNodes } from './ChordNodes';
 import { CmEditorChordSearchUnknownChordsModalTrigger } from './SearchUnknownChordsModalTrigger';
 
-const chordsToSendAtom = atom<ChordPack>({});
+let chordsToSendAtom: Atom<ChordPack>;
 
 export const CmEditorChordPage = () => {
+  chordsToSendAtom ??= atom<ChordPack>({});
+
   const { newChordName = '' } = useSearch({ from: '/cm/edit/chord' });
   const navigate = useNavigate();
   const checkAccess = useCheckUserAccessRightsInScope();

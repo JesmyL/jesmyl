@@ -2,7 +2,7 @@ import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditab
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { Modal } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useMemo } from 'react';
 import { IScheduleWidgetListCat, IScheduleWidgetListUnit, IScheduleWidgetUserCati } from 'shared/api';
 import styled from 'styled-components';
@@ -19,9 +19,11 @@ type Props = {
   shortTitles: [string, string];
 };
 
-const isModalOpenAtom = atom(false);
+let isModalOpenAtom: Atom<boolean>;
 
 export function ScheduleWidgetListUnit(props: Props) {
+  isModalOpenAtom ??= atom(false);
+
   const { unit, cat, cati } = props;
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();

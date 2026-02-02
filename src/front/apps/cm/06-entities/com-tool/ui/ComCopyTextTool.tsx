@@ -1,12 +1,14 @@
 import { Modal } from '#shared/ui/modal';
 import { useCmComCurrent } from '$cm/entities/com';
 import { CmComCopyTextModalInner } from '$cm/features/com';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { CmComTool } from '../ComTool';
 
-const isOpenAtom = atom(false);
+let isOpenAtom: Atom<boolean>;
 
 export const CmComToolCopyText = () => {
+  isOpenAtom ??= atom(false);
+
   const ccom = useCmComCurrent();
 
   return (

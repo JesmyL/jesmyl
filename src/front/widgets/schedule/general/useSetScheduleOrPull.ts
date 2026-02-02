@@ -1,13 +1,15 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { useIndexSchedules } from '$index/shared/state';
-import { atom, useAtom } from 'atomaric';
+import { Atom, atom, useAtom } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetWid } from 'shared/api';
 
-const scheduleAtom = atom<IScheduleWidget | null>(null);
+let scheduleAtom: Atom<IScheduleWidget | null>;
 
 export const useGetScheduleOrPull = (scheduleInstance: string | IScheduleWidgetWid | NaN) => {
+  scheduleAtom ??= atom<IScheduleWidget | null>(null);
+
   const [schedule, setSchedule] = useAtom(scheduleAtom);
   const [isLoading, setIsLoading] = useState(true);
   const schedules = useIndexSchedules();

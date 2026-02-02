@@ -17,7 +17,7 @@ import { CmCom } from '$cm/ext';
 import { cmAppActions } from '$cm/shared/const';
 import { cmConstantsConfigAtom, cmIDB } from '$cm/shared/state';
 import { useAuth } from '$index/shared/state';
-import { atom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { CmComCommentBlockSpecialSelector } from 'shared/api';
 import { toast } from 'sonner';
@@ -26,11 +26,15 @@ import { CmComCommentSimpleComments } from './SimpleComments';
 import { CmComCommentTransferAltModalInner } from './TransferAltCommentModalInner';
 
 const HashSwitcherIcon = 'Note03';
-const isShowInfoModalAtom = atom(false);
-const isOpenTransferModalAtom = atom(false);
-const isKindCommentsAtom = atom(false);
+let isShowInfoModalAtom: Atom<boolean>;
+let isOpenTransferModalAtom: Atom<boolean>;
+let isKindCommentsAtom: Atom<boolean>;
 
 export const CmComCommentModalInner = ({ com }: { com: CmCom }) => {
+  isShowInfoModalAtom ??= atom(false);
+  isOpenTransferModalAtom ??= atom(false);
+  isKindCommentsAtom ??= atom(false);
+
   const ordSelectorId = useAtomValue(cmComCommentRedactOrdSelectorIdAtom);
   const altCommentKeys = useAtomValue(cmComCommentCurrentOpenedAltKeyAtom);
   const altCommentKey = altCommentKeys[com.wid] ?? altCommentKeys.last;

@@ -4,15 +4,18 @@ import { getParentNodeWithClassName } from '#shared/lib/getParentNodeWithClassNa
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { cmIDB, useCmComList } from '$cm/ext';
 import { useNavigate } from '@tanstack/react-router';
-import { atom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useMemo, useRef } from 'react';
 import { makeRegExp } from 'regexpert';
 import styled, { css } from 'styled-components';
 
-const isOpenAtom = atom(false);
-const lastClickedChordAtom = atom('', 'cm+editor:lastClickedChord');
+let isOpenAtom: Atom<boolean>;
+let lastClickedChordAtom: Atom<string>;
 
 export const CmEditorChordSearchUnknownChordsModalTrigger = () => {
+  isOpenAtom ??= atom(false);
+  lastClickedChordAtom ??= atom('', 'cm+editor:lastClickedChord');
+
   const coms = useCmComList();
   const chordPack = cmIDB.useValue.chordPack();
   const aRef = useRef<HTMLAnchorElement>(null);

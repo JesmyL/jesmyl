@@ -3,7 +3,7 @@ import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { atom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode, useMemo } from 'react';
 import { IScheduleWidget, ScheduleWidgetCleans, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
 import styled from 'styled-components';
@@ -20,14 +20,18 @@ type Props = {
   onItemSelectSend?: (typei: number) => Promise<unknown>;
 };
 
-const isModalOpenAtom = atom(false);
 const emptyArray: [] = [];
 
 const itemIt = <Item,>({ item }: { item: Item }) => item;
 const eqByTitle = (a: { title: string }, b: { title: string }) => (a.title > b.title ? 1 : b.title < a.title ? -1 : 0);
-const termAtom = atom('');
+
+let termAtom: Atom<string>;
+let isModalOpenAtom: Atom<boolean>;
 
 export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCounts, onItemSelectSend }: Props) => {
+  termAtom ??= atom('');
+  isModalOpenAtom ??= atom(false);
+
   const types = schedule.types || emptyArray;
   const term = useAtomValue(termAtom);
   const error = useAttTypeTitleError(term, schedule, true);

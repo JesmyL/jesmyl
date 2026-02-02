@@ -1,5 +1,5 @@
 import { useSetRootAnchoredContent } from '#shared/ui/useSetRootAnchoredContent';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { ReactNode, useCallback, useRef } from 'react';
 import { emptyFunc } from 'shared/utils';
 import { Modal } from '../../modal/ui/Modal';
@@ -8,9 +8,11 @@ import { ModalFooter } from '../../modal/ui/ModalFooter';
 import { ModalHeader } from '../../modal/ui/ModalHeader';
 import { ConfirmListeners } from '../ui/Listeners';
 
-const isOpenConfirmAtom = atom(false);
+let isOpenConfirmAtom: Atom<boolean>;
 
 export const useConfirm = () => {
+  isOpenConfirmAtom ??= atom(false);
+
   const onCloseRef = useRef<() => void>(emptyFunc);
   const setContent = useSetRootAnchoredContent(isOpenConfirmAtom);
 

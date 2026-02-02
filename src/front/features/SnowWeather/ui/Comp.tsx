@@ -1,14 +1,16 @@
 import { mylib } from '#shared/lib/my-lib';
 import { indexIsDarkModeAtom } from '$index/shared/state';
-import { atom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { memo } from 'react';
 import styled, { css } from 'styled-components';
 
 const nodes: Record<number, React.ReactNode> = {};
-const countAtom = atom(100, 'snow-weather:flake-count');
+let countAtom: Atom<number>;
 
 export const SnowWeather = memo(
   (props: { settingRender?: (props: { count: number; countAtom: typeof countAtom }) => React.ReactNode }) => {
+    countAtom ??= atom(100, 'snow-weather:flake-count');
+
     const count = useAtomValue(countAtom);
     const isDarkMode = useAtomValue(indexIsDarkModeAtom);
 

@@ -1,15 +1,17 @@
 import { Modal, ModalBody } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { scheduleWidgetUserRights } from 'shared/api';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
 import { schGeneralTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetRightControlList } from './RightControlList';
 
-const isModalOpenAtom = atom(false);
+let isModalOpenAtom: Atom<boolean>;
 
 export function ScheduleWidgetNewUserRegisterLevel() {
+  isModalOpenAtom ??= atom(false);
+
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
 

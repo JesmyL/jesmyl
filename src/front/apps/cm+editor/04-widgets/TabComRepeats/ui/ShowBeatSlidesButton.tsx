@@ -1,12 +1,14 @@
 import { Button } from '#shared/components';
 import { Modal, ModalBody } from '#shared/ui/modal';
 import { CmCom } from '$cm/ext';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useMemo } from 'react';
 
-const openAtom = atom(false);
+let openAtom: Atom<boolean>;
 
 export const CmEditorTabComRepeatsShowBeatSlidesButton = ({ com }: { com: CmCom }) => {
+  openAtom ??= atom(false);
+
   const list = useMemo(() => com.makeExpandedSolidFragmentedSlides(com.makeExpandedSolidTextLines()), [com]);
 
   return (

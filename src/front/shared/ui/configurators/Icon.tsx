@@ -3,7 +3,7 @@ import { Button } from '#shared/components/ui/button';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useQuery } from '@tanstack/react-query';
-import { atom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode } from 'react';
 import { itIt } from 'shared/utils';
 import { toast } from 'sonner';
@@ -13,11 +13,7 @@ import { TextInput } from '../TextInput';
 import { TheIconLoading } from '../the-icon/IconLoading';
 import { LazyIcon } from '../the-icon/LazyIcon';
 
-const isOpenModalAtom = atom(false);
-const iconOnLoadAtom = atom<KnownStameskaIconName | null>(null);
 const pageSize = 54;
-const pageAtom = atom(0, 'icons:setOfListPage');
-const searchTermAtom = atom('', 'icons:setOfListSearchTerm');
 
 interface Props {
   icon: KnownStameskaIconName;
@@ -28,7 +24,17 @@ interface Props {
   className?: string;
 }
 
+let isOpenModalAtom: Atom<boolean>;
+let iconOnLoadAtom: Atom<KnownStameskaIconName | null>;
+let pageAtom: Atom<number>;
+let searchTermAtom: Atom<string>;
+
 export default function IconConfigurator(props: Props) {
+  isOpenModalAtom ??= atom(false);
+  iconOnLoadAtom ??= atom<KnownStameskaIconName | null>(null);
+  pageAtom ??= atom(0, 'icons:setOfListPage');
+  searchTermAtom ??= atom('', 'icons:setOfListSearchTerm');
+
   const loadingIcon = useAtomValue(iconOnLoadAtom);
 
   return (

@@ -13,7 +13,7 @@ import { CmEditorEERulesWord, CmEditorEERulesWordSearchModalInner } from '$cm+ed
 import { cmEditorClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContainer';
-import { atom, useAtom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { EeStorePack } from 'shared/api';
 import { CmEditorEERulesListComputer } from './EERulesListComputer';
@@ -22,13 +22,19 @@ const sizes = [10, 30, 50, 100];
 
 const listBox = { list: [] } as { list: string[] };
 
-const eeEditedWordsAtom = atom<EeStorePack>({});
-const pageSizeAtom = atom(50);
-const currentPageAtom = atom(0);
-const isCheckBibleAtom = atom(false);
-const isOpenSearchWordAtom = atom(false);
+let pageSizeAtom: Atom<number>;
+let currentPageAtom: Atom<number>;
+let isCheckBibleAtom: Atom<boolean>;
+let isOpenSearchWordAtom: Atom<boolean>;
+let eeEditedWordsAtom: Atom<EeStorePack>;
 
 export const CmEditorEERulesPage = () => {
+  eeEditedWordsAtom ??= atom({});
+  pageSizeAtom ??= atom(50);
+  currentPageAtom ??= atom(0);
+  isCheckBibleAtom ??= atom(false);
+  isOpenSearchWordAtom ??= atom(false);
+
   const [pageSize, setPageSize] = useAtom(pageSizeAtom);
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
   const [isCheckBible, setIsCheckBible] = useAtom(isCheckBibleAtom);

@@ -6,13 +6,13 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { TheButton } from '#shared/ui/TheButton';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { CmComFaceList } from '$cm/ext';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
 import { IScheduleWidgetWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import { CmEditorMeetingEventEditsHistoryStatisticModalInner } from './EventEditsHistoryStatisticModal';
 
-const isOpenStatisticAtom = atom(false);
+let isOpenStatisticAtom: Atom<boolean>;
 
 export const CmEditorMeetingEventEditsHistoryModalInner = ({
   dayi,
@@ -21,6 +21,8 @@ export const CmEditorMeetingEventEditsHistoryModalInner = ({
   dayi: number;
   schw: IScheduleWidgetWid;
 }) => {
+  isOpenStatisticAtom ??= atom(false);
+
   const [limit, setLimit] = useState(10);
   const [historyPacks, isLoading, error, setHistoryPacks] = useInvocatedValue(
     null,

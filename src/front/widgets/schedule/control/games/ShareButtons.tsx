@@ -6,7 +6,7 @@ import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { getScheduleWidgetUserPhotoStorageKey } from '#widgets/schedule/storage';
 import { schPhotosTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { indexIDB } from '$index/shared/state';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { ScheduleWidgetPhotoKey } from 'shared/api';
 import { ScheduleWidgetPhotoGalery } from './PhotoGalery';
 import { checkIsUserPhotoable } from './utils';
@@ -15,9 +15,11 @@ interface Props {
   prefix?: React.ReactNode;
 }
 
-const isOpenGaleryAtom = atom(false);
+let isOpenGaleryAtom: Atom<boolean>;
 
 export const ScheduleWidgetShareButtons = function ShareButtons({ prefix }: Props) {
+  isOpenGaleryAtom ??= atom(false);
+
   const rights = useScheduleWidgetRightsContext();
 
   return (

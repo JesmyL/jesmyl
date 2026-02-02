@@ -10,12 +10,12 @@ import { cmIDB } from '$cm/shared/state';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
-import { atom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { memo, useEffect, useState } from 'react';
 import { CmComWid, ICmComCommentBlock, SokiAuthLogin } from 'shared/api';
 import { toast } from 'sonner';
 
-const isModalOpenAtom = atom(false);
+let isModalOpenAtom: Atom<boolean>;
 
 export const CmComCommentSharePull = memo(function CmComCommentSharePull({
   shareProps,
@@ -25,6 +25,8 @@ export const CmComCommentSharePull = memo(function CmComCommentSharePull({
     comw: CmComWid;
   };
 }) {
+  isModalOpenAtom ??= atom(false);
+
   const com = useCmCom(shareProps.comw);
   const [altKeyFrom, setAltKeyFrom] = useState<string | nil>(undefined);
   const [altKeyTo, setAltKeyTo] = useState<string | nil>(undefined);

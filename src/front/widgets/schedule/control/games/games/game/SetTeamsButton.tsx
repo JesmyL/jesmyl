@@ -2,12 +2,14 @@ import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 
 import { TheButton } from '#shared/ui/TheButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { ScheduleWidgetTeamGameSetTeamsScreen } from './SetTeamsScreen';
 
-const isOpenFullContentAtom = atom(false);
+let isOpenFullContentAtom: Atom<boolean>;
 
 export function ScheduleWidgetTeamGameSetTeamsButton() {
+  isOpenFullContentAtom ??= atom(false);
+
   const rights = useScheduleWidgetRightsContext();
   const criterias = rights.schedule.games?.criterias;
 

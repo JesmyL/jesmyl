@@ -3,7 +3,7 @@ import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { CmComOrderOnClickBetweenData } from '$cm+editor/shared/model/Orders';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { CmEditorComAddOrderNewOrderMakeEtap } from '../model';
 import { CmEditorComAddOrderAdditionsEtapsModalInner } from './Etaps';
 
@@ -13,9 +13,11 @@ type Props = {
   setClickBetweenOrds: (data: CmComOrderOnClickBetweenData) => void;
 };
 
-const selectFirstEtapAtom = atom<null | CmEditorComAddOrderNewOrderMakeEtap>(null);
+let selectFirstEtapAtom: Atom<null | CmEditorComAddOrderNewOrderMakeEtap>;
 
 export const CmEditorComAddOrderRedactorAdditions = ({ com, setClickBetweenOrds }: Props) => {
+  selectFirstEtapAtom ??= atom<null | CmEditorComAddOrderNewOrderMakeEtap>(null);
+
   return (
     <>
       <BottomPopupItem

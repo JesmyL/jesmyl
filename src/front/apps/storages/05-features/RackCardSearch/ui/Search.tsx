@@ -2,14 +2,16 @@ import { Button } from '#shared/components/ui/button';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { Modal } from '#shared/ui/modal';
 import { useNavigate } from '@tanstack/react-router';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useEffect } from 'react';
 import { StoragesRack } from 'shared/model/storages/list.model';
 import { StoragesRackCardSearchModalInner } from './ModalInner';
 
-const isOpenSearchModal = atom(false);
+let isOpenSearchModalAtom: Atom<boolean>;
 
 export const StoragesRackCardSearch = ({ rack }: { rack: StoragesRack }) => {
+  isOpenSearchModalAtom ??= atom(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,7 +21,7 @@ export const StoragesRackCardSearch = ({ rack }: { rack: StoragesRack }) => {
           if (!event.ctrlKey || event.code !== 'KeyF') return;
           event.stopPropagation();
           event.preventDefault();
-          isOpenSearchModal.do.toggle();
+          isOpenSearchModalAtom.do.toggle();
         }),
       )
       .effect();
@@ -29,10 +31,10 @@ export const StoragesRackCardSearch = ({ rack }: { rack: StoragesRack }) => {
     <>
       <Button
         icon="SearchVisual"
-        onClick={isOpenSearchModal.do.toggle}
+        onClick={isOpenSearchModalAtom.do.toggle}
       />
 
-      <Modal openAtom={isOpenSearchModal}>
+      <Modal openAtom={isOpenSearchModalAtom}>
         <StoragesRackCardSearchModalInner
           rack={rack}
           onCardClick={async card => {
@@ -41,7 +43,7 @@ export const StoragesRackCardSearch = ({ rack }: { rack: StoragesRack }) => {
               params: { cardi: '' + card.i, rackw: '' + rack.w },
             });
 
-            isOpenSearchModal.reset();
+            isOpenSearchModalAtom.reset();
           }}
         />
       </Modal>

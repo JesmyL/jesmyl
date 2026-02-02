@@ -3,15 +3,17 @@ import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { ChordVisibleVariant, TheCmComOrder } from '$cm/ext';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { aSharpToBChord, bToASharpChord } from 'shared/utils/cm/com/const';
 import { CmEditorComOrderToolsProps } from '../model';
 
 const intervals = Array.from({ length: 12 }, (_, i) => i);
 
-const isModalOpenAtom = atom(false);
+let isModalOpenAtom: Atom<boolean>;
 
 export const CmEditorComOrderToolsModulation = ({ com, ord, ordi }: CmEditorComOrderToolsProps) => {
+  isModalOpenAtom ??= atom(false);
+
   let firstChord = com.chordLabels[ordi][0][0];
 
   if (firstChord[1] === '#') firstChord = firstChord.slice(0, 1);

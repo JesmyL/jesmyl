@@ -5,7 +5,7 @@ import { TheButton } from '#shared/ui/TheButton';
 import { EditableComOrder } from '$cm+editor/shared/classes/EditableComOrder';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { CmComOrder } from '$cm/ext';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
 import { nbsp } from 'shared/utils/cm/com/const';
@@ -23,7 +23,7 @@ interface Props {
 const startFlash = '/';
 const finishFlash = '\\';
 
-const isOpenModalAtom = atom(false);
+let isOpenModalAtom: Atom<boolean>;
 
 export const CmEditorTabComRepeatsRemoveButton = ({
   isChordBlock,
@@ -34,6 +34,8 @@ export const CmEditorTabComRepeatsRemoveButton = ({
   reset,
   setField,
 }: Props) => {
+  isOpenModalAtom ??= atom(false);
+
   const confirm = useConfirm();
 
   return (

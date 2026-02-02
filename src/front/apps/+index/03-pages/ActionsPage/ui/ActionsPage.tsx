@@ -5,12 +5,14 @@ import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContaine
 import { QrReader } from '#shared/ui/qr-code/QrReader';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { Link } from '@tanstack/react-router';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { hosts } from 'shared/api';
 
-const isOpenAtom = atom(false);
+let isOpenAtom: Atom<boolean>;
 
 export function IndexActionsPage() {
+  isOpenAtom ??= atom(false);
+
   const onHrefData = LinkAppActionFabric.useOnHrefData();
   const appName = useAppNameContext();
 

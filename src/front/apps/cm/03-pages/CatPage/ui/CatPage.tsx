@@ -33,10 +33,12 @@ interface Props {
   comDescription?: (com: CmCom, comi: number) => ReactNode;
 }
 
-const isOpenRatingSortedComsAtom = atom(false);
+let isOpenRatingSortedComsAtom: Atom<boolean>;
 const termAtoms: PRecord<CmCatWid, Atom<string>> = {};
 
 export const CmCatPage = (props: Props) => {
+  isOpenRatingSortedComsAtom ??= atom(false);
+
   const termAtom = (termAtoms[props.cat?.wid ?? CmCatWid.def] ??= atom('', `cm:comListSearch:${props.cat?.wid}`));
 
   const term = useAtomValue(termAtom);

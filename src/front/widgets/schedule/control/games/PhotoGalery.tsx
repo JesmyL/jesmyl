@@ -2,16 +2,18 @@ import { mylib } from '#shared/lib/my-lib';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
-import { atom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { IScheduleWidgetUser } from 'shared/api';
 import { ScheduleWidgetUserPhoto } from '../users/UserPhoto';
 import { ScheduleWidgetRemovableUserFace } from './RemovableUserFace';
 import { checkIsUserPhotoable } from './utils';
 
-const termAtom = atom('');
+let termAtom: Atom<string>;
 
 export const ScheduleWidgetPhotoGalery = () => {
+  termAtom ??= atom('');
+
   const rights = useScheduleWidgetRightsContext();
   const term = useAtomValue(termAtom);
 

@@ -3,13 +3,15 @@ import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TextInput } from '#shared/ui/TextInput';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
 import { schGeneralTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 
-const isModalOpenAtom = atom(false);
+let isModalOpenAtom: Atom<boolean>;
 
 export const ScheduleCreateWidgetButton = () => {
+  isModalOpenAtom ??= atom(false);
+
   const [title, setTitle] = useState('');
 
   return (

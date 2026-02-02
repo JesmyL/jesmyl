@@ -1,6 +1,6 @@
 import { useSetBibleAddressWithForceJoinReset } from '$bible/shared/hooks';
 import { useBibleCurrentChapterList } from '$bible/shared/hooks/texts';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useMemo } from 'react';
 import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
@@ -9,9 +9,11 @@ import { useBibleBroadcastListFaceClickListener } from '../lib/useBibleListFaceC
 
 const faceClassName = 'bible-list-chapter-face';
 
-const fastChaptersCountAtom = atom(0, 'bible:fastChaptersCount');
+let fastChaptersCountAtom: Atom<number>;
 
 export function BibleBroadcastListChapters() {
+  fastChaptersCountAtom ??= atom(0, 'bible:fastChaptersCount');
+
   const chapters = useBibleCurrentChapterList();
   const setAddress = useSetBibleAddressWithForceJoinReset();
 

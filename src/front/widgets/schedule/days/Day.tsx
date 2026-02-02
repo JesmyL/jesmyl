@@ -4,7 +4,7 @@ import { mylib, MyLib } from '#shared/lib/my-lib';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useMemo, useState } from 'react';
 import {
   indexScheduleCheckIsDayIsPast,
@@ -37,7 +37,7 @@ const defaultPrint = {
   title: true,
 };
 
-const openFullDayAtom = atom<number | null>(null);
+let openFullDayAtom: Atom<number | null>;
 
 export const ScheduleWidgetDay = ({
   day,
@@ -48,6 +48,8 @@ export const ScheduleWidgetDay = ({
   isForceOpen,
   scheduleScopeProps,
 }: ScheduleWidgetDayProps) => {
+  openFullDayAtom ??= atom<number | null>(null);
+
   const date = new Date(indexScheduleGetDayStartMs(schedule, dayi));
   const isPastDay = indexScheduleCheckIsDayIsPast(schedule, dayi);
   const title = mylib.dayFullTitles[date.getDay()];

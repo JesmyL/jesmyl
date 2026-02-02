@@ -5,7 +5,7 @@ import { ScheduleWidgetTopicTitle } from '#widgets/schedule/complect/TopicTitle'
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { ScheduleWidgetEventType } from '#widgets/schedule/events/EventType';
 import { schDaysTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { IScheduleWidget, IScheduleWidgetDayEvent, ScheduleDayScopeProps } from 'shared/api';
 
 type Props = {
@@ -14,9 +14,12 @@ type Props = {
   onEventCut: () => void;
   dayScopeProps: ScheduleDayScopeProps;
 };
-const isOpenModalAtom = atom(false);
+
+let isOpenModalAtom: Atom<boolean>;
 
 export function ScheduleWidgetDayEventEventActions({ schedule, event, onEventCut, dayScopeProps }: Props) {
+  isOpenModalAtom ??= atom(false);
+
   const rights = useScheduleWidgetRightsContext();
 
   return (

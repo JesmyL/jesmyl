@@ -2,7 +2,7 @@ import { StrongDiv } from '#basis/ui/strong-control/StrongDiv';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import {
   CustomAttUseTaleId,
   IScheduleWidgetListUnit,
@@ -13,7 +13,7 @@ import {
 } from 'shared/api';
 import { KeyValueListAttNumberMember } from './KeyValueListAttNumberMember';
 
-const isModalOpenAtom = atom(false);
+let isModalOpenAtom: Atom<boolean>;
 
 export function ScheduleKeyValueListAttArrayItemKeyChange(props: {
   users: IScheduleWidgetUser[];
@@ -23,6 +23,8 @@ export function ScheduleKeyValueListAttArrayItemKeyChange(props: {
   theKey: number;
   dayEventAttScopeProps: ScheduleDayEventAttachmentScopeProps;
 }) {
+  isModalOpenAtom ??= atom(false);
+
   const map = (id: number) => {
     return (
       <StrongDiv

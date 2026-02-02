@@ -4,7 +4,7 @@ import { SendableDropdown } from '#shared/ui/sends/dropdown/SendableDropdown';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
 import { schGeneralTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
@@ -17,9 +17,11 @@ const tgInformTimesItems = [
   ...[5, 10, 15, 30].map(time => ({ title: 'Напоминать TG за ' + time + ' мин.', id: time })),
 ];
 
-const isModalOpenAtom = atom(false);
+let isModalOpenAtom: Atom<boolean>;
 
 export const ScheduleWidgetControl = () => {
+  isModalOpenAtom ??= atom(false);
+
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
 

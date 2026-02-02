@@ -2,7 +2,7 @@ import { StoragesAddColumn } from '$storages/entities/AddColumn';
 import { TheStoragesCell } from '$storages/entities/Cell';
 import { useStoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { StoragesRack, StoragesRackCard } from 'shared/model/storages/list.model';
 
 type Props = {
@@ -10,9 +10,11 @@ type Props = {
   card: StoragesRackCard;
 };
 
-const isOpenModalAtom = atom(false);
+let isOpenModalAtom: Atom<boolean>;
 
 export const StoragesCellList = ({ rack, card }: Props) => {
+  isOpenModalAtom ??= atom(false);
+
   const isEdit = useStoragesIsEditInnersContext();
 
   return (

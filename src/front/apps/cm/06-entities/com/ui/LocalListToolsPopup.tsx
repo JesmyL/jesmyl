@@ -2,15 +2,18 @@ import { isTouchDevice } from '#shared/lib/device-differences';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { CmCom } from '$cm/ext';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useCmComOpenComLinkRendererContext } from '../lib/current-com-list';
 import { CmComListQrShare } from './ComListShare';
 import { CmComFullscreenExpandList } from './FullscreenExpandComList';
 
-const isOpenQrAtom = atom(false);
-const isOpenListAtom = atom(false);
+let isOpenQrAtom: Atom<boolean>;
+let isOpenListAtom: Atom<boolean>;
 
 export const CmComLocalListToolsPopup = (props: { coms: CmCom[] | und; children?: React.ReactNode }) => {
+  isOpenQrAtom ??= atom(false);
+  isOpenListAtom ??= atom(false);
+
   const linkToCom = useCmComOpenComLinkRendererContext();
 
   return !props.coms?.length ? (

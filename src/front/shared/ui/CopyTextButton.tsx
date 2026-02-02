@@ -1,4 +1,4 @@
-import { atom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode } from 'react';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
@@ -15,9 +15,11 @@ interface Props {
   onClose?: () => void;
 }
 
-const textToCopyAtom = atom('');
+let textToCopyAtom: Atom<string>;
 
 export function CopyTextButton({ text, disabled, description, className, message, withoutIcon, onClose }: Props) {
+  textToCopyAtom ??= atom('');
+
   const textToCopy = useAtomValue(textToCopyAtom);
 
   return (

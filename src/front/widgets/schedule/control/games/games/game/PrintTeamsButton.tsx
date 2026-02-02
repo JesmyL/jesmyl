@@ -2,14 +2,16 @@ import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useScheduleGameContext } from '../lib/contexts';
 
-const isOpenPrintAtom = atom(false);
+let isOpenPrintAtom: Atom<boolean>;
 
 export const ScheduleWidgetTeamGamePrintTeamsButton = function PrintTeamsButton() {
+  isOpenPrintAtom ??= atom(false);
+
   const rights = useScheduleWidgetRightsContext();
 
   const game = useScheduleGameContext();

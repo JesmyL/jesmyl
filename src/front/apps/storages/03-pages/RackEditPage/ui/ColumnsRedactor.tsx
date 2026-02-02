@@ -5,22 +5,25 @@ import { StoragesAddColumn } from '$storages/entities/AddColumn';
 import { TheStoragesColumnEditColumn } from '$storages/entities/ColumnEdit';
 import { StoragesStatusManagerModalInner } from '$storages/features/StatusManager';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { StoragesRack } from 'shared/model/storages/list.model';
 import { twMerge } from 'tailwind-merge';
 
 const ItemGrabber = makeElementGrabber<number | null>();
 
-const isOpenAddColumnModalAtom = atom(false);
-const isOpenStatusesRedactorModal = atom(false);
+let isOpenAddColumnModalAtom: Atom<boolean>;
+let isOpenStatusesRedactorModalAtom: Atom<boolean>;
 
 export const StoragesRackEditColumnsRedactor = ({ rack }: { rack: StoragesRack }) => {
+  isOpenAddColumnModalAtom ??= atom(false);
+  isOpenStatusesRedactorModalAtom ??= atom(false);
+
   return (
     <>
       <Button
         icon="Cube"
         className="mt-5"
-        onClick={isOpenStatusesRedactorModal.do.toggle}
+        onClick={isOpenStatusesRedactorModalAtom.do.toggle}
       >
         Редактироввать статусы
       </Button>
@@ -103,7 +106,7 @@ export const StoragesRackEditColumnsRedactor = ({ rack }: { rack: StoragesRack }
         }
       />
 
-      <Modal openAtom={isOpenStatusesRedactorModal}>
+      <Modal openAtom={isOpenStatusesRedactorModalAtom}>
         <StoragesStatusManagerModalInner rack={rack} />
       </Modal>
     </>

@@ -3,13 +3,15 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { ScheduleWidgetMarkdownBroadcast } from '#widgets/schedule/live-broadcast/markdown/Broadcast';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useMemo, useState } from 'react';
 import { useScheduleGameContext } from '../lib/contexts';
 
-const isOpenFullContentAtom = atom(false);
+let isOpenFullContentAtom: Atom<boolean>;
 
 export const ScheduleWidgetTeamGameTranslateTeamsButton = function TranslateTeamsButton() {
+  isOpenFullContentAtom ??= atom(false);
+
   const rights = useScheduleWidgetRightsContext();
 
   const game = useScheduleGameContext();

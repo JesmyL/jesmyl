@@ -2,7 +2,7 @@ import { StrongDiv } from '#basis/ui/strong-control/StrongDiv';
 import { mylib } from '#shared/lib/my-lib';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { ReactNode } from 'react';
 import {
   IScheduleWidget,
@@ -24,7 +24,7 @@ type Props = {
   onSend: (attRef: ScheduleWidgetAttRef) => Promise<unknown>;
 };
 
-const isModalOpenAtom = atom(false);
+let isModalOpenAtom: Atom<boolean>;
 
 export function ScheduleWidgetBindAttRefKeyButton({
   atts,
@@ -36,6 +36,8 @@ export function ScheduleWidgetBindAttRefKeyButton({
   onRemoveAttSend,
   onSend,
 }: Props) {
+  isModalOpenAtom ??= atom(false);
+
   return (
     <>
       <TheIconButton

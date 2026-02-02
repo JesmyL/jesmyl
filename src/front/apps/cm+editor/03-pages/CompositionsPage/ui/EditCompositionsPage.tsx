@@ -10,15 +10,18 @@ import {
   useCmComList,
 } from '$cm/ext';
 import { useNavigate } from '@tanstack/react-router';
-import { atom, useAtom } from 'atomaric';
+import { Atom, atom, useAtom } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { ICmEditorCompositionsCatSpecialSearches } from '../model';
 
-const termAtom = atom('');
-const debounceTermAtom = atom('');
+let termAtom: Atom<string>;
+let debounceTermAtom: Atom<string>;
 
 export const CmEditorCompositionsPage = () => {
+  termAtom ??= atom('');
+  debounceTermAtom ??= atom('');
+
   const coms = useCmComList();
   const [isOpenMorePopup, setIsOpenMorePopup] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);

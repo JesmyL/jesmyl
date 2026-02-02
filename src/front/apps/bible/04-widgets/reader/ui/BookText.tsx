@@ -2,7 +2,7 @@ import { mylib } from '#shared/lib/my-lib';
 import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
 import { useBibleBroadcastListSingleAddressSetter } from '$bible/entities/broadcast-list';
 import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { BibleReaderChapterText } from './ChapterText';
@@ -14,9 +14,11 @@ interface Props {
   currentVersei?: BibleVersei;
 }
 
-const speedKfAtom = atom(10, 'bible:speedRollKf');
+let speedKfAtom: Atom<number>;
 
 export const BibleReaderBookText = ({ chapterList, currentChapteri, currentVersei, currentBooki }: Props) => {
+  speedKfAtom ??= atom(10, 'bible:speedRollKf');
+
   const listRef = useRef<HTMLDivElement>(null);
   const isScrollingRef = useRef(false);
   const [resizeNum, setResizeNum] = useState(0);

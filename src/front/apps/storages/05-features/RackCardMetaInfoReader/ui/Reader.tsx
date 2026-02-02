@@ -3,11 +3,11 @@ import { EllipsisText } from '#shared/ui/EllipsisText';
 import { QrReader } from '#shared/ui/qr-code/QrReader';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
 import { StoragesRack, StoragesRackCard } from 'shared/model/storages/list.model';
 
-const isQrReaderOpenAtom = atom(false);
+let isQrReaderOpenAtom: Atom<boolean>;
 
 export const StoragesRackCardMetaInfoReader = ({
   card,
@@ -18,6 +18,8 @@ export const StoragesRackCardMetaInfoReader = ({
   rack: StoragesRack;
   isEdit: boolean;
 }) => {
+  isQrReaderOpenAtom ??= atom(false);
+
   const [isLoading, setIsLoading] = useState(false);
 
   return (

@@ -3,7 +3,7 @@ import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useAuth, useIndexSchedules } from '$index/shared/state';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
 import {
   CustomAttUseTaleId,
@@ -17,9 +17,11 @@ import { ScheduleWidgetTopicTitle } from '../complect/TopicTitle';
 import { useScheduleWidgetRightsContext } from '../contexts';
 import { schGeneralTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 
-const isModalOpenAtom = atom(false);
+let isModalOpenAtom: Atom<boolean>;
 
 export function ScheduleWidgetCopy(props: { schw: IScheduleWidgetWid }) {
+  isModalOpenAtom ??= atom(false);
+
   const [schw, setSchw] = useState(0);
   const schedules = useIndexSchedules();
   const rights = useScheduleWidgetRightsContext();

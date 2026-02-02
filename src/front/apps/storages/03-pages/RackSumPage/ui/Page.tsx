@@ -4,16 +4,18 @@ import { Modal, usePrompt } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { storagesIDB } from '$storages/shared/state/storagesIDB';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { storagesSummaryTypePropsDict } from 'shared/const/storages/summary.dicts';
 import { StoragesRackSummaryMi, StoragesRackWid } from 'shared/model/storages/list.model';
 import { storagesRackSumComputeFormulas } from '../lib/computeFormulas';
 import { StoragesRackSumEditModalInner } from './EditModalInner';
 
-const summaryEditMiAtom = atom<null | StoragesRackSummaryMi>(null);
+let summaryEditMiAtom: Atom<null | StoragesRackSummaryMi>;
 
 export const StoragesRackSumPage = ({ rackw }: { rackw: StoragesRackWid }) => {
+  summaryEditMiAtom ??= atom<null | StoragesRackSummaryMi>(null);
+
   const rack = useLiveQuery(() => storagesIDB.tb.racks.get(rackw), [rackw]);
   const prompt = usePrompt();
 

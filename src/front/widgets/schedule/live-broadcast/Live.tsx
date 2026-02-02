@@ -7,7 +7,7 @@ import { BibleBroadcastSlide } from '$bible/entities/broadcast';
 import { CmBroadcastLiveScreen } from '$cm/features/broadcast/ui/Screen';
 import { liveDataAtom, liveDataStreamersAtom } from '$index/shared/state';
 import { schLiveTsjrpcBaseClient, schLiveTsjrpcClient } from '$index/shared/tsjrpc/live.tsjrpc';
-import { atom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { IScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
 import { ScheduleWidgetMarkdownLiveBroadcast } from './MarkdownLive';
@@ -17,9 +17,11 @@ interface Props {
   isShowMarkdownOnly?: boolean;
 }
 
-const isSelectStreamerModalAtom = atom(false);
+let isSelectStreamerModalAtom: Atom<boolean>;
 
 export const ScheduleWidgetLiveBroadcast = ({ schw, isShowMarkdownOnly }: Props) => {
+  isSelectStreamerModalAtom ??= atom(false);
+
   const liveData = useAtomValue(liveDataAtom);
   const [streamerLogin, setStreamerLogin] = useState<SokiAuthLogin | null>(null);
   const streamers = useAtomValue(liveDataStreamersAtom);

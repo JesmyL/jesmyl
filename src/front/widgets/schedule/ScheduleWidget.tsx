@@ -1,3 +1,4 @@
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { StrongInputDateTimeExtracter } from '#basis/ui/strong-control/StrongDateTimeExtracter';
@@ -7,7 +8,7 @@ import { QrCodeFullScreen } from '#shared/ui/qr-code/QrCodeFullScreen';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useEffect, useMemo, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { IScheduleWidget, IScheduleWidgetWid, ScheduleScopeProps } from 'shared/api';
@@ -26,10 +27,9 @@ import { ScheduleWidgetWatchLiveBroadcastButton } from './live-broadcast/WatchLi
 import { ScheduleWidgetMyUserTgInform } from './tg-inform/UserTgInform';
 import { schDaysTsjrpcClient, schGeneralTsjrpcClient, schUsersTsjrpcClient } from './tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetRights, useScheduleWidgetRights } from './useScheduleWidget';
-import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 
 const msInMin = mylib.howMs.inMin;
-const isOpenInviteQrAtom = atom(false);
+let isOpenInviteQrAtom: Atom<boolean>;
 
 export function ScheduleWidget({
   schedule,
@@ -38,6 +38,8 @@ export function ScheduleWidget({
   schedule?: IScheduleWidget;
   rights?: ScheduleWidgetRights;
 }) {
+  isOpenInviteQrAtom ??= atom(false);
+
   const rights = useScheduleWidgetRights(schedule, topRights);
   const checkAccess = useCheckUserAccessRightsInScope();
 

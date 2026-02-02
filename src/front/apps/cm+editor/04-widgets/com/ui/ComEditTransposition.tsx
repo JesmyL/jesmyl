@@ -5,7 +5,7 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { ChordVisibleVariant, CmComOrderList } from '$cm/ext';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
@@ -15,9 +15,11 @@ const dotts = '.'
   .map((_, i) => i)
   .reverse();
 
-const isOpenModalAtom = atom(false);
+let isOpenModalAtom: Atom<boolean>;
 
 export const CmEditorComEditTransposition = ({ ccom }: { ccom: EditableCom }) => {
+  isOpenModalAtom ??= atom(false);
+
   const [initialPosition] = useState(ccom.transPosition);
   const [iconOnLoad, setIconOnLoad] = useState('');
   const firstChord = ccom.getFirstSimpleChord();

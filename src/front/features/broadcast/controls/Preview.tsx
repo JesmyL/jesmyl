@@ -1,6 +1,6 @@
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import styled, { css } from 'styled-components';
 import { BroadcastScreen } from '../BroadcastScreen';
 import { useScreenBroadcastCurrentConfig } from '../hooks/configs';
@@ -9,9 +9,11 @@ interface Props {
   isPreview?: boolean;
 }
 
-const isSettingsOpenAtom = atom(false);
+let isSettingsOpenAtom: Atom<boolean>;
 
 export const BroadcastSlidePreview = ({ isPreview = true }: Props) => {
+  isSettingsOpenAtom ??= atom(false);
+
   const currentConfig = useScreenBroadcastCurrentConfig();
 
   return (

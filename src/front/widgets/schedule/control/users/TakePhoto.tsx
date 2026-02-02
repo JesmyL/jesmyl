@@ -5,7 +5,7 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { getScheduleWidgetUserPhotoStorageKey } from '#widgets/schedule/storage';
 import { indexIDB } from '$index/shared/state';
-import { atom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
 import { IScheduleWidgetUser } from 'shared/api';
 import { isNIs } from 'shared/utils';
@@ -16,9 +16,11 @@ interface Props {
   user: IScheduleWidgetUser;
 }
 
-const isOpenFullContentAtom = atom(false);
+let isOpenFullContentAtom: Atom<boolean>;
 
 export function ScheduleWidgetUserTakePhoto({ user }: Props) {
+  isOpenFullContentAtom ??= atom(false);
+
   return (
     <>
       <FullContent openAtom={isOpenFullContentAtom}>
