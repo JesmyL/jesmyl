@@ -27,26 +27,25 @@
     }
   },
   "rights": {
-    "T166cbf17596a0c2919e4df1a6d54e66": { "info": { "role": "TOP", "fio": "Павел 👨‍💻", "m": 1768712370354 } },
+    "T166cbf17596a0c2919e4df1a6d54e66": { "info": { "role": "TOP", "fio": "Павел 👨‍💻", "m": 1769960136935 } },
     "T6558fe287d2ea93be3e19bbe64b5dfc": { "info": { "fio": "Руслан", "m": 1768712207761, "role": "ADMIN" } },
     "T7f21a14d3133065ca2e48254f87ecf3": {
-      "info": { "fio": "danikpon", "m": 1769798454318, "role": "ADMIN" },
+      "info": { "fio": "danikpon", "m": 1769958813549, "role": "ADMIN" },
       "cm": {
-        "CHORD": 4,
-        "COM_TR": 4,
         "COM_AMARK": 4,
         "COM_CAT": 4,
         "COM_REP": 4,
         "COM_AUDIO": 4,
         "COM_CH": 4,
-        "COM_TXT_NL": 4,
-        "COM_TXT": 4,
         "COM_ORD": 4,
         "COM_APPS": 4,
         "COM_MAIN": 4,
         "COM": 4,
         "CAT": 4,
-        "MP3": 4
+        "MP3": 4,
+        "CHORD": 4,
+        "COM_TR": 6,
+        "COM_TXT": 6
       },
       "sch": { "SCH": 4 },
       "q": { "EDIT": 4 }
@@ -90,6 +89,7 @@
     "Tb21203600ee559664d6ca188acd3b0e": { "info": { "fio": "Александра Соломка", "m": 1766326823542 } },
     "T5e1300aec5d968ec6027eb3daa7b545": { "info": { "fio": "Егор Слободской", "m": 1767223426386 } },
     "T0f69cadeb031aecd1e022c429d18d28": { "info": { "fio": "Лиля", "m": 1769710212639 } },
-    "T62fc6796b8398263cfa29e59ba149bc": { "info": { "fio": "David Shmardin", "m": 1769883055730 } }
+    "T62fc6796b8398263cfa29e59ba149bc": { "info": { "fio": "David Shmardin", "m": 1769883055730 } },
+    "Ta61379ef755b2009adad70843072202": { "info": { "fio": "Кирилл", "m": 1769975737222 } }
   }
 }
