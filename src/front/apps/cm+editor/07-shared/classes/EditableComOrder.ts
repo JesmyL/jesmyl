@@ -1,6 +1,5 @@
 import { CmComOrder, CmComOrderEditableRegion, ICmComOrderExportableMe } from '$cm/ext';
 import { InheritancableOrder } from 'shared/api';
-import { cmEditComOrderClientTsjrpcMethods } from '../lib/cm-editor.tsjrpc.methods';
 import { EditableCom } from './EditableCom';
 
 export class EditableComOrder extends CmComOrder {
@@ -43,30 +42,28 @@ export class EditableComOrder extends CmComOrder {
       : this.me.isAnchor && this.me.source?.top[key] == null;
   }
 
-  async cutChordPositions(textLine: string, linei: number) {
-    const chords = this.chords.split('\n')[linei]?.split(' ') ?? 0;
-    const line = [...(this.positions?.[linei] ?? [])];
+  makeCutChordPositions(linePositions: number[], textLine: string, linei: number) {
+    const chords = this.chords.split('\n')[linei]?.split(' ') ?? [];
+    let cutLine = linePositions;
+    let diffCount = chords.length - cutLine.length;
 
-    if (chords.length >= line.length) return;
-    const postChordi = line.indexOf(-2);
-    if (postChordi >= 0) line.splice(postChordi, 1);
-    line.length = chords.length;
+    if (diffCount > 0) return { diffCount };
 
-    await cmEditComOrderClientTsjrpcMethods.setPositionsLine({
-      comw: this.com.wid,
-      orderTitle: this.me.header(),
-      ordw: this.wid,
-      linei,
-      line,
-      lineChangesText: textLine,
-    });
-  }
+    const vowels = this.com.getVowelPositions(textLine);
 
-  async trimOverPositions() {
-    await cmEditComOrderClientTsjrpcMethods.trimOverPositions({
-      comw: this.com.wid,
-      orderTitle: this.me.header({ isEdit: true }),
-      ordw: this.wid,
-    });
+    const overVowelsLen = cutLine.filter(num => num > vowels.length - 1).length;
+    const overPositionsLen = cutLine.length - chords.length;
+
+    diffCount = Math.max(overVowelsLen, overPositionsLen);
+    cutLine = cutLine.slice();
+
+    if (overVowelsLen && cutLine[0] === -2) {
+      cutLine.shift();
+      cutLine.splice(cutLine.length - overVowelsLen, 0, -2);
+    }
+
+    cutLine = cutLine.slice(0, -diffCount);
+
+    return { cutLine: chords.length && !cutLine.length ? null : cutLine, diffCount };
   }
 }

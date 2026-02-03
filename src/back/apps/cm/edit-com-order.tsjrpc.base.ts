@@ -241,7 +241,7 @@ export const cmEditComOrderServerTsjrpcBase =
             }
 
             targetOrd.p ??= [];
-            targetOrd.p[linei] = line;
+            targetOrd.p[linei] = Array.from(new Set(line)).sort((a, b) => a - b);
 
             return `в блоке ${orderTitle} изменена аппликатура в ${linei + 1}-й строке: ${lineChangesText}`;
           }),

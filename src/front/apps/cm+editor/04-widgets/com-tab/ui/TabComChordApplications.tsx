@@ -2,10 +2,10 @@ import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRi
 import { StyledLoadingSpinner } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
+import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { ChordVisibleVariant, CmComOrderLine, TheCmCom, TheCmComOrder } from '$cm/ext';
 import React from 'react';
 import { makeRegExp } from 'regexpert';
-import { itIt } from 'shared/utils';
 import { useCmEditorComTabUpdateLinePositions } from '../lib/useUpdateChordLinePositions';
 import { CmEditorComTabChordApplicationsStyledContent } from '../style/CmEditorTabComChordApplicationsStyledContent.styled';
 
@@ -26,7 +26,6 @@ export const CmEditorComTabChordApplications = ({ ccom }: { ccom: EditableCom })
     <CmEditorComTabChordApplicationsStyledContent id="chord-application-redactor">
       {ccom.orders?.map((ord, ordi) => {
         if (!ord.isVisible) return null;
-        const chords = ord.chords?.split('\n').map(line => line.split(' '));
 
         return (
           <React.Fragment key={ordi}>
@@ -45,9 +44,10 @@ export const CmEditorComTabChordApplications = ({ ccom }: { ccom: EditableCom })
               }}
               asLineComponent={props => {
                 const { com, textLine, textLinei } = props;
-                const linePositions =
-                  ordLinePositionsOnSend[`${ord.wid}/${textLinei}`] ?? ord.positions?.[textLinei] ?? [];
-                const diffCount = (chords[textLinei]?.filter(itIt).length || 0) - (linePositions?.length || 0);
+                const lineOnLoad = ordLinePositionsOnSend[`${ord.wid}/${textLinei}`];
+                const linePositions = lineOnLoad ?? ord.positions?.[textLinei] ?? [];
+
+                const { cutLine, diffCount } = ord.makeCutChordPositions(linePositions, textLine, textLinei);
 
                 return (
                   <div>
@@ -80,14 +80,26 @@ export const CmEditorComTabChordApplications = ({ ccom }: { ccom: EditableCom })
                       com-letter-chorded="post"
                       onClick={() => updateLinePositions(ord, textLinei, -2)}
                     />
-                    {!diffCount || (
-                      <span
-                        className={'ml-2' + (diffCount < 0 ? ' pointer text-xKO' : '')}
-                        onClick={() => ord.cutChordPositions(textLine, textLinei)}
-                      >
-                        {diffCount}
-                      </span>
-                    )}
+                    {!diffCount ||
+                      (cutLine ? (
+                        <span
+                          className={`ml-2 pointer text-xKO ${lineOnLoad ? ' disabled pointers-none' : ''}`}
+                          onClick={() =>
+                            cmEditComOrderClientTsjrpcMethods.setPositionsLine({
+                              comw: com.wid,
+                              orderTitle: ord.me.header(),
+                              ordw: ord.wid,
+                              linei: textLinei,
+                              line: cutLine,
+                              lineChangesText: textLine,
+                            })
+                          }
+                        >
+                          {-diffCount}
+                        </span>
+                      ) : (
+                        <span className="ml-2">{diffCount}</span>
+                      ))}
                   </div>
                 );
               }}
@@ -97,7 +109,13 @@ export const CmEditorComTabChordApplications = ({ ccom }: { ccom: EditableCom })
                 icon="Cancel01"
                 className="text-xKO"
                 prefix={<div className="h-3 w-30 bg-xKO" />}
-                onClick={() => ord.trimOverPositions()}
+                onClick={() =>
+                  cmEditComOrderClientTsjrpcMethods.trimOverPositions({
+                    comw: ccom.wid,
+                    orderTitle: ord.me.header({ isEdit: true }),
+                    ordw: ord.wid,
+                  })
+                }
               />
             )}
           </React.Fragment>
