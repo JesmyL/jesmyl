@@ -30,25 +30,8 @@
     "T166cbf17596a0c2919e4df1a6d54e66": { "info": { "role": "TOP", "fio": "Павел 👨‍💻", "m": 1769960136935 } },
     "T6558fe287d2ea93be3e19bbe64b5dfc": { "info": { "fio": "Руслан", "m": 1768712207761, "role": "ADMIN" } },
     "T7f21a14d3133065ca2e48254f87ecf3": {
-      "info": { "fio": "danikpon", "m": 1769958813549, "role": "ADMIN" },
-      "cm": {
-        "COM_AMARK": 4,
-        "COM_CAT": 4,
-        "COM_REP": 4,
-        "COM_AUDIO": 4,
-        "COM_CH": 4,
-        "COM_ORD": 4,
-        "COM_APPS": 4,
-        "COM_MAIN": 4,
-        "COM": 4,
-        "CAT": 4,
-        "MP3": 4,
-        "CHORD": 4,
-        "COM_TR": 6,
-        "COM_TXT": 6
-      },
-      "sch": { "SCH": 4 },
-      "q": { "EDIT": 4 }
+      "info": { "fio": "danikpon", "m": 1770007938406 },
+      "cm": { "EDIT": 4, "COM_TXT": 6, "COM_TXT_NL": 10, "COM_TR": 6, "EVENT": 6, "COM": 4 }
     },
     "T88eae2a48675aa330a3438b156799d8": { "info": { "fio": "Кирилл", "m": 1757905644600 } },
     "Tcd1de434b6554eaa585d6cbb6901d2a": { "info": { "fio": "Маша", "m": 1758121708642 } },
