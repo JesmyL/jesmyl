@@ -14,6 +14,7 @@ type Props<Item> = {
   placeholder?: React.ReactNode;
   emptyMessage?: React.ReactNode;
   onNewItem?: (title: string) => Promise<unknown> | nil | void;
+  onClear?: () => Promise<unknown> | nil | void;
   isShowSelectedNodeOnly?: boolean;
   termMinLenghtToShowList?: number;
 };
@@ -54,22 +55,32 @@ export function Autocomplete<Item extends { title: React.ReactNode; value: strin
       open={open}
       onOpenChange={setOpen}
     >
-      <Popover.Trigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="h-auto @container w-full"
-        >
-          {(props.selected ? selectedNode : props.placeholder) || <span />}
+      <div className="flex gap-3">
+        <Popover.Trigger asChild>
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className={`h-auto @container ${props.onClear ? 'w-[calc(100cqw-70px)]' : 'w-full'}`}
+          >
+            {(props.selected ? selectedNode : props.placeholder) || <span />}
 
-          <TheIconLoading
-            icon={open ? 'ArrowUp01' : 'ArrowDown01'}
-            className="opacity-50"
-            isLoading={isLoading}
+            <TheIconLoading
+              icon={open ? 'ArrowUp01' : 'ArrowDown01'}
+              className="opacity-50"
+              isLoading={isLoading}
+            />
+          </Button>
+        </Popover.Trigger>
+
+        {props.onClear && (
+          <Button
+            icon="Cancel01"
+            onClick={props.onClear}
           />
-        </Button>
-      </Popover.Trigger>
+        )}
+      </div>
+
       <Popover.Content className="p-0">
         <Command.Root>
           <Command.Input
