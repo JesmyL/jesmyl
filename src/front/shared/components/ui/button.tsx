@@ -60,7 +60,7 @@ function Button({
     withoutAnimation?: boolean;
     iconKind?: StameskaIconKind;
     disabledReason?: React.ReactNode;
-    onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>;
+    onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | nil | Promise<unknown>;
   }) {
   const Comp = asSpan ? 'span' : asChild ? Slot : 'button';
   const [promiseIsLoading, setIsLoading] = React.useState(false);
