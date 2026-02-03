@@ -9,10 +9,10 @@ export const StoragesCellOfTypeText = (props: StoragesCellTypeProps<StoragesColu
 
   if (!isEdit)
     return (
-      !props.cell?.val || (
+      !props.cell?.[1] || (
         <div>
           <span>{props.columnTitleNode()}</span>
-          <span className="text-x3 pre-text"> {props.cell.val}</span>
+          <span className="text-x3 pre-text"> {props.cell[1]}</span>
         </div>
       )
     );
@@ -25,7 +25,7 @@ export const StoragesCellOfTypeText = (props: StoragesCellTypeProps<StoragesColu
         <InputWithLoadingIcon
           icon={props.icon}
           multiline
-          defaultValue={props.cell?.val}
+          defaultValue={props.cell?.[1]}
           strongDefaultValue
           onChanged={value =>
             storagesTsjrpcClient.editCellValue({

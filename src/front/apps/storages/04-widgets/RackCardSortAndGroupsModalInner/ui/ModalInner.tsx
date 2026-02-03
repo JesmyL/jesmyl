@@ -1,11 +1,11 @@
 import { mylib } from '#shared/lib/my-lib';
-import { SortDirection } from '#shared/model/sortDirection';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { StoragesWithRack } from '$storages/entities/WithRack';
 import { storagesSortAndGroupAtom } from '$storages/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
+import { SortDirection } from 'shared/model/common/sortDirection';
 import { StoragesRack, StoragesRackCard } from 'shared/model/storages/list.model';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
 import { itNNull } from 'shared/utils';

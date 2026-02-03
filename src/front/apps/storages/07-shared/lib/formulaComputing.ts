@@ -6,7 +6,7 @@ import {
   StoragesNestedCellMi,
   StoragesRackColumn,
 } from 'shared/model/storages/rack.model';
-import { itIt } from 'shared/utils';
+import { itIt, smylib } from 'shared/utils';
 
 type UtilProps = {
   formula: string | nil;
@@ -35,8 +35,8 @@ export const storagesMakeActualFormulaProps = ({ cardRow, coli, nestedCellMi, ne
     cells:
       nestedCellMi == null || cardRow == null || cardRow[coli] == null
         ? cardRow
-        : 'row' in cardRow[coli]
-          ? cardRow[coli].row.find(cell => cell.mi === nestedCellMi)?.row
+        : smylib.isObj(cardRow[coli][1]) && smylib.isArr(cardRow[coli][1].nst)
+          ? cardRow[coli][1].nst.find(cell => cell.mi === nestedCellMi)?.row
           : null,
   };
 };
@@ -67,7 +67,7 @@ export const storagesReplaceFormulaNumbers = <Ret extends unknown | string = unk
 
       let result = (() => {
         const cell = props.cells?.[coli];
-        if (cell?.t === StoragesColumnType.Number) return '' + cell.val;
+        if (cell?.[0] === StoragesColumnType.Number) return '' + cell[1];
 
         const col = props.cols?.[coli] as StoragesRackColumn<StoragesColumnType.Formula>;
         if (col?.t === StoragesColumnType.Formula) {

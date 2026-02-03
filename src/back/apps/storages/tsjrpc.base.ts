@@ -9,6 +9,7 @@ import {
 } from 'shared/api/tsjrpc/storages/tsjrpc.model';
 import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
 import { storagesStylePropKeysMatrix } from 'shared/const/storages/styleProps.config';
+import { SortDirection } from 'shared/model/common/sortDirection';
 import {
   StoragesRack,
   StoragesRackCard,
@@ -32,7 +33,7 @@ import {
 } from 'shared/model/storages/rack.model';
 import { itNNull, SMyLib, smylib } from 'shared/utils';
 import { makeDeepProxyObject } from 'shared/utils/makeDeepProxyObject';
-import { storagesDirStore } from './file-stores';
+import { storagesDirStorage } from './file-stores';
 import { storagesStoresSharesServerTsjrpcMethods } from './tsjrpc.shares';
 
 export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseServer<StoragesTsjrpcModel> {
@@ -48,7 +49,7 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           }
 
           const login = auth.login;
-          const { items, maxMod } = storagesDirStore.getFreshItems(lastModfiedAt);
+          const { items, maxMod } = storagesDirStorage.getFreshItems(lastModfiedAt);
           const racks = items.filter(rack => rack.team[login]?.role);
           let rackwRack: Partial<Record<StoragesRackWid, StoragesRackStorageSaved[]>>;
 
@@ -60,7 +61,7 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
                     if ('parent' in rack) {
                       rackwRack ??= SMyLib.groupBy(racks, rack => rack.w);
 
-                      const parentRack = rackwRack[rack.parent]?.[0] ?? storagesDirStore.getItem(rack.parent);
+                      const parentRack = rackwRack[rack.parent]?.[0] ?? storagesDirStorage.getItem(rack.parent);
                       if (!parentRack || 'parent' in parentRack) return null;
                       return { ...parentRack, ...rack };
                     }
@@ -76,7 +77,7 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           if (throwIfNoUserScopeAccessRight(auth?.login, 'storages', 'LIST', 'C')) throw '';
           const login = auth.login;
 
-          const { item, mod } = await storagesDirStore.createItem(store => ({
+          const { item, mod } = await storagesDirStorage.createItem(store => ({
             ...store,
             title,
             team: {
@@ -129,16 +130,16 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
             rack.cards.push({
               ...card,
               row: card.row?.map((cell, celli): StoragesCell<StoragesColumnType> => {
-                if (cell == null || (cell.t !== StoragesColumnType.List && cell.t !== StoragesColumnType.String))
+                if (cell == null || (cell[0] !== StoragesColumnType.List && cell[0] !== StoragesColumnType.String))
                   return cell!;
 
                 const col = rack.cols[celli];
                 const dict = rack.dicts['di' in col ? (col.di ?? 0) : 0];
 
-                if (cell.t === StoragesColumnType.List)
-                  return {
-                    ...cell!,
-                    val: cell.val.map(str => {
+                if (cell[0] === StoragesColumnType.List) {
+                  return [
+                    cell[0],
+                    cell[1].map(str => {
                       if (dict == null) return 0;
 
                       let index = dict.li.indexOf(str);
@@ -146,12 +147,13 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
 
                       return index;
                     }),
-                  };
+                  ];
+                }
 
-                let index = dict.li.indexOf(cell.val);
-                if (index < 0) index = dict.li.push(cell.val) - 1;
+                let index = dict.li.indexOf(cell[1]);
+                if (index < 0) index = dict.li.push(cell[1]) - 1;
 
-                return { ...cell, val: index };
+                return [cell[0], index];
               }),
             });
           });
@@ -278,33 +280,34 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
         }),
 
         createDatesNestedCell: updateCell(cell => {
-          if (cell.t !== StoragesColumnType.Dates) throw 'Cell type error 761564128398';
+          if (cell[0] !== StoragesColumnType.Dates) throw 'Cell type error 761564128398';
 
-          cell.row ??= [];
+          cell[1] ??= { nst: [] };
+          cell[1].nst ??= [];
           let ts = undefined;
 
           const todayTs = new Date().setHours(0, 0, 0, 0) / 100000;
-          if (!cell.row.some(it => it.ts === todayTs)) ts = todayTs;
+          if (!cell[1].nst.some(it => it.ts === todayTs)) ts = todayTs;
 
-          cell.row.push({
+          cell[1].nst.push({
             row: [],
-            mi: smylib.takeNextMi(cell.row, StoragesNestedCellMi.min),
+            mi: smylib.takeNextMi(cell[1].nst, StoragesNestedCellMi.min),
             ts,
           });
         }),
 
         editNestedCellProp: updateCell((cell, props) => {
-          if (!('row' in cell) || !smylib.isArr(cell.row) || props.nestedCellMi == null) return;
+          if (!smylib.isObj(cell[1]) || !smylib.isArr(cell[1].nst) || props.nestedCellMi == null) return;
 
-          const nestedCell = cell.row.find(cell => cell.mi === props.nestedCellMi);
+          const nestedCell = cell[1].nst.find(cell => cell.mi === props.nestedCellMi);
           if (nestedCell == null) return;
 
           smylib.keys(props.partialProps).forEach(key => {
             nestedCell[key] = props.partialProps[key];
           });
 
-          if (props.sortRow != null) {
-            const by = props.sortRow.prop as never;
+          if (props.sortDates != null) {
+            const by = props.sortDates.prop as never;
             const sort = (a: object, b: object) =>
               a[by] == null
                 ? b[by] == null
@@ -312,28 +315,42 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
                   : -1
                 : b[by] == null
                   ? 1
-                  : +a[by] - +b[by] || (`${a}` > `${b}` ? 1 : `${a}` < `${b}` ? -1 : 0);
+                  : +a[by] - +b[by] || `${a}`.localeCompare(`${b}`);
 
-            cell.row.sort(props.sortRow.asc ? (b, a) => sort(a, b) : (a, b) => sort(b, a));
+            cell[1].nst.sort(props.sortDates.dir === SortDirection.Asc ? (a, b) => sort(a, b) : (a, b) => sort(b, a));
           }
         }),
 
         editCellValue: updateCellOrNestedCell(({ rowHolder, columni, colType, colsHolder }, { value }, _, rack) => {
           if (colType == null) return;
-          rowHolder.row ??= [];
+          const row = (rowHolder.row ??= []);
           const cell = (rowHolder.row[columni] ??= storagesColumnConfigDict[colType].def());
           const typeCell = storagesColumnConfigDict[colType].retCorrectTypeValue(value);
 
-          if (typeCell.t !== StoragesColumnType.String) {
-            if (typeCell.t === cell.t) cell.val = typeCell.val as never;
-            return;
+          if (typeCell[0] !== StoragesColumnType.String) {
+            if (typeCell[0] === cell[0]) cell[1] = typeCell[1] as never;
+          } else {
+            const col = colsHolder.cols?.[columni] as StoragesRackColumn<StoragesColumnType.String> | nil;
+            if (col?.t !== StoragesColumnType.String) return;
+            const dict = rack.dicts[col.di ?? 0];
+            cell[1] = dict.li.indexOf('' + value);
+            if (cell[1] < 0) cell[1] = dict.li.push('' + value) - 1;
           }
 
-          const col = colsHolder.cols?.[columni] as StoragesRackColumn<StoragesColumnType.String>;
-          if (col == null || col.t !== StoragesColumnType.String) return;
-          const dict = rack.dicts[col.di ?? 0];
-          cell.val = dict.li.indexOf('' + value);
-          if (cell.val < 0) cell.val = dict.li.push('' + value) - 1;
+          if (
+            cell &&
+            (
+              storagesColumnConfigDict[colType].checkIsCellCanBeDelete ??
+              (<Type extends StoragesColumnType>(cell: StoragesCell<Type>) => !cell[1])
+            )(cell as never)
+          ) {
+            delete rowHolder.row[columni];
+          }
+
+          for (let i = row.length - 1; i >= 0; i--) {
+            if (row[row.length - 1] == null) row.pop();
+            else break;
+          }
         }),
 
         toggleListCellValue: updateCellOrNestedCell(
@@ -342,14 +359,14 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
             if (column == null || column.t !== StoragesColumnType.List || colType !== StoragesColumnType.List) return;
 
             rowHolder.row ??= [];
-            const cell = (rowHolder.row[columni] ??= { t: colType, val: [] });
+            const cell = (rowHolder.row[columni] ??= [colType, []]);
 
-            if (cell.t !== StoragesColumnType.List) return;
+            if (cell[0] !== StoragesColumnType.List) return;
             const dictList = rack.dicts[column.di ?? 0].li;
             const titleIndexDict: Record<string, StoragesDictItemi> = {};
             const titlesSet = new Set<string>();
 
-            cell.val.forEach(titlei => {
+            cell[1].forEach(titlei => {
               titlesSet.add(dictList[titlei]);
             });
 
@@ -367,20 +384,11 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
 
             titlesSet.delete('');
 
-            cell.val = Array.from(titlesSet)
+            cell[1] = Array.from(titlesSet)
               .sort()
               .map(title => titleIndexDict[title]);
           },
         ),
-
-        setNumber: updateCellOrNestedCell(({ rowHolder, columni, colType }, props) => {
-          if (colType != StoragesColumnType.Number) return;
-          rowHolder.row ??= [];
-          const cell = (rowHolder.row[columni] ??= { t: colType, val: 0 });
-          if (cell?.t !== StoragesColumnType.Number) return;
-
-          cell.val = props.amount;
-        }),
 
         setRackAsParent: updateRack((rack, { parentRackw }) => {
           if (rack.statuses.length > 1) throw 'Уже существуют собственные статусы';
@@ -484,7 +492,7 @@ function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret exte
     let ret: Ret = undefined!;
     let parentRack = null as StoragesRackStorageSaved | nil;
 
-    const updated = storagesDirStore.updateItem(props.rackw, rack => {
+    const updated = storagesDirStorage.updateItem(props.rackw, rack => {
       if (!('parent' in rack)) {
         ret = updater(rack, props);
         return;
@@ -493,7 +501,7 @@ function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret exte
       const proxyRack = makeDeepProxyObject(rack, {
         get: (_, key) => {
           if (key in rackCore) return rack[key as never];
-          parentRack ??= storagesDirStore.getItem(rack.parent);
+          parentRack ??= storagesDirStorage.getItem(rack.parent);
           return parentRack?.[key as never];
         },
         onSet: (_, keys, key) => {
@@ -505,7 +513,7 @@ function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret exte
 
       ret = updater(proxyRack as never, props);
 
-      if (parentRack != null) storagesDirStore.saveItem(parentRack.w);
+      if (parentRack != null) storagesDirStorage.saveItem(parentRack.w);
     });
 
     if (updated == null) throw 'Error 10961237652345683910';
@@ -520,7 +528,7 @@ function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret exte
       );
 
     if ('parent' in item) {
-      parentRack ??= storagesDirStore.getItem(item.parent);
+      parentRack ??= storagesDirStorage.getItem(item.parent);
       if (parentRack == null || 'parent' in parentRack)
         throw 'Во время формирования дочернего стеллажа обнаружено наследование от другого дочернего стеллажа';
       rack = { ...parentRack, ...item };
@@ -593,9 +601,9 @@ function updateCellOrNestedCell<
 
     card.row ??= [];
     const cardCell = card.row[props.coli];
-    if (cardCell == null || !('row' in cardCell)) throw 'Error 1862531839123';
+    if (cardCell == null || !smylib.isObj(cardCell[1])) throw 'Error 1862531839123';
 
-    const rowHolder = cardCell.row.find(it => it.mi === props.nestedCellMi);
+    const rowHolder = cardCell[1]?.nst.find(it => it.mi === props.nestedCellMi);
     if (!smylib.isObj(rowHolder)) throw 'Error 192644527841210';
 
     return updater(
@@ -623,7 +631,7 @@ function updateCell<Props extends StoragesTsjrpcCellSelector, RetValue, Ret exte
     card.row ??= [];
     const cell = (card.row[props.coli] ??= storagesColumnConfigDict[column.t].def());
 
-    if (column.t !== cell.t) throw 'Incorrect card type 162535678729';
+    if (column.t !== cell[0]) throw 'Incorrect card type 162535678729';
 
     return updater(cell, props, column, card, rack);
   });

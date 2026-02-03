@@ -22,15 +22,16 @@ export const StoragesCellOfTypeDates = (props: StoragesCellTypeProps<StoragesCol
 
   const isEdit = useStoragesIsEditInnersContext();
   const [isExpand, setIsExpand] = useState(false);
+  const dates = props.cell?.[1]?.nst;
 
-  if (!isEdit && !props.cell?.row?.length) return;
+  if (!isEdit && !dates?.length) return;
 
-  let firstUndatedCelli = props.cell?.row.findIndex(cell => cell.ts == null) ?? Number.MAX_SAFE_INTEGER;
-  if (firstUndatedCelli < 0) firstUndatedCelli = props.cell?.row.length ?? 0;
+  let firstUndatedCelli = dates?.findIndex(cell => cell.ts == null) ?? Number.MAX_SAFE_INTEGER;
+  if (firstUndatedCelli < 0) firstUndatedCelli = dates?.length ?? 0;
   const isNeedExpand = firstUndatedCelli >= maxLimCount;
 
-  const mapCellNode = props.cell?.row
-    ? (dateCell: (typeof props.cell.row)[number], dateCelli: number) => {
+  const mapCellNode = dates
+    ? (dateCell: (typeof dates)[number], dateCelli: number) => {
         if (dateCell == null) return;
 
         return (
@@ -40,7 +41,7 @@ export const StoragesCellOfTypeDates = (props: StoragesCellTypeProps<StoragesCol
           >
             <Button onClick={() => openDateMiAtom.set({ coli: props.coli, mi: dateCell.mi })}>
               <StoragesDateTimestampTitle timestamp={dateCell.ts} />
-              {dateCell.title && <span className="text-x7"> {dateCell.title}</span>}
+              {dateCell.dsc && <span className="text-x7"> {dateCell.dsc}</span>}
               <LazyIcon icon="ArrowRight01" />
             </Button>
           </div>
@@ -48,11 +49,8 @@ export const StoragesCellOfTypeDates = (props: StoragesCellTypeProps<StoragesCol
       }
     : () => null;
 
-  const headCells = props.cell?.row.slice(
-    0,
-    firstUndatedCelli < 0 ? minShowCount : Math.min(minShowCount, firstUndatedCelli),
-  );
-  const moreCells = firstUndatedCelli > 0 ? props.cell?.row.slice(minShowCount, firstUndatedCelli) : null;
+  const headCells = dates?.slice(0, firstUndatedCelli < 0 ? minShowCount : Math.min(minShowCount, firstUndatedCelli));
+  const moreCells = firstUndatedCelli > 0 ? dates?.slice(minShowCount, firstUndatedCelli) : null;
 
   return (
     <div>
@@ -66,17 +64,17 @@ export const StoragesCellOfTypeDates = (props: StoragesCellTypeProps<StoragesCol
         )}
       </div>
       <ConditionalRender
-        value={props.cell?.row.length}
+        value={dates?.length}
         render={() =>
           isNeedExpand ? (
             <>
               {headCells?.map(mapCellNode)}
               {!moreCells?.length ||
                 (isExpand ? moreCells.map(mapCellNode) : <Button onClick={() => setIsExpand(is => !is)}>...</Button>)}
-              {isEdit && firstUndatedCelli > 0 && props.cell?.row.slice(firstUndatedCelli).map(mapCellNode)}
+              {isEdit && firstUndatedCelli > 0 && dates?.slice(firstUndatedCelli).map(mapCellNode)}
             </>
           ) : isEdit ? (
-            props.cell?.row.map(mapCellNode)
+            dates?.map(mapCellNode)
           ) : (
             <>
               {headCells?.map(mapCellNode)}

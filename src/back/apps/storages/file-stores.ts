@@ -1,7 +1,7 @@
 import { DirStorage } from 'back/complect/DirStorage';
 import { StoragesRackStorageSaved } from 'shared/model/storages/list.model';
 
-export const storagesDirStore = new DirStorage({
+export const storagesDirStorage = new DirStorage({
   dirPath: '/apps/storages/list/',
   idKey: 'w',
   makeNewItem: (): StoragesRackStorageSaved => ({

@@ -6,17 +6,18 @@ import { StoragesCellTypeProps } from '../model/model';
 
 export const StoragesCellOfTypeLink = (props: StoragesCellTypeProps<StoragesColumnType.Link>) => {
   const isEdit = useStoragesIsEditInnersContext();
+  const value = props.cell?.[1];
 
   if (!isEdit)
     return (
-      !props.cell?.val || (
+      !value || (
         <div>
           <span>{props.column.title} </span>
           <a
-            href={props.cell.val}
+            href={value}
             className="font-bold italic text-x7/80! underline!"
           >
-            {` ${props.cell.val} `}
+            {` ${value} `}
           </a>
         </div>
       )
@@ -29,7 +30,7 @@ export const StoragesCellOfTypeLink = (props: StoragesCellTypeProps<StoragesColu
 
         <InputWithLoadingIcon
           icon={props.icon}
-          defaultValue={props.cell?.val}
+          defaultValue={value}
           strongDefaultValue
           onChanged={value =>
             storagesTsjrpcClient.editCellValue({

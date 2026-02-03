@@ -1,5 +1,6 @@
 import { SokiAuthLogin } from 'shared/api/complect/soki.model';
 import { storagesStylePropKeysMatrix } from 'shared/const/storages/styleProps.config';
+import { SortDirection } from 'shared/model/common/sortDirection';
 import {
   StoragesRack,
   StoragesRackCard,
@@ -41,11 +42,11 @@ export type StoragesTsjrpcModel = {
 
   editNestedCellProp: (
     args: StoragesTsjrpcCellSelector &
-      StoragesNestedCellSelectors & { partialProps: object; sortRow?: { prop: string; asc: boolean } },
+      StoragesNestedCellSelectors & { partialProps: object; sortDates?: { prop: string; dir: SortDirection } },
   ) => void;
 
   editCellValue: (
-    args: StoragesTsjrpcCellSelector & StoragesNestedCellSelectors & { value: StoragesCell<StoragesColumnType>['val'] },
+    args: StoragesTsjrpcCellSelector & StoragesNestedCellSelectors & { value: StoragesCell<StoragesColumnType>[1] },
   ) => void;
 
   createRackStatus: (args: RackSelector & { title: string }) => void;
@@ -65,7 +66,6 @@ export type StoragesTsjrpcModel = {
   toggleRackStatusNexti: (args: StoragesTsjrpcRackStatusSelector & { nextStatusi: number }) => void;
   editRackStatusTitle: (args: StoragesTsjrpcRackStatusSelector & { title: string }) => void;
 
-  setNumber: (args: StoragesTsjrpcCellSelector & { amount: number }) => void;
   setRackAsParent: (args: StoragesTsjrpcRackSelector & { parentRackw: StoragesRackWid }) => void;
 
   editColumnType: (

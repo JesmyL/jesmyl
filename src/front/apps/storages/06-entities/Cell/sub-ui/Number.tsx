@@ -12,12 +12,13 @@ export const StoragesCellOfTypeNumber = (props: StoragesCellTypeProps<StoragesCo
   const isEdit = useStoragesIsEditInnersContext();
 
   if (isEdit) return <Edit {...props} />;
+  const value = props.cell?.[1];
 
   return (
-    !props.cell?.val || (
+    !value || (
       <div className="flex gap-2">
         <span>{props.column.title}</span>
-        <span className="font-bold">{props.cell?.val}</span>
+        <span className="font-bold">{value}</span>
         <span>{props.column.mt}</span>
       </div>
     )
@@ -25,6 +26,8 @@ export const StoragesCellOfTypeNumber = (props: StoragesCellTypeProps<StoragesCo
 };
 
 const Edit = (props: StoragesCellTypeProps<StoragesColumnType.Number>) => {
+  const value = props.cell?.[1];
+
   const inputRef = useRef<(HTMLInputElement & HTMLTextAreaElement) | null>(null);
   const { coli, cols } = storagesMakeActualFormulaProps({
     coli: props.coli,
@@ -45,11 +48,11 @@ const Edit = (props: StoragesCellTypeProps<StoragesColumnType.Number>) => {
             icon={props.icon}
             type="number"
             inputRef={inputRef}
-            defaultValue={props.cell ? '' + props.cell.val : ''}
+            defaultValue={value ? '' + value : ''}
             strongDefaultValue
             onChanged={amount =>
-              storagesTsjrpcClient.setNumber({
-                amount: Math.abs(+amount),
+              storagesTsjrpcClient.editCellValue({
+                value: Math.abs(+amount),
                 cardi: props.card.i,
                 rackw: props.rack.w,
                 coli: props.coli,

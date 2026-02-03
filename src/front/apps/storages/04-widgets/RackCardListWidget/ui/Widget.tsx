@@ -1,7 +1,6 @@
 import { Accordion } from '#shared/components/ui/accordion';
 import { Button } from '#shared/components/ui/button';
 import { mylib } from '#shared/lib/my-lib';
-import { SortDirection } from '#shared/model/sortDirection';
 import { useConfirm } from '#shared/ui/modal';
 import { StoragesRackStatusFace } from '$storages/entities/RackStatusFace';
 import { storagesSortAndGroupAtom } from '$storages/shared/state/atoms';
@@ -9,6 +8,7 @@ import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.metho
 import { useNavigate } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { memo } from 'react';
+import { SortDirection } from 'shared/model/common/sortDirection';
 import { StoragesRack, StoragesRackCard, StoragesRackWid } from 'shared/model/storages/list.model';
 import { StoragesColumnType, StoragesDictItemi, StoragesRackColumn } from 'shared/model/storages/rack.model';
 
@@ -110,8 +110,8 @@ export const StoragesRackCardListWidget = memo((props: { rack: StoragesRack }) =
     }
 
     return cards.slice().sort((aCard, bCard) => {
-      const aVal = aCard.row?.[sort]?.val;
-      const bVal = bCard.row?.[sort]?.val;
+      const aVal = aCard.row?.[sort]?.[1];
+      const bVal = bCard.row?.[sort]?.[1];
 
       let result = 0;
 
@@ -136,16 +136,16 @@ export const StoragesRackCardListWidget = memo((props: { rack: StoragesRack }) =
       return noValue;
     }
 
-    if (card.row?.[group]?.val == null) return noValue;
+    if (card.row?.[group]?.[1] == null) return noValue;
 
     if (mylib.isNum(group)) {
       const col = props.rack.cols[group] as StoragesRackColumn<StoragesColumnType.String>;
 
-      if (col.t === StoragesColumnType.String && mylib.isNum(card.row[group].val))
-        return props.rack.dicts[col.di ?? 0].li[card.row[group].val] || card.row[group].val;
+      if (col.t === StoragesColumnType.String && mylib.isNum(card.row[group][1]))
+        return props.rack.dicts[col.di ?? 0].li[card.row[group][1]] || card.row[group][1];
     }
 
-    if (mylib.isNum(card.row[group].val) || mylib.isStr(card.row[group].val)) return card.row[group].val;
+    if (mylib.isNum(card.row[group][1]) || mylib.isStr(card.row[group][1])) return card.row[group][1];
 
     return noValue;
   });

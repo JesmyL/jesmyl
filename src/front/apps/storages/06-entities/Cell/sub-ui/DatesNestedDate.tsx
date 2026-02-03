@@ -1,8 +1,8 @@
+import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { DatePicker } from '#shared/components/DatePicker';
 import { Button } from '#shared/components/ui/button';
 import { mylib } from '#shared/lib/my-lib';
 import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
-import { TextInput } from '#shared/ui/TextInput';
 import { StoragesAddColumn } from '$storages/entities/AddColumn';
 import { StoragesDateTimestampTitle } from '$storages/entities/DateTimestampTitle';
 import { storagesExcludeColumnTypesForDatedNestedCell } from '$storages/shared/const/exclude.const';
@@ -11,12 +11,12 @@ import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.metho
 import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
 import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
+import { SortDirection } from 'shared/model/common/sortDirection';
 import { StoragesColumnType, StoragesNestedCellMi } from 'shared/model/storages/rack.model';
 import { storagesCellComponents } from '../const/cellComponents';
 import { StoragesCellTypeProps } from '../model/model';
 
 let isOpenAddColumnModalAtom: Atom<boolean>;
-const maxTitleLength = 10;
 
 export const StoragesCellDatesNestedDateCell = (
   props: StoragesCellTypeProps<StoragesColumnType.Dates> & {
@@ -25,11 +25,13 @@ export const StoragesCellDatesNestedDateCell = (
 ) => {
   isOpenAddColumnModalAtom ??= atom(false);
 
+  const maxTitleLength = 10;
   const [isSelfEdit, setIsSelfEdit] = useState(false);
   const isCardEdit = useStoragesIsEditInnersContext();
-  const cardCell = props.cell?.row?.find(it => it.mi === props.dateMi);
+  const row = props.cell?.[1]?.nst;
+  const cardCell = row?.find(it => it.mi === props.dateMi);
 
-  const disabledDates = props.cell?.row.map(it => new Date((it.ts ?? Number.MAX_SAFE_INTEGER) * 100000));
+  const disabledDates = row?.map(it => new Date((it.ts ?? Number.MAX_SAFE_INTEGER) * 100000));
 
   const isEdit = isSelfEdit || isCardEdit;
 
@@ -63,28 +65,29 @@ export const StoragesCellDatesNestedDateCell = (
                   coli: props.coli,
                   cardi: props.card.i,
                   partialProps: { ts: Math.trunc(dateTime / 100000) },
-                  sortRow: { prop: 'ts', asc: false },
+                  sortDates: { prop: 'ts', dir: SortDirection.Desc },
                 });
               }}
             />
 
-            <TextInput
+            <InputWithLoadingIcon
               label={`Описание (${maxTitleLength} символов)`}
-              defaultValue={cardCell?.title}
+              icon="Text"
+              defaultValue={cardCell?.dsc}
               maxLength={maxTitleLength}
-              onChanged={title =>
+              onChanged={dsc =>
                 storagesTsjrpcClient.editNestedCellProp({
                   ...props.nestedSelectors,
                   rackw: props.rack.w,
                   coli: props.coli,
                   cardi: props.card.i,
-                  partialProps: { title },
+                  partialProps: { dsc },
                 })
               }
             />
           </>
         ) : (
-          cardCell?.title
+          cardCell?.dsc
         )}
 
         <StoragesIsEditInnersContext value={isEdit}>

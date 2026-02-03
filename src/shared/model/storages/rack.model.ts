@@ -67,56 +67,31 @@ export type StoragesColumnCustomProperties<Type extends StoragesColumnType> = {
 }[Type];
 
 type StoragesCellDict<DictItem extends string | StoragesDictItemi> = TypeSatisfiesDict<{
-  [StoragesColumnType.Date]: {
-    t: StoragesColumnType.Date;
-    val: number | nil;
-  };
+  [StoragesColumnType.Date]: [StoragesColumnType.Date, val?: number | nil];
 
-  [StoragesColumnType.List]: {
-    t: StoragesColumnType.List;
-    val: DictItem[];
-  };
+  [StoragesColumnType.List]: [StoragesColumnType.List, DictItem[]];
 
-  [StoragesColumnType.Dates]: {
-    t: StoragesColumnType.Dates;
-    val: und;
-    row: (StoragesNestedCell & { ts?: number })[];
-  };
+  [StoragesColumnType.Dates]: [StoragesColumnType.Dates, { nst: (StoragesNestedCell & { ts?: number })[] }];
 
-  [StoragesColumnType.Number]: {
-    t: StoragesColumnType.Number;
-    val: number;
-  };
+  [StoragesColumnType.Number]: [StoragesColumnType.Number, number];
 
-  [StoragesColumnType.String]: {
-    t: StoragesColumnType.String;
-    val: DictItem;
-  };
+  [StoragesColumnType.String]: [StoragesColumnType.String, DictItem];
 
-  [StoragesColumnType.Link]: {
-    t: StoragesColumnType.Link;
-    val: string;
-  };
+  [StoragesColumnType.Link]: [StoragesColumnType.Link, string];
 
-  [StoragesColumnType.Text]: {
-    t: StoragesColumnType.Text;
-    val: string;
-  };
+  [StoragesColumnType.Text]: [StoragesColumnType.Text, string];
 
-  [StoragesColumnType.Formula]: {
-    t: StoragesColumnType.Formula;
-    val: string;
-  };
+  [StoragesColumnType.Formula]: [StoragesColumnType.Formula, val?: never];
 }>;
 
 export type StoragesNestedCell = {
   mi: StoragesNestedCellMi;
-  title?: string;
+  dsc?: string;
   row: (StoragesCell<StoragesColumnType> | nil)[];
 };
 
 type TypeSatisfiesDict<
   T extends {
-    [T in StoragesColumnType]: { t: T; val: unknown; row?: StoragesNestedCell[] };
+    [T in StoragesColumnType]: [t: T, val?: unknown];
   },
 > = T;

@@ -37,155 +37,122 @@ export const storagesColumnConfigDict: {
       column: StoragesRackColumn<Type>,
       rack: StoragesRack,
     ) => string | nil;
+    checkIsCellCanBeDelete?: (cell: StoragesCell<Type>) => boolean;
   };
 } = {
   [StoragesColumnType.Date]: {
     icon: 'Calendar01',
     typeTitle: 'Дата',
-    def: () => ({
-      t: StoragesColumnType.Date,
-      val: undefined,
-    }),
+    def: () => [StoragesColumnType.Date],
     checkType: checkDate,
     mapStringToCell: value => {
       if (checkDate(value)) return null;
       const val = mapStrOrNumToTimestamp(value);
       if (val == null) return null;
 
-      return { t: StoragesColumnType.Date, val };
+      return [StoragesColumnType.Date, val];
     },
-    retCorrectTypeValue: value => ({
-      t: StoragesColumnType.Date,
-      val: smylib.isNum(value) || smylib.isStr(value) ? +value : undefined,
-    }),
-    makeStringValue: cell => (cell?.val == null ? null : new Date(cell.val).toLocaleDateString('ru')),
+    retCorrectTypeValue: value =>
+      smylib.isNum(value) || smylib.isStr(value) ? [StoragesColumnType.Date, +value] : [StoragesColumnType.Date],
+    makeStringValue: cell => (cell?.[1] == null ? null : new Date(cell[1]).toLocaleDateString('ru')),
   },
   [StoragesColumnType.Dates]: {
     icon: 'Calendar02',
     typeTitle: 'Даты',
     makeStringValue: cell => {
-      if (cell?.row == null) return;
-      const firstCell = cell.row.find(cell => cell.ts != null);
+      if (cell?.[1].nst == null) return;
+      const firstCell = cell[1].nst.find(cell => cell.ts != null);
       if (firstCell?.ts == null) return;
 
       return new Date(firstCell.ts * 100000).toLocaleDateString('ru');
     },
-    def: () => ({
-      t: StoragesColumnType.Dates,
-      val: undefined,
-      row: [],
-    }),
+    def: () => [StoragesColumnType.Dates, { nst: [] }],
     checkType: checkDate,
     mapStringToCell: value => {
       if (checkDate(value)) return null;
       const ts = mapStrOrNumToTimestamp(value);
       if (ts == null) return null;
 
-      return {
-        t: StoragesColumnType.Dates,
-        val: undefined,
-        row: [{ mi: StoragesNestedCellMi.min, ts, row: [] }],
-      };
+      return [StoragesColumnType.Dates, { nst: [{ mi: StoragesNestedCellMi.min, ts, row: [] }] }];
     },
-    retCorrectTypeValue: () => ({ t: StoragesColumnType.Dates, val: undefined, row: [] }),
+    retCorrectTypeValue: () => [StoragesColumnType.Dates, { nst: [] }],
+    checkIsCellCanBeDelete: cell => !smylib.keys(cell[1].nst).length,
   },
   [StoragesColumnType.List]: {
     icon: 'Scroll',
     typeTitle: 'Список из словаря',
     makeStringValue: (cell, column, rack) => {
-      const valueScalar = cell?.val.find(it => makeStoragesDictValue(it, column, rack));
+      const valueScalar = cell?.[1].find(it => makeStoragesDictValue(it, column, rack));
       if (valueScalar == null || mylib.isStr(valueScalar)) return valueScalar;
       return makeStoragesDictValue(valueScalar, column, rack);
     },
-    def: () => ({
-      t: StoragesColumnType.List,
-      val: [],
-    }),
+    def: () => [StoragesColumnType.List, []],
     checkType: value => (smylib.isStr(value) ? null : 'Это не строка'),
-    mapStringToCell: value => ({ t: StoragesColumnType.List, val: [value] }),
-    retCorrectTypeValue: value => ({
-      t: StoragesColumnType.List,
-      val: smylib.isArr(value) ? (value as string[]) : [],
-    }),
+    mapStringToCell: value => [StoragesColumnType.List, [value]],
+    retCorrectTypeValue: value => [StoragesColumnType.List, smylib.isArr(value) ? (value as string[]) : []],
   },
   [StoragesColumnType.Number]: {
     icon: 'Absolute',
     typeTitle: 'Цифра',
-    makeStringValue: cell => cell && '' + cell.val,
-    def: () => ({
-      t: StoragesColumnType.Number,
-      val: 0,
-    }),
+    makeStringValue: cell => cell && '' + cell[1],
+    def: () => [StoragesColumnType.Number, 0],
     checkType: value => ((smylib.isNum(value) || smylib.isStr(value)) && !smylib.isNaN(+value) ? null : 'Это не число'),
     mapStringToCell: value => {
       if (smylib.isNaN(+value)) return null;
 
-      return { t: StoragesColumnType.Number, val: +value };
+      return [StoragesColumnType.Number, +value];
     },
-    retCorrectTypeValue: value => ({ t: StoragesColumnType.Number, val: smylib.isNum(value) ? value : 0 }),
+    retCorrectTypeValue: value => [StoragesColumnType.Number, smylib.isNum(value) ? value : 0],
   },
   [StoragesColumnType.String]: {
     icon: 'BorderFull',
     typeTitle: 'Строка из словаря',
-    makeStringValue: (cell, column, rack) => makeStoragesDictValue(cell?.val, column, rack),
-    def: () => ({ t: StoragesColumnType.String, val: 0 }),
+    makeStringValue: (cell, column, rack) => makeStoragesDictValue(cell?.[1], column, rack),
+    def: () => [StoragesColumnType.String, 0],
     checkType: value => (smylib.isStr(value) ? null : 'Это не строка'),
     mapStringToCell: value => {
       if (!smylib.isStr(value)) return null;
 
-      return { t: StoragesColumnType.String, val: value };
+      return [StoragesColumnType.String, value];
     },
-    retCorrectTypeValue: value => ({ t: StoragesColumnType.String, val: smylib.isStr(value) ? value.trim() : '' }),
+    retCorrectTypeValue: value => [StoragesColumnType.String, smylib.isStr(value) ? value.trim() : ''],
   },
 
   [StoragesColumnType.Link]: {
     icon: 'Link01',
     typeTitle: 'Ссылка',
-    makeStringValue: cell => cell?.val,
-    def: () => ({ t: StoragesColumnType.Link, val: '' }),
+    makeStringValue: cell => cell?.[1],
+    def: () => [StoragesColumnType.Link, ''],
     checkType: value => (storagesCheckStringValueIsLink(value) ? null : 'Это не ссылка'),
     mapStringToCell: value => {
       if (!storagesCheckStringValueIsLink(value)) return null;
 
-      return { t: StoragesColumnType.Link, val: value };
+      return [StoragesColumnType.Link, value];
     },
-    retCorrectTypeValue: value => ({
-      t: StoragesColumnType.Link,
-      val: storagesCheckStringValueIsLink(value) ? value : '',
-    }),
+    retCorrectTypeValue: value => [StoragesColumnType.Link, storagesCheckStringValueIsLink(value) ? value : ''],
   },
 
   [StoragesColumnType.Text]: {
     icon: 'Text',
     typeTitle: 'Текст',
-    makeStringValue: cell => cell?.val,
-    def: () => ({ t: StoragesColumnType.Text, val: '' }),
+    makeStringValue: cell => cell?.[1],
+    def: () => [StoragesColumnType.Text, ''],
     checkType: value => (smylib.isStr(value) ? null : 'Это не текст'),
     mapStringToCell: value => {
       if (smylib.isStr(value)) return null;
 
-      return { t: StoragesColumnType.Text, val: value };
+      return [StoragesColumnType.Text, value];
     },
-    retCorrectTypeValue: value => ({
-      t: StoragesColumnType.Text,
-      val: smylib.isStr(value) ? value : '',
-    }),
+    retCorrectTypeValue: value => [StoragesColumnType.Text, smylib.isStr(value) ? value : ''],
   },
 
   [StoragesColumnType.Formula]: {
     icon: 'Math',
     typeTitle: 'Формула',
-    makeStringValue: cell => cell?.val,
-    def: () => ({
-      t: StoragesColumnType.Formula,
-      val: '',
-    }),
+    makeStringValue: cell => cell?.[1],
+    def: () => [StoragesColumnType.Formula],
     checkType: value => (smylib.isStr(value) ? null : 'Это не формула'),
-    mapStringToCell: value => {
-      if (!smylib.isStr(value)) return null;
-
-      return { t: StoragesColumnType.Formula, val: value };
-    },
-    retCorrectTypeValue: value => ({ t: StoragesColumnType.Formula, val: smylib.isStr(value) ? value : '' }),
+    mapStringToCell: () => [StoragesColumnType.Formula],
+    retCorrectTypeValue: () => [StoragesColumnType.Formula],
   },
 };

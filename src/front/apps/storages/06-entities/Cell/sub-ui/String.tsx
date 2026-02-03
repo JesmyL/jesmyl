@@ -7,7 +7,7 @@ import { StoragesCellTypeProps } from '../model/model';
 export const StoragesCellOfTypeString = (props: StoragesCellTypeProps<StoragesColumnType.String>) => {
   const isEdit = useStoragesIsEditInnersContext();
   const dict = props.rack.dicts[props.column.di ?? 0];
-  const value = props.cell && dict.li[props.cell.val];
+  const value = props.cell && dict.li[props.cell[1]];
 
   if (!isEdit)
     return (
@@ -24,7 +24,7 @@ export const StoragesCellOfTypeString = (props: StoragesCellTypeProps<StoragesCo
       <div>
         {props.columnTitleNode(<> ({props.rack.dicts[props.column.di ?? 0].title})</>)}
         <Autocomplete
-          selected={props.cell?.val}
+          selected={props.cell?.[1]}
           items={dict.li.map(value => ({ value, title: value }))}
           onNewItem={async value => {
             await storagesTsjrpcClient.editCellValue({

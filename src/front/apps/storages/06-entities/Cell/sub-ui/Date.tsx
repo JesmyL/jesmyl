@@ -6,7 +6,7 @@ import { StoragesColumnType } from 'shared/model/storages/rack.model';
 import { StoragesCellTypeProps } from '../model/model';
 
 export const StoragesCellOfTypeDate = (props: StoragesCellTypeProps<StoragesColumnType.Date>) => {
-  const date = new Date(props.cell?.val ?? NaN);
+  const date = new Date(props.cell?.[1] ?? NaN);
   const isEdit = useStoragesIsEditInnersContext();
 
   if (mylib.isNaN(date.getTime())) return;
@@ -17,7 +17,7 @@ export const StoragesCellOfTypeDate = (props: StoragesCellTypeProps<StoragesColu
         {props.columnTitleNode()}
         {isEdit ? (
           <DatePicker
-            initValue={props.cell?.val}
+            initValue={props.cell?.[1]}
             onSelect={async date => {
               storagesTsjrpcClient.editCellValue({
                 ...props.nestedSelectors,

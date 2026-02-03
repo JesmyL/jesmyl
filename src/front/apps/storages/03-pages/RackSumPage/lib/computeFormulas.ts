@@ -47,15 +47,18 @@ export const storagesRackSumComputeFormulas = (summary: StoragesRackSummary, rac
 
           return (
             card.row?.reduce((sum, cell) => {
-              if (cell && 'row' in cell) {
+              if (mylib.isObj(cell?.[1]) && cell[1].nst) {
                 return (
                   sum +
-                  cell.row.reduce((sum, rowItem) => {
+                  cell[1].nst.reduce((sum, rowItem) => {
                     if (rowItem.ts == null || filterByDate(rowItem.ts)) return sum;
 
                     const nestedCell = rowItem.row[nestedColi];
-                    if (nestedCell?.t === StoragesColumnType.Number) return sum + nestedCell.val;
-                    if (nestedCell?.t === StoragesColumnType.Formula && nestedColumn.t === StoragesColumnType.Formula) {
+                    if (nestedCell?.[0] === StoragesColumnType.Number) return sum + nestedCell[1];
+                    if (
+                      nestedCell?.[0] === StoragesColumnType.Formula &&
+                      nestedColumn.t === StoragesColumnType.Formula
+                    ) {
                       const result = storagesComputeFormula(
                         {
                           cells: card.row,

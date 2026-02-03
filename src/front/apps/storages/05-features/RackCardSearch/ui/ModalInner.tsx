@@ -92,11 +92,11 @@ export const StoragesRackCardSearchModalInner = ({
                     const cell = card.row?.[coli];
 
                     if (cell == null) return '';
-                    if (cell.t !== StoragesColumnType.String) return cell.val ?? '';
+                    if (cell[0] !== StoragesColumnType.String) return cell[1] ?? '';
 
                     const column = rack.cols[coli] as StoragesRackColumn<StoragesColumnType.String>;
                     if (column == null || column.t !== StoragesColumnType.String) return '';
-                    return rack.dicts[column.di ?? 0].li[cell.val] ?? '';
+                    return rack.dicts[column.di ?? 0].li[cell[1]] ?? '';
                   })
                   .join(' ');
 

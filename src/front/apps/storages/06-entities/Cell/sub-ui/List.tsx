@@ -8,7 +8,7 @@ import { StoragesCellTypeProps } from '../model/model';
 export const StoragesCellOfTypeList = (props: StoragesCellTypeProps<StoragesColumnType.List>) => {
   const isEdit = useStoragesIsEditInnersContext();
 
-  if (!isEdit && !props.cell?.val.length) return;
+  if (!isEdit && !props.cell?.[1].length) return;
   const dict = props.rack.dicts[props.column.di ?? 0];
 
   return (
@@ -18,7 +18,7 @@ export const StoragesCellOfTypeList = (props: StoragesCellTypeProps<StoragesColu
         {isEdit && <LazyIcon icon={props.icon} />}
         <Autocomplete
           isShowSelectedNodeOnly={!isEdit}
-          selected={props.cell?.val}
+          selected={props.cell?.[1]}
           items={dict.li.map(value => ({ value, title: value }))}
           onNewItem={async title => {
             await storagesTsjrpcClient.toggleListCellValue({
