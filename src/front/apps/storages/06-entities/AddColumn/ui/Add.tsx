@@ -39,12 +39,13 @@ export const StoragesAddColumn = (props: {
         >
           Новое поле
         </Button>
-        <div className="text-xs text-x3/70">Будет добавлено {props.andTextButton ?? 'во все карточки'}</div>
       </div>
 
       <Modal openAtom={props.isOpenModalAtom}>
         <ModalHeader>Выберите тип нового специального поля</ModalHeader>
         <ModalBody className="flex flex-col gap-3 *:w-full">
+          <div className="text-xKO font-bold">Будет добавлено {props.andTextButton ?? 'во все карточки'}</div>
+
           {columnTypeOrder.map(colType => {
             if (props.excludeColumnTypes?.has(colType)) return;
             const { typeTitle, icon } = storagesColumnConfigDict[colType];
