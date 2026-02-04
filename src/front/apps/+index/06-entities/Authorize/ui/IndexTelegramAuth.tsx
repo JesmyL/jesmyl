@@ -9,7 +9,6 @@ import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc/tsjrpc.methods';
 import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { useIndexAuthorizeErrors } from '../state/atoms';
 import { IndexAuthorizeTelegramStyledPage } from '../style/IndexTelegramAuth.styled';
 import { IndexAuthorizeTgNativeAuth } from './TgNativeAuth';
 
@@ -24,9 +23,7 @@ export const IndexAuthorizeTelegramPage = () => {
   );
 
   const connectionNode = useConnectionState();
-  const [errors] = useIndexAuthorizeErrors();
   const navigate = useNavigate();
-  const error = (message: string | nil) => message && <div className="login-error-message">{message}</div>;
 
   return (
     <IndexAuthorizeTelegramStyledPage
@@ -105,7 +102,6 @@ export const IndexAuthorizeTelegramPage = () => {
               {isSendTgCode && (
                 <>
                   <div className="input-container flex">
-                    {error(errors.login)}
                     <div
                       id="tg-auth-code-input-wrapper"
                       className="input-wrapper"

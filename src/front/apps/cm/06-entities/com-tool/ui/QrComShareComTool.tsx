@@ -15,16 +15,21 @@ export const CmComToolQrComShare = () => {
   const comw = ccom?.wid ?? CmComWid.def;
   const comNumber = useComNumber(comw);
 
-  if (!ccom) return;
-  const link = cmAppActions.makeLink({ comw: ccom?.wid });
+  const toolNode = (
+    <CmComTool
+      title="Поделиться по QR"
+      icon="QrCode"
+      onClick={isOpenQrAtom.do.toggle}
+    />
+  );
+
+  if (!ccom) return toolNode;
+
+  const link = cmAppActions.makeLink({ comw: ccom.wid });
 
   return (
     <>
-      <CmComTool
-        title="Поделиться по QR"
-        icon="QrCode"
-        onClick={isOpenQrAtom.do.toggle}
-      />
+      {toolNode}
 
       <QrCodeFullScreen
         openAtom={isOpenQrAtom}

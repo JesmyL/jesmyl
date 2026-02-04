@@ -1,7 +1,8 @@
 import { useScheduleCurrentSchwContext } from '#widgets/schedule/complect/lib/contexts';
 import { ScheduleWidgetLiveBroadcast } from '#widgets/schedule/live-broadcast/Live';
 import { useIndexSchedules } from '$index/shared/state';
-import { useIsCanShowTextBroadcast } from './atoms';
+import { useAtomValue } from 'atomaric';
+import { takeIsCanShowTextBroadcastAtom } from './atoms';
 
 interface Props {
   children: React.ReactNode;
@@ -9,7 +10,7 @@ interface Props {
 }
 
 export const BroadcastTextScreen = ({ children }: Props) => {
-  if (!useIsCanShowTextBroadcast()[0]) return <>{children}</>;
+  if (!useAtomValue(takeIsCanShowTextBroadcastAtom())) return <>{children}</>;
 
   return <Screen>{children}</Screen>;
 };

@@ -1,16 +1,17 @@
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import {
   bibleAllTranslates,
+  bibleMyTranslatesAtom,
   bibleTitles,
   BibleTranslateModulesRedactButton,
   translateDescriptions,
-  useBibleMyTranslates,
 } from '$bible/ext';
+import { useAtomValue } from 'atomaric';
 import React from 'react';
 import { CmComCommentForExample } from './ForExample';
 
 export function TheCmComCommentBibleTextsInfo() {
-  const [myTranslates] = useBibleMyTranslates();
+  const myTranslates = useAtomValue(bibleMyTranslatesAtom);
 
   return (
     <div className="">

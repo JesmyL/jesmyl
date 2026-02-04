@@ -2,14 +2,15 @@ import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { bibleAllTranslates, translateDescriptions } from '$bible/shared/const/consts';
-import { useBibleMyTranslates } from '$bible/shared/hooks/translates';
 import { bibleTsjrpcClient } from '$bible/shared/lib/tsjrpc';
 import { removeBibleTranslate } from '$bible/shared/lib/utils';
+import { bibleMyTranslatesAtom } from '$bible/shared/state/atoms';
+import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
 
 export default function TranslatesLoadModalInner() {
-  const [myTranslates] = useBibleMyTranslates();
+  const myTranslates = useAtomValue(bibleMyTranslatesAtom);
   const [translateOnLoad, setTranslateOnLoad] = useState<BibleTranslateName | null>(null);
 
   return (

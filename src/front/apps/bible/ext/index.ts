@@ -4,8 +4,7 @@ export { BibleTranslateModulesRedactButton } from '$bible/entities/translate/ui/
 export { bibleLowerBooks, bibleTitles } from '$bible/shared/const/bibleTitles';
 export { bibleAllTranslates, translateDescriptions } from '$bible/shared/const/consts';
 export { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
-export { useBibleMyTranslates } from '$bible/shared/hooks/translates';
-export { bibleShowTranslatesAtom } from '$bible/shared/state/atoms';
+export { bibleMyTranslatesAtom, bibleShowTranslatesAtom } from '$bible/shared/state/atoms';
 export { bibleTranslatesIDB } from '$bible/shared/state/bibleIDB';
 export { BibleTranslatesContextProvider, type BibleBookTranslates } from '$bible/shared/state/TranslatesContext';
 export { BibleBroadcastLive } from '$bible/widgets/broadcast/ui/Live';

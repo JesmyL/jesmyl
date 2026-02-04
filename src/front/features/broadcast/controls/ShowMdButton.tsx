@@ -1,16 +1,17 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { useAtomValue } from 'atomaric';
 import { FunctionComponent, memo } from 'react';
-import { useIsCanShowTextBroadcast } from '../atoms';
+import { takeIsCanShowTextBroadcastAtom } from '../atoms';
 
 interface Props {
   Parent?: FunctionComponent<{ children: React.ReactNode; onClick?: Function; className?: string }>;
 }
 
 export const ScreenBroadcastControlPanelShowMdButton = memo(function ShowMdButton({ Parent }: Props) {
-  const [isCanShowTextBroadcast, setIsCanShowTextBroadcast] = useIsCanShowTextBroadcast();
+  const isCanShowTextBroadcast = useAtomValue(takeIsCanShowTextBroadcastAtom());
 
   const onClick = () => {
-    setIsCanShowTextBroadcast(!isCanShowTextBroadcast);
+    takeIsCanShowTextBroadcastAtom().do.toggle();
   };
 
   if (Parent)
@@ -21,7 +22,7 @@ export const ScreenBroadcastControlPanelShowMdButton = memo(function ShowMdButto
       >
         <LazyIcon
           icon="TvSmart"
-          kind={isCanShowTextBroadcast ? 'SolidRounded' : 'StrokeRounded'}
+          kind={isCanShowTextBroadcast ? 'SolidRounded' : undefined}
         />
       </Parent>
     );
@@ -29,7 +30,7 @@ export const ScreenBroadcastControlPanelShowMdButton = memo(function ShowMdButto
   return (
     <LazyIcon
       icon="TvSmart"
-      kind={isCanShowTextBroadcast ? 'SolidRounded' : 'StrokeRounded'}
+      kind={isCanShowTextBroadcast ? 'SolidRounded' : undefined}
       onClick={onClick}
     />
   );

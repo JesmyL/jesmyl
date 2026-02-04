@@ -1,11 +1,11 @@
-import { useAtom, useAtomValue } from 'atomaric';
+import { useAtomValue } from 'atomaric';
 import { memo } from 'react';
 import { cmComMetricNumTitles, cmComNextMetricSize } from 'shared/const/cm/com-metric-nums';
 import styled, { css, keyframes } from 'styled-components';
 import { metronomeUserMeterAccentsAtom, metronomeUserMeterSizeAtom } from '../lib/atoms';
 
 export const MetronomeMeterDots = memo(function MetronomeMeterDots() {
-  const [userMeterSize, setUserMeterSize] = useAtom(metronomeUserMeterSizeAtom);
+  const userMeterSize = useAtomValue(metronomeUserMeterSizeAtom);
   const accents = useAtomValue(metronomeUserMeterAccentsAtom)[userMeterSize] ?? '1' + '0'.repeat(userMeterSize - 1);
 
   return (
@@ -36,7 +36,7 @@ export const MetronomeMeterDots = memo(function MetronomeMeterDots() {
           })}
       </StyledMeterDots>
 
-      <div onClick={() => setUserMeterSize(cmComNextMetricSize[userMeterSize])}>
+      <div onClick={() => metronomeUserMeterSizeAtom.set(cmComNextMetricSize[userMeterSize])}>
         {cmComMetricNumTitles[userMeterSize]}
       </div>
     </StyledContainer>

@@ -1,7 +1,7 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { useIndexSchedules } from '$index/shared/state';
-import { Atom, atom, useAtom } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetWid } from 'shared/api';
 
@@ -10,7 +10,7 @@ let scheduleAtom: Atom<IScheduleWidget | null>;
 export const useGetScheduleOrPull = (scheduleInstance: string | IScheduleWidgetWid | NaN) => {
   scheduleAtom ??= atom<IScheduleWidget | null>(null);
 
-  const [schedule, setSchedule] = useAtom(scheduleAtom);
+  const schedule = useAtomValue(scheduleAtom);
   const [isLoading, setIsLoading] = useState(true);
   const schedules = useIndexSchedules();
   const [error, setError] = useState('');
@@ -25,7 +25,7 @@ export const useGetScheduleOrPull = (scheduleInstance: string | IScheduleWidgetW
     const schedule = schedules?.find(find);
 
     if (schedule !== undefined) {
-      setSchedule(schedule);
+      scheduleAtom.set(schedule);
       setIsLoading(false);
       return;
     }
@@ -45,7 +45,7 @@ export const useGetScheduleOrPull = (scheduleInstance: string | IScheduleWidgetW
         }, 600),
       )
       .effect();
-  }, [scheduleInstance, schedules, setSchedule]);
+  }, [scheduleInstance, schedules]);
 
   return { schedule, isLoading, error } as const;
 };

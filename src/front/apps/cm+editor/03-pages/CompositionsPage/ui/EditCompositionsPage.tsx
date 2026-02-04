@@ -10,29 +10,26 @@ import {
   useCmComList,
 } from '$cm/ext';
 import { useNavigate } from '@tanstack/react-router';
-import { Atom, atom, useAtom } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { ICmEditorCompositionsCatSpecialSearches } from '../model';
 
 let termAtom: Atom<string>;
-let debounceTermAtom: Atom<string>;
 
 export const CmEditorCompositionsPage = () => {
   termAtom ??= atom('');
-  debounceTermAtom ??= atom('');
 
   const coms = useCmComList();
   const [isOpenMorePopup, setIsOpenMorePopup] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
   const [mapper, setMapper] = useState<ICmEditorCompositionsCatSpecialSearches['map'] | null>(null);
-  const [term, setTerm] = useAtom(termAtom);
+  const term = useAtomValue(termAtom);
   const navigate = useNavigate();
-  const debouncedTerm = useAtom(debounceTermAtom);
 
   useEffect(() => {
     if (listRef.current) listRef.current.scrollTop = 0;
-  }, [debouncedTerm]);
+  }, []);
 
   return (
     <>
@@ -55,7 +52,7 @@ export const CmEditorCompositionsPage = () => {
                   {term.startsWith('@') && (
                     <CmEditorCompositionsCatSpecialSearches
                       term={term}
-                      setTerm={setTerm}
+                      setTerm={termAtom.set}
                       setMapper={setMapper}
                     />
                   )}

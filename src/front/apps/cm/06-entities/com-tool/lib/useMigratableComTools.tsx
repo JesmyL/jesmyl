@@ -2,7 +2,7 @@ import { MyLib } from '#shared/lib/my-lib';
 import { cmComTopToolsAtom } from '$cm/entities/index';
 import { cmUserStoreTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useAuth } from '$index/shared/state';
-import { useAtom, useAtomValue } from 'atomaric';
+import { useAtomValue } from 'atomaric';
 import React from 'react';
 import { MigratableComToolName } from 'shared/api';
 import { CmComToolIsComToolIconItemsContext, CmComToolItemAttrsContext, CmComToolNameContext } from '../state/contexts';
@@ -80,14 +80,14 @@ const toolKeys = MyLib.keys(toolsDict);
 
 let saveTimeout: TimeOut;
 export const useCmComToolMigratableList = () => {
-  const [comTopTools, setComTopTools] = useAtom(cmComTopToolsAtom);
+  const comTopTools = useAtomValue(cmComTopToolsAtom);
   const auth = useAuth();
 
   mapToolsSelf.comTopTools = comTopTools;
   mapToolsSelf.fun = (tool: MigratableComToolName) => {
     const tools =
       comTopTools.indexOf(tool) < 0 ? [...comTopTools, tool] : comTopTools.filter(currTool => tool !== currTool);
-    setComTopTools(tools);
+    cmComTopToolsAtom.set(tools);
 
     if (auth.login == null) return;
     clearTimeout(saveTimeout);

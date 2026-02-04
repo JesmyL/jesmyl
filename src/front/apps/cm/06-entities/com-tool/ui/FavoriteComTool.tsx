@@ -5,15 +5,22 @@ import { CmComTool } from '../ComTool';
 export const CmComToolFavorite = () => {
   const ccom = useCmComCurrent();
   const { isFavourite, toggleFavourite } = useCmComFavouriteList();
+  const addTitle = 'Добавить избранное';
+
+  if (!ccom)
+    return (
+      <CmComTool
+        title={addTitle}
+        icon="Star"
+      />
+    );
 
   return (
-    ccom && (
-      <CmComTool
-        title={isFavourite(ccom.wid) ? 'Удалить избранное' : 'Добавить избранное'}
-        icon="Star"
-        iconKind={isFavourite(ccom.wid) ? 'SolidRounded' : 'StrokeRounded'}
-        onClick={() => toggleFavourite(ccom.wid)}
-      />
-    )
+    <CmComTool
+      title={isFavourite(ccom.wid) ? 'Удалить избранное' : addTitle}
+      icon="Star"
+      iconKind={isFavourite(ccom.wid) ? 'SolidRounded' : undefined}
+      onClick={() => toggleFavourite(ccom.wid)}
+    />
   );
 };

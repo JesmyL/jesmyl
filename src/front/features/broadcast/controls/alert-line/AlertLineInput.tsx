@@ -4,7 +4,7 @@ import { Modal } from '#shared/ui/modal';
 import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { complectIDB } from '$index/shared/state';
-import { Atom, atom, useAtom } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React from 'react';
 import { AlertLineSettingsModalInner } from './AlertLineSettings';
@@ -17,7 +17,7 @@ export const AlertLineInput = () => {
 
   const configs = useLiveQuery(() => complectIDB.tb.alertLineConfigs.toArray());
   const [alertLine, setAlertLine] = complectIDB.use.broadcastAlertLine();
-  const [showAlertConfigId, setShowAlertConfigId] = useAtom(broadcastShowAlertLineConfigIdAtom);
+  const showAlertConfigId = useAtomValue(broadcastShowAlertLineConfigIdAtom);
 
   return (
     <>
@@ -40,7 +40,7 @@ export const AlertLineInput = () => {
             key={config.id}
             config={config}
             isSelected={showAlertConfigId === config.id}
-            onClick={() => setShowAlertConfigId(showAlertConfigId === config.id ? null : config.id)}
+            onClick={() => broadcastShowAlertLineConfigIdAtom.set(showAlertConfigId === config.id ? null : config.id)}
           />
         ))}
       </div>

@@ -6,20 +6,17 @@ export const CmComToolBroadcast = () => {
   const ccom = useCmComCurrent();
   const linkToCom = useCmComOpenComLinkRendererContext();
 
-  return (
-    ccom &&
-    linkToCom({
-      children: (
-        <CmComTool
-          title="Слайды"
-          icon="Computer"
-          onClick={cmBroadcastCurrentSlideiAtom.reset}
-        />
-      ),
-      search: {
-        comw: ccom.wid,
-        tran: '-!-',
-      },
-    })
-  );
+  return linkToCom({
+    children: (
+      <CmComTool
+        title="Слайды"
+        icon="Computer"
+        onClick={cmBroadcastCurrentSlideiAtom.reset}
+      />
+    ),
+    search: {
+      comw: ccom?.wid,
+      tran: '-!-',
+    },
+  });
 };

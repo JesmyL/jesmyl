@@ -1,12 +1,14 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
+import { useAtomValue } from 'atomaric';
 import React, { JSX, useEffect, useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
 import { Eventer } from 'shared/utils';
 import { bibleAllTranslates } from '../const/consts';
 import { BibleTranslatesContext } from '../contexts/translates';
-import { useBibleMyTranslates, useBibleShowTranslatesValue } from '../hooks/translates';
+import { useBibleShowTranslatesValue } from '../hooks/translates';
 import { BibleTranslate } from '../model/base';
+import { bibleMyTranslatesAtom } from './atoms';
 import { bibleTranslatesIDB } from './bibleIDB';
 
 interface Props {
@@ -15,7 +17,7 @@ interface Props {
 }
 export function BibleTranslatesContextProvider({ children, isSetAllTranslates }: Props): JSX.Element {
   const showTranslates = useBibleShowTranslatesValue();
-  const [myTranslates] = useBibleMyTranslates();
+  const myTranslates = useAtomValue(bibleMyTranslatesAtom);
   const [translates, setTranslates] = useState<BibleBookTranslates>(localTranslates);
   const watchTranslates = isSetAllTranslates ? myTranslates : showTranslates;
 

@@ -13,7 +13,7 @@ import { CmEditorEERulesWord, CmEditorEERulesWordSearchModalInner } from '$cm+ed
 import { cmEditorClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContainer';
-import { Atom, atom, useAtom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { EeStorePack } from 'shared/api';
 import { CmEditorEERulesListComputer } from './EERulesListComputer';
@@ -35,9 +35,9 @@ export const CmEditorEERulesPage = () => {
   isCheckBibleAtom ??= atom(false);
   isOpenSearchWordAtom ??= atom(false);
 
-  const [pageSize, setPageSize] = useAtom(pageSizeAtom);
-  const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
-  const [isCheckBible, setIsCheckBible] = useAtom(isCheckBibleAtom);
+  const pageSize = useAtomValue(pageSizeAtom);
+  const currentPage = useAtomValue(currentPageAtom);
+  const isCheckBible = useAtomValue(isCheckBibleAtom);
   const eeStoreRef = useActualRef(cmEditorIDB.useValue.eeStore());
 
   const [updates, setUpdates] = useState(0);
@@ -85,7 +85,7 @@ export const CmEditorEERulesPage = () => {
           <IconCheckbox
             postfix="включать библейские слова"
             checked={isCheckBible}
-            onChange={setIsCheckBible}
+            onChange={isCheckBibleAtom.set}
           />
           {isShowListComputer ? (
             <CmEditorEERulesListComputer
@@ -102,7 +102,7 @@ export const CmEditorEERulesPage = () => {
                     <Button
                       key={size}
                       disabled={pageSize === size}
-                      onClick={() => setPageSize(size)}
+                      onClick={() => pageSizeAtom.set(size)}
                     >
                       {size}
                     </Button>
@@ -114,7 +114,7 @@ export const CmEditorEERulesPage = () => {
                   %)
                 </Badge>
                 <Dropdown
-                  onSelect={({ id }) => setCurrentPage(id)}
+                  onSelect={({ id }) => currentPageAtom.set(id)}
                   items={Array(Math.ceil(listBox.list.length / pageSize))
                     .fill(0)
                     .map((_, page): DropdownItem<number> => {

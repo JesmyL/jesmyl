@@ -4,15 +4,22 @@ import { CmComTool } from '../ComTool';
 export const CmComToolSelected = () => {
   const ccom = useCmComCurrent();
   const { selectedComPosition } = useCmComSelectedList();
+  const selTitle = 'Выбрать песню';
+
+  if (ccom == null)
+    return (
+      <CmComTool
+        title={selTitle}
+        icon="CheckmarkBadge01"
+      />
+    );
 
   return (
-    ccom && (
-      <CmComTool
-        title={selectedComPosition(ccom.wid) ? 'Убрать из выбранных' : 'Выбрать песню'}
-        icon="CheckmarkBadge01"
-        iconKind={selectedComPosition(ccom.wid) ? 'SolidRounded' : 'StrokeRounded'}
-        onClick={() => cmComSelectedComwsAtom.do.toggle(ccom.wid)}
-      />
-    )
+    <CmComTool
+      title={selectedComPosition(ccom.wid) ? 'Убрать из выбранных' : selTitle}
+      icon="CheckmarkBadge01"
+      iconKind={selectedComPosition(ccom.wid) ? 'SolidRounded' : undefined}
+      onClick={() => cmComSelectedComwsAtom.do.toggle(ccom.wid)}
+    />
   );
 };

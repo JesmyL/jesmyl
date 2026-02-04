@@ -6,7 +6,7 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ChordVisibleVariant } from '$cm/shared/model';
 import { cmIDB } from '$cm/shared/state';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
-import { useAtom, useAtomValue } from 'atomaric';
+import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
@@ -17,7 +17,7 @@ import { useCmComToolMigratableList } from './lib/useMigratableComTools';
 
 export const CmComToolList = () => {
   const ccom = useCmComCurrentFixedCom();
-  const [fontSize, setFontSize] = useAtom(cmComFontSizeAtom);
+  const fontSize = useAtomValue(cmComFontSizeAtom);
   const chordVisibleVariant = useAtomValue(cmComChordVisibleVariantAtom);
   const comToolsNode = useCmComToolMigratableList();
   const ifixedCom = useLiveQuery(() => ccom && cmIDB.tb.fixedComs.get(ccom.wid), [ccom?.wid]);
@@ -75,12 +75,12 @@ export const CmComToolList = () => {
               className="minus"
               icon="MinusSign"
               disabled={fontSize <= minFontSize}
-              onClick={() => setFontSize(changeFontSize(-1))}
+              onClick={() => cmComFontSizeAtom.set(changeFontSize(-1))}
             />
 
             <Badge
               className={twMerge('min-w-13 flex justify-center bg-x2', fontSize < 0 ? 'text-x7' : 'text-x3')}
-              onClick={() => setFontSize(changeFontSize(0))}
+              onClick={() => cmComFontSizeAtom.set(changeFontSize(0))}
             >
               {fontSize < 0 ? 'auto' : fontSize}
             </Badge>
@@ -88,7 +88,7 @@ export const CmComToolList = () => {
               className="plus"
               icon="PlusSign"
               disabled={fontSize < 0 || fontSize >= maxFontSize}
-              onClick={() => setFontSize(changeFontSize(1))}
+              onClick={() => cmComFontSizeAtom.set(changeFontSize(1))}
             />
           </div>
         }

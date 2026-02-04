@@ -1,12 +1,12 @@
 import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useAtom } from 'atomaric';
+import { useAtomValue } from 'atomaric';
 import { memo } from 'react';
 import styled from 'styled-components';
 import { metronomeUserBpmAtom } from '../lib/atoms';
 
 export const MetronomeBpmInput = memo(function MetronomeBpmInput() {
-  const [userBpm, setUserBpm] = useAtom(metronomeUserBpmAtom);
+  const userBpm = useAtomValue(metronomeUserBpmAtom);
 
   return (
     <StyledBox className="flex gap-2 column">
@@ -14,20 +14,20 @@ export const MetronomeBpmInput = memo(function MetronomeBpmInput() {
         icon="MinusSignCircle"
         kind="BulkRounded"
         className="pointer"
-        onClick={() => setUserBpm(prev => prev - 1)}
+        onClick={() => metronomeUserBpmAtom.do.increment(-1)}
       />
 
       <StyledBpmInput
         type="tel"
         value={'' + userBpm}
-        onInput={value => setUserBpm(+value)}
+        onInput={value => metronomeUserBpmAtom.set(+value)}
       />
 
       <LazyIcon
         icon="PlusSignCircle"
         kind="BulkRounded"
         className="pointer"
-        onClick={() => setUserBpm(prev => prev + 1)}
+        onClick={() => metronomeUserBpmAtom.do.increment(1)}
       />
     </StyledBox>
   );

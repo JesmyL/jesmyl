@@ -1,6 +1,5 @@
 import { bibleTranslateFilter } from '$bible/shared/const/consts';
-import { useBibleMyTranslates, useBibleShowTranslates } from '$bible/shared/hooks/translates';
-import { bibleBookiAtom } from '$bible/shared/state/atoms';
+import { bibleBookiAtom, bibleMyTranslatesAtom, bibleShowTranslatesAtom } from '$bible/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
 import { JSX, memo } from 'react';
 import { twMerge } from 'tailwind-merge';
@@ -11,8 +10,8 @@ export const BibleTranslateModulesControl = memo(function BibleModules({
 }: {
   isHideEmptyBook?: boolean;
 }): JSX.Element {
-  const [myTranslates] = useBibleMyTranslates();
-  const [showTranslates, setShowTranslates] = useBibleShowTranslates();
+  const myTranslates = useAtomValue(bibleMyTranslatesAtom);
+  const showTranslates = useAtomValue(bibleShowTranslatesAtom);
   const booki = useAtomValue(bibleBookiAtom);
 
   return (
@@ -27,13 +26,13 @@ export const BibleTranslateModulesControl = memo(function BibleModules({
             className={twMerge('pointer', isShow && 'underline', showTranslates[0] === tName && 'text-x7')}
             onClick={event => {
               if (!event.ctrlKey) {
-                setShowTranslates([tName]);
+                bibleShowTranslatesAtom.set([tName]);
                 return;
               }
 
               if (isShow) {
-                if (showTranslates.length > 1) setShowTranslates(prev => prev.filter(name => name !== tName));
-              } else setShowTranslates(prev => [...prev, tName]);
+                if (showTranslates.length > 1) bibleShowTranslatesAtom.set(prev => prev.filter(name => name !== tName));
+              } else bibleShowTranslatesAtom.set(prev => [...prev, tName]);
             }}
           >
             {tName.toUpperCase()}

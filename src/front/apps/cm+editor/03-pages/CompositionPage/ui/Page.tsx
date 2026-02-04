@@ -88,7 +88,7 @@ export const CmEditorCompositionPage = ({
           {connectionNode}
           <TheIconButton
             icon="MusicNote03"
-            kind={isOpenPlayer ? 'SolidRounded' : 'StrokeRounded'}
+            kind={isOpenPlayer ? 'SolidRounded' : undefined}
             className="m-2"
             onClick={() => setIsOpenPlayer(!isOpenPlayer)}
           />
@@ -114,7 +114,6 @@ export const CmEditorCompositionPage = ({
                       isActive ? (
                         <TheIconButton
                           icon={icon}
-                          kind="StrokeRounded"
                           className="text-x7"
                         />
                       ) : (

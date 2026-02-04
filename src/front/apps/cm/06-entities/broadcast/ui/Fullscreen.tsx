@@ -8,7 +8,7 @@ import {
   useCmBroadcastScreenComNavigations,
   useCmBroadcastScreenComTextNavigations,
 } from '$cm/features/broadcast';
-import { Atom, atom, useAtom } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useReducer } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
@@ -21,7 +21,7 @@ export const CmBroadcastFullscreen = () => {
   isShowInfoAtom ??= atom(true);
 
   const [forceUpdates, forceUpdate] = useReducer(forceUpdater, 0);
-  const [isShowInfo, setIsShowInfo] = useAtom(isShowInfoAtom);
+  const isShowInfo = useAtomValue(isShowInfoAtom);
 
   const { text, nextSlide, prevSlide } = useCmBroadcastScreenComTextNavigations();
   const { nextCom, prevCom } = useCmBroadcastScreenComNavigations();
@@ -76,7 +76,7 @@ export const CmBroadcastFullscreen = () => {
           <LazyIcon
             icon="Cancel01"
             className="close-info-button pointer absolute top-(--half-safe-gap) right-(--half-safe-gap) opacity-0"
-            onClick={() => setIsShowInfo(false)}
+            onClick={() => isShowInfoAtom.set(false)}
           />
           <div
             className="bottom-area info-area bottom-(--safe-gap) left-(--safe-gap) pointer"

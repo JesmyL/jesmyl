@@ -1,12 +1,12 @@
 import { complectIDB } from '$index/shared/state';
 import { schLiveTsjrpcClient } from '$index/shared/tsjrpc';
-import { Atom, atom, useAtom } from 'atomaric';
+import { Atom, atom } from 'atomaric';
 import { IScheduleWidgetWid } from 'shared/api';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 import { BroadcastViewApp } from './Broadcast.model';
 
 let isCanShowTextBroadcastAtom: Atom<boolean>;
-export const useIsCanShowTextBroadcast = () => useAtom((isCanShowTextBroadcastAtom ??= atom(false)));
+export const takeIsCanShowTextBroadcastAtom = () => (isCanShowTextBroadcastAtom ??= atom(false));
 
 export const currentBroadcastConfigiAtom = atom(0);
 export const isBroadcastTextVisibleAtom = atom(true);

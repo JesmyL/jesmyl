@@ -10,7 +10,7 @@ import { CmEditorChordRedactableTrack } from '$cm+editor/entities/chord';
 import { cmEditorClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { CmChordCard, cmIDB } from '$cm/ext';
 import { useNavigate, useSearch } from '@tanstack/react-router';
-import { Atom, atom, useAtom } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { ChordPack, ChordTrack } from 'shared/api';
 import { correctChordRegs } from 'shared/utils/cm/com/const';
@@ -31,8 +31,8 @@ export const CmEditorChordPage = () => {
   const chords = cmIDB.useValue.chordPack();
   const [currentChordName, setCurrentChord] = useState(newChordName);
   const [isNewChord, setIsNewChord] = useState(!!newChordName);
-  const [redactableChords, updateRedactableChords] = useAtom(cmEditorChordRedactableChordsAtom);
-  const [chordsToSend, setChordsToSend] = useAtom(chordsToSendAtom);
+  const redactableChords = useAtomValue(cmEditorChordRedactableChordsAtom);
+  const chordsToSend = useAtomValue(chordsToSendAtom);
 
   const redactableChord: ChordTrack = redactableChords[currentChordName];
   const isExists = chords[currentChordName];
@@ -45,7 +45,7 @@ export const CmEditorChordPage = () => {
       while (realTrack.at(-1) === 0) realTrack.pop();
       if (!mylib.isEq(chords[chordName], realTrack)) value[chordName] = realTrack as ChordTrack;
     });
-    setChordsToSend(value);
+    chordsToSendAtom.set(value);
   };
 
   useEffect(() => {
@@ -76,7 +76,7 @@ export const CmEditorChordPage = () => {
       [currentChordName]: JSON.parse(JSON.stringify(track)).map((point: number) => point || 0),
     } as ChordPack;
 
-    updateRedactableChords(newRedactableChords);
+    cmEditorChordRedactableChordsAtom.set(newRedactableChords);
 
     setExecution(newRedactableChords);
   };
@@ -99,8 +99,8 @@ export const CmEditorChordPage = () => {
               confirm={`Отправить аккорды ${mylib.keys(chordsToSend).join('; ')} ?`}
               onClick={async () => {
                 await cmEditorClientTsjrpcMethods.setChords({ chords: chordsToSend });
-                setChordsToSend({});
-                updateRedactableChords({});
+                chordsToSendAtom.set({});
+                cmEditorChordRedactableChordsAtom.set({});
               }}
             />
           </div>
@@ -177,17 +177,17 @@ export const CmEditorChordPage = () => {
                         setNewNameError('');
                         setCurrentChord(newChordName);
                         newRedacts[newChordName] = [0];
-                        updateRedactableChords(newRedacts);
+                        cmEditorChordRedactableChordsAtom.set(newRedacts);
                       } else if (redactableChord) {
                         setIsNewChord(false);
                         setNewNameError('');
                         if (!isExists) setCurrentChord('');
                         navigate({ to: '.', search: { newChordName: '' } });
                         delete newRedacts[currentChordName];
-                        updateRedactableChords(newRedacts);
+                        cmEditorChordRedactableChordsAtom.set(newRedacts);
                       } else if (chords) {
                         newRedacts[currentChordName] = chords[currentChordName];
-                        updateRedactableChords(newRedacts);
+                        cmEditorChordRedactableChordsAtom.set(newRedacts);
                       }
                       setExecution(newRedacts);
                     }}
