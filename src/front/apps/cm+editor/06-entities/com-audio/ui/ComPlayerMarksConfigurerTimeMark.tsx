@@ -5,7 +5,8 @@ import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import {
   checkIsCmComAudioMarkTitleIsLineSelector,
-  cmComAudioPlayerHTMLElement,
+  cmComAudioPlayerSwitchIsPlay,
+  cmComAudioPlayerUpdateCurrentTime,
   cmIDB,
   makeCmComAudioMarkTitleBySelector,
 } from '$cm/ext';
@@ -44,8 +45,8 @@ export const CmEditorComAudioMarksConfigurerTimeMark = ({ selector, time, src, c
         <Button
           icon="Play"
           onClick={() => {
-            cmComAudioPlayerHTMLElement.currentTime = time;
-            cmComAudioPlayerHTMLElement.play();
+            cmComAudioPlayerUpdateCurrentTime(time);
+            cmComAudioPlayerSwitchIsPlay(true);
           }}
         />
         <TextInput

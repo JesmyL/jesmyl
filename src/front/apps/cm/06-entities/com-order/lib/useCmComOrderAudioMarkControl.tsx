@@ -1,7 +1,11 @@
 import { Button } from '#shared/components/ui/button';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { MyLib, mylib } from '#shared/lib/my-lib';
-import { cmComAudioPlayerHTMLElement, cmComAudioPlayerPlaySrcAtom } from '$cm/entities/com-audio-player';
+import {
+  cmComAudioPlayerPlaySrcAtom,
+  cmComAudioPlayerSwitchIsPlay,
+  cmComAudioPlayerUpdateCurrentTime,
+} from '$cm/entities/com-audio-player';
 import { CmCom, makeCmComAudioMarkTitleBySelector } from '$cm/ext';
 import { cmIDB } from '$cm/shared/state';
 import { Atom, useAtomValue } from 'atomaric';
@@ -69,8 +73,8 @@ export const useCmComOrderAudioMarkControlButtons = (
               className={className}
               onClick={event => {
                 event.stopPropagation();
-                cmComAudioPlayerHTMLElement.currentTime = +time - takeMinusTime();
-                cmComAudioPlayerHTMLElement.play();
+                cmComAudioPlayerUpdateCurrentTime(+time - takeMinusTime());
+                cmComAudioPlayerSwitchIsPlay(true);
               }}
             >
               <span className={className ?? 'text-x3'}>{titleProps.title}</span>
@@ -98,8 +102,8 @@ export const useCmComOrderAudioMarkControlButtons = (
             className={className}
             onClick={event => {
               event.stopPropagation();
-              cmComAudioPlayerHTMLElement.currentTime = +time - takeMinusTime();
-              cmComAudioPlayerHTMLElement.play();
+              cmComAudioPlayerUpdateCurrentTime(+time - takeMinusTime());
+              cmComAudioPlayerSwitchIsPlay(true);
             }}
           />,
           +time,

@@ -1,6 +1,10 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { useCmComLaterList } from '$cm/entities/com';
-import { cmComAudioPlayerIsPlayAtom, cmComAudioPlayerPlaySrcAtom } from '$cm/entities/com-audio-player';
+import {
+  cmComAudioPlayerGetSrc,
+  cmComAudioPlayerIsPlayAtom,
+  cmComAudioPlayerSetSrc,
+} from '$cm/entities/com-audio-player';
 import { CmCom } from '$cm/ext';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useEffect, useRef } from 'react';
@@ -22,8 +26,8 @@ export const useCmComCompositionControls = (ccom: CmCom | nil) => {
   }, [addLaterComw, ccom?.wid]);
 
   useEffect(() => {
-    if (!cmComAudioPlayerIsPlayAtom.get() && !ccom?.audio.includes(cmComAudioPlayerPlaySrcAtom.get()!)) {
-      if (ccom?.audio[0]) cmComAudioPlayerPlaySrcAtom.set(ccom.audio[0]);
+    if (!cmComAudioPlayerIsPlayAtom.get() && !ccom?.audio.includes(cmComAudioPlayerGetSrc()!)) {
+      if (ccom?.audio[0]) cmComAudioPlayerSetSrc(ccom.audio[0]);
     }
   }, [ccom?.audio]);
 

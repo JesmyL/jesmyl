@@ -1,12 +1,12 @@
 import { mylib } from '#shared/lib/my-lib';
-import { cmComAudioPlayerHTMLElement } from '$cm/ext';
+import { takeCmComAudioPlayerCurrentTime } from '$cm/ext';
 
 export const takeCmComTrackCurrentTimeMark = (
   timeMarks: number[],
   timePositions$: Record<'prev' | 'current' | 'next' | 'preprev', number> | nil,
   extraTime = 0,
 ) => {
-  const pivotTime = cmComAudioPlayerHTMLElement.currentTime + (extraTime < 0 ? 0 : extraTime);
+  const pivotTime = takeCmComAudioPlayerCurrentTime() + (extraTime < 0 ? 0 : extraTime);
   const currentMarkTimei = mylib.binarySearch(timeMarks, (time, timei, compare) => {
     return time < pivotTime && (timeMarks[timei + 1] == null || timeMarks[timei + 1] > pivotTime)
       ? compare.eq

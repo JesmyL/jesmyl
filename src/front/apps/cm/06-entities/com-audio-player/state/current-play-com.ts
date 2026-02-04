@@ -1,7 +1,8 @@
+import { addEventListenerPipe } from '#shared/lib/hookEffectPipe';
 import { atom, useAtomValue } from 'atomaric';
 import { HttpLink } from 'shared/api';
 
-export const cmComAudioPlayerHTMLElement = document.createElement('audio');
+const audioElement = document.createElement('audio');
 
 const comPlayerDurationAtom = atom(0.01);
 const comPlayerCurrentTimeAtom = atom(0);
@@ -10,21 +11,9 @@ export const cmComAudioPlayerPlaySrcAtom = atom<HttpLink | null>(null);
 export const cmComAudioPlayerEndedTickAtom = atom(false);
 export const cmComAudioPlayerErrorTickAtom = atom(false);
 export const cmComAudioPlayerIsPlayAtom = atom(false);
-export const cmComAudioPlayerIsUserSlideTrackDTO = { isSlide: false };
 
 export const useCmComAudioPlayerDuration = () => useAtomValue(comPlayerDurationAtom);
 export const useCmComAudioPlayerCurrentTime = () => useAtomValue(comPlayerCurrentTimeAtom);
-
-cmComAudioPlayerPlaySrcAtom.subscribe(src => {
-  cmComAudioPlayerIsPlayAtom.set(false);
-  cmComAudioPlayerHTMLElement.currentTime = 0;
-  cmComAudioPlayerHTMLElement.src = src!;
-});
-
-cmComAudioPlayerIsPlayAtom.subscribe(isPlay => {
-  if (isPlay) cmComAudioPlayerHTMLElement.play();
-  else cmComAudioPlayerHTMLElement.pause();
-});
 
 cmComAudioPlayerEndedTickAtom.subscribe(isEnd => {
   if (isEnd) setTimeout(cmComAudioPlayerEndedTickAtom.set, 0, false);
@@ -36,30 +25,60 @@ cmComAudioPlayerErrorTickAtom.subscribe(isEnd => {
 
 // audio listeners
 
-cmComAudioPlayerHTMLElement.addEventListener('durationchange', () => {
-  comPlayerDurationAtom.set(cmComAudioPlayerHTMLElement.duration);
+audioElement.addEventListener('durationchange', () => {
+  comPlayerDurationAtom.set(audioElement.duration);
 });
 
-cmComAudioPlayerHTMLElement.addEventListener('ended', () => {
-  comPlayerCurrentTimeAtom.set(0);
+audioElement.addEventListener('ended', () => {
+  cmComAudioPlayerUpdateCurrentTime(0);
   cmComAudioPlayerIsPlayAtom.set(false);
+
   cmComAudioPlayerEndedTickAtom.set(true);
 });
 
-cmComAudioPlayerHTMLElement.addEventListener('error', () => {
+audioElement.addEventListener('error', () => {
   cmComAudioPlayerErrorTickAtom.set(true);
 });
 
-cmComAudioPlayerHTMLElement.addEventListener('timeupdate', () => {
-  comPlayerCurrentTimeAtom.set(cmComAudioPlayerHTMLElement.currentTime);
+audioElement.addEventListener('timeupdate', () => {
+  comPlayerCurrentTimeAtom.set(audioElement.currentTime);
 });
 
-cmComAudioPlayerHTMLElement.addEventListener('pause', () => {
-  if (cmComAudioPlayerIsUserSlideTrackDTO.isSlide) return;
-  cmComAudioPlayerIsPlayAtom.set(false);
-});
+// methods
 
-cmComAudioPlayerHTMLElement.addEventListener('play', () => {
-  if (cmComAudioPlayerIsUserSlideTrackDTO.isSlide) return;
-  cmComAudioPlayerIsPlayAtom.set(true);
-});
+export const cmComAudioPlayerUpdateCurrentTime = (time: number) => (audioElement.currentTime = time);
+export const takeCmComAudioPlayerCurrentTime = () => audioElement.currentTime;
+
+export const cmComAudioPlayerUpdatePlaybackRate = (playbackRate: number) => {
+  audioElement.playbackRate = playbackRate;
+};
+
+export const cmComAudioPlayerAddEventListenerPipe = <
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Listener extends typeof addEventListenerPipe<HTMLAudioElement, any, any>,
+>(
+  eventName: Parameters<Listener>[1],
+  callback: Parameters<Listener>[2],
+) => {
+  return addEventListenerPipe(audioElement, eventName, callback);
+};
+
+export const cmComAudioPlayerGetSrc = () => cmComAudioPlayerPlaySrcAtom.get();
+export const cmComAudioPlayerSetSrc = (src: HttpLink | null) => {
+  if (cmComAudioPlayerPlaySrcAtom.get() === src) return;
+
+  cmComAudioPlayerUpdateCurrentTime(0);
+  cmComAudioPlayerSwitchIsPlay(false);
+  audioElement.src = src!;
+
+  setTimeout(cmComAudioPlayerPlaySrcAtom.set, 0, src);
+};
+
+export const cmComAudioPlayerSwitchIsPlay = (isPlay: boolean = audioElement.paused) => {
+  if (audioElement.paused ? !isPlay : isPlay) return;
+
+  cmComAudioPlayerIsPlayAtom.set(isPlay);
+
+  if (isPlay) audioElement.play();
+  else audioElement.pause();
+};

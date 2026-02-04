@@ -13,8 +13,10 @@ export {
 } from '$cm/entities/com';
 export {
   CmComAudioPlayer,
-  cmComAudioPlayerHTMLElement,
   cmComAudioPlayerIsPlayAtom,
+  cmComAudioPlayerSwitchIsPlay,
+  cmComAudioPlayerUpdateCurrentTime,
+  takeCmComAudioPlayerCurrentTime,
 } from '$cm/entities/com-audio-player';
 export { CmComAudioPlayerMarksMovers } from '$cm/entities/com-audio-player/ui/ComPlayerMarksMovers';
 export { useCmComCommentBlockCss } from '$cm/entities/com-comment';

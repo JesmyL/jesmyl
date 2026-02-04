@@ -16,11 +16,11 @@ import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/shared/state/com'
 import {
   ChordVisibleVariant,
   CmComAudioPlayer,
-  cmComAudioPlayerHTMLElement,
   CmComAudioPlayerMarksMovers,
   CmComOrderLine,
   CmComOrderList,
   cmIDB,
+  takeCmComAudioPlayerCurrentTime,
   useCmComCommentBlockCss,
   useCmComOrderAudioMarkControlButtons,
 } from '$cm/ext';
@@ -122,12 +122,12 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                         <Button
                           icon="PlusSign"
                           onClick={() => {
-                            if (editSrc == null || cmComAudioPlayerHTMLElement.currentTime < 0.001) {
+                            if (editSrc == null || takeCmComAudioPlayerCurrentTime() < 0.001) {
                               toast('Песня не воспроизводилась', makeToastKOMoodConfig());
                               return;
                             }
 
-                            let fixedTime: CmComAudioMarkPackTime = +cmComAudioPlayerHTMLElement.currentTime.toFixed(2);
+                            let fixedTime: CmComAudioMarkPackTime = +takeCmComAudioPlayerCurrentTime().toFixed(2);
                             if (Math.trunc(fixedTime) === fixedTime) fixedTime += 0.11;
 
                             cmComEditorAudioMarksEditPacksAtom.do.putMarks(ccom.wid, editSrc, {
@@ -202,13 +202,12 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                             <Button
                               icon="PlusSign"
                               onClick={() => {
-                                if (editSrc == null || cmComAudioPlayerHTMLElement.currentTime < 0.001) {
+                                if (editSrc == null || takeCmComAudioPlayerCurrentTime() < 0.001) {
                                   toast('Песня не воспроизводилась', makeToastKOMoodConfig());
                                   return;
                                 }
 
-                                let fixedTime: CmComAudioMarkPackTime =
-                                  +cmComAudioPlayerHTMLElement.currentTime.toFixed(2);
+                                let fixedTime: CmComAudioMarkPackTime = +takeCmComAudioPlayerCurrentTime().toFixed(2);
                                 if (Math.trunc(fixedTime) === fixedTime) fixedTime += 0.11;
 
                                 cmComEditorAudioMarksEditPacksAtom.do.putMarks(ccom.wid, editSrc, {

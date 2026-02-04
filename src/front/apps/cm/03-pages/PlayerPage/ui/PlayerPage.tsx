@@ -9,9 +9,9 @@ import { useCmCom } from '$cm/entities/com';
 import {
   cmComAudioPlayerEndedTickAtom,
   cmComAudioPlayerErrorTickAtom,
-  cmComAudioPlayerIsPlayAtom,
   CmComAudioPlayerPlayButton,
-  cmComAudioPlayerPlaySrcAtom,
+  cmComAudioPlayerSetSrc,
+  cmComAudioPlayerSwitchIsPlay,
   CmComAudioPlayerTrack,
 } from '$cm/entities/com-audio-player';
 import { CmComFaceList } from '$cm/entities/com-face';
@@ -75,8 +75,8 @@ export const CmPlayerPage = () => {
 
     if (src) {
       cmComLastOpenComwAtom.set(com.wid);
-      cmComAudioPlayerPlaySrcAtom.set(src);
-      if (isCanPlay) cmComAudioPlayerIsPlayAtom.set(true);
+      cmComAudioPlayerSetSrc(src);
+      if (isCanPlay) cmComAudioPlayerSwitchIsPlay(true);
       return;
     }
 
@@ -110,13 +110,13 @@ export const CmPlayerPage = () => {
         const nextCom = findNextCom(search.comw, coms);
         if (nextCom == null) return search as never;
 
-        cmComAudioPlayerPlaySrcAtom.set(nextCom.audio[0]);
+        cmComAudioPlayerSetSrc(nextCom.audio[0]);
 
         return { ...(search as object), comw: nextCom.wid };
       },
     });
 
-    if (isCanPlay) return setTimeoutEffect(cmComAudioPlayerIsPlayAtom.set, 1000, true);
+    if (isCanPlay) return setTimeoutEffect(cmComAudioPlayerSwitchIsPlay, 1000, true);
   }, [coms, navigate, endedTick, errorTick]);
 
   return (
@@ -164,7 +164,7 @@ export const CmPlayerPage = () => {
             importantOnClick={({ defaultClick }) => {
               isCanPlay = true;
               defaultClick();
-              cmComAudioPlayerIsPlayAtom.do.toggle();
+              cmComAudioPlayerSwitchIsPlay();
             }}
             comDescription={
               !isMobileDevice
@@ -184,8 +184,8 @@ export const CmPlayerPage = () => {
                           }
 
                           cmPlayerBroadcastComwAtom.set(com.wid);
-                          cmComAudioPlayerPlaySrcAtom.set(src);
                           cmPlayerBroadcastAudioSrcAtom.set(src);
+                          cmComAudioPlayerSetSrc(src);
 
                           navigate({ to: '.', search: { comw: com.wid } });
 

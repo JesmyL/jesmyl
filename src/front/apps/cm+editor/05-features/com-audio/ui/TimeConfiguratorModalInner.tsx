@@ -8,8 +8,9 @@ import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/shared/state/com';
 import {
-  cmComAudioPlayerHTMLElement,
   cmComAudioPlayerIsPlayAtom,
+  cmComAudioPlayerSwitchIsPlay,
+  cmComAudioPlayerUpdateCurrentTime,
   cmIDB,
   makeCmComAudioMarkTitleBySelector,
 } from '$cm/ext';
@@ -52,9 +53,9 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
 
       if (+result < 0) return prev;
 
-      cmComAudioPlayerHTMLElement.pause();
-      cmComAudioPlayerHTMLElement.currentTime = +result;
-      setTimeout(() => cmComAudioPlayerHTMLElement.play(), 500);
+      cmComAudioPlayerSwitchIsPlay(false);
+      cmComAudioPlayerUpdateCurrentTime(+result);
+      setTimeout(cmComAudioPlayerSwitchIsPlay, 500, true);
 
       return +result;
     });
@@ -89,8 +90,8 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
           <Button
             icon="PlayCircle"
             onClick={() => {
-              cmComAudioPlayerHTMLElement.currentTime = currentTime;
-              cmComAudioPlayerHTMLElement.play();
+              cmComAudioPlayerUpdateCurrentTime(currentTime);
+              cmComAudioPlayerSwitchIsPlay(true);
             }}
           />
           <div>

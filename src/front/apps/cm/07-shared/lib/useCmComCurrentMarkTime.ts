@@ -1,5 +1,5 @@
-import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { cmComAudioPlayerHTMLElement } from '$cm/ext';
+import { hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { cmComAudioPlayerAddEventListenerPipe } from '$cm/entities/com-audio-player';
 import { useEffect, useState } from 'react';
 import { CmComAudioMarkPackTime } from 'shared/api';
 import { cmComTrackPreSwitchTimeAtom } from '../state';
@@ -13,7 +13,7 @@ export const useCmComCurrentMarkTimei = (markTimes: CmComAudioMarkPackTime[]) =>
 
     return hookEffectPipe()
       .pipe(
-        addEventListenerPipe(cmComAudioPlayerHTMLElement, 'timeupdate', () => {
+        cmComAudioPlayerAddEventListenerPipe('timeupdate', () => {
           const currentMarkTimei = takeCmComTrackCurrentTimeMark(
             markTimes,
             undefined,

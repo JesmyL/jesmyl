@@ -3,10 +3,10 @@ import { mylib } from '#shared/lib/my-lib';
 import { useAtomValue } from 'atomaric';
 import { HttpLink } from 'shared/api';
 import {
-  cmComAudioPlayerHTMLElement,
-  cmComAudioPlayerIsPlayAtom,
-  cmComAudioPlayerIsUserSlideTrackDTO,
   cmComAudioPlayerPlaySrcAtom,
+  cmComAudioPlayerSwitchIsPlay,
+  cmComAudioPlayerUpdateCurrentTime,
+  cmComAudioPlayerUpdatePlaybackRate,
   useCmComAudioPlayerCurrentTime,
   useCmComAudioPlayerDuration,
 } from '../state/current-play-com';
@@ -41,11 +41,11 @@ const TimeRender = ({ time }: { time: React.ReactNode }) => {
       onTouchStart={event => {
         event.preventDefault();
         clearTimeout(playbackRateTimeout);
-        playbackRateTimeout = setTimeout(() => (cmComAudioPlayerHTMLElement.playbackRate = 2), 100);
+        playbackRateTimeout = setTimeout(() => cmComAudioPlayerUpdatePlaybackRate(2), 100);
       }}
       onTouchEnd={() => {
         clearTimeout(playbackRateTimeout);
-        cmComAudioPlayerHTMLElement.playbackRate = 1;
+        cmComAudioPlayerUpdatePlaybackRate(1);
       }}
     >
       {time}
@@ -75,18 +75,12 @@ const Track = (props: { currentTime: number; duration: number; time: React.React
         step={1}
         max={props.duration}
         disabled={props.duration < 2}
-        onValueChange={([value]) => {
-          cmComAudioPlayerIsPlayAtom.set(false);
-          cmComAudioPlayerIsUserSlideTrackDTO.isSlide = true;
+        onValueChange={times => {
+          cmComAudioPlayerSwitchIsPlay(false);
           clearTimeout(userChangeTimeout);
-          userChangeTimeout = setTimeout(() => {
-            cmComAudioPlayerIsUserSlideTrackDTO.isSlide = false;
-            cmComAudioPlayerIsPlayAtom.set(true);
-          }, 300);
+          userChangeTimeout = setTimeout(cmComAudioPlayerSwitchIsPlay, 300, true);
 
-          const time = value as number;
-
-          cmComAudioPlayerHTMLElement.currentTime = time;
+          cmComAudioPlayerUpdateCurrentTime(times[0]);
         }}
       />
       {props.time}

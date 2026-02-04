@@ -2,7 +2,12 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useAtomValue } from 'atomaric';
 import { HttpLink } from 'shared/api';
 import { twMerge } from 'tailwind-merge';
-import { cmComAudioPlayerIsPlayAtom, cmComAudioPlayerPlaySrcAtom } from '../state/current-play-com';
+import {
+  cmComAudioPlayerIsPlayAtom,
+  cmComAudioPlayerPlaySrcAtom,
+  cmComAudioPlayerSetSrc,
+  cmComAudioPlayerSwitchIsPlay,
+} from '../state/current-play-com';
 
 interface Props {
   className?: string;
@@ -21,8 +26,8 @@ export const CmComAudioPlayerPlayButton = ({ src, className }: Props) => {
       className={twMerge('pointer', isOtherPlaySrc && 'text-x5', className)}
       withoutAnimation
       onClick={() => {
-        cmComAudioPlayerPlaySrcAtom.set(src);
-        cmComAudioPlayerIsPlayAtom.do.toggle();
+        cmComAudioPlayerSetSrc(src);
+        cmComAudioPlayerSwitchIsPlay();
       }}
     />
   );

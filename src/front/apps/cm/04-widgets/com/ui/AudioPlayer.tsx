@@ -2,6 +2,7 @@ import { hideAppFooterAtom } from '#basis/state/hideAppFooterAtom';
 import {
   cmComAudioPlayerIsPlayAtom,
   cmComAudioPlayerPlaySrcAtom,
+  cmComAudioPlayerSetSrc,
   CmComAudioPlayerWithMarks,
 } from '$cm/entities/com-audio-player';
 import { cmComIsAudioPlayerHiddenAtom } from '$cm/entities/index';
@@ -18,7 +19,7 @@ export const CmComAudioPlayerInCompositionPage = ({ ccom }: { ccom: CmCom }) => 
   const isPlayOtherAudio = !!playSrc && !ccom.audio.includes(playSrc);
 
   useEffect(() => {
-    if (!isPlay && isPlayOtherAudio) cmComAudioPlayerPlaySrcAtom.set(ccom.audio[0]);
+    if (!isPlay && isPlayOtherAudio) cmComAudioPlayerSetSrc(ccom.audio[0]);
   }, [ccom.audio, isPlay, isPlayOtherAudio]);
 
   return (

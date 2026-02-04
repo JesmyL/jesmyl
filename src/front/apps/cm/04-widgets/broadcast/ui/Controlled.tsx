@@ -12,7 +12,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useCmComCurrent, useCmComOpenComLinkRendererContext } from '$cm/entities/com';
 import {
   CmComAudioPlayerPlayButton,
-  cmComAudioPlayerPlaySrcAtom,
+  cmComAudioPlayerSetSrc,
   CmComAudioPlayerTrack,
 } from '$cm/entities/com-audio-player';
 import { CmComFaceList } from '$cm/entities/com-face';
@@ -68,7 +68,7 @@ export function CmBroadcastControlled(props: Props) {
       if (pack != null) return;
 
       cmPlayerBroadcastComwAtom.reset();
-      cmComAudioPlayerPlaySrcAtom.reset();
+      cmComAudioPlayerSetSrc(null);
       cmPlayerBroadcastAudioSrcAtom.reset();
       toast('Для этого трека маркеры не установлены', makeToastKOMoodConfig());
     });
@@ -79,7 +79,7 @@ export function CmBroadcastControlled(props: Props) {
     });
 
     cmPlayerBroadcastComwAtom.set(comw);
-    cmComAudioPlayerPlaySrcAtom.set(src);
+    cmComAudioPlayerSetSrc(src);
     cmPlayerBroadcastAudioSrcAtom.set(src);
 
     watchBroadcast();

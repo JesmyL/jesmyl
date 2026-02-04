@@ -4,7 +4,6 @@ import {
   CmCom,
   CmComOrder,
   checkIsCmComAudioMarkTitleIsLineSelector,
-  cmComAudioPlayerHTMLElement,
   cmIDB,
   makeCmComAudioMarkTitleBySelector,
 } from '$cm/ext';
@@ -14,7 +13,14 @@ import { useAtomValue } from 'atomaric';
 import { useEffect, useRef } from 'react';
 import { CmComAudioMarkPackTime, HttpLink } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
-import { cmComAudioPlayerPlaySrcAtom } from '../state/current-play-com';
+import {
+  cmComAudioPlayerAddEventListenerPipe,
+  cmComAudioPlayerPlaySrcAtom,
+  cmComAudioPlayerSetSrc,
+  cmComAudioPlayerSwitchIsPlay,
+  cmComAudioPlayerUpdateCurrentTime,
+  takeCmComAudioPlayerCurrentTime,
+} from '../state/current-play-com';
 
 const currentAccentClassName = 'text-x7';
 const windowDocument = window.document;
@@ -53,8 +59,8 @@ export const useCmComAudioPlayerMoversController = (
         : () => {
             const actualMarkTime: CmComAudioMarkPackTime =
               preSwitchTime !== 0 &&
-              cmComAudioPlayerHTMLElement.currentTime < timePositions$.next &&
-              cmComAudioPlayerHTMLElement.currentTime > timePositions$.next - preSwitchTime
+              takeCmComAudioPlayerCurrentTime() < timePositions$.next &&
+              takeCmComAudioPlayerCurrentTime() > timePositions$.next - preSwitchTime
                 ? timePositions$.next
                 : timePositions$.current;
 
@@ -109,27 +115,28 @@ export const useCmComAudioPlayerMoversController = (
     };
 
     updatePoints();
-    cmComAudioPlayerPlaySrcAtom.set(src);
+    cmComAudioPlayerSetSrc(src);
 
     return hookEffectPipe()
       .pipe(
         addEventListenerPipe(prevRef.current, 'click', () => {
-          cmComAudioPlayerHTMLElement.play();
+          cmComAudioPlayerSwitchIsPlay(true);
 
-          cmComAudioPlayerHTMLElement.currentTime =
-            Math.abs(timePositions$.current - timePositions$.prev) < 1 ? timePositions$.preprev : timePositions$.prev;
+          cmComAudioPlayerUpdateCurrentTime(
+            Math.abs(timePositions$.current - timePositions$.prev) < 1 ? timePositions$.preprev : timePositions$.prev,
+          );
         }),
         addEventListenerPipe(repeatRef.current, 'click', () => {
-          cmComAudioPlayerHTMLElement.play();
-          cmComAudioPlayerHTMLElement.currentTime = timePositions$.current;
+          cmComAudioPlayerSwitchIsPlay(true);
+          cmComAudioPlayerUpdateCurrentTime(timePositions$.current);
         }),
         addEventListenerPipe(nextRef.current, 'click', () => {
-          cmComAudioPlayerHTMLElement.play();
-          cmComAudioPlayerHTMLElement.currentTime = timePositions$.next;
+          cmComAudioPlayerSwitchIsPlay(true);
+          cmComAudioPlayerUpdateCurrentTime(timePositions$.next);
         }),
-        addEventListenerPipe(cmComAudioPlayerHTMLElement, 'timeupdate', updatePoints),
-        addEventListenerPipe(cmComAudioPlayerHTMLElement, 'ended', () => {
-          cmComAudioPlayerHTMLElement.currentTime = 0;
+        cmComAudioPlayerAddEventListenerPipe('timeupdate', updatePoints),
+        cmComAudioPlayerAddEventListenerPipe('ended', () => {
+          cmComAudioPlayerUpdateCurrentTime(0);
           updatePoints();
         }),
       )
