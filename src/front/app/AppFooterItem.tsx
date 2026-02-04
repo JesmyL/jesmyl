@@ -13,14 +13,15 @@ interface Props {
   children?: React.ReactNode;
 }
 
-export function AppFooterItem({ to, icon, title, className, children, idPostfix: id }: Props) {
+export function AppFooterItem({ to, icon, title, className, children, idPostfix }: Props) {
   const place = useCurrentAppFooterItemPlaceContext();
   const isActive = to === place || `${to}/` === place;
+  const linkTo = !isActive && place ? FooterPlacementManager.makePlaceLink(to) : to;
 
   return (
     <div
-      id={`footer-button-${id}`}
-      link-to={!isActive && place ? FooterPlacementManager.makePlaceLink(to) : to}
+      id={`footer-button-${idPostfix}`}
+      link-to={linkTo}
       className={twMerge(
         'footer-item relative z-10 pointer px-3 py-1 min-w-17 h-(--item-s) flex flex-col text-sm',
         isActive && 'active bg-x2 rounded-full',

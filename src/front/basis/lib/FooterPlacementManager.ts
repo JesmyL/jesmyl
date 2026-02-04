@@ -32,6 +32,16 @@ export class FooterPlacementManager {
   };
 
   static makePlaceLink = (to: string): keyof FileRoutesByPath => {
-    return (localStorage.getItem(placeLsPrefix + to) ?? localStorage.getItem(placeLsPrefix + `${to}/`) ?? to) as never;
+    const lsPath = localStorage.getItem(`${placeLsPrefix}${to}`);
+
+    if (lsPath != null) {
+      return (
+        lsPath.startsWith(to) || lsPath.startsWith(`${to.slice(0, -1)}?`) || lsPath.startsWith(`${to.slice(0, -1)}#`)
+          ? lsPath
+          : to
+      ) as never;
+    }
+
+    return to as never;
   };
 }
