@@ -11,21 +11,31 @@ class EffectPipeMember {
 type Elem = HTMLElement | typeof globalThis | Window | nil;
 type EventListenerOptions = Parameters<(typeof window)['addEventListener']>[2];
 
+type EventMapForElement<T extends Elem> = T extends HTMLElement
+  ? HTMLElementEventMap
+  : T extends Window
+    ? WindowEventMap
+    : T extends typeof globalThis
+      ? Record<string, any>
+      : never;
+
 export const addEventListenerPipe = <
-  EventName extends keyof HTMLElementEventMap,
-  Event extends HTMLElementEventMap[EventName],
+  T extends NonNullable<Elem>,
+  EventName extends keyof EventMapForElement<T>,
+  Event extends EventMapForElement<T>[EventName],
 >(
-  elem: Elem,
+  elem: T | nil,
   eventName: EventName,
   callback: ((event: Event) => void) | nil,
   options?: EventListenerOptions,
 ) => {
-  if (callback == null) return;
+  if (callback == null || elem == null) return;
 
-  if (elem == null) return new EffectPipeMember(() => {});
-  elem.addEventListener(eventName, callback as never, options);
+  elem.addEventListener(eventName as never, callback as never, options);
 
-  return new EffectPipeMember(() => elem.removeEventListener(eventName, callback as never, options));
+  return new EffectPipeMember(() => {
+    elem.removeEventListener(eventName as never, callback as never, options);
+  });
 };
 
 export const addEventListenerWithDelayPipe = <
