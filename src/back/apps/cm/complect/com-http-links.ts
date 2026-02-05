@@ -14,6 +14,7 @@ const numLeadToHttpLinks: Record<HttpNumLeadLinkKey, HttpLink> = {
 };
 
 const httpToNumLeadLinks: Record<HttpLink, HttpNumLeadLinkKey> = {};
+const timeSeparator = '~~';
 
 SMyLib.entries(numLeadToHttpLinks)
   .sort((a, b) => b[1].length - a[1].length)
@@ -29,7 +30,7 @@ export const makeCmComNumLeadLinkFromHttp = (httpLink: HttpLink): HttpNumLeadLin
         const [firstRoute, routePostfix] = linkPostfix.split('/', 2);
 
         if (routePostfix.startsWith(firstRoute)) {
-          linkPostfix = `${firstRoute}//${linkPostfix.slice(firstRoute.length * 2 + 1)}`;
+          linkPostfix = `${firstRoute}${timeSeparator}${linkPostfix.slice(firstRoute.length * 2 + 1)}`;
         }
       }
 
@@ -49,7 +50,8 @@ export const makeCmComHttpLinkFromNumLead = (numLeadLink: HttpNumLeadLink): Http
   let postfix = numLeadLink.slice(prefix.length);
 
   if (prefix === '1~') {
-    const [firstRoute, routePostfix] = postfix.split('//', 2);
+    const [firstRoute, routePostfix] = postfix.split(timeSeparator);
+
     if (routePostfix != null) {
       postfix = `${firstRoute}/${firstRoute}${routePostfix}`;
     }
