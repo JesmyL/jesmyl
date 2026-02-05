@@ -9,6 +9,7 @@ import { questionerUserServerTsjrpcBase } from './apps/q/tsjrpc/user.tsjrpc.base
 import { storagesServerTsjrpcBase } from './apps/storages/tsjrpc.base';
 import { sokiServer } from './complect/soki/SokiServer';
 import { baseMessagesCatcher } from './sides/telegram-bot/complect/message-catchers';
+import { startExpressRouting } from './startExpressRouting';
 
 sokiServer.start();
 
@@ -25,3 +26,5 @@ baseMessagesCatcher.register();
 scheduleWidgetMessageCatcher.register();
 
 startCrTgAlarm();
+
+startExpressRouting();
