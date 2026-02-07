@@ -14,6 +14,7 @@ export const startExpressRouting = () => {
 
   app.use(express.json());
   app.use('/assets', express.static(`${mainFolderPath}/assets`));
+  app.use('/sounds', express.static(`${mainFolderPath}/sounds`));
   app.use('/down', express.static(`${mainFolderPath}/down`));
 
   const isRequestFromSearchBot = (req: Request) => {
