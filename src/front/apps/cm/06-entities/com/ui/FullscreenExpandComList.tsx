@@ -6,11 +6,12 @@ import { TheCmComWithComments } from '$cm/widgets/com';
 import { useAtomValue } from 'atomaric';
 import React from 'react';
 import styled from 'styled-components';
-import { cmComSpeedRollKfAtom } from '../state/atoms';
+import { cmComChordHardLevelAtom, cmComSpeedRollKfAtom } from '../state/atoms';
 import { CmComNumber } from './ComNumber';
 
 export function CmComFullscreenExpandList({ coms }: { coms: CmCom[] }) {
   const altCommentKeys = useAtomValue(cmComCommentCurrentOpenedAltKeyAtom);
+  const chordHardLevel = useAtomValue(cmComChordHardLevelAtom);
 
   return (
     <ExpandContent className="com-expand-content h-full">
@@ -26,6 +27,7 @@ export function CmComFullscreenExpandList({ coms }: { coms: CmCom[] }) {
                   fontSize={-1}
                   chordVisibleVariant={2}
                   isMiniAnchor={false}
+                  chordHardLevel={chordHardLevel}
                 />
               </TheCmComWithComments>
             </React.Fragment>

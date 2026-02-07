@@ -37,6 +37,7 @@ export const CmEditorComOrderToolsModulation = ({ com, ord, ordi }: CmEditorComO
             ord={ord}
             ordi={ordi}
             chordVisibleVariant={ChordVisibleVariant.Maximal}
+            chordHardLevel={3}
             com={com}
           />
           {intervals.map(position => {

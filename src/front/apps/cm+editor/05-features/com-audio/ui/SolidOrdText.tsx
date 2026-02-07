@@ -11,6 +11,7 @@ import {
 } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
 import { CmComAudioMarkPackTime, CmComAudioMarkSelector, HttpLink } from 'shared/api';
+import { retNull } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
 
 interface Props {
@@ -30,7 +31,8 @@ export const CmEditorComAudioSolidOrdTextController = ({ com, ord, selector, src
       com={com}
       ord={ord}
       ordi={0}
-      asHeaderComponent={() => null}
+      asHeaderComponent={retNull}
+      chordHardLevel={3}
       asLineComponent={
         mylib.isStr(selector)
           ? props => {

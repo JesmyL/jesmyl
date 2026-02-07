@@ -32,6 +32,7 @@ export const CmEditorComOrderToolsChordBind = ({ com, ord, ordi }: CmEditorComOr
               ordi={ordi}
               com={com}
               chordVisibleVariant={ChordVisibleVariant.Maximal}
+              chordHardLevel={3}
             />
           </pre>
           {com.chords?.map((chordsBlock, chordsBlocki) => {

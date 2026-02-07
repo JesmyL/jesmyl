@@ -70,6 +70,7 @@ export const CmEditorComEditTransposition = ({
           <CmComOrderList
             com={ccom}
             chordVisibleVariant={ChordVisibleVariant.Maximal}
+            chordHardLevel={3}
           />
         </ModalBody>
       </Modal>

@@ -20,6 +20,7 @@ interface Props {
   showInvisibles?: boolean;
   specialClassId?: string;
   isHideRepeats?: boolean;
+  chordHardLevel: 1 | 2 | 3;
 }
 
 export function TheCmComOrder(props: Props) {
@@ -182,9 +183,11 @@ export function TheCmComOrder(props: Props) {
                 prevLinesCount: 1,
                 com: props.com,
                 isJoinLetters: true,
+                chordHardLevel: props.chordHardLevel,
               })
             ) : (
               <CmComOrderLine
+                chordHardLevel={props.chordHardLevel}
                 chordedOrd={chordedOrd}
                 textLine={textLine}
                 textLinei={textLinei}

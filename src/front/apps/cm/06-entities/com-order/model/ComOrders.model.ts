@@ -14,4 +14,5 @@ export interface ICmComOrderListProps {
   showInvisibles?: boolean;
   listRef?: React.RefObject<HTMLDivElement | null>;
   className?: string;
+  chordHardLevel: 1 | 2 | 3;
 }

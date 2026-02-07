@@ -186,6 +186,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                     chordVisibleVariant={ChordVisibleVariant.None}
                     fontSize={20}
                     com={ccom}
+                    chordHardLevel={3}
                     asContentAfterOrder={({ ord }) =>
                       audioMarkControl.afterTargetOrdwOtherPlayButtonNodeDict[ord.makeSelector()]
                     }

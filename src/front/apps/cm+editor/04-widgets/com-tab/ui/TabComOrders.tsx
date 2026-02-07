@@ -121,6 +121,7 @@ export const CmEditorComTabComOrders = ({ ccom }: { ccom: EditableCom }) => {
                 ord={ord}
                 ordi={ordi}
                 com={ccom}
+                chordHardLevel={3}
                 showInvisibles
                 chordVisibleVariant={ChordVisibleVariant.Maximal}
                 asHeaderComponent={

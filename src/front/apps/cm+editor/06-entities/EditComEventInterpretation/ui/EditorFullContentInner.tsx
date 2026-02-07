@@ -53,6 +53,7 @@ export const CmEditorEditComEventInterpretationFullContentInner = ({
                   ord={ord}
                   ordi={ordi}
                   com={com}
+                  chordHardLevel={3}
                   chordVisibleVariant={ChordVisibleVariant.Maximal}
                   showInvisibles
                   asHeaderComponent={({ headerNode, ord }) => {

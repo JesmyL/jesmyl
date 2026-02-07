@@ -10,6 +10,7 @@ export interface ICmComOrderLineProps extends ICmComOrderProps {
   prevLinesCount?: number;
   onClick?: React.MouseEventHandler<HTMLSpanElement>;
   setWordClass?: (props: ICmComOrderLineProps, wordi: number) => string;
+  chordHardLevel: 1 | 2 | 3;
 }
 
 export interface ICmComOrderLinePropsBag {

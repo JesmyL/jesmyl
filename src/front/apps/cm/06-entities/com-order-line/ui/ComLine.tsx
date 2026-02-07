@@ -1,5 +1,3 @@
-import { cmComChordHardLevelAtom } from '$cm/entities/index';
-import { useAtomValue } from 'atomaric';
 import React, { ReactNode } from 'react';
 import { makeRegExp } from 'regexpert';
 import { ICmComOrderLineProps } from '../model/line';
@@ -21,29 +19,29 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
     prevLinesCount,
     setWordClass,
     solidTextLinei,
+    chordHardLevel,
     ...attrs
   } = props;
 
-  const className = `composition-line line-num-${props.textLinei}`;
-  const chordHardLevel = useAtomValue(cmComChordHardLevelAtom);
+  const className = `composition-line line-num-${textLinei}`;
 
-  if (!props.chordedOrd)
+  if (!chordedOrd)
     return (
       <div
         {...attrs}
         className={className}
       >
-        {props.words.map((word, wordi) => {
+        {words.map((word, wordi) => {
           return (
             <span
               key={wordi}
-              className={props.setWordClass?.(props, wordi)}
+              className={setWordClass?.(props, wordi)}
               com-word-index={wordi}
             >
               {word && <span dangerouslySetInnerHTML={{ __html: word }} />}
               <span
                 key={wordi + 100000}
-                className={props.setWordClass?.(props, wordi)}
+                className={setWordClass?.(props, wordi)}
                 com-word-index={wordi}
               >
                 {' '}
@@ -54,16 +52,16 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
       </div>
     );
 
-  const vowelPositions = props.com.getVowelPositions(props.textLine);
+  const vowelPositions = com.getVowelPositions(textLine);
   let chordIndex = 0;
   let points = vowelPositions;
 
   const chordsLabels = ord.lineChordLabels(chordHardLevel, textLinei, ordi);
-  const linePositions = props.positions ?? ord.positions?.[textLinei] ?? [];
+  const linePositions = positions ?? ord.positions?.[textLinei] ?? [];
 
-  if (props.isJoinLetters !== false)
+  if (isJoinLetters !== false)
     points = vowelPositions.filter(
-      (lett, letti) => !letti || linePositions.includes(letti) || props.textLine[lett].match(makeRegExp('/ /')),
+      (lett, letti) => !letti || linePositions.includes(letti) || textLine[lett].match(makeRegExp('/ /')),
     );
 
   const isHasPre = linePositions.includes(-1);
@@ -82,7 +80,7 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
       isAddSpaceWord && (
         <span
           key={`other-index-${index}`}
-          className={props.setWordClass?.(props, index)}
+          className={setWordClass?.(props, index)}
           com-letter-space-word=""
           com-letter-index={index}
         >
@@ -95,7 +93,7 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
 
   points.forEach((index, indexi, indexa) => {
     const isLast = indexi === indexa.length - 1;
-    const firstTextBit = indexi === 0 ? props.textLine.slice(0, index) : '';
+    const firstTextBit = indexi === 0 ? textLine.slice(0, index) : '';
     const isChordedFirst = indexi === 0 && isHasPre && firstTextBit === '';
     const isChordedLast = isLast && isHasPost;
     const isChorded = linePositions.includes(vowelPositions.indexOf(index));
@@ -104,7 +102,7 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
     const chord = makeTaktedChord(isChordedFirst ? chordsLabels[0] : chordLabel);
     const pchord = isLast && isHasPost ? chordsLabels[chordsLabels.length - 1] : null;
 
-    const baseTextBitOriginal = props.textLine.slice(index, indexa[indexi + 1]);
+    const baseTextBitOriginal = textLine.slice(index, indexa[indexi + 1]);
 
     let firstBitNode: ReactNode = firstTextBit !== '' && (
       <span

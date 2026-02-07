@@ -2,7 +2,7 @@ import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
 import { useCmCom } from '$cm/entities/com';
 import { CmComOrderList } from '$cm/entities/com-order';
 import { CmComOrderLine } from '$cm/entities/com-order-line';
-import { cmComChordVisibleVariantAtom, cmComSpeedRollKfAtom } from '$cm/entities/index';
+import { cmComChordHardLevelAtom, cmComChordVisibleVariantAtom, cmComSpeedRollKfAtom } from '$cm/entities/index';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
@@ -14,6 +14,7 @@ const _lineNamePrefix = 'live-broadcast-line-';
 export const CmBroadcastLiveList = (props: CmBroadcastSchWgtLiveDataValue) => {
   const com = useCmCom(props.comw);
   const chordVisibleVariant = useAtomValue(cmComChordVisibleVariantAtom);
+  const chordHardLevel = useAtomValue(cmComChordHardLevelAtom);
   const lineSum = useMemo(() => {
     let lastSum = 0;
     const sum = [lastSum];
@@ -52,6 +53,7 @@ export const CmBroadcastLiveList = (props: CmBroadcastSchWgtLiveDataValue) => {
           <CmComOrderList
             chordVisibleVariant={chordVisibleVariant}
             com={com}
+            chordHardLevel={chordHardLevel}
             asHeaderComponent={props => {
               if (props.ord.isRealText()) return props.headerNode;
 
