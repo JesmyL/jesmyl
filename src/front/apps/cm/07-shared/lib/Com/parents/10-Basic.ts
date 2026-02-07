@@ -79,4 +79,6 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
   get nextLangn() {
     return cmComLanguages[(this.langi || 0) + 1] || cmComLanguages[0];
   }
+
+  isDayFromCreate = (createdAt: number = this.wid) => createdAt > Date.now() - 24 * 60 * 60 * 1000;
 }

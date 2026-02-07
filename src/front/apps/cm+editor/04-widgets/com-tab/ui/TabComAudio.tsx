@@ -32,7 +32,7 @@ export const CmEditorComTabAudio = ({ ccom }: { ccom: EditableCom }) => {
         <CmEditorComAudioControlledList
           srcs={ccom.audio}
           icon="CancelCircle"
-          isCanDelete={checkAccess('cm', 'COM_AUDIO', 'D')}
+          isCanDelete={ccom.isDayFromCreate() || checkAccess('cm', 'COM_AUDIO', 'D')}
           onToggle={async src => {
             await toggleLinkExistance(src);
             setRemovedHrefs(removedHrefs.concat(src));

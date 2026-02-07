@@ -193,6 +193,8 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
     return (this.me.isInherit || this.me.isAnchorInherit || this.me.isAnchorInheritPlus) && this.isHeaderNoneForce;
   }
 
+  isDayFromCreate = () => this.com.isDayFromCreate(this.top.cre);
+
   getWatchInheritance = <Key extends keyof Required<InheritancableOrder>>(key: Key) => {
     return (
       this.me.isAnchorInherit
