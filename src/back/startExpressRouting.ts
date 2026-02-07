@@ -5,6 +5,7 @@ import { makeRegExp } from 'regexpert';
 import { hosts, HttpNumLeadLink } from 'shared/api';
 import { makeCmComHttpLinkFromNumLead } from './apps/cm/complect/com-http-links';
 import { catsFileStore, comsDirStore } from './apps/cm/file-stores';
+import { schedulesDirStore } from './apps/index/schedules/file-stores';
 
 export const startExpressRouting = () => {
   const app = express();
@@ -23,9 +24,10 @@ export const startExpressRouting = () => {
   };
 
   const makeOgMeta = (ogProperty: string, content: string) =>
-    `<meta property="og:${ogProperty}" content="${content}" />`;
+    `<meta property="og:${ogProperty}" content="${content.replace(makeRegExp('/"/g'), "'")}" />`;
 
   const cmDescription = 'Приложение для вашего служения';
+  const audioPathPrefix = '/audio/';
 
   const makePage = ({
     bodyContent = '',
@@ -75,7 +77,6 @@ export const startExpressRouting = () => {
     if (req.params[0] === 'mp3') {
       try {
         const isSearchBot = isRequestFromSearchBot(req);
-        const audioPathPrefix = '/audio/';
         let externalUrl = req.url;
         let ogDescription = 'Звуковая дорожка';
         let trackLink = '' as HttpNumLeadLink;
@@ -158,32 +159,47 @@ export const startExpressRouting = () => {
 
   app.get(/(.*)/, (req: Request, res: Response) => {
     if (isRequestFromSearchBot(req)) {
-      const comwMatch = req.url.match(makeRegExp('/\\bcomw=(\\d+)/'));
+      let descriptionFromSearchParams = '';
 
-      if (comwMatch !== null && +comwMatch[1]) {
-        const com = comsDirStore.getItem(+comwMatch[1]);
+      try {
+        const schwMatch = req.url.match(makeRegExp('/\\bschw=(\\d+(?:\\.\\d+)?)/'));
 
-        if (com) {
-          let ogDescription = `${com.n}\n`;
-          const cats = catsFileStore.getValue();
+        if (schwMatch != null && +schwMatch[1]) {
+          const schedule = schedulesDirStore.getItem(+schwMatch[1]);
 
-          cats.forEach(cat => {
-            if (cat.d?.[com.w]) ogDescription += `\n${cat.n} ${cat.d[com.w]}`;
-            if (cat.s?.includes(com.w)) ogDescription += `\n${cat.n}`;
-          });
-
-          if (com.al) ogDescription += `\n${hosts.host}/audio/${com.w}.mp3`;
-
-          res.type('text/html').status(200).send(makePage({ ogDescription }));
-
-          return;
+          if (schedule) {
+            descriptionFromSearchParams += `\n\nМероприятие "${schedule.title}${schedule.topic ? `: ${schedule.topic}` : ''}"`;
+          }
         }
+      } catch (_e) {
+        //
+      }
+
+      try {
+        const comwMatch = req.url.match(makeRegExp('/\\bcomw=(\\d+(?:\\.\\d+)?)/'));
+        if (comwMatch !== null && +comwMatch[1]) {
+          const com = comsDirStore.getItem(+comwMatch[1]);
+
+          if (com) {
+            descriptionFromSearchParams += `\n\n${com.n}`;
+            const cats = catsFileStore.getValue();
+
+            cats.forEach(cat => {
+              if (cat.d?.[com.w]) descriptionFromSearchParams += `\n${cat.n} ${cat.d[com.w]}`;
+              if (cat.s?.includes(com.w)) descriptionFromSearchParams += `\n${cat.n}`;
+            });
+
+            if (com.al) descriptionFromSearchParams += `\n${hosts.host}${audioPathPrefix}${com.w}.mp3`;
+          }
+        }
+      } catch (_e) {
+        //
       }
 
       res
         .type('text/html')
         .status(200)
-        .send(makePage({ ogDescription: cmDescription }));
+        .send(makePage({ ogDescription: descriptionFromSearchParams.trim() || cmDescription }));
 
       return;
     }
