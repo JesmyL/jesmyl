@@ -42,8 +42,6 @@ export const CmEditorComTabChordApplicationsStyledContent = styled.div`
 
     &[com-letter-chorded]:not([com-letter-chorded='pre']):not([com-letter-chorded='post']) {
       > [word-fragment] > * {
-        display: inline-block;
-
         &[com-letter-space-word] {
           background-color: var(--color--ko);
         }

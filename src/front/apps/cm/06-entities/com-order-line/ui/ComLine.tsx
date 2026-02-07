@@ -93,6 +93,7 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
 
   points.forEach((index, indexi, indexa) => {
     const isLast = indexi === indexa.length - 1;
+    const isFirst = indexi === 0;
     const firstTextBit = indexi === 0 ? textLine.slice(0, index) : '';
     const isChordedFirst = indexi === 0 && isHasPre && firstTextBit === '';
     const isChordedLast = isLast && isHasPost;
@@ -100,7 +101,7 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
     const chordLabel = isChorded ? chordsLabels[chordIndex++ - (isHasPre ? -1 : 0)] || undefined : undefined;
 
     const chord = makeTaktedChord(isChordedFirst ? chordsLabels[0] : chordLabel);
-    const pchord = isLast && isHasPost ? chordsLabels[chordsLabels.length - 1] : null;
+    const pchord = isChordedLast || (isHasPre && isFirst) ? chordsLabels[chordsLabels.length - 1] : null;
 
     const baseTextBitOriginal = textLine.slice(index, indexa[indexi + 1]);
 
@@ -109,6 +110,7 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
         com-letter-chorded={isHasPre ? 'pre' : undefined}
         dangerouslySetInnerHTML={{ __html: firstTextBit }}
         attr-chord={isHasPre ? makeTaktedChord(chordsLabels[0]) : undefined}
+        attr-pchord={isHasPre ? makeTaktedChord(chordsLabels[0]) : undefined}
       />
     );
 
@@ -144,7 +146,7 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
             <span
               word-fragment=""
               attr-chord={chord}
-              attr-pchord={pchord}
+              attr-pchord={isHasPre && isFirst && firstTextBit ? undefined : pchord}
             >
               {insertDividedBits(baseTextBitOriginal, chord)}
             </span>
@@ -188,23 +190,27 @@ const insertDividedBits = (lettersText: string, chord: string | und) => {
     if (letters[txti] === ' ') break;
     if (letters[txti] === '') continue;
 
-    node = (
-      <>
+    if (letters[txti].endsWith('-'))
+      node = (
         <span
-          dangerouslySetInnerHTML={{
-            __html: letters[txti][letters[txti].length - 1] === '-' ? letters[txti].slice(0, -1) : letters[txti],
-          }}
+          dash-divider="-"
+          dangerouslySetInnerHTML={{ __html: letters[txti].slice(0, -1) }}
         />
-        <span dash-divider="" />
-      </>
-    );
+      );
+    else
+      node = (
+        <span
+          dash-divider=""
+          dangerouslySetInnerHTML={{ __html: letters[txti] }}
+        />
+      );
 
     letters[txti] = '';
     break;
   }
 
   return (
-    <span>
+    <span dash-container="">
       {node}
       <span dangerouslySetInnerHTML={{ __html: letters.join('') }} />
     </span>

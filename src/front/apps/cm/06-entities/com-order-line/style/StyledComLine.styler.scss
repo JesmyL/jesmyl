@@ -18,9 +18,16 @@
     white-space: pre;
 
     &[com-letter-chorded='pre'] {
+      text-align: right;
+
       &::before {
         position: relative;
-        margin-right: -1em;
+        text-align: left;
+        margin-right: -0.3em;
+      }
+
+      &:not(:has([word-fragment]))::before {
+        margin-right: -0.7em;
       }
     }
 
@@ -57,12 +64,15 @@
         font-size: 1em;
       }
 
+      &:not([com-letter-chorded='pre']) [word-fragment]::before {
+        left: 100%;
+      }
+
       [word-fragment] {
         &::before {
           content: attr(attr-pchord);
           position: absolute;
           top: -1em;
-          left: 100%;
         }
 
         &::after {
@@ -126,9 +136,14 @@
 
   .whole-word,
   [com-letter-spaced-word] {
-    [dash-divider]::before {
+    [dash-divider]:not([dash-divider='-'])::after {
       display: none;
     }
+  }
+
+  [dash-divider]::after {
+    content: '-';
+    display: inline-block;
   }
 
   .whole-word {
@@ -136,15 +151,21 @@
       &:has(+ [attr-chord]) [word-fragment] {
         position: relative;
 
-        > span:has(span) {
+        [dash-container] {
+          container: dash-container / inline-size;
           display: inline-flex;
           justify-content: space-between;
           width: 100%;
 
-          [dash-divider]::before {
-            content: ' - ';
-            display: inline-block;
-            color: var(--color--7);
+          [dash-divider] {
+            width: 100%;
+
+            &::after {
+              width: calc(100% - 0.5em);
+              display: inline-block;
+              text-align: center;
+              color: var(--color--7);
+            }
           }
         }
       }
