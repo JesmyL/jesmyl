@@ -3,7 +3,7 @@ import { useAtomValue } from 'atomaric';
 import React, { ReactNode } from 'react';
 import { makeRegExp } from 'regexpert';
 import { ICmComOrderLineProps } from '../model/line';
-import { StyledCmComOrderLine } from '../style/StyledComLine.styler';
+import '../style/StyledComLine.styler.scss';
 
 export const CmComOrderLine = (props: ICmComOrderLineProps) => {
   const {
@@ -29,7 +29,7 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
 
   if (!props.chordedOrd)
     return (
-      <StyledCmComOrderLine
+      <div
         {...attrs}
         className={className}
       >
@@ -51,7 +51,7 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
             </span>
           );
         })}
-      </StyledCmComOrderLine>
+      </div>
     );
 
   const vowelPositions = props.com.getVowelPositions(props.textLine);
@@ -105,7 +105,6 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
     const pchord = isLast && isHasPost ? chordsLabels[chordsLabels.length - 1] : null;
 
     const baseTextBitOriginal = props.textLine.slice(index, indexa[indexi + 1]);
-    // const origWords = baseTextBitOriginal.split(makeRegExp('/ +/g')); // /([а-яё])/
 
     let firstBitNode: ReactNode = firstTextBit !== '' && (
       <span
@@ -168,12 +167,12 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
   });
 
   return (
-    <StyledCmComOrderLine
+    <div
       {...attrs}
       className={className}
     >
       {wordsNodes}
-    </StyledCmComOrderLine>
+    </div>
   );
 };
 

@@ -1,6 +1,4 @@
-import styled from 'styled-components';
-
-export const StyledCmComOrderLine = styled.div`
+.composition-line {
   white-space: normal;
 
   * {
@@ -19,6 +17,13 @@ export const StyledCmComOrderLine = styled.div`
     line-height: 1;
     white-space: pre;
 
+    &[com-letter-chorded='pre'] {
+      &::before {
+        position: relative;
+        margin-right: -1em;
+      }
+    }
+
     &[com-letter-chorded='pre'],
     &[com-letter-chorded='post'],
     &[com-letter-spaced-word] {
@@ -29,6 +34,11 @@ export const StyledCmComOrderLine = styled.div`
     }
 
     &:not([com-letter-chorded='pre']):not([com-letter-chorded='post']) {
+      &::before,
+      &::after {
+        position: absolute;
+      }
+
       &[com-letter-spaced-word]::before {
         left: -0.2em;
       }
@@ -41,7 +51,6 @@ export const StyledCmComOrderLine = styled.div`
     &:not([com-letter-chorded='post']) {
       &::before,
       &::after {
-        position: absolute;
         top: -1em;
         z-index: 0;
         pointer-events: none;
@@ -169,4 +178,4 @@ export const StyledCmComOrderLine = styled.div`
   [com-letter-space-word][com-letter-index][com-word-index] {
     color: inherit;
   }
-`;
+}

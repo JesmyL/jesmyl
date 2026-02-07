@@ -1,4 +1,4 @@
-import('../front/apps/cm/06-entities/com-order-line/style/StyledComLine.styler');
+import('../front/apps/cm/06-entities/com-order-line/style/StyledComLine.styler.scss');
 
 import 'react';
 
