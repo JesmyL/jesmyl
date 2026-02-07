@@ -274,6 +274,13 @@ export const startCrTgAlarm = () => {
     nextAlarmDate = new Date(alarmInTimeTs);
     nextAlarmDate.setHours(crData.hours, crData.minutes, 0, 0);
 
+    const earlyRepayDate = new Date(nextPaymentInTimeDate);
+    earlyRepayDate.setDate(earlyRepayDate.getDate() + 1);
+    earlyRepayDate.setHours(crData.hours, crData.minutes, 0, 0);
+    nodeSchedule.scheduleJob(earlyRepayDate, () => {
+      crTelegramBot.postMessage('Досрочка!');
+    });
+
     currentJob = nodeSchedule.scheduleJob(nextAlarmDate, () => {
       const nextAlarmDate = setAlarm();
       let nextAlarmInfo = 'Больше напоминаний не будет';
