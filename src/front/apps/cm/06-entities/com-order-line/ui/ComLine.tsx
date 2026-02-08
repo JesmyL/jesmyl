@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { makeRegExp } from 'regexpert';
 import { ICmComOrderLineProps } from '../model/line';
 import '../style/StyledComLine.styler.scss';
@@ -67,8 +67,8 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
   const isHasPre = linePositions.includes(-1);
   const isHasPost = linePositions.includes(-2);
 
-  let wordBitNodes: ReactNode[] = [];
-  const wordsNodes: ReactNode[] = [];
+  let wordBitNodes: React.ReactNode[] = [];
+  const wordsNodes: React.ReactNode[] = [];
   const pushWordNode = (index: number, isAddSpaceWord: boolean) => {
     wordsNodes.push(
       <span
@@ -105,7 +105,7 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
 
     const baseTextBitOriginal = textLine.slice(index, indexa[indexi + 1]);
 
-    let firstBitNode: ReactNode = firstTextBit !== '' && (
+    let firstBitNode: React.ReactNode = firstTextBit !== '' && (
       <span
         com-letter-chorded={isHasPre ? 'pre' : undefined}
         dangerouslySetInnerHTML={{ __html: firstTextBit }}
@@ -153,7 +153,12 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
           ) : (
             baseTextBitOriginal.split(makeRegExp('/ +/g')).map((txt, txti) => {
               return (
-                <React.Fragment key={txti}>{txt && <span dangerouslySetInnerHTML={{ __html: txt }} />}</React.Fragment>
+                txt && (
+                  <span
+                    key={txti}
+                    dangerouslySetInnerHTML={{ __html: txt }}
+                  />
+                )
               );
             })
           )}
