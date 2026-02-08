@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { CmComOrder, cmIDB } from '$cm/ext';
+import { CmComOrder } from '$cm/ext';
 import { makeRegExp } from 'regexpert';
 import {
   chordBemoleEquivalent,
@@ -67,26 +67,12 @@ export class CmComChords extends CmComOrders {
     return simpleHashChords[nextIndex];
   }
 
-  async setChordsInitialTon() {
-    const fixed = { ...(mylib.isNNlButUnd(this.wid) && (await cmIDB.tb.fixedComs.get(this.wid))) };
-    delete fixed.ton;
-    await cmIDB.tb.fixedComs.put(fixed);
-  }
-
   transposeBlock(cblock: string, delta = this.transPosition) {
     return cblock?.replace(simpleHashChordReg_g, chord => this.transposeChord(chord, delta));
   }
 
   transposedBlocks(delta?: number) {
     return this.chords?.map((cblock: string) => this.transposeBlock(cblock, delta));
-  }
-
-  async transpose(delta: number) {
-    if (this.transPosition !== undefined) this.transPosition -= -delta;
-    else this.transPosition = delta;
-
-    const isUpdated = await cmIDB.tb.fixedComs.update(this.wid, { ton: this.transPosition + delta });
-    if (!isUpdated) await cmIDB.tb.fixedComs.put({ w: this.wid, ton: this.transPosition + delta });
   }
 
   private updateChordLabels() {

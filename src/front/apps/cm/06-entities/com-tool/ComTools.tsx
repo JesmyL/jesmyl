@@ -47,18 +47,22 @@ export const CmComToolList = () => {
             <TheIconButton
               icon="MinusSign"
               className="minus"
-              onClick={() => ccom.transpose(-1)}
+              onClick={() => cmIDB.tb.fixedComs.put({ w: ccom.wid, ton: (ccom.transPosition ?? 0) - 1 })}
             />
             <Badge
               className={twMerge('min-w-13 flex justify-center bg-x2', ifixedCom?.ton == null ? 'text-x7' : 'text-x3')}
-              onClick={() => ccom.setChordsInitialTon()}
+              onClick={async () => {
+                const fixed = { ...(await cmIDB.tb.fixedComs.get(ccom.wid)) };
+                delete fixed.ton;
+                await cmIDB.tb.fixedComs.put(fixed);
+              }}
             >
               {ccom.getFirstSimpleChord()}
             </Badge>
             <TheIconButton
               icon="PlusSign"
               className="plus"
-              onClick={() => ccom.transpose(1)}
+              onClick={() => cmIDB.tb.fixedComs.put({ w: ccom.wid, ton: (ccom.transPosition ?? 0) + 1 })}
             />
           </div>
         }
