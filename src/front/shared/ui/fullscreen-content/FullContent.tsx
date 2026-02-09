@@ -53,7 +53,7 @@ export const FullContent = <Value, TrustValue extends Value>(
                     props.onClose?.();
                   }}
                   onClick={props.closable ? openAtom.reset : propagationStopper}
-                  className={props.className}
+                  className={twMerge('z-10', props.className)}
                 >
                   {props.hideCloseButton || props.closable || (
                     <StyledCloseButton

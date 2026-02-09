@@ -33,7 +33,7 @@ export const Modal = <Value, TrustValue extends Value = Exclude<Value, nil | '' 
         <Dialog.Overlay />
         <EscapableModal onClose={() => onClose(openAtom)} />
         <StyledModalScreenWrapper
-          className={twMerge('type_screen bg-x1/97', className)}
+          className={twMerge('type_screen bg-x1/97 z-10', className)}
           onClick={event => {
             event.stopPropagation();
             onClose(openAtom);
