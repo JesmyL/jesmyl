@@ -28,7 +28,7 @@ export const CmEditorComTabChordApplicationsStyledContent = styled.div`
     }
   }
 
-  [com-letter-index] {
+  [com-letter-index]:not(:has([com-letter-index])) {
     cursor: pointer;
 
     ${styledHoverBind(css`

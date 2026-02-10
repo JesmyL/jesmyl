@@ -67,7 +67,7 @@ export const CmEditorComTabChordApplications = ({ ccom }: { ccom: EditableCom })
                       ordi={ordi}
                       isJoinLetters={false}
                       onClick={async event => {
-                        const letteriStr = (event.nativeEvent.composedPath() as HTMLSpanElement[])
+                        const letteriStr = (event.nativeEvent.composedPath() as (HTMLSpanElement | nil)[])
                           .find(span => span?.hasAttribute('com-letter-index'))
                           ?.getAttribute('com-letter-index');
 

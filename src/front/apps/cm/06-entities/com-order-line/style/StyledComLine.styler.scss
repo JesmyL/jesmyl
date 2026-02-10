@@ -134,7 +134,7 @@
     }
   }
 
-  .whole-word,
+  [whole-wordi],
   [com-letter-spaced-word] {
     [dash-divider]:not([dash-divider='-'])::after {
       display: none;
@@ -146,7 +146,9 @@
     display: inline-block;
   }
 
-  .whole-word {
+  [whole-wordi] {
+    white-space: nowrap;
+
     [attr-chord] {
       &:has(+ [attr-chord]) [word-fragment] {
         position: relative;
@@ -156,6 +158,10 @@
           display: inline-flex;
           justify-content: space-between;
           width: 100%;
+
+          &:has([dash-divider]) {
+            min-width: 1.2em;
+          }
 
           [dash-divider] {
             width: 100%;

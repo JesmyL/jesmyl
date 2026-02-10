@@ -1,8 +1,14 @@
 import { Button } from '#shared/components/ui/button';
 import { propagationStopper } from '#shared/lib/event-funcs';
+import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { BibleTranslateModulesControl, BibleTranslatesContextProvider } from '$bible/ext';
-import { useCmComCommentCheckIsIncludesBibleAddress } from '$cm/entities/com-comment';
+import {
+  cmComCommentRedactOrdSelectorIdAtom,
+  useCmComCommentCheckIsIncludesBibleAddress,
+} from '$cm/entities/com-comment';
 import { CmCom, useCmComCommentBlockCss } from '$cm/ext';
+import { cmIsShowMyCommentsAtom } from '$cm/shared/state';
+import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
 import { itNIt } from 'shared/utils';
 import styled, { RuleSet } from 'styled-components';
@@ -28,7 +34,13 @@ export const TheCmComWithComments = (props: Props) => {
 };
 
 const Content = (props: Props) => {
-  const { commentCss, isThereUnsettedTranslate, isThereCorrectBibleText } = useCmComCommentBlockCss(props.com);
+  const isShowMyComments = useAtomValue(cmIsShowMyCommentsAtom);
+  const isCommentRedactorIsOpen = useDebounceValue(useAtomValue(cmComCommentRedactOrdSelectorIdAtom));
+
+  const { commentCss, isThereUnsettedTranslate, isThereCorrectBibleText } = useCmComCommentBlockCss(
+    props.com,
+    !isShowMyComments || isCommentRedactorIsOpen != null,
+  );
   const [isExpandFirstComment, setIsExpandFirstComment] = useState(true);
 
   return (

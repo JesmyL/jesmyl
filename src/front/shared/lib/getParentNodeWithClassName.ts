@@ -1,10 +1,14 @@
 import { makeRegExp } from 'regexpert';
 
+const replaces: Record<string, string> = {
+  "'": "\\'",
+  '\\': '\\\\',
+  '\n': "''\\A''",
+};
+const replaceContentParts = (all: string) => replaces[all];
+
 export const makePseudoElementCorrectContentText = (text: string) =>
-  text
-    ?.replace(makeRegExp("/'/g"), "\\'")
-    .replace(makeRegExp('/\\\\/g'), '\\\\')
-    .replace(makeRegExp('/\\n/g'), "''\\A''");
+  text?.replace(makeRegExp("/['\\\\\\n]/g"), replaceContentParts);
 
 export const getParentNodeWithClassName = <ClassName extends string>(
   event: { target: unknown },

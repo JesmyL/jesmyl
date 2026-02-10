@@ -1,3 +1,4 @@
+import { mylib } from '#shared/lib/my-lib';
 import { bibleShowTranslatesAtom, useBibleTranslatesContext } from '$bible/ext';
 import { CmCom } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
@@ -47,15 +48,30 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
             commentLines ??= [];
             if (kindComment) commentLines = [kindComment].concat(commentLines);
 
-            const lineComments: (string[] | nil)[] = [];
+            const lineCommentKeys = new Set<string | number>();
+            const lineComments: Record<string, string[]> = {};
 
             const linesStyle = commentLines.map((line, linei) => {
               if (!line) return;
 
-              line = line.replace(makeRegExp(`/(?<=^|\\n) *(/*)( *\\d+ *)(.*)/g`), (_all, pre, num, rest) => {
-                (lineComments[num.trim()] ??= []).push(`${pre} ${rest}`);
-                return '';
-              });
+              line = line.replace(
+                makeRegExp(`/(?<=^|\\n) *(/*)( *\\d{1,2} *)(.*)/g`),
+                (_all, pre: string, num: string, rest: string) => {
+                  let key;
+
+                  if (rest.startsWith(':')) {
+                    rest = rest.slice(1);
+
+                    key = `${num.trim().padStart(lineWordPositionDigitsSeparationCount, ' ')}${`${parseInt(rest) || 1}`.padStart(lineWordPositionDigitsSeparationCount, ' ')}`;
+                    rest = rest.slice(numsSet.has(rest[0]) && numsSet.has(rest[1]) ? 2 : 1);
+                  } else key = +num.trim();
+
+                  lineCommentKeys.add(key);
+                  (lineComments[key] ??= []).push(pre ? `${pre} ${rest}` : rest);
+
+                  return '';
+                },
+              );
 
               return css`
                 .styled-header ${commentHolderSelectors[linei] || '::after'} {
@@ -67,20 +83,108 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
             });
 
             return css`
-              [solid-com-order-selector]:has([ord-selector='${ordSelectorId}']) {
+              [solid-com-order-selector='${ordSelectorId}'] {
                 ${linesStyle}
 
-                ${lineComments.map(
-                  (comment, commenti) =>
-                    comment &&
-                    css`
-                      &:not(:has([solid-order-text-linei='${commenti - 1}'])):after,
-                      [solid-order-text-linei='${commenti - 1}']:before {
-                        ${cmComCommentMakePseudoCommentContentPropCss(comment.join('\n'))}
-                        ${cmComCommentMakePseudoCommentContentAccentsCss(comment.join('\n'))}
+                ${Array.from(lineCommentKeys).map(commentKey => {
+                  let comment = lineComments[commentKey].join('\n');
+
+                  if (mylib.isNum(commentKey))
+                    return css`
+                      &:not(:has([solid-order-text-linei='${commentKey}'])):after,
+                      [solid-order-text-linei='${commentKey}']:before {
+                        ${cmComCommentMakePseudoCommentContentPropCss(comment)}
+                        ${cmComCommentMakePseudoCommentContentAccentsCss(comment)}
                       }
-                    `,
-                )}
+                    `;
+
+                  const linei = +commentKey.slice(0, lineWordPositionDigitsSeparationCount) - 1;
+                  const wordi = +commentKey.slice(lineWordPositionDigitsSeparationCount) - 1;
+                  const csss: (RuleSet<object> | false)[] = [];
+
+                  comment = comment.replace(makeRegExp('/\\[([^\\n\\]]+)\\]/g'), (_all, content: string) => {
+                    const leadChar = content[0];
+                    content = content.slice(1);
+
+                    switch (leadChar) {
+                      case '^': {
+                        const chords = content.split(makeRegExp('/ +/'));
+
+                        for (let chordi = 0; chordi < chords.length; chordi++) {
+                          if (chords[chordi] === '.') continue;
+                          let chord = chords[chordi];
+                          let content = '';
+                          const highlights = cmComCommentMakePseudoCommentContentAccentsCss(chord, null);
+
+                          if (chord[0] === '!') {
+                            if (chord[1] === '!') chord = chord.slice(2);
+                            else chord = chord.slice(1);
+                          }
+
+                          const isPreAddition = chord[0] === '>';
+                          const isPostAddition = chord[0] === '<';
+
+                          if (chord !== '.') {
+                            if (isPreAddition || isPostAddition) chord = chord.slice(1);
+
+                            content = cmComCommentMakePseudoCommentContentPropCss(
+                              chord,
+                              isPreAddition ? 'attr(attr-chord)' : '',
+                              isPostAddition ? 'attr(attr-chord)' : '',
+                            );
+                          }
+
+                          csss.push(css`
+                            > [attr-chordi='${chordi}']:not([com-letter-chorded='post']):before,
+                            > [attr-chordi='${chordi}'][com-letter-chorded='post'] [word-fragment]:before,
+                            > [attr-chordi='${chordi - 1}'][com-letter-chorded='pre'] [word-fragment]:before,
+                            > [attr-chordi='${chordi - 1}'][com-letter-chorded='post']:after {
+                              ${content}${highlights}
+                              text-decoration-line: underline;
+                            }
+
+                            > [attr-chordi='${chordi - 1}'][com-letter-chorded='pre'] [word-fragment]:after {
+                              ${content}
+                            }
+
+                            > [attr-chordi='${chordi}']:not([com-letter-chorded='post']) {
+                              &[com-letter-spaced-word] {
+                                text-align: right;
+                                display: inline-block;
+                              }
+
+                              [word-fragment]:after {
+                                ${content}
+                              }
+                            }
+                          `);
+                        }
+
+                        break;
+                      }
+                      case '<':
+                      case '>': {
+                        csss.push(css`
+                          ${leadChar === '<' ? '&:before' : '&:after'} {
+                            ${cmComCommentMakePseudoCommentContentPropCss(content + (leadChar === '<' ? '' : ' '))}
+                            ${cmComCommentMakePseudoCommentContentAccentsCss(content, null)}
+                          }
+                        `);
+                        break;
+                      }
+                    }
+
+                    return '';
+                  });
+
+                  return css`
+                    [solid-order-text-linei='${linei}'] [whole-wordi='${wordi}'] {
+                      ${cmComCommentMakePseudoCommentContentAccentsCss(comment, null)}
+
+                      ${csss}
+                    }
+                  `;
+                })}
               }
             `;
           }) ?? []);
@@ -200,3 +304,6 @@ const commentHolderSelectors = [
   '.comment-holder:nth-child(4)::after',
   '.comment-holder:nth-child(5)::before',
 ];
+
+const lineWordPositionDigitsSeparationCount = 3;
+const numsSet = new Set('0123456789');

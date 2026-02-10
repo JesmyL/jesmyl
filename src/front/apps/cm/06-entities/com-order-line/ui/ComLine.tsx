@@ -57,60 +57,57 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
   let points = vowelPositions;
 
   const chordsLabels = ord.lineChordLabels(chordHardLevel, textLinei, ordi);
-  const linePositions = positions ?? ord.positions?.[textLinei] ?? [];
+  const linePositions = new Set(positions ?? ord.positions?.[textLinei]);
 
   if (isJoinLetters !== false)
-    points = vowelPositions.filter(
-      (lett, letti) => !letti || linePositions.includes(letti) || textLine[lett].match(makeRegExp('/ /')),
-    );
+    points = vowelPositions.filter((lett, letti) => !letti || linePositions.has(letti) || textLine[lett].includes(' '));
 
-  const isHasPre = linePositions.includes(-1);
-  const isHasPost = linePositions.includes(-2);
+  const isHasPre = linePositions.has(-1);
 
   let wordBitNodes: React.ReactNode[] = [];
   const wordsNodes: React.ReactNode[] = [];
+  let wholeWordi = 0;
+
   const pushWordNode = (index: number, isAddSpaceWord: boolean) => {
     wordsNodes.push(
       <span
         key={index}
-        className="nowrap whole-word"
+        whole-wordi={wholeWordi++}
+        com-letter-index={isAddSpaceWord ? index : undefined}
       >
         {wordBitNodes}
       </span>,
-      isAddSpaceWord && (
-        <span
-          key={`other-index-${index}`}
-          className={setWordClass?.(props, index)}
-          com-letter-space-word=""
-          com-letter-index={index}
-        >
-          {' '}
-        </span>
-      ),
+      isAddSpaceWord && ' ',
     );
     wordBitNodes = [];
+    usedChordi = -1;
   };
 
-  points.forEach((index, indexi, indexa) => {
-    const isLast = indexi === indexa.length - 1;
+  let usedChordi = -1;
+
+  for (let indexi = 0; indexi < points.length; indexi++) {
+    const index = points[indexi];
+    const isLast = indexi === points.length - 1;
     const isFirst = indexi === 0;
-    const firstTextBit = indexi === 0 ? textLine.slice(0, index) : '';
-    const isChordedFirst = indexi === 0 && isHasPre && firstTextBit === '';
-    const isChordedLast = isLast && isHasPost;
-    const isChorded = linePositions.includes(vowelPositions.indexOf(index));
+    const firstTextBit = isFirst ? textLine.slice(0, index) : '';
+    const isFirstAndChorded = isFirst && isHasPre && firstTextBit === '';
+    const isLastAndChorded = isLast && linePositions.has(-2);
+    const isChorded = linePositions.has(vowelPositions.indexOf(index));
     const chordLabel = isChorded ? chordsLabels[chordIndex++ - (isHasPre ? -1 : 0)] || undefined : undefined;
 
-    const chord = makeTaktedChord(isChordedFirst ? chordsLabels[0] : chordLabel);
-    const pchord = isChordedLast || (isHasPre && isFirst) ? chordsLabels[chordsLabels.length - 1] : null;
+    const chord = makeTaktedChord(isFirstAndChorded ? chordsLabels[0] : chordLabel);
+    if (isChorded || (isFirst && isHasPre)) usedChordi++;
+    const pchord = isLastAndChorded || (isHasPre && isFirst) ? chordsLabels[chordsLabels.length - 1] : null;
 
-    const baseTextBitOriginal = textLine.slice(index, indexa[indexi + 1]);
+    const baseTextBitOriginal = textLine.slice(index, points[indexi + 1]);
 
     let firstBitNode: React.ReactNode = firstTextBit !== '' && (
       <span
+        key={indexi + 100000}
         com-letter-chorded={isHasPre ? 'pre' : undefined}
         dangerouslySetInnerHTML={{ __html: firstTextBit }}
         attr-chord={isHasPre ? makeTaktedChord(chordsLabels[0]) : undefined}
-        attr-pchord={isHasPre ? makeTaktedChord(chordsLabels[0]) : undefined}
+        attr-chordi={usedChordi < 0 ? undefined : usedChordi}
       />
     );
 
@@ -118,58 +115,86 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
       pushWordNode(indexi, true);
 
       if (firstTextBit !== '') {
-        wordBitNodes.push(<React.Fragment key={indexi + 100000}>{firstBitNode}</React.Fragment>, ' ');
+        wordBitNodes.push(firstBitNode, ' ');
         firstBitNode = null;
       }
     }
 
-    const node = (
-      <React.Fragment key={indexi}>
-        {firstBitNode}
+    const isSpaced = includeEmptyOrUnd(baseTextBitOriginal === ' ');
+    const chordedState =
+      isChorded || isFirstAndChorded || isLastAndChorded
+        ? isLastAndChorded
+          ? 'post'
+          : isFirstAndChorded
+            ? 'pre'
+            : ''
+        : undefined;
+
+    if (isChorded && ((isSpaced === '' && chordedState === '') || firstBitNode)) usedChordi++;
+
+    let nodeInner;
+
+    if (isChorded || isLastAndChorded) {
+      let inner;
+
+      if (chord === undefined || chord.length < baseTextBitOriginal.length) {
+        if (isChorded && usedChordi < 0) usedChordi++;
+
+        inner = <span dangerouslySetInnerHTML={{ __html: baseTextBitOriginal }} />;
+      } else inner = insertDividedBits(baseTextBitOriginal);
+
+      nodeInner = (
         <span
+          word-fragment=""
           attr-chord={chord}
-          attr-pchord={pchord}
-          com-letter-index={indexi}
-          com-letter-space-word={includeEmptyOrUnd(baseTextBitOriginal === ' ')}
-          com-letter-spaced-word={includeEmptyOrUnd(baseTextBitOriginal.match(makeRegExp('/ /')))}
-          com-letter-chorded={
-            isChorded || isChordedFirst || isChordedLast
-              ? isChordedLast
-                ? 'post'
-                : isChordedFirst
-                  ? 'pre'
-                  : ''
-              : undefined
-          }
+          attr-pchord={isHasPre && isFirst && firstTextBit ? undefined : pchord}
         >
-          {isChorded || isChordedLast ? (
-            <span
-              word-fragment=""
-              attr-chord={chord}
-              attr-pchord={isHasPre && isFirst && firstTextBit ? undefined : pchord}
-            >
-              {insertDividedBits(baseTextBitOriginal, chord)}
-            </span>
-          ) : (
-            baseTextBitOriginal.split(makeRegExp('/ +/g')).map((txt, txti) => {
-              return (
-                txt && (
-                  <span
-                    key={txti}
-                    dangerouslySetInnerHTML={{ __html: txt }}
-                  />
-                )
-              );
-            })
-          )}
+          {inner}
         </span>
-      </React.Fragment>
+      );
+    } else {
+      nodeInner = baseTextBitOriginal.split(makeRegExp('/ +/g')).map((txt, txti) => {
+        return (
+          txt && (
+            <span
+              key={txti}
+              dangerouslySetInnerHTML={{ __html: txt }}
+            />
+          )
+        );
+      });
+    }
+
+    const node = (
+      <span
+        key={indexi}
+        attr-chord={chord}
+        attr-chordi={!isChorded || usedChordi < 0 ? undefined : usedChordi}
+        attr-pchord={pchord}
+        com-letter-index={indexi}
+        com-letter-space-word={isSpaced}
+        com-letter-spaced-word={includeEmptyOrUnd(baseTextBitOriginal.match(makeRegExp('/ /')))}
+        com-letter-chorded={chordedState}
+      >
+        {nodeInner}
+      </span>
     );
 
-    wordBitNodes.push(node);
+    wordBitNodes.push(
+      firstBitNode ? (
+        <React.Fragment key={indexi}>
+          {firstBitNode}
+          {node}
+        </React.Fragment>
+      ) : (
+        node
+      ),
+    );
 
-    if (indexa.length - 1 === indexi) pushWordNode(indexi + 1, false);
-  });
+    if (points.length - 1 === indexi) {
+      pushWordNode(indexi + 1, false);
+    }
+  }
 
   return (
     <div
@@ -184,10 +209,7 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
 const consonantLettersStr = '[йцкнгшщзхъфвпрлджчсмтьб]';
 const splitLettersReg = makeRegExp(`/([а-яё](?:${consonantLettersStr}(?=${consonantLettersStr}{2}))?[?!,.)-:;]?)/`);
 
-const insertDividedBits = (lettersText: string, chord: string | und) => {
-  if (chord === undefined || chord.length < lettersText.length)
-    return <span dangerouslySetInnerHTML={{ __html: lettersText }} />;
-
+const insertDividedBits = (lettersText: string) => {
   const letters = lettersText.split(splitLettersReg);
   let node: React.ReactNode = null;
 
