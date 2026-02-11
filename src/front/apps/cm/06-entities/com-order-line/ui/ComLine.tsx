@@ -96,7 +96,7 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
     const chordLabel = isChorded ? chordsLabels[chordIndex++ - (isHasPre ? -1 : 0)] || undefined : undefined;
 
     const chord = makeTaktedChord(isFirstAndChorded ? chordsLabels[0] : chordLabel);
-    if (isChorded || (isFirst && isHasPre)) usedChordi++;
+    if ((isChorded && !firstTextBit) || (isFirst && isHasPre)) usedChordi++;
     const pchord = isLastAndChorded || (isHasPre && isFirst) ? chordsLabels[chordsLabels.length - 1] : null;
 
     const baseTextBitOriginal = textLine.slice(index, points[indexi + 1]);
