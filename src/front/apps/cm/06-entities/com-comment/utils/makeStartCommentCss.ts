@@ -4,7 +4,7 @@ import { makeRegExp } from 'regexpert';
 import { BibleTranslateName } from 'shared/api';
 import { cmComCommentHeadBibleAddressRegExp } from './commentHeadBibleAddressRegExp';
 import {
-  cmComCommentMakePseudoCommentContentAccentsCss,
+  cmComCommentMakePseudoCommentContentAccentsColorCss,
   cmComCommentMakePseudoCommentContentPropCss,
 } from './makePseudoComment.props';
 
@@ -28,7 +28,7 @@ export const cmComCommentMakeStartCommentCss = async (
       .flat(),
   );
 
-  const accentsCss = cmComCommentMakePseudoCommentContentAccentsCss(startComment);
+  const accentsCss = cmComCommentMakePseudoCommentContentAccentsColorCss(startComment);
   let isThereUnsettedTranslate = false;
   let isThereCorrectBibleText = false;
 
