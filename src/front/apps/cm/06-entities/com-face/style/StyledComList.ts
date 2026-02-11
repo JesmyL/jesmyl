@@ -1,5 +1,5 @@
-import { makePseudoElementCorrectContentText } from '#shared/lib/getParentNodeWithClassName';
 import { MyLib } from '#shared/lib/my-lib';
+import { cmComCommentMakePseudoCommentContentPropCss } from '$cm/entities/com-comment';
 import { CmComWid } from 'shared/api';
 import styled, { css } from 'styled-components';
 import { cmComFaceCurrentComwIdPrefix } from '../const/ids';
@@ -22,7 +22,7 @@ export const StyledCmComFaceList = styled.div<{
           margin-top: 2em;
 
           &:before {
-            content: '${makePseudoElementCorrectContentText(title)}';
+            ${cmComCommentMakePseudoCommentContentPropCss(title)}
             position: absolute;
             display: block;
             top: -1.5em;

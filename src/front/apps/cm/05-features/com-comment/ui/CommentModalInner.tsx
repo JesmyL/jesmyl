@@ -19,7 +19,7 @@ import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { CmComCommentBlockSpecialSelector } from 'shared/api';
 import { toast } from 'sonner';
-import { CmComCommentHeadCommentTools } from './HeaderCommentTools';
+import { CmComCommentCommentTools } from './CommentTools';
 import { CmComCommentKindComments } from './KindComments';
 import { CmComCommentSimpleComments } from './SimpleComments';
 import { CmComCommentTransferAltModalInner } from './TransferAltCommentModalInner';
@@ -65,7 +65,7 @@ export const CmComCommentModalInner = ({ com }: { com: CmCom }) => {
           <span className="text-x3 ellipsis">{com.name}</span>
         </span>
 
-        <CmComCommentHeadCommentTools
+        <CmComCommentCommentTools
           com={com}
           addItems={[
             <DropdownMenu.Item key="TextFirstlineRight">

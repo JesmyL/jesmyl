@@ -8,8 +8,11 @@ import { CmComCommentBlockSpecialSelector } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 import { RuleSet, css } from 'styled-components';
-import { cmComCommentMakePseudoCommentContentAccentsCss } from '../utils/makePseudoCommentContentAccentsCss';
-import { cmComCommentMakePseudoCommentContentPropCss } from '../utils/makePseudoCommentContentPropCss';
+import {
+  cmComCommentMakeContentTextWithoutHighlightMarkers,
+  cmComCommentMakePseudoCommentContentAccentsCss,
+  cmComCommentMakePseudoCommentContentPropCss,
+} from '../utils/makePseudoComment.props';
 import { cmComCommentMakeStartCommentCss } from '../utils/makeStartCommentCss';
 import { cmComCommentPseudoCommentStaticPropsCss } from '../utils/pseudoCommentStaticPropsCss';
 import {
@@ -112,22 +115,20 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
 
                         for (let chordi = 0; chordi < chords.length; chordi++) {
                           if (chords[chordi] === '.') continue;
+
                           let chord = chords[chordi];
-                          let content = '';
+                          let contentCss = '';
                           const highlights = cmComCommentMakePseudoCommentContentAccentsCss(chord, null);
 
-                          if (chord[0] === '!') {
-                            if (chord[1] === '!') chord = chord.slice(2);
-                            else chord = chord.slice(1);
-                          }
+                          chord = cmComCommentMakeContentTextWithoutHighlightMarkers(chord);
 
-                          const isPreAddition = chord[0] === '>';
-                          const isPostAddition = chord[0] === '<';
+                          if (chord !== '.' && chord !== '') {
+                            const isPreAddition = chord[0] === '>';
+                            const isPostAddition = chord[0] === '<';
 
-                          if (chord !== '.') {
                             if (isPreAddition || isPostAddition) chord = chord.slice(1);
 
-                            content = cmComCommentMakePseudoCommentContentPropCss(
+                            contentCss = cmComCommentMakePseudoCommentContentPropCss(
                               chord,
                               isPreAddition ? 'attr(attr-chord)' : '',
                               isPostAddition ? 'attr(attr-chord)' : '',
@@ -139,12 +140,12 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
                             > [attr-chordi='${chordi}'][com-letter-chorded='post'] [word-fragment]:before,
                             > [attr-chordi='${chordi - 1}'][com-letter-chorded='pre'] [word-fragment]:before,
                             > [attr-chordi='${chordi - 1}'][com-letter-chorded='post']:after {
-                              ${content}${highlights}
+                              ${contentCss}${highlights}
                               text-decoration-line: underline;
                             }
 
                             > [attr-chordi='${chordi - 1}'][com-letter-chorded='pre'] [word-fragment]:after {
-                              ${content}
+                              ${contentCss}
                             }
 
                             > [attr-chordi='${chordi}']:not([com-letter-chorded='post']) {
@@ -154,7 +155,7 @@ export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = fals
                               }
 
                               [word-fragment]:after {
-                                ${content}
+                                ${contentCss}
                               }
                             }
                           `);

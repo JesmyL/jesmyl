@@ -3,8 +3,10 @@ import { BibleBookTranslates, bibleLowerBooks, bibleTitles, translateDescription
 import { makeRegExp } from 'regexpert';
 import { BibleTranslateName } from 'shared/api';
 import { cmComCommentHeadBibleAddressRegExp } from './commentHeadBibleAddressRegExp';
-import { cmComCommentMakePseudoCommentContentAccentsCss } from './makePseudoCommentContentAccentsCss';
-import { cmComCommentMakePseudoCommentContentPropCss } from './makePseudoCommentContentPropCss';
+import {
+  cmComCommentMakePseudoCommentContentAccentsCss,
+  cmComCommentMakePseudoCommentContentPropCss,
+} from './makePseudoComment.props';
 
 let titlesMap: Map<string, number>;
 let titlesLine: string[];

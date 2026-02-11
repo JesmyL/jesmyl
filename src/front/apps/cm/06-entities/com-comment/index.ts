@@ -9,3 +9,5 @@ export * from './ui/ForExample';
 export * from './ui/TheComCommentBibleTextsInfo';
 
 export * from './state/atoms';
+
+export * from './utils/makePseudoComment.props';
