@@ -20,11 +20,9 @@ export const cmComCommentMakeContentTextWithoutHighlightMarkers = (text: string)
 };
 
 export const cmComCommentMakePseudoCommentContentPropCss = (text: string, pre = '', post = '') => {
-  return `
-    content: ${pre}'${cmComCommentMakePseudoElementCorrectContentText(
-      cmComCommentMakeContentTextWithoutHighlightMarkers(text),
-    )}'${post};
-  `;
+  return `content:${pre}'${cmComCommentMakePseudoElementCorrectContentText(
+    cmComCommentMakeContentTextWithoutHighlightMarkers(text),
+  )}'${post};`;
 };
 
 const replaces: Record<string, string> = {
