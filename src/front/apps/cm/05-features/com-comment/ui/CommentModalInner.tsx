@@ -14,6 +14,7 @@ import {
 } from '$cm/entities/com-comment';
 import { CmComOrder } from '$cm/entities/com-order';
 import { CmCom } from '$cm/ext';
+import { CmLineCommentConstructorButton } from '$cm/features/LineCommentConstructorButton';
 import { cmConstantsConfigAtom, cmIDB, cmIsShowMyCommentsAtom } from '$cm/shared/state';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
@@ -40,6 +41,7 @@ export const CmComCommentModalInner = ({ com }: { com: CmCom }) => {
   const registeredAltKeys = useAtomValue(cmComCommentRegisteredAltKeysAtom);
 
   if (ordSelectorId === null) return;
+  const isHeadComment = ordSelectorId === CmComCommentBlockSpecialSelector.Head;
 
   cmComCommentRegisteredAltKeysAtom.do.init();
 
@@ -65,6 +67,13 @@ export const CmComCommentModalInner = ({ com }: { com: CmCom }) => {
           <span className="text-x3 ellipsis">{com.name}</span>
         </span>
 
+        {isHeadComment || (
+          <CmLineCommentConstructorButton
+            ordSelector={ordSelectorId}
+            com={com}
+          />
+        )}
+
         <CmComCommentCommentTools
           com={com}
           addItems={[
@@ -79,15 +88,17 @@ export const CmComCommentModalInner = ({ com }: { com: CmCom }) => {
               </Button>
             </DropdownMenu.Item>,
 
-            <DropdownMenu.Item key="TextFont">
-              <Button
-                icon="TextFont"
-                onClick={() => cmComCommentRedactOrdSelectorIdAtom.set(CmComCommentBlockSpecialSelector.Head)}
-                className="w-full"
-              >
-                Редактировать главный коммент
-              </Button>
-            </DropdownMenu.Item>,
+            isHeadComment || (
+              <DropdownMenu.Item key="TextFont">
+                <Button
+                  icon="TextFont"
+                  onClick={() => cmComCommentRedactOrdSelectorIdAtom.set(CmComCommentBlockSpecialSelector.Head)}
+                  className="w-full"
+                >
+                  Редактировать главный коммент
+                </Button>
+              </DropdownMenu.Item>
+            ),
           ]}
         />
       </ModalHeader>

@@ -1,6 +1,5 @@
 export * from './lib/useCheckIsComCommentIncludesBibleAddress';
 export * from './lib/useCmComCommentBlock';
-export * from './lib/useComBlockCommentCssStyles';
 export * from './lib/useComCommentBlock';
 export * from './lib/useComCommentBlockFastReactions';
 export * from './lib/useTrySendComCommentBlocks';
@@ -10,4 +9,7 @@ export * from './ui/TheComCommentBibleTextsInfo';
 
 export * from './state/atoms';
 
+export * from './utils/cmComCommentTextRulesDetector';
 export * from './utils/makePseudoComment.props';
+
+export * from './model/common';

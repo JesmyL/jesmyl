@@ -26,3 +26,18 @@ export const getParentNodeWithClassName = <ClassName extends string>(
 
   return { foundClassNames, node };
 };
+
+export const getParentNodeWithAttributeName = (event: { target: unknown }, stopAttributeName: string) => {
+  let node = event.target as HTMLElement | null;
+  let attr: string | null = null;
+
+  while (node) {
+    if (node.hasAttribute(stopAttributeName)) {
+      attr = node.getAttribute(stopAttributeName);
+      break;
+    }
+    node = node.parentElement;
+  }
+
+  return { node, attr };
+};

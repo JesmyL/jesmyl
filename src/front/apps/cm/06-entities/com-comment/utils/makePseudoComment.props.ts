@@ -10,7 +10,8 @@ export const cmComCommentPseudoCommentContentAccentsKind = (text: string) => {
   return 1;
 };
 
-export const cmComCommentAccentsColorList = [null, `color: var(--color-x7);`, `color: var(--color-xKO);`];
+export const cmComCommentAccentsColorList = [null, `color: var(--color-x7);`, `color: var(--color-xKO);`] as const;
+export const cmComCommentAccentsColorClassNameList = [null, `text-x7`, `text-xKO`] as const;
 
 export const cmComCommentMakePseudoCommentContentAccentsColorCss = (
   text: string,
@@ -20,13 +21,12 @@ export const cmComCommentMakePseudoCommentContentAccentsColorCss = (
   elseCss ??
   `opacity: var(--comment-opacity);`;
 
-export const cmComCommentTrimHighlightMarkers = (text: string) =>
-  text.slice(cmComCommentPseudoCommentContentAccentsKind(text));
+export const cmComCommentTrimHighlightMarkers = (text: string) => {
+  return text.startsWith('.') ? text.slice(1) : text.slice(cmComCommentPseudoCommentContentAccentsKind(text));
+};
 
 export const cmComCommentMakePseudoCommentContentPropCss = (text: string, pre = '', post = '') => {
-  return `content:${pre}'${cmComCommentMakePseudoElementCorrectContentText(
-    cmComCommentTrimHighlightMarkers(text),
-  )}'${post};`;
+  return `content:${pre}${cmComCommentMakePseudoElementCorrectContentText(text)}${post};`;
 };
 
 const replaces: Record<string, string> = {
@@ -36,5 +36,8 @@ const replaces: Record<string, string> = {
 };
 const replaceContentParts = (all: string) => replaces[all];
 
-export const cmComCommentMakePseudoElementCorrectContentText = (text: string) =>
-  text?.replace(makeRegExp("/['\\\\\\n]/g"), replaceContentParts);
+export const cmComCommentMakePseudoElementCorrectContentText = (text: string) => {
+  text = text?.replace(makeRegExp("/[\\\\'\\n]/g"), replaceContentParts);
+
+  return text ? `'${text}'` : '';
+};

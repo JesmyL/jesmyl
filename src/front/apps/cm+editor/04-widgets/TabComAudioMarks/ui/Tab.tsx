@@ -28,7 +28,6 @@ import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { CmComAudioMarkPackTime, HttpLink } from 'shared/api';
 import { toast } from 'sonner';
-import styled, { RuleSet } from 'styled-components';
 import { CmEditorTabComAudioMarksShowSlideListButton } from './ShowSlideListButton';
 
 let srcOnEditAtom: Atom<null | HttpLink>;
@@ -41,7 +40,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
   const editSrc = useAtomValue(srcOnEditAtom);
   const trackMarks = cmIDB.useAudioTrackMarks(editSrc);
   const marksOnUpdating = useAtomValue(cmComEditorAudioMarksEditPacksAtom);
-  const { commentCss } = useCmComCommentBlockCss(ccom, true);
+  const { commentCssStr } = useCmComCommentBlockCss(ccom, true);
 
   const audioMarkControl = useCmComOrderAudioMarkControlButtons(
     preSwitchTimeAtom,
@@ -181,8 +180,9 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
 
                   {audioMarkControl.afterTargetOrdwOtherPlayButtonNodeDict.before}
 
-                  <StyledComOrders
-                    $commentStyles={commentCss}
+                  <style>{commentCssStr}</style>
+
+                  <CmComOrderList
                     chordVisibleVariant={ChordVisibleVariant.None}
                     fontSize={20}
                     com={ccom}
@@ -254,7 +254,3 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
     </div>
   );
 };
-
-const StyledComOrders = styled(CmComOrderList)<{ $commentStyles?: RuleSet<object> | string }>`
-  ${props => props.$commentStyles}
-`;

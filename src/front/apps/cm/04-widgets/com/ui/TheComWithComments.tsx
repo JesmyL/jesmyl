@@ -11,7 +11,6 @@ import { cmIsShowMyCommentsAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
 import { itNIt } from 'shared/utils';
-import styled, { RuleSet } from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 
 type Props = {
@@ -37,7 +36,7 @@ const Content = (props: Props) => {
   const isShowMyComments = useAtomValue(cmIsShowMyCommentsAtom);
   const isCommentRedactorIsOpen = useDebounceValue(useAtomValue(cmComCommentRedactOrdSelectorIdAtom));
 
-  const { commentCss, isThereUnsettedTranslate, isThereCorrectBibleText } = useCmComCommentBlockCss(
+  const { commentCssStr, isThereUnsettedTranslate, isThereCorrectBibleText } = useCmComCommentBlockCss(
     props.com,
     !isShowMyComments || isCommentRedactorIsOpen != null,
   );
@@ -45,6 +44,8 @@ const Content = (props: Props) => {
 
   return (
     <>
+      <style>{commentCssStr}</style>
+
       <div
         className="flex gap-3"
         onClick={propagationStopper}
@@ -58,22 +59,14 @@ const Content = (props: Props) => {
         )}
       </div>
 
-      <StyledContent $commentStyles={commentCss}>
-        <div
-          className={twMerge('com-orders-with-comments', isExpandFirstComment && 'expand-first-comment-bible-texts')}
-        >
-          {props.beforeCommentsNode}
-          <span className="comment-holder" />
-          <span className="comment-holder" />
-          <span className="comment-holder" />
-          <span className="comment-holder" />
-          {props.children}
-        </div>
-      </StyledContent>
+      <div className={twMerge('com-orders-with-comments', isExpandFirstComment && 'expand-first-comment-bible-texts')}>
+        {props.beforeCommentsNode}
+        <span className="comment-holder" />
+        <span className="comment-holder" />
+        <span className="comment-holder" />
+        <span className="comment-holder" />
+        {props.children}
+      </div>
     </>
   );
 };
-
-const StyledContent = styled.div<{ $commentStyles?: RuleSet<object> | string }>`
-  ${props => props.$commentStyles}
-`;
