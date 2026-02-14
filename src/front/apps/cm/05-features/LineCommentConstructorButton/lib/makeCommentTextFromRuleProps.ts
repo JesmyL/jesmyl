@@ -25,7 +25,7 @@ export const makeCmLineCommentConstructorButtonCommentTextFromRuleProps = (
 
       if ('blocki' in props) {
         commentBlocks[props.blocki] ??= '';
-        commentBlocks[props.blocki] += makeCorrectText(props.kind, props.text);
+        commentBlocks[props.blocki] += makeCorrectText(props.kind, props.text, false);
       } else if ('wordi' in props) {
         const wordKey = `l${props.linei}w${props.wordi}` as const;
 
@@ -77,14 +77,13 @@ export const makeCmLineCommentConstructorButtonCommentTextFromRuleProps = (
         if (!propsKeysSet.has(lineKey)) continue;
         propsKeysSet.delete(lineKey);
 
-        lineCommentsText += `\n${props.linei + 1}${makeCorrectText(props.kind, props.text)}`;
+        lineCommentsText += `\n${props.linei + 1}${makeCorrectText(props.kind, props.text, false)}`;
       }
     }
 
     commentBlocks[0] ??= '';
-    commentBlocks[0] += `\n\n${lineCommentsText.trim()}`;
-    commentBlocks[0] += `\n\n${wordCommentsText.trim()}`;
-    commentBlocks[0] = commentBlocks[0].trim();
+    if (lineCommentsText) commentBlocks[0] += `\n\n${lineCommentsText.trim()}`;
+    if (wordCommentsText) commentBlocks[0] += `\n\n${wordCommentsText.trim()}`;
 
     return commentBlocks;
   } catch (e) {
@@ -103,13 +102,17 @@ const replaceChordEscapes = {
 const chordEscapesReplacer = (all: string) => replaceChordEscapes[all as never];
 const replaceChordInText = (text: string) => text.replace(makeRegExp('/(?<!\\\\)[ }]/g'), chordEscapesReplacer);
 
-const makeCorrectText = (kind: 0 | 1 | 2 | nil, text: string) => {
+const makeCorrectText = (kind: 0 | 1 | 2 | nil, text: string, isSimpleStartCharEscape = true) => {
   text = text.trim();
 
-  if (text[0] === '!' || text[0] === '.') text = `.${text}`;
+  if ((isSimpleStartCharEscape ? simpleStartCharForEscapeSet : startCharForEscapeSet).has(text[0])) text = `.${text}`;
 
   return `${makeAccentMarker(kind)}${text}`;
 };
+
+const simpleStartCharForEscape = '.!';
+const simpleStartCharForEscapeSet = new Set(simpleStartCharForEscape);
+const startCharForEscapeSet = new Set(`0123456789${simpleStartCharForEscape}`);
 
 const makeTextRule = (
   propsDict: CmLineCommentConstructorButtonRulePropsDict,
