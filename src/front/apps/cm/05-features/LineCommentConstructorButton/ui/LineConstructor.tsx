@@ -11,7 +11,7 @@ export const CmLineCommentConstructorButtonLineConstructor = ({ linei }: { linei
       <div className="rounded bg-x2 my-10 p-3">
         <div>Строка {linei + 1}</div>
         <CmLineCommentConstructorButtonTextWithAccentRedactor
-          blockKey={`${linei}`}
+          blockKey={`l${linei}`}
           label="Коммент для строки"
           blockPropsHolder={propsDict}
           getDefaultPropsDict={() => ({

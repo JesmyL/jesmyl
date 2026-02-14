@@ -13,6 +13,7 @@ export const CmLineCommentConstructorButtonTextWithAccentRedactor = <
   blockPropsHolder: { dict?: CmLineCommentConstructorButtonRulePropsDict };
   getDefaultPropsDict: () => CmLineCommentConstructorButtonRulePropsDict[Key];
   disabled?: boolean;
+  multiline?: boolean;
 }) => {
   return (
     <div className="mt-5">

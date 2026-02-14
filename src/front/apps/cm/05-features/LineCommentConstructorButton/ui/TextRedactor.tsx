@@ -12,6 +12,7 @@ export const CmLineCommentConstructorButtonTextRedactor = <Key extends CmLineCom
   blockPropsHolder: { dict?: CmLineCommentConstructorButtonRulePropsDict };
   getDefaultPropsDict: () => CmLineCommentConstructorButtonRulePropsDict[Key];
   disabled?: boolean;
+  multiline?: boolean;
 }) => {
   const updateDebounce = useDebounceCallback();
 
@@ -21,6 +22,7 @@ export const CmLineCommentConstructorButtonTextRedactor = <Key extends CmLineCom
       defaultValue={props.blockPropsHolder.dict?.[props.blockKey]?.text}
       disabled={props.disabled}
       strongDefaultValue
+      multiline={props.multiline}
       onInput={value =>
         updateDebounce(() => {
           cmLineCommentConstructorButtonRulePropsDictAtom.do.update(dict => {

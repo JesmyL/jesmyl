@@ -34,14 +34,15 @@ export const CmLineCommentConstructorButtonChordConstructor = ({
                 cmLineCommentConstructorButtonRulePropsDictAtom.do.update(dict => {
                   if (dict.dict == null) return;
 
-                  const keyPrefix = `${linei}:${wordi}/${chordi}` as const;
+                  const wordKeyPrefix = `l${linei}w${wordi}` as const;
+                  const keyPrefix = `${wordKeyPrefix}c${chordi}` as const;
 
                   delete dict.dict[`${keyPrefix}^`];
                   delete dict.dict[`${keyPrefix}<`];
                   delete dict.dict[`${keyPrefix}>`];
 
-                  dict.wordChordiMaxDict[`${linei}:${wordi}`] ??= 1;
-                  dict.wordChordiMaxDict[`${linei}:${wordi}`]!--;
+                  dict.wordChordiMaxDict[wordKeyPrefix] ??= 1;
+                  dict.wordChordiMaxDict[wordKeyPrefix]--;
                 });
               }}
             />
@@ -49,7 +50,7 @@ export const CmLineCommentConstructorButtonChordConstructor = ({
         </div>
 
         <CmLineCommentConstructorButtonAccentKindRedactor
-          blockKey={`${linei}:${wordi}/${chordi}^`}
+          blockKey={`l${linei}w${wordi}c${chordi}^`}
           blockPropsHolder={propsDict}
           getDefaultPropsDict={() => ({
             linei,
@@ -64,7 +65,7 @@ export const CmLineCommentConstructorButtonChordConstructor = ({
 
         <div className="flex gap-2">
           <CmLineCommentConstructorButtonTextRedactor
-            blockKey={`${linei}:${wordi}/${chordi}<`}
+            blockKey={`l${linei}w${wordi}c${chordi}<`}
             blockPropsHolder={propsDict}
             label="До"
             getDefaultPropsDict={() => ({
@@ -79,7 +80,7 @@ export const CmLineCommentConstructorButtonChordConstructor = ({
           />
 
           <CmLineCommentConstructorButtonTextRedactor
-            blockKey={`${linei}:${wordi}/${chordi}^`}
+            blockKey={`l${linei}w${wordi}c${chordi}^`}
             blockPropsHolder={propsDict}
             label="Вместо"
             getDefaultPropsDict={() => ({
@@ -94,7 +95,7 @@ export const CmLineCommentConstructorButtonChordConstructor = ({
           />
 
           <CmLineCommentConstructorButtonTextRedactor
-            blockKey={`${linei}:${wordi}/${chordi}>`}
+            blockKey={`l${linei}w${wordi}c${chordi}>`}
             blockPropsHolder={propsDict}
             label="После"
             getDefaultPropsDict={() => ({

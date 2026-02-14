@@ -108,7 +108,7 @@ export const CmComCommentModalInner = ({ com }: { com: CmCom }) => {
           isShowComments ? (
             <>
               <ModalBody>
-                {isKindComments && !ordNN ? (
+                {isKindComments ? (
                   <CmComCommentKindComments
                     altCommentKey={altCommentKey}
                     com={com}

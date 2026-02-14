@@ -7,13 +7,14 @@ import {
 
 export type CmLineCommentConstructorButtonPropKey = keyof CmLineCommentConstructorButtonRulePropsDict;
 
-export type CmLineCommentConstructorButtonPropsDictWordRulePropsKey = `${number}:${number}`;
+export type CmLineCommentConstructorButtonPropsDictWordRulePropsKey = `l${number}w${number}`;
+export type CmLineCommentConstructorButtonPropsDictBlockRulePropsKey = `b${number}`;
 export type CmLineCommentConstructorButtonPropsDictChordRulePropsKey =
-  `${CmLineCommentConstructorButtonPropsDictWordRulePropsKey}/${number}`;
+  `${CmLineCommentConstructorButtonPropsDictWordRulePropsKey}c${number}`;
 
 export type CmLineCommentConstructorButtonRulePropsDict = Partial<
-  Record<`[${number}]`, CmComCommentTextDetectorBlockRuleProps> &
-    Record<`${number}`, CmComCommentTextDetectorLineRuleProps> &
+  Record<CmLineCommentConstructorButtonPropsDictBlockRulePropsKey, CmComCommentTextDetectorBlockRuleProps> &
+    Record<`l${number}`, CmComCommentTextDetectorLineRuleProps> &
     Record<
       `${CmLineCommentConstructorButtonPropsDictWordRulePropsKey}${'<' | '>' | '^'}`,
       CmComCommentTextDetectorWordRuleProps

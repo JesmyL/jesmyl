@@ -16,7 +16,7 @@ export const CmLineCommentConstructorButtonWordConstructor = ({ linei, wordi }: 
 
         <CmLineCommentConstructorButtonAccentKindRedactor
           blockPropsHolder={propsDict}
-          blockKey={`${linei}:${wordi}^`}
+          blockKey={`l${linei}w${wordi}^`}
           getDefaultPropsDict={() => ({
             place: '^',
             kind: 0,
@@ -28,8 +28,8 @@ export const CmLineCommentConstructorButtonWordConstructor = ({ linei, wordi }: 
         />
 
         <CmLineCommentConstructorButtonBlockRedactor
-          preKey={`${linei}:${wordi}<`}
-          postKey={`${linei}:${wordi}>`}
+          preKey={`l${linei}w${wordi}<`}
+          postKey={`l${linei}w${wordi}>`}
           blockPropsHolder={propsDict}
           preLabel="Текст до"
           postLabel="Текст после"
@@ -44,7 +44,7 @@ export const CmLineCommentConstructorButtonWordConstructor = ({ linei, wordi }: 
         />
       </div>
 
-      {Array.from({ length: propsDict.wordChordiMaxDict[`${linei}:${wordi}`] ?? 0 }, () => 0).map(
+      {Array.from({ length: propsDict.wordChordiMaxDict[`l${linei}w${wordi}`] ?? 0 }, () => 0).map(
         (_, chordi, chorda) => {
           return (
             <CmLineCommentConstructorButtonChordConstructor
@@ -65,8 +65,8 @@ export const CmLineCommentConstructorButtonWordConstructor = ({ linei, wordi }: 
           cmLineCommentConstructorButtonRulePropsDictAtom.do.update(dict => {
             if (dict.dict == null) return;
 
-            const chordi = (propsDict.wordChordiMaxDict[`${linei}:${wordi}`] ?? -1) + 1;
-            const keyPrefix = `${linei}:${wordi}/${chordi}` as const;
+            const chordi = (propsDict.wordChordiMaxDict[`l${linei}w${wordi}`] ?? -1) + 1;
+            const keyPrefix = `l${linei}w${wordi}c${chordi}` as const;
 
             dict.dict[`${keyPrefix}^`] = {
               place: '^',
@@ -78,8 +78,8 @@ export const CmLineCommentConstructorButtonWordConstructor = ({ linei, wordi }: 
               wordi,
             };
 
-            dict.wordChordiMaxDict[`${linei}:${wordi}`] ??= 0;
-            dict.wordChordiMaxDict[`${linei}:${wordi}`]!++;
+            dict.wordChordiMaxDict[`l${linei}w${wordi}`] ??= 0;
+            dict.wordChordiMaxDict[`l${linei}w${wordi}`]!++;
           });
         }}
       >

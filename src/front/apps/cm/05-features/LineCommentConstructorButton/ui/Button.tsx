@@ -37,16 +37,16 @@ export const CmLineCommentConstructorButton = ({
             cmComCommentTextRulesDetector(commentTexts, props => {
               let key: CmLineCommentConstructorButtonPropKey;
 
-              if ('blocki' in props) key = `[${props.blocki}]`;
+              if ('blocki' in props) key = `b${props.blocki}`;
               else if ('chordi' in props) {
-                const wordKey = `${props.linei}:${props.wordi}` as const;
+                const wordKey = `l${props.linei}w${props.wordi}` as const;
 
                 wordChordiMaxDict[wordKey] ??= 0;
                 wordChordiMaxDict[wordKey]++;
 
-                key = `${wordKey}/${props.chordi}${props.place}`;
-              } else if ('wordi' in props) key = `${props.linei}:${props.wordi}${props.place}`;
-              else key = `${props.linei}`;
+                key = `${wordKey}c${props.chordi}${props.place}`;
+              } else if ('wordi' in props) key = `l${props.linei}w${props.wordi}${props.place}`;
+              else key = `l${props.linei}`;
 
               if (!(key in propsDict)) propsDict[key] = props as never;
             });

@@ -25,15 +25,15 @@ export const makeCmLineCommentConstructorButtonCommentTextFromRuleProps = (
 
       if ('blocki' in props) {
         commentBlocks[props.blocki] ??= '';
-        commentBlocks[props.blocki] += props.text;
+        commentBlocks[props.blocki] += makeCorrectText(props.kind, props.text);
       } else if ('wordi' in props) {
-        const wordKey = `${props.linei}:${props.wordi}` as const;
+        const wordKey = `l${props.linei}w${props.wordi}` as const;
 
         if (
           'chordi' in props
-            ? !propsKeysSet.has(`${wordKey}/${props.chordi}^`) &&
-              !propsKeysSet.has(`${wordKey}/${props.chordi}<`) &&
-              !propsKeysSet.has(`${wordKey}/${props.chordi}>`)
+            ? !propsKeysSet.has(`${wordKey}c${props.chordi}^`) &&
+              !propsKeysSet.has(`${wordKey}c${props.chordi}<`) &&
+              !propsKeysSet.has(`${wordKey}c${props.chordi}>`)
             : !propsKeysSet.has(`${wordKey}${props.place}`)
         )
           continue;
@@ -48,7 +48,7 @@ export const makeCmLineCommentConstructorButtonCommentTextFromRuleProps = (
         const postChordRulesList: string[] = [];
 
         for (let chordi = chordsCount; chordi >= 0; chordi--) {
-          const chordKey = `${wordKey}/${chordi}` as const;
+          const chordKey = `${wordKey}c${chordi}` as const;
 
           propsKeysSet.delete(`${chordKey}^`);
           propsKeysSet.delete(`${chordKey}<`);
@@ -72,7 +72,7 @@ export const makeCmLineCommentConstructorButtonCommentTextFromRuleProps = (
 
         wordCommentsText += `\n${props.linei + 1}:${props.wordi + 1}${accentMarker}${makeTextRule(propsDict, wordKey, '<')}${makeTextRule(propsDict, wordKey, '>')}${makeChordRuleLine('<', preChordRulesList)}${makeChordRuleLine('^', replaceChordRulesList)}${makeChordRuleLine('>', postChordRulesList)}`;
       } else {
-        const lineKey = `${props.linei}` as const;
+        const lineKey = `l${props.linei}` as const;
 
         if (!propsKeysSet.has(lineKey)) continue;
         propsKeysSet.delete(lineKey);

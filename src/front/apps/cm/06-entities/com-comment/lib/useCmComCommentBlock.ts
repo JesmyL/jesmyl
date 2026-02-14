@@ -62,7 +62,11 @@ export const useCmComCommentUpdater = (comw: CmComWid) => {
       ordSelectorId: CmComCommentBlockSimpleSelector,
       altCommentKey: string | nil,
     ) => {
-      const texts = updater([...(takeCommentTexts(ordSelectorId) ?? [])]);
+      const prev = [...(takeCommentTexts(ordSelectorId) ?? [])];
+      const texts = updater(prev);
+
+      if (!Array.from({ length: Math.max(prev.length, texts.length) }).some((_, texti) => prev[texti] !== texts[texti]))
+        return;
 
       const isAltComment =
         altCommentKey != null &&

@@ -1,4 +1,5 @@
 import { getParentNodeWithAttributeName } from '#shared/lib/getParentNodeWithClassName';
+import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { mylib } from '#shared/lib/my-lib';
 import {
   cmComCommentCurrentOpenedAltKeyAtom,
@@ -10,10 +11,12 @@ import { ChordVisibleVariant, CmCom, CmComOrderList } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { CmComCommentBlockSimpleSelector, CmComOrderWid } from 'shared/api';
+import { itNUnd, retNull } from 'shared/utils';
 import styled, { css } from 'styled-components';
 import { makeCmLineCommentConstructorButtonCommentTextFromRuleProps } from '../lib/makeCommentTextFromRuleProps';
 import { cmLineCommentConstructorButtonRulePropsDictAtom } from '../state/atoms';
 import { CmLineCommentConstructorButtonLineConstructor } from './LineConstructor';
+import { CmLineCommentConstructorButtonTextWithAccentRedactor } from './TextWithAccentRedactor';
 import { CmLineCommentConstructorButtonWordConstructor } from './WordConstructor';
 
 type Selection = Partial<{ linei: number; wordi: number }>;
@@ -29,7 +32,7 @@ export const CmLineCommentConstructorButtonTextRulesConstructor = ({
   const chordHardLevel = useAtomValue(cmComChordHardLevelAtom);
   const propsDict = useAtomValue(cmLineCommentConstructorButtonRulePropsDictAtom);
   const solidOrdContainerRef = useRef<HTMLDivElement>(null);
-  const updateComment = useCmComCommentUpdater(com.wid);
+  const updateCommentRef = useActualRef(useCmComCommentUpdater(com.wid));
   const altCommentKeys = useAtomValue(cmComCommentCurrentOpenedAltKeyAtom);
   const altCommentKey = altCommentKeys[com.wid] ?? altCommentKeys.last;
 
@@ -42,7 +45,7 @@ export const CmLineCommentConstructorButtonTextRulesConstructor = ({
     useMemo(
       () => ({
         ordw: ordSelector,
-        propsList: mylib.values(propsDict.dict!).filter(props => props !== undefined && 'linei' in props),
+        propsList: mylib.values(propsDict.dict!).filter(itNUnd),
       }),
       [ordSelector, propsDict.dict],
     ),
@@ -51,8 +54,9 @@ export const CmLineCommentConstructorButtonTextRulesConstructor = ({
   useEffect(() => {
     const dict = propsDict.dict;
     if (dict == null) return;
+
     const timeout = setTimeout(async () => {
-      updateComment(
+      updateCommentRef.current(
         () => makeCmLineCommentConstructorButtonCommentTextFromRuleProps(dict, propsDict.wordChordiMaxDict),
         ordSelector,
         altCommentKey,
@@ -60,10 +64,36 @@ export const CmLineCommentConstructorButtonTextRulesConstructor = ({
     }, 1000);
 
     return () => clearTimeout(timeout);
-  }, [altCommentKey, com.wid, ordSelector, propsDict.dict, propsDict.wordChordiMaxDict, updateComment]);
+  }, [altCommentKey, com.wid, ordSelector, propsDict.dict, propsDict.wordChordiMaxDict, updateCommentRef]);
 
   return (
     <>
+      {Array.from(
+        {
+          length: Math.min(
+            3,
+            +!!propsDict.dict?.b0?.text + +!!propsDict.dict?.b1?.text + +!!propsDict.dict?.b2?.text + 1,
+          ),
+        },
+        retNull,
+      ).map((_, blocki) => {
+        return (
+          <CmLineCommentConstructorButtonTextWithAccentRedactor
+            key={blocki}
+            blockKey={`b${blocki}`}
+            label={`Коммент №${blocki + 1}`}
+            blockPropsHolder={propsDict}
+            multiline
+            getDefaultPropsDict={() => ({
+              blocki,
+              kind: 0,
+              rate: blocki,
+              text: '',
+            })}
+          />
+        );
+      })}
+
       <StyledSolidOrdContainer
         ref={solidOrdContainerRef}
         $sel={selection}
