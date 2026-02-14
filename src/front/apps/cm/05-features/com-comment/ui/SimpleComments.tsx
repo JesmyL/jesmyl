@@ -32,6 +32,7 @@ export const CmComCommentSimpleComments = ({
                 async () =>
                   updateComment(
                     texts => {
+                      texts = [...texts];
                       texts[linei] = value;
                       return texts;
                     },
