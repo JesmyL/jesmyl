@@ -146,8 +146,8 @@ export class CmComTexts extends CmComChords {
   };
 
   private _replaceRepeats = (() => {
-    const startFlagContent = '[*{';
-    const endFlagContent = ']*}';
+    const startFlagContent = '[*{' as const;
+    const endFlagContent = ']*}' as const;
 
     const escapedStartFlagContent = escapeRegExpSymbols(startFlagContent);
     const escapedEndFlagContent = escapeRegExpSymbols(endFlagContent);
@@ -177,11 +177,9 @@ export class CmComTexts extends CmComChords {
           const leadMark = lead.trim();
 
           if (startSlashes.length !== endSlashes.length) {
-            if (startSlashes.length + 1 === endSlashes.length) {
-              return `\n${leadMark}${beforeContent}${startFlagContent.repeat(startSlashes.length + 1)}${content}${endFlagContent.repeat(startSlashes.length + 1)}${endSlashes}`;
-            }
+            const startRepeat = startSlashes.length + 1;
 
-            throw '';
+            return `\n${leadMark}${beforeContent}${startFlagContent.repeat(startRepeat)}${content}${endFlagContent.repeat(startRepeat)}${endSlashes}`;
           }
 
           let repeatedContent = '';
