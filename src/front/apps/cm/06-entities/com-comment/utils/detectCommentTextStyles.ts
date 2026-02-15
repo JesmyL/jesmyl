@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { CmComOrderWid } from 'shared/api';
+import { CmComCommentBlockSimpleSelector } from 'shared/api';
 import { RuleSet, css } from 'styled-components';
 import { cmComCommentHeaderHolderSelectors } from '../const/commentHolderSelectors';
 import { CmComCommentTextDetectorChordRuleProps, CmComCommentTextDetectorRuleProps } from '../model/common';
@@ -10,7 +10,7 @@ import {
 } from './makePseudoComment.props';
 import { cmComCommentPseudoCommentStaticPropsCss } from './pseudoCommentStaticPropsCss';
 
-export const cmComCommentDetectCommentTextStyles = (ordSelectorId: CmComOrderWid) => {
+export const cmComCommentDetectCommentTextStyles = (ordSelectorId: CmComCommentBlockSimpleSelector) => {
   const styles: RuleSet<object>[] = [];
   const lineWordStyleDict: PRecord<`${number}/${number}`, (RuleSet<object> | string | nil)[]> = {};
   const sidePlacedChordsOnWait: PRecord<

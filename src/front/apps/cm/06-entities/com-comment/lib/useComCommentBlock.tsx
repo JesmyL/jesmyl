@@ -4,7 +4,7 @@ import { cmComIsComMiniAnchorAtom } from '$cm/entities/index';
 import { CmCom } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
-import { CmComCommentBlockSpecialSelector, CmComOrderWid } from 'shared/api';
+import { CmComCommentBlockSimpleSelector, CmComCommentBlockSpecialSelector } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 import { css } from 'styled-components';
@@ -23,7 +23,7 @@ import {
 export const useCmComCommentBlockCss = (
   com: CmCom,
   isSetHashesOnly = false,
-  customPropsForOrder?: { ordw: CmComOrderWid; propsList: CmComCommentTextDetectorRuleProps[] },
+  customPropsForOrder?: { selector: CmComCommentBlockSimpleSelector; propsList: CmComCommentTextDetectorRuleProps[] },
 ) => {
   const [styles, setStyles] = useState<
     Partial<{
@@ -45,7 +45,7 @@ export const useCmComCommentBlockCss = (
       let cssContentList;
 
       if (customPropsForOrder) {
-        const { onDetect, styles } = cmComCommentDetectCommentTextStyles(customPropsForOrder.ordw);
+        const { onDetect, styles } = cmComCommentDetectCommentTextStyles(customPropsForOrder.selector);
 
         customPropsForOrder.propsList.forEach(onDetect);
 
@@ -102,19 +102,17 @@ export const useCmComCommentBlockCss = (
           const selector = `> ${cmComCommentHeaderHolderSelectors[linei + 1]}`;
 
           return css`
-            .com-orders-with-comments {
-              ${selector} {
-                ${cmComCommentPseudoCommentStaticPropsCss}
-                ${accentsCss}
-              }
+            ${selector} {
+              ${cmComCommentPseudoCommentStaticPropsCss}
+              ${accentsCss}
+            }
 
-              &.expand-first-comment-bible-texts ${selector} {
-                ${commentWithTextCss}
-              }
+            &.expand-first-comment-bible-texts ${selector} {
+              ${commentWithTextCss}
+            }
 
-              &:not(.expand-first-comment-bible-texts) ${selector} {
-                ${commentWithTextLinksOnlyCss}
-              }
+            &:not(.expand-first-comment-bible-texts) ${selector} {
+              ${commentWithTextLinksOnlyCss}
             }
           `;
         }),
@@ -171,7 +169,7 @@ export const useCmComCommentBlockCss = (
       return {
         isThereUnsettedTranslate,
         isThereCorrectBibleText,
-        commentCssStr: `.com-ord-list{${joinRecursively(styleCss)}`,
+        commentCssStr: `.com-orders-with-comments{${joinRecursively(styleCss)}`,
       };
     })()
       .then(styles => setStyles(styles))

@@ -6,6 +6,7 @@ import { cmComCommentHeadBibleAddressRegExp } from './commentHeadBibleAddressReg
 import {
   cmComCommentMakePseudoCommentContentAccentsColorCss,
   cmComCommentMakePseudoCommentContentPropCss,
+  cmComCommentTrimHighlightMarkers,
 } from './makePseudoComment.props';
 
 let titlesMap: Map<string, number>;
@@ -140,8 +141,12 @@ export const cmComCommentMakeStartCommentCss = async (
     });
 
   return {
-    commentWithTextCss: cmComCommentMakePseudoCommentContentPropCss(makeStartComment()),
-    commentWithTextLinksOnlyCss: cmComCommentMakePseudoCommentContentPropCss(makeStartComment(true)),
+    commentWithTextCss: cmComCommentMakePseudoCommentContentPropCss(
+      cmComCommentTrimHighlightMarkers(makeStartComment()),
+    ),
+    commentWithTextLinksOnlyCss: cmComCommentMakePseudoCommentContentPropCss(
+      cmComCommentTrimHighlightMarkers(makeStartComment(true)),
+    ),
     isThereUnsettedTranslate,
     isThereCorrectBibleText,
     accentsCss,

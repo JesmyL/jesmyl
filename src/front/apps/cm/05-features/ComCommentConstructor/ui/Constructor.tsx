@@ -1,12 +1,7 @@
 import { Button } from '#shared/components';
 import { getParentNodeWithAttributeName } from '#shared/lib/getParentNodeWithClassName';
-import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { mylib } from '#shared/lib/my-lib';
-import {
-  cmComCommentCurrentOpenedAltKeyAtom,
-  useCmComCommentBlockCss,
-  useCmComCommentUpdater,
-} from '$cm/entities/com-comment';
+import { cmComCommentCurrentOpenedAltKeyAtom, useCmComCommentBlockCss } from '$cm/entities/com-comment';
 import { CmComCommentAlternativeSelector } from '$cm/entities/ComCommentAlternativeSelector';
 import { CmComCommentSavedLocalMarker } from '$cm/entities/ComCommentSavedLocalMarker';
 import { CmComCommentTools } from '$cm/entities/ComCommentTools';
@@ -17,10 +12,9 @@ import { cmIsShowMyCommentsAtom } from '$cm/shared/state';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { Atom, useAtomValue } from 'atomaric';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { CmComCommentBlockSimpleSelector, CmComOrderWid } from 'shared/api';
+import { CmComCommentBlockSimpleSelector } from 'shared/api';
 import { itNUnd, retNull } from 'shared/utils';
 import styled, { css } from 'styled-components';
-import { makeCmComCommentConstructorCommentTextFromRuleProps } from '../lib/makeCommentTextFromRuleProps';
 import { CmComCommentConstructorLineConstructor } from './LineConstructor';
 import { CmComCommentConstructorTextWithAccentRedactor } from './TextWithAccentRedactor';
 import { CmComCommentConstructorWordConstructor } from './WordConstructor';
@@ -29,20 +23,17 @@ type Selection = Partial<{ linei: number; wordi: number }>;
 
 export const CmComCommentConstructorTextRulesConstructor = ({
   com,
-  ordSelector,
+  ordSelector: selector,
   isRedactAsTextAtom,
 }: {
   com: CmCom;
-  ordSelector: CmComOrderWid;
+  ordSelector: CmComCommentBlockSimpleSelector;
   isRedactAsTextAtom: Atom<boolean>;
 }) => {
   const fontSize = useAtomValue(cmComFontSizeAtom);
   const chordHardLevel = useAtomValue(cmComChordHardLevelAtom);
   const propsDict = useAtomValue(cmComCommentConstructorRulePropsDictAtom);
   const solidOrdContainerRef = useRef<HTMLDivElement>(null);
-  const updateCommentRef = useActualRef(useCmComCommentUpdater(com.wid));
-  const altCommentKeys = useAtomValue(cmComCommentCurrentOpenedAltKeyAtom);
-  const altCommentKey = altCommentKeys[com.wid] ?? altCommentKeys.last;
   const isShowComments = useAtomValue(cmIsShowMyCommentsAtom);
 
   const [selection, setSelection] = useState<Selection>({});
@@ -53,33 +44,18 @@ export const CmComCommentConstructorTextRulesConstructor = ({
     false,
     useMemo(
       () => ({
-        ordw: ordSelector,
+        selector,
         propsList: mylib.values(propsDict.dict!).filter(itNUnd),
       }),
-      [ordSelector, propsDict.dict],
+      [selector, propsDict.dict],
     ),
   );
 
   useEffect(() => {
-    const dict = propsDict.dict;
-    if (dict == null) return;
-
-    const timeout = setTimeout(async () => {
-      updateCommentRef.current(
-        () => makeCmComCommentConstructorCommentTextFromRuleProps(dict, propsDict.wordChordiMaxDict),
-        ordSelector,
-        altCommentKey,
-      );
-    }, 1000);
-
-    return () => clearTimeout(timeout);
-  }, [altCommentKey, com.wid, ordSelector, propsDict.dict, propsDict.wordChordiMaxDict, updateCommentRef]);
-
-  useEffect(() => {
     return cmComCommentCurrentOpenedAltKeyAtom.subscribe(() => {
-      updateCmComCommentConstructorRulePropsDict(com.wid, ordSelector);
+      updateCmComCommentConstructorRulePropsDict(com.wid, selector);
     });
-  }, [com.wid, ordSelector]);
+  }, [com.wid, selector]);
 
   return (
     <>
@@ -94,7 +70,7 @@ export const CmComCommentConstructorTextRulesConstructor = ({
 
       <CmComCommentSavedLocalMarker
         comw={com.wid}
-        ordSelectorId={ordSelector}
+        ordSelectorId={selector}
       />
       {!isShowComments ? (
         <div className="w-full h-full flex justify-center text-xKO">Комментарии скрыты</div>
@@ -129,7 +105,7 @@ export const CmComCommentConstructorTextRulesConstructor = ({
           <StyledSolidOrdContainer
             ref={solidOrdContainerRef}
             $sel={selection}
-            $ordSelector={ordSelector}
+            $ordSelector={selector}
             onClick={event => {
               const linei = getParentNodeWithAttributeName(event, 'solid-order-text-linei').attr;
 

@@ -1,5 +1,5 @@
 import { cmComCommentTextRulesDetector, takeCmComCommentTextBlock } from '$cm/entities/com-comment';
-import { CmComOrderWid, CmComWid } from 'shared/api';
+import { CmComCommentBlockSimpleSelector, CmComWid } from 'shared/api';
 import {
   CmComCommentConstructorPropKey,
   CmComCommentConstructorPropsDictWordRulePropsKey,
@@ -8,7 +8,10 @@ import {
 import { cmIDB } from '../state';
 import { cmComCommentConstructorRulePropsDictAtom } from '../state/com-comment.atoms';
 
-export const updateCmComCommentConstructorRulePropsDict = async (comw: CmComWid, ordSelector: CmComOrderWid) => {
+export const updateCmComCommentConstructorRulePropsDict = async (
+  comw: CmComWid,
+  ordSelector: CmComCommentBlockSimpleSelector,
+) => {
   const localCommentBlock = await cmIDB.tb.localComCommentBlocks.get(comw);
   const commentBlock = await cmIDB.tb.comCommentBlocks.get(comw);
 
@@ -35,5 +38,5 @@ export const updateCmComCommentConstructorRulePropsDict = async (comw: CmComWid,
     });
   }
 
-  cmComCommentConstructorRulePropsDictAtom.set({ dict: propsDict, wordChordiMaxDict });
+  cmComCommentConstructorRulePropsDictAtom.set({ dict: propsDict, wordChordiMaxDict, selector: ordSelector });
 };

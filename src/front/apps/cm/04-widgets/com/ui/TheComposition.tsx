@@ -16,11 +16,13 @@ import { cmComCommentRedactOrdSelectorIdAtom } from '$cm/entities/com-comment';
 import { CmComToolList, useCmComToolMigratableTop } from '$cm/entities/com-tool';
 import { cmComChordVisibleVariantAtom, cmComIsShowCatBindsInCompositionAtom } from '$cm/entities/index';
 import { CmComCommentModalInner } from '$cm/features/com-comment';
-import { CmComCommentConstructorTextRulesConstructor } from '$cm/features/ComCommentConstructor';
+import {
+  CmComCommentConstructorTextRulesConstructor,
+  useCmComCommentConstructorListenChanges,
+} from '$cm/features/ComCommentConstructor';
 import { Link } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
-import { CmComCommentBlockSpecialSelector } from 'shared/api';
 import { useCmComCompositionControls } from '../lib/useComCompositionControls';
 import { StyledCmComCompositionContainer } from '../style/Composition';
 import { CmComAudioPlayerInCompositionPage } from './AudioPlayer';
@@ -34,6 +36,8 @@ export function TheCmComComposition() {
   const chordVisibleVariant = useAtomValue(cmComChordVisibleVariantAtom);
   const comToolsNode = useCmComToolMigratableTop();
   const { list } = useCmComCurrentComPackContext();
+
+  useCmComCommentConstructorListenChanges(ccom?.wid);
 
   if (ccom == null) return <CmComNotFoundPage />;
 
@@ -101,8 +105,7 @@ export function TheCmComComposition() {
                     onClose={atom.reset}
                   >
                     {ordSelector =>
-                      ordSelector != null &&
-                      ordSelector !== CmComCommentBlockSpecialSelector.Head && (
+                      ordSelector != null && (
                         <CmComCommentConstructorTextRulesConstructor
                           com={ccom}
                           ordSelector={ordSelector}
