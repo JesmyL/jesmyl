@@ -1,3 +1,4 @@
+import { focusedInputElementAtom } from '#shared/lib/atoms/focusedInputElementAtom';
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
@@ -78,6 +79,8 @@ export const FullContent = <Value, TrustValue extends Value>(
 };
 
 const Swiped = ({ close, ...props }: { close: () => void } & HTMLAttributes<HTMLDivElement>) => {
+  const focusedInput = useAtomValue(focusedInputElementAtom);
+
   useEffect(() => {
     const closeAction: PropagationStopper = event => {
       event.stopPropagation();
@@ -93,7 +96,7 @@ const Swiped = ({ close, ...props }: { close: () => void } & HTMLAttributes<HTML
   return (
     <StyledContainerWrapper
       {...props}
-      {...swiper}
+      {...(focusedInput ? {} : swiper)}
     />
   );
 };
