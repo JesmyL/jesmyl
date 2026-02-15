@@ -2,8 +2,9 @@ import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMak
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import { hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { TrustChildrenCheckType } from '#shared/model/TrustChildrenCheckType';
-import { atom, Atom } from 'atomaric';
+import { atom, Atom, useAtomValue } from 'atomaric';
 import { HTMLAttributes, ReactNode, useEffect, useMemo } from 'react';
 import { Eventer, EventerListeners } from 'shared/utils';
 import styled from 'styled-components';
@@ -11,7 +12,6 @@ import { twMerge } from 'tailwind-merge';
 import { Portal } from '../Portal';
 import { RootAnchoredContent } from '../RootAnchoredContent';
 import { TheIconButton } from '../the-icon/TheIconButton';
-import { WithAtomValue } from '../WithAtomValue';
 
 const swipeEvents: EventerListeners<void> = [];
 
@@ -26,6 +26,7 @@ export const FullContent = <Value, TrustValue extends Value>(
     containerClassName?: string;
     hideCloseButton?: boolean;
     onClose?: () => void;
+    isRenderHere?: boolean;
   } & ({ openAtom: Atom<Value> } | { forceOpen: true }),
 ) => {
   const openAtom = useMemo(() => {
@@ -38,41 +39,42 @@ export const FullContent = <Value, TrustValue extends Value>(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
-    <WithAtomValue atom={openAtom}>
-      {value => {
-        const isOpen = props.checkIsOpen === undefined ? value === 0 || !!value : props.checkIsOpen(value);
+  const value = useAtomValue(openAtom);
+  const isOpen = props.checkIsOpen === undefined ? value === 0 || !!value : props.checkIsOpen(value);
+  const onCloseRef = useActualRef(props.onClose);
 
-        return (
-          <RootAnchoredContent openAtom={openAtom}>
-            {isOpen && (
-              <Portal>
-                <Swiped
-                  close={() => {
-                    openAtom.reset();
-                    props.onClose?.();
-                  }}
-                  onClick={props.closable ? openAtom.reset : propagationStopper}
-                  className={twMerge('z-10', props.className)}
-                >
-                  {props.hideCloseButton || props.closable || (
-                    <StyledCloseButton
-                      icon="Cancel01"
-                      className="pointer close-button"
-                      onClick={openAtom.reset}
-                    />
-                  )}
-                  <StyledContainer className={twMerge('p-5', props.containerClassName)}>
-                    {typeof props.children === 'function' ? props.children(value as never) : props.children}
-                  </StyledContainer>
-                </Swiped>
-              </Portal>
-            )}
-          </RootAnchoredContent>
-        );
-      }}
-    </WithAtomValue>
+  useEffect(
+    () =>
+      openAtom.subscribe(() => {
+        if (openAtom.isInitialValue()) onCloseRef.current?.();
+      }),
+    [onCloseRef, openAtom, value],
   );
+
+  const content = isOpen && (
+    <Portal>
+      <Swiped
+        close={openAtom.reset}
+        onClick={props.closable ? openAtom.reset : propagationStopper}
+        className={twMerge('z-10', props.className)}
+      >
+        {props.hideCloseButton || props.closable || (
+          <StyledCloseButton
+            icon="Cancel01"
+            className="pointer close-button"
+            onClick={openAtom.reset}
+          />
+        )}
+        <StyledContainer className={twMerge('p-5', props.containerClassName)}>
+          {typeof props.children === 'function' ? props.children(value as never) : props.children}
+        </StyledContainer>
+      </Swiped>
+    </Portal>
+  );
+
+  if (props.isRenderHere) return content;
+
+  return <RootAnchoredContent openAtom={openAtom}>{content}</RootAnchoredContent>;
 };
 
 const Swiped = ({ close, ...props }: { close: () => void } & HTMLAttributes<HTMLDivElement>) => {
