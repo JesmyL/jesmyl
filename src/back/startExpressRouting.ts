@@ -185,11 +185,11 @@ export const startExpressRouting = () => {
             const cats = catsFileStore.getValue();
 
             cats.forEach(cat => {
-              if (cat.d?.[com.w]) descriptionFromSearchParams += `\n${cat.n} ${cat.d[com.w]}`;
-              if (cat.s?.includes(com.w)) descriptionFromSearchParams += `\n${cat.n}`;
+              if (cat.d == null) return;
+              if (cat.d[com.w]) descriptionFromSearchParams += `\n${cat.n} ${cat.d[com.w]}`;
             });
 
-            if (com.al) descriptionFromSearchParams += `\n${hosts.host}${audioPathPrefix}${com.w}.mp3`;
+            if (com.al) descriptionFromSearchParams += `\n\n${hosts.host}${audioPathPrefix}${com.w}.mp3`;
           }
         }
       } catch (_e) {
