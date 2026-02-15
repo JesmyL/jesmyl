@@ -3,19 +3,19 @@ import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmComCommentRegisteredAltKeysAtom } from '$cm/entities/com-comment';
-import { CmCom } from '$cm/ext';
 import { cmIDB } from '$cm/shared/state';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useState } from 'react';
+import { CmComWid } from 'shared/api';
 
-export const CmComCommentTransferAltModalInner = ({ com }: { com: CmCom }) => {
+export const CmComCommentAlternativeSelectorTransferModalInner = ({ comw }: { comw: CmComWid }) => {
   const [transferAltFrom, setTransferAltFrom] = useState<string | null>(null);
   const registeredAltKeys = useAtomValue(cmComCommentRegisteredAltKeysAtom);
   const [transferAltTo, setTransferAltTo] = useState<string | null>(registeredAltKeys.values().next().value ?? null);
   const items = Array.from(registeredAltKeys).map(key => ({ id: key, title: key }));
-  const localCommentBlock = useLiveQuery(() => cmIDB.tb.localComCommentBlocks.get(com.wid), [com.wid]);
+  const localCommentBlock = useLiveQuery(() => cmIDB.tb.localComCommentBlocks.get(comw), [comw]);
 
   cmComCommentRegisteredAltKeysAtom.do.init();
 
@@ -52,9 +52,7 @@ export const CmComCommentTransferAltModalInner = ({ com }: { com: CmCom }) => {
                 ? 'Действие может быть выполнено только при отправке комментариев на сервер'
                 : undefined
           }
-          onClick={() =>
-            cmTsjrpcClient.replaceUserAltCommentBlocks({ comw: com.wid, from: transferAltFrom, to: transferAltTo })
-          }
+          onClick={() => cmTsjrpcClient.replaceUserAltCommentBlocks({ comw, from: transferAltFrom, to: transferAltTo })}
         >
           Обменять
         </Button>

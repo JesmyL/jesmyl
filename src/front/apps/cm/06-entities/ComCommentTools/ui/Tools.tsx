@@ -8,9 +8,8 @@ import { CmCom } from '$cm/ext';
 import { cmAppActions } from '$cm/shared/const';
 import { cmIsShowMyCommentsAtom } from '$cm/shared/state';
 import { useAuth } from '$index/shared/state';
-import { CmComCommentSintaxInfo } from './CommentSintaxInfo';
 
-export const CmComCommentCommentTools = ({ addItems, com }: { addItems?: React.ReactNode[]; com: CmCom }) => {
+export const CmComCommentTools = ({ com }: { com: CmCom }) => {
   const auth = useAuth();
 
   return (
@@ -24,7 +23,6 @@ export const CmComCommentCommentTools = ({ addItems, com }: { addItems?: React.R
             <>
               {isShow && (
                 <>
-                  {addItems}
                   {auth.login && (
                     <DropdownMenu.Item>
                       <WithAtom init={false}>
@@ -48,10 +46,6 @@ export const CmComCommentCommentTools = ({ addItems, com }: { addItems?: React.R
                       </WithAtom>
                     </DropdownMenu.Item>
                   )}
-
-                  <DropdownMenu.Item>
-                    <CmComCommentSintaxInfo />
-                  </DropdownMenu.Item>
                 </>
               )}
               <DropdownMenu.Item onClick={cmIsShowMyCommentsAtom.do.toggle}>

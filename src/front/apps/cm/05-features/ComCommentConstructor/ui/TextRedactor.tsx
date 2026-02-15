@@ -1,16 +1,13 @@
 import { TextInput } from '#shared/ui/TextInput';
-import {
-  CmLineCommentConstructorButtonPropKey,
-  CmLineCommentConstructorButtonRulePropsDict,
-} from '$cm/shared/model/com-comment';
+import { CmComCommentConstructorPropKey, CmComCommentConstructorRulePropsDict } from '$cm/shared/model/com-comment';
+import { cmLineCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useDebounceCallback } from 'shared/utils/useDebounceCallback';
-import { cmLineCommentConstructorButtonRulePropsDictAtom } from '../state/atoms';
 
-export const CmLineCommentConstructorButtonTextRedactor = <Key extends CmLineCommentConstructorButtonPropKey>(props: {
+export const CmComCommentConstructorTextRedactor = <Key extends CmComCommentConstructorPropKey>(props: {
   blockKey: Key;
   label: React.ReactNode;
-  blockPropsHolder: { dict?: CmLineCommentConstructorButtonRulePropsDict };
-  getDefaultPropsDict: () => CmLineCommentConstructorButtonRulePropsDict[Key];
+  blockPropsHolder: { dict?: CmComCommentConstructorRulePropsDict };
+  getDefaultPropsDict: () => CmComCommentConstructorRulePropsDict[Key];
   disabled?: boolean;
   multiline?: boolean;
 }) => {
@@ -25,7 +22,7 @@ export const CmLineCommentConstructorButtonTextRedactor = <Key extends CmLineCom
       multiline={props.multiline}
       onInput={value =>
         updateDebounce(() => {
-          cmLineCommentConstructorButtonRulePropsDictAtom.do.update(dict => {
+          cmLineCommentConstructorRulePropsDictAtom.do.update(dict => {
             dict.dict ??= {};
             const blockDict = (dict.dict[props.blockKey] ??= props.getDefaultPropsDict());
             if (blockDict == null) return;

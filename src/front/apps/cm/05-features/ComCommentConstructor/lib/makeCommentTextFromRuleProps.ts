@@ -1,14 +1,14 @@
 import { mylib } from '#shared/lib/my-lib';
 import {
-  CmLineCommentConstructorButtonPropsDictChordRulePropsKey,
-  CmLineCommentConstructorButtonPropsDictWordRulePropsKey,
-  CmLineCommentConstructorButtonRulePropsDict,
+  CmComCommentConstructorPropsDictChordRulePropsKey,
+  CmComCommentConstructorPropsDictWordRulePropsKey,
+  CmComCommentConstructorRulePropsDict,
 } from '$cm/shared/model/com-comment';
 import { makeRegExp } from 'regexpert';
 
-export const makeCmLineCommentConstructorButtonCommentTextFromRuleProps = (
-  propsDict: CmLineCommentConstructorButtonRulePropsDict,
-  chordCountDict: PRecord<CmLineCommentConstructorButtonPropsDictWordRulePropsKey, number>,
+export const makeCmComCommentConstructorCommentTextFromRuleProps = (
+  propsDict: CmComCommentConstructorRulePropsDict,
+  chordCountDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKey, number>,
 ) => {
   try {
     let wordCommentsText = '';
@@ -115,10 +115,8 @@ const simpleStartCharForEscapeSet = new Set(simpleStartCharForEscape);
 const startCharForEscapeSet = new Set(`0123456789${simpleStartCharForEscape}`);
 
 const makeTextRule = (
-  propsDict: CmLineCommentConstructorButtonRulePropsDict,
-  key:
-    | CmLineCommentConstructorButtonPropsDictWordRulePropsKey
-    | CmLineCommentConstructorButtonPropsDictChordRulePropsKey,
+  propsDict: CmComCommentConstructorRulePropsDict,
+  key: CmComCommentConstructorPropsDictWordRulePropsKey | CmComCommentConstructorPropsDictChordRulePropsKey,
   place: '<' | '>',
 ) => {
   const props = propsDict[`${key}${place}`];

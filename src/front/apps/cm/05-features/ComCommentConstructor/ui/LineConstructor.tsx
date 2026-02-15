@@ -1,16 +1,16 @@
 import { cmComCommentTextDetectorCalculateRate } from '$cm/entities/com-comment';
+import { cmLineCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
-import { cmLineCommentConstructorButtonRulePropsDictAtom } from '../state/atoms';
-import { CmLineCommentConstructorButtonTextWithAccentRedactor } from './TextWithAccentRedactor';
+import { CmComCommentConstructorTextWithAccentRedactor } from './TextWithAccentRedactor';
 
-export const CmLineCommentConstructorButtonLineConstructor = ({ linei }: { linei: number }) => {
-  const propsDict = useAtomValue(cmLineCommentConstructorButtonRulePropsDictAtom);
+export const CmComCommentConstructorLineConstructor = ({ linei }: { linei: number }) => {
+  const propsDict = useAtomValue(cmLineCommentConstructorRulePropsDictAtom);
 
   return (
     <>
       <div className="rounded bg-x2 my-10 p-3">
         <div>Строка {linei + 1}</div>
-        <CmLineCommentConstructorButtonTextWithAccentRedactor
+        <CmComCommentConstructorTextWithAccentRedactor
           blockKey={`l${linei}`}
           label="Коммент для строки"
           blockPropsHolder={propsDict}

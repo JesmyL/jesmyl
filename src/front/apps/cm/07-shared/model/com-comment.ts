@@ -5,22 +5,22 @@ import {
   CmComCommentTextDetectorWordRuleProps,
 } from '$cm/entities/com-comment';
 
-export type CmLineCommentConstructorButtonPropKey = keyof CmLineCommentConstructorButtonRulePropsDict;
+export type CmComCommentConstructorPropKey = keyof CmComCommentConstructorRulePropsDict;
 
-export type CmLineCommentConstructorButtonPropsDictWordRulePropsKey = `l${number}w${number}`;
-export type CmLineCommentConstructorButtonPropsDictBlockRulePropsKey = `b${number}`;
-export type CmLineCommentConstructorButtonPropsDictChordRulePropsKey =
-  `${CmLineCommentConstructorButtonPropsDictWordRulePropsKey}c${number}`;
+export type CmComCommentConstructorPropsDictWordRulePropsKey = `l${number}w${number}`;
+export type CmComCommentConstructorPropsDictBlockRulePropsKey = `b${number}`;
+export type CmComCommentConstructorPropsDictChordRulePropsKey =
+  `${CmComCommentConstructorPropsDictWordRulePropsKey}c${number}`;
 
-export type CmLineCommentConstructorButtonRulePropsDict = Partial<
-  Record<CmLineCommentConstructorButtonPropsDictBlockRulePropsKey, CmComCommentTextDetectorBlockRuleProps> &
+export type CmComCommentConstructorRulePropsDict = Partial<
+  Record<CmComCommentConstructorPropsDictBlockRulePropsKey, CmComCommentTextDetectorBlockRuleProps> &
     Record<`l${number}`, CmComCommentTextDetectorLineRuleProps> &
     Record<
-      `${CmLineCommentConstructorButtonPropsDictWordRulePropsKey}${'<' | '>' | '^'}`,
+      `${CmComCommentConstructorPropsDictWordRulePropsKey}${'<' | '>' | '^'}`,
       CmComCommentTextDetectorWordRuleProps
     > &
     Record<
-      `${CmLineCommentConstructorButtonPropsDictChordRulePropsKey}${'<' | '>' | '^'}`,
+      `${CmComCommentConstructorPropsDictChordRulePropsKey}${'<' | '>' | '^'}`,
       CmComCommentTextDetectorChordRuleProps
     >
 >;

@@ -1,7 +1,10 @@
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { Modal } from '#shared/ui/modal';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { DocTitle } from '#shared/ui/tags/DocTitle';
+import { WithAtom } from '#shared/ui/WithAtom';
 import { WithAtomTruthfulValue } from '#shared/ui/WithAtomTruthfulValue';
+import { WithAtomValue } from '#shared/ui/WithAtomValue';
 import {
   CmComCatMentions,
   CmComNotFoundPage,
@@ -13,9 +16,11 @@ import { cmComCommentRedactOrdSelectorIdAtom } from '$cm/entities/com-comment';
 import { CmComToolList, useCmComToolMigratableTop } from '$cm/entities/com-tool';
 import { cmComChordVisibleVariantAtom, cmComIsShowCatBindsInCompositionAtom } from '$cm/entities/index';
 import { CmComCommentModalInner } from '$cm/features/com-comment';
+import { CmComCommentConstructorTextRulesConstructor } from '$cm/features/ComCommentConstructor';
 import { Link } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
+import { CmComCommentBlockSpecialSelector } from 'shared/api';
 import { useCmComCompositionControls } from '../lib/useComCompositionControls';
 import { StyledCmComCompositionContainer } from '../style/Composition';
 import { CmComAudioPlayerInCompositionPage } from './AudioPlayer';
@@ -79,9 +84,37 @@ export function TheCmComComposition() {
           <Modal
             key="com-comment"
             openAtom={cmComCommentRedactOrdSelectorIdAtom}
+            isRenderHere
           >
             <CmComCommentModalInner com={ccom} />
           </Modal>
+
+          <WithAtom init={false}>
+            {atom => (
+              <WithAtomValue atom={atom}>
+                {isClose => (
+                  <FullContent
+                    key="com-comment-constructor"
+                    openAtom={cmComCommentRedactOrdSelectorIdAtom}
+                    isRenderHere
+                    className={isClose ? 'hidden' : undefined}
+                    onClose={atom.reset}
+                  >
+                    {ordSelector =>
+                      ordSelector != null &&
+                      ordSelector !== CmComCommentBlockSpecialSelector.Head && (
+                        <CmComCommentConstructorTextRulesConstructor
+                          com={ccom}
+                          ordSelector={ordSelector}
+                          isRedactAsTextAtom={atom}
+                        />
+                      )
+                    }
+                  </FullContent>
+                )}
+              </WithAtomValue>
+            )}
+          </WithAtom>
 
           <BottomPopup
             id="com-tools-bottom-popup"

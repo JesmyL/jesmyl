@@ -1,11 +1,11 @@
 import { Button } from '#shared/components';
 import { cmComCommentTextDetectorCalculateRate } from '$cm/entities/com-comment';
+import { cmLineCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
-import { cmLineCommentConstructorButtonRulePropsDictAtom } from '../state/atoms';
-import { CmLineCommentConstructorButtonAccentKindRedactor } from './AccentKindRedactor';
-import { CmLineCommentConstructorButtonTextRedactor } from './TextRedactor';
+import { CmComCommentConstructorAccentKindRedactor } from './AccentKindRedactor';
+import { CmComCommentConstructorTextRedactor } from './TextRedactor';
 
-export const CmLineCommentConstructorButtonChordConstructor = ({
+export const CmComCommentConstructorChordConstructor = ({
   linei,
   wordi,
   chordi,
@@ -16,7 +16,7 @@ export const CmLineCommentConstructorButtonChordConstructor = ({
   chordi: number;
   isLast: boolean;
 }) => {
-  const propsDict = useAtomValue(cmLineCommentConstructorButtonRulePropsDictAtom);
+  const propsDict = useAtomValue(cmLineCommentConstructorRulePropsDictAtom);
 
   return (
     <>
@@ -31,7 +31,7 @@ export const CmLineCommentConstructorButtonChordConstructor = ({
               icon="Delete02"
               className="text-xKO"
               onClick={() => {
-                cmLineCommentConstructorButtonRulePropsDictAtom.do.update(dict => {
+                cmLineCommentConstructorRulePropsDictAtom.do.update(dict => {
                   if (dict.dict == null) return;
 
                   const wordKeyPrefix = `l${linei}w${wordi}` as const;
@@ -49,7 +49,7 @@ export const CmLineCommentConstructorButtonChordConstructor = ({
           )}
         </div>
 
-        <CmLineCommentConstructorButtonAccentKindRedactor
+        <CmComCommentConstructorAccentKindRedactor
           blockKey={`l${linei}w${wordi}c${chordi}^`}
           blockPropsHolder={propsDict}
           getDefaultPropsDict={() => ({
@@ -64,7 +64,7 @@ export const CmLineCommentConstructorButtonChordConstructor = ({
         />
 
         <div className="flex gap-2">
-          <CmLineCommentConstructorButtonTextRedactor
+          <CmComCommentConstructorTextRedactor
             blockKey={`l${linei}w${wordi}c${chordi}<`}
             blockPropsHolder={propsDict}
             label="До"
@@ -79,7 +79,7 @@ export const CmLineCommentConstructorButtonChordConstructor = ({
             })}
           />
 
-          <CmLineCommentConstructorButtonTextRedactor
+          <CmComCommentConstructorTextRedactor
             blockKey={`l${linei}w${wordi}c${chordi}^`}
             blockPropsHolder={propsDict}
             label="Вместо"
@@ -94,7 +94,7 @@ export const CmLineCommentConstructorButtonChordConstructor = ({
             })}
           />
 
-          <CmLineCommentConstructorButtonTextRedactor
+          <CmComCommentConstructorTextRedactor
             blockKey={`l${linei}w${wordi}c${chordi}>`}
             blockPropsHolder={propsDict}
             label="После"

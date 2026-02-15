@@ -1,20 +1,20 @@
 import { Button } from '#shared/components';
 import { cmComCommentTextDetectorCalculateRate } from '$cm/entities/com-comment';
+import { cmLineCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
-import { cmLineCommentConstructorButtonRulePropsDictAtom } from '../state/atoms';
-import { CmLineCommentConstructorButtonAccentKindRedactor } from './AccentKindRedactor';
-import { CmLineCommentConstructorButtonBlockRedactor } from './BlockRedactor';
-import { CmLineCommentConstructorButtonChordConstructor } from './ChordConstructor';
+import { CmComCommentConstructorAccentKindRedactor } from './AccentKindRedactor';
+import { CmComCommentConstructorBlockRedactor } from './BlockRedactor';
+import { CmComCommentConstructorChordConstructor } from './ChordConstructor';
 
-export const CmLineCommentConstructorButtonWordConstructor = ({ linei, wordi }: { linei: number; wordi: number }) => {
-  const propsDict = useAtomValue(cmLineCommentConstructorButtonRulePropsDictAtom);
+export const CmComCommentConstructorWordConstructor = ({ linei, wordi }: { linei: number; wordi: number }) => {
+  const propsDict = useAtomValue(cmLineCommentConstructorRulePropsDictAtom);
 
   return (
     <>
       <div className="rounded bg-x2 my-10 p-3">
         <div>Слово {wordi + 1}</div>
 
-        <CmLineCommentConstructorButtonAccentKindRedactor
+        <CmComCommentConstructorAccentKindRedactor
           blockPropsHolder={propsDict}
           blockKey={`l${linei}w${wordi}^`}
           getDefaultPropsDict={() => ({
@@ -27,7 +27,7 @@ export const CmLineCommentConstructorButtonWordConstructor = ({ linei, wordi }: 
           })}
         />
 
-        <CmLineCommentConstructorButtonBlockRedactor
+        <CmComCommentConstructorBlockRedactor
           preKey={`l${linei}w${wordi}<`}
           postKey={`l${linei}w${wordi}>`}
           blockPropsHolder={propsDict}
@@ -47,7 +47,7 @@ export const CmLineCommentConstructorButtonWordConstructor = ({ linei, wordi }: 
       {Array.from({ length: propsDict.wordChordiMaxDict[`l${linei}w${wordi}`] ?? 0 }, () => 0).map(
         (_, chordi, chorda) => {
           return (
-            <CmLineCommentConstructorButtonChordConstructor
+            <CmComCommentConstructorChordConstructor
               key={chordi}
               chordi={chordi}
               linei={linei}
@@ -62,7 +62,7 @@ export const CmLineCommentConstructorButtonWordConstructor = ({ linei, wordi }: 
         icon="PlusSign"
         className="text-xOK"
         onClick={() => {
-          cmLineCommentConstructorButtonRulePropsDictAtom.do.update(dict => {
+          cmLineCommentConstructorRulePropsDictAtom.do.update(dict => {
             if (dict.dict == null) return;
 
             const chordi = (propsDict.wordChordiMaxDict[`l${linei}w${wordi}`] ?? -1) + 1;
