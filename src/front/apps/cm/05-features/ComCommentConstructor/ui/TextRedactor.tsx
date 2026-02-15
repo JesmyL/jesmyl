@@ -1,6 +1,6 @@
 import { TextInput } from '#shared/ui/TextInput';
 import { CmComCommentConstructorPropKey, CmComCommentConstructorRulePropsDict } from '$cm/shared/model/com-comment';
-import { cmLineCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
+import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useDebounceCallback } from 'shared/utils/useDebounceCallback';
 
 export const CmComCommentConstructorTextRedactor = <Key extends CmComCommentConstructorPropKey>(props: {
@@ -22,7 +22,7 @@ export const CmComCommentConstructorTextRedactor = <Key extends CmComCommentCons
       multiline={props.multiline}
       onInput={value =>
         updateDebounce(() => {
-          cmLineCommentConstructorRulePropsDictAtom.do.update(dict => {
+          cmComCommentConstructorRulePropsDictAtom.do.update(dict => {
             dict.dict ??= {};
             const blockDict = (dict.dict[props.blockKey] ??= props.getDefaultPropsDict());
             if (blockDict == null) return;

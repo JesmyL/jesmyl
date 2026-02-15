@@ -1,13 +1,13 @@
 import { Button } from '#shared/components';
 import { cmComCommentTextDetectorCalculateRate } from '$cm/entities/com-comment';
-import { cmLineCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
+import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
 import { CmComCommentConstructorAccentKindRedactor } from './AccentKindRedactor';
 import { CmComCommentConstructorBlockRedactor } from './BlockRedactor';
 import { CmComCommentConstructorChordConstructor } from './ChordConstructor';
 
 export const CmComCommentConstructorWordConstructor = ({ linei, wordi }: { linei: number; wordi: number }) => {
-  const propsDict = useAtomValue(cmLineCommentConstructorRulePropsDictAtom);
+  const propsDict = useAtomValue(cmComCommentConstructorRulePropsDictAtom);
 
   return (
     <>
@@ -62,7 +62,7 @@ export const CmComCommentConstructorWordConstructor = ({ linei, wordi }: { linei
         icon="PlusSign"
         className="text-xOK"
         onClick={() => {
-          cmLineCommentConstructorRulePropsDictAtom.do.update(dict => {
+          cmComCommentConstructorRulePropsDictAtom.do.update(dict => {
             if (dict.dict == null) return;
 
             const chordi = (propsDict.wordChordiMaxDict[`l${linei}w${wordi}`] ?? -1) + 1;

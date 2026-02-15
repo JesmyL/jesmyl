@@ -7,11 +7,14 @@ import {
   useCmComCommentBlockCss,
   useCmComCommentUpdater,
 } from '$cm/entities/com-comment';
+import { CmComCommentAlternativeSelector } from '$cm/entities/ComCommentAlternativeSelector';
+import { CmComCommentSavedLocalMarker } from '$cm/entities/ComCommentSavedLocalMarker';
 import { CmComCommentTools } from '$cm/entities/ComCommentTools';
 import { cmComChordHardLevelAtom, cmComFontSizeAtom } from '$cm/entities/index';
 import { ChordVisibleVariant, CmCom, CmComOrderList } from '$cm/ext';
+import { updateCmComCommentConstructorRulePropsDict } from '$cm/shared/lib/updateComCommentConstructorRulePropsDict';
 import { cmIsShowMyCommentsAtom } from '$cm/shared/state';
-import { cmLineCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
+import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { Atom, useAtomValue } from 'atomaric';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { CmComCommentBlockSimpleSelector, CmComOrderWid } from 'shared/api';
@@ -35,7 +38,7 @@ export const CmComCommentConstructorTextRulesConstructor = ({
 }) => {
   const fontSize = useAtomValue(cmComFontSizeAtom);
   const chordHardLevel = useAtomValue(cmComChordHardLevelAtom);
-  const propsDict = useAtomValue(cmLineCommentConstructorRulePropsDictAtom);
+  const propsDict = useAtomValue(cmComCommentConstructorRulePropsDictAtom);
   const solidOrdContainerRef = useRef<HTMLDivElement>(null);
   const updateCommentRef = useActualRef(useCmComCommentUpdater(com.wid));
   const altCommentKeys = useAtomValue(cmComCommentCurrentOpenedAltKeyAtom);
@@ -72,15 +75,27 @@ export const CmComCommentConstructorTextRulesConstructor = ({
     return () => clearTimeout(timeout);
   }, [altCommentKey, com.wid, ordSelector, propsDict.dict, propsDict.wordChordiMaxDict, updateCommentRef]);
 
+  useEffect(() => {
+    return cmComCommentCurrentOpenedAltKeyAtom.subscribe(() => {
+      updateCmComCommentConstructorRulePropsDict(com.wid, ordSelector);
+    });
+  }, [com.wid, ordSelector]);
+
   return (
     <>
-      <div className="flex gap-2">
+      <div className="flex gap-3">
+        <CmComCommentAlternativeSelector comw={com.wid} />
         <Button
           icon="TextFirstlineRight"
           onClick={isRedactAsTextAtom.do.toggle}
         />
         <CmComCommentTools com={com} />
       </div>
+
+      <CmComCommentSavedLocalMarker
+        comw={com.wid}
+        ordSelectorId={ordSelector}
+      />
       {!isShowComments ? (
         <div className="w-full h-full flex justify-center text-xKO">Комментарии скрыты</div>
       ) : (

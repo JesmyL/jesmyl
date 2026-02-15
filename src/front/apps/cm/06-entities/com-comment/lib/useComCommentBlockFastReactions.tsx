@@ -4,18 +4,11 @@ import { mylib } from '#shared/lib/my-lib';
 import { isCmComAudioPlayerOpenMoversAtom } from '$cm/entities/com-audio-player';
 import { cmComIsComMiniAnchorAtom } from '$cm/entities/index';
 import { CmCom } from '$cm/ext';
-import {
-  CmComCommentConstructorPropKey,
-  CmComCommentConstructorPropsDictWordRulePropsKey,
-  CmComCommentConstructorRulePropsDict,
-} from '$cm/shared/model/com-comment';
-import { cmLineCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
+import { updateCmComCommentConstructorRulePropsDict } from '$cm/shared/lib/updateComCommentConstructorRulePropsDict';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { wait } from 'shared/utils';
 import { cmComCommentRedactOrdSelectorIdAtom } from '../state/atoms';
-import { cmComCommentTextRulesDetector } from '../utils/cmComCommentTextRulesDetector';
-import { takeCmComCommentTextBlock } from './useCmComCommentBlock';
 
 export const useCmComCommentBlockFastReactions = (listRef: React.RefObject<HTMLDivElement | null>, com: CmCom) => {
   const isMiniAnchor = useAtomValue(cmComIsComMiniAnchorAtom);
@@ -49,33 +42,12 @@ export const useCmComCommentBlockFastReactions = (listRef: React.RefObject<HTMLD
       if (ord == null) return;
 
       (async () => {
-        const propsDict: CmComCommentConstructorRulePropsDict = {};
-        const wordChordiMaxDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKey, number> = {};
-        const commentTexts = await takeCmComCommentTextBlock(ord.makeSelector(), ord.com.wid);
+        const ordSelector = ord.makeSelector();
 
-        if (commentTexts)
-          cmComCommentTextRulesDetector(commentTexts, props => {
-            let key: CmComCommentConstructorPropKey;
-
-            if ('blocki' in props) key = `b${props.blocki}`;
-            else if ('chordi' in props) {
-              const wordKey = `l${props.linei}w${props.wordi}` as const;
-
-              wordChordiMaxDict[wordKey] ??= 0;
-              wordChordiMaxDict[wordKey]++;
-
-              key = `${wordKey}c${props.chordi}${props.place}`;
-            } else if ('wordi' in props) key = `l${props.linei}w${props.wordi}${props.place}`;
-            else key = `l${props.linei}`;
-
-            if (!(key in propsDict)) propsDict[key] = props as never;
-          });
-
-        cmLineCommentConstructorRulePropsDictAtom.set({ dict: propsDict, wordChordiMaxDict });
-
+        await updateCmComCommentConstructorRulePropsDict(com.wid, ordSelector);
         await wait(100);
 
-        cmComCommentRedactOrdSelectorIdAtom.set(ord.makeSelector());
+        cmComCommentRedactOrdSelectorIdAtom.set(ordSelector);
       })();
     };
 

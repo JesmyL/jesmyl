@@ -1,10 +1,10 @@
 import { cmComCommentTextDetectorCalculateRate } from '$cm/entities/com-comment';
-import { cmLineCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
+import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
 import { CmComCommentConstructorTextWithAccentRedactor } from './TextWithAccentRedactor';
 
 export const CmComCommentConstructorLineConstructor = ({ linei }: { linei: number }) => {
-  const propsDict = useAtomValue(cmLineCommentConstructorRulePropsDictAtom);
+  const propsDict = useAtomValue(cmComCommentConstructorRulePropsDictAtom);
 
   return (
     <>

@@ -1,41 +1,25 @@
 import { Button } from '#shared/components';
-import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { Modal, usePrompt } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { WithAtom } from '#shared/ui/WithAtom';
-import {
-  cmComCommentCurrentOpenedAltKeyAtom,
-  cmComCommentRegisteredAltKeysAtom,
-  useCmComCommentBlock,
-} from '$cm/entities/com-comment';
+import { cmComCommentCurrentOpenedAltKeyAtom, cmComCommentRegisteredAltKeysAtom } from '$cm/entities/com-comment';
 import { cmConstantsConfigAtom, cmIDB } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
-import { useEffect, useState } from 'react';
-import { CmComCommentBlockSimpleSelector, CmComWid } from 'shared/api';
+import { CmComWid } from 'shared/api';
 import { toast } from 'sonner';
 import { CmComCommentAlternativeSelectorTransferModalInner } from './TransferAltCommentModalInner';
 
-export const CmComCommentAlternativeSelector = ({
-  ordSelectorId,
-  comw,
-}: {
-  ordSelectorId: CmComCommentBlockSimpleSelector;
-  comw: CmComWid;
-}) => {
+export const CmComCommentAlternativeSelector = ({ comw }: { comw: CmComWid }) => {
   const altCommentKeys = useAtomValue(cmComCommentCurrentOpenedAltKeyAtom);
   const altCommentKey = altCommentKeys[comw] ?? altCommentKeys.last;
 
-  const { localCommentBlock } = useCmComCommentBlock(comw);
   const { maxComCommentAlternativesCount } = useAtomValue(cmConstantsConfigAtom);
   const prompt = usePrompt();
   const registeredAltKeys = useAtomValue(cmComCommentRegisteredAltKeysAtom);
 
   return (
     <>
-      {(localCommentBlock?.d?.[ordSelectorId] != null ||
-        (altCommentKey && localCommentBlock?.alt?.[altCommentKey]?.[ordSelectorId] != null)) && <SavedLocalLabel />}
-
       <Dropdown<string | null>
         id={altCommentKey}
         nullTitle={<span className="text-x7">Общ</span>}
@@ -108,27 +92,5 @@ export const CmComCommentAlternativeSelector = ({
         }
       />
     </>
-  );
-};
-
-const SavedLocalLabel = () => {
-  const [isShow, setIsShow] = useState(false);
-
-  useEffect(() => {
-    return hookEffectPipe()
-      .pipe(setTimeoutPipe(() => setIsShow(true), 2500))
-      .effect();
-  }, []);
-
-  return (
-    isShow && (
-      <>
-        Сохранено локально
-        <LazyIcon
-          icon="FileValidation"
-          className="text-xOK"
-        />
-      </>
-    )
   );
 };

@@ -18,38 +18,42 @@ export const useCmComCommentBlock = (comw: CmComWid) => {
   return { localCommentBlock, commentBlock };
 };
 
+export const takeCmComCommentTextBlock = (
+  comw: CmComWid,
+  selector: CmComCommentBlockSimpleSelector,
+  localCommentBlock: ICmComCommentBlock | nil,
+  commentBlock: ICmComCommentBlock | nil,
+  altCommentKey?: string | nil,
+) => {
+  if (altCommentKey == null) {
+    const altCommentKeys = cmComCommentCurrentOpenedAltKeyAtom.get();
+    altCommentKey = altCommentKeys[comw] ?? altCommentKeys.last;
+  }
+
+  return altCommentKey != null
+    ? (localCommentBlock?.alt?.[altCommentKey]?.[selector] ?? commentBlock?.alt?.[altCommentKey]?.[selector])
+    : (localCommentBlock?.d?.[selector] ?? commentBlock?.d?.[selector]);
+};
+
 export const useCmComCommentTextBlockTaker = (
   comw: CmComWid,
   localCommentBlock: ICmComCommentBlock | nil,
   commentBlock: ICmComCommentBlock | nil,
 ) => {
-  return useCallback(
-    (selector: CmComCommentBlockSimpleSelector) => {
-      return takeCmComCommentTextBlockWithKnownProps(selector, comw, localCommentBlock, commentBlock);
-    },
-    [commentBlock, comw, localCommentBlock],
-  );
-};
-
-export const takeCmComCommentTextBlock = async (selector: CmComCommentBlockSimpleSelector, comw: CmComWid) => {
-  const localCommentBlock = await cmIDB.tb.localComCommentBlocks.get(comw);
-  const commentBlock = await cmIDB.tb.comCommentBlocks.get(comw);
-
-  return takeCmComCommentTextBlockWithKnownProps(selector, comw, localCommentBlock, commentBlock);
-};
-
-export const takeCmComCommentTextBlockWithKnownProps = (
-  selector: CmComCommentBlockSimpleSelector,
-  comw: CmComWid,
-  localCommentBlock: ICmComCommentBlock | nil,
-  commentBlock: ICmComCommentBlock | nil,
-) => {
-  const altCommentKeys = cmComCommentCurrentOpenedAltKeyAtom.get();
+  const altCommentKeys = useAtomValue(cmComCommentCurrentOpenedAltKeyAtom);
   const altCommentKey = altCommentKeys[comw] ?? altCommentKeys.last;
 
-  return altCommentKey != null
-    ? (localCommentBlock?.alt?.[altCommentKey]?.[selector] ?? commentBlock?.alt?.[altCommentKey]?.[selector])
-    : (localCommentBlock?.d?.[selector] ?? commentBlock?.d?.[selector]);
+  return useCallback(
+    (selector: CmComCommentBlockSimpleSelector) => {
+      return takeCmComCommentTextBlock(comw, selector, localCommentBlock, commentBlock, altCommentKey);
+    },
+    [altCommentKey, commentBlock, comw, localCommentBlock],
+  );
+};
+export const useCmComCommentTextBlockTakerWithoutComments = (comw: CmComWid) => {
+  const { commentBlock, localCommentBlock } = useCmComCommentBlock(comw);
+
+  return useCmComCommentTextBlockTaker(comw, localCommentBlock, commentBlock);
 };
 
 export const useCmComCommentKindBlockTaker = (
@@ -81,8 +85,11 @@ export const useCmComCommentUpdater = (comw: CmComWid) => {
       const prev = [...(takeCommentTexts(ordSelectorId) ?? [])];
       const texts = updater(prev);
 
-      if (!Array.from({ length: Math.max(prev.length, texts.length) }).some((_, texti) => prev[texti] !== texts[texti]))
-        return;
+      const isNoChanges = !Array.from({ length: Math.max(prev.length, texts.length) }).some((_, texti) => {
+        return (prev[texti] ?? '') !== (texts[texti] ?? '');
+      });
+
+      if (isNoChanges) return;
 
       const isAltComment =
         altCommentKey != null &&

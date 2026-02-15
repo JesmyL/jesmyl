@@ -1,5 +1,5 @@
 import { TextInput } from '#shared/ui/TextInput';
-import { useCmComCommentBlock, useCmComCommentTextBlockTaker, useCmComCommentUpdater } from '$cm/entities/com-comment';
+import { useCmComCommentTextBlockTakerWithoutComments, useCmComCommentUpdater } from '$cm/entities/com-comment';
 import { CmComCommentBlockSimpleSelector, CmComWid } from 'shared/api';
 import { useDeferredCallback } from 'shared/utils/useDeferredCallback';
 
@@ -13,8 +13,7 @@ export const CmComCommentSimpleComments = ({
   comw: CmComWid;
 }) => {
   const deferredCallback = useDeferredCallback();
-  const { localCommentBlock, commentBlock } = useCmComCommentBlock(comw);
-  const takeCommentTexts = useCmComCommentTextBlockTaker(comw, localCommentBlock, commentBlock);
+  const takeCommentTexts = useCmComCommentTextBlockTakerWithoutComments(comw);
   const texts = takeCommentTexts(ordSelectorId) ?? [];
   const updateComment = useCmComCommentUpdater(comw);
 

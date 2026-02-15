@@ -1,6 +1,6 @@
 import { Button } from '#shared/components';
 import { cmComCommentTextDetectorCalculateRate } from '$cm/entities/com-comment';
-import { cmLineCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
+import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
 import { CmComCommentConstructorAccentKindRedactor } from './AccentKindRedactor';
 import { CmComCommentConstructorTextRedactor } from './TextRedactor';
@@ -16,7 +16,7 @@ export const CmComCommentConstructorChordConstructor = ({
   chordi: number;
   isLast: boolean;
 }) => {
-  const propsDict = useAtomValue(cmLineCommentConstructorRulePropsDictAtom);
+  const propsDict = useAtomValue(cmComCommentConstructorRulePropsDictAtom);
 
   return (
     <>
@@ -31,7 +31,7 @@ export const CmComCommentConstructorChordConstructor = ({
               icon="Delete02"
               className="text-xKO"
               onClick={() => {
-                cmLineCommentConstructorRulePropsDictAtom.do.update(dict => {
+                cmComCommentConstructorRulePropsDictAtom.do.update(dict => {
                   if (dict.dict == null) return;
 
                   const wordKeyPrefix = `l${linei}w${wordi}` as const;

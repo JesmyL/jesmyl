@@ -4,7 +4,7 @@ import {
 } from '$cm/shared/model/com-comment';
 import { atom, Atom } from 'atomaric';
 
-export const cmLineCommentConstructorRulePropsDictAtom: Atom<{
+export const cmComCommentConstructorRulePropsDictAtom: Atom<{
   dict?: CmComCommentConstructorRulePropsDict;
   wordChordiMaxDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKey, number>;
 }> = atom({ wordChordiMaxDict: {} });

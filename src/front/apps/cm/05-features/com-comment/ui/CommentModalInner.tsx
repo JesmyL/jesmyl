@@ -9,6 +9,7 @@ import {
 } from '$cm/entities/com-comment';
 import { CmComOrder } from '$cm/entities/com-order';
 import { CmComCommentAlternativeSelector } from '$cm/entities/ComCommentAlternativeSelector';
+import { CmComCommentSavedLocalMarker } from '$cm/entities/ComCommentSavedLocalMarker';
 import { CmCom } from '$cm/ext';
 import { cmIsShowMyCommentsAtom } from '$cm/shared/state';
 import { Atom, atom, useAtomValue } from 'atomaric';
@@ -98,10 +99,11 @@ export const CmComCommentModalInner = ({ com }: { com: CmCom }) => {
                 )}
               </ModalBody>
               <ModalFooter className="flex gap-2">
-                <CmComCommentAlternativeSelector
+                <CmComCommentSavedLocalMarker
                   comw={com.wid}
                   ordSelectorId={ordSelectorId}
                 />
+                <CmComCommentAlternativeSelector comw={com.wid} />
               </ModalFooter>
             </>
           )
