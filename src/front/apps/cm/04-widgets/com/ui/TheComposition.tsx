@@ -33,7 +33,7 @@ export function TheCmComComposition() {
   const comToolsNode = useCmComToolMigratableTop();
   const { list } = useCmComCurrentComPackContext();
 
-  useCmComCommentConstructorListenChanges(ccom?.wid);
+  useCmComCommentConstructorListenChanges();
 
   if (ccom == null) return <CmComNotFoundPage />;
 

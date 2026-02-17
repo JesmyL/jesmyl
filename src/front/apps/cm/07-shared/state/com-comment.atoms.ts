@@ -2,12 +2,15 @@ import {
   CmComCommentConstructorPropsDictWordRulePropsKey,
   CmComCommentConstructorRulePropsDict,
 } from '$cm/shared/model/com-comment';
-import { atom, Atom } from 'atomaric';
+import { atom } from 'atomaric';
 import { CmComCommentBlockSimpleSelector, CmComWid } from 'shared/api';
 
-export const cmComCommentConstructorRulePropsDictAtom: Atom<{
-  dict?: CmComCommentConstructorRulePropsDict;
-  selector?: CmComCommentBlockSimpleSelector;
-  comw: CmComWid;
-  wordChordiMaxDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKey, number>;
-}> = atom({ wordChordiMaxDict: {}, comw: CmComWid.def });
+export const cmComCommentConstructorRulePropsDictAtom = atom(
+  (): {
+    dict?: CmComCommentConstructorRulePropsDict;
+    selector?: CmComCommentBlockSimpleSelector;
+    comw: CmComWid;
+    altCommentKey: string | null;
+    wordChordiMaxDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKey, number>;
+  } => ({ wordChordiMaxDict: {}, comw: CmComWid.def, altCommentKey: null }),
+);

@@ -1,4 +1,8 @@
-import { cmComCommentTextRulesDetector, takeCmComCommentTextBlock } from '$cm/entities/com-comment';
+import {
+  cmComCommentCurrentOpenedAltKeyAtom,
+  cmComCommentTextRulesDetector,
+  takeCmComCommentTextBlock,
+} from '$cm/entities/com-comment';
 import { CmComCommentBlockSimpleSelector, CmComCommentBlockSpecialSelector, CmComWid } from 'shared/api';
 import {
   CmComCommentConstructorPropKey,
@@ -17,7 +21,9 @@ export const updateCmComCommentConstructorRulePropsDict = async (
 
   const propsDict: CmComCommentConstructorRulePropsDict = {};
   const wordChordiMaxDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKey, number> = {};
-  const commentTexts = takeCmComCommentTextBlock(comw, selector, localCommentBlock, commentBlock);
+  const altCommentKeys = cmComCommentCurrentOpenedAltKeyAtom.get();
+  const altCommentKey = altCommentKeys[comw] ?? altCommentKeys.last;
+  const commentTexts = takeCmComCommentTextBlock(comw, selector, localCommentBlock, commentBlock, altCommentKey);
 
   if (commentTexts) {
     cmComCommentTextRulesDetector(selector === CmComCommentBlockSpecialSelector.Head, commentTexts, props => {
@@ -38,5 +44,5 @@ export const updateCmComCommentConstructorRulePropsDict = async (
     });
   }
 
-  cmComCommentConstructorRulePropsDictAtom.set({ dict: propsDict, wordChordiMaxDict, selector, comw });
+  cmComCommentConstructorRulePropsDictAtom.set({ dict: propsDict, wordChordiMaxDict, selector, comw, altCommentKey });
 };
