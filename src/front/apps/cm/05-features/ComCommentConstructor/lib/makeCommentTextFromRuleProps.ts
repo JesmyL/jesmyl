@@ -27,6 +27,8 @@ export const makeCmComCommentConstructorCommentTextFromRuleProps = (
       if ('blocki' in props) {
         commentBlocks[props.blocki] ??= '';
 
+        if (!props.text) continue;
+
         if (isSimpleBlockText) commentBlocks[props.blocki] += makeCorrectText(props.kind, props.text, false);
         else
           commentBlocks[props.blocki] += props.text
@@ -75,13 +77,20 @@ export const makeCmComCommentConstructorCommentTextFromRuleProps = (
           if (postChordText) postChordRulesList[chordi] = postChordText;
         }
 
-        const accentMarker = makeAccentMarker(propsDict[`${wordKey}^`]?.kind);
+        let wordText = makeAccentMarker(propsDict[`${wordKey}^`]?.kind);
 
-        wordCommentsText += `\n${props.linei + 1}:${props.wordi + 1}${accentMarker}${makeTextRule(propsDict, wordKey, '<')}${makeTextRule(propsDict, wordKey, '>')}${makeChordRuleLine('<', preChordRulesList)}${makeChordRuleLine('^', replaceChordRulesList)}${makeChordRuleLine('>', postChordRulesList)}`;
+        wordText += makeWordTextRule(propsDict, wordKey, '<');
+        wordText += makeWordTextRule(propsDict, wordKey, '>');
+
+        wordText += makeChordTextRule('<', preChordRulesList);
+        wordText += makeChordTextRule('^', replaceChordRulesList);
+        wordText += makeChordTextRule('>', postChordRulesList);
+
+        if (wordText) wordCommentsText += `\n${props.linei + 1}:${props.wordi + 1}${wordText}`;
       } else {
         const lineKey = `l${props.linei}` as const;
 
-        if (!propsKeysSet.has(lineKey)) continue;
+        if (!propsKeysSet.has(lineKey) || !props.text) continue;
         propsKeysSet.delete(lineKey);
 
         lineCommentsText += `\n${props.linei + 1}${makeCorrectText(props.kind, props.text, false)}`;
@@ -121,15 +130,15 @@ const simpleStartCharForEscape = '.!';
 const simpleStartCharForEscapeSet = new Set(simpleStartCharForEscape);
 const startCharForEscapeSet = new Set(`0123456789${simpleStartCharForEscape}`);
 
-const makeTextRule = (
+const makeWordTextRule = (
   propsDict: CmComCommentConstructorRulePropsDict,
   key: CmComCommentConstructorPropsDictWordRulePropsKey | CmComCommentConstructorPropsDictChordRulePropsKey,
   place: '<' | '>',
 ) => {
   const props = propsDict[`${key}${place}`];
-  const result = props && makeCorrectText(props.kind, props.text).replace(makeRegExp(`/\\]/g`), '\\]');
-  return result ? `[${place}${result}]` : '';
+  if (!props?.text) return '';
+  return `[${place}${makeCorrectText(props.kind, props.text).replace(makeRegExp(`/\\]/g`), '\\]')}]`;
 };
 
-const makeChordRuleLine = (place: '^' | '>' | '<', chords: string[]) =>
+const makeChordTextRule = (place: '^' | '>' | '<', chords: string[]) =>
   chords.length ? `{${place}${chords.join(' ')}}` : '';
