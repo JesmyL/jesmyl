@@ -1,5 +1,4 @@
-import { useActualRef } from '#shared/lib/hooks/useActualRef';
-import { cmComCommentCurrentOpenedAltKeyAtom, useCmComCommentUpdater } from '$cm/entities/com-comment';
+import { cmComCommentCurrentOpenedAltKeyAtom, cmComCommentUpdater } from '$cm/entities/com-comment';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
@@ -9,18 +8,20 @@ import { makeCmComCommentConstructorCommentTextFromRuleProps } from './makeComme
 export const useCmComCommentConstructorListenChanges = (comw: CmComWid | nil) => {
   comw ??= CmComWid.def;
 
-  const updateCommentRef = useActualRef(useCmComCommentUpdater(comw));
   const altCommentKeys = useAtomValue(cmComCommentCurrentOpenedAltKeyAtom);
   const altCommentKey = altCommentKeys[comw] ?? altCommentKeys.last;
   const propsDict = useAtomValue(cmComCommentConstructorRulePropsDictAtom);
 
   useEffect(() => {
+    if (propsDict.comw === CmComWid.def) return;
+
     const dict = propsDict.dict;
     const selector = propsDict.selector;
     if (dict == null || selector == null) return;
 
-    const timeout = setTimeout(async () => {
-      updateCommentRef.current(
+    const timeout = setTimeout(() => {
+      cmComCommentUpdater(
+        propsDict.comw,
         () => makeCmComCommentConstructorCommentTextFromRuleProps(dict, propsDict.wordChordiMaxDict),
         selector,
         altCommentKey,
@@ -28,5 +29,5 @@ export const useCmComCommentConstructorListenChanges = (comw: CmComWid | nil) =>
     }, 1000);
 
     return () => clearTimeout(timeout);
-  }, [altCommentKey, propsDict.dict, propsDict.selector, propsDict.wordChordiMaxDict, updateCommentRef]);
+  }, [altCommentKey, propsDict.comw, propsDict.dict, propsDict.selector, propsDict.wordChordiMaxDict]);
 };

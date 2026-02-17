@@ -25,6 +25,13 @@ export const cmComCommentDetectCommentTextStyles = (ordSelectorId: CmComCommentB
         color: var(--color-x3);
       }
 
+      .comment-holder {
+        &:after,
+        &:before {
+          ${cmComCommentPseudoCommentStaticPropsCss}
+        }
+      }
+
       [solid-com-order-selector='${ordSelectorId}'] {
         ${() => {
           return mylib.values(sidePlacedChordsOnWait).map(chordProps => {
@@ -61,7 +68,7 @@ export const cmComCommentDetectCommentTextStyles = (ordSelectorId: CmComCommentB
               > [attr-chordi='${chordi - 1}'][com-letter-chorded='pre'] [word-fragment]:before,
               > [attr-chordi='${chordi - 1}'][com-letter-chorded='post']:after {
                 ${contentTextCss}${cmComCommentAccentsColorList[replaceProps?.kind ?? 0]}
-                text-decoration-line: underline;
+                text-decoration: underline;
               }
 
               ${contentTextCss &&
@@ -102,7 +109,6 @@ export const cmComCommentDetectCommentTextStyles = (ordSelectorId: CmComCommentB
       if ('blocki' in props) {
         styles.push(css`
           .styled-header ${cmComCommentHeaderHolderSelectors[props.blocki] || '::after'} {
-            ${cmComCommentPseudoCommentStaticPropsCss}
             ${cmComCommentMakePseudoCommentContentPropCss(props.text)}
             ${accentColor}
           }

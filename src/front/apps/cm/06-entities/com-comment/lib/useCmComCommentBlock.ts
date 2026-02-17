@@ -71,52 +71,49 @@ export const useCmComCommentKindBlockTaker = (
         commentBlock?.d?.[CmComCommentBlockSpecialSelector.Kinds]);
 };
 
-export const useCmComCommentUpdater = (comw: CmComWid) => {
-  const { maxComCommentAlternativesCount } = useAtomValue(cmConstantsConfigAtom);
-  const { localCommentBlock, commentBlock } = useCmComCommentBlock(comw);
-  const takeCommentTexts = useCmComCommentTextBlockTaker(comw, localCommentBlock, commentBlock);
+export const cmComCommentUpdater = async (
+  comw: CmComWid,
+  updater: (prevBlocks: string[]) => string[],
+  selector: CmComCommentBlockSimpleSelector,
+  altCommentKey: string | nil,
+) => {
+  const localCommentBlock = await cmIDB.tb.localComCommentBlocks.get(comw);
+  const commentBlock = await cmIDB.tb.comCommentBlocks.get(comw);
 
-  return useCallback(
-    (
-      updater: (prevBlocks: string[]) => string[],
-      ordSelectorId: CmComCommentBlockSimpleSelector,
-      altCommentKey: string | nil,
-    ) => {
-      const prev = [...(takeCommentTexts(ordSelectorId) ?? [])];
-      const texts = updater(prev);
+  const takeCommentTexts = takeCmComCommentTextBlock(comw, selector, localCommentBlock, commentBlock, altCommentKey);
 
-      const isNoChanges = !Array.from({ length: Math.max(prev.length, texts.length) }).some((_, texti) => {
-        return (prev[texti] ?? '') !== (texts[texti] ?? '');
-      });
+  const prev = [...(takeCommentTexts ?? [])];
+  const texts = updater(prev);
 
-      if (isNoChanges) return;
+  const isNoChanges = !Array.from({ length: Math.max(prev.length, texts.length) }).some((_, texti) => {
+    return (prev[texti] ?? '') !== (texts[texti] ?? '');
+  });
 
-      const isAltComment =
-        altCommentKey != null &&
-        (localCommentBlock?.alt?.[altCommentKey] != null ||
-          mylib.keys(localCommentBlock?.alt ?? []).length < maxComCommentAlternativesCount);
+  if (isNoChanges) return;
 
-      cmIDB.tb.localComCommentBlocks.put({
-        ...localCommentBlock,
-        comw,
-        m: Date.now(),
-        d: isAltComment
-          ? localCommentBlock?.d
-          : {
-              ...localCommentBlock?.d,
-              [ordSelectorId]: texts,
-            },
-        alt: isAltComment
-          ? {
-              ...localCommentBlock?.alt,
-              [altCommentKey]: {
-                ...localCommentBlock?.alt?.[altCommentKey],
-                [ordSelectorId]: texts,
-              },
-            }
-          : localCommentBlock?.alt,
-      });
-    },
-    [comw, localCommentBlock, maxComCommentAlternativesCount, takeCommentTexts],
-  );
+  const isAltComment =
+    altCommentKey != null &&
+    (localCommentBlock?.alt?.[altCommentKey] != null ||
+      mylib.keys(localCommentBlock?.alt ?? []).length < cmConstantsConfigAtom.get().maxComCommentAlternativesCount);
+
+  cmIDB.tb.localComCommentBlocks.put({
+    ...localCommentBlock,
+    comw,
+    m: Date.now(),
+    d: isAltComment
+      ? localCommentBlock?.d
+      : {
+          ...localCommentBlock?.d,
+          [selector]: texts,
+        },
+    alt: isAltComment
+      ? {
+          ...localCommentBlock?.alt,
+          [altCommentKey]: {
+            ...localCommentBlock?.alt?.[altCommentKey],
+            [selector]: texts,
+          },
+        }
+      : localCommentBlock?.alt,
+  });
 };

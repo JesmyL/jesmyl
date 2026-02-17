@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import { CmComBlockKindKey } from './BlockKind.model';
 import { KindBlock } from './KindBlock';
 
-const makeStartsBlockKindSelector = (key: CmComBlockKindKey) => `[${KindBlock.blockKindAttribute}^="${key}"]` as const;
+const makeStartsBlockKindSelector = <Key extends CmComBlockKindKey>(key: Key) =>
+  `[${KindBlock.blockKindAttribute}^="${key}"]` as const;
 const makeEndsBlockKindSelector = (key: CmComBlockKindKey) => `[${KindBlock.blockKindAttribute}$="${key}"]` as const;
 
 export const BlockKindProvider = styled.div`
@@ -102,6 +103,7 @@ export const BlockKindProvider = styled.div`
 
       &${makeStartsBlockKindSelector(CmComBlockKindKey.PTwo)},
         &${makeStartsBlockKindSelector(CmComBlockKindKey.Bridge)},
+        &${makeStartsBlockKindSelector(CmComBlockKindKey.Insert)},
         &${makeStartsBlockKindSelector(CmComBlockKindKey.Final)} {
         font-style: italic;
       }

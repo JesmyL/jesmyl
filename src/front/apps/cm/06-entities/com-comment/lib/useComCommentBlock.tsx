@@ -103,7 +103,6 @@ export const useCmComCommentBlockCss = (
 
           return css`
             ${selector} {
-              ${cmComCommentPseudoCommentStaticPropsCss}
               ${accentsCss}
             }
 
@@ -119,8 +118,7 @@ export const useCmComCommentBlockCss = (
       );
 
       const styleCss = css`
-        --comment-opacity: 0.5;
-        --comment-opacity-accent: 0.8;
+        --comment-opacity: 0.6;
         --comment-margin-left: 1rem;
 
         ${headCommentContents}
@@ -130,11 +128,11 @@ export const useCmComCommentBlockCss = (
           > ::after,
           > ::before,
           &::before {
-            opacity: var(--comment-opacity);
             text-decoration: none;
           }
 
           &::before {
+            opacity: var(--comment-opacity);
             margin-right: 1rem;
           }
 

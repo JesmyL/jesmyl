@@ -1,7 +1,7 @@
 import { css } from 'styled-components';
 
 export const cmComCommentPseudoCommentStaticPropsCss = css`
-  opacity: var(--comment-opacity-accent);
+  opacity: var(--comment-opacity);
   display: block;
   white-space: break-spaces;
   word-wrap: break-word;
@@ -9,4 +9,5 @@ export const cmComCommentPseudoCommentStaticPropsCss = css`
   line-height: normal;
   margin-bottom: 0.5em;
   text-decoration: underline;
+  font-weight: bold;
 `;

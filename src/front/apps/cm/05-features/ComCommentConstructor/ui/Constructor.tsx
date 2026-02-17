@@ -76,6 +76,8 @@ export const CmComCommentConstructorTextRulesConstructor = ({
         <div className="w-full h-full flex justify-center text-xKO">Комментарии скрыты</div>
       ) : (
         <>
+          <style>{commentCssStr}</style>
+
           {Array.from(
             {
               length: Math.min(
@@ -105,6 +107,7 @@ export const CmComCommentConstructorTextRulesConstructor = ({
           <StyledSolidOrdContainer
             ref={solidOrdContainerRef}
             $sel={selection}
+            className="com-orders-with-comments"
             $ordSelector={selector}
             onClick={event => {
               const linei = getParentNodeWithAttributeName(event, 'solid-order-text-linei').attr;
@@ -129,8 +132,6 @@ export const CmComCommentConstructorTextRulesConstructor = ({
               });
             }}
           >
-            <style>{commentCssStr}</style>
-
             <CmComOrderList
               chordHardLevel={chordHardLevel}
               chordVisibleVariant={ChordVisibleVariant.Maximal}

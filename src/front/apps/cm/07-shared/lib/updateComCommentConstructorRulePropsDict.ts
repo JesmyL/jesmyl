@@ -38,5 +38,5 @@ export const updateCmComCommentConstructorRulePropsDict = async (
     });
   }
 
-  cmComCommentConstructorRulePropsDictAtom.set({ dict: propsDict, wordChordiMaxDict, selector: ordSelector });
+  cmComCommentConstructorRulePropsDictAtom.set({ dict: propsDict, wordChordiMaxDict, selector: ordSelector, comw });
 };
