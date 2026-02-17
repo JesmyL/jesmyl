@@ -183,12 +183,13 @@ export const startExpressRouting = () => {
           if (com) {
             descriptionFromSearchParams += `\n\n${com.n}`;
             const cats = catsFileStore.getValue();
+            let categories = '';
 
             cats.forEach(cat => {
-              if (cat.d == null) return;
-              if (cat.d[com.w]) descriptionFromSearchParams += `\n${cat.n} ${cat.d[com.w]}`;
+              if (cat.d?.[com.w]) categories += `\n${cat.n} ${cat.d[com.w]}`;
             });
 
+            if (categories) descriptionFromSearchParams += `\n${categories}`;
             if (com.al) descriptionFromSearchParams += `\n\n${hosts.host}${audioPathPrefix}${com.w}.mp3`;
           }
         }
