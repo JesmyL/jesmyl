@@ -561,6 +561,9 @@
   "icon": "ShoppingCartFavorite01",
   "sum": [
     { "mi": 1, "formula": "#1.#1", "title": "Сумма", "type": 41, "date": 17606484 },
-    { "mi": 2, "formula": "#1.#1", "title": "Сумма", "type": 41, "date": 17630676 }
+    { "mi": 2, "formula": "#1.#1", "title": "Сумма", "type": 41, "date": 17630676 },
+    { "mi": 3, "formula": "#1.#1", "title": "дек", "type": 41, "date": 17646228 },
+    { "mi": 4, "formula": "#1.#1", "title": "янв", "type": 41, "date": 17672148 },
+    { "mi": 5, "formula": "#1.#1", "title": "фев", "type": 41, "date": 17698932 }
   ]
 }
