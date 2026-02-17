@@ -21,6 +21,10 @@ export const cmComCommentMakePseudoCommentContentAccentsColorCss = (
   elseCss ??
   `opacity: var(--comment-opacity);`;
 
+export const cmComCommentTrimHighlightMarkersEachLine = (text: string) => {
+  return text.split('\n').map(cmComCommentTrimHighlightMarkers).join('\n');
+};
+
 export const cmComCommentTrimHighlightMarkers = (text: string) => {
   text = text.slice(cmComCommentPseudoCommentContentAccentsKind(text));
   return text.startsWith('.') ? text.slice(1) : text;

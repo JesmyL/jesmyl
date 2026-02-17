@@ -101,7 +101,7 @@ export const CmComCommentModalInner = ({ com }: { com: CmCom }) => {
               <ModalFooter className="flex gap-2">
                 <CmComCommentSavedLocalMarker
                   comw={com.wid}
-                  ordSelectorId={ordSelectorId}
+                  selector={ordSelectorId}
                 />
                 <CmComCommentAlternativeSelector comw={com.wid} />
               </ModalFooter>

@@ -6,10 +6,10 @@ import { useEffect, useState } from 'react';
 import { CmComCommentBlockSimpleSelector, CmComWid } from 'shared/api';
 
 export const CmComCommentSavedLocalMarker = ({
-  ordSelectorId,
+  selector,
   comw,
 }: {
-  ordSelectorId: CmComCommentBlockSimpleSelector;
+  selector: CmComCommentBlockSimpleSelector;
   comw: CmComWid;
 }) => {
   const altCommentKeys = useAtomValue(cmComCommentCurrentOpenedAltKeyAtom);
@@ -19,8 +19,8 @@ export const CmComCommentSavedLocalMarker = ({
 
   return (
     <>
-      {(localCommentBlock?.d?.[ordSelectorId] != null ||
-        (altCommentKey && localCommentBlock?.alt?.[altCommentKey]?.[ordSelectorId] != null)) && <SavedLocalLabel />}
+      {(localCommentBlock?.d?.[selector] != null ||
+        (altCommentKey && localCommentBlock?.alt?.[altCommentKey]?.[selector] != null)) && <SavedLocalLabel />}
     </>
   );
 };

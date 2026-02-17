@@ -10,12 +10,30 @@ import {
 import {
   cmComCommentPseudoCommentContentAccentsKind,
   cmComCommentTrimHighlightMarkers,
+  cmComCommentTrimHighlightMarkersEachLine,
 } from './makePseudoComment.props';
 
 export const cmComCommentTextRulesDetector = (
+  isSimpleBlockText: boolean,
   commentBlocks: string[],
   onFound: (props: CmComCommentTextDetectorRuleProps) => void,
 ) => {
+  if (isSimpleBlockText) {
+    for (let blocki = 0; blocki < commentBlocks.length; blocki++) {
+      const block = commentBlocks[blocki]?.trim();
+      if (!block) continue;
+
+      onFound({
+        blocki,
+        kind: cmComCommentPseudoCommentContentAccentsKind(block),
+        text: cmComCommentTrimHighlightMarkers(block),
+        rate: blocki,
+      } satisfies CmComCommentTextDetectorBlockRuleProps);
+    }
+
+    return;
+  }
+
   const lineCommentKeys = new Set<string | number>();
   const lineComments: Record<string, string[]> = {};
 
@@ -44,13 +62,14 @@ export const cmComCommentTextRulesDetector = (
 
     block = block.trim();
 
-    if (block)
+    if (block) {
       onFound({
         blocki,
         kind: cmComCommentPseudoCommentContentAccentsKind(block),
-        text: cmComCommentTrimHighlightMarkers(block),
+        text: cmComCommentTrimHighlightMarkersEachLine(block),
         rate: blocki,
       } satisfies CmComCommentTextDetectorBlockRuleProps);
+    }
   }
 
   Array.from(lineCommentKeys).map(commentKey => {

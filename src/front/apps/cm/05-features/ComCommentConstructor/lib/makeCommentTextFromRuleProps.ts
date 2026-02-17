@@ -7,6 +7,7 @@ import {
 import { makeRegExp } from 'regexpert';
 
 export const makeCmComCommentConstructorCommentTextFromRuleProps = (
+  isSimpleBlockText: boolean,
   propsDict: CmComCommentConstructorRulePropsDict,
   chordCountDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKey, number>,
 ) => {
@@ -25,7 +26,13 @@ export const makeCmComCommentConstructorCommentTextFromRuleProps = (
 
       if ('blocki' in props) {
         commentBlocks[props.blocki] ??= '';
-        commentBlocks[props.blocki] += makeCorrectText(props.kind, props.text, false);
+
+        if (isSimpleBlockText) commentBlocks[props.blocki] += makeCorrectText(props.kind, props.text, false);
+        else
+          commentBlocks[props.blocki] += props.text
+            .split('\n')
+            .map((line, linei) => makeCorrectText(linei ? 0 : props.kind, line, false))
+            .join('\n');
       } else if ('wordi' in props) {
         const wordKey = `l${props.linei}w${props.wordi}` as const;
 

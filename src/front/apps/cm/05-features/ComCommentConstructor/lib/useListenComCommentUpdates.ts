@@ -2,7 +2,7 @@ import { cmComCommentCurrentOpenedAltKeyAtom, cmComCommentUpdater } from '$cm/en
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import { CmComWid } from 'shared/api';
+import { CmComCommentBlockSpecialSelector, CmComWid } from 'shared/api';
 import { makeCmComCommentConstructorCommentTextFromRuleProps } from './makeCommentTextFromRuleProps';
 
 export const useCmComCommentConstructorListenChanges = (comw: CmComWid | nil) => {
@@ -22,7 +22,12 @@ export const useCmComCommentConstructorListenChanges = (comw: CmComWid | nil) =>
     const timeout = setTimeout(() => {
       cmComCommentUpdater(
         propsDict.comw,
-        () => makeCmComCommentConstructorCommentTextFromRuleProps(dict, propsDict.wordChordiMaxDict),
+        () =>
+          makeCmComCommentConstructorCommentTextFromRuleProps(
+            selector === CmComCommentBlockSpecialSelector.Head,
+            dict,
+            propsDict.wordChordiMaxDict,
+          ),
         selector,
         altCommentKey,
       );

@@ -104,11 +104,11 @@ export function TheCmComComposition() {
                     className={isClose ? 'hidden' : undefined}
                     onClose={atom.reset}
                   >
-                    {ordSelector =>
-                      ordSelector != null && (
+                    {selector =>
+                      selector != null && (
                         <CmComCommentConstructorTextRulesConstructor
                           com={ccom}
-                          ordSelector={ordSelector}
+                          selector={selector}
                           isRedactAsTextAtom={atom}
                         />
                       )

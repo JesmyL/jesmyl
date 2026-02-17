@@ -67,7 +67,7 @@ export const useCmComCommentBlockCss = (
 
               const { onDetect, styles } = cmComCommentDetectCommentTextStyles(ordSelectorId);
 
-              cmComCommentTextRulesDetector(commentLines, onDetect);
+              cmComCommentTextRulesDetector(false, commentLines, onDetect);
 
               return styles;
             }) ?? []);
@@ -93,8 +93,8 @@ export const useCmComCommentBlockCss = (
             isThereUnsettedTranslate: isUnset,
             isThereCorrectBibleText: isWithText,
             accentsCss,
-            commentWithTextCss,
-            commentWithTextLinksOnlyCss,
+            makeCommentWithTextCss,
+            makeCommentWithTextLinksOnlyCss,
           } = await cmComCommentMakeStartCommentCss(currentBibleTranslate, line, translates);
 
           isThereUnsettedTranslate ||= isUnset;
@@ -107,11 +107,11 @@ export const useCmComCommentBlockCss = (
             }
 
             &.expand-first-comment-bible-texts ${selector} {
-              ${commentWithTextCss}
+              ${makeCommentWithTextCss}
             }
 
             &:not(.expand-first-comment-bible-texts) ${selector} {
-              ${commentWithTextLinksOnlyCss}
+              ${makeCommentWithTextLinksOnlyCss}
             }
           `;
         }),

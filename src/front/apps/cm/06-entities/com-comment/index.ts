@@ -1,6 +1,6 @@
 export * from './lib/useCheckIsComCommentIncludesBibleAddress';
 export * from './lib/useCmComCommentBlock';
-export * from './lib/useComCommentBlock';
+export * from './lib/useCmComCommentBlockCss';
 export * from './lib/useComCommentBlockFastReactions';
 export * from './lib/useTrySendComCommentBlocks';
 

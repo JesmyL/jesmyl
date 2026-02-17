@@ -1,5 +1,5 @@
 import { cmComCommentTextRulesDetector, takeCmComCommentTextBlock } from '$cm/entities/com-comment';
-import { CmComCommentBlockSimpleSelector, CmComWid } from 'shared/api';
+import { CmComCommentBlockSimpleSelector, CmComCommentBlockSpecialSelector, CmComWid } from 'shared/api';
 import {
   CmComCommentConstructorPropKey,
   CmComCommentConstructorPropsDictWordRulePropsKey,
@@ -10,17 +10,17 @@ import { cmComCommentConstructorRulePropsDictAtom } from '../state/com-comment.a
 
 export const updateCmComCommentConstructorRulePropsDict = async (
   comw: CmComWid,
-  ordSelector: CmComCommentBlockSimpleSelector,
+  selector: CmComCommentBlockSimpleSelector,
 ) => {
   const localCommentBlock = await cmIDB.tb.localComCommentBlocks.get(comw);
   const commentBlock = await cmIDB.tb.comCommentBlocks.get(comw);
 
   const propsDict: CmComCommentConstructorRulePropsDict = {};
   const wordChordiMaxDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKey, number> = {};
-  const commentTexts = takeCmComCommentTextBlock(comw, ordSelector, localCommentBlock, commentBlock);
+  const commentTexts = takeCmComCommentTextBlock(comw, selector, localCommentBlock, commentBlock);
 
   if (commentTexts) {
-    cmComCommentTextRulesDetector(commentTexts, props => {
+    cmComCommentTextRulesDetector(selector === CmComCommentBlockSpecialSelector.Head, commentTexts, props => {
       let key: CmComCommentConstructorPropKey;
 
       if ('blocki' in props) key = `b${props.blocki}`;
@@ -38,5 +38,5 @@ export const updateCmComCommentConstructorRulePropsDict = async (
     });
   }
 
-  cmComCommentConstructorRulePropsDictAtom.set({ dict: propsDict, wordChordiMaxDict, selector: ordSelector, comw });
+  cmComCommentConstructorRulePropsDictAtom.set({ dict: propsDict, wordChordiMaxDict, selector, comw });
 };

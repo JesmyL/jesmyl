@@ -141,12 +141,10 @@ export const cmComCommentMakeStartCommentCss = async (
     });
 
   return {
-    commentWithTextCss: cmComCommentMakePseudoCommentContentPropCss(
-      cmComCommentTrimHighlightMarkers(makeStartComment()),
-    ),
-    commentWithTextLinksOnlyCss: cmComCommentMakePseudoCommentContentPropCss(
-      cmComCommentTrimHighlightMarkers(makeStartComment(true)),
-    ),
+    makeCommentWithTextCss: () =>
+      cmComCommentMakePseudoCommentContentPropCss(cmComCommentTrimHighlightMarkers(makeStartComment())),
+    makeCommentWithTextLinksOnlyCss: () =>
+      cmComCommentMakePseudoCommentContentPropCss(cmComCommentTrimHighlightMarkers(makeStartComment(true))),
     isThereUnsettedTranslate,
     isThereCorrectBibleText,
     accentsCss,
