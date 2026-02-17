@@ -1,14 +1,17 @@
 import { Button } from '#shared/components';
 import { mylib } from '#shared/lib/my-lib';
+import { Modal } from '#shared/ui/modal';
+import { WithAtom } from '#shared/ui/WithAtom';
 import { cmComCommentCurrentOpenedAltKeyAtom, useCmComCommentBlockCss } from '$cm/entities/com-comment';
 import { CmComCommentAlternativeSelector } from '$cm/entities/ComCommentAlternativeSelector';
 import { CmComCommentSavedLocalMarker } from '$cm/entities/ComCommentSavedLocalMarker';
 import { CmComCommentTools } from '$cm/entities/ComCommentTools';
 import { CmCom } from '$cm/ext';
+import { CmComCommentModalInner } from '$cm/features/com-comment';
 import { updateCmComCommentConstructorRulePropsDict } from '$cm/shared/lib/updateComCommentConstructorRulePropsDict';
 import { cmIsShowMyCommentsAtom } from '$cm/shared/state';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
-import { Atom, useAtomValue } from 'atomaric';
+import { useAtomValue } from 'atomaric';
 import { useEffect, useMemo } from 'react';
 import { CmComCommentBlockSimpleSelector, CmComCommentBlockSpecialSelector } from 'shared/api';
 import { itNUnd, retNull } from 'shared/utils';
@@ -18,11 +21,9 @@ import { CmComCommentConstructorTextWithAccentRedactor } from './TextWithAccentR
 export const CmComCommentConstructorTextRulesConstructor = ({
   com,
   selector,
-  isRedactAsTextAtom,
 }: {
   com: CmCom;
   selector: CmComCommentBlockSimpleSelector;
-  isRedactAsTextAtom: Atom<boolean>;
 }) => {
   const propsDict = useAtomValue(cmComCommentConstructorRulePropsDictAtom);
   const isShowComments = useAtomValue(cmIsShowMyCommentsAtom);
@@ -49,10 +50,23 @@ export const CmComCommentConstructorTextRulesConstructor = ({
     <>
       <div className="flex gap-3">
         <CmComCommentAlternativeSelector comw={com.wid} />
-        <Button
-          icon="TextFirstlineRight"
-          onClick={isRedactAsTextAtom.do.toggle}
-        />
+
+        <WithAtom init={false}>
+          {openAtom => (
+            <>
+              <Modal
+                key="com-comment"
+                openAtom={openAtom}
+              >
+                <CmComCommentModalInner com={com} />
+              </Modal>
+              <Button
+                icon="TextFirstlineRight"
+                onClick={openAtom.do.toggle}
+              />
+            </>
+          )}
+        </WithAtom>
         <CmComCommentTools com={com} />
       </div>
 
