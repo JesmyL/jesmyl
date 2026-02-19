@@ -36,7 +36,7 @@ const Content = (props: Props) => {
   const isShowMyComments = useAtomValue(cmIsShowMyCommentsAtom);
   const isCommentRedactorIsOpen = useDebounceValue(useAtomValue(cmComCommentRedactOrdSelectorIdAtom));
 
-  const { commentCssStr, isThereUnsettedTranslate, isThereCorrectBibleText } = useCmComCommentBlockCss(
+  const { commentCssNode, isThereUnsettedTranslate, isThereCorrectBibleText } = useCmComCommentBlockCss(
     props.com,
     !isShowMyComments || isCommentRedactorIsOpen != null,
   );
@@ -44,7 +44,7 @@ const Content = (props: Props) => {
 
   return (
     <>
-      <style>{commentCssStr}</style>
+      {commentCssNode}
 
       <div
         className="flex gap-3"

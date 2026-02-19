@@ -14,6 +14,7 @@ import { cmComCommentTextRulesDetector } from '../utils/cmComCommentTextRulesDet
 import { cmComCommentDetectCommentTextStyles } from '../utils/detectCommentTextStyles';
 import { cmComCommentMakeStartCommentCss } from '../utils/makeStartCommentCss';
 import { cmComCommentPseudoCommentStaticPropsCss } from '../utils/pseudoCommentStaticPropsCss';
+import { cmComCommentMakeStyleNode } from './checkSupport';
 import {
   useCmComCommentBlock,
   useCmComCommentKindBlockTaker,
@@ -27,7 +28,7 @@ export const useCmComCommentBlockCss = (
 ) => {
   const [styles, setStyles] = useState<
     Partial<{
-      commentCssStr: string;
+      commentCssNode: React.ReactNode;
       isThereUnsettedTranslate: boolean;
       isThereCorrectBibleText: boolean;
     }>
@@ -167,7 +168,7 @@ export const useCmComCommentBlockCss = (
       return {
         isThereUnsettedTranslate,
         isThereCorrectBibleText,
-        commentCssStr: `.com-orders-with-comments{${joinRecursively(styleCss)}`,
+        commentCssNode: cmComCommentMakeStyleNode(`.com-orders-with-comments{${joinRecursively(styleCss)}}`),
       };
     })()
       .then(styles => setStyles(styles))

@@ -40,7 +40,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
   const editSrc = useAtomValue(srcOnEditAtom);
   const trackMarks = cmIDB.useAudioTrackMarks(editSrc);
   const marksOnUpdating = useAtomValue(cmComEditorAudioMarksEditPacksAtom);
-  const { commentCssStr } = useCmComCommentBlockCss(ccom, true);
+  const { commentCssNode } = useCmComCommentBlockCss(ccom, true);
 
   const audioMarkControl = useCmComOrderAudioMarkControlButtons(
     preSwitchTimeAtom,
@@ -180,7 +180,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
 
                   {audioMarkControl.afterTargetOrdwOtherPlayButtonNodeDict.before}
 
-                  <style>{commentCssStr}</style>
+                  {commentCssNode}
 
                   <CmComOrderList
                     chordVisibleVariant={ChordVisibleVariant.None}

@@ -28,7 +28,7 @@ export const CmComCommentConstructorTextRulesConstructor = ({
   const propsDict = useAtomValue(cmComCommentConstructorRulePropsDictAtom);
   const isShowComments = useAtomValue(cmIsShowMyCommentsAtom);
 
-  const { commentCssStr } = useCmComCommentBlockCss(
+  const { commentCssNode } = useCmComCommentBlockCss(
     com,
     false,
     useMemo(
@@ -78,7 +78,7 @@ export const CmComCommentConstructorTextRulesConstructor = ({
         <div className="w-full h-full flex justify-center text-xKO">Комментарии скрыты</div>
       ) : (
         <>
-          <style>{commentCssStr}</style>
+          {commentCssNode}
 
           {Array.from(
             {
