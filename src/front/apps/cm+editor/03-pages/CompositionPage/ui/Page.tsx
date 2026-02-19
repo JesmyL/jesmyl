@@ -35,7 +35,7 @@ export const CmEditorCompositionPage = ({
   const checkAccess = useCheckUserAccessRightsInScope();
   const TabComponent =
     (tab &&
-      cmEditorComTabCompositionNavs[tab].checkTabAccess(checkAccess) &&
+      cmEditorComTabCompositionNavs[tab]?.checkTabAccess(checkAccess) &&
       cmEditorComTabCompositionNavs[tab]?.Component) ||
     cmEditorComTabCompositionNavs.watch.Component;
 
