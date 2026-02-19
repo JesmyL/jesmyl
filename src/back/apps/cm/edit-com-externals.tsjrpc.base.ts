@@ -1,6 +1,6 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
-import { CmComAudioMarkPack, CmComAudioMarkPackTime, CmComWid, ComsInSchEvent } from 'shared/api';
+import { CmComAudioMarkPack, CmComAudioMarkPackTime, CmComWid, CmComWidRefGroupId, ComsInSchEvent } from 'shared/api';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
 import { itNumSort, SMyLib, smylib } from 'shared/utils';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
@@ -8,6 +8,7 @@ import { schedulesDirStore } from '../index/schedules/file-stores';
 import { makeCmComNumLeadLinkFromHttp } from './complect/com-http-links';
 import {
   cmComAudioMarkPacksFileStore,
+  cmComWidRefGroupDictFileStore,
   comsDirStore,
   comsInSchEventDirStorage,
   comsInSchEventHistoryDirStorage,
@@ -263,6 +264,57 @@ export const cmEditComExternalsTsjrpcBaseServer =
             if (mod) {
               cmShareServerTsjrpcMethods.refreshScheduleEventComPacks({ packs: [pack], modifiedAt: mod }, null);
             }
+          },
+
+          switchComwRefs: async ({ comw, withComw }) => {
+            let description = '';
+
+            const { mod } = cmComWidRefGroupDictFileStore.modifyValueWithAutoSave(refs => {
+              const comwRefGroup = refs[comw];
+              const withComwRefGroup = refs[withComw];
+
+              const com = comsDirStore.getItem(comw);
+              const withCom = comsDirStore.getItem(withComw);
+              const allGroups = smylib.values(refs);
+
+              if (comwRefGroup != null) {
+                if (comwRefGroup !== withComwRefGroup) {
+                  if (com == null || withCom == null) throw 'Песня не найдена';
+
+                  refs[withComw] = comwRefGroup;
+                  description += `Песни "${com.n}" и "${withCom.n}" объединены в ссылочную группу`;
+                } else {
+                  const comJoinGroupMembersCount =
+                    comwRefGroup == null
+                      ? 0
+                      : allGroups.reduce((sum, curr) => sum + (comwRefGroup === curr ? 1 : 0), 0);
+
+                  if (comJoinGroupMembersCount === 2) delete refs[comw];
+                  delete refs[withComw];
+
+                  description += `Удалена ссылка между ${com ? `песней "${com.n}"` : '<s>неизвестной песней</s>'}`;
+                  description += ` и ${withCom ? `песней "${withCom.n}"` : '<s>неизвестной песней</s>'}`;
+                }
+              } else {
+                if (com == null || withCom == null) throw 'Песня не найдена';
+
+                if (withComwRefGroup != null) refs[comw] = withComwRefGroup;
+                else {
+                  const reservedGroupsSet = new Set(allGroups);
+                  let minGroupId = CmComWidRefGroupId.min;
+
+                  for (;;) if (!reservedGroupsSet.has(++minGroupId)) break;
+
+                  refs[comw] = refs[withComw] = minGroupId;
+                }
+
+                description += `Песни "${com.n}" и "${withCom.n}" объединены в ссылочную группу`;
+              }
+
+              cmShareServerTsjrpcMethods.refreshComWidRefDict({ refs, mod }, null);
+            });
+
+            return { description };
           },
         },
       });

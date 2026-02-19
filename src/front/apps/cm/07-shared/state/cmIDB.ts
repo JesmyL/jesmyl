@@ -5,6 +5,7 @@ import {
   ChordPack,
   CmComAudioMarkPack,
   CmComWid,
+  CmComWidRefGroupDict,
   CmConstantsConfig,
   ComsInSchEvent,
   ICmComCommentBlock,
@@ -41,6 +42,7 @@ export interface CmIDBStorage {
   chordVisibleVariant: ChordVisibleVariant | null;
   comFontSize: number | null;
   speedRollKf: number | null;
+  comWidRefDict: CmComWidRefGroupDict;
 }
 
 class CmIDB extends DexieDB<CmIDBStorage> {
@@ -59,6 +61,7 @@ class CmIDB extends DexieDB<CmIDBStorage> {
       lastOpenComw: [null],
       isShowFavouritesInBroadcast: [null],
       constantsConfig: [null],
+      comWidRefDict: [{}],
 
       coms: {
         w: '++',

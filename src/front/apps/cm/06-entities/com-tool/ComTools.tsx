@@ -13,9 +13,10 @@ import { twMerge } from 'tailwind-merge';
 import { useCmComCurrentFixedCom } from '../com/lib/com-selections';
 import { cmComChordVisibleVariantAtom, cmComFontSizeAtom } from '../com/state/atoms';
 import { CmComCatMentions } from '../com/ui/ComCatMentions';
+import { CmComJoinGroupList } from '../ComJoinGroupList';
 import { useCmComToolMigratableList } from './lib/useMigratableComTools';
 
-export const CmComToolList = () => {
+export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => {
   const ccom = useCmComCurrentFixedCom();
   const fontSize = useAtomValue(cmComFontSizeAtom);
   const chordVisibleVariant = useAtomValue(cmComChordVisibleVariantAtom);
@@ -120,6 +121,16 @@ export const CmComToolList = () => {
         {Math.trunc(ccom.wid) !== Math.trunc(ccom.mod) && (
           <div>Обновлена: {new Date(ccom.mod).toLocaleString('ru')}</div>
         )}
+      </div>
+      <div className="ml-7">
+        <CmComJoinGroupList
+          com={ccom}
+          children={comJoinsList => !comJoinsList.length || <div className="mt-7">Связанные песни</div>}
+          importantOnClick={({ defaultClick }) => {
+            onClose(false);
+            defaultClick();
+          }}
+        />
       </div>
     </>
   );

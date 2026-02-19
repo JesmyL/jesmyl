@@ -101,7 +101,7 @@ export function TheCmComComposition() {
             title={ccom.name}
             onClose={setIsOpenTools}
           >
-            <CmComToolList />
+            <CmComToolList onClose={setIsOpenTools} />
           </BottomPopup>
         </>
       }

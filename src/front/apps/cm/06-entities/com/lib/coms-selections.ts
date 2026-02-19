@@ -6,20 +6,26 @@ import { useMemo } from 'react';
 import { CmComMod, CmComWid, IExportableCom } from 'shared/api';
 import { itNNull } from 'shared/utils';
 
-export const useCmComList = (comwsLine?: CmComWid[]) => {
+export const useCmComList = (comwsList?: CmComWid[] | nil, excludeComwsList?: CmComWid[]) => {
   const icoms = useLiveQuery(
-    () => (comwsLine == null ? cmIDB.db.coms.toArray() : cmIDB.db.coms.where('w').anyOf(comwsLine).toArray()),
-    [comwsLine],
+    () =>
+      (excludeComwsList == null
+        ? comwsList == null
+          ? cmIDB.db.coms
+          : cmIDB.db.coms.where('w').anyOf(comwsList)
+        : cmIDB.db.coms.where('w').noneOf(excludeComwsList)
+      ).toArray(),
+    [comwsList, excludeComwsList],
   );
 
   return useMemo(() => {
     if (icoms == null) return [];
 
     const comwIndexDict = {} as Record<CmComWid, number>;
-    const unknownComwSet = new Set<CmComWid>(comwsLine);
+    const unknownComwSet = new Set<CmComWid>(comwsList);
 
-    if (comwsLine) {
-      comwsLine.forEach((comw, comwi) => (comwIndexDict[comw] = comwi));
+    if (comwsList) {
+      comwsList.forEach((comw, comwi) => (comwIndexDict[comw] = comwi));
       icoms.forEach(com => unknownComwSet.delete(com.w));
     } else {
       icoms.forEach((com, comwi) => {
@@ -29,7 +35,7 @@ export const useCmComList = (comwsLine?: CmComWid[]) => {
     }
 
     const unknownComs =
-      comwsLine
+      comwsList
         ?.map((comw): IExportableCom | null => (unknownComwSet.has(comw) ? { m: CmComMod.def, n: '', w: comw } : null))
         .filter(itNNull) ?? [];
 
@@ -37,7 +43,7 @@ export const useCmComList = (comwsLine?: CmComWid[]) => {
       .concat(unknownComs)
       .sort((a, b) => comwIndexDict[a.w] - comwIndexDict[b.w])
       .map(icom => new CmCom(icom));
-  }, [comwsLine, icoms]);
+  }, [comwsList, icoms]);
 };
 
 export const [CmComListContext, useCmComListContext] = contextCreator<CmCom[]>([]);

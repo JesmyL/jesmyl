@@ -77,6 +77,11 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
           cmConstantsConfigAtom.set(prev => ({ ...prev, ...config }));
           await cmIDB.updateLastModifiedAt(modifiedAt);
         },
+
+        refreshComWidRefDict: async ({ refs, mod }) => {
+          cmIDB.set.comWidRefDict(refs);
+          await cmIDB.updateLastModifiedAt(mod);
+        },
       },
     });
   }

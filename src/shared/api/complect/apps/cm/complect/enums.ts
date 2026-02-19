@@ -31,3 +31,7 @@ export const enum CmMeetingWid {
 export const enum CmMeetingEventWid {
   def = -1,
 }
+
+export const enum CmComWidRefGroupId {
+  min = 0,
+}

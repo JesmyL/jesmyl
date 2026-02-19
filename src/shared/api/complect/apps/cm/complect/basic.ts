@@ -3,7 +3,15 @@ import { StrRegExp } from 'regexpert';
 import { CmBroadcastSlideGrouperKind } from 'shared/model/cm/broadcast';
 import { CmComMetricNums } from 'shared/model/cm/com-metric-nums';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
-import { CmCatWid, CmComIntensityLevel, CmComMod, CmComOrderWid, CmComWid, CmMeetingEventWid } from './enums';
+import {
+  CmCatWid,
+  CmComIntensityLevel,
+  CmComMod,
+  CmComOrderWid,
+  CmComWid,
+  CmComWidRefGroupId,
+  CmMeetingEventWid,
+} from './enums';
 
 export interface CmMp3Rule {
   w: number;
@@ -248,3 +256,5 @@ export type MenuComToolNameList =
   | 'copy-com'
   | 'chord-hard-level'
   | 'cats-binds';
+
+export type CmComWidRefGroupDict = PRecord<CmComWid, CmComWidRefGroupId>;

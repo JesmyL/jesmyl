@@ -4,6 +4,7 @@ import {
   ChordPack,
   CmComAudioMarkPack,
   CmComWid,
+  CmComWidRefGroupDict,
   CmConstantsConfig,
   CmMp3Rule,
   ComsInSchEvent,
@@ -98,3 +99,8 @@ export const cmConstantsConfigFileStore = new FileStore<CmConstantsConfig>(
 
   if (isConfigChanged) cmConstantsConfigFileStore.saveValue();
 })();
+
+export const cmComWidRefGroupDictFileStore = new FileStore<CmComWidRefGroupDict>(
+  '/apps/cm/comWidRefGroupDict.json',
+  {},
+);

@@ -31,6 +31,7 @@ export {
 } from '$cm/entities/com-order';
 export { CmComOrderLine } from '$cm/entities/com-order-line';
 export { TheCmComOrderSolid } from '$cm/entities/com-order/ui/TheOrderSolid';
+export { CmComJoinGroupList } from '$cm/entities/ComJoinGroupList';
 export { type CmBroadcastSchWgtLiveDataValue } from '$cm/features/broadcast/model/model';
 export { CmCom } from '$cm/shared/lib/Com';
 export {

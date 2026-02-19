@@ -40,11 +40,11 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
       methods: {
         requestFreshes: async ({ lastModfiedAt }, { client, auth, visitInfo }) => {
           if (cmComWidRefGroupDictFileStore.fileModifiedAt() > lastModfiedAt) {
-            const joins = cmComWidRefGroupDictFileStore.getValue();
+            const refs = cmComWidRefGroupDictFileStore.getValue();
 
-            cmShareServerTsjrpcMethods.refreshComWidRefsDict(
+            cmShareServerTsjrpcMethods.refreshComWidRefDict(
               {
-                joins,
+                refs,
                 mod: cmComWidRefGroupDictFileStore.fileModifiedAt(),
               },
               client,

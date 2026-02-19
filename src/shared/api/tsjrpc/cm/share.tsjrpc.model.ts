@@ -2,6 +2,7 @@ import {
   ChordPack,
   CmCatWid,
   CmComWid,
+  CmComWidRefGroupDict,
   CmConstantsConfig,
   ComsInSchEvent,
   ICmComCommentBlock,
@@ -30,4 +31,5 @@ export type CmShareTsjrpcModel = {
 
   refreshScheduleEventComPacks: (args: { packs: ComsInSchEvent[]; modifiedAt: number }) => void;
   refreshConstantsConfig: (args: { config: Partial<CmConstantsConfig>; modifiedAt: number }) => unknown;
+  refreshComWidRefDict: (args: { refs: CmComWidRefGroupDict; mod: number }) => unknown;
 };

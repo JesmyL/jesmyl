@@ -53,4 +53,6 @@ export type CmEditComExternalsTsjrpcModel = {
     src: HttpLink;
     cMarks?: CmComAudioMarkPack;
   };
+
+  switchComwRefs: (args: { comw: CmComWid; withComw: CmComWid }) => void;
 };

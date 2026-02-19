@@ -20,6 +20,7 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
   Constructor: new (icom: IExportableCom) => ComConstructor;
   termAtom: Atom<string>;
   children: (props: {
+    term: string;
     inputNode: React.ReactNode;
     searchedComs: ComConstructor[];
     limitedComs: ComConstructor[];
@@ -111,6 +112,7 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
         termAtom={props.termAtom}
       />
     ),
+    term,
     catNumberSearch,
     limitedComs,
     searchedComs: mappedComs ?? searchedComs,

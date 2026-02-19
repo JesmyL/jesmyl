@@ -9,6 +9,7 @@ import { CmEditorComTabChordsBlocks } from '../ui/TabComChordsBlocks';
 import { CmEditorComTabMain } from '../ui/TabComMain';
 import { CmEditorComTabComOnBroadcast } from '../ui/TabComOnBroadcast';
 import { CmEditorComTabComOrders } from '../ui/TabComOrders';
+import { CmEditorComTabComRefs } from '../ui/TabComRefs';
 import { CmEditorComTabTextBlocks } from '../ui/TabComTextBlocks';
 import { CmEditorComTabWatch } from '../ui/TabComWatch';
 
@@ -62,6 +63,11 @@ export const cmEditorComTabCompositionNavs = {
     Component: CmEditorComTabComOnBroadcast,
     icon: 'Computer',
     checkTabAccess: checkAccess => checkAccess('cm', 'COM_TR'),
+  },
+  ref: {
+    Component: CmEditorComTabComRefs,
+    icon: 'Link01',
+    checkTabAccess: checkAccess => checkAccess('cm', 'COM_REF'),
   },
   main: {
     Component: CmEditorComTabMain,
