@@ -5,6 +5,7 @@ import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-ext
 import { itNumSort, SMyLib, smylib } from 'shared/utils';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
 import { schedulesDirStore } from '../index/schedules/file-stores';
+import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from './client-selectors-by-visit';
 import { makeCmComNumLeadLinkFromHttp } from './complect/com-http-links';
 import {
   cmComAudioMarkPacksFileStore,
@@ -311,7 +312,10 @@ export const cmEditComExternalsTsjrpcBaseServer =
                 description += `Песни "${com.n}" и "${withCom.n}" объединены в ссылочную группу`;
               }
 
-              cmShareServerTsjrpcMethods.refreshComWidRefDict({ refs, mod }, null);
+              cmShareServerTsjrpcMethods.refreshComWidRefDict(
+                { refs, mod },
+                cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector,
+              );
             });
 
             return { description };

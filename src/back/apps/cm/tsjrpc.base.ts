@@ -8,6 +8,7 @@ import {
 } from 'shared/api';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
 import { SMyLib, smylib } from 'shared/utils';
+import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from './client-selectors-by-visit';
 import { makeCmComNumLeadLinkFromHttp } from './complect/com-http-links';
 import { mapCmImportableToExportableCom } from './complect/tools';
 import { cmEditCatServerTsjrpcBase } from './edit-cat.tsjrpc.base';
@@ -39,7 +40,10 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
       scope: 'Cm',
       methods: {
         requestFreshes: async ({ lastModfiedAt }, { client, auth, visitInfo }) => {
-          if (cmComWidRefGroupDictFileStore.fileModifiedAt() > lastModfiedAt) {
+          if (
+            cmComWidRefGroupDictFileStore.fileModifiedAt() > lastModfiedAt &&
+            cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector(visitInfo)
+          ) {
             const refs = cmComWidRefGroupDictFileStore.getValue();
 
             cmShareServerTsjrpcMethods.refreshComWidRefDict(
