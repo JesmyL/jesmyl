@@ -46,7 +46,7 @@ export const CmEditorCompositionPage = ({
       .pipe(
         setTimeoutPipe(() => {
           if (!ccom && (mylib.isNaN(ccomw) || removedComs[ccomw] == null)) navigate({ to: '/cm/edit/coms' });
-        }, 500),
+        }, 2500),
       )
       .effect();
   }, [ccom, ccomw, navigate, removedComs]);
