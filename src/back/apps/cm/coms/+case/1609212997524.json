@@ -12,7 +12,7 @@
   ],
   "c": ["Gm D\nD7 Gm\nCm F A#\nCm D7 Gm", "Gm D\nD7 Gm\nCm F A# D#\nD7 Gm", "Cm F A# D#\nD7 Gm"],
   "o": [
-    { "w": 0, "c": 1, "t": "{texti}", "k": 15 },
+    { "w": 0, "c": 1, "k": 15 },
     {
       "t": 0,
       "c": 0,

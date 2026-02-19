@@ -2,7 +2,7 @@
   "c": ["D G D\nHm A/C# E A\nD G D/F#\nHm Em A D", "A D G D\nHm E A\nA D G D/F#\nHm Em A D", "D Hm A/C# G"],
   "n": "Твёрдо я верю мой Иисус",
   "o": [
-    { "w": 0, "c": 2, "t": "texti", "k": 15 },
+    { "w": 0, "c": 2, "k": 15 },
     {
       "c": 0,
       "p": [
