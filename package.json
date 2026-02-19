@@ -10,7 +10,6 @@
     "lint": "tsc --project ./tsconfig.json --noEmit && eslint **/*.{ts,tsx,json} *.*",
     "tg-dev": "nodemon tg-bot.mjs",
     "format": "prettier --write \"**/src/**/*.{tsx,ts}\"",
-    "format-jsons": "prettier --write \"**/src/**/*.json\"",
     "cy-test": "cypress open"
   },
   "eslintConfig": {

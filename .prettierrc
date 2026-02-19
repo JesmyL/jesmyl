@@ -6,6 +6,5 @@
   "singleAttributePerLine": true,
   "trailingComma": "all",
   "plugins": [],
-  "cssDeclarationSorterOrder": "concentric-css",
   "arrowParens": "avoid"
 }

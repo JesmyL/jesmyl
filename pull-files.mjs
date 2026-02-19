@@ -16,14 +16,17 @@ import { exec } from 'child_process';
     ['apps/index', 'rights'],
     ['apps/index', 'nouns'],
     ['apps/index', 'pronouns'],
-    ['apps/cm'],
-    ['apps/cm/coms'],
-    ['apps/cm/comComments'],
-    ['apps/cm/comsInSchEvent'],
-    ['apps/cm/comsInSchEventHistory'],
     ['apps/q'],
     ['apps/q/blanks'],
     ['apps/storages/list'],
+
+    ['apps/cm'],
+    ['apps/cm/comComments'],
+    ['apps/cm/comsInSchEvent'],
+    ['apps/cm/comsInSchEventHistory'],
+
+    // large
+    ['apps/cm/coms'],
   ];
 
   const joinPath = listPaths => listPaths.filter(i => i).join('/');
@@ -39,12 +42,11 @@ import { exec } from 'child_process';
 
     try {
       await execAsync(`scp -r root@185.244.173.52:/var/www/jesmyl.ru/${serverPath} ${localPath}`);
+      await execAsync(`npx prettier --write "${localPath}"`);
 
       console.info(`${serverPath} saved!`);
     } catch (_error) {
       console.info(`${serverPath} load FAILURE!`);
     }
   }
-
-  await execAsync('npm run format-jsons');
 })();
