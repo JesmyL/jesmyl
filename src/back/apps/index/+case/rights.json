@@ -2,7 +2,7 @@
   "roles": {
     "TOP": { "info": { "m": 0 } },
     "ADMIN": {
-      "info": { "m": 1769508373020 },
+      "info": { "m": 1771481056219 },
       "cm": {
         "EDIT": 4,
         "COM": 14,
@@ -20,15 +20,16 @@
         "EVENT": 6,
         "MP3": 4,
         "CAT": 6,
-        "COM_TXT_NL": 10
+        "COM_TXT_NL": 10,
+        "COM_REF": 14
       },
       "q": { "EDIT": 14 },
       "sch": { "SCH": 14 }
     }
   },
   "rights": {
-    "T166cbf17596a0c2919e4df1a6d54e66": { "info": { "role": "TOP", "fio": "Павел 👨‍💻", "m": 1769960136935 } },
-    "T6558fe287d2ea93be3e19bbe64b5dfc": { "info": { "fio": "Руслан", "m": 1768712207761, "role": "ADMIN" } },
+    "T166cbf17596a0c2919e4df1a6d54e66": { "info": { "role": "TOP", "fio": "Павел 👨‍💻", "m": 1771480954367 } },
+    "T6558fe287d2ea93be3e19bbe64b5dfc": { "info": { "fio": "Руслан", "m": 1771481139467, "role": "ADMIN" } },
     "T7f21a14d3133065ca2e48254f87ecf3": {
       "info": { "fio": "danikpon", "m": 1770007938406 },
       "cm": { "EDIT": 4, "COM_TXT": 6, "COM_TXT_NL": 10, "COM_TR": 6, "EVENT": 6, "COM": 4 }
