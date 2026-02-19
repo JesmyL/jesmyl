@@ -66,9 +66,10 @@ export class FileStore<Value> {
       });
   };
 
-  getValueWithAutoSave = (): Value => {
-    Promise.resolve().then(() => this.saveValue());
-    return this.getValue();
+  modifyValueWithAutoSave = <RetVal>(tryModify: (value: Value) => RetVal): { result: RetVal; mod: number } => {
+    const result = tryModify(this.getValue());
+    this.saveValue();
+    return { result, mod: this.fileModifiedAt() };
   };
 
   setValue = (val: Value | ((value: Value) => Value)) => {

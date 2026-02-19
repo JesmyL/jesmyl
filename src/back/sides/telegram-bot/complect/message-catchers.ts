@@ -52,12 +52,13 @@ jesmylTgBot.catchMessages(async (message, bot) => {
 
 export const baseCallbackCatcher = jesmylTgBot.catchCallbackQuery(async (query, bot, answer) => {
   if (query.message == null) return answer('');
+  const message = query.message;
 
   if (query.data === initScheduleInform_) {
-    const requisites = `${query.message.chat.id}/${query.chat_instance}`;
+    const requisites = `${message.chat.id}/${query.chat_instance}`;
 
     await bot.sendMessage(
-      query.message.chat.id,
+      message.chat.id,
       `1. Для связывания этого чата с JesmyL-мероприятием необходимо ` +
         `вставить следующую строчку в поле управления мероприятием в приложении ${hosts.host}` +
         `\n\n<code>${requisites}</code>\n\n` +
@@ -66,7 +67,7 @@ export const baseCallbackCatcher = jesmylTgBot.catchCallbackQuery(async (query, 
       { parse_mode: 'HTML' },
     );
 
-    await bot.sendMessage(query.message.chat.id, `Посмотреть`, {
+    await bot.sendMessage(message.chat.id, `Посмотреть`, {
       reply_markup: {
         inline_keyboard: [
           [
@@ -79,23 +80,24 @@ export const baseCallbackCatcher = jesmylTgBot.catchCallbackQuery(async (query, 
       },
     });
 
-    await bot.deleteMessage(query.message.chat.id, query.message.message_id);
+    await bot.deleteMessage(message.chat.id, message.message_id);
 
     return answer(requisites);
   } else if (query.data === requestAccessRights_) {
-    const rights = userAccessRightsAndRolesFileStore.getValueWithAutoSave().rights;
-    const user = query.from;
+    return userAccessRightsAndRolesFileStore.modifyValueWithAutoSave(async ({ rights }) => {
+      const user = query.from;
 
-    rights[JesmylTelegramBot.makeLoginFromId(query.from.id)] ??= {
-      info: {
-        fio: `${user.first_name}${user.last_name ? ` ${user.last_name}` : ''}`,
-        m: Date.now(),
-      },
-    };
+      rights[JesmylTelegramBot.makeLoginFromId(query.from.id)] ??= {
+        info: {
+          fio: `${user.first_name}${user.last_name ? ` ${user.last_name}` : ''}`,
+          m: Date.now(),
+        },
+      };
 
-    await bot.deleteMessage(query.message.chat.id, query.message.message_id);
+      await bot.deleteMessage(message.chat.id, message.message_id);
 
-    return answer({ text: 'Запрос подан. Свяжитесь с админом' });
+      return answer({ text: 'Запрос подан. Свяжитесь с админом' });
+    }).result;
   }
 
   return answer('...');

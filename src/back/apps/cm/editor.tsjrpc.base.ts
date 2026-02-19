@@ -51,17 +51,18 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
         addMp3Rule: async ({ rule }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'MP3', 'U')) throw '';
 
-          mp3ResourcesData.getValueWithAutoSave().push(rule);
+          mp3ResourcesData.modifyValueWithAutoSave(srcs => srcs.push(rule));
 
           return { description: `Добавлено MP3-правило` };
         },
         setMp3Rule: async ({ rule }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'MP3', 'U')) throw '';
 
-          const list = mp3ResourcesData.getValueWithAutoSave();
-          const index = list.findIndex(r => r.w === rule.w);
-          if (index < 0) throw new Error('rule not found');
-          list.splice(index, 1, rule);
+          mp3ResourcesData.modifyValueWithAutoSave(list => {
+            const index = list.findIndex(r => r.w === rule.w);
+            if (index < 0) throw new Error('rule not found');
+            list.splice(index, 1, rule);
+          });
 
           return { description: `Изменено MP3-правило` };
         },

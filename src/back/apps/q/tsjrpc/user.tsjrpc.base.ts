@@ -56,31 +56,32 @@ export const questionerUserServerTsjrpcBase =
           },
 
           publicUserAnswer: ({ blankw, answer }) => {
-            const totalAnswers = questionerUserAnswersFileStore.getValueWithAutoSave();
-            const blank = questionerBlanksDirStorage.getItem(blankw);
+            questionerUserAnswersFileStore.modifyValueWithAutoSave(totalAnswers => {
+              const blank = questionerBlanksDirStorage.getItem(blankw);
 
-            totalAnswers[blankw] ??= { answers: [] };
-            totalAnswers[blankw].answers.push(answer);
+              totalAnswers[blankw] ??= { answers: [] };
+              totalAnswers[blankw].answers.push(answer);
 
-            SMyLib.entries(answer.a).forEach(([templateId, answerValue]) => {
-              if (answerValue == null) return;
-              if (answerValue.v == null) {
-                delete answer.a[templateId];
-                return;
-              }
+              SMyLib.entries(answer.a).forEach(([templateId, answerValue]) => {
+                if (answerValue == null) return;
+                if (answerValue.v == null) {
+                  delete answer.a[templateId];
+                  return;
+                }
 
-              const template = blank?.tmp[templateId];
-              if (template == null) return;
+                const template = blank?.tmp[templateId];
+                if (template == null) return;
 
-              if (template.type === QuestionerType.Check || template.type === QuestionerType.Radio) {
-                const userAnswer = answerValue as QuestionerUserAnswerValueBox[QuestionerVariatedType];
-                userAnswer.len = smylib.keys(template.variants).length ?? 0;
-              }
+                if (template.type === QuestionerType.Check || template.type === QuestionerType.Radio) {
+                  const userAnswer = answerValue as QuestionerUserAnswerValueBox[QuestionerVariatedType];
+                  userAnswer.len = smylib.keys(template.variants).length ?? 0;
+                }
+              });
+
+              return {
+                description: `Получен ответ на опрос ${blank?.title} от ${answer.fio ? `"${answer.fio}"` : 'Анонимного пользователя'}\n\n<blockquote expandable>${JSON.stringify(answer, null, 1)}</blockquote>`,
+              };
             });
-
-            return {
-              description: `Получен ответ на опрос ${blank?.title} от ${answer.fio ? `"${answer.fio}"` : 'Анонимного пользователя'}\n\n<blockquote expandable>${JSON.stringify(answer, null, 1)}</blockquote>`,
-            };
           },
         },
       });

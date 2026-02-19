@@ -20,6 +20,7 @@ import {
   catsFileStore,
   chordPackFileStore,
   cmComAudioMarkPacksFileStore,
+  cmComWidRefGroupDictFileStore,
   cmConstantsConfigFileStore,
   comCommentsDirStore,
   comsDirStore,
@@ -38,6 +39,18 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
       scope: 'Cm',
       methods: {
         requestFreshes: async ({ lastModfiedAt }, { client, auth, visitInfo }) => {
+          if (cmComWidRefGroupDictFileStore.fileModifiedAt() > lastModfiedAt) {
+            const joins = cmComWidRefGroupDictFileStore.getValue();
+
+            cmShareServerTsjrpcMethods.refreshComWidRefsDict(
+              {
+                joins,
+                mod: cmComWidRefGroupDictFileStore.fileModifiedAt(),
+              },
+              client,
+            );
+          }
+
           const freshComs = comsDirStore.getFreshItems(lastModfiedAt);
 
           if (freshComs.items.length) {
@@ -307,9 +320,10 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
         },
 
         printComwVisit: async ({ comw }) => {
-          const visitMarks = comwVisitsFileStore.getValueWithAutoSave();
-          visitMarks[comw] ??= 0;
-          visitMarks[comw]++;
+          comwVisitsFileStore.modifyValueWithAutoSave(visitMarks => {
+            visitMarks[comw] ??= 0;
+            visitMarks[comw]++;
+          });
         },
 
         takeComwVisitsCount: async ({ comw }) => ({ value: comwVisitsFileStore.getValue()[comw] ?? 0 }),

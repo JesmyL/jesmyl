@@ -28,15 +28,15 @@ export const cmUserStoreTsjrpcBaseServer = new (class CmUserStore extends Tsjrpc
       scope: 'CmUserStore',
       methods: {
         setAboutComFavorites: valueSendBuilder((authLogin, clientSelector, userFavorites) => {
-          const favorites = aboutComFavoritesFileStore.getValueWithAutoSave();
+          aboutComFavoritesFileStore.modifyValueWithAutoSave(favorites => {
+            const modifiedAt = Date.now();
+            favorites[authLogin] ??= { m: modifiedAt, fio: '' };
+            favorites[authLogin].m = modifiedAt;
+            if (userFavorites.comws != null) favorites[authLogin].comws = userFavorites.comws;
+            if (userFavorites.tools != null) favorites[authLogin].tools = userFavorites.tools;
 
-          const modifiedAt = Date.now();
-          favorites[authLogin] ??= { m: modifiedAt, fio: '' };
-          favorites[authLogin].m = modifiedAt;
-          if (userFavorites.comws != null) favorites[authLogin].comws = userFavorites.comws;
-          if (userFavorites.tools != null) favorites[authLogin].tools = userFavorites.tools;
-
-          cmShareServerTsjrpcMethods.refreshAboutComFavorites({ value: favorites[authLogin] }, clientSelector);
+            cmShareServerTsjrpcMethods.refreshAboutComFavorites({ value: favorites[authLogin] }, clientSelector);
+          });
         }),
       },
     });
