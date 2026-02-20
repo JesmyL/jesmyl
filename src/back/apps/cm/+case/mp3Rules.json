@@ -51,5 +51,25 @@
     "repText": "cdn.$2",
     "url": "https://copy.mp3xa.me",
     "w": 1744618913193.429
+  },
+  {
+    "attr": "data-audio-src",
+    "query": "[data-audio-src]",
+    "textQuery": "",
+    "repReg": "/m\\.my\\./",
+    "repText": "moosic.my.",
+    "rdir": "",
+    "url": "https://m.my.mail.ru",
+    "w": 1771562638078.321
+  },
+  {
+    "attr": "-",
+    "query": "-",
+    "textQuery": "",
+    "repReg": "",
+    "repText": "",
+    "rdir": "https://m.my.mail.ru",
+    "url": "https://my.mail.ru",
+    "w": 1771562888189.383
   }
 ]
