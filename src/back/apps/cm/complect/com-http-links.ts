@@ -11,6 +11,7 @@ const numLeadToHttpLinks: Record<HttpNumLeadLinkKey, HttpLink> = {
   '7~': 'https://alliluya.com/attachments/article/',
   '8~': 'https://ia801205.us.archive.org/13/items/songsofrevival/',
   '9~': 'https://livepleer.com/uploaded/mp3/',
+  '10~': 'https://moosic.my.mail.ru/file/',
 };
 
 const httpToNumLeadLinks: Record<HttpLink, HttpNumLeadLinkKey> = {};

@@ -51,7 +51,7 @@ export const cmComAudioMarkPacksFileStore = new FileStore<
 
 export const comwVisitsFileStore = new FileStore<PRecord<CmComWid, number>>('/apps/cm/comwVisits.json', {});
 
-export const mp3ResourcesData = new FileStore<CmMp3Rule[]>('/apps/cm/mp3Rules.json', []);
+export const mp3ResourcesFileStorage = new FileStore<CmMp3Rule[]>('/apps/cm/mp3Rules.json', []);
 
 export const chordPackFileStore = new FileStore<ChordPack>('/apps/cm/chordTracks.json', {});
 export const eePackFileStore = new FileStore<EeStorePack>('/apps/cm/eeStorage.json', {});

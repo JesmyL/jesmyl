@@ -1,7 +1,7 @@
 import https from 'https';
 import { CmMp3ContainsPageResult } from 'shared/api';
 import { cmEditorTsjrpcBaseServer } from '../editor.tsjrpc.base';
-import { mp3ResourcesData } from '../file-stores';
+import { mp3ResourcesFileStorage } from '../file-stores';
 
 const fetch = (url: string) => {
   return new Promise<string>((resolve, reject) => {
@@ -31,13 +31,20 @@ const fetch = (url: string) => {
 
 export const cmGetResourceHTMLString: typeof cmEditorTsjrpcBaseServer.getResourceHTMLString = ({ src }) => {
   return new Promise<{ value: CmMp3ContainsPageResult }>((resolve, reject) => {
-    const rules = mp3ResourcesData.getValue();
-    const rule = rules.find(({ url }) => src.startsWith(url));
+    const rules = mp3ResourcesFileStorage.getValue();
+    let rule = rules.find(({ url }) => src.startsWith(url));
 
-    if (rule)
-      fetch(src)
+    if (rule?.rdir) {
+      rule = rules.find(({ url }) => rule?.rdir === url);
+    }
+
+    if (rule) {
+      const userUrl = new URL(src);
+      userUrl.hostname = new URL(rule.url).hostname;
+
+      fetch(userUrl.toString())
         .then(html => resolve({ value: { rule, html } }))
         .catch(error => reject(`Ошибка 97377213\n${error}`));
-    else reject('Ошибка. Этот ресурс неизвестен');
+    } else reject('Ошибка. Этот ресурс неизвестен');
   });
 };

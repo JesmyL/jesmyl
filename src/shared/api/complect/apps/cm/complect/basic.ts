@@ -20,6 +20,7 @@ export interface CmMp3Rule {
   repReg: StrRegExp | '';
   repText: string;
   query: string;
+  rdir?: string;
   textQuery?: string;
   isHTML?: 1;
 }

@@ -5,7 +5,12 @@ import { smylib } from 'shared/utils';
 import { unwatchEditComBusies, watchEditComBusies } from './complect/edit-com-busy';
 import { cmGetResourceHTMLString } from './complect/mp3-rules';
 import { cmShareEditorServerTsjrpcMethods } from './editor.tsjrpc.shares';
-import { chordPackFileStore, cmConstantsConfigFileStore, eePackFileStore, mp3ResourcesData } from './file-stores';
+import {
+  chordPackFileStore,
+  cmConstantsConfigFileStore,
+  eePackFileStore,
+  mp3ResourcesFileStorage,
+} from './file-stores';
 import { cmShareServerTsjrpcMethods } from './tsjrpc.shares';
 
 export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseServer<CmEditorTsjrpcModel> {
@@ -47,18 +52,18 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
         },
 
         getResourceHTMLString: cmGetResourceHTMLString,
-        getMp3RulesList: async () => ({ value: mp3ResourcesData.getValue() }),
+        getMp3RulesList: async () => ({ value: mp3ResourcesFileStorage.getValue() }),
         addMp3Rule: async ({ rule }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'MP3', 'U')) throw '';
 
-          mp3ResourcesData.modifyValueWithAutoSave(srcs => srcs.push(rule));
+          mp3ResourcesFileStorage.modifyValueWithAutoSave(srcs => srcs.push(rule));
 
           return { description: `Добавлено MP3-правило` };
         },
         setMp3Rule: async ({ rule }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'MP3', 'U')) throw '';
 
-          mp3ResourcesData.modifyValueWithAutoSave(list => {
+          mp3ResourcesFileStorage.modifyValueWithAutoSave(list => {
             const index = list.findIndex(r => r.w === rule.w);
             if (index < 0) throw new Error('rule not found');
             list.splice(index, 1, rule);
