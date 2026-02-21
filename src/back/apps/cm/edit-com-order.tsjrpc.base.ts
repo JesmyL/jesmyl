@@ -1,4 +1,7 @@
-import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
+import {
+  checkWhatOfUserScopeOperationAccessRight,
+  throwIfNoUserScopeAccessRight,
+} from 'back/complect/throwIfNoUserScopeAccessRight';
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { makeRegExp } from 'regexpert';
 import {
@@ -179,7 +182,7 @@ export const cmEditComOrderServerTsjrpcBase =
             com.o.splice(insertAfterOrdi + 1, 0, {
               w: getNextOrdWid(com.o),
               a: targetOrdw,
-              cre: Date.now(),
+              cre: checkWhatOfUserScopeOperationAccessRight(auth, 'cm', 'COM_ORD').D ? undefined : Date.now(),
             });
 
             return `создана ссылка ${orderTitle}`;
@@ -221,12 +224,10 @@ export const cmEditComOrderServerTsjrpcBase =
               k: kind,
               c: chordi,
               t: texti,
-              cre: Date.now(),
+              cre: checkWhatOfUserScopeOperationAccessRight(auth, 'cm', 'COM_ORD').D ? undefined : Date.now(),
             };
 
-            if (afterOrdi < 1) {
-              com.o.unshift(ord);
-            } else com.o.splice(afterOrdi + 1, 0, ord);
+            com.o.splice(afterOrdi + 1, 0, ord);
 
             return `добавлен новый порядковый блок ${orderTitle}`;
           }),

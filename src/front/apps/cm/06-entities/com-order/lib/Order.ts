@@ -88,11 +88,10 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
     return (
       this.me.positions ??
       this.getWatchInheritance('p') ??
-      this.getLeadInheritance('p') ??
-      this.me.source?.top.p ??
       this.me.watchOrd?.me.source?.top.p ??
+      this.me.source?.top.p ??
       this.me.targetOrd?.me.source?.top.p ??
-      (this.me.source && (this.me.source.top.p = []))
+      this.getLeadInheritance('p')
     );
   }
 
