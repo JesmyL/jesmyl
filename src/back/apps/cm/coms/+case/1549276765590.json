@@ -11,7 +11,7 @@
   ],
   "c": ["Dm C\nA# A\nF C\nGm A", "A# Gm A\nA# Gm\nA", "Dm F\nGm A\nDm F", "Gm A Dm"],
   "o": [
-    { "w": 8, "c": 1, "t": null, "k": 15 },
+    { "w": 8, "c": 1, "k": 15 },
     {
       "c": 0,
       "p": [

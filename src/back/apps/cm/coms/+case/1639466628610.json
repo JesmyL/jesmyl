@@ -12,7 +12,7 @@
   ],
   "c": ["Am Dm\nG C\nF Dm\nE\nAm Dm\nG C\nF Dm\nE", "Am Dm\nG C\nF Dm\nE .E7..Am", "Am Dm\nG C\nF Dm\nE Am"],
   "o": [
-    { "w": 8, "c": 2, "t": null, "k": 15 },
+    { "w": 8, "c": 2, "k": 15 },
     { "w": 0, "p": [[4, 9], [3, 9], [4, 8], [3], [3, 10], [2, 9], [3, 9], [3]], "c": 0, "t": 0, "k": 39 },
     {
       "w": 1,
