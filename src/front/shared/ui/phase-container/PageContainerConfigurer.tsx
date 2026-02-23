@@ -73,8 +73,9 @@ export const PageContainerConfigurer = (props: PageContainerConfigurerProps) => 
 
       <StyledPhaseContainerConfigurerContent
         className={twMerge(
-          'content p-2 static bg-x5 w-[100vw] h-(--content-height) overflow-x-hidden  overflow-y-auto pb-(--footer-height) transition-(--fullscreen-transition)',
+          'content p-2 static bg-x5 w-[100vw] h-(--content-height) overflow-x-hidden overflow-y-auto transition-(--fullscreen-transition)',
           props.contentClass,
+          'pb-(--footer-height)',
         )}
         ref={props.contentRef}
       >

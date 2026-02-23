@@ -80,7 +80,7 @@ export const CmCatPage = (props: Props) => {
                   <>
                     {playComSrc && (
                       <CmComAudioPlayer
-                        className="fixed top-[var(--header-height)] w-full z-20 -ml-2"
+                        className="fixed top-(--header-height) w-full z-20 -ml-2"
                         audioLinks={[playComSrc]}
                       />
                     )}

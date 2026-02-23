@@ -20,7 +20,7 @@ export const CmComAudioPlayerWithMarks = (props: Props) => {
 
   return (
     <CmComAudioPlayer
-      className={twMerge('fixed top-[var(--header-height)] left-0 w-full z-20', props.className)}
+      className={twMerge('fixed top-(--header-height) left-0 w-full z-20', props.className)}
       audioLinks={props.audioLinks}
       addRender={src =>
         !props.hideMarksForce &&

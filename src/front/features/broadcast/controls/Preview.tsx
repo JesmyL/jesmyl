@@ -17,7 +17,7 @@ export const BroadcastSlidePreview = ({ isPreview = true }: Props) => {
   const currentConfig = useScreenBroadcastCurrentConfig();
 
   return (
-    <div className="pointer relative inline-block w-[var(--size)] min-w-[var(--min-size)] max-w-[var(--max-size)] h-[var(--size)] min-h-[var(--min-size)] max-h-[var(--max-size)] overflow-hidden text-x3 text-[14px] align-middle select-none whitespace-pre rounded-[20px]">
+    <div className="pointer relative inline-block w-(--size) min-w-(--min-size) max-w-(--max-size) h-(--size) min-h-(--min-size) max-h-(--max-size) overflow-hidden text-x3 text-[14px] align-middle select-none whitespace-pre rounded-[20px]">
       {currentConfig === undefined ? (
         <BroadcastScreen
           win={window}

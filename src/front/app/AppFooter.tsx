@@ -115,7 +115,7 @@ const StyledActiveBackground = styled.div`
 
 const StyledFooter = styled.div.attrs<{ $childsCount: number }>({
   className:
-    'footer-menu grid absolute bottom-[var(--footer-bottom)] pt-[10px] opacity-[var(--footer-opacity)] transition-[var(--fullscreen-transition)] w-[100vw] h-[var(--footer-height)] gap-[2vw] px-[2vw]',
+    'footer-menu grid absolute bottom-(--footer-bottom) pt-[10px] opacity-(--footer-opacity) transition-(--fullscreen-transition) w-[100vw] h-(--footer-height) gap-[2vw] px-[2vw]',
 })`
   --py: calc(var(--spacing) * 1);
   --track-h: calc(var(--spacing) * 14 + var(--py));
