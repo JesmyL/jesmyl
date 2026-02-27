@@ -259,10 +259,9 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
           if (from == null) throw 'Не верный код';
           if (from.auth?.login == null) throw 'Ошибка привязки - неизвестный профиль';
           if (from.auth.login !== auth.login) throw 'Ошибка привязки - другой аккаунт';
-          if (!from.auth.email) throw 'Ошибка привязки - не E-mail';
 
           const binds = indexUserLoginBindsFileStorage.getValue();
-          const newLogin = makeLoginFromEmail(from.auth.email);
+          const newLogin = makeLoginFromEmail(from.email);
 
           if (binds[newLogin] != null)
             throw `E-mail уже привязан к ${(smylib.isStr(binds[newLogin]) ? binds[newLogin] : binds[newLogin].login) === auth.login ? 'вашему' : 'другому'} аккаунту`;
@@ -290,7 +289,6 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
             ...rootAuth,
             ...emailAuth,
             login: rootLogin,
-            email: from.email,
             nick: rootAuth?.nick || emailNick,
             fio: rootAuth?.fio || emailNick,
           };
