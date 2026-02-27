@@ -2,7 +2,7 @@ import { useConfirm } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { QrCodeFullScreen } from '#shared/ui/qr-code/QrCodeFullScreen';
 import { cmOnUserLogout } from '$cm/ext';
-import { authIDB, indexUserAccessRightsAtom, useAuth } from '$index/shared/state';
+import { authIDB, indexIDB, indexUserAccessRightsAtom, useAuth } from '$index/shared/state';
 import { Atom, atom } from 'atomaric';
 
 let isOpenQrAtom: Atom<boolean>;
@@ -29,6 +29,7 @@ export const IndexUserMore = ({ onClose }: { onClose: (isOpen: false) => void })
           if (await confirm('Произвести выход из системы?', 'Разлогиниться')) {
             await authIDB.remove.auth();
             await authIDB.remove.token();
+            await indexIDB.resetLastModifiedAt();
 
             indexUserAccessRightsAtom.reset();
 

@@ -33,4 +33,5 @@ export interface LocalSokiAuth {
   login?: SokiAuthLogin;
   tgId?: number;
   tgAva?: string;
+  email?: string;
 }

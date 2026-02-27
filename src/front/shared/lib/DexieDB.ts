@@ -34,6 +34,7 @@ export class DexieDB<Store> {
   useValue = {} as { [K in keyof Required<Store>]: () => Store[K] };
 
   updateLastModifiedAt!: Store extends { lastModifiedAt: number } ? (modifiedAt: number) => Promise<void> : never;
+  resetLastModifiedAt!: Store extends { lastModifiedAt: number } ? () => Promise<void> : never;
 
   constructor(
     storageName: string,
@@ -126,13 +127,25 @@ export class DexieDB<Store> {
         let lastModifiedLocal: number = await (this.get as WithLastModifiedAt).lastModifiedAt();
         let timeout: TimeOut;
 
-        this.updateLastModifiedAt = (async (modifiedAt: number) => {
-          if (!modifiedAt || lastModifiedLocal >= modifiedAt) return;
+        const update = (modifiedAt: number) => {
+          const { promise, resolve } = Promise.withResolvers();
           lastModifiedLocal = modifiedAt;
 
           clearTimeout(timeout);
-          timeout = setTimeout(() => (this.set as WithLastModifiedAt).lastModifiedAt(modifiedAt), 100);
+          timeout = setTimeout(() => {
+            (this.set as WithLastModifiedAt).lastModifiedAt(modifiedAt);
+            resolve(modifiedAt);
+          }, 100);
+
+          return promise;
+        };
+
+        this.updateLastModifiedAt = (async (modifiedAt: number) => {
+          if (!modifiedAt || lastModifiedLocal >= modifiedAt) return;
+          return update(modifiedAt);
         }) as never;
+
+        this.resetLastModifiedAt = (() => update(0)) as never;
       })();
     }
   }

@@ -16,10 +16,15 @@ export type IndexTsjrpcModel = {
     iconsMd5Hash: string;
   }) => void;
   getDeviceId: () => DeviceId;
+
   authMeByTelegramNativeButton: (args: { user: TelegramNativeAuthUserData }) => { token: string; auth: LocalSokiAuth };
   authMeByTelegramMiniButton: (args: { user: TelegramNativeAuthUserData }) => { token: string; auth: LocalSokiAuth };
   authMeByTelegramInScheduleDay: (args: { user: TelegramNativeAuthUserData }) => { token: string; auth: LocalSokiAuth };
   authMeByTelegramBotNumber: (args: { secretNumber: number }) => { token: string; auth: LocalSokiAuth };
+
+  sendEmailOTP: (args: { email: string }) => { email: string };
+  authByEmailOTP: (args: { otp: number }) => { token: string; auth: LocalSokiAuth };
+  bindEmailByOTP: (args: { otp: number }) => { fioOrNick: string };
 
   getFreshAppVersion: () => number;
   getIndexValues: () => IndexValues;

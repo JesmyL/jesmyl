@@ -16,6 +16,7 @@ import { exec } from 'child_process';
     ['apps/index', 'rights'],
     ['apps/index', 'nouns'],
     ['apps/index', 'pronouns'],
+    ['apps/index', 'userLoginBinds'],
     ['apps/q'],
     ['apps/q/blanks'],
     ['apps/storages/list'],

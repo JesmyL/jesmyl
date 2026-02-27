@@ -174,6 +174,7 @@ export const knownStameskaIconNames = {
   RightToLeftListTriangle: 0,
   RowDelete: 0,
   RssError: 0,
+  Mail01: 0,
   Ruler: 0,
   SchoolReportCard: 0,
   Scroll: 0,

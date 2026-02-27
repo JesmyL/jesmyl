@@ -7,10 +7,16 @@ import { FontFamilySelector } from '#shared/ui/configurators/selectors/FontFamil
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { indexIsPlayAnimationsAtom, indexIsShowPlayerInFooterAtom, useAppFontFamily } from '$index/shared/state';
+import {
+  authIDB,
+  indexIsPlayAnimationsAtom,
+  indexIsShowPlayerInFooterAtom,
+  useAppFontFamily,
+} from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
 import React from 'react';
 import { itIt } from 'shared/utils';
+import { IndexSettingsBindEmail } from './BindEmail';
 
 const styles = {
   position: 'absolute',
@@ -30,6 +36,7 @@ export function IndexSettingsPage() {
   const [appFontFamily, setAppFontFamily] = useAppFontFamily();
   const connectionNode = useConnectionState('m-2');
   const checkAccess = useCheckUserAccessRightsInScope();
+  const token = authIDB.useValue.token();
 
   const settingsList = [
     checkAccess('general', 'ALL') && (
@@ -110,6 +117,7 @@ export function IndexSettingsPage() {
         };
       }}
     />,
+    !token || <IndexSettingsBindEmail key="bind-email" />,
   ].filter(itIt);
 
   return (

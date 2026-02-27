@@ -1,7 +1,7 @@
 import { FileStore } from 'back/complect/FileStore';
 import { NounPronsType } from 'back/complect/model';
 import { IndexAppAccessRightTitles, IndexAppUserAccessRightsAndRoles } from 'shared/model/index/access-rights';
-import { IndexValues } from 'shared/model/index/other';
+import { IndexLoginBindsDict, IndexValues } from 'shared/model/index/other';
 import { emptyFunc } from 'shared/utils';
 import { stameskaIconPack } from 'stameska-icon/pack';
 
@@ -22,6 +22,8 @@ export const indexStameskaIconsFileStore = new FileStore<typeof stameskaIconPack
 
 export const appVersionFileStore = new FileStore<{ num: number }>('/+version.json', { num: 0 });
 export const valuesFileStore = new FileStore<IndexValues>('/values', {});
+
+export const indexUserLoginBindsFileStorage = new FileStore<IndexLoginBindsDict>('/apps/index/userLoginBinds.json', {});
 
 // valuesFileStore.setValue(prev => ({
 //   ...prev,
