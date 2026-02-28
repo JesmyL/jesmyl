@@ -1,5 +1,6 @@
 import { AppName } from '#basis/model/App.model';
 import { DexieDB } from '#shared/lib/DexieDB';
+import { soki } from '#shared/soki';
 import { IndexMyFilesTypeBoxAssociations } from '$index/entities/MyFilesTypeBox';
 import { DeviceId, IScheduleWidget, IScheduleWidgetWid, ScheduleWidgetPhotoKey } from 'shared/api';
 import { StameskaIconPack } from 'stameska-icon/utils';
@@ -43,3 +44,7 @@ class IndexIDB extends DexieDB<Storage> {
 }
 
 export const indexIDB = new IndexIDB();
+
+soki.onAuthorizeEvent.listen(async () => {
+  await indexIDB.remove.lastModifiedAt();
+});

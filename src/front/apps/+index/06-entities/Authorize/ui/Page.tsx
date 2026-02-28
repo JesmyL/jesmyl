@@ -1,9 +1,10 @@
 import { useConnectionState } from '#basis/lib/useConnectionState';
 import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
 import { Button } from '#shared/components';
+import { soki } from '#shared/soki';
 import { makeToastOKMoodConfig } from '#shared/ui/modal';
 import { IndexEmailConfirm } from '$index/entities/EmailConfirm';
-import { authIDB, indexIDB } from '$index/shared/state';
+import { authIDB } from '$index/shared/state';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
@@ -61,7 +62,9 @@ export const IndexAuthorizePage = () => {
 
                   await authIDB.set.auth(auth);
                   await authIDB.set.token(token);
-                  await indexIDB.resetLastModifiedAt();
+
+                  soki.onBeforeAuthorizeEvent.invoke();
+                  setTimeout(() => soki.onAuthorizeEvent.invoke(), 100);
 
                   navigate({ to: '..' });
                   toast(`Успешная авторизация`, makeToastOKMoodConfig());

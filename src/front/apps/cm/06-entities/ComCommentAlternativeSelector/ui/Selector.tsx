@@ -18,6 +18,8 @@ export const CmComCommentAlternativeSelector = ({ comw }: { comw: CmComWid }) =>
   const prompt = usePrompt();
   const registeredAltKeys = useAtomValue(cmComCommentRegisteredAltKeysAtom);
 
+  cmComCommentRegisteredAltKeysAtom.do.init();
+
   return (
     <>
       <Dropdown<string | null>
