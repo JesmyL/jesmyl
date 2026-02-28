@@ -16,7 +16,7 @@ import { exec } from 'child_process';
     ['apps/index', 'rights'],
     ['apps/index', 'nouns'],
     ['apps/index', 'pronouns'],
-    ['apps/index', 'userLoginBinds'],
+    ['apps/index', 'userLoginBinds', '.secure'],
     ['apps/q'],
     ['apps/q/blanks'],
     ['apps/storages/list'],
@@ -32,21 +32,24 @@ import { exec } from 'child_process';
 
   const joinPath = listPaths => listPaths.filter(i => i).join('/');
   const jsonExt = '.json';
-  const allJsons = `*${jsonExt}`;
 
   for (const [path, name, ext = jsonExt] of paths) {
     const nameWithExt = name ? `${name}${ext ?? ''}` : '';
-    const serverPath = joinPath([path, nameWithExt || allJsons]);
+    const serverPath = joinPath([path, nameWithExt || `*${ext}`]);
     const localPath = `./src/back/${joinPath([path, '+case', nameWithExt])}`;
 
     console.info('TRY LOAD FILE', serverPath, '=>', localPath);
 
     try {
       await execAsync(`scp -r root@185.244.173.52:/var/www/jesmyl.ru/${serverPath} ${localPath}`);
-      await execAsync(`npx prettier --write "${localPath}"`);
+
+      try {
+        await execAsync(`npx prettier --write "${localPath}"`);
+      } catch (_) {}
 
       console.info(`${serverPath} saved!`);
     } catch (_error) {
+      console.log(_error);
       console.info(`${serverPath} load FAILURE!`);
     }
   }

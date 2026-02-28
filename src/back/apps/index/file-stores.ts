@@ -23,8 +23,6 @@ export const indexStameskaIconsFileStore = new FileStore<typeof stameskaIconPack
 export const appVersionFileStore = new FileStore<{ num: number }>('/+version.json', { num: 0 });
 export const valuesFileStore = new FileStore<IndexValues>('/values', {});
 
-export const indexUserLoginBindsFileStorage = new FileStore<IndexLoginBindsDict>('/apps/index/userLoginBinds.json', {});
-
 // valuesFileStore.setValue(prev => ({
 //   ...prev,
 //   // chatUrl: '',
@@ -32,3 +30,10 @@ export const indexUserLoginBindsFileStorage = new FileStore<IndexLoginBindsDict>
 //   // desktopLinuxDownLink: `${hosts.host}/down/JESMYL_PRO.AppImage`,
 //   // desktopWindowsDownLink: `${hosts.host}/down/JESMYL_PRO.exe`,
 // }));
+
+const secureKeyFileStorage = new FileStore('/apps/index/userLoginBindsSequreKey', { key: '' });
+export const indexUserLoginBindsFileStorage = new FileStore<IndexLoginBindsDict>(
+  '/apps/index/userLoginBinds.secure',
+  {},
+  { sequreKey: secureKeyFileStorage.getValue().key },
+);

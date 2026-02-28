@@ -1,4 +1,5 @@
 import { backConfig } from 'back/config/backConfig';
+import crypto from 'crypto';
 import fs, { StatsListener } from 'fs';
 import { smylib } from 'shared/utils';
 
@@ -9,12 +10,14 @@ const initialFileDir = `${__dirname}${backConfig.fileStoreDir}`;
 export class FileStore<Value> {
   private value: Value;
   private filePath = '';
+  static algorithm = 'aes-256-ctr';
 
   getValue: () => Value;
 
   constructor(
     path: `/${string}`,
     private defaultValue: Value,
+    private options?: { sequreKey?: string },
   ) {
     this.filePath = `${initialFileDir}${path}`;
     this.value = defaultValue;
@@ -28,9 +31,27 @@ export class FileStore<Value> {
     };
   }
 
+  static encrypt(text: string, password: string) {
+    // nvm 20+
+    const cipher = crypto.createCipher(this.algorithm, password);
+    let crypted = cipher.update(text, 'utf8', 'hex');
+    crypted += cipher.final('hex');
+    return crypted;
+  }
+
+  static decrypt(text: string, password: string) {
+    const decipher = crypto.createDecipher(this.algorithm, password);
+    let dec = decipher.update(text, 'hex', 'utf8');
+    dec += decipher.final('utf8');
+    return dec;
+  }
+
   private readValue = (defaultValue: Value): Value => {
     try {
-      return JSON.parse('' + fs.readFileSync(this.filePath));
+      let content = '' + fs.readFileSync(this.filePath);
+      if (this.options?.sequreKey) content = FileStore.decrypt(content, this.options?.sequreKey);
+
+      return JSON.parse(content);
     } catch (_error) {
       return defaultValue;
     }
@@ -38,12 +59,18 @@ export class FileStore<Value> {
 
   private writeValue = (value: Value) => {
     try {
-      fs.writeFileSync(this.filePath, JSON.stringify(value));
+      let content = JSON.stringify(value);
+      if (this.options?.sequreKey) content = FileStore.encrypt(content, this.options?.sequreKey);
+
+      fs.writeFileSync(this.filePath, content);
       return true;
     } catch (_error) {
       try {
         this.makePath();
-        fs.writeFileSync(this.filePath, JSON.stringify(value));
+        let content = JSON.stringify(value);
+        if (this.options?.sequreKey) content = FileStore.encrypt(content, this.options?.sequreKey);
+
+        fs.writeFileSync(this.filePath, content);
 
         return true;
       } catch (_error) {
