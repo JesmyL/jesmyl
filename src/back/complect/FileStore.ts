@@ -32,24 +32,23 @@ export class FileStore<Value> {
   }
 
   static encrypt(text: string, password: string) {
-    // nvm 20+
-    const cipher = crypto.createCipher(this.algorithm, password);
-    let crypted = cipher.update(text, 'utf8', 'hex');
-    crypted += cipher.final('hex');
-    return crypted;
+    const key = crypto.createHash('sha256').update(password).digest();
+    const cipher = crypto.createCipheriv(this.algorithm, key, key.subarray(0, 16));
+
+    return cipher.update(text, 'utf8', 'hex') + cipher.final('hex');
   }
 
-  static decrypt(text: string, password: string) {
-    const decipher = crypto.createDecipher(this.algorithm, password);
-    let dec = decipher.update(text, 'hex', 'utf8');
-    dec += decipher.final('utf8');
-    return dec;
+  static decrypt(hex: string, password: string) {
+    const key = crypto.createHash('sha256').update(password).digest();
+    const decipher = crypto.createDecipheriv(this.algorithm, key, key.subarray(0, 16));
+
+    return decipher.update(hex, 'hex', 'utf8') + decipher.final('utf8');
   }
 
   private readValue = (defaultValue: Value): Value => {
     try {
       let content = '' + fs.readFileSync(this.filePath);
-      if (this.options?.sequreKey) content = FileStore.decrypt(content, this.options?.sequreKey);
+      if (this.options?.sequreKey) content = FileStore.decrypt(content, this.options.sequreKey);
 
       return JSON.parse(content);
     } catch (_error) {
