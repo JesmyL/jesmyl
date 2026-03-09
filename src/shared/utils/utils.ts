@@ -17,15 +17,6 @@ export const convertMd2HTMLMaker = (isForTg: boolean) => {
   };
 };
 
-export const escapeText = (text: string) =>
-  text.replace(/(%[0-9a-f]{2})+/gi, a => {
-    try {
-      return decodeURIComponent(a);
-    } catch (_error) {
-      return a;
-    }
-  });
-
 export const transcriptEnToRuDict = {
   q: 'й',
   w: 'ц',
@@ -77,8 +68,6 @@ export const transcriptEnToRuText = (text: string) => {
 
   return transcriptedText;
 };
-
-export const trimTextLines = (text: string) => text.trim().split(makeRegExp('/\n/')).map(itTrim).join('\n');
 
 /////////////////////////////////////
 /////////////////////////////////////
@@ -172,3 +161,5 @@ export const itNNil = <It>(it: It) => it != null;
 export const itNNaN = (it: number) => typeof it !== 'number' || !isNaN(it);
 export const itInvokeIt = <Ret>(it: () => Ret) => it();
 export const wait = (waitTime = 100) => new Promise(resolve => setTimeout(resolve, waitTime));
+export const capitalizeText = (text: string) => text[0].toUpperCase() + text.slice(1);
+export const trimTextLines = (text: string) => text.trim().replace(makeRegExp('/(.+?)\\s+?\\n/g'), '$1\n');

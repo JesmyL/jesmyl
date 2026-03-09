@@ -2,7 +2,7 @@ import { CmComOrder } from '$cm/ext';
 import { escapeRegExpSymbols, makeNamedRegExp, makeRegExp } from 'regexpert';
 import { CmComAudioMarkPackTime, CmComOrderWid } from 'shared/api';
 import { CmBroadcastMonolineSlide } from 'shared/model/cm/broadcast';
-import { itIt } from 'shared/utils';
+import { capitalizeText, itIt } from 'shared/utils';
 import { doubleQuotesStr, slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 import { makeCmComAudioMarkTitleEmptySelector } from '../../makeCmComAudioMarkTitleBySelector';
 import { CmComChords } from './30-Chords';
@@ -72,16 +72,11 @@ export class CmComTexts extends CmComChords {
   };
 
   static makeEachLineFirstLetterUpperCase = (lines: string[] | nil, firstLineLetterToUpperCase = true) => {
-    if (lines == null) return [];
-    if (!firstLineLetterToUpperCase) return lines;
-
-    return lines
-      .map(line => {
-        if (line?.length) return `${line[0].toUpperCase()}${line.slice(1)}`;
-
-        return line;
-      })
-      .filter(itIt);
+    return lines == null
+      ? []
+      : firstLineLetterToUpperCase
+        ? lines.map(line => (line?.length ? capitalizeText(line) : line)).filter(itIt)
+        : lines;
   };
 
   makeExpandedSolidTextLines = (): CmBroadcastMonolineSlide[] => {

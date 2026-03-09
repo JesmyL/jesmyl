@@ -5,7 +5,7 @@ import {
   IScheduleWidgetDayEvent,
   ScheduleWidgetDayListItemTypeBox,
 } from 'shared/api';
-import { SMyLib, smylib } from 'shared/utils';
+import { capitalizeText, SMyLib, smylib } from 'shared/utils';
 
 const singleTitleSymbols = '- ().,/';
 const incorrectsTitleReg = makeRegExp(`/[^${singleTitleSymbols}\\dа-яё]/gi`);
@@ -189,12 +189,7 @@ export class ScheduleWidgetCleans {
       return (
         titleStr
           .split(makeRegExp('/\\s*\\/\\s*/'))
-          .map(title => {
-            return (
-              timeStr +
-              ` ${ScheduleWidgetCleans.attachmentTypeTitleNormalize(title[0].toUpperCase() + title.slice(1), true)}`
-            );
-          })
+          .map(title => `${timeStr} ${ScheduleWidgetCleans.attachmentTypeTitleNormalize(capitalizeText(title), true)}`)
           .join('\n') + (description ? `\n${description}` : '')
       );
     });

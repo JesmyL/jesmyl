@@ -6,6 +6,7 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode, useMemo } from 'react';
 import { IScheduleWidget, ScheduleWidgetCleans, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
+import { capitalizeText } from 'shared/utils';
 import styled from 'styled-components';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { schEventTypesTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
@@ -56,7 +57,7 @@ export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCount
   const typesToAdd = useMemo((): React.ReactNode[] => {
     if (error || term.length < 3 || sortedTypes.some(({ title }) => title === term)) return [];
 
-    const title = term[0].toUpperCase() + term.slice(1);
+    const title = capitalizeText(term);
 
     return (sortedTypes.length ? [90, 60, 30, 15] : [120, 90, 60, 45, 30, 20, 15, 10, 5]).map(tm => {
       const node = (

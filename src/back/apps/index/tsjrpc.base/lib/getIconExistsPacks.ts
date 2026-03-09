@@ -1,5 +1,5 @@
 import { makeRegExp } from 'regexpert';
-import { itIt, smylib } from 'shared/utils';
+import { capitalizeText, itIt, smylib } from 'shared/utils';
 import { StameskaIconName } from 'stameska-icon/pack';
 import { StameskaIconKind, StameskaIconPack } from 'stameska-icon/utils';
 import { indexServerTsjrpcBase } from '..';
@@ -15,10 +15,10 @@ export const indexTSJRPCBaseGetIconExistsPacks: typeof indexServerTsjrpcBase.get
   if (searchTerm) {
     const nameBeats = searchTerm
       .trim()
-      .replace(/.*?([^/]+$)/, '$1')
-      .split(/(\d+)|\W|([A-Z][a-z]+)/)
+      .replace(makeRegExp('/.*?([^/]+$)/'), '$1')
+      .split(makeRegExp('/(\\d+)|\\W|([A-Z][a-z]+)/'))
       .filter(itIt)
-      .map(name => `${name[0].toUpperCase()}${name.slice(1)}`);
+      .map(capitalizeText);
 
     const exactIconName = nameBeats.join('').replace(postfixReplaceRegExp, '') as StameskaIconName;
 
