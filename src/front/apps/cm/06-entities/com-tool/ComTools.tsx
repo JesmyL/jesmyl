@@ -108,6 +108,17 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
         <CmComCatMentions com={ccom} />
       </div>
 
+      <div className="ml-7 my-5 [&_.face-logo]:bg-x2!">
+        <CmComJoinGroupList
+          com={ccom}
+          children={comJoinsList => !comJoinsList.length || <div className="mb-2">Связанные песни</div>}
+          importantOnClick={({ defaultClick }) => {
+            onClose(false);
+            defaultClick();
+          }}
+        />
+      </div>
+
       <div className="w-full opacity-50 flex center gap-2 text-xs py-3">
         Просмотрели
         {visitsCount === null ? (
@@ -121,16 +132,6 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
         {Math.trunc(ccom.wid) !== Math.trunc(ccom.mod) && (
           <div>Обновлена: {new Date(ccom.mod).toLocaleString('ru')}</div>
         )}
-      </div>
-      <div className="ml-7">
-        <CmComJoinGroupList
-          com={ccom}
-          children={comJoinsList => !comJoinsList.length || <div className="mt-7">Связанные песни</div>}
-          importantOnClick={({ defaultClick }) => {
-            onClose(false);
-            defaultClick();
-          }}
-        />
       </div>
     </>
   );
