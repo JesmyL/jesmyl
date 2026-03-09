@@ -126,15 +126,16 @@
     { "i": 36, "title": "остаётся место Footer’а при фокусе", "status": 0 }
   ],
   "statuses": [
-    { "title": "Новый", "color": "#74a7ff", "icon": "AiInnovation03", "next": [5, 1, 7, 3, 8] },
-    { "title": "тестируется", "color": "#be38f3", "icon": "TestTube01", "next": [2, 6, 3] },
-    { "title": "Готово", "icon": "CheckmarkCircle03", "color": "#96d35f", "next": [4, 6] },
-    { "title": "идея не очень", "next": [0, 7], "icon": "Confused", "color": "#fdc700" },
-    { "title": "вернул с багом", "next": [0, 1, 7, 3], "icon": "Bug02", "color": "#ff8c82" },
-    { "title": "проблема", "icon": "Alert02", "color": "#e22400", "next": [4, 1, 2, 3] },
-    { "title": "вернул", "icon": "Replay", "color": "#fff994", "next": [0, 5, 4, 1] },
-    { "title": "на уточнении", "color": "#f4a4c0", "icon": "FileUnknown", "next": [0, 5, 4, 1, 2, 6, 3] },
-    { "title": "не повторялось", "icon": "Cloud", "color": "#a67b01" }
+    { "title": "Новый", "color": "#74a7ff", "icon": "AiInnovation03", "next": [5, 1, 7, 3, 8, 9] },
+    { "title": "тестируется", "color": "#be38f3", "icon": "TestTube01", "next": [2, 6, 3, 9] },
+    { "title": "Готово", "icon": "CheckmarkCircle03", "color": "#96d35f", "next": [4, 6, 9] },
+    { "title": "идея не очень", "next": [0, 7, 9], "icon": "Confused", "color": "#fdc700" },
+    { "title": "вернул с багом", "next": [0, 1, 7, 3, 9], "icon": "Bug02", "color": "#ff8c82" },
+    { "title": "проблема", "icon": "Alert02", "color": "#e22400", "next": [4, 1, 2, 3, 9] },
+    { "title": "вернул", "icon": "Replay", "color": "#fff994", "next": [0, 5, 4, 1, 9] },
+    { "title": "на уточнении", "color": "#f4a4c0", "icon": "FileUnknown", "next": [0, 5, 4, 1, 2, 6, 3, 9] },
+    { "title": "не повторялось", "icon": "Cloud", "color": "#a67b01" },
+    { "title": "доработать", "icon": "Tools", "color": "#d9ec37" }
   ],
   "cols": [
     { "t": 74, "title": "Ссылка" },
@@ -151,5 +152,5 @@
   ],
   "icon": "BinaryCode",
   "colsOrd": [2, 3, 4, 0, 1, 5, 6],
-  "statusOrd": [0, 5, 4, 1, 2, 6, 7, 3, 8]
+  "statusOrd": [0, 5, 4, 1, 2, 6, 7, 3, 8, 9]
 }
