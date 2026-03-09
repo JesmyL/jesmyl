@@ -249,7 +249,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
             text: `${otp} | ${expireMinutes} минуты`,
           });
 
-          return { value: { email } };
+          return { value: { email }, description: `Запрос ОТП кода на E-mail ${email}` };
         },
 
         bindEmailByOTP: ({ otp }, { auth }) => {
@@ -271,8 +271,12 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
 
           indexUserLoginBindsFileStorage.saveValue();
           from.expire();
+          const fioOrNick = from.auth.fio ?? from.auth.nick ?? '???';
 
-          return { value: { fioOrNick: from.auth.fio ?? from.auth.nick ?? '???' } };
+          return {
+            value: { fioOrNick },
+            description: `Привязка E-mail ${from.email} к аккаунту для ${fioOrNick}`,
+          };
         },
 
         authByEmailOTP: ({ otp }) => {
@@ -298,6 +302,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
               auth,
               token: jwt.sign(auth, tokenSecretFileStore.getValue().token, { expiresIn: '100 D' }),
             },
+            description: `Авторизация по E-mail ${from.email} (${auth.fio ?? auth.nick ?? auth.login ?? '???'})`,
           };
         },
       },
