@@ -1,6 +1,7 @@
 {
   "w": 1728808671171,
   "n": "Идите и научите",
+  "bpm": 121,
   "d": 4,
   "k": "4",
   "k2": 2,
@@ -14,14 +15,14 @@
     "Идите |и научите,\nи пусть они |верят Мне."
   ],
   "c": [
-    "H2 H2/G#\nH2/G F#7\nH2 H2/A\nH2/G# C#dim7/G",
+    "H2 H2/G#\nH2/F# F#7\nH2 H2/A\nH2/G# C#dim7/G",
     "H C#m/H\nE/H F#/H\nH/D# C#m/E\nE/C# F#/A#",
     "E2 F#2 G#sus2\nE2 F#2 Hmaj9",
-    "E6/2 F#7b9/G G#m-Adim-Cdim\nEmaj9 F#7 H-F#m-H7",
-    "E F#\nH C#m\nE F#\n.H-C#m..H",
+    "E6/2 F#7/G G#m-H/F#-C#/F\nEmaj9 F#7 H-F#m-H7",
+    "H2 H2/G#\nH2/F#\nH2 H2/G#\nH2/F# F#7",
     "Emaj9 D#m7add4\nG#madd4 Hmaj9/F#\nEmaj9 F#7\nH2",
-    "Emaj9 D#m7add4\nG#madd4 Hmaj9/F#\nEmaj9 .F#7/G..F#7\n.H2-C#m7..Hmaj9",
-    "E F#\nH C#m\nE\nF# .H-C#m..H",
+    "Emaj9 D#m7add4\nG#madd4 Hmaj9/F#\nEmaj9 .F#7/G..F#7\n.G#m-C#/F..Hmaj9",
+    "E2 F#4\nG#m-G#m/F# ..C#/F\n.Emaj9..Emmaj7\n.F#7..F#7/G .H-C#m..H-H/D#",
     "C#m9 F#7\nHmaj9"
   ],
   "o": [
@@ -65,7 +66,7 @@
     { "w": 4, "a": 1, "c": 3 },
     { "w": 5, "a": 2 },
     { "w": 6, "t": 4, "c": 7, "p": [[2, 8], [-2, 2], [2], [2, 8]], "r": 2, "k": 31 },
-    { "w": 7, "a": 2, "c": 6 },
+    { "w": 7, "a": 2, "c": 6, "r": 2 },
     { "w": 9, "k": 88, "c": 8, "t": 5, "cre": 1773331641634, "p": [[1, 8], [7]] }
   ]
 }
