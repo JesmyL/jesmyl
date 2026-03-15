@@ -11,7 +11,7 @@ export const startExpressRouting = () => {
   const app = express();
   const PORT = +(process.env.PORT || 8080);
   const mainFolderPath = `/var/www/${hosts.dns}`;
-  const isSearchBotReg = /googlebot|bingbot|yandexbot|slurp|duckduckbot|telegrambot|vk\.com|twitterbot/;
+  const isSearchBotReg = /(google|bing|yandex|duckduck|telegram|twitter)bot|slurp|vk\.com/;
 
   app.use(express.json());
   app.use('/assets', express.static(`${mainFolderPath}/assets`));
@@ -58,14 +58,12 @@ export const startExpressRouting = () => {
                 ${makeOgMeta('image:height', '512')}
                 ${makeOgMeta('url', hosts.host)}
                 ${makeOgMeta('type', 'website')}
-
                 ${
                   ogAudio
                     ? `
-                    ${makeOgMeta('audio', ogAudio.url)}
-                    ${makeOgMeta('audio:title', ogAudio.title)}
-                    ${makeOgMeta('audio:type', 'audio/mpeg')}
-                `
+                      ${makeOgMeta('audio', ogAudio.url)}
+                      ${makeOgMeta('audio:title', ogAudio.title)}
+                      ${makeOgMeta('audio:type', 'audio/mpeg')}`
                     : ''
                 }
             </head>
