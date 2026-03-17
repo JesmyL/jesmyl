@@ -137,7 +137,7 @@
     { "i": 37, "title": "structuredClone", "status": 0, "note": "js утилита" }
   ],
   "statuses": [
-    { "title": "Новый", "color": "#74a7ff", "icon": "AiInnovation03", "next": [5, 1, 7, 3, 8, 9] },
+    { "title": "Ожидает", "color": "#74a7ff", "icon": "AiInnovation03", "next": [5, 1, 7, 3, 8, 9] },
     { "title": "тестируется", "color": "#be38f3", "icon": "TestTube01", "next": [2, 6, 3, 9] },
     { "title": "Готово", "icon": "CheckmarkCircle03", "color": "#96d35f", "next": [4, 6, 9] },
     { "title": "идея не очень", "next": [0, 7, 9], "icon": "Confused", "color": "#fdc700" },
