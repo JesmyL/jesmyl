@@ -265,6 +265,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
 
           if (binds[newLogin] != null)
             throw `E-mail уже привязан к ${(smylib.isStr(binds[newLogin]) ? binds[newLogin] : binds[newLogin].login) === auth.login ? 'вашему' : 'другому'} аккаунту`;
+          if (newLogin === from.auth.login) throw 'Не возможно привязать почту к тому же аккаунту';
 
           binds[from.auth.login] ??= { ...from.auth, login: undefined as never };
           binds[newLogin] = from.auth.login;
