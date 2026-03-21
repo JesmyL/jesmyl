@@ -1,7 +1,7 @@
 {
   "w": 1710060142345,
   "n": "Бывают минуты и даже мгновенья",
-  "bpm": 80,
+  "bpm": 148,
   "d": 4,
   "k": { "d": { "1": 34, "4/2": 45 }, "s": "=8:4" },
   "k2": { "d": { "1": 2122, "4/2": 2221 }, "s": "=8:2" },
@@ -15,7 +15,7 @@
   "c": [
     "Em D C G\nAm Em C D",
     "Em D G Am\nEm D C D\nEm D Am Em\nC G Am H",
-    "Em D G Am\nEm D C D\nEm D A2/C# Cmaj7\nAm Em/G F#dim H",
+    "Em D G Am\nEm D C D\nEm D A2/C# Cmaj7\nAm Em/G F#dim Hsus4-H",
     "Em D C G\nAm Em C D\nEm D C G\nAm Em C D Em",
     "C D Em"
   ],
