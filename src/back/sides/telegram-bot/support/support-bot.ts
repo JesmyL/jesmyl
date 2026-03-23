@@ -1,6 +1,7 @@
 import { jesmylTgBot } from '../bot';
 import { tgBotUrlController } from '../complect/url-controller';
 import { logTelegramBot, tglogger } from '../log/log-bot';
+import { postJRPCMessage, PostJRPCMessageScope } from '../postJRPCMessage';
 import { prodStartOptions } from '../prod/prod-bot';
 import { JesmylTelegramBot } from '../tg-bot';
 
@@ -9,6 +10,7 @@ export const supportTelegramBot = new JesmylTelegramBot({
   chatId: -1001938269237,
   logger: tglogger,
   uniqPrefix: '+',
+  scope: PostJRPCMessageScope.Support,
 });
 
 tgBotUrlController(supportTelegramBot, logTelegramBot, '&');
@@ -28,6 +30,6 @@ supportTelegramBot.onChatMessages(async (bot, message) => {
   }
 
   if (bot.messageCase('/start', message.text)) {
-    bot.postMessage('Новая авторизация', prodStartOptions);
+    postJRPCMessage('Новая авторизация', { tgBot: bot, tg: prodStartOptions });
   }
 });

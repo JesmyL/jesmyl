@@ -3,6 +3,7 @@ import { jesmylTgBot } from '../bot';
 import { tgBotDTO } from '../complect/dto';
 import { tgBotUrlController } from '../complect/url-controller';
 import { tglogger } from '../log/log-bot';
+import { postJRPCMessage, PostJRPCMessageScope } from '../postJRPCMessage';
 import { JesmylTelegramBot } from '../tg-bot';
 
 export const gul94iTelegramBot = new JesmylTelegramBot({
@@ -10,6 +11,7 @@ export const gul94iTelegramBot = new JesmylTelegramBot({
   chatId: -1001862285194,
   logger: tglogger,
   uniqPrefix: '@',
+  scope: PostJRPCMessageScope.Gul94i,
 });
 
 export const gul94iAdminTelegramBot = new JesmylTelegramBot({
@@ -17,6 +19,7 @@ export const gul94iAdminTelegramBot = new JesmylTelegramBot({
   chatId: -1002202471829,
   logger: tglogger,
   uniqPrefix: '@!',
+  scope: PostJRPCMessageScope.Gul94iAdmin,
 });
 
 tgBotDTO.gul94iAdminTelegramBot = gul94iAdminTelegramBot;
@@ -50,13 +53,13 @@ const makeAndSendPoll = async (text: string, chatId: number) => {
 
   sentOptions.forEach((sentOption, sentOptioni) => {
     if (sentOption.length !== options[sentOptioni]?.length) {
-      gul94iAdminTelegramBot.postMessage(
+      postJRPCMessage(
         spoilerDiv +
           `\n\n${sentOptioni + 1}-й пункт войдёт не полностью!\n\n` +
           options[sentOptioni] +
           `\n\n<b>стало:</b>\n${sentOption}\n\n` +
           spoilerDiv,
-        { parse_mode: 'HTML' },
+        { tgBot: gul94iAdminTelegramBot, tg: { parse_mode: 'HTML' } },
       );
     }
   });
@@ -71,8 +74,11 @@ gul94iAdminTelegramBot.onChatMessages(async (bot, message) => {
       makeAndSendPoll(message.reply_to_message.text, gul94iTelegramBot.chatId);
       await bot.deleteMessage(message.message_id);
 
-      bot.postMessage('Опрос опубликован', {
-        reply_to_message_id: message.reply_to_message.message_id,
+      postJRPCMessage('Опрос опубликован', {
+        tgBot: bot,
+        tg: {
+          reply_to_message_id: message.reply_to_message.message_id,
+        },
       });
     }
 
@@ -85,12 +91,12 @@ gul94iAdminTelegramBot.onChatMessages(async (bot, message) => {
   }
 
   if (message.text.match(chaoHashTagRegExp)) {
-    bot.postMessage(
+    postJRPCMessage(
       `#ЧАОпрос\n\n` +
         `сделай ответ на своё 👆🏻 сообщение, чтобы:\n` +
         `-- опубликовать опрос - "${msgForPublicate}";\n` +
         `-- проверить - "${msgForCheck}"`,
-      { reply_to_message_id: message.message_id },
+      { tgBot: bot, tg: { reply_to_message_id: message.message_id } },
     );
   }
 });

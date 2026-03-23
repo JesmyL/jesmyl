@@ -1,6 +1,7 @@
 import { FileStore } from 'back/complect/FileStore';
 import { jesmylTgBot } from 'back/sides/telegram-bot/bot';
 import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
+import { postJRPCMessage, PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
 import { JesmylTelegramBot } from 'back/sides/telegram-bot/tg-bot';
 import nodeSchedule from 'node-schedule';
 import { itIt, itNNaN, smylib } from 'shared/utils';
@@ -17,6 +18,7 @@ const crTelegramBot = new JesmylTelegramBot({
   chatId: -1002426462260,
   logger: tglogger,
   uniqPrefix: '>',
+  scope: PostJRPCMessageScope.Credit,
 });
 
 const crFileStore = new FileStore<CrAlarm | nil>('/apps/index/crAlarm.json', null);
@@ -26,6 +28,11 @@ export const startCrTgAlarm = () => {
   let currentJob: nodeSchedule.Job;
   let nextPaymentInTimeDate: Date;
   let nextAlarmDate: Date;
+
+  const postMessageOptions = {
+    tgBot: crTelegramBot,
+    scope: PostJRPCMessageScope.Credit,
+  };
 
   const queryPrefix = {
     changeHours: 'changeAlarmHours',
@@ -40,14 +47,17 @@ export const startCrTgAlarm = () => {
     if (!message.text) return;
 
     if (message.text.startsWith('/do')) {
-      bot.postMessage('Доступные действия', {
-        reply_markup: {
-          inline_keyboard: [
-            [{ text: 'Изменить время (часы) напоминания', callback_data: queryPrefix.changeHours }],
-            [{ text: 'Изменить время (минуты) напоминания', callback_data: queryPrefix.changeMinutes }],
-            [{ text: 'Изменить дни напоминания', callback_data: queryPrefix.changeDays }],
-            [{ text: 'Информация', callback_data: queryPrefix.showInfo }],
-          ],
+      postJRPCMessage('Доступные действия', {
+        tgBot: bot,
+        tg: {
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: 'Изменить время (часы) напоминания', callback_data: queryPrefix.changeHours }],
+              [{ text: 'Изменить время (минуты) напоминания', callback_data: queryPrefix.changeMinutes }],
+              [{ text: 'Изменить дни напоминания', callback_data: queryPrefix.changeDays }],
+              [{ text: 'Информация', callback_data: queryPrefix.showInfo }],
+            ],
+          },
         },
       });
     }
@@ -225,13 +235,13 @@ export const startCrTgAlarm = () => {
     const nextAlarmDate = setAlarm();
 
     if (nextAlarmDate == null) {
-      crTelegramBot.postMessage('Не удалось установить новое напоминание');
+      postJRPCMessage('Не удалось установить новое напоминание', postMessageOptions);
       return;
     }
 
     const nextAlarmTime = `${nextAlarmDate.toLocaleString('ru').slice(0, -3)}`;
 
-    crTelegramBot.postMessage(`Время следующего напоминания ${nextAlarmTime}`);
+    postJRPCMessage(`Время следующего напоминания ${nextAlarmTime}`, postMessageOptions);
   };
 
   const setAlarm = (dayDate = new Date()) => {
@@ -278,7 +288,7 @@ export const startCrTgAlarm = () => {
     earlyRepayDate.setDate(earlyRepayDate.getDate() + 1);
     earlyRepayDate.setHours(crData.hours, crData.minutes, 0, 0);
     nodeSchedule.scheduleJob(earlyRepayDate, () => {
-      crTelegramBot.postMessage('Досрочка!');
+      postJRPCMessage('Досрочка!', postMessageOptions);
     });
 
     currentJob = nodeSchedule.scheduleJob(nextAlarmDate, () => {
@@ -295,10 +305,11 @@ export const startCrTgAlarm = () => {
         )}`;
       }
 
-      crTelegramBot.postMessage(
+      postJRPCMessage(
         'Оплата кредита ' +
           timeFormatter.format((nextPaymentInTimeTs - alarmInTimeTs) / smylib.howMs.inDay, 'day') +
           `\n\n${nextAlarmInfo}`,
+        postMessageOptions,
       );
     });
 

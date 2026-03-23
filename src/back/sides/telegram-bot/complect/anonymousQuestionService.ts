@@ -1,4 +1,5 @@
 import { jesmylTgBot } from '../bot';
+import { postJRPCMessage } from '../postJRPCMessage';
 import { tgBotDTO } from './dto';
 
 export const telegramAnonymousChatMessageService = ({
@@ -29,8 +30,13 @@ export const telegramAnonymousChatMessageService = ({
       }
 
       if (message.text && message.reply_to_message?.text?.startsWith(writeCommand)) {
-        tgBotDTO[botAdminName]?.postMessage(message.text, {
-          reply_markup: { inline_keyboard: [[{ text: 'Отправить анонимку в чат', callback_data: sendQuery }]] },
+        if (!tgBotDTO[botAdminName]) return;
+
+        postJRPCMessage(message.text, {
+          tgBot: tgBotDTO[botAdminName],
+          tg: {
+            reply_markup: { inline_keyboard: [[{ text: 'Отправить анонимку в чат', callback_data: sendQuery }]] },
+          },
         });
 
         return;
@@ -44,10 +50,15 @@ export const telegramAnonymousChatMessageService = ({
     tgBotDTO[botAdminName]?.onChatQueries(async (_bot, query, answer) => {
       if (query.data === sendQuery && query.message?.text) {
         await tgBotDTO[botAdminName]?.editMessageText(query.message.message_id, query.message.text);
-        await tgBotDTO[botName]?.postMessage(`<b>Анонимное сообщение</b>\n\n${query.message.text}`, {
-          protect_content: true,
-          allow_sending_without_reply: true,
-        });
+
+        if (tgBotDTO[botName])
+          await postJRPCMessage(`<b>Анонимное сообщение</b>\n\n${query.message.text}`, {
+            tgBot: tgBotDTO[botName],
+            tg: {
+              protect_content: true,
+              allow_sending_without_reply: true,
+            },
+          });
 
         answer({ text: 'Отправлено' });
       }

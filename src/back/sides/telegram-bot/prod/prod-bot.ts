@@ -8,6 +8,7 @@ import { controlTelegramBot } from '../control/control-bot';
 import { jesmylChangesBot } from '../control/jesmylChangesBot';
 import { gul94iAdminTelegramBot, gul94iTelegramBot } from '../gul94i/gul94i-bot';
 import { tglogger } from '../log/log-bot';
+import { postJRPCMessage, PostJRPCMessageScope } from '../postJRPCMessage';
 import { JesmylTelegramBot } from '../tg-bot';
 import { authorizeTelegramCb } from './authorize';
 
@@ -17,6 +18,7 @@ export const prodTelegramBot = new JesmylTelegramBot({
   logger: tglogger,
   logAllAsJSON: true,
   uniqPrefix: '',
+  scope: PostJRPCMessageScope.Prod,
 });
 
 export const prodStartOptions: SendMessageOptions = prodTelegramBot.makeSendMessageOptions([
@@ -49,7 +51,7 @@ prodTelegramBot.onChatMessages((bot, message) => {
   if (!message.text) return;
 
   if (bot.messageCase('/start', message.text)) {
-    bot.postMessage(prodStartMessage(bot.botName), prodStartOptions);
+    postJRPCMessage(prodStartMessage(bot.botName), { tgBot: bot, tg: prodStartOptions });
   }
 });
 

@@ -5,6 +5,7 @@ import { emptyFunc, smylib } from 'shared/utils';
 import { Stream } from 'stream';
 import { TgLogger } from './log/log-bot';
 import { JTgBotCallbackQuery, JTgBotChatMessageCallback } from './model';
+import { PostJRPCMessageScope } from './postJRPCMessage';
 import { JesmylTelegramBotWrapper } from './tg-bot-wrapper';
 
 const botName = 'jesmylbot';
@@ -18,6 +19,7 @@ export class JesmylTelegramBot {
   private logAllAsJSON?: boolean;
   private _bot: JesmylTelegramBotWrapper;
   botName = botName;
+  scope: PostJRPCMessageScope;
   uniqPrefix: string;
   sendMessage: (
     userOrId: User | number,
@@ -31,9 +33,11 @@ export class JesmylTelegramBot {
     bot: JesmylTelegramBotWrapper;
     logger: TgLogger;
     uniqPrefix: string;
+    scope: PostJRPCMessageScope;
   }) {
     this.logger = props.logger;
     this.chatId = props.chatId;
+    this.scope = props.scope;
     this.logAllAsJSON = props.logAllAsJSON;
     this._bot = props.bot;
     this.sendMessage = (userOrId, text, options) =>
@@ -93,29 +97,29 @@ export class JesmylTelegramBot {
   }
 
   onChatMessages(cb: JTgBotChatMessageCallback) {
-    this._bot.registerChatMessagesCallback(
-      this,
-      this.chatId,
-      this.logAllAsJSON && this.logger
-        ? (bot, message, metadata) => {
-            this.logger.jsonCode({ message, metadata });
-            cb(bot, message, metadata);
-          }
-        : cb,
-    );
+    // this._bot.registerChatMessagesCallback(
+    //   this,
+    //   this.chatId,
+    //   this.logAllAsJSON && this.logger
+    //     ? (bot, message, metadata) => {
+    //         this.logger.jsonCode({ message, metadata });
+    //         cb(bot, message, metadata);
+    //       }
+    //     : cb,
+    // );
   }
 
   onChatQueries(cb: JTgBotCallbackQuery) {
-    this._bot.registerChatCallbackQueryCallback(
-      this,
-      this.chatId,
-      this.logAllAsJSON && this.logger
-        ? (bot, query, answer) => {
-            this.logger.jsonCode({ query });
-            cb(bot, query, answer);
-          }
-        : cb,
-    );
+    // this._bot.registerChatCallbackQueryCallback(
+    //   this,
+    //   this.chatId,
+    //   this.logAllAsJSON && this.logger
+    //     ? (bot, query, answer) => {
+    //         this.logger.jsonCode({ query });
+    //         cb(bot, query, answer);
+    //       }
+    //     : cb,
+    // );
   }
 
   deleteMessage(messageId: number, chatId?: number) {

@@ -6,7 +6,7 @@ import { emailerConfigFileStorage } from '../file-stores';
 let transporter: nodemailer.Transporter<SMTPTransport.SentMessageInfo, SMTPTransport.Options>;
 type Options = Mail.Options;
 
-export const sendEmailMessage = async (options: Options) => {
+export const sendEmailMessage = async (options: Options & { isSameTo?: boolean }) => {
   const auth = emailerConfigFileStorage.getValue().first;
 
   if (auth == null) return;
@@ -18,11 +18,13 @@ export const sendEmailMessage = async (options: Options) => {
     secure: true,
     auth,
   });
+  const from = options.from ?? `"Jesmyl Space" <${auth.user}>`;
 
   transporter.sendMail(
     {
+      to: options.isSameTo ? from : undefined,
       ...options,
-      from: options.from ?? `"Jesmyl Space" <${auth.user}>`,
+      from,
     },
     (error, info) => {
       if (error) reject(error);

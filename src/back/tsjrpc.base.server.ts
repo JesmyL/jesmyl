@@ -5,6 +5,7 @@ import { WebSocket } from 'ws';
 import { backConfig } from './config/backConfig';
 import { jesmylChangesBot } from './sides/telegram-bot/control/jesmylChangesBot';
 import { tglogger } from './sides/telegram-bot/log/log-bot';
+import { postJRPCMessage } from './sides/telegram-bot/postJRPCMessage';
 import { userAuthStringified, userVisitStringified } from './utils';
 
 export type ServerTSJRPCTool = {
@@ -43,13 +44,16 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
 
         const text = `<code>${scope}.${method}</code>\n\n<b>${title}</b>`;
 
-        jesmylChangesBot.postMessage(
+        postJRPCMessage(
           tool.auth
-            ? `${`${tool.auth.fio} ${tool.auth.nick ? `t.me/${tool.auth.nick}` : ''}\n`}` +
+            ? `${`${tool.auth.fio} ${tool.auth.nick && (!tool.auth.email || !tool.auth.email.startsWith(tool.auth.nick)) ? `t.me/${tool.auth.nick}` : ''}\n`}` +
                 text +
                 `\n\n<blockquote expandable>${JSON.stringify(tool.auth, null, 1)}</blockquote>`
             : text,
-          { parse_mode: 'HTML' },
+          {
+            tgBot: jesmylChangesBot,
+            tg: { parse_mode: 'HTML' },
+          },
         );
       },
   beforeEach: async ({ invoke: { method }, tool, beforeEachTools, defaultBeforeEachTool }) => {

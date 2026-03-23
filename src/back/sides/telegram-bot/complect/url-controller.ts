@@ -1,6 +1,7 @@
 import TelegramBot, { SendMessageOptions } from 'node-telegram-bot-api';
 import { makeRegExp } from 'regexpert';
 import { JTgBotCallbackQuery } from '../model';
+import { postJRPCMessage } from '../postJRPCMessage';
 import { JesmylTelegramBot } from '../tg-bot';
 
 export const tgBotUrlController = async (
@@ -54,7 +55,9 @@ export const tgBotUrlController = async (
         cb: async () => {
           const knowns = await refreshDescription();
 
-          adminBot.postMessage(`Информация группы перечитана. Известные ссылки:\n\n${knowns.join('\n')}`);
+          postJRPCMessage(`Информация группы перечитана. Известные ссылки:\n\n${knowns.join('\n')}`, {
+            tgBot: adminBot,
+          });
         },
       },
     ],
@@ -118,9 +121,12 @@ export const tgBotUrlController = async (
 
     const forwardedSentMessage = await adminBot.forwardMessage(bot.chatId, message.message_id);
 
-    await adminBot.postMessage('Что делаем с сообщением?', {
-      ...botOptions,
-      reply_to_message_id: forwardedSentMessage.message_id,
+    await postJRPCMessage('Что делаем с сообщением?', {
+      tgBot: adminBot,
+      tg: {
+        ...botOptions,
+        reply_to_message_id: forwardedSentMessage.message_id,
+      },
     });
 
     await bot.deleteMessage(message.message_id);
