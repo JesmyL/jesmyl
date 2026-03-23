@@ -1,3 +1,4 @@
+import { backConfig } from 'back/config/backConfig';
 import TgBot from 'node-telegram-bot-api';
 import Mail from 'nodemailer/lib/mailer';
 import { sendEmailMessage } from '../emailer/lib/sendEmailMessage';
@@ -39,6 +40,8 @@ export const postJRPCMessage = async (
     email?: Mail.Options;
   },
 ) => {
+  if (backConfig.isTest) return;
+
   await sendEmailMessage({
     isSameTo: true,
     subject: `SYSTEM: ${new Date().toLocaleDateString('ru')} (${scopeTitleDict[options.scope ?? options.tgBot.scope]})`,
