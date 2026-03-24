@@ -1,5 +1,5 @@
 import { tsjrpcBaseClientNext } from '#basis/tsjrpc/TsjrpcBase.client';
-import { authIDB, indexDeviceIdAtom } from '$index/shared/state';
+import { authIDB, indexDeviceEmojiAtom, indexDeviceIdAtom } from '$index/shared/state';
 import { makeRegExp } from 'regexpert';
 import { SokiError, TsjrpcClientEvent, TsjrpcClientTool, TsjrpcServerEvent } from 'shared/api';
 import { Eventer, smylib } from 'shared/utils';
@@ -45,6 +45,7 @@ export class SokiTrip {
         token: await authIDB.get.token(),
         visitInfo: {
           deviceId: indexDeviceIdAtom.get(),
+          deviceEmoji: indexDeviceEmojiAtom.get(),
           version: jversion.num,
           urls: this.urls.length ? this.urls : [this.getCurrentUrl()],
           clientTm: Date.now(),

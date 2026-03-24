@@ -10,6 +10,7 @@ export const enum SokiError {
 
 export interface SokiVisit {
   deviceId: DeviceId;
+  deviceEmoji: string;
   urls: string[];
   version: number;
   clientTm: number;

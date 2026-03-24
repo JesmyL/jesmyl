@@ -16,6 +16,7 @@ export type IndexTsjrpcModel = {
     iconsMd5Hash: string;
   }) => void;
   getDeviceId: () => DeviceId;
+  getDeviceEmoji: () => string;
 
   authMeByTelegramNativeButton: (args: { user: TelegramNativeAuthUserData }) => { token: string; auth: LocalSokiAuth };
   authMeByTelegramMiniButton: (args: { user: TelegramNativeAuthUserData }) => { token: string; auth: LocalSokiAuth };

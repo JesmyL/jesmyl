@@ -10,6 +10,7 @@ import jwt from 'jsonwebtoken';
 import { escapeRegExpSymbols, makeRegExp } from 'regexpert';
 import { LocalSokiAuth } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
+import { emojiList } from 'shared/const/emojiList';
 import { smylib } from 'shared/utils';
 import { switchCRUDAccesRightValue } from 'shared/utils/index/utils';
 import {
@@ -146,6 +147,15 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
           return {
             value: deviceId as never,
             description: `Запрос DeviceId - ${deviceId}`,
+          };
+        },
+
+        getDeviceEmoji: async () => {
+          const value = smylib.randomItem(emojiList);
+
+          return {
+            value,
+            description: `Запрос DeviceEmoji - ${value}`,
           };
         },
 

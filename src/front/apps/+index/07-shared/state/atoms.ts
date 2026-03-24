@@ -16,6 +16,11 @@ export const indexDeviceIdAtom = atom(DeviceId.def, {
   unchangable: true,
 });
 
+export const indexDeviceEmojiAtom = atom('', {
+  storeKey: 'index:deviceEmoji',
+  unchangable: true,
+});
+
 export const lastUpdatedIconsMd5HashAtom = atom('', 'index:lastUpdatedIconsMd5Hash');
 
 export const liveDataAtom = atom<IndexSchWBroadcastLiveDataValue | null>(null);

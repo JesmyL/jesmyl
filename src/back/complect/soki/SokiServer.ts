@@ -54,8 +54,11 @@ export class SokiServer {
             if (event.visitInfo !== undefined) {
               this.visits.set(client, event.visitInfo);
 
-              if (!this.isLocalhost(event.visitInfo.urls[0]))
-                tglogger.visit(`Не авторизованный\n\n${userVisitStringified(event.visitInfo)}\n\n`);
+              if (!this.isLocalhost(event.visitInfo.urls[0])) {
+                tglogger.visit(
+                  `${event.visitInfo.deviceEmoji || '??'} Не авторизованный\n\n${userVisitStringified(event.visitInfo)}\n\n`,
+                );
+              }
             }
 
             return;
@@ -76,7 +79,9 @@ export class SokiServer {
             this.visits.set(client, event.visitInfo);
 
             if (!this.isLocalhost(event.visitInfo.urls[0]))
-              tglogger.visit(`${userAuthStringified(auth)}\n\n${userVisitStringified(event.visitInfo)}\n\n`);
+              tglogger.visit(
+                `${event.visitInfo.deviceEmoji || '??'} ${userAuthStringified(auth)}\n\n${userVisitStringified(event.visitInfo)}\n\n`,
+              );
           }
 
           if (auth) {

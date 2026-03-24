@@ -4,6 +4,7 @@ import { bibleTsjrpcBaseClient } from '$bible/shared/lib/tsjrpc';
 import { cmEditorInitialInvokes } from '$cm+editor/shared/lib/cm+editor-initial-invokes';
 import { cmShareEditorTsjrpcBaseClient } from '$cm+editor/shared/lib/cm-editor.tsjrpc.base';
 import {
+  indexDeviceEmojiAtom,
   indexDeviceIdAtom,
   indexIDB,
   indexUserAccessRightsAtom,
@@ -27,12 +28,18 @@ export const appInitialInvokes = () => {
 
   const getFreshes = async () => {
     const lastModfiedAt = await indexIDB.get.lastModifiedAt();
-    const deviceId = indexDeviceIdAtom.get();
 
     try {
+      const deviceId = indexDeviceIdAtom.get();
       if (deviceId === DeviceId.def) {
         const deviceId = await indexTsjrpcClientMethods.getDeviceId();
         indexDeviceIdAtom.set(deviceId);
+      }
+
+      const deviceEmoji = indexDeviceEmojiAtom.get();
+      if (!deviceEmoji) {
+        const deviceEmoji = await indexTsjrpcClientMethods.getDeviceEmoji();
+        indexDeviceEmojiAtom.set(deviceEmoji);
       }
     } catch (_e) {
       //
