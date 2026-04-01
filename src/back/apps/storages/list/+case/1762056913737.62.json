@@ -49,7 +49,11 @@
       "i": 11,
       "status": 2
     },
-    { "title": "Метроном", "status": 2, "note": "Не играет в айфонах\nвёрстка на планшете", "i": 12 },
+    {
+      "title": "Метроном",
+      "note": "// 1. Создаем синтезатор для звука \"клик\"\nconst synth = new Tone.MembraneSynth().toDestination();\n\n// 2. Описываем функцию, которая срабатывает на каждый удар\nconst repeat = (time) => {\n  // 'C4' — нота, '32n' — длительность (очень короткая)\n  synth.triggerAttackRelease(\"C4\", \"32n\", time);\n};\n\n// 3. Планируем повторение (четвертными нотами '4n')\nTone.Transport.scheduleRepeat(repeat, \"4n\");\n\n// 4. Управление метрономом\nconst startMetronome = async () => {\n  await Tone.start(); // Разрешаем аудио в браузере\n  Tone.Transport.bpm.value = 120; // Устанавливаем темп\n  Tone.Transport.start();\n};\n\nconst stopMetronome = () => {\n  Tone.Transport.stop();\n};\n\n//темп\nTone.Transport.bpm.value = 90;\n\n====\nНе играет в айфонах\nвёрстка на планшете",
+      "i": 12
+    },
     { "title": "CmEditCom.setMeterSize", "note": "поправить значение было (4/4/4)", "status": 2, "i": 13 },
     { "title": "рендер Com в FullContent?", "note": "страницу песни рендерить в Full…", "i": 14 },
     {
@@ -256,9 +260,8 @@
     },
     {
       "i": 64,
-      "title": "бывают 1.00 трек метки",
-      "note": "исключить возможность добавления меток с целым числом по времени",
-      "status": 2
+      "title": "аудио метки",
+      "note": "учитывать перевод песни для пустотелых меток\n\n====\n\nследим за текстом в аудио\n\n// 1. Создаем фильтр в Tone.js\nconst voiceFilter = new Tone.Filter({\n  type: \"bandpass\",\n  frequency: 1500, // Центр голоса\n  Q: 0.5           // Ширина пропускания\n}).toDestination();\n\n// 2. Подключаем плеер к фильтру\nplayer.connect(voiceFilter);\n\n// 3. Запускаем стандартное распознавание (оно будет слушать через микрофон или стерео-микшер)\nconst recognition = new webkitSpeechRecognition();\nrecognition.continuous = true;\nrecognition.interimResults = true;\nrecognition.lang = 'ru-RU';\n\nrecognition.onresult = (event) => {\n  const result = event.results[event.results.length - 1][0].transcript;\n  console.log(\"Текст в реальном времени:\", result);\n};\n\n\n====\n✅ исключить возможность добавления меток с целым числом по времени"
     },
     { "i": 65, "title": "указывать принадлежность трек меток к определённой песне", "status": 2 },
     {
@@ -377,7 +380,7 @@
       "title": "tone js",
       "status": 0,
       "row": [[74, "https://tonejs.github.io/"]],
-      "note": "снизу про frequency - транспонирование?\n\nStarting Audio - и удалить пустое мп3"
+      "note": "транспонирование\n\n// 1. Создаем эффект изменения тона (параметр в полутонах)\nconst pitchShift = new Tone.PitchShift({\n  pitch: 2, // +2 полутона (целый тон вверх)\n  windowSize: 0.1, // размер окна обработки (влияет на задержку и качество)\n  delayTime: 0,\n  feedback: 0\n}).toDestination();\n\n// 2. Создаем плеер и подключаем его к эффекту\nconst player = new Tone.Player(\"https://github.io\")\n  .connect(pitchShift);\n\n// 3. Запуск (нужен жест пользователя, например, клик)\ndocument.querySelector('#play-button').addEventListener('click', async () => {\n  await Tone.start(); // Разрешаем аудио-контекст\n  player.start();\n});\n\n// Сдвинуть на 5 полутонов вниз (в реальном времени)\npitchShift.pitch = -5;\n\n\n\n====\n\nStarting Audio - и удалить пустое мп3"
     },
     {
       "i": 96,
@@ -413,7 +416,8 @@
         [35, "привязывать непосредственно к каждому блоку (считать в продолжении свои строки)"]
       ]
     },
-    { "i": 104, "title": "подсвечивать совпадения при поиске слов", "status": 0 }
+    { "i": 104, "title": "подсвечивать совпадения при поиске слов", "status": 0 },
+    { "i": 105, "title": "аудио трек", "status": 0 }
   ],
   "parent": 1761967947833.002,
   "icon": "BookOpen02"

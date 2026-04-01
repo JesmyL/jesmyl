@@ -134,7 +134,8 @@
       "note": "некликабельный полностраничный элемент находится в самом низу экрана\n\nпри фокусе происходит скролл к самому низу всего\n\nбрать у элемента его clientHeight (или другой параметр)"
     },
     { "i": 36, "title": "остаётся место Footer’а при фокусе", "status": 0 },
-    { "i": 37, "title": "structuredClone", "status": 0, "note": "js утилита" }
+    { "i": 37, "title": "structuredClone", "status": 0, "note": "js утилита" },
+    { "i": 38, "title": "цветовые схемы", "status": 0, "note": "oklch(from currentColor calc(l + 1) c h)" }
   ],
   "statuses": [
     { "title": "Ожидает", "color": "#74a7ff", "icon": "AiInnovation03", "next": [5, 1, 7, 3, 8, 9] },
