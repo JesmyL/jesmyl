@@ -8,6 +8,7 @@ import {
   CmComWidRefGroupDict,
   CmConstantsConfig,
   ComsInSchEvent,
+  HttpNumLeadLink,
   ICmComCommentBlock,
   IExportableCat,
   IExportableCom,
@@ -89,7 +90,7 @@ class CmIDB extends DexieDB<CmIDBStorage> {
     });
   }
 
-  useAudioTrackMarks = (src: string | nil) =>
+  useAudioTrackMarks = (src: HttpNumLeadLink | nil) =>
     justUseLiveQuery(async () => (src ? this.tb.comAudioTrackMarks.get({ src }) : undefined), [src]);
 }
 
