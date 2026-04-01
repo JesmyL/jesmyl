@@ -9,7 +9,6 @@ import {
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
 import { SMyLib, smylib } from 'shared/utils';
 import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from './client-selectors-by-visit';
-import { makeCmComNumLeadLinkFromHttp } from './complect/com-http-links';
 import { mapCmImportableToExportableCom } from './complect/tools';
 import { cmEditCatServerTsjrpcBase } from './edit-cat.tsjrpc.base';
 import { cmEditComExternalsTsjrpcBaseServer } from './edit-com-externals.tsjrpc.base';
@@ -333,11 +332,13 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
         takeComwVisitsCount: async ({ comw }) => ({ value: comwVisitsFileStore.getValue()[comw] ?? 0 }),
         getComwVisits: async () => ({ value: comwVisitsFileStore.getValue() }),
 
-        takeFreshComAudioMarksPack: async ({ lastModfiedAt, src }) => {
-          const allMarkPacks = cmComAudioMarkPacksFileStore.getValue();
-          const srcMarksPack = allMarkPacks[makeCmComNumLeadLinkFromHttp(src)];
+        takeFreshComAudioMarksPack: async ({ mod, src }) => {
+          if (mod == null) throw 'Ошибка 51712343778';
 
-          return { value: !srcMarksPack?.cMarks || srcMarksPack.m <= lastModfiedAt ? null : { ...srcMarksPack, src } };
+          const allMarkPacks = cmComAudioMarkPacksFileStore.getValue();
+          const srcMarksPack = allMarkPacks[src];
+
+          return { value: !srcMarksPack?.cMarks || srcMarksPack.m <= mod ? null : { ...srcMarksPack, src } };
         },
       },
     });

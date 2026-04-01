@@ -14,7 +14,7 @@ import { itNNil, SMyLib, smylib, trimTextLines } from 'shared/utils';
 import { cmComLanguages } from 'shared/utils/cm/com/const';
 import { textLinesLengthIncorrects } from 'shared/utils/cm/com/textLinesLengthIncorrects';
 import { transformToClearText } from 'shared/utils/cm/com/transformToClearText';
-import { makeCmComHttpToNumLeadAudioLinks, makeCmComNumLeadToHttpAudioLinks } from './complect/com-http-links';
+import { makeCmComNumLeadAudioLinkList } from './complect/com-http-links';
 import { mapCmExportableToImportableCom, mapCmImportableToExportableCom } from './complect/tools';
 import { cmConstantsConfigFileStore, comsDirStore } from './file-stores';
 import { cmShareServerTsjrpcMethods } from './tsjrpc.shares';
@@ -181,12 +181,10 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         toggleAudioLink: modifyCom((com, { link }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_AUDIO', 'U')) throw '';
 
-          const prev = makeCmComNumLeadToHttpAudioLinks(com.al);
+          const prev = makeCmComNumLeadAudioLinkList(com.al);
           const isThereInPrev = prev?.includes(link);
 
-          com.al = makeCmComHttpToNumLeadAudioLinks(
-            isThereInPrev ? prev?.filter(pLink => pLink !== link) : [...(prev ?? []), link],
-          );
+          com.al = isThereInPrev ? prev?.filter(pLink => pLink !== link) : [...(prev ?? []), link];
 
           return `изменение аудио-ссылок:\n\n${isThereInPrev ? 'удалено' : 'добавлено'}:\n${link}\n\nбыло:\n${prev}`;
         }),

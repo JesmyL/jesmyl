@@ -1,4 +1,4 @@
-import { CmComAudioMarkPack, CmComWid, HttpLink, ICmComCommentBlock } from 'shared/api/complect/apps';
+import { CmComAudioMarkPack, CmComWid, HttpNumLeadLink, ICmComCommentBlock } from 'shared/api/complect/apps';
 import { SokiAuthLogin } from 'shared/api/complect/soki.model';
 
 export type CmTsjrpcModel = {
@@ -17,9 +17,9 @@ export type CmTsjrpcModel = {
   takeComwVisitsCount: (args: { comw: CmComWid }) => number;
   getComwVisits: () => PRecord<CmComWid, number>;
 
-  takeFreshComAudioMarksPack: (args: { src: HttpLink; lastModfiedAt: number }) => null | {
+  takeFreshComAudioMarksPack: (args: { src: HttpNumLeadLink; mod: number }) => null | {
     cMarks?: CmComAudioMarkPack;
-    src: HttpLink;
+    src: HttpNumLeadLink;
     m: number;
   };
 };

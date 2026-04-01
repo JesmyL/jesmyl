@@ -3,12 +3,12 @@ import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { CmCom } from '$cm/ext';
 import { useFetchFreshComAudioMarksPack } from '$cm/shared/api/useFetchFreshComAudioMarksPack';
 import { Atom, useAtomValue } from 'atomaric';
-import { HttpLink } from 'shared/api';
+import { HttpNumLeadLink } from 'shared/api';
 import { twMerge } from 'tailwind-merge';
 import { useCmComAudioPlayerMoversController } from '../lib/useCmComAudioPlayerMoversController';
 
 interface Props {
-  src: HttpLink;
+  src: HttpNumLeadLink;
   com: CmCom;
   repeatButtonClassName?: string;
   preSwitchTimeAtom: Atom<number>;

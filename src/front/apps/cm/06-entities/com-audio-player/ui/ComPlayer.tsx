@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { HttpLink } from 'shared/api';
+import { HttpNumLeadLink } from 'shared/api';
 import styled, { css, keyframes } from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 import { CmComAudioPlayerPlayButton } from './ComPlayerPlayButton';
 import { CmComAudioPlayerTrack } from './ComPlayerTrack';
 
 interface Props {
-  audioLinks: HttpLink[];
-  timeRender?: (timeNode: React.ReactNode, currentSrc: HttpLink) => React.ReactNode;
-  addRender?: (currentSrc: HttpLink) => React.ReactNode;
+  audioLinks: HttpNumLeadLink[];
+  timeRender?: (timeNode: React.ReactNode, currentSrc: HttpNumLeadLink) => React.ReactNode;
+  addRender?: (currentSrc: HttpNumLeadLink) => React.ReactNode;
   className?: string;
 }
 

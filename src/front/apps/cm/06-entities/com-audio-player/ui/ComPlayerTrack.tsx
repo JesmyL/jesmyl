@@ -1,7 +1,7 @@
 import { Slider } from '#shared/components/ui/slider';
 import { mylib } from '#shared/lib/my-lib';
 import { useAtomValue } from 'atomaric';
-import { HttpLink } from 'shared/api';
+import { HttpNumLeadLink } from 'shared/api';
 import {
   cmComAudioPlayerPlaySrcAtom,
   cmComAudioPlayerSwitchIsPlay,
@@ -14,8 +14,8 @@ import {
 let userChangeTimeout: TimeOut;
 
 interface Props {
-  src: HttpLink;
-  timeRender?: (timeNode: React.ReactNode, src: HttpLink) => React.ReactNode;
+  src: HttpNumLeadLink;
+  timeRender?: (timeNode: React.ReactNode, src: HttpNumLeadLink) => React.ReactNode;
 }
 
 export const CmComAudioPlayerTrack = (props: Props) => {

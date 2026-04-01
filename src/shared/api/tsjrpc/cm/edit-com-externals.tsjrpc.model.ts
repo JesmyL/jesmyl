@@ -4,7 +4,7 @@ import {
   CmComAudioMarkPackTime,
   CmComOrderWid,
   CmComWid,
-  HttpLink,
+  HttpNumLeadLink,
   ScheduleComPackHistoryItem,
 } from 'shared/api/complect/apps';
 import { IScheduleWidgetDayEventMi, IScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
@@ -39,18 +39,18 @@ export type CmEditComExternalsTsjrpcModel = {
     writedAt: number;
   }) => ScheduleComPackHistoryItem[];
 
-  updateAudioMarks: (args: { src: HttpLink; cMarks: CmComAudioMarkEditPack }) => {
-    src: HttpLink;
+  updateAudioMarks: (args: { src: HttpNumLeadLink; cMarks: CmComAudioMarkEditPack }) => {
+    src: HttpNumLeadLink;
     cMarks?: CmComAudioMarkPack;
   };
 
   changeAudioMarkTime: (args: {
-    src: HttpLink;
+    src: HttpNumLeadLink;
     time: CmComAudioMarkPackTime;
     newTime: CmComAudioMarkPackTime;
     comw: CmComWid;
   }) => null | {
-    src: HttpLink;
+    src: HttpNumLeadLink;
     cMarks?: CmComAudioMarkPack;
   };
 

@@ -10,7 +10,7 @@ import {
   cmIDB,
   makeCmComAudioMarkTitleBySelector,
 } from '$cm/ext';
-import { CmComAudioMarkPackTime, CmComAudioMarkSelector, HttpLink } from 'shared/api';
+import { CmComAudioMarkPackTime, CmComAudioMarkSelector, HttpNumLeadLink } from 'shared/api';
 import { twMerge } from 'tailwind-merge';
 import { cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom } from '../state/atoms';
 
@@ -18,7 +18,7 @@ interface Props {
   time: CmComAudioMarkPackTime;
   com: EditableCom;
   selector: CmComAudioMarkSelector | nil;
-  src: HttpLink;
+  src: HttpNumLeadLink;
   pinTime: RKey<CmComAudioMarkPackTime> | null;
   onPin: (time: RKey<CmComAudioMarkPackTime> | null) => void;
 }

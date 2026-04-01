@@ -26,15 +26,15 @@ import {
 } from '$cm/ext';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import { CmComAudioMarkPackTime, HttpLink } from 'shared/api';
+import { CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
 import { toast } from 'sonner';
 import { CmEditorTabComAudioMarksShowSlideListButton } from './ShowSlideListButton';
 
-let srcOnEditAtom: Atom<null | HttpLink>;
+let srcOnEditAtom: Atom<null | HttpNumLeadLink>;
 let preSwitchTimeAtom: Atom<number>;
 
 export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
-  srcOnEditAtom ??= atom<null | HttpLink>(null, 'cm+editor:srcOnMarkEdit');
+  srcOnEditAtom ??= atom<null | HttpNumLeadLink>(null, 'cm+editor:srcOnMarkEdit');
   preSwitchTimeAtom ??= atom(-1, 'cm+editor:comAudioPreSwitchTime');
 
   const editSrc = useAtomValue(srcOnEditAtom);

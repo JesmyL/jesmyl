@@ -61,12 +61,12 @@ export const makeCmComHttpLinkFromNumLead = (numLeadLink: HttpNumLeadLink): Http
   return `${numLeadToHttpLinks[prefix]}${postfix}`;
 };
 
-export const makeCmComNumLeadToHttpAudioLinks = (nulLeadLinks: HttpNumLeadLink[] | HttpNumLeadLink | nil) => {
-  const links = nulLeadLinks ? [nulLeadLinks].flat().map(makeCmComHttpLinkFromNumLead) : [];
+export const makeCmComNumLeadAudioLinkList = (numLeadLinks: HttpNumLeadLink[] | HttpNumLeadLink | nil) => {
+  const links = numLeadLinks ? [numLeadLinks].flat() : [];
   return !links.length ? undefined : links;
 };
 
-export const makeCmComHttpToNumLeadAudioLinks = (httpLinks: HttpLink[] | nil) => {
-  const links = httpLinks ? httpLinks.flat().map(makeCmComNumLeadLinkFromHttp) : [];
+export const makeCmComHttpAudioLinks = (httpLinks: HttpNumLeadLink[] | nil) => {
+  const links = httpLinks ? httpLinks.flat() : [];
   return links.length === 1 ? links[0] : !links.length ? undefined : links;
 };

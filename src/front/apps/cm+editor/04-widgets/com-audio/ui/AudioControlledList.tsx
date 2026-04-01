@@ -1,17 +1,17 @@
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { CmComAudioPlayer } from '$cm/ext';
 import { useState } from 'react';
-import { HttpLink } from 'shared/api';
+import { HttpNumLeadLink } from 'shared/api';
 
 interface Props {
-  srcs: HttpLink[];
-  onToggle: (link: HttpLink) => Promise<unknown>;
+  srcs: HttpNumLeadLink[];
+  onToggle: (link: HttpNumLeadLink) => Promise<unknown>;
   icon: KnownStameskaIconName;
   isCanDelete?: boolean;
 }
 
 export const CmEditorComAudioControlledList = ({ srcs, onToggle, icon, isCanDelete }: Props) => {
-  const [tracksInProcess, setTracksInProcess] = useState<HttpLink[]>([]);
+  const [tracksInProcess, setTracksInProcess] = useState<HttpNumLeadLink[]>([]);
 
   return (
     <>

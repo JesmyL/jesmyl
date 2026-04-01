@@ -28,6 +28,7 @@ export const startExpressRouting = () => {
 
   const cmDescription = 'Приложение для вашего служения';
   const audioPathPrefix = '/audio/';
+  const trackPathPrefix = '/track/';
 
   const makePage = ({
     bodyContent = '',
@@ -79,7 +80,10 @@ export const startExpressRouting = () => {
         let ogDescription = 'Звуковая дорожка';
         let trackLink = '' as HttpNumLeadLink;
 
-        if (req.url.startsWith(audioPathPrefix)) {
+        if (req.url.startsWith(trackPathPrefix)) {
+          trackLink = req.url.slice(trackPathPrefix.length) as never;
+          externalUrl = makeCmComHttpLinkFromNumLead(trackLink);
+        } else if (req.url.startsWith(audioPathPrefix)) {
           const [comwStr, num] = req.url.slice(audioPathPrefix.length).split(makeRegExp('/\\.mp3|_/'));
           const com = comsDirStore.getItem(+comwStr);
 

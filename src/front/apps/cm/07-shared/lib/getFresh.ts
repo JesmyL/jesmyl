@@ -1,14 +1,14 @@
 import { cmIDB } from '$cm/ext';
-import { HttpLink } from 'shared/api';
+import { HttpNumLeadLink } from 'shared/api';
 import { cmTsjrpcClient } from '../tsjrpc';
 
-export const getCmComFreshAudioMarksPack = async (src: HttpLink) => {
+export const getCmComFreshAudioMarksPack = async (src: HttpNumLeadLink) => {
   const markPack = await cmIDB.tb.comAudioTrackMarks.get(src);
   try {
     return (
       (
         await cmTsjrpcClient.takeFreshComAudioMarksPack(
-          { lastModfiedAt: markPack?.m || 0, src },
+          { mod: markPack?.m || 0, src },
           { aborter: { signal: AbortSignal.timeout(5000) } },
         )
       )?.cMarks ?? (await cmIDB.tb.comAudioTrackMarks.get(src))?.cMarks

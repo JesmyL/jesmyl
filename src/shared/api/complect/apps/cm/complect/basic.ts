@@ -145,7 +145,7 @@ export type IExportableCom = IExportableComInterpretationSimpleValues & {
   l?: number;
 
   /** аудио файлы */
-  al?: HttpLink[];
+  al?: HttpNumLeadLink[];
 
   /** @deprecated */
   a?: string;

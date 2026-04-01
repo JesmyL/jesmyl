@@ -10,7 +10,7 @@ import {
   TheCmComOrderSolid,
 } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
-import { CmComAudioMarkPackTime, CmComAudioMarkSelector, HttpLink } from 'shared/api';
+import { CmComAudioMarkPackTime, CmComAudioMarkSelector, HttpNumLeadLink } from 'shared/api';
 import { retNull } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
 
@@ -19,7 +19,7 @@ interface Props {
   ord: CmComOrder;
   selector: CmComAudioMarkSelector | nil;
   time: CmComAudioMarkPackTime;
-  src: HttpLink;
+  src: HttpNumLeadLink;
 }
 
 export const CmEditorComAudioSolidOrdTextController = ({ com, ord, selector, src, time }: Props) => {

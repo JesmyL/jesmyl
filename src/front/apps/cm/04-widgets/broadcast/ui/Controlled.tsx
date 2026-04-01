@@ -26,7 +26,7 @@ import { cmPlayerBroadcastAudioSrcAtom, cmPlayerBroadcastComwAtom } from '$cm/sh
 import { useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { ReactNode } from 'react';
-import { CmComWid, HttpLink } from 'shared/api';
+import { CmComWid, HttpNumLeadLink } from 'shared/api';
 import { toast } from 'sonner';
 import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
@@ -63,7 +63,7 @@ export function CmBroadcastControlled(props: Props) {
 
   const watchBroadcast = useWatchScreenBroadcast();
 
-  const onStartBroadcast = async (comw: CmComWid, src: HttpLink) => {
+  const onStartBroadcast = async (comw: CmComWid, src: HttpNumLeadLink) => {
     getCmComFreshAudioMarksPack(src).then(pack => {
       if (pack != null) return;
 

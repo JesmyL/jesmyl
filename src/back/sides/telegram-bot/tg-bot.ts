@@ -96,7 +96,7 @@ export class JesmylTelegramBot {
     return this._bot.makeOptionsKeyboard(this, keyboard, false, keyPrefix);
   }
 
-  onChatMessages(cb: JTgBotChatMessageCallback) {
+  onChatMessages(_cb: JTgBotChatMessageCallback) {
     // this._bot.registerChatMessagesCallback(
     //   this,
     //   this.chatId,
@@ -109,7 +109,7 @@ export class JesmylTelegramBot {
     // );
   }
 
-  onChatQueries(cb: JTgBotCallbackQuery) {
+  onChatQueries(_cb: JTgBotCallbackQuery) {
     // this._bot.registerChatCallbackQueryCallback(
     //   this,
     //   this.chatId,

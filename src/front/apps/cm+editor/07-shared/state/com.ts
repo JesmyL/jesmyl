@@ -1,17 +1,23 @@
 import { MyLib, mylib } from '#shared/lib/my-lib';
 import { atom } from 'atomaric';
-import { CmComAudioMarkEditPack, CmComAudioMarkPack, CmComAudioMarkPackTime, CmComWid, HttpLink } from 'shared/api';
+import {
+  CmComAudioMarkEditPack,
+  CmComAudioMarkPack,
+  CmComAudioMarkPackTime,
+  CmComWid,
+  HttpNumLeadLink,
+} from 'shared/api';
 import { ComEditBusy } from 'shared/api/tsjrpc/cm/editor.tsjrpc.shares.model';
 
 export const removedCompositionsAtom = atom<PRecord<CmComWid, string>>({});
 export const comEditorBusiesAtom = atom<ComEditBusy[]>([]);
 
-export const cmComEditorAudioMarksEditPacksAtom = atom({} as PRecord<HttpLink, CmComAudioMarkEditPack>, {
+export const cmComEditorAudioMarksEditPacksAtom = atom({} as PRecord<HttpNumLeadLink, CmComAudioMarkEditPack>, {
   do: (set, get, self) => ({
-    putMarks: (comw: CmComWid, src: HttpLink, cMarks: CmComAudioMarkEditPack[CmComWid]) => {
+    putMarks: (comw: CmComWid, src: HttpNumLeadLink, cMarks: CmComAudioMarkEditPack[CmComWid]) => {
       self.do.setPartial({ [src]: { ...get()[src], [comw]: { ...get()[src]?.[comw], ...cMarks } } });
     },
-    removeMark: (comw: CmComWid, src: HttpLink, time: RKey<CmComAudioMarkPackTime>) => {
+    removeMark: (comw: CmComWid, src: HttpNumLeadLink, time: RKey<CmComAudioMarkPackTime>) => {
       const newMarks: CmComAudioMarkEditPack = { ...get()[src] };
       newMarks[comw] = { ...get()[src]?.[comw] };
 
@@ -20,10 +26,10 @@ export const cmComEditorAudioMarksEditPacksAtom = atom({} as PRecord<HttpLink, C
 
       self.do.setPartial({ [src]: newMarks });
     },
-    renameMark: (comw: CmComWid, src: HttpLink, time: RKey<number>, title: string) => {
+    renameMark: (comw: CmComWid, src: HttpNumLeadLink, time: RKey<number>, title: string) => {
       self.do.setPartial({ [src]: { ...get()[src], [comw]: { [time]: title } } });
     },
-    removeMarks: (src: HttpLink, cMarks: CmComAudioMarkPack | und) => {
+    removeMarks: (src: HttpNumLeadLink, cMarks: CmComAudioMarkPack | und) => {
       if (cMarks == null) return;
 
       MyLib.entries(cMarks).forEach(([comwStr, comMarks]) => {

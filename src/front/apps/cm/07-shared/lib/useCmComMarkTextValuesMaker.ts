@@ -2,7 +2,7 @@ import { MyLib, mylib } from '#shared/lib/my-lib';
 import { CmCom, CmComOrder, cmIDB } from '$cm/ext';
 import { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
-import { CmComAudioMarkPackTime, CmComOrderWid, HttpLink } from 'shared/api';
+import { CmComAudioMarkPackTime, CmComOrderWid, HttpNumLeadLink } from 'shared/api';
 import { nbsp } from 'shared/utils/cm/com/const';
 import {
   checkIsCmComAudioMarkTitleIsLineSelector,
@@ -13,7 +13,7 @@ import {
 const technicalTextPrefix = `##${Date.now()}@@`;
 type TotalRepeatsCount = { r: number };
 
-export const useCmComMarkTextValuesMaker = (com: CmCom | und, link: HttpLink | nil) => {
+export const useCmComMarkTextValuesMaker = (com: CmCom | und, link: HttpNumLeadLink | nil) => {
   const marks = cmIDB.useAudioTrackMarks(link);
   const trackMarks = com && marks?.cMarks?.[com.wid];
   const markTimes: CmComAudioMarkPackTime[] = useMemo(() => MyLib.keys(trackMarks).map(Number), [trackMarks]);

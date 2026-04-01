@@ -11,7 +11,7 @@ import { makeCmComAudioMarkLineiFromSelector } from '$cm/shared/lib/makeCmComAud
 import { takeCmComTrackCurrentTimeMark } from '$cm/shared/lib/takeCmComTrackCurrentTimeMark';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useRef } from 'react';
-import { CmComAudioMarkPackTime, HttpLink } from 'shared/api';
+import { CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import {
   cmComAudioPlayerAddEventListenerPipe,
@@ -26,7 +26,7 @@ const currentAccentClassName = 'text-x7';
 const windowDocument = window.document;
 
 export const useCmComAudioPlayerMoversController = (
-  src: HttpLink,
+  src: HttpNumLeadLink,
   com: CmCom,
   preSwitchTime: number,
   win: Window | nil,

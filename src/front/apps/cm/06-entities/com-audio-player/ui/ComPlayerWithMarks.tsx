@@ -2,14 +2,14 @@ import { Badge } from '#shared/components/ui/badge';
 import { CmCom } from '$cm/ext';
 import { cmComTrackPreSwitchTimeAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
-import { HttpLink } from 'shared/api';
+import { HttpNumLeadLink } from 'shared/api';
 import { twMerge } from 'tailwind-merge';
 import { isCmComAudioPlayerOpenMoversAtom } from '../state/atoms';
 import { CmComAudioPlayer } from './ComPlayer';
 import { CmComAudioPlayerMarksMovers } from './ComPlayerMarksMovers';
 
 interface Props {
-  audioLinks: HttpLink[];
+  audioLinks: HttpNumLeadLink[];
   com: CmCom;
   className?: string;
   hideMarksForce?: boolean;

@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { makeRegExp } from 'regexpert';
-import { CmMp3Rule, HttpLink } from 'shared/api';
+import { CmMp3Rule, HttpNumLeadLink } from 'shared/api';
 import { itIt, itNNull } from 'shared/utils';
 
 export const useCmExtractHrefsFromHTML = (
   html: string | nil,
   mp3Rule: CmMp3Rule | nil,
-  setHrefs: (value: React.SetStateAction<HttpLink[]>) => void,
-  audioLinks: HttpLink[] | nil,
+  setHrefs: (value: React.SetStateAction<HttpNumLeadLink[]>) => void,
+  audioLinks: HttpNumLeadLink[] | nil,
 ) => {
   useEffect(() => {
     if (html && mp3Rule) {
@@ -15,12 +15,12 @@ export const useCmExtractHrefsFromHTML = (
       const div = document.createElement('div');
       div.innerHTML = html;
       const { attr, query, url, repReg, repText = '' } = mp3Rule;
-      let mapSrc = itIt<HttpLink>;
+      let mapSrc = itIt<HttpNumLeadLink>;
 
       if (repReg)
         try {
           const regToReplace = makeRegExp(repReg);
-          mapSrc = (src: HttpLink) => src.replace(regToReplace, repText) as HttpLink;
+          mapSrc = (src: HttpNumLeadLink) => src.replace(regToReplace, repText) as HttpNumLeadLink;
         } catch (_error) {
           //
         }
@@ -58,7 +58,7 @@ export const useCmExtractHrefsFromHTML = (
                   serverUrl.pathname = attrUrl.pathname;
                   serverUrl.search = attrUrl.search;
 
-                  const src = serverUrl.toString() as HttpLink;
+                  const src = serverUrl.toString() as HttpNumLeadLink;
                   if (existsHrefs.has(src)) return null;
                   return mapSrc(src);
                 }

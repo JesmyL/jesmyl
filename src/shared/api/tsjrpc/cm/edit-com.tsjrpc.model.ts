@@ -1,4 +1,4 @@
-import { CmComIntensityLevel, CmComWid, HttpLink, IExportableCom } from 'shared/api/complect/apps';
+import { CmComIntensityLevel, CmComWid, HttpNumLeadLink, IExportableCom } from 'shared/api/complect/apps';
 import { CmBroadcastSlideGrouperKindSingleValue, CmBroadcastSlideGrouperOrdCombiner } from 'shared/model/cm/broadcast';
 import { CmComMetricNums } from 'shared/model/cm/com-metric-nums';
 
@@ -22,7 +22,7 @@ export type CmEditComTsjrpcModel = {
     setGroupValue?: { linesLen: number; rule: number; keys: (keyof CmBroadcastSlideGrouperOrdCombiner)[] };
     isK2: boolean;
   }) => IExportableCom;
-  toggleAudioLink: (args: { comw: CmComWid; link: HttpLink }) => void;
+  toggleAudioLink: (args: { comw: CmComWid; link: HttpNumLeadLink }) => void;
 
   changeChordBlock: (args: { texti: number; comw: CmComWid; value: string }) => IExportableCom;
   changeTextBlock: (args: { texti: number; comw: CmComWid; value: string }) => IExportableCom;

@@ -14,7 +14,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { Atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
-import { CmComMod, CmComWid, CmMp3Rule, HttpLink, IExportableCom } from 'shared/api';
+import { CmComMod, CmComWid, CmMp3Rule, HttpNumLeadLink, IExportableCom } from 'shared/api';
 import { itIt, itNNil } from 'shared/utils';
 import { chordsBlockIncorrectMessage } from 'shared/utils/cm/com/chordsBlockIncorrectMessage';
 import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
@@ -34,7 +34,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
   const eeStore = cmEditorIDB.useValue.eeStore();
   const { maxAvailableComLineLength } = useAtomValue(cmConstantsConfigAtom);
 
-  const [hrefs, setHrefs] = useState<HttpLink[]>([]);
+  const [hrefs, setHrefs] = useState<HttpNumLeadLink[]>([]);
   const [removedAudioHrefs, setRemovedAudioHrefs] = useState<string[]>([]);
 
   useCmExtractHrefsFromHTML(innerHTML, mp3Rule, setHrefs, newCom.al);

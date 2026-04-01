@@ -17,14 +17,14 @@ import {
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
-import { CmComAudioMarkPackTime, HttpLink } from 'shared/api';
+import { CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
 import { nbsp } from 'shared/utils/cm/com/const';
 import { CmEditorComAudioSolidOrdTextController } from './SolidOrdText';
 
 interface Props {
   time: CmComAudioMarkPackTime;
   com: EditableCom;
-  src: HttpLink;
+  src: HttpNumLeadLink;
 }
 
 export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ time, com, src }: Props) => {
