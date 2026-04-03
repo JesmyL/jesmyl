@@ -32,6 +32,7 @@ export const valuesFileStore = new FileStore<IndexValues>('/values', {});
 // }));
 
 const secureKeyFileStorage = new FileStore('/apps/index/userLoginBindsSequreKey', { key: '' });
+
 export const indexUserLoginBindsFileStorage = new FileStore<IndexLoginBindsDict>(
   '/apps/index/userLoginBinds.secure',
   {},
