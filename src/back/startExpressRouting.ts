@@ -213,33 +213,48 @@ export const startExpressRouting = (wsServer: WebSocketServer) => {
     res.sendFile(path.resolve(`${mainFolderPath}/index.html`));
   });
 
-  const readCert = (fileName: string) => fs.readFileSync(`/etc/letsencrypt/live/${hosts.dns}/${fileName}.pem`, 'utf8');
+  const readCert = (fileName: string) => {
+    try {
+      return fs.readFileSync(`/etc/letsencrypt/live/${hosts.dns}/${fileName}.pem`, 'utf8');
+    } catch (_e) {
+      //
+    }
+  };
 
-  http
-    .createServer((req, res) => {
-      res.writeHead(301, { Location: `https://${req.headers.host}${req.url}` });
-      res.end();
-    })
-    .listen(80, '0.0.0.0', () => tglogger.log('HTTP редирект запущен на порту 80'));
+  const key = readCert('privkey');
+  const cert = readCert('fullchain');
 
-  const httpsServer = https.createServer(
-    {
-      key: readCert('privkey'),
-      cert: readCert('fullchain'),
-    },
-    app,
-  );
+  if (key && cert) {
+    http
+      .createServer((req, res) => {
+        res.writeHead(301, { Location: `https://${req.headers.host}${req.url}` });
+        res.end();
+      })
+      .listen(80, '0.0.0.0', () => tglogger.log('HTTP редирект запущен на порту 80'));
 
-  httpsServer
-    .on('upgrade', (request, socket, head) => {
-      const pathname = request.url ? new URL(request.url, 'http://localhost').pathname : '';
-      if (pathname === '/websocket/' || pathname === '/websocket') {
+    https
+      .createServer({ key, cert }, app)
+      .on('upgrade', (request, socket, head) => {
+        const pathname = request.url ? new URL(request.url, 'http://localhost').pathname : '';
+        if (pathname === '/websocket/' || pathname === '/websocket') {
+          wsServer.handleUpgrade(request, socket, head, ws => {
+            wsServer.emit('connection', ws, request);
+          });
+        } else {
+          socket.destroy();
+        }
+      })
+      .listen(443, '0.0.0.0', () => tglogger.log('HTTPS запущен на порту 443'));
+  } else {
+    const port = process.env.PORT || 4446;
+
+    http
+      .createServer(app)
+      .on('upgrade', (request, socket, head) => {
         wsServer.handleUpgrade(request, socket, head, ws => {
           wsServer.emit('connection', ws, request);
         });
-      } else {
-        socket.destroy();
-      }
-    })
-    .listen(443, '0.0.0.0', () => tglogger.log('HTTPS запущен на порту 443'));
+      })
+      .listen(+port, '0.0.0.0', () => console.info(`WS запущен локально`));
+  }
 };

@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "relog": "fuser -k 4446/tcp & node /var/www/jesmyl.ru/back.index.cjs",
-    "re-start": "systemctl restart jesmyl_soki",
+    "relog": "fuser -k 443/tcp & fuser -k 80/tcp & node /var/www/jesmyl.ru/back.index.cjs",
+    "re-start": "fuser -k 443/tcp & fuser -k 80/tcp & systemctl restart jesmyl_soki",
     "re-status": "systemctl status jesmyl_soki",
     "relog-s": "fuser -k 3359/tcp & node /var/www/sub/back.index.cjs",
     "re-start-s": "systemctl restart jsub",
