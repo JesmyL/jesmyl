@@ -8,7 +8,7 @@ import { makeCmComAudioMarkTitleEmptySelector } from '../../makeCmComAudioMarkTi
 import { CmComChords } from './30-Chords';
 
 export class CmComTexts extends CmComChords {
-  get ordersWithFinalChordedOrd() {
+  ordersWithFinalChordedOrd() {
     const orders = this.orders;
     if (orders == null || orders[orders.length - 1].texti == null) return orders;
 
@@ -17,7 +17,12 @@ export class CmComTexts extends CmComChords {
         {
           top: { w: CmComOrderWid.never, c: 0 },
           header: () =>
-            makeCmComAudioMarkTitleEmptySelector('', [0, CmComAudioMarkPackTime.def], CmComAudioMarkPackTime.def),
+            makeCmComAudioMarkTitleEmptySelector(
+              '',
+              [0, CmComAudioMarkPackTime.def],
+              CmComAudioMarkPackTime.def,
+              this.langi,
+            ),
         },
         this as never,
       ),
@@ -81,7 +86,7 @@ export class CmComTexts extends CmComChords {
 
   makeExpandedSolidTextLines = (): CmBroadcastMonolineSlide[] => {
     try {
-      const comOrders = this.ordersWithFinalChordedOrd;
+      const comOrders = this.ordersWithFinalChordedOrd();
       if (comOrders == null) return [];
       let totalLinei = -1;
       let blocki = -1;

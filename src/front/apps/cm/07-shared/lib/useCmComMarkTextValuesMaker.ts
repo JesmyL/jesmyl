@@ -66,7 +66,7 @@ export const useCmComMarkTextValuesMaker = (com: CmCom | und, link: HttpNumLeadL
         }
       } else if (!selector) {
         markTextDict[times[timei]] =
-          `${technicalTextPrefix}${makeCmComAudioMarkTitleEmptySelector(selector, trackMarks, +times[timei])}`;
+          `${technicalTextPrefix}${makeCmComAudioMarkTitleEmptySelector(selector, trackMarks, +times[timei], com?.langi ?? 0)}`;
 
         continue;
       }

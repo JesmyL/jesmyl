@@ -9,6 +9,8 @@ import {
   CmComWid,
 } from 'shared/api';
 import { nbsp } from 'shared/utils/cm/com/const';
+import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
+import { comBlockKindsConfig } from 'shared/values/cm/block-kinds/comBlockKinds.config';
 
 export const makeCmComAudioMarkTitleAsLineSelector = (linei: number) => `~${linei + 1}`;
 export const makeCmComAudioMarkLineiFromSelector = (selector: string) => +selector.slice(1) - 1;
@@ -16,21 +18,29 @@ export const makeCmComAudioMarkLineiFromSelector = (selector: string) => +select
 export const checkIsCmComAudioMarkTitleIsLineSelector = (selector: CmComAudioMarkSelector | nil): selector is string =>
   mylib.isStr(selector) && selector.startsWith('~') && !mylib.isNaN(+selector.slice(1));
 
-export const makeCmComAudioMarkTitleEmptySelector = (
-  selector: string | nil,
-  cMarks: (number | `${number}`)[] | CmComAudioMarkPack[CmComWid] | nil,
-  time: CmComAudioMarkPackTime,
-) => {
-  if (selector) return selector;
+const enterBlockKind = comBlockKindsConfig.find(it => it.key === CmComBlockKindKey.Enter);
+const finalBlockKind = comBlockKindsConfig.find(it => it.key === CmComBlockKindKey.Final);
+const playBlockKind = comBlockKindsConfig.find(it => it.key === CmComBlockKindKey.Play);
 
-  if (+time === 0) return 'Вступление';
+export const makeCmComAudioMarkTitleEmptySelector =
+  !enterBlockKind || !finalBlockKind || !playBlockKind
+    ? (selector: string | nil) => selector || '---'
+    : (
+        selector: string | nil,
+        cMarks: (number | `${number}`)[] | CmComAudioMarkPack[CmComWid] | nil,
+        time: CmComAudioMarkPackTime,
+        language: number,
+      ) => {
+        if (selector) return selector;
 
-  cMarks = cMarks != null ? (mylib.isArr(cMarks) ? cMarks : mylib.keys(cMarks)) : (cMarks ?? []);
+        if (+time === 0) return enterBlockKind.title[language];
 
-  if (+cMarks[cMarks.length - 1] === +time) return 'Финал';
+        cMarks = cMarks != null ? (mylib.isArr(cMarks) ? cMarks : mylib.keys(cMarks)) : (cMarks ?? []);
 
-  return 'Проигрыш';
-};
+        if (+cMarks[cMarks.length - 1] === +time) return finalBlockKind.title[language];
+
+        return playBlockKind.title[language];
+      };
 
 export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | React.ReactNode = string>(
   time: CmComAudioMarkPackTime,
@@ -80,7 +90,7 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
   }
 
   const { ord, visibleOrdi } = com.getOrderBySelector(lastSelector);
-  let title = makeCmComAudioMarkTitleEmptySelector(selector, comMarks, time);
+  let title = makeCmComAudioMarkTitleEmptySelector(selector, comMarks, time, com.langi ?? 0);
 
   if (checkIsCmComAudioMarkTitleIsLineSelector(selector) && ord) {
     let lines = ord.transformedText().split('\n');
