@@ -12,7 +12,7 @@ import {
 import { FreeAnswerCallbackQueryOptions, JesmylTelegramBot } from './tg-bot';
 
 export class JesmylTelegramBotWrapper {
-  bot: TgBot;
+  bot!: TgBot;
   private fromOptionsOnCallbackQueryCallback: Record<string, { cb: JTgBotCallbackQueryWithoutBot; chatId: number }> =
     {};
   private chatCallbackQueryCallbacks: Record<string, JTgBotCallbackQueryWithoutBot> = {};
@@ -29,6 +29,8 @@ export class JesmylTelegramBotWrapper {
   private _cbQueryAnswer = (_options: string | FreeAnswerCallbackQueryOptions) => 'answered' as const;
 
   constructor(token: string, options: TgBot.ConstructorOptions) {
+    return;
+
     this.bot = new TgBot(token, options);
 
     this.bot.on('message', async (message, metadata) => {
@@ -102,8 +104,10 @@ export class JesmylTelegramBotWrapper {
   invokeMessageCatcherItem = (cb: TgBotWrapperMessageCatcher) => cb(this._message, this.bot);
   invokeMessageCallbacks = (cb: JTgBotChatMessageCallbackWithoutBot) => cb(this._message, this._metadata);
 
-  invokeCallbackQueryCatcherItem = (cb: TgBotWrapperCallbackCatcher) =>
+  invokeCallbackQueryCatcherItem = (cb: TgBotWrapperCallbackCatcher) => {
+    return;
     cb(this._cbQuery, this.bot, this._cbQueryAnswer);
+  };
 
   catchMessages(catcher: TgBotWrapperMessageCatcher) {
     this.messageCatchers.add(catcher);
@@ -147,6 +151,7 @@ export class JesmylTelegramBotWrapper {
   };
 
   setCommands(commands: BotCommand[]) {
+    return;
     this.bot.setMyCommands(commands);
   }
 

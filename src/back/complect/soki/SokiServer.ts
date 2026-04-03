@@ -21,7 +21,7 @@ export class SokiServer {
   private abortedRequestIdsSet = new Set<string>();
 
   start() {
-    new WebSocketServer({ port: 4446 }).on('connection', (client: WebSocket) => {
+    const ws = new WebSocketServer({ noServer: true }).on('connection', (client: WebSocket) => {
       this.clients.add(client);
       client.on('close', () => {
         const auth = this.auths.get(client);
@@ -56,7 +56,7 @@ export class SokiServer {
 
               if (!this.isLocalhost(event.visitInfo.urls[0])) {
                 tglogger.visit(
-                  `${event.visitInfo.deviceEmoji || '??'} Не авторизованный\n\n${userVisitStringified(event.visitInfo)}\n\n`,
+                  `${event.visitInfo.deviceEmoji || '??'} ${event.visitInfo.deviceId || 'Не авторизованный'}\n\n${userVisitStringified(event.visitInfo)}\n\n`,
                 );
               }
             }
@@ -119,6 +119,8 @@ export class SokiServer {
     });
 
     console.info('SokiServer started!!!');
+
+    return ws;
   }
 
   send(event: TsjrpcServerEvent, clientSelector: SokiServerClientSelector | nil | void) {

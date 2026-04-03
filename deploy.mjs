@@ -41,7 +41,7 @@ deployTheCode(
       'apps/cm': ['~/#/*.json'],
       'apps/cm/coms': ['~/#/*.json'],
       'apps/cm/comComments': ['~/#/*.json'],
-      'apps/bible': ['~/#/*.json'],
+      'apps/index': ['~/#/*.secure'],
       'apps/index': ['~/#/*.json'],
       'apps/q': ['~/#/*.json'],
       'apps/q/blanks': ['~/#/*.json'],
@@ -52,8 +52,10 @@ deployTheCode(
 
 function makePaths(prefix, dict) {
   const newDict = {};
+  const keyPostfix = !'is deploy case files' ? '/+case' : '';
+
   Object.keys(dict).forEach(key => {
-    const replace = str => str.replace('#', key).replace('~', prefix);
+    const replace = str => str.replace('#', key + keyPostfix).replace('~', prefix);
 
     newDict[key] = dict[key].map(replace);
   });

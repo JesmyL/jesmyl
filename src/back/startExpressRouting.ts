@@ -1,16 +1,19 @@
 import express, { Request, Response } from 'express';
+import fs from 'fs';
 import http from 'http';
 import https from 'https';
+import path from 'path';
 import { makeRegExp } from 'regexpert';
 import { hosts, HttpNumLeadLink } from 'shared/api';
+import { WebSocketServer } from 'ws';
 import { makeCmComHttpLinkFromNumLead } from './apps/cm/complect/com-http-links';
 import { catsFileStore, comsDirStore } from './apps/cm/file-stores';
 import { schedulesDirStore } from './apps/index/schedules/file-stores';
+import { tglogger } from './sides/telegram-bot/log/log-bot';
 
-export const startExpressRouting = () => {
+export const startExpressRouting = (wsServer: WebSocketServer) => {
   const app = express();
-  const PORT = +(process.env.PORT || 8080);
-  const mainFolderPath = `/var/www/${hosts.dns}`;
+  const mainFolderPath = `/var/www/${hosts.dns}` as const;
   const isSearchBotReg = /(google|bing|yandex|duckduck|telegram|twitter)bot|slurp|vk\.com/;
 
   app.use(express.json());
@@ -207,8 +210,36 @@ export const startExpressRouting = () => {
       return;
     }
 
-    res.sendFile(`${mainFolderPath}/index.html`);
+    res.sendFile(path.resolve(`${mainFolderPath}/index.html`));
   });
 
-  app.listen(PORT, '0.0.0.0', () => {});
+  const readCert = (fileName: string) => fs.readFileSync(`/etc/letsencrypt/live/${hosts.dns}/${fileName}.pem`, 'utf8');
+
+  http
+    .createServer((req, res) => {
+      res.writeHead(301, { Location: `https://${req.headers.host}${req.url}` });
+      res.end();
+    })
+    .listen(80, '0.0.0.0', () => tglogger.log('HTTP редирект запущен на порту 80'));
+
+  const httpsServer = https.createServer(
+    {
+      key: readCert('privkey'),
+      cert: readCert('fullchain'),
+    },
+    app,
+  );
+
+  httpsServer
+    .on('upgrade', (request, socket, head) => {
+      const pathname = request.url ? new URL(request.url, 'http://localhost').pathname : '';
+      if (pathname === '/websocket/' || pathname === '/websocket') {
+        wsServer.handleUpgrade(request, socket, head, ws => {
+          wsServer.emit('connection', ws, request);
+        });
+      } else {
+        socket.destroy();
+      }
+    })
+    .listen(443, '0.0.0.0', () => tglogger.log('HTTPS запущен на порту 443'));
 };

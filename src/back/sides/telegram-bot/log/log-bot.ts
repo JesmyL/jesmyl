@@ -61,6 +61,7 @@ export class TgLogger {
   }
 
   log(text: string) {
+    console.info(text);
     postJRPCMessage(text, {
       tgBot: this.bot,
       tg: this.replyToScope('log'),

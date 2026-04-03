@@ -9,6 +9,8 @@ export const tgBotUrlController = async (
   adminBot: JesmylTelegramBot,
   keyPrefix?: string,
 ) => {
+  return;
+
   let knownUrls: string[] = [];
 
   const urlWordParts = '-\\w@_%';

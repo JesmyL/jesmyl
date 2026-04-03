@@ -11,7 +11,8 @@ import { sokiServer } from './complect/soki/SokiServer';
 import { baseMessagesCatcher } from './sides/telegram-bot/complect/message-catchers';
 import { startExpressRouting } from './startExpressRouting';
 
-sokiServer.start();
+const ws = sokiServer.start();
+startExpressRouting(ws);
 
 bibleTsjrpcBaseServer.$$register();
 cmServerTsjrpcBase.$$register();
@@ -26,5 +27,3 @@ baseMessagesCatcher.register();
 scheduleWidgetMessageCatcher.register();
 
 startCrTgAlarm();
-
-startExpressRouting();

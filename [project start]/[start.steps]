@@ -1,93 +1,19 @@
 apt-get update && apt-get upgrade
 apt install nano
-apt install nginx
-apt install apache2
 ufw status
-ufw allow 'Apache'
-apt install php7.4
-php -v
-??? apt-get install -y php-zip
-??? apt-get install php7.4-zip
 mkdir /var/www/jesmyl.ru/
-chmod 777 /var/www/jesmyl.ru/
-a2enmod rewrite # for .htaccess work
-
-fuser -k 4446/tcp ###
-
-scp -r ./build/* root@89.104.71.170:/var/www/html # XE5fYQaR41ostIS8
-scp -r ./src/back/back.index.cjs root@89.104.71.170:/var/www/jesmyl.ru/back.index.cjs # XE5fYQaR41ostIS8
+chmod 755 /var/www/jesmyl.ru/
 
 apt install npm
 cd /var/www/jesmyl.ru/
-npm install
-npm install -g typescript
-npm i -g ts-node
-npm i core-js
-npm i --save-dev @types/ws
-npm i -D tslib @types/node
 
-# open port 
-iptables -I INPUT -p tcp -m tcp --dport 4446 -j ACCEPT
-netstat -na | grep :4446
-
-iptables -I INPUT -p tcp -m tcp --dport 3359 -j ACCEPT
-sudo ufw allow 3359/tcp
-netstat -na | grep :3359
-
-
-sudo apt install -y docker.io
-sudo systemctl start docker
-sudo systemctl enable docker
-
-// on local
-sudo docker run -d --name testPostgresDB -e POSTGRES_PASSWORD=test -e POSTGRES_USER=jesmyl -e POSTGRES_DB=tjdb -p 3627:5432 postgres
-// on SSH
-sudo docker run -d --name postgresDB -e POSTGRES_PASSWORD=??????? -e POSTGRES_USER=jesmyl -e POSTGRES_DB=jdb -p 5432:5432 postgres
-
-npm i node-schedule
-npm i @prisma/client
-npx prisma generate
-npx prisma migrate dev
-nano .env
-/////////////// .env:
-GENERATE_SOURCEMAP=false
-DATABASE_URL="postgresql://jesmyl:????@localhost:5432/jdb"
-/////////////// .env
+// certificates
+sudo apt update
+sudo apt install certbot
+sudo certbot certonly --standalone -d jesmyl.ru
+sudo crontab -e # add last line -> 0 3 * * 1 certbot renew --pre-hook "systemctl stop jesmyl_soki" --post-hook "systemctl start jesmyl_soki"
 
 nano /etc/systemd/system/jesmyl_soki.service
-nano /etc/systemd/system/jsub.service
 
-nano /etc/php/7.4/apache2/php.ini
-
-nano /etc/apache2/sites-available/jesmyl.ru.conf
-
-nano /etc/apache2/ports.conf
-
-nano /etc/nginx/sites-enabled/default
-
-nano /etc/nginx/nginx.conf
-
-nano /etc/ssl/certificate.crt
-/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/:
------BEGIN CERTIFICATE-----
-{{certificate content}}
------END CERTIFICATE-----
-/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
-
-nano /etc/ssl/certificate.key
-/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/:
------BEGIN CERTIFICATE-----
-{{certificate content}}
------END CERTIFICATE-----
-/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
-
-systemctl restart nginx
-systemctl restart apache2
 systemctl restart jesmyl_soki
-systemctl restart jmsg
 netstat -tlpn
-
-
-
-// about certificates
-https://certbot.eff.org/instructions?ws=nginx&os=pip
