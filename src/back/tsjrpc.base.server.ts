@@ -46,7 +46,7 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
 
         postJRPCMessage(
           tool.auth
-            ? `${`${tool.auth.fio} ${tool.auth.nick && (!tool.auth.email || !tool.auth.email.startsWith(tool.auth.nick)) ? `t.me/${tool.auth.nick}` : ''}\n`}` +
+            ? `${`${tool.auth.fio} ${tool.auth.nick && (!tool.auth.email || !tool.auth.email.startsWith(tool.auth.nick)) ? `https://t.me/${tool.auth.nick}` : ''}\n`}` +
                 text +
                 `\n\n<blockquote expandable>${JSON.stringify(tool.auth, null, 1)}</blockquote>`
             : text,
