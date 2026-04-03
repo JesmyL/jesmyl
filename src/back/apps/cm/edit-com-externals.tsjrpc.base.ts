@@ -1,6 +1,13 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
-import { CmComAudioMarkPack, CmComAudioMarkPackTime, CmComWid, CmComWidRefGroupId, ComsInSchEvent } from 'shared/api';
+import {
+  CmComAudioMarkPack,
+  CmComAudioMarkPackTime,
+  CmComWid,
+  CmComWidRefGroupDict,
+  CmComWidRefGroupId,
+  ComsInSchEvent,
+} from 'shared/api';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
 import { itNumSort, SMyLib, smylib } from 'shared/utils';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
@@ -267,8 +274,10 @@ export const cmEditComExternalsTsjrpcBaseServer =
 
           switchComwRefs: async ({ comw, withComw }) => {
             let description = '';
+            let refGroups: CmComWidRefGroupDict | nil;
 
             const { mod } = cmComWidRefGroupDictFileStore.modifyValueWithAutoSave(refs => {
+              refGroups = refs;
               const comwRefGroup = refs[comw];
               const withComwRefGroup = refs[withComw];
 
@@ -309,12 +318,14 @@ export const cmEditComExternalsTsjrpcBaseServer =
 
                 description += `Песни "${com.n}" и "${withCom.n}" объединены в ссылочную группу`;
               }
-
-              cmShareServerTsjrpcMethods.refreshComWidRefDict(
-                { refs, mod },
-                cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector,
-              );
             });
+
+            if (refGroups == null) throw 'Ошибка 318294001';
+
+            cmShareServerTsjrpcMethods.refreshComWidRefDict(
+              { refs: refGroups, mod },
+              cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector,
+            );
 
             return { description };
           },
