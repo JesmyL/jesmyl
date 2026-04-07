@@ -426,9 +426,10 @@
     {
       "i": 106,
       "title": "🛑",
-      "status": 5,
+      "status": 1,
       "note": "CmEditComExternals.switchComwRefs() ReferenceError: Cannot access 'mod' before initialization"
-    }
+    },
+    { "i": 107, "title": "текстовые блоки песни", "status": 0, "note": "разрешить ссылки на продолжения" }
   ],
   "parent": 1761967947833.002,
   "icon": "BookOpen02"
