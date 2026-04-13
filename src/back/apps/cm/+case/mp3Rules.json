@@ -1,11 +1,14 @@
 [
   {
-    "url": "https://holychords.pro",
     "attr": "data-audio-file",
     "query": "[data-audio-file]",
-    "w": 1675948750826.1692,
     "isHTML": 1,
-    "textQuery": "pre#music_text"
+    "textQuery": "pre#music_text",
+    "repReg": "",
+    "repText": "",
+    "rdir": "",
+    "url": "https://holychords.pro",
+    "w": 1675948750826.1692
   },
   { "url": "https://youthsongs.ru", "attr": "src", "query": "source[src]", "w": 1675952461043.098 },
   { "url": "https://alliluya.com", "attr": "href", "query": "div.filename a[href]", "w": 1675972788074.424 },

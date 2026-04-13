@@ -13,6 +13,7 @@ import { itNumSort, SMyLib, smylib } from 'shared/utils';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
 import { schedulesDirStore } from '../index/schedules/file-stores';
 import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from './client-selectors-by-visit';
+import { makeCmComHttpLinkFromNumLead } from './complect/com-http-links';
 import {
   cmComAudioMarkPacksFileStore,
   cmComWidRefGroupDictFileStore,
@@ -118,7 +119,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
             let description: string | null = null;
 
             if (allMarkPacks[src] == null) {
-              description = `Создан новый пак аудио-маркеров для ссылки ${src}`;
+              description = `Создан новый пак аудио-маркеров для ссылки ${makeCmComHttpLinkFromNumLead(src)}`;
               allMarkPacks[src] = { m: Date.now() };
             } else allMarkPacks[src].m = Date.now();
 

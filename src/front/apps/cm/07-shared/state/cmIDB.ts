@@ -97,3 +97,6 @@ class CmIDB extends DexieDB<CmIDBStorage> {
 const justUseLiveQuery = useLiveQuery;
 
 export const cmIDB = new CmIDB();
+
+// TODO not for commit
+cmIDB.tb.comAudioTrackMarks.where('src').startsWith('http').delete();
