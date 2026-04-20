@@ -1,14 +1,9 @@
 import { makeTwiceKnownName } from 'back/complect/makeTwiceKnownName';
-import { tokenSecretFileStore } from 'back/complect/soki/file-stores';
-import { makeAuthFromEmail, makeLoginFromEmail } from 'back/sides/emailer/lib/makeEmailLogin';
-import { sendEmailMessage } from 'back/sides/emailer/lib/sendEmailMessage';
 import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { supportTelegramAuthorizations } from 'back/sides/telegram-bot/prod/authorize';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { exec } from 'child_process';
-import jwt from 'jsonwebtoken';
 import { escapeRegExpSymbols, makeRegExp } from 'regexpert';
-import { LocalSokiAuth } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { emojiList } from 'shared/const/emojiList';
 import { smylib } from 'shared/utils';
@@ -17,19 +12,17 @@ import {
   accessRightTitlesFileStore,
   appVersionFileStore,
   indexStameskaIconsFileStore,
-  indexUserLoginBindsFileStorage,
   nounsFileStore,
   pronounsFileStore,
   userAccessRightsAndRolesFileStore,
   valuesFileStore,
 } from '../file-stores';
-import { indexTakeRootLoginRecursively } from '../lib/takeRootLoginRecursively';
 import { schGeneralTsjrpcBaseServer } from '../schedules/base-tsjrpc/general.tsjrpc.base';
 import { indexServerTsjrpcShareMethods } from '../tsjrpc.methods';
-import { emailCodesDto } from './const/emailCodesDto';
 import { indexTSJRPCBaseGetIconExistsPacks } from './lib/getIconExistsPacks';
 import { indexAuthByTgUser } from './lib/makeAuthFromUser';
 import { makeUserAccessRights } from './lib/makeUserAccessRights';
+import { otpTSJRPCMethods } from './lib/otp.methods';
 import { indexTSJRPCBaseRequestFreshes } from './lib/requestFreshes';
 import { indexTSJRPCBaseUpdateUserAccessRight } from './lib/updateUserAccessRight';
 
@@ -236,86 +229,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
             pronounsFileStore.saveValue();
           }
         },
-
-        sendEmailOTP: async ({ email }, { auth }) => {
-          const otp = smylib.randomOf(12345, 98765);
-          const expireMinutes = 3;
-
-          const expire = () => {
-            clearTimeout(timeout);
-            delete emailCodesDto[otp];
-          };
-          const timeout = setTimeout(expire, smylib.howMs.inMin * expireMinutes);
-
-          emailCodesDto[otp] = {
-            auth: makeAuthFromEmail(email, auth),
-            expire,
-            email,
-          };
-
-          await sendEmailMessage({
-            to: email,
-            subject: 'Код авторизации',
-            text: `${otp} | ${expireMinutes} минуты`,
-          });
-
-          return { value: { email }, description: `Запрос ОТП кода на E-mail ${email}` };
-        },
-
-        bindEmailByOTP: ({ otp }, { auth }) => {
-          if (auth == null) throw 'Не авторизован';
-          const from = emailCodesDto[otp];
-
-          if (from == null) throw 'Не верный код';
-          if (from.auth?.login == null) throw 'Ошибка привязки - неизвестный профиль';
-          if (from.auth.login !== auth.login) throw 'Ошибка привязки - другой аккаунт';
-
-          const binds = indexUserLoginBindsFileStorage.getValue();
-          const newLogin = makeLoginFromEmail(from.email);
-
-          if (binds[newLogin] != null)
-            throw `E-mail уже привязан к ${(smylib.isStr(binds[newLogin]) ? binds[newLogin] : binds[newLogin].login) === auth.login ? 'вашему' : 'другому'} аккаунту`;
-          if (newLogin === from.auth.login) throw 'Не возможно привязать почту к тому же аккаунту';
-
-          binds[from.auth.login] ??= { ...from.auth, login: undefined as never };
-          binds[newLogin] = from.auth.login;
-
-          indexUserLoginBindsFileStorage.saveValue();
-          from.expire();
-          const fioOrNick = from.auth.fio ?? from.auth.nick ?? '???';
-
-          return {
-            value: { fioOrNick },
-            description: `Привязка E-mail ${from.email} к аккаунту для ${fioOrNick}`,
-          };
-        },
-
-        authByEmailOTP: ({ otp }) => {
-          const from = emailCodesDto[otp];
-
-          if (from == null) throw 'Не верный код';
-
-          const emailAuth = makeAuthFromEmail(from.email, from.auth);
-          const binds = indexUserLoginBindsFileStorage.getValue();
-          const rootLogin = indexTakeRootLoginRecursively(makeLoginFromEmail(from.email));
-          const rootAuth = smylib.isObj(binds[rootLogin]) ? binds[rootLogin] : null;
-          const emailNick = from.email.split('@')[0];
-          const auth: LocalSokiAuth = {
-            ...rootAuth,
-            ...emailAuth,
-            login: rootLogin,
-            nick: rootAuth?.nick || emailNick,
-            fio: rootAuth?.fio || emailNick,
-          };
-
-          return {
-            value: {
-              auth,
-              token: jwt.sign(auth, tokenSecretFileStore.getValue().token, { expiresIn: '100 D' }),
-            },
-            description: `Авторизация по E-mail ${from.email} (${auth.fio ?? auth.nick ?? auth.login ?? '???'})`,
-          };
-        },
+        ...otpTSJRPCMethods,
       },
     });
   }

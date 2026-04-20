@@ -42,7 +42,7 @@ export const postJRPCMessage = async (
 ) => {
   if (backConfig.isTest) return;
 
-  await sendEmailMessage({
+  await sendEmailMessage('first', {
     isSameTo: true,
     subject: `SYSTEM: ${new Date().toLocaleDateString('ru')} (${scopeTitleDict[options.scope ?? options.tgBot.scope]})`,
     html: text,

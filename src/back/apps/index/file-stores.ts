@@ -1,5 +1,6 @@
 import { FileStore } from 'back/complect/FileStore';
 import { NounPronsType } from 'back/complect/model';
+import { DeviceId, LocalSokiAuth } from 'shared/api';
 import { IndexAppAccessRightTitles, IndexAppUserAccessRightsAndRoles } from 'shared/model/index/access-rights';
 import { IndexLoginBindsDict, IndexValues } from 'shared/model/index/other';
 import { emptyFunc } from 'shared/utils';
@@ -38,3 +39,12 @@ export const indexUserLoginBindsFileStorage = new FileStore<IndexLoginBindsDict>
   {},
   { sequreKey: secureKeyFileStorage.getValue().key },
 );
+
+export const emailTextingLetterVariantsFileStorage = new FileStore<{ texts: string[] }>(
+  '/apps/index/emailTextingLetterVariants',
+  { texts: [] },
+);
+
+export const sentEmailOTPFileStorage = new FileStore<
+  { otp: number; ts: number; deviceId: DeviceId | nil; auth: LocalSokiAuth }[]
+>('/apps/index/sentEmailOTP', []);
