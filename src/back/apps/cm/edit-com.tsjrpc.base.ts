@@ -14,7 +14,7 @@ import { itNNil, SMyLib, smylib, trimTextLines } from 'shared/utils';
 import { cmComLanguages } from 'shared/utils/cm/com/const';
 import { textLinesLengthIncorrects } from 'shared/utils/cm/com/textLinesLengthIncorrects';
 import { transformToClearText } from 'shared/utils/cm/com/transformToClearText';
-import { makeCmComNumLeadAudioLinkList } from './complect/com-http-links';
+import { makeCmComNumLeadAudioLinkList, makeCmComNumLeadLinkFromHttp } from './complect/com-http-links';
 import { mapCmExportableToImportableCom, mapCmImportableToExportableCom } from './complect/tools';
 import { cmConstantsConfigFileStore, comsDirStore } from './file-stores';
 import { cmShareServerTsjrpcMethods } from './tsjrpc.shares';
@@ -288,7 +288,13 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
             t: newCom.t?.map(text => transformToClearText(text)),
           };
 
+          try {
+            com.al = com.al?.map(makeCmComNumLeadLinkFromHttp);
+          } catch {
+            //
+          }
           comsDirStore.createItem(() => mapCmExportableToImportableCom(com), com.w);
+
           const mod = comsDirStore.saveItem(com.w) ?? 0;
 
           cmShareServerTsjrpcMethods.editedCom({ com, mod }, null);

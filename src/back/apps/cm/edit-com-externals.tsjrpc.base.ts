@@ -13,7 +13,7 @@ import { itNumSort, SMyLib, smylib } from 'shared/utils';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
 import { schedulesDirStore } from '../index/schedules/file-stores';
 import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from './client-selectors-by-visit';
-import { makeCmComHttpLinkFromNumLead } from './complect/com-http-links';
+import { makeCmComHttpLinkFromNumLead, makeCmComNumLeadLinkFromHttp } from './complect/com-http-links';
 import {
   cmComAudioMarkPacksFileStore,
   cmComWidRefGroupDictFileStore,
@@ -117,14 +117,15 @@ export const cmEditComExternalsTsjrpcBaseServer =
           updateAudioMarks: async ({ cMarks, src }) => {
             const allMarkPacks = cmComAudioMarkPacksFileStore.getValue();
             let description: string | null = null;
+            const numLink = makeCmComNumLeadLinkFromHttp(src);
 
-            if (allMarkPacks[src] == null) {
-              description = `Создан новый пак аудио-маркеров для ссылки ${makeCmComHttpLinkFromNumLead(src)}`;
-              allMarkPacks[src] = { m: Date.now() };
-            } else allMarkPacks[src].m = Date.now();
+            if (allMarkPacks[numLink] == null) {
+              description = `Создан новый пак аудио-маркеров для ссылки ${makeCmComHttpLinkFromNumLead(numLink)}`;
+              allMarkPacks[numLink] = { m: Date.now() };
+            } else allMarkPacks[numLink].m = Date.now();
 
-            if (allMarkPacks[src].cMarks == null) {
-              const comMarks = (allMarkPacks[src].cMarks ??= {});
+            if (allMarkPacks[numLink].cMarks == null) {
+              const comMarks = (allMarkPacks[numLink].cMarks ??= {});
               const comNames: string[] = [];
 
               smylib.keys(cMarks).forEach(comw => {
@@ -138,7 +139,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
               if (description) description += `\n\nпесни:\n${comNames.join('\n')}`;
             }
 
-            const srcPackMarks = allMarkPacks[src].cMarks;
+            const srcPackMarks = allMarkPacks[numLink].cMarks;
 
             SMyLib.entries(cMarks).forEach(([comwStr, comMarks]) => {
               if (comMarks == null) return;
@@ -183,19 +184,19 @@ export const cmEditComExternalsTsjrpcBaseServer =
               if (smylib.keys(srcPackMarks[comwStr]).length < 2) delete srcPackMarks[comwStr];
             });
 
-            if (!smylib.keys(srcPackMarks).length) delete allMarkPacks[src].cMarks;
+            if (!smylib.keys(srcPackMarks).length) delete allMarkPacks[numLink].cMarks;
 
             cmComAudioMarkPacksFileStore.saveValue();
 
             return {
               description,
-              value: { cMarks: allMarkPacks[src].cMarks, src },
+              value: { cMarks: allMarkPacks[numLink].cMarks, src: numLink },
             };
           },
 
           changeAudioMarkTime: async ({ newTime, src, time, comw }) => {
             const allMarkPacks = cmComAudioMarkPacksFileStore.getValue();
-            const numLeadSrc = src;
+            const numLeadSrc = makeCmComNumLeadLinkFromHttp(src);
 
             if (allMarkPacks[numLeadSrc]?.cMarks == null) return { value: null };
 

@@ -336,9 +336,10 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
           if (mod == null) throw 'Ошибка 51712343778';
 
           const allMarkPacks = cmComAudioMarkPacksFileStore.getValue();
-          const srcMarksPack = allMarkPacks[src];
 
-          return { value: !srcMarksPack?.cMarks || srcMarksPack.m <= mod ? null : { ...srcMarksPack, src } };
+          return {
+            value: !allMarkPacks[src]?.cMarks || allMarkPacks[src].m <= mod ? null : { ...allMarkPacks[src], src },
+          };
         },
       },
     });

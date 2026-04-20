@@ -21,10 +21,12 @@ SMyLib.entries(numLeadToHttpLinks)
   .sort((a, b) => b[1].length - a[1].length)
   .forEach(([key, value]) => (httpToNumLeadLinks[value] = key));
 
-export const makeCmComNumLeadLinkFromHttp = (httpLink: HttpLink): HttpNumLeadLink => {
-  for (const httpLinkPrefix in httpToNumLeadLinks) {
+export const makeCmComNumLeadLinkFromHttp = (httpLink: string): HttpNumLeadLink => {
+  let httpLinkPrefix: HttpLink;
+
+  for (httpLinkPrefix in httpToNumLeadLinks) {
     if (httpLink.startsWith(httpLinkPrefix)) {
-      const numLead = httpToNumLeadLinks[httpLinkPrefix as never];
+      const numLead = httpToNumLeadLinks[httpLinkPrefix];
       let linkPostfix = httpLink.slice(httpLinkPrefix.length);
 
       if (numLead === '1~') {
@@ -42,8 +44,8 @@ export const makeCmComNumLeadLinkFromHttp = (httpLink: HttpLink): HttpNumLeadLin
   return httpLink as never;
 };
 
-export const makeCmComHttpLinkFromNumLead = (numLeadLink: HttpNumLeadLink): HttpLink => {
-  if (numLeadLink.startsWith('http')) return numLeadLink as never;
+export const makeCmComHttpLinkFromNumLead = (numLeadLink: string): HttpLink => {
+  if (numLeadLink.startsWith('http')) return numLeadLink;
 
   const prefix = `${parseFloat(numLeadLink)}~` as const;
   if (numLeadToHttpLinks[prefix] === undefined) throw `Unknown link prefix ${prefix}`;
