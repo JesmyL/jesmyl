@@ -74,6 +74,7 @@ function modifyCat<Props extends { catw: CmCatWid }, Tools>(
 
     cat.m = Date.now();
     cmShareServerTsjrpcMethods.editedCat({ cat }, null);
+    catsFileStore.saveValue();
 
     return { value: cat, description };
   };
