@@ -22,6 +22,7 @@ import { exec } from 'child_process';
     ['apps/storages/list'],
 
     ['apps/cm'],
+    ['apps/cm', 'cats'],
     ['apps/cm/comComments'],
     ['apps/cm/comsInSchEvent'],
     ['apps/cm/comsInSchEventHistory'],
