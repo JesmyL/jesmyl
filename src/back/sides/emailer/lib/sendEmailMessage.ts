@@ -27,6 +27,7 @@ export const sendEmailMessage = async (key: EmailerAuthConfigKey, options: Optio
     to: options.isSameTo ? from : undefined,
     ...options,
     from,
+    html: options.html ? `<div style='white-space:pre-line'>${options.html}</div>` : undefined,
   };
 
   transporters[key].sendMail(sendOptions, (error, info) => {

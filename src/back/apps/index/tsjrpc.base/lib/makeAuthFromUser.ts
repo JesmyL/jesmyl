@@ -1,4 +1,5 @@
 import { tokenSecretFileStore } from 'back/complect/soki/file-stores';
+import { PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
 import { prodTelegramBot } from 'back/sides/telegram-bot/prod/prod-bot';
 import { JesmylTelegramBot } from 'back/sides/telegram-bot/tg-bot';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
@@ -35,5 +36,6 @@ export const indexAuthByTgUser =
         `Авторизация ${auth?.fio} (@${auth?.nick ?? '??'}) ${title}\n\n` +
         `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>\n\n` +
         `<blockquote expandable>${JSON.stringify(visitInfo, null, 1)}</blockquote>`,
+      logScope: PostJRPCMessageScope.Support,
     };
   };

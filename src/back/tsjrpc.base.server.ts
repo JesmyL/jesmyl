@@ -5,7 +5,7 @@ import { WebSocket } from 'ws';
 import { backConfig } from './config/backConfig';
 import { jesmylChangesBot } from './sides/telegram-bot/control/jesmylChangesBot';
 import { tglogger } from './sides/telegram-bot/log/log-bot';
-import { postJRPCMessage } from './sides/telegram-bot/postJRPCMessage';
+import { postJRPCMessage, PostJRPCMessageScope } from './sides/telegram-bot/postJRPCMessage';
 import { userAuthStringified, userVisitStringified } from './utils';
 
 export type ServerTSJRPCTool = {
@@ -16,7 +16,7 @@ export type ServerTSJRPCTool = {
 export type ServerTSJRPCBeforeEachTool = { minVersion?: number };
 
 export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRPCBaseMaker<
-  { description?: null | string | ((tool: ServerTSJRPCTool) => string) },
+  { description?: null | string | ((tool: ServerTSJRPCTool) => string); logScope?: PostJRPCMessageScope },
   ServerTSJRPCTool,
   ServerTSJRPCBeforeEachTool
 >({
@@ -53,6 +53,7 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
           {
             tgBot: jesmylChangesBot,
             tg: { parse_mode: 'HTML' },
+            scope: feedback.logScope,
           },
         );
       },

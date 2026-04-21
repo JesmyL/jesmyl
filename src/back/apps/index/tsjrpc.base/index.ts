@@ -1,5 +1,6 @@
 import { makeTwiceKnownName } from 'back/complect/makeTwiceKnownName';
 import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
+import { PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
 import { supportTelegramAuthorizations } from 'back/sides/telegram-bot/prod/authorize';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { exec } from 'child_process';
@@ -140,6 +141,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
           return {
             value: deviceId as never,
             description: `Запрос DeviceId - ${deviceId}`,
+            logScope: PostJRPCMessageScope.Support,
           };
         },
 
@@ -149,6 +151,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
           return {
             value,
             description: `Запрос DeviceEmoji - ${value}`,
+            logScope: PostJRPCMessageScope.Support,
           };
         },
 
@@ -219,7 +222,8 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
             nounsFileStore.saveValue();
           }
           if (pron) {
-            if (!pron.endsWith('й') && !pron.endsWith('йся')) throw 'Прилагательное должно заканчиваться на й или йся';
+            if (!pron.endsWith('й') && !pron.endsWith('йся'))
+              throw 'Прилагательное должно заканчиваться на `й` или `йся`';
 
             const { words } = pronounsFileStore.getValue();
             delete words[''];
