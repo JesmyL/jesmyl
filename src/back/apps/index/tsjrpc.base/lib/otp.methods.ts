@@ -1,12 +1,14 @@
+import { getBibleTranslateTexts } from 'back/complect/lib/make-bible-texts';
 import { tokenSecretFileStore } from 'back/complect/soki/file-stores';
 import { makeAuthFromEmail, makeLoginFromEmail } from 'back/sides/emailer/lib/makeEmailLogin';
 import { sendEmailMessage } from 'back/sides/emailer/lib/sendEmailMessage';
 import { PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import jwt from 'jsonwebtoken';
+import { makeRegExp } from 'regexpert';
 import { LocalSokiAuth } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
-import { smylib } from 'shared/utils';
+import { smylib, wait } from 'shared/utils';
 import {
   emailTextingLetterVariantsFileStorage,
   indexUserLoginBindsFileStorage,
@@ -14,11 +16,26 @@ import {
 } from '../../file-stores';
 import { indexTakeRootLoginRecursively } from '../../lib/takeRootLoginRecursively';
 
+const minutesUntilExpire = 5;
 const expireOTP = (otp: number) => sentEmailOTPFileStorage.setValue(verifies => verifies.filter(it => it.otp !== otp));
 const checkIsOTPTimeStampExpired = (timeStamp: number) => timeStamp < Date.now() - smylib.howMs.inMin * 5;
 
+let bibleTexts: ReturnType<typeof getBibleTranslateTexts> | nil;
+let bibleTextsExpireTimeOut: TimeOut;
+
+const getRandomBibleChapterText = () => {
+  bibleTexts ??= getBibleTranslateTexts();
+
+  clearTimeout(bibleTextsExpireTimeOut);
+  bibleTextsExpireTimeOut = setTimeout(() => (bibleTexts = null), smylib.howMs.inMin * 30);
+
+  return smylib.randomItem(smylib.randomItem(bibleTexts.chapters)).join('\n');
+};
+
 export const otpTSJRPCMethods = {
   sendEmailOTP: async ({ email }, { auth, visitInfo }) => {
+    await wait(5000);
+
     const verifies = sentEmailOTPFileStorage.getValue();
     let userVerify = verifies.find(({ deviceId, auth: verifyAuth }) => {
       return (
@@ -28,7 +45,12 @@ export const otpTSJRPCMethods = {
     });
 
     if (userVerify && !checkIsOTPTimeStampExpired(userVerify.ts)) throw 'Запросите отправку кода чуть позже';
-    const otp = smylib.randomOf(12345, 98765);
+
+    let otp;
+    const oldOtpSet = new Set(verifies.map(it => it.otp));
+
+    do otp = smylib.randomOf(12345, 987654);
+    while (oldOtpSet.has(otp));
 
     const defaultVerify = {
       deviceId: visitInfo?.deviceId,
@@ -44,19 +66,28 @@ export const otpTSJRPCMethods = {
 
     sentEmailOTPFileStorage.saveValue();
 
-    const expireMinutes = 3;
     const text = smylib.randomItem(emailTextingLetterVariantsFileStorage.getValue().texts);
 
     const expire = () => {
       clearTimeout(timeout);
       expireOTP(otp);
     };
-    const timeout = setTimeout(expire, smylib.howMs.inMin * expireMinutes);
+    const timeout = setTimeout(expire, smylib.howMs.inMin * minutesUntilExpire);
+    let randomBibleText = '';
+
+    try {
+      randomBibleText = `\n\n\nСлучайная глава из Писания:\n\n${getRandomBibleChapterText()}`;
+    } catch {
+      //
+    }
 
     const html = `${
       //
-      text.replace(/{c}/, `<b style='font-size:1.5em'>${otp}</b>`).replace(/{n}/, 'JesmyL')
-    }\n\nЧерез ${expireMinutes} минуты код станет не действительным`;
+      text.replace(makeRegExp('/{c}/'), `<b style='font-size:1.5em'>${otp}</b>`).replace(makeRegExp('/{n}/'), 'JesmyL')
+    }\n\nЧерез ${minutesUntilExpire} ${
+      //
+      smylib.declension(minutesUntilExpire, 'минуту', 'минуты', 'минут')
+    } код станет не действительным${randomBibleText}`;
 
     try {
       await sendEmailMessage('second', {
@@ -70,13 +101,16 @@ export const otpTSJRPCMethods = {
 
     return {
       value: { email },
-      description: `Запрос ОТП кода на E-mail ${email}<br/><br/><br/>${html}`,
+      description: `Запрос ОТП кода на E-mail ${email}\n\n\n${html}`,
       logScope: PostJRPCMessageScope.Support,
     };
   },
 
-  bindEmailByOTP: ({ otp }, { auth }) => {
+  bindEmailByOTP: async ({ otp }, { auth }) => {
     if (auth == null) throw 'Не авторизован';
+
+    await wait(5000);
+
     const verifies = sentEmailOTPFileStorage.getValue();
     const from = verifies.find(it => it.otp === otp);
 
@@ -107,7 +141,9 @@ export const otpTSJRPCMethods = {
     };
   },
 
-  authByEmailOTP: ({ otp }) => {
+  authByEmailOTP: async ({ otp }) => {
+    await wait(5000);
+
     const verifies = sentEmailOTPFileStorage.getValue();
     const from = verifies.find(it => it.otp === otp);
 
