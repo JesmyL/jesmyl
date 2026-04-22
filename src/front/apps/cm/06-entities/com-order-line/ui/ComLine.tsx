@@ -23,29 +23,20 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
     ...attrs
   } = props;
 
-  const className = `composition-line line-num-${textLinei}`;
-
   if (!chordedOrd)
     return (
       <div
         {...attrs}
-        className={className}
+        ord-linei={textLinei}
       >
         {words.map((word, wordi) => {
           return (
             <span
               key={wordi}
               className={setWordClass?.(props, wordi)}
-              com-word-index={wordi}
+              line-wordi={wordi}
             >
-              {word && <span dangerouslySetInnerHTML={{ __html: word }} />}
-              <span
-                key={wordi + 100000}
-                className={setWordClass?.(props, wordi)}
-                com-word-index={wordi}
-              >
-                {' '}
-              </span>
+              {word && <span dangerouslySetInnerHTML={{ __html: word }} />}{' '}
             </span>
           );
         })}
@@ -72,7 +63,7 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
     wordsNodes.push(
       <span
         key={index}
-        whole-wordi={wholeWordi++}
+        line-wordi={wholeWordi++}
         com-letter-index={isAddSpaceWord ? index : undefined}
       >
         {wordBitNodes}
@@ -199,7 +190,7 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
   return (
     <div
       {...attrs}
-      className={className}
+      ord-linei={textLinei}
     >
       {wordsNodes}
     </div>

@@ -120,7 +120,7 @@ export const cmComCommentDetectCommentTextStyles = (ordSelectorId: CmComCommentB
           lineWordStyleDict[lineWordStyleKey] = [];
 
           styles.push(css`
-            [solid-order-text-linei='${props.linei}'] [whole-wordi='${props.wordi}'] {
+            [solid-order-text-linei='${props.linei}'] [line-wordi='${props.wordi}'] {
               ${() => lineWordStyleDict[lineWordStyleKey]}
             }
           `);

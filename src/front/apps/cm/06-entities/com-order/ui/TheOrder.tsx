@@ -111,6 +111,7 @@ export function TheCmComOrder(props: Props) {
       <div
         id={`com-block-${ordi}`}
         ord-selector={ord.makeSelector()}
+        anchor-ord={ord.anchor}
         className={
           (props.specialClassId || '') + 'composition-block styled-block' + (ord.isVisible ? '' : ' opacity-30')
         }
@@ -152,6 +153,7 @@ export function TheCmComOrder(props: Props) {
     <div
       id={`com-block-${ordi}`}
       ord-selector={ord.makeSelector()}
+      anchor-ord={ord.anchor}
       {...styleAttributes}
       className={
         (props.specialClassId || '') +

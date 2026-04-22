@@ -60,7 +60,7 @@ export const BlockKindProvider = styled.div`
       }
 
       &.chorded-block {
-        .composition-line {
+        [ord-linei] {
           line-height: 2.3em;
         }
 
@@ -70,7 +70,7 @@ export const BlockKindProvider = styled.div`
       }
 
       &.without-chords {
-        .composition-line {
+        [ord-linei] {
           line-height: 1.5em;
         }
 

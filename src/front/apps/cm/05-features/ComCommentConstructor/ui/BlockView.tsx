@@ -25,7 +25,7 @@ export const CmComCommentConstructorBlockView = ({ selector, com }: { selector: 
 
           if (linei == null) return;
 
-          const wordi = getParentNodeWithAttributeName(event, 'whole-wordi').attr;
+          const wordi = getParentNodeWithAttributeName(event, 'line-wordi').attr;
 
           setSelection(prev => {
             const newPrev = { ...prev };
@@ -90,7 +90,7 @@ const StyledSolidOrdContainer = styled.div<{
 
           ${props.$wordi != null &&
           css`
-            [whole-wordi='${props.$wordi}'] {
+            [line-wordi='${props.$wordi}'] {
               &,
               * {
                 text-decoration-style: wavy;

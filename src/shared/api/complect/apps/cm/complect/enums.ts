@@ -21,7 +21,7 @@ export const enum CmComOrderWid {
 
 export const enum CmCatWid {
   def = -1,
-  zero = 0,
+  all = 0,
 }
 
 export const enum CmMeetingWid {

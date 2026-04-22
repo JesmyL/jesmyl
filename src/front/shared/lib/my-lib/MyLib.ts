@@ -84,7 +84,7 @@ export class MyLib extends SMyLib {
     );
   }
 
-  searchRate<T, R extends { item: T; deep: number; rate: number; field: string }, RetItem extends R = R>(
+  searchRate<T, R extends { item: T; deep: number; rate: number; field: string; pos: string[] }, RetItem extends R = R>(
     items: T[],
     searchWord: string,
     places: (Trace[] | Trace)[],
@@ -98,7 +98,7 @@ export class MyLib extends SMyLib {
     const wordRegs = normalWords.map(word => this.internationalWordReg(word, isNumberSearch));
 
     return items.reduce((ferries: RetItem[], item, itemi) => {
-      const ferry = { item, deep: 0, rate: 0 };
+      const ferry = { item, deep: 0, rate: 0, pos: [] } as never as RetItem;
 
       if (
         places.some((place, placei) => {
@@ -106,20 +106,20 @@ export class MyLib extends SMyLib {
           const index = constantPositions.indexOf(place as never);
 
           if (index > -1) {
-            if (
-              words.some(word =>
-                word && words.length > 1
-                  ? `${mapNumListItem(itemi + index)}` === word
-                  : `${itemi + index}`.startsWith(word),
-              )
-            ) {
+            const rateIndex = words.findIndex(word =>
+              word && words.length > 1
+                ? `${mapNumListItem(itemi + index)}` === word
+                : `${itemi + index}`.startsWith(word),
+            );
+
+            if (rateIndex > -1) {
               ferry.rate = 1;
               return true;
             }
             return false;
           }
 
-          const searchInPlace = (str: string, level: number) => {
+          const searchInPlace = (searchPath: unknown[], str: string, level: number) => {
             str = str.toLowerCase();
             let noWord = false;
 
@@ -130,6 +130,9 @@ export class MyLib extends SMyLib {
                 noWord = true;
                 return null;
               }
+
+              ferry.pos.push(searchPath.concat(index).join('/'));
+
               return (accRate as number) + index + level;
             }, null);
 
@@ -139,22 +142,35 @@ export class MyLib extends SMyLib {
             return true;
           };
 
-          const search = (track: Trace[] | Trace, target: unknown, level: number) => {
-            let searched;
-            ([] as Trace[]).concat(track).reduce((target, trace, tracei, tracea) => {
-              if (!target) return null;
-              if (trace === this.c.INDEX && this.isArr(target)) {
-                searched = target.some((o: unknown) => search(track.slice(tracei + 1), o, (level + tracei) * 10));
+          const search = (searchPath: unknown[], track: Trace[] | Trace, target: unknown, level: number) => {
+            let searched = false;
+
+            [track].flat().reduce((nestedTarget, trace, tracei, tracea) => {
+              if (!nestedTarget) return null;
+              if (trace === this.c.INDEX && this.isArr(nestedTarget)) {
+                searched = nestedTarget.some((o, oi) =>
+                  search(searchPath.concat(`${this.c.INDEX}:${oi}`), track.slice(tracei + 1), o, (level + tracei) * 10),
+                );
                 return null;
               }
-              if (tracei >= tracea.length - 1)
-                searched = searchInPlace((target as never as Record<string, string>)[trace as string], level);
-              return (target as never as Record<string, string>)[trace as string];
+
+              if (tracei >= tracea.length - 1) {
+                searched = searchInPlace(
+                  searchPath.concat(trace),
+                  (nestedTarget as never as Record<string, string>)[trace as string],
+                  level,
+                );
+              }
+
+              return (nestedTarget as never as Record<string, string>)[trace as string];
             }, target);
+
             return searched;
           };
 
-          return search(place, item, placei);
+          const isSearched = search(this.isArr(place) ? [place[0]] : [], place, item, placei);
+
+          return isSearched;
         })
       )
         ferries.push(ferry as never);
@@ -163,7 +179,11 @@ export class MyLib extends SMyLib {
     }, []);
   }
 
-  searchRateWithSort<T, R extends { item: T; deep: number; rate: number; field: string }, RetItem extends R = R>(
+  searchRateWithSort<
+    T,
+    R extends { item: T; deep: number; rate: number; field: string; pos: string[] },
+    RetItem extends R = R,
+  >(
     items: T[],
     searchWord: string,
     places: (Trace[] | Trace)[],

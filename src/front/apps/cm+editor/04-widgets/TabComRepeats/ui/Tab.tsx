@@ -204,8 +204,8 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
                       if (isCantRedact) return;
 
                       const wordiStr = (event.nativeEvent.composedPath() as HTMLSpanElement[])
-                        .find(span => span?.hasAttribute('com-word-index'))
-                        ?.getAttribute('com-word-index');
+                        .find(span => span?.hasAttribute('line-wordi'))
+                        ?.getAttribute('line-wordi');
 
                       if (wordiStr == null) return;
 
@@ -272,7 +272,7 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
 const Content = styled.div`
   position: relative;
 
-  [com-word-index] {
+  [line-wordi] {
     cursor: pointer;
 
     &.inactive-word {

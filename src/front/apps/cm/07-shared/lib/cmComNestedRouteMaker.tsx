@@ -5,13 +5,19 @@ import {
   CmComOpenComLinkRendererContext,
   CmComOpenLinkRenderer,
   CmComOpenRouteProps,
+  CmComWithComListSearchFilterInput,
+  CmComWithSearchedWords,
   useCmCom,
 } from '$cm/entities/com';
 import { cmComLastOpenComwAtom } from '$cm/entities/index';
 import { TheCmComComposition } from '$cm/widgets/com';
-import { FileRoutesByPath, Link, useSearch } from '@tanstack/react-router';
+import { FileRoutesByPath, Link, useParams, useSearch } from '@tanstack/react-router';
+import { useAtomValue } from 'atomaric';
 import { JSX, useEffect } from 'react';
+import { CmCatWid } from 'shared/api';
 import { CmComInScheduleWid } from '../state/contexts';
+import { takeCatTermAtom } from './Cat';
+import { CmCom } from './Com';
 
 interface Props<Path extends keyof FileRoutesByPath> {
   path: Path;
@@ -23,30 +29,54 @@ interface Props<Path extends keyof FileRoutesByPath> {
 export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>(props: Props<Path>) => {
   const ComRouteComponent = () => {
     const { comw, tran, schw } = useSearch({ from: props.path }) as CmComOpenRouteProps;
+    const { catw } = useParams({ from: props.path }) as { catw?: string };
     const com = useCmCom(comw);
     const comList = props.useComListPack();
+    const termAtom = takeCatTermAtom(catw ? +catw : CmCatWid.all);
+    const term = useAtomValue(termAtom);
 
     useEffect(() => {
       if (comw) cmComLastOpenComwAtom.set(comw);
     }, [comw]);
 
+    const render = (node: React.ReactNode) =>
+      comw != null && term ? (
+        <CmComWithComListSearchFilterInput
+          Constructor={CmCom}
+          coms={comList.list}
+          termAtom={termAtom}
+        >
+          {({ searchedComs, wordFounds }) =>
+            wordFounds[comw] ? (
+              <CmComWithSearchedWords wordFounds={wordFounds[comw]}>
+                <CmComCurrentComPackContext value={{ ...comList, list: searchedComs }}>
+                  {node}
+                </CmComCurrentComPackContext>
+              </CmComWithSearchedWords>
+            ) : (
+              <CmComCurrentComPackContext value={comList}>{node}</CmComCurrentComPackContext>
+            )
+          }
+        </CmComWithComListSearchFilterInput>
+      ) : (
+        <CmComCurrentComPackContext value={comList}>{node}</CmComCurrentComPackContext>
+      );
+
     return (
       <CmComOpenComLinkRendererContext value={goToComLinkRenderer}>
-        <CmComCurrentComPackContext value={comList}>
-          <CmComInScheduleWid value={schw}>
-            {tran ? (
-              props.BroadcastComponent ? (
-                <props.BroadcastComponent />
-              ) : (
-                <CmBroadcast />
-              )
-            ) : com || comw !== undefined ? (
-              <TheCmComComposition />
+        <CmComInScheduleWid value={schw}>
+          {tran ? (
+            props.BroadcastComponent ? (
+              render(<props.BroadcastComponent />)
             ) : (
-              <props.RouteComponent />
-            )}
-          </CmComInScheduleWid>
-        </CmComCurrentComPackContext>
+              render(<CmBroadcast />)
+            )
+          ) : com || comw !== undefined ? (
+            render(<TheCmComComposition />)
+          ) : (
+            <props.RouteComponent />
+          )}
+        </CmComInScheduleWid>
       </CmComOpenComLinkRendererContext>
     );
   };

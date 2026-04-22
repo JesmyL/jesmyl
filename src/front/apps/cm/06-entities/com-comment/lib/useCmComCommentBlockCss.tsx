@@ -1,7 +1,7 @@
-import { mylib } from '#shared/lib/my-lib';
 import { bibleShowTranslatesAtom, useBibleTranslatesContext } from '$bible/ext';
 import { cmComIsComMiniAnchorAtom } from '$cm/entities/index';
 import { CmCom } from '$cm/ext';
+import { makeStyleNode } from '$cm/shared/lib/makeStyleNode';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { CmComCommentBlockSimpleSelector, CmComCommentBlockSpecialSelector } from 'shared/api';
@@ -14,7 +14,6 @@ import { cmComCommentTextRulesDetector } from '../utils/cmComCommentTextRulesDet
 import { cmComCommentDetectCommentTextStyles } from '../utils/detectCommentTextStyles';
 import { cmComCommentMakeStartCommentCss } from '../utils/makeStartCommentCss';
 import { cmComCommentPseudoCommentStaticPropsCss } from '../utils/pseudoCommentStaticPropsCss';
-import { cmComCommentMakeStyleNode } from './checkSupport';
 import {
   useCmComCommentBlock,
   useCmComCommentKindBlockTaker,
@@ -168,7 +167,11 @@ export const useCmComCommentBlockCss = (
       return {
         isThereUnsettedTranslate,
         isThereCorrectBibleText,
-        commentCssNode: cmComCommentMakeStyleNode(`.com-orders-with-comments{${joinRecursively(styleCss)}}`),
+        commentCssNode: makeStyleNode(css`
+          .com-orders-with-comments {
+            ${styleCss}
+          }
+        `),
       };
     })()
       .then(styles => setStyles(styles))
@@ -184,21 +187,4 @@ export const useCmComCommentBlockCss = (
   ]);
 
   return useAtomValue(cmComIsComMiniAnchorAtom) ? {} : styles;
-};
-
-const joinRecursively = (value: unknown) => {
-  const joinRecursively = (value: unknown) => {
-    let result = '';
-
-    if (mylib.isStr(value) || mylib.isNum(value)) result += value;
-    else if (mylib.isArr(value)) {
-      for (let i = 0; i < value.length; i++) {
-        result += joinRecursively(value[i]);
-      }
-    } else if (mylib.isFunc(value)) result += joinRecursively(value());
-
-    return result;
-  };
-
-  return joinRecursively(value);
 };

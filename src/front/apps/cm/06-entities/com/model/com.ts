@@ -1,4 +1,4 @@
-import { CmComWid, IScheduleWidgetWid } from 'shared/api';
+import { CmComOrderWid, CmComWid, IScheduleWidgetWid } from 'shared/api';
 
 export interface CmComOpenRouteProps {
   comw?: CmComWid;
@@ -11,3 +11,5 @@ export type CmComOpenLinkRenderer = (props: {
   search: CmComOpenRouteProps;
   linkRef?: React.RefObject<HTMLAnchorElement | null>;
 }) => React.ReactNode;
+
+export type CmComWordFounds = PRecord<CmComWid, { ordw: CmComOrderWid; linei: number; wordi: number }[]>;

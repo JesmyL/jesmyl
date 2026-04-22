@@ -8,6 +8,7 @@ export * from './model/com';
 export * from './state/atoms';
 export { cmComSelectedComwsAtom } from './state/atoms';
 export * from './ui/CmComListSearchFilterInput';
+export * from './ui/CmComWithSearchedWords';
 export * from './ui/ComCatMentions';
 export * from './ui/ComListShare';
 export * from './ui/ComNotFoundPage';

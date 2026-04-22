@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 export const CmEditorComTabChordApplicationsStyledContent = styled.div`
   max-width: 100vw;
 
-  .composition-line {
+  [ord-linei] {
     display: inline;
   }
 

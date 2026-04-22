@@ -7,8 +7,10 @@ import { Atom, useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
-import { CmComWid, IExportableCom } from 'shared/api';
+import { CmComOrderWid, CmComWid, IExportableCom } from 'shared/api';
+import { itNNil } from 'shared/utils';
 import { takeCorrectComIndex, takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
+import { CmComWordFounds } from '../model/com';
 import { cmComWidNumberDictAtom } from '../state/atoms';
 
 const mapExtractItem = <Item,>({ item }: { item: Item }): Item => item;
@@ -25,6 +27,7 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
     searchedComs: ComConstructor[];
     limitedComs: ComConstructor[];
     foundComsLength: number;
+    wordFounds: CmComWordFounds;
     catNumberSearch: {
       comws: CmComWid[];
       descriptions: PRecord<CmComWid, string>;
@@ -67,40 +70,92 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
   ) as ComConstructor[] | nil;
 
   const searchedComs = useMemo(() => {
-    if (term === '404') return [];
+    const result: { coms: ComConstructor[]; founds: CmComWordFounds } = {
+      coms: [],
+      founds: {},
+    };
+
+    if (term === '404') return result;
 
     const comList = props.coms?.map(com => new props.Constructor(com.top)) ?? [];
-    if (!term) return comList;
-
-    const numCheckedTerm = isNumberSearch || isNaN(+term) ? term : `${takeCorrectComIndex(+term)}`;
-    const multiNums = term.split(makeRegExp('/[ ,]+/'));
-    const isMultiNumSearch = !multiNums.some(numStr => mylib.isNaN(+numStr));
-
-    if (isMultiNumSearch) {
-      const searchNumberIndexDict: Record<number, number> = {};
-      for (const numi in multiNums) searchNumberIndexDict[+multiNums[numi]] = +numi;
-
-      return comList
-        .filter(com => comwNumberDict[com.wid]! in searchNumberIndexDict)
-        .sort((a, b) => searchNumberIndexDict[comwNumberDict[a.wid]!] - searchNumberIndexDict[comwNumberDict[b.wid]!]);
+    if (!term) {
+      result.coms = comList;
+      return result;
     }
 
-    return mylib
-      .searchRate(
-        comList,
-        numCheckedTerm,
-        ['name', mylib.c.POSITION, ['orders', mylib.c.INDEX, 'text']],
-        isNumberSearch,
-        takeCorrectComNumber,
-      )
-      .sort(sortItemsByRate)
-      .map(mapExtractItem);
+    const numCheckedTerm = isNumberSearch || isNaN(+term) ? term : `${takeCorrectComIndex(+term)}`;
+
+    if (!isNumberSearch) {
+      const multiNums = term.split(makeRegExp('/[ ,]+/'));
+      const isMultiNumSearch = !multiNums.some(numStr => mylib.isNaN(+numStr));
+
+      if (isMultiNumSearch) {
+        const searchNumberIndexDict: Record<number, number> = {};
+        for (const numi in multiNums) searchNumberIndexDict[+multiNums[numi]] = +numi;
+
+        result.coms = comList
+          .filter(com => comwNumberDict[com.wid]! in searchNumberIndexDict)
+          .sort(
+            (a, b) => searchNumberIndexDict[comwNumberDict[a.wid]!] - searchNumberIndexDict[comwNumberDict[b.wid]!],
+          );
+
+        return result;
+      }
+    }
+
+    const searchs = mylib.searchRate(
+      comList,
+      numCheckedTerm,
+      ['name', mylib.c.POSITION, ['orders', mylib.c.INDEX, 'text']],
+      isNumberSearch,
+      takeCorrectComNumber,
+    );
+
+    result.coms = searchs.sort(sortItemsByRate).map(mapExtractItem);
+
+    result.founds = searchs.reduce((acc, item) => {
+      const orderwWordiDict: PRecord<CmComOrderWid, Record<number, { linei: number; wordi: number }>> = {};
+      acc[item.item.wid] = item.pos
+        .map(positions => {
+          const [, ordIndexStr, letterIndexStr] =
+            positions.match(makeRegExp(`/${mylib.c.INDEX}:(\\d+)/text/(\\d+)/`)) ?? [];
+
+          if (!letterIndexStr) return;
+          const ord = item.item.orders?.[+ordIndexStr];
+
+          if (!ord) return;
+          const ordw = ord.wid;
+
+          if (!orderwWordiDict[ordw]) {
+            orderwWordiDict[ordw] = {};
+            const all = Array.from(ord.text.matchAll(/[^ \n]+(?: |\n|$)/g));
+            let linei = 0;
+            let lineWordi = 0;
+
+            all.reduce((acc, foundWord) => {
+              acc[foundWord.index] = { linei, wordi: lineWordi++ };
+              if (foundWord[0]?.endsWith('\n')) {
+                linei++;
+                lineWordi = 0;
+              }
+
+              return acc;
+            }, orderwWordiDict[ordw]);
+          }
+          return { ordw, ...orderwWordiDict[ordw][+letterIndexStr] };
+        })
+        .filter(itNNil);
+
+      return acc;
+    }, result.founds);
+
+    return result;
   }, [comwNumberDict, isNumberSearch, props.Constructor, props.coms, term]);
 
   const limitedComs = useMemo(() => {
-    if (!term.length) return searchedComs;
+    if (!term.length) return searchedComs.coms;
 
-    return searchedComs?.slice(0, 30);
+    return searchedComs.coms?.slice(0, 30);
   }, [searchedComs, term.length]);
 
   return props.children({
@@ -114,8 +169,9 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
     ),
     term,
     catNumberSearch,
-    limitedComs,
-    searchedComs: mappedComs ?? searchedComs,
-    foundComsLength: (catNumberSearch?.comws.length ?? 0) + (mappedComs ?? searchedComs).length,
+    limitedComs: limitedComs,
+    searchedComs: mappedComs ?? searchedComs.coms,
+    foundComsLength: (catNumberSearch?.comws.length ?? 0) + (mappedComs ?? searchedComs.coms).length,
+    wordFounds: searchedComs.founds,
   });
 };

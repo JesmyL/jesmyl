@@ -16,6 +16,7 @@ import { CmComFaceList } from '$cm/entities/com-face';
 import { CmComSetListLimitsExtracterContext } from '$cm/entities/index';
 import { CmCom, CmComWithComListSearchFilterInput } from '$cm/ext';
 import { CmComRatingSortedComList } from '$cm/features/com';
+import { takeCatTermAtom } from '$cm/shared/lib/Cat';
 import { FileRoutesByPath } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode, useEffect, useRef } from 'react';
@@ -34,13 +35,11 @@ interface Props {
 }
 
 let isOpenRatingSortedComsAtom: Atom<boolean>;
-const termAtoms: PRecord<CmCatWid, Atom<string>> = {};
 
 export const CmCatPage = (props: Props) => {
   isOpenRatingSortedComsAtom ??= atom(false);
 
-  const termAtom = (termAtoms[props.cat?.wid ?? CmCatWid.def] ??= atom('', `cm:comListSearch:${props.cat?.wid}`));
-
+  const termAtom = takeCatTermAtom(props.cat?.wid ?? CmCatWid.all);
   const term = useAtomValue(termAtom);
   const debouncedTerm = useDebounceValue(term);
 

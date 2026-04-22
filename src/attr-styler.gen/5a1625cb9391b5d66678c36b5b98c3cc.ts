@@ -8,7 +8,6 @@ declare module 'react' {
     'com-letter-index'?: number | string;
     'com-letter-space-word'?: number | string;
     'com-letter-spaced-word'?: number | string;
-    'com-word-index'?: number | string;
   }
 }
 
