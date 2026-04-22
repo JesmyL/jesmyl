@@ -154,7 +154,7 @@
         position: relative;
 
         [dash-container] {
-          container: dash-container / inline-size;
+          container: dash-container;
           display: inline-flex;
           justify-content: space-between;
           width: 100%;
