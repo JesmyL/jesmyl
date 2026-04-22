@@ -18,7 +18,8 @@ import { indexTakeRootLoginRecursively } from '../../lib/takeRootLoginRecursivel
 
 const minutesUntilExpire = 5;
 const expireOTP = (otp: number) => sentEmailOTPFileStorage.setValue(verifies => verifies.filter(it => it.otp !== otp));
-const checkIsOTPTimeStampExpired = (timeStamp: number) => timeStamp < Date.now() - smylib.howMs.inMin * 5;
+const checkIsOTPTimeStampExpired = (timeStamp: number) =>
+  timeStamp < Date.now() - smylib.howMs.inMin * minutesUntilExpire;
 
 let bibleTexts: ReturnType<typeof getBibleTranslateTexts> | nil;
 let bibleTextsExpireTimeOut: TimeOut;
@@ -29,8 +30,50 @@ const getRandomBibleChapterText = () => {
   clearTimeout(bibleTextsExpireTimeOut);
   bibleTextsExpireTimeOut = setTimeout(() => (bibleTexts = null), smylib.howMs.inMin * 30);
 
-  return smylib.randomItem(smylib.randomItem(bibleTexts.chapters)).join('\n');
+  return smylib.randomItem(smylib.randomItem(bibleTexts.chapters)).join(' ');
 };
+
+const subjects = [
+  'Код верификации',
+  'Секретный код',
+  'Секретный код верификации',
+  'Код для идентификации почты',
+  'Код для аутентификации почты',
+  'Одноразовый код',
+  'Одноразовый пароль',
+  'Одноразовый код авторизации',
+  'Секретный одноразовый код авторизации',
+  'Одноразовый код верификации',
+  'Одноразовый верификационный код',
+  'Номер-пароль для аутентификации',
+  'Аутентификационный пароль',
+  'Аутентификационный код',
+  'Аутентификационный код-пароль',
+  'Аутентификационный номер-пароль',
+  'Авторизационный код',
+  'Авторизационный пароль',
+  'Авторизационный номер-пароль',
+  'Авторизационный код-пароль',
+  'Верификационный номер-пароль',
+  'Верификационный код-пароль',
+  'Верификационный пароль',
+  'Верификационный код',
+];
+
+const randomBibleChapterTextingList = [
+  'Случайная глава из Писания',
+  'Случайный текст из Библии',
+  'Библейский текст',
+  'Текст из Библии, взятый случайным образом',
+  'Текст Писания для назидания (взят случайным образом)',
+  'Назидание из Библейского Писания случайно выбранной главы',
+  'Глава из Библейскго текста выбранная случайным образом',
+  'Назидательный текст Священного Библейского Писания',
+  'Взятый случайным образом текст из Библии',
+  'Текст Священного Писания',
+  'Библейский Священный текст в назидание',
+  'Текст для назидания',
+];
 
 export const otpTSJRPCMethods = {
   sendEmailOTP: async ({ email }, { auth, visitInfo }) => {
@@ -76,7 +119,7 @@ export const otpTSJRPCMethods = {
     let randomBibleText = '';
 
     try {
-      randomBibleText = `\n\n\nСлучайная глава из Писания:\n\n${getRandomBibleChapterText()}`;
+      randomBibleText = `\n\n\n${smylib.randomItem(randomBibleChapterTextingList)}:\n\n${getRandomBibleChapterText()}`;
     } catch {
       //
     }
@@ -92,7 +135,7 @@ export const otpTSJRPCMethods = {
     try {
       await sendEmailMessage('second', {
         to: email,
-        subject: 'Код верификации',
+        subject: smylib.randomItem(subjects),
         html,
       });
     } catch (e) {
