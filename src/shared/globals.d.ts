@@ -49,20 +49,4 @@ declare global {
   type XOR<T, U> = (Without<T, U> & U) | (Without<U, T> & T);
 
   type KnownStameskaIconName = keyof typeof knownStameskaIconNames;
-
-  interface String {
-    startsWith<Text extends string>(this: string, text: Text): this is `${Text}${string}`;
-    endsWith<Text extends string>(this: string, text: Text): this is `${string}${Text}`;
-    includes<Text extends string>(this: string, text: Text): this is `${string}${Text}${string}`;
-    repeat<Count extends number, Text extends string>(this: Text, count: Count): CountRepeatTextRecord<Text>[Count];
-  }
 }
-
-type CountRepeatTextRecord<T extends string> = Record<number, `${T}${string}`> & {
-  0: '';
-  1: T;
-  2: `${T}${T}`;
-  3: `${T}${T}${T}`;
-  4: `${T}${T}${T}${T}`;
-  5: `${T}${T}${T}${T}${T}`;
-};

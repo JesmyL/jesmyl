@@ -45,7 +45,7 @@ export const makeCmComNumLeadLinkFromHttp = (httpLink: string): HttpNumLeadLink 
 };
 
 export const makeCmComHttpLinkFromNumLead = (numLeadLink: string): HttpLink => {
-  if (numLeadLink.startsWith('http')) return numLeadLink;
+  if (numLeadLink.startsWith('http')) return numLeadLink as never;
 
   const prefix = `${parseFloat(numLeadLink)}~` as const;
   if (numLeadToHttpLinks[prefix] === undefined) throw `Unknown link prefix ${prefix}`;
