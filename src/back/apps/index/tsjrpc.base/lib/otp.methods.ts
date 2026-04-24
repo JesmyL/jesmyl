@@ -2,7 +2,9 @@ import { getBibleTranslateTexts } from 'back/complect/lib/make-bible-texts';
 import { tokenSecretFileStore } from 'back/complect/soki/file-stores';
 import { makeAuthFromEmail, makeLoginFromEmail } from 'back/sides/emailer/lib/makeEmailLogin';
 import { sendEmailMessage } from 'back/sides/emailer/lib/sendEmailMessage';
-import { PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
+import { EmailerAuthConfigKey } from 'back/sides/emailer/model';
+import { logTelegramBot, tglogger } from 'back/sides/telegram-bot/log/log-bot';
+import { postJRPCMessage, PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import jwt from 'jsonwebtoken';
 import { makeRegExp } from 'regexpert';
@@ -75,6 +77,19 @@ const randomBibleChapterTextingList = [
   'Текст для назидания',
 ];
 
+const makeMailtoButton = ({
+  text,
+  email,
+  subject,
+  buttonText,
+}: {
+  email: string;
+  subject: string;
+  text: string;
+  buttonText: string;
+}) =>
+  `<a href="mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}"><button>${buttonText}</button></a>`;
+
 export const otpTSJRPCMethods = {
   sendEmailOTP: async ({ email }, { auth, visitInfo }) => {
     await wait(5000);
@@ -124,28 +139,54 @@ export const otpTSJRPCMethods = {
       //
     }
 
-    const html = `${
-      //
-      text.replace(makeRegExp('/{c}/'), `<b style='font-size:1.5em'>${otp}</b>`).replace(makeRegExp('/{n}/'), 'JesmyL')
-    }\n\nЧерез ${minutesUntilExpire} ${
-      //
-      smylib.declension(minutesUntilExpire, 'минуту', 'минуты', 'минут')
-    } код станет не действительным${randomBibleText}`;
+    const makeText = (asHtml = true) =>
+      `${text.replace(makeRegExp('/{c}/'), asHtml ? `<b style='font-size:1.5em'>${otp}</b>` : `${otp}`).replace(makeRegExp('/{n}/'), 'JesmyL')}\n\nЧерез ${minutesUntilExpire} ${
+        //
+        smylib.declension(minutesUntilExpire, 'минуту', 'минуты', 'минут')
+      } код станет не действительным${randomBibleText}`;
+
+    let logScope = PostJRPCMessageScope.Support;
+
+    const html = makeText();
 
     try {
-      await sendEmailMessage('second', {
+      await sendEmailMessage(EmailerAuthConfigKey.Space, {
         to: email,
         subject: smylib.randomItem(subjects),
         html,
       });
     } catch (e) {
-      throw `Произошла ошибка\n\n${e}`;
+      logScope = PostJRPCMessageScope.Error;
+      tglogger.error(`Произошла ошибка\n\n${e}`);
+
+      const sendMailtoButton = (scope: EmailerAuthConfigKey) =>
+        postJRPCMessage(
+          `${makeMailtoButton({
+            email,
+            subject: smylib.randomItem(subjects),
+            text: makeText(false),
+            buttonText: 'СФОРМИРОВАТЬ ПИСЬМО',
+          })}\n\n\n\n\n${html}`,
+          {
+            tgBot: logTelegramBot,
+            scope: PostJRPCMessageScope.Error,
+          },
+          scope,
+        );
+
+      try {
+        await sendMailtoButton(EmailerAuthConfigKey.Space);
+      } catch {
+        tglogger.error(`Произошла вторичная ошибка\n\n${e}`);
+
+        await sendMailtoButton(EmailerAuthConfigKey.Official);
+      }
     }
 
     return {
       value: { email },
       description: `Запрос ОТП кода на E-mail ${email}\n\n\n${html}`,
-      logScope: PostJRPCMessageScope.Support,
+      logScope,
     };
   },
 
