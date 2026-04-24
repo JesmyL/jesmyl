@@ -29,18 +29,20 @@ export const CmComCommentConstructorAccentKindRedactor = <Key extends CmComComme
   return (
     <div className="mt-5">
       <ButtonGroup.Root>
-        <Button
-          className={blockProps?.kind === 2 ? cmComCommentAccentsColorClassNameList[blockProps.kind] : undefined}
-          onClick={() => onKindChange(2)}
-        >
-          усиленный акцент
-        </Button>
-        <Button
-          className={blockProps?.kind === 1 ? cmComCommentAccentsColorClassNameList[blockProps.kind] : undefined}
-          onClick={() => onKindChange(1)}
-        >
-          акцент
-        </Button>
+        {(
+          [
+            { kind: 1, color: 'bg-x7! text-x1' },
+            { kind: 2, color: 'bg-xKO! text-x1' },
+          ] as const
+        ).map(({ color, kind }) => (
+          <Button
+            key={kind}
+            className={blockProps?.kind === kind ? color : cmComCommentAccentsColorClassNameList[kind]}
+            onClick={() => onKindChange(kind)}
+          >
+            акцент
+          </Button>
+        ))}
       </ButtonGroup.Root>
     </div>
   );
