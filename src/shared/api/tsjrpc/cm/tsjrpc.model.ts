@@ -1,4 +1,5 @@
 import { CmComAudioMarkPack, CmComWid, HttpNumLeadLink, ICmComCommentBlock } from 'shared/api/complect/apps';
+import { IScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
 import { SokiAuthLogin } from 'shared/api/complect/soki.model';
 
 export type CmTsjrpcModel = {
@@ -22,4 +23,6 @@ export type CmTsjrpcModel = {
     src: HttpNumLeadLink;
     m: number;
   };
+
+  getSchEventComPackMod: (args: { schw: IScheduleWidgetWid; dayi: number }) => { mod: number };
 };

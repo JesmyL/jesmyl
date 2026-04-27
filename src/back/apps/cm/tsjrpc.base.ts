@@ -25,6 +25,7 @@ import {
   comCommentsDirStore,
   comsDirStore,
   comsInSchEventDirStorage,
+  comsInSchEventHistoryDirStorage,
   comwVisitsFileStore,
 } from './file-stores';
 import { cmShareServerTsjrpcMethods } from './tsjrpc.shares';
@@ -340,6 +341,12 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
           return {
             value: !allMarkPacks[src]?.cMarks || allMarkPacks[src].m <= mod ? null : { ...allMarkPacks[src], src },
           };
+        },
+
+        getSchEventComPackMod: async ({ schw, dayi }) => {
+          const history = comsInSchEventHistoryDirStorage.getItem(schw);
+
+          return { value: { mod: history?.d[dayi]?.[0].w ?? 0 } };
         },
       },
     });

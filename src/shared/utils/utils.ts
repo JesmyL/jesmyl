@@ -163,3 +163,28 @@ export const itInvokeIt = <Ret>(it: () => Ret) => it();
 export const wait = (waitTime = 100) => new Promise(resolve => setTimeout(resolve, waitTime));
 export const capitalizeText = (text: string) => text[0].toUpperCase() + text.slice(1);
 export const trimTextLines = (text: string) => text.trim().replace(makeRegExp('/(.+?)\\s+?\\n/g'), '$1\n');
+
+export const makeDateLabel = (inputDate: number | Date | string) => {
+  const date = new Date(inputDate);
+  const now = new Date();
+
+  const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+  const startOfTarget = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+
+  const diffInDays = Math.round((startOfTarget - startOfToday) / 86400000);
+
+  if (Math.abs(diffInDays) <= 3) {
+    const rtf = new Intl.RelativeTimeFormat('ru', { numeric: 'auto' });
+    const relative = rtf.format(diffInDays, 'day');
+
+    return relative[0].toUpperCase() + relative.slice(1);
+  }
+
+  return date.toLocaleDateString('ru', {
+    day: 'numeric',
+    month: 'long',
+    year: diffInDays < -365 ? 'numeric' : undefined,
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+};

@@ -14,7 +14,7 @@ interface Props {
 
 export const useCmMeetingComFaceList = ({ dayi, eventMi, schw, comImportantOnClick, isPutCcomFaceOff }: Props) => {
   const pack = useLiveQuery(() => schw && cmIDB.db.scheduleComPacks.get({ schw }), [schw]);
-  const packComws = pack?.pack?.[dayi as never]?.[eventMi as never] ?? [];
+  const packComws = pack?.pack?.[dayi as never]?.[eventMi as IScheduleWidgetDayEventMi] ?? [];
   const coms = useCmComList(packComws);
 
   return {

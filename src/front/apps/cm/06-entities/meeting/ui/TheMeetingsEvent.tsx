@@ -8,10 +8,13 @@ import { ScheduleWidgetWatchLiveBroadcastButton } from '#widgets/schedule/live-b
 import { ScheduleDayEventPathProps } from '#widgets/schedule/ScheduleWidget.model';
 import { CmEditorMeetingEventEdits } from '$cm+editor/ext';
 import { CmComLocalListToolsPopup, useCmComOpenComLinkRendererContext } from '$cm/entities/com';
+import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { indexIDB, useAuth } from '$index/shared/state';
+import { useQuery } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useState } from 'react';
+import { makeDateLabel } from 'shared/utils';
 import { useCmMeetingComFaceList } from '../lib/useMeetingComFaceList';
 
 type Props = Required<ScheduleDayEventPathProps>;
@@ -23,6 +26,10 @@ export const CmMeetingEvent = ({ dayi, eventMi, schw }: Props) => {
   const linkToCom = useCmComOpenComLinkRendererContext();
   const checkAccess = useCheckUserAccessRightsInScope();
   const [isToolsOpen, setIsToolsOpen] = useState(false);
+  const mod = useQuery({
+    queryKey: [],
+    queryFn: () => cmTsjrpcClient.getSchEventComPackMod({ schw, dayi }),
+  });
 
   if (schedule == null) return;
 
@@ -63,25 +70,26 @@ export const CmMeetingEvent = ({ dayi, eventMi, schw }: Props) => {
         </div>
       }
       content={
-        <>
-          <AppDialogProvider title="cm-meeting-event-coms">
-            {comFaceListNode}
-            {isToolsOpen && (
-              <BottomPopup onClose={setIsToolsOpen}>
-                <CmComLocalListToolsPopup coms={coms}>
-                  {checkAccess('cm', 'EVENT', 'U') && (
-                    <CmEditorMeetingEventEdits
-                      packComws={packComws}
-                      dayi={dayi}
-                      eventMi={eventMi}
-                      schw={schw}
-                    />
-                  )}
-                </CmComLocalListToolsPopup>
-              </BottomPopup>
-            )}
-          </AppDialogProvider>
-        </>
+        <AppDialogProvider title="cm-meeting-event-coms">
+          {comFaceListNode}
+          <div className="text-center opacity-50 text-sm">
+            {!mod.data?.mod || `Обновлено: ${makeDateLabel(mod.data.mod)}`}
+          </div>
+          {isToolsOpen && (
+            <BottomPopup onClose={setIsToolsOpen}>
+              <CmComLocalListToolsPopup coms={coms}>
+                {checkAccess('cm', 'EVENT', 'U') && (
+                  <CmEditorMeetingEventEdits
+                    packComws={packComws}
+                    dayi={dayi}
+                    eventMi={eventMi}
+                    schw={schw}
+                  />
+                )}
+              </CmComLocalListToolsPopup>
+            </BottomPopup>
+          )}
+        </AppDialogProvider>
       }
     />
   );

@@ -6,9 +6,11 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ChordVisibleVariant } from '$cm/shared/model';
 import { cmIDB } from '$cm/shared/state';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
+import { useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { useEffect, useState } from 'react';
+import { CmComWid } from 'shared/api';
+import { makeDateLabel } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
 import { useCmComCurrentFixedCom } from '../com/lib/com-selections';
 import { cmComChordVisibleVariantAtom, cmComFontSizeAtom } from '../com/state/atoms';
@@ -22,16 +24,12 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
   const chordVisibleVariant = useAtomValue(cmComChordVisibleVariantAtom);
   const comToolsNode = useCmComToolMigratableList();
   const ifixedCom = useLiveQuery(() => ccom && cmIDB.tb.fixedComs.get(ccom.wid), [ccom?.wid]);
-  const [visitsCount, setVisitsCount] = useState<null | number>(null);
 
-  useEffect(() => {
-    if (ccom?.wid == null) return;
-
-    (async () => {
-      const visitsCount = await cmTsjrpcClient.takeComwVisitsCount({ comw: ccom.wid });
-      setVisitsCount(visitsCount);
-    })();
-  }, [ccom?.wid]);
+  const visitsCountQuery = useQuery({
+    queryKey: ['cmTsjrpcClient.takeComwVisitsCount', ccom?.wid],
+    queryFn: () => cmTsjrpcClient.takeComwVisitsCount({ comw: ccom?.wid ?? CmComWid.def }),
+    enabled: !!ccom?.wid,
+  });
 
   if (!ccom) return null;
 
@@ -121,17 +119,18 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
 
       <div className="w-full opacity-50 flex center gap-2 text-xs py-3">
         Просмотрели
-        {visitsCount === null ? (
+        {visitsCountQuery.isLoading ? (
           <TheIconLoading />
         ) : (
-          ` ${visitsCount} ${mylib.declension(visitsCount, 'раз', 'раза', 'раз')}`
+          <>
+            {' '}
+            {visitsCountQuery.data} {mylib.declension(visitsCountQuery.data ?? 0, 'раз', 'раза', 'раз')}
+          </>
         )}
       </div>
       <div className="w-full opacity-50 flex flex-col text-xs py-3">
-        <div>Добавлена: {new Date(ccom.wid).toLocaleString('ru')}</div>
-        {Math.trunc(ccom.wid) !== Math.trunc(ccom.mod) && (
-          <div>Обновлена: {new Date(ccom.mod).toLocaleString('ru')}</div>
-        )}
+        <div>Добавлена: {makeDateLabel(ccom.wid)}</div>
+        {Math.trunc(ccom.wid) !== Math.trunc(ccom.mod) && <div>Обновлена: {makeDateLabel(ccom.mod)}</div>}
       </div>
     </>
   );
