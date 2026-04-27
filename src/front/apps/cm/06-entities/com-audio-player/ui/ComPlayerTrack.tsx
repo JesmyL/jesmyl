@@ -38,7 +38,7 @@ let playbackRateTimeout: TimeOut;
 const TimeRender = ({ time }: { time: React.ReactNode }) => {
   return (
     <code
-      className="h-[1.2rem]"
+      className="h-[.9rem]"
       onTouchStart={event => {
         event.preventDefault();
         clearTimeout(playbackRateTimeout);
