@@ -32,7 +32,7 @@ export const CmBroadcastCurrentScreen = (props: BroadcastScreenProps & Partial<F
     <CmBroadcastScreen
       {...props}
       cmConfig={currentConfig}
-      text={text}
+      text={text ?? ''}
       nextText={CmCom.makeEachLineFirstLetterUpperCase(selfSlides[nextSlidei]?.lines, !isFragments).join(
         isFragments ? ' ' : '\n',
       )}

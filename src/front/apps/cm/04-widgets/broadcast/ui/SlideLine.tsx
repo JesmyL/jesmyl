@@ -15,7 +15,8 @@ export const CmBroadcastSlideLine = () => {
   return (
     <div className="no-scrollbar snap-x snap-mandatory flex my-2 bg-x1 py-2 overflow-auto nowrap rounded-md">
       {minimalSlides.map((slide, slidei) => {
-        if (showChordedSlideMode === CmBroadcastShowChordedSlideMode.Hide && !slide.ord.isRealText()) return;
+        if (!slide || (showChordedSlideMode === CmBroadcastShowChordedSlideMode.Hide && !slide.ord.isRealText()))
+          return;
 
         return (
           <div

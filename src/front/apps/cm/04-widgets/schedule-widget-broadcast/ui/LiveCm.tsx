@@ -62,11 +62,11 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
           comw: ccom.wid,
           slidei: currentSlidei,
 
-          fromLinei: currentSlide?.fromLinei,
-          toLinei: currentSlide?.toLinei,
+          fromLinei: currentSlide?.fromLinei ?? 0,
+          toLinei: currentSlide?.toLinei ?? 0,
 
           text: isFragments
-            ? currentSlide?.lines
+            ? (currentSlide?.lines ?? '')
             : CmCom.makeEachLineFirstLetterUpperCase(currentSlide?.lines).join('\n'),
           isChorded: !currentSlide?.ord.isRealText(),
 
