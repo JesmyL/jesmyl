@@ -56,7 +56,7 @@ export const register = (config?: Config) => {
 
 function registerValidSW(swUrl: string, config?: Config) {
   navigator.serviceWorker
-    .register(swUrl)
+    .register(swUrl, { scope: '/' })
     .then(registration => {
       if (registration.waiting) swRegistration = registration;
 

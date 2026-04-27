@@ -16,6 +16,12 @@ export const startExpressRouting = (wsServer: WebSocketServer) => {
   const mainFolderPath = `/var/www/${hosts.dns}` as const;
   const isSearchBotReg = /(google|bing|yandex|duckduck|telegram|twitter)bot|slurp|vk\.com/;
 
+  app.get('/sw.js', (_req, res) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Content-Type', 'application/javascript');
+    res.sendFile(`${mainFolderPath}/sw.js`);
+  });
+
   app.use(express.json());
   app.use('/assets', express.static(`${mainFolderPath}/assets`));
   app.use('/sounds', express.static(`${mainFolderPath}/sounds`));
@@ -78,7 +84,6 @@ export const startExpressRouting = (wsServer: WebSocketServer) => {
   app.get(/^[^?#]+\.(js|png|json|mp3)($|[?#])/, async (req: Request, res: Response) => {
     if (req.params[0] === 'mp3') {
       try {
-        const isSearchBot = isRequestFromSearchBot(req);
         let externalUrl = req.url;
         let ogDescription = 'Звуковая дорожка';
         let trackLink = '' as HttpNumLeadLink;
@@ -105,46 +110,15 @@ export const startExpressRouting = (wsServer: WebSocketServer) => {
           });
         }
 
-        const url = new URL(externalUrl);
-        const client = url.protocol === 'https:' ? https : http;
+        if (isRequestFromSearchBot(req)) {
+          const customPage = makePage({
+            ogDescription,
+            ogAudio: { title: ogDescription, url: externalUrl },
+          });
+          return res.status(200).contentType('text/html').send(customPage);
+        }
 
-        client
-          .request(
-            {
-              hostname: url.hostname,
-              port: url.port,
-              path: url.pathname + url.search,
-              method: 'GET',
-              headers: {
-                'User-Agent': 'Mozilla/5.0',
-                ...(req.headers.range && { Range: req.headers.range }),
-              },
-            },
-            proxyRes => {
-              if (isSearchBot) {
-                const customPage = makePage({
-                  ogDescription,
-                  ogAudio: { title: ogDescription, url: externalUrl },
-                });
-
-                res.writeHead(200, {
-                  'Content-Type': 'text/html; charset=utf-8',
-                  'Content-Length': Buffer.byteLength(customPage, 'utf8'),
-                });
-                res.end(customPage);
-              } else {
-                res.writeHead(proxyRes.statusCode!, {
-                  ...proxyRes.headers,
-                  'Accept-Ranges': 'bytes',
-                  'Content-Type': 'audio/mpeg',
-                  'Cache-Control': 'public, max-age=3600',
-                });
-                proxyRes.pipe(res);
-              }
-            },
-          )
-          .on('error', () => res.status(500))
-          .end();
+        res.redirect(302, externalUrl);
       } catch (error) {
         console.error('Proxy error:', error);
         res.status(500).send('Stream failed');
@@ -162,7 +136,7 @@ export const startExpressRouting = (wsServer: WebSocketServer) => {
     res.sendFile(`${mainFolderPath}${req.url}`);
   });
 
-  app.get(/(.*)/, (req: Request, res: Response) => {
+  app.use((req: Request, res: Response) => {
     if (isRequestFromSearchBot(req)) {
       let descriptionFromSearchParams = '';
 
