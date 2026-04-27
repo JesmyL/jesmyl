@@ -31,7 +31,6 @@ export const BottomPopupItem = ({
   ...attrs
 }: Props) => {
   const onClose = useBottomPopupOnCloseContext();
-  // console.log('ITEM');
 
   return (
     <li
