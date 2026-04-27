@@ -1,8 +1,8 @@
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { memo, useRef } from 'react';
-import styled from 'styled-components';
 import { metronomeIsPlayAtom } from '../lib/atoms';
 import audioSrc from './silent.wav';
 

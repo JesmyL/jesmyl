@@ -5,11 +5,12 @@ import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TextInput } from '#shared/ui/TextInput';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useQuery } from '@tanstack/react-query';
 import { Atom, useAtomValue } from 'atomaric';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
-import styled from 'styled-components';
 
 export const IndexNounPronsRedactorWordRedactor = (props: {
   atom: Atom<string>;
@@ -119,8 +120,10 @@ const Buttons = ({ onLevelChange, initLevel }: { onLevelChange: (level: number) 
   );
 };
 
-const DropStyled = styled.div`
-  .drops:has(.word-input:focus) + .drops-list {
-    opacity: 1;
-  }
-`;
+const DropStyled = styled('div')(
+  css({
+    '.drops:has(.word-input:focus) + .drops-list': {
+      opacity: 1,
+    },
+  }),
+);

@@ -1,5 +1,5 @@
+import styled from '@emotion/styled';
 import { HTMLAttributes } from 'react';
-import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 
 type Props = HTMLAttributes<HTMLDivElement> & { children: React.ReactNode };

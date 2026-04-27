@@ -1,6 +1,6 @@
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import styled from '@emotion/styled';
 import { ScheduleWidgetRightsCtrl, ScheduleWidgetRightTexts } from 'shared/api';
-import styled from 'styled-components';
 
 export function ScheduleWidgetRightControlList({
   R,

@@ -4,8 +4,8 @@ import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContaine
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useCmCatList } from '$cm/entities/cat';
 import { useCmComSelectedList } from '$cm/entities/com';
+import styled from '@emotion/styled';
 import { Link } from '@tanstack/react-router';
-import styled from 'styled-components';
 
 export const CmListsPage = () => {
   const cats = useCmCatList();

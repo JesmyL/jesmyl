@@ -1,10 +1,10 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
+import styled from '@emotion/styled';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { IScheduleWidgetUser, IScheduleWidgetUserMi } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
-import styled from 'styled-components';
 import { ScheduleWidgetTeamsCriteriaSorterScreenHistory } from './History';
 import { HistoryAdder } from './model';
 import { ScheduleWidgetTeamsCriteriaSorterScreenSortBoxPhoto } from './SortBoxPhoto';

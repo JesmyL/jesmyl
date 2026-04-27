@@ -1,5 +1,6 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import styled, { css } from 'styled-components';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useScreenBroadcastBackgroundStyles } from '../../complect/hooks/background-styles';
 import { AlertLineConfig } from '../../model';
 

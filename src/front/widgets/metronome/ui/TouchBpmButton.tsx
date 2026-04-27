@@ -1,6 +1,6 @@
 import { isTouchDevice } from '#shared/lib/device-differences';
+import styled from '@emotion/styled';
 import { memo } from 'react';
-import styled from 'styled-components';
 import { metronomeUserBpmAtom } from '../lib/atoms';
 
 let lastTs: number;

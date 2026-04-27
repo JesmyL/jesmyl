@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
+import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { IndexConsoleCoderResultLine } from '../sub-ui/line';
 import { IndexConsoleCodeExecutionScreen } from './Coder';
 

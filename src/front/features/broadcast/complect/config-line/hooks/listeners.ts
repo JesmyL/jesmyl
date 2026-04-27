@@ -52,12 +52,14 @@ export const useScreenBroadcastFaceLineListeners = (
           switch (event.code) {
             case 'Enter':
               parentWin.focus();
-              break;
+              return;
 
             case 'Escape':
               parentWin.blur();
-              break;
+              return;
           }
+
+          onKeyDown(event);
         };
 
         // eslint-disable-next-line @eslint-react/web-api/no-leaked-event-listener

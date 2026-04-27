@@ -8,9 +8,10 @@ import {
   useCmBroadcastScreenComNavigations,
   useCmBroadcastScreenComTextNavigations,
 } from '$cm/features/broadcast';
+import { css, keyframes } from '@emotion/react';
+import styled from '@emotion/styled';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useReducer } from 'react';
-import styled, { css, keyframes } from 'styled-components';
 
 const forceUpdater = (it: number) => it + 1;
 const style = { padding: '5px' };

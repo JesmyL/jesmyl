@@ -2,12 +2,12 @@ import { bibleShowTranslatesAtom, useBibleTranslatesContext } from '$bible/ext';
 import { cmComIsComMiniAnchorAtom } from '$cm/entities/index';
 import { CmCom } from '$cm/ext';
 import { makeStyleNode } from '$cm/shared/lib/makeStyleNode';
+import { css, SerializedStyles } from '@emotion/react';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { CmComCommentBlockSimpleSelector, CmComCommentBlockSpecialSelector } from 'shared/api';
-import { emptyFunc } from 'shared/utils';
+import { emptyFunc, itInvokeIt } from 'shared/utils';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
-import { css } from 'styled-components';
 import { cmComCommentHeaderHolderSelectors } from '../const/commentHolderSelectors';
 import { CmComCommentTextDetectorRuleProps } from '../model/common';
 import { cmComCommentTextRulesDetector } from '../utils/cmComCommentTextRulesDetector';
@@ -49,18 +49,18 @@ export const useCmComCommentBlockCss = (
 
         customPropsForOrder.propsList.forEach(onDetect);
 
-        cssContentList = styles;
+        cssContentList = [styles];
       } else {
         cssContentList = isSetHashesOnly
           ? null
-          : (visibleOrders?.map(ord => {
-              if (ord == null) return;
+          : (visibleOrders?.map((ord): (() => string | SerializedStyles) => {
+              if (ord == null) return () => '';
               const ordSelectorId = ord.makeSelector();
 
               let commentLines = takeCommentTexts(ordSelectorId);
               const kindComment = ord.kind && commentKindsBlock?.[Math.abs(ord.kind) as CmComBlockKindKey];
 
-              if (!commentLines?.length && !kindComment) return '';
+              if (!commentLines?.length && !kindComment) return () => '';
 
               commentLines ??= [];
               if (kindComment) commentLines = [kindComment].concat(commentLines);
@@ -107,11 +107,11 @@ export const useCmComCommentBlockCss = (
             }
 
             &.expand-first-comment-bible-texts ${selector} {
-              ${makeCommentWithTextCss}
+              ${makeCommentWithTextCss()}
             }
 
             &:not(.expand-first-comment-bible-texts) ${selector} {
-              ${makeCommentWithTextLinksOnlyCss}
+              ${makeCommentWithTextLinksOnlyCss()}
             }
           `;
         }),
@@ -145,7 +145,7 @@ export const useCmComCommentBlockCss = (
           }
         }
 
-        ${cssContentList}
+        ${cssContentList?.map(itInvokeIt)}
         ${numeredOrderHeaders}
 
           [solid-com-order-selector] {
@@ -174,7 +174,7 @@ export const useCmComCommentBlockCss = (
         `),
       };
     })()
-      .then(styles => setStyles(styles))
+      .then(setStyles)
       .catch(emptyFunc);
   }, [
     currentBibleTranslate,

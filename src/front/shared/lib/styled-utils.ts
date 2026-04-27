@@ -1,6 +1,6 @@
-import { RuleSet, css } from 'styled-components';
+import { css, SerializedStyles } from '@emotion/react';
 
-export const styledHoverBind = (styles: RuleSet<object>, query = '&') => {
+export const styledHoverBind = (styles: SerializedStyles, query = '&') => {
   return css`
     @media (hover: hover) {
       ${query}:hover {

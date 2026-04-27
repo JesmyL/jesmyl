@@ -1,6 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
+import { css, SerializedStyles } from '@emotion/react';
 import { CmComCommentBlockSimpleSelector } from 'shared/api';
-import { RuleSet, css } from 'styled-components';
+import { itInvokeIt } from 'shared/utils';
 import { cmComCommentHeaderHolderSelectors } from '../const/commentHolderSelectors';
 import { CmComCommentTextDetectorChordRuleProps, CmComCommentTextDetectorRuleProps } from '../model/common';
 import {
@@ -11,119 +12,123 @@ import {
 import { cmComCommentPseudoCommentStaticPropsCss } from './pseudoCommentStaticPropsCss';
 
 export const cmComCommentDetectCommentTextStyles = (ordSelectorId: CmComCommentBlockSimpleSelector) => {
-  const styles: RuleSet<object>[] = [];
-  const lineWordStyleDict: PRecord<`${number}/${number}`, (RuleSet<object> | string | nil)[]> = {};
+  const styles: (() => SerializedStyles)[] = [];
+  const lineWordStyleDict: PRecord<`${number}/${number}`, (SerializedStyles | string | nil)[]> = {};
   const sidePlacedChordsOnWait: PRecord<
     `${number}:${number}/${number}`,
     PRecord<'<' | '^' | '>', CmComCommentTextDetectorChordRuleProps>
   > = {};
 
   return {
-    styles: css`
-      ::before,
-      :after {
-        color: var(--color-x3);
-      }
+    styles: () => {
+      const rules = css`
+        ${mylib.values(sidePlacedChordsOnWait).map(chordProps => {
+          const preProps = chordProps?.['<'];
+          const replaceProps = chordProps?.['^'];
+          const postProps = chordProps?.['>'];
 
-      .comment-holder {
-        &:after,
-        &:before {
-          ${cmComCommentPseudoCommentStaticPropsCss}
-        }
-      }
+          const props = preProps ?? replaceProps ?? postProps!;
 
-      [solid-com-order-selector='${ordSelectorId}'] {
-        ${() => {
-          return mylib.values(sidePlacedChordsOnWait).map(chordProps => {
-            const preProps = chordProps?.['<'];
-            const replaceProps = chordProps?.['^'];
-            const postProps = chordProps?.['>'];
+          const wordRuleList = lineWordStyleDict[`${props.linei}/${props.wordi}`];
+          if (wordRuleList == null) return;
 
-            const props = preProps ?? replaceProps ?? postProps!;
+          const chordi = props.chordi;
 
-            const wordRuleList = lineWordStyleDict[`${props.linei}/${props.wordi}`];
-            if (wordRuleList == null) return;
+          const preText = preProps?.text;
+          const replaceText = replaceProps?.text;
+          const postText = postProps?.text;
 
-            const chordi = props.chordi;
+          let contentTextCss = '';
 
-            const preText = preProps?.text;
-            const replaceText = replaceProps?.text;
-            const postText = postProps?.text;
+          if (preText) contentTextCss += cmComCommentMakePseudoElementCorrectContentText(preText);
 
-            let contentTextCss = '';
+          contentTextCss += replaceText
+            ? cmComCommentMakePseudoElementCorrectContentText(replaceText)
+            : 'attr(attr-chord)';
 
-            if (preText) contentTextCss += cmComCommentMakePseudoElementCorrectContentText(preText);
+          if (postText) contentTextCss += cmComCommentMakePseudoElementCorrectContentText(postText);
 
-            contentTextCss += replaceText
-              ? cmComCommentMakePseudoElementCorrectContentText(replaceText)
-              : 'attr(attr-chord)';
+          contentTextCss = contentTextCss && `content:${contentTextCss};`;
 
-            if (postText) contentTextCss += cmComCommentMakePseudoElementCorrectContentText(postText);
+          wordRuleList.push(css`
+            > [attr-chordi='${chordi}']:not([com-letter-chorded='post']):before,
+            > [attr-chordi='${chordi}'][com-letter-chorded='post'] [word-fragment]:before,
+            > [attr-chordi='${chordi - 1}'][com-letter-chorded='pre'] [word-fragment]:before,
+            > [attr-chordi='${chordi - 1}'][com-letter-chorded='post']:after {
+              ${contentTextCss}${cmComCommentAccentsColorList[replaceProps?.kind ?? 0]}
+              text-decoration: underline;
+            }
 
-            contentTextCss = contentTextCss && `content:${contentTextCss};`;
+            ${contentTextCss &&
+            css`
+              > [attr-chordi='${chordi - 1}'][com-letter-chorded='pre'] [word-fragment]:after {
+                ${contentTextCss}
+              }
+            `}
 
-            wordRuleList.push(css`
-              > [attr-chordi='${chordi}']:not([com-letter-chorded='post']):before,
-              > [attr-chordi='${chordi}'][com-letter-chorded='post'] [word-fragment]:before,
-              > [attr-chordi='${chordi - 1}'][com-letter-chorded='pre'] [word-fragment]:before,
-              > [attr-chordi='${chordi - 1}'][com-letter-chorded='post']:after {
-                ${contentTextCss}${cmComCommentAccentsColorList[replaceProps?.kind ?? 0]}
-                text-decoration: underline;
+            > [attr-chordi='${chordi}']:not([com-letter-chorded='post']) {
+              &[com-letter-spaced-word] {
+                text-align: right;
+                display: inline-block;
               }
 
               ${contentTextCss &&
               css`
-                > [attr-chordi='${chordi - 1}'][com-letter-chorded='pre'] [word-fragment]:after {
+                [word-fragment]:after {
                   ${contentTextCss}
                 }
               `}
+            }
+          `);
 
-              > [attr-chordi='${chordi}']:not([com-letter-chorded='post']) {
-                &[com-letter-spaced-word] {
-                  text-align: right;
-                  display: inline-block;
-                }
+          return null;
+        })}
+      `;
 
-                ${contentTextCss &&
-                css`
-                  [word-fragment]:after {
-                    ${contentTextCss}
-                  }
-                `}
-              }
-            `);
-
-            return null;
-          });
-        }}
-
-        ${
-          // !after {sidePlacedChordsOnWait} map
-          () => styles
+      return css`
+        ::before,
+        :after {
+          color: var(--color-x3);
         }
-      }
-    `,
+
+        .comment-holder {
+          &:after,
+          &:before {
+            ${cmComCommentPseudoCommentStaticPropsCss}
+          }
+        }
+
+        [solid-com-order-selector='${ordSelectorId}'] {
+          ${rules}
+          ${styles.map(itInvokeIt)}
+        }
+      `;
+    },
     onDetect: (props: CmComCommentTextDetectorRuleProps) => {
       const accentColor = cmComCommentAccentsColorList[props.kind];
 
       if ('blocki' in props) {
-        styles.push(css`
-          .styled-header ${cmComCommentHeaderHolderSelectors[props.blocki] || '::after'} {
-            ${cmComCommentMakePseudoCommentContentPropCss(props.text)}
-            ${accentColor}
-          }
-        `);
+        styles.push(
+          () => css`
+            .styled-header ${cmComCommentHeaderHolderSelectors[props.blocki] || '::after'} {
+              ${cmComCommentMakePseudoCommentContentPropCss(props.text)}
+              ${accentColor}
+            }
+          `,
+        );
       } else if ('wordi' in props) {
         const lineWordStyleKey = `${props.linei}/${props.wordi}` as const;
 
         if (lineWordStyleDict[lineWordStyleKey] == null) {
           lineWordStyleDict[lineWordStyleKey] = [];
 
-          styles.push(css`
-            [solid-order-text-linei='${props.linei}'] [line-wordi='${props.wordi}'] {
-              ${() => lineWordStyleDict[lineWordStyleKey]}
-            }
-          `);
+          styles.push(
+            () => css`
+              [solid-order-text-linei='${props.linei}'] [line-wordi='${props.wordi}'] {
+                ${lineWordStyleDict[lineWordStyleKey]}
+              }
+            `,
+          );
         }
 
         if ('chordi' in props) {
@@ -142,13 +147,15 @@ export const cmComCommentDetectCommentTextStyles = (ordSelectorId: CmComCommentB
           lineWordStyleDict[lineWordStyleKey].push(accentColor);
         }
       } else if ('linei' in props) {
-        styles.push(css`
-          &:not(:has([solid-order-text-linei='${props.linei}'])):after,
-          [solid-order-text-linei='${props.linei}']:before {
-            ${cmComCommentMakePseudoCommentContentPropCss(props.text)}
-            ${accentColor}
-          }
-        `);
+        styles.push(
+          () => css`
+            &:not(:has([solid-order-text-linei='${props.linei}'])):after,
+            [solid-order-text-linei='${props.linei}']:before {
+              ${cmComCommentMakePseudoCommentContentPropCss(props.text)}
+              ${accentColor}
+            }
+          `,
+        );
       }
     },
   };

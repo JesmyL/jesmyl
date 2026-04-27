@@ -2,9 +2,9 @@ import { mylib } from '#shared/lib/my-lib';
 import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
 import { useBibleBroadcastListSingleAddressSetter } from '$bible/entities/broadcast-list';
 import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
+import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
 import { BibleReaderChapterText } from './ChapterText';
 
 interface Props {

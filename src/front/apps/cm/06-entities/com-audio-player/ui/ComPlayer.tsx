@@ -1,6 +1,7 @@
+import { css, keyframes } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useState } from 'react';
 import { HttpNumLeadLink } from 'shared/api';
-import styled, { css, keyframes } from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 import { CmComAudioPlayerPlayButton } from './ComPlayerPlayButton';
 import { CmComAudioPlayerTrack } from './ComPlayerTrack';

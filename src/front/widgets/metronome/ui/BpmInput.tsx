@@ -1,8 +1,8 @@
 import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { memo } from 'react';
-import styled from 'styled-components';
 import { metronomeUserBpmAtom } from '../lib/atoms';
 
 export const MetronomeBpmInput = memo(function MetronomeBpmInput() {

@@ -10,6 +10,7 @@ import { ScheduleWidgetTopicTitle } from '#widgets/schedule/complect/TopicTitle'
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { ScheduleWidgetDayEventAtts } from '#widgets/schedule/events/atts/DayEventAtts';
 import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
+import styled from '@emotion/styled';
 import { ReactNode, useMemo } from 'react';
 import {
   indexScheduleGetEventFinishMs,
@@ -21,7 +22,6 @@ import {
   ScheduleWidgetAttKey,
   ScheduleWidgetCleans,
 } from 'shared/api';
-import styled from 'styled-components';
 import { ScheduleWidgetDayEventRating } from './DayEventRating';
 import { DayEventRedactControls } from './RedactControls';
 

@@ -9,10 +9,12 @@ import { CmComSharedListActionInterpretator } from '$cm/features/com';
 import { CmComCommentSharePull } from '$cm/features/com-comment';
 import { cmAppActions } from '$cm/shared/const';
 import { cmConstantsConfigAtom } from '$cm/shared/state';
+import { Global } from '@emotion/react';
 import { Outlet } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import React, { memo, Suspense, useEffect, useState } from 'react';
 import { CmComWid } from 'shared/api';
+import { blockCmGlobalCss } from 'shared/values/cm/block-kinds/BlockKindsProvider';
 import { toast } from 'sonner';
 
 const CmEditorPage = React.lazy(() => import('$cm+editor/app/EditorPage').then(m => ({ default: m.CmEditorPage })));
@@ -61,6 +63,8 @@ export const CmApp = () => {
   return (
     <>
       <Outlet />
+
+      <Global styles={blockCmGlobalCss} />
 
       {checkAccess('cm', 'EDIT') && <RenderEditorOnce />}
 

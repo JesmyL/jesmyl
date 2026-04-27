@@ -2,10 +2,10 @@ import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditab
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { Modal } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { useMemo } from 'react';
 import { IScheduleWidgetListCat, IScheduleWidgetListUnit, IScheduleWidgetUserCati } from 'shared/api';
-import styled from 'styled-components';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
 import { ScheduleWidgetUserList } from '../control/users/UserList';

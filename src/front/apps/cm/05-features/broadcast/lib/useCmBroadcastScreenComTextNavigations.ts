@@ -27,7 +27,7 @@ export const useCmBroadcastScreenComTextNavigations = () => {
     )
       return;
 
-    const textedSlidei = minimalSlides.findIndex((slide, slidei) => slidei > currentSlidei && slide.ord.isRealText());
+    const textedSlidei = minimalSlides.findIndex((slide, slidei) => slidei > currentSlidei && slide?.ord.isRealText());
     if (minimalSlides[textedSlidei] == null || !minimalSlides[textedSlidei].ord.isRealText()) return;
 
     cmBroadcastCurrentSlideiAtom.set(textedSlidei);
@@ -53,11 +53,11 @@ export const useCmBroadcastScreenComTextNavigations = () => {
       if (
         (showChordedSlideMode === CmBroadcastShowChordedSlideMode.Pass ||
           showChordedSlideMode === CmBroadcastShowChordedSlideMode.Hide) &&
-        !minimalSlides[nextSlidei].ord.isRealText()
+        !minimalSlides[nextSlidei]?.ord.isRealText()
       ) {
         nextSlidei = isRtL
-          ? minimalSlides.findLastIndex((slide, slidei) => slidei < nextSlidei && slide.ord.isRealText())
-          : minimalSlides.findIndex((slide, ordi) => ordi > nextSlidei && slide.ord.isRealText());
+          ? minimalSlides.findLastIndex((slide, slidei) => slidei < nextSlidei && slide?.ord.isRealText())
+          : minimalSlides.findIndex((slide, ordi) => ordi > nextSlidei && slide?.ord.isRealText());
       }
 
       if (nextSlidei >= minimalSlides.length || nextSlidei < 0) return;

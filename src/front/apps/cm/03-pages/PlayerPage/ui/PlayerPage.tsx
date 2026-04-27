@@ -22,12 +22,12 @@ import { CmCom, CmComAudioPlayerMarksMovers, CmComNumber, useCmComList, useCmCom
 import { getCmComFreshAudioMarksPack } from '$cm/shared/lib/getFresh';
 import { cmComTrackPreSwitchTimeAtom, cmOpenComListModeAtom } from '$cm/shared/state';
 import { cmPlayerBroadcastAudioSrcAtom, cmPlayerBroadcastComwAtom } from '$cm/shared/state/broadcast.atoms';
+import styled from '@emotion/styled';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useMemo } from 'react';
 import { CmComWid } from 'shared/api';
 import { toast } from 'sonner';
-import styled from 'styled-components';
 import { CmPlayerBroadcast } from './Broadcast';
 
 let isCanPlay = false;
@@ -195,6 +195,7 @@ export const CmPlayerPage = () => {
                           }
 
                           renderComponentInNewWindow({
+                            target: 'player-page',
                             reactNode: win => {
                               openWin = win;
 

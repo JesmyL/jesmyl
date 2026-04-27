@@ -9,11 +9,11 @@ import { removedCompositionsAtom } from '$cm+editor/shared/state/com';
 import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContainer';
 import { cmEditorComTabCompositionNavs } from '$cm+editor/widgets/com-tab';
 import { CmComAudioPlayer, CmComNumber } from '$cm/ext';
+import styled from '@emotion/styled';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { CmComWid } from 'shared/api';
-import styled from 'styled-components';
 import { useCmEditorCompositionTrySendAudioMarks } from '../api/useCmComEditorTrySendAudioMarks';
 import {
   CmEditorCompositionBusyInfo,

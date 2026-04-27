@@ -9,10 +9,11 @@ import { cmComFontSizeAtom, cmComIsComMiniAnchorAtom, cmComSpeedRollKfAtom } fro
 import { CmCom } from '$cm/ext';
 import { ChordVisibleVariant } from '$cm/shared/model';
 import { cmComTrackPreSwitchTimeAtom } from '$cm/shared/state';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { Link } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useRef } from 'react';
-import styled, { css } from 'styled-components';
 import { TheCmCom } from './TheCom';
 import { TheCmComWithComments } from './TheComWithComments';
 

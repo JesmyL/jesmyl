@@ -1,9 +1,9 @@
 import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
 import { useBibleAddressBooki, useBibleAddressChapteri } from '$bible/shared/hooks';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
+import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { JSX, useEffect, useRef } from 'react';
-import styled from 'styled-components';
 import { bibleBroadcastListVerseiIdPrefix } from '../const/ids';
 import { useBibleBroadcastListVerseListeners } from '../lib/useVerseListListeners';
 
@@ -49,11 +49,11 @@ const StyledFace = styled.li`
   transition-property: background-color, color;
   transition-duration: 0.5s;
 
-  &:nth-child(odd) {
+  &:nth-of-type(odd) {
     background-color: var(--color--2);
   }
 
-  &:nth-child(10n):not(:last-child) {
+  &:nth-of-type(10n):not(:last-child) {
     margin-bottom: 10px;
     position: relative;
 

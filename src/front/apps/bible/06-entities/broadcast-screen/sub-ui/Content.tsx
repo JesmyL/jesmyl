@@ -2,7 +2,7 @@ import { BibleBroadcastScreenConfig, useBibleBroadcastScreenScreenStyle } from '
 import { verseTranslateTitleCssClassName, verseTranslateTitleCssVariableName } from '$bible/shared/const/ids';
 import { useBibleTextContentContext } from '$bible/shared/contexts/texts';
 import { useBibleBroadcastScreenFontSizeScreenAdapter } from '$bible/shared/lib';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import '../style/Content.scss';
 
 interface Props {

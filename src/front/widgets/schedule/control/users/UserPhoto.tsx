@@ -1,9 +1,9 @@
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { getScheduleWidgetUserPhotoStorageKey } from '#widgets/schedule/storage';
 import { indexIDB } from '$index/shared/state';
+import styled from '@emotion/styled';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { IScheduleWidgetUser } from 'shared/api';
-import styled from 'styled-components';
 
 interface Props {
   user: IScheduleWidgetUser;

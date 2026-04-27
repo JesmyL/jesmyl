@@ -1,4 +1,5 @@
-import styled, { css } from 'styled-components';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { BroadcastResizeBorderPositions, FixedResizerLines, ScreenBroadcastPositionConfig } from '../../model';
 import { PositionConfiguratorsResizersHalfFixer } from './HalfFixer';
 import { usePositionConfiguratorResizerBorderMaker } from './hooks/border-maker';

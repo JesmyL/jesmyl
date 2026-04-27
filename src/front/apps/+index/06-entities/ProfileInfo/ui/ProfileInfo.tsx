@@ -1,7 +1,7 @@
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
+import styled from '@emotion/styled';
 import { useState } from 'react';
 import { LocalSokiAuth } from 'shared/api';
-import styled from 'styled-components';
 import { IndexUserMore } from '../../UserMore/ui/UserMore';
 
 export const IndexProfileInfo = ({ auth }: { auth: LocalSokiAuth }) => {

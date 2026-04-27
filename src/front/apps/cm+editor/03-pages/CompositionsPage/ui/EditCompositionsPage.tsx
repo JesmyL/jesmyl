@@ -9,10 +9,10 @@ import {
   CmEditorCompositionsCatSpecialSearches,
   useCmComList,
 } from '$cm/ext';
+import styled from '@emotion/styled';
 import { useNavigate } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
 import { ICmEditorCompositionsCatSpecialSearches } from '../model';
 
 let termAtom: Atom<string>;

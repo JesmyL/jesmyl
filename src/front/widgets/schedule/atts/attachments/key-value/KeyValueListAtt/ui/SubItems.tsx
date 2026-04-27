@@ -3,6 +3,8 @@ import { markdown } from '#shared/config/markdown';
 import { mylib } from '#shared/lib/my-lib';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { ReactNode } from 'react';
 import {
   customAttUseRights,
@@ -14,7 +16,6 @@ import {
   ScheduleWidgetAppAttCustomizableValueItem,
   ScheduleWidgetAppAttCustomized,
 } from 'shared/api';
-import styled, { css } from 'styled-components';
 import { KeyValueListAttNumberMember } from '../../KeyValueListAttNumberMember';
 import { ScheduleKeyValueListAttLiItemDropdown } from '../../LiItemDropdown';
 

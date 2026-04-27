@@ -1,8 +1,8 @@
 import { useSetBibleAddressWithForceJoinReset } from '$bible/shared/hooks';
 import { useBibleCurrentChapterList } from '$bible/shared/hooks/texts';
+import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { useMemo } from 'react';
-import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 import { bibleBroadcastListChapteriIdPrefix } from '../const/ids';
 import { useBibleBroadcastListFaceClickListener } from '../lib/useBibleListFaceClickListener';

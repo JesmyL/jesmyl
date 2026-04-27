@@ -3,9 +3,9 @@ import { cmComCommentCurrentOpenedAltKeyAtom } from '$cm/entities/com-comment';
 import { CmComOrderList } from '$cm/entities/com-order';
 import { CmCom } from '$cm/ext';
 import { TheCmComWithComments } from '$cm/widgets/com';
+import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import React from 'react';
-import styled from 'styled-components';
 import { cmComChordHardLevelAtom, cmComSpeedRollKfAtom } from '../state/atoms';
 import { CmComNumber } from './ComNumber';
 

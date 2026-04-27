@@ -11,11 +11,11 @@ import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { WithAtomValue } from '#shared/ui/WithAtomValue';
 import { gamerIDB } from '$gamer/shared/state/gamerIDB';
+import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import md5Func from 'md5';
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 import {
   gamerMemoryGiantBoardImageisAtom,

@@ -1,7 +1,7 @@
 import { isNumberSearchAtom } from '#basis/state/isNumberSearchAtom';
+import styled from '@emotion/styled';
 import { atom, Atom, useAtomValue } from 'atomaric';
 import { useEffect, useId } from 'react';
-import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 import { LazyIcon } from './the-icon/LazyIcon';
 import { WithAtomValue } from './WithAtomValue';

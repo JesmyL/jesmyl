@@ -1,11 +1,11 @@
 import { focusedInputElementAtom } from '#shared/lib/atoms/focusedInputElementAtom';
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { isMobileDevice } from '#shared/lib/device-differences';
+import styled from '@emotion/styled';
 import { Link } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useRef } from 'react';
 import { emptyFunc } from 'shared/utils';
-import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 import { LazyIcon } from '../the-icon/LazyIcon';
 import { PageContainerConfigurerProps } from './PageContainerConfigurer.model';

@@ -3,11 +3,12 @@ import { ButtonGroup } from '#shared/components/ui/button-group';
 import { getParentNodeWithClassName } from '#shared/lib/getParentNodeWithClassName';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { cmIDB, useCmComList } from '$cm/ext';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useNavigate } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useMemo, useRef } from 'react';
 import { makeRegExp } from 'regexpert';
-import styled, { css } from 'styled-components';
 
 let isOpenAtom: Atom<boolean>;
 let lastClickedChordAtom: Atom<string>;

@@ -3,11 +3,11 @@ import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { TheButton } from '#shared/ui/TheButton';
 import { cmComSelectedComwsAtom, useCmComSelectedList } from '$cm/entities/com';
 import { CmComFaceList } from '$cm/entities/com-face';
+import styled from '@emotion/styled';
 import { useNavigate } from '@tanstack/react-router';
 import { Atom, useAtomValue } from 'atomaric';
 import { CmComWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
-import styled from 'styled-components';
 
 export const CmComSharedListActionInterpretator = ({
   comListOnActionAtom,

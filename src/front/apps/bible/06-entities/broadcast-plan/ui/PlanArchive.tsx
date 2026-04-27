@@ -2,8 +2,8 @@ import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe
 import { mylib } from '#shared/lib/my-lib';
 import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '$bible/shared/hooks';
 import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
+import styled from '@emotion/styled';
 import { JSX, memo, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
 import { BibleBroadcastArchive } from '../../broadcast-archive/ui/Archive';
 import { useBibleBroadcastPlan, useBibleBroadcastPlanClearSetter } from '../lib/plan';
 

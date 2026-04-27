@@ -5,11 +5,11 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { getScheduleWidgetUserPhotoStorageKey } from '#widgets/schedule/storage';
 import { indexIDB } from '$index/shared/state';
+import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
 import { IScheduleWidgetUser } from 'shared/api';
 import { isNIs } from 'shared/utils';
-import styled from 'styled-components';
 import { ScheduleWidgetUserPhoto } from './UserPhoto';
 
 interface Props {

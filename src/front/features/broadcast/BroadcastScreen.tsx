@@ -4,8 +4,9 @@ import { BibleTranslatesContextProvider } from '$bible/shared/state/TranslatesCo
 import { cmIsTrackBroadcastAtom } from '$cm/shared/state';
 import { CmBroadcastCurrentComTrackScreen } from '$cm/widgets/broadcast/ui/CurrentComTrackScreen';
 import { CmBroadcastCurrentScreen } from '$cm/widgets/broadcast/ui/CurrentScreen';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
-import styled, { css } from 'styled-components';
 import { broadcastCurrentTextAppAtom } from './atoms';
 import { useCurrentForceViweAppContext } from './Broadcast.contexts';
 import { BroadcastScreenProps } from './Broadcast.model';

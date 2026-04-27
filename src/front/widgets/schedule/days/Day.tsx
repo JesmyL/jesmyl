@@ -4,6 +4,7 @@ import { mylib, MyLib } from '#shared/lib/my-lib';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { useMemo, useState } from 'react';
 import {
@@ -15,7 +16,6 @@ import {
   ScheduleScopeProps,
 } from 'shared/api';
 import { isNIs } from 'shared/utils';
-import styled from 'styled-components';
 import { ScheduleAlarmDay } from '../alarm/AlarmDay';
 import { ScheduleDayScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';

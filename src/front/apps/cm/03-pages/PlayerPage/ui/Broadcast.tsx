@@ -2,8 +2,8 @@ import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
 import { useCmCom } from '$cm/entities/com';
 import { useCmComCurrentMarkValues } from '$cm/shared/lib/useCmComCurrentMarkValues';
 import { cmPlayerBroadcastComwAtom } from '$cm/shared/state/broadcast.atoms';
+import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
-import styled from 'styled-components';
 
 export const CmPlayerBroadcast = () => {
   const comw = useAtomValue(cmPlayerBroadcastComwAtom);

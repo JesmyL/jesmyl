@@ -1,6 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
 import { CopyTextButton } from '#shared/ui/CopyTextButton';
-import styled from 'styled-components';
 import { StyledIndexConsoleCoderResultName } from '../style/styles';
 
 export const IndexConsoleCoderResultSimple = ({ name, value }: { value: unknown; name?: string | number }) => (
@@ -13,9 +12,9 @@ export const IndexConsoleCoderResultSimple = ({ name, value }: { value: unknown;
     {value instanceof Error ? (
       <pre className="text-xKO">{'' + value}</pre>
     ) : (
-      <Simple>
+      <span className="flex text-[#7aa7ef]">
         {mylib.isRegExp(value) ? (
-          <RegExpResult>{' ' + value}</RegExpResult>
+          <span className="text-[#efd799]">{' ' + value}</span>
         ) : mylib.isNaN(value) ? (
           'NaN'
         ) : value == null ? (
@@ -27,16 +26,7 @@ export const IndexConsoleCoderResultSimple = ({ name, value }: { value: unknown;
         ) : (
           JSON.stringify(value)
         )}
-      </Simple>
+      </span>
     )}
   </span>
 );
-
-const Simple = styled.span`
-  display: flex;
-  color: #7aa7ef;
-`;
-
-const RegExpResult = styled.span`
-  color: #efd799;
-`;

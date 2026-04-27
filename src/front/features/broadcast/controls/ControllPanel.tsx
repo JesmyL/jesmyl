@@ -1,7 +1,7 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { memo } from 'react';
-import styled from 'styled-components';
 import { useScreenBroadcastConfigsValue } from '../atoms';
 import { useWatchScreenBroadcast } from '../hooks/watch-broadcast';
 import { useScreenBroadcastCurrentWindow, useScreenBroadcastWindows } from '../hooks/windows';
@@ -44,7 +44,7 @@ export const ScreenBroadcastControlPanel = memo(function ControlPanel({ onNext, 
         >
           {windows.length ? <LazyIcon icon="Computer" /> : <LazyIcon icon="Play" />}
         </ControlButton>
-        <ScreenBroadcastControlPanelShowMdButton Parent={ControlButton} />
+        <ScreenBroadcastControlPanelShowMdButton />
         <ControlButton
           className="pointer"
           title="Backspace"

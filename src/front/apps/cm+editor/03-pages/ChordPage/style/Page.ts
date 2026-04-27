@@ -1,5 +1,5 @@
 import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContainer';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 export const StyledCmEditorChordPageContainer = styled(PageCmEditorContainer)`
   .content {

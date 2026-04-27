@@ -1,7 +1,8 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useState } from 'react';
 import { IScheduleWidgetUser } from 'shared/api';
-import styled, { css } from 'styled-components';
 import { HistoryAdder } from './model';
 
 interface Props {

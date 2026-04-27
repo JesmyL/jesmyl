@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { fixedResizerLinesAtom } from '../../atoms';
 import { FixedResizerLines, ScreenBroadcastPositionConfig } from '../../model';
 

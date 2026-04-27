@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { cmComSelectedComwsAtom } from '../state/atoms';
 
 export const CmComMoveSelectedButton = ({ comi }: { comi: number }) => {

@@ -1,6 +1,6 @@
 import { useSetBibleAddressWithForceJoinReset } from '$bible/shared/hooks';
 import { useBibleBookList } from '$bible/shared/hooks/texts';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { twMerge } from 'tailwind-merge';
 import { bibleBroadcastListBookiIdPrefix } from '../const/ids';
 import { useBibleBroadcastListSingleAddressSetter } from '../lib/hooks';

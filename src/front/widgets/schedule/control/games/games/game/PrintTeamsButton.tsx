@@ -2,9 +2,10 @@ import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
 import { useScheduleGameContext } from '../lib/contexts';
 
 let isOpenPrintAtom: Atom<boolean>;

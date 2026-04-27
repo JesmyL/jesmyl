@@ -1,5 +1,6 @@
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { IIncorrects } from 'shared/model/cm/Incorrects';
-import styled, { css } from 'styled-components';
 
 const classNamePostfix = '-correct-block';
 

@@ -1,7 +1,8 @@
 import { complectIDB } from '$index/shared/state';
+import { css, keyframes } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
-import styled, { css, keyframes } from 'styled-components';
 import { broadcastShowAlertLineConfigIdAtom } from '../../initial-slide-context';
 
 export const AlertLineSlideText = () => {

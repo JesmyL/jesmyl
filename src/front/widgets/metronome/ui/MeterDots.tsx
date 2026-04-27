@@ -1,7 +1,8 @@
+import { css, keyframes } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { memo } from 'react';
 import { cmComMetricNumTitles, cmComNextMetricSize } from 'shared/const/cm/com-metric-nums';
-import styled, { css, keyframes } from 'styled-components';
 import { metronomeUserMeterAccentsAtom, metronomeUserMeterSizeAtom } from '../lib/atoms';
 
 export const MetronomeMeterDots = memo(function MetronomeMeterDots() {

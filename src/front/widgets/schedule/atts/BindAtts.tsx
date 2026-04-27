@@ -3,6 +3,7 @@ import { propagationStopper } from '#shared/lib/event-funcs';
 import { MyLib, mylib } from '#shared/lib/my-lib';
 import { Modal, ModalBody, ModalFooter } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { ReactNode } from 'react';
 import {
@@ -13,7 +14,6 @@ import {
   ScheduleWidgetDayEventAttValues,
   scheduleWidgetUserRights,
 } from 'shared/api';
-import styled from 'styled-components';
 import { useScheduleWidgetRightsContext } from '../contexts';
 import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
 import { useScheduleWidgetAppAttsContext } from '../useScheduleWidget';

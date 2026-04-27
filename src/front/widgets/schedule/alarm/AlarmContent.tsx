@@ -4,6 +4,7 @@ import { FullContentValue } from '#shared/ui/fullscreen-content/FullContent';
 import { useFullContent } from '#shared/ui/fullscreen-content/useFullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useIndexSchedules } from '$index/shared/state';
+import styled from '@emotion/styled';
 import { Link } from '@tanstack/react-router';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import {
@@ -14,7 +15,6 @@ import {
   ScheduleWidgetDayListItemTypeBox,
 } from 'shared/api';
 import { itNNull } from 'shared/utils';
-import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 import { ScheduleWidgetTopicTitle } from '../complect/TopicTitle';
 import { ScheduleAlarmDay } from './AlarmDay';

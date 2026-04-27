@@ -10,10 +10,7 @@ import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { configureAtomaric } from 'atomaric';
 import { useSyncExternalStore } from 'react';
 import { routeTree } from 'routeTree.gen';
-import { BlockKindProvider } from 'shared/values/cm/block-kinds/BlockKindsProvider';
 import { Toaster } from 'sonner';
-import { makeStameskaIconStyledProvider } from 'stameska-icon/provider';
-import styled, { css, keyframes } from 'styled-components';
 import './App.scss';
 import './tw.css';
 
@@ -36,28 +33,24 @@ declare module '@tanstack/react-router' {
 export const App = () => {
   return (
     <QueryClientProvider client={defaultQueryClient}>
-      <StyledIconProvider>
-        <BlockKindProvider>
-          <AppDialogProvider title="app">
-            <RouterProvider router={router} />
+      <AppDialogProvider title="app">
+        <RouterProvider router={router} />
 
-            <Modal
-              openAtom={rootAppModalTextContentAtom}
-              checkIsOpen={checkUserModalTextContentShow}
-            >
-              <WithAtomValue atom={rootAppModalTextContentAtom}>
-                {props => (
-                  <>
-                    <ModalHeader>{props.header || 'Сообщение'}</ModalHeader>
-                    <ModalBody>{props.text}</ModalBody>
-                    {props.footer && <ModalFooter>{props.footer}</ModalFooter>}
-                  </>
-                )}
-              </WithAtomValue>
-            </Modal>
-          </AppDialogProvider>
-        </BlockKindProvider>
-      </StyledIconProvider>
+        <Modal
+          openAtom={rootAppModalTextContentAtom}
+          checkIsOpen={checkUserModalTextContentShow}
+        >
+          <WithAtomValue atom={rootAppModalTextContentAtom}>
+            {props => (
+              <>
+                <ModalHeader>{props.header || 'Сообщение'}</ModalHeader>
+                <ModalBody>{props.text}</ModalBody>
+                {props.footer && <ModalFooter>{props.footer}</ModalFooter>}
+              </>
+            )}
+          </WithAtomValue>
+        </Modal>
+      </AppDialogProvider>
       <Toaster
         position="bottom-center"
         style={{ bottom: '100px' }}
@@ -66,7 +59,6 @@ export const App = () => {
   );
 };
 
-const StyledIconProvider = makeStameskaIconStyledProvider(styled, css, keyframes);
 const checkUserModalTextContentShow = (it: { text: React.ReactNode }) => !!it.text;
 
 soki.onTokenInvalidEvent.listen(() => {

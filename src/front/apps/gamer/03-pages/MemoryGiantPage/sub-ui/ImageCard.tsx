@@ -1,6 +1,6 @@
 import { GamerMemoryGiantImage } from '$gamer/shared/model/memory-giant';
+import styled from '@emotion/styled';
 import { HTMLAttributes } from 'react';
-import styled from 'styled-components';
 
 export const GamerMemoryGiantImageCard = ({
   image,

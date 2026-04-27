@@ -2,8 +2,8 @@ import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { NewWindow } from '#shared/ui/tags/NewWindow';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { useAuth } from '$index/shared/state';
+import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { markdownBroadcastAtom } from './atoms';
 import { ScheduleWidgetMarkdownBroadcastWindow } from './Window';
 

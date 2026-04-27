@@ -1,5 +1,6 @@
 import { styledHoverBind } from '#shared/lib/styled-utils';
-import styled, { css } from 'styled-components';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
 export const CmEditorComTabChordApplicationsStyledContent = styled.div`
   max-width: 100vw;

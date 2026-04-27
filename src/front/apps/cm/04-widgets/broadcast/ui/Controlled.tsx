@@ -23,12 +23,12 @@ import { useCmBroadcastScreenComNavigations, useCmBroadcastScreenComTextNavigati
 import { getCmComFreshAudioMarksPack } from '$cm/shared/lib/getFresh';
 import { cmComTrackPreSwitchTimeAtom, cmIsTrackBroadcastAtom } from '$cm/shared/state';
 import { cmPlayerBroadcastAudioSrcAtom, cmPlayerBroadcastComwAtom } from '$cm/shared/state/broadcast.atoms';
+import styled from '@emotion/styled';
 import { useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { ReactNode } from 'react';
 import { CmComWid, HttpNumLeadLink } from 'shared/api';
 import { toast } from 'sonner';
-import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 import { useCmBroadcastScreenKeyDownListen } from '../lib/keydown-listen';
 import { CmBroadcastControlPanel } from './ControllPanel';

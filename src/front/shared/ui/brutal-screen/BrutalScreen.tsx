@@ -1,5 +1,5 @@
+import styled from '@emotion/styled';
 import { HtmlHTMLAttributes, PropsWithChildren } from 'react';
-import styled from 'styled-components';
 
 export function BrutalScreen(props: PropsWithChildren<HtmlHTMLAttributes<HTMLDivElement>>) {
   return (

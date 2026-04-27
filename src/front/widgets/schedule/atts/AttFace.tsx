@@ -1,10 +1,10 @@
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { ReactNode } from 'react';
 import { ScheduleWidgetAttKey, scheduleWidgetUserRights } from 'shared/api';
-import styled from 'styled-components';
 import { useScheduleWidgetRightsContext } from '../contexts';
 import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
 import { ScheduleWidgetCustomAtt } from './custom/CustomAtt';

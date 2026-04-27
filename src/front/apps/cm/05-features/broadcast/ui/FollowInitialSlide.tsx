@@ -1,6 +1,6 @@
 import { QRCode } from '#shared/ui/qr-code/QRCode';
+import styled from '@emotion/styled';
 import { IScheduleWidgetWid, hosts } from 'shared/api';
-import styled from 'styled-components';
 
 export const CmBroadcastFollowInitialSlide = ({ schw }: { schw: IScheduleWidgetWid }) => {
   return (

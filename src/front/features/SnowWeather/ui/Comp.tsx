@@ -1,8 +1,9 @@
 import { mylib } from '#shared/lib/my-lib';
 import { indexIsDarkModeAtom } from '$index/shared/state';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { memo } from 'react';
-import styled, { css } from 'styled-components';
 
 const nodes: Record<number, React.ReactNode> = {};
 let countAtom: Atom<number>;

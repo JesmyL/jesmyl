@@ -1,10 +1,11 @@
 import { getParentNodeWithAttributeName } from '#shared/lib/getParentNodeWithClassName';
 import { cmComChordHardLevelAtom, cmComFontSizeAtom } from '$cm/entities/index';
 import { ChordVisibleVariant, CmCom, CmComOrderList } from '$cm/ext';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
 import { CmComCommentBlockSimpleSelector, CmComOrderWid } from 'shared/api';
-import styled, { css } from 'styled-components';
 import { CmComCommentConstructorLineConstructor } from './LineConstructor';
 import { CmComCommentConstructorWordConstructor } from './WordConstructor';
 

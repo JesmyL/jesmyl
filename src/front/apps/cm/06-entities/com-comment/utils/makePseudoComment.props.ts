@@ -1,5 +1,5 @@
+import { SerializedStyles } from '@emotion/react';
 import { makeRegExp } from 'regexpert';
-import { RuleSet } from 'styled-components';
 
 export const cmComCommentPseudoCommentContentAccentsKind = (text: string) => {
   text = text.trimStart();
@@ -15,7 +15,7 @@ export const cmComCommentAccentsColorClassNameList = [null, `text-x7`, `text-xKO
 
 export const cmComCommentMakePseudoCommentContentAccentsColorCss = (
   text: string,
-  elseCss?: RuleSet<object> | nil | string,
+  elseCss?: SerializedStyles | nil | string,
 ) =>
   cmComCommentAccentsColorList[cmComCommentPseudoCommentContentAccentsKind(text)] ??
   elseCss ??

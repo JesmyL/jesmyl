@@ -1,7 +1,8 @@
 import { useCmComSelectedList } from '$cm/entities/com';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { memo } from 'react';
 import { CmComWid } from 'shared/api';
-import styled, { css } from 'styled-components';
 import { cmComFaceCurrentComwIdPrefix } from '../const/ids';
 import { StyledCmComFaceList } from '../style/StyledComList';
 

@@ -8,10 +8,10 @@ import { ScheduleWidgetTopicTitle } from '#widgets/schedule/complect/TopicTitle'
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { ScheduleWidgetEventTypeList } from '#widgets/schedule/events/EventTypeList';
 import { schDaysTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
+import styled from '@emotion/styled';
 import { useEffect, useMemo, useState } from 'react';
 import { IScheduleWidgetDay, ScheduleDayScopeProps, indexScheduleGetDayEventTimes } from 'shared/api';
 import { isNIs } from 'shared/utils';
-import styled from 'styled-components';
 import { ScheduleWidgetDayEvent, StyledScheduleWidgetDayEvent } from './DayEvent';
 import { ScheduleWidgetDayEventEventActions } from './EventActions';
 

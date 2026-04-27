@@ -1,6 +1,6 @@
 import { Button } from '#shared/components';
+import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
-import styled from 'styled-components';
 import { currentBroadcastConfigiAtom, useScreenBroadcastConfigsValue } from '../../atoms';
 import { useAddScreenBroadcastConfig } from '../../hooks/configs';
 import { useWatchScreenBroadcast } from '../../hooks/watch-broadcast';

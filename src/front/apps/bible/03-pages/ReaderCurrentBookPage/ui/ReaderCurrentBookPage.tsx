@@ -9,10 +9,10 @@ import { useBibleAddressBooki, useBibleAddressChapteri, useBibleAddressVersei } 
 import { useBibleBookList } from '$bible/shared/hooks/texts';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
 import { BibleReaderBookText } from '$bible/widgets/reader';
+import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
 import { emptyFunc } from 'shared/utils';
-import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 
 export function BibleReaderCurrentBookPage() {

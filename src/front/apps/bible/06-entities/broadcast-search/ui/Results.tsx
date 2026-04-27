@@ -3,11 +3,11 @@ import { useBibleAddressBooki, useBibleAddressChapteri } from '$bible/shared/hoo
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
 import { BibleBooki, BibleBroadcastSingleAddress, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
 import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
+import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { JSX, useCallback, useEffect, useState } from 'react';
 import { escapeRegExpSymbols, makeRegExp } from 'regexpert';
 import { transcriptEnToRuText } from 'shared/utils';
-import styled from 'styled-components';
 import { useBibleBroadcastSearchResultSelectedValue, useBibleBroadcastSearchSearchResultList } from '../lib/results';
 import { bibleBroadcastSearchTermAtom, bibleBroadcastSearchZoneAtom } from '../state/atoms';
 import { BibleBroadcastSearchResultVerse } from './ResultVerse';

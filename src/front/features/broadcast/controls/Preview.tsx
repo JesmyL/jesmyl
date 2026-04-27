@@ -1,7 +1,8 @@
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
-import styled, { css } from 'styled-components';
 import { BroadcastScreen } from '../BroadcastScreen';
 import { useScreenBroadcastCurrentConfig } from '../hooks/configs';
 

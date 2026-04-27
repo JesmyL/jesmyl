@@ -1,6 +1,6 @@
 import { CmBroadcastSchWgtLiveDataValue } from '$cm/ext';
 import { CmBroadcastScreen } from '$cm/widgets/broadcast';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 type Props = CmBroadcastSchWgtLiveDataValue & {
   subUpdates: number | string | und;

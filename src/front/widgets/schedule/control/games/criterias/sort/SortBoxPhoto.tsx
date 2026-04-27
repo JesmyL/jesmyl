@@ -1,7 +1,7 @@
 import { ScheduleWidgetUserTakePhoto } from '#widgets/schedule/control/users/TakePhoto';
 import { ScheduleWidgetUserPhoto } from '#widgets/schedule/control/users/UserPhoto';
+import styled from '@emotion/styled';
 import { IScheduleWidgetUser } from 'shared/api';
-import styled from 'styled-components';
 
 interface Props {
   user: IScheduleWidgetUser;

@@ -5,8 +5,8 @@ import { BibleBroadcastSearchPanel } from '$bible/entities/broadcast-search';
 import { BibleTranslateModulesControl } from '$bible/entities/translate';
 import { useBiblePrintShowSlideAddressCode } from '$bible/shared/hooks/slide-sync';
 import { bibleVerseiAtom } from '$bible/shared/state/atoms';
+import styled from '@emotion/styled';
 import { JSX, ReactNode, useEffect } from 'react';
-import styled from 'styled-components';
 import { ScreenBroadcastControlPanel } from '../../../../../features/broadcast/controls/ControllPanel';
 import { BibleBroadcastControlledTopPanel } from './TopPanel';
 

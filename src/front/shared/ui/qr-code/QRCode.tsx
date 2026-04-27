@@ -1,6 +1,6 @@
+import styled from '@emotion/styled';
 import QRCodeGenerator from 'qrcode';
 import { HTMLAttributes } from 'react';
-import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 
 export function QRCode({ text, ...props }: HTMLAttributes<HTMLCanvasElement> & { text: string }) {

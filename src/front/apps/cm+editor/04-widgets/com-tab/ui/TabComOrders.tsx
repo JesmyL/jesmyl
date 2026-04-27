@@ -12,8 +12,8 @@ import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { CmComOrderOnClickBetweenData } from '$cm+editor/shared/model/Orders';
 import { ChordVisibleVariant, TheCmComOrder } from '$cm/ext';
+import styled from '@emotion/styled';
 import React, { useState } from 'react';
-import styled from 'styled-components';
 
 export const CmEditorComTabComOrders = ({ ccom }: { ccom: EditableCom }) => {
   const [newBlockAdderPopupCom, setNewBlockAdderPopupCom] = useState<EditableCom | false>(false);

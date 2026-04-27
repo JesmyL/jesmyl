@@ -40,7 +40,12 @@ export default defineConfig(() => {
       ...(isHttpsOnLocalhost ? [basicSsl()] : []),
       VitePWA(vitePWAOptions),
       tailwindcss(),
-      react(),
+      react({
+        jsxImportSource: '@emotion/react',
+        babel: {
+          plugins: ['@emotion/babel-plugin'],
+        },
+      }),
       attrStylerVitePlugin({
         fileExtToAnalize: ['.css', '.scss', '.styler.ts'],
         prefixes: ['st-', 'com-letter-', 'com-word-'],

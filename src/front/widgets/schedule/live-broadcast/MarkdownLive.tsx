@@ -1,5 +1,5 @@
 import { markdown } from '#shared/config/markdown';
-import { css } from 'styled-components';
+import { css } from '@emotion/react';
 
 interface Props {
   md?: string;

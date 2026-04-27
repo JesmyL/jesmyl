@@ -4,7 +4,8 @@ import {
   StyledPhaseContainerConfigurerHeadTitle,
 } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { cmComAudioPlayerHeaderStickyCss } from '$cm/entities/com-audio-player';
-import styled, { css } from 'styled-components';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
 export const StyledCmComCompositionContainer = styled(PageContainerConfigurer)<{ $isInLaterList: boolean }>`
   ${props =>

@@ -1,5 +1,4 @@
-import { mylib } from '#shared/lib/my-lib';
-import styled, { RuleSet } from 'styled-components';
+import { Global, SerializedStyles } from '@emotion/react';
 
 const checkClassName = 'check-nested-feature-supports';
 const opacity = '0.234';
@@ -19,26 +18,5 @@ style.remove();
 checkDiv.remove();
 
 export const makeStyleNode = isSupports
-  ? (styleCssStr: string | RuleSet<object>) => <style>{joinRecursively(styleCssStr)}</style>
-  : (styleCssStr: string | RuleSet<object>) => <Style $text={`html:has(&){${joinRecursively(styleCssStr)}}`} />;
-
-const Style = styled.div<{ $text: string }>`
-  ${props => props.$text}
-`;
-
-const joinRecursively = (value: unknown) => {
-  const joinRecursively = (value: unknown) => {
-    let result = '';
-
-    if (mylib.isStr(value) || mylib.isNum(value)) result += value;
-    else if (mylib.isArr(value)) {
-      for (let i = 0; i < value.length; i++) {
-        result += joinRecursively(value[i]);
-      }
-    } else if (mylib.isFunc(value)) result += joinRecursively(value());
-
-    return result;
-  };
-
-  return joinRecursively(value);
-};
+  ? (styleCssStr: SerializedStyles) => <style>{styleCssStr.styles}</style>
+  : (styleCssStr: SerializedStyles) => <Global styles={styleCssStr} />;

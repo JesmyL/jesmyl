@@ -1,5 +1,5 @@
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { twMerge } from 'tailwind-merge';
 import { ScreenBroadcastConfig } from '../../model';
 

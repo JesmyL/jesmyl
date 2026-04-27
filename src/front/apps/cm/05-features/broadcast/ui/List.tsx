@@ -3,10 +3,10 @@ import { useCmCom } from '$cm/entities/com';
 import { CmComOrderList } from '$cm/entities/com-order';
 import { CmComOrderLine } from '$cm/entities/com-order-line';
 import { cmComChordHardLevelAtom, cmComChordVisibleVariantAtom, cmComSpeedRollKfAtom } from '$cm/entities/index';
+import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
-import styled from 'styled-components';
 import { CmBroadcastSchWgtLiveDataValue } from '../model/model';
 
 const _lineNamePrefix = 'live-broadcast-line-';

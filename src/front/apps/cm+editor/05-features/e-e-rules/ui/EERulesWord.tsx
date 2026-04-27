@@ -2,11 +2,11 @@ import { mylib } from '#shared/lib/my-lib';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
+import styled from '@emotion/styled';
 import { memo, useReducer, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { EeStorePack } from 'shared/api';
 import { itIt, itNIt } from 'shared/utils';
-import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 
 const radioTitles = ['е/ё', 'е!!', 'ё!!'].map((typeName, type) => <div key={type}>{typeName}</div>);

@@ -1,7 +1,7 @@
 import { BroadcastSlidePreview } from '#features/broadcast/controls/Preview';
 import { BibleBroadcastList } from '$bible/entities/broadcast-list';
+import styled from '@emotion/styled';
 import { JSX, useState } from 'react';
-import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 
 export const BibleBroadcastControlledTopPanel = function TopPanel(): JSX.Element {

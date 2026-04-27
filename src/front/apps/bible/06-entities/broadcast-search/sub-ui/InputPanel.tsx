@@ -1,8 +1,9 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { BibleSearchZone } from '$bible/shared/model/base';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import styled, { css } from 'styled-components';
 import { useBibleBroadcastSearchResultSelectedSet } from '../lib/results';
 import { bibleBroadcastSearchZoneAtom } from '../state/atoms';
 import { BibleBroadcastSearchPanelAddressInput } from './AddressInput';

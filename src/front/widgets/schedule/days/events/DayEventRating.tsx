@@ -5,10 +5,10 @@ import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIcon
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
+import styled from '@emotion/styled';
 import { ReactNode } from 'react';
 import { IScheduleWidgetDayEvent, ScheduleDayEventScopeProps } from 'shared/api';
 import { emptyAsyncFunc, itNNull } from 'shared/utils';
-import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 
 const ratePoints = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5] as const;

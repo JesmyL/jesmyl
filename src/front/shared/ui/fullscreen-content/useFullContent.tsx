@@ -1,8 +1,8 @@
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
+import styled from '@emotion/styled';
 import { MouseEvent, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { Eventer, EventerListeners } from 'shared/utils';
-import styled from 'styled-components';
 import { Portal } from '../Portal';
 import { LazyIcon } from '../the-icon/LazyIcon';
 

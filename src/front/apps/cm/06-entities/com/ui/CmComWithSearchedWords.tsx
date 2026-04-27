@@ -1,7 +1,7 @@
 import { makeStyleNode } from '$cm/shared/lib/makeStyleNode';
+import { css } from '@emotion/react';
 import React from 'react';
 import { CmComWid } from 'shared/api';
-import { css } from 'styled-components';
 import { CmComWordFounds } from '../model/com';
 
 export const CmComWithSearchedWords = (props: {

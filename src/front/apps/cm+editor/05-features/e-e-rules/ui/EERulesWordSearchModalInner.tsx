@@ -1,8 +1,8 @@
 import { ModalBody } from '#shared/ui/modal';
 import { TextInput } from '#shared/ui/TextInput';
+import styled from '@emotion/styled';
 import { useState } from 'react';
 import { EeStorePack } from 'shared/api';
-import styled from 'styled-components';
 import { CmEditorEERulesWord } from './EERulesWord';
 
 type Props = {

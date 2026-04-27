@@ -2,9 +2,9 @@ import { Button } from '#shared/components/ui/button';
 import { ButtonGroup } from '#shared/components/ui/button-group';
 import { EditableComOrder } from '$cm+editor/shared/classes/EditableComOrder';
 import { IEditableComLineProps } from '$cm+editor/shared/model/Repeats';
+import styled from '@emotion/styled';
 import { CSSProperties, Dispatch, SetStateAction } from 'react';
 import { OrderRepeats } from 'shared/api';
-import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 import { CmEditorTabComRepeatsRemoveButton } from './ComRepeatsRemoveButton';
 

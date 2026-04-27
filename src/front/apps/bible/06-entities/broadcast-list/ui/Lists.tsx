@@ -10,8 +10,9 @@ import {
 } from '$bible/shared/hooks';
 import { BibleBooki, BibleBroadcastJoinAddress, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
 import { BibleTranslatesContextProvider } from '$bible/shared/state/TranslatesContext';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useEffect } from 'react';
-import styled, { css } from 'styled-components';
 import {
   bibleBroadcastListBookiIdPrefix,
   bibleBroadcastListChapteriIdPrefix,

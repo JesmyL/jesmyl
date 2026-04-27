@@ -3,7 +3,7 @@ import { renderComponentInNewWindow } from '#shared/lib/renders';
 import { memo, useEffect, useRef, useState } from 'react';
 
 interface Props {
-  target?: string;
+  target: string;
   features?: string;
   children?: React.ReactNode;
   onInit?: (win: Window) => void;

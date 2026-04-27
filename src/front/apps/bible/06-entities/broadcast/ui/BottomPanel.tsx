@@ -1,6 +1,6 @@
 import { BibleBroadcastScreenConfigurations } from '$bible/widgets/broadcast';
+import styled from '@emotion/styled';
 import { JSX, memo } from 'react';
-import styled from 'styled-components';
 import { BibleBroadcastHistoryArchive } from '../../broadcast-history/ui/HistoryArchive';
 import { BibleBroadcastPlanArchive } from '../../broadcast-plan/ui/PlanArchive';
 

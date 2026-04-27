@@ -17,12 +17,12 @@ import { CmComSetListLimitsExtracterContext } from '$cm/entities/index';
 import { CmCom, CmComWithComListSearchFilterInput } from '$cm/ext';
 import { CmComRatingSortedComList } from '$cm/features/com';
 import { takeCatTermAtom } from '$cm/shared/lib/Cat';
+import styled from '@emotion/styled';
 import { FileRoutesByPath } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode, useEffect, useRef } from 'react';
 import { CmCatWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
-import styled from 'styled-components';
 
 interface Props {
   cat: CmCat | und;

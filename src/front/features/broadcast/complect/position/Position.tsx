@@ -1,7 +1,8 @@
 import { useCmBroadcastUpdateCurrentConfig } from '$cm/widgets/broadcast/hooks/update-config';
+import { css, SerializedStyles } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import styled, { RuleSet, css } from 'styled-components';
 import { fixedResizerLinesAtom } from '../atoms';
 import { defaultScreenBroadcastPositionConfig } from '../defaults';
 import { BroadcastResizeBorderPositions, FixedResizerLines, ScreenBroadcastPositionConfig } from '../model';
@@ -186,7 +187,7 @@ const Rect = styled.div<{
       const type = props.$fixedResizerLines.type;
       const value = props.$fixedResizerLines.value;
 
-      const setFixes = (): RuleSet<object> | null => {
+      const setFixes = (): SerializedStyles | null => {
         if (type === 'horz') {
           if (value === props.$config.left)
             return props.$resizeOnly

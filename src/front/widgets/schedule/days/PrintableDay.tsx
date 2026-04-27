@@ -1,5 +1,5 @@
+import styled from '@emotion/styled';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import styled from 'styled-components';
 import { ScheduleWidgetContextWrapper } from '../general/ContextWrapper';
 import { useScheduleWidgetRights } from '../useScheduleWidget';
 import { ScheduleWidgetDay, ScheduleWidgetDayProps } from './Day';

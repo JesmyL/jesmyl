@@ -1,6 +1,7 @@
+import { keyframes } from '@emotion/react';
+import styled from '@emotion/styled';
 import { HTMLAttributes, memo } from 'react';
 import { StameskaIconKind } from 'stameska-icon/utils';
-import styled, { keyframes } from 'styled-components';
 import { LazyIcon } from './LazyIcon';
 
 interface Props extends HTMLAttributes<HTMLOrSVGElement> {

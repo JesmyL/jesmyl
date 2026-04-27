@@ -21,7 +21,7 @@ export const useCmBroadcastMinimalConfigSlides = (selfConfigi: number) => {
 
   const { minimalSlides, minimalConfigi } = useMemo(() => {
     const result = {
-      minimalSlides: [] as CmBroadcastMonolineSlide[],
+      minimalSlides: [] as (CmBroadcastMonolineSlide | nil)[],
       minimalConfigi: 0,
     };
 
@@ -53,7 +53,7 @@ export const useCmBroadcastMinimalConfigSlides = (selfConfigi: number) => {
     currentSlidei,
     nextSlidei: currentSlidei + 1,
     minimalSlides,
-    selfSlides: [] as CmBroadcastMonolineSlide[],
+    selfSlides: [] as (CmBroadcastMonolineSlide | nil)[],
     selfConfig: configs[selfConfigi],
     isFragments: false,
     showChordedSlideMode,
@@ -71,14 +71,16 @@ export const useCmBroadcastMinimalConfigSlides = (selfConfigi: number) => {
     );
 
     const currentGroupedLines = (result.selfSlides = com.groupSlideListByKind(currentGroupedTexts));
-    const minimalFromLinei = minimalSlides[currentSlidei]?.fromLinei;
 
     if (isCantShowFragments) {
       result.minimalSlides = result.selfSlides;
-    } else
+    } else {
+      const minimalFromLinei = minimalSlides[currentSlidei]?.fromLinei ?? 0;
+
       result.currentSlidei = currentGroupedLines.findIndex(
         ({ fromLinei, toLinei }) => minimalFromLinei >= fromLinei && minimalFromLinei < toLinei,
       );
+    }
   } else {
     result.currentSlidei = currentSlidei;
     result.selfSlides = minimalSlides;
@@ -92,10 +94,10 @@ export const useCmBroadcastMinimalConfigSlides = (selfConfigi: number) => {
     (showChordedSlideMode === CmBroadcastShowChordedSlideMode.Hide ||
       showChordedSlideMode === CmBroadcastShowChordedSlideMode.Pass) &&
     currentSlides[result.nextSlidei] != null &&
-    !currentSlides[result.nextSlidei].ord.isRealText()
+    !currentSlides[result.nextSlidei]?.ord.isRealText()
   ) {
     result.nextSlidei = currentSlides.findIndex(
-      (slide, slidei) => slidei > result.nextSlidei && slide.ord.isRealText(),
+      (slide, slidei) => slidei > result.nextSlidei && slide?.ord.isRealText(),
     );
   }
 

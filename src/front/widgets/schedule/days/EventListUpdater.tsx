@@ -1,6 +1,7 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TextInput } from '#shared/ui/TextInput';
+import styled from '@emotion/styled';
 import { useEffect, useMemo, useState } from 'react';
 import {
   IScheduleWidget,
@@ -10,7 +11,6 @@ import {
   indexScheduleGetDayEventTimes,
 } from 'shared/api';
 import { emptyFunc, itNNull, retNull } from 'shared/utils';
-import styled from 'styled-components';
 import { schDaysTsjrpcClient, schEventTypesTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetDayEvent } from './events/DayEvent';
 

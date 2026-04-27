@@ -1,10 +1,10 @@
 import { hideAppFooterAtom } from '#basis/state/hideAppFooterAtom';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import styled from '@emotion/styled';
 import { Atom, useAtomValue } from 'atomaric';
 import { HTMLAttributes, PropsWithChildren, RefObject, useEffect, useRef, useState } from 'react';
 import { itNIt } from 'shared/utils';
-import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 
 export const RolledContent = ({

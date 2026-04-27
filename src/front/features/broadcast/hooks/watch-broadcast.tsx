@@ -1,9 +1,9 @@
 import { cursors } from '#shared/const/cursorsBase64';
 import { renderComponentInNewWindow } from '#shared/lib/renders';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
+import { Global, css } from '@emotion/react';
 import { useCallback } from 'react';
 import { toast } from 'sonner';
-import { createGlobalStyle, css } from 'styled-components';
 import { useScreenBroadcastConfigsValue } from '../atoms';
 import { useCurrentForceViweAppContext } from '../Broadcast.contexts';
 import { BroadcastScreen } from '../BroadcastScreen';
@@ -57,7 +57,7 @@ export const useWatchScreenBroadcast = () => {
                 win={win}
                 forceViewApp={forceViewApp}
               />
-              <StyledBroadcastGlobalStyles />
+              <Global styles={styles} />
             </>
           );
         },
@@ -110,5 +110,3 @@ const styles = css`
     }
   }
 `;
-
-const StyledBroadcastGlobalStyles = createGlobalStyle`${styles}`;

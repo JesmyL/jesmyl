@@ -42,6 +42,7 @@ export function ScheduleWidgetDayEditPanel({ day, dayi, schedule, scheduleScopeP
         postfix="Распечатать распорядок дня"
         onClick={() =>
           renderComponentInNewWindow({
+            target: 'sch/day-edit',
             reactNode: win => (
               <ScheduleWidgetPrintableDay
                 scheduleScopeProps={scheduleScopeProps}

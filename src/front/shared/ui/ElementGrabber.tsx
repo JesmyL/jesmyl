@@ -1,6 +1,7 @@
 import { contextCreator } from '#shared/lib/contextCreator';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { Dispatch, FC, SetStateAction, useMemo, useState } from 'react';
-import styled, { css } from 'styled-components';
 
 export const makeElementGrabber = <Value, OnDropReturn = void>(options?: {
   classNamePrefix?: string;

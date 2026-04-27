@@ -1,6 +1,6 @@
+import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
 import { makeRegExp } from 'regexpert';
-import styled from 'styled-components';
 
 interface Props {
   onError: (error: Error) => void;
