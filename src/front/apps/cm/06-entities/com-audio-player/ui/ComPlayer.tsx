@@ -1,5 +1,7 @@
+import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { HttpNumLeadLink } from 'shared/api';
 import { twMerge } from 'tailwind-merge';
@@ -16,6 +18,12 @@ interface Props {
 export const CmComAudioPlayer = ({ audioLinks, timeRender, addRender, className }: Props) => {
   const [currentVariant, setCurrentVariant] = useState(0);
   const src = audioLinks[currentVariant];
+  const linkLeadNum = parseInt(src, 10);
+
+  const linkHostQuery = useQuery({
+    queryKey: ['cmTsjrpcClient.getLinkLeadNumHost', linkLeadNum],
+    queryFn: () => cmTsjrpcClient.getLinkLeadNumHost({ num: linkLeadNum }),
+  });
 
   return (
     <div className={twMerge(className, 'w-full')}>
@@ -25,6 +33,9 @@ export const CmComAudioPlayer = ({ audioLinks, timeRender, addRender, className 
           src={src}
           timeRender={timeRender}
         />
+        <div className="absolute pointers-none text-center w-full text-[.5rem] bottom-0">
+          {linkHostQuery.data?.host}
+        </div>
 
         {audioLinks.length > 1 && (
           <div

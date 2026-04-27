@@ -9,6 +9,7 @@ import {
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
 import { SMyLib, smylib } from 'shared/utils';
 import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from './client-selectors-by-visit';
+import { numLeadToHttpLinks } from './complect/com-http-links';
 import { mapCmImportableToExportableCom } from './complect/tools';
 import { cmEditCatServerTsjrpcBase } from './edit-cat.tsjrpc.base';
 import { cmEditComExternalsTsjrpcBaseServer } from './edit-com-externals.tsjrpc.base';
@@ -323,17 +324,17 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
           return { value: resultComments };
         },
 
-        printComwVisit: async ({ comw }) => {
+        printComwVisit: ({ comw }) => {
           comwVisitsFileStore.modifyValueWithAutoSave(visitMarks => {
             visitMarks[comw] ??= 0;
             visitMarks[comw]++;
           });
         },
 
-        takeComwVisitsCount: async ({ comw }) => ({ value: comwVisitsFileStore.getValue()[comw] ?? 0 }),
-        getComwVisits: async () => ({ value: comwVisitsFileStore.getValue() }),
+        takeComwVisitsCount: ({ comw }) => ({ value: comwVisitsFileStore.getValue()[comw] ?? 0 }),
+        getComwVisits: () => ({ value: comwVisitsFileStore.getValue() }),
 
-        takeFreshComAudioMarksPack: async ({ mod, src }) => {
+        takeFreshComAudioMarksPack: ({ mod, src }) => {
           if (mod == null) throw 'Ошибка 51712343778';
 
           const allMarkPacks = cmComAudioMarkPacksFileStore.getValue();
@@ -343,11 +344,13 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
           };
         },
 
-        getSchEventComPackMod: async ({ schw, dayi }) => {
+        getSchEventComPackMod: ({ schw, dayi }) => {
           const history = comsInSchEventHistoryDirStorage.getItem(schw);
 
           return { value: { mod: history?.d[dayi]?.[0].w ?? 0 } };
         },
+
+        getLinkLeadNumHost: ({ num }) => ({ value: { host: numLeadToHttpLinks[`${num}~`]?.split('/')[2] } }),
       },
     });
   }

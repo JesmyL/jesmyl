@@ -38,6 +38,7 @@ let playbackRateTimeout: TimeOut;
 const TimeRender = ({ time }: { time: React.ReactNode }) => {
   return (
     <code
+      className="h-[1.2rem]"
       onTouchStart={event => {
         event.preventDefault();
         clearTimeout(playbackRateTimeout);
@@ -61,7 +62,7 @@ const TrackWithCurrents = (props: Props) => {
     <Track
       currentTime={currentTime}
       duration={useCmComAudioPlayerDuration()}
-      time={props.timeRender?.(<TimeRender time={time} />, props.src) ?? time}
+      time={props.timeRender?.(time, props.src) ?? time}
     />
   );
 };

@@ -1,7 +1,7 @@
 import { HttpLink, HttpNumLeadLink, HttpNumLeadLinkKey } from 'shared/api';
 import { SMyLib } from 'shared/utils';
 
-const numLeadToHttpLinks: Record<HttpNumLeadLinkKey, HttpLink> = {
+export const numLeadToHttpLinks: Record<HttpNumLeadLinkKey, HttpLink> = {
   '1~': 'https://holychords.pro/uploads/music/',
   '2~': 'https://holychords.pro/storage/music/',
   '3~': 'https://ps.vkuseraudio.net/audio/ee/',

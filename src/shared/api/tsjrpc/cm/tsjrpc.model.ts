@@ -23,6 +23,7 @@ export type CmTsjrpcModel = {
     src: HttpNumLeadLink;
     m: number;
   };
+  getLinkLeadNumHost: (args: { num: number }) => { host: string | nil };
 
   getSchEventComPackMod: (args: { schw: IScheduleWidgetWid; dayi: number }) => { mod: number };
 };
