@@ -40,7 +40,7 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>(props:
     }, [comw]);
 
     const render = (node: React.ReactNode) =>
-      comw != null && term ? (
+      comw != null && term && !schw ? (
         <CmComWithComListSearchFilterInput
           Constructor={CmCom}
           coms={comList.list}
