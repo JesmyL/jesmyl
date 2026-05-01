@@ -1,7 +1,7 @@
 import { Button, ButtonGroup } from '#shared/components';
-import { cmComCommentAccentsColorClassNameList } from '$cm/entities/com-comment';
-import { CmComCommentConstructorPropKey, CmComCommentConstructorRulePropsDict } from '$cm/shared/model/com-comment';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
+import { CmComCommentConstructorPropKey, CmComCommentConstructorRulePropsDict } from 'shared/model/cm/com-comment';
+import { cmComCommentAccentsColorClassNameList } from 'shared/utils/cm';
 import { useDebounceCallback } from 'shared/utils/useDebounceCallback';
 
 export const CmComCommentConstructorAccentKindRedactor = <Key extends CmComCommentConstructorPropKey>({

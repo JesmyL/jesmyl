@@ -6,7 +6,7 @@ export class EditableComOrder extends CmComOrder {
   _regions?: CmComOrderEditableRegion<EditableComOrder>[];
   com: EditableCom;
 
-  constructor(me: ICmComOrderExportableMe, com: EditableCom) {
+  constructor(me: ICmComOrderExportableMe<any>, com: EditableCom) {
     super(me, com);
     this.com = com;
   }

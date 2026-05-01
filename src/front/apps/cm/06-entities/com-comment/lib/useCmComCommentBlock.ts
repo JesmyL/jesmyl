@@ -1,4 +1,4 @@
-import { mylib } from '#shared/lib/my-lib';
+import { MyLib, mylib } from '#shared/lib/my-lib';
 import { cmConstantsConfigAtom, cmIDB } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -73,23 +73,37 @@ export const useCmComCommentKindBlockTaker = (
 
 export const cmComCommentUpdater = async (
   comw: CmComWid,
-  updater: (prevBlocks: string[]) => string[],
-  selector: CmComCommentBlockSimpleSelector,
   altCommentKey: string | nil,
+  ordUpdaters: PRecord<CmComCommentBlockSimpleSelector, (prevBlocks: string[]) => string[]>,
 ) => {
   const localCommentBlock = await cmIDB.tb.localComCommentBlocks.get(comw);
   const commentBlock = await cmIDB.tb.comCommentBlocks.get(comw);
+  const ordTextsDict: PRecord<CmComCommentBlockSimpleSelector, string[]> = {};
 
-  const takeCommentTexts = takeCmComCommentTextBlock(comw, selector, localCommentBlock, commentBlock, altCommentKey);
+  MyLib.entries(ordUpdaters).forEach(([ordSelector, updater]) => {
+    if (!updater) return;
 
-  const prev = [...(takeCommentTexts ?? [])];
-  const texts = updater(prev);
+    const takeCommentTexts = takeCmComCommentTextBlock(
+      comw,
+      ordSelector === CmComCommentBlockSpecialSelector.Head
+        ? (ordSelector as CmComCommentBlockSpecialSelector.Head)
+        : +ordSelector,
+      localCommentBlock,
+      commentBlock,
+      altCommentKey,
+    );
 
-  const isNoChanges = !Array.from({ length: Math.max(prev.length, texts.length) }).some((_, texti) => {
-    return (prev[texti] ?? '') !== (texts[texti] ?? '');
+    const prev = [...(takeCommentTexts ?? [])];
+    const texts = updater(prev);
+
+    const isNoChanges = !Array.from({ length: Math.max(prev.length, texts.length) }).some((_, texti) => {
+      return (prev[texti] ?? '') !== (texts[texti] ?? '');
+    });
+
+    if (isNoChanges) return;
+
+    ordTextsDict[ordSelector] = texts;
   });
-
-  if (isNoChanges) return;
 
   const isAltComment =
     altCommentKey != null &&
@@ -104,14 +118,14 @@ export const cmComCommentUpdater = async (
       ? localCommentBlock?.d
       : {
           ...localCommentBlock?.d,
-          [selector]: texts,
+          ...ordTextsDict,
         },
     alt: isAltComment
       ? {
           ...localCommentBlock?.alt,
           [altCommentKey]: {
             ...localCommentBlock?.alt?.[altCommentKey],
-            [selector]: texts,
+            ...ordTextsDict,
           },
         }
       : localCommentBlock?.alt,

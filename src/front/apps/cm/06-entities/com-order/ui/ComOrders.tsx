@@ -32,8 +32,6 @@ export function CmComOrderList(props: ICmComOrderListProps) {
             specialClassId={specialClassId}
             ord={ord}
             ordi={ordi}
-            asContentAfterOrder={props.asContentAfterOrder}
-            chordHardLevel={props.chordHardLevel}
             asHeaderComponent={headerProps => {
               const headerNode = headerProps.ord.isModulated ? (
                 <div

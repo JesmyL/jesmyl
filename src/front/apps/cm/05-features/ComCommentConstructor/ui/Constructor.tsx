@@ -31,13 +31,7 @@ export const CmComCommentConstructorTextRulesConstructor = ({
   const { commentCssNode } = useCmComCommentBlockCss(
     com,
     false,
-    useMemo(
-      () => ({
-        selector,
-        propsList: mylib.values(propsDict.dict!).filter(itNUnd),
-      }),
-      [selector, propsDict.dict],
-    ),
+    useMemo(() => mylib.values(propsDict.dict!).filter(itNUnd), [propsDict.dict]),
   );
 
   useEffect(() => {
@@ -84,7 +78,10 @@ export const CmComCommentConstructorTextRulesConstructor = ({
             {
               length: Math.min(
                 3,
-                +!!propsDict.dict?.b0?.text + +!!propsDict.dict?.b1?.text + +!!propsDict.dict?.b2?.text + 1,
+                +!!propsDict.dict?.[`s${selector}b0`]?.text +
+                  +!!propsDict.dict?.[`s${selector}b1`]?.text +
+                  +!!propsDict.dict?.[`s${selector}b2`]?.text +
+                  1,
               ),
             },
             retNull,
@@ -92,11 +89,12 @@ export const CmComCommentConstructorTextRulesConstructor = ({
             return (
               <CmComCommentConstructorTextWithAccentRedactor
                 key={blocki}
-                blockKey={`b${blocki}`}
+                blockKey={`s${selector}b${blocki}`}
                 label={`Коммент №${blocki + 1}`}
                 blockPropsHolder={propsDict}
                 multiline
                 getDefaultPropsDict={() => ({
+                  sel: selector,
                   blocki,
                   kind: 0,
                   rate: blocki,

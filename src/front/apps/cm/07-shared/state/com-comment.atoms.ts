@@ -1,9 +1,9 @@
+import { atom } from 'atomaric';
+import { CmComCommentBlockSimpleSelector, CmComWid } from 'shared/api';
 import {
   CmComCommentConstructorPropsDictWordRulePropsKey,
   CmComCommentConstructorRulePropsDict,
-} from '$cm/shared/model/com-comment';
-import { atom } from 'atomaric';
-import { CmComCommentBlockSimpleSelector, CmComWid } from 'shared/api';
+} from 'shared/model/cm/com-comment';
 
 export const cmComCommentConstructorRulePropsDictAtom = atom(
   (): {

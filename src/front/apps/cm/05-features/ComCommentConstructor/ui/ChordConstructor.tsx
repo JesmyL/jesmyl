@@ -1,16 +1,19 @@
 import { Button } from '#shared/components';
-import { cmComCommentTextDetectorCalculateRate } from '$cm/entities/com-comment';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
+import { CmComOrderWid } from 'shared/api';
+import { cmComCommentTextDetectorCalculateRate } from 'shared/utils/cm/com/cmComCommentTextRulesDetector';
 import { CmComCommentConstructorAccentKindRedactor } from './AccentKindRedactor';
 import { CmComCommentConstructorTextRedactor } from './TextRedactor';
 
 export const CmComCommentConstructorChordConstructor = ({
+  ordw,
   linei,
   wordi,
   chordi,
   isLast,
 }: {
+  ordw: CmComOrderWid;
   linei: number;
   wordi: number;
   chordi: number;
@@ -34,7 +37,7 @@ export const CmComCommentConstructorChordConstructor = ({
                 cmComCommentConstructorRulePropsDictAtom.do.update(dict => {
                   if (dict.dict == null) return;
 
-                  const wordKeyPrefix = `l${linei}w${wordi}` as const;
+                  const wordKeyPrefix = `s${ordw}l${linei}w${wordi}` as const;
                   const keyPrefix = `${wordKeyPrefix}c${chordi}` as const;
 
                   delete dict.dict[`${keyPrefix}^`];
@@ -50,9 +53,10 @@ export const CmComCommentConstructorChordConstructor = ({
         </div>
 
         <CmComCommentConstructorAccentKindRedactor
-          blockKey={`l${linei}w${wordi}c${chordi}^`}
+          blockKey={`s${ordw}l${linei}w${wordi}c${chordi}^`}
           blockPropsHolder={propsDict}
           getDefaultPropsDict={() => ({
+            sel: ordw,
             linei,
             wordi,
             chordi,
@@ -65,10 +69,11 @@ export const CmComCommentConstructorChordConstructor = ({
 
         <div className="flex gap-2">
           <CmComCommentConstructorTextRedactor
-            blockKey={`l${linei}w${wordi}c${chordi}<`}
+            blockKey={`s${ordw}l${linei}w${wordi}c${chordi}<`}
             blockPropsHolder={propsDict}
             label="До"
             getDefaultPropsDict={() => ({
+              sel: ordw,
               linei,
               wordi,
               chordi,
@@ -80,10 +85,11 @@ export const CmComCommentConstructorChordConstructor = ({
           />
 
           <CmComCommentConstructorTextRedactor
-            blockKey={`l${linei}w${wordi}c${chordi}^`}
+            blockKey={`s${ordw}l${linei}w${wordi}c${chordi}^`}
             blockPropsHolder={propsDict}
             label="Вместо"
             getDefaultPropsDict={() => ({
+              sel: ordw,
               linei,
               wordi,
               chordi,
@@ -95,10 +101,11 @@ export const CmComCommentConstructorChordConstructor = ({
           />
 
           <CmComCommentConstructorTextRedactor
-            blockKey={`l${linei}w${wordi}c${chordi}>`}
+            blockKey={`s${ordw}l${linei}w${wordi}c${chordi}>`}
             blockPropsHolder={propsDict}
             label="После"
             getDefaultPropsDict={() => ({
+              sel: ordw,
               linei,
               wordi,
               chordi,

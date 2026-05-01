@@ -1,8 +1,8 @@
 import { MyLib } from '#shared/lib/my-lib';
-import { cmComCommentMakePseudoCommentContentPropCss } from '$cm/entities/com-comment';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { CmComWid } from 'shared/api';
+import { cmComCommentMakePseudoCommentContentPropCss } from 'shared/utils/cm';
 import { cmComFaceCurrentComwIdPrefix } from '../const/ids';
 
 export const StyledCmComFaceList = styled.div<{

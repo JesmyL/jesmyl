@@ -1,11 +1,14 @@
 import { CmComOrder, CmComOrderLine, TheCmComOrder } from '$cm/ext';
 import React from 'react';
 
-export const TheCmComOrderSolid = (
-  props: Parameters<typeof TheCmComOrder>[0] & {
-    asContentAfterOrder?: (props: { ord: CmComOrder }) => React.ReactNode;
-  },
-) => {
+export const TheCmComOrderSolid = ({
+  asLineComponent,
+  asHeaderComponent,
+  asContentAfterOrder,
+  ...props
+}: Parameters<typeof TheCmComOrder>[0] & {
+  asContentAfterOrder?: (props: { ord: CmComOrder }) => React.ReactNode;
+}) => {
   let nextOrd = props.ord.me.next;
   const ords: CmComOrder[] = [props.ord];
   const lineCounts: number[] = [0, props.ord.text.split('\n').length];
@@ -18,7 +21,7 @@ export const TheCmComOrderSolid = (
   }
 
   return (
-    <div solid-com-order-selector={props.ord.wid}>
+    <div solid-ord-selector={props.ord.wid}>
       {ords.map((ord, ordIndex) => {
         if (!ord.isVisible) return;
         const ordi = ordIndex + props.ordi;
@@ -29,32 +32,28 @@ export const TheCmComOrderSolid = (
               {...props}
               ord={ord}
               ordi={ordi}
-              asHeaderComponent={
-                props.asHeaderComponent ? headerProps => props.asHeaderComponent?.({ ...headerProps, ord }) : undefined
-              }
+              asHeaderComponent={asHeaderComponent && (headerProps => asHeaderComponent({ ...headerProps, ord }))}
               asLineComponent={
-                props.asLineComponent
+                asLineComponent
                   ? lineProps =>
-                      props.asLineComponent?.({
+                      asLineComponent({
                         ...lineProps,
                         ordi,
                         solidTextLinei: lineProps.textLinei + lineCounts[ordIndex],
                       })
-                  : lineProps => {
-                      return (
-                        <CmComOrderLine
-                          {...lineProps}
-                          ordi={ordi}
-                          solid-order-text-linei={lineProps.textLinei + lineCounts[ordIndex]}
-                        />
-                      );
-                    }
+                  : lineProps => (
+                      <CmComOrderLine
+                        {...lineProps}
+                        ordi={ordi}
+                        solid-ord-linei={lineProps.textLinei + lineCounts[ordIndex]}
+                      />
+                    )
               }
             />
           </React.Fragment>
         );
       })}
-      {props.asContentAfterOrder?.({ ord: props.ord })}
+      {asContentAfterOrder?.({ ord: props.ord })}
     </div>
   );
 };

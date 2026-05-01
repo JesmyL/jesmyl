@@ -1,13 +1,9 @@
 import { mylib, MyLib } from '#shared/lib/my-lib';
-import { SourceBased } from '#shared/lib/SourceBased';
 import { CmCom } from '$cm/ext';
 import { ChordVisibleVariant } from '$cm/shared/model';
 import { makeRegExp } from 'regexpert';
 import {
   CmComOrderSelector,
-  CmComOrderWid,
-  IExportableComInterpretation,
-  IExportableOrder,
   IExportableOrderFieldValues,
   InheritancableOrder,
   OrderRepeats,
@@ -18,39 +14,25 @@ import { chordInterpretedRegs } from 'shared/utils/cm/com/const';
 import { transformToDisplayedText } from 'shared/utils/cm/com/transformToDisplayedText';
 import { CmComOrderUtils } from 'shared/utils/cm/ComOrderUtils';
 import { CmComOrderEditableRegion, ICmComOrderExportableMe } from '../model/Order.model';
+import { CmComOrderStatica } from './OrderStatica';
+import { CmComOrderWidClass } from './OrderWid';
 
-export class CmComOrder extends SourceBased<IExportableOrder> {
+export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   _regions?: CmComOrderEditableRegion<CmComOrder>[];
   com: CmCom;
   element?: HTMLDivElement;
-  me: ICmComOrderExportableMe;
 
-  constructor(me: ICmComOrderExportableMe, com: CmCom) {
-    super(me.top);
+  constructor(me: ICmComOrderExportableMe<CmComOrder>, com: CmCom) {
+    super(me);
     this.com = com;
 
     this.texti = mylib.isNum(me.top.t) ? me.top.t : undefined;
 
     this.fieldValues = me.top.f;
-    this.me = me;
-  }
-
-  static getWithExtendableFields(
-    source: ICmComOrderExportableMe | und,
-    target: ICmComOrderExportableMe,
-  ): ICmComOrderExportableMe {
-    return { ...source, ...target, top: { ...source?.top, ...target.top } };
   }
 
   get isMin() {
     return this.top.m;
-  }
-
-  get wid(): CmComOrderWid {
-    if (this.me.leadOrd != null && this.me.watchOrd != null)
-      return this.me.leadOrd.me.top.w + this.me.watchOrd.me.top.w / 100;
-
-    return this.me.source?.top.w ?? this.top.w;
   }
 
   get isModulated() {
@@ -63,10 +45,6 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
 
   get anchor() {
     return this.getBasic('a');
-  }
-
-  get isEmptyHeader() {
-    return this.getBasic('e');
   }
 
   get isOpened() {
@@ -120,16 +98,8 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
 
     if (this.me.isInherit) return !(this.getBasic('v') === 0 || (this.me.leadOrd && !this.me.leadOrd.isVisible));
 
-    return CmComOrder.checkIsOrdVisibleInInterpretation(this.top, this.com.intp);
+    return CmComOrderStatica.checkIsOrdVisibleInInterpretation(this.top, this.com.intp);
   }
-
-  static checkIsOrdVisibleInInterpretation = (
-    ordTop: IExportableOrder,
-    comInterpretation: IExportableComInterpretation | nil,
-  ) => {
-    const visibilityValue = comInterpretation?.o?.[ordTop.w]?.v;
-    return visibilityValue === 1 ? true : ordTop.v !== 0 && visibilityValue !== 0;
-  };
 
   get isHeaderNoneForce() {
     return this.me.kind?.isHeaderNoneForce;
@@ -298,7 +268,7 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
     self: Ord | null,
     text: string,
     repeats: OrderRepeats | nil,
-    comOrders: CmComOrder[] | null,
+    comOrders: CmComOrder[] | nil,
   ) => {
     const txt = (text || '').split(makeRegExp('/\\n+/')).map((txt: string) => txt.split(makeRegExp('/\\s+/')));
     const lines = txt.length;

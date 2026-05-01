@@ -1,6 +1,6 @@
 import { TextInput } from '#shared/ui/TextInput';
-import { CmComCommentConstructorPropKey, CmComCommentConstructorRulePropsDict } from '$cm/shared/model/com-comment';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
+import { CmComCommentConstructorPropKey, CmComCommentConstructorRulePropsDict } from 'shared/model/cm/com-comment';
 import { useDebounceCallback } from 'shared/utils/useDebounceCallback';
 
 export const CmComCommentConstructorTextRedactor = <Key extends CmComCommentConstructorPropKey>(props: {

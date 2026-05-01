@@ -1,12 +1,13 @@
-import { mylib } from '#shared/lib/my-lib';
 import { makeRegExp } from 'regexpert';
+import { CmComCommentBlockSimpleSelector } from 'shared/api';
 import {
   CmComCommentTextDetectorBlockRuleProps,
   CmComCommentTextDetectorChordRuleProps,
   CmComCommentTextDetectorLineRuleProps,
   CmComCommentTextDetectorRuleProps,
   CmComCommentTextDetectorWordRuleProps,
-} from '../model/common';
+} from 'shared/model/cm/com-comment';
+import { smylib } from 'shared/utils/SMyLib';
 import {
   cmComCommentPseudoCommentContentAccentsKind,
   cmComCommentTrimHighlightMarkers,
@@ -15,6 +16,7 @@ import {
 
 export const cmComCommentTextRulesDetector = (
   isSimpleBlockText: boolean,
+  selector: CmComCommentBlockSimpleSelector,
   commentBlocks: string[],
   onFound: (props: CmComCommentTextDetectorRuleProps) => void,
 ) => {
@@ -24,6 +26,7 @@ export const cmComCommentTextRulesDetector = (
       if (!block) continue;
 
       onFound({
+        sel: selector,
         blocki,
         kind: cmComCommentPseudoCommentContentAccentsKind(block),
         text: cmComCommentTrimHighlightMarkers(block),
@@ -64,6 +67,7 @@ export const cmComCommentTextRulesDetector = (
 
     if (block) {
       onFound({
+        sel: selector,
         blocki,
         kind: cmComCommentPseudoCommentContentAccentsKind(block),
         text: cmComCommentTrimHighlightMarkersEachLine(block),
@@ -75,8 +79,9 @@ export const cmComCommentTextRulesDetector = (
   Array.from(lineCommentKeys).map(commentKey => {
     let comment = lineComments[commentKey].join('\n');
 
-    if (mylib.isNum(commentKey)) {
+    if (smylib.isNum(commentKey)) {
       onFound({
+        sel: selector,
         linei: commentKey - 1,
         kind: cmComCommentPseudoCommentContentAccentsKind(comment),
         text: cmComCommentTrimHighlightMarkers(comment),
@@ -91,6 +96,7 @@ export const cmComCommentTextRulesDetector = (
 
     if (wordKind) {
       onFound({
+        sel: selector,
         linei,
         wordi,
         place: '^',
@@ -115,6 +121,7 @@ export const cmComCommentTextRulesDetector = (
 
       if (wordContent) {
         onFound({
+          sel: selector,
           linei,
           wordi,
           place,
@@ -135,6 +142,7 @@ export const cmComCommentTextRulesDetector = (
           if (chord === '.') chord = '';
 
           onFound({
+            sel: selector,
             chordi,
             linei,
             wordi,

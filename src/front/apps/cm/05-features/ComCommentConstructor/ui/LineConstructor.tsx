@@ -1,20 +1,30 @@
-import { cmComCommentTextDetectorCalculateRate } from '$cm/entities/com-comment';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
+import { CmComOrderWid } from 'shared/api';
+import { cmComCommentTextDetectorCalculateRate } from 'shared/utils/cm';
 import { CmComCommentConstructorTextWithAccentRedactor } from './TextWithAccentRedactor';
 
-export const CmComCommentConstructorLineConstructor = ({ linei }: { linei: number }) => {
+export const CmComCommentConstructorLineConstructor = ({
+  linei,
+  solidLinei,
+  ordw,
+}: {
+  ordw: CmComOrderWid;
+  linei: number;
+  solidLinei: number;
+}) => {
   const propsDict = useAtomValue(cmComCommentConstructorRulePropsDictAtom);
 
   return (
     <>
       <div className="rounded bg-x2 my-10 p-3">
-        <div>Строка {linei + 1}</div>
+        <div>Строка {solidLinei + 1}</div>
         <CmComCommentConstructorTextWithAccentRedactor
-          blockKey={`l${linei}`}
+          blockKey={`s${ordw}l${linei}`}
           label="Коммент для строки"
           blockPropsHolder={propsDict}
           getDefaultPropsDict={() => ({
+            sel: ordw,
             kind: 0,
             linei,
             rate: cmComCommentTextDetectorCalculateRate(linei),

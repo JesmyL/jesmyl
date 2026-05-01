@@ -85,7 +85,7 @@ export const useCmComAudioPlayerMoversController = (
               if (+preSwitchTime >= 0) {
                 const lineNode = checkIsCmComAudioMarkTitleIsLineSelector(selector)
                   ? document.querySelector(
-                      `[solid-com-order-selector="${titleProps.ord?.wid}"] [solid-order-text-linei="${makeCmComAudioMarkLineiFromSelector(selector)}"]`,
+                      `[solid-ord-selector="${titleProps.ord?.wid}"] [solid-ord-linei="${makeCmComAudioMarkLineiFromSelector(selector)}"]`,
                     )
                   : null;
 

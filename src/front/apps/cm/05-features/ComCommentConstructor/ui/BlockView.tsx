@@ -12,7 +12,12 @@ import { CmComCommentConstructorWordConstructor } from './WordConstructor';
 export const CmComCommentConstructorBlockView = ({ selector, com }: { selector: CmComOrderWid; com: CmCom }) => {
   const fontSize = useAtomValue(cmComFontSizeAtom);
   const chordHardLevel = useAtomValue(cmComChordHardLevelAtom);
-  const [{ linei, wordi }, setSelection] = useState<{ linei?: number; wordi?: number }>({});
+  const [{ linei, wordi, ordw, solidLinei }, setSelection] = useState<{
+    ordw?: CmComOrderWid;
+    linei?: number;
+    wordi?: number;
+    solidLinei?: number;
+  }>({});
 
   return (
     <>
@@ -20,28 +25,17 @@ export const CmComCommentConstructorBlockView = ({ selector, com }: { selector: 
         className="com-orders-with-comments"
         $linei={linei}
         $wordi={wordi}
+        $ordw={ordw}
         $ordSelector={selector}
         onClick={event => {
-          const linei = getParentNodeWithAttributeName(event, 'solid-order-text-linei').attr;
-
-          if (linei == null) return;
-
+          const ordw = getParentNodeWithAttributeName(event, 'ord-selector').attr;
+          const linei = getParentNodeWithAttributeName(event, 'ord-linei').attr;
+          const solidLinei = getParentNodeWithAttributeName(event, 'solid-ord-linei').attr;
           const wordi = getParentNodeWithAttributeName(event, 'line-wordi').attr;
 
-          setSelection(prev => {
-            const newPrev = { ...prev };
+          if (linei == null || ordw == null || solidLinei == null || wordi == null) return;
 
-            if (prev.linei != null) {
-              if (wordi == null) return prev;
-
-              if (newPrev.wordi === +wordi || newPrev.linei !== +linei) delete newPrev.wordi;
-              else newPrev.wordi = +wordi;
-
-              newPrev.linei = +linei;
-            } else newPrev.linei = +linei;
-
-            return newPrev;
-          });
+          setSelection({ linei: +linei, solidLinei: +solidLinei, wordi: +wordi, ordw: +ordw });
         }}
       >
         <CmComOrderList
@@ -53,14 +47,19 @@ export const CmComCommentConstructorBlockView = ({ selector, com }: { selector: 
         />
       </StyledSolidOrdContainer>
 
-      {linei != null && (
+      {linei != null && ordw != null && solidLinei != null && (
         <>
-          <CmComCommentConstructorLineConstructor linei={linei} />
+          <CmComCommentConstructorLineConstructor
+            linei={linei}
+            solidLinei={solidLinei}
+            ordw={ordw}
+          />
 
           {wordi != null && (
             <CmComCommentConstructorWordConstructor
               linei={linei}
               wordi={wordi}
+              ordw={ordw}
             />
           )}
         </>
@@ -72,18 +71,19 @@ export const CmComCommentConstructorBlockView = ({ selector, com }: { selector: 
 const StyledSolidOrdContainer = styled.div<{
   $linei: number | nil;
   $wordi: number | nil;
+  $ordw: number | nil;
   $ordSelector: CmComCommentBlockSimpleSelector;
 }>`
   ${props => [
     css`
-      [solid-com-order-selector]:not([solid-com-order-selector='${props.$ordSelector}']) {
+      [solid-ord-selector]:not([solid-ord-selector='${props.$ordSelector}']) {
         display: none;
         visibility: hidden;
       }
     `,
     props.$linei != null && [
       css`
-        [solid-order-text-linei='${props.$linei}'] {
+        [ord-selector='${props.$ordw}'] [ord-linei='${props.$linei}'] {
           &,
           * {
             text-decoration: underline;

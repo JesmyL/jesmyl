@@ -6,7 +6,7 @@ import { EditableComOrder } from '../EditableComOrder';
 import { EditableComParseBlocks } from './lib/31-ParseBlocks';
 
 export class EditableCom extends EditableComParseBlocks {
-  orderConstructor(me: ICmComOrderExportableMe) {
+  orderConstructor(me: ICmComOrderExportableMe<any>) {
     return new EditableComOrder(me, this);
   }
 

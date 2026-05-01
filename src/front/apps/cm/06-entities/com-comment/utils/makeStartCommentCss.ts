@@ -2,12 +2,12 @@ import { mylib } from '#shared/lib/my-lib';
 import { BibleBookTranslates, bibleLowerBooks, bibleTitles, translateDescriptions } from '$bible/ext';
 import { makeRegExp } from 'regexpert';
 import { BibleTranslateName } from 'shared/api';
-import { cmComCommentHeadBibleAddressRegExp } from './commentHeadBibleAddressRegExp';
 import {
   cmComCommentMakePseudoCommentContentAccentsColorCss,
   cmComCommentMakePseudoCommentContentPropCss,
   cmComCommentTrimHighlightMarkers,
-} from './makePseudoComment.props';
+} from 'shared/utils/cm';
+import { cmComCommentHeadBibleAddressRegExp } from './commentHeadBibleAddressRegExp';
 
 let titlesMap: Map<string, number>;
 let titlesLine: string[];

@@ -1,28 +1,57 @@
-import { mylib } from '#shared/lib/my-lib';
+import { makeRegExp } from 'regexpert';
+import { CmComCommentBlockSimpleSelector } from 'shared/api';
 import {
+  CmComCommentConstructorPropKey,
   CmComCommentConstructorPropsDictChordRulePropsKey,
   CmComCommentConstructorPropsDictWordRulePropsKey,
   CmComCommentConstructorRulePropsDict,
-} from '$cm/shared/model/com-comment';
-import { makeRegExp } from 'regexpert';
+  CmComCommentTextDetectorRuleProps,
+} from 'shared/model/cm/com-comment';
+import { smylib } from 'shared/utils/SMyLib';
+import { itIt } from 'shared/utils/utils';
 
-export const makeCmComCommentConstructorCommentTextFromRuleProps = (
+export const fillCmComCommentConstructorCommentInKey2PropsDict = (
+  selector: CmComCommentBlockSimpleSelector,
+  propsDict: CmComCommentConstructorRulePropsDict,
+  props: CmComCommentTextDetectorRuleProps,
+  wordChordiMaxDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKey, number>,
+) => {
+  let key: CmComCommentConstructorPropKey;
+
+  if ('blocki' in props) key = `s${selector}b${props.blocki}`;
+  else if ('chordi' in props) {
+    const wordKey = `s${props.sel}l${props.linei}w${props.wordi}` as const;
+
+    wordChordiMaxDict[wordKey] ??= 0;
+    wordChordiMaxDict[wordKey]++;
+
+    key = `${wordKey}c${props.chordi}${props.place}`;
+  } else if ('wordi' in props) key = `s${props.sel}l${props.linei}w${props.wordi}${props.place}`;
+  else key = `s${props.sel}l${props.linei}`;
+
+  if (!(key in propsDict)) propsDict[key] = props as never;
+};
+
+export const makeCmComCommentConstructorCommentOrdSelector2TextsDictFromRuleProps = (
   isSimpleBlockText: boolean,
   propsDict: CmComCommentConstructorRulePropsDict,
   chordCountDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKey, number>,
 ) => {
   try {
-    let wordCommentsText = '';
-    let lineCommentsText = '';
-    const commentBlocks: string[] = [];
+    const wordCommentsText: PRecord<CmComCommentBlockSimpleSelector, string> = {};
+    const lineCommentsText: PRecord<CmComCommentBlockSimpleSelector, string> = {};
+    const commentOrdBlocks: PRecord<CmComCommentBlockSimpleSelector, string[]> = {};
+    const usedOrdsSet = new Set<CmComCommentBlockSimpleSelector>();
 
-    const propsList = mylib.values(propsDict);
+    const propsList = smylib.values(propsDict);
     propsList.sort((a, b) => a!.rate - b!.rate);
-    const propsKeysSet = new Set(mylib.keys(propsDict));
+    const propsKeysSet = new Set(smylib.keys(propsDict));
 
     for (let propsi = 0; propsi < propsList.length; propsi++) {
       const props = propsList[propsi];
       if (props == null) continue;
+      const commentBlocks = (commentOrdBlocks[props.sel] ??= []);
+      usedOrdsSet.add(props.sel);
 
       if ('blocki' in props) {
         commentBlocks[props.blocki] ??= '';
@@ -36,7 +65,7 @@ export const makeCmComCommentConstructorCommentTextFromRuleProps = (
             .map((line, linei) => makeCorrectText(linei ? 0 : props.kind, line, false))
             .join('\n');
       } else if ('wordi' in props) {
-        const wordKey = `l${props.linei}w${props.wordi}` as const;
+        const wordKey = `s${props.sel}l${props.linei}w${props.wordi}` as const;
 
         if (
           'chordi' in props
@@ -86,25 +115,36 @@ export const makeCmComCommentConstructorCommentTextFromRuleProps = (
         wordText += makeChordTextRule('^', replaceChordRulesList);
         wordText += makeChordTextRule('>', postChordRulesList);
 
-        if (wordText) wordCommentsText += `\n${props.linei + 1}:${props.wordi + 1}${wordText}`;
+        if (wordText) {
+          wordCommentsText[props.sel] ??= '';
+          wordCommentsText[props.sel] += `\n${props.linei + 1}:${props.wordi + 1}${wordText}`;
+        }
       } else {
-        const lineKey = `l${props.linei}` as const;
+        const lineKey = `s${props.sel}l${props.linei}` as const;
 
         if (!propsKeysSet.has(lineKey) || !props.text) continue;
         propsKeysSet.delete(lineKey);
 
-        lineCommentsText += `\n${props.linei + 1}${makeCorrectText(props.kind, props.text, false)}`;
+        lineCommentsText[props.sel] ??= '';
+        lineCommentsText[props.sel] += `\n${props.linei + 1}${makeCorrectText(props.kind, props.text, false)}`;
       }
     }
 
-    commentBlocks[0] ??= '';
-    if (lineCommentsText) commentBlocks[0] += `\n\n${lineCommentsText.trim()}`;
-    if (wordCommentsText) commentBlocks[0] += `\n\n${wordCommentsText.trim()}`;
+    usedOrdsSet.forEach(ordw => {
+      if (!commentOrdBlocks[ordw]) return;
 
-    return commentBlocks;
+      commentOrdBlocks[ordw][0] ??= '';
+      if (lineCommentsText[ordw]) commentOrdBlocks[ordw][0] += `\n\n${lineCommentsText[ordw].trim()}`;
+      if (wordCommentsText[ordw]) commentOrdBlocks[ordw][0] += `\n\n${wordCommentsText[ordw].trim()}`;
+
+      commentOrdBlocks[ordw][0] = commentOrdBlocks[ordw][0].trim();
+      commentOrdBlocks[ordw] = commentOrdBlocks[ordw].filter(itIt);
+    });
+
+    return commentOrdBlocks;
   } catch (e) {
     console.error(e);
-    return [];
+    return {};
   }
 };
 

@@ -1,16 +1,17 @@
 import { bibleShowTranslatesAtom, useBibleTranslatesContext } from '$bible/ext';
 import { cmComIsComMiniAnchorAtom } from '$cm/entities/index';
-import { CmCom } from '$cm/ext';
+import { CmCom, CmComOrder } from '$cm/ext';
 import { makeStyleNode } from '$cm/shared/lib/makeStyleNode';
 import { css, SerializedStyles } from '@emotion/react';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
-import { CmComCommentBlockSimpleSelector, CmComCommentBlockSpecialSelector } from 'shared/api';
+import { CmComCommentBlockSpecialSelector } from 'shared/api';
+import { CmComCommentTextDetectorRuleProps } from 'shared/model/cm/com-comment';
 import { emptyFunc, itInvokeIt } from 'shared/utils';
+import { cmComCommentTextRulesDetector } from 'shared/utils/cm';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
+import { cmComOrderPlusKindSet } from 'shared/values/cm/block-kinds/kind-sets';
 import { cmComCommentHeaderHolderSelectors } from '../const/commentHolderSelectors';
-import { CmComCommentTextDetectorRuleProps } from '../model/common';
-import { cmComCommentTextRulesDetector } from '../utils/cmComCommentTextRulesDetector';
 import { cmComCommentDetectCommentTextStyles } from '../utils/detectCommentTextStyles';
 import { cmComCommentMakeStartCommentCss } from '../utils/makeStartCommentCss';
 import { cmComCommentPseudoCommentStaticPropsCss } from '../utils/pseudoCommentStaticPropsCss';
@@ -23,7 +24,7 @@ import {
 export const useCmComCommentBlockCss = (
   com: CmCom,
   isSetHashesOnly = false,
-  customPropsForOrder?: { selector: CmComCommentBlockSimpleSelector; propsList: CmComCommentTextDetectorRuleProps[] },
+  customPropsForOrder?: CmComCommentTextDetectorRuleProps[],
 ) => {
   const [styles, setStyles] = useState<
     Partial<{
@@ -45,29 +46,36 @@ export const useCmComCommentBlockCss = (
       let cssContentList;
 
       if (customPropsForOrder) {
-        const { onDetect, styles } = cmComCommentDetectCommentTextStyles(customPropsForOrder.selector);
+        const { onDetect, styles } = cmComCommentDetectCommentTextStyles();
 
-        customPropsForOrder.propsList.forEach(onDetect);
+        customPropsForOrder.forEach(onDetect);
 
         cssContentList = [styles];
       } else {
         cssContentList = isSetHashesOnly
           ? null
           : (visibleOrders?.map((ord): (() => string | SerializedStyles) => {
-              if (ord == null) return () => '';
-              const ordSelectorId = ord.makeSelector();
+              const { onDetect, styles } = cmComCommentDetectCommentTextStyles();
+              let currentOrd: CmComOrder | nil = ord;
 
-              let commentLines = takeCommentTexts(ordSelectorId);
-              const kindComment = ord.kind && commentKindsBlock?.[Math.abs(ord.kind) as CmComBlockKindKey];
+              do {
+                const ord = currentOrd;
+                currentOrd = currentOrd.me.next;
 
-              if (!commentLines?.length && !kindComment) return () => '';
+                if (ord == null) break;
 
-              commentLines ??= [];
-              if (kindComment) commentLines = [kindComment].concat(commentLines);
+                const ordw = ord.makeSelector();
 
-              const { onDetect, styles } = cmComCommentDetectCommentTextStyles(ordSelectorId);
+                let commentLines = takeCommentTexts(ordw);
+                const kindComment = ord.kind && commentKindsBlock?.[Math.abs(ord.kind) as CmComBlockKindKey];
 
-              cmComCommentTextRulesDetector(false, commentLines, onDetect);
+                if (!commentLines?.length && !kindComment) continue;
+
+                commentLines ??= [];
+                if (kindComment) commentLines = [kindComment].concat(commentLines);
+
+                cmComCommentTextRulesDetector(false, ord.wid, commentLines, onDetect);
+              } while (currentOrd?.kind && cmComOrderPlusKindSet.has(currentOrd.kind));
 
               return styles;
             }) ?? []);
@@ -148,13 +156,13 @@ export const useCmComCommentBlockCss = (
         ${cssContentList?.map(itInvokeIt)}
         ${numeredOrderHeaders}
 
-          [solid-com-order-selector] {
+          [ord-selector] {
           &:after,
-          [solid-order-text-linei]:before {
+          [ord-linei]:before {
             ${cmComCommentPseudoCommentStaticPropsCss}
           }
 
-          [solid-order-text-linei]:before {
+          [ord-linei]:before {
             margin-left: var(--comment-margin-left);
           }
 

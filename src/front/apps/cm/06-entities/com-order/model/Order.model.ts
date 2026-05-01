@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { IExportableOrder, IExportableOrderFieldValues, OrderRepeats } from 'shared/api';
 import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';
 import { CmComOrder } from '../lib/Order';
+import { CmComOrderWidClass } from '../lib/OrderWid';
 
 export type CmComOrderEditableRegion<Ord extends CmComOrder> = {
   count: number;
@@ -24,22 +25,22 @@ export type CmComOrderEditableRegion<Ord extends CmComOrder> = {
   others: number[] | null;
 };
 
-export type ICmComOrderExportableMe = {
+export type ICmComOrderExportableMe<OrderConstructor extends CmComOrderWidClass<OrderConstructor>> = {
   top: IExportableOrder;
   header: (bag?: CmComOrderTopHeaderBag | nil, isRequired?: boolean) => string;
 } & Partial<{
-  source: ICmComOrderExportableMe;
+  source: ICmComOrderExportableMe<OrderConstructor>;
   init: IExportableOrder;
 
-  leadOrd: CmComOrder; // first of ord inheritance chain
-  watchOrd: CmComOrder | nil; // same ord of its ref
-  targetOrd: CmComOrder | nil; // leader of watch ord
-  ord: CmComOrder;
+  leadOrd: OrderConstructor; // first of ord inheritance chain
+  watchOrd: OrderConstructor | nil; // same ord of its ref
+  targetOrd: OrderConstructor | nil; // leader of watch ord
+  ord: OrderConstructor;
 
-  prev: CmComOrder | null;
-  next: CmComOrder | null;
-  prevOrd: CmComOrder | null;
-  nextOrd: CmComOrder | null;
+  prev: OrderConstructor | null;
+  next: OrderConstructor | null;
+  prevOrd: OrderConstructor | null;
+  nextOrd: OrderConstructor | null;
   isAnchor: boolean;
   isTarget: boolean;
   isInherit: boolean;

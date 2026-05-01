@@ -1,4 +1,4 @@
-import { CmComCommentConstructorPropKey, CmComCommentConstructorRulePropsDict } from '$cm/shared/model/com-comment';
+import { CmComCommentConstructorPropKey, CmComCommentConstructorRulePropsDict } from 'shared/model/cm/com-comment';
 import { CmComCommentConstructorAccentKindRedactor } from './AccentKindRedactor';
 import { CmComCommentConstructorTextRedactor } from './TextRedactor';
 

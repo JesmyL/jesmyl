@@ -1,9 +1,10 @@
+import { MyLib } from '#shared/lib/my-lib';
 import { cmComCommentUpdater } from '$cm/entities/com-comment';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import { CmComCommentBlockSpecialSelector, CmComWid } from 'shared/api';
-import { makeCmComCommentConstructorCommentTextFromRuleProps } from './makeCommentTextFromRuleProps';
+import { CmComCommentBlockSimpleSelector, CmComCommentBlockSpecialSelector, CmComWid } from 'shared/api';
+import { makeCmComCommentConstructorCommentOrdSelector2TextsDictFromRuleProps } from 'shared/utils/cm/com/makeCommentTextFromRuleProps';
 
 export const useCmComCommentConstructorListenChanges = () => {
   const propsDict = useAtomValue(cmComCommentConstructorRulePropsDictAtom);
@@ -16,16 +17,22 @@ export const useCmComCommentConstructorListenChanges = () => {
     if (dict == null || selector == null) return;
 
     const timeout = setTimeout(() => {
+      const ordSelector2TextsDict = makeCmComCommentConstructorCommentOrdSelector2TextsDictFromRuleProps(
+        selector === CmComCommentBlockSpecialSelector.Head,
+        dict,
+        propsDict.wordChordiMaxDict,
+      );
+
       cmComCommentUpdater(
         propsDict.comw,
-        () =>
-          makeCmComCommentConstructorCommentTextFromRuleProps(
-            selector === CmComCommentBlockSpecialSelector.Head,
-            dict,
-            propsDict.wordChordiMaxDict,
-          ),
-        selector,
         propsDict.altCommentKey,
+        MyLib.entries(ordSelector2TextsDict).reduce<
+          PRecord<CmComCommentBlockSimpleSelector, (prevBlocks: string[]) => string[]>
+        >((acc, [ordwStr, lines]) => {
+          if (!lines) return acc;
+          acc[ordwStr] = () => lines;
+          return acc;
+        }, {}),
       );
     }, 1000);
 
