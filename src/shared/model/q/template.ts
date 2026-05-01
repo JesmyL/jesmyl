@@ -40,7 +40,7 @@ type QuestionerTemplateBox = {
     needSelect?: 1;
     len?: number;
   }> &
-  QuestionerVariantedTemplate;
+    QuestionerVariantedTemplate;
   [QuestionerType.Comment]: Implement<{
     type: QuestionerType.Comment;
     correct?: string;
@@ -77,7 +77,7 @@ type TemplateDefaults = {
   req: 1 | und;
   hidden?: 1;
   correct?: unknown;
-  if?: QuestionerTemplateIfCondition,
+  if?: QuestionerTemplateIfCondition;
 };
 
 type Implement<

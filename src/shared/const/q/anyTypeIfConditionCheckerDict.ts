@@ -1,8 +1,8 @@
-import { QuestionerBlank } from "shared/model/q";
-import { QuestionerUserAnswer } from "shared/model/q/answer";
-import { questionerTypeIfConditionCheckerDict } from "./typeIfConditionCheckerDict";
-import { QuestionerTemplateIfCondition } from "shared/model/q/condition";
-import { questionerTypeDefaultIfConditionOperatorDict } from "./typeDefaultIfConditionOperator";
+import { QuestionerBlank } from 'shared/model/q';
+import { QuestionerUserAnswer } from 'shared/model/q/answer';
+import { questionerTypeIfConditionCheckerDict } from './typeIfConditionCheckerDict';
+import { QuestionerTemplateIfCondition } from 'shared/model/q/condition';
+import { questionerTypeDefaultIfConditionOperatorDict } from './typeDefaultIfConditionOperator';
 
 const _hideQuestion = true;
 const _showQuestion = false;
@@ -10,7 +10,7 @@ const _showQuestion = false;
 export const questionerAnyTypeIfConditionCheckerDict = (
   ifCondition: QuestionerTemplateIfCondition | nil,
   userAnswer: QuestionerUserAnswer,
-  blank: OmitOwn<QuestionerBlank, "team">,
+  blank: OmitOwn<QuestionerBlank, 'team'>,
 ) => {
   if (ifCondition == null || !ifCondition.next.length) return _showQuestion;
   const isAnd = !ifCondition.t;
@@ -26,10 +26,11 @@ export const questionerAnyTypeIfConditionCheckerDict = (
 
       if (
         questionerTypeIfConditionCheckerDict[template.type](
-          next as never, answer, next.op ?? questionerTypeDefaultIfConditionOperatorDict[template.type]
+          next as never,
+          answer,
+          next.op ?? questionerTypeDefaultIfConditionOperatorDict[template.type],
         )
       ) {
-
         if (isConditionAnd) {
           isConditionPass = false;
           break;
@@ -48,4 +49,4 @@ export const questionerAnyTypeIfConditionCheckerDict = (
   }
 
   return !isAnd;
-}
+};

@@ -1,6 +1,5 @@
-import { QuestionerBlank } from "shared/model/q";
-
+import { QuestionerBlank } from 'shared/model/q';
 
 export type QuestionerAdminShareTsjrpcModel = {
-  updateBlanks: (args: { blanks: QuestionerBlank[], maxMod: number }) => void
+  updateBlanks: (args: { blanks: QuestionerBlank[]; maxMod: number }) => void;
 };

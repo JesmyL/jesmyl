@@ -18,8 +18,11 @@ export const QuestionerAdminCheckTemplateCardContent = (
             label="Минимум пунктов (1)"
             type="tel"
             onChanged={value =>
-              questionerAdminTsjrpcClient
-                .changeTemplateMinSign({ blankw: props.blank.w, templateId: props.templateId, value: +value })
+              questionerAdminTsjrpcClient.changeTemplateMinSign({
+                blankw: props.blank.w,
+                templateId: props.templateId,
+                value: +value,
+              })
             }
           />
           <InputWithLoadingIcon
@@ -29,8 +32,11 @@ export const QuestionerAdminCheckTemplateCardContent = (
             label="Максимум пунктов"
             type="tel"
             onChanged={value =>
-              questionerAdminTsjrpcClient
-                .changeTemplateMaxSign({ blankw: props.blank.w, templateId: props.templateId, value: +value })
+              questionerAdminTsjrpcClient.changeTemplateMaxSign({
+                blankw: props.blank.w,
+                templateId: props.templateId,
+                value: +value,
+              })
             }
           />
         </div>

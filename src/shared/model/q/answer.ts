@@ -43,10 +43,10 @@ export type QuestionerConditionContentProps<Type extends QuestionerType> = {
   blank: QuestionerBlank;
   templateId: RKey<QuestionerTemplateId>;
   template: QuestionerTemplateByItsType<Type>;
-  ifCondition: QuestionerTemplateTypeConditionDict[Type] | nil,
-  operator: Exclude<QuestionerTemplateTypeConditionDict[Type]['op'], nil>,
-  nexti: number,
-  nextNexti: number,
+  ifCondition: QuestionerTemplateTypeConditionDict[Type] | nil;
+  operator: Exclude<QuestionerTemplateTypeConditionDict[Type]['op'], nil>;
+  nexti: number;
+  nextNexti: number;
 };
 
 export type QuestionerUserAnswer = {

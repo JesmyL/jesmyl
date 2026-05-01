@@ -26,17 +26,13 @@ export const QuestionerAdminSorterTemplateCardContent = ({
         <IconCheckbox
           checked={!!template.noCorrect}
           postfix="Нет правильного порядка"
-          onChange={() =>
-            questionerAdminTsjrpcClient.switchTemplateNoCorrectsSign({ blankw: blank.w, templateId })
-          }
+          onChange={() => questionerAdminTsjrpcClient.switchTemplateNoCorrectsSign({ blankw: blank.w, templateId })}
         />
         <IconCheckbox
           checked={!!template.needSelect}
           disabled={!!template.noCorrect}
           postfix="Нужно выбрать подходящие варианты"
-          onChange={() =>
-            questionerAdminTsjrpcClient.switchTemplateNeedSelectSign({ blankw: blank.w, templateId })
-          }
+          onChange={() => questionerAdminTsjrpcClient.switchTemplateNeedSelectSign({ blankw: blank.w, templateId })}
         />
 
         <InputWithLoadingIcon
@@ -44,9 +40,7 @@ export const QuestionerAdminSorterTemplateCardContent = ({
           defaultValue={template.above || ''}
           label="Верхняя ремарка"
           strongDefaultValue
-          onChanged={text =>
-            questionerAdminTsjrpcClient.changeTemplateAboveText({ blankw: blank.w, templateId, text })
-          }
+          onChanged={text => questionerAdminTsjrpcClient.changeTemplateAboveText({ blankw: blank.w, templateId, text })}
         />
 
         <InputWithLoadingIcon
@@ -54,9 +48,7 @@ export const QuestionerAdminSorterTemplateCardContent = ({
           defaultValue={template.below || ''}
           label="Нижняя ремарка"
           strongDefaultValue
-          onChanged={text =>
-            questionerAdminTsjrpcClient.changeTemplateBelowText({ blankw: blank.w, templateId, text })
-          }
+          onChanged={text => questionerAdminTsjrpcClient.changeTemplateBelowText({ blankw: blank.w, templateId, text })}
         />
       </div>
 
@@ -74,7 +66,11 @@ export const QuestionerAdminSorterTemplateCardContent = ({
                 <Button
                   icon="ArrowDataTransferVertical"
                   onClick={() =>
-                    questionerAdminTsjrpcClient.changeTemplateCorrectAnswerIndex({ blankw: blank.w, templateId, answerId: +answerId })
+                    questionerAdminTsjrpcClient.changeTemplateCorrectAnswerIndex({
+                      blankw: blank.w,
+                      templateId,
+                      answerId: +answerId,
+                    })
                   }
                 />
               )}
@@ -89,14 +85,22 @@ export const QuestionerAdminSorterTemplateCardContent = ({
                     <LazyIcon
                       icon={isInCorrect ? 'CheckmarkSquare02' : 'Square'}
                       onClick={() =>
-                        questionerAdminTsjrpcClient
-                          .changeTemplateCorrectAnswerSign({ blankw: blank.w, templateId, answerId: +answerId })
+                        questionerAdminTsjrpcClient.changeTemplateCorrectAnswerSign({
+                          blankw: blank.w,
+                          templateId,
+                          answerId: +answerId,
+                        })
                       }
                     />
                   )
                 }
                 onChanged={value =>
-                  questionerAdminTsjrpcClient.changeTemplateAnswerVariantTitle({ blankw: blank.w, templateId, answerId, value })
+                  questionerAdminTsjrpcClient.changeTemplateAnswerVariantTitle({
+                    blankw: blank.w,
+                    templateId,
+                    answerId,
+                    value,
+                  })
                 }
               />
             </div>
@@ -108,9 +112,7 @@ export const QuestionerAdminSorterTemplateCardContent = ({
           className="mt-5"
           disabled={variantKeys.some(key => !template.variants[key]?.title)}
           disabledReason="Есть пункты без названия"
-          onClick={() =>
-            questionerAdminTsjrpcClient.addTemplateAnswerVariant({ blankw: blank.w, templateId })
-          }
+          onClick={() => questionerAdminTsjrpcClient.addTemplateAnswerVariant({ blankw: blank.w, templateId })}
         >
           Добавить пункт
         </Button>

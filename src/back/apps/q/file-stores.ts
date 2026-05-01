@@ -15,8 +15,7 @@ export const questionerBlanksDirStorage = new DirStorage<QuestionerBlank, Questi
     tmp: {},
     w: Date.now() + Math.random(),
   }),
-}
-);
+});
 
 export const questionerUserAnswersFileStore = new FileStore<
   PRecord<QuestionerBlankWid, { answers: QuestionerUserAnswer[] }>

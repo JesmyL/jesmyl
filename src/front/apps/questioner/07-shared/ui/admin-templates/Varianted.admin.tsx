@@ -43,12 +43,21 @@ export const QuestionerAdminVariantedTemplateCardContent = ({
                 <LazyIcon
                   {...makeVariantIconProps(+answerId)}
                   onClick={() =>
-                    questionerAdminTsjrpcClient.changeTemplateCorrectAnswerSign({ blankw: blank.w, templateId, answerId: +answerId })
+                    questionerAdminTsjrpcClient.changeTemplateCorrectAnswerSign({
+                      blankw: blank.w,
+                      templateId,
+                      answerId: +answerId,
+                    })
                   }
                 />
               }
               onChanged={value =>
-                questionerAdminTsjrpcClient.changeTemplateAnswerVariantTitle({ blankw: blank.w, templateId, answerId, value })
+                questionerAdminTsjrpcClient.changeTemplateAnswerVariantTitle({
+                  blankw: blank.w,
+                  templateId,
+                  answerId,
+                  value,
+                })
               }
             />
           );
@@ -58,9 +67,7 @@ export const QuestionerAdminVariantedTemplateCardContent = ({
           className="mt-5"
           disabled={variantKeys.some(key => !template.variants[key]?.title)}
           disabledReason="Есть варианты без названия"
-          onClick={() =>
-            questionerAdminTsjrpcClient.addTemplateAnswerVariant({ blankw: blank.w, templateId })
-          }
+          onClick={() => questionerAdminTsjrpcClient.addTemplateAnswerVariant({ blankw: blank.w, templateId })}
         >
           Добавить вариант
         </Button>

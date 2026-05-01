@@ -9,9 +9,8 @@ export const QuestionerApp = () => {
   return <Outlet />;
 };
 
-
 (async () => {
   questionerAdminTsjrpcClient.requestFreshes({
-    lastModfiedAt: await questionerIDB.get.lastModifiedAt()
-  })
+    lastModfiedAt: await questionerIDB.get.lastModifiedAt(),
+  });
 })();
