@@ -1,7 +1,7 @@
 {
   "w": 1534006585256,
   "n": "Превыше всех",
-  "bpm": 130,
+  "bpm": 128,
   "d": 2,
   "s": 4,
   "k": "4",
@@ -15,8 +15,8 @@
   "c": [
     "C D G\nC D G\nEm C-G\nAm Am7 D",
     "C D G\nC D G\nEm C-G\nAm Am7 H",
-    "G Am D G\nG Am D G\nEm C-G\nAm7 C-D G",
-    "G D Em C"
+    "G Am D G\nG Am D G\nEm Em/D C-G/H\nAm7 C/E-D/F# G",
+    "G D/F# Em C"
   ],
   "o": [
     { "c": 3, "w": 0, "r": 2, "k": 15 },
@@ -49,7 +49,7 @@
       "p": [
         [0, 3, 11, 5],
         [0, 6, 11, 3],
-        [3, 10],
+        [3, 5, 10],
         [5, 10, 18]
       ],
       "t": 2,
