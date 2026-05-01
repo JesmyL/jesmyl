@@ -9,6 +9,7 @@ import { fillCmComCommentConstructorCommentInKey2PropsDict } from 'shared/utils/
 import { cmComOrderPlusKindSet } from 'shared/values/cm/block-kinds/kind-sets';
 import { cmIDB } from '../state';
 import { cmComCommentConstructorRulePropsDictAtom } from '../state/com-comment.atoms';
+import { CmCom } from './Com';
 
 export const updateCmComCommentConstructorRulePropsDict = async (
   comw: CmComWid,
@@ -23,19 +24,22 @@ export const updateCmComCommentConstructorRulePropsDict = async (
   const altCommentKeys = cmComCommentCurrentOpenedAltKeyAtom.get();
   const altCommentKey = altCommentKeys[comw] ?? altCommentKeys.last;
   let isFound = false;
-  const orders = icom?.o;
+  const orders = icom ? new CmCom(icom)?.orders : null;
 
   if (orders)
     for (const ord of orders) {
-      isFound ||= ord.w === selector;
+      isFound ||= ord.wid === selector;
       if (!isFound) continue;
-      if (ord.w !== selector && (!ord.k || !cmComOrderPlusKindSet.has(ord.k))) break;
+      if (ord.wid !== selector && (!ord.kind || !cmComOrderPlusKindSet.has(ord.kind))) break;
 
-      const commentTexts = takeCmComCommentTextBlock(comw, ord.w, localCommentBlock, commentBlock, altCommentKey);
+      const commentTexts = takeCmComCommentTextBlock(comw, ord.wid, localCommentBlock, commentBlock, altCommentKey);
 
       if (commentTexts) {
-        cmComCommentTextRulesDetector(selector === CmComCommentBlockSpecialSelector.Head, ord.w, commentTexts, props =>
-          fillCmComCommentConstructorCommentInKey2PropsDict(ord.w, propsDict, props, wordChordiMaxDict),
+        cmComCommentTextRulesDetector(
+          selector === CmComCommentBlockSpecialSelector.Head,
+          ord.wid,
+          commentTexts,
+          props => fillCmComCommentConstructorCommentInKey2PropsDict(ord.wid, propsDict, props, wordChordiMaxDict),
         );
       }
     }
