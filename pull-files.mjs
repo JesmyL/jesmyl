@@ -50,7 +50,7 @@ import { exec } from 'child_process';
 
       console.info(`${serverPath} saved!`);
     } catch (_error) {
-      console.log(_error);
+      console.info(_error);
       console.info(`${serverPath} load FAILURE!`);
     }
   }

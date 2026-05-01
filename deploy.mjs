@@ -21,7 +21,7 @@ readdir(baseDir)
         const newPath = join(baseDir, newName);
 
         await rename(oldPath, newPath);
-        console.log(`Переименован: ${file} → ${newName}`);
+        console.info(`Переименован: ${file} → ${newName}`);
       }
     });
   })
