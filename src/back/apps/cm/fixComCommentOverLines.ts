@@ -26,7 +26,7 @@ export const fixComCommentOverLines = () => {
   //       SMyLib.entries(ordComments).forEach(([selector, comments]: [CmComCommentBlockSimpleSelector, string[]]) => {
   //         const ordProps: CmComCommentTextDetectorRuleProps[] = [];
   //         if (selector === CmComCommentBlockSpecialSelector.Head) {
-  //           cmComCommentTextRulesDetector(false, selector, comments, props => ordProps.push(props));
+  //           cmComCommentTextRulesDetector(selector === CmComCommentBlockSpecialSelector.Head, selector, comments, props => ordProps.push(props));
   //         } else {
   //           selector = +selector;
   //           let isCountDownLinei = true;
@@ -41,7 +41,7 @@ export const fixComCommentOverLines = () => {
   //             const nextOrd = ords?.[ordi + 1];
   //             ordls.next = nextOrd && cmComOrderPlusKindSet.has(nextOrd.top.k!) ? nextOrd.wid : null;
   //           }
-  //           cmComCommentTextRulesDetector(false, selector, comments, props => ordProps.push(props));
+  //           cmComCommentTextRulesDetector(selector === CmComCommentBlockSpecialSelector.Head, selector, comments, props => ordProps.push(props));
   //           if (isCountDownLinei) {
   //             const propsWithOverLens = ordProps.filter(
   //               prop => 'linei' in prop && prop.linei < 50 && prop.linei > ordls.len - 1,
@@ -62,7 +62,7 @@ export const fixComCommentOverLines = () => {
   //         });
   //       });
   //       const txt = makeCmComCommentConstructorCommentOrdSelector2TextsDictFromRuleProps(
-  //         false,
+  //         selector === CmComCommentBlockSpecialSelector.Head,
   //         codesBlock,
   //         chordsHolder,
   //       );
