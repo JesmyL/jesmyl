@@ -49,7 +49,6 @@ export const fixComCommentOverLines = () => {
   //             // if (propsWithOverLens.length) {
   //             //   isChanged = true;
   //             // }
-  //             // console.log(propsWithOverLens);
   //             propsWithOverLens.forEach(it => {
   //               if (ordls.next != null) {
   //                 it.sel = ordls.next;
@@ -58,7 +57,6 @@ export const fixComCommentOverLines = () => {
   //             });
   //           }
   //         }
-  //         // console.log(ordProps);
   //         ordProps.forEach(props => {
   //           fillCmComCommentConstructorCommentInKey2PropsDict(selector, codesBlock, props, chordsHolder);
   //         });
@@ -75,7 +73,7 @@ export const fixComCommentOverLines = () => {
   //     while (isChanged) {
   //       isChanged = false;
   //       if (i-- < 0) {
-  //         console.log({ fio, name: icom.n, comw: icom.w, id, err: 'LIMIT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' });
+  //         console.info({ fio, name: icom.n, comw: icom.w, id, err: 'LIMIT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' });
   //         break;
   //       }
   //       if (block?.alt) {
@@ -107,12 +105,10 @@ export const fixComCommentOverLines = () => {
   //           block.m = Date.now();
   //         }
   //       }
-  //       // console.log({ isChanged });
   //       isWasChanged ||= isChanged;
   //     }
-  //     // console.log({ isWasChanged });
   //     if (isWasChanged) {
-  //       console.log({ fio, name: icom.n });
+  //       console.info({ fio, name: icom.n });
   //       const prev = comCommentsDirStore.getItem(id);
   //       comCommentsDirStore.saveItem(id as never, { ...prev, b: { ...prev?.b, [comwStr]: block }, l: id as never });
   //     }
