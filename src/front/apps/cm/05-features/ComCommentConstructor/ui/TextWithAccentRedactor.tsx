@@ -1,12 +1,20 @@
-import { CmComCommentConstructorPropKey, CmComCommentConstructorRulePropsDict } from 'shared/model/cm/com-comment';
+import {
+  CmComCommentConstructorPropKey,
+  CmComCommentConstructorRuleKindByPropsType,
+  CmComCommentConstructorRulePropsDict,
+} from 'shared/model/cm/com-comment';
 import { CmComCommentConstructorAccentKindRedactor } from './AccentKindRedactor';
 import { CmComCommentConstructorTextRedactor } from './TextRedactor';
 
-export const CmComCommentConstructorTextWithAccentRedactor = <Key extends CmComCommentConstructorPropKey>(props: {
+export const CmComCommentConstructorTextWithAccentRedactor = <
+  Key extends CmComCommentConstructorPropKey,
+  PropsType extends CmComCommentConstructorRulePropsDict[Key],
+>(props: {
   blockKey: Key;
   label: React.ReactNode;
+  kind: CmComCommentConstructorRuleKindByPropsType<PropsType>;
   blockPropsHolder: { dict?: CmComCommentConstructorRulePropsDict };
-  getDefaultPropsDict: () => CmComCommentConstructorRulePropsDict[Key];
+  getDefaultPropsDict: () => PropsType;
   disabled?: boolean;
   multiline?: boolean;
 }) => {

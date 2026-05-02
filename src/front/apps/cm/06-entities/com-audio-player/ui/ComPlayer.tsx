@@ -33,7 +33,7 @@ export const CmComAudioPlayer = ({ audioLinks, timeRender, addRender, className 
           src={src}
           timeRender={timeRender}
         />
-        <div className="absolute pointers-none text-center w-full text-[.5rem] bottom-0">
+        <div className="absolute pointers-none text-center w-full text-[.5rem] top-[2.2em]">
           {linkHostQuery.data?.host}
         </div>
 

@@ -7,4 +7,9 @@ export const cmConstantsDefaultConfig: CmConstantsConfig = {
   maxLaterComsVizitedCount: 4,
   maxComCommentAlternativesCount: 3,
   showFragmentSlidesBelow: CmComIntensityLevel.Medium,
+  maxComCommentHeadLen: 300,
+  maxComCommentBlockLen: 100,
+  maxComCommentLineLen: 20,
+  maxComCommentWordLen: 10,
+  maxComCommentChordLen: 5,
 };

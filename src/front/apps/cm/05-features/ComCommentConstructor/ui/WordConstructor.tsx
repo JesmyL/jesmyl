@@ -2,6 +2,7 @@ import { Button } from '#shared/components';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
 import { CmComOrderWid } from 'shared/api';
+import { CmComCommentConstructorRuleKind } from 'shared/model/cm/com-comment';
 import { cmComCommentTextDetectorCalculateRate } from 'shared/utils/cm';
 import { CmComCommentConstructorAccentKindRedactor } from './AccentKindRedactor';
 import { CmComCommentConstructorBlockRedactor } from './BlockRedactor';
@@ -17,6 +18,7 @@ export const CmComCommentConstructorWordConstructor = ({
   wordi: number;
 }) => {
   const propsDict = useAtomValue(cmComCommentConstructorRulePropsDictAtom);
+  const wordKeyPrefix = `s${ordw}l${linei}w${wordi}` as const;
 
   return (
     <>
@@ -25,7 +27,7 @@ export const CmComCommentConstructorWordConstructor = ({
 
         <CmComCommentConstructorAccentKindRedactor
           blockPropsHolder={propsDict}
-          blockKey={`s${ordw}l${linei}w${wordi}^`}
+          blockKey={`${wordKeyPrefix}^`}
           getDefaultPropsDict={() => ({
             sel: ordw,
             place: '^',
@@ -38,8 +40,9 @@ export const CmComCommentConstructorWordConstructor = ({
         />
 
         <CmComCommentConstructorBlockRedactor
-          preKey={`s${ordw}l${linei}w${wordi}<`}
-          postKey={`s${ordw}l${linei}w${wordi}>`}
+          preKey={`${wordKeyPrefix}<`}
+          postKey={`${wordKeyPrefix}>`}
+          kind={CmComCommentConstructorRuleKind.Word}
           blockPropsHolder={propsDict}
           preLabel="Текст до"
           postLabel="Текст после"
@@ -55,20 +58,18 @@ export const CmComCommentConstructorWordConstructor = ({
         />
       </div>
 
-      {Array.from({ length: propsDict.wordChordiMaxDict[`s${ordw}l${linei}w${wordi}`] ?? 0 }, () => 0).map(
-        (_, chordi, chorda) => {
-          return (
-            <CmComCommentConstructorChordConstructor
-              key={chordi}
-              ordw={ordw}
-              chordi={chordi}
-              linei={linei}
-              wordi={wordi}
-              isLast={chorda.length - 1 === chordi}
-            />
-          );
-        },
-      )}
+      {Array.from({ length: propsDict.wordChordiMaxDict[wordKeyPrefix] ?? 0 }, () => 0).map((_, chordi, chorda) => {
+        return (
+          <CmComCommentConstructorChordConstructor
+            key={chordi}
+            ordw={ordw}
+            chordi={chordi}
+            linei={linei}
+            wordi={wordi}
+            isLast={chorda.length - 1 === chordi}
+          />
+        );
+      })}
 
       <Button
         icon="PlusSign"
@@ -77,10 +78,10 @@ export const CmComCommentConstructorWordConstructor = ({
           cmComCommentConstructorRulePropsDictAtom.do.update(dict => {
             if (dict.dict == null) return;
 
-            const chordi = (propsDict.wordChordiMaxDict[`s${ordw}l${linei}w${wordi}`] ?? -1) + 1;
-            const keyPrefix = `s${ordw}l${linei}w${wordi}c${chordi}` as const;
+            const chordi = (propsDict.wordChordiMaxDict[wordKeyPrefix] ?? -1) + 1;
+            const chordKeyPrefix = `${wordKeyPrefix}c${chordi}` as const;
 
-            dict.dict[`${keyPrefix}^`] = {
+            dict.dict[`${chordKeyPrefix}^`] = {
               sel: ordw,
               place: '^',
               chordi,
@@ -91,8 +92,8 @@ export const CmComCommentConstructorWordConstructor = ({
               wordi,
             };
 
-            dict.wordChordiMaxDict[`s${ordw}l${linei}w${wordi}`] ??= 0;
-            dict.wordChordiMaxDict[`s${ordw}l${linei}w${wordi}`]!++;
+            dict.wordChordiMaxDict[wordKeyPrefix] ??= 0;
+            dict.wordChordiMaxDict[wordKeyPrefix]!++;
           });
         }}
       >

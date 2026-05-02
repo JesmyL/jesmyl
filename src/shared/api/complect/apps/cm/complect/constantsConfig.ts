@@ -6,5 +6,10 @@ export interface CmConstantsConfig {
   maxSelectedComsCount: number;
   maxLaterComsVizitedCount: number;
   maxComCommentAlternativesCount: number;
+  maxComCommentHeadLen: number;
+  maxComCommentBlockLen: number;
+  maxComCommentLineLen: number;
+  maxComCommentWordLen: number;
+  maxComCommentChordLen: number;
   showFragmentSlidesBelow: CmComIntensityLevel;
 }

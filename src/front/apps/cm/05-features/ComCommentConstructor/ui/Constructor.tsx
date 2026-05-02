@@ -14,6 +14,7 @@ import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-c
 import { useAtomValue } from 'atomaric';
 import { useEffect, useMemo } from 'react';
 import { CmComCommentBlockSimpleSelector, CmComCommentBlockSpecialSelector } from 'shared/api';
+import { CmComCommentConstructorRuleKind } from 'shared/model/cm/com-comment';
 import { itNUnd, retNull } from 'shared/utils';
 import { CmComCommentConstructorBlockView } from './BlockView';
 import { CmComCommentConstructorTextWithAccentRedactor } from './TextWithAccentRedactor';
@@ -93,6 +94,11 @@ export const CmComCommentConstructorTextRulesConstructor = ({
                 label={`Коммент №${blocki + 1}`}
                 blockPropsHolder={propsDict}
                 multiline
+                kind={
+                  selector === CmComCommentBlockSpecialSelector.Head
+                    ? CmComCommentConstructorRuleKind.Head
+                    : CmComCommentConstructorRuleKind.Block
+                }
                 getDefaultPropsDict={() => ({
                   sel: selector,
                   blocki,

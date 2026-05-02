@@ -46,3 +46,22 @@ export type CmComCommentConstructorRulePropsDict = Partial<
       CmComCommentTextDetectorChordRuleProps
     >
 >;
+
+export const enum CmComCommentConstructorRuleKind {
+  Head,
+  Block,
+  Line,
+  Word,
+  Chord,
+}
+
+export type CmComCommentConstructorRuleKindByPropsType<Key extends CmComCommentTextDetectorRuleProps | und> =
+  Key extends CmComCommentTextDetectorChordRuleProps
+    ? CmComCommentConstructorRuleKind.Chord
+    : Key extends CmComCommentTextDetectorWordRuleProps
+      ? CmComCommentConstructorRuleKind.Word
+      : Key extends CmComCommentTextDetectorLineRuleProps
+        ? CmComCommentConstructorRuleKind.Line
+        : Key extends CmComCommentTextDetectorBlockRuleProps
+          ? CmComCommentConstructorRuleKind.Block | CmComCommentConstructorRuleKind.Head
+          : null;

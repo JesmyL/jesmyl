@@ -1,6 +1,7 @@
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
 import { CmComOrderWid } from 'shared/api';
+import { CmComCommentConstructorRuleKind } from 'shared/model/cm/com-comment';
 import { cmComCommentTextDetectorCalculateRate } from 'shared/utils/cm';
 import { CmComCommentConstructorTextWithAccentRedactor } from './TextWithAccentRedactor';
 
@@ -23,6 +24,7 @@ export const CmComCommentConstructorLineConstructor = ({
           blockKey={`s${ordw}l${linei}`}
           label="Коммент для строки"
           blockPropsHolder={propsDict}
+          kind={CmComCommentConstructorRuleKind.Line}
           getDefaultPropsDict={() => ({
             sel: ordw,
             kind: 0,
