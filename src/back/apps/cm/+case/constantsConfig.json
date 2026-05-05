@@ -4,5 +4,10 @@
   "maxSelectedComsCount": 30,
   "maxLaterComsVizitedCount": 4,
   "maxComCommentAlternativesCount": 2,
-  "showFragmentSlidesBelow": 1
+  "showFragmentSlidesBelow": 1,
+  "maxComCommentHeadLen": 300,
+  "maxComCommentBlockLen": 100,
+  "maxComCommentChordLen": 5,
+  "maxComCommentLineLen": 20,
+  "maxComCommentWordLen": 10
 }
