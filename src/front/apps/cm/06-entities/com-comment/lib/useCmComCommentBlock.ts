@@ -1,5 +1,5 @@
-import { MyLib, mylib } from '#shared/lib/my-lib';
-import { cmConstantsConfigAtom, cmIDB } from '$cm/shared/state';
+import { MyLib } from '#shared/lib/my-lib';
+import { cmIDB } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useCallback } from 'react';
@@ -9,7 +9,7 @@ import {
   CmComWid,
   ICmComCommentBlock,
 } from 'shared/api';
-import { cmComCommentCurrentOpenedAltKeyAtom } from '../state/atoms';
+import { cmComCommentCurrentComw2OpenAltiDictAtom } from '../state/atoms';
 
 export const useCmComCommentBlock = (comw: CmComWid) => {
   const localCommentBlock = useLiveQuery(() => cmIDB.tb.localComCommentBlocks.get(comw), [comw]);
@@ -23,16 +23,14 @@ export const takeCmComCommentTextBlock = (
   selector: CmComCommentBlockSimpleSelector,
   localCommentBlock: ICmComCommentBlock | nil,
   commentBlock: ICmComCommentBlock | nil,
-  altCommentKey?: string | nil,
+  commentAlti?: number | nil,
 ) => {
-  if (altCommentKey == null) {
-    const altCommentKeys = cmComCommentCurrentOpenedAltKeyAtom.get();
-    altCommentKey = altCommentKeys[comw] ?? altCommentKeys.last;
+  if (commentAlti == null) {
+    const altCommentKeys = cmComCommentCurrentComw2OpenAltiDictAtom.get();
+    commentAlti = altCommentKeys[comw] ?? altCommentKeys.lasti;
   }
 
-  return altCommentKey != null
-    ? (localCommentBlock?.alt?.[altCommentKey]?.[selector] ?? commentBlock?.alt?.[altCommentKey]?.[selector])
-    : (localCommentBlock?.d?.[selector] ?? commentBlock?.d?.[selector]);
+  return localCommentBlock?.dl?.[commentAlti ?? 0]?.[selector] ?? commentBlock?.dl?.[commentAlti ?? 0]?.[selector];
 };
 
 export const useCmComCommentTextBlockTaker = (
@@ -40,14 +38,13 @@ export const useCmComCommentTextBlockTaker = (
   localCommentBlock: ICmComCommentBlock | nil,
   commentBlock: ICmComCommentBlock | nil,
 ) => {
-  const altCommentKeys = useAtomValue(cmComCommentCurrentOpenedAltKeyAtom);
-  const altCommentKey = altCommentKeys[comw] ?? altCommentKeys.last;
+  const altCommentKeys = useAtomValue(cmComCommentCurrentComw2OpenAltiDictAtom);
+  const commentAlti = altCommentKeys[comw] ?? altCommentKeys.lasti;
 
   return useCallback(
-    (selector: CmComCommentBlockSimpleSelector) => {
-      return takeCmComCommentTextBlock(comw, selector, localCommentBlock, commentBlock, altCommentKey);
-    },
-    [altCommentKey, commentBlock, comw, localCommentBlock],
+    (selector: CmComCommentBlockSimpleSelector) =>
+      takeCmComCommentTextBlock(comw, selector, localCommentBlock, commentBlock, commentAlti),
+    [commentAlti, commentBlock, comw, localCommentBlock],
   );
 };
 export const useCmComCommentTextBlockTakerWithoutComments = (comw: CmComWid) => {
@@ -61,24 +58,24 @@ export const useCmComCommentKindBlockTaker = (
   localCommentBlock: ICmComCommentBlock | nil,
   commentBlock: ICmComCommentBlock | nil,
 ) => {
-  const altCommentKeys = useAtomValue(cmComCommentCurrentOpenedAltKeyAtom);
-  const altCommentKey = altCommentKeys[comw] ?? altCommentKeys.last;
+  const altCommentKeys = useAtomValue(cmComCommentCurrentComw2OpenAltiDictAtom);
+  const commentAlti = altCommentKeys[comw] ?? altCommentKeys.lasti;
 
-  return altCommentKey != null
-    ? (localCommentBlock?.alt?.[altCommentKey]?.[CmComCommentBlockSpecialSelector.Kinds] ??
-        commentBlock?.alt?.[altCommentKey]?.[CmComCommentBlockSpecialSelector.Kinds])
-    : (localCommentBlock?.d?.[CmComCommentBlockSpecialSelector.Kinds] ??
-        commentBlock?.d?.[CmComCommentBlockSpecialSelector.Kinds]);
+  return (
+    localCommentBlock?.dl?.[commentAlti]?.[CmComCommentBlockSpecialSelector.Kinds] ??
+    commentBlock?.dl?.[commentAlti]?.[CmComCommentBlockSpecialSelector.Kinds]
+  );
 };
 
 export const cmComCommentUpdater = async (
   comw: CmComWid,
-  altCommentKey: string | nil,
+  commentAlti: number,
   ordUpdaters: PRecord<CmComCommentBlockSimpleSelector, (prevBlocks: string[]) => string[]>,
 ) => {
   const localCommentBlock = await cmIDB.tb.localComCommentBlocks.get(comw);
   const commentBlock = await cmIDB.tb.comCommentBlocks.get(comw);
   const ordTextsDict: PRecord<CmComCommentBlockSimpleSelector, string[]> = {};
+  let isChanged = false;
 
   MyLib.entries(ordUpdaters).forEach(([ordSelector, updater]) => {
     if (!updater) return;
@@ -90,7 +87,7 @@ export const cmComCommentUpdater = async (
         : +ordSelector,
       localCommentBlock,
       commentBlock,
-      altCommentKey,
+      commentAlti,
     );
 
     const prev = [...(takeCommentTexts ?? [])];
@@ -101,33 +98,21 @@ export const cmComCommentUpdater = async (
     });
 
     if (isNoChanges) return;
+    isChanged = true;
 
     ordTextsDict[ordSelector] = texts;
   });
 
-  const isAltComment =
-    altCommentKey != null &&
-    (localCommentBlock?.alt?.[altCommentKey] != null ||
-      mylib.keys(localCommentBlock?.alt ?? []).length < cmConstantsConfigAtom.get().maxComCommentAlternativesCount);
+  const dictList = localCommentBlock?.dl ?? [];
 
-  cmIDB.tb.localComCommentBlocks.put({
-    ...localCommentBlock,
-    comw,
-    m: Date.now(),
-    d: isAltComment
-      ? localCommentBlock?.d
-      : {
-          ...localCommentBlock?.d,
-          ...ordTextsDict,
-        },
-    alt: isAltComment
-      ? {
-          ...localCommentBlock?.alt,
-          [altCommentKey]: {
-            ...localCommentBlock?.alt?.[altCommentKey],
-            ...ordTextsDict,
-          },
-        }
-      : localCommentBlock?.alt,
-  });
+  dictList[commentAlti] = { ...dictList[commentAlti], ...ordTextsDict };
+
+  if (isChanged) {
+    cmIDB.tb.localComCommentBlocks.put({
+      ...localCommentBlock,
+      comw,
+      m: Date.now(),
+      dl: dictList,
+    });
+  }
 };

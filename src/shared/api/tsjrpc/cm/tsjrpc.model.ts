@@ -8,7 +8,6 @@ export type CmTsjrpcModel = {
     modifiedComments: ICmComCommentBlock[];
     clientDateNow: number;
   }) => ICmComCommentBlock[];
-  replaceUserAltCommentBlocks: (args: { comw: CmComWid; from: string | null; to: string | null }) => void;
   pullUserAltCommentBlock: (args: {
     comw: CmComWid;
     login: SokiAuthLogin;

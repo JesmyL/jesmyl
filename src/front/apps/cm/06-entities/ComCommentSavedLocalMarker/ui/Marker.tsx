@@ -1,6 +1,6 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { cmComCommentCurrentOpenedAltKeyAtom, useCmComCommentBlock } from '$cm/entities/com-comment';
+import { cmComCommentCurrentComw2OpenAltiDictAtom, useCmComCommentBlock } from '$cm/entities/com-comment';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { CmComCommentBlockSimpleSelector, CmComWid } from 'shared/api';
@@ -12,17 +12,12 @@ export const CmComCommentSavedLocalMarker = ({
   selector: CmComCommentBlockSimpleSelector;
   comw: CmComWid;
 }) => {
-  const altCommentKeys = useAtomValue(cmComCommentCurrentOpenedAltKeyAtom);
-  const altCommentKey = altCommentKeys[comw] ?? altCommentKeys.last;
+  const altCommentKeys = useAtomValue(cmComCommentCurrentComw2OpenAltiDictAtom);
+  const commentAlti = altCommentKeys[comw] ?? altCommentKeys.lasti;
 
   const { localCommentBlock } = useCmComCommentBlock(comw);
 
-  return (
-    <>
-      {(localCommentBlock?.d?.[selector] != null ||
-        (altCommentKey && localCommentBlock?.alt?.[altCommentKey]?.[selector] != null)) && <SavedLocalLabel />}
-    </>
-  );
+  return localCommentBlock?.dl?.[commentAlti]?.[selector] && <SavedLocalLabel />;
 };
 
 const SavedLocalLabel = () => {

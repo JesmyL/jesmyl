@@ -1,5 +1,5 @@
 import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
-import { cmComCommentCurrentOpenedAltKeyAtom } from '$cm/entities/com-comment';
+import { cmComCommentCurrentComw2OpenAltiDictAtom } from '$cm/entities/com-comment';
 import { CmComOrderList } from '$cm/entities/com-order';
 import { CmCom } from '$cm/ext';
 import { TheCmComWithComments } from '$cm/widgets/com';
@@ -10,7 +10,7 @@ import { cmComChordHardLevelAtom, cmComSpeedRollKfAtom } from '../state/atoms';
 import { CmComNumber } from './ComNumber';
 
 export function CmComFullscreenExpandList({ coms }: { coms: CmCom[] }) {
-  const altCommentKeys = useAtomValue(cmComCommentCurrentOpenedAltKeyAtom);
+  const altCommentKeys = useAtomValue(cmComCommentCurrentComw2OpenAltiDictAtom);
   const chordHardLevel = useAtomValue(cmComChordHardLevelAtom);
 
   return (
@@ -20,7 +20,7 @@ export function CmComFullscreenExpandList({ coms }: { coms: CmCom[] }) {
           {coms?.map(com => (
             <React.Fragment key={com.wid}>
               <div className="com-number">#{<CmComNumber comw={com.wid} />}</div>
-              <div className="uppercase">{altCommentKeys[com.wid] ?? altCommentKeys.last}</div>
+              <div className="uppercase">{altCommentKeys[com.wid] ?? altCommentKeys.lasti}</div>
               <TheCmComWithComments com={com}>
                 <CmComOrderList
                   com={com}

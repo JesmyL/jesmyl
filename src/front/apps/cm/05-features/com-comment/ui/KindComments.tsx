@@ -6,7 +6,7 @@ import { useDeferredCallback } from 'shared/utils/useDeferredCallback';
 import { comBlockKindsConfig } from 'shared/values/cm/block-kinds/comBlockKinds.config';
 import { twMerge } from 'tailwind-merge';
 
-export const CmComCommentKindComments = ({ altCommentKey, com }: { altCommentKey: string | null; com: CmCom }) => {
+export const CmComCommentKindComments = ({ commentAlti, com }: { commentAlti: number; com: CmCom }) => {
   const deferredCallback = useDeferredCallback();
   const { localCommentBlock, commentBlock } = useCmComCommentBlock(com.wid);
   const kindCommentTexts = useCmComCommentKindBlockTaker(com.wid, localCommentBlock, commentBlock);
@@ -39,27 +39,16 @@ export const CmComCommentKindComments = ({ altCommentKey, com }: { altCommentKey
                 deferredCallback(
                   () => {
                     const texts = { ...kindCommentTexts, [kind.key]: value };
-                    const isAltComment = altCommentKey != null;
+                    const dictList = localCommentBlock?.dl ?? [];
+
+                    dictList[commentAlti] ??= {};
+                    dictList[commentAlti][CmComCommentBlockSpecialSelector.Kinds] = texts;
 
                     cmIDB.tb.localComCommentBlocks.put({
                       ...localCommentBlock,
                       comw: com.wid,
                       m: Date.now(),
-                      d: isAltComment
-                        ? localCommentBlock?.d
-                        : {
-                            ...localCommentBlock?.d,
-                            [CmComCommentBlockSpecialSelector.Kinds]: texts,
-                          },
-                      alt: isAltComment
-                        ? {
-                            ...localCommentBlock?.alt,
-                            [altCommentKey]: {
-                              ...localCommentBlock?.alt?.[altCommentKey],
-                              [CmComCommentBlockSpecialSelector.Kinds]: texts,
-                            },
-                          }
-                        : localCommentBlock?.alt,
+                      dl: dictList,
                     });
                   },
                   1000,

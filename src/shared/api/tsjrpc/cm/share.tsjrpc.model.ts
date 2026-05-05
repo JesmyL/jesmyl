@@ -26,7 +26,7 @@ export type CmShareTsjrpcModel = {
   editedChords: (args: { chords: ChordPack; modifiedAt: number }) => unknown;
   refreshChordPack: (args: { pack: ChordPack; modifiedAt: number }) => unknown;
 
-  refreshComCommentBlocks: (args: { comments: ICmComCommentBlock[]; modifiedAt: number }) => void;
+  refreshComComments: (args: { comments: ICmComCommentBlock[]; mod: number; alts: string[] | nil }) => void;
   refreshAboutComFavorites: (args: { value: TAboutComFavoriteItem }) => void;
 
   refreshScheduleEventComPacks: (args: { packs: ComsInSchEvent[]; modifiedAt: number }) => void;

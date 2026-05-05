@@ -3,7 +3,11 @@ import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe
 import { mylib } from '#shared/lib/my-lib';
 import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
 import { cmComAudioPlayerPlaySrcAtom, isCmComAudioPlayerOpenMoversAtom } from '$cm/entities/com-audio-player';
-import { cmComCommentCurrentOpenedAltKeyAtom, useCmComCommentBlockFastReactions } from '$cm/entities/com-comment';
+import {
+  cmComCommentCurrentComw2OpenAltiDictAtom,
+  cmComCommentRegisteredAltKeysAtom,
+  useCmComCommentBlockFastReactions,
+} from '$cm/entities/com-comment';
 import { useCmComOrderAudioMarkControlButtons } from '$cm/entities/com-order';
 import { cmComFontSizeAtom, cmComIsComMiniAnchorAtom, cmComSpeedRollKfAtom } from '$cm/entities/index';
 import { CmCom } from '$cm/ext';
@@ -33,8 +37,10 @@ interface Props {
 export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props) => {
   const fontSize = useAtomValue(cmComFontSizeAtom);
   const isMiniAnchor = useAtomValue(cmComIsComMiniAnchorAtom);
-  const altCommentKeys = useAtomValue(cmComCommentCurrentOpenedAltKeyAtom);
-  const altCommentKey = altCommentKeys[com.wid] ?? altCommentKeys.last;
+  const altCommentKeys = useAtomValue(cmComCommentCurrentComw2OpenAltiDictAtom);
+  const commentAltTitle = useAtomValue(cmComCommentRegisteredAltKeysAtom)[
+    altCommentKeys[com.wid] ?? altCommentKeys.lasti ?? 0
+  ];
   const listRef = useRef<HTMLDivElement>(null);
   const playSrc = useAtomValue(cmComAudioPlayerPlaySrcAtom);
   const isOpenMoversButtons =
@@ -98,7 +104,7 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
 
           <TheCmComWithComments
             com={com}
-            beforeCommentsNode={<div className="sticky uppercase -top-30!">{altCommentKey}</div>}
+            beforeCommentsNode={<div className="sticky uppercase -top-30!">{commentAltTitle}</div>}
           >
             <TheCmCom
               com={com}

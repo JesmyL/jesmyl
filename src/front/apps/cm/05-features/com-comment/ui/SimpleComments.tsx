@@ -4,32 +4,32 @@ import { CmComCommentBlockSimpleSelector, CmComCommentBlockSpecialSelector, CmCo
 import { useDeferredCallback } from 'shared/utils/useDeferredCallback';
 
 export const CmComCommentSimpleComments = ({
-  altCommentKey,
-  ordSelectorId,
+  commentAlti,
+  ordSelector,
   comw,
 }: {
-  altCommentKey: string | null;
-  ordSelectorId: CmComCommentBlockSimpleSelector;
+  commentAlti: number;
+  ordSelector: CmComCommentBlockSimpleSelector;
   comw: CmComWid;
 }) => {
   const deferredCallback = useDeferredCallback();
   const takeCommentTexts = useCmComCommentTextBlockTakerWithoutComments(comw);
-  const texts = takeCommentTexts(ordSelectorId) ?? [];
+  const texts = takeCommentTexts(ordSelector) ?? [];
 
   return (
     <>
       {texts.concat(texts.length < 3 ? '' : [])?.map((line, linei) => {
         return (
           <TextInput
-            key={`${altCommentKey}${linei}`}
+            key={`${commentAlti}${linei}`}
             defaultValue={line}
             multiline
             className="mb-3"
             onInput={value => {
               deferredCallback(
                 async () =>
-                  cmComCommentUpdater(comw, altCommentKey, {
-                    [ordSelectorId as CmComCommentBlockSpecialSelector.Head]: texts => {
+                  cmComCommentUpdater(comw, commentAlti, {
+                    [ordSelector as CmComCommentBlockSpecialSelector.Head]: texts => {
                       texts = [...texts];
                       texts[linei] = value;
                       return texts;

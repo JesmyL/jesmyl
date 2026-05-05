@@ -25,7 +25,7 @@ export const useCmComCommentConstructorListenChanges = () => {
 
       cmComCommentUpdater(
         propsDict.comw,
-        propsDict.altCommentKey,
+        propsDict.commentAlti,
         MyLib.entries(ordSelector2TextsDict).reduce<
           PRecord<CmComCommentBlockSimpleSelector, (prevBlocks: string[]) => string[]>
         >((acc, [ordwStr, lines]) => {

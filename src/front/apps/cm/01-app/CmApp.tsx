@@ -4,9 +4,8 @@ import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { Metronome } from '#widgets/metronome';
 import { useCmCom, useCmComSelectedList } from '$cm/entities/com';
-import { cmComLastOpenComwAtom, cmComSelectedComwsAtom, cmComShareComCommentPropsAtom } from '$cm/entities/index';
+import { cmComLastOpenComwAtom, cmComSelectedComwsAtom } from '$cm/entities/index';
 import { CmComSharedListActionInterpretator } from '$cm/features/com';
-import { CmComCommentSharePull } from '$cm/features/com-comment';
 import { cmAppActions } from '$cm/shared/const';
 import { cmConstantsConfigAtom } from '$cm/shared/state';
 import { Global } from '@emotion/react';
@@ -25,7 +24,6 @@ export const CmApp = () => {
 
   useCurrentAppSetter('cm');
   const { maxSelectedComsCount } = useAtomValue(cmConstantsConfigAtom);
-  const comCommentShareProps = useAtomValue(cmComShareComCommentPropsAtom);
   const checkAccess = useCheckUserAccessRightsInScope();
   const ccomw = useAtomValue(cmComLastOpenComwAtom);
   const ccom = useCmCom(ccomw);
@@ -40,11 +38,6 @@ export const CmApp = () => {
 
     if ('comw' in props && props.comw != null) {
       navigateFromRoot({ to: '/cm/i', search: { comw: props.comw } });
-      return true;
-    }
-
-    if ('shareCommentComw' in props && !!props.login && !!props.shareCommentComw) {
-      cmComShareComCommentPropsAtom.set({ comw: props.shareCommentComw, login: props.login });
       return true;
     }
 
@@ -69,7 +62,6 @@ export const CmApp = () => {
       {checkAccess('cm', 'EDIT') && <RenderEditorOnce />}
 
       <CmComSharedListActionInterpretator comListOnActionAtom={comListOnActionAtom} />
-      {comCommentShareProps && <CmComCommentSharePull shareProps={comCommentShareProps} />}
 
       {ccom && (
         <Metronome

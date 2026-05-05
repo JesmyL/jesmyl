@@ -3,9 +3,8 @@ import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { WithAtomValue } from '#shared/ui/WithAtomValue';
 import {
-  cmComCommentCurrentOpenedAltKeyAtom,
+  cmComCommentCurrentComw2OpenAltiDictAtom,
   cmComCommentRedactOrdSelectorIdAtom,
-  cmComCommentRegisteredAltKeysAtom,
 } from '$cm/entities/com-comment';
 import { CmComOrder } from '$cm/entities/com-order';
 import { CmComCommentAlternativeSelector } from '$cm/entities/ComCommentAlternativeSelector';
@@ -23,14 +22,12 @@ export const CmComCommentModalInner = ({ com }: { com: CmCom }) => {
   isKindCommentsAtom ??= atom(true);
 
   const ordSelectorId = useAtomValue(cmComCommentRedactOrdSelectorIdAtom);
-  const altCommentKeys = useAtomValue(cmComCommentCurrentOpenedAltKeyAtom);
-  const altCommentKey = altCommentKeys[com.wid] ?? altCommentKeys.last;
+  const altCommentKeys = useAtomValue(cmComCommentCurrentComw2OpenAltiDictAtom);
+  const commentAlti = altCommentKeys[com.wid] ?? altCommentKeys.lasti;
   const isKindComments = useAtomValue(isKindCommentsAtom);
 
   if (ordSelectorId === null) return;
   const isHeadComment = ordSelectorId === CmComCommentBlockSpecialSelector.Head;
-
-  cmComCommentRegisteredAltKeysAtom.do.init();
 
   let ord: CmComOrder | und;
   let ordNN = 0;
@@ -87,13 +84,13 @@ export const CmComCommentModalInner = ({ com }: { com: CmCom }) => {
               <ModalBody>
                 {isKindComments ? (
                   <CmComCommentKindComments
-                    altCommentKey={altCommentKey}
+                    commentAlti={commentAlti}
                     com={com}
                   />
                 ) : (
                   <CmComCommentSimpleComments
-                    altCommentKey={altCommentKey}
-                    ordSelectorId={ordSelectorId}
+                    commentAlti={commentAlti}
+                    ordSelector={ordSelectorId}
                     comw={com.wid}
                   />
                 )}

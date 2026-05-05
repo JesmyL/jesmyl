@@ -2,7 +2,7 @@ import { Button } from '#shared/components';
 import { mylib } from '#shared/lib/my-lib';
 import { Modal } from '#shared/ui/modal';
 import { WithAtom } from '#shared/ui/WithAtom';
-import { cmComCommentCurrentOpenedAltKeyAtom, useCmComCommentBlockCss } from '$cm/entities/com-comment';
+import { cmComCommentCurrentComw2OpenAltiDictAtom, useCmComCommentBlockCss } from '$cm/entities/com-comment';
 import { CmComCommentAlternativeSelector } from '$cm/entities/ComCommentAlternativeSelector';
 import { CmComCommentSavedLocalMarker } from '$cm/entities/ComCommentSavedLocalMarker';
 import { CmComCommentTools } from '$cm/entities/ComCommentTools';
@@ -36,7 +36,7 @@ export const CmComCommentConstructorTextRulesConstructor = ({
   );
 
   useEffect(() => {
-    return cmComCommentCurrentOpenedAltKeyAtom.subscribe(() => {
+    return cmComCommentCurrentComw2OpenAltiDictAtom.subscribe(() => {
       updateCmComCommentConstructorRulePropsDict(com.wid, selector);
     });
   }, [com.wid, selector]);
@@ -62,7 +62,7 @@ export const CmComCommentConstructorTextRulesConstructor = ({
             </>
           )}
         </WithAtom>
-        <CmComCommentTools com={com} />
+        <CmComCommentTools />
       </div>
 
       <CmComCommentSavedLocalMarker

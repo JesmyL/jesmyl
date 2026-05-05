@@ -62,6 +62,7 @@ export const comCommentsDirStore = new DirStorage<
   {
     l: SokiAuthLogin;
     fio?: string;
+    alts?: string[];
     b: PRecord<CmComWid, OmitOwn<ICmComCommentBlock, 'comw'>>;
   },
   SokiAuthLogin,

@@ -173,7 +173,7 @@ export type IExportableCom = IExportableComInterpretationSimpleValues & {
 export type IServerSideCom = OmitOwn<IExportableCom, 'al' | 'm'> & { al?: HttpNumLeadLink[] | HttpNumLeadLink };
 
 export const enum CmComCommentBlockSpecialSelector {
-  Head = 'head',
+  Head = 'h',
   Kinds = 'k',
 }
 
@@ -186,10 +186,9 @@ export type CmComCommentBlockDict = PRecord<CmComCommentBlockSimpleSelector, str
 
 export type ICmComCommentBlock = {
   comw: CmComWid;
-  /** comment block dict */
-  d?: CmComCommentBlockDict;
-  alt?: PRecord<string, CmComCommentBlockDict>;
   m: number;
+  /** comment block dict list */
+  dl?: (CmComCommentBlockDict | nil)[];
 };
 
 export type TAboutComFavoriteItem = {

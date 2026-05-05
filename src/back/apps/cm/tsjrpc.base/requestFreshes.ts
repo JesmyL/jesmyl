@@ -106,7 +106,10 @@ export const cmServerTsjrpcBaseRequestFreshes = {
             }));
 
           if (comments.length > 0) {
-            cmShareServerTsjrpcMethods.refreshComCommentBlocks({ comments, modifiedAt: commentsLastModified }, client);
+            cmShareServerTsjrpcMethods.refreshComComments(
+              { comments, mod: commentsLastModified, alts: commentsHolder?.alts },
+              client,
+            );
           }
         } while (Math.ceil(0));
       }

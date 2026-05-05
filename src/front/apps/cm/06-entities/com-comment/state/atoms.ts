@@ -1,37 +1,10 @@
-import { mylib } from '#shared/lib/my-lib';
-import { cmConstantsConfigAtom, cmIDB } from '$cm/shared/state';
 import { atom } from 'atomaric';
 import { CmComCommentBlockSimpleSelector, CmComWid } from 'shared/api';
 
 export const cmComCommentRedactOrdSelectorIdAtom = atom<CmComCommentBlockSimpleSelector | null>(null);
-export const cmComCommentCurrentOpenedAltKeyAtom = atom(
-  {} as PRecord<CmComWid, string> & { last: string | null },
-  'cm:cmComCommentCurrentOpenedAltKey',
+export const cmComCommentCurrentComw2OpenAltiDictAtom = atom<PRecord<CmComWid, number> & { lasti: number }>(
+  { lasti: 0 },
+  'cm:comCommentCurrentComw2OpenAltiDict',
 );
 
-export const cmComCommentRegisteredAltKeysAtom = atom(new Set<string>(), {
-  do: (set, get, self) => ({
-    init: async () => {
-      if (!self.isInitialValue()) return;
-
-      const max = cmConstantsConfigAtom.get().maxComCommentAlternativesCount;
-      if (!max || get().size >= max) return;
-
-      const newKeySet = new Set<string>();
-
-      [...(await cmIDB.tb.localComCommentBlocks.toArray()), ...(await cmIDB.tb.comCommentBlocks.toArray())].some(
-        comment => {
-          return (
-            comment.alt != null &&
-            mylib.keys(comment.alt).some(key => {
-              newKeySet.add(key);
-              return newKeySet.size >= max;
-            })
-          );
-        },
-      );
-
-      set(newKeySet);
-    },
-  }),
-});
+export const cmComCommentRegisteredAltKeysAtom = atom((): string[] => [], 'cm:comCommentRegisteredAltKeysAtom');

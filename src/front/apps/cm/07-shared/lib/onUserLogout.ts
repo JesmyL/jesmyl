@@ -1,11 +1,11 @@
-import { cmComCommentCurrentOpenedAltKeyAtom } from '$cm/entities/com-comment';
+import { cmComCommentCurrentComw2OpenAltiDictAtom } from '$cm/entities/com-comment';
 import { cmComFavoriteComsAtom, cmComSelectedComwsAtom, cmComTopToolsAtom } from '$cm/entities/index';
 import { cmIDB } from '$cm/ext';
 
 export const cmOnUserLogout = () => {
   cmComTopToolsAtom.reset();
   cmComSelectedComwsAtom.reset();
-  cmComCommentCurrentOpenedAltKeyAtom.reset();
+  cmComCommentCurrentComw2OpenAltiDictAtom.reset();
   cmComFavoriteComsAtom.reset();
 
   cmIDB.tb.comCommentBlocks.clear();

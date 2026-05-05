@@ -1,13 +1,12 @@
 import { cmIDB } from '$cm/ext';
 import { ChordVisibleVariant } from '$cm/shared/model';
 import { atom } from 'atomaric';
-import { CmComWid, MigratableComToolName, SokiAuthLogin } from 'shared/api';
+import { CmComWid, MigratableComToolName } from 'shared/api';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
 
 export const cmComChordHardLevelAtom = atom<1 | 2 | 3>(2, 'cm:chord-hard-level');
 export const cmComIsComMiniAnchorAtom = atom(false, 'cm:is-com-mini-anchor');
 export const cmComIsShowCatBindsInCompositionAtom = atom(false);
-export const cmComShareComCommentPropsAtom = atom<{ login: SokiAuthLogin; comw: CmComWid } | null>(null);
 
 export const cmComChordVisibleVariantAtom = atom(ChordVisibleVariant.Maximal, 'cm:chordVisibleVariant');
 

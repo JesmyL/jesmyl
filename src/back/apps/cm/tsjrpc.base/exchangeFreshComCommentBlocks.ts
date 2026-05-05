@@ -6,8 +6,8 @@ import {
   ICmComCommentBlock,
 } from 'shared/api';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
-import { smylib, SMyLib } from 'shared/utils';
-import { cmConstantsConfigFileStore, comCommentsDirStore } from '../file-stores';
+import { retUnd, SMyLib, smylib } from 'shared/utils';
+import { comCommentsDirStore } from '../file-stores';
 import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
 
 export const cmServerTsjrpcBaseExchangeFreshComCommentBlocks = {
@@ -24,7 +24,7 @@ export const cmServerTsjrpcBaseExchangeFreshComCommentBlocks = {
     const freshComments: ICmComCommentBlock[] = [];
     const resultComments: ICmComCommentBlock[] = [];
 
-    modifiedComments.forEach(({ d, comw, m, alt }) => {
+    modifiedComments.forEach(({ comw, m, dl }) => {
       const commentModifiedAt = m + withClientTimeDelta;
 
       if (userServerComments[comw] != null && commentModifiedAt < userServerComments[comw].m) {
@@ -32,11 +32,9 @@ export const cmServerTsjrpcBaseExchangeFreshComCommentBlocks = {
         return;
       }
 
-      const checkKindsFull = (commentBlockDict: CmComCommentBlockDict | nil) => {
-        if (commentBlockDict == null) return;
-
+      const checkKindsFull = (commentBlockDict: CmComCommentBlockDict) => {
         const altKindsDict = commentBlockDict[CmComCommentBlockSpecialSelector.Kinds];
-        if (altKindsDict == null) return;
+        if (altKindsDict == null) return commentBlockDict;
 
         smylib.keys(altKindsDict).forEach(key => {
           if (!altKindsDict[key]) delete altKindsDict[key];
@@ -45,6 +43,8 @@ export const cmServerTsjrpcBaseExchangeFreshComCommentBlocks = {
         if (!smylib.keys(altKindsDict).length) {
           delete commentBlockDict[CmComCommentBlockSpecialSelector.Kinds];
         }
+
+        return commentBlockDict;
       };
 
       const checkSimpleFull = (
@@ -68,70 +68,39 @@ export const cmServerTsjrpcBaseExchangeFreshComCommentBlocks = {
         }
       };
 
-      const newCommentDict: CmComCommentBlockDict = {
-        ...userServerComments[comw]?.d,
-        ...d,
-        [CmComCommentBlockSpecialSelector.Kinds]: {
-          ...userServerComments[comw]?.d?.[CmComCommentBlockSpecialSelector.Kinds],
-          ...d?.[CmComCommentBlockSpecialSelector.Kinds],
-        },
-      };
+      const comServerCommentDicts = userServerComments[comw]?.dl ?? [];
+      const modeifiedComCommentDicts = dl ?? [];
 
-      checkKindsFull(newCommentDict);
+      const resultDictList = Array.from(
+        { length: Math.max(modeifiedComCommentDicts.length, comServerCommentDicts.length) },
+        retUnd,
+      ).map((_, i) => {
+        const dict = checkKindsFull({
+          ...comServerCommentDicts[i],
+          ...modeifiedComCommentDicts[i],
+          [CmComCommentBlockSpecialSelector.Kinds]: {
+            ...comServerCommentDicts[i]?.[CmComCommentBlockSpecialSelector.Kinds],
+            ...modeifiedComCommentDicts[i]?.[CmComCommentBlockSpecialSelector.Kinds],
+          },
+        });
+
+        SMyLib.entries(dict).forEach(([key, block]) => {
+          if (key === CmComCommentBlockSpecialSelector.Kinds || !block) return;
+          checkSimpleFull(key, block, dict);
+        });
+
+        return dict;
+      });
+
+      for (let resultDictListi = resultDictList.length - 1; resultDictListi > -1; resultDictListi--)
+        if (!smylib.keys(resultDictList[resultDictListi]).length) resultDictList.pop();
+        else break;
 
       userServerComments[comw] = {
         ...userServerComments[comw],
-        d: newCommentDict,
         m: commentModifiedAt,
+        dl: resultDictList.length ? resultDictList : undefined,
       };
-
-      if (alt) {
-        const userAlt = (userServerComments[comw].alt ??= {});
-
-        if (
-          Array.from(new Set([...smylib.keys(alt), ...smylib.keys(userAlt)])).length <=
-          cmConstantsConfigFileStore.getValue().maxComCommentAlternativesCount
-        )
-          SMyLib.entries(alt).forEach(([altCommentKey, altValue]) => {
-            userAlt[altCommentKey] = {
-              ...userAlt[altCommentKey],
-              ...altValue,
-              [CmComCommentBlockSpecialSelector.Kinds]: {
-                ...userAlt[altCommentKey]?.[CmComCommentBlockSpecialSelector.Kinds],
-                ...altValue?.[CmComCommentBlockSpecialSelector.Kinds],
-              },
-            };
-
-            checkKindsFull(userAlt[altCommentKey]);
-          });
-      }
-
-      if (newCommentDict)
-        SMyLib.entries(newCommentDict).forEach(([key, block]) => {
-          if (!block) return;
-
-          if (key === CmComCommentBlockSpecialSelector.Kinds) {
-            checkKindsFull(newCommentDict);
-          } else checkSimpleFull(key, block, newCommentDict);
-
-          if (userServerComments[comw] && !smylib.keys(newCommentDict).length) delete userServerComments[comw].d;
-        });
-
-      const userServerAltCommentDict = userServerComments[comw].alt;
-
-      if (userServerAltCommentDict != null)
-        SMyLib.keys(userServerAltCommentDict).forEach(altCommentKey => {
-          const altBlock = userServerAltCommentDict[altCommentKey];
-
-          if (!altBlock) return;
-          SMyLib.entries(altBlock).forEach(([key, block]) => {
-            if (block == null) return;
-
-            if (key === CmComCommentBlockSpecialSelector.Kinds) {
-              checkKindsFull(newCommentDict);
-            } else checkSimpleFull(key, block, userServerAltCommentDict[altCommentKey]);
-          });
-        });
 
       const block: ICmComCommentBlock = { ...userServerComments[comw], comw };
       resultComments.push(block);
@@ -142,8 +111,8 @@ export const cmServerTsjrpcBaseExchangeFreshComCommentBlocks = {
     if (localSavedCommentsMaxModifiedAt) {
       comCommentsDirStore.saveItem(auth.login);
 
-      cmShareServerTsjrpcMethods.refreshComCommentBlocks(
-        { comments: freshComments, modifiedAt: localSavedCommentsMaxModifiedAt },
+      cmShareServerTsjrpcMethods.refreshComComments(
+        { comments: freshComments, mod: localSavedCommentsMaxModifiedAt, alts: commentsHolder.alts },
         { login: auth.login },
       );
     }

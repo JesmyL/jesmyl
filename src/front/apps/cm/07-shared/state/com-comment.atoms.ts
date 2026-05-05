@@ -10,7 +10,7 @@ export const cmComCommentConstructorRulePropsDictAtom = atom(
     dict?: CmComCommentConstructorRulePropsDict;
     selector?: CmComCommentBlockSimpleSelector;
     comw: CmComWid;
-    altCommentKey: string | null;
+    commentAlti: number;
     wordChordiMaxDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKey, number>;
-  } => ({ wordChordiMaxDict: {}, comw: CmComWid.def, altCommentKey: null }),
+  } => ({ wordChordiMaxDict: {}, comw: CmComWid.def, commentAlti: 0 }),
 );

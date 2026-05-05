@@ -12,7 +12,6 @@ import {
   comsInSchEventHistoryDirStorage,
   comwVisitsFileStore,
 } from '../file-stores';
-import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
 import { cmUserStoreTsjrpcBaseServer } from '../user-store.tsjrpc.base';
 import { cmServerTsjrpcBaseExchangeFreshComCommentBlocks } from './exchangeFreshComCommentBlocks';
 import { cmServerTsjrpcBaseRequestFreshes } from './requestFreshes';
@@ -24,37 +23,6 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
       methods: {
         ...cmServerTsjrpcBaseRequestFreshes,
         ...cmServerTsjrpcBaseExchangeFreshComCommentBlocks,
-
-        replaceUserAltCommentBlocks: async ({ from: transferAltFrom, to: transferAltTo, comw }, { auth, client }) => {
-          if (!auth?.login) throw 'Для обмена специальными комментариями нужна авторизация';
-          const commentBlock = comCommentsDirStore.getItem(auth.login)?.b[comw];
-          if (commentBlock == null) return;
-
-          const fromAlt = transferAltFrom == null ? commentBlock.d : commentBlock.alt?.[transferAltFrom];
-          const toAlt = transferAltTo == null ? commentBlock.d : commentBlock.alt?.[transferAltTo];
-
-          const alt = (commentBlock.alt ??= {});
-
-          if (transferAltFrom != null && transferAltTo != null) {
-            alt[transferAltFrom] = toAlt;
-            alt[transferAltTo] = fromAlt;
-          } else if (transferAltTo != null && transferAltFrom == null) {
-            commentBlock.d = toAlt ?? {};
-            alt[transferAltTo] = fromAlt;
-          } else if (transferAltFrom != null && transferAltTo == null) {
-            commentBlock.d = fromAlt ?? {};
-            alt[transferAltFrom] = toAlt;
-          }
-
-          cmShareServerTsjrpcMethods.refreshComCommentBlocks(
-            { comments: [{ ...commentBlock, comw }], modifiedAt: Date.now() },
-            client,
-          );
-
-          commentBlock.m = Date.now();
-
-          comCommentsDirStore.saveItem(auth.login);
-        },
 
         pullUserAltCommentBlock: async ({ comw, login }) => {
           return { value: comCommentsDirStore.getItem(login)?.b[comw] ?? null };

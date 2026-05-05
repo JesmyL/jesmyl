@@ -1,4 +1,5 @@
 import { TsjrpcBaseClient } from '#basis/tsjrpc/TsjrpcBase.client';
+import { cmComCommentRegisteredAltKeysAtom } from '$cm/entities/com-comment';
 import { cmComFavoriteComsAtom, cmComTopToolsAtom } from '$cm/entities/index';
 import { CmShareTsjrpcModel } from 'shared/api/tsjrpc/cm/share.tsjrpc.model';
 import { cmConstantsConfigAtom } from '../state/atoms';
@@ -51,7 +52,7 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
           cmIDB.updateLastModifiedAt(modifiedAt);
         },
 
-        refreshComCommentBlocks: async ({ comments, modifiedAt }) => {
+        refreshComComments: async ({ comments, mod, alts }) => {
           await Promise.all(
             comments.map(async comment => {
               await cmIDB.tb.comCommentBlocks.put(comment);
@@ -59,7 +60,9 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
             }),
           );
 
-          cmIDB.updateLastModifiedAt(modifiedAt);
+          cmComCommentRegisteredAltKeysAtom.set(alts ?? []);
+
+          cmIDB.updateLastModifiedAt(mod);
         },
 
         refreshAboutComFavorites: async ({ value: favorites }) => {
