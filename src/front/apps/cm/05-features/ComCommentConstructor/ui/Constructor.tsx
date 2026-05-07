@@ -8,16 +8,14 @@ import { CmCom } from '$cm/ext';
 import { updateCmComCommentConstructorRulePropsDict } from '$cm/shared/lib/updateComCommentConstructorRulePropsDict';
 import { cmIsShowMyCommentsAtom } from '$cm/shared/state';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
-import { atom, useAtomValue } from 'atomaric';
-import { useEffect, useMemo } from 'react';
+import { useAtomValue } from 'atomaric';
+import { useEffect, useMemo, useState } from 'react';
 import { CmComCommentBlockSimpleSelector, CmComCommentBlockSpecialSelector } from 'shared/api';
 import { CmComCommentConstructorRuleType } from 'shared/model/cm/com-comment';
-import { itNUnd, retNull } from 'shared/utils';
+import { itNIt, itNUnd, retNull } from 'shared/utils';
 import { CmComCommentConstructorCurrentInnerKindContext } from '../state/CurrentInnerKind';
 import { CmComCommentConstructorBlockView } from './BlockView';
 import { CmComCommentConstructorTextWithAccentRedactor } from './TextWithAccentRedactor';
-
-const isRedactKindsAtom = atom(false);
 
 export const CmComCommentConstructorTextRulesConstructor = ({
   com,
@@ -29,7 +27,7 @@ export const CmComCommentConstructorTextRulesConstructor = ({
   const propsDict = useAtomValue(cmComCommentConstructorRulePropsDictAtom);
   const isShowComments = useAtomValue(cmIsShowMyCommentsAtom);
   const simpleSelectorPrefix = `s${selector}` as const;
-  const isRedactKinds = useAtomValue(isRedactKindsAtom);
+  const [isRedactKinds, setIsRedactKinds] = useState(false);
 
   const { commentCssNode } = useCmComCommentBlockCss(
     com,
@@ -98,7 +96,7 @@ export const CmComCommentConstructorTextRulesConstructor = ({
         {isHead || (
           <Button
             icon="TextFirstlineRight"
-            onClick={isRedactKindsAtom.do.toggle}
+            onClick={() => setIsRedactKinds(itNIt)}
             className={isRedactKinds ? 'text-x7' : undefined}
           />
         )}
