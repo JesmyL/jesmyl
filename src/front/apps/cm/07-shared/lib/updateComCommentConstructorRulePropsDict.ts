@@ -23,18 +23,18 @@ export const updateCmComCommentConstructorRulePropsDict = async (
   const altCommentKeys = cmComCommentCurrentComw2OpenAltiDictAtom.get();
   const commentAlti = altCommentKeys[comw] ?? altCommentKeys.lasti;
 
-  const fillDict = (selector: CmComCommentBlockSimpleSelector) => {
+  const fillDict = (isSimpleBlockText: boolean, selector: CmComCommentBlockSimpleSelector) => {
     const commentTexts = takeCmComCommentTextBlock(comw, selector, localCommentBlock, commentBlock, commentAlti);
 
     if (commentTexts) {
-      cmComCommentTextRulesDetector(false, selector, commentTexts, props =>
+      cmComCommentTextRulesDetector(isSimpleBlockText, selector, commentTexts, props =>
         fillCmComCommentConstructorCommentInKey2PropsDict(selector, propsDict, props, wordChordiMaxDict),
       );
     }
   };
 
   if (selector === CmComCommentBlockSpecialSelector.Head) {
-    fillDict(selector);
+    fillDict(true, selector);
   } else {
     let isFound = false;
     const icom = await cmIDB.tb.coms.get(comw);
@@ -46,7 +46,7 @@ export const updateCmComCommentConstructorRulePropsDict = async (
         if (!isFound) continue;
         if (ord.wid !== selector && (!ord.kind || !cmComOrderPlusKindSet.has(ord.kind))) break;
 
-        fillDict(ord.wid);
+        fillDict(false, ord.wid);
       }
   }
 
