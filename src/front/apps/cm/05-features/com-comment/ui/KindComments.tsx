@@ -38,11 +38,13 @@ export const CmComCommentKindComments = ({ commentAlti, com }: { commentAlti: nu
               onInput={(value: string) => {
                 deferredCallback(
                   () => {
-                    const texts = { ...kindCommentTexts, [kind.key]: value };
                     const dictList = localCommentBlock?.dl ?? [];
 
                     dictList[commentAlti] ??= {};
-                    dictList[commentAlti][CmComCommentBlockSpecialSelector.Kinds] = texts;
+                    dictList[commentAlti][CmComCommentBlockSpecialSelector.Kinds] = {
+                      ...kindCommentTexts,
+                      [kind.key]: value,
+                    };
 
                     cmIDB.tb.localComCommentBlocks.put({
                       ...localCommentBlock,

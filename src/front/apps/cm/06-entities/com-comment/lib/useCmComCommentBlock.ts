@@ -30,7 +30,7 @@ export const takeCmComCommentTextBlock = (
     commentAlti = altCommentKeys[comw] ?? altCommentKeys.lasti;
   }
 
-  return localCommentBlock?.dl?.[commentAlti ?? 0]?.[selector] ?? commentBlock?.dl?.[commentAlti ?? 0]?.[selector];
+  return localCommentBlock?.dl?.[commentAlti]?.[selector] ?? commentBlock?.dl?.[commentAlti]?.[selector];
 };
 
 export const useCmComCommentTextBlockTaker = (

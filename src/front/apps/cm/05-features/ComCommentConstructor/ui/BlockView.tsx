@@ -9,7 +9,7 @@ import { CmComCommentBlockSimpleSelector, CmComOrderWid } from 'shared/api';
 import { CmComCommentConstructorLineConstructor } from './LineConstructor';
 import { CmComCommentConstructorWordConstructor } from './WordConstructor';
 
-export const CmComCommentConstructorBlockView = ({ selector, com }: { selector: CmComOrderWid; com: CmCom }) => {
+export const CmComCommentConstructorBlockView = ({ ordw: ordwSelector, com }: { ordw: CmComOrderWid; com: CmCom }) => {
   const fontSize = useAtomValue(cmComFontSizeAtom);
   const chordHardLevel = useAtomValue(cmComChordHardLevelAtom);
   const [{ linei, wordi, ordw, solidLinei }, setSelection] = useState<{
@@ -26,7 +26,7 @@ export const CmComCommentConstructorBlockView = ({ selector, com }: { selector: 
         $linei={linei}
         $wordi={wordi}
         $ordw={ordw}
-        $ordSelector={selector}
+        $ordSelector={ordwSelector}
         onClick={event => {
           const ordw = getParentNodeWithAttributeName(event, 'ord-selector').attr;
           const linei = getParentNodeWithAttributeName(event, 'ord-linei').attr;

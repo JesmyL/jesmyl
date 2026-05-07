@@ -35,11 +35,13 @@ export const CmComCommentConstructorTextRulesConstructor = ({
     useMemo(() => mylib.values(propsDict.dict!).filter(itNUnd), [propsDict.dict]),
   );
 
-  useEffect(() => {
-    return cmComCommentCurrentComw2OpenAltiDictAtom.subscribe(() => {
-      updateCmComCommentConstructorRulePropsDict(com.wid, selector);
-    });
-  }, [com.wid, selector]);
+  useEffect(
+    () =>
+      cmComCommentCurrentComw2OpenAltiDictAtom.subscribe(() => {
+        updateCmComCommentConstructorRulePropsDict(com.wid, selector);
+      }),
+    [com.wid, selector],
+  );
 
   return (
     <>
@@ -113,7 +115,7 @@ export const CmComCommentConstructorTextRulesConstructor = ({
           {selector !== CmComCommentBlockSpecialSelector.Head && (
             <CmComCommentConstructorBlockView
               com={com}
-              selector={selector}
+              ordw={selector}
             />
           )}
         </>
