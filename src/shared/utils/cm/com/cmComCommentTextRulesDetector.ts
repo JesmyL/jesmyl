@@ -1,6 +1,7 @@
 import { makeRegExp } from 'regexpert';
 import { CmComCommentBlockSimpleSelector } from 'shared/api';
 import {
+  CmComCommentConstructorPropsDictSelectorRulePropsKey,
   CmComCommentTextDetectorBlockRuleProps,
   CmComCommentTextDetectorChordRuleProps,
   CmComCommentTextDetectorLineRuleProps,
@@ -9,13 +10,14 @@ import {
 } from 'shared/model/cm/com-comment';
 import { smylib } from 'shared/utils/SMyLib';
 import {
-  cmComCommentPseudoCommentContentAccentsKind,
+  cmComCommentPseudoCommentContentAccentsType,
   cmComCommentTrimHighlightMarkers,
   cmComCommentTrimHighlightMarkersEachLine,
 } from './makePseudoComment.props';
 
 export const cmComCommentTextRulesDetector = (
   isSimpleBlockText: boolean,
+  selectorPrefix: CmComCommentConstructorPropsDictSelectorRulePropsKey,
   selector: CmComCommentBlockSimpleSelector,
   commentBlocks: string[],
   onFound: (props: CmComCommentTextDetectorRuleProps) => void,
@@ -26,9 +28,10 @@ export const cmComCommentTextRulesDetector = (
       if (!block) continue;
 
       onFound({
+        pre: selectorPrefix,
         sel: selector,
         blocki,
-        kind: cmComCommentPseudoCommentContentAccentsKind(block),
+        type: cmComCommentPseudoCommentContentAccentsType(block),
         text: cmComCommentTrimHighlightMarkers(block),
         rate: blocki,
       } satisfies CmComCommentTextDetectorBlockRuleProps);
@@ -67,9 +70,10 @@ export const cmComCommentTextRulesDetector = (
 
     if (block) {
       onFound({
+        pre: selectorPrefix,
         sel: selector,
         blocki,
-        kind: cmComCommentPseudoCommentContentAccentsKind(block),
+        type: cmComCommentPseudoCommentContentAccentsType(block),
         text: cmComCommentTrimHighlightMarkersEachLine(block),
         rate: blocki,
       } satisfies CmComCommentTextDetectorBlockRuleProps);
@@ -81,9 +85,10 @@ export const cmComCommentTextRulesDetector = (
 
     if (smylib.isNum(commentKey)) {
       onFound({
+        pre: selectorPrefix,
         sel: selector,
         linei: commentKey - 1,
-        kind: cmComCommentPseudoCommentContentAccentsKind(comment),
+        type: cmComCommentPseudoCommentContentAccentsType(comment),
         text: cmComCommentTrimHighlightMarkers(comment),
         rate: cmComCommentTextDetectorCalculateRate(commentKey),
       } satisfies CmComCommentTextDetectorLineRuleProps);
@@ -92,15 +97,16 @@ export const cmComCommentTextRulesDetector = (
 
     const linei = +commentKey.slice(0, lineWordPositionDigitsSeparationCount) - 1;
     const wordi = +commentKey.slice(lineWordPositionDigitsSeparationCount) - 1;
-    const wordKind = cmComCommentPseudoCommentContentAccentsKind(comment);
+    const wordKind = cmComCommentPseudoCommentContentAccentsType(comment);
 
     if (wordKind) {
       onFound({
+        pre: selectorPrefix,
         sel: selector,
         linei,
         wordi,
         place: '^',
-        kind: wordKind,
+        type: wordKind,
         text: '',
         rate: cmComCommentTextDetectorCalculateRate(linei, wordi),
       } satisfies CmComCommentTextDetectorWordRuleProps);
@@ -121,11 +127,12 @@ export const cmComCommentTextRulesDetector = (
 
       if (wordContent) {
         onFound({
+          pre: selectorPrefix,
           sel: selector,
           linei,
           wordi,
           place,
-          kind: cmComCommentPseudoCommentContentAccentsKind(content),
+          type: cmComCommentPseudoCommentContentAccentsType(content),
           text: cmComCommentTrimHighlightMarkers(content).replace(makeRegExp('/(?:\\\\)[ \\]]/g'), all => all.slice(1)),
           rate: cmComCommentTextDetectorCalculateRate(linei, wordi),
         } satisfies CmComCommentTextDetectorWordRuleProps);
@@ -136,19 +143,20 @@ export const cmComCommentTextRulesDetector = (
           let chord = chords[chordi];
           if (chord === '.') continue;
 
-          const kind = cmComCommentPseudoCommentContentAccentsKind(chord);
+          const type = cmComCommentPseudoCommentContentAccentsType(chord);
 
           chord = cmComCommentTrimHighlightMarkers(chord);
           if (chord === '.') chord = '';
 
           onFound({
+            pre: selectorPrefix,
             sel: selector,
             chordi,
             linei,
             wordi,
             text: chord.replace(makeRegExp('/(?:\\\\)[ }]/g'), all => all.slice(1)),
             place,
-            kind,
+            type,
             rate: cmComCommentTextDetectorCalculateRate(linei, wordi, chordi),
           } satisfies CmComCommentTextDetectorChordRuleProps);
         }

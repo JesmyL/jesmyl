@@ -2,8 +2,9 @@ import { Button } from '#shared/components';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
 import { CmComOrderWid } from 'shared/api';
-import { CmComCommentConstructorRuleKind } from 'shared/model/cm/com-comment';
+import { CmComCommentConstructorRuleType } from 'shared/model/cm/com-comment';
 import { cmComCommentTextDetectorCalculateRate } from 'shared/utils/cm';
+import { useCmComCommentConstructorCurrentInnerKindContext } from '../state/CurrentInnerKind';
 import { CmComCommentConstructorAccentKindRedactor } from './AccentKindRedactor';
 import { CmComCommentConstructorBlockRedactor } from './BlockRedactor';
 import { CmComCommentConstructorChordConstructor } from './ChordConstructor';
@@ -18,7 +19,8 @@ export const CmComCommentConstructorWordConstructor = ({
   wordi: number;
 }) => {
   const propsDict = useAtomValue(cmComCommentConstructorRulePropsDictAtom);
-  const wordKeyPrefix = `s${ordw}l${linei}w${wordi}` as const;
+  const selectorPrefix = useCmComCommentConstructorCurrentInnerKindContext() ?? (`s${ordw}` as const);
+  const wordKeyPrefix = `${selectorPrefix}l${linei}w${wordi}` as const;
 
   return (
     <>
@@ -29,9 +31,10 @@ export const CmComCommentConstructorWordConstructor = ({
           blockPropsHolder={propsDict}
           blockKey={`${wordKeyPrefix}^`}
           getDefaultPropsDict={() => ({
+            pre: selectorPrefix,
             sel: ordw,
             place: '^',
-            kind: 0,
+            type: 0,
             linei,
             wordi,
             rate: cmComCommentTextDetectorCalculateRate(linei, wordi),
@@ -42,14 +45,15 @@ export const CmComCommentConstructorWordConstructor = ({
         <CmComCommentConstructorBlockRedactor
           preKey={`${wordKeyPrefix}<`}
           postKey={`${wordKeyPrefix}>`}
-          kind={CmComCommentConstructorRuleKind.Word}
+          type={CmComCommentConstructorRuleType.Word}
           blockPropsHolder={propsDict}
           preLabel="Текст до"
           postLabel="Текст после"
           getDefaultPropsDict={place => ({
+            pre: selectorPrefix,
             sel: ordw,
             place,
-            kind: 0,
+            type: 0,
             linei,
             wordi,
             rate: cmComCommentTextDetectorCalculateRate(linei, wordi),
@@ -82,10 +86,11 @@ export const CmComCommentConstructorWordConstructor = ({
             const chordKeyPrefix = `${wordKeyPrefix}c${chordi}` as const;
 
             dict.dict[`${chordKeyPrefix}^`] = {
+              pre: selectorPrefix,
               sel: ordw,
               place: '^',
               chordi,
-              kind: 0,
+              type: 0,
               linei,
               rate: cmComCommentTextDetectorCalculateRate(linei, wordi, chordi),
               text: '',

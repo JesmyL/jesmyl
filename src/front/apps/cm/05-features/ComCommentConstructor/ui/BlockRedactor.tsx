@@ -22,7 +22,7 @@ export const CmComCommentConstructorBlockRedactor = <
   preLabel: React.ReactNode;
   postLabel: React.ReactNode;
   disabled?: boolean;
-  kind: CmComCommentConstructorRuleKindByPropsType<PropsType>;
+  type: CmComCommentConstructorRuleKindByPropsType<PropsType>;
   blockPropsHolder: { dict?: CmComCommentConstructorRulePropsDict };
   getDefaultPropsDict: (place: '<' | '>') => PropsType;
 }) => {

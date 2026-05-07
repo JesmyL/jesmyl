@@ -1,7 +1,7 @@
 import { SerializedStyles } from '@emotion/react';
 import { makeRegExp } from 'regexpert';
 
-export const cmComCommentPseudoCommentContentAccentsKind = (text: string) => {
+export const cmComCommentPseudoCommentContentAccentsType = (text: string) => {
   text = text.trimStart();
 
   if (text[0] !== '!') return 0;
@@ -17,7 +17,7 @@ export const cmComCommentMakePseudoCommentContentAccentsColorCss = (
   text: string,
   elseCss?: SerializedStyles | nil | string,
 ) =>
-  cmComCommentAccentsColorList[cmComCommentPseudoCommentContentAccentsKind(text)] ??
+  cmComCommentAccentsColorList[cmComCommentPseudoCommentContentAccentsType(text)] ??
   elseCss ??
   `opacity: var(--comment-opacity);`;
 
@@ -26,7 +26,7 @@ export const cmComCommentTrimHighlightMarkersEachLine = (text: string) => {
 };
 
 export const cmComCommentTrimHighlightMarkers = (text: string) => {
-  text = text.slice(cmComCommentPseudoCommentContentAccentsKind(text));
+  text = text.slice(cmComCommentPseudoCommentContentAccentsType(text));
   return text.startsWith('.') ? text.slice(1) : text;
 };
 

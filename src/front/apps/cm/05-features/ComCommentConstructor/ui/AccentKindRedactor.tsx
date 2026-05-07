@@ -16,13 +16,13 @@ export const CmComCommentConstructorAccentKindRedactor = <Key extends CmComComme
   const blockProps = blockPropsHolder.dict?.[blockKey];
   const updateDebounce = useDebounceCallback();
 
-  const onKindChange = (kind: 1 | 2) =>
+  const onKindChange = (type: 1 | 2) =>
     updateDebounce(() => {
       cmComCommentConstructorRulePropsDictAtom.do.update(dict => {
         dict.dict ??= {};
         const blockDict = (dict.dict[blockKey] ??= getDefaultPropsDict());
         if (blockDict == null) return;
-        blockDict.kind = blockProps?.kind === kind ? 0 : kind;
+        blockDict.type = blockProps?.type === type ? 0 : type;
       });
     });
 
@@ -31,14 +31,14 @@ export const CmComCommentConstructorAccentKindRedactor = <Key extends CmComComme
       <ButtonGroup.Root>
         {(
           [
-            { kind: 1, color: 'bg-x7! text-x1' },
-            { kind: 2, color: 'bg-xKO! text-x1' },
+            { type: 1, color: 'bg-x7! text-x1' },
+            { type: 2, color: 'bg-xKO! text-x1' },
           ] as const
-        ).map(({ color, kind }) => (
+        ).map(({ color, type }) => (
           <Button
-            key={kind}
-            className={blockProps?.kind === kind ? color : cmComCommentAccentsColorClassNameList[kind]}
-            onClick={() => onKindChange(kind)}
+            key={type}
+            className={blockProps?.type === type ? color : cmComCommentAccentsColorClassNameList[type]}
+            onClick={() => onKindChange(type)}
           >
             акцент
           </Button>

@@ -16,8 +16,8 @@ import { cmComCommentDetectCommentTextStyles } from '../utils/detectCommentTextS
 import { cmComCommentMakeStartCommentCss } from '../utils/makeStartCommentCss';
 import { cmComCommentPseudoCommentStaticPropsCss } from '../utils/pseudoCommentStaticPropsCss';
 import {
+  takeCmComCommentKindBlockDict,
   useCmComCommentBlock,
-  useCmComCommentKindBlockTaker,
   useCmComCommentTextBlockTaker,
 } from './useCmComCommentBlock';
 
@@ -36,7 +36,7 @@ export const useCmComCommentBlockCss = (
   const translates = useBibleTranslatesContext();
   const { localCommentBlock, commentBlock } = useCmComCommentBlock(com.wid);
   const takeCommentTexts = useCmComCommentTextBlockTaker(com.wid, localCommentBlock, commentBlock);
-  const commentKindsBlock = useCmComCommentKindBlockTaker(com.wid, localCommentBlock, commentBlock);
+  const commentKindsBlock = takeCmComCommentKindBlockDict(com.wid, localCommentBlock, commentBlock);
   const currentBibleTranslate = useAtomValue(bibleShowTranslatesAtom)[0];
 
   useEffect(() => {
@@ -52,6 +52,8 @@ export const useCmComCommentBlockCss = (
 
         cssContentList = [styles];
       } else {
+        const ordKindsWasSettedSet = new Set<CmComBlockKindKey | nil>();
+
         cssContentList = isSetHashesOnly
           ? null
           : (visibleOrders?.map((ord): (() => string | SerializedStyles) => {
@@ -66,15 +68,17 @@ export const useCmComCommentBlockCss = (
 
                 const ordw = ord.makeSelector();
 
-                let commentLines = takeCommentTexts(ordw);
-                const kindComment = ord.kind && commentKindsBlock?.[Math.abs(ord.kind) as CmComBlockKindKey];
+                const commentLines = takeCommentTexts(ordw);
+                if (commentLines?.length)
+                  cmComCommentTextRulesDetector(false, `s${ord.wid}`, ord.wid, commentLines, onDetect);
 
-                if (!commentLines?.length && !kindComment) continue;
+                if (!ordKindsWasSettedSet.has(ord.kind)) {
+                  ordKindsWasSettedSet.add(ord.kind);
+                  const kindComment = ord.kind && commentKindsBlock?.[Math.abs(ord.kind) as CmComBlockKindKey];
 
-                commentLines ??= [];
-                if (kindComment) commentLines = [kindComment].concat(commentLines);
-
-                cmComCommentTextRulesDetector(false, ord.wid, commentLines, onDetect);
+                  if (kindComment)
+                    cmComCommentTextRulesDetector(false, `k${ord.kind}`, ord.wid, [kindComment], onDetect);
+                }
               } while (currentOrd?.kind && cmComOrderPlusKindSet.has(currentOrd.kind));
 
               return styles;

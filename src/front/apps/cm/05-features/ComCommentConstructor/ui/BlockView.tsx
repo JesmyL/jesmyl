@@ -6,12 +6,15 @@ import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
 import { CmComCommentBlockSimpleSelector, CmComOrderWid } from 'shared/api';
+import { useCmComCommentConstructorCurrentInnerKindContext } from '../state/CurrentInnerKind';
 import { CmComCommentConstructorLineConstructor } from './LineConstructor';
 import { CmComCommentConstructorWordConstructor } from './WordConstructor';
 
 export const CmComCommentConstructorBlockView = ({ ordw: ordwSelector, com }: { ordw: CmComOrderWid; com: CmCom }) => {
   const fontSize = useAtomValue(cmComFontSizeAtom);
   const chordHardLevel = useAtomValue(cmComChordHardLevelAtom);
+  const selectorPrefix = useCmComCommentConstructorCurrentInnerKindContext();
+
   const [{ linei, wordi, ordw, solidLinei }, setSelection] = useState<{
     ordw?: CmComOrderWid;
     linei?: number;
@@ -19,10 +22,12 @@ export const CmComCommentConstructorBlockView = ({ ordw: ordwSelector, com }: { 
     solidLinei?: number;
   }>({});
 
+  const variativeLinei = selectorPrefix ? solidLinei : linei;
+
   return (
     <>
       <StyledSolidOrdContainer
-        className="com-orders-with-comments"
+        className="com-orders-with-comments weight-add"
         $linei={linei}
         $wordi={wordi}
         $ordw={ordw}
@@ -47,17 +52,17 @@ export const CmComCommentConstructorBlockView = ({ ordw: ordwSelector, com }: { 
         />
       </StyledSolidOrdContainer>
 
-      {linei != null && ordw != null && solidLinei != null && (
+      {variativeLinei != null && ordw != null && solidLinei != null && (
         <>
           <CmComCommentConstructorLineConstructor
-            linei={linei}
+            linei={variativeLinei}
             solidLinei={solidLinei}
             ordw={ordw}
           />
 
           {wordi != null && (
             <CmComCommentConstructorWordConstructor
-              linei={linei}
+              linei={variativeLinei}
               wordi={wordi}
               ordw={ordw}
             />

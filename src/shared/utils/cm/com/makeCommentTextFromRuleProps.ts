@@ -1,8 +1,9 @@
 import { makeRegExp } from 'regexpert';
-import { CmComCommentBlockSimpleSelector } from 'shared/api';
+import { CmComCommentBlockSpecialSelector } from 'shared/api';
 import {
   CmComCommentConstructorPropKey,
   CmComCommentConstructorPropsDictChordRulePropsKey,
+  CmComCommentConstructorPropsDictSelectorRulePropsKey,
   CmComCommentConstructorPropsDictWordRulePropsKey,
   CmComCommentConstructorRulePropsDict,
   CmComCommentTextDetectorRuleProps,
@@ -11,37 +12,35 @@ import { smylib } from 'shared/utils/SMyLib';
 import { itIt } from 'shared/utils/utils';
 
 export const fillCmComCommentConstructorCommentInKey2PropsDict = (
-  selector: CmComCommentBlockSimpleSelector,
   propsDict: CmComCommentConstructorRulePropsDict,
   props: CmComCommentTextDetectorRuleProps,
   wordChordiMaxDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKey, number>,
 ) => {
   let key: CmComCommentConstructorPropKey;
 
-  if ('blocki' in props) key = `s${selector}b${props.blocki}`;
+  if ('blocki' in props) key = `${props.pre}b${props.blocki}`;
   else if ('chordi' in props) {
-    const wordKey = `s${props.sel}l${props.linei}w${props.wordi}` as const;
+    const wordKey = `${props.pre}l${props.linei}w${props.wordi}` as const;
 
     wordChordiMaxDict[wordKey] ??= 0;
     wordChordiMaxDict[wordKey]++;
 
     key = `${wordKey}c${props.chordi}${props.place}`;
-  } else if ('wordi' in props) key = `s${props.sel}l${props.linei}w${props.wordi}${props.place}`;
-  else key = `s${props.sel}l${props.linei}`;
+  } else if ('wordi' in props) key = `${props.pre}l${props.linei}w${props.wordi}${props.place}`;
+  else key = `${props.pre}l${props.linei}`;
 
   if (!(key in propsDict)) propsDict[key] = props as never;
 };
 
 export const makeCmComCommentConstructorCommentOrdSelector2TextsDictFromRuleProps = (
-  isSimpleBlockText: boolean,
   propsDict: CmComCommentConstructorRulePropsDict,
   chordCountDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKey, number>,
 ) => {
   try {
-    const wordCommentsText: PRecord<CmComCommentBlockSimpleSelector, string> = {};
-    const lineCommentsText: PRecord<CmComCommentBlockSimpleSelector, string> = {};
-    const commentOrdBlocks: PRecord<CmComCommentBlockSimpleSelector, string[]> = {};
-    const usedOrdsSet = new Set<CmComCommentBlockSimpleSelector>();
+    const wordCommentsText: PRecord<CmComCommentConstructorPropsDictSelectorRulePropsKey, string> = {};
+    const lineCommentsText: PRecord<CmComCommentConstructorPropsDictSelectorRulePropsKey, string> = {};
+    const commentOrdBlocks: PRecord<CmComCommentConstructorPropsDictSelectorRulePropsKey, string[]> = {};
+    const usedSelectorsSet = new Set<CmComCommentConstructorPropsDictSelectorRulePropsKey>();
 
     const propsList = smylib.values(propsDict);
     propsList.sort((a, b) => a!.rate - b!.rate);
@@ -50,22 +49,24 @@ export const makeCmComCommentConstructorCommentOrdSelector2TextsDictFromRuleProp
     for (let propsi = 0; propsi < propsList.length; propsi++) {
       const props = propsList[propsi];
       if (props == null) continue;
-      const commentBlocks = (commentOrdBlocks[props.sel] ??= []);
-      usedOrdsSet.add(props.sel);
+
+      const commentBlocks = (commentOrdBlocks[props.pre] ??= []);
+      usedSelectorsSet.add(props.pre);
 
       if ('blocki' in props) {
         commentBlocks[props.blocki] ??= '';
 
         if (!props.text) continue;
 
-        if (isSimpleBlockText) commentBlocks[props.blocki] += makeCorrectText(props.kind, props.text, false);
+        if (props.pre === `s${CmComCommentBlockSpecialSelector.Head}`)
+          commentBlocks[props.blocki] += makeCorrectText(props.type, props.text, false);
         else
           commentBlocks[props.blocki] += props.text
             .split('\n')
-            .map((line, linei) => makeCorrectText(linei ? 0 : props.kind, line, false))
+            .map((line, linei) => makeCorrectText(linei ? 0 : props.type, line, false))
             .join('\n');
       } else if ('wordi' in props) {
-        const wordKey = `s${props.sel}l${props.linei}w${props.wordi}` as const;
+        const wordKey = `${props.pre}l${props.linei}w${props.wordi}` as const;
 
         if (
           'chordi' in props
@@ -97,7 +98,7 @@ export const makeCmComCommentConstructorCommentOrdSelector2TextsDictFromRuleProp
           const postProps = propsDict[`${chordKey}>`];
 
           const replaceChordText =
-            replaceProps && replaceChordInText(makeCorrectText(replaceProps.kind, replaceProps.text));
+            replaceProps && replaceChordInText(makeCorrectText(replaceProps.type, replaceProps.text));
           const preChordText = preProps && replaceChordInText(makeCorrectText(0, preProps.text));
           const postChordText = postProps && replaceChordInText(makeCorrectText(0, postProps.text));
 
@@ -106,7 +107,7 @@ export const makeCmComCommentConstructorCommentOrdSelector2TextsDictFromRuleProp
           if (postChordText) postChordRulesList[chordi] = postChordText;
         }
 
-        let wordText = makeAccentMarker(propsDict[`${wordKey}^`]?.kind);
+        let wordText = makeAccentMarker(propsDict[`${wordKey}^`]?.type);
 
         wordText += makeWordTextRule(propsDict, wordKey, '<');
         wordText += makeWordTextRule(propsDict, wordKey, '>');
@@ -116,8 +117,8 @@ export const makeCmComCommentConstructorCommentOrdSelector2TextsDictFromRuleProp
         wordText += makeChordTextRule('>', postChordRulesList);
 
         if (wordText) {
-          wordCommentsText[props.sel] ??= '';
-          wordCommentsText[props.sel] += `\n${props.linei + 1}:${props.wordi + 1}${wordText}`;
+          wordCommentsText[props.pre] ??= '';
+          wordCommentsText[props.pre] += `\n${props.linei + 1}:${props.wordi + 1}${wordText}`;
         }
       } else {
         const lineKey = `s${props.sel}l${props.linei}` as const;
@@ -125,20 +126,20 @@ export const makeCmComCommentConstructorCommentOrdSelector2TextsDictFromRuleProp
         if (!propsKeysSet.has(lineKey) || !props.text) continue;
         propsKeysSet.delete(lineKey);
 
-        lineCommentsText[props.sel] ??= '';
-        lineCommentsText[props.sel] += `\n${props.linei + 1}${makeCorrectText(props.kind, props.text, false)}`;
+        lineCommentsText[props.pre] ??= '';
+        lineCommentsText[props.pre] += `\n${props.linei + 1}${makeCorrectText(props.type, props.text, false)}`;
       }
     }
 
-    usedOrdsSet.forEach(ordw => {
-      if (!commentOrdBlocks[ordw]) return;
+    usedSelectorsSet.forEach(prefix => {
+      if (!commentOrdBlocks[prefix]) return;
 
-      commentOrdBlocks[ordw][0] ??= '';
-      if (lineCommentsText[ordw]) commentOrdBlocks[ordw][0] += `\n\n${lineCommentsText[ordw].trim()}`;
-      if (wordCommentsText[ordw]) commentOrdBlocks[ordw][0] += `\n\n${wordCommentsText[ordw].trim()}`;
+      commentOrdBlocks[prefix][0] ??= '';
+      if (lineCommentsText[prefix]) commentOrdBlocks[prefix][0] += `\n\n${lineCommentsText[prefix].trim()}`;
+      if (wordCommentsText[prefix]) commentOrdBlocks[prefix][0] += `\n\n${wordCommentsText[prefix].trim()}`;
 
-      commentOrdBlocks[ordw][0] = commentOrdBlocks[ordw][0].trim();
-      commentOrdBlocks[ordw] = commentOrdBlocks[ordw].filter(itIt);
+      commentOrdBlocks[prefix][0] = commentOrdBlocks[prefix][0].trim();
+      commentOrdBlocks[prefix] = commentOrdBlocks[prefix].filter(itIt);
     });
 
     return commentOrdBlocks;
@@ -148,7 +149,7 @@ export const makeCmComCommentConstructorCommentOrdSelector2TextsDictFromRuleProp
   }
 };
 
-const makeAccentMarker = (kind: 0 | 1 | 2 | nil) => '!'.repeat(kind ?? 0);
+const makeAccentMarker = (type: 0 | 1 | 2 | nil) => '!'.repeat(type ?? 0);
 
 const replaceChordEscapes = {
   ' ': '_',
@@ -158,12 +159,12 @@ const replaceChordEscapes = {
 const chordEscapesReplacer = (all: string) => replaceChordEscapes[all as never];
 const replaceChordInText = (text: string) => text.replace(makeRegExp('/(?<!\\\\)[ }]/g'), chordEscapesReplacer);
 
-const makeCorrectText = (kind: 0 | 1 | 2 | nil, text: string, isSimpleStartCharEscape = true) => {
+const makeCorrectText = (type: 0 | 1 | 2 | nil, text: string, isSimpleStartCharEscape = true) => {
   text = text.trim();
 
   if ((isSimpleStartCharEscape ? simpleStartCharForEscapeSet : startCharForEscapeSet).has(text[0])) text = `.${text}`;
 
-  return `${makeAccentMarker(kind)}${text}`;
+  return `${makeAccentMarker(type)}${text}`;
 };
 
 const simpleStartCharForEscape = '.!';
@@ -177,7 +178,7 @@ const makeWordTextRule = (
 ) => {
   const props = propsDict[`${key}${place}`];
   if (!props?.text) return '';
-  return `[${place}${makeCorrectText(props.kind, props.text).replace(makeRegExp(`/\\]/g`), '\\]')}]`;
+  return `[${place}${makeCorrectText(props.type, props.text).replace(makeRegExp(`/\\]/g`), '\\]')}]`;
 };
 
 const makeChordTextRule = (place: '^' | '>' | '<', chords: string[]) =>

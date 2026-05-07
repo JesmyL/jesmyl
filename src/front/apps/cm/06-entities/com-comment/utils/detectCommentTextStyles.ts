@@ -1,7 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { css, SerializedStyles } from '@emotion/react';
-import { CmComCommentBlockSimpleSelector } from 'shared/api';
 import {
+  CmComCommentConstructorPropsDictSelectorRulePropsKey,
   CmComCommentConstructorPropsDictWordRulePropsKey,
   CmComCommentTextDetectorChordRuleProps,
   CmComCommentTextDetectorRuleProps,
@@ -12,12 +12,17 @@ import {
   cmComCommentMakePseudoCommentContentPropCss,
   cmComCommentMakePseudoElementCorrectContentText,
 } from 'shared/utils/cm';
+import { PRecord } from 'tsjrpc/types/base.model';
 import { cmComCommentHeaderHolderSelectors } from '../const/commentHolderSelectors';
 import { cmComCommentPseudoCommentStaticPropsCss } from './pseudoCommentStaticPropsCss';
 
 export const cmComCommentDetectCommentTextStyles = () => {
-  const ordSelector2StylesDict: PRecord<CmComCommentBlockSimpleSelector, (() => SerializedStyles)[]> = {};
-  const usedOrdSelectorSet = new Set<CmComCommentBlockSimpleSelector>();
+  const ordSelector2StylesDict: PRecord<
+    CmComCommentConstructorPropsDictSelectorRulePropsKey,
+    (() => SerializedStyles)[]
+  > = {};
+  const ordKind2StylesDict: PRecord<CmComCommentConstructorPropsDictSelectorRulePropsKey, SerializedStyles> = {};
+  const usedOrdSelectorSet = new Set<CmComCommentConstructorPropsDictSelectorRulePropsKey>();
   const lineWordStyleDict: PRecord<
     CmComCommentConstructorPropsDictWordRulePropsKey,
     (SerializedStyles | string | nil)[]
@@ -38,7 +43,7 @@ export const cmComCommentDetectCommentTextStyles = () => {
 
             const props = preProps ?? replaceProps ?? postProps!;
 
-            const wordRuleList = lineWordStyleDict[`s${selector}l${props.linei}w${props.wordi}`];
+            const wordRuleList = lineWordStyleDict[`${selector}l${props.linei}w${props.wordi}`];
             if (wordRuleList == null) return;
 
             const chordi = props.chordi;
@@ -64,7 +69,7 @@ export const cmComCommentDetectCommentTextStyles = () => {
               > [attr-chordi='${chordi}'][com-letter-chorded='post'] [word-fragment]:before,
               > [attr-chordi='${chordi - 1}'][com-letter-chorded='pre'] [word-fragment]:before,
               > [attr-chordi='${chordi - 1}'][com-letter-chorded='post']:after {
-                ${contentTextCss}${cmComCommentAccentsColorList[replaceProps?.kind ?? 0]}
+                ${contentTextCss}${cmComCommentAccentsColorList[replaceProps?.type ?? 0]}
                 text-decoration: underline;
               }
 
@@ -94,8 +99,12 @@ export const cmComCommentDetectCommentTextStyles = () => {
           })}
         `;
 
+        const query = selector.startsWith('k')
+          ? `[solid-block-kind='${selector}']`
+          : `&.weight-add [ord-selector='${selector.slice(1)}']`;
+
         return css`
-          [ord-selector='${selector}'] {
+          ${query} {
             ${rules}
             ${ordSelector2StylesDict[selector]?.map(itInvokeIt)}
           }
@@ -116,23 +125,34 @@ export const cmComCommentDetectCommentTextStyles = () => {
         }
 
         ${selectorsCssList}
+        ${mylib.values(ordKind2StylesDict)}
       `;
     },
     onDetect: (props: CmComCommentTextDetectorRuleProps) => {
-      const accentColor = cmComCommentAccentsColorList[props.kind];
+      const accentColor = props.text ? (cmComCommentAccentsColorList[props.type] ?? 'color: currentColor;') : '';
+      const isKind = props.pre.startsWith('k');
 
-      usedOrdSelectorSet.add(props.sel);
-      const styles = (ordSelector2StylesDict[props.sel] ??= []);
+      usedOrdSelectorSet.add(props.pre);
+      const styles = (ordSelector2StylesDict[props.pre] ??= []);
 
       if ('blocki' in props) {
-        styles.push(
-          () => css`
-            .styled-header ${cmComCommentHeaderHolderSelectors[props.blocki] || '::after'} {
+        if (isKind) {
+          ordKind2StylesDict[props.pre] ??= css`
+            [solid-ord-selector][solid-block-kind='${props.pre}'] ${cmComCommentHeaderHolderSelectors[0]} {
               ${cmComCommentMakePseudoCommentContentPropCss(props.text)}
               ${accentColor}
             }
-          `,
-        );
+          `;
+        } else {
+          styles.push(
+            () => css`
+              .styled-header ${cmComCommentHeaderHolderSelectors[props.blocki + 1] || '::after'} {
+                ${cmComCommentMakePseudoCommentContentPropCss(props.text)}
+                ${accentColor}
+              }
+            `,
+          );
+        }
       } else if ('wordi' in props) {
         const lineWordStyleKey = `s${props.sel}l${props.linei}w${props.wordi}` as const;
 
@@ -141,7 +161,7 @@ export const cmComCommentDetectCommentTextStyles = () => {
 
           styles.push(
             () => css`
-              [ord-linei='${props.linei}'] [line-wordi='${props.wordi}'] {
+              [${isKind ? 'solid-' : ''}ord-linei='${props.linei}'] [line-wordi='${props.wordi}'] {
                 ${lineWordStyleDict[lineWordStyleKey]}
               }
             `,

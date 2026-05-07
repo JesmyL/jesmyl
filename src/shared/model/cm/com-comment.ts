@@ -1,4 +1,5 @@
 import { CmComCommentBlockSimpleSelector } from 'shared/api';
+import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 
 export type CmComCommentTextDetectorRuleProps =
   | CmComCommentTextDetectorBlockRuleProps
@@ -8,9 +9,10 @@ export type CmComCommentTextDetectorRuleProps =
 
 type CommonType = {
   text: string;
-  kind: 0 | 1 | 2;
+  type: 0 | 1 | 2;
   rate: number;
   sel: CmComCommentBlockSimpleSelector;
+  pre: CmComCommentConstructorPropsDictSelectorRulePropsKey;
 };
 
 export type CmComCommentTextDetectorBlockRuleProps = { blocki: number } & CommonType;
@@ -27,10 +29,19 @@ export type CmComCommentTextDetectorChordRuleProps = CmComCommentTextDetectorWor
 
 export type CmComCommentConstructorPropKey = keyof CmComCommentConstructorRulePropsDict;
 
-export type CmComCommentConstructorPropsDictLineRulePropsKey = `s${CmComCommentBlockSimpleSelector}l${number}`;
+export type CmComCommentConstructorPropsDictSelectorRulePropsKey =
+  | `s${CmComCommentBlockSimpleSelector}`
+  | `k${CmComBlockKindKey}`;
+
+export type CmComCommentConstructorPropsDictBlockRulePropsKey =
+  `${CmComCommentConstructorPropsDictSelectorRulePropsKey}b${number}`;
+
+export type CmComCommentConstructorPropsDictLineRulePropsKey =
+  `${CmComCommentConstructorPropsDictSelectorRulePropsKey}l${number}`;
+
 export type CmComCommentConstructorPropsDictWordRulePropsKey =
   `${CmComCommentConstructorPropsDictLineRulePropsKey}w${number}`;
-export type CmComCommentConstructorPropsDictBlockRulePropsKey = `s${CmComCommentBlockSimpleSelector}b${number}`;
+
 export type CmComCommentConstructorPropsDictChordRulePropsKey =
   `${CmComCommentConstructorPropsDictWordRulePropsKey}c${number}`;
 
@@ -47,7 +58,7 @@ export type CmComCommentConstructorRulePropsDict = Partial<
     >
 >;
 
-export const enum CmComCommentConstructorRuleKind {
+export const enum CmComCommentConstructorRuleType {
   Head,
   Block,
   Line,
@@ -57,11 +68,11 @@ export const enum CmComCommentConstructorRuleKind {
 
 export type CmComCommentConstructorRuleKindByPropsType<Key extends CmComCommentTextDetectorRuleProps | und> =
   Key extends CmComCommentTextDetectorChordRuleProps
-    ? CmComCommentConstructorRuleKind.Chord
+    ? CmComCommentConstructorRuleType.Chord
     : Key extends CmComCommentTextDetectorWordRuleProps
-      ? CmComCommentConstructorRuleKind.Word
+      ? CmComCommentConstructorRuleType.Word
       : Key extends CmComCommentTextDetectorLineRuleProps
-        ? CmComCommentConstructorRuleKind.Line
+        ? CmComCommentConstructorRuleType.Line
         : Key extends CmComCommentTextDetectorBlockRuleProps
-          ? CmComCommentConstructorRuleKind.Block | CmComCommentConstructorRuleKind.Head
+          ? CmComCommentConstructorRuleType.Block | CmComCommentConstructorRuleType.Head
           : null;

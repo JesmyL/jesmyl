@@ -1,6 +1,9 @@
 import { TextInput } from '#shared/ui/TextInput';
-import { cmComCommentUpdater, useCmComCommentTextBlockTakerWithoutComments } from '$cm/entities/com-comment';
-import { CmComCommentBlockSimpleSelector, CmComCommentBlockSpecialSelector, CmComWid } from 'shared/api';
+import {
+  cmComCommentLocalCommentsUpdater,
+  useCmComCommentTextBlockTakerWithoutComments,
+} from '$cm/entities/com-comment';
+import { CmComCommentBlockSimpleSelector, CmComWid } from 'shared/api';
 import { useDeferredCallback } from 'shared/utils/useDeferredCallback';
 
 export const CmComCommentSimpleComments = ({
@@ -28,8 +31,8 @@ export const CmComCommentSimpleComments = ({
             onInput={value => {
               deferredCallback(
                 async () =>
-                  cmComCommentUpdater(comw, commentAlti, {
-                    [ordSelector as CmComCommentBlockSpecialSelector.Head]: texts => {
+                  cmComCommentLocalCommentsUpdater(comw, commentAlti, {
+                    [`s${ordSelector}`]: (texts: string[]) => {
                       texts = [...texts];
                       texts[linei] = value;
                       return texts;

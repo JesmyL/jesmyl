@@ -2,8 +2,9 @@ import { Button } from '#shared/components';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
 import { CmComOrderWid } from 'shared/api';
-import { CmComCommentConstructorRuleKind } from 'shared/model/cm/com-comment';
+import { CmComCommentConstructorRuleType } from 'shared/model/cm/com-comment';
 import { cmComCommentTextDetectorCalculateRate } from 'shared/utils/cm/com/cmComCommentTextRulesDetector';
+import { useCmComCommentConstructorCurrentInnerKindContext } from '../state/CurrentInnerKind';
 import { CmComCommentConstructorAccentKindRedactor } from './AccentKindRedactor';
 import { CmComCommentConstructorTextRedactor } from './TextRedactor';
 
@@ -21,8 +22,9 @@ export const CmComCommentConstructorChordConstructor = ({
   isLast: boolean;
 }) => {
   const propsDict = useAtomValue(cmComCommentConstructorRulePropsDictAtom);
+  const selectorPrefix = useCmComCommentConstructorCurrentInnerKindContext() ?? (`s${ordw}` as const);
 
-  const wordKeyPrefix = `s${ordw}l${linei}w${wordi}` as const;
+  const wordKeyPrefix = `${selectorPrefix}l${linei}w${wordi}` as const;
   const chordKeyPrefix = `${wordKeyPrefix}c${chordi}` as const;
 
   return (
@@ -57,13 +59,14 @@ export const CmComCommentConstructorChordConstructor = ({
           blockKey={`${chordKeyPrefix}^`}
           blockPropsHolder={propsDict}
           getDefaultPropsDict={() => ({
+            pre: selectorPrefix,
             sel: ordw,
             linei,
             wordi,
             chordi,
             text: '',
             place: '^',
-            kind: 0,
+            type: 0,
             rate: cmComCommentTextDetectorCalculateRate(linei, wordi, chordi),
           })}
         />
@@ -71,51 +74,54 @@ export const CmComCommentConstructorChordConstructor = ({
         <div className="flex gap-2">
           <CmComCommentConstructorTextRedactor
             blockKey={`${chordKeyPrefix}<`}
-            kind={CmComCommentConstructorRuleKind.Chord}
+            type={CmComCommentConstructorRuleType.Chord}
             blockPropsHolder={propsDict}
             label="До"
             getDefaultPropsDict={() => ({
+              pre: selectorPrefix,
               sel: ordw,
               linei,
               wordi,
               chordi,
               text: '',
               place: '<',
-              kind: 0,
+              type: 0,
               rate: cmComCommentTextDetectorCalculateRate(linei, wordi, chordi),
             })}
           />
 
           <CmComCommentConstructorTextRedactor
             blockKey={`${chordKeyPrefix}^`}
-            kind={CmComCommentConstructorRuleKind.Chord}
+            type={CmComCommentConstructorRuleType.Chord}
             blockPropsHolder={propsDict}
             label="Вместо"
             getDefaultPropsDict={() => ({
+              pre: selectorPrefix,
               sel: ordw,
               linei,
               wordi,
               chordi,
               text: '',
               place: '^',
-              kind: 0,
+              type: 0,
               rate: cmComCommentTextDetectorCalculateRate(linei, wordi, chordi),
             })}
           />
 
           <CmComCommentConstructorTextRedactor
-            blockKey={`s${ordw}l${linei}w${wordi}c${chordi}>`}
-            kind={CmComCommentConstructorRuleKind.Chord}
+            blockKey={`${selectorPrefix}l${linei}w${wordi}c${chordi}>`}
+            type={CmComCommentConstructorRuleType.Chord}
             blockPropsHolder={propsDict}
             label="После"
             getDefaultPropsDict={() => ({
+              pre: selectorPrefix,
               sel: ordw,
               linei,
               wordi,
               chordi,
               text: '',
               place: '>',
-              kind: 0,
+              type: 0,
               rate: cmComCommentTextDetectorCalculateRate(linei, wordi, chordi),
             })}
           />

@@ -10,6 +10,7 @@ import { CmCom, useCmComCommentBlockCss } from '$cm/ext';
 import { cmIsShowMyCommentsAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
+import { commentHolderNodes } from 'shared/const/cm/commentHolderNodes';
 import { itNIt } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
 
@@ -59,12 +60,14 @@ const Content = (props: Props) => {
         )}
       </div>
 
-      <div className={twMerge('com-orders-with-comments', isExpandFirstComment && 'expand-first-comment-bible-texts')}>
+      <div
+        className={twMerge(
+          'com-orders-with-comments weight-add',
+          isExpandFirstComment && 'expand-first-comment-bible-texts',
+        )}
+      >
         {props.beforeCommentsNode}
-        <span className="comment-holder" />
-        <span className="comment-holder" />
-        <span className="comment-holder" />
-        <span className="comment-holder" />
+        {commentHolderNodes}
         {props.children}
       </div>
     </>

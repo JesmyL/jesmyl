@@ -1,10 +1,8 @@
 import { css } from '@emotion/react';
 import { CmComBlockKindKey } from './BlockKind.model';
-import { KindBlock } from './KindBlock';
 
-const makeStartsBlockKindSelector = <Key extends CmComBlockKindKey>(key: Key) =>
-  `[${KindBlock.blockKindAttribute}^="${key}"]` as const;
-const makeEndsBlockKindSelector = (key: CmComBlockKindKey) => `[${KindBlock.blockKindAttribute}$="${key}"]` as const;
+const makeStartsBlockKindSelector = <Key extends CmComBlockKindKey>(key: Key) => `[block-kind^="${key}"]` as const;
+const makeEndsBlockKindSelector = (key: CmComBlockKindKey) => `[block-kind$="${key}"]` as const;
 
 export const blockCmGlobalCss = css`
   .composition-block {
@@ -62,7 +60,7 @@ export const blockCmGlobalCss = css`
         line-height: 2.3em;
       }
 
-      + [${KindBlock.inheritBlockKindAttribute}].without-chords {
+      + [inherit-block-kind].without-chords {
         margin-top: -0.4em;
       }
     }
@@ -72,7 +70,7 @@ export const blockCmGlobalCss = css`
         line-height: 1.5em;
       }
 
-      + [${KindBlock.inheritBlockKindAttribute}].chorded-block {
+      + [inherit-block-kind].chorded-block {
         margin-top: 0.4em;
       }
     }

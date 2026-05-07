@@ -4,9 +4,9 @@ import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-c
 import { useAtomValue } from 'atomaric';
 import {
   CmComCommentConstructorPropKey,
-  CmComCommentConstructorRuleKind,
   CmComCommentConstructorRuleKindByPropsType,
   CmComCommentConstructorRulePropsDict,
+  CmComCommentConstructorRuleType,
 } from 'shared/model/cm/com-comment';
 import { useDebounceCallback } from 'shared/utils/useDebounceCallback';
 
@@ -15,7 +15,7 @@ export const CmComCommentConstructorTextRedactor = <
   PropsType extends CmComCommentConstructorRulePropsDict[Key],
 >(props: {
   blockKey: Key;
-  kind: CmComCommentConstructorRuleKindByPropsType<PropsType>;
+  type: CmComCommentConstructorRuleKindByPropsType<PropsType>;
   label: React.ReactNode;
   blockPropsHolder: { dict?: CmComCommentConstructorRulePropsDict };
   getDefaultPropsDict: () => PropsType;
@@ -26,12 +26,12 @@ export const CmComCommentConstructorTextRedactor = <
   const text = props.blockPropsHolder.dict?.[props.blockKey]?.text;
   const constants = useAtomValue(cmConstantsConfigAtom);
   const maxLen = {
-    [CmComCommentConstructorRuleKind.Head]: constants.maxComCommentHeadLen,
-    [CmComCommentConstructorRuleKind.Block]: constants.maxComCommentBlockLen,
-    [CmComCommentConstructorRuleKind.Line]: constants.maxComCommentLineLen,
-    [CmComCommentConstructorRuleKind.Word]: constants.maxComCommentWordLen,
-    [CmComCommentConstructorRuleKind.Chord]: constants.maxComCommentChordLen,
-  }[props.kind ?? CmComCommentConstructorRuleKind.Line];
+    [CmComCommentConstructorRuleType.Head]: constants.maxComCommentHeadLen,
+    [CmComCommentConstructorRuleType.Block]: constants.maxComCommentBlockLen,
+    [CmComCommentConstructorRuleType.Line]: constants.maxComCommentLineLen,
+    [CmComCommentConstructorRuleType.Word]: constants.maxComCommentWordLen,
+    [CmComCommentConstructorRuleType.Chord]: constants.maxComCommentChordLen,
+  }[props.type ?? CmComCommentConstructorRuleType.Line];
 
   return (
     <TextInput

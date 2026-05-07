@@ -12,7 +12,7 @@ export const CmComCommentConstructorTextWithAccentRedactor = <
 >(props: {
   blockKey: Key;
   label: React.ReactNode;
-  kind: CmComCommentConstructorRuleKindByPropsType<PropsType>;
+  type: CmComCommentConstructorRuleKindByPropsType<PropsType>;
   blockPropsHolder: { dict?: CmComCommentConstructorRulePropsDict };
   getDefaultPropsDict: () => PropsType;
   disabled?: boolean;

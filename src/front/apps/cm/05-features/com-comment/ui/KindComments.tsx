@@ -1,5 +1,5 @@
 import { TextInput } from '#shared/ui/TextInput';
-import { useCmComCommentBlock, useCmComCommentKindBlockTaker } from '$cm/entities/com-comment';
+import { takeCmComCommentKindBlockDict, useCmComCommentBlock } from '$cm/entities/com-comment';
 import { CmCom, cmIDB } from '$cm/ext';
 import { CmComCommentBlockSpecialSelector } from 'shared/api';
 import { useDeferredCallback } from 'shared/utils/useDeferredCallback';
@@ -9,7 +9,7 @@ import { twMerge } from 'tailwind-merge';
 export const CmComCommentKindComments = ({ commentAlti, com }: { commentAlti: number; com: CmCom }) => {
   const deferredCallback = useDeferredCallback();
   const { localCommentBlock, commentBlock } = useCmComCommentBlock(com.wid);
-  const kindCommentTexts = useCmComCommentKindBlockTaker(com.wid, localCommentBlock, commentBlock);
+  const kindCommentTexts = takeCmComCommentKindBlockDict(com.wid, localCommentBlock, commentBlock);
 
   const usedKindCountDict =
     com.orders?.reduce(

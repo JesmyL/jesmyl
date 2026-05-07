@@ -5,7 +5,7 @@ import { ChordVisibleVariant } from '$cm/shared/model';
 import { useAtomValue } from 'atomaric';
 import React from 'react';
 import { makeRegExp } from 'regexpert';
-import { retNull } from 'shared/utils';
+import { commentHolderNodes } from 'shared/const/cm/commentHolderNodes';
 import { CmComOrderLine } from '../../com-order-line/ui/ComLine';
 import { CmComOrder } from '../lib/Order';
 import { ICmComOrderHeaderProps } from '../model/Order.model';
@@ -51,7 +51,7 @@ export function TheCmComOrder(props: Props) {
           isTexted: false,
           repeats: ord.repeatsTitle,
         })}
-        {holderNodes}
+        {commentHolderNodes}
       </div>
     );
   }
@@ -74,10 +74,10 @@ export function TheCmComOrder(props: Props) {
       {...styleAttributes}
     >
       {blockHeader}
-      {holderNodes}
+      {commentHolderNodes}
     </div>
   ) : (
-    !ord.me.kind?.isHeaderNoneForce && <div className="styled-header empty">{holderNodes}</div>
+    !ord.me.kind?.isHeaderNoneForce && <div className="styled-header empty">{commentHolderNodes}</div>
   );
 
   const header =
@@ -198,15 +198,3 @@ export function TheCmComOrder(props: Props) {
     </div>
   );
 }
-
-////////////////////////////////////
-////////////////////////////////////
-////////////////////////////////////
-////////////////////////////////////
-
-const holderNodes = Array.from({ length: 4 }, retNull).map((_, i) => (
-  <span
-    key={i}
-    className="comment-holder"
-  />
-));

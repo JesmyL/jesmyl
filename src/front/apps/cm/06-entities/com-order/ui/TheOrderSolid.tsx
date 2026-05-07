@@ -21,7 +21,10 @@ export const TheCmComOrderSolid = ({
   }
 
   return (
-    <div solid-ord-selector={props.ord.wid}>
+    <div
+      solid-ord-selector={props.ord.wid}
+      solid-block-kind={`k${props.ord.kind}`}
+    >
       {ords.map((ord, ordIndex) => {
         if (!ord.isVisible) return;
         const ordi = ordIndex + props.ordi;
