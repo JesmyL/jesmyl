@@ -1,4 +1,3 @@
-import { mylib } from '#shared/lib/my-lib';
 import { TextInput } from '#shared/ui/TextInput';
 import { cmConstantsConfigAtom } from '$cm/ext';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
@@ -38,7 +37,7 @@ export const CmComCommentConstructorTextRedactor = <
     <TextInput
       label={
         <>
-          {props.label} (до {maxLen} {mylib.declension(maxLen, 'символа', 'символов', 'символов')})
+          {props.label} ({text?.length ?? 0}/{maxLen})
         </>
       }
       defaultValue={text}
