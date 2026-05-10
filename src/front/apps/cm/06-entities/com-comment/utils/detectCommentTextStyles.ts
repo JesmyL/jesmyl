@@ -14,6 +14,7 @@ import {
 } from 'shared/utils/cm';
 import { PRecord } from 'tsjrpc/types/base.model';
 import { cmComCommentHeaderHolderSelectors } from '../const/commentHolderSelectors';
+import { cmComCommentExtractSelector } from '../lib/useCmComCommentBlock';
 import { cmComCommentPseudoCommentStaticPropsCss } from './pseudoCommentStaticPropsCss';
 
 export const cmComCommentDetectCommentTextStyles = () => {
@@ -101,7 +102,7 @@ export const cmComCommentDetectCommentTextStyles = () => {
 
         const query = selector.startsWith('k')
           ? `[solid-block-kind='${selector}']`
-          : `&.weight-add [ord-selector='${selector.slice(1)}']`;
+          : `&.weight-add [ord-selector='${cmComCommentExtractSelector(selector)}']`;
 
         return css`
           ${query} {
@@ -154,7 +155,7 @@ export const cmComCommentDetectCommentTextStyles = () => {
           );
         }
       } else if ('wordi' in props) {
-        const lineWordStyleKey = `s${props.sel}l${props.linei}w${props.wordi}` as const;
+        const lineWordStyleKey = `${props.pre}l${props.linei}w${props.wordi}` as const;
 
         if (lineWordStyleDict[lineWordStyleKey] == null) {
           lineWordStyleDict[lineWordStyleKey] = [];

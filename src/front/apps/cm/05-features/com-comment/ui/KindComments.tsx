@@ -1,5 +1,9 @@
 import { TextInput } from '#shared/ui/TextInput';
-import { takeCmComCommentKindBlockDict, useCmComCommentBlock } from '$cm/entities/com-comment';
+import {
+  cmComCommentExtractSelector,
+  takeCmComCommentKindBlockDict,
+  useCmComCommentBlock,
+} from '$cm/entities/com-comment';
 import { CmCom, cmIDB } from '$cm/ext';
 import { CmComCommentBlockSpecialSelector } from 'shared/api';
 import { useDeferredCallback } from 'shared/utils/useDeferredCallback';
@@ -14,7 +18,12 @@ export const CmComCommentKindComments = ({ commentAlti, com }: { commentAlti: nu
   const usedKindCountDict =
     com.orders?.reduce(
       (countDict, ord) =>
-        ord.kind ? { ...countDict, [Math.abs(ord.kind)]: (countDict[Math.abs(ord.kind)] ?? 0) + 1 } : countDict,
+        ord.kind
+          ? {
+              ...countDict,
+              [cmComCommentExtractSelector(ord.kind)]: (countDict[cmComCommentExtractSelector(ord.kind)] ?? 0) + 1,
+            }
+          : countDict,
       {} as PRecord<number, number>,
     ) ?? {};
 

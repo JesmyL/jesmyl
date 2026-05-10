@@ -32,7 +32,7 @@ export const updateCmComCommentConstructorRulePropsDict = async (
     const commentTexts = takeCmComCommentTextBlock(comw, selector, localCommentBlock, commentBlock, commentAlti);
 
     if (commentTexts) {
-      cmComCommentTextRulesDetector(isSimpleBlockText, `s${selector}`, selector, commentTexts, props =>
+      cmComCommentTextRulesDetector(isSimpleBlockText, `s${selector}`, commentTexts, props =>
         fillCmComCommentConstructorCommentInKey2PropsDict(propsDict, props, wordChordiMaxDict),
       );
     }
@@ -61,7 +61,7 @@ export const updateCmComCommentConstructorRulePropsDict = async (
         const commentText = takeCmComCommentKindBlockDict(comw, localCommentBlock, commentBlock)?.[kind];
 
         if (commentText) {
-          cmComCommentTextRulesDetector(false, `k${kind}`, selector, [commentText], props =>
+          cmComCommentTextRulesDetector(false, `k${kind}`, [commentText], props =>
             fillCmComCommentConstructorCommentInKey2PropsDict(propsDict, props, wordChordiMaxDict),
           );
         }

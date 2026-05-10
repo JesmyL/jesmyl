@@ -121,7 +121,7 @@ export const makeCmComCommentConstructorCommentOrdSelector2TextsDictFromRuleProp
           wordCommentsText[props.pre] += `\n${props.linei + 1}:${props.wordi + 1}${wordText}`;
         }
       } else {
-        const lineKey = `s${props.sel}l${props.linei}` as const;
+        const lineKey = `${props.pre}l${props.linei}` as const;
 
         if (!propsKeysSet.has(lineKey) || !props.text) continue;
         propsKeysSet.delete(lineKey);

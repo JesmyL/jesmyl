@@ -1,5 +1,4 @@
 import { makeRegExp } from 'regexpert';
-import { CmComCommentBlockSimpleSelector } from 'shared/api';
 import {
   CmComCommentConstructorPropsDictSelectorRulePropsKey,
   CmComCommentTextDetectorBlockRuleProps,
@@ -18,7 +17,6 @@ import {
 export const cmComCommentTextRulesDetector = (
   isSimpleBlockText: boolean,
   selectorPrefix: CmComCommentConstructorPropsDictSelectorRulePropsKey,
-  selector: CmComCommentBlockSimpleSelector,
   commentBlocks: string[],
   onFound: (props: CmComCommentTextDetectorRuleProps) => void,
 ) => {
@@ -29,7 +27,6 @@ export const cmComCommentTextRulesDetector = (
 
       onFound({
         pre: selectorPrefix,
-        sel: selector,
         blocki,
         type: cmComCommentPseudoCommentContentAccentsType(block),
         text: cmComCommentTrimHighlightMarkers(block),
@@ -71,7 +68,6 @@ export const cmComCommentTextRulesDetector = (
     if (block) {
       onFound({
         pre: selectorPrefix,
-        sel: selector,
         blocki,
         type: cmComCommentPseudoCommentContentAccentsType(block),
         text: cmComCommentTrimHighlightMarkersEachLine(block),
@@ -86,7 +82,6 @@ export const cmComCommentTextRulesDetector = (
     if (smylib.isNum(commentKey)) {
       onFound({
         pre: selectorPrefix,
-        sel: selector,
         linei: commentKey - 1,
         type: cmComCommentPseudoCommentContentAccentsType(comment),
         text: cmComCommentTrimHighlightMarkers(comment),
@@ -102,7 +97,6 @@ export const cmComCommentTextRulesDetector = (
     if (wordKind) {
       onFound({
         pre: selectorPrefix,
-        sel: selector,
         linei,
         wordi,
         place: '^',
@@ -128,7 +122,6 @@ export const cmComCommentTextRulesDetector = (
       if (wordContent) {
         onFound({
           pre: selectorPrefix,
-          sel: selector,
           linei,
           wordi,
           place,
@@ -150,7 +143,6 @@ export const cmComCommentTextRulesDetector = (
 
           onFound({
             pre: selectorPrefix,
-            sel: selector,
             chordi,
             linei,
             wordi,

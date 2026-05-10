@@ -16,6 +16,7 @@ import { cmComCommentDetectCommentTextStyles } from '../utils/detectCommentTextS
 import { cmComCommentMakeStartCommentCss } from '../utils/makeStartCommentCss';
 import { cmComCommentPseudoCommentStaticPropsCss } from '../utils/pseudoCommentStaticPropsCss';
 import {
+  cmComCommentExtractSelector,
   takeCmComCommentKindBlockDict,
   useCmComCommentBlock,
   useCmComCommentTextBlockTaker,
@@ -69,15 +70,13 @@ export const useCmComCommentBlockCss = (
                 const ordw = ord.makeSelector();
 
                 const commentLines = takeCommentTexts(ordw);
-                if (commentLines?.length)
-                  cmComCommentTextRulesDetector(false, `s${ord.wid}`, ord.wid, commentLines, onDetect);
+                if (commentLines?.length) cmComCommentTextRulesDetector(false, `s${ord.wid}`, commentLines, onDetect);
 
                 if (!ordKindsWasSettedSet.has(ord.kind)) {
                   ordKindsWasSettedSet.add(ord.kind);
-                  const kindComment = ord.kind && commentKindsBlock?.[Math.abs(ord.kind) as CmComBlockKindKey];
+                  const kindComment = ord.kind && commentKindsBlock?.[cmComCommentExtractSelector(ord.kind)];
 
-                  if (kindComment)
-                    cmComCommentTextRulesDetector(false, `k${ord.kind}`, ord.wid, [kindComment], onDetect);
+                  if (kindComment) cmComCommentTextRulesDetector(false, `k${ord.kind}`, [kindComment], onDetect);
                 }
               } while (currentOrd?.kind && cmComOrderPlusKindSet.has(currentOrd.kind));
 

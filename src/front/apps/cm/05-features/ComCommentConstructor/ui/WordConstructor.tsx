@@ -32,7 +32,6 @@ export const CmComCommentConstructorWordConstructor = ({
           blockKey={`${wordKeyPrefix}^`}
           getDefaultPropsDict={() => ({
             pre: selectorPrefix,
-            sel: ordw,
             place: '^',
             type: 0,
             linei,
@@ -51,7 +50,6 @@ export const CmComCommentConstructorWordConstructor = ({
           postLabel="Текст после"
           getDefaultPropsDict={place => ({
             pre: selectorPrefix,
-            sel: ordw,
             place,
             type: 0,
             linei,
@@ -87,7 +85,6 @@ export const CmComCommentConstructorWordConstructor = ({
 
             dict.dict[`${chordKeyPrefix}^`] = {
               pre: selectorPrefix,
-              sel: ordw,
               place: '^',
               chordi,
               type: 0,

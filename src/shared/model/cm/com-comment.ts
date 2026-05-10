@@ -11,7 +11,6 @@ type CommonType = {
   text: string;
   type: 0 | 1 | 2;
   rate: number;
-  sel: CmComCommentBlockSimpleSelector;
   pre: CmComCommentConstructorPropsDictSelectorRulePropsKey;
 };
 

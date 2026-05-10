@@ -60,7 +60,6 @@ export const CmComCommentConstructorChordConstructor = ({
           blockPropsHolder={propsDict}
           getDefaultPropsDict={() => ({
             pre: selectorPrefix,
-            sel: ordw,
             linei,
             wordi,
             chordi,
@@ -79,7 +78,6 @@ export const CmComCommentConstructorChordConstructor = ({
             label="До"
             getDefaultPropsDict={() => ({
               pre: selectorPrefix,
-              sel: ordw,
               linei,
               wordi,
               chordi,
@@ -97,7 +95,6 @@ export const CmComCommentConstructorChordConstructor = ({
             label="Вместо"
             getDefaultPropsDict={() => ({
               pre: selectorPrefix,
-              sel: ordw,
               linei,
               wordi,
               chordi,
@@ -115,7 +112,6 @@ export const CmComCommentConstructorChordConstructor = ({
             label="После"
             getDefaultPropsDict={() => ({
               pre: selectorPrefix,
-              sel: ordw,
               linei,
               wordi,
               chordi,

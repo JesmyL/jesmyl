@@ -1,5 +1,6 @@
 import { SerializedStyles } from '@emotion/react';
 import { makeRegExp } from 'regexpert';
+import { checkIsStartsWith } from 'shared/utils/checkIs';
 
 export const cmComCommentPseudoCommentContentAccentsType = (text: string) => {
   text = text.trimStart();
@@ -27,7 +28,7 @@ export const cmComCommentTrimHighlightMarkersEachLine = (text: string) => {
 
 export const cmComCommentTrimHighlightMarkers = (text: string) => {
   text = text.slice(cmComCommentPseudoCommentContentAccentsType(text));
-  return text.startsWith('.') ? text.slice(1) : text;
+  return checkIsStartsWith(text, '.') ? text.slice(1) : text;
 };
 
 export const cmComCommentMakePseudoCommentContentPropCss = (text: string, pre = '', post = '') => {

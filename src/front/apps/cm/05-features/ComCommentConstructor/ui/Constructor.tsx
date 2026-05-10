@@ -65,7 +65,6 @@ export const CmComCommentConstructorTextRulesConstructor = ({
               type={CmComCommentConstructorRuleType.Block}
               getDefaultPropsDict={() => ({
                 pre: variativeSelectorPrefix,
-                sel: selector,
                 blocki: 0,
                 type: 0,
                 rate: 0,
@@ -140,7 +139,6 @@ export const CmComCommentConstructorTextRulesConstructor = ({
                   }
                   getDefaultPropsDict={() => ({
                     pre: simpleSelectorPrefix,
-                    sel: selector,
                     blocki,
                     type: 0,
                     rate: blocki,

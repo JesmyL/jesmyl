@@ -29,7 +29,6 @@ export const CmComCommentConstructorLineConstructor = ({
           type={CmComCommentConstructorRuleType.Line}
           getDefaultPropsDict={() => ({
             pre: selectorPrefix,
-            sel: ordw,
             type: 0,
             linei,
             rate: cmComCommentTextDetectorCalculateRate(linei),
