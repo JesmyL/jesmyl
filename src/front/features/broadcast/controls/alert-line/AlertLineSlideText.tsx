@@ -1,5 +1,5 @@
 import { complectIDB } from '$index/shared/state';
-import { css, keyframes } from '@emotion/react';
+import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -31,15 +31,14 @@ export const AlertLineSlideText = () => {
   );
 };
 
-const anim = keyframes`${css`
+const anim = keyframes`
   0% {
     transform: translateX(0);
   }
   100% {
     transform: translateX(-100%);
   }
-`}
-  `;
+`;
 
 const StyledAlertLine = styled.div<{ $speed: number }>`
   --animation-time: ${props => props.$speed}s;

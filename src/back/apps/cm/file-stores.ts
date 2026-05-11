@@ -21,7 +21,7 @@ import {
 import { smylib } from 'shared/utils';
 import { cmConstantsDefaultConfig } from 'shared/values/cm/cmConstantsDefaultConfig';
 
-export const comsDirStore = new DirStorage<IServerSideCom, CmComWid>({
+export const comsDirStorage = new DirStorage<IServerSideCom, CmComWid>({
   dirPath: '/apps/cm/coms/',
   makeNewItem: () => ({
     n: '',
@@ -31,7 +31,7 @@ export const comsDirStore = new DirStorage<IServerSideCom, CmComWid>({
   idKey: 'w',
 });
 
-export const catsFileStore = new FileStore<IExportableCat[]>('/apps/cm/cats.json', []);
+export const catsFileStorage = new FileStore<IExportableCat[]>('/apps/cm/cats.json', []);
 
 export const comsInSchEventDirStorage = new DirStorage<ComsInSchEvent, IScheduleWidgetWid, 'schw'>({
   dirPath: '/apps/cm/comsInSchEvent/',

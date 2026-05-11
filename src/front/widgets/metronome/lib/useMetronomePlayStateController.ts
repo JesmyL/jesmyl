@@ -1,17 +1,18 @@
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
+import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { Loop, Sampler, getTransport } from 'tone';
 import {
+  metronomeCurrentBpmAtom,
+  metronomeCurrentMeterSizeAtom,
   metronomeIsPlayAtom,
-  metronomeUserBpmAtom,
   metronomeUserMeterAccentsAtom,
-  metronomeUserMeterSizeAtom,
 } from './atoms';
 
 export const useMetronomePlayStateController = () => {
-  const userBpm = useDebounceValue(useAtomValue(metronomeUserBpmAtom), 500);
-  const userMeterSize = useAtomValue(metronomeUserMeterSizeAtom);
+  const userBpm = useDebounceValue(useAtomValue(metronomeCurrentBpmAtom), 500);
+  const userMeterSize = useAtomValue(metronomeCurrentMeterSizeAtom);
   const accents = useAtomValue(metronomeUserMeterAccentsAtom)[userMeterSize] ?? `1${'0'.repeat(userMeterSize - 1)}`;
   const isPlay = useAtomValue(metronomeIsPlayAtom);
 
@@ -23,7 +24,7 @@ export const useMetronomePlayStateController = () => {
 
     for (let beati = 0; beati < userMeterSize; beati++) {
       const note = accents[beati] === '1' ? 'B1' : 'G1';
-      const diff = 60 / userBpm;
+      const diff = 60 / takeCorrectMetronomeBpm(userBpm);
       const loopDuration = diff * userMeterSize;
       const beatDiffTime = diff * beati;
 

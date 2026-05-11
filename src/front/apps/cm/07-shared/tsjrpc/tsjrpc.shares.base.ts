@@ -71,14 +71,14 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
           cmIDB.updateLastModifiedAt(favorites.m);
         },
 
-        refreshScheduleEventComPacks: async ({ packs: list, modifiedAt }) => {
+        refreshSchEvComPacks: async ({ packs: list, mod }) => {
           cmIDB.db.scheduleComPacks.bulkPut(list);
-          cmIDB.updateLastModifiedAt(modifiedAt);
+          cmIDB.updateLastModifiedAt(mod);
         },
 
-        refreshConstantsConfig: async ({ config, modifiedAt }) => {
+        refreshConstConfig: async ({ config, mod }) => {
           cmConstantsConfigAtom.set(prev => ({ ...prev, ...config }));
-          await cmIDB.updateLastModifiedAt(modifiedAt);
+          await cmIDB.updateLastModifiedAt(mod);
         },
 
         refreshComWidRefDict: async ({ refs, mod }) => {

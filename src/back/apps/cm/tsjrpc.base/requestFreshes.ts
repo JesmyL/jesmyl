@@ -1,17 +1,17 @@
 import { FileStore } from 'back/complect/FileStore';
-import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
+import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
 import { SMyLib } from 'shared/utils';
 import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from '../client-selectors-by-visit';
 import { mapCmImportableToExportableCom } from '../complect/tools';
 import {
   aboutComFavoritesFileStore,
-  catsFileStore,
+  catsFileStorage,
   chordPackFileStore,
   cmComWidRefGroupDictFileStore,
   cmConstantsConfigFileStore,
   comCommentsDirStore,
-  comsDirStore,
+  comsDirStorage,
   comsInSchEventDirStorage,
 } from '../file-stores';
 import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
@@ -33,21 +33,21 @@ export const cmServerTsjrpcBaseRequestFreshes = {
       );
     }
 
-    const freshComs = comsDirStore.getFreshItems(lastModfiedAt);
+    const freshComs = comsDirStorage.getFreshItems(lastModfiedAt);
 
     if (freshComs.items.length) {
       cmShareServerTsjrpcMethods.refreshComList(
         {
           coms: freshComs.items.map(mapCmImportableToExportableCom),
           modifiedAt: freshComs.maxMod,
-          existComws: comsDirStore.getAllIds(),
+          existComws: comsDirStorage.getAllIds(),
         },
         client,
       );
     }
 
-    sendBasicModifiedableList(lastModfiedAt, catsFileStore, catsFileStore.getValue, (cats, modifiedAt) => {
-      const existCatws = catsFileStore.getValue().filter(filterNotRemoved).map(extractItemw);
+    sendBasicModifiedableList(lastModfiedAt, catsFileStorage, catsFileStorage.getValue, (cats, modifiedAt) => {
+      const existCatws = catsFileStorage.getValue().filter(filterNotRemoved).map(extractItemw);
       cmShareServerTsjrpcMethods.refreshCatList({ cats, modifiedAt, existCatws }, client);
     });
 
@@ -64,18 +64,18 @@ export const cmServerTsjrpcBaseRequestFreshes = {
     const freshComsInSchEvent = comsInSchEventDirStorage.getFreshItems(lastModfiedAt);
 
     if (freshComsInSchEvent.items.length) {
-      cmShareServerTsjrpcMethods.refreshScheduleEventComPacks(
-        { packs: freshComsInSchEvent.items, modifiedAt: freshComsInSchEvent.maxMod },
+      cmShareServerTsjrpcMethods.refreshSchEvComPacks(
+        { packs: freshComsInSchEvent.items, mod: freshComsInSchEvent.maxMod },
         client,
       );
     }
 
     if (visitInfo && visitInfo.version > 1039)
       if (cmConstantsConfigFileStore.fileModifiedAt() > lastModfiedAt) {
-        cmShareServerTsjrpcMethods.refreshConstantsConfig(
+        cmShareServerTsjrpcMethods.refreshConstConfig(
           {
             config: cmConstantsConfigFileStore.getValue(),
-            modifiedAt: cmConstantsConfigFileStore.fileModifiedAt(),
+            mod: cmConstantsConfigFileStore.fileModifiedAt(),
           },
           client,
         );
@@ -125,7 +125,7 @@ export const cmServerTsjrpcBaseRequestFreshes = {
         cmShareServerTsjrpcMethods.refreshAboutComFavorites({ value: favoriteItem }, client);
     }
   },
-} satisfies Partial<ConstructorParameters<typeof TsjrpcBaseServer<CmTsjrpcModel>>[0]['methods']>;
+} satisfies ServerTsjrpcSatisfy<CmTsjrpcModel>;
 
 const sendBasicModifiedableList = <Item extends { m: number }, Value>(
   lastModfiedAt: number,

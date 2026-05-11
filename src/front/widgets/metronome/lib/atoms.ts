@@ -1,8 +1,9 @@
 import { atom } from 'atomaric';
-import { CmComMetricNums } from 'shared/model/cm/com-metric-nums';
+import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
+import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 
 export const metronomeIsPlayAtom = atom(false);
-export const metronomeUserMeterSizeAtom = atom<CmComMetricNums>(4);
-export const metronomeUserMeterAccentsAtom = atom<PRecord<CmComMetricNums, string>>({}, 'metronome:meter-accents');
-export const metronomeUserBpmAtom = atom(120);
+export const metronomeCurrentMeterSizeAtom = atom(CmComMetricNum.Four);
+export const metronomeUserMeterAccentsAtom = atom<PRecord<CmComMetricNum, string>>({}, 'metronome:meter-accents');
+export const metronomeCurrentBpmAtom = atom(takeCorrectMetronomeBpm());
 export const metronomeIsOpenAtom = atom<null | boolean>(null);

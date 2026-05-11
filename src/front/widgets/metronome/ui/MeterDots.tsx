@@ -1,20 +1,21 @@
-import { css, keyframes } from '@emotion/react';
+import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { memo } from 'react';
 import { cmComMetricNumTitles, cmComNextMetricSize } from 'shared/const/cm/com-metric-nums';
-import { metronomeUserMeterAccentsAtom, metronomeUserMeterSizeAtom } from '../lib/atoms';
+import { metronomeCurrentMeterSizeAtom, metronomeUserMeterAccentsAtom } from '../lib/atoms';
 
 export const MetronomeMeterDots = memo(function MetronomeMeterDots() {
-  const userMeterSize = useAtomValue(metronomeUserMeterSizeAtom);
-  const accents = useAtomValue(metronomeUserMeterAccentsAtom)[userMeterSize] ?? '1' + '0'.repeat(userMeterSize - 1);
+  const userMeterSize = useAtomValue(metronomeCurrentMeterSizeAtom);
+  const defaultAccents = '1' + '0'.repeat(userMeterSize - 1);
+  const accents = useAtomValue(metronomeUserMeterAccentsAtom)[userMeterSize] ?? defaultAccents;
 
   return (
     <StyledContainer className="flex gap-2 column">
       <StyledMeterDots
         id="metronome-dotts"
         className="flex flex-wrap"
-        meter-size={userMeterSize}
+        data-meter-size={userMeterSize}
       >
         {Array(userMeterSize)
           .fill(1)
@@ -22,7 +23,8 @@ export const MetronomeMeterDots = memo(function MetronomeMeterDots() {
             return (
               <i
                 key={doti}
-                className={`metronome-dot rounded-full! ${accents[doti] === '1' ? ' accent' : ''}`}
+                className="rounded-full!"
+                data-dot={accents[doti]}
                 onClick={() => {
                   const newAccents = accents
                     .padEnd(userMeterSize, '0')
@@ -30,52 +32,54 @@ export const MetronomeMeterDots = memo(function MetronomeMeterDots() {
                     .map((num, numi) => (numi === doti ? (num === '0' ? '1' : '0') : num || '0'))
                     .join('');
 
-                  metronomeUserMeterAccentsAtom.do.setPartial({ [userMeterSize]: newAccents });
+                  metronomeUserMeterAccentsAtom.do.setPartial({
+                    [userMeterSize]: newAccents === defaultAccents ? undefined : newAccents,
+                  });
                 }}
               />
             );
           })}
       </StyledMeterDots>
 
-      <div onClick={() => metronomeUserMeterSizeAtom.set(cmComNextMetricSize[userMeterSize])}>
+      <div onClick={() => metronomeCurrentMeterSizeAtom.set(cmComNextMetricSize[userMeterSize])}>
         {cmComMetricNumTitles[userMeterSize]}
       </div>
     </StyledContainer>
   );
 });
 
-const scalePulse1 = keyframes`${css`
+const scalePulse1 = keyframes`
   0% {
     scale: 1;
   }
   100% {
     scale: 2;
   }
-`}`;
+`;
 
-const scalePulse2 = keyframes`${css`
+const scalePulse2 = keyframes`
   from {
     scale: 1;
   }
   to {
     scale: 2;
   }
-`}`;
+`;
 
 const StyledMeterDots = styled.div`
   --size: 17px;
   --gap: 5px;
   gap: var(--gap);
 
-  &[meter-size='6'] {
+  &[data-meter-size='6'] {
     width: calc(3 * (var(--size) + var(--gap)));
   }
 
-  &[meter-size='8'] {
+  &[data-meter-size='8'] {
     width: calc(4 * (var(--size) + var(--gap)));
   }
 
-  .metronome-dot {
+  [data-dot] {
     width: var(--size);
     height: var(--size);
   }
@@ -90,7 +94,7 @@ const StyledMeterDots = styled.div`
       animation: ${scalePulse2} 0.2s;
     }
 
-    &.accent {
+    &[data-dot='1'] {
       opacity: 1;
     }
   }

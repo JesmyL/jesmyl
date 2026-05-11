@@ -4,13 +4,13 @@ import { metronomeIsOpenAtom } from '../lib/atoms';
 
 const LazyMetronome = React.lazy(() => import('./LazyMetronome'));
 
-export const Metronome = (props: Parameters<typeof LazyMetronome>[0]) => {
+export const Metronome = () => {
   const isOpen = useAtomValue(metronomeIsOpenAtom);
 
   return (
-    isOpen !== null && (
+    isOpen != null && (
       <Suspense>
-        <LazyMetronome {...props} />
+        <LazyMetronome />
       </Suspense>
     )
   );

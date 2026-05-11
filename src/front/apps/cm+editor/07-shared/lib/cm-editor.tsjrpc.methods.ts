@@ -53,7 +53,7 @@ export const cmEditComExternalsClientTsjrpcMethods =
   new (class CmEditComExternals extends TsjrpcClient<CmEditComExternalsTsjrpcModel> {
     constructor() {
       super({
-        scope: 'CmEditComExternals',
+        scope: 'CmEditComExt',
         methods: {
           updateAudioMarks: {
             onResponse: ({ cMarks, src }) => {

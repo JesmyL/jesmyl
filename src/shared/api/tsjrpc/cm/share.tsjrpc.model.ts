@@ -29,7 +29,7 @@ export type CmShareTsjrpcModel = {
   refreshComComments: (args: { comments: ICmComCommentBlock[]; mod: number; alts: string[] | nil }) => void;
   refreshAboutComFavorites: (args: { value: TAboutComFavoriteItem }) => void;
 
-  refreshScheduleEventComPacks: (args: { packs: ComsInSchEvent[]; modifiedAt: number }) => void;
-  refreshConstantsConfig: (args: { config: Partial<CmConstantsConfig>; modifiedAt: number }) => unknown;
+  refreshSchEvComPacks: (args: { packs: ComsInSchEvent[]; mod: number }) => void;
+  refreshConstConfig: (args: { config: Partial<CmConstantsConfig>; mod: number }) => unknown;
   refreshComWidRefDict: (args: { refs: CmComWidRefGroupDict; mod: number }) => unknown;
 };

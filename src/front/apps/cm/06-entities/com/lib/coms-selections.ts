@@ -42,7 +42,7 @@ export const useCmComList = (comwsList?: CmComWid[] | nil, excludeComwsList?: Cm
     return icoms
       .concat(unknownComs)
       .sort((a, b) => comwIndexDict[a.w] - comwIndexDict[b.w])
-      .map(icom => new CmCom(icom));
+      .map(icom => new CmCom(icom, null));
   }, [comwsList, icoms]);
 };
 

@@ -1,9 +1,9 @@
 import { IExportableCom, IServerSideCom } from 'shared/api';
-import { comsDirStore } from '../file-stores';
+import { comsDirStorage } from '../file-stores';
 import { makeCmComHttpAudioLinks, makeCmComNumLeadAudioLinkList } from './com-http-links';
 
 export const mapCmImportableToExportableCom = (com: IServerSideCom): IExportableCom => {
-  return { ...com, al: makeCmComNumLeadAudioLinkList(com.al), m: comsDirStore.getItemModTime(com.w) ?? 0 };
+  return { ...com, al: makeCmComNumLeadAudioLinkList(com.al), m: comsDirStorage.getItemModTime(com.w) ?? 0 };
 };
 
 export const mapCmExportableToImportableCom = (com: OmitOwn<IExportableCom, 'm'>): IServerSideCom => {

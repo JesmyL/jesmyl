@@ -3,8 +3,8 @@ import { useCurrentAppSetter } from '#basis/lib/useCurrentAppSetter';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { Metronome } from '#widgets/metronome';
-import { useCmCom, useCmComSelectedList } from '$cm/entities/com';
-import { cmComLastOpenComwAtom, cmComSelectedComwsAtom } from '$cm/entities/index';
+import { useCmComSelectedList } from '$cm/entities/com';
+import { cmComSelectedComwsAtom } from '$cm/entities/index';
 import { CmComSharedListActionInterpretator } from '$cm/features/com';
 import { cmAppActions } from '$cm/shared/const';
 import { cmConstantsConfigAtom } from '$cm/shared/state';
@@ -25,8 +25,6 @@ export const CmApp = () => {
   useCurrentAppSetter('cm');
   const { maxSelectedComsCount } = useAtomValue(cmConstantsConfigAtom);
   const checkAccess = useCheckUserAccessRightsInScope();
-  const ccomw = useAtomValue(cmComLastOpenComwAtom);
-  const ccom = useCmCom(ccomw);
 
   const { selectedComws } = useCmComSelectedList();
 
@@ -63,12 +61,7 @@ export const CmApp = () => {
 
       <CmComSharedListActionInterpretator comListOnActionAtom={comListOnActionAtom} />
 
-      {ccom && (
-        <Metronome
-          meterSize={ccom.meterSize}
-          bpm={ccom.beatsPerMinute}
-        />
-      )}
+      <Metronome />
     </>
   );
 };

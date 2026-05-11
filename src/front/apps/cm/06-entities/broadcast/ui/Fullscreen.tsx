@@ -105,7 +105,7 @@ export const CmBroadcastFullscreen = () => {
   );
 };
 
-const closeInfoAnimation = keyframes`${css`
+const closeInfoAnimation = keyframes`
   from {
     margin-left: 0px;
   }
@@ -130,7 +130,7 @@ const closeInfoAnimation = keyframes`${css`
   to {
     margin-left: 0px;
   }
-`}`;
+`;
 
 const StyledContainer = styled.div<{ $isShowInfo: boolean }>`
   ${props =>

@@ -6,9 +6,7 @@ import { EditableComOrder } from '../EditableComOrder';
 import { EditableComParseBlocks } from './lib/31-ParseBlocks';
 
 export class EditableCom extends EditableComParseBlocks {
-  orderConstructor(me: ICmComOrderExportableMe<any>) {
-    return new EditableComOrder(me, this);
-  }
+  orderConstructor = (me: ICmComOrderExportableMe<any>) => new EditableComOrder(me, this);
 
   replaceBemoles(coli: number) {
     if (this.chords === undefined) return;

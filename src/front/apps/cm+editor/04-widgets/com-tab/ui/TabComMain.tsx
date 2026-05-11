@@ -2,10 +2,10 @@ import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRi
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { MyLib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
-import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { CmEditorTextCorrectMessages } from '$cm+editor/entities/text';
+import { CmEditorComEditBpm } from '$cm+editor/features/ComEditBpm';
 import { CmEditorComEditTransposition } from '$cm+editor/features/ComEditTransposition';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
@@ -16,8 +16,7 @@ import { useState } from 'react';
 import { CmComIntensityLevel } from 'shared/api';
 import { cmComIntensityLevelTitleDict } from 'shared/const/cm/cmComDriveLevelTitleDict';
 import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
-import { CmComMetricNums } from 'shared/model/cm/com-metric-nums';
-import { emptyFunc } from 'shared/utils';
+import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 
 export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
@@ -48,13 +47,9 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
       />
       <CmEditorTextCorrectMessages corrects={nameCorrects} />
 
-      <InputWithLoadingIcon
-        icon="DashboardSpeed02"
-        label="Ударов в минуту"
-        type="tel"
-        defaultValue={'' + (ccom.beatsPerMinute ?? '')}
-        onChanged={value => cmEditComClientTsjrpcMethods.setBpM({ comw: ccom.wid, value: +value })}
-        onInput={emptyFunc}
+      <CmEditorComEditBpm
+        def={ccom.beatsPerMinute}
+        onChange={value => cmEditComClientTsjrpcMethods.setBpM({ comw: ccom.wid, value })}
       />
       <Dropdown
         label={
@@ -63,16 +58,12 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
             Размерность
           </>
         }
-        id={ccom.meterSize}
-        items={
-          MyLib.entries(cmComMetricNumTitles).map(([idStr, title]) => ({
-            id: +idStr,
-            title,
-          })) as DropdownItem<CmComMetricNums>[]
-        }
-        onSelectId={value => {
-          cmEditComClientTsjrpcMethods.setMeterSize({ comw: ccom.wid, value });
-        }}
+        id={ccom.meterSize ?? CmComMetricNum.Four}
+        items={MyLib.entries(cmComMetricNumTitles).map(([idStr, title]) => ({
+          id: +idStr,
+          title,
+        }))}
+        onSelectId={value => cmEditComClientTsjrpcMethods.setMeterSize({ comw: ccom.wid, value })}
       />
       <Dropdown
         label={
@@ -118,9 +109,9 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
             <span className="text-x7">{ccom.isBemoled ? 'Бемольная' : 'Диезная'}</span> песня
           </>
         }
-        onClick={() => {
-          cmEditComClientTsjrpcMethods.makeBemoled({ comw: ccom.wid, value: ccom.isBemoled === 1 ? 0 : 1 });
-        }}
+        onClick={() =>
+          cmEditComClientTsjrpcMethods.makeBemoled({ comw: ccom.wid, value: ccom.isBemoled === 1 ? 0 : 1 })
+        }
       />
       {checkAccess('cm', 'COM', 'D') && (
         <TheIconButton
@@ -132,9 +123,9 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
             </>
           }
           postfix="Удалить песню"
-          onClick={async () => {
+          onClick={() => {
             removedCompositionsAtom.set(prev => ({ ...prev, [ccom.wid]: ccom.name }));
-            cmEditComClientTsjrpcMethods.remove({ comw: ccom.wid });
+            return cmEditComClientTsjrpcMethods.remove({ comw: ccom.wid });
           }}
         />
       )}

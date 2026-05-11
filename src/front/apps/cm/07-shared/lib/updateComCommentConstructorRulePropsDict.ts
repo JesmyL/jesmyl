@@ -43,7 +43,7 @@ export const updateCmComCommentConstructorRulePropsDict = async (
   } else {
     let isFound = false;
     const icom = await cmIDB.tb.coms.get(comw);
-    const orders = icom ? new CmCom(icom)?.orders : null;
+    const orders = icom ? new CmCom(icom, null)?.orders : null;
 
     if (orders) {
       const usedOrdKindsSet = new Set<CmComBlockKindKey>();

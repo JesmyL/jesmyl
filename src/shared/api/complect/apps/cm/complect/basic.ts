@@ -1,7 +1,7 @@
 import { CmCatKind } from '$cm/entities/cat/model/Cat.model';
 import { StrRegExp } from 'regexpert';
 import { CmBroadcastSlideGrouperKind } from 'shared/model/cm/broadcast';
-import { CmComMetricNums } from 'shared/model/cm/com-metric-nums';
+import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 import {
   CmCatWid,
@@ -109,6 +109,9 @@ export type IFixedCom = { w: CmComWid } & Partial<{
 export type IExportableComInterpretationSimpleValues = {
   /** уровень транспозиции песни */
   p?: number;
+
+  /** ударов в минуту */
+  bpm?: number;
 };
 
 export type IExportableOrderInterpretation = {
@@ -138,9 +141,6 @@ export type IExportableCom = IExportableComInterpretationSimpleValues & {
   /** бемольная ли песня */
   b?: num;
 
-  /** ударов в минуту */
-  bpm?: number;
-
   /** язык песни */
   l?: number;
 
@@ -160,7 +160,7 @@ export type IExportableCom = IExportableComInterpretationSimpleValues & {
   o?: IExportableOrder[];
 
   /** размерность песни */
-  s?: CmComMetricNums;
+  s?: CmComMetricNum;
 
   /** интенсивность песни */
   d?: CmComIntensityLevel;

@@ -7,7 +7,7 @@ import { Atom, useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
-import { CmComOrderWid, CmComWid, IExportableCom } from 'shared/api';
+import { CmComOrderWid, CmComWid, IExportableCom, IExportableComInterpretation } from 'shared/api';
 import { itNNil } from 'shared/utils';
 import { takeCorrectComIndex, takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
 import { CmComWordFounds } from '../model/com';
@@ -19,7 +19,7 @@ const sortItemsByRate = (a: { rate: number }, b: { rate: number }) => a.rate - b
 export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(props: {
   comsMapper?: ((coms: CmCom[], term: string) => Promise<CmCom[]>) | null;
   coms?: CmCom[];
-  Constructor: new (icom: IExportableCom) => ComConstructor;
+  Constructor: new (icom: IExportableCom, intp: IExportableComInterpretation | nil) => ComConstructor;
   termAtom: Atom<string>;
   children: (props: {
     term: string;
@@ -77,7 +77,7 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
 
     if (term === '404') return result;
 
-    const comList = props.coms?.map(com => new props.Constructor(com.top)) ?? [];
+    const comList = props.coms?.map(com => new props.Constructor(com.top, com.intp)) ?? [];
     if (!term) {
       result.coms = comList;
       return result;

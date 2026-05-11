@@ -22,13 +22,8 @@ export class CmComOrders extends CmComBasic {
     header: () => '',
   });
 
-  orderConstructor(me: ICmComOrderExportableMe<CmComOrder>) {
-    return new CmComOrder(me, this as never);
-  }
-
-  visibleOrders = () => {
-    return this.orders?.filter((ord: CmComOrder) => ord.isVisibleOrd());
-  };
+  orderConstructor = (me: ICmComOrderExportableMe<CmComOrder>) => new CmComOrder(me, this as never);
+  visibleOrders = () => this.orders?.filter((ord: CmComOrder) => ord.isVisibleOrd());
 
   getOrderBySelector = (ordSelector: CmComOrderSelector) => {
     let visibleOrdi = -1;

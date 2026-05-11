@@ -96,10 +96,10 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
 
         updateConstantsConfig: async ({ config }) => {
           cmConstantsConfigFileStore.updateValue(prev => ({ ...prev, ...config }));
-          cmShareServerTsjrpcMethods.refreshConstantsConfig(
+          cmShareServerTsjrpcMethods.refreshConstConfig(
             {
               config,
-              modifiedAt: cmConstantsConfigFileStore.fileModifiedAt(),
+              mod: cmConstantsConfigFileStore.fileModifiedAt(),
             },
             tool => !!(tool && tool.version > 1039),
           );

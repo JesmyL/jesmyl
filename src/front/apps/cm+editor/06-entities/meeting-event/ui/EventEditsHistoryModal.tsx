@@ -28,7 +28,7 @@ export const CmEditorMeetingEventEditsHistoryModalInner = ({
     null,
     async ({ aborter }) => {
       if (mylib.isNaN(schw) || mylib.isNaN(dayi)) return null;
-      return cmEditComExternalsClientTsjrpcMethods.getScheduleEventHistory({ schw, dayi }, { aborter });
+      return cmEditComExternalsClientTsjrpcMethods.getSchEvHistory({ schw, dayi }, { aborter });
     },
     [schw, dayi],
   );
@@ -78,7 +78,7 @@ export const CmEditorMeetingEventEditsHistoryModalInner = ({
                   className="text-xKO"
                   confirm="Удалить эту запись?"
                   onSend={async () => {
-                    const packs = await cmEditComExternalsClientTsjrpcMethods.removeScheduleEventHistoryItem({
+                    const packs = await cmEditComExternalsClientTsjrpcMethods.removeSchEvHistoryItem({
                       schw,
                       dayi,
                       writedAt: pack.w,

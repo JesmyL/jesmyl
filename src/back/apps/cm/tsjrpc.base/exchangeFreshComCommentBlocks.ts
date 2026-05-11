@@ -1,4 +1,4 @@
-import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
+import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import {
   CmComCommentBlockAnySelector,
   CmComCommentBlockDict,
@@ -119,4 +119,4 @@ export const cmServerTsjrpcBaseExchangeFreshComCommentBlocks = {
 
     return { value: resultComments };
   },
-} satisfies Partial<ConstructorParameters<typeof TsjrpcBaseServer<CmTsjrpcModel>>[0]['methods']>;
+} satisfies ServerTsjrpcSatisfy<CmTsjrpcModel>;

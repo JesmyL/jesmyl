@@ -3,7 +3,7 @@ import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { CmCatWid, CmComWid, IExportableCat, IExportableCom, IServerSideCom } from 'shared/api';
 import { CmEditCatTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-cat.tsjrpc.model';
 import { smylib } from 'shared/utils';
-import { catsFileStore, comsDirStore } from './file-stores';
+import { catsFileStorage, comsDirStorage } from './file-stores';
 import { cmShareServerTsjrpcMethods } from './tsjrpc.shares';
 
 export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBaseServer<CmEditCatTsjrpcModel> {
@@ -54,7 +54,7 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
 
 function getCmComNameInBrackets(comScalar: CmComWid | IServerSideCom | IExportableCom) {
   if (smylib.isNum(comScalar)) {
-    const com = comsDirStore.getItem(comScalar);
+    const com = comsDirStorage.getItem(comScalar);
     if (com == null) return '[Неизвестная песня]';
     return `"${com.n}"`;
   }
@@ -66,7 +66,7 @@ function modifyCat<Props extends { catw: CmCatWid }, Tools>(
   modifier: (cat: IExportableCat, props: Props, tools: Tools) => string | null,
 ) {
   return async (props: Props, tools: Tools) => {
-    const cat = catsFileStore.getValue().find(cat => cat.w === props.catw);
+    const cat = catsFileStorage.getValue().find(cat => cat.w === props.catw);
 
     if (cat == null) throw new Error('Cat is not found');
 
@@ -74,7 +74,7 @@ function modifyCat<Props extends { catw: CmCatWid }, Tools>(
 
     cat.m = Date.now();
     cmShareServerTsjrpcMethods.editedCat({ cat }, null);
-    catsFileStore.saveValue();
+    catsFileStorage.saveValue();
 
     return { value: cat, description };
   };

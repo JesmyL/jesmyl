@@ -6,30 +6,32 @@ import {
   CmComWid,
   CmComWidRefGroupDict,
   CmComWidRefGroupId,
-  ComsInSchEvent,
 } from 'shared/api';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
 import { itNumSort, SMyLib, smylib } from 'shared/utils';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
-import { schedulesDirStore } from '../index/schedules/file-stores';
-import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from './client-selectors-by-visit';
-import { makeCmComHttpLinkFromNumLead, makeCmComNumLeadLinkFromHttp } from './complect/com-http-links';
+import { schedulesDirStore } from '../../index/schedules/file-stores';
+import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from '../client-selectors-by-visit';
+import { makeCmComHttpLinkFromNumLead, makeCmComNumLeadLinkFromHttp } from '../complect/com-http-links';
 import {
   cmComAudioMarkPacksFileStore,
   cmComWidRefGroupDictFileStore,
-  comsDirStore,
+  comsDirStorage,
   comsInSchEventDirStorage,
   comsInSchEventHistoryDirStorage,
-} from './file-stores';
-import { cmShareServerTsjrpcMethods } from './tsjrpc.shares';
+} from '../file-stores';
+import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
+import { cmEditComExternalsTsjrpcInterpretations } from './interpretations';
 
 export const cmEditComExternalsTsjrpcBaseServer =
   new (class CmEditComExternals extends TsjrpcBaseServer<CmEditComExternalsTsjrpcModel> {
     constructor() {
       super({
-        scope: 'CmEditComExternals',
+        scope: 'CmEditComExt',
         methods: {
-          setInScheduleEvent: async ({ schw, dayi, eventMi, list, fio }, { auth }) => {
+          ...cmEditComExternalsTsjrpcInterpretations(),
+
+          setInSchEv: async ({ schw, dayi, eventMi, list, fio }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'U')) throw '';
 
             const pack = await comsInSchEventDirStorage.getOrCreateItem(schw);
@@ -52,11 +54,8 @@ export const cmEditComExternalsTsjrpcBaseServer =
             const mod = comsInSchEventDirStorage.saveItem(pack.schw);
             comsInSchEventHistoryDirStorage.saveItem(pack.schw);
 
-            cmShareServerTsjrpcMethods.refreshScheduleEventComPacks(
-              { packs: [pack], modifiedAt: mod ?? Date.now() },
-              null,
-            );
-            const coms = comsDirStore.getAllItems().filter(com => !com.isRemoved);
+            cmShareServerTsjrpcMethods.refreshSchEvComPacks({ packs: [pack], mod: mod ?? Date.now() }, null);
+            const coms = comsDirStorage.getAllItems().filter(com => !com.isRemoved);
 
             return {
               description:
@@ -71,14 +70,14 @@ export const cmEditComExternalsTsjrpcBaseServer =
             };
           },
 
-          getScheduleEventHistory: async ({ schw, dayi }, { auth }) => {
+          getSchEvHistory: async ({ schw, dayi }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'R')) throw '';
 
             const history = comsInSchEventHistoryDirStorage.getItem(schw);
 
             return { value: history?.d?.[dayi] ?? [] };
           },
-          getScheduleEventHistoryStatistic: async ({ schw, dayi }, { auth }) => {
+          getSchEvHistoryStatistic: async ({ schw, dayi }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'R')) throw '';
 
             const comwCount = {} as Record<CmComWid, number>;
@@ -97,7 +96,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
             return { value: { comwCount, totalCount } };
           },
 
-          removeScheduleEventHistoryItem: async ({ schw, dayi, writedAt }) => {
+          removeSchEvHistoryItem: async ({ schw, dayi, writedAt }) => {
             const history = comsInSchEventHistoryDirStorage.getItem(schw);
             const itemi = history?.d?.[dayi]?.findIndex(item => item.w === writedAt);
 
@@ -131,7 +130,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
               smylib.keys(cMarks).forEach(comw => {
                 comMarks[comw] = { 0: '' };
                 if (description) {
-                  const com = comsDirStore.getItem(+comw);
+                  const com = comsDirStorage.getItem(+comw);
                   if (com) comNames.push(com.n);
                 }
               });
@@ -229,51 +228,6 @@ export const cmEditComExternalsTsjrpcBaseServer =
             return { value: { cMarks: allMarkPacks[numLeadSrc].cMarks, src }, description: null };
           },
 
-          // interpretations
-          switchComOrdVisiblityInterpretation: async ({ comw, ordw, schw, isOrdInvisible }, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'U')) throw '';
-
-            const pack = await comsInSchEventDirStorage.getOrCreateItem(schw);
-            pack.intp ??= {};
-            const comIntp = (pack.intp[comw] ??= {});
-            const ordsIntp = (comIntp.o ??= {});
-            const ordInterpretation = (ordsIntp[ordw] ??= {});
-
-            if (ordInterpretation.v == null || ordInterpretation.v === 1) ordInterpretation.v = 0;
-            else if (isOrdInvisible) ordInterpretation.v = 1;
-            else delete ordInterpretation.v;
-
-            if (!smylib.keys(ordInterpretation).length) delete ordsIntp[ordw];
-            if (!smylib.keys(ordsIntp).length) delete comIntp.o;
-
-            deleteEmptyComInterpretation(pack, comw);
-
-            const mod = comsInSchEventDirStorage.saveItem(schw);
-
-            if (mod) {
-              cmShareServerTsjrpcMethods.refreshScheduleEventComPacks({ packs: [pack], modifiedAt: mod }, null);
-            }
-          },
-
-          setComTonInterpretation: async ({ comw, schw, ton }, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'U')) throw '';
-
-            const pack = await comsInSchEventDirStorage.getOrCreateItem(schw);
-            pack.intp ??= {};
-            const comIntp = (pack.intp[comw] ??= {});
-
-            comIntp.p = ton;
-            if (!comIntp.p) delete comIntp.p;
-
-            deleteEmptyComInterpretation(pack, comw);
-
-            const mod = comsInSchEventDirStorage.saveItem(schw);
-
-            if (mod) {
-              cmShareServerTsjrpcMethods.refreshScheduleEventComPacks({ packs: [pack], modifiedAt: mod }, null);
-            }
-          },
-
           switchComwRefs: async ({ comw, withComw }) => {
             let description = '';
             let refGroups: CmComWidRefGroupDict | nil;
@@ -283,8 +237,8 @@ export const cmEditComExternalsTsjrpcBaseServer =
               const comwRefGroup = refs[comw];
               const withComwRefGroup = refs[withComw];
 
-              const com = comsDirStore.getItem(comw);
-              const withCom = comsDirStore.getItem(withComw);
+              const com = comsDirStorage.getItem(comw);
+              const withCom = comsDirStorage.getItem(withComw);
               const allGroups = smylib.values(refs);
 
               if (comwRefGroup != null) {
@@ -335,10 +289,3 @@ export const cmEditComExternalsTsjrpcBaseServer =
       });
     }
   })();
-
-const deleteEmptyComInterpretation = (pack: ComsInSchEvent, comw: CmComWid) => {
-  if (pack.intp == null) return;
-
-  if (!smylib.keys(pack.intp[comw]).length) delete pack.intp[comw];
-  if (!smylib.keys(pack.intp).length) delete pack.intp;
-};

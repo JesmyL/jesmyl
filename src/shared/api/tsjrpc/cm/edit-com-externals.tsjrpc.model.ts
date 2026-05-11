@@ -10,7 +10,7 @@ import {
 import { IScheduleWidgetDayEventMi, IScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
 
 export type CmEditComExternalsTsjrpcModel = {
-  setInScheduleEvent: (args: {
+  setInSchEv: (args: {
     schw: IScheduleWidgetWid;
     dayi: number;
     eventMi: IScheduleWidgetDayEventMi;
@@ -18,22 +18,26 @@ export type CmEditComExternalsTsjrpcModel = {
     fio: string;
   }) => void;
 
-  switchComOrdVisiblityInterpretation: (args: {
+  /** ord visibility interpretation */
+  ordVisIntp: (args: {
     schw: IScheduleWidgetWid;
     comw: CmComWid;
     ordw: CmComOrderWid;
-    isOrdInvisible: boolean;
+    isInv: boolean;
   }) => void;
 
-  setComTonInterpretation: (args: { schw: IScheduleWidgetWid; comw: CmComWid; ton: number }) => void;
+  /** com transposition interpretation */
+  tonIntp: (args: { schw: IScheduleWidgetWid; comw: CmComWid; ton: number }) => void;
+  /** com bpm interpretation */
+  bpmIntp: (args: { schw: IScheduleWidgetWid; comw: CmComWid; bpm: number }) => void;
 
-  getScheduleEventHistory: (args: { schw: IScheduleWidgetWid; dayi: number }) => ScheduleComPackHistoryItem[];
-  getScheduleEventHistoryStatistic: (args: { schw: IScheduleWidgetWid; dayi: number }) => {
+  getSchEvHistory: (args: { schw: IScheduleWidgetWid; dayi: number }) => ScheduleComPackHistoryItem[];
+  getSchEvHistoryStatistic: (args: { schw: IScheduleWidgetWid; dayi: number }) => {
     comwCount: Record<CmComWid, number>;
     totalCount: number;
   };
 
-  removeScheduleEventHistoryItem: (args: {
+  removeSchEvHistoryItem: (args: {
     schw: IScheduleWidgetWid;
     dayi: number;
     writedAt: number;

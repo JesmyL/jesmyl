@@ -1,20 +1,22 @@
 import { IExportableCom, IExportableComInterpretation } from 'shared/api';
 import { CmBroadcastSlideGrouperKind } from 'shared/model/cm/broadcast';
+import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { cmComLanguages } from 'shared/utils/cm/com/const';
 import { BaseNamed } from '../../BaseNamed';
 
 export class CmComBasic extends BaseNamed<IExportableCom> {
   initial: Partial<IExportableCom & { pos: number }>;
   ton?: number;
-  intp: IExportableComInterpretation | nil;
 
-  constructor(top: IExportableCom, interpretation?: IExportableComInterpretation | nil) {
+  constructor(
+    top: IExportableCom,
+    public intp: IExportableComInterpretation | nil,
+  ) {
     super(top);
-    this.intp = interpretation;
 
     this.initial = {};
 
-    this.transPosition = top.ton ?? interpretation?.p ?? top.p;
+    this.transPosition = top.ton ?? intp?.p ?? top.p;
   }
 
   get mod() {
@@ -29,7 +31,7 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
   }
 
   get beatsPerMinute() {
-    return this.getBasic('bpm');
+    return takeCorrectMetronomeBpm(this.intp?.bpm ?? this.getBasic('bpm'));
   }
 
   get meterSize() {

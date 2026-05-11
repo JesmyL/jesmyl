@@ -8,7 +8,7 @@ import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
 import { CmBroadcastShowChordedSlideMode } from '$cm/shared/model';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
-import { css, keyframes } from '@emotion/react';
+import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useRef } from 'react';
@@ -112,7 +112,7 @@ export const CmBroadcastScreen = (props: Props) => {
   );
 };
 
-const simpleAnimation = keyframes`${css`
+const simpleAnimation = keyframes`
   from {
     opacity: 0.1;
     transform: translate(calc(var(--direction) * 1vw), 0);
@@ -122,9 +122,9 @@ const simpleAnimation = keyframes`${css`
     opacity: 1;
     transform: translate(0, 0);
   }
-`}`;
+`;
 
-const lineEnterAnimation = keyframes`${css`
+const lineEnterAnimation = keyframes`
   from {
     opacity: 0.1;
   }
@@ -132,9 +132,9 @@ const lineEnterAnimation = keyframes`${css`
   to {
     opacity: 1;
   }
-`}`;
+`;
 
-const lineFlyAnimation = keyframes`${css`
+const lineFlyAnimation = keyframes`
   from {
     translate: calc(var(--direction) * -1vw) 0;
   }
@@ -142,7 +142,7 @@ const lineFlyAnimation = keyframes`${css`
   to {
     translate: calc(var(--direction) * 1vw) 0;
   }
-`}`;
+`;
 
 const StyledFontSizeContain = styled(FontSizeContain)`
   line-height: 1;

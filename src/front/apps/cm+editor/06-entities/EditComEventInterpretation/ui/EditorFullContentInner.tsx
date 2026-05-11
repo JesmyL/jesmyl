@@ -1,4 +1,5 @@
 import { Button } from '#shared/components';
+import { CmEditorComEditBpm } from '$cm+editor/features/ComEditBpm';
 import { CmEditorComEditTransposition } from '$cm+editor/features/ComEditTransposition';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { ChordVisibleVariant, cmIDB, TheCmComOrder, useCmCom } from '$cm/ext';
@@ -30,11 +31,14 @@ export const CmEditorEditComEventInterpretationFullContentInner = ({
 
       {com && (
         <>
+          <CmEditorComEditBpm
+            def={com.beatsPerMinute}
+            onChange={bpm => cmEditComExternalsClientTsjrpcMethods.bpmIntp({ comw: com.wid, bpm, schw })}
+          />
+
           <CmEditorComEditTransposition
             ccom={com}
-            onChange={ton =>
-              cmEditComExternalsClientTsjrpcMethods.setComTonInterpretation({ comw: com.wid, ton, schw })
-            }
+            onChange={ton => cmEditComExternalsClientTsjrpcMethods.tonIntp({ comw: com.wid, ton, schw })}
           />
 
           {com.orders?.map((ord, ordi) => {
@@ -65,11 +69,11 @@ export const CmEditorEditComEventInterpretationFullContentInner = ({
                         <Button
                           icon={isInvisible ? 'ViewOff' : 'View'}
                           onClick={() =>
-                            cmEditComExternalsClientTsjrpcMethods.switchComOrdVisiblityInterpretation({
+                            cmEditComExternalsClientTsjrpcMethods.ordVisIntp({
                               comw,
                               ordw: ord.wid,
                               schw,
-                              isOrdInvisible: !ord.isVisible,
+                              isInv: !ord.isVisible,
                             })
                           }
                         />

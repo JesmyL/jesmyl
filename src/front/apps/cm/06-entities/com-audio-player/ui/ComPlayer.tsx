@@ -1,5 +1,5 @@
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
-import { css, keyframes } from '@emotion/react';
+import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -53,7 +53,7 @@ export const CmComAudioPlayer = ({ audioLinks, timeRender, addRender, className 
   );
 };
 
-const loadAudioAnimation = keyframes`${css`
+const loadAudioAnimation = keyframes`
   from {
     transform: scale(0.2) rotate(0);
   }
@@ -61,7 +61,7 @@ const loadAudioAnimation = keyframes`${css`
   to {
     transform: scale(0.2) rotate(360deg);
   }
-`}`;
+`;
 
 export const StyledCmComAudioPlayer = styled.div`
   --com-player-size: 30px;

@@ -7,7 +7,7 @@ import { makeRegExp } from 'regexpert';
 import { hosts, HttpNumLeadLink } from 'shared/api';
 import { WebSocketServer } from 'ws';
 import { makeCmComHttpLinkFromNumLead } from './apps/cm/complect/com-http-links';
-import { catsFileStore, comsDirStore } from './apps/cm/file-stores';
+import { catsFileStorage, comsDirStorage } from './apps/cm/file-stores';
 import { schedulesDirStore } from './apps/index/schedules/file-stores';
 import { tglogger } from './sides/telegram-bot/log/log-bot';
 
@@ -93,7 +93,7 @@ export const startExpressRouting = (wsServer: WebSocketServer) => {
           externalUrl = makeCmComHttpLinkFromNumLead(trackLink);
         } else if (req.url.startsWith(audioPathPrefix)) {
           const [comwStr, num] = req.url.slice(audioPathPrefix.length).split(makeRegExp('/\\.mp3|_/'));
-          const com = comsDirStore.getItem(+comwStr);
+          const com = comsDirStorage.getItem(+comwStr);
 
           if (!com?.al?.length) return res.status(404);
 
@@ -102,7 +102,7 @@ export const startExpressRouting = (wsServer: WebSocketServer) => {
 
           ogDescription = `${com.n}\n`;
 
-          const cats = catsFileStore.getValue();
+          const cats = catsFileStorage.getValue();
 
           cats.forEach(cat => {
             if (cat.d?.[com.w]) ogDescription += `\n${cat.n} ${cat.d[com.w]}`;
@@ -157,11 +157,11 @@ export const startExpressRouting = (wsServer: WebSocketServer) => {
       try {
         const comwMatch = req.url.match(makeRegExp('/\\bcomw=(\\d+(?:\\.\\d+)?)/'));
         if (comwMatch !== null && +comwMatch[1]) {
-          const com = comsDirStore.getItem(+comwMatch[1]);
+          const com = comsDirStorage.getItem(+comwMatch[1]);
 
           if (com) {
             descriptionFromSearchParams += `\n\n${com.n}`;
-            const cats = catsFileStore.getValue();
+            const cats = catsFileStorage.getValue();
             let categories = '';
 
             cats.forEach(cat => {

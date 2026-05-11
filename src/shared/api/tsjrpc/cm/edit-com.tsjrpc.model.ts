@@ -1,6 +1,6 @@
 import { CmComIntensityLevel, CmComWid, HttpNumLeadLink, IExportableCom } from 'shared/api/complect/apps';
 import { CmBroadcastSlideGrouperKindSingleValue, CmBroadcastSlideGrouperOrdCombiner } from 'shared/model/cm/broadcast';
-import { CmComMetricNums } from 'shared/model/cm/com-metric-nums';
+import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 
 type SimpleComValueSetter<Value> = (args: { comw: CmComWid; value: Value }) => IExportableCom;
 
@@ -10,7 +10,7 @@ export type CmEditComTsjrpcModel = {
   rename: SimpleComValueSetter<string>;
   destroy: (args: { comw: CmComWid }) => string;
   setBpM: SimpleComValueSetter<number>;
-  setMeterSize: SimpleComValueSetter<CmComMetricNums>;
+  setMeterSize: SimpleComValueSetter<CmComMetricNum>;
   changeLanguage: SimpleComValueSetter<number>;
   changeDrive: SimpleComValueSetter<CmComIntensityLevel>;
   changeTon: SimpleComValueSetter<number>;

@@ -18,7 +18,7 @@ export const CmEditorMeetingEventEditsHistoryStatisticModalInner = ({ dayi, schw
     undefined,
     async ({ aborter }, initialValue) => {
       if (mylib.isNaN(schw) || mylib.isNaN(dayi)) return initialValue;
-      return cmEditComExternalsClientTsjrpcMethods.getScheduleEventHistoryStatistic({ schw, dayi }, { aborter });
+      return cmEditComExternalsClientTsjrpcMethods.getSchEvHistoryStatistic({ schw, dayi }, { aborter });
     },
     [schw, dayi],
   );

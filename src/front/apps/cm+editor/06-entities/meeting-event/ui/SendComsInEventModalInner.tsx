@@ -38,7 +38,7 @@ export const CmEditorMeetingEventSendComsModalInner = ({
           disabledReason="Этот список уже загружен"
           onSuccess={openAtom.reset}
           onSend={() =>
-            cmEditComExternalsClientTsjrpcMethods.setInScheduleEvent({
+            cmEditComExternalsClientTsjrpcMethods.setInSchEv({
               schw,
               dayi,
               eventMi,
