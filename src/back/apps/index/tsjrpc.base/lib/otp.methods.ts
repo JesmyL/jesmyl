@@ -1,11 +1,11 @@
 import { getBibleTranslateTexts } from 'back/complect/lib/make-bible-texts';
+import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { tokenSecretFileStore } from 'back/complect/soki/file-stores';
 import { makeAuthFromEmail, makeLoginFromEmail } from 'back/sides/emailer/lib/makeEmailLogin';
 import { sendEmailMessage } from 'back/sides/emailer/lib/sendEmailMessage';
 import { EmailerAuthConfigKey } from 'back/sides/emailer/model';
 import { logTelegramBot, tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { postJRPCMessage, PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
-import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import jwt from 'jsonwebtoken';
 import { makeRegExp } from 'regexpert';
 import { LocalSokiAuth } from 'shared/api';
@@ -258,4 +258,4 @@ export const otpTSJRPCMethods = {
       logScope: PostJRPCMessageScope.Support,
     };
   },
-} satisfies Partial<ConstructorParameters<typeof TsjrpcBaseServer<IndexTsjrpcModel>>[0]['methods']>;
+} satisfies ServerTsjrpcSatisfy<IndexTsjrpcModel>;
