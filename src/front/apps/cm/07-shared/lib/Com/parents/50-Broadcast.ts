@@ -28,25 +28,19 @@ const enum RuleKind {
 }
 
 export class CmComBroadcast extends CmComTexts {
-  groupSlideListByKind = (groupedLines: CmBroadcastGroupedSlide[] | und): CmBroadcastMonolineSlide[] => {
-    return (
-      groupedLines
-        ?.map(({ slides, ord }, blocki) => {
-          return slides.map((slides): CmBroadcastMonolineSlide => {
-            const slide = slides[0];
-
-            return {
-              ord,
-              blocki,
-              lines: slides.map(slide => slide.lines.join('\n')),
-              fromLinei: slide.fromLinei,
-              toLinei: slide.fromLinei + (slides.filter(line => !line.lines[0]?.startsWith('|')).length || 1),
-            };
-          });
-        })
-        .flat() ?? []
-    );
-  };
+  groupSlideListByKind = (groupedLines: CmBroadcastGroupedSlide[] | und): CmBroadcastMonolineSlide[] =>
+    groupedLines
+      ?.map(({ slides, ord }) =>
+        slides.map((slides): CmBroadcastMonolineSlide => {
+          return {
+            ord,
+            lines: slides.map(slide => slide.lines.join('\n')),
+            fromLinei: CmComTexts.takeLineiFromHeapLine(slides[0]?.lines?.[0] ?? ''),
+            toLinei: CmComTexts.takeLineiFromHeapLine(slides.at(-1)?.lines?.at(-1) ?? '') + 1,
+          };
+        }),
+      )
+      .flat() ?? [];
 
   groupSlideLinesByKind = (
     monolineSlides: CmBroadcastMonolineSlide[][],

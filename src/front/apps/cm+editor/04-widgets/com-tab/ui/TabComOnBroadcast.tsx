@@ -21,7 +21,7 @@ export const CmEditorComTabComOnBroadcast = ({ ccom }: { ccom: EditableCom }) =>
   const textsWithNumeredLines = ccom.makeExpandedSolidSlides().map((slides): CmBroadcastMonolineSlide[] =>
     slides.map((slide, slidei) => ({
       ...slide,
-      lines: CmCom.makeEachLineFirstLetterUpperCase(slide.lines).map(line => `${slidei + 1}: ${line}`),
+      lines: CmCom.prepareEachTextLine(slide.lines).map(line => `${slidei + 1}: ${line}`),
     })),
   );
 

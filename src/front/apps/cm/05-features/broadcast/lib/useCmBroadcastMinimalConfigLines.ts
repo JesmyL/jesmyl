@@ -1,4 +1,5 @@
 import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
+import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { cmBroadcastCurrentSlideiAtom } from '$cm/entities/broadcast';
 import { useCmComCurrent } from '$cm/entities/com';
 import { cmConstantsConfigAtom } from '$cm/ext';
@@ -13,7 +14,7 @@ import { CmBroadcastMonolineSlide } from 'shared/model/cm/broadcast';
 export const useCmBroadcastMinimalConfigSlides = (selfConfigi: number) => {
   const currentSlidei = useAtomValue(cmBroadcastCurrentSlideiAtom);
   const com = useCmComCurrent();
-  const configs = useCmBroadcastScreenConfigs();
+  const configsRef = useActualRef(useCmBroadcastScreenConfigs());
   const showChordedSlideMode = useAtomValue(cmShowChordedSlideModeAtom);
 
   const { showFragmentSlidesBelow } = useAtomValue(cmConstantsConfigAtom);
@@ -27,12 +28,12 @@ export const useCmBroadcastMinimalConfigSlides = (selfConfigi: number) => {
 
     if (isCantShowFragments || com == null) return result;
 
-    result.minimalConfigi ||= configs.findIndex(config => config.pushKind === '1') + 1;
+    result.minimalConfigi ||= configsRef.current.findIndex(config => config.pushKind === '1') + 1;
     result.minimalConfigi ||= currentBroadcastConfigiAtom.get() + 1;
 
     result.minimalConfigi--;
 
-    const minimalConfig = configs[result.minimalConfigi];
+    const minimalConfig = configsRef.current[result.minimalConfigi];
 
     if (minimalConfig == null) return result;
 
@@ -47,59 +48,70 @@ export const useCmBroadcastMinimalConfigSlides = (selfConfigi: number) => {
     }
 
     return result;
-  }, [com, configs, isCantShowFragments]);
+  }, [com, configsRef, isCantShowFragments]);
 
-  const result = {
-    currentSlidei,
-    nextSlidei: currentSlidei + 1,
-    minimalSlides,
-    selfSlides: [] as (CmBroadcastMonolineSlide | nil)[],
-    selfConfig: configs[selfConfigi],
-    isFragments: false,
-    showChordedSlideMode,
-    com,
-  };
+  return useMemo(() => {
+    const result = {
+      currentSlidei,
+      nextSlidei: currentSlidei + 1,
+      minimalSlides,
+      selfSlides: [] as (CmBroadcastMonolineSlide | nil)[],
+      selfConfig: configsRef.current[selfConfigi],
+      isFragments: false,
+      showChordedSlideMode,
+      com,
+    };
 
-  if (com == null) return result;
+    if (com == null) return result;
 
-  if (isCantShowFragments || selfConfigi !== minimalConfigi) {
-    const currentGroupedTexts = com.groupSlideLinesByKind(
-      com.makeExpandedSolidSlides(),
-      configs[selfConfigi]?.pushKind === '2'
-        ? (com.broadcastPushKind('k2', null!) ?? com.broadcastPushKind('k'))
-        : com.broadcastPushKind('k'),
-    );
+    if (isCantShowFragments || selfConfigi !== minimalConfigi) {
+      const currentGroupedTexts = com.groupSlideLinesByKind(
+        com.makeExpandedSolidSlides(),
+        configsRef.current[selfConfigi]?.pushKind === '2'
+          ? (com.broadcastPushKind('k2', null!) ?? com.broadcastPushKind('k'))
+          : com.broadcastPushKind('k'),
+      );
 
-    const currentGroupedLines = (result.selfSlides = com.groupSlideListByKind(currentGroupedTexts));
+      const currentGroupedLines = (result.selfSlides = com.groupSlideListByKind(currentGroupedTexts));
 
-    if (isCantShowFragments) {
-      result.minimalSlides = result.selfSlides;
+      if (isCantShowFragments) {
+        result.minimalSlides = result.selfSlides;
+      } else {
+        const minimalFromLinei = minimalSlides[currentSlidei]?.fromLinei ?? 0;
+
+        result.currentSlidei = currentGroupedLines.findIndex(
+          ({ fromLinei, toLinei }) => minimalFromLinei >= fromLinei && minimalFromLinei < toLinei,
+        );
+      }
     } else {
-      const minimalFromLinei = minimalSlides[currentSlidei]?.fromLinei ?? 0;
+      result.currentSlidei = currentSlidei;
+      result.selfSlides = minimalSlides;
+    }
 
-      result.currentSlidei = currentGroupedLines.findIndex(
-        ({ fromLinei, toLinei }) => minimalFromLinei >= fromLinei && minimalFromLinei < toLinei,
+    if (!isCantShowFragments) result.isFragments = configsRef.current[selfConfigi]?.pushKind === '1';
+
+    const currentSlides = result.minimalSlides.length ? result.minimalSlides : result.selfSlides;
+
+    if (
+      (showChordedSlideMode === CmBroadcastShowChordedSlideMode.Hide ||
+        showChordedSlideMode === CmBroadcastShowChordedSlideMode.Pass) &&
+      currentSlides[result.nextSlidei] != null &&
+      !currentSlides[result.nextSlidei]?.ord.isRealText()
+    ) {
+      result.nextSlidei = currentSlides.findIndex(
+        (slide, slidei) => slidei > result.nextSlidei && slide?.ord.isRealText(),
       );
     }
-  } else {
-    result.currentSlidei = currentSlidei;
-    result.selfSlides = minimalSlides;
-  }
 
-  if (!isCantShowFragments) result.isFragments = configs[selfConfigi]?.pushKind === '1';
-
-  const currentSlides = result.minimalSlides.length ? result.minimalSlides : result.selfSlides;
-
-  if (
-    (showChordedSlideMode === CmBroadcastShowChordedSlideMode.Hide ||
-      showChordedSlideMode === CmBroadcastShowChordedSlideMode.Pass) &&
-    currentSlides[result.nextSlidei] != null &&
-    !currentSlides[result.nextSlidei]?.ord.isRealText()
-  ) {
-    result.nextSlidei = currentSlides.findIndex(
-      (slide, slidei) => slidei > result.nextSlidei && slide?.ord.isRealText(),
-    );
-  }
-
-  return result;
+    return result;
+  }, [
+    com,
+    configsRef,
+    currentSlidei,
+    isCantShowFragments,
+    minimalConfigi,
+    minimalSlides,
+    selfConfigi,
+    showChordedSlideMode,
+  ]);
 };

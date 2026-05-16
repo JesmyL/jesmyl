@@ -39,7 +39,7 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>({
     const { comw, tran, schw } = useSearch({ from: path }) as CmComOpenRouteProps;
     const { catw } = useParams({ from: path }) as { catw?: string };
     const com = useCmCom(comw, schw);
-    const comList = useComListPack();
+    const comListPack = useComListPack();
     const termAtom = takeCatTermAtom(catw ? +catw : CmCatWid.all);
     const term = useAtomValue(termAtom);
     const meterSize = com?.meterSize ?? CmComMetricNum.Four;
@@ -56,23 +56,21 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>({
       comw != null && term && !schw ? (
         <CmComWithComListSearchFilterInput
           Constructor={CmCom}
-          coms={comList.list}
+          coms={comListPack.list}
           termAtom={termAtom}
         >
-          {({ searchedComs, wordFounds }) =>
-            wordFounds[comw] ? (
-              <CmComWithSearchedWords wordFounds={wordFounds[comw]}>
-                <CmComCurrentComPackContext value={{ ...comList, list: searchedComs }}>
-                  {node}
-                </CmComCurrentComPackContext>
-              </CmComWithSearchedWords>
-            ) : (
-              <CmComCurrentComPackContext value={comList}>{node}</CmComCurrentComPackContext>
-            )
-          }
+          {({ searchedComs, wordFounds }) => (
+            <CmComCurrentComPackContext value={{ ...comListPack, list: searchedComs }}>
+              {wordFounds[comw] ? (
+                <CmComWithSearchedWords wordFounds={wordFounds[comw]}>{node}</CmComWithSearchedWords>
+              ) : (
+                node
+              )}
+            </CmComCurrentComPackContext>
+          )}
         </CmComWithComListSearchFilterInput>
       ) : (
-        <CmComCurrentComPackContext value={comList}>{node}</CmComCurrentComPackContext>
+        <CmComCurrentComPackContext value={comListPack}>{node}</CmComCurrentComPackContext>
       );
 
     return (

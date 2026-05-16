@@ -11,7 +11,6 @@ export type CmBroadcastSlideGrouperOrdCombiner = PRecord<`${CmComOrderWid}${'' |
 
 export type CmBroadcastMonolineSlide = {
   ord: CmComOrder;
-  blocki: number;
   lines: string[];
   fromLinei: number;
   toLinei: number;

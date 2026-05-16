@@ -25,7 +25,7 @@ export const CmBroadcastCurrentScreen = (props: BroadcastScreenProps & Partial<F
   const text =
     isFragments && isRealText
       ? selfSlides[currentSlidei]?.lines
-      : CmCom.makeEachLineFirstLetterUpperCase(selfSlides[currentSlidei]?.lines).join('\n');
+      : CmCom.prepareEachTextLine(selfSlides[currentSlidei]?.lines).join('\n');
   const switchDirection = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
 
   return (
@@ -33,9 +33,7 @@ export const CmBroadcastCurrentScreen = (props: BroadcastScreenProps & Partial<F
       {...props}
       cmConfig={currentConfig}
       text={text ?? ''}
-      nextText={CmCom.makeEachLineFirstLetterUpperCase(selfSlides[nextSlidei]?.lines, !isFragments).join(
-        isFragments ? ' ' : '\n',
-      )}
+      nextText={CmCom.prepareEachTextLine(selfSlides[nextSlidei]?.lines, !isFragments).join(isFragments ? ' ' : '\n')}
       isChorded={!isRealText}
       isNextChorded={!selfSlides[nextSlidei]?.ord.isRealText()}
       isVisible={isVisible}

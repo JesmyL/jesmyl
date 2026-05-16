@@ -76,12 +76,13 @@ export class CmComTexts extends CmComChords {
     return slides;
   };
 
-  static makeEachLineFirstLetterUpperCase = (lines: string[] | nil, firstLineLetterToUpperCase = true) => {
-    return lines == null
-      ? []
-      : firstLineLetterToUpperCase
-        ? lines.map(line => (line?.length ? capitalizeText(line) : line)).filter(itIt)
-        : lines;
+  static prepareEachTextLine = (lines: string[] | nil, firstLineLetterToUpperCase = true) => {
+    if (lines == null) return [];
+    lines = lines.map(line => line.slice(allStartDigits));
+
+    return firstLineLetterToUpperCase
+      ? lines.map(line => (line?.length ? capitalizeText(line) : line)).filter(itIt)
+      : lines;
   };
 
   makeExpandedSolidTextLines = (): CmBroadcastMonolineSlide[] => {
@@ -106,15 +107,11 @@ export class CmComTexts extends CmComChords {
           return ordLines
             .map(line => {
               totalLinei++;
-              let prevVert = '';
 
               return line.split(makeRegExp('/ *((?:/+&nbsp;)? *[|]) */')).map(lineLn => {
-                if (lineLn.trimEnd().endsWith('|')) {
-                  prevVert = lineLn;
-                  return '';
-                }
+                if (lineLn.trimEnd().endsWith('|')) return '';
 
-                return lineLn && `\n${seperator}${blocki}${seperator}${totalLinei}${seperator}${prevVert}${lineLn}`;
+                return lineLn && `\n${padStart(blocki)}${padStart(totalLinei)}${lineLn}`;
               });
             })
             .flat()
@@ -127,15 +124,14 @@ export class CmComTexts extends CmComChords {
 
       for (let i = 0; i < allRepeatedLines.length; i++) {
         if (!allRepeatedLines[i]) continue;
-        const [, blockiStr, totalLineiStr, line] = allRepeatedLines[i].split(seperator);
+        const blockiStr = allRepeatedLines[i].slice(0, startDigits);
         const ord = headSolidOrders[+blockiStr];
 
         slides.push({
-          lines: [line.trim().replace(makeRegExp('/\\s{2,}/'), ' ').replace(makeRegExp('/[|]+/g'), '')],
+          lines: [allRepeatedLines[i]],
           ord,
-          blocki: +blockiStr,
-          fromLinei: +totalLineiStr,
-          toLinei: +totalLineiStr + 1,
+          fromLinei: 0,
+          toLinei: 0,
         });
       }
 
@@ -207,14 +203,18 @@ export class CmComTexts extends CmComChords {
       return text;
     };
   })();
+
+  static takeLineiFromHeapLine = (line: string | nil) => +(line?.slice(startDigits, allStartDigits) || 0);
 }
 
-const seperator = `#@>`;
+const startDigits = 5;
+const allStartDigits = startDigits * 2;
+const padStart = (num: number) => `${num}`.padStart(startDigits, '0');
 
 const repeatsRegBox = makeNamedRegExp(
   // regexpert:
   // stringify $0
-  `/(?<lead>(^|\\n)${seperator}\\d+${seperator}\\d+${seperator})(?<before>.*?)(?<start>/+)(?:&nbsp;)?(?<content>[^\\\\/]*?)(?:&nbsp;)?(?<end>\\\\+)(?<endNl>\\n?)/g`,
+  `/(?<lead>(^|\\n)\\d{${allStartDigits}})(?<before>.*?)(?<start>/+)(?:&nbsp;)?(?<content>[^\\\\/]*?)(?:&nbsp;)?(?<end>\\\\+)(?<endNl>\\n?)/g`,
 );
 
 const somePrep = `[.,:;!?${doubleQuotesStr}]*`;

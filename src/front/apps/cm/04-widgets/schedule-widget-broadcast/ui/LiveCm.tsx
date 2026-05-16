@@ -65,14 +65,10 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
           fromLinei: currentSlide?.fromLinei ?? 0,
           toLinei: currentSlide?.toLinei ?? 0,
 
-          text: isFragments
-            ? (currentSlide?.lines ?? '')
-            : CmCom.makeEachLineFirstLetterUpperCase(currentSlide?.lines).join('\n'),
+          text: isFragments ? (currentSlide?.lines ?? '') : CmCom.prepareEachTextLine(currentSlide?.lines).join('\n'),
           isChorded: !currentSlide?.ord.isRealText(),
 
-          nextText: CmCom.makeEachLineFirstLetterUpperCase(nextSlide?.lines, !isFragments).join(
-            isFragments ? ' ' : '\n',
-          ),
+          nextText: CmCom.prepareEachTextLine(nextSlide?.lines, !isFragments).join(isFragments ? ' ' : '\n'),
           isNextChorded: !nextSlide?.ord.isRealText(),
           dir,
           chordedMode,

@@ -20,15 +20,15 @@ export const CmEditorTabComRepeatsShowBeatSlidesButton = ({ com }: { com: CmCom 
 
       <Modal openAtom={openAtom}>
         <ModalBody>
-          {list.map(({ lines }) => {
-            return lines.map((line, linei) => (
+          {list.map(({ lines }) =>
+            lines.map((line, linei) => (
               <div
                 key={linei}
                 className={linei ? '' : 'mt-4'}
                 dangerouslySetInnerHTML={{ __html: line }}
               />
-            ));
-          })}
+            )),
+          )}
         </ModalBody>
       </Modal>
     </>
