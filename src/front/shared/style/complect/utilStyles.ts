@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-export const utilStyles = css`
+export const utilStyles = () => css`
   .inline-block {
     display: inline-block;
   }
@@ -198,4 +198,15 @@ export const utilStyles = css`
   .pointers-none {
     pointer-events: none !important;
   }
+
+  .strong-size {
+    height: ${strongSizeVar};
+    min-height: ${strongSizeVar};
+    max-height: ${strongSizeVar};
+    width: ${strongSizeVar};
+    min-width: ${strongSizeVar};
+    max-width: ${strongSizeVar};
+  }
 `;
+
+const strongSizeVar = 'var(--strong-size)';

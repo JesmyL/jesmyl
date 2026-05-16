@@ -1,4 +1,4 @@
-import { useScreenBroadcastBackgroundStyles } from '#features/broadcast/complect/hooks/background-styles';
+import { takeScreenBroadcastBackgroundStyles } from '#features/broadcast/complect/hooks/background-styles';
 import { CSSProperties, useMemo } from 'react';
 import { BibleBroadcastScreenConfig } from '../model/model';
 
@@ -8,8 +8,6 @@ export const useBibleBroadcastScreenAddressStyle = (
   isVisible: boolean,
   currentConfig: BibleBroadcastScreenConfig | und,
 ) => {
-  const background = useScreenBroadcastBackgroundStyles(currentConfig?.address);
-
   return useMemo((): CSSProperties => {
     if (currentConfig === undefined) return {};
 
@@ -20,8 +18,8 @@ export const useBibleBroadcastScreenAddressStyle = (
       bottom: 0,
 
       display: isVisible ? undefined : 'none',
-      background,
+      background: takeScreenBroadcastBackgroundStyles(currentConfig?.address),
       zIndex: 10,
     };
-  }, [background, currentConfig, isVisible]);
+  }, [currentConfig, isVisible]);
 };

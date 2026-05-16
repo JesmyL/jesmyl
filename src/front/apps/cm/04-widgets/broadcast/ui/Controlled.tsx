@@ -30,6 +30,7 @@ import { ReactNode } from 'react';
 import { CmComWid, HttpNumLeadLink } from 'shared/api';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
+import { useCmBroadcastUpdateCurrentConfig } from '../hooks/update-config';
 import { useCmBroadcastScreenKeyDownListen } from '../lib/keydown-listen';
 import { CmBroadcastControlPanel } from './ControllPanel';
 import { CmBroadcastScreenConfigurations } from './ScreenConfigurations';
@@ -47,12 +48,15 @@ export function CmBroadcastControlled(props: Props) {
   const isTrackBroadcast = useAtomValue(cmIsTrackBroadcastAtom);
   const broadcastSrc = useAtomValue(cmPlayerBroadcastAudioSrcAtom);
   const navigate = useNavigate();
+  const updateCmConfig = useCmBroadcastUpdateCurrentConfig();
 
   const { comPack, coms } = useCmBroadcastScreenComNavigations();
   const setSlidei = useCmBroadcastScreenComTextNavigations().setSlidei;
   const linkToCom = useCmComOpenComLinkRendererContext();
+
   let comList = props.comList ?? coms;
   if (isTrackBroadcast) comList = comList.filter(com => com.audio.length);
+
   const com = useCmComCurrent();
   const updateConfig = useUpdateScreenBroadcastConfig();
   const configs: ScreenBroadcastConfig[] = useScreenBroadcastConfigsValue();
@@ -123,7 +127,7 @@ export function CmBroadcastControlled(props: Props) {
       content={
         <Container>
           <div className="flex">
-            <BroadcastSlidePreview />
+            <BroadcastSlidePreview onBgFileIdChange={boxes => updateCmConfig({ bgFileId: boxes[0].id })} />
 
             <div className="broadcast-com-list">
               <div className="m-5">

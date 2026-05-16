@@ -40,7 +40,9 @@ export class DexieDB<Store> {
     storageName: string,
     defaults: Required<{
       [K in keyof Store]: Store[K] extends any[]
-        ? Partial<Record<'_', '++'> & Record<keyof Store[K][number], true | '++'>> | [(() => Store[K]) | Store[K]]
+        ?
+            | Partial<Record<'_', '++'> & Record<keyof Store[K][number], true | '++'> & Record<string, true | '++'>>
+            | [(() => Store[K]) | Store[K]]
         : [(() => Store[K]) | Store[K]];
     }>,
     version = 1,

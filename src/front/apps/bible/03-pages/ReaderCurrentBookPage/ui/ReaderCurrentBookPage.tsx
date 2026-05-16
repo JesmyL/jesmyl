@@ -110,7 +110,7 @@ function Content() {
                 <ItemFace
                   key={chapteri}
                   className={
-                    'inline-flex center pointer' +
+                    'inline-flex center pointer strong-size' +
                     (chapteri === selectedChapteri ? ' bg-x7 text-x1' : ' bg-x2 text-x3') +
                     (chapteri === currentChapteri ? ' font-bold underline' : '')
                   }
@@ -135,7 +135,7 @@ function Content() {
                 <ItemFace
                   key={versei}
                   className={
-                    'inline-flex center pointer bg-x2 text-x3' +
+                    'inline-flex center pointer bg-x2 text-x3 strong-size' +
                     (versei === currentVersei ? ' text-x7 font-bold underline' : '')
                   }
                   onClick={() => {
@@ -160,18 +160,9 @@ function Content() {
 }
 
 const ItemFace = styled.div`
-  --size: calc((100vw - 12 * 3px) / 5);
+  --strong-size: calc((100vw - 12 * 3px) / 5);
 
   position: relative;
-
-  min-width: var(--size);
-  max-width: var(--size);
-  width: var(--size);
-
-  min-height: var(--size);
-  max-height: var(--size);
-  height: var(--size);
-
   margin: 3px;
 
   &::before {

@@ -12,15 +12,14 @@ export const AlertLineSlideText = () => {
 
   if (config == null) return null;
 
-  const { icon, id, title, isWithBackground, backgroundInteractive, top, background, backgroundColor, ...styles } =
-    config;
+  const { icon, id, title, withBg, bgFileId, top, bg, bgColor, ...styles } = config;
 
   const text = alertLineText || config.text;
 
   return (
     <StyledAlertLineContainer style={styles}>
       <StyledAlertLine
-        style={{ top: `${top}%`, ...(isWithBackground ? { background, backgroundColor } : {}) }}
+        style={{ top: `${top}%`, ...(withBg ? { background: bg, backgroundColor: bgColor } : {}) }}
         $speed={config.speed}
       >
         <StyledItem>{text}</StyledItem>

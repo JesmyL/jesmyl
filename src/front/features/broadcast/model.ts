@@ -1,6 +1,7 @@
 import { FontStyleType } from '#shared/ui/configurators/FontStyle/model';
 import { FontWeightType } from '#shared/ui/configurators/FontWeight';
 import { BackgroundConfigProps } from '#shared/ui/configurators/model';
+import { MyFileBoxId } from 'x/my-files';
 
 export interface ScreenBroadcastConfig {
   title: string;
@@ -16,7 +17,7 @@ export type AlertLineConfig = BackgroundConfigProps & {
   icon: KnownStameskaIconName;
   color: string;
   fontSize: number;
-  fontFamily?: string;
+  fontFileId?: MyFileBoxId;
   fontStyle?: FontStyleType;
   fontWeight?: FontWeightType;
 };

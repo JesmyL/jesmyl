@@ -1,6 +1,6 @@
-import { useSetBroadcastScreenInteractiveBackground } from '#features/broadcast/hooks/interactive-back';
 import { BibleBroadcastScreenConfig, useBibleBroadcastScreenAddressStyle } from '$bible/entities/broadcast';
 import { useRef } from 'react';
+import { useMyFileNode } from 'x/my-files';
 import { BibleBroadcastScreenAddressContent } from './AddressContent';
 import { BibleBroadcastScreenAddressContentPositionConfiguration } from './AddressContentPositionConfiguration';
 
@@ -15,8 +15,8 @@ interface Props {
 }
 
 export const BibleBroadcastScreenAddressContainer: React.FC<Props> = props => {
-  const addressBackground = useSetBroadcastScreenInteractiveBackground(
-    props.bibleConfig?.address.isWithBackground ? props.bibleConfig.address.backgroundInteractive : undefined,
+  const addressBackground = useMyFileNode(
+    props.bibleConfig?.address.withBg ? props.bibleConfig.address.bgFileId : undefined,
   );
   const wrapperRef = useRef<HTMLDivElement>(null);
 

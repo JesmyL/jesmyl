@@ -39,7 +39,7 @@ export const CmComAudioPlayer = ({ audioLinks, timeRender, addRender, className 
 
         {audioLinks.length > 1 && (
           <div
-            className="current-variant-badge flex center pointer"
+            className="current-variant-badge bg-x3 text-x2 strong-size flex center pointer"
             onClick={() => {
               setCurrentVariant(currentVariant > audioLinks.length - 2 ? 0 : currentVariant + 1);
             }}
@@ -86,17 +86,9 @@ export const StyledCmComAudioPlayer = styled.div`
   }
 
   .current-variant-badge {
-    --size: 1.8em;
+    --strong-size: 1.8em;
 
     border-radius: 50%;
-    background: var(--color--3);
-    width: var(--size);
-    min-width: var(--size);
-    max-width: var(--size);
-    height: var(--size);
-    min-height: var(--size);
-    max-height: var(--size);
-    color: var(--color--2);
   }
 
   .loading-logo {

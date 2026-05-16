@@ -1,9 +1,9 @@
 import { ScreenBroadcastPositionConfig } from '#features/broadcast/complect/model';
 import { ScreenTranslateCurrentPositionConfigurators } from '#features/broadcast/complect/position/Position';
-import { useApplyScreenFontFamilyEffect } from '#features/broadcast/hooks/set-font-family';
 import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
 import { useCallback } from 'react';
+import { useApplyScreenFontFamilyEffect } from 'x/my-files';
 import { cmBroadcastSubConfigNext } from '../const/defaults';
 import { useCmBroadcastUpdateCurrentConfig } from '../hooks/update-config';
 import { useCmBroadcastScreenStyle } from '../lib/get-style';
@@ -38,7 +38,7 @@ export const CmBroadcastSubScreen = (props: Props & Partial<FontSizeContainProps
     [props.parentConfig, updateConfig],
   );
 
-  useApplyScreenFontFamilyEffect(props.config?.fontFamily, props.win);
+  useApplyScreenFontFamilyEffect(props.config?.fontFileId, props.win);
 
   return (
     <>

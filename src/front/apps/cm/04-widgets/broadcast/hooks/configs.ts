@@ -14,7 +14,7 @@ export const cmBroadcastDefaultConfig: CmBroadcastScreenConfig & BackgroundConfi
   ...defaultScreenBroadcastPositionConfig,
   ...defaultScreenBroadcastTextConfig,
   ...defaultScreenBroadcastBackgroundConfig,
-  isWithBackground: false,
+  withBg: false,
   pushKind: '1',
 };
 

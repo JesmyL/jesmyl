@@ -1,4 +1,4 @@
-import { BackgroundNameType } from './selectors/BackgroundSelector';
+import { MyFileBoxId } from 'x/my-files';
 
 export type ConfiguratorEditProps<Config> = {
   config: Config;
@@ -7,8 +7,8 @@ export type ConfiguratorEditProps<Config> = {
 };
 
 export interface BackgroundConfigProps {
-  backgroundInteractive?: BackgroundNameType;
-  background: string;
-  isWithBackground: boolean;
-  backgroundColor: string;
+  bgFileId?: MyFileBoxId;
+  bg: string;
+  withBg: boolean;
+  bgColor: string;
 }

@@ -19,6 +19,8 @@
     "baseUrl": "src",
     "types": ["vite-plugin-pwa/info.d.ts", "vite-plugin-pwa/client.d.ts"],
     "paths": {
+      "x/*": ["./front/x/*"],
+
       "#shared/*": ["./front/shared/*"],
       "#features/*": ["./front/features/*"],
       "#widgets/*": ["./front/widgets/*"],

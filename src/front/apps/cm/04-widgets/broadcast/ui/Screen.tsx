@@ -1,7 +1,6 @@
 import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
+import { takeScreenBroadcastBackgroundStyles } from '#features/broadcast/complect/hooks/background-styles';
 import { ScreenTranslateCurrentPositionConfigurators } from '#features/broadcast/complect/position/Position';
-import { useSetBroadcastScreenInteractiveBackground } from '#features/broadcast/hooks/interactive-back';
-import { useApplyScreenFontFamilyEffect } from '#features/broadcast/hooks/set-font-family';
 import { mylib } from '#shared/lib/my-lib';
 import { HorizontalDirection } from '#shared/model/Direction';
 import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
@@ -12,8 +11,8 @@ import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useRef } from 'react';
+import { useApplyScreenFontFamilyEffect, useMyFileNode } from 'x/my-files';
 import { useCmBroadcastScreenStyle } from '../lib/get-style';
-import { useCmBroadcastScreenWrapperStyle } from '../lib/get-wrapper-style';
 import { CmBroadcastScreenConfig } from '../model/model';
 import { CmBroadcastSubScreen } from './SubScreen';
 
@@ -41,15 +40,12 @@ export const CmBroadcastScreen = (props: Props) => {
     props.isChorded ? (props.cmConfig?.subs?.chorded ?? props.cmConfig) : props.cmConfig,
   );
 
-  const wrapperStyle = useCmBroadcastScreenWrapperStyle(props.cmConfig);
-  const background = useSetBroadcastScreenInteractiveBackground(
-    props.cmConfig?.isWithBackground ? props.cmConfig.backgroundInteractive : undefined,
-  );
+  const background = useMyFileNode(props.cmConfig?.withBg ? props.cmConfig.bgFileId : null);
 
-  useApplyScreenFontFamilyEffect(props.cmConfig?.fontFamily, props.win);
+  useApplyScreenFontFamilyEffect(props.cmConfig?.fontFileId, props.win);
   let nextSlideNode = null;
 
-  if (props.cmConfig?.subs?.next !== undefined) {
+  if (props.cmConfig?.subs?.next != null) {
     nextSlideNode = (
       <CmBroadcastSubScreen
         config={
@@ -74,7 +70,7 @@ export const CmBroadcastScreen = (props: Props) => {
   return (
     <div
       className="relative full-size bg-black overflow-hidden"
-      style={wrapperStyle}
+      style={{ background: takeScreenBroadcastBackgroundStyles(props.cmConfig) }}
       ref={wrapperRef}
     >
       {background}

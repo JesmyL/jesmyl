@@ -12,7 +12,7 @@ export const useScreenBroadcastTextStyles = (config: ScreenBroadcastTextConfig |
       fontWeight: theConfig.fontWeight,
       textAlign: theConfig.textAlign,
       fontStyle: theConfig.fontStyle,
-      fontFamily: theConfig.fontFamily === undefined ? fontFamily : `'${theConfig.fontFamily}'`,
+      fontFamily: theConfig.fontFileId == null ? fontFamily : `'${theConfig.fontFileId}'`,
     };
-  }, [theConfig.fontFamily, theConfig.fontStyle, theConfig.fontWeight, theConfig.textAlign]);
+  }, [theConfig.fontFileId, theConfig.fontStyle, theConfig.fontWeight, theConfig.textAlign]);
 };

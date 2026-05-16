@@ -1,15 +1,15 @@
+import { MyFileBoxId, MyFilesFontFamilySelector } from 'x/my-files';
 import { ConfiguratorEditProps } from './model';
-import { FontFamilySelector } from './selectors/FontFamilySelector';
 
-type Props = ConfiguratorEditProps<{ fontFamily?: string }>;
+type Props = ConfiguratorEditProps<{ fontFileId?: MyFileBoxId }>;
 
 export const FontFamilyConfigurator = ({ config, updateConfig }: Props) => {
   return (
     <div className="flex gap-2 my-2">
       Шрифт
-      <FontFamilySelector
-        fontFamily={config.fontFamily}
-        onSelect={fontFamily => updateConfig({ fontFamily })}
+      <MyFilesFontFamilySelector
+        fileId={config.fontFileId}
+        onSelect={fontFileId => updateConfig({ fontFileId })}
       />
     </div>
   );

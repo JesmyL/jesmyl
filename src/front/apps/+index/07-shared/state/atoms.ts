@@ -28,11 +28,7 @@ export const liveDataStreamersAtom = atom<{ fio: string; login: SokiAuthLogin }[
 
 export const useIndexSchedules = () => useLiveQuery(() => indexIDB.db.schs.toArray());
 
-export const useIndexFileAssociations = () => indexIDB.useValue.fileAssociations();
-
 export const useAuth = () => authIDB.useValue.auth();
-
-export const useAppFontFamily = () => indexIDB.use.appFontFamily();
 
 export const indexIsPlayAnimationsAtom = atom(false, 'index:isPlayAnimations');
 export const indexIsShowPlayerInFooterAtom = atom(false, 'index:isShowPlayerInFooter');

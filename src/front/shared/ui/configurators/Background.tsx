@@ -1,6 +1,6 @@
+import { MyFileBackgroundSelector } from 'x/my-files';
 import { IconCheckbox } from '../the-icon/IconCheckbox';
 import { BackgroundConfigProps, ConfiguratorEditProps } from './model';
-import { BackgroundSelector } from './selectors/BackgroundSelector';
 
 type Props = ConfiguratorEditProps<BackgroundConfigProps>;
 
@@ -10,22 +10,22 @@ export const BackgroundConfigurator = ({ config, updateConfig, title = 'Фон' 
       <div className="flex gap-2 my-2">
         {title}
         <IconCheckbox
-          checked={config.isWithBackground}
-          onChange={() => updateConfig({ isWithBackground: !config.isWithBackground })}
+          checked={config.withBg}
+          onChange={() => updateConfig({ withBg: !config.withBg })}
         />
-        <BackgroundSelector
-          background={config.backgroundInteractive}
-          onSelect={backgroundInteractive => updateConfig({ backgroundInteractive })}
+        <MyFileBackgroundSelector
+          bgFileId={config.bgFileId}
+          onSelect={bgFileId => updateConfig({ bgFileId })}
         />
         <input
           className="bg-x3 text-x1"
-          value={config.background}
-          onChange={event => updateConfig({ background: event.target.value })}
+          value={config.bg}
+          onChange={event => updateConfig({ bg: event.target.value })}
         />
         <input
           type="color"
-          value={config.backgroundColor}
-          onChange={event => updateConfig({ backgroundColor: event.target.value })}
+          value={config.bgColor}
+          onChange={event => updateConfig({ bgColor: event.target.value })}
         />
       </div>
     </>

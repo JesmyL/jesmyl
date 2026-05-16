@@ -1,17 +1,13 @@
-import { AppName } from '#basis/model/App.model';
 import { DexieDB } from '#shared/lib/DexieDB';
 import { soki } from '#shared/soki';
-import { IndexMyFilesTypeBoxAssociations } from '$index/entities/MyFilesTypeBox';
 import { DeviceId, IScheduleWidget, IScheduleWidgetWid, ScheduleWidgetPhotoKey } from 'shared/api';
 import { StameskaIconPack } from 'stameska-icon/utils';
+import { MyFileBoxId } from 'x/my-files';
 
 interface Storage {
   lastModifiedAt: number;
-  appFontFamily: string | null;
+  appFontFamilyId: MyFileBoxId | null;
   deviceId: DeviceId | null;
-
-  currentApp: AppName;
-  fileAssociations?: IndexMyFilesTypeBoxAssociations;
 
   schs: IScheduleWidget[];
   lastScheduleWid: IScheduleWidgetWid | NaN;
@@ -23,9 +19,7 @@ class IndexIDB extends DexieDB<Storage> {
   constructor() {
     super('index', {
       lastModifiedAt: [0],
-      appFontFamily: [null],
-      currentApp: ['cm'],
-      fileAssociations: [{} as never],
+      appFontFamilyId: [null],
       deviceId: [null],
       lastScheduleWid: [NaN],
 

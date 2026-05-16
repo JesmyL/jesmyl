@@ -18,7 +18,8 @@ export const useBibleBroadcastScreenFontSizeAddressAdapter = (
         : currentConfig.address.height +
           currentConfig.address.width +
           currentConfig.fontWeight +
-          currentConfig.fontFamily +
+          currentConfig.bgFileId +
+          currentConfig.fontFileId +
           currentConfig.addressPanel.height),
   );
 };

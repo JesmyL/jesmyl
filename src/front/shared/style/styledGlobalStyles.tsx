@@ -26,7 +26,7 @@ const styles = css`
   }
 
   ${colorStyles}
-  ${utilStyles}
+  ${utilStyles()}
   ${twStyles}
   ${resetStyles}
   ${fontStyles}

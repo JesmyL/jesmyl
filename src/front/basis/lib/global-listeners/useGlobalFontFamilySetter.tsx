@@ -1,17 +1,17 @@
-import { applyFontFamilyFromMyFiles } from '#shared/ui/configurators/utils/set-font-family-effect';
-import { useAppFontFamily } from '$index/shared/state';
+import { indexIDB } from '$index/shared/state';
 import { useEffect } from 'react';
+import { applyFontFamilyFromMyFiles } from 'x/my-files';
 
 export const useGlobalFontFamilySetter = () => {
-  const [appFontFamily] = useAppFontFamily();
+  const appFontFamilyId = indexIDB.useValue.appFontFamilyId();
 
   useEffect(() => {
-    if (appFontFamily == null) return;
-    applyFontFamilyFromMyFiles(appFontFamily, window);
-    document.body.style.fontFamily = '"' + appFontFamily + '"';
+    if (appFontFamilyId == null) return;
+    applyFontFamilyFromMyFiles(window, appFontFamilyId);
+    document.body.style.fontFamily = `"${appFontFamilyId}"`;
 
     return () => {
       document.body.style.fontFamily = '';
     };
-  }, [appFontFamily]);
+  }, [appFontFamilyId]);
 };

@@ -27,7 +27,6 @@ export const bibleBroadcastDefaultConfig: BibleBroadcastScreenConfig = {
   },
 };
 
-export const useBibleBroadcastScreenConfigsSet = () => bibleIDB.useSet.broadcastScreenConfigs();
 export const useBibleBroadcastScreenConfigs = () =>
   useMakeScreenBroadcastConfigsFillPack(bibleIDB.useValue.broadcastScreenConfigs(), bibleBroadcastDefaultConfig);
 

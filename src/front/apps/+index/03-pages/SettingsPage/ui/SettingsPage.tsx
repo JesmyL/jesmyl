@@ -3,19 +3,14 @@ import { useConnectionState } from '#basis/lib/useConnectionState';
 import { useAppNameContext } from '#basis/state/contexts';
 import { MyLib } from '#shared/lib/my-lib';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
-import { FontFamilySelector } from '#shared/ui/configurators/selectors/FontFamilySelector';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import {
-  authIDB,
-  indexIsPlayAnimationsAtom,
-  indexIsShowPlayerInFooterAtom,
-  useAppFontFamily,
-} from '$index/shared/state';
+import { authIDB, indexIDB, indexIsPlayAnimationsAtom, indexIsShowPlayerInFooterAtom } from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
 import React from 'react';
 import { itIt } from 'shared/utils';
+import { MyFilesFontFamilySelector } from 'x/my-files';
 import { IndexSettingsBindEmail } from './BindEmail';
 
 const styles = {
@@ -33,7 +28,7 @@ const styles = {
 
 export function IndexSettingsPage() {
   const appName = useAppNameContext();
-  const [appFontFamily, setAppFontFamily] = useAppFontFamily();
+  const [fontFamilyFileId, setFontFamilyFileId] = indexIDB.use.appFontFamilyId();
   const connectionNode = useConnectionState('m-2');
   const checkAccess = useCheckUserAccessRightsInScope();
   const token = authIDB.useValue.token();
@@ -94,9 +89,9 @@ export function IndexSettingsPage() {
       iconNode={<LazyIcon icon="Text" />}
       title="Шрифт"
       box={
-        <FontFamilySelector
-          fontFamily={appFontFamily}
-          onSelect={setAppFontFamily}
+        <MyFilesFontFamilySelector
+          fileId={fontFamilyFileId}
+          onSelect={setFontFamilyFileId}
         />
       }
     />,

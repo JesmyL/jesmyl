@@ -17,7 +17,7 @@ export const defaultScreenBroadcastTextConfig: ScreenBroadcastTextConfig = {
 };
 
 export const defaultScreenBroadcastBackgroundConfig: BackgroundConfigProps = {
-  background: '',
-  backgroundColor: '#000000',
-  isWithBackground: false,
+  bg: '',
+  bgColor: '#000000',
+  withBg: false,
 };

@@ -1,4 +1,5 @@
 import { BroadcastSlidePreview } from '#features/broadcast/controls/Preview';
+import { useBibleBroadcastUpdateCurrentConfig } from '$bible/entities/broadcast';
 import { BibleBroadcastList } from '$bible/entities/broadcast-list';
 import styled from '@emotion/styled';
 import { JSX, useState } from 'react';
@@ -6,6 +7,7 @@ import { twMerge } from 'tailwind-merge';
 
 export const BibleBroadcastControlledTopPanel = function TopPanel(): JSX.Element {
   const [isPreview, setIsPreview] = useState(true);
+  const updateConfig = useBibleBroadcastUpdateCurrentConfig();
 
   return (
     <StyledTopPanel>
@@ -18,7 +20,10 @@ export const BibleBroadcastControlledTopPanel = function TopPanel(): JSX.Element
           {' / '}
           <div className={twMerge('pointer', !isPreview && 'text-x7')}>Слайд</div>
         </div>
-        <BroadcastSlidePreview isPreview={isPreview} />
+        <BroadcastSlidePreview
+          isPreview={isPreview}
+          onBgFileIdChange={boxes => updateConfig({ bgFileId: boxes[0].id })}
+        />
       </div>
       <BibleBroadcastList />
     </StyledTopPanel>

@@ -1,15 +1,14 @@
 import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
+import { bibleIDB } from '$bible/shared/state/bibleIDB';
 import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
-import { bibleBroadcastDefaultConfig, useBibleBroadcastScreenConfigsSet } from '../config/configs';
+import { bibleBroadcastDefaultConfig } from '../config/configs';
 import { BibleBroadcastScreenConfig } from '../model/model';
 
 export const useBibleBroadcastUpdateConfig = (topConfigi?: number) => {
-  const setConfigs = useBibleBroadcastScreenConfigsSet();
-
   return useCallback(
     (config: Partial<BibleBroadcastScreenConfig> | null, configi?: number) => {
-      setConfigs(configs => {
+      bibleIDB.set.broadcastScreenConfigs(configs => {
         const configIndex = topConfigi ?? configi;
         if (configIndex == null) return configs;
 
@@ -22,7 +21,7 @@ export const useBibleBroadcastUpdateConfig = (topConfigi?: number) => {
         return newConfigs;
       });
     },
-    [setConfigs, topConfigi],
+    [topConfigi],
   );
 };
 

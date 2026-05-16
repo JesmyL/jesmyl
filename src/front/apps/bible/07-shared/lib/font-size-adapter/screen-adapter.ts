@@ -16,7 +16,7 @@ export const useBibleBroadcastScreenFontSizeScreenAdapter = (
         currentConfig.screen.width +
         currentConfig.address.height +
         currentConfig.fontWeight +
-        currentConfig.fontFamily +
+        currentConfig.fontFileId +
         currentConfig.addressPanel.height) +
     windowResizeUpdatesNum +
     useAtomValue(isBroadcastTextVisibleAtom);

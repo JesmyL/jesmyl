@@ -42,7 +42,9 @@ export function ScheduleWidgetAttFace({
   return (
     <>
       <Tatt
-        className={'relative flex center column' + (isCanRedact && tatt?.isCustomize ? ' text-x7 pointer' : '')}
+        className={
+          'relative flex center column strong-size bg-x5' + (isCanRedact && tatt?.isCustomize ? ' text-x7 pointer' : '')
+        }
         onClick={isCanRedact && tatt?.isCustomize ? () => tattOnRedactAtom.set(attKey) : undefined}
       >
         {isLink && (
@@ -102,17 +104,10 @@ export function ScheduleWidgetAttFace({
 }
 
 const Tatt = styled.div`
-  --att-size: 90px;
+  --strong-size: 90px;
 
   position: relative;
   border-radius: 3px;
-  background-color: var(--color--5);
-  width: var(--att-size);
-  min-width: var(--att-size);
-  max-width: var(--att-size);
-  height: var(--att-size);
-  min-height: var(--att-size);
-  max-height: var(--att-size);
 
   .close-button {
     position: absolute;
