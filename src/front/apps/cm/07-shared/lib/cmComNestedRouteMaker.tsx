@@ -82,7 +82,7 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>({
             ) : (
               render(<CmBroadcast />)
             )
-          ) : com || comw !== undefined ? (
+          ) : com || comw != null ? (
             render(<TheCmComComposition />)
           ) : (
             <RouteComponent />
@@ -95,23 +95,19 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>({
   return {
     ComRouteComponent,
     component: ComRouteComponent,
-    validateSearch: (search: PRecord<string, unknown>): CmComOpenRouteProps => {
-      return {
-        comw: +search.comw! || undefined,
-        tran: search.tran != null ? '-!-' : undefined,
-      };
-    },
+    validateSearch: (search: PRecord<string, unknown>): CmComOpenRouteProps => ({
+      comw: +search.comw! || undefined,
+      tran: search.tran != null ? '-!-' : undefined,
+    }),
   };
 };
 
-const goToComLinkRenderer: CmComOpenLinkRenderer = ({ linkRef, children, search }) => {
-  return (
-    <Link
-      ref={linkRef}
-      to="."
-      search={prev => ({ ...(prev as object), ...(search as object) })}
-    >
-      {children}
-    </Link>
-  );
-};
+const goToComLinkRenderer: CmComOpenLinkRenderer = ({ linkRef, children, search }) => (
+  <Link
+    ref={linkRef}
+    to="."
+    search={prev => ({ ...(prev as object), ...(search as object) })}
+  >
+    {children}
+  </Link>
+);
