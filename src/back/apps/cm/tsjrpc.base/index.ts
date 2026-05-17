@@ -1,4 +1,5 @@
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
+import { takeLogginedAuthOrThrow } from 'back/utils';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
 import { numLeadToHttpLinks } from '../complect/com-http-links';
 import { cmEditCatServerTsjrpcBase } from '../edit-cat.tsjrpc.base';
@@ -24,8 +25,15 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
         ...cmServerTsjrpcBaseRequestFreshes,
         ...cmServerTsjrpcBaseExchangeFreshComCommentBlocks,
 
-        pullUserAltCommentBlock: async ({ comw, login }) => {
-          return { value: comCommentsDirStore.getItem(login)?.b[comw] ?? null };
+        pullComComments: ({ comw }, { auth }) => {
+          const comments = comCommentsDirStore.getItem(takeLogginedAuthOrThrow(auth).login)?.b[comw];
+
+          return {
+            value: comments && {
+              ...comments,
+              comw,
+            },
+          };
         },
 
         printComwVisit: ({ comw }) => {

@@ -1,6 +1,5 @@
 import { CmComAudioMarkPack, CmComWid, HttpNumLeadLink, ICmComCommentBlock } from 'shared/api/complect/apps';
 import { IScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
-import { SokiAuthLogin } from 'shared/api/complect/soki.model';
 
 export type CmTsjrpcModel = {
   requestFreshes: (args: { lastModfiedAt: number }) => void;
@@ -8,10 +7,7 @@ export type CmTsjrpcModel = {
     modifiedComments: ICmComCommentBlock[];
     clientDateNow: number;
   }) => ICmComCommentBlock[];
-  pullUserAltCommentBlock: (args: {
-    comw: CmComWid;
-    login: SokiAuthLogin;
-  }) => OmitOwn<ICmComCommentBlock, 'comw'> | null;
+  pullComComments: (args: { comw: CmComWid }) => ICmComCommentBlock | nil;
 
   printComwVisit: (args: { comw: CmComWid }) => void;
   takeComwVisitsCount: (args: { comw: CmComWid }) => number;

@@ -13,6 +13,11 @@ export const cmTsjrpcClient = new (class Cm extends TsjrpcClient<CmTsjrpcModel> 
             cmIDB.tb.comAudioTrackMarks.put(pack);
           },
         },
+        pullComComments: {
+          onResponse: comments => {
+            if (comments) cmIDB.tb.comCommentBlocks.put(comments);
+          },
+        },
       },
     });
   }

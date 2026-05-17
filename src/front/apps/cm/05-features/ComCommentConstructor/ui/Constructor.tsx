@@ -99,7 +99,7 @@ export const CmComCommentConstructorTextRulesConstructor = ({
             className={isRedactKinds ? 'text-x7' : undefined}
           />
         )}
-        <CmComCommentTools />
+        <CmComCommentTools comw={com.wid} />
       </div>
 
       <CmComCommentSavedLocalMarker
