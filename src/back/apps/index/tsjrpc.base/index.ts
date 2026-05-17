@@ -3,6 +3,7 @@ import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
 import { supportTelegramAuthorizations } from 'back/sides/telegram-bot/prod/authorize';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
+import { takeLogginedAuthOrThrow } from 'back/utils';
 import { exec } from 'child_process';
 import { escapeRegExpSymbols, makeRegExp } from 'regexpert';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
@@ -57,8 +58,9 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         getIconExistsPacks: indexTSJRPCBaseGetIconExistsPacks,
         updateUserAccessRight: indexTSJRPCBaseUpdateUserAccessRight,
 
-        updateUserAccessRole: async ({ login, role }, { auth }) => {
-          if (auth?.login == null) throw 'Не авторизован 56552391123';
+        updateUserAccessRole: async ({ login, role }, { auth: userAuth }) => {
+          const auth = takeLogginedAuthOrThrow(userAuth);
+
           if (auth.login === login) throw 'Нельзя поменять роль себе же';
 
           const { rights, roles } = userAccessRightsAndRolesFileStore.getValue();
@@ -93,9 +95,8 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
           return { value: { roles, rights } };
         },
 
-        updateRoleAccessRight: async ({ operation, rule, scope, role }, { auth }) => {
-          if (auth?.login == null) throw 'Не авторизован 77237192';
-
+        updateRoleAccessRight: async ({ operation, rule, scope, role }, { auth: userAuth }) => {
+          const auth = takeLogginedAuthOrThrow(userAuth);
           const { rights, roles } = userAccessRightsAndRolesFileStore.getValue();
           const authUserRole = rights[auth.login]?.info.role;
 

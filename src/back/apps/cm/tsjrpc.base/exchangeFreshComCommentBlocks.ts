@@ -1,4 +1,5 @@
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
+import { takeLogginedAuthOrThrow } from 'back/utils';
 import {
   CmComCommentBlockAnySelector,
   CmComCommentBlockDict,
@@ -11,9 +12,8 @@ import { comCommentsDirStore } from '../file-stores';
 import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
 
 export const cmServerTsjrpcBaseExchangeFreshComCommentBlocks = {
-  exchangeFreshComCommentBlocks: async ({ modifiedComments, clientDateNow }, { auth }) => {
-    if (auth?.login == null) throw new Error('Не авторизован');
-
+  exchangeFreshComCommentBlocks: async ({ modifiedComments, clientDateNow }, { auth: userAuth }) => {
+    const auth = takeLogginedAuthOrThrow(userAuth);
     const withClientTimeDelta = Date.now() - clientDateNow;
 
     const commentsHolder = await comCommentsDirStore.getOrCreateItem(auth.login, null, auth.login);

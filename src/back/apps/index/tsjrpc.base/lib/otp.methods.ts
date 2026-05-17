@@ -6,6 +6,7 @@ import { sendEmailMessage } from 'back/sides/emailer/lib/sendEmailMessage';
 import { EmailerAuthConfigKey } from 'back/sides/emailer/model';
 import { logTelegramBot, tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { postJRPCMessage, PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
+import { takeLogginedAuthOrThrow } from 'back/utils';
 import jwt from 'jsonwebtoken';
 import { makeRegExp } from 'regexpert';
 import { LocalSokiAuth } from 'shared/api';
@@ -190,8 +191,8 @@ export const otpTSJRPCMethods = {
     };
   },
 
-  bindEmailByOTP: async ({ otp }, { auth }) => {
-    if (auth == null) throw 'Не авторизован';
+  bindEmailByOTP: async ({ otp }, { auth: userAuth }) => {
+    const auth = takeLogginedAuthOrThrow(userAuth);
 
     await wait(5000);
 
