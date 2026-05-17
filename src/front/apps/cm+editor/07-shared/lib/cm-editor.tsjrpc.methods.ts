@@ -7,7 +7,7 @@ import { CmEditComOrderTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-order.t
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
 import { CmEditorTsjrpcModel } from 'shared/api/tsjrpc/cm/editor.tsjrpc.model';
 import { cmEditorComChordEditsHistoryAtom, cmEditorComTextsEditsHistoryAtom } from '../state/atoms';
-import { cmComEditorAudioMarksEditPacksAtom } from '../state/com';
+import { cmComEditorAudioMarksEditPacksAtom, comEditorBusiesAtom } from '../state/com';
 
 export const cmEditCatClientTsjrpcMethods = new (class CmEditCat extends TsjrpcClient<CmEditCatTsjrpcModel> {
   constructor() {
@@ -86,6 +86,9 @@ export const cmEditorClientTsjrpcMethods = new (class CmEditor extends TsjrpcCli
   constructor() {
     super({
       scope: 'CmEditor',
+      methods: {
+        watchComBusies: { onResponse: () => comEditorBusiesAtom.set([]) },
+      },
     });
   }
 })();

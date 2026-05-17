@@ -12,7 +12,7 @@ export type CmEditorTsjrpcModel = {
 
   setChords: (args: { chords: ChordPack }) => ChordPack;
   setEEWords: (args: { words: EeStorePack }) => EeStorePack;
-  updateConstantsConfig: (args: { config: Partial<CmConstantsConfig> }) => void;
+  updateConstConfig: (args: { config: Partial<CmConstantsConfig> }) => void;
   getResourceHTMLString: (args: { src: string }) => CmMp3ContainsPageResult;
 
   getMp3RulesList: () => CmMp3Rule[];

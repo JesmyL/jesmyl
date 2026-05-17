@@ -1,3 +1,4 @@
+import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmEditorClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { comEditorBusiesAtom } from '$cm+editor/shared/state/com';
@@ -18,6 +19,8 @@ export const CmEditorCompositionBusyInfo = ({ comw }: { comw: CmComWid }) => {
       cmEditorClientTsjrpcMethods.unwatchComBusies();
     };
   }, [comw]);
+
+  if (!busies) return <TheIconLoading />;
 
   const comBusies = busies.filter(busy => busy.comw === comw);
 

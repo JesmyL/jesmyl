@@ -2,7 +2,7 @@ import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeA
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { CmEditorTsjrpcModel } from 'shared/api/tsjrpc/cm/editor.tsjrpc.model';
 import { smylib } from 'shared/utils';
-import { unwatchEditComBusies, watchEditComBusies } from './complect/edit-com-busy';
+import { cmEditComBusyTsjrpcMethods } from './complect/edit-com-busy';
 import { cmGetResourceHTMLString } from './complect/mp3-rules';
 import { cmShareEditorServerTsjrpcMethods } from './editor.tsjrpc.shares';
 import {
@@ -18,6 +18,8 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
     super({
       scope: 'CmEditor',
       methods: {
+        ...cmEditComBusyTsjrpcMethods,
+
         setChords: async ({ chords }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'CHORD', 'U')) throw '';
 
@@ -72,9 +74,6 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
           return { description: `Изменено MP3-правило` };
         },
 
-        watchComBusies: watchEditComBusies,
-        unwatchComBusies: unwatchEditComBusies,
-
         requestFreshes: async ({ lastModfiedAt }, { client, auth }) => {
           try {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EDIT', 'R')) throw '';
@@ -94,14 +93,14 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
           }
         },
 
-        updateConstantsConfig: async ({ config }) => {
+        updateConstConfig: async ({ config }) => {
           cmConstantsConfigFileStore.updateValue(prev => ({ ...prev, ...config }));
           cmShareServerTsjrpcMethods.refreshConstConfig(
             {
               config,
               mod: cmConstantsConfigFileStore.fileModifiedAt(),
             },
-            tool => !!(tool && tool.version > 1039),
+            null,
           );
         },
       },

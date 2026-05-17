@@ -10,7 +10,7 @@ import {
 import { ComEditBusy } from 'shared/api/tsjrpc/cm/editor.tsjrpc.shares.model';
 
 export const removedCompositionsAtom = atom<PRecord<CmComWid, string>>({});
-export const comEditorBusiesAtom = atom<ComEditBusy[]>([]);
+export const comEditorBusiesAtom = atom<ComEditBusy[] | nil>(null);
 
 export const cmComEditorAudioMarksEditPacksAtom = atom({} as PRecord<HttpNumLeadLink, CmComAudioMarkEditPack>, {
   do: (set, get, self) => ({

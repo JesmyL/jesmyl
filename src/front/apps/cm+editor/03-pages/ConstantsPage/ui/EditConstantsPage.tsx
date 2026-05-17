@@ -19,11 +19,12 @@ export const CmEditorConstantsPage = () => {
             return (
               <InputWithLoadingIcon
                 key={key}
-                defaultValue={'' + defaultValue}
-                placeholder={'' + cmConstantsDefaultConfig[key]}
+                label={key}
                 icon="RightToLeftListTriangle"
+                placeholder={'' + cmConstantsDefaultConfig[key]}
+                defaultValue={'' + defaultValue}
                 onChanged={async value =>
-                  cmEditorClientTsjrpcMethods.updateConstantsConfig({
+                  cmEditorClientTsjrpcMethods.updateConstConfig({
                     config: {
                       [key]: (mylib.isNum(defaultValue)
                         ? value === ''
@@ -35,7 +36,6 @@ export const CmEditorConstantsPage = () => {
                     },
                   })
                 }
-                label={key}
               />
             );
           })}

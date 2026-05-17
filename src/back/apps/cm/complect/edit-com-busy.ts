@@ -1,30 +1,33 @@
+import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
-import { CmComWid } from 'shared/api';
+import { CmEditorTsjrpcModel } from 'shared/api/tsjrpc/cm/editor.tsjrpc.model';
 import { ComEditBusy } from 'shared/api/tsjrpc/cm/editor.tsjrpc.shares.model';
 import { WebSocket } from 'ws';
 import { cmShareEditorServerTsjrpcMethods } from '../editor.tsjrpc.shares';
 
-export const watchEditComBusies = async ({ comw }: { comw: CmComWid }, tool: ServerTSJRPCTool) => {
-  const { auth, client, visitInfo } = tool;
+export const cmEditComBusyTsjrpcMethods = {
+  watchComBusies: async ({ comw }, tool) => {
+    const { auth, client, visitInfo } = tool;
 
-  if (!(client instanceof WebSocket)) return;
-  if (auth == null || auth.fio == null || auth.login == null || visitInfo == null) throw 'Авторизация не действительна';
+    if (!(client instanceof WebSocket)) return;
+    if (auth == null || auth.fio == null || auth.login == null || visitInfo == null)
+      throw 'Авторизация не действительна';
 
-  const comBusy: ComEditBusy = {
-    comw,
-    fio: auth.fio,
-    login: auth.login,
-    deviceId: visitInfo.deviceId,
-  };
+    const comBusy: ComEditBusy = {
+      comw,
+      fio: auth.fio,
+      login: auth.login,
+      deviceId: visitInfo.deviceId,
+    };
 
-  clientToBusyMap.set(client, comBusy);
+    clientToBusyMap.set(client, comBusy);
 
-  share();
+    share();
 
-  client.on('close', () => unwatch(tool));
-};
-
-export const unwatchEditComBusies = async (_: unknown, tool: ServerTSJRPCTool) => unwatch(tool);
+    client.on('close', () => unwatch(tool));
+  },
+  unwatchComBusies: async (_, tool) => unwatch(tool),
+} satisfies ServerTsjrpcSatisfy<CmEditorTsjrpcModel>;
 
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
