@@ -31,8 +31,24 @@
     "T166cbf17596a0c2919e4df1a6d54e66": { "info": { "role": "TOP", "fio": "Павел 👨‍💻", "m": 1771480954367 } },
     "T6558fe287d2ea93be3e19bbe64b5dfc": { "info": { "fio": "Руслан", "m": 1771481139467, "role": "ADMIN" } },
     "T7f21a14d3133065ca2e48254f87ecf3": {
-      "info": { "fio": "danikpon", "m": 1770007938406 },
-      "cm": { "EDIT": 4, "COM_TXT": 6, "COM_TXT_NL": 10, "COM_TR": 6, "EVENT": 6, "COM": 4 }
+      "info": { "fio": "danikpon", "m": 1779003541790 },
+      "cm": {
+        "EDIT": 6,
+        "COM_TXT": 14,
+        "COM_TXT_NL": 14,
+        "COM_TR": 14,
+        "EVENT": 6,
+        "COM": 6,
+        "CAT": 6,
+        "COM_MAIN": 6,
+        "COM_APPS": 6,
+        "COM_ORD": 6,
+        "COM_CH": 12,
+        "COM_REP": 14,
+        "COM_AMARK": 14,
+        "COM_REF": 14,
+        "CHORD": 14
+      }
     },
     "T88eae2a48675aa330a3438b156799d8": { "info": { "fio": "Кирилл", "m": 1757905644600 } },
     "Tcd1de434b6554eaa585d6cbb6901d2a": { "info": { "fio": "Маша", "m": 1758121708642 } },
