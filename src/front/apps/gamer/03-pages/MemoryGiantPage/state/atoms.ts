@@ -55,7 +55,7 @@ gamerMemoryGiantShowTimeSecondsAtom.subscribe(() => {
 });
 
 export const gamerMemoryGiantBoardImageisAtom = atom(null as number[] | null, {
-  storeKey: 'gamer:MemoryGiant:boardImageis',
+  storageKey: 'gamer:MemoryGiant:boardImageis',
   do: (set, get, self) => ({
     abort: () => {
       self.reset();

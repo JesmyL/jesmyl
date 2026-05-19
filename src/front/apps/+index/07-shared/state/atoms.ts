@@ -12,12 +12,12 @@ import { authIDB } from './auth-idb';
 import { indexIDB } from './index-idb';
 
 export const indexDeviceIdAtom = atom(DeviceId.def, {
-  storeKey: 'index:deviceId',
+  storageKey: 'index:deviceId',
   unchangable: true,
 });
 
 export const indexDeviceEmojiAtom = atom('', {
-  storeKey: 'index:deviceEmoji',
+  storageKey: 'index:deviceEmoji',
   unchangable: true,
 });
 
@@ -38,7 +38,7 @@ export const indexAppUserAccessRightsMatrixAtom = atom<IndexAppUserAccessRightsA
 export const indexUserAccessRightsAtom = atom<IndexAppUserAccessRightsWithoutInfo>(
   {},
   {
-    storeKey: 'index:myAccessRights',
+    storageKey: 'index:myAccessRights',
     securifyKeyLevel: cmSecureAtomLevel,
     securifyValueLevel: cmSecureAtomLevel,
   },

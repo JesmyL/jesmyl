@@ -4,7 +4,7 @@ import { cmConstantsDefaultConfig } from 'shared/values/cm/cmConstantsDefaultCon
 import { CmBroadcastShowChordedSlideMode } from '../model';
 
 export const cmConstantsConfigAtom = atom(cmConstantsDefaultConfig, {
-  storeKey: 'cm:constantsConfig',
+  storageKey: 'cm:constantsConfig',
   securifyKeyLevel: cmSecureAtomLevel,
   securifyValueLevel: cmSecureAtomLevel,
 });

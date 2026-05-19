@@ -19,7 +19,7 @@ export const StoragesRackCardListWidget = memo((props: { rack: StoragesRack }) =
   const navigate = useNavigate();
   const confirm = useConfirm();
   const openGroupsAtom = (openGroupsAtoms[props.rack.w] ??= atom<string[]>([], {
-    storeKey: `storages:openCardGroups/${props.rack.w}`,
+    storageKey: `storages:openCardGroups/${props.rack.w}`,
     exp: () => new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
   }));
   const openGroups = useAtomValue(openGroupsAtom);

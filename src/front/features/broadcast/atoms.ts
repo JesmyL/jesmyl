@@ -14,8 +14,8 @@ export const isBroadcastTextVisibleAtom = atom(true);
 export const useScreenBroadcastConfigsSet = () => complectIDB.useSet.screenBroadcastConfigs();
 export const useScreenBroadcastConfigsValue = () => complectIDB.useValue.screenBroadcastConfigs();
 
-export const broadcastCurrentTextAppAtom = atom('cm' as BroadcastViewApp, {
-  storeKey: 'index:broadcastCurrentTextApp',
+export const broadcastCurrentTextAppAtom = atom((): BroadcastViewApp => 'cm', {
+  storageKey: 'index:broadcastCurrentTextApp',
   do: (set, get) => ({ switch: () => set(get() === 'cm' ? 'bible' : 'cm') }),
 });
 
