@@ -1,4 +1,5 @@
 import { cmIDB } from '$cm/ext';
+import { cmComMaxFontSize, cmComMinFontSize } from '$cm/shared/const';
 import { ChordVisibleVariant } from '$cm/shared/model';
 import { atom } from 'atomaric';
 import { CmComWid, MigratableComToolName } from 'shared/api';
@@ -16,7 +17,11 @@ export const cmComTopToolsAtom = atom<MigratableComToolName[]>(
   'cm:comTopTools',
 );
 
-export const cmComFontSizeAtom = atom(14, 'cm:comFontSize');
+export const cmComFontSizeAtom = atom(16, {
+  storageKey: 'cm:comFontSize',
+  filter: fontSize => Math.abs(fontSize) >= cmComMinFontSize && Math.abs(fontSize) <= cmComMaxFontSize,
+});
+
 export const cmComSpeedRollKfAtom = atom(10, 'cm:speedRollKf');
 export const cmComIsAudioPlayerHiddenAtom = atom(false, 'cm:isAudioPlayerHidden');
 export const cmComLaterComwListAtom = atom<CmComWid[]>([], 'cm:laterComwList');

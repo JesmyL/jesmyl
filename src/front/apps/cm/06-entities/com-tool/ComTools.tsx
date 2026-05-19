@@ -3,6 +3,7 @@ import { mylib } from '#shared/lib/my-lib';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { cmComMaxFontSize, cmComMinFontSize } from '$cm/shared/const';
 import { ChordVisibleVariant } from '$cm/shared/model';
 import { cmIDB } from '$cm/shared/state';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
@@ -77,21 +78,21 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
             <TheIconButton
               className="minus"
               icon="MinusSign"
-              disabled={fontSize <= minFontSize}
-              onClick={() => cmComFontSizeAtom.set(changeFontSize(-1))}
+              disabled={fontSize <= cmComMinFontSize}
+              onClick={() => cmComFontSizeAtom.do.increment(-1)}
             />
 
             <Badge
               className={twMerge('min-w-13 flex justify-center bg-x2', fontSize < 0 ? 'text-x7' : 'text-x3')}
-              onClick={() => cmComFontSizeAtom.set(changeFontSize(0))}
+              onClick={() => cmComFontSizeAtom.set(fs => -fs)}
             >
               {fontSize < 0 ? 'auto' : fontSize}
             </Badge>
             <TheIconButton
               className="plus"
               icon="PlusSign"
-              disabled={fontSize < 0 || fontSize >= maxFontSize}
-              onClick={() => cmComFontSizeAtom.set(changeFontSize(1))}
+              disabled={fontSize < 0 || fontSize >= cmComMaxFontSize}
+              onClick={() => cmComFontSizeAtom.do.increment()}
             />
           </div>
         }
@@ -134,17 +135,4 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
       </div>
     </>
   );
-};
-
-const maxFontSize = 50;
-const minFontSize = 5;
-
-const changeFontSize = (delta: number) => {
-  return (prev: number) => {
-    if (delta === 0) return -prev;
-    if (delta < 0 && prev <= minFontSize) return prev;
-    if (delta > 0 && prev >= maxFontSize) return prev;
-
-    return prev + delta;
-  };
 };
