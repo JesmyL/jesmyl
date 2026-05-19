@@ -6,6 +6,9 @@ const shadowStyle: CSSProperties = {
   position: 'absolute',
   color: 'transparent',
   pointerEvents: 'none',
+  WebkitTextStroke: 0,
+  WebkitTextStrokeWidth: 0,
+  WebkitTextStrokeColor: '0',
 };
 
 export function FontSizeContain({ className, content, html, subUpdates, style }: FontSizeContainProps) {

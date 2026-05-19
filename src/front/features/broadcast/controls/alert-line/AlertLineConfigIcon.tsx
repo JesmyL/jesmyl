@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default function AlertLineConfigIcon({ config, isSelected, onClick }: Props) {
-  const background = takeScreenBroadcastBackgroundStyles(config);
+  const background = takeScreenBroadcastBackgroundStyles(config).background;
 
   return (
     <StypedIconContainer

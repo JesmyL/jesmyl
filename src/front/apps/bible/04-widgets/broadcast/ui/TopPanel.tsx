@@ -22,7 +22,7 @@ export const BibleBroadcastControlledTopPanel = function TopPanel(): JSX.Element
         </div>
         <BroadcastSlidePreview
           isPreview={isPreview}
-          onBgFileIdChange={boxes => updateConfig({ bgFileId: boxes[0].id })}
+          onBgFileIdChange={box => updateConfig({ bgFileId: box.id, withBg: true })}
         />
       </div>
       <BibleBroadcastList />

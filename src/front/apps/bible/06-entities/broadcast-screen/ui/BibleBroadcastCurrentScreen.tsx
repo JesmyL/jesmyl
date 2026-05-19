@@ -1,5 +1,6 @@
 import { currentBroadcastConfigiAtom, isBroadcastTextVisibleAtom } from '#features/broadcast/atoms';
 import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
+import { useScreenBroadcastFaceLineListeners } from '#features/broadcast/complect/config-line/hooks/listeners';
 import { useScreenBroadcastCurrentConfig } from '#features/broadcast/hooks/configs';
 import { useAtomValue } from 'atomaric';
 import { useBibleBroadcastScreenConfig } from '../../broadcast/config/configs';
@@ -12,6 +13,7 @@ export function BibleBroadcastScreenCurrentScreen(props: BroadcastScreenProps) {
   const isActualVisible = useAtomValue(isBroadcastTextVisibleAtom);
 
   const config = useScreenBroadcastCurrentConfig();
+  useScreenBroadcastFaceLineListeners();
 
   return (
     <BibleBroadcastScreenScreen

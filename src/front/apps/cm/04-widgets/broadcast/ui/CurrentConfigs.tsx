@@ -6,6 +6,7 @@ import { BackgroundConfigurator } from '#shared/ui/configurators/Background';
 import { ColorConfigurator } from '#shared/ui/configurators/Color';
 import { FontFamilyConfigurator } from '#shared/ui/configurators/FontFamily';
 import { FontWeightConfigurator } from '#shared/ui/configurators/FontWeight/ui';
+import { StrokeConfigurator } from '#shared/ui/configurators/Stroke';
 import { ScreenTranslateConfigurationTextAlign } from '#shared/ui/configurators/TextAlign';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
@@ -67,6 +68,10 @@ export const CmBroadcastCurrentScreenConfigurations = ({ currentConfig }: Props)
         />
 
         <ColorConfigurator
+          config={currentConfig}
+          updateConfig={update}
+        />
+        <StrokeConfigurator
           config={currentConfig}
           updateConfig={update}
         />

@@ -8,6 +8,7 @@ import { FontFamilyConfigurator } from '#shared/ui/configurators/FontFamily';
 import { FontSizeConfigurator } from '#shared/ui/configurators/FontSize';
 import { FontStyleConfigurator } from '#shared/ui/configurators/FontStyle';
 import { FontWeightConfigurator } from '#shared/ui/configurators/FontWeight/ui';
+import { StrokeConfigurator } from '#shared/ui/configurators/Stroke';
 import { TextInput } from '#shared/ui/TextInput';
 import { complectIDB } from '$index/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -98,6 +99,10 @@ const AlertLineConfigSettingsInnerWithConfig = ({
         />
       </div>
       <ColorConfigurator
+        config={config}
+        updateConfig={update}
+      />
+      <StrokeConfigurator
         config={config}
         updateConfig={update}
       />

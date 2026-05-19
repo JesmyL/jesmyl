@@ -2,6 +2,7 @@ import { ScreenBroadcastTextConfig } from '#features/broadcast/complect/model';
 import { ColorConfigurator } from '#shared/ui/configurators/Color';
 import { FontFamilyConfigurator } from '#shared/ui/configurators/FontFamily';
 import { FontWeightConfigurator } from '#shared/ui/configurators/FontWeight';
+import { StrokeConfigurator } from '#shared/ui/configurators/Stroke';
 import { ScreenTranslateConfigurationTextAlign } from '#shared/ui/configurators/TextAlign';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import {
@@ -60,6 +61,10 @@ export const CmBroadcastSubBlockConfigurator = ({
         onClick={() => putSubConfigUpdate(subKey, null, null)}
       />
       <ColorConfigurator
+        config={currentConfig.subs[subKey]}
+        updateConfig={update}
+      />
+      <StrokeConfigurator
         config={currentConfig.subs[subKey]}
         updateConfig={update}
       />

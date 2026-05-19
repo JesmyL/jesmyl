@@ -1,4 +1,5 @@
 import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
+import { makeBroadcastTextStroke } from '#features/broadcast/complect/defaults';
 import { takeScreenBroadcastBackgroundStyles } from '#features/broadcast/complect/hooks/background-styles';
 import { ScreenTranslateCurrentPositionConfigurators } from '#features/broadcast/complect/position/Position';
 import { mylib } from '#shared/lib/my-lib';
@@ -49,10 +50,8 @@ export const CmBroadcastScreen = (props: Props) => {
     nextSlideNode = (
       <CmBroadcastSubScreen
         config={
-          props.isNextChorded
-            ? props.cmConfig.subs.chorded
-              ? { ...props.cmConfig.subs.next, ...props.cmConfig.subs.chorded }
-              : props.cmConfig.subs.next
+          props.isNextChorded && props.cmConfig.subs.chorded
+            ? { ...props.cmConfig.subs.next, ...props.cmConfig.subs.chorded }
             : props.cmConfig.subs.next
         }
         win={props.win}
@@ -70,7 +69,7 @@ export const CmBroadcastScreen = (props: Props) => {
   return (
     <div
       className="relative full-size bg-black overflow-hidden"
-      style={{ background: takeScreenBroadcastBackgroundStyles(props.cmConfig) }}
+      style={takeScreenBroadcastBackgroundStyles(props.cmConfig)}
       ref={wrapperRef}
     >
       {background}
@@ -87,6 +86,7 @@ export const CmBroadcastScreen = (props: Props) => {
         style={{
           ['--direction' as 'left']: props.slideSwitchDir,
           ...style,
+          ...makeBroadcastTextStroke(props.cmConfig),
           opacity: props.isTechnicalText ? Math.min(+(style.opacity || 1) || 1, 0.3) : style.opacity,
         }}
         html={(isBlindMode && props.isChorded) || mylib.isArr(props.text) ? undefined : props.text}

@@ -9,7 +9,7 @@ import { useScreenBroadcastCurrentConfig } from '../hooks/configs';
 
 interface Props {
   isPreview?: boolean;
-  onBgFileIdChange: (fileBoxes: MyFileBox[]) => void;
+  onBgFileIdChange: (fileBox: MyFileBox) => void;
 }
 
 let isSettingsOpenAtom: Atom<boolean>;
@@ -22,7 +22,10 @@ export const BroadcastSlidePreview = ({ isPreview = true, onBgFileIdChange }: Pr
   return (
     <>
       <MyFilesUploader
-        onChange={boxes => [MyFileType.Image, MyFileType.Video].includes(boxes[0].type) && onBgFileIdChange(boxes)}
+        onChange={boxes => {
+          const box = boxes.find(b => [MyFileType.Image, MyFileType.Video].includes(b.type));
+          if (box) onBgFileIdChange(box);
+        }}
         className="pointer relative inline-block w-(--size) min-w-(--min-size) max-w-(--max-size) h-(--size) min-h-(--min-size) max-h-(--max-size) overflow-hidden text-x3 text-[14px] align-middle select-none whitespace-pre rounded-[20px]"
       >
         {!currentConfig ? (

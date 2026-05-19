@@ -1,9 +1,9 @@
 import { BibleBroadcastScreenConfig, useBibleBroadcastScreenScreenStyle } from '$bible/entities/broadcast';
+import { bibleTagControledContentGlobalCssNode } from '$bible/shared/const/bibleTagControledContentGlobalCssNode';
 import { verseTranslateTitleCssClassName, verseTranslateTitleCssVariableName } from '$bible/shared/const/ids';
 import { useBibleTextContentContext } from '$bible/shared/contexts/texts';
 import { useBibleBroadcastScreenFontSizeScreenAdapter } from '$bible/shared/lib';
 import styled from '@emotion/styled';
-import '../style/Content.scss';
 
 interface Props {
   screeni: number | und;
@@ -26,6 +26,7 @@ export function BibleBroadcastScreenContent(props: Props) {
 
   return (
     <>
+      {bibleTagControledContentGlobalCssNode}
       <StyledVerseText
         className="bible-tag-controled-content absolute flex center"
         style={screenStyle}

@@ -1,3 +1,4 @@
+import { makeBroadcastTextStroke } from '#features/broadcast/complect/defaults';
 import { complectIDB } from '$index/shared/state';
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -19,7 +20,11 @@ export const AlertLineSlideText = () => {
   return (
     <StyledAlertLineContainer style={styles}>
       <StyledAlertLine
-        style={{ top: `${top}%`, ...(withBg ? { background: bg, backgroundColor: bgColor } : {}) }}
+        style={{
+          top: `${top}%`,
+          ...(withBg ? { background: bg, backgroundColor: bgColor } : {}),
+          ...makeBroadcastTextStroke(styles),
+        }}
         $speed={config.speed}
       >
         <StyledItem>{text}</StyledItem>

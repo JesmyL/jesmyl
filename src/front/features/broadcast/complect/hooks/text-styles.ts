@@ -1,5 +1,5 @@
 import { CSSProperties, useMemo } from 'react';
-import { defaultScreenBroadcastTextConfig } from '../defaults';
+import { defaultScreenBroadcastTextConfig, makeBroadcastTextStroke } from '../defaults';
 import { ScreenBroadcastTextConfig } from '../model';
 
 export const useScreenBroadcastTextStyles = (config: ScreenBroadcastTextConfig | und) => {
@@ -13,6 +13,7 @@ export const useScreenBroadcastTextStyles = (config: ScreenBroadcastTextConfig |
       textAlign: theConfig.textAlign,
       fontStyle: theConfig.fontStyle,
       fontFamily: theConfig.fontFileId == null ? fontFamily : `'${theConfig.fontFileId}'`,
+      ...makeBroadcastTextStroke(theConfig),
     };
-  }, [theConfig.fontFileId, theConfig.fontStyle, theConfig.fontWeight, theConfig.textAlign]);
+  }, [theConfig]);
 };

@@ -1,20 +1,18 @@
-import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
-import { BroadcastWindow } from '#features/broadcast/hooks/windows';
+import { currentBroadcastConfigiAtom, useScreenBroadcastConfigsValue } from '#features/broadcast/atoms';
+import { useScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
+import { useUpdateScreenBroadcastConfig } from '#features/broadcast/hooks/with-config';
 import { isShowBroadcastInitialSlideAtom, isShowBroadcastTextAtom } from '#features/broadcast/initial-slide-context';
-import { ScreenBroadcastConfig } from '#features/broadcast/model';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
+import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import { itNNil } from 'shared/utils';
+import { itInvokeIt, itNNil } from 'shared/utils';
 
-const invokeEach = (cb: () => void) => cb();
-
-export const useScreenBroadcastFaceLineListeners = (
-  configs: ScreenBroadcastConfig[],
-  currentConfigi: number,
-  updateConfig: (configi: number, config: Partial<ScreenBroadcastConfig> | null) => void,
-  windows: readonly (nil | BroadcastWindow)[],
-) => {
+export const useScreenBroadcastFaceLineListeners = () => {
+  const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
   const currentConfigiRef = useActualRef(currentConfigi);
+  const configs = useScreenBroadcastConfigsValue();
+  const updateConfig = useUpdateScreenBroadcastConfig();
+  const windows = useScreenBroadcastWindows();
 
   useEffect(() => {
     const onKeyDown = async (event: KeyboardEvent) => {
@@ -93,7 +91,7 @@ export const useScreenBroadcastFaceLineListeners = (
     window.addEventListener('keydown', onKeyDown);
 
     return () => {
-      listeners.forEach(invokeEach);
+      listeners.forEach(itInvokeIt);
       window.removeEventListener('keydown', onKeyDown);
     };
   }, [configs, currentConfigiRef, updateConfig, windows]);

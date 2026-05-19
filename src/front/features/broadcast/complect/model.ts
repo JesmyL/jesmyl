@@ -6,6 +6,8 @@ import { MyFileBoxId } from 'x/my-files';
 
 export interface ScreenBroadcastSimpleTextConfig {
   color: string;
+  stroke?: string;
+  strokeW?: number;
   display?: ScreenTranslateConfigTypeDisplay;
   opacity?: number;
   fontStyle?: FontStyleType;

@@ -8,6 +8,7 @@ import { FontFamilyConfigurator } from '#shared/ui/configurators/FontFamily';
 import { FontStyleConfigurator } from '#shared/ui/configurators/FontStyle';
 import { FontWeightConfigurator } from '#shared/ui/configurators/FontWeight/ui';
 import { OpacityConfigurator } from '#shared/ui/configurators/Opacity';
+import { StrokeConfigurator } from '#shared/ui/configurators/Stroke';
 import { ScreenTranslateConfigurationTextAlign } from '#shared/ui/configurators/TextAlign';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { BibleBroadcastScreenConfig, useBibleBroadcastUpdateCurrentConfig } from '$bible/entities/broadcast';
@@ -34,6 +35,10 @@ export function BibleBroadcastCurrentScreenConfigurations({ currentConfig }: Pro
     <>
       <ScreenTranslateConfigurationNameChanger />
       <ColorConfigurator
+        config={currentConfig}
+        updateConfig={update}
+      />
+      <StrokeConfigurator
         config={currentConfig}
         updateConfig={update}
       />
@@ -64,6 +69,10 @@ export function BibleBroadcastCurrentScreenConfigurations({ currentConfig }: Pro
               config={currentConfig.insertedtext}
               updateConfig={putUpdateConfigInner('insertedtext')}
             />
+            <StrokeConfigurator
+              config={currentConfig.insertedtext}
+              updateConfig={putUpdateConfigInner('insertedtext')}
+            />
             <FontStyleConfigurator
               config={currentConfig.insertedtext}
               updateConfig={putUpdateConfigInner('insertedtext')}
@@ -83,6 +92,10 @@ export function BibleBroadcastCurrentScreenConfigurations({ currentConfig }: Pro
         <ExpandableContent title="Текст в [скобках]">
           <div className="ml-2">
             <ColorConfigurator
+              config={currentConfig.textinbrackets}
+              updateConfig={putUpdateConfigInner('textinbrackets')}
+            />
+            <StrokeConfigurator
               config={currentConfig.textinbrackets}
               updateConfig={putUpdateConfigInner('textinbrackets')}
             />
@@ -108,6 +121,10 @@ export function BibleBroadcastCurrentScreenConfigurations({ currentConfig }: Pro
               config={currentConfig.godswords}
               updateConfig={putUpdateConfigInner('godswords')}
             />
+            <StrokeConfigurator
+              config={currentConfig.godswords}
+              updateConfig={putUpdateConfigInner('godswords')}
+            />
             <FontStyleConfigurator
               config={currentConfig.godswords}
               updateConfig={putUpdateConfigInner('godswords')}
@@ -122,6 +139,10 @@ export function BibleBroadcastCurrentScreenConfigurations({ currentConfig }: Pro
       <ExpandableContent title="Ссылка">
         <div className="ml-2">
           <ColorConfigurator
+            config={currentConfig.address}
+            updateConfig={putUpdateConfigInner('address')}
+          />
+          <StrokeConfigurator
             config={currentConfig.address}
             updateConfig={putUpdateConfigInner('address')}
           />
