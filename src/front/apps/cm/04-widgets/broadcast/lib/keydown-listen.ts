@@ -13,11 +13,6 @@ export const useCmBroadcastScreenKeyDownListen = () => {
   useEffect(() => {
     const onKeyBroadcast = async (event: KeyboardEvent) => {
       switch (event.code) {
-        case 'F5':
-        case 'KeyR':
-          if (!event.ctrlKey) return;
-          // just prevent default + stop propagation
-          break;
         case 'ArrowUp':
           if (!event.ctrlKey) return;
           comActionsRef.current.prevCom();
