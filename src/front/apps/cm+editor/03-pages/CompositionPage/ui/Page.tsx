@@ -35,7 +35,7 @@ export const CmEditorCompositionPage = ({
   const checkAccess = useCheckUserAccessRightsInScope();
   const TabComponent =
     (tab &&
-      cmEditorComTabCompositionNavs[tab]?.checkTabAccess(checkAccess) &&
+      checkAccess('cm', cmEditorComTabCompositionNavs[tab]?.scope) &&
       cmEditorComTabCompositionNavs[tab]?.Component) ||
     cmEditorComTabCompositionNavs.watch.Component;
 
@@ -99,34 +99,33 @@ export const CmEditorCompositionPage = ({
           {mylib.isNaN(ccomw) || <CmEditorCompositionBusyInfo comw={ccomw} />}
 
           <div className="flex justify-around gap-x-2 px-2 sticky nav-panel overflow-auto no-scrollbar">
-            {MyLib.entries(cmEditorComTabCompositionNavs).map(([tab, { icon, checkTabAccess }]) => {
-              if (!checkTabAccess(checkAccess)) return null;
-
-              return (
-                <Link
-                  key={tab}
-                  to={'/cm/edit/coms/$comw/$tab'}
-                  params={{ comw: `${ccom.wid}`, tab }}
-                  className="pointer"
-                >
-                  {({ isActive }) =>
-                    icon ? (
-                      isActive ? (
-                        <TheIconButton
-                          icon={icon}
-                          className="text-x7"
-                        />
-                      ) : (
-                        <TheIconButton
-                          icon={icon}
-                          kind="BulkRounded"
-                        />
-                      )
-                    ) : null
-                  }
-                </Link>
-              );
-            })}
+            {MyLib.entries(cmEditorComTabCompositionNavs).map(
+              ([tab, { icon, scope }]) =>
+                checkAccess('cm', scope) && (
+                  <Link
+                    key={tab}
+                    to="/cm/edit/coms/$comw/$tab"
+                    params={{ comw: `${ccom.wid}`, tab }}
+                    className="pointer"
+                  >
+                    {({ isActive }) =>
+                      icon ? (
+                        isActive ? (
+                          <TheIconButton
+                            icon={icon}
+                            className="text-x7"
+                          />
+                        ) : (
+                          <TheIconButton
+                            icon={icon}
+                            kind="BulkRounded"
+                          />
+                        )
+                      ) : null
+                    }
+                  </Link>
+                ),
+            )}
           </div>
 
           {isOpenPlayer && !!ccom.audio?.length && (

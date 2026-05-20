@@ -1,7 +1,7 @@
-import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { CmEditorTabComAudioMarks } from '$cm+editor/widgets/TabComAudioMarks';
 import { CmEditorTabComRepeats } from '$cm+editor/widgets/TabComRepeats';
+import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
 import { CmEditorComTabAudio } from '../ui/TabComAudio';
 import { CmEditorComTabCategoryBinds } from '../ui/TabComCategoryBinds';
 import { CmEditorComTabChordApplications } from '../ui/TabComChordApplications';
@@ -17,68 +17,68 @@ export const cmEditorComTabCompositionNavs = {
   watch: {
     Component: CmEditorComTabWatch,
     icon: 'View',
-    checkTabAccess: checkAccess => checkAccess('cm', 'COM'),
+    scope: 'COM',
   },
   aps: {
     Component: CmEditorComTabChordApplications,
     icon: 'Umbrella',
-    checkTabAccess: checkAccess => checkAccess('cm', 'COM_APPS'),
+    scope: 'COM_APPS',
   },
   ord: {
     Component: CmEditorComTabComOrders,
     icon: 'DistributeVerticalTop',
-    checkTabAccess: checkAccess => checkAccess('cm', 'COM_ORD'),
+    scope: 'COM_ORD',
   },
   txt: {
     Component: CmEditorComTabTextBlocks,
     icon: 'TextVerticalAlignment',
-    checkTabAccess: checkAccess => checkAccess('cm', 'COM_TXT'),
+    scope: 'COM_TXT',
   },
   ch: {
     Component: CmEditorComTabChordsBlocks,
     icon: 'Playlist03',
-    checkTabAccess: checkAccess => checkAccess('cm', 'COM_CH'),
+    scope: 'COM_CH',
   },
   audio: {
     Component: CmEditorComTabAudio,
     icon: 'Voice',
-    checkTabAccess: checkAccess => checkAccess('cm', 'COM_AUDIO'),
+    scope: 'COM_AUDIO',
   },
   points: {
     Component: CmEditorTabComAudioMarks,
     icon: 'PinLocation01',
-    checkTabAccess: checkAccess => checkAccess('cm', 'COM_AMARK'),
+    scope: 'COM_AMARK',
   },
   cat: {
     Component: CmEditorComTabCategoryBinds,
     icon: 'BookOpen02',
-    checkTabAccess: checkAccess => checkAccess('cm', 'COM_CAT'),
+    scope: 'COM_CAT',
   },
   rep: {
     Component: CmEditorTabComRepeats,
     icon: 'Layers01',
-    checkTabAccess: checkAccess => checkAccess('cm', 'COM_REP'),
+    scope: 'COM_REP',
   },
   tr: {
     Component: CmEditorComTabComOnBroadcast,
     icon: 'Computer',
-    checkTabAccess: checkAccess => checkAccess('cm', 'COM_TR'),
+    scope: 'COM_TR',
   },
   ref: {
     Component: CmEditorComTabComRefs,
     icon: 'Link01',
-    checkTabAccess: checkAccess => checkAccess('cm', 'COM_REF'),
+    scope: 'COM_REF',
   },
   main: {
     Component: CmEditorComTabMain,
     icon: 'SchoolReportCard',
-    checkTabAccess: checkAccess => checkAccess('cm', 'COM_MAIN'),
+    scope: 'COM_MAIN',
   },
 } satisfies Record<
   string,
   {
     Component: (props: { ccom: EditableCom }) => React.ReactNode;
     icon: KnownStameskaIconName;
-    checkTabAccess: (checker: ReturnType<typeof useCheckUserAccessRightsInScope>) => void;
+    scope: keyof OmitOwn<IndexAppAccessRightTitles['cm'], 'info'>;
   }
 >;
