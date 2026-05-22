@@ -37,7 +37,7 @@ export const CmEditorComTabComNewLiner = ({ ccom }: { ccom: EditableCom }) => {
 
   return (
     <>
-      <div className="absolute left-12 top-30 h-full w-53 bg-x2 opacity-25 z-0" />
+      <div className="absolute pointers-none left-12 top-30 h-full w-53 bg-x2 opacity-25 z-0" />
       {lineGroups.map((group, groupi) => (
         <div
           key={groupi}
