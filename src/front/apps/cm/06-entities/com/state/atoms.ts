@@ -19,7 +19,7 @@ export const cmComTopToolsAtom = atom<MigratableComToolName[]>(
 
 export const cmComFontSizeAtom = atom(16, {
   storageKey: 'cm:comFontSize',
-  filter: fontSize => Math.abs(fontSize) >= cmComMinFontSize && Math.abs(fontSize) <= cmComMaxFontSize,
+  map: (val, prev) => (Math.abs(val) >= cmComMinFontSize && Math.abs(val) <= cmComMaxFontSize ? val : prev),
 });
 
 export const cmComSpeedRollKfAtom = atom(10, 'cm:speedRollKf');
