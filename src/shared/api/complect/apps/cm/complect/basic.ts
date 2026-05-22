@@ -1,6 +1,5 @@
 import { CmCatKind } from '$cm/entities/cat/model/Cat.model';
 import { StrRegExp } from 'regexpert';
-import { CmBroadcastSlideGrouperKind } from 'shared/model/cm/broadcast';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 import {
@@ -134,9 +133,8 @@ export type IExportableCom = IExportableComInterpretationSimpleValues & {
   /** время изменения */
   m: CmComMod;
 
-  /** вариант группировки строк для трансляций */
-  k?: CmBroadcastSlideGrouperKind;
-  k2?: CmBroadcastSlideGrouperKind;
+  /** разбивка текстов на линии */
+  nl?: [PRecord<CmComOrderWid, CmComNewlinerStrConfig>];
 
   /** бемольная ли песня */
   b?: num;
@@ -175,6 +173,10 @@ export type IServerSideCom = OmitOwn<IExportableCom, 'al' | 'm'> & { al?: HttpNu
 export const enum CmComCommentBlockSpecialSelector {
   Head = 'h',
   Kinds = 'k',
+}
+
+export const enum CmComNewlinerStrConfig {
+  def = '15.-2 9.01',
 }
 
 export type CmComCommentBlockSimpleSelector = CmComOrderSelector | CmComCommentBlockSpecialSelector.Head;

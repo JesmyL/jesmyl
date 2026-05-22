@@ -2,11 +2,10 @@ import { propsOfClicker } from '#shared/lib/clicker/propsOfClicker';
 import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { CmCom } from '$cm/ext';
 import {
   useCmBroadcastClose,
   useCmBroadcastScreenComNavigations,
-  useCmBroadcastScreenComTextNavigations,
+  useCmBroadcastSlidesContext,
 } from '$cm/features/broadcast';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -24,10 +23,9 @@ export const CmBroadcastFullscreen = () => {
   const [forceUpdates, forceUpdate] = useReducer(forceUpdater, 0);
   const isShowInfo = useAtomValue(isShowInfoAtom);
 
-  const { text, nextSlide, prevSlide } = useCmBroadcastScreenComTextNavigations();
+  const { html, toNextSlide, toPrevSlide } = useCmBroadcastSlidesContext();
   const { nextCom, prevCom } = useCmBroadcastScreenComNavigations();
   const closeBroadcast = useCmBroadcastClose();
-  const html = CmCom.prepareEachTextLine([text ?? ''])[0];
 
   useEffect(() => {
     window.addEventListener('resize', forceUpdate);
@@ -81,7 +79,7 @@ export const CmBroadcastFullscreen = () => {
           />
           <div
             className="bottom-area info-area bottom-(--safe-gap) left-(--safe-gap) pointer"
-            onClick={prevSlide}
+            onClick={toPrevSlide}
           >
             <div className="description">
               клик&nbsp;-
@@ -91,7 +89,7 @@ export const CmBroadcastFullscreen = () => {
           </div>
           <div
             className="bottom-area info-area bottom-(--safe-gap) right-(--safe-gap) pointer"
-            onClick={nextSlide}
+            onClick={toNextSlide}
           >
             <div className="description">
               клик&nbsp;-

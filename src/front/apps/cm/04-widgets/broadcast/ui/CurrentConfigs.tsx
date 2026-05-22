@@ -8,7 +8,6 @@ import { FontFamilyConfigurator } from '#shared/ui/configurators/FontFamily';
 import { FontWeightConfigurator } from '#shared/ui/configurators/FontWeight/ui';
 import { StrokeConfigurator } from '#shared/ui/configurators/Stroke';
 import { ScreenTranslateConfigurationTextAlign } from '#shared/ui/configurators/TextAlign';
-import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { useCallback } from 'react';
 import { cmBroadcastSubConfigNext } from '../const/defaults';
@@ -55,17 +54,6 @@ export const CmBroadcastCurrentScreenConfigurations = ({ currentConfig }: Props)
     <ExpandableContent title="Настроить">
       <div className="ml-2">
         <ScreenTranslateConfigurationNameChanger />
-
-        <Dropdown
-          id={currentConfig.pushKind}
-          label="Разбивка строк"
-          undTitle="так как есть"
-          items={[
-            { id: '1', title: 'фрагменты' },
-            { id: '2', title: 'минимальный' },
-          ]}
-          onSelectId={pushKind => updateConfig({ pushKind })}
-        />
 
         <ColorConfigurator
           config={currentConfig}

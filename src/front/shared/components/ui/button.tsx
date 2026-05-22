@@ -25,7 +25,8 @@ const buttonVariants = cva(
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',
-        sm: 'h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5',
+        sm: 'h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5 [&_svg]:scale-90!',
+        sx: 'h-5 rounded-sm gap-1.1 px-2 has-[>svg]:px-2 [&_svg]:scale-70!',
         lg: 'h-10 rounded-md px-6 has-[>svg]:px-4',
         icon: 'size-9',
       },
@@ -71,7 +72,7 @@ function Button({
       className={cn(
         buttonVariants({
           variant,
-          size: icon && !children ? 'icon' : size,
+          size: icon && !children && !size ? 'icon' : size,
           className: [disabled && 'opacity-50', className],
         }),
       )}

@@ -15,7 +15,7 @@ import { CmComFaceList } from '$cm/entities/com-face';
 import { CmComToolHideMetronome } from '$cm/entities/com-tool';
 import { CmComListPackKindSelector } from '$cm/entities/ComListPackKindSelector';
 import { CmCom, CmComAudioPlayerMarksMovers } from '$cm/ext';
-import { useCmBroadcastScreenComNavigations, useCmBroadcastScreenComTextNavigations } from '$cm/features/broadcast';
+import { useCmBroadcastScreenComNavigations, useCmBroadcastSlidesContext } from '$cm/features/broadcast';
 import { getCmComFreshAudioMarksPack } from '$cm/shared/lib/getFresh';
 import { cmComTrackPreSwitchTimeAtom, cmIsTrackBroadcastAtom } from '$cm/shared/state';
 import { cmPlayerBroadcastAudioSrcAtom, cmPlayerBroadcastComwAtom } from '$cm/shared/state/broadcast.atoms';
@@ -47,7 +47,7 @@ export function CmBroadcastControlled(props: Props) {
   const updateCmConfig = useCmBroadcastUpdateCurrentConfig();
 
   const { comPack, coms } = useCmBroadcastScreenComNavigations();
-  const setSlidei = useCmBroadcastScreenComTextNavigations().setSlidei;
+  const { setSlidei } = useCmBroadcastSlidesContext();
   const linkToCom = useCmComOpenComLinkRendererContext();
 
   let comList = props.comList ?? coms;

@@ -1,10 +1,11 @@
 import { BibleBroadcastScreenCurrentScreen } from '$bible/entities/broadcast-screen/ui/BibleBroadcastCurrentScreen';
 import { BibleCurrentTextsContext } from '$bible/shared/state/CurrentTextsContext';
 import { BibleTranslatesContextProvider } from '$bible/shared/state/TranslatesContext';
+import { CmBroadcastSlidesContext } from '$cm/features/broadcast';
 import { cmIsTrackBroadcastAtom } from '$cm/shared/state';
 import { CmBroadcastCurrentComTrackScreen } from '$cm/widgets/broadcast/ui/CurrentComTrackScreen';
 import { CmBroadcastCurrentScreen } from '$cm/widgets/broadcast/ui/CurrentScreen';
-import { css } from '@emotion/react';
+import { css, Global } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { broadcastCurrentTextAppAtom } from './atoms';
@@ -23,15 +24,15 @@ export const BroadcastScreen = (props: BroadcastScreenProps) => {
 
   return (
     <>
+      {globalsNode}
       {initialSlide && (
         <>
-          <div
+          <StyledBlackBoard
             key="StyledInitialSlide"
-            className="full-size bg-black"
             hidden={props.isPreview}
           >
             {initialSlide}
-          </div>
+          </StyledBlackBoard>
 
           {props.isPreview && (
             <StyledInfo
@@ -48,7 +49,6 @@ export const BroadcastScreen = (props: BroadcastScreenProps) => {
 
       <StyledNextSiblingVisibiliter
         key="StyledNextSiblingVisibiliter"
-        className="full-size bg-black"
         $isShowTranslatedText={isShowTranslatedText && !initialSlide}
       >
         <BroadcastTextScreen key="BroadcastTextScreen">
@@ -61,7 +61,9 @@ export const BroadcastScreen = (props: BroadcastScreenProps) => {
           ) : isTrackBroadcast ? (
             <CmBroadcastCurrentComTrackScreen {...props} />
           ) : (
-            <CmBroadcastCurrentScreen {...props} />
+            <CmBroadcastSlidesContext>
+              <CmBroadcastCurrentScreen {...props} />
+            </CmBroadcastSlidesContext>
           )}
         </BroadcastTextScreen>
       </StyledNextSiblingVisibiliter>
@@ -71,7 +73,23 @@ export const BroadcastScreen = (props: BroadcastScreenProps) => {
   );
 };
 
-const StyledNextSiblingVisibiliter = styled.div<{ $isShowTranslatedText: boolean }>`
+const globalsNode = (
+  <Global
+    styles={css`
+      html {
+        background: #000;
+      }
+    `}
+  />
+);
+
+const StyledBlackBoard = styled.div`
+  background: #000;
+  height: 100%;
+  width: 100%;
+`;
+
+const StyledNextSiblingVisibiliter = styled(StyledBlackBoard)<{ $isShowTranslatedText: boolean }>`
   ${props =>
     !props.$isShowTranslatedText &&
     css`

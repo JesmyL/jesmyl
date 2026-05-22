@@ -13,7 +13,6 @@ import { OrderRepeats } from 'shared/api';
 import { nbsp } from 'shared/utils/cm/com/const';
 import { twMerge } from 'tailwind-merge';
 import { CmEditorTabComRepeatsCountButtonPanel } from './CountButtonPanel';
-import { CmEditorTabComRepeatsShowBeatSlidesButton } from './ShowBeatSlidesButton';
 
 export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
   const [start, setStart] = useState<IEditableComLineProps | null>(null);
@@ -73,8 +72,6 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
 
   return (
     <Content className={twMerge(start != null && 'active', isCantRedact && 'disabled pointers-none')}>
-      <CmEditorTabComRepeatsShowBeatSlidesButton com={ccom} />
-
       {ccom.orders?.map((ord, ordi) => {
         if (!ord.isVisible) return null;
 

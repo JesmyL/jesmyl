@@ -1,9 +1,8 @@
 import { CmComOrder } from '$cm/ext';
 import { escapeRegExpSymbols, makeNamedRegExp, makeRegExp } from 'regexpert';
 import { CmComAudioMarkPackTime, CmComOrderWid } from 'shared/api';
-import { CmBroadcastMonolineSlide } from 'shared/model/cm/broadcast';
+import { CmBroadcastMonolineSlide, CmBroadcastSlideLine } from 'shared/model/cm/broadcast';
 import { capitalizeText, itIt } from 'shared/utils';
-import { doubleQuotesStr, slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 import { makeCmComAudioMarkTitleEmptySelector } from '../../makeCmComAudioMarkTitleBySelector';
 import { CmComChords } from './30-Chords';
 
@@ -29,48 +28,18 @@ export class CmComTexts extends CmComChords {
     );
   }
 
-  makeExpandedSolidFragmentedSlides = (expandedSlides: CmBroadcastMonolineSlide[]): CmBroadcastMonolineSlide[] => {
-    const wordsSumReduce = (sum: number, word: string) => sum + word.length;
-
-    return expandedSlides
-      .map(({ lines, ord, ...props }): CmBroadcastMonolineSlide[] => {
-        return lines.map((line): CmBroadcastMonolineSlide => {
-          const beats = line.split(lineBeatsSplitReg).filter(itIt);
-          let minDiff = line.length;
-          let minDiffi = 1;
-
-          for (let i = 1; i < beats.length; i++) {
-            const beforeCount = beats.slice(0, i).reduce(wordsSumReduce, 0);
-            const afterCount = beats.slice(i).reduce(wordsSumReduce, 0);
-
-            if (minDiff >= Math.abs(beforeCount - afterCount)) {
-              minDiff = Math.abs(beforeCount - afterCount);
-              minDiffi = i;
-            }
-          }
-
-          return {
-            lines: [beats.slice(0, minDiffi).join(' '), beats.slice(minDiffi).join(' ')],
-            ord,
-            ...props,
-          };
-        });
-      })
-      .flat();
-  };
-
-  makeExpandedSolidSlides = (): CmBroadcastMonolineSlide[][] => {
+  makeExpandGroupedLines = () => {
     let prevOrd: CmComOrder | null = null;
-    let prevFromLinei = -1;
+    let prevTotalLinei = -1;
 
-    const slides: CmBroadcastMonolineSlide[][] = [];
+    const slides: CmBroadcastSlideLine[][] = [];
 
-    this.makeExpandedSolidTextLines().forEach(slide => {
-      if (slide.ord !== prevOrd || slide.fromLinei < prevFromLinei) slides.push([]);
+    this.makeExpandLines().forEach(slide => {
+      if (slide.ord !== prevOrd || slide.totalLinei < prevTotalLinei) slides.push([]);
       slides[slides.length - 1].push(slide);
 
       prevOrd = slide.ord;
-      prevFromLinei = slide.fromLinei;
+      prevTotalLinei = slide.totalLinei;
     });
 
     return slides;
@@ -78,14 +47,13 @@ export class CmComTexts extends CmComChords {
 
   static prepareEachTextLine = (lines: string[] | nil, firstLineLetterToUpperCase = true) => {
     if (lines == null) return [];
-    lines = lines.map(line => line.slice(allStartDigits));
 
     return firstLineLetterToUpperCase
-      ? lines.map(line => (line?.length ? capitalizeText(line) : line)).filter(itIt)
+      ? lines.map(line => (line?.length ? capitalizeText(line).replace(makeRegExp('/[|]/g'), '') : line)).filter(itIt)
       : lines;
   };
 
-  makeExpandedSolidTextLines = (): CmBroadcastMonolineSlide[] => {
+  makeExpandLines = () => {
     try {
       const comOrders = this.ordersWithFinalChordedOrd();
       if (comOrders == null) return [];
@@ -99,39 +67,30 @@ export class CmComTexts extends CmComChords {
 
           const ordLines = (ord.isRealText() ? ord.repeatedText(undefined, false, false) : ord.me.header()).split('\n');
 
-          if (!ord.me.isInherit) {
-            blocki++;
-            headSolidOrders.push(ord);
-          }
+          blocki++;
+          headSolidOrders.push(ord);
 
           return ordLines
-            .map(line => {
-              totalLinei++;
-
-              return line.split(makeRegExp('/ *((?:/+&nbsp;)? *[|]) */')).map(lineLn => {
-                if (lineLn.trimEnd().endsWith('|')) return '';
-
-                return lineLn && `\n${padStart(blocki)}${padStart(totalLinei)}${lineLn}`;
-              });
-            })
+            .map((line, linei) => `\n${padStart(blocki)}${padStart(linei)}${padStart(++totalLinei)}${line}`)
             .flat()
             .join('\n');
         })
         .join('\n');
 
-      const allRepeatedLines = this._replaceRepeats(heapText).split(makeRegExp('/\\s*\n\\s*/'));
-      const slides: CmBroadcastMonolineSlide[] = [];
+      const allRepeatedLines = this._extendRepeats(heapText).split(makeRegExp('/\\s*\n\\s*/'));
+      const slides: CmBroadcastSlideLine[] = [];
 
       for (let i = 0; i < allRepeatedLines.length; i++) {
-        if (!allRepeatedLines[i]) continue;
-        const blockiStr = allRepeatedLines[i].slice(0, startDigits);
-        const ord = headSolidOrders[+blockiStr];
+        const line = allRepeatedLines[i];
+        if (!line) continue;
+        const blocki = CmComTexts.takeHeapLineBlocki(line);
 
         slides.push({
-          lines: [allRepeatedLines[i]],
-          ord,
-          fromLinei: 0,
-          toLinei: 0,
+          line: CmComTexts.takeClearHeapLine(line),
+          ord: headSolidOrders[blocki],
+          blocki,
+          totalLinei: CmComTexts.takeHeapLineTotalLinei(line),
+          ordLinei: CmComTexts.takeHeapLineLinei(line),
         });
       }
 
@@ -141,7 +100,54 @@ export class CmComTexts extends CmComChords {
     }
   };
 
-  private _replaceRepeats = (() => {
+  makeExpandSlides = (expandLines: CmBroadcastSlideLine[] = this.makeExpandLines()) => {
+    const slides: CmBroadcastMonolineSlide[] = [];
+    let prevSlide: CmBroadcastMonolineSlide | nil;
+    let prevOrdLinei: number;
+    let prevInitWordi: number;
+
+    expandLines.forEach(({ line, ord, ordLinei, totalLinei }) => {
+      const { configSet } = this.makeNewlinerSet(ord, ordLinei);
+
+      const lineWords = line.split(' ');
+      let prevWordi = 0;
+
+      const fillSlide = () => {
+        prevInitWordi = 0;
+
+        prevSlide = {
+          lines: [],
+          ord,
+          fromLinei: totalLinei,
+          toLinei: 0,
+        };
+
+        slides.push(prevSlide);
+
+        return prevSlide;
+      };
+
+      configSet.add(lineWords.length + 1);
+      if (prevOrdLinei >= ordLinei || !prevSlide) prevSlide = fillSlide();
+      prevOrdLinei = ordLinei;
+
+      configSet.forEach(initWordi => {
+        if (prevInitWordi < 0 || !prevSlide) prevSlide = fillSlide();
+        prevInitWordi = initWordi;
+
+        const wordi = Math.abs(initWordi) - 1;
+        if (!wordi) return;
+
+        prevSlide.toLinei = totalLinei + 1;
+        prevSlide.lines.push(lineWords.slice(prevWordi, wordi).join(' '));
+        prevWordi = wordi;
+      });
+    });
+
+    return slides.filter(({ lines }) => lines.length);
+  };
+
+  private _extendRepeats = (() => {
     const startFlagContent = '[*{' as const;
     const endFlagContent = ']*}' as const;
 
@@ -204,22 +210,18 @@ export class CmComTexts extends CmComChords {
     };
   })();
 
-  static takeLineiFromHeapLine = (line: string | nil) => +(line?.slice(startDigits, allStartDigits) || 0);
+  static takeHeapLineTotalLinei = (line: string | nil) => +(line?.slice(startDigits * 2, allStartDigits) || 0);
+  static takeHeapLineLinei = (line: string | nil) => +(line?.slice(startDigits, startDigits * 2) || 0);
+  static takeHeapLineBlocki = (line: string | nil) => +(line?.slice(0, startDigits) || 0);
+  static takeClearHeapLine = (line: string | nil) => line?.slice(allStartDigits) || '';
 }
 
 const startDigits = 5;
-const allStartDigits = startDigits * 2;
+const allStartDigits = startDigits * 3;
 const padStart = (num: number) => `${num}`.padStart(startDigits, '0');
 
 const repeatsRegBox = makeNamedRegExp(
   // regexpert:
   // stringify $0
   `/(?<lead>(^|\\n)\\d{${allStartDigits}})(?<before>.*?)(?<start>/+)(?:&nbsp;)?(?<content>[^\\\\/]*?)(?:&nbsp;)?(?<end>\\\\+)(?<endNl>\\n?)/g`,
-);
-
-const somePrep = `[.,:;!?${doubleQuotesStr}]*`;
-const someRuBeat = `[${doubleQuotesStr}]*[${slavicLowerLettersStr}]{1,2}${somePrep}`;
-const slavicLetter = `[${doubleQuotesStr}]*[${slavicLowerLettersStr}]+${somePrep}(?: \\d+|(?: [${slavicLowerLettersStr}—]{1,2}){1,2}$)?`;
-const lineBeatsSplitReg = makeRegExp(
-  `/([${slavicLowerLettersStr}]+-${slavicLetter})|(${someRuBeat} ${someRuBeat} ${slavicLetter})|(${someRuBeat} ${slavicLetter})|(${slavicLetter})|[ ]+/i`,
 );

@@ -1,20 +1,16 @@
-import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
-import { CmCom } from '$cm/ext';
-import { useCmBroadcastMinimalConfigSlides, useCmBroadcastScreenComTextNavigations } from '$cm/features/broadcast';
+import { useCmBroadcastSlidesContext } from '$cm/features/broadcast';
 import { CmBroadcastShowChordedSlideMode } from '$cm/shared/model';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
 import { twMerge } from 'tailwind-merge';
 
 export const CmBroadcastSlideLine = () => {
-  const { currentSlidei, setSlidei } = useCmBroadcastScreenComTextNavigations();
-  const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
-  const { minimalSlides, isFragments } = useCmBroadcastMinimalConfigSlides(currentConfigi);
+  const { currentSlidei, setSlidei, slides } = useCmBroadcastSlidesContext();
   const showChordedSlideMode = useAtomValue(cmShowChordedSlideModeAtom);
 
   return (
     <div className="no-scrollbar snap-x snap-mandatory flex my-2 bg-x1 py-2 overflow-auto nowrap rounded-md">
-      {minimalSlides.map((slide, slidei) => {
+      {slides.map((slide, slidei) => {
         if (!slide || (showChordedSlideMode === CmBroadcastShowChordedSlideMode.Hide && !slide.ord.isRealText()))
           return;
 
@@ -38,11 +34,7 @@ export const CmBroadcastSlideLine = () => {
                       : 'italic underline'),
               )}
             >
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: CmCom.prepareEachTextLine(slide.lines, !isFragments).join('\n'),
-                }}
-              />
+              <div dangerouslySetInnerHTML={{ __html: slide.lines.join('\n') }} />
             </div>
           </div>
         );

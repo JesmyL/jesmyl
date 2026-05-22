@@ -6,7 +6,7 @@ import { cmOpenComListModeAtom } from '$cm/shared/state';
 import { useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
-import { useCmBroadcastScreenComTextNavigations } from './useCmBroadcastScreenComTextNavigations';
+import { useCmBroadcastSlidesContext } from '../state/slides';
 
 export const useCmBroadcastScreenComNavigations = () => {
   const favourite = useCmComFavouriteList();
@@ -30,7 +30,7 @@ export const useCmBroadcastScreenComNavigations = () => {
   const comPack = useCmComCurrentComPackContext();
   const coms =
     openListMode === 'fav' ? favourite.favouriteComs : openListMode === 'sel' ? selected.selectedComs : comPack.list;
-  const { setSlidei } = useCmBroadcastScreenComTextNavigations();
+  const { setSlidei } = useCmBroadcastSlidesContext();
 
   return {
     coms,

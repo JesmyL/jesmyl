@@ -114,6 +114,15 @@ export const setPolyfills = () => {
         return differenceSet;
       };
     }
+
+    if (!setPrototype.symmetricDifference) {
+      setPrototype.symmetricDifference = function (otherSet: Set<unknown>) {
+        const differenceSet = new (globalThis as any).Set();
+        for (const elem of this) if (!otherSet.has(elem)) differenceSet.add(elem);
+        for (const elem of otherSet as never as []) if (!this.has(elem)) differenceSet.add(elem);
+        return differenceSet;
+      };
+    }
   })();
 };
 

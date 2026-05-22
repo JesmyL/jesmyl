@@ -1,13 +1,13 @@
 import { ScreenBroadcastControlPanel } from '#features/broadcast/controls/ControllPanel';
-import { useCmBroadcastScreenComTextNavigations } from '$cm/features/broadcast';
+import { useCmBroadcastSlidesContext } from '$cm/features/broadcast';
 
 export const CmBroadcastControlPanel = () => {
-  const { nextSlide, prevSlide } = useCmBroadcastScreenComTextNavigations();
+  const { toNextSlide, toPrevSlide } = useCmBroadcastSlidesContext();
 
   return (
     <ScreenBroadcastControlPanel
-      onNext={nextSlide}
-      onPrev={prevSlide}
+      onNext={toNextSlide}
+      onPrev={toPrevSlide}
     />
   );
 };

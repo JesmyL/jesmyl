@@ -1,5 +1,10 @@
-import { CmComIntensityLevel, CmComWid, HttpNumLeadLink, IExportableCom } from 'shared/api/complect/apps';
-import { CmBroadcastSlideGrouperKindSingleValue, CmBroadcastSlideGrouperOrdCombiner } from 'shared/model/cm/broadcast';
+import {
+  CmComIntensityLevel,
+  CmComOrderWid,
+  CmComWid,
+  HttpNumLeadLink,
+  IExportableCom,
+} from 'shared/api/complect/apps';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 
 type SimpleComValueSetter<Value> = (args: { comw: CmComWid; value: Value }) => IExportableCom;
@@ -16,12 +21,6 @@ export type CmEditComTsjrpcModel = {
   changeTon: SimpleComValueSetter<number>;
   makeBemoled: SimpleComValueSetter<num>;
 
-  changePushKind: (args: {
-    comw: CmComWid;
-    value: CmBroadcastSlideGrouperKindSingleValue;
-    setGroupValue?: { linesLen: number; rule: number; keys: (keyof CmBroadcastSlideGrouperOrdCombiner)[] };
-    isK2: boolean;
-  }) => IExportableCom;
   toggleAudioLink: (args: { comw: CmComWid; link: HttpNumLeadLink }) => void;
 
   changeChordBlock: (args: { texti: number; comw: CmComWid; value: string }) => IExportableCom;
@@ -37,4 +36,15 @@ export type CmEditComTsjrpcModel = {
   bringBackToLife: (args: { comw: CmComWid }) => IExportableCom;
 
   takeRemovedComs: () => IExportableCom[];
+
+  switchNewlinerWord: (args: { comw: CmComWid; ordw: CmComOrderWid; linei: number; wordi: number }) => void;
+
+  switchNewlinerBr: (args: { comw: CmComWid; ordw: CmComOrderWid; linei: number; wordi: number }) => void;
+
+  pullNewlinerLineConfig: (args: {
+    comw: CmComWid;
+    ordw: CmComOrderWid;
+    watchOrdw: CmComOrderWid;
+    linei: number;
+  }) => void;
 };

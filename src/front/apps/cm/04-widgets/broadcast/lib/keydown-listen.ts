@@ -1,6 +1,6 @@
 import { useScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
-import { useCmBroadcastScreenComNavigations, useCmBroadcastScreenComTextNavigations } from '$cm/features/broadcast';
+import { useCmBroadcastScreenComNavigations, useCmBroadcastSlidesContext } from '$cm/features/broadcast';
 import { useEffect } from 'react';
 
 const win = { win: window };
@@ -8,7 +8,7 @@ const win = { win: window };
 export const useCmBroadcastScreenKeyDownListen = () => {
   const windows = useScreenBroadcastWindows();
   const comActionsRef = useActualRef(useCmBroadcastScreenComNavigations());
-  const comTextActionsRef = useActualRef(useCmBroadcastScreenComTextNavigations());
+  const comTextActionsRef = useActualRef(useCmBroadcastSlidesContext());
 
   useEffect(() => {
     const onKeyBroadcast = async (event: KeyboardEvent) => {
@@ -24,11 +24,11 @@ export const useCmBroadcastScreenKeyDownListen = () => {
           break;
 
         case 'ArrowLeft':
-          comTextActionsRef.current.prevSlide();
+          comTextActionsRef.current.toPrevSlide();
           break;
 
         case 'ArrowRight':
-          comTextActionsRef.current.nextSlide();
+          comTextActionsRef.current.toNextSlide();
           break;
 
         default:

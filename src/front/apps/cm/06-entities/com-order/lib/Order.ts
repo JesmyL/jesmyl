@@ -124,10 +124,13 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
     return region ? region.count + '' : '';
   }
 
+  private _re: OrderRepeats | nil;
   get repeats(): OrderRepeats | null {
+    if (this._re !== undefined) return this._re;
+
     if (this.me.isAnchorInherit) {
-      return (this.me.leadOrd?.me.source?.top._r?.[this.me.anchorInheritIndex || 0] ?? 0) as never;
-    } else if (this.me && this.me.source && this.me.source.top.r != null) return this.me.source.top.r;
+      this._re = this.me.leadOrd?.me.source?.top._r?.[this.me.anchorInheritIndex || 0] ?? 0;
+    } else if (this.me && this.me.source && this.me.source.top.r != null) this._re = this.me.source.top.r;
     else {
       const repeats =
         this.me.repeats ?? this.me?.targetOrd?.me.source?.top.r ?? this.getWatchInheritance('r') ?? this.top.r;
@@ -135,14 +138,18 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
       const nrepeats = {} as SpecialOrderRepeats;
       const reg = makeRegExp('/[a-z]/i', 0);
 
-      return MyLib.entries((repeats && (mylib.isNum(repeats) ? { '.': repeats } : repeats)) || nrepeats).reduce(
+      this._re = MyLib.entries((repeats && (mylib.isNum(repeats) ? { '.': repeats } : repeats)) || nrepeats).reduce(
         (acc, [key, val]) => {
           if (!reg.exec(key)) acc[key] = val;
           return acc;
         },
         nrepeats,
       );
+
+      if (!mylib.keys(this._re).length) this._re = 0;
     }
+
+    return this._re;
   }
 
   get regions(): CmComOrderEditableRegion<CmComOrder>[] | und {

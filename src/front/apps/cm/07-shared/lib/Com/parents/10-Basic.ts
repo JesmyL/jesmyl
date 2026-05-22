@@ -1,5 +1,4 @@
 import { IExportableCom, IExportableComInterpretation } from 'shared/api';
-import { CmBroadcastSlideGrouperKind } from 'shared/model/cm/broadcast';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { cmComLanguages } from 'shared/utils/cm/com/const';
 import { BaseNamed } from '../../BaseNamed';
@@ -40,10 +39,6 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
 
   get audio() {
     return this.getBasicOr('al', []);
-  }
-
-  broadcastPushKind(version: 'k' | 'k2', def: CmBroadcastSlideGrouperKind = 0) {
-    return this.getBasicOr(version, def);
   }
 
   get initialTransPosition() {

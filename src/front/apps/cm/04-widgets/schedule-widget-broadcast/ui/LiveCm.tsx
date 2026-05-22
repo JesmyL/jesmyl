@@ -3,11 +3,14 @@ import { isShowBroadcastTextAtom } from '#features/broadcast/initial-slide-conte
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
 import { useCmComCurrent } from '$cm/entities/com';
-import { CmCom } from '$cm/ext';
-import { useCmBroadcastMinimalConfigSlides, useCmBroadcastScreenComNavigations } from '$cm/features/broadcast';
+import {
+  CmBroadcastSlidesContext,
+  useCmBroadcastScreenComNavigations,
+  useCmBroadcastSlidesContext,
+} from '$cm/features/broadcast';
 import { LiveBroadcastAppProps } from '$cm/shared/model';
-import { cmIsTrackBroadcastAtom } from '$cm/shared/state';
-import { CmBroadcastControlled } from '$cm/widgets/broadcast';
+import { cmIsTrackBroadcastAtom, cmShowChordedSlideModeAtom } from '$cm/shared/state';
+import { CmBroadcastControlled, useCmBroadcastScreenConfigs } from '$cm/widgets/broadcast';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
@@ -18,41 +21,39 @@ export const CmScheduleWidgetBroadcastLiveCm = (props: LiveBroadcastAppProps) =>
 
   return (
     <>
-      {isTrackBroadcast || <LiveReport {...props} />}
-      <CmBroadcastControlled
-        comList={coms}
-        headTitle={props.headTitle}
-        head={
-          <LazyIcon
-            icon="BookOpen02"
-            className="pointer mr-2"
-            onClick={broadcastCurrentTextAppAtom.do.switch}
-          />
-        }
-      />
+      <CmBroadcastSlidesContext>
+        {isTrackBroadcast || <LiveReport {...props} />}
+        <CmBroadcastControlled
+          comList={coms}
+          headTitle={props.headTitle}
+          head={
+            <LazyIcon
+              icon="BookOpen02"
+              className="pointer mr-2"
+              onClick={broadcastCurrentTextAppAtom.do.switch}
+            />
+          }
+        />
+      </CmBroadcastSlidesContext>
     </>
   );
 };
 
 const LiveReport = (props: LiveBroadcastAppProps) => {
   const ccom = useCmComCurrent();
-  const {
-    currentSlidei,
-    selfSlides,
-    selfConfig,
-    nextSlidei,
-    showChordedSlideMode: chordedMode,
-    isFragments,
-  } = useCmBroadcastMinimalConfigSlides(0);
+  const selfConfig = useCmBroadcastScreenConfigs()[0];
+  const chordedMode = useAtomValue(cmShowChordedSlideModeAtom);
   const dir = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
   const isHide = !useAtomValue(isShowBroadcastTextAtom);
+
+  const { currentSlidei, html, nextSlidei, slides, nextHtml } = useCmBroadcastSlidesContext();
 
   useEffect(() => {
     if (props.isCantTranslateLive || !ccom) return;
 
     return setTimeoutEffect(() => {
-      const currentSlide = selfSlides[currentSlidei];
-      const nextSlide = selfSlides[nextSlidei];
+      const currentSlide = slides[currentSlidei];
+      const nextSlide = slides[nextSlidei];
 
       const liveData: IndexSchWBroadcastLiveDataValue = {
         fio: props.fio,
@@ -65,10 +66,10 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
           fromLinei: currentSlide?.fromLinei ?? 0,
           toLinei: currentSlide?.toLinei ?? 0,
 
-          text: isFragments ? (currentSlide?.lines ?? '') : CmCom.prepareEachTextLine(currentSlide?.lines).join('\n'),
+          text: html,
           isChorded: !currentSlide?.ord.isRealText(),
 
-          nextText: CmCom.prepareEachTextLine(nextSlide?.lines, !isFragments).join(isFragments ? ' ' : '\n'),
+          nextText: nextHtml,
           isNextChorded: !nextSlide?.ord.isRealText(),
           dir,
           chordedMode,
@@ -84,12 +85,13 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
     props.fio,
     props.isCantTranslateLive,
     props.schedule.w,
-    selfSlides,
     nextSlidei,
     dir,
-    chordedMode,
-    isFragments,
     isHide,
+    slides,
+    html,
+    nextHtml,
+    chordedMode,
   ]);
 
   return <></>;
