@@ -1,6 +1,7 @@
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
+import { makeRegExp } from 'regexpert';
 import { CmComWid } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
 import { trimTextLines } from 'shared/utils';
@@ -36,6 +37,16 @@ export const cmEditComServerTsjrpcTextableBlocks = {
     com.t[coli] = clearValue;
 
     return `изменён текстовый блок:\n\n${value}\n\nбыло:\n${prev}`;
+  }),
+
+  removeVerticalBarsFromTexts: modifyCom((com, _, { auth }) => {
+    if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'D')) throw '';
+
+    const texts = com.t;
+
+    if (texts) texts.forEach((text, texti) => (texts[texti] = text.replace(makeRegExp('/[|]/g'), '')));
+
+    return `вырезаны столбики из текстов`;
   }),
 
   insertChordBlock: insertInTextableBlock('c', ({ value }, { auth }) => {

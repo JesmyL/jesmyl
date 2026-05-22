@@ -126,30 +126,35 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
 
   private _re: OrderRepeats | nil;
   get repeats(): OrderRepeats | null {
-    if (this._re !== undefined) return this._re;
+    let repeatsResult = this._re;
+    if (repeatsResult !== undefined) return repeatsResult;
 
     if (this.me.isAnchorInherit) {
-      this._re = this.me.leadOrd?.me.source?.top._r?.[this.me.anchorInheritIndex || 0] ?? 0;
-    } else if (this.me && this.me.source && this.me.source.top.r != null) this._re = this.me.source.top.r;
-    else {
+      repeatsResult = this.me.leadOrd?.me.source?.top._r?.[this.me.anchorInheritIndex || 0] ?? 0;
+    } else if (this.me && this.me.source && this.me.source.top.r != null) {
+      repeatsResult = this.me.source.top.r;
+    } else {
       const repeats =
         this.me.repeats ?? this.me?.targetOrd?.me.source?.top.r ?? this.getWatchInheritance('r') ?? this.top.r;
 
-      const nrepeats = {} as SpecialOrderRepeats;
-      const reg = makeRegExp('/[a-z]/i', 0);
+      if (mylib.isNum(repeats)) repeatsResult = repeats;
+      else if (repeats == null) repeatsResult = 0;
+      else {
+        const reg = makeRegExp('/[a-z]/i', 0);
+        repeatsResult = {};
 
-      this._re = MyLib.entries((repeats && (mylib.isNum(repeats) ? { '.': repeats } : repeats)) || nrepeats).reduce(
-        (acc, [key, val]) => {
-          if (!reg.exec(key)) acc[key] = val;
-          return acc;
-        },
-        nrepeats,
-      );
-
-      if (!mylib.keys(this._re).length) this._re = 0;
+        for (const key in repeats) if (!reg.exec(key)) repeatsResult[key] = repeats[key];
+      }
     }
 
-    return this._re;
+    if (mylib.isObj(repeatsResult))
+      if (!mylib.keys(repeatsResult).length) repeatsResult = 0;
+      else {
+        const { '.': dotNum, ...reWODot } = repeatsResult;
+        if (!mylib.keys(reWODot).length) repeatsResult = dotNum;
+      }
+
+    return (this._re = repeatsResult);
   }
 
   get regions(): CmComOrderEditableRegion<CmComOrder>[] | und {

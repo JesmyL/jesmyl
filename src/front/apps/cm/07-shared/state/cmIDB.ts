@@ -1,4 +1,5 @@
 import { DexieDB } from '#shared/lib/DexieDB';
+import { cmComWidNumberDictAtom } from '$cm/entities/index';
 import { CmBroadcastScreenConfig, cmBroadcastDefaultConfig } from '$cm/widgets/broadcast';
 import { useLiveQuery } from 'dexie-react-hooks';
 import {
@@ -15,6 +16,7 @@ import {
   IFixedCom,
   MigratableComToolName,
 } from 'shared/api';
+import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
 import { ChordVisibleVariant } from '../model/Cm.model';
 
 export interface CmIDBStorage {
@@ -98,5 +100,18 @@ const justUseLiveQuery = useLiveQuery;
 
 export const cmIDB = new CmIDB();
 
-// TODO not for commit
-cmIDB.tb.comAudioTrackMarks.where('src').startsWith('http').delete();
+cmIDB.tb.coms
+  .toCollection()
+  .keys()
+  .then(keys => {
+    const comwNumberDict: PRecord<CmComWid, number> = {};
+    const numberComwDict: PRecord<number, CmComWid> = {};
+
+    keys.forEach((key, keyi) => {
+      const comNumber = takeCorrectComNumber(keyi + 1);
+      comwNumberDict[key as CmComWid] = comNumber;
+      numberComwDict[comNumber] = key as CmComWid;
+    });
+
+    cmComWidNumberDictAtom.set(comwNumberDict);
+  });

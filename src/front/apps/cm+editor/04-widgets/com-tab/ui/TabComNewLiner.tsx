@@ -2,9 +2,11 @@ import { Button } from '#shared/components';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { CmComOrder } from '$cm/ext';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 export const CmEditorComTabComNewLiner = ({ ccom }: { ccom: EditableCom }) => {
+  const lineGroups = useMemo(() => ccom.makeExpandGroupedLines(), [ccom]);
+
   const renderBreakButton = (
     configSet: Set<number>,
     ord: CmComOrder,
@@ -35,7 +37,8 @@ export const CmEditorComTabComNewLiner = ({ ccom }: { ccom: EditableCom }) => {
 
   return (
     <>
-      {ccom.makeExpandGroupedLines().map((group, groupi) => (
+      <div className="absolute left-12 top-30 h-full w-53 bg-x2 opacity-25 z-0" />
+      {lineGroups.map((group, groupi) => (
         <div
           key={groupi}
           className="mt-20"
@@ -56,7 +59,7 @@ export const CmEditorComTabComNewLiner = ({ ccom }: { ccom: EditableCom }) => {
                         key={initWordi}
                         size="sx"
                         icon="Play"
-                        className={`bg-x2! text-x7! pr-0! pl-0!${watchOrdConfigSet ? '' : ' opacity-50!'}`}
+                        className={`bg-x2! text-x7! has-[>svg]:px-0! px-0!${watchOrdConfigSet ? '' : ' opacity-50!'}`}
                         onClick={() =>
                           watchOrd &&
                           cmEditComClientTsjrpcMethods.pullNewlinerLineConfig({
@@ -85,7 +88,7 @@ export const CmEditorComTabComNewLiner = ({ ccom }: { ccom: EditableCom }) => {
                       <Button
                         size="sx"
                         icon={isHasAbsWordi ? 'SquareArrowMoveLeftUp' : 'SquareArrowMoveDownLeft'}
-                        className={`pr-0! pl-0!${isHasAbsWordi ? ` bg-x7! text-x1!${watchOrdConfigSet ? ' opacity-50!' : ''}` : ''}`}
+                        className={`has-[>svg]:px-0! px-0!${isHasAbsWordi ? ` bg-x7! text-x1!${watchOrdConfigSet ? ' opacity-50!' : ''}` : ''}`}
                         onClick={() =>
                           cmEditComClientTsjrpcMethods.switchNewlinerWord({
                             comw: ccom.wid,
