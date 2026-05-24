@@ -5,7 +5,8 @@ export type CmBroadcastMonolineSlide = {
   lines: string[];
   fromLinei: number;
   toLinei: number;
-  isLastSlide?: boolean;
+  textHash: string;
+  repeats?: number;
 };
 
 export type CmBroadcastSlideLine = {

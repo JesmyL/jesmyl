@@ -1,8 +1,10 @@
 import { CmComOrder } from '$cm/ext';
+import md5 from 'md5';
 import { escapeRegExpSymbols, makeNamedRegExp, makeRegExp } from 'regexpert';
 import { CmComAudioMarkPackTime, CmComOrderWid } from 'shared/api';
 import { CmBroadcastMonolineSlide, CmBroadcastSlideLine } from 'shared/model/cm/broadcast';
 import { capitalizeText, itIt } from 'shared/utils';
+import { nbsp } from 'shared/utils/cm/com/const';
 import { makeCmComAudioMarkTitleEmptySelector } from '../../makeCmComAudioMarkTitleBySelector';
 import { CmComChords } from './30-Chords';
 
@@ -118,10 +120,9 @@ export class CmComTexts extends CmComChords {
     let prevSlide: CmBroadcastMonolineSlide | nil;
     let prevOrdLinei: number;
     let prevInitWordi: number;
+    let isPrevChordedSlide = false;
 
     expandLines.forEach(({ line, ord, ordLinei, totalLinei, selfLinei }) => {
-      const { currentSet } = this.makeNewlinerSet(ord, ordLinei, selfLinei);
-
       const lineWords = line.split(' ');
       let prevWordi = 0;
 
@@ -132,7 +133,8 @@ export class CmComTexts extends CmComChords {
           lines: [],
           ord,
           fromLinei: totalLinei,
-          toLinei: 0,
+          toLinei: totalLinei,
+          textHash: '',
         };
 
         slides.push(prevSlide);
@@ -140,8 +142,18 @@ export class CmComTexts extends CmComChords {
         return prevSlide;
       };
 
-      currentSet.add(lineWords.length + 1);
-      if (prevOrdLinei >= ordLinei || !prevSlide) prevSlide = fillSlide();
+      if (!ord.isRealText()) {
+        fillSlide().lines = lineWords;
+        isPrevChordedSlide = true;
+        return;
+      }
+      if (isPrevChordedSlide) fillSlide();
+
+      isPrevChordedSlide = false;
+
+      const { currentSet } = this.makeNewlinerSet(ord, ordLinei, selfLinei);
+      currentSet.add(lineWords.length + 10);
+      if (prevOrdLinei > ordLinei) prevSlide = fillSlide();
       prevOrdLinei = ordLinei;
 
       currentSet.forEach(initWordi => {
@@ -157,7 +169,34 @@ export class CmComTexts extends CmComChords {
       });
     });
 
-    return slides.filter(({ lines }) => lines.length);
+    const fullSlides = slides.filter(({ lines }) => lines.length);
+
+    for (let fullSlidei = fullSlides.length - 1; fullSlidei >= 0; fullSlidei--) {
+      const fullSlide = fullSlides[fullSlidei];
+      if (!fullSlide) continue;
+      fullSlide.textHash = md5(fullSlide.lines.join('\n'));
+
+      const nextFullSlide = fullSlides[fullSlidei + 1];
+
+      if (nextFullSlide?.textHash === fullSlide.textHash) {
+        fullSlide.repeats = (nextFullSlide.repeats ??= 1) + 1;
+        nextFullSlide.lines = [];
+      }
+
+      if (fullSlide.repeats) {
+        const lines = fullSlide.lines;
+
+        if (lines[0]) {
+          lines[0] = `${'/'.repeat(fullSlide.repeats)}${nbsp}${lines[0]}`;
+        }
+        const last = lines.length - 1;
+        if (lines[last]) {
+          lines[last] = `${lines[last]}${nbsp}${'\\'.repeat(fullSlide.repeats)}`;
+        }
+      }
+    }
+
+    return fullSlides.filter(({ lines }) => lines.length);
   };
 
   private _expandRepeats = (() => {
