@@ -52,6 +52,12 @@ export const CmEditorComTabComNewLiner = ({ ccom }: { ccom: EditableCom }) => {
                 key={ordBlocki}
                 className="mt-5"
               >
+                {!selfLinei && (
+                  <div>
+                    {ord.me.header()}
+                    {ord.me.kind?.isInherit && '+'}
+                  </div>
+                )}
                 {renderBreakButton(1, !ordBlocki)}
 
                 {line.split(' ').map((word, initWordi) => {

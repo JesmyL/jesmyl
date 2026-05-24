@@ -61,7 +61,7 @@ export const BroadcastScreen = (props: BroadcastScreenProps) => {
           ) : isTrackBroadcast ? (
             <CmBroadcastCurrentComTrackScreen {...props} />
           ) : (
-            <CmBroadcastSlidesContext>
+            <CmBroadcastSlidesContext configi={props.screeni ?? 0}>
               <CmBroadcastCurrentScreen {...props} />
             </CmBroadcastSlidesContext>
           )}

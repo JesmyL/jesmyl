@@ -21,7 +21,7 @@ export const CmScheduleWidgetBroadcastLiveCm = (props: LiveBroadcastAppProps) =>
 
   return (
     <>
-      <CmBroadcastSlidesContext>
+      <CmBroadcastSlidesContext configi={0}>
         {isTrackBroadcast || <LiveReport {...props} />}
         <CmBroadcastControlled
           comList={coms}

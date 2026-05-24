@@ -8,6 +8,7 @@ import { FontFamilyConfigurator } from '#shared/ui/configurators/FontFamily';
 import { FontWeightConfigurator } from '#shared/ui/configurators/FontWeight/ui';
 import { StrokeConfigurator } from '#shared/ui/configurators/Stroke';
 import { ScreenTranslateConfigurationTextAlign } from '#shared/ui/configurators/TextAlign';
+import { TextCaseConfigurator } from '#shared/ui/configurators/TextCase';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { useCallback } from 'react';
 import { cmBroadcastSubConfigNext } from '../const/defaults';
@@ -56,6 +57,10 @@ export const CmBroadcastCurrentScreenConfigurations = ({ currentConfig }: Props)
         <ScreenTranslateConfigurationNameChanger />
 
         <ColorConfigurator
+          config={currentConfig}
+          updateConfig={update}
+        />
+        <TextCaseConfigurator
           config={currentConfig}
           updateConfig={update}
         />

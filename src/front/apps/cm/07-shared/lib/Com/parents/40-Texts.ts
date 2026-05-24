@@ -3,6 +3,7 @@ import md5 from 'md5';
 import { escapeRegExpSymbols, makeNamedRegExp, makeRegExp } from 'regexpert';
 import { CmComAudioMarkPackTime, CmComOrderWid } from 'shared/api';
 import { CmBroadcastMonolineSlide, CmBroadcastSlideLine } from 'shared/model/cm/broadcast';
+import { TextCase } from 'shared/model/common/sortDirection';
 import { capitalizeText, itIt } from 'shared/utils';
 import { nbsp } from 'shared/utils/cm/com/const';
 import { makeCmComAudioMarkTitleEmptySelector } from '../../makeCmComAudioMarkTitleBySelector';
@@ -47,12 +48,18 @@ export class CmComTexts extends CmComChords {
     return slides;
   };
 
-  static prepareEachTextLine = (lines: string[] | nil, firstLineLetterToUpperCase = true) => {
-    if (lines == null) return [];
+  static prepareEachTextLine = (lines: string[] | nil, textCase: TextCase | nil) => {
+    if (!lines?.length) return [];
+    textCase = textCase ?? TextCase.Capitalize;
 
-    return firstLineLetterToUpperCase
-      ? lines.map(line => (line?.length ? capitalizeText(line).replace(makeRegExp('/[|]/g'), '') : line)).filter(itIt)
-      : lines;
+    const map: (line: string) => string =
+      textCase === TextCase.Capitalize
+        ? capitalizeText
+        : textCase === TextCase.Uppercase
+          ? line => line.toUpperCase()
+          : itIt;
+
+    return lines.map(line => (line?.length ? map(line).replace(makeRegExp('/[|]/g'), '') : line)).filter(itIt);
   };
 
   makeExpandLines = () => {
@@ -133,7 +140,7 @@ export class CmComTexts extends CmComChords {
           lines: [],
           ord,
           fromLinei: totalLinei,
-          toLinei: totalLinei,
+          toLinei: totalLinei + 1,
           textHash: '',
         };
 

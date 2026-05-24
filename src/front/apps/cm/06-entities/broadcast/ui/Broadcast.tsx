@@ -8,7 +8,7 @@ export const CmBroadcast = () => {
   return (
     <>
       <CurrentForceViweAppContext value="cm">
-        <CmBroadcastSlidesContext>
+        <CmBroadcastSlidesContext configi={0}>
           {isTouchDevice ? <CmBroadcastFullscreen /> : <CmBroadcastControlled />}
         </CmBroadcastSlidesContext>
       </CurrentForceViweAppContext>
