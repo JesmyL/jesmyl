@@ -27,7 +27,7 @@ export const CmMeetingEvent = ({ dayi, eventMi, schw }: Props) => {
   const checkAccess = useCheckUserAccessRightsInScope();
   const [isToolsOpen, setIsToolsOpen] = useState(false);
   const mod = useQuery({
-    queryKey: [],
+    queryKey: ['getSchEventComPackMod', schw, dayi],
     queryFn: () => cmTsjrpcClient.getSchEventComPackMod({ schw, dayi }),
   });
 
