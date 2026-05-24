@@ -1,39 +1,10 @@
 import { Button } from '#shared/components';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { CmComOrder } from '$cm/ext';
 import React, { useMemo } from 'react';
 
 export const CmEditorComTabComNewLiner = ({ ccom }: { ccom: EditableCom }) => {
   const lineGroups = useMemo(() => ccom.makeExpandGroupedLines(), [ccom]);
-
-  const renderBreakButton = (
-    configSet: Set<number>,
-    ord: CmComOrder,
-    linei: number,
-    wordi: number,
-    isNeedHr?: boolean,
-  ) => (
-    <>
-      {(configSet.has(-wordi) || isNeedHr) && (
-        <div className={`my-3 h-1 ${configSet.has(-wordi) && isNeedHr ? 'bg-xKO' : 'bg-x2'}`} />
-      )}
-      <Button
-        size="sx"
-        {...(configSet.has(-wordi)
-          ? { icon: 'MinusSignCircle', className: 'text-xKO' }
-          : { icon: 'PlusSignCircle', className: 'text-xOK' })}
-        onClick={() =>
-          cmEditComClientTsjrpcMethods.switchNewlinerBr({
-            comw: ccom.wid,
-            linei,
-            wordi,
-            ordw: ord.wid,
-          })
-        }
-      />
-    </>
-  );
 
   return (
     <>
@@ -43,56 +14,88 @@ export const CmEditorComTabComNewLiner = ({ ccom }: { ccom: EditableCom }) => {
           key={groupi}
           className="mt-20"
         >
-          {group?.map(({ line, ord, ordLinei }, ordBlocki) => {
-            const { watchOrdConfigSet, configSet, watchOrd } = ccom.makeNewlinerSet(ord, ordLinei);
+          {group?.map(({ line, ord, ordLinei, selfLinei }, ordBlocki) => {
+            if (!ord.isRealText()) return line;
+
+            const { watchSet, currentSet, nearSet, selfSet } = ccom.makeNewlinerSet(ord, ordLinei, selfLinei);
+            const isSelf = !!selfSet.size;
+            const isDifferentDigitsWithNear = !nearSet || !!nearSet.symmetricDifference(selfSet).size;
+
+            const renderBreakButton = (wordi: number, isNeedHr?: boolean) => (
+              <>
+                {(currentSet.has(-wordi) || isNeedHr) && (
+                  <div className={`my-3 h-1 ${currentSet.has(-wordi) && isNeedHr ? 'bg-xKO' : 'bg-x2'}`} />
+                )}
+                <Button
+                  size="sx"
+                  {...(currentSet.has(-wordi) && !watchSet
+                    ? { icon: 'MinusSignCircle', className: isDifferentDigitsWithNear ? 'text-x6' : 'bg-xKO! text-x6' }
+                    : {
+                        icon: 'PlusSignCircle',
+                        className: isDifferentDigitsWithNear ? 'text-xOK' : 'bg-xKO! text-x6',
+                      })}
+                  onClick={() =>
+                    cmEditComClientTsjrpcMethods.switchNewlinerBr({
+                      comw: ccom.wid,
+                      ordw: ord.wid,
+                      ordLinei,
+                      selfLinei,
+                      wordi,
+                    })
+                  }
+                />
+              </>
+            );
 
             return (
               <div
                 key={ordBlocki}
                 className="mt-5"
               >
-                {ord.isRealText() && renderBreakButton(configSet, ord, ordLinei, 1, !ordBlocki)}
+                {renderBreakButton(1, !ordBlocki)}
+
                 {line.split(' ').map((word, initWordi) => {
                   if (!initWordi)
                     return (
                       <Button
                         key={initWordi}
                         size="sx"
-                        icon="Play"
-                        className={`bg-x2! text-x7! has-[>svg]:px-0! px-0!${watchOrdConfigSet ? '' : ' opacity-50!'}`}
-                        onClick={() =>
-                          watchOrd &&
-                          cmEditComClientTsjrpcMethods.pullNewlinerLineConfig({
-                            comw: ccom.wid,
-                            linei: ordLinei,
-                            ordw: ord.wid,
-                            watchOrdw: watchOrd.wid,
-                          })
-                        }
+                        className={`bg-x2! text-x7! has-[>svg]:px-0! px-0!`}
+                        {...(isSelf
+                          ? {
+                              icon: 'Delete01',
+                              onClick: () =>
+                                cmEditComClientTsjrpcMethods.removeNewliner({
+                                  comw: ccom.wid,
+                                  linei: selfLinei,
+                                  ordw: ord.wid,
+                                }),
+                            }
+                          : { icon: 'Play' })}
                       >
-                        <span dangerouslySetInnerHTML={{ __html: word || '??' }} />
+                        <span dangerouslySetInnerHTML={{ __html: word }} />
                       </Button>
                     );
 
                   const wordi = initWordi + 1;
-                  const isHasAbsWordi = configSet.has(wordi) || configSet.has(-wordi);
+                  const isHasAbsWordi = currentSet.has(wordi) || currentSet.has(-wordi);
 
                   return (
                     <React.Fragment key={wordi}>
                       {isHasAbsWordi && (
                         <>
                           <br />
-                          {renderBreakButton(configSet, ord, ordLinei, wordi)}
+                          {renderBreakButton(wordi)}
                         </>
                       )}
                       <Button
                         size="sx"
                         icon={isHasAbsWordi ? 'SquareArrowMoveLeftUp' : 'SquareArrowMoveDownLeft'}
-                        className={`has-[>svg]:px-0! px-0!${isHasAbsWordi ? ` bg-x7! text-x1!${watchOrdConfigSet ? ' opacity-50!' : ''}` : ''}`}
+                        className={`has-[>svg]:px-0! px-0! ${isHasAbsWordi ? `${isDifferentDigitsWithNear ? 'bg-x7! text-x1!' : 'bg-xKO! text-x6!'}${isSelf ? '' : ' opacity-50!'}` : ''}`}
                         onClick={() =>
                           cmEditComClientTsjrpcMethods.switchNewlinerWord({
                             comw: ccom.wid,
-                            linei: ordLinei,
+                            linei: selfLinei,
                             wordi,
                             ordw: ord.wid,
                           })

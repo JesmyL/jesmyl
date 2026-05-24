@@ -71,30 +71,43 @@ export class CmComTexts extends CmComChords {
           headSolidOrders.push(ord);
 
           return ordLines
-            .map((line, linei) => `\n${padStart(blocki)}${padStart(linei)}${padStart(++totalLinei)}${line}`)
+            .map(
+              (line, linei) =>
+                `\n${padStart(blocki)}${padStart(linei)}${padStart(linei)}${padStart(++totalLinei)}${line}`,
+            )
             .flat()
             .join('\n');
         })
         .join('\n');
 
-      const allRepeatedLines = this._extendRepeats(heapText).split(makeRegExp('/\\s*\n\\s*/'));
+      const allRepeatedLines = this._expandRepeats(heapText).split(makeRegExp('/\\s*\n\\s*/'));
       const slides: CmBroadcastSlideLine[] = [];
 
       for (let i = 0; i < allRepeatedLines.length; i++) {
         const line = allRepeatedLines[i];
         if (!line) continue;
-        const blocki = CmComTexts.takeHeapLineBlocki(line);
+        const blocki = sliceDiapasoniNum(line, Diapasoni.Block);
 
         slides.push({
-          line: CmComTexts.takeClearHeapLine(line),
+          line: sliceClearHeapLine(line),
           ord: headSolidOrders[blocki],
+          totalLinei: sliceDiapasoniNum(line, Diapasoni.TotalLine),
+          ordLinei: sliceDiapasoniNum(line, Diapasoni.Line),
+          selfLinei: sliceDiapasoniNum(line, Diapasoni.SelfLine),
           blocki,
-          totalLinei: CmComTexts.takeHeapLineTotalLinei(line),
-          ordLinei: CmComTexts.takeHeapLineLinei(line),
         });
       }
 
-      return slides;
+      let prevBlocki: number;
+      let prevLinei: number;
+
+      return slides.map(slide => {
+        if (prevBlocki !== slide.blocki) prevLinei = 0;
+        prevBlocki = slide.blocki;
+
+        slide.selfLinei = prevLinei++;
+        return slide;
+      });
     } catch (_e) {
       return [];
     }
@@ -106,8 +119,8 @@ export class CmComTexts extends CmComChords {
     let prevOrdLinei: number;
     let prevInitWordi: number;
 
-    expandLines.forEach(({ line, ord, ordLinei, totalLinei }) => {
-      const { configSet } = this.makeNewlinerSet(ord, ordLinei);
+    expandLines.forEach(({ line, ord, ordLinei, totalLinei, selfLinei }) => {
+      const { currentSet } = this.makeNewlinerSet(ord, ordLinei, selfLinei);
 
       const lineWords = line.split(' ');
       let prevWordi = 0;
@@ -127,11 +140,11 @@ export class CmComTexts extends CmComChords {
         return prevSlide;
       };
 
-      configSet.add(lineWords.length + 1);
+      currentSet.add(lineWords.length + 1);
       if (prevOrdLinei >= ordLinei || !prevSlide) prevSlide = fillSlide();
       prevOrdLinei = ordLinei;
 
-      configSet.forEach(initWordi => {
+      currentSet.forEach(initWordi => {
         if (prevInitWordi < 0 || !prevSlide) prevSlide = fillSlide();
         prevInitWordi = initWordi;
 
@@ -147,7 +160,7 @@ export class CmComTexts extends CmComChords {
     return slides.filter(({ lines }) => lines.length);
   };
 
-  private _extendRepeats = (() => {
+  private _expandRepeats = (() => {
     const startFlagContent = '[*{' as const;
     const endFlagContent = ']*}' as const;
 
@@ -209,16 +222,35 @@ export class CmComTexts extends CmComChords {
       return text;
     };
   })();
-
-  static takeHeapLineTotalLinei = (line: string | nil) => +(line?.slice(startDigits * 2, allStartDigits) || 0);
-  static takeHeapLineLinei = (line: string | nil) => +(line?.slice(startDigits, startDigits * 2) || 0);
-  static takeHeapLineBlocki = (line: string | nil) => +(line?.slice(0, startDigits) || 0);
-  static takeClearHeapLine = (line: string | nil) => line?.slice(allStartDigits) || '';
 }
 
-const startDigits = 5;
-const allStartDigits = startDigits * 3;
-const padStart = (num: number) => `${num}`.padStart(startDigits, '0');
+const enum Diapasoni {
+  Block = 0,
+  Line = 1,
+  SelfLine = 2,
+  TotalLine = 3,
+  Last,
+}
+
+const enum StartDigits {
+  it = 5,
+}
+
+const digitDiapasons = [
+  StartDigits.it * Diapasoni.Block,
+  StartDigits.it * Diapasoni.Line,
+  StartDigits.it * Diapasoni.SelfLine,
+  StartDigits.it * Diapasoni.TotalLine,
+  StartDigits.it * Diapasoni.Last,
+] as const;
+
+const padStart = (num: number) => `${num}`.padStart(StartDigits.it, '0');
+const allStartDigits = digitDiapasons[Diapasoni.Last];
+
+const sliceDiapasoniNum = (line: string | nil, diapasoni: Diapasoni) =>
+  +(line?.slice(digitDiapasons[diapasoni], digitDiapasons[diapasoni + 1]) || 0);
+
+const sliceClearHeapLine = (line: string | nil) => line?.slice(allStartDigits) || '';
 
 const repeatsRegBox = makeNamedRegExp(
   // regexpert:

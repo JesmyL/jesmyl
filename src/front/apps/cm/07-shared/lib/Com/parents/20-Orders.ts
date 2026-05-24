@@ -1,5 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
 import { CmComOrder, ICmComOrderExportableMe } from '$cm/ext';
+import { makeRegExp } from 'regexpert';
 import { CmComOrderSelector, IExportableOrder } from 'shared/api';
 import { cmComNewlinerLineNewlinerConfigToSet } from 'shared/utils/cm/com/newliner';
 import { orderListConstructor } from 'shared/utils/cm/com/orderListConstructor';
@@ -44,35 +45,49 @@ export class CmComOrders extends CmComBasic {
       orderListConstructor(me => this.orderConstructor(me), this.ords, this.intp, this.langi) ?? this._o);
   }
 
-  makeNewlinerSet = (ord: CmComOrder, linei: number) => {
-    let watchOrdConfigSet;
-    let resultWatchOrd;
-    const ordConfigSet = cmComNewlinerLineNewlinerConfigToSet(this.top.nl?.[0][ord.wid], linei);
+  makeNewlinerSet = (ord: CmComOrder, linei: number, selfLinei: number) => {
+    let watchSet;
+    let watchOrd;
 
-    if (!ordConfigSet.size) {
-      const isFreeRepeats = !ord.repeats || mylib.isNum(ord.repeats);
-      const repeatsJson = isFreeRepeats ? null : JSON.stringify(ord.repeats);
-      const watchOrd = this.orders?.find(
-        o =>
+    const ordNl = this.top.nl?.[0][ord.wid];
+    const selfSet = cmComNewlinerLineNewlinerConfigToSet(ordNl, selfLinei);
+    const ordSet = cmComNewlinerLineNewlinerConfigToSet(ordNl, linei);
+
+    const isFreeRepeats = !ord.repeats || mylib.isNum(ord.repeats);
+    const repeatsJson = isFreeRepeats ? NaN : JSON.stringify(ord.repeats);
+    const orders = this.orders;
+
+    if (orders)
+      for (const o of orders) {
+        if (o.wid === ord.wid) break;
+
+        if (
           o.texti === ord.texti &&
-          (isFreeRepeats ? !o.repeats || mylib.isNum(o.repeats) : repeatsJson === JSON.stringify(o.repeats)),
-      );
-      const set = cmComNewlinerLineNewlinerConfigToSet(
-        watchOrd != null && watchOrd.wid !== ord.wid ? this.top.nl?.[0][watchOrd.wid] : null,
-        linei,
-      );
-
-      if (watchOrd && set.size) {
-        resultWatchOrd = watchOrd;
-        watchOrdConfigSet = set;
+          (!o.repeats ||
+            mylib.isNum(o.repeats) ||
+            mylib.keys(o.repeats).join('|').search(makeRegExp('/:[1-9]/')) < 0 ||
+            repeatsJson === JSON.stringify(o.repeats))
+        ) {
+          watchOrd = o;
+          break;
+        }
       }
-    }
+
+    const set = cmComNewlinerLineNewlinerConfigToSet(
+      watchOrd && watchOrd.wid !== ord.wid ? this.top.nl?.[0][watchOrd.wid] : null,
+      linei,
+    );
+
+    if (watchOrd && set.size) watchSet = set;
+
+    const nearSet = ordSet?.size && watchSet && linei !== selfLinei ? ordSet : watchSet;
 
     return {
-      watchOrdConfigSet,
-      configSet: watchOrdConfigSet ?? ordConfigSet,
-      ordConfigSet,
-      watchOrd: resultWatchOrd,
+      watchSet,
+      ordSet,
+      selfSet,
+      nearSet,
+      currentSet: (selfSet.size ? selfSet : nearSet?.size ? nearSet : ordSet) ?? new Set(),
     };
   };
 }

@@ -2,7 +2,7 @@ import { makeRegExp } from 'regexpert';
 import { anyQuotesStr, displayableTextBlockCharsStr, nbsp, openAndClosedQuotes, slavicLowerLettersStr } from './const';
 
 let level = 0;
-const dashReplacer: (...args: string[]) => string = (_, $1, $2) => ($2 ? ' —\n' : $1 || `${nbsp}— `);
+const dashReplacer: (...args: string[]) => string = (_, $1, $2) => ($2 ? `${nbsp}—\n` : $1 || `${nbsp}— `);
 
 const replaceNestedBrackets = (all: string, index: number, text: string) => {
   const pre = text[index - 1];

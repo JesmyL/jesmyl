@@ -13,5 +13,6 @@ export type CmBroadcastSlideLine = {
   line: string;
   totalLinei: number;
   ordLinei: number;
+  selfLinei: number;
   blocki: number;
 };

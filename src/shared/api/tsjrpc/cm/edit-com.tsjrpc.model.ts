@@ -41,12 +41,12 @@ export type CmEditComTsjrpcModel = {
 
   switchNewlinerWord: (args: { comw: CmComWid; ordw: CmComOrderWid; linei: number; wordi: number }) => void;
 
-  switchNewlinerBr: (args: { comw: CmComWid; ordw: CmComOrderWid; linei: number; wordi: number }) => void;
-
-  pullNewlinerLineConfig: (args: {
+  removeNewliner: (args: { comw: CmComWid; ordw: CmComOrderWid; linei: number }) => void;
+  switchNewlinerBr: (args: {
     comw: CmComWid;
     ordw: CmComOrderWid;
-    watchOrdw: CmComOrderWid;
-    linei: number;
+    selfLinei: number;
+    wordi: number;
+    ordLinei: number;
   }) => void;
 };

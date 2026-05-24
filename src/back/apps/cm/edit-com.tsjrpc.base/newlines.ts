@@ -9,21 +9,6 @@ import {
 import { modifyCom } from './lib/modifiers';
 
 export const cmEditComServerTsjrpcNewlines = {
-  pullNewlinerLineConfig: modifyCom((com, { linei, ordw, watchOrdw }) => {
-    com.nl ??= [{}];
-
-    const ordConfig = com.nl[0][ordw];
-    const watchOrdConfig = com.nl[0][watchOrdw];
-    const ordNewlines = ordConfig?.split(' ') ?? [];
-    const watchOrdNewlines = watchOrdConfig?.split(' ') ?? [];
-
-    ordNewlines[linei] = watchOrdNewlines[linei];
-
-    com.nl[0][ordw] = ordNewlines.join(' ') as CmComNewlinerStrConfig;
-
-    return retLabel(com.w);
-  }),
-
   switchNewlinerWord: modifyCom((com, { linei, wordi, ordw }) => {
     updateNewlinerLineSet(com, ordw, linei, set => {
       if (set.has(wordi) || set.has(-wordi)) {
@@ -35,19 +20,25 @@ export const cmEditComServerTsjrpcNewlines = {
     return retLabel(com.w);
   }),
 
-  switchNewlinerBr: modifyCom((com, { linei, wordi, ordw }) => {
-    updateNewlinerLineSet(com, ordw, linei, set => {
+  switchNewlinerBr: modifyCom((com, { selfLinei, wordi, ordw, ordLinei }) => {
+    updateNewlinerLineSet(com, ordw, selfLinei, set => {
       if (set.has(wordi)) {
         set.delete(wordi);
         set.add(-wordi);
       } else if (set.has(-wordi)) {
         set.delete(-wordi);
         set.add(wordi);
-      } else set.add(-Math.abs(wordi));
+      } else set.add((ordLinei === selfLinei ? -1 : 1) * Math.abs(wordi));
 
       set.delete(0);
-      set.delete(1);
+      if (ordLinei === selfLinei) set.delete(1);
     });
+
+    return retLabel(com.w);
+  }),
+
+  removeNewliner: modifyCom((com, { linei, ordw }) => {
+    updateNewlinerLineSet(com, ordw, linei, set => set.clear());
 
     return retLabel(com.w);
   }),
