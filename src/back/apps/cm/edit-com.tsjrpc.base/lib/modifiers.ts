@@ -6,7 +6,7 @@ import { comsDirStorage } from '../../file-stores';
 import { cmShareServerTsjrpcMethods } from '../../tsjrpc.shares';
 
 const und = undefined;
-const comBlank: Record<keyof IExportableCom, und> = {
+const comBlank: { [K in keyof Required<IExportableCom>]: und } = {
   w: und,
   m: und,
   n: und,
@@ -14,6 +14,8 @@ const comBlank: Record<keyof IExportableCom, und> = {
   bpm: und,
   d: und,
   s: und,
+  k: und,
+  k2: und,
   nl: und,
   l: und,
   p: und,

@@ -136,6 +136,11 @@ export type IExportableCom = IExportableComInterpretationSimpleValues & {
   /** разбивка текстов на линии */
   nl?: [PRecord<CmComOrderWid, CmComNewlinerStrConfig>];
 
+  /** @deprecated */
+  k?: unknown;
+  /** @deprecated */
+  k2?: unknown;
+
   /** бемольная ли песня */
   b?: num;
 
