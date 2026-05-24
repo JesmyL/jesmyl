@@ -6,12 +6,12 @@ import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
 
 export const BibleBroadcastScreenAddressPanel = (props: {
-  screeni: number | und;
+  configi: number | und;
   wrapperRef: React.RefObject<HTMLDivElement | null>;
 }) => {
   const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
   const updateConfig = useBibleBroadcastUpdateCurrentConfig();
-  const currentConfig = useBibleBroadcastScreenConfig(props.screeni ?? currentConfigi);
+  const currentConfig = useBibleBroadcastScreenConfig(props.configi ?? currentConfigi);
 
   const updateConfigAddressPanel = useCallback(
     (config: Partial<ScreenBroadcastPositionConfig>) => {

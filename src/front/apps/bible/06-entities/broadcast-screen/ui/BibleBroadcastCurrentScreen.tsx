@@ -8,7 +8,7 @@ import { BibleBroadcastScreenScreen } from './BibleBroadcastScreen';
 
 export function BibleBroadcastScreenCurrentScreen(props: BroadcastScreenProps) {
   const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
-  const currentConfig = useBibleBroadcastScreenConfig(props.screeni ?? currentConfigi);
+  const currentConfig = useBibleBroadcastScreenConfig(props.configi ?? currentConfigi);
 
   const isActualVisible = useAtomValue(isBroadcastTextVisibleAtom);
 

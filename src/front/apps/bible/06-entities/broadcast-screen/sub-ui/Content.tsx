@@ -6,7 +6,7 @@ import { useBibleBroadcastScreenFontSizeScreenAdapter } from '$bible/shared/lib'
 import styled from '@emotion/styled';
 
 interface Props {
-  screeni: number | und;
+  configi: number | und;
   win: Window | und;
   isPreview: boolean | und;
   windowResizeUpdatesNum: number | und;

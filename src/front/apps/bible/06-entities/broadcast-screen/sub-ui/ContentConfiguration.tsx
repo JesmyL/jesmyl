@@ -6,13 +6,13 @@ import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
 
 export const BibleBroadcastScreenContentConfiguration = (props: {
-  screeni: number | und;
+  configi: number | und;
   wrapperRef: React.RefObject<HTMLDivElement | null>;
 }) => {
   const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
   const updateConfig = useBibleBroadcastUpdateCurrentConfig();
 
-  const currentConfig = useBibleBroadcastScreenConfig(props.screeni ?? currentConfigi);
+  const currentConfig = useBibleBroadcastScreenConfig(props.configi ?? currentConfigi);
 
   const updateConfigScreen = useCallback(
     (config: Partial<ScreenBroadcastPositionConfig>) => {

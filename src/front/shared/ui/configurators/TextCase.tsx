@@ -1,5 +1,5 @@
 import { MyLib } from '#shared/lib/my-lib';
-import { TextCase } from 'shared/model/common/sortDirection';
+import { TextCase } from 'shared/model/common';
 import { Dropdown } from '../dropdown/Dropdown';
 import { ConfiguratorEditProps } from './model';
 

@@ -8,7 +8,7 @@ import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.metho
 import { useNavigate } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { memo } from 'react';
-import { SortDirection } from 'shared/model/common/sortDirection';
+import { SortDirection } from 'shared/model/common';
 import { StoragesRack, StoragesRackCard, StoragesRackWid } from 'shared/model/storages/list.model';
 import { StoragesColumnType, StoragesDictItemi, StoragesRackColumn } from 'shared/model/storages/rack.model';
 

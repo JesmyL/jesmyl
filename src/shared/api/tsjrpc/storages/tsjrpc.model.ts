@@ -1,6 +1,6 @@
 import { SokiAuthLogin } from 'shared/api/complect/soki.model';
 import { storagesStylePropKeysMatrix } from 'shared/const/storages/styleProps.config';
-import { SortDirection } from 'shared/model/common/sortDirection';
+import { SortDirection } from 'shared/model/common';
 import {
   StoragesRack,
   StoragesRackCard,

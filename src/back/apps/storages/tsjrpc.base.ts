@@ -9,7 +9,7 @@ import {
 } from 'shared/api/tsjrpc/storages/tsjrpc.model';
 import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
 import { storagesStylePropKeysMatrix } from 'shared/const/storages/styleProps.config';
-import { SortDirection } from 'shared/model/common/sortDirection';
+import { SortDirection } from 'shared/model/common';
 import {
   StoragesRack,
   StoragesRackCard,

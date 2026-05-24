@@ -14,7 +14,7 @@ import { CmBroadcastScreen } from './Screen';
 export const CmBroadcastCurrentComTrackScreen = (props: BroadcastScreenProps & Partial<FontSizeContainProps>) => {
   const getCurrentConfig = useGetScreenBroadcastConfig();
   const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
-  const currentConfig = useCmBroadcastScreenConfig(props.screeni ?? currentConfigi);
+  const currentConfig = useCmBroadcastScreenConfig(props.configi ?? currentConfigi);
   const forceUpdates = useCmBroadcastScreenWinResizeListen(props.win);
   const isVisible = useAtomValue(isBroadcastTextVisibleAtom);
 

@@ -3,7 +3,7 @@ import md5 from 'md5';
 import { escapeRegExpSymbols, makeNamedRegExp, makeRegExp } from 'regexpert';
 import { CmComAudioMarkPackTime, CmComOrderWid } from 'shared/api';
 import { CmBroadcastMonolineSlide, CmBroadcastSlideLine } from 'shared/model/cm/broadcast';
-import { TextCase } from 'shared/model/common/sortDirection';
+import { TextCase } from 'shared/model/common';
 import { capitalizeText, itIt } from 'shared/utils';
 import { nbsp } from 'shared/utils/cm/com/const';
 import { makeCmComAudioMarkTitleEmptySelector } from '../../makeCmComAudioMarkTitleBySelector';

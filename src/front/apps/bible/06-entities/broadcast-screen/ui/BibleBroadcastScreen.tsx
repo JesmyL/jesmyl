@@ -50,7 +50,7 @@ export const BibleBroadcastScreenScreen = (props: Props) => {
           />
           {isChangeAddressPanelHeight && props.bibleConfig && (
             <BibleBroadcastScreenAddressPanel
-              screeni={props.screeni}
+              configi={props.configi}
               wrapperRef={wrapperRef}
             />
           )}
@@ -63,12 +63,12 @@ export const BibleBroadcastScreenScreen = (props: Props) => {
       >
         {props.isTech && props.bibleConfig && (
           <BibleBroadcastScreenContentConfiguration
-            screeni={props.screeni}
+            configi={props.configi}
             wrapperRef={screenWrapperRef}
           />
         )}
         <BibleBroadcastScreenContent
-          screeni={props.screeni}
+          configi={props.configi}
           win={props.win}
           isPreview={props.isPreview}
           windowResizeUpdatesNum={props.windowResizeUpdatesNum}
@@ -80,7 +80,7 @@ export const BibleBroadcastScreenScreen = (props: Props) => {
         isChangeAddressPanelHeight={isChangeAddressPanelHeight}
         isTech={props.isTech}
         isPreview={props.isPreview}
-        screeni={props.screeni}
+        configi={props.configi}
         bibleConfig={props.bibleConfig}
         windowResizeUpdatesNum={props.windowResizeUpdatesNum}
         isVisible={props.isVisible}

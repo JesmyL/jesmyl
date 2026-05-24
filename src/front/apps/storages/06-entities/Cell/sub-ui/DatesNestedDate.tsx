@@ -11,7 +11,7 @@ import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.metho
 import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
 import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
-import { SortDirection } from 'shared/model/common/sortDirection';
+import { SortDirection } from 'shared/model/common';
 import { StoragesColumnType, StoragesNestedCellMi } from 'shared/model/storages/rack.model';
 import { storagesCellComponents } from '../const/cellComponents';
 import { StoragesCellTypeProps } from '../model/model';

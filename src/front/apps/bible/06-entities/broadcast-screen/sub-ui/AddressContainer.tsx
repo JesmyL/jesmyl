@@ -5,7 +5,7 @@ import { BibleBroadcastScreenAddressContent } from './AddressContent';
 import { BibleBroadcastScreenAddressContentPositionConfiguration } from './AddressContentPositionConfiguration';
 
 interface Props {
-  screeni: number | und;
+  configi: number | und;
   isTech: boolean | und;
   isPreview: boolean | und;
   isChangeAddressPanelHeight: boolean;
@@ -32,12 +32,12 @@ export const BibleBroadcastScreenAddressContainer: React.FC<Props> = props => {
         {addressBackground}
         {!props.isChangeAddressPanelHeight && props.isTech && props.bibleConfig && (
           <BibleBroadcastScreenAddressContentPositionConfiguration
-            screeni={props.screeni}
+            configi={props.configi}
             wrapperRef={wrapperRef}
           />
         )}
         <BibleBroadcastScreenAddressContent
-          screeni={props.screeni}
+          configi={props.configi}
           isPreview={props.isPreview}
           bibleConfig={props.bibleConfig}
           windowResizeUpdatesNum={props.windowResizeUpdatesNum}

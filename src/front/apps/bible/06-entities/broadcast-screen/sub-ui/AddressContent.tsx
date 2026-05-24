@@ -3,7 +3,7 @@ import { useBibleAddressTextContext } from '$bible/shared/contexts/texts';
 import { useBibleBroadcastScreenFontSizeAddressAdapter } from '$bible/shared/lib';
 
 interface Props {
-  screeni: number | und;
+  configi: number | und;
   isPreview: boolean | und;
   bibleConfig: BibleBroadcastScreenConfig | und;
   windowResizeUpdatesNum: number | und;

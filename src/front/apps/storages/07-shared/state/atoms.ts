@@ -1,5 +1,5 @@
 import { atom } from 'atomaric';
-import { SortDirection } from 'shared/model/common/sortDirection';
+import { SortDirection } from 'shared/model/common';
 import { StoragesRackCard, StoragesRackWid } from 'shared/model/storages/list.model';
 
 export const storagesSortAndGroupAtom = atom<

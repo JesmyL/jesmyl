@@ -53,7 +53,7 @@ export const useWatchScreenBroadcast = () => {
           return (
             <>
               <BroadcastScreen
-                screeni={windowi}
+                configi={windowi}
                 win={win}
                 forceViewApp={forceViewApp}
               />
