@@ -71,7 +71,7 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
   }, [flashCount, isReadySetChordBlock, reset, setField, startOrd]);
 
   return (
-    <Content className={twMerge(start != null && 'active', isCantRedact && 'disabled pointers-none')}>
+    <Content className={twMerge('relative', start != null && 'active', isCantRedact && 'disabled pointers-none')}>
       {ccom.orders?.map((ord, ordi) => {
         if (!ord.isVisible) return null;
 
@@ -267,8 +267,6 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
 };
 
 const Content = styled.div`
-  position: relative;
-
   [line-wordi] {
     cursor: pointer;
 
