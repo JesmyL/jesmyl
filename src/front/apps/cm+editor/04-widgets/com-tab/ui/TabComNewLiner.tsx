@@ -20,9 +20,9 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
             const { watchSet, currentSet, nearSet, ownSet } = ccom.makeNewlinerSet(ord, repeati, linei);
             const isHasSelfChanges = !!ownSet.size;
             const isDifferentDigitsWithNear = !nearSet || !!nearSet.symmetricDifference(ownSet).size;
-            const currentCloneSet = currentSet._clone();
-            currentCloneSet.delete(-1);
-            currentCloneSet.delete(1);
+            const cloneSet = ownSet._clone();
+            cloneSet.delete(-1);
+            cloneSet.delete(1);
 
             const renderBreakButton = (wordi: number, isNeedHr?: boolean) => (
               <>
@@ -89,8 +89,8 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
 
                   const wordi = initWordi + 1;
                   const isHasAbsWordi = currentSet.has(wordi) || currentSet.has(-wordi);
-                  currentCloneSet.delete(wordi);
-                  currentCloneSet.delete(-wordi);
+                  cloneSet.delete(wordi);
+                  cloneSet.delete(-wordi);
 
                   return (
                     <React.Fragment key={wordi}>
@@ -119,7 +119,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                     </React.Fragment>
                   );
                 })}
-                {Array.from(currentCloneSet).map(wordi => (
+                {Array.from(cloneSet).map(wordi => (
                   <Button
                     key={wordi}
                     icon="Scissor01"
