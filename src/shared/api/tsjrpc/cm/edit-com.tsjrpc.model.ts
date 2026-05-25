@@ -39,14 +39,9 @@ export type CmEditComTsjrpcModel = {
 
   takeRemovedComs: () => IExportableCom[];
 
-  switchNewlinerWord: (args: { comw: CmComWid; ordw: CmComOrderWid; linei: number; wordi: number }) => void;
+  switchNLWord: (args: { comw: CmComWid; ordw: CmComOrderWid; linei: number; repeati: number; wordi: number }) => void;
 
-  removeNewliner: (args: { comw: CmComWid; ordw: CmComOrderWid; linei: number }) => void;
-  switchNewlinerBr: (args: {
-    comw: CmComWid;
-    ordw: CmComOrderWid;
-    selfLinei: number;
-    wordi: number;
-    ordLinei: number;
-  }) => void;
+  removeNL: (args: { comw: CmComWid; ordw: CmComOrderWid; linei: number; repeati: number }) => void;
+
+  switchNLBr: (args: { comw: CmComWid; ordw: CmComOrderWid; repeati: number; wordi: number; linei: number }) => void;
 };

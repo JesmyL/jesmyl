@@ -12,8 +12,8 @@ export type CmBroadcastMonolineSlide = {
 export type CmBroadcastSlideLine = {
   ord: CmComOrder;
   line: string;
-  totalLinei: number;
-  ordLinei: number;
-  selfLinei: number;
   blocki: number;
+  linei: number;
+  repeati: number;
+  totalLinei: number;
 };

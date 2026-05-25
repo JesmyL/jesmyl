@@ -3,6 +3,7 @@ import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import React, { useMemo } from 'react';
 
+// TODO: rename -> CmEditorComTabComBroadcast
 export const CmEditorComTabComNewLiner = ({ ccom }: { ccom: EditableCom }) => {
   const lineGroups = useMemo(() => ccom.makeExpandGroupedLines(), [ccom]);
 
@@ -14,12 +15,12 @@ export const CmEditorComTabComNewLiner = ({ ccom }: { ccom: EditableCom }) => {
           key={groupi}
           className="mt-20"
         >
-          {group?.map(({ line, ord, ordLinei, selfLinei }, ordBlocki) => {
-            if (!ord.isRealText()) return line;
+          {group?.map(({ line, ord, linei, repeati }, ordBlocki) => {
+            if (!ord.isRealText() || !line.trim()) return line;
 
-            const { watchSet, currentSet, nearSet, selfSet } = ccom.makeNewlinerSet(ord, ordLinei, selfLinei);
-            const isSelf = !!selfSet.size;
-            const isDifferentDigitsWithNear = !nearSet || !!nearSet.symmetricDifference(selfSet).size;
+            const { watchSet, currentSet, nearSet, ownSet } = ccom.makeNewlinerSet(ord, repeati, linei);
+            const isHasSelfChanges = !!ownSet.size;
+            const isDifferentDigitsWithNear = !nearSet || !!nearSet.symmetricDifference(ownSet).size;
 
             const renderBreakButton = (wordi: number, isNeedHr?: boolean) => (
               <>
@@ -28,18 +29,18 @@ export const CmEditorComTabComNewLiner = ({ ccom }: { ccom: EditableCom }) => {
                 )}
                 <Button
                   size="sx"
-                  {...(currentSet.has(-wordi) && !watchSet
+                  {...(currentSet.has(-wordi) && !watchSet.size
                     ? { icon: 'MinusSignCircle', className: isDifferentDigitsWithNear ? 'text-x6' : 'bg-xKO! text-x6' }
                     : {
                         icon: 'PlusSignCircle',
                         className: isDifferentDigitsWithNear ? 'text-xOK' : 'bg-xKO! text-x6',
                       })}
                   onClick={() =>
-                    cmEditComClientTsjrpcMethods.switchNewlinerBr({
+                    cmEditComClientTsjrpcMethods.switchNLBr({
                       comw: ccom.wid,
                       ordw: ord.wid,
-                      ordLinei,
-                      selfLinei,
+                      repeati,
+                      linei,
                       wordi,
                     })
                   }
@@ -52,7 +53,7 @@ export const CmEditorComTabComNewLiner = ({ ccom }: { ccom: EditableCom }) => {
                 key={ordBlocki}
                 className="mt-5"
               >
-                {!selfLinei && (
+                {!linei && (
                   <div>
                     {ord.me.header()}
                     {ord.me.kind?.isInherit && '+'}
@@ -66,15 +67,16 @@ export const CmEditorComTabComNewLiner = ({ ccom }: { ccom: EditableCom }) => {
                       <Button
                         key={initWordi}
                         size="sx"
-                        className={`bg-x2! text-x7! has-[>svg]:px-0! px-0!`}
-                        {...(isSelf
+                        className={`${isHasSelfChanges ? 'text-x8! underline' : 'text-x7!'} bg-x2! has-[>svg]:px-0! px-0!`}
+                        {...(isHasSelfChanges
                           ? {
                               icon: 'Delete01',
                               onClick: () =>
-                                cmEditComClientTsjrpcMethods.removeNewliner({
+                                cmEditComClientTsjrpcMethods.removeNL({
                                   comw: ccom.wid,
-                                  linei: selfLinei,
                                   ordw: ord.wid,
+                                  linei,
+                                  repeati,
                                 }),
                             }
                           : { icon: 'Play' })}
@@ -97,11 +99,12 @@ export const CmEditorComTabComNewLiner = ({ ccom }: { ccom: EditableCom }) => {
                       <Button
                         size="sx"
                         icon={isHasAbsWordi ? 'SquareArrowMoveLeftUp' : 'SquareArrowMoveDownLeft'}
-                        className={`has-[>svg]:px-0! px-0! ${isHasAbsWordi ? `${isDifferentDigitsWithNear ? 'bg-x7! text-x1!' : 'bg-xKO! text-x6!'}${isSelf ? '' : ' opacity-50!'}` : ''}`}
+                        className={`has-[>svg]:px-0! px-0! ${isHasAbsWordi ? `${isDifferentDigitsWithNear ? 'bg-x7! text-x1!' : 'bg-xKO! text-x6!'}${isHasSelfChanges ? '' : ' opacity-50!'}` : ''}`}
                         onClick={() =>
-                          cmEditComClientTsjrpcMethods.switchNewlinerWord({
+                          cmEditComClientTsjrpcMethods.switchNLWord({
                             comw: ccom.wid,
-                            linei: selfLinei,
+                            linei,
+                            repeati,
                             wordi,
                             ordw: ord.wid,
                           })

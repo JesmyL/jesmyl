@@ -1,15 +1,29 @@
 import { CmComNewlinerStrConfig } from 'shared/api';
 
-export const cmComNewlinerLineNewlinerConfigToSet = (nlConfig: CmComNewlinerStrConfig | nil, linei: number) => {
-  const lineJoins = nlConfig?.split(' ')?.[linei];
-  const set = new Set<number>();
+export const takeCmComNewlinerRepeatConfig = (nlConfig: CmComNewlinerStrConfig.whole | nil, repeati: number) =>
+  nlConfig?.split('/', repeati + 1)[repeati] as CmComNewlinerStrConfig.repeat | nil;
 
-  if (!lineJoins?.length) return set;
+export const takeCmComNewlinerLineConfig = (
+  nlConfig: CmComNewlinerStrConfig.whole | nil,
+  repeati: number,
+  linei: number,
+) =>
+  takeCmComNewlinerRepeatConfig(nlConfig, repeati)?.split(' ', linei + 1)[linei] as CmComNewlinerStrConfig.line | nil;
+
+export const cmComNewlinerLineConfigToSet = (
+  nlConfig: CmComNewlinerStrConfig.whole | nil,
+  repeati: number,
+  linei: number,
+) => {
+  const set = new Set<number>();
+  const lineConfig = takeCmComNewlinerLineConfig(nlConfig, repeati, linei);
+
+  if (!lineConfig?.length) return set;
 
   let tenPlus = 0;
   let dir: 1 | -1 = 1;
 
-  lineJoins.split('').forEach(numStr => {
+  lineConfig.split('').forEach(numStr => {
     if (numStr === '-') dir = -1;
     else if (numStr === '.') tenPlus += 10;
     else {
@@ -36,5 +50,5 @@ export const cmComNewlinerLineSetToNewlinerConfig = (setOrArr: Set<number> | num
       result += `${num < 0 ? '-' : ''}${`${num}`.at(-1)}`;
     });
 
-  return result as CmComNewlinerStrConfig;
+  return result as CmComNewlinerStrConfig.line;
 };

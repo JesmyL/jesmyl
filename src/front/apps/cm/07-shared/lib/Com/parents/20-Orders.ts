@@ -2,7 +2,7 @@ import { mylib } from '#shared/lib/my-lib';
 import { CmComOrder, ICmComOrderExportableMe } from '$cm/ext';
 import { makeRegExp } from 'regexpert';
 import { CmComOrderSelector, IExportableOrder } from 'shared/api';
-import { cmComNewlinerLineNewlinerConfigToSet } from 'shared/utils/cm/com/newliner';
+import { cmComNewlinerLineConfigToSet } from 'shared/utils/cm/com/newliner';
 import { orderListConstructor } from 'shared/utils/cm/com/orderListConstructor';
 import { CmComBasic } from './10-Basic';
 
@@ -45,13 +45,12 @@ export class CmComOrders extends CmComBasic {
       orderListConstructor(me => this.orderConstructor(me), this.ords, this.intp, this.langi) ?? this._o);
   }
 
-  makeNewlinerSet = (ord: CmComOrder, linei: number, selfLinei: number) => {
-    let watchSet;
+  makeNewlinerSet = (ord: CmComOrder, repeati: number, linei: number) => {
     let watchOrd;
 
     const ordNl = this.top.nl?.[0][ord.wid];
-    const selfSet = cmComNewlinerLineNewlinerConfigToSet(ordNl, selfLinei);
-    const ordSet = cmComNewlinerLineNewlinerConfigToSet(ordNl, linei);
+    const ownSet = cmComNewlinerLineConfigToSet(ordNl, repeati, linei);
+    const rootSet = !repeati ? new Set<number>() : cmComNewlinerLineConfigToSet(ordNl, 0, linei);
 
     const isFreeRepeats = !ord.repeats || mylib.isNum(ord.repeats);
     const repeatsJson = isFreeRepeats ? NaN : JSON.stringify(ord.repeats);
@@ -73,21 +72,18 @@ export class CmComOrders extends CmComBasic {
         }
       }
 
-    const set = cmComNewlinerLineNewlinerConfigToSet(
-      watchOrd && watchOrd.wid !== ord.wid ? this.top.nl?.[0][watchOrd.wid] : null,
-      linei,
-    );
+    const watchNl = watchOrd ? this.top.nl?.[0][watchOrd.wid] : null;
 
-    if (watchOrd && set.size) watchSet = set;
+    const watchOwnSet = cmComNewlinerLineConfigToSet(watchNl, repeati, linei);
+    const watchRootSet = !repeati ? new Set<number>() : cmComNewlinerLineConfigToSet(watchNl, 0, linei);
 
-    const nearSet = ordSet?.size && watchSet && linei !== selfLinei ? ordSet : watchSet;
+    const nearSet = [rootSet, watchOwnSet, watchRootSet].find(set => set.size);
 
     return {
-      watchSet,
-      ordSet,
-      selfSet,
+      watchSet: watchOwnSet.size ? watchOwnSet : watchRootSet,
+      ownSet,
       nearSet,
-      currentSet: (selfSet.size ? selfSet : nearSet?.size ? nearSet : ordSet) ?? new Set(),
+      currentSet: (ownSet.size ? ownSet : nearSet?.size ? nearSet : rootSet) ?? new Set(),
     };
   };
 }

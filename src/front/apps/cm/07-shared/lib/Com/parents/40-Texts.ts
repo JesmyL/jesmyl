@@ -82,8 +82,7 @@ export class CmComTexts extends CmComChords {
 
           return ordLines
             .map(
-              (line, linei) =>
-                `\n${padStart(blocki)}${padStart(linei)}${padStart(linei)}${padStart(++totalLinei)}${line}`,
+              (line, linei) => `\n${padStart(blocki)}${padStart(linei)}${padStart(0)}${padStart(++totalLinei)}${line}`,
             )
             .flat()
             .join('\n');
@@ -102,22 +101,13 @@ export class CmComTexts extends CmComChords {
           line: sliceClearHeapLine(line),
           ord: headSolidOrders[blocki],
           totalLinei: sliceDiapasoniNum(line, Diapasoni.TotalLine),
-          ordLinei: sliceDiapasoniNum(line, Diapasoni.Line),
-          selfLinei: sliceDiapasoniNum(line, Diapasoni.SelfLine),
+          linei: sliceDiapasoniNum(line, Diapasoni.Line),
+          repeati: sliceDiapasoniNum(line, Diapasoni.Repeat),
           blocki,
         });
       }
 
-      let prevBlocki: number;
-      let prevLinei: number;
-
-      return slides.map(slide => {
-        if (prevBlocki !== slide.blocki) prevLinei = 0;
-        prevBlocki = slide.blocki;
-
-        slide.selfLinei = prevLinei++;
-        return slide;
-      });
+      return slides;
     } catch (_e) {
       return [];
     }
@@ -130,7 +120,7 @@ export class CmComTexts extends CmComChords {
     let prevInitWordi: number;
     let isPrevChordedSlide = false;
 
-    expandLines.forEach(({ line, ord, ordLinei, totalLinei, selfLinei }) => {
+    expandLines.forEach(({ line, ord, linei, totalLinei, repeati }) => {
       const lineWords = line.split(' ');
       let prevWordi = 0;
 
@@ -159,10 +149,10 @@ export class CmComTexts extends CmComChords {
 
       isPrevChordedSlide = false;
 
-      const { currentSet } = this.makeNewlinerSet(ord, ordLinei, selfLinei);
+      const { currentSet } = this.makeNewlinerSet(ord, repeati, linei);
       currentSet.add(lineWords.length + 10);
-      if (prevOrdLinei > ordLinei) prevSlide = fillSlide();
-      prevOrdLinei = ordLinei;
+      if (prevOrdLinei > linei) prevSlide = fillSlide();
+      prevOrdLinei = linei;
 
       currentSet.forEach(initWordi => {
         if (prevInitWordi < 0 || !prevSlide) prevSlide = fillSlide();
@@ -226,6 +216,8 @@ export class CmComTexts extends CmComChords {
         isReplaced = false;
 
         text = text.replace(repeatsRegBox.regExp, (...args) => {
+          isReplaced = true;
+
           const {
             lead,
             before: beforeContent,
@@ -234,8 +226,6 @@ export class CmComTexts extends CmComChords {
             start: startSlashes,
             endNl,
           } = repeatsRegBox.transform(args);
-
-          isReplaced = true;
           const leadMark = lead.trim();
 
           if (startSlashes.length !== endSlashes.length) {
@@ -252,12 +242,24 @@ export class CmComTexts extends CmComChords {
             flagedContent = flagedContent.replace(flagsReg, (_all, comma, start, content, end) => {
               start = start.slice(0, -startFlagContent.length);
 
-              if (!start) return '';
-
-              return `${comma ?? ''}${start}${content}${end.slice(0, -endFlagContent.length)}`;
+              return !start || !content
+                ? ''
+                : `${comma ?? ''}${start}${content}${end.slice(0, -endFlagContent.length)}`;
             });
+            const repeati = sliceDiapasoniNum(leadMark, Diapasoni.Repeat) + Math.abs(i - startSlashes.length);
 
-            repeatedContent += `${i !== startSlashes.length && isNlStart ? `\n${leadMark}` : ''}${flagedContent} `;
+            flagedContent = flagedContent
+              .split(makeRegExp('/\\n+/'))
+              .map((line, linei) =>
+                linei
+                  ? setDiapasoniNum(line, Diapasoni.Repeat, repeati + sliceDiapasoniNum(line, Diapasoni.Repeat))
+                  : line,
+              )
+              .join('\n');
+            const before =
+              i !== startSlashes.length && isNlStart ? `\n${setDiapasoniNum(leadMark, Diapasoni.Repeat, repeati)}` : '';
+
+            repeatedContent += `${before}${flagedContent} `;
           }
 
           repeatedContent = repeatedContent.replace(startEndFlagReg, '');
@@ -274,7 +276,7 @@ export class CmComTexts extends CmComChords {
 const enum Diapasoni {
   Block = 0,
   Line = 1,
-  SelfLine = 2,
+  Repeat = 2,
   TotalLine = 3,
   Last,
 }
@@ -286,7 +288,7 @@ const enum StartDigits {
 const digitDiapasons = [
   StartDigits.it * Diapasoni.Block,
   StartDigits.it * Diapasoni.Line,
-  StartDigits.it * Diapasoni.SelfLine,
+  StartDigits.it * Diapasoni.Repeat,
   StartDigits.it * Diapasoni.TotalLine,
   StartDigits.it * Diapasoni.Last,
 ] as const;
@@ -296,6 +298,10 @@ const allStartDigits = digitDiapasons[Diapasoni.Last];
 
 const sliceDiapasoniNum = (line: string | nil, diapasoni: Diapasoni) =>
   +(line?.slice(digitDiapasons[diapasoni], digitDiapasons[diapasoni + 1]) || 0);
+
+const setDiapasoniNum = (line: string, diapasoni: Diapasoni, num: number) => {
+  return `${line.slice(0, digitDiapasons[diapasoni])}${padStart(num)}${line.slice(digitDiapasons[diapasoni + 1])}`;
+};
 
 const sliceClearHeapLine = (line: string | nil) => line?.slice(allStartDigits) || '';
 

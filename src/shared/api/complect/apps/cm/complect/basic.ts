@@ -134,7 +134,7 @@ export type IExportableCom = IExportableComInterpretationSimpleValues & {
   m: CmComMod;
 
   /** разбивка текстов на линии */
-  nl?: [PRecord<CmComOrderWid, CmComNewlinerStrConfig>];
+  nl?: [PRecord<CmComOrderWid, CmComNewlinerStrConfig.whole>];
 
   /** @deprecated */
   k?: unknown;
@@ -181,7 +181,9 @@ export const enum CmComCommentBlockSpecialSelector {
 }
 
 export const enum CmComNewlinerStrConfig {
-  def = '15.-2 9.01',
+  whole = '15.-2 9.01/  34',
+  repeat = '15.-2 9.01',
+  line = '15.-2',
 }
 
 export type CmComCommentBlockSimpleSelector = CmComOrderSelector | CmComCommentBlockSpecialSelector.Head;
