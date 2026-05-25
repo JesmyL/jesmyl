@@ -3,8 +3,7 @@ import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import React, { useMemo } from 'react';
 
-// TODO: rename -> CmEditorComTabComBroadcast
-export const CmEditorComTabComNewLiner = ({ ccom }: { ccom: EditableCom }) => {
+export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
   const lineGroups = useMemo(() => ccom.makeExpandGroupedLines(), [ccom]);
 
   return (
