@@ -39,16 +39,14 @@ export const cmComNewlinerLineSetToNewlinerConfig = (setOrArr: Set<number> | num
   let result = '';
   let tenMinus = 10;
 
-  Array.from(setOrArr ?? [])
-    .sort((a, b) => Math.abs(a) - Math.abs(b))
-    .forEach(num => {
-      while (num >= tenMinus) {
-        tenMinus += 10;
-        result += '.';
-      }
+  new Set(Array.from(setOrArr ?? []).sort((a, b) => Math.abs(a) - Math.abs(b))).forEach(num => {
+    while (Math.abs(num) >= tenMinus) {
+      tenMinus += 10;
+      result += '.';
+    }
 
-      result += `${num < 0 ? '-' : ''}${`${num}`.at(-1)}`;
-    });
+    result += `${num < 0 ? '-' : ''}${`${num}`.at(-1)}`;
+  });
 
   return result as CmComNewlinerStrConfig.line;
 };
