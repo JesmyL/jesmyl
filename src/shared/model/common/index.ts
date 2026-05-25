@@ -6,6 +6,6 @@ export const enum SortDirection {
 
 export const enum TextCase {
   Capitalize = 0,
-  Lowercase = 1,
+  AsIs = 1,
   Uppercase = 2,
 }

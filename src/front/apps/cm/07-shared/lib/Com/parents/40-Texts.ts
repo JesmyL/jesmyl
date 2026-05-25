@@ -2,6 +2,7 @@ import { CmComOrder } from '$cm/ext';
 import md5 from 'md5';
 import { escapeRegExpSymbols, makeNamedRegExp, makeRegExp } from 'regexpert';
 import { CmComAudioMarkPackTime, CmComOrderWid } from 'shared/api';
+import { defaultTextCase } from 'shared/const/textCase';
 import { CmBroadcastMonolineSlide, CmBroadcastSlideLine } from 'shared/model/cm/broadcast';
 import { TextCase } from 'shared/model/common';
 import { capitalizeText, itIt } from 'shared/utils';
@@ -50,7 +51,7 @@ export class CmComTexts extends CmComChords {
 
   static prepareEachTextLine = (lines: string[] | nil, textCase: TextCase | nil) => {
     if (!lines?.length) return [];
-    textCase = textCase ?? TextCase.Capitalize;
+    textCase = textCase ?? defaultTextCase;
 
     const map: (line: string) => string =
       textCase === TextCase.Capitalize
