@@ -39,7 +39,7 @@ export const CmEditorComTabTextBlockWordLetterLowerer = ({ com }: { com: CmCom }
           }
         />
       </ModalHeader>
-      <ModalBody>
+      <ModalBody className="max-h-[70vh]!">
         {comTextBlocks.map((words, itTexti) => (
           <div
             key={itTexti}
@@ -67,13 +67,14 @@ export const CmEditorComTabTextBlockWordLetterLowerer = ({ com }: { com: CmCom }
         ))}
       </ModalBody>
       {selectedWord && (
-        <ModalFooter className="flex justify-between w-full flex-wrap min-h-10 gap-3">
+        <ModalFooter className="flex flex-col w-full min-h-10 gap-3">
           {mappers.map((mapper, mapperi) => {
             const mappedWord = mapper(selectedWord);
 
             return (
               <Button
                 key={mapperi}
+                size="sm"
                 className={twMerge(
                   mappedWord === comTextBlocks[texti]?.[wordi] && 'underline',
                   mappedWord === selectedWord && 'bg-x3! text-x1',
