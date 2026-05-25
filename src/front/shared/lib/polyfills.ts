@@ -123,6 +123,14 @@ export const setPolyfills = () => {
         return differenceSet;
       };
     }
+
+    if (!setPrototype._clone) {
+      const clearSet = new (globalThis as any).Set();
+
+      setPrototype._clone = function () {
+        return this.union(clearSet);
+      };
+    }
   })();
 };
 
@@ -156,6 +164,10 @@ declare global {
 
   interface String {
     reverse: () => string;
+  }
+
+  interface Set<T> {
+    _clone: () => Set<T>;
   }
 
   interface OnMessageEvent extends OmitOwn<Event, 'currentTarget' | 'target' | 'srcElement'> {
