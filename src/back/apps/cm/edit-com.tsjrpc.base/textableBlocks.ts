@@ -11,16 +11,16 @@ import { cmConstantsConfigFileStore } from '../file-stores';
 import { modifyCom } from './lib/modifiers';
 
 export const cmEditComServerTsjrpcTextableBlocks = {
-  changeChordBlock: modifyCom((com, { texti: coli, value }, { auth }) => {
+  changeChordBlock: modifyCom((com, { texti, value }, { auth }) => {
     if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_CH', 'U')) throw '';
 
     com.c ??= [];
-    const prev = com.c[coli];
-    com.c[coli] = trimTextLines(value);
+    const prev = com.c[texti];
+    com.c[texti] = trimTextLines(value);
 
     return `изменён аккордный блок:\n\n${value}\n\nбыло:\n${prev}`;
   }),
-  changeTextBlock: modifyCom((com, { texti: coli, value }, { auth }) => {
+  changeTextBlock: modifyCom((com, { texti, value }, { auth }) => {
     if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_TXT', 'U')) throw '';
 
     const incorrects = textLinesLengthIncorrects(
@@ -31,12 +31,39 @@ export const cmEditComServerTsjrpcTextableBlocks = {
     if (incorrects?.errors?.length) throw incorrects.errors[0].message;
 
     com.t ??= [];
-    const prev = com.t[coli];
+    const prev = com.t[texti];
     const clearValue = transformToClearText(value);
 
-    com.t[coli] = clearValue;
+    com.t[texti] = clearValue;
 
     return `изменён текстовый блок:\n\n${value}\n\nбыло:\n${prev}`;
+  }),
+  textCaps: modifyCom((com, { texts }, { auth }) => {
+    if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_TXT', 'U')) throw '';
+    const newTexts: string[] = [];
+    const comTexts = (com.t ??= []);
+    const notRuLettersReg = makeRegExp('/[^а-яё]/gi');
+
+    texts.forEach((newText, newTexti) => {
+      if (
+        newText.replace(notRuLettersReg, '').toLowerCase() !==
+        comTexts[newTexti]?.replace(notRuLettersReg, '').toLowerCase()
+      )
+        throw 'Редактировать можно только заглавные буквы';
+
+      const incorrects = textLinesLengthIncorrects(
+        newText,
+        cmConstantsConfigFileStore.getValue().maxAvailableComLineLength,
+      );
+
+      if (incorrects?.errors?.length) throw incorrects.errors[0].message;
+
+      newTexts[newTexti] = transformToClearText(newText);
+    });
+
+    com.t = newTexts;
+
+    return `изменены текстовые блоки`;
   }),
 
   removeVerticalBarsFromTexts: modifyCom((com, _, { auth }) => {

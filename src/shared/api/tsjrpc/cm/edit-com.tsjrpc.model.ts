@@ -25,6 +25,7 @@ export type CmEditComTsjrpcModel = {
 
   changeChordBlock: (args: { texti: number; comw: CmComWid; value: string }) => IExportableCom;
   changeTextBlock: (args: { texti: number; comw: CmComWid; value: string }) => IExportableCom;
+  textCaps: (args: { comw: CmComWid; texts: string[] }) => IExportableCom;
 
   removeVerticalBarsFromTexts: (args: { comw: CmComWid }) => void;
 
