@@ -39,7 +39,7 @@ export class CmComTexts extends CmComChords {
     const slides: CmBroadcastSlideLine[][] = [];
 
     this.makeExpandLines().forEach(slide => {
-      if (slide.ord !== prevOrd || slide.totalLinei < prevTotalLinei) slides.push([]);
+      if ((slide.ord !== prevOrd || slide.totalLinei < prevTotalLinei) && !slide.ord.isAnyInherited) slides.push([]);
       slides[slides.length - 1].push(slide);
 
       prevOrd = slide.ord;
@@ -151,7 +151,7 @@ export class CmComTexts extends CmComChords {
 
       const { currentSet } = this.makeNewlinerSet(ord, repeati, linei);
       currentSet.add(lineWords.length + 10);
-      if (prevOrdLinei > linei) prevSlide = fillSlide();
+      if (prevOrdLinei > linei && !ord.me.isInherit && !ord.me.isAnchorInherit) prevSlide = fillSlide();
       prevOrdLinei = linei;
 
       currentSet.forEach(initWordi => {

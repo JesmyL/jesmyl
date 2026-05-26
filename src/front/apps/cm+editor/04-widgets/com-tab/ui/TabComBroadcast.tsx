@@ -55,12 +55,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                 key={ordBlocki}
                 className="mt-5"
               >
-                {!linei && (
-                  <div>
-                    {ord.me.header()}
-                    {ord.me.kind?.isInherit && '+'}
-                  </div>
-                )}
+                {ord.isAnyInherited || !!linei || !!repeati || <div>{ord.me.header()}</div>}
                 {renderBreakButton(1, !ordBlocki)}
 
                 {line.split(' ').map((word, initWordi) => {

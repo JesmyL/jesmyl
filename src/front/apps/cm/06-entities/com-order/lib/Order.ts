@@ -62,6 +62,10 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
     this.setExportable('t', val);
   }
 
+  get isAnyInherited() {
+    return this.me.isInherit || this.me.isAnchorInherit || this.me.isAnchorInheritPlus;
+  }
+
   get positions(): (number[] | null)[] | nil {
     return (
       this.me.positions ??
@@ -171,7 +175,7 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   };
 
   isInSolidLineWithInvisibles() {
-    return (this.me.isInherit || this.me.isAnchorInherit || this.me.isAnchorInheritPlus) && this.isHeaderNoneForce;
+    return this.isAnyInherited && this.isHeaderNoneForce;
   }
 
   isDayFromCreate = () => this.com.isDayFromCreate(this.top.cre);
