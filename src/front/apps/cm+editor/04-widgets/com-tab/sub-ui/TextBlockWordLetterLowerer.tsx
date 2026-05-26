@@ -1,18 +1,21 @@
 import { Button } from '#shared/components';
-import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
+import { mylib } from '#shared/lib/my-lib';
+import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { CmCom } from '$cm/ext';
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
+import { itIt } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
 
 const mappers: ((word: string) => string)[] = [
-  word => word.toUpperCase(),
   word => {
     const wordi = word.search(makeRegExp('/[а-яё]/i'));
     return word.slice(0, wordi) + word[wordi].toUpperCase() + word.slice(wordi + 1).toLowerCase();
   },
   word => word.toLowerCase(),
+  word => word.toUpperCase(),
+  itIt,
 ];
 
 export const CmEditorComTabTextBlockWordLetterLowerer = ({ com }: { com: CmCom }) => {
@@ -24,22 +27,23 @@ export const CmEditorComTabTextBlockWordLetterLowerer = ({ com }: { com: CmCom }
     wordi: -1,
   }));
 
-  const selectedWord = texts[texti]?.[wordi];
-
   return (
     <>
       <ModalHeader className="flex flex-end">
         <Button
           icon="Telegram"
+          disabled={mylib.isEq(texts, comTextBlocks)}
           onClick={() =>
             cmEditComClientTsjrpcMethods.textCaps({
               comw: com.wid,
               texts: texts.map(words => words.join('')),
             })
           }
-        />
+        >
+          Отправить
+        </Button>
       </ModalHeader>
-      <ModalBody className="max-h-[70vh]!">
+      <ModalBody>
         {comTextBlocks.map((words, itTexti) => (
           <div
             key={itTexti}
@@ -57,7 +61,23 @@ export const CmEditorComTabTextBlockWordLetterLowerer = ({ com }: { com: CmCom }
                     texti === itTexti && wordi === itWordi && 'bg-x7! text-x1',
                     word !== itWord && 'underline',
                   )}
-                  onClick={() => setWordState(prev => ({ ...prev, texti: itTexti, wordi: itWordi }))}
+                  onClick={() => {
+                    const selectedWord = texts[itTexti]?.[itWordi];
+                    let nextMapi = mappers.findIndex(mapper => mapper(selectedWord) === selectedWord) + 1;
+                    if (!mappers[nextMapi]) nextMapi = 0;
+
+                    const newTexts = [...texts];
+                    newTexts[itTexti] = [...(newTexts[itTexti] || [])];
+                    newTexts[itTexti][itWordi] = mappers[nextMapi](itWord);
+
+                    setWordState(prev => ({
+                      ...prev,
+                      texti: itTexti,
+                      wordi: itWordi,
+                      texts: newTexts,
+                      mapi: nextMapi,
+                    }));
+                  }}
                 >
                   {word}
                 </Button>
@@ -66,33 +86,6 @@ export const CmEditorComTabTextBlockWordLetterLowerer = ({ com }: { com: CmCom }
           </div>
         ))}
       </ModalBody>
-      {selectedWord && (
-        <ModalFooter className="flex flex-col w-full min-h-10 gap-3">
-          {mappers.map((mapper, mapperi) => {
-            const mappedWord = mapper(selectedWord);
-
-            return (
-              <Button
-                key={mapperi}
-                size="sm"
-                className={twMerge(
-                  mappedWord === comTextBlocks[texti]?.[wordi] && 'underline',
-                  mappedWord === selectedWord && 'bg-x3! text-x1',
-                )}
-                onClick={() => {
-                  const newTexts = [...texts];
-                  newTexts[texti] = [...newTexts[texti]];
-                  newTexts[texti][wordi] = mappedWord;
-
-                  setWordState(prev => ({ ...prev, texts: newTexts }));
-                }}
-              >
-                {mappedWord}
-              </Button>
-            );
-          })}
-        </ModalFooter>
-      )}
     </>
   );
 };
