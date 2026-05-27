@@ -102,6 +102,9 @@ export const cmServerTsjrpcBaseExchangeFreshComCommentBlocks = {
         dl: resultDictList.length ? resultDictList : undefined,
       };
 
+      delete userServerComments[comw].d;
+      delete userServerComments[comw].alt;
+
       const block: ICmComCommentBlock = { ...userServerComments[comw], comw };
       resultComments.push(block);
       freshComments.push(block);
