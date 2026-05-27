@@ -2,7 +2,8 @@ import { makeRegExp } from 'regexpert';
 import { anyQuotesStr, displayableTextBlockCharsStr, nbsp, openAndClosedQuotes, slavicLowerLettersStr } from './const';
 
 let level = 0;
-const dashReplacer: (...args: string[]) => string = (_, $1, $2) => ($2 ? `${nbsp}—\n` : $1 || `${nbsp}— `);
+const dashReplacer: (...args: string[]) => string = (_, $1, $2, $3) =>
+  $2 ? `${nbsp}—\n` : $1 || ($3?.[0] === '\n' ? `\n—${nbsp}` : `${nbsp}— `);
 
 const replaceNestedBrackets = (all: string, index: number, text: string) => {
   const pre = text[index - 1];
@@ -27,7 +28,7 @@ export const transformToDisplayedText = (
   const str = text
     .replace(makeRegExp(`/[^${displayableTextBlockCharsStr}${isHideNewLineSeparator ? '' : '|'}]+/gi`), '')
     .replace(makeRegExp(`/"+/g`), replaceNestedBrackets)
-    .replace(makeRegExp(`/((?=\\S)-+(?=\\S))|( ?-+\n)|( ?-+ ?)/g`), dashReplacer)
+    .replace(makeRegExp(`/((?=\\S)-+(?=\\S))|( ?-+\n)|(\\s?-+ ?)/g`), dashReplacer)
     .replace(makeRegExp(`/\\( [${anyQuotesStr}]\\)|\\([${anyQuotesStr}] \\)/g`), '');
 
   return {
