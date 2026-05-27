@@ -10,7 +10,7 @@ export const chordLikeStr =
 export const chordInterpretedLikeStr =
   `(?<simpleChord>(?:${chordLeadLetter}|B)m?7?)${lightModificators}${hardModificators}?` as const;
 
-export const doubleQuotesStr = '«»„„“”«»“' as const;
+export const doubleQuotesStr = '«»„“”' as const;
 export const singleQuotesStr = '’`‘’' as const;
 export const anyQuotesStr = `${doubleQuotesStr}${singleQuotesStr}'"` as const;
 export const replacableAvailableCharsStr = '…' as const;
