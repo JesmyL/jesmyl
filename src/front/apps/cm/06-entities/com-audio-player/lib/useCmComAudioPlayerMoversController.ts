@@ -77,19 +77,23 @@ export const useCmComAudioPlayerMoversController = (
 
               titleNode.innerText = titleProps.title;
 
-              const htmlButtonSelector = `[com-audio-mark-time-selector="${actualMarkTime}"]`;
+              const htmlButtonSelector = `[com-audio-mark-time-selector="${actualMarkTime}"]` as const;
               const block = document.querySelector(`.composition-block:has(${htmlButtonSelector})`);
 
               const button = (block ?? document)?.querySelector(htmlButtonSelector);
 
               if (+preSwitchTime >= 0) {
+                const ordSelector = `[solid-ord-selector="${titleProps.ord?.wid}"]` as const;
                 const lineNode = checkIsCmComAudioMarkTitleIsLineSelector(selector)
                   ? document.querySelector(
-                      `[solid-ord-selector="${titleProps.ord?.wid}"] [solid-ord-linei="${makeCmComAudioMarkLineiFromSelector(selector)}"]`,
+                      `${ordSelector} [solid-ord-linei="${makeCmComAudioMarkLineiFromSelector(selector)}"]`,
                     )
                   : null;
 
-                (lineNode ?? block ?? button)?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                (lineNode ?? block ?? button ?? document.querySelector(ordSelector))?.scrollIntoView({
+                  block: 'center',
+                  behavior: 'smooth',
+                });
               }
 
               prevButton?.classList.remove(currentAccentClassName);

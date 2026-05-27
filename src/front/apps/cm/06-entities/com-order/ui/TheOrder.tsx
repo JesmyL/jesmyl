@@ -40,7 +40,6 @@ export function TheCmComOrder(props: Props) {
   if (props.isMiniAnchor && ord.isAnchor && !ord.isOpened) {
     return (
       <div
-        id={`com-block-${ordi}`}
         className="styled-header anchor"
         {...styleAttributes}
         ref={el => {
@@ -97,7 +96,6 @@ export function TheCmComOrder(props: Props) {
 
     return (
       <div
-        id={`com-block-${ordi}`}
         ord-selector={ord.makeSelector()}
         anchor-ord={ord.anchor}
         className={
@@ -139,7 +137,6 @@ export function TheCmComOrder(props: Props) {
 
   return (
     <div
-      id={`com-block-${ordi}`}
       ord-selector={ord.makeSelector()}
       anchor-ord={ord.anchor}
       {...styleAttributes}

@@ -39,7 +39,17 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
           className="mt-20"
         >
           {group?.map(({ line, ord, linei, repeati }, ordBlocki) => {
-            if (!ord.isRealText() || !line.trim()) return line;
+            const props = { 'solid-ord-selector': ord.makeSelector() };
+
+            if (!ord.isRealText() || !line.trim())
+              return (
+                <div
+                  key={ordBlocki}
+                  {...props}
+                >
+                  {line}
+                </div>
+              );
 
             const { watchSet, currentSet, nearSet, ownSet } = ccom.makeNewlinerSet(ord, repeati, linei);
             const isHasSelfChanges = !!ownSet.size;
@@ -78,6 +88,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
               <div
                 key={ordBlocki}
                 className="mt-5"
+                {...props}
               >
                 {ord.isAnyInherited || !!linei || !!repeati || <div>{ord.me.header()}</div>}
                 {renderBreakButton(1, !ordBlocki)}

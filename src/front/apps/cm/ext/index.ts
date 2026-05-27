@@ -16,6 +16,7 @@ export {
   cmComAudioPlayerIsPlayAtom,
   cmComAudioPlayerSwitchIsPlay,
   cmComAudioPlayerUpdateCurrentTime,
+  CmComAudioPlayerWithMarks,
   takeCmComAudioPlayerCurrentTime,
 } from '$cm/entities/com-audio-player';
 export { CmComAudioPlayerMarksMovers } from '$cm/entities/com-audio-player/ui/ComPlayerMarksMovers';

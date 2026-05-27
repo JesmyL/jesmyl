@@ -8,7 +8,7 @@ import { useEditableCcom } from '$cm+editor/shared/lib/useEditableCom';
 import { removedCompositionsAtom } from '$cm+editor/shared/state/com';
 import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContainer';
 import { cmEditorComTabCompositionNavs } from '$cm+editor/widgets/com-tab';
-import { CmComAudioPlayer, CmComNumber } from '$cm/ext';
+import { CmComAudioPlayerWithMarks, CmComNumber } from '$cm/ext';
 import styled from '@emotion/styled';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
@@ -130,7 +130,11 @@ export const CmEditorCompositionPage = ({
 
           {isOpenPlayer && !!ccom.audio?.length && (
             <div className="sticky com-player">
-              <CmComAudioPlayer audioLinks={ccom.audio} />
+              <CmComAudioPlayerWithMarks
+                className="static"
+                audioLinks={ccom.audio}
+                com={ccom}
+              />
             </div>
           )}
           <StyledOutlet>{TabComponent && <TabComponent ccom={ccom} />}</StyledOutlet>
