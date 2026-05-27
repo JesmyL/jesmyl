@@ -1,3 +1,4 @@
+import { mylib } from '#shared/lib/my-lib';
 import { CmComOrder } from '$cm/ext';
 import md5 from 'md5';
 import { escapeRegExpSymbols, makeNamedRegExp, makeRegExp } from 'regexpert';
@@ -6,7 +7,7 @@ import { defaultTextCase } from 'shared/const/textCase';
 import { CmBroadcastMonolineSlide, CmBroadcastSlideLine } from 'shared/model/cm/broadcast';
 import { TextCase } from 'shared/model/common';
 import { capitalizeText, itIt } from 'shared/utils';
-import { nbsp } from 'shared/utils/cm/com/const';
+import { doubleQuotesStr, nbsp, slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 import { makeCmComAudioMarkTitleEmptySelector } from '../../makeCmComAudioMarkTitleBySelector';
 import { CmComChords } from './30-Chords';
 
@@ -49,19 +50,31 @@ export class CmComTexts extends CmComChords {
     return slides;
   };
 
-  static prepareEachTextLine = (lines: string[] | nil, textCase: TextCase | nil) => {
-    if (!lines?.length) return [];
-    textCase = textCase ?? defaultTextCase;
+  static prepareEachTextLine = (() => {
+    const preps = '.!?';
+    const prepsSet = new Set(preps);
+    const str = `/([|])|((?:[${doubleQuotesStr}]|[${preps}] |^—${nbsp})[${slavicLowerLettersStr}])/gi` as const;
+    const reg = makeRegExp(str);
+    const rep: Parameters<(typeof String.prototype)['replace']>[1] = (all, $1, $2) =>
+      $1 ? '' : mylib.isStr($2) ? $2.slice(0, -1) + $2.slice(-1).toUpperCase() : all;
+    const mappers: Record<TextCase, (line: string) => string> = {
+      [TextCase.Capitalize]: capitalizeText,
+      [TextCase.Uppercase]: line => line.toUpperCase(),
+      [TextCase.AsIs]: itIt,
+    };
 
-    const map: (line: string) => string =
-      textCase === TextCase.Capitalize
-        ? capitalizeText
-        : textCase === TextCase.Uppercase
-          ? line => line.toUpperCase()
-          : itIt;
+    return (lines: string[] | nil, textCase: TextCase | nil) => {
+      if (!lines?.length) return [];
+      const map = mappers[textCase ?? defaultTextCase];
+      let lastSymbol = '';
 
-    return lines.map(line => (line?.length ? map(line).replace(makeRegExp('/[|]/g'), '') : line)).filter(itIt);
-  };
+      return lines.filter(itIt).map((line, linei) => {
+        const result = (!linei || prepsSet.has(lastSymbol) ? capitalizeText : map)(line).replace(reg, rep);
+        lastSymbol = line.slice(-1);
+        return result;
+      });
+    };
+  })();
 
   makeExpandLines = () => {
     try {
