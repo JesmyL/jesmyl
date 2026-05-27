@@ -14,11 +14,9 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
         {openAtom => (
           <>
             <Button
-              icon="Code"
+              icon="Computer"
               onClick={openAtom.do.toggle}
-            >
-              Посмотреть JSON
-            </Button>
+            />
             <FullContent openAtom={openAtom}>
               {isOpen =>
                 isOpen &&
