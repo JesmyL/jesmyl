@@ -7,6 +7,7 @@ import { Atom, atom } from 'atomaric';
 import React, { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
 import { IScheduleWidgetListCat } from 'shared/api';
+import { ruLowerLettersStr } from 'shared/utils/cm/com/const';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
 import { schListsTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
@@ -14,7 +15,7 @@ import { ScheduleWidgetListUnit } from './Unit';
 
 const LazyIconConfigurator = React.lazy(() => import('../../../shared/ui/configurators/Icon'));
 
-const reg = makeRegExp('/([а-яё]?[йуеъыаоэяиью]+[а-яё]).+/i');
+const reg = makeRegExp(`/([${ruLowerLettersStr}]?[йуеъыаоэяиью]+[${ruLowerLettersStr}]).+/i`);
 const cutTitle = (title: string) => title.replace(reg, '$1.');
 
 let isModalOpenAtom: Atom<boolean>;

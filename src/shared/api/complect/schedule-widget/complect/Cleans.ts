@@ -6,9 +6,10 @@ import {
   ScheduleWidgetDayListItemTypeBox,
 } from 'shared/api';
 import { capitalizeText, SMyLib, smylib } from 'shared/utils';
+import { ruLowerLettersStr } from 'shared/utils/cm/com/const';
 
 const singleTitleSymbols = '- ().,/';
-const incorrectsTitleReg = makeRegExp(`/[^${singleTitleSymbols}\\dа-яё]/gi`);
+const incorrectsTitleReg = makeRegExp(`/[^${singleTitleSymbols}\\d${ruLowerLettersStr}]/gi`);
 const singlesTitleReg = makeRegExp(`/([${singleTitleSymbols}])(\\1+)/g`);
 const titleLettersNormalizer = (_: string, __: string, letters: string) => letters[0];
 
@@ -100,7 +101,7 @@ export class ScheduleWidgetCleans {
 
   static attachmentTypeTitleNormalize = (text: string, isWithTopic?: boolean) => {
     if (isWithTopic) {
-      const notSymboli = text.search(makeRegExp(`/[^- .,\\wа-яё]/gi`));
+      const notSymboli = text.search(makeRegExp(`/[^- .,\\w${ruLowerLettersStr}]/gi`));
       const topic = notSymboli < 0 ? '' : text.slice(notSymboli).trim();
 
       return (

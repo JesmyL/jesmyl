@@ -1,7 +1,8 @@
 [
-  "src/front/apps/cm/06-entities/com-comment/utils/commentHeadBibleAddressRegExp.ts",
-  "src/front/apps/cm/07-shared/lib/Com/parents/40-Texts.ts",
-  "src/front/components/apps/bible/translations/search/input-panel/address/hooks/transformers.tsx",
-  "src/front/components/apps/cm/col/com/complect/comment-parser/Cleans.ts",
-  "src/shared/utils/cm/com/const.ts"
+    "src/front/apps/bible/06-entities/broadcast-search/lib/transformers.tsx",
+    "src/front/apps/cm/06-entities/com-comment/utils/commentHeadBibleAddressRegExp.ts",
+    "src/front/apps/cm/07-shared/lib/Com/parents/40-Texts.ts",
+    "src/front/components/apps/bible/translations/search/input-panel/address/hooks/transformers.tsx",
+    "src/front/components/apps/cm/col/com/complect/comment-parser/Cleans.ts",
+    "src/shared/utils/cm/com/const.ts"
 ]

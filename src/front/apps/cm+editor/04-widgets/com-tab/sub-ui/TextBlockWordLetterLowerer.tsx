@@ -5,17 +5,16 @@ import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.ts
 import { CmCom } from '$cm/ext';
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
-import { itIt } from 'shared/utils';
+import { slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 import { twMerge } from 'tailwind-merge';
 
 const mappers: ((word: string) => string)[] = [
   word => {
-    const wordi = word.search(makeRegExp('/[а-яё]/i'));
+    const wordi = word.search(makeRegExp(`/[${slavicLowerLettersStr}]/i`));
     return word.slice(0, wordi) + word[wordi].toUpperCase() + word.slice(wordi + 1).toLowerCase();
   },
   word => word.toLowerCase(),
   word => word.toUpperCase(),
-  itIt,
 ];
 
 export const CmEditorComTabTextBlockWordLetterLowerer = ({ com }: { com: CmCom }) => {

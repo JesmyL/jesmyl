@@ -5,6 +5,7 @@ import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
 import { itIt } from 'shared/utils';
+import { slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 import { takeTextLineOverLengthIndex } from 'shared/utils/cm/com/takeTextLineOverLengthIndex';
 import { ICmEditorCompositionsCatSpecialSearches } from '../model';
 
@@ -44,7 +45,7 @@ const eeIncorrectWordsReg = delayedValueSetDefiner(
   () => cmEditorIDB.get.eeStore,
   /^ееее$/,
   value => {
-    const notRuLetter = '([^а-яёіґїє])';
+    const notRuLetter = `([^${slavicLowerLettersStr}])`;
     return new RegExp(
       notRuLetter +
         '(' +

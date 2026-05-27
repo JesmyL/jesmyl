@@ -1,6 +1,7 @@
 import { nounsFileStore, pronounsFileStore } from 'back/apps/index/file-stores';
 import { makeRegExp } from 'regexpert';
 import { SMyLib, smylib } from 'shared/utils';
+import { ruLowerLettersStr } from 'shared/utils/cm/com/const';
 
 type Replacer<Ret> = (substring: string, ...args: string[]) => Ret;
 
@@ -89,7 +90,7 @@ const regEnds: [RegExp, [RegExp, EndVariantsDict][]][] = SMyLib.entries(wordRegE
 const allAll = (all: string) => all;
 
 const fixNoun = (() => {
-  const reg = makeRegExp('/[^-а-яё\\d"]/gi');
+  const reg = makeRegExp(`/[^-${ruLowerLettersStr}\\d"]/gi`);
   return (noun: string) => noun.replace(reg, '').replace(makeRegExp('/ /g'), '_') + (noun.startsWith('"') ? '"' : '');
 })();
 

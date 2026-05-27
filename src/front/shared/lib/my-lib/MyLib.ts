@@ -1,5 +1,6 @@
 import { makeRegExp } from 'regexpert';
 import { SMyLib, itIt } from 'shared/utils';
+import { ruLowerLettersStr, slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 import { addEventListenerPipe, hookEffectPipe } from '../hookEffectPipe';
 
 const constants = {
@@ -57,7 +58,7 @@ export class MyLib extends SMyLib {
 
   numberSearchReplacements: [RegExp, string][] = [
     [/0/g, '[ 0]'],
-    [/1/g, '[^а-яё1]'],
+    [/1/g, `[^${ruLowerLettersStr}1`],
     [/2/g, '[абвг2]'],
     [/3/g, '[деёжз3]'],
     [/4/g, '[ийкл4]'],
@@ -93,7 +94,7 @@ export class MyLib extends SMyLib {
   ): RetItem[] {
     const normalWords = isNumberSearch
       ? searchWord.split(makeRegExp('/0+/')).filter(itIt)
-      : searchWord.split(makeRegExp("/[^а-яёa-z0-9ґї'ʼє]+/i")).filter(itIt);
+      : searchWord.split(makeRegExp(`/[^a-z0-9'ʼ${slavicLowerLettersStr}]+/i`)).filter(itIt);
     const words = normalWords.map(word => word.toLowerCase());
     const wordRegs = normalWords.map(word => this.internationalWordReg(word, isNumberSearch));
 

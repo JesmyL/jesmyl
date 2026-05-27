@@ -8,6 +8,7 @@ import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { makeNamedRegExp, makeRegExp } from 'regexpert';
 import { emptyFunc, transcriptEnToRuText } from 'shared/utils';
+import { ruLowerLettersStr } from 'shared/utils/cm/com/const';
 
 export const useBibleBroadcastSearchTransformAddressTermToAddress = (
   term: string,
@@ -58,7 +59,7 @@ export const useBibleBroadcastSearchTransformAddressTermToAddress = (
       booki = bibleLowerBooks.findIndex(book => checkEachBibleTitles(book, title => title.includes(bookTitle)));
     if (booki < 0 && ruBookName.length > 1) {
       const bookTitleRegStr =
-        `/^${chips.bookNum}${ruBookName[0]}[а-яё]?${ruBookName[1]}[а-яё]?${ruBookName.slice(2)}[а-яё]*$/` as const;
+        `/^${chips.bookNum}${ruBookName[0]}[${ruLowerLettersStr}]?${ruBookName[1]}[${ruLowerLettersStr}]?${ruBookName.slice(2)}[${ruLowerLettersStr}]*$/` as const;
 
       booki = bibleLowerBooks.findIndex(book =>
         checkEachBibleTitles(book, title => !!title.match(makeRegExp(bookTitleRegStr))),
@@ -159,7 +160,7 @@ export const useBibleBroadcastSearchTransformAddressTermToAddress = (
 ////////////////////////////////////
 
 const { regExp: addressReg, transform: makePropsFromAddressArgs } = makeNamedRegExp(
-  `/(?<bookNum>\\d?)(?:-?[ея]?)?\\s*(?:(?<bookName>[а-яё]+)|(?<bookNameEn>[a-z]*))\\s*(?:(?<chapter>\\d{1,3})(?:(?::|\\s+)(?<verse>\\d{1,3})(?:\\s*(?<verseSeparator>[-,]?)\\s*)(?<finishVerse>\\d{1,3})?)?)?/`,
+  `/(?<bookNum>\\d?)(?:-?[ея]?)?\\s*(?:(?<bookName>[${ruLowerLettersStr}]+)|(?<bookNameEn>[a-z]*))\\s*(?:(?<chapter>\\d{1,3})(?:(?::|\\s+)(?<verse>\\d{1,3})(?:\\s*(?<verseSeparator>[-,]?)\\s*)(?<finishVerse>\\d{1,3})?)?)?/`,
 );
 
 const disable = false;

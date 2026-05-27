@@ -7,6 +7,7 @@ import { memo, useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { BibleTranslateName, EeStorePack } from 'shared/api';
 import { itIt } from 'shared/utils';
+import { slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 
 type Props = {
   isCheckBible: boolean;
@@ -54,7 +55,7 @@ export const CmEditorEERulesListComputer = memo(function ListComputer({
           const lower = text.toLowerCase();
 
           etap('Обрезка неславянских символов', () => {
-            const normSlavic = lower.replace(makeRegExp('/[^а-яёіїєґ]+/gi'), ' ');
+            const normSlavic = lower.replace(makeRegExp(`/[^${slavicLowerLettersStr}]+/gi`), ' ');
 
             etap('Глобальная замена ё на е', () => {
               const norm = normSlavic.replace(makeRegExp('/ё/g'), 'е');

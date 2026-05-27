@@ -5,6 +5,7 @@ import { makeRegExp } from 'regexpert';
 import { CmComWid } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
 import { trimTextLines } from 'shared/utils';
+import { slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 import { textLinesLengthIncorrects } from 'shared/utils/cm/com/textLinesLengthIncorrects';
 import { transformToClearText } from 'shared/utils/cm/com/transformToClearText';
 import { cmConstantsConfigFileStore } from '../file-stores';
@@ -42,7 +43,7 @@ export const cmEditComServerTsjrpcTextableBlocks = {
     if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_TXT', 'U')) throw '';
     const newTexts: string[] = [];
     const comTexts = (com.t ??= []);
-    const notRuLettersReg = makeRegExp('/[^а-яё]/gi');
+    const notRuLettersReg = makeRegExp(`/[^${slavicLowerLettersStr}]/gi`);
 
     texts.forEach((newText, newTexti) => {
       if (

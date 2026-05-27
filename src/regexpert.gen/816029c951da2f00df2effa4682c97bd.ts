@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-namespace */
 import('../front/apps/cm/06-entities/com-comment/utils/commentHeadBibleAddressRegExp');
 
@@ -17,30 +18,28 @@ namespace N816029c951da2f00df2effa4682c97bd_1 {
   type $verseTail = `-${$verseTo}`;
   type $verseTo = `${number}`;
 
-  export interface I
-    extends Record<
-      `/(?<translate>${string}:)?(?<book>(?<bookPrefix>(?<bookNumberWithSuffix>(?<bookNumber>\\d{1,3})-?(?<bookNumberSuffix>[яе]?)|(?<bookTitleFrom>От)) *)?(?<bookTitle>[а-яё]+))+ *(?<chapter>\\d{1,3}):(?<verseDiapason>(?<verseFrom>\\d{1,3})(?<verseTail>-(?<verseTo>\\d{1,3}))?)/gi`,
-      IgnoreCaseRecord<{
-        $0: $0;
-        translate?: $translate;
-        book: $book;
-        bookPrefix?: $bookPrefix;
-        bookNumberWithSuffix?: $bookNumberWithSuffix;
-        bookNumber?: $bookNumber;
-        bookNumberSuffix?: $bookNumberSuffix;
-        bookTitleFrom?: $bookTitleFrom;
-        bookTitle: $bookTitle;
-        chapter: $chapter;
-        verseDiapason: $verseDiapason;
-        verseFrom: $verseFrom;
-        verseTail?: $verseTail;
-        verseTo?: $verseTo;
-      }>
-    > {
-    '': '';
-  }
+  export interface I extends Record<
+    `/(?<translate>${string}:)?(?<book>(?<bookPrefix>(?<bookNumberWithSuffix>(?<bookNumber>\\d{1,3})-?(?<bookNumberSuffix>[яе]?)|(?<bookTitleFrom>От)) *)?(?<bookTitle>[${string}]+))+ *(?<chapter>\\d{1,3}):(?<verseDiapason>(?<verseFrom>\\d{1,3})(?<verseTail>-(?<verseTo>\\d{1,3}))?)/gi`,
+    IgnoreCaseRecord<{
+      $0: $0;
+      translate?: $translate;
+      book: $book;
+      bookPrefix?: $bookPrefix;
+      bookNumberWithSuffix?: $bookNumberWithSuffix;
+      bookNumber?: $bookNumber;
+      bookNumberSuffix?: $bookNumberSuffix;
+      bookTitleFrom?: $bookTitleFrom;
+      bookTitle: $bookTitle;
+      chapter: $chapter;
+      verseDiapason: $verseDiapason;
+      verseFrom: $verseFrom;
+      verseTail?: $verseTail;
+      verseTo?: $verseTo
+    }>
+  > { '': '' }
 }
 
-interface _GlobalScopedNamedRegExpMakerGeneratedTypes extends N816029c951da2f00df2effa4682c97bd_1.I {
-  '': '';
+interface _GlobalScopedNamedRegExpMakerGeneratedTypes
+  extends N816029c951da2f00df2effa4682c97bd_1.I {
+    '': ''
 }
