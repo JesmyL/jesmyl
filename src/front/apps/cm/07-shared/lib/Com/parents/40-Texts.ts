@@ -200,9 +200,10 @@ export class CmComTexts extends CmComChords {
         if (lines[0]) {
           lines[0] = `${'/'.repeat(fullSlide.repeats)}${nbsp}${lines[0]}`;
         }
-        const last = lines.length - 1;
-        if (lines[last]) {
-          lines[last] = `${lines[last]}${nbsp}${'\\'.repeat(fullSlide.repeats)}`;
+        const lasti = lines.findLastIndex(itIt);
+
+        if (lines[lasti]) {
+          lines[lasti] = `${lines[lasti]}${nbsp}${'\\'.repeat(fullSlide.repeats)}`;
         }
       }
     }

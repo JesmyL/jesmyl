@@ -1,4 +1,6 @@
 import { Button } from '#shared/components';
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import { WithAtom } from '#shared/ui/WithAtom';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import React, { useMemo } from 'react';
@@ -8,6 +10,30 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
 
   return (
     <>
+      <WithAtom init={false}>
+        {openAtom => (
+          <>
+            <Button
+              icon="Code"
+              onClick={openAtom.do.toggle}
+            >
+              Посмотреть JSON
+            </Button>
+            <FullContent openAtom={openAtom}>
+              {isOpen =>
+                isOpen &&
+                ccom.makeExpandSlides().map((slide, slidei) => (
+                  <div
+                    key={slidei}
+                    className="my-5 white-pre"
+                    dangerouslySetInnerHTML={{ __html: slide.lines.join('\n') }}
+                  />
+                ))
+              }
+            </FullContent>
+          </>
+        )}
+      </WithAtom>
       <div className="absolute pointers-none left-12 top-30 h-full w-53 bg-x2 opacity-25 z-0" />
       {lineGroups.map((group, groupi) => (
         <div

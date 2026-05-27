@@ -52,21 +52,33 @@ export class CmComOrders extends CmComBasic {
     const ownSet = cmComNewlinerLineConfigToSet(ordNl, repeati, linei);
     const rootSet = !repeati ? new Set<number>() : cmComNewlinerLineConfigToSet(ordNl, 0, linei);
 
-    const isFreeRepeats = !ord.repeats || mylib.isNum(ord.repeats);
-    const repeatsJson = isFreeRepeats ? NaN : JSON.stringify(ord.repeats);
+    let repeatsJson;
+
+    if (!ord.repeats || mylib.isNum(ord.repeats)) repeatsJson = NaN;
+    else {
+      const { '.': self, ...restRepeats } = ord.repeats;
+      repeatsJson = JSON.stringify(restRepeats);
+    }
+
     const orders = this.orders;
 
     if (orders)
       for (const o of orders) {
         if (o.wid === ord.wid) break;
+        if (o.texti !== ord.texti) continue;
 
         if (
-          o.texti === ord.texti &&
-          (!o.repeats ||
-            mylib.isNum(o.repeats) ||
-            mylib.keys(o.repeats).join('|').search(makeRegExp('/:[1-9]/')) < 0 ||
-            repeatsJson === JSON.stringify(o.repeats))
+          !o.repeats ||
+          mylib.isNum(o.repeats) ||
+          mylib.keys(o.repeats).join('|').search(makeRegExp('/:[1-9]/')) < 0
         ) {
+          watchOrd = o;
+          break;
+        }
+
+        const { '.': self, ...restRepeats } = o.repeats;
+
+        if (repeatsJson === JSON.stringify(restRepeats)) {
           watchOrd = o;
           break;
         }

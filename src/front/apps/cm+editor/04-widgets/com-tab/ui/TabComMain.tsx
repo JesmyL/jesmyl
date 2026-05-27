@@ -1,9 +1,12 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
+import { Button } from '#shared/components';
 import { MyLib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { WithAtom } from '#shared/ui/WithAtom';
 import { CmEditorTextCorrectMessages } from '$cm+editor/entities/text';
 import { CmEditorComEditBpm } from '$cm+editor/features/ComEditBpm';
 import { CmEditorComEditTransposition } from '$cm+editor/features/ComEditTransposition';
@@ -13,10 +16,12 @@ import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { removedCompositionsAtom } from '$cm+editor/shared/state/com';
 import { ChordVisibleVariant, TheCmCom } from '$cm/ext';
 import { useState } from 'react';
+import { makeRegExp } from 'regexpert';
 import { CmComIntensityLevel } from 'shared/api';
 import { cmComIntensityLevelTitleDict } from 'shared/const/cm/cmComDriveLevelTitleDict';
 import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
+import { itIt } from 'shared/utils';
 import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 
 export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
@@ -114,20 +119,56 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
         }
       />
       {checkAccess('cm', 'COM', 'D') && (
-        <TheIconButton
-          icon="Delete01"
-          className="text-xKO"
-          confirm={
-            <>
-              Удалить песню <span className="text-x7">{ccom.name}</span>?
-            </>
-          }
-          postfix="Удалить песню"
-          onClick={() => {
-            removedCompositionsAtom.set(prev => ({ ...prev, [ccom.wid]: ccom.name }));
-            return cmEditComClientTsjrpcMethods.remove({ comw: ccom.wid });
-          }}
-        />
+        <>
+          <TheIconButton
+            icon="Delete01"
+            className="text-xKO"
+            confirm={
+              <>
+                Удалить песню <span className="text-x7">{ccom.name}</span>?
+              </>
+            }
+            postfix="Удалить песню"
+            onClick={() => {
+              removedCompositionsAtom.set(prev => ({ ...prev, [ccom.wid]: ccom.name }));
+              return cmEditComClientTsjrpcMethods.remove({ comw: ccom.wid });
+            }}
+          />
+          <WithAtom init={false}>
+            {openAtom => (
+              <>
+                <Button
+                  icon="Code"
+                  onClick={openAtom.do.toggle}
+                >
+                  Посмотреть JSON
+                </Button>
+                <FullContent openAtom={openAtom}>
+                  {isOpen =>
+                    isOpen && (
+                      <textarea
+                        className="size-full bg-x2!"
+                        onChange={itIt}
+                        value={JSON
+                          //
+                          .stringify(
+                            ccom.top,
+                            (key, value) => (isNaN(+key) || !Array.isArray(value) ? value : JSON.stringify(value)),
+                            2,
+                          )
+                          .replace(
+                            makeRegExp('/\\[\\s*((?:["\\d,.[\\]]*|null|,|\\s)*)\\s*\\]/g'),
+                            //
+                            all => all.replace(makeRegExp('/"/g'), ''),
+                          )}
+                      />
+                    )
+                  }
+                </FullContent>
+              </>
+            )}
+          </WithAtom>
+        </>
       )}
 
       {comNode}
