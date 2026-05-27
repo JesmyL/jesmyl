@@ -51,10 +51,6 @@ export interface IExportableOrderFieldValues {
   md?: number;
 }
 
-type Inheritancables<K extends keyof InheritancableOrder = keyof InheritancableOrder> = Partial<
-  Record<K, Record<number, InheritancableOrder[K]>>
->;
-
 type WatchInherited<K extends keyof InheritancableOrder> = (InheritancableOrder[K] | nil)[];
 
 export type IExportableOrder = InheritancableOrder & {
@@ -89,7 +85,7 @@ export type IExportableOrder = InheritancableOrder & {
    * @deprecated
    * Значения наследников
    * */
-  inh?: Inheritancables;
+  inh?: unknown;
 
   _v?: WatchInherited<'v'>;
   _r?: WatchInherited<'r'>;
@@ -133,7 +129,7 @@ export type IExportableCom = IExportableComInterpretationSimpleValues & {
   /** время изменения */
   m: CmComMod;
 
-  /** разбивка текстов на линии */
+  /** разбивка текстов на линии и слайды */
   nl?: [PRecord<CmComOrderWid, CmComNewlinerStrConfig.whole>];
 
   /** @deprecated */

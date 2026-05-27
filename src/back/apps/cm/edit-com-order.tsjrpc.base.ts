@@ -290,16 +290,11 @@ function modifyOrd<Props extends { ordw: CmComOrderWid; comw: CmComWid }>(
   modifier: (ord: IExportableOrder, props: Props, tool: ServerTSJRPCTool, com: IServerSideCom) => string | null,
 ) {
   return modifyCom<Props>((com, props, tool) => {
-    let foundOrd: IExportableOrder | null = null;
+    const ord = com.o?.find(o => o.w === props.ordw);
 
-    com.o?.forEach(ord => {
-      if (ord.w === props.ordw) foundOrd = ord;
-      if (ord.cre != null && ord.cre < Date.now() - 24 * 60 * 60 * 1000) delete ord.cre;
-    });
+    if (ord == null) throw new Error('Порядковый блок не найден');
 
-    if (foundOrd == null) throw new Error('Ord not found');
-
-    return modifier(foundOrd, props, tool, com);
+    return modifier(ord, props, tool, com);
   });
 }
 

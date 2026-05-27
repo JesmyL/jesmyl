@@ -1,6 +1,7 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
 import { CmComWid, IExportableCom, IServerSideCom } from 'shared/api';
+import { smylib } from 'shared/utils';
 import { mapCmImportableToExportableCom } from '../../complect/tools';
 import { comsDirStorage } from '../../file-stores';
 import { cmShareServerTsjrpcMethods } from '../../tsjrpc.shares';
@@ -44,6 +45,17 @@ export function modifyCom<Props extends { comw: CmComWid }>(
 
     const comName = com.n;
     const description = mapper(com, props, tool);
+
+    // fixes:
+    delete com.k;
+    delete com.k2;
+    delete com.a;
+
+    com.o?.forEach(ord => {
+      if (ord.cre != null && ord.cre < Date.now() - smylib.howMs.inDay) delete ord.cre;
+      delete ord.inh;
+    });
+    // :fixes
 
     const mod = comsDirStorage.saveItem(props.comw, { ...comBlank, ...com }) ?? 0;
     const expCom = mapCmImportableToExportableCom(com);
