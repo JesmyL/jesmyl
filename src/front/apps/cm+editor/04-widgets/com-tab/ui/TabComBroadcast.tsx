@@ -22,9 +22,9 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
       const ordLineId = makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, samei);
 
       if (lines.length > 5) {
-        warns[ordLineId] = [WarnType.Error, 'Слишком много строк'];
+        warns[ordLineId] = [WarnType.Error, 'Много строк'];
       } else if (lines.length > 4) {
-        warns[ordLineId] = [WarnType.Warning, 'Пограничное количество строк'];
+        warns[ordLineId] = [WarnType.Warning, 'Максимальное количество строк'];
       } else if (lines.length < 2) {
         warns[ordLineId] = [WarnType.Warning, 'Мало строк'];
       }

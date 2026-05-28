@@ -143,7 +143,7 @@ export class CmComTexts extends CmComChords {
       const fillSlide = () => {
         prevInitWordi = 0;
         const zeroSameId = makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, 0);
-        const samei = prevSlide?._id === zeroSameId ? (prevSlide?.samei ?? 0) + 1 : 0;
+        const samei = prevSlide?.lines.length && prevSlide?._id === zeroSameId ? (prevSlide?.samei ?? 0) + 1 : 0;
         const id = makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, samei);
 
         prevSlide = {
