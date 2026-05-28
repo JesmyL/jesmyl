@@ -46,13 +46,13 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
   const dir = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
   const isHide = !useAtomValue(isShowBroadcastTextAtom);
 
-  const { currentSlidei, html, nextSlidei, slides, nextHtml } = useCmBroadcastSlidesContext();
+  const { slidei, html, nextSlidei, slides, nextHtml, slideId } = useCmBroadcastSlidesContext();
 
   useEffect(() => {
     if (props.isCantTranslateLive || !ccom) return;
 
     return setTimeoutEffect(() => {
-      const currentSlide = slides[currentSlidei];
+      const currentSlide = slides[slidei];
       const nextSlide = slides[nextSlidei];
 
       const liveData: IndexSchWBroadcastLiveDataValue = {
@@ -61,7 +61,7 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
         cm: {
           config: selfConfig,
           comw: ccom.wid,
-          slidei: currentSlidei,
+          slideId,
 
           fromLinei: currentSlide?.fromLinei ?? 0,
           toLinei: currentSlide?.toLinei ?? 0,
@@ -79,7 +79,6 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
       broadcastNextLiveDataAtom.set({ schw: props.schedule.w, data: liveData });
     }, 100);
   }, [
-    currentSlidei,
     ccom,
     selfConfig,
     props.fio,
@@ -92,6 +91,8 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
     html,
     nextHtml,
     chordedMode,
+    slidei,
+    slideId,
   ]);
 
   return <></>;

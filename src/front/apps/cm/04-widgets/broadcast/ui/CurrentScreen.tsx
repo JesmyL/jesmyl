@@ -16,7 +16,7 @@ export const CmBroadcastCurrentScreen = (props: BroadcastScreenProps & Partial<F
   const forceUpdates = useCmBroadcastScreenWinResizeListen(props.win);
   const isVisible = useAtomValue(isBroadcastTextVisibleAtom);
 
-  const { html, nextHtml, slides, currentSlidei, nextSlidei } = useCmBroadcastSlidesContext();
+  const { html, nextHtml, slides, slidei, nextSlidei, slideId } = useCmBroadcastSlidesContext();
 
   const switchDirection = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
 
@@ -26,11 +26,11 @@ export const CmBroadcastCurrentScreen = (props: BroadcastScreenProps & Partial<F
       cmConfig={currentConfig}
       text={html}
       nextText={nextHtml}
-      isChorded={!slides[currentSlidei]?.ord.isRealText()}
+      isChorded={!slides[slidei]?.ord.isRealText()}
       isNextChorded={!slides[nextSlidei]?.ord.isRealText()}
       isVisible={isVisible}
       subUpdates={`${currentConfigi}${forceUpdates}${getCurrentConfig(currentConfigi)?.proportion}`}
-      freshSlideKey={`${html}//${currentSlidei}`}
+      freshSlideKey={`${html}//${slideId}`}
       slideSwitchDir={switchDirection}
     />
   );

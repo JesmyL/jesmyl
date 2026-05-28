@@ -9,6 +9,8 @@ export type CmBroadcastMonolineSlide = {
   _id: CmBroadcastMonolineSlideOrdId;
   /** unique slide id */
   id: CmBroadcastMonolineSlideOrdId;
+  /** slide id includes in slide */
+  ids: Set<CmBroadcastMonolineSlideOrdId>;
   /** first lead ord */
   ord: CmComOrder;
   /** slide text lines */

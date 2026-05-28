@@ -2,9 +2,10 @@ import { HorizontalDirection } from '#shared/model/Direction';
 import { CmBroadcastShowChordedSlideMode } from '$cm/shared/model';
 import { CmBroadcastScreenConfig } from '$cm/widgets/broadcast';
 import { CmComWid } from 'shared/api';
+import { CmBroadcastMonolineSlideOrdId } from 'shared/model/cm/broadcast';
 
 export interface CmBroadcastSchWgtLiveDataValue {
-  slidei: number;
+  slideId: CmBroadcastMonolineSlideOrdId | nil;
   comw: CmComWid;
   fromLinei: number;
   toLinei: number;

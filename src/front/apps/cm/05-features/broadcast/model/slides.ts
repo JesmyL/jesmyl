@@ -1,11 +1,11 @@
-import { CmBroadcastMonolineSlide } from 'shared/model/cm/broadcast';
+import { CmBroadcastMonolineSlide, CmBroadcastMonolineSlideOrdId } from 'shared/model/cm/broadcast';
 
 export type CmBroadcastSlidesContextState = {
-  isDefault?: boolean;
   slides: CmBroadcastMonolineSlide[];
   html: string;
   nextHtml: string;
-  currentSlidei: number;
+  slidei: number;
+  slideId: CmBroadcastMonolineSlideOrdId;
   nextSlidei: number;
   toNextSlide: () => void;
   toPrevSlide: () => void;

@@ -144,9 +144,11 @@ export class CmComTexts extends CmComChords {
         prevInitWordi = 0;
         const zeroSameId = makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, 0);
         const samei = prevSlide?._id === zeroSameId ? (prevSlide?.samei ?? 0) + 1 : 0;
+        const id = makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, samei);
 
         prevSlide = {
-          id: makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, samei),
+          id,
+          ids: new Set([id]),
           lines: [],
           ord,
           linei,
@@ -176,6 +178,7 @@ export class CmComTexts extends CmComChords {
       currentSet.add(lineWords.length + 10);
       if (prevOrdLinei > linei && !ord.me.isInherit && !ord.me.isAnchorInherit) prevSlide = fillSlide();
       prevOrdLinei = linei;
+      let samei = 0;
 
       currentSet.forEach(initWordi => {
         if (prevInitWordi < 0 || !prevSlide) prevSlide = fillSlide();
@@ -186,6 +189,8 @@ export class CmComTexts extends CmComChords {
 
         prevSlide.toLinei = totalLinei + 1;
         prevSlide.lines.push(lineWords.slice(prevWordi, wordi).join(' '));
+        prevSlide.ids.add(makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, samei++));
+
         prevWordi = wordi;
       });
     });

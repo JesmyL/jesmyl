@@ -1,6 +1,5 @@
 import { CmBroadcastSchWgtLiveDataValue } from '$cm/ext';
 import { CmBroadcastScreen } from '$cm/widgets/broadcast';
-import styled from '@emotion/styled';
 
 type Props = CmBroadcastSchWgtLiveDataValue & {
   subUpdates: number | string | und;
@@ -8,21 +7,16 @@ type Props = CmBroadcastSchWgtLiveDataValue & {
 
 export const CmBroadcastLiveSlide = (props: Props) => {
   return (
-    <Container className="flex center full-size">
+    <div className="flex center full-size overflow-hidden m-auto">
       <CmBroadcastScreen
         {...props}
         className="inline-flex center white-pre-children"
         text={props.text}
         cmConfig={props.config}
         isVisible
-        freshSlideKey={`${props.text}//${props.slidei}`}
+        freshSlideKey={`${props.text}//${props.slideId}`}
         slideSwitchDir={props.dir}
       />
-    </Container>
+    </div>
   );
 };
-
-const Container = styled.div`
-  overflow: hidden;
-  margin: auto;
-`;

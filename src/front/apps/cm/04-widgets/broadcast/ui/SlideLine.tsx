@@ -5,7 +5,7 @@ import { useAtomValue } from 'atomaric';
 import { twMerge } from 'tailwind-merge';
 
 export const CmBroadcastSlideLine = () => {
-  const { currentSlidei, setSlidei, slides } = useCmBroadcastSlidesContext();
+  const { slidei: currentSlidei, setSlidei, slides } = useCmBroadcastSlidesContext();
   const showChordedSlideMode = useAtomValue(cmShowChordedSlideModeAtom);
 
   return (

@@ -12,20 +12,37 @@ import { CmBroadcastInnerSlidesContext } from '../state/slides';
 
 export const CmBroadcastSlidesContext = ({ children, configi }: { children: React.ReactNode; configi: number }) => {
   const config = useCmBroadcastScreenConfig(configi);
-  const currentSlidei = useAtomValue(cmBroadcastCurrentSlideiAtom);
+  const { slidei, slideId } = useAtomValue(cmBroadcastCurrentSlideiAtom);
   const com = useCmComCurrent();
   const showChordedSlideMode = useAtomValue(cmShowChordedSlideModeAtom);
   const slides = useMemo(() => com?.makeExpandSlides(true) ?? [], [com]);
 
+  let currentSlidei = slidei;
+
+  if (slides[currentSlidei]?.id !== slideId) {
+    if (slideId == null) {
+      currentSlidei = 0;
+    } else {
+      currentSlidei--;
+      if (slides[currentSlidei]?.id !== slideId) currentSlidei += 2;
+      if (slides[currentSlidei]?.id !== slideId) currentSlidei = slides.findIndex(slide => slide.ids.has(slideId));
+      if (slides[currentSlidei]?.id !== slideId) currentSlidei = 0;
+    }
+  }
+
   let nextSlidei = currentSlidei + 1;
 
   if (
-    (showChordedSlideMode === CmBroadcastShowChordedSlideMode.Hide ||
-      showChordedSlideMode === CmBroadcastShowChordedSlideMode.Pass) &&
-    slides[nextSlidei] != null &&
-    !slides[nextSlidei]?.ord.isRealText()
+    showChordedSlideMode === CmBroadcastShowChordedSlideMode.Hide ||
+    showChordedSlideMode === CmBroadcastShowChordedSlideMode.Pass
   ) {
-    nextSlidei = slides.findIndex((slide, slidei) => slidei > nextSlidei && slide?.ord.isRealText());
+    if (slides[currentSlidei] != null && !slides[currentSlidei]?.ord.isRealText()) {
+      currentSlidei = slides.findIndex((slide, slidei) => slidei > currentSlidei && slide?.ord.isRealText());
+      nextSlidei = currentSlidei + 1;
+    }
+    if (slides[nextSlidei] != null && !slides[nextSlidei]?.ord.isRealText()) {
+      nextSlidei = slides.findIndex((slide, slidei) => slidei > nextSlidei && slide?.ord.isRealText());
+    }
   }
 
   useEffect(() => {
@@ -47,8 +64,9 @@ export const CmBroadcastSlidesContext = ({ children, configi }: { children: Reac
       slides,
       html: CmCom.prepareEachTextLine(slides[currentSlidei]?.lines, config?.case).join('\n'),
       nextHtml: CmCom.prepareEachTextLine(slides[nextSlidei]?.lines, config?.case).join('\n'),
-      currentSlidei,
+      slidei: currentSlidei,
       nextSlidei,
+      slideId: slides[currentSlidei]?.id ?? slideId,
       toNextSlide: () => state.setSlidei(currentSlidei + 1),
       toPrevSlide: () => state.setSlidei(currentSlidei - 1),
       setSlidei: (nextSlidei: number) => {
@@ -70,10 +88,10 @@ export const CmBroadcastSlidesContext = ({ children, configi }: { children: Reac
           isRtL ? HorizontalDirection.RightToLeft : HorizontalDirection.LeftToRight,
         );
 
-        cmBroadcastCurrentSlideiAtom.set(nextSlidei);
+        cmBroadcastCurrentSlideiAtom.set({ slidei: nextSlidei, slideId: slides[nextSlidei]?.id });
       },
     }),
-    [config?.case, currentSlidei, nextSlidei, showChordedSlideMode, slides],
+    [slides, currentSlidei, config?.case, nextSlidei, slideId, showChordedSlideMode],
   );
 
   return <CmBroadcastInnerSlidesContext value={state}>{children}</CmBroadcastInnerSlidesContext>;
