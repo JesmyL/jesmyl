@@ -15,7 +15,7 @@ export const CmBroadcastSlidesContext = ({ children, configi }: { children: Reac
   const currentSlidei = useAtomValue(cmBroadcastCurrentSlideiAtom);
   const com = useCmComCurrent();
   const showChordedSlideMode = useAtomValue(cmShowChordedSlideModeAtom);
-  const slides = useMemo(() => com?.makeExpandSlides() ?? [], [com]);
+  const slides = useMemo(() => com?.makeExpandSlides(true) ?? [], [com]);
 
   let nextSlidei = currentSlidei + 1;
 

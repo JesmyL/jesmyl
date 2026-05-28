@@ -4,9 +4,34 @@ import { WithAtom } from '#shared/ui/WithAtom';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import React, { useMemo } from 'react';
+import { CmBroadcastMonolineSlideOrdId } from 'shared/model/cm/broadcast';
+import { makeCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
+import { twMerge } from 'tailwind-merge';
+
+const enum WarnType {
+  Error,
+  Warning,
+}
 
 export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
-  const lineGroups = useMemo(() => ccom.makeExpandGroupedLines(), [ccom]);
+  const { warns, slides, groups } = useMemo(() => {
+    const slides = ccom.makeExpandSlides(false);
+    const warns: PRecord<CmBroadcastMonolineSlideOrdId, [WarnType, string]> = {};
+
+    slides.forEach(({ linei, lines, ord, repeati, samei }) => {
+      const ordLineId = makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, samei);
+
+      if (lines.length > 5) {
+        warns[ordLineId] = [WarnType.Error, 'Слишком много строк'];
+      } else if (lines.length > 4) {
+        warns[ordLineId] = [WarnType.Warning, 'Пограничное количество строк'];
+      } else if (lines.length < 2) {
+        warns[ordLineId] = [WarnType.Warning, 'Мало строк'];
+      }
+    });
+
+    return { warns, slides, groups: ccom.makeExpandGroupedLines(false) };
+  }, [ccom]);
 
   return (
     <>
@@ -20,7 +45,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
             <FullContent openAtom={openAtom}>
               {isOpen =>
                 isOpen &&
-                ccom.makeExpandSlides().map((slide, slidei) => (
+                slides.map((slide, slidei) => (
                   <div
                     key={slidei}
                     className="my-5 white-pre"
@@ -33,12 +58,15 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
         )}
       </WithAtom>
       <div className="absolute pointers-none left-12 top-30 h-full w-53 bg-x2 opacity-25 z-0" />
-      {lineGroups.map((group, groupi) => (
+      {groups.map((group, groupi) => (
         <div
           key={groupi}
           className="mt-20"
         >
           {group?.map(({ line, ord, linei, repeati }, ordBlocki) => {
+            let samei = 0;
+            let prevLineId = '';
+
             const props = { 'solid-ord-selector': ord.makeSelector() };
 
             if (!ord.isRealText() || !line.trim())
@@ -58,31 +86,62 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
             cloneSet.delete(-1);
             cloneSet.delete(1);
 
-            const renderBreakButton = (wordi: number, isNeedHr?: boolean) => (
-              <>
-                {(currentSet.has(-wordi) || isNeedHr) && (
-                  <div className={`my-3 h-1 ${currentSet.has(-wordi) && isNeedHr ? 'bg-xKO' : 'bg-x2'}`} />
-                )}
-                <Button
-                  size="sx"
-                  {...(currentSet.has(-wordi) && !watchSet.size
-                    ? { icon: 'MinusSignCircle', className: isDifferentDigitsWithNear ? 'text-x6' : 'bg-xKO! text-x6' }
-                    : {
-                        icon: 'PlusSignCircle',
-                        className: isDifferentDigitsWithNear ? 'text-xOK' : 'bg-xKO! text-x6',
-                      })}
-                  onClick={() =>
-                    cmEditComClientTsjrpcMethods.switchNLBr({
-                      comw: ccom.wid,
-                      ordw: ord.wid,
-                      repeati,
-                      linei,
-                      wordi,
-                    })
-                  }
-                />
-              </>
-            );
+            const renderBreakButton = (wordi: number, isNeedHr?: boolean) => {
+              let beforeNode;
+
+              if (currentSet.has(-wordi) || isNeedHr) {
+                const zeroOrdLineId = makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, 0);
+
+                if (prevLineId === zeroOrdLineId) samei++;
+                else samei = 0;
+                prevLineId = zeroOrdLineId;
+                const ordLineId = makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, samei);
+
+                beforeNode = (
+                  <>
+                    <div className={`my-3 h-1 ${currentSet.has(-wordi) && isNeedHr ? 'bg-xKO' : 'bg-x2'}`} />
+
+                    {warns[ordLineId] && (
+                      <div
+                        className={twMerge(
+                          'mb-3 text-center',
+                          warns[ordLineId][0] === WarnType.Error ? 'text-x3 bg-xKO' : 'text-x1 bg-x3',
+                        )}
+                      >
+                        {warns[ordLineId][1]}
+                      </div>
+                    )}
+                  </>
+                );
+              }
+
+              return (
+                <>
+                  {beforeNode}
+                  <Button
+                    size="sx"
+                    {...(currentSet.has(-wordi) && !watchSet.size
+                      ? {
+                          icon: 'MinusSignCircle',
+                          className: isDifferentDigitsWithNear ? 'text-x6' : 'bg-xKO! text-x6',
+                        }
+                      : {
+                          icon: 'PlusSignCircle',
+                          className: isDifferentDigitsWithNear ? 'text-xOK' : 'bg-xKO! text-x6',
+                        })}
+                    onClick={() =>
+                      cmEditComClientTsjrpcMethods.switchNLBr({
+                        comw: ccom.wid,
+                        ordw: ord.wid,
+                        repeati,
+                        linei,
+                        wordi,
+                      })
+                    }
+                  />
+                </>
+              );
+            };
 
             return (
               <div

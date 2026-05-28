@@ -8,13 +8,14 @@ import { CmBroadcastMonolineSlide, CmBroadcastSlideLine } from 'shared/model/cm/
 import { TextCase } from 'shared/model/common';
 import { capitalizeText, itIt } from 'shared/utils';
 import { doubleQuotesStr, nbsp, slavicLowerLettersStr } from 'shared/utils/cm/com/const';
+import { makeCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
 import { makeCmComAudioMarkTitleEmptySelector } from '../../makeCmComAudioMarkTitleBySelector';
 import { CmComChords } from './30-Chords';
 
 export class CmComTexts extends CmComChords {
-  ordersWithFinalChordedOrd() {
+  ordersWithFinalChordedOrd(isFinalChordedOrd: boolean) {
     const orders = this.orders;
-    if (orders == null || orders[orders.length - 1].texti == null) return orders;
+    if (!isFinalChordedOrd || !orders?.at(-1)?.isRealText()) return orders ?? [];
 
     return orders.concat(
       new CmComOrder(
@@ -33,13 +34,13 @@ export class CmComTexts extends CmComChords {
     );
   }
 
-  makeExpandGroupedLines = () => {
+  makeExpandGroupedLines = (isFinalChordedOrd: boolean) => {
     let prevOrd: CmComOrder | null = null;
     let prevTotalLinei = -1;
 
     const slides: CmBroadcastSlideLine[][] = [];
 
-    this.makeExpandLines().forEach(slide => {
+    this.makeExpandLines(isFinalChordedOrd).forEach(slide => {
       if ((slide.ord !== prevOrd || slide.totalLinei < prevTotalLinei) && !slide.ord.isAnyInherited) slides.push([]);
       slides[slides.length - 1].push(slide);
 
@@ -76,10 +77,9 @@ export class CmComTexts extends CmComChords {
     };
   })();
 
-  makeExpandLines = () => {
+  makeExpandLines = (isFinalChordedOrd: boolean) => {
     try {
-      const comOrders = this.ordersWithFinalChordedOrd();
-      if (comOrders == null) return [];
+      const comOrders = this.ordersWithFinalChordedOrd(isFinalChordedOrd);
       let totalLinei = -1;
       let blocki = -1;
       const headSolidOrders: CmComOrder[] = [];
@@ -126,7 +126,10 @@ export class CmComTexts extends CmComChords {
     }
   };
 
-  makeExpandSlides = (expandLines: CmBroadcastSlideLine[] = this.makeExpandLines()) => {
+  makeExpandSlides = (
+    isFinalChordedOrd: boolean,
+    expandLines: CmBroadcastSlideLine[] = this.makeExpandLines(isFinalChordedOrd),
+  ) => {
     const slides: CmBroadcastMonolineSlide[] = [];
     let prevSlide: CmBroadcastMonolineSlide | nil;
     let prevOrdLinei: number;
@@ -139,13 +142,20 @@ export class CmComTexts extends CmComChords {
 
       const fillSlide = () => {
         prevInitWordi = 0;
+        const zeroSameId = makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, 0);
+        const samei = prevSlide?._id === zeroSameId ? (prevSlide?.samei ?? 0) + 1 : 0;
 
         prevSlide = {
+          id: makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, samei),
           lines: [],
           ord,
+          linei,
+          repeati,
+          samei,
           fromLinei: totalLinei,
           toLinei: totalLinei + 1,
-          textHash: '',
+          _textHash: '',
+          _id: zeroSameId,
         };
 
         slides.push(prevSlide);
@@ -185,11 +195,11 @@ export class CmComTexts extends CmComChords {
     for (let fullSlidei = fullSlides.length - 1; fullSlidei >= 0; fullSlidei--) {
       const fullSlide = fullSlides[fullSlidei];
       if (!fullSlide) continue;
-      fullSlide.textHash = md5(fullSlide.lines.join('\n'));
+      fullSlide._textHash = md5(fullSlide.lines.join('\n'));
 
       const nextFullSlide = fullSlides[fullSlidei + 1];
 
-      if (nextFullSlide?.textHash === fullSlide.textHash) {
+      if (nextFullSlide?._textHash === fullSlide._textHash) {
         fullSlide.repeats = (nextFullSlide.repeats ??= 1) + 1;
         nextFullSlide.lines = [];
       }
