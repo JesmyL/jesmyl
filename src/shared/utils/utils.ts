@@ -165,6 +165,9 @@ export const wait = (waitTime = 100) => new Promise(resolve => setTimeout(resolv
 export const capitalizeText = (text: string) => text[0].toUpperCase() + text.slice(1);
 export const trimTextLines = (text: string) => text.trim().replace(makeRegExp('/(.+?)\\s+?\\n/g'), '$1\n');
 
+type ParseNumber<T extends string> = T extends `${infer N extends number}` ? N : never;
+export const extractNumber = <T extends string>(value: T) => parseFloat(value) as ParseNumber<T>;
+
 export const makeDateLabel = (inputDate: number | Date | string) => {
   const date = new Date(inputDate);
   const now = new Date();
