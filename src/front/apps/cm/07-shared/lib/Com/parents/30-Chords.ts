@@ -82,7 +82,7 @@ export class CmComChords extends CmComOrders {
       const prevTransPosition = currTransPosition;
 
       if (!this.excludedModulations.has(ord.wid) && ord.isModulated) {
-        currTransPosition = currTransPosition + (ord.fieldValues?.md || 0);
+        currTransPosition = currTransPosition + (ord?.modulation || 0);
       }
 
       const chords = this.actualChords(ord.chordsi, ord.me.kind?.isModulation ? prevTransPosition : currTransPosition);

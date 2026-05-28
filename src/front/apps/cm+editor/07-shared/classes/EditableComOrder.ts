@@ -19,13 +19,6 @@ export class EditableComOrder extends CmComOrder {
     return this._regions;
   }
 
-  get fieldValues() {
-    return this.getBasicOr('f', {});
-  }
-  set fieldValues(val) {
-    this.setExportable('f', val);
-  }
-
   isWithHead() {
     return (
       !this.me.isInherit &&

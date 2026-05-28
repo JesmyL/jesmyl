@@ -26,7 +26,7 @@ export const orderListConstructor = <OrderConstructor extends CmComOrderWidClass
 
   const setMin = (me: ICmComOrderExportableMe<OrderConstructor>) => {
     const styleName = Math.abs(me.kind?.key ?? 0);
-    if (me.top.f?.md) minimals = [];
+    if (me.top?.md) minimals = [];
     me.top.m = minimals.some(([s, c]) => styleName === s && me.top.c === c) ? undefined : 1;
     minimals.push([styleName, me.top.c]);
   };

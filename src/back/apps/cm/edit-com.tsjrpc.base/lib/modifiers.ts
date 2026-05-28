@@ -15,8 +15,6 @@ const comBlank: { [K in keyof Required<IExportableCom>]: und } = {
   bpm: und,
   d: und,
   s: und,
-  k: und,
-  k2: und,
   nl: und,
   l: und,
   p: und,
@@ -25,7 +23,6 @@ const comBlank: { [K in keyof Required<IExportableCom>]: und } = {
   c: und,
   o: und,
   ton: und,
-  a: und,
   isRemoved: und,
 };
 
@@ -40,22 +37,12 @@ export function modifyCom<Props extends { comw: CmComWid }>(
     if (com == null) throw new Error(`Песня не найдена`);
     if (!com.n) throw new Error(`У песни нет названия`);
 
-    delete com.a;
-    delete (com as { m?: 0 }).m;
+    com.o?.forEach(ord => {
+      if (ord.cre != null && ord.cre < Date.now() - smylib.howMs.inDay) delete ord.cre;
+    });
 
     const comName = com.n;
     const description = mapper(com, props, tool);
-
-    // fixes:
-    delete com.k;
-    delete com.k2;
-    delete com.a;
-
-    com.o?.forEach(ord => {
-      if (ord.cre != null && ord.cre < Date.now() - smylib.howMs.inDay) delete ord.cre;
-      delete ord.inh;
-    });
-    // :fixes
 
     const mod = comsDirStorage.saveItem(props.comw, { ...comBlank, ...com }) ?? 0;
     const expCom = mapCmImportableToExportableCom(com);

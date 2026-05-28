@@ -1,6 +1,6 @@
 import { CmCom } from '$cm/ext';
 import { ReactNode } from 'react';
-import { IExportableOrder, IExportableOrderFieldValues, OrderRepeats } from 'shared/api';
+import { IExportableOrder, OrderRepeats } from 'shared/api';
 import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';
 import { CmComOrder } from '../lib/Order';
 import { CmComOrderWidClass } from '../lib/OrderWid';
@@ -64,23 +64,6 @@ export interface CmComOrderTopHeaderBag {
   isEdit?: boolean;
   isTexted?: boolean;
   repeats?: string;
-}
-
-export interface CmComOrderExecArgs<Value> {
-  wid?: number | null;
-  value?: Value;
-  fieldn?: keyof IExportableOrderFieldValues;
-  linei?: number;
-  line?: number[];
-  lineTitle?: string;
-}
-
-export interface CmComOrderField {
-  name: keyof IExportableOrder;
-  title: string;
-  isExt?: boolean;
-  extIf?: (poss?: [] | null) => boolean;
-  type: string | string[];
 }
 
 export interface ICmComOrderHeaderProps extends ICmComOrderProps {

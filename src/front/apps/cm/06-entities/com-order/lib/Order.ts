@@ -2,13 +2,7 @@ import { mylib, MyLib } from '#shared/lib/my-lib';
 import { CmCom } from '$cm/ext';
 import { ChordVisibleVariant } from '$cm/shared/model';
 import { makeRegExp } from 'regexpert';
-import {
-  CmComOrderSelector,
-  IExportableOrderFieldValues,
-  InheritancableOrder,
-  OrderRepeats,
-  SpecialOrderRepeats,
-} from 'shared/api';
+import { CmComOrderSelector, InheritancableOrder, OrderRepeats, SpecialOrderRepeats } from 'shared/api';
 import { itIt } from 'shared/utils';
 import { chordInterpretedRegs } from 'shared/utils/cm/com/const';
 import { transformToDisplayedText } from 'shared/utils/cm/com/transformToDisplayedText';
@@ -25,10 +19,6 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   constructor(me: ICmComOrderExportableMe<CmComOrder>, com: CmCom) {
     super(me);
     this.com = com;
-
-    this.texti = mylib.isNum(me.top.t) ? me.top.t : undefined;
-
-    this.fieldValues = me.top.f;
   }
 
   get isMin() {
@@ -36,30 +26,31 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   }
 
   get isModulated() {
-    return !!this.me.source?.top.f?.md && !this.me.isAnchorInherit && !this.me.isAnchorInheritPlus;
+    return !(!this.me.source?.top.md || this.me.isAnchorInherit || this.me.isAnchorInheritPlus);
+  }
+
+  get modulation() {
+    return this.me.source?.top.md;
   }
 
   get isAnchor() {
-    return this.getBasic('a') != null;
+    return this.top.a != null;
   }
 
   get anchor() {
-    return this.getBasic('a');
+    return this.top.a;
   }
 
   get isOpened() {
-    return this.getBasic('o');
+    return this.top.o;
   }
 
   get chordsi() {
-    return this.getBasic('c') ?? this.me.watchOrd?.getBasic('c');
+    return this.top.c ?? this.me.watchOrd?.top.c;
   }
 
   get texti() {
-    return this.getBasic('t');
-  }
-  set texti(val) {
-    this.setExportable('t', val);
+    return this.top.t;
   }
 
   get isAnyInherited() {
@@ -78,7 +69,7 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   }
 
   get kind() {
-    return this.getBasic('k');
+    return this.top.k;
   }
 
   get text() {
@@ -100,20 +91,13 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
         (this.getWatchInheritance('v') ?? this.getLeadInheritance('v') ?? this.me.source?.top.v) === 0
       );
 
-    if (this.me.isInherit) return !(this.getBasic('v') === 0 || (this.me.leadOrd && !this.me.leadOrd.isVisible));
+    if (this.me.isInherit) return !(this.top.v === 0 || (this.me.leadOrd && !this.me.leadOrd.isVisible));
 
     return CmComOrderStatica.checkIsOrdVisibleInInterpretation(this.top, this.com.intp);
   }
 
   get isHeaderNoneForce() {
     return this.me.kind?.isHeaderNoneForce;
-  }
-
-  get fieldValues(): IExportableOrderFieldValues | und {
-    return this.getBasicOr('f', {});
-  }
-  set fieldValues(val) {
-    this.setExportable('f', val);
   }
 
   get repeatsTitle(): string {
@@ -183,8 +167,7 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   getWatchInheritance = <Key extends keyof Required<InheritancableOrder>>(key: Key) => {
     return (
       this.me.isAnchorInherit
-        ? (this.me.watchOrd?.me.source?.top[`_${key}`]?.[this.me.anchorInheritIndex || 0] ??
-          this.me.watchOrd?.getBasic(key))
+        ? (this.me.watchOrd?.me.source?.top[`_${key}`]?.[this.me.anchorInheritIndex || 0] ?? this.me.watchOrd?.top[key])
         : null
     ) as InheritancableOrder[Key] | nil;
   };

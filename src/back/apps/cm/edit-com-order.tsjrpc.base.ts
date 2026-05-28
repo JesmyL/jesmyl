@@ -268,10 +268,7 @@ export const cmEditComOrderServerTsjrpcBase =
           }),
 
           setModulationValue: modifyOrd((ord, { value, orderTitle }) => {
-            ord.f ??= {};
-            ord.f.md = value || undefined;
-
-            if (!smylib.keys(ord.f).length) delete ord.f;
+            ord.md = value || undefined;
 
             return `установлено значение модулирования блока ${orderTitle} - ${value}`;
           }),

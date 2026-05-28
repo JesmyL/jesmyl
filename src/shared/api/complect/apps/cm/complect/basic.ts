@@ -46,11 +46,6 @@ export interface InheritancableOrder {
   v?: num;
 }
 
-export interface IExportableOrderFieldValues {
-  /** Значение модуляции */
-  md?: number;
-}
-
 type WatchInherited<K extends keyof InheritancableOrder> = (InheritancableOrder[K] | nil)[];
 
 export type IExportableOrder = InheritancableOrder & {
@@ -69,8 +64,8 @@ export type IExportableOrder = InheritancableOrder & {
   /** Без названия */
   e?: 1;
 
-  /** Особые значения */
-  f?: IExportableOrderFieldValues;
+  /** Значение модуляции */
+  md?: number;
 
   /** Минималка */
   m?: 1;
@@ -80,12 +75,6 @@ export type IExportableOrder = InheritancableOrder & {
 
   /** Тип блока */
   k?: CmComBlockKindKey;
-
-  /**
-   * @deprecated
-   * Значения наследников
-   * */
-  inh?: unknown;
 
   _v?: WatchInherited<'v'>;
   _r?: WatchInherited<'r'>;
@@ -132,11 +121,6 @@ export type IExportableCom = IExportableComInterpretationSimpleValues & {
   /** разбивка текстов на линии и слайды */
   nl?: [PRecord<CmComOrderWid, CmComNewlinerStrConfig.whole>];
 
-  /** @deprecated */
-  k?: unknown;
-  /** @deprecated */
-  k2?: unknown;
-
   /** бемольная ли песня */
   b?: num;
 
@@ -145,9 +129,6 @@ export type IExportableCom = IExportableComInterpretationSimpleValues & {
 
   /** аудио файлы */
   al?: HttpNumLeadLink[];
-
-  /** @deprecated */
-  a?: string;
 
   /** список текстов */
   t?: string[];

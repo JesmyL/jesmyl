@@ -20,7 +20,7 @@ export const CmEditorComOrderToolsModulation = ({ com, ord, ordi }: CmEditorComO
   else firstChord = firstChord[0];
 
   firstChord = bToASharpChord[firstChord] ?? firstChord;
-  const modulationDelta = ord.fieldValues.md ?? 0;
+  const modulationDelta = ord.modulation ?? 0;
 
   return (
     <>
