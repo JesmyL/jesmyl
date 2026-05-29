@@ -42,7 +42,7 @@ export class CmComTexts extends CmComChords {
 
     this.makeExpandLines(isFinalChordedOrd).forEach(slide => {
       if ((slide.ord !== prevOrd || slide.totalLinei < prevTotalLinei) && !slide.ord.isAnyInherited) slides.push([]);
-      slides[slides.length - 1].push(slide);
+      slides.at(-1)?.push(slide);
 
       prevOrd = slide.ord;
       prevTotalLinei = slide.totalLinei;
@@ -105,8 +105,8 @@ export class CmComTexts extends CmComChords {
       const allRepeatedLines = this._expandRepeats(heapText).split(makeRegExp('/\\s*\n\\s*/'));
       const slides: CmBroadcastSlideLine[] = [];
 
-      for (let i = 0; i < allRepeatedLines.length; i++) {
-        const line = allRepeatedLines[i];
+      for (let linei = 0; linei < allRepeatedLines.length; linei++) {
+        const line = allRepeatedLines.at(linei)?.trim();
         if (!line) continue;
         const blocki = sliceDiapasoniNum(line, Diapasoni.Block);
 
@@ -130,11 +130,13 @@ export class CmComTexts extends CmComChords {
     isFinalChordedOrd: boolean,
     expandLines: CmBroadcastSlideLine[] = this.makeExpandLines(isFinalChordedOrd),
   ) => {
-    const slides: CmBroadcastMonolineSlide[] = [];
+    let slides: CmBroadcastMonolineSlide[] = [];
     let prevSlide: CmBroadcastMonolineSlide | nil;
     let prevOrdLinei: number;
+    let prevOrdw: CmComOrderWid;
     let prevInitWordi: number;
     let isPrevChordedSlide = false;
+    const filterFullSlides = () => slides.filter(({ lines }) => lines.length);
 
     expandLines.forEach(({ line, ord, linei, totalLinei, repeati }) => {
       const lineWords = line.split(' ');
@@ -170,15 +172,21 @@ export class CmComTexts extends CmComChords {
         isPrevChordedSlide = true;
         return;
       }
-      if (isPrevChordedSlide) fillSlide();
+
+      if (
+        //
+        isPrevChordedSlide ||
+        ((prevOrdLinei > linei || prevOrdw !== ord.wid) && !ord.isAnyInherited)
+      )
+        fillSlide();
 
       isPrevChordedSlide = false;
+      prevOrdw = ord.wid;
+      prevOrdLinei = linei;
 
+      let samei = 0;
       const { currentSet } = this.makeNewlinerSet(ord, repeati, linei);
       currentSet.add(lineWords.length + 10);
-      if (prevOrdLinei > linei && !ord.me.isInherit && !ord.me.isAnchorInherit) prevSlide = fillSlide();
-      prevOrdLinei = linei;
-      let samei = 0;
 
       currentSet.forEach(initWordi => {
         if (prevInitWordi < 0 || !prevSlide) prevSlide = fillSlide();
@@ -187,43 +195,46 @@ export class CmComTexts extends CmComChords {
         const wordi = Math.abs(initWordi) - 1;
         if (!wordi) return;
 
-        prevSlide.toLinei = totalLinei + 1;
-        prevSlide.lines.push(lineWords.slice(prevWordi, wordi).join(' '));
-        prevSlide.ids.add(makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, samei++));
-
+        const line = lineWords.slice(prevWordi, wordi).join(' ').trim();
         prevWordi = wordi;
+
+        if (line) {
+          prevSlide.toLinei = totalLinei + 1;
+          prevSlide.lines.push(line);
+          prevSlide.ids.add(makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, samei++));
+        }
       });
     });
 
-    const fullSlides = slides.filter(({ lines }) => lines.length);
+    slides = filterFullSlides();
 
-    for (let fullSlidei = fullSlides.length - 1; fullSlidei >= 0; fullSlidei--) {
-      const fullSlide = fullSlides[fullSlidei];
-      if (!fullSlide) continue;
-      fullSlide._textHash = md5(fullSlide.lines.join('\n'));
+    for (let slidei = slides.length - 1; slidei >= 0; slidei--) {
+      const slide = slides[slidei];
+      if (!slide) continue;
+      slide._textHash = md5(slide.lines.join('\n'));
 
-      const nextFullSlide = fullSlides[fullSlidei + 1];
+      const nextSlide = slides[slidei + 1];
 
-      if (nextFullSlide?._textHash === fullSlide._textHash) {
-        fullSlide.repeats = (nextFullSlide.repeats ??= 1) + 1;
-        nextFullSlide.lines = [];
+      if (nextSlide?._textHash === slide._textHash) {
+        slide.repeats = (nextSlide.repeats ??= 1) + 1;
+        nextSlide.lines = [];
       }
 
-      if (fullSlide.repeats) {
-        const lines = fullSlide.lines;
+      if (slide.repeats) {
+        const lines = slide.lines;
 
         if (lines[0]) {
-          lines[0] = `${'/'.repeat(fullSlide.repeats)}${nbsp}${lines[0]}`;
+          lines[0] = `${'/'.repeat(slide.repeats)}${nbsp}${lines[0]}`;
         }
         const lasti = lines.findLastIndex(itIt);
 
         if (lines[lasti]) {
-          lines[lasti] = `${lines[lasti]}${nbsp}${'\\'.repeat(fullSlide.repeats)}`;
+          lines[lasti] = `${lines[lasti]}${nbsp}${'\\'.repeat(slide.repeats)}`;
         }
       }
     }
 
-    return fullSlides.filter(({ lines }) => lines.length);
+    return filterFullSlides();
   };
 
   private _expandRepeats = (() => {
@@ -240,6 +251,7 @@ export class CmComTexts extends CmComChords {
 
     return (text: string) => {
       let isReplaced = false;
+      text = `${text}\n`;
 
       do {
         isReplaced = false;
