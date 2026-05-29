@@ -8,40 +8,44 @@ export class KindBlock extends SourceBased<IExportableKindProp> {
   });
 
   get key() {
-    return this.getBasicOr('key', CmComBlockKindKey.One);
+    return this.top.key ?? CmComBlockKindKey.One;
+  }
+
+  get alt() {
+    return this.top.alt;
   }
 
   get title() {
-    return this.getBasic('title');
+    return this.top.title;
   }
 
   get isInherit() {
-    return this.getBasic('isInherit');
+    return this.top.isInherit;
   }
 
   get isHeaderNoneForce() {
-    return this.getBasic('isHeaderNoneForce');
+    return this.top.isHeaderNoneForce;
   }
 
   get isBlockForTextableOnly() {
-    return this.getBasic('isBlockForTextableOnly');
+    return this.top.isBlockForTextableOnly;
   }
 
   get isBlockForChordedOnly() {
-    return this.getBasic('isBlockForChordedOnly');
+    return this.top.isBlockForChordedOnly;
   }
 
   get group() {
-    return this.getBasic('group');
+    return this.top.group;
   }
 
   get isModulation() {
-    return this.getBasic('isModulation');
+    return this.top.isModulation;
   }
   get tags() {
-    return this.getBasic('tags');
+    return this.top.tags;
   }
   get forChordedBlock() {
-    return this.getBasic('forChordedBlock');
+    return this.top.forChordedBlock;
   }
 }
