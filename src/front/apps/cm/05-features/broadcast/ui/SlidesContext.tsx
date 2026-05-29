@@ -18,15 +18,16 @@ export const CmBroadcastSlidesContext = ({ children, configi }: { children: Reac
   const slides = useMemo(() => com?.makeExpandSlides(true) ?? [], [com]);
 
   let currentSlidei = slidei;
+  const notHas = () => !slides[currentSlidei]?.ids.has(slideId!);
 
-  if (slides[currentSlidei]?.id !== slideId) {
+  if (notHas()) {
     if (slideId == null) {
       currentSlidei = 0;
     } else {
       currentSlidei--;
-      if (slides[currentSlidei]?.id !== slideId) currentSlidei += 2;
-      if (slides[currentSlidei]?.id !== slideId) currentSlidei = slides.findIndex(slide => slide.ids.has(slideId));
-      if (slides[currentSlidei]?.id !== slideId) currentSlidei = 0;
+      if (notHas()) currentSlidei += 2;
+      if (notHas()) currentSlidei = slides.findIndex(slide => slide.ids.has(slideId));
+      if (notHas()) currentSlidei = 0;
     }
   }
 
