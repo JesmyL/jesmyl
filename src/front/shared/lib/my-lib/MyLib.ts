@@ -340,11 +340,6 @@ export class MyLib extends SMyLib {
     if (isStatic) parent.style.position = prevPosition;
   }
 
-  unique<Item, Res>(arr: Item[], by: (f: Item) => Res) {
-    const exclusives: Res[] = [];
-    return arr.filter(item => (exclusives.indexOf(by(item)) === -1 ? exclusives.push(by(item)) : false));
-  }
-
   static values<T extends object | [], R extends T extends Record<string, infer V> ? V : unknown>(obj: T | nil): R[] {
     return obj ? Object.values(obj) : [];
   }

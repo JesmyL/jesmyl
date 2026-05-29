@@ -1,6 +1,4 @@
-import { mylib } from '#shared/lib/my-lib';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
-import { itIt } from 'shared/utils';
 
 interface Props {
   texti?: number;
@@ -32,16 +30,15 @@ export const CmEditorComOrderAddTextableBlockAnchorTitles = ({ texti, com, chord
       <span
         className="opacity-50"
         dangerouslySetInnerHTML={{
-          __html: mylib
-            .unique(
+          __html: Array.from(
+            new Set(
               ordersUsedText.map(
                 o =>
                   (o.me.isAnchor || o.me.isAnchorInherit || o.me.isAnchorInheritPlus ? '&#9875;' : '') +
-                  `${o.me.header()}${o.me.kind?.isInherit ? ` ${o.me.kind.key}` : ''}`,
+                  `${o.me.header()}${o.me.kind?.isInherit ? ` ${o.me.kind.alt ?? o.me.kind.key}` : ''}`,
               ),
-              itIt,
-            )
-            .join(', '),
+            ),
+          ).join(', '),
         }}
       />
     </div>
