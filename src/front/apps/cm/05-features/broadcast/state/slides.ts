@@ -11,6 +11,5 @@ export const [CmBroadcastInnerSlidesContext, useCmBroadcastSlidesContext] =
     nextHtml: '-',
     setSlidei: emptyFunc,
     slides: [],
-    toNextSlide: emptyFunc,
-    toPrevSlide: emptyFunc,
+    toSlide: emptyFunc,
   });

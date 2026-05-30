@@ -54,18 +54,21 @@ export const BroadcastSlidePreview = ({ isPreview = true, onBgFileIdChange }: Pr
       </MyFilesUploader>
 
       <FullContent openAtom={isSettingsOpenAtom}>
-        <div className="flex center mt-5">
-          <StyledFullContainer className="flex center bg-x3 strong-size">
-            {currentConfig && (
-              <ScreenWithBackground $proportion={currentConfig.proportion}>
-                <BroadcastScreen
-                  isTech
-                  isPreview={isPreview}
-                />
-              </ScreenWithBackground>
-            )}
-          </StyledFullContainer>
-        </div>
+        {isOpen =>
+          isOpen &&
+          currentConfig && (
+            <div className="flex center mt-5">
+              <StyledFullContainer className="flex center bg-x3 strong-size">
+                <ScreenWithBackground $proportion={currentConfig.proportion}>
+                  <BroadcastScreen
+                    isTech
+                    isPreview={isPreview}
+                  />
+                </ScreenWithBackground>
+              </StyledFullContainer>
+            </div>
+          )
+        }
       </FullContent>
     </>
   );

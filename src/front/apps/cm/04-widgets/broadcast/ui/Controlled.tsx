@@ -1,4 +1,5 @@
 import { useScreenBroadcastFaceLineListeners } from '#features/broadcast/complect/config-line/hooks/listeners';
+import { ScreenBroadcastControlPanel } from '#features/broadcast/controls/ControllPanel';
 import { BroadcastSlidePreview } from '#features/broadcast/controls/Preview';
 import { useWatchScreenBroadcast } from '#features/broadcast/hooks/watch-broadcast';
 import { Button } from '#shared/components/ui/button';
@@ -28,7 +29,6 @@ import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import { useCmBroadcastUpdateCurrentConfig } from '../hooks/update-config';
 import { useCmBroadcastScreenKeyDownListen } from '../lib/keydown-listen';
-import { CmBroadcastControlPanel } from './ControllPanel';
 import { CmBroadcastScreenConfigurations } from './ScreenConfigurations';
 import { CmBroadcastShowChordedSlideModeSelector } from './ShowChordedSlideModeSelector';
 import { CmBroadcastSlideLine } from './SlideLine';
@@ -45,6 +45,7 @@ export function CmBroadcastControlled(props: Props) {
   const broadcastSrc = useAtomValue(cmPlayerBroadcastAudioSrcAtom);
   const navigate = useNavigate();
   const updateCmConfig = useCmBroadcastUpdateCurrentConfig();
+  const { toSlide } = useCmBroadcastSlidesContext();
 
   const { comPack, coms } = useCmBroadcastScreenComNavigations();
   const { setSlidei } = useCmBroadcastSlidesContext();
@@ -181,7 +182,7 @@ export function CmBroadcastControlled(props: Props) {
           ) : (
             <>
               <CmBroadcastSlideLine />
-              <CmBroadcastControlPanel />
+              <ScreenBroadcastControlPanel onChange={toSlide} />
               <div className="flex w-full justify-between mt-5">
                 <CmBroadcastShowChordedSlideModeSelector />
                 <div className="w-53">

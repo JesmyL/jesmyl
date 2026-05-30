@@ -7,7 +7,6 @@ export type CmBroadcastSlidesContextState = {
   slidei: number;
   slideId: CmBroadcastMonolineSlideOrdId;
   nextSlidei: number;
-  toNextSlide: () => void;
-  toPrevSlide: () => void;
-  setSlidei: (nextSlidei: number) => void;
+  toSlide: (dir: 1 | -1) => void;
+  setSlidei: (newSlidei: number) => void;
 };

@@ -143,6 +143,9 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
               );
             };
 
+            const words = line.split(' ');
+            if (words.length === 1) words.push('#');
+
             return (
               <div
                 key={ordBlocki}
@@ -152,7 +155,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                 {ord.isAnyInherited || !!linei || !!repeati || <div>{ord.me.header()}</div>}
                 {renderBreakButton(1, !ordBlocki)}
 
-                {line.split(' ').map((word, initWordi) => {
+                {words.map((word, initWordi) => {
                   if (!initWordi)
                     return (
                       <Button

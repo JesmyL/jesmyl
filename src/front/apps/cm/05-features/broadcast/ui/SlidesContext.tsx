@@ -7,6 +7,7 @@ import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { useCmBroadcastScreenConfig } from '$cm/widgets/broadcast';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useMemo } from 'react';
+import { CmBroadcastMonolineSlide } from 'shared/model/cm/broadcast';
 import { CmBroadcastSlidesContextState } from '../model/slides';
 import { CmBroadcastInnerSlidesContext } from '../state/slides';
 
@@ -16,34 +17,41 @@ export const CmBroadcastSlidesContext = ({ children, configi }: { children: Reac
   const com = useCmComCurrent();
   const showChordedSlideMode = useAtomValue(cmShowChordedSlideModeAtom);
   const slides = useMemo(() => com?.makeExpandSlides(true) ?? [], [com]);
+  const isHiddenChordsMode =
+    showChordedSlideMode === CmBroadcastShowChordedSlideMode.Hide ||
+    showChordedSlideMode === CmBroadcastShowChordedSlideMode.Pass;
 
   let currentSlidei = slidei;
-  const notHas = () => !slides[currentSlidei]?.ids.has(slideId!);
 
-  if (notHas()) {
-    if (slideId == null) {
-      currentSlidei = 0;
-    } else {
-      currentSlidei--;
-      if (notHas()) currentSlidei += 2;
-      if (notHas()) currentSlidei = slides.findIndex(slide => slide.ids.has(slideId));
-      if (notHas()) currentSlidei = 0;
+  if (slideId) {
+    const checkIsHasCurrentSlideId = (slide = slides.at(currentSlidei)) => slide?.ids.has(slideId!);
+
+    if (!checkIsHasCurrentSlideId()) {
+      currentSlidei = slidei - 1;
+
+      if (!checkIsHasCurrentSlideId()) {
+        currentSlidei = slidei + 1;
+
+        if (!checkIsHasCurrentSlideId()) {
+          currentSlidei = slides.findIndex(checkIsHasCurrentSlideId);
+
+          if (!checkIsHasCurrentSlideId()) currentSlidei = slidei;
+        }
+      }
     }
   }
 
   let nextSlidei = currentSlidei + 1;
 
-  if (
-    showChordedSlideMode === CmBroadcastShowChordedSlideMode.Hide ||
-    showChordedSlideMode === CmBroadcastShowChordedSlideMode.Pass
-  ) {
-    if (slides[currentSlidei] != null && !slides[currentSlidei]?.ord.isRealText()) {
-      currentSlidei = slides.findIndex((slide, slidei) => slidei > currentSlidei && slide?.ord.isRealText());
-      nextSlidei = currentSlidei + 1;
-    }
-    if (slides[nextSlidei] != null && !slides[nextSlidei]?.ord.isRealText()) {
-      nextSlidei = slides.findIndex((slide, slidei) => slidei > nextSlidei && slide?.ord.isRealText());
-    }
+  if (isHiddenChordsMode) {
+    const currentSlide = slides.at(currentSlidei);
+    if (currentSlide && !currentSlide.ord.isRealText())
+      currentSlidei = findSlideOrdRealTextIndex(slides, currentSlidei);
+
+    nextSlidei = currentSlidei + 1;
+
+    const nextSlide = slides.at(nextSlidei);
+    if (nextSlide && !nextSlide.ord.isRealText()) nextSlidei = findSlideOrdRealTextIndex(slides, nextSlidei);
   }
 
   useEffect(() => {
@@ -68,32 +76,31 @@ export const CmBroadcastSlidesContext = ({ children, configi }: { children: Reac
       slidei: currentSlidei,
       nextSlidei,
       slideId: slides[currentSlidei]?.id ?? slideId,
-      toNextSlide: () => state.setSlidei(currentSlidei + 1),
-      toPrevSlide: () => state.setSlidei(currentSlidei - 1),
-      setSlidei: (nextSlidei: number) => {
-        const isRtL = currentSlidei > nextSlidei;
+      toSlide: dir => state.setSlidei(currentSlidei + dir),
+      setSlidei: (newSlidei: number) => {
+        const isRtL = currentSlidei > newSlidei;
 
-        if (
-          (showChordedSlideMode === CmBroadcastShowChordedSlideMode.Pass ||
-            showChordedSlideMode === CmBroadcastShowChordedSlideMode.Hide) &&
-          !slides[nextSlidei]?.ord.isRealText()
-        ) {
-          nextSlidei = isRtL
-            ? slides.findLastIndex((slide, slidei) => slidei < nextSlidei && slide?.ord.isRealText())
-            : slides.findIndex((slide, ordi) => ordi > nextSlidei && slide?.ord.isRealText());
+        if (isHiddenChordsMode && !slides[newSlidei]?.ord.isRealText()) {
+          newSlidei = isRtL
+            ? slides.slice(0, newSlidei).findLastIndex(checkIsSlideOrdRealText)
+            : slides.slice(newSlidei).findIndex(checkIsSlideOrdRealText) + newSlidei;
         }
 
-        if (nextSlidei >= slides.length || nextSlidei < 0) return;
+        if (newSlidei >= slides.length || newSlidei < 0) return;
 
         cmBroadcastSwitchBlockDirectionAtom.set(
           isRtL ? HorizontalDirection.RightToLeft : HorizontalDirection.LeftToRight,
         );
 
-        cmBroadcastCurrentSlideiAtom.set({ slidei: nextSlidei, slideId: slides[nextSlidei]?.id });
+        cmBroadcastCurrentSlideiAtom.set({ slidei: newSlidei, slideId: slides.at(newSlidei)?.id ?? slideId });
       },
     }),
-    [slides, currentSlidei, config?.case, nextSlidei, slideId, showChordedSlideMode],
+    [config?.case, currentSlidei, isHiddenChordsMode, nextSlidei, slideId, slides],
   );
 
   return <CmBroadcastInnerSlidesContext value={state}>{children}</CmBroadcastInnerSlidesContext>;
 };
+
+const checkIsSlideOrdRealText = (slide: CmBroadcastMonolineSlide) => slide.ord.isRealText();
+const findSlideOrdRealTextIndex = (slides: CmBroadcastMonolineSlide[], slidei: number) =>
+  slides.slice(slidei).findIndex(checkIsSlideOrdRealText) + slidei;

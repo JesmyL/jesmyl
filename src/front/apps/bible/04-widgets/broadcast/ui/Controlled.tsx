@@ -51,10 +51,7 @@ export default function BibleBroadcastControlled({ head, headTitle }: Props): JS
         <Container>
           <BibleBroadcastControlledTopPanel />
           <BibleTranslateModulesControl />
-          <ScreenBroadcastControlPanel
-            onPrev={() => bibleVerseiAtom.do.increment(-1)}
-            onNext={() => bibleVerseiAtom.do.increment(1)}
-          />
+          <ScreenBroadcastControlPanel onChange={bibleVerseiAtom.do.increment} />
           <BibleBroadcastSearchPanel />
           <BibleBroadcastControlledBottomPanel />
         </Container>

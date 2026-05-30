@@ -102,7 +102,7 @@ export class CmComTexts extends CmComChords {
         })
         .join('\n');
 
-      const allRepeatedLines = this._expandRepeats(heapText).split(makeRegExp('/\\s*\n\\s*/'));
+      const allRepeatedLines = this._expandRepeats(heapText).split('\n');
       const slides: CmBroadcastSlideLine[] = [];
 
       for (let linei = 0; linei < allRepeatedLines.length; linei++) {
@@ -305,7 +305,7 @@ export class CmComTexts extends CmComChords {
 
           repeatedContent = repeatedContent.replace(startEndFlagReg, '');
 
-          return `\n${leadMark}${beforeContent}${repeatedContent}${endNl}`;
+          return `\n${leadMark}${beforeContent}${repeatedContent.trim()}${endNl}`;
         });
       } while (isReplaced);
 
