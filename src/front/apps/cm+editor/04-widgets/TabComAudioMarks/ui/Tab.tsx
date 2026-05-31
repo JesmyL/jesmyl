@@ -187,7 +187,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                     fontSize={20}
                     com={ccom}
                     chordHardLevel={3}
-                    asAfterOrderNode={({ ord }) =>
+                    asAfterOrdNode={({ ord }) =>
                       audioMarkControl.afterTargetOrdwOtherPlayButtonNodeDict[ord.makeSelector()]
                     }
                     asLineNode={props => (

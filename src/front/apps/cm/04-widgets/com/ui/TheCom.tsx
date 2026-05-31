@@ -13,7 +13,7 @@ interface Props {
   fontSize?: number;
   listRef?: RefObject<HTMLDivElement | null>;
   asHeaderNode?: Parameters<typeof CmComOrderList>[0]['asHeaderNode'];
-  asAfterOrdNode?: Parameters<typeof CmComOrderList>[0]['asAfterOrderNode'];
+  asAfterOrdNode?: Parameters<typeof CmComOrderList>[0]['asAfterOrdNode'];
   asLineNode?: Parameters<typeof CmComOrderList>[0]['asLineNode'];
 }
 
