@@ -21,7 +21,7 @@ import { CmComIntensityLevel } from 'shared/api';
 import { cmComIntensityLevelTitleDict } from 'shared/const/cm/cmComDriveLevelTitleDict';
 import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
-import { itIt } from 'shared/utils';
+import { emptyFunc } from 'shared/utils';
 import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 
 export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
@@ -146,22 +146,25 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
                 <FullContent openAtom={openAtom}>
                   {isOpen =>
                     isOpen && (
-                      <textarea
-                        className="size-full bg-x2!"
-                        onChange={itIt}
-                        value={JSON
-                          //
-                          .stringify(
-                            ccom.top,
-                            (key, value) => (isNaN(+key) || !Array.isArray(value) ? value : JSON.stringify(value)),
-                            2,
-                          )
-                          .replace(
-                            makeRegExp('/\\[\\s*((?:["\\d,.[\\]]*|null|,|\\s)*)\\s*\\]/g'),
+                      <>
+                        <div className="my-3">{JSON.stringify(ccom.top).length} символов</div>
+                        <textarea
+                          className="size-full bg-x2!"
+                          onChange={emptyFunc}
+                          value={JSON
                             //
-                            all => all.replace(makeRegExp('/"/g'), ''),
-                          )}
-                      />
+                            .stringify(
+                              ccom.top,
+                              (key, value) => (isNaN(+key) || !Array.isArray(value) ? value : JSON.stringify(value)),
+                              2,
+                            )
+                            .replace(
+                              makeRegExp('/\\[\\s*((?:[-"\\d,.[\\]]*|null|,|\\s)*)\\s*\\]/g'),
+                              //
+                              all => all.replace(makeRegExp('/"/g'), ''),
+                            )}
+                        />
+                      </>
                     )
                   }
                 </FullContent>

@@ -23,8 +23,6 @@ export const CmEditorComTabComOrders = ({ ccom }: { ccom: EditableCom }) => {
   const isCanCreate = checkAccess('cm', 'COM_ORD', 'C');
   const isCanUpdate = checkAccess('cm', 'COM_ORD', 'U');
 
-  if (!ccom) return null;
-
   const zeroProps = {
     aboveLeadOrdw: null,
     ordAbove: null,
