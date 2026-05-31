@@ -85,7 +85,7 @@ export const CmEditorComTabComOrders = ({ ccom }: { ccom: EditableCom }) => {
 
         return (
           <React.Fragment key={ordi}>
-            <div className={ord.me.isAnchorInherit ? 'inherit-block' : ''}>
+            <div className={ord.me.isAnchorInherit ? 'text-x7 opacity-20' : ''}>
               <div className="mx-10 mt-2">
                 {clickBetweenData || isWithHead ? null : ord.me.isAnchorInherit &&
                   ord.me.leadOrd &&
@@ -122,17 +122,15 @@ export const CmEditorComTabComOrders = ({ ccom }: { ccom: EditableCom }) => {
                 chordHardLevel={3}
                 showInvisibles
                 chordVisibleVariant={ChordVisibleVariant.Maximal}
-                asHeaderComponent={
+                asHeaderNode={
                   clickBetweenData
                     ? undefined
-                    : ({ headerNode }) => {
-                        return (
-                          <div className="flex">
-                            {headerNode}
-                            {isWithHead && editNode}
-                          </div>
-                        );
-                      }
+                    : ({ node }) => (
+                        <div className="flex">
+                          {node}
+                          {isWithHead && editNode}
+                        </div>
+                      )
                 }
               />
             </div>
@@ -176,15 +174,4 @@ export const CmEditorComTabComOrders = ({ ccom }: { ccom: EditableCom }) => {
 
 const StyledOrdersRedactor = styled.div`
   --icon-color: var(--color--7);
-
-  .order-changes-buttons {
-    > * {
-      margin-right: var(--main-gap);
-    }
-  }
-
-  .inherit-block {
-    opacity: 0.2;
-    color: var(--color--7);
-  }
 `;

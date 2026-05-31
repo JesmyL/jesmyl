@@ -31,9 +31,9 @@ export const CmEditorComAudioSolidOrdTextController = ({ com, ord, selector, src
       com={com}
       ord={ord}
       ordi={0}
-      asHeaderComponent={retNull}
+      asHeaderNode={retNull}
       chordHardLevel={3}
-      asLineComponent={
+      asLineNode={
         mylib.isStr(selector)
           ? props => {
               const lineSelector = makeCmComAudioMarkTitleAsLineSelector(props.solidTextLinei);

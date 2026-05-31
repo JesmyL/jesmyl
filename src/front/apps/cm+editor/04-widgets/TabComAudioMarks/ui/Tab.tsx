@@ -187,16 +187,16 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                     fontSize={20}
                     com={ccom}
                     chordHardLevel={3}
-                    asContentAfterOrder={({ ord }) =>
+                    asAfterOrderNode={({ ord }) =>
                       audioMarkControl.afterTargetOrdwOtherPlayButtonNodeDict[ord.makeSelector()]
                     }
-                    asLineComponent={props => (
+                    asLineNode={props => (
                       <div className="flex gap-2 custom-align-items">
                         <span className="text-x7">{props.solidTextLinei + 1}</span>
                         <CmComOrderLine {...props} />
                       </div>
                     )}
-                    asHeaderComponent={({ headerNode, ord }) =>
+                    asHeaderNode={({ node, ord }) =>
                       ord.isVisibleOrd() && (
                         <div className="flex flex-wrap gap-3">
                           {pinTime == null ? (
@@ -229,7 +229,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                               }
                             />
                           )}
-                          {headerNode}
+                          {node}
                           {audioMarkControl.ordwPlayButtonNodeDict[ord.wid]}
                         </div>
                       )

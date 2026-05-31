@@ -1,4 +1,4 @@
-import { ICmComOrderLineProps } from '$cm/entities/com-order-line';
+import { ICmComOrderLineAsComponentProps } from '$cm/entities/com-order-line';
 import { cmComChordHardLevelAtom } from '$cm/entities/index';
 import { CmCom } from '$cm/ext';
 import { ChordVisibleVariant } from '$cm/shared/model';
@@ -8,11 +8,11 @@ import { makeRegExp } from 'regexpert';
 import { commentHolderNodes } from 'shared/const/cm/commentHolderNodes';
 import { CmComOrderLine } from '../../com-order-line/ui/ComLine';
 import { CmComOrder } from '../lib/Order';
-import { ICmComOrderHeaderProps } from '../model/Order.model';
+import { ICmComOrderHeaderAsComponentProps } from '../model/Order.model';
 
 interface Props {
-  asLineComponent?: (props: ICmComOrderLineProps) => React.ReactNode;
-  asHeaderComponent?: (props: ICmComOrderHeaderProps) => React.ReactNode;
+  asLineNode?: (props: ICmComOrderLineAsComponentProps) => React.ReactNode;
+  asHeaderNode?: (props: ICmComOrderHeaderAsComponentProps) => React.ReactNode;
   isMiniAnchor?: boolean;
   ord: CmComOrder;
   ordi: number;
@@ -67,7 +67,7 @@ export function TheCmComOrder(props: Props) {
 
   const chordedOrd = ord.isCanShowChordsInText(props.chordVisibleVariant);
 
-  const headerNode = blockHeader ? (
+  const node = blockHeader ? (
     <div
       className="styled-header"
       {...styleAttributes}
@@ -79,17 +79,16 @@ export function TheCmComOrder(props: Props) {
     !ord.me.kind?.isHeaderNoneForce && <div className="styled-header empty">{commentHolderNodes}</div>
   );
 
-  const header =
-    typeof props.asHeaderComponent === 'function'
-      ? props.asHeaderComponent({
-          chordedOrd,
-          ord,
-          ordi,
-          com: props.com,
-          isJoinLetters: true,
-          headerNode,
-        })
-      : headerNode;
+  const header = props.asHeaderNode
+    ? props.asHeaderNode({
+        chordedOrd,
+        ord,
+        ordi,
+        com: props.com,
+        isJoinLetters: true,
+        node,
+      })
+    : node;
 
   if (!ord.text) {
     if (!ord.chords) return null;
@@ -121,7 +120,7 @@ export function TheCmComOrder(props: Props) {
                 return (
                   <span
                     key={texti}
-                    className={text === '|' ? 'text-x7' : undefined}
+                    className={text === '|' ? 'text-x7' : ''}
                   >
                     {text === '|' ? ' | ' : text}
                   </span>
@@ -154,41 +153,25 @@ export function TheCmComOrder(props: Props) {
       {lines.map((textLine, textLinei, textLinea) => {
         const words = textLine?.split(makeRegExp('/ +/'));
 
+        const lineProps: ICmComOrderLineAsComponentProps = {
+          chordedOrd,
+          textLine,
+          textLinei,
+          solidTextLinei: -1,
+          textLines: textLinea.length,
+          ord,
+          ordi,
+          wordCount: words.length,
+          words,
+          prevLinesCount: 1,
+          com: props.com,
+          isJoinLetters: true,
+          chordHardLevel: props.chordHardLevel,
+        };
+
         return (
           <React.Fragment key={textLinei}>
-            {typeof props.asLineComponent === 'function' ? (
-              props.asLineComponent({
-                chordedOrd,
-                textLine,
-                textLinei,
-                solidTextLinei: -1,
-                textLines: textLinea.length,
-                ord,
-                ordi,
-                wordCount: words.length,
-                words,
-                prevLinesCount: 1,
-                com: props.com,
-                isJoinLetters: true,
-                chordHardLevel: props.chordHardLevel,
-              })
-            ) : (
-              <CmComOrderLine
-                chordHardLevel={props.chordHardLevel}
-                chordedOrd={chordedOrd}
-                textLine={textLine}
-                textLinei={textLinei}
-                solidTextLinei={-1}
-                prevLinesCount={1}
-                textLines={textLinea.length}
-                ord={ord}
-                ordi={ordi}
-                wordCount={words.length}
-                words={words}
-                com={props.com}
-                isJoinLetters
-              />
-            )}
+            {props.asLineNode ? props.asLineNode(lineProps) : <CmComOrderLine {...lineProps} />}
           </React.Fragment>
         );
       })}

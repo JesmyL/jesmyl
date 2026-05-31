@@ -30,7 +30,7 @@ export const CmComAudioPlayerInCompositionPage = ({ ccom }: { ccom: CmCom }) => 
           <CmComAudioPlayerWithMarks
             audioLinks={ccom.audio}
             com={ccom}
-            className={isPlayOtherAudio ? 'top-[calc(var(--header-height)+31px)]' : undefined}
+            className={isPlayOtherAudio ? 'top-[calc(var(--header-height)+31px)]' : ''}
           />
         )}
         {isPlayOtherAudio && isPlay && (

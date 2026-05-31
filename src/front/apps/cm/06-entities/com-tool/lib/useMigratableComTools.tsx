@@ -39,7 +39,7 @@ function mapTools(this: und | typeof mapToolsSelf, key: MigratableComToolName) {
   return (
     <div
       key={key}
-      className={this.comTopTools.includes(key) ? '[&_.icon-box]:bg-x4 [&_.icon-box]:text-x2' : undefined}
+      className={this.comTopTools.includes(key) ? '[&_.icon-box]:bg-x4 [&_.icon-box]:text-x2' : ''}
     >
       <CmComToolNameContext value={key}>
         <CmComToolItemAttrsContext

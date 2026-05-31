@@ -2,12 +2,12 @@ import { CmComOrder, CmComOrderLine, TheCmComOrder } from '$cm/ext';
 import React from 'react';
 
 export const TheCmComOrderSolid = ({
-  asLineComponent,
-  asHeaderComponent,
-  asContentAfterOrder,
+  asLineNode,
+  asHeaderNode,
+  asAfterOrdNode,
   ...props
 }: Parameters<typeof TheCmComOrder>[0] & {
-  asContentAfterOrder?: (props: { ord: CmComOrder }) => React.ReactNode;
+  asAfterOrdNode?: (props: { ord: CmComOrder }) => React.ReactNode;
 }) => {
   let nextOrd = props.ord.me.next;
   const ords: CmComOrder[] = [props.ord];
@@ -35,11 +35,11 @@ export const TheCmComOrderSolid = ({
               {...props}
               ord={ord}
               ordi={ordi}
-              asHeaderComponent={asHeaderComponent && (headerProps => asHeaderComponent({ ...headerProps, ord }))}
-              asLineComponent={
-                asLineComponent
+              asHeaderNode={asHeaderNode && (headerProps => asHeaderNode({ ...headerProps, ord }))}
+              asLineNode={
+                asLineNode
                   ? lineProps =>
-                      asLineComponent({
+                      asLineNode({
                         ...lineProps,
                         ordi,
                         solidTextLinei: lineProps.textLinei + lineCounts[ordIndex],
@@ -56,7 +56,7 @@ export const TheCmComOrderSolid = ({
           </React.Fragment>
         );
       })}
-      {asContentAfterOrder?.({ ord: props.ord })}
+      {asAfterOrdNode?.({ ord: props.ord })}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { CmComOrder, ICmComOrderProps } from '../../com-order';
 
-export interface ICmComOrderLineProps extends ICmComOrderProps {
+export interface ICmComOrderLineAsComponentProps extends ICmComOrderProps {
   textLine: string;
   textLinei: number;
   textLines: number;
@@ -9,7 +9,7 @@ export interface ICmComOrderLineProps extends ICmComOrderProps {
   words: string[];
   prevLinesCount?: number;
   onClick?: React.MouseEventHandler<HTMLSpanElement>;
-  setWordClass?: (props: ICmComOrderLineProps, wordi: number) => string;
+  setWordClass?: (props: ICmComOrderLineAsComponentProps, wordi: number) => string;
   chordHardLevel: 1 | 2 | 3;
 }
 

@@ -44,7 +44,7 @@ export const CmEditorEERulesWord = memo(function CmEditorEERulesWord({
           {parts.map((part, parti) => (
             <th
               key={parti}
-              className={trackState == null ? undefined : 'text-xOK'}
+              className={trackState == null ? '' : 'text-xOK'}
             >
               {isVariated && <div>{part}</div>}
               <div>
@@ -87,7 +87,7 @@ export const CmEditorEERulesWord = memo(function CmEditorEERulesWord({
             </th>
           )}
         </StyledWordTr>
-        <tr className={isIgnored ? 'disabled' : undefined}>
+        <tr className={isIgnored ? 'disabled' : ''}>
           {parts.map((part, parti) => (
             <td
               key={parti}

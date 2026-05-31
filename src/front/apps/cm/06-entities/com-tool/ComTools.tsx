@@ -39,7 +39,7 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
       <BottomPopupItem
         id="transpose-tool"
         icon="SlidersHorizontal"
-        className={chordVisibleVariant === ChordVisibleVariant.None ? 'disabled' : undefined}
+        className={chordVisibleVariant === ChordVisibleVariant.None ? 'disabled' : ''}
         titleNode={<span className="@min-[100px]:visible invisible">Тональность</span>}
         onClick={event => event.stopPropagation()}
         rightNode={

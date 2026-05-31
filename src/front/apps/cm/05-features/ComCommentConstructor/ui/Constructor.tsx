@@ -96,7 +96,7 @@ export const CmComCommentConstructorTextRulesConstructor = ({
           <Button
             icon="TextFirstlineRight"
             onClick={() => setIsRedactKinds(itNIt)}
-            className={isRedactKinds ? 'text-x7' : undefined}
+            className={isRedactKinds ? 'text-x7' : ''}
           />
         )}
         <CmComCommentTools comw={com.wid} />

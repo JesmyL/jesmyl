@@ -147,7 +147,7 @@ export function CmBroadcastControlled(props: Props) {
                             key={src}
                             icon="ComputerVideo"
                             withoutAnimation
-                            className={broadcastSrc === src ? 'text-x7' : undefined}
+                            className={broadcastSrc === src ? 'text-x7' : ''}
                             onClick={() => onStartBroadcast(com.wid, src)}
                           />
                         ));

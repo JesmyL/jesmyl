@@ -112,16 +112,16 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
               chordVisibleVariant={chordVisibleVariant}
               isMiniAnchor={isMiniAnchor}
               listRef={listRef}
-              asContentAfterOrder={
+              asAfterOrdNode={
                 isOpenMoversButtons
                   ? ({ ord }) => audioMarkControl.afterTargetOrdwOtherPlayButtonNodeDict[ord.makeSelector()]
                   : undefined
               }
-              asHeaderComponent={
+              asHeaderNode={
                 isOpenMoversButtons
-                  ? ({ ord, headerNode }) => (
+                  ? ({ ord, node }) => (
                       <div className="flex gap-1 flex-wrap max-w-[80%]">
-                        {headerNode}
+                        {node}
                         {audioMarkControl.ordwPlayButtonNodeDict[ord.wid]}
                       </div>
                     )

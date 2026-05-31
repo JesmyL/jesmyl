@@ -35,15 +35,13 @@ export const CmEditorComTabChordApplications = ({ ccom }: { ccom: EditableCom })
               chordVisibleVariant={ChordVisibleVariant.Maximal}
               com={ccom}
               chordHardLevel={3}
-              asHeaderComponent={({ headerNode }) => {
-                return (
-                  <div className="flex gap-2">
-                    {headerNode}
-                    {!linesOnUpdateSet[ord.wid]?.size || <StyledLoadingSpinner icon="Loading03" />}
-                  </div>
-                );
-              }}
-              asLineComponent={props => {
+              asHeaderNode={({ node }) => (
+                <div className="flex gap-2">
+                  {node}
+                  {!linesOnUpdateSet[ord.wid]?.size || <StyledLoadingSpinner icon="Loading03" />}
+                </div>
+              )}
+              asLineNode={props => {
                 const { com, textLine, textLinei } = props;
                 const lineOnLoad = ordLinePositionsOnSend[`${ord.wid}/${textLinei}`];
                 const linePositions = lineOnLoad ?? ord.positions?.[textLinei] ?? [];

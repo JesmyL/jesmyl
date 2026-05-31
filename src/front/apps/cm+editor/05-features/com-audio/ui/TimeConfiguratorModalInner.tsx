@@ -64,9 +64,7 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
   return (
     <>
       <ModalHeader className="flex w-full justify-between">
-        <span className={isShortTime ? 'text-xKO' : undefined}>
-          {isReplaceBlockText ? title.split('\n', 1)[0] : title}
-        </span>
+        <span className={isShortTime ? 'text-xKO' : ''}>{isReplaceBlockText ? title.split('\n', 1)[0] : title}</span>
         <span className="flex gap-3">
           {isTextEdit || (
             <Button

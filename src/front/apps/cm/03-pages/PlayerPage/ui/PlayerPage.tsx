@@ -174,7 +174,7 @@ export const CmPlayerPage = () => {
                         key={src}
                         icon="Computer"
                         withoutAnimation
-                        className={broadcastSrc === src ? 'text-x7' : undefined}
+                        className={broadcastSrc === src ? 'text-x7' : ''}
                         onClick={async () => {
                           const pack = await getCmComFreshAudioMarksPack(src);
 

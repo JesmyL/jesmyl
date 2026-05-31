@@ -5,7 +5,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
-import { CmComCommentBlockSimpleSelector, CmComOrderWid } from 'shared/api';
+import { CmComOrderWid } from 'shared/api';
 import { useCmComCommentConstructorCurrentInnerKindContext } from '../state/CurrentInnerKind';
 import { CmComCommentConstructorLineConstructor } from './LineConstructor';
 import { CmComCommentConstructorWordConstructor } from './WordConstructor';
@@ -31,7 +31,6 @@ export const CmComCommentConstructorBlockView = ({ ordw: ordwSelector, com }: { 
         $linei={linei}
         $wordi={wordi}
         $ordw={ordw}
-        $ordSelector={ordwSelector}
         onClick={event => {
           const ordw = getParentNodeWithAttributeName(event, 'ord-selector').attr;
           const linei = getParentNodeWithAttributeName(event, 'ord-linei').attr;
@@ -49,6 +48,7 @@ export const CmComCommentConstructorBlockView = ({ ordw: ordwSelector, com }: { 
           com={com}
           isMiniAnchor={false}
           fontSize={fontSize}
+          asOrderNode={({ ord, node }) => ord.wid === ordwSelector && node}
         />
       </StyledSolidOrdContainer>
 
@@ -77,15 +77,8 @@ const StyledSolidOrdContainer = styled.div<{
   $linei: number | nil;
   $wordi: number | nil;
   $ordw: number | nil;
-  $ordSelector: CmComCommentBlockSimpleSelector;
 }>`
   ${props => [
-    css`
-      [solid-ord-selector]:not([solid-ord-selector='${props.$ordSelector}']) {
-        display: none;
-        visibility: hidden;
-      }
-    `,
     props.$linei != null && [
       css`
         [ord-selector='${props.$ordw}'] [ord-linei='${props.$linei}'] {

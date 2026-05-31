@@ -57,7 +57,7 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
     return this.me.isInherit || this.me.isAnchorInherit || this.me.isAnchorInheritPlus;
   }
 
-  get positions(): (number[] | null)[] | nil {
+  get positions(): (number[] | nil)[] | nil {
     return (
       this.me.positions ??
       this.getWatchInheritance('p') ??
@@ -158,9 +158,7 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
     );
   };
 
-  isInSolidLineWithInvisibles() {
-    return this.isAnyInherited && this.isHeaderNoneForce;
-  }
+  isInSolidLineWithInvisibles = () => this.isAnyInherited && this.isHeaderNoneForce;
 
   isDayFromCreate = () => this.com.isDayFromCreate(this.top.cre);
 

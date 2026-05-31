@@ -90,7 +90,7 @@ export const CmEditorComTabComRefs = ({ ccom }: { ccom: EditableCom }) => {
                                     <>
                                       <Button
                                         icon="PlusSignSquare"
-                                        className={allRefs[withCom.wid] != null ? undefined : 'text-xOK'}
+                                        className={allRefs[withCom.wid] != null ? '' : 'text-xOK'}
                                         onClick={() => {
                                           if (allRefs[withCom.wid] != null) {
                                             otherRefGroupAtom.set(withCom.wid);

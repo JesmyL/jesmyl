@@ -12,22 +12,12 @@ interface Props {
   isMiniAnchor?: boolean;
   fontSize?: number;
   listRef?: RefObject<HTMLDivElement | null>;
-  asHeaderComponent?: Parameters<typeof CmComOrderList>[0]['asHeaderComponent'];
-  asContentAfterOrder?: Parameters<typeof CmComOrderList>[0]['asContentAfterOrder'];
-  asLineComponent?: Parameters<typeof CmComOrderList>[0]['asLineComponent'];
+  asHeaderNode?: Parameters<typeof CmComOrderList>[0]['asHeaderNode'];
+  asAfterOrdNode?: Parameters<typeof CmComOrderList>[0]['asAfterOrderNode'];
+  asLineNode?: Parameters<typeof CmComOrderList>[0]['asLineNode'];
 }
 
-export const TheCmCom = ({
-  com: topCom,
-  showInvisibles,
-  chordVisibleVariant,
-  isMiniAnchor,
-  fontSize,
-  listRef,
-  asLineComponent,
-  asHeaderComponent,
-  asContentAfterOrder,
-}: Props) => {
+export const TheCmCom = ({ com: topCom, chordVisibleVariant, ...props }: Props) => {
   const ccom = useCmComCurrent();
   const com = topCom ?? ccom;
   const chordHardLevel = useAtomValue(cmComChordHardLevelAtom);
@@ -36,15 +26,9 @@ export const TheCmCom = ({
 
   return (
     <CmComOrderList
+      {...props}
       com={com}
-      fontSize={fontSize}
       chordVisibleVariant={chordVisibleVariant ?? ChordVisibleVariant.Minimal}
-      isMiniAnchor={isMiniAnchor}
-      showInvisibles={showInvisibles}
-      listRef={listRef}
-      asHeaderComponent={asHeaderComponent}
-      asContentAfterOrder={asContentAfterOrder}
-      asLineComponent={asLineComponent}
       chordHardLevel={chordHardLevel}
     />
   );

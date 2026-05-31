@@ -51,7 +51,7 @@ export const CmEditorEditComEventInterpretationFullContentInner = ({
             return (
               <div
                 key={ord.wid}
-                className={isInvisible ? 'opacity-40' : undefined}
+                className={isInvisible ? 'opacity-40' : ''}
               >
                 <TheCmComOrder
                   ord={ord}
@@ -60,12 +60,12 @@ export const CmEditorEditComEventInterpretationFullContentInner = ({
                   chordHardLevel={3}
                   chordVisibleVariant={ChordVisibleVariant.Maximal}
                   showInvisibles
-                  asHeaderComponent={({ headerNode, ord }) => {
-                    if (ord.me.isInherit) return headerNode;
-
-                    return (
+                  asHeaderNode={({ node, ord }) =>
+                    ord.me.isInherit ? (
+                      node
+                    ) : (
                       <div className="flex gap-3">
-                        {headerNode}
+                        {node}
                         <Button
                           icon={isInvisible ? 'ViewOff' : 'View'}
                           onClick={() =>
@@ -78,8 +78,8 @@ export const CmEditorEditComEventInterpretationFullContentInner = ({
                           }
                         />
                       </div>
-                    );
-                  }}
+                    )
+                  }
                 />
               </div>
             );

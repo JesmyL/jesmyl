@@ -54,18 +54,18 @@ export const CmBroadcastLiveList = (props: CmBroadcastSchWgtLiveDataValue) => {
             chordVisibleVariant={chordVisibleVariant}
             com={com}
             chordHardLevel={chordHardLevel}
-            asHeaderComponent={props => {
-              if (props.ord.isRealText()) return props.headerNode;
-
-              return <div id={`${_lineNamePrefix}${lineSum[props.ordi]}`}>{props.headerNode}</div>;
-            }}
-            asLineComponent={props => {
-              return (
-                <div id={`${_lineNamePrefix}${lineSum[props.ordi] + props.textLinei}`}>
-                  <CmComOrderLine {...props} />
-                </div>
-              );
-            }}
+            asHeaderNode={props =>
+              props.ord.isRealText() ? (
+                props.node
+              ) : (
+                <div id={`${_lineNamePrefix}${lineSum[props.ordi]}`}>{props.node}</div>
+              )
+            }
+            asLineNode={props => (
+              <div id={`${_lineNamePrefix}${lineSum[props.ordi] + props.textLinei}`}>
+                <CmComOrderLine {...props} />
+              </div>
+            )}
           />
         )}
       </List>

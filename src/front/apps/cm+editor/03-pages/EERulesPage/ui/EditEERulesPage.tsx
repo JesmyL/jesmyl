@@ -122,9 +122,7 @@ export const CmEditorEERulesPage = () => {
 
                       return {
                         title: (
-                          <span
-                            className={words.some(word => eeStoreRef.current[word] == null) ? undefined : 'text-xOK'}
-                          >
+                          <span className={words.some(word => eeStoreRef.current[word] == null) ? '' : 'text-xOK'}>
                             {words[0]}
                           </span>
                         ),

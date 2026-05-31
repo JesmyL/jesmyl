@@ -44,7 +44,7 @@ export const CmComCommentConstructorTextRedactor = <
       disabled={props.disabled}
       strongDefaultValue
       multiline={props.multiline}
-      className={text && text.length > maxLen ? 'bg-xKO! text-x3! border-xKO' : undefined}
+      className={text && text.length > maxLen ? 'bg-xKO! text-x3! border-xKO' : ''}
       onInput={value =>
         updateDebounce(() => {
           cmComCommentConstructorRulePropsDictAtom.do.update(dict => {

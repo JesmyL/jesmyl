@@ -1,10 +1,10 @@
 import React from 'react';
 import { makeRegExp } from 'regexpert';
 import { ruConsonantLettersStr, ruLowerLettersStr } from 'shared/utils/cm/com/const';
-import { ICmComOrderLineProps } from '../model/line';
+import { ICmComOrderLineAsComponentProps } from '../model/line';
 import '../style/StyledComLine.styler.scss';
 
-export const CmComOrderLine = (props: ICmComOrderLineProps) => {
+export const CmComOrderLine = (props: ICmComOrderLineAsComponentProps) => {
   const {
     chordedOrd,
     com,

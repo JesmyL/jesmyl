@@ -66,15 +66,22 @@ export interface CmComOrderTopHeaderBag {
   repeats?: string;
 }
 
-export interface ICmComOrderHeaderProps extends ICmComOrderProps {
-  headerNode: ReactNode;
+export interface ICmComOrderHeaderAsComponentProps extends ICmComOrderProps {
+  node: ReactNode;
 }
 
 export interface ICmComOrderProps {
   chordedOrd: boolean;
   ord: CmComOrder;
   ordi: number;
-  positions?: number[];
+  positions?: (number | nil)[] | nil;
   isJoinLetters: boolean;
   com: CmCom;
+}
+
+export interface ICmComOrderAsComponentProps {
+  ord: CmComOrder;
+  com: CmCom;
+  ordi: number;
+  node: React.ReactNode;
 }

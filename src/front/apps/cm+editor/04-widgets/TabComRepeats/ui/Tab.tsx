@@ -113,10 +113,10 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
               com={ccom}
               ord={ord}
               ordi={ordi}
-              asHeaderComponent={props => {
+              asHeaderNode={({ node }) => {
                 return (
                   <div className="flex items-center">
-                    {props.headerNode}
+                    {node}
                     {ord.me.watchOrd ? (
                       <>
                         <LazyIcon
@@ -146,7 +146,7 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
                   </div>
                 );
               }}
-              asLineComponent={props => {
+              asLineNode={props => {
                 return (
                   <CmComOrderLine
                     {...props}
