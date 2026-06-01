@@ -1,4 +1,6 @@
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { Button } from '#shared/components';
+import { CmEditorComEditBemoled } from '$cm+editor/features/ComEditBemoled';
 import { CmEditorComEditBpm } from '$cm+editor/features/ComEditBpm';
 import { CmEditorComEditTransposition } from '$cm+editor/features/ComEditTransposition';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
@@ -20,6 +22,8 @@ export const CmEditorEditComEventInterpretationFullContentInner = ({
   const com = useCmCom(comw ?? CmComWid.def, schw);
   const schedule = useLiveQuery(() => indexIDB.db.schs.get(schw), [schw]);
   const ordsInterpretation = schPack?.intp?.[comw]?.o;
+  const checkAccess = useCheckUserAccessRightsInScope();
+  const canFixIntp = checkAccess('cm', 'COM_INTP', 'U');
 
   return (
     <>
@@ -29,7 +33,7 @@ export const CmEditorEditComEventInterpretationFullContentInner = ({
       </div>
       {linkNode}
 
-      {com && (
+      {canFixIntp && com && (
         <>
           <CmEditorComEditBpm
             def={com.beatsPerMinute}
@@ -39,6 +43,11 @@ export const CmEditorEditComEventInterpretationFullContentInner = ({
           <CmEditorComEditTransposition
             ccom={com}
             onChange={ton => cmEditComExternalsClientTsjrpcMethods.tonIntp({ comw: com.wid, ton, schw })}
+          />
+
+          <CmEditorComEditBemoled
+            value={com.isBemoled}
+            onChange={val => cmEditComExternalsClientTsjrpcMethods.bemoleIntp({ schw, comw: com.wid, val })}
           />
 
           {com.orders?.map((ord, ordi) => {

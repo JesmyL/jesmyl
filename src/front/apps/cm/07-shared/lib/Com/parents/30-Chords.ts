@@ -21,19 +21,11 @@ export class CmComChords extends CmComOrders {
   }
 
   get isBemoled() {
-    return this.getBasicOr('b', 0);
-  }
-  set isBemoled(val: num) {
-    this.setExportable('b', val ? 1 : 0);
-    this.resetChordLabels();
+    return this.intp?.b ?? this.top.b ?? 0;
   }
 
   get chords() {
-    return this.getBasic('c');
-  }
-  set chords(val: string[] | und) {
-    this.setExportable('c', val);
-    this.resetChordLabels();
+    return this.top.c;
   }
 
   get chordLabels(): string[][][] {

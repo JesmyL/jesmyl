@@ -47,68 +47,74 @@ export const CmComCommentConstructorLostProps = ({ ordw, com }: { ordw: CmComOrd
         : '',
       list: mylib
         .values(propsDict.dict ?? {})
-        .filter(props => props && (!('linei' in props) || !usedKeys.has(`${props.pre}l${props.linei}`))),
+        .filter(props => props && 'linei' in props && !usedKeys.has(`${props.pre}l${props.linei}`)),
     };
   }, [com, ordw, propsDict.dict]);
 
+  const nodes = lostProps.list
+    .map(props => {
+      if (!props) return;
+
+      let lineTitle = '';
+      let wordTitle = '';
+      let chordTitle = '';
+      let isColorFix = false;
+
+      if ('linei' in props) {
+        lineTitle = `Стр. ${props.linei + 1 + (lostProps.lensAdd[props.pre] ?? 0)}`;
+
+        if ('wordi' in props) {
+          const isChord = 'chordi' in props;
+          const titlePrefix = isChord
+            ? ''
+            : `${({ '>': 'после', '<': 'до', '^': 'цвет' } as const)[props.place]} слова`;
+          isColorFix = !isChord && props.place === '^';
+
+          wordTitle = `${titlePrefix || 'слово'} ${props.wordi + 1}`;
+
+          if (isChord) {
+            chordTitle = `Акк ${props.chordi + 1}`;
+          }
+        }
+      } else return;
+
+      const propsKey = makeCmComCommentConstructorPropsKey(props, {});
+      const joinTitle = (
+        <span className={cmComCommentAccentsColorClassNameList[props.type]!}>
+          {props.text} (
+          {[props.pre.startsWith('k') ? lostProps.ordHeader : '', lineTitle, wordTitle, chordTitle]
+            .filter(itIt)
+            .join(', ')}
+          )
+        </span>
+      );
+
+      return (
+        (props.text || (isColorFix && !!props.type)) && (
+          <TheIconButton
+            key={propsKey}
+            icon="Delete01"
+            postfix={joinTitle}
+            confirm={<>Удалить {joinTitle}?</>}
+            onClick={() => {
+              cmComCommentConstructorRulePropsDictAtom.do.update(dict => {
+                const blockDict = dict.dict?.[propsKey];
+                if (!blockDict) return;
+                if (isColorFix) blockDict.type = 0;
+                else blockDict.text = '';
+              });
+            }}
+          />
+        )
+      );
+    })
+    .filter(itIt);
+
   return (
-    !lostProps.list.length || (
+    !nodes.length || (
       <>
         <div>Недостижимые комментарии</div>
-        {lostProps.list.map(props => {
-          if (!props) return;
-
-          let lineTitle = '';
-          let wordTitle = '';
-          let chordTitle = '';
-          let isColorFix = false;
-
-          if ('linei' in props) {
-            lineTitle = `Стр. ${props.linei + 1 + (lostProps.lensAdd[props.pre] ?? 0)}`;
-
-            if ('wordi' in props) {
-              const titlePrefix =
-                'chordi' in props ? '' : `${({ '>': 'после', '<': 'до', '^': 'цвет' } as const)[props.place]} слова`;
-              isColorFix = !('chordi' in props) && props.place === '^';
-
-              wordTitle = `${titlePrefix || 'слово'} ${props.wordi + 1}`;
-
-              if ('chordi' in props) {
-                chordTitle = `Акк ${props.chordi + 1}`;
-              }
-            }
-          } else return;
-
-          const propsKey = makeCmComCommentConstructorPropsKey(props, {});
-          const joinTitle = (
-            <span className={cmComCommentAccentsColorClassNameList[props.type]!}>
-              {props.text} (
-              {[props.pre.startsWith('k') ? lostProps.ordHeader : '', lineTitle, wordTitle, chordTitle]
-                .filter(itIt)
-                .join(', ')}
-              )
-            </span>
-          );
-
-          return (
-            (props.text || (isColorFix && !!props.type)) && (
-              <TheIconButton
-                key={propsKey}
-                icon="Delete01"
-                postfix={joinTitle}
-                confirm={<>Удалить {joinTitle}?</>}
-                onClick={() => {
-                  cmComCommentConstructorRulePropsDictAtom.do.update(dict => {
-                    const blockDict = dict.dict?.[propsKey];
-                    if (!blockDict) return;
-                    if (isColorFix) blockDict.type = 0;
-                    else blockDict.text = '';
-                  });
-                }}
-              />
-            )
-          );
-        })}
+        {nodes}
       </>
     )
   );

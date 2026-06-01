@@ -19,15 +19,12 @@ export type CmEditComExternalsTsjrpcModel = {
   }) => void;
 
   /** ord visibility interpretation */
-  ordVisIntp: (args: {
-    schw: IScheduleWidgetWid;
-    comw: CmComWid;
-    ordw: CmComOrderWid;
-    isInv: boolean;
-  }) => void;
+  ordVisIntp: (args: { schw: IScheduleWidgetWid; comw: CmComWid; ordw: CmComOrderWid; isInv: boolean }) => void;
 
   /** com transposition interpretation */
   tonIntp: (args: { schw: IScheduleWidgetWid; comw: CmComWid; ton: number }) => void;
+  /** is bemoled interpretation value */
+  bemoleIntp: (args: { schw: IScheduleWidgetWid; comw: CmComWid; val: num }) => void;
   /** com bpm interpretation */
   bpmIntp: (args: { schw: IScheduleWidgetWid; comw: CmComWid; bpm: number }) => void;
 

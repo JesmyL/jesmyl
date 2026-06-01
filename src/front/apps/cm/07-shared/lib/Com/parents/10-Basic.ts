@@ -19,30 +19,34 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
   }
 
   get mod() {
-    return this.getBasic('m');
+    return this.top.m;
   }
 
   get texts() {
-    return this.getBasic('t');
+    return this.top.t;
   }
   set texts(val) {
     this.setExportable('t', val);
   }
 
   get beatsPerMinute() {
-    return takeCorrectMetronomeBpm(this.intp?.bpm ?? this.getBasic('bpm'));
+    return takeCorrectMetronomeBpm(this.intp?.bpm ?? this.bpm);
+  }
+
+  get bpm() {
+    return this.top.bpm;
   }
 
   get meterSize() {
-    return this.getBasic('s');
+    return this.top.s;
   }
 
   get audio() {
-    return this.getBasicOr('al', []);
+    return this.top.al ?? [];
   }
 
   get initialTransPosition() {
-    return this.initial.p ?? this.getBasic('p');
+    return this.initial.p ?? this.top.p;
   }
   set initialTransPosition(val) {
     if (this.initial.p == null) this.initial.p = val || 0;
@@ -50,14 +54,14 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
   }
 
   get initialTransPos() {
-    return this.initial.pos ?? this.initial.p ?? this.getBasic('p');
+    return this.initial.pos ?? this.initial.p ?? this.top.p;
   }
   set initialTransPos(val) {
     if (this.initial.pos == null) this.initial.pos = val || 0;
   }
 
   get transPosition() {
-    return this.getBasic('p');
+    return this.top.p;
   }
   set transPosition(value) {
     const v = value || 0;

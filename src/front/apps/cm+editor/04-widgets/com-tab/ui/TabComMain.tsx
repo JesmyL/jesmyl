@@ -8,6 +8,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { WithAtom } from '#shared/ui/WithAtom';
 import { CmEditorTextCorrectMessages } from '$cm+editor/entities/text';
+import { CmEditorComEditBemoled } from '$cm+editor/features/ComEditBemoled';
 import { CmEditorComEditBpm } from '$cm+editor/features/ComEditBpm';
 import { CmEditorComEditTransposition } from '$cm+editor/features/ComEditTransposition';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
@@ -39,6 +40,7 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
   );
 
   if (!checkAccess('cm', 'COM_MAIN', 'U')) return comNode;
+  const canFixIntp = checkAccess('cm', 'COM_INTP', 'C', ccom.wid);
 
   return (
     <>
@@ -52,10 +54,12 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
       />
       <CmEditorTextCorrectMessages corrects={nameCorrects} />
 
-      <CmEditorComEditBpm
-        def={ccom.beatsPerMinute}
-        onChange={value => cmEditComClientTsjrpcMethods.setBpM({ comw: ccom.wid, value })}
-      />
+      {ccom.bpm == null || !canFixIntp || (
+        <CmEditorComEditBpm
+          def={ccom.beatsPerMinute}
+          onChange={value => cmEditComClientTsjrpcMethods.setBpM({ comw: ccom.wid, value })}
+        />
+      )}
       <Dropdown
         label={
           <>
@@ -98,26 +102,18 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
           cmEditComClientTsjrpcMethods.changeLanguage({ comw: ccom.wid, value: ccom.langi ? 0 : 1 });
         }}
       />
-      <CmEditorComEditTransposition
-        ccom={ccom}
-        onChange={position => cmEditComClientTsjrpcMethods.changeTon({ comw: ccom.wid, value: position })}
-      />
-      <TheIconButton
-        icon="Grid"
-        confirm={
-          <>
-            Сделать песню <span className="text-x7">{ccom.isBemoled ? 'диезной' : 'бемольной'}</span>?
-          </>
-        }
-        postfix={
-          <>
-            <span className="text-x7">{ccom.isBemoled ? 'Бемольная' : 'Диезная'}</span> песня
-          </>
-        }
-        onClick={() =>
-          cmEditComClientTsjrpcMethods.makeBemoled({ comw: ccom.wid, value: ccom.isBemoled === 1 ? 0 : 1 })
-        }
-      />
+      {canFixIntp && (
+        <>
+          <CmEditorComEditTransposition
+            ccom={ccom}
+            onChange={position => cmEditComClientTsjrpcMethods.changeTon({ comw: ccom.wid, value: position })}
+          />
+          <CmEditorComEditBemoled
+            value={ccom.isBemoled}
+            onChange={value => cmEditComClientTsjrpcMethods.makeBemoled({ comw: ccom.wid, value })}
+          />
+        </>
+      )}
       {checkAccess('cm', 'COM', 'D') && (
         <>
           <TheIconButton

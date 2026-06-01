@@ -33,6 +33,7 @@ export const CmComCommentConstructorTextRulesConstructor = ({
     com,
     false,
     useMemo(() => mylib.values(propsDict.dict).filter(itNUnd), [propsDict.dict]),
+    400,
   );
 
   useEffect(

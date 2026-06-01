@@ -96,6 +96,9 @@ export type IExportableComInterpretationSimpleValues = {
 
   /** ударов в минуту */
   bpm?: number;
+
+  /** бемольная ли песня */
+  b?: num;
 };
 
 export type IExportableOrderInterpretation = {
@@ -120,9 +123,6 @@ export type IExportableCom = IExportableComInterpretationSimpleValues & {
 
   /** разбивка текстов на линии и слайды */
   nl?: [PRecord<CmComOrderWid, CmComNewlinerStrConfig.whole>];
-
-  /** бемольная ли песня */
-  b?: num;
 
   /** язык песни */
   l?: number;

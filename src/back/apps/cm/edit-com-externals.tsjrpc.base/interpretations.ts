@@ -35,6 +35,11 @@ export const cmEditComExternalsTsjrpcInterpretations = () =>
       if (!intp.p || com.p === intp.p) delete intp.p;
     }),
 
+    bemoleIntp: updateInterptetation((com, intp, { val }) => {
+      intp.b = val;
+      if (!intp.b || com.b === intp.b) delete intp.b;
+    }),
+
     bpmIntp: updateInterptetation((com, intp, { bpm }) => {
       intp.bpm = takeCorrectMetronomeBpm(bpm);
 
