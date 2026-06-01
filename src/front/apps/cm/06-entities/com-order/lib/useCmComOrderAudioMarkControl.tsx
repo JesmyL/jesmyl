@@ -87,7 +87,7 @@ export const useCmComOrderAudioMarkControlButtons = (
         return;
       }
 
-      const ordw = com.getOrderBySelector(selector[0]).ord?.wid;
+      const ordw = com.getOrd(selector[0]).ord?.wid;
       if (ordw == null) return;
 
       lastOrdwOrNull = ordw;

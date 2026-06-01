@@ -409,7 +409,5 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
 
   makeSelector = (): CmComOrderSelector => this.wid;
 
-  isMySelector = (selector: CmComOrderSelector) => this.wid === selector;
-
   isVisibleOrd = () => !this.isHeaderNoneForce && this.isVisible;
 }

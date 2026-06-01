@@ -63,6 +63,7 @@ export type ICmComOrderExportableMe<OrderConstructor extends CmComOrderWidClass<
 export interface CmComOrderTopHeaderBag {
   isEdit?: boolean;
   isTexted?: boolean;
+  numered?: boolean;
   repeats?: string;
 }
 

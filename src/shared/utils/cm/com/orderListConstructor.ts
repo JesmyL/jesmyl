@@ -45,7 +45,7 @@ export const orderListConstructor = <OrderConstructor extends CmComOrderWidClass
         (style.title[langi] || style.title[0]) +
         (bag.isEdit
           ? ' №'
-          : (numered ? (groups[type] < 2 ? '' : ` ${number}`) : '') +
+          : (bag.numered !== false && numered ? (groups[type] < 2 ? '' : ` ${number}`) : '') +
             (bag.repeats ? ` ×  ${bag.repeats}р. ` : '') +
             (bag.isTexted ? ':' : ''))
       );

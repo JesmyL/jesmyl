@@ -2,9 +2,9 @@ import { makeRegExp } from 'regexpert';
 import { CmComCommentBlockSpecialSelector } from 'shared/api';
 import {
   CmComCommentConstructorPropKey,
-  CmComCommentConstructorPropsDictChordRulePropsKey,
+  CmComCommentConstructorPropsDictChordRulePropsKeyPrefix,
   CmComCommentConstructorPropsDictSelectorRulePropsKey,
-  CmComCommentConstructorPropsDictWordRulePropsKey,
+  CmComCommentConstructorPropsDictWordRulePropsKeyPrefix,
   CmComCommentConstructorRulePropsDict,
   CmComCommentTextDetectorRuleProps,
 } from 'shared/model/cm/com-comment';
@@ -14,7 +14,15 @@ import { itIt } from 'shared/utils/utils';
 export const fillCmComCommentConstructorCommentInKey2PropsDict = (
   propsDict: CmComCommentConstructorRulePropsDict,
   props: CmComCommentTextDetectorRuleProps,
-  wordChordiMaxDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKey, number>,
+  wordChordiMaxDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKeyPrefix, number>,
+) => {
+  const key = makeCmComCommentConstructorPropsKey(props, wordChordiMaxDict);
+  if (!(key in propsDict)) propsDict[key] = props as never;
+};
+
+export const makeCmComCommentConstructorPropsKey = (
+  props: CmComCommentTextDetectorRuleProps,
+  $wordChordiMaxDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKeyPrefix, number>,
 ) => {
   let key: CmComCommentConstructorPropKey;
 
@@ -22,19 +30,19 @@ export const fillCmComCommentConstructorCommentInKey2PropsDict = (
   else if ('chordi' in props) {
     const wordKey = `${props.pre}l${props.linei}w${props.wordi}` as const;
 
-    wordChordiMaxDict[wordKey] ??= 0;
-    wordChordiMaxDict[wordKey]++;
+    $wordChordiMaxDict[wordKey] ??= 0;
+    $wordChordiMaxDict[wordKey]++;
 
     key = `${wordKey}c${props.chordi}${props.place}`;
   } else if ('wordi' in props) key = `${props.pre}l${props.linei}w${props.wordi}${props.place}`;
   else key = `${props.pre}l${props.linei}`;
 
-  if (!(key in propsDict)) propsDict[key] = props as never;
+  return key;
 };
 
 export const makeCmComCommentConstructorCommentOrdSelector2TextsDictFromRuleProps = (
   propsDict: CmComCommentConstructorRulePropsDict,
-  chordCountDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKey, number>,
+  chordCountDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKeyPrefix, number>,
 ) => {
   try {
     const wordCommentsText: PRecord<CmComCommentConstructorPropsDictSelectorRulePropsKey, string> = {};
@@ -173,7 +181,7 @@ const startCharForEscapeSet = new Set(`0123456789${simpleStartCharForEscape}`);
 
 const makeWordTextRule = (
   propsDict: CmComCommentConstructorRulePropsDict,
-  key: CmComCommentConstructorPropsDictWordRulePropsKey | CmComCommentConstructorPropsDictChordRulePropsKey,
+  key: CmComCommentConstructorPropsDictWordRulePropsKeyPrefix | CmComCommentConstructorPropsDictChordRulePropsKeyPrefix,
   place: '<' | '>',
 ) => {
   const props = propsDict[`${key}${place}`];

@@ -5,7 +5,7 @@ import {
 } from '$cm/entities/com-comment';
 import { CmComCommentBlockSimpleSelector, CmComCommentBlockSpecialSelector, CmComWid } from 'shared/api';
 import {
-  CmComCommentConstructorPropsDictWordRulePropsKey,
+  CmComCommentConstructorPropsDictWordRulePropsKeyPrefix,
   CmComCommentConstructorRulePropsDict,
 } from 'shared/model/cm/com-comment';
 import { cmComCommentTextRulesDetector } from 'shared/utils/cm';
@@ -24,7 +24,7 @@ export const updateCmComCommentConstructorRulePropsDict = async (
   const commentBlock = await cmIDB.tb.comCommentBlocks.get(comw);
 
   const propsDict: CmComCommentConstructorRulePropsDict = {};
-  const wordChordiMaxDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKey, number> = {};
+  const wordChordiMaxDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKeyPrefix, number> = {};
   const altCommentKeys = cmComCommentCurrentComw2OpenAltiDictAtom.get();
   const commentAlti = altCommentKeys[comw] ?? altCommentKeys.lasti;
 

@@ -60,7 +60,7 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
   const isShortTime = Math.abs(time - +(comMarkKeys[comMarkKeys.indexOf(`${time}`) + 1] ?? 0)) < 1;
 
   if (mylib.isArr(selector)) {
-    const { ord, visibleOrdi } = com.getOrderBySelector(selector[0]);
+    const { ord, visibleOrdi } = com.getOrd(selector[0]);
     if (comMarks == null || ord == null) return { title: '?' as never, ord: null, isShortTime };
 
     const repeats = computeOrdRepeats(time, comMarks, selector[0]);
@@ -89,7 +89,7 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
     });
   }
 
-  const { ord, visibleOrdi } = com.getOrderBySelector(lastSelector);
+  const { ord, visibleOrdi } = com.getOrd(lastSelector);
   let title = makeCmComAudioMarkTitleEmptySelector(selector, comMarks, time, com.langi ?? 0);
 
   if (checkIsCmComAudioMarkTitleIsLineSelector(selector) && ord) {

@@ -38,7 +38,7 @@ export const useCmComCommentBlockFastReactions = (listRef: React.RefObject<HTMLD
 
       const selector = +node.getAttribute('ord-selector')!;
       if (mylib.isNaN(selector)) return;
-      const { ord } = com.getOrderBySelector(selector);
+      const { ord } = com.getOrd(selector);
       if (ord == null) return;
 
       (async () => {

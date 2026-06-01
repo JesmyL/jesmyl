@@ -48,7 +48,7 @@ export const CmComCommentConstructorTextRulesConstructor = ({
   const isHead = selector === CmComCommentBlockSpecialSelector.Head;
 
   if (!isHead) {
-    const { ord } = com.getOrderBySelector(selector);
+    const { ord } = com.getOrd(selector);
     const ordKind = ord?.me.kind;
     const selectorPrefix = ordKind?.key && isRedactKinds ? (`k${ordKind.key}` as const) : null;
     const variativeSelectorPrefix = selectorPrefix ?? simpleSelectorPrefix;

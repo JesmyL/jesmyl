@@ -37,7 +37,7 @@ export const useCmComMarkTextValuesMaker = (com: CmCom | und, link: HttpNumLeadL
       const nextSelector = trackMarks[times[timei + 1]];
 
       if (mylib.isArr(selector)) {
-        const ord = com?.getOrderBySelector(selector[0]);
+        const ord = com?.getOrd(selector[0]);
 
         if (ord?.ord) {
           const ordw = ord.ord.wid;

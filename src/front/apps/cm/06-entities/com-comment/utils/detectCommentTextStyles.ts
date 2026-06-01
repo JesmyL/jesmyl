@@ -1,8 +1,9 @@
 import { mylib } from '#shared/lib/my-lib';
 import { css, SerializedStyles } from '@emotion/react';
 import {
+  CmComCommentConstructorPropsDictChordRulePropsKeyPrefix,
   CmComCommentConstructorPropsDictSelectorRulePropsKey,
-  CmComCommentConstructorPropsDictWordRulePropsKey,
+  CmComCommentConstructorPropsDictWordRulePropsKeyPrefix,
   CmComCommentTextDetectorChordRuleProps,
   CmComCommentTextDetectorRuleProps,
 } from 'shared/model/cm/com-comment';
@@ -25,11 +26,11 @@ export const cmComCommentDetectCommentTextStyles = () => {
   const ordKind2StylesDict: PRecord<CmComCommentConstructorPropsDictSelectorRulePropsKey, SerializedStyles> = {};
   const usedOrdSelectorSet = new Set<CmComCommentConstructorPropsDictSelectorRulePropsKey>();
   const lineWordStyleDict: PRecord<
-    CmComCommentConstructorPropsDictWordRulePropsKey,
+    CmComCommentConstructorPropsDictWordRulePropsKeyPrefix,
     (SerializedStyles | string | nil)[]
   > = {};
   const sidePlacedChordsOnWait: PRecord<
-    `${number}:${number}/${number}`,
+    CmComCommentConstructorPropsDictChordRulePropsKeyPrefix,
     PRecord<'<' | '^' | '>', CmComCommentTextDetectorChordRuleProps>
   > = {};
 
@@ -70,7 +71,8 @@ export const cmComCommentDetectCommentTextStyles = () => {
               > [attr-chordi='${chordi}'][com-letter-chorded='post'] [word-fragment]:before,
               > [attr-chordi='${chordi - 1}'][com-letter-chorded='pre'] [word-fragment]:before,
               > [attr-chordi='${chordi - 1}'][com-letter-chorded='post']:after {
-                ${contentTextCss}${cmComCommentAccentsColorList[replaceProps?.type ?? 0]}
+                ${contentTextCss}
+                ${replaceProps?.type ? cmComCommentAccentsColorList[replaceProps.type] : ''}
                 text-decoration: underline;
               }
 
@@ -130,7 +132,7 @@ export const cmComCommentDetectCommentTextStyles = () => {
       `;
     },
     onDetect: (props: CmComCommentTextDetectorRuleProps) => {
-      const accentColor = props.text ? (cmComCommentAccentsColorList[props.type] ?? 'color: currentColor;') : '';
+      const accentColor = cmComCommentAccentsColorList[props.type] ?? 'color: var(--text-color);';
       const isKind = props.pre.startsWith('k');
 
       usedOrdSelectorSet.add(props.pre);
@@ -170,7 +172,7 @@ export const cmComCommentDetectCommentTextStyles = () => {
         }
 
         if ('chordi' in props) {
-          const key = `${props.linei}:${props.wordi}/${props.chordi}` as const;
+          const key = `${lineWordStyleKey}c${props.chordi}` as const;
 
           sidePlacedChordsOnWait[key] ??= {};
           sidePlacedChordsOnWait[key][props.place] ??= props;

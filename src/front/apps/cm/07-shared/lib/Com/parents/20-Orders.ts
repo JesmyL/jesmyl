@@ -1,7 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { CmComOrder, ICmComOrderExportableMe } from '$cm/ext';
 import { makeRegExp } from 'regexpert';
-import { CmComOrderSelector, IExportableOrder } from 'shared/api';
+import { CmComOrderSelector, CmComOrderWid, IExportableOrder } from 'shared/api';
 import { cmComNewlinerLineConfigToSet } from 'shared/utils/cm/com/newliner';
 import { orderListConstructor } from 'shared/utils/cm/com/orderListConstructor';
 import { CmComBasic } from './10-Basic';
@@ -28,16 +28,31 @@ export class CmComOrders extends CmComBasic {
   orderConstructor = (me: ICmComOrderExportableMe<CmComOrder>) => new CmComOrder(me, this as never);
   visibleOrders = () => this.orders?.filter((ord: CmComOrder) => ord.isVisibleOrd());
 
-  getOrderBySelector = (ordSelector: CmComOrderSelector) => {
+  getOrd = (ordw: CmComOrderSelector) => {
     let visibleOrdi = -1;
 
     const ord = this.orders?.find(ord => {
       if (ord.isVisibleOrd()) visibleOrdi++;
 
-      return ord.isMySelector(ordSelector);
+      return ord.wid === ordw;
     });
 
     return { ord, visibleOrdi };
+  };
+
+  getSolidOrdLine = (ordw: CmComOrderWid) => {
+    let ord: CmComOrder | nil = this.orders?.find(ord => ord.wid === ordw);
+
+    const ords: CmComOrder[] = ord ? [] : [];
+
+    do {
+      if (ord) {
+        ords.push(ord);
+        ord = ord.me.next;
+      }
+    } while (ord?.isAnyInherited);
+
+    return ords;
   };
 
   setOrders() {

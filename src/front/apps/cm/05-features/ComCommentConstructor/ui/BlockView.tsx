@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { CmComOrderWid } from 'shared/api';
 import { useCmComCommentConstructorCurrentInnerKindContext } from '../state/CurrentInnerKind';
 import { CmComCommentConstructorLineConstructor } from './LineConstructor';
+import { CmComCommentConstructorLostProps } from './LostProps';
 import { CmComCommentConstructorWordConstructor } from './WordConstructor';
 
 export const CmComCommentConstructorBlockView = ({ ordw: ordwSelector, com }: { ordw: CmComOrderWid; com: CmCom }) => {
@@ -52,6 +53,11 @@ export const CmComCommentConstructorBlockView = ({ ordw: ordwSelector, com }: { 
         />
       </StyledSolidOrdContainer>
 
+      <CmComCommentConstructorLostProps
+        com={com}
+        ordw={ordwSelector}
+      />
+
       {variativeLinei != null && ordw != null && solidLinei != null && (
         <>
           <CmComCommentConstructorLineConstructor
@@ -78,27 +84,25 @@ const StyledSolidOrdContainer = styled.div<{
   $wordi: number | nil;
   $ordw: number | nil;
 }>`
-  ${props => [
-    props.$linei != null && [
-      css`
-        [ord-selector='${props.$ordw}'] [ord-linei='${props.$linei}'] {
-          &,
-          * {
-            text-decoration: underline;
-          }
-
-          ${props.$wordi != null &&
-          css`
-            [line-wordi='${props.$wordi}'] {
-              &,
-              * {
-                text-decoration-style: wavy;
-                text-decoration-color: var(--color-x7);
-              }
-            }
-          `}
+  ${props =>
+    props.$linei != null &&
+    css`
+      [ord-selector='${props.$ordw}'] [ord-linei='${props.$linei}'] {
+        &,
+        * {
+          text-decoration: underline;
         }
-      `,
-    ],
-  ]}
+
+        ${props.$wordi != null &&
+        css`
+          [line-wordi='${props.$wordi}'] {
+            &,
+            * {
+              text-decoration-style: wavy;
+              text-decoration-color: var(--color-x7);
+            }
+          }
+        `}
+      }
+    `}
 `;

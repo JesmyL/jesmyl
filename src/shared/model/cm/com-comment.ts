@@ -17,9 +17,11 @@ type CommonType = {
 export type CmComCommentTextDetectorBlockRuleProps = { blocki: number } & CommonType;
 export type CmComCommentTextDetectorLineRuleProps = { linei: number } & CommonType;
 
+type Place = '<' | '>' | '^';
+
 export type CmComCommentTextDetectorWordRuleProps = CmComCommentTextDetectorLineRuleProps & {
   wordi: number;
-  place: '<' | '>' | '^';
+  place: Place;
 };
 
 export type CmComCommentTextDetectorChordRuleProps = CmComCommentTextDetectorWordRuleProps & {
@@ -39,22 +41,22 @@ export type CmComCommentConstructorPropsDictLineRulePropsKey =
   `${CmComCommentConstructorPropsDictSelectorRulePropsKey}l${number}`;
 
 export type CmComCommentConstructorPropsDictWordRulePropsKey =
+  `${CmComCommentConstructorPropsDictWordRulePropsKeyPrefix}${Place}`;
+
+export type CmComCommentConstructorPropsDictWordRulePropsKeyPrefix =
   `${CmComCommentConstructorPropsDictLineRulePropsKey}w${number}`;
 
 export type CmComCommentConstructorPropsDictChordRulePropsKey =
-  `${CmComCommentConstructorPropsDictWordRulePropsKey}c${number}`;
+  `${CmComCommentConstructorPropsDictChordRulePropsKeyPrefix}${Place}`;
+
+export type CmComCommentConstructorPropsDictChordRulePropsKeyPrefix =
+  `${CmComCommentConstructorPropsDictWordRulePropsKeyPrefix}c${number}`;
 
 export type CmComCommentConstructorRulePropsDict = Partial<
   Record<CmComCommentConstructorPropsDictBlockRulePropsKey, CmComCommentTextDetectorBlockRuleProps> &
     Record<CmComCommentConstructorPropsDictLineRulePropsKey, CmComCommentTextDetectorLineRuleProps> &
-    Record<
-      `${CmComCommentConstructorPropsDictWordRulePropsKey}${'<' | '>' | '^'}`,
-      CmComCommentTextDetectorWordRuleProps
-    > &
-    Record<
-      `${CmComCommentConstructorPropsDictChordRulePropsKey}${'<' | '>' | '^'}`,
-      CmComCommentTextDetectorChordRuleProps
-    >
+    Record<CmComCommentConstructorPropsDictWordRulePropsKey, CmComCommentTextDetectorWordRuleProps> &
+    Record<CmComCommentConstructorPropsDictChordRulePropsKey, CmComCommentTextDetectorChordRuleProps>
 >;
 
 export const enum CmComCommentConstructorRuleType {

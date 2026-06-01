@@ -1,7 +1,7 @@
 import { atom } from 'atomaric';
 import { CmComCommentBlockSimpleSelector, CmComWid } from 'shared/api';
 import {
-  CmComCommentConstructorPropsDictWordRulePropsKey,
+  CmComCommentConstructorPropsDictWordRulePropsKeyPrefix,
   CmComCommentConstructorRulePropsDict,
 } from 'shared/model/cm/com-comment';
 
@@ -11,6 +11,6 @@ export const cmComCommentConstructorRulePropsDictAtom = atom(
     selector?: CmComCommentBlockSimpleSelector;
     comw: CmComWid;
     commentAlti: number;
-    wordChordiMaxDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKey, number>;
+    wordChordiMaxDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKeyPrefix, number>;
   } => ({ wordChordiMaxDict: {}, comw: CmComWid.def, commentAlti: 0 }),
 );
