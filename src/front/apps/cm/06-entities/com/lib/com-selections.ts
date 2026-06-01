@@ -16,7 +16,7 @@ export const useCmComCurrentFixedCom = (): CmCom | und => {
   const schInterpretation = useLiveQuery(async () => schw && cmIDB.tb.scheduleComPacks.get(schw), [schw])?.intp;
 
   return useMemo(
-    () => ccom && new CmCom({ ...ccom.top, ...ifixedCom }, schInterpretation?.[comw]),
+    () => ccom && new CmCom(ccom.top, ifixedCom, schInterpretation?.[comw]),
     [ccom, schInterpretation, comw, ifixedCom],
   );
 };
@@ -26,7 +26,7 @@ export const useCmCom = (comw: CmComWid | und, interpretationSchw?: IScheduleWid
   const schw = useCmComInScheduleWid() ?? interpretationSchw;
   const schInterpretation = useLiveQuery(async () => schw && cmIDB.tb.scheduleComPacks.get(schw), [schw])?.intp;
 
-  return useMemo(() => icom && new CmCom(icom, schInterpretation?.[icom.w]), [schInterpretation, icom]);
+  return useMemo(() => icom && new CmCom(icom, null, schInterpretation?.[icom.w]), [schInterpretation, icom]);
 };
 
 export const useCmComLastOpenComw = () => useAtomValue(cmComLastOpenComwAtom);

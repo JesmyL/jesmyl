@@ -191,7 +191,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
             <h2>Порядковые блоки</h2>
             <CmComOrderList
               chordVisibleVariant={ChordVisibleVariant.None}
-              com={new CmCom(newCom, null)}
+              com={new CmCom(newCom, null, null)}
               chordHardLevel={3}
             />
           </>

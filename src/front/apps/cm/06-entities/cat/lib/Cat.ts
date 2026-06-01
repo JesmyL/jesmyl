@@ -27,24 +27,15 @@ export class CmCat extends BaseNamed<IExportableCat> {
   }
 
   get stack() {
-    return this.getBasicOr('s', []);
-  }
-  set stack(val: number[]) {
-    this.setExportable('s', val);
+    return this.top.s ?? [];
   }
 
   get dict() {
-    return this.getBasic('d');
-  }
-  set dict(val) {
-    this.setExportable('d', val);
+    return this.top.d;
   }
 
   get kind(): CmCatKind {
-    return this.getBasic('k');
-  }
-  set kind(val: CmCatKind) {
-    this.setExportable('k', val);
+    return this.top.k;
   }
 
   get comws(): CmComWid[] {

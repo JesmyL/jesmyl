@@ -7,11 +7,11 @@ import { EditableCom } from '../classes/EditableCom';
 export const useEditableCcom = (comw: CmComWid): EditableCom | und => {
   const icom = useLiveQuery(() => cmIDB.db.coms.where({ w: comw }).first(), [comw]);
 
-  return useMemo(() => icom && new EditableCom(icom, null), [icom]);
+  return useMemo(() => icom && new EditableCom(icom, null, null), [icom]);
 };
 
 export const useEditableComs = () => {
   const icoms = useLiveQuery(() => cmIDB.db.coms.toArray());
 
-  return useMemo(() => icoms?.map(icom => new EditableCom(icom, null)), [icoms]);
+  return useMemo(() => icoms?.map(icom => new EditableCom(icom, null, null)), [icoms]);
 };

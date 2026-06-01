@@ -1,17 +1,11 @@
-import { mylib } from '#shared/lib/my-lib';
 import { CmCom } from '$cm/ext';
 import { makeRegExp } from 'regexpert';
-import { IExportableCom, IExportableComInterpretation } from 'shared/api';
+import { IExportableComInterpretation, IFixedCom } from 'shared/api';
 import { comBlockKinds } from 'shared/values/cm/block-kinds/BlockKind';
 
 export class EditableComBase extends CmCom {
-  initial: CmCom;
-
-  constructor(top: IExportableCom, intp: IExportableComInterpretation | nil) {
-    super(mylib.clone(top), intp);
-
-    this.initial = new CmCom(mylib.clone(top), intp);
-  }
+  fix: IFixedCom | nil;
+  intp: IExportableComInterpretation | nil;
 
   static takeStyleByTitle(text: string) {
     if (!text) return;

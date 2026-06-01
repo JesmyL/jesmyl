@@ -22,7 +22,6 @@ const comBlank: { [K in keyof Required<IExportableCom>]: und } = {
   t: und,
   c: und,
   o: und,
-  ton: und,
   isRemoved: und,
 };
 

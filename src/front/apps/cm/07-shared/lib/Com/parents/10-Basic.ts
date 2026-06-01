@@ -1,21 +1,19 @@
-import { IExportableCom, IExportableComInterpretation } from 'shared/api';
+import { IExportableCom, IExportableComInterpretation, IFixedCom } from 'shared/api';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { cmComLanguages } from 'shared/utils/cm/com/const';
 import { BaseNamed } from '../../BaseNamed';
 
 export class CmComBasic extends BaseNamed<IExportableCom> {
-  initial: Partial<IExportableCom & { pos: number }>;
   ton?: number;
 
   constructor(
     top: IExportableCom,
+    public fix: IFixedCom | nil,
     public intp: IExportableComInterpretation | nil,
   ) {
     super(top);
 
-    this.initial = {};
-
-    this.transPosition = top.ton ?? intp?.p ?? top.p;
+    this.transPosition = this.fix?.ton ?? this.intp?.p ?? top.p;
   }
 
   get mod() {
@@ -26,7 +24,7 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
     return this.top.t;
   }
   set texts(val) {
-    this.setExportable('t', val);
+    this.setBasic('t', val);
   }
 
   get beatsPerMinute() {
@@ -45,29 +43,13 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
     return this.top.al ?? [];
   }
 
-  get initialTransPosition() {
-    return this.initial.p ?? this.top.p;
-  }
-  set initialTransPosition(val) {
-    if (this.initial.p == null) this.initial.p = val || 0;
-    this.initialTransPos = val || 0;
-  }
-
-  get initialTransPos() {
-    return this.initial.pos ?? this.initial.p ?? this.top.p;
-  }
-  set initialTransPos(val) {
-    if (this.initial.pos == null) this.initial.pos = val || 0;
-  }
-
   get transPosition() {
-    return this.top.p;
+    return this.getBasic('p');
   }
   set transPosition(value) {
     const v = value || 0;
     const val = v > 11 ? v % 12 : v < 0 ? 12 + v : v;
-    this.setExportable('p', val);
-    this.initialTransPosition = val;
+    this.setBasic('p', val);
   }
 
   get langi() {

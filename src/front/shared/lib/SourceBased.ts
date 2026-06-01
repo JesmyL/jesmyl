@@ -22,7 +22,7 @@ export class SourceBased<T> {
     return this.basics[fieldn] as NonNullable<T[K]>;
   }
 
-  setExportable<K extends keyof T>(fieldn: K, val: T[K]) {
+  setBasic<K extends keyof T>(fieldn: K, val: T[K]) {
     this.basics[fieldn] = val;
   }
 }

@@ -10,7 +10,7 @@ export const useEditableCcat = (catw: CmCatWid): CmEditorCat | und => {
   const icoms = useLiveQuery(() => cmIDB.db.coms.toArray());
 
   return useMemo(
-    () => icat && new CmEditorCat(icat, icoms?.map(icom => new EditableCom(icom, null)) ?? []),
+    () => icat && new CmEditorCat(icat, icoms?.map(icom => new EditableCom(icom, null, null)) ?? []),
     [icat, icoms],
   );
 };

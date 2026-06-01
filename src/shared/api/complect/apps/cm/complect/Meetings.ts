@@ -23,10 +23,7 @@ export interface IExportableMeetingsContext {
 
 export class MeetingsContext extends SourceBased<IExportableMeetingsContext> {
   get context() {
-    return this.getBasic('c');
-  }
-  set context(val) {
-    this.setExportable('c', val);
+    return this.top.c;
   }
 }
 

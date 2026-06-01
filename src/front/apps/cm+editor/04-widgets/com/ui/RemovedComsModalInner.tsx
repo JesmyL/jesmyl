@@ -17,7 +17,7 @@ export const CmEditorComRemovedComsModalInner = () => {
     queryFn: () => cmEditComClientTsjrpcMethods.takeRemovedComs(),
   });
 
-  const coms = useMemo(() => icoms?.map(icom => new CmCom(icom, null)) ?? [], [icoms]);
+  const coms = useMemo(() => icoms?.map(icom => new CmCom(icom, null, null)) ?? [], [icoms]);
 
   return (
     <>

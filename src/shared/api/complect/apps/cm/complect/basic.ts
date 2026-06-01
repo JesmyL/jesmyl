@@ -145,8 +145,6 @@ export type IExportableCom = IExportableComInterpretationSimpleValues & {
   /** интенсивность песни */
   d?: CmComIntensityLevel;
 
-  ton?: number;
-
   isRemoved?: 1;
 };
 
