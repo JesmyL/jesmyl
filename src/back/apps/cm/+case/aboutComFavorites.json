@@ -4,8 +4,16 @@
       1548880317132, 1548917413824, 1611736070924, 1726248595759, 1605180288824, 1534141476440, 1530368314000,
       1538320243090, 1607346106376, 1652272651937
     ],
-    "m": 1780022608292,
-    "tools": ["edit-com", "com-comment", "hide-metronome", "chord-images", "show-translation", "mark-com"],
+    "m": 1780213328534,
+    "tools": [
+      "edit-com",
+      "com-comment",
+      "hide-metronome",
+      "chord-images",
+      "show-translation",
+      "mark-com",
+      "is-mini-anchor"
+    ],
     "fio": "Павел 👨‍💻"
   },
   "08a0e6ba7792e902569816a81b846b25": {
