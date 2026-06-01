@@ -134,28 +134,12 @@ export const setPolyfills = () => {
   })();
 };
 
-const prev: Record<string, unknown> = {};
-(globalThis as { inspectComponentProps: unknown }).inspectComponentProps = (
-  curr: Record<string, unknown>,
-  print?: boolean,
-) => {
-  for (const c in curr) {
-    if (curr[c] === prev[c]) {
-      console.warn('>>>>', curr[c] === prev[c] ? 'old' : 'NEW', c, ...(print ? [prev[c], curr[c]] : []));
-      console.error('>>>>', curr[c] === prev[c] ? 'old' : 'NEW', c, ...(print ? [prev[c], curr[c]] : []));
-    }
-
-    prev[c] = curr[c];
-  }
-};
-
 declare global {
   function setTimeoutEffect<Args extends unknown[]>(
     handler: (...args: Args) => void,
     timeout?: number,
     ...args: Args
   ): () => void;
-  function inspectComponentProps(curr: Record<string, unknown>, print?: boolean): void;
 
   interface Array<T> {
     toSorted: (compareFn?: (a: T, b: T) => number) => T[];
