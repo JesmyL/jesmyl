@@ -112,7 +112,7 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
               chordVisibleVariant={chordVisibleVariant}
               isMiniAnchor={isMiniAnchor}
               listRef={listRef}
-              asAfterOrdNode={
+              asAfterSolidOrdNode={
                 isOpenMoversButtons
                   ? ({ ord }) => audioMarkControl.afterTargetOrdwOtherPlayButtonNodeDict[ord.makeSelector()]
                   : undefined

@@ -4,9 +4,11 @@ import React from 'react';
 export const TheCmComOrderSolid = ({
   asLineNode,
   asHeaderNode,
+  asAfterSolidOrdNode,
   asAfterOrdNode,
   ...props
 }: Parameters<typeof TheCmComOrder>[0] & {
+  asAfterSolidOrdNode?: (props: { ord: CmComOrder }) => React.ReactNode;
   asAfterOrdNode?: (props: { ord: CmComOrder }) => React.ReactNode;
 }) => {
   let nextOrd = props.ord.me.next;
@@ -53,10 +55,11 @@ export const TheCmComOrderSolid = ({
                     )
               }
             />
+            {asAfterOrdNode?.({ ord })}
           </React.Fragment>
         );
       })}
-      {asAfterOrdNode?.({ ord: props.ord })}
+      {asAfterSolidOrdNode?.({ ord: props.ord })}
     </div>
   );
 };

@@ -7,6 +7,7 @@ export interface ICmComOrderListProps {
   asHeaderNode?: (props: ICmComOrderHeaderAsComponentProps) => React.ReactNode;
   asLineNode?: (props: ICmComOrderLineAsComponentProps) => React.ReactNode;
   asOrderNode?: (props: ICmComOrderAsComponentProps) => React.ReactNode;
+  asAfterSolidOrdNode?: (props: { ord: CmComOrder }) => React.ReactNode;
   asAfterOrdNode?: (props: { ord: CmComOrder }) => React.ReactNode;
   com: CmCom;
   isMiniAnchor?: boolean;
