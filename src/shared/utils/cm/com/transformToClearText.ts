@@ -9,7 +9,6 @@ export const transformToClearText = (text: string) => {
       .replace(makeRegExp(`/[${singleQuotesStr}]/g`), "'")
       .replace(makeRegExp(`/ ([,.!?:])/g`), '$1')
       .replace(makeRegExp(`/ +-+([ \\n])+|-+([ \\n])+| -+/g`), dashesReplacer)
-      .replace(makeRegExp(`/ *[|]+ */g`), all => (all.trim().length < 2 ? ' |' : '|| '))
       .replace(makeRegExp(`/…|\\.{4,}/g`), '...')
       .replace(makeRegExp(`/([^.]|^)\\.{2}([^.]|$)/g`), '$1.$2')
       .replace(makeRegExp(`/([${displayableTextBlockSingleWritedSymbolsStr} ])\\1+/g`), '$1'),
