@@ -60,7 +60,7 @@ export const CmBroadcastSlidesContext = ({ children, configi }: { children: Reac
   }, [com?.wid]);
 
   useEffect(() => {
-    const nextd = window.document.getElementById(`broadcast-window-line-${currentSlidei}`);
+    const nextd = window.document.getElementById(`broadcast-window-slidei-${currentSlidei}`);
 
     if (nextd) {
       const nextParent = nextd.parentElement;

@@ -15,6 +15,7 @@ declare global {
   type numberStr = `${'-' | ''}${intStr}${`.${number}` | ''}`;
   type StringBySlash = `${string}/${string}`;
   type func = (arg: unknown, ...args: unknown[]) => unknown | void;
+  type StringReplacer = Parameters<(typeof String.prototype)['replace']>[1];
 
   type KRecord<Key extends string | number, Value> = (Record<`${Key}`, Value> | Record<Key, Value>) &
     Record<`${Key}` | Key, Value>;

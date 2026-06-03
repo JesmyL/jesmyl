@@ -1,5 +1,5 @@
 import { makeRegExp } from 'regexpert';
-import { smylib } from './SMyLib';
+import { slavicLowerLettersStr } from './cm/com/const';
 
 export const convertMd2HTMLMaker = (isForTg: boolean) => {
   const headersReplacer = isForTg ? '<b>$2</b>' : baseHeadersReplacer;
@@ -163,44 +163,11 @@ export const itNNaN = (it: number) => typeof it !== 'number' || !isNaN(it);
 export const itInvokeIt = <Ret>(it: () => Ret) => it();
 export const wait = (waitTime = 100) => new Promise(resolve => setTimeout(resolve, waitTime));
 export const capitalizeText = (text: string) => text[0].toUpperCase() + text.slice(1);
+export const capitalizeSlavicText = (text: string) => {
+  const wordi = text.search(makeRegExp(`/[${slavicLowerLettersStr}]/i`));
+  return text.slice(0, wordi) + text[wordi].toUpperCase() + text.slice(wordi + 1).toLowerCase();
+};
 export const trimTextLines = (text: string) => text.trim().replace(makeRegExp('/(.+?)\\s+?\\n/g'), '$1\n');
 
 type ParseNumber<T extends string> = T extends `${infer N extends number}` ? N : never;
 export const extractNumber = <T extends string>(value: T) => parseFloat(value) as ParseNumber<T>;
-
-export const makeDateLabel = (inputDate: number | Date | string) => {
-  const date = new Date(inputDate);
-  const now = new Date();
-
-  const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-  const startOfTarget = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
-
-  const diffInDays = Math.round((startOfTarget - startOfToday) / smylib.howMs.inDay);
-
-  if (Math.abs(diffInDays) <= 3) {
-    const rtf = new Intl.RelativeTimeFormat('ru', { numeric: 'auto' });
-    const relative = rtf.format(diffInDays, 'day');
-
-    return (
-      relative[0].toUpperCase() +
-      relative.slice(1) +
-      date
-        .toLocaleDateString('ru', {
-          minute: '2-digit',
-          hour: '2-digit',
-          day: 'numeric',
-          month: 'long',
-        })
-        .slice(-8)
-    );
-  }
-
-  return date.toLocaleDateString('ru', {
-    minute: '2-digit',
-    hour: '2-digit',
-    weekday: 'short',
-    day: 'numeric',
-    month: 'long',
-    year: diffInDays < -365 ? 'numeric' : undefined,
-  });
-};

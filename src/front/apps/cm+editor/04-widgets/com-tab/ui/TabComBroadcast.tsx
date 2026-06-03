@@ -6,27 +6,23 @@ import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.ts
 import React, { useMemo } from 'react';
 import { CmBroadcastMonolineSlideOrdId } from 'shared/model/cm/broadcast';
 import { makeCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
+import { takeTextBlockWithoutSquareBracketsContent } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 import { twMerge } from 'tailwind-merge';
-
-const enum WarnType {
-  Error,
-  Warning,
-}
 
 export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
   const { warns, slides, groups } = useMemo(() => {
     const slides = ccom.makeExpandSlides(false);
-    const warns: PRecord<CmBroadcastMonolineSlideOrdId, [WarnType, string]> = {};
+    const warns: PRecord<CmBroadcastMonolineSlideOrdId, [className: string, text: string]> = {};
 
     slides.forEach(({ linei, lines, ord, repeati, samei }) => {
       const ordLineId = makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, samei);
 
       if (lines.length > 5) {
-        warns[ordLineId] = [WarnType.Error, 'Много строк'];
+        warns[ordLineId] = ['text-x3 bg-xKO', 'Много строк'];
       } else if (lines.length > 4) {
-        warns[ordLineId] = [WarnType.Warning, 'Максимальное количество строк'];
+        warns[ordLineId] = ['text-x1 bg-x3 opacity-50', 'Максимальное количество строк'];
       } else if (lines.length < 2) {
-        warns[ordLineId] = [WarnType.Warning, 'Мало строк'];
+        warns[ordLineId] = ['text-x3 bg-orange-500 opacity-60', 'Мало строк'];
       }
     });
 
@@ -68,6 +64,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
             let prevLineId = '';
 
             const props = { 'solid-ord-selector': ord.makeSelector() };
+            line = takeTextBlockWithoutSquareBracketsContent(line);
 
             if (!ord.isRealText() || !line.trim())
               return (
@@ -102,14 +99,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                     <div className={`my-3 h-1 ${currentSet.has(-wordi) && isNeedHr ? 'bg-xKO' : 'bg-x2'}`} />
 
                     {warns[ordLineId] && (
-                      <div
-                        className={twMerge(
-                          'mb-3 text-center',
-                          warns[ordLineId][0] === WarnType.Error ? 'text-x3 bg-xKO' : 'text-x1 bg-x3',
-                        )}
-                      >
-                        {warns[ordLineId][1]}
-                      </div>
+                      <div className={twMerge('mb-3 text-center', warns[ordLineId][0])}>{warns[ordLineId][1]}</div>
                     )}
                   </>
                 );

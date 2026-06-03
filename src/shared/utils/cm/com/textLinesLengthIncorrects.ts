@@ -1,13 +1,12 @@
-import { makeRegExp } from 'regexpert';
 import { IIncorrects } from 'shared/model/cm/Incorrects';
 import { clearTextLineForLengthCompute } from './clearTextLineForLengthCompute';
 import { takeTextLineOverLengthIndex } from './takeTextLineOverLengthIndex';
 
 export const textLinesLengthIncorrects = (text: string, maxLength: number): IIncorrects | und => {
-  const linei = takeTextLineOverLengthIndex(text, maxLength);
+  const { linei, lines } = takeTextLineOverLengthIndex(text, maxLength);
 
   if (linei > -1) {
-    const line = clearTextLineForLengthCompute(text.split(makeRegExp(`/\n/`))[linei]);
+    const line = clearTextLineForLengthCompute(lines[linei]);
     return {
       errors: [
         {

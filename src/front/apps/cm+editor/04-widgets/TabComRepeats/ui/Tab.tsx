@@ -24,7 +24,7 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
   const checkAccess = useCheckUserAccessRightsInScope();
   const isCantRedact = !checkAccess('cm', 'COM_REP', 'U');
 
-  const { textLinei: startLinei, wordi: startWordi, orderUnit: startOrd } = start || {};
+  const { linei: startLinei, wordi: startWordi, orderUnit: startOrd } = start || {};
   let startedFlashes = 0;
   let beforeFlashes = 0;
   let isInRegion = false;
@@ -87,9 +87,9 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
                     if (start == null || !isChordBlock) {
                       setStart({
                         orderUnit: ord,
-                        textLine: '',
-                        textLinei: 0,
-                        textLines: 0,
+                        line: '',
+                        linei: 0,
+                        linesLen: 0,
                         wordCount: 0,
                         wordi: 0,
                         words: [],
@@ -152,12 +152,11 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
                     {...props}
                     setWordClass={(props, wordi) => {
                       if (!start) return '';
-                      const { wordCount, textLinei } = props;
+                      const { wordCount, linei } = props;
 
                       const openers = ord.regions?.reduce(
                         (count: number, { startLinei, startWordi, startKey }) =>
-                          count +
-                          +(textLinei === startLinei && wordi === startWordi && !(startKey || '').startsWith('~')),
+                          count + +(linei === startLinei && wordi === startWordi && !(startKey || '').startsWith('~')),
                         0,
                       );
                       if (openers) {
@@ -170,7 +169,7 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
 
                       const closers = ord.regions?.reduce(
                         (count, { endLinei, endWordi = wordCount - 1 }) =>
-                          count + +(textLinei === endLinei && wordi === endWordi),
+                          count + +(linei === endLinei && wordi === endWordi),
                         0,
                       );
 
@@ -183,13 +182,13 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
 
                       const isLastInRange =
                         ord === startOrd &&
-                        textLinei === startLinei &&
+                        linei === startLinei &&
                         wordi === startWordi &&
                         startedFlashes + 1 === prevStarteds;
 
                       if (isLastInRange) isRegionEnds = true;
 
-                      if (!isInRegion && ord === startOrd && textLinei === startLinei && wordi === startWordi)
+                      if (!isInRegion && ord === startOrd && linei === startLinei && wordi === startWordi)
                         isInRegion = true;
 
                       return isLastInRange ||
@@ -206,7 +205,7 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
 
                       if (wordiStr == null) return;
 
-                      const { textLinei: linei, textLines: lines, wordCount } = props;
+                      const { linei, linesLen, wordCount } = props;
 
                       if (start == null || isChordBlock) {
                         setStart({ ...props, orderUnit: ord, wordi: +wordiStr });
@@ -216,7 +215,10 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
                         const nextLetter = ccom.getRegionNextLetter();
                         const [startDiap, finishDiap] =
                           startOrd === ord
-                            ? startLinei === 0 && startWordi === 0 && linei === lines - 1 && +wordiStr === wordCount - 1
+                            ? startLinei === 0 &&
+                              startWordi === 0 &&
+                              linei === linesLen - 1 &&
+                              +wordiStr === wordCount - 1
                               ? ['.']
                               : [
                                   `${startLinei}${startWordi ? `:${startWordi}` : ''}${

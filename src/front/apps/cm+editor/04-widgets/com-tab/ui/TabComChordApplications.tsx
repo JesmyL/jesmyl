@@ -42,21 +42,21 @@ export const CmEditorComTabChordApplications = ({ ccom }: { ccom: EditableCom })
                 </div>
               )}
               asLineNode={props => {
-                const { com, textLine, textLinei } = props;
-                const lineOnLoad = ordLinePositionsOnSend[`${ord.wid}/${textLinei}`];
-                const linePositions = lineOnLoad ?? ord.positions?.[textLinei] ?? [];
+                const { com, line, linei } = props;
+                const lineOnLoad = ordLinePositionsOnSend[`${ord.wid}/${linei}`];
+                const linePositions = lineOnLoad ?? ord.positions?.[linei] ?? [];
 
-                const { cutLine, diffCount } = ord.makeCutChordPositions(linePositions, textLine, textLinei);
+                const { cutLine, diffCount } = ord.makeCutChordPositions(linePositions, line, linei);
 
                 return (
                   <div>
                     <div
                       className={`binder pointer${linePositions?.includes(-1) ? ' active' : ''}`}
                       com-letter-chorded="pre"
-                      onClick={() => updateLinePositions(ord, textLinei, -1)}
+                      onClick={() => updateLinePositions(ord, linei, -1)}
                     />
                     <CmComOrderLine
-                      key={textLinei}
+                      key={linei}
                       {...props}
                       chordedOrd
                       ord={ord}
@@ -70,14 +70,14 @@ export const CmEditorComTabChordApplications = ({ ccom }: { ccom: EditableCom })
                           ?.getAttribute('com-letter-index');
 
                         if (letteriStr != null) {
-                          updateLinePositions(ord, textLinei, +letteriStr);
+                          updateLinePositions(ord, linei, +letteriStr);
                         }
                       }}
                     />
                     <div
                       className={'binder pointer' + (linePositions?.includes(-2) ? ' active' : '')}
                       com-letter-chorded="post"
-                      onClick={() => updateLinePositions(ord, textLinei, -2)}
+                      onClick={() => updateLinePositions(ord, linei, -2)}
                     />
                     {!diffCount ||
                       (cutLine ? (
@@ -88,9 +88,9 @@ export const CmEditorComTabChordApplications = ({ ccom }: { ccom: EditableCom })
                               comw: com.wid,
                               orderTitle: ord.me.header(),
                               ordw: ord.wid,
-                              linei: textLinei,
+                              linei,
                               line: cutLine,
-                              lineChangesText: textLine,
+                              lineChangesText: line,
                             })
                           }
                         >

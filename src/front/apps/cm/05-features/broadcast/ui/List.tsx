@@ -9,7 +9,7 @@ import { useEffect, useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmBroadcastSchWgtLiveDataValue } from '../model/model';
 
-const _lineNamePrefix = 'live-broadcast-line-';
+const _lineNamePrefix = 'live-broadcast-linei-';
 
 export const CmBroadcastLiveList = (props: CmBroadcastSchWgtLiveDataValue) => {
   const com = useCmCom(props.comw);
@@ -62,7 +62,7 @@ export const CmBroadcastLiveList = (props: CmBroadcastSchWgtLiveDataValue) => {
               )
             }
             asLineNode={props => (
-              <div id={`${_lineNamePrefix}${lineSum[props.ordi] + props.textLinei}`}>
+              <div id={`${_lineNamePrefix}${lineSum[props.ordi] + props.linei}`}>
                 <CmComOrderLine {...props} />
               </div>
             )}

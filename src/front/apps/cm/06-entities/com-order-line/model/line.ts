@@ -1,10 +1,10 @@
 import { CmComOrder, ICmComOrderProps } from '../../com-order';
 
 export interface ICmComOrderLineAsComponentProps extends ICmComOrderProps {
-  textLine: string;
-  textLinei: number;
-  textLines: number;
-  solidTextLinei: number;
+  line: string;
+  linei: number;
+  linesLen: number;
+  solidLinei: number;
   wordCount: number;
   words: string[];
   prevLinesCount?: number;

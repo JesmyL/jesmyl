@@ -2,6 +2,7 @@ import { useCmBroadcastSlidesContext } from '$cm/features/broadcast';
 import { CmBroadcastShowChordedSlideMode } from '$cm/shared/model';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
+import { takeTextBlockWithoutSquareBracketsContent } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 import { twMerge } from 'tailwind-merge';
 
 export const CmBroadcastSlideLine = () => {
@@ -17,7 +18,7 @@ export const CmBroadcastSlideLine = () => {
         return (
           <div
             key={slidei}
-            id={`broadcast-window-line-${slidei}`}
+            id={`broadcast-window-slidei-${slidei}`}
             onClick={() => setSlidei(slidei)}
             className="mx-3 snap-center"
           >
@@ -34,7 +35,9 @@ export const CmBroadcastSlideLine = () => {
                       : 'italic underline'),
               )}
             >
-              <div dangerouslySetInnerHTML={{ __html: slide.lines.join('\n') }} />
+              <div
+                dangerouslySetInnerHTML={{ __html: takeTextBlockWithoutSquareBracketsContent(slide.lines.join('\n')) }}
+              />
             </div>
           </div>
         );

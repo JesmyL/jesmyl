@@ -7,6 +7,8 @@ import { CmEditorComOrderAddTextableBlockAnchorTitles } from '$cm+editor/feature
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { cmEditorComTextsEditsHistoryAtom } from '$cm+editor/shared/state/atoms';
+import { makeRegExp } from 'regexpert';
+import { toast } from 'sonner';
 import {
   CmEditorComTabTextBlockPrevValueButton,
   CmEditorComTabTextBlockPrevValueUpdateModal,
@@ -74,6 +76,16 @@ export const CmEditorComTabTextBlocks = ({ ccom }: { ccom: EditableCom }) => {
               />
 
               <div className="flex gap-2">
+                {!(text.search(makeRegExp('/[()[]|]/')) + 1) || (
+                  <Button
+                    icon="Code"
+                    onClick={() => {
+                      toast(
+                        `Текст в [квадратных скобках] не показывается в слайдах, но приводится к (тексту в круглых скобках) в тексте песен. Используйте [[две открывающие скобки] для переноса строки. Перед "[" должен быть пробел, а после "]" быть ничего не должно`,
+                      );
+                    }}
+                  />
+                )}
                 {checkAccess('cm', 'COM_TXT', 'U') && (
                   <CmEditorComTabTextBlockPrevValueButton
                     historyAtom={cmEditorComTextsEditsHistoryAtom}

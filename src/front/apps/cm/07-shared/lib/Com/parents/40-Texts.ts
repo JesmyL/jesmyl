@@ -6,9 +6,10 @@ import { CmComAudioMarkPackTime, CmComOrderWid } from 'shared/api';
 import { defaultTextCase } from 'shared/const/textCase';
 import { CmBroadcastMonolineSlide, CmBroadcastSlideLine } from 'shared/model/cm/broadcast';
 import { TextCase } from 'shared/model/common';
-import { capitalizeText, itIt } from 'shared/utils';
+import { capitalizeSlavicText, itIt } from 'shared/utils';
 import { doubleQuotesStr, nbsp, slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 import { makeCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
+import { takeTextBlockWithoutSquareBracketsContent } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 import { makeCmComAudioMarkTitleEmptySelector } from '../../makeCmComAudioMarkTitleBySelector';
 import { CmComChords } from './30-Chords';
 
@@ -56,10 +57,10 @@ export class CmComTexts extends CmComChords {
     const prepsSet = new Set(preps);
     const str = `/([|])|((?:[${doubleQuotesStr}]|[${preps}] |^—${nbsp})[${slavicLowerLettersStr}])/gi` as const;
     const reg = makeRegExp(str);
-    const rep: Parameters<(typeof String.prototype)['replace']>[1] = (all, $1, $2) =>
+    const rep: StringReplacer = (all, $1, $2) =>
       $1 ? '' : mylib.isStr($2) ? $2.slice(0, -1) + $2.slice(-1).toUpperCase() : all;
     const mappers: Record<TextCase, (line: string) => string> = {
-      [TextCase.Capitalize]: capitalizeText,
+      [TextCase.Capitalize]: capitalizeSlavicText,
       [TextCase.Uppercase]: line => line.toUpperCase(),
       [TextCase.AsIs]: itIt,
     };
@@ -70,7 +71,9 @@ export class CmComTexts extends CmComChords {
       let lastSymbol = '';
 
       return lines.filter(itIt).map((line, linei) => {
-        const result = (!linei || prepsSet.has(lastSymbol) ? capitalizeText : map)(line).replace(reg, rep);
+        const result = (!linei || prepsSet.has(lastSymbol) ? capitalizeSlavicText : map)(
+          takeTextBlockWithoutSquareBracketsContent(line),
+        ).replace(reg, rep);
         lastSymbol = line.slice(-1);
         return result;
       });
@@ -88,7 +91,7 @@ export class CmComTexts extends CmComChords {
         .map(ord => {
           if (!ord.isVisible) return;
 
-          const ordLines = (ord.isRealText() ? ord.repeatedText(undefined, false, false) : ord.me.header()).split('\n');
+          const ordLines = (ord.isRealText() ? ord.repeatedText(undefined, false) : ord.me.header()).split('\n');
 
           blocki++;
           headSolidOrders.push(ord);

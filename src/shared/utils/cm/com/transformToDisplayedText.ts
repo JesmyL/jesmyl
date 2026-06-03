@@ -18,15 +18,11 @@ const replaceNestedBrackets = (all: string, index: number, text: string) => {
     .join('');
 };
 
-export const transformToDisplayedText = (
-  text = '',
-  isSetFirstLetterUpperCase = true,
-  isHideNewLineSeparator = true,
-) => {
+export const transformToDisplayedText = (text = '', isSetFirstLetterUpperCase = true) => {
   level = 0;
 
   const str = text
-    .replace(makeRegExp(`/[^${displayableTextBlockCharsStr}${isHideNewLineSeparator ? '' : '|'}]+/gi`), '')
+    .replace(makeRegExp(`/[^${displayableTextBlockCharsStr}[\\]]+/gi`), '')
     .replace(makeRegExp(`/"+/g`), replaceNestedBrackets)
     .replace(makeRegExp(`/((?=\\S)-+(?=\\S))|( ?-+\n)|(\\s?-+ ?)/g`), dashReplacer)
     .replace(makeRegExp(`/\\( [${anyQuotesStr}]\\)|\\([${anyQuotesStr}] \\)/g`), '');

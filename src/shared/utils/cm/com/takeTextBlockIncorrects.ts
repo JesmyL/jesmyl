@@ -2,25 +2,45 @@ import { makeRegExp } from 'regexpert';
 import { EeStorePack } from 'shared/api';
 import { IIncorrects } from 'shared/model/cm/Incorrects';
 import { smylib } from 'shared/utils/SMyLib';
-import { displayableTextBlockCharsStr, doubleQuotesStr, replacableAvailableCharsStr, singleQuotesStr } from './const';
+import {
+  displayableTextBlockCharsStr,
+  displayableTextBlockSymbolsStr,
+  doubleQuotesStr,
+  replacableAvailableCharsStr,
+  singleQuotesStr,
+  slavicLowerLettersStr,
+} from './const';
 import { eeTextIncorrects } from './eeTextIncorrects';
 import { transformToDisplayedText } from './transformToDisplayedText';
+
+const availSymbols = `${doubleQuotesStr}${singleQuotesStr}${replacableAvailableCharsStr}` as const;
+const squareReplaceReg = makeRegExp(
+  `/([${displayableTextBlockSymbolsStr}${slavicLowerLettersStr}${availSymbols}]) \\[\\[?|](?=\\n|$)/g`,
+);
+const notAvailSymbolsReg = `/[^${displayableTextBlockCharsStr}${availSymbols}]+/gi` as const;
+
+export const takeTextBlockCorrectBrackets = (text: string) =>
+  text.replace(squareReplaceReg, (all, $1) => (all.endsWith(']') ? ')' : $1 + ' ('));
+
+export const takeTextBlockReadableBracketsContent = (text: string) =>
+  text.replace(makeRegExp('/\\s(\\[)?\\[([^\\]]*)]+/g'), (_all, $1, $2) => ` ${$1 ? '</br>' : ''}(${$2})`);
+
+export const takeTextBlockWithoutSquareBracketsContent = (text: string) =>
+  text.replace(makeRegExp('/\\s+\\[[^\\]]+]/g'), '');
 
 export const takeTextBlockIncorrects = (text: string | und = '', eeStore: EeStorePack): IIncorrects => {
   let mistakes = '';
 
-  const textWithIncorrects = text.replace(
-    makeRegExp(
-      `/[^${displayableTextBlockCharsStr}${doubleQuotesStr}${singleQuotesStr}${replacableAvailableCharsStr}]+/gi`,
-    ),
-    all => {
-      mistakes += all;
-      return `[${all}]`;
-    },
-  );
+  text = takeTextBlockCorrectBrackets(text);
 
-  if (textWithIncorrects !== text)
+  const textWithIncorrects = text.replace(makeRegExp(notAvailSymbolsReg), all => {
+    mistakes += all;
+    return `[${all}]`;
+  });
+
+  if (textWithIncorrects !== text) {
     return { errors: [{ message: `Присутствуют недопустимые символы: ${mistakes}\n\n${textWithIncorrects}\n\n` }] };
+  }
 
   const { level } = transformToDisplayedText(text);
 

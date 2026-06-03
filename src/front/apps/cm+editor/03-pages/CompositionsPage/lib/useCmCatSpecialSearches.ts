@@ -73,7 +73,7 @@ export const useCmEditorCompositionsCatSpecialSearches = (): Record<
         map: async (coms, term) => {
           const maxLength = +term.split(':')[1] || maxAvailableComLineLength;
 
-          return coms.filter(com => com.texts?.some(text => takeTextLineOverLengthIndex(text, maxLength) > -1));
+          return coms.filter(com => com.texts?.some(text => takeTextLineOverLengthIndex(text, maxLength).linei > -1));
         },
       },
       '@repeatsMatch:': {

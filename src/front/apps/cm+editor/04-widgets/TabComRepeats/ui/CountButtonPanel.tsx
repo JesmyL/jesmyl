@@ -22,7 +22,7 @@ export const CmEditorTabComRepeatsCountButtonPanel = (props: {
   setField: (ord?: EditableComOrder | null, repeateds?: OrderRepeats | nil, prevs?: OrderRepeats | nil) => void;
 }) => {
   const flashes = props.ord.regions?.filter(
-    it => it.startLinei === props.start.textLinei && it.startWordi === props.start.wordi,
+    it => it.startLinei === props.start.linei && it.startWordi === props.start.wordi,
   );
 
   return (
@@ -45,7 +45,7 @@ export const CmEditorTabComRepeatsCountButtonPanel = (props: {
           reset={props.reset}
           setField={props.setField}
           startOrd={props.start.orderUnit}
-          textLinei={props.start.textLinei}
+          textLinei={props.start.linei}
           wordi={props.start.wordi}
         />
       )}

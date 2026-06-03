@@ -1,9 +1,18 @@
 import { ICmComOrderExportableMe } from '$cm/ext';
 import { makeRegExp } from 'regexpert';
-import { chordDiezEquivalent, simpleBemoleChordReg_g } from 'shared/utils/cm/com/const';
+import { SMyLib } from 'shared/utils';
+import { chordBemoleEquivalent, simpleBemoleChordReg_g } from 'shared/utils/cm/com/const';
 import { cmEditComClientTsjrpcMethods } from '../../lib/cm-editor.tsjrpc.methods';
 import { EditableComOrder } from '../EditableComOrder';
 import { EditableComParseBlocks } from './lib/31-ParseBlocks';
+
+export const chordDiezEquivalent = SMyLib.entries(chordBemoleEquivalent).reduce(
+  (acc, [key, val]) => ({ ...acc, [val]: key }),
+  {
+    Bb: 'A#',
+    Hb: 'A#',
+  } as Record<string, string>,
+);
 
 export class EditableCom extends EditableComParseBlocks {
   orderConstructor = (me: ICmComOrderExportableMe<any>) => new EditableComOrder(me, this);

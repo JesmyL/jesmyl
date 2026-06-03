@@ -131,7 +131,8 @@ export const useBibleBroadcastSearchTransformAddressTermToAddress = (
           } as never);
         }
       };
-    } while (disable);
+      // eslint-disable-next-line no-constant-condition
+    } while (false);
 
     const address = (
       <>
@@ -162,5 +163,3 @@ export const useBibleBroadcastSearchTransformAddressTermToAddress = (
 const { regExp: addressReg, transform: makePropsFromAddressArgs } = makeNamedRegExp(
   `/(?<bookNum>\\d?)(?:-?[ея]?)?\\s*(?:(?<bookName>[${ruLowerLettersStr}]+)|(?<bookNameEn>[a-z]*))\\s*(?:(?<chapter>\\d{1,3})(?:(?::|\\s+)(?<verse>\\d{1,3})(?:\\s*(?<verseSeparator>[-,]?)\\s*)(?<finishVerse>\\d{1,3})?)?)?/`,
 );
-
-const disable = false;

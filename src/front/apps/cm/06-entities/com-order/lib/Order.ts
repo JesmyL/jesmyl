@@ -393,19 +393,11 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
         );
   };
 
-  repeatedText = (
-    repeats: OrderRepeats | null = this.repeats,
-    isSetFirstLetterUpperCase?: boolean,
-    isHideNewLineSeparator?: boolean,
-  ) => {
-    return CmComOrderUtils.makeRepeatedText(
-      this.transformedText(isSetFirstLetterUpperCase, isHideNewLineSeparator),
-      repeats,
-    );
-  };
+  repeatedText = (repeats: OrderRepeats | null = this.repeats, isSetFirstLetterUpperCase?: boolean) =>
+    CmComOrderUtils.makeRepeatedText(this.transformedText(isSetFirstLetterUpperCase), repeats);
 
-  transformedText = (isSetFirstLetterUpperCase?: boolean, isHideNewLineSeparator?: boolean) =>
-    transformToDisplayedText(this.text, isSetFirstLetterUpperCase, isHideNewLineSeparator).text;
+  transformedText = (isSetFirstLetterUpperCase?: boolean) =>
+    transformToDisplayedText(this.text, isSetFirstLetterUpperCase).text;
 
   makeSelector = (): CmComOrderSelector => this.wid;
 

@@ -14,7 +14,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useState } from 'react';
-import { makeDateLabel } from 'shared/utils';
+import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { useCmMeetingComFaceList } from '../lib/useMeetingComFaceList';
 
 type Props = Required<ScheduleDayEventPathProps>;

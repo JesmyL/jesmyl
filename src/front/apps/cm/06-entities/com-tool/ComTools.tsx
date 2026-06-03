@@ -11,7 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { CmComWid } from 'shared/api';
-import { makeDateLabel } from 'shared/utils';
+import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { twMerge } from 'tailwind-merge';
 import { useCmComCurrentFixedCom } from '../com/lib/com-selections';
 import { cmComChordVisibleVariantAtom, cmComFontSizeAtom } from '../com/state/atoms';

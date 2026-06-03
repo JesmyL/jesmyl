@@ -5,14 +5,11 @@ import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.ts
 import { CmCom } from '$cm/ext';
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
-import { slavicLowerLettersStr } from 'shared/utils/cm/com/const';
+import { capitalizeSlavicText } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
 
 const mappers: ((word: string) => string)[] = [
-  word => {
-    const wordi = word.search(makeRegExp(`/[${slavicLowerLettersStr}]/i`));
-    return word.slice(0, wordi) + word[wordi].toUpperCase() + word.slice(wordi + 1).toLowerCase();
-  },
+  capitalizeSlavicText,
   word => word.toLowerCase(),
   word => word.toUpperCase(),
 ];

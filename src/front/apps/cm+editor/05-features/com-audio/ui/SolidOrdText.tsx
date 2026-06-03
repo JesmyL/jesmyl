@@ -36,7 +36,7 @@ export const CmEditorComAudioSolidOrdTextController = ({ com, ord, selector, src
       asLineNode={
         mylib.isStr(selector)
           ? props => {
-              const lineSelector = makeCmComAudioMarkTitleAsLineSelector(props.solidTextLinei);
+              const lineSelector = makeCmComAudioMarkTitleAsLineSelector(props.solidLinei);
 
               return (
                 <div className={twMerge('flex gap-3 my-2', selector === lineSelector ? 'text-x7' : '')}>

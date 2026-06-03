@@ -192,7 +192,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                     }
                     asLineNode={props => (
                       <div className="flex gap-2 custom-align-items">
-                        <span className="text-x7">{props.solidTextLinei + 1}</span>
+                        <span className="text-x7">{props.solidLinei + 1}</span>
                         <CmComOrderLine {...props} />
                       </div>
                     )}

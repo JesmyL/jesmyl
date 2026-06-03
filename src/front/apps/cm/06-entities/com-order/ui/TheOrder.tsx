@@ -155,10 +155,10 @@ export function TheCmComOrder(props: Props) {
 
         const lineProps: ICmComOrderLineAsComponentProps = {
           chordedOrd,
-          textLine,
-          textLinei,
-          solidTextLinei: -1,
-          textLines: textLinea.length,
+          line: textLine,
+          linei: textLinei,
+          solidLinei: -1,
+          linesLen: textLinea.length,
           ord,
           ordi,
           wordCount: words.length,

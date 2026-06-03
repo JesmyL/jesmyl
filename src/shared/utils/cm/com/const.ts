@@ -1,5 +1,4 @@
 import { escapeRegExpNames, makeNamedRegExp, makeRegExp } from 'regexpert';
-import { SMyLib } from 'shared/utils/SMyLib';
 
 export const hardModificators =
   `(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))` as const;
@@ -23,8 +22,8 @@ export const ruLowerLettersStr = `а-яё` as const;
 export const ruConsonantLettersStr = 'йцкнгшщзхъфвпрлджчсмтьб';
 export const slavicLowerLettersStr = `${ruLowerLettersStr}${uaDifferentLowerLettersStr}` as const;
 export const displayableTextBlockSingleWritedSymbolsStr = `(),":;'?` as const;
-export const displayableTextBlockSymbolsStr = `-.!\\s${displayableTextBlockSingleWritedSymbolsStr}` as const;
-export const displayableTextBlockCharsStr = `${displayableTextBlockSymbolsStr}${slavicLowerLettersStr}` as const;
+export const displayableTextBlockSymbolsStr = `-.!${displayableTextBlockSingleWritedSymbolsStr}` as const;
+export const displayableTextBlockCharsStr = `${displayableTextBlockSymbolsStr}${slavicLowerLettersStr}\\s` as const;
 
 export const nbsp = '&nbsp;';
 
@@ -87,11 +86,3 @@ export const chordBemoleEquivalent: Record<string, string> = {
 };
 
 export const cmComLanguages = ['русский', 'украинский'];
-
-export const chordDiezEquivalent = SMyLib.entries(chordBemoleEquivalent).reduce(
-  (acc, [key, val]) => ({ ...acc, [val]: key }),
-  {
-    Bb: 'A#',
-    Hb: 'A#',
-  } as Record<string, string>,
-);

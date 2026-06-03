@@ -44,13 +44,13 @@ export const TheCmComOrderSolid = ({
                       asLineNode({
                         ...lineProps,
                         ordi,
-                        solidTextLinei: lineProps.textLinei + lineCounts[ordIndex],
+                        solidLinei: lineProps.linei + lineCounts[ordIndex],
                       })
                   : lineProps => (
                       <CmComOrderLine
                         {...lineProps}
                         ordi={ordi}
-                        solid-ord-linei={lineProps.textLinei + lineCounts[ordIndex]}
+                        solid-ord-linei={lineProps.linei + lineCounts[ordIndex]}
                       />
                     )
               }
