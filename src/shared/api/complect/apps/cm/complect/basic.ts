@@ -155,10 +155,26 @@ export const enum CmComCommentBlockSpecialSelector {
   Kinds = 'k',
 }
 
+export const enum CmComNewlinerLinei {
+  i = 0,
+  never = -1,
+}
+
+export const enum CmComNewlinerRepeati {
+  i = 0,
+  never = -1,
+}
+
+export const enum CmComNewlinerWordi {
+  NewLine = -1,
+  i = 0,
+  NotNewLine = 1,
+}
+
 export const enum CmComNewlinerStrConfig {
-  whole = '15.-2 9.01/  34',
-  repeat = '15.-2 9.01',
-  line = '15.-2',
+  whole = '15.-2/12 9.01//34',
+  line = '15.-2/12',
+  repeat = '15.-2',
 }
 
 export type CmComCommentBlockSimpleSelector = CmComOrderSelector | CmComCommentBlockSpecialSelector.Head;

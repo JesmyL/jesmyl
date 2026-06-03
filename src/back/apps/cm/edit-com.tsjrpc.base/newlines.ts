@@ -1,13 +1,27 @@
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
-import { CmComNewlinerStrConfig, CmComOrderWid, CmComWid, IServerSideCom } from 'shared/api';
+import {
+  CmComNewlinerLinei,
+  CmComNewlinerRepeati,
+  CmComNewlinerStrConfig,
+  CmComOrderWid,
+  CmComWid,
+  IServerSideCom,
+} from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
-import { smylib } from 'shared/utils';
-import { cmComNewlinerLineConfigToSet, cmComNewlinerLineSetToNewlinerConfig } from 'shared/utils/cm/com/newliner';
+import { itNNull, smylib } from 'shared/utils';
+import {
+  cmComNewlinerLineConfigToSet,
+  cmComNewlinerLineSetToNewlinerConfig,
+  takeCmComNewlinerLineFullConfig,
+  takeCmComNewlinerRepeatFullConfig,
+} from 'shared/utils/cm/com/newliner';
 import { modifyCom } from './lib/modifiers';
 
 export const cmEditComServerTsjrpcNewlines = {
   switchNLWord: modifyCom((com, { linei, wordi, ordw, repeati }) => {
-    updateNewlinerLineSet(com, ordw, repeati, linei, set => {
+    updateNewlinerLineSet(com, ordw, linei, repeati, (itRepeati, set) => {
+      if (itRepeati !== repeati) return;
+
       if (set.has(wordi) || set.has(-wordi)) {
         set.delete(wordi);
         set.delete(-wordi);
@@ -18,7 +32,9 @@ export const cmEditComServerTsjrpcNewlines = {
   }),
 
   switchNLBr: modifyCom((com, { linei, wordi, ordw, repeati }) => {
-    updateNewlinerLineSet(com, ordw, repeati, linei, set => {
+    updateNewlinerLineSet(com, ordw, linei, repeati, (itRepeati, set) => {
+      if (itRepeati !== repeati) return;
+
       if (set.has(wordi)) {
         set.delete(wordi);
         set.add(-wordi);
@@ -35,7 +51,10 @@ export const cmEditComServerTsjrpcNewlines = {
   }),
 
   removeNL: modifyCom((com, { linei, ordw, repeati }) => {
-    updateNewlinerLineSet(com, ordw, repeati, linei, set => set.clear());
+    updateNewlinerLineSet(com, ordw, linei, repeati, (itRepeati, set) => {
+      if (repeati != null && itRepeati !== repeati) return;
+      set.clear();
+    });
 
     return retLabel(com.w);
   }),
@@ -54,24 +73,28 @@ const timers: PRecord<CmComWid, TimeOut> = {};
 const updateNewlinerLineSet = (
   com: IServerSideCom,
   ordw: CmComOrderWid,
-  repeati: number,
-  linei: number,
-  updater: (set: Set<number>) => void,
+  linei: CmComNewlinerLinei,
+  repeati: CmComNewlinerRepeati | nil,
+  updater: (repeati: CmComNewlinerRepeati, set: Set<number>) => void,
 ) => {
   com.nl ??= [{}];
   const wholeNLConfig = com.nl[0][ordw];
-  const set = cmComNewlinerLineConfigToSet(wholeNLConfig, repeati, linei);
-  const repeatConfigList = (wholeNLConfig?.split('/') ?? []) as (CmComNewlinerStrConfig.repeat | nil)[];
-  const lineConfigList = (repeatConfigList[repeati]?.split(' ') ?? []) as (CmComNewlinerStrConfig.line | nil)[];
+  const lineConfigList = takeCmComNewlinerLineFullConfig(wholeNLConfig);
+  const repeatConfigList = takeCmComNewlinerRepeatFullConfig(wholeNLConfig, linei);
 
-  updater(set);
+  Array.from({ length: Math.max(repeatConfigList.length, (repeati || 0) + 1) }, itNNull).forEach((_, repeati) => {
+    const set = cmComNewlinerLineConfigToSet(wholeNLConfig, linei, repeati);
+    updater(repeati, set);
 
-  lineConfigList[linei] = cmComNewlinerLineSetToNewlinerConfig(set);
-  checkFullValues(lineConfigList);
-  repeatConfigList[repeati] = lineConfigList.join(' ') as CmComNewlinerStrConfig.repeat;
+    repeatConfigList[repeati] = cmComNewlinerLineSetToNewlinerConfig(set);
+  });
+
   checkFullValues(repeatConfigList);
 
-  const repeatConfig = repeatConfigList.join('/') as CmComNewlinerStrConfig.whole;
+  lineConfigList[linei] = repeatConfigList.join('/') as CmComNewlinerStrConfig.line;
+  checkFullValues(lineConfigList);
+
+  const repeatConfig = lineConfigList.join(' ') as CmComNewlinerStrConfig.whole;
 
   if (repeatConfig) com.nl[0][ordw] = repeatConfig;
   else delete com.nl[0][ordw];
@@ -83,7 +106,7 @@ const checkFullValues = (list: (string | nil)[]) => {
   let isFullNotFound = true;
 
   for (let repeatConfigi = list.length - 1; repeatConfigi >= 0; repeatConfigi--) {
-    list[repeatConfigi] ||= '' as CmComNewlinerStrConfig.repeat;
+    list[repeatConfigi] ||= '';
 
     if (isFullNotFound)
       if (list[repeatConfigi]) isFullNotFound = false;

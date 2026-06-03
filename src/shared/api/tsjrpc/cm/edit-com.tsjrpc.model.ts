@@ -1,5 +1,8 @@
 import {
   CmComIntensityLevel,
+  CmComNewlinerLinei,
+  CmComNewlinerRepeati,
+  CmComNewlinerWordi,
   CmComOrderWid,
   CmComWid,
   HttpNumLeadLink,
@@ -40,9 +43,26 @@ export type CmEditComTsjrpcModel = {
 
   takeRemovedComs: () => IExportableCom[];
 
-  switchNLWord: (args: { comw: CmComWid; ordw: CmComOrderWid; linei: number; repeati: number; wordi: number }) => void;
+  switchNLWord: (args: {
+    comw: CmComWid;
+    ordw: CmComOrderWid;
+    linei: CmComNewlinerLinei;
+    repeati: CmComNewlinerRepeati;
+    wordi: CmComNewlinerWordi;
+  }) => void;
 
-  removeNL: (args: { comw: CmComWid; ordw: CmComOrderWid; linei: number; repeati: number }) => void;
+  removeNL: (args: {
+    comw: CmComWid;
+    ordw: CmComOrderWid;
+    linei: CmComNewlinerLinei;
+    repeati: CmComNewlinerRepeati | null;
+  }) => void;
 
-  switchNLBr: (args: { comw: CmComWid; ordw: CmComOrderWid; repeati: number; wordi: number; linei: number }) => void;
+  switchNLBr: (args: {
+    comw: CmComWid;
+    ordw: CmComOrderWid;
+    linei: CmComNewlinerLinei;
+    repeati: CmComNewlinerRepeati;
+    wordi: CmComNewlinerWordi;
+  }) => void;
 };

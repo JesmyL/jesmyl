@@ -1,7 +1,8 @@
 import { CmComOrder } from '$cm/ext';
-import { CmComOrderWid } from 'shared/api';
+import { CmComNewlinerLinei, CmComNewlinerRepeati, CmComOrderWid } from 'shared/api';
 
-export type CmBroadcastMonolineSlideLineId = `${number}${`r${number}` | ''}${`s${number}` | ''}`;
+export type CmBroadcastMonolineSlideLineId =
+  `${CmComNewlinerLinei}${`r${CmComNewlinerRepeati}` | ''}${`s${number}` | ''}`;
 export type CmBroadcastMonolineSlideOrdId = `w${CmComOrderWid}l${CmBroadcastMonolineSlideLineId}`;
 
 export type CmBroadcastMonolineSlide = {
@@ -16,9 +17,9 @@ export type CmBroadcastMonolineSlide = {
   /** slide text lines */
   lines: string[];
   /** order line index */
-  linei: number;
+  linei: CmComNewlinerLinei;
   /** repeat order index */
-  repeati: number;
+  repeati: CmComNewlinerRepeati;
   /** same line divide index */
   samei: number;
   /** total from line index */
@@ -35,7 +36,7 @@ export type CmBroadcastSlideLine = {
   ord: CmComOrder;
   line: string;
   blocki: number;
-  linei: number;
-  repeati: number;
+  linei: CmComNewlinerLinei;
+  repeati: CmComNewlinerRepeati;
   totalLinei: number;
 };

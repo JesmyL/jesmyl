@@ -1,7 +1,13 @@
 import { mylib } from '#shared/lib/my-lib';
 import { CmComOrder, ICmComOrderExportableMe } from '$cm/ext';
 import { makeRegExp } from 'regexpert';
-import { CmComOrderSelector, CmComOrderWid, IExportableOrder } from 'shared/api';
+import {
+  CmComNewlinerLinei,
+  CmComNewlinerRepeati,
+  CmComOrderSelector,
+  CmComOrderWid,
+  IExportableOrder,
+} from 'shared/api';
 import { cmComNewlinerLineConfigToSet } from 'shared/utils/cm/com/newliner';
 import { orderListConstructor } from 'shared/utils/cm/com/orderListConstructor';
 import { CmComBasic } from './10-Basic';
@@ -60,12 +66,12 @@ export class CmComOrders extends CmComBasic {
       orderListConstructor(me => this.orderConstructor(me), this.ords, this.intp, this.langi) ?? this._o);
   }
 
-  makeNewlinerSet = (ord: CmComOrder, repeati: number, linei: number) => {
+  makeNewlinerSet = (ord: CmComOrder, linei: CmComNewlinerLinei, repeati: CmComNewlinerRepeati) => {
     let watchOrd;
 
     const ordNl = this.top.nl?.[0][ord.wid];
-    const ownSet = cmComNewlinerLineConfigToSet(ordNl, repeati, linei);
-    const rootSet = !repeati ? new Set<number>() : cmComNewlinerLineConfigToSet(ordNl, 0, linei);
+    const ownSet = cmComNewlinerLineConfigToSet(ordNl, linei, repeati);
+    const rootSet = !repeati ? new Set<number>() : cmComNewlinerLineConfigToSet(ordNl, linei, 0);
 
     let repeatsJson;
 
@@ -101,8 +107,8 @@ export class CmComOrders extends CmComBasic {
 
     const watchNl = watchOrd ? this.top.nl?.[0][watchOrd.wid] : null;
 
-    const watchOwnSet = cmComNewlinerLineConfigToSet(watchNl, repeati, linei);
-    const watchRootSet = !repeati ? new Set<number>() : cmComNewlinerLineConfigToSet(watchNl, 0, linei);
+    const watchOwnSet = cmComNewlinerLineConfigToSet(watchNl, linei, repeati);
+    const watchRootSet = !repeati ? new Set<number>() : cmComNewlinerLineConfigToSet(watchNl, linei, 0);
 
     const nearSet = [rootSet, watchOwnSet, watchRootSet].find(set => set.size);
 

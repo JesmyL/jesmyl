@@ -1,29 +1,37 @@
-import { CmComNewlinerStrConfig } from 'shared/api';
+import { CmComNewlinerLinei, CmComNewlinerRepeati, CmComNewlinerStrConfig, CmComNewlinerWordi } from 'shared/api';
 
-export const takeCmComNewlinerRepeatConfig = (nlConfig: CmComNewlinerStrConfig.whole | nil, repeati: number) =>
-  nlConfig?.split('/', repeati + 1)[repeati] as CmComNewlinerStrConfig.repeat | nil;
-
-export const takeCmComNewlinerLineConfig = (
+export const takeCmComNewlinerRepeatFullConfig = (
   nlConfig: CmComNewlinerStrConfig.whole | nil,
-  repeati: number,
-  linei: number,
+  linei: CmComNewlinerLinei,
+) => (takeCmComNewlinerLineFullConfig(nlConfig)[linei]?.split('/') ?? []) as (CmComNewlinerStrConfig.repeat | nil)[];
+
+export const takeCmComNewlinerRepeatConfig = (
+  nlConfig: CmComNewlinerStrConfig.whole | nil,
+  linei: CmComNewlinerLinei,
+  repeati: CmComNewlinerRepeati,
 ) =>
-  takeCmComNewlinerRepeatConfig(nlConfig, repeati)?.split(' ', linei + 1)[linei] as CmComNewlinerStrConfig.line | nil;
+  takeCmComNewlinerLineConfig(nlConfig, linei)?.split('/', repeati + 1)[repeati] as CmComNewlinerStrConfig.repeat | nil;
+
+export const takeCmComNewlinerLineFullConfig = (nlConfig: CmComNewlinerStrConfig.whole | nil) =>
+  (nlConfig?.split(' ') ?? []) as (CmComNewlinerStrConfig.line | nil)[];
+
+export const takeCmComNewlinerLineConfig = (nlConfig: CmComNewlinerStrConfig.whole | nil, linei: CmComNewlinerLinei) =>
+  nlConfig?.split(' ', linei + 1)[linei] as CmComNewlinerStrConfig.line | nil;
 
 export const cmComNewlinerLineConfigToSet = (
   nlConfig: CmComNewlinerStrConfig.whole | nil,
-  repeati: number,
-  linei: number,
+  linei: CmComNewlinerLinei,
+  repeati: CmComNewlinerRepeati,
 ) => {
-  const set = new Set<number>();
-  const lineConfig = takeCmComNewlinerLineConfig(nlConfig, repeati, linei);
+  const set = new Set<CmComNewlinerWordi>();
+  const lineRepeatConfig = takeCmComNewlinerRepeatConfig(nlConfig, linei, repeati);
 
-  if (!lineConfig?.length) return set;
+  if (!lineRepeatConfig?.length) return set;
 
   let tenPlus = 0;
   let dir: 1 | -1 = 1;
 
-  lineConfig.split('').forEach(numStr => {
+  lineRepeatConfig.split('').forEach(numStr => {
     if (numStr === '-') dir = -1;
     else if (numStr === '.') tenPlus += 10;
     else {
@@ -35,7 +43,9 @@ export const cmComNewlinerLineConfigToSet = (
   return set;
 };
 
-export const cmComNewlinerLineSetToNewlinerConfig = (setOrArr: Set<number> | number[] | nil) => {
+export const cmComNewlinerLineSetToNewlinerConfig = (
+  setOrArr: Set<CmComNewlinerWordi> | CmComNewlinerWordi[] | nil,
+) => {
   let result = '';
   let tenMinus = 10;
 
@@ -48,5 +58,5 @@ export const cmComNewlinerLineSetToNewlinerConfig = (setOrArr: Set<number> | num
     result += `${num < 0 ? '-' : ''}${`${num}`.at(-1)}`;
   });
 
-  return result as CmComNewlinerStrConfig.line;
+  return result as CmComNewlinerStrConfig.repeat;
 };

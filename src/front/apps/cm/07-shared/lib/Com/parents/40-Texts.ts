@@ -188,7 +188,7 @@ export class CmComTexts extends CmComChords {
       prevOrdLinei = linei;
 
       let samei = 0;
-      const { currentSet } = this.makeNewlinerSet(ord, repeati, linei);
+      const { currentSet } = this.makeNewlinerSet(ord, linei, repeati);
       currentSet.add(lineWords.length + 10);
 
       currentSet.forEach(initWordi => {
