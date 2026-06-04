@@ -8,7 +8,7 @@ import { JSX, useEffect } from 'react';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 
 interface Props {
-  fio: string;
+  fio: string | nil;
   onSend: (liveData: IndexSchWBroadcastLiveDataValue) => void;
 }
 
@@ -32,7 +32,11 @@ const Live = ({ fio, onSend }: Props) => {
     return setTimeoutEffect(() => {
       if (isNaN(schw)) return;
 
-      const liveData: IndexSchWBroadcastLiveDataValue = { fio, isHide, bible: { text, addressText, config } };
+      const liveData: IndexSchWBroadcastLiveDataValue = {
+        fio: fio ?? '',
+        isHide,
+        bible: { text, addressText, config },
+      };
 
       onSend(liveData);
     }, 100);

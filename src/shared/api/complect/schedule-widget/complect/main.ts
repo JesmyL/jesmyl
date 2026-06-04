@@ -2,22 +2,23 @@
 import { SokiAppName, SokiAuthLogin } from '../../soki.model';
 import { ScheduleWidgetRegType, ScheduleWidgetUserRoleRight } from './rights';
 
-export enum IScheduleWidgetWid {
+export const enum IScheduleWidgetWid {
   def = 1,
+  none = -10,
 }
-export enum IScheduleWidgetUserMi {
+export const enum IScheduleWidgetUserMi {
   def = 0,
 }
-export enum IScheduleWidgetTeamMi {
+export const enum IScheduleWidgetTeamMi {
   def = 1,
 }
-export enum IScheduleWidgetTeamGameMi {
+export const enum IScheduleWidgetTeamGameMi {
   def = 0,
 }
-export enum IScheduleWidgetDayEventMi {
+export const enum IScheduleWidgetDayEventMi {
   def = 1,
 }
-export enum IScheduleWidgetDayi {
+export const enum IScheduleWidgetDayi {
   def = 0,
 }
 export enum IScheduleWidgetAttachmentTypeMi {
@@ -27,11 +28,11 @@ export enum IScheduleWidgetAttachmentTypeMi {
 export enum IScheduleWidgetUserCati {
   def = 0,
 }
-export enum IScheduleWidgetUserUnitMi {
+export const enum IScheduleWidgetUserUnitMi {
   def = 1,
 }
 
-export enum IScheduleWidgetUserTgId {
+export const enum IScheduleWidgetUserTgId {
   def = 1,
 }
 

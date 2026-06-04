@@ -10,10 +10,10 @@ export enum ChordVisibleVariant {
 }
 
 export interface LiveBroadcastAppProps {
-  isCantTranslateLive: boolean;
-  fio: string;
-  headTitle: ReactNode;
-  schedule: IScheduleWidget;
+  isCantTranslateLive?: boolean;
+  fio?: string;
+  headTitle?: ReactNode;
+  schedule?: IScheduleWidget;
 }
 
 export const enum CmBroadcastShowChordedSlideMode {

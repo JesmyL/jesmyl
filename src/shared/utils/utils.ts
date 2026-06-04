@@ -165,7 +165,7 @@ export const wait = (waitTime = 100) => new Promise(resolve => setTimeout(resolv
 export const capitalizeText = (text: string) => text[0].toUpperCase() + text.slice(1);
 export const capitalizeSlavicText = (text: string) => {
   const wordi = text.search(makeRegExp(`/[${slavicLowerLettersStr}]/i`));
-  return text.slice(0, wordi) + text[wordi].toUpperCase() + text.slice(wordi + 1).toLowerCase();
+  return wordi < 0 ? text : text.slice(0, wordi) + (text.at(wordi)?.toUpperCase() ?? '') + text.slice(wordi + 1);
 };
 export const trimTextLines = (text: string) => text.trim().replace(makeRegExp('/(.+?)\\s+?\\n/g'), '$1\n');
 

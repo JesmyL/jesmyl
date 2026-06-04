@@ -3,6 +3,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { BibleBroadcastLive } from '$bible/ext';
 import { LiveBroadcastAppProps } from '$cm/shared/model';
 import React, { memo, useCallback } from 'react';
+import { IScheduleWidgetWid } from 'shared/api';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 
 const BibleBroadcastControlled = React.lazy(() => import('$bible/widgets/broadcast/ui/Controlled'));
@@ -14,8 +15,9 @@ export const CmScheduleWidgetBroadcastBibleControlled = memo(function BibleTr({
   schedule,
 }: LiveBroadcastAppProps) {
   const onSend = useCallback(
-    (liveData: IndexSchWBroadcastLiveDataValue) => broadcastNextLiveDataAtom.set({ schw: schedule.w, data: liveData }),
-    [schedule.w],
+    (liveData: IndexSchWBroadcastLiveDataValue) =>
+      broadcastNextLiveDataAtom.set({ schw: schedule?.w ?? IScheduleWidgetWid.none, data: liveData }),
+    [schedule?.w],
   );
 
   return (

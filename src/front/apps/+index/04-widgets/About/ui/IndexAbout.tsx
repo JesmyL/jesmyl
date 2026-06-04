@@ -8,9 +8,11 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useQuery } from '@tanstack/react-query';
-import { useAtomValue } from 'atomaric';
+import { atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { jversion } from 'shared/values';
+
+const extVersionAtom = atom('', 'index:extVersion');
 
 export function IndexAbout() {
   const [cacheNames, setCacheNames] = useState<string[]>([]);
@@ -19,6 +21,7 @@ export function IndexAbout() {
   const isOnline = useIsOnline();
   const isThereNewSW = useAtomValue(checkIsThereNewSWAtom);
   const { data: values = {} } = useIndexValuesQuery();
+  const extVersion = useAtomValue(extVersionAtom);
 
   const { data: appVersion, isLoading: isVersionLoading } = useQuery({
     queryKey: ['indexAppVersion'],
@@ -72,6 +75,7 @@ export function IndexAbout() {
         ) : (
           ''
         )}
+        {!extVersion || <> [{extVersion}]</>}
         {isOnline ? (
           isRefreshProcess ? (
             <TheIconLoading />

@@ -50,3 +50,4 @@ export { cmPlayerBroadcastAudioSrcAtom } from '$cm/shared/state/broadcast.atoms'
 export { useCmBroadcastCurrentScreenConfig } from '$cm/widgets/broadcast';
 export { CmBroadcastScreenConfigurationPushKind } from '$cm/widgets/broadcast/ui/PushKind';
 export { TheCmCom } from '$cm/widgets/com';
+export { CmScheduleWidgetBroadcastLiveCm } from '$cm/widgets/schedule-widget-broadcast/ui/LiveCm';
