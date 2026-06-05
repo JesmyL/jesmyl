@@ -8,7 +8,9 @@ import { CmComOrder } from '$cm/ext';
 import { Atom, atom } from 'atomaric';
 import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
+import { checkIsNotNumber } from 'shared/utils/checkIs';
 import { nbsp } from 'shared/utils/cm/com/const';
+import { cmComOrderCheckRepeatKeyIsFlag, makeCmComOrderRepeatOrSelf } from 'shared/utils/cm/repeat-keys';
 
 interface Props {
   isChordBlock: boolean;
@@ -69,21 +71,21 @@ export const CmEditorTabComRepeatsRemoveButton = ({
           {ord.regions
             ?.filter(({ startLinei, startWordi }) => textLinei === startLinei && wordi === startWordi)
             .map((flash, flashi) => {
-              const { startLinei, startWordi, endLinei, endWordi, startOrd, endOrd, startKey, count } = flash;
+              const { startLinei, startWordi, finLinei, finWordi, startOrd, finOrd, startKey, count } = flash;
 
               const fill = (
                 ord?: CmComOrder | null,
                 l?: number | nil,
                 w?: number | nil,
-                isBeg?: boolean,
-                fl?: number | und,
-                fw?: number | und,
+                isStart?: boolean,
+                fl?: number | nil,
+                fw?: number | nil,
               ) => {
                 const lines = (ord?.text || '').split(makeRegExp('/\\n+/'));
-                return (isBeg ? lines.slice(l || 0, fl == null ? fl : fl + 1) : lines.slice(0, (l || 0) + 1))
+                return (isStart ? lines.slice(l || 0, fl == null ? undefined : fl + 1) : lines.slice(0, (l || 0) + 1))
                   .map(line =>
-                    (isBeg
-                      ? (line || '').split(makeRegExp('/ +/')).slice(w || 0, fw == null ? fw : fw + 1)
+                    (isStart
+                      ? (line || '').split(makeRegExp('/ +/')).slice(w || 0, fw == null ? undefined : fw + 1)
                       : (line || '').split(makeRegExp('/ +/')).slice(0, (w || 0) + 1)
                     ).join(' '),
                   )
@@ -101,7 +103,7 @@ export const CmEditorTabComRepeatsRemoveButton = ({
                       __html:
                         startFlash.repeat(count || 0) +
                         nbsp +
-                        ((startKey || '').startsWith('~')
+                        (cmComOrderCheckRepeatKeyIsFlag(startKey || '')
                           ? fill(
                               startOrd,
                               startLinei,
@@ -110,38 +112,36 @@ export const CmEditorTabComRepeatsRemoveButton = ({
                               startLinei ?? undefined,
                               startWordi ?? undefined,
                             )
-                          : startOrd === endOrd
-                            ? fill(startOrd, startLinei, startWordi, true, endLinei ?? undefined, endWordi ?? undefined)
+                          : startOrd === finOrd
+                            ? fill(startOrd, startLinei, startWordi, true, finLinei, finWordi)
                             : `${fill(startOrd, startLinei, startWordi, true)}\n...\n${fill(
-                                endOrd,
+                                finOrd,
                                 startLinei,
                                 startWordi,
                                 false,
                               )}`) +
-                        ((startKey || '').startsWith('~') ? '' : nbsp + finishFlash.repeat(count || 0)),
+                        (cmComOrderCheckRepeatKeyIsFlag(startKey || '') ? '' : nbsp + finishFlash.repeat(count || 0)),
                     }}
                   />
                   <TheButton
                     color="x3"
                     onClick={() => {
-                      const { startOrd, endOrd, startKey, endKey } = flash;
-                      const srepeats = mylib.clone(startOrd?.repeats);
+                      const { startOrd, finOrd, startKey, finKey } = flash;
+                      const startRrepeats = mylib.clone(startOrd?.repeats);
 
-                      if (srepeats && typeof srepeats !== 'number') {
-                        delete srepeats[startKey];
-                        setField(startOrd, srepeats);
+                      if (startRrepeats && checkIsNotNumber(startRrepeats)) {
+                        delete startRrepeats[startKey];
+                        setField(startOrd, startRrepeats);
                       } else setField(startOrd, 0);
 
                       startOrd?.resetRegions();
 
-                      if (startOrd !== endOrd && endOrd) {
-                        const frepeats = {
-                          ...(typeof endOrd.repeats === 'number' ? { '.': endOrd.repeats } : endOrd.repeats || {}),
-                        };
+                      if (startOrd !== finOrd && finOrd) {
+                        const frepeats = { ...makeCmComOrderRepeatOrSelf(finOrd.repeats) };
 
-                        delete frepeats[endKey || '.'];
-                        setField(endOrd, frepeats);
-                        endOrd?.resetRegions();
+                        delete frepeats[finKey || '.'];
+                        setField(finOrd, frepeats);
+                        finOrd?.resetRegions();
                       }
 
                       reset();

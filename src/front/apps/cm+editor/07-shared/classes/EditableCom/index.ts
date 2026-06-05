@@ -1,7 +1,9 @@
 import { ICmComOrderExportableMe } from '$cm/ext';
 import { makeRegExp } from 'regexpert';
-import { SMyLib } from 'shared/utils';
+import { itIt, SMyLib } from 'shared/utils';
+import { checkIsNumber } from 'shared/utils/checkIs';
 import { chordBemoleEquivalent, simpleBemoleChordReg_g } from 'shared/utils/cm/com/const';
+import { arrayByLength, objectKeys } from 'shared/utils/object.utils';
 import { cmEditComClientTsjrpcMethods } from '../../lib/cm-editor.tsjrpc.methods';
 import { EditableComOrder } from '../EditableComOrder';
 import { EditableComParseBlocks } from './lib/31-ParseBlocks';
@@ -30,19 +32,17 @@ export class EditableCom extends EditableComParseBlocks {
 
   getRegionNextLetter() {
     const chars = this.orders
-      ?.map(ord => Object.keys(ord.repeats || {}).map(key => (key.match(makeRegExp('/[a-z]/i')) || [])[0]))
+      ?.map(ord =>
+        checkIsNumber(ord.repeats) ? '' : objectKeys(ord.repeats).map(key => key.match(makeRegExp('/[a-z]/i'))?.[0]),
+      )
       .flat()
-      .filter(s => s)
+      .filter(itIt)
       .map(letter => letter?.charCodeAt(0));
 
-    const next =
-      chars &&
-      '.'
-        .repeat(26)
-        .split('')
-        .map((_, ci) => 97 + ci)
-        .find(num => chars.indexOf(num) < 0);
+    if (!chars) return null;
 
-    return next && String.fromCharCode(next);
+    const next = arrayByLength(26, i => 97 + i).find(num => chars.indexOf(num) < 0);
+
+    return next ? (String.fromCharCode(next) as 'a' | 'b') : null;
   }
 }

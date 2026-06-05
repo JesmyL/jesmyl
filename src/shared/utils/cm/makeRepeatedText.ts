@@ -1,33 +1,39 @@
 import { mylib } from '#shared/lib/my-lib';
 import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
+import { objectKeys } from '../object.utils';
 import { nbsp } from './com/const';
+import {
+  cmComOrderCheckRepeatKeyIsFlag,
+  cmComOrderCheckRepeatKeyIsPortalEnd,
+  cmComOrderCheckRepeatKeyIsPortalStart,
+} from './repeat-keys';
 
-export const cmComOrderMakeRepeatedText = (text: string, repeats: OrderRepeats | nil = null) => {
+export const cmComOrderMakeRepeatedText = (text: string, repeats: OrderRepeats | nil) => {
   if (!repeats) return text;
 
   if (mylib.isNum(repeats)) return insertRepeats(text, repeats, true, true);
   else {
     const poss: PRecord<number, PRecord<number, number[]>> = {};
     const parts: PRecord<string, number> = {};
-    const sortedKeys = mylib
-      .keys(repeats)
-      .sort((a, b) => calculateRepeatKeyWeight(parts, a) - calculateRepeatKeyWeight(parts, b));
+    const sortedKeys = objectKeys(repeats).sort(
+      (a, b) => calculateRepeatKeyWeight(parts, a) - calculateRepeatKeyWeight(parts, b),
+    );
 
     for (const key of sortedKeys) {
       if (key === '.') continue;
 
       const pushRep = (linei: number, wordi: number, fix = 1) => {
-        ((poss[linei] ??= {})[wordi] ??= []).push(fix * repeats[key]);
+        ((poss[linei] ??= {})[wordi] ??= []).push(fix * (repeats[key] ?? 1));
       };
 
-      if (key.match(makeRegExp('/[a-z]$/i'))) {
+      if (cmComOrderCheckRepeatKeyIsPortalEnd(key)) {
         const [linei, wordi] = key.split(makeRegExp('/[:a-z]/i'));
         pushRep(+linei, +wordi, -1);
         continue;
       }
 
-      if (key.startsWith('~') || key.match(makeRegExp('/^[a-z]/i'))) {
+      if (cmComOrderCheckRepeatKeyIsFlag(key) || cmComOrderCheckRepeatKeyIsPortalStart(key)) {
         const [, linei, wordi] = key.split(makeRegExp('/[~:a-z]/i'));
         pushRep(+linei, +wordi);
         continue;

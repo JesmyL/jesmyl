@@ -34,7 +34,28 @@ export interface CmComBindAttach {
   eventw?: CmMeetingEventWid;
 }
 
-export type SpecialOrderRepeats = Record<string, number>;
+export const enum SpecialOrderRepeatsKey {
+  Self = '.',
+  StartToEndLine = '2-3',
+  Diapason = '2:0-3:2',
+  LineWord = '2:0',
+  Line = '2',
+  Flag = '~3:2',
+
+  // portal
+  PortalStart = 'a0:0',
+  PortalEnd = '0:0b',
+}
+
+export type SpecialOrderRepeatsInnerAnyKey =
+  | SpecialOrderRepeatsKey.Diapason
+  | SpecialOrderRepeatsKey.Flag
+  | SpecialOrderRepeatsKey.StartToEndLine
+  | SpecialOrderRepeatsKey.Self
+  | SpecialOrderRepeatsKey.LineWord
+  | SpecialOrderRepeatsKey.Line;
+
+export type SpecialOrderRepeats = PRecord<SpecialOrderRepeatsKey, number>;
 export type OrderRepeats = number | SpecialOrderRepeats;
 
 export interface InheritancableOrder {

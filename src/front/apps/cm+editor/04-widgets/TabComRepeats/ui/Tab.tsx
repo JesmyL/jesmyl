@@ -11,6 +11,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
 import { nbsp } from 'shared/utils/cm/com/const';
+import { cmComOrderMakeRepeatPortalKey, makeCmComOrderRepeatOrSelf } from 'shared/utils/cm/repeat-keys';
 import { twMerge } from 'tailwind-merge';
 import { CmEditorTabComRepeatsCountButtonPanel } from './CountButtonPanel';
 
@@ -34,9 +35,7 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
     (ord?: EditableComOrder | null, repeateds?: OrderRepeats | nil, prevs?: OrderRepeats | nil) => {
       if (isCantRedact || !ord) return;
 
-      const reps = typeof prevs === 'number' ? { '.': prevs } : prevs || {};
-      const repds = typeof repeateds === 'number' ? { '.': repeateds } : repeateds || {};
-      const repeats = { ...reps, ...repds };
+      const repeats = { ...makeCmComOrderRepeatOrSelf(prevs), ...makeCmComOrderRepeatOrSelf(repeateds) };
       const keys = Object.keys(repeats);
       if (repeats['.'] === 0) delete repeats['.'];
 
@@ -168,8 +167,8 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
                       const prevEnds = isRegionEnds;
 
                       const closers = ord.regions?.reduce(
-                        (count, { endLinei, endWordi = wordCount - 1 }) =>
-                          count + +(linei === endLinei && wordi === endWordi),
+                        (count, { finLinei, finWordi = wordCount - 1 }) =>
+                          count + +(linei === finLinei && wordi === finWordi),
                         0,
                       );
 
@@ -227,9 +226,12 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
                                       : `-${linei}${wordCount - 1 === +wordiStr ? '' : `:${wordiStr}`}`
                                   }`,
                                 ]
-                            : [`${nextLetter}${startLinei}:${startWordi}`, `${linei}:${wordiStr}${nextLetter}`];
+                            : [
+                                cmComOrderMakeRepeatPortalKey(startLinei, startWordi, nextLetter, true),
+                                cmComOrderMakeRepeatPortalKey(+linei, +wordiStr, nextLetter, false),
+                              ];
 
-                        setField(startOrd, { [startDiap]: flashCount }, startOrd?.repeats);
+                        if (startDiap) setField(startOrd, { [startDiap]: flashCount }, startOrd?.repeats);
 
                         if (startOrd !== ord) {
                           setField(ord, { [finishDiap || '']: flashCount }, ord.repeats);

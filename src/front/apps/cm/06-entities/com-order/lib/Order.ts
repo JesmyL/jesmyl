@@ -3,12 +3,22 @@ import { CmCom } from '$cm/ext';
 import { ChordVisibleVariant } from '$cm/shared/model';
 import { makeRegExp } from 'regexpert';
 import { CmComOrderSelector, InheritancableOrder, OrderRepeats, SpecialOrderRepeats } from 'shared/api';
-import { itIt } from 'shared/utils';
 import { cmComOrderCheckIsOrdVisibleInInterpretation } from 'shared/utils/cm/checkIs';
 import { chordInterpretedRegs } from 'shared/utils/cm/com/const';
 import { transformToDisplayedText } from 'shared/utils/cm/com/transformToDisplayedText';
 import { cmComOrderMakeRegions } from 'shared/utils/cm/makeRegions';
 import { cmComOrderMakeRepeatedText } from 'shared/utils/cm/makeRepeatedText';
+import {
+  cmComOrderCheckRepeatKeyIsFlag,
+  cmComOrderCheckRepeatKeyIsPortal,
+  cmComOrderCheckRepeatKeyIsPortalStart,
+  cmComOrderMakeRepeatInnerDiapasonKey,
+  cmComOrderMakeRepeatInnerEndKey,
+  cmComOrderMakeRepeatInnerStartKey,
+  cmComOrderMakeRepeatPortalKey,
+  cmComOrderRepeatFlagKey,
+  takeCmComOrderRepeatPortalKeyLetter,
+} from 'shared/utils/cm/repeat-keys';
 import { CmComOrderEditableRegion, ICmComOrderExportableMe } from '../model/Order.model';
 import { CmComOrderWidClass } from './OrderWid';
 
@@ -108,13 +118,13 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
     if (typeof repeats === 'number') return repeats < 2 ? '' : repeats + '';
     if (repeats['.']) return repeats['.'] < 2 ? '' : repeats['.'] + '';
     const lastLineIndex = this.text.split(makeRegExp('/\\n/')).length - 1;
-    const region = this.regions?.find(({ startLinei, endLinei }) => startLinei === 0 && endLinei === lastLineIndex);
+    const region = this.regions?.find(({ startLinei, finLinei }) => startLinei === 0 && finLinei === lastLineIndex);
 
     return region ? region.count + '' : '';
   }
 
   private _re: OrderRepeats | nil;
-  get repeats(): OrderRepeats | null {
+  get repeats(): OrderRepeats | nil {
     let repeatsResult = this._re;
     if (repeatsResult !== undefined) return repeatsResult;
 
@@ -132,7 +142,7 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
         const reg = makeRegExp('/[a-z]/i', 0);
         repeatsResult = {};
 
-        for (const key in repeats) if (!reg.exec(key)) repeatsResult[key] = repeats[key];
+        for (const key in repeats) if (!reg.exec(key)) repeatsResult[key as '.'] = repeats[key as '.'];
       }
     }
 
@@ -213,54 +223,49 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   };
 
   setRegions = <Ord extends CmComOrder>() =>
-    (this._regions = cmComOrderMakeRegions(this.self<Ord>(), this.text, this.repeats, this.comOrders()));
+    (this._regions = cmComOrderMakeRegions<Ord>(this.self<Ord>(), this.text, this.repeats, this.comOrders() as Ord[]));
 
   static makeRepeatsFromRegions = <Ord extends CmComOrder>(regions: CmComOrderEditableRegion<Ord>[] | und) => {
     const repeats = {} as SpecialOrderRepeats;
 
-    regions?.forEach(re => {
-      if (re.key === '.') {
-        repeats[re.key] = re.count;
+    regions?.forEach(({ count, key, finLinei, finWordi, isFinWordiLast, startLinei, startWordi }) => {
+      if (key === '.') {
+        repeats[key] = count;
         return;
       }
 
-      if (re.key.search(makeRegExp('/[a-z]/')) > -1) {
-        const parts = re.key.split(makeRegExp('/\\d+/')).filter(itIt);
+      if (cmComOrderCheckRepeatKeyIsPortal(key)) {
+        const portalKey = cmComOrderMakeRepeatPortalKey(
+          finLinei,
+          finWordi,
+          takeCmComOrderRepeatPortalKeyLetter(key),
+          cmComOrderCheckRepeatKeyIsPortalStart(key),
+        );
 
-        if (parts[0] === ':') repeats[`${re.endLinei}:${re.endWordi}${parts[1]}`] = re.count;
-        else repeats[`${parts[0]}${re.startLinei}:${re.startWordi}`] = re.count;
+        if (portalKey) repeats[portalKey] = count;
 
         return;
       }
 
-      if (re.key.search(makeRegExp('/~/')) > -1) {
-        repeats[`~${re.startLinei}:${re.startWordi}`] = re.count;
+      if (cmComOrderCheckRepeatKeyIsFlag(key)) {
+        const flagKey = cmComOrderRepeatFlagKey(startLinei, startWordi);
+        if (flagKey) repeats[flagKey] = count;
+
         return;
       }
 
-      const startKey =
-        re.startLinei === null
-          ? ('' as const)
-          : !re.startWordi
-            ? (`${re.startLinei}` as const)
-            : (`${re.startLinei}:${re.startWordi}` as const);
+      const resultKey = cmComOrderMakeRepeatInnerDiapasonKey(
+        cmComOrderMakeRepeatInnerStartKey(startLinei, startWordi),
+        cmComOrderMakeRepeatInnerEndKey(startLinei, isFinWordiLast, finLinei, finWordi),
+      );
 
-      const endKey =
-        re.endLinei === null
-          ? ('' as const)
-          : !re.endWordi || re.isEndWordiLast
-            ? (`${re.endLinei}` as const)
-            : (`${re.endLinei === re.startLinei ? '' : re.endLinei}:${re.endWordi}` as const);
-
-      const key = startKey && endKey && startKey !== endKey ? (`${startKey}-${endKey}` as const) : startKey || endKey;
-
-      if (key) repeats[key] = re.count;
+      if (resultKey) repeats[resultKey] = count;
     });
 
     return repeats;
   };
 
-  repeatedText = (repeats: OrderRepeats | null = this.repeats, isSetFirstLetterUpperCase?: boolean) =>
+  repeatedText = (repeats: OrderRepeats | nil = this.repeats, isSetFirstLetterUpperCase?: boolean) =>
     cmComOrderMakeRepeatedText(this.transformedText(isSetFirstLetterUpperCase), repeats);
 
   transformedText = (isSetFirstLetterUpperCase?: boolean) =>

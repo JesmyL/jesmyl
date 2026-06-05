@@ -1,6 +1,6 @@
 import { CmCom } from '$cm/ext';
 import { ReactNode } from 'react';
-import { IExportableOrder, OrderRepeats } from 'shared/api';
+import { IExportableOrder, OrderRepeats, SpecialOrderRepeatsKey } from 'shared/api';
 import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';
 import { CmComOrder } from '../lib/Order';
 import { CmComOrderWidClass } from '../lib/OrderWid';
@@ -8,20 +8,20 @@ import { CmComOrderWidClass } from '../lib/OrderWid';
 export type CmComOrderEditableRegion<Ord extends CmComOrder> = {
   count: number;
 
-  key: string;
-  startKey: string;
-  endKey: string;
+  key: RKey<SpecialOrderRepeatsKey>;
+  startKey: RKey<SpecialOrderRepeatsKey>;
+  finKey: RKey<SpecialOrderRepeatsKey> | nil;
 
-  startLinei: number | null;
-  startWordi: number | null;
+  startLinei: number | nil;
+  startWordi: number | nil;
 
-  endLinei: number | null;
-  endWordi: number | null;
-  isEndWordiLast: boolean;
+  finLinei: number | nil;
+  finWordi: number | nil;
+  isFinWordiLast?: boolean;
 
-  startOrd: Ord | null;
-  endOrd: Ord | null;
-  /** [endLinei, endWordi] in other order */
+  startOrd: Ord | nil;
+  finOrd: Ord | nil;
+  /** [finLinei, finWordi] in other order */
   others: number[] | null;
 };
 
