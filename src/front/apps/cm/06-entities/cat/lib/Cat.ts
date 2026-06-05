@@ -23,11 +23,7 @@ export class CmCat extends BaseNamed<IExportableCat> {
 
   private _stackSet: Set<number> | null = null;
   get stackSet() {
-    return (this._stackSet ??= new Set(this.stack));
-  }
-
-  get stack() {
-    return this.top.s ?? [];
+    return (this._stackSet ??= new Set(this.top.s));
   }
 
   get dict() {

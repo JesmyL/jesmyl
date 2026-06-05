@@ -17,7 +17,7 @@ export class CmCom extends CmComTexts {
     const inCats = cats
       .filter(cat => {
         if (cat.dict?.[wid] != null) natives.push(`${cat.name} ${cat.dict[wid]}`);
-        return cat.stack.includes(wid);
+        return cat.stackSet.has(wid);
       })
       .map(cat => cat.name);
 

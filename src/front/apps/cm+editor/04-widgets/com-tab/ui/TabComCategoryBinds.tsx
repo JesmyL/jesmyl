@@ -82,7 +82,7 @@ export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => 
                     <span>{cat.name} </span>
                   </>
                 }
-                checked={cat.stack?.some(comw => ccom.wid === comw)}
+                checked={cat.stackSet.has(ccom.wid)}
                 disabled={!checkAccess('cm', 'COM_CAT', 'U')}
                 onClick={() =>
                   cmEditCatClientTsjrpcMethods.toggleComExistence({
