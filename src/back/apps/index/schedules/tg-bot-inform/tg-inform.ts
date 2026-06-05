@@ -16,13 +16,18 @@ import {
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
-import { convertMd2HTMLMaker, SMyLib, smylib } from 'shared/utils';
+import { howMillisecondsInMin } from 'shared/const/ms';
+import { checkIsNotString, checkIsNumber } from 'shared/utils/checkIs';
+import { objectEntries } from 'shared/utils/object.utils';
+import { convertMd2HTMLMaker } from 'shared/utils/tg-replaces';
 import { schedulesDirStore } from '../file-stores';
 import { onScheduleDayEventIsNeedTgInformSetEvent, onScheduleUserTgInformSetEvent } from '../specific-modify-events';
 import { makeScheduleWidgetJoinTitle } from './message-catchers';
 
 const getSchedule = (scheduleScalar: number | IScheduleWidget) =>
-  smylib.isNum(scheduleScalar) ? schedulesDirStore.getAllItems().find(sch => sch.w === scheduleScalar) : scheduleScalar;
+  checkIsNumber(scheduleScalar)
+    ? schedulesDirStore.getAllItems().find(sch => sch.w === scheduleScalar)
+    : scheduleScalar;
 
 const jobs: Record<number, nodeSchedule.Job> = {};
 const unsubscribeQueryDataNamePrefix = 'sch-wdgt-unsub:';
@@ -87,18 +92,18 @@ class TgInformer {
       for (let eventi = 0; eventi < day.list.length; eventi++) {
         const event = day.list[eventi];
         const eventTimeMin = ScheduleWidgetCleans.takeEventTm(event, schedule.types[event.type]);
-        const eventTimeMs = eventTimeMin * smylib.howMs.inMin;
+        const eventTimeMs = eventTimeMin * howMillisecondsInMin;
 
         if (now > indexScheduleGetEventFinishMs(schedule, wakeupMs, dayi, times[eventi]) - eventTimeMs) continue;
 
-        const eventStartMs = dayStartMs + wakeupMs + times[eventi] * smylib.howMs.inMin - eventTimeMs;
+        const eventStartMs = dayStartMs + wakeupMs + times[eventi] * howMillisecondsInMin - eventTimeMs;
 
-        const minutesRemaning = (eventStartMs - now) / smylib.howMs.inMin;
+        const minutesRemaning = (eventStartMs - now) / howMillisecondsInMin;
 
         let time =
           event.tgInform !== 0 && informBeforeTime > 0
             ? minutesRemaning > informBeforeTime
-              ? now + (minutesRemaning - informBeforeTime) * smylib.howMs.inMin + 100
+              ? now + (minutesRemaning - informBeforeTime) * howMillisecondsInMin + 100
               : minutesRemaning > 0.3
                 ? null
                 : eventStartMs
@@ -113,7 +118,7 @@ class TgInformer {
             now +
             100 +
             (prevEventTimeMin !== undefined && prevEventTimeMin <= informBeforeTime && prevEventTimeMin > 4
-              ? smylib.howMs.inMin
+              ? howMillisecondsInMin
               : 0);
         }
 
@@ -155,7 +160,7 @@ class TgInformer {
       if (!schedule?.days[dayi]?.list[eventi]) return;
 
       const event = schedule.days[dayi].list[eventi];
-      const timeToEvent = Math.ceil((eventStartMs - Date.now()) / smylib.howMs.inMin);
+      const timeToEvent = Math.ceil((eventStartMs - Date.now()) / howMillisecondsInMin);
       const isWithDelay = event.tgInform !== 0 && timeToEvent > 0;
 
       const secrets: string[] = [];
@@ -195,7 +200,7 @@ class TgInformer {
 
             if (!event.atts) break;
 
-            const attEntries = SMyLib.entries(event.atts);
+            const attEntries = objectEntries(event.atts);
 
             if (!eventTm) isSetAttTitle = true;
             if (!isSetAttTitle && (event.atts == null || !attEntries.length)) break;
@@ -222,7 +227,7 @@ class TgInformer {
             let labelTimeTo = `через ${eventTimeMin}м.`;
 
             if (eventTimeMin > 45) {
-              const date = new Date(dayStartMs + wakeupMs + times[timedEventi] * smylib.howMs.inMin);
+              const date = new Date(dayStartMs + wakeupMs + times[timedEventi] * howMillisecondsInMin);
               labelTimeTo = `в ${('' + date.getHours()).padStart(2, '0')}:` + ('' + date.getMinutes()).padStart(2, '0');
             }
 
@@ -308,7 +313,7 @@ class TgInformer {
           if (tgChatId !== null) {
             const message = await jesmylTgBot.sendMessage(tgChatId, text, tglogger, openDayScheduleKey);
 
-            if (!smylib.isStr(message.value)) {
+            if (checkIsNotString(message.value)) {
               if (await jesmylTgBot.bot.pinChatMessage(tgChatId, message.value.message_id))
                 jesmylTgBot.bot.deleteMessage(tgChatId, message.value.message_id + 1);
             }
