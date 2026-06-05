@@ -9,7 +9,7 @@ export const cmComOrderMakeRepeatedText = <Ord extends CmComOrder>(
 
   const textSplits = text.split('\n').map(splitMap);
 
-  regions.sort(finRateSort);
+  if (regions.length > 1) regions.sort(finRateSort);
 
   regions.forEach(({ startLinei, startWordi, count }) => {
     if (startLinei != null && startWordi != null) {
@@ -18,7 +18,7 @@ export const cmComOrderMakeRepeatedText = <Ord extends CmComOrder>(
     }
   });
 
-  regions.sort(startRateSort);
+  if (regions.length > 1) regions.sort(startRateSort);
 
   regions.forEach(({ count, finLinei, finWordi }) => {
     if (finLinei != null && finWordi != null) {
@@ -31,5 +31,8 @@ export const cmComOrderMakeRepeatedText = <Ord extends CmComOrder>(
 
 const joinMap = (line: string[]) => line.join(' ');
 const splitMap = (line: string) => line.split(' ');
-const finRateSort = (a: { finRate: number }, b: { finRate: number }) => a.finRate - b.finRate;
-const startRateSort = (a: { startRate: number }, b: { startRate: number }) => b.startRate - a.startRate;
+const finRateSort = <Ord extends CmComOrder>(a: CmComOrderEditableRegion<Ord>, b: CmComOrderEditableRegion<Ord>) =>
+  a.finRate - b.finRate || a.otherRate - b.otherRate;
+
+const startRateSort = <Ord extends CmComOrder>(a: CmComOrderEditableRegion<Ord>, b: CmComOrderEditableRegion<Ord>) =>
+  b.startRate - a.startRate || b.otherRate - a.otherRate;

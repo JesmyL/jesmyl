@@ -4,7 +4,6 @@ import { makeRegExp } from 'regexpert';
 import { OrderRepeats, SpecialOrderRepeatsKey } from 'shared/api';
 import { checkIsNumber } from '../checkIs';
 import { objectEntries, objectKeys } from '../object.utils';
-import { itIt } from '../utils';
 import {
   cmComOrderCheckRepeatKeyIsFlag,
   cmComOrderCheckRepeatKeyIsPortalStart,
@@ -61,9 +60,10 @@ export const cmComOrderMakeRegions = <Ord extends CmComOrder>(
           const letter = takeCmComOrderRepeatPortalKeyLetter(key);
 
           if (letter != null) {
-            const [first, second, third] = key.split(makeRegExp('/[:a-z]/i')).map(Number);
             const isStart = cmComOrderCheckRepeatKeyIsPortalStart(key);
-            let others: number[] = [];
+            const [lineiStr, wordiStr] = key.slice(isStart ? 1 : 0, isStart ? undefined : -1).split(':');
+
+            let others: [linei: number, wordi: number] | nil = null;
             let finishKey: SpecialOrderRepeatsKey | nil = null;
 
             const ord = comOrders?.find(
@@ -71,7 +71,11 @@ export const cmComOrderMakeRegions = <Ord extends CmComOrder>(
                 !checkIsNumber(ord.repeats) &&
                 objectKeys(ord.repeats).some(key => {
                   if (cmComOrderCheckRepeatKeyPortalLetterIsOtherSide(key, letter, isStart)) {
-                    others = key.split(makeRegExp('/[:a-z]/i')).filter(itIt).map(Number);
+                    const isStart = cmComOrderCheckRepeatKeyIsPortalStart(key);
+                    others = key
+                      .slice(isStart ? 1 : 0, isStart ? undefined : -1)
+                      .split(':')
+                      .map(Number) as [number, number];
                     finishKey = key;
                     return true;
                   }
@@ -82,8 +86,8 @@ export const cmComOrderMakeRegions = <Ord extends CmComOrder>(
             return calculateRate(
               isStart
                 ? {
-                    startLinei: second,
-                    startWordi: third,
+                    startLinei: +lineiStr,
+                    startWordi: +wordiStr,
                     finLinei: null,
                     finWordi: null,
                     startOrd: self,
@@ -97,8 +101,8 @@ export const cmComOrderMakeRegions = <Ord extends CmComOrder>(
                 : {
                     startLinei: null,
                     startWordi: null,
-                    finLinei: first,
-                    finWordi: second,
+                    finLinei: +lineiStr,
+                    finWordi: +wordiStr,
                     startOrd: ord,
                     finOrd: self,
                     others,
@@ -128,6 +132,7 @@ const calculateRate = <Ord extends CmComOrder, Rep extends CmComOrderEditableReg
   ...it,
   startRate: calc(it.startOrd?.i, it.startLinei, it.startWordi),
   finRate: calc(it.finOrd?.i, it.finLinei, it.finWordi),
+  otherRate: it.others ? calc((it.finOrd ?? it.startOrd)?.i, it.others[0], it.others[1]) : 0,
 });
 
 const calc = (ordi: number | nil, linei: number | nil, wordi: number | nil) =>

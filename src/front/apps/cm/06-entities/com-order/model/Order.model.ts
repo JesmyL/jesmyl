@@ -8,6 +8,7 @@ import { CmComOrderWidClass } from '../lib/OrderWid';
 export type CmComOrderEditableRegion<Ord extends CmComOrder> = CmComOrderEditableRegionBase<Ord> & {
   startRate: number;
   finRate: number;
+  otherRate: number;
 };
 
 export type CmComOrderEditableRegionBase<Ord extends CmComOrder> = {
@@ -27,7 +28,7 @@ export type CmComOrderEditableRegionBase<Ord extends CmComOrder> = {
   startOrd: Ord | nil;
   finOrd: Ord | nil;
   /** [finLinei, finWordi] in other order */
-  others: number[] | null;
+  others: [linei: number, wordi: number] | null;
 };
 
 export type ICmComOrderExportableMe<OrderConstructor extends CmComOrderWidClass<OrderConstructor>> = {
