@@ -6,6 +6,7 @@ export class CmComOrderWidClass<
   OrderConstructor extends CmComOrderWidClass<OrderConstructor>,
 > extends SourceBased<IExportableOrder> {
   me: ICmComOrderExportableMe<OrderConstructor>;
+  i?: number;
 
   constructor(me: ICmComOrderExportableMe<OrderConstructor>) {
     super(me.top);

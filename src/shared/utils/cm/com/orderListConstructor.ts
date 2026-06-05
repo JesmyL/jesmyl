@@ -176,5 +176,8 @@ export const orderListConstructor = <OrderConstructor extends CmComOrderWidClass
     }
   }
 
+  orders.forEach(setIndex);
   return orders;
 };
+
+const setIndex = (ord: { i?: number }, ordi: number) => (ord.i = ordi);

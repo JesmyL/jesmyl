@@ -265,8 +265,11 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
     return repeats;
   };
 
-  repeatedText = (repeats: OrderRepeats | nil = this.repeats, isSetFirstLetterUpperCase?: boolean) =>
-    cmComOrderMakeRepeatedText(this.transformedText(isSetFirstLetterUpperCase), repeats);
+  private _rt: string | nil;
+  repeatedText = (
+    regions: CmComOrderEditableRegion<CmComOrder>[] | nil = this.regions,
+    isSetFirstLetterUpperCase?: boolean,
+  ) => (this._rt ??= cmComOrderMakeRepeatedText(this.transformedText(isSetFirstLetterUpperCase), regions));
 
   transformedText = (isSetFirstLetterUpperCase?: boolean) =>
     transformToDisplayedText(this.text, isSetFirstLetterUpperCase).text;

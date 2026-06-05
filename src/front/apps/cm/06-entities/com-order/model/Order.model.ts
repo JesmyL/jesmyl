@@ -5,7 +5,12 @@ import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';
 import { CmComOrder } from '../lib/Order';
 import { CmComOrderWidClass } from '../lib/OrderWid';
 
-export type CmComOrderEditableRegion<Ord extends CmComOrder> = {
+export type CmComOrderEditableRegion<Ord extends CmComOrder> = CmComOrderEditableRegionBase<Ord> & {
+  startRate: number;
+  finRate: number;
+};
+
+export type CmComOrderEditableRegionBase<Ord extends CmComOrder> = {
   count: number;
 
   key: RKey<SpecialOrderRepeatsKey>;

@@ -11,6 +11,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
 import { nbsp } from 'shared/utils/cm/com/const';
+import { cmComOrderMakeRegions } from 'shared/utils/cm/makeRegions';
 import { cmComOrderMakeRepeatPortalKey, makeCmComOrderRepeatOrSelf } from 'shared/utils/cm/repeat-keys';
 import { twMerge } from 'tailwind-merge';
 import { CmEditorTabComRepeatsCountButtonPanel } from './CountButtonPanel';
@@ -48,7 +49,9 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
         comw: ccom.wid,
         value: (keys.length ? (keys.length === 1 && keys[0] === '.' ? repeats['.'] : repeats) : 0) ?? 0,
         textValue: ord.text
-          ? ord.repeatedText(repeats).replace(makeRegExp(`/${nbsp}/g`), ' ')
+          ? ord
+              .repeatedText(cmComOrderMakeRegions(ord, ord.text, repeats, ccom.orders))
+              .replace(makeRegExp(`/${nbsp}/g`), ' ')
           : ord.me.header({ repeats: ord.repeatsTitle }),
       });
     },

@@ -1,3 +1,4 @@
+import { CmComOrderEditableRegionBase } from '$cm/entities/com-order';
 import { CmComOrder, CmComOrderEditableRegion } from '$cm/ext';
 import { makeRegExp } from 'regexpert';
 import { OrderRepeats, SpecialOrderRepeatsKey } from 'shared/api';
@@ -26,7 +27,7 @@ export const cmComOrderMakeRegions = <Ord extends CmComOrder>(
     ? []
     : objectEntries(makeCmComOrderRepeatOrSelf(repeats)).map(([key, count]): CmComOrderEditableRegion<Ord> => {
         if (key === SpecialOrderRepeatsKey.Self)
-          return {
+          return calculateRate({
             startLinei: 0,
             startWordi: 0,
             finLinei: lines - 1,
@@ -39,11 +40,11 @@ export const cmComOrderMakeRegions = <Ord extends CmComOrder>(
             startKey: key,
             finKey: key,
             count,
-          };
+          });
         else if (cmComOrderCheckRepeatKeyIsFlag(key)) {
           const [, linei, wordi] = key.split(makeRegExp('/[~:]/'));
 
-          return {
+          return calculateRate({
             startLinei: +linei,
             startWordi: +wordi,
             finLinei: null,
@@ -55,7 +56,7 @@ export const cmComOrderMakeRegions = <Ord extends CmComOrder>(
             startKey: key,
             finKey: key,
             count,
-          };
+          });
         } else {
           const letter = takeCmComOrderRepeatPortalKeyLetter(key);
 
@@ -78,7 +79,7 @@ export const cmComOrderMakeRegions = <Ord extends CmComOrder>(
                 }),
             );
 
-            return (
+            return calculateRate(
               isStart
                 ? {
                     startLinei: second,
@@ -105,10 +106,10 @@ export const cmComOrderMakeRegions = <Ord extends CmComOrder>(
                     startKey: key,
                     finKey: finishKey,
                     count,
-                  }
+                  },
             ) satisfies CmComOrderEditableRegion<Ord>;
           } else {
-            return {
+            return calculateRate({
               ...cmComOrderTakeRepeatInnerKeyComponents(key, lineWordsList),
               startOrd: self,
               finOrd: self,
@@ -117,8 +118,17 @@ export const cmComOrderMakeRegions = <Ord extends CmComOrder>(
               startKey: key,
               finKey: key,
               count,
-            };
+            });
           }
         }
       });
 };
+
+const calculateRate = <Ord extends CmComOrder, Rep extends CmComOrderEditableRegionBase<Ord>>(it: Rep) => ({
+  ...it,
+  startRate: calc(it.startOrd?.i, it.startLinei, it.startWordi),
+  finRate: calc(it.finOrd?.i, it.finLinei, it.finWordi),
+});
+
+const calc = (ordi: number | nil, linei: number | nil, wordi: number | nil) =>
+  ((ordi ?? 0) + 1) * 100 + ((linei ?? 0) + 1) * 10 + (wordi ?? 0) + 1;
