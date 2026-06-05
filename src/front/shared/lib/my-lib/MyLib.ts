@@ -245,24 +245,6 @@ export class MyLib extends SMyLib {
     return RegExp(this.isFunc(transformer) ? transformer(string, reps) : string, flags);
   }
 
-  intervalToString(begin: number, end: number) {
-    const diff = end - begin;
-    const ms = this.getMilliseconds();
-
-    if (diff > ms.inYear) return 'Больше года';
-    if (diff > ms.inMonth) return 'Больше месяца';
-    if (diff >= ms.inDay) {
-      const days = Math.trunc(diff % ms.inDay) + 2;
-      return `${days} ${this.declension(days, 'день', 'дня')}`;
-    }
-
-    return '';
-  }
-
-  insertAfter(elem: HTMLElement, refElem: HTMLElement) {
-    return refElem.parentNode?.insertBefore(elem, refElem.nextSibling);
-  }
-
   scrollToView(
     element: Element | null,
     position = 'center',

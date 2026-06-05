@@ -20,13 +20,6 @@ export class SMyLib {
     inDay,
   };
 
-  getMilliseconds(monthDays = 30, yearDays = 365) {
-    const inMonth = inDay * monthDays;
-    const inYear = inDay * yearDays;
-
-    return { inSec, inMin, inHour, inDay, inMonth, inYear };
-  }
-
   isObj = (it: unknown): it is Record<string, unknown> => it instanceof Object && !(it instanceof Array);
   isobj = (it: unknown): it is Record<string | number, unknown> | unknown[] => typeof it === 'object' && it != null;
   isArr = <Item = unknown>(it: unknown): it is Item[] => it instanceof Array;
