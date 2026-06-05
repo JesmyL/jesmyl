@@ -1,14 +1,15 @@
-import { mylib, MyLib } from '#shared/lib/my-lib';
+import { mylib } from '#shared/lib/my-lib';
 import { CmCom } from '$cm/ext';
 import { ChordVisibleVariant } from '$cm/shared/model';
 import { makeRegExp } from 'regexpert';
 import { CmComOrderSelector, InheritancableOrder, OrderRepeats, SpecialOrderRepeats } from 'shared/api';
 import { itIt } from 'shared/utils';
+import { cmComOrderCheckIsOrdVisibleInInterpretation } from 'shared/utils/cm/checkIs';
 import { chordInterpretedRegs } from 'shared/utils/cm/com/const';
 import { transformToDisplayedText } from 'shared/utils/cm/com/transformToDisplayedText';
-import { CmComOrderUtils } from 'shared/utils/cm/ComOrderUtils';
+import { cmComOrderMakeRegions } from 'shared/utils/cm/makeRegions';
+import { cmComOrderMakeRepeatedText } from 'shared/utils/cm/makeRepeatedText';
 import { CmComOrderEditableRegion, ICmComOrderExportableMe } from '../model/Order.model';
-import { CmComOrderStatica } from './OrderStatica';
 import { CmComOrderWidClass } from './OrderWid';
 
 export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
@@ -93,7 +94,7 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
 
     if (this.me.isInherit) return !(this.top.v === 0 || (this.me.leadOrd && !this.me.leadOrd.isVisible));
 
-    return CmComOrderStatica.checkIsOrdVisibleInInterpretation(this.top, this.com.intp);
+    return cmComOrderCheckIsOrdVisibleInInterpretation(this.top, this.com.intp);
   }
 
   get isHeaderNoneForce() {
@@ -146,9 +147,7 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   }
 
   get regions(): CmComOrderEditableRegion<CmComOrder>[] | und {
-    if (this._regions === undefined) this.setRegions();
-
-    return this._regions;
+    return (this._regions ??= this.setRegions());
   }
 
   isCanShowChordsInText = (chordVisibleVariant: ChordVisibleVariant) => {
@@ -214,7 +213,7 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   };
 
   setRegions = <Ord extends CmComOrder>() =>
-    (this._regions = CmComOrder.makeRegions(this.self<Ord>(), this.text, this.repeats, this.comOrders()));
+    (this._regions = cmComOrderMakeRegions(this.self<Ord>(), this.text, this.repeats, this.comOrders()));
 
   static makeRepeatsFromRegions = <Ord extends CmComOrder>(regions: CmComOrderEditableRegion<Ord>[] | und) => {
     const repeats = {} as SpecialOrderRepeats;
@@ -261,140 +260,8 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
     return repeats;
   };
 
-  static makeRegions = <Ord extends CmComOrder>(
-    self: Ord | null,
-    text: string,
-    repeats: OrderRepeats | nil,
-    comOrders: CmComOrder[] | nil,
-  ) => {
-    const txt = (text || '').split(makeRegExp('/\\n+/')).map((txt: string) => txt.split(makeRegExp('/\\s+/')));
-    const lines = txt.length;
-
-    return repeats === 0
-      ? []
-      : MyLib.entries(mylib.isNum(repeats) ? { '.': repeats } : repeats).map(
-          ([key, count]: [string, number]): CmComOrderEditableRegion<Ord> => {
-            if (key === '.')
-              return {
-                startLinei: 0,
-                startWordi: 0,
-                endLinei: lines - 1,
-                endWordi: (txt[txt.length - 1] || '').length - 1,
-                isEndWordiLast: true,
-                startOrd: self,
-                endOrd: self,
-                others: null,
-                key,
-                startKey: key,
-                endKey: key,
-                count,
-              };
-            else if (key.startsWith('~')) {
-              const [, linei, wordi] = key.split(makeRegExp('/[~:]/'));
-
-              return {
-                startLinei: +linei,
-                startWordi: +wordi,
-                endLinei: null,
-                endWordi: null,
-                isEndWordiLast: false,
-                startOrd: self,
-                endOrd: self,
-                others: null,
-                key,
-                startKey: key,
-                endKey: key,
-                count,
-              };
-            } else {
-              const letter: string | undefined = (makeRegExp('/[a-z]/i').exec(key) ?? [])[0];
-
-              if (letter !== undefined) {
-                const [first, second, third] = key.split(makeRegExp('/[:a-z]/i')).map(num => parseInt(num));
-                const isBeg = key.match(makeRegExp('/^[a-z]/i'));
-                let others: number[] = [];
-                let finishKey: string = '';
-
-                const ord = comOrders?.find(
-                  (ord: CmComOrder) =>
-                    !mylib.isNum(ord.repeats) &&
-                    Object.keys(ord.repeats || {}).some(key => {
-                      if (key[!isBeg ? 'startsWith' : 'endsWith'](letter)) {
-                        others = key.split(makeRegExp('/[:a-z]/i')).filter(itIt).map(Number);
-                        finishKey = key;
-                        return true;
-                      }
-                      return false;
-                    }),
-                );
-
-                return (
-                  isBeg
-                    ? {
-                        startLinei: second,
-                        startWordi: third,
-                        endLinei: null,
-                        endWordi: null,
-                        startOrd: self,
-                        endOrd: ord,
-                        others,
-                        key,
-                        startKey: key,
-                        endKey: finishKey,
-                        count,
-                      }
-                    : {
-                        startLinei: null,
-                        startWordi: null,
-                        endLinei: first,
-                        endWordi: second,
-                        startOrd: ord,
-                        endOrd: self,
-                        others,
-                        key,
-                        startKey: key,
-                        endKey: finishKey,
-                        count,
-                      }
-                ) as CmComOrderEditableRegion<Ord>;
-              } else {
-                const [beg, end] = key.split('-');
-                const [startLinei, startWordi = 0] = beg.split(':').map(num => parseInt(num));
-                let endLinei = 0;
-                let endWordi = 0;
-                let isEndWordiLast = false;
-
-                if (end) {
-                  [endLinei, endWordi] = (end || '').split(':').map(num => parseInt(num));
-                  if (mylib.isNaN(endLinei)) endLinei = startLinei;
-                  if (endWordi == null) {
-                    endWordi = (txt[endLinei] || '').length - 1;
-                    isEndWordiLast = true;
-                  }
-                } else [endLinei, endWordi] = [startLinei, (txt[startLinei] || '').length - 1];
-
-                return {
-                  startLinei,
-                  startWordi,
-                  endLinei,
-                  endWordi,
-                  isEndWordiLast,
-                  startOrd: self,
-                  endOrd: self,
-                  others: null,
-                  key,
-                  startKey: key,
-                  endKey: key,
-                  count,
-                };
-              }
-            }
-          },
-        );
-  };
-
   repeatedText = (repeats: OrderRepeats | null = this.repeats, isSetFirstLetterUpperCase?: boolean) =>
-    CmComOrderUtils.makeRepeatedText(this.transformedText(isSetFirstLetterUpperCase), repeats);
+    cmComOrderMakeRepeatedText(this.transformedText(isSetFirstLetterUpperCase), repeats);
 
   transformedText = (isSetFirstLetterUpperCase?: boolean) =>
     transformToDisplayedText(this.text, isSetFirstLetterUpperCase).text;

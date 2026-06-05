@@ -7,7 +7,7 @@ import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { JSX, useCallback, useEffect, useState } from 'react';
 import { escapeRegExpSymbols, makeRegExp } from 'regexpert';
-import { transcriptEnToRuText } from 'shared/utils';
+import { transcriptEnToRuText } from 'shared/utils/ru-en-letters';
 import { useBibleBroadcastSearchResultSelectedValue, useBibleBroadcastSearchSearchResultList } from '../lib/results';
 import { bibleBroadcastSearchTermAtom, bibleBroadcastSearchZoneAtom } from '../state/atoms';
 import { BibleBroadcastSearchResultVerse } from './ResultVerse';

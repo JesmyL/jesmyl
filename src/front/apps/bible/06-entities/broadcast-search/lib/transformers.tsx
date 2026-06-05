@@ -7,8 +7,9 @@ import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/shared/model/base
 import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { makeNamedRegExp, makeRegExp } from 'regexpert';
-import { emptyFunc, transcriptEnToRuText } from 'shared/utils';
+import { emptyFunc } from 'shared/utils';
 import { ruLowerLettersStr } from 'shared/utils/cm/com/const';
+import { transcriptEnToRuText } from 'shared/utils/ru-en-letters';
 
 export const useBibleBroadcastSearchTransformAddressTermToAddress = (
   term: string,

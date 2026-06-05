@@ -14,9 +14,7 @@ export class EditableComOrder extends CmComOrder {
   comOrders = () => this.com.orders;
 
   get regions(): CmComOrderEditableRegion<EditableComOrder>[] | und {
-    if (this._regions === undefined) this.setRegions();
-
-    return this._regions;
+    return (this._regions ??= this.setRegions());
   }
 
   isWithHead() {

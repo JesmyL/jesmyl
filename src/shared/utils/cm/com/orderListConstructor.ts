@@ -1,10 +1,10 @@
 import { CmComOrderTopHeaderBag } from '$cm/entities/com-order';
-import { CmComOrderStatica } from '$cm/entities/com-order/lib/OrderStatica';
 import { CmComOrderWidClass } from '$cm/entities/com-order/lib/OrderWid';
 import { ICmComOrderExportableMe } from '$cm/ext';
 import { IExportableComInterpretation } from 'shared/api';
 import { comBlockKinds } from 'shared/values/cm/block-kinds/BlockKind';
 import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';
+import { cmComOrderCheckIsOrdVisibleInInterpretation, cmComOrderGetWithExtendableFields } from '../checkIs';
 
 export const orderListConstructor = <OrderConstructor extends CmComOrderWidClass<OrderConstructor>>(
   orderConstructor: (me: ICmComOrderExportableMe<OrderConstructor>) => OrderConstructor,
@@ -34,7 +34,7 @@ export const orderListConstructor = <OrderConstructor extends CmComOrderWidClass
   const header = (ord: ICmComOrderExportableMe<OrderConstructor>, style: KindBlock, numered = true) => {
     const type = Math.abs(style.key);
     const number =
-      numered && CmComOrderStatica.checkIsOrdVisibleInInterpretation(ord.top, intp)
+      numered && cmComOrderCheckIsOrdVisibleInInterpretation(ord.top, intp)
         ? (groups[type] = groups[type] == null ? 1 : ord.top.a == null ? groups[type] + 1 : groups[type])
         : '';
 
@@ -59,7 +59,7 @@ export const orderListConstructor = <OrderConstructor extends CmComOrderWidClass
       continue;
     }
     const targetOrd: OrderConstructor | nil = ordMe.top.a == null ? null : orders.find(o => o.wid === ordMe.top.a);
-    const me = CmComOrderStatica.getWithExtendableFields(targetOrd?.me, ordMe);
+    const me = cmComOrderGetWithExtendableFields(targetOrd?.me, ordMe);
 
     const style = getStyle(me);
 
@@ -115,7 +115,7 @@ export const orderListConstructor = <OrderConstructor extends CmComOrderWidClass
 
       while (ancStyle?.isInherit) {
         isAnchorInheritPlus = true;
-        const ancMe = CmComOrderStatica.getWithExtendableFields(targetOrd.me.source, anc);
+        const ancMe = cmComOrderGetWithExtendableFields(targetOrd.me.source, anc);
 
         ancMe.isAnchorInherit = true;
         ancMe.isInherit = true;
@@ -149,7 +149,7 @@ export const orderListConstructor = <OrderConstructor extends CmComOrderWidClass
     let nextStyle = getStyle(next);
 
     while (nextStyle?.isInherit) {
-      const nextMe = CmComOrderStatica.getWithExtendableFields(targetOrd?.me.source, next);
+      const nextMe = cmComOrderGetWithExtendableFields(targetOrd?.me.source, next);
 
       nextMe.isInherit = true;
       nextMe.kind = nextStyle;
