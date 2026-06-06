@@ -2,6 +2,7 @@ export const checkIsStartsWith = <Start extends string>(value: string, start: St
   value.startsWith(start);
 
 export const checkIsObject = (it: unknown): it is object => it instanceof Object && !(it instanceof Array);
+export const checkIsNotObject = <It>(it: It): it is Exclude<It, object> => !checkIsObject(it);
 
 export const checkIsAnyObject = (it: unknown): it is Record<string | number, unknown> | unknown[] =>
   typeof it === 'object' && it != null;
@@ -26,6 +27,9 @@ export const checkIsJsDate = (it: unknown): it is Date => it instanceof Date;
 export const checkIsJsDateMold = (it: unknown): it is number | string | Date =>
   checkIsString(it) || checkIsNumber(it) || checkIsJsDate(it);
 
+export const checkIsJsDateCorrectMold = (it: unknown): it is number | string | Date =>
+  checkIsJsDateMold(it) && !checkIsNaN(new Date(it).getTime());
+
 export const checkIsNumeric = (it: number | string): it is number | `${number}` => parseFloat(it as string) == it;
 
 export const checkIsArray = <Item = unknown>(it: unknown): it is Item[] => Array.isArray(it);
@@ -34,10 +38,13 @@ export const checkIsAsyncFunction = <Fun extends func>(it: unknown | Fun): it is
   checkIsFunction(it) && (it as never as { [Symbol.toStringTag]: unknown })[Symbol.toStringTag] === 'AsyncFunction';
 
 export const checkIsUndefined = (it: unknown): it is undefined => it === undefined;
+export const checkIsNotUndefined = <It>(it: It): it is Exclude<It, undefined> => it !== undefined;
 
 export const checkIsNull = (it: unknown): it is null => it === null;
+export const checkIsNotNull = <It>(it: It): it is Exclude<It, null> => it !== null;
 
 export const checkIsNil = (it: unknown): it is null | undefined => checkIsNull(it) || checkIsUndefined(it);
+export const checkIsNotNil = <It>(it: It): it is Exclude<It, null | undefined> => it != null;
 
 export const checkIsNaN = (it: unknown): it is number => checkIsNumber(it) && isNaN(it);
 
