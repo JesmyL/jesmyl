@@ -1,5 +1,7 @@
-import { CmCat, CmCatTracker, CmCom } from '$cm/ext';
+import { CmCatTracker } from '#shared/model/cm/cat/Cat.model';
 import { CmComIntensityLevel } from 'shared/api';
+import { CmCat } from './Cat';
+import { CmCom } from './Com';
 
 export const cmEditorCategoryTrackers: CmCatTracker = {
   full: { title: 'Полный', select: () => true },

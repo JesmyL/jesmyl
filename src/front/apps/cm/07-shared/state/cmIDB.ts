@@ -1,6 +1,7 @@
 import { DexieDB } from '#shared/lib/DexieDB';
+import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { cmComWidNumberDictAtom } from '$cm/entities/index';
-import { CmBroadcastScreenConfig, cmBroadcastDefaultConfig } from '$cm/widgets/broadcast';
+import { cmBroadcastDefaultConfig } from '$cm/widgets/broadcast';
 import { useLiveQuery } from 'dexie-react-hooks';
 import {
   ChordPack,
@@ -16,8 +17,8 @@ import {
   IFixedCom,
   MigratableComToolName,
 } from 'shared/api';
+import { CmBroadcastScreenConfig } from 'shared/model/cm/broadcast';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
-import { ChordVisibleVariant } from '../model/Cm.model';
 
 export interface CmIDBStorage {
   chordPack: ChordPack;

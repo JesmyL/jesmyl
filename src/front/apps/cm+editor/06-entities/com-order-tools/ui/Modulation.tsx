@@ -1,8 +1,9 @@
+import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { ChordVisibleVariant, TheCmComOrder } from '$cm/ext';
+import { TheCmComOrder } from '$cm/ext';
 import { Atom, atom } from 'atomaric';
 import { aSharpToBChord, bToASharpChord } from 'shared/utils/cm/com/const';
 import { CmEditorComOrderToolsProps } from '../model';

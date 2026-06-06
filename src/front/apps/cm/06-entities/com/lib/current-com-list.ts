@@ -1,5 +1,5 @@
 import { contextCreator } from '#shared/lib/contextCreator';
-import { CmCom } from '$cm/ext';
+import { CmCom } from 'shared/const/cm/Com';
 import { retNull } from 'shared/utils';
 import { CmComOpenLinkRenderer } from '../model/com';
 

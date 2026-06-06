@@ -1,5 +1,7 @@
-import { CmComOrder, CmComOrderLine, TheCmComOrder } from '$cm/ext';
+import { CmComOrderLine } from '$cm/ext';
 import React from 'react';
+import { CmComOrder } from 'shared/const/cm/order/Order';
+import { TheCmComOrder } from './TheOrder';
 
 export const TheCmComOrderSolid = ({
   asLineNode,

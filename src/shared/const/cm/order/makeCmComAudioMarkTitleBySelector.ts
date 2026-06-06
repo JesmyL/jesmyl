@@ -1,5 +1,3 @@
-import { mylib } from '#shared/lib/my-lib';
-import { CmCom, CmComOrder } from '$cm/ext';
 import { makeRegExp } from 'regexpert';
 import {
   CmComAudioMarkPack,
@@ -8,15 +6,19 @@ import {
   CmComOrderWid,
   CmComWid,
 } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
+import { checkIsArray, checkIsNaN, checkIsString } from 'shared/utils/checkIs';
 import { nbsp } from 'shared/utils/cm/com/const';
+import { objectKeys } from 'shared/utils/object.utils';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 import { comBlockKindsConfig } from 'shared/values/cm/block-kinds/comBlockKinds.config';
+import { CmComOrder } from './Order';
 
 export const makeCmComAudioMarkTitleAsLineSelector = (linei: number) => `~${linei + 1}`;
 export const makeCmComAudioMarkLineiFromSelector = (selector: string) => +selector.slice(1) - 1;
 
 export const checkIsCmComAudioMarkTitleIsLineSelector = (selector: CmComAudioMarkSelector | nil): selector is string =>
-  mylib.isStr(selector) && selector.startsWith('~') && !mylib.isNaN(+selector.slice(1));
+  checkIsString(selector) && selector.startsWith('~') && !checkIsNaN(+selector.slice(1));
 
 const enterBlockKind = comBlockKindsConfig.find(it => it.key === CmComBlockKindKey.Enter);
 const finalBlockKind = comBlockKindsConfig.find(it => it.key === CmComBlockKindKey.Final);
@@ -35,7 +37,7 @@ export const makeCmComAudioMarkTitleEmptySelector =
 
         if (+time === 0) return enterBlockKind.title[language];
 
-        cMarks = cMarks != null ? (mylib.isArr(cMarks) ? cMarks : mylib.keys(cMarks)) : (cMarks ?? []);
+        cMarks = cMarks != null ? (checkIsArray(cMarks) ? cMarks : objectKeys(cMarks)) : (cMarks ?? []);
 
         if (+cMarks[cMarks.length - 1] === +time) return finalBlockKind.title[language];
 
@@ -56,10 +58,10 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
   isReplaceBlockText?: boolean;
   isShortTime: boolean;
 } => {
-  const comMarkKeys = mylib.keys(comMarks ?? {});
+  const comMarkKeys = objectKeys(comMarks);
   const isShortTime = Math.abs(time - +(comMarkKeys[comMarkKeys.indexOf(`${time}`) + 1] ?? 0)) < 1;
 
-  if (mylib.isArr(selector)) {
+  if (checkIsArray(selector)) {
     const { ord, visibleOrdi } = com.getOrd(selector[0]);
     if (comMarks == null || ord == null) return { title: '?' as never, ord: null, isShortTime };
 
@@ -78,7 +80,7 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
 
   if (comMarks != null) {
     comMarkKeys.find(itTime => {
-      if (comMarks[itTime] == null || mylib.isStr(comMarks[itTime])) return time === +itTime;
+      if (comMarks[itTime] == null || checkIsString(comMarks[itTime])) return time === +itTime;
 
       if (lastSelector !== comMarks[itTime][0]) repeats = 1;
       else repeats++;
@@ -139,8 +141,8 @@ const computeOrdRepeats = (
   let repeats = 0;
 
   if (cMarks)
-    mylib.keys(cMarks).find(itTime => {
-      if (cMarks[itTime] == null || mylib.isStr(cMarks[itTime])) return false;
+    objectKeys(cMarks).find(itTime => {
+      if (cMarks[itTime] == null || checkIsString(cMarks[itTime])) return false;
 
       if (selector === cMarks[itTime][0]) repeats++;
       else repeats = 0;

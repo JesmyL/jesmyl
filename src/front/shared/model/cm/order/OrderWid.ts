@@ -1,5 +1,5 @@
-import { SourceBased } from '#shared/lib/SourceBased';
-import { ICmComOrderExportableMe } from '$cm/ext';
+import { SourceBased } from '#shared/const/SourceBased';
+import { ICmComOrderExportableMe } from '#shared/model/cm/order/regions';
 import { CmComOrderWid, IExportableOrder } from 'shared/api';
 
 export class CmComOrderWidClass<

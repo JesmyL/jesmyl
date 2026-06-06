@@ -1,14 +1,13 @@
-import { ICmComOrderLineAsComponentProps } from '$cm/entities/com-order-line';
+import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
+import { ICmComOrderHeaderAsComponentProps } from '#shared/model/cm/order/regions';
+import { CmComOrderLine, ICmComOrderLineAsComponentProps } from '$cm/entities/com-order-line';
 import { cmComChordHardLevelAtom } from '$cm/entities/index';
-import { CmCom } from '$cm/ext';
-import { ChordVisibleVariant } from '$cm/shared/model';
 import { useAtomValue } from 'atomaric';
 import React from 'react';
 import { makeRegExp } from 'regexpert';
+import { CmCom } from 'shared/const/cm/Com';
 import { commentHolderNodes } from 'shared/const/cm/commentHolderNodes';
-import { CmComOrderLine } from '../../com-order-line/ui/ComLine';
-import { CmComOrder } from '../lib/Order';
-import { ICmComOrderHeaderAsComponentProps } from '../model/Order.model';
+import { CmComOrder } from 'shared/const/cm/order/Order';
 
 interface Props {
   asLineNode?: (props: ICmComOrderLineAsComponentProps) => React.ReactNode;

@@ -1,11 +1,12 @@
 import { bibleShowTranslatesAtom, useBibleTranslatesContext } from '$bible/ext';
 import { cmComIsComMiniAnchorAtom } from '$cm/entities/index';
-import { CmCom, CmComOrder } from '$cm/ext';
 import { makeStyleNode } from '$cm/shared/lib/makeStyleNode';
 import { css, SerializedStyles } from '@emotion/react';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { CmComCommentBlockSpecialSelector } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
+import { CmComOrder } from 'shared/const/cm/order/Order';
 import { CmComCommentTextDetectorRuleProps } from 'shared/model/cm/com-comment';
 import { itInvokeIt } from 'shared/utils';
 import { cmComCommentTextRulesDetector } from 'shared/utils/cm';

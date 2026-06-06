@@ -1,5 +1,4 @@
-import { mylib } from '#shared/lib/my-lib';
-import { CmComOrder, ICmComOrderExportableMe } from '$cm/ext';
+import { ICmComOrderExportableMe } from '#shared/model/cm/order/regions';
 import { makeRegExp } from 'regexpert';
 import {
   CmComNewlinerLinei,
@@ -8,8 +7,11 @@ import {
   CmComOrderWid,
   IExportableOrder,
 } from 'shared/api';
+import { checkIsNumber } from 'shared/utils/checkIs';
 import { cmComNewlinerLineConfigToSet } from 'shared/utils/cm/com/newliner';
 import { orderListConstructor } from 'shared/utils/cm/com/orderListConstructor';
+import { objectKeys } from 'shared/utils/object.utils';
+import { CmComOrder } from '../../order/Order';
 import { CmComBasic } from './10-Basic';
 
 export class CmComOrders extends CmComBasic {
@@ -75,7 +77,7 @@ export class CmComOrders extends CmComBasic {
 
     let repeatsJson;
 
-    if (!ord.repeats || mylib.isNum(ord.repeats)) repeatsJson = NaN;
+    if (!ord.repeats || checkIsNumber(ord.repeats)) repeatsJson = NaN;
     else {
       const { '.': self, ...restRepeats } = ord.repeats;
       repeatsJson = JSON.stringify(restRepeats);
@@ -90,8 +92,8 @@ export class CmComOrders extends CmComBasic {
 
         if (
           !o.repeats ||
-          mylib.isNum(o.repeats) ||
-          mylib.keys(o.repeats).join('|').search(makeRegExp('/:[1-9]/')) < 0
+          checkIsNumber(o.repeats) ||
+          objectKeys(o.repeats).join('|').search(makeRegExp('/:[1-9]/')) < 0
         ) {
           watchOrd = o;
           break;

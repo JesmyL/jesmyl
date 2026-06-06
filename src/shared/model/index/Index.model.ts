@@ -1,7 +1,7 @@
 import { AppName } from '#basis/model/App.model';
-import { BibleBroadcastScreenConfig } from '$bible/ext';
-import { CmBroadcastSchWgtLiveDataValue } from '$cm/ext';
 import { LocalSokiAuth } from 'shared/api';
+import { BibleBroadcastScreenConfig } from '../bible/broadcast';
+import { CmBroadcastSchWgtLiveDataValue } from '../cm/SchWgtLive';
 
 export type IndexErrorScope = keyof ClientRegisterData;
 

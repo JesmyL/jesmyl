@@ -1,8 +1,8 @@
 import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
 import { BibleVersei } from '$bible/shared/model/base';
+import { bibleJoinAddressAtom, bibleVerseiAtom } from '$bible/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
-import { bibleJoinAddressAtom, bibleVerseiAtom } from '../../state/atoms';
 import { useBibleBroadcastSlideSyncContentSetter } from '../slide-sync';
 import { useBibleShowTranslatesValue } from '../translates';
 import { useBibleBroadcastJoinAddress } from './address';

@@ -1,8 +1,8 @@
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
+import { IndexUserMore } from '$index/entities/UserMore/ui/UserMore';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { LocalSokiAuth } from 'shared/api';
-import { IndexUserMore } from '../../UserMore/ui/UserMore';
 
 export const IndexProfileInfo = ({ auth }: { auth: LocalSokiAuth }) => {
   const [isShowAva, setIsShowAva] = useState(true);

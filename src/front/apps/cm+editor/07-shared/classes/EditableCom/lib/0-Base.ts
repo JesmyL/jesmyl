@@ -1,6 +1,6 @@
-import { CmCom } from '$cm/ext';
 import { makeRegExp } from 'regexpert';
 import { IExportableComInterpretation, IFixedCom } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
 import { comBlockKinds } from 'shared/values/cm/block-kinds/BlockKind';
 
 export class EditableComBase extends CmCom {

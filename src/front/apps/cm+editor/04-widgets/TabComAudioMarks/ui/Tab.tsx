@@ -1,6 +1,7 @@
 import { Button } from '#shared/components/ui/button';
 import { ButtonGroup } from '#shared/components/ui/button-group';
 import { MyLib, mylib } from '#shared/lib/my-lib';
+import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
 import { makeToastKOMoodConfig, Modal } from '#shared/ui/modal';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
@@ -14,7 +15,6 @@ import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/shared/state/com';
 import {
-  ChordVisibleVariant,
   CmComAudioPlayer,
   CmComAudioPlayerMarksMovers,
   CmComOrderLine,

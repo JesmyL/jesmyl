@@ -1,3 +1,4 @@
+import { ScreenBroadcastControlPanel } from '#features/broadcast/controls/ControllPanel';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BibleBroadcastControlledBottomPanel } from '$bible/entities/broadcast';
@@ -7,7 +8,6 @@ import { useBiblePrintShowSlideAddressCode } from '$bible/shared/hooks/slide-syn
 import { bibleVerseiAtom } from '$bible/shared/state/atoms';
 import styled from '@emotion/styled';
 import { JSX, ReactNode, useEffect } from 'react';
-import { ScreenBroadcastControlPanel } from '../../../../../features/broadcast/controls/ControllPanel';
 import { BibleBroadcastControlledTopPanel } from './TopPanel';
 
 interface Props {

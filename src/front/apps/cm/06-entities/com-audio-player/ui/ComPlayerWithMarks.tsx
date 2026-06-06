@@ -1,8 +1,8 @@
 import { Badge } from '#shared/components/ui/badge';
-import { CmCom } from '$cm/ext';
 import { cmComTrackPreSwitchTimeAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
 import { HttpNumLeadLink } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
 import { twMerge } from 'tailwind-merge';
 import { isCmComAudioPlayerOpenMoversAtom } from '../state/atoms';
 import { CmComAudioPlayer } from './ComPlayer';

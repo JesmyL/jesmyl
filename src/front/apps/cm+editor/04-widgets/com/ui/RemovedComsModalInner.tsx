@@ -1,11 +1,12 @@
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { CmCom, CmComFaceList, TheCmCom } from '$cm/ext';
+import { CmComFaceList, TheCmCom } from '$cm/ext';
 import { useQuery } from '@tanstack/react-query';
 import { Atom, atom } from 'atomaric';
 import { useMemo } from 'react';
 import { CmComWid } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
 
 let openComwAtom: Atom<CmComWid | null>;
 

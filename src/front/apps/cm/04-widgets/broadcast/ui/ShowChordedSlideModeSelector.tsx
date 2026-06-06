@@ -1,5 +1,5 @@
+import { CmBroadcastShowChordedSlideMode } from '#shared/model/cm/Cm.model';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
-import { CmBroadcastShowChordedSlideMode } from '$cm/shared/model';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
 

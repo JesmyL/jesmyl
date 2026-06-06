@@ -2,6 +2,7 @@ import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRi
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Button } from '#shared/components';
 import { MyLib } from '#shared/lib/my-lib';
+import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -15,7 +16,7 @@ import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { removedCompositionsAtom } from '$cm+editor/shared/state/com';
-import { ChordVisibleVariant, TheCmCom } from '$cm/ext';
+import { TheCmCom } from '$cm/ext';
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmComIntensityLevel } from 'shared/api';

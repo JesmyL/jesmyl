@@ -1,5 +1,5 @@
+import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { cmComChordVisibleVariantAtom } from '$cm/entities/com';
-import { ChordVisibleVariant } from '$cm/shared/model';
 import { useAtomValue } from 'atomaric';
 import { toast } from 'sonner';
 import { CmComTool } from '../ComTool';

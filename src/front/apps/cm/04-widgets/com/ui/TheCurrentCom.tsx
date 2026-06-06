@@ -1,3 +1,4 @@
+import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { CmComOrderList } from '$cm/entities/com-order';
 import {
   cmComChordHardLevelAtom,
@@ -5,9 +6,8 @@ import {
   cmComFontSizeAtom,
   cmComIsComMiniAnchorAtom,
 } from '$cm/entities/index';
-import { CmCom } from '$cm/ext';
-import { ChordVisibleVariant } from '$cm/shared/model';
 import { useAtomValue } from 'atomaric';
+import { CmCom } from 'shared/const/cm/Com';
 
 export const TheCmComCurrent = ({ com }: { com: CmCom }) => {
   const fontSize = useAtomValue(cmComFontSizeAtom);

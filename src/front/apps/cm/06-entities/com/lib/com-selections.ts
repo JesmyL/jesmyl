@@ -1,11 +1,11 @@
 import { mylib } from '#shared/lib/my-lib';
-import { CmCom } from '$cm/ext';
 import { cmIDB } from '$cm/shared/state';
 import { useCmComInScheduleWid } from '$cm/shared/state/contexts';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { CmComWid, IScheduleWidgetWid } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
 import { cmComLastOpenComwAtom } from '../state/atoms';
 
 export const useCmComCurrentFixedCom = (): CmCom | und => {

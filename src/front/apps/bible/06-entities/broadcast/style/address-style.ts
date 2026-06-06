@@ -1,7 +1,7 @@
 import { makeBroadcastTextStroke } from '#features/broadcast/complect/defaults';
 import { takeScreenBroadcastBackgroundStyles } from '#features/broadcast/complect/hooks/background-styles';
 import { CSSProperties, useMemo } from 'react';
-import { BibleBroadcastScreenConfig } from '../model/model';
+import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 
 export const bibleBroadcastAddressGridArea = 'address-grid-area';
 

@@ -1,6 +1,6 @@
 import { useScreenBroadcastTextStyles } from '#features/broadcast/complect/hooks/text-styles';
 import { CSSProperties, useMemo } from 'react';
-import { BibleBroadcastScreenConfig } from '../model/model';
+import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 import { bibleBroadcastAddressGridArea } from './address-style';
 import { bibleBroadcastScreenGridArea } from './screen-style';
 

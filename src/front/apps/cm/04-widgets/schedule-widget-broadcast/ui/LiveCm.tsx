@@ -1,5 +1,6 @@
 import { broadcastCurrentTextAppAtom, broadcastNextLiveDataAtom } from '#features/broadcast/atoms';
 import { isShowBroadcastTextAtom } from '#features/broadcast/initial-slide-context';
+import { LiveBroadcastAppProps } from '#shared/model/cm/Cm.model';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
 import { useCmComCurrent } from '$cm/entities/com';
@@ -8,7 +9,6 @@ import {
   useCmBroadcastScreenComNavigations,
   useCmBroadcastSlidesContext,
 } from '$cm/features/broadcast';
-import { LiveBroadcastAppProps } from '$cm/shared/model';
 import { cmIsTrackBroadcastAtom, cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { CmBroadcastControlled, useCmBroadcastScreenConfigs } from '$cm/widgets/broadcast';
 import { useAtomValue } from 'atomaric';

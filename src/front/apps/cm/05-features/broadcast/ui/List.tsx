@@ -7,7 +7,7 @@ import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
-import { CmBroadcastSchWgtLiveDataValue } from '../model/model';
+import { CmBroadcastSchWgtLiveDataValue } from 'shared/model/cm/SchWgtLive';
 
 const _lineNamePrefix = 'live-broadcast-linei-';
 

@@ -1,5 +1,5 @@
-import { Dropdown } from '../../dropdown/Dropdown';
-import { DropdownItem } from '../../dropdown/Dropdown.model';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
+import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
 import { ConfiguratorEditProps } from '../model';
 import { TextAlignConfigurator } from './model';
 

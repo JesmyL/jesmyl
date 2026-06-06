@@ -1,6 +1,5 @@
-import { CmComOrderTopHeaderBag } from '$cm/entities/com-order';
-import { CmComOrderWidClass } from '$cm/entities/com-order/lib/OrderWid';
-import { ICmComOrderExportableMe } from '$cm/ext';
+import { CmComOrderWidClass } from '#shared/model/cm/order/OrderWid';
+import { CmComOrderTopHeaderBag, ICmComOrderExportableMe } from '#shared/model/cm/order/regions';
 import { IExportableComInterpretation } from 'shared/api';
 import { comBlockKinds } from 'shared/values/cm/block-kinds/BlockKind';
 import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';

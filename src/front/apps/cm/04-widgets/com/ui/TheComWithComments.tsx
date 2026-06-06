@@ -4,12 +4,13 @@ import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { BibleTranslateModulesControl, BibleTranslatesContextProvider } from '$bible/ext';
 import {
   cmComCommentRedactOrdSelectorIdAtom,
+  useCmComCommentBlockCss,
   useCmComCommentCheckIsIncludesBibleAddress,
 } from '$cm/entities/com-comment';
-import { CmCom, useCmComCommentBlockCss } from '$cm/ext';
 import { cmIsShowMyCommentsAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
+import { CmCom } from 'shared/const/cm/Com';
 import { commentHolderNodes } from 'shared/const/cm/commentHolderNodes';
 import { itNIt } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';

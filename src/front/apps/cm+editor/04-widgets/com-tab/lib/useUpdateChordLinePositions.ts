@@ -1,7 +1,7 @@
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { CmComOrder } from '$cm/ext';
 import { useState } from 'react';
 import { CmComOrderWid } from 'shared/api';
+import { CmComOrder } from 'shared/const/cm/order/Order';
 
 const timeouts: PRecord<`${CmComOrderWid}/${number}`, TimeOut> = {};
 

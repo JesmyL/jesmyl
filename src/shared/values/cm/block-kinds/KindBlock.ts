@@ -1,4 +1,4 @@
-import { SourceBased } from '#shared/lib/SourceBased';
+import { SourceBased } from '#shared/const/SourceBased';
 import { CmComBlockKindKey, IExportableKindProp } from './BlockKind.model';
 
 export class KindBlock extends SourceBased<IExportableKindProp> {

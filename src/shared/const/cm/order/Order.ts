@@ -1,8 +1,9 @@
-import { mylib } from '#shared/lib/my-lib';
-import { CmCom } from '$cm/ext';
-import { ChordVisibleVariant } from '$cm/shared/model';
+import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
+import { CmComOrderWidClass } from '#shared/model/cm/order/OrderWid';
+import { CmComOrderEditableRegion, ICmComOrderExportableMe } from '#shared/model/cm/order/regions';
 import { makeRegExp } from 'regexpert';
 import { CmComOrderSelector, InheritancableOrder, OrderRepeats, SpecialOrderRepeats } from 'shared/api';
+import { checkIsNumber, checkIsObject } from 'shared/utils/checkIs';
 import { cmComOrderCheckIsOrdVisibleInInterpretation } from 'shared/utils/cm/checkIs';
 import { chordInterpretedRegs } from 'shared/utils/cm/com/const';
 import { transformToDisplayedText } from 'shared/utils/cm/com/transformToDisplayedText';
@@ -19,8 +20,8 @@ import {
   cmComOrderRepeatFlagKey,
   takeCmComOrderRepeatPortalKeyLetter,
 } from 'shared/utils/cm/repeat-keys';
-import { CmComOrderEditableRegion, ICmComOrderExportableMe } from '../model/Order.model';
-import { CmComOrderWidClass } from './OrderWid';
+import { objectLength } from 'shared/utils/object.utils';
+import { CmCom } from '../Com';
 
 export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   _regions?: CmComOrderEditableRegion<CmComOrder>[];
@@ -129,14 +130,14 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
     if (repeatsResult !== undefined) return repeatsResult;
 
     if (this.me.isAnchorInherit) {
-      repeatsResult = this.me.leadOrd?.me.source?.top._r?.[this.me.anchorInheritIndex || 0] ?? 0;
+      repeatsResult = this.getLeadInheritance('r') ?? this.getWatchValue('r') ?? 0;
     } else if (this.me && this.me.source && this.me.source.top.r != null) {
       repeatsResult = this.me.source.top.r;
     } else {
       const repeats =
         this.me.repeats ?? this.me?.targetOrd?.me.source?.top.r ?? this.getWatchInheritance('r') ?? this.top.r;
 
-      if (mylib.isNum(repeats)) repeatsResult = repeats;
+      if (checkIsNumber(repeats)) repeatsResult = repeats;
       else if (repeats == null) repeatsResult = 0;
       else {
         const reg = makeRegExp('/[a-z]/i', 0);
@@ -146,11 +147,11 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
       }
     }
 
-    if (mylib.isObj(repeatsResult))
-      if (!mylib.keys(repeatsResult).length) repeatsResult = 0;
+    if (checkIsObject(repeatsResult))
+      if (!objectLength(repeatsResult)) repeatsResult = 0;
       else {
         const { '.': dotNum, ...reWODot } = repeatsResult;
-        if (!mylib.keys(reWODot).length) repeatsResult = dotNum;
+        if (!objectLength(reWODot)) repeatsResult = dotNum;
       }
 
     return (this._re = repeatsResult);
@@ -171,6 +172,10 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
 
   isDayFromCreate = () => this.com.isDayFromCreate(this.top.cre);
 
+  getWatchValue = <Key extends keyof Required<InheritancableOrder>>(key: Key) => {
+    return (this.me.isAnchorInherit ? this.me.watchOrd?.top[key] : null) as InheritancableOrder[Key] | nil;
+  };
+
   getWatchInheritance = <Key extends keyof Required<InheritancableOrder>>(key: Key) => {
     return (
       this.me.isAnchorInherit
@@ -183,10 +188,6 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
     return (
       this.me.isAnchorInherit ? this.me.leadOrd?.me.source?.top[`_${key}`]?.[this.me.anchorInheritIndex || 0] : null
     ) as InheritancableOrder[Key] | nil;
-  };
-
-  resetRegions = () => {
-    delete this._regions;
   };
 
   comOrders = () => this.com.orders;

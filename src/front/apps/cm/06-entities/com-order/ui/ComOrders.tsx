@@ -1,9 +1,9 @@
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { useBibleBroadcastScreenFontSizeAdapter } from '#shared/lib/hooks/useFontSizeAdapter';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { CmCom } from '$cm/ext';
 import styled from '@emotion/styled';
 import { ReactNode, useEffect, useState } from 'react';
+import { CmCom } from 'shared/const/cm/Com';
 import { twMerge } from 'tailwind-merge';
 import { ICmComOrderListProps } from '../model/ComOrders.model';
 import { TheCmComOrderSolid } from './TheOrderSolid';

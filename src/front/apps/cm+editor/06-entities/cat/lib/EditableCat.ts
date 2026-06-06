@@ -1,6 +1,6 @@
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
-import { CmCat } from '$cm/ext';
 import { IExportableCat } from 'shared/api';
+import { CmCat } from 'shared/const/cm/Cat';
 
 export class CmEditorCat extends CmCat {
   initialName: string;

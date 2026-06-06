@@ -1,10 +1,10 @@
-import { ICmComOrderExportableMe } from '$cm/ext';
+import { ICmComOrderExportableMe } from '#shared/model/cm/order/regions';
+import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { makeRegExp } from 'regexpert';
 import { itIt, SMyLib } from 'shared/utils';
 import { checkIsNumber } from 'shared/utils/checkIs';
 import { chordBemoleEquivalent, simpleBemoleChordReg_g } from 'shared/utils/cm/com/const';
 import { arrayByLength, objectKeys } from 'shared/utils/object.utils';
-import { cmEditComClientTsjrpcMethods } from '../../lib/cm-editor.tsjrpc.methods';
 import { EditableComOrder } from '../EditableComOrder';
 import { EditableComParseBlocks } from './lib/31-ParseBlocks';
 

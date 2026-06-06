@@ -3,7 +3,7 @@ import { useScreenBroadcastTextStyles } from '#features/broadcast/complect/hooks
 import { MyLib } from '#shared/lib/my-lib';
 import { verseTranslateTitleCssVariableName } from '$bible/shared/const/ids';
 import { CSSProperties, useMemo } from 'react';
-import { BibleBroadcastScreenConfig } from '../model/model';
+import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 
 export const bibleBroadcastScreenGridArea = 'screen-grid-area';
 

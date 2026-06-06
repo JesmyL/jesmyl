@@ -9,6 +9,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useMemo, useRef } from 'react';
 import { makeRegExp } from 'regexpert';
+import { arrayByLength } from 'shared/utils/object.utils';
 
 let isOpenAtom: Atom<boolean>;
 let lastClickedChordAtom: Atom<string>;
@@ -28,7 +29,7 @@ export const CmEditorChordSearchUnknownChordsModalTrigger = () => {
     const unknownChordsSet = new Set<string>([lastClickedChordAtom.get()]);
 
     coms.forEach(com => {
-      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].forEach(delta =>
+      arrayByLength(12, i => i).forEach(delta =>
         com.transposedBlocks(delta)?.forEach(block => {
           block.split(makeRegExp('/[-\\s.|]+/')).forEach(chord => {
             if (chord && chordPack[chord] === undefined) unknownChordsSet.add(chord);

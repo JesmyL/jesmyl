@@ -11,8 +11,9 @@ import { OpacityConfigurator } from '#shared/ui/configurators/Opacity';
 import { StrokeConfigurator } from '#shared/ui/configurators/Stroke';
 import { ScreenTranslateConfigurationTextAlign } from '#shared/ui/configurators/TextAlign';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
-import { BibleBroadcastScreenConfig, useBibleBroadcastUpdateCurrentConfig } from '$bible/entities/broadcast';
+import { useBibleBroadcastUpdateCurrentConfig } from '$bible/entities/broadcast';
 import { useCallback } from 'react';
+import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 
 interface Props {
   currentConfig: BibleBroadcastScreenConfig;

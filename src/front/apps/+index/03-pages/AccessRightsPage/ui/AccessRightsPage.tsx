@@ -1,5 +1,5 @@
 import { Accordion } from '#shared/components/ui/accordion';
-import { mylib, MyLib } from '#shared/lib/my-lib';
+import { mylib } from '#shared/lib/my-lib';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
@@ -9,6 +9,7 @@ import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc/tsjrpc.methods';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { checkUserScopeAccessRight } from 'shared/utils/index/utils';
+import { objectEntries } from 'shared/utils/object.utils';
 import { IndexAccessRightsUpdateTable } from './AccessRightsUpdateTable';
 import { IndexAccessRightsUserRoleSelector } from './UserRoleSelector';
 
@@ -35,7 +36,7 @@ export function IndexAccessRightsPage() {
             <ConditionalRender
               value={userRightsAndRoles?.rights}
               render={rights =>
-                MyLib.entries(rights).map(([userLogin, userRights]) => {
+                objectEntries(rights).map(([userLogin, userRights]) => {
                   if (userRights == null) return null;
 
                   return (

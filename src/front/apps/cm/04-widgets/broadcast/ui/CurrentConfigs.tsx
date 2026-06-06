@@ -11,13 +11,13 @@ import { ScreenTranslateConfigurationTextAlign } from '#shared/ui/configurators/
 import { TextCaseConfigurator } from '#shared/ui/configurators/TextCase';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { useCallback } from 'react';
-import { cmBroadcastSubConfigNext } from '../const/defaults';
-import { useCmBroadcastUpdateCurrentConfig } from '../hooks/update-config';
 import {
   CmBroadcastScreenConfig,
   CmBroadcastScreenConfigSubConfigs,
   CmBroadcastTextScreenConfig,
-} from '../model/model';
+} from 'shared/model/cm/broadcast';
+import { cmBroadcastSubConfigNext } from '../const/defaults';
+import { useCmBroadcastUpdateCurrentConfig } from '../hooks/update-config';
 import { CmBroadcastSubBlockConfigurator } from './SubBlockConfigurator';
 
 interface Props {

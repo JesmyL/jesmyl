@@ -1,8 +1,8 @@
+import { BibleBroadcastHistoryArchive } from '$bible/entities/broadcast-history';
+import { BibleBroadcastPlanArchive } from '$bible/entities/broadcast-plan';
 import { BibleBroadcastScreenConfigurations } from '$bible/widgets/broadcast';
 import styled from '@emotion/styled';
 import { JSX, memo } from 'react';
-import { BibleBroadcastHistoryArchive } from '../../broadcast-history/ui/HistoryArchive';
-import { BibleBroadcastPlanArchive } from '../../broadcast-plan/ui/PlanArchive';
 
 export const BibleBroadcastControlledBottomPanel = memo(function BibleBroadcastControlledBottomPanel(): JSX.Element {
   return (

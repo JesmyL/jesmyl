@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { CmCom } from '$cm/ext';
+import { CmCom } from 'shared/const/cm/Com';
 import { ICmComFaceList } from '../model/model';
 import { CmComFaceListComList } from './_ComList';
 import { CmComFaceWidList } from './_WidList';

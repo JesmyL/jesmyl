@@ -1,6 +1,6 @@
-import { CmCom } from '$cm/ext';
 import { CmComIntensityLevel } from 'shared/api';
-import { CmCat } from '../lib/Cat';
+import { CmCat } from 'shared/const/cm/Cat';
+import { CmCom } from 'shared/const/cm/Com';
 
 export interface CmCatComWrap<C = CmCom> {
   item: C;

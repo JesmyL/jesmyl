@@ -1,9 +1,9 @@
 import { Button } from '#shared/components/ui/button';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
-import { CmCom } from '$cm/ext';
 import { useFetchFreshComAudioMarksPack } from '$cm/shared/api/useFetchFreshComAudioMarksPack';
 import { Atom, useAtomValue } from 'atomaric';
 import { HttpNumLeadLink } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
 import { twMerge } from 'tailwind-merge';
 import { useCmComAudioPlayerMoversController } from '../lib/useCmComAudioPlayerMoversController';
 

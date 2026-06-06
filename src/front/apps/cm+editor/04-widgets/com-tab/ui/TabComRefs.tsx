@@ -5,16 +5,10 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { WithHook } from '#shared/ui/WithHook';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import {
-  CmCom,
-  CmComFaceList,
-  CmComJoinGroupList,
-  CmComWithComListSearchFilterInput,
-  useCmCom,
-  useCmComList,
-} from '$cm/ext';
+import { CmComFaceList, CmComJoinGroupList, CmComWithComListSearchFilterInput, useCmCom, useCmComList } from '$cm/ext';
 import { Atom, atom } from 'atomaric';
 import { CmComWid } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
 import { itIt } from 'shared/utils';
 
 let searchAtom: Atom<string>;

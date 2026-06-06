@@ -1,9 +1,9 @@
 import { contextCreator } from '#shared/lib/contextCreator';
-import { CmCom } from '$cm/ext';
 import { cmIDB } from '$cm/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { CmComMod, CmComWid, IExportableCom } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
 import { itNNull } from 'shared/utils';
 
 export const useCmComList = (comwsList?: CmComWid[] | nil, excludeComwsList?: CmComWid[]) => {

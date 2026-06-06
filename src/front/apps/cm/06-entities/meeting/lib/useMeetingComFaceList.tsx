@@ -1,8 +1,9 @@
 import { CmComFaceList } from '$cm/entities/com-face';
-import { CmCom, useCmComList } from '$cm/ext';
+import { useCmComList } from '$cm/ext';
 import { cmIDB } from '$cm/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { IScheduleWidgetDayEventMi, IScheduleWidgetWid } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
 
 interface Props {
   schw: IScheduleWidgetWid | und;

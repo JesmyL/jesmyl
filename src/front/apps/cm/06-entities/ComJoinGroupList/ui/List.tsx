@@ -1,7 +1,8 @@
 import { MyLib } from '#shared/lib/my-lib';
-import { CmCom, CmComFaceList, cmIDB } from '$cm/ext';
+import { CmComFaceList, cmIDB } from '$cm/ext';
 import { useMemo } from 'react';
 import { CmComWid, CmComWidRefGroupDict } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
 import { itIt } from 'shared/utils';
 
 export const CmComJoinGroupList = ({

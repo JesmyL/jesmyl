@@ -1,6 +1,6 @@
 import { DexieDB } from '#shared/lib/DexieDB';
-import { BibleBroadcastScreenConfig } from '$bible/entities/broadcast';
 import { BibleTranslateName } from 'shared/api';
+import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 import {
   BibleBooki,
   BibleBroadcastAddress,

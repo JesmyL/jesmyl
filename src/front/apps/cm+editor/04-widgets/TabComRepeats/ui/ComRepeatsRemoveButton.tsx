@@ -4,10 +4,10 @@ import { Modal, ModalBody, ModalHeader, useConfirm } from '#shared/ui/modal';
 import { TheButton } from '#shared/ui/TheButton';
 import { EditableComOrder } from '$cm+editor/shared/classes/EditableComOrder';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { CmComOrder } from '$cm/ext';
 import { Atom, atom } from 'atomaric';
 import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
+import { CmComOrder } from 'shared/const/cm/order/Order';
 import { checkIsNotNumber } from 'shared/utils/checkIs';
 import { nbsp } from 'shared/utils/cm/com/const';
 import { cmComOrderCheckRepeatKeyIsFlag, makeCmComOrderRepeatOrSelf } from 'shared/utils/cm/repeat-keys';
@@ -134,14 +134,11 @@ export const CmEditorTabComRepeatsRemoveButton = ({
                         setField(startOrd, startRrepeats);
                       } else setField(startOrd, 0);
 
-                      startOrd?.resetRegions();
-
                       if (startOrd !== finOrd && finOrd) {
                         const frepeats = { ...makeCmComOrderRepeatOrSelf(finOrd.repeats) };
 
                         delete frepeats[finKey || '.'];
                         setField(finOrd, frepeats);
-                        finOrd?.resetRegions();
                       }
 
                       reset();

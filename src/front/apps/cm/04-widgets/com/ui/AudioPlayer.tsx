@@ -6,9 +6,9 @@ import {
   CmComAudioPlayerWithMarks,
 } from '$cm/entities/com-audio-player';
 import { cmComIsAudioPlayerHiddenAtom } from '$cm/entities/index';
-import { CmCom } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
+import { CmCom } from 'shared/const/cm/Com';
 
 export const CmComAudioPlayerInCompositionPage = ({ ccom }: { ccom: CmCom }) => {
   const playSrc = useAtomValue(cmComAudioPlayerPlaySrcAtom);

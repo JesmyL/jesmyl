@@ -3,14 +3,12 @@ import { mylib } from '#shared/lib/my-lib';
 import { TextInput } from '#shared/ui/TextInput';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
+import { cmComAudioPlayerSwitchIsPlay, cmComAudioPlayerUpdateCurrentTime, cmIDB } from '$cm/ext';
+import { CmComAudioMarkPackTime, CmComAudioMarkSelector, HttpNumLeadLink } from 'shared/api';
 import {
   checkIsCmComAudioMarkTitleIsLineSelector,
-  cmComAudioPlayerSwitchIsPlay,
-  cmComAudioPlayerUpdateCurrentTime,
-  cmIDB,
   makeCmComAudioMarkTitleBySelector,
-} from '$cm/ext';
-import { CmComAudioMarkPackTime, CmComAudioMarkSelector, HttpNumLeadLink } from 'shared/api';
+} from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { twMerge } from 'tailwind-merge';
 import { cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom } from '../state/atoms';
 

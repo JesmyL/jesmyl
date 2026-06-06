@@ -1,5 +1,6 @@
-import { CmComOrder, CmComOrderEditableRegion, ICmComOrderExportableMe } from '$cm/ext';
+import { CmComOrderEditableRegion, ICmComOrderExportableMe } from '#shared/model/cm/order/regions';
 import { InheritancableOrder } from 'shared/api';
+import { CmComOrder } from 'shared/const/cm/order/Order';
 import { EditableCom } from './EditableCom';
 
 export class EditableComOrder extends CmComOrder {

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-namespace */
-import('../front/apps/cm/07-shared/lib/Com/parents/40-Texts');
+import('../shared/const/cm/Com/parents/40-Texts');
 
-namespace N55a94eb9fa4754c2256eae7603a3c38d_1 {
+namespace N1db5e6670ddbdce505ba1a631fd401b2_1 {
   type $0 = string; // `${$lead}${$before}${$start}${U1 | ''}${$content}${U2 | ''}${$end}${$endNl}`;
   type $lead = `${$2}${number}{${string}}`;
   type $2 = `` | `\n`;
@@ -31,6 +31,6 @@ namespace N55a94eb9fa4754c2256eae7603a3c38d_1 {
 }
 
 interface _GlobalScopedNamedRegExpMakerGeneratedTypes
-  extends N55a94eb9fa4754c2256eae7603a3c38d_1.I {
+  extends N1db5e6670ddbdce505ba1a631fd401b2_1.I {
     '': ''
 }

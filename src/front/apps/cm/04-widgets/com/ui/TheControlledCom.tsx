@@ -1,6 +1,7 @@
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
+import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
 import { cmComAudioPlayerPlaySrcAtom, isCmComAudioPlayerOpenMoversAtom } from '$cm/entities/com-audio-player';
 import {
@@ -10,14 +11,13 @@ import {
 } from '$cm/entities/com-comment';
 import { useCmComOrderAudioMarkControlButtons } from '$cm/entities/com-order';
 import { cmComFontSizeAtom, cmComIsComMiniAnchorAtom, cmComSpeedRollKfAtom } from '$cm/entities/index';
-import { CmCom } from '$cm/ext';
-import { ChordVisibleVariant } from '$cm/shared/model';
 import { cmComTrackPreSwitchTimeAtom } from '$cm/shared/state';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Link } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useRef } from 'react';
+import { CmCom } from 'shared/const/cm/Com';
 import { TheCmCom } from './TheCom';
 import { TheCmComWithComments } from './TheComWithComments';
 

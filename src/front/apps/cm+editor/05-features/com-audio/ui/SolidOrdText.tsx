@@ -1,16 +1,13 @@
 import { Button } from '#shared/components/ui/button';
 import { mylib } from '#shared/lib/my-lib';
+import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/shared/state/com';
-import {
-  ChordVisibleVariant,
-  CmCom,
-  CmComOrder,
-  CmComOrderLine,
-  makeCmComAudioMarkTitleAsLineSelector,
-  TheCmComOrderSolid,
-} from '$cm/ext';
+import { CmComOrderLine, TheCmComOrderSolid } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
 import { CmComAudioMarkPackTime, CmComAudioMarkSelector, HttpNumLeadLink } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
+import { makeCmComAudioMarkTitleAsLineSelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
+import { CmComOrder } from 'shared/const/cm/order/Order';
 import { retNull } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
 

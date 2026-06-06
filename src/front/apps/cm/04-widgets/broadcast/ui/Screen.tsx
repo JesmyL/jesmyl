@@ -3,18 +3,18 @@ import { makeBroadcastTextStroke } from '#features/broadcast/complect/defaults';
 import { takeScreenBroadcastBackgroundStyles } from '#features/broadcast/complect/hooks/background-styles';
 import { ScreenTranslateCurrentPositionConfigurators } from '#features/broadcast/complect/position/Position';
 import { mylib } from '#shared/lib/my-lib';
+import { CmBroadcastShowChordedSlideMode } from '#shared/model/cm/Cm.model';
 import { HorizontalDirection } from '#shared/model/Direction';
 import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
-import { CmBroadcastShowChordedSlideMode } from '$cm/shared/model';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useRef } from 'react';
+import { CmBroadcastScreenConfig } from 'shared/model/cm/broadcast';
 import { useApplyScreenFontFamilyEffect, useMyFileNode } from 'x/my-files';
 import { useCmBroadcastScreenStyle } from '../lib/get-style';
-import { CmBroadcastScreenConfig } from '../model/model';
 import { CmBroadcastSubScreen } from './SubScreen';
 
 type Props = BroadcastScreenProps &

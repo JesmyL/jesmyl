@@ -1,16 +1,16 @@
-import { mylib } from '#shared/lib/my-lib';
-import { CmComOrder } from '$cm/ext';
 import md5 from 'md5';
 import { escapeRegExpSymbols, makeNamedRegExp, makeRegExp } from 'regexpert';
 import { CmComAudioMarkPackTime, CmComOrderWid } from 'shared/api';
+import { makeCmComAudioMarkTitleEmptySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { defaultTextCase } from 'shared/const/textCase';
 import { CmBroadcastMonolineSlide, CmBroadcastSlideLine } from 'shared/model/cm/broadcast';
 import { TextCase } from 'shared/model/common';
 import { capitalizeSlavicText, itIt } from 'shared/utils';
+import { checkIsString } from 'shared/utils/checkIs';
 import { doubleQuotesStr, nbsp, slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 import { makeCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
 import { takeTextBlockWithoutSquareBracketsContent } from 'shared/utils/cm/com/takeTextBlockIncorrects';
-import { makeCmComAudioMarkTitleEmptySelector } from '../../makeCmComAudioMarkTitleBySelector';
+import { CmComOrder } from '../../order/Order';
 import { CmComChords } from './30-Chords';
 
 export class CmComTexts extends CmComChords {
@@ -58,7 +58,7 @@ export class CmComTexts extends CmComChords {
     const str = `/([|])|((?:[${doubleQuotesStr}]|[${preps}] |^—${nbsp})[${slavicLowerLettersStr}])/gi` as const;
     const reg = makeRegExp(str);
     const rep: StringReplacer = (all, $1, $2) =>
-      $1 ? '' : mylib.isStr($2) ? $2.slice(0, -1) + $2.slice(-1).toUpperCase() : all;
+      $1 ? '' : checkIsString($2) ? $2.slice(0, -1) + $2.slice(-1).toUpperCase() : all;
     const mappers: Record<TextCase, (line: string) => string> = {
       [TextCase.Capitalize]: capitalizeSlavicText,
       [TextCase.Uppercase]: line => line.toUpperCase(),

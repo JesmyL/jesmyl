@@ -1,5 +1,5 @@
-import { CmCom } from '$cm/ext';
 import { CmComCommentBlockSpecialSelector, CmComWid } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
 import { cmComCommentHeadBibleAddressRegExp } from '../utils/commentHeadBibleAddressRegExp';
 import { useCmComCommentTextBlockTakerWithoutComments } from './useCmComCommentBlock';
 

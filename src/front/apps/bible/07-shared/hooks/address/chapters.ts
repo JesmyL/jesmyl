@@ -1,7 +1,7 @@
 import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
 import { BibleChapteri } from '$bible/shared/model/base';
+import { bibleChapteriAtom } from '$bible/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
-import { bibleChapteriAtom } from '../../state/atoms';
 import { useBibleShowTranslatesValue } from '../translates';
 import { useBibleAddressBooki } from './books';
 

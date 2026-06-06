@@ -1,7 +1,7 @@
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import { CmChordCardImageList } from '$cm/entities/chord-card';
 import { useCmComCurrentFixedCom } from '$cm/entities/com';
 import { Atom, atom } from 'atomaric';
-import { CmChordCardImageList } from '../../chord-card/ui/ChordImagesList';
 import { CmComTool } from '../ComTool';
 
 let isOpenAtom: Atom<boolean>;

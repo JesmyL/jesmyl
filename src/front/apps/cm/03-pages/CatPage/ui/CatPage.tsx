@@ -6,7 +6,6 @@ import {
   StyledPhaseContainerConfigurerContent,
   StyledPhaseContainerConfigurerHead,
 } from '#shared/ui/phase-container/PageContainerConfigurer';
-import { CmCat } from '$cm/entities/cat';
 import {
   CmComAudioPlayer,
   cmComAudioPlayerHeaderStickyCss,
@@ -14,7 +13,7 @@ import {
 } from '$cm/entities/com-audio-player';
 import { CmComFaceList } from '$cm/entities/com-face';
 import { CmComSetListLimitsExtracterContext } from '$cm/entities/index';
-import { CmCom, CmComWithComListSearchFilterInput } from '$cm/ext';
+import { CmComWithComListSearchFilterInput } from '$cm/ext';
 import { CmComRatingSortedComList } from '$cm/features/com';
 import { takeCatTermAtom } from '$cm/shared/lib/Cat';
 import styled from '@emotion/styled';
@@ -22,6 +21,8 @@ import { FileRoutesByPath } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode, useEffect, useRef } from 'react';
 import { CmCatWid } from 'shared/api';
+import { CmCat } from 'shared/const/cm/Cat';
+import { CmCom } from 'shared/const/cm/Com';
 import { emptyFunc } from 'shared/utils';
 
 interface Props {

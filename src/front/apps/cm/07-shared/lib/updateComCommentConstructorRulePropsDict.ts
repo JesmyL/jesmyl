@@ -4,6 +4,7 @@ import {
   takeCmComCommentTextBlock,
 } from '$cm/entities/com-comment';
 import { CmComCommentBlockSimpleSelector, CmComCommentBlockSpecialSelector, CmComWid } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
 import {
   CmComCommentConstructorPropsDictWordRulePropsKeyPrefix,
   CmComCommentConstructorRulePropsDict,
@@ -14,7 +15,6 @@ import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model'
 import { cmComOrderPlusKindSet } from 'shared/values/cm/block-kinds/kind-sets';
 import { cmIDB } from '../state';
 import { cmComCommentConstructorRulePropsDictAtom } from '../state/com-comment.atoms';
-import { CmCom } from './Com';
 
 export const updateCmComCommentConstructorRulePropsDict = async (
   comw: CmComWid,

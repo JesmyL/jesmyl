@@ -1,5 +1,7 @@
 import md5 from 'md5';
 import { makeRegExp } from 'regexpert';
+import { checkIsEq } from './checkIsEq';
+import { ruLowerLettersStr, slavicLowerLettersStr } from './cm/com/const';
 import { itIt, itNIt } from './utils';
 
 export type StringTemplaterArgs<Adds = object> = {
@@ -12,7 +14,19 @@ const inMin = inSec * 60;
 const inHour = inMin * 60;
 const inDay = inHour * 24;
 
+const constants = {
+  REMOVE: ['REMOVE'] as const,
+  POSITION: ['POSITION'] as const,
+  INDEX: ['INDEX'] as const,
+};
+
+const constantPositions = [constants.INDEX, constants.POSITION];
+
+type Trace = string | (typeof constants)[keyof typeof constants];
+
 export class SMyLib {
+  c = constants;
+
   howMs = {
     inSec,
     inMin,
@@ -117,6 +131,191 @@ export class SMyLib {
     return `${cutText}${cutText.length !== text.length ? ' ...' : ''}`;
   }
 
+  numberSearchReplacements: [RegExp, string][] = [
+    [/0/g, '[ 0]'],
+    [/1/g, `[^${ruLowerLettersStr}1`],
+    [/2/g, '[абвг2]'],
+    [/3/g, '[деёжз3]'],
+    [/4/g, '[ийкл4]'],
+    [/5/g, '[мноп5]'],
+    [/6/g, '[рсту6]'],
+    [/7/g, '[фхцч7]'],
+    [/8/g, '[шщъы8]'],
+    [/9/g, '[ьэюя9]'],
+  ];
+
+  textSearchReplacements: [RegExp, string][] = [
+    [/[ыіi]/g, '[ыії]'],
+    [/[ъ'ʼ]/g, "[ъ'ʼ]"],
+    [/[эє]/g, '[эє]'],
+    [/[гґ]/g, '[гґ]'],
+    [/[её]/g, '[её]'],
+  ];
+
+  internationalWordReg(word: string, isNumberSearch?: boolean) {
+    return makeRegExp(
+      `/${(isNumberSearch ? this.numberSearchReplacements : this.textSearchReplacements)
+        .reduce((acc, [from, to]) => acc.replace(from, to), word)
+        .toLowerCase()}/`,
+    );
+  }
+
+  searchRate<T, R extends { item: T; deep: number; rate: number; field: string; pos: string[] }, RetItem extends R = R>(
+    items: T[],
+    searchWord: string,
+    places: (Trace[] | Trace)[],
+    isNumberSearch?: boolean,
+    mapNumListItem: (num: number) => number = itIt,
+  ): RetItem[] {
+    const normalWords = isNumberSearch
+      ? searchWord.split(makeRegExp('/0+/')).filter(itIt)
+      : searchWord.split(makeRegExp(`/[^a-z0-9'ʼ${slavicLowerLettersStr}]+/i`)).filter(itIt);
+    const words = normalWords.map(word => word.toLowerCase());
+    const wordRegs = normalWords.map(word => this.internationalWordReg(word, isNumberSearch));
+
+    return items.reduce((ferries: RetItem[], item, itemi) => {
+      const ferry = { item, deep: 0, rate: 0, pos: [] } as never as RetItem;
+
+      if (
+        places.some((place, placei) => {
+          ferry.deep = placei;
+          const index = constantPositions.indexOf(place as never);
+
+          if (index > -1) {
+            const rateIndex = words.findIndex(word =>
+              word && words.length > 1
+                ? `${mapNumListItem(itemi + index)}` === word
+                : `${itemi + index}`.startsWith(word),
+            );
+
+            if (rateIndex > -1) {
+              ferry.rate = 1;
+              return true;
+            }
+            return false;
+          }
+
+          const searchInPlace = (searchPath: unknown[], str: string, level: number) => {
+            str = str.toLowerCase();
+            let noWord = false;
+
+            const currRate = words.reduce((accRate: number | null, _word, wordi) => {
+              if (noWord || !wordRegs[wordi]) return null;
+              const index = str.search(wordRegs[wordi]);
+              if (index < 0) {
+                noWord = true;
+                return null;
+              }
+
+              ferry.pos.push(searchPath.concat(index).join('/'));
+
+              return (accRate as number) + index + level;
+            }, null);
+
+            if (noWord || currRate == null) return false;
+
+            ferry.rate = currRate;
+            return true;
+          };
+
+          const search = (searchPath: unknown[], track: Trace[] | Trace, target: unknown, level: number) => {
+            let searched = false;
+
+            [track].flat().reduce((nestedTarget, trace, tracei, tracea) => {
+              if (!nestedTarget) return null;
+              if (trace === constants.INDEX && this.isArr(nestedTarget)) {
+                searched = nestedTarget.some((o, oi) =>
+                  search(
+                    searchPath.concat(`${constants.INDEX}:${oi}`),
+                    track.slice(tracei + 1),
+                    o,
+                    (level + tracei) * 10,
+                  ),
+                );
+                return null;
+              }
+
+              if (tracei >= tracea.length - 1) {
+                searched = searchInPlace(
+                  searchPath.concat(trace),
+                  (nestedTarget as never as Record<string, string>)[trace as string],
+                  level,
+                );
+              }
+
+              return (nestedTarget as never as Record<string, string>)[trace as string];
+            }, target);
+
+            return searched;
+          };
+
+          const isSearched = search(this.isArr(place) ? [place[0]] : [], place, item, placei);
+
+          return isSearched;
+        })
+      )
+        ferries.push(ferry as never);
+
+      return ferries;
+    }, []);
+  }
+
+  searchRateWithSort<
+    T,
+    R extends { item: T; deep: number; rate: number; field: string; pos: string[] },
+    RetItem extends R = R,
+  >(
+    items: T[],
+    searchWord: string,
+    places: (Trace[] | Trace)[],
+    isNumberSearch?: boolean,
+  ): { list: Promise<RetItem[]>; reset: () => void } {
+    const { promise, reject, resolve } = Promise.withResolvers<RetItem[]>();
+    const reseter: { t: TimeOut } = { t: undefined };
+
+    const result = this.searchRate<T, R, RetItem>(items, searchWord, places, isNumberSearch);
+
+    setTimeout(() => {
+      resolve(this.qsort(result, (a, b) => a.rate - b.rate, 3, reseter));
+    }, 0);
+
+    return {
+      list: promise,
+      reset: () => {
+        reject();
+        clearTimeout(reseter.t);
+      },
+    };
+  }
+
+  qsort<Item>(items: Item[], compareFn?: (a: Item, b: Item) => number, interval = 0, reseter?: { t: TimeOut }) {
+    compareFn ??= (a, b) => (a > b ? 1 : a === b ? 0 : -1);
+    reseter ??= { t: undefined };
+
+    const sort = async (items: Item[]): Promise<Item[]> => {
+      if (items.length < 2) return items;
+
+      const { promise, resolve } = Promise.withResolvers<Item[]>();
+
+      reseter.t = setTimeout(async () => {
+        const less = [];
+        const great = [];
+        const pivot = items[0];
+        const list = items.slice(1);
+
+        for (const item of list)
+          if (compareFn(item, pivot) < 1) less.push(item);
+          else great.push(item);
+
+        resolve((await sort(less)).concat(pivot, await sort(great)));
+      }, interval);
+
+      return promise;
+    };
+
+    return sort(items);
+  }
+
   clone =
     typeof structuredClone === 'function'
       ? <Val>(obj: Val, options?: Parameters<typeof structuredClone>[1]): Val => structuredClone(obj, options)
@@ -150,60 +349,7 @@ export class SMyLib {
     return id as Id;
   }
 
-  isEq(base: unknown, source: unknown, isIgnoreArrayItemsOrder?: boolean) {
-    if (base === source) return true;
-    if (base == null && base == source) return true;
-    if (base == null || source == null) return false;
-
-    if (this.typeOf(base) !== this.typeOf(source)) return false;
-
-    if (typeof base === 'object') {
-      if (this.isArr(base) && this.isArr(source)) {
-        if (base.length !== source.length) return false;
-
-        if (isIgnoreArrayItemsOrder) {
-          for (const bVal of base) {
-            let isNotFound = true;
-
-            for (const sVal of source)
-              if (this.isEq(bVal, sVal, isIgnoreArrayItemsOrder)) {
-                isNotFound = false;
-                break;
-              }
-
-            if (isNotFound) return false;
-          }
-
-          return true;
-        } else {
-          for (let basei = 0; basei < base.length; basei++) {
-            if (!this.isEq(base[basei], source[basei], isIgnoreArrayItemsOrder)) return false;
-          }
-
-          return true;
-        }
-      }
-
-      const bEntries = Object.entries(base).filter(([, val]) => val !== undefined);
-      const sEntries = Object.entries(source).filter(([, val]) => val !== undefined);
-
-      if (
-        bEntries.length !== sEntries.length ||
-        bEntries.some(([bKey, bVal]) => !this.isEq(bVal, source[bKey as never], isIgnoreArrayItemsOrder))
-      )
-        return false;
-    } else if (base !== source) return false;
-
-    return true;
-  }
-
-  typeOf(obj: unknown): string | null {
-    return (
-      (['isStr', 'isNum', 'isBool', 'isArr', 'isNull', 'isUnd', 'isFunc', 'isObj', 'isNan'] as (keyof SMyLib)[]).find(
-        (type: keyof SMyLib) => (this[type] as func)(obj),
-      ) || null
-    );
-  }
+  isEq = checkIsEq;
 
   md5(content: string) {
     return md5(content);

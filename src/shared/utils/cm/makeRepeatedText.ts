@@ -1,4 +1,5 @@
-import { CmComOrder, CmComOrderEditableRegion } from '$cm/ext';
+import { CmComOrderEditableRegion } from '#shared/model/cm/order/regions';
+import { CmComOrder } from 'shared/const/cm/order/Order';
 import { nbsp } from './com/const';
 
 export const cmComOrderMakeRepeatedText = <Ord extends CmComOrder>(

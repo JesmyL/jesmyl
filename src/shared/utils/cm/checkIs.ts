@@ -1,5 +1,5 @@
-import { CmComOrderWidClass } from '$cm/entities/com-order/lib/OrderWid';
-import { ICmComOrderExportableMe } from '$cm/ext';
+import { CmComOrderWidClass } from '#shared/model/cm/order/OrderWid';
+import { ICmComOrderExportableMe } from '#shared/model/cm/order/regions';
 import { IExportableComInterpretation, IExportableOrder } from 'shared/api';
 
 export const cmComOrderCheckIsOrdVisibleInInterpretation = (

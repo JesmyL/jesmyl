@@ -4,13 +4,13 @@ import { cmComCommentCurrentComw2OpenAltiDictAtom, useCmComCommentBlockCss } fro
 import { CmComCommentAlternativeSelector } from '$cm/entities/ComCommentAlternativeSelector';
 import { CmComCommentSavedLocalMarker } from '$cm/entities/ComCommentSavedLocalMarker';
 import { CmComCommentTools } from '$cm/entities/ComCommentTools';
-import { CmCom } from '$cm/ext';
 import { updateCmComCommentConstructorRulePropsDict } from '$cm/shared/lib/updateComCommentConstructorRulePropsDict';
 import { cmIsShowMyCommentsAtom } from '$cm/shared/state';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useMemo, useState } from 'react';
 import { CmComCommentBlockSimpleSelector, CmComCommentBlockSpecialSelector } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
 import { CmComCommentConstructorRuleType } from 'shared/model/cm/com-comment';
 import { itNIt, itNUnd, retNull } from 'shared/utils';
 import { CmComCommentConstructorCurrentInnerKindContext } from '../state/CurrentInnerKind';

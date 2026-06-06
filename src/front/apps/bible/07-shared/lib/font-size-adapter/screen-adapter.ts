@@ -1,7 +1,7 @@
 import { isBroadcastTextVisibleAtom } from '#features/broadcast/atoms';
 import { useBibleBroadcastScreenFontSizeAdapter } from '#shared/lib/hooks/useFontSizeAdapter';
-import { BibleBroadcastScreenConfig } from '$bible/entities/broadcast';
 import { useAtomValue } from 'atomaric';
+import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 
 export const useBibleBroadcastScreenFontSizeScreenAdapter = (
   content: string,

@@ -1,12 +1,12 @@
-import { mylib } from '#shared/lib/my-lib';
-import { CmComOrder } from '$cm/ext';
 import { makeRegExp } from 'regexpert';
+import { checkIsString } from 'shared/utils/checkIs';
 import {
   chordBemoleEquivalent,
   simpleHashChordReg_g,
   simpleHashChords,
   simpleHashedEachLetterChordReg_g,
 } from 'shared/utils/cm/com/const';
+import { CmComOrder } from '../../order/Order';
 import { CmComOrders } from './20-Orders';
 
 export class CmComChords extends CmComOrders {
@@ -99,7 +99,7 @@ export class CmComChords extends CmComOrders {
   }
 
   actualChords(chordsScalar?: string | number, position = this.transPosition) {
-    const chords = mylib.isStr(chordsScalar) ? (chordsScalar as string) : this.chords?.[chordsScalar as number];
+    const chords = checkIsString(chordsScalar) ? (chordsScalar as string) : this.chords?.[chordsScalar as number];
     return chords && CmComChords.withBemoles(this.transposeBlock(chords, position), this.isBemoled);
   }
 

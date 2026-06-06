@@ -6,11 +6,12 @@ import {
   cmComAudioPlayerSwitchIsPlay,
   cmComAudioPlayerUpdateCurrentTime,
 } from '$cm/entities/com-audio-player';
-import { CmCom, makeCmComAudioMarkTitleBySelector } from '$cm/ext';
 import { cmIDB } from '$cm/shared/state';
 import { Atom, useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { CmComAudioMarkPackTime, CmComAudioMarkSelector, CmComOrderWid } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
+import { makeCmComAudioMarkTitleBySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { itIt } from 'shared/utils';
 
 export const useCmComOrderAudioMarkControlButtons = (

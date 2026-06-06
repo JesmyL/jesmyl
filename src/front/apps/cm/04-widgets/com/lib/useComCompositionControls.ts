@@ -5,9 +5,9 @@ import {
   cmComAudioPlayerIsPlayAtom,
   cmComAudioPlayerSetSrc,
 } from '$cm/entities/com-audio-player';
-import { CmCom } from '$cm/ext';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useEffect, useRef } from 'react';
+import { CmCom } from 'shared/const/cm/Com';
 
 export const useCmComCompositionControls = (ccom: CmCom | nil) => {
   const { addLaterComw, laterComws } = useCmComLaterList();

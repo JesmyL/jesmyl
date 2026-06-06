@@ -1,5 +1,5 @@
-import { CmBroadcastSchWgtLiveDataValue } from '$cm/ext';
 import { CmBroadcastScreen } from '$cm/widgets/broadcast';
+import { CmBroadcastSchWgtLiveDataValue } from 'shared/model/cm/SchWgtLive';
 
 type Props = CmBroadcastSchWgtLiveDataValue & {
   subUpdates: number | string | und;

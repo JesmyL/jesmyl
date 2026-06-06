@@ -1,7 +1,7 @@
 import { useScreenBroadcastPositionsStyles } from '#features/broadcast/complect/hooks/position-styles';
 import { useScreenBroadcastTextStyles } from '#features/broadcast/complect/hooks/text-styles';
 import { CSSProperties, useMemo } from 'react';
-import { BibleBroadcastScreenConfig } from '../model/model';
+import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 
 export const useBibleBroadcastScreenAddressTextWrapperStyle = (currentConfig: BibleBroadcastScreenConfig | und) => {
   const textStyles = useScreenBroadcastTextStyles(currentConfig?.address);

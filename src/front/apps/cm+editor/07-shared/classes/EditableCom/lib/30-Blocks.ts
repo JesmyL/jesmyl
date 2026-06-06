@@ -1,4 +1,4 @@
-import { cmEditComClientTsjrpcMethods } from '../../../lib/cm-editor.tsjrpc.methods';
+import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { EditableComOrders } from './20-Orders';
 
 const itTrim = (it: string) => it.trim();

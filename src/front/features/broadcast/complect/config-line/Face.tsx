@@ -1,7 +1,7 @@
+import { ScreenBroadcastConfig } from '#features/broadcast/model';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import styled from '@emotion/styled';
 import { twMerge } from 'tailwind-merge';
-import { ScreenBroadcastConfig } from '../../model';
 
 interface ScreenBroadcastFaceProps {
   configi: number;

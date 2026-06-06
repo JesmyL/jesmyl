@@ -1,9 +1,9 @@
+import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { cmComChordHardLevelAtom, CmComNotFoundPage, useCmComCurrent } from '$cm/entities/com';
 import { CmComOrderList } from '$cm/entities/com-order';
-import { CmCom } from '$cm/ext';
-import { ChordVisibleVariant } from '$cm/shared/model';
 import { useAtomValue } from 'atomaric';
 import { RefObject } from 'react';
+import { CmCom } from 'shared/const/cm/Com';
 
 interface Props {
   com?: CmCom;

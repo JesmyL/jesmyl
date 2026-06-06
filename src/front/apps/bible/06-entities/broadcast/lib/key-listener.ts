@@ -6,6 +6,7 @@ import {
 } from '#shared/lib/hookEffectPipe';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { mylib } from '#shared/lib/my-lib';
+import { useBibleBroadcastPlanAddToPlan } from '$bible/entities/broadcast-plan';
 import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
 import {
   useBibleAddressBooki,
@@ -18,7 +19,6 @@ import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
 import { BibleBroadcastAddress, BibleBroadcastJoinAddress, BibleVersei } from '$bible/shared/model/base';
 import { bibleJoinAddressAtom, bibleVerseiAtom } from '$bible/shared/state/atoms';
 import { useEffect, useState } from 'react';
-import { useBibleBroadcastPlanAddToPlan } from '../../broadcast-plan/lib/plan';
 
 export const BibleBroadcastScreenKeyListener = (versei: BibleVersei, win?: Window) => {
   const [numberCollection, setNumberCollection] = useState('');

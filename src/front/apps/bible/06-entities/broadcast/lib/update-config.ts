@@ -2,8 +2,8 @@ import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
 import { bibleIDB } from '$bible/shared/state/bibleIDB';
 import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
+import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 import { bibleBroadcastDefaultConfig } from '../config/configs';
-import { BibleBroadcastScreenConfig } from '../model/model';
 
 export const useBibleBroadcastUpdateConfig = (topConfigi?: number) => {
   return useCallback(

@@ -1,9 +1,9 @@
-import { CmCom } from '$cm/ext';
+import { CmComOrderWidClass } from '#shared/model/cm/order/OrderWid';
 import { ReactNode } from 'react';
 import { IExportableOrder, OrderRepeats, SpecialOrderRepeatsKey } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
+import { CmComOrder } from 'shared/const/cm/order/Order';
 import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';
-import { CmComOrder } from '../lib/Order';
-import { CmComOrderWidClass } from '../lib/OrderWid';
 
 export type CmComOrderEditableRegion<Ord extends CmComOrder> = CmComOrderEditableRegionBase<Ord> & {
   startRate: number;

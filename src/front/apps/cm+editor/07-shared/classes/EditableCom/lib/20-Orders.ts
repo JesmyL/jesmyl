@@ -1,4 +1,4 @@
-import { ICmComOrderExportableMe } from '$cm/ext';
+import { ICmComOrderExportableMe } from '#shared/model/cm/order/regions';
 import { EditableComOrder } from '../../EditableComOrder';
 import { EditableComCorrects } from './10-Corrects';
 

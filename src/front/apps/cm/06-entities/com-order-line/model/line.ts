@@ -1,4 +1,5 @@
-import { CmComOrder, ICmComOrderProps } from '../../com-order';
+import { ICmComOrderProps } from '#shared/model/cm/order/regions';
+import { CmComOrder } from 'shared/const/cm/order/Order';
 
 export interface ICmComOrderLineAsComponentProps extends ICmComOrderProps {
   line: string;

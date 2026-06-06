@@ -1,7 +1,7 @@
 import { broadcastCurrentTextAppAtom, broadcastNextLiveDataAtom } from '#features/broadcast/atoms';
+import { LiveBroadcastAppProps } from '#shared/model/cm/Cm.model';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { BibleBroadcastLive } from '$bible/ext';
-import { LiveBroadcastAppProps } from '$cm/shared/model';
 import React, { memo, useCallback } from 'react';
 import { IScheduleWidgetWid } from 'shared/api';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';

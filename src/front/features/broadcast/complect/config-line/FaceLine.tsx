@@ -1,11 +1,11 @@
+import { currentBroadcastConfigiAtom, useScreenBroadcastConfigsValue } from '#features/broadcast/atoms';
+import { useAddScreenBroadcastConfig } from '#features/broadcast/hooks/configs';
+import { useWatchScreenBroadcast } from '#features/broadcast/hooks/watch-broadcast';
+import { useScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
+import { ScreenBroadcastConfig } from '#features/broadcast/model';
 import { Button } from '#shared/components';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
-import { currentBroadcastConfigiAtom, useScreenBroadcastConfigsValue } from '../../atoms';
-import { useAddScreenBroadcastConfig } from '../../hooks/configs';
-import { useWatchScreenBroadcast } from '../../hooks/watch-broadcast';
-import { useScreenBroadcastWindows } from '../../hooks/windows';
-import { ScreenBroadcastConfig } from '../../model';
 import { ScreenBroadcastFace } from './Face';
 import { useScreenBroadcastPutOnFaceClose } from './hooks/put-on-face-close';
 

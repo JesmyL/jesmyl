@@ -2,9 +2,9 @@ import { mylib } from '#shared/lib/my-lib';
 import { useBibleBroadcastListSingleAddressSetter } from '$bible/entities/broadcast-list';
 import { useBibleBroadcastSearchResultSelectedSet } from '$bible/entities/broadcast-search';
 import { BibleBooki, BibleBroadcastJoinAddress, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
+import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
-import { bibleJoinAddressAtom } from '../../state/atoms';
 
 export const useBibleBroadcastAddressIndexesSetter = () => {
   const setAddress = useBibleBroadcastListSingleAddressSetter();

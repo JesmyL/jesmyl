@@ -1,4 +1,3 @@
-export { type BibleBroadcastScreenConfig } from '$bible/entities/broadcast';
 export { BibleTranslateModulesControl } from '$bible/entities/translate/ui/ModulesBroadcastControl';
 export { BibleTranslateModulesRedactButton } from '$bible/entities/translate/ui/ModulesBroadcastRedactButton';
 export { bibleLowerBooks, bibleTitles } from '$bible/shared/const/bibleTitles';

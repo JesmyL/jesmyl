@@ -2,9 +2,9 @@ import { Button } from '#shared/components';
 import { mylib } from '#shared/lib/my-lib';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { CmCom } from '$cm/ext';
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
+import { CmCom } from 'shared/const/cm/Com';
 import { capitalizeSlavicText } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
 

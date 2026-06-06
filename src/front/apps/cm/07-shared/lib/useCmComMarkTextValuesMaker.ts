@@ -1,14 +1,16 @@
 import { MyLib, mylib } from '#shared/lib/my-lib';
-import { CmCom, CmComOrder, cmIDB } from '$cm/ext';
 import { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmComAudioMarkPackTime, CmComOrderWid, HttpNumLeadLink } from 'shared/api';
-import { nbsp } from 'shared/utils/cm/com/const';
+import { CmCom } from 'shared/const/cm/Com';
 import {
   checkIsCmComAudioMarkTitleIsLineSelector,
   makeCmComAudioMarkLineiFromSelector,
   makeCmComAudioMarkTitleEmptySelector,
-} from './makeCmComAudioMarkTitleBySelector';
+} from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
+import { CmComOrder } from 'shared/const/cm/order/Order';
+import { nbsp } from 'shared/utils/cm/com/const';
+import { cmIDB } from '../state';
 
 const technicalTextPrefix = `##${Date.now()}@@`;
 type TotalRepeatsCount = { r: number };

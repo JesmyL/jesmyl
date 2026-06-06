@@ -1,10 +1,10 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
+import { BibleBroadcastArchive } from '$bible/entities/broadcast-archive';
 import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '$bible/shared/hooks';
 import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
 import styled from '@emotion/styled';
 import { JSX, memo, useEffect, useRef, useState } from 'react';
-import { BibleBroadcastArchive } from '../../broadcast-archive/ui/Archive';
 import { useBibleBroadcastPlan, useBibleBroadcastPlanClearSetter } from '../lib/plan';
 
 export const BibleBroadcastPlanArchive = memo(function BibleBroadcastPlanArchive(): JSX.Element {

@@ -1,8 +1,8 @@
+import { takeScreenBroadcastBackgroundStyles } from '#features/broadcast/complect/hooks/background-styles';
+import { AlertLineConfig } from '#features/broadcast/model';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { takeScreenBroadcastBackgroundStyles } from '../../complect/hooks/background-styles';
-import { AlertLineConfig } from '../../model';
 
 type Props = {
   config: AlertLineConfig;

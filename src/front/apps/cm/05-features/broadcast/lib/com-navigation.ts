@@ -1,11 +1,11 @@
-import { useCmComCurrent, useCmComCurrentComPackContext } from '$cm/entities/com';
+import { useCmComCurrent, useCmComCurrentComPackContext, useCmComSelectedList } from '$cm/entities/com';
 import { cmComFaceCurrentComwIdPrefix } from '$cm/entities/com-face';
 import { useCmComFavouriteList } from '$cm/entities/com-favourite';
-import { CmCom, useCmComSelectedList } from '$cm/ext';
 import { cmOpenComListModeAtom } from '$cm/shared/state';
 import { useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
+import { CmCom } from 'shared/const/cm/Com';
 import { useCmBroadcastSlidesContext } from '../state/slides';
 
 export const useCmBroadcastScreenComNavigations = () => {

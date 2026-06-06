@@ -15,7 +15,7 @@ import {
 import { CmComFaceList } from '$cm/entities/com-face';
 import { CmComToolHideMetronome } from '$cm/entities/com-tool';
 import { CmComListPackKindSelector } from '$cm/entities/ComListPackKindSelector';
-import { CmCom, CmComAudioPlayerMarksMovers } from '$cm/ext';
+import { CmComAudioPlayerMarksMovers } from '$cm/ext';
 import { useCmBroadcastScreenComNavigations, useCmBroadcastSlidesContext } from '$cm/features/broadcast';
 import { getCmComFreshAudioMarksPack } from '$cm/shared/lib/getFresh';
 import { cmComTrackPreSwitchTimeAtom, cmIsTrackBroadcastAtom } from '$cm/shared/state';
@@ -25,6 +25,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { ReactNode } from 'react';
 import { CmComWid, HttpNumLeadLink } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import { useCmBroadcastUpdateCurrentConfig } from '../hooks/update-config';

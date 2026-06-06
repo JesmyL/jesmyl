@@ -8,11 +8,11 @@ import {
   CmComToolMiniAnchorSwitch,
 } from '$cm/entities/com-tool';
 import { cmComChordVisibleVariantAtom, cmComIsComMiniAnchorAtom } from '$cm/entities/index';
-import { CmCom } from '$cm/ext';
 import { TheCmComCurrent } from '$cm/widgets/com';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
+import { CmCom } from 'shared/const/cm/Com';
 import { nbsp } from 'shared/utils/cm/com/const';
 
 export const CmComCopyTextModalInner = ({ com }: { com: CmCom }) => {

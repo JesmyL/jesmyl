@@ -1,9 +1,10 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { StyledLoadingSpinner } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { ChordVisibleVariant, CmComOrderLine, TheCmCom, TheCmComOrder } from '$cm/ext';
+import { CmComOrderLine, TheCmCom, TheCmComOrder } from '$cm/ext';
 import React from 'react';
 import { makeRegExp } from 'regexpert';
 import { useCmEditorComTabUpdateLinePositions } from '../lib/useUpdateChordLinePositions';

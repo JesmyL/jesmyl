@@ -1,10 +1,10 @@
 import { mylib } from '#shared/lib/my-lib';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { CmCom } from '$cm/ext';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { CmComOrderWid } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
 import {
   CmComCommentConstructorPropKey,
   CmComCommentConstructorPropsDictSelectorRulePropsKey,

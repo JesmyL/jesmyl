@@ -1,5 +1,5 @@
 import { fixedResizerLinesAtom } from '#features/broadcast/complect/atoms';
-import { FixedResizerLines, ScreenBroadcastPositionConfig } from '../../../model';
+import { FixedResizerLines, ScreenBroadcastPositionConfig } from '#features/broadcast/complect/model';
 
 const minSize = 2;
 

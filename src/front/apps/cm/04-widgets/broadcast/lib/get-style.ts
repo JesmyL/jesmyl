@@ -1,7 +1,7 @@
 import { useScreenBroadcastPositionsStyles } from '#features/broadcast/complect/hooks/position-styles';
 import { useScreenBroadcastTextStyles } from '#features/broadcast/complect/hooks/text-styles';
 import { CSSProperties, useMemo } from 'react';
-import { CmBroadcastTextScreenConfig } from '../model/model';
+import { CmBroadcastTextScreenConfig } from 'shared/model/cm/broadcast';
 
 export const useCmBroadcastScreenStyle = (isVisible: boolean, currentConfig: CmBroadcastTextScreenConfig | und) => {
   const textStyles = useScreenBroadcastTextStyles(currentConfig);

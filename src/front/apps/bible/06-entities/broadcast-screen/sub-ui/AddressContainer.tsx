@@ -1,5 +1,6 @@
-import { BibleBroadcastScreenConfig, useBibleBroadcastScreenAddressStyle } from '$bible/entities/broadcast';
+import { useBibleBroadcastScreenAddressStyle } from '$bible/entities/broadcast';
 import { useRef } from 'react';
+import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 import { useMyFileNode } from 'x/my-files';
 import { BibleBroadcastScreenAddressContent } from './AddressContent';
 import { BibleBroadcastScreenAddressContentPositionConfiguration } from './AddressContentPositionConfiguration';

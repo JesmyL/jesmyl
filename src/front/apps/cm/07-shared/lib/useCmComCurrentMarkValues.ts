@@ -1,5 +1,5 @@
-import { CmCom } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
+import { CmCom } from 'shared/const/cm/Com';
 import { cmPlayerBroadcastAudioSrcAtom } from '../state/broadcast.atoms';
 import { useCmComCurrentMarkTimei } from './useCmComCurrentMarkTime';
 import { useCmComMarkTextValuesMaker } from './useCmComMarkTextValuesMaker';

@@ -1,5 +1,5 @@
+import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { cmComMaxFontSize, cmComMinFontSize } from '$cm/shared/const';
-import { ChordVisibleVariant } from '$cm/shared/model';
 import { atom } from 'atomaric';
 import { CmComWid, MigratableComToolName } from 'shared/api';
 

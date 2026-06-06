@@ -1,10 +1,12 @@
+import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { ChordVisibleVariant, CmCom, CmComOrderList } from '$cm/ext';
+import { CmComOrderList } from '$cm/ext';
 import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
+import { CmCom } from 'shared/const/cm/Com';
 import { twMerge } from 'tailwind-merge';
 
 let isOpenModalAtom: Atom<boolean>;

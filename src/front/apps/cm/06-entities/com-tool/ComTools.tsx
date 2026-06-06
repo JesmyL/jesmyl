@@ -1,10 +1,10 @@
 import { Badge } from '#shared/components/ui/badge';
 import { mylib } from '#shared/lib/my-lib';
+import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmComMaxFontSize, cmComMinFontSize } from '$cm/shared/const';
-import { ChordVisibleVariant } from '$cm/shared/model';
 import { cmIDB } from '$cm/shared/state';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useQuery } from '@tanstack/react-query';

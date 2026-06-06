@@ -1,9 +1,10 @@
-import { cmEditorCategoryTrackers } from '#shared/const/cm/cmEditorCategoryTrackers';
-import { mylib } from '#shared/lib/my-lib';
-import { CmCom } from '$cm/ext';
-import { BaseNamed } from '$cm/shared/lib';
+import { CmCatKind } from '#shared/model/cm/cat/Cat.model';
 import { CmComWid, IExportableCat } from 'shared/api';
-import { CmCatKind } from '../model/Cat.model';
+import { smylib } from 'shared/utils';
+import { objectKeys } from 'shared/utils/object.utils';
+import { BaseNamed } from './BaseNamed';
+import { cmEditorCategoryTrackers } from './cmEditorCategoryTrackers';
+import { CmCom } from './Com';
 
 export class CmCat extends BaseNamed<IExportableCat> {
   term?: string;
@@ -35,15 +36,15 @@ export class CmCat extends BaseNamed<IExportableCat> {
   }
 
   get comws(): CmComWid[] {
-    return this.top.s ?? mylib.keys(this.top.d ?? {}).map(Number);
+    return this.top.s ?? objectKeys(this.top.d ?? {}).map(Number);
   }
 
   static sortedSearch(term: string, coms: CmCom[], isNumberSearch?: boolean) {
     if (term) {
-      return mylib.searchRateWithSort(
+      return smylib.searchRateWithSort(
         coms,
         term,
-        ['name', 'number', ['orders', mylib.c.INDEX, 'text']],
+        ['name', 'number', ['orders', smylib.c.INDEX, 'text']],
         isNumberSearch,
       );
     } else {

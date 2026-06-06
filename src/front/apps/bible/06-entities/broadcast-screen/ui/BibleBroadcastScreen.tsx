@@ -1,11 +1,10 @@
 import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { BibleBroadcastScreenKeyListener, useBibleBroadcastScreenWrapperStyle } from '$bible/entities/broadcast';
 import { useBibleAddressVersei } from '$bible/shared/hooks';
 import { useRef, useState } from 'react';
+import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 import { useApplyScreenFontFamilyEffect, useMyFileNode } from 'x/my-files';
-import { BibleBroadcastScreenKeyListener } from '../../broadcast/lib/key-listener';
-import { BibleBroadcastScreenConfig } from '../../broadcast/model/model';
-import { useBibleBroadcastScreenWrapperStyle } from '../../broadcast/style/wrapper-style';
 import { BibleBroadcastScreenAddressContainer } from '../sub-ui/AddressContainer';
 import { BibleBroadcastScreenAddressPanel } from '../sub-ui/AddressPanel';
 import { BibleBroadcastScreenContent } from '../sub-ui/Content';

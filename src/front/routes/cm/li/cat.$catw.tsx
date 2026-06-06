@@ -1,10 +1,10 @@
 import { useCmCat } from '$cm/entities/cat';
 import { CmComListContextValue } from '$cm/entities/com';
-import { CmCom } from '$cm/ext';
 import { CmCatPage } from '$cm/pages/CatPage';
 import { makeCmComNestedRoute } from '$cm/shared/lib';
 import { createFileRoute } from '@tanstack/react-router';
 import { useMemo } from 'react';
+import { CmCom } from 'shared/const/cm/Com';
 
 export const Route = createFileRoute('/cm/li/cat/$catw')(
   makeCmComNestedRoute({

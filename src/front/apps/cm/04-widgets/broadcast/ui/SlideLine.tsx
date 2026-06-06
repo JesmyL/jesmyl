@@ -1,5 +1,5 @@
+import { CmBroadcastShowChordedSlideMode } from '#shared/model/cm/Cm.model';
 import { useCmBroadcastSlidesContext } from '$cm/features/broadcast';
-import { CmBroadcastShowChordedSlideMode } from '$cm/shared/model';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
 import { takeTextBlockWithoutSquareBracketsContent } from 'shared/utils/cm/com/takeTextBlockIncorrects';

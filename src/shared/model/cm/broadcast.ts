@@ -1,5 +1,20 @@
-import { CmComOrder } from '$cm/ext';
+import { ScreenBroadcastPositionConfig, ScreenBroadcastTextConfig } from '#features/broadcast/complect/model';
+import { BackgroundConfigProps } from '#shared/ui/configurators/model';
 import { CmComNewlinerLinei, CmComNewlinerRepeati, CmComOrderWid } from 'shared/api';
+import { CmComOrder } from 'shared/const/cm/order/Order';
+
+export type CmBroadcastTextScreenConfig = ScreenBroadcastPositionConfig & ScreenBroadcastTextConfig;
+
+export interface CmBroadcastScreenConfigSubConfigs {
+  /** next slide config */
+  next: CmBroadcastTextScreenConfig;
+  /** chorded block slide config */
+  chorded: CmBroadcastTextScreenConfig;
+}
+
+export interface CmBroadcastScreenConfig extends CmBroadcastTextScreenConfig, BackgroundConfigProps {
+  subs?: Partial<CmBroadcastScreenConfigSubConfigs>;
+}
 
 export type CmBroadcastMonolineSlideLineId =
   `${CmComNewlinerLinei}${`r${CmComNewlinerRepeati}` | ''}${`s${number}` | ''}`;

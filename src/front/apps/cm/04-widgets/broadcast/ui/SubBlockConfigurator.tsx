@@ -9,7 +9,7 @@ import {
   CmBroadcastScreenConfig,
   CmBroadcastScreenConfigSubConfigs,
   CmBroadcastTextScreenConfig,
-} from '../model/model';
+} from 'shared/model/cm/broadcast';
 
 type Props = {
   currentConfig: CmBroadcastScreenConfig;

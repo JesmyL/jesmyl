@@ -1,7 +1,8 @@
+import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
+import { ICmComOrderAsComponentProps, ICmComOrderHeaderAsComponentProps } from '#shared/model/cm/order/regions';
 import { ICmComOrderLineAsComponentProps } from '$cm/entities/com-order-line';
-import { CmCom, CmComOrder } from '$cm/ext';
-import { ChordVisibleVariant } from '$cm/shared/model';
-import { ICmComOrderAsComponentProps, ICmComOrderHeaderAsComponentProps } from './Order.model';
+import { CmCom } from 'shared/const/cm/Com';
+import { CmComOrder } from 'shared/const/cm/order/Order';
 
 export interface ICmComOrderListProps {
   asHeaderNode?: (props: ICmComOrderHeaderAsComponentProps) => React.ReactNode;

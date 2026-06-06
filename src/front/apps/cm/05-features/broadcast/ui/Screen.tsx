@@ -1,7 +1,7 @@
 import { addDebouncedEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { useEffect, useState } from 'react';
-import { CmBroadcastSchWgtLiveDataValue } from '../model/model';
+import { CmBroadcastSchWgtLiveDataValue } from 'shared/model/cm/SchWgtLive';
 import { CmBroadcastLiveList } from './List';
 import { CmBroadcastLiveSlide } from './Slide';
 

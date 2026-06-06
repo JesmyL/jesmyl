@@ -1,10 +1,10 @@
 import { makeBroadcastTextStroke } from '#features/broadcast/complect/defaults';
+import { broadcastShowAlertLineConfigIdAtom } from '#features/broadcast/initial-slide-context';
 import { complectIDB } from '$index/shared/state';
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { broadcastShowAlertLineConfigIdAtom } from '../../initial-slide-context';
 
 export const AlertLineSlideText = () => {
   const alertLineText = complectIDB.useValue.broadcastAlertLine();

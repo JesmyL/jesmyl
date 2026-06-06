@@ -1,10 +1,11 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { Button } from '#shared/components';
+import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { CmEditorComEditBemoled } from '$cm+editor/features/ComEditBemoled';
 import { CmEditorComEditBpm } from '$cm+editor/features/ComEditBpm';
 import { CmEditorComEditTransposition } from '$cm+editor/features/ComEditTransposition';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { ChordVisibleVariant, cmIDB, TheCmComOrder, useCmCom } from '$cm/ext';
+import { cmIDB, TheCmComOrder, useCmCom } from '$cm/ext';
 import { indexIDB } from '$index/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { CmComWid, IScheduleWidgetWid } from 'shared/api';

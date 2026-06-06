@@ -8,7 +8,7 @@ import { useMakeScreenBroadcastConfigsFillPack } from '#features/broadcast/hooks
 import { BackgroundConfigProps } from '#shared/ui/configurators/model';
 import { cmIDB } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
-import { CmBroadcastScreenConfig } from '../model/model';
+import { CmBroadcastScreenConfig } from 'shared/model/cm/broadcast';
 
 export const cmBroadcastDefaultConfig: CmBroadcastScreenConfig & BackgroundConfigProps = {
   ...defaultScreenBroadcastPositionConfig,

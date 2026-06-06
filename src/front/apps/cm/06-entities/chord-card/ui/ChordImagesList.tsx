@@ -1,4 +1,4 @@
-import { CmCom } from '$cm/ext';
+import { CmCom } from 'shared/const/cm/Com';
 import { itIt } from 'shared/utils';
 import { CmChordCard } from './ChordCard';
 import { CmChordCardUndefined } from './UndefinedChordCard';

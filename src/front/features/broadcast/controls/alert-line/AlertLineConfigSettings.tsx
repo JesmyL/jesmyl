@@ -1,3 +1,4 @@
+import { AlertLineConfig } from '#features/broadcast/model';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { useDebounceAction } from '#shared/lib/hooks/useDebounceAction';
@@ -13,7 +14,6 @@ import { TextInput } from '#shared/ui/TextInput';
 import { complectIDB } from '$index/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React, { useDeferredValue, useEffect, useRef, useState } from 'react';
-import { AlertLineConfig } from '../../model';
 
 const LazyAlertLineConfigIcon = React.lazy(() => import('./AlertLineConfigIcon'));
 const LazyIconConfigurator = React.lazy(() => import('#shared/ui/configurators/Icon'));

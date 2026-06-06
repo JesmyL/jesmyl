@@ -1,6 +1,7 @@
-import { BibleBroadcastScreenConfig, useBibleBroadcastScreenAddressTextWrapperStyle } from '$bible/entities/broadcast';
+import { useBibleBroadcastScreenAddressTextWrapperStyle } from '$bible/entities/broadcast';
 import { useBibleAddressTextContext } from '$bible/shared/contexts/texts';
 import { useBibleBroadcastScreenFontSizeAddressAdapter } from '$bible/shared/lib';
+import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 
 interface Props {
   configi: number | und;

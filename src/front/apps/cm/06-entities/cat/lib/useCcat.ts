@@ -4,7 +4,7 @@ import { cmIDB } from '$cm/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { CmCatWid } from 'shared/api';
-import { CmCat } from './Cat';
+import { CmCat } from 'shared/const/cm/Cat';
 
 export const useCmCat = (catw: CmCatWid) => {
   const icat = useCmCatICcat(catw);

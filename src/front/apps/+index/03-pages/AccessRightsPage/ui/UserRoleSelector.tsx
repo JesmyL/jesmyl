@@ -1,5 +1,4 @@
 import { Button } from '#shared/components/ui/button';
-import { MyLib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { usePrompt } from '#shared/ui/modal';
 import { indexAppUserAccessRightsMatrixAtom, indexOpenAccessRoleRedactorAtom } from '$index/shared/state';
@@ -7,6 +6,7 @@ import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useAtomValue } from 'atomaric';
 import { SokiAuthLogin } from 'shared/api';
 import { IndexAppUserAccessRights } from 'shared/model/index/access-rights';
+import { objectKeys } from 'shared/utils/object.utils';
 
 export const IndexAccessRightsUserRoleSelector = ({
   userRights,
@@ -27,7 +27,7 @@ export const IndexAccessRightsUserRoleSelector = ({
         <Dropdown
           id={userRights.info.role ?? null}
           nullTitle="Без роли"
-          items={MyLib.keys(userRightsAndRoles.roles).map(id => ({ id, title: id }))}
+          items={objectKeys(userRightsAndRoles.roles).map(id => ({ id, title: id }))}
           renderItem={({ node, id, afterClickAction }) => (
             <div className="flex gap-2 w-max">
               {node}

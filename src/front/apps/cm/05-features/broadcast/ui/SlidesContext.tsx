@@ -1,12 +1,12 @@
+import { CmBroadcastShowChordedSlideMode } from '#shared/model/cm/Cm.model';
 import { HorizontalDirection } from '#shared/model/Direction';
 import { cmBroadcastCurrentSlideiAtom, cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
 import { useCmComCurrent } from '$cm/entities/com';
-import { CmCom } from '$cm/ext';
-import { CmBroadcastShowChordedSlideMode } from '$cm/shared/model';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { useCmBroadcastScreenConfig } from '$cm/widgets/broadcast';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useMemo } from 'react';
+import { CmCom } from 'shared/const/cm/Com';
 import { CmBroadcastMonolineSlide } from 'shared/model/cm/broadcast';
 import { CmBroadcastSlidesContextState } from '../model/slides';
 import { CmBroadcastInnerSlidesContext } from '../state/slides';

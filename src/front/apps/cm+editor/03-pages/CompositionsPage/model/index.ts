@@ -1,4 +1,4 @@
-import { CmCom } from '$cm/ext';
+import { CmCom } from 'shared/const/cm/Com';
 
 export type ICmEditorCompositionsCatSpecialSearches = {
   title: string;

@@ -12,12 +12,12 @@ import {
   cmComAudioPlayerSwitchIsPlay,
   cmComAudioPlayerUpdateCurrentTime,
   cmIDB,
-  makeCmComAudioMarkTitleBySelector,
 } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
+import { makeCmComAudioMarkTitleBySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { nbsp } from 'shared/utils/cm/com/const';
 import { CmEditorComAudioSolidOrdTextController } from './SolidOrdText';
 

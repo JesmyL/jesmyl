@@ -1,10 +1,10 @@
 import { mylib } from '#shared/lib/my-lib';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { CmComFaceList } from '$cm/entities/com-face';
-import { CmCom } from '$cm/ext';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
+import { CmCom } from 'shared/const/cm/Com';
 
 interface Props {
   coms: CmCom[];

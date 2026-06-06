@@ -1,7 +1,7 @@
-import { CmComOrderEditableRegionBase } from '$cm/entities/com-order';
-import { CmComOrder, CmComOrderEditableRegion } from '$cm/ext';
+import { CmComOrderEditableRegion, CmComOrderEditableRegionBase } from '#shared/model/cm/order/regions';
 import { makeRegExp } from 'regexpert';
 import { OrderRepeats, SpecialOrderRepeatsKey } from 'shared/api';
+import { CmComOrder } from 'shared/const/cm/order/Order';
 import { checkIsNumber } from '../checkIs';
 import { objectEntries, objectKeys } from '../object.utils';
 import {

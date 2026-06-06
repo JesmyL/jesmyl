@@ -1,5 +1,5 @@
-import { CmCat } from '$cm/ext';
 import { ruUaReg_i } from 'shared/utils/cm/com/const';
+import { CmCat } from '../Cat';
 import { CmComTexts } from './parents/40-Texts';
 
 export class CmCom extends CmComTexts {

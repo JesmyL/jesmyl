@@ -1,17 +1,17 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
-import {
-  CmCom,
-  CmComOrder,
-  checkIsCmComAudioMarkTitleIsLineSelector,
-  cmIDB,
-  makeCmComAudioMarkTitleBySelector,
-} from '$cm/ext';
-import { makeCmComAudioMarkLineiFromSelector } from '$cm/shared/lib/makeCmComAudioMarkTitleBySelector';
+import { cmIDB } from '$cm/ext';
 import { takeCmComTrackCurrentTimeMark } from '$cm/shared/lib/takeCmComTrackCurrentTimeMark';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useRef } from 'react';
 import { CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
+import {
+  checkIsCmComAudioMarkTitleIsLineSelector,
+  makeCmComAudioMarkLineiFromSelector,
+  makeCmComAudioMarkTitleBySelector,
+} from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
+import { CmComOrder } from 'shared/const/cm/order/Order';
 import { emptyFunc } from 'shared/utils';
 import {
   cmComAudioPlayerAddEventListenerPipe,

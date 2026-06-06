@@ -7,7 +7,7 @@ import {
 import { useMakeScreenBroadcastConfigsFillPack } from '#features/broadcast/hooks/configs';
 import { bibleIDB } from '$bible/shared/state/bibleIDB';
 import { useAtomValue } from 'atomaric';
-import { BibleBroadcastScreenConfig } from '../model/model';
+import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 
 export const bibleBroadcastDefaultConfig: BibleBroadcastScreenConfig = {
   ...defaultScreenBroadcastTextConfig,

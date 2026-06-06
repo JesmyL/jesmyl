@@ -1,5 +1,6 @@
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { MyLib } from '#shared/lib/my-lib';
+import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TextInput } from '#shared/ui/TextInput';
 import { TheButton } from '#shared/ui/TheButton';
@@ -9,13 +10,14 @@ import { useCmExtractHrefsFromHTML } from '$cm+editor/shared/lib/useCmExtractHre
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { ObserveUrlResource } from '$cm+editor/shared/ui/ObserveUrlResource';
 import { CmEditorComAudioControlledList } from '$cm+editor/widgets/com-audio';
-import { ChordVisibleVariant, CmCom, CmComOrderList, cmConstantsConfigAtom } from '$cm/ext';
+import { CmComOrderList, cmConstantsConfigAtom } from '$cm/ext';
 import styled from '@emotion/styled';
 import { useNavigate } from '@tanstack/react-router';
 import { Atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmComMod, CmComWid, CmMp3Rule, HttpNumLeadLink, IExportableCom } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
 import { itIt, itNNil } from 'shared/utils';
 import { chordsBlockIncorrectMessage } from 'shared/utils/cm/com/chordsBlockIncorrectMessage';
 import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';

@@ -1,3 +1,4 @@
+import { defaultAlertLineConfig } from '#features/broadcast/consts';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -5,7 +6,6 @@ import { complectIDB } from '$index/shared/state';
 import { Atom, atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React from 'react';
-import { defaultAlertLineConfig } from '../../consts';
 import { AlertLineConfigSettingsInner } from './AlertLineConfigSettings';
 
 const LazyAlertLineConfigIcon = React.lazy(() => import('./AlertLineConfigIcon'));

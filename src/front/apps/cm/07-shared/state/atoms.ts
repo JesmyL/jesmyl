@@ -1,7 +1,7 @@
 import { cmSecureAtomLevel } from '#shared/const/values';
+import { CmBroadcastShowChordedSlideMode } from '#shared/model/cm/Cm.model';
 import { atom } from 'atomaric';
 import { cmConstantsDefaultConfig } from 'shared/values/cm/cmConstantsDefaultConfig';
-import { CmBroadcastShowChordedSlideMode } from '../model';
 
 export const cmConstantsConfigAtom = atom(cmConstantsDefaultConfig, {
   storageKey: 'cm:constantsConfig',

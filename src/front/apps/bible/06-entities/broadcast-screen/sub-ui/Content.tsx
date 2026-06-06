@@ -1,9 +1,10 @@
-import { BibleBroadcastScreenConfig, useBibleBroadcastScreenScreenStyle } from '$bible/entities/broadcast';
+import { useBibleBroadcastScreenScreenStyle } from '$bible/entities/broadcast';
 import { bibleTagControledContentGlobalCssNode } from '$bible/shared/const/bibleTagControledContentGlobalCssNode';
 import { verseTranslateTitleCssClassName, verseTranslateTitleCssVariableName } from '$bible/shared/const/ids';
 import { useBibleTextContentContext } from '$bible/shared/contexts/texts';
 import { useBibleBroadcastScreenFontSizeScreenAdapter } from '$bible/shared/lib';
 import styled from '@emotion/styled';
+import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 
 interface Props {
   configi: number | und;

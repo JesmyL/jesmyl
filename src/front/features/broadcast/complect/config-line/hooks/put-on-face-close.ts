@@ -1,9 +1,9 @@
 import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
+import { useRemoveScreenBroadcastConfig } from '#features/broadcast/hooks/configs';
+import { BroadcastWindow, useUpdateScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
+import { useUpdateScreenBroadcastConfig } from '#features/broadcast/hooks/with-config';
+import { ScreenBroadcastConfig } from '#features/broadcast/model';
 import { useCallback } from 'react';
-import { useRemoveScreenBroadcastConfig } from '../../../hooks/configs';
-import { BroadcastWindow, useUpdateScreenBroadcastWindows } from '../../../hooks/windows';
-import { useUpdateScreenBroadcastConfig } from '../../../hooks/with-config';
-import { ScreenBroadcastConfig } from '../../../model';
 
 export const useScreenBroadcastPutOnFaceClose = <Config>(
   configs: ScreenBroadcastConfig[],

@@ -16,11 +16,11 @@ import { FileRoutesByPath, Link, useParams, useSearch } from '@tanstack/react-ro
 import { useAtomValue } from 'atomaric';
 import { JSX, useEffect } from 'react';
 import { CmCatWid } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { CmComInScheduleWid } from '../state/contexts';
 import { takeCatTermAtom } from './Cat';
-import { CmCom } from './Com';
 
 interface Props<Path extends keyof FileRoutesByPath> {
   path: Path;

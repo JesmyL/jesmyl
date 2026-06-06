@@ -4,8 +4,9 @@ import {
   takeCmComCommentKindBlockDict,
   useCmComCommentBlock,
 } from '$cm/entities/com-comment';
-import { CmCom, cmIDB } from '$cm/ext';
+import { cmIDB } from '$cm/ext';
 import { CmComCommentBlockSpecialSelector } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
 import { useDeferredCallback } from 'shared/utils/useDeferredCallback';
 import { comBlockKindsConfig } from 'shared/values/cm/block-kinds/comBlockKinds.config';
 import { twMerge } from 'tailwind-merge';
