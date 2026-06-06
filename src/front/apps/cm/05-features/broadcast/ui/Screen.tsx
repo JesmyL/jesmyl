@@ -1,4 +1,4 @@
-import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { addDebouncedEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { useEffect, useState } from 'react';
 import { CmBroadcastSchWgtLiveDataValue } from '../model/model';
@@ -20,7 +20,7 @@ export const CmBroadcastLiveScreen = (
     let i = 0;
 
     return hookEffectPipe()
-      .pipe(addEventListenerPipe(window, 'resize', () => setSubUpdates(++i)))
+      .pipe(addDebouncedEventListenerPipe(100, window, 'resize', () => setSubUpdates(++i)))
       .effect();
   }, []);
 
