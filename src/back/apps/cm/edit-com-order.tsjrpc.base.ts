@@ -5,6 +5,7 @@ import {
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { makeRegExp } from 'regexpert';
 import {
+  CmComMod,
   CmComOrderWid,
   CmComWid,
   IExportableOrder,
@@ -13,7 +14,15 @@ import {
   SpecialOrderRepeats,
 } from 'shared/api';
 import { CmEditComOrderTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-order.tsjrpc.model';
-import { smylib } from 'shared/utils';
+import { CmCom } from 'shared/const/cm/Com';
+import { CmComOrder } from 'shared/const/cm/order/Order';
+import { checkIsNil, checkIsNotObject, checkIsNull, checkIsObject, checkIsUndefined } from 'shared/utils/checkIs';
+import { checkIsEq } from 'shared/utils/checkIsEq';
+import { nbsp } from 'shared/utils/cm/com/const';
+import { orderListConstructor } from 'shared/utils/cm/com/orderListConstructor';
+import { cmComOrderMakeRegions } from 'shared/utils/cm/makeRegions';
+import { takeCmComOrderRepeatPortalKeyLetter } from 'shared/utils/cm/repeat-keys';
+import { objectKeys, objectLength } from 'shared/utils/object.utils';
 import { modifyCom } from './edit-com.tsjrpc.base';
 
 export const cmEditComOrderServerTsjrpcBase =
@@ -26,45 +35,45 @@ export const cmEditComOrderServerTsjrpcBase =
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_REP', 'U')) throw '';
 
             const removeAllJoinRepeats = (ordRepeats: OrderRepeats | nil) => {
-              if (!smylib.isObj(ordRepeats)) return;
+              if (checkIsNotObject(ordRepeats)) return;
 
-              smylib.keys(ordRepeats).forEach(repeatKey => {
-                const letter = repeatKey.match(makeRegExp('/[a-z]/'))?.[0];
+              objectKeys(ordRepeats).forEach(repeatKey => {
+                const letter = takeCmComOrderRepeatPortalKeyLetter(repeatKey);
 
                 if (!letter) return;
 
                 const deleteKeysWithLetter = (reps: SpecialOrderRepeats | nil) => {
-                  if (reps == null || !smylib.isObj(reps)) return;
+                  if (checkIsNotObject(reps)) return;
 
-                  smylib.keys(reps).forEach(key => {
-                    if (key.includes(letter)) delete reps[key];
+                  objectKeys(reps).forEach(key => {
+                    if (takeCmComOrderRepeatPortalKeyLetter(key) === letter) delete reps[key];
                   });
                 };
 
                 com.o?.forEach(ord => {
-                  if (smylib.isObj(ord.r)) {
+                  if (checkIsObject(ord.r)) {
                     deleteKeysWithLetter(ord.r);
 
-                    if (!smylib.keys(ord.r).length) delete ord.r;
+                    if (!objectLength(ord.r)) delete ord.r;
                   }
 
                   if (ord._r) {
                     const inheritRepeats = ord._r;
                     ord._r.forEach((inheritReps, inheritRepsi) => {
-                      if (!smylib.isObj(inheritReps)) return;
+                      if (checkIsNotObject(inheritReps)) return;
 
                       deleteKeysWithLetter(inheritReps);
 
-                      if (!smylib.keys(inheritReps).length) {
+                      if (!objectLength(inheritReps)) {
                         delete inheritRepeats[inheritRepsi];
                       }
                     });
 
-                    while (ord._r.length && ord._r[ord._r.length - 1] == null) {
+                    while (objectLength(ord._r) && ord._r[objectLength(ord._r) - 1] == null) {
                       ord._r.pop();
                     }
 
-                    if (!ord._r.length) delete ord._r;
+                    if (!objectLength(ord._r)) delete ord._r;
                   }
                 });
               });
@@ -88,17 +97,39 @@ export const cmEditComOrderServerTsjrpcBase =
             return `сброшено значение повторений для блока ${orderTitle}`;
           }),
 
-          setRepeats: modifyOrd((ord, { value, inhi, orderTitle, textValue }, { auth }) => {
+          setRepeats: modifyOrd((ord, { value, selfOrdw }, { auth }, com) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_REP', 'U')) throw '';
+            const cmCom = new CmCom({ ...com, m: CmComMod.def, w: CmComWid.def, al: [] }, null, null);
+
+            const ords = orderListConstructor(me => new CmComOrder(me as never, cmCom), cmCom.ords, null, 0);
+
+            const comOrd = ords?.find(ord => ord.wid === selfOrdw);
+
+            if (!comOrd) throw 'Self Ord is not found';
+            const inhi = comOrd.me.anchorInheritIndex;
+
+            const textValue = comOrd.text
+              ? comOrd
+                  .repeatedText(cmComOrderMakeRegions(comOrd, comOrd.text, value, (cmCom.setOrders() ?? []) as never))
+                  .replace(makeRegExp(`/${nbsp}/g`), ' ')
+              : comOrd.me.header({ repeats: comOrd.repeatsTitle });
+
+            let isDel = false;
+
+            if (comOrd.me.isAnchorInherit) isDel = checkIsEq(value, comOrd.getWatchValue('r'));
+            else if (comOrd.isAnchor) isDel = checkIsEq(value, comOrd.me.targetOrd?.repeats);
 
             if (inhi != null) {
               ord._r ??= [];
-              ord._r[inhi] = value;
+
+              if (isDel) delete ord._r[inhi];
+              else ord._r[inhi] = value;
 
               clearNullableOrderInheritValues(ord, '_r');
-            } else ord.r = value;
+            } else if ((!value && checkIsNull(ord.a)) || isDel) delete ord.r;
+            else ord.r = value;
 
-            return `изменены повторения для блока ${orderTitle}:\n\n${textValue}`;
+            return `изменены повторения для блока ${comOrd.me.header()}:\n\n${textValue}`;
           }),
           setKind: modifyOrd((ord, { kind, newTypeTitle, orderTitle }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
@@ -130,11 +161,11 @@ export const cmEditComOrderServerTsjrpcBase =
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
             ord._v ??= [];
-            ord._v[inhi] = ord._v[inhi] === undefined ? 0 : undefined;
+            ord._v[inhi] = checkIsUndefined(ord._v[inhi]) ? 0 : undefined;
 
             clearNullableOrderInheritValues(ord, '_v');
 
-            return `часть ссылки на ${leadOrderTitle} сделана ${ord._v?.[inhi] == null ? '' : 'не'}видимой`;
+            return `часть ссылки на ${leadOrderTitle} сделана ${checkIsNil(ord._v?.[inhi]) ? '' : 'не'}видимой`;
           }),
 
           moveOrdAfter: modifyCom((com, { insertAfterOrdwOrFirst, ordw, orderTitle }, { auth }) => {
@@ -143,8 +174,9 @@ export const cmEditComOrderServerTsjrpcBase =
             com.o ??= [];
 
             const movableOrdi = com.o.findIndex(o => o.w === ordw);
-            const insertAfterOrdi =
-              insertAfterOrdwOrFirst == null ? -1 : com.o.findIndex(o => o.w === insertAfterOrdwOrFirst);
+            const insertAfterOrdi = checkIsNil(insertAfterOrdwOrFirst)
+              ? -1
+              : com.o.findIndex(o => o.w === insertAfterOrdwOrFirst);
 
             if (movableOrdi < 0) throw new Error('Целевой порядковый блок не найден');
 
@@ -216,8 +248,9 @@ export const cmEditComOrderServerTsjrpcBase =
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'C')) throw '';
 
             com.o ??= [];
-            const afterOrdi =
-              insertAfterOrdwOrFirst == null ? -1 : com.o.findIndex(ord => ord.w === insertAfterOrdwOrFirst);
+            const afterOrdi = checkIsNil(insertAfterOrdwOrFirst)
+              ? -1
+              : com.o.findIndex(ord => ord.w === insertAfterOrdwOrFirst);
 
             const ord: IExportableOrder = {
               w: getNextOrdWid(com.o),
@@ -250,7 +283,7 @@ export const cmEditComOrderServerTsjrpcBase =
           trimOverPositions: modifyOrd((ord, { orderTitle }, { auth }, com) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_APPS', 'U')) throw '';
 
-            if (com.t == null) throw 'В песне нет текстов';
+            if (checkIsNil(com.t)) throw 'В песне нет текстов';
 
             let targetOrd = ord;
             if (ord.a != null) {
@@ -258,11 +291,11 @@ export const cmEditComOrderServerTsjrpcBase =
               delete ord.p;
             }
 
-            if (targetOrd.t == null || !com.t[targetOrd.t]) throw 'Текста нет';
-            if (targetOrd.p == null) throw 'Аппликатура не обнаружена';
+            if (checkIsNil(targetOrd.t) || !com.t[targetOrd.t]) throw 'Текста нет';
+            if (checkIsNil(targetOrd.p)) throw 'Аппликатура не обнаружена';
 
-            const textLinesCount = com.t[targetOrd.t].split(makeRegExp('/\n/')).length;
-            if (textLinesCount < targetOrd.p.length) targetOrd.p.length = textLinesCount;
+            const textLinesCount = objectLength(com.t[targetOrd.t].split(makeRegExp('/\n/')));
+            if (textLinesCount < objectLength(targetOrd.p)) targetOrd.p.length = textLinesCount;
 
             return `в блоке ${orderTitle} удалены лишние строки аппликатуры`;
           }),
@@ -289,7 +322,7 @@ function modifyOrd<Props extends { ordw: CmComOrderWid; comw: CmComWid }>(
   return modifyCom<Props>((com, props, tool) => {
     const ord = com.o?.find(o => o.w === props.ordw);
 
-    if (ord == null) throw new Error('Порядковый блок не найден');
+    if (checkIsNil(ord)) throw new Error('Порядковый блок не найден');
 
     return modifier(ord, props, tool, com);
   });
@@ -299,9 +332,9 @@ const getNextOrdWid = (ords: { w: CmComOrderWid }[]) =>
   ords.reduce((max, curr) => (curr.w > max ? curr.w : max), CmComOrderWid.def) + 1;
 
 const clearNullableOrderInheritValues = (ord: IExportableOrder, key: '_r' | '_v') => {
-  if (ord[key] == null) return;
+  if (checkIsNil(ord[key])) return;
 
-  while (ord[key].length && ord[key][ord[key].length - 1] == null) ord[key].pop();
+  while (objectLength(ord[key]) && checkIsNil(ord[key][objectLength(ord[key]) - 1])) ord[key].pop();
 
-  if (!ord[key].length) delete ord[key];
+  if (!objectLength(ord[key])) delete ord[key];
 };

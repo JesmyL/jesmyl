@@ -1,18 +1,17 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { useConfirm } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { EditableComOrder } from '$cm+editor/shared/classes/EditableComOrder';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { IEditableComLineProps } from '$cm+editor/shared/model/Repeats';
-import { ChordVisibleVariant, CmComOrderLine, TheCmComOrder } from '$cm/ext';
+import { CmComOrderLine, TheCmComOrder } from '$cm/ext';
 import styled from '@emotion/styled';
 import { useCallback, useEffect, useState } from 'react';
-import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
-import { nbsp } from 'shared/utils/cm/com/const';
-import { cmComOrderMakeRegions } from 'shared/utils/cm/makeRegions';
 import { cmComOrderMakeRepeatPortalKey, makeCmComOrderRepeatOrSelf } from 'shared/utils/cm/repeat-keys';
+import { objectKeys, objectLength } from 'shared/utils/object.utils';
 import { twMerge } from 'tailwind-merge';
 import { CmEditorTabComRepeatsCountButtonPanel } from './CountButtonPanel';
 
@@ -37,22 +36,21 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
       if (isCantRedact || !ord) return;
 
       const repeats = { ...makeCmComOrderRepeatOrSelf(prevs), ...makeCmComOrderRepeatOrSelf(repeateds) };
-      const keys = Object.keys(repeats);
+      const keys = objectKeys(repeats);
       if (repeats['.'] === 0) delete repeats['.'];
 
-      const ordw = ord.me.isAnchorInherit ? (ord.me.leadOrd?.wid ?? ord.wid) : ord.wid;
+      const value =
+        (objectLength(keys) ? (objectLength(keys) === 1 && keys[0] === '.' ? repeats['.'] : repeats) : 0) ?? 0;
+      let ordw;
+
+      if (ord.me.isAnchorInherit) ordw = ord.me.leadOrd?.wid ?? ord.wid;
+      else ordw = ord.wid;
 
       cmEditComOrderClientTsjrpcMethods.setRepeats({
         ordw,
-        inhi: ord.me.anchorInheritIndex,
-        orderTitle: ord.me.header(),
+        selfOrdw: ord.wid,
         comw: ccom.wid,
-        value: (keys.length ? (keys.length === 1 && keys[0] === '.' ? repeats['.'] : repeats) : 0) ?? 0,
-        textValue: ord.text
-          ? ord
-              .repeatedText(cmComOrderMakeRegions(ord, ord.text, repeats, ccom.orders))
-              .replace(makeRegExp(`/${nbsp}/g`), ' ')
-          : ord.me.header({ repeats: ord.repeatsTitle }),
+        value,
       });
     },
     [ccom, isCantRedact],
@@ -236,12 +234,9 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
 
                         if (startDiap) setField(startOrd, { [startDiap]: flashCount }, startOrd?.repeats);
 
-                        if (startOrd !== ord) {
-                          setField(ord, { [finishDiap || '']: flashCount }, ord.repeats);
-                          ord.resetRegions();
+                        if (startOrd !== ord && finishDiap) {
+                          setField(ord, { [finishDiap]: flashCount }, ord.repeats);
                         }
-
-                        startOrd?.resetRegions();
 
                         reset();
                       }

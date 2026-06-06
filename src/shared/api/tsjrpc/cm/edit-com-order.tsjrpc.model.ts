@@ -3,12 +3,10 @@ import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model'
 
 export type CmEditComOrderTsjrpcModel = {
   setRepeats: (args: {
-    ordw: CmComOrderWid;
-    orderTitle: string;
     comw: CmComWid;
-    inhi?: number;
+    ordw: CmComOrderWid;
+    selfOrdw: CmComOrderWid;
     value: OrderRepeats;
-    textValue: string;
   }) => IExportableCom;
 
   clearOwnRepeats: (args: {
