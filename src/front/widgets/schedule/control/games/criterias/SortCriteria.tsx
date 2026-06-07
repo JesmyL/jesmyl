@@ -1,5 +1,4 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
-import { mylib } from '#shared/lib/my-lib';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
@@ -12,6 +11,7 @@ import { Atom, atom, useAtomValue } from 'atomaric';
 import { useMemo, useState } from 'react';
 import { IScheduleWidgetTeamCriteria, IScheduleWidgetUser, ScheduleGameCriteriaScopeProps } from 'shared/api';
 import { isNIs } from 'shared/utils';
+import { searchRate } from 'shared/utils/searchRate';
 import { ScheduleWidgetRemovableUserFace } from '../RemovableUserFace';
 import { checkIsUserPhotoable } from '../utils';
 import { ScheduleWidgetTeamsCriteriaSorterScreen } from './sort/SorterScreen';
@@ -62,11 +62,11 @@ export function ScheduleWidgetSortCriteria({ criteria, criteriai }: Props) {
   }, [criteria.sorts, rights.schedule.ctrl.users]);
 
   const filteredUsers: IScheduleWidgetUser[] = useMemo(
-    () => (!term ? sortedUsers : mylib.searchRate(sortedUsers, term, ['fio']).map(itemIt)),
+    () => (!term ? sortedUsers : searchRate(sortedUsers, term, ['fio']).map(itemIt)),
     [sortedUsers, term],
   );
   const filteredUncriteriedUsers: IScheduleWidgetUser[] = useMemo(
-    () => (!term ? uncriteriedUsers : mylib.searchRate(uncriteriedUsers, term, ['fio']).map(itemIt)),
+    () => (!term ? uncriteriedUsers : searchRate(uncriteriedUsers, term, ['fio']).map(itemIt)),
     [uncriteriedUsers, term],
   );
 

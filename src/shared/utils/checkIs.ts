@@ -1,8 +1,11 @@
 export const checkIsStartsWith = <Start extends string>(value: string, start: Start): value is `${Start}${string}` =>
   value.startsWith(start);
 
-export const checkIsObject = (it: unknown): it is object => it instanceof Object && !(it instanceof Array);
-export const checkIsNotObject = <It>(it: It): it is Exclude<It, object> => !checkIsObject(it);
+export const checkIsEndsWith = <End extends string>(value: string, end: End): value is `${string}${End}` =>
+  value.endsWith(end);
+
+export const checkIsObject = (it: unknown): it is Record<string, unknown> => checkIsAnyObject(it) && !checkIsArray(it);
+export const checkIsNotObject = <It>(it: It): it is Exclude<It, Record<string, unknown>> => !checkIsObject(it);
 
 export const checkIsAnyObject = (it: unknown): it is Record<string | number, unknown> | unknown[] =>
   typeof it === 'object' && it != null;
@@ -46,6 +49,6 @@ export const checkIsNotNull = <It>(it: It): it is Exclude<It, null> => it !== nu
 export const checkIsNil = (it: unknown): it is null | undefined => checkIsNull(it) || checkIsUndefined(it);
 export const checkIsNotNil = <It>(it: It): it is Exclude<It, null | undefined> => it != null;
 
-export const checkIsNaN = (it: unknown): it is number => checkIsNumber(it) && isNaN(it);
+export const checkIsNaN = (it: unknown) => checkIsNumber(it) && isNaN(it);
 
 export const checkIsNotANumber = (it: unknown): it is number => !checkIsNumber(it) || isNaN(it);

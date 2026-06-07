@@ -1,4 +1,3 @@
-import { mylib } from '#shared/lib/my-lib';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
@@ -8,6 +7,7 @@ import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode, useMemo } from 'react';
 import { IScheduleWidget, ScheduleWidgetCleans, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
 import { capitalizeText } from 'shared/utils';
+import { searchRate } from 'shared/utils/searchRate';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { schEventTypesTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetEventType } from './EventType';
@@ -40,16 +40,14 @@ export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCount
 
   const sortedTypes = useMemo(() => {
     const sortedTypes: ScheduleWidgetDayListItemTypeBox[] = (
-      term === '' ? [...types] : mylib.searchRate(types, term, ['title']).map(itemIt)
+      term === '' ? [...types] : searchRate(types, term, ['title']).map(itemIt)
     ).sort(eqByTitle);
 
     if (!usedCounts) return sortedTypes;
 
-    sortedTypes.sort((a, b) => {
-      const ai = types.indexOf(a);
-      const bi = types.indexOf(b);
-      return (a.title ? usedCounts[ai] || 0 : -1) - (b.title ? usedCounts[bi] || 0 : -1);
-    });
+    sortedTypes.sort(
+      (a, b) => (a.title ? usedCounts[types.indexOf(a)] || 0 : -1) - (b.title ? usedCounts[types.indexOf(b)] || 0 : -1),
+    );
 
     return sortedTypes;
   }, [term, types, usedCounts]);

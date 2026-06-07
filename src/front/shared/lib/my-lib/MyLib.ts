@@ -2,17 +2,9 @@ import { makeRegExp } from 'regexpert';
 import { SMyLib } from 'shared/utils';
 import { addEventListenerPipe, hookEffectPipe } from '../hookEffectPipe';
 
-const constants = {
-  REMOVE: ['REMOVE'] as const,
-  POSITION: ['POSITION'] as const,
-  INDEX: ['INDEX'] as const,
-};
-
 export type AddRestMode = 'strong' | 'weak' | 'random';
 
 export class MyLib extends SMyLib {
-  c = constants;
-
   monthFullTitles = [
     'Января',
     'Февраля',

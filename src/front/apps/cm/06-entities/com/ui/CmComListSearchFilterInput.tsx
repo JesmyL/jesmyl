@@ -1,5 +1,4 @@
 import { isNumberSearchAtom } from '#basis/state/isNumberSearchAtom';
-import { mylib } from '#shared/lib/my-lib';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { useCmCatList } from '$cm/entities/cat';
 import { Atom, useAtomValue } from 'atomaric';
@@ -9,7 +8,9 @@ import { makeRegExp } from 'regexpert';
 import { CmComOrderWid, CmComWid, IExportableCom, IExportableComInterpretation, IFixedCom } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { itNNil } from 'shared/utils';
+import { checkIsNaN } from 'shared/utils/checkIs';
 import { takeCorrectComIndex, takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
+import { searchConstants, searchRate } from 'shared/utils/searchRate';
 import { CmComWordFounds } from '../model/com';
 import { cmComWidNumberDictAtom } from '../state/atoms';
 
@@ -48,7 +49,7 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
   const catNumberSearch = useMemo((): CatNumberSearch => {
     const termNumber = +term;
 
-    if (mylib.isNaN(termNumber)) return null;
+    if (checkIsNaN(termNumber)) return null;
 
     const descriptions: PRecord<CmComWid, string> = {};
     const comws: CmComWid[] = [];
@@ -91,7 +92,7 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
 
     if (!isNumberSearch) {
       const multiNums = term.split(makeRegExp('/[ ,]+/'));
-      const isMultiNumSearch = !multiNums.some(numStr => mylib.isNaN(+numStr));
+      const isMultiNumSearch = !multiNums.some(numStr => checkIsNaN(+numStr));
 
       if (isMultiNumSearch) {
         const searchNumberIndexDict: Record<number, number> = {};
@@ -107,10 +108,10 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
       }
     }
 
-    const searchs = mylib.searchRate(
+    const searchs = searchRate(
       comList,
       numCheckedTerm,
-      ['name', mylib.c.POSITION, ['orders', mylib.c.INDEX, 'text']],
+      ['name', searchConstants.POSITION, ['orders', searchConstants.INDEX, 'text']],
       isNumberSearch,
       takeCorrectComNumber,
     );
@@ -122,7 +123,7 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
       acc[item.item.wid] = item.pos
         .map(positions => {
           const [, ordIndexStr, letterIndexStr] =
-            positions.match(makeRegExp(`/${mylib.c.INDEX}:(\\d+)/text/(\\d+)/`)) ?? [];
+            positions.match(makeRegExp(`/${searchConstants.INDEX[0]}:(\\d+)/text/(\\d+)/`)) ?? [];
 
           if (!letterIndexStr) return;
           const ord = item.item.orders?.[+ordIndexStr];

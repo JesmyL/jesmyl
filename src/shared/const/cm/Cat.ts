@@ -1,7 +1,7 @@
 import { CmCatKind } from '#shared/model/cm/cat/Cat.model';
 import { CmComWid, IExportableCat } from 'shared/api';
-import { smylib } from 'shared/utils';
 import { objectKeys } from 'shared/utils/object.utils';
+import { searchConstants, searchRateWithSort } from 'shared/utils/searchRate';
 import { BaseNamed } from './BaseNamed';
 import { cmEditorCategoryTrackers } from './cmEditorCategoryTrackers';
 import { CmCom } from './Com';
@@ -41,10 +41,10 @@ export class CmCat extends BaseNamed<IExportableCat> {
 
   static sortedSearch(term: string, coms: CmCom[], isNumberSearch?: boolean) {
     if (term) {
-      return smylib.searchRateWithSort(
+      return searchRateWithSort(
         coms,
         term,
-        ['name', 'number', ['orders', smylib.c.INDEX, 'text']],
+        ['name', 'number', ['orders', searchConstants.INDEX, 'text']],
         isNumberSearch,
       );
     } else {
