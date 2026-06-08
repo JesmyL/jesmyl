@@ -1,22 +1,19 @@
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { makeRegExp } from 'regexpert';
-import { CmComMod, CmComWid, OrderRepeats, SpecialOrderRepeats } from 'shared/api';
+import { OrderRepeats, SpecialOrderRepeats } from 'shared/api';
 import { CmEditComOrderTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-order.tsjrpc.model';
-import { CmCom } from 'shared/const/cm/Com';
-import { CmComOrder } from 'shared/const/cm/order/Order';
 import { checkIsNil, checkIsNotNil, checkIsNotObject, checkIsObject } from 'shared/utils/checkIs';
 import { checkIsEq } from 'shared/utils/checkIsEq';
 import { nbsp } from 'shared/utils/cm/com/const';
-import { orderListConstructor } from 'shared/utils/cm/com/orderListConstructor';
 import { cmComOrderMakeRegions } from 'shared/utils/cm/makeRegions';
 import { cmComOrderMakeRepeatedText } from 'shared/utils/cm/makeRepeatedText';
 import { takeCmComOrderRepeatPortalKeyLetter } from 'shared/utils/cm/repeat-keys';
 import { objectKeys, objectLength } from 'shared/utils/object.utils';
-import { clearNullableOrderInheritValues, modifyOrd } from './utils';
+import { clearNullableOrderInheritValues, modifyOrd, ModifyOrdParent } from './utils';
 
 export const cmEditComOrderServerTsjrpcRepeats = {
-  clearOwnRepeats: modifyOrd((ord, { orderTitle, inhi }, { auth }, com) => {
+  clearOwnRepeats: modifyOrd(ModifyOrdParent.Lead, (ord, _, { auth }, com, getCmComOrd) => {
     if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_REP', 'U')) throw '';
 
     const removeAllJoinRepeats = (ordRepeats: OrderRepeats | nil) => {
@@ -64,12 +61,14 @@ export const cmEditComOrderServerTsjrpcRepeats = {
       });
     };
 
-    if (inhi == null) {
+    const inhi = getCmComOrd().me.anchorInheritIndex;
+
+    if (checkIsNil(inhi)) {
       removeAllJoinRepeats(ord.r);
       clearNullableOrderInheritValues(ord, '_r');
 
       delete ord.r;
-    } else if (ord._r?.[inhi] != null) {
+    } else if (checkIsNotNil(ord._r?.[inhi])) {
       removeAllJoinRepeats(ord._r[inhi]);
 
       if (ord._r) {
@@ -79,52 +78,55 @@ export const cmEditComOrderServerTsjrpcRepeats = {
       }
     }
 
-    return `сброшено значение повторений для блока ${orderTitle}`;
+    return `сброшено значение повторений для блока ${getCmComOrd().me.header()}`;
   }),
 
-  setRepeats: modifyOrd((ord, { value, selfOrdw }, { auth }, com) => {
-    if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_REP', 'U')) throw '';
-    const cmCom = new CmCom({ ...com, m: CmComMod.def, w: CmComWid.def, al: [] }, null, null);
+  setRepeats: modifyOrd(
+    ModifyOrdParent.Lead,
+    (ord, { value }, { auth }, _com, getCmComOrd, _getCmCom, getCmComOrds) => {
+      if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_REP', 'U')) throw '';
 
-    const ords = orderListConstructor(me => new CmComOrder(me as never, cmCom), cmCom.ords, null, 0);
+      const comOrd = getCmComOrd();
+      const inhi = comOrd.me.anchorInheritIndex;
 
-    const comOrd = ords?.find(ord => ord.wid === selfOrdw);
+      const prevValue = checkIsNotNil(inhi) ? ord._r?.[inhi] : ord.r;
+      const ordText = comOrd.text;
 
-    if (!comOrd) throw 'Self Ord is not found';
-    const inhi = comOrd.me.anchorInheritIndex;
+      const makeTitle = (value: OrderRepeats | nil) => {
+        const regions = cmComOrderMakeRegions(comOrd, ordText, value, getCmComOrds());
 
-    const prevValue = checkIsNotNil(inhi) ? ord._r?.[inhi] : ord.r;
-    const ordText = comOrd.text;
-    const orders = cmCom.setOrders() ?? [];
+        return ordText
+          ? cmComOrderMakeRepeatedText(comOrd.transformedText(), regions).replace(makeRegExp(`/${nbsp}/g`), ' ')
+          : comOrd.me.header({ repeats: comOrd.repeatsTitle });
+      };
 
-    const makeTitle = (value: OrderRepeats | nil) => {
-      const regions = cmComOrderMakeRegions(comOrd, ordText, value, orders);
+      let isDel = false;
 
-      return ordText
-        ? cmComOrderMakeRepeatedText(comOrd.transformedText(), regions).replace(makeRegExp(`/${nbsp}/g`), ' ')
-        : comOrd.me.header({ repeats: comOrd.repeatsTitle });
-    };
+      if (comOrd.me.isAnchorInherit) isDel = checkIsEq(value, comOrd.getWatchValue('r'));
+      else if (comOrd.isAnchor) isDel = checkIsEq(value, comOrd.me.targetOrd?.repeats);
+      let newValueHolder;
 
-    let isDel = false;
+      if (checkIsNotNil(inhi)) {
+        ord._r ??= [];
 
-    if (comOrd.me.isAnchorInherit) isDel = checkIsEq(value, comOrd.getWatchValue('r'));
-    else if (comOrd.isAnchor) isDel = checkIsEq(value, comOrd.me.targetOrd?.repeats);
-    let newValueHolder;
+        if (isDel) delete ord._r[inhi];
+        else ord._r[inhi] = value;
 
-    if (checkIsNotNil(inhi)) {
-      ord._r ??= [];
+        clearNullableOrderInheritValues(ord, '_r');
 
-      if (isDel) delete ord._r[inhi];
-      else ord._r[inhi] = value;
+        newValueHolder = { v: ord._r[inhi] };
+      } else if ((!value && checkIsNil(ord.a)) || isDel) delete ord.r;
+      else ord.r = value;
 
-      clearNullableOrderInheritValues(ord, '_r');
+      newValueHolder ??= { v: ord.r };
 
-      newValueHolder = { v: ord._r[inhi] };
-    } else if ((!value && checkIsNil(ord.a)) || isDel) delete ord.r;
-    else ord.r = value;
+      return `изменены повторения для блока ${comOrd.me.header()}:\n\n${makeTitle(newValueHolder.v)}\n\nбыло:\n${makeTitle(prevValue)}`;
+    },
+  ),
 
-    newValueHolder ??= { v: ord.r };
+  removeRepeats: modifyOrd(ModifyOrdParent.Self, (ord, _, __, ___, getCmComOrd) => {
+    delete ord.r;
 
-    return `изменены повторения для блока ${comOrd.me.header()}:\n\n${makeTitle(newValueHolder.v)}\n\nбыло:\n${makeTitle(prevValue)}`;
+    return `убраны повторения в блоке ${getCmComOrd().me.header()}`;
   }),
 } satisfies ServerTsjrpcSatisfy<CmEditComOrderTsjrpcModel>;

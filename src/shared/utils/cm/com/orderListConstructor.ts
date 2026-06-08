@@ -16,7 +16,6 @@ export const orderListConstructor = <OrderConstructor extends CmComOrderWidClass
   let minimals: [number?, number?][] = [];
   const styles = comBlockKinds.kinds;
   const groups: Record<string, number> = {};
-  let viewIndex = 0;
   let prev, prevOrd;
 
   const getStyle = (ord: ICmComOrderExportableMe<OrderConstructor> | nil) => {
@@ -72,13 +71,10 @@ export const orderListConstructor = <OrderConstructor extends CmComOrderWidClass
     me.kind = style;
     me.source = ordMe;
     me.isNextInherit = !!getStyle(ords[topi + 1])?.isInherit;
-    me.isNextAnchorOrd = !!(ords[topi + 1] && ords[topi + 1].top.a === ordMe.top.w);
-    me.isPrevTargetOrd = !!(targetOrd && ords[topi - 1] === targetOrd.me.source);
     me.targetOrd = targetOrd;
     me.watchOrd = targetOrd;
     me.isAnchor = ordMe.top.a != null;
     me.isTarget = ords.some(me => me.top.a === ordMe.top.w);
-    me.viewIndex = viewIndex++;
     me.sourceIndex = ords.indexOf(ordMe);
 
     setMin(me);
@@ -121,13 +117,11 @@ export const orderListConstructor = <OrderConstructor extends CmComOrderWidClass
         ancMe.kind = ancStyle;
         ancMe.source = anc;
         ancMe.header = me.header;
-        ancMe.init = me.top;
         ancMe.targetOrd = targetOrd;
         ancMe.leadOrd = newOrder;
         ancMe.watchOrd = orders[srcIndex + anchorInheritIndex + 1];
         ancMe.isNextInherit = !!getStyle(ords[anci + 1])?.isInherit;
         ancMe.anchorInheritIndex = anchorInheritIndex++;
-        ancMe.viewIndex = viewIndex++;
         ancMe.sourceIndex = ords.indexOf(targetOrd.me);
 
         setMin(ancMe);
@@ -154,12 +148,10 @@ export const orderListConstructor = <OrderConstructor extends CmComOrderWidClass
       nextMe.kind = nextStyle;
       nextMe.leadOrd = newOrder;
       nextMe.prev = prev;
-      nextMe.init = me.top;
       nextMe.isNextInherit = !!getStyle(ords[nexti + 1])?.isInherit;
       nextMe.isAnchorInheritPlus = isAnchorInheritPlus;
       nextMe.header = me.header;
       nextMe.source = next;
-      nextMe.viewIndex = viewIndex++;
       nextMe.sourceIndex = ords.indexOf(next);
 
       setMin(nextMe);

@@ -34,7 +34,7 @@ export const CmComCopyTextModalInner = ({ com }: { com: CmCom }) => {
                 const header = ord.me.isInherit ? '' : ord.me.header({ isTexted: !isMini });
 
                 if (isMini) return header && `\n${header}.`;
-                const chordLabels = ord.chordLabels ?? com.chordLabels[ordi];
+                const chordLabels = com.chordLabels[ordi];
 
                 if (!ord.text)
                   return `\n${ord.me.header()}.${isShowChordsInText ? `\n${chordLabels?.map(line => line.join(' ')).join('\n') ?? ''}` : ''}`;

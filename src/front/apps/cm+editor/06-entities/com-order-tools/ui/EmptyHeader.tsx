@@ -10,7 +10,6 @@ export const CmEditorComOrderToolsEmptyHeader = (props: CmEditorComOrderToolsPro
         title={`${props.ord.isEmptyHeader ? 'Вернуть' : 'Убрать'} название блока`}
         onClick={async () => {
           await cmEditComOrderClientTsjrpcMethods.toggleTitleVisibility({
-            orderTitle: props.ord.me.header(),
             comw: props.com.wid,
             ordw: props.ord.wid,
           });

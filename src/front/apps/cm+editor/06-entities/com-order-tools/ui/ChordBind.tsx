@@ -52,10 +52,8 @@ export const CmEditorComOrderToolsChordBind = ({ com, ord, ordi }: CmEditorComOr
                 onClick={() =>
                   cmEditComOrderClientTsjrpcMethods.bindChordBlock({
                     ordw: ord.wid,
-                    orderTitle: ord.me.header(),
                     comw: com.wid,
                     chordi: chordsBlocki,
-                    isAnchor: ord.isAnchor ? 1 : 0,
                   })
                 }
                 postfix={

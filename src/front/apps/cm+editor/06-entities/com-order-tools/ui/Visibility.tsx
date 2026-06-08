@@ -27,7 +27,6 @@ export const CmEditorComOrderToolsOrderVisibility = ({ onClose, ord }: CmEditorC
           setIsLoading(true);
           await cmEditComOrderClientTsjrpcMethods.toggleVisibility({
             ordw: ord.wid,
-            orderTitle: ord.me.header(),
             comw: ord.com.wid,
           });
           setIsLoading(false);

@@ -35,7 +35,6 @@ export const useCmEditorComTabUpdateLinePositions = () => {
       try {
         await cmEditComOrderClientTsjrpcMethods.setPositionsLine({
           comw: ord.com.wid,
-          orderTitle: ord.me.header(),
           ordw: ord.wid,
           linei,
           line,

@@ -10,7 +10,6 @@ export const CmEditorComOrderToolsHiddenOnMin = (props: CmEditorComOrderToolsPro
         title={`${props.ord.isOpened ? 'Скрывать' : 'Показывать'} в свёрнутом режиме`}
         onClick={async () => {
           await cmEditComOrderClientTsjrpcMethods.toggleVisibilityInMiniMode({
-            orderTitle: props.ord.me.header(),
             comw: props.com.wid,
             ordw: props.ord.wid,
           });

@@ -40,10 +40,7 @@ export const CmEditorTabComRepeatsCountButtonPanel = (props: {
       />
       {!flashes?.length || (
         <CmEditorTabComRepeatsRemoveButton
-          isChordBlock={props.isChordBlock}
-          ord={props.ord}
-          reset={props.reset}
-          setField={props.setField}
+          {...props}
           startOrd={props.start.orderUnit}
           textLinei={props.start.linei}
           wordi={props.start.wordi}

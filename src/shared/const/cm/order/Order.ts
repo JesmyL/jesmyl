@@ -71,7 +71,6 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
 
   get positions(): (number[] | nil)[] | nil {
     return (
-      this.me.positions ??
       this.getWatchInheritance('p') ??
       this.me.watchOrd?.me.source?.top.p ??
       this.me.source?.top.p ??
@@ -85,15 +84,11 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   }
 
   get text() {
-    return this.me.text ?? ((this.texti != null && this.com.texts && this.com.texts[this.texti]) || '');
+    return (this.texti != null && this.com.texts && this.com.texts[this.texti]) || '';
   }
 
   get chords() {
-    return this.me.chords ?? ((this.chordsi != null && this.com.chords?.[this.chordsi]) || '');
-  }
-
-  get chordLabels() {
-    return this.me.chordLabels;
+    return (this.chordsi != null && this.com.chords?.[this.chordsi]) || '';
   }
 
   get isVisible(): boolean {
@@ -134,8 +129,7 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
     } else if (this.me && this.me.source && this.me.source.top.r != null) {
       repeatsResult = this.me.source.top.r;
     } else {
-      const repeats =
-        this.me.repeats ?? this.me?.targetOrd?.me.source?.top.r ?? this.getWatchInheritance('r') ?? this.top.r;
+      const repeats = this.me?.targetOrd?.me.source?.top.r ?? this.getWatchInheritance('r') ?? this.top.r;
 
       if (checkIsNumber(repeats)) repeatsResult = repeats;
       else if (repeats == null) repeatsResult = 0;
@@ -197,7 +191,7 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   isRealText = () => !!(this.text && this.isVisible);
 
   lineChordLabels = (chordHardLevel: 2 | 1 | 3, specialLinei: number, specialOrdi: number) => {
-    let chordsLabels = (this.chordLabels ?? this.com.chordLabels[specialOrdi])?.[specialLinei] ?? [];
+    let chordsLabels = this.com.chordLabels[specialOrdi]?.[specialLinei] ?? [];
 
     if (chordHardLevel < 3) {
       chordsLabels = chordsLabels.map(chord => {

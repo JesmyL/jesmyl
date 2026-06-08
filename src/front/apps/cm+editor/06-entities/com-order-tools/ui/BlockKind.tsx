@@ -47,7 +47,6 @@ export const CmEditorComOrderToolsBlockKind = ({ com, ord, ordi }: CmEditorComOr
                 onClick={() =>
                   cmEditComOrderClientTsjrpcMethods.setKind({
                     ordw: ord.wid,
-                    orderTitle: ord.me.header(),
                     comw: com.wid,
                     kind: kindBlock.key,
                     newTypeTitle: kindBlock.title[com.langi],

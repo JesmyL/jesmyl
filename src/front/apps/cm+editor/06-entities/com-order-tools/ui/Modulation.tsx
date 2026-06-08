@@ -53,7 +53,6 @@ export const CmEditorComOrderToolsModulation = ({ com, ord, ordi }: CmEditorComO
                 onClick={() =>
                   cmEditComOrderClientTsjrpcMethods.setModulationValue({
                     comw: com.wid,
-                    orderTitle: ord.me.header(),
                     ordw: ord.wid,
                     value: position,
                   })

@@ -15,7 +15,7 @@ import { CmComOrder } from '../../order/Order';
 import { CmComBasic } from './10-Basic';
 
 export class CmComOrders extends CmComBasic {
-  protected _o?: CmComOrder[];
+  protected _o?: CmComOrder[] | nil;
   protected _ords?: ICmComOrderExportableMe<CmComOrder>[];
 
   get ords() {
@@ -63,10 +63,7 @@ export class CmComOrders extends CmComBasic {
     return ords;
   };
 
-  setOrders() {
-    return (this._o =
-      orderListConstructor(me => this.orderConstructor(me), this.ords, this.intp, this.langi) ?? this._o);
-  }
+  setOrders = () => (this._o = orderListConstructor(me => this.orderConstructor(me), this.ords, this.intp, this.langi));
 
   makeNewlinerSet = (ord: CmComOrder, linei: CmComNewlinerLinei, repeati: CmComNewlinerRepeati) => {
     let watchOrd;

@@ -51,10 +51,9 @@ export const CmEditorComOrderToolsChangeText = ({ com, ord, ordi }: CmEditorComO
                 onChange={isModalOpenAtom.reset}
                 onClick={() =>
                   cmEditComOrderClientTsjrpcMethods.setTexti({
-                    orderTitle: ord.me.header(),
                     comw: com.wid,
                     ordw: ord.wid,
-                    texti: texti,
+                    texti,
                   })
                 }
               />

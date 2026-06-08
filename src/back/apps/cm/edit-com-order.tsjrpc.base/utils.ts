@@ -1,20 +1,59 @@
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
-import { CmComOrderWid, CmComWid, IExportableOrder, IServerSideCom } from 'shared/api';
+import { CmComMod, CmComOrderWid, CmComWid, IExportableOrder, IServerSideCom } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
+import { CmComOrder } from 'shared/const/cm/order/Order';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { objectLength } from 'shared/utils/object.utils';
 import { modifyCom } from '../edit-com.tsjrpc.base';
 
-export function modifyOrd<Props extends { ordw: CmComOrderWid; comw: CmComWid }>(
-  modifier: (ord: IExportableOrder, props: Props, tool: ServerTSJRPCTool, com: IServerSideCom) => string | null,
-) {
-  return modifyCom<Props>((com, props, tool) => {
-    const ord = com.o?.find(o => o.w === props.ordw);
-
-    if (checkIsNil(ord)) throw new Error('Порядковый блок не найден');
-
-    return modifier(ord, props, tool, com);
-  });
+export const enum ModifyOrdParent {
+  Self,
+  Unknown,
+  Lead,
+  Target,
+  Watch,
 }
+
+export const modifyOrd = <Props extends { ordw: CmComOrderWid; comw: CmComWid }>(
+  parent: ModifyOrdParent,
+  modifier: (
+    ord: IExportableOrder,
+    props: Props,
+    tool: ServerTSJRPCTool,
+    com: IServerSideCom,
+    getCmComOrd: () => CmComOrder,
+    getCmCom: () => CmCom,
+    getCmComOrds: () => CmComOrder[],
+  ) => string | null,
+) =>
+  modifyCom<Props>((com, props, tool) => {
+    let cmCom: CmCom | nil;
+    let comOrds: CmComOrder[] | nil;
+    let cmOrd: CmComOrder | nil;
+
+    const getCmCom = () => (cmCom ??= new CmCom({ ...com, m: CmComMod.def, w: CmComWid.def, al: [] }, null, null));
+    const getCmComOrds = () => (comOrds ??= getCmCom().setOrders() ?? []);
+
+    let getCmComOrd = () => {
+      cmOrd ??= getCmComOrds()?.find(ord => ord.wid === props.ordw);
+      if (checkIsNil(cmOrd)) throw 'Порядковый блок не найден (при поиске по собственному ID)';
+      const cmComOrd = cmOrd;
+      getCmComOrd = () => cmComOrd;
+      return cmOrd;
+    };
+
+    let ord = com.o?.find(o => o.w === props.ordw);
+
+    if (parent === ModifyOrdParent.Lead) ord ??= getCmComOrd().me.leadOrd?.me.source?.top;
+    if (parent === ModifyOrdParent.Target) ord ??= getCmComOrd().me.targetOrd?.me.source?.top;
+    if (parent === ModifyOrdParent.Watch) ord ??= getCmComOrd().me.watchOrd?.me.source?.top;
+
+    ord ??= getCmComOrd().me.top;
+
+    if (checkIsNil(ord)) throw 'Порядковый блок не найден';
+
+    return modifier(ord, props, tool, com, getCmComOrd, getCmCom, getCmComOrds);
+  });
 
 export const getNextOrdWid = (ords: { w: CmComOrderWid }[]) =>
   ords.reduce((max, curr) => (curr.w > max ? curr.w : max), CmComOrderWid.def) + 1;

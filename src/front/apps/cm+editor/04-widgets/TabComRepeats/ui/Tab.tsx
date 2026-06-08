@@ -32,23 +32,18 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
   let isRegionEnds = false;
 
   const setField = useCallback(
-    (ord?: EditableComOrder | null, repeateds?: OrderRepeats | nil, prevs?: OrderRepeats | nil) => {
+    (ord?: EditableComOrder | nil, repeateds?: OrderRepeats | nil, prevs?: OrderRepeats | nil) => {
       if (isCantRedact || !ord) return;
 
       const repeats = { ...makeCmComOrderRepeatOrSelf(prevs), ...makeCmComOrderRepeatOrSelf(repeateds) };
-      const keys = objectKeys(repeats);
       if (repeats['.'] === 0) delete repeats['.'];
+      const keys = objectKeys(repeats);
 
       const value =
         (objectLength(keys) ? (objectLength(keys) === 1 && keys[0] === '.' ? repeats['.'] : repeats) : 0) ?? 0;
-      let ordw;
-
-      if (ord.me.isAnchorInherit) ordw = ord.me.leadOrd?.wid ?? ord.wid;
-      else ordw = ord.wid;
 
       cmEditComOrderClientTsjrpcMethods.setRepeats({
-        ordw,
-        selfOrdw: ord.wid,
+        ordw: ord.wid,
         comw: ccom.wid,
         value,
       });
@@ -134,10 +129,8 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
 
                             if (isClear)
                               cmEditComOrderClientTsjrpcMethods.clearOwnRepeats({
-                                ordw: ord.me.leadOrd?.wid ?? ord.wid,
-                                orderTitle: ord.me.header(),
+                                ordw: ord.wid,
                                 comw: ccom.wid,
-                                inhi: ord.me.anchorInheritIndex,
                               });
                           }}
                         />

@@ -33,10 +33,8 @@ export const CmEditorComOrderToolsAnchorDelete = ({ com, ord, onClose }: CmEdito
           return;
 
         await cmEditComOrderClientTsjrpcMethods.remove({
-          orderTitle: ord.me.header(),
           comw: com.wid,
           ordw: ord.wid,
-          isAnchor: ord.isAnchor,
         });
         onClose(false);
       }}

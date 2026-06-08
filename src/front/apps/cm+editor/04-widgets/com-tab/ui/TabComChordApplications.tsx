@@ -87,7 +87,6 @@ export const CmEditorComTabChordApplications = ({ ccom }: { ccom: EditableCom })
                           onClick={() =>
                             cmEditComOrderClientTsjrpcMethods.setPositionsLine({
                               comw: com.wid,
-                              orderTitle: ord.me.header(),
                               ordw: ord.wid,
                               linei,
                               line: cutLine,
@@ -112,7 +111,6 @@ export const CmEditorComTabChordApplications = ({ ccom }: { ccom: EditableCom })
                 onClick={() =>
                   cmEditComOrderClientTsjrpcMethods.trimOverPositions({
                     comw: ccom.wid,
-                    orderTitle: ord.me.header({ isEdit: true }),
                     ordw: ord.wid,
                   })
                 }

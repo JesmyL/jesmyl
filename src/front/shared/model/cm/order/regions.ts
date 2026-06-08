@@ -1,6 +1,6 @@
 import { CmComOrderWidClass } from '#shared/model/cm/order/OrderWid';
 import { ReactNode } from 'react';
-import { IExportableOrder, OrderRepeats, SpecialOrderRepeatsKey } from 'shared/api';
+import { IExportableOrder, SpecialOrderRepeatsKey } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { CmComOrder } from 'shared/const/cm/order/Order';
 import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';
@@ -36,12 +36,13 @@ export type ICmComOrderExportableMe<OrderConstructor extends CmComOrderWidClass<
   header: (bag?: CmComOrderTopHeaderBag | nil, isRequired?: boolean) => string;
 } & Partial<{
   source: ICmComOrderExportableMe<OrderConstructor>;
-  init: IExportableOrder;
 
-  leadOrd: OrderConstructor; // first of ord inheritance chain
-  watchOrd: OrderConstructor | nil; // same ord of its ref
-  targetOrd: OrderConstructor | nil; // leader of watch ord
-  ord: OrderConstructor;
+  /** first of ord inheritance chain */
+  leadOrd: OrderConstructor;
+  /** same ord of its ref */
+  watchOrd: OrderConstructor | nil;
+  /** leader of watch ord */
+  targetOrd: OrderConstructor | nil;
 
   prev: OrderConstructor | null;
   next: OrderConstructor | null;
@@ -52,14 +53,7 @@ export type ICmComOrderExportableMe<OrderConstructor extends CmComOrderWidClass<
   isInherit: boolean;
   isAnchorInherit: boolean;
   isAnchorInheritPlus: boolean;
-  text: string;
-  chords: string;
-  chordLabels: string[][];
-  positions: number[][];
-  repeats: OrderRepeats | null; // Повторения
   isNextInherit: boolean;
-  isNextAnchorOrd: boolean;
-  isPrevTargetOrd: boolean;
   anchorInheritIndex: number;
   sourceIndex: number;
   viewIndex: number;
