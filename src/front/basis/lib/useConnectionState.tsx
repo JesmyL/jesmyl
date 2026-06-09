@@ -1,32 +1,23 @@
-import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useEffect, useState } from 'react';
+import { atom, useAtomValue } from 'atomaric';
 import { twMerge } from 'tailwind-merge';
 
-export function useConnectionState(className?: string) {
-  return (
-    useIsOnline() || (
-      <LazyIcon
-        icon="Alert01"
-        className={twMerge('text-xKO', className)}
-      />
-    )
-  );
-}
-
-export const useIsOnline = () => {
-  const [isOnline, setIsOnline] = useState(true);
-
-  useEffect(
-    () =>
-      hookEffectPipe()
-        .pipe(
-          addEventListenerPipe(window, 'online' as never, () => setIsOnline(true)),
-          addEventListenerPipe(window, 'offline' as never, () => setIsOnline(false)),
-        )
-        .effect(),
-    [],
+export const useConnectionState = (className?: string) =>
+  useIsOnline() ? null : (
+    <LazyIcon
+      icon="Alert01"
+      className={twMerge('text-xKO', className)}
+    />
   );
 
-  return isOnline;
+export let useIsOnline = () => {
+  const isOnlineAtom = atom(true);
+  const uav = useAtomValue;
+  const ret = () => uav(isOnlineAtom);
+
+  window.addEventListener('online', () => isOnlineAtom.set(true));
+  window.addEventListener('offline', () => isOnlineAtom.set(false));
+  useIsOnline = ret;
+
+  return ret();
 };

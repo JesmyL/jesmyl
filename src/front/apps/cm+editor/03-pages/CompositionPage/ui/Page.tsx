@@ -1,7 +1,6 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { useConnectionState } from '#basis/lib/useConnectionState';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { MyLib, mylib } from '#shared/lib/my-lib';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { useEditableCcom } from '$cm+editor/shared/lib/useEditableCom';
@@ -14,6 +13,8 @@ import { Link, useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { CmComWid } from 'shared/api';
+import { checkIsNaN } from 'shared/utils/checkIs';
+import { objectEntries } from 'shared/utils/object.utils';
 import { useCmEditorCompositionTrySendAudioMarks } from '../api/useCmComEditorTrySendAudioMarks';
 import {
   CmEditorCompositionBusyInfo,
@@ -45,14 +46,14 @@ export const CmEditorCompositionPage = ({
     return hookEffectPipe()
       .pipe(
         setTimeoutPipe(() => {
-          if (!ccom && (mylib.isNaN(ccomw) || removedComs[ccomw] == null)) navigate({ to: '/cm/edit/coms' });
+          if (!ccom && (checkIsNaN(ccomw) || removedComs[ccomw] == null)) navigate({ to: '/cm/edit/coms' });
         }, 2500),
       )
       .effect();
   }, [ccom, ccomw, navigate, removedComs]);
 
   if (!ccom) {
-    if (mylib.isNaN(ccomw) || removedComs[ccomw] == null) return null;
+    if (checkIsNaN(ccomw) || removedComs[ccomw] == null) return null;
 
     return (
       <PageCmEditorContainer
@@ -84,7 +85,7 @@ export const CmEditorCompositionPage = ({
       withoutBackSwipe
       backButtonPath="/cm/edit/coms/"
       head={
-        <>
+        <div className="flex">
           {connectionNode}
           <TheIconButton
             icon="MusicNote03"
@@ -92,14 +93,16 @@ export const CmEditorCompositionPage = ({
             className="m-2"
             onClick={() => setIsOpenPlayer(!isOpenPlayer)}
           />
-        </>
+        </div>
       }
       content={
         <>
-          {mylib.isNaN(ccomw) || <CmEditorCompositionBusyInfo comw={ccomw} />}
+          {checkIsNaN(ccomw) || (
+            <div className="my-2">{connectionNode ?? <CmEditorCompositionBusyInfo comw={ccomw} />}</div>
+          )}
 
           <div className="flex justify-around gap-x-2 px-2 sticky nav-panel overflow-auto no-scrollbar">
-            {MyLib.entries(cmEditorComTabCompositionNavs).map(
+            {objectEntries(cmEditorComTabCompositionNavs).map(
               ([tab, { icon, scope }]) =>
                 checkAccess('cm', scope) && (
                   <Link
