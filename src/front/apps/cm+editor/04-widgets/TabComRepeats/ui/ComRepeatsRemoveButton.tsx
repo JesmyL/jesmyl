@@ -6,36 +6,27 @@ import { TheButton } from '#shared/ui/TheButton';
 import { WithAtom } from '#shared/ui/WithAtom';
 import { EditableComOrder } from '$cm+editor/shared/classes/EditableComOrder';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
+import { useAtomValue } from 'atomaric';
 import { makeRegExp } from 'regexpert';
-import { OrderRepeats } from 'shared/api';
 import { CmComOrder } from 'shared/const/cm/order/Order';
 import { checkIsNotNumber } from 'shared/utils/checkIs';
 import { nbsp } from 'shared/utils/cm/com/const';
 import { cmComOrderCheckRepeatKeyIsFlag, makeCmComOrderRepeatOrSelf } from 'shared/utils/cm/repeat-keys';
+import { cmEditorTabComRepeatsStateAtom } from '../state/atoms';
 
 interface Props {
-  isChordBlock: boolean;
-  startOrd: EditableComOrder;
   ord: EditableComOrder;
   textLinei: number;
   wordi: number;
-  reset: () => void;
-  setField: (ord?: EditableComOrder | null, repeateds?: OrderRepeats | nil, prevs?: OrderRepeats | nil) => void;
 }
 
 const startFlash = '/';
 const finishFlash = '\\';
 
-export const CmEditorTabComRepeatsRemoveButton = ({
-  isChordBlock,
-  startOrd,
-  ord,
-  textLinei,
-  wordi,
-  reset,
-  setField,
-}: Props) => {
+export const CmEditorTabComRepeatsRemoveButton = ({ ord, textLinei, wordi }: Props) => {
+  const { isChordBlock, start } = useAtomValue(cmEditorTabComRepeatsStateAtom);
   const confirm = useConfirm();
+  if (!start) return;
 
   return (
     <WithAtom init={false}>
@@ -48,12 +39,12 @@ export const CmEditorTabComRepeatsRemoveButton = ({
               propagationStopper(event);
 
               if (isChordBlock) {
-                if (await confirm(`Сбросить повторения блока "${startOrd.me.header() || ''}"?`, 'Сброс')) {
+                if (await confirm(`Сбросить повторения блока "${start.ord.me.header() || ''}"?`, 'Сброс')) {
                   cmEditComOrderClientTsjrpcMethods.removeRepeats({
-                    comw: startOrd.com.wid,
-                    ordw: startOrd.wid,
+                    comw: start.ord.com.wid,
+                    ordw: start.ord.wid,
                   });
-                  reset();
+                  cmEditorTabComRepeatsStateAtom.reset();
                 }
                 return;
               }
@@ -127,23 +118,23 @@ export const CmEditorTabComRepeatsRemoveButton = ({
                       />
                       <TheButton
                         color="x3"
-                        onClick={() => {
+                        onClick={async () => {
                           const { startOrd, finOrd, startKey, finKey } = flash;
                           const startRrepeats = mylib.clone(startOrd?.repeats);
 
                           if (startRrepeats && checkIsNotNumber(startRrepeats)) {
                             delete startRrepeats[startKey];
-                            setField(startOrd, startRrepeats);
-                          } else setField(startOrd, 0);
+                            await cmEditorTabComRepeatsStateAtom.do.$setField(startOrd, startRrepeats);
+                          } else await cmEditorTabComRepeatsStateAtom.do.$setField(startOrd, 0);
 
                           if (startOrd !== finOrd && finOrd) {
                             const frepeats = { ...makeCmComOrderRepeatOrSelf(finOrd.repeats) };
 
                             delete frepeats[finKey || '.'];
-                            setField(finOrd, frepeats);
+                            await cmEditorTabComRepeatsStateAtom.do.$setField(finOrd, frepeats);
                           }
 
-                          reset();
+                          cmEditorTabComRepeatsStateAtom.reset();
                           isOpenModalAtom.reset();
                         }}
                       >

@@ -8,5 +8,5 @@ export interface IEditableComLineProps {
   words: string[];
   onClick?: React.MouseEventHandler<HTMLSpanElement>;
   wordi: number;
-  orderUnit: EditableComOrder;
+  ord: EditableComOrder;
 }

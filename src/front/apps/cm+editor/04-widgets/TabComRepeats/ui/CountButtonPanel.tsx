@@ -1,75 +1,69 @@
 import { Button } from '#shared/components/ui/button';
 import { ButtonGroup } from '#shared/components/ui/button-group';
+import { propagationStopper } from '#shared/lib/event-funcs';
 import { EditableComOrder } from '$cm+editor/shared/classes/EditableComOrder';
-import { IEditableComLineProps } from '$cm+editor/shared/model/Repeats';
 import styled from '@emotion/styled';
-import { CSSProperties, Dispatch, SetStateAction } from 'react';
-import { OrderRepeats } from 'shared/api';
+import { useAtomValue } from 'atomaric';
+import { arrayByLength } from 'shared/utils/object.utils';
 import { twMerge } from 'tailwind-merge';
+import { cmEditorTabComRepeatsStateAtom } from '../state/atoms';
 import { CmEditorTabComRepeatsRemoveButton } from './ComRepeatsRemoveButton';
 
-export const CmEditorTabComRepeatsCountButtonPanel = (props: {
-  pos: CSSProperties;
-  flashCount: number;
-  isChordBlock: boolean;
+interface Props {
   ord: EditableComOrder;
-  setFlashCount: Dispatch<SetStateAction<number>>;
-  start: IEditableComLineProps;
-  startLinei: number | und;
-  startOrd: EditableComOrder | und;
-  reset: () => void;
-  startWordi: number | und;
-  setField: (ord?: EditableComOrder | null, repeateds?: OrderRepeats | nil, prevs?: OrderRepeats | nil) => void;
-}) => {
-  const flashes = props.ord.regions?.filter(
-    it => it.startLinei === props.start.linei && it.startWordi === props.start.wordi,
-  );
+}
+
+export const CmEditorTabComRepeatsCountButtonPanel = ({ ord }: Props) => {
+  const { flashCount, isChordBlock, pos, start } = useAtomValue(cmEditorTabComRepeatsStateAtom);
+  if (!start) return;
+
+  const { linei: startLinei, wordi: startWordi, ord: startOrd } = start;
+
+  const flashes = ord.regions?.filter(it => it.startLinei === start.linei && it.startWordi === start.wordi);
 
   return (
     <StyledPanel
-      className={twMerge('absolute flex z-1300', (!props.start || props.ord !== props.start.orderUnit) && 'hidden')}
-      style={props.pos}
+      className={twMerge('absolute flex z-1300', (!start || ord !== start.ord) && 'hidden')}
+      style={pos}
     >
       <Button
         icon="Cancel01"
         className="button pointer bg-x6! text-x1!"
         onClick={event => {
-          event.stopPropagation();
-          props.reset();
+          propagationStopper(event);
+          cmEditorTabComRepeatsStateAtom.reset();
         }}
       />
       {!flashes?.length || (
         <CmEditorTabComRepeatsRemoveButton
-          {...props}
-          startOrd={props.start.orderUnit}
-          textLinei={props.start.linei}
-          wordi={props.start.wordi}
+          ord={ord}
+          textLinei={start.linei}
+          wordi={start.wordi}
         />
       )}
       <ButtonGroup.Root>
-        {[1, 2, 3, 4, 5].map(currFlashCount => {
+        {arrayByLength(5, i => i + (isChordBlock ? 2 : 1)).map(currFlashCount => {
           return (
             <Button
               key={currFlashCount}
-              className={twMerge('button pointer text-x1!', props.flashCount === currFlashCount ? 'bg-x7!' : 'bg-x3!')}
-              onClick={() => props.setFlashCount(currFlashCount)}
+              className={twMerge('button pointer text-x1!', flashCount === currFlashCount ? 'bg-x7!' : 'bg-x3!')}
+              onClick={() => cmEditorTabComRepeatsStateAtom.do.update(state => (state.flashCount = currFlashCount))}
             >
               {currFlashCount}
             </Button>
           );
         })}
       </ButtonGroup.Root>
-      {props.isChordBlock || props.flashCount === 1 || (
+      {isChordBlock || flashCount === 1 || (
         <Button
           icon="Flag03"
           className="button text-x6! bg-x2!"
           onClick={() => {
-            props.setField(
-              props.startOrd,
-              { [`~${props.startLinei}:${props.startWordi}`]: props.flashCount - 1 },
-              props.start.orderUnit.repeats,
+            cmEditorTabComRepeatsStateAtom.do.$setField(
+              startOrd,
+              { [`~${startLinei}:${startWordi}`]: flashCount - 1 },
+              start.ord.repeats,
             );
-            props.reset();
           }}
         />
       )}
