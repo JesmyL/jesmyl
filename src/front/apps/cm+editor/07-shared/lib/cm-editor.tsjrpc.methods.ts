@@ -18,18 +18,19 @@ export const cmEditCatClientTsjrpcMethods = new (class CmEditCat extends TsjrpcC
 })();
 
 const makeOnChangeBlock = (atom: typeof cmEditorComTextsEditsHistoryAtom, col: 'c' | 't') => {
-  return async (args: { texti: number; comw: CmComWid }) => {
-    const text = (await cmIDB.tb.coms.get(args.comw))?.[col]?.[args.texti];
+  return async ({ comw, texti }: { texti: number; comw: CmComWid }) => {
+    const text = (await cmIDB.tb.coms.get(comw))?.[col]?.[texti];
     if (!text) return;
 
-    atom.do.setDeepPartial(`value/${args.comw}/${args.texti}`, prev => Array.from(new Set([text].concat(prev ?? []))), {
-      value: { [args.comw]: {} },
+    atom.do.update(history => {
+      history[comw] ??= {};
+      history[comw][texti] = Array.from(new Set([text].concat(history[comw][texti] ?? [])));
     });
   };
 };
 
 const makeCleaner = (atom: typeof cmEditorComTextsEditsHistoryAtom) => {
-  return (args: { comw: CmComWid }) => atom.do.setDeepPartial(`value/${args.comw}`, {}, { value: {} });
+  return (args: { comw: CmComWid }) => atom.do.update(history => (history[args.comw] = {}));
 };
 
 export const cmEditComClientTsjrpcMethods = new (class CmEditCom extends TsjrpcClient<CmEditComTsjrpcModel> {

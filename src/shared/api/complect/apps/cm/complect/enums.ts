@@ -1,5 +1,6 @@
 export const enum CmComWid {
   def = -1,
+  never = -2,
 }
 
 export const enum CmComIntensityLevel {

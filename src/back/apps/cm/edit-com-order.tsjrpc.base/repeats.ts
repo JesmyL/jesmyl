@@ -101,10 +101,10 @@ export const cmEditComOrderServerTsjrpcRepeats = {
       };
 
       let isDel = false;
+      let newValueHolder;
 
       if (comOrd.me.isAnchorInherit) isDel = checkIsEq(value, comOrd.getWatchValue('r'));
       else if (comOrd.isAnchor) isDel = checkIsEq(value, comOrd.me.targetOrd?.repeats);
-      let newValueHolder;
 
       if (checkIsNotNil(inhi)) {
         ord._r ??= [];

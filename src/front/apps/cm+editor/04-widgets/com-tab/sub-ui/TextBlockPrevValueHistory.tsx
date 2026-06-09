@@ -6,7 +6,7 @@ import { CmComWid } from 'shared/api';
 import { twMerge } from 'tailwind-merge';
 
 type Props = {
-  historyAtom: Atom<{ value?: PRecord<CmComWid, PRecord<number, string[]>> }>;
+  historyAtom: Atom<PRecord<CmComWid, PRecord<number, string[]>>>;
   comw: CmComWid;
 };
 
@@ -15,7 +15,7 @@ let openHistoryAtom: Atom<null | number>;
 export const CmEditorComTabTextBlockPrevValueButton = (props: Props & { texti: number }) => {
   openHistoryAtom ??= atom<null | number>(null);
 
-  const history = useAtomValue(props.historyAtom).value?.[props.comw];
+  const history = useAtomValue(props.historyAtom)?.[props.comw];
 
   return (
     !history?.[props.texti]?.length || (
@@ -32,7 +32,7 @@ export const CmEditorComTabTextBlockPrevValueButton = (props: Props & { texti: n
 export const CmEditorComTabTextBlockPrevValueUpdateModal = (
   props: Props & { onPaste: (text: string, texti: number) => Promise<unknown>; texts: string[] | nil },
 ) => {
-  const history = useAtomValue(props.historyAtom).value?.[props.comw];
+  const history = useAtomValue(props.historyAtom)?.[props.comw];
   const texti = useAtomValue(openHistoryAtom);
 
   return (
