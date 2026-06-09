@@ -1,6 +1,7 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { useConfirm } from '#shared/ui/modal';
+import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
@@ -8,9 +9,10 @@ import { CmComOrderLine, TheCmComOrder } from '$cm/ext';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
+import { CmComWid } from 'shared/api';
 import { cmComOrderMakeRepeatPortalKey } from 'shared/utils/cm/repeat-keys';
 import { twMerge } from 'tailwind-merge';
-import { cmEditorTabComRepeatsStateAtom } from '../state/atoms';
+import { cmEditorTabComRepeatsOnLoadAtom, cmEditorTabComRepeatsStateAtom } from '../state/atoms';
 import { CmEditorTabComRepeatsCountButtonPanel } from './CountButtonPanel';
 
 export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
@@ -19,6 +21,7 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
   const checkAccess = useCheckUserAccessRightsInScope();
   const isCantRedact = !checkAccess('cm', 'COM_REP', 'U');
 
+  const ordwsOnLoadSet = useAtomValue(cmEditorTabComRepeatsOnLoadAtom);
   const { flashCount, isChordBlock, start, comw } = useAtomValue(cmEditorTabComRepeatsStateAtom);
   const { linei: startLinei, wordi: startWordi, ord: startOrd } = start || {};
 
@@ -32,13 +35,12 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
   useEffect(() => {
     if (isReadySetChordBlock) {
       cmEditorTabComRepeatsStateAtom.do.$setField(startOrd, flashCount);
-      cmEditorTabComRepeatsStateAtom.reset();
       setIsReadySetChordBlock(false);
     }
   }, [flashCount, isReadySetChordBlock, startOrd]);
 
   return (
-    comw === ccom.wid && (
+    (comw === ccom.wid || comw === CmComWid.zero) && (
       <Content className={twMerge('relative', start != null && 'active', isCantRedact && 'disabled pointers-none')}>
         {ccom.orders?.map((ord, ordi) => {
           if (!ord.isVisible) return null;
@@ -89,7 +91,7 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
                   return (
                     <div className="flex items-center">
                       {node}
-                      {ord.me.watchOrd ? (
+                      {ord.me.watchOrd && (
                         <>
                           <LazyIcon
                             icon="LinkBackward"
@@ -112,7 +114,8 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
                             }}
                           />
                         </>
-                      ) : null}
+                      )}
+                      {ordwsOnLoadSet.has(ord.wid) && <TheIconLoading />}
                     </div>
                   );
                 }}
@@ -218,8 +221,6 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
                           if (startOrd !== ord && finishDiap) {
                             cmEditorTabComRepeatsStateAtom.do.$setField(ord, { [finishDiap]: flashCount }, ord.repeats);
                           }
-
-                          cmEditorTabComRepeatsStateAtom.reset();
                         }
                       }}
                     />

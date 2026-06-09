@@ -134,7 +134,6 @@ export const CmEditorTabComRepeatsRemoveButton = ({ ord, textLinei, wordi }: Pro
                             await cmEditorTabComRepeatsStateAtom.do.$setField(finOrd, frepeats);
                           }
 
-                          cmEditorTabComRepeatsStateAtom.reset();
                           isOpenModalAtom.reset();
                         }}
                       >

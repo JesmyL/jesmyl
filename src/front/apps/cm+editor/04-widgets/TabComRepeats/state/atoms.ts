@@ -3,9 +3,11 @@ import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-edit
 import { IEditableComLineProps } from '$cm+editor/shared/model/Repeats';
 import { atom } from 'atomaric';
 import { CSSProperties } from 'react';
-import { CmComWid, OrderRepeats } from 'shared/api';
+import { CmComOrderWid, CmComWid, OrderRepeats } from 'shared/api';
 import { makeCmComOrderRepeatOrSelf } from 'shared/utils/cm/repeat-keys';
 import { objectKeys, objectLength } from 'shared/utils/object.utils';
+
+export const cmEditorTabComRepeatsOnLoadAtom = atom(new Set<CmComOrderWid>());
 
 export const cmEditorTabComRepeatsStateAtom = atom(
   {
@@ -13,14 +15,22 @@ export const cmEditorTabComRepeatsStateAtom = atom(
     pos: { '--x': 0, '--y': 0 } as CSSProperties & { '--x': number; '--y': number },
     isChordBlock: false,
     flashCount: 2,
-    comw: CmComWid.def,
+    comw: CmComWid.zero,
   },
   {
     do: (set, get, self) => ({
-      reComw: (comw: CmComWid) => set({ ...self.initialValue, comw }),
-      $setField: async (ord?: EditableComOrder | null, repeateds?: OrderRepeats | nil, prevs?: OrderRepeats | nil) => {
+      reComw: (comw: CmComWid) => {
+        set({ ...self.initialValue, comw });
+        return () => set({ ...self.initialValue, comw: CmComWid.zero });
+      },
+
+      $setField: async (ord: EditableComOrder | nil, repeateds: OrderRepeats | nil, prevs?: OrderRepeats | nil) => {
         const comw = get().comw;
-        if (comw === CmComWid.def || !ord) return;
+        if (comw === CmComWid.zero || !ord) return;
+
+        const ordw = ord.me.isAnchorInherit ? ord.wid : (ord.me.leadOrd?.wid ?? ord.wid);
+        cmEditorTabComRepeatsOnLoadAtom.do.add(ordw);
+        cmEditorTabComRepeatsStateAtom.do.reComw(comw);
 
         const repeats = { ...makeCmComOrderRepeatOrSelf(prevs), ...makeCmComOrderRepeatOrSelf(repeateds) };
         if (repeats['.'] === 0) delete repeats['.'];
@@ -30,12 +40,12 @@ export const cmEditorTabComRepeatsStateAtom = atom(
           (objectLength(keys) ? (objectLength(keys) === 1 && keys[0] === '.' ? repeats['.'] : repeats) : 0) ?? 0;
 
         await cmEditComOrderClientTsjrpcMethods.setRepeats({
+          comw,
           ordw: ord.wid,
-          comw: comw,
           value,
         });
 
-        self.do.reComw();
+        cmEditorTabComRepeatsOnLoadAtom.do.delete(ordw);
       },
     }),
   },
