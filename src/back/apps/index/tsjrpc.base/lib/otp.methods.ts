@@ -11,18 +11,22 @@ import jwt from 'jsonwebtoken';
 import { makeRegExp } from 'regexpert';
 import { LocalSokiAuth } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
+import { constantsConfigurator } from 'shared/const/cm/constants.def';
+import { howMillisecondsInMin } from 'shared/const/ms';
 import { smylib, wait } from 'shared/utils';
+import { checkIsObject, checkIsString } from 'shared/utils/checkIs';
 import {
   emailTextingLetterVariantsFileStorage,
   indexUserLoginBindsFileStorage,
   sentEmailOTPFileStorage,
 } from '../../file-stores';
 import { indexTakeRootLoginRecursively } from '../../lib/takeRootLoginRecursively';
+import { constantsConfigFileStore } from '../../schedules/file-stores';
 
 const minutesUntilExpire = 5;
 const expireOTP = (otp: number) => sentEmailOTPFileStorage.setValue(verifies => verifies.filter(it => it.otp !== otp));
 const checkIsOTPTimeStampExpired = (timeStamp: number) =>
-  timeStamp < Date.now() - smylib.howMs.inMin * minutesUntilExpire;
+  timeStamp < Date.now() - howMillisecondsInMin * minutesUntilExpire;
 
 let bibleTexts: ReturnType<typeof getBibleTranslateTexts> | nil;
 let bibleTextsExpireTimeOut: TimeOut;
@@ -31,36 +35,24 @@ const getRandomBibleChapterText = () => {
   bibleTexts ??= getBibleTranslateTexts();
 
   clearTimeout(bibleTextsExpireTimeOut);
-  bibleTextsExpireTimeOut = setTimeout(() => (bibleTexts = null), smylib.howMs.inMin * 30);
+  bibleTextsExpireTimeOut = setTimeout(() => (bibleTexts = null), howMillisecondsInMin * 30);
 
   return smylib.randomItem(smylib.randomItem(bibleTexts.chapters)).join(' ');
 };
 
 const subjects = [
   'Код верификации',
-  'Секретный код',
-  'Секретный код верификации',
   'Код для идентификации почты',
   'Код для аутентификации почты',
-  'Одноразовый код',
-  'Одноразовый пароль',
   'Одноразовый код авторизации',
   'Секретный одноразовый код авторизации',
   'Одноразовый код верификации',
   'Одноразовый верификационный код',
   'Номер-пароль для аутентификации',
-  'Аутентификационный пароль',
-  'Аутентификационный код',
-  'Аутентификационный код-пароль',
-  'Аутентификационный номер-пароль',
-  'Авторизационный код',
-  'Авторизационный пароль',
-  'Авторизационный номер-пароль',
-  'Авторизационный код-пароль',
-  'Верификационный номер-пароль',
-  'Верификационный код-пароль',
-  'Верификационный пароль',
-  'Верификационный код',
+
+  ...['Аутентификационный', 'Авторизационный', 'Верификационный', 'Одноразовый', 'Секретный']
+    .map(pre => ['код', 'код-пароль', 'номер-пароль', 'пароль'].map(post => `${pre} ${post}`))
+    .flat(),
 ];
 
 const randomBibleChapterTextingList = [
@@ -94,6 +86,11 @@ const makeMailtoButton = ({
 export const otpTSJRPCMethods = {
   sendEmailOTP: async ({ email }, { auth, visitInfo }) => {
     await wait(5000);
+
+    const { availEmailDomainZone } = constantsConfigFileStore.getValue();
+    const availEmailDomainZoneError = constantsConfigurator.availEmailDomainZone.error(availEmailDomainZone, email);
+
+    if (availEmailDomainZoneError) throw availEmailDomainZoneError;
 
     const verifies = sentEmailOTPFileStorage.getValue();
     let userVerify = verifies.find(({ deviceId, auth: verifyAuth }) => {
@@ -131,7 +128,7 @@ export const otpTSJRPCMethods = {
       clearTimeout(timeout);
       expireOTP(otp);
     };
-    const timeout = setTimeout(expire, smylib.howMs.inMin * minutesUntilExpire);
+    const timeout = setTimeout(expire, howMillisecondsInMin * minutesUntilExpire);
     let randomBibleText = '';
 
     try {
@@ -144,7 +141,7 @@ export const otpTSJRPCMethods = {
       `${text.replace(makeRegExp('/{c}/'), asHtml ? `<b style='font-size:1.5em'>${otp}</b>` : `${otp}`).replace(makeRegExp('/{n}/'), 'JesmyL')}\n\nЧерез ${minutesUntilExpire} ${
         //
         smylib.declension(minutesUntilExpire, 'минуту', 'минуты', 'минут')
-      } код станет не действительным${randomBibleText}`;
+      } код станет недействительным${randomBibleText}`;
 
     let logScope = PostJRPCMessageScope.Support;
 
@@ -209,7 +206,7 @@ export const otpTSJRPCMethods = {
     const newLogin = makeLoginFromEmail(from.auth.email);
 
     if (binds[newLogin] != null)
-      throw `E-mail уже привязан к ${(smylib.isStr(binds[newLogin]) ? binds[newLogin] : binds[newLogin].login) === auth.login ? 'вашему' : 'другому'} аккаунту`;
+      throw `E-mail уже привязан к ${(checkIsString(binds[newLogin]) ? binds[newLogin] : binds[newLogin].login) === auth.login ? 'вашему' : 'другому'} аккаунту`;
     if (newLogin === from.auth.login) throw 'Не возможно привязать почту к тому же аккаунту';
 
     binds[from.auth.login] ??= { ...from.auth, login: undefined as never };
@@ -239,7 +236,7 @@ export const otpTSJRPCMethods = {
     const emailAuth = makeAuthFromEmail(from.auth.email, from.auth);
     const binds = indexUserLoginBindsFileStorage.getValue();
     const rootLogin = indexTakeRootLoginRecursively(makeLoginFromEmail(from.auth.email));
-    const rootAuth = smylib.isObj(binds[rootLogin]) ? binds[rootLogin] : null;
+    const rootAuth = checkIsObject(binds[rootLogin]) ? binds[rootLogin] : null;
     const emailNick = from.auth.email.split('@')[0];
     const auth: LocalSokiAuth = {
       ...rootAuth,

@@ -1,3 +1,4 @@
+import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { FileStore } from 'back/complect/FileStore';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
@@ -9,7 +10,6 @@ import {
   catsFileStorage,
   chordPackFileStore,
   cmComWidRefGroupDictFileStore,
-  cmConstantsConfigFileStore,
   comCommentsDirStore,
   comsDirStorage,
   comsInSchEventDirStorage,
@@ -71,11 +71,11 @@ export const cmServerTsjrpcBaseRequestFreshes = {
     }
 
     if (visitInfo && visitInfo.version > 1039)
-      if (cmConstantsConfigFileStore.fileModifiedAt() > lastModfiedAt) {
+      if (constantsConfigFileStore.fileModifiedAt() > lastModfiedAt) {
         cmShareServerTsjrpcMethods.refreshConstConfig(
           {
-            config: cmConstantsConfigFileStore.getValue(),
-            mod: cmConstantsConfigFileStore.fileModifiedAt(),
+            config: constantsConfigFileStore.getValue(),
+            mod: constantsConfigFileStore.fileModifiedAt(),
           },
           client,
         );

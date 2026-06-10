@@ -1,8 +1,8 @@
+import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { TsjrpcBaseClient } from '#basis/tsjrpc/TsjrpcBase.client';
 import { cmComCommentRegisteredAltKeysAtom } from '$cm/entities/com-comment';
 import { cmComFavoriteComsAtom, cmComTopToolsAtom } from '$cm/entities/index';
 import { CmShareTsjrpcModel } from 'shared/api/tsjrpc/cm/share.tsjrpc.model';
-import { cmConstantsConfigAtom } from '../state/atoms';
 import { cmIDB } from '../state/cmIDB';
 
 export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extends TsjrpcBaseClient<CmShareTsjrpcModel> {
@@ -77,7 +77,7 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
         },
 
         refreshConstConfig: async ({ config, mod }) => {
-          cmConstantsConfigAtom.set(prev => ({ ...prev, ...config }));
+          constantsConfigAtom.set(prev => ({ ...prev, ...config }));
           await cmIDB.updateLastModifiedAt(mod);
         },
 

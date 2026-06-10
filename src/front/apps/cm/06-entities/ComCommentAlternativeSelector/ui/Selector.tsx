@@ -1,9 +1,9 @@
+import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { Button } from '#shared/components';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { usePrompt } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmComCommentCurrentComw2OpenAltiDictAtom, cmComCommentRegisteredAltKeysAtom } from '$cm/entities/com-comment';
-import { cmConstantsConfigAtom, cmIDB } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
 import { CmComWid } from 'shared/api';
 import { toast } from 'sonner';
@@ -12,7 +12,7 @@ export const CmComCommentAlternativeSelector = ({ comw }: { comw: CmComWid }) =>
   const altCommentKeys = useAtomValue(cmComCommentCurrentComw2OpenAltiDictAtom);
   const commentAlti = altCommentKeys[comw] ?? altCommentKeys.lasti;
 
-  const { maxComCommentAlternativesCount } = useAtomValue(cmConstantsConfigAtom);
+  const { maxComCommentAlternativesCount } = useAtomValue(constantsConfigAtom);
   const prompt = usePrompt();
   const registeredAltKeys = useAtomValue(cmComCommentRegisteredAltKeysAtom);
 
@@ -46,7 +46,6 @@ export const CmComCommentAlternativeSelector = ({ comw }: { comw: CmComWid }) =>
                 }
 
                 const commentAlti = (await prompt('Добавить новую альтернативу'))?.toLowerCase();
-                const localComment = await cmIDB.tb.localComCommentBlocks.get(comw);
 
                 if (!commentAlti) return;
 

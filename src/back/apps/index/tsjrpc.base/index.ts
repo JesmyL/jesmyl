@@ -1,3 +1,4 @@
+import { cmShareServerTsjrpcMethods } from 'back/apps/cm/tsjrpc.shares';
 import { makeTwiceKnownName } from 'back/complect/makeTwiceKnownName';
 import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
@@ -20,6 +21,7 @@ import {
   valuesFileStore,
 } from '../file-stores';
 import { schGeneralTsjrpcBaseServer } from '../schedules/base-tsjrpc/general.tsjrpc.base';
+import { constantsConfigFileStore } from '../schedules/file-stores';
 import { indexServerTsjrpcShareMethods } from '../tsjrpc.methods';
 import { indexTSJRPCBaseGetIconExistsPacks } from './lib/getIconExistsPacks';
 import { indexAuthByTgUser } from './lib/makeAuthFromUser';
@@ -54,6 +56,8 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         getDeviceId: { minVersion: 0 },
       },
       methods: {
+        ...otpTSJRPCMethods,
+
         requestFreshes: indexTSJRPCBaseRequestFreshes,
         getIconExistsPacks: indexTSJRPCBaseGetIconExistsPacks,
         updateUserAccessRight: indexTSJRPCBaseUpdateUserAccessRight,
@@ -234,7 +238,15 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
             pronounsFileStore.saveValue();
           }
         },
-        ...otpTSJRPCMethods,
+
+        updateConstConfig: async ({ config }) => {
+          constantsConfigFileStore.updateValue(prev => ({ ...prev, ...config }));
+          cmShareServerTsjrpcMethods.refreshConstConfig(
+            { config, mod: constantsConfigFileStore.fileModifiedAt() },
+            null,
+          );
+          indexServerTsjrpcShareMethods.constConfig({ config, mod: constantsConfigFileStore.fileModifiedAt() }, null);
+        },
       },
     });
   }

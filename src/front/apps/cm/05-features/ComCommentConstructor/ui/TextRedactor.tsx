@@ -1,5 +1,5 @@
+import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { TextInput } from '#shared/ui/TextInput';
-import { cmConstantsConfigAtom } from '$cm/ext';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
 import {
@@ -24,7 +24,7 @@ export const CmComCommentConstructorTextRedactor = <
 }) => {
   const updateDebounce = useDebounceCallback();
   const text = props.blockPropsHolder.dict?.[props.blockKey]?.text;
-  const constants = useAtomValue(cmConstantsConfigAtom);
+  const constants = useAtomValue(constantsConfigAtom);
   const maxLen = {
     [CmComCommentConstructorRuleType.Head]: constants.maxComCommentHeadLen,
     [CmComCommentConstructorRuleType.Block]: constants.maxComCommentBlockLen,

@@ -29,7 +29,7 @@ export { cmOnUserLogout } from '$cm/shared/lib/onUserLogout';
 export { useCmComCurrentMarkTimei } from '$cm/shared/lib/useCmComCurrentMarkTime';
 export { useCmComCurrentMarkValues } from '$cm/shared/lib/useCmComCurrentMarkValues';
 export { useCmComMarkTextValuesMaker } from '$cm/shared/lib/useCmComMarkTextValuesMaker';
-export { cmConstantsConfigAtom, cmIDB } from '$cm/shared/state';
+export { cmIDB } from '$cm/shared/state';
 export { cmPlayerBroadcastAudioSrcAtom } from '$cm/shared/state/broadcast.atoms';
 export { useCmBroadcastCurrentScreenConfig } from '$cm/widgets/broadcast';
 export { CmBroadcastScreenConfigurationPushKind } from '$cm/widgets/broadcast/ui/PushKind';

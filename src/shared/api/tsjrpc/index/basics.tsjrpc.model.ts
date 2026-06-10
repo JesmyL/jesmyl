@@ -1,5 +1,6 @@
 import { DeviceId } from 'shared/api/complect/enums';
 import { LocalSokiAuth, SokiAuthLogin, TelegramNativeAuthUserData } from 'shared/api/complect/soki.model';
+import { ConstantsConfig } from 'shared/model/constantsConfig';
 import {
   IndexAppAccessRightTitles,
   IndexAppUserAccessRightsAndRoles,
@@ -71,4 +72,6 @@ export type IndexTsjrpcModel = {
     prons?: string[];
     result: string;
   };
+
+  updateConstConfig: (args: { config: Partial<ConstantsConfig> }) => void;
 };

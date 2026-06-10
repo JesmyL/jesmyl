@@ -5,12 +5,7 @@ import { smylib } from 'shared/utils';
 import { cmEditComBusyTsjrpcMethods } from './complect/edit-com-busy';
 import { cmGetResourceHTMLString } from './complect/mp3-rules';
 import { cmShareEditorServerTsjrpcMethods } from './editor.tsjrpc.shares';
-import {
-  chordPackFileStore,
-  cmConstantsConfigFileStore,
-  eePackFileStore,
-  mp3ResourcesFileStorage,
-} from './file-stores';
+import { chordPackFileStore, eePackFileStore, mp3ResourcesFileStorage } from './file-stores';
 import { cmShareServerTsjrpcMethods } from './tsjrpc.shares';
 
 export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseServer<CmEditorTsjrpcModel> {
@@ -91,17 +86,6 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
               client,
             );
           }
-        },
-
-        updateConstConfig: async ({ config }) => {
-          cmConstantsConfigFileStore.updateValue(prev => ({ ...prev, ...config }));
-          cmShareServerTsjrpcMethods.refreshConstConfig(
-            {
-              config,
-              mod: cmConstantsConfigFileStore.fileModifiedAt(),
-            },
-            null,
-          );
         },
       },
     });

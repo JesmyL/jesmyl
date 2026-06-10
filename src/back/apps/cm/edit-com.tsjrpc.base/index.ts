@@ -1,3 +1,4 @@
+import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { CmComIntensityLevel } from 'shared/api';
@@ -11,7 +12,7 @@ import { textLinesLengthIncorrects } from 'shared/utils/cm/com/textLinesLengthIn
 import { transformToClearText } from 'shared/utils/cm/com/transformToClearText';
 import { makeCmComNumLeadAudioLinkList, makeCmComNumLeadLinkFromHttp } from '../complect/com-http-links';
 import { mapCmExportableToImportableCom, mapCmImportableToExportableCom } from '../complect/tools';
-import { cmConstantsConfigFileStore, comsDirStorage } from '../file-stores';
+import { comsDirStorage } from '../file-stores';
 import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
 import { modifyCom } from './lib/modifiers';
 import { cmEditComServerTsjrpcNewlines } from './newlines';
@@ -106,7 +107,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
 
           const incorrects = newCom.t
             ?.map(text =>
-              textLinesLengthIncorrects(text, cmConstantsConfigFileStore.getValue().maxAvailableComLineLength),
+              textLinesLengthIncorrects(text, constantsConfigFileStore.getValue().maxAvailableComLineLength),
             )
             .filter(itNNil);
 

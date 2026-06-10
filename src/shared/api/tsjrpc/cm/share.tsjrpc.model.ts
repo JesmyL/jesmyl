@@ -3,8 +3,8 @@ import {
   CmCatWid,
   CmComWid,
   CmComWidRefGroupDict,
-  CmConstantsConfig,
   ComsInSchEvent,
+  ConstantsConfig,
   ICmComCommentBlock,
   IExportableCat,
   IExportableCom,
@@ -30,6 +30,7 @@ export type CmShareTsjrpcModel = {
   refreshAboutComFavorites: (args: { value: TAboutComFavoriteItem }) => void;
 
   refreshSchEvComPacks: (args: { packs: ComsInSchEvent[]; mod: number }) => void;
-  refreshConstConfig: (args: { config: Partial<CmConstantsConfig>; mod: number }) => unknown;
+  /** @deprecated */
+  refreshConstConfig: (args: { config: Partial<ConstantsConfig>; mod: number }) => unknown;
   refreshComWidRefDict: (args: { refs: CmComWidRefGroupDict; mod: number }) => unknown;
 };

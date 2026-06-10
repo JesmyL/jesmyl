@@ -1,3 +1,4 @@
+import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
@@ -8,7 +9,6 @@ import { trimTextLines } from 'shared/utils';
 import { slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 import { textLinesLengthIncorrects } from 'shared/utils/cm/com/textLinesLengthIncorrects';
 import { transformToClearText } from 'shared/utils/cm/com/transformToClearText';
-import { cmConstantsConfigFileStore } from '../file-stores';
 import { modifyCom } from './lib/modifiers';
 
 export const cmEditComServerTsjrpcTextableBlocks = {
@@ -24,10 +24,7 @@ export const cmEditComServerTsjrpcTextableBlocks = {
   changeTextBlock: modifyCom((com, { texti, value }, { auth }) => {
     if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_TXT', 'U')) throw '';
 
-    const incorrects = textLinesLengthIncorrects(
-      value,
-      cmConstantsConfigFileStore.getValue().maxAvailableComLineLength,
-    );
+    const incorrects = textLinesLengthIncorrects(value, constantsConfigFileStore.getValue().maxAvailableComLineLength);
 
     if (incorrects?.errors?.length) throw incorrects.errors[0].message;
 
@@ -54,7 +51,7 @@ export const cmEditComServerTsjrpcTextableBlocks = {
 
       const incorrects = textLinesLengthIncorrects(
         newText,
-        cmConstantsConfigFileStore.getValue().maxAvailableComLineLength,
+        constantsConfigFileStore.getValue().maxAvailableComLineLength,
       );
 
       if (incorrects?.errors?.length) throw incorrects.errors[0].message;

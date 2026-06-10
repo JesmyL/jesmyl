@@ -5,7 +5,6 @@ import {
   CmComAudioMarkPack,
   CmComWid,
   CmComWidRefGroupDict,
-  CmConstantsConfig,
   CmMp3Rule,
   ComsInSchEvent,
   ComsInSchEventHistory,
@@ -18,8 +17,6 @@ import {
   SokiAuthLogin,
   TAboutComFavoriteItem,
 } from 'shared/api';
-import { smylib } from 'shared/utils';
-import { cmConstantsDefaultConfig } from 'shared/values/cm/cmConstantsDefaultConfig';
 
 export const comsDirStorage = new DirStorage<IServerSideCom, CmComWid>({
   dirPath: '/apps/cm/coms/',
@@ -74,32 +71,6 @@ export const comCommentsDirStore = new DirStorage<
 });
 
 export const aboutComFavoritesFileStore = new FileStore<TUserFavoritesStore>('/apps/cm/aboutComFavorites.json', {});
-
-export const cmConstantsConfigFileStore = new FileStore<CmConstantsConfig>(
-  '/apps/cm/constantsConfig.json',
-  cmConstantsDefaultConfig,
-);
-
-(() => {
-  const config = cmConstantsConfigFileStore.getValue();
-  let isConfigChanged = false;
-
-  smylib.keys(config).forEach(key => {
-    if (cmConstantsDefaultConfig[key] === undefined) {
-      delete config[key];
-      isConfigChanged = true;
-    }
-  });
-
-  smylib.keys(cmConstantsDefaultConfig).forEach(key => {
-    if (config[key] === undefined) {
-      config[key] = cmConstantsDefaultConfig[key];
-      isConfigChanged = true;
-    }
-  });
-
-  if (isConfigChanged) cmConstantsConfigFileStore.saveValue();
-})();
 
 export const cmComWidRefGroupDictFileStore = new FileStore<CmComWidRefGroupDict>(
   '/apps/cm/comWidRefGroupDict.json',

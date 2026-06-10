@@ -34,7 +34,7 @@ export function IndexSettingsPage() {
   const token = authIDB.useValue.token();
 
   const settingsList = [
-    checkAccess('general', 'ALL') && (
+    checkAccess('general', 'ALL') && [
       <Link
         key="consol.e"
         to="/!other/$appName/settings/console"
@@ -44,9 +44,8 @@ export function IndexSettingsPage() {
           iconNode={<LazyIcon icon="SourceCodeCircle" />}
           title="Консоль"
         />
-      </Link>
-    ),
-    checkAccess('general', 'ALL') && (
+      </Link>,
+
       <Link
         key="access-rights"
         to="/!other/$appName/settings/rights"
@@ -56,9 +55,8 @@ export function IndexSettingsPage() {
           iconNode={<LazyIcon icon="UserGroup" />}
           title="Права доступа"
         />
-      </Link>
-    ),
-    checkAccess('general', 'ALL') && (
+      </Link>,
+
       <Link
         key="noun-prons"
         to="/!other/$appName/settings/noun_prons"
@@ -68,8 +66,25 @@ export function IndexSettingsPage() {
           iconNode={<LazyIcon icon="TextFont" />}
           title="Сущ/прил редактор"
         />
-      </Link>
-    ),
+      </Link>,
+
+      <Link
+        key="const"
+        to="/!other/$appName/settings/constant"
+        params={{ appName }}
+      >
+        <BrutalItem
+          iconNode={
+            <LazyIcon
+              icon="RightToLeftListTriangle"
+              kind="TwotoneRounded"
+            />
+          }
+          title="Константы"
+          idPostfix="constants"
+        />
+      </Link>,
+    ],
     <BrutalItem
       key="show-player"
       iconNode={<LazyIcon icon="PlayListFavourite02" />}
@@ -113,7 +128,9 @@ export function IndexSettingsPage() {
       }}
     />,
     !token || <IndexSettingsBindEmail key="bind-email" />,
-  ].filter(itIt);
+  ]
+    .flat()
+    .filter(itIt);
 
   return (
     <PageContainerConfigurer

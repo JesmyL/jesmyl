@@ -1,7 +1,7 @@
+import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { useCmComList } from '$cm/entities/com';
 import { cmComFavoriteComsAtom } from '$cm/entities/index';
-import { cmConstantsConfigAtom } from '$cm/shared/state';
 import { cmUserStoreTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useAuth } from '$index/shared/state';
 import { useAtomValue } from 'atomaric';
@@ -11,7 +11,7 @@ let saveTimeout: TimeOut;
 
 export const useCmComFavouriteList = () => {
   const favourites = useAtomValue(cmComFavoriteComsAtom);
-  const { maxFavouritesCount } = useAtomValue(cmConstantsConfigAtom);
+  const { maxFavouritesCount } = useAtomValue(constantsConfigAtom);
   const favouriteComsSet = new Set(favourites);
   const auth = useAuth();
 

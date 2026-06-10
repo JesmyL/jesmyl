@@ -1,3 +1,4 @@
+import { ConstantsConfig } from 'shared/model/constantsConfig';
 import { IndexAppUserAccessRightsWithoutInfo } from 'shared/model/index/access-rights';
 import { toast } from 'sonner';
 import { StameskaIconKind, StameskaIconPack } from 'stameska-icon/utils';
@@ -20,4 +21,6 @@ export type IndexTsjrpcSharesModel = {
     mood?: 'ko' | 'ok';
     config?: Parameters<typeof toast>[1];
   }) => void;
+
+  constConfig: (args: { config: Partial<ConstantsConfig>; mod: number }) => unknown;
 };

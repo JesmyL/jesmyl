@@ -1,3 +1,4 @@
+import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { TsjrpcBaseClient } from '#basis/tsjrpc/TsjrpcBase.client';
 import { rootAppModalTextContentAtom } from '#shared/lib/atoms/rootAppModalTextContentAtom';
 import { MyLib } from '#shared/lib/my-lib';
@@ -42,6 +43,11 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
               />
             ),
           });
+        },
+
+        constConfig: async ({ config, mod }) => {
+          constantsConfigAtom.set(prev => ({ ...prev, ...config }));
+          await indexIDB.updateLastModifiedAt(mod);
         },
       },
     });

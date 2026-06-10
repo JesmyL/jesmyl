@@ -1,3 +1,4 @@
+import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { MyLib } from '#shared/lib/my-lib';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
@@ -10,7 +11,7 @@ import { useCmExtractHrefsFromHTML } from '$cm+editor/shared/lib/useCmExtractHre
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { ObserveUrlResource } from '$cm+editor/shared/ui/ObserveUrlResource';
 import { CmEditorComAudioControlledList } from '$cm+editor/widgets/com-audio';
-import { CmComOrderList, cmConstantsConfigAtom } from '$cm/ext';
+import { CmComOrderList } from '$cm/ext';
 import styled from '@emotion/styled';
 import { useNavigate } from '@tanstack/react-router';
 import { Atom, useAtomValue } from 'atomaric';
@@ -34,7 +35,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
   const [newCom, setNewCom] = useState<IExportableCom>({ m: CmComMod.def, n: '', w: CmComWid.def });
   const [parseErrors, setParseErrors] = useState<string[]>([]);
   const eeStore = cmEditorIDB.useValue.eeStore();
-  const { maxAvailableComLineLength } = useAtomValue(cmConstantsConfigAtom);
+  const { maxAvailableComLineLength } = useAtomValue(constantsConfigAtom);
 
   const [hrefs, setHrefs] = useState<HttpNumLeadLink[]>([]);
   const [removedAudioHrefs, setRemovedAudioHrefs] = useState<string[]>([]);

@@ -1,6 +1,7 @@
+import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { mylib, MyLib } from '#shared/lib/my-lib';
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
-import { cmConstantsConfigAtom, cmIDB } from '$cm/ext';
+import { cmIDB } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
@@ -63,7 +64,7 @@ export const useCmEditorCompositionsCatSpecialSearches = (): Record<
   `@${string}`,
   ICmEditorCompositionsCatSpecialSearches
 > => {
-  const { maxAvailableComLineLength } = useAtomValue(cmConstantsConfigAtom);
+  const { maxAvailableComLineLength } = useAtomValue(constantsConfigAtom);
 
   return useMemo(
     () => ({

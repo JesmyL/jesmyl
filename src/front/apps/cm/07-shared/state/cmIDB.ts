@@ -8,7 +8,6 @@ import {
   CmComAudioMarkPack,
   CmComWid,
   CmComWidRefGroupDict,
-  CmConstantsConfig,
   ComsInSchEvent,
   HttpNumLeadLink,
   ICmComCommentBlock,
@@ -38,7 +37,6 @@ export interface CmIDBStorage {
   broadcastScreenConfigs: CmBroadcastScreenConfig[];
 
   comTopTools: MigratableComToolName[] | null;
-  constantsConfig: CmConstantsConfig | null;
   lastOpenComw?: CmComWid | null;
   isShowFavouritesInBroadcast: boolean | null;
   selectedComws: CmComWid[] | null;
@@ -64,7 +62,6 @@ class CmIDB extends DexieDB<CmIDBStorage> {
       speedRollKf: [null],
       lastOpenComw: [null],
       isShowFavouritesInBroadcast: [null],
-      constantsConfig: [null],
       comWidRefDict: [{}],
 
       coms: {

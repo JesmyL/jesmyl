@@ -66,12 +66,14 @@ const QABlankLazyImport = createFileRoute('/q/a/$blank')()
 const CmEditMp3RulesLazyImport = createFileRoute('/cm/edit/mp3Rules')()
 const CmEditEventsLazyImport = createFileRoute('/cm/edit/events')()
 const CmEditEELazyImport = createFileRoute('/cm/edit/e-e')()
-const CmEditConstantLazyImport = createFileRoute('/cm/edit/constant')()
 const StoragesIRackwIndexLazyImport = createFileRoute('/storages/i/$rackw/')()
 const GamerIMemoryGiantIndexLazyImport = createFileRoute(
   '/gamer/i/memory-giant/',
 )()
 const CmEditComsIndexLazyImport = createFileRoute('/cm/edit/coms/')()
+const otherAppNameSettingsConstantLazyImport = createFileRoute(
+  '/!other/$appName/settings/constant',
+)()
 const StoragesIRackwEditIndexLazyImport = createFileRoute(
   '/storages/i/$rackw/edit/',
 )()
@@ -329,14 +331,6 @@ const CmEditEELazyRoute = CmEditEELazyImport.update({
   import('./front/routes/cm/edit/e-e.lazy').then((d) => d.Route),
 )
 
-const CmEditConstantLazyRoute = CmEditConstantLazyImport.update({
-  id: '/constant',
-  path: '/constant',
-  getParentRoute: () => CmEditRouteLazyRoute,
-} as any).lazy(() =>
-  import('./front/routes/cm/edit/constant.lazy').then((d) => d.Route),
-)
-
 const CmLiSelRoute = CmLiSelImport.update({
   id: '/li/sel',
   path: '/li/sel',
@@ -410,6 +404,19 @@ const otherAppNameActionsIndexRoute = otherAppNameActionsIndexImport.update({
   path: '/actions/',
   getParentRoute: () => otherAppNameRouteRoute,
 } as any)
+
+const otherAppNameSettingsConstantLazyRoute =
+  otherAppNameSettingsConstantLazyImport
+    .update({
+      id: '/settings/constant',
+      path: '/settings/constant',
+      getParentRoute: () => otherAppNameRouteRoute,
+    } as any)
+    .lazy(() =>
+      import('./front/routes/!other.$appName/settings/constant.lazy').then(
+        (d) => d.Route,
+      ),
+    )
 
 const CmLiCatCatwRoute = CmLiCatCatwImport.update({
   id: '/li/cat/$catw',
@@ -673,13 +680,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CmLiSelImport
       parentRoute: typeof CmRouteImport
     }
-    '/cm/edit/constant': {
-      id: '/cm/edit/constant'
-      path: '/constant'
-      fullPath: '/cm/edit/constant'
-      preLoaderRoute: typeof CmEditConstantLazyImport
-      parentRoute: typeof CmEditRouteLazyImport
-    }
     '/cm/edit/e-e': {
       id: '/cm/edit/e-e'
       path: '/e-e'
@@ -805,6 +805,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/cm/li/cat/$catw'
       preLoaderRoute: typeof CmLiCatCatwImport
       parentRoute: typeof CmRouteImport
+    }
+    '/!other/$appName/settings/constant': {
+      id: '/!other/$appName/settings/constant'
+      path: '/settings/constant'
+      fullPath: '/!other/$appName/settings/constant'
+      preLoaderRoute: typeof otherAppNameSettingsConstantLazyImport
+      parentRoute: typeof otherAppNameRouteImport
     }
     '/!other/$appName/actions/': {
       id: '/!other/$appName/actions/'
@@ -936,7 +943,6 @@ const BibleRouteRouteWithChildren = BibleRouteRoute._addFileChildren(
 
 interface CmEditRouteLazyRouteChildren {
   CmEditChordRoute: typeof CmEditChordRoute
-  CmEditConstantLazyRoute: typeof CmEditConstantLazyRoute
   CmEditEELazyRoute: typeof CmEditEELazyRoute
   CmEditEventsLazyRoute: typeof CmEditEventsLazyRoute
   CmEditMp3RulesLazyRoute: typeof CmEditMp3RulesLazyRoute
@@ -948,7 +954,6 @@ interface CmEditRouteLazyRouteChildren {
 
 const CmEditRouteLazyRouteChildren: CmEditRouteLazyRouteChildren = {
   CmEditChordRoute: CmEditChordRoute,
-  CmEditConstantLazyRoute: CmEditConstantLazyRoute,
   CmEditEELazyRoute: CmEditEELazyRoute,
   CmEditEventsLazyRoute: CmEditEventsLazyRoute,
   CmEditMp3RulesLazyRoute: CmEditMp3RulesLazyRoute,
@@ -1062,6 +1067,7 @@ interface otherAppNameRouteRouteChildren {
   otherAppNameIndexRoute: typeof otherAppNameIndexRoute
   otherAppNameSettingsConsoleRoute: typeof otherAppNameSettingsConsoleRoute
   otherAppNameSettingsRightsRoute: typeof otherAppNameSettingsRightsRoute
+  otherAppNameSettingsConstantLazyRoute: typeof otherAppNameSettingsConstantLazyRoute
   otherAppNameActionsIndexRoute: typeof otherAppNameActionsIndexRoute
   otherAppNameAuthIndexRoute: typeof otherAppNameAuthIndexRoute
   otherAppNameSchsIndexRoute: typeof otherAppNameSchsIndexRoute
@@ -1075,6 +1081,7 @@ const otherAppNameRouteRouteChildren: otherAppNameRouteRouteChildren = {
   otherAppNameIndexRoute: otherAppNameIndexRoute,
   otherAppNameSettingsConsoleRoute: otherAppNameSettingsConsoleRoute,
   otherAppNameSettingsRightsRoute: otherAppNameSettingsRightsRoute,
+  otherAppNameSettingsConstantLazyRoute: otherAppNameSettingsConstantLazyRoute,
   otherAppNameActionsIndexRoute: otherAppNameActionsIndexRoute,
   otherAppNameAuthIndexRoute: otherAppNameAuthIndexRoute,
   otherAppNameSchsIndexRoute: otherAppNameSchsIndexRoute,
@@ -1113,7 +1120,6 @@ export interface FileRoutesByFullPath {
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
   '/cm/li/sel': typeof CmLiSelRoute
-  '/cm/edit/constant': typeof CmEditConstantLazyRoute
   '/cm/edit/e-e': typeof CmEditEELazyRoute
   '/cm/edit/events': typeof CmEditEventsLazyRoute
   '/cm/edit/mp3Rules': typeof CmEditMp3RulesLazyRoute
@@ -1132,6 +1138,7 @@ export interface FileRoutesByFullPath {
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
   '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
+  '/!other/$appName/settings/constant': typeof otherAppNameSettingsConstantLazyRoute
   '/!other/$appName/actions': typeof otherAppNameActionsIndexRoute
   '/!other/$appName/auth': typeof otherAppNameAuthIndexRoute
   '/!other/$appName/schs': typeof otherAppNameSchsIndexRoute
@@ -1168,7 +1175,6 @@ export interface FileRoutesByTo {
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
   '/cm/li/sel': typeof CmLiSelRoute
-  '/cm/edit/constant': typeof CmEditConstantLazyRoute
   '/cm/edit/e-e': typeof CmEditEELazyRoute
   '/cm/edit/events': typeof CmEditEventsLazyRoute
   '/cm/edit/mp3Rules': typeof CmEditMp3RulesLazyRoute
@@ -1187,6 +1193,7 @@ export interface FileRoutesByTo {
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
   '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
+  '/!other/$appName/settings/constant': typeof otherAppNameSettingsConstantLazyRoute
   '/!other/$appName/actions': typeof otherAppNameActionsIndexRoute
   '/!other/$appName/auth': typeof otherAppNameAuthIndexRoute
   '/!other/$appName/schs': typeof otherAppNameSchsIndexRoute
@@ -1230,7 +1237,6 @@ export interface FileRoutesById {
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
   '/cm/li/sel': typeof CmLiSelRoute
-  '/cm/edit/constant': typeof CmEditConstantLazyRoute
   '/cm/edit/e-e': typeof CmEditEELazyRoute
   '/cm/edit/events': typeof CmEditEventsLazyRoute
   '/cm/edit/mp3Rules': typeof CmEditMp3RulesLazyRoute
@@ -1249,6 +1255,7 @@ export interface FileRoutesById {
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
   '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
+  '/!other/$appName/settings/constant': typeof otherAppNameSettingsConstantLazyRoute
   '/!other/$appName/actions/': typeof otherAppNameActionsIndexRoute
   '/!other/$appName/auth/': typeof otherAppNameAuthIndexRoute
   '/!other/$appName/schs/': typeof otherAppNameSchsIndexRoute
@@ -1293,7 +1300,6 @@ export interface FileRouteTypes {
     | '/cm/li/events'
     | '/cm/li/fav'
     | '/cm/li/sel'
-    | '/cm/edit/constant'
     | '/cm/edit/e-e'
     | '/cm/edit/events'
     | '/cm/edit/mp3Rules'
@@ -1312,6 +1318,7 @@ export interface FileRouteTypes {
     | '/!other/$appName/settings/console'
     | '/!other/$appName/settings/rights'
     | '/cm/li/cat/$catw'
+    | '/!other/$appName/settings/constant'
     | '/!other/$appName/actions'
     | '/!other/$appName/auth'
     | '/!other/$appName/schs'
@@ -1347,7 +1354,6 @@ export interface FileRouteTypes {
     | '/cm/li/events'
     | '/cm/li/fav'
     | '/cm/li/sel'
-    | '/cm/edit/constant'
     | '/cm/edit/e-e'
     | '/cm/edit/events'
     | '/cm/edit/mp3Rules'
@@ -1366,6 +1372,7 @@ export interface FileRouteTypes {
     | '/!other/$appName/settings/console'
     | '/!other/$appName/settings/rights'
     | '/cm/li/cat/$catw'
+    | '/!other/$appName/settings/constant'
     | '/!other/$appName/actions'
     | '/!other/$appName/auth'
     | '/!other/$appName/schs'
@@ -1407,7 +1414,6 @@ export interface FileRouteTypes {
     | '/cm/li/events'
     | '/cm/li/fav'
     | '/cm/li/sel'
-    | '/cm/edit/constant'
     | '/cm/edit/e-e'
     | '/cm/edit/events'
     | '/cm/edit/mp3Rules'
@@ -1426,6 +1432,7 @@ export interface FileRouteTypes {
     | '/!other/$appName/settings/console'
     | '/!other/$appName/settings/rights'
     | '/cm/li/cat/$catw'
+    | '/!other/$appName/settings/constant'
     | '/!other/$appName/actions/'
     | '/!other/$appName/auth/'
     | '/!other/$appName/schs/'
@@ -1562,6 +1569,7 @@ export const routeTree = rootRoute
         "/!other/$appName/",
         "/!other/$appName/settings/console",
         "/!other/$appName/settings/rights",
+        "/!other/$appName/settings/constant",
         "/!other/$appName/actions/",
         "/!other/$appName/auth/",
         "/!other/$appName/schs/",
@@ -1596,7 +1604,6 @@ export const routeTree = rootRoute
       "parent": "/cm",
       "children": [
         "/cm/edit/chord",
-        "/cm/edit/constant",
         "/cm/edit/e-e",
         "/cm/edit/events",
         "/cm/edit/mp3Rules",
@@ -1643,10 +1650,6 @@ export const routeTree = rootRoute
     "/cm/li/sel": {
       "filePath": "cm/li/sel.tsx",
       "parent": "/cm"
-    },
-    "/cm/edit/constant": {
-      "filePath": "cm/edit/constant.lazy.tsx",
-      "parent": "/cm/edit"
     },
     "/cm/edit/e-e": {
       "filePath": "cm/edit/e-e.lazy.tsx",
@@ -1718,6 +1721,10 @@ export const routeTree = rootRoute
     "/cm/li/cat/$catw": {
       "filePath": "cm/li/cat.$catw.tsx",
       "parent": "/cm"
+    },
+    "/!other/$appName/settings/constant": {
+      "filePath": "!other.$appName/settings/constant.lazy.tsx",
+      "parent": "/!other/$appName"
     },
     "/!other/$appName/actions/": {
       "filePath": "!other.$appName/actions/index.tsx",

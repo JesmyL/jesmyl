@@ -28,8 +28,8 @@ export const IndexAuthorizeTelegramInlineAuthButton = () => {
                   <TheIconSendButton
                     icon="Telegram"
                     className="text-xOK"
-                    onSend={async () =>
-                      await indexTsjrpcClientMethods.authMeByTelegramMiniButton({
+                    onSend={() =>
+                      indexTsjrpcClientMethods.authMeByTelegramMiniButton({
                         user: api.initDataUnsafe.user,
                       })
                     }

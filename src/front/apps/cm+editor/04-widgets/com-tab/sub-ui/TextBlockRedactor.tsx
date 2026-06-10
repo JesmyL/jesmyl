@@ -1,8 +1,8 @@
+import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { CmEditorTextCorrectMessages } from '$cm+editor/entities/text';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
-import { cmConstantsConfigAtom } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
 import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
@@ -18,7 +18,7 @@ interface Props {
 export const CmEditorComTabTextBlockRedactor = ({ texti, text, ccom, disabled }: Props) => {
   const [value, setValue] = useState(text);
   const eeStore = cmEditorIDB.useValue.eeStore();
-  const { maxAvailableComLineLength } = useAtomValue(cmConstantsConfigAtom);
+  const { maxAvailableComLineLength } = useAtomValue(constantsConfigAtom);
   const lineLengthCorrects = textLinesLengthIncorrects(value, maxAvailableComLineLength);
   const corrects = lineLengthCorrects ?? takeTextBlockIncorrects(value, eeStore);
 
