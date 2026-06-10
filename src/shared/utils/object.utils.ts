@@ -15,3 +15,27 @@ export const objectLength = <const It extends object | unknown[] | nil>(
   it: It,
 ): It extends nil ? 0 : It extends unknown[] ? (It extends { length: infer L } ? L : number) : number =>
   (checkIsNil(it) ? 0 : checkIsArray(it) ? it.length : objectKeys(it).length) as never;
+
+export const forEachObjectEntries = <T>(
+  it: T,
+  eacher: (
+    key: T extends object | nil ? (keyof T extends number ? `${keyof T}` : keyof T) : string,
+    value: T[keyof T],
+  ) => void,
+) => {
+  if (checkIsObject(it)) for (const key in it) eacher(key as never, it[key] as never);
+};
+
+export const mapObjectEntries = <T, Ret>(
+  it: T,
+  mapper: (
+    key: T extends object | nil ? (keyof T extends number ? `${keyof T}` : keyof T) : string,
+    value: T[keyof T],
+    index: number,
+  ) => Ret,
+): Ret[] => {
+  let i = 0;
+  const result: Ret[] = [];
+  if (checkIsObject(it)) for (const key in it) result.push(mapper(key as never, it[key] as never, i++));
+  return result;
+};
