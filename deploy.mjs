@@ -37,14 +37,14 @@ deployTheCode(
     loadToDirFiles: makePaths('./src/back', {
       ...deployPathsDict,
 
-      './': [...(deployPathsDict['./'] || []), 'start.mjs', 'paths.mjs'],
+      '': [...(deployPathsDict[''] || []), 'start.mjs', 'paths.mjs'],
     }),
   },
 );
 
 function makePaths(prefix, dict) {
   const newDict = {};
-  const keyPostfix = !'is deploy case files' ? '/+case' : '';
+  const keyPostfix = projectConfig.isUpdateAllStarts ? '/+case' : '';
 
   Object.keys(dict).forEach(key => {
     const replace = str => str.replace('#', key + keyPostfix).replace('~', prefix);

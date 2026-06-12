@@ -22,10 +22,15 @@ const slashes = '/'.repeat(text.length);
 console.info(`${'/'.repeat(fullLen)}\n${slashes}${text}${slashes}\n${'/'.repeat(fullLen)}`);
 
 export const deployPathsDict = {
-  './': [projectConfigFilePath],
-  // down: ['~/*.exe'],
-  // './down': ['~/*.AppImage'],
-  // 'apps/bible': ['./src/bibles/*.json'],
+  '': [projectConfigFilePath],
+
+  ...(projectConfig.isUpdateAllStarts
+    ? {
+        down: ['~/*.exe'],
+        './down': ['~/*.AppImage'],
+        'apps/bible': ['./src/bibles/*.json'],
+      }
+    : {}),
 
   'apps/cm': ['~/#/*.json'],
   'apps/cm/coms': ['~/#/*.json'],
