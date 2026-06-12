@@ -92,14 +92,13 @@ const sendFilesOnServer = (files, back) => {
   );
 };
 
-const execAsync = stringCommand => {
-  return new Promise((res, rej) =>
+export const execAsync = stringCommand =>
+  new Promise((res, rej) =>
     exec(stringCommand, error => {
       if (error) rej(error);
       else res();
     }),
   );
-};
 
 /**
  *

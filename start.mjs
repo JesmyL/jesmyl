@@ -7,7 +7,7 @@ const startProcess = async () => {
   const rootDir = `/var/www/${projectConfig.dns}/`;
 
   [systemdPath, rootDir].forEach(makeDirExistsChecker(''));
-  Object.keys(deployPathsDict).forEach(makeDirExistsChecker(rootDir));
+  Object.keys(deployPathsDict).concat(['down']).forEach(makeDirExistsChecker(rootDir));
 
   await run(`sudo chmod 755 ${rootDir}`, 'root chmod');
 

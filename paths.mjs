@@ -1,6 +1,11 @@
 import fs from 'fs';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 
-const projectConfigFilePath = 'project-config.json';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const projectConfigFilePath = join(__dirname, 'project-config.json');
 const {
   base: { current, ...base },
   configs: {
@@ -15,7 +20,7 @@ export const projectConfig = {
   host: `https://${dns}`,
 };
 
-const text = ` ${dns} `;
+const text = ` ${dns} - ${ip} `;
 const fullLen = text.length * 3;
 const slashes = '/'.repeat(text.length);
 
@@ -26,8 +31,7 @@ export const deployPathsDict = {
 
   ...(projectConfig.isUpdateAllStarts
     ? {
-        down: ['~/*.exe'],
-        './down': ['~/*.AppImage'],
+        // down: ['~/*.exe', '~/*.AppImage'],
         'apps/bible': ['./src/bibles/*.json'],
       }
     : {}),
@@ -37,6 +41,7 @@ export const deployPathsDict = {
   'apps/cm/comComments': ['~/#/*.json'],
   'apps/index': ['~/#/*.secure'],
   'apps/index': ['~/#/*.json'],
+  'apps/index/schedules': ['~/#/*.json'],
   'apps/q': ['~/#/*.json'],
   'apps/q/blanks': ['~/#/*.json'],
   'apps/storages/list': ['~/#/*.json'],
