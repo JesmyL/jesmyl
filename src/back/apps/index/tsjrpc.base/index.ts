@@ -7,6 +7,7 @@ import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { takeLogginedAuthOrThrow } from 'back/utils';
 import { exec } from 'child_process';
 import { escapeRegExpSymbols, makeRegExp } from 'regexpert';
+import { projectConfig } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { emojiList } from 'shared/const/emojiList';
 import { smylib } from 'shared/utils';
@@ -35,7 +36,7 @@ const deviceIdPostfixSymbols = '!@#$%^&*;.,?/|\\+=-'.split('');
 appVersionFileStore.watchFile(value => {
   tglogger.log(`Version upgrade: ${value.num}`);
 
-  const command = 'chmod +x /var/www/jesmyl.ru/assets/';
+  const command = `chmod +x /var/www/${projectConfig.dns}/assets/`;
 
   setTimeout(() => {
     tglogger.log(`${command} start`);

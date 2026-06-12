@@ -2,6 +2,7 @@ import { readdir, rename } from 'fs/promises';
 import { dirname, extname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { deployTheCode } from './deploy-the-code.mjs';
+import { deployPathsDict, projectConfig } from './paths.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -32,20 +33,11 @@ deployTheCode(
     builtFolder: 'build',
   },
   {
-    targetDir: 'jesmyl.ru',
+    targetDir: projectConfig.dns,
     loadToDirFiles: makePaths('./src/back', {
-      // down: ['~/*.exe'],
-      // './down': ['~/*.AppImage'],
-      // 'apps/bible': ['./src/bibles/*.json'],
+      ...deployPathsDict,
 
-      'apps/cm': ['~/#/*.json'],
-      'apps/cm/coms': ['~/#/*.json'],
-      'apps/cm/comComments': ['~/#/*.json'],
-      'apps/index': ['~/#/*.secure'],
-      'apps/index': ['~/#/*.json'],
-      'apps/q': ['~/#/*.json'],
-      'apps/q/blanks': ['~/#/*.json'],
-      'apps/storages/list': ['~/#/*.json'],
+      './': [...(deployPathsDict['./'] || []), 'start.mjs', 'paths.mjs'],
     }),
   },
 );

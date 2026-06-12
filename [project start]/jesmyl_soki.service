@@ -1,7 +1,0 @@
-[Unit]
-Description=The Soki Service
-
-[Service]
-Restart=on-failure
-RestartSec=5s
-ExecStart=node /var/www/jesmyl.ru/back.index.cjs

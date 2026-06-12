@@ -6,7 +6,7 @@ import { QrReader } from '#shared/ui/qr-code/QrReader';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { Link } from '@tanstack/react-router';
 import { Atom, atom } from 'atomaric';
-import { hosts } from 'shared/api';
+import { projectConfig } from 'shared/api';
 
 let isOpenAtom: Atom<boolean>;
 
@@ -54,7 +54,7 @@ export function IndexActionsPage() {
           <QrReader
             openAtom={isOpenAtom}
             onReadData={value => {
-              if (value.startsWith(hosts.host)) {
+              if (value.startsWith(projectConfig.host)) {
                 onHrefData(value);
                 isOpenAtom.set(false);
               }

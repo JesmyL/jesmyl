@@ -1,0 +1,18 @@
+{
+  "base": {
+    "isUpdateAllStarts": true,
+    "current": "jesmylRu"
+  },
+
+  "configs": {
+    "weInRu": {
+      "ip": "194.67.124.130",
+      "dns": "we-in.ru"
+    },
+
+    "jesmylRu": {
+      "ip": "185.244.173.52",
+      "dns": "jesmyl.ru"
+    }
+  }
+}

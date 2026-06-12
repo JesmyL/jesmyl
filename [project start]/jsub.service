@@ -1,9 +1,0 @@
-[Unit]
-Description=The Msg Soki Service
-
-[Service]
-Restart=on-failure
-RestartSec=5s
-ExecStart=node /var/www/sub/back.index.cjs
-
-#3359

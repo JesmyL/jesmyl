@@ -1,6 +1,6 @@
 export * from './complect/apps';
 export * from './complect/enums';
-export * from './complect/hosts';
+export * from './complect/projectConfig';
 export * from './complect/schedule-widget';
 export * from './complect/server-store';
 export * from './complect/soki.model';

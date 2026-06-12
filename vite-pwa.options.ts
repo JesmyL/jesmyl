@@ -59,12 +59,12 @@ export const vitePWAOptions: Partial<VitePWAOptions> = {
     // capture_links: 'existing_client_event',
     // url_handlers: [
     //   {
-    //     origin: 'https://jesmyl.ru',
+    //     origin: projectConfig.host,
     //   },
     // ],
     // intent_filters: {
     //   scope_url_scheme: 'https',
-    //   scope_url_host: 'jesmyl.ru',
+    //   scope_url_host: projectConfig.dns,
     //   scope_url_path: '/',
     // },
   },
