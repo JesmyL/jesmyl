@@ -2,7 +2,7 @@
 import { valuesFileStore } from 'back/apps/index/file-stores';
 import { backConfig } from 'back/config/backConfig';
 import { SendMessageOptions } from 'node-telegram-bot-api';
-import { projectConfig } from 'shared/api';
+import { hostConfig } from 'shared/api';
 import { jesmylTgBot } from '../bot';
 import { controlTelegramBot } from '../control/control-bot';
 import { jesmylChangesBot } from '../control/jesmylChangesBot';
@@ -33,7 +33,7 @@ export const prodStartOptions: SendMessageOptions = prodTelegramBot.makeSendMess
 
 const prodStartMessage = (botName: string) => `
 Привет!
-Теперь есть возможность авторизоваться в приложении <a href="${projectConfig.host}">JesmyL</a> через Телеграм-бота
+Теперь есть возможность авторизоваться в приложении <a href="${hostConfig.url}">JesmyL</a> через Телеграм-бота
 
 Для этого:
   1. Нужно состоять в <a href="${valuesFileStore.getValue().chatUrl}">группе</a>

@@ -1,4 +1,4 @@
-import { projectConfig } from 'shared/api';
+import { hostConfig } from 'shared/api';
 import { bibleTsjrpcBaseServer } from './apps/bible/tsjrpc';
 import { cmServerTsjrpcBase } from './apps/cm/tsjrpc.base';
 import { startCrTgAlarm } from './apps/index/crTgAlarm';
@@ -30,4 +30,4 @@ scheduleWidgetMessageCatcher.register();
 
 startCrTgAlarm();
 
-if (projectConfig.isUpdateAllStarts) updateAllStarts();
+if (hostConfig.isUpdateAllStarts) updateAllStarts();

@@ -1,5 +1,5 @@
 import { CallbackQuery, ChatMember, SendMessageOptions } from 'node-telegram-bot-api';
-import { projectConfig } from 'shared/api';
+import { hostConfig } from 'shared/api';
 import { smylib } from 'shared/utils';
 import { jesmylTgBot } from '../bot';
 import { tglogger } from '../log/log-bot';
@@ -89,7 +89,7 @@ export const authorizeTelegramCb: JTgBotCallbackQuery = async (prodBot, query, a
           `Твой одноразовый код: <code>${randId}</code>.\n` +
             'Логин: ' +
             (query.from.username || prodBot.convertNickFromId(query.from.id)) +
-            `\n\nЗайди в приложение <a href="${projectConfig.host}">JesmyL</a>, ` +
+            `\n\nЗайди в приложение <a href="${hostConfig.url}">JesmyL</a>, ` +
             'перейди в раздел Другое - Войти, и введи его в поле ввода.\n\n' +
             `Через ${minutesText} этот код будет упразднён`,
         )

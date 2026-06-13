@@ -1,10 +1,10 @@
-import { AttTgInformStorage, projectConfig } from 'shared/api';
+import { AttTgInformStorage, hostConfig } from 'shared/api';
 
 export const makeCmScheduleWidgetComListUrl = (
   schw: number | string,
   dayi: number | string,
   eventMi: number | string,
-) => `${projectConfig.host}/!other/cm/schs?attKey=%5Bcm%5D%3Acoms&schw=${schw}&dayi=${dayi}&eventMi=${eventMi}`;
+) => `${hostConfig.url}/!other/cm/schs?attKey=%5Bcm%5D%3Acoms&schw=${schw}&dayi=${dayi}&eventMi=${eventMi}`;
 
 export const cmTgAttInform: AttTgInformStorage = {
   '[cm]:coms': (_value, eventTitle, schedule, dayi, event) => {

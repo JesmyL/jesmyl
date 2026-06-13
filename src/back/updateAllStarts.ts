@@ -9,8 +9,8 @@ export const updateAllStarts = () => {
   //   ...prev,
   //   // chatUrl: '',
   //   // iconSearchLink: '',
-  //   // desktopLinuxDownLink: `${projectConfig.host}/down/JESMYL_PRO.AppImage`,
-  //   // desktopWindowsDownLink: `${projectConfig.host}/down/JESMYL_PRO.exe`,
+  //   // desktopLinuxDownLink: `${hostConfig.url}/down/JESMYL_PRO.AppImage`,
+  //   // desktopWindowsDownLink: `${hostConfig.url}/down/JESMYL_PRO.exe`,
   // }));
   //
   //

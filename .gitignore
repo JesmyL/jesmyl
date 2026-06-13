@@ -30,3 +30,5 @@ yarn-error.log*
 
 .tgBotEnv
 .passw
+
+host-config.json

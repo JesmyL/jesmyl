@@ -4,7 +4,7 @@ import http from 'http';
 import https from 'https';
 import path from 'path';
 import { makeRegExp } from 'regexpert';
-import { HttpNumLeadLink, projectConfig } from 'shared/api';
+import { HttpNumLeadLink, hostConfig } from 'shared/api';
 import { WebSocketServer } from 'ws';
 import { makeCmComHttpLinkFromNumLead } from './apps/cm/complect/com-http-links';
 import { catsFileStorage, comsDirStorage } from './apps/cm/file-stores';
@@ -13,7 +13,7 @@ import { tglogger } from './sides/telegram-bot/log/log-bot';
 
 export const startExpressRouting = (wsServer: WebSocketServer) => {
   const app = express();
-  const mainFolderPath = `/var/www/${projectConfig.dns}` as const;
+  const mainFolderPath = `/var/www/${hostConfig.host}` as const;
   const isSearchBotReg = /(google|bing|yandex|duckduck|telegram|twitter)bot|slurp|vk\.com/;
 
   app.get('/sw.js', (_req, res) => {
@@ -63,10 +63,10 @@ export const startExpressRouting = (wsServer: WebSocketServer) => {
 
                 ${makeOgMeta('title', title)}
                 ${makeOgMeta('description', ogDescription)}
-                ${makeOgMeta('image', `${projectConfig.host}/android-chrome-512x512.png`)}
+                ${makeOgMeta('image', `${hostConfig.url}/android-chrome-512x512.png`)}
                 ${makeOgMeta('image:width', '512')}
                 ${makeOgMeta('image:height', '512')}
-                ${makeOgMeta('url', projectConfig.host)}
+                ${makeOgMeta('url', hostConfig.url)}
                 ${makeOgMeta('type', 'website')}
                 ${
                   ogAudio
@@ -169,7 +169,7 @@ export const startExpressRouting = (wsServer: WebSocketServer) => {
             });
 
             if (categories) descriptionFromSearchParams += `\n${categories}`;
-            if (com.al) descriptionFromSearchParams += `\n\n${projectConfig.host}${audioPathPrefix}${com.w}.mp3`;
+            if (com.al) descriptionFromSearchParams += `\n\n${hostConfig.url}${audioPathPrefix}${com.w}.mp3`;
           }
         }
       } catch (_e) {
@@ -189,7 +189,7 @@ export const startExpressRouting = (wsServer: WebSocketServer) => {
 
   const readCert = (fileName: string) => {
     try {
-      return fs.readFileSync(`/etc/letsencrypt/live/${projectConfig.dns}/${fileName}.pem`, 'utf8');
+      return fs.readFileSync(`/etc/letsencrypt/live/${hostConfig.host}/${fileName}.pem`, 'utf8');
     } catch (_e) {
       //
     }

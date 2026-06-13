@@ -1,10 +1,11 @@
 import { exec } from 'child_process';
 import fs from 'fs';
 import { promisify } from 'util';
-import { deployPathsDict, projectConfig } from './paths.mjs';
+import { hostConfig } from './hostConfig.mjs';
+import { deployPathsDict } from './paths.mjs';
 
 const startProcess = async () => {
-  const rootDir = `/var/www/${projectConfig.dns}/`;
+  const rootDir = `/var/www/${hostConfig.host}/`;
 
   [systemdPath, rootDir].forEach(makeDirExistsChecker(''));
   Object.keys(deployPathsDict).concat(['down']).forEach(makeDirExistsChecker(rootDir));
@@ -19,18 +20,18 @@ Description=The Soki Service
 [Service]
 Restart=on-failure
 RestartSec=5s
-ExecStart=node /var/www/${projectConfig.dns}/back.index.cjs`,
+ExecStart=node /var/www/${hostConfig.host}/back.index.cjs`,
     () => {},
   );
 
   const scripts = `
-    "relog": "fuser -k 443/tcp & fuser -k 80/tcp & node /var/www/${projectConfig.dns}/back.index.cjs",
+    "relog": "fuser -k 443/tcp & fuser -k 80/tcp & node /var/www/${hostConfig.host}/back.index.cjs",
     "re-start": "fuser -k 443/tcp & fuser -k 80/tcp & systemctl restart jesmyl_soki",
     "re-status": "systemctl status jesmyl_soki",
     "relog-s": "fuser -k 3359/tcp & node /var/www/sub/back.index.cjs",
     "re-start-s": "systemctl restart jsub",
     "re-status-s": "systemctl status jsub",
-    "x": "chmod +x /var/www/${projectConfig.dns}/assets/"
+    "x": "chmod +x /var/www/${hostConfig.host}/assets/"
 `;
 
   fs.writeFileSync('/package.json', `{"scripts": {${scripts}}}`, () => {});
@@ -61,15 +62,9 @@ ExecStart=node /var/www/${projectConfig.dns}/back.index.cjs`,
     // Натравить айпи на домен и установить сертификаты:
       sudo apt update
       sudo apt install certbot
-      sudo certbot certonly --standalone -d ${projectConfig.dns}
-    // Выполнить код в условии (!'do it once') в файле start.mjs
+      sudo certbot certonly --standalone -d ${hostConfig.host}
+      (crontab -l 2>/dev/null; echo '0 3 * * 1 certbot renew --pre-hook "systemctl stop jesmyl_soki" --post-hook "systemctl start jesmyl_soki"') | crontab -
   `);
-
-  if (!'do it once') {
-    await run(
-      `(corntab -l 2>/dev/null; echo '0 3 * * 1 certbot renew --pre-hook "systemctl stop jesmyl_soki" --post-hook "systemctl start jesmyl_soki"')`,
-    );
-  }
 };
 
 ///////////////////////////////////////////

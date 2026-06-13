@@ -1,35 +1,9 @@
-import fs from 'fs';
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const projectConfigFilePath = join(__dirname, 'project-config.json');
-const {
-  base: { current, ...base },
-  configs: {
-    [current]: { dns, ip },
-  },
-} = JSON.parse('' + fs.readFileSync(projectConfigFilePath));
-
-export const projectConfig = {
-  ...base,
-  dns,
-  ip,
-  host: `https://${dns}`,
-};
-
-const text = ` ${dns} - ${ip} `;
-const fullLen = text.length * 3;
-const slashes = '/'.repeat(text.length);
-
-console.info(`${'/'.repeat(fullLen)}\n${slashes}${text}${slashes}\n${'/'.repeat(fullLen)}`);
+import { hostConfig, hostConfigFileName } from './hostConfig.mjs';
 
 export const deployPathsDict = {
-  '': [projectConfigFilePath],
+  '': [hostConfigFileName, 'hostConfig.mjs'],
 
-  ...(projectConfig.isUpdateAllStarts
+  ...(hostConfig.isUpdateAllStarts
     ? {
         'apps/bible': ['./src/bibles/*.json'],
         'apps/index': ['~/#/*.json', '~/#/*.secure', '~/#/emailTextingLetterVariants'],

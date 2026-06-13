@@ -1,4 +1,4 @@
-import { projectConfig } from 'shared/api';
+import { hostConfig } from 'shared/api';
 import { isHttpsOnLocalhost } from '../../../is.https';
 
 type Environment = {
@@ -15,7 +15,7 @@ const localhost = 'localhost';
 
 const sokiLink = isTest
   ? `ws://${isHttpsOnLocalhost ? localhost : import.meta.env.VITE_DNS || localhost}${import.meta.env.VITE_SOKI_POSTFIX}`
-  : `wss://${projectConfig.dns}${import.meta.env.VITE_SOKI_POSTFIX}`;
+  : `wss://${hostConfig.host}${import.meta.env.VITE_SOKI_POSTFIX}`;
 
 export const environment: Environment = {
   isTest,

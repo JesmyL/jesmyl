@@ -1,5 +1,5 @@
 import { exec } from 'child_process';
-import { projectConfig } from './paths.mjs';
+import { hostConfig } from './hostConfig.mjs';
 
 (async () => {
   const execAsync = stringCommand => {
@@ -43,7 +43,7 @@ import { projectConfig } from './paths.mjs';
     console.info('TRY LOAD FILE', serverPath, '=>', localPath);
 
     try {
-      await execAsync(`scp -r root@${projectConfig.ip}:/var/www/${projectConfig.dns}/${serverPath} ${localPath}`);
+      await execAsync(`scp -r root@${hostConfig.ip}:/var/www/${hostConfig.host}/${serverPath} ${localPath}`);
 
       try {
         await execAsync(`npx prettier --write "${localPath}"`);

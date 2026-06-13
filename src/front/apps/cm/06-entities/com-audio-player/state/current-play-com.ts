@@ -1,6 +1,6 @@
 import { addEventListenerPipe } from '#shared/lib/hookEffectPipe';
 import { atom, useAtomValue } from 'atomaric';
-import { HttpNumLeadLink, projectConfig } from 'shared/api';
+import { HttpNumLeadLink, hostConfig } from 'shared/api';
 
 const audioElement = document.createElement('audio');
 
@@ -69,7 +69,7 @@ export const cmComAudioPlayerSetSrc = (src: HttpNumLeadLink | null) => {
 
   cmComAudioPlayerUpdateCurrentTime(0);
   cmComAudioPlayerSwitchIsPlay(false);
-  audioElement.src = src! && `${projectConfig.host}/track/${src}`;
+  audioElement.src = src! && `${hostConfig.url}/track/${src}`;
 
   setTimeout(cmComAudioPlayerPlaySrcAtom.set, 0, src);
 };

@@ -1,5 +1,5 @@
 import { userAccessRightsAndRolesFileStore } from 'back/apps/index/file-stores';
-import { projectConfig } from 'shared/api';
+import { hostConfig } from 'shared/api';
 import { jesmylTgBot } from '../bot';
 import { prodTelegramBot } from '../prod/prod-bot';
 import { JesmylTelegramBot } from '../tg-bot';
@@ -60,7 +60,7 @@ export const baseCallbackCatcher = jesmylTgBot.catchCallbackQuery(async (query, 
     await bot.sendMessage(
       message.chat.id,
       `1. Для связывания этого чата с JesmyL-мероприятием необходимо ` +
-        `вставить следующую строчку в поле управления мероприятием в приложении ${projectConfig.host}` +
+        `вставить следующую строчку в поле управления мероприятием в приложении ${hostConfig.url}` +
         `\n\n<code>${requisites}</code>\n\n` +
         `2. Закрепите следующее сообщение для быстрого доступа к расписанию дня\n\n` +
         `3. Удалите это сообщение - оно больше не понадобится`,

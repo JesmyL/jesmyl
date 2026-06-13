@@ -1,7 +1,7 @@
 import { exec } from 'child_process';
 import file_system from 'fs';
 import { buildBackIndexFile } from './build-back-index.mjs';
-import { projectConfig } from './paths.mjs';
+import { hostConfig } from './hostConfig.mjs';
 
 const versionFilePath = 'src/shared/values/+version.json';
 
@@ -85,7 +85,7 @@ export const deployTheCode = async (front, back) => {
 const sendFilesOnServer = (files, back) => {
   console.info('try load files', files);
   return new Promise((res, rej) =>
-    exec(`scp -r ${files.join(' ')} root@${projectConfig.dns}:/var/www/${back.targetDir}`, err => {
+    exec(`scp -r ${files.join(' ')} root@${hostConfig.host}:/var/www/${back.targetDir}`, err => {
       if (err) rej(err);
       else res();
     }),
