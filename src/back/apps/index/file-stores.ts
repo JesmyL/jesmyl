@@ -1,6 +1,6 @@
 import { FileStore } from 'back/complect/FileStore';
 import { NounPronsType } from 'back/complect/model';
-import { DeviceId, LocalSokiAuth, projectConfig } from 'shared/api';
+import { DeviceId, LocalSokiAuth } from 'shared/api';
 import { IndexAppAccessRightTitles, IndexAppUserAccessRightsAndRoles } from 'shared/model/index/access-rights';
 import { IndexLoginBindsDict, IndexValues } from 'shared/model/index/other';
 import { emptyFunc } from 'shared/utils';
@@ -22,18 +22,6 @@ export const indexStameskaIconsFileStore = new FileStore<typeof stameskaIconPack
 
 export const appVersionFileStore = new FileStore<{ num: number }>('/+version.json', { num: 0 });
 export const valuesFileStore = new FileStore<IndexValues>('/values', {});
-
-if (projectConfig.isUpdateAllStarts) {
-  // if (indexStameskaIconsFileStore.getValue() == null) indexStameskaIconsFileStore.setValue(stameskaIconPack);
-  //
-  // valuesFileStore.setValue(prev => ({
-  //   ...prev,
-  //   // chatUrl: '',
-  //   // iconSearchLink: '',
-  //   // desktopLinuxDownLink: `${projectConfig.host}/down/JESMYL_PRO.AppImage`,
-  //   // desktopWindowsDownLink: `${projectConfig.host}/down/JESMYL_PRO.exe`,
-  // }));
-}
 
 const secureKeyFileStorage = new FileStore('/apps/index/userLoginBindsSequreKey', { key: '' });
 

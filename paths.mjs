@@ -31,15 +31,14 @@ export const deployPathsDict = {
 
   ...(projectConfig.isUpdateAllStarts
     ? {
-        // down: ['~/*.exe', '~/*.AppImage'],
         'apps/bible': ['./src/bibles/*.json'],
+        'apps/index': ['~/#/*.json', '~/#/*.secure', '~/#/emailTextingLetterVariants'],
       }
     : {}),
 
   'apps/cm': ['~/#/*.json'],
   'apps/cm/coms': ['~/#/*.json'],
   'apps/cm/comComments': ['~/#/*.json'],
-  'apps/index': ['~/#/*.secure'],
   'apps/index': ['~/#/*.json'],
   'apps/index/schedules': ['~/#/*.json'],
   'apps/q': ['~/#/*.json'],

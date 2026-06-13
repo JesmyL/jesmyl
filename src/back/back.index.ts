@@ -1,3 +1,4 @@
+import { projectConfig } from 'shared/api';
 import { bibleTsjrpcBaseServer } from './apps/bible/tsjrpc';
 import { cmServerTsjrpcBase } from './apps/cm/tsjrpc.base';
 import { startCrTgAlarm } from './apps/index/crTgAlarm';
@@ -10,6 +11,7 @@ import { storagesServerTsjrpcBase } from './apps/storages/tsjrpc.base';
 import { sokiServer } from './complect/soki/SokiServer';
 import { baseMessagesCatcher } from './sides/telegram-bot/complect/message-catchers';
 import { startExpressRouting } from './startExpressRouting';
+import { updateAllStarts } from './updateAllStarts';
 
 const ws = sokiServer.start();
 startExpressRouting(ws);
@@ -27,3 +29,5 @@ baseMessagesCatcher.register();
 scheduleWidgetMessageCatcher.register();
 
 startCrTgAlarm();
+
+if (projectConfig.isUpdateAllStarts) updateAllStarts();
