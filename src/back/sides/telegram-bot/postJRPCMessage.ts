@@ -46,10 +46,12 @@ export const postJRPCMessage = async (
 
   await sendEmailMessage(emailKey, {
     isSameTo: true,
-    subject: `SYSTEM: ${new Date().toLocaleDateString('ru')} (${scopeTitleDict[options.scope ?? options.tgBot.scope]})`,
+    subject: `SYSTEM: ${new Date().toLocaleDateString('ru', dateConfig)} (${scopeTitleDict[options.scope ?? options.tgBot.scope]})`,
     html,
     ...options.email,
   });
 
   //   await options.tgBot.postMessage(text, options.tg, options.tg?.chatId);
 };
+
+const dateConfig = { day: '2-digit', year: 'numeric', month: '2-digit', weekday: 'short' } as const;
