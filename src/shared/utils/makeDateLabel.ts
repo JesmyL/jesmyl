@@ -1,4 +1,4 @@
-import { smylib } from './SMyLib';
+import { howMillisecondsInDay } from 'shared/const/ms';
 
 export const makeDateLabel = (inputDate: number | Date | string) => {
   const date = new Date(inputDate);
@@ -7,7 +7,7 @@ export const makeDateLabel = (inputDate: number | Date | string) => {
   const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
   const startOfTarget = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
 
-  const diffInDays = Math.round((startOfTarget - startOfToday) / smylib.howMs.inDay);
+  const diffInDays = Math.round((startOfTarget - startOfToday) / howMillisecondsInDay);
 
   if (Math.abs(diffInDays) <= 3) {
     const rtf = new Intl.RelativeTimeFormat('ru', { numeric: 'auto' });
