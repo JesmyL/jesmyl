@@ -90,7 +90,7 @@ export const otpTSJRPCMethods = {
     const { availEmailDomainZone } = constantsConfigFileStore.getValue();
     const availEmailDomainZoneError = constantsConfigurator.availEmailDomainZone.error(availEmailDomainZone, email);
 
-    if (availEmailDomainZoneError) throw availEmailDomainZoneError;
+    if (availEmailDomainZoneError) throw `${email} - ${availEmailDomainZoneError}`;
 
     const verifies = sentEmailOTPFileStorage.getValue();
     let userVerify = verifies.find(({ deviceId, auth: verifyAuth }) => {
@@ -100,7 +100,7 @@ export const otpTSJRPCMethods = {
       );
     });
 
-    if (userVerify && !checkIsOTPTimeStampExpired(userVerify.ts)) throw 'Запросите отправку кода чуть позже';
+    if (userVerify && !checkIsOTPTimeStampExpired(userVerify.ts)) throw `${email} - Запросите отправку кода чуть позже`;
 
     let otp;
     const oldOtpSet = new Set(verifies.map(it => it.otp));
