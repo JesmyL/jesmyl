@@ -7,6 +7,7 @@ import {
   StoragesRackColumn,
 } from 'shared/model/storages/rack.model';
 import { itIt, smylib } from 'shared/utils';
+import { textToUpperCase } from 'shared/utils/string.utils';
 
 type UtilProps = {
   formula: string | nil;
@@ -53,8 +54,8 @@ export const storagesReplaceFormulaNumbers = <Ret extends unknown | string = unk
     ?.replace(makeRegExp('/(\\n|^) */{2}.*/g'), '')
     .trim()
     .replace(makeRegExp('/\\b([a-z.][a-z.0-9]*)\\s*(\\(?)/gi'), (_all, prop, bracket) => {
-      if (!(prop in Math)) return bracket || (prop === prop.toUpperCase() ? prop : '0');
-      return `${props.funcPrefix ?? 'Math.'}${prop}${bracket || (prop === prop.toUpperCase() ? '' : '0')}`;
+      if (!(prop in Math)) return bracket || (prop === textToUpperCase(prop) ? prop : '0');
+      return `${props.funcPrefix ?? 'Math.'}${prop}${bracket || (prop === textToUpperCase(prop) ? '' : '0')}`;
     })
     .split(makeRegExp('/(#\\d+(?:\\.#\\d+)?)/g'))
     .map((value, valuei) => {

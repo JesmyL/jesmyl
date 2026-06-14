@@ -4,6 +4,7 @@ import { QuestionerUserTsjrpcModel } from 'shared/api/tsjrpc/q/user.tsjrpc.model
 import { QuestionerTemplate, QuestionerTemplateId, QuestionerType, QuestionerVariatedType } from 'shared/model/q';
 import { QuestionerUserAnswerValueBox } from 'shared/model/q/answer';
 import { itIt, SMyLib, smylib } from 'shared/utils';
+import { textToUpperCase } from 'shared/utils/string.utils';
 import { questionerBlanksDirStorage, questionerUserAnswersFileStore } from '../file-stores';
 
 export const questionerUserServerTsjrpcBase =
@@ -30,7 +31,7 @@ export const questionerUserServerTsjrpcBase =
                       texts
                         .concat(templateForUser.addTexts ?? [])
                         .filter(itIt)
-                        .map(it => it.toUpperCase()),
+                        .map(textToUpperCase),
                     ),
                   ),
                 );

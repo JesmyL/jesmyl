@@ -5,14 +5,10 @@ import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.ts
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmCom } from 'shared/const/cm/Com';
-import { capitalizeSlavicText } from 'shared/utils';
+import { textToCapitalizeSlavicCase, textToLowerCase, textToUpperCase } from 'shared/utils/string.utils';
 import { twMerge } from 'tailwind-merge';
 
-const mappers: ((word: string) => string)[] = [
-  capitalizeSlavicText,
-  word => word.toLowerCase(),
-  word => word.toUpperCase(),
-];
+const mappers = [textToCapitalizeSlavicCase, textToLowerCase, textToUpperCase];
 
 export const CmEditorComTabTextBlockWordLetterLowerer = ({ com }: { com: CmCom }) => {
   const comTextBlocks = com.texts?.map(text => text.trim().split(makeRegExp('/(\\s+)/'))) ?? [];

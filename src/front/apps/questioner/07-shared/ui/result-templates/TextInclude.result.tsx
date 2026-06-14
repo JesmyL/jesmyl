@@ -2,6 +2,7 @@ import React from 'react';
 import { makeQuestionerTextIncludeSymbolSplitRegExp } from 'shared/const/q/textIncludeSymbols';
 import { QuestionerType } from 'shared/model/q';
 import { QuestionerResultContentProps } from 'shared/model/q/answer';
+import { textToUpperCase } from 'shared/utils/string.utils';
 
 export const QuestionerResultTextIncludeTemplateCardContent = ({
   template,
@@ -21,7 +22,7 @@ export const QuestionerResultTextIncludeTemplateCardContent = ({
               return (
                 <span
                   className={
-                    correctAnswerText.toUpperCase() === userAnswerText?.toUpperCase() ? 'text-xOK' : 'text-xKO'
+                    textToUpperCase(correctAnswerText) === textToUpperCase(userAnswerText) ? 'text-xOK' : 'text-xKO'
                   }
                   key={textFragmenti}
                 >

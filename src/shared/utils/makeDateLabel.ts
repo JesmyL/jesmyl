@@ -1,4 +1,5 @@
 import { howMillisecondsInDay } from 'shared/const/ms';
+import { textToCapitalizeCase } from './string.utils';
 
 export const makeDateLabel = (inputDate: number | Date | string) => {
   const date = new Date(inputDate);
@@ -14,8 +15,7 @@ export const makeDateLabel = (inputDate: number | Date | string) => {
     const relative = rtf.format(diffInDays, 'day');
 
     return (
-      relative[0].toUpperCase() +
-      relative.slice(1) +
+      textToCapitalizeCase(relative) +
       date
         .toLocaleDateString('ru', {
           minute: '2-digit',

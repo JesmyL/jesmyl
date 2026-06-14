@@ -6,8 +6,8 @@ import styled from '@emotion/styled';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode, useMemo } from 'react';
 import { IScheduleWidget, ScheduleWidgetCleans, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
-import { capitalizeText } from 'shared/utils';
 import { searchRate } from 'shared/utils/searchRate';
+import { textToCapitalizeCase } from 'shared/utils/string.utils';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { schEventTypesTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetEventType } from './EventType';
@@ -55,7 +55,7 @@ export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCount
   const typesToAdd = useMemo((): React.ReactNode[] => {
     if (error || term.length < 3 || sortedTypes.some(({ title }) => title === term)) return [];
 
-    const title = capitalizeText(term);
+    const title = textToCapitalizeCase(term);
 
     return (sortedTypes.length ? [90, 60, 30, 15] : [120, 90, 60, 45, 30, 20, 15, 10, 5]).map(tm => {
       const node = (

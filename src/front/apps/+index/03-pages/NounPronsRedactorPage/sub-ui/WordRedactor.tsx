@@ -10,6 +10,7 @@ import styled from '@emotion/styled';
 import { useQuery } from '@tanstack/react-query';
 import { Atom, useAtomValue } from 'atomaric';
 import { useRef, useState } from 'react';
+import { textToUpperCase } from 'shared/utils/string.utils';
 import { toast } from 'sonner';
 
 export const IndexNounPronsRedactorWordRedactor = (props: {
@@ -53,7 +54,7 @@ export const IndexNounPronsRedactorWordRedactor = (props: {
             disabled={
               isQueryInProcess ||
               isDisabled ||
-              query.data?.[`${props.wordKey}s`]?.includes(term.toUpperCase()) ||
+              query.data?.[`${props.wordKey}s`]?.includes(textToUpperCase(term)) ||
               props.checkIsDisabled?.(term)
             }
             confirm={

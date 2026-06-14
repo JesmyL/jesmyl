@@ -8,6 +8,7 @@ import { bibleMyTranslatesAtom } from '$bible/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
+import { textToUpperCase } from 'shared/utils/string.utils';
 
 export default function TranslatesLoadModalInner() {
   const myTranslates = useAtomValue(bibleMyTranslatesAtom);
@@ -21,7 +22,7 @@ export default function TranslatesLoadModalInner() {
         <h3 className="my-2 font-bold">Загруженные переводы</h3>
         {myTranslates.map(tName => {
           const isUnremovable = myTranslates.length < 2;
-          const title = `${translateDescriptions[tName]} (${tName.toUpperCase()})`;
+          const title = `${translateDescriptions[tName]} (${textToUpperCase(tName)})`;
 
           return (
             <TheIconButton
@@ -39,7 +40,7 @@ export default function TranslatesLoadModalInner() {
         <h3 className="my-2 font-bold">Доступные к загрузке</h3>
         {bibleAllTranslates.map(tName => {
           if (myTranslates.includes(tName)) return null;
-          const title = `${translateDescriptions[tName]} (${tName.toUpperCase()})`;
+          const title = `${translateDescriptions[tName]} (${textToUpperCase(tName)})`;
 
           return (
             <TheIconSendButton

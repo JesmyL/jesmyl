@@ -5,11 +5,12 @@ import { makeCmComAudioMarkTitleEmptySelector } from 'shared/const/cm/order/make
 import { defaultTextCase } from 'shared/const/textCase';
 import { CmBroadcastMonolineSlide, CmBroadcastSlideLine } from 'shared/model/cm/broadcast';
 import { TextCase } from 'shared/model/common';
-import { capitalizeSlavicText, itIt } from 'shared/utils';
+import { itIt } from 'shared/utils';
 import { checkIsString } from 'shared/utils/checkIs';
 import { doubleQuotesStr, nbsp, slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 import { makeCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
 import { takeTextBlockWithoutSquareBracketsContent } from 'shared/utils/cm/com/takeTextBlockIncorrects';
+import { textToCapitalizeSlavicCase, textToUpperCase } from 'shared/utils/string.utils';
 import { CmComOrder } from '../../order/Order';
 import { CmComChords } from './30-Chords';
 
@@ -57,11 +58,10 @@ export class CmComTexts extends CmComChords {
     const prepsSet = new Set(preps);
     const str = `/([|])|((?:[${doubleQuotesStr}]|[${preps}] |^—${nbsp})[${slavicLowerLettersStr}])/gi` as const;
     const reg = makeRegExp(str);
-    const rep: StringReplacer = (all, $1, $2) =>
-      $1 ? '' : checkIsString($2) ? $2.slice(0, -1) + $2.slice(-1).toUpperCase() : all;
+    const rep: StringReplacer = (all, $1, $2) => ($1 ? '' : checkIsString($2) ? textToUpperCase($2) : all);
     const mappers: Record<TextCase, (line: string) => string> = {
-      [TextCase.Capitalize]: capitalizeSlavicText,
-      [TextCase.Uppercase]: line => line.toUpperCase(),
+      [TextCase.Capitalize]: textToCapitalizeSlavicCase,
+      [TextCase.Uppercase]: textToUpperCase,
       [TextCase.AsIs]: itIt,
     };
 
@@ -71,7 +71,7 @@ export class CmComTexts extends CmComChords {
       let lastSymbol = '';
 
       return lines.filter(itIt).map((line, linei) => {
-        const result = (!linei || prepsSet.has(lastSymbol) ? capitalizeSlavicText : map)(
+        const result = (!linei || prepsSet.has(lastSymbol) ? textToCapitalizeSlavicCase : map)(
           takeTextBlockWithoutSquareBracketsContent(line),
         ).replace(reg, rep);
         lastSymbol = line.slice(-1);

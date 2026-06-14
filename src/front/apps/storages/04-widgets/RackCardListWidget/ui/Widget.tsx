@@ -11,6 +11,7 @@ import { memo } from 'react';
 import { SortDirection } from 'shared/model/common';
 import { StoragesRack, StoragesRackCard, StoragesRackWid } from 'shared/model/storages/list.model';
 import { StoragesColumnType, StoragesDictItemi, StoragesRackColumn } from 'shared/model/storages/rack.model';
+import { textToUpperCase } from 'shared/utils/string.utils';
 
 const noValue = '<Без значения>';
 const openGroupsAtoms: PRecord<StoragesRackWid, Atom<string[]>> = {};
@@ -69,7 +70,9 @@ export const StoragesRackCardListWidget = memo((props: { rack: StoragesRack }) =
     const isAsc = dir === SortDirection.Asc;
     const compareNumbers = (a: number, b: number) => (isAsc ? a - b : b - a);
     const compareStrings = (a: string, b: string) =>
-      isAsc ? a.toUpperCase().localeCompare(b.toUpperCase()) : b.toUpperCase().localeCompare(a.toUpperCase());
+      isAsc
+        ? textToUpperCase(a).localeCompare(textToUpperCase(b))
+        : textToUpperCase(b).localeCompare(textToUpperCase(a));
 
     if (sort === 'status') {
       const ord = props.rack.statusOrd;

@@ -12,6 +12,7 @@ import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { emojiList } from 'shared/const/emojiList';
 import { smylib } from 'shared/utils';
 import { switchCRUDAccesRightValue } from 'shared/utils/index/utils';
+import { textToUpperCase } from 'shared/utils/string.utils';
 import {
   accessRightTitlesFileStore,
   appVersionFileStore,
@@ -198,7 +199,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
               .filter(key => key.match(reg))
               .sort((a, b) => a.length - b.length || a.localeCompare(b))
               .slice(0, 10)
-              .map(word => word.toUpperCase());
+              .map(textToUpperCase);
           }
 
           if (args.pron && args.pron.length > 2) {
@@ -212,7 +213,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
               .filter(key => key.match(reg))
               .sort((a, b) => a.length - b.length || a.localeCompare(b))
               .slice(0, 10)
-              .map(word => word.toUpperCase());
+              .map(textToUpperCase);
           }
 
           return { value: { nouns, prons, result: makeTwiceKnownName(' ', args.pron, args.noun, false) } };

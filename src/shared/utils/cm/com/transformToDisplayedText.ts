@@ -1,4 +1,5 @@
 import { makeRegExp } from 'regexpert';
+import { textToUpperCase } from 'shared/utils/string.utils';
 import { anyQuotesStr, displayableTextBlockCharsStr, nbsp, openAndClosedQuotes, slavicLowerLettersStr } from './const';
 
 let level = 0;
@@ -21,16 +22,17 @@ const replaceNestedBrackets = (all: string, index: number, text: string) => {
 export const transformToDisplayedText = (text = '', isSetFirstLetterUpperCase = true) => {
   level = 0;
 
-  const str = text
+  text = text
     .replace(makeRegExp(`/[^${displayableTextBlockCharsStr}[\\]]+/gi`), '')
     .replace(makeRegExp(`/"+/g`), replaceNestedBrackets)
     .replace(makeRegExp(`/((?=\\S)-+(?=\\S))|( ?-+\n)|(\\s?-+ ?)/g`), dashReplacer)
     .replace(makeRegExp(`/\\( [${anyQuotesStr}]\\)|\\([${anyQuotesStr}] \\)/g`), '');
 
-  return {
-    text: isSetFirstLetterUpperCase
-      ? str.replace(makeRegExp(`/(?:^|\\n)[${slavicLowerLettersStr}]/g`), all => all.toUpperCase())
-      : str,
-    level,
-  };
+  if (isSetFirstLetterUpperCase)
+    text = text.replace(
+      makeRegExp(`/(?:(?:^|\\n)[^${slavicLowerLettersStr}]*)[${slavicLowerLettersStr}]/gi`),
+      textToUpperCase,
+    );
+
+  return { text, level };
 };

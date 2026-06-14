@@ -1,6 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import React, { useState } from 'react';
+import { textToUpperCase } from 'shared/utils/string.utils';
 import { twMerge } from 'tailwind-merge';
 import { Button } from './ui/button';
 import { Command } from './ui/command';
@@ -93,7 +94,7 @@ export function Autocomplete<Item extends { title: React.ReactNode; value: strin
             <Command.List className="w-full">
               {props.emptyMessage && <Command.Empty>{props.emptyMessage}</Command.Empty>}
               {!!trimmedTerm &&
-                !props.items.some(id => id?.value.toUpperCase() === trimmedTerm.toUpperCase()) &&
+                !props.items.some(id => textToUpperCase(id?.value) === textToUpperCase(trimmedTerm)) &&
                 trimmedTerm.length >= termMinLenghtToShowList &&
                 onNewItem && (
                   <Button

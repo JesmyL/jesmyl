@@ -7,6 +7,7 @@ import {
   cmComCommentMakePseudoCommentContentPropCss,
   cmComCommentTrimHighlightMarkers,
 } from 'shared/utils/cm';
+import { textToUpperCase } from 'shared/utils/string.utils';
 import { cmComCommentHeadBibleAddressRegExp } from './commentHeadBibleAddressRegExp';
 
 let titlesMap: Map<string, number>;
@@ -42,7 +43,7 @@ export const cmComCommentMakeStartCommentCss = async (
 
       const tName = (translateName || currentBibleTranslate || 'rst').toLowerCase() as BibleTranslateName;
 
-      const tNameUpper = tName.toUpperCase() as BibleTranslateName;
+      const tNameUpper = textToUpperCase(tName) as BibleTranslateName;
 
       const translate = translates[tName];
       if (translate == null || translate.chapters == null) {

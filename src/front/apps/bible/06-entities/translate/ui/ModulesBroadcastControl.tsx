@@ -2,6 +2,7 @@ import { bibleTranslateFilter } from '$bible/shared/const/consts';
 import { bibleBookiAtom, bibleMyTranslatesAtom, bibleShowTranslatesAtom } from '$bible/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
 import { JSX, memo } from 'react';
+import { textToUpperCase } from 'shared/utils/string.utils';
 import { twMerge } from 'tailwind-merge';
 import { BibleTranslateModulesRedactButton } from './ModulesBroadcastRedactButton';
 
@@ -35,7 +36,7 @@ export const BibleTranslateModulesControl = memo(function BibleModules({
               } else bibleShowTranslatesAtom.set(prev => [...prev, tName]);
             }}
           >
-            {tName.toUpperCase()}
+            {textToUpperCase(tName)}
           </div>
         );
       })}

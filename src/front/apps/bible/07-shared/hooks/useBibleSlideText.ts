@@ -1,6 +1,7 @@
 import { mylib, MyLib } from '#shared/lib/my-lib';
 import { BibleTranslateName } from 'shared/api';
 import { itIt } from 'shared/utils';
+import { textToUpperCase } from 'shared/utils/string.utils';
 import { bibleTitles } from '../const/bibleTitles';
 import { translateDescriptions } from '../const/consts';
 import { verseTranslateTitleCssClassName } from '../const/ids';
@@ -43,7 +44,7 @@ const makeSlideSingleAddressText = (
       ? showTranslates.length > 1
         ? `${verse}<div><h3 class="${verseTranslateTitleCssClassName}">${
             translateDescriptions[tName]
-          } (${tName.toUpperCase()})</h3>${text ? verseNum + text : ''}</div>`
+          } (${textToUpperCase(tName)})</h3>${text ? verseNum + text : ''}</div>`
         : text
       : verse;
   }, '');
@@ -103,7 +104,7 @@ const makeSlideJoinedAddressText = (
         (showTranslates.length > 1
           ? `<h3 class="${verseTranslateTitleCssClassName}">${
               translateDescriptions[tName]
-            } (${tName.toUpperCase()})</h3>`
+            } (${textToUpperCase(tName)})</h3>`
           : '') +
           '<br>' +
           text

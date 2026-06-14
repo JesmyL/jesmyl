@@ -14,6 +14,7 @@ import {
   ScheduleWidgetAppAttCustomized,
 } from 'shared/api';
 import { itIt } from 'shared/utils';
+import { textToUpperCase } from 'shared/utils/string.utils';
 
 export const scheduleWidgetKeyValueListAttMakeGamesAdder = (
   att: ScheduleWidgetAppAttCustomized,
@@ -43,7 +44,7 @@ export const scheduleWidgetKeyValueListAttMakeGamesAdder = (
                     props: dayEventAttScopeProps,
                     itemMi,
                     value:
-                      `####${team.title.toUpperCase()}\n\n+ ` +
+                      `####${textToUpperCase(team.title)}\n\n+ ` +
                       team.users
                         .map(({ mi }) => rights.schedule.ctrl.users.find(user => user.mi === mi)?.fio ?? '')
                         .filter(itIt)
