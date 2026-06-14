@@ -1,6 +1,6 @@
 import { ScreenBroadcastPositionConfig, ScreenBroadcastTextConfig } from '#features/broadcast/complect/model';
 import { BackgroundConfigProps } from '#shared/ui/configurators/model';
-import { CmComNewlinerLinei, CmComNewlinerRepeati, CmComOrderWid } from 'shared/api';
+import { CmComLineText, CmComNewlinerLinei, CmComNewlinerRepeati, CmComOrderWid } from 'shared/api';
 import { CmComOrder } from 'shared/const/cm/order/Order';
 
 export type CmBroadcastTextScreenConfig = ScreenBroadcastPositionConfig & ScreenBroadcastTextConfig;
@@ -49,7 +49,7 @@ export type CmBroadcastMonolineSlide = {
 
 export type CmBroadcastSlideLine = {
   ord: CmComOrder;
-  line: string;
+  line: CmComLineText;
   blocki: number;
   linei: CmComNewlinerLinei;
   repeati: CmComNewlinerRepeati;

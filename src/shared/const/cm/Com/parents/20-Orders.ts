@@ -1,16 +1,15 @@
 import { ICmComOrderExportableMe } from '#shared/model/cm/order/regions';
-import { makeRegExp } from 'regexpert';
 import {
+  CmComLineText,
   CmComNewlinerLinei,
+  CmComNewlinerLineTextSetHolder,
   CmComNewlinerRepeati,
   CmComOrderSelector,
   CmComOrderWid,
   IExportableOrder,
 } from 'shared/api';
-import { checkIsNumber } from 'shared/utils/checkIs';
-import { cmComNewlinerLineConfigToSet } from 'shared/utils/cm/com/newliner';
+import { cmComNewlinerLineConfigToSet, cmComNewlinerSymbolFreeUpperCaseText } from 'shared/utils/cm/com/newliner';
 import { orderListConstructor } from 'shared/utils/cm/com/orderListConstructor';
-import { objectKeys } from 'shared/utils/object.utils';
 import { CmComOrder } from '../../order/Order';
 import { CmComBasic } from './10-Basic';
 
@@ -65,57 +64,22 @@ export class CmComOrders extends CmComBasic {
 
   setOrders = () => (this._o = orderListConstructor(me => this.orderConstructor(me), this.ords, this.intp, this.langi));
 
-  makeNewlinerSet = (ord: CmComOrder, linei: CmComNewlinerLinei, repeati: CmComNewlinerRepeati) => {
-    let watchOrd;
+  makeNewlinerSet = (
+    setHolder: CmComNewlinerLineTextSetHolder,
+    ord: CmComOrder,
+    line: CmComLineText,
+    linei: CmComNewlinerLinei,
+    repeati: CmComNewlinerRepeati,
+  ) => {
+    const ownSet = cmComNewlinerLineConfigToSet(this.top.nl?.[0][ord.wid], linei, repeati);
+    let firstSet;
+    let currentSet = ownSet;
 
-    const ordNl = this.top.nl?.[0][ord.wid];
-    const ownSet = cmComNewlinerLineConfigToSet(ordNl, linei, repeati);
-    const rootSet = !repeati ? new Set<number>() : cmComNewlinerLineConfigToSet(ordNl, linei, 0);
+    const upperLine = (setHolder[line] ??= cmComNewlinerSymbolFreeUpperCaseText(line));
+    setHolder[upperLine] ??= ownSet;
 
-    let repeatsJson;
+    if (!ownSet.size) currentSet = firstSet = setHolder[upperLine];
 
-    if (!ord.repeats || checkIsNumber(ord.repeats)) repeatsJson = NaN;
-    else {
-      const { '.': self, ...restRepeats } = ord.repeats;
-      repeatsJson = JSON.stringify(restRepeats);
-    }
-
-    const orders = this.orders;
-
-    if (orders)
-      for (const o of orders) {
-        if (o.wid === ord.wid) break;
-        if (o.texti !== ord.texti) continue;
-
-        if (
-          !o.repeats ||
-          checkIsNumber(o.repeats) ||
-          objectKeys(o.repeats).join('|').search(makeRegExp('/:[1-9]/')) < 0
-        ) {
-          watchOrd = o;
-          break;
-        }
-
-        const { '.': self, ...restRepeats } = o.repeats;
-
-        if (repeatsJson === JSON.stringify(restRepeats)) {
-          watchOrd = o;
-          break;
-        }
-      }
-
-    const watchNl = watchOrd ? this.top.nl?.[0][watchOrd.wid] : null;
-
-    const watchOwnSet = cmComNewlinerLineConfigToSet(watchNl, linei, repeati);
-    const watchRootSet = !repeati ? new Set<number>() : cmComNewlinerLineConfigToSet(watchNl, linei, 0);
-
-    const nearSet = [rootSet, watchOwnSet, watchRootSet].find(set => set.size);
-
-    return {
-      watchSet: watchOwnSet.size ? watchOwnSet : watchRootSet,
-      ownSet,
-      nearSet,
-      currentSet: (ownSet.size ? ownSet : nearSet?.size ? nearSet : rootSet) ?? new Set(),
-    };
+    return { ownSet, firstSet, currentSet, holdSet: setHolder[upperLine], upperLine };
   };
 }

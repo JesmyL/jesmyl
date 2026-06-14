@@ -4,7 +4,7 @@ import { WithAtom } from '#shared/ui/WithAtom';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import React, { useMemo } from 'react';
-import { CmComNewlinerWordi } from 'shared/api';
+import { CmComLineText, CmComNewlinerWordi } from 'shared/api';
 import { CmBroadcastMonolineSlideOrdId } from 'shared/model/cm/broadcast';
 import { makeCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
 import { takeCmComNewlinerLineFullConfig } from 'shared/utils/cm/com/newliner';
@@ -12,7 +12,7 @@ import { takeTextBlockWithoutSquareBracketsContent } from 'shared/utils/cm/com/t
 import { twMerge } from 'tailwind-merge';
 
 export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
-  const { warns, slides, groups } = useMemo(() => {
+  const { warns, slides, groups, setHolder } = useMemo(() => {
     const slides = ccom.makeExpandSlides(false);
     const warns: PRecord<CmBroadcastMonolineSlideOrdId, [className: string, text: string]> = {};
 
@@ -28,8 +28,10 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
       }
     });
 
-    return { warns, slides, groups: ccom.makeExpandGroupedLines(false) };
+    return { warns, slides, groups: ccom.makeExpandGroupedLines(false), setHolder: {} };
   }, [ccom]);
+
+  const upperLinesDict: PRecord<Uppercase<CmComLineText>, 1> = {};
 
   return (
     <>
@@ -113,13 +115,22 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                   </div>
                 );
 
-              const { watchSet, currentSet, nearSet, ownSet } = ccom.makeNewlinerSet(ord, linei, repeati);
+              const { currentSet, ownSet, firstSet, holdSet, upperLine } = ccom.makeNewlinerSet(
+                setHolder,
+                ord,
+                line,
+                linei,
+                repeati,
+              );
 
               const isHasSelfChanges = !!ownSet.size;
-              const isDifferentDigitsWithNear = !nearSet || !!nearSet.symmetricDifference(ownSet).size;
+              const isSameDigitsWithFirst =
+                upperLinesDict[upperLine] && !firstSet && !holdSet.symmetricDifference(ownSet).size;
               const cloneSet = ownSet._clone();
               cloneSet.delete(CmComNewlinerWordi.NewLine);
               cloneSet.delete(CmComNewlinerWordi.NotNewLine);
+
+              upperLinesDict[upperLine] = 1;
 
               const renderBreakButton = (wordi: number, isNeedHr?: boolean) => {
                 let beforeNode;
@@ -148,14 +159,14 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                     {beforeNode}
                     <Button
                       size="sx"
-                      {...(currentSet.has(-wordi) && !watchSet.size
+                      {...(currentSet.has(-wordi) && !firstSet?.size
                         ? {
                             icon: 'MinusSignCircle',
-                            className: isDifferentDigitsWithNear ? 'text-x6' : 'bg-xKO! text-x6',
+                            className: isSameDigitsWithFirst ? 'bg-xKO! text-x6' : 'text-x6',
                           }
                         : {
                             icon: 'PlusSignCircle',
-                            className: isDifferentDigitsWithNear ? 'text-xOK' : 'bg-xKO! text-x6',
+                            className: isSameDigitsWithFirst ? 'bg-xKO! text-x6' : 'text-xOK',
                           })}
                       onClick={() =>
                         cmEditComClientTsjrpcMethods.switchNLBr({
@@ -223,7 +234,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                         <Button
                           size="sx"
                           icon={isHasAbsWordi ? 'SquareArrowMoveLeftUp' : 'SquareArrowMoveDownLeft'}
-                          className={`has-[>svg]:px-0! px-0! ${isHasAbsWordi ? `${isDifferentDigitsWithNear ? 'bg-x7! text-x1!' : 'bg-xKO! text-x6!'}${isHasSelfChanges ? '' : ' opacity-50!'}` : ''}`}
+                          className={`has-[>svg]:px-0! px-0! ${isHasAbsWordi ? `${isSameDigitsWithFirst ? 'bg-xKO! text-x6!' : 'bg-x7! text-x1!'}${isHasSelfChanges ? '' : ' opacity-50!'}` : ''}`}
                           onClick={() =>
                             cmEditComClientTsjrpcMethods.switchNLWord({
                               comw: ccom.wid,

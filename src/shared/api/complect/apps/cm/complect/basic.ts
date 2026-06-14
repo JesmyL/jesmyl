@@ -176,6 +176,15 @@ export const enum CmComCommentBlockSpecialSelector {
   Kinds = 'k',
 }
 
+export type CmComNewlinerLineTextSetHolder = PRecord<CmComLineText, Uppercase<CmComLineText>> &
+  PRecord<Uppercase<CmComLineText>, Set<number>>;
+
+export const enum CmComLineText {
+  line1 = 'Строка1',
+  line2 = 'Вторая строка',
+  line3 = 'Строка под номером три',
+}
+
 export const enum CmComNewlinerLinei {
   i = 0,
   never = -1,

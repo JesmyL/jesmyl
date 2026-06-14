@@ -1,5 +1,5 @@
 import { makeRegExp } from 'regexpert';
-import { EeStorePack } from 'shared/api';
+import { CmComLineText, EeStorePack } from 'shared/api';
 import { IIncorrects } from 'shared/model/cm/Incorrects';
 import { smylib } from 'shared/utils/SMyLib';
 import {
@@ -26,7 +26,7 @@ export const takeTextBlockReadableBracketsContent = (text: string) =>
   text.replace(makeRegExp('/\\s(\\[)?\\[([^\\]]*)]+/g'), (_all, $1, $2) => ` ${$1 ? '</br>' : ''}(${$2})`);
 
 export const takeTextBlockWithoutSquareBracketsContent = (text: string) =>
-  text.replace(makeRegExp('/\\s+\\[[^\\]]+]/g'), '');
+  text.replace(makeRegExp('/\\s+\\[[^\\]]+]/g'), '') as CmComLineText;
 
 export const takeTextBlockIncorrects = (text: string | und = '', eeStore: EeStorePack): IIncorrects => {
   let mistakes = '';

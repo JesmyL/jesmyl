@@ -24,7 +24,7 @@ export const CmBroadcastSlidesContext = ({ children, configi }: { children: Reac
   let currentSlidei = slidei;
 
   if (slideId) {
-    const checkIsHasCurrentSlideId = (slide = slides.at(currentSlidei)) => slide?.ids.has(slideId!);
+    const checkIsHasCurrentSlideId = () => slides.at(currentSlidei)?.ids.has(slideId!);
 
     if (!checkIsHasCurrentSlideId()) {
       currentSlidei = slidei - 1;
