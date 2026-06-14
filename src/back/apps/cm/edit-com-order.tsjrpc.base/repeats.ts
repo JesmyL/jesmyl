@@ -105,6 +105,9 @@ export const cmEditComOrderServerTsjrpcRepeats = {
 
       if (comOrd.me.isAnchorInherit) isDel = checkIsEq(value, comOrd.getWatchValue('r'));
       else if (comOrd.isAnchor) isDel = checkIsEq(value, comOrd.me.targetOrd?.repeats);
+      else isDel = !value;
+
+      if (value === 1) value = 0;
 
       if (checkIsNotNil(inhi)) {
         ord._r ??= [];
@@ -115,7 +118,7 @@ export const cmEditComOrderServerTsjrpcRepeats = {
         clearNullableOrderInheritValues(ord, '_r');
 
         newValueHolder = { v: ord._r[inhi] };
-      } else if ((!value && checkIsNil(ord.a)) || isDel) delete ord.r;
+      } else if (isDel) delete ord.r;
       else ord.r = value;
 
       newValueHolder ??= { v: ord.r };
