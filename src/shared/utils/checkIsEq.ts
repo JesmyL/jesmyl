@@ -60,17 +60,17 @@ export const checkIsEq = (base: unknown, source: unknown, isIgnoreArrayItemsOrde
   return true;
 };
 
-const typeOf = (obj: unknown) => {
-  return [
-    checkIsString,
-    checkIsNumber,
-    checkIsBoolean,
-    checkIsArray,
-    checkIsNull,
-    checkIsUndefined,
-    checkIsFunction,
-    checkIsObject,
-    checkIsNaN,
-    checkIsJsDate,
-  ].findIndex(type => type(obj));
-};
+const types = [
+  checkIsString,
+  checkIsNumber,
+  checkIsBoolean,
+  checkIsArray,
+  checkIsNull,
+  checkIsUndefined,
+  checkIsFunction,
+  checkIsObject,
+  checkIsNaN,
+  checkIsJsDate,
+];
+
+const typeOf = (obj: unknown) => types.findIndex(type => type(obj));
