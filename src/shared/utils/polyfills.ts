@@ -51,6 +51,13 @@ export const setSharedPolyfills = () => {
     return pos < 0 ? this[this.length + pos] : this[pos];
   });
 
+  setArrayProtoMethod('with', function (this: unknown[], pos, value) {
+    const arrayClone = this.slice(0);
+    arrayClone[pos < 0 ? this.length + pos : pos] = value;
+
+    return arrayClone;
+  });
+
   setArrayProtoMethod('merge', function (this: unknown[], array) {
     if (array !== undefined) for (let i = 0; i < array.length; i++) this.push(array[i]);
 
