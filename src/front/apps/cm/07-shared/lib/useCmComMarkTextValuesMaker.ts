@@ -9,7 +9,7 @@ import {
   makeCmComAudioMarkTitleEmptySelector,
 } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { CmComOrder } from 'shared/const/cm/order/Order';
-import { nbsp } from 'shared/utils/cm/com/const';
+import { makeCmComOrderRepeatedText } from 'shared/utils/cm/order';
 import { cmIDB } from '../state';
 
 const technicalTextPrefix = `##${Date.now()}@@`;
@@ -125,12 +125,12 @@ export const useCmComMarkTextValuesMaker = (com: CmCom | und, link: HttpNumLeadL
     if (markTotalRepeatsCount < 2) return text;
 
     if (markTotalRepeatsCount < 4) {
-      return `${'/'.repeat(markTotalRepeatsCount)}${nbsp}${text}${nbsp}${'\\'.repeat(markTotalRepeatsCount)}`;
+      return makeCmComOrderRepeatedText(text, markTotalRepeatsCount);
     }
 
     const repeatsCount = markTotalRepeatsCount - timeMarkTextRepeatDict[timeMark].index;
 
-    return `${makeFadeRepeats('/', markTotalRepeatsCount, repeatsCount)}${text}${makeFadeRepeats('\\', markTotalRepeatsCount, repeatsCount)}`;
+    return makeCmComOrderRepeatedText(text, repeatsCount, markTotalRepeatsCount);
   };
 
   return {
@@ -146,12 +146,4 @@ export const useCmComMarkTextValuesMaker = (com: CmCom | und, link: HttpNumLeadL
       return { isTechnicalText, text: makeRepeatedText(text, timeMark) };
     },
   };
-};
-
-const makeFadeRepeats = (slash: '\\' | '/', total: number, current: number) => {
-  const invisibleSlash = `<span class="opacity-40">${slash.repeat(total - current)}</span>`;
-
-  return slash === '/'
-    ? `${invisibleSlash}${slash.repeat(current)}${nbsp}`
-    : `${nbsp}${slash.repeat(current)}${invisibleSlash}`;
 };

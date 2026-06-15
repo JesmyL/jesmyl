@@ -7,8 +7,9 @@ import {
   CmComWid,
 } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
-import { checkIsArray, checkIsNaN, checkIsString } from 'shared/utils/checkIs';
+import { checkIsArray, checkIsNaN, checkIsStartsWith, checkIsString } from 'shared/utils/checkIs';
 import { nbsp } from 'shared/utils/cm/com/const';
+import { CmComOrdRepeatSlashPlacement, makeCmComOrderRepeats } from 'shared/utils/cm/order';
 import { objectKeys } from 'shared/utils/object.utils';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 import { comBlockKindsConfig } from 'shared/values/cm/block-kinds/comBlockKinds.config';
@@ -115,8 +116,8 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
       : title;
   }
 
-  const repeatsText = `${repeats > 1 ? `${'/'.repeat(repeats)} ` : ''}`;
-  const isReplaceBlockText = title.startsWith('+');
+  const repeatsText = `${repeats > 1 ? `${makeCmComOrderRepeats(CmComOrdRepeatSlashPlacement.Before, repeats)} ` : ''}`;
+  const isReplaceBlockText = checkIsStartsWith(title, '+');
   const fullTitle = title;
 
   if (isReplaceBlockText) title = title.split('\n', 1)[0];

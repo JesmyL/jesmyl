@@ -1,6 +1,6 @@
 import { CmComOrderEditableRegion } from '#shared/model/cm/order/regions';
 import { CmComOrder } from 'shared/const/cm/order/Order';
-import { nbsp } from './com/const';
+import { CmComOrdRepeatSlashPlacement, makeCmComOrderRepeats } from './order';
 
 export const cmComOrderMakeRepeatedText = <Ord extends CmComOrder>(
   text: string,
@@ -15,7 +15,9 @@ export const cmComOrderMakeRepeatedText = <Ord extends CmComOrder>(
   regions.forEach(({ startLinei, startWordi, count }) => {
     if (startLinei != null && startWordi != null) {
       const word = textSplits[startLinei]?.[startWordi];
-      if (word) textSplits[startLinei][startWordi] = `${'/'.repeat(count)}${nbsp}${word}`;
+      if (word)
+        textSplits[startLinei][startWordi] =
+          `${makeCmComOrderRepeats(CmComOrdRepeatSlashPlacement.Before, count)}${word}`;
     }
   });
 
@@ -23,7 +25,8 @@ export const cmComOrderMakeRepeatedText = <Ord extends CmComOrder>(
 
   regions.forEach(({ count, finLinei, finWordi }) => {
     if (finLinei != null && finWordi != null) {
-      if (textSplits[finLinei]?.[finWordi]) textSplits[finLinei][finWordi] += `${nbsp}${'\\'.repeat(count)}`;
+      if (textSplits[finLinei]?.[finWordi])
+        textSplits[finLinei][finWordi] += `${makeCmComOrderRepeats(CmComOrdRepeatSlashPlacement.After, count)}`;
     }
   });
 

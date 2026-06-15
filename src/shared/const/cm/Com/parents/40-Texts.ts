@@ -10,6 +10,7 @@ import { checkIsString } from 'shared/utils/checkIs';
 import { doubleQuotesStr, nbsp, slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 import { makeCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
 import { takeTextBlockWithoutSquareBracketsContent } from 'shared/utils/cm/com/takeTextBlockIncorrects';
+import { CmComOrdRepeatSlashPlacement, makeCmComOrderRepeats } from 'shared/utils/cm/order';
 import { textToCapitalizeSlavicCase, textToUpperCase } from 'shared/utils/string.utils';
 import { CmComOrder } from '../../order/Order';
 import { CmComChords } from './30-Chords';
@@ -213,27 +214,34 @@ export class CmComTexts extends CmComChords {
     slides = filterFullSlides();
 
     for (let slidei = slides.length - 1; slidei >= 0; slidei--) {
-      const slide = slides[slidei];
-      if (!slide) continue;
-      slide._textHash = md5(slide.lines.join('\n'));
+      const slide = slides.at(slidei);
 
-      const nextSlide = slides[slidei + 1];
+      if (slide) {
+        const nextSlide = slides.at(slidei + 1);
+        slide._textHash = md5(slide.lines.join('\n'));
 
-      if (nextSlide?._textHash === slide._textHash) {
-        slide.repeats = (nextSlide.repeats ??= 1) + 1;
-        nextSlide.lines = [];
+        if (nextSlide?._textHash === slide._textHash) {
+          slide.repeatsRemaining = (nextSlide.repeatsRemaining ??= 1) + 1;
+          slide.repeated = nextSlide.repeated ??= { r: 1 };
+          slide.repeated.r++;
+        }
       }
+    }
 
-      if (slide.repeats) {
+    for (let slidei = 0; slidei < slides.length; slidei++) {
+      const slide = slides.at(slidei);
+
+      if (slide?.repeated) {
         const lines = slide.lines;
 
         if (lines[0]) {
-          lines[0] = `${'/'.repeat(slide.repeats)}${nbsp}${lines[0]}`;
+          lines[0] = `${makeCmComOrderRepeats(CmComOrdRepeatSlashPlacement.Before, slide.repeated.r, slide.repeatsRemaining)}${lines[0]}`;
         }
         const lasti = lines.findLastIndex(itIt);
 
         if (lines[lasti]) {
-          lines[lasti] = `${lines[lasti]}${nbsp}${'\\'.repeat(slide.repeats)}`;
+          lines[lasti] =
+            `${lines[lasti]}${makeCmComOrderRepeats(CmComOrdRepeatSlashPlacement.After, slide.repeated.r, slide.repeatsRemaining)}`;
         }
       }
     }

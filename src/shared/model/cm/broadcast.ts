@@ -44,7 +44,8 @@ export type CmBroadcastMonolineSlide = {
   /** technical field for calculating slide repeats */
   _textHash: string;
   /** repeats of same slides */
-  repeats?: number;
+  repeated?: { r: number };
+  repeatsRemaining?: number;
 };
 
 export type CmBroadcastSlideLine = {

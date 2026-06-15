@@ -10,7 +10,7 @@ import { useAtomValue } from 'atomaric';
 import { makeRegExp } from 'regexpert';
 import { CmComOrder } from 'shared/const/cm/order/Order';
 import { checkIsNotNumber } from 'shared/utils/checkIs';
-import { nbsp } from 'shared/utils/cm/com/const';
+import { CmComOrdRepeatSlashPlacement, makeCmComOrderRepeats } from 'shared/utils/cm/order';
 import { cmComOrderCheckRepeatKeyIsFlag, makeCmComOrderRepeatOrSelf } from 'shared/utils/cm/repeat-keys';
 import { cmEditorTabComRepeatsStateAtom } from '../state/atoms';
 
@@ -19,9 +19,6 @@ interface Props {
   textLinei: number;
   wordi: number;
 }
-
-const startFlash = '/';
-const finishFlash = '\\';
 
 export const CmEditorTabComRepeatsRemoveButton = ({ ord, textLinei, wordi }: Props) => {
   const { isChordBlock, start } = useAtomValue(cmEditorTabComRepeatsStateAtom);
@@ -92,8 +89,7 @@ export const CmEditorTabComRepeatsRemoveButton = ({ ord, textLinei, wordi }: Pro
                         className="pre-text"
                         dangerouslySetInnerHTML={{
                           __html:
-                            startFlash.repeat(count || 0) +
-                            nbsp +
+                            makeCmComOrderRepeats(CmComOrdRepeatSlashPlacement.Before, count || 0) +
                             (cmComOrderCheckRepeatKeyIsFlag(startKey || '')
                               ? fill(
                                   startOrd,
@@ -113,7 +109,7 @@ export const CmEditorTabComRepeatsRemoveButton = ({ ord, textLinei, wordi }: Pro
                                   )}`) +
                             (cmComOrderCheckRepeatKeyIsFlag(startKey || '')
                               ? ''
-                              : nbsp + finishFlash.repeat(count || 0)),
+                              : makeCmComOrderRepeats(CmComOrdRepeatSlashPlacement.After, count || 0)),
                         }}
                       />
                       <TheButton
