@@ -27,6 +27,10 @@ export default defineConfig(() => {
   return {
     build: { outDir: 'build' },
     server: { port: 3627 },
+    test: {
+      globals: true,
+      environment: 'jsdom',
+    },
     plugins: [
       regExpertVitePlugin(),
       TanStackRouterVite({ target: 'react', autoCodeSplitting: true, routesDirectory: 'src/front/routes' }),
