@@ -1,13 +1,9 @@
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { takeLogginedAuthOrThrow } from 'back/utils';
-import {
-  CmComCommentBlockAnySelector,
-  CmComCommentBlockDict,
-  CmComCommentBlockSpecialSelector,
-  ICmComCommentBlock,
-} from 'shared/api';
+import { CmComCommentBlockDict, CmComCommentBlockSpecialSelector, ICmComCommentBlock } from 'shared/api';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
-import { retUnd, SMyLib, smylib } from 'shared/utils';
+import { arrayByLength } from 'shared/utils/object.utils';
+import { removeEmptyRightValues } from 'shared/utils/removeEmptyRightValues';
 import { comCommentsDirStore } from '../file-stores';
 import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
 
@@ -32,75 +28,28 @@ export const cmServerTsjrpcBaseExchangeFreshComCommentBlocks = {
         return;
       }
 
-      const checkKindsFull = (commentBlockDict: CmComCommentBlockDict) => {
-        const altKindsDict = commentBlockDict[CmComCommentBlockSpecialSelector.Kinds];
-        if (altKindsDict == null) return commentBlockDict;
-
-        smylib.keys(altKindsDict).forEach(key => {
-          if (!altKindsDict[key]) delete altKindsDict[key];
-        });
-
-        if (!smylib.keys(altKindsDict).length) {
-          delete commentBlockDict[CmComCommentBlockSpecialSelector.Kinds];
-        }
-
-        return commentBlockDict;
-      };
-
-      const checkSimpleFull = (
-        key: keyof CmComCommentBlockDict,
-        block: CmComCommentBlockDict[CmComCommentBlockAnySelector],
-        userServerCommentDict: CmComCommentBlockDict | nil,
-      ) => {
-        if (block == null) return;
-
-        if (smylib.isArr(block)) {
-          for (let blocki = block.length - 1; blocki >= 0; blocki--) {
-            if (block[blocki]) break;
-            block.splice(-1);
-          }
-
-          if (!block.length && userServerCommentDict) delete userServerCommentDict[key];
-        } else {
-          smylib.keys(block).forEach(key => {
-            if (!block[key]) delete block[key];
-          });
-        }
-      };
-
       const comServerCommentDicts = userServerComments[comw]?.dl ?? [];
       const modeifiedComCommentDicts = dl ?? [];
 
-      const resultDictList = Array.from(
-        { length: Math.max(modeifiedComCommentDicts.length, comServerCommentDicts.length) },
-        retUnd,
-      ).map((_, i) => {
-        const dict = checkKindsFull({
+      const resultDictList = arrayByLength(
+        Math.max(modeifiedComCommentDicts.length, comServerCommentDicts.length),
+        (i): CmComCommentBlockDict | nil => ({
           ...comServerCommentDicts[i],
           ...modeifiedComCommentDicts[i],
           [CmComCommentBlockSpecialSelector.Kinds]: {
             ...comServerCommentDicts[i]?.[CmComCommentBlockSpecialSelector.Kinds],
             ...modeifiedComCommentDicts[i]?.[CmComCommentBlockSpecialSelector.Kinds],
           },
-        });
-
-        SMyLib.entries(dict).forEach(([key, block]) => {
-          if (key === CmComCommentBlockSpecialSelector.Kinds || !block) return;
-          checkSimpleFull(key, block, dict);
-        });
-
-        return dict;
-      });
-
-      for (let resultDictListi = resultDictList.length - 1; resultDictListi > -1; resultDictListi--)
-        if (!smylib.keys(resultDictList[resultDictListi]).length) resultDictList.pop();
-        else break;
+        }),
+      );
 
       userServerComments[comw] = {
         ...userServerComments[comw],
+        dl: resultDictList.map(it => it || {}),
         m: commentModifiedAt,
-        dl: resultDictList.length ? resultDictList : undefined,
       };
+
+      removeEmptyRightValues(userServerComments[comw]);
 
       delete userServerComments[comw].d;
       delete userServerComments[comw].alt;

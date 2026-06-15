@@ -8,13 +8,15 @@ import {
   IServerSideCom,
 } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
-import { itNNull, smylib } from 'shared/utils';
+import { howMillisecondsInMin } from 'shared/const/ms';
 import {
   cmComNewlinerLineConfigToSet,
   cmComNewlinerLineSetToNewlinerConfig,
   takeCmComNewlinerLineFullConfig,
   takeCmComNewlinerRepeatFullConfig,
 } from 'shared/utils/cm/com/newliner';
+import { arrayByLength, objectLength } from 'shared/utils/object.utils';
+import { removeEmptyRightValues } from 'shared/utils/removeEmptyRightValues';
 import { modifyCom } from './lib/modifiers';
 
 export const cmEditComServerTsjrpcNewlines = {
@@ -63,7 +65,7 @@ export const cmEditComServerTsjrpcNewlines = {
 const retLabel = (comw: CmComWid) => {
   if (timers[comw] != null) return null;
 
-  timers[comw] = setTimeout(() => delete timers[comw], smylib.howMs.inMin * 5);
+  timers[comw] = setTimeout(() => delete timers[comw], howMillisecondsInMin * 5);
 
   return 'настройка слайдов';
 };
@@ -82,34 +84,22 @@ const updateNewlinerLineSet = (
   const lineConfigList = takeCmComNewlinerLineFullConfig(wholeNLConfig);
   const repeatConfigList = takeCmComNewlinerRepeatFullConfig(wholeNLConfig, linei);
 
-  Array.from({ length: Math.max(repeatConfigList.length, (repeati || 0) + 1) }, itNNull).forEach((_, repeati) => {
+  arrayByLength(Math.max(repeatConfigList.length, (repeati || 0) + 1), repeati => {
     const set = cmComNewlinerLineConfigToSet(wholeNLConfig, linei, repeati);
     updater(repeati, set);
 
     repeatConfigList[repeati] = cmComNewlinerLineSetToNewlinerConfig(set);
   });
 
-  checkFullValues(repeatConfigList);
+  removeEmptyRightValues(repeatConfigList, null, it => it || '');
 
   lineConfigList[linei] = repeatConfigList.join('/') as CmComNewlinerStrConfig.line;
-  checkFullValues(lineConfigList);
+  removeEmptyRightValues(lineConfigList, null, it => it || '');
 
   const repeatConfig = lineConfigList.join(' ') as CmComNewlinerStrConfig.whole;
 
   if (repeatConfig) com.nl[0][ordw] = repeatConfig;
   else delete com.nl[0][ordw];
 
-  if (!smylib.keys(com.nl[0]).length) delete com.nl;
-};
-
-const checkFullValues = (list: (string | nil)[]) => {
-  let isFullNotFound = true;
-
-  for (let repeatConfigi = list.length - 1; repeatConfigi >= 0; repeatConfigi--) {
-    list[repeatConfigi] ||= '';
-
-    if (isFullNotFound)
-      if (list[repeatConfigi]) isFullNotFound = false;
-      else list.pop();
-  }
+  if (!objectLength(com.nl[0])) delete com.nl;
 };
