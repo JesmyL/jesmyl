@@ -51,9 +51,6 @@ export const cmServerTsjrpcBaseExchangeFreshComCommentBlocks = {
 
       removeEmptyRightValues(userServerComments[comw]);
 
-      delete userServerComments[comw].d;
-      delete userServerComments[comw].alt;
-
       const block: ICmComCommentBlock = { ...userServerComments[comw], comw };
       resultComments.push(block);
       freshComments.push(block);

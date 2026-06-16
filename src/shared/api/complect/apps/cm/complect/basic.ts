@@ -219,11 +219,6 @@ export type ICmComCommentBlock = {
   m: number;
   /** comment block dict list */
   dl?: (CmComCommentBlockDict | nil)[];
-
-  /** @deprecated */
-  d?: unknown;
-  /** @deprecated */
-  alt?: unknown;
 };
 
 export type TAboutComFavoriteItem = {
