@@ -29,18 +29,24 @@ export const cmServerTsjrpcBaseExchangeFreshComCommentBlocks = {
       }
 
       const comServerCommentDicts = userServerComments[comw]?.dl ?? [];
-      const modeifiedComCommentDicts = dl ?? [];
+      const modifiedComCommentDicts = dl ?? [];
 
       const resultDictList = arrayByLength(
-        Math.max(modeifiedComCommentDicts.length, comServerCommentDicts.length),
-        (i): CmComCommentBlockDict | nil => ({
-          ...comServerCommentDicts[i],
-          ...modeifiedComCommentDicts[i],
-          [CmComCommentBlockSpecialSelector.Kinds]: {
-            ...comServerCommentDicts[i]?.[CmComCommentBlockSpecialSelector.Kinds],
-            ...modeifiedComCommentDicts[i]?.[CmComCommentBlockSpecialSelector.Kinds],
-          },
-        }),
+        Math.max(modifiedComCommentDicts.length, comServerCommentDicts.length),
+        (i): CmComCommentBlockDict | nil => {
+          const dict = {
+            ...comServerCommentDicts[i],
+            ...modifiedComCommentDicts[i],
+            [CmComCommentBlockSpecialSelector.Kinds]: {
+              ...comServerCommentDicts[i]?.[CmComCommentBlockSpecialSelector.Kinds],
+              ...modifiedComCommentDicts[i]?.[CmComCommentBlockSpecialSelector.Kinds],
+            },
+          };
+
+          removeEmptyRightValues(dict);
+
+          return dict;
+        },
       );
 
       userServerComments[comw] = {
