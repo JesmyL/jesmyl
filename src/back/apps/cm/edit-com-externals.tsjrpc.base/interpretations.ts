@@ -1,8 +1,9 @@
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
-import { CmComWid, IExportableComInterpretation, IScheduleWidgetWid, IServerSideCom } from 'shared/api';
+import { CmComMod, CmComWid, IExportableComInterpretation, IScheduleWidgetWid, IServerSideCom } from 'shared/api';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
+import { CmCom } from 'shared/const/cm/Com';
 import { smylib } from 'shared/utils';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { comsDirStorage, comsInSchEventDirStorage } from '../file-stores';
@@ -10,23 +11,30 @@ import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
 
 export const cmEditComExternalsTsjrpcInterpretations = () =>
   ({
-    ordVisIntp: updateInterptetation((com, intp, { isInv, ordw }) => {
-      const ord = com.o?.find(o => o.w === ordw);
-      if (!ord) throw 'Не найдено';
+    ordVisIntp: updateInterptetation((com, intp, { ordw }) => {
+      const getOrd = () => {
+        const cmOrds = new CmCom({ ...com, al: [], m: CmComMod.def }, null, intp).orders;
+        return cmOrds?.find(o => o.wid === ordw);
+      };
+
+      const cmOrd = getOrd();
+
+      if (!cmOrd) throw 'Не найдено';
 
       const ordsIntp = (intp.o ??= {});
-      const ordInterpretation = (ordsIntp[ordw] ??= {});
+      const ordIntp = (ordsIntp[ordw] ??= {});
 
-      if (ordInterpretation.v == null || ordInterpretation.v === 1) ordInterpretation.v = 0;
-      else if (isInv) ordInterpretation.v = 1;
-      else delete ordInterpretation.v;
+      if (cmOrd.isVisible) {
+        delete ordIntp.v;
 
-      const ordv = ord.v ?? 1;
-      const intpv = ordInterpretation.v ?? 1;
+        if (getOrd()?.isVisible) ordIntp.v = 0;
+      } else {
+        delete ordIntp.v;
 
-      if ((!ordv && !intpv) || (ordv && intpv)) delete ordInterpretation.v;
+        if (!getOrd()?.isVisible) ordIntp.v = 1;
+      }
 
-      if (!smylib.keys(ordInterpretation).length) delete ordsIntp[ordw];
+      if (!smylib.keys(ordIntp).length) delete ordsIntp[ordw];
       if (!smylib.keys(ordsIntp).length) delete intp.o;
     }),
 

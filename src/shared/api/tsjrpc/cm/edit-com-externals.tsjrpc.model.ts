@@ -19,7 +19,7 @@ export type CmEditComExternalsTsjrpcModel = {
   }) => void;
 
   /** ord visibility interpretation */
-  ordVisIntp: (args: { schw: IScheduleWidgetWid; comw: CmComWid; ordw: CmComOrderWid; isInv: boolean }) => void;
+  ordVisIntp: (args: { schw: IScheduleWidgetWid; comw: CmComWid; ordw: CmComOrderWid }) => void;
 
   /** com transposition interpretation */
   tonIntp: (args: { schw: IScheduleWidgetWid; comw: CmComWid; ton: number }) => void;
