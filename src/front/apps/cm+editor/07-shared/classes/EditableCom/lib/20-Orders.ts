@@ -6,7 +6,7 @@ export class EditableComOrders extends EditableComCorrects {
   protected _o?: EditableComOrder[];
 
   get ords() {
-    if (this._ords == null) this._ords = this.getBasic('o')?.map(this.mapTopOrdInOrdMe) ?? [];
+    if (this._ords == null) this._ords = this.top.o?.map(this.mapTopOrdInOrdMe) ?? [];
 
     return this._ords as ICmComOrderExportableMe<any>[];
   }

@@ -15,7 +15,7 @@ export class CmComOrderWidClass<
   }
 
   get isEmptyHeader() {
-    return this.getBasic('e');
+    return this.top.e;
   }
 
   get wid(): CmComOrderWid {

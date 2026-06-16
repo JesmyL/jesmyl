@@ -7,10 +7,10 @@ export interface BaseNamedExportables {
 
 export class BaseNamed<T extends BaseNamedExportables> extends SourceBased<T> {
   get name() {
-    return this.getBasic('n');
+    return this.top.n;
   }
 
-  get wid() {
-    return this.getBasic('w');
+  get wid(): T['w'] {
+    return this.top.w;
   }
 }

@@ -9,7 +9,7 @@ export class CmComOrders extends CmComBasic {
   protected _ords?: ICmComOrderExportableMe<CmComOrder>[];
 
   get ords() {
-    if (this._ords == null) this._ords = [...(this.getBasic('o') || [])].map(this.mapTopOrdInOrdMe);
+    if (this._ords == null) this._ords = this.top.o?.map(this.mapTopOrdInOrdMe) ?? [];
 
     return this._ords;
   }

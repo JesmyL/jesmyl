@@ -30,13 +30,9 @@ export const CmComCommentSimpleComments = ({
             className="mb-3"
             onInput={value => {
               deferredCallback(
-                async () =>
+                () =>
                   cmComCommentLocalCommentsUpdater(comw, commentAlti, {
-                    [`s${ordSelector}`]: (texts: string[]) => {
-                      texts = [...texts];
-                      texts[linei] = value;
-                      return texts;
-                    },
+                    [`s${ordSelector}`]: (texts: string[]) => texts.with(linei, value),
                   }),
                 1000,
                 false,

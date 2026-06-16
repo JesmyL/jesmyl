@@ -23,9 +23,6 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
   get texts() {
     return this.top.t;
   }
-  set texts(val) {
-    this.setBasic('t', val);
-  }
 
   get beatsPerMinute() {
     return takeCorrectMetronomeBpm(this.intp?.bpm ?? this.bpm);
@@ -44,12 +41,12 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
   }
 
   get transPosition() {
-    return this.getBasic('p');
+    return this.top.p;
   }
   set transPosition(value) {
     const v = value || 0;
     const val = v > 11 ? v % 12 : v < 0 ? 12 + v : v;
-    this.setBasic('p', val);
+    this.top.p = val;
   }
 
   get langi() {
