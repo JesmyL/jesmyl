@@ -35,6 +35,6 @@ export const myFilesConfig: {
     title: 'Другие',
     single: 'файл',
     icon: 'MoreVerticalCircle01',
-    ext: new Set([]),
+    ext: new Set<string>([]),
   },
 };

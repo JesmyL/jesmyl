@@ -14,10 +14,4 @@ export class EditableComOrders extends EditableComCorrects {
   get orders(): EditableComOrder[] | null {
     return this._o || (this.setOrders() as []);
   }
-
-  afterOrderChange() {
-    delete this._ords;
-    this.setOrders();
-    this.resetChordLabels();
-  }
 }

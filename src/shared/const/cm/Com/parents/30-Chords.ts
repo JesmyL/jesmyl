@@ -93,11 +93,6 @@ export class CmComChords extends CmComOrders {
     });
   }
 
-  resetChordLabels() {
-    delete this._usedChords;
-    delete this._chordLabels;
-  }
-
   actualChords(chordsScalar?: string | number, position = this.transPosition) {
     const chords = checkIsString(chordsScalar) ? (chordsScalar as string) : this.chords?.[chordsScalar as number];
     return chords && CmComChords.withBemoles(this.transposeBlock(chords, position), this.isBemoled);
