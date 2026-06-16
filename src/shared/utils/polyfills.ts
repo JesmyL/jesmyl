@@ -83,7 +83,7 @@ export const setSharedPolyfills = () => {
   };
 
   (function () {
-    if (typeof window.Map === 'function') return;
+    if (typeof globalThis.Map === 'function') return;
 
     function Map(this: any) {
       this._keys = [];
