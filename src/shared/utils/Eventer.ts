@@ -1,3 +1,5 @@
+import { checkIsArray } from './checkIs';
+
 export interface EventerCallbackEvent<Value, StopValue> {
   value: Value;
   stopPropagation: (stopValue?: StopValue) => void;
@@ -119,7 +121,7 @@ export class Eventer {
     listeners: Lis,
     cb: (value: Value) => Return,
   ) => {
-    if (Array.isArray(listeners)) listeners.splice(listeners.indexOf(cb), 1);
+    if (checkIsArray(listeners)) listeners.splice(listeners.indexOf(cb), 1);
     else listeners.delete(cb);
   };
 
@@ -158,10 +160,10 @@ export class Eventer {
 
     return {
       listen: (cb, initValue) => this.listenValue(listeners, cb, initValue),
-      mute: cb => this.muteValue(listeners, cb),
+      mute: cb => this.muteValue(listeners as never, cb),
       invoke: value => this.invokeValue(listeners, value),
       listenFirst: cb => {
-        const rem = this.listenValue(listeners, value => {
+        const rem = this.listenValue(listeners as never, value => {
           cb(value);
           rem();
         });
