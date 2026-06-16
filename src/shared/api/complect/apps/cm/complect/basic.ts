@@ -5,6 +5,7 @@ import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model'
 import {
   CmCatWid,
   CmComIntensityLevel,
+  CmComLangi,
   CmComMod,
   CmComOrderWid,
   CmComWid,
@@ -146,7 +147,7 @@ export type IExportableCom = IExportableComInterpretationSimpleValues & {
   nl?: [PRecord<CmComOrderWid, CmComNewlinerStrConfig.whole>];
 
   /** язык песни */
-  l?: number;
+  l?: CmComLangi;
 
   /** аудио файлы */
   al?: HttpNumLeadLink[];

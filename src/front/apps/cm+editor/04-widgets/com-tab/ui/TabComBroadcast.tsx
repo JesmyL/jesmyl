@@ -12,7 +12,7 @@ import { takeTextBlockWithoutSquareBracketsContent } from 'shared/utils/cm/com/t
 import { twMerge } from 'tailwind-merge';
 
 export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
-  const { warns, slides, groups, setHolder } = useMemo(() => {
+  const { warns, slides, groups } = useMemo(() => {
     const slides = ccom.makeExpandSlides(false);
     const warns: PRecord<CmBroadcastMonolineSlideOrdId, [className: string, text: string]> = {};
 
@@ -28,7 +28,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
       }
     });
 
-    return { warns, slides, groups: ccom.makeExpandGroupedLines(false), setHolder: {} };
+    return { warns, slides, groups: ccom.makeExpandGroupedLines(false) };
   }, [ccom]);
 
   const upperLinesDict: PRecord<Uppercase<CmComLineText>, 1> = {};
@@ -115,17 +115,14 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                   </div>
                 );
 
-              const { currentSet, ownSet, firstSet, holdSet, upperLine } = ccom.makeNewlinerSet(
-                setHolder,
-                ord,
-                line,
-                linei,
-                repeati,
-              );
+              const { currentSet, ownSet, firstSet, holdSet, upperLine } = ord.makeNewlinerSets(line, linei, repeati);
 
               const isHasSelfChanges = !!ownSet.size;
-              const isSameDigitsWithFirst =
-                upperLinesDict[upperLine] && !firstSet && !holdSet.symmetricDifference(ownSet).size;
+              const isSameDigitsWithHolder =
+                upperLinesDict[upperLine] &&
+                !firstSet &&
+                new Set([1]).union(holdSet.symmetricDifference(ownSet)).size === 1;
+
               const cloneSet = ownSet._clone();
               cloneSet.delete(CmComNewlinerWordi.NewLine);
               cloneSet.delete(CmComNewlinerWordi.NotNewLine);
@@ -162,11 +159,11 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                       {...(currentSet.has(-wordi) && !firstSet?.size
                         ? {
                             icon: 'MinusSignCircle',
-                            className: isSameDigitsWithFirst ? 'bg-xKO! text-x6' : 'text-x6',
+                            className: isSameDigitsWithHolder ? 'bg-xKO! text-x6' : 'text-x6',
                           }
                         : {
                             icon: 'PlusSignCircle',
-                            className: isSameDigitsWithFirst ? 'bg-xKO! text-x6' : 'text-xOK',
+                            className: isSameDigitsWithHolder ? 'bg-xKO! text-x6' : 'text-xOK',
                           })}
                       onClick={() =>
                         cmEditComClientTsjrpcMethods.switchNLBr({
@@ -234,7 +231,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                         <Button
                           size="sx"
                           icon={isHasAbsWordi ? 'SquareArrowMoveLeftUp' : 'SquareArrowMoveDownLeft'}
-                          className={`has-[>svg]:px-0! px-0! ${isHasAbsWordi ? `${isSameDigitsWithFirst ? 'bg-xKO! text-x6!' : 'bg-x7! text-x1!'}${isHasSelfChanges ? '' : ' opacity-50!'}` : ''}`}
+                          className={`has-[>svg]:px-0! px-0! ${isHasAbsWordi ? `${isSameDigitsWithHolder ? 'bg-xKO! text-x6!' : 'bg-x7! text-x1!'}${isHasSelfChanges ? '' : ' opacity-50!'}` : ''}`}
                           onClick={() =>
                             cmEditComClientTsjrpcMethods.switchNLWord({
                               comw: ccom.wid,

@@ -1,15 +1,15 @@
 import { CmComOrderWidClass } from '#shared/model/cm/order/OrderWid';
 import { CmComOrderTopHeaderBag, ICmComOrderExportableMe } from '#shared/model/cm/order/regions';
-import { IExportableComInterpretation } from 'shared/api';
+import { CmComLangi, IExportableComInterpretation } from 'shared/api';
 import { comBlockKinds } from 'shared/values/cm/block-kinds/BlockKind';
 import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';
 import { cmComOrderCheckIsOrdVisibleInInterpretation, cmComOrderGetWithExtendableFields } from '../checkIs';
 
-export const orderListConstructor = <OrderConstructor extends CmComOrderWidClass<OrderConstructor>>(
+export const cmComOrderListConstructor = <OrderConstructor extends CmComOrderWidClass<OrderConstructor>>(
   orderConstructor: (me: ICmComOrderExportableMe<OrderConstructor>) => OrderConstructor,
   ords: ICmComOrderExportableMe<OrderConstructor>[],
   intp: IExportableComInterpretation | nil,
-  langi: number,
+  langi: CmComLangi,
 ) => {
   if (!comBlockKinds) return null;
   const orders: OrderConstructor[] = [];

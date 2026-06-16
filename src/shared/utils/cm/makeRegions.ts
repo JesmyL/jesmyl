@@ -3,7 +3,7 @@ import { makeRegExp } from 'regexpert';
 import { OrderRepeats, SpecialOrderRepeatsKey } from 'shared/api';
 import { CmComOrder } from 'shared/const/cm/order/Order';
 import { checkIsNumber } from '../checkIs';
-import { objectEntries, objectKeys } from '../object.utils';
+import { mapObjectEntries, objectKeys } from '../object.utils';
 import {
   cmComOrderCheckRepeatKeyIsFlag,
   cmComOrderCheckRepeatKeyIsPortalStart,
@@ -24,7 +24,7 @@ export const cmComOrderMakeRegions = <Ord extends CmComOrder>(
 
   return repeats === 0
     ? []
-    : objectEntries(makeCmComOrderRepeatOrSelf(repeats)).map(([key, count]): CmComOrderEditableRegion<Ord> => {
+    : mapObjectEntries(makeCmComOrderRepeatOrSelf(repeats), (key, count): CmComOrderEditableRegion<Ord> => {
         if (key === SpecialOrderRepeatsKey.Self)
           return calculateRate({
             startLinei: 0,

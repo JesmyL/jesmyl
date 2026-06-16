@@ -1,4 +1,4 @@
-import { IExportableCom, IExportableComInterpretation, IFixedCom } from 'shared/api';
+import { CmComLangi, IExportableCom, IExportableComInterpretation, IFixedCom } from 'shared/api';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { cmComLanguages } from 'shared/utils/cm/com/const';
 import { BaseNamed } from '../../BaseNamed';
@@ -53,14 +53,14 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
   }
 
   get langi() {
-    return this.getBasicOr('l', 0);
+    return this.top.l ?? CmComLangi.Ru;
   }
 
   get langn() {
-    return cmComLanguages[this.langi || 0];
+    return cmComLanguages[this.langi];
   }
   get nextLangn() {
-    return cmComLanguages[(this.langi || 0) + 1] || cmComLanguages[0];
+    return cmComLanguages[this.langi + 1] || cmComLanguages[CmComLangi.Ru];
   }
 
   isDayFromCreate = (createdAt: number = this.wid) => createdAt > Date.now() - 24 * 60 * 60 * 1000;

@@ -2,10 +2,19 @@ import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { CmComOrderWidClass } from '#shared/model/cm/order/OrderWid';
 import { CmComOrderEditableRegion, ICmComOrderExportableMe } from '#shared/model/cm/order/regions';
 import { makeRegExp } from 'regexpert';
-import { CmComOrderSelector, InheritancableOrder, OrderRepeats, SpecialOrderRepeats } from 'shared/api';
+import {
+  CmComLineText,
+  CmComNewlinerLinei,
+  CmComNewlinerRepeati,
+  CmComOrderSelector,
+  InheritancableOrder,
+  OrderRepeats,
+  SpecialOrderRepeats,
+} from 'shared/api';
 import { checkIsNumber, checkIsObject } from 'shared/utils/checkIs';
 import { cmComOrderCheckIsOrdVisibleInInterpretation } from 'shared/utils/cm/checkIs';
 import { chordInterpretedRegs } from 'shared/utils/cm/com/const';
+import { cmComNewlinerLineConfigToSet, cmComNewlinerSymbolFreeUpperCaseText } from 'shared/utils/cm/com/newliner';
 import { transformToDisplayedText } from 'shared/utils/cm/com/transformToDisplayedText';
 import { cmComOrderMakeRegions } from 'shared/utils/cm/makeRegions';
 import { cmComOrderMakeRepeatedText } from 'shared/utils/cm/makeRepeatedText';
@@ -272,4 +281,18 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   makeSelector = (): CmComOrderSelector => this.wid;
 
   isVisibleOrd = () => !this.isHeaderNoneForce && this.isVisible;
+
+  makeNewlinerSets = (line: CmComLineText, linei: CmComNewlinerLinei, repeati: CmComNewlinerRepeati) => {
+    const setHolder = this.com.newlinerSetHolder;
+    const ownSet = cmComNewlinerLineConfigToSet(this.com.top.nl?.[0][this.wid], linei, repeati);
+    let firstSet;
+    let currentSet = ownSet;
+
+    const upperLine = (setHolder[line] ??= cmComNewlinerSymbolFreeUpperCaseText(line));
+    setHolder[upperLine] ??= ownSet;
+
+    if (!ownSet.size) currentSet = firstSet = setHolder[upperLine];
+
+    return { ownSet, firstSet, currentSet, holdSet: setHolder[upperLine], upperLine };
+  };
 }

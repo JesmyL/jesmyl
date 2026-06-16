@@ -1,3 +1,8 @@
+export const enum CmComLangi {
+  Ru = 0,
+  Ua,
+}
+
 export const enum CmComWid {
   def = -1,
   other = -2,

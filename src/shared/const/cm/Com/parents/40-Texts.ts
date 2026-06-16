@@ -1,6 +1,6 @@
 import md5 from 'md5';
 import { escapeRegExpSymbols, makeNamedRegExp, makeRegExp } from 'regexpert';
-import { CmComAudioMarkPackTime, CmComLineText, CmComNewlinerLineTextSetHolder, CmComOrderWid } from 'shared/api';
+import { CmComAudioMarkPackTime, CmComLineText, CmComOrderWid } from 'shared/api';
 import { makeCmComAudioMarkTitleEmptySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { defaultTextCase } from 'shared/const/textCase';
 import { CmBroadcastMonolineSlide, CmBroadcastSlideLine } from 'shared/model/cm/broadcast';
@@ -130,7 +130,6 @@ export class CmComTexts extends CmComChords {
     }
   };
 
-  private newlinerSetHolder: CmComNewlinerLineTextSetHolder = {};
   makeExpandSlides = (
     isFinalChordedOrd: boolean,
     expandLines: CmBroadcastSlideLine[] = this.makeExpandLines(isFinalChordedOrd),
@@ -190,10 +189,9 @@ export class CmComTexts extends CmComChords {
       prevOrdLinei = linei;
 
       let samei = 0;
-      const { currentSet } = this.makeNewlinerSet(this.newlinerSetHolder, ord, line, linei, repeati);
-      currentSet.add(lineWords.length + 10);
+      const { currentSet } = ord.makeNewlinerSets(line, linei, repeati);
 
-      currentSet.forEach(initWordi => {
+      currentSet.union(new Set([lineWords.length + 10])).forEach(initWordi => {
         if (prevInitWordi < 0 || !prevSlide) prevSlide = fillSlide();
         prevInitWordi = initWordi;
 

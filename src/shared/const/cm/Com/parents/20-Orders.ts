@@ -1,15 +1,6 @@
 import { ICmComOrderExportableMe } from '#shared/model/cm/order/regions';
-import {
-  CmComLineText,
-  CmComNewlinerLinei,
-  CmComNewlinerLineTextSetHolder,
-  CmComNewlinerRepeati,
-  CmComOrderSelector,
-  CmComOrderWid,
-  IExportableOrder,
-} from 'shared/api';
-import { cmComNewlinerLineConfigToSet, cmComNewlinerSymbolFreeUpperCaseText } from 'shared/utils/cm/com/newliner';
-import { orderListConstructor } from 'shared/utils/cm/com/orderListConstructor';
+import { CmComNewlinerLineTextSetHolder, CmComOrderSelector, CmComOrderWid, IExportableOrder } from 'shared/api';
+import { cmComOrderListConstructor } from 'shared/utils/cm/com/orderListConstructor';
 import { CmComOrder } from '../../order/Order';
 import { CmComBasic } from './10-Basic';
 
@@ -62,24 +53,8 @@ export class CmComOrders extends CmComBasic {
     return ords;
   };
 
-  setOrders = () => (this._o = orderListConstructor(me => this.orderConstructor(me), this.ords, this.intp, this.langi));
+  setOrders = () =>
+    (this._o = cmComOrderListConstructor(me => this.orderConstructor(me), this.ords, this.intp, this.langi));
 
-  makeNewlinerSet = (
-    setHolder: CmComNewlinerLineTextSetHolder,
-    ord: CmComOrder,
-    line: CmComLineText,
-    linei: CmComNewlinerLinei,
-    repeati: CmComNewlinerRepeati,
-  ) => {
-    const ownSet = cmComNewlinerLineConfigToSet(this.top.nl?.[0][ord.wid], linei, repeati);
-    let firstSet;
-    let currentSet = ownSet;
-
-    const upperLine = (setHolder[line] ??= cmComNewlinerSymbolFreeUpperCaseText(line));
-    setHolder[upperLine] ??= ownSet;
-
-    if (!ownSet.size) currentSet = firstSet = setHolder[upperLine];
-
-    return { ownSet, firstSet, currentSet, holdSet: setHolder[upperLine], upperLine };
-  };
+  newlinerSetHolder: CmComNewlinerLineTextSetHolder = {};
 }
