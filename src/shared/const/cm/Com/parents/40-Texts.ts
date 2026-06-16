@@ -18,7 +18,7 @@ import { CmComChords } from './30-Chords';
 export class CmComTexts extends CmComChords {
   ordersWithFinalChordedOrd(isFinalChordedOrd: boolean) {
     const orders = this.orders;
-    if (!isFinalChordedOrd || !orders?.at(-1)?.isRealText()) return orders ?? [];
+    if (!isFinalChordedOrd || !orders || !orders.at(-1)?.isChBlock()) return orders ?? [];
 
     return orders.concat(
       new CmComOrder(
@@ -90,9 +90,7 @@ export class CmComTexts extends CmComChords {
 
       const heapText = comOrders
         .map(ord => {
-          if (!ord.isVisible) return;
-
-          const ordLines = (ord.isRealText() ? ord.repeatedText(undefined, false) : ord.me.header()).split('\n');
+          const ordLines = (ord.isChBlock() ? ord.me.header() : ord.repeatedText(undefined, false)).split('\n');
 
           blocki++;
           headSolidOrders.push(ord);
@@ -132,6 +130,7 @@ export class CmComTexts extends CmComChords {
 
   makeExpandSlides = (
     isFinalChordedOrd: boolean,
+    isShowInvisibleSlides: boolean,
     expandLines: CmBroadcastSlideLine[] = this.makeExpandLines(isFinalChordedOrd),
   ) => {
     let slides: CmBroadcastMonolineSlide[] = [];
@@ -140,7 +139,8 @@ export class CmComTexts extends CmComChords {
     let prevOrdw: CmComOrderWid;
     let prevInitWordi: number;
     let isPrevChordedSlide = false;
-    const filterFullSlides = () => slides.filter(({ lines }) => lines.length);
+    const filterFullSlides = () =>
+      slides.filter(({ lines, ord }) => lines.length && (ord.isVisible || isShowInvisibleSlides));
 
     expandLines.forEach(({ line, ord, linei, totalLinei, repeati }) => {
       const lineWords = line.split(' ');
@@ -171,7 +171,7 @@ export class CmComTexts extends CmComChords {
         return prevSlide;
       };
 
-      if (!ord.isRealText()) {
+      if (ord.isChBlock()) {
         fillSlide().lines = lineWords;
         isPrevChordedSlide = true;
         return;
@@ -214,7 +214,7 @@ export class CmComTexts extends CmComChords {
     for (let slidei = slides.length - 1; slidei >= 0; slidei--) {
       const slide = slides.at(slidei);
 
-      if (slide) {
+      if (slide && (slide.ord.isVisible || isShowInvisibleSlides)) {
         const nextSlide = slides.at(slidei + 1);
         slide._textHash = md5(slide.lines.join('\n'));
 

@@ -13,7 +13,7 @@ import { twMerge } from 'tailwind-merge';
 
 export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
   const { warns, slides, groups } = useMemo(() => {
-    const slides = ccom.makeExpandSlides(false);
+    const slides = ccom.makeExpandSlides(false, true);
     const warns: PRecord<CmBroadcastMonolineSlideOrdId, [className: string, text: string]> = {};
 
     slides.forEach(({ linei, lines, ord, repeati, samei }) => {
@@ -105,7 +105,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
               const props = { 'solid-ord-selector': ord.makeSelector() };
               line = takeTextBlockWithoutSquareBracketsContent(line);
 
-              if (!ord.isRealText() || !line.trim())
+              if (ord.isChBlock() || !line.trim())
                 return (
                   <div
                     key={ordBlocki}

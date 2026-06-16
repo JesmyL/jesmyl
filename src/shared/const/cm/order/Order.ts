@@ -198,6 +198,7 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   self = <Ord extends CmComOrder>(): Ord => this as never;
 
   isRealText = () => !!(this.text && this.isVisible);
+  isChBlock = () => this.texti == null;
 
   lineChordLabels = (chordHardLevel: 2 | 1 | 3, specialLinei: number, specialOrdi: number) => {
     let chordsLabels = this.com.chordLabels[specialOrdi]?.[specialLinei] ?? [];

@@ -68,10 +68,10 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
           toLinei: currentSlide?.toLinei ?? 0,
 
           text: html,
-          isChorded: !currentSlide?.ord.isRealText(),
+          isChorded: currentSlide?.ord.isChBlock(),
 
           nextText: nextHtml,
-          isNextChorded: !nextSlide?.ord.isRealText(),
+          isNextChorded: nextSlide?.ord.isChBlock(),
           dir,
           chordedMode,
         },

@@ -16,7 +16,7 @@ export const CmBroadcastSlidesContext = ({ children, configi }: { children: Reac
   const { slidei, slideId } = useAtomValue(cmBroadcastCurrentSlideiAtom);
   const com = useCmComCurrent();
   const showChordedSlideMode = useAtomValue(cmShowChordedSlideModeAtom);
-  const slides = useMemo(() => com?.makeExpandSlides(true) ?? [], [com]);
+  const slides = useMemo(() => com?.makeExpandSlides(true, false) ?? [], [com]);
   const isHiddenChordsMode =
     showChordedSlideMode === CmBroadcastShowChordedSlideMode.Hide ||
     showChordedSlideMode === CmBroadcastShowChordedSlideMode.Pass;
@@ -45,13 +45,12 @@ export const CmBroadcastSlidesContext = ({ children, configi }: { children: Reac
 
   if (isHiddenChordsMode) {
     const currentSlide = slides.at(currentSlidei);
-    if (currentSlide && !currentSlide.ord.isRealText())
-      currentSlidei = findSlideOrdRealTextIndex(slides, currentSlidei);
+    if (currentSlide && currentSlide.ord.isChBlock()) currentSlidei = findSlideOrdRealTextIndex(slides, currentSlidei);
 
     nextSlidei = currentSlidei + 1;
 
     const nextSlide = slides.at(nextSlidei);
-    if (nextSlide && !nextSlide.ord.isRealText()) nextSlidei = findSlideOrdRealTextIndex(slides, nextSlidei);
+    if (nextSlide && nextSlide.ord.isChBlock()) nextSlidei = findSlideOrdRealTextIndex(slides, nextSlidei);
   }
 
   useEffect(() => {
@@ -80,7 +79,7 @@ export const CmBroadcastSlidesContext = ({ children, configi }: { children: Reac
       setSlidei: (newSlidei: number) => {
         const isRtL = currentSlidei > newSlidei;
 
-        if (isHiddenChordsMode && !slides[newSlidei]?.ord.isRealText()) {
+        if (isHiddenChordsMode && slides[newSlidei]?.ord.isChBlock()) {
           newSlidei = isRtL
             ? slides.slice(0, newSlidei).findLastIndex(checkIsSlideOrdRealText)
             : slides.slice(newSlidei).findIndex(checkIsSlideOrdRealText) + newSlidei;
@@ -101,6 +100,6 @@ export const CmBroadcastSlidesContext = ({ children, configi }: { children: Reac
   return <CmBroadcastInnerSlidesContext value={state}>{children}</CmBroadcastInnerSlidesContext>;
 };
 
-const checkIsSlideOrdRealText = (slide: CmBroadcastMonolineSlide) => slide.ord.isRealText();
+const checkIsSlideOrdRealText = (slide: CmBroadcastMonolineSlide) => !slide.ord.isChBlock();
 const findSlideOrdRealTextIndex = (slides: CmBroadcastMonolineSlide[], slidei: number) =>
   slides.slice(slidei).findIndex(checkIsSlideOrdRealText) + slidei;

@@ -12,8 +12,7 @@ export const CmBroadcastSlideLine = () => {
   return (
     <div className="no-scrollbar snap-x snap-mandatory flex my-2 bg-x1 py-2 overflow-auto nowrap rounded-md">
       {slides.map((slide, slidei) => {
-        if (!slide || (showChordedSlideMode === CmBroadcastShowChordedSlideMode.Hide && !slide.ord.isRealText()))
-          return;
+        if (!slide || (showChordedSlideMode === CmBroadcastShowChordedSlideMode.Hide && slide.ord.isChBlock())) return;
 
         return (
           <div
@@ -27,7 +26,7 @@ export const CmBroadcastSlideLine = () => {
               className={twMerge(
                 'pointer flex flex-col text-x3 flex p-3 h-[calc(100%-1.5em)] overflow-hidden text-[14px] text-center white-pre rounded-md',
                 currentSlidei === slidei && 'text-x7 bg-x2',
-                !slide.ord.isRealText() &&
+                slide.ord.isChBlock() &&
                   (showChordedSlideMode === CmBroadcastShowChordedSlideMode.Blind
                     ? 'italic opacity-50'
                     : showChordedSlideMode === CmBroadcastShowChordedSlideMode.Pass
