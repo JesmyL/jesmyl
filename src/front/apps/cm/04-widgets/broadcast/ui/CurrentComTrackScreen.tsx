@@ -27,7 +27,7 @@ export const CmBroadcastCurrentComTrackScreen = (props: BroadcastScreenProps & P
     <CmBroadcastScreen
       {...props}
       cmConfig={currentConfig}
-      text={html ?? ''}
+      html={html ?? ''}
       nextText={nextHtml ?? ''}
       isChorded={!!isTechnicalText}
       isNextChorded={!!isNextTechnicalText}

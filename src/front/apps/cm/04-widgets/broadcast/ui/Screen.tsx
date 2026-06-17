@@ -2,7 +2,6 @@ import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
 import { makeBroadcastTextStroke } from '#features/broadcast/complect/defaults';
 import { takeScreenBroadcastBackgroundStyles } from '#features/broadcast/complect/hooks/background-styles';
 import { ScreenTranslateCurrentPositionConfigurators } from '#features/broadcast/complect/position/Position';
-import { mylib } from '#shared/lib/my-lib';
 import { CmBroadcastShowChordedSlideMode } from '#shared/model/cm/Cm.model';
 import { HorizontalDirection } from '#shared/model/Direction';
 import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
@@ -13,6 +12,7 @@ import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useRef } from 'react';
 import { CmBroadcastScreenConfig } from 'shared/model/cm/broadcast';
+import { checkIsArray } from 'shared/utils/checkIs';
 import { useApplyScreenFontFamilyEffect, useMyFileNode } from 'x/my-files';
 import { useCmBroadcastScreenStyle } from '../lib/get-style';
 import { CmBroadcastSubScreen } from './SubScreen';
@@ -20,7 +20,7 @@ import { CmBroadcastSubScreen } from './SubScreen';
 type Props = BroadcastScreenProps &
   Partial<FontSizeContainProps> & {
     cmConfig: CmBroadcastScreenConfig | und;
-    text: string | string[];
+    html: string | string[];
     nextText: string;
     isVisible: boolean;
     isTechnicalText?: boolean;
@@ -89,10 +89,10 @@ export const CmBroadcastScreen = (props: Props) => {
           ...makeBroadcastTextStroke(props.cmConfig),
           opacity: props.isTechnicalText ? Math.min(+(style.opacity || 1) || 1, 0.3) : style.opacity,
         }}
-        html={(isBlindMode && props.isChorded) || mylib.isArr(props.text) ? undefined : props.text}
+        html={(isBlindMode && props.isChorded) || checkIsArray(props.html) ? undefined : props.html}
         content={
-          mylib.isArr(props.text)
-            ? props.text.map((line, linei) => (
+          checkIsArray(props.html)
+            ? props.html.map((line, linei) => (
                 <div
                   key={linei}
                   className="fragmented-slide-line"

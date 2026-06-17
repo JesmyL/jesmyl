@@ -42,7 +42,7 @@ export type CmBroadcastMonolineSlide = {
   /** total to line index */
   toLinei: number;
   /** technical field for calculating slide repeats */
-  _textHash: string;
+  textHash: string;
   /** repeats of same slides */
   repeated?: { r: number };
   repeatsRemaining?: number;

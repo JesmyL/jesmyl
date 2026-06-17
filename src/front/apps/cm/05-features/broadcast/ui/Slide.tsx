@@ -11,10 +11,9 @@ export const CmBroadcastLiveSlide = (props: Props) => {
       <CmBroadcastScreen
         {...props}
         className="inline-flex center white-pre-children"
-        text={props.text}
         cmConfig={props.config}
         isVisible
-        freshSlideKey={`${props.text}//${props.slideId}`}
+        freshSlideKey={props.hash || `${props.html}`}
         slideSwitchDir={props.dir}
       />
     </div>

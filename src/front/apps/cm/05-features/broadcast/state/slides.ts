@@ -9,6 +9,7 @@ export const [CmBroadcastInnerSlidesContext, useCmBroadcastSlidesContext] =
     nextSlidei: -2,
     html: '-',
     nextHtml: '-',
+    hash: '',
     setSlidei: emptyFunc,
     slides: [],
     toSlide: emptyFunc,

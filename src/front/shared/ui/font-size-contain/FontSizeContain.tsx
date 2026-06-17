@@ -1,5 +1,6 @@
-import { mylib } from '#shared/lib/my-lib';
 import { CSSProperties, useLayoutEffect, useRef, useState } from 'react';
+import { checkIsArray, checkIsNotNaN } from 'shared/utils/checkIs';
+import { twMerge } from 'tailwind-merge';
 import { FontSizeContainProps } from './FontSizeContain.model';
 
 const shadowStyle: CSSProperties = {
@@ -26,7 +27,7 @@ export function FontSizeContain({ className, content, html, subUpdates, style }:
         containerRef.current.clientWidth / shadowChildRef.current.clientWidth,
       );
 
-      if (scale > 0 && Number.isFinite(scale) && !mylib.isNaN(scale))
+      if (scale > 0 && Number.isFinite(scale) && checkIsNotNaN(scale))
         setChildStyle({
           transform: `scale(${scale})`,
           transformOrigin: style?.textAlign === 'left' ? 'left' : style?.textAlign === 'right' ? 'right' : 'center',
@@ -36,14 +37,14 @@ export function FontSizeContain({ className, content, html, subUpdates, style }:
 
   return (
     <div
-      className={className + ' absolute h-full w-full'}
+      className={twMerge('absolute h-full w-full', className)}
       ref={containerRef}
       style={style}
     >
       {html !== undefined ? (
         <>
           <WithHtml
-            __html={html}
+            __html={checkIsArray(html) ? html.join('\n') : html}
             childStyle={childStyle}
             shadowChildRef={shadowChildRef}
           />

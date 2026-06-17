@@ -10,7 +10,10 @@ export interface CmBroadcastSchWgtLiveDataValue {
   toLinei: number;
   isChorded: boolean;
   isNextChorded: boolean;
+  /** @deprecated */
   text: string | string[];
+  html: string | string[];
+  hash: string;
   nextText: string;
   config: CmBroadcastScreenConfig;
   dir: HorizontalDirection;

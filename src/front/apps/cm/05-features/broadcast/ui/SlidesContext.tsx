@@ -70,11 +70,12 @@ export const CmBroadcastSlidesContext = ({ children, configi }: { children: Reac
   const state = useMemo(
     (): CmBroadcastSlidesContextState => ({
       slides,
-      html: CmCom.prepareEachTextLine(slides[currentSlidei]?.lines, config?.case).join('\n'),
-      nextHtml: CmCom.prepareEachTextLine(slides[nextSlidei]?.lines, config?.case).join('\n'),
+      html: CmCom.prepareEachTextLine(slides.at(currentSlidei)?.lines, config?.case).join('\n'),
+      nextHtml: CmCom.prepareEachTextLine(slides.at(nextSlidei)?.lines, config?.case).join('\n'),
+      hash: slides.at(currentSlidei)?.textHash ?? '',
       slidei: currentSlidei,
       nextSlidei,
-      slideId: slides[currentSlidei]?.id ?? slideId,
+      slideId: slides.at(currentSlidei)?.id ?? slideId ?? 'w-1l0',
       toSlide: dir => state.setSlidei(currentSlidei + dir),
       setSlidei: (newSlidei: number) => {
         const isRtL = currentSlidei > newSlidei;

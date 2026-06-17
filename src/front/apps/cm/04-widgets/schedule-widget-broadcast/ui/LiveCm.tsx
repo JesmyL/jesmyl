@@ -42,25 +42,25 @@ export const CmScheduleWidgetBroadcastLiveCm = (props: LiveBroadcastAppProps) =>
 
 const LiveReport = (props: LiveBroadcastAppProps) => {
   const ccom = useCmComCurrent();
-  const selfConfig = useCmBroadcastScreenConfigs()[0];
+  const config = useCmBroadcastScreenConfigs()[0];
   const chordedMode = useAtomValue(cmShowChordedSlideModeAtom);
   const dir = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
   const isHide = !useAtomValue(isShowBroadcastTextAtom);
 
-  const { slidei, html, nextSlidei, slides, nextHtml, slideId } = useCmBroadcastSlidesContext();
+  const { slidei, html, nextSlidei, slides, nextHtml, slideId, hash } = useCmBroadcastSlidesContext();
 
   useEffect(() => {
     if (props.isCantTranslateLive || !ccom) return;
 
     return setTimeoutEffect(() => {
-      const currentSlide = slides[slidei];
-      const nextSlide = slides[nextSlidei];
+      const currentSlide = slides.at(slidei);
+      const nextSlide = slides.at(nextSlidei);
 
       const liveData: IndexSchWBroadcastLiveDataValue = {
         fio: props.fio ?? '',
         isHide,
         cm: {
-          config: selfConfig,
+          config,
           comw: ccom.wid,
           slideId,
 
@@ -68,10 +68,12 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
           toLinei: currentSlide?.toLinei ?? 0,
 
           text: html,
-          isChorded: currentSlide?.ord.isChBlock(),
+          html,
+          hash,
+          isChorded: !!currentSlide?.ord.isChBlock(),
 
           nextText: nextHtml,
-          isNextChorded: nextSlide?.ord.isChBlock(),
+          isNextChorded: !!nextSlide?.ord.isChBlock(),
           dir,
           chordedMode,
         },
@@ -81,7 +83,7 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
     }, 100);
   }, [
     ccom,
-    selfConfig,
+    config,
     props.fio,
     props.isCantTranslateLive,
     props.schedule?.w,
@@ -94,6 +96,7 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
     chordedMode,
     slidei,
     slideId,
+    hash,
   ]);
 
   return <></>;

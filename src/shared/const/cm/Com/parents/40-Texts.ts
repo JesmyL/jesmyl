@@ -162,7 +162,7 @@ export class CmComTexts extends CmComChords {
           samei,
           fromLinei: totalLinei,
           toLinei: totalLinei + 1,
-          _textHash: '',
+          textHash: '',
           _id: zeroSameId,
         };
 
@@ -216,9 +216,9 @@ export class CmComTexts extends CmComChords {
 
       if (slide && (slide.ord.isVisible || isShowInvisibleSlides)) {
         const nextSlide = slides.at(slidei + 1);
-        slide._textHash = md5(slide.lines.join('\n'));
+        slide.textHash = md5(slide.lines.join('\n'));
 
-        if (nextSlide?._textHash === slide._textHash) {
+        if (nextSlide?.textHash === slide.textHash) {
           slide.repeatsRemaining = (nextSlide.repeatsRemaining ??= 1) + 1;
           slide.repeated = nextSlide.repeated ??= { r: 1 };
           slide.repeated.r++;

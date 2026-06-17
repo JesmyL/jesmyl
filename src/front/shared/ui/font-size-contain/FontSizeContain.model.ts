@@ -5,5 +5,5 @@ export type FontSizeContainProps = {
   subUpdates?: string | number;
   style?: CSSProperties;
   content?: ReactNode;
-  html?: string;
+  html?: string | string[];
 };
