@@ -6,7 +6,7 @@ export type CmBroadcastSlidesContextState = {
   nextHtml: string;
   hash: string;
   slidei: number;
-  slideId: CmBroadcastMonolineSlideOrdId;
+  slideId?: CmBroadcastMonolineSlideOrdId | nil;
   nextSlidei: number;
   toSlide: (dir: 1 | -1) => void;
   setSlidei: (newSlidei: number) => void;

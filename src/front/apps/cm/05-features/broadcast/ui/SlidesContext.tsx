@@ -75,7 +75,7 @@ export const CmBroadcastSlidesContext = ({ children, configi }: { children: Reac
       hash: slides.at(currentSlidei)?.textHash ?? '',
       slidei: currentSlidei,
       nextSlidei,
-      slideId: slides.at(currentSlidei)?.id ?? slideId ?? 'w-1l0',
+      slideId: slides.at(currentSlidei)?.id ?? slideId,
       toSlide: dir => state.setSlidei(currentSlidei + dir),
       setSlidei: (newSlidei: number) => {
         const isRtL = currentSlidei > newSlidei;
