@@ -67,6 +67,7 @@ export const makeCmEventNestedRoute = <Path extends keyof FileRoutesByPath>(prop
     path: props.path,
     RouteComponent: EventRouteComponent,
     useComListPack: props.useComListPack ?? useComListPack,
+    isIgnoreSearch: true,
     BroadcastComponent: () => {
       const { schw: paramSchw } = useParams({ from: props.path }) as { schw?: `${IScheduleWidgetWid}` };
       const { schw = paramSchw } = useSearch({ from: props.path }) as Search;

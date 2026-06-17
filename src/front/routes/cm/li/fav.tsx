@@ -10,6 +10,7 @@ export const Route = createFileRoute('/cm/li/fav')(
     path: '/cm/li/fav',
     RouteComponent,
     useComListPack,
+    isIgnoreSearch: true,
   }),
 );
 

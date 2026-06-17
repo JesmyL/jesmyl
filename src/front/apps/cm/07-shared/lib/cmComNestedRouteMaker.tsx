@@ -13,7 +13,7 @@ import {
 import { cmComLastOpenComwAtom } from '$cm/entities/index';
 import { TheCmComComposition } from '$cm/widgets/com';
 import { FileRoutesByPath, Link, useParams, useSearch } from '@tanstack/react-router';
-import { useAtomValue } from 'atomaric';
+import { atom, useAtomValue } from 'atomaric';
 import { JSX, useEffect } from 'react';
 import { CmCatWid } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
@@ -23,24 +23,28 @@ import { CmComInScheduleWid } from '../state/contexts';
 import { takeCatTermAtom } from './Cat';
 
 interface Props<Path extends keyof FileRoutesByPath> {
+  isIgnoreSearch?: boolean;
   path: Path;
   RouteComponent: () => JSX.Element;
   useComListPack: () => CmComListContextValue;
   BroadcastComponent?: () => JSX.Element;
 }
 
+let emptyTextAtom;
+
 export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>({
   RouteComponent,
   path,
   useComListPack,
   BroadcastComponent,
+  isIgnoreSearch,
 }: Props<Path>) => {
   const ComRouteComponent = () => {
     const { comw, tran, schw } = useSearch({ from: path }) as CmComOpenRouteProps;
     const { catw } = useParams({ from: path }) as { catw?: string };
     const com = useCmCom(comw, schw);
     const comListPack = useComListPack();
-    const termAtom = takeCatTermAtom(catw ? +catw : CmCatWid.all);
+    const termAtom = isIgnoreSearch ? takeCatTermAtom(catw ? +catw : CmCatWid.all) : (emptyTextAtom ??= atom(''));
     const term = useAtomValue(termAtom);
     const meterSize = com?.meterSize ?? CmComMetricNum.Four;
     const beatsPerMinute = takeCorrectMetronomeBpm(com?.beatsPerMinute);

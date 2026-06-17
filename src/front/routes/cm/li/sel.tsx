@@ -10,6 +10,7 @@ export const Route = createFileRoute('/cm/li/sel')(
     path: '/cm/li/sel',
     RouteComponent,
     useComListPack,
+    isIgnoreSearch: true,
   }),
 );
 
