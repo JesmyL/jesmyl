@@ -4,8 +4,8 @@ import { WithAtom } from '#shared/ui/WithAtom';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import React, { useMemo } from 'react';
-import { CmComLineText, CmComNewlinerWordi } from 'shared/api';
-import { CmBroadcastMonolineSlideOrdId } from 'shared/model/cm/broadcast';
+import { CmComNewlinerWordi } from 'shared/api';
+import { CmBroadcastMonolineSlideOrdId, CmComNewlinerSymbolFreeUpperCaseLine } from 'shared/model/cm/broadcast';
 import { makeCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
 import { takeCmComNewlinerLineFullConfig } from 'shared/utils/cm/com/newliner';
 import { takeTextBlockWithoutSquareBracketsContent } from 'shared/utils/cm/com/takeTextBlockIncorrects';
@@ -31,7 +31,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
     return { warns, slides, groups: ccom.makeExpandGroupedLines(false) };
   }, [ccom]);
 
-  const upperLinesDict: PRecord<Uppercase<CmComLineText>, 1> = {};
+  const upperLinesDict: PRecord<CmComNewlinerSymbolFreeUpperCaseLine, 1> = {};
 
   return (
     <>
@@ -105,10 +105,13 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
               const props = { 'solid-ord-selector': ord.makeSelector() };
               line = takeTextBlockWithoutSquareBracketsContent(line);
 
+              const invisibleOrdClassName = ord.isVisible ? '' : '*:line-through *:decoration-xKO *:decoration-2';
+
               if (ord.isChBlock() || !line.trim())
                 return (
                   <div
                     key={ordBlocki}
+                    className={invisibleOrdClassName}
                     {...props}
                   >
                     {line}
@@ -185,7 +188,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
               return (
                 <div
                   key={ordBlocki}
-                  className="mt-5"
+                  className={twMerge('mt-5', invisibleOrdClassName)}
                   {...props}
                 >
                   {ord.isAnyInherited || !!linei || !!repeati || <div>{ord.me.header()}</div>}

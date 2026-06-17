@@ -1,5 +1,6 @@
 import { CmCatKind } from '#shared/model/cm/cat/Cat.model';
 import { StrRegExp } from 'regexpert';
+import { CmComNewlinerSymbolFreeUpperCaseLine } from 'shared/model/cm/broadcast';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 import {
@@ -177,8 +178,8 @@ export const enum CmComCommentBlockSpecialSelector {
   Kinds = 'k',
 }
 
-export type CmComNewlinerLineTextSetHolder = PRecord<CmComLineText, Uppercase<CmComLineText>> &
-  PRecord<Uppercase<CmComLineText>, Set<number>>;
+export type CmComNewlinerLineTextSetHolder = PRecord<CmComLineText, CmComNewlinerSymbolFreeUpperCaseLine> &
+  PRecord<CmComNewlinerSymbolFreeUpperCaseLine, Set<number>>;
 
 export const enum CmComLineText {
   line1 = 'Строка1',

@@ -6,6 +6,7 @@ import {
   CmComNewlinerStrConfig,
   CmComNewlinerWordi,
 } from 'shared/api';
+import { CmComNewlinerSymbolFreeUpperCaseLine } from 'shared/model/cm/broadcast';
 import { textToUpperCase } from 'shared/utils/string.utils';
 import { slavicLowerLettersStr } from './const';
 
@@ -70,6 +71,6 @@ export const cmComNewlinerLineSetToNewlinerConfig = (
   return result as CmComNewlinerStrConfig.repeat;
 };
 
-const reg = makeRegExp(`/[^-— ${slavicLowerLettersStr}]/gi`);
-export const cmComNewlinerSymbolFreeUpperCaseText = (line: CmComLineText) =>
-  textToUpperCase(line.replace(reg, '') as CmComLineText);
+const reg = makeRegExp(`/[^- ${slavicLowerLettersStr}]/gi`);
+export const cmComNewlinerSymbolFreeUpperCaseText = (line: CmComLineText): CmComNewlinerSymbolFreeUpperCaseLine =>
+  `_${textToUpperCase(line.replace(reg, '') as CmComLineText)}` as const;

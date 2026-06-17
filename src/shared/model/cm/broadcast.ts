@@ -56,3 +56,5 @@ export type CmBroadcastSlideLine = {
   repeati: CmComNewlinerRepeati;
   totalLinei: number;
 };
+
+export type CmComNewlinerSymbolFreeUpperCaseLine = `_${Uppercase<CmComLineText>}`;
