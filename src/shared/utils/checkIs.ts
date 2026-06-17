@@ -50,5 +50,6 @@ export const checkIsNil = (it: unknown): it is null | undefined => checkIsNull(i
 export const checkIsNotNil = <It>(it: It): it is Exclude<It, null | undefined> => it != null;
 
 export const checkIsNaN = (it: unknown) => checkIsNumber(it) && isNaN(it);
+export const checkIsNotNaN = (it: number) => !isNaN(it);
 
 export const checkIsNotANumber = (it: unknown): it is number => !checkIsNumber(it) || isNaN(it);
