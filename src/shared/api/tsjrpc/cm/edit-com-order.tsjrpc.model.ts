@@ -17,12 +17,7 @@ export type CmEditComOrderTsjrpcModel = {
 
   toggleVisibility: (args: { ordw: CmComOrderWid; comw: CmComWid }) => IExportableCom;
 
-  toggleAnchorInheritVisibility: (args: {
-    comw: CmComWid;
-    ordw: CmComOrderWid;
-    inhi: number;
-    leadOrderTitle: string;
-  }) => IExportableCom;
+  toggleAnchorInhVis: (args: { comw: CmComWid; ordw: CmComOrderWid }) => IExportableCom;
 
   moveOrdAfter: (args: {
     ordw: CmComOrderWid;

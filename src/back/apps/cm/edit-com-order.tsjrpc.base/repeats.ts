@@ -13,7 +13,7 @@ import { objectKeys, objectLength } from 'shared/utils/object.utils';
 import { clearNullableOrderInheritValues, modifyOrd, ModifyOrdParent } from './utils';
 
 export const cmEditComOrderServerTsjrpcRepeats = {
-  clearOwnRepeats: modifyOrd(ModifyOrdParent.Lead, (ord, _, { auth }, com, getCmComOrd) => {
+  clearOwnRepeats: modifyOrd(ModifyOrdParent.LeadOrSelf, (ord, _, { auth }, com, getCmComOrd) => {
     if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_REP', 'U')) throw '';
 
     const removeAllJoinRepeats = (ordRepeats: OrderRepeats | nil) => {
@@ -82,7 +82,7 @@ export const cmEditComOrderServerTsjrpcRepeats = {
   }),
 
   setRepeats: modifyOrd(
-    ModifyOrdParent.Lead,
+    ModifyOrdParent.LeadOrSelf,
     (ord, { value }, { auth }, _com, getCmComOrd, _getCmCom, getCmComOrds) => {
       if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_REP', 'U')) throw '';
 

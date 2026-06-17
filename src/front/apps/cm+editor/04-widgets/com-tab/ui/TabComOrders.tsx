@@ -86,7 +86,7 @@ export const CmEditorComTabComOrders = ({ ccom }: { ccom: EditableCom }) => {
 
         return (
           <React.Fragment key={ordi}>
-            <div className={ord.me.isAnchorInherit ? 'text-x7 opacity-20' : ''}>
+            <div className={ord.me.isAnchorInherit ? 'text-x7 opacity-70' : ''}>
               <div className="mx-10 mt-2">
                 {clickBetweenData || isWithHead ? null : ord.me.isAnchorInherit &&
                   ord.me.leadOrd &&
@@ -100,16 +100,12 @@ export const CmEditorComTabComOrders = ({ ccom }: { ccom: EditableCom }) => {
                         {ord.me.leadOrd.top._v?.[ord.me.anchorInheritIndex] == null ? 'не' : ''}видимой?
                       </>
                     }
-                    onClick={() => {
-                      if (ord.me.anchorInheritIndex == null || ord.me.leadOrd == null) return;
-
-                      return cmEditComOrderClientTsjrpcMethods.toggleAnchorInheritVisibility({
+                    onClick={() =>
+                      cmEditComOrderClientTsjrpcMethods.toggleAnchorInhVis({
                         comw: ord.com.wid,
-                        ordw: ord.me.leadOrd.wid,
-                        inhi: ord.me.anchorInheritIndex,
-                        leadOrderTitle: ord.me.leadOrd.me.header(),
-                      });
-                    }}
+                        ordw: ord.wid,
+                      })
+                    }
                   />
                 ) : (
                   editNode

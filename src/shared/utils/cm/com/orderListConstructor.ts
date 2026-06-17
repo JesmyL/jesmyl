@@ -1,6 +1,7 @@
 import { CmComOrderWidClass } from '#shared/model/cm/order/OrderWid';
 import { CmComOrderTopHeaderBag, ICmComOrderExportableMe } from '#shared/model/cm/order/regions';
 import { CmComLangi, IExportableComInterpretation } from 'shared/api';
+import { checkIsNil, checkIsNotNil } from 'shared/utils/checkIs';
 import { comBlockKinds } from 'shared/values/cm/block-kinds/BlockKind';
 import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';
 import { cmComOrderCheckIsOrdVisibleInInterpretation, cmComOrderGetWithExtendableFields } from '../checkIs';
@@ -15,7 +16,8 @@ export const cmComOrderListConstructor = <OrderConstructor extends CmComOrderWid
   const orders: OrderConstructor[] = [];
   let minimals: [number?, number?][] = [];
   const styles = comBlockKinds.kinds;
-  const groups: Record<string, number> = {};
+  const groups: Record<number, number> = {};
+  const anchorGroups: Record<number, 1> = {};
   let prev, prevOrd;
 
   const getStyle = (ord: ICmComOrderExportableMe<OrderConstructor> | nil) => {
@@ -29,21 +31,36 @@ export const cmComOrderListConstructor = <OrderConstructor extends CmComOrderWid
     minimals.push([styleName, me.top.c]);
   };
 
-  const header = (ord: ICmComOrderExportableMe<OrderConstructor>, style: KindBlock, numered = true) => {
+  const headerMaker = (ordMe: ICmComOrderExportableMe<OrderConstructor>, style: KindBlock, numered: boolean) => {
     const type = Math.abs(style.key);
-    const number =
-      numered && cmComOrderCheckIsOrdVisibleInInterpretation(ord.top, intp)
-        ? (groups[type] = groups[type] == null ? 1 : ord.top.a == null ? groups[type] + 1 : groups[type])
-        : '';
+    let number: number | und;
+
+    if (numered) {
+      groups[type] ??= 0;
+
+      if (numered && cmComOrderCheckIsOrdVisibleInInterpretation(ordMe.top, intp)) {
+        if (checkIsNil(ordMe.top.a)) groups[type] += 1;
+        else if (checkIsNotNil(ordMe.top.a) && ordMe.top.v === 1 && !anchorGroups[type]) {
+          const leadOrd = ords.find(o => o.top.w === ordMe.top.a);
+
+          if (leadOrd?.top.v === 0) {
+            if (!anchorGroups[type]) groups[type] += 1;
+            anchorGroups[type] = 1;
+          }
+        }
+
+        number = groups[type];
+      } else number = 0;
+    }
 
     return (bag: CmComOrderTopHeaderBag | nil) => {
       bag ??= {};
 
       return (
-        (style.title[langi] || style.title[0]) +
+        (style.title[langi] || style.title[CmComLangi.Ru]) +
         (bag.isEdit
           ? ' №'
-          : (bag.numered !== false && numered ? (groups[type] < 2 ? '' : ` ${number}`) : '') +
+          : (bag.numered !== false && numered ? (groups[type] < 2 || !number ? '' : ` ${number}`) : '') +
             (bag.repeats ? ` ×  ${bag.repeats}р. ` : '') +
             (bag.isTexted ? ':' : ''))
       );
@@ -83,10 +100,10 @@ export const cmComOrderListConstructor = <OrderConstructor extends CmComOrderWid
     orders.push(newOrder);
 
     me.header = newOrder.isEmptyHeader
-      ? (bag, isRequired) => (isRequired ? header(ordMe, style, false)(bag) : '')
+      ? (bag, isRequired) => (isRequired ? headerMaker(ordMe, style, false)(bag) : '')
       : targetOrd && targetOrd.me.header! && !me.source.top.k
         ? targetOrd.me.header
-        : header(ordMe, style);
+        : headerMaker(ordMe, style, true);
 
     me.prev = prev || null;
 

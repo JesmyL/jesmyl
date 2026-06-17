@@ -4,8 +4,8 @@ import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
 import { CmComMod, CmComWid, IExportableComInterpretation, IScheduleWidgetWid, IServerSideCom } from 'shared/api';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
 import { CmCom } from 'shared/const/cm/Com';
-import { smylib } from 'shared/utils';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
+import { objectLength } from 'shared/utils/object.utils';
 import { comsDirStorage, comsInSchEventDirStorage } from '../file-stores';
 import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
 
@@ -23,19 +23,18 @@ export const cmEditComExternalsTsjrpcInterpretations = () =>
 
       const ordsIntp = (intp.o ??= {});
       const ordIntp = (ordsIntp[ordw] ??= {});
+      const isVisible = cmOrd.isVisible;
 
-      if (cmOrd.isVisible) {
-        delete ordIntp.v;
+      delete ordIntp.v;
 
+      if (isVisible) {
         if (getOrd()?.isVisible) ordIntp.v = 0;
       } else {
-        delete ordIntp.v;
-
         if (!getOrd()?.isVisible) ordIntp.v = 1;
       }
 
-      if (!smylib.keys(ordIntp).length) delete ordsIntp[ordw];
-      if (!smylib.keys(ordsIntp).length) delete intp.o;
+      if (!objectLength(ordIntp)) delete ordsIntp[ordw];
+      if (!objectLength(ordsIntp)) delete intp.o;
     }),
 
     tonIntp: updateInterptetation((com, intp, { ton }) => {
@@ -75,8 +74,8 @@ const updateInterptetation =
 
     update(com, (intp[props.comw] ??= {}), props);
 
-    if (!smylib.keys(intp[props.comw]).length) delete intp[props.comw];
-    if (!smylib.keys(intp).length) delete pack.intp;
+    if (!objectLength(intp[props.comw])) delete intp[props.comw];
+    if (!objectLength(intp)) delete pack.intp;
 
     const mod = comsInSchEventDirStorage.saveItem(props.schw);
 

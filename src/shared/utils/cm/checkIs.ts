@@ -7,7 +7,7 @@ export const cmComOrderCheckIsOrdVisibleInInterpretation = (
   comInterpretation: IExportableComInterpretation | nil,
 ) => {
   const visibilityValue = comInterpretation?.o?.[ordTop.w]?.v;
-  return visibilityValue === 1 ? true : ordTop.v !== 0 && visibilityValue !== 0;
+  return visibilityValue === 1 || (ordTop.v !== 0 && visibilityValue !== 0);
 };
 
 export const cmComOrderGetWithExtendableFields = <OrderConstructor extends CmComOrderWidClass<OrderConstructor>>(

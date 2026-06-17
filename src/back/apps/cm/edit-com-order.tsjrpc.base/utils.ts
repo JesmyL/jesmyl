@@ -8,8 +8,11 @@ import { modifyCom } from '../edit-com.tsjrpc.base';
 
 export const enum ModifyOrdParent {
   Self,
-  Unknown,
-  Lead,
+  LeadOrSelf,
+  TargetOrSelf,
+  WatchOrSelf,
+
+  Lead = 11,
   Target,
   Watch,
 }
@@ -30,6 +33,7 @@ export const modifyOrd = <Props extends { ordw: CmComOrderWid; comw: CmComWid }>
     let cmCom: CmCom | nil;
     let comOrds: CmComOrder[] | nil;
     let cmOrd: CmComOrder | nil;
+    let ord = com.o?.find(o => o.w === props.ordw);
 
     const getCmCom = () => (cmCom ??= new CmCom({ ...com, m: CmComMod.def, w: CmComWid.def, al: [] }, null, null));
     const getCmComOrds = () => (comOrds ??= getCmCom().setOrders() ?? []);
@@ -42,11 +46,16 @@ export const modifyOrd = <Props extends { ordw: CmComOrderWid; comw: CmComWid }>
       return cmOrd;
     };
 
-    let ord = com.o?.find(o => o.w === props.ordw);
+    if (parent === ModifyOrdParent.LeadOrSelf || parent === ModifyOrdParent.Lead)
+      ord ??= getCmComOrd().me.leadOrd?.me.source?.top;
 
-    if (parent === ModifyOrdParent.Lead) ord ??= getCmComOrd().me.leadOrd?.me.source?.top;
-    if (parent === ModifyOrdParent.Target) ord ??= getCmComOrd().me.targetOrd?.me.source?.top;
-    if (parent === ModifyOrdParent.Watch) ord ??= getCmComOrd().me.watchOrd?.me.source?.top;
+    if (parent === ModifyOrdParent.TargetOrSelf || parent === ModifyOrdParent.Target)
+      ord ??= getCmComOrd().me.targetOrd?.me.source?.top;
+
+    if (parent === ModifyOrdParent.WatchOrSelf || parent === ModifyOrdParent.Watch)
+      ord ??= getCmComOrd().me.watchOrd?.me.source?.top;
+
+    if (!ord && parent > 10) throw `Не найден определённый родительский блок ${parent}`;
 
     ord ??= getCmComOrd().me.top;
 
@@ -61,7 +70,7 @@ export const getNextOrdWid = (ords: { w: CmComOrderWid }[]) =>
 export const clearNullableOrderInheritValues = (ord: IExportableOrder, key: '_r' | '_v') => {
   if (checkIsNil(ord[key])) return;
 
-  while (objectLength(ord[key]) && checkIsNil(ord[key][objectLength(ord[key]) - 1])) ord[key].pop();
+  while (objectLength(ord[key]) && checkIsNil(ord[key].at(-1))) ord[key].pop();
 
   if (!objectLength(ord[key])) delete ord[key];
 };

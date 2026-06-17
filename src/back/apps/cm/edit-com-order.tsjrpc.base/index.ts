@@ -3,11 +3,12 @@ import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { makeRegExp } from 'regexpert';
 import { CmEditComOrderTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-order.tsjrpc.model';
 import { CmComOrder } from 'shared/const/cm/order/Order';
-import { checkIsNil, checkIsUndefined } from 'shared/utils/checkIs';
+import { checkIsNil } from 'shared/utils/checkIs';
 import { objectLength } from 'shared/utils/object.utils';
+import { removeEmptyRightValues } from 'shared/utils/removeEmptyRightValues';
 import { cmEditComOrderServerTsjrpcOutside } from './outside';
 import { cmEditComOrderServerTsjrpcRepeats } from './repeats';
-import { clearNullableOrderInheritValues, modifyOrd, ModifyOrdParent } from './utils';
+import { modifyOrd, ModifyOrdParent } from './utils';
 
 export const cmEditComOrderServerTsjrpcBase =
   new (class CmEditComOrder extends TsjrpcBaseServer<CmEditComOrderTsjrpcModel> {
@@ -38,22 +39,38 @@ export const cmEditComOrderServerTsjrpcBase =
           toggleVisibility: modifyOrd(ModifyOrdParent.Self, (ord, _, { auth }, __, getCmComOrd) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'D')) throw '';
 
-            ord.v ??= 1;
-            ord.v = ord.v ? 0 : 1;
-            if (ord.v) delete ord.v;
+            const isVisible = getCmComOrd().isVisible;
+            const targetOrd = getCmComOrd().me.targetOrd;
+
+            if (!targetOrd) ord.v = undefined;
+
+            if (isVisible === getCmComOrd().isVisible) {
+              if (targetOrd) ord.v = targetOrd.isVisible ? (isVisible ? 0 : undefined) : isVisible ? undefined : 1;
+              else ord.v = isVisible ? 0 : 1;
+            }
+
+            if (checkIsNil(ord.v)) delete ord.v;
 
             return `порядковый блок ${makeOrdTitle(getCmComOrd)} сделан ${ord.v ? '' : 'не'}видимым`;
           }),
 
-          toggleAnchorInheritVisibility: modifyOrd(ModifyOrdParent.Self, (ord, { leadOrderTitle, inhi }, { auth }) => {
+          toggleAnchorInhVis: modifyOrd(ModifyOrdParent.Lead, (leadOrd, _, { auth }, __, getCmComOrd) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
-            ord._v ??= [];
-            ord._v[inhi] = checkIsUndefined(ord._v[inhi]) ? 0 : undefined;
+            const cmOrd = getCmComOrd();
+            const inhi = cmOrd.me.anchorInheritIndex;
 
-            clearNullableOrderInheritValues(ord, '_v');
+            if (checkIsNil(inhi) || checkIsNil(cmOrd.me.leadOrd)) throw 'Продолжение блока не найдено';
 
-            return `часть ссылки на ${leadOrderTitle} сделана ${checkIsNil(ord._v?.[inhi]) ? '' : 'не'}видимой`;
+            const isVisible = cmOrd.isVisible;
+            leadOrd._v ??= [];
+            leadOrd._v[inhi] = undefined;
+
+            if (isVisible === getCmComOrd().isVisible) leadOrd._v[inhi] = isVisible ? 0 : 1;
+
+            if (removeEmptyRightValues(leadOrd._v, (it, size) => checkIsNil(it) || !size)) delete leadOrd._v;
+
+            return `часть ссылки на ${cmOrd.me.leadOrd.me.header()} сделана ${checkIsNil(leadOrd._v?.[inhi]) ? '' : 'не'}видимой`;
           }),
 
           remove: modifyOrd(ModifyOrdParent.Self, (ord, { ordw }, { auth }, com, getCmComOrd) => {
@@ -94,7 +111,7 @@ export const cmEditComOrderServerTsjrpcBase =
           }),
 
           setPositionsLine: modifyOrd(
-            ModifyOrdParent.Watch,
+            ModifyOrdParent.WatchOrSelf,
             (ord, { linei, line, lineChangesText }, { auth }, _, getCmComOrd) => {
               if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_APPS', 'U')) throw '';
 
@@ -105,7 +122,7 @@ export const cmEditComOrderServerTsjrpcBase =
             },
           ),
 
-          trimOverPositions: modifyOrd(ModifyOrdParent.Target, (ord, _, { auth }, com, getCmComOrd) => {
+          trimOverPositions: modifyOrd(ModifyOrdParent.TargetOrSelf, (ord, _, { auth }, com, getCmComOrd) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_APPS', 'U')) throw '';
 
             if (checkIsNil(com.t)) throw 'В песне нет текстов';
