@@ -1,7 +1,9 @@
 import { makeRegExp } from 'regexpert';
 import { CmComLineText, EeStorePack } from 'shared/api';
 import { IIncorrects } from 'shared/model/cm/Incorrects';
+import { TextCase } from 'shared/model/common';
 import { smylib } from 'shared/utils/SMyLib';
+import { cmTransformToReadableLines } from '../transformToReadableText';
 import {
   displayableTextBlockCharsStr,
   displayableTextBlockSymbolsStr,
@@ -11,7 +13,6 @@ import {
   slavicLowerLettersStr,
 } from './const';
 import { eeTextIncorrects } from './eeTextIncorrects';
-import { transformToDisplayedText } from './transformToDisplayedText';
 
 const availSymbols = `${doubleQuotesStr}${singleQuotesStr}${replacableAvailableCharsStr}` as const;
 const squareReplaceReg = makeRegExp(
@@ -42,7 +43,7 @@ export const takeTextBlockIncorrects = (text: string | und = '', eeStore: EeStor
     return { errors: [{ message: `Присутствуют недопустимые символы: ${mistakes}\n\n${textWithIncorrects}\n\n` }] };
   }
 
-  const { level } = transformToDisplayedText(text);
+  const { level } = cmTransformToReadableLines(text.split('\n'), TextCase.Capitalize);
 
   if (level) {
     const pre = level < 0 ? 'открывающ' : 'закрывающ';

@@ -6,7 +6,10 @@ export const textToLowerCase = <Str extends string>(text: Str | nil) => (text?.t
 export const textToCapitalizeCase = <Str extends string>(text: Str) =>
   (textToUpperCase(text[0]) + text.slice(1)) as Capitalize<Str>;
 
-export const textToCapitalizeSlavicCase = (text: string) => {
-  const wordi = text.search(makeRegExp(`/[${slavicLowerLettersStr}]/i`));
-  return wordi < 0 ? text : text.slice(0, wordi) + (textToUpperCase(text.at(wordi)) ?? '') + text.slice(wordi + 1);
-};
+const capRep = (_: string, $1: string, $2: string) => `${$1}${textToUpperCase($2)}`;
+
+export const textToCapitalizeSlavicCase = (text: string, isMultiline = false) =>
+  text.replace(
+    makeRegExp(`/^([^${slavicLowerLettersStr}]*)([${slavicLowerLettersStr}])/${isMultiline ? 'gim' : 'i'}`),
+    capRep,
+  );

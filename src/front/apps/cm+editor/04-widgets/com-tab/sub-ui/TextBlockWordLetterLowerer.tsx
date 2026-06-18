@@ -5,10 +5,8 @@ import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.ts
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmCom } from 'shared/const/cm/Com';
-import { textToCapitalizeSlavicCase, textToLowerCase, textToUpperCase } from 'shared/utils/string.utils';
+import { textToCapitalizeSlavicCase, textToLowerCase } from 'shared/utils/string.utils';
 import { twMerge } from 'tailwind-merge';
-
-const mappers = [textToCapitalizeSlavicCase, textToLowerCase, textToUpperCase];
 
 export const CmEditorComTabTextBlockWordLetterLowerer = ({ com }: { com: CmCom }) => {
   const comTextBlocks = com.texts?.map(text => text.trim().split(makeRegExp('/(\\s+)/'))) ?? [];
@@ -55,6 +53,8 @@ export const CmEditorComTabTextBlockWordLetterLowerer = ({ com }: { com: CmCom }
                   )}
                   onClick={() => {
                     const selectedWord = texts[itTexti]?.[itWordi];
+                    const mappers = [textToCapitalizeSlavicCase, textToLowerCase];
+
                     let nextMapi = mappers.findIndex(mapper => mapper(selectedWord) === selectedWord) + 1;
                     if (!mappers[nextMapi]) nextMapi = 0;
 

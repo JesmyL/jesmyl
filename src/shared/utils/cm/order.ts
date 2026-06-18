@@ -2,7 +2,9 @@ import { checkIsNotNil } from '../checkIs';
 import { nbsp } from './com/const';
 
 export const enum CmComOrdRepeatSlashPlacement {
+  /** / */
   Before,
+  /** \ */
   After,
 }
 

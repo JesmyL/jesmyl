@@ -1,6 +1,8 @@
 import { CmComOrderEditableRegion } from '#shared/model/cm/order/regions';
 import { CmComOrder } from 'shared/const/cm/order/Order';
+import { TextCase } from 'shared/model/common';
 import { CmComOrdRepeatSlashPlacement, makeCmComOrderRepeats } from './order';
+import { cmTransformToReadableLines } from './transformToReadableText';
 
 export const cmComOrderMakeRepeatedText = <Ord extends CmComOrder>(
   text: string,
@@ -8,7 +10,7 @@ export const cmComOrderMakeRepeatedText = <Ord extends CmComOrder>(
 ) => {
   if (!regions?.length) return text;
 
-  const textSplits = text.split('\n').map(splitMap);
+  const textSplits = cmTransformToReadableLines(text.split('\n'), TextCase.AsIs).lines.map(splitMap);
 
   if (regions.length > 1) regions.sort(finRateSort);
 

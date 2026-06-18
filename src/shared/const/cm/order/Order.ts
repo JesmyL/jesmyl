@@ -11,11 +11,11 @@ import {
   OrderRepeats,
   SpecialOrderRepeats,
 } from 'shared/api';
+import { TextCase } from 'shared/model/common';
 import { checkIsNumber, checkIsObject } from 'shared/utils/checkIs';
 import { cmComOrderCheckIsOrdVisibleInInterpretation } from 'shared/utils/cm/checkIs';
 import { chordInterpretedRegs } from 'shared/utils/cm/com/const';
 import { cmComNewlinerLineConfigToSet, cmComNewlinerSymbolFreeUpperCaseText } from 'shared/utils/cm/com/newliner';
-import { transformToDisplayedText } from 'shared/utils/cm/com/transformToDisplayedText';
 import { cmComOrderMakeRegions } from 'shared/utils/cm/makeRegions';
 import { cmComOrderMakeRepeatedText } from 'shared/utils/cm/makeRepeatedText';
 import {
@@ -29,6 +29,7 @@ import {
   cmComOrderRepeatFlagKey,
   takeCmComOrderRepeatPortalKeyLetter,
 } from 'shared/utils/cm/repeat-keys';
+import { cmTransformToReadableText } from 'shared/utils/cm/transformToReadableText';
 import { objectLength } from 'shared/utils/object.utils';
 import { CmCom } from '../Com';
 
@@ -271,13 +272,10 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   };
 
   private _rt: string | nil;
-  repeatedText = (
-    regions: CmComOrderEditableRegion<CmComOrder>[] | nil = this.regions,
-    isSetFirstLetterUpperCase?: boolean,
-  ) => (this._rt ??= cmComOrderMakeRepeatedText(this.transformedText(isSetFirstLetterUpperCase), regions));
+  repeatedText = (regions: CmComOrderEditableRegion<CmComOrder>[] | nil = this.regions, textCase?: TextCase | nil) =>
+    (this._rt ??= cmComOrderMakeRepeatedText(this.transformedText(textCase), regions));
 
-  transformedText = (isSetFirstLetterUpperCase?: boolean) =>
-    transformToDisplayedText(this.text, isSetFirstLetterUpperCase).text;
+  transformedText = (textCase?: TextCase | nil) => cmTransformToReadableText(this.text, textCase).text;
 
   makeSelector = (): CmComOrderSelector => this.wid;
 

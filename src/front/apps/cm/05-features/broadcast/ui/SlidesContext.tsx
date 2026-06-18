@@ -6,8 +6,8 @@ import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { useCmBroadcastScreenConfig } from '$cm/widgets/broadcast';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useMemo } from 'react';
-import { CmCom } from 'shared/const/cm/Com';
 import { CmBroadcastMonolineSlide } from 'shared/model/cm/broadcast';
+import { cmTransformToReadableLines } from 'shared/utils/cm/transformToReadableText';
 import { CmBroadcastSlidesContextState } from '../model/slides';
 import { CmBroadcastInnerSlidesContext } from '../state/slides';
 
@@ -70,8 +70,8 @@ export const CmBroadcastSlidesContext = ({ children, configi }: { children: Reac
   const state = useMemo(
     (): CmBroadcastSlidesContextState => ({
       slides,
-      html: CmCom.prepareEachTextLine(slides.at(currentSlidei)?.lines, config?.case).join('\n'),
-      nextHtml: CmCom.prepareEachTextLine(slides.at(nextSlidei)?.lines, config?.case).join('\n'),
+      html: cmTransformToReadableLines(slides.at(currentSlidei)?.lines, config?.case).lines.join('\n'),
+      nextHtml: cmTransformToReadableLines(slides.at(nextSlidei)?.lines, config?.case).lines.join('\n'),
       hash: slides.at(currentSlidei)?.textHash ?? '',
       slidei: currentSlidei,
       nextSlidei,
