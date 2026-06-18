@@ -5,8 +5,8 @@ import { textToCapitalizeSlavicCase, textToUpperCase } from '../string.utils';
 import { itIt } from '../utils';
 import {
   anyQuotesStr,
+  comNbsp,
   displayableTextBlockCharsStr,
-  nbsp,
   openAndClosedQuotes,
   slavicLowerLettersStr,
 } from './com/const';
@@ -55,7 +55,7 @@ export const cmTransformToReadableLines = (lines: string[] | nil, textCase: Text
 
 let level = 0;
 const dashReplacer: (...args: string[]) => string = (_, $1, $3, $4) =>
-  $3 ? `${nbsp}—\n` : !$4 || $1?.[0] === '\n' || $1 === '-' ? `\n—${nbsp}` : `${nbsp}— `;
+  $3 ? `${comNbsp}—\n` : !$4 || $1?.[0] === '\n' || $1 === '-' ? `\n—${comNbsp}` : `${comNbsp}— `;
 
 const replaceNestedBrackets = (all: string, index: number, text: string) => {
   const pre = text[index - 1];

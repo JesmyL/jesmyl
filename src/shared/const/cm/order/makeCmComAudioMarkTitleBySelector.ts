@@ -8,7 +8,7 @@ import {
 } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { checkIsArray, checkIsNaN, checkIsStartsWith, checkIsString } from 'shared/utils/checkIs';
-import { nbsp } from 'shared/utils/cm/com/const';
+import { comNbsp } from 'shared/utils/cm/com/const';
 import { CmComOrdRepeatSlashPlacement, makeCmComOrderRepeats } from 'shared/utils/cm/order';
 import { objectKeys } from 'shared/utils/object.utils';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
@@ -112,7 +112,7 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
     }
 
     title = lineText
-      ? `#${visibleOrdi + 1}:${linei + 1} ${lineText.replace(makeRegExp(`/ *([/\\\\]|${nbsp})+ */g`), ' ').trim()}`
+      ? `#${visibleOrdi + 1}:${linei + 1} ${lineText.replace(makeRegExp(`/ *([/\\\\]|${comNbsp})+ */g`), ' ').trim()}`
       : title;
   }
 

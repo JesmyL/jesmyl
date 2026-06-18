@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeRegExp } from 'regexpert';
-import { ruConsonantLettersStr, ruLowerLettersStr } from 'shared/utils/cm/com/const';
+import { makeCmComTextInnerHtmlProp, ruConsonantLettersStr, ruLowerLettersStr } from 'shared/utils/cm/com/const';
 import { takeTextBlockReadableBracketsContent } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 import { ICmComOrderLineAsComponentProps } from '../model/line';
 import '../style/StyledComLine.styler.scss';
@@ -40,7 +40,7 @@ export const CmComOrderLine = (props: ICmComOrderLineAsComponentProps) => {
               className={setWordClass?.(props, wordi)}
               line-wordi={wordi}
             >
-              {word && <span dangerouslySetInnerHTML={{ __html: word }} />}{' '}
+              {word && <span {...makeCmComTextInnerHtmlProp(word)} />}{' '}
             </span>
           );
         })}
@@ -100,9 +100,9 @@ export const CmComOrderLine = (props: ICmComOrderLineAsComponentProps) => {
       <span
         key={indexi + 100000}
         com-letter-chorded={isHasPre ? 'pre' : undefined}
-        dangerouslySetInnerHTML={{ __html: firstTextBit }}
         attr-chord={isHasPre ? makeTaktedChord(chordsLabels[0]) : undefined}
         attr-chordi={usedChordi < 0 ? undefined : usedChordi}
+        {...makeCmComTextInnerHtmlProp(firstTextBit)}
       />
     );
 
@@ -135,7 +135,7 @@ export const CmComOrderLine = (props: ICmComOrderLineAsComponentProps) => {
       if (chord === undefined || chord.length < baseTextBitOriginal.length) {
         if (isChorded && usedChordi < 0) usedChordi++;
 
-        inner = <span dangerouslySetInnerHTML={{ __html: baseTextBitOriginal }} />;
+        inner = <span {...makeCmComTextInnerHtmlProp(baseTextBitOriginal)} />;
       } else inner = insertDividedBits(baseTextBitOriginal);
 
       nodeInner = (
@@ -153,7 +153,7 @@ export const CmComOrderLine = (props: ICmComOrderLineAsComponentProps) => {
           txt && (
             <span
               key={txti}
-              dangerouslySetInnerHTML={{ __html: txt }}
+              {...makeCmComTextInnerHtmlProp(txt)}
             />
           )
         );
@@ -217,14 +217,14 @@ const insertDividedBits = (lettersText: string) => {
       node = (
         <span
           dash-divider="-"
-          dangerouslySetInnerHTML={{ __html: letters[txti].slice(0, -1) }}
+          {...makeCmComTextInnerHtmlProp(letters[txti].slice(0, -1))}
         />
       );
     else
       node = (
         <span
           dash-divider=""
-          dangerouslySetInnerHTML={{ __html: letters[txti] }}
+          {...makeCmComTextInnerHtmlProp(letters[txti])}
         />
       );
 
@@ -235,7 +235,7 @@ const insertDividedBits = (lettersText: string) => {
   return (
     <span dash-container="">
       {node}
-      <span dangerouslySetInnerHTML={{ __html: letters.join('') }} />
+      <span {...makeCmComTextInnerHtmlProp(letters.join(''))} />
     </span>
   );
 };

@@ -1,5 +1,6 @@
 import { textCaseTitles } from 'shared/const/textCase';
 import { TextCase } from 'shared/model/common';
+import { comNbsp } from './com/const';
 import { cmTransformToReadableLines, cmTransformToReadableText } from './transformToReadableText';
 
 describe('transformToReadableText', () => {
@@ -29,10 +30,10 @@ describe('transformToReadableText', () => {
 
     expect(
       duplicate(`
-Текущий кейс&nbsp;— Первое с большой
+Текущий кейс${comNbsp}— Первое с большой
 Текст для проверки
 Многострочного текста
-—&nbsp;С разными. Комбинациями
+—${comNbsp}С разными. Комбинациями
 Знаков «Препинания, „Дабы“ удостовериться».
 В (правильности) работы-функций
     `),
@@ -40,10 +41,10 @@ describe('transformToReadableText', () => {
 
     expect(
       duplicate(`
-Текущий кейс&nbsp;— так Как есть
+Текущий кейс${comNbsp}— так Как есть
 текст для проверки
 многострочного текста
-—&nbsp;с разными. Комбинациями
+—${comNbsp}с разными. Комбинациями
 знаков «Препинания, „Дабы“ удостовериться».
 В (правильности) работы-функций
     `),
@@ -51,10 +52,10 @@ describe('transformToReadableText', () => {
 
     expect(
       duplicate(`
-ТЕКУЩИЙ КЕЙС&nbsp;— ВСЕ С БОЛЬШОЙ
+ТЕКУЩИЙ КЕЙС${comNbsp}— ВСЕ С БОЛЬШОЙ
 ТЕКСТ ДЛЯ ПРОВЕРКИ
 МНОГОСТРОЧНОГО ТЕКСТА
-—&nbsp;С РАЗНЫМИ. КОМБИНАЦИЯМИ
+—${comNbsp}С РАЗНЫМИ. КОМБИНАЦИЯМИ
 ЗНАКОВ «ПРЕПИНАНИЯ, „ДАБЫ“ УДОСТОВЕРИТЬСЯ».
 В (ПРАВИЛЬНОСТИ) РАБОТЫ-ФУНКЦИЙ
     `),

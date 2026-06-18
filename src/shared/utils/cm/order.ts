@@ -1,5 +1,5 @@
 import { checkIsNotNil } from '../checkIs';
-import { nbsp } from './com/const';
+import { comNbsp } from './com/const';
 
 export const enum CmComOrdRepeatSlashPlacement {
   /** / */
@@ -9,8 +9,8 @@ export const enum CmComOrdRepeatSlashPlacement {
 }
 
 const slashDict: Record<CmComOrdRepeatSlashPlacement, [string, string]> = {
-  [CmComOrdRepeatSlashPlacement.Before]: ['/', nbsp],
-  [CmComOrdRepeatSlashPlacement.After]: ['\\', nbsp],
+  [CmComOrdRepeatSlashPlacement.Before]: ['/', comNbsp],
+  [CmComOrdRepeatSlashPlacement.After]: ['\\', comNbsp],
 };
 
 export const makeCmComOrderRepeats = (

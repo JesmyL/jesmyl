@@ -22,10 +22,14 @@ export const ruLowerLettersStr = `а-яё` as const;
 export const ruConsonantLettersStr = 'йцкнгшщзхъфвпрлджчсмтьб';
 export const slavicLowerLettersStr = `${ruLowerLettersStr}${uaDifferentLowerLettersStr}` as const;
 export const displayableTextBlockSingleWritedSymbolsStr = `(),":;'?` as const;
-export const displayableTextBlockSymbolsStr = `-.!${displayableTextBlockSingleWritedSymbolsStr}` as const;
+export const displayableTextBlockSymbolsStr = `-_.!${displayableTextBlockSingleWritedSymbolsStr}` as const;
 export const displayableTextBlockCharsStr = `${displayableTextBlockSymbolsStr}${slavicLowerLettersStr}\\s` as const;
 
 export const nbsp = '&nbsp;';
+export const comNbsp = `_` as const;
+
+export const makeCmComTextInnerHtmlProp = (text: string | nil) =>
+  text ? { dangerouslySetInnerHTML: { __html: text.replace(makeRegExp(`/${comNbsp}/g`), nbsp) } } : {};
 
 export const textedChordRegs = makeNamedRegExp(
   // regexpert:

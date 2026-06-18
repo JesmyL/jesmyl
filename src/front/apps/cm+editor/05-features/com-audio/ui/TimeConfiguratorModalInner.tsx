@@ -18,7 +18,7 @@ import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
 import { makeCmComAudioMarkTitleBySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
-import { nbsp } from 'shared/utils/cm/com/const';
+import { comNbsp } from 'shared/utils/cm/com/const';
 import { CmEditorComAudioSolidOrdTextController } from './SolidOrdText';
 
 interface Props {
@@ -144,7 +144,7 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
             icon="TextAlignLeft"
             multiline
             defaultValue={
-              isReplaceBlockText ? fullTitle : `+${ord?.transformedText().replace(makeRegExp(`/${nbsp}/g`), '')}`
+              isReplaceBlockText ? fullTitle : `+${ord?.transformedText().replace(makeRegExp(`/${comNbsp}/g`), '')}`
             }
             strongDefaultValue
             onChanged={value =>

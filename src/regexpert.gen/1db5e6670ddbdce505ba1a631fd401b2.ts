@@ -12,11 +12,11 @@ namespace N1db5e6670ddbdce505ba1a631fd401b2_1 {
   type $end = `${RepeatingString<`\\`>}`;
   type $endNl = `${`\n` | ''}`;
   
-  type U1 = `&nbsp;`;
+  type U1 = string;
   type U2 = U1;
 
   export interface I extends Record<
-    `/(?<lead>(^|\\n)\\d{${string}})(?<before>.*?)(?<start>/+)(?:&nbsp;)?(?<content>[^\\\\/]*?)(?:&nbsp;)?(?<end>\\\\+)(?<endNl>\\n?)/g`,
+    `/(?<lead>(^|\\n)\\d{${string}})(?<before>.*?)(?<start>/+)(?:${string})?(?<content>[^\\\\/]*?)(?:${string})?(?<end>\\\\+)(?<endNl>\\n?)/g`,
     {
       $0: $0;
       lead: $lead;

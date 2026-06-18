@@ -13,6 +13,7 @@ import { useAtomValue } from 'atomaric';
 import { useRef } from 'react';
 import { CmBroadcastScreenConfig } from 'shared/model/cm/broadcast';
 import { checkIsArray } from 'shared/utils/checkIs';
+import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
 import { useApplyScreenFontFamilyEffect, useMyFileNode } from 'x/my-files';
 import { useCmBroadcastScreenStyle } from '../lib/get-style';
 import { CmBroadcastSubScreen } from './SubScreen';
@@ -97,7 +98,7 @@ export const CmBroadcastScreen = (props: Props) => {
                   key={linei}
                   className="fragmented-slide-line"
                   fragmented-slide-linei={linei}
-                  dangerouslySetInnerHTML={{ __html: line }}
+                  {...makeCmComTextInnerHtmlProp(line)}
                 />
               ))
             : undefined

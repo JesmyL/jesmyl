@@ -5,6 +5,7 @@ import { makeCmComAudioMarkTitleEmptySelector } from 'shared/const/cm/order/make
 import { CmBroadcastMonolineSlide, CmBroadcastSlideLine } from 'shared/model/cm/broadcast';
 import { TextCase } from 'shared/model/common';
 import { itIt } from 'shared/utils';
+import { comNbsp } from 'shared/utils/cm/com/const';
 import { makeCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
 import { CmComOrdRepeatSlashPlacement, makeCmComOrderRepeats } from 'shared/utils/cm/order';
 import { CmComOrder } from '../../order/Order';
@@ -327,5 +328,5 @@ const sliceClearHeapLine = (line: string | nil) => (line?.slice(allStartDigits) 
 const repeatsRegBox = makeNamedRegExp(
   // regexpert:
   // stringify $0
-  `/(?<lead>(^|\\n)\\d{${allStartDigits}})(?<before>.*?)(?<start>/+)(?:&nbsp;)?(?<content>[^\\\\/]*?)(?:&nbsp;)?(?<end>\\\\+)(?<endNl>\\n?)/g`,
+  `/(?<lead>(^|\\n)\\d{${allStartDigits}})(?<before>.*?)(?<start>/+)(?:${comNbsp})?(?<content>[^\\\\/]*?)(?:${comNbsp})?(?<end>\\\\+)(?<endNl>\\n?)/g`,
 );
