@@ -275,7 +275,7 @@ export class SMyLib {
         };
 
         if (part === dob) {
-          console.info();
+          //
         } else if (part === dcb || part === ocb) escLim++;
         else if (this.isStr(part)) {
           const match = part.match(makeRegExp('/^\\$(\\w+)(!{1,2}|\\?{1,2})?(;?)/'));
