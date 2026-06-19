@@ -12,6 +12,7 @@ type Props<ChangedValue> = {
   value?: string;
   label?: string;
   placeholder?: string;
+  inputClassName?: string;
   className?: string;
   multiline?: boolean;
   isError?: boolean;
@@ -40,7 +41,8 @@ export const InputWithLoadingIcon = <ChangedValue,>({
   placeholder,
   disabled,
   strongDefaultValue,
-  className = '',
+  inputClassName,
+  className,
   postfix,
   ...attrs
 }: Props<ChangedValue>) => {
@@ -48,7 +50,7 @@ export const InputWithLoadingIcon = <ChangedValue,>({
   const [firstValue, setFirstValue] = useState(attrs.defaultValue ?? attrs.value);
 
   return (
-    <div className="w-full flex gap-2 my-2">
+    <div className={twMerge('w-full flex gap-2 my-2', className)}>
       <div className={label ? 'mt-5' : ''}>
         {isError ? (
           <LazyIcon
@@ -72,7 +74,7 @@ export const InputWithLoadingIcon = <ChangedValue,>({
           <TextInput
             {...attrs}
             multiline={multiline}
-            className={twMerge('w-full pointer', className)}
+            className={twMerge('w-full pointer', inputClassName)}
             placeholder={placeholder}
             strongDefaultValue={strongDefaultValue}
             type={type}

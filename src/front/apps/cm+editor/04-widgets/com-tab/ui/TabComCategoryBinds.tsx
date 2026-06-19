@@ -29,7 +29,7 @@ export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => 
                 icon="BookOpen02"
                 label={cat.name}
                 type="tel"
-                className="bg-x1!"
+                inputClassName="bg-x1!"
                 disabled={!checkAccess('cm', 'COM_CAT', 'U')}
                 defaultValue={`${cat.dict?.[ccom.wid] || ''}`}
                 strongDefaultValue

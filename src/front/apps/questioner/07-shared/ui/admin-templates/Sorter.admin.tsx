@@ -78,7 +78,7 @@ export const QuestionerAdminSorterTemplateCardContent = ({
                 defaultValue={template.variants[answerId]?.title ?? ''}
                 strongDefaultValue
                 multiline
-                className="my-3"
+                inputClassName="my-3"
                 iconNode={
                   !!template.noCorrect ||
                   !template.needSelect || (

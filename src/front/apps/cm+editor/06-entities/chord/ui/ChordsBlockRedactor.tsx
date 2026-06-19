@@ -21,7 +21,7 @@ export const CmEditorChordBlockRedactor = ({ text, texti, ccom, isDisabled }: Pr
         multiline
         icon="Playlist03"
         label=""
-        className="bg-x1!"
+        inputClassName="bg-x1!"
         defaultValue={text}
         strongDefaultValue
         onChanged={value => ccom.changeChordsBlock(texti, value)}
