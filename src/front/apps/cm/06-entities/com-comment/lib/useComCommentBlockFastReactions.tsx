@@ -42,12 +42,10 @@ export const useCmComCommentBlockFastReactions = (listRef: React.RefObject<HTMLD
       if (ord == null) return;
 
       (async () => {
-        const ordSelector = ord.makeSelector();
-
-        await updateCmComCommentConstructorRulePropsDict(com.wid, ordSelector);
+        await updateCmComCommentConstructorRulePropsDict(com.wid, ord.wid);
         await wait(100);
 
-        cmComCommentRedactOrdSelectorIdAtom.set(ordSelector);
+        cmComCommentRedactOrdSelectorIdAtom.set(ord.wid);
       })();
     };
 

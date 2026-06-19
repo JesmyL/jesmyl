@@ -6,7 +6,6 @@ import {
   CmComLineText,
   CmComNewlinerLinei,
   CmComNewlinerRepeati,
-  CmComOrderSelector,
   InheritancableOrder,
   OrderRepeats,
   SpecialOrderRepeats,
@@ -276,8 +275,6 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
     (this._rt ??= cmComOrderMakeRepeatedText(this.transformedText(textCase), regions));
 
   transformedText = (textCase?: TextCase | nil) => cmTransformToReadableText(this.text, textCase).text;
-
-  makeSelector = (): CmComOrderSelector => this.wid;
 
   isVisibleOrd = () => !this.isHeaderNoneForce && this.isVisible;
 

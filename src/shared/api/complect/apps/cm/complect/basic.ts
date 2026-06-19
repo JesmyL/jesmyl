@@ -209,9 +209,8 @@ export const enum CmComNewlinerStrConfig {
   repeat = '15.-2',
 }
 
-export type CmComCommentBlockSimpleSelector = CmComOrderSelector | CmComCommentBlockSpecialSelector.Head;
-export type CmComCommentBlockAnySelector = CmComOrderSelector | CmComCommentBlockSpecialSelector;
-export type CmComOrderSelector = CmComOrderWid;
+export type CmComCommentBlockSimpleSelector = CmComOrderWid | CmComCommentBlockSpecialSelector.Head;
+export type CmComCommentBlockAnySelector = CmComOrderWid | CmComCommentBlockSpecialSelector;
 
 export type CmComCommentBlockDict = PRecord<CmComCommentBlockSimpleSelector, string[]> &
   PRecord<CmComCommentBlockSpecialSelector.Kinds, PRecord<CmComBlockKindKey, string>>;
@@ -260,7 +259,7 @@ export type HttpLink = `http${string}`;
 export type HttpNumLeadLinkKey = `${number}~`;
 export type HttpNumLeadLink = `${HttpNumLeadLinkKey}${string}`;
 
-export type CmComAudioMarkSelector = [CmComOrderSelector] | string;
+export type CmComAudioMarkSelector = [CmComOrderWid] | string;
 export const enum CmComAudioMarkPackTime {
   def = 12.3,
   zero = 0,

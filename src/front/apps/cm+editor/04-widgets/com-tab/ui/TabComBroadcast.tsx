@@ -102,7 +102,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
               let samei = 0;
               let prevLineId = '';
 
-              const props = { 'solid-ord-selector': ord.makeSelector() };
+              const props = { 'solid-ord-selector': ord.wid };
               line = takeTextBlockWithoutSquareBracketsContent(line);
 
               const invisibleOrdClassName = ord.isVisible ? '' : '*:line-through *:decoration-xKO *:decoration-2';

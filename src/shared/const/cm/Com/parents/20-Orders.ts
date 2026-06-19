@@ -1,5 +1,5 @@
 import { ICmComOrderExportableMe } from '#shared/model/cm/order/regions';
-import { CmComNewlinerLineTextSetHolder, CmComOrderSelector, CmComOrderWid, IExportableOrder } from 'shared/api';
+import { CmComNewlinerLineTextSetHolder, CmComOrderWid, IExportableOrder } from 'shared/api';
 import { cmComOrderListConstructor } from 'shared/utils/cm/com/orderListConstructor';
 import { CmComOrder } from '../../order/Order';
 import { CmComBasic } from './10-Basic';
@@ -26,7 +26,7 @@ export class CmComOrders extends CmComBasic {
   orderConstructor = (me: ICmComOrderExportableMe<CmComOrder>) => new CmComOrder(me, this as never);
   visibleOrders = () => this.orders?.filter((ord: CmComOrder) => ord.isVisibleOrd());
 
-  getOrd = (ordw: CmComOrderSelector) => {
+  getOrd = (ordw: CmComOrderWid) => {
     let visibleOrdi = -1;
 
     const ord = this.orders?.find(ord => {

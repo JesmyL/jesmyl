@@ -187,9 +187,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                     fontSize={20}
                     com={ccom}
                     chordHardLevel={3}
-                    asAfterSolidOrdNode={({ ord }) =>
-                      audioMarkControl.afterTargetOrdwOtherPlayButtonNodeDict[ord.makeSelector()]
-                    }
+                    asAfterSolidOrdNode={({ ord }) => audioMarkControl.afterTargetOrdwOtherPlayButtonNodeDict[ord.wid]}
                     asLineNode={props => (
                       <div className="flex gap-2 custom-align-items">
                         <span className="text-x7">{props.solidLinei + 1}</span>
@@ -212,7 +210,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                                 if (Math.trunc(fixedTime) === fixedTime) fixedTime += 0.11;
 
                                 cmComEditorAudioMarksEditPacksAtom.do.putMarks(ccom.wid, editSrc, {
-                                  [fixedTime]: [ord.makeSelector()],
+                                  [fixedTime]: [ord.wid],
                                 });
                               }}
                             />
@@ -223,7 +221,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                                 cmEditComExternalsClientTsjrpcMethods
                                   .updateAudioMarks({
                                     src: editSrc,
-                                    cMarks: { [ccom.wid]: { [pinTime]: [ord.makeSelector()] } },
+                                    cMarks: { [ccom.wid]: { [pinTime]: [ord.wid] } },
                                   })
                                   .then(() => setPinTime(null))
                               }

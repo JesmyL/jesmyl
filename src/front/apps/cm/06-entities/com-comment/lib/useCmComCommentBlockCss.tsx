@@ -70,9 +70,7 @@ export const useCmComCommentBlockCss = (
 
                   if (ord == null) break;
 
-                  const ordw = ord.makeSelector();
-
-                  const commentLines = takeCommentTexts(ordw);
+                  const commentLines = takeCommentTexts(ord.wid);
                   if (commentLines?.length) cmComCommentTextRulesDetector(false, `s${ord.wid}`, commentLines, onDetect);
 
                   if (!ordKindsWasSettedSet.has(ord.kind)) {
@@ -87,17 +85,13 @@ export const useCmComCommentBlockCss = (
               }) ?? []);
         }
 
-        const numeredOrderHeaders = visibleOrders?.map((ord, ordi) => {
-          const ordSelectorId = ord.makeSelector();
-
-          return css`
-            [ord-selector='${ordSelectorId}'] .styled-header {
-              &::before {
-                content: '#${ordi + 1}';
-              }
+        const numeredOrderHeaders = visibleOrders?.map(
+          (ord, ordi) => css`
+            [ord-selector='${ord.wid}'] .styled-header::before {
+              content: '#${ordi + 1}';
             }
-          `;
-        });
+          `,
+        );
         let isThereUnsettedTranslate = false;
         let isThereCorrectBibleText = false;
 
