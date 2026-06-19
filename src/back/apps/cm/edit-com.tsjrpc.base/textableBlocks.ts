@@ -6,9 +6,10 @@ import { makeRegExp } from 'regexpert';
 import { CmComWid } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
 import { trimTextLines } from 'shared/utils';
-import { slavicLowerLettersStr } from 'shared/utils/cm/com/const';
+import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 import { textLinesLengthIncorrects } from 'shared/utils/cm/com/textLinesLengthIncorrects';
 import { transformToClearText } from 'shared/utils/cm/com/transformToClearText';
+import { eePackFileStore } from '../file-stores';
 import { modifyCom } from './lib/modifiers';
 
 export const cmEditComServerTsjrpcTextableBlocks = {
@@ -39,22 +40,17 @@ export const cmEditComServerTsjrpcTextableBlocks = {
   textCaps: modifyCom((com, { texts }, { auth }) => {
     if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_TXT', 'U')) throw '';
     const newTexts: string[] = [];
-    const comTexts = (com.t ??= []);
-    const notRuLettersReg = makeRegExp(`/[^${slavicLowerLettersStr}]/gi`);
 
     texts.forEach((newText, newTexti) => {
-      if (
-        newText.replace(notRuLettersReg, '').toLowerCase() !==
-        comTexts[newTexti]?.replace(notRuLettersReg, '').toLowerCase()
-      )
-        throw 'Редактировать можно только заглавные буквы';
-
-      const incorrects = textLinesLengthIncorrects(
+      const lenIncorrects = textLinesLengthIncorrects(
         newText,
         constantsConfigFileStore.getValue().maxAvailableComLineLength,
       );
 
-      if (incorrects?.errors?.length) throw incorrects.errors[0].message;
+      if (lenIncorrects?.errors?.length) throw lenIncorrects.errors[0].message;
+
+      const textIncorrects = takeTextBlockIncorrects(newText, eePackFileStore.getValue());
+      if (textIncorrects?.errors?.length) throw textIncorrects.errors[0].message;
 
       newTexts[newTexti] = transformToClearText(newText);
     });

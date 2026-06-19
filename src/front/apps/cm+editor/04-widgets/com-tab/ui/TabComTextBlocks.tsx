@@ -7,6 +7,7 @@ import { CmEditorComOrderAddTextableBlockAnchorTitles } from '$cm+editor/feature
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { cmEditorComTextsEditsHistoryAtom } from '$cm+editor/shared/state/atoms';
+import React, { useReducer } from 'react';
 import { makeRegExp } from 'regexpert';
 import { toast } from 'sonner';
 import {
@@ -18,13 +19,14 @@ import { CmEditorComTabTextBlockWordLetterLowerer } from '../sub-ui/TextBlockWor
 
 export const CmEditorComTabTextBlocks = ({ ccom }: { ccom: EditableCom }) => {
   const checkAccess = useCheckUserAccessRightsInScope();
+  const [capsUpdateNum, setCapsUpdateNum] = useReducer(it => it + 1, 0);
 
   if (!ccom) return null;
 
   const isDisabled = !checkAccess('cm', 'COM_TXT', 'U');
 
   return (
-    <>
+    <React.Fragment key={capsUpdateNum}>
       {checkAccess('cm', 'COM', 'D') && (
         <div className="flex gap-3">
           <WithAtom init={false}>
@@ -35,7 +37,14 @@ export const CmEditorComTabTextBlocks = ({ ccom }: { ccom: EditableCom }) => {
                   icon="TextFont"
                 />
                 <Modal openAtom={openAtom}>
-                  {isOpen => isOpen && <CmEditorComTabTextBlockWordLetterLowerer com={ccom} />}
+                  {isOpen =>
+                    isOpen && (
+                      <CmEditorComTabTextBlockWordLetterLowerer
+                        com={ccom}
+                        onUpdate={setCapsUpdateNum}
+                      />
+                    )
+                  }
                 </Modal>
               </>
             )}
@@ -130,6 +139,6 @@ export const CmEditorComTabTextBlocks = ({ ccom }: { ccom: EditableCom }) => {
         onPaste={(value, texti) => ccom.changeTextBlock(texti, value)}
         texts={ccom.texts}
       />
-    </>
+    </React.Fragment>
   );
 };
