@@ -209,6 +209,13 @@ export const enum CmComNewlinerStrConfig {
   repeat = '15.-2',
 }
 
+export const enum CmComTextSquareBracketsMode {
+  AsIs = 0,
+  BrBrackets,
+  NlBrackets,
+  Remove,
+}
+
 export type CmComCommentBlockSimpleSelector = CmComOrderWid | CmComCommentBlockSpecialSelector.Head;
 export type CmComCommentBlockAnySelector = CmComOrderWid | CmComCommentBlockSpecialSelector;
 

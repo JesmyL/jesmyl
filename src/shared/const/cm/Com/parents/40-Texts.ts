@@ -1,6 +1,6 @@
 import md5 from 'md5';
 import { escapeRegExpSymbols, makeNamedRegExp, makeRegExp } from 'regexpert';
-import { CmComAudioMarkPackTime, CmComLineText, CmComOrderWid } from 'shared/api';
+import { CmComAudioMarkPackTime, CmComLineText, CmComOrderWid, CmComTextSquareBracketsMode } from 'shared/api';
 import { makeCmComAudioMarkTitleEmptySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { CmBroadcastMonolineSlide, CmBroadcastSlideLine } from 'shared/model/cm/broadcast';
 import { TextCase } from 'shared/model/common';
@@ -59,7 +59,11 @@ export class CmComTexts extends CmComChords {
 
       const heapText = comOrders
         .map(ord => {
-          const ordLines = (ord.isChBlock() ? ord.me.header() : ord.repeatedText(undefined, TextCase.AsIs)).split('\n');
+          const ordLines = (
+            ord.isChBlock()
+              ? ord.me.header()
+              : ord.repeatedText(CmComTextSquareBracketsMode.AsIs, undefined, TextCase.AsIs)
+          ).split('\n');
 
           blocki++;
           headSolidOrders.push(ord);

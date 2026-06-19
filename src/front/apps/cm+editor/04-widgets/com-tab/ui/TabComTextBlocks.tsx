@@ -40,13 +40,6 @@ export const CmEditorComTabTextBlocks = ({ ccom }: { ccom: EditableCom }) => {
               </>
             )}
           </WithAtom>
-          {ccom.texts?.some(text => text.includes('|')) && (
-            <TheIconButton
-              onClick={() => cmEditComClientTsjrpcMethods.removeVerticalBarsFromTexts({ comw: ccom.wid })}
-              icon="Scissor01"
-              confirm="Удалить столбики в текстах?"
-            />
-          )}
         </div>
       )}
       {checkAccess('cm', 'COM_TXT', 'C') && (

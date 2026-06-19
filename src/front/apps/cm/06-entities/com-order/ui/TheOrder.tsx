@@ -5,9 +5,11 @@ import { cmComChordHardLevelAtom } from '$cm/entities/index';
 import { useAtomValue } from 'atomaric';
 import React from 'react';
 import { makeRegExp } from 'regexpert';
+import { CmComTextSquareBracketsMode } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { commentHolderNodes } from 'shared/const/cm/commentHolderNodes';
 import { CmComOrder } from 'shared/const/cm/order/Order';
+import { twMerge } from 'tailwind-merge';
 
 interface Props {
   asLineNode?: (props: ICmComOrderLineAsComponentProps) => React.ReactNode;
@@ -131,19 +133,21 @@ export function TheCmComOrder(props: Props) {
     );
   }
 
-  const lines = (props.isHideRepeats ? ord.text : ord.repeatedText() || '').split(makeRegExp('/\\n/'));
+  const lines = (props.isHideRepeats ? ord.text : ord.repeatedText(CmComTextSquareBracketsMode.AsIs) || '').split(
+    makeRegExp('/\\n/'),
+  );
 
   return (
     <div
       ord-selector={ord.wid}
       anchor-ord={ord.anchor}
       {...styleAttributes}
-      className={
-        (props.specialClassId || '') +
-        `composition-block styled-block` +
-        (ord.isVisible ? '' : ' opacity-30') +
-        (chordedOrd ? ' chorded-block' : ' without-chords')
-      }
+      className={twMerge(
+        'composition-block styled-block',
+        !ord.isVisible && 'opacity-30',
+        chordedOrd ? 'chorded-block' : 'without-chords',
+        props.specialClassId,
+      )}
       ref={el => {
         if (el) ord.element = el;
       }}

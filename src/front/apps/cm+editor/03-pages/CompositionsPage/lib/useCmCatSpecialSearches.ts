@@ -5,6 +5,7 @@ import { cmIDB } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
+import { CmComTextSquareBracketsMode } from 'shared/api';
 import { itIt } from 'shared/utils';
 import { slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 import { takeTextLineOverLengthIndex } from 'shared/utils/cm/com/takeTextLineOverLengthIndex';
@@ -103,7 +104,9 @@ export const useCmEditorCompositionsCatSpecialSearches = (): Record<
             const regStr = term.slice(term.indexOf(':') + 1) || '/\\/\\//i';
             const reg = makeRegExp(regStr as never);
 
-            return coms.filter(com => com.orders?.some(ord => ord.repeatedText().match(reg)));
+            return coms.filter(com =>
+              com.orders?.some(ord => ord.repeatedText(CmComTextSquareBracketsMode.AsIs).match(reg)),
+            );
           } catch (_error) {
             return [];
           }

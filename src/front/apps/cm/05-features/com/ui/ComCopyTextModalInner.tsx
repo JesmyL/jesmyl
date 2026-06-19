@@ -11,6 +11,7 @@ import { cmComChordVisibleVariantAtom, cmComIsComMiniAnchorAtom } from '$cm/enti
 import { TheCmComCurrent } from '$cm/widgets/com';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
+import { CmComTextSquareBracketsMode } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { comNbspReg } from 'shared/utils/cm/com/const';
 
@@ -38,7 +39,7 @@ export const CmComCopyTextModalInner = ({ com }: { com: CmCom }) => {
                 if (!ord.text)
                   return `\n${ord.me.header()}.${isShowChordsInText ? `\n${chordLabels?.map(line => line.join(' ')).join('\n') ?? ''}` : ''}`;
 
-                const preparedText = ord.repeatedText().replace(comNbspReg, ' ');
+                const preparedText = ord.repeatedText(CmComTextSquareBracketsMode.NlBrackets).replace(comNbspReg, ' ');
                 if (!isShowChordsInText) return `${header && `\n${header}\n`}${preparedText}`;
 
                 const textLines = preparedText.split('\n');

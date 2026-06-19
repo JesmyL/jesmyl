@@ -2,8 +2,9 @@ import { CmBroadcastShowChordedSlideMode } from '#shared/model/cm/Cm.model';
 import { useCmBroadcastSlidesContext } from '$cm/features/broadcast';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
+import { CmComTextSquareBracketsMode } from 'shared/api';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
-import { takeTextBlockWithoutSquareBracketsContent } from 'shared/utils/cm/com/takeTextBlockIncorrects';
+import { squareBracketsReplacers } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 import { twMerge } from 'tailwind-merge';
 
 export const CmBroadcastSlideLine = () => {
@@ -35,7 +36,11 @@ export const CmBroadcastSlideLine = () => {
                       : 'italic underline'),
               )}
             >
-              <div {...makeCmComTextInnerHtmlProp(takeTextBlockWithoutSquareBracketsContent(slide.lines.join('\n')))} />
+              <div
+                {...makeCmComTextInnerHtmlProp(
+                  squareBracketsReplacers[CmComTextSquareBracketsMode.Remove](slide.lines.join('\n')),
+                )}
+              />
             </div>
           </div>
         );

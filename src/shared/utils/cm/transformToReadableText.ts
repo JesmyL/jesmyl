@@ -1,4 +1,5 @@
 import { makeRegExp } from 'regexpert';
+import { CmComTextSquareBracketsMode } from 'shared/api';
 import { defaultTextCase } from 'shared/const/textCase';
 import { TextCase } from 'shared/model/common';
 import { textToCapitalizeSlavicCase, textToUpperCase } from '../string.utils';
@@ -10,36 +11,47 @@ import {
   openAndClosedQuotes,
   slavicLowerLettersStr,
 } from './com/const';
-import { takeTextBlockWithoutSquareBracketsContent } from './com/takeTextBlockIncorrects';
+import { squareBracketsReplacers } from './com/takeTextBlockIncorrects';
 
-export const cmTransformToReadableText = (text: string | nil, textCase: TextCase | nil) => {
+export const cmTransformToReadableText = (
+  text: string | nil,
+  textCase: TextCase | nil,
+  squareBracketsMode: CmComTextSquareBracketsMode,
+) => {
   level = 0;
 
   if (text) {
-    text = textToCapitalizeSlavicCase(text);
-    text = takeTextBlockWithoutSquareBracketsContent(text);
+    if (squareBracketsMode) text = squareBracketsReplacers[squareBracketsMode](text);
+    if (textCase !== TextCase.Capitalize) text = textToCapitalizeSlavicCase(text);
+
     text = mappers[textCase ?? defaultTextCase](text, true);
     text = replaceInText(text);
-    if (textCase !== TextCase.Uppercase) text = uperCasesText(text);
+    if (textCase !== TextCase.Uppercase) text = upperCasesText(text);
   } else text = '';
 
   return { level, text };
 };
 
-export const cmTransformToReadableLines = (lines: string[] | nil, textCase: TextCase | nil) => {
+export const cmTransformToReadableLines = (
+  lines: string[] | nil,
+  textCase: TextCase | nil,
+  squareBracketsMode: CmComTextSquareBracketsMode,
+) => {
   level = 0;
 
   if (!lines?.length) return { lines: [], level };
 
-  const map = mappers[textCase ?? defaultTextCase];
+  textCase ??= defaultTextCase;
   let lastSymbol = '';
 
   lines = lines.filter(itIt).map((line, linei) => {
-    line = takeTextBlockWithoutSquareBracketsContent(line);
+    line = squareBracketsReplacers[squareBracketsMode](line);
 
-    if (!linei || prepsSet.has(lastSymbol)) line = textToCapitalizeSlavicCase(line);
-    line = replaceInText(map(line)).trim();
-    if (textCase !== TextCase.Uppercase) line = uperCasesText(line);
+    if (textCase !== TextCase.Capitalize && (!linei || prepsSet.has(lastSymbol)))
+      line = textToCapitalizeSlavicCase(line);
+
+    line = replaceInText(mappers[textCase](line, true)).trim();
+    if (textCase !== TextCase.Uppercase) line = upperCasesText(line);
 
     lastSymbol = line.slice(-1);
     return line;
@@ -77,7 +89,7 @@ const replaceInText = (text: string) =>
     .replace(makeRegExp(`/((?:^|\\n)-+ ?)|( ?-+\n)|((?=\\S)-+\\s)/gm`), dashReplacer)
     .replace(makeRegExp(`/\\( [${anyQuotesStr}]\\)|\\([${anyQuotesStr}] \\)/g`), '');
 
-const uperCasesText = (text: string) =>
+const upperCasesText = (text: string) =>
   text.replace(makeRegExp(`/(?:[${preps}]\\s|[${anyQuotesStr}])[${slavicLowerLettersStr}]/g`), textToUpperCase);
 
 const preps = '.!?';

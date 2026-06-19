@@ -6,6 +6,7 @@ import {
   CmComLineText,
   CmComNewlinerLinei,
   CmComNewlinerRepeati,
+  CmComTextSquareBracketsMode,
   InheritancableOrder,
   OrderRepeats,
   SpecialOrderRepeats,
@@ -271,10 +272,14 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   };
 
   private _rt: string | nil;
-  repeatedText = (regions: CmComOrderEditableRegion<CmComOrder>[] | nil = this.regions, textCase?: TextCase | nil) =>
-    (this._rt ??= cmComOrderMakeRepeatedText(this.transformedText(textCase), regions));
+  repeatedText = (
+    squareBracketsMode: CmComTextSquareBracketsMode,
+    regions: CmComOrderEditableRegion<CmComOrder>[] | nil = this.regions,
+    textCase?: TextCase | nil,
+  ) => (this._rt ??= cmComOrderMakeRepeatedText(this.transformedText(squareBracketsMode, textCase), regions));
 
-  transformedText = (textCase?: TextCase | nil) => cmTransformToReadableText(this.text, textCase).text;
+  transformedText = (squareBracketsMode: CmComTextSquareBracketsMode, textCase?: TextCase | nil) =>
+    cmTransformToReadableText(this.text, textCase, squareBracketsMode).text;
 
   isVisibleOrd = () => !this.isHeaderNoneForce && this.isVisible;
 

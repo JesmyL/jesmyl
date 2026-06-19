@@ -1,3 +1,4 @@
+import { CmComTextSquareBracketsMode } from 'shared/api';
 import { textCaseTitles } from 'shared/const/textCase';
 import { TextCase } from 'shared/model/common';
 import { comNbsp } from './com/const';
@@ -5,7 +6,7 @@ import { cmTransformToReadableLines, cmTransformToReadableText } from './transfo
 
 describe('transformToReadableText', () => {
   it('eq', () => {
-    const makeTexts = (textCase: TextCase) => {
+    const makeTexts = (textCase: TextCase, squareBracketsMode: CmComTextSquareBracketsMode) => {
       const text = `
 текущий кейс- ${textCaseTitles[textCase]}
 текст для проверки
@@ -16,14 +17,21 @@ describe('transformToReadableText', () => {
     `.trim();
 
       return [
-        cmTransformToReadableLines(text.split('\n'), textCase).lines.join('\n'),
-        cmTransformToReadableText(text, textCase).text,
+        cmTransformToReadableLines(text.split('\n'), textCase, squareBracketsMode).lines.join('\n'),
+        cmTransformToReadableText(text, textCase, squareBracketsMode).text,
       ];
     };
 
     [TextCase.AsIs, TextCase.Capitalize, TextCase.Uppercase].forEach(textCase => {
-      const [ex, eq] = makeTexts(textCase);
-      expect(ex).toEqual(eq);
+      [
+        CmComTextSquareBracketsMode.AsIs,
+        CmComTextSquareBracketsMode.BrBrackets,
+        CmComTextSquareBracketsMode.NlBrackets,
+        CmComTextSquareBracketsMode.Remove,
+      ].forEach(mode => {
+        const [ex, eq] = makeTexts(textCase, mode);
+        expect(ex).toEqual(eq);
+      });
     });
 
     const duplicate = (text: string) => [text.trim(), text.trim()];
@@ -37,7 +45,7 @@ describe('transformToReadableText', () => {
 Знаков «Препинания, „Дабы“ удостовериться».
 В (правильности) работы-функций
     `),
-    ).toEqual(makeTexts(TextCase.Capitalize));
+    ).toEqual(makeTexts(TextCase.Capitalize, CmComTextSquareBracketsMode.Remove));
 
     expect(
       duplicate(`
@@ -48,7 +56,7 @@ describe('transformToReadableText', () => {
 знаков «Препинания, „Дабы“ удостовериться».
 В (правильности) работы-функций
     `),
-    ).toEqual(makeTexts(TextCase.AsIs));
+    ).toEqual(makeTexts(TextCase.AsIs, CmComTextSquareBracketsMode.Remove));
 
     expect(
       duplicate(`
@@ -59,6 +67,6 @@ describe('transformToReadableText', () => {
 ЗНАКОВ «ПРЕПИНАНИЯ, „ДАБЫ“ УДОСТОВЕРИТЬСЯ».
 В (ПРАВИЛЬНОСТИ) РАБОТЫ-ФУНКЦИЙ
     `),
-    ).toEqual(makeTexts(TextCase.Uppercase));
+    ).toEqual(makeTexts(TextCase.Uppercase, CmComTextSquareBracketsMode.Remove));
   });
 });

@@ -4,12 +4,12 @@ import { WithAtom } from '#shared/ui/WithAtom';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import React, { useMemo } from 'react';
-import { CmComNewlinerWordi } from 'shared/api';
+import { CmComNewlinerWordi, CmComTextSquareBracketsMode } from 'shared/api';
 import { CmBroadcastMonolineSlideOrdId, CmComNewlinerSymbolFreeUpperCaseLine } from 'shared/model/cm/broadcast';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
 import { makeCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
 import { takeCmComNewlinerLineFullConfig } from 'shared/utils/cm/com/newliner';
-import { takeTextBlockWithoutSquareBracketsContent } from 'shared/utils/cm/com/takeTextBlockIncorrects';
+import { squareBracketsReplacers } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 import { twMerge } from 'tailwind-merge';
 
 export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
@@ -104,7 +104,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
               let prevLineId = '';
 
               const props = { 'solid-ord-selector': ord.wid };
-              line = takeTextBlockWithoutSquareBracketsContent(line);
+              line = squareBracketsReplacers[CmComTextSquareBracketsMode.Remove](line);
 
               const invisibleOrdClassName = ord.isVisible ? '' : '*:line-through *:decoration-xKO *:decoration-2';
 

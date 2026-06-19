@@ -1,9 +1,9 @@
 import { makeRegExp } from 'regexpert';
-import { CmComLineText, EeStorePack } from 'shared/api';
+import { CmComTextSquareBracketsMode, EeStorePack } from 'shared/api';
 import { IIncorrects } from 'shared/model/cm/Incorrects';
 import { TextCase } from 'shared/model/common';
 import { smylib } from 'shared/utils/SMyLib';
-import { cmTransformToReadableLines } from '../transformToReadableText';
+import { cmTransformToReadableText } from '../transformToReadableText';
 import {
   displayableTextBlockCharsStr,
   displayableTextBlockSymbolsStr,
@@ -23,11 +23,18 @@ const notAvailSymbolsReg = `/[^${displayableTextBlockCharsStr}${availSymbols}]+/
 export const takeTextBlockCorrectBrackets = (text: string) =>
   text.replace(squareReplaceReg, (all, $1) => (all.endsWith(']') ? ')' : $1 + ' ('));
 
-export const takeTextBlockReadableBracketsContent = (text: string) =>
-  text.replace(makeRegExp('/\\s(\\[)?\\[([^\\]]*)]+/g'), (_all, $1, $2) => ` ${$1 ? '</br>' : ''}(${$2})`);
+const bracketReplacerReg = makeRegExp('/\\s(\\[)?\\[([^\\]]*)]+/g');
+export const squareBracketsReplacers: Record<CmComTextSquareBracketsMode, <Text extends string>(text: Text) => Text> = {
+  [CmComTextSquareBracketsMode.AsIs]: text => text,
 
-export const takeTextBlockWithoutSquareBracketsContent = (text: string) =>
-  text.replace(makeRegExp('/\\s+\\[[^\\]]+]/g'), '') as CmComLineText;
+  [CmComTextSquareBracketsMode.BrBrackets]: text =>
+    text.replace(bracketReplacerReg, (_all, $1, $2) => ` ${$1 ? '</br>' : ''}(${$2})`) as never,
+
+  [CmComTextSquareBracketsMode.NlBrackets]: text =>
+    text.replace(bracketReplacerReg, (_all, $1, $2) => ` ${$1 ? '\n' : ''}(${$2})`) as never,
+
+  [CmComTextSquareBracketsMode.Remove]: text => text.replace(bracketReplacerReg, '') as never,
+};
 
 export const takeTextBlockIncorrects = (text: string | und = '', eeStore: EeStorePack): IIncorrects => {
   let mistakes = '';
@@ -43,7 +50,7 @@ export const takeTextBlockIncorrects = (text: string | und = '', eeStore: EeStor
     return { errors: [{ message: `Присутствуют недопустимые символы: ${mistakes}\n\n${textWithIncorrects}\n\n` }] };
   }
 
-  const { level } = cmTransformToReadableLines(text.split('\n'), TextCase.Capitalize);
+  const { level } = cmTransformToReadableText(text, TextCase.Capitalize, CmComTextSquareBracketsMode.AsIs);
 
   if (level) {
     const pre = level < 0 ? 'открывающ' : 'закрывающ';

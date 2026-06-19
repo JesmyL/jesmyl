@@ -1,7 +1,8 @@
 import React from 'react';
 import { makeRegExp } from 'regexpert';
+import { CmComTextSquareBracketsMode } from 'shared/api';
 import { makeCmComTextInnerHtmlProp, ruConsonantLettersStr, ruLowerLettersStr } from 'shared/utils/cm/com/const';
-import { takeTextBlockReadableBracketsContent } from 'shared/utils/cm/com/takeTextBlockIncorrects';
+import { squareBracketsReplacers } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 import { ICmComOrderLineAsComponentProps } from '../model/line';
 import '../style/StyledComLine.styler.scss';
 
@@ -25,7 +26,9 @@ export const CmComOrderLine = (props: ICmComOrderLineAsComponentProps) => {
     ...attrs
   } = props;
 
-  const line = textLine.endsWith(']') ? takeTextBlockReadableBracketsContent(textLine) : textLine;
+  const line = textLine.endsWith(']')
+    ? squareBracketsReplacers[CmComTextSquareBracketsMode.BrBrackets](textLine)
+    : textLine;
 
   if (!chordedOrd)
     return (

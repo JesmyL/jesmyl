@@ -1,7 +1,7 @@
 import { MyLib, mylib } from '#shared/lib/my-lib';
 import { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
-import { CmComAudioMarkPackTime, CmComOrderWid, HttpNumLeadLink } from 'shared/api';
+import { CmComAudioMarkPackTime, CmComOrderWid, CmComTextSquareBracketsMode, HttpNumLeadLink } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import {
   checkIsCmComAudioMarkTitleIsLineSelector,
@@ -50,7 +50,7 @@ export const useCmComMarkTextValuesMaker = (com: CmCom | und, link: HttpNumLeadL
               let text = '';
 
               while (currentOrd) {
-                text += `\n${currentOrd.transformedText()}`;
+                text += `\n${currentOrd.transformedText(CmComTextSquareBracketsMode.Remove)}`;
                 currentOrd = currentOrd.me.next;
                 if (currentOrd == null || !currentOrd.isHeaderNoneForce) break;
               }

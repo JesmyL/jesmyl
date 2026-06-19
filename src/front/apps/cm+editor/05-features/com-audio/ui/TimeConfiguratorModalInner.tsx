@@ -15,7 +15,7 @@ import {
 } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
-import { CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
+import { CmComAudioMarkPackTime, CmComTextSquareBracketsMode, HttpNumLeadLink } from 'shared/api';
 import { makeCmComAudioMarkTitleBySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { comNbspReg } from 'shared/utils/cm/com/const';
 import { CmEditorComAudioSolidOrdTextController } from './SolidOrdText';
@@ -142,7 +142,11 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
           <InputWithLoadingIcon
             icon="TextAlignLeft"
             multiline
-            defaultValue={isReplaceBlockText ? fullTitle : `+${ord?.transformedText().replace(comNbspReg, '')}`}
+            defaultValue={
+              isReplaceBlockText
+                ? fullTitle
+                : `+${ord?.transformedText(CmComTextSquareBracketsMode.Remove).replace(comNbspReg, '')}`
+            }
             strongDefaultValue
             onChanged={value =>
               cmEditComExternalsClientTsjrpcMethods

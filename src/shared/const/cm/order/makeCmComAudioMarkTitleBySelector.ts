@@ -4,6 +4,7 @@ import {
   CmComAudioMarkPackTime,
   CmComAudioMarkSelector,
   CmComOrderWid,
+  CmComTextSquareBracketsMode,
   CmComWid,
 } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
@@ -96,7 +97,7 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
   let title = makeCmComAudioMarkTitleEmptySelector(selector, comMarks, time, com.langi ?? 0);
 
   if (checkIsCmComAudioMarkTitleIsLineSelector(selector) && ord) {
-    let lines = ord.transformedText().split('\n');
+    let lines = ord.transformedText(CmComTextSquareBracketsMode.Remove).split('\n');
     const linei = makeCmComAudioMarkLineiFromSelector(selector);
     let lineText = lines[linei];
 
@@ -104,7 +105,8 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
       let nextOrd: CmComOrder | nil = ord.me.next;
 
       while (nextOrd?.isInSolidLineWithInvisibles()) {
-        if (nextOrd.isVisible) lines = lines.concat(nextOrd.transformedText().split('\n'));
+        if (nextOrd.isVisible)
+          lines = lines.concat(nextOrd.transformedText(CmComTextSquareBracketsMode.Remove).split('\n'));
 
         if ((lineText = lines[linei]) != null) break;
         nextOrd = nextOrd?.me.next;
