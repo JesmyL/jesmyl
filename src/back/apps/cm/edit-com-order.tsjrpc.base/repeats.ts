@@ -1,11 +1,10 @@
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
-import { makeRegExp } from 'regexpert';
 import { OrderRepeats, SpecialOrderRepeats } from 'shared/api';
 import { CmEditComOrderTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-order.tsjrpc.model';
 import { checkIsNil, checkIsNotNil, checkIsNotObject, checkIsObject } from 'shared/utils/checkIs';
 import { checkIsEq } from 'shared/utils/checkIsEq';
-import { comNbsp } from 'shared/utils/cm/com/const';
+import { comNbspReg } from 'shared/utils/cm/com/const';
 import { cmComOrderMakeRegions } from 'shared/utils/cm/makeRegions';
 import { cmComOrderMakeRepeatedText } from 'shared/utils/cm/makeRepeatedText';
 import { takeCmComOrderRepeatPortalKeyLetter } from 'shared/utils/cm/repeat-keys';
@@ -96,7 +95,7 @@ export const cmEditComOrderServerTsjrpcRepeats = {
         const regions = cmComOrderMakeRegions(comOrd, ordText, value, getCmComOrds());
 
         return ordText
-          ? cmComOrderMakeRepeatedText(comOrd.transformedText(), regions).replace(makeRegExp(`/${comNbsp}/g`), ' ')
+          ? cmComOrderMakeRepeatedText(comOrd.transformedText(), regions).replace(comNbspReg, ' ')
           : comOrd.me.header({ repeats: comOrd.repeatsTitle });
       };
 

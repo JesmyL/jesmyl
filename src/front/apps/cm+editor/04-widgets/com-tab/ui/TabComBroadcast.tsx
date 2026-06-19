@@ -6,6 +6,7 @@ import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.ts
 import React, { useMemo } from 'react';
 import { CmComNewlinerWordi } from 'shared/api';
 import { CmBroadcastMonolineSlideOrdId, CmComNewlinerSymbolFreeUpperCaseLine } from 'shared/model/cm/broadcast';
+import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
 import { makeCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
 import { takeCmComNewlinerLineFullConfig } from 'shared/utils/cm/com/newliner';
 import { takeTextBlockWithoutSquareBracketsContent } from 'shared/utils/cm/com/takeTextBlockIncorrects';
@@ -49,7 +50,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                   <div
                     key={slidei}
                     className="my-5 white-pre"
-                    dangerouslySetInnerHTML={{ __html: slide.lines.join('\n') }}
+                    {...makeCmComTextInnerHtmlProp(slide.lines.join('\n'))}
                   />
                 ))
               }
@@ -214,7 +215,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                               }
                             : { icon: 'Play' })}
                         >
-                          <span dangerouslySetInnerHTML={{ __html: word }} />
+                          <span {...makeCmComTextInnerHtmlProp(word)} />
                         </Button>
                       );
 
@@ -245,7 +246,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                             })
                           }
                         >
-                          <span dangerouslySetInnerHTML={{ __html: word }} />
+                          <span {...makeCmComTextInnerHtmlProp(word)} />
                         </Button>
                       </React.Fragment>
                     );

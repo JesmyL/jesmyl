@@ -27,9 +27,11 @@ export const displayableTextBlockCharsStr = `${displayableTextBlockSymbolsStr}${
 
 export const nbsp = '&nbsp;';
 export const comNbsp = `_` as const;
+export const comNbspReg = makeRegExp(`/${comNbsp}/gi`);
 
-export const makeCmComTextInnerHtmlProp = (text: string | nil) =>
-  text ? { dangerouslySetInnerHTML: { __html: text.replace(makeRegExp(`/${comNbsp}/g`), nbsp) } } : {};
+export const makeCmComTextInnerHtmlProp = (text: string | nil) => ({
+  dangerouslySetInnerHTML: text ? { __html: text.replace(comNbspReg, nbsp) } : undefined,
+});
 
 export const textedChordRegs = makeNamedRegExp(
   // regexpert:

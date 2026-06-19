@@ -10,6 +10,7 @@ import { useAtomValue } from 'atomaric';
 import { makeRegExp } from 'regexpert';
 import { CmComOrder } from 'shared/const/cm/order/Order';
 import { checkIsNotNumber } from 'shared/utils/checkIs';
+import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
 import { CmComOrdRepeatSlashPlacement, makeCmComOrderRepeats } from 'shared/utils/cm/order';
 import { cmComOrderCheckRepeatKeyIsFlag, makeCmComOrderRepeatOrSelf } from 'shared/utils/cm/repeat-keys';
 import { cmEditorTabComRepeatsStateAtom } from '../state/atoms';
@@ -87,9 +88,8 @@ export const CmEditorTabComRepeatsRemoveButton = ({ ord, textLinei, wordi }: Pro
                     >
                       <div
                         className="pre-text"
-                        dangerouslySetInnerHTML={{
-                          __html:
-                            makeCmComOrderRepeats(CmComOrdRepeatSlashPlacement.Before, count || 0) +
+                        {...makeCmComTextInnerHtmlProp(
+                          makeCmComOrderRepeats(CmComOrdRepeatSlashPlacement.Before, count || 0) +
                             (cmComOrderCheckRepeatKeyIsFlag(startKey || '')
                               ? fill(
                                   startOrd,
@@ -110,7 +110,7 @@ export const CmEditorTabComRepeatsRemoveButton = ({ ord, textLinei, wordi }: Pro
                             (cmComOrderCheckRepeatKeyIsFlag(startKey || '')
                               ? ''
                               : makeCmComOrderRepeats(CmComOrdRepeatSlashPlacement.After, count || 0)),
-                        }}
+                        )}
                       />
                       <TheButton
                         color="x3"
