@@ -63,7 +63,7 @@ export const CmEditorComTabTextBlockWordLetterLowerer = ({ com, onUpdate }: { co
                 ) : (
                   <Button
                     icon="Edit02"
-                    disabled={checkIsNotNil(textiOnEdit)}
+                    disabled={checkIsNotNil(textiOnEdit) || !mylib.isEq(initialTexts[itTexti], texts[itTexti])}
                     onClick={() => setTextiOnEdit(itTexti)}
                   />
                 )}
