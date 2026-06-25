@@ -11,6 +11,7 @@ import {
   OrderRepeats,
   SpecialOrderRepeats,
 } from 'shared/api';
+import { defaultTextCase } from 'shared/const/textCase';
 import { TextCase } from 'shared/model/common';
 import { checkIsNil, checkIsNumber, checkIsObject } from 'shared/utils/checkIs';
 import { cmComOrderCheckIsOrdVisibleInInterpretation } from 'shared/utils/cm/checkIs';
@@ -278,12 +279,16 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
     return repeats;
   };
 
-  private _rt: string | nil;
+  private _rt: PRecord<TextCase, string | nil> = {};
   repeatedText = (
     squareBracketsMode: CmComTextSquareBracketsMode,
     regions: CmComOrderEditableRegion<CmComOrder>[] | nil = this.regions,
     textCase?: TextCase | nil,
-  ) => (this._rt ??= cmComOrderMakeRepeatedText(this.transformedText(squareBracketsMode, textCase), regions));
+  ) =>
+    (this._rt[textCase ?? defaultTextCase] ??= cmComOrderMakeRepeatedText(
+      this.transformedText(squareBracketsMode, textCase),
+      regions,
+    ));
 
   transformedText = (squareBracketsMode: CmComTextSquareBracketsMode, textCase?: TextCase | nil) =>
     cmTransformToReadableText(this.text, textCase, squareBracketsMode).text;

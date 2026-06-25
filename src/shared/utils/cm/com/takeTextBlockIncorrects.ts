@@ -16,14 +16,14 @@ import { eeTextIncorrects } from './eeTextIncorrects';
 
 const availSymbols = `${doubleQuotesStr}${singleQuotesStr}${replacableAvailableCharsStr}` as const;
 const squareReplaceReg = makeRegExp(
-  `/([${displayableTextBlockSymbolsStr}${slavicLowerLettersStr}${availSymbols}]) \\[\\[?|](?=\\n|$)/g`,
+  `/([${displayableTextBlockSymbolsStr}${slavicLowerLettersStr}${availSymbols}]) \\[\\[?|](?=\\n|$)/gi`,
 );
 const notAvailSymbolsReg = `/[^${displayableTextBlockCharsStr}${availSymbols}]+/gi` as const;
 
 export const takeTextBlockCorrectBrackets = (text: string) =>
   text.replace(squareReplaceReg, (all, $1) => (all.endsWith(']') ? ')' : $1 + ' ('));
 
-const bracketReplacerReg = makeRegExp('/\\s(\\[)?\\[([^\\]]*)]+/g');
+const bracketReplacerReg = makeRegExp('/(?:\\s|_)(\\[)?\\[([^\\]]*)]+/g');
 export const squareBracketsReplacers: Record<CmComTextSquareBracketsMode, <Text extends string>(text: Text) => Text> = {
   [CmComTextSquareBracketsMode.AsIs]: text => text,
 

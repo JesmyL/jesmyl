@@ -26,7 +26,7 @@ export const CmComOrderLine = (props: ICmComOrderLineAsComponentProps) => {
     ...attrs
   } = props;
 
-  const line = textLine.endsWith(']')
+  const line = textLine.includes(']')
     ? squareBracketsReplacers[CmComTextSquareBracketsMode.BrBrackets](textLine)
     : textLine;
 
