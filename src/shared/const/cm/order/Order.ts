@@ -12,7 +12,7 @@ import {
   SpecialOrderRepeats,
 } from 'shared/api';
 import { TextCase } from 'shared/model/common';
-import { checkIsNumber, checkIsObject } from 'shared/utils/checkIs';
+import { checkIsNil, checkIsNumber, checkIsObject } from 'shared/utils/checkIs';
 import { cmComOrderCheckIsOrdVisibleInInterpretation } from 'shared/utils/cm/checkIs';
 import { chordInterpretedRegs } from 'shared/utils/cm/com/const';
 import { cmComNewlinerLineConfigToSet, cmComNewlinerSymbolFreeUpperCaseText } from 'shared/utils/cm/com/newliner';
@@ -113,6 +113,13 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
     return cmComOrderCheckIsOrdVisibleInInterpretation(this.top, this.com.intp);
   }
 
+  private _isDisplayNone: boolean | nil;
+  get isDisplayNone() {
+    return (this._isDisplayNone ??=
+      //
+      !(this.isVisible || !this.regions?.some(r => checkIsNil(r.startLinei) && checkIsNil(r.startWordi))));
+  }
+
   get isHeaderNoneForce() {
     return this.me.kind?.isHeaderNoneForce;
   }
@@ -121,7 +128,7 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
     const repeats = this.repeats;
 
     if (!repeats) return '';
-    if (typeof repeats === 'number') return repeats < 2 ? '' : repeats + '';
+    if (checkIsNumber(repeats)) return repeats < 2 ? '' : repeats + '';
     if (repeats['.']) return repeats['.'] < 2 ? '' : repeats['.'] + '';
     const lastLineIndex = this.text.split(makeRegExp('/\\n/')).length - 1;
     const region = this.regions?.find(({ startLinei, finLinei }) => startLinei === 0 && finLinei === lastLineIndex);

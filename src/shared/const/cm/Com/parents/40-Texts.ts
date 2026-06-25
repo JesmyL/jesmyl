@@ -59,6 +59,8 @@ export class CmComTexts extends CmComChords {
 
       const heapText = comOrders
         .map(ord => {
+          if (ord.isDisplayNone) return '';
+
           const ordLines = (
             ord.isChBlock()
               ? ord.me.header()
