@@ -1,6 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { makeRegExp } from 'regexpert';
 import { IExportableOrder } from 'shared/api';
+import { checkIsString } from 'shared/utils/checkIs';
 import {
   checkIsChordLineReg,
   ruDifferentLowerLettersStr,
@@ -45,7 +46,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
     };
     const inheritStyle = comBlockKinds?.kinds.find(({ isInherit }) => isInherit);
 
-    (typeof blocks === 'string' ? blocks.split(makeRegExp('/\\n+\\s*\\n+/')) : blocks).forEach(block => {
+    (checkIsString(blocks) ? blocks.split(makeRegExp('/\\n+\\s*\\n+/')) : blocks).forEach(block => {
       if (!block) return;
       const unit: Unit = {};
       const textLines: string[] = [];

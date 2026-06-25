@@ -1,6 +1,7 @@
 import { backConfig } from 'back/config/backConfig';
 import fs from 'fs';
 import { smylib, wait } from 'shared/utils';
+import { checkIsNumber } from 'shared/utils/checkIs';
 import { FileStore } from './FileStore';
 
 const initialFileDir = `${__dirname}${backConfig.fileStoreDir}`;
@@ -63,7 +64,7 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
       const newItem = (newItemMapper ?? retItem)(makeNewItem());
 
       id ??= newItem[idKey];
-      id = (typeof id === 'number' ? +`${id}` : id) as Id;
+      id = (checkIsNumber(id) ? +`${id}` : id) as Id;
 
       const item = (fileStores[id] = new FileStore(`${dirPath}${id}.json`, {
         ...newItem,

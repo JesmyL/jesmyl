@@ -1,5 +1,6 @@
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode } from 'react';
+import { checkIsString } from 'shared/utils/checkIs';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import { Modal, ModalBody, ModalHeader } from './modal';
@@ -28,7 +29,7 @@ export function CopyTextButton({ text, disabled, description, className, message
         className={twMerge('flex gap-2 pointer', className)}
         onClick={event => {
           event.stopPropagation();
-          const textToWrite = typeof text === 'string' ? text : text();
+          const textToWrite = checkIsString(text) ? text : text();
           if (textToWrite == null) return;
 
           try {

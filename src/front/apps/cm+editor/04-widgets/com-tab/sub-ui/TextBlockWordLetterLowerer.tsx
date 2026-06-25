@@ -1,5 +1,4 @@
 import { Button } from '#shared/components';
-import { mylib } from '#shared/lib/my-lib';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { useState } from 'react';
@@ -7,6 +6,7 @@ import { makeRegExp } from 'regexpert';
 import { CmCom } from 'shared/const/cm/Com';
 import { emptyAsyncFunc } from 'shared/utils';
 import { checkIsNotNil } from 'shared/utils/checkIs';
+import { checkIsEq } from 'shared/utils/checkIsEq';
 import { textToCapitalizeSlavicCase, textToLowerCase } from 'shared/utils/string.utils';
 import { twMerge } from 'tailwind-merge';
 import { CmEditorComTabRedactTextWithIncorrectMessage } from './RedactTextWithIncorrectMessage';
@@ -29,7 +29,7 @@ export const CmEditorComTabTextBlockWordLetterLowerer = ({ com, onUpdate }: { co
       <ModalHeader className="flex flex-end">
         <Button
           icon="Telegram"
-          disabled={isError || mylib.isEq(texts, initialTexts)}
+          disabled={isError || checkIsEq(texts, initialTexts)}
           onClick={async () => {
             await cmEditComClientTsjrpcMethods.textCaps({
               comw: com.wid,
@@ -63,7 +63,7 @@ export const CmEditorComTabTextBlockWordLetterLowerer = ({ com, onUpdate }: { co
                 ) : (
                   <Button
                     icon="Edit02"
-                    disabled={checkIsNotNil(textiOnEdit) || !mylib.isEq(initialTexts[itTexti], texts[itTexti])}
+                    disabled={checkIsNotNil(textiOnEdit) || !checkIsEq(initialTexts[itTexti], texts[itTexti])}
                     onClick={() => setTextiOnEdit(itTexti)}
                   />
                 )}

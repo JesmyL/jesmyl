@@ -4,6 +4,7 @@ import { TextInput } from '#shared/ui/TextInput';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useEffect, useState } from 'react';
+import { checkIsString } from 'shared/utils/checkIs';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import { StrongEditableFieldMultiline } from './StrongEditableFieldMultiline';
@@ -35,7 +36,7 @@ let inputTimeout: TimeOut;
 export function StrongEditableField<Key extends string, Value extends string | Partial<Record<Key, string>>>(
   props: Props<Key, Value>,
 ) {
-  const value = typeof props.value === 'string' ? props.value : (props.value?.[props.fieldKey as never] ?? '');
+  const value = checkIsString(props.value) ? props.value : (props.value?.[props.fieldKey as never] ?? '');
   const [stateValue, setStateValue] = useState(value);
   const [isUserChange, setIsUserChange] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

@@ -5,6 +5,7 @@ import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 import { makeRegExp } from 'regexpert';
 import { LocalSokiAuth, SokiAuthLogin, SokiError, SokiVisit, TsjrpcClientEvent, TsjrpcServerEvent } from 'shared/api';
 import { setSharedPolyfills, smylib } from 'shared/utils';
+import { checkIsString } from 'shared/utils/checkIs';
 import WebSocket, { WebSocketServer } from 'ws';
 import { ErrorCatcher } from '../ErrorCatcher';
 import { tokenSecretFileStore } from './file-stores';
@@ -198,7 +199,7 @@ const parseReciever = (() => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (_key: string, value: any) => {
-    if (typeof value === 'string') {
+    if (checkIsString(value)) {
       if (value.trim().includes('\n')) {
         for (value = value.trimEnd().split(nlSplitRegexp); value[0] === ''; value.shift());
         value = value.join('\n');

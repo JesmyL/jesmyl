@@ -99,7 +99,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
             key={groupi}
             className="mt-20"
           >
-            {group?.map(({ line, ord, linei, repeati }, ordBlocki) => {
+            {group?.map(({ line, ord, linei, repeati }, groupi) => {
               let samei = 0;
               let prevLineId = '';
 
@@ -111,7 +111,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
               if (ord.isChBlock() || !line.trim())
                 return (
                   <div
-                    key={ordBlocki}
+                    key={groupi}
                     className={invisibleOrdClassName}
                     {...props}
                   >
@@ -188,12 +188,12 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
 
               return (
                 <div
-                  key={ordBlocki}
+                  key={groupi}
                   className={twMerge('mt-5', invisibleOrdClassName)}
                   {...props}
                 >
                   {ord.isAnyInherited || !!linei || !!repeati || <div>{ord.me.header()}</div>}
-                  {renderBreakButton(1, !ordBlocki)}
+                  {renderBreakButton(1, !groupi)}
 
                   {words.map((word, initWordi) => {
                     if (!initWordi)
