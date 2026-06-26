@@ -9,9 +9,11 @@ import { exec } from 'child_process';
 import { escapeRegExpSymbols, makeRegExp } from 'regexpert';
 import { hostConfig } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
+import { constantsConfigurator } from 'shared/const/cm/constants.def';
 import { emojiList } from 'shared/const/emojiList';
 import { smylib } from 'shared/utils';
 import { switchCRUDAccesRightValue } from 'shared/utils/index/utils';
+import { forEachObjectEntries } from 'shared/utils/object.utils';
 import { textToUpperCase } from 'shared/utils/string.utils';
 import {
   accessRightTitlesFileStore,
@@ -242,12 +244,44 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         },
 
         updateConstConfig: async ({ config }) => {
-          constantsConfigFileStore.updateValue(prev => ({ ...prev, ...config }));
-          cmShareServerTsjrpcMethods.refreshConstConfig(
-            { config, mod: constantsConfigFileStore.fileModifiedAt() },
+          const prevConfig = constantsConfigFileStore.getValue();
+          const newConfig = { ...config };
+          const updates: string[] = [];
+
+          forEachObjectEntries(newConfig, (key, value) => {
+            const configuration = constantsConfigurator[key];
+            const jsonValue = JSON.stringify(value);
+            let updateTitle;
+
+            if (configuration == null) {
+              delete newConfig[key];
+              updateTitle = `Неизвестный ключ (уже удалено) ${key} = ${jsonValue}`;
+            } else {
+              const checkedValue = (newConfig[key] = configuration.checked(value) as never);
+
+              updateTitle = `${configuration.title} = ${checkedValue}`;
+            }
+
+            updates.push(`${updateTitle} (было ${prevConfig[key]})`);
+          });
+
+          constantsConfigFileStore.setValue({ ...prevConfig, ...newConfig });
+
+          try {
+            await cmShareServerTsjrpcMethods.refreshConstConfig(
+              { config: newConfig, mod: constantsConfigFileStore.fileModifiedAt() },
+              null,
+            );
+          } catch {
+            //
+          }
+
+          await indexServerTsjrpcShareMethods.constConfig(
+            { config: newConfig, mod: constantsConfigFileStore.fileModifiedAt() },
             null,
           );
-          indexServerTsjrpcShareMethods.constConfig({ config, mod: constantsConfigFileStore.fileModifiedAt() }, null);
+
+          return { description: `Константы\n\n${updates.join('\n')}` };
         },
       },
     });

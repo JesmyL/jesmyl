@@ -1,0 +1,13 @@
+{
+  "maxComCommentAlternativesCount": 2,
+  "maxComCommentBlockLen": 100,
+  "maxComCommentChordLen": 9,
+  "maxComCommentHeadLen": 100,
+  "maxComCommentLineLen": 20,
+  "maxComCommentWordLen": 10,
+  "maxAvailableComLineLength": 60,
+  "maxFavouritesCount": 200,
+  "maxLaterComsVizitedCount": 8,
+  "maxSelectedComsCount": 30,
+  "availEmailDomainZone": "ru"
+}

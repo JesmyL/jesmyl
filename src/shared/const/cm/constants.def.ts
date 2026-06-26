@@ -1,26 +1,28 @@
 import { makeRegExp } from 'regexpert';
-import {
-  CmComIntensityLevel,
-  ConstantsConfig,
-  ConstantsConfigConfigurator,
-  ConstantsConfigConfiguratorItem,
-} from 'shared/api';
+import { ConstantsConfig, ConstantsConfigConfigurator, ConstantsConfigConfiguratorItem } from 'shared/api';
 import { checkIsNaN, checkIsNotNumber, checkIsStartsWith, checkIsString } from 'shared/utils/checkIs';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 
-const numberZips = {
-  unzip: str => +str,
-  str: (strNum, def) => (checkIsNaN(+strNum) ? `${def}` : strNum),
-  error: () => null,
-} satisfies Partial<ConstantsConfigConfiguratorItem<number, number>>;
+const numberZips = (def: number, title: string) =>
+  ({
+    title,
+    def,
+    unzip: str => +str,
+    str: strNum => (checkIsNaN(+strNum) ? `${def}` : strNum),
+    error: () => null,
+    checked: strNum => (checkIsNaN(+`${strNum}`) ? def : +`${strNum}`),
+  }) satisfies Partial<ConstantsConfigConfiguratorItem<number, number>>;
 
-const stringSetZips = (() => {
+const stringSetZips = (def: string, title: string) => {
   const unzip = (str: string) => new Set(str.split(makeRegExp('/[^a-z]+/')));
   const str = (set: string) => Array.from(unzip(set)).join(' ');
 
   return {
+    def,
+    title,
     unzip,
     str,
+    checked: it => (checkIsString(it) ? it : def),
     error: (value, checkValue) => {
       if (checkIsString(checkValue)) {
         const set = unzip(value);
@@ -33,30 +35,25 @@ const stringSetZips = (() => {
       return 'String expected!';
     },
   } satisfies Partial<ConstantsConfigConfiguratorItem<string, Set<string>>>;
-})();
+};
 
 export const constantsConfigurator: ConstantsConfigConfigurator = {
   '>cm - комменты': 0,
-  maxComCommentAlternativesCount: { def: 3, title: 'макс. кол-во альтернатив', ...numberZips },
-  maxComCommentBlockLen: { def: 100, title: 'макс. смиволов для блока', ...numberZips },
-  maxComCommentChordLen: { def: 5, title: 'макс. смиволов для аккордя', ...numberZips },
-  maxComCommentHeadLen: { def: 300, title: 'макс. смиволов для шапки', ...numberZips },
-  maxComCommentLineLen: { def: 20, title: 'макс. смиволов для строки', ...numberZips },
-  maxComCommentWordLen: { def: 10, title: 'макс. смиволов для слова', ...numberZips },
+  maxComCommentAlternativesCount: numberZips(3, 'макс. кол-во альтернатив'),
+  maxComCommentBlockLen: numberZips(100, 'макс. смиволов для блока'),
+  maxComCommentChordLen: numberZips(5, 'макс. смиволов для аккордя'),
+  maxComCommentHeadLen: numberZips(300, 'макс. смиволов для шапки'),
+  maxComCommentLineLen: numberZips(20, 'макс. смиволов для строки'),
+  maxComCommentWordLen: numberZips(10, 'макс. смиволов для слова'),
 
   '>cm - другое': 0,
-  maxAvailableComLineLength: { def: 47, title: 'макс. длина строки в песне', ...numberZips },
-  maxFavouritesCount: { def: 30, title: 'макс. лайк-песен', ...numberZips },
-  maxLaterComsVizitedCount: { def: 4, title: 'макс. последних песен', ...numberZips },
-  maxSelectedComsCount: { def: 50, title: 'макс. выбр. песен', ...numberZips },
-  showFragmentSlidesBelow: {
-    def: CmComIntensityLevel.Medium,
-    title: 'ХХХ - фрагменты для слайдов ниже интенсивности',
-    ...numberZips,
-  },
+  maxAvailableComLineLength: numberZips(47, 'макс. длина строки в песне'),
+  maxFavouritesCount: numberZips(30, 'макс. лайк-песен'),
+  maxLaterComsVizitedCount: numberZips(4, 'макс. последних песен'),
+  maxSelectedComsCount: numberZips(50, 'макс. выбр. песен'),
 
   '>index - общее': 0,
-  availEmailDomainZone: { def: 'ru', title: 'E-mail доменные зоны', ...stringSetZips },
+  availEmailDomainZone: stringSetZips('ru', 'E-mail доменные зоны'),
 };
 
 export const constantsDefaultConfig = (() => {

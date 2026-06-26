@@ -1,11 +1,10 @@
-import { CmComIntensityLevel } from 'shared/api';
-
 export type ConstantsConfigConfiguratorItem<Type, ParsedValue> = {
   /** default value */
   def: Type;
 
   unzip: (value: string) => ParsedValue;
-  str: (value: string, def: Type) => string;
+  checked: (value: unknown) => Type;
+  str: (value: string) => string;
   title: string;
   error: (value: Type, checkValue: unknown) => string | nil;
 };
@@ -27,7 +26,6 @@ export type ConstantsConfigTypes = ConstantsConfigInfer<{
   maxComCommentLineLen: [number, number];
   maxComCommentWordLen: [number, number];
   maxComCommentChordLen: [number, number];
-  showFragmentSlidesBelow: [CmComIntensityLevel, CmComIntensityLevel];
 
   availEmailDomainZone: [string, Set<string>];
 }>;
