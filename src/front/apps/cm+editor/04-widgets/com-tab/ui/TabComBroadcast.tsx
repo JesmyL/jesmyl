@@ -1,4 +1,5 @@
 import { Button } from '#shared/components';
+import { propsOfClicker } from '#shared/lib/clicker/propsOfClicker';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { WithAtom } from '#shared/ui/WithAtom';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
@@ -122,10 +123,9 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
               const { currentSet, ownSet, firstSet, holdSet, upperLine } = ord.makeNewlinerSets(line, linei, repeati);
 
               const isHasSelfChanges = !!ownSet.size;
+              const isFirstLine = !upperLinesDict[upperLine];
               const isSameDigitsWithHolder =
-                upperLinesDict[upperLine] &&
-                !firstSet &&
-                new Set([1]).union(holdSet.symmetricDifference(ownSet)).size === 1;
+                !isFirstLine && !firstSet && new Set([1]).union(holdSet.symmetricDifference(ownSet)).size === 1;
 
               const cloneSet = ownSet._clone();
               cloneSet.delete(CmComNewlinerWordi.NewLine);
@@ -190,6 +190,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                 <div
                   key={groupi}
                   className={twMerge('mt-5', invisibleOrdClassName)}
+                  upper-line={upperLine}
                   {...props}
                 >
                   {ord.isAnyInherited || !!linei || !!repeati || <div>{ord.me.header()}</div>}
@@ -201,7 +202,11 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                         <Button
                           key={initWordi}
                           size="sx"
-                          className={`${isHasSelfChanges ? 'text-x8! underline' : 'text-x7!'} bg-x2! has-[>svg]:px-0! px-0!`}
+                          className={twMerge(
+                            'bg-x2! has-[>svg]:px-0! px-0!',
+                            isHasSelfChanges ? 'text-x8!' : 'text-x7!',
+                            isFirstLine && 'underline decoration-double',
+                          )}
                           {...(isHasSelfChanges
                             ? {
                                 icon: 'Delete01',
@@ -213,7 +218,27 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                                     repeati,
                                   }),
                               }
-                            : { icon: 'Play' })}
+                            : isFirstLine
+                              ? { icon: 'Play' }
+                              : { icon: 'ArrowUpDouble' })}
+                          {...(isFirstLine
+                            ? null
+                            : propsOfClicker({
+                                onCtxMenu: event => {
+                                  event.preventDefault();
+                                  const elem = document.querySelector(`[upper-line='${upperLine}']`);
+                                  const className = 'bg-x2!';
+
+                                  if (elem) {
+                                    clearTimeout(targetHighlightMap.get(elem));
+                                    const timeout = setTimeout(() => elem.classList.remove(className), 2000);
+                                    targetHighlightMap.set(elem, timeout);
+
+                                    elem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                    elem.classList.add(className);
+                                  }
+                                },
+                              }))}
                         >
                           <span {...makeCmComTextInnerHtmlProp(word)} />
                         </Button>
@@ -280,3 +305,5 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
     </>
   );
 };
+
+const targetHighlightMap = new Map<Element, TimeOut>();

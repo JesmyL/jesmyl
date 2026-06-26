@@ -33,23 +33,6 @@ export class CmComTexts extends CmComChords {
     );
   }
 
-  makeExpandGroupedLines = (isFinalChordedOrd: boolean) => {
-    let prevOrd: CmComOrder | null = null;
-    let prevTotalLinei = -1;
-
-    const slides: CmBroadcastSlideLine[][] = [];
-
-    this.makeExpandLines(isFinalChordedOrd).forEach(slide => {
-      if ((slide.ord !== prevOrd || slide.totalLinei < prevTotalLinei) && !slide.ord.isAnyInherited) slides.push([]);
-      slides.at(-1)?.push(slide);
-
-      prevOrd = slide.ord;
-      prevTotalLinei = slide.totalLinei;
-    });
-
-    return slides;
-  };
-
   makeExpandLines = (isFinalChordedOrd: boolean) => {
     try {
       const comOrders = this.ordersWithFinalChordedOrd(isFinalChordedOrd);
