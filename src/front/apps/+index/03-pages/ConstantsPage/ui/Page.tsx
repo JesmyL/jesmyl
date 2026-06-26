@@ -27,15 +27,13 @@ export const IndexConstantsPage = () => {
                 </div>
               );
 
-            const configValue = constants[key] ?? configItem.str(configItem.def as never, configItem.def as never);
-
             return (
               <InputWithLoadingIcon
                 key={key}
                 label={configItem.title}
                 icon="RightToLeftListTriangle"
                 placeholder={'' + constantsDefaultConfig[key]}
-                defaultValue={'' + configValue}
+                defaultValue={configItem.str(constants[key])}
                 onChanged={value =>
                   indexTsjrpcClientMethods.updateConstConfig({ config: { [key]: configItem.unzip(value) } })
                 }

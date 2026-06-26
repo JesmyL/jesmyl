@@ -4,7 +4,7 @@ export type ConstantsConfigConfiguratorItem<Type, ParsedValue> = {
 
   unzip: (value: string) => ParsedValue;
   checked: (value: unknown) => Type;
-  str: (value: string) => string;
+  str: (value: unknown) => string;
   title: string;
   error: (value: Type, checkValue: unknown) => string | nil;
 };

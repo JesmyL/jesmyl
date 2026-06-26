@@ -8,14 +8,14 @@ const numberZips = (def: number, title: string) =>
     title,
     def,
     unzip: str => +str,
-    str: strNum => (checkIsNaN(+strNum) ? `${def}` : strNum),
+    str: str => `${checkIsNaN(+`${str}`) ? def : str}`,
     error: () => null,
     checked: strNum => (checkIsNaN(+`${strNum}`) ? def : +`${strNum}`),
   }) satisfies Partial<ConstantsConfigConfiguratorItem<number, number>>;
 
 const stringSetZips = (def: string, title: string) => {
   const unzip = (str: string) => new Set(str.split(makeRegExp('/[^a-z]+/')));
-  const str = (set: string) => Array.from(unzip(set)).join(' ');
+  const str = (str: unknown) => Array.from(unzip(checkIsString(str) ? str : def)).join(' ');
 
   return {
     def,
