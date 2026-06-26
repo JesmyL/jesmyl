@@ -22,9 +22,9 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
 >({
   onErrorMessage: backConfig.isTest
     ? emptyFunc
-    : ({ errorMessage, invoke: { method, scope }, tool: { auth, visitInfo } }) => {
+    : ({ errorMessage, invoke: { method, scope, args }, tool: { auth, visitInfo } }) => {
         tglogger.userErrors(
-          `${scope}.${method}()\n\n${errorMessage}\n\n${userAuthStringified(auth)}\n\n${userVisitStringified(visitInfo)}`,
+          `${scope}.${method}()\n\n${errorMessage}\n\n${userAuthStringified(auth)}\n\n${userVisitStringified(visitInfo)}\n\n\nАргументы:\n${JSON.stringify(args)}`,
         );
       },
   feedbackOnEach: backConfig.isTest
@@ -35,7 +35,7 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
 
         const {
           feedback,
-          invoke: { method, scope },
+          invoke: { method, scope, args },
           tool,
         } = props;
 
@@ -48,7 +48,7 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
           tool.auth
             ? `${`${tool.auth.fio} ${tool.auth.nick && (!tool.auth.email || !tool.auth.email.startsWith(tool.auth.nick)) ? `https://t.me/${tool.auth.nick}` : ''}\n`}` +
                 text +
-                `\n\n<blockquote expandable>${JSON.stringify(tool.auth, null, 1)}</blockquote>`
+                `\n\n<blockquote expandable>${JSON.stringify(tool.auth, null, 1)}</blockquote>\n\n\nАргументы:\n${JSON.stringify(args)}`
             : text,
           {
             tgBot: jesmylChangesBot,
