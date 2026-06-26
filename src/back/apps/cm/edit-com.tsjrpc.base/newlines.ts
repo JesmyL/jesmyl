@@ -7,7 +7,6 @@ import {
   CmComNewlinerWordi,
   CmComOrderWid,
   CmComWid,
-  IServerSideCom,
 } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
 import { CmCom } from 'shared/const/cm/Com';
@@ -26,9 +25,9 @@ import { modifyCom } from './lib/modifiers';
 
 type Sets = ReturnType<CmComOrder['makeNewlinerSets']>;
 
-export const cmEditComServerTsjrpcNewlines = {
-  switchNLWord: modifyCom((com, { linei, wordi, ordw, repeati }) => {
-    updateNewlinerLineSet(com, ordw, linei, repeati, (itRepeati, set, getSets) => {
+export const cmEditComServerTsjrpcNewlines = () =>
+  ({
+    switchNLWord: updateNewlinerLineSet(({ repeati, wordi }, itRepeati, set, getSets) => {
       if (itRepeati !== repeati) return;
 
       updateSetByHoldSet(getSets, set, wordi, repeati);
@@ -37,13 +36,9 @@ export const cmEditComServerTsjrpcNewlines = {
         set.delete(wordi);
         set.delete(-wordi);
       } else set.add(Math.abs(wordi));
-    });
+    }),
 
-    return retLabel(com.w);
-  }),
-
-  switchNLBr: modifyCom((com, { linei, wordi, ordw, repeati }) => {
-    updateNewlinerLineSet(com, ordw, linei, repeati, (itRepeati, set, getSets) => {
+    switchNLBr: updateNewlinerLineSet(({ repeati, wordi }, itRepeati, set, getSets) => {
       if (itRepeati !== repeati) return;
 
       if (updateSetByHoldSet(getSets, set, wordi, repeati)) {
@@ -63,20 +58,18 @@ export const cmEditComServerTsjrpcNewlines = {
 
       set.delete(0);
       if (!repeati) set.delete(1);
-    });
+    }),
 
-    return retLabel(com.w);
-  }),
-
-  removeNL: modifyCom((com, { linei, ordw, repeati }) => {
-    updateNewlinerLineSet(com, ordw, linei, repeati, (itRepeati, set) => {
+    removeNL: updateNewlinerLineSet(({ repeati }, itRepeati, set) => {
       if (repeati != null && itRepeati !== repeati) return;
       set.clear();
-    });
+    }),
+  }) satisfies ServerTsjrpcSatisfy<CmEditComTsjrpcModel>;
 
-    return retLabel(com.w);
-  }),
-} satisfies ServerTsjrpcSatisfy<CmEditComTsjrpcModel>;
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 
 const timers: PRecord<CmComWid, TimeOut> = {};
 const retLabel = (comw: CmComWid) => {
@@ -142,44 +135,47 @@ const updateSetByHoldSet = (
   return isNotFixed;
 };
 
-const updateNewlinerLineSet = (
-  com: IServerSideCom,
-  ordw: CmComOrderWid,
-  linei: CmComNewlinerLinei,
-  repeati: CmComNewlinerRepeati | nil,
-  updater: (repeati: CmComNewlinerRepeati, set: Set<number>, getSets: () => Sets | nil) => void,
-) => {
-  com.nl ??= [{}];
-  const wholeNLConfig = com.nl[0][ordw];
-  const lineConfigList = takeCmComNewlinerLineFullConfig(wholeNLConfig);
-  const repeatConfigList = takeCmComNewlinerRepeatFullConfig(wholeNLConfig, linei);
+const updateNewlinerLineSet = <
+  Props extends { comw: CmComWid; linei: CmComNewlinerLinei; ordw: CmComOrderWid; repeati: CmComNewlinerRepeati | nil },
+>(
+  updater: (props: Props, currentRepeati: CmComNewlinerRepeati, set: Set<number>, getSets: () => Sets | nil) => void,
+) =>
+  modifyCom<Props>((com, props) => {
+    const { linei, ordw, repeati } = props;
 
-  arrayByLength(Math.max(repeatConfigList.length, (repeati || 0) + 1), itRepeati => {
-    const set = cmComNewlinerLineConfigToSet(wholeNLConfig, linei, itRepeati);
-    updater(itRepeati, set, () => {
-      let sets: Sets | nil = null;
+    com.nl ??= [{}];
+    const wholeNLConfig = com.nl[0][ordw];
+    const lineConfigList = takeCmComNewlinerLineFullConfig(wholeNLConfig);
+    const repeatConfigList = takeCmComNewlinerRepeatFullConfig(wholeNLConfig, linei);
 
-      new CmCom({ ...com, m: CmComMod.def, al: [] }, null, null).makeExpandLines(false).find(slide => {
-        sets = slide.ord.makeNewlinerSets(slide.line, slide.linei, slide.repeati);
+    arrayByLength(Math.max(repeatConfigList.length, (repeati || 0) + 1), itRepeati => {
+      const set = cmComNewlinerLineConfigToSet(wholeNLConfig, linei, itRepeati);
+      updater(props, itRepeati, set, () => {
+        let sets: Sets | nil = null;
 
-        return slide.ord.wid === ordw && slide.linei === linei && slide.repeati === itRepeati;
+        new CmCom({ ...com, m: CmComMod.def, al: [] }, null, null).makeExpandLines(false).find(slide => {
+          sets = slide.ord.makeNewlinerSets(slide.line, slide.linei, slide.repeati);
+
+          return slide.ord.wid === ordw && slide.linei === linei && slide.repeati === itRepeati;
+        });
+
+        return sets;
       });
 
-      return sets;
+      repeatConfigList[itRepeati] = cmComNewlinerLineSetToNewlinerConfig(set);
     });
 
-    repeatConfigList[itRepeati] = cmComNewlinerLineSetToNewlinerConfig(set);
+    removeEmptyRightValues(repeatConfigList, null, it => it || '');
+
+    lineConfigList[linei] = repeatConfigList.join('/') as CmComNewlinerStrConfig.line;
+    removeEmptyRightValues(lineConfigList, null, it => it || '');
+
+    const repeatConfig = lineConfigList.join(' ') as CmComNewlinerStrConfig.whole;
+
+    if (repeatConfig) com.nl[0][ordw] = repeatConfig;
+    else delete com.nl[0][ordw];
+
+    if (!objectLength(com.nl[0])) delete com.nl;
+
+    return retLabel(com.w);
   });
-
-  removeEmptyRightValues(repeatConfigList, null, it => it || '');
-
-  lineConfigList[linei] = repeatConfigList.join('/') as CmComNewlinerStrConfig.line;
-  removeEmptyRightValues(lineConfigList, null, it => it || '');
-
-  const repeatConfig = lineConfigList.join(' ') as CmComNewlinerStrConfig.whole;
-
-  if (repeatConfig) com.nl[0][ordw] = repeatConfig;
-  else delete com.nl[0][ordw];
-
-  if (!objectLength(com.nl[0])) delete com.nl;
-};

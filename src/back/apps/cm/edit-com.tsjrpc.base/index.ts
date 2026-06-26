@@ -23,7 +23,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
     super({
       scope: 'CmEditCom',
       methods: {
-        ...cmEditComServerTsjrpcNewlines,
+        ...cmEditComServerTsjrpcNewlines(),
         ...cmEditComServerTsjrpcTextableBlocks,
 
         rename: modifyCom((com, { value }, { auth }) => {
