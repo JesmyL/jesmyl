@@ -14,6 +14,7 @@ import { hostConfig } from './hostConfig.mjs';
   const paths = [
     ['apps/index/schedules'],
     ['apps/index', 'rights'],
+    ['apps/index', 'constantsConfig'],
     ['apps/index', 'nouns'],
     ['apps/index', 'pronouns'],
     ['apps/index', 'emailTextingLetterVariants', ''],
