@@ -216,6 +216,8 @@ export const enum CmComTextSquareBracketsMode {
   Remove,
 }
 
+export type CmComBracketLevelHolder = { level: number };
+
 export type CmComCommentBlockSimpleSelector = CmComOrderWid | CmComCommentBlockSpecialSelector.Head;
 export type CmComCommentBlockAnySelector = CmComOrderWid | CmComCommentBlockSpecialSelector;
 

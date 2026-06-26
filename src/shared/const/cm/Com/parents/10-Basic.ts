@@ -1,10 +1,17 @@
-import { CmComLangi, IExportableCom, IExportableComInterpretation, IFixedCom } from 'shared/api';
+import {
+  CmComBracketLevelHolder,
+  CmComLangi,
+  IExportableCom,
+  IExportableComInterpretation,
+  IFixedCom,
+} from 'shared/api';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { cmComLanguages } from 'shared/utils/cm/com/const';
 import { BaseNamed } from '../../BaseNamed';
 
 export class CmComBasic extends BaseNamed<IExportableCom> {
   ton?: number;
+  bracketLevelHolder: CmComBracketLevelHolder = { level: 0 };
 
   constructor(
     top: IExportableCom,

@@ -17,8 +17,8 @@ describe('transformToReadableText', () => {
     `.trim();
 
       return [
-        cmTransformToReadableLines(text.split('\n'), textCase, squareBracketsMode).lines.join('\n'),
-        cmTransformToReadableText(text, textCase, squareBracketsMode).text,
+        cmTransformToReadableLines({ level: 0 }, text.split('\n'), textCase, squareBracketsMode).lines.join('\n'),
+        cmTransformToReadableText({ level: 0 }, text, textCase, squareBracketsMode).text,
       ];
     };
 

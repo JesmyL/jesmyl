@@ -30,8 +30,10 @@ export const comNbsp = `_` as const;
 export const comNbspReg = makeRegExp(`/${comNbsp}/gi`);
 
 export const makeCmComTextInnerHtmlProp = (text: string | nil) => ({
-  dangerouslySetInnerHTML: text ? { __html: text.replace(comNbspReg, nbsp) } : undefined,
+  dangerouslySetInnerHTML: text ? { __html: makeCmComNbspHtmlText(text) } : undefined,
 });
+
+export const makeCmComNbspHtmlText = (text: string | nil): string => text?.replace(comNbspReg, nbsp) ?? '';
 
 export const textedChordRegs = makeNamedRegExp(
   // regexpert:
@@ -68,12 +70,7 @@ export const simpleHashedEachLetterChordReg_g = makeRegExp('/[A-H]#/g');
 export const simpleHashChords = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'H'];
 export const cleanChords = ['A', 'C', 'D', 'E', 'F', 'G', 'H'];
 
-export const openAndClosedQuotes = [
-  ['«', '»'],
-  ['„', '“'],
-  ['"', '"'],
-  ["'", "'"],
-];
+export const openAndClosedQuotes = ['«»', '„“', '""', "''"];
 
 export const aSharpToBChord: Record<string, string> = {
   'A#': 'B',

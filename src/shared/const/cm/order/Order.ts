@@ -291,7 +291,7 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
     ));
 
   transformedText = (squareBracketsMode: CmComTextSquareBracketsMode, textCase?: TextCase | nil) =>
-    cmTransformToReadableText(this.text, textCase, squareBracketsMode).text;
+    cmTransformToReadableText(this.com.bracketLevelHolder, this.text, textCase, squareBracketsMode).text;
 
   isVisibleOrd = () => !this.isHeaderNoneForce && this.isVisible;
 
