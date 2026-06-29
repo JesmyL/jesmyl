@@ -10,10 +10,10 @@ import {
 } from 'shared/api/complect/apps';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 
-type SimpleComValueSetter<Value> = (args: { comw: CmComWid; value: Value }) => IExportableCom;
+type SimpleComValueSetter<Value> = (args: { comw: CmComWid; value: Value }) => CmComWid;
 
 export type CmEditComTsjrpcModel = {
-  newCom: (args: { value: OmitOwn<IExportableCom, 'w'> }) => IExportableCom;
+  newCom: (args: { value: OmitOwn<IExportableCom, 'w'> }) => CmComWid;
 
   rename: SimpleComValueSetter<string>;
   destroy: (args: { comw: CmComWid }) => string;
@@ -26,20 +26,20 @@ export type CmEditComTsjrpcModel = {
 
   toggleAudioLink: (args: { comw: CmComWid; link: HttpNumLeadLink }) => void;
 
-  changeChordBlock: (args: { texti: number; comw: CmComWid; value: string }) => IExportableCom;
-  changeTextBlock: (args: { texti: number; comw: CmComWid; value: string }) => IExportableCom;
-  textCaps: (args: { comw: CmComWid; texts: string[] }) => IExportableCom;
+  changeChordBlock: (args: { texti: number; comw: CmComWid; value: string }) => CmComWid;
+  changeTextBlock: (args: { texti: number; comw: CmComWid; value: string }) => CmComWid;
+  textCaps: (args: { comw: CmComWid; texts: string[] }) => CmComWid;
 
   removeVerticalBarsFromTexts: (args: { comw: CmComWid }) => void;
 
-  insertChordBlock: (args: { value: string; comw: CmComWid; insertToi: number }) => IExportableCom;
-  removeChordBlock: (args: { comw: CmComWid; value: string; removei: number }) => IExportableCom;
+  insertChordBlock: (args: { value: string; comw: CmComWid; insertToi: number }) => CmComWid;
+  removeChordBlock: (args: { comw: CmComWid; value: string; removei: number }) => CmComWid;
 
-  insertTextBlock: (args: { value: string; comw: CmComWid; insertToi: number }) => IExportableCom;
-  removeTextBlock: (args: { comw: CmComWid; value: string; removei: number }) => IExportableCom;
+  insertTextBlock: (args: { value: string; comw: CmComWid; insertToi: number }) => CmComWid;
+  removeTextBlock: (args: { comw: CmComWid; value: string; removei: number }) => CmComWid;
 
-  remove: (args: { comw: CmComWid }) => IExportableCom;
-  bringBackToLife: (args: { comw: CmComWid }) => IExportableCom;
+  remove: (args: { comw: CmComWid }) => CmComWid;
+  bringBackToLife: (args: { comw: CmComWid }) => CmComWid;
 
   takeRemovedComs: () => IExportableCom[];
 

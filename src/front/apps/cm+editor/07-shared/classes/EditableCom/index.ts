@@ -1,20 +1,12 @@
 import { ICmComOrderExportableMe } from '#shared/model/cm/order/regions';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { makeRegExp } from 'regexpert';
-import { itIt, SMyLib } from 'shared/utils';
+import { itIt } from 'shared/utils';
 import { checkIsNumber } from 'shared/utils/checkIs';
-import { chordBemoleEquivalent, simpleBemoleChordReg_g } from 'shared/utils/cm/com/const';
+import { chordDiezEquivalent, simpleBemoleChordReg_g } from 'shared/utils/cm/com/const';
 import { arrayByLength, objectKeys } from 'shared/utils/object.utils';
 import { EditableComOrder } from '../EditableComOrder';
 import { EditableComParseBlocks } from './lib/31-ParseBlocks';
-
-export const chordDiezEquivalent = SMyLib.entries(chordBemoleEquivalent).reduce(
-  (acc, [key, val]) => ({ ...acc, [val]: key }),
-  {
-    Bb: 'A#',
-    Hb: 'A#',
-  } as Record<string, string>,
-);
 
 export class EditableCom extends EditableComParseBlocks {
   orderConstructor = (me: ICmComOrderExportableMe<any>) => new EditableComOrder(me, this);
@@ -25,7 +17,7 @@ export class EditableCom extends EditableComParseBlocks {
     const col = this.chords[coli];
     if (!col) return;
 
-    const val = col.replace(simpleBemoleChordReg_g, chord => chordDiezEquivalent[chord] || chord);
+    const val = col.replace(simpleBemoleChordReg_g, chord => chordDiezEquivalent()[chord] || chord);
 
     cmEditComClientTsjrpcMethods.changeChordBlock({ texti: coli, comw: this.wid, value: val });
   }

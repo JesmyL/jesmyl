@@ -124,13 +124,14 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           } catch {
             //
           }
+
           comsDirStorage.createItem(() => mapCmExportableToImportableCom(com), com.w);
 
           const mod = comsDirStorage.saveItem(com.w) ?? 0;
 
           cmShareServerTsjrpcMethods.editedCom({ com, mod }, null);
 
-          return { value: com, description: `Добавлена новая песня "${com.n}"` };
+          return { value: com.w, description: `Добавлена новая песня "${com.n}"` };
         },
 
         remove: modifyCom((com, _, { auth }) => {

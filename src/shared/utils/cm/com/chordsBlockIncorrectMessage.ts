@@ -1,6 +1,6 @@
 import { makeRegExp } from 'regexpert';
 import { IIncorrects } from 'shared/model/cm/Incorrects';
-import { textedChordRegs } from './const';
+import { textedChordRegsLazy } from './const';
 
 export const chordsBlockIncorrectMessage = (value: string | und): IIncorrects => {
   const incorrectChords: string[] = [];
@@ -8,7 +8,7 @@ export const chordsBlockIncorrectMessage = (value: string | und): IIncorrects =>
     .trim()
     .split(makeRegExp('/([\\n\\s ]+)/'))
     .map(chord => {
-      if (chord.trim() && !chord.match(textedChordRegs.regExp)) {
+      if (chord.trim() && !chord.match(textedChordRegsLazy().regExp)) {
         incorrectChords.push(chord);
         return `[${chord}]`;
       }

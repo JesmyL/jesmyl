@@ -1,4 +1,6 @@
 import { escapeRegExpNames, makeNamedRegExp, makeRegExp } from 'regexpert';
+import { lazyInit } from 'shared/utils/lazyInit';
+import { forEachObjectEntries, objectKeys } from 'shared/utils/object.utils';
 
 export const hardModificators =
   `(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))` as const;
@@ -27,7 +29,7 @@ export const displayableTextBlockCharsStr = `${displayableTextBlockSymbolsStr}${
 
 export const nbsp = '&nbsp;';
 export const comNbsp = `_` as const;
-export const comNbspReg = makeRegExp(`/${comNbsp}/gi`);
+export const comNbspReg = makeRegExp(`/${comNbsp}/g`);
 
 export const makeCmComTextInnerHtmlProp = (text: string | nil) => ({
   dangerouslySetInnerHTML: text ? { __html: makeCmComNbspHtmlText(text) } : undefined,
@@ -35,30 +37,39 @@ export const makeCmComTextInnerHtmlProp = (text: string | nil) => ({
 
 export const makeCmComNbspHtmlText = (text: string | nil): string => text?.replace(comNbspReg, nbsp) ?? '';
 
-export const textedChordRegs = makeNamedRegExp(
-  // regexpert:
-  // stringify $0 U23
-  `/^\\|?\\.*-?${chordLikeStr}(?<bassChord>/${
-    //
-    escapeRegExpNames(chordLikeStr, '_bass')
-  })?(?<repeats>(?:(?:\\.+|-|\\.+-)${
-    //
-    escapeRegExpNames(chordLikeStr, '_lastRepeat')
-  }(?:/${
-    //
-    escapeRegExpNames(chordLikeStr, `_lastRepeatBass`)
-  })?)*)\\|?$/`,
+export const textedChordRegsLazy = lazyInit(() =>
+  makeNamedRegExp(
+    // regexpert:
+    // stringify $0 U23
+    `/^\\|?\\.*-?${chordLikeStr}(?<bassChord>/${
+      //
+      escapeRegExpNames(chordLikeStr, '_bass')
+    })?(?<repeats>(?:(?:\\.+|-|\\.+-)${
+      //
+      escapeRegExpNames(chordLikeStr, '_lastRepeat')
+    }(?:/${
+      //
+      escapeRegExpNames(chordLikeStr, `_lastRepeatBass`)
+    })?)*)\\|?$/`,
+  ),
 );
-export const correctChordRegs = makeNamedRegExp(
-  // regexpert:
-  // stringify $0
-  `/^${chordLikeStr}(?:/${escapeRegExpNames(chordLikeStr, '_bass')})?$/`,
+
+export const correctChordRegsLazy = lazyInit(() =>
+  makeNamedRegExp(
+    // regexpert:
+    // stringify $0
+    `/^${chordLikeStr}(?:/${escapeRegExpNames(chordLikeStr, '_bass')})?$/`,
+  ),
 );
-export const chordInterpretedRegs = makeNamedRegExp(
-  // regexpert:
-  // stringify $0
-  `/^${chordInterpretedLikeStr}(?:/${escapeRegExpNames(chordInterpretedLikeStr, '_bass')})?$/`,
+
+export const chordInterpretedRegsLazy = lazyInit(() =>
+  makeNamedRegExp(
+    // regexpert:
+    // stringify $0
+    `/^${chordInterpretedLikeStr}(?:/${escapeRegExpNames(chordInterpretedLikeStr, '_bass')})?$/`,
+  ),
 );
+
 export const checkIsChordLineReg = makeRegExp('/^[-+A-Ha-z# /\\d]+$/');
 export const correctNotSlavicNameReg_i = makeRegExp(`/([^${slavicLowerLettersStr} !?]+\\s*)+$/i`);
 
@@ -67,25 +78,46 @@ export const simpleHashChordReg_g = makeRegExp('/[ACDEFGH]#?/g');
 export const simpleBemoleChordReg_g = makeRegExp('/[A-H]b?/g');
 export const simpleHashedEachLetterChordReg_g = makeRegExp('/[A-H]#/g');
 
-export const simpleHashChords = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'H'];
-export const cleanChords = ['A', 'C', 'D', 'E', 'F', 'G', 'H'];
-
 export const openAndClosedQuotes = ['«»', '„“', '""', "''"];
 
+const ASharp = 'A#';
+
 export const aSharpToBChord: Record<string, string> = {
-  'A#': 'B',
+  [ASharp]: 'B',
 };
 
 export const bToASharpChord: Record<string, string> = {
-  B: 'A#',
+  B: ASharp,
 };
 
 export const chordBemoleEquivalent: Record<string, string> = {
-  'A#': 'B',
+  C: '',
   'C#': 'Db',
+  D: '',
   'D#': 'Eb',
+  E: '',
+  F: '',
   'F#': 'Gb',
+  G: '',
   'G#': 'Ab',
+  A: '',
+  ...aSharpToBChord,
+  H: '',
 };
+
+export const chordDiezEquivalent = lazyInit(() => {
+  const it = {
+    Bb: ASharp,
+    Hb: ASharp,
+  } as Record<string, string>;
+
+  forEachObjectEntries(chordBemoleEquivalent, (key, val) => {
+    if (val) it[val] = key;
+  });
+
+  return it;
+});
+
+export const simpleHashChords = objectKeys(chordBemoleEquivalent);
 
 export const cmComLanguages = ['русский', 'украинский'];

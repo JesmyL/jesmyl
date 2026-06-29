@@ -15,7 +15,7 @@ import { defaultTextCase } from 'shared/const/textCase';
 import { TextCase } from 'shared/model/common';
 import { checkIsNil, checkIsNumber, checkIsObject } from 'shared/utils/checkIs';
 import { cmComOrderCheckIsOrdVisibleInInterpretation } from 'shared/utils/cm/checkIs';
-import { chordInterpretedRegs } from 'shared/utils/cm/com/const';
+import { chordInterpretedRegsLazy } from 'shared/utils/cm/com/const';
 import { cmComNewlinerLineConfigToSet, cmComNewlinerSymbolFreeUpperCaseText } from 'shared/utils/cm/com/newliner';
 import { cmComOrderMakeRegions } from 'shared/utils/cm/makeRegions';
 import { cmComOrderMakeRepeatedText } from 'shared/utils/cm/makeRepeatedText';
@@ -220,8 +220,8 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
 
         return chordsList
           .map(chord => {
-            return chord.replace(chordInterpretedRegs.regExp, (...args) => {
-              const chips = chordInterpretedRegs.transform(args);
+            return chord.replace(chordInterpretedRegsLazy().regExp, (...args) => {
+              const chips = chordInterpretedRegsLazy().transform(args);
 
               if (chordHardLevel === 1)
                 return `${chips.simpleChord}${chips.simpleChord_bass ? '/' : ''}${chips.simpleChord_bass ?? ''}`;

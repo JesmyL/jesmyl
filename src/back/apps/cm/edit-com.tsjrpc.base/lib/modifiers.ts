@@ -48,6 +48,6 @@ export function modifyCom<Props extends { comw: CmComWid }>(
 
     cmShareServerTsjrpcMethods.editedCom({ com: expCom, mod }, null);
 
-    return { value: expCom, description: description ? `Песня "${comName}" - ${description}` : null };
+    return { value: expCom.w, description: description ? `Песня "${comName}" - ${description}` : null };
   };
 }
