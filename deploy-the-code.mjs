@@ -30,6 +30,7 @@ export const deployTheCode = async (front, back) => {
     try {
       console.info(`Lint check for v${num} is running...`);
       await execAsync('npm run lint');
+      await execAsync('npm run test');
 
       console.info(`Build v${num} is running...`);
       await execAsync('npm run build');
