@@ -1,18 +1,17 @@
 import { TextInput } from '#shared/ui/TextInput';
 import { CmEditorTextCorrectMessages } from '$cm+editor/entities/text';
-import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { IExportableCom } from 'shared/api';
-import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
+import { IIncorrects } from 'shared/model/cm/Incorrects';
 
 export const CmEditorComCreateNameChange = ({
   name,
   setNewCom,
+  incorrcets,
 }: {
   name: string | und;
   setNewCom: (value: React.SetStateAction<IExportableCom>) => void;
+  incorrcets: IIncorrects;
 }) => {
-  const eeStore = cmEditorIDB.useValue.eeStore();
-
   return (
     <>
       <div className="flex w-full">
@@ -29,7 +28,7 @@ export const CmEditorComCreateNameChange = ({
           />
         </div>
       </div>
-      <CmEditorTextCorrectMessages corrects={takeTextBlockIncorrects(name, eeStore)} />
+      <CmEditorTextCorrectMessages corrects={incorrcets} />
     </>
   );
 };

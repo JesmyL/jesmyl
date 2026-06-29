@@ -1,13 +1,14 @@
-import { mylib } from '#shared/lib/my-lib';
 import { makeRegExp } from 'regexpert';
 import { IExportableOrder } from 'shared/api';
-import { checkIsString } from 'shared/utils/checkIs';
+import { enRuLetterVisualEquivalentLazy } from 'shared/const/letter-eqs';
+import { checkIsNil, checkIsNotNil, checkIsString } from 'shared/utils/checkIs';
 import {
   checkIsChordLineReg,
+  cmComLanguages,
   ruDifferentLowerLettersStr,
   slavicLowerLettersStr,
-  uaDifferentLowerLettersStr,
 } from 'shared/utils/cm/com/const';
+import { objectLength } from 'shared/utils/object.utils';
 import { comBlockKinds } from 'shared/values/cm/block-kinds/BlockKind';
 import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';
 import { EditableComBlocks } from './30-Blocks';
@@ -36,14 +37,6 @@ export class EditableComParseBlocks extends EditableComBlocks {
     let wid = 0;
     const errors: string[] = [];
     const slogUnits: Record<number, Unit[]> = {};
-    const setLanguagei = (reg: RegExp, text: string, langi: number) => {
-      if (text.match(reg)) {
-        if (languagei !== undefined && languagei !== langi) {
-          languagei = undefined;
-          errors.push('Не удалось определить язык песни');
-        } else languagei = langi;
-      }
-    };
     const inheritStyle = comBlockKinds?.kinds.find(({ isInherit }) => isInherit);
 
     (checkIsString(blocks) ? blocks.split(makeRegExp('/\\n+\\s*\\n+/')) : blocks).forEach(block => {
@@ -56,9 +49,15 @@ export class EditableComParseBlocks extends EditableComBlocks {
       block.split('\n').forEach((line, linei) => {
         const freeLine = line.replace(makeRegExp('/\\s+/g'), ' ').trim();
 
-        if (languagei !== null) {
-          setLanguagei(makeRegExp(`/[${ruDifferentLowerLettersStr}]/`), freeLine, 0);
-          setLanguagei(makeRegExp(`/[${uaDifferentLowerLettersStr}]/`), freeLine, 1);
+        if (checkIsNotNil(languagei)) {
+          cmComLanguages.forEach((_, langi) => {
+            if (freeLine.match(makeRegExp(`/[${ruDifferentLowerLettersStr}]/`))) {
+              if (checkIsNotNil(languagei) && languagei !== langi) {
+                languagei = undefined;
+                errors.push('Не удалось определить язык песни');
+              } else languagei = langi;
+            }
+          });
         }
 
         if (linei === 0) {
@@ -88,15 +87,14 @@ export class EditableComParseBlocks extends EditableComBlocks {
 
       const pushTextLines = (chordLinesCount: number) => {
         for (let i = 0; i < chordLinesCount; i++) {
-          const lines = textLines; //.slice(i * chordLinesCount, (i + 1) * chordLinesCount);
+          const lines = textLines.slice(i * chordLinesCount, (i + 1) * chordLinesCount);
           if (lines.length) unitTextLines.push(lines);
         }
       };
 
       if (chordLinesCount === 0) {
-        const unitStyle = unit.kind;
-        if (unitStyle) {
-          const sameUnit = units.find(({ kind: style }) => unitStyle === style);
+        if (unit.kind) {
+          const sameUnit = units.find(u => unit.kind === u.kind && unit !== u);
 
           if (sameUnit) {
             if (sameUnit.chordLinesCount) pushTextLines(sameUnit.chordLinesCount);
@@ -116,11 +114,10 @@ export class EditableComParseBlocks extends EditableComBlocks {
 
       unitTextLines.forEach((lines, linesi) => {
         const currUnit = linesi === 0 ? unit : {};
-        const reg = makeRegExp(`/[^${slavicLowerLettersStr} ]/gi`);
 
-        currUnit.text = lines.join('\n');
         currUnit.chords = chords;
-        currUnit.cleanText = lines.map(line => line.replace(reg, '')).join('\n');
+        currUnit.text = lines.join('\n');
+        currUnit.cleanText = currUnit.text.replace(makeRegExp(`/[^${slavicLowerLettersStr} \\n]/gi`), '');
 
         if (linesi > 0) {
           currUnit.kind = inheritStyle;
@@ -136,7 +133,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
     const orders: IExportableOrder[] = [];
 
     units.forEach((unit, uniti) => {
-      if (unit.kind === undefined && comBlockKinds) {
+      if (checkIsNil(unit.kind) && comBlockKinds) {
         if (!unit.text) {
           if (uniti === 0) unit.kind = comBlockKinds.forChordedBlock[0];
           else unit.kind = comBlockKinds.forChordedBlock[1];
@@ -147,7 +144,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
           if (style) unit.kind = style;
         } else {
           const uniti = unitSlogGroups.findIndex(units => units.includes(unit));
-          if (uniti !== undefined) {
+          if (uniti > -1) {
             const style = comBlockKinds.getNextLevelSortedStyle(uniti);
             if (style) unit.kind = style;
           }
@@ -156,9 +153,9 @@ export class EditableComParseBlocks extends EditableComBlocks {
 
       if (unit.text) {
         let texti: number;
-        const sameTextUnit = units.find(u => u.cleanText === unit.cleanText && u.texti !== undefined);
+        const sameTextUnit = units.find(u => u.cleanText === unit.cleanText && checkIsNotNil(u.texti));
 
-        if (sameTextUnit?.texti !== undefined) texti = sameTextUnit.texti;
+        if (checkIsNotNil(sameTextUnit?.texti)) texti = sameTextUnit.texti;
         else texti = texts.push(unit.text) - 1;
 
         unit.texti = texti;
@@ -166,9 +163,9 @@ export class EditableComParseBlocks extends EditableComBlocks {
 
       if (unit.chords) {
         let chordsi: number;
-        const sameChordsUnit = units.find(u => u.chords === unit.chords && u.chordsi !== undefined);
+        const sameChordsUnit = units.find(u => u.chords === unit.chords && checkIsNotNil(u.chordsi));
 
-        if (sameChordsUnit?.chordsi !== undefined) chordsi = sameChordsUnit.chordsi;
+        if (checkIsNotNil(sameChordsUnit?.chordsi)) chordsi = sameChordsUnit.chordsi;
         else chordsi = chords.push(unit.chords) - 1;
 
         unit.chordsi = chordsi;
@@ -180,9 +177,9 @@ export class EditableComParseBlocks extends EditableComBlocks {
       if (similarOrd) {
         ord.a = similarOrd.w;
       } else {
-        if (unit.chordsi !== undefined) ord.c = unit.chordsi;
-        if (unit.texti !== undefined) ord.t = unit.texti;
-        if (unit.kind !== undefined) ord.k = unit.kind.key;
+        if (checkIsNotNil(unit.chordsi)) ord.c = unit.chordsi;
+        if (checkIsNotNil(unit.texti)) ord.t = unit.texti;
+        if (checkIsNotNil(unit.kind)) ord.k = unit.kind.key;
       }
 
       orders.push(ord);
@@ -190,10 +187,10 @@ export class EditableComParseBlocks extends EditableComBlocks {
 
     return {
       com: {
-        l: languagei,
-        c: chords.length ? chords : [''],
-        t: texts.length ? texts : [''],
-        o: orders.filter(ord => mylib.keys(ord).length),
+        l: languagei || undefined,
+        c: objectLength(chords) ? chords : [''],
+        t: objectLength(texts) ? texts.map(text => enRuLetterVisualEquivalentLazy().repl(text)) : [''],
+        o: orders.filter(ord => checkIsNotNil(ord.t) || checkIsNotNil(ord.c) || checkIsNotNil(ord.a)),
       },
       errors,
     };

@@ -80,10 +80,12 @@ export const cmEditComOrderServerTsjrpcBase =
             )
               throw '';
 
+            const description = `${getCmComOrd().isAnchor ? 'удалена ссылка на' : 'удалён'} ${makeOrdTitle(getCmComOrd)}`;
+
             com.o ??= [];
             com.o = com.o.filter(ord => ord.w !== ordw && ord.a !== ordw);
 
-            return `${getCmComOrd().isAnchor ? 'удалена ссылка на' : 'удалён'} ${makeOrdTitle(getCmComOrd)}`;
+            return description;
           }),
 
           setTexti: modifyOrd(ModifyOrdParent.Self, (ord, { texti }, { auth }, _, getCmComOrd) => {
