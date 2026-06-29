@@ -4,7 +4,7 @@ import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { WithAtom } from '#shared/ui/WithAtom';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { CmComNewlinerWordi, CmComTextSquareBracketsMode } from 'shared/api';
 import { CmBroadcastMonolineSlideOrdId, CmComNewlinerSymbolFreeUpperCaseLine } from 'shared/model/cm/broadcast';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
@@ -14,6 +14,8 @@ import { squareBracketsReplacers } from 'shared/utils/cm/com/takeTextBlockIncorr
 import { twMerge } from 'tailwind-merge';
 
 export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
+  const targetHighlightMap = useState(() => new Map<Element, TimeOut>())[0];
+
   const { warns, slides, groups } = useMemo(() => {
     const slides = ccom.makeExpandSlides(false, true);
     const warns: PRecord<CmBroadcastMonolineSlideOrdId, [className: string, text: string]> = {};
@@ -305,5 +307,3 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
     </>
   );
 };
-
-const targetHighlightMap = new Map<Element, TimeOut>();
