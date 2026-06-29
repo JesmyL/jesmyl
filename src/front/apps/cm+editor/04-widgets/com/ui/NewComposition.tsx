@@ -12,7 +12,6 @@ import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { ObserveUrlResource } from '$cm+editor/shared/ui/ObserveUrlResource';
 import { CmEditorComAudioControlledList } from '$cm+editor/widgets/com-audio';
 import { CmComOrderList } from '$cm/ext';
-import styled from '@emotion/styled';
 import { useNavigate } from '@tanstack/react-router';
 import { Atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
@@ -113,9 +112,9 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
           }}
         />
 
-        <StyledTextInput
+        <TextInput
           value={value}
-          className="my-2"
+          className="my-2 w-full h-full text-(--text-color) border-(--text-color) border-2 border-dashed resize-none"
           multiline
           placeholder="Начни писать или вставь текст для создания песни"
           onInput={setTextAsValue}
@@ -232,12 +231,3 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
     </>
   );
 };
-
-const StyledTextInput = styled(TextInput)`
-  outline: 0;
-  border: 2px dashed var(--text-color);
-  width: 100%;
-  height: 100%;
-  resize: none;
-  color: var(--text-color);
-`;
