@@ -143,8 +143,8 @@ export const makeCmComCommentConstructorCommentOrdSelector2TextsDictFromRuleProp
       if (!commentOrdBlocks[prefix]) return;
 
       commentOrdBlocks[prefix][0] ??= '';
-      if (lineCommentsText[prefix]) commentOrdBlocks[prefix][0] += `\n\n${lineCommentsText[prefix].trim()}`;
-      if (wordCommentsText[prefix]) commentOrdBlocks[prefix][0] += `\n\n${wordCommentsText[prefix].trim()}`;
+      if (lineCommentsText[prefix]) commentOrdBlocks[prefix][0] += `\n${lineCommentsText[prefix].trim()}`;
+      if (wordCommentsText[prefix]) commentOrdBlocks[prefix][0] += `\n${wordCommentsText[prefix].trim()}`;
 
       commentOrdBlocks[prefix][0] = commentOrdBlocks[prefix][0].trim();
       commentOrdBlocks[prefix] = commentOrdBlocks[prefix].filter(itIt);
