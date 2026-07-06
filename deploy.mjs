@@ -1,12 +1,6 @@
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
 import { deployTheCode } from './deploy-the-code.mjs';
 import { hostConfig } from './hostConfig.mjs';
 import { deployPathsDict } from './paths.mjs';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const baseDir = join(__dirname, 'src/back');
 
 deployTheCode(
   {
@@ -17,7 +11,7 @@ deployTheCode(
     loadToDirFiles: makePaths('./src/back', {
       ...deployPathsDict,
 
-      '': [...(deployPathsDict[''] || []), 'start.mjs', 'paths.mjs'],
+      '': [...(deployPathsDict[''] || []), 'paths.mjs', 'paths.basic.mjs', '~/#root-orientir.js'],
     }),
   },
 );

@@ -1,7 +1,7 @@
 import { CmComOrderWidClass } from '#shared/model/cm/order/OrderWid';
 import { CmComOrderTopHeaderBag, ICmComOrderExportableMe } from '#shared/model/cm/order/regions';
 import { CmComLangi, IExportableComInterpretation } from 'shared/api';
-import { checkIsNil, checkIsNotNil } from 'shared/utils/checkIs';
+import { checkIsFalseOrZero, checkIsNil, checkIsNotNil, checkIsTrueOrOne } from 'shared/utils/checkIs';
 import { comBlockKinds } from 'shared/values/cm/block-kinds/BlockKind';
 import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';
 import { cmComOrderCheckIsOrdVisibleInInterpretation, cmComOrderGetWithExtendableFields } from '../checkIs';
@@ -14,7 +14,7 @@ export const cmComOrderListConstructor = <OrderConstructor extends CmComOrderWid
 ) => {
   if (!comBlockKinds) return null;
   const orders: OrderConstructor[] = [];
-  let minimals: [number?, number?][] = [];
+  let minimals: [number | nil, number | nil][] = [];
   const styles = comBlockKinds.kinds;
   const groups: Record<number, number> = {};
   const anchorGroups: Record<number, 1> = {};
@@ -40,10 +40,10 @@ export const cmComOrderListConstructor = <OrderConstructor extends CmComOrderWid
 
       if (numered && cmComOrderCheckIsOrdVisibleInInterpretation(ordMe.top, intp)) {
         if (checkIsNil(ordMe.top.a)) groups[type] += 1;
-        else if (checkIsNotNil(ordMe.top.a) && ordMe.top.v === 1 && !anchorGroups[type]) {
+        else if (checkIsNotNil(ordMe.top.a) && checkIsTrueOrOne(ordMe.top.v) && !anchorGroups[type]) {
           const leadOrd = ords.find(o => o.top.w === ordMe.top.a);
 
-          if (leadOrd?.top.v === 0) {
+          if (checkIsFalseOrZero(leadOrd?.top.v)) {
             if (!anchorGroups[type]) groups[type] += 1;
             anchorGroups[type] = 1;
           }

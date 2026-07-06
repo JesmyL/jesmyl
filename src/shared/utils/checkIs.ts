@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const checkIsStartsWith = <Start extends string>(value: string, start: Start): value is `${Start}${string}` =>
   value.startsWith(start);
 
@@ -13,7 +14,9 @@ export const checkIsAnyObject = (it: unknown): it is Record<string | number, unk
 export const checkIsBoolean = (it: unknown): it is boolean => typeof it === 'boolean';
 export const checkIsString = (it: unknown): it is string => typeof it === 'string';
 export const checkIsNumber = (it: unknown): it is number => typeof it === 'number';
-export const checkIsFunction = <Fun extends func>(it: unknown | Fun): it is Fun => typeof it === 'function';
+
+type AnyFunction = (...args: any[]) => any;
+export const checkIsFunction = <Fun extends AnyFunction>(it: unknown): it is Fun => typeof it === 'function';
 
 export const checkIsNotBoolean = <It>(it: It): it is Exclude<It, boolean> => typeof it !== 'boolean';
 export const checkIsNotString = <It>(it: It): it is Exclude<It, string> => typeof it !== 'string';
@@ -53,3 +56,6 @@ export const checkIsNaN = (it: unknown) => checkIsNumber(it) && isNaN(it);
 export const checkIsNotNaN = (it: number) => !isNaN(it);
 
 export const checkIsNotANumber = (it: unknown): it is number => !checkIsNumber(it) || isNaN(it);
+
+export const checkIsFalseOrZero = (it: unknown): it is false | 0 => it === false || it === 0;
+export const checkIsTrueOrOne = (it: unknown): it is true | 1 => it === true || it === 1;

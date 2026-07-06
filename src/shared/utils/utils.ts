@@ -19,5 +19,7 @@ export const itInvokeIt = <Ret>(it: () => Ret) => it();
 export const wait = (waitTime = 100) => new Promise(resolve => setTimeout(resolve, waitTime));
 export const trimTextLines = (text: string) => text.trim().replace(makeRegExp('/(.+?)\\s+?\\n/g'), '$1\n');
 
+export const iife = <Val>(fun: () => Val) => fun();
+
 type ParseNumber<T extends string> = T extends `${infer N extends number}` ? N : never;
 export const extractNumber = <T extends string>(value: T) => parseFloat(value) as ParseNumber<T>;

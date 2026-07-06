@@ -1,4 +1,4 @@
-import { checkIsArray, checkIsNil, checkIsObject } from './checkIs';
+import { checkIsArray, checkIsNil, checkIsObject, checkIsString } from './checkIs';
 
 export const objectEntries = <T>(
   it: T,
@@ -11,10 +11,10 @@ export const objectKeys = <T, Key extends T extends object | nil ? keyof T : str
 export const arrayByLength = <Value>(length: number, map: (index: number, value: unknown) => Value): Value[] =>
   Array.from({ length }, (v, i) => map(i, v));
 
-export const objectLength = <const It extends object | unknown[] | nil>(
+export const objectLength = <const It extends object | unknown[] | string | nil>(
   it: It,
 ): It extends nil ? 0 : It extends unknown[] ? (It extends { length: infer L } ? L : number) : number =>
-  (checkIsNil(it) ? 0 : checkIsArray(it) ? it.length : objectKeys(it).length) as never;
+  (checkIsNil(it) ? 0 : checkIsArray(it) || checkIsString(it) ? it.length : objectKeys(it).length) as never;
 
 export const forEachObjectEntries = <T>(
   it: T,

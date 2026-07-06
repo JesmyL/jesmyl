@@ -2,7 +2,7 @@ import { ICmComOrderExportableMe } from '#shared/model/cm/order/regions';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { makeRegExp } from 'regexpert';
 import { itIt } from 'shared/utils';
-import { checkIsNumber } from 'shared/utils/checkIs';
+import { checkIsNil, checkIsNumber } from 'shared/utils/checkIs';
 import { chordDiezEquivalent, simpleBemoleChordReg_g } from 'shared/utils/cm/com/const';
 import { arrayByLength, objectKeys } from 'shared/utils/object.utils';
 import { EditableComOrder } from '../EditableComOrder';
@@ -12,7 +12,7 @@ export class EditableCom extends EditableComParseBlocks {
   orderConstructor = (me: ICmComOrderExportableMe<any>) => new EditableComOrder(me, this);
 
   replaceBemoles(coli: number) {
-    if (this.chords === undefined) return;
+    if (checkIsNil(this.chords)) return;
 
     const col = this.chords[coli];
     if (!col) return;

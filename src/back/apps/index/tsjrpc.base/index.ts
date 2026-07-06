@@ -1,5 +1,6 @@
 import { cmShareServerTsjrpcMethods } from 'back/apps/cm/tsjrpc.shares';
 import { makeTwiceKnownName } from 'back/complect/makeTwiceKnownName';
+import { hostRootDir } from 'back/envJson';
 import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
 import { supportTelegramAuthorizations } from 'back/sides/telegram-bot/prod/authorize';
@@ -7,7 +8,6 @@ import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { takeLogginedAuthOrThrow } from 'back/utils';
 import { exec } from 'child_process';
 import { escapeRegExpSymbols, makeRegExp } from 'regexpert';
-import { hostConfig } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { constantsConfigurator } from 'shared/const/cm/constants.def';
 import { emojiList } from 'shared/const/emojiList';
@@ -39,10 +39,10 @@ const deviceIdPostfixSymbols = '!@#$%^&*;.,?/|\\+=-'.split('');
 appVersionFileStore.watchFile(value => {
   tglogger.log(`Version upgrade: ${value.num}`);
 
-  const command = `chmod +x /var/www/${hostConfig.host}/assets/`;
+  const command = `chmod +x ${hostRootDir}/assets/`;
 
   setTimeout(() => {
-    tglogger.log(`${command} start`);
+    tglogger.log(command);
 
     exec(command, (error, stdout, stderr) => {
       tglogger[error ? 'error' : 'log'](`${command}\n\n${JSON.stringify({ error, stdout, stderr }, null, ' ')}`);

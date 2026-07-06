@@ -14,7 +14,7 @@ export class CmComChords extends CmComOrders {
   protected _chordLabels?: string[][][];
   protected _usedChords?: Record<string, string>;
 
-  static withBemoles(chords?: string, isSet: num = 0) {
+  static withBemoles(chords?: string, isSet?: boolean | num | nil) {
     return (
       isSet ? chords?.replace(simpleHashedEachLetterChordReg_g, all => chordBemoleEquivalent[all] || all) : chords
     )?.replace(makeRegExp('/A#/g'), 'B');
@@ -46,17 +46,17 @@ export class CmComChords extends CmComOrders {
     )?.[0];
   }
 
-  transposeChord(chord: string, delta: number = 1) {
+  transposeChord(chord: string, delta: number | nil) {
     const currentIndex = simpleHashChords.indexOf(chord);
-    const di = currentIndex + delta;
+    const di = currentIndex + (delta ?? 1);
     const len = simpleHashChords.length;
     const nextIndex = di < 0 ? len - -di : di > len ? di % len : di === len || -di === len ? 0 : di;
 
     return simpleHashChords[nextIndex];
   }
 
-  transposeBlock(cblock: string, delta = this.transPosition) {
-    return cblock?.replace(simpleHashChordReg_g, chord => this.transposeChord(chord, delta));
+  transposeBlock(cblock: string, delta?: number | nil) {
+    return cblock?.replace(simpleHashChordReg_g, chord => this.transposeChord(chord, delta ?? this.transPosition));
   }
 
   transposedBlocks(delta?: number) {
@@ -93,7 +93,7 @@ export class CmComChords extends CmComOrders {
     });
   }
 
-  actualChords(chordsScalar?: string | number, position = this.transPosition) {
+  actualChords(chordsScalar?: string | number | nil, position = this.transPosition) {
     const chords = checkIsString(chordsScalar) ? (chordsScalar as string) : this.chords?.[chordsScalar as number];
     return chords && CmComChords.withBemoles(this.transposeBlock(chords, position), this.isBemoled);
   }

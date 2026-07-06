@@ -9,23 +9,23 @@ import { WebSocketServer } from 'ws';
 import { makeCmComHttpLinkFromNumLead } from './apps/cm/complect/com-http-links';
 import { catsFileStorage, comsDirStorage } from './apps/cm/file-stores';
 import { schedulesDirStore } from './apps/index/schedules/file-stores';
+import { hostRootDir } from './envJson';
 import { tglogger } from './sides/telegram-bot/log/log-bot';
 
-export const startExpressRouting = (wsServer: WebSocketServer) => {
+export const startExpressRouting = async (wsServer: WebSocketServer) => {
   const app = express();
-  const mainFolderPath = `/var/www/${hostConfig.host}` as const;
   const isSearchBotReg = /(google|bing|yandex|duckduck|telegram|twitter)bot|slurp|vk\.com/;
 
   app.get('/sw.js', (_req, res) => {
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     res.setHeader('Content-Type', 'application/javascript');
-    res.sendFile(`${mainFolderPath}/sw.js`);
+    res.sendFile(`${hostRootDir}/sw.js`);
   });
 
   app.use(express.json());
-  app.use('/assets', express.static(`${mainFolderPath}/assets`));
-  app.use('/sounds', express.static(`${mainFolderPath}/sounds`));
-  app.use('/down', express.static(`${mainFolderPath}/down`));
+  app.use('/assets', express.static(`${hostRootDir}/assets`));
+  app.use('/sounds', express.static(`${hostRootDir}/sounds`));
+  app.use('/down', express.static(`${hostRootDir}/down`));
 
   const isRequestFromSearchBot = (req: Request) => {
     const ua = (req.get('User-Agent') || '').toLowerCase();
@@ -133,7 +133,7 @@ export const startExpressRouting = (wsServer: WebSocketServer) => {
         'Cache-Control': 'public, max-age=3600',
       });
 
-    res.sendFile(`${mainFolderPath}${req.url}`);
+    res.sendFile(`${hostRootDir}${req.url}`);
   });
 
   app.use((req: Request, res: Response) => {
@@ -184,7 +184,7 @@ export const startExpressRouting = (wsServer: WebSocketServer) => {
       return;
     }
 
-    res.sendFile(path.resolve(`${mainFolderPath}/index.html`));
+    res.sendFile(path.resolve(`${hostRootDir}/index.html`));
   });
 
   const readCert = (fileName: string) => {

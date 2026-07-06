@@ -1,4 +1,5 @@
 import { hostConfig, hostConfigFileName } from './hostConfig.mjs';
+import { deployPathsBasicDict } from './paths.basic.mjs';
 
 export const deployPathsDict = {
   '': [hostConfigFileName, 'hostConfig.mjs'],
@@ -7,17 +8,7 @@ export const deployPathsDict = {
     ? {
         'apps/bible': ['./src/bibles/*.json'],
         'apps/index': ['~/#/*.json', '~/#/*.secure', '~/#/emailTextingLetterVariants'],
+        ...deployPathsBasicDict,
       }
-    : {}),
-
-  'apps/cm': ['~/#/*.json'],
-  'apps/cm/coms': ['~/#/*.json'],
-  'apps/cm/comComments': ['~/#/*.json'],
-  'apps/cm/comsInSchEventHistory': ['~/#/*.json'],
-  'apps/cm/comsInSchEvent': ['~/#/*.json'],
-  'apps/index': ['~/#/*.json'],
-  'apps/index/schedules': ['~/#/*.json'],
-  'apps/q': ['~/#/*.json'],
-  'apps/q/blanks': ['~/#/*.json'],
-  'apps/storages/list': ['~/#/*.json'],
+    : deployPathsBasicDict),
 };

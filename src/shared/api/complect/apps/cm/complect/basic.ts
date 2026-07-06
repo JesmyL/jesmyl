@@ -3,6 +3,7 @@ import { StrRegExp } from 'regexpert';
 import { CmComNewlinerSymbolFreeUpperCaseLine } from 'shared/model/cm/broadcast';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
+
 import {
   CmCatWid,
   CmComIntensityLevel,
@@ -62,11 +63,11 @@ export type OrderRepeats = number | SpecialOrderRepeats;
 
 export interface InheritancableOrder {
   /** Повторения */
-  r?: OrderRepeats | null;
+  r?: OrderRepeats | nil;
   /** Позиции аккордов */
-  p?: (number[] | null)[] | nil;
+  p?: (number[] | nil)[] | nil;
   /** Видимость блока */
-  v?: num;
+  v?: boolean | num | nil;
 }
 
 type WatchInherited<K extends keyof InheritancableOrder> = (InheritancableOrder[K] | nil)[];
@@ -76,37 +77,37 @@ export type IExportableOrder = InheritancableOrder & {
   w: CmComOrderWid;
 
   /** Ссылка на блок */
-  a?: CmComOrderWid;
+  a?: CmComOrderWid | nil;
 
   /** Текстовый блок */
-  t?: number;
+  t?: number | nil;
 
   /** Блок аккордов */
-  c?: number;
+  c?: number | nil;
 
   /** Без названия */
-  e?: 1;
+  e?: boolean | num | nil;
 
   /** Значение модуляции */
-  md?: number;
+  md?: number | nil;
 
   /** Минималка */
   m?: 1;
 
   /** Открыто в свёрнутом режиме */
-  o?: 1;
+  o?: boolean | num | nil;
 
   /** Тип блока */
-  k?: CmComBlockKindKey;
+  k?: CmComBlockKindKey | nil;
 
-  _v?: WatchInherited<'v'>;
-  _r?: WatchInherited<'r'>;
-  _p?: WatchInherited<'p'>;
+  _v?: WatchInherited<'v'> | nil;
+  _r?: WatchInherited<'r'> | nil;
+  _p?: WatchInherited<'p'> | nil;
 
   /**
    * время создания (существует при времени жизни менее суток)
    */
-  cre?: number;
+  cre?: number | nil;
 };
 
 export type IFixedCom = { w: CmComWid } & Partial<{
@@ -115,61 +116,65 @@ export type IFixedCom = { w: CmComWid } & Partial<{
 
 export type IExportableComInterpretationSimpleValues = {
   /** уровень транспозиции песни */
-  p?: number;
+  p?: number | nil;
 
   /** ударов в минуту */
-  bpm?: number;
+  bpm?: number | nil;
 
   /** бемольная ли песня */
-  b?: num;
+  b?: boolean | num | nil;
 };
 
 export type IExportableOrderInterpretation = {
   /** видимость блока **в специальной интерпритации** */
-  v?: num;
+  v?: num | nil;
 };
 
 export type IExportableComInterpretation = IExportableComInterpretationSimpleValues & {
   /** порядковые блоки **в специальной интерпритации** */
-  o?: { [ordi: number]: IExportableOrderInterpretation | nil };
+  o?: { [ordi: number]: IExportableOrderInterpretation | nil } | nil;
 };
 
-export type IExportableCom = IExportableComInterpretationSimpleValues & {
-  /** название песни */
-  n: string;
+type NullifyOptionals<T> = { [K in keyof T]: und extends T[K] ? T[K] | nil : T[K] };
 
-  /** время создания - уникальный ID */
-  w: CmComWid;
+export type IExportableCom = NullifyOptionals<
+  IExportableComInterpretationSimpleValues & {
+    /** название песни */
+    n: string;
 
-  /** время изменения */
-  m: CmComMod;
+    /** время создания - уникальный ID */
+    w: CmComWid;
 
-  /** разбивка текстов на линии и слайды */
-  nl?: [PRecord<CmComOrderWid, CmComNewlinerStrConfig.whole>];
+    /** время изменения */
+    m: CmComMod;
 
-  /** язык песни */
-  l?: CmComLangi;
+    /** разбивка текстов на линии и слайды */
+    nl?: PRecord<CmComOrderWid, CmComNewlinerStrConfig.whole>[];
 
-  /** аудио файлы */
-  al?: HttpNumLeadLink[];
+    /** язык песни */
+    l?: CmComLangi;
 
-  /** список текстов */
-  t?: string[];
+    /** аудио файлы */
+    al?: HttpNumLeadLink[];
 
-  /** список аккорлов */
-  c?: string[];
+    /** список текстов */
+    t?: string[];
 
-  /** порядковые блоки */
-  o?: IExportableOrder[];
+    /** список аккорлов */
+    c?: string[];
 
-  /** размерность песни */
-  s?: CmComMetricNum;
+    /** порядковые блоки */
+    o?: IExportableOrder[];
 
-  /** интенсивность песни */
-  d?: CmComIntensityLevel;
+    /** размерность песни */
+    s?: CmComMetricNum;
 
-  isRemoved?: 1;
-};
+    /** интенсивность песни */
+    d?: CmComIntensityLevel;
+
+    isRemoved?: boolean | 1;
+  }
+>;
 
 export type IServerSideCom = OmitOwn<IExportableCom, 'al' | 'm'> & { al?: HttpNumLeadLink[] | HttpNumLeadLink };
 

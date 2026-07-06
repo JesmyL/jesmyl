@@ -54,12 +54,11 @@ export const deployTheCode = async (front, back) => {
   if (process.argv.includes('-b')) {
     console.info('back.index file build is running...');
 
-    const filePath = await buildBackIndexFile();
-    const backIndexFilePath = `./${filePath}.cjs`;
+    const filePaths = (await buildBackIndexFile()).map(fileName => `./${fileName}`);
 
     console.info('...sending back files on server');
 
-    await sendFilesOnServer([backIndexFilePath], back);
+    await sendFilesOnServer(filePaths, back);
 
     if (back.loadToDirFiles != null) {
       const loadToDirFiles = Object.entries(back.loadToDirFiles);
@@ -72,7 +71,7 @@ export const deployTheCode = async (front, back) => {
         }
     }
 
-    await execAsync(`rm ${backIndexFilePath}`);
+    await Promise.all(filePaths.map(filePath => execAsync(`rm ${filePath}`)));
     console.info('Back files sent on server');
   }
 };

@@ -1,6 +1,9 @@
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 
-export const CmEditorComEditBemoled = (props: { value: num | nil; onChange: (isBemoled: num) => Promise<unknown> }) => (
+export const CmEditorComEditBemoled = (props: {
+  value: boolean | num | nil;
+  onChange: (isBemoled: num) => Promise<unknown>;
+}) => (
   <TheIconButton
     icon="Grid"
     confirm={

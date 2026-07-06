@@ -29,9 +29,9 @@ if (!'is need update files') {
 }
 
 (async () => {
-  const path = await buildBackIndexFile();
+  const [backIndexFilePath] = await buildBackIndexFile();
 
-  const proc = exec(`node ./${path}.cjs`);
+  const proc = exec(`node ./${backIndexFilePath}`);
 
   proc.stdout.on('data', console.info);
   proc.stderr.on('data', error => {

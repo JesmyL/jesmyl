@@ -4,9 +4,14 @@
 /node_modules
 /.pnp
 .pnp.js
-/src/back/back.index.cjs
-/src/back/.env.mode
+
 /src/back/file-stores
+*.cjs
+/src/back/.env.mode
+/src/back/.env.json
+/src/back/docker-compose.yml
+/src/back/package.json
+drizzle.migrations
 
 # testing
 /coverage
