@@ -4,6 +4,7 @@ import { and, eq, lt } from 'drizzle-orm';
 import { CmComWid, IExportableCom } from 'shared/api';
 import { Bool } from 'shared/enums';
 import { checkIsNotUndefined } from 'shared/utils/checkIs';
+import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
 
 const tinyDict: PRecord<CmComWid, Tiny | null> = {};
 const selectDict = { n: comsDB.n, al: comsDB.al, w: comsDB.w };
@@ -22,7 +23,7 @@ export const takeComwTiny = async (comw: RKey<CmComWid>) => {
   return (tinyDict[comw] = comTiny
     ? {
         ...comTiny,
-        i: await db.$count(comsDB, and(eq(comsDB.isRemoved, Bool.False), lt(comsDB.w, +comw))),
+        i: takeCorrectComNumber(await db.$count(comsDB, and(eq(comsDB.isRemoved, Bool.False), lt(comsDB.w, +comw)))),
       }
     : null);
 };
