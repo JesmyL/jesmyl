@@ -72,43 +72,45 @@ export interface InheritancableOrder {
 
 type WatchInherited<K extends keyof InheritancableOrder> = (InheritancableOrder[K] | nil)[];
 
-export type IExportableOrder = InheritancableOrder & {
-  /** Уникальный айди */
-  w: CmComOrderWid;
+export type IExportableOrder = NullifyOptionals<
+  InheritancableOrder & {
+    /** Уникальный айди */
+    w: CmComOrderWid;
 
-  /** Ссылка на блок */
-  a?: CmComOrderWid | nil;
+    /** Ссылка на блок */
+    a?: CmComOrderWid;
 
-  /** Текстовый блок */
-  t?: number | nil;
+    /** Текстовый блок */
+    t?: number;
 
-  /** Блок аккордов */
-  c?: number | nil;
+    /** Блок аккордов */
+    c?: number;
 
-  /** Без названия */
-  e?: boolean | num | nil;
+    /** Без названия */
+    e?: boolean | num;
 
-  /** Значение модуляции */
-  md?: number | nil;
+    /** Значение модуляции */
+    md?: number;
 
-  /** Минималка */
-  m?: 1;
+    /** Минималка */
+    m?: 1;
 
-  /** Открыто в свёрнутом режиме */
-  o?: boolean | num | nil;
+    /** Открыто в свёрнутом режиме */
+    o?: boolean | num;
 
-  /** Тип блока */
-  k?: CmComBlockKindKey | nil;
+    /** Тип блока */
+    k?: CmComBlockKindKey;
 
-  _v?: WatchInherited<'v'> | nil;
-  _r?: WatchInherited<'r'> | nil;
-  _p?: WatchInherited<'p'> | nil;
+    _v?: WatchInherited<'v'>;
+    _r?: WatchInherited<'r'>;
+    _p?: WatchInherited<'p'>;
 
-  /**
-   * время создания (существует при времени жизни менее суток)
-   */
-  cre?: number | nil;
-};
+    /**
+     * время создания (существует при времени жизни менее суток)
+     */
+    cre?: number;
+  }
+>;
 
 export type IFixedCom = { w: CmComWid } & Partial<{
   ton: number;
@@ -122,7 +124,7 @@ export type IExportableComInterpretationSimpleValues = {
   bpm?: number | nil;
 
   /** бемольная ли песня */
-  b?: boolean | num | nil;
+  b?: num | nil;
 };
 
 export type IExportableOrderInterpretation = {
@@ -158,10 +160,10 @@ export type IExportableCom = NullifyOptionals<
     al?: HttpNumLeadLink[];
 
     /** список текстов */
-    t?: string[];
+    t: string[];
 
     /** список аккорлов */
-    c?: string[];
+    c: string[];
 
     /** порядковые блоки */
     o?: IExportableOrder[];
@@ -172,11 +174,9 @@ export type IExportableCom = NullifyOptionals<
     /** интенсивность песни */
     d?: CmComIntensityLevel;
 
-    isRemoved?: boolean | 1;
+    isRemoved?: Bool;
   }
 >;
-
-export type IServerSideCom = OmitOwn<IExportableCom, 'al' | 'm'> & { al?: HttpNumLeadLink[] | HttpNumLeadLink };
 
 export const enum CmComCommentBlockSpecialSelector {
   Head = 'h',

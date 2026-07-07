@@ -12,18 +12,16 @@ import {
   HttpNumLeadLink,
   ICmComCommentBlock,
   IExportableCat,
+  IExportableCom,
   IScheduleWidgetWid,
-  IServerSideCom,
   SokiAuthLogin,
   TAboutComFavoriteItem,
 } from 'shared/api';
+import { cmDefaultCom } from 'shared/const/cm/def.com';
 
-export const comsDirStorage = new DirStorage<IServerSideCom, CmComWid>({
+export const comsDirStorage = new DirStorage<IExportableCom, CmComWid>({
   dirPath: '/apps/cm/coms/',
-  makeNewItem: () => ({
-    n: '',
-    w: +`${Date.now() + Math.random()}`,
-  }),
+  makeNewItem: () => cmDefaultCom(+`${Date.now() + Math.random()}`),
   cacheTime: 30 * 60 * 60 * 1000,
   idKey: 'w',
 });

@@ -19,8 +19,7 @@ export const cmEditComOrderServerTsjrpcBase =
           ...cmEditComOrderServerTsjrpcRepeats,
           ...cmEditComOrderServerTsjrpcOutside,
 
-          setKind: modifyOrd(ModifyOrdParent.Self, (ord, { kind, newTypeTitle }, { auth }, _, getCmComOrd) => {
-            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
+          setKind: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, { kind, newTypeTitle }, __, _, getCmComOrd) => {
             if (kind == null) throw 'Неизвестный тип';
 
             ord.k = kind;
@@ -28,17 +27,13 @@ export const cmEditComOrderServerTsjrpcBase =
             return `название блока ${makeOrdTitle(getCmComOrd)} изменено на ${newTypeTitle}`;
           }),
 
-          bindChordBlock: modifyOrd(ModifyOrdParent.Self, (ord, { chordi }, { auth }, _, getCmComOrd) => {
-            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
-
+          bindChordBlock: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, { chordi }, __, _, getCmComOrd) => {
             ord.c = chordi;
 
             return `к ${getCmComOrd().isAnchor ? 'ссылке на блок' : 'блоку'} ${makeOrdTitle(getCmComOrd)} прикреплён ${chordi + 1}-й блок Аккордов`;
           }),
 
-          toggleVisibility: modifyOrd(ModifyOrdParent.Self, (ord, _, { auth }, __, getCmComOrd) => {
-            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'D')) throw '';
-
+          toggleVisibility: modifyOrd(ModifyOrdParent.Self, ['COM_ORD', 'D'], (ord, _, ___, __, getCmComOrd) => {
             const isVisible = getCmComOrd().isVisible;
             const targetOrd = getCmComOrd().me.targetOrd;
 
@@ -54,9 +49,7 @@ export const cmEditComOrderServerTsjrpcBase =
             return `порядковый блок ${makeOrdTitle(getCmComOrd)} сделан ${ord.v ? '' : 'не'}видимым`;
           }),
 
-          toggleAnchorInhVis: modifyOrd(ModifyOrdParent.Lead, (leadOrd, _, { auth }, __, getCmComOrd) => {
-            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
-
+          toggleAnchorInhVis: modifyOrd(ModifyOrdParent.Lead, 'COM_ORD', (leadOrd, _, ___, __, getCmComOrd) => {
             const cmOrd = getCmComOrd();
             const inhi = cmOrd.me.anchorInheritIndex;
 
@@ -73,7 +66,7 @@ export const cmEditComOrderServerTsjrpcBase =
             return `часть ссылки на ${cmOrd.me.leadOrd.me.header()} сделана ${checkIsNil(leadOrd._v?.[inhi]) ? '' : 'не'}видимой`;
           }),
 
-          remove: modifyOrd(ModifyOrdParent.Self, (ord, { ordw }, { auth }, com, getCmComOrd) => {
+          remove: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, { ordw }, { auth }, com, getCmComOrd) => {
             if (
               (ord.cre ?? com.w) < Date.now() - 24 * 60 * 60 * 1000 &&
               throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'D')
@@ -88,25 +81,19 @@ export const cmEditComOrderServerTsjrpcBase =
             return description;
           }),
 
-          setTexti: modifyOrd(ModifyOrdParent.Self, (ord, { texti }, { auth }, _, getCmComOrd) => {
-            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
-
+          setTexti: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, { texti }, __, _, getCmComOrd) => {
             ord.t = texti;
 
             return `к порядковому блоку ${makeOrdTitle(getCmComOrd)} прикреплён ${texti + 1} текст`;
           }),
 
-          toggleVisibilityInMiniMode: modifyOrd(ModifyOrdParent.Self, (ord, _, { auth }, __, getCmComOrd) => {
-            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
-
+          toggleVisibilityInMiniMode: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, _, ___, __, getCmComOrd) => {
             ord.o = ord.o ? undefined : 1;
 
             return `ссылка на блок ${makeOrdTitle(getCmComOrd)} сделана ${ord.o ? 'видимой' : 'невидимой'} в мини-режиме`;
           }),
 
-          toggleTitleVisibility: modifyOrd(ModifyOrdParent.Self, (ord, _, { auth }, __, getCmComOrd) => {
-            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
-
+          toggleTitleVisibility: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, _, __, ___, getCmComOrd) => {
             ord.e = ord.e ? undefined : 1;
 
             return `заголовок в порядковом блоке ${makeOrdTitle(getCmComOrd)} сделан ${ord.e ? 'видимым' : 'невидимым'}`;
@@ -114,9 +101,8 @@ export const cmEditComOrderServerTsjrpcBase =
 
           setPositionsLine: modifyOrd(
             ModifyOrdParent.WatchOrSelf,
-            (ord, { linei, line, lineChangesText }, { auth }, _, getCmComOrd) => {
-              if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_APPS', 'U')) throw '';
-
+            'COM_APPS',
+            (ord, { linei, line, lineChangesText }, __, _, getCmComOrd) => {
               ord.p ??= [];
               ord.p[linei] = Array.from(new Set(line)).sort((a, b) => a - b);
 
@@ -124,9 +110,7 @@ export const cmEditComOrderServerTsjrpcBase =
             },
           ),
 
-          trimOverPositions: modifyOrd(ModifyOrdParent.TargetOrSelf, (ord, _, { auth }, com, getCmComOrd) => {
-            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_APPS', 'U')) throw '';
-
+          trimOverPositions: modifyOrd(ModifyOrdParent.TargetOrSelf, 'COM_APPS', (ord, _, __, com, getCmComOrd) => {
             if (checkIsNil(com.t)) throw 'В песне нет текстов';
 
             if (checkIsNil(ord.t) || !com.t[ord.t]) throw 'Текста нет';
@@ -138,7 +122,7 @@ export const cmEditComOrderServerTsjrpcBase =
             return `в блоке ${makeOrdTitle(getCmComOrd)} удалены лишние строки аппликатуры`;
           }),
 
-          setModulationValue: modifyOrd(ModifyOrdParent.Self, (ord, { value }, _, __, getCmComOrd) => {
+          setModulationValue: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, { value }, _, __, getCmComOrd) => {
             ord.md = value || undefined;
 
             return `установлено значение модулирования блока ${makeOrdTitle(getCmComOrd)} - ${value}`;

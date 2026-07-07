@@ -2,8 +2,9 @@ import { contextCreator } from '#shared/lib/contextCreator';
 import { cmIDB } from '$cm/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
-import { CmComMod, CmComWid, IExportableCom } from 'shared/api';
+import { CmComWid, IExportableCom } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
+import { cmDefaultCom } from 'shared/const/cm/def.com';
 import { itNNull } from 'shared/utils';
 
 export const useCmComList = (comwsList?: CmComWid[] | nil, excludeComwsList?: CmComWid[]) => {
@@ -36,7 +37,7 @@ export const useCmComList = (comwsList?: CmComWid[] | nil, excludeComwsList?: Cm
 
     const unknownComs =
       comwsList
-        ?.map((comw): IExportableCom | null => (unknownComwSet.has(comw) ? { m: CmComMod.def, n: '', w: comw } : null))
+        ?.map((comw): IExportableCom | null => (unknownComwSet.has(comw) ? cmDefaultCom(comw) : null))
         .filter(itNNull) ?? [];
 
     return icoms

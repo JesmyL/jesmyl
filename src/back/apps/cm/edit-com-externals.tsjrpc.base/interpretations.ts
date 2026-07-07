@@ -1,12 +1,13 @@
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
+import { selectPgCheckedExportableCom } from 'back/drizzle/ex/com.selectors';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
-import { CmComMod, CmComWid, IExportableComInterpretation, IScheduleWidgetWid, IServerSideCom } from 'shared/api';
+import { CmComMod, CmComWid, IExportableCom, IExportableComInterpretation, IScheduleWidgetWid } from 'shared/api';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
 import { CmCom } from 'shared/const/cm/Com';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { objectLength } from 'shared/utils/object.utils';
-import { comsDirStorage, comsInSchEventDirStorage } from '../file-stores';
+import { comsInSchEventDirStorage } from '../file-stores';
 import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
 
 export const cmEditComExternalsTsjrpcInterpretations = () =>
@@ -60,12 +61,12 @@ export const cmEditComExternalsTsjrpcInterpretations = () =>
 
 const updateInterptetation =
   <Props extends { schw: IScheduleWidgetWid; comw: CmComWid }>(
-    update: (com: IServerSideCom, intp: IExportableComInterpretation, props: Props) => void,
+    update: (com: IExportableCom, intp: IExportableComInterpretation, props: Props) => void,
   ) =>
   async (props: Props, { auth }: ServerTSJRPCTool) => {
     if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'U')) throw '';
 
-    const com = comsDirStorage.getItem(props.comw);
+    const com = await selectPgCheckedExportableCom(props.comw);
 
     if (!com) throw 'Песня не найдена';
 

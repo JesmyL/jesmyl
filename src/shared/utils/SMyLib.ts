@@ -1,6 +1,7 @@
 import md5 from 'md5';
 import { makeRegExp } from 'regexpert';
 import { checkIsEq } from './checkIsEq';
+import { deepClone } from './clone';
 import { itIt, itNIt } from './utils';
 
 export type StringTemplaterArgs<Adds = object> = {
@@ -29,8 +30,7 @@ export class SMyLib {
   isStr = (it: unknown): it is string => typeof it === 'string';
   isFunc = <Fun extends Function>(it: unknown | Fun): it is Fun => typeof it === 'function';
   isRegExp = (it: unknown): it is RegExp => it instanceof RegExp;
-  isAFunc = (it: func | unknown): it is func =>
-    this.isFunc(it) && (it as never as { [Symbol.toStringTag]: unknown })[Symbol.toStringTag] === 'AsyncFunction';
+
   isUnd = (it: unknown): it is undefined => it === undefined;
   isBool = (it: unknown): it is boolean => typeof it === 'boolean';
   isNull = (it: unknown): it is null => it === null;
@@ -106,23 +106,8 @@ export class SMyLib {
     return `${cutText}${cutText.length !== text.length ? ' ...' : ''}`;
   }
 
-  clone =
-    typeof structuredClone === 'function'
-      ? <Val>(obj: Val, options?: Parameters<typeof structuredClone>[1]): Val => structuredClone(obj, options)
-      : <Val>(what: Val): Val => {
-          if (what === null || what === undefined) return what;
-          else if (this.isArr(what)) {
-            const arr: unknown[] = [];
-            for (const key in what) arr[key] = this.clone(what[key]);
-            return arr as Val;
-          } else if (what.constructor === Object) {
-            const obj: Record<string, unknown> = {};
-            for (const key in what) obj[key] = this.clone(what[key]);
-            return obj as Val;
-          }
-
-          return what;
-        };
+  /** @deprecated */
+  clone = deepClone;
 
   takeNextMi<Mi extends number, Item extends { [k in MiKey]: Mi }, MiKey extends string = 'mi'>(
     list: Item[],

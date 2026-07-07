@@ -1,4 +1,5 @@
 import { knownStameskaIconNames } from 'shared/values/index/known-icons';
+import { Bool as BoolType } from './enums';
 
 enum NotANumber {
   nan = 'NaN',
@@ -6,16 +7,10 @@ enum NotANumber {
 
 declare global {
   type num = 0 | 1;
-  type str = '' | '1';
+  type Bool = BoolType;
   type nil = null | undefined;
   type und = undefined;
   type TimeOut = ReturnType<typeof setTimeout> | und | number;
-  type intStr = `${'-' | ''}${number}`;
-  type doubleStr = `${'-' | ''}${intStr}.${number}`;
-  type numberStr = `${'-' | ''}${intStr}${`.${number}` | ''}`;
-  type StringBySlash = `${string}/${string}`;
-  type func = (arg: unknown, ...args: unknown[]) => unknown | void;
-  type StringReplacer = Parameters<(typeof String.prototype)['replace']>[1];
 
   type KRecord<Key extends string | number, Value> = (Record<`${Key}`, Value> | Record<Key, Value>) &
     Record<`${Key}` | Key, Value>;
@@ -28,7 +23,6 @@ declare global {
   type RKey<Key extends number | string> = Key | `${Key}`;
 
   type OmitOwn<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-  type WithRewrites<T, P> = Pick<T, Exclude<keyof T, keyof P>> & Pick<P, keyof P>;
 
   type NaN = NotANumber;
   type NaNumber = number | NotANumber;
@@ -42,12 +36,10 @@ declare global {
 
   type PreventerAndStopperCallback = (event: DefaultPreventerEvent & PropagationStopperEvent) => void;
 
+  /** @deprecated */
   type NonUndefined<T> = T extends undefined ? never : T;
-  type NonNull<T> = T extends null ? never : T;
-  type NonNil<T> = T extends nil ? never : T;
 
-  type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
-  type XOR<T, U> = (Without<T, U> & U) | (Without<U, T> & T);
+  type PromiseOr<T> = T | Promise<T>;
 
   type KnownStameskaIconName = keyof typeof knownStameskaIconNames;
 }

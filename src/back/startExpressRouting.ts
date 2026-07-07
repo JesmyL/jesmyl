@@ -6,8 +6,9 @@ import path from 'path';
 import { makeRegExp } from 'regexpert';
 import { HttpNumLeadLink, hostConfig } from 'shared/api';
 import { WebSocketServer } from 'ws';
+import { takeComwTiny } from './apps/cm/com.tiny';
 import { makeCmComHttpLinkFromNumLead } from './apps/cm/complect/com-http-links';
-import { catsFileStorage, comsDirStorage } from './apps/cm/file-stores';
+import { catsFileStorage } from './apps/cm/file-stores';
 import { schedulesDirStore } from './apps/index/schedules/file-stores';
 import { hostRootDir } from './envJson';
 import { tglogger } from './sides/telegram-bot/log/log-bot';
@@ -93,14 +94,14 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
           externalUrl = makeCmComHttpLinkFromNumLead(trackLink);
         } else if (req.url.startsWith(audioPathPrefix)) {
           const [comwStr, num] = req.url.slice(audioPathPrefix.length).split(makeRegExp('/\\.mp3|_/'));
-          const com = comsDirStorage.getItem(+comwStr);
+          const com = await takeComwTiny(+comwStr);
 
           if (!com?.al?.length) return res.status(404);
 
           trackLink = [com.al].flat()[+num || 0];
           externalUrl = makeCmComHttpLinkFromNumLead(trackLink);
 
-          ogDescription = `${com.n}\n`;
+          ogDescription = `${com.i + 1}. ${com.n}\n`;
 
           const cats = catsFileStorage.getValue();
 
@@ -136,7 +137,7 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
     res.sendFile(`${hostRootDir}${req.url}`);
   });
 
-  app.use((req: Request, res: Response) => {
+  app.use(async (req: Request, res: Response) => {
     if (isRequestFromSearchBot(req)) {
       let descriptionFromSearchParams = '';
 
@@ -157,10 +158,10 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
       try {
         const comwMatch = req.url.match(makeRegExp('/\\bcomw=(\\d+(?:\\.\\d+)?)/'));
         if (comwMatch !== null && +comwMatch[1]) {
-          const com = comsDirStorage.getItem(+comwMatch[1]);
+          const com = await takeComwTiny(+comwMatch[1]);
 
           if (com) {
-            descriptionFromSearchParams += `\n\n${com.n}`;
+            descriptionFromSearchParams += `\n\n${com.i + 1}. ${com.n}`;
             const cats = catsFileStorage.getValue();
             let categories = '';
 

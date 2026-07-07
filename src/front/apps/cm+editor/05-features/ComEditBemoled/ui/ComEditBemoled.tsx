@@ -1,8 +1,9 @@
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { Bool } from 'shared/enums';
 
 export const CmEditorComEditBemoled = (props: {
-  value: boolean | num | nil;
-  onChange: (isBemoled: num) => Promise<unknown>;
+  value: Bool | nil;
+  onChange: (isBemoled: Bool) => Promise<unknown>;
 }) => (
   <TheIconButton
     icon="Grid"
@@ -16,6 +17,6 @@ export const CmEditorComEditBemoled = (props: {
         <span className="text-x7">{props.value ? 'Бемольная' : 'Диезная'}</span> песня
       </>
     }
-    onClick={() => props.onChange(props.value === 1 ? 0 : 1)}
+    onClick={() => props.onChange(props.value === Bool.True ? Bool.False : Bool.True)}
   />
 );

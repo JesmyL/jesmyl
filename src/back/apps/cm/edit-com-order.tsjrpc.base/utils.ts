@@ -1,8 +1,10 @@
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
-import { CmComMod, CmComOrderWid, CmComWid, IExportableOrder, IServerSideCom } from 'shared/api';
+import { CmComMod, CmComOrderWid, CmComWid, IExportableCom, IExportableOrder } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { CmComOrder } from 'shared/const/cm/order/Order';
+import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
 import { checkIsNil } from 'shared/utils/checkIs';
+import { CRUDOperation } from 'shared/utils/index/utils';
 import { objectLength } from 'shared/utils/object.utils';
 import { modifyCom } from '../edit-com.tsjrpc.base';
 
@@ -19,17 +21,20 @@ export const enum ModifyOrdParent {
 
 export const modifyOrd = <Props extends { ordw: CmComOrderWid; comw: CmComWid }>(
   parent: ModifyOrdParent,
+  rightsCheck:
+    | keyof OmitOwn<IndexAppAccessRightTitles['cm'], 'info'>
+    | [keyof OmitOwn<IndexAppAccessRightTitles['cm'], 'info'>, CRUDOperation],
   modifier: (
     ord: IExportableOrder,
     props: Props,
     tool: ServerTSJRPCTool,
-    com: IServerSideCom,
+    com: IExportableCom,
     getCmComOrd: () => CmComOrder,
     getCmCom: () => CmCom,
     getCmComOrds: () => CmComOrder[],
   ) => string | null,
 ) =>
-  modifyCom<Props>((com, props, tool) => {
+  modifyCom<Props>(rightsCheck, (com, props, tool) => {
     let cmCom: CmCom | nil;
     let comOrds: CmComOrder[] | nil;
     let cmOrd: CmComOrder | nil;

@@ -15,14 +15,16 @@ export const checkIsBoolean = (it: unknown): it is boolean => typeof it === 'boo
 export const checkIsString = (it: unknown): it is string => typeof it === 'string';
 export const checkIsNumber = (it: unknown): it is number => typeof it === 'number';
 
-type AnyFunction = (...args: any[]) => any;
-export const checkIsFunction = <Fun extends AnyFunction>(it: unknown): it is Fun => typeof it === 'function';
-
 export const checkIsNotBoolean = <It>(it: It): it is Exclude<It, boolean> => typeof it !== 'boolean';
 export const checkIsNotString = <It>(it: It): it is Exclude<It, string> => typeof it !== 'string';
 export const checkIsNotNumber = <It>(it: It): it is Exclude<It, number> => typeof it !== 'number';
-export const checkIsNotFunction = <Fun extends func>(it: unknown | Fun): it is Exclude<Fun, func> =>
+
+type AnyFunction = (...args: any[]) => any;
+export const checkIsFunction = <Fun extends AnyFunction>(it: unknown): it is Fun => typeof it === 'function';
+export const checkIsNotFunction = <Fun extends AnyFunction>(it: unknown | Fun): it is Exclude<Fun, AnyFunction> =>
   typeof it !== 'function';
+export const checkIsAsyncFunction = <Fun extends AnyFunction>(it: unknown | Fun): it is Fun =>
+  checkIsFunction(it) && (it as never as { [Symbol.toStringTag]: unknown })[Symbol.toStringTag] === 'AsyncFunction';
 
 export const checkIsRealNumber = (it: unknown): it is number => checkIsNumber(it) && !isNaN(it);
 
@@ -39,9 +41,6 @@ export const checkIsJsDateCorrectMold = (it: unknown): it is number | string | D
 export const checkIsNumeric = (it: number | string): it is number | `${number}` => parseFloat(it as string) == it;
 
 export const checkIsArray = <Item = unknown>(it: unknown): it is Item[] => Array.isArray(it);
-
-export const checkIsAsyncFunction = <Fun extends func>(it: unknown | Fun): it is Fun =>
-  checkIsFunction(it) && (it as never as { [Symbol.toStringTag]: unknown })[Symbol.toStringTag] === 'AsyncFunction';
 
 export const checkIsUndefined = (it: unknown): it is undefined => it === undefined;
 export const checkIsNotUndefined = <It>(it: It): it is Exclude<It, undefined> => it !== undefined;

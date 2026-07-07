@@ -10,30 +10,29 @@ import { modifyCom } from '../edit-com.tsjrpc.base';
 import { getNextOrdWid } from './utils';
 
 export const cmEditComOrderServerTsjrpcOutside = {
-  insertNewBlock: modifyCom((com, { insertAfterOrdwOrFirst, kind, chordi, texti, orderTitle }, { auth }) => {
-    if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'C')) throw '';
+  insertNewBlock: modifyCom(
+    ['COM_ORD', 'C'],
+    (com, { insertAfterOrdwOrFirst, kind, chordi, texti, orderTitle }, { auth }) => {
+      com.o ??= [];
+      const afterOrdi = checkIsNil(insertAfterOrdwOrFirst)
+        ? -1
+        : com.o.findIndex(ord => ord.w === insertAfterOrdwOrFirst);
 
-    com.o ??= [];
-    const afterOrdi = checkIsNil(insertAfterOrdwOrFirst)
-      ? -1
-      : com.o.findIndex(ord => ord.w === insertAfterOrdwOrFirst);
+      const ord: IExportableOrder = {
+        w: getNextOrdWid(com.o),
+        k: kind,
+        c: chordi,
+        t: texti,
+        cre: checkWhatOfUserScopeOperationAccessRight(auth, 'cm', 'COM_ORD').D ? undefined : Date.now(),
+      };
 
-    const ord: IExportableOrder = {
-      w: getNextOrdWid(com.o),
-      k: kind,
-      c: chordi,
-      t: texti,
-      cre: checkWhatOfUserScopeOperationAccessRight(auth, 'cm', 'COM_ORD').D ? undefined : Date.now(),
-    };
+      com.o.splice(afterOrdi + 1, 0, ord);
 
-    com.o.splice(afterOrdi + 1, 0, ord);
+      return `добавлен новый порядковый блок ${orderTitle}`;
+    },
+  ),
 
-    return `добавлен новый порядковый блок ${orderTitle}`;
-  }),
-
-  addAnchorOrder: modifyCom((com, { insertAfterOrdw, targetOrdw, orderTitle }, { auth }) => {
-    if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
-
+  addAnchorOrder: modifyCom('COM_ORD', (com, { insertAfterOrdw, targetOrdw, orderTitle }, { auth }) => {
     com.o ??= [];
 
     const targetOrdi = com.o.findIndex(o => o.w === targetOrdw);
@@ -52,7 +51,7 @@ export const cmEditComOrderServerTsjrpcOutside = {
     return `создана ссылка ${orderTitle}`;
   }),
 
-  moveOrdAfter: modifyCom((com, { insertAfterOrdwOrFirst, ordw, orderTitle }, { auth }) => {
+  moveOrdAfter: modifyCom('COM_ORD', (com, { insertAfterOrdwOrFirst, ordw, orderTitle }, { auth }) => {
     if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
     com.o ??= [];

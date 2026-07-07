@@ -1,7 +1,6 @@
 import {
   ChordPack,
   CmCatWid,
-  CmComWid,
   CmComWidRefGroupDict,
   ComsInSchEvent,
   ConstantsConfig,
@@ -13,12 +12,7 @@ import {
 
 export type CmShareTsjrpcModel = {
   editedCom: (args: { com: IExportableCom; mod: number }) => unknown;
-  refreshComList: (args: {
-    coms: IExportableCom[];
-    modifiedAt: number;
-    /** @deprecated */
-    existComws: CmComWid[];
-  }) => unknown;
+  refreshComList: (args: { coms: IExportableCom[]; modifiedAt: number }) => unknown;
 
   editedCat: (args: { cat: IExportableCat }) => unknown;
   refreshCatList: (args: { cats: IExportableCat[]; modifiedAt: number; existCatws: CmCatWid[] }) => unknown;

@@ -73,7 +73,7 @@ export const cmEditComServerTsjrpcNewlines = () =>
 
 const timers: PRecord<CmComWid, TimeOut> = {};
 const retLabel = (comw: CmComWid) => {
-  if (timers[comw] != null) return null;
+  if (checkIsNotNil(timers[comw])) return null;
 
   timers[comw] = setTimeout(() => delete timers[comw], howMillisecondsInMin * 5);
 
@@ -140,7 +140,7 @@ const updateNewlinerLineSet = <
 >(
   updater: (props: Props, currentRepeati: CmComNewlinerRepeati, set: Set<number>, getSets: () => Sets | nil) => void,
 ) =>
-  modifyCom<Props>((com, props) => {
+  modifyCom<Props>('COM_TR', (com, props) => {
     const { linei, ordw, repeati } = props;
 
     com.nl ??= [{}];
@@ -175,7 +175,7 @@ const updateNewlinerLineSet = <
     if (repeatConfig) com.nl[0][ordw] = repeatConfig;
     else delete com.nl[0][ordw];
 
-    if (!objectLength(com.nl[0])) delete com.nl;
+    if (!objectLength(com.nl[0])) com.nl = [];
 
     return retLabel(com.w);
   });

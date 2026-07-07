@@ -1,18 +1,21 @@
 import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
+import { comsDB } from 'back/drizzle.schema';
+import { db } from 'back/drizzle/drizzle.db';
+import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
-import { CmComIntensityLevel } from 'shared/api';
+import { eq } from 'drizzle-orm';
+import { CmComIntensityLevel, CmComLangi } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
 import { cmComIntensityLevelTitleDict } from 'shared/const/cm/cmComDriveLevelTitleDict';
 import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
+import { Bool } from 'shared/enums';
 import { itNNil } from 'shared/utils';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { cmComLanguages } from 'shared/utils/cm/com/const';
 import { textLinesLengthIncorrects } from 'shared/utils/cm/com/textLinesLengthIncorrects';
 import { transformToClearText } from 'shared/utils/cm/com/transformToClearText';
 import { makeCmComNumLeadAudioLinkList, makeCmComNumLeadLinkFromHttp } from '../complect/com-http-links';
-import { mapCmExportableToImportableCom, mapCmImportableToExportableCom } from '../complect/tools';
-import { comsDirStorage } from '../file-stores';
 import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
 import { modifyCom } from './lib/modifiers';
 import { cmEditComServerTsjrpcNewlines } from './newlines';
@@ -26,74 +29,47 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         ...cmEditComServerTsjrpcNewlines(),
         ...cmEditComServerTsjrpcTextableBlocks,
 
-        rename: modifyCom((com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_MAIN', 'U')) throw '';
+        rename: modifyCom('COM_MAIN', (com, { value }) =>
+          simpleUpdateReverse(`переименована на "${value}"`, (com.n = value)),
+        ),
 
-          com.n = value;
+        setBpM: modifyCom('COM_MAIN', (com, { value }) =>
+          simpleUpdateReverse(
+            `значение ударов в минуту установлено в ${value} (было ${com.bpm})`,
+            (com.bpm = takeCorrectMetronomeBpm(value)),
+          ),
+        ),
 
-          return `переименована на "${value}"`;
-        }),
+        setMeterSize: modifyCom('COM_MAIN', (com, { value }) =>
+          simpleUpdateReverse(
+            `размерность теперь ${cmComMetricNumTitles[value]} (было ${cmComMetricNumTitles[com.s ?? 4]})`,
+            (com.s = value),
+          ),
+        ),
 
-        setBpM: modifyCom((com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_MAIN', 'U')) throw '';
+        changeLanguage: modifyCom('COM_MAIN', (com, { value }) =>
+          simpleUpdateReverse(
+            `язык изменён на ${cmComLanguages[value]} (было ${com.l == null ? null : cmComLanguages[com.l]})`,
+            (com.l = value),
+          ),
+        ),
 
-          const prev = com.bpm;
-          com.bpm = takeCorrectMetronomeBpm(value);
+        changeDrive: modifyCom('COM_MAIN', (com, { value }) =>
+          simpleUpdateReverse(
+            `уровень интенсивности установлен как "${cmComIntensityLevelTitleDict[com.d ?? CmComIntensityLevel.Medium]}" (было ${cmComIntensityLevelTitleDict[com.d ?? CmComIntensityLevel.Medium]})`,
+            (com.d = value),
+          ),
+        ),
 
-          if (takeCorrectMetronomeBpm() === com.bpm) delete com.bpm;
+        changeTon: modifyCom('COM_MAIN', (com, { value }) =>
+          simpleUpdateReverse(`тональность изменена на ${value} (было ${com.p})`, (com.p = value)),
+        ),
 
-          return `значение ударов в минуту установлено в ${value} (было ${prev})`;
-        }),
+        makeBemoled: modifyCom('COM_MAIN', (com, { value }) =>
+          simpleUpdate((com.b = value), `теперь ${value ? 'бемольная' : 'диезная'}`),
+        ),
 
-        setMeterSize: modifyCom((com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_MAIN', 'U')) throw '';
-
-          const prev = com.s;
-          com.s = value;
-          if (com.s === 4) delete com.s;
-
-          return `размерность теперь ${cmComMetricNumTitles[value]} (было ${cmComMetricNumTitles[prev ?? 4]})`;
-        }),
-
-        changeLanguage: modifyCom((com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_MAIN', 'U')) throw '';
-
-          const prev = com.l;
-          com.l = value || undefined;
-
-          return `язык изменён на ${cmComLanguages[value]} (было ${prev == null ? null : cmComLanguages[prev]})`;
-        }),
-
-        changeDrive: modifyCom((com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_MAIN', 'U')) throw '';
-
-          const prev = com.d;
-          com.d = value;
-          if (com.d === CmComIntensityLevel.Medium) delete com.d;
-
-          return `уровень интенсивности установлен как "${cmComIntensityLevelTitleDict[com.d ?? CmComIntensityLevel.Medium]}" (было ${cmComIntensityLevelTitleDict[prev ?? CmComIntensityLevel.Medium]})`;
-        }),
-
-        changeTon: modifyCom((com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_MAIN', 'U')) throw '';
-
-          const prev = com.p;
-          com.p = value;
-
-          return `тональность изменена на ${value} (было ${prev})`;
-        }),
-
-        makeBemoled: modifyCom((com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_MAIN', 'U')) throw '';
-
-          com.b = value || undefined;
-
-          return `теперь ${value ? 'бемольная' : 'диезная'}`;
-        }),
-
-        toggleAudioLink: modifyCom((com, { link }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_AUDIO', 'U')) throw '';
-
+        toggleAudioLink: modifyCom('COM_AUDIO', (com, { link }) => {
           const prev = makeCmComNumLeadAudioLinkList(com.al);
           const isThereInPrev = prev?.includes(link);
 
@@ -113,10 +89,15 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
 
           if (incorrects?.[0]?.errors?.length) throw incorrects[0].errors[0].message;
 
+          const w = Date.now();
+
           const com = {
             ...newCom,
-            w: Date.now(),
+            w,
+            m: w,
             t: newCom.t?.map(text => transformToClearText(text)),
+            l: newCom.l || CmComLangi.Ru,
+            al: newCom.al?.map(makeCmComNumLeadLinkFromHttp) || [],
           };
 
           try {
@@ -125,39 +106,29 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
             //
           }
 
-          comsDirStorage.createItem(() => mapCmExportableToImportableCom(com), com.w);
+          await db.insert(comsDB).values(com);
 
-          const mod = comsDirStorage.saveItem(com.w) ?? 0;
-
-          cmShareServerTsjrpcMethods.editedCom({ com, mod }, null);
+          cmShareServerTsjrpcMethods.editedCom({ com, mod: w }, null);
 
           return { value: com.w, description: `Добавлена новая песня "${com.n}"` };
         },
 
-        remove: modifyCom((com, _, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'D')) throw '';
+        remove: modifyCom(['COM', 'D'], com => simpleUpdate((com.isRemoved = Bool.True), `удалена`)),
 
-          com.isRemoved = 1;
-
-          return `удалена`;
-        }),
-
-        bringBackToLife: modifyCom((com, _, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'C')) throw '';
-
-          delete com.isRemoved;
-
-          return `(ранее удалённая) возвращена`;
-        }),
+        bringBackToLife: modifyCom(['COM', 'C'], com =>
+          simpleUpdate((com.isRemoved = Bool.False), `(ранее удалённая) возвращена`),
+        ),
 
         takeRemovedComs: async (_, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'C')) throw '';
 
           return {
-            value: comsDirStorage
-              .getAllItems()
-              .filter(com => com.isRemoved)
-              .map(mapCmImportableToExportableCom),
+            value: (
+              await db
+                .select({ c: makePgCheckedSelectExportableComSqlRaw() })
+                .from(comsDB)
+                .where(eq(comsDB.isRemoved, Bool.True))
+            ).map(it => it.c),
           };
         },
         destroy: async ({ comw }, { auth }) => {
@@ -166,11 +137,14 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'D')) throw '';
 
-          const com = comsDirStorage.getItem(comw);
-          if (com == null) throw '';
-          comsDirStorage.deleteItem(comw);
+          const [com] = await db.select({ n: comsDB.n, is: comsDB.isRemoved }).from(comsDB).where(eq(comsDB.w, comw));
 
-          return { value: com.n, description: `Песня ${com.n} НЕ уничтожена` };
+          if (!com) throw 'Неизвестная песня';
+          if (!com.is) throw 'Сначала песню нужно удалить';
+
+          await db.delete(comsDB).where(eq(comsDB.w, comw));
+
+          return { value: com.n, description: `Песня ${com.n} уничтожена` };
         },
       },
     });
@@ -178,3 +152,6 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
 })();
 
 export * from './lib/modifiers';
+
+const simpleUpdate = (_result: unknown, dsc: string) => dsc;
+const simpleUpdateReverse = (dsc: string, _result: unknown) => dsc;

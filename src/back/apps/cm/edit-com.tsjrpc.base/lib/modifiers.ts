@@ -1,53 +1,71 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
+import { comsDB } from 'back/drizzle.schema';
+import { db } from 'back/drizzle/drizzle.db';
+import { selectPgCheckedExportableCom } from 'back/drizzle/ex/com.selectors';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
-import { CmComWid, IExportableCom, IServerSideCom } from 'shared/api';
-import { smylib } from 'shared/utils';
-import { mapCmImportableToExportableCom } from '../../complect/tools';
-import { comsDirStorage } from '../../file-stores';
+import { eq } from 'drizzle-orm';
+import { CmComLangi, CmComWid, IExportableCom } from 'shared/api';
+import { howMillisecondsInDay } from 'shared/const/ms';
+import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
+import { checkIsString } from 'shared/utils/checkIs';
+import { checkIsEq } from 'shared/utils/checkIsEq';
+import { deepClone } from 'shared/utils/clone';
+import { CRUDOperation } from 'shared/utils/index/utils';
+import { forEachObjectEntries } from 'shared/utils/object.utils';
+import { resetComwTiny, takeComwTiny } from '../../com.tiny';
 import { cmShareServerTsjrpcMethods } from '../../tsjrpc.shares';
 
-const und = undefined;
-const comBlank: { [K in keyof Required<IExportableCom>]: und } = {
-  w: und,
-  m: und,
-  n: und,
-  b: und,
-  bpm: und,
-  d: und,
-  s: und,
-  nl: und,
-  l: und,
-  p: und,
-  al: und,
-  t: und,
-  c: und,
-  o: und,
-  isRemoved: und,
-};
-
-export function modifyCom<Props extends { comw: CmComWid }>(
-  mapper: (com: IServerSideCom, props: Props, tool: ServerTSJRPCTool) => string | null,
-) {
-  return async (props: Props, tool: ServerTSJRPCTool) => {
+export const modifyCom =
+  <Props extends { comw: CmComWid }>(
+    rightsCheck:
+      | keyof OmitOwn<IndexAppAccessRightTitles['cm'], 'info'>
+      | [keyof OmitOwn<IndexAppAccessRightTitles['cm'], 'info'>, CRUDOperation],
+    mapper: (partialCom: IExportableCom, props: Props, tool: ServerTSJRPCTool) => PromiseOr<string | nil>,
+  ) =>
+  async (props: Props, tool: ServerTSJRPCTool) => {
     if (throwIfNoUserScopeAccessRight(tool.auth?.login, 'cm', 'COM', 'U')) throw '';
 
-    const com = comsDirStorage.getItem(props.comw);
+    const [scope, operator] = checkIsString(rightsCheck) ? [rightsCheck] : rightsCheck;
+    if (throwIfNoUserScopeAccessRight(tool.auth?.login, 'cm', scope, operator)) throw '';
 
-    if (com == null) throw new Error(`Песня не найдена`);
-    if (!com.n) throw new Error(`У песни нет названия`);
+    const com = await selectPgCheckedExportableCom(props.comw);
+
+    if (!com) throw new Error(`Песня не найдена`);
+    const comName = com.n;
+    const comClone = deepClone(com);
+
+    const description = await mapper(com, props, tool);
+
+    const m = Date.now();
 
     com.o?.forEach(ord => {
-      if (ord.cre != null && ord.cre < Date.now() - smylib.howMs.inDay) delete ord.cre;
+      if (ord.cre != null && ord.cre < Date.now() - howMillisecondsInDay) delete ord.cre;
     });
 
-    const comName = com.n;
-    const description = mapper(com, props, tool);
+    const comUpdates: Partial<IExportableCom> = {};
+    let isChanged = false;
 
-    const mod = comsDirStorage.saveItem(props.comw, { ...comBlank, ...com }) ?? 0;
-    const expCom = mapCmImportableToExportableCom(com);
+    forEachObjectEntries(com, (key, value) => {
+      if (!checkIsEq(value, comClone[key])) {
+        isChanged = true;
+        comUpdates[key as never] = value as never;
+        resetComwTiny(key as never, props.comw);
+      }
+    });
 
-    cmShareServerTsjrpcMethods.editedCom({ com: expCom, mod }, null);
+    if (isChanged) {
+      await db
+        .update(comsDB)
+        .set({ ...comUpdates, m, l: comUpdates.l ?? CmComLangi.Ru })
+        .where(eq(comsDB.w, props.comw));
 
-    return { value: expCom.w, description: description ? `Песня "${comName}" - ${description}` : null };
+      cmShareServerTsjrpcMethods.editedCom({ com, mod: m }, null);
+    }
+
+    return {
+      value: props.comw,
+      description: description
+        ? `Песня ${((await takeComwTiny(props.comw))?.i ?? -1) + 1}. "${comName}" - ${description}`
+        : null,
+    };
   };
-}

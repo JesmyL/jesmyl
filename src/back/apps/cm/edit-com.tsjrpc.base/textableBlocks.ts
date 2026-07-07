@@ -1,30 +1,26 @@
 import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
-import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
-import { makeRegExp } from 'regexpert';
 import { CmComWid } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
+import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
 import { trimTextLines } from 'shared/utils';
 import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 import { textLinesLengthIncorrects } from 'shared/utils/cm/com/textLinesLengthIncorrects';
 import { transformToClearText } from 'shared/utils/cm/com/transformToClearText';
+import { CRUDOperation } from 'shared/utils/index/utils';
 import { eePackFileStore } from '../file-stores';
 import { modifyCom } from './lib/modifiers';
 
 export const cmEditComServerTsjrpcTextableBlocks = {
-  changeChordBlock: modifyCom((com, { texti, value }, { auth }) => {
-    if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_CH', 'U')) throw '';
-
+  changeChordBlock: modifyCom('COM_CH', (com, { texti, value }) => {
     com.c ??= [];
     const prev = com.c[texti];
     com.c[texti] = trimTextLines(value);
 
     return `изменён аккордный блок:\n\n${value}\n\nбыло:\n${prev}`;
   }),
-  changeTextBlock: modifyCom((com, { texti, value }, { auth }) => {
-    if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_TXT', 'U')) throw '';
-
+  changeTextBlock: modifyCom('COM_TXT', (com, { texti, value }) => {
     const incorrects = textLinesLengthIncorrects(value, constantsConfigFileStore.getValue().maxAvailableComLineLength);
 
     if (incorrects?.errors?.length) throw incorrects.errors[0].message;
@@ -37,8 +33,7 @@ export const cmEditComServerTsjrpcTextableBlocks = {
 
     return `изменён текстовый блок:\n\n${value}\n\nбыло:\n${prev}`;
   }),
-  textCaps: modifyCom((com, { texts }, { auth }) => {
-    if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_TXT', 'U')) throw '';
+  textCaps: modifyCom('COM_TXT', (com, { texts }) => {
     const newTexts: string[] = [];
 
     texts.forEach((newText, newTexti) => {
@@ -60,44 +55,29 @@ export const cmEditComServerTsjrpcTextableBlocks = {
     return `изменены текстовые блоки`;
   }),
 
-  removeVerticalBarsFromTexts: modifyCom((com, _, { auth }) => {
-    if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'D')) throw '';
-
-    const texts = com.t;
-
-    if (texts) texts.forEach((text, texti) => (texts[texti] = text.replace(makeRegExp('/[|]/g'), '')));
-
-    return `вырезаны столбики из текстов`;
-  }),
-
-  insertChordBlock: insertInTextableBlock('c', ({ value }, { auth }) => {
-    if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_CH', 'C')) throw '';
-
+  insertChordBlock: insertInTextableBlock('c', ['COM_CH', 'C'], ({ value }) => {
     return `вставлен${value ? '' : ' новый'} аккордный блок ${value ? `:\n\n${value}` : ''}`;
   }),
-  insertTextBlock: insertInTextableBlock('t', ({ value }, { auth }) => {
-    if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_TXT', 'C')) throw '';
-
+  insertTextBlock: insertInTextableBlock('t', ['COM_TXT', 'C'], ({ value }) => {
     return `вставлен${value ? '' : ' новый'} текстовый блок${value ? `:\n\n${value}` : ''}`;
   }),
 
-  removeChordBlock: removeTextableBlock('c', ({ value }, { auth }) => {
-    if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_CH', 'D')) throw '';
-
+  removeChordBlock: removeTextableBlock('c', ['COM_CH', 'D'], ({ value }) => {
     return `удалён${value ? '' : ' новый'} аккордный блок ${value ? `:\n\n${value}` : ''}`;
   }),
-  removeTextBlock: removeTextableBlock('t', ({ value }, { auth }) => {
-    if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_TXT', 'D')) throw '';
-
+  removeTextBlock: removeTextableBlock('t', ['COM_TXT', 'D'], ({ value }) => {
     return `удалён${value ? '' : ' новый'} текстовый блок${value ? `:\n\n${value}` : ''}`;
   }),
 } satisfies ServerTsjrpcSatisfy<CmEditComTsjrpcModel>;
 
 function insertInTextableBlock<Props extends { value: string; comw: CmComWid; insertToi: number }>(
   coln: 'c' | 't',
-  text: (props: Props, tool: ServerTSJRPCTool) => string,
+  rightsCheck:
+    | keyof OmitOwn<IndexAppAccessRightTitles['cm'], 'info'>
+    | [keyof OmitOwn<IndexAppAccessRightTitles['cm'], 'info'>, CRUDOperation],
+  dsc: (props: Props, tool: ServerTSJRPCTool) => string,
 ) {
-  return modifyCom<Props>((com, props, tool) => {
+  return modifyCom<Props>(rightsCheck, (com, props, tool) => {
     if (com[coln] == null) return '';
     const list = com[coln];
 
@@ -106,16 +86,19 @@ function insertInTextableBlock<Props extends { value: string; comw: CmComWid; in
       if (ord[coln] != null && ord[coln] >= props.insertToi) ord[coln]++;
     });
 
-    return text(props, tool);
+    return dsc(props, tool);
   });
 }
 
 function removeTextableBlock<Props extends { comw: CmComWid; removei: number }>(
   coln: 'c' | 't',
-  text: (props: Props, tool: ServerTSJRPCTool) => string,
+  rightsCheck:
+    | keyof OmitOwn<IndexAppAccessRightTitles['cm'], 'info'>
+    | [keyof OmitOwn<IndexAppAccessRightTitles['cm'], 'info'>, CRUDOperation],
+  dsc: (props: Props, tool: ServerTSJRPCTool) => string,
 ) {
-  return modifyCom<Props>((com, props, tool) => {
-    if (com[coln] == null) return null;
+  return modifyCom<Props>(rightsCheck, (com, props, tool) => {
+    if (com[coln] == null) return '';
     const list = com[coln];
 
     list.splice(props.removei, 1);
@@ -125,8 +108,8 @@ function removeTextableBlock<Props extends { comw: CmComWid; removei: number }>(
         else if (ord[coln] === props.removei) delete ord[coln];
     });
 
-    com.o = com.o?.filter(ord => ord.a != null || ord.c != null || ord.t != null);
+    com.o = com.o?.filter(ord => ord.a != null || ord.c != null || ord.t != null) ?? [];
 
-    return text(props, tool);
+    return dsc(props, tool);
   });
 }

@@ -1,5 +1,5 @@
 import { hostConfig } from 'shared/api';
-import { Do } from 'shared/Do.enum';
+import { Do } from 'shared/enums';
 import { iife } from 'shared/utils';
 import { bibleTsjrpcBaseServer } from './apps/bible/tsjrpc';
 import { cmServerTsjrpcBase } from './apps/cm/tsjrpc.base';
@@ -18,22 +18,22 @@ iife(async () => {
   if (Do.It) await import('./initBack').then(m => m.initBack());
   if (Do.It) await import('./drizzle/drizzleInitiator').then(m => m.drizzleInitiator());
 
-const ws = sokiServer.start();
+  const ws = sokiServer.start();
   if (Do.It) await import('./startExpressRouting').then(m => m.startExpressRouting(ws));
 
-bibleTsjrpcBaseServer.$$register();
-cmServerTsjrpcBase.$$register();
-storagesServerTsjrpcBase.$$register();
-questionerAdminServerTsjrpcBase.$$register();
-questionerUserServerTsjrpcBase.$$register();
-indexServerTsjrpcBase.$$register();
+  bibleTsjrpcBaseServer.$$register();
+  cmServerTsjrpcBase.$$register();
+  storagesServerTsjrpcBase.$$register();
+  questionerAdminServerTsjrpcBase.$$register();
+  questionerUserServerTsjrpcBase.$$register();
+  indexServerTsjrpcBase.$$register();
 
-initTgScheduleInform();
+  initTgScheduleInform();
 
-baseMessagesCatcher.register();
-scheduleWidgetMessageCatcher.register();
+  baseMessagesCatcher.register();
+  scheduleWidgetMessageCatcher.register();
 
-startCrTgAlarm();
+  startCrTgAlarm();
 
-if (hostConfig.isUpdateAllStarts) updateAllStarts();
+  if (hostConfig.isUpdateAllStarts) updateAllStarts();
 });

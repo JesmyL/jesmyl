@@ -10,13 +10,15 @@ import {
 } from 'shared/api';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
 import { itNumSort, SMyLib, smylib } from 'shared/utils';
+import { checkIsNil } from 'shared/utils/checkIs';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
+import { objectKeys } from 'shared/utils/object.utils';
 import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from '../client-selectors-by-visit';
+import { takeComwTiny } from '../com.tiny';
 import { makeCmComHttpLinkFromNumLead, makeCmComNumLeadLinkFromHttp } from '../complect/com-http-links';
 import {
   cmComAudioMarkPacksFileStore,
   cmComWidRefGroupDictFileStore,
-  comsDirStorage,
   comsInSchEventDirStorage,
   comsInSchEventHistoryDirStorage,
 } from '../file-stores';
@@ -55,18 +57,17 @@ export const cmEditComExternalsTsjrpcBaseServer =
             comsInSchEventHistoryDirStorage.saveItem(pack.schw);
 
             cmShareServerTsjrpcMethods.refreshSchEvComPacks({ packs: [pack], mod: mod ?? Date.now() }, null);
-            const coms = comsDirStorage.getAllItems().filter(com => !com.isRemoved);
+
+            const comTitlesList = await Promise.all(
+              list.map(async comw => {
+                const comTiny = await takeComwTiny(comw);
+
+                return comTiny ? `${takeCorrectComNumber(comTiny.i + 1)}. ${comTiny.n}` : `<s>Неизвестная песня</s>`;
+              }),
+            );
 
             return {
-              description:
-                `Обновлён список песен в расписании ` +
-                `"${schedulesDirStore.getItem(schw)?.title ?? '??'}":\n\n${list
-                  .map(comw => {
-                    const comi = coms.findIndex(com => com.w === comw);
-                    if (comi < 0) return `<s>Нет песни</s>`;
-                    return `${takeCorrectComNumber(comi + 1)}. ${coms[comi].n}`;
-                  })
-                  .join('\n')}`,
+              description: `Обновлён список песен в расписании "${schedulesDirStore.getItem(schw)?.title ?? '??'}":\n\n${comTitlesList.join('\n')}`,
             };
           },
 
@@ -123,17 +124,19 @@ export const cmEditComExternalsTsjrpcBaseServer =
               allMarkPacks[numLink] = { m: Date.now() };
             } else allMarkPacks[numLink].m = Date.now();
 
-            if (allMarkPacks[numLink].cMarks == null) {
+            if (checkIsNil(allMarkPacks[numLink].cMarks)) {
               const comMarks = (allMarkPacks[numLink].cMarks ??= {});
               const comNames: string[] = [];
 
-              smylib.keys(cMarks).forEach(comw => {
-                comMarks[comw] = { 0: '' };
-                if (description) {
-                  const com = comsDirStorage.getItem(+comw);
-                  if (com) comNames.push(com.n);
-                }
-              });
+              await Promise.all(
+                smylib.keys(cMarks).map(async comw => {
+                  comMarks[comw] = { 0: '' };
+                  if (description) {
+                    const comTiny = await takeComwTiny(+comw);
+                    if (comTiny) comNames.push(comTiny.n);
+                  }
+                }),
+              );
 
               if (description) description += `\n\nпесни:\n${comNames.join('\n')}`;
             }
@@ -232,35 +235,35 @@ export const cmEditComExternalsTsjrpcBaseServer =
             let description = '';
             let refGroups: CmComWidRefGroupDict | nil;
 
-            const { mod } = cmComWidRefGroupDictFileStore.modifyValueWithAutoSave(refs => {
+            const { mod } = cmComWidRefGroupDictFileStore.modifyValueWithAutoSave(async refs => {
               refGroups = refs;
               const comwRefGroup = refs[comw];
               const withComwRefGroup = refs[withComw];
 
-              const com = comsDirStorage.getItem(comw);
-              const withCom = comsDirStorage.getItem(withComw);
-              const allGroups = smylib.values(refs);
+              const comTiny = await takeComwTiny(comw);
+              const withComTiny = await takeComwTiny(withComw);
+              const allGroups = objectKeys(refs);
 
               if (comwRefGroup != null) {
                 if (comwRefGroup !== withComwRefGroup) {
-                  if (com == null || withCom == null) throw 'Песня не найдена';
+                  if (checkIsNil(comTiny) || checkIsNil(withComTiny)) throw 'Песня не найдена';
 
                   refs[withComw] = comwRefGroup;
-                  description += `Песни "${com.n}" и "${withCom.n}" объединены в ссылочную группу`;
+                  description += `Песни "${comTiny.n}" и "${withComTiny.n}" объединены в ссылочную группу`;
                 } else {
                   const comJoinGroupMembersCount =
                     comwRefGroup == null
                       ? 0
-                      : allGroups.reduce((sum, curr) => sum + (comwRefGroup === curr ? 1 : 0), 0);
+                      : allGroups.reduce((sum, curr) => sum + (comwRefGroup === +curr ? 1 : 0), 0);
 
                   if (comJoinGroupMembersCount === 2) delete refs[comw];
                   delete refs[withComw];
 
-                  description += `Удалена ссылка между ${com ? `песней "${com.n}"` : '<s>неизвестной песней</s>'}`;
-                  description += ` и ${withCom ? `песней "${withCom.n}"` : '<s>неизвестной песней</s>'}`;
+                  description += `Удалена ссылка между ${comTiny ? `песней "${comTiny.n}"` : '<s>неизвестной песней</s>'}`;
+                  description += ` и ${withComTiny ? `песней "${withComTiny.n}"` : '<s>неизвестной песней</s>'}`;
                 }
               } else {
-                if (com == null || withCom == null) throw 'Песня не найдена';
+                if (comTiny == null || withComTiny == null) throw 'Песня не найдена';
 
                 if (withComwRefGroup != null) refs[comw] = withComwRefGroup;
                 else {
@@ -272,7 +275,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
                   refs[comw] = refs[withComw] = minGroupId;
                 }
 
-                description += `Песни "${com.n}" и "${withCom.n}" объединены в ссылочную группу`;
+                description += `Песни "${comTiny.n}" и "${withComTiny.n}" объединены в ссылочную группу`;
               }
             });
 

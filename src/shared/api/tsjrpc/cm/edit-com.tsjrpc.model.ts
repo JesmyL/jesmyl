@@ -22,15 +22,13 @@ export type CmEditComTsjrpcModel = {
   changeLanguage: SimpleComValueSetter<number>;
   changeDrive: SimpleComValueSetter<CmComIntensityLevel>;
   changeTon: SimpleComValueSetter<number>;
-  makeBemoled: SimpleComValueSetter<num>;
+  makeBemoled: SimpleComValueSetter<Bool>;
 
   toggleAudioLink: (args: { comw: CmComWid; link: HttpNumLeadLink }) => void;
 
   changeChordBlock: (args: { texti: number; comw: CmComWid; value: string }) => CmComWid;
   changeTextBlock: (args: { texti: number; comw: CmComWid; value: string }) => CmComWid;
   textCaps: (args: { comw: CmComWid; texts: string[] }) => CmComWid;
-
-  removeVerticalBarsFromTexts: (args: { comw: CmComWid }) => void;
 
   insertChordBlock: (args: { value: string; comw: CmComWid; insertToi: number }) => CmComWid;
   removeChordBlock: (args: { comw: CmComWid; value: string; removei: number }) => CmComWid;

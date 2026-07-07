@@ -24,7 +24,7 @@ export type CmEditComExternalsTsjrpcModel = {
   /** com transposition interpretation */
   tonIntp: (args: { schw: IScheduleWidgetWid; comw: CmComWid; ton: number }) => void;
   /** is bemoled interpretation value */
-  bemoleIntp: (args: { schw: IScheduleWidgetWid; comw: CmComWid; val: num }) => void;
+  bemoleIntp: (args: { schw: IScheduleWidgetWid; comw: CmComWid; val: Bool }) => void;
   /** com bpm interpretation */
   bpmIntp: (args: { schw: IScheduleWidgetWid; comw: CmComWid; bpm: number }) => void;
 

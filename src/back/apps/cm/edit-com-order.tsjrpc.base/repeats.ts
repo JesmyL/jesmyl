@@ -1,5 +1,4 @@
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
-import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { CmComTextSquareBracketsMode, OrderRepeats, SpecialOrderRepeats } from 'shared/api';
 import { CmEditComOrderTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-order.tsjrpc.model';
 import { checkIsNil, checkIsNotNil, checkIsNotObject, checkIsObject } from 'shared/utils/checkIs';
@@ -12,9 +11,7 @@ import { objectKeys, objectLength } from 'shared/utils/object.utils';
 import { clearNullableOrderInheritValues, modifyOrd, ModifyOrdParent } from './utils';
 
 export const cmEditComOrderServerTsjrpcRepeats = {
-  clearOwnRepeats: modifyOrd(ModifyOrdParent.LeadOrSelf, (ord, _, { auth }, com, getCmComOrd) => {
-    if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_REP', 'U')) throw '';
-
+  clearOwnRepeats: modifyOrd(ModifyOrdParent.LeadOrSelf, 'COM_REP', (ord, _, __, com, getCmComOrd) => {
     const removeAllJoinRepeats = (ordRepeats: OrderRepeats | nil) => {
       if (checkIsNotObject(ordRepeats)) return;
 
@@ -82,9 +79,8 @@ export const cmEditComOrderServerTsjrpcRepeats = {
 
   setRepeats: modifyOrd(
     ModifyOrdParent.LeadOrSelf,
-    (ord, { value }, { auth }, _com, getCmComOrd, _getCmCom, getCmComOrds) => {
-      if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_REP', 'U')) throw '';
-
+    'COM_REP',
+    (ord, { value }, _, _com, getCmComOrd, _getCmCom, getCmComOrds) => {
       const comOrd = getCmComOrd();
       const inhi = comOrd.me.anchorInheritIndex;
 
@@ -129,7 +125,7 @@ export const cmEditComOrderServerTsjrpcRepeats = {
     },
   ),
 
-  removeRepeats: modifyOrd(ModifyOrdParent.Self, (ord, _, __, ___, getCmComOrd) => {
+  removeRepeats: modifyOrd(ModifyOrdParent.Self, 'COM_REP', (ord, _, __, ___, getCmComOrd) => {
     delete ord.r;
 
     return `убраны повторения в блоке ${getCmComOrd().me.header()}`;

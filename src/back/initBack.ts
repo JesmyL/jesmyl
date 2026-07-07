@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { hostConfig } from 'shared/api';
-import { Do } from 'shared/Do.enum';
+import { Do } from 'shared/enums';
 import { wait } from 'shared/utils';
 import { checkIsStartsWith } from 'shared/utils/checkIs';
 import { objectKeys } from 'shared/utils/object.utils';

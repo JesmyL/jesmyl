@@ -1,17 +1,20 @@
 import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { FileStore } from 'back/complect/FileStore';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
+import { comsDB } from 'back/drizzle.schema';
+import { db } from 'back/drizzle/drizzle.db';
+import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
+import { and, eq, gt } from 'drizzle-orm';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
+import { Bool } from 'shared/enums';
 import { SMyLib } from 'shared/utils';
 import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from '../client-selectors-by-visit';
-import { mapCmImportableToExportableCom } from '../complect/tools';
 import {
   aboutComFavoritesFileStore,
   catsFileStorage,
   chordPackFileStore,
   cmComWidRefGroupDictFileStore,
   comCommentsDirStore,
-  comsDirStorage,
   comsInSchEventDirStorage,
 } from '../file-stores';
 import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
@@ -33,14 +36,23 @@ export const cmServerTsjrpcBaseRequestFreshes = {
       );
     }
 
-    const freshComs = comsDirStorage.getFreshItems(lastModfiedAt);
+    const freshComs = await db
+      .select({ c: makePgCheckedSelectExportableComSqlRaw() })
+      .from(comsDB)
+      .where(and(gt(comsDB.m, lastModfiedAt), eq(comsDB.isRemoved, Bool.False)));
 
-    if (freshComs.items.length) {
+    if (freshComs.length) {
+      let maxMod = 0;
+
+      const coms = freshComs.map(it => {
+        maxMod = Math.max(maxMod, it.c.m);
+        return it.c;
+      });
+
       cmShareServerTsjrpcMethods.refreshComList(
         {
-          coms: freshComs.items.map(mapCmImportableToExportableCom),
-          modifiedAt: freshComs.maxMod,
-          existComws: comsDirStorage.getAllIds(),
+          coms,
+          modifiedAt: maxMod,
         },
         client,
       );

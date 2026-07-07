@@ -1,4 +1,4 @@
-import { bigint, boolean, integer, jsonb, pgTable, serial, text, varchar } from 'p/d';
+import { bigint, integer, jsonb, pgTable, serial, smallint, text, varchar } from 'p/d';
 import {
   CmComIntensityLevel,
   CmComLangi,
@@ -8,11 +8,11 @@ import {
   IExportableCom,
   IExportableOrder,
 } from 'shared/api';
-import { Do } from 'shared/Do.enum';
+import { Bool, Do } from 'shared/enums';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { itIt } from 'shared/utils';
 
-const initStringArray = (columnName: string) => text(columnName).array().notNull().default([]);
+const initStringArray = (columnName: string) => text(columnName).array().default([]);
 
 export const comsDB = pgTable('coms', {
   id: serial('id').primaryKey().notNull(),
@@ -26,18 +26,17 @@ export const comsDB = pgTable('coms', {
   m: bigint('modifiedAt', { mode: 'number' })
     .notNull()
     .$type<CmComMod>()
-    .$defaultFn(() => Date.now())
-    .$onUpdateFn(() => Date.now()),
+    .$defaultFn(() => Date.now()),
 
   n: varchar('title', { length: 256 }).notNull(),
 
   // a: varchar('author', { length: 256 }),
 
-  t: initStringArray('texts'),
+  t: initStringArray('texts').notNull(),
 
-  c: initStringArray('chords'),
+  c: initStringArray('chords').notNull(),
 
-  b: boolean('isBemoled').default(false),
+  b: smallint('isBemoled').default(Bool.False).$type<Bool>(),
 
   bpm: integer('bpm'),
 
@@ -55,7 +54,7 @@ export const comsDB = pgTable('coms', {
 
   nl: jsonb('newliner').$type<Required<IExportableCom>['nl']>(),
 
-  isRemoved: boolean('isRemoved').default(false),
+  isRemoved: smallint('isRemoved').default(Bool.False).$type<Bool>(),
 });
 
 if (!Do.It) itIt<Required<IExportableCom>>(comsDB.$inferSelect);
