@@ -151,7 +151,7 @@ export type IExportableCom = NullifyOptionals<
     m: CmComMod;
 
     /** разбивка текстов на линии и слайды */
-    nl?: PRecord<CmComOrderWid, CmComNewlinerStrConfig.whole>[];
+    nl?: (PRecord<CmComOrderWid, CmComNewlinerStrConfig.whole> | nil)[];
 
     /** язык песни */
     l?: CmComLangi;

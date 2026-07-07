@@ -143,8 +143,10 @@ const updateNewlinerLineSet = <
   modifyCom<Props>('COM_TR', (com, props) => {
     const { linei, ordw, repeati } = props;
 
-    com.nl ??= [{}];
-    const wholeNLConfig = com.nl[0][ordw];
+    com.nl ??= [];
+    com.nl[0] ??= {};
+
+    const wholeNLConfig = com.nl[0]?.[ordw];
     const lineConfigList = takeCmComNewlinerLineFullConfig(wholeNLConfig);
     const repeatConfigList = takeCmComNewlinerRepeatFullConfig(wholeNLConfig, linei);
 

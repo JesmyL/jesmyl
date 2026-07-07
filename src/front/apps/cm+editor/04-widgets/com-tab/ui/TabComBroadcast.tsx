@@ -68,7 +68,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
 
         if (firstGroup && !firstGroup.repeati && !firstGroup.ord.isAnyInherited) {
           const ord = firstGroup.ord;
-          const ordNl = ccom.top.nl?.[0][ord.wid];
+          const ordNl = ccom.top.nl?.[0]?.[ord.wid];
           const lineWholeConfigList = takeCmComNewlinerLineFullConfig(ordNl);
           const lines = ord.text.split('\n');
 
