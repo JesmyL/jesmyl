@@ -7,7 +7,7 @@
     "start": "vite --host --mode test",
     "build": "vite build",
     "serve": "vite preview",
-    "lint": "tsc --project ./tsconfig.json --noEmit && eslint **/*.{ts,tsx,json} *.*",
+    "lint": "tsc --project ./tsconfig.json --noEmit && eslint .",
     "tg-dev": "nodemon tg-bot.mjs",
     "format": "prettier --write \"**/src/**/*.{tsx,ts}\"",
     "test": "jest",
