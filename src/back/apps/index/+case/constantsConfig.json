@@ -7,7 +7,7 @@
   "maxComCommentWordLen": 10,
   "maxAvailableComLineLength": 60,
   "maxFavouritesCount": 200,
-  "maxLaterComsVizitedCount": 8,
+  "maxLaterComsVizitedCount": 10,
   "maxSelectedComsCount": 30,
   "availEmailDomainZone": "ru"
 }

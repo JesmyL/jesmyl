@@ -9,10 +9,10 @@
     "Очень нежно обнимая,\nВ радости, в печали, зная,\nВзглядом долгим провожая-\nДень за днём пройдёт...\nДаже если боль застанет,\nЧто-то очень сильно ранит,\nСвыше все Отец исправит,\nРадость вновь вдохнёт."
   ],
   "c": [
-    "C\nEm\nF\nC G/H\nAm\nEm\nF\nC G/H",
-    "C\nEm\nF\nC G/H\nAm\nEm/G\nF\nC G/H",
-    "Am-F C\nG/H\nAm-F C G/H\nAm-F C\nG/H\nAm-F C G/H",
-    "Am-F C G/H"
+    "C\nEm/H\nF/A\nC/G G/H\nAm\nEm\nF\nC/E G/H",
+    "C\nEm/H\nF/A\nC/G G/H\nAm\nEm/G\nF\nC/E G/H",
+    "Am-F C/E\nG/H\nAm-F C/E G/H\nAm-F C/E\nG/H\nAm-F C/E G/H",
+    "Am-F C/E G/H"
   ],
   "o": [
     { "w": 0, "k": -39, "c": 0, "t": 0, "p": [[-1], [-1], [0], [0, 6], [-1], [-1], [0], [0, 6]] },
