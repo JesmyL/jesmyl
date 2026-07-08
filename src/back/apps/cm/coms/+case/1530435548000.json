@@ -3,7 +3,9 @@
   "n": "Ты не один идёшь по жизни",
   "d": 5,
   "nl": [{ "1": "4 4 -15 5", "2": "4 4 -14 4", "3": "3 3 -14 3", "5": "3 4 -14 4" }],
-  "al": "https://data.ipleer.com/listen/180100001/THYrQkNiVCtWR3JKbUdnVGdPV1VlNEVVeHE3NnNuY3FuR2tJWHE2bFpLbndXamd4aVQ3bXgwYXlibGdLK1dNZjI5T0MxMjRIRGJLL2dTRzZMMFh3MDFRSlZ3WVdPTFA2bDE3UDJmVlRrTnllWWdWdFlhL0J0QXNTSXE5UXV1Q3c/Hristianskaya_molodezh_-_Ty_ne_odin_idesh_po_zhizni._(iPleer.com).mp3",
+  "al": [
+    "https://data.ipleer.com/listen/180100001/THYrQkNiVCtWR3JKbUdnVGdPV1VlNEVVeHE3NnNuY3FuR2tJWHE2bFpLbndXamd4aVQ3bXgwYXlibGdLK1dNZjI5T0MxMjRIRGJLL2dTRzZMMFh3MDFRSlZ3WVdPTFA2bDE3UDJmVlRrTnllWWdWdFlhL0J0QXNTSXE5UXV1Q3c/Hristianskaya_molodezh_-_Ty_ne_odin_idesh_po_zhizni._(iPleer.com).mp3"
+  ],
   "t": [
     "ты не один идёшь по жизни.\nв мире людей никто не лишний,\nвсе мы в одной семье у Бога,\nвсе мы с тобой, и нас так много.",
     "ты не один, всегда Бог рядом!\nты не один, грустить не надо!\nты не один, пойдём со мною\nв страну чудес, в страну святую!",
@@ -12,9 +14,10 @@
   ],
   "c": ["Em Am\nH7 Em\nC Am\nH7 Em", "E Am\nD G\nC Am\nH7 .Em ..Em"],
   "o": [
-    { "w": 0, "c": 0, "k": 15 },
+    { "c": 0, "k": 15, "w": 0 },
     {
       "c": 0,
+      "k": 39,
       "p": [
         [0, 8],
         [1, 8],
@@ -22,24 +25,24 @@
         [10, 0]
       ],
       "t": 0,
-      "w": 1,
-      "k": 39
+      "w": 1
     },
     {
       "c": 1,
+      "k": 94,
       "p": [
         [0, 8],
         [0, 8],
         [0, 8],
         [2, 9, 12]
       ],
-      "t": 1,
-      "w": 2,
       "r": 2,
-      "k": 94
+      "t": 1,
+      "w": 2
     },
     {
       "c": 0,
+      "k": 39,
       "p": [
         [0, 7],
         [8, 0],
@@ -47,12 +50,12 @@
         [7, 0]
       ],
       "t": 2,
-      "w": 3,
-      "k": 39
+      "w": 3
     },
     { "a": 2, "w": 4 },
     {
       "c": 0,
+      "k": -39,
       "p": [
         [0, 8],
         [1, 9],
@@ -60,8 +63,7 @@
         [1, 8]
       ],
       "t": 3,
-      "w": 5,
-      "k": -39
+      "w": 5
     },
     { "a": 2, "w": 6 }
   ]
