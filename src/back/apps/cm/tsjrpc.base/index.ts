@@ -1,5 +1,9 @@
+import { comsDB } from 'back/drizzle.schema';
+import { db } from 'back/drizzle/drizzle.db';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { takeLogginedAuthOrThrow } from 'back/utils';
+import { eq } from 'drizzle-orm';
+import { CmComWid } from 'shared/api';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
 import { numLeadToHttpLinks } from '../complect/com-http-links';
 import { cmEditCatServerTsjrpcBase } from '../edit-cat.tsjrpc.base';
@@ -7,12 +11,7 @@ import { cmEditComExternalsTsjrpcBaseServer } from '../edit-com-externals.tsjrpc
 import { cmEditComOrderServerTsjrpcBase } from '../edit-com-order.tsjrpc.base';
 import { cmEditComServerTsjrpcBase } from '../edit-com.tsjrpc.base';
 import { cmEditorTsjrpcBaseServer } from '../editor.tsjrpc.base';
-import {
-  cmComAudioMarkPacksFileStore,
-  comCommentsDirStore,
-  comsInSchEventHistoryDirStorage,
-  comwVisitsFileStore,
-} from '../file-stores';
+import { cmComAudioMarkPacksFileStore, comCommentsDirStore, comsInSchEventHistoryDirStorage } from '../file-stores';
 import { cmUserStoreTsjrpcBaseServer } from '../user-store.tsjrpc.base';
 import { cmServerTsjrpcBaseExchangeFreshComCommentBlocks } from './exchangeFreshComCommentBlocks';
 import { cmServerTsjrpcBaseRequestFreshes } from './requestFreshes';
@@ -36,18 +35,32 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
           };
         },
 
-        printComwVisit: ({ comw }) => {
-          comwVisitsFileStore.modifyValueWithAutoSave(visitMarks => {
-            visitMarks[comw] ??= 0;
-            visitMarks[comw]++;
-          });
+        printComwVisit: async ({ comw }) => {
+          const where = eq(comsDB.w, comw);
+          const visits = (await db.select({ v: comsDB.visits }).from(comsDB).where(where)).at(0)?.v ?? 0;
+
+          await db
+            .update(comsDB)
+            .set({ visits: visits + 1 })
+            .where(where);
         },
 
-        takeComwVisitsCount: ({ comw }) => ({ value: comwVisitsFileStore.getValue()[comw] ?? 0 }),
-        getComwVisits: () => ({ value: comwVisitsFileStore.getValue() }),
+        takeComwVisitsCount: async ({ comw }) => ({
+          value: (await db.select({ v: comsDB.visits }).from(comsDB).where(eq(comsDB.w, comw))).at(0)?.v ?? 0,
+        }),
+
+        getComwVisits: async () => ({
+          value: (await db.select({ v: comsDB.visits, w: comsDB.w }).from(comsDB)).reduce(
+            (acc, { v, w }) => {
+              acc[w] = v;
+              return acc;
+            },
+            {} as PRecord<CmComWid, number>,
+          ),
+        }),
 
         takeFreshComAudioMarksPack: ({ mod, src }) => {
-          if (mod == null) throw 'Ошибка 51712343778';
+          if (!mod) throw 'Ошибка 51712343778';
 
           const allMarkPacks = cmComAudioMarkPacksFileStore.getValue();
 

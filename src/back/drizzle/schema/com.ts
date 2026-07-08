@@ -58,7 +58,7 @@ export const comsDB = pgTable('coms', {
 
   // external
 
-  visits: integer('visits'),
+  visits: integer('visits').notNull().default(0),
 });
 
 if (!Do.It) itIt<Required<IExportableCom>>(comsDB.$inferSelect);

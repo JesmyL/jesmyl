@@ -44,8 +44,6 @@ export const cmComAudioMarkPacksFileStore = new FileStore<
   PRecord<HttpNumLeadLink, { m: number; cMarks?: CmComAudioMarkPack }>
 >('/apps/cm/comAudioMarkPacks.json', {});
 
-export const comwVisitsFileStore = new FileStore<PRecord<CmComWid, number>>('/apps/cm/comwVisits.json', {});
-
 export const mp3ResourcesFileStorage = new FileStore<CmMp3Rule[]>('/apps/cm/mp3Rules.json', []);
 
 export const chordPackFileStore = new FileStore<ChordPack>('/apps/cm/chordTracks.json', {});
