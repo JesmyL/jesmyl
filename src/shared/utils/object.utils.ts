@@ -8,6 +8,8 @@ export const objectEntries = <T>(
 export const objectKeys = <T, Key extends T extends object | nil ? keyof T : string>(it: T): Key[] =>
   checkIsObject(it) ? (Object.keys(it) as never) : [];
 
+export const objectValues = <T>(it: T): T[keyof T][] => (checkIsObject(it) ? (Object.values(it) as never) : []);
+
 export const arrayByLength = <Value>(length: number, map: (index: number, value: unknown) => Value): Value[] =>
   Array.from({ length }, (v, i) => map(i, v));
 
