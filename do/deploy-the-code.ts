@@ -1,17 +1,14 @@
 import { exec } from 'child_process';
 import file_system from 'fs';
-import { buildBackIndexFile } from './build-back-index.mjs';
-import { hostConfig } from './hostConfig.mjs';
+import { hostConfig } from '../freshHostConfig';
+import { buildBackIndexFile } from './build-back-index';
 
 const versionFilePath = 'src/shared/values/+version.json';
 
-/**
- *
- * @param {{ builtFolder: string; }} front
- * @param {{ targetDir: string; loadToDirFiles: { [serverDir: string]: string[] } }} back
- * @returns
- */
-export const deployTheCode = async (front, back) => {
+export const deployTheCode = async (
+  front: { builtFolder: string },
+  back: { targetDir: string; loadToDirFiles: { [serverDir: string]: string[] } },
+) => {
   if (process.argv.includes('-f')) {
     const builtFiles = [`./${front.builtFolder}/*`];
 
@@ -76,45 +73,29 @@ export const deployTheCode = async (front, back) => {
   }
 };
 
-/**
- *
- * @param {string[]} files
- * @param {{ targetDir: string; }} back
- * @returns
- */
-const sendFilesOnServer = (files, back) => {
+const sendFilesOnServer = (files: string[], back: { targetDir: string }) => {
   console.info('try load files', files);
   return new Promise((res, rej) =>
     exec(`scp -r ${files.join(' ')} root@${hostConfig.host}:/var/www/${back.targetDir}`, err => {
       if (err) rej(err);
-      else res();
+      else res(0);
     }),
   );
 };
 
-export const execAsync = stringCommand =>
+export const execAsync = (stringCommand: string) =>
   new Promise((res, rej) =>
     exec(stringCommand, error => {
       if (error) rej(error);
-      else res();
+      else res(0);
     }),
   );
 
-/**
- *
- * @param {boolean} isIgnoreVersionUpdate
- * @returns
- */
-const updateVersion = isIgnoreVersionUpdate => {
-  /**
-   *
-   * @param {string} version
-   * @param {() => void} cb
-   * @returns
-   */
-  const setVersion = (version, cb) => file_system.writeFile(versionFilePath, version, () => cb?.());
+const updateVersion = (isIgnoreVersionUpdate: boolean) => {
+  const setVersion = (version: string, cb?: () => void) =>
+    file_system.writeFile(versionFilePath, version, () => cb?.());
 
-  return new Promise((resolveVersion, rejectVersion) => {
+  return new Promise<[number, () => void]>((resolveVersion, rejectVersion) => {
     file_system.readFile(versionFilePath, 'utf8', (err, versionStr) => {
       if (err) {
         rejectVersion(err);

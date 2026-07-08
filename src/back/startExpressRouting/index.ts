@@ -6,12 +6,13 @@ import path from 'path';
 import { makeRegExp } from 'regexpert';
 import { HttpNumLeadLink, hostConfig } from 'shared/api';
 import { WebSocketServer } from 'ws';
-import { takeComwTiny } from './apps/cm/com.tiny';
-import { makeCmComHttpLinkFromNumLead } from './apps/cm/complect/com-http-links';
-import { catsFileStorage } from './apps/cm/file-stores';
-import { schedulesDirStore } from './apps/index/schedules/file-stores';
-import { hostRootDir } from './envJson';
-import { tglogger } from './sides/telegram-bot/log/log-bot';
+import { takeComwTiny } from '../apps/cm/com.tiny';
+import { makeCmComHttpLinkFromNumLead } from '../apps/cm/complect/com-http-links';
+import { catsFileStorage } from '../apps/cm/file-stores';
+import { schedulesDirStore } from '../apps/index/schedules/file-stores';
+import { hostRootDir } from '../envJson';
+import { tglogger } from '../sides/telegram-bot/log/log-bot';
+import { pullFilesExpressRoute } from './pullFiles';
 
 export const startExpressRouting = async (wsServer: WebSocketServer) => {
   const app = express();
@@ -27,6 +28,8 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
   app.use('/assets', express.static(`${hostRootDir}/assets`));
   app.use('/sounds', express.static(`${hostRootDir}/sounds`));
   app.use('/down', express.static(`${hostRootDir}/down`));
+
+  pullFilesExpressRoute(app);
 
   const isRequestFromSearchBot = (req: Request) => {
     const ua = (req.get('User-Agent') || '').toLowerCase();

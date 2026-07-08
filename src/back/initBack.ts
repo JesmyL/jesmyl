@@ -4,7 +4,7 @@ import { Do } from 'shared/enums';
 import { wait } from 'shared/utils';
 import { checkIsStartsWith } from 'shared/utils/checkIs';
 import { objectKeys } from 'shared/utils/object.utils';
-import { deployPathsBasicDict } from '../../paths.basic.mjs';
+import { deployPathsBasicDict } from '../../paths.basic';
 import { hostCwdOptions, systemdPath } from './const';
 import { lazyEnvJson } from './envJson';
 import { makeCyanLogText, makeGreenLogText, makeYellowLogText, rewriteAndDo, runCommand } from './utils.exec';
