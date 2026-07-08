@@ -55,6 +55,10 @@ export const comsDB = pgTable('coms', {
   nl: jsonb('newliner').$type<Required<IExportableCom>['nl']>(),
 
   isRemoved: smallint('isRemoved').default(Bool.False).$type<Bool>(),
+
+  // external
+
+  visits: integer('visits'),
 });
 
 if (!Do.It) itIt<Required<IExportableCom>>(comsDB.$inferSelect);

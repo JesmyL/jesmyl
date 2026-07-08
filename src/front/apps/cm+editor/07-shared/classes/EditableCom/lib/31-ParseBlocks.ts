@@ -1,5 +1,5 @@
 import { makeRegExp } from 'regexpert';
-import { IExportableOrder } from 'shared/api';
+import { CmComLangi, IExportableOrder } from 'shared/api';
 import { enRuLetterVisualEquivalentLazy } from 'shared/const/letter-eqs';
 import { checkIsNil, checkIsNotNil, checkIsString } from 'shared/utils/checkIs';
 import {
@@ -33,7 +33,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
     };
 
     const units: Unit[] = [];
-    let languagei: number | und;
+    let languagei = CmComLangi.Ru;
     let wid = 0;
     const errors: string[] = [];
     const slogUnits: Record<number, Unit[]> = {};
@@ -53,7 +53,6 @@ export class EditableComParseBlocks extends EditableComBlocks {
           cmComLanguages.forEach((_, langi) => {
             if (freeLine.match(makeRegExp(`/[${ruDifferentLowerLettersStr}]/`))) {
               if (checkIsNotNil(languagei) && languagei !== langi) {
-                languagei = undefined;
                 errors.push('Не удалось определить язык песни');
               } else languagei = langi;
             }
@@ -187,7 +186,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
 
     return {
       com: {
-        l: languagei || undefined,
+        l: languagei,
         c: objectLength(chords) ? chords : [''],
         t: objectLength(texts) ? texts.map(text => enRuLetterVisualEquivalentLazy().repl(text)) : [''],
         o: orders.filter(ord => checkIsNotNil(ord.t) || checkIsNotNil(ord.c) || checkIsNotNil(ord.a)),

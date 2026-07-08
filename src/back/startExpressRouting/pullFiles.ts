@@ -1,11 +1,6 @@
-import { comsDB } from 'back/drizzle.schema';
-import { db } from 'back/drizzle/drizzle.db';
-import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
 import { makeRedLogText } from 'back/utils.exec';
 import express from 'express';
 import md5 from 'md5';
-import { PgCheckFieldMode } from 'p/d';
-import { IExportableCom } from 'shared/api';
 import {
   pullFilesExpressRoutePath,
   pullFilesExpressSecretQueryName,
@@ -13,43 +8,9 @@ import {
 } from 'shared/api/pullFiles.utils';
 import { wait } from 'shared/utils';
 import { checkIsString } from 'shared/utils/checkIs';
-import { lazyInit } from 'shared/utils/lazyInit';
-import { mapObjectEntries } from 'shared/utils/object.utils';
+import { mapObjectEntries, objectEntries } from 'shared/utils/object.utils';
 import * as secret from '../../../do/secret.md5.json';
-
-const dirFilesDictLazy: () => Record<`${string}/`, () => Promise<{ file: string; data: unknown; name: string }[]>> =
-  lazyInit(() => {
-    const und = undefined;
-    const comBlank: { [K in keyof Required<IExportableCom>]: und } = {
-      w: und,
-      m: und,
-      n: und,
-      b: und,
-      bpm: und,
-      d: und,
-      s: und,
-      nl: und,
-      l: und,
-      p: und,
-      al: und,
-      t: und,
-      c: und,
-      o: und,
-      isRemoved: und,
-    };
-
-    return {
-      'apps/cm/coms/': async () => {
-        return (
-          await db.select({ com: makePgCheckedSelectExportableComSqlRaw({ m: PgCheckFieldMode.Remove }) }).from(comsDB)
-        ).map(({ com }) => ({
-          data: { ...comBlank, ...com },
-          file: `${com.w}.json`,
-          name: com.n,
-        }));
-      },
-    };
-  });
+import { pullPushDirFilesDictLazy } from './lib/pull-push.configurer';
 
 export const pullFilesExpressRoute = (app: ReturnType<typeof express>) => {
   app.get(pullFilesExpressRoutePath, async (req, res) => {
@@ -66,28 +27,32 @@ export const pullFilesExpressRoute = (app: ReturnType<typeof express>) => {
 
     try {
       await Promise.all(
-        mapObjectEntries(dirFilesDictLazy(), async (dir, cb) => {
-          const datas = await cb();
-          const len = datas.length;
-          let i = 0;
+        mapObjectEntries(pullPushDirFilesDictLazy(), async (dir, box) => {
+          const vals = objectEntries(box);
 
-          for (const { data, file, name } of datas) {
-            i++;
+          for (const [file, { pull }] of vals) {
+            const datas = [(await (pull as any)(file)) || []].flat();
+            const len = datas.length;
+            let i = 0;
 
-            const chunk = stringifyPulledFileDatasNl(
-              {
-                dir,
-                file,
-                name,
-                isLast: i === len,
-                count: `${i}/${len}`,
-              },
-              data,
-            );
+            for (const { data, file, name } of datas) {
+              i++;
 
-            res.write(chunk);
+              const chunk = stringifyPulledFileDatasNl(
+                {
+                  dir,
+                  file,
+                  name,
+                  isLast: i === len,
+                  count: `${i}/${len}`,
+                },
+                data,
+              );
 
-            await wait(10);
+              res.write(chunk);
+
+              await wait(10);
+            }
           }
         }),
       );

@@ -21,6 +21,8 @@ export const makePgCheckedSelectExportableComSqlRaw = <Adds extends Parameters<t
 
     isRemoved: PgCheckFieldMode.Remove,
     id: PgCheckFieldMode.Remove,
+    visits: PgCheckFieldMode.Remove,
+
     ...adds,
   });
 

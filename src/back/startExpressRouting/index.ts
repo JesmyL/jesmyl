@@ -13,6 +13,7 @@ import { schedulesDirStore } from '../apps/index/schedules/file-stores';
 import { hostRootDir } from '../envJson';
 import { tglogger } from '../sides/telegram-bot/log/log-bot';
 import { pullFilesExpressRoute } from './pullFiles';
+import { pushFilesExpressRoute } from './pushFiles';
 
 export const startExpressRouting = async (wsServer: WebSocketServer) => {
   const app = express();
@@ -30,6 +31,7 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
   app.use('/down', express.static(`${hostRootDir}/down`));
 
   pullFilesExpressRoute(app);
+  pushFilesExpressRoute(app);
 
   const isRequestFromSearchBot = (req: Request) => {
     const ua = (req.get('User-Agent') || '').toLowerCase();

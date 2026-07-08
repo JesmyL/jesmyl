@@ -98,7 +98,7 @@ if (!Do.It) {
 
       try {
         const { strData, meta } = parsePulledFileDatas(line);
-        const dir = `src/back/${meta.dir}+case/`;
+        const dir = `src/back/${meta.dir}+case/` as const;
         const filePath = `${dir}${meta.file}`;
 
         try {

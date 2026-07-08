@@ -154,7 +154,7 @@ export type IExportableCom = NullifyOptionals<
     nl?: (PRecord<CmComOrderWid, CmComNewlinerStrConfig.whole> | nil)[];
 
     /** язык песни */
-    l?: CmComLangi;
+    l: CmComLangi;
 
     /** аудио файлы */
     al?: HttpNumLeadLink[];
