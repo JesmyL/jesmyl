@@ -26,6 +26,7 @@ export const lazyEnvJson = lazyInit(() => {
     DB_NAME: '',
     DB_PORT: '',
     DB_HOST: '',
+    SECURE_KEY: '',
   };
 
   if (!fs.existsSync(envFilePath)) {

@@ -1,4 +1,5 @@
 import { backConfig } from 'back/config/backConfig';
+import { jsonParseSecure, jsonStringifySecure } from 'back/json-secure';
 import crypto from 'crypto';
 import fs, { StatsListener } from 'fs';
 import { smylib } from 'shared/utils';
@@ -38,38 +39,32 @@ export class FileStore<Value> {
     return cipher.update(text, 'utf8', 'hex') + cipher.final('hex');
   }
 
-  static decrypt(hex: string, password: string) {
-    const key = crypto.createHash('sha256').update(password).digest();
-    const decipher = crypto.createDecipheriv(this.algorithm, key, key.subarray(0, 16));
-
-    return decipher.update(hex, 'hex', 'utf8') + decipher.final('utf8');
-  }
-
   private readValue = (defaultValue: Value): Value => {
     try {
-      let content = '' + fs.readFileSync(this.filePath);
-      if (this.options?.sequreKey) content = FileStore.decrypt(content, this.options.sequreKey);
-
-      return JSON.parse(content);
+      const content = fs.readFileSync(this.filePath, 'utf-8');
+      return this.options?.sequreKey ? jsonParseSecure(content as never, this.options.sequreKey) : JSON.parse(content);
     } catch (_error) {
       return defaultValue;
     }
   };
 
   private writeValue = (value: Value) => {
-    try {
-      let content = JSON.stringify(value);
-      if (this.options?.sequreKey) content = FileStore.encrypt(content, this.options?.sequreKey);
+    const write = () => {
+      const content = this.options?.sequreKey
+        ? jsonStringifySecure(value, this.options?.sequreKey)
+        : JSON.stringify(value);
 
       fs.writeFileSync(this.filePath, content);
+    };
+
+    try {
+      write();
       return true;
     } catch (_error) {
       try {
         this.makePath();
-        let content = JSON.stringify(value);
-        if (this.options?.sequreKey) content = FileStore.encrypt(content, this.options?.sequreKey);
 
-        fs.writeFileSync(this.filePath, content);
+        write();
 
         return true;
       } catch (_error) {

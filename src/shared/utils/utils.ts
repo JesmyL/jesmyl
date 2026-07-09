@@ -24,3 +24,11 @@ export const iife = <Val>(fun: () => Val) => fun();
 
 type ParseNumber<T extends string> = T extends `${infer N extends number}` ? N : never;
 export const extractNumber = <T extends string>(value: T) => parseFloat(value) as ParseNumber<T>;
+
+// JSON
+declare const jsonBrand: unique symbol;
+export type JsonString<T> = string & { readonly [jsonBrand]: T };
+
+export const jsonStringify = <Val>(val: Val) => JSON.stringify(val) as JsonString<Val>;
+export const jsonParse = <T>(val: JsonString<T>) => JSON.parse(val) as T;
+// JSON

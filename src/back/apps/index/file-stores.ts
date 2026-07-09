@@ -1,5 +1,6 @@
 import { FileStore } from 'back/complect/FileStore';
 import { NounPronsType } from 'back/complect/model';
+import { lazyEnvJson } from 'back/envJson';
 import { DeviceId, LocalSokiAuth } from 'shared/api';
 import { IndexAppAccessRightTitles, IndexAppUserAccessRightsAndRoles } from 'shared/model/index/access-rights';
 import { IndexLoginBindsDict, IndexValues } from 'shared/model/index/other';
@@ -23,12 +24,10 @@ export const indexStameskaIconsFileStore = new FileStore<typeof stameskaIconPack
 export const appVersionFileStore = new FileStore<{ num: number }>('/+version.json', { num: 0 });
 export const valuesFileStore = new FileStore<IndexValues>('/values', {});
 
-const secureKeyFileStorage = new FileStore('/apps/index/userLoginBindsSequreKey', { key: '' });
-
 export const indexUserLoginBindsFileStorage = new FileStore<IndexLoginBindsDict>(
   '/apps/index/userLoginBinds.secure',
   {},
-  { sequreKey: secureKeyFileStorage.getValue().key },
+  { sequreKey: lazyEnvJson().SECURE_KEY },
 );
 
 export const emailTextingLetterVariantsFileStorage = new FileStore<{ texts: string[] }>(
