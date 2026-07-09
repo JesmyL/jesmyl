@@ -1,12 +1,16 @@
 import { getBibleTranslateTexts } from 'back/complect/lib/make-bible-texts';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { tokenSecretFileStore } from 'back/complect/soki/file-stores';
+import { usersDB } from 'back/drizzle.schema';
+import { db } from 'back/drizzle/drizzle.db';
+import { jsonParseSecure, jsonStringifySecure } from 'back/json-secure';
 import { makeAuthFromEmail, makeLoginFromEmail } from 'back/sides/emailer/lib/makeEmailLogin';
 import { sendEmailMessage } from 'back/sides/emailer/lib/sendEmailMessage';
 import { EmailerAuthConfigKey } from 'back/sides/emailer/model';
 import { logTelegramBot, tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { postJRPCMessage, PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
 import { takeLogginedAuthOrThrow } from 'back/utils';
+import { arrayOverlaps, eq, or } from 'drizzle-orm';
 import jwt from 'jsonwebtoken';
 import { makeRegExp } from 'regexpert';
 import { LocalSokiAuth } from 'shared/api';
@@ -14,13 +18,7 @@ import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { constantsConfigurator } from 'shared/const/cm/constants.def';
 import { howMillisecondsInMin } from 'shared/const/ms';
 import { smylib, wait } from 'shared/utils';
-import { checkIsObject, checkIsString } from 'shared/utils/checkIs';
-import {
-  emailTextingLetterVariantsFileStorage,
-  indexUserLoginBindsFileStorage,
-  sentEmailOTPFileStorage,
-} from '../../file-stores';
-import { indexTakeRootLoginRecursively } from '../../lib/takeRootLoginRecursively';
+import { emailTextingLetterVariantsFileStorage, sentEmailOTPFileStorage } from '../../file-stores';
 import { constantsConfigFileStore } from '../../schedules/file-stores';
 
 const minutesUntilExpire = 5;
@@ -83,110 +81,130 @@ const makeMailtoButton = ({
 }) =>
   `<a href="mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}"><button>${buttonText}</button></a>`;
 
-export const otpTSJRPCMethods = {
-  sendEmailOTP: async ({ email }, { auth, visitInfo }) => {
-    await wait(5000);
+const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = async (
+  { email },
+  { auth, visitInfo },
+) => {
+  await wait(5000);
 
-    const { availEmailDomainZone } = constantsConfigFileStore.getValue();
-    const availEmailDomainZoneError = constantsConfigurator.availEmailDomainZone.error(availEmailDomainZone, email);
+  const { availEmailDomainZone } = constantsConfigFileStore.getValue();
+  const availEmailDomainZoneError = constantsConfigurator.availEmailDomainZone.error(availEmailDomainZone, email);
 
-    if (availEmailDomainZoneError) throw `${email} - ${availEmailDomainZoneError}`;
+  if (availEmailDomainZoneError) throw `${email} - ${availEmailDomainZoneError}`;
 
-    const verifies = sentEmailOTPFileStorage.getValue();
-    let userVerify = verifies.find(({ deviceId, auth: verifyAuth }) => {
-      return (
-        (deviceId && visitInfo?.deviceId === deviceId) ||
-        (auth && ((email && auth.email === email) || auth.login === verifyAuth.login || auth.nick === verifyAuth.nick))
-      );
-    });
+  const verifies = sentEmailOTPFileStorage.getValue();
+  let userVerify = verifies.find(({ deviceId, auth: verifyAuth }) => {
+    return (
+      (deviceId && visitInfo?.deviceId === deviceId) ||
+      (auth && ((email && auth.email === email) || auth.login === verifyAuth.login || auth.nick === verifyAuth.nick))
+    );
+  });
 
-    if (userVerify && !checkIsOTPTimeStampExpired(userVerify.ts)) throw `${email} - Запросите отправку кода чуть позже`;
+  if (userVerify && !checkIsOTPTimeStampExpired(userVerify.ts)) throw `${email} - Запросите отправку кода чуть позже`;
 
-    let otp;
-    const oldOtpSet = new Set(verifies.map(it => it.otp));
+  let otp;
+  const oldOtpSet = new Set(verifies.map(it => it.otp));
 
-    do otp = smylib.randomOf(12345, 987654);
-    while (oldOtpSet.has(otp));
+  do otp = smylib.randomOf(12345, 987654);
+  while (oldOtpSet.has(otp));
 
-    const defaultVerify = {
-      deviceId: visitInfo?.deviceId,
-      auth: makeAuthFromEmail(email, auth),
-      otp,
-      ts: Date.now(),
-    };
+  const defaultVerify = {
+    deviceId: visitInfo?.deviceId,
+    auth: makeAuthFromEmail(email, auth),
+    otp,
+    ts: Date.now(),
+  };
 
-    if (!userVerify) {
-      userVerify = defaultVerify;
-      verifies.push(userVerify);
-    } else Object.assign(userVerify, defaultVerify);
+  if (!userVerify) {
+    userVerify = defaultVerify;
+    verifies.push(userVerify);
+  } else Object.assign(userVerify, defaultVerify);
 
-    sentEmailOTPFileStorage.saveValue();
+  sentEmailOTPFileStorage.saveValue();
 
-    const text = smylib.randomItem(emailTextingLetterVariantsFileStorage.getValue().texts);
+  const text = smylib.randomItem(emailTextingLetterVariantsFileStorage.getValue().texts);
 
-    const expire = () => {
-      clearTimeout(timeout);
-      expireOTP(otp);
-    };
-    const timeout = setTimeout(expire, howMillisecondsInMin * minutesUntilExpire);
-    let randomBibleText = '';
+  const expire = () => {
+    clearTimeout(timeout);
+    expireOTP(otp);
+  };
+  const timeout = setTimeout(expire, howMillisecondsInMin * minutesUntilExpire);
+  let randomBibleText = '';
 
-    try {
-      randomBibleText = `\n\n\n${smylib.randomItem(randomBibleChapterTextingList)}:\n\n${getRandomBibleChapterText()}`;
-    } catch {
+  try {
+    randomBibleText = `\n\n\n${smylib.randomItem(randomBibleChapterTextingList)}:\n\n${getRandomBibleChapterText()}`;
+  } catch {
+    //
+  }
+
+  const makeText = (asHtml = true) =>
+    `${text.replace(makeRegExp('/{c}/'), asHtml ? `<b style='font-size:1.5em'>${otp}</b>` : `${otp}`).replace(makeRegExp('/{n}/'), 'JesmyL')}\n\nЧерез ${minutesUntilExpire} ${
       //
-    }
+      smylib.declension(minutesUntilExpire, 'минуту', 'минуты', 'минут')
+    } код станет недействительным${randomBibleText}`;
 
-    const makeText = (asHtml = true) =>
-      `${text.replace(makeRegExp('/{c}/'), asHtml ? `<b style='font-size:1.5em'>${otp}</b>` : `${otp}`).replace(makeRegExp('/{n}/'), 'JesmyL')}\n\nЧерез ${minutesUntilExpire} ${
-        //
-        smylib.declension(minutesUntilExpire, 'минуту', 'минуты', 'минут')
-      } код станет недействительным${randomBibleText}`;
+  let logScope = PostJRPCMessageScope.Support;
 
-    let logScope = PostJRPCMessageScope.Support;
+  const html = makeText();
 
-    const html = makeText();
+  try {
+    await sendEmailMessage(EmailerAuthConfigKey.Space, {
+      to: email,
+      subject: smylib.randomItem(subjects),
+      html,
+    });
+  } catch (e) {
+    logScope = PostJRPCMessageScope.Error;
+    tglogger.error(`Произошла ошибка\n\n${e}`);
+
+    const sendMailtoButton = (scope: EmailerAuthConfigKey) =>
+      postJRPCMessage(
+        `${makeMailtoButton({
+          email,
+          subject: smylib.randomItem(subjects),
+          text: makeText(false),
+          buttonText: 'СФОРМИРОВАТЬ ПИСЬМО',
+        })}\n\n\n\n\n${html}`,
+        {
+          tgBot: logTelegramBot,
+          scope: PostJRPCMessageScope.Error,
+        },
+        scope,
+      );
 
     try {
-      await sendEmailMessage(EmailerAuthConfigKey.Space, {
-        to: email,
-        subject: smylib.randomItem(subjects),
-        html,
-      });
-    } catch (e) {
-      logScope = PostJRPCMessageScope.Error;
-      tglogger.error(`Произошла ошибка\n\n${e}`);
+      await sendMailtoButton(EmailerAuthConfigKey.Space);
+    } catch {
+      tglogger.error(`Произошла вторичная ошибка\n\n${e}`);
 
-      const sendMailtoButton = (scope: EmailerAuthConfigKey) =>
-        postJRPCMessage(
-          `${makeMailtoButton({
-            email,
-            subject: smylib.randomItem(subjects),
-            text: makeText(false),
-            buttonText: 'СФОРМИРОВАТЬ ПИСЬМО',
-          })}\n\n\n\n\n${html}`,
-          {
-            tgBot: logTelegramBot,
-            scope: PostJRPCMessageScope.Error,
-          },
-          scope,
-        );
-
-      try {
-        await sendMailtoButton(EmailerAuthConfigKey.Space);
-      } catch {
-        tglogger.error(`Произошла вторичная ошибка\n\n${e}`);
-
-        await sendMailtoButton(EmailerAuthConfigKey.Official);
-      }
+      await sendMailtoButton(EmailerAuthConfigKey.Official);
     }
+  }
 
-    return {
-      value: { email },
-      description: `Запрос ОТП кода на E-mail ${email}\n\n\n${html}`,
-      logScope,
-    };
+  return {
+    value: { email },
+    description: `Запрос ОТП кода на E-mail ${email}\n\n\n${html}`,
+    logScope,
+  };
+};
+
+export const otpTSJRPCMethods = {
+  sendBindEmailOTP: async (args, props) => {
+    const newLogin = makeLoginFromEmail(args.email);
+
+    const userBinded = (
+      await db
+        .select({ l: usersDB.l })
+        .from(usersDB)
+        .where(or(eq(usersDB.l, newLogin), arrayOverlaps(usersDB.ls, [newLogin])))
+    ).at(0);
+
+    if (userBinded) throw `E-mail уже привязан к ${userBinded.l === props.auth?.login ? 'вашему' : 'другому'} аккаунту`;
+
+    return await sendEmailOTP(args, props);
   },
+
+  sendEmailOTP_v1: sendEmailOTP,
 
   bindEmailByOTP: async ({ otp }, { auth: userAuth }) => {
     const auth = takeLogginedAuthOrThrow(userAuth);
@@ -196,23 +214,35 @@ export const otpTSJRPCMethods = {
     const verifies = sentEmailOTPFileStorage.getValue();
     const from = verifies.find(it => it.otp === otp);
 
-    if (from == null) throw 'Не верный код';
+    if (!from) throw 'Не верный код';
     if (checkIsOTPTimeStampExpired(from.ts)) throw 'Время кода истекло';
-    if (from.auth?.login == null) throw 'Ошибка привязки - неизвестный профиль';
+    if (!from.auth?.login) throw 'Ошибка привязки - неизвестный профиль';
     if (from.auth.login !== auth.login) throw 'Ошибка привязки - другой аккаунт';
     if (!from.auth.email) throw 'Ошибка привязки - e-mail не определён';
 
-    const binds = indexUserLoginBindsFileStorage.getValue();
     const newLogin = makeLoginFromEmail(from.auth.email);
 
-    if (binds[newLogin] != null)
-      throw `E-mail уже привязан к ${(checkIsString(binds[newLogin]) ? binds[newLogin] : binds[newLogin].login) === auth.login ? 'вашему' : 'другому'} аккаунту`;
     if (newLogin === from.auth.login) throw 'Не возможно привязать почту к тому же аккаунту';
 
-    binds[from.auth.login] ??= { ...from.auth, login: undefined as never };
-    binds[newLogin] = from.auth.login;
+    const [user] = await db
+      .select({ l: usersDB.l, ls: usersDB.ls })
+      .from(usersDB)
+      .where(eq(usersDB.l, from.auth.login));
 
-    indexUserLoginBindsFileStorage.saveValue();
+    if (user) {
+      await db
+        .update(usersDB)
+        .set({ ls: [...(user.ls ?? []), newLogin] })
+        .where(eq(usersDB.l, from.auth.login));
+    } else {
+      await db.insert(usersDB).values({
+        ls: [newLogin],
+        auth: jsonStringifySecure(from.auth),
+        rules: {},
+        l: from.auth.login,
+      });
+    }
+
     expireOTP(otp);
     const fioOrNick = from.auth.fio ?? from.auth.nick ?? '???';
 
@@ -234,14 +264,22 @@ export const otpTSJRPCMethods = {
     if (!from.auth.email) throw 'Ошибка привязки - e-mail не определён';
 
     const emailAuth = makeAuthFromEmail(from.auth.email, from.auth);
-    const binds = indexUserLoginBindsFileStorage.getValue();
-    const rootLogin = indexTakeRootLoginRecursively(makeLoginFromEmail(from.auth.email));
-    const rootAuth = checkIsObject(binds[rootLogin]) ? binds[rootLogin] : null;
-    const emailNick = from.auth.email.split('@')[0];
+    const loginByEmail = makeLoginFromEmail(from.auth.email);
+    const user = (
+      await db
+        .select({ l: usersDB.l, auth: usersDB.auth })
+        .from(usersDB)
+        .where(or(eq(usersDB.l, loginByEmail), arrayOverlaps(usersDB.ls, [loginByEmail])))
+    ).at(0);
+
+    const rootAuth = user?.auth ? jsonParseSecure(user.auth) : null;
+
+    const emailNick = from.auth.email.split('@', 1)[0];
     const auth: LocalSokiAuth = {
       ...rootAuth,
       ...emailAuth,
-      login: rootLogin,
+      login: user?.l ?? loginByEmail,
+      email: rootAuth?.email ?? emailAuth.email,
       nick: rootAuth?.nick || emailNick,
       fio: rootAuth?.fio || emailNick,
     };

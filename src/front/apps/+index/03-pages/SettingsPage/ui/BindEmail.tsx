@@ -20,6 +20,7 @@ export const IndexSettingsBindEmail = () => {
       />
       {isOpen && (
         <IndexEmailConfirm
+          onSend={email => indexTsjrpcClientMethods.sendBindEmailOTP({ email })}
           onConfirm={async otp => {
             const { fioOrNick } = await indexTsjrpcClientMethods.bindEmailByOTP({ otp });
             toast(`${fioOrNick} привязан к текущему аккаунту`, makeToastOKMoodConfig());

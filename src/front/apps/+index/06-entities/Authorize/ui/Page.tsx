@@ -57,6 +57,7 @@ export const IndexAuthorizePage = () => {
               <IndexAuthorizeByTelegram />
             ) : (
               <IndexEmailConfirm
+                onSend={email => indexTsjrpcClientMethods.sendEmailOTP_v1({ email })}
                 onConfirm={async otp => {
                   const { auth, token } = await indexTsjrpcClientMethods.authByEmailOTP({ otp });
 

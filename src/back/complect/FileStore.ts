@@ -18,7 +18,7 @@ export class FileStore<Value> {
   constructor(
     path: `/${string}`,
     private defaultValue: Value,
-    private options?: { sequreKey?: string },
+    private options?: { secureKey?: string },
   ) {
     this.filePath = `${initialFileDir}${path}`;
     this.value = defaultValue;
@@ -42,7 +42,7 @@ export class FileStore<Value> {
   private readValue = (defaultValue: Value): Value => {
     try {
       const content = fs.readFileSync(this.filePath, 'utf-8');
-      return this.options?.sequreKey ? jsonParseSecure(content as never, this.options.sequreKey) : JSON.parse(content);
+      return this.options?.secureKey ? jsonParseSecure(content as never, this.options.secureKey) : JSON.parse(content);
     } catch (_error) {
       return defaultValue;
     }
@@ -50,8 +50,8 @@ export class FileStore<Value> {
 
   private writeValue = (value: Value) => {
     const write = () => {
-      const content = this.options?.sequreKey
-        ? jsonStringifySecure(value, this.options?.sequreKey)
+      const content = this.options?.secureKey
+        ? jsonStringifySecure(value, this.options?.secureKey)
         : JSON.stringify(value);
 
       fs.writeFileSync(this.filePath, content);

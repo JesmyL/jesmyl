@@ -24,7 +24,8 @@ export type IndexTsjrpcModel = {
   authMeByTelegramInScheduleDay: (args: { user: TelegramNativeAuthUserData }) => { token: string; auth: LocalSokiAuth };
   authMeByTelegramBotNumber: (args: { secretNumber: number }) => { token: string; auth: LocalSokiAuth };
 
-  sendEmailOTP: (args: { email: string }) => { email: string };
+  sendEmailOTP_v1: (args: { email: string }) => { email: string };
+  sendBindEmailOTP: (args: { email: string }) => { email: string };
   authByEmailOTP: (args: { otp: number }) => { token: string; auth: LocalSokiAuth };
   bindEmailByOTP: (args: { otp: number }) => { fioOrNick: string };
 

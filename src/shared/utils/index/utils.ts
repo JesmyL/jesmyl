@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
 import {
-  IndexAccessScopeRules,
+  IndexAccessScopeRulesWithInfo,
   IndexAppAccessRightTitles,
   IndexAppUserAccessRightsWithoutInfo,
 } from 'shared/model/index/access-rights';
@@ -24,7 +24,7 @@ export const checkUserScopeAccessRight = <
   Rule extends keyof IndexAppAccessRightTitles[Scope],
   Rights extends IndexAppUserAccessRightsWithoutInfo,
 >(
-  roleRights: IndexAccessScopeRules<{ m: number }> | nil,
+  roleRights: IndexAccessScopeRulesWithInfo<{ m: number }> | nil,
   userRights: Rights | nil,
   scope: Scope,
   rule: Rule | Rule[],

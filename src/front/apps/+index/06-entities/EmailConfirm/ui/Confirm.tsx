@@ -2,13 +2,18 @@ import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { Button } from '#shared/components';
 import { makeToastOKMoodConfig } from '#shared/ui/modal';
 import { TextInput } from '#shared/ui/TextInput';
-import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
 import { constantsConfigurator } from 'shared/const/cm/constants.def';
 import { toast } from 'sonner';
 
-export const IndexEmailConfirm = ({ onConfirm }: { onConfirm: (code: number) => void }) => {
+export const IndexEmailConfirm = ({
+  onConfirm,
+  onSend,
+}: {
+  onConfirm: (code: number) => void;
+  onSend: (email: string) => Promise<{ email: string }>;
+}) => {
   const [email, setEmail] = useState('');
   const [otp, setOTP] = useState('');
   const otpLabel = 'Одноразовый код';
@@ -31,7 +36,7 @@ export const IndexEmailConfirm = ({ onConfirm }: { onConfirm: (code: number) => 
           className="mt-[1.7em]"
           disabled={!email || !!availEmailDomainZoneError}
           onClick={async () => {
-            const result = await indexTsjrpcClientMethods.sendEmailOTP({ email });
+            const result = await onSend(email);
             toast(`${otpLabel} отправлен на почту ${result.email}`, makeToastOKMoodConfig());
           }}
         />

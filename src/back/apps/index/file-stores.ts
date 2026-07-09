@@ -27,7 +27,7 @@ export const valuesFileStore = new FileStore<IndexValues>('/values', {});
 export const indexUserLoginBindsFileStorage = new FileStore<IndexLoginBindsDict>(
   '/apps/index/userLoginBinds.secure',
   {},
-  { sequreKey: lazyEnvJson().SECURE_KEY },
+  { secureKey: lazyEnvJson().SECURE_KEY },
 );
 
 export const emailTextingLetterVariantsFileStorage = new FileStore<{ texts: string[] }>(

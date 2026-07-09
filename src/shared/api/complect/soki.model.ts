@@ -28,10 +28,13 @@ export const enum SokiAuthLogin {
   other = '{other SokiAuthLogin}',
 }
 
+export type UserAuth = LocalSokiAuth;
+
+/** @deprecated */
 export interface LocalSokiAuth {
+  login?: SokiAuthLogin;
   fio?: string;
   nick?: string;
-  login?: SokiAuthLogin;
   tgId?: number;
   tgAva?: string;
   email?: string;

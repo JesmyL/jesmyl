@@ -1,4 +1,4 @@
-import { drizzle } from 'drizzle-orm/postgres-js'; // ИСПРАВЛЕНО: импортируем правильный драйвер для Postgres
+import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import * as schema from '../drizzle.schema';
 import { lazyEnvJson } from '../envJson';
