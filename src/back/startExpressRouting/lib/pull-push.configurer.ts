@@ -47,12 +47,8 @@ export const pullPushDirFilesDictLazy = lazyInit(
           pull: async file => {
             const data: PRecord<CmComWid, number> = {};
 
-            await Promise.all(
-              (await db.select({ v: comsDB.visits, w: comsDB.w }).from(comsDB))
-                .sort((a, b) => a.w - b.w)
-                .map(({ v, w }) => {
-                  if (v) data[w] = v;
-                }),
+            (await db.select({ v: comsDB.visits, w: comsDB.w }).from(comsDB).orderBy(comsDB.w)).map(
+              ({ v, w }) => (data[w] = v || 0),
             );
 
             return { data, file, name: file };
