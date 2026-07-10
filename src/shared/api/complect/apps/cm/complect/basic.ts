@@ -137,8 +137,6 @@ export type IExportableComInterpretation = IExportableComInterpretationSimpleVal
   o?: { [ordi: number]: IExportableOrderInterpretation | nil } | nil;
 };
 
-type NullifyOptionals<T> = { [K in keyof T]: und extends T[K] ? T[K] | nil : T[K] };
-
 export type IExportableCom = NullifyOptionals<
   IExportableComInterpretationSimpleValues & {
     /** название песни */

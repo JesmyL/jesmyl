@@ -1,7 +1,9 @@
 import { JsonSecureString } from 'back/json-secure';
 import { bigint, jsonb, pgTable, serial, text } from 'p/d';
-import { SokiAuthLogin, UserAuth } from 'shared/api';
+import { SokiAuthLogin, UserAuth, UserInfo } from 'shared/api';
+import { Do } from 'shared/enums';
 import { IndexAccessScopeRules } from 'shared/model/index/access-rights';
+import { itIt } from 'shared/utils';
 
 export const usersDB = pgTable('users', {
   id: serial('id').primaryKey().notNull(),
@@ -20,3 +22,5 @@ export const usersDB = pgTable('users', {
 
   r: text('role'),
 });
+
+if (!Do.It) itIt<UserInfo>(usersDB.$inferSelect);

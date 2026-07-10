@@ -1,4 +1,6 @@
+import { JsonSecureString } from 'back/json-secure';
 import { User } from 'node-telegram-bot-api';
+import { IndexAccessScopeRules } from 'shared/model/index/access-rights';
 import { DeviceId } from './enums';
 
 export const sokiAppNames = ['index', 'cm', 'tuner', 'q', 'bible', 'storages', 'gamer'] as const;
@@ -23,6 +25,8 @@ export interface TelegramNativeAuthUserData extends OmitOwn<User, 'language_code
   hash?: string;
 }
 
+export type UserLogin = SokiAuthLogin;
+
 export const enum SokiAuthLogin {
   def = '{SokiAuthLogin}',
   other = '{other SokiAuthLogin}',
@@ -39,3 +43,14 @@ export interface LocalSokiAuth {
   tgAva?: string;
   email?: string;
 }
+
+export type UserInfo = NullifyOptionals<{
+  auth: JsonSecureString<UserAuth>;
+  /** login */
+  l: UserLogin;
+  /** logins */
+  ls?: UserLogin[];
+  rules?: IndexAccessScopeRules;
+  /** role */
+  r?: string;
+}>;

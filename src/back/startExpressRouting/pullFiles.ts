@@ -4,16 +4,17 @@ import md5 from 'md5';
 import {
   pullFilesExpressRoutePath,
   pullFilesExpressSecretQueryName,
+  pullPushFileDirNameNet,
   stringifyPulledFileDatasNl,
 } from 'shared/api/pullFiles.utils';
 import { wait } from 'shared/utils';
-import { checkIsString } from 'shared/utils/checkIs';
-import { mapObjectEntries, objectEntries } from 'shared/utils/object.utils';
+import { checkIsEndsWith, checkIsString } from 'shared/utils/checkIs';
+import { objectEntries } from 'shared/utils/object.utils';
 import * as secret from '../../../do/secret.md5.json';
 import { pullPushDirFilesDictLazy } from './lib/pull-push.configurer';
 
 export const pullFilesExpressRoute = (app: ReturnType<typeof express>) => {
-  app.get(pullFilesExpressRoutePath, async (req, res) => {
+  app.post(pullFilesExpressRoutePath, async (req, res) => {
     if (
       !checkIsString(req.query[pullFilesExpressSecretQueryName]) ||
       md5(req.query[pullFilesExpressSecretQueryName]) !== secret.md5ecret
@@ -22,40 +23,52 @@ export const pullFilesExpressRoute = (app: ReturnType<typeof express>) => {
       return;
     }
 
+    const dirNameNet = req.body as typeof pullPushFileDirNameNet;
+
     res.setHeader('Content-Type', 'application/x-ndjson; charset=utf-8');
     res.setHeader('Transfer-Encoding', 'chunked');
 
     try {
-      await Promise.all(
-        mapObjectEntries(pullPushDirFilesDictLazy(), async (dir, box) => {
-          const vals = objectEntries(box);
+      const config = pullPushDirFilesDictLazy();
 
-          for (const [file, { pull }] of vals) {
-            const datas = [(await (pull as any)(file)) || []].flat();
-            const len = datas.length;
-            let i = 0;
+      for (const dirStr in config) {
+        if (!(dirStr in dirNameNet)) continue;
 
-            for (const { data, file, name } of datas) {
-              i++;
+        const dir = dirStr as keyof typeof config;
+        const vals = objectEntries(config[dir]);
 
-              const chunk = stringifyPulledFileDatasNl(
-                {
-                  dir,
-                  file,
-                  name,
-                  isLast: i === len,
-                  count: `${i}/${len}`,
-                },
-                data,
-              );
+        for (const [fileName, { pull }] of vals) {
+          if (!(fileName in dirNameNet[dir])) continue;
 
-              res.write(chunk);
+          const dirPath = checkIsEndsWith(fileName, '/') ? (`${dir}${fileName}` as const) : dir;
 
-              await wait(10);
-            }
+          const datas = [(await (pull as (file: string) => Promise<[]>)(fileName)) || []].flat();
+          const len = datas.length;
+          let i = 0;
+
+          for (const { data, file, name } of datas) {
+            i++;
+
+            const chunk = stringifyPulledFileDatasNl(
+              {
+                dir,
+                dirDir: fileName,
+                caseDir: dirPath,
+                file,
+                name,
+                count: `${i}/${len}`,
+                isFirst: i === 1,
+                isLast: i === len,
+              },
+              data,
+            );
+
+            res.write(chunk);
+
+            await wait(10);
           }
-        }),
-      );
+        }
+      }
 
       res.end();
     } catch (error) {

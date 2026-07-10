@@ -39,6 +39,8 @@ declare global {
   /** @deprecated */
   type NonUndefined<T> = T extends undefined ? never : T;
 
+  type NullifyOptionals<T> = { [K in keyof T]: und extends T[K] ? T[K] | nil : T[K] };
+
   type PromiseOr<T> = T | Promise<T>;
 
   type KnownStameskaIconName = keyof typeof knownStameskaIconNames;

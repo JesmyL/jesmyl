@@ -2,7 +2,13 @@ import { exec } from 'child_process';
 import fs from 'fs';
 import { hostConfig } from '../freshHostConfig';
 import { Do } from '../src/shared/enums';
-import { parsePulledFileDatas, pullFilesExpressRoutePath, pullFilesExpressSecretQueryName } from './pullFiles.utils';
+import {
+  jsonStringify,
+  parsePulledFileDatas,
+  pullFilesExpressRoutePath,
+  pullFilesExpressSecretQueryName,
+  pullPushFileDirNameNet,
+} from './pull-push.utils';
 import * as secret from './secret.json';
 
 const execAsync = (stringCommand: string) => {
@@ -36,9 +42,6 @@ if (!Do.It) {
       ['apps/cm/comComments'],
       ['apps/cm/comsInSchEvent'],
       ['apps/cm/comsInSchEventHistory'],
-
-      // large
-      ['apps/cm/coms'],
     ];
 
     const joinPath = (listPaths: string[]) => listPaths.filter(i => i).join('/');
@@ -75,6 +78,11 @@ if (!Do.It) {
   const { url } = hostConfig;
   const response = await fetch(
     `${url}${pullFilesExpressRoutePath}?${pullFilesExpressSecretQueryName}=${secret.secret}`,
+    {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: jsonStringify(pullPushFileDirNameNet),
+    },
   );
   const reader = response.body?.getReader();
   const decoder = new TextDecoder('utf-8');
@@ -98,8 +106,14 @@ if (!Do.It) {
 
       try {
         const { strData, meta } = parsePulledFileDatas(line);
-        const dir = `src/back/${meta.dir}+case/` as const;
+        const dir = `src/back/${meta.caseDir}+case/` as const;
         const filePath = `${dir}${meta.file}`;
+
+        if (meta.isFirst) {
+          console.info('/'.repeat(30));
+          console.info('/'.repeat(10), meta.caseDir);
+          console.info('/'.repeat(30));
+        }
 
         try {
           fs.writeFileSync(filePath, strData);
