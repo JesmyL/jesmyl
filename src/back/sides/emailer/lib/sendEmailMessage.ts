@@ -1,3 +1,4 @@
+import { makeRedLogText } from 'back/utils.exec';
 import nodemailer from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
@@ -10,7 +11,17 @@ const transporters: PRecord<
 > = {};
 type Options = Mail.Options;
 
+let sentCount = 0;
+let sentIncrementTimeOut: TimeOut;
+
 export const sendEmailMessage = async (key: EmailerAuthConfigKey, options: Options & { isSameTo?: boolean }) => {
+  clearTimeout(sentIncrementTimeOut);
+  sentIncrementTimeOut = setTimeout(() => (sentCount = 0), 1000);
+
+  if (sentCount++ > 20) {
+    throw makeRedLogText('Too many send-mail requests');
+  }
+
   const auth = emailerConfigFileStorage.getValue()[key];
 
   if (auth == null) return;
