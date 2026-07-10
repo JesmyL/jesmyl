@@ -1,0 +1,24 @@
+{
+  "l": "T7f21a14d3133065ca2e48254f87ecf3",
+  "ls": ["@51813da360c5a98da730479c3b22b474"],
+  "auth": "b4f27f12ddbbeecf89d73ec503d9bb146f34c959f47123198a44b248d638b2d57bb9f4fb496ff77406e18584ba978216606694cb13fe20fd35376d61ae4c38f176b1847e9d4ad42b0ac34dd44a4da74e3d31a2cf949f786ec8739db0bababd5321bdfd448fdc335fc51caade2589254d9a459e1c402368e3db81b00fccc89f5a",
+  "rules": {
+    "cm": {
+      "CAT": 6,
+      "COM": 6,
+      "EDIT": 6,
+      "CHORD": 14,
+      "EVENT": 6,
+      "COM_CH": 12,
+      "COM_TR": 14,
+      "COM_ORD": 6,
+      "COM_REF": 14,
+      "COM_REP": 14,
+      "COM_TXT": 14,
+      "COM_APPS": 6,
+      "COM_MAIN": 6,
+      "COM_AMARK": 14,
+      "COM_TXT_NL": 14
+    }
+  }
+}

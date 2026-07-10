@@ -1,0 +1,6 @@
+{
+  "l": "T610619ba5541eb4bb18b39beff4cc2c",
+  "ls": ["@5e5f02c8227adbb5743f2720317bd307", "@e8cdcd208a2064d0270caa8b481d98dd"],
+  "auth": "b4f27f12ddbbeecf89d42dc235dea21f233ac70fe75f0e5f924bb54bd13ebfd27cbcedf50d60f1391ef9777b0b413bc9c0b12b661f0ce740ea8eba9328beec419f085ade40f4553b15a14fd44a4da742647ca384dcd46d60c86894fcebd88e0926e6a00bdd873a4ed80df58174d5280e9202fe1243266ab4dad4b4599fcf8c421f129bf6a43eface5c8b9b7dd6f117c61672d571",
+  "rules": { "cm": { "COM": 4, "EDIT": 4, "COM_CH": 6, "COM_APPS": 6 } }
+}
