@@ -1,0 +1,30 @@
+{
+  "TOP": {},
+  "ADMIN": {
+    "r": {
+      "q": { "EDIT": 14 },
+      "cm": {
+        "CAT": 6,
+        "COM": 14,
+        "MP3": 4,
+        "EDIT": 4,
+        "CHORD": 6,
+        "EVENT": 6,
+        "COM_CH": 15,
+        "COM_TR": 4,
+        "COM_CAT": 14,
+        "COM_ORD": 14,
+        "COM_REF": 14,
+        "COM_REP": 15,
+        "COM_TXT": 15,
+        "COM_APPS": 6,
+        "COM_INTP": 6,
+        "COM_MAIN": 6,
+        "COM_AMARK": 15,
+        "COM_AUDIO": 14,
+        "COM_TXT_NL": 10
+      },
+      "sch": { "SCH": 14 }
+    }
+  }
+}
