@@ -1,41 +1,35 @@
-import { smylib } from 'shared/utils';
+import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
+import { userDB } from 'back/drizzle.schema';
+import { dbUpdate } from 'back/drizzle/drizzle.db';
+import { eq } from 'drizzle-orm';
+import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { switchCRUDAccesRightValue } from 'shared/utils/index/utils';
-import { indexServerTsjrpcBase } from '..';
-import { userAccessRightsAndRolesFileStore } from '../../file-stores';
+import { objectLength } from 'shared/utils/object.utils';
+import { resetUserTiny, takeUserTiny } from '../../tinies/userTiny';
 import { indexServerTsjrpcShareMethods } from '../../tsjrpc.methods';
 import { makeUserAccessRights } from './makeUserAccessRights';
 
-export const indexTSJRPCBaseUpdateUserAccessRight: typeof indexServerTsjrpcBase.updateUserAccessRight = async ({
-  login,
-  rule,
-  scope,
-  operation,
-}) => {
-  if (scope === 'general') throw 'Эти права доступа менять нельзя';
+export const indexTSJRPCBaseUpdateUserAccessRight = {
+  updateUserAccessRight: async ({ login, rule, scope, operation }) => {
+    if (scope === 'general') throw 'Эти права доступа менять нельзя';
 
-  const { rights, roles } = userAccessRightsAndRolesFileStore.getValue();
+    const { rights: userRights } = (await takeUserTiny(login)) ?? {};
 
-  if (rights[login] == null) return { value: null };
-  const userRights = rights[login];
+    if (!userRights) return { value: {} };
 
-  userRights[scope] ??= {};
-  userRights[scope][rule] = switchCRUDAccesRightValue(userRights[scope][rule] ?? 0, operation);
+    userRights[scope] ??= {};
+    userRights[scope][rule] = switchCRUDAccesRightValue(userRights[scope][rule] ?? 0, operation);
 
-  userRights.info ??= { fio: 'unknown 856278', m: 0 };
-  userRights.info.m = Date.now();
+    if (!userRights[scope][rule]) delete userRights[scope][rule];
+    if (!objectLength(userRights[scope])) delete userRights[scope];
 
-  if (!userRights[scope][rule]) delete userRights[scope][rule];
-  if (!smylib.keys(userRights[scope]).length) delete userRights[scope];
+    const m = Date.now();
 
-  userAccessRightsAndRolesFileStore.saveValue();
+    await dbUpdate(userDB, { rights: userRights, m }, eq(userDB.l, login));
+    resetUserTiny(login);
 
-  indexServerTsjrpcShareMethods.refreshAccessRights(
-    {
-      rights: makeUserAccessRights(login),
-      lastModifiedAt: userRights.info.m,
-    },
-    { login },
-  );
+    indexServerTsjrpcShareMethods.refreshAccessRights({ rights: await makeUserAccessRights(login), mod: m }, { login });
 
-  return { value: { rights, roles } };
-};
+    return { value: { [login]: await takeUserTiny(login) } };
+  },
+} satisfies ServerTsjrpcSatisfy<IndexTsjrpcModel>;

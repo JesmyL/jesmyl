@@ -1,8 +1,9 @@
 import { TsjrpcClient } from '#basis/tsjrpc/Tsjrpc.client';
 import { soki } from '#shared/soki';
-import { LocalSokiAuth } from 'shared/api';
+import { LocalSokiAuth, UserInfoUnsecure, UserLogin } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
-import { authIDB, indexAppUserAccessRightsMatrixAtom, indexIDB } from '../state';
+import { UserAccessRole, UserAccessRoleInfo } from 'shared/model/index/access-rights';
+import { authIDB, indexAppUserInfoDictAtom, indexAppUserRoleInfoDictAtom, indexIDB } from '../state';
 
 const tgAuthorize = async ({ auth, token }: { auth: LocalSokiAuth; token: string }) => {
   await authIDB.set.auth(auth);
@@ -10,6 +11,20 @@ const tgAuthorize = async ({ auth, token }: { auth: LocalSokiAuth; token: string
 
   soki.onBeforeAuthorizeEvent.invoke();
   setTimeout(() => soki.onAuthorizeEvent.invoke(), 100);
+};
+
+const userUpdaters = {
+  onResponse: async (userDict: PRecord<UserLogin, UserInfoUnsecure> | null) => {
+    if (!userDict) return;
+    indexAppUserInfoDictAtom.set(prev => ({ ...prev, ...userDict }));
+  },
+};
+
+const roleUpdaters = {
+  onResponse: async (roleDict: PRecord<UserAccessRole, UserAccessRoleInfo> | null) => {
+    if (!roleDict) return;
+    indexAppUserRoleInfoDictAtom.set(prev => ({ ...prev, ...roleDict }));
+  },
 };
 
 export const indexTsjrpcClientMethods = new (class Index extends TsjrpcClient<IndexTsjrpcModel> {
@@ -22,30 +37,10 @@ export const indexTsjrpcClientMethods = new (class Index extends TsjrpcClient<In
         authMeByTelegramMiniButton: { onResponse: tgAuthorize },
         authMeByTelegramInScheduleDay: { onResponse: tgAuthorize },
 
-        updateUserAccessRight: {
-          onResponse: async rightsAndRoles => {
-            if (rightsAndRoles == null) return;
-            indexAppUserAccessRightsMatrixAtom.set(rightsAndRoles);
-          },
-        },
-        updateUserAccessRole: {
-          onResponse: async rightsAndRoles => {
-            if (rightsAndRoles == null) return;
-            indexAppUserAccessRightsMatrixAtom.set(rightsAndRoles);
-          },
-        },
-        addNewAccessRole: {
-          onResponse: async rightsAndRoles => {
-            if (rightsAndRoles == null) return;
-            indexAppUserAccessRightsMatrixAtom.set(rightsAndRoles);
-          },
-        },
-        updateRoleAccessRight: {
-          onResponse: async rightsAndRoles => {
-            if (rightsAndRoles == null) return;
-            indexAppUserAccessRightsMatrixAtom.set(rightsAndRoles);
-          },
-        },
+        updateUserAccessRight: userUpdaters,
+        updateUserAccessRole: userUpdaters,
+        addNewAccessRole: roleUpdaters,
+        updateRoleAccessRight: roleUpdaters,
 
         getIconPack: {
           onResponse: ({ pack }) => {

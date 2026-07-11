@@ -1,10 +1,10 @@
 import { ConstantsConfig } from 'shared/model/constantsConfig';
-import { IndexAppUserAccessRightsWithoutInfo } from 'shared/model/index/access-rights';
+import { IndexAccessScopeRules } from 'shared/model/index/access-rights';
 import { toast } from 'sonner';
 import { StameskaIconKind, StameskaIconPack } from 'stameska-icon/utils';
 
 export type IndexTsjrpcSharesModel = {
-  refreshAccessRights: (args: { rights: IndexAppUserAccessRightsWithoutInfo; lastModifiedAt: number }) => unknown;
+  refreshAccessRights: (args: { rights: IndexAccessScopeRules; mod: number }) => unknown;
   updateKnownIconPacks: (args: {
     actualIconPacks: PRecord<KnownStameskaIconName, StameskaIconPack | null>;
     iconsMd5Hash: string;

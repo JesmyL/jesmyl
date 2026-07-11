@@ -67,8 +67,7 @@ export const schAttachmentTypesTsjrpcBaseServer =
                 actualIconPacks: { [value]: indexStameskaIconsFileStore.getValue()[value] },
                 iconsMd5Hash: knownStameskaIconNamesMd5Hash,
               },
-              // TODO: remove soon
-              visit => !!visit?.version && visit?.version >= 1019,
+              null,
             );
 
             tatt.icon = value;

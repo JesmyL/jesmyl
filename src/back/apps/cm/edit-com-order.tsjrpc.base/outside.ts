@@ -12,7 +12,7 @@ import { getNextOrdWid } from './utils';
 export const cmEditComOrderServerTsjrpcOutside = {
   insertNewBlock: modifyCom(
     ['COM_ORD', 'C'],
-    (com, { insertAfterOrdwOrFirst, kind, chordi, texti, orderTitle }, { auth }) => {
+    async (com, { insertAfterOrdwOrFirst, kind, chordi, texti, orderTitle }, { auth }) => {
       com.o ??= [];
       const afterOrdi = checkIsNil(insertAfterOrdwOrFirst)
         ? -1
@@ -23,7 +23,7 @@ export const cmEditComOrderServerTsjrpcOutside = {
         k: kind,
         c: chordi,
         t: texti,
-        cre: checkWhatOfUserScopeOperationAccessRight(auth, 'cm', 'COM_ORD').D ? undefined : Date.now(),
+        cre: (await checkWhatOfUserScopeOperationAccessRight(auth, 'cm', 'COM_ORD')).D ? undefined : Date.now(),
       };
 
       com.o.splice(afterOrdi + 1, 0, ord);
@@ -32,7 +32,7 @@ export const cmEditComOrderServerTsjrpcOutside = {
     },
   ),
 
-  addAnchorOrder: modifyCom('COM_ORD', (com, { insertAfterOrdw, targetOrdw, orderTitle }, { auth }) => {
+  addAnchorOrder: modifyCom('COM_ORD', async (com, { insertAfterOrdw, targetOrdw, orderTitle }, { auth }) => {
     com.o ??= [];
 
     const targetOrdi = com.o.findIndex(o => o.w === targetOrdw);
@@ -45,14 +45,14 @@ export const cmEditComOrderServerTsjrpcOutside = {
     com.o.splice(insertAfterOrdi + 1, 0, {
       w: getNextOrdWid(com.o),
       a: targetOrdw,
-      cre: checkWhatOfUserScopeOperationAccessRight(auth, 'cm', 'COM_ORD').D ? undefined : Date.now(),
+      cre: (await checkWhatOfUserScopeOperationAccessRight(auth, 'cm', 'COM_ORD')).D ? undefined : Date.now(),
     });
 
     return `создана ссылка ${orderTitle}`;
   }),
 
-  moveOrdAfter: modifyCom('COM_ORD', (com, { insertAfterOrdwOrFirst, ordw, orderTitle }, { auth }) => {
-    if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
+  moveOrdAfter: modifyCom('COM_ORD', async (com, { insertAfterOrdwOrFirst, ordw, orderTitle }, { auth }) => {
+    if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
     com.o ??= [];
 

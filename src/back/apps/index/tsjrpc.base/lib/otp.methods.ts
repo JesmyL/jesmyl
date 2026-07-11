@@ -1,8 +1,8 @@
 import { getBibleTranslateTexts } from 'back/complect/lib/make-bible-texts';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { tokenSecretFileStore } from 'back/complect/soki/file-stores';
-import { usersDB } from 'back/drizzle.schema';
-import { db } from 'back/drizzle/drizzle.db';
+import { userDB } from 'back/drizzle.schema';
+import { db, dbUpdate } from 'back/drizzle/drizzle.db';
 import { jsonParseSecure, jsonStringifySecure } from 'back/json-secure';
 import { makeAuthFromEmail, makeLoginFromEmail } from 'back/sides/emailer/lib/makeEmailLogin';
 import { sendEmailMessage } from 'back/sides/emailer/lib/sendEmailMessage';
@@ -191,13 +191,12 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
 export const otpTSJRPCMethods = {
   sendBindEmailOTP: async (args, props) => {
     const newLogin = makeLoginFromEmail(args.email);
+    const users = await db
+      .select({ l: userDB.l })
+      .from(userDB)
+      .where(or(eq(userDB.l, newLogin), arrayOverlaps(userDB.ls, [newLogin])));
 
-    const userBinded = (
-      await db
-        .select({ l: usersDB.l })
-        .from(usersDB)
-        .where(or(eq(usersDB.l, newLogin), arrayOverlaps(usersDB.ls, [newLogin])))
-    ).at(0);
+    const userBinded = users.at(0);
 
     if (userBinded) throw `E-mail уже привязан к ${userBinded.l === props.auth?.login ? 'вашему' : 'другому'} аккаунту`;
 
@@ -224,22 +223,16 @@ export const otpTSJRPCMethods = {
 
     if (newLogin === from.auth.login) throw 'Не возможно привязать почту к тому же аккаунту';
 
-    const [user] = await db
-      .select({ l: usersDB.l, ls: usersDB.ls })
-      .from(usersDB)
-      .where(eq(usersDB.l, from.auth.login));
+    const [user] = await db.select({ l: userDB.l, ls: userDB.ls }).from(userDB).where(eq(userDB.l, from.auth.login));
 
     if (user) {
-      await db
-        .update(usersDB)
-        .set({ ls: [...(user.ls ?? []), newLogin] })
-        .where(eq(usersDB.l, from.auth.login));
+      await dbUpdate(userDB, { ls: [...(user.ls ?? []), newLogin] }, eq(userDB.l, from.auth.login));
     } else {
-      await db.insert(usersDB).values({
+      await db.insert(userDB).values({
         ls: [newLogin],
         auth: jsonStringifySecure(from.auth),
-        rules: {},
         l: from.auth.login,
+        rights: {},
       });
     }
 
@@ -267,9 +260,9 @@ export const otpTSJRPCMethods = {
     const loginByEmail = makeLoginFromEmail(from.auth.email);
     const user = (
       await db
-        .select({ l: usersDB.l, auth: usersDB.auth })
-        .from(usersDB)
-        .where(or(eq(usersDB.l, loginByEmail), arrayOverlaps(usersDB.ls, [loginByEmail])))
+        .select({ l: userDB.l, auth: userDB.auth })
+        .from(userDB)
+        .where(or(eq(userDB.l, loginByEmail), arrayOverlaps(userDB.ls, [loginByEmail])))
     ).at(0);
 
     const rootAuth = user?.auth ? jsonParseSecure(user.auth) : null;

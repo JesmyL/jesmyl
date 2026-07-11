@@ -16,7 +16,7 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
         ...cmEditComBusyTsjrpcMethods,
 
         setChords: async ({ chords }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'CHORD', 'U')) throw '';
+          if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'CHORD', 'U')) throw '';
 
           chordPackFileStore.setValue({ ...chordPackFileStore.getValue(), ...chords });
           const modifiedAt = chordPackFileStore.fileModifiedAt();
@@ -26,7 +26,7 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
         },
 
         setEEWords: async ({ words }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EE', 'U')) throw '';
+          if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'EE', 'U')) throw '';
 
           eePackFileStore.setValue({ ...eePackFileStore.getValue(), ...words });
           const modifiedAt = eePackFileStore.fileModifiedAt();
@@ -51,14 +51,14 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
         getResourceHTMLString: cmGetResourceHTMLString,
         getMp3RulesList: async () => ({ value: mp3ResourcesFileStorage.getValue() }),
         addMp3Rule: async ({ rule }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'MP3', 'U')) throw '';
+          if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'MP3', 'U')) throw '';
 
           mp3ResourcesFileStorage.modifyValueWithAutoSave(srcs => srcs.push(rule));
 
           return { description: `Добавлено MP3-правило` };
         },
         setMp3Rule: async ({ rule }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'MP3', 'U')) throw '';
+          if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'MP3', 'U')) throw '';
 
           mp3ResourcesFileStorage.modifyValueWithAutoSave(list => {
             const index = list.findIndex(r => r.w === rule.w);
@@ -71,7 +71,7 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
 
         requestFreshes: async ({ lastModfiedAt }, { client, auth }) => {
           try {
-            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EDIT', 'R')) throw '';
+            if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'EDIT', 'R')) throw '';
           } catch (_) {
             return;
           }

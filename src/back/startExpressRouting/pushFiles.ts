@@ -27,7 +27,7 @@ export const pushFilesExpressRoute = (app: ReturnType<typeof express>) => {
 
     try {
       const pushHolder = pullPushDirFilesDictLazy()[meta.dir]?.[meta.dirDir as never] as unknown as {
-        push(data: unknown): Promise<void>;
+        PUSH(data: unknown): Promise<void>;
       };
 
       if (!pushHolder) {
@@ -35,7 +35,7 @@ export const pushFilesExpressRoute = (app: ReturnType<typeof express>) => {
         return;
       }
 
-      await pushHolder.push(JSON.parse(strData));
+      await pushHolder.PUSH(JSON.parse(strData));
 
       res.status(200).send(`[${meta.count}] Обработан ${meta.name}`);
     } catch {

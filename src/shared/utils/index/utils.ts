@@ -1,10 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
-import {
-  IndexAccessScopeRulesWithInfo,
-  IndexAppAccessRightTitles,
-  IndexAppUserAccessRightsWithoutInfo,
-} from 'shared/model/index/access-rights';
-import { SMyLib } from '../SMyLib';
+import { IndexAccessScopeRules, IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
+import { objectKeys } from '../object.utils';
 
 const operations = {
   C: 0,
@@ -14,7 +10,7 @@ const operations = {
 };
 
 export type CRUDOperation = keyof typeof operations;
-export const accessRightsCRUDOperations = SMyLib.keys(operations);
+export const accessRightsCRUDOperations = objectKeys(operations);
 
 const isUser_HasNo_AccessRights = false;
 const isUser_Has_AccessRights = true;
@@ -22,10 +18,10 @@ const isUser_Has_AccessRights = true;
 export const checkUserScopeAccessRight = <
   Scope extends keyof IndexAppAccessRightTitles,
   Rule extends keyof IndexAppAccessRightTitles[Scope],
-  Rights extends IndexAppUserAccessRightsWithoutInfo,
+  Rights extends IndexAccessScopeRules,
 >(
-  roleRights: IndexAccessScopeRulesWithInfo<{ m: number }> | nil,
-  userRights: Rights | nil,
+  roleRights: IndexAccessScopeRules | nil,
+  userInfo: Rights | nil,
   scope: Scope,
   rule: Rule | Rule[],
   operation: CRUDOperation | CRUDOperation[] = 'R',
@@ -38,8 +34,7 @@ export const checkUserScopeAccessRight = <
 
     for (const ruleItem of rule) {
       const accessBinary = (
-        (userRights?.[scope]?.[ruleItem as never] ??
-          (userRights?.info?.role === 'TOP' ? 15 : (roleRights?.[scope]?.[ruleItem as never] ?? 0))) >>> 0
+        (userInfo?.[scope]?.[ruleItem as never] ?? roleRights?.[scope]?.[ruleItem as never] ?? 0) >>> 0
       )
         .toString(2)
         .padStart(4, '0');

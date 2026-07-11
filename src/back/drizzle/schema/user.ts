@@ -2,10 +2,10 @@ import { JsonSecureString } from 'back/json-secure';
 import { bigint, jsonb, pgTable, serial, text } from 'p/d';
 import { SokiAuthLogin, UserAuth, UserInfo } from 'shared/api';
 import { Do } from 'shared/enums';
-import { IndexAccessScopeRules } from 'shared/model/index/access-rights';
+import { IndexAccessScopeRules, UserAccessRole } from 'shared/model/index/access-rights';
 import { itIt } from 'shared/utils';
 
-export const usersDB = pgTable('users', {
+export const userDB = pgTable('users', {
   id: serial('id').primaryKey().notNull(),
 
   l: text('login').unique().$type<SokiAuthLogin>().notNull(),
@@ -13,14 +13,13 @@ export const usersDB = pgTable('users', {
 
   m: bigint('modifiedAt', { mode: 'number' })
     .notNull()
-    .$defaultFn(() => Date.now())
-    .$onUpdateFn(() => Date.now()),
+    .$defaultFn(() => Date.now()),
 
   auth: text('secureAuth').$type<JsonSecureString<UserAuth>>().notNull(),
 
-  rules: jsonb('rules').$type<IndexAccessScopeRules>().notNull(),
+  rights: jsonb('rules').$type<IndexAccessScopeRules>().notNull(),
 
-  r: text('role'),
+  r: text('role').$type<UserAccessRole>(),
 });
 
-if (!Do.It) itIt<UserInfo>(usersDB.$inferSelect);
+if (!Do.It) itIt<UserInfo>(userDB.$inferSelect);

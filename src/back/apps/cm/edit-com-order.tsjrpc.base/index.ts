@@ -66,10 +66,10 @@ export const cmEditComOrderServerTsjrpcBase =
             return `часть ссылки на ${cmOrd.me.leadOrd.me.header()} сделана ${checkIsNil(leadOrd._v?.[inhi]) ? '' : 'не'}видимой`;
           }),
 
-          remove: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, { ordw }, { auth }, com, getCmComOrd) => {
+          remove: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', async (ord, { ordw }, { auth }, com, getCmComOrd) => {
             if (
               (ord.cre ?? com.w) < Date.now() - 24 * 60 * 60 * 1000 &&
-              throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'D')
+              (await throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'D'))
             )
               throw '';
 

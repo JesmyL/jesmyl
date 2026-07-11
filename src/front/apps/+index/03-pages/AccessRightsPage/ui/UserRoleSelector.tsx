@@ -1,33 +1,32 @@
 import { Button } from '#shared/components/ui/button';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { usePrompt } from '#shared/ui/modal';
-import { indexAppUserAccessRightsMatrixAtom, indexOpenAccessRoleRedactorAtom } from '$index/shared/state';
+import { indexAppUserRoleInfoDictAtom, indexOpenAccessRoleRedactorAtom } from '$index/shared/state';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useAtomValue } from 'atomaric';
-import { SokiAuthLogin } from 'shared/api';
-import { IndexAppUserAccessRights } from 'shared/model/index/access-rights';
+import { SokiAuthLogin, UserInfoUnsecure } from 'shared/api';
 import { objectKeys } from 'shared/utils/object.utils';
 
 export const IndexAccessRightsUserRoleSelector = ({
-  userRights,
+  userInfo,
   userLogin,
 }: {
-  userRights: Required<IndexAppUserAccessRights>[SokiAuthLogin];
+  userInfo: UserInfoUnsecure;
   userLogin: SokiAuthLogin;
 }) => {
-  const userRightsAndRoles = useAtomValue(indexAppUserAccessRightsMatrixAtom);
+  const userRightsAndRoles = useAtomValue(indexAppUserRoleInfoDictAtom);
   const prompt = usePrompt();
 
-  if (userRightsAndRoles?.roles == null) return;
+  if (!userRightsAndRoles) return;
 
   return (
     <>
       <div className="flex gap-3 mb-5 ml-3">
         Роль
         <Dropdown
-          id={userRights.info.role ?? null}
+          id={userInfo.r ?? null}
           nullTitle="Без роли"
-          items={objectKeys(userRightsAndRoles.roles).map(id => ({ id, title: id }))}
+          items={objectKeys(userRightsAndRoles).map(id => ({ id, title: id }))}
           renderItem={({ node, id, afterClickAction }) => (
             <div className="flex gap-2 w-max">
               {node}

@@ -1,11 +1,11 @@
-import { comsDB, usersDB } from 'back/drizzle.schema';
-import { db } from 'back/drizzle/drizzle.db';
+import { comsDB, userDB, userRoleDB } from 'back/drizzle.schema';
+import { db, dbUpdate } from 'back/drizzle/drizzle.db';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
 import { jsonParseSecure } from 'back/json-secure';
 import { eq } from 'drizzle-orm';
 import { makePgCheckedSelectSqlRaw, PgCheckFieldMode } from 'p/d';
-import { CmComWid, IExportableCom } from 'shared/api';
-import { mapObjectEntries, PullPushFileDirNameNet } from 'shared/api/pullFiles.utils';
+import { IExportableCom } from 'shared/api';
+import { forEachObjectEntries, mapObjectEntries, PullPushFileDirNameNet } from 'shared/api/pullFiles.utils';
 import { lazyInit } from 'shared/utils/lazyInit';
 
 type FileMeta<K extends keyof PullPushFileDirNameNet, File extends keyof PullPushFileDirNameNet[K]> = {
@@ -18,16 +18,19 @@ export const pullPushDirFilesDictLazy = lazyInit(
   (): {
     [K in keyof PullPushFileDirNameNet]: {
       [File in keyof PullPushFileDirNameNet[K]]: {
-        pull: (fileName: File) => PromiseOr<File extends `${string}/` ? FileMeta<K, File>[] : FileMeta<K, File>>;
-        push: (data: PullPushFileDirNameNet[K][File]) => PromiseOr<unknown>;
+        pull: (
+          fileName: File,
+          expectedType: FileMeta<K, File>['data'],
+        ) => PromiseOr<File extends `${string}/` ? FileMeta<K, File>[] : FileMeta<K, File>>;
+        PUSH: (data: PullPushFileDirNameNet[K][File]) => PromiseOr<unknown>;
       };
     };
   } => {
     return {
       'apps/cm/': {
         'comwVisits.json': {
-          pull: async file => {
-            const data: PRecord<CmComWid, number> = {};
+          pull: async (file, _type) => {
+            const data: typeof _type = {};
 
             (await db.select({ v: comsDB.visits, w: comsDB.w }).from(comsDB).orderBy(comsDB.w)).map(
               ({ v, w }) => (data[w] = v || 0),
@@ -36,16 +39,12 @@ export const pullPushDirFilesDictLazy = lazyInit(
             return { data, file, name: file };
           },
 
-          push: async visits => {
-            await Promise.all(
-              mapObjectEntries(visits, (comw, visits) => {
-                return db
-                  .update(comsDB)
-                  .set({ visits: visits ?? 0 })
-                  .where(eq(comsDB.w, +comw));
-              }),
-            );
-          },
+          PUSH: visits =>
+            Promise.all(
+              mapObjectEntries(visits, (comw, visits) =>
+                dbUpdate(comsDB, { visits: visits ?? 0 }, eq(comsDB.w, +comw)),
+              ),
+            ),
         },
 
         'coms/': {
@@ -80,7 +79,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
             }));
           },
 
-          push: com => db.insert(comsDB).values(com),
+          PUSH: com => db.insert(comsDB).values(com),
         },
       },
 
@@ -90,15 +89,15 @@ export const pullPushDirFilesDictLazy = lazyInit(
             (
               await db
                 .select({
-                  u: makePgCheckedSelectSqlRaw(usersDB, {
+                  u: makePgCheckedSelectSqlRaw(userDB, {
                     ls: 'len=0',
-                    rules: 'len=0',
+                    rights: 'len=0',
                     r: PgCheckFieldMode.RemoveIfNull,
                     m: PgCheckFieldMode.Remove,
                     id: PgCheckFieldMode.Remove,
                   }),
                 })
-                .from(usersDB)
+                .from(userDB)
             ).map(({ u }) => {
               const auth = jsonParseSecure(u.auth);
 
@@ -109,11 +108,40 @@ export const pullPushDirFilesDictLazy = lazyInit(
               };
             }),
 
-          push: async user => {
-            await db.insert(usersDB).values({
+          PUSH: async user => {
+            await db.insert(userDB).values({
               ...user,
               ls: user.ls ?? [],
-              rules: user.rules ?? {},
+              rights: user.rights ?? {},
+            });
+          },
+        },
+        'userRoles.json': {
+          pull: async (file, _type) => {
+            const roles: typeof _type = {};
+
+            (
+              await db
+                .select({
+                  r: makePgCheckedSelectSqlRaw(userRoleDB, {
+                    id: PgCheckFieldMode.Remove,
+                    m: PgCheckFieldMode.Remove,
+                    r: 'len=0',
+                  }),
+                })
+                .from(userRoleDB)
+            ).forEach(role => (roles[role.r.n] = { r: role.r.r }));
+
+            return {
+              data: roles,
+              file,
+              name: file,
+            };
+          },
+
+          PUSH: roles => {
+            forEachObjectEntries(roles, async (role, rules) => {
+              await dbUpdate(userRoleDB, { r: rules?.r ?? null }, eq(userRoleDB.n, role));
             });
           },
         },

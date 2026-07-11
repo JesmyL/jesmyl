@@ -1,19 +1,25 @@
 import { cmShareServerTsjrpcMethods } from 'back/apps/cm/tsjrpc.shares';
 import { makeTwiceKnownName } from 'back/complect/makeTwiceKnownName';
+import { userDB, userRoleDB } from 'back/drizzle.schema';
+import { db, dbUpdate } from 'back/drizzle/drizzle.db';
 import { hostRootDir } from 'back/envJson';
+import { jsonParseSecure } from 'back/json-secure';
 import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
 import { supportTelegramAuthorizations } from 'back/sides/telegram-bot/prod/authorize';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { takeLogginedAuthOrThrow } from 'back/utils';
 import { exec } from 'child_process';
+import { eq } from 'drizzle-orm';
 import { escapeRegExpSymbols, makeRegExp } from 'regexpert';
+import { UserInfoUnsecure, UserLogin } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { constantsConfigurator } from 'shared/const/cm/constants.def';
 import { emojiList } from 'shared/const/emojiList';
-import { smylib } from 'shared/utils';
+import { UserAccessRole, UserAccessRoleInfo } from 'shared/model/index/access-rights';
+import { iife, smylib } from 'shared/utils';
 import { switchCRUDAccesRightValue } from 'shared/utils/index/utils';
-import { forEachObjectEntries } from 'shared/utils/object.utils';
+import { forEachObjectEntries, objectKeys, objectLength } from 'shared/utils/object.utils';
 import { textToUpperCase } from 'shared/utils/string.utils';
 import {
   accessRightTitlesFileStore,
@@ -21,11 +27,12 @@ import {
   indexStameskaIconsFileStore,
   nounsFileStore,
   pronounsFileStore,
-  userAccessRightsAndRolesFileStore,
   valuesFileStore,
 } from '../file-stores';
 import { schGeneralTsjrpcBaseServer } from '../schedules/base-tsjrpc/general.tsjrpc.base';
 import { constantsConfigFileStore } from '../schedules/file-stores';
+import { resetUserRoleTiny, takeUserRoleTiny } from '../tinies/userRoleTiny';
+import { resetUserTiny, takeUserTiny } from '../tinies/userTiny';
 import { indexServerTsjrpcShareMethods } from '../tsjrpc.methods';
 import { indexTSJRPCBaseGetIconExistsPacks } from './lib/getIconExistsPacks';
 import { indexAuthByTgUser } from './lib/makeAuthFromUser';
@@ -61,81 +68,87 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
       },
       methods: {
         ...otpTSJRPCMethods,
-
-        requestFreshes: indexTSJRPCBaseRequestFreshes,
-        getIconExistsPacks: indexTSJRPCBaseGetIconExistsPacks,
-        updateUserAccessRight: indexTSJRPCBaseUpdateUserAccessRight,
+        ...indexTSJRPCBaseUpdateUserAccessRight,
+        ...indexTSJRPCBaseRequestFreshes,
+        ...indexTSJRPCBaseGetIconExistsPacks,
 
         updateUserAccessRole: async ({ login, role }, { auth: userAuth }) => {
           const auth = takeLogginedAuthOrThrow(userAuth);
 
           if (auth.login === login) throw 'Нельзя поменять роль себе же';
 
-          const { rights, roles } = userAccessRightsAndRolesFileStore.getValue();
-          const authUserRole = rights[auth.login]?.info.role;
+          const yourUser = await takeUserTiny(auth.login);
 
-          if (authUserRole == null || authUserRole !== 'TOP') throw 'Нет прав на это действие 55412304234670';
+          if (yourUser?.r !== 'TOP') throw 'Нет прав на это действие 55412304234670';
 
-          rights[login] ??= { info: { fio: 'unknown 1523612', m: 0 } };
-          rights[login].info.role = role ?? undefined;
-          rights[login].info.m = Date.now();
+          const mod = Date.now();
+          const where = eq(userDB.l, login);
 
-          userAccessRightsAndRolesFileStore.saveValue();
+          if (role) {
+            const roleInfo = await takeUserRoleTiny(role);
+            if (!roleInfo) throw 'Неизвестная роль';
+            await dbUpdate(userDB, { r: role, m: mod }, where);
+          } else await dbUpdate(userDB, { r: null, m: mod }, where);
+
+          resetUserTiny(login);
+
           indexServerTsjrpcShareMethods.refreshAccessRights(
-            {
-              rights: makeUserAccessRights(login),
-              lastModifiedAt: rights[login].info.m,
-            },
+            { rights: await makeUserAccessRights(login), mod },
             { login },
           );
 
-          return { value: { rights, roles } };
+          return { value: { [login]: await takeUserTiny(login) } };
         },
 
         addNewAccessRole: async ({ role }) => {
-          const { roles, rights } = userAccessRightsAndRolesFileStore.getValue();
-          if (roles[role] !== undefined) throw 'Такая роль уже существует';
+          const roleInfo = await takeUserRoleTiny(role);
+          if (roleInfo) throw 'Такая роль уже существует';
 
-          roles[role] = { info: { m: Date.now() } };
+          await db.insert(userRoleDB).values({ n: role });
 
-          userAccessRightsAndRolesFileStore.saveValue();
-
-          return { value: { roles, rights } };
+          return { value: { [role]: await takeUserRoleTiny(role) } };
         },
 
         updateRoleAccessRight: async ({ operation, rule, scope, role }, { auth: userAuth }) => {
           const auth = takeLogginedAuthOrThrow(userAuth);
-          const { rights, roles } = userAccessRightsAndRolesFileStore.getValue();
-          const authUserRole = rights[auth.login]?.info.role;
+          const yourUser = await takeUserTiny(auth.login);
 
-          if (authUserRole == null || authUserRole !== 'TOP') throw 'Нет прав на это действие 068234765';
+          if (yourUser?.r !== 'TOP') throw 'Нет прав на это действие 068234765';
 
-          roles[role] ??= { info: { m: 0 } };
-          roles[role][scope] ??= {};
-          const lastModifiedAt = (roles[role].info.m = Date.now());
+          const roleRights = await takeUserRoleTiny(role);
 
-          roles[role][scope][rule] = switchCRUDAccesRightValue(roles[role][scope][rule] ?? 0, operation);
+          if (!roleRights) throw 'Нет такой роли';
 
-          if (!roles[role][scope][rule]) delete roles[role][scope][rule];
-          if (!smylib.keys(roles[role][scope]).length) delete roles[role][scope];
+          roleRights.r ??= {};
+          roleRights.r[scope] ??= {};
+          const mod = Date.now();
 
-          userAccessRightsAndRolesFileStore.saveValue();
+          roleRights.r[scope][rule] = switchCRUDAccesRightValue(roleRights.r[scope][rule] ?? 0, operation);
 
-          indexServerTsjrpcShareMethods.refreshAccessRights({ rights: {}, lastModifiedAt: 0 }, (_, auth, client) => {
-            if (auth?.login != null && rights[auth.login]?.info.role === role) {
-              indexServerTsjrpcShareMethods.refreshAccessRights(
-                {
-                  rights: makeUserAccessRights(auth.login),
-                  lastModifiedAt,
-                },
-                client,
-              );
+          if (!roleRights.r[scope][rule]) delete roleRights.r[scope][rule];
+          if (!objectLength(roleRights.r[scope])) delete roleRights.r[scope];
+
+          const usersWithRoleSet = new Set(
+            (await db.select({ l: userDB.l }).from(userDB).where(eq(userDB.r, role))).map(it => it.l),
+          );
+
+          indexServerTsjrpcShareMethods.refreshAccessRights({ rights: {}, mod: 0 }, (_, auth, client) => {
+            if (auth?.login && usersWithRoleSet.has(auth.login)) {
+              iife(async () => {
+                indexServerTsjrpcShareMethods.refreshAccessRights(
+                  { rights: await makeUserAccessRights(auth.login), mod },
+                  client,
+                );
+              });
             }
 
             return false;
           });
 
-          return { value: { rights, roles } };
+          await dbUpdate(userRoleDB, { r: roleRights.r ?? null }, eq(userRoleDB.n, role));
+          resetUserRoleTiny(role);
+
+          return { value: { [role]: await takeUserRoleTiny(role) } };
         },
 
         getDeviceId: async () => {
@@ -180,12 +193,27 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         getIndexValues: async () => ({ value: valuesFileStore.getValue() }),
 
         getAccessRightTitles: async () => ({ value: accessRightTitlesFileStore.getValue() }),
-        getUserAccessRightsAndRoles: async () => ({ value: userAccessRightsAndRolesFileStore.getValue() }),
+        getUserInfoDict: async () => {
+          const userInfoDict: PRecord<UserLogin, UserInfoUnsecure> = {};
+
+          (await db.select().from(userDB)).forEach(
+            it => (userInfoDict[it.l] = { ...it, uauth: jsonParseSecure(it.auth) }),
+          );
+
+          return { value: userInfoDict };
+        },
+        getRoleUnfoDict: async () => {
+          const roleInfoDict: PRecord<UserAccessRole, UserAccessRoleInfo> = {};
+
+          (await db.select().from(userRoleDB)).forEach(it => (roleInfoDict[it.n] = it));
+
+          return { value: roleInfoDict };
+        },
         getIconPack: async ({ icon }) => ({ value: { pack: indexStameskaIconsFileStore.getValue()[icon] } }),
 
         getNounPron: args => {
-          const allNouns = smylib.keys(nounsFileStore.getValue().words);
-          const allProns = smylib.keys(pronounsFileStore.getValue().words);
+          const allNouns = objectKeys(nounsFileStore.getValue().words);
+          const allProns = objectKeys(pronounsFileStore.getValue().words);
           const e$e: Record<string, string> = { е: '[её]', ё: '[её]', Е: '[её]', Ё: '[её]' };
           let nouns: string[] | und = undefined;
           let prons: string[] | und = undefined;

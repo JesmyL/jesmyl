@@ -23,10 +23,10 @@ export const modifyCom =
     mapper: (partialCom: IExportableCom, props: Props, tool: ServerTSJRPCTool) => PromiseOr<string | nil>,
   ) =>
   async (props: Props, tool: ServerTSJRPCTool) => {
-    if (throwIfNoUserScopeAccessRight(tool.auth?.login, 'cm', 'COM', 'U')) throw '';
+    if (await throwIfNoUserScopeAccessRight(tool.auth?.login, 'cm', 'COM', 'U')) throw '';
 
     const [scope, operator] = checkIsString(rightsCheck) ? [rightsCheck] : rightsCheck;
-    if (throwIfNoUserScopeAccessRight(tool.auth?.login, 'cm', scope, operator)) throw '';
+    if (await throwIfNoUserScopeAccessRight(tool.auth?.login, 'cm', scope, operator)) throw '';
 
     const com = await selectPgCheckedExportableCom(props.comw);
 

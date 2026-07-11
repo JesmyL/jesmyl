@@ -34,7 +34,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
           ...cmEditComExternalsTsjrpcInterpretations(),
 
           setInSchEv: async ({ schw, dayi, eventMi, list, fio }, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'U')) throw '';
+            if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'U')) throw '';
 
             const pack = await comsInSchEventDirStorage.getOrCreateItem(schw);
             const packHistory = await comsInSchEventHistoryDirStorage.getOrCreateItem(schw);
@@ -72,14 +72,14 @@ export const cmEditComExternalsTsjrpcBaseServer =
           },
 
           getSchEvHistory: async ({ schw, dayi }, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'R')) throw '';
+            if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'R')) throw '';
 
             const history = comsInSchEventHistoryDirStorage.getItem(schw);
 
             return { value: history?.d?.[dayi] ?? [] };
           },
           getSchEvHistoryStatistic: async ({ schw, dayi }, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'R')) throw '';
+            if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'R')) throw '';
 
             const comwCount = {} as Record<CmComWid, number>;
             let totalCount = 0;

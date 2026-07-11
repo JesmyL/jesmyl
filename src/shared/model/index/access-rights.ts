@@ -1,14 +1,9 @@
-import { SokiAuthLogin, UserAuth } from 'shared/api';
-import * as rightsFromFile from '../../../back/apps/index/+case/rights.json';
+import { UserAuth } from 'shared/api';
+import * as rolesFromFile from '../../../back/apps/index/+case/userRoles.json';
 import * as rightTitlesFromFile from '../../../back/apps/index/rightTitles.json';
 
 export type IndexAppAccessRightTitles = typeof rightTitlesFromFile;
-export type UserAccessRole = keyof typeof rightsFromFile.roles;
-
-type UserAccessRights<LoginKey extends string, Role extends string> = {
-  roles: RPRecord<'TOP', UserAccessRole, IndexAccessScopeRulesWithInfo<{ m: number }>>;
-  rights: PRecord<LoginKey, IndexAccessScopeRulesWithInfo<AccessRightsOwnerInfo<Role>>>;
-};
+export type UserAccessRole = keyof typeof rolesFromFile;
 
 export type IndexAccessScopeRulesWithInfo<Info> = { info: Info } & IndexAccessScopeRules;
 
@@ -22,8 +17,12 @@ export type AccessRightsOwnerInfo<Role extends string> = UserAuth & {
   role?: Role;
 };
 
-export type IndexAppUserAccessRights = UserAccessRights<SokiAuthLogin, UserAccessRole>['rights'];
-export type IndexAppUserAccessRightsAndRoles = UserAccessRights<SokiAuthLogin, UserAccessRole>;
-export type IndexAppUserAccessRightsWithoutInfo = Partial<UserAccessRights<string, string>['rights'][string]>;
+export type UserAccessRoleStoraged = PRecord<UserAccessRole, { r?: UserAccessRoleInfo['r'] }>;
 
-rightsFromFile satisfies UserAccessRights<string, string>;
+export type UserAccessRoleInfo = NullifyOptionals<{
+  m: number;
+  n: UserAccessRole;
+  r?: IndexAccessScopeRules;
+}>;
+
+rolesFromFile satisfies UserAccessRoleStoraged;

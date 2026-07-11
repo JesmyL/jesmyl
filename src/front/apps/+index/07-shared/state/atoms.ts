@@ -1,12 +1,8 @@
 import { cmSecureAtomLevel } from '#shared/const/values';
 import { atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { DeviceId, SokiAppName, SokiAuthLogin } from 'shared/api';
-import {
-  IndexAppUserAccessRightsAndRoles,
-  IndexAppUserAccessRightsWithoutInfo,
-  UserAccessRole,
-} from 'shared/model/index/access-rights';
+import { DeviceId, SokiAppName, SokiAuthLogin, UserInfoUnsecure, UserLogin } from 'shared/api';
+import { IndexAccessScopeRules, UserAccessRole, UserAccessRoleInfo } from 'shared/model/index/access-rights';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 import { authIDB } from './auth-idb';
 import { indexIDB } from './index-idb';
@@ -34,8 +30,10 @@ export const indexIsPlayAnimationsAtom = atom(false, 'index:isPlayAnimations');
 export const indexIsShowPlayerInFooterAtom = atom(false, 'index:isShowPlayerInFooter');
 export const indexIsDarkModeAtom = atom(false, 'index:isDarkMode');
 
-export const indexAppUserAccessRightsMatrixAtom = atom<IndexAppUserAccessRightsAndRoles | null>(null);
-export const indexUserAccessRightsAtom = atom<IndexAppUserAccessRightsWithoutInfo>(
+export const indexAppUserInfoDictAtom = atom<PRecord<UserLogin, UserInfoUnsecure> | null>(null);
+export const indexAppUserRoleInfoDictAtom = atom<PRecord<UserAccessRole, UserAccessRoleInfo> | null>(null);
+
+export const indexUserAccessRightsAtom = atom<IndexAccessScopeRules>(
   {},
   {
     storageKey: 'index:myAccessRights',

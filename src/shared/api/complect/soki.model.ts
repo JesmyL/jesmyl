@@ -1,6 +1,6 @@
 import { JsonSecureString } from 'back/json-secure';
 import { User } from 'node-telegram-bot-api';
-import { IndexAccessScopeRules } from 'shared/model/index/access-rights';
+import { IndexAccessScopeRules, UserAccessRole } from 'shared/model/index/access-rights';
 import { DeviceId } from './enums';
 
 export const sokiAppNames = ['index', 'cm', 'tuner', 'q', 'bible', 'storages', 'gamer'] as const;
@@ -44,13 +44,15 @@ export interface LocalSokiAuth {
   email?: string;
 }
 
+export type UserInfoUnsecure = UserInfo & { uauth: UserAuth };
+
 export type UserInfo = NullifyOptionals<{
   auth: JsonSecureString<UserAuth>;
   /** login */
   l: UserLogin;
   /** logins */
   ls?: UserLogin[];
-  rules?: IndexAccessScopeRules;
+  rights?: IndexAccessScopeRules;
   /** role */
-  r?: string;
+  r?: UserAccessRole;
 }>;

@@ -58,7 +58,7 @@ export type SpecialOrderRepeatsInnerAnyKey =
   | SpecialOrderRepeatsKey.LineWord
   | SpecialOrderRepeatsKey.Line;
 
-export type SpecialOrderRepeats = PRecord<SpecialOrderRepeatsKey, number>;
+export type SpecialOrderRepeats = SPRecord<SpecialOrderRepeatsKey, number>;
 export type OrderRepeats = number | SpecialOrderRepeats;
 
 export interface InheritancableOrder {
@@ -277,7 +277,7 @@ export const enum CmComAudioMarkPackTime {
   zero = 0,
 }
 
-export type CmComAudioMarkPack = PRecord<CmComWid, PRecord<CmComAudioMarkPackTime, CmComAudioMarkSelector>>;
+export type CmComAudioMarkPack = SPRecord<CmComWid, SPRecord<CmComAudioMarkPackTime, CmComAudioMarkSelector>>;
 
 export type CmComAudioMarkEditPack = PRecord<
   CmComWid,

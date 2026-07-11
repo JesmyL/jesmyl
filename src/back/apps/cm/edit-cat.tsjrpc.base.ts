@@ -14,7 +14,7 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
       scope: 'CmEditCat',
       methods: {
         toggleComExistence: modifyCat(async (cat, { comw }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
+          if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
           if (cat.k !== 'list') throw 'Категория не является списком';
 
           const stackSet = new Set(cat.s);
@@ -30,7 +30,7 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
         }),
 
         removeNativeComNum: modifyCat(async (cat, { comw }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
+          if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
 
           if (checkIsNil(cat.d)) return null;
           delete cat.d[comw];
@@ -41,7 +41,7 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
         }),
 
         setNativeComNum: modifyCat(async (cat, { comw, value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
+          if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
 
           if (cat.k !== 'dict') throw 'Категория не является сборником';
 

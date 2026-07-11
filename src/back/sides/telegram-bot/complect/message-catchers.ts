@@ -1,4 +1,6 @@
-import { userAccessRightsAndRolesFileStore } from 'back/apps/index/file-stores';
+import { userDB } from 'back/drizzle.schema';
+import { db } from 'back/drizzle/drizzle.db';
+import { jsonStringifySecure } from 'back/json-secure';
 import { hostConfig } from 'shared/api';
 import { jesmylTgBot } from '../bot';
 import { prodTelegramBot } from '../prod/prod-bot';
@@ -84,20 +86,23 @@ export const baseCallbackCatcher = jesmylTgBot.catchCallbackQuery(async (query, 
 
     return answer(requisites);
   } else if (query.data === requestAccessRights_) {
-    return userAccessRightsAndRolesFileStore.modifyValueWithAutoSave(async ({ rights }) => {
-      const user = query.from;
+    const user = query.from;
+    const login = JesmylTelegramBot.makeLoginFromId(query.from.id);
 
-      rights[JesmylTelegramBot.makeLoginFromId(query.from.id)] ??= {
-        info: {
-          fio: `${user.first_name}${user.last_name ? ` ${user.last_name}` : ''}`,
-          m: Date.now(),
-        },
-      };
+    await db.insert(userDB).values({
+      auth: jsonStringifySecure({
+        fio: `${user.first_name} ${user.last_name || ''}`.trim(),
+        nick: user.username,
+        tgId: user.id,
+      }),
+      l: login,
+      ls: [],
+      rights: {},
+    });
 
-      await bot.deleteMessage(message.chat.id, message.message_id);
+    await bot.deleteMessage(message.chat.id, message.message_id);
 
-      return answer({ text: 'Запрос подан. Свяжитесь с админом' });
-    }).result;
+    return answer({ text: 'Запрос подан. Свяжитесь с админом' });
   }
 
   return answer('...');

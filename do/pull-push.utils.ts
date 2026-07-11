@@ -1,4 +1,5 @@
 import { CmComWid, IExportableCom, UserInfo } from 'shared/api';
+import { UserAccessRoleStoraged } from 'shared/model/index/access-rights';
 
 export * from '../src/shared/utils';
 export * from '../src/shared/utils/object.utils';
@@ -42,5 +43,6 @@ export const pullPushFileDirNameNet = {
   },
   'apps/index/': {
     'users/': T<UserInfo>(),
+    'userRoles.json': T<UserAccessRoleStoraged>(),
   },
 };

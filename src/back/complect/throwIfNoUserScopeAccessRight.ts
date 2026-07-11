@@ -1,12 +1,14 @@
-import { userAccessRightsAndRolesFileStore } from 'back/apps/index/file-stores';
+import { takeUserRoleTiny } from 'back/apps/index/tinies/userRoleTiny';
+import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { LocalSokiAuth, SokiAuthLogin } from 'shared/api';
+import { Bool } from 'shared/enums';
 import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
 import { smylib } from 'shared/utils';
 import { accessRightsCRUDOperations, checkUserScopeAccessRight, CRUDOperation } from 'shared/utils/index/utils';
 import WebSocket from 'ws';
 import { sokiServer } from './soki/SokiServer';
 
-export const throwIfNoUserScopeAccessRight = <
+export const throwIfNoUserScopeAccessRight = async <
   Scope extends keyof IndexAppAccessRightTitles,
   Rule extends keyof OmitOwn<IndexAppAccessRightTitles[Scope], 'info'>,
 >(
@@ -14,7 +16,7 @@ export const throwIfNoUserScopeAccessRight = <
   scope: Scope,
   rule: Rule,
   operation?: CRUDOperation | CRUDOperation[],
-): selector is nil => {
+) => {
   do {
     if (selector == null) break;
     let login: SokiAuthLogin | nil;
@@ -37,39 +39,37 @@ export const throwIfNoUserScopeAccessRight = <
 
     if (login == null) break;
 
-    const userRights = userAccessRightsAndRolesFileStore.getValue().rights[login];
+    const userInfo = await takeUserTiny(login);
 
-    if (userRights == null) break;
-    const roleRights = userRights.info.role
-      ? userAccessRightsAndRolesFileStore.getValue().roles[userRights.info.role]
-      : null;
+    if (!userInfo) break;
+    const roleInfo = userInfo.r ? await takeUserRoleTiny(userInfo.r) : null;
 
-    if (checkUserScopeAccessRight(roleRights, userRights, scope, rule, operation)) return false;
-
-    // eslint-disable-next-line no-constant-condition
-  } while (false);
+    if (checkUserScopeAccessRight(roleInfo?.r, userInfo.rights, scope, rule, operation)) return false;
+  } while (Bool.False);
 
   throw 'Нет прав на это действие';
 };
 
-export const checkWhatOfUserScopeOperationAccessRight = <
+export const checkWhatOfUserScopeOperationAccessRight = async <
   Scope extends keyof IndexAppAccessRightTitles,
   Rule extends keyof OmitOwn<IndexAppAccessRightTitles[Scope], 'info'>,
 >(
   selector: SokiAuthLogin | LocalSokiAuth | WebSocket | nil,
   scope: Scope,
   rule: Rule,
-): Record<CRUDOperation, boolean> => {
+): Promise<Record<CRUDOperation, boolean>> => {
   const result = {} as Record<CRUDOperation, boolean>;
 
-  accessRightsCRUDOperations.forEach(operation => {
+  for (const operationStr in accessRightsCRUDOperations) {
+    const operation = operationStr as CRUDOperation;
+
     try {
-      if (throwIfNoUserScopeAccessRight(selector, scope, rule, operation)) throw '';
+      if (await throwIfNoUserScopeAccessRight(selector, scope, rule, operation)) throw '';
       result[operation] = true;
     } catch (_e) {
       result[operation] = false;
     }
-  });
+  }
 
   return result;
 };

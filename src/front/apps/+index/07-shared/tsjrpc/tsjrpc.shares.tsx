@@ -13,7 +13,7 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
     super({
       scope: 'Index',
       methods: {
-        refreshAccessRights: async ({ rights, lastModifiedAt }) => {
+        refreshAccessRights: async ({ rights, mod: lastModifiedAt }) => {
           indexUserAccessRightsAtom.set(rights);
           indexIDB.updateLastModifiedAt(lastModifiedAt);
         },

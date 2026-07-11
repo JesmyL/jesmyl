@@ -1,3 +1,4 @@
+import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import {
   IScheduleWidget,
   IScheduleWidgetUser,
@@ -7,117 +8,121 @@ import {
   ScheduleWidgetUserRoleRight,
   SokiAuthLogin,
 } from 'shared/api';
-import { itNNil, smylib } from 'shared/utils';
+import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
+import { itNNil } from 'shared/utils';
+import { objectKeys, objectLength } from 'shared/utils/object.utils';
 import { knownStameskaIconNames, knownStameskaIconNamesMd5Hash } from 'shared/values/index/known-icons';
 import { StameskaIconPack } from 'stameska-icon/utils';
 import { WebSocket } from 'ws';
-import { indexServerTsjrpcBase } from '..';
-import { indexStameskaIconsFileStore, userAccessRightsAndRolesFileStore } from '../../file-stores';
+import { indexStameskaIconsFileStore } from '../../file-stores';
 import { schedulesDirStore } from '../../schedules/file-stores';
 import { schServerTsjrpcShareMethods } from '../../schedules/tsjrpc.shares';
+import { takeUserRoleTiny } from '../../tinies/userRoleTiny';
+import { takeUserTiny } from '../../tinies/userTiny';
 import { indexServerTsjrpcShareMethods } from '../../tsjrpc.methods';
 import { makeUserAccessRights } from './makeUserAccessRights';
 
-export const indexTSJRPCBaseRequestFreshes: typeof indexServerTsjrpcBase.requestFreshes = async (
-  { lastModfiedAt, iconPacks: userIconPacks, iconsMd5Hash: userIconsMd5Hash },
-  { client, auth },
-) => {
-  const isNoAuth = auth == null;
-  const login = auth?.login;
-  const someScheduleUser = (user: IScheduleWidgetUser) => user.login === login;
+export const indexTSJRPCBaseRequestFreshes = {
+  requestFreshes: async (
+    { lastModfiedAt, iconPacks: userIconPacks, iconsMd5Hash: userIconsMd5Hash },
+    { client, auth },
+  ) => {
+    const isNoAuth = auth == null;
+    const login = auth?.login;
+    const someScheduleUser = (user: IScheduleWidgetUser) => user.login === login;
 
-  if (login != null && client != null) {
-    const rightsAndRoles = userAccessRightsAndRolesFileStore.getValue();
-    const userRights = rightsAndRoles.rights[login];
+    if (login && client) {
+      const userInfo = await takeUserTiny(login);
 
-    if (userRights != null && userRights.info.m > lastModfiedAt) {
-      refreshUserAccessRights(login, client, userRights.info.m);
-    } else {
-      const userRole = userRights?.info.role ? rightsAndRoles.roles[userRights.info.role] : null;
-
-      if (smylib.isObj(userRole) && userRole.info.m > lastModfiedAt) {
-        refreshUserAccessRights(login, client, userRole.info.m);
-      }
-    }
-  }
-
-  const schedules: IScheduleWidget[] = [];
-
-  schedulesDirStore.getAllItems().forEach((sch): number | null => {
-    const removedSch = { w: sch.w, isRemoved: 1 } as IScheduleWidget;
-
-    if (scheduleWidgetRegTypeRights.checkIsHasRights(sch.ctrl.type, ScheduleWidgetRegType.Public)) {
-      if (sch.m <= lastModfiedAt) return null;
-      return schedules.push(sch);
-    }
-
-    if (isNoAuth) return schedules.push(removedSch);
-    if (!sch.ctrl.users.some(someScheduleUser)) return schedules.push(removedSch);
-
-    if (sch.m <= lastModfiedAt) return null;
-
-    return schedules.push(sch);
-  });
-
-  if (userIconsMd5Hash !== knownStameskaIconNamesMd5Hash || !userIconPacks?.length || !!schedules.length) {
-    const userActualIconDict: PRecord<KnownStameskaIconName, StameskaIconPack | null> = {};
-    const knownIconNamesSet = new Set(smylib.keys(knownStameskaIconNames));
-
-    userIconPacks?.forEach(iconName => {
-      if (knownIconNamesSet.has(iconName)) {
-        knownIconNamesSet.delete(iconName);
-
-        if (userActualIconDict[iconName] === null) {
-          delete userActualIconDict[iconName];
-        }
-        return;
-      }
-
-      userActualIconDict[iconName] = null;
-    });
-
-    knownIconNamesSet.forEach(knownIconName => {
-      userActualIconDict[knownIconName] = indexStameskaIconsFileStore.getValue()[knownIconName];
-    });
-
-    const userIconPacksSet = new Set(userIconPacks);
-    const userAccessSchedules: IScheduleWidget[] = [];
-
-    schedulesDirStore.getAllItems().forEach(sch => {
-      if (scheduleWidgetRegTypeRights.checkIsHasRights(sch.ctrl.type, ScheduleWidgetRegType.Public)) {
-        userAccessSchedules.push(sch);
+      if (userInfo && userInfo.m > lastModfiedAt) {
+        await refreshUserAccessRights(login, client, userInfo.m);
       } else {
-        if (
-          scheduleWidgetUserRights.checkIsHasRights(
-            sch.ctrl.users.find(user => user.login === login)?.R,
-            ScheduleWidgetUserRoleRight.Read,
-          )
-        )
-          userAccessSchedules.push(sch);
+        const userRole = userInfo?.r && (await takeUserRoleTiny(userInfo.r));
+
+        if (userRole && userRole.m > lastModfiedAt) {
+          await refreshUserAccessRights(login, client, userRole.m);
+        }
       }
+    }
+
+    const schedules: IScheduleWidget[] = [];
+
+    schedulesDirStore.getAllItems().forEach((sch): number | null => {
+      const removedSch = { w: sch.w, isRemoved: 1 } as IScheduleWidget;
+
+      if (scheduleWidgetRegTypeRights.checkIsHasRights(sch.ctrl.type, ScheduleWidgetRegType.Public)) {
+        if (sch.m <= lastModfiedAt) return null;
+        return schedules.push(sch);
+      }
+
+      if (isNoAuth) return schedules.push(removedSch);
+      if (!sch.ctrl.users.some(someScheduleUser)) return schedules.push(removedSch);
+
+      if (sch.m <= lastModfiedAt) return null;
+
+      return schedules.push(sch);
     });
 
-    userAccessSchedules
-      .map(extractAllScheduleIcons)
-      .flat(2)
-      .filter(itNNil)
-      .forEach(iconName => {
-        if (userIconPacksSet.has(iconName)) return;
-        userActualIconDict[iconName] = indexStameskaIconsFileStore.getValue()[iconName];
+    if (userIconsMd5Hash !== knownStameskaIconNamesMd5Hash || !userIconPacks?.length || !!schedules.length) {
+      const userActualIconDict: PRecord<KnownStameskaIconName, StameskaIconPack | null> = {};
+      const knownIconNamesSet = new Set(objectKeys(knownStameskaIconNames));
+
+      userIconPacks?.forEach(iconName => {
+        if (knownIconNamesSet.has(iconName)) {
+          knownIconNamesSet.delete(iconName);
+
+          if (userActualIconDict[iconName] === null) {
+            delete userActualIconDict[iconName];
+          }
+          return;
+        }
+
+        userActualIconDict[iconName] = null;
       });
 
-    if (knownStameskaIconNamesMd5Hash !== userIconsMd5Hash || smylib.keys(userActualIconDict).length)
-      indexServerTsjrpcShareMethods.updateKnownIconPacks(
-        {
-          actualIconPacks: userActualIconDict,
-          iconsMd5Hash: knownStameskaIconNamesMd5Hash,
-        },
-        client,
-      );
-  }
+      knownIconNamesSet.forEach(knownIconName => {
+        userActualIconDict[knownIconName] = indexStameskaIconsFileStore.getValue()[knownIconName];
+      });
 
-  if (schedules.length) schServerTsjrpcShareMethods.refreshSchedules({ schs: schedules }, client);
-};
+      const userIconPacksSet = new Set(userIconPacks);
+      const userAccessSchedules: IScheduleWidget[] = [];
+
+      schedulesDirStore.getAllItems().forEach(sch => {
+        if (scheduleWidgetRegTypeRights.checkIsHasRights(sch.ctrl.type, ScheduleWidgetRegType.Public)) {
+          userAccessSchedules.push(sch);
+        } else {
+          if (
+            scheduleWidgetUserRights.checkIsHasRights(
+              sch.ctrl.users.find(user => user.login === login)?.R,
+              ScheduleWidgetUserRoleRight.Read,
+            )
+          )
+            userAccessSchedules.push(sch);
+        }
+      });
+
+      userAccessSchedules
+        .map(extractAllScheduleIcons)
+        .flat(2)
+        .filter(itNNil)
+        .forEach(iconName => {
+          if (userIconPacksSet.has(iconName)) return;
+          userActualIconDict[iconName] = indexStameskaIconsFileStore.getValue()[iconName];
+        });
+
+      if (knownStameskaIconNamesMd5Hash !== userIconsMd5Hash || objectLength(userActualIconDict))
+        indexServerTsjrpcShareMethods.updateKnownIconPacks(
+          {
+            actualIconPacks: userActualIconDict,
+            iconsMd5Hash: knownStameskaIconNamesMd5Hash,
+          },
+          client,
+        );
+    }
+
+    if (schedules.length) schServerTsjrpcShareMethods.refreshSchedules({ schs: schedules }, client);
+  },
+} satisfies ServerTsjrpcSatisfy<IndexTsjrpcModel>;
 
 const extractIcon = <Icon>(it: { icon?: Icon }) => it.icon;
 const extractAllScheduleIcons = (sch: IScheduleWidget) => {
@@ -131,5 +136,5 @@ const extractAllScheduleIcons = (sch: IScheduleWidget) => {
     : [];
 };
 
-const refreshUserAccessRights = (login: SokiAuthLogin, client: WebSocket, lastModifiedAt: number) =>
-  indexServerTsjrpcShareMethods.refreshAccessRights({ rights: makeUserAccessRights(login), lastModifiedAt }, client);
+const refreshUserAccessRights = async (login: SokiAuthLogin, client: WebSocket, mod: number) =>
+  indexServerTsjrpcShareMethods.refreshAccessRights({ rights: await makeUserAccessRights(login), mod }, client);

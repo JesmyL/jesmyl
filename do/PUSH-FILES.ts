@@ -27,7 +27,6 @@ import * as secret from './secret.json';
 
     async function walk(caseDir: `${string}/`, files: string[], topDirDir: string | null) {
       const caseDirPath = makeCaseDir(caseDir);
-
       const len = files.length;
 
       for (let filei = 0; filei < files.length; filei++) {

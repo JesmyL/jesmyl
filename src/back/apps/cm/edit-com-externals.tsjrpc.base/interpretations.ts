@@ -64,7 +64,7 @@ const updateInterptetation =
     update: (com: IExportableCom, intp: IExportableComInterpretation, props: Props) => void,
   ) =>
   async (props: Props, { auth }: ServerTSJRPCTool) => {
-    if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'U')) throw '';
+    if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'U')) throw '';
 
     const com = await selectPgCheckedExportableCom(props.comw);
 

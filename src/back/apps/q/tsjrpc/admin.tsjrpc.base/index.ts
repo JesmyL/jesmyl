@@ -1,5 +1,6 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
+import { takeLogginedAuthOrThrow } from 'back/utils';
 import { QuestionerAdminTsjrpcModel } from 'shared/api/tsjrpc/q/admin.tsjrpc.model';
 import { questionerTextIncludeSymbols } from 'shared/const/q/textIncludeSymbols';
 import { questionerTypeDefaultIfConditionOperatorDict } from 'shared/const/q/typeDefaultIfConditionOperator';
@@ -13,7 +14,8 @@ import {
   QuestionerTemplateSelector,
   QuestionerType,
 } from 'shared/model/q';
-import { smylib, SMyLib } from 'shared/utils';
+import { smylib } from 'shared/utils';
+import { objectKeys } from 'shared/utils/object.utils';
 import { questionerBlanksDirStorage } from '../../file-stores';
 import { questionerAdminServerTsjrpcShare } from '../admin.tsjrpc.share';
 import { questionerTSJRPCAddBlankTemplate } from './lib/addBlankTemplate';
@@ -40,7 +42,7 @@ export const questionerAdminServerTsjrpcBase =
           },
 
           getAdminBlank: async ({ blankw }, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth, 'q', 'EDIT', 'U')) throw '';
+            if (await throwIfNoUserScopeAccessRight(auth, 'q', 'EDIT', 'U')) throw '';
             const blank = questionerBlanksDirStorage.getItem(blankw);
 
             return { value: blank ? { ...blank, w: blankw } : null };
@@ -52,7 +54,7 @@ export const questionerAdminServerTsjrpcBase =
 
           changeTemplatePosition: updateBlank((blank, { templateId }) => {
             const templateKeys: QuestionerTemplateId[] = Array.from(
-              new Set([...blank.ord, ...smylib.keys(blank.tmp).map(Number)]),
+              new Set([...blank.ord, ...objectKeys(blank.tmp).map(Number)]),
             );
             const index = templateKeys.indexOf(+templateId);
             blank.ord = smylib.withInsertedBeforei(templateKeys, index - 1, index);
@@ -142,7 +144,7 @@ export const questionerAdminServerTsjrpcBase =
 
           changeTemplateCorrectAnswerIndex: updateTemplate((template, { answerId }) => {
             if (template.type === QuestionerType.Sorter) {
-              template.correct ??= smylib.keys(template.variants).map(Number);
+              template.correct ??= objectKeys(template.variants).map(Number);
               const answeri = template.correct.indexOf(+answerId);
               template.correct = smylib.withInsertedBeforei(template.correct, answeri - 1, answeri);
 
@@ -210,7 +212,7 @@ export const questionerAdminServerTsjrpcBase =
             template.if.next.push({ next: [] });
           }),
           addTemplateConditionNextNext: updateTemplate((template, { nexti, templateId }, blank) => {
-            const ids = smylib.keys(blank.tmp);
+            const ids = objectKeys(blank.tmp);
             const tmpId = +ids[0] === +templateId ? ids[1] : ids[0];
 
             if (tmpId == null) return;
@@ -266,12 +268,13 @@ function updateBlank<Args extends QuestionerBlankSelector>(
   updater: (blank: OmitOwn<QuestionerBlank, 'w'>, args: Args) => void,
 ): (args: Args, tool: ServerTSJRPCTool) => void {
   return async (args, tool) => {
-    if (throwIfNoUserScopeAccessRight(tool.auth?.login, 'q', 'EDIT', 'U')) throw '';
+    const auth = takeLogginedAuthOrThrow(tool.auth);
+    if (await throwIfNoUserScopeAccessRight(auth.login, 'q', 'EDIT', 'U')) throw '';
 
     const blank = questionerBlanksDirStorage.getItem(args.blankw);
 
     if (!blank) throw `Blank ${args.blankw} not found`;
-    if (!adminRoles.has(blank.team[tool.auth.login]?.r)) throw 'Нет прав на это действие 63412393';
+    if (!adminRoles.has(blank.team[auth.login]?.r)) throw 'Нет прав на это действие 63412393';
 
     updater(blank, args);
     blank.m = Date.now();
@@ -279,7 +282,7 @@ function updateBlank<Args extends QuestionerBlankSelector>(
     const maxMod = questionerBlanksDirStorage.saveItem(args.blankw);
 
     if (maxMod != null)
-      questionerAdminServerTsjrpcShare.updateBlanks({ blanks: [blank], maxMod }, { logins: SMyLib.keys(blank.team) });
+      questionerAdminServerTsjrpcShare.updateBlanks({ blanks: [blank], maxMod }, { logins: objectKeys(blank.team) });
   };
 }
 

@@ -1,36 +1,39 @@
 import { SokiAuthLogin } from 'shared/api';
-import { IndexAppUserAccessRightsWithoutInfo } from 'shared/model/index/access-rights';
-import { accessRightTitlesFileStore, userAccessRightsAndRolesFileStore } from '../../file-stores';
+import { IndexAccessScopeRules } from 'shared/model/index/access-rights';
+import { accessRightTitlesFileStore } from '../../file-stores';
+import { takeUserRoleTiny } from '../../tinies/userRoleTiny';
+import { takeUserTiny } from '../../tinies/userTiny';
 
-export const makeUserAccessRights = (login: SokiAuthLogin | nil) => {
-  const { rights, roles } = userAccessRightsAndRolesFileStore.getValue();
-  if (login == null || rights[login] == null) return {};
+export const makeUserAccessRights = async (login: SokiAuthLogin | nil) => {
+  if (!login) return {};
 
-  const userRights = rights[login];
-  let userRightsResult: IndexAppUserAccessRightsWithoutInfo = {};
+  const { rights: userRights, r: userRole } = (await takeUserTiny(login)) ?? {};
 
-  if (userRights.info.role != null) {
+  if (!userRights) return {};
+
+  let userRightsResult: IndexAccessScopeRules = {};
+
+  if (userRole) {
     const titles = accessRightTitlesFileStore.getValue();
 
-    if (userRights.info.role === 'TOP') {
+    if (userRole === 'TOP') {
       for (const scopeName in titles) {
         if (!(scopeName in titles)) continue;
 
         userRightsResult[scopeName as 'general'] = {};
 
         for (const ruleName in titles[scopeName as 'general']) {
-          if (ruleName === 'info') continue;
-          userRightsResult[scopeName as 'general']![ruleName as 'ALL'] = 15;
+          if (ruleName !== 'info') userRightsResult[scopeName as 'general']![ruleName as 'ALL'] = 15;
         }
       }
     } else {
-      const roleRules = roles[userRights.info.role];
+      const { r: roleRules } = (await takeUserRoleTiny(userRole)) ?? {};
 
-      if (roleRules != null) {
+      if (roleRules) {
         for (const scopeName in roleRules) {
-          if (scopeName === 'info' || !(scopeName in roleRules)) continue;
+          if (!(scopeName in roleRules)) continue;
 
-          const { info, ...rules } = roleRules[scopeName as 'general'] ?? {};
+          const rules = roleRules[scopeName as 'general'] ?? {};
           userRightsResult[scopeName as 'general'] = rules;
         }
       }
@@ -43,12 +46,9 @@ export const makeUserAccessRights = (login: SokiAuthLogin | nil) => {
         ...userRightsResult[scopeName as 'general'],
         ...userRights[scopeName as 'general'],
       };
-
-      delete userRightsResult[scopeName as 'general']?.info;
     }
   } else {
-    const { info, ...rights } = userRights;
-    userRightsResult = rights;
+    userRightsResult = userRights;
   }
 
   return userRightsResult;

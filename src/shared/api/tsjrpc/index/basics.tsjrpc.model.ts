@@ -1,11 +1,13 @@
 import { DeviceId } from 'shared/api/complect/enums';
-import { LocalSokiAuth, SokiAuthLogin, TelegramNativeAuthUserData } from 'shared/api/complect/soki.model';
-import { ConstantsConfig } from 'shared/model/constantsConfig';
 import {
-  IndexAppAccessRightTitles,
-  IndexAppUserAccessRightsAndRoles,
-  UserAccessRole,
-} from 'shared/model/index/access-rights';
+  LocalSokiAuth,
+  SokiAuthLogin,
+  TelegramNativeAuthUserData,
+  UserInfoUnsecure,
+  UserLogin,
+} from 'shared/api/complect/soki.model';
+import { ConstantsConfig } from 'shared/model/constantsConfig';
+import { IndexAppAccessRightTitles, UserAccessRole, UserAccessRoleInfo } from 'shared/model/index/access-rights';
 import { IndexValues } from 'shared/model/index/other';
 import { CRUDOperation } from 'shared/utils/index/utils';
 import { StameskaIconPack } from 'stameska-icon/utils';
@@ -33,7 +35,8 @@ export type IndexTsjrpcModel = {
   getIndexValues: () => IndexValues;
 
   getAccessRightTitles: () => IndexAppAccessRightTitles;
-  getUserAccessRightsAndRoles: () => IndexAppUserAccessRightsAndRoles;
+  getUserInfoDict: () => PRecord<UserLogin, UserInfoUnsecure>;
+  getRoleUnfoDict: () => PRecord<UserAccessRole, UserAccessRoleInfo>;
 
   updateUserAccessRight: <
     Scope extends keyof IndexAppAccessRightTitles,
@@ -43,7 +46,7 @@ export type IndexTsjrpcModel = {
     scope: Scope;
     rule: Rule;
     operation: CRUDOperation;
-  }) => IndexAppUserAccessRightsAndRoles | null;
+  }) => PRecord<UserLogin, UserInfoUnsecure>;
 
   updateRoleAccessRight: <
     Scope extends keyof IndexAppAccessRightTitles,
@@ -53,14 +56,14 @@ export type IndexTsjrpcModel = {
     scope: Scope;
     rule: Rule;
     operation: CRUDOperation;
-  }) => IndexAppUserAccessRightsAndRoles | null;
+  }) => PRecord<UserAccessRole, UserAccessRoleInfo> | null;
 
   updateUserAccessRole: (args: {
     login: SokiAuthLogin;
     role: UserAccessRole | nil;
-  }) => IndexAppUserAccessRightsAndRoles | null;
+  }) => PRecord<UserLogin, UserInfoUnsecure> | null;
 
-  addNewAccessRole: (args: { role: UserAccessRole }) => IndexAppUserAccessRightsAndRoles | null;
+  addNewAccessRole: (args: { role: UserAccessRole }) => PRecord<UserAccessRole, UserAccessRoleInfo> | null;
 
   getIconExistsPacks: (args: { page: number; pageSize: number; searchTerm: string }) => {
     packs: StameskaIconPack[];

@@ -79,7 +79,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         newCom: async ({ value: newCom }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'C')) throw '';
+          if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'C')) throw '';
 
           const incorrects = newCom.t
             ?.map(text =>
@@ -120,7 +120,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         ),
 
         takeRemovedComs: async (_, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'C')) throw '';
+          if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'C')) throw '';
 
           return {
             value: (
@@ -132,10 +132,10 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           };
         },
         destroy: async ({ comw }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'C')) throw '';
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'R')) throw '';
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'U')) throw '';
-          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'D')) throw '';
+          if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'C')) throw '';
+          if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'R')) throw '';
+          if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'U')) throw '';
+          if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'D')) throw '';
 
           const [com] = await db.select({ n: comsDB.n, is: comsDB.isRemoved }).from(comsDB).where(eq(comsDB.w, comw));
 

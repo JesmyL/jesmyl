@@ -1,5 +1,6 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
+import { takeLogginedAuthOrThrow } from 'back/utils';
 import {
   StoragesTsjrpcCellSelector,
   StoragesTsjrpcModel,
@@ -41,9 +42,10 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
     super({
       scope: 'Storages',
       methods: {
-        requestFreshes: async ({ lastModfiedAt }, { client, auth }) => {
+        requestFreshes: async ({ lastModfiedAt }, tool) => {
+          const auth = takeLogginedAuthOrThrow(tool.auth);
           try {
-            if (throwIfNoUserScopeAccessRight(auth?.login, 'storages', 'LIST')) throw '';
+            if (await throwIfNoUserScopeAccessRight(auth?.login, 'storages', 'LIST')) throw '';
           } catch (_e) {
             return;
           }
@@ -70,11 +72,12 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
                   .filter(itNNull),
                 maxMod,
               },
-              client,
+              tool.client,
             );
         },
-        createRack: async ({ title }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'storages', 'LIST', 'C')) throw '';
+        createRack: async ({ title }, tool) => {
+          const auth = takeLogginedAuthOrThrow(tool.auth);
+          if (await throwIfNoUserScopeAccessRight(auth?.login, 'storages', 'LIST', 'C')) throw '';
           const login = auth.login;
 
           const { item, mod } = await storagesDirStorage.createItem(store => ({
@@ -487,8 +490,9 @@ function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret exte
   updater: (rack: StoragesRack, props: Props) => Ret,
 ) {
   return async (props: Props, tool: ServerTSJRPCTool): Promise<Ret> => {
-    if (throwIfNoUserScopeAccessRight(tool.auth?.login, 'storages', 'LIST', 'U')) throw '';
-    const login = tool.auth?.login;
+    const auth = takeLogginedAuthOrThrow(tool.auth);
+    if (await throwIfNoUserScopeAccessRight(auth.login, 'storages', 'LIST', 'U')) throw '';
+    const login = auth.login;
     let ret: Ret = undefined!;
     let parentRack = null as StoragesRackStorageSaved | nil;
 
