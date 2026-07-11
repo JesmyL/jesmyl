@@ -1,1 +1,1 @@
-export * from '../../../do/pull-push.utils';
+export * from '../../../do/push-pull.utils';

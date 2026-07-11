@@ -1,5 +1,5 @@
 import { comsDB } from 'back/drizzle.schema';
-import { db } from 'back/drizzle/drizzle.db';
+import { db, dbUpdate } from 'back/drizzle/drizzle.db';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { takeLogginedAuthOrThrow } from 'back/utils';
 import { eq } from 'drizzle-orm';
@@ -39,10 +39,7 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
           const where = eq(comsDB.w, comw);
           const visits = (await db.select({ v: comsDB.visits }).from(comsDB).where(where)).at(0)?.v ?? 0;
 
-          await db
-            .update(comsDB)
-            .set({ visits: visits + 1 })
-            .where(where);
+          await dbUpdate(comsDB, { visits: visits + 1 }, where);
         },
 
         takeComwVisitsCount: async ({ comw }) => ({
