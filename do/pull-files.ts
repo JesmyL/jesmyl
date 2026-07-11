@@ -8,7 +8,7 @@ import {
   pullFilesExpressRoutePath,
   pullFilesExpressSecretQueryName,
   pullPushFileDirNameNet,
-} from './pull-push.utils';
+} from './push-pull.utils';
 import * as secret from './secret.json';
 
 const execAsync = (stringCommand: string) => {
