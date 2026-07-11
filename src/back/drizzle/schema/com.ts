@@ -14,6 +14,7 @@ import { itIt } from 'shared/utils';
 
 const initStringArray = (columnName: string) => text(columnName).array().default([]);
 
+/** @deprecated -> comDB */
 export const comsDB = pgTable('coms', {
   id: serial('id').primaryKey().notNull(),
 

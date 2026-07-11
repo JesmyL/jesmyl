@@ -4,6 +4,7 @@ import { addEventListenerPipe, hookEffectPipe } from '../hookEffectPipe';
 
 export type AddRestMode = 'strong' | 'weak' | 'random';
 
+/** @deprecated */
 export class MyLib extends SMyLib {
   monthFullTitles = [
     'Января',

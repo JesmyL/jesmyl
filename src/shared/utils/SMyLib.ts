@@ -354,4 +354,5 @@ export class SMyLib {
   }
 }
 
+/** @deprecated */
 export const smylib = new SMyLib();
