@@ -14,8 +14,7 @@ import { itIt } from 'shared/utils';
 
 const initStringArray = (columnName: string) => text(columnName).array().default([]);
 
-/** @deprecated -> comDB */
-export const comsDB = pgTable('coms', {
+export const comDB = pgTable('coms', {
   id: serial('id').primaryKey().notNull(),
 
   w: bigint('writedAt', { mode: 'number' })
@@ -62,4 +61,4 @@ export const comsDB = pgTable('coms', {
   visits: integer('visits').notNull().default(0),
 });
 
-if (!Do.It) itIt<Required<IExportableCom>>(comsDB.$inferSelect);
+if (!Do.It) itIt<Required<IExportableCom>>(comDB.$inferSelect);

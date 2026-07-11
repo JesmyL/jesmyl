@@ -1,5 +1,5 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
-import { comsDB } from 'back/drizzle.schema';
+import { comDB } from 'back/drizzle.schema';
 import { dbUpdate } from 'back/drizzle/drizzle.db';
 import { selectPgCheckedExportableCom } from 'back/drizzle/ex/com.selectors';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
@@ -54,7 +54,7 @@ export const modifyCom =
     });
 
     if (isChanged) {
-      await dbUpdate(comsDB, { ...comUpdates, m, l: comUpdates.l ?? CmComLangi.Ru }, eq(comsDB.w, props.comw));
+      await dbUpdate(comDB, { ...comUpdates, m, l: comUpdates.l ?? CmComLangi.Ru }, eq(comDB.w, props.comw));
 
       cmShareServerTsjrpcMethods.editedCom({ com, mod: m }, null);
     }

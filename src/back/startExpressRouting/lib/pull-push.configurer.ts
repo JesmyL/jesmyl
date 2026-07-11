@@ -1,4 +1,4 @@
-import { comsDB, userDB, userRoleDB } from 'back/drizzle.schema';
+import { comDB, userDB, userRoleDB } from 'back/drizzle.schema';
 import { db, dbUpdate } from 'back/drizzle/drizzle.db';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
 import { jsonParseSecure } from 'back/json-secure';
@@ -32,7 +32,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
           pull: async (file, _type) => {
             const data: typeof _type = {};
 
-            (await db.select({ v: comsDB.visits, w: comsDB.w }).from(comsDB).orderBy(comsDB.w)).map(
+            (await db.select({ v: comDB.visits, w: comDB.w }).from(comDB).orderBy(comDB.w)).map(
               ({ v, w }) => (data[w] = v || 0),
             );
 
@@ -41,9 +41,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
 
           PUSH: visits =>
             Promise.all(
-              mapObjectEntries(visits, (comw, visits) =>
-                dbUpdate(comsDB, { visits: visits ?? 0 }, eq(comsDB.w, +comw)),
-              ),
+              mapObjectEntries(visits, (comw, visits) => dbUpdate(comDB, { visits: visits ?? 0 }, eq(comDB.w, +comw))),
             ),
         },
 
@@ -71,7 +69,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
             return (
               await db
                 .select({ com: makePgCheckedSelectExportableComSqlRaw({ m: PgCheckFieldMode.Remove }) })
-                .from(comsDB)
+                .from(comDB)
             ).map(({ com }) => ({
               data: { ...comBlank, ...com },
               file: `${com.w}.json`,
@@ -79,7 +77,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
             }));
           },
 
-          PUSH: com => db.insert(comsDB).values(com),
+          PUSH: com => db.insert(comDB).values(com),
         },
       },
 

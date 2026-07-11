@@ -1,4 +1,4 @@
-import { comsDB } from 'back/drizzle.schema';
+import { comDB } from 'back/drizzle.schema';
 import { db, dbUpdate } from 'back/drizzle/drizzle.db';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { takeLogginedAuthOrThrow } from 'back/utils';
@@ -36,18 +36,18 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
         },
 
         printComwVisit: async ({ comw }) => {
-          const where = eq(comsDB.w, comw);
-          const visits = (await db.select({ v: comsDB.visits }).from(comsDB).where(where)).at(0)?.v ?? 0;
+          const where = eq(comDB.w, comw);
+          const visits = (await db.select({ v: comDB.visits }).from(comDB).where(where)).at(0)?.v ?? 0;
 
-          await dbUpdate(comsDB, { visits: visits + 1 }, where);
+          await dbUpdate(comDB, { visits: visits + 1 }, where);
         },
 
         takeComwVisitsCount: async ({ comw }) => ({
-          value: (await db.select({ v: comsDB.visits }).from(comsDB).where(eq(comsDB.w, comw))).at(0)?.v ?? 0,
+          value: (await db.select({ v: comDB.visits }).from(comDB).where(eq(comDB.w, comw))).at(0)?.v ?? 0,
         }),
 
         getComwVisits: async () => ({
-          value: (await db.select({ v: comsDB.visits, w: comsDB.w }).from(comsDB)).reduce(
+          value: (await db.select({ v: comDB.visits, w: comDB.w }).from(comDB)).reduce(
             (acc, { v, w }) => {
               acc[w] = v;
               return acc;

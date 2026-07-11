@@ -1,7 +1,7 @@
 import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { FileStore } from 'back/complect/FileStore';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
-import { comsDB } from 'back/drizzle.schema';
+import { comDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
 import { and, eq, gt } from 'drizzle-orm';
@@ -38,8 +38,8 @@ export const cmServerTsjrpcBaseRequestFreshes = {
 
     const freshComs = await db
       .select({ c: makePgCheckedSelectExportableComSqlRaw() })
-      .from(comsDB)
-      .where(and(gt(comsDB.m, lastModfiedAt), eq(comsDB.isRemoved, Bool.False)));
+      .from(comDB)
+      .where(and(gt(comDB.m, lastModfiedAt), eq(comDB.isRemoved, Bool.False)));
 
     if (freshComs.length) {
       let maxMod = 0;

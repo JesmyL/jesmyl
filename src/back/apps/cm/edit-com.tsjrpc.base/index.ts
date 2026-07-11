@@ -1,6 +1,6 @@
 import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
-import { comsDB } from 'back/drizzle.schema';
+import { comDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
@@ -106,7 +106,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
             //
           }
 
-          await db.insert(comsDB).values(com);
+          await db.insert(comDB).values(com);
 
           cmShareServerTsjrpcMethods.editedCom({ com, mod: w }, null);
 
@@ -126,8 +126,8 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
             value: (
               await db
                 .select({ c: makePgCheckedSelectExportableComSqlRaw() })
-                .from(comsDB)
-                .where(eq(comsDB.isRemoved, Bool.True))
+                .from(comDB)
+                .where(eq(comDB.isRemoved, Bool.True))
             ).map(it => it.c),
           };
         },
@@ -137,12 +137,12 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'U')) throw '';
           if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'D')) throw '';
 
-          const [com] = await db.select({ n: comsDB.n, is: comsDB.isRemoved }).from(comsDB).where(eq(comsDB.w, comw));
+          const [com] = await db.select({ n: comDB.n, is: comDB.isRemoved }).from(comDB).where(eq(comDB.w, comw));
 
           if (!com) throw 'Неизвестная песня';
           if (!com.is) throw 'Сначала песню нужно удалить';
 
-          await db.delete(comsDB).where(eq(comsDB.w, comw));
+          await db.delete(comDB).where(eq(comDB.w, comw));
 
           return { value: com.n, description: `Песня ${com.n} уничтожена` };
         },

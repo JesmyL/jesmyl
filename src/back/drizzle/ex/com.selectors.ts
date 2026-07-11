@@ -4,12 +4,12 @@ import { CmComIntensityLevel, CmComLangi, CmComWid } from 'shared/api';
 import { Bool } from 'shared/enums';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { makePgCheckedSelectSqlRaw, PgCheckFieldMode } from '.';
-import { comsDB } from '../schema';
+import { comDB } from '../schema';
 
 export const makePgCheckedSelectExportableComSqlRaw = <Adds extends Parameters<typeof makePgCheckedSelectSqlRaw>[1]>(
   adds?: Adds,
 ) =>
-  makePgCheckedSelectSqlRaw(comsDB, {
+  makePgCheckedSelectSqlRaw(comDB, {
     l: `=${CmComLangi.Ru}`,
     s: `=${CmComMetricNum.Four}`,
     d: `=${CmComIntensityLevel.Medium}`,
@@ -27,4 +27,4 @@ export const makePgCheckedSelectExportableComSqlRaw = <Adds extends Parameters<t
   });
 
 export const selectPgCheckedExportableCom = async (comw: CmComWid) =>
-  (await db.select({ c: makePgCheckedSelectExportableComSqlRaw() }).from(comsDB).where(eq(comsDB.w, comw))).at(0)?.c;
+  (await db.select({ c: makePgCheckedSelectExportableComSqlRaw() }).from(comDB).where(eq(comDB.w, comw))).at(0)?.c;

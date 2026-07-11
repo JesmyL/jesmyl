@@ -1,4 +1,4 @@
-import { comsDB } from 'back/drizzle.schema';
+import { comDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
 import { and, eq, lt } from 'drizzle-orm';
 import { CmComWid, IExportableCom } from 'shared/api';
@@ -7,7 +7,7 @@ import { checkIsNotUndefined } from 'shared/utils/checkIs';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
 
 const tinyDict: PRecord<CmComWid, Tiny | null> = {};
-const selectDict = { n: comsDB.n, al: comsDB.al, w: comsDB.w };
+const selectDict = { n: comDB.n, al: comDB.al, w: comDB.w };
 
 type Tiny = Pick<IExportableCom, keyof typeof selectDict> & { i: number };
 
@@ -18,12 +18,12 @@ export const resetComwTiny = async (changedKey: keyof typeof selectDict, comw: R
 export const takeComwTiny = async (comw: RKey<CmComWid>) => {
   if (checkIsNotUndefined(tinyDict[comw])) return tinyDict[comw];
 
-  const comTiny = (await db.select(selectDict).from(comsDB).where(eq(comsDB.w, +comw))).at(0);
+  const comTiny = (await db.select(selectDict).from(comDB).where(eq(comDB.w, +comw))).at(0);
 
   return (tinyDict[comw] = comTiny
     ? {
         ...comTiny,
-        i: takeCorrectComNumber(await db.$count(comsDB, and(eq(comsDB.isRemoved, Bool.False), lt(comsDB.w, +comw)))),
+        i: takeCorrectComNumber(await db.$count(comDB, and(eq(comDB.isRemoved, Bool.False), lt(comDB.w, +comw)))),
       }
     : null);
 };
