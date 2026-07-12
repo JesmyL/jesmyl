@@ -2,12 +2,7 @@ import { makeRegExp } from 'regexpert';
 import { CmComLangi, IExportableOrder } from 'shared/api';
 import { enRuLetterVisualEquivalentLazy } from 'shared/const/letter-eqs';
 import { checkIsNil, checkIsNotNil, checkIsString } from 'shared/utils/checkIs';
-import {
-  checkIsChordLineReg,
-  cmComLanguages,
-  ruDifferentLowerLettersStr,
-  slavicLowerLettersStr,
-} from 'shared/utils/cm/com/const';
+import { checkIsChordLineReg, slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 import { objectLength } from 'shared/utils/object.utils';
 import { comBlockKinds } from 'shared/values/cm/block-kinds/BlockKind';
 import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';
@@ -15,7 +10,7 @@ import { EditableComBlocks } from './30-Blocks';
 
 export class EditableComParseBlocks extends EditableComBlocks {
   static async parseBlocksFromClipboard(value: string, cb?: (blocks: string[]) => boolean) {
-    const blocks: string[] = value.trim().split(makeRegExp('/\\n\\s*\\n/'));
+    const blocks = value.trim().split(makeRegExp('/\\n\\s*\\n/'));
 
     if ((cb && cb(blocks)) !== false) this.parseBlocks(blocks);
   }
@@ -33,7 +28,6 @@ export class EditableComParseBlocks extends EditableComBlocks {
     };
 
     const units: Unit[] = [];
-    let languagei = CmComLangi.Ru;
     let wid = 0;
     const errors: string[] = [];
     const slogUnits: Record<number, Unit[]> = {};
@@ -49,17 +43,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
       block.split('\n').forEach((line, linei) => {
         const freeLine = line.replace(makeRegExp('/\\s+/g'), ' ').trim();
 
-        if (checkIsNotNil(languagei)) {
-          cmComLanguages.forEach((_, langi) => {
-            if (freeLine.match(makeRegExp(`/[${ruDifferentLowerLettersStr}]/`))) {
-              if (checkIsNotNil(languagei) && languagei !== langi) {
-                errors.push('Не удалось определить язык песни');
-              } else languagei = langi;
-            }
-          });
-        }
-
-        if (linei === 0) {
+        if (!linei) {
           unit.kind = this.takeStyleByTitle(freeLine);
           if (unit.kind) return;
         }
@@ -67,15 +51,12 @@ export class EditableComParseBlocks extends EditableComBlocks {
         if (freeLine.match(checkIsChordLineReg)) {
           chordLines.push(freeLine);
         } else {
-          if (textLines.length === 0) {
-            const letters = freeLine.match(makeRegExp('/[аеёиоуэыяюaeouiіїє]/gi'));
-            const slogs = letters?.length;
-            if (slogs !== undefined) {
-              if (slogUnits[slogs] === undefined) slogUnits[slogs] = [];
-              unit.firstLineSlogs = slogs;
-              slogUnits[slogs].push(unit);
-            }
+          if (!objectLength(textLines)) {
+            const slogsCount = objectLength(freeLine.match(makeRegExp('/[аеёиоуэыяюaeouiіїє]/gi')));
+            unit.firstLineSlogs = slogsCount;
+            (slogUnits[slogsCount] ??= []).push(unit);
           }
+
           textLines.push(freeLine);
         }
       });
@@ -91,7 +72,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
         }
       };
 
-      if (chordLinesCount === 0) {
+      if (!chordLinesCount) {
         if (unit.kind) {
           const sameUnit = units.find(u => unit.kind === u.kind && unit !== u);
 
@@ -112,7 +93,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
       }
 
       unitTextLines.forEach((lines, linesi) => {
-        const currUnit = linesi === 0 ? unit : {};
+        const currUnit = !linesi ? unit : {};
 
         currUnit.chords = chords;
         currUnit.text = lines.join('\n');
@@ -134,7 +115,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
     units.forEach((unit, uniti) => {
       if (checkIsNil(unit.kind) && comBlockKinds) {
         if (!unit.text) {
-          if (uniti === 0) unit.kind = comBlockKinds.forChordedBlock[0];
+          if (!uniti) unit.kind = comBlockKinds.forChordedBlock[0];
           else unit.kind = comBlockKinds.forChordedBlock[1];
         }
         const prevUnit = units[uniti - 1];
@@ -186,7 +167,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
 
     return {
       com: {
-        l: languagei,
+        l: CmComLangi.Ru,
         c: objectLength(chords) ? chords : [''],
         t: objectLength(texts) ? texts.map(text => enRuLetterVisualEquivalentLazy().repl(text)) : [''],
         o: orders.filter(ord => checkIsNotNil(ord.t) || checkIsNotNil(ord.c) || checkIsNotNil(ord.a)),
