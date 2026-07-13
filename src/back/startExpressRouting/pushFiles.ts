@@ -1,4 +1,5 @@
 import { makeRedLogText } from 'back/utils.exec';
+import { DrizzleQueryError } from 'drizzle-orm';
 import express from 'express';
 import md5 from 'md5';
 import {
@@ -44,8 +45,14 @@ export const pushFilesExpressRoute = (app: ReturnType<typeof express>) => {
       );
 
       res.status(200).send(`[${meta.count}] Обработан ${meta.name}`);
-    } catch {
-      res.status(500).send(`[${meta.count}] ERROR ${meta.name}`);
+    } catch (error) {
+      console.error(error);
+
+      let errorMessage = 'ERROR';
+      if (error instanceof DrizzleQueryError)
+        errorMessage = makeRedLogText(error.cause?.message ?? error.stack ?? error.message);
+
+      res.status(500).send(`[${meta.count}] ${meta.name} ${errorMessage}`);
     }
   });
 };

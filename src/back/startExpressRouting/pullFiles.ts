@@ -1,4 +1,5 @@
 import { makeRedLogText } from 'back/utils.exec';
+import { DrizzleQueryError } from 'drizzle-orm';
 import express from 'express';
 import md5 from 'md5';
 import {
@@ -73,7 +74,12 @@ export const pullFilesExpressRoute = (app: ReturnType<typeof express>) => {
       res.end();
     } catch (error) {
       console.error(makeRedLogText(`${error}`));
-      if (!res.headersSent) res.status(500).send('Error');
+
+      let errorMessage = 'ERROR';
+      if (error instanceof DrizzleQueryError)
+        errorMessage = makeRedLogText(error.cause?.message ?? error.stack ?? error.message);
+
+      if (!res.headersSent) res.status(500).send(errorMessage);
     }
   });
 };
