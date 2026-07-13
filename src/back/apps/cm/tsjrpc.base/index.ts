@@ -37,13 +37,13 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
 
         printComwVisit: async ({ comw }) => {
           const where = eq(comDB.w, comw);
-          const visits = (await db.select({ v: comDB.visits }).from(comDB).where(where)).at(0)?.v ?? 0;
+          const visits = (await db.select({ v: comDB.visits }).from(comDB).where(where).limit(1)).at(0)?.v ?? 0;
 
           await dbUpdate(comDB, { visits: visits + 1 }, where);
         },
 
         takeComwVisitsCount: async ({ comw }) => ({
-          value: (await db.select({ v: comDB.visits }).from(comDB).where(eq(comDB.w, comw))).at(0)?.v ?? 0,
+          value: (await db.select({ v: comDB.visits }).from(comDB).where(eq(comDB.w, comw)).limit(1)).at(0)?.v ?? 0,
         }),
 
         getComwVisits: async () => ({

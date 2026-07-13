@@ -191,12 +191,13 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
 export const otpTSJRPCMethods = {
   sendBindEmailOTP: async (args, props) => {
     const newLogin = makeLoginFromEmail(args.email);
-    const users = await db
-      .select({ l: userDB.l })
-      .from(userDB)
-      .where(or(eq(userDB.l, newLogin), arrayOverlaps(userDB.ls, [newLogin])));
-
-    const userBinded = users.at(0);
+    const userBinded = (
+      await db
+        .select({ l: userDB.l })
+        .from(userDB)
+        .where(or(eq(userDB.l, newLogin), arrayOverlaps(userDB.ls, [newLogin])))
+        .limit(1)
+    ).at(0);
 
     if (userBinded) throw `E-mail уже привязан к ${userBinded.l === props.auth?.login ? 'вашему' : 'другому'} аккаунту`;
 
@@ -263,6 +264,7 @@ export const otpTSJRPCMethods = {
         .select({ l: userDB.l, auth: userDB.auth })
         .from(userDB)
         .where(or(eq(userDB.l, loginByEmail), arrayOverlaps(userDB.ls, [loginByEmail])))
+        .limit(1)
     ).at(0);
 
     const rootAuth = user?.auth ? jsonParseSecure(user.auth) : null;

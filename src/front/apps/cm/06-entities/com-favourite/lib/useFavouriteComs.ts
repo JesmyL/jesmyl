@@ -5,6 +5,7 @@ import { cmComFavoriteComsAtom } from '$cm/entities/index';
 import { cmUserStoreTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useAuth } from '$index/shared/state';
 import { useAtomValue } from 'atomaric';
+import { itNumSort } from 'shared/utils';
 import { toast } from 'sonner';
 
 export const useCmComFavouriteList = () => {
@@ -25,7 +26,7 @@ export const useCmComFavouriteList = () => {
       const comws = Array.from(favouriteComsSet);
       const isOverLimit = comws.length > maxFavouritesCount;
 
-      cmComFavoriteComsAtom.set(comws.slice(0, maxFavouritesCount));
+      cmComFavoriteComsAtom.set(comws.slice(0, maxFavouritesCount).sort(itNumSort));
 
       if (isOverLimit) {
         toast(`Лимит - ${maxFavouritesCount} избранных`, makeToastKOMoodConfig());

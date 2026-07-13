@@ -18,7 +18,7 @@ export const resetComwTiny = async (changedKey: keyof typeof selectDict, comw: R
 export const takeComwTiny = async (comw: RKey<CmComWid>) => {
   if (checkIsNotUndefined(tinyDict[comw])) return tinyDict[comw];
 
-  const comTiny = (await db.select(selectDict).from(comDB).where(eq(comDB.w, +comw))).at(0);
+  const comTiny = (await db.select(selectDict).from(comDB).where(eq(comDB.w, +comw)).limit(1)).at(0);
 
   return (tinyDict[comw] = comTiny
     ? {

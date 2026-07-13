@@ -27,4 +27,5 @@ export const makePgCheckedSelectExportableComSqlRaw = <Adds extends Parameters<t
   });
 
 export const selectPgCheckedExportableCom = async (comw: CmComWid) =>
-  (await db.select({ c: makePgCheckedSelectExportableComSqlRaw() }).from(comDB).where(eq(comDB.w, comw))).at(0)?.c;
+  (await db.select({ c: makePgCheckedSelectExportableComSqlRaw() }).from(comDB).where(eq(comDB.w, comw)).limit(1)).at(0)
+    ?.c;

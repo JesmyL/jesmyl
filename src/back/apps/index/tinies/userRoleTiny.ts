@@ -11,7 +11,7 @@ export const resetUserRoleTiny = (role: UserAccessRole) => delete tinyDict[role]
 export const takeUserRoleTiny = async (role: UserAccessRole) => {
   if (checkIsNotUndefined(tinyDict[role])) return tinyDict[role];
 
-  const userRoleTiny = (await db.select().from(userRoleDB).where(eq(userRoleDB.n, role))).at(0);
+  const userRoleTiny = (await db.select().from(userRoleDB).where(eq(userRoleDB.n, role)).limit(1)).at(0);
 
   return (tinyDict[role] = userRoleTiny || null);
 };

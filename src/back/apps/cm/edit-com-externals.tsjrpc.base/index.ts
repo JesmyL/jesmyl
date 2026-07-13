@@ -10,7 +10,7 @@ import {
 } from 'shared/api';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
 import { itNumSort, SMyLib, smylib } from 'shared/utils';
-import { checkIsNil } from 'shared/utils/checkIs';
+import { checkIsArray, checkIsNil } from 'shared/utils/checkIs';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
 import { objectKeys } from 'shared/utils/object.utils';
 import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from '../client-selectors-by-visit';
@@ -43,7 +43,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
             pack.pack[dayi][eventMi] = list;
 
             let dayHistory = packHistory.d[dayi];
-            if (!smylib.isArr(dayHistory)) dayHistory = packHistory.d[dayi] = [];
+            if (!checkIsArray(dayHistory)) dayHistory = packHistory.d[dayi] = [];
 
             if (dayHistory.length) {
               const today = new Date().setHours(0, 0, 0, 0);
@@ -129,7 +129,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
               const comNames: string[] = [];
 
               await Promise.all(
-                smylib.keys(cMarks).map(async comw => {
+                objectKeys(cMarks).map(async comw => {
                   comMarks[comw] = { 0: '' };
                   if (description) {
                     const comTiny = await takeComwTiny(+comw);
@@ -173,8 +173,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
             SMyLib.entries(srcPackMarks).forEach(([comwStr, comMarks]) => {
               const sortedMarksPack: CmComAudioMarkPack[CmComWid] = {};
 
-              smylib
-                .keys(comMarks)
+              objectKeys(comMarks)
                 .map(Number)
                 .sort(itNumSort)
                 .forEach((time: CmComAudioMarkPackTime) => {
@@ -183,10 +182,10 @@ export const cmEditComExternalsTsjrpcBaseServer =
 
               srcPackMarks[comwStr] = sortedMarksPack;
 
-              if (smylib.keys(srcPackMarks[comwStr]).length < 2) delete srcPackMarks[comwStr];
+              if (objectKeys(srcPackMarks[comwStr]).length < 2) delete srcPackMarks[comwStr];
             });
 
-            if (!smylib.keys(srcPackMarks).length) delete allMarkPacks[numLink].cMarks;
+            if (!objectKeys(srcPackMarks).length) delete allMarkPacks[numLink].cMarks;
 
             cmComAudioMarkPacksFileStore.saveValue();
 
@@ -215,8 +214,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
 
             const sortedMarksPack: CmComAudioMarkPack = {};
 
-            smylib
-              .keys(comPack)
+            objectKeys(comPack)
               .map(Number)
               .sort(itNumSort)
               .forEach((time: CmComAudioMarkPackTime) => {
