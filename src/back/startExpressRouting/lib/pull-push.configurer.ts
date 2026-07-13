@@ -95,7 +95,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
               w: comDB.w,
               f: user2ComDB.isFav,
               l: userDB.l,
-            });
+            }).orderBy(user2ComDB.userId, comDB.id);
 
             user2Coms.forEach(({ c, f, w, l }) => {
               if (!w || !l) return;
