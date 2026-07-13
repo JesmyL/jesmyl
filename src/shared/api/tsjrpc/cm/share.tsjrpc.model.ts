@@ -1,13 +1,14 @@
 import {
   ChordPack,
   CmCatWid,
+  CmComWid,
   CmComWidRefGroupDict,
   ComsInSchEvent,
   ConstantsConfig,
   ICmComCommentBlock,
   IExportableCat,
   IExportableCom,
-  TAboutComFavoriteItem,
+  MigratableComToolName,
 } from 'shared/api/complect/apps';
 
 export type CmShareTsjrpcModel = {
@@ -21,7 +22,9 @@ export type CmShareTsjrpcModel = {
   refreshChordPack: (args: { pack: ChordPack; modifiedAt: number }) => unknown;
 
   refreshComComments: (args: { comments: ICmComCommentBlock[]; mod: number; alts: string[] | nil }) => void;
-  refreshAboutComFavorites: (args: { value: TAboutComFavoriteItem }) => void;
+  comFav: (args: { comw: CmComWid; is: boolean; mod: number }) => void;
+  favTools: (args: { tools: MigratableComToolName[]; mod: number }) => void;
+  refreshComFavs: (args: { comws: CmComWid[]; mod: number }) => void;
 
   refreshSchEvComPacks: (args: { packs: ComsInSchEvent[]; mod: number }) => void;
   /** @deprecated */

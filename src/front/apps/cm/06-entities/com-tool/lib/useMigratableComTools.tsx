@@ -92,7 +92,7 @@ export const useCmComToolMigratableList = () => {
     if (auth.login == null) return;
     clearTimeout(saveTimeout);
     saveTimeout = setTimeout(() => {
-      cmUserStoreTsjrpcClient.setAboutComFavorites({ tools });
+      cmUserStoreTsjrpcClient.favTools({ tools });
     }, 1000);
   };
 

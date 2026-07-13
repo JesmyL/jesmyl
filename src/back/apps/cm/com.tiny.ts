@@ -7,9 +7,9 @@ import { checkIsNotUndefined } from 'shared/utils/checkIs';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
 
 const tinyDict: PRecord<CmComWid, Tiny | null> = {};
-const selectDict = { n: comDB.n, al: comDB.al, w: comDB.w };
+const selectDict = { n: comDB.n, al: comDB.al, w: comDB.w, id: comDB.id };
 
-type Tiny = Pick<IExportableCom, keyof typeof selectDict> & { i: number };
+type Tiny = Pick<IExportableCom, keyof OmitOwn<typeof selectDict, 'id'>> & { i: number; id: number };
 
 export const resetComwTiny = async (changedKey: keyof typeof selectDict, comw: RKey<CmComWid>) => {
   if (changedKey in selectDict) delete tinyDict[comw];

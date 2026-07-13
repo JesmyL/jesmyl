@@ -235,13 +235,6 @@ export type ICmComCommentBlock = {
   dl?: (CmComCommentBlockDict | nil)[];
 };
 
-export type TAboutComFavoriteItem = {
-  m: number;
-  fio: string;
-  comws?: CmComWid[];
-  tools?: MigratableComToolName[];
-};
-
 export interface IExportableCat {
   /** время создания - уникальный ID */
   w: CmCatWid;

@@ -3,7 +3,10 @@ import { TsjrpcBaseClient } from '#basis/tsjrpc/TsjrpcBase.client';
 import { cmComCommentRegisteredAltKeysAtom } from '$cm/entities/com-comment';
 import { cmComFavoriteComsAtom, cmComTopToolsAtom } from '$cm/entities/index';
 import { CmShareTsjrpcModel } from 'shared/api/tsjrpc/cm/share.tsjrpc.model';
+import { itNumSort } from 'shared/utils';
 import { cmIDB } from '../state/cmIDB';
+
+const updateMod = (mod: number) => cmIDB.updateLastModifiedAt(mod);
 
 export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extends TsjrpcBaseClient<CmShareTsjrpcModel> {
   constructor() {
@@ -17,11 +20,11 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
             await cmIDB.db.coms.put(com);
           }
 
-          if (mod) cmIDB.updateLastModifiedAt(mod);
+          updateMod(mod);
         },
 
         refreshComList: async ({ coms, modifiedAt }) => {
-          cmIDB.updateLastModifiedAt(modifiedAt);
+          updateMod(modifiedAt);
           await cmIDB.db.coms.bulkPut(coms);
           cmIDB.db.coms.where({ isRemoved: 1 }).delete();
         },
@@ -33,23 +36,23 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
             await cmIDB.db.cats.put(cat);
           }
 
-          cmIDB.updateLastModifiedAt(cat.m ?? cat.w);
+          updateMod(cat.m ?? cat.w);
         },
 
         refreshCatList: async ({ cats, modifiedAt, existCatws }) => {
           await cmIDB.db.cats.bulkPut(cats);
           cmIDB.db.cats.where('w').noneOf(existCatws).delete();
-          cmIDB.updateLastModifiedAt(modifiedAt);
+          updateMod(modifiedAt);
         },
 
         editedChords: async ({ chords, modifiedAt }) => {
           cmIDB.set.chordPack(prev => ({ ...prev, ...chords }));
-          cmIDB.updateLastModifiedAt(modifiedAt);
+          updateMod(modifiedAt);
         },
 
         refreshChordPack: async ({ pack, modifiedAt }) => {
           if (pack) cmIDB.set.chordPack(pack);
-          cmIDB.updateLastModifiedAt(modifiedAt);
+          updateMod(modifiedAt);
         },
 
         refreshComComments: async ({ comments, mod, alts }) => {
@@ -62,28 +65,39 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
 
           cmComCommentRegisteredAltKeysAtom.set(alts ?? []);
 
-          cmIDB.updateLastModifiedAt(mod);
+          updateMod(mod);
         },
 
-        refreshAboutComFavorites: async ({ value: favorites }) => {
-          if (favorites.comws != null) cmComFavoriteComsAtom.set(favorites.comws);
-          if (favorites.tools != null) cmComTopToolsAtom.set(favorites.tools);
-          cmIDB.updateLastModifiedAt(favorites.m);
+        comFav: async ({ comw, is, mod }) => {
+          if (is) cmComFavoriteComsAtom.set(prev => [...prev, comw].sort(itNumSort));
+          else cmComFavoriteComsAtom.do.removeFirst(comw);
+
+          updateMod(mod);
+        },
+
+        refreshComFavs: async ({ comws, mod }) => {
+          cmComFavoriteComsAtom.set(comws);
+          updateMod(mod);
+        },
+
+        favTools: async ({ tools, mod }) => {
+          cmComTopToolsAtom.set(tools);
+          updateMod(mod);
         },
 
         refreshSchEvComPacks: async ({ packs: list, mod }) => {
           cmIDB.db.scheduleComPacks.bulkPut(list);
-          cmIDB.updateLastModifiedAt(mod);
+          updateMod(mod);
         },
 
         refreshConstConfig: async ({ config, mod }) => {
           constantsConfigAtom.set(prev => ({ ...prev, ...config }));
-          await cmIDB.updateLastModifiedAt(mod);
+          updateMod(mod);
         },
 
         refreshComWidRefDict: async ({ refs, mod }) => {
           cmIDB.set.comWidRefDict(refs);
-          await cmIDB.updateLastModifiedAt(mod);
+          updateMod(mod);
         },
       },
     });

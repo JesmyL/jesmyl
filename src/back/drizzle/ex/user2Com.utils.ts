@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { takeComwTiny } from 'back/apps/cm/com.tiny';
+import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { eq } from 'drizzle-orm';
 import { PgSelectBase, SelectedFields } from 'drizzle-orm/pg-core';
 import { CmComCommentBlockDict, CmComWid, UserLogin } from 'shared/api';
@@ -13,18 +15,34 @@ export const upsertUser2ComProps = async (
   userLogin: UserLogin,
   comw: CmComWid,
   props: { comment?: (CmComCommentBlockDict | nil)[]; isFav?: boolean },
-  isSetModifies?: boolean,
+  isSetModifies = true,
 ) => {
+  const user = await takeUserTiny(userLogin);
+  const com = await takeComwTiny(comw);
+
+  if (!user || !com) return;
+
   return await db.transaction(async tx => {
     if (!objectLength(props)) return;
 
-    const user = (await tx.select({ id: userDB.id }).from(userDB).where(eq(userDB.l, userLogin))).at(0);
-    const com = (await tx.select({ id: comDB.id }).from(comDB).where(eq(comDB.w, comw))).at(0);
-
-    if (!user || !com) return;
-
     const propsWithMod =
       checkIsNotUndefined(props.comment) && isSetModifies ? { ...props, commentMod: Date.now() } : props;
+    let cmFavComMod = 0;
+
+    if (checkIsNotUndefined(props.isFav) && isSetModifies) {
+      cmFavComMod = Date.now();
+
+      await tx
+        .insert(userExtDB)
+        .values({
+          userId: user.id,
+          cmFavComMod,
+        })
+        .onConflictDoUpdate({
+          target: userExtDB.userId,
+          set: { cmFavComMod },
+        });
+    }
 
     const propsUpset = await tx
       .insert(user2ComDB)
@@ -39,22 +57,7 @@ export const upsertUser2ComProps = async (
       })
       .returning({ userId: user2ComDB.userId });
 
-    if (checkIsNotUndefined(props.isFav) && isSetModifies) {
-      const favMod = { cmFavComMod: Date.now() };
-
-      await tx
-        .insert(userExtDB)
-        .values({
-          userId: user.id,
-          ...favMod,
-        })
-        .onConflictDoUpdate({
-          target: userExtDB.userId,
-          set: favMod,
-        });
-    }
-
-    return propsUpset.at(0);
+    return { ...propsUpset.at(0), cmFavComMod };
   });
 };
 

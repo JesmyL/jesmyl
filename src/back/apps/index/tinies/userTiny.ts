@@ -5,7 +5,7 @@ import { eq } from 'drizzle-orm';
 import { UserInfoUnsecure, UserLogin } from 'shared/api';
 import { checkIsNotUndefined } from 'shared/utils/checkIs';
 
-const tinyDict: PRecord<UserLogin, (UserInfoUnsecure & { m: number }) | nil> = {};
+const tinyDict: PRecord<UserLogin, (UserInfoUnsecure & { m: number; id: number }) | nil> = {};
 
 export const resetUserTiny = async (login: UserLogin) => delete tinyDict[login];
 

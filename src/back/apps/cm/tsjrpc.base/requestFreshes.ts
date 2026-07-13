@@ -1,16 +1,17 @@
 import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { FileStore } from 'back/complect/FileStore';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
-import { comDB } from 'back/drizzle.schema';
+import { comDB, user2ComDB, userDB, userExtDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
+import { selectUser2Com } from 'back/drizzle/ex/user2Com.utils';
 import { and, eq, gt } from 'drizzle-orm';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
-import { Bool } from 'shared/enums';
+import { Bool, Do } from 'shared/enums';
 import { SMyLib } from 'shared/utils';
+import { checkIsNotNil } from 'shared/utils/checkIs';
 import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from '../client-selectors-by-visit';
 import {
-  aboutComFavoritesFileStore,
   catsFileStorage,
   chordPackFileStore,
   cmComWidRefGroupDictFileStore,
@@ -123,18 +124,41 @@ export const cmServerTsjrpcBaseRequestFreshes = {
               client,
             );
           }
-        } while (Math.ceil(0));
+        } while (Do.Not);
       }
 
-      const favoriteItem = aboutComFavoritesFileStore.getValue()[login];
+      const user2Com = (await selectUser2Com({ ext: userExtDB }).where(eq(userDB.l, auth.login))).at(0)?.ext;
 
-      if (favoriteItem && !favoriteItem.fio) {
-        favoriteItem.fio = auth.fio ?? '?';
-        aboutComFavoritesFileStore.saveValue();
+      if (user2Com) {
+        if (user2Com.cmFavComToolsMod > lastModfiedAt) {
+          cmShareServerTsjrpcMethods.favTools(
+            {
+              mod: user2Com.cmFavComToolsMod,
+              tools: user2Com.cmFavComTools,
+            },
+            client,
+          );
+        }
+
+        if (user2Com.cmFavComMod > lastModfiedAt) {
+          cmShareServerTsjrpcMethods.refreshComFavs(
+            {
+              comws: (
+                await db
+                  .select({ w: comDB.w })
+                  .from(user2ComDB)
+                  .leftJoin(comDB, eq(comDB.id, user2ComDB.comId))
+                  .where(and(eq(user2ComDB.isFav, true), eq(user2ComDB.userId, user2Com.userId)))
+                  .orderBy(comDB.w)
+              )
+                .map(it => it.w)
+                .filter(checkIsNotNil),
+              mod: user2Com.cmFavComMod,
+            },
+            client,
+          );
+        }
       }
-
-      if (favoriteItem != null && favoriteItem.m > lastModfiedAt)
-        cmShareServerTsjrpcMethods.refreshAboutComFavorites({ value: favoriteItem }, client);
     }
   },
 } satisfies ServerTsjrpcSatisfy<CmTsjrpcModel>;

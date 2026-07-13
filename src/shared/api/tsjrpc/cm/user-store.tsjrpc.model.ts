@@ -1,5 +1,6 @@
-import { TAboutComFavoriteItem } from 'shared/api/complect/apps';
+import { CmComWid, MigratableComToolName } from 'shared/api/complect/apps';
 
 export type CmUserStoreTsjrpcModel = {
-  setAboutComFavorites: (args: Partial<TAboutComFavoriteItem>) => void;
+  comFav: (args: { comw: CmComWid; is: boolean }) => void;
+  favTools: (args: { tools: MigratableComToolName[] }) => void;
 };

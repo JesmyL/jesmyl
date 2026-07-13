@@ -14,7 +14,6 @@ import {
   IExportableCat,
   IScheduleWidgetWid,
   SokiAuthLogin,
-  TAboutComFavoriteItem,
 } from 'shared/api';
 
 export const catsFileStorage = new FileStore<IExportableCat[]>('/apps/cm/cats.json', []);
@@ -40,8 +39,6 @@ export const mp3ResourcesFileStorage = new FileStore<CmMp3Rule[]>('/apps/cm/mp3R
 export const chordPackFileStore = new FileStore<ChordPack>('/apps/cm/chordTracks.json', {});
 export const eePackFileStore = new FileStore<EeStorePack>('/apps/cm/eeStorage.json', {});
 
-type TUserFavoritesStore = Partial<Record<string, TAboutComFavoriteItem>>;
-
 export const comCommentsDirStore = new DirStorage<
   {
     l: SokiAuthLogin;
@@ -56,8 +53,6 @@ export const comCommentsDirStore = new DirStorage<
   makeNewItem: () => ({ l: '' as SokiAuthLogin, fio: '', b: {} }),
   idKey: 'l',
 });
-
-export const aboutComFavoritesFileStore = new FileStore<TUserFavoritesStore>('/apps/cm/aboutComFavorites.json', {});
 
 export const cmComWidRefGroupDictFileStore = new FileStore<CmComWidRefGroupDict>(
   '/apps/cm/comWidRefGroupDict.json',
