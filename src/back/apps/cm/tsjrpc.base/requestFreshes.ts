@@ -1,21 +1,20 @@
 import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { FileStore } from 'back/complect/FileStore';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
-import { comDB, user2ComDB, userDB, userExtDB } from 'back/drizzle.schema';
+import { comDB, selectUserExt, user2ComDB, userDB, userExtDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
 import { selectUser2Com } from 'back/drizzle/ex/user2Com.utils';
 import { and, DrizzleQueryError, eq, gt } from 'drizzle-orm';
+import { ICmComCommentBlock } from 'shared/api';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
 import { Bool, Do } from 'shared/enums';
-import { SMyLib } from 'shared/utils';
 import { checkIsNotNil } from 'shared/utils/checkIs';
 import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from '../client-selectors-by-visit';
 import {
   catsFileStorage,
   chordPackFileStore,
   cmComWidRefGroupDictFileStore,
-  comCommentsDirStore,
   comsInSchEventDirStorage,
 } from '../file-stores';
 import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
@@ -96,52 +95,45 @@ export const cmServerTsjrpcBaseRequestFreshes = {
 
     if (auth?.login != null) {
       const login = auth.login;
-      const commentsLastModified = comCommentsDirStore.getItemModTime(login);
-
-      if (commentsLastModified != null && commentsLastModified > lastModfiedAt) {
-        do {
-          const commentsHolder = comCommentsDirStore.getItem(login);
-
-          const blocks = commentsHolder?.b;
-          if (commentsHolder && (commentsHolder.fio == null || commentsHolder.fio !== auth.fio)) {
-            commentsHolder.fio = auth.fio;
-            comCommentsDirStore.saveItem(login);
-          }
-
-          if (blocks == null) break;
-
-          const comments = SMyLib.keys(blocks)
-            .filter(comw => blocks[comw] != null && blocks[comw].m > lastModfiedAt)
-            .map(strComw => ({
-              m: 0,
-              comw: +strComw,
-              ...blocks[strComw],
-            }));
-
-          if (comments.length > 0) {
-            cmShareServerTsjrpcMethods.refreshComComments(
-              { comments, mod: commentsLastModified, alts: commentsHolder?.alts },
-              client,
-            );
-          }
-        } while (Do.Not);
-      }
 
       try {
-        const user2Com = (await selectUser2Com({ ext: userExtDB }).where(eq(userDB.l, auth.login)).limit(1)).at(0)?.ext;
+        const userExt = (await selectUserExt({ u: userExtDB }).where(eq(userDB.l, login)).limit(1)).at(0)?.u;
 
-        if (user2Com) {
-          if (user2Com.cmFavComToolsMod > lastModfiedAt) {
+        do {
+          let maxMod = 0;
+
+          const commentHolders = await selectUser2Com({
+            dl: user2ComDB.comment,
+            mod: user2ComDB.commentMod,
+            comw: comDB.w,
+          }).where(and(eq(userDB.l, login), gt(user2ComDB.commentMod, lastModfiedAt)));
+
+          if (commentHolders.length > 0) {
+            const comments: ICmComCommentBlock[] = [];
+
+            commentHolders.forEach(({ dl, mod, comw }) => {
+              if (!comw) return;
+              if (mod) maxMod = Math.max(maxMod, mod);
+
+              return comments.push({ comw, m: 0, dl: dl || undefined });
+            });
+
+            cmShareServerTsjrpcMethods.refreshComComments({ comments, mod: maxMod, alts: userExt?.cmCommAlts }, client);
+          }
+        } while (Do.Not);
+
+        if (userExt) {
+          if (userExt.cmFavComToolsMod > lastModfiedAt) {
             cmShareServerTsjrpcMethods.favTools(
               {
-                mod: user2Com.cmFavComToolsMod,
-                tools: user2Com.cmFavComTools,
+                mod: userExt.cmFavComToolsMod,
+                tools: userExt.cmFavComTools,
               },
               client,
             );
           }
 
-          if (user2Com.cmFavComMod > lastModfiedAt) {
+          if (userExt.cmFavComMod > lastModfiedAt) {
             cmShareServerTsjrpcMethods.refreshComFavs(
               {
                 comws: (
@@ -149,12 +141,12 @@ export const cmServerTsjrpcBaseRequestFreshes = {
                     .select({ w: comDB.w })
                     .from(user2ComDB)
                     .leftJoin(comDB, eq(comDB.id, user2ComDB.comId))
-                    .where(and(eq(user2ComDB.isFav, true), eq(user2ComDB.userId, user2Com.userId)))
+                    .where(and(eq(user2ComDB.isFav, true), eq(user2ComDB.userId, userExt.userId)))
                     .orderBy(comDB.w)
                 )
                   .map(it => it.w)
                   .filter(checkIsNotNil),
-                mod: user2Com.cmFavComMod,
+                mod: userExt.cmFavComMod,
               },
               client,
             );

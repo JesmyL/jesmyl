@@ -1,5 +1,8 @@
-import { bigint, integer, pgTable, text } from 'drizzle-orm/pg-core';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { eq } from 'drizzle-orm';
+import { bigint, integer, PgSelectBase, pgTable, SelectedFields, text } from 'drizzle-orm/pg-core';
 import { MigratableComToolName, SokiAppName } from 'shared/api';
+import { db } from '../drizzle.db';
 import { userDB } from './user';
 
 const typeExample = (name: string) => bigint(name, { mode: 'number' }).notNull().default(0);
@@ -21,4 +24,13 @@ export const userExtDB = pgTable('userExt', {
     .$type<MigratableComToolName[]>()
     .notNull()
     .$defaultFn(() => []),
+
+  cmCommAlts: text('cmCommAlts')
+    .array()
+    .notNull()
+    .$defaultFn(() => []),
 });
+
+export const selectUserExt = <const Sel extends SelectedFields, Ret extends PgSelectBase<any, Sel, 'multiple', any>>(
+  sel: Sel,
+) => db.select(sel).from(userExtDB).leftJoin(userDB, eq(userExtDB.userId, userDB.id)) as unknown as Ret;

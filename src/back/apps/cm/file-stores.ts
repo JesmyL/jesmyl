@@ -3,17 +3,14 @@ import { FileStore } from 'back/complect/FileStore';
 import {
   ChordPack,
   CmComAudioMarkPack,
-  CmComWid,
   CmComWidRefGroupDict,
   CmMp3Rule,
   ComsInSchEvent,
   ComsInSchEventHistory,
   EeStorePack,
   HttpNumLeadLink,
-  ICmComCommentBlock,
   IExportableCat,
   IScheduleWidgetWid,
-  SokiAuthLogin,
 } from 'shared/api';
 
 export const catsFileStorage = new FileStore<IExportableCat[]>('/apps/cm/cats.json', []);
@@ -38,21 +35,6 @@ export const mp3ResourcesFileStorage = new FileStore<CmMp3Rule[]>('/apps/cm/mp3R
 
 export const chordPackFileStore = new FileStore<ChordPack>('/apps/cm/chordTracks.json', {});
 export const eePackFileStore = new FileStore<EeStorePack>('/apps/cm/eeStorage.json', {});
-
-export const comCommentsDirStore = new DirStorage<
-  {
-    l: SokiAuthLogin;
-    fio?: string;
-    alts?: string[];
-    b: PRecord<CmComWid, OmitOwn<ICmComCommentBlock, 'comw'>>;
-  },
-  SokiAuthLogin,
-  'l'
->({
-  dirPath: '/apps/cm/comComments/',
-  makeNewItem: () => ({ l: '' as SokiAuthLogin, fio: '', b: {} }),
-  idKey: 'l',
-});
 
 export const cmComWidRefGroupDictFileStore = new FileStore<CmComWidRefGroupDict>(
   '/apps/cm/comWidRefGroupDict.json',

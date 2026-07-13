@@ -1,10 +1,12 @@
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
+import { comDB, user2ComDB, userDB, userExtDB } from 'back/drizzle.schema';
+import { selectUser2Com, upsertUser2ComProps } from 'back/drizzle/ex/user2Com.utils';
 import { takeLogginedAuthOrThrow } from 'back/utils';
+import { and, eq } from 'drizzle-orm';
 import { CmComCommentBlockDict, CmComCommentBlockSpecialSelector, ICmComCommentBlock } from 'shared/api';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
-import { arrayByLength } from 'shared/utils/object.utils';
+import { arrayByLength, objectLength } from 'shared/utils/object.utils';
 import { removeEmptyRightValues } from 'shared/utils/removeEmptyRightValues';
-import { comCommentsDirStore } from '../file-stores';
 import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
 
 export const cmServerTsjrpcBaseExchangeFreshComCommentBlocks = {
@@ -12,27 +14,32 @@ export const cmServerTsjrpcBaseExchangeFreshComCommentBlocks = {
     const auth = takeLogginedAuthOrThrow(userAuth);
     const withClientTimeDelta = Date.now() - clientDateNow;
 
-    const commentsHolder = await comCommentsDirStore.getOrCreateItem(auth.login, null, auth.login);
-    commentsHolder.fio = auth.fio;
-    const userServerComments = commentsHolder.b;
-
     let localSavedCommentsMaxModifiedAt = 0;
     const freshComments: ICmComCommentBlock[] = [];
     const resultComments: ICmComCommentBlock[] = [];
 
-    modifiedComments.forEach(({ comw, m, dl }) => {
+    for (const { comw, m, dl } of modifiedComments) {
       const commentModifiedAt = m + withClientTimeDelta;
 
-      if (userServerComments[comw] != null && commentModifiedAt < userServerComments[comw].m) {
-        resultComments.push({ ...userServerComments[comw], comw });
-        return;
+      const serverCommentHolder = (
+        await selectUser2Com({
+          dl: user2ComDB.comment,
+          mod: user2ComDB.commentMod,
+        })
+          .where(and(eq(userDB.l, auth.login), eq(comDB.w, comw)))
+          .limit(1)
+      ).at(0);
+
+      if (serverCommentHolder?.mod && commentModifiedAt < serverCommentHolder.mod) {
+        resultComments.push({ dl: serverCommentHolder.dl || undefined, m: serverCommentHolder.mod, comw });
+        continue;
       }
 
-      const comServerCommentDicts = userServerComments[comw]?.dl ?? [];
+      const comServerCommentDicts = serverCommentHolder?.dl ?? [];
       const modifiedComCommentDicts = dl ?? [];
 
       const resultDictList = arrayByLength(
-        Math.max(modifiedComCommentDicts.length, comServerCommentDicts.length),
+        Math.max(objectLength(modifiedComCommentDicts), objectLength(comServerCommentDicts)),
         (i): CmComCommentBlockDict | nil => {
           const dict = {
             ...comServerCommentDicts[i],
@@ -47,27 +54,29 @@ export const cmServerTsjrpcBaseExchangeFreshComCommentBlocks = {
 
           return dict;
         },
-      );
+      ).map(it => it || {});
 
-      userServerComments[comw] = {
-        ...userServerComments[comw],
-        dl: resultDictList.map(it => it || {}),
-        m: commentModifiedAt,
-      };
+      const isEmpty = removeEmptyRightValues(resultDictList);
+      const comment = isEmpty ? undefined : resultDictList;
 
-      removeEmptyRightValues(userServerComments[comw]);
+      const block: ICmComCommentBlock = { dl: comment, comw, m: commentModifiedAt };
 
-      const block: ICmComCommentBlock = { ...userServerComments[comw], comw };
       resultComments.push(block);
       freshComments.push(block);
       localSavedCommentsMaxModifiedAt = Math.max(localSavedCommentsMaxModifiedAt, commentModifiedAt);
-    });
+
+      await upsertUser2ComProps(auth.login, comw, { comment: comment ?? null });
+    }
 
     if (localSavedCommentsMaxModifiedAt) {
-      comCommentsDirStore.saveItem(auth.login);
+      const user2ComHolder = (
+        await selectUser2Com({ alts: userExtDB.cmCommAlts })
+          .where(and(eq(userDB.l, auth.login)))
+          .limit(1)
+      ).at(0);
 
       cmShareServerTsjrpcMethods.refreshComComments(
-        { comments: freshComments, mod: localSavedCommentsMaxModifiedAt, alts: commentsHolder.alts },
+        { comments: freshComments, mod: localSavedCommentsMaxModifiedAt, alts: user2ComHolder?.alts },
         { login: auth.login },
       );
     }

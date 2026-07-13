@@ -1,8 +1,9 @@
-import { comDB } from 'back/drizzle.schema';
+import { comDB, user2ComDB, userDB } from 'back/drizzle.schema';
 import { db, dbUpdate } from 'back/drizzle/drizzle.db';
+import { selectUser2Com } from 'back/drizzle/ex/user2Com.utils';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { takeLogginedAuthOrThrow } from 'back/utils';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import { CmComWid } from 'shared/api';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
 import { numLeadToHttpLinks } from '../complect/com-http-links';
@@ -11,7 +12,7 @@ import { cmEditComExternalsTsjrpcBaseServer } from '../edit-com-externals.tsjrpc
 import { cmEditComOrderServerTsjrpcBase } from '../edit-com-order.tsjrpc.base';
 import { cmEditComServerTsjrpcBase } from '../edit-com.tsjrpc.base';
 import { cmEditorTsjrpcBaseServer } from '../editor.tsjrpc.base';
-import { cmComAudioMarkPacksFileStore, comCommentsDirStore, comsInSchEventHistoryDirStorage } from '../file-stores';
+import { cmComAudioMarkPacksFileStore, comsInSchEventHistoryDirStorage } from '../file-stores';
 import { cmUserStoreTsjrpcBaseServer } from '../user-store.tsjrpc.base';
 import { cmServerTsjrpcBaseExchangeFreshComCommentBlocks } from './exchangeFreshComCommentBlocks';
 import { cmServerTsjrpcBaseRequestFreshes } from './requestFreshes';
@@ -24,14 +25,24 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
         ...cmServerTsjrpcBaseRequestFreshes,
         ...cmServerTsjrpcBaseExchangeFreshComCommentBlocks,
 
-        pullComComments: ({ comw }, { auth }) => {
-          const comments = comCommentsDirStore.getItem(takeLogginedAuthOrThrow(auth).login)?.b[comw];
+        pullComComments: async ({ comw }, tool) => {
+          const auth = takeLogginedAuthOrThrow(tool.auth);
+
+          const user2ComHolder = (
+            await selectUser2Com({ c: user2ComDB.comment, mod: user2ComDB.commentMod })
+              .where(and(eq(userDB.l, auth.login)))
+              .limit(1)
+          ).at(0);
 
           return {
-            value: comments && {
-              ...comments,
-              comw,
-            },
+            value:
+              user2ComHolder?.c && user2ComHolder?.mod
+                ? {
+                    m: user2ComHolder.mod,
+                    dl: user2ComHolder.c,
+                    comw,
+                  }
+                : undefined,
           };
         },
 

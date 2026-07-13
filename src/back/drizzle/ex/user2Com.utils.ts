@@ -14,7 +14,7 @@ import { userExtDB } from '../schema/userExt';
 export const upsertUser2ComProps = async (
   userLogin: UserLogin,
   comw: CmComWid,
-  props: { comment?: (CmComCommentBlockDict | nil)[]; isFav?: boolean },
+  props: { comment?: (CmComCommentBlockDict | nil)[] | nil; isFav?: boolean },
   isSetModifies = true,
 ) => {
   const user = await takeUserTiny(userLogin);
