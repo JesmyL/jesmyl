@@ -27,6 +27,8 @@ export const lazyEnvJson = lazyInit(() => {
     DB_PORT: '',
     DB_HOST: '',
     SECURE_KEY: '',
+
+    isProd: false,
   };
 
   if (!fs.existsSync(envFilePath)) {
@@ -39,10 +41,10 @@ export const lazyEnvJson = lazyInit(() => {
 
   const envJson: typeof jsonForType = JSON.parse(fs.readFileSync(envFilePath, 'utf-8'));
   const emptyFields: string[] = [];
+  const invalidValuesSet = new Set<unknown>([null, undefined, '']);
 
   forEachObjectEntries(emptyEnvDict, key => {
-    const jsonValue = envJson[key];
-    if (!jsonValue) emptyFields.push(key);
+    if (invalidValuesSet.has(envJson[key])) emptyFields.push(key);
   });
 
   if (emptyFields.length) {

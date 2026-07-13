@@ -3,7 +3,7 @@ import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { LocalSokiAuth, SokiAuthLogin } from 'shared/api';
 import { Bool } from 'shared/enums';
 import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
-import { smylib } from 'shared/utils';
+import { checkIsNil, checkIsString } from 'shared/utils/checkIs';
 import { accessRightsCRUDOperations, checkUserScopeAccessRight, CRUDOperation } from 'shared/utils/index/utils';
 import WebSocket from 'ws';
 import { sokiServer } from './soki/SokiServer';
@@ -18,14 +18,14 @@ export const throwIfNoUserScopeAccessRight = async <
   operation?: CRUDOperation | CRUDOperation[],
 ) => {
   do {
-    if (selector == null) break;
+    if (checkIsNil(selector)) break;
     let login: SokiAuthLogin | nil;
 
     if (typeof selector === 'object' && 'login' in selector) {
       if (selector.login) login = selector.login;
     }
 
-    if (smylib.isStr(selector)) {
+    if (checkIsString(selector)) {
       login = selector;
 
       const client = sokiServer.clientsByLogin.get(login)?.values().next().value;
@@ -37,11 +37,13 @@ export const throwIfNoUserScopeAccessRight = async <
       login = sokiServer.auths.get(selector)?.login;
     }
 
-    if (login == null) break;
+    if (checkIsNil(login)) break;
 
     const userInfo = await takeUserTiny(login);
 
     if (!userInfo) break;
+    if (userInfo.r === 'TOP') return false;
+
     const roleInfo = userInfo.r ? await takeUserRoleTiny(userInfo.r) : null;
 
     if (checkUserScopeAccessRight(roleInfo?.r, userInfo.rights, scope, rule, operation)) return false;

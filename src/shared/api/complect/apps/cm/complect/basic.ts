@@ -227,6 +227,7 @@ export type CmComCommentBlockAnySelector = CmComOrderWid | CmComCommentBlockSpec
 export type CmComCommentBlockDict = PRecord<CmComCommentBlockSimpleSelector, string[]> &
   PRecord<CmComCommentBlockSpecialSelector.Kinds, PRecord<CmComBlockKindKey, string>>;
 
+/** @deprecated */
 export type ICmComCommentBlock = {
   comw: CmComWid;
   m: number;

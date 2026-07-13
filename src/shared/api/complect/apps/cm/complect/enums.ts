@@ -3,6 +3,7 @@ export const enum CmComLangi {
   Ua,
 }
 
+/** @deprecated -> brand number */
 export const enum CmComWid {
   def = -1,
   other = -2,
