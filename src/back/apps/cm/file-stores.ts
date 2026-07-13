@@ -12,19 +12,10 @@ import {
   HttpNumLeadLink,
   ICmComCommentBlock,
   IExportableCat,
-  IExportableCom,
   IScheduleWidgetWid,
   SokiAuthLogin,
   TAboutComFavoriteItem,
 } from 'shared/api';
-import { cmDefaultCom } from 'shared/const/cm/def.com';
-
-export const comsDirStorage = new DirStorage<IExportableCom, CmComWid>({
-  dirPath: '/apps/cm/coms/',
-  makeNewItem: () => cmDefaultCom(+`${Date.now() + Math.random()}`),
-  cacheTime: 30 * 60 * 60 * 1000,
-  idKey: 'w',
-});
 
 export const catsFileStorage = new FileStore<IExportableCat[]>('/apps/cm/cats.json', []);
 
@@ -62,7 +53,7 @@ export const comCommentsDirStore = new DirStorage<
   'l'
 >({
   dirPath: '/apps/cm/comComments/',
-  makeNewItem: () => ({ l: SokiAuthLogin.other, fio: '', b: {} }),
+  makeNewItem: () => ({ l: '' as SokiAuthLogin, fio: '', b: {} }),
   idKey: 'l',
 });
 

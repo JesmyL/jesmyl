@@ -8,7 +8,7 @@ import {
   pullPushFileDirNameNet,
   pushFilesExpressRoutePath,
   stringifyPulledFileDatasNl,
-} from './pull-push.utils';
+} from './push-pull.utils';
 import * as secret from './secret.json';
 
 (async () => {

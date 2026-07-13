@@ -1,4 +1,4 @@
-import { CmComWid, IExportableCom, UserInfo } from 'shared/api';
+import { CmComCommentBlockDict, CmComWid, IExportableCom, UserInfo, UserLogin } from 'shared/api';
 import { UserAccessRoleStoraged } from 'shared/model/index/access-rights';
 
 export * from '../src/shared/utils';
@@ -8,7 +8,7 @@ const dataSeparator = '#%^%#';
 
 type Meta = {
   dir: keyof PullPushFileDirNameNet;
-  dirDir: PullPushFileDirNameNet[keyof PullPushFileDirNameNet] | string;
+  dirDir: string;
   caseDir: `${string}/`;
   file: string;
   name: string;
@@ -34,15 +34,16 @@ export const pullFilesExpressSecretQueryName = 'secret_word';
 
 export type PullPushFileDirNameNet = typeof pullPushFileDirNameNet;
 
-const T = <Type>() => 0 as Type;
+const T = <Type, FileName extends string>() => 0 as never as { F: FileName; T: Type };
 
 export const pullPushFileDirNameNet = {
   'apps/cm/': {
-    'coms/': T<IExportableCom>(),
-    'comwVisits.json': T<PRecord<CmComWid, number>>(),
+    'coms/': T<IExportableCom, `${CmComWid}`>(),
+    'user2Com/': T<PRecord<CmComWid, { fav?: 1; comm?: (CmComCommentBlockDict | nil)[] }>, UserLogin>(),
+    comwVisits: T<PRecord<CmComWid, number>, string>(),
   },
   'apps/index/': {
-    'users/': T<UserInfo>(),
-    'userRoles.json': T<UserAccessRoleStoraged>(),
+    'users/': T<UserInfo, UserLogin>(),
+    userRoles: T<UserAccessRoleStoraged, string>(),
   },
-};
+} satisfies Record<string, Record<string, { F: unknown; T: unknown }>>;

@@ -1,6 +1,6 @@
 import { JsonSecureString } from 'back/json-secure';
 import { bigint, jsonb, pgTable, serial, text } from 'p/d';
-import { SokiAuthLogin, UserAuth, UserInfo } from 'shared/api';
+import { UserAuth, UserInfo, UserLogin } from 'shared/api';
 import { Do } from 'shared/enums';
 import { IndexAccessScopeRules, UserAccessRole } from 'shared/model/index/access-rights';
 import { itIt } from 'shared/utils';
@@ -8,8 +8,8 @@ import { itIt } from 'shared/utils';
 export const userDB = pgTable('users', {
   id: serial('id').primaryKey().notNull(),
 
-  l: text('login').unique().$type<SokiAuthLogin>().notNull(),
-  ls: text('logins').array().$type<SokiAuthLogin[]>().notNull(),
+  l: text('login').unique().$type<UserLogin>().notNull(),
+  ls: text('logins').array().$type<UserLogin[]>().notNull(),
 
   m: bigint('modifiedAt', { mode: 'number' })
     .notNull()

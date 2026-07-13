@@ -107,7 +107,7 @@ if (!Do.It) {
       try {
         const { strData, meta } = parsePulledFileDatas(line);
         const dir = `src/back/${meta.caseDir}+case/` as const;
-        const filePath = `${dir}${meta.file}`;
+        const filePath = `${dir}${meta.file}.json`;
 
         if (meta.isFirst) {
           console.info('/'.repeat(30));

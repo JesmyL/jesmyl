@@ -2,6 +2,7 @@ import { makeRedLogText } from 'back/utils.exec';
 import express from 'express';
 import md5 from 'md5';
 import {
+  objectLength,
   parsePulledFileDatas,
   pullFilesExpressSecretQueryName,
   pushFilesExpressRoutePath,
@@ -12,6 +13,8 @@ import * as secret from '../../../do/secret.md5.json';
 import { pullPushDirFilesDictLazy } from './lib/pull-push.configurer';
 
 export const pushFilesExpressRoute = (app: ReturnType<typeof express>) => {
+  const jsonPostfix = '.json';
+
   app.post(pushFilesExpressRoutePath, express.text({ type: 'text/plain', limit: '50mb' }), async (req, res) => {
     if (
       !checkIsString(req.query[pullFilesExpressSecretQueryName]) ||
@@ -27,7 +30,7 @@ export const pushFilesExpressRoute = (app: ReturnType<typeof express>) => {
 
     try {
       const pushHolder = pullPushDirFilesDictLazy()[meta.dir]?.[meta.dirDir as never] as unknown as {
-        PUSH(data: unknown): Promise<void>;
+        PUSH(data: unknown, fileNameJsonless: string): Promise<void>;
       };
 
       if (!pushHolder) {
@@ -35,7 +38,10 @@ export const pushFilesExpressRoute = (app: ReturnType<typeof express>) => {
         return;
       }
 
-      await pushHolder.PUSH(JSON.parse(strData));
+      await pushHolder.PUSH(
+        JSON.parse(strData),
+        meta.file.endsWith(jsonPostfix) ? meta.file.slice(0, -objectLength(jsonPostfix)) : meta.file,
+      );
 
       res.status(200).send(`[${meta.count}] Обработан ${meta.name}`);
     } catch {

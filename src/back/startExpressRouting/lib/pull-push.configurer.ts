@@ -1,16 +1,23 @@
-import { comDB, userDB, userRoleDB } from 'back/drizzle.schema';
+import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
+import { comDB, user2ComDB, userDB, userRoleDB } from 'back/drizzle.schema';
 import { db, dbUpdate } from 'back/drizzle/drizzle.db';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
+import { selectUser2Com, upsertUser2ComProps } from 'back/drizzle/ex/user2Com.utils';
 import { jsonParseSecure } from 'back/json-secure';
 import { eq } from 'drizzle-orm';
 import { makePgCheckedSelectSqlRaw, PgCheckFieldMode } from 'p/d';
-import { IExportableCom } from 'shared/api';
-import { forEachObjectEntries, mapObjectEntries, PullPushFileDirNameNet } from 'shared/api/pullFiles.utils';
+import { IExportableCom, UserLogin } from 'shared/api';
+import {
+  forEachObjectEntries,
+  mapObjectEntries,
+  objectLength,
+  PullPushFileDirNameNet,
+} from 'shared/api/pullFiles.utils';
 import { lazyInit } from 'shared/utils/lazyInit';
 
 type FileMeta<K extends keyof PullPushFileDirNameNet, File extends keyof PullPushFileDirNameNet[K]> = {
-  file: string;
-  data: PullPushFileDirNameNet[K][File];
+  file: PullPushFileDirNameNet[K][File] extends { F: infer FileName extends string } ? FileName : never;
+  data: PullPushFileDirNameNet[K][File] extends { T: infer Type } ? Type : never;
   name: string;
 };
 
@@ -22,13 +29,13 @@ export const pullPushDirFilesDictLazy = lazyInit(
           fileName: File,
           expectedType: FileMeta<K, File>['data'],
         ) => PromiseOr<File extends `${string}/` ? FileMeta<K, File>[] : FileMeta<K, File>>;
-        PUSH: (data: PullPushFileDirNameNet[K][File]) => PromiseOr<unknown>;
+        PUSH: (data: FileMeta<K, File>['data'], file: `${FileMeta<K, File>['file']}`) => PromiseOr<unknown>;
       };
     };
   } => {
     return {
       'apps/cm/': {
-        'comwVisits.json': {
+        comwVisits: {
           pull: async (file, _type) => {
             const data: typeof _type = {};
 
@@ -72,12 +79,59 @@ export const pullPushDirFilesDictLazy = lazyInit(
                 .from(comDB)
             ).map(({ com }) => ({
               data: { ...comBlank, ...com },
-              file: `${com.w}.json`,
+              file: `${com.w}`,
               name: com.n,
             }));
           },
 
           PUSH: com => db.insert(comDB).values(com),
+        },
+
+        'user2Com/': {
+          pull: async (_dir, _type) => {
+            const comw_user2ComsDict = {} as Record<UserLogin, typeof _type>;
+            const user2Coms = await selectUser2Com({
+              c: user2ComDB.comment,
+              w: comDB.w,
+              f: user2ComDB.isFav,
+              l: userDB.l,
+            });
+
+            user2Coms.forEach(({ c, f, w, l }) => {
+              if (!w || !l) return;
+
+              const dict = ((comw_user2ComsDict[l] ??= {})[w] ??= {});
+
+              if (c) dict.comm = c;
+              if (f) dict.fav = 1;
+
+              if (!objectLength(dict)) delete comw_user2ComsDict[l][w];
+            });
+
+            return Promise.all(
+              mapObjectEntries(comw_user2ComsDict, async (login, data) => ({
+                data,
+                file: login,
+                name: (await takeUserTiny(login))?.uauth.fio ?? login,
+              })),
+            );
+          },
+
+          PUSH: (u2c, login) => {
+            forEachObjectEntries(u2c, async (comwStr, val) => {
+              if (!val) return;
+
+              await upsertUser2ComProps(
+                login,
+                +comwStr,
+                {
+                  comment: val.comm,
+                  isFav: !!val.fav,
+                },
+                false,
+              );
+            });
+          },
         },
       },
 
@@ -101,7 +155,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
 
               return {
                 data: u,
-                file: `${u.l}.json`,
+                file: u.l,
                 name: auth.fio || auth.nick || auth.email || '??',
               };
             }),
@@ -114,7 +168,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
             });
           },
         },
-        'userRoles.json': {
+        userRoles: {
           pull: async (file, _type) => {
             const roles: typeof _type = {};
 
