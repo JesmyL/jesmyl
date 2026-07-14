@@ -11,7 +11,7 @@ import { StrongEditableFieldMultiline } from './StrongEditableFieldMultiline';
 
 type Props<Key, Value> = {
   fieldKey?: Key;
-  value?: Value;
+  value?: Value | nil;
   title?: string;
   description?: React.ReactNode;
   disabled?: boolean;

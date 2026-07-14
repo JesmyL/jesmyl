@@ -1,5 +1,8 @@
 import { sokiServer } from 'back/complect/soki/SokiServer';
+import { scheduleDB } from 'back/drizzle.schema';
+import { db } from 'back/drizzle/drizzle.db';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
+import { takeLogginedAuthOrThrow } from 'back/utils';
 import {
   IScheduleWidget,
   IScheduleWidgetUserCati,
@@ -14,10 +17,12 @@ import {
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
 import { SchGeneralTsjrpcModel } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
-import { smylib } from 'shared/utils';
-import { schedulesDirStore } from '../file-stores';
+import { Bool } from 'shared/enums';
+import { checkIsNumber } from 'shared/utils/checkIs';
+import { deepClone } from 'shared/utils/clone';
 import { schLiveTsjrpcServer } from '../live.tsjrpc';
 import { modifySchedule } from '../schedule-modificators';
+import { takeScheduleWidgetTiny } from '../schedule.tiny';
 import { onScheduleUserTgInformSetEvent } from '../specific-modify-events';
 import { schAttachmentTypesTsjrpcBaseServer } from './attachment-types.tsjrpc.base';
 import { schDayEventsTsjrpcBaseServer } from './day-events.tsjrpc.base';
@@ -34,7 +39,7 @@ onScheduleUserTgInformSetEvent.listen(async ({ isNotInform, schProps, userLogin 
   const client = userLogin && sokiServer.clientsByLogin.get(userLogin)?.values().next().value;
   const auth = client && sokiServer.auths.get(client);
 
-  const { value: sch } = await modifySchedule(false, sch => {
+  const { value: sch } = await modifySchedule(false, async sch => {
     if (userLogin == null) throw new Error('Не авторизован');
 
     const user = sch.ctrl.users.find(user => user.login === userLogin);
@@ -42,7 +47,7 @@ onScheduleUserTgInformSetEvent.listen(async ({ isNotInform, schProps, userLogin 
     user.tgInform = isNotInform;
 
     description =
-      `В расписании ${scheduleTitleInBrackets(sch)} участник ${auth?.fio ?? '?'} (${auth?.nick ?? '?'}) ` +
+      `В расписании ${await scheduleTitleInBrackets(sch)} участник ${auth?.fio ?? '?'} (${auth?.nick ?? '?'}) ` +
       `${isNotInform ? 'отключил' : 'включил'} TG-напоминания`;
 
     return description;
@@ -61,22 +66,22 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
       Key extends keyof IScheduleWidget,
     >(
       key: Key,
-      text: (sch: IScheduleWidget, props: Props) => string | null,
+      text: (sch: IScheduleWidget, props: Props) => PromiseOr<string | null>,
       isNeedRefreshTgInformTime?: boolean,
     ) =>
-      modifySchedule<Props>(isNeedRefreshTgInformTime || false, (sch, props) => {
+      modifySchedule<Props>(isNeedRefreshTgInformTime || false, async (sch, props) => {
         sch[key] = props.value;
 
-        return text(sch, props);
+        return await text(sch, props);
       });
 
     super({
       scope: 'SchGeneral',
       methods: {
-        create: async ({ title }, { auth }) => {
-          if (auth == null) throw new Error('no auth');
+        create: async ({ title }, tool) => {
+          const auth = takeLogginedAuthOrThrow(tool.auth);
 
-          const sch: IScheduleWidget = smylib.clone({
+          const sch: IScheduleWidget = deepClone({
             w: IScheduleWidgetWid.def,
             m: IScheduleWidgetUserCati.def,
             title: '',
@@ -144,48 +149,52 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
             },
           ];
 
-          schedulesDirStore.createItem(() => sch, sch.w);
+          await db.insert(scheduleDB).values({ ...sch, isRemoved: Bool.False, withTech: Bool.False, tgChatReqs: '' });
 
           return {
             value: sch,
-            description: `Создано новое расписание ${scheduleTitleInBrackets(sch)}`,
+            description: `Создано новое расписание ${await scheduleTitleInBrackets(sch)}`,
           };
         },
 
-        rename: updateScheduleValue('title', sch => `Расписание ${scheduleTitleInBrackets(sch)} переименовано`),
+        rename: updateScheduleValue(
+          'title',
+          async sch => `Расписание ${await scheduleTitleInBrackets(sch)} переименовано`,
+        ),
         setTopic: updateScheduleValue(
           'topic',
-          sch => `В расписании ${scheduleTitleInBrackets(sch)} изменена тема: ${sch.topic}`,
+          async sch => `В расписании ${await scheduleTitleInBrackets(sch)} изменена тема: ${sch.topic}`,
         ),
         setDescription: updateScheduleValue(
           'dsc',
-          sch => `В расписании ${scheduleTitleInBrackets(sch)} изменено описание: ${sch.dsc}`,
+          async sch => `В расписании ${await scheduleTitleInBrackets(sch)} изменено описание: ${sch.dsc}`,
         ),
         setFirstDayAsTech: updateScheduleValue(
           'withTech',
-          sch =>
-            `В расписании ${scheduleTitleInBrackets(sch)} первый день сделан ${sch.withTech ? 'техническим' : 'обычным'}`,
+          async sch =>
+            `В расписании ${await scheduleTitleInBrackets(sch)} первый день сделан ${sch.withTech ? 'техническим' : 'обычным'}`,
           true,
         ),
         setTgChatRequisites: updateScheduleValue(
           'tgChatReqs',
-          sch => `В расписании ${scheduleTitleInBrackets(sch)} изменены реквизиты TG-чата: ${sch.tgChatReqs}`,
+          async sch =>
+            `В расписании ${await scheduleTitleInBrackets(sch)} изменены реквизиты TG-чата: ${sch.tgChatReqs}`,
           true,
         ),
         setTgInformTime: updateScheduleValue(
           'tgInformTime',
-          sch =>
-            `В расписании ${scheduleTitleInBrackets(sch)} TG-напоминания будут ` +
+          async sch =>
+            `В расписании ${await scheduleTitleInBrackets(sch)} TG-напоминания будут ` +
             `${sch.tgInformTime ? `за ${sch.tgInformTime} минут` : 'только в начале события'} `,
           true,
         ),
 
-        setStartTime: modifySchedule(true, (sch, { value }) => {
+        setStartTime: modifySchedule(true, async (sch, { value }) => {
           sch.prevStart = sch.start;
           sch.start = value;
 
           return (
-            `В расписании ${scheduleTitleInBrackets(sch)} установлена дата начала - ` +
+            `В расписании ${await scheduleTitleInBrackets(sch)} установлена дата начала - ` +
             `${new Date(sch.start).toLocaleDateString('ru')}`
           );
         }),
@@ -193,30 +202,32 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
         setIsTgInformMe: ({ props: schProps, type: isNotInform }, { auth }) =>
           onScheduleUserTgInformSetEvent.invoke({ schProps, isNotInform, userLogin: auth?.login }),
 
-        toggleIsTgInform: modifySchedule(true, sch => {
+        toggleIsTgInform: modifySchedule(true, async sch => {
           sch.tgInform = sch.tgInform === 0 ? undefined : 0;
 
-          return `В расписании ${scheduleTitleInBrackets(sch)} TG-напоминания ${
+          return `В расписании ${await scheduleTitleInBrackets(sch)} TG-напоминания ${
             sch.tgInform === 0 ? 'отключены' : 'включены'
           }`;
         }),
 
-        remove: modifySchedule(true, sch => {
+        remove: modifySchedule(true, async sch => {
           sch.isRemoved = 1;
 
-          return `Расписание ${scheduleTitleInBrackets(sch)} удалено`;
+          return `Расписание ${await scheduleTitleInBrackets(sch)} удалено`;
         }),
 
-        copySchedule: modifySchedule(false, (sch, { schedule }) => {
+        copySchedule: modifySchedule(false, async (sch, { schedule }) => {
+          const from = await scheduleTitleInBrackets(schedule);
+          const to = await scheduleTitleInBrackets(sch);
           Object.assign(sch, schedule, { title: sch.title });
 
-          return `Расписание ${scheduleTitleInBrackets(sch)} скопировано в ${scheduleTitleInBrackets} `;
+          return `Расписание ${from} скопировано в ${to} `;
         }),
 
-        setScheduleRegisterType: modifySchedule(false, (sch, { type }) => {
+        setScheduleRegisterType: modifySchedule(false, async (sch, { type }) => {
           sch.ctrl.type = type;
 
-          if (!smylib.isNum(type)) return `В расписании <b>${scheduleTitleInBrackets(sch)}</b> изменение типа`;
+          if (!checkIsNumber(type)) return `В расписании <b>${await scheduleTitleInBrackets(sch)}</b> изменение типа`;
 
           const isSwPublic = scheduleWidgetRegTypeRights.checkIsHasIndividualRights(type, ScheduleWidgetRegType.Public);
 
@@ -240,7 +251,7 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
             )!;
 
             return (
-              `В расписании <b>${scheduleTitleInBrackets(sch)}</b> изменение типа:` +
+              `В расписании <b>${await scheduleTitleInBrackets(sch)}</b> изменение типа:` +
               `\n\n${ScheduleWidgetCleans.putInTgTag(isSwPublic ? '' : 's', publicRule.title)}` +
               `\n${ScheduleWidgetCleans.putInTgTag(
                 isSwPublic && isSwBeforeRegistration ? '' : 's',
@@ -252,14 +263,14 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
               )}`
             );
           } catch (_error) {
-            return `В расписании <b>${scheduleTitleInBrackets(sch)}</b> изменение типа`;
+            return `В расписании <b>${await scheduleTitleInBrackets(sch)}</b> изменение типа`;
           }
         }),
-        setDefaultUserRights: modifySchedule(false, (sch, { R }) => {
+        setDefaultUserRights: modifySchedule(false, async (sch, { R }) => {
           sch.ctrl.defu = R;
 
           return (
-            `В расписании ${scheduleTitleInBrackets(sch)} для новых участников установлены права по умолчанию: ` +
+            `В расписании ${await scheduleTitleInBrackets(sch)} для новых участников установлены права по умолчанию: ` +
             (scheduleWidgetUserRights.texts[scheduleWidgetUserRights.rightsBalance(R)].role?.[0] ?? 'Неизвестный')
           );
         }),
@@ -268,9 +279,9 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
   }
 })();
 
-export const scheduleTitleInBrackets = (schScalar: IScheduleWidget | IScheduleWidgetWid) => {
-  if (smylib.isNum(schScalar)) {
-    const sch = schedulesDirStore.getItem(schScalar);
+export const scheduleTitleInBrackets = async (schScalar: IScheduleWidget | IScheduleWidgetWid) => {
+  if (checkIsNumber(schScalar)) {
+    const sch = await takeScheduleWidgetTiny(schScalar);
     if (sch == null) throw new Error('schedule not found');
     return `"${sch.title}"`;
   }

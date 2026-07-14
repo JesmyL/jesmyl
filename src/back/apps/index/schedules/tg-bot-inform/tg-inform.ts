@@ -1,3 +1,5 @@
+import { scheduleDB } from 'back/drizzle.schema';
+import { db } from 'back/drizzle/drizzle.db';
 import { jesmylTgBot } from 'back/sides/telegram-bot/bot';
 import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import nodeSchedule from 'node-schedule';
@@ -17,17 +19,15 @@ import {
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
 import { howMillisecondsInMin } from 'shared/const/ms';
-import { checkIsNotString, checkIsNumber } from 'shared/utils/checkIs';
+import { checkIsNil, checkIsNotString, checkIsNumber } from 'shared/utils/checkIs';
 import { objectEntries } from 'shared/utils/object.utils';
 import { convertMd2HTMLMaker } from 'shared/utils/tg-replaces';
-import { schedulesDirStore } from '../file-stores';
+import { takeScheduleWidgetTiny } from '../schedule.tiny';
 import { onScheduleDayEventIsNeedTgInformSetEvent, onScheduleUserTgInformSetEvent } from '../specific-modify-events';
 import { makeScheduleWidgetJoinTitle } from './message-catchers';
 
-const getSchedule = (scheduleScalar: number | IScheduleWidget) =>
-  checkIsNumber(scheduleScalar)
-    ? schedulesDirStore.getAllItems().find(sch => sch.w === scheduleScalar)
-    : scheduleScalar;
+const getSchedule = async (scheduleScalar: number | IScheduleWidget) =>
+  checkIsNumber(scheduleScalar) ? await takeScheduleWidgetTiny(scheduleScalar) : scheduleScalar;
 
 const jobs: Record<number, nodeSchedule.Job> = {};
 const unsubscribeQueryDataNamePrefix = 'sch-wdgt-unsub:';
@@ -51,17 +51,15 @@ class TgInformer {
   constructor() {
     this.listenUserPersonalTgQueries();
 
-    nodeSchedule.scheduleJob('1 0 * * *', () => {
-      schedulesDirStore.getAllItems().forEach(sch => this.inform(sch.w));
-    });
+    nodeSchedule.scheduleJob('1 0 * * *', () => initTgScheduleInform());
   }
 
-  inform = (scheduleScalar: number | IScheduleWidget, invokeDayi?: number) => {
-    const schedule = getSchedule(scheduleScalar);
+  inform = async (scheduleScalar: number | IScheduleWidget, invokeDayi?: number) => {
+    const schedule = await getSchedule(scheduleScalar);
 
-    if (schedule == null) return;
+    if (!schedule) return;
 
-    if (invokeDayi === undefined || !indexScheduleCheckIsDayIsPast(schedule, invokeDayi)) jobs[schedule.w]?.cancel();
+    if (checkIsNil(invokeDayi) || !indexScheduleCheckIsDayIsPast(schedule, invokeDayi)) jobs[schedule.w]?.cancel();
 
     if (
       schedule.tgInform === 0 ||
@@ -74,12 +72,11 @@ class TgInformer {
     const now = Date.now();
     const daysLen = schedule.days.length;
     const informBeforeTime = schedule.tgInformTime;
-    const tgChatId =
-      schedule.tgChatReqs === undefined
+    const tgChatId = !schedule.tgChatReqs
+      ? null
+      : isNaN(parseInt(schedule.tgChatReqs, 10))
         ? null
-        : isNaN(parseInt(schedule.tgChatReqs, 10))
-          ? null
-          : parseInt(schedule.tgChatReqs, 10);
+        : parseInt(schedule.tgChatReqs, 10);
 
     dayLoop: for (let dayi = 0; dayi < daysLen; dayi++) {
       const day = schedule.days[dayi];
@@ -156,7 +153,7 @@ class TgInformer {
   ) {
     jobs[schw]?.cancel();
     jobs[schw] = nodeSchedule.scheduleJob(time, async () => {
-      const schedule = getSchedule(schw);
+      const schedule = await getSchedule(schw);
       if (!schedule?.days[dayi]?.list[eventi]) return;
 
       const event = schedule.days[dayi].list[eventi];
@@ -358,7 +355,7 @@ class TgInformer {
       ) {
         const schw = +event.value.data.split(':')[1];
 
-        const schedule = getSchedule(schw);
+        const schedule = await getSchedule(schw);
         if (schedule == null) return;
 
         const userTgId = event.value.from.id;
@@ -412,6 +409,6 @@ class TgInformer {
 
 export const scheduleTgInformer = new TgInformer();
 
-export const initTgScheduleInform = () => {
-  schedulesDirStore.getAllItems().forEach(scheduleTgInformer.inform);
+export const initTgScheduleInform = async () => {
+  (await db.select({ w: scheduleDB.w }).from(scheduleDB)).forEach(sch => scheduleTgInformer.inform(sch.w));
 };

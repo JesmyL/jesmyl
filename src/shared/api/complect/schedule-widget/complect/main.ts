@@ -59,27 +59,26 @@ export interface IScheduleWidgetListCat {
   titles: [string, string];
 }
 
-export interface IScheduleWidget {
+export type IScheduleWidget = NullifyOptionals<{
   w: IScheduleWidgetWid;
   m: number;
-  isRemoved?: 1;
+  isRemoved?: Bool;
   start: number;
   prevStart?: number;
   title: string;
   topic: string;
   dsc: string;
   days: IScheduleWidgetDay[];
-  withTech?: 1 | nil;
+  withTech?: Bool;
   types: ScheduleWidgetDayListItemTypeBox[];
   tatts: ScheduleWidgetAppAttCustomized[];
-  app: SokiAppName;
   ctrl: IScheduleWidgetCtrl;
   games?: IScheduleWidgetTeamGames;
   lists: IScheduleWidgetLists;
-  tgInform?: 0;
+  tgInform?: Bool;
   tgChatReqs?: string;
   tgInformTime: number;
-}
+}>;
 
 export interface IScheduleWidgetDay {
   mi: number;

@@ -3,6 +3,8 @@ import { FileStore } from 'back/complect/FileStore';
 import { ConstantsConfig, IScheduleWidget, IScheduleWidgetWid } from 'shared/api';
 import { constantsDefaultConfig } from 'shared/const/cm/constants.def';
 import { takeDefaultScheduleWidget } from 'shared/const/schedule-widget/const';
+import { iife } from 'shared/utils';
+import { checkIsUndefined } from 'shared/utils/checkIs';
 import { objectKeys } from 'shared/utils/object.utils';
 
 export const schedulesDirStore = new DirStorage<IScheduleWidget, IScheduleWidgetWid, 'w'>({
@@ -16,23 +18,23 @@ export const constantsConfigFileStore = new FileStore<ConstantsConfig>(
   constantsDefaultConfig,
 );
 
-(() => {
+iife(() => {
   const config = constantsConfigFileStore.getValue();
   let isConfigChanged = false;
 
   objectKeys(config).forEach(key => {
-    if (constantsDefaultConfig[key] === undefined) {
+    if (checkIsUndefined(constantsDefaultConfig[key])) {
       delete config[key];
       isConfigChanged = true;
     }
   });
 
   objectKeys(constantsDefaultConfig).forEach(key => {
-    if (config[key] === undefined) {
+    if (checkIsUndefined(config[key])) {
       config[key] = constantsDefaultConfig[key] as never;
       isConfigChanged = true;
     }
   });
 
   if (isConfigChanged) constantsConfigFileStore.saveValue();
-})();
+});

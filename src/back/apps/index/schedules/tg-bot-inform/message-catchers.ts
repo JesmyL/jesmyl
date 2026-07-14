@@ -1,9 +1,11 @@
 /* eslint-disable no-constant-condition */
+import { scheduleDB } from 'back/drizzle.schema';
+import { db } from 'back/drizzle/drizzle.db';
 import { jesmylTgBot } from 'back/sides/telegram-bot/bot';
+import { like } from 'drizzle-orm';
 import { makeRegExp } from 'regexpert';
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleWidgetCleans } from 'shared/api';
 import { itNNull } from 'shared/utils';
-import { schedulesDirStore } from '../file-stores';
 import {
   onScheduleDayBeginTimeSetEvent,
   onScheduleDayEventListSetEvent,
@@ -44,13 +46,13 @@ export const makeScheduleWidgetJoinTitle = (
   return titles.join(' / ');
 };
 
-const getScheduleByRequisit = (requisit: `${number}/` | `/${string}`) =>
-  schedulesDirStore.getAllItems().find(sch => sch.tgChatReqs?.includes(requisit));
+const getScheduleByRequisit = async (requisit: `${number}/%` | `%/${string}`) =>
+  (await db.select().from(scheduleDB).where(like(scheduleDB.tgChatReqs, requisit)).limit(1)).at(0);
 
-const getScheduleAndTodayiByRequisit = (requisit: `${number}/` | `/${string}`) => {
-  const schedule = getScheduleByRequisit(requisit);
+const getScheduleAndTodayiByRequisit = async (requisit: `${number}/%` | `%/${string}`) => {
+  const schedule = await getScheduleByRequisit(requisit);
 
-  if (schedule == null) throw 'Мероприятие не найдено';
+  if (!schedule) throw 'Мероприятие не найдено';
 
   const dayi = ScheduleWidgetCleans.getCurrentDayi(schedule);
 
@@ -73,10 +75,10 @@ const markup = {
 
 export const scheduleWidgetMessageCatcher = jesmylTgBot.catchMessages(async (message, bot) => {
   if (
-    message.from === undefined ||
-    message.text === undefined ||
+    !message.from ||
+    !message.text ||
     message.text.search(makeRegExp('/расписание/i')) < 0 ||
-    getScheduleByRequisit(`${message.chat.id}/`) === undefined
+    !(await getScheduleByRequisit(`${message.chat.id}/%`))
   )
     return;
 
@@ -130,7 +132,7 @@ jesmylTgBot.catchCallbackQuery(async (query, bot, answer) => {
     dayi = -1;
 
   try {
-    [schedule, dayi] = getScheduleAndTodayiByRequisit(`/${query.chat_instance}`);
+    [schedule, dayi] = await getScheduleAndTodayiByRequisit(`%/${query.chat_instance}`);
   } catch (errorMessage) {
     return ret('' + errorMessage);
   }
@@ -140,9 +142,9 @@ jesmylTgBot.catchCallbackQuery(async (query, bot, answer) => {
   const { dayWup, list, newTypes } = ScheduleWidgetCleans.preparedText2DayList(query.message.text, schedule);
 
   if (+!+'find sch') {
-    const schedule = getScheduleByRequisit(`/${query.chat_instance}`);
+    const schedule = await getScheduleByRequisit(`%/${query.chat_instance}`);
 
-    if (schedule === undefined) return ret('Расписание не найдено');
+    if (!schedule) return ret('Расписание не найдено');
 
     const dayProps = { dayi, schw: schedule.w };
 

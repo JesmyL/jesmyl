@@ -3,6 +3,7 @@ import { eq } from 'drizzle-orm';
 import { bigint, integer, PgSelectBase, pgTable, SelectedFields, text } from 'drizzle-orm/pg-core';
 import { MigratableComToolName, SokiAppName } from 'shared/api';
 import { db } from '../drizzle.db';
+import { emptyTextArraySQL } from './lib/const';
 import { userDB } from './user';
 
 const typeExample = (name: string) => bigint(name, { mode: 'number' }).notNull().default(0);
@@ -19,16 +20,9 @@ export const userExtDB = pgTable('userExt', {
   ...modColumn('cmFavComMod'),
   ...modColumn('cmFavComToolsMod'),
 
-  cmFavComTools: text('cmFavComTools')
-    .array()
-    .$type<MigratableComToolName[]>()
-    .notNull()
-    .$defaultFn(() => []),
+  cmFavComTools: text('cmFavComTools').array().$type<MigratableComToolName[]>().notNull().default(emptyTextArraySQL),
 
-  cmCommAlts: text('cmCommAlts')
-    .array()
-    .notNull()
-    .$defaultFn(() => []),
+  cmCommAlts: text('cmCommAlts').array().notNull().default(emptyTextArraySQL),
 });
 
 export const selectUserExt = <const Sel extends SelectedFields, Ret extends PgSelectBase<any, Sel, 'multiple', any>>(

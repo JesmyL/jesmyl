@@ -1,4 +1,4 @@
-import { schedulesDirStore } from 'back/apps/index/schedules/file-stores';
+import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import {
@@ -66,8 +66,10 @@ export const cmEditComExternalsTsjrpcBaseServer =
               }),
             );
 
+            const sch = await takeScheduleWidgetTiny(schw);
+
             return {
-              description: `Обновлён список песен в расписании "${schedulesDirStore.getItem(schw)?.title ?? '??'}":\n\n${comTitlesList.join('\n')}`,
+              description: `Обновлён список песен в расписании "${sch?.title ?? '??'}":\n\n${comTitlesList.join('\n')}`,
             };
           },
 
@@ -101,16 +103,16 @@ export const cmEditComExternalsTsjrpcBaseServer =
             const history = comsInSchEventHistoryDirStorage.getItem(schw);
             const itemi = history?.d?.[dayi]?.findIndex(item => item.w === writedAt);
 
-            if (itemi == null || itemi < 0) throw new Error('item not found');
+            if (checkIsNil(itemi) || itemi < 0) throw new Error('item not found');
 
             history?.d?.[dayi]?.splice(itemi, 1);
             comsInSchEventHistoryDirStorage.saveItem(schw);
 
+            const sch = await takeScheduleWidgetTiny(schw);
+
             return {
               value: history?.d?.[dayi] ?? [],
-              description:
-                `Удалена пачка песен из истории события в расписании ` +
-                `"${schedulesDirStore.getItem(schw)?.title ?? '??'}"`,
+              description: `Удалена пачка песен из истории события в расписании "${sch?.title ?? '??'}"`,
             };
           },
 

@@ -1,4 +1,8 @@
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
+import { scheduleDB } from 'back/drizzle.schema';
+import { db } from 'back/drizzle/drizzle.db';
+import { and, eq, gt } from 'drizzle-orm';
+import { makePgCheckedSelectSqlRaw, PgCheckFieldMode } from 'p/d';
 import {
   IScheduleWidget,
   IScheduleWidgetUser,
@@ -9,13 +13,13 @@ import {
   SokiAuthLogin,
 } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
+import { Bool } from 'shared/enums';
 import { itNNil } from 'shared/utils';
 import { objectKeys, objectLength } from 'shared/utils/object.utils';
 import { knownStameskaIconNames, knownStameskaIconNamesMd5Hash } from 'shared/values/index/known-icons';
 import { StameskaIconPack } from 'stameska-icon/utils';
 import { WebSocket } from 'ws';
 import { indexStameskaIconsFileStore } from '../../file-stores';
-import { schedulesDirStore } from '../../schedules/file-stores';
 import { schServerTsjrpcShareMethods } from '../../schedules/tsjrpc.shares';
 import { takeUserRoleTiny } from '../../tinies/userRoleTiny';
 import { takeUserTiny } from '../../tinies/userTiny';
@@ -47,18 +51,30 @@ export const indexTSJRPCBaseRequestFreshes = {
 
     const schedules: IScheduleWidget[] = [];
 
-    schedulesDirStore.getAllItems().forEach((sch): number | null => {
+    const freshSchedules = await db
+      .select({
+        sch: makePgCheckedSelectSqlRaw(scheduleDB, {
+          id: PgCheckFieldMode.Remove,
+          isRemoved: PgCheckFieldMode.Remove,
+          games: PgCheckFieldMode.RemoveIfNull,
+          tgChatReqs: PgCheckFieldMode.RemoveIfNull,
+          withTech: `=${Bool.False}`,
+          tgInform: `=${Bool.True}`,
+          prevStart: `=0`,
+        }),
+      })
+      .from(scheduleDB)
+      .where(and(gt(scheduleDB.m, lastModfiedAt), eq(scheduleDB.isRemoved, Bool.False)));
+
+    freshSchedules.forEach(({ sch }): number | null => {
       const removedSch = { w: sch.w, isRemoved: 1 } as IScheduleWidget;
 
       if (scheduleWidgetRegTypeRights.checkIsHasRights(sch.ctrl.type, ScheduleWidgetRegType.Public)) {
-        if (sch.m <= lastModfiedAt) return null;
         return schedules.push(sch);
       }
 
       if (isNoAuth) return schedules.push(removedSch);
       if (!sch.ctrl.users.some(someScheduleUser)) return schedules.push(removedSch);
-
-      if (sch.m <= lastModfiedAt) return null;
 
       return schedules.push(sch);
     });
@@ -87,7 +103,7 @@ export const indexTSJRPCBaseRequestFreshes = {
       const userIconPacksSet = new Set(userIconPacks);
       const userAccessSchedules: IScheduleWidget[] = [];
 
-      schedulesDirStore.getAllItems().forEach(sch => {
+      freshSchedules.forEach(({ sch }) => {
         if (scheduleWidgetRegTypeRights.checkIsHasRights(sch.ctrl.type, ScheduleWidgetRegType.Public)) {
           userAccessSchedules.push(sch);
         } else {

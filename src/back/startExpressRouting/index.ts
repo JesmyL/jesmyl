@@ -1,3 +1,4 @@
+import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
 import express, { Request, Response } from 'express';
 import fs from 'fs';
 import http from 'http';
@@ -9,7 +10,6 @@ import { WebSocketServer } from 'ws';
 import { takeComwTiny } from '../apps/cm/com.tiny';
 import { makeCmComHttpLinkFromNumLead } from '../apps/cm/complect/com-http-links';
 import { catsFileStorage } from '../apps/cm/file-stores';
-import { schedulesDirStore } from '../apps/index/schedules/file-stores';
 import { hostRootDir } from '../envJson';
 import { tglogger } from '../sides/telegram-bot/log/log-bot';
 import { pullFilesExpressRoute } from './pullFiles';
@@ -149,8 +149,8 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
       try {
         const schwMatch = req.url.match(makeRegExp('/\\bschw=(\\d+(?:\\.\\d+)?)/'));
 
-        if (schwMatch != null && +schwMatch[1]) {
-          const schedule = schedulesDirStore.getItem(+schwMatch[1]);
+        if (schwMatch && +schwMatch[1]) {
+          const schedule = await takeScheduleWidgetTiny(+schwMatch[1]);
 
           if (schedule) {
             descriptionFromSearchParams += `\n\nМероприятие "${schedule.title}${schedule.topic ? `: ${schedule.topic}` : ''}"`;
@@ -162,7 +162,7 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
 
       try {
         const comwMatch = req.url.match(makeRegExp('/\\bcomw=(\\d+(?:\\.\\d+)?)/'));
-        if (comwMatch !== null && +comwMatch[1]) {
+        if (comwMatch && +comwMatch[1]) {
           const com = await takeComwTiny(+comwMatch[1]);
 
           if (com) {
