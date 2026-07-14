@@ -1,25 +1,103 @@
 {
-  "w": 1704636528751,
   "title": "Молодёжка",
-  "app": "index",
-  "dsc": "",
   "topic": "",
+  "dsc": "",
+  "start": 1764450000000,
+  "prevStart": 1761426000000,
+  "tgInformTime": 15,
+  "ctrl": {
+    "cats": ["Основное"],
+    "defu": 21,
+    "type": 3,
+    "roles": [
+      { "mi": 0, "icon": "Github", "user": 0, "title": "Координатор" },
+      { "mi": 1, "title": "" }
+    ],
+    "users": [
+      {
+        "R": 127,
+        "mi": 0,
+        "fio": "Павел 💾",
+        "nick": "gfirf",
+        "tgId": 958383738,
+        "login": "T166cbf17596a0c2919e4df1a6d54e66",
+        "tgAlerts": 1,
+        "tgInform": 1
+      },
+      {
+        "R": 127,
+        "mi": 1,
+        "fio": "danikpon",
+        "nick": "danikpon",
+        "tgId": 370756745,
+        "login": "T7f21a14d3133065ca2e48254f87ecf3",
+        "tgInform": 1
+      },
+      {
+        "R": 43,
+        "mi": 2,
+        "fio": "Руслан",
+        "nick": "maunrus",
+        "tgId": 521630606,
+        "login": "T6558fe287d2ea93be3e19bbe64b5dfc",
+        "tgInform": 0
+      },
+      { "R": 21, "mi": 3, "fio": "yansmk", "nick": "yansmk", "login": "08a0e6ba7792e902569816a81b846b25" },
+      {
+        "R": 47,
+        "mi": 4,
+        "fio": "Жменька💙",
+        "nick": "Pashas_wife",
+        "tgId": 1086988826,
+        "login": "T2844a791f6cb5702a875a0bad8e9397",
+        "tgInform": 1
+      },
+      {
+        "R": 47,
+        "mi": 5,
+        "fio": "",
+        "nick": "AndreyKartyshin",
+        "tgId": 760378069,
+        "login": "T0798c1117b22e78af2e87c075b53ea2",
+        "tgInform": 0
+      },
+      { "R": 17, "mi": 6, "fio": "Андрей" },
+      {
+        "R": 47,
+        "mi": 7,
+        "fio": "Денис Евдокимов",
+        "nick": "EvdDenis",
+        "tgId": 426245780,
+        "login": "Ta6fc77b8901b55067f55c104839abde"
+      },
+      { "R": 127, "mi": 8, "fio": "JESMYL", "nick": "JESMYL", "login": "1cd799804adadac7bebf6f355fe7a58b" },
+      {
+        "R": 5,
+        "mi": 9,
+        "fio": "Юрий",
+        "nick": "t:esjimyimje",
+        "tgId": 1206346301,
+        "login": "T1c5a587ddebf63011b5aa6e54977b34"
+      },
+      { "mi": 10, "fio": "User", "nick": "User", "login": "8f9bfe9d1345237cb3b2b205864da075" }
+    ]
+  },
   "days": [
     {
+      "mi": 0,
+      "wup": 17,
       "list": [
         {
-          "type": 0,
           "mi": 0,
-          "tgAlert": 1,
+          "tm": 30,
           "atts": {},
-          "tgInform": 0,
           "rate": { "0": [0, ""], "4": [5, "Хорошо общаться с мужем 🥰\nи вкусно кофе ☕️"] },
-          "tm": 30
+          "type": 0,
+          "tgAlert": 1,
+          "tgInform": 0
         },
         {
-          "type": 1,
           "mi": 1,
-          "tgAlert": 1,
           "atts": {
             "[cm]:coms": { "comws": [1611851960664, 1611851960664], "eventw": 1610962824551 },
             "[SCH]:custom:0": {
@@ -31,146 +109,64 @@
               ]
             }
           },
-          "tgInform": 0,
-          "rate": { "0": [0, "от"], "4": [0, ""] }
+          "rate": { "0": [0, "от"], "4": [0, ""] },
+          "type": 1,
+          "tgAlert": 1,
+          "tgInform": 0
         },
         {
-          "type": 2,
           "mi": 2,
-          "tgAlert": 1,
-          "atts": {},
-          "tgInform": 0,
-          "dsc": "",
           "tm": 60,
+          "dsc": "",
+          "atts": {},
           "rate": { "0": [0, ""] },
-          "topic": ""
+          "type": 2,
+          "topic": "",
+          "tgAlert": 1,
+          "tgInform": 0
         },
-        { "type": 3, "mi": 3, "tgInform": 0 }
-      ],
-      "wup": 17,
-      "mi": 0
+        { "mi": 3, "type": 3, "tgInform": 0 }
+      ]
     }
   ],
+  "games": {
+    "list": [{ "mi": 0, "teams": [], "title": "Новая игра" }],
+    "criterias": [{ "sorts": [], "title": "ggggvvvbj" }],
+    "strikedUsers": []
+  },
+  "lists": {
+    "cats": [{ "icon": "UserGroup03", "title": "Группа", "titles": ["Наставники", "Участники"] }],
+    "units": [{ "mi": 1, "cat": 0, "dsc": "", "title": "Первая" }]
+  },
   "tatts": [
     {
-      "description": "Ход",
-      "icon": "WorkoutRun",
-      "initVal": {},
-      "title": "Ход события",
       "R": 105,
       "U": 105,
       "mi": 0,
       "use": 113,
-      "titles": ["лоывар", "ыволарыва"]
+      "icon": "WorkoutRun",
+      "title": "Ход события",
+      "titles": ["лоывар", "ыволарыва"],
+      "initVal": {},
+      "description": "Ход"
     },
     {
-      "description": "",
-      "icon": "Attachment",
-      "initVal": {},
-      "title": "Наз",
       "R": 47,
       "U": 47,
+      "Rs": [],
       "mi": 1,
       "use": 393,
-      "Rs": [],
-      "titles": ["пром о"]
+      "icon": "Attachment",
+      "title": "Наз",
+      "titles": ["пром о"],
+      "initVal": {},
+      "description": ""
     }
   ],
   "types": [
-    { "title": "Общение", "tm": 15 },
-    { "title": "Прославление", "tm": 30, "atts": { "[cm]:coms": [-1] } },
-    { "title": "Проповедь", "tm": 90 },
-    { "title": "Разъезд", "tm": 5 }
-  ],
-  "start": 1764450000000,
-  "ctrl": {
-    "cats": ["Основное"],
-    "users": [
-      {
-        "mi": 0,
-        "nick": "gfirf",
-        "fio": "Павел 💾",
-        "login": "T166cbf17596a0c2919e4df1a6d54e66",
-        "R": 127,
-        "tgAlerts": 1,
-        "tgId": 958383738,
-        "tgInform": 1
-      },
-      {
-        "fio": "danikpon",
-        "login": "T7f21a14d3133065ca2e48254f87ecf3",
-        "nick": "danikpon",
-        "tgId": 370756745,
-        "mi": 1,
-        "tgInform": 1,
-        "R": 127
-      },
-      {
-        "fio": "Руслан",
-        "login": "T6558fe287d2ea93be3e19bbe64b5dfc",
-        "nick": "maunrus",
-        "tgId": 521630606,
-        "mi": 2,
-        "R": 43,
-        "tgInform": 0
-      },
-      { "fio": "yansmk", "login": "08a0e6ba7792e902569816a81b846b25", "nick": "yansmk", "mi": 3, "R": 21 },
-      {
-        "fio": "Жменька💙",
-        "login": "T2844a791f6cb5702a875a0bad8e9397",
-        "nick": "Pashas_wife",
-        "tgId": 1086988826,
-        "mi": 4,
-        "tgInform": 1,
-        "R": 47
-      },
-      {
-        "fio": "",
-        "login": "T0798c1117b22e78af2e87c075b53ea2",
-        "nick": "AndreyKartyshin",
-        "tgId": 760378069,
-        "mi": 5,
-        "R": 47,
-        "tgInform": 0
-      },
-      { "fio": "Андрей", "mi": 6, "R": 17 },
-      {
-        "fio": "Денис Евдокимов",
-        "login": "Ta6fc77b8901b55067f55c104839abde",
-        "nick": "EvdDenis",
-        "tgId": 426245780,
-        "mi": 7,
-        "R": 47
-      },
-      { "fio": "JESMYL", "login": "1cd799804adadac7bebf6f355fe7a58b", "nick": "JESMYL", "mi": 8, "R": 127 },
-      {
-        "fio": "Юрий",
-        "login": "T1c5a587ddebf63011b5aa6e54977b34",
-        "nick": "t:esjimyimje",
-        "tgId": 1206346301,
-        "mi": 9,
-        "R": 5
-      },
-      { "fio": "User", "login": "8f9bfe9d1345237cb3b2b205864da075", "nick": "User", "mi": 10 }
-    ],
-    "roles": [
-      { "mi": 0, "title": "Координатор", "icon": "Github", "user": 0 },
-      { "title": "", "mi": 1 }
-    ],
-    "type": 3,
-    "defu": 21
-  },
-  "lists": {
-    "cats": [{ "icon": "UserGroup03", "title": "Группа", "titles": ["Наставники", "Участники"] }],
-    "units": [{ "cat": 0, "mi": 1, "title": "Первая", "dsc": "" }]
-  },
-  "tgAlertsTime": 30,
-  "tgInformTime": 15,
-  "games": {
-    "criterias": [{ "title": "ggggvvvbj", "sorts": [] }],
-    "list": [{ "title": "Новая игра", "teams": [], "mi": 0 }],
-    "strikedUsers": []
-  },
-  "m": 1764518489248,
-  "prevStart": 1761426000000
+    { "tm": 15, "title": "Общение" },
+    { "tm": 30, "atts": { "[cm]:coms": [-1] }, "title": "Прославление" },
+    { "tm": 90, "title": "Проповедь" },
+    { "tm": 5, "title": "Разъезд" }
+  ]
 }

@@ -1,50 +1,47 @@
 {
-  "w": 1749052926374,
-  "m": 1777579783425,
   "title": "Малые группы",
-  "app": "index",
-  "dsc": "",
   "topic": "",
-  "days": [
-    {
-      "list": [
-        { "type": 2, "mi": 7, "atts": { "[cm]:coms": {} }, "rate": { "0": [-3, ""] } },
-        { "type": 1, "mi": 5, "atts": { "[cm]:coms": {} } },
-        { "type": 0, "mi": 6, "atts": { "[cm]:coms": {} } }
-      ],
-      "mi": 0,
-      "wup": 19
-    },
-    { "list": [], "mi": 1, "wup": 7 }
-  ],
-  "tatts": [],
-  "types": [
-    { "title": "13 кабинет", "tm": 120 },
-    { "title": "10 кабинет", "tm": 120 },
-    { "title": "2 кабинет", "tm": 120 }
-  ],
-  "tgInformTime": 5,
+  "dsc": "",
   "start": 1843851600000,
+  "prevStart": 1749157200000,
+  "tgInformTime": 5,
   "ctrl": {
     "cats": ["Основное"],
+    "defu": 5,
+    "type": 3,
+    "roles": [{ "mi": 0, "icon": "Teacher", "title": "Координатор", "userMi": 0 }],
     "users": [
       {
+        "R": 127,
         "mi": 0,
         "fio": "Павел 👨‍💻",
-        "login": "T166cbf17596a0c2919e4df1a6d54e66",
         "nick": "gfirf",
         "tgId": 958383738,
-        "R": 127
+        "login": "T166cbf17596a0c2919e4df1a6d54e66"
       }
-    ],
-    "roles": [{ "mi": 0, "title": "Координатор", "icon": "Teacher", "userMi": 0 }],
-    "type": 3,
-    "defu": 5
+    ]
   },
-  "games": { "criterias": [{ "title": "Сила", "sorts": {} }], "list": [] },
+  "days": [
+    {
+      "mi": 0,
+      "wup": 19,
+      "list": [
+        { "mi": 7, "atts": { "[cm]:coms": {} }, "rate": { "0": [-3, ""] }, "type": 2 },
+        { "mi": 5, "atts": { "[cm]:coms": {} }, "type": 1 },
+        { "mi": 6, "atts": { "[cm]:coms": {} }, "type": 0 }
+      ]
+    },
+    { "mi": 1, "wup": 7, "list": [] }
+  ],
+  "games": { "list": [], "criterias": [{ "sorts": {}, "title": "Сила" }] },
   "lists": {
     "cats": [{ "icon": "UserGroup", "title": "Группа", "titles": ["Наставники", "Участники"] }],
-    "units": [{ "cati": 0, "mi": 1, "title": "Группа 1", "dsc": "" }]
+    "units": [{ "mi": 1, "dsc": "", "cati": 0, "title": "Группа 1" }]
   },
-  "prevStart": 1749157200000
+  "tatts": [],
+  "types": [
+    { "tm": 120, "title": "13 кабинет" },
+    { "tm": 120, "title": "10 кабинет" },
+    { "tm": 120, "title": "2 кабинет" }
+  ]
 }

@@ -1,45 +1,42 @@
 {
-  "w": 1764483762958,
-  "m": 1764484704695,
   "title": "С детьми",
-  "app": "index",
-  "dsc": "",
   "topic": "",
-  "days": [{ "list": [], "mi": 0, "wup": 7 }],
-  "tatts": [{ "list": [], "mi": 0, "wup": 7 }],
-  "types": [{ "list": [], "mi": 0, "wup": 7 }],
-  "tgInformTime": 5,
+  "dsc": "",
   "start": 1767042000000,
+  "tgInformTime": 5,
   "ctrl": {
     "cats": ["Основное"],
+    "defu": 5,
+    "type": 5,
+    "roles": [{ "mi": 0, "icon": "Teacher", "title": "Координатор", "userMi": 0 }],
     "users": [
       {
+        "R": 127,
         "mi": 0,
         "fio": "Павел 👨‍💻",
-        "login": "T166cbf17596a0c2919e4df1a6d54e66",
         "nick": "gfirf",
         "tgId": 958383738,
-        "R": 127
+        "login": "T166cbf17596a0c2919e4df1a6d54e66"
       },
       {
-        "nick": "Evgenia_Slob",
-        "tgId": 1086988826,
-        "login": "T2844a791f6cb5702a875a0bad8e9397",
+        "R": 127,
+        "mi": 1,
+        "exp": 1770568781,
         "fio": "Джексон_С",
         "iat": 1761928781,
-        "exp": 1770568781,
-        "mi": 1,
-        "R": 127
+        "nick": "Evgenia_Slob",
+        "tgId": 1086988826,
+        "login": "T2844a791f6cb5702a875a0bad8e9397"
       }
-    ],
-    "roles": [{ "mi": 0, "title": "Координатор", "icon": "Teacher", "userMi": 0 }],
-    "type": 5,
-    "defu": 5
+    ]
   },
-  "games": { "criterias": [{ "title": "Сила", "sorts": {} }], "list": [] },
+  "days": [{ "mi": 0, "wup": 7, "list": [] }],
+  "games": { "list": [], "criterias": [{ "sorts": {}, "title": "Сила" }] },
   "lists": {
     "cats": [{ "icon": "UserGroup", "title": "Группа", "titles": ["Наставники", "Участники"] }],
-    "units": [{ "cati": 0, "mi": 1, "title": "Группа 1", "dsc": "" }]
+    "units": [{ "mi": 1, "dsc": "", "cati": 0, "title": "Группа 1" }]
   },
+  "tatts": [{ "mi": 0, "wup": 7, "list": [] }],
+  "types": [{ "mi": 0, "wup": 7, "list": [] }],
   "isRemoved": 1
 }

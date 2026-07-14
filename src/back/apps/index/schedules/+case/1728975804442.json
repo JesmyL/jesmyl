@@ -1,0 +1,85 @@
+{
+  "title": "Пасторская конференция",
+  "topic": "",
+  "dsc": "",
+  "start": 1780088400000,
+  "prevStart": 1772312400000,
+  "tgInformTime": 5,
+  "ctrl": {
+    "cats": ["Основное"],
+    "defu": 21,
+    "type": 3,
+    "roles": [
+      { "mi": 0, "icon": "Github", "title": "Координатор" },
+      { "mi": 1, "title": "" }
+    ],
+    "users": [
+      {
+        "R": 127,
+        "mi": 1,
+        "fio": "danikpon",
+        "nick": "danikpon",
+        "tgId": 370756745,
+        "login": "T7f21a14d3133065ca2e48254f87ecf3",
+        "tgInform": 1
+      },
+      {
+        "R": 127,
+        "mi": 2,
+        "fio": "Павел 👨‍💻",
+        "nick": "gfirf",
+        "tgId": 958383738,
+        "login": "T166cbf17596a0c2919e4df1a6d54e66"
+      }
+    ]
+  },
+  "days": [
+    {
+      "mi": 0,
+      "wup": 18,
+      "list": [
+        { "mi": 0, "tm": 30, "atts": {}, "type": 0, "tgAlert": 1, "tgInform": 0 },
+        { "mi": 4, "type": 4, "tgInform": 0 },
+        {
+          "mi": 1,
+          "tm": 5,
+          "atts": { "[cm]:coms": { "comws": [1611851960664, 1611851960664, 1517518975000], "eventw": 1611496603426 } },
+          "type": 1,
+          "tgAlert": 1,
+          "tgInform": 0
+        },
+        { "mi": 2, "tm": 30, "dsc": "", "atts": {}, "type": 2, "topic": "", "tgAlert": 1, "tgInform": 0 },
+        { "mi": 6, "type": 5, "tgInform": 0 },
+        { "mi": 9, "tm": 20, "type": 5, "tgInform": 0 },
+        { "mi": 8, "type": 6, "tgInform": 0 }
+      ]
+    }
+  ],
+  "games": { "list": [], "criterias": [{ "sorts": {}, "title": "Сила" }] },
+  "lists": {
+    "cats": [{ "icon": "UserGroup03", "title": "Группа", "titles": ["Наставники", "Участники"] }],
+    "units": [{ "mi": 1, "cat": 0, "dsc": "", "title": "Первая" }]
+  },
+  "tatts": [
+    {
+      "R": 105,
+      "U": 105,
+      "mi": 0,
+      "use": 113,
+      "icon": "LeftToRightListDash",
+      "title": "Ход события",
+      "titles": ["лоывар", "ыволарыва"],
+      "initVal": {},
+      "description": ""
+    }
+  ],
+  "types": [
+    { "tm": 15, "title": "Общение" },
+    { "tm": 5, "atts": {}, "title": "Пение" },
+    { "tm": 90, "title": "Проповедь" },
+    { "tm": 5, "title": "Разъезд" },
+    { "tm": 5, "title": "Введение" },
+    { "tm": 45, "title": "Свидетельства" },
+    { "tm": 15, "title": "Молитва" }
+  ]
+}

@@ -1,34 +1,31 @@
 {
-  "w": 1751532792744,
-  "m": 1754193300115.0593,
   "title": "Молитвенное собрание",
-  "app": "index",
-  "dsc": "",
   "topic": "",
-  "days": [{ "list": [{ "type": 0, "mi": 1, "atts": { "[cm]:coms": {} }, "tgInform": 0 }], "mi": 0, "wup": 7 }],
-  "tatts": [],
-  "types": [{ "title": "Пение", "tm": 30 }],
-  "tgInformTime": 5,
+  "dsc": "",
   "start": 1754168400000,
+  "tgInformTime": 5,
   "ctrl": {
     "cats": ["Основное"],
+    "defu": 5,
+    "type": 3,
+    "roles": [{ "mi": 0, "icon": "Teacher", "title": "Координатор", "userMi": 0 }],
     "users": [
       {
+        "R": 127,
         "mi": 0,
         "fio": "Павел 👨‍💻",
-        "login": "T166cbf17596a0c2919e4df1a6d54e66",
         "nick": "gfirf",
         "tgId": 958383738,
-        "R": 127
+        "login": "T166cbf17596a0c2919e4df1a6d54e66"
       }
-    ],
-    "roles": [{ "mi": 0, "title": "Координатор", "icon": "Teacher", "userMi": 0 }],
-    "type": 3,
-    "defu": 5
+    ]
   },
-  "games": { "criterias": [{ "title": "Сила", "sorts": {} }], "list": [] },
+  "days": [{ "mi": 0, "wup": 7, "list": [{ "mi": 1, "atts": { "[cm]:coms": {} }, "type": 0, "tgInform": 0 }] }],
+  "games": { "list": [], "criterias": [{ "sorts": {}, "title": "Сила" }] },
   "lists": {
     "cats": [{ "icon": "UserGroup", "title": "Группа", "titles": ["Наставники", "Участники"] }],
-    "units": [{ "cati": 0, "mi": 1, "title": "Группа 1", "dsc": "" }]
-  }
+    "units": [{ "mi": 1, "dsc": "", "cati": 0, "title": "Группа 1" }]
+  },
+  "tatts": [],
+  "types": [{ "tm": 30, "title": "Пение" }]
 }

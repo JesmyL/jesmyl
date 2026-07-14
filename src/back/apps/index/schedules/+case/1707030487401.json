@@ -1,68 +1,65 @@
 {
-  "w": 1707030487401,
   "title": "Утреннее собрание",
-  "app": "index",
-  "dsc": "",
   "topic": "",
-  "days": [
-    {
-      "list": [
-        { "type": 0, "mi": 0, "atts": { "[cm]:coms": { "eventw": 1611470202200 } }, "tgInform": 0 },
-        { "type": 1, "mi": 1, "dsc": "Юрий Матвиенко", "topic": "«Каждого вера испытается» 1-е Фесс. 2:17-3:8" },
-        { "type": 0, "mi": 2, "tgInform": 0 },
-        {
-          "type": 1,
-          "mi": 3,
-          "topic": "«Обязанности пастырей» 1-е Петра 5:1-4",
-          "dsc": "Евдокимов Алексей",
-          "tgInform": 0
-        },
-        { "type": 0, "mi": 4, "tgInform": 0 }
-      ],
-      "wup": 10,
-      "mi": 0
-    }
-  ],
-  "tatts": [],
-  "types": [
-    { "tm": 5, "title": "Пение ", "atts": { "[cm]:coms": [-1] } },
-    { "tm": 45, "title": "Проповедь" },
-    { "title": "Хлебопреломление ", "tm": 30 }
-  ],
-  "tgInformTime": 5,
+  "dsc": "",
   "start": 1748120400000,
+  "prevStart": 1748034000000,
+  "tgInformTime": 5,
   "ctrl": {
     "cats": ["Основное"],
+    "defu": 43,
+    "type": 3,
+    "roles": [{ "mi": 0, "icon": "Github", "user": 0, "title": "Координатор" }],
     "users": [
       {
+        "R": 127,
+        "mi": 0,
         "fio": "danikpon",
-        "login": "T7f21a14d3133065ca2e48254f87ecf3",
         "nick": "danikpon",
         "tgId": 370756745,
-        "mi": 0,
-        "R": 127,
+        "login": "T7f21a14d3133065ca2e48254f87ecf3",
         "tgInform": 1
       },
-      { "fio": "Павел 💾", "login": "T166cbf17596a0c2919e4df1a6d54e66", "nick": "gfirf", "tgId": 958383738, "mi": 1 },
+      { "mi": 1, "fio": "Павел 💾", "nick": "gfirf", "tgId": 958383738, "login": "T166cbf17596a0c2919e4df1a6d54e66" },
       {
+        "mi": 2,
         "fio": "Артём ✞",
-        "login": "T5bf2641668ea893e95047be453a5044",
         "nick": "artemkadjam",
         "tgId": 1035981397,
-        "mi": 2
+        "login": "T5bf2641668ea893e95047be453a5044"
       }
-    ],
-    "roles": [{ "mi": 0, "title": "Координатор", "icon": "Github", "user": 0 }],
-    "type": 3,
-    "defu": 43
+    ]
   },
+  "days": [
+    {
+      "mi": 0,
+      "wup": 10,
+      "list": [
+        { "mi": 0, "atts": { "[cm]:coms": { "eventw": 1611470202200 } }, "type": 0, "tgInform": 0 },
+        { "mi": 1, "dsc": "Юрий Матвиенко", "type": 1, "topic": "«Каждого вера испытается» 1-е Фесс. 2:17-3:8" },
+        { "mi": 2, "type": 0, "tgInform": 0 },
+        {
+          "mi": 3,
+          "dsc": "Евдокимов Алексей",
+          "type": 1,
+          "topic": "«Обязанности пастырей» 1-е Петра 5:1-4",
+          "tgInform": 0
+        },
+        { "mi": 4, "type": 0, "tgInform": 0 }
+      ]
+    }
+  ],
   "lists": {
     "cats": [
       { "icon": "UserGroup03", "title": "Группа", "titles": ["Наставники", "Участники"] },
-      { "title": "", "icon": "LeftToRightListDash", "titles": ["Руководители", "Участники"] }
+      { "icon": "LeftToRightListDash", "title": "", "titles": ["Руководители", "Участники"] }
     ],
-    "units": [{ "cat": 0, "mi": 1, "title": "Первая", "dsc": "" }]
+    "units": [{ "mi": 1, "cat": 0, "dsc": "", "title": "Первая" }]
   },
-  "m": 1748156100121.5886,
-  "prevStart": 1748034000000
+  "tatts": [],
+  "types": [
+    { "tm": 5, "atts": { "[cm]:coms": [-1] }, "title": "Пение " },
+    { "tm": 45, "title": "Проповедь" },
+    { "tm": 30, "title": "Хлебопреломление " }
+  ]
 }
