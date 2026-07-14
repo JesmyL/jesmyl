@@ -62,7 +62,6 @@ export interface IScheduleWidgetListCat {
 export type IScheduleWidget = NullifyOptionals<{
   w: IScheduleWidgetWid;
   m: number;
-  isRemoved?: Bool;
   start: number;
   prevStart?: number;
   title: string;
@@ -78,6 +77,7 @@ export type IScheduleWidget = NullifyOptionals<{
   tgInform?: Bool;
   tgChatReqs?: string;
   tgInformTime: number;
+  isRemoved?: Bool;
 }>;
 
 export interface IScheduleWidgetDay {

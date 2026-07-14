@@ -26,9 +26,9 @@ export const scheduleDB = pgTable('schedule', {
     .notNull()
     .$defaultFn(() => Date.now()),
 
-  isRemoved: smallint('isRemoved').notNull().default(Bool.False),
-  withTech: smallint('withTech').notNull().default(Bool.False),
-  tgInform: smallint('tgInform').default(Bool.True),
+  isRemoved: smallint('isRemoved').notNull().$type<Bool>().default(Bool.False),
+  withTech: smallint('withTech').notNull().$type<Bool>().default(Bool.False),
+  tgInform: smallint('tgInform').$type<Bool>().default(Bool.True),
 
   start: bigint('start', { mode: 'number' }).notNull().default(0),
   prevStart: bigint('prevStart', { mode: 'number' }).default(0),

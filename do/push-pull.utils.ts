@@ -1,4 +1,12 @@
-import { CmComCommentBlockDict, CmComWid, IExportableCom, UserInfo, UserLogin } from 'shared/api';
+import {
+  CmComCommentBlockDict,
+  CmComWid,
+  IExportableCom,
+  IScheduleWidget,
+  IScheduleWidgetWid,
+  UserInfo,
+  UserLogin,
+} from 'shared/api';
 import { UserAccessRoleStoraged } from 'shared/model/index/access-rights';
 
 export * from '../src/shared/utils';
@@ -44,6 +52,7 @@ export const pullPushFileDirNameNet = {
   },
   'apps/index/': {
     'users/': T<UserInfo, UserLogin>(),
+    'schedules/': T<OmitOwn<IScheduleWidget, 'm' | 'w'>, `${IScheduleWidgetWid}`>(),
     userRoles: T<UserAccessRoleStoraged, string>(),
   },
 } satisfies Record<string, Record<string, { F: unknown; T: unknown }>>;

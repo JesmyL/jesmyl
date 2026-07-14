@@ -1,19 +1,22 @@
 import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
-import { comDB, user2ComDB, userDB, userRoleDB } from 'back/drizzle.schema';
+import { comDB, scheduleDB, user2ComDB, userDB, userRoleDB } from 'back/drizzle.schema';
 import { db, dbUpdate } from 'back/drizzle/drizzle.db';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
 import { selectUser2Com, upsertUser2ComProps } from 'back/drizzle/ex/user2Com.utils';
 import { jsonParseSecure } from 'back/json-secure';
 import { eq } from 'drizzle-orm';
 import { makePgCheckedSelectSqlRaw, PgCheckFieldMode } from 'p/d';
-import { IExportableCom, UserLogin } from 'shared/api';
+import { IExportableCom, IScheduleWidget, UserLogin } from 'shared/api';
 import {
   forEachObjectEntries,
   mapObjectEntries,
   objectLength,
   PullPushFileDirNameNet,
 } from 'shared/api/pullFiles.utils';
+import { Bool } from 'shared/enums';
 import { lazyInit } from 'shared/utils/lazyInit';
+
+const und = undefined;
 
 type FileMeta<K extends keyof PullPushFileDirNameNet, File extends keyof PullPushFileDirNameNet[K]> = {
   file: PullPushFileDirNameNet[K][File] extends { F: infer FileName extends string } ? FileName : never;
@@ -54,7 +57,6 @@ export const pullPushDirFilesDictLazy = lazyInit(
 
         'coms/': {
           pull: async () => {
-            const und = undefined;
             const comBlank: { [K in keyof Required<IExportableCom>]: und } = {
               w: und,
               m: und,
@@ -194,6 +196,58 @@ export const pullPushDirFilesDictLazy = lazyInit(
           PUSH: roles => {
             forEachObjectEntries(roles, async (role, rules) => {
               await dbUpdate(userRoleDB, { r: rules?.r ?? null }, eq(userRoleDB.n, role));
+            });
+          },
+        },
+        'schedules/': {
+          pull: async () => {
+            const schKeyOrdering: OmitOwn<Required<Record<keyof IScheduleWidget, und>>, 'w' | 'm'> = {
+              title: und,
+              topic: und,
+              dsc: und,
+              start: und,
+              prevStart: und,
+              tgChatReqs: und,
+              tgInform: und,
+              tgInformTime: und,
+              withTech: und,
+              ctrl: und,
+              days: und,
+              games: und,
+              lists: und,
+              tatts: und,
+              types: und,
+              isRemoved: und,
+            };
+
+            return (
+              await db
+                .select({
+                  s: makePgCheckedSelectSqlRaw(scheduleDB, {
+                    prevStart: '=0',
+                    withTech: `=${Bool.False}`,
+                    isRemoved: `=${Bool.False}`,
+                    tgInform: `=${Bool.True}`,
+                    games: 'len=0',
+                    tgChatReqs: 'len=0',
+                  }),
+                })
+                .from(scheduleDB)
+            ).map(({ s: { m, w, id, ...sch } }) => {
+              return {
+                data: { ...schKeyOrdering, ...sch },
+                file: `${w}`,
+                name: sch.title,
+              };
+            });
+          },
+          PUSH: async (sch, schwStr) => {
+            await db.insert(scheduleDB).values({
+              ...sch,
+              w: +schwStr,
+              isRemoved: +!!sch.isRemoved,
+              withTech: +!!sch.withTech,
+              tgChatReqs: sch.tgChatReqs || '',
             });
           },
         },
