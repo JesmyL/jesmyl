@@ -27,8 +27,6 @@ export const drizzleInitiator = async () => {
           PGOPTIONS: '-c client_min_messages=warning',
         },
       });
-
-      await runCommand(makeCommand('push'), '', { stdio: 'inherit', ...hostCwdOptions });
     } catch (error) {
       console.error(makeRedLogText(`${error}`, ''));
       console.error(
