@@ -5,16 +5,17 @@ import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { takeLogginedAuthOrThrow } from 'back/utils';
 import {
   IScheduleWidget,
-  IScheduleWidgetUserCati,
-  IScheduleWidgetUserMi,
-  IScheduleWidgetWid,
   ScheduleScopeProps,
   ScheduleWidgetCleans,
   ScheduleWidgetRegType,
   scheduleWidgetRegTypeRights,
   scheduleWidgetRegTypeTitles,
+  ScheduleWidgetUserCati,
+  ScheduleWidgetUserMi,
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
+  ScheduleWidgetWid,
+  ScheduleWidgetWidDef,
 } from 'shared/api';
 import { SchGeneralTsjrpcModel } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
 import { Bool } from 'shared/enums';
@@ -82,8 +83,8 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
           const auth = takeLogginedAuthOrThrow(tool.auth);
 
           const sch: IScheduleWidget = deepClone({
-            w: IScheduleWidgetWid.def,
-            m: IScheduleWidgetUserCati.def,
+            w: ScheduleWidgetWidDef,
+            m: ScheduleWidgetUserCati.def,
             title: '',
             app: 'index',
             dsc: '',
@@ -101,7 +102,7 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
                   mi: 0,
                   title: 'Координатор',
                   icon: 'Teacher',
-                  userMi: IScheduleWidgetUserMi.def,
+                  userMi: ScheduleWidgetUserMi.def,
                 },
               ],
               type: scheduleWidgetRegTypeRights.collectRights(),
@@ -121,7 +122,7 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
               ],
               units: [
                 {
-                  cati: IScheduleWidgetUserCati.def,
+                  cati: ScheduleWidgetUserCati.def,
                   mi: 1,
                   title: 'Группа 1',
                   dsc: '',
@@ -131,7 +132,7 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
           });
 
           const date = new Date();
-          sch.m = sch.w = date.getTime();
+          sch.m = sch.w = date.getTime() as ScheduleWidgetWid;
           sch.title = title;
 
           date.setMonth(date.getMonth() + 1);
@@ -140,7 +141,7 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
 
           sch.ctrl.users = [
             {
-              mi: IScheduleWidgetUserMi.def,
+              mi: ScheduleWidgetUserMi.def,
               fio: auth.fio,
               login: auth.login,
               nick: auth.nick,
@@ -279,10 +280,10 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
   }
 })();
 
-export const scheduleTitleInBrackets = async (schScalar: IScheduleWidget | IScheduleWidgetWid) => {
+export const scheduleTitleInBrackets = async (schScalar: IScheduleWidget | ScheduleWidgetWid) => {
   if (checkIsNumber(schScalar)) {
-    const sch = await takeScheduleWidgetTiny(schScalar);
-    if (sch == null) throw new Error('schedule not found');
+    const sch = await takeScheduleWidgetTiny({ w: schScalar }, false);
+    if (!sch) throw new Error('schedule not found');
     return `"${sch.title}"`;
   }
   return `"${schScalar.title}"`;

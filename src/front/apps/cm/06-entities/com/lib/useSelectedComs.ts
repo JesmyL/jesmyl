@@ -1,5 +1,6 @@
 import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
+import { CmComWid } from 'shared/api';
 import { cmComSelectedComwsAtom } from '../state/atoms';
 import { useCmComList } from './coms-selections';
 
@@ -10,6 +11,6 @@ export const useCmComSelectedList = () => {
   return {
     selectedComws,
     selectedComs,
-    selectedComPosition: useCallback((comWid: number) => selectedComws.indexOf(comWid) + 1, [selectedComws]),
+    selectedComPosition: useCallback((comWid: CmComWid) => selectedComws.indexOf(comWid) + 1, [selectedComws]),
   };
 };

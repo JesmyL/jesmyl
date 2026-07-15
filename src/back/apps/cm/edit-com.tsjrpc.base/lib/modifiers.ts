@@ -5,7 +5,7 @@ import { selectPgCheckedExportableCom } from 'back/drizzle/ex/com.selectors';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
 import { eq } from 'drizzle-orm';
 import { CmComLangi, CmComWid, IExportableCom } from 'shared/api';
-import { howMillisecondsInDay } from 'shared/const/ms';
+import { checkIsNowInDay } from 'shared/const/ms';
 import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
 import { checkIsString } from 'shared/utils/checkIs';
 import { checkIsEq } from 'shared/utils/checkIsEq';
@@ -39,7 +39,7 @@ export const modifyCom =
     const m = Date.now();
 
     com.o?.forEach(ord => {
-      if (ord.cre != null && ord.cre < Date.now() - howMillisecondsInDay) delete ord.cre;
+      if (checkIsNowInDay(ord.cre)) delete ord.cre;
     });
 
     const comUpdates: Partial<IExportableCom> = {};
@@ -49,7 +49,7 @@ export const modifyCom =
       if (!checkIsEq(value, comClone[key])) {
         isChanged = true;
         comUpdates[key as never] = value as never;
-        resetComwTiny(key as never, props.comw);
+        resetComwTiny({ w: props.comw }, key);
       }
     });
 
@@ -62,7 +62,7 @@ export const modifyCom =
     return {
       value: props.comw,
       description: description
-        ? `Песня ${((await takeComwTiny(props.comw))?.i ?? -1) + 1}. "${comName}" - ${description}`
+        ? `Песня ${((await takeComwTiny({ w: props.comw }, false))?.i ?? -1) + 1}. "${comName}" - ${description}`
         : null,
     };
   };

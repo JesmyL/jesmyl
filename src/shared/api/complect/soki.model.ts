@@ -25,9 +25,7 @@ export interface TelegramNativeAuthUserData extends OmitOwn<User, 'language_code
   hash?: string;
 }
 
-declare const userLoginBrand: unique symbol;
-type UserLoginBrand = string & { readonly [userLoginBrand]: typeof userLoginBrand };
-export type UserLogin = `${UserLoginBrand}`;
+export type UserLogin = StringBrand<'UserLogin'>;
 
 export type SokiAuthLogin = UserLogin;
 

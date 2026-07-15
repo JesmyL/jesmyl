@@ -8,6 +8,8 @@ import {
   IScheduleWidgetDay,
   ScheduleScopeProps,
   ScheduleWidgetCleans,
+  ScheduleWidgetDayEventMi,
+  ScheduleWidgetDayi,
   indexScheduleGetDayEventTimes,
 } from 'shared/api';
 import { emptyFunc, itNNull, retNull } from 'shared/utils';
@@ -16,7 +18,7 @@ import { ScheduleWidgetDayEvent } from './events/DayEvent';
 
 interface Props {
   day: IScheduleWidgetDay;
-  dayi: number;
+  dayi: ScheduleWidgetDayi;
   schedule: IScheduleWidget;
   onClose: (isOpen: false) => void;
   scheduleScopeProps: ScheduleScopeProps;
@@ -47,7 +49,11 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
 
           const theDay = {
             ...day,
-            list: list.map((event, eventi) => ({ ...event, mi: event?.mi ?? -eventi, type: event?.type ?? -1 })),
+            list: list.map((event, eventi) => ({
+              ...event,
+              mi: event?.mi ?? (-eventi as ScheduleWidgetDayEventMi),
+              type: event?.type ?? -1,
+            })),
           };
 
           const days = [...schedule.days];

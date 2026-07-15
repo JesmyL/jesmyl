@@ -9,7 +9,7 @@ import { CmComOrderLine, TheCmComOrder } from '$cm/ext';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
-import { CmComWid } from 'shared/api';
+import { CmComWidZero } from 'shared/api';
 import { cmComOrderMakeRepeatPortalKey } from 'shared/utils/cm/repeat-keys';
 import { twMerge } from 'tailwind-merge';
 import { cmEditorTabComRepeatsOnLoadAtom, cmEditorTabComRepeatsStateAtom } from '../state/atoms';
@@ -40,7 +40,7 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
   }, [flashCount, isReadySetChordBlock, startOrd]);
 
   return (
-    (comw === ccom.wid || comw === CmComWid.zero) && (
+    (comw === ccom.wid || comw === CmComWidZero) && (
       <Content className={twMerge('relative', start != null && 'active', isCantRedact && 'disabled pointers-none')}>
         {ccom.orders?.map((ord, ordi) => {
           if (!ord.isVisible) return null;

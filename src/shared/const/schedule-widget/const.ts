@@ -1,7 +1,7 @@
-import { IScheduleWidget, IScheduleWidgetWid, ScheduleWidgetRegType, ScheduleWidgetUserRoleRight } from 'shared/api';
+import { IScheduleWidget, ScheduleWidgetRegType, ScheduleWidgetUserRoleRight, ScheduleWidgetWidDef } from 'shared/api';
 
 export const takeDefaultScheduleWidget: () => IScheduleWidget = () => ({
-  w: IScheduleWidgetWid.def,
+  w: ScheduleWidgetWidDef,
   m: 0,
   start: 0,
   title: '',

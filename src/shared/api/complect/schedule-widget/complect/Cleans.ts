@@ -3,8 +3,10 @@ import {
   CustomAttUseTaleId,
   IScheduleWidget,
   IScheduleWidgetDayEvent,
+  ScheduleWidgetDayi,
   ScheduleWidgetDayListItemTypeBox,
 } from 'shared/api';
+import { howMillisecondsInDay, howMillisecondsInHour, howMillisecondsInMin } from 'shared/const/ms';
 import { SMyLib, smylib } from 'shared/utils';
 import { ruLowerLettersStr } from 'shared/utils/cm/com/const';
 import { textToCapitalizeCase } from 'shared/utils/string.utils';
@@ -67,7 +69,7 @@ export class ScheduleWidgetCleans {
 
     return (
       returnAs === 'number'
-        ? +(beginHours || 0) * smylib.howMs.inHour + wakeUpMinutes * smylib.howMs.inMin
+        ? +(beginHours || 0) * howMillisecondsInHour + wakeUpMinutes * howMillisecondsInMin
         : `${beginHours.padStart(2, '0')}:${('' + wakeUpMinutes).padStart(2, '0')}`
     ) as never;
   };
@@ -79,17 +81,17 @@ export class ScheduleWidgetCleans {
   };
 
   static daysToText = (days: number, isNeedCalculate?: boolean) => {
-    const daysTo = isNeedCalculate ? Math.ceil(days / smylib.howMs.inDay) : days;
+    const daysTo = isNeedCalculate ? Math.ceil(days / howMillisecondsInDay) : days;
     return daysTo + ' ' + smylib.declension(daysTo, 'день', 'дня', 'дней');
   };
   static hoursToText = (hoursTo: number) => hoursTo + ' ' + smylib.declension(hoursTo, 'час', 'часа', 'часов');
   static minutesToText = (minutes: number, isNeedCalculate?: boolean) => {
-    const minutesTo = isNeedCalculate ? Math.ceil(minutes / smylib.howMs.inMin) : minutes;
+    const minutesTo = isNeedCalculate ? Math.ceil(minutes / howMillisecondsInMin) : minutes;
     return minutesTo + ' ' + smylib.declension(minutesTo, 'минуту', 'минуты', 'минут');
   };
 
   static minutesToTextTemplate = (minutes: number, text: string) => {
-    const minutesTo = Math.ceil(minutes / smylib.howMs.inMin);
+    const minutesTo = Math.ceil(minutes / howMillisecondsInMin);
 
     return smylib.stringTemplater(text, {
       num: minutesTo,
@@ -116,7 +118,8 @@ export class ScheduleWidgetCleans {
   static getCurrentDayi(schedule: IScheduleWidget) {
     const date = new Date();
     date.setHours(0, 0, 0, 0);
-    return (date.getTime() - schedule.start + (schedule.withTech ? smylib.howMs.inDay : 0)) / smylib.howMs.inDay;
+    return ((date.getTime() - schedule.start + (schedule.withTech ? howMillisecondsInDay : 0)) /
+      howMillisecondsInDay) as ScheduleWidgetDayi;
   }
 
   static getCurrentDayiOrNull(schedule: IScheduleWidget) {
@@ -124,13 +127,13 @@ export class ScheduleWidgetCleans {
     date.setHours(0, 0, 0, 0);
 
     const dayi = Math.trunc(
-      (date.getTime() - schedule.start + (schedule.withTech ? smylib.howMs.inDay : 0)) / smylib.howMs.inDay,
+      (date.getTime() - schedule.start + (schedule.withTech ? howMillisecondsInDay : 0)) / howMillisecondsInDay,
     );
     if (dayi > schedule.days.length - 1 || dayi < 0) return null;
-    return dayi;
+    return dayi as ScheduleWidgetDayi;
   }
 
-  static getCurrentEventInDay(schedule: IScheduleWidget, dayi: number) {
+  static getCurrentEventInDay(schedule: IScheduleWidget, dayi: ScheduleWidgetDayi) {
     const day = schedule.days[dayi];
     if (day == null) return undefined;
 
@@ -142,7 +145,7 @@ export class ScheduleWidgetCleans {
     const [hoursStr, minsStr = 0] = ('' + day.wup).split('.');
 
     let prevMins = +hoursStr * 60 + +minsStr;
-    const nowMins = (date.getTime() - dateStart.getTime()) / smylib.howMs.inMin;
+    const nowMins = (date.getTime() - dateStart.getTime()) / howMillisecondsInMin;
 
     for (let eventi = 0; eventi < day.list.length; eventi++) {
       const event = day.list[eventi];

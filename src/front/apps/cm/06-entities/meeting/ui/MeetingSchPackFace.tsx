@@ -3,7 +3,7 @@ import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useMemo, useState } from 'react';
-import { IScheduleWidget, IScheduleWidgetDayEventMi, ScheduleComPackEventPath } from 'shared/api';
+import { IScheduleWidget, ScheduleComPackEventPath, ScheduleWidgetDayEventMi, ScheduleWidgetDayi } from 'shared/api';
 import { isNIs } from 'shared/utils';
 import { useCmMeetingLinkToEvent } from '../state/meeting';
 
@@ -13,7 +13,7 @@ export const CmMeetingSchPackFace = ({ schedule }: { schedule: IScheduleWidget }
   const paths = useMemo(() => {
     const paths = {} as Record<
       ScheduleComPackEventPath,
-      { title: string; dayi: number; eventMi: IScheduleWidgetDayEventMi }
+      { title: string; dayi: ScheduleWidgetDayi; eventMi: ScheduleWidgetDayEventMi }
     >;
 
     schedule.days.forEach((day, dayi) => {
@@ -21,7 +21,7 @@ export const CmMeetingSchPackFace = ({ schedule }: { schedule: IScheduleWidget }
         if (event.atts?.['[cm]:coms'] == null) return;
         paths[`${dayi}/${event.mi}`] = {
           title: schedule.types[event.type].title,
-          dayi,
+          dayi: dayi as ScheduleWidgetDayi,
           eventMi: event.mi,
         };
       });

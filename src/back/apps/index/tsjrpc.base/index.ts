@@ -77,7 +77,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
 
           if (auth.login === login) throw 'Нельзя поменять роль себе же';
 
-          const yourUser = await takeUserTiny(auth.login);
+          const yourUser = await takeUserTiny({ l: auth.login });
 
           if (yourUser?.r !== 'TOP') throw 'Нет прав на это действие 55412304234670';
 
@@ -85,37 +85,37 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
           const where = eq(userDB.l, login);
 
           if (role) {
-            const roleInfo = await takeUserRoleTiny(role);
+            const roleInfo = await takeUserRoleTiny({ n: role });
             if (!roleInfo) throw 'Неизвестная роль';
             await dbUpdate(userDB, { r: role, m: mod }, where);
           } else await dbUpdate(userDB, { r: null, m: mod }, where);
 
-          resetUserTiny(login);
+          resetUserTiny({ l: login });
 
           indexServerTsjrpcShareMethods.refreshAccessRights(
             { rights: await makeUserAccessRights(login), mod },
             { login },
           );
 
-          return { value: { [login]: await takeUserTiny(login) } };
+          return { value: { [login]: await takeUserTiny({ l: login }) } };
         },
 
         addNewAccessRole: async ({ role }) => {
-          const roleInfo = await takeUserRoleTiny(role);
+          const roleInfo = await takeUserRoleTiny({ n: role });
           if (roleInfo) throw 'Такая роль уже существует';
 
           await db.insert(userRoleDB).values({ n: role });
 
-          return { value: { [role]: await takeUserRoleTiny(role) } };
+          return { value: { [role]: await takeUserRoleTiny({ n: role }) } };
         },
 
         updateRoleAccessRight: async ({ operation, rule, scope, role }, { auth: userAuth }) => {
           const auth = takeLogginedAuthOrThrow(userAuth);
-          const yourUser = await takeUserTiny(auth.login);
+          const yourUser = await takeUserTiny({ l: auth.login });
 
           if (yourUser?.r !== 'TOP') throw 'Нет прав на это действие 068234765';
 
-          const roleRights = await takeUserRoleTiny(role);
+          const roleRights = await takeUserRoleTiny({ n: role });
 
           if (!roleRights) throw 'Нет такой роли';
 
@@ -146,9 +146,9 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
           });
 
           await dbUpdate(userRoleDB, { r: roleRights.r ?? null }, eq(userRoleDB.n, role));
-          resetUserRoleTiny(role);
+          resetUserRoleTiny({ n: role });
 
-          return { value: { [role]: await takeUserRoleTiny(role) } };
+          return { value: { [role]: await takeUserRoleTiny({ n: role }) } };
         },
 
         getDeviceId: async () => {

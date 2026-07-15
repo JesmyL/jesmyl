@@ -13,10 +13,11 @@ import {
   IScheduleWidget,
   IScheduleWidgetDay,
   IScheduleWidgetDayEvent,
-  IScheduleWidgetWid,
   ScheduleWidgetCleans,
+  ScheduleWidgetDayi,
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
+  ScheduleWidgetWid,
 } from 'shared/api';
 import { howMillisecondsInMin } from 'shared/const/ms';
 import { checkIsNil, checkIsNotString, checkIsNumber } from 'shared/utils/checkIs';
@@ -26,14 +27,14 @@ import { takeScheduleWidgetTiny } from '../schedule.tiny';
 import { onScheduleDayEventIsNeedTgInformSetEvent, onScheduleUserTgInformSetEvent } from '../specific-modify-events';
 import { makeScheduleWidgetJoinTitle } from './message-catchers';
 
-const getSchedule = async (scheduleScalar: number | IScheduleWidget) =>
-  checkIsNumber(scheduleScalar) ? await takeScheduleWidgetTiny(scheduleScalar) : scheduleScalar;
+const getSchedule = async (scheduleScalar: ScheduleWidgetWid | IScheduleWidget) =>
+  checkIsNumber(scheduleScalar) ? await takeScheduleWidgetTiny({ w: scheduleScalar }, false) : scheduleScalar;
 
 const jobs: Record<number, nodeSchedule.Job> = {};
 const unsubscribeQueryDataNamePrefix = 'sch-wdgt-unsub:';
 const subscribeQueryDataNamePrefix = 'sch-wdgt-sub:';
 
-const unsubOptions = {} as Record<IScheduleWidgetWid, SendMessageOptions>;
+const unsubOptions = {} as Record<ScheduleWidgetWid, SendMessageOptions>;
 
 const convertMd2HTML = convertMd2HTMLMaker(true);
 
@@ -54,17 +55,17 @@ class TgInformer {
     nodeSchedule.scheduleJob('1 0 * * *', () => initTgScheduleInform());
   }
 
-  inform = async (scheduleScalar: number | IScheduleWidget, invokeDayi?: number) => {
+  inform = async (scheduleScalar: ScheduleWidgetWid | IScheduleWidget, invokeDayi?: ScheduleWidgetDayi) => {
     const schedule = await getSchedule(scheduleScalar);
 
-    if (!schedule) return;
+    if (!schedule?.days) return;
 
     if (checkIsNil(invokeDayi) || !indexScheduleCheckIsDayIsPast(schedule, invokeDayi)) jobs[schedule.w]?.cancel();
 
     if (
       schedule.tgInform === 0 ||
       schedule.days.length === 0 ||
-      indexScheduleCheckIsDayIsPast(schedule, schedule.days.length - 1) ||
+      indexScheduleCheckIsDayIsPast(schedule, (schedule.days.length - 1) as ScheduleWidgetDayi) ||
       (invokeDayi !== undefined && indexScheduleCheckIsDayIsPast(schedule, invokeDayi))
     )
       return;
@@ -78,7 +79,8 @@ class TgInformer {
         ? null
         : parseInt(schedule.tgChatReqs, 10);
 
-    dayLoop: for (let dayi = 0; dayi < daysLen; dayi++) {
+    dayLoop: for (let i = 0; i < daysLen; i++) {
+      const dayi = i as ScheduleWidgetDayi;
       const day = schedule.days[dayi];
 
       if (day.list.length === 0 || indexScheduleCheckIsDayIsPast(schedule, dayi)) continue;
@@ -139,8 +141,8 @@ class TgInformer {
   };
 
   private setJob(
-    schw: IScheduleWidgetWid,
-    dayi: number,
+    schw: ScheduleWidgetWid,
+    dayi: ScheduleWidgetDayi,
     day: IScheduleWidgetDay,
     eventi: number,
     eventStartMs: number,
@@ -353,7 +355,7 @@ class TgInformer {
         (event.value.data.startsWith(unsubscribeQueryDataNamePrefix) ||
           event.value.data.startsWith(subscribeQueryDataNamePrefix))
       ) {
-        const schw = +event.value.data.split(':')[1];
+        const schw = +event.value.data.split(':')[1] as ScheduleWidgetWid;
 
         const schedule = await getSchedule(schw);
         if (schedule == null) return;

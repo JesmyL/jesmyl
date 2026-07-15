@@ -1,23 +1,24 @@
 import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
-import { MyLib, mylib } from '#shared/lib/my-lib';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { CmComFaceList } from '$cm/ext';
 import { useMemo } from 'react';
-import { CmComWid, IScheduleWidgetWid } from 'shared/api';
+import { CmComWid, ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
+import { checkIsNaN } from 'shared/utils/checkIs';
+import { objectKeys } from 'shared/utils/object.utils';
 
 type Props = {
-  dayi: number;
-  schw: IScheduleWidgetWid;
+  dayi: ScheduleWidgetDayi;
+  schw: ScheduleWidgetWid;
 };
 
 export const CmEditorMeetingEventEditsHistoryStatisticModalInner = ({ dayi, schw }: Props) => {
   const [{ comwCount, totalCount } = {}, isLoading, error] = useInvocatedValue(
     undefined,
     async ({ aborter }, initialValue) => {
-      if (mylib.isNaN(schw) || mylib.isNaN(dayi)) return initialValue;
+      if (checkIsNaN(schw) || checkIsNaN(dayi)) return initialValue;
       return cmEditComExternalsClientTsjrpcMethods.getSchEvHistoryStatistic({ schw, dayi }, { aborter });
     },
     [schw, dayi],
@@ -26,7 +27,7 @@ export const CmEditorMeetingEventEditsHistoryStatisticModalInner = ({ dayi, schw
   const comws = useMemo(() => {
     if (comwCount == null) return [];
 
-    return MyLib.keys(comwCount)
+    return objectKeys(comwCount)
       .sort((a, b) => comwCount[b] - comwCount[a])
       .map(comwStr => +comwStr as CmComWid);
   }, [comwCount]);

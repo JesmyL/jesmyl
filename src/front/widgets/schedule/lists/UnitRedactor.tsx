@@ -5,8 +5,8 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import {
   IScheduleWidgetListCat,
   IScheduleWidgetListUnit,
-  IScheduleWidgetUserCati,
   ScheduleUnitScopeProps,
+  ScheduleWidgetUserCati,
 } from 'shared/api';
 import { ScheduleWidgetUserList } from '../control/users/UserList';
 import { schListsTsjrpcClient, schUsersTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
@@ -14,7 +14,7 @@ import { schListsTsjrpcClient, schUsersTsjrpcClient } from '../tsjrpc/tsjrpc.met
 type Props = {
   unit: IScheduleWidgetListUnit;
   cat: IScheduleWidgetListCat;
-  cati: IScheduleWidgetUserCati;
+  cati: ScheduleWidgetUserCati;
   shortTitles: [string, string];
   unitScopeData: ScheduleUnitScopeProps;
 };

@@ -7,8 +7,8 @@ import { Atom, atom } from 'atomaric';
 import { ReactNode, useMemo } from 'react';
 import {
   IScheduleWidgetUser,
-  IScheduleWidgetUserMi,
   ScheduleUserScopeProps,
+  ScheduleWidgetUserMi,
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
@@ -36,10 +36,10 @@ export const ScheduleWidgetUser = (props: Props) => {
   );
 };
 
-let isRedactModalOpenAtom: Atom<IScheduleWidgetUserMi | null>;
+let isRedactModalOpenAtom: Atom<ScheduleWidgetUserMi | null>;
 
 const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props) => {
-  isRedactModalOpenAtom ??= atom<IScheduleWidgetUserMi | null>(null);
+  isRedactModalOpenAtom ??= atom<ScheduleWidgetUserMi | null>(null);
 
   const rights = useScheduleWidgetRightsContext();
 

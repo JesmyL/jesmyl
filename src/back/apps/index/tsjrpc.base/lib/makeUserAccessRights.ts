@@ -7,7 +7,7 @@ import { takeUserTiny } from '../../tinies/userTiny';
 export const makeUserAccessRights = async (login: SokiAuthLogin | nil) => {
   if (!login) return {};
 
-  const { rights: userRights, r: userRole } = (await takeUserTiny(login)) ?? {};
+  const { rights: userRights, r: userRole } = (await takeUserTiny({ l: login }, false)) ?? {};
 
   if (!userRights) return {};
 
@@ -27,7 +27,7 @@ export const makeUserAccessRights = async (login: SokiAuthLogin | nil) => {
         }
       }
     } else {
-      const { r: roleRules } = (await takeUserRoleTiny(userRole)) ?? {};
+      const { r: roleRules } = (await takeUserRoleTiny({ n: userRole })) ?? {};
 
       if (roleRules) {
         for (const scopeName in roleRules) {

@@ -5,7 +5,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { useMemo } from 'react';
-import { IScheduleWidgetListCat, IScheduleWidgetListUnit, IScheduleWidgetUserCati } from 'shared/api';
+import { IScheduleWidgetListCat, IScheduleWidgetListUnit, ScheduleWidgetUserCati } from 'shared/api';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
 import { ScheduleWidgetUserList } from '../control/users/UserList';
@@ -15,7 +15,7 @@ import { ScheduleWidgetListUnitRedactor } from './UnitRedactor';
 type Props = {
   unit: IScheduleWidgetListUnit;
   cat: IScheduleWidgetListCat;
-  cati: IScheduleWidgetUserCati;
+  cati: ScheduleWidgetUserCati;
   shortTitles: [string, string];
 };
 

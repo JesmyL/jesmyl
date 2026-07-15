@@ -2,6 +2,7 @@ import { addAbortControlledPipe, hookEffectPipe } from '#shared/lib/hookEffectPi
 import { theIconLoadingNode } from '#shared/ui/the-icon/theIconLoadingNode';
 import { useEffect, useState } from 'react';
 
+/** @deprecated */
 export const useInvocatedValue = <Value, InitialValue extends Value>(
   initialValue: InitialValue,
   invocation: (props: { aborter: { signal: AbortSignal } }, initialValue: InitialValue) => Promise<Value>,

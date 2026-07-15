@@ -3,7 +3,7 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import styled from '@emotion/styled';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { IScheduleWidgetUser, IScheduleWidgetUserMi } from 'shared/api';
+import { IScheduleWidgetUser, ScheduleWidgetUserMi } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import { ScheduleWidgetTeamsCriteriaSorterScreenHistory } from './History';
 import { HistoryAdder } from './model';
@@ -37,7 +37,7 @@ export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes = function SortBox
   stopOnSingleInsert,
 }: Props) {
   const rights = useScheduleWidgetRightsContext();
-  const [unknownUsers, setUnknownUsers] = useState<IScheduleWidgetUserMi[]>([]);
+  const [unknownUsers, setUnknownUsers] = useState<ScheduleWidgetUserMi[]>([]);
   const [correct, setCorrect] = useState<'left' | 'right' | nil>(null);
 
   const insertUser = useMemo<IScheduleWidgetUser | und>(() => {

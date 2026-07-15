@@ -1,5 +1,6 @@
 import { CmCatKind } from '#shared/model/cm/cat/Cat.model';
 import { CmComWid, IExportableCat } from 'shared/api';
+import { extractNumber } from 'shared/utils';
 import { objectKeys } from 'shared/utils/object.utils';
 import { searchConstants, searchRateWithSort } from 'shared/utils/searchRate';
 import { BaseNamed } from './BaseNamed';
@@ -22,7 +23,7 @@ export class CmCat extends BaseNamed<IExportableCat> {
     }
   }
 
-  private _stackSet: Set<number> | null = null;
+  private _stackSet: Set<CmComWid> | null = null;
   get stackSet() {
     return (this._stackSet ??= new Set(this.top.s));
   }
@@ -36,7 +37,7 @@ export class CmCat extends BaseNamed<IExportableCat> {
   }
 
   get comws(): CmComWid[] {
-    return this.top.s ?? objectKeys(this.top.d ?? {}).map(Number);
+    return this.top.s ?? objectKeys(this.top.d ?? {}).map(extractNumber);
   }
 
   static sortedSearch(term: string, coms: CmCom[], isNumberSearch?: boolean) {

@@ -11,9 +11,9 @@ import { Atom, atom, useAtomValue } from 'atomaric';
 import React, { ReactNode, useMemo } from 'react';
 import {
   CustomAttUseRights,
-  IScheduleWidgetAttachmentTypeMi,
   ScheduleAttachmentTypeScopeProps,
   ScheduleWidgetAppAttCustomized,
+  ScheduleWidgetAttachmentTypeMi,
   ScheduleWidgetRightsCtrl,
   customAttUseRights,
   customAttUseRightsTitles,
@@ -46,7 +46,7 @@ const whoCanUnits: { action: string; rule: 'R' | 'U'; icon: KnownStameskaIconNam
 ];
 
 let whoCaniAtom: Atom<WhoCan>;
-let openAttRedactorAtom: Atom<IScheduleWidgetAttachmentTypeMi | null>;
+let openAttRedactorAtom: Atom<ScheduleWidgetAttachmentTypeMi | null>;
 
 export function ScheduleWidgetCustomAtt(props: {
   tatt: ScheduleWidgetAppAttCustomized;
@@ -54,7 +54,7 @@ export function ScheduleWidgetCustomAtt(props: {
   topContent?: ReactNode;
 }) {
   whoCaniAtom ??= atom<WhoCan>(WhoCan.No);
-  openAttRedactorAtom ??= atom<IScheduleWidgetAttachmentTypeMi | null>(null);
+  openAttRedactorAtom ??= atom<ScheduleWidgetAttachmentTypeMi | null>(null);
 
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();

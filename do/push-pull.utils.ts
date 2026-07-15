@@ -1,9 +1,14 @@
+import { UserId } from 'back/drizzle.schema';
 import {
   CmComCommentBlockDict,
+  CmComInSchDayEvWr,
   CmComWid,
   IExportableCom,
+  IExportableComInterpretation,
   IScheduleWidget,
-  IScheduleWidgetWid,
+  ScheduleWidgetDayEventMi,
+  ScheduleWidgetDayi,
+  ScheduleWidgetWid,
   UserInfo,
   UserLogin,
 } from 'shared/api';
@@ -42,17 +47,32 @@ export const pullFilesExpressSecretQueryName = 'secret_word';
 
 export type PullPushFileDirNameNet = typeof pullPushFileDirNameNet;
 
-const T = <Type, FileName extends string>() => 0 as never as { F: FileName; T: Type };
+const T = <Type, FileName extends string>() => 1 as never as { F: FileName; T: Type };
 
 export const pullPushFileDirNameNet = {
   'apps/cm/': {
-    'coms/': T<IExportableCom, `${CmComWid}`>(),
-    'user2Com/': T<PRecord<CmComWid, { fav?: 1; comm?: (CmComCommentBlockDict | nil)[] }>, UserLogin>(),
     comwVisits: T<PRecord<CmComWid, number>, string>(),
+
+    'coms/': T<IExportableCom, `${CmComWid}`>(),
+
+    'user2Com/': T<PRecord<CmComWid, { fav?: 1; comm?: (CmComCommentBlockDict | nil)[] }>, UserLogin>(),
+
+    'schDayEvComHistory/': T<
+      Record<
+        ScheduleWidgetDayi,
+        Record<ScheduleWidgetDayEventMi, { s: CmComWid[]; u: UserId; w: CmComInSchDayEvWr }[]>
+      >,
+      `${ScheduleWidgetWid}`
+    >(),
+
+    'sch2Com/': T<Record<CmComWid, { intp?: IExportableComInterpretation }>, `${ScheduleWidgetWid}`>(),
   },
+
   'apps/index/': {
-    'users/': T<UserInfo, UserLogin>(),
-    'schedules/': T<OmitOwn<IScheduleWidget, 'm' | 'w'>, `${IScheduleWidgetWid}`>(),
+    'users/': T<UserInfo & { id: UserId }, UserLogin>(),
+
+    'schedules/': T<OmitOwn<IScheduleWidget, 'm' | 'w'>, `${ScheduleWidgetWid}`>(),
+
     userRoles: T<UserAccessRoleStoraged, string>(),
   },
 } satisfies Record<string, Record<string, { F: unknown; T: unknown }>>;

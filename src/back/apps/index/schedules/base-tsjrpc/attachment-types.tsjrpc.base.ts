@@ -1,10 +1,10 @@
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import {
   IScheduleWidget,
-  IScheduleWidgetAttachmentTypeMi,
   ScheduleAttachmentTypeScopeProps,
   ScheduleWidgetAppAttCustomizable,
   ScheduleWidgetAppAttCustomized,
+  ScheduleWidgetAttachmentTypeMi,
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
@@ -45,7 +45,7 @@ export const schAttachmentTypesTsjrpcBaseServer =
           create: modifySchedule(false, sch => {
             sch.tatts.push({
               ...newTatt(),
-              mi: smylib.takeNextMi(sch.tatts, IScheduleWidgetAttachmentTypeMi.def),
+              mi: smylib.takeNextMi(sch.tatts, ScheduleWidgetAttachmentTypeMi.def),
             });
 
             return `${this.inSchTitle(sch)} создан тип вложений`;

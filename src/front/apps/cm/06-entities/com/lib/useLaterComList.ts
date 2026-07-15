@@ -1,10 +1,11 @@
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
+import { CmComWid } from 'shared/api';
 import { itIt, itNIt } from 'shared/utils';
 import { cmComLaterComwListAtom } from '../state/atoms';
 
-const addLaterComw = async (comw: number) => {
+const addLaterComw = async (comw: CmComWid) => {
   const { maxLaterComsVizitedCount } = constantsConfigAtom.get();
 
   cmComLaterComwListAtom.set(prev => {

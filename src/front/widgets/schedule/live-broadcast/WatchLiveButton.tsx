@@ -3,7 +3,7 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useLocation, useNavigate } from '@tanstack/react-router';
 import { atom } from 'atomaric';
 import { useEffect } from 'react';
-import { IScheduleWidgetWid } from 'shared/api';
+import { ScheduleWidgetWid } from 'shared/api';
 import { ScheduleWidgetLiveBroadcast } from './Live';
 
 const queryKey = 'follow';
@@ -15,7 +15,7 @@ export const ScheduleWidgetWatchLiveBroadcastButton = ({
   schw,
   postfix,
 }: {
-  schw: IScheduleWidgetWid;
+  schw: ScheduleWidgetWid;
   postfix?: string;
 }) => {
   const loc = useLocation();

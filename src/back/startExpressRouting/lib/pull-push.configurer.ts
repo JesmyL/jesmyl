@@ -1,13 +1,16 @@
+import { takeComwTiny } from 'back/apps/cm/com.tiny';
+import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
 import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
-import { comDB, scheduleDB, user2ComDB, userDB, userRoleDB } from 'back/drizzle.schema';
+import { comDB, sch2ComDB, schComHistoryDB, scheduleDB, user2ComDB, userDB, userRoleDB } from 'back/drizzle.schema';
 import { db, dbUpdate } from 'back/drizzle/drizzle.db';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
 import { selectUser2Com, upsertUser2ComProps } from 'back/drizzle/ex/user2Com.utils';
 import { jsonParseSecure } from 'back/json-secure';
-import { eq } from 'drizzle-orm';
+import { asc, desc, eq } from 'drizzle-orm';
 import { makePgCheckedSelectSqlRaw, PgCheckFieldMode } from 'p/d';
-import { IExportableCom, IScheduleWidget, UserLogin } from 'shared/api';
+import { IExportableCom, IScheduleWidget, ScheduleWidgetWid, UserLogin } from 'shared/api';
 import {
+  extractNumber,
   forEachObjectEntries,
   mapObjectEntries,
   objectLength,
@@ -51,7 +54,9 @@ export const pullPushDirFilesDictLazy = lazyInit(
 
           PUSH: visits =>
             Promise.all(
-              mapObjectEntries(visits, (comw, visits) => dbUpdate(comDB, { visits: visits ?? 0 }, eq(comDB.w, +comw))),
+              mapObjectEntries(visits, (comw, visits) =>
+                dbUpdate(comDB, { visits: visits ?? 0 }, eq(comDB.w, extractNumber(comw))),
+              ),
             ),
         },
 
@@ -114,7 +119,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
               mapObjectEntries(comw_user2ComsDict, async (login, data) => ({
                 data,
                 file: login,
-                name: (await takeUserTiny(login))?.uauth.fio ?? login,
+                name: (await takeUserTiny({ l: login }, false))?.uauth.fio ?? login,
               })),
             );
           },
@@ -125,13 +130,93 @@ export const pullPushDirFilesDictLazy = lazyInit(
 
               await upsertUser2ComProps(
                 login,
-                +comwStr,
+                extractNumber(comwStr),
                 {
                   comment: val.comm,
                   isFav: !!val.fav,
                 },
                 false,
               );
+            });
+          },
+        },
+        'schDayEvComHistory/': {
+          pull: async (_, _type) => {
+            const dict: Record<ScheduleWidgetWid, { d: typeof _type; n: string }> = {};
+
+            const history = await db
+              .select()
+              .from(schComHistoryDB)
+              .orderBy(
+                asc(schComHistoryDB.schId),
+                asc(schComHistoryDB.dayi),
+                asc(schComHistoryDB.eventMi),
+                desc(schComHistoryDB.w),
+              );
+
+            for (const { comws, dayi, eventMi, schId, userId, w } of history) {
+              const sch = await takeScheduleWidgetTiny({ id: schId }, false);
+              if (!sch) continue;
+              const schw = sch.w;
+
+              dict[schw] ??= { d: {}, n: sch.title };
+              dict[schw].d[dayi] ??= {};
+              dict[schw].d[dayi][eventMi] ??= [];
+
+              dict[schw].d[dayi][eventMi].push({ s: comws, u: userId, w });
+            }
+
+            return mapObjectEntries(dict, (schw, data) => ({
+              data: data.d,
+              file: schw,
+              name: data.n,
+            }));
+          },
+          PUSH: async (data, schw) => {
+            const sch = await takeScheduleWidgetTiny({ w: extractNumber(schw) });
+
+            forEachObjectEntries(data, (dayi, dayHistory) => {
+              forEachObjectEntries(dayHistory, (eventMi, items) => {
+                items.forEach(async ({ s, u, w }) => {
+                  await db.insert(schComHistoryDB).values({
+                    dayi: extractNumber(dayi),
+                    eventMi: extractNumber(eventMi),
+                    schId: sch.id,
+                    userId: u,
+                    comws: s,
+                    w,
+                  });
+                });
+              });
+            });
+          },
+        },
+
+        'sch2Com/': {
+          pull: async (_, _type) => {
+            const dict: Record<ScheduleWidgetWid, { d: typeof _type; n: string }> = {};
+
+            const list = await db.select().from(sch2ComDB).orderBy(sch2ComDB.schId, asc(sch2ComDB.comId));
+
+            for (const { comId, intp, schId } of list) {
+              const sch = await takeScheduleWidgetTiny({ id: schId }, false);
+              const com = await takeComwTiny({ id: comId }, false);
+
+              if (!sch || !com) continue;
+
+              dict[sch.w] ??= { d: {}, n: sch.title };
+              dict[sch.w].d[com.w] = { intp: intp ?? und };
+            }
+
+            return mapObjectEntries(dict, (schw, { d, n }) => ({ data: d, file: schw, name: n }));
+          },
+          PUSH: async (data, schw) => {
+            forEachObjectEntries(data, async (comw, { intp }) => {
+              const sch = await takeScheduleWidgetTiny({ w: extractNumber(schw) }, false);
+              const com = await takeComwTiny({ w: extractNumber(comw) }, false);
+              if (!com || !sch) return;
+
+              await db.insert(sch2ComDB).values({ comId: com.id, schId: sch.id, intp });
             });
           },
         },
@@ -148,7 +233,6 @@ export const pullPushDirFilesDictLazy = lazyInit(
                     rights: 'len=0',
                     r: PgCheckFieldMode.RemoveIfNull,
                     m: PgCheckFieldMode.Remove,
-                    id: PgCheckFieldMode.Remove,
                   }),
                 })
                 .from(userDB)
@@ -244,7 +328,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
           PUSH: async (sch, schwStr) => {
             await db.insert(scheduleDB).values({
               ...sch,
-              w: +schwStr,
+              w: extractNumber(schwStr),
               isRemoved: +!!sch.isRemoved,
               withTech: +!!sch.withTech,
               tgChatReqs: sch.tgChatReqs || '',

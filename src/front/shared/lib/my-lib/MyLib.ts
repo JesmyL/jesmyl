@@ -403,6 +403,7 @@ export class MyLib extends SMyLib {
   };
 }
 
+/** @deprecated */
 export const mylib = new MyLib();
 
 const compareDict = {

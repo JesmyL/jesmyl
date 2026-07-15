@@ -10,6 +10,7 @@ import {
   ScheduleWidgetUserRoleRight,
   scheduleWidgetUserRights,
 } from 'shared/api';
+import { extractNumber } from 'shared/utils';
 import { useCmMeetingComFaceList } from '../meeting/lib/useMeetingComFaceList';
 import { CmExternalComListAtt } from './ui/CmExternalComListAtt';
 
@@ -43,7 +44,7 @@ const route = makeCmEventNestedRoute({
 
 function useComListPack() {
   const { dayi, eventMi, schw } = useSearch({ from: path });
-  const { coms } = useCmMeetingComFaceList({ dayi, eventMi, schw: +schw! });
+  const { coms } = useCmMeetingComFaceList({ dayi, eventMi, schw: extractNumber(schw!) });
 
   return useMemo(() => ({ list: coms }), [coms]);
 }

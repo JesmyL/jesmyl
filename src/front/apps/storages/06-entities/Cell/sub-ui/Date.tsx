@@ -3,13 +3,15 @@ import { mylib } from '#shared/lib/my-lib';
 import { useStoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
+import { checkIsNaN } from 'shared/utils/checkIs';
+import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { StoragesCellTypeProps } from '../model/model';
 
 export const StoragesCellOfTypeDate = (props: StoragesCellTypeProps<StoragesColumnType.Date>) => {
   const date = new Date(props.cell?.[1] ?? NaN);
   const isEdit = useStoragesIsEditInnersContext();
 
-  if (mylib.isNaN(date.getTime())) return;
+  if (checkIsNaN(date.getTime())) return;
 
   return (
     <>
@@ -28,13 +30,9 @@ export const StoragesCellOfTypeDate = (props: StoragesCellTypeProps<StoragesColu
               });
             }}
           />
-        ) : mylib.isNaN(date.getTime()) ? (
-          ''
         ) : (
           <div className="flex gap-3">
-            <span className="font-bold">
-              {date.toLocaleDateString('ru', { month: 'long', day: 'numeric', year: '2-digit' })}
-            </span>
+            <span className="font-bold">{makeDateLabel(date)}</span>
           </div>
         )}
       </div>

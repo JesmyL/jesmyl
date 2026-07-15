@@ -21,6 +21,7 @@ import {
   ScheduleDayScopeProps,
   ScheduleWidgetAttKey,
   ScheduleWidgetCleans,
+  ScheduleWidgetDayi,
 } from 'shared/api';
 import { ScheduleWidgetDayEventRating } from './DayEventRating';
 import { DayEventRedactControls } from './RedactControls';
@@ -31,7 +32,7 @@ interface Props {
   schedule: IScheduleWidget;
   event: IScheduleWidgetDayEvent;
   eventi: number;
-  dayi: number;
+  dayi: ScheduleWidgetDayi;
   day: IScheduleWidgetDay;
   eventTimes: number[];
   secretTime: number;

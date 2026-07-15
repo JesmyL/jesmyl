@@ -5,7 +5,9 @@ export const objectEntries = <T>(
 ): [T extends object | nil ? (keyof T extends number ? `${keyof T}` : keyof T) : string, T[keyof T]][] =>
   checkIsObject(it) ? (Object.entries(it) as never) : [];
 
-export const objectKeys = <T, Key extends T extends object | nil ? keyof T : string>(it: T): Key[] =>
+export const objectKeys = <T>(
+  it: T,
+): (T extends object | nil ? (keyof T extends number ? `${keyof T}` : keyof T) : string)[] =>
   checkIsObject(it) ? (Object.keys(it) as never) : [];
 
 export const objectValues = <T>(it: T): T[keyof T][] => (checkIsObject(it) ? (Object.values(it) as never) : []);

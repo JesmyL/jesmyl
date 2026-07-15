@@ -8,8 +8,10 @@ import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-
 import { CmComFaceList } from '$cm/ext';
 import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
-import { IScheduleWidgetWid } from 'shared/api';
+import { ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
+import { checkIsNaN } from 'shared/utils/checkIs';
+import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { CmEditorMeetingEventEditsHistoryStatisticModalInner } from './EventEditsHistoryStatisticModal';
 
 let isOpenStatisticAtom: Atom<boolean>;
@@ -18,8 +20,8 @@ export const CmEditorMeetingEventEditsHistoryModalInner = ({
   dayi,
   schw,
 }: {
-  dayi: number;
-  schw: IScheduleWidgetWid;
+  dayi: ScheduleWidgetDayi;
+  schw: ScheduleWidgetWid;
 }) => {
   isOpenStatisticAtom ??= atom(false);
 
@@ -27,7 +29,7 @@ export const CmEditorMeetingEventEditsHistoryModalInner = ({
   const [historyPacks, isLoading, error, setHistoryPacks] = useInvocatedValue(
     null,
     async ({ aborter }) => {
-      if (mylib.isNaN(schw) || mylib.isNaN(dayi)) return null;
+      if (checkIsNaN(schw) || checkIsNaN(dayi)) return null;
       return cmEditComExternalsClientTsjrpcMethods.getSchEvHistory({ schw, dayi }, { aborter });
     },
     [schw, dayi],
@@ -49,14 +51,6 @@ export const CmEditorMeetingEventEditsHistoryModalInner = ({
       </ModalBody>
     );
 
-  const itemTitleTimeOptions = {
-    month: 'long',
-    year: 'numeric',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-  } as const;
-
   return (
     <>
       <ModalHeader className="flex justify-between">
@@ -71,20 +65,20 @@ export const CmEditorMeetingEventEditsHistoryModalInner = ({
           return (
             <div key={pack.w}>
               <h3 className="flex gap-2 w-full between">
-                {new Date(pack.w).toLocaleString('ru', itemTitleTimeOptions)}
+                {makeDateLabel(pack.w)}
 
                 <TheIconSendButton
                   icon="Delete02"
                   className="text-xKO"
                   confirm="Удалить эту запись?"
                   onSend={async () => {
-                    const packs = await cmEditComExternalsClientTsjrpcMethods.removeSchEvHistoryItem({
+                    const { w } = await cmEditComExternalsClientTsjrpcMethods.removeSchEvHistoryItem({
                       schw,
                       dayi,
                       writedAt: pack.w,
                     });
 
-                    setHistoryPacks(packs);
+                    setHistoryPacks(historyPacks.filter(it => it.w !== w));
                   }}
                 />
               </h3>

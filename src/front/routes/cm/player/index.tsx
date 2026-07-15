@@ -6,7 +6,7 @@ export const Route = createFileRoute('/cm/player/')({
   component: RouteComponent,
   validateSearch: (search): { comw: CmComWid | und } => {
     return {
-      comw: +search.comw! || undefined,
+      comw: (+search.comw! as CmComWid) || undefined,
     };
   },
 });

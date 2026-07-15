@@ -3,13 +3,14 @@ import {
   CmCatWid,
   CmComWid,
   CmComWidRefGroupDict,
-  ComsInSchEvent,
+  ComsInScheduleIntp,
   ConstantsConfig,
   ICmComCommentBlock,
   IExportableCat,
   IExportableCom,
   MigratableComToolName,
 } from 'shared/api/complect/apps';
+import { ScheduleWidgetDayEventMi, ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
 
 export type CmShareTsjrpcModel = {
   editedCom: (args: { com: IExportableCom; mod: number }) => unknown;
@@ -26,7 +27,16 @@ export type CmShareTsjrpcModel = {
   favTools: (args: { tools: MigratableComToolName[]; mod: number }) => void;
   refreshComFavs: (args: { comws: CmComWid[]; mod: number }) => void;
 
-  refreshSchEvComPacks: (args: { packs: ComsInSchEvent[]; mod: number }) => void;
+  freshSchEvComIntp: (args: { intps: ComsInScheduleIntp[]; mod: number }) => void;
+  freshSchDayEvComws: (args: {
+    schw: ScheduleWidgetWid;
+    dayi: ScheduleWidgetDayi;
+    eventMi: ScheduleWidgetDayEventMi;
+    comws: CmComWid[];
+    fio: string;
+    w: number;
+  }) => void;
+
   /** @deprecated */
   refreshConstConfig: (args: { config: Partial<ConstantsConfig>; mod: number }) => unknown;
   refreshComWidRefDict: (args: { refs: CmComWidRefGroupDict; mod: number }) => unknown;

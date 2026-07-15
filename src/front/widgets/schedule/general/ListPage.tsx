@@ -5,6 +5,7 @@ import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContaine
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useIndexSchedules } from '$index/shared/state';
 import { Link, useNavigate } from '@tanstack/react-router';
+import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { schLinkAction } from '../links';
 import { ScheduleCreateWidgetButton } from './CreateButton';
 
@@ -59,13 +60,7 @@ export const ScheduleWidgetListPage = () => {
                     {schedule.topic ? `: ${schedule.topic}` : ''}
                   </div>
 
-                  <div className="col-span-12 text-xs">
-                    {new Date(schedule.start).toLocaleDateString('ru', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
-                  </div>
+                  <div className="col-span-12 text-xs">{makeDateLabel(schedule.start)}</div>
                 </Link>
               );
             })}

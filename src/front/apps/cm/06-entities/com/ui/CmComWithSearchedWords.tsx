@@ -12,7 +12,7 @@ export const CmComWithSearchedWords = (props: {
     <>
       {props.children}
       {makeStyleNode(css`
-        ${props.wordFounds.map(({ linei, ordw, wordi }) => {
+        ${props.wordFounds?.map(({ linei, ordw, wordi }) => {
           const ends = `$='.${`${ordw}`.padStart(2, '0')}'`;
 
           return css`

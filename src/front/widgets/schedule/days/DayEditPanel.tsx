@@ -4,7 +4,7 @@ import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { Atom, atom } from 'atomaric';
 import { makeRegExp } from 'regexpert';
-import { IScheduleWidget, IScheduleWidgetDay, ScheduleScopeProps } from 'shared/api';
+import { IScheduleWidget, IScheduleWidgetDay, ScheduleScopeProps, ScheduleWidgetDayi } from 'shared/api';
 import { useScheduleDayScopePropsContext } from '../complect/lib/contexts';
 import { schDaysTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetEventListUpdater } from './EventListUpdater';
@@ -13,7 +13,7 @@ import { ScheduleWidgetPrintableDay } from './PrintableDay';
 interface Props {
   scheduleScopeProps: ScheduleScopeProps;
   day: IScheduleWidgetDay;
-  dayi: number;
+  dayi: ScheduleWidgetDayi;
   schedule: IScheduleWidget;
 }
 

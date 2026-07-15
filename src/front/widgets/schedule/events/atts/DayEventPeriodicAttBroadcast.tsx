@@ -10,12 +10,13 @@ import {
   ScheduleDayEventAttachmentScopeProps,
   ScheduleWidgetAttKey,
   ScheduleWidgetAttRef,
+  ScheduleWidgetDayi,
 } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 
 export function ScheduleWidgetDayEventPeriodicBroadcast(props: {
   day: IScheduleWidgetDay;
-  dayi: number;
+  dayi: ScheduleWidgetDayi;
   attKey: ScheduleWidgetAttKey;
   att: ScheduleWidgetAttRef;
   schedule: IScheduleWidget;

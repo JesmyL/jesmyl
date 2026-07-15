@@ -2,20 +2,21 @@ import { CmComFaceList } from '$cm/entities/com-face';
 import { useCmComList } from '$cm/ext';
 import { cmIDB } from '$cm/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { IScheduleWidgetDayEventMi, IScheduleWidgetWid } from 'shared/api';
+import { ScheduleWidgetDayEventMi, ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
+import { checkIsNotNil } from 'shared/utils/checkIs';
 
 interface Props {
-  schw: IScheduleWidgetWid | und;
-  dayi: number | und;
-  eventMi: IScheduleWidgetDayEventMi | und;
+  schw: ScheduleWidgetWid | und;
+  dayi: ScheduleWidgetDayi | und;
+  eventMi: ScheduleWidgetDayEventMi | und;
   comImportantOnClick?: (props: { com: CmCom }) => void;
   isPutCcomFaceOff?: boolean;
 }
 
 export const useCmMeetingComFaceList = ({ dayi, eventMi, schw, comImportantOnClick, isPutCcomFaceOff }: Props) => {
-  const pack = useLiveQuery(() => schw && cmIDB.db.scheduleComPacks.get({ schw }), [schw]);
-  const packComws = pack?.pack?.[dayi as never]?.[eventMi as IScheduleWidgetDayEventMi] ?? [];
+  const pack = useLiveQuery(() => schw && cmIDB.db.scheduleComws.get({ schw }), [schw]);
+  const packComws = checkIsNotNil(dayi) && checkIsNotNil(eventMi) ? (pack?.pack?.[dayi]?.[eventMi]?.s ?? []) : [];
   const coms = useCmComList(packComws);
 
   return {

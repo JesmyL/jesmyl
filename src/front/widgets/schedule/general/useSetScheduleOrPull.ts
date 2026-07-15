@@ -3,11 +3,11 @@ import { mylib } from '#shared/lib/my-lib';
 import { useIndexSchedules } from '$index/shared/state';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
-import { IScheduleWidget, IScheduleWidgetWid } from 'shared/api';
+import { IScheduleWidget, ScheduleWidgetWid } from 'shared/api';
 
 let scheduleAtom: Atom<IScheduleWidget | null>;
 
-export const useGetScheduleOrPull = (scheduleInstance: string | IScheduleWidgetWid | NaN) => {
+export const useGetScheduleOrPull = (scheduleInstance: string | ScheduleWidgetWid | NaN) => {
   scheduleAtom ??= atom<IScheduleWidget | null>(null);
 
   const schedule = useAtomValue(scheduleAtom);

@@ -1,15 +1,7 @@
+import { makeDateLabel } from 'shared/utils/makeDateLabel';
+
 export const StoragesDateTimestampTitle = ({ timestamp }: { timestamp: number | nil }) => {
   return (
-    <>
-      {timestamp == null ? (
-        <span className="text-xKO">Дата не выбрана</span>
-      ) : (
-        new Date(timestamp * 100000).toLocaleDateString('ru', {
-          day: 'numeric',
-          month: 'long',
-          year: '2-digit',
-        })
-      )}
-    </>
+    <>{timestamp == null ? <span className="text-xKO">Дата не выбрана</span> : makeDateLabel(timestamp * 100000)}</>
   );
 };

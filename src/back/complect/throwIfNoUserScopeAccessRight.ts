@@ -39,12 +39,12 @@ export const throwIfNoUserScopeAccessRight = async <
 
     if (checkIsNil(login)) break;
 
-    const userInfo = await takeUserTiny(login);
+    const userInfo = await takeUserTiny({ l: login }, false);
 
     if (!userInfo) break;
     if (userInfo.r === 'TOP') return false;
 
-    const roleInfo = userInfo.r ? await takeUserRoleTiny(userInfo.r) : null;
+    const roleInfo = userInfo.r ? await takeUserRoleTiny({ n: userInfo.r }, false) : null;
 
     if (checkUserScopeAccessRight(roleInfo?.r, userInfo.rights, scope, rule, operation)) return false;
   } while (Bool.False);

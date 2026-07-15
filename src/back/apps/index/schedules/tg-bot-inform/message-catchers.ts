@@ -4,7 +4,7 @@ import { db } from 'back/drizzle/drizzle.db';
 import { jesmylTgBot } from 'back/sides/telegram-bot/bot';
 import { like } from 'drizzle-orm';
 import { makeRegExp } from 'regexpert';
-import { IScheduleWidget, IScheduleWidgetDay, ScheduleWidgetCleans } from 'shared/api';
+import { IScheduleWidget, IScheduleWidgetDay, ScheduleWidgetCleans, ScheduleWidgetDayi } from 'shared/api';
 import { itNNull } from 'shared/utils';
 import {
   onScheduleDayBeginTimeSetEvent,
@@ -128,8 +128,8 @@ jesmylTgBot.catchCallbackQuery(async (query, bot, answer) => {
 
   if (query.data !== parseCbData_) return ret('');
 
-  let schedule: IScheduleWidget,
-    dayi = -1;
+  let schedule: IScheduleWidget;
+  let dayi = -1 as ScheduleWidgetDayi;
 
   try {
     [schedule, dayi] = await getScheduleAndTodayiByRequisit(`%/${query.chat_instance}`);

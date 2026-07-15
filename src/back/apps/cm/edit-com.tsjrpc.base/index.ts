@@ -5,7 +5,7 @@ import { db } from 'back/drizzle/drizzle.db';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { eq } from 'drizzle-orm';
-import { CmComIntensityLevel, CmComLangi } from 'shared/api';
+import { CmComIntensityLevel, CmComLangi, CmComWid } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
 import { cmComIntensityLevelTitleDict } from 'shared/const/cm/cmComDriveLevelTitleDict';
 import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
@@ -89,7 +89,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
 
           if (incorrects?.[0]?.errors?.length) throw incorrects[0].errors[0].message;
 
-          const w = Date.now();
+          const w = Date.now() as CmComWid;
 
           const com = {
             ...newCom,

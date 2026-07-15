@@ -1,8 +1,8 @@
 import { ContextMenu } from '#shared/components/ui/context-menu';
-import { mylib } from '#shared/lib/my-lib';
 import { useCmComLastOpenComw } from '$cm/entities/com';
 import { useState } from 'react';
 import { CmComWid } from 'shared/api';
+import { checkIsNaN } from 'shared/utils/checkIs';
 import { cmComFaceCurrentComwIdPrefix } from '../const/ids';
 import { StyledCmComFaceList } from '../style/StyledComList';
 import { CmComFaceListProps } from './_ComList';
@@ -30,9 +30,9 @@ export const CmComFaceListControlledContainer = (props: Props) => {
 
     if (!foundElementWithFaceItemClassName?.id.startsWith(cmComFaceCurrentComwIdPrefix)) return;
 
-    const comw = +foundElementWithFaceItemClassName.id.slice(cmComFaceCurrentComwIdPrefix.length);
+    const comw = +foundElementWithFaceItemClassName.id.slice(cmComFaceCurrentComwIdPrefix.length) as CmComWid;
 
-    if (mylib.isNaN(comw)) return;
+    if (checkIsNaN(comw)) return;
 
     setSelectedComw(comw);
   };

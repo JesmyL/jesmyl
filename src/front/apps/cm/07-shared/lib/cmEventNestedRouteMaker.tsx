@@ -12,7 +12,8 @@ import {
 import { CmScheduleWidgetBroadcast } from '$cm/widgets/schedule-widget-broadcast';
 import { FileRoutesByPath, Link, useParams, useSearch } from '@tanstack/react-router';
 import { useMemo } from 'react';
-import { IScheduleWidgetWid } from 'shared/api';
+import { ScheduleWidgetWid } from 'shared/api';
+import { extractNumber } from 'shared/utils';
 import { makeCmComNestedRoute } from './cmComNestedRouteMaker';
 
 interface Props<Path extends keyof FileRoutesByPath> {
@@ -25,7 +26,7 @@ type Search = ScheduleDayEventPathProps & CmComOpenRouteProps;
 
 export const makeCmEventNestedRoute = <Path extends keyof FileRoutesByPath>(props: Props<Path>) => {
   const EventRouteComponent = () => {
-    const { schw: paramSchw } = useParams({ from: props.path }) as { schw?: IScheduleWidgetWid };
+    const { schw: paramSchw } = useParams({ from: props.path }) as { schw?: ScheduleWidgetWid };
     const { dayi, eventMi, schw = paramSchw } = useSearch({ from: props.path }) as ScheduleDayEventPathProps;
 
     return (
@@ -34,7 +35,7 @@ export const makeCmEventNestedRoute = <Path extends keyof FileRoutesByPath>(prop
           <CmMeetingEvent
             dayi={dayi}
             eventMi={eventMi}
-            schw={+schw}
+            schw={extractNumber(schw)}
           />
         ) : (
           <CmMeetingLinkToEvent value={linkToEventRenderer}>
@@ -69,10 +70,10 @@ export const makeCmEventNestedRoute = <Path extends keyof FileRoutesByPath>(prop
     useComListPack: props.useComListPack ?? useComListPack,
     isIgnoreSearch: true,
     BroadcastComponent: () => {
-      const { schw: paramSchw } = useParams({ from: props.path }) as { schw?: `${IScheduleWidgetWid}` };
+      const { schw: paramSchw } = useParams({ from: props.path }) as { schw?: `${ScheduleWidgetWid}` };
       const { schw = paramSchw } = useSearch({ from: props.path }) as Search;
 
-      return isTouchDevice ? <CmBroadcastFullscreen /> : <CmScheduleWidgetBroadcast schw={+schw!} />;
+      return isTouchDevice ? <CmBroadcastFullscreen /> : <CmScheduleWidgetBroadcast schw={extractNumber(schw!)} />;
     },
   });
 
@@ -82,9 +83,9 @@ export const makeCmEventNestedRoute = <Path extends keyof FileRoutesByPath>(prop
     validateSearch: (search: PRecord<string, unknown>): ScheduleDayEventPathProps & CmComOpenRouteProps => {
       return {
         ...(mylib.isFunc(comRoute?.validateSearch) ? comRoute.validateSearch(search) : {}),
-        schw: isNaN(+search.schw!) ? undefined : +search.schw!,
-        dayi: isNaN(+search.dayi!) ? undefined : +search.dayi!,
-        eventMi: isNaN(+search.eventMi!) ? undefined : +search.eventMi!,
+        schw: isNaN(+search.schw!) ? undefined : (+search.schw! as never),
+        dayi: isNaN(+search.dayi!) ? undefined : (+search.dayi! as never),
+        eventMi: isNaN(+search.eventMi!) ? undefined : (+search.eventMi! as never),
       };
     },
   };

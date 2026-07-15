@@ -3,12 +3,12 @@ export const enum CmComLangi {
   Ua,
 }
 
-/** @deprecated -> brand number */
-export const enum CmComWid {
-  def = -1,
-  other = -2,
-  zero = 0,
-}
+export type CmComWid = NumberBrand<'CmComWid'>;
+
+export const CmComWidZero = 0 as CmComWid;
+export const CmComWidDef = -1 as CmComWid;
+
+export type CmComInSchDayEvWr = NumberBrand<'CmComInSchDayEvWr'>;
 
 export const enum CmComIntensityLevel {
   TooSlow = 1,

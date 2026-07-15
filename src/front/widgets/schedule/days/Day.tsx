@@ -14,6 +14,7 @@ import {
   IScheduleWidgetDay,
   ScheduleDayScopeProps,
   ScheduleScopeProps,
+  ScheduleWidgetDayi,
 } from 'shared/api';
 import { isNIs } from 'shared/utils';
 import { ScheduleAlarmDay } from '../alarm/AlarmDay';
@@ -25,7 +26,7 @@ import { ScheduleWidgetDayEventList } from './events/DayEventList';
 
 export interface ScheduleWidgetDayProps {
   day: IScheduleWidgetDay;
-  dayi: number;
+  dayi: ScheduleWidgetDayi;
   schedule: IScheduleWidget;
   isPrint?: boolean;
   isCanOpenFull?: boolean;

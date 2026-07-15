@@ -5,7 +5,7 @@ import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import styled from '@emotion/styled';
 import { useEffect } from 'react';
-import { IScheduleWidgetWid } from 'shared/api';
+import { ScheduleWidgetWidDef } from 'shared/api';
 import { ScheduleWidgetAlarmContent } from '../alarm/AlarmContent';
 import { ScheduleCurrentSchwContext } from '../complect/lib/contexts';
 import { extractTgRouteDataFromUrl } from './extractTgRouteDataFromUrl';
@@ -53,7 +53,7 @@ const Child = ({ api, initData }: Props) => {
   }, [initData.user]);
 
   return (
-    <ScheduleCurrentSchwContext value={schedule?.w ?? IScheduleWidgetWid.def}>
+    <ScheduleCurrentSchwContext value={schedule?.w ?? ScheduleWidgetWidDef}>
       <StyledBox>
         {schedule ? (
           <ScheduleWidgetAlarmContent

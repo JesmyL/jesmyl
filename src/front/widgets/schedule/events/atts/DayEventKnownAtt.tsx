@@ -12,6 +12,7 @@ import {
   ScheduleDayEventScopeProps,
   ScheduleWidgetAttKey,
   ScheduleWidgetDayEventAttValue,
+  ScheduleWidgetDayi,
 } from 'shared/api';
 import { isNIs, retNull } from 'shared/utils';
 import { ScheduleWidgetDayEventAttResult } from './DayEventAttResult';
@@ -19,7 +20,7 @@ import { ScheduleWidgetDayEventPeriodicBroadcast } from './DayEventPeriodicAttBr
 
 export type ScheduleDayEventKnownAttProps = {
   day: IScheduleWidgetDay;
-  dayi: number;
+  dayi: ScheduleWidgetDayi;
   attKey: ScheduleWidgetAttKey;
   att: ScheduleWidgetDayEventAttValue;
   schedule: IScheduleWidget;
@@ -115,7 +116,7 @@ export const DayEventKnownAtt = (props: ScheduleDayEventKnownAttProps) => {
               <ScheduleWidgetTopicTitle
                 titleBox={props.schedule.types[event.type]}
                 topicBox={event}
-                prefix={props.day.mi !== day.mi && <span>{`${props.schedule.days.indexOf(day) + 1} день, `}</span>}
+                prefix={props.day.i !== day.i && <span>{`${props.schedule.days.indexOf(day) + 1} день, `}</span>}
               />
             </div>
           );

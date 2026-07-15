@@ -1,4 +1,4 @@
-import { MyLib, mylib } from '#shared/lib/my-lib';
+import { mylib } from '#shared/lib/my-lib';
 import { atom } from 'atomaric';
 import {
   CmComAudioMarkEditPack,
@@ -8,6 +8,7 @@ import {
   HttpNumLeadLink,
 } from 'shared/api';
 import { ComEditBusy } from 'shared/api/tsjrpc/cm/editor.tsjrpc.shares.model';
+import { forEachObjectEntries } from 'shared/utils/object.utils';
 
 export const removedCompositionsAtom = atom<PRecord<CmComWid, string>>({});
 export const comEditorBusiesAtom = atom<ComEditBusy[] | nil>(null);
@@ -32,7 +33,7 @@ export const cmComEditorAudioMarksEditPacksAtom = atom({} as PRecord<HttpNumLead
     removeMarks: (src: HttpNumLeadLink, cMarks: CmComAudioMarkPack | und) => {
       if (cMarks == null) return;
 
-      MyLib.entries(cMarks).forEach(([comwStr, comMarks]) => {
+      forEachObjectEntries(cMarks, (comwStr, comMarks) => {
         if (comMarks == null) return;
 
         const newMarks: CmComAudioMarkEditPack = { ...get()[src] };

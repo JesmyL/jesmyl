@@ -1,17 +1,19 @@
-import { bigint, boolean, integer, jsonb, pgTable, primaryKey } from 'drizzle-orm/pg-core';
+import { bigint, boolean, jsonb, pgTable, primaryKey } from 'drizzle-orm/pg-core';
 import { CmComCommentBlockDict } from 'shared/api';
-import { comDB } from './com';
-import { userDB } from './user';
+import { comDB, ComId } from './com';
+import { userDB, UserId } from './user';
 
 export const user2ComDB = pgTable(
   'user2Com',
   {
-    userId: integer('userId')
+    userId: bigint('userId', { mode: 'number' })
       .notNull()
+      .$type<UserId>()
       .references(() => userDB.id, { onDelete: 'cascade' }),
 
-    comId: integer('comId')
+    comId: bigint('comId', { mode: 'number' })
       .notNull()
+      .$type<ComId>()
       .references(() => comDB.id, { onDelete: 'cascade' }),
 
     commentMod: bigint('commentMod', { mode: 'number' })

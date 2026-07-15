@@ -1,5 +1,5 @@
 import { atom } from 'atomaric';
-import { CmComCommentBlockSimpleSelector, CmComWid } from 'shared/api';
+import { CmComCommentBlockSimpleSelector, CmComWid, CmComWidDef } from 'shared/api';
 import {
   CmComCommentConstructorPropsDictWordRulePropsKeyPrefix,
   CmComCommentConstructorRulePropsDict,
@@ -12,5 +12,5 @@ export const cmComCommentConstructorRulePropsDictAtom = atom(
     comw: CmComWid;
     commentAlti: number;
     wordChordiMaxDict: PRecord<CmComCommentConstructorPropsDictWordRulePropsKeyPrefix, number>;
-  } => ({ wordChordiMaxDict: {}, comw: CmComWid.def, commentAlti: 0 }),
+  } => ({ wordChordiMaxDict: {}, comw: CmComWidDef, commentAlti: 0 }),
 );

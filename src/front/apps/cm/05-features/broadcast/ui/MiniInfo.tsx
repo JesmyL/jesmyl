@@ -1,7 +1,8 @@
 import { useCmCom } from '$cm/entities/com';
+import { CmComWid } from 'shared/api';
 
 interface Props {
-  comw?: number;
+  comw?: CmComWid;
 }
 
 export const CmBroadcastSlideMiniInfo = (props: Props) => {

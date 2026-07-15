@@ -55,7 +55,7 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
 })();
 
 const getCmComNameInBrackets = async (comw: CmComWid) => {
-  const com = await takeComwTiny(comw);
+  const com = await takeComwTiny({ w: comw }, false);
   return com ? `${com.i + 1}. "${com.n}"` : '[Неизвестная песня]';
 };
 

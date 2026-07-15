@@ -8,7 +8,8 @@ import {
   CmComAudioMarkPack,
   CmComWid,
   CmComWidRefGroupDict,
-  ComsInSchEvent,
+  ComsInScheduleIntp,
+  ComsInSchEventComwsPack,
   HttpNumLeadLink,
   ICmComCommentBlock,
   IExportableCat,
@@ -32,7 +33,8 @@ export interface CmIDBStorage {
   fixedComs: IFixedCom[];
   cats: IExportableCat[];
   comAudioTrackMarks: { src: string; cMarks?: CmComAudioMarkPack; m: number }[];
-  scheduleComPacks: ComsInSchEvent[];
+  scheduleComIntp: ComsInScheduleIntp[];
+  scheduleComws: ComsInSchEventComwsPack[];
 
   broadcastScreenConfigs: CmBroadcastScreenConfig[];
 
@@ -81,7 +83,10 @@ class CmIDB extends DexieDB<CmIDBStorage> {
       localComCommentBlocks: {
         comw: '++',
       },
-      scheduleComPacks: {
+      scheduleComIntp: {
+        schw: '++',
+      },
+      scheduleComws: {
         schw: '++',
       },
       comAudioTrackMarks: {

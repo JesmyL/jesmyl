@@ -4,16 +4,16 @@ import { useCmComInScheduleWid } from '$cm/shared/state/contexts';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
-import { CmComWid, IScheduleWidgetWid } from 'shared/api';
+import { CmComWid, CmComWidDef, ScheduleWidgetWid } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { cmComLastOpenComwAtom } from '../state/atoms';
 
 export const useCmComCurrentFixedCom = (): CmCom | und => {
   const ccom = useCmComCurrent();
-  const comw = ccom?.wid ?? CmComWid.def;
+  const comw = ccom?.wid ?? CmComWidDef;
   const ifixedCom = useLiveQuery(() => mylib.isNNlButUnd(comw) && cmIDB.tb.fixedComs.get(+comw), [comw]);
   const schw = useCmComInScheduleWid();
-  const schInterpretation = useLiveQuery(async () => schw && cmIDB.tb.scheduleComPacks.get(schw), [schw])?.intp;
+  const schInterpretation = useLiveQuery(async () => schw && cmIDB.tb.scheduleComIntp.get(schw), [schw])?.intp;
 
   return useMemo(
     () => ccom && new CmCom(ccom.top, ifixedCom, schInterpretation?.[comw]),
@@ -21,10 +21,10 @@ export const useCmComCurrentFixedCom = (): CmCom | und => {
   );
 };
 
-export const useCmCom = (comw: CmComWid | und, interpretationSchw?: IScheduleWidgetWid): CmCom | und => {
+export const useCmCom = (comw: CmComWid | und, interpretationSchw?: ScheduleWidgetWid): CmCom | und => {
   const icom = useLiveQuery(() => mylib.isNNlButUnd(comw) && cmIDB.tb.coms.get(comw), [comw]);
   const schw = useCmComInScheduleWid() ?? interpretationSchw;
-  const schInterpretation = useLiveQuery(async () => schw && cmIDB.tb.scheduleComPacks.get(schw), [schw])?.intp;
+  const schInterpretation = useLiveQuery(async () => schw && cmIDB.tb.scheduleComIntp.get(schw), [schw])?.intp;
 
   return useMemo(() => icom && new CmCom(icom, null, schInterpretation?.[icom.w]), [schInterpretation, icom]);
 };

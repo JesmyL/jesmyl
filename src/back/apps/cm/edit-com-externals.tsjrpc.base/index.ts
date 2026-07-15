@@ -1,27 +1,30 @@
 import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
+import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
+import { db, dbUpdate } from 'back/drizzle/drizzle.db';
+import { schComHistoryDB } from 'back/drizzle/schema/schComHistory';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
+import { takeLogginedAuthOrThrow } from 'back/utils';
+import { and, eq } from 'drizzle-orm';
 import {
   CmComAudioMarkPack,
   CmComAudioMarkPackTime,
+  CmComInSchDayEvWr,
   CmComWid,
   CmComWidRefGroupDict,
   CmComWidRefGroupId,
+  ScheduleComPackHistoryItem,
 } from 'shared/api';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
-import { itNumSort, SMyLib, smylib } from 'shared/utils';
-import { checkIsArray, checkIsNil } from 'shared/utils/checkIs';
+import { checkIsNowInDay } from 'shared/const/ms';
+import { extractNumber, itNumSort, SMyLib, smylib } from 'shared/utils';
+import { checkIsNil } from 'shared/utils/checkIs';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
-import { objectKeys } from 'shared/utils/object.utils';
+import { objectKeys, objectLength, objectValues } from 'shared/utils/object.utils';
 import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from '../client-selectors-by-visit';
 import { takeComwTiny } from '../com.tiny';
 import { makeCmComHttpLinkFromNumLead, makeCmComNumLeadLinkFromHttp } from '../complect/com-http-links';
-import {
-  cmComAudioMarkPacksFileStore,
-  cmComWidRefGroupDictFileStore,
-  comsInSchEventDirStorage,
-  comsInSchEventHistoryDirStorage,
-} from '../file-stores';
+import { cmComAudioMarkPacksFileStore, cmComWidRefGroupDictFileStore } from '../file-stores';
 import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
 import { cmEditComExternalsTsjrpcInterpretations } from './interpretations';
 
@@ -33,86 +36,121 @@ export const cmEditComExternalsTsjrpcBaseServer =
         methods: {
           ...cmEditComExternalsTsjrpcInterpretations(),
 
-          setInSchEv: async ({ schw, dayi, eventMi, list, fio }, { auth }) => {
+          addComwsInSchEvHistory: async ({ schw, dayi, eventMi, comws }, tool) => {
+            const auth = takeLogginedAuthOrThrow(tool.auth);
             if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'U')) throw '';
 
-            const pack = await comsInSchEventDirStorage.getOrCreateItem(schw);
-            const packHistory = await comsInSchEventHistoryDirStorage.getOrCreateItem(schw);
+            const sch = await takeScheduleWidgetTiny({ w: schw });
+            const where = and(
+              eq(schComHistoryDB.schId, sch.id),
+              eq(schComHistoryDB.dayi, dayi),
+              eq(schComHistoryDB.eventMi, eventMi),
+            );
 
-            pack.pack[dayi] ??= {};
-            pack.pack[dayi][eventMi] = list;
+            if (!where) throw 'Error 86514230100';
 
-            let dayHistory = packHistory.d[dayi];
-            if (!checkIsArray(dayHistory)) dayHistory = packHistory.d[dayi] = [];
+            const prevItem = (await db.select({ m: schComHistoryDB.w }).from(schComHistoryDB).where(where).limit(1)).at(
+              0,
+            );
+            const wr = Date.now() as CmComInSchDayEvWr;
 
-            if (dayHistory.length) {
-              const today = new Date().setHours(0, 0, 0, 0);
-              const prevPachi = dayHistory.findIndex(item => item.e === eventMi && item.w > today);
-              if (prevPachi > -1) dayHistory.splice(prevPachi, 1);
+            if (checkIsNowInDay(prevItem?.m)) {
+              await dbUpdate(schComHistoryDB, { comws, w: wr }, where);
+            } else {
+              const user = await takeUserTiny({ l: auth.login });
+              await db.insert(schComHistoryDB).values({
+                dayi,
+                eventMi,
+                schId: sch.id,
+                userId: user.id,
+                comws,
+                w: wr,
+              });
             }
 
-            dayHistory.unshift({ s: list, w: Date.now(), e: eventMi, fio });
-
-            const mod = comsInSchEventDirStorage.saveItem(pack.schw);
-            comsInSchEventHistoryDirStorage.saveItem(pack.schw);
-
-            cmShareServerTsjrpcMethods.refreshSchEvComPacks({ packs: [pack], mod: mod ?? Date.now() }, null);
+            cmShareServerTsjrpcMethods.freshSchDayEvComws(
+              { dayi, eventMi, schw, comws, fio: auth.fio ?? '??', w: wr },
+              null,
+            );
 
             const comTitlesList = await Promise.all(
-              list.map(async comw => {
-                const comTiny = await takeComwTiny(comw);
+              comws.map(async comw => {
+                const comTiny = await takeComwTiny({ w: comw }, false);
 
                 return comTiny ? `${takeCorrectComNumber(comTiny.i + 1)}. ${comTiny.n}` : `<s>Неизвестная песня</s>`;
               }),
             );
 
-            const sch = await takeScheduleWidgetTiny(schw);
-
             return {
-              description: `Обновлён список песен в расписании "${sch?.title ?? '??'}":\n\n${comTitlesList.join('\n')}`,
+              description: `Обновлён список песен в расписании "${sch.title ?? '??'}":\n\n${comTitlesList.join('\n')}`,
             };
           },
 
           getSchEvHistory: async ({ schw, dayi }, { auth }) => {
             if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'R')) throw '';
 
-            const history = comsInSchEventHistoryDirStorage.getItem(schw);
+            const sch = await takeScheduleWidgetTiny({ w: schw });
 
-            return { value: history?.d?.[dayi] ?? [] };
+            const selPacks = await db
+              .select()
+              .from(schComHistoryDB)
+              .where(and(eq(schComHistoryDB.schId, sch.id), eq(schComHistoryDB.dayi, dayi)));
+
+            const packs: ScheduleComPackHistoryItem[] = [];
+
+            for (const { comws, dayi, eventMi, w, userId } of selPacks) {
+              const user = await takeUserTiny({ id: userId }, false);
+
+              packs.push({ e: eventMi, fio: user?.uauth.fio || '<Неизвестный>', w, s: comws, d: dayi });
+            }
+
+            return { value: packs };
           },
           getSchEvHistoryStatistic: async ({ schw, dayi }, { auth }) => {
             if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'R')) throw '';
 
-            const comwCount = {} as Record<CmComWid, number>;
+            const comwCount: Record<CmComWid, number> = {};
             let totalCount = 0;
-            const packs = comsInSchEventHistoryDirStorage.getItem(schw)?.d?.[dayi];
 
-            if (packs === undefined) return { value: { comwCount, totalCount } };
+            const sch = await takeScheduleWidgetTiny({ w: schw });
+            const selPacks = await db
+              .select({ s: schComHistoryDB.comws })
+              .from(schComHistoryDB)
+              .where(and(eq(schComHistoryDB.schId, sch.id), eq(schComHistoryDB.dayi, dayi)));
 
-            for (const pack of packs)
+            const ret = () => ({ value: { comwCount, totalCount } });
+            if (!objectLength(selPacks)) return ret();
+
+            for (const pack of selPacks)
               for (const comw of pack.s) {
                 comwCount[comw] ??= 0;
                 comwCount[comw]++;
                 totalCount++;
               }
 
-            return { value: { comwCount, totalCount } };
+            return ret();
           },
 
           removeSchEvHistoryItem: async ({ schw, dayi, writedAt }) => {
-            const history = comsInSchEventHistoryDirStorage.getItem(schw);
-            const itemi = history?.d?.[dayi]?.findIndex(item => item.w === writedAt);
+            const sch = await takeScheduleWidgetTiny({ w: schw });
+            const result = (
+              await db
+                .delete(schComHistoryDB)
+                .where(
+                  and(
+                    eq(schComHistoryDB.schId, sch.id),
+                    eq(schComHistoryDB.dayi, dayi),
+                    eq(schComHistoryDB.w, writedAt),
+                  ),
+                )
+                .returning({ w: schComHistoryDB.w })
+            ).at(0);
 
-            if (checkIsNil(itemi) || itemi < 0) throw new Error('item not found');
-
-            history?.d?.[dayi]?.splice(itemi, 1);
-            comsInSchEventHistoryDirStorage.saveItem(schw);
-
-            const sch = await takeScheduleWidgetTiny(schw);
+            if (result?.w !== writedAt) throw 'Ошибка удаления';
 
             return {
-              value: history?.d?.[dayi] ?? [],
-              description: `Удалена пачка песен из истории события в расписании "${sch?.title ?? '??'}"`,
+              value: result,
+              description: `Удалена пачка песен из истории события в расписании "${sch.title ?? '??'}"`,
             };
           },
 
@@ -134,7 +172,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
                 objectKeys(cMarks).map(async comw => {
                   comMarks[comw] = { 0: '' };
                   if (description) {
-                    const comTiny = await takeComwTiny(+comw);
+                    const comTiny = await takeComwTiny({ w: extractNumber(comw) });
                     if (comTiny) comNames.push(comTiny.n);
                   }
                 }),
@@ -240,9 +278,9 @@ export const cmEditComExternalsTsjrpcBaseServer =
               const comwRefGroup = refs[comw];
               const withComwRefGroup = refs[withComw];
 
-              const comTiny = await takeComwTiny(comw);
-              const withComTiny = await takeComwTiny(withComw);
-              const allGroups = objectKeys(refs);
+              const comTiny = await takeComwTiny({ w: comw });
+              const withComTiny = await takeComwTiny({ w: withComw });
+              const allGroups = objectValues(refs);
 
               if (comwRefGroup != null) {
                 if (comwRefGroup !== withComwRefGroup) {
@@ -254,7 +292,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
                   const comJoinGroupMembersCount =
                     comwRefGroup == null
                       ? 0
-                      : allGroups.reduce((sum, curr) => sum + (comwRefGroup === +curr ? 1 : 0), 0);
+                      : allGroups.reduce((sum, curr) => sum + (comwRefGroup === +(curr ?? 0) ? 1 : 0), 0);
 
                   if (comJoinGroupMembersCount === 2) delete refs[comw];
                   delete refs[withComw];

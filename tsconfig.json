@@ -95,9 +95,10 @@
 
       "shared/*": ["./shared/*"],
       "front/*": ["./front/*"],
-      "p/d": ["./back/drizzle/ex/index.ts"], 
       "back/*": ["./back/*"],
-      "bibles/*": ["./bibles/*"]
+      "bibles/*": ["./bibles/*"],
+
+      "p/d": ["./back/drizzle/ex/index.ts"]
     }
   },
   "include": ["src", "cypress/**/*.ts", "regexpert.gen"],

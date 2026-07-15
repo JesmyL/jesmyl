@@ -17,8 +17,8 @@ export const upsertUser2ComProps = async (
   props: { comment?: (CmComCommentBlockDict | nil)[] | nil; isFav?: boolean },
   isSetModifies = true,
 ) => {
-  const user = await takeUserTiny(userLogin);
-  const com = await takeComwTiny(comw);
+  const user = await takeUserTiny({ l: userLogin }, false);
+  const com = await takeComwTiny({ w: comw }, false);
 
   if (!user || !com) return;
 

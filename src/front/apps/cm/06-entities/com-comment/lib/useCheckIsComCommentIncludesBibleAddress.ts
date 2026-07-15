@@ -1,4 +1,4 @@
-import { CmComCommentBlockSpecialSelector, CmComWid } from 'shared/api';
+import { CmComCommentBlockSpecialSelector, CmComWidDef } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { cmComCommentHeadBibleAddressRegExp } from '../utils/commentHeadBibleAddressRegExp';
 import { useCmComCommentTextBlockTakerWithoutComments } from './useCmComCommentBlock';
@@ -6,7 +6,7 @@ import { useCmComCommentTextBlockTakerWithoutComments } from './useCmComCommentB
 let isWasOpenComWithBibleAddressInComment = false;
 
 export const useCmComCommentCheckIsIncludesBibleAddress = (com: CmCom | und) => {
-  const comw = com?.wid ?? CmComWid.def;
+  const comw = com?.wid ?? CmComWidDef;
   const takeCommentTexts = useCmComCommentTextBlockTakerWithoutComments(comw);
 
   if (isWasOpenComWithBibleAddressInComment) return true;

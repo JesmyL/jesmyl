@@ -5,22 +5,24 @@ import {
   IScheduleWidgetDay,
   IScheduleWidgetLists,
   IScheduleWidgetTeamGames,
-  IScheduleWidgetWid,
   ScheduleWidgetAppAttCustomized,
   ScheduleWidgetDayListItemTypeBox,
+  ScheduleWidgetWid,
 } from 'shared/api';
 import { Bool, Do } from 'shared/enums';
 import { itIt } from 'shared/utils';
 import { emptyJSONArraySQL, emptyJSONObjectSQL } from './lib/const';
 
+export type SchId = NumberBrand<'SchId'>;
+
 export const scheduleDB = pgTable('schedule', {
-  id: serial('id').primaryKey().notNull(),
+  id: serial('id').primaryKey().$type<SchId>().notNull(),
 
   w: bigint('writedAt', { mode: 'number' })
     .unique()
     .notNull()
-    .$type<IScheduleWidgetWid>()
-    .$defaultFn(() => Date.now()),
+    .$type<ScheduleWidgetWid>()
+    .$defaultFn(() => Date.now() as ScheduleWidgetWid),
 
   m: bigint('modifiedAt', { mode: 'number' })
     .notNull()

@@ -85,9 +85,31 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
           updateMod(mod);
         },
 
-        refreshSchEvComPacks: async ({ packs: list, mod }) => {
-          cmIDB.db.scheduleComPacks.bulkPut(list);
+        freshSchEvComIntp: async ({ intps, mod }) => {
+          cmIDB.db.scheduleComIntp.bulkPut(intps);
           updateMod(mod);
+        },
+
+        freshSchDayEvComws: async ({ comws, dayi, eventMi, schw, fio, w }) => {
+          const prev = await cmIDB.db.scheduleComws.get(schw);
+
+          await cmIDB.db.scheduleComws.put({
+            schw,
+            pack: {
+              ...prev?.pack,
+              [dayi]: {
+                ...prev?.pack[dayi],
+                [eventMi]: {
+                  ...prev?.pack[dayi]?.[eventMi],
+                  s: comws,
+                  fio,
+                  w,
+                },
+              },
+            },
+          });
+
+          updateMod(w);
         },
 
         refreshConstConfig: async ({ config, mod }) => {

@@ -1,5 +1,5 @@
 import { CmComAudioMarkPack, CmComWid, HttpNumLeadLink, ICmComCommentBlock } from 'shared/api/complect/apps';
-import { IScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
+import { ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
 
 export type CmTsjrpcModel = {
   requestFreshes: (args: { lastModfiedAt: number }) => void;
@@ -20,5 +20,5 @@ export type CmTsjrpcModel = {
   };
   getLinkLeadNumHost: (args: { num: number }) => { host: string | nil };
 
-  getSchEventComPackMod: (args: { schw: IScheduleWidgetWid; dayi: number }) => { mod: number };
+  getSchEventComPackMod: (args: { schw: ScheduleWidgetWid; dayi: ScheduleWidgetDayi }) => { mod: number };
 };

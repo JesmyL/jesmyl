@@ -36,12 +36,12 @@ export const indexTSJRPCBaseRequestFreshes = {
     const someScheduleUser = (user: IScheduleWidgetUser) => user.login === login;
 
     if (login && client) {
-      const userInfo = await takeUserTiny(login);
+      const userInfo = await takeUserTiny({ l: login }, false);
 
       if (userInfo && userInfo.m > lastModfiedAt) {
         await refreshUserAccessRights(login, client, userInfo.m);
       } else {
-        const userRole = userInfo?.r && (await takeUserRoleTiny(userInfo.r));
+        const userRole = userInfo?.r && (await takeUserRoleTiny({ n: userInfo.r }, false));
 
         if (userRole && userRole.m > lastModfiedAt) {
           await refreshUserAccessRights(login, client, userRole.m);

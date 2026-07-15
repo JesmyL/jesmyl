@@ -1,5 +1,5 @@
 import { smylib } from 'shared/utils';
-import { IScheduleWidgetUserMi, IScheduleWidgetWid } from './main';
+import { ScheduleWidgetUserMi, ScheduleWidgetWid } from './main';
 import { ScheduleWidgetRightsCtrl, ScheduleWidgetRightTexts } from './rights-constructor';
 
 export enum ScheduleWidgetUserRoleRight {
@@ -164,6 +164,6 @@ export const scheduleWidgetRegTypeTitles: ScheduleWidgetRightTexts<ScheduleWidge
 
 export const scheduleWidgetRegTypeRights = new ScheduleWidgetRightsCtrl(scheduleWidgetRegTypeTitles);
 
-export const packScheduleWidgetInviteLink = (schedulew: IScheduleWidgetWid, userMi: IScheduleWidgetUserMi) => {
+export const packScheduleWidgetInviteLink = (schedulew: ScheduleWidgetWid, userMi: ScheduleWidgetUserMi) => {
   return smylib.md5(schedulew + ':' + userMi);
 };

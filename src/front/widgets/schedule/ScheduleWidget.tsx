@@ -12,7 +12,7 @@ import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { useEffect, useMemo, useState } from 'react';
 import { makeRegExp } from 'regexpert';
-import { IScheduleWidget, IScheduleWidgetWid, ScheduleScopeProps } from 'shared/api';
+import { IScheduleWidget, ScheduleScopeProps, ScheduleWidgetDayi, ScheduleWidgetWidDef } from 'shared/api';
 import { ScheduleWidgetCustomAttachments } from './atts/custom/CustomAttachments';
 import { ScheduleWidgetStartTimeText } from './complect/StartTimeText';
 import { ScheduleWidgetTopicTitle } from './complect/TopicTitle';
@@ -44,7 +44,7 @@ export function ScheduleWidget({
   const checkAccess = useCheckUserAccessRightsInScope();
 
   const scheduleScopeProps: ScheduleScopeProps = useMemo(
-    () => ({ schw: schedule?.w ?? IScheduleWidgetWid.def }),
+    () => ({ schw: schedule?.w ?? ScheduleWidgetWidDef }),
     [schedule?.w],
   );
   const prevDate = schedule?.prevStart == null ? null : new Date(schedule.prevStart);
@@ -288,7 +288,7 @@ export function ScheduleWidget({
                     <ScheduleWidgetDay
                       key={dayi}
                       day={day}
-                      dayi={dayi}
+                      dayi={dayi as ScheduleWidgetDayi}
                       schedule={schedule}
                       isCanOpenFull
                       scheduleScopeProps={scheduleScopeProps}

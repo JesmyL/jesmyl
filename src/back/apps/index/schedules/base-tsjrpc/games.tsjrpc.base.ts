@@ -4,9 +4,9 @@ import {
   IScheduleWidget,
   IScheduleWidgetTeamCriteria,
   IScheduleWidgetTeamGame,
-  IScheduleWidgetTeamGameMi,
   ScheduleGameCriteriaScopeProps,
   ScheduleGameScopeProps,
+  ScheduleWidgetTeamGameMi,
 } from 'shared/api';
 import { SchGamesTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
 import { smylib } from 'shared/utils';
@@ -42,7 +42,7 @@ export const schGamesTsjrpcBaseServer = new (class SchGames extends TsjrpcBaseSe
           sch.games ??= { criterias: [], list: [] };
           sch.games.list.push({
             title: `Игра ${sch.games.list.length + 1}`,
-            mi: smylib.takeNextMi(sch.games.list, IScheduleWidgetTeamGameMi.def),
+            mi: smylib.takeNextMi(sch.games.list, ScheduleWidgetTeamGameMi.def),
             teams: [],
           });
 

@@ -5,6 +5,7 @@ import { cmComFavoriteComsAtom } from '$cm/entities/index';
 import { cmUserStoreTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useAuth } from '$index/shared/state';
 import { useAtomValue } from 'atomaric';
+import { CmComWid } from 'shared/api';
 import { itNumSort } from 'shared/utils';
 import { toast } from 'sonner';
 
@@ -16,8 +17,8 @@ export const useCmComFavouriteList = () => {
 
   const ret = {
     favouriteComs: useCmComList(favourites),
-    isFavourite: (comw: number) => favouriteComsSet.has(comw),
-    toggleFavourite: (comw: number) => {
+    isFavourite: (comw: CmComWid) => favouriteComsSet.has(comw),
+    toggleFavourite: (comw: CmComWid) => {
       const isFav = ret.isFavourite(comw);
 
       if (isFav) favouriteComsSet.delete(comw);

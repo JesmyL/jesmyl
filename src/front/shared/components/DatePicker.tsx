@@ -3,6 +3,7 @@ import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover';
 import { useState } from 'react';
 import { Matcher } from 'react-day-picker';
+import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { twMerge } from 'tailwind-merge';
 import { Button } from './ui/button';
 import { Calendar } from './ui/calendar';
@@ -36,9 +37,7 @@ export const DatePicker = (props: {
           id="date"
           className={twMerge('w-48 justify-between font-normal', props.className)}
         >
-          {date
-            ? (props.dateTitle ?? date.toLocaleDateString('ru', { month: 'long', day: 'numeric', year: '2-digit' }))
-            : (props.placeholder ?? 'Дата')}
+          {date ? (props.dateTitle ?? makeDateLabel(date)) : (props.placeholder ?? 'Дата')}
           <TheIconLoading
             icon="ArrowDown01"
             isLoading={isLoading}

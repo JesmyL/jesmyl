@@ -1,9 +1,9 @@
-import { MyLib } from '#shared/lib/my-lib';
 import { CmComFaceList, cmIDB } from '$cm/ext';
 import { useMemo } from 'react';
 import { CmComWid, CmComWidRefGroupDict } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
-import { itIt } from 'shared/utils';
+import { extractNumber, itIt } from 'shared/utils';
+import { forEachObjectEntries } from 'shared/utils/object.utils';
 
 export const CmComJoinGroupList = ({
   com,
@@ -26,8 +26,8 @@ export const CmComJoinGroupList = ({
     const comJoinGroupId = refs[comw];
     const comws: CmComWid[] = [];
 
-    MyLib.entries(refs).forEach(([comwStr, joinGroupId]) => {
-      if (comJoinGroupId === joinGroupId && +comwStr !== comw) comws.push(+comwStr);
+    forEachObjectEntries(refs, (comwStr, joinGroupId) => {
+      if (comJoinGroupId === joinGroupId && +comwStr !== comw) comws.push(extractNumber(comwStr));
     });
 
     return comws;

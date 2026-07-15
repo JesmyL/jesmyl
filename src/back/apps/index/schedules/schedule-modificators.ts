@@ -11,20 +11,20 @@ import { takeScheduleWidgetTiny } from './schedule.tiny';
 import { scheduleTgInformer } from './tg-bot-inform/tg-inform';
 import { schServerTsjrpcShareMethods } from './tsjrpc.shares';
 
+const uncheckedKeysSet = new Set<keyof IScheduleWidget>(['w', 'm']);
+
 export const modifySchedule =
   <Props extends { props: ScheduleScopeProps }>(
     isNeedRefreshTgInformTime: boolean,
     modifier: (sch: IScheduleWidget, props: Props, tool: ServerTSJRPCTool) => PromiseOr<string | null>,
   ) =>
   async (props: Props, tool: ServerTSJRPCTool) => {
-    const sch = await takeScheduleWidgetTiny(props.props.schw);
-    if (!sch) throw new Error('schedule not found');
+    const sch = await takeScheduleWidgetTiny({ w: props.props.schw });
     const clone = deepClone(sch);
 
     const description = await modifier(sch, props, tool);
 
     const updates: Partial<IScheduleWidget> = {};
-    const uncheckedKeysSet = new Set<keyof typeof sch>(['w', 'm']);
 
     objectKeys({ ...sch, ...clone }).forEach(key => {
       if (key === 'id' || uncheckedKeysSet.has(key) || checkIsEq(clone[key], sch[key])) return;
@@ -48,7 +48,7 @@ export const modifySchedule =
         eq(scheduleDB.w, props.props.schw),
       );
 
-      schServerTsjrpcShareMethods.editedSchedule({ sch, mod }, null);
+      schServerTsjrpcShareMethods.editedSchedule({ sch }, null);
       if (isNeedRefreshTgInformTime) scheduleTgInformer.inform(sch.w);
     }
 
@@ -61,6 +61,6 @@ export const modifyScheduleDay = <Props extends { props: ScheduleDayScopeProps }
 ) =>
   modifySchedule<Props>(isNeedRefreshTgInformTime, (sch, props, tool) => {
     const day = sch.days[props.props.dayi];
-    if (day == null) throw new Error('day not found');
+    if (!day) throw new Error('День не найден');
     return modifier(day, props, sch, tool);
   });

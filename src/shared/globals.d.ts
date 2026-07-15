@@ -24,7 +24,7 @@ declare global {
 
   type OmitOwn<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-  type NaN = NotANumber;
+  type NaN = NotANumber & number;
   type NaNumber = number | NotANumber;
   type FalsyValue = false | '' | 0 | nil;
 
@@ -44,4 +44,14 @@ declare global {
   type PromiseOr<T> = T | Promise<T>;
 
   type KnownStameskaIconName = keyof typeof knownStameskaIconNames;
+
+  type NumberBrand<Symbol> = number & NumberBrаnd<Symbol>;
+  type StringBrand<Symbol> = `${StringBrаnd<Symbol>}`;
+}
+
+declare const brand: unique symbol;
+type StringBrаnd<Symbol> = string & { readonly [K in brand]: Symbol };
+
+class NumberBrаnd<T> {
+  private t: T;
 }

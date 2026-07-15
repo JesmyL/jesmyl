@@ -5,11 +5,12 @@ import {
   ScheduleDayEventAttachmentScopeProps,
   ScheduleWidgetAttKey,
   ScheduleWidgetDayEventAttValue,
+  ScheduleWidgetDayi,
 } from 'shared/api';
 
 type Props = {
   day: IScheduleWidgetDay;
-  dayi: number;
+  dayi: ScheduleWidgetDayi;
   attKey: ScheduleWidgetAttKey;
   schedule: IScheduleWidget;
   isCanRedact: boolean;

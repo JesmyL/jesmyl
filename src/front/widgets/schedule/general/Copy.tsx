@@ -8,9 +8,9 @@ import { useState } from 'react';
 import {
   CustomAttUseTaleId,
   IScheduleWidget,
-  IScheduleWidgetWid,
   ScheduleWidgetCleans,
   ScheduleWidgetDayEventAttValues,
+  ScheduleWidgetWid,
 } from 'shared/api';
 import { itNNull } from 'shared/utils';
 import { ScheduleWidgetTopicTitle } from '../complect/TopicTitle';
@@ -19,7 +19,7 @@ import { schGeneralTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 
 let isModalOpenAtom: Atom<boolean>;
 
-export function ScheduleWidgetCopy(props: { schw: IScheduleWidgetWid }) {
+export function ScheduleWidgetCopy(props: { schw: ScheduleWidgetWid }) {
   isModalOpenAtom ??= atom(false);
 
   const [schw, setSchw] = useState(0);

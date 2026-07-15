@@ -5,7 +5,8 @@ import http from 'http';
 import https from 'https';
 import path from 'path';
 import { makeRegExp } from 'regexpert';
-import { HttpNumLeadLink, hostConfig } from 'shared/api';
+import { CmComWid, HttpNumLeadLink, ScheduleWidgetWid, hostConfig } from 'shared/api';
+import { extractNumber } from 'shared/utils';
 import { WebSocketServer } from 'ws';
 import { takeComwTiny } from '../apps/cm/com.tiny';
 import { makeCmComHttpLinkFromNumLead } from '../apps/cm/complect/com-http-links';
@@ -98,8 +99,11 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
           trackLink = req.url.slice(trackPathPrefix.length) as never;
           externalUrl = makeCmComHttpLinkFromNumLead(trackLink);
         } else if (req.url.startsWith(audioPathPrefix)) {
-          const [comwStr, num] = req.url.slice(audioPathPrefix.length).split(makeRegExp('/\\.mp3|_/'));
-          const com = await takeComwTiny(+comwStr);
+          const [comwStr, num] = req.url.slice(audioPathPrefix.length).split(makeRegExp('/\\.mp3|_/')) as [
+            `${CmComWid}`,
+            `${number}`,
+          ];
+          const com = await takeComwTiny({ w: extractNumber(comwStr) }, false);
 
           if (!com?.al?.length) return res.status(404);
 
@@ -150,7 +154,7 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
         const schwMatch = req.url.match(makeRegExp('/\\bschw=(\\d+(?:\\.\\d+)?)/'));
 
         if (schwMatch && +schwMatch[1]) {
-          const schedule = await takeScheduleWidgetTiny(+schwMatch[1]);
+          const schedule = await takeScheduleWidgetTiny({ w: +schwMatch[1] as ScheduleWidgetWid }, false);
 
           if (schedule) {
             descriptionFromSearchParams += `\n\nМероприятие "${schedule.title}${schedule.topic ? `: ${schedule.topic}` : ''}"`;
@@ -163,7 +167,7 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
       try {
         const comwMatch = req.url.match(makeRegExp('/\\bcomw=(\\d+(?:\\.\\d+)?)/'));
         if (comwMatch && +comwMatch[1]) {
-          const com = await takeComwTiny(+comwMatch[1]);
+          const com = await takeComwTiny({ w: +comwMatch[1] as CmComWid }, false);
 
           if (com) {
             descriptionFromSearchParams += `\n\n${com.i + 1}. ${com.n}`;

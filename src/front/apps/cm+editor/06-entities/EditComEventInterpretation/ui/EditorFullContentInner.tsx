@@ -8,7 +8,7 @@ import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-
 import { TheCmComOrder, useCmCom } from '$cm/ext';
 import { indexIDB } from '$index/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { CmComWid, IScheduleWidgetWid } from 'shared/api';
+import { CmComWid, CmComWidDef, ScheduleWidgetWid } from 'shared/api';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 
 export const CmEditorEditComEventInterpretationFullContentInner = ({
@@ -17,10 +17,10 @@ export const CmEditorEditComEventInterpretationFullContentInner = ({
   linkNode,
 }: {
   comw: CmComWid;
-  schw: IScheduleWidgetWid;
+  schw: ScheduleWidgetWid;
   linkNode: React.ReactNode;
 }) => {
-  const com = useCmCom(comw ?? CmComWid.def, schw);
+  const com = useCmCom(comw ?? CmComWidDef, schw);
   const schedule = useLiveQuery(() => indexIDB.db.schs.get(schw), [schw]);
   const checkAccess = useCheckUserAccessRightsInScope();
   const canFixIntp = checkAccess('cm', 'COM_INTP', 'U');

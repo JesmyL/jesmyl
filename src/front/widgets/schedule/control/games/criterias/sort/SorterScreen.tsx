@@ -5,8 +5,8 @@ import { useCallback, useState } from 'react';
 import {
   IScheduleWidgetTeamCriteria,
   IScheduleWidgetUser,
-  IScheduleWidgetUserMi,
   ScheduleGameCriteriaScopeProps,
+  ScheduleWidgetUserMi,
 } from 'shared/api';
 import { ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes } from './SortBoxes';
 
@@ -79,7 +79,7 @@ export function ScheduleWidgetTeamsCriteriaSorterScreen({
           title="Отправить"
           onSuccess={openAtom.reset}
           onSend={() => {
-            const value = {} as Record<IScheduleWidgetUserMi, number>;
+            const value = {} as Record<ScheduleWidgetUserMi, number>;
 
             sortedUsers.forEach((user, useri) => {
               if (criteria.sorts[user.mi] === useri) return;

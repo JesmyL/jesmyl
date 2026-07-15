@@ -1,4 +1,4 @@
 import { contextCreator } from '#shared/lib/contextCreator';
-import { IScheduleWidgetWid } from 'shared/api';
+import { ScheduleWidgetWid } from 'shared/api';
 
-export const [CmComInScheduleWid, useCmComInScheduleWid] = contextCreator<IScheduleWidgetWid | nil>(null);
+export const [CmComInScheduleWid, useCmComInScheduleWid] = contextCreator<ScheduleWidgetWid | nil>(null);

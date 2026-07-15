@@ -9,11 +9,11 @@ import { liveDataAtom, liveDataStreamersAtom } from '$index/shared/state';
 import { schLiveTsjrpcBaseClient, schLiveTsjrpcClient } from '$index/shared/tsjrpc/live.tsjrpc';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
-import { IScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
+import { ScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
 import { ScheduleWidgetMarkdownLiveBroadcast } from './MarkdownLive';
 
 interface Props {
-  schw: IScheduleWidgetWid;
+  schw: ScheduleWidgetWid;
   isShowMarkdownOnly?: boolean;
 }
 

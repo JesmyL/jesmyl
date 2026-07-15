@@ -22,8 +22,8 @@ export const trimTextLines = (text: string) => text.trim().replace(makeRegExp('/
 
 export const iife = <Val>(fun: () => Val) => fun();
 
-type ParseNumber<T extends string> = T extends `${infer N extends number}` ? N : never;
-export const extractNumber = <T extends string>(value: T) => parseFloat(value) as ParseNumber<T>;
+type ParseNumber<T extends string | number> = T extends `${infer N extends number}` ? N : T;
+export const extractNumber = <T extends string | number>(value: T) => parseFloat(`${value}`) as ParseNumber<T>;
 
 // JSON
 declare const jsonBrand: unique symbol;

@@ -2,14 +2,14 @@ import { cmComCommentLocalCommentsUpdater } from '$cm/entities/com-comment';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import { CmComWid } from 'shared/api';
+import { CmComWidDef } from 'shared/api';
 import { makeCmComCommentConstructorCommentOrdSelector2TextsDictFromRuleProps } from 'shared/utils/cm/com/makeCommentTextFromRuleProps';
 
 export const useCmComCommentConstructorListenChanges = () => {
   const propsDict = useAtomValue(cmComCommentConstructorRulePropsDictAtom);
 
   useEffect(() => {
-    if (propsDict.comw === CmComWid.def) return;
+    if (propsDict.comw === CmComWidDef) return;
 
     const dict = propsDict.dict;
     const selector = propsDict.selector;

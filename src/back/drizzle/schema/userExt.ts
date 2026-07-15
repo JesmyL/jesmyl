@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { eq } from 'drizzle-orm';
-import { bigint, integer, PgSelectBase, pgTable, SelectedFields, text } from 'drizzle-orm/pg-core';
+import { bigint, PgSelectBase, pgTable, SelectedFields, text } from 'drizzle-orm/pg-core';
 import { MigratableComToolName, SokiAppName } from 'shared/api';
 import { db } from '../drizzle.db';
 import { emptyTextArraySQL } from './lib/const';
-import { userDB } from './user';
+import { userDB, UserId } from './user';
 
 const typeExample = (name: string) => bigint(name, { mode: 'number' }).notNull().default(0);
 
@@ -12,9 +12,10 @@ const modColumn = <Name extends `${SokiAppName}${Uppercase<string>}${string}Mod`
   ({ [name]: typeExample(name) }) as Record<Name, ReturnType<typeof typeExample>>;
 
 export const userExtDB = pgTable('userExt', {
-  userId: integer('userId')
+  userId: bigint('userId', { mode: 'number' })
     .unique()
     .notNull()
+    .$type<UserId>()
     .references(() => userDB.id, { onDelete: 'cascade' }),
 
   ...modColumn('cmFavComMod'),

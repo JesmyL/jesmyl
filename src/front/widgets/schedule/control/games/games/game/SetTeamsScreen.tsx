@@ -8,13 +8,13 @@ import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/con
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { schGamesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { useEffect, useState } from 'react';
-import { IScheduleWidgetExportableTeam, IScheduleWidgetUserMi } from 'shared/api';
+import { IScheduleWidgetExportableTeam, ScheduleWidgetUserMi } from 'shared/api';
 import { ScheduleWidgetRemovableUserFace } from '../../RemovableUserFace';
 import { useScheduleGameContext } from '../lib/contexts';
 
 const arrayMapper = () => [];
 const retriesLine = [40, 100, 200, 300, 600, 1000, 2000, 5000, 20000, 100000];
-const defStrikedUsers: IScheduleWidgetUserMi[] = [];
+const defStrikedUsers: ScheduleWidgetUserMi[] = [];
 
 export function ScheduleWidgetTeamGameSetTeamsScreen() {
   const rights = useScheduleWidgetRightsContext();
@@ -50,8 +50,8 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
             .sort((a, b) => criteria[a.mi] - criteria[b.mi])
             .map(user => user.mi);
 
-          let teamsNumbers: IScheduleWidgetUserMi[][] = Array.from({ length: teamsCount }, () => []);
-          const mapToPower = (team: IScheduleWidgetUserMi[]) =>
+          let teamsNumbers: ScheduleWidgetUserMi[][] = Array.from({ length: teamsCount }, () => []);
+          const mapToPower = (team: ScheduleWidgetUserMi[]) =>
             team.reduce((sum, userMi) => sum + criteria[userMi] + 1, 0);
 
           const diffMap = new Map<number, number[][]>();
@@ -76,7 +76,7 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
           teamsNumbers = diffMap.get(min)!;
           setDiapason(min);
 
-          const teams: { users: { mi: IScheduleWidgetUserMi; p: number }[] }[] = teamsNumbers.map(team => ({
+          const teams: { users: { mi: ScheduleWidgetUserMi; p: number }[] }[] = teamsNumbers.map(team => ({
             users: team.map(mi => ({ mi, p: criteria[mi] })),
           }));
 

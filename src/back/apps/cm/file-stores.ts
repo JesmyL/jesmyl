@@ -1,31 +1,15 @@
-import { DirStorage } from 'back/complect/DirStorage';
 import { FileStore } from 'back/complect/FileStore';
 import {
   ChordPack,
   CmComAudioMarkPack,
   CmComWidRefGroupDict,
   CmMp3Rule,
-  ComsInSchEvent,
-  ComsInSchEventHistory,
   EeStorePack,
   HttpNumLeadLink,
   IExportableCat,
-  IScheduleWidgetWid,
 } from 'shared/api';
 
 export const catsFileStorage = new FileStore<IExportableCat[]>('/apps/cm/cats.json', []);
-
-export const comsInSchEventDirStorage = new DirStorage<ComsInSchEvent, IScheduleWidgetWid, 'schw'>({
-  dirPath: '/apps/cm/comsInSchEvent/',
-  idKey: 'schw',
-  makeNewItem: () => ({ pack: {}, schw: Date.now() + Math.random() }),
-});
-
-export const comsInSchEventHistoryDirStorage = new DirStorage<ComsInSchEventHistory, IScheduleWidgetWid, 'schw'>({
-  dirPath: '/apps/cm/comsInSchEventHistory/',
-  idKey: 'schw',
-  makeNewItem: () => ({ d: {}, schw: Date.now() + Math.random() }),
-});
 
 export const cmComAudioMarkPacksFileStore = new FileStore<
   PRecord<HttpNumLeadLink, { m: number; cMarks?: CmComAudioMarkPack }>

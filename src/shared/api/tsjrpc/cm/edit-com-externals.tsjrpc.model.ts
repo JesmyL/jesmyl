@@ -2,43 +2,43 @@ import {
   CmComAudioMarkEditPack,
   CmComAudioMarkPack,
   CmComAudioMarkPackTime,
+  CmComInSchDayEvWr,
   CmComOrderWid,
   CmComWid,
   HttpNumLeadLink,
   ScheduleComPackHistoryItem,
 } from 'shared/api/complect/apps';
-import { IScheduleWidgetDayEventMi, IScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
+import { ScheduleWidgetDayEventMi, ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
 
 export type CmEditComExternalsTsjrpcModel = {
-  setInSchEv: (args: {
-    schw: IScheduleWidgetWid;
-    dayi: number;
-    eventMi: IScheduleWidgetDayEventMi;
-    list: CmComWid[];
-    fio: string;
+  addComwsInSchEvHistory: (args: {
+    schw: ScheduleWidgetWid;
+    dayi: ScheduleWidgetDayi;
+    eventMi: ScheduleWidgetDayEventMi;
+    comws: CmComWid[];
   }) => void;
 
   /** ord visibility interpretation */
-  ordVisIntp: (args: { schw: IScheduleWidgetWid; comw: CmComWid; ordw: CmComOrderWid }) => void;
+  ordVisIntp: (args: { schw: ScheduleWidgetWid; comw: CmComWid; ordw: CmComOrderWid }) => void;
 
   /** com transposition interpretation */
-  tonIntp: (args: { schw: IScheduleWidgetWid; comw: CmComWid; ton: number }) => void;
+  tonIntp: (args: { schw: ScheduleWidgetWid; comw: CmComWid; ton: number }) => void;
   /** is bemoled interpretation value */
-  bemoleIntp: (args: { schw: IScheduleWidgetWid; comw: CmComWid; val: Bool }) => void;
+  bemoleIntp: (args: { schw: ScheduleWidgetWid; comw: CmComWid; val: Bool }) => void;
   /** com bpm interpretation */
-  bpmIntp: (args: { schw: IScheduleWidgetWid; comw: CmComWid; bpm: number }) => void;
+  bpmIntp: (args: { schw: ScheduleWidgetWid; comw: CmComWid; bpm: number }) => void;
 
-  getSchEvHistory: (args: { schw: IScheduleWidgetWid; dayi: number }) => ScheduleComPackHistoryItem[];
-  getSchEvHistoryStatistic: (args: { schw: IScheduleWidgetWid; dayi: number }) => {
-    comwCount: Record<CmComWid, number>;
+  getSchEvHistory: (args: { schw: ScheduleWidgetWid; dayi: ScheduleWidgetDayi }) => ScheduleComPackHistoryItem[];
+  getSchEvHistoryStatistic: (args: { schw: ScheduleWidgetWid; dayi: ScheduleWidgetDayi }) => {
+    comwCount: Record<RKey<CmComWid>, number>;
     totalCount: number;
   };
 
   removeSchEvHistoryItem: (args: {
-    schw: IScheduleWidgetWid;
-    dayi: number;
-    writedAt: number;
-  }) => ScheduleComPackHistoryItem[];
+    schw: ScheduleWidgetWid;
+    dayi: ScheduleWidgetDayi;
+    writedAt: CmComInSchDayEvWr;
+  }) => { w: CmComInSchDayEvWr };
 
   updateAudioMarks: (args: { src: HttpNumLeadLink; cMarks: CmComAudioMarkEditPack }) => {
     src: HttpNumLeadLink;

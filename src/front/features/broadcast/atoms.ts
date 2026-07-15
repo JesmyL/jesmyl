@@ -1,7 +1,7 @@
 import { complectIDB } from '$index/shared/state';
 import { schLiveTsjrpcClient } from '$index/shared/tsjrpc';
 import { Atom, atom } from 'atomaric';
-import { IScheduleWidgetWid } from 'shared/api';
+import { ScheduleWidgetWid, ScheduleWidgetWidDef, ScheduleWidgetWidNone } from 'shared/api';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 import { BroadcastViewApp } from './Broadcast.model';
 
@@ -20,13 +20,13 @@ export const broadcastCurrentTextAppAtom = atom((): BroadcastViewApp => 'cm', {
 });
 
 export const broadcastNextLiveDataAtom = atom(
-  (): { schw: IScheduleWidgetWid; data: IndexSchWBroadcastLiveDataValue } => ({
+  (): { schw: ScheduleWidgetWid; data: IndexSchWBroadcastLiveDataValue } => ({
     data: { fio: '', isHide: false },
-    schw: IScheduleWidgetWid.def,
+    schw: ScheduleWidgetWidDef,
   }),
 );
 
 broadcastNextLiveDataAtom.subscribe(value => {
-  if (value.schw === IScheduleWidgetWid.none) return;
+  if (value.schw === ScheduleWidgetWidNone) return;
   schLiveTsjrpcClient.next(value);
 });

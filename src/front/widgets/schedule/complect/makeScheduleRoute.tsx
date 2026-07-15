@@ -1,6 +1,6 @@
 import { appAttsStore } from '#basis/lib/appScheduleAttrsStorage';
-import { mylib } from '#shared/lib/my-lib';
-import { IScheduleWidgetWid, ScheduleDayEventAttachmentScopeProps } from 'shared/api';
+import { ScheduleDayEventAttachmentScopeProps, ScheduleWidgetWidDef } from 'shared/api';
+import { checkIsNaN } from 'shared/utils/checkIs';
 import { ScheduleSingleAlarmDay } from '../alarm/SingleAlarmDay';
 import { ScheduleWidgetPage } from '../pages/ScheduleWidgetPage';
 import { ScheduleCurrentSchwContext } from './lib/contexts';
@@ -31,7 +31,7 @@ export const makeScheduleRoute = (
             attKey={search.attKey}
             dayi={search.dayi}
             eventMi={search.eventMi}
-            schw={search.schw ?? IScheduleWidgetWid.def}
+            schw={search.schw ?? ScheduleWidgetWidDef}
           />
         );
 
@@ -51,9 +51,9 @@ export const makeScheduleRoute = (
       search: Record<string, unknown>,
     ): Partial<ScheduleDayEventAttachmentScopeProps & { isOpenSingleDay: true }> => {
       return {
-        dayi: mylib.isNaN(+search.dayi!) ? undefined : +search.dayi!,
-        schw: mylib.isNaN(+search.schw!) ? undefined : +search.schw!,
-        eventMi: mylib.isNaN(+search.eventMi!) ? undefined : +search.eventMi!,
+        dayi: checkIsNaN(+search.dayi!) ? undefined : (+search.dayi! as never),
+        schw: checkIsNaN(+search.schw!) ? undefined : (+search.schw! as never),
+        eventMi: checkIsNaN(+search.eventMi!) ? undefined : (+search.eventMi! as never),
         attKey: `${search.attKey}`.includes(']:') ? (`${search.attKey}` as never) : undefined,
         isOpenSingleDay: search.isOpenSingleDay ? true : undefined,
       };

@@ -3,8 +3,10 @@ import { Do } from 'shared/enums';
 import { IndexAccessScopeRules, UserAccessRole, UserAccessRoleInfo } from 'shared/model/index/access-rights';
 import { itIt } from 'shared/utils';
 
+export type UserRoleId = NumberBrand<'UserRoleId'>;
+
 export const userRoleDB = pgTable('userRole', {
-  id: serial('id').primaryKey().notNull(),
+  id: serial('id').$type<UserRoleId>().primaryKey().notNull(),
 
   m: bigint('modifiedAt', { mode: 'number' })
     .notNull()

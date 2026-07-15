@@ -1,9 +1,11 @@
+import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
 import { comDB, user2ComDB, userDB } from 'back/drizzle.schema';
 import { db, dbUpdate } from 'back/drizzle/drizzle.db';
 import { selectUser2Com } from 'back/drizzle/ex/user2Com.utils';
+import { schComHistoryDB } from 'back/drizzle/schema/schComHistory';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { takeLogginedAuthOrThrow } from 'back/utils';
-import { and, eq } from 'drizzle-orm';
+import { and, desc, eq } from 'drizzle-orm';
 import { CmComWid } from 'shared/api';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
 import { numLeadToHttpLinks } from '../complect/com-http-links';
@@ -12,7 +14,7 @@ import { cmEditComExternalsTsjrpcBaseServer } from '../edit-com-externals.tsjrpc
 import { cmEditComOrderServerTsjrpcBase } from '../edit-com-order.tsjrpc.base';
 import { cmEditComServerTsjrpcBase } from '../edit-com.tsjrpc.base';
 import { cmEditorTsjrpcBaseServer } from '../editor.tsjrpc.base';
-import { cmComAudioMarkPacksFileStore, comsInSchEventHistoryDirStorage } from '../file-stores';
+import { cmComAudioMarkPacksFileStore } from '../file-stores';
 import { cmUserStoreTsjrpcBaseServer } from '../user-store.tsjrpc.base';
 import { cmServerTsjrpcBaseExchangeFreshComCommentBlocks } from './exchangeFreshComCommentBlocks';
 import { cmServerTsjrpcBaseRequestFreshes } from './requestFreshes';
@@ -77,10 +79,18 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
           };
         },
 
-        getSchEventComPackMod: ({ schw, dayi }) => {
-          const history = comsInSchEventHistoryDirStorage.getItem(schw);
+        getSchEventComPackMod: async ({ schw, dayi }) => {
+          const sch = await takeScheduleWidgetTiny({ w: schw });
+          const result = (
+            await db
+              .select({ w: schComHistoryDB.w })
+              .from(schComHistoryDB)
+              .where(and(eq(schComHistoryDB.schId, sch.id), eq(schComHistoryDB.dayi, dayi)))
+              .orderBy(desc(schComHistoryDB.w))
+              .limit(1)
+          ).at(0);
 
-          return { value: { mod: history?.d[dayi]?.[0].w ?? 0 } };
+          return { value: { mod: result?.w ?? 0 } };
         },
 
         getLinkLeadNumHost: ({ num }) => ({ value: { host: numLeadToHttpLinks[`${num}~`]?.split('/')[2] } }),

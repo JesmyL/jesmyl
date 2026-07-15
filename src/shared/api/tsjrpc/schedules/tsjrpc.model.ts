@@ -2,10 +2,7 @@ import {
   AttTranslatorType,
   IScheduleWidget,
   IScheduleWidgetDayEvent,
-  IScheduleWidgetDayEventMi,
   IScheduleWidgetExportableTeam,
-  IScheduleWidgetUserMi,
-  IScheduleWidgetWid,
   ScheduleAttachmentTypeScopeProps,
   ScheduleDayEventAttachmentScopeProps,
   ScheduleDayEventScopeProps,
@@ -23,7 +20,10 @@ import {
   ScheduleWidgetAttKey,
   ScheduleWidgetAttOwnValue,
   ScheduleWidgetAttRef,
+  ScheduleWidgetDayEventMi,
   ScheduleWidgetPhotoKey,
+  ScheduleWidgetUserMi,
+  ScheduleWidgetWid,
 } from 'shared/api';
 
 type Callback<Value> = (args: { props: ScheduleScopeProps; value: Value }) => IScheduleWidget;
@@ -58,8 +58,8 @@ export type SchUsersTsjrpcMethods = {
 };
 
 export type SchPhotosTsjrpcMethods = {
-  getSharedPhotos: (args: { schw: IScheduleWidgetWid }) => { key: ScheduleWidgetPhotoKey; src: string }[];
-  putSharedPhotos: (args: { schw: IScheduleWidgetWid; photoDict: Record<ScheduleWidgetPhotoKey, string> }) => {
+  getSharedPhotos: (args: { schw: ScheduleWidgetWid }) => { key: ScheduleWidgetPhotoKey; src: string }[];
+  putSharedPhotos: (args: { schw: ScheduleWidgetWid; photoDict: Record<ScheduleWidgetPhotoKey, string> }) => {
     addedCount: number;
     loadedCount: number;
   };
@@ -102,7 +102,7 @@ export type SchRolesTsjrpcMethods = {
 
   setRoleUser: (args: {
     props: ScheduleRoleScopeProps;
-    value: IScheduleWidgetUserMi;
+    value: ScheduleWidgetUserMi;
     roleTitle: string;
     userName: string;
   }) => IScheduleWidget;
@@ -115,7 +115,7 @@ export type SchGamesTsjrpcMethods = {
   setTitle: (args: { props: ScheduleGameScopeProps; value: string; prevTitle: string }) => IScheduleWidget;
   toggleStrikedUser: (args: {
     props: ScheduleScopeProps;
-    userMi: IScheduleWidgetUserMi;
+    userMi: ScheduleWidgetUserMi;
     userName: string;
   }) => IScheduleWidget;
   addCriteria: (args: { props: ScheduleScopeProps }) => IScheduleWidget;
@@ -126,7 +126,7 @@ export type SchGamesTsjrpcMethods = {
   }) => IScheduleWidget;
   setSortedDict: (args: {
     props: ScheduleGameCriteriaScopeProps;
-    value: Record<IScheduleWidgetUserMi, number>;
+    value: Record<ScheduleWidgetUserMi, number>;
     criteriaTitle: string;
   }) => IScheduleWidget;
 };
@@ -143,11 +143,11 @@ export type SchDaysTsjrpcMethods = {
   addEvent: (args: { props: ScheduleDayScopeProps; value: number }) => IScheduleWidget;
   removeEvent: (args: {
     props: ScheduleDayScopeProps;
-    value: { eventMi: IScheduleWidgetDayEventMi; eventTypeTitle: string };
+    value: { eventMi: ScheduleWidgetDayEventMi; eventTypeTitle: string };
   }) => IScheduleWidget;
   moveEvent: (args: {
     props: ScheduleDayScopeProps;
-    value: { eventMi: IScheduleWidgetDayEventMi; beforei: number };
+    value: { eventMi: ScheduleWidgetDayEventMi; beforei: number };
   }) => IScheduleWidget;
 };
 
@@ -234,14 +234,14 @@ export type SchDayEventsTsjrpcMethods = {
   // rating
   setRatePoint: (args: {
     props: ScheduleDayEventScopeProps;
-    userMi: IScheduleWidgetUserMi;
+    userMi: ScheduleWidgetUserMi;
     ratePoint: number;
     userName: string;
   }) => IScheduleWidget;
 
   setRateComment: (args: {
     props: ScheduleDayEventScopeProps;
-    userMi: IScheduleWidgetUserMi;
+    userMi: ScheduleWidgetUserMi;
     comment: string;
     userName: string;
   }) => IScheduleWidget;
@@ -312,7 +312,7 @@ export type SchAttachmentTypesTsjrpcMethods = {
   toggleUserWhoCan: (args: {
     props: ScheduleAttachmentTypeScopeProps;
     rule: 'Rs' | 'Us';
-    userMi: IScheduleWidgetUserMi;
+    userMi: ScheduleWidgetUserMi;
     tattTitle: string;
     userName: string;
   }) => IScheduleWidget;

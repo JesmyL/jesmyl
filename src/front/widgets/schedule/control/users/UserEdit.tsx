@@ -4,9 +4,9 @@ import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { schUsersTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import {
   IScheduleWidgetUser,
-  IScheduleWidgetWid,
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
+  ScheduleWidgetWidDef,
 } from 'shared/api';
 import { ScheduleWidgetRightControlList } from '../RightControlList';
 
@@ -16,7 +16,7 @@ export function ScheduleWidgetUserEdit({ user }: { user: IScheduleWidgetUser }) 
   const rights = useScheduleWidgetRightsContext();
   const scheduleUserScopeProps = useScheduleUserScopePropsContext();
 
-  if (scheduleUserScopeProps.schw === IScheduleWidgetWid.def) return <div className="text-xKO">Не в контексте</div>;
+  if (scheduleUserScopeProps.schw === ScheduleWidgetWidDef) return <div className="text-xKO">Не в контексте</div>;
 
   return (
     <>

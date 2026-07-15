@@ -1,6 +1,6 @@
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { Atom, atom } from 'atomaric';
-import { CmComWid, IScheduleWidgetWid } from 'shared/api';
+import { CmComWid, ScheduleWidgetWid } from 'shared/api';
 import { CmEditorEditComEventInterpretationFullContentInner } from './EditorFullContentInner';
 
 let openAtom: Atom<boolean>;
@@ -11,7 +11,7 @@ export const CmEditorEditComEventInterpretation = ({
   toolNode,
   linkNode,
 }: {
-  schw: IScheduleWidgetWid;
+  schw: ScheduleWidgetWid;
   comw: CmComWid | nil;
   toolNode: React.ReactNode;
   linkNode: React.ReactNode;

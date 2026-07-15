@@ -13,7 +13,7 @@ import { cmIsTrackBroadcastAtom, cmShowChordedSlideModeAtom } from '$cm/shared/s
 import { CmBroadcastControlled, useCmBroadcastScreenConfigs } from '$cm/widgets/broadcast';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import { IScheduleWidgetWid } from 'shared/api';
+import { ScheduleWidgetWidNone } from 'shared/api';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 
 export const CmScheduleWidgetBroadcastLiveCm = (props: LiveBroadcastAppProps) => {
@@ -79,7 +79,7 @@ const LiveReport = (props: LiveBroadcastAppProps) => {
         },
       };
 
-      broadcastNextLiveDataAtom.set({ schw: props.schedule?.w ?? IScheduleWidgetWid.none, data: liveData });
+      broadcastNextLiveDataAtom.set({ schw: props.schedule?.w ?? ScheduleWidgetWidNone, data: liveData });
     }, 100);
   }, [
     ccom,

@@ -2,10 +2,10 @@ import { hideAppFooterAtom } from '#basis/state/hideAppFooterAtom';
 import { indexIDB } from '$index/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect } from 'react';
-import { IScheduleWidgetWid, ScheduleWidgetCleans } from 'shared/api';
+import { ScheduleWidgetCleans, ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api';
 import { ScheduleAlarmDay } from './AlarmDay';
 
-export function ScheduleSingleAlarmDay({ schw, dayi }: { schw: IScheduleWidgetWid; dayi: number | nil }) {
+export function ScheduleSingleAlarmDay({ schw, dayi }: { schw: ScheduleWidgetWid; dayi: ScheduleWidgetDayi | nil }) {
   const schedule = useLiveQuery(() => indexIDB.tb.schs.get(schw), [schw]);
 
   useEffect(() => {

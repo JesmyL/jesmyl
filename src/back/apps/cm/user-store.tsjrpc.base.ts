@@ -28,8 +28,7 @@ export const cmUserStoreTsjrpcBaseServer = new (class CmUserStore extends Tsjrpc
 
         favTools: async ({ tools }, tool) => {
           const auth = takeLogginedAuthOrThrow(tool.auth);
-          const user = await takeUserTiny(auth.login);
-          if (!user) throw 'Пользователь не найден';
+          const user = await takeUserTiny({ l: auth.login });
 
           const mod = Date.now();
 

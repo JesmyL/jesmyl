@@ -1,17 +1,13 @@
-import { userRoleDB } from 'back/drizzle.schema';
+import { userRoleDB, UserRoleId } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
-import { eq } from 'drizzle-orm';
-import { UserAccessRole, UserAccessRoleInfo } from 'shared/model/index/access-rights';
-import { checkIsNotUndefined } from 'shared/utils/checkIs';
+import { tinyMakerGenerator } from 'back/drizzle/ex/tinyMaker';
+import { UserAccessRoleInfo } from 'shared/model/index/access-rights';
+import { itIt } from 'shared/utils';
 
-const tinyDict: PRecord<UserAccessRole, UserAccessRoleInfo | nil> = {};
-
-export const resetUserRoleTiny = (role: UserAccessRole) => delete tinyDict[role];
-
-export const takeUserRoleTiny = async (role: UserAccessRole) => {
-  if (checkIsNotUndefined(tinyDict[role])) return tinyDict[role];
-
-  const userRoleTiny = (await db.select().from(userRoleDB).where(eq(userRoleDB.n, role)).limit(1)).at(0);
-
-  return (tinyDict[role] = userRoleTiny || null);
-};
+export const [takeUserRoleTiny, resetUserRoleTiny] = tinyMakerGenerator(
+  0 as never as UserAccessRoleInfo & { id: UserRoleId },
+  'n',
+  'Роль не найдена',
+  async mkSimpleWhere => (await db.select().from(userRoleDB).where(mkSimpleWhere(userRoleDB)).limit(1)).at(0),
+  itIt,
+);

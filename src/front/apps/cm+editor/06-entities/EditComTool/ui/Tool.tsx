@@ -1,6 +1,6 @@
 import { CmEditorEditComEventInterpretation } from '$cm+editor/entities/EditComEventInterpretation';
 import { Link } from '@tanstack/react-router';
-import { CmComWid, IScheduleWidgetWid } from 'shared/api';
+import { CmComWid, ScheduleWidgetWid } from 'shared/api';
 
 export const CmEditorEditComTool = ({
   ccomw,
@@ -9,7 +9,7 @@ export const CmEditorEditComTool = ({
 }: {
   toolNode: React.ReactNode;
   ccomw: CmComWid | nil;
-  schw: IScheduleWidgetWid | nil;
+  schw: ScheduleWidgetWid | nil;
 }) => {
   const linkNode = (
     <Link

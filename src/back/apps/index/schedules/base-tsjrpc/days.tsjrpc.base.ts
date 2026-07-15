@@ -1,6 +1,6 @@
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { makeRegExp } from 'regexpert';
-import { IScheduleWidgetDayEventMi } from 'shared/api';
+import { ScheduleWidgetDayEventMi, ScheduleWidgetDayEventMiDef, ScheduleWidgetDayi } from 'shared/api';
 import { SchDaysTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
 import { smylib } from 'shared/utils';
 import { modifySchedule, modifyScheduleDay } from '../schedule-modificators';
@@ -11,7 +11,7 @@ onScheduleDayEventListSetEvent.listen(async ({ list, dayProps }) => {
   return (
     await modifyScheduleDay(true, day => {
       let miniMi = 0;
-      day.list = list.map(event => ({ ...event, mi: miniMi++ }));
+      day.list = list.map(event => ({ ...event, mi: miniMi++ as ScheduleWidgetDayEventMi }));
 
       return null;
     })({ props: dayProps }, { auth: undefined, client: null, visitInfo: undefined })
@@ -39,7 +39,7 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
         addDay: modifySchedule(true, sch => {
           sch.days.push({
             list: [],
-            mi: smylib.takeNextMi(sch.days, 0 as number),
+            i: smylib.takeNextMi(sch.days, 0 as ScheduleWidgetDayi, 'i'),
             wup: 7,
           });
 
@@ -72,7 +72,7 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
         addEvent: modifyScheduleDay(true, (day, { value, props }, sch) => {
           day.list.push({
             type: value,
-            mi: smylib.takeNextMi(day.list, IScheduleWidgetDayEventMi.def),
+            mi: smylib.takeNextMi(day.list, ScheduleWidgetDayEventMiDef),
           });
 
           return (

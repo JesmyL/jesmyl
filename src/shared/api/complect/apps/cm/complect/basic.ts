@@ -272,7 +272,7 @@ export const enum CmComAudioMarkPackTime {
 
 export type CmComAudioMarkPack = SPRecord<CmComWid, SPRecord<CmComAudioMarkPackTime, CmComAudioMarkSelector>>;
 
-export type CmComAudioMarkEditPack = PRecord<
+export type CmComAudioMarkEditPack = SPRecord<
   CmComWid,
   PRecord<CmComAudioMarkPackTime, CmComAudioMarkSelector | `+${CmComAudioMarkPackTime}+` | null>
 >;
@@ -293,4 +293,4 @@ export type MenuComToolNameList =
   | 'chord-hard-level'
   | 'cats-binds';
 
-export type CmComWidRefGroupDict = PRecord<CmComWid, CmComWidRefGroupId>;
+export type CmComWidRefGroupDict = SPRecord<CmComWid, CmComWidRefGroupId>;

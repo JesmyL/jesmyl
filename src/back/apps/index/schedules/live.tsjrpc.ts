@@ -1,16 +1,16 @@
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { TsjrpcServerMethods } from 'back/tsjrpc.server';
-import { IScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
+import { ScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
 import { SchLiveTsjrpcModel, SchLiveTsjrpcSharesModel } from 'shared/api/tsjrpc/schedules/live.tsjrpc.model';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 import { itNNull, SMyLib } from 'shared/utils';
 import { WebSocket } from 'ws';
 
-const theLiveData = {} as PRecord<IScheduleWidgetWid, PRecord<SokiAuthLogin, IndexSchWBroadcastLiveDataValue>>;
-const liveDataWatchers: PRecord<IScheduleWidgetWid, PRecord<SokiAuthLogin, Set<WebSocket>>> = {};
-const streamersWaiters: PRecord<IScheduleWidgetWid, Set<WebSocket>> = {};
+const theLiveData = {} as PRecord<ScheduleWidgetWid, PRecord<SokiAuthLogin, IndexSchWBroadcastLiveDataValue>>;
+const liveDataWatchers: PRecord<ScheduleWidgetWid, PRecord<SokiAuthLogin, Set<WebSocket>>> = {};
+const streamersWaiters: PRecord<ScheduleWidgetWid, Set<WebSocket>> = {};
 
-const shareLiveData = (schw: IScheduleWidgetWid, streamerLogin: SokiAuthLogin) => {
+const shareLiveData = (schw: ScheduleWidgetWid, streamerLogin: SokiAuthLogin) => {
   const waiters = liveDataWatchers[schw]?.[streamerLogin];
   if (waiters == null) return;
   const data = theLiveData[schw]?.[streamerLogin] ?? null;

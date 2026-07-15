@@ -1,14 +1,15 @@
-import { mylib } from '#shared/lib/my-lib';
 import { useCmComList } from '$cm/entities/com';
 import { cmIDB } from '$cm/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { CmCatWid } from 'shared/api';
 import { CmCat } from 'shared/const/cm/Cat';
+import { extractNumber } from 'shared/utils';
+import { objectKeys } from 'shared/utils/object.utils';
 
 export const useCmCat = (catw: CmCatWid) => {
   const icat = useCmCatICcat(catw);
-  const comws = useMemo(() => icat?.s ?? (icat?.d && mylib.keys(icat.d).map(Number)), [icat?.d, icat?.s]);
+  const comws = useMemo(() => icat?.s ?? (icat?.d && objectKeys(icat.d).map(extractNumber)), [icat?.d, icat?.s]);
   const coms = useCmComList(comws);
 
   return useMemo(() => {

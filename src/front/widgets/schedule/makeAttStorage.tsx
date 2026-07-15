@@ -1,6 +1,7 @@
 import { appAttsStore } from '#basis/lib/appScheduleAttrsStorage';
-import { MyLib, mylib } from '#shared/lib/my-lib';
 import { IScheduleWidget } from 'shared/api';
+import { checkIsArray } from 'shared/utils/checkIs';
+import { forEachObjectEntries } from 'shared/utils/object.utils';
 import { ScheduleKeyValueListAtt } from './atts/attachments/key-value/KeyValueListAtt/Att';
 import { scheduleOwnAtts } from './atts/attachments/ownAtts';
 import { ScheduleWidgetAppAtts, ScheduleWidgetAttRefs } from './ScheduleWidget.model';
@@ -13,8 +14,8 @@ export const makeAttStorage = (schedule?: IScheduleWidget): [ScheduleWidgetAppAt
   schedule?.days.forEach(day => {
     day.list.forEach(event => {
       if (event.atts)
-        MyLib.entries(event.atts).forEach(([attKey, att]) => {
-          if (!mylib.isArr(att)) (attRefs[attKey] ??= []).push([day.mi, event.mi]);
+        forEachObjectEntries(event.atts, (attKey, att) => {
+          if (!checkIsArray(att)) (attRefs[attKey] ??= []).push([day.i, event.mi]);
         });
     });
   });

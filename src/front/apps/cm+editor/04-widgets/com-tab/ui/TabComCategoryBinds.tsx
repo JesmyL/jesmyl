@@ -50,7 +50,7 @@ export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => 
               {cat.dict?.[ccom.wid] != null && (
                 <TheIconButton
                   icon="Cancel01"
-                  postfix={isNaN(cat.dict?.[ccom.wid as never]) ? 'Корректно очистить' : 'Удалить'}
+                  postfix={isNaN(cat.dict?.[ccom.wid] as never) ? 'Корректно очистить' : 'Удалить'}
                   confirm={`Очистить номер из сборника ${cat.name}?`}
                   className="pointer text-xKO ml-5 mb-2"
                   disabled={!checkAccess('cm', 'COM_CAT', 'U')}

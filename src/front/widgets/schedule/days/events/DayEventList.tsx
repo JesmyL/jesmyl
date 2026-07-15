@@ -10,7 +10,12 @@ import { ScheduleWidgetEventTypeList } from '#widgets/schedule/events/EventTypeL
 import { schDaysTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import styled from '@emotion/styled';
 import { useEffect, useMemo, useState } from 'react';
-import { IScheduleWidgetDay, ScheduleDayScopeProps, indexScheduleGetDayEventTimes } from 'shared/api';
+import {
+  IScheduleWidgetDay,
+  ScheduleDayScopeProps,
+  ScheduleWidgetDayi,
+  indexScheduleGetDayEventTimes,
+} from 'shared/api';
 import { isNIs } from 'shared/utils';
 import { ScheduleWidgetDayEvent, StyledScheduleWidgetDayEvent } from './DayEvent';
 import { ScheduleWidgetDayEventEventActions } from './EventActions';
@@ -19,7 +24,7 @@ type Props = {
   day: IScheduleWidgetDay;
   isPastDay: boolean;
   isForceExpand?: boolean;
-  dayi: number;
+  dayi: ScheduleWidgetDayi;
   dayScopeProps: ScheduleDayScopeProps;
 };
 

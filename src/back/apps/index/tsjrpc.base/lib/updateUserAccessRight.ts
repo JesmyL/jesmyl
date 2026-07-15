@@ -13,7 +13,7 @@ export const indexTSJRPCBaseUpdateUserAccessRight = {
   updateUserAccessRight: async ({ login, rule, scope, operation }) => {
     if (scope === 'general') throw 'Эти права доступа менять нельзя';
 
-    const { rights: userRights } = (await takeUserTiny(login)) ?? {};
+    const { rights: userRights } = (await takeUserTiny({ l: login })) ?? {};
 
     if (!userRights) return { value: {} };
 
@@ -26,10 +26,10 @@ export const indexTSJRPCBaseUpdateUserAccessRight = {
     const m = Date.now();
 
     await dbUpdate(userDB, { rights: userRights, m }, eq(userDB.l, login));
-    resetUserTiny(login);
+    resetUserTiny({ l: login });
 
     indexServerTsjrpcShareMethods.refreshAccessRights({ rights: await makeUserAccessRights(login), mod: m }, { login });
 
-    return { value: { [login]: await takeUserTiny(login) } };
+    return { value: { [login]: await takeUserTiny({ l: login }) } };
   },
 } satisfies ServerTsjrpcSatisfy<IndexTsjrpcModel>;

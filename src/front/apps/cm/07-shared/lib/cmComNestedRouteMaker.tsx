@@ -15,7 +15,7 @@ import { TheCmComComposition } from '$cm/widgets/com';
 import { FileRoutesByPath, Link, useParams, useSearch } from '@tanstack/react-router';
 import { atom, useAtomValue } from 'atomaric';
 import { JSX, useEffect } from 'react';
-import { CmCatWid } from 'shared/api';
+import { CmCatWid, CmComWid } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
@@ -100,7 +100,7 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>({
     ComRouteComponent,
     component: ComRouteComponent,
     validateSearch: (search: PRecord<string, unknown>): CmComOpenRouteProps => ({
-      comw: +search.comw! || undefined,
+      comw: (+search.comw! as CmComWid) || undefined,
       tran: search.tran != null ? '-!-' : undefined,
     }),
   };

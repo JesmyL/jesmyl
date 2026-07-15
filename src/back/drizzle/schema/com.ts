@@ -14,14 +14,16 @@ import { itIt } from 'shared/utils';
 
 const initStringArray = (columnName: string) => text(columnName).array().default([]);
 
+export type ComId = NumberBrand<'ComId'>;
+
 export const comDB = pgTable('coms', {
-  id: serial('id').primaryKey().notNull(),
+  id: serial('id').primaryKey().$type<ComId>().notNull(),
 
   w: bigint('writedAt', { mode: 'number' })
     .unique()
     .notNull()
     .$type<CmComWid>()
-    .$defaultFn(() => Date.now()),
+    .$defaultFn(() => Date.now() as never),
 
   m: bigint('modifiedAt', { mode: 'number' })
     .notNull()

@@ -10,7 +10,7 @@ import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { CmComWid } from 'shared/api';
+import { CmComWidDef } from 'shared/api';
 import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { twMerge } from 'tailwind-merge';
 import { useCmComCurrentFixedCom } from '../com/lib/com-selections';
@@ -28,7 +28,7 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
 
   const visitsCountQuery = useQuery({
     queryKey: ['cmTsjrpcClient.takeComwVisitsCount', ccom?.wid],
-    queryFn: () => cmTsjrpcClient.takeComwVisitsCount({ comw: ccom?.wid ?? CmComWid.def }),
+    queryFn: () => cmTsjrpcClient.takeComwVisitsCount({ comw: ccom?.wid ?? CmComWidDef }),
     enabled: !!ccom?.wid,
   });
 

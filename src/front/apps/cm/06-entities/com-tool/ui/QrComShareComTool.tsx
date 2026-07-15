@@ -3,7 +3,7 @@ import { useCmComCurrent } from '$cm/entities/com';
 import { cmAppActions } from '$cm/shared/const';
 import { useComNumber } from '$cm/shared/lib';
 import { Atom, atom } from 'atomaric';
-import { CmComWid } from 'shared/api';
+import { CmComWidDef } from 'shared/api';
 import { CmComTool } from '../ComTool';
 
 let isOpenQrAtom: Atom<boolean>;
@@ -12,7 +12,7 @@ export const CmComToolQrComShare = () => {
   isOpenQrAtom ??= atom(false);
 
   const ccom = useCmComCurrent();
-  const comw = ccom?.wid ?? CmComWid.def;
+  const comw = ccom?.wid ?? CmComWidDef;
   const comNumber = useComNumber(comw);
 
   const toolNode = (

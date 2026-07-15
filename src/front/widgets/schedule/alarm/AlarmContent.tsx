@@ -12,6 +12,7 @@ import {
   IScheduleWidgetDay,
   IScheduleWidgetDayEvent,
   ScheduleWidgetCleans,
+  ScheduleWidgetDayi,
   ScheduleWidgetDayListItemTypeBox,
 } from 'shared/api';
 import { itNNull } from 'shared/utils';
@@ -138,7 +139,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
           const start = currSchBox.sch.start - (currSchBox.sch.withTech ? msInDay : 0);
           const currDayi = currSchBox.days.findIndex((_, dayi) => {
             return start + dayi * msInDay < now && start + (dayi + 1) * msInDay > now;
-          });
+          }) as ScheduleWidgetDayi;
 
           if (currDayi > -1 && currDayi < currSchBox.days.length) {
             const currDay = currSchBox.days[currDayi];
@@ -309,7 +310,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
                   return (
                     <ScheduleAlarmDay
                       day={willSchBox.days[1]}
-                      dayi={1}
+                      dayi={1 as ScheduleWidgetDayi}
                       schedule={willSchBox.sch}
                       isForceOpen
                       scheduleScopeProps={{ schw: willSchBox.sch.w }}
@@ -321,7 +322,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
                   return (
                     <ScheduleAlarmDay
                       day={willSchBox.days[0]}
-                      dayi={0}
+                      dayi={0 as ScheduleWidgetDayi}
                       schedule={willSchBox.sch}
                       isForceOpen
                       scheduleScopeProps={{ schw: willSchBox.sch.w }}

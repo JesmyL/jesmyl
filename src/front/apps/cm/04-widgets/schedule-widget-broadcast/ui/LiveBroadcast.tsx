@@ -9,12 +9,12 @@ import { schLiveTsjrpcClient } from '$index/shared/tsjrpc';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
-import { IScheduleWidgetWid } from 'shared/api';
+import { ScheduleWidgetWid } from 'shared/api';
 import { itNNull } from 'shared/utils';
 import { CmScheduleWidgetBroadcastBibleControlled } from './LiveBible';
 import { CmScheduleWidgetBroadcastLiveCm } from './LiveCm';
 
-export const CmScheduleWidgetBroadcast = ({ schw }: { schw: IScheduleWidgetWid | und }) => {
+export const CmScheduleWidgetBroadcast = ({ schw }: { schw: ScheduleWidgetWid | und }) => {
   const auth = useAuth();
   const windows = useScreenBroadcastWindows();
   const isCm = useAtomValue(broadcastCurrentTextAppAtom) === 'cm';

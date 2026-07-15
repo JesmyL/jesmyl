@@ -1,6 +1,7 @@
 import { backConfig } from 'back/config/backConfig';
 import TgBot from 'node-telegram-bot-api';
 import Mail from 'nodemailer/lib/mailer';
+import { Do } from 'shared/enums';
 import { sendEmailMessage } from '../emailer/lib/sendEmailMessage';
 import { EmailerAuthConfigKey } from '../emailer/model';
 import { JesmylTelegramBot } from './tg-bot';
@@ -44,12 +45,13 @@ export const postJRPCMessage = async (
 ) => {
   if (backConfig.isTest) return;
 
-  await sendEmailMessage(emailKey, {
-    isSameTo: true,
-    subject: `SYSTEM: ${new Date().toLocaleDateString('ru', dateConfig)} (${scopeTitleDict[options.scope ?? options.tgBot.scope]})`,
-    html,
-    ...options.email,
-  });
+  if (!Do.It)
+    await sendEmailMessage(emailKey, {
+      isSameTo: true,
+      subject: `SYSTEM: ${new Date().toLocaleDateString('ru', dateConfig)} (${scopeTitleDict[options.scope ?? options.tgBot.scope]})`,
+      html,
+      ...options.email,
+    });
 
   //   await options.tgBot.postMessage(text, options.tg, options.tg?.chatId);
 };

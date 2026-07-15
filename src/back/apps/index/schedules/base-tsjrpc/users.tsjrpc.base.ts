@@ -2,8 +2,8 @@ import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import {
   IScheduleWidget,
   IScheduleWidgetUser,
-  IScheduleWidgetUserMi,
   ScheduleUserScopeProps,
+  ScheduleWidgetUserMi,
   scheduleWidgetUserRights,
 } from 'shared/api';
 import { SchUsersTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
@@ -26,7 +26,7 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
       scope: 'SchUsers',
       methods: {
         addUsersByExcel: modifySchedule(false, (sch, { users }) => {
-          let lastUserMi = smylib.takeNextMi(sch.ctrl.users, IScheduleWidgetUserMi.def);
+          let lastUserMi = smylib.takeNextMi(sch.ctrl.users, ScheduleWidgetUserMi.def);
           users.forEach(user => sch.ctrl.users.push({ ...user, mi: ++lastUserMi }));
 
           return (
@@ -39,7 +39,7 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
           if (sch.ctrl.users.some(user => user.login === auth.login)) throw new Error('user exists');
           const authClone: IScheduleWidgetUser & { level?: number } = {
             ...auth,
-            mi: smylib.takeNextMi(sch.ctrl.users, IScheduleWidgetUserMi.def),
+            mi: smylib.takeNextMi(sch.ctrl.users, ScheduleWidgetUserMi.def),
           };
 
           delete authClone.level;

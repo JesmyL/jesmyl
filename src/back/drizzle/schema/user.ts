@@ -5,8 +5,10 @@ import { Do } from 'shared/enums';
 import { IndexAccessScopeRules, UserAccessRole } from 'shared/model/index/access-rights';
 import { itIt } from 'shared/utils';
 
+export type UserId = NumberBrand<'UserId'>;
+
 export const userDB = pgTable('users', {
-  id: serial('id').primaryKey().notNull(),
+  id: serial('id').primaryKey().$type<UserId>().notNull(),
 
   l: text('login').unique().$type<UserLogin>().notNull(),
   ls: text('logins').array().$type<UserLogin[]>().notNull(),

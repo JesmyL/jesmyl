@@ -1,22 +1,19 @@
 import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
+import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
 import { FileStore } from 'back/complect/FileStore';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
-import { comDB, selectUserExt, user2ComDB, userDB, userExtDB } from 'back/drizzle.schema';
+import { comDB, sch2ComDB, selectUserExt, user2ComDB, userDB, userExtDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
 import { selectUser2Com } from 'back/drizzle/ex/user2Com.utils';
 import { and, DrizzleQueryError, eq, gt } from 'drizzle-orm';
-import { ICmComCommentBlock } from 'shared/api';
+import { ComsInScheduleIntp, ICmComCommentBlock } from 'shared/api';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
 import { Bool, Do } from 'shared/enums';
 import { checkIsNotNil } from 'shared/utils/checkIs';
+import { objectLength } from 'shared/utils/object.utils';
 import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from '../client-selectors-by-visit';
-import {
-  catsFileStorage,
-  chordPackFileStore,
-  cmComWidRefGroupDictFileStore,
-  comsInSchEventDirStorage,
-} from '../file-stores';
+import { catsFileStorage, chordPackFileStore, cmComWidRefGroupDictFileStore } from '../file-stores';
 import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
 
 export const cmServerTsjrpcBaseRequestFreshes = {
@@ -73,13 +70,23 @@ export const cmServerTsjrpcBaseRequestFreshes = {
       );
     }
 
-    const freshComsInSchEvent = comsInSchEventDirStorage.getFreshItems(lastModfiedAt);
+    const freshComsInSchEvent = await db
+      .select({ it: sch2ComDB })
+      .from(sch2ComDB)
+      .where(gt(sch2ComDB.intpMod, lastModfiedAt));
 
-    if (freshComsInSchEvent.items.length) {
-      cmShareServerTsjrpcMethods.refreshSchEvComPacks(
-        { packs: freshComsInSchEvent.items, mod: freshComsInSchEvent.maxMod },
-        client,
-      );
+    if (objectLength(freshComsInSchEvent)) {
+      let mod = 0;
+      const intps: ComsInScheduleIntp[] = [];
+
+      for (const { it } of freshComsInSchEvent) {
+        mod = Math.max(it.intpMod, mod);
+        const sch = await takeScheduleWidgetTiny({ id: it.schId }, false);
+
+        if (it && sch) intps.push({ schw: sch.w, intp: it.intp ?? undefined });
+      }
+
+      cmShareServerTsjrpcMethods.freshSchEvComIntp({ intps, mod }, client);
     }
 
     if (visitInfo && visitInfo.version > 1039)

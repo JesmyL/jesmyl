@@ -3,12 +3,13 @@ import { JSX, ReactNode } from 'react';
 import {
   AttKey,
   IScheduleWidget,
-  IScheduleWidgetDayEventMi,
-  IScheduleWidgetWid,
   ScheduleDayEventAttachmentScopeProps,
   ScheduleWidgetAppAttBasic,
   ScheduleWidgetAttKey,
   ScheduleWidgetAttRef,
+  ScheduleWidgetDayEventMi,
+  ScheduleWidgetDayi,
+  ScheduleWidgetWid,
 } from 'shared/api';
 
 export type ScheduleWidgetAttRefs = Record<ScheduleWidgetAttKey<AttKey>, ScheduleWidgetAttRef[]>;
@@ -19,9 +20,9 @@ export type ScheduleWidgetAppAtts<AttAppName extends AttKey = AttKey, AttValue =
 >;
 
 export interface ScheduleDayEventPathProps {
-  schw?: IScheduleWidgetWid;
-  dayi?: number;
-  eventMi?: IScheduleWidgetDayEventMi;
+  schw?: ScheduleWidgetWid;
+  dayi?: ScheduleWidgetDayi;
+  eventMi?: ScheduleWidgetDayEventMi;
 }
 
 export type ScheduleWidgetAppAttResultItem<AttValue> = (mpValue: () => AttValue, content: ReactNode) => JSX.Element;

@@ -1,4 +1,10 @@
-import { cmTgAttInform, IScheduleWidget, IScheduleWidgetDayEvent, ScheduleWidgetAttKey } from 'shared/api';
+import {
+  cmTgAttInform,
+  IScheduleWidget,
+  IScheduleWidgetDayEvent,
+  ScheduleWidgetAttKey,
+  ScheduleWidgetDayi,
+} from 'shared/api';
 
 export type AttTgInformStorage = Record<
   ScheduleWidgetAttKey,
@@ -6,7 +12,7 @@ export type AttTgInformStorage = Record<
     value: unknown,
     eventTitle: string,
     schedule: IScheduleWidget,
-    dayi: number,
+    dayi: ScheduleWidgetDayi,
     event: IScheduleWidgetDayEvent,
     attMi: number | string,
   ) => `${string}\n\n` | null

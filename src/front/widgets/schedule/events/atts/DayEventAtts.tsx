@@ -6,6 +6,7 @@ import {
   IScheduleWidgetDay,
   IScheduleWidgetDayEvent,
   ScheduleDayEventScopeProps,
+  ScheduleWidgetDayi,
   ScheduleWidgetDayListItemTypeBox,
   scheduleWidgetUserRights,
 } from 'shared/api';
@@ -15,7 +16,7 @@ export function ScheduleWidgetDayEventAtts(props: {
   typeBox: ScheduleWidgetDayListItemTypeBox;
   event: IScheduleWidgetDayEvent;
   day: IScheduleWidgetDay;
-  dayi: number;
+  dayi: ScheduleWidgetDayi;
   isPrevEvent: boolean;
   schedule: IScheduleWidget;
   dayEventScopeProps: ScheduleDayEventScopeProps;

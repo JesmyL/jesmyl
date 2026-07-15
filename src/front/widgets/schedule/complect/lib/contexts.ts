@@ -1,28 +1,29 @@
 import { contextCreator } from '#shared/lib/contextCreator';
 import {
-  IScheduleWidgetUserMi,
-  IScheduleWidgetWid,
   ScheduleDayScopeProps,
   ScheduleScopeProps,
   ScheduleUserScopeProps,
+  ScheduleWidgetDayi,
+  ScheduleWidgetUserMi,
+  ScheduleWidgetWid,
+  ScheduleWidgetWidDef,
 } from 'shared/api';
 
 export const [ScheduleScopePropsContext, useScheduleScopePropsContext] = contextCreator<ScheduleScopeProps>({
-  schw: IScheduleWidgetWid.def,
+  schw: ScheduleWidgetWidDef,
 });
 
 export const [ScheduleUserScopePropsContext, useScheduleUserScopePropsContext] = contextCreator<ScheduleUserScopeProps>(
   {
-    schw: IScheduleWidgetWid.def,
-    userMi: IScheduleWidgetUserMi.def,
+    schw: ScheduleWidgetWidDef,
+    userMi: ScheduleWidgetUserMi.def,
   },
 );
 
 export const [ScheduleDayScopePropsContext, useScheduleDayScopePropsContext] = contextCreator<ScheduleDayScopeProps>({
-  schw: IScheduleWidgetWid.def,
-  dayi: -1,
+  schw: ScheduleWidgetWidDef,
+  dayi: -1 as ScheduleWidgetDayi,
 });
 
-export const [ScheduleCurrentSchwContext, useScheduleCurrentSchwContext] = contextCreator<IScheduleWidgetWid>(
-  IScheduleWidgetWid.def,
-);
+export const [ScheduleCurrentSchwContext, useScheduleCurrentSchwContext] =
+  contextCreator<ScheduleWidgetWid>(ScheduleWidgetWidDef);
