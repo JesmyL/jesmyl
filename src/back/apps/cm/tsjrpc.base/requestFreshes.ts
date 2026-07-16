@@ -1,17 +1,35 @@
 import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
+import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { FileStore } from 'back/complect/FileStore';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
-import { comDB, sch2ComDB, selectUserExt, user2ComDB, userDB, userExtDB } from 'back/drizzle.schema';
+import {
+  comDB,
+  sch2ComDB,
+  schComHistoryDB,
+  scheduleDB,
+  SchId,
+  selectUserExt,
+  user2ComDB,
+  userDB,
+  userExtDB,
+} from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
 import { selectUser2Com } from 'back/drizzle/ex/user2Com.utils';
-import { and, DrizzleQueryError, eq, gt } from 'drizzle-orm';
-import { ComsInScheduleIntp, ICmComCommentBlock } from 'shared/api';
+import { and, desc, DrizzleQueryError, eq, gt } from 'drizzle-orm';
+import {
+  CmComInSchDayEvWr,
+  CmScheduleDayEventComwsPack,
+  ComsInScheduleIntp,
+  ICmComCommentBlock,
+  ScheduleWidgetDayEventMi,
+  ScheduleWidgetDayi,
+} from 'shared/api';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
 import { Bool, Do } from 'shared/enums';
 import { checkIsNotNil } from 'shared/utils/checkIs';
-import { objectLength } from 'shared/utils/object.utils';
+import { objectLength, objectValues } from 'shared/utils/object.utils';
 import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from '../client-selectors-by-visit';
 import { catsFileStorage, chordPackFileStore, cmComWidRefGroupDictFileStore } from '../file-stores';
 import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
@@ -46,13 +64,7 @@ export const cmServerTsjrpcBaseRequestFreshes = {
         return it.c;
       });
 
-      cmShareServerTsjrpcMethods.refreshComList(
-        {
-          coms,
-          modifiedAt: maxMod,
-        },
-        client,
-      );
+      cmShareServerTsjrpcMethods.refreshComList({ coms, modifiedAt: maxMod }, client);
     }
 
     sendBasicModifiedableList(lastModfiedAt, catsFileStorage, catsFileStorage.getValue, (cats, modifiedAt) => {
@@ -70,23 +82,62 @@ export const cmServerTsjrpcBaseRequestFreshes = {
       );
     }
 
-    const freshComsInSchEvent = await db
-      .select({ it: sch2ComDB })
-      .from(sch2ComDB)
-      .where(gt(sch2ComDB.intpMod, lastModfiedAt));
+    if (visitInfo && visitInfo.version >= 1230) {
+      const freshComsInSchEvent = await db
+        .select({ it: sch2ComDB })
+        .from(sch2ComDB)
+        .where(gt(sch2ComDB.intpMod, lastModfiedAt));
 
-    if (objectLength(freshComsInSchEvent)) {
-      let mod = 0;
-      const intps: ComsInScheduleIntp[] = [];
+      if (objectLength(freshComsInSchEvent)) {
+        let mod = 0;
+        const intps: ComsInScheduleIntp[] = [];
 
-      for (const { it } of freshComsInSchEvent) {
-        mod = Math.max(it.intpMod, mod);
-        const sch = await takeScheduleWidgetTiny({ id: it.schId }, false);
+        for (const { it } of freshComsInSchEvent) {
+          mod = Math.max(it.intpMod, mod);
+          const sch = await takeScheduleWidgetTiny({ id: it.schId }, false);
 
-        if (it && sch) intps.push({ schw: sch.w, intp: it.intp ?? undefined });
+          if (it && sch) intps.push({ schw: sch.w, intp: it.intp ?? undefined });
+        }
+
+        cmShareServerTsjrpcMethods.freshSchEvComIntp({ intps, mod }, client);
       }
 
-      cmShareServerTsjrpcMethods.freshSchEvComIntp({ intps, mod }, client);
+      const allSchedules = await db.select({ id: scheduleDB.id }).from(scheduleDB);
+
+      const packDict: Record<
+        `${SchId}/${ScheduleWidgetDayi}/${ScheduleWidgetDayEventMi}`,
+        typeof schComHistoryDB.$inferSelect
+      > = {};
+
+      for (const { id } of allSchedules) {
+        const comwsPacks = await db
+          .select()
+          .from(schComHistoryDB)
+          .where(and(eq(schComHistoryDB.schId, id), gt(schComHistoryDB.w, lastModfiedAt as CmComInSchDayEvWr)))
+          .orderBy(desc(schComHistoryDB.w));
+
+        comwsPacks.forEach(pack => {
+          const key = `${pack.schId}/${pack.dayi}/${pack.eventMi}` as const;
+          if (!packDict[key] || packDict[key].w < pack.w) packDict[key] = pack;
+        });
+      }
+
+      const lastPacks = objectValues(packDict);
+
+      if (objectLength(lastPacks)) {
+        const packs: CmScheduleDayEventComwsPack[] = [];
+
+        for (const { schId, userId, ...packRest } of lastPacks) {
+          const user = await takeUserTiny({ id: userId }, false);
+          const sch = await takeScheduleWidgetTiny({ id: schId }, false);
+
+          if (!user || !sch) continue;
+
+          packs.push({ fio: user.uauth.fio || '??', schw: sch.w, ...packRest });
+        }
+
+        cmShareServerTsjrpcMethods.freshSchDayEvComws({ packs }, null);
+      }
     }
 
     if (visitInfo && visitInfo.version > 1039)

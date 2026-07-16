@@ -1,3 +1,4 @@
+import { defaultQueryClient } from '#basis/config/queryClient';
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { TsjrpcBaseClient } from '#basis/tsjrpc/TsjrpcBase.client';
 import { cmComCommentRegisteredAltKeysAtom } from '$cm/entities/com-comment';
@@ -90,26 +91,30 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
           updateMod(mod);
         },
 
-        freshSchDayEvComws: async ({ comws, dayi, eventMi, schw, fio, w }) => {
-          const prev = await cmIDB.db.scheduleComws.get(schw);
+        freshSchDayEvComws: async ({ packs }) => {
+          [packs].flat().forEach(async ({ comws, dayi, eventMi, schw, fio, w }) => {
+            const prev = await cmIDB.db.scheduleComws.get(schw);
 
-          await cmIDB.db.scheduleComws.put({
-            schw,
-            pack: {
-              ...prev?.pack,
-              [dayi]: {
-                ...prev?.pack[dayi],
-                [eventMi]: {
-                  ...prev?.pack[dayi]?.[eventMi],
-                  s: comws,
-                  fio,
-                  w,
+            await cmIDB.db.scheduleComws.put({
+              schw,
+              pack: {
+                ...prev?.pack,
+                [dayi]: {
+                  ...prev?.pack[dayi],
+                  [eventMi]: {
+                    ...prev?.pack[dayi]?.[eventMi],
+                    s: comws,
+                    fio,
+                    w,
+                  },
                 },
               },
-            },
-          });
+            });
 
-          updateMod(w);
+            defaultQueryClient.invalidateQueries({ queryKey: ['getSchEventComPackMod', schw, dayi] });
+
+            updateMod(w);
+          });
         },
 
         refreshConstConfig: async ({ config, mod }) => {

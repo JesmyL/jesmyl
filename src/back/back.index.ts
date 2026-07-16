@@ -11,11 +11,15 @@ import { questionerAdminServerTsjrpcBase } from './apps/q/tsjrpc/admin.tsjrpc.ba
 import { questionerUserServerTsjrpcBase } from './apps/q/tsjrpc/user.tsjrpc.base';
 import { storagesServerTsjrpcBase } from './apps/storages/tsjrpc.base';
 import { sokiServer } from './complect/soki/SokiServer';
+import { backConfig } from './config/backConfig';
 import { baseMessagesCatcher } from './sides/telegram-bot/complect/message-catchers';
 import { updateAllStarts } from './updateAllStarts';
 
 iife(async () => {
   if (Do.It) await import('./initBack').then(m => m.initBack());
+
+  if (!Do.It) if (backConfig.isTest) await import('./drizzle/cloneDrizzleToLocal').then(m => m.cloneDrizzleToLocal());
+
   if (Do.It) await import('./drizzle/drizzleInitiator').then(m => m.drizzleInitiator());
 
   const ws = sokiServer.start();

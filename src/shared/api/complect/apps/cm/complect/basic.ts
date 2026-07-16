@@ -1,9 +1,9 @@
 import { CmCatKind } from '#shared/model/cm/cat/Cat.model';
 import { StrRegExp } from 'regexpert';
+import { ScheduleWidgetDayEventMi, ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
 import { CmComNewlinerSymbolFreeUpperCaseLine } from 'shared/model/cm/broadcast';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
-
 import {
   CmCatWid,
   CmComIntensityLevel,
@@ -294,3 +294,12 @@ export type MenuComToolNameList =
   | 'cats-binds';
 
 export type CmComWidRefGroupDict = SPRecord<CmComWid, CmComWidRefGroupId>;
+
+export type CmScheduleDayEventComwsPack = {
+  schw: ScheduleWidgetWid;
+  dayi: ScheduleWidgetDayi;
+  eventMi: ScheduleWidgetDayEventMi;
+  comws: CmComWid[];
+  fio: string;
+  w: number;
+};

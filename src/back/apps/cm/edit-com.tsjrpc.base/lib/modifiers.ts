@@ -5,7 +5,7 @@ import { selectPgCheckedExportableCom } from 'back/drizzle/ex/com.selectors';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
 import { eq } from 'drizzle-orm';
 import { CmComLangi, CmComWid, IExportableCom } from 'shared/api';
-import { checkIsNowInDay } from 'shared/const/ms';
+import { checkIsNowInCurrentDay } from 'shared/const/ms';
 import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
 import { checkIsString } from 'shared/utils/checkIs';
 import { checkIsEq } from 'shared/utils/checkIsEq';
@@ -39,7 +39,7 @@ export const modifyCom =
     const m = Date.now();
 
     com.o?.forEach(ord => {
-      if (checkIsNowInDay(ord.cre)) delete ord.cre;
+      if (ord.cre && !checkIsNowInCurrentDay(ord.cre)) delete ord.cre;
     });
 
     const comUpdates: Partial<IExportableCom> = {};

@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import { hostConfig } from 'shared/api';
 import { iife } from 'shared/utils';
-import { lazyInit } from 'shared/utils/lazyInit';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 import * as jsonForType from './.env.json';
 import { makeCyanLogText, makeGreenLogText, makeRedLogText, makeYellowLogText } from './utils.exec';
@@ -17,8 +16,19 @@ export const hostRootDir = iife(() => {
   return dir;
 });
 
-export const lazyEnvJson = lazyInit(() => {
-  const envFilePath = `${hostRootDir}/.env.json` as const;
+const cacheDict: Record<
+  string,
+  typeof jsonForType & {
+    envFilePath: string;
+    dbUrl: string;
+    hostRootDir: string;
+  }
+> = {};
+
+export const lazyEnvJson = (filePostfix: '' | `.${string}` = '') => {
+  if (cacheDict[filePostfix]) return cacheDict[filePostfix];
+
+  const envFilePath = `${hostRootDir}/.env${filePostfix}.json` as const;
 
   const emptyEnvDict: typeof jsonForType = {
     DB_USER: '',
@@ -60,10 +70,10 @@ export const lazyEnvJson = lazyInit(() => {
   const dbUrl =
     `postgres://${envJson.DB_USER}:${envJson.DB_PASSWORD}@${envJson.DB_HOST}:${envJson.DB_PORT}/${envJson.DB_NAME}` as const;
 
-  return {
+  return (cacheDict[filePostfix] = {
     ...envJson,
     envFilePath,
     dbUrl,
-    hostRootDir: hostRootDir,
-  };
-});
+    hostRootDir,
+  });
+};

@@ -31,7 +31,7 @@ export const CmMeetingEvent = ({ dayi, eventMi, schw }: Props) => {
     queryFn: () => cmTsjrpcClient.getSchEventComPackMod({ schw, dayi }),
   });
 
-  if (schedule == null) return;
+  if (!schedule) return;
 
   const typei = schedule.days[dayi].list.find(event => event.mi === eventMi)?.type ?? -1;
 

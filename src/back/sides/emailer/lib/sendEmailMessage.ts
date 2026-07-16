@@ -24,7 +24,7 @@ export const sendEmailMessage = async (key: EmailerAuthConfigKey, options: Optio
 
   const auth = emailerConfigFileStorage.getValue()[key];
 
-  if (auth == null) return;
+  if (!auth) return;
   const { promise, reject, resolve } = Promise.withResolvers<SMTPTransport.SentMessageInfo>();
 
   transporters[key] ??= nodemailer.createTransport({

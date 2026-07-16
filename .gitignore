@@ -13,6 +13,8 @@
 /src/back/package.json
 drizzle.migrations
 
+.env.server.json
+
 secret.json
 secret.md5.json
 

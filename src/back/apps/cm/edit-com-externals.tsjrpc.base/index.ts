@@ -5,7 +5,7 @@ import { db, dbUpdate } from 'back/drizzle/drizzle.db';
 import { schComHistoryDB } from 'back/drizzle/schema/schComHistory';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { takeLogginedAuthOrThrow } from 'back/utils';
-import { and, eq } from 'drizzle-orm';
+import { and, asc, desc, eq } from 'drizzle-orm';
 import {
   CmComAudioMarkPack,
   CmComAudioMarkPackTime,
@@ -16,7 +16,7 @@ import {
   ScheduleComPackHistoryItem,
 } from 'shared/api';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
-import { checkIsNowInDay } from 'shared/const/ms';
+import { checkIsNowInCurrentDay } from 'shared/const/ms';
 import { extractNumber, itNumSort, SMyLib, smylib } from 'shared/utils';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
@@ -41,21 +41,24 @@ export const cmEditComExternalsTsjrpcBaseServer =
             if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'U')) throw '';
 
             const sch = await takeScheduleWidgetTiny({ w: schw });
-            const where = and(
-              eq(schComHistoryDB.schId, sch.id),
-              eq(schComHistoryDB.dayi, dayi),
-              eq(schComHistoryDB.eventMi, eventMi),
-            );
 
-            if (!where) throw 'Error 86514230100';
-
-            const prevItem = (await db.select({ m: schComHistoryDB.w }).from(schComHistoryDB).where(where).limit(1)).at(
-              0,
-            );
+            const prevItem = (
+              await db
+                .select({ w: schComHistoryDB.w })
+                .from(schComHistoryDB)
+                .where(
+                  and(
+                    eq(schComHistoryDB.schId, sch.id),
+                    eq(schComHistoryDB.dayi, dayi),
+                    eq(schComHistoryDB.eventMi, eventMi),
+                  ),
+                )
+                .limit(1)
+            ).at(0);
             const wr = Date.now() as CmComInSchDayEvWr;
 
-            if (checkIsNowInDay(prevItem?.m)) {
-              await dbUpdate(schComHistoryDB, { comws, w: wr }, where);
+            if (prevItem && checkIsNowInCurrentDay(prevItem.w)) {
+              await dbUpdate(schComHistoryDB, { comws, w: wr }, eq(schComHistoryDB.w, prevItem.w));
             } else {
               const user = await takeUserTiny({ l: auth.login });
               await db.insert(schComHistoryDB).values({
@@ -69,7 +72,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
             }
 
             cmShareServerTsjrpcMethods.freshSchDayEvComws(
-              { dayi, eventMi, schw, comws, fio: auth.fio ?? '??', w: wr },
+              { packs: { dayi, eventMi, schw, comws, fio: auth.fio ?? '??', w: wr } },
               null,
             );
 
@@ -94,7 +97,8 @@ export const cmEditComExternalsTsjrpcBaseServer =
             const selPacks = await db
               .select()
               .from(schComHistoryDB)
-              .where(and(eq(schComHistoryDB.schId, sch.id), eq(schComHistoryDB.dayi, dayi)));
+              .where(and(eq(schComHistoryDB.schId, sch.id), eq(schComHistoryDB.dayi, dayi)))
+              .orderBy(desc(schComHistoryDB.w), asc(schComHistoryDB.eventMi));
 
             const packs: ScheduleComPackHistoryItem[] = [];
 
