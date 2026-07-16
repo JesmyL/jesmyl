@@ -23,7 +23,7 @@ export type CmShareTsjrpcModel = {
   refreshChordPack: (args: { pack: ChordPack; modifiedAt: number }) => unknown;
 
   refreshComComments: (args: { comments: ICmComCommentBlock[]; mod: number; alts: string[] | nil }) => void;
-  comFav: (args: { comw: CmComWid; is: boolean; mod: number }) => void;
+  comFav_v1: (args: { fav: Record<CmComWid, Bool>; mod: number }) => void;
   favTools: (args: { tools: MigratableComToolName[]; mod: number }) => void;
   refreshComFavs: (args: { comws: CmComWid[]; mod: number }) => void;
 

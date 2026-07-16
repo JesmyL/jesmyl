@@ -4,7 +4,8 @@ import { TsjrpcBaseClient } from '#basis/tsjrpc/TsjrpcBase.client';
 import { cmComCommentRegisteredAltKeysAtom } from '$cm/entities/com-comment';
 import { cmComFavoriteComsAtom, cmComTopToolsAtom } from '$cm/entities/index';
 import { CmShareTsjrpcModel } from 'shared/api/tsjrpc/cm/share.tsjrpc.model';
-import { itNumSort } from 'shared/utils';
+import { extractNumber, itNumSort } from 'shared/utils';
+import { mapObjectEntries } from 'shared/utils/object.utils';
 import { cmIDB } from '../state/cmIDB';
 
 const updateMod = (mod: number) => cmIDB.updateLastModifiedAt(mod);
@@ -69,9 +70,15 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
           updateMod(mod);
         },
 
-        comFav: async ({ comw, is, mod }) => {
-          if (is) cmComFavoriteComsAtom.set(prev => [...prev, comw].sort(itNumSort));
-          else cmComFavoriteComsAtom.do.removeFirst(comw);
+        comFav_v1: async ({ fav, mod }) => {
+          const prevSet = new Set(cmComFavoriteComsAtom.get());
+
+          mapObjectEntries(fav, (comw, is) => {
+            if (is) prevSet.add(extractNumber(comw));
+            else prevSet.delete(extractNumber(comw));
+          });
+
+          cmComFavoriteComsAtom.set(Array.from(prevSet).sort(itNumSort));
 
           updateMod(mod);
         },

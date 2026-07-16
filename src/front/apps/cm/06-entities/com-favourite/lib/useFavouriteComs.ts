@@ -1,19 +1,38 @@
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
+import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { useCmComList } from '$cm/entities/com';
 import { cmComFavoriteComsAtom } from '$cm/entities/index';
 import { cmUserStoreTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useAuth } from '$index/shared/state';
-import { useAtomValue } from 'atomaric';
+import { atom, useAtomValue } from 'atomaric';
+import { useEffect } from 'react';
 import { CmComWid } from 'shared/api';
 import { itNumSort } from 'shared/utils';
+import { objectLength } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
+
+const favCacheAtom = atom<Record<CmComWid, Bool>>({}, 'cm:comFavCache');
 
 export const useCmComFavouriteList = () => {
   const favourites = useAtomValue(cmComFavoriteComsAtom);
   const { maxFavouritesCount } = useAtomValue(constantsConfigAtom);
   const favouriteComsSet = new Set(favourites);
   const auth = useAuth();
+  const favCache = useAtomValue(favCacheAtom);
+
+  useEffect(() => {
+    if (!auth.login || !objectLength(favCache)) return;
+
+    return hookEffectPipe()
+      .pipe(
+        setTimeoutPipe(async () => {
+          await cmUserStoreTsjrpcClient.comFav_v1({ fav: favCache });
+          favCacheAtom.reset();
+        }, 1000),
+      )
+      .effect();
+  }, [auth.login, favCache]);
 
   const ret = {
     favouriteComs: useCmComList(favourites),
@@ -36,7 +55,10 @@ export const useCmComFavouriteList = () => {
 
       if (!auth.login) return;
 
-      cmUserStoreTsjrpcClient.comFav({ comw, is: !isFav });
+      favCacheAtom.do.update(fav => {
+        if (comw in fav) delete fav[comw];
+        else fav[comw] = +!isFav;
+      });
     },
   };
 
