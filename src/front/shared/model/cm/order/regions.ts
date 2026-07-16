@@ -14,9 +14,9 @@ export type CmComOrderEditableRegion<Ord extends CmComOrder> = CmComOrderEditabl
 export type CmComOrderEditableRegionBase<Ord extends CmComOrder> = {
   count: number;
 
-  key: RKey<SpecialOrderRepeatsKey>;
-  startKey: RKey<SpecialOrderRepeatsKey>;
-  finKey: RKey<SpecialOrderRepeatsKey> | nil;
+  key: SKey<SpecialOrderRepeatsKey>;
+  startKey: SKey<SpecialOrderRepeatsKey>;
+  finKey: SKey<SpecialOrderRepeatsKey> | nil;
 
   startLinei: number | nil;
   startWordi: number | nil;

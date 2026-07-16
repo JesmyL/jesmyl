@@ -41,7 +41,7 @@ export type QuestionerResultContentProps<Type extends QuestionerType> = {
 
 export type QuestionerConditionContentProps<Type extends QuestionerType> = {
   blank: QuestionerBlank;
-  templateId: RKey<QuestionerTemplateId>;
+  templateId: SKey<QuestionerTemplateId>;
   template: QuestionerTemplateByItsType<Type>;
   ifCondition: QuestionerTemplateTypeConditionDict[Type] | nil;
   operator: Exclude<QuestionerTemplateTypeConditionDict[Type]['op'], nil>;
@@ -60,6 +60,6 @@ export type QuestionerAnswerVariant = {
 
 export type QuestionerTemplateSelector<With = object> = QuestionerBlankSelector<
   With & {
-    templateId: RKey<QuestionerTemplateId>;
+    templateId: SKey<QuestionerTemplateId>;
   }
 >;

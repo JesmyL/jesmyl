@@ -9,7 +9,7 @@ type ConditionOperator = Exclude<QuestionerTemplateTypeConditionDict[QuestionerT
 export const QuestionerTemplateConditionSorterCardContent = (
   props: QuestionerConditionContentProps<QuestionerType.Sorter>,
 ) => {
-  const operatorSelectorDict: Record<RKey<ConditionOperator>, React.ReactNode> = {
+  const operatorSelectorDict: Record<SKey<ConditionOperator>, React.ReactNode> = {
     [QuestionerTemplateConditionOperator.In]: (
       <QuestionerTemplateConditionCardVariantSelector
         {...props}

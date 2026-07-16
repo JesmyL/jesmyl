@@ -23,7 +23,7 @@ export const QuestionerTemplateCard = ({
   template: QuestionerTemplate;
   requiredSign: React.ReactNode;
   content: React.ReactNode;
-  templateId: RKey<QuestionerTemplateId>;
+  templateId: SKey<QuestionerTemplateId>;
   actionIconsNode?: React.ReactNode;
   className?: string;
 }) => {

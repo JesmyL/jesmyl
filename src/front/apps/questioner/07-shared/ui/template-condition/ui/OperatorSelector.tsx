@@ -11,7 +11,7 @@ export const QuestionerTemplateConditionCardOperatorSelector = <
   ConditionOperator extends Exclude<QuestionerTemplateTypeConditionDict[Type]['op'], nil>,
 >(
   props: QuestionerConditionContentProps<QuestionerType> & {
-    operatorSelectorDict: Record<RKey<ConditionOperator>, React.ReactNode>;
+    operatorSelectorDict: Record<SKey<ConditionOperator>, React.ReactNode>;
     operator: ConditionOperator;
   },
 ) => {

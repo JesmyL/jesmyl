@@ -17,8 +17,8 @@ interface Props {
   com: EditableCom;
   selector: CmComAudioMarkSelector | nil;
   src: HttpNumLeadLink;
-  pinTime: RKey<CmComAudioMarkPackTime> | null;
-  onPin: (time: RKey<CmComAudioMarkPackTime> | null) => void;
+  pinTime: SKey<CmComAudioMarkPackTime> | null;
+  onPin: (time: SKey<CmComAudioMarkPackTime> | null) => void;
 }
 
 export const CmEditorComAudioMarksConfigurerTimeMark = ({ selector, time, src, com, onPin, pinTime }: Props) => {

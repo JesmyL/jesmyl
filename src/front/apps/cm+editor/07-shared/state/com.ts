@@ -18,7 +18,7 @@ export const cmComEditorAudioMarksEditPacksAtom = atom({} as PRecord<HttpNumLead
     putMarks: (comw: CmComWid, src: HttpNumLeadLink, cMarks: CmComAudioMarkEditPack[CmComWid]) => {
       self.do.setPartial({ [src]: { ...get()[src], [comw]: { ...get()[src]?.[comw], ...cMarks } } });
     },
-    removeMark: (comw: CmComWid, src: HttpNumLeadLink, time: RKey<CmComAudioMarkPackTime>) => {
+    removeMark: (comw: CmComWid, src: HttpNumLeadLink, time: SKey<CmComAudioMarkPackTime>) => {
       const newMarks: CmComAudioMarkEditPack = { ...get()[src] };
       newMarks[comw] = { ...get()[src]?.[comw] };
 
@@ -27,7 +27,7 @@ export const cmComEditorAudioMarksEditPacksAtom = atom({} as PRecord<HttpNumLead
 
       self.do.setPartial({ [src]: newMarks });
     },
-    renameMark: (comw: CmComWid, src: HttpNumLeadLink, time: RKey<number>, title: string) => {
+    renameMark: (comw: CmComWid, src: HttpNumLeadLink, time: SKey<number>, title: string) => {
       self.do.setPartial({ [src]: { ...get()[src], [comw]: { [time]: title } } });
     },
     removeMarks: (src: HttpNumLeadLink, cMarks: CmComAudioMarkPack | und) => {

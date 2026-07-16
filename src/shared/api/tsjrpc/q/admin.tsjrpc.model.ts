@@ -71,7 +71,7 @@ export type QuestionerAdminTsjrpcModel = {
     args: QuestionerTemplateSelector<{ textValue: string; textCode: string }>,
   ) => void;
   changeTemplateAnswerVariantTitle: (
-    args: QuestionerTemplateSelector<{ answerId: RKey<QuestionerAnswerId>; value: string }>,
+    args: QuestionerTemplateSelector<{ answerId: SKey<QuestionerAnswerId>; value: string }>,
   ) => void;
   addTemplateAnswerVariant: (args: QuestionerTemplateSelector) => void;
 };

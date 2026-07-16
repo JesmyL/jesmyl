@@ -1,16 +1,16 @@
-import { QuestionerType } from 'shared/model/q';
-import { QuestionerConditionContentProps } from 'shared/model/q/answer';
-import { QuestionerTemplateConditionCardOperatorSelector } from './ui/OperatorSelector';
-import { QuestionerTemplateConditionOperator, QuestionerTemplateTypeConditionDict } from 'shared/model/q/condition';
 import { TextInput } from '#shared/ui/TextInput';
 import { questionerAdminTsjrpcClient } from '$q/shared/tsjrpc/admin.tsjrpc';
+import { QuestionerType } from 'shared/model/q';
+import { QuestionerConditionContentProps } from 'shared/model/q/answer';
+import { QuestionerTemplateConditionOperator, QuestionerTemplateTypeConditionDict } from 'shared/model/q/condition';
+import { QuestionerTemplateConditionCardOperatorSelector } from './ui/OperatorSelector';
 
 type ConditionOperator = Exclude<QuestionerTemplateTypeConditionDict[QuestionerType.Comment]['op'], nil>;
 
 export const QuestionerTemplateConditionCommentCardContent = (
   props: QuestionerConditionContentProps<QuestionerType.Comment>,
 ) => {
-  const operatorSelectorDict: Record<RKey<ConditionOperator>, React.ReactNode> = {
+  const operatorSelectorDict: Record<SKey<ConditionOperator>, React.ReactNode> = {
     [QuestionerTemplateConditionOperator.GreatThenLength]: null,
     [QuestionerTemplateConditionOperator.LessThenLength]: null,
   };

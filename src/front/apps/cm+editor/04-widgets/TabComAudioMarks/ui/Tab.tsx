@@ -106,7 +106,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
         src={editSrc}
       />
 
-      <WithState<RKey<CmComAudioMarkPackTime> | null> init={null}>
+      <WithState<SKey<CmComAudioMarkPackTime> | null> init={null}>
         {(pinTime, setPinTime) => (
           <ConditionalRender
             value={editSrc}

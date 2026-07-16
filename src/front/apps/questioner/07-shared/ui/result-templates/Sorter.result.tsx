@@ -8,7 +8,7 @@ export const QuestionerResultSorterTemplateCardContent = ({
   template,
 }: QuestionerResultContentProps<QuestionerType.Sorter>) => {
   const variantKeys = mylib.keys(template.variants);
-  let newAnswerIds: RKey<QuestionerAnswerId>[] = [];
+  let newAnswerIds: SKey<QuestionerAnswerId>[] = [];
   const variantKeySet = new Set(variantKeys.map(Number));
   userAnswer?.v.forEach(answerId => variantKeySet.delete(answerId));
 

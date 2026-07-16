@@ -19,8 +19,7 @@ declare global {
 
   type PRecord<Key extends string | number, Value> = Partial<Record<Key, Value>>;
 
-  /** @deprecated rename on SKey */
-  type RKey<Key extends number | string> = Key | `${Key}`;
+  type SKey<Key extends number | string> = Key | `${Key}`;
 
   type OmitOwn<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 

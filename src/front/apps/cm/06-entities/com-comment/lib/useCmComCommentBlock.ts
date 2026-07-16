@@ -23,7 +23,7 @@ export const useCmComCommentBlock = (comw: CmComWid) => {
 
 export const takeCmComCommentTextBlock = (
   comw: CmComWid,
-  selector: RKey<CmComCommentBlockSimpleSelector>,
+  selector: SKey<CmComCommentBlockSimpleSelector>,
   localCommentBlock: ICmComCommentBlock | nil,
   commentBlock: ICmComCommentBlock | nil,
   commentAlti?: number | nil,

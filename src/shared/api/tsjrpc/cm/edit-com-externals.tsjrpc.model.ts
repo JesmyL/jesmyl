@@ -30,7 +30,7 @@ export type CmEditComExternalsTsjrpcModel = {
 
   getSchEvHistory: (args: { schw: ScheduleWidgetWid; dayi: ScheduleWidgetDayi }) => ScheduleComPackHistoryItem[];
   getSchEvHistoryStatistic: (args: { schw: ScheduleWidgetWid; dayi: ScheduleWidgetDayi }) => {
-    comwCount: Record<RKey<CmComWid>, number>;
+    comwCount: Record<SKey<CmComWid>, number>;
     totalCount: number;
   };
 

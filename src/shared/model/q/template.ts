@@ -53,7 +53,7 @@ export type QuestionerTemplateByItsType<Type extends QuestionerType> = Questione
 export type QuestionerAdminTemplateContentProps<Type extends QuestionerType> = {
   blank: QuestionerBlank;
   template: QuestionerTemplateByItsType<Type>;
-  templateId: RKey<QuestionerTemplateId>;
+  templateId: SKey<QuestionerTemplateId>;
 };
 
 /////////////////////////////
@@ -89,6 +89,6 @@ type Implement<
 
 export type QuestionerTemplateSelector<With = object> = QuestionerBlankSelector<
   With & {
-    templateId: RKey<QuestionerTemplateId>;
+    templateId: SKey<QuestionerTemplateId>;
   }
 >;

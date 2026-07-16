@@ -6,7 +6,7 @@ export const makeCmComOrderRepeatOrSelf = (repeats: OrderRepeats | nil) =>
   checkIsNumber(repeats) ? { '.': repeats } : (repeats as SpecialOrderRepeats | nil);
 
 export const takeCmComOrderRepeatPortalKeyLetter = <
-  Key extends RKey<SpecialOrderRepeatsKey>,
+  Key extends SKey<SpecialOrderRepeatsKey>,
   Ret extends Key extends SpecialOrderRepeatsKey.PortalStart | SpecialOrderRepeatsKey.PortalEnd
     ? 'a' | 'b'
     : 'a' | 'b' | nil,
@@ -79,7 +79,7 @@ export const cmComOrderMakeRepeatInnerStartKey = (linei: number | nil, wordi: nu
       : (`${linei}:${wordi}` as SpecialOrderRepeatsKey.LineWord);
 
 export const cmComOrderTakeRepeatInnerKeyComponents = (
-  key: RKey<SpecialOrderRepeatsKey>,
+  key: SKey<SpecialOrderRepeatsKey>,
   lineWordsList: string[][],
 ) => {
   const [beg, end] = key.split('-');
