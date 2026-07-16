@@ -41,11 +41,11 @@ export const postJRPCMessage = async (
     tg?: TgBot.SendMessageOptions & { chatId?: number };
     email?: Mail.Options;
   },
-  emailKey = EmailerAuthConfigKey.Self,
+  emailKey = EmailerAuthConfigKey.Space,
 ) => {
   if (backConfig.isTest) return;
 
-  if (!Do.It)
+  if (Do.It)
     await sendEmailMessage(emailKey, {
       isSameTo: true,
       subject: `SYSTEM: ${new Date().toLocaleDateString('ru', dateConfig)} (${scopeTitleDict[options.scope ?? options.tgBot.scope]})`,
