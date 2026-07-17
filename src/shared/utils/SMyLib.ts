@@ -14,6 +14,7 @@ const inMin = inSec * 60;
 const inHour = inMin * 60;
 const inDay = inHour * 24;
 
+/** @deprecated */
 export class SMyLib {
   howMs = {
     inSec,

@@ -2,7 +2,7 @@ import { checkIsArray, checkIsNil, checkIsObject, checkIsString } from './checkI
 
 export const objectEntries = <T>(
   it: T,
-): [T extends object | nil ? (keyof T extends number ? `${keyof T}` : keyof T) : string, T[keyof T]][] =>
+): [T extends object | nil ? (keyof T extends number ? `${keyof T}` : keyof T) : string, NonNullable<T>[keyof T]][] =>
   checkIsObject(it) ? (Object.entries(it) as never) : [];
 
 export const objectKeys = <T>(
@@ -10,7 +10,8 @@ export const objectKeys = <T>(
 ): (T extends object | nil ? (keyof T extends number ? `${keyof T}` : keyof T) : string)[] =>
   checkIsObject(it) ? (Object.keys(it) as never) : [];
 
-export const objectValues = <T>(it: T): T[keyof T][] => (checkIsObject(it) ? (Object.values(it) as never) : []);
+export const objectValues = <T>(it: T): NonNullable<T>[keyof T][] =>
+  checkIsObject(it) ? (Object.values(it) as never) : [];
 
 export const arrayByLength = <Value>(length: number, map: (index: number, value: unknown) => Value): Value[] =>
   Array.from({ length }, (v, i) => map(i, v));
@@ -24,7 +25,7 @@ export const forEachObjectEntries = <T>(
   it: T,
   eacher: (
     key: T extends object | nil ? (keyof T extends number ? `${keyof T}` : keyof T) : string,
-    value: T[keyof T],
+    value: NonNullable<T>[keyof T],
   ) => void,
 ) => {
   if (checkIsObject(it)) for (const key in it) eacher(key as never, it[key] as never);
@@ -34,7 +35,7 @@ export const mapObjectEntries = <T, Ret>(
   it: T,
   mapper: (
     key: T extends object | nil ? (keyof T extends number ? `${keyof T}` : keyof T) : string,
-    value: T[keyof T],
+    value: NonNullable<T>[keyof T],
     index: number,
   ) => Ret,
 ): Ret[] => {

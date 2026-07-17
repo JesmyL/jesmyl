@@ -30,9 +30,11 @@ export const drizzleInitiator = async () => {
     } catch (error) {
       console.error(makeRedLogText(`${error}`, ''));
       console.error(
-        makeRedLogText('👆👆👆 Ошибка при выполнении команды. Можно выполнить в ручную небезопасную команду:', ''),
+        makeRedLogText('👆👆👆 Ошибка при выполнении команды. Можно выполнить последовательность команд вручную:'),
       );
-      console.error(makeGreenLogText(makeCommand('push')));
+      console.info(makeGreenLogText(makeCommand('generate'), ''));
+      console.info(makeGreenLogText(makeCommand('migrate'), ''));
+      console.info(makeGreenLogText(makeCommand('push')));
     }
 
     return true;

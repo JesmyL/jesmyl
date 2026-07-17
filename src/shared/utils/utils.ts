@@ -1,4 +1,5 @@
 import { makeRegExp } from 'regexpert';
+import { checkIsNaN } from './checkIs';
 
 export const itIt = <It>(it: It) => it;
 export const itTrim = (it: string) => it.trim();
@@ -23,7 +24,10 @@ export const trimTextLines = (text: string) => text.trim().replace(makeRegExp('/
 export const iife = <Val>(fun: () => Val) => fun();
 
 type ParseNumber<T extends string | number> = T extends `${infer N extends number}` ? N : T;
-export const extractNumber = <T extends string | number>(value: T) => parseFloat(`${value}`) as ParseNumber<T>;
+export const extractNumber = <T extends string | number>(value: T) => {
+  const val = parseFloat(`${value}`);
+  return (checkIsNaN(val) ? value : val) as ParseNumber<T>;
+};
 
 // JSON
 declare const jsonBrand: unique symbol;
