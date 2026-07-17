@@ -1,5 +1,6 @@
 import { UserId } from 'back/drizzle.schema';
 import {
+  CmComAudioMarkPack,
   CmComCommentBlockDict,
   CmComInSchDayEvWr,
   CmComWid,
@@ -53,7 +54,7 @@ export const pullPushFileDirNameNet = {
   'apps/cm/': {
     comwVisits: T<PRecord<CmComWid, number>, string>(),
 
-    'coms/': T<IExportableCom, `${CmComWid}`>(),
+    'coms/': T<IExportableCom & { am?: CmComAudioMarkPack | nil }, `${CmComWid}`>(),
 
     'user2Com/': T<PRecord<CmComWid, { fav?: 1; comm?: (CmComCommentBlockDict | nil)[] }>, UserLogin>(),
 
