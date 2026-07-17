@@ -18,16 +18,16 @@ interface Props {
   selector: CmComAudioMarkSelector | nil;
   src: HttpNumLeadLink;
   pinTime: SKey<CmComAudioMarkPackTime> | null;
-  onPin: (time: SKey<CmComAudioMarkPackTime> | null) => void;
+  onPin: (time: CmComAudioMarkPackTime | null) => void;
 }
 
 export const CmEditorComAudioMarksConfigurerTimeMark = ({ selector, time, src, com, onPin, pinTime }: Props) => {
-  const trackMarks = cmIDB.useAudioTrackMarks(src);
+  const trackMarks = cmIDB.useAudioTrackMarks(com.wid);
   const titleProps = makeCmComAudioMarkTitleBySelector(
     time,
     com,
     selector,
-    trackMarks?.cMarks?.[com.wid],
+    trackMarks?.marks?.[src],
     (_, title) => title,
   );
 
@@ -58,7 +58,7 @@ export const CmEditorComAudioMarksConfigurerTimeMark = ({ selector, time, src, c
           maxLength={20}
           onChanged={value =>
             cmEditComExternalsClientTsjrpcMethods
-              .updateAudioMarks({ src, cMarks: { [com.wid]: { [time]: value } } })
+              .updateAudioMarks_v2({ comw: com.wid, src, time, val: value })
               .then(() => onPin(null))
           }
         />

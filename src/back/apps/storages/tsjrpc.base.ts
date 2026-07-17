@@ -43,6 +43,8 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
       scope: 'Storages',
       methods: {
         requestFreshes: async ({ lastModfiedAt }, tool) => {
+          lastModfiedAt = Math.trunc(lastModfiedAt);
+
           const auth = takeLogginedAuthOrThrow(tool.auth);
           try {
             if (await throwIfNoUserScopeAccessRight(auth?.login, 'storages', 'LIST')) throw '';

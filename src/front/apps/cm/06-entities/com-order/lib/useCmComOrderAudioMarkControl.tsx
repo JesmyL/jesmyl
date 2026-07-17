@@ -1,6 +1,6 @@
 import { Button } from '#shared/components/ui/button';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
-import { MyLib, mylib } from '#shared/lib/my-lib';
+import { mylib } from '#shared/lib/my-lib';
 import {
   cmComAudioPlayerPlaySrcAtom,
   cmComAudioPlayerSwitchIsPlay,
@@ -12,7 +12,9 @@ import { useMemo } from 'react';
 import { CmComAudioMarkPackTime, CmComAudioMarkSelector, CmComOrderWid } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { makeCmComAudioMarkTitleBySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
-import { itIt } from 'shared/utils';
+import { extractNumber, itIt } from 'shared/utils';
+import { checkIsArray, checkIsNil } from 'shared/utils/checkIs';
+import { forEachObjectEntries } from 'shared/utils/object.utils';
 
 export const useCmComOrderAudioMarkControlButtons = (
   preTimeAtom: Atom<number>,
@@ -26,11 +28,11 @@ export const useCmComOrderAudioMarkControlButtons = (
   ) => React.ReactNode = itIt,
 ) => {
   const src = useAtomValue(cmComAudioPlayerPlaySrcAtom);
-  const audioTrackMarks = cmIDB.useAudioTrackMarks(src);
+  const audioTrackMarks = cmIDB.useAudioTrackMarks(com.wid);
   const actualMapNodeRef = useActualRef(mapNode);
 
   return useMemo(() => {
-    const comMarks = audioTrackMarks?.cMarks?.[com.wid];
+    const comMarks = src ? audioTrackMarks?.marks?.[src] : null;
     const ordwPlayButtonNodeDict: PRecord<CmComOrderWid, React.ReactNode[]> = {};
     const afterTargetOrdwOtherPlayButtonNodeDict: PRecord<'before' | CmComOrderWid, React.ReactNode[]> = {};
 
@@ -39,14 +41,14 @@ export const useCmComOrderAudioMarkControlButtons = (
       afterTargetOrdwOtherPlayButtonNodeDict,
     };
 
-    if (!isNeedCompute || comMarks == null) return result;
+    if (!isNeedCompute || checkIsNil(comMarks)) return result;
 
     let lastOrdwOrNull: 'before' | CmComOrderWid = 'before';
     const takeMinusTime = () => (preTimeAtom.get() < 0 ? 0 : preTimeAtom.get());
 
-    MyLib.entries(comMarks).forEach(([time, selector]) => {
+    forEachObjectEntries(comMarks, (time, selector) => {
       const titleProps = makeCmComAudioMarkTitleBySelector(
-        +time,
+        extractNumber(time),
         com,
         selector,
         comMarks,
@@ -58,7 +60,7 @@ export const useCmComOrderAudioMarkControlButtons = (
         title => (title.startsWith('+') ? title.slice(1) : title),
       );
 
-      if (selector == null || (isHideShortTime && titleProps.isShortTime)) return;
+      if (checkIsNil(selector) || (isHideShortTime && titleProps.isShortTime)) return;
       const className = titleProps.isShortTime ? 'text-xKO' : undefined;
 
       if (mylib.isStr(selector)) {
@@ -80,7 +82,7 @@ export const useCmComOrderAudioMarkControlButtons = (
             >
               <span className={className ?? 'text-x3'}>{titleProps.title}</span>
             </Button>,
-            +time,
+            extractNumber(time),
             selector,
           ),
         );
@@ -89,7 +91,7 @@ export const useCmComOrderAudioMarkControlButtons = (
       }
 
       const ordw = com.getOrd(selector[0]).ord?.wid;
-      if (ordw == null) return;
+      if (checkIsNil(ordw)) return;
 
       lastOrdwOrNull = ordw;
 
@@ -107,14 +109,14 @@ export const useCmComOrderAudioMarkControlButtons = (
               cmComAudioPlayerSwitchIsPlay(true);
             }}
           />,
-          +time,
+          extractNumber(time),
           selector,
         ),
       );
     });
 
-    if (mylib.isArr(comMarks[0])) delete afterTargetOrdwOtherPlayButtonNodeDict.before;
+    if (checkIsArray(comMarks[0 as CmComAudioMarkPackTime])) delete afterTargetOrdwOtherPlayButtonNodeDict.before;
 
     return result;
-  }, [audioTrackMarks?.cMarks, isNeedCompute, preTimeAtom, com, isHideShortTime, actualMapNodeRef]);
+  }, [src, audioTrackMarks?.marks, isNeedCompute, preTimeAtom, com, isHideShortTime, actualMapNodeRef]);
 };

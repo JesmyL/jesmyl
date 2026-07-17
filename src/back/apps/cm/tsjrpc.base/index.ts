@@ -14,7 +14,6 @@ import { cmEditComExternalsTsjrpcBaseServer } from '../edit-com-externals.tsjrpc
 import { cmEditComOrderServerTsjrpcBase } from '../edit-com-order.tsjrpc.base';
 import { cmEditComServerTsjrpcBase } from '../edit-com.tsjrpc.base';
 import { cmEditorTsjrpcBaseServer } from '../editor.tsjrpc.base';
-import { cmComAudioMarkPacksFileStore } from '../file-stores';
 import { cmUserStoreTsjrpcBaseServer } from '../user-store.tsjrpc.base';
 import { cmServerTsjrpcBaseExchangeFreshComCommentBlocks } from './exchangeFreshComCommentBlocks';
 import { cmServerTsjrpcBaseRequestFreshes } from './requestFreshes';
@@ -69,14 +68,14 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
           ),
         }),
 
-        takeFreshComAudioMarksPack: ({ mod, src }) => {
+        takeFreshComAudioMarksPack: async ({ mod, comw }) => {
           if (!mod) throw 'Ошибка 51712343778';
 
-          const allMarkPacks = cmComAudioMarkPacksFileStore.getValue();
+          const marksHolder = (
+            await db.select({ marks: comDB.am, m: comDB.amMod }).from(comDB).where(eq(comDB.w, comw)).limit(1)
+          ).at(0);
 
-          return {
-            value: !allMarkPacks[src]?.cMarks || allMarkPacks[src].m <= mod ? null : { ...allMarkPacks[src], src },
-          };
+          return { value: !marksHolder || marksHolder.m <= mod ? null : { comw, ...marksHolder } };
         },
 
         getSchEventComPackMod: async ({ schw, dayi }) => {

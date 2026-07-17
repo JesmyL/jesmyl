@@ -36,6 +36,8 @@ import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
 
 export const cmServerTsjrpcBaseRequestFreshes = {
   requestFreshes: async ({ lastModfiedAt }, { client, auth, visitInfo }) => {
+    lastModfiedAt = Math.trunc(lastModfiedAt);
+
     if (
       cmComWidRefGroupDictFileStore.fileModifiedAt() > lastModfiedAt &&
       cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector(visitInfo)

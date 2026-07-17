@@ -32,6 +32,8 @@ export const questionerAdminServerTsjrpcBase =
           addBlankTemplate: questionerTSJRPCAddBlankTemplate,
 
           requestFreshes: ({ lastModfiedAt }, { client, auth }) => {
+            lastModfiedAt = Math.trunc(lastModfiedAt);
+
             if (auth?.login == null) return;
             const login = auth?.login;
             const { items, maxMod } = questionerBlanksDirStorage.getFreshItems(lastModfiedAt, item =>

@@ -1,6 +1,6 @@
 import { Button } from '#shared/components/ui/button';
 import { ButtonGroup } from '#shared/components/ui/button-group';
-import { MyLib, mylib } from '#shared/lib/my-lib';
+import { mylib } from '#shared/lib/my-lib';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
 import { makeToastKOMoodConfig, Modal } from '#shared/ui/modal';
@@ -26,7 +26,9 @@ import {
 } from '$cm/ext';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import { CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
+import { CmComAudioMarkPackTime, CmComWid, HttpNumLeadLink } from 'shared/api';
+import { extractNumber } from 'shared/utils';
+import { mapObjectEntries } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
 import { CmEditorTabComAudioMarksShowSlideListButton } from './ShowSlideListButton';
 
@@ -38,7 +40,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
   preSwitchTimeAtom ??= atom(-1, 'cm+editor:comAudioPreSwitchTime');
 
   const editSrc = useAtomValue(srcOnEditAtom);
-  const trackMarks = cmIDB.useAudioTrackMarks(editSrc);
+  const trackMarks = cmIDB.useAudioTrackMarks(ccom.wid);
   const marksOnUpdating = useAtomValue(cmComEditorAudioMarksEditPacksAtom);
   const { commentCssNode } = useCmComCommentBlockCss(ccom, true);
 
@@ -106,7 +108,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
         src={editSrc}
       />
 
-      <WithState<SKey<CmComAudioMarkPackTime> | null> init={null}>
+      <WithState<CmComAudioMarkPackTime | null> init={null}>
         {(pinTime, setPinTime) => (
           <ConditionalRender
             value={editSrc}
@@ -126,7 +128,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                               return;
                             }
 
-                            let fixedTime: CmComAudioMarkPackTime = +takeCmComAudioPlayerCurrentTime().toFixed(2);
+                            let fixedTime = +takeCmComAudioPlayerCurrentTime().toFixed(2);
                             if (Math.trunc(fixedTime) === fixedTime) fixedTime += 0.11;
 
                             cmComEditorAudioMarksEditPacksAtom.do.putMarks(ccom.wid, editSrc, {
@@ -144,7 +146,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                     )}
                   />
 
-                  {MyLib.entries(marksOnUpdating[editSrc]?.[ccom.wid] ?? {}).map(([time, selector]) => {
+                  {mapObjectEntries(marksOnUpdating[ccom.wid]?.[editSrc], (time, selector) => {
                     return (
                       !selector || (
                         <div
@@ -157,26 +159,26 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                           <TheIconLoading />
                           <Button
                             icon="Cancel01"
-                            onClick={() => cmComEditorAudioMarksEditPacksAtom.do.removeMark(ccom.wid, editSrc, time)}
+                            onClick={() =>
+                              cmComEditorAudioMarksEditPacksAtom.do.removeMark(ccom.wid, editSrc, extractNumber(time))
+                            }
                           />
                         </div>
                       )
                     );
                   })}
 
-                  {MyLib.entries(trackMarks?.cMarks?.[ccom.wid] ?? {}).map(([time, selector]) => {
-                    return (
-                      <CmEditorComAudioMarksConfigurerTimeMark
-                        key={time}
-                        selector={selector}
-                        time={+time}
-                        src={editSrc}
-                        com={ccom}
-                        pinTime={pinTime}
-                        onPin={setPinTime}
-                      />
-                    );
-                  })}
+                  {mapObjectEntries(trackMarks?.marks?.[editSrc], (time, selector) => (
+                    <CmEditorComAudioMarksConfigurerTimeMark
+                      key={time}
+                      selector={selector}
+                      time={extractNumber(time)}
+                      src={editSrc}
+                      com={ccom}
+                      pinTime={pinTime}
+                      onPin={setPinTime}
+                    />
+                  ))}
 
                   {audioMarkControl.afterTargetOrdwOtherPlayButtonNodeDict.before}
 
@@ -206,7 +208,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                                   return;
                                 }
 
-                                let fixedTime: CmComAudioMarkPackTime = +takeCmComAudioPlayerCurrentTime().toFixed(2);
+                                let fixedTime = +takeCmComAudioPlayerCurrentTime().toFixed(2);
                                 if (Math.trunc(fixedTime) === fixedTime) fixedTime += 0.11;
 
                                 cmComEditorAudioMarksEditPacksAtom.do.putMarks(ccom.wid, editSrc, {
@@ -219,9 +221,11 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                               icon="PinLocation01"
                               onClick={() =>
                                 cmEditComExternalsClientTsjrpcMethods
-                                  .updateAudioMarks({
+                                  .updateAudioMarks_v2({
+                                    comw: ccom.wid,
                                     src: editSrc,
-                                    cMarks: { [ccom.wid]: { [pinTime]: [ord.wid] } },
+                                    time: pinTime,
+                                    val: [ord.wid] as [CmComWid],
                                   })
                                   .then(() => setPinTime(null))
                               }

@@ -7,8 +7,6 @@ import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { takeLogginedAuthOrThrow } from 'back/utils';
 import { and, asc, desc, eq } from 'drizzle-orm';
 import {
-  CmComAudioMarkPack,
-  CmComAudioMarkPackTime,
   CmComInSchDayEvWr,
   CmComWid,
   CmComWidRefGroupDict,
@@ -17,15 +15,14 @@ import {
 } from 'shared/api';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
 import { checkIsNowInCurrentDay } from 'shared/const/ms';
-import { extractNumber, itNumSort, SMyLib, smylib } from 'shared/utils';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
-import { objectKeys, objectLength, objectValues } from 'shared/utils/object.utils';
+import { objectLength, objectValues } from 'shared/utils/object.utils';
 import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from '../client-selectors-by-visit';
 import { takeComwTiny } from '../com.tiny';
-import { makeCmComHttpLinkFromNumLead, makeCmComNumLeadLinkFromHttp } from '../complect/com-http-links';
-import { cmComAudioMarkPacksFileStore, cmComWidRefGroupDictFileStore } from '../file-stores';
+import { cmComWidRefGroupDictFileStore } from '../file-stores';
 import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
+import { cmEditComExternalsTsjrpcAudioMarks } from './audioMarks';
 import { cmEditComExternalsTsjrpcInterpretations } from './interpretations';
 
 export const cmEditComExternalsTsjrpcBaseServer =
@@ -35,6 +32,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
         scope: 'CmEditComExt',
         methods: {
           ...cmEditComExternalsTsjrpcInterpretations(),
+          ...cmEditComExternalsTsjrpcAudioMarks,
 
           addComwsInSchEvHistory: async ({ schw, dayi, eventMi, comws }, tool) => {
             const auth = takeLogginedAuthOrThrow(tool.auth);
@@ -156,121 +154,6 @@ export const cmEditComExternalsTsjrpcBaseServer =
               value: result,
               description: `Удалена пачка песен из истории события в расписании "${sch.title ?? '??'}"`,
             };
-          },
-
-          updateAudioMarks: async ({ cMarks, src }) => {
-            const allMarkPacks = cmComAudioMarkPacksFileStore.getValue();
-            let description: string | null = null;
-            const numLink = makeCmComNumLeadLinkFromHttp(src);
-
-            if (allMarkPacks[numLink] == null) {
-              description = `Создан новый пак аудио-маркеров для ссылки ${makeCmComHttpLinkFromNumLead(numLink)}`;
-              allMarkPacks[numLink] = { m: Date.now() };
-            } else allMarkPacks[numLink].m = Date.now();
-
-            if (checkIsNil(allMarkPacks[numLink].cMarks)) {
-              const comMarks = (allMarkPacks[numLink].cMarks ??= {});
-              const comNames: string[] = [];
-
-              await Promise.all(
-                objectKeys(cMarks).map(async comw => {
-                  comMarks[comw] = { 0: '' };
-                  if (description) {
-                    const comTiny = await takeComwTiny({ w: extractNumber(comw) });
-                    if (comTiny) comNames.push(comTiny.n);
-                  }
-                }),
-              );
-
-              if (description) description += `\n\nпесни:\n${comNames.join('\n')}`;
-            }
-
-            const srcPackMarks = allMarkPacks[numLink].cMarks;
-
-            SMyLib.entries(cMarks).forEach(([comwStr, comMarks]) => {
-              if (comMarks == null) return;
-
-              SMyLib.entries(comMarks).forEach(([time, selector]) => {
-                srcPackMarks[comwStr] ??= {};
-
-                if (selector == null) {
-                  delete srcPackMarks[comwStr][time];
-                  return;
-                }
-
-                if (+time === 0.11) time = 0;
-                if (selector === `+0.11+`) selector = `+0+`;
-
-                const addTime = `+${time}+`;
-                time = +(+time).toFixed(2);
-                if (time !== 0 && Math.trunc(time) === time) time += 0.11;
-
-                if (selector === addTime || selector === `+${time}+`) {
-                  srcPackMarks[comwStr][time] = smylib.convertSecondsInStrTime(+time);
-                  return;
-                }
-
-                srcPackMarks[comwStr][time] = selector;
-              });
-            });
-
-            SMyLib.entries(srcPackMarks).forEach(([comwStr, comMarks]) => {
-              const sortedMarksPack: CmComAudioMarkPack[CmComWid] = {};
-
-              objectKeys(comMarks)
-                .map(Number)
-                .sort(itNumSort)
-                .forEach((time: CmComAudioMarkPackTime) => {
-                  sortedMarksPack[time] = srcPackMarks[comwStr]?.[time];
-                });
-
-              srcPackMarks[comwStr] = sortedMarksPack;
-
-              if (objectKeys(srcPackMarks[comwStr]).length < 2) delete srcPackMarks[comwStr];
-            });
-
-            if (!objectKeys(srcPackMarks).length) delete allMarkPacks[numLink].cMarks;
-
-            cmComAudioMarkPacksFileStore.saveValue();
-
-            return {
-              description,
-              value: { cMarks: allMarkPacks[numLink].cMarks, src: numLink },
-            };
-          },
-
-          changeAudioMarkTime: async ({ newTime, src, time, comw }) => {
-            const allMarkPacks = cmComAudioMarkPacksFileStore.getValue();
-            const numLeadSrc = makeCmComNumLeadLinkFromHttp(src);
-
-            if (allMarkPacks[numLeadSrc]?.cMarks == null) return { value: null };
-
-            const cMarks = allMarkPacks[numLeadSrc].cMarks;
-            cMarks[comw] ??= {};
-            const comPack = cMarks[comw];
-
-            if (comPack[newTime] != null) throw 'Такое время уже зарегистрировано';
-
-            comPack[newTime] = comPack[time];
-            delete comPack[time];
-
-            allMarkPacks[numLeadSrc].m = Date.now();
-
-            const sortedMarksPack: CmComAudioMarkPack = {};
-
-            objectKeys(comPack)
-              .map(Number)
-              .sort(itNumSort)
-              .forEach((time: CmComAudioMarkPackTime) => {
-                sortedMarksPack[comw] ??= {};
-                sortedMarksPack[comw][time] = comPack[time];
-              });
-
-            allMarkPacks[numLeadSrc].cMarks = sortedMarksPack;
-
-            cmComAudioMarkPacksFileStore.saveValue();
-
-            return { value: { cMarks: allMarkPacks[numLeadSrc].cMarks, src }, description: null };
           },
 
           switchComwRefs: async ({ comw, withComw }) => {

@@ -31,6 +31,8 @@ export const indexTSJRPCBaseRequestFreshes = {
     { lastModfiedAt, iconPacks: userIconPacks, iconsMd5Hash: userIconsMd5Hash },
     { client, auth },
   ) => {
+    lastModfiedAt = Math.trunc(lastModfiedAt);
+
     const isNoAuth = auth == null;
     const login = auth?.login;
     const someScheduleUser = (user: IScheduleWidgetUser) => user.login === login;

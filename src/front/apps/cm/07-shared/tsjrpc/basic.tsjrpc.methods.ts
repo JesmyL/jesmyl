@@ -9,8 +9,7 @@ export const cmTsjrpcClient = new (class Cm extends TsjrpcClient<CmTsjrpcModel> 
       methods: {
         takeFreshComAudioMarksPack: {
           onResponse: pack => {
-            if (pack == null) return;
-            cmIDB.tb.comAudioTrackMarks.put(pack);
+            if (pack) cmIDB.tb.comAudioTrackMarks_v1.put(pack);
           },
         },
         pullComComments: {

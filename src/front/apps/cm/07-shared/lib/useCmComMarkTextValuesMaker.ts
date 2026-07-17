@@ -1,4 +1,3 @@
-import { MyLib, mylib } from '#shared/lib/my-lib';
 import { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmComAudioMarkPackTime, CmComOrderWid, CmComTextSquareBracketsMode, HttpNumLeadLink } from 'shared/api';
@@ -9,26 +8,29 @@ import {
   makeCmComAudioMarkTitleEmptySelector,
 } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { CmComOrder } from 'shared/const/cm/order/Order';
+import { extractNumber } from 'shared/utils';
+import { checkIsArray, checkIsNaN, checkIsNil, checkIsNotNil, checkIsString } from 'shared/utils/checkIs';
 import { makeCmComOrderRepeatedText } from 'shared/utils/cm/order';
+import { objectKeys } from 'shared/utils/object.utils';
 import { cmIDB } from '../state';
 
 const technicalTextPrefix = `##${Date.now()}@@`;
 type TotalRepeatsCount = { r: number };
 
-export const useCmComMarkTextValuesMaker = (com: CmCom | und, link: HttpNumLeadLink | nil) => {
-  const marks = cmIDB.useAudioTrackMarks(link);
-  const trackMarks = com && marks?.cMarks?.[com.wid];
-  const markTimes: CmComAudioMarkPackTime[] = useMemo(() => MyLib.keys(trackMarks).map(Number), [trackMarks]);
+export const useCmComMarkTextValuesMaker = (com: CmCom | und, src: HttpNumLeadLink | nil) => {
+  const marks = cmIDB.useAudioTrackMarks(com?.wid);
+  const trackMarks = com && checkIsNotNil(src) ? marks?.marks?.[src] : null;
+  const markTimes: CmComAudioMarkPackTime[] = useMemo(() => objectKeys(trackMarks).map(extractNumber), [trackMarks]);
 
   const { markTextDict, timeMarkTextRepeatDict } = useMemo(() => {
-    const markTextDict: PRecord<CmComAudioMarkPackTime, string> = {};
-    const timeMarkTextRepeatDict: PRecord<number, { index: number; total: TotalRepeatsCount }> = {};
+    const markTextDict: SPRecord<CmComAudioMarkPackTime, string> = {};
+    const timeMarkTextRepeatDict: SPRecord<number, { index: number; total: TotalRepeatsCount }> = {};
     const result = { markTextDict, timeMarkTextRepeatDict };
 
-    if (trackMarks == null) return result;
+    if (checkIsNil(trackMarks)) return result;
 
     const ordwTextDict: PRecord<CmComOrderWid, string[]> = {};
-    const times = mylib.keys(trackMarks);
+    const times = objectKeys(trackMarks);
     let prevLinei = 0;
     let currentLines: string[] = [];
     let prevTextForRepeats = technicalTextPrefix;
@@ -38,7 +40,7 @@ export const useCmComMarkTextValuesMaker = (com: CmCom | und, link: HttpNumLeadL
       const selector = trackMarks[times[timei]];
       const nextSelector = trackMarks[times[timei + 1]];
 
-      if (mylib.isArr(selector)) {
+      if (checkIsArray(selector)) {
         const ord = com?.getOrd(selector[0]);
 
         if (ord?.ord) {
@@ -68,7 +70,7 @@ export const useCmComMarkTextValuesMaker = (com: CmCom | und, link: HttpNumLeadL
         }
       } else if (!selector) {
         markTextDict[times[timei]] =
-          `${technicalTextPrefix}${makeCmComAudioMarkTitleEmptySelector(selector, trackMarks, +times[timei], com?.langi ?? 0)}`;
+          `${technicalTextPrefix}${makeCmComAudioMarkTitleEmptySelector(selector, trackMarks, extractNumber(times[timei]), com?.langi ?? 0)}`;
 
         continue;
       }
@@ -78,7 +80,7 @@ export const useCmComMarkTextValuesMaker = (com: CmCom | und, link: HttpNumLeadL
       if (checkIsCmComAudioMarkTitleIsLineSelector(selector)) {
         const linei = makeCmComAudioMarkLineiFromSelector(selector);
 
-        if (mylib.isNaN(linei)) continue;
+        if (checkIsNaN(linei)) continue;
 
         let nextLinei = checkIsCmComAudioMarkTitleIsLineSelector(nextSelector)
           ? makeCmComAudioMarkLineiFromSelector(nextSelector)
@@ -87,7 +89,7 @@ export const useCmComMarkTextValuesMaker = (com: CmCom | und, link: HttpNumLeadL
         if (linei === nextLinei) nextLinei = undefined;
 
         blockText = currentLines.slice(linei, nextLinei).join('\n');
-      } else if (!checkIsCmComAudioMarkTitleIsLineSelector(selector) && mylib.isStr(selector)) {
+      } else if (!checkIsCmComAudioMarkTitleIsLineSelector(selector) && checkIsString(selector)) {
         const selectorText = selector.trim();
 
         if (selectorText === '-') continue;
@@ -98,7 +100,7 @@ export const useCmComMarkTextValuesMaker = (com: CmCom | und, link: HttpNumLeadL
       } else if (checkIsCmComAudioMarkTitleIsLineSelector(nextSelector)) {
         const linei = makeCmComAudioMarkLineiFromSelector(nextSelector);
 
-        if (mylib.isNaN(linei)) continue;
+        if (checkIsNaN(linei)) continue;
 
         blockText = currentLines.slice(prevLinei, linei).join('\n');
         prevLinei = linei;

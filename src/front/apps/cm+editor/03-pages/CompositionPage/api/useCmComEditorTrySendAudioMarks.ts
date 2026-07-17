@@ -1,19 +1,20 @@
-import { mylib, MyLib } from '#shared/lib/my-lib';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/shared/state/com';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
+import { extractNumber } from 'shared/utils';
+import { forEachObjectEntries, objectLength } from 'shared/utils/object.utils';
 
 export const useCmEditorCompositionTrySendAudioMarks = () => {
   const marksOnLoad = useAtomValue(cmComEditorAudioMarksEditPacksAtom);
 
   useEffect(() => {
-    if (!mylib.keys(marksOnLoad).length) return;
+    if (!objectLength(marksOnLoad)) return;
 
     const timeout = setTimeout(() => {
-      MyLib.entries(marksOnLoad).forEach(([src, cMarks]) => {
-        if (cMarks == null) return;
-        cmEditComExternalsClientTsjrpcMethods.updateAudioMarks({ src, cMarks });
+      forEachObjectEntries(marksOnLoad, (comw, marks) => {
+        if (!marks) return;
+        cmEditComExternalsClientTsjrpcMethods.updateAudioMarks_v2({ comw: extractNumber(comw), marks });
       });
     }, 200);
 

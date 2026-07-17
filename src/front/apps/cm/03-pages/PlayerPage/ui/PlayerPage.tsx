@@ -177,7 +177,7 @@ export const CmPlayerPage = () => {
                         withoutAnimation
                         className={broadcastSrc === src ? 'text-x7' : ''}
                         onClick={async () => {
-                          const pack = await getCmComFreshAudioMarksPack(src);
+                          const pack = await getCmComFreshAudioMarksPack(com.wid);
 
                           if (pack == null) {
                             toast('Для этого трека маркеры не установлены', makeToastKOMoodConfig());

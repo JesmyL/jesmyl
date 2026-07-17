@@ -1,5 +1,6 @@
 import { bigint, integer, jsonb, pgTable, serial, smallint, text, varchar } from 'p/d';
 import {
+  CmComAudioMarkPack,
   CmComIntensityLevel,
   CmComLangi,
   CmComMod,
@@ -61,6 +62,9 @@ export const comDB = pgTable('coms', {
   // external
 
   visits: integer('visits').notNull().default(0),
+
+  am: jsonb('audioMarks').$type<CmComAudioMarkPack>(),
+  amMod: bigint('amMod', { mode: 'number' }).notNull().default(0),
 });
 
 if (!Do.It) itIt<Required<IExportableCom>>(comDB.$inferSelect);

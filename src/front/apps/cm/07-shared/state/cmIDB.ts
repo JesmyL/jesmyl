@@ -10,7 +10,6 @@ import {
   CmComWidRefGroupDict,
   ComsInScheduleIntp,
   ComsInSchEventComwsPack,
-  HttpNumLeadLink,
   ICmComCommentBlock,
   IExportableCat,
   IExportableCom,
@@ -32,7 +31,7 @@ export interface CmIDBStorage {
   /** user com interpretation */
   fixedComs: IFixedCom[];
   cats: IExportableCat[];
-  comAudioTrackMarks: { src: string; cMarks?: CmComAudioMarkPack; m: number }[];
+  comAudioTrackMarks_v1: { comw: CmComWid; marks: CmComAudioMarkPack | nil; m: number }[];
   scheduleComIntp: ComsInScheduleIntp[];
   scheduleComws: ComsInSchEventComwsPack[];
 
@@ -89,14 +88,14 @@ class CmIDB extends DexieDB<CmIDBStorage> {
       scheduleComws: {
         schw: '++',
       },
-      comAudioTrackMarks: {
+      comAudioTrackMarks_v1: {
         src: '++',
       },
     });
   }
 
-  useAudioTrackMarks = (src: HttpNumLeadLink | nil) =>
-    justUseLiveQuery(async () => (src ? this.tb.comAudioTrackMarks.get({ src }) : undefined), [src]);
+  useAudioTrackMarks = (comw: CmComWid | nil) =>
+    justUseLiveQuery(async () => (comw ? this.tb.comAudioTrackMarks_v1.get({ comw }) : undefined), [comw]);
 }
 
 const justUseLiveQuery = useLiveQuery;

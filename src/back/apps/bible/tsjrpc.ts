@@ -10,6 +10,8 @@ export const bibleTsjrpcBaseServer = new (class Bible extends TsjrpcBaseServer<B
       scope: 'Bible',
       methods: {
         requestFreshes: async ({ lastModifiedAt, myTranslates }, { client }) => {
+          lastModifiedAt = Math.trunc(lastModifiedAt);
+
           myTranslates.forEach(tName => {
             try {
               const modifiedAt = fs.statSync(makeBibleTranslateFileName(tName)).mtimeMs;

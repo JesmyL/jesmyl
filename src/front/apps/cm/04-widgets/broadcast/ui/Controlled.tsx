@@ -26,6 +26,7 @@ import { useAtomValue } from 'atomaric';
 import { ReactNode } from 'react';
 import { CmComWid, HttpNumLeadLink } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
+import { checkIsNotNil } from 'shared/utils/checkIs';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import { useCmBroadcastUpdateCurrentConfig } from '../hooks/update-config';
@@ -62,8 +63,8 @@ export function CmBroadcastControlled(props: Props) {
   const watchBroadcast = useWatchScreenBroadcast();
 
   const onStartBroadcast = async (comw: CmComWid, src: HttpNumLeadLink) => {
-    getCmComFreshAudioMarksPack(src).then(pack => {
-      if (pack != null) return;
+    getCmComFreshAudioMarksPack(comw).then(pack => {
+      if (checkIsNotNil(pack)) return;
 
       cmPlayerBroadcastComwAtom.reset();
       cmComAudioPlayerSetSrc(null);
@@ -142,8 +143,8 @@ export function CmBroadcastControlled(props: Props) {
                 }}
                 comDescription={
                   isTrackBroadcast
-                    ? com => {
-                        return com.audio.map(src => (
+                    ? com =>
+                        com.audio.map(src => (
                           <Button
                             key={src}
                             icon="ComputerVideo"
@@ -151,8 +152,7 @@ export function CmBroadcastControlled(props: Props) {
                             className={broadcastSrc === src ? 'text-x7' : ''}
                             onClick={() => onStartBroadcast(com.wid, src)}
                           />
-                        ));
-                      }
+                        ))
                     : undefined
                 }
               />

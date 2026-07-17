@@ -1,5 +1,6 @@
 import {
   CmComAudioMarkEditPack,
+  CmComAudioMarkEditPackValue,
   CmComAudioMarkPack,
   CmComAudioMarkPackTime,
   CmComInSchDayEvWr,
@@ -40,18 +41,31 @@ export type CmEditComExternalsTsjrpcModel = {
     writedAt: CmComInSchDayEvWr;
   }) => { w: CmComInSchDayEvWr };
 
-  updateAudioMarks: (args: { src: HttpNumLeadLink; cMarks: CmComAudioMarkEditPack }) => {
-    src: HttpNumLeadLink;
+  updateAudioMarks_v2: (
+    args: {
+      comw: CmComWid;
+    } & (
+      | {
+          src: HttpNumLeadLink;
+          time: CmComAudioMarkPackTime;
+          val: CmComAudioMarkEditPackValue;
+        }
+      | {
+          marks: CmComAudioMarkEditPack[CmComWid];
+        }
+    ),
+  ) => {
+    comw: CmComWid;
     cMarks?: CmComAudioMarkPack;
   };
 
-  changeAudioMarkTime: (args: {
+  changeAudioMarkTime_v1: (args: {
     src: HttpNumLeadLink;
     time: CmComAudioMarkPackTime;
     newTime: CmComAudioMarkPackTime;
     comw: CmComWid;
   }) => null | {
-    src: HttpNumLeadLink;
+    comw: CmComWid;
     cMarks?: CmComAudioMarkPack;
   };
 

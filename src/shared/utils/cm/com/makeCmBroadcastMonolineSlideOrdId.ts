@@ -1,12 +1,12 @@
 import { CmComNewlinerLinei, CmComNewlinerRepeati, CmComOrderWid } from 'shared/api';
-import { CmBroadcastMonolineSlideLineId, CmBroadcastMonolineSlideOrdId } from 'shared/model/cm/broadcast';
+import { CmBroadcastMonolineSlideLineId, CmBroadcastMonolineSlideOrdStrId } from 'shared/model/cm/broadcast';
 
 export const makeCmBroadcastMonolineSlideOrdLineId = (
   ordw: CmComOrderWid,
   linei: CmComNewlinerLinei,
   repeati: CmComNewlinerRepeati | nil,
   sameLinei: number | nil,
-): CmBroadcastMonolineSlideOrdId => `w${ordw}l${makeCmBroadcastMonolineSlideLineId(linei, repeati, sameLinei)}`;
+): CmBroadcastMonolineSlideOrdStrId => `w${ordw}l${makeCmBroadcastMonolineSlideLineId(linei, repeati, sameLinei)}`;
 
 export const makeCmBroadcastMonolineSlideLineId = (
   linei: CmComNewlinerLinei,

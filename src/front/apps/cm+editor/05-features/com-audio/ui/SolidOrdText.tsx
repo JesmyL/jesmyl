@@ -20,7 +20,7 @@ interface Props {
 }
 
 export const CmEditorComAudioSolidOrdTextController = ({ com, ord, selector, src, time }: Props) => {
-  const marksEditPack = useAtomValue(cmComEditorAudioMarksEditPacksAtom)[src]?.[com.wid];
+  const marksEditPack = useAtomValue(cmComEditorAudioMarksEditPacksAtom)?.[com.wid]?.[src];
 
   return (
     <TheCmComOrderSolid

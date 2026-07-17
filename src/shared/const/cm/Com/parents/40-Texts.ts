@@ -23,8 +23,8 @@ export class CmComTexts extends CmComChords {
           header: () =>
             makeCmComAudioMarkTitleEmptySelector(
               '',
-              [0, CmComAudioMarkPackTime.def],
-              CmComAudioMarkPackTime.def,
+              [0, 1.1 as CmComAudioMarkPackTime],
+              1.1 as CmComAudioMarkPackTime,
               this.langi,
             ),
         },

@@ -4,6 +4,7 @@ import { useFetchFreshComAudioMarksPack } from '$cm/shared/api/useFetchFreshComA
 import { Atom, useAtomValue } from 'atomaric';
 import { HttpNumLeadLink } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
+import { checkIsNil } from 'shared/utils/checkIs';
 import { twMerge } from 'tailwind-merge';
 import { useCmComAudioPlayerMoversController } from '../lib/useCmComAudioPlayerMoversController';
 
@@ -28,7 +29,7 @@ export const CmComAudioPlayerMarksMovers = (props: Props) => {
     props.win,
   );
 
-  if (audioTrackMarks?.cMarks == null && props.isHidePanelOnEmptyMarks) return null;
+  if (checkIsNil(audioTrackMarks?.marks) && props.isHidePanelOnEmptyMarks) return null;
 
   return (
     <div className="flex gap-3 w-full justify-center">

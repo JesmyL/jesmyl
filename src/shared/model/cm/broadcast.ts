@@ -18,15 +18,20 @@ export interface CmBroadcastScreenConfig extends CmBroadcastTextScreenConfig, Ba
 
 export type CmBroadcastMonolineSlideLineId =
   `${CmComNewlinerLinei}${`r${CmComNewlinerRepeati}` | ''}${`s${number}` | ''}`;
-export type CmBroadcastMonolineSlideOrdId = `w${CmComOrderWid}l${CmBroadcastMonolineSlideLineId}`;
+export type CmBroadcastMonolineSlideOrdStrId = `w${CmComOrderWid}l${CmBroadcastMonolineSlideLineId}`;
+export type CmBroadcastMonolineSlideOrdId =
+  | [CmComOrderWid]
+  | [CmComOrderWid, CmComNewlinerLinei]
+  | [CmComOrderWid, CmComNewlinerLinei, CmComNewlinerRepeati]
+  | [CmComOrderWid, CmComNewlinerLinei, CmComNewlinerRepeati, number];
 
 export type CmBroadcastMonolineSlide = {
   /** zero-samei technical id */
-  _id: CmBroadcastMonolineSlideOrdId;
+  _id: CmBroadcastMonolineSlideOrdStrId;
   /** unique slide id */
-  id: CmBroadcastMonolineSlideOrdId;
+  id: CmBroadcastMonolineSlideOrdStrId;
   /** slide id includes in slide */
-  ids: Set<CmBroadcastMonolineSlideOrdId>;
+  ids: Set<CmBroadcastMonolineSlideOrdStrId>;
   /** first lead ord */
   ord: CmComOrder;
   /** slide text lines */

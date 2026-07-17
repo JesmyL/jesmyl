@@ -1,8 +1,8 @@
 import { HorizontalDirection } from '#shared/model/Direction';
 import { atom } from 'atomaric';
-import { CmBroadcastMonolineSlideOrdId } from 'shared/model/cm/broadcast';
+import { CmBroadcastMonolineSlideOrdStrId } from 'shared/model/cm/broadcast';
 
-export const cmBroadcastCurrentSlideiAtom = atom<{ slidei: number; slideId: nil | CmBroadcastMonolineSlideOrdId }>({
+export const cmBroadcastCurrentSlideiAtom = atom<{ slidei: number; slideId: nil | CmBroadcastMonolineSlideOrdStrId }>({
   slidei: 0,
   slideId: null,
 });

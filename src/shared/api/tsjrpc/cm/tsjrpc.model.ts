@@ -1,8 +1,10 @@
-import { CmComAudioMarkPack, CmComWid, HttpNumLeadLink, ICmComCommentBlock } from 'shared/api/complect/apps';
+import { CmComAudioMarkPack, CmComWid, ICmComCommentBlock } from 'shared/api/complect/apps';
 import { ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
 
 export type CmTsjrpcModel = {
+  /** TODO: lastModifiedAt - typo */
   requestFreshes: (args: { lastModfiedAt: number }) => void;
+
   exchangeFreshComCommentBlocks: (args: {
     modifiedComments: ICmComCommentBlock[];
     clientDateNow: number;
@@ -13,9 +15,9 @@ export type CmTsjrpcModel = {
   takeComwVisitsCount: (args: { comw: CmComWid }) => number;
   getComwVisits: () => PRecord<CmComWid, number>;
 
-  takeFreshComAudioMarksPack: (args: { src: HttpNumLeadLink; mod: number }) => null | {
-    cMarks?: CmComAudioMarkPack;
-    src: HttpNumLeadLink;
+  takeFreshComAudioMarksPack: (args: { mod: number; comw: CmComWid }) => null | {
+    marks: CmComAudioMarkPack | nil;
+    comw: CmComWid;
     m: number;
   };
   getLinkLeadNumHost: (args: { num: number }) => { host: string | nil };

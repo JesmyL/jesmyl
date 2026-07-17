@@ -1,4 +1,3 @@
-import { mylib } from '#shared/lib/my-lib';
 import { atom } from 'atomaric';
 import {
   CmComAudioMarkEditPack,
@@ -8,48 +7,51 @@ import {
   HttpNumLeadLink,
 } from 'shared/api';
 import { ComEditBusy } from 'shared/api/tsjrpc/cm/editor.tsjrpc.shares.model';
-import { forEachObjectEntries } from 'shared/utils/object.utils';
+import { checkIsNil } from 'shared/utils/checkIs';
+import { forEachObjectEntries, objectKeys, objectLength } from 'shared/utils/object.utils';
 
 export const removedCompositionsAtom = atom<PRecord<CmComWid, string>>({});
 export const comEditorBusiesAtom = atom<ComEditBusy[] | nil>(null);
 
-export const cmComEditorAudioMarksEditPacksAtom = atom({} as PRecord<HttpNumLeadLink, CmComAudioMarkEditPack>, {
-  do: (set, get, self) => ({
+export const cmComEditorAudioMarksEditPacksAtom = atom((): CmComAudioMarkEditPack => ({}), {
+  do: (_set, _get, self) => ({
     putMarks: (comw: CmComWid, src: HttpNumLeadLink, cMarks: CmComAudioMarkEditPack[CmComWid]) => {
-      self.do.setPartial({ [src]: { ...get()[src], [comw]: { ...get()[src]?.[comw], ...cMarks } } });
+      self.do.update(prev => {
+        (prev[comw] ??= {})[src] ??= {};
+
+        prev[comw][src] = { ...prev[comw][src], ...cMarks };
+      });
     },
-    removeMark: (comw: CmComWid, src: HttpNumLeadLink, time: SKey<CmComAudioMarkPackTime>) => {
-      const newMarks: CmComAudioMarkEditPack = { ...get()[src] };
-      newMarks[comw] = { ...get()[src]?.[comw] };
+    removeMark: (comw: CmComWid, src: HttpNumLeadLink, time: CmComAudioMarkPackTime) => {
+      self.do.update(prev => {
+        const linkPack = ((prev[comw] ??= {})[src] ??= {});
 
-      if (newMarks[comw][time] === `+${time}+`) delete newMarks[comw][time];
-      else newMarks[comw][time] = null;
-
-      self.do.setPartial({ [src]: newMarks });
+        if (linkPack[time] === `+${time}+`) delete linkPack[time];
+        else linkPack[time] = null;
+      });
     },
-    renameMark: (comw: CmComWid, src: HttpNumLeadLink, time: SKey<number>, title: string) => {
-      self.do.setPartial({ [src]: { ...get()[src], [comw]: { [time]: title } } });
+    renameMark: (comw: CmComWid, src: HttpNumLeadLink, time: CmComAudioMarkPackTime, title: string) => {
+      self.do.update(prev => {
+        ((prev[comw] ??= {})[src] ??= {})[time] = ` ${title}`;
+      });
     },
-    removeMarks: (src: HttpNumLeadLink, cMarks: CmComAudioMarkPack | und) => {
-      if (cMarks == null) return;
+    removeMarks: (comw: CmComWid, cMarks: CmComAudioMarkPack | und) => {
+      if (!cMarks) return;
 
-      forEachObjectEntries(cMarks, (comwStr, comMarks) => {
-        if (comMarks == null) return;
+      self.do.update(prev => {
+        forEachObjectEntries(cMarks, (src, comMarks) => {
+          if (!comMarks) return;
 
-        const newMarks: CmComAudioMarkEditPack = { ...get()[src] };
-        const comNewMarks: CmComAudioMarkEditPack[CmComWid] = (newMarks[comwStr] = { ...get()[src]?.[comwStr] });
+          const linkMarks = ((prev[comw] ??= {})[src] ??= {});
 
-        mylib.keys(comMarks).forEach(time => delete comNewMarks[time]);
+          objectKeys(comMarks).forEach(time => delete linkMarks[time]);
 
-        mylib.keys(comNewMarks).forEach(time => {
-          if (comMarks[time] == null) delete comNewMarks[time];
+          objectKeys(linkMarks).forEach(time => {
+            if (checkIsNil(comMarks[time])) delete linkMarks[time];
+          });
+
+          if (!objectLength(linkMarks)) delete prev[comw][src];
         });
-
-        if (!mylib.keys(comNewMarks).length) {
-          const newMarks = { ...get() };
-          delete newMarks[src];
-          set(newMarks);
-        } else self.do.setPartial({ [src]: newMarks });
       });
     },
   }),

@@ -6,7 +6,7 @@ import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import React, { useMemo, useState } from 'react';
 import { CmComNewlinerWordi, CmComTextSquareBracketsMode } from 'shared/api';
-import { CmBroadcastMonolineSlideOrdId, CmComNewlinerSymbolFreeUpperCaseLine } from 'shared/model/cm/broadcast';
+import { CmBroadcastMonolineSlideOrdStrId, CmComNewlinerSymbolFreeUpperCaseLine } from 'shared/model/cm/broadcast';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
 import { makeCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
 import { takeCmComNewlinerLineFullConfig } from 'shared/utils/cm/com/newliner';
@@ -18,7 +18,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
 
   const { warns, slides, groups } = useMemo(() => {
     const slides = ccom.makeExpandSlides(false, true);
-    const warns: PRecord<CmBroadcastMonolineSlideOrdId, [className: string, text: string]> = {};
+    const warns: PRecord<CmBroadcastMonolineSlideOrdStrId, [className: string, text: string]> = {};
 
     slides.forEach(({ linei, lines, ord, repeati, samei }) => {
       const ordLineId = makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, samei);

@@ -70,6 +70,8 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
         },
 
         requestFreshes: async ({ lastModfiedAt }, { client, auth }) => {
+          lastModfiedAt = Math.trunc(lastModfiedAt);
+
           try {
             if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'EDIT', 'R')) throw '';
           } catch (_) {

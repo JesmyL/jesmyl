@@ -1,5 +1,4 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { mylib } from '#shared/lib/my-lib';
 import { cmIDB } from '$cm/ext';
 import { takeCmComTrackCurrentTimeMark } from '$cm/shared/lib/takeCmComTrackCurrentTimeMark';
 import { useAtomValue } from 'atomaric';
@@ -12,7 +11,9 @@ import {
   makeCmComAudioMarkTitleBySelector,
 } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { CmComOrder } from 'shared/const/cm/order/Order';
-import { emptyFunc } from 'shared/utils';
+import { emptyFunc, extractNumber } from 'shared/utils';
+import { checkIsNil } from 'shared/utils/checkIs';
+import { objectKeys } from 'shared/utils/object.utils';
 import {
   cmComAudioPlayerAddEventListenerPipe,
   cmComAudioPlayerPlaySrcAtom,
@@ -32,8 +33,8 @@ export const useCmComAudioPlayerMoversController = (
   win: Window | nil,
 ) => {
   const document = win?.document ?? windowDocument;
-  const playSrc = useAtomValue(cmComAudioPlayerPlaySrcAtom);
-  const audioTrackMarks = cmIDB.useAudioTrackMarks(playSrc ?? src);
+  const currentSrc = useAtomValue(cmComAudioPlayerPlaySrcAtom) ?? src;
+  const audioTrackMarks = cmIDB.useAudioTrackMarks(com.wid);
 
   const titleRef = useRef<HTMLDivElement>(null);
   const prevRef = useRef<HTMLButtonElement>(null);
@@ -41,13 +42,16 @@ export const useCmComAudioPlayerMoversController = (
   const nextRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (titleRef.current === null || audioTrackMarks?.cMarks == null) return;
-    const audioMarkPack = audioTrackMarks.cMarks?.[com.wid];
+    if (checkIsNil(titleRef.current) || checkIsNil(audioTrackMarks?.marks)) return;
+    const audioMarkPack = audioTrackMarks.marks[currentSrc];
 
     const titleNode = titleRef.current;
-    const markTimeList = mylib.keys(audioMarkPack).map(Number);
+    const markTimeList = objectKeys(audioMarkPack).map(extractNumber);
     const selectorToTitlePropsDict: PRecord<number, { title: string; ord: CmComOrder | nil }> = {};
-    const timePositions$ = { prev: 0, current: 0, next: 0, preprev: 0 };
+    const timePositions$ = { prev: 0, current: 0, next: 0, preprev: 0 } as never as Record<
+      'prev' | 'current' | 'next' | 'preprev',
+      CmComAudioMarkPackTime
+    >;
 
     let lastMarkTime = 0;
     let prevButton: Element | nil = null;
@@ -57,7 +61,7 @@ export const useCmComAudioPlayerMoversController = (
       audioMarkPack == null || preSwitchTime < 0
         ? emptyFunc
         : () => {
-            const actualMarkTime: CmComAudioMarkPackTime =
+            const actualMarkTime =
               preSwitchTime !== 0 &&
               takeCmComAudioPlayerCurrentTime() < timePositions$.next &&
               takeCmComAudioPlayerCurrentTime() > timePositions$.next - preSwitchTime
@@ -145,7 +149,7 @@ export const useCmComAudioPlayerMoversController = (
         }),
       )
       .effect(() => prevButton?.classList.remove(currentAccentClassName));
-  }, [audioTrackMarks, com, document, preSwitchTime, src]);
+  }, [audioTrackMarks?.marks, com, currentSrc, document, preSwitchTime, src]);
 
   return {
     titleRef,

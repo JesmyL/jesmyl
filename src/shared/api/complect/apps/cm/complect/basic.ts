@@ -1,7 +1,7 @@
 import { CmCatKind } from '#shared/model/cm/cat/Cat.model';
 import { StrRegExp } from 'regexpert';
 import { ScheduleWidgetDayEventMi, ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
-import { CmComNewlinerSymbolFreeUpperCaseLine } from 'shared/model/cm/broadcast';
+import { CmBroadcastMonolineSlideOrdId, CmComNewlinerSymbolFreeUpperCaseLine } from 'shared/model/cm/broadcast';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 import {
@@ -173,6 +173,8 @@ export type IExportableCom = NullifyOptionals<
     d?: CmComIntensityLevel;
 
     isRemoved?: Bool;
+
+    am?: CmComAudioMarkPack;
   }
 >;
 
@@ -264,19 +266,20 @@ export type HttpLink = `http${string}`;
 export type HttpNumLeadLinkKey = `${number}~`;
 export type HttpNumLeadLink = `${HttpNumLeadLinkKey}${string}`;
 
-export type CmComAudioMarkSelector = [CmComOrderWid] | string;
-export const enum CmComAudioMarkPackTime {
-  def = 12.3,
-  zero = 0,
-}
+export type CmComAudioMarkSelector = CmBroadcastMonolineSlideOrdId | string;
 
-export type CmComAudioMarkPack = SPRecord<CmComWid, SPRecord<CmComAudioMarkPackTime, CmComAudioMarkSelector>>;
+export type CmComAudioMarkPackTime = NumberBrand<'CmComAudioMarkPackTime'>;
+
+export type CmComAudioMarkPack = SPRecord<HttpNumLeadLink, SPRecord<CmComAudioMarkPackTime, CmComAudioMarkSelector>>;
+
+export type CmComAudioMarkEditPackValue = CmComAudioMarkSelector | `+${CmComAudioMarkPackTime}+` | null;
 
 export type CmComAudioMarkEditPack = SPRecord<
   CmComWid,
-  PRecord<CmComAudioMarkPackTime, CmComAudioMarkSelector | `+${CmComAudioMarkPackTime}+` | null>
+  PRecord<HttpNumLeadLink, PRecord<SKey<CmComAudioMarkPackTime>, CmComAudioMarkEditPackValue>>
 >;
 
+/** @deprecated make enum */
 export type MenuComToolNameList =
   | 'fullscreen-mode'
   | 'mark-com'

@@ -56,17 +56,17 @@ export const cmEditComExternalsClientTsjrpcMethods =
       super({
         scope: 'CmEditComExt',
         methods: {
-          updateAudioMarks: {
-            onResponse: ({ cMarks, src }) => {
-              cmIDB.tb.comAudioTrackMarks.put({ cMarks, src });
-              cmComEditorAudioMarksEditPacksAtom.do.removeMarks(src, cMarks);
+          updateAudioMarks_v2: {
+            onResponse: ({ cMarks, comw }) => {
+              cmIDB.tb.comAudioTrackMarks_v1.put({ marks: cMarks, comw });
+              cmComEditorAudioMarksEditPacksAtom.do.removeMarks(comw, cMarks);
             },
           },
-          changeAudioMarkTime: {
+          changeAudioMarkTime_v1: {
             onResponse: pack => {
-              if (pack == null) return;
-              cmIDB.tb.comAudioTrackMarks.put({ cMarks: pack.cMarks, src: pack.src });
-              cmComEditorAudioMarksEditPacksAtom.do.removeMarks(pack.src, pack.cMarks);
+              if (!pack) return;
+              cmIDB.tb.comAudioTrackMarks_v1.put({ marks: pack.cMarks, comw: pack.comw });
+              cmComEditorAudioMarksEditPacksAtom.do.removeMarks(pack.comw, pack.cMarks);
             },
           },
         },
