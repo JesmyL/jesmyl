@@ -2,9 +2,8 @@
 import Dexie, { EntityTable, TableHooks } from 'dexie';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useCallback } from 'react';
-
-import { smylib, SMyLib } from 'shared/utils';
-import { mylib } from './my-lib';
+import { checkIsArray, checkIsFunction } from 'shared/utils/checkIs';
+import { forEachObjectEntriesSimple, mapObjectEntries, objectLength } from 'shared/utils/object.utils';
 
 const keyvalues = '%keyvalues%';
 
@@ -54,7 +53,7 @@ export class DexieDB<Store> {
     };
 
     const takeValueFromDefaults = (key: keyof Store) => {
-      if (mylib.isArr(defaults[key]) && mylib.isFunc(defaults[key][0])) {
+      if (checkIsArray(defaults[key]) && checkIsFunction(defaults[key][0])) {
         return defaults[key][0]();
       }
 
@@ -96,7 +95,7 @@ export class DexieDB<Store> {
     this.set = new Proxy(this.set, {
       get: (_, key) => {
         return returnIfKeyInDefaults(key, async (value: Parameters<(typeof this.set)[keyof Store]>[0]) => {
-          if (smylib.isFunc(value)) {
+          if (checkIsFunction(value)) {
             return await this.getKeyvalues().put({
               val: value(await this.get[key as keyof Store]()),
               key,
@@ -110,16 +109,13 @@ export class DexieDB<Store> {
 
     const stores = {} as Record<keyof Store, string>;
 
-    smylib.keys(defaults).forEach(key => {
-      if (mylib.isArr(defaults[key])) return;
+    forEachObjectEntriesSimple(defaults, (key, values) => {
+      if (checkIsArray(values)) return;
 
-      stores[key] = SMyLib.entries(defaults[key])
-        .map(([key, val]) => `${val === '++' ? val : ''}${key as never}`)
-        .join(', ');
+      stores[key] = mapObjectEntries(values, (key, val) => `${val === '++' ? val : ''}${key as never}`).join(', ');
     });
 
     stores[keyvalues as keyof Store] = '++key';
-
     this.db.version(version).stores(stores);
 
     if ('lastModifiedAt' in defaults) {
@@ -150,6 +146,27 @@ export class DexieDB<Store> {
         this.resetLastModifiedAt = (() => update(0)) as never;
       })();
     }
+
+    indexedDB.open(storageName).onsuccess = event => {
+      const db = (event.target as IDBOpenDBRequest).result;
+      const currentVersion = db.version;
+      const updates = Array.from(db.objectStoreNames).filter(tableName => !(tableName in stores));
+
+      if (objectLength(updates)) {
+        const upgradeRequest = indexedDB.open(storageName, currentVersion + 1);
+
+        upgradeRequest.onupgradeneeded = e => {
+          const db = (e.target as IDBOpenDBRequest).result;
+          updates.forEach(tableName => db.deleteObjectStore(tableName));
+        };
+
+        upgradeRequest.onsuccess = e => {
+          (e.target as IDBOpenDBRequest).result.close();
+        };
+      }
+
+      db.close();
+    };
   }
 
   private getKeyvalues = () =>
