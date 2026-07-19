@@ -8,6 +8,7 @@ import { takeLogginedAuthOrThrow } from 'back/utils';
 import { and, desc, eq } from 'drizzle-orm';
 import { CmComWid } from 'shared/api';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
+import { checkIsNil } from 'shared/utils/checkIs';
 import { numLeadToHttpLinks } from '../complect/com-http-links';
 import { cmEditCatServerTsjrpcBase } from '../edit-cat.tsjrpc.base';
 import { cmEditComExternalsTsjrpcBaseServer } from '../edit-com-externals.tsjrpc.base';
@@ -68,8 +69,8 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
           ),
         }),
 
-        takeFreshComAudioMarksPack: async ({ mod, comw }) => {
-          if (!mod) throw 'Ошибка 51712343778';
+        takeFreshComAudioMarksPack_v1: async ({ mod, comw }) => {
+          if (checkIsNil(mod)) throw 'Ошибка 51712343778';
 
           const marksHolder = (
             await db.select({ marks: comDB.am, m: comDB.amMod }).from(comDB).where(eq(comDB.w, comw)).limit(1)

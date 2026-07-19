@@ -8,6 +8,7 @@ import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
 import { CmComOrderWid } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
+import { checkIsNil, checkIsNotNil } from 'shared/utils/checkIs';
 import { useCmComCommentConstructorCurrentInnerKindContext } from '../state/CurrentInnerKind';
 import { CmComCommentConstructorLineConstructor } from './LineConstructor';
 import { CmComCommentConstructorLostProps } from './LostProps';
@@ -40,9 +41,9 @@ export const CmComCommentConstructorBlockView = ({ ordw: ordwSelector, com }: { 
           const solidLinei = getParentNodeWithAttributeName(event, 'solid-ord-linei').attr;
           const wordi = getParentNodeWithAttributeName(event, 'line-wordi').attr;
 
-          if (linei == null || ordw == null || solidLinei == null || wordi == null) return;
+          if (checkIsNil(linei) || checkIsNil(ordw) || checkIsNil(solidLinei) || checkIsNil(wordi)) return;
 
-          setSelection({ linei: +linei, solidLinei: +solidLinei, wordi: +wordi, ordw: +ordw });
+          setSelection({ linei: +linei, solidLinei: +solidLinei, wordi: +wordi, ordw: +ordw as CmComOrderWid });
         }}
       >
         <CmComOrderList
@@ -60,7 +61,7 @@ export const CmComCommentConstructorBlockView = ({ ordw: ordwSelector, com }: { 
         ordw={ordwSelector}
       />
 
-      {variativeLinei != null && ordw != null && solidLinei != null && (
+      {checkIsNotNil(variativeLinei) && checkIsNotNil(ordw) && checkIsNotNil(solidLinei) && (
         <>
           <CmComCommentConstructorLineConstructor
             linei={variativeLinei}
@@ -68,7 +69,7 @@ export const CmComCommentConstructorBlockView = ({ ordw: ordwSelector, com }: { 
             ordw={ordw}
           />
 
-          {wordi != null && (
+          {checkIsNotNil(wordi) && (
             <CmComCommentConstructorWordConstructor
               linei={variativeLinei}
               wordi={wordi}

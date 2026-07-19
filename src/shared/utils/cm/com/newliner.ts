@@ -1,7 +1,7 @@
 import { makeRegExp } from 'regexpert';
 import {
   CmComLineText,
-  CmComNewlinerLinei,
+  CmComLinei,
   CmComNewlinerRepeati,
   CmComNewlinerStrConfig,
   CmComNewlinerWordi,
@@ -10,14 +10,12 @@ import { CmComNewlinerSymbolFreeUpperCaseLine } from 'shared/model/cm/broadcast'
 import { textToUpperCase } from 'shared/utils/string.utils';
 import { slavicLowerLettersStr } from './const';
 
-export const takeCmComNewlinerRepeatFullConfig = (
-  nlConfig: CmComNewlinerStrConfig.whole | nil,
-  linei: CmComNewlinerLinei,
-) => (takeCmComNewlinerLineFullConfig(nlConfig)[linei]?.split('/') ?? []) as (CmComNewlinerStrConfig.repeat | nil)[];
+export const takeCmComNewlinerRepeatFullConfig = (nlConfig: CmComNewlinerStrConfig.whole | nil, linei: CmComLinei) =>
+  (takeCmComNewlinerLineFullConfig(nlConfig)[linei]?.split('/') ?? []) as (CmComNewlinerStrConfig.repeat | nil)[];
 
 export const takeCmComNewlinerRepeatConfig = (
   nlConfig: CmComNewlinerStrConfig.whole | nil,
-  linei: CmComNewlinerLinei,
+  linei: CmComLinei,
   repeati: CmComNewlinerRepeati,
 ) =>
   takeCmComNewlinerLineConfig(nlConfig, linei)?.split('/', repeati + 1)[repeati] as CmComNewlinerStrConfig.repeat | nil;
@@ -25,12 +23,12 @@ export const takeCmComNewlinerRepeatConfig = (
 export const takeCmComNewlinerLineFullConfig = (nlConfig: CmComNewlinerStrConfig.whole | nil) =>
   (nlConfig?.split(' ') ?? []) as (CmComNewlinerStrConfig.line | nil)[];
 
-export const takeCmComNewlinerLineConfig = (nlConfig: CmComNewlinerStrConfig.whole | nil, linei: CmComNewlinerLinei) =>
+export const takeCmComNewlinerLineConfig = (nlConfig: CmComNewlinerStrConfig.whole | nil, linei: CmComLinei) =>
   nlConfig?.split(' ', linei + 1)[linei] as CmComNewlinerStrConfig.line | nil;
 
 export const cmComNewlinerLineConfigToSet = (
   nlConfig: CmComNewlinerStrConfig.whole | nil,
-  linei: CmComNewlinerLinei,
+  linei: CmComLinei,
   repeati: CmComNewlinerRepeati,
 ) => {
   const set = new Set<CmComNewlinerWordi>();
@@ -45,7 +43,7 @@ export const cmComNewlinerLineConfigToSet = (
     if (numStr === '-') dir = -1;
     else if (numStr === '.') tenPlus += 10;
     else {
-      set.add((+numStr + tenPlus) * dir);
+      set.add(((+numStr + tenPlus) * dir) as never);
       dir = 1;
     }
   });

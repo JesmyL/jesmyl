@@ -48,7 +48,7 @@ export type CmEditComExternalsTsjrpcModel = {
       | {
           src: HttpNumLeadLink;
           time: CmComAudioMarkPackTime;
-          val: CmComAudioMarkEditPackValue;
+          sel: CmComAudioMarkEditPackValue;
         }
       | {
           marks: CmComAudioMarkEditPack[CmComWid];
@@ -56,7 +56,7 @@ export type CmEditComExternalsTsjrpcModel = {
     ),
   ) => {
     comw: CmComWid;
-    cMarks?: CmComAudioMarkPack;
+    marks?: CmComAudioMarkPack;
   };
 
   changeAudioMarkTime_v1: (args: {
@@ -66,7 +66,7 @@ export type CmEditComExternalsTsjrpcModel = {
     comw: CmComWid;
   }) => null | {
     comw: CmComWid;
-    cMarks?: CmComAudioMarkPack;
+    marks?: CmComAudioMarkPack;
   };
 
   switchComwRefs: (args: { comw: CmComWid; withComw: CmComWid }) => void;

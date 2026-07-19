@@ -1,7 +1,7 @@
 import { CmCatKind } from '#shared/model/cm/cat/Cat.model';
 import { StrRegExp } from 'regexpert';
 import { ScheduleWidgetDayEventMi, ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
-import { CmBroadcastMonolineSlideOrdId, CmComNewlinerSymbolFreeUpperCaseLine } from 'shared/model/cm/broadcast';
+import { CmBroadcastMonolineSlideSelectorId, CmComNewlinerSymbolFreeUpperCaseLine } from 'shared/model/cm/broadcast';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 import {
@@ -184,7 +184,7 @@ export const enum CmComCommentBlockSpecialSelector {
 }
 
 export type CmComNewlinerLineTextSetHolder = PRecord<CmComLineText, CmComNewlinerSymbolFreeUpperCaseLine> &
-  PRecord<CmComNewlinerSymbolFreeUpperCaseLine, Set<number>>;
+  PRecord<CmComNewlinerSymbolFreeUpperCaseLine, Set<CmComNewlinerWordi>>;
 
 export const enum CmComLineText {
   line1 = 'Строка1',
@@ -192,21 +192,23 @@ export const enum CmComLineText {
   line3 = 'Строка под номером три',
 }
 
-export const enum CmComNewlinerLinei {
-  i = 0,
-  never = -1,
-}
+export type CmComLinei = NumberBrand<'CmComLinei'>;
 
-export const enum CmComNewlinerRepeati {
-  i = 0,
-  never = -1,
-}
+export const CmComLineiNe = -1 as CmComLinei;
+export const CmComLineiZero = 0 as CmComLinei;
 
-export const enum CmComNewlinerWordi {
-  NewLine = -1,
-  i = 0,
-  NotNewLine = 1,
-}
+export type CmComNewlinerRepeati = NumberBrand<'CmComNewlinerRepeati'>;
+
+export const CmComNewlinerRepeatiZero = 0 as 0 & CmComNewlinerRepeati;
+
+export type CmComNewlinerWordi = NumberBrand<'CmComNewlinerWordi'>;
+
+export const CmComNewlinerWordiZero = 0 as 0 & CmComNewlinerWordi;
+export const CmComNewlinerWordiNewLine = -1 as -1 & CmComNewlinerWordi;
+export const CmComNewlinerWordiNotNewLine = 1 as 1 & CmComNewlinerWordi;
+
+export type CmComNewlinerSamei = NumberBrand<'CmComNewlinerSamei'>;
+export const CmComNewlinerSameiZero = 0 as CmComNewlinerSamei;
 
 export const enum CmComNewlinerStrConfig {
   whole = '15.-2/12 9.01//34',
@@ -226,8 +228,8 @@ export type CmComBracketLevelHolder = { level: number };
 export type CmComCommentBlockSimpleSelector = CmComOrderWid | CmComCommentBlockSpecialSelector.Head;
 export type CmComCommentBlockAnySelector = CmComOrderWid | CmComCommentBlockSpecialSelector;
 
-export type CmComCommentBlockDict = PRecord<CmComCommentBlockSimpleSelector, string[]> &
-  PRecord<CmComCommentBlockSpecialSelector.Kinds, PRecord<CmComBlockKindKey, string>>;
+export type CmComCommentBlockDict = SPRecord<CmComCommentBlockSimpleSelector, string[]> &
+  SPRecord<CmComCommentBlockSpecialSelector.Kinds, SPRecord<CmComBlockKindKey, string>>;
 
 export type ICmComCommentBlock = {
   comw: CmComWid;
@@ -266,7 +268,7 @@ export type HttpLink = `http${string}`;
 export type HttpNumLeadLinkKey = `${number}~`;
 export type HttpNumLeadLink = `${HttpNumLeadLinkKey}${string}`;
 
-export type CmComAudioMarkSelector = CmBroadcastMonolineSlideOrdId | string;
+export type CmComAudioMarkSelector = CmBroadcastMonolineSlideSelectorId | string;
 
 export type CmComAudioMarkPackTime = NumberBrand<'CmComAudioMarkPackTime'>;
 

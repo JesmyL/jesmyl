@@ -1,151 +1,51 @@
+import { useCmBroadcastSlidesContext } from '$cm/ext';
 import { useMemo } from 'react';
-import { makeRegExp } from 'regexpert';
-import { CmComAudioMarkPackTime, CmComOrderWid, CmComTextSquareBracketsMode, HttpNumLeadLink } from 'shared/api';
+import { CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
-import {
-  checkIsCmComAudioMarkTitleIsLineSelector,
-  makeCmComAudioMarkLineiFromSelector,
-  makeCmComAudioMarkTitleEmptySelector,
-} from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
-import { CmComOrder } from 'shared/const/cm/order/Order';
+import { CmBroadcastMonolineSlide, CmBroadcastMonolineSlideOrdStrId } from 'shared/model/cm/broadcast';
 import { extractNumber } from 'shared/utils';
-import { checkIsArray, checkIsNaN, checkIsNil, checkIsNotNil, checkIsString } from 'shared/utils/checkIs';
-import { makeCmComOrderRepeatedText } from 'shared/utils/cm/order';
-import { objectKeys } from 'shared/utils/object.utils';
+import { checkIsArray, checkIsNil, checkIsNotNil } from 'shared/utils/checkIs';
+import { convertCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
+import { forEachObjectEntries, objectKeys } from 'shared/utils/object.utils';
 import { cmIDB } from '../state';
 
-const technicalTextPrefix = `##${Date.now()}@@`;
-type TotalRepeatsCount = { r: number };
-
+/** @deprecated  make contexted */
 export const useCmComMarkTextValuesMaker = (com: CmCom | und, src: HttpNumLeadLink | nil) => {
   const marks = cmIDB.useAudioTrackMarks(com?.wid);
   const trackMarks = com && checkIsNotNil(src) ? marks?.marks?.[src] : null;
   const markTimes: CmComAudioMarkPackTime[] = useMemo(() => objectKeys(trackMarks).map(extractNumber), [trackMarks]);
+  const slides = useCmBroadcastSlidesContext();
 
-  const { markTextDict, timeMarkTextRepeatDict } = useMemo(() => {
-    const markTextDict: SPRecord<CmComAudioMarkPackTime, string> = {};
-    const timeMarkTextRepeatDict: SPRecord<number, { index: number; total: TotalRepeatsCount }> = {};
-    const result = { markTextDict, timeMarkTextRepeatDict };
+  const { timeSlideDict, slideIdTimeDict } = useMemo(() => {
+    const timeSlideDict: SPRecord<CmComAudioMarkPackTime, CmBroadcastMonolineSlide> = {};
+    const slideIdTimeDict: SPRecord<CmBroadcastMonolineSlideOrdStrId, CmComAudioMarkPackTime> = {};
 
-    if (checkIsNil(trackMarks)) return result;
+    const result = { timeSlideDict, slideIdTimeDict };
 
-    const ordwTextDict: PRecord<CmComOrderWid, string[]> = {};
-    const times = objectKeys(trackMarks);
-    let prevLinei = 0;
-    let currentLines: string[] = [];
-    let prevTextForRepeats = technicalTextPrefix;
-    let repeatTimeMark: TotalRepeatsCount = { r: 1 };
+    if (checkIsNil(trackMarks) || !slides?.slides.length) return result;
 
-    for (let timei = 0; timei < times.length; timei++) {
-      const selector = trackMarks[times[timei]];
-      const nextSelector = trackMarks[times[timei + 1]];
+    const idSlideDict: Record<CmBroadcastMonolineSlideOrdStrId, CmBroadcastMonolineSlide> = {};
 
-      if (checkIsArray(selector)) {
-        const ord = com?.getOrd(selector[0]);
+    slides.slides.forEach(slide => {
+      idSlideDict[slide.id] = slide;
+    });
 
-        if (ord?.ord) {
-          const ordw = ord.ord.wid;
+    forEachObjectEntries(trackMarks, (time, selector) => {
+      if (!checkIsArray(selector)) return;
 
-          if (ordwTextDict[ordw] == null) {
-            if (ord.ord.isRealText()) {
-              let currentOrd = ord.ord as CmComOrder | nil;
-              let text = '';
+      const id = convertCmBroadcastMonolineSlideOrdLineId(selector);
+      timeSlideDict[time] = idSlideDict[id];
 
-              while (currentOrd) {
-                text += `\n${currentOrd.transformedText(CmComTextSquareBracketsMode.Remove)}`;
-                currentOrd = currentOrd.me.next;
-                if (currentOrd == null || !currentOrd.isHeaderNoneForce) break;
-              }
-
-              ordwTextDict[ordw] = text.trim().split(makeRegExp('/\\s*\\n+\\s*/'));
-            } else {
-              const chordedText = `${technicalTextPrefix}${ord.ord.me.header()}`;
-              ordwTextDict[ordw] = [chordedText];
-              markTextDict[times[timei]] = chordedText;
-            }
-          }
-
-          currentLines = ordwTextDict[ordw];
-          prevLinei = 0;
-        }
-      } else if (!selector) {
-        markTextDict[times[timei]] =
-          `${technicalTextPrefix}${makeCmComAudioMarkTitleEmptySelector(selector, trackMarks, extractNumber(times[timei]), com?.langi ?? 0)}`;
-
-        continue;
-      }
-
-      let blockText;
-
-      if (checkIsCmComAudioMarkTitleIsLineSelector(selector)) {
-        const linei = makeCmComAudioMarkLineiFromSelector(selector);
-
-        if (checkIsNaN(linei)) continue;
-
-        let nextLinei = checkIsCmComAudioMarkTitleIsLineSelector(nextSelector)
-          ? makeCmComAudioMarkLineiFromSelector(nextSelector)
-          : undefined;
-
-        if (linei === nextLinei) nextLinei = undefined;
-
-        blockText = currentLines.slice(linei, nextLinei).join('\n');
-      } else if (!checkIsCmComAudioMarkTitleIsLineSelector(selector) && checkIsString(selector)) {
-        const selectorText = selector.trim();
-
-        if (selectorText === '-') continue;
-
-        blockText = selectorText.startsWith('+')
-          ? selectorText.slice(1).trim()
-          : `${technicalTextPrefix}${selectorText}`;
-      } else if (checkIsCmComAudioMarkTitleIsLineSelector(nextSelector)) {
-        const linei = makeCmComAudioMarkLineiFromSelector(nextSelector);
-
-        if (checkIsNaN(linei)) continue;
-
-        blockText = currentLines.slice(prevLinei, linei).join('\n');
-        prevLinei = linei;
-      } else blockText = currentLines.slice(prevLinei).join('\n');
-
-      markTextDict[times[timei]] = blockText;
-
-      if (!blockText) continue;
-
-      if (prevTextForRepeats === blockText) {
-        repeatTimeMark.r++;
-      } else repeatTimeMark = { r: 1 };
-
-      timeMarkTextRepeatDict[times[timei]] = { index: repeatTimeMark.r - 1, total: repeatTimeMark };
-      prevTextForRepeats = blockText;
-    }
+      slideIdTimeDict[id] = extractNumber(time);
+    });
 
     return result;
-  }, [com, trackMarks]);
-
-  const makeRepeatedText = <Text extends string | nil>(text: Text, timeMark: number) => {
-    if (!text || timeMarkTextRepeatDict[timeMark] == null) return text;
-    const markTotalRepeatsCount = timeMarkTextRepeatDict[timeMark].total.r;
-    if (markTotalRepeatsCount < 2) return text;
-
-    if (markTotalRepeatsCount < 4) {
-      return makeCmComOrderRepeatedText(text, markTotalRepeatsCount);
-    }
-
-    const repeatsCount = markTotalRepeatsCount - timeMarkTextRepeatDict[timeMark].index;
-
-    return makeCmComOrderRepeatedText(text, repeatsCount, markTotalRepeatsCount);
-  };
+  }, [slides?.slides, trackMarks]);
 
   return {
-    markTextDict,
-    technicalTextPrefix,
-    makeRepeatedText,
     markTimes,
-    makeText: (timei: number) => {
-      const timeMark = markTimes[timei];
-      const isTechnicalText = markTextDict[timeMark]?.startsWith(technicalTextPrefix);
-      const text = isTechnicalText ? markTextDict[timeMark]?.slice(technicalTextPrefix.length) : markTextDict[timeMark];
-
-      return { isTechnicalText, text: makeRepeatedText(text, timeMark) };
-    },
+    timeSlideDict,
+    slideIdTimeDict,
+    takeSlide: (timei: number) => timeSlideDict[markTimes[timei]],
   };
 };

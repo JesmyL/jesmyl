@@ -1,22 +1,28 @@
 import { CmBroadcastShowChordedSlideMode } from '#shared/model/cm/Cm.model';
 import { HorizontalDirection } from '#shared/model/Direction';
 import { cmBroadcastCurrentSlideiAtom, cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
-import { useCmComCurrent } from '$cm/entities/com';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
-import { useCmBroadcastScreenConfig } from '$cm/widgets/broadcast';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useMemo } from 'react';
+import { CmCom } from 'shared/const/cm/Com';
 import { CmBroadcastMonolineSlide } from 'shared/model/cm/broadcast';
+import { TextCase } from 'shared/model/common';
 import { makeCmComNbspHtmlText } from 'shared/utils/cm/com/const';
 import { CmBroadcastSlidesContextState } from '../model/slides';
 import { CmBroadcastInnerSlidesContext } from '../state/slides';
 
-export const CmBroadcastSlidesContext = ({ children, configi }: { children: React.ReactNode; configi: number }) => {
-  const config = useCmBroadcastScreenConfig(configi);
+export const CmBroadcastSlidesContext = ({
+  children,
+  textCase,
+  com,
+}: {
+  children: React.ReactNode;
+  textCase: TextCase | nil;
+  com: CmCom;
+}) => {
   const { slidei, slideId } = useAtomValue(cmBroadcastCurrentSlideiAtom);
-  const com = useCmComCurrent();
   const showChordedSlideMode = useAtomValue(cmShowChordedSlideModeAtom);
-  const slides = useMemo(() => com?.makeExpandSlides(true, false) ?? [], [com]);
+  const slides = useMemo(() => com?.makeExpandSlides(true, false, textCase) ?? [], [com, textCase]);
   const isHiddenChordsMode =
     showChordedSlideMode === CmBroadcastShowChordedSlideMode.Hide ||
     showChordedSlideMode === CmBroadcastShowChordedSlideMode.Pass;
@@ -97,7 +103,7 @@ export const CmBroadcastSlidesContext = ({ children, configi }: { children: Reac
         cmBroadcastCurrentSlideiAtom.set({ slidei: newSlidei, slideId: slides.at(newSlidei)?.id ?? slideId });
       },
     }),
-    [config?.case, currentSlidei, isHiddenChordsMode, nextSlidei, slideId, slides],
+    [currentSlidei, isHiddenChordsMode, nextSlidei, slideId, slides],
   );
 
   return <CmBroadcastInnerSlidesContext value={state}>{children}</CmBroadcastInnerSlidesContext>;

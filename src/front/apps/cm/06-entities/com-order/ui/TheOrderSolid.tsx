@@ -1,6 +1,7 @@
 import { CmComOrderLine } from '$cm/ext';
 import React from 'react';
 import { CmComOrder } from 'shared/const/cm/order/Order';
+import { incrementNumber } from 'shared/utils';
 import { TheCmComOrder } from './TheOrder';
 
 export const TheCmComOrderSolid = ({
@@ -46,7 +47,7 @@ export const TheCmComOrderSolid = ({
                       asLineNode({
                         ...lineProps,
                         ordi,
-                        solidLinei: lineProps.linei + lineCounts[ordIndex],
+                        solidLinei: incrementNumber(lineProps.linei, lineCounts[ordIndex]),
                       })
                   : lineProps => (
                       <CmComOrderLine

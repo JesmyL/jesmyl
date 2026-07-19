@@ -1,17 +1,15 @@
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { mylib } from '#shared/lib/my-lib';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
-import { cmComAudioPlayerPlaySrcAtom, isCmComAudioPlayerOpenMoversAtom } from '$cm/entities/com-audio-player';
+import { isCmComAudioPlayerOpenMoversAtom } from '$cm/entities/com-audio-player';
 import {
   cmComCommentCurrentComw2OpenAltiDictAtom,
   cmComCommentRegisteredAltKeysAtom,
   useCmComCommentBlockFastReactions,
 } from '$cm/entities/com-comment';
-import { useCmComOrderAudioMarkControlButtons } from '$cm/entities/com-order';
 import { cmComFontSizeAtom, cmComIsComMiniAnchorAtom, cmComSpeedRollKfAtom } from '$cm/entities/index';
-import { cmComTrackPreSwitchTimeAtom } from '$cm/shared/state';
+import { useCmComOrderAudioMarkControlButtonsContext } from '$cm/ext';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Link } from '@tanstack/react-router';
@@ -42,27 +40,9 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
     altCommentKeys[com.wid] ?? altCommentKeys.lasti ?? 0
   ];
   const listRef = useRef<HTMLDivElement>(null);
-  const playSrc = useAtomValue(cmComAudioPlayerPlaySrcAtom);
-  const isOpenMoversButtons =
-    useAtomValue(isCmComAudioPlayerOpenMoversAtom) && !!playSrc && com.audio.includes(playSrc);
+  const isOpenMoversButtons = useAtomValue(isCmComAudioPlayerOpenMoversAtom);
 
-  const audioMarkControl = useCmComOrderAudioMarkControlButtons(
-    cmComTrackPreSwitchTimeAtom,
-    isOpenMoversButtons,
-    com,
-    true,
-    (node, time, selector) =>
-      mylib.isStr(selector) ? (
-        <div
-          key={time}
-          className="my-3"
-        >
-          {node}
-        </div>
-      ) : (
-        node
-      ),
-  );
+  const audioMarkControl = useCmComOrderAudioMarkControlButtonsContext();
 
   const comi = comList.findIndex(c => c.wid === com.wid);
   const nextComw = comi < comList.length - 1 ? comList[comi + 1]?.wid : comList[0]?.wid;
@@ -100,7 +80,7 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
           className="relative h-full"
           $listHeight={listRef.current?.clientHeight}
         >
-          {isOpenMoversButtons && audioMarkControl.afterTargetOrdwOtherPlayButtonNodeDict.before}
+          {audioMarkControl?.controls.afterIdDict.before}
 
           <TheCmComWithComments
             com={com}
@@ -108,25 +88,23 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
           >
             <TheCmCom
               com={com}
-              fontSize={isOpenMoversButtons ? Math.abs(fontSize) : fontSize}
               chordVisibleVariant={chordVisibleVariant}
               isMiniAnchor={isMiniAnchor}
               listRef={listRef}
-              asAfterSolidOrdNode={
-                isOpenMoversButtons
-                  ? ({ ord }) => audioMarkControl.afterTargetOrdwOtherPlayButtonNodeDict[ord.wid]
-                  : undefined
-              }
-              asHeaderNode={
-                isOpenMoversButtons
-                  ? ({ ord, node }) => (
+              {...(isOpenMoversButtons
+                ? {
+                    fontSize: Math.abs(fontSize),
+                    asAfterSolidOrdNode: ({ ord }) => audioMarkControl?.controls.afterIdDict[ord.wid],
+                    asHeaderNode: ({ ord, node }) => (
                       <div className="flex gap-1 flex-wrap max-w-[80%]">
                         {node}
-                        {audioMarkControl.ordwPlayButtonNodeDict[ord.wid]}
+                        {audioMarkControl?.controls.idDict[ord.wid]}
                       </div>
-                    )
-                  : undefined
-              }
+                    ),
+                  }
+                : {
+                    fontSize,
+                  })}
             />
           </TheCmComWithComments>
         </WithScrollProgress>

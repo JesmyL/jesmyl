@@ -7,9 +7,9 @@ export const cmTsjrpcClient = new (class Cm extends TsjrpcClient<CmTsjrpcModel> 
     super({
       scope: 'Cm',
       methods: {
-        takeFreshComAudioMarksPack: {
+        takeFreshComAudioMarksPack_v1: {
           onResponse: pack => {
-            if (pack) cmIDB.tb.comAudioTrackMarks_v1.put(pack);
+            if (pack) cmIDB.tb.comAudioTrackMarks_v2.put(pack);
           },
         },
         pullComComments: {

@@ -1,13 +1,14 @@
 import { getParentNodeWithClassName } from '#shared/lib/getParentNodeWithClassName';
 import { addEventListenerWithDelayPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { mylib } from '#shared/lib/my-lib';
 import { isCmComAudioPlayerOpenMoversAtom } from '$cm/entities/com-audio-player';
 import { cmComIsComMiniAnchorAtom } from '$cm/entities/index';
 import { updateCmComCommentConstructorRulePropsDict } from '$cm/shared/lib/updateComCommentConstructorRulePropsDict';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
+import { CmComOrderWid } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { wait } from 'shared/utils';
+import { checkIsNaN } from 'shared/utils/checkIs';
 import { cmComCommentRedactOrdSelectorIdAtom } from '../state/atoms';
 
 export const useCmComCommentBlockFastReactions = (listRef: React.RefObject<HTMLDivElement | null>, com: CmCom) => {
@@ -36,8 +37,8 @@ export const useCmComCommentBlockFastReactions = (listRef: React.RefObject<HTMLD
 
       if (node === null || !foundClassNames['styled-header']) return;
 
-      const selector = +node.getAttribute('ord-selector')!;
-      if (mylib.isNaN(selector)) return;
+      const selector = +node.getAttribute('ord-selector')! as CmComOrderWid;
+      if (checkIsNaN(selector)) return;
       const { ord } = com.getOrd(selector);
       if (ord == null) return;
 

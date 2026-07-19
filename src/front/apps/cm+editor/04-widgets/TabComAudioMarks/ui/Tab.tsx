@@ -1,258 +1,247 @@
 import { Button } from '#shared/components/ui/button';
 import { ButtonGroup } from '#shared/components/ui/button-group';
 import { mylib } from '#shared/lib/my-lib';
-import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
 import { makeToastKOMoodConfig, Modal } from '#shared/ui/modal';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { WithState } from '#shared/ui/WithState';
-import {
-  CmEditorComAudioMarksConfigurerTimeMark,
-  cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom,
-} from '$cm+editor/entities/com-audio';
+import { cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom } from '$cm+editor/entities/com-audio';
 import { CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner } from '$cm+editor/features/com-audio';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/shared/state/com';
 import {
+  CmBroadcastSlidesContext,
   CmComAudioPlayer,
   CmComAudioPlayerMarksMovers,
-  CmComOrderLine,
-  CmComOrderList,
-  cmIDB,
+  CmComOrderAudioMarkControlButtonsContext,
   takeCmComAudioPlayerCurrentTime,
-  useCmComCommentBlockCss,
-  useCmComOrderAudioMarkControlButtons,
+  useCmComMarkTextValuesMaker,
+  useCmComOrderAudioMarkControlButtonsContext,
 } from '$cm/ext';
-import { Atom, atom, useAtomValue } from 'atomaric';
+import { atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import { CmComAudioMarkPackTime, CmComWid, HttpNumLeadLink } from 'shared/api';
-import { extractNumber } from 'shared/utils';
+import { CmComAudioMarkEditPackValue, CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
+import { extractNumber, iife } from 'shared/utils';
+import { checkIsNil } from 'shared/utils/checkIs';
+import { makeCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
+import { lazyInit } from 'shared/utils/lazyInit';
 import { mapObjectEntries } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
+import { twMerge } from 'tailwind-merge';
 import { CmEditorTabComAudioMarksShowSlideListButton } from './ShowSlideListButton';
 
-let srcOnEditAtom: Atom<null | HttpNumLeadLink>;
-let preSwitchTimeAtom: Atom<number>;
+const srcOnEditAtom = lazyInit(() => atom<null | HttpNumLeadLink>(null, 'cm+editor:srcOnMarkEdit'));
+const preSwitchTimeAtom = lazyInit(() => atom(-1, 'cm+editor:comAudioPreSwitchTime'));
 
-export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
-  srcOnEditAtom ??= atom<null | HttpNumLeadLink>(null, 'cm+editor:srcOnMarkEdit');
-  preSwitchTimeAtom ??= atom(-1, 'cm+editor:comAudioPreSwitchTime');
+export const CmEditorTabComAudioMarks = iife(() => {
+  const Child = ({ ccom }: { ccom: EditableCom }) => {
+    const editSrc = useAtomValue(srcOnEditAtom());
+    const marksOnUpdating = useAtomValue(cmComEditorAudioMarksEditPacksAtom);
+    const { slideIdTimeDict } = useCmComMarkTextValuesMaker(ccom, editSrc);
 
-  const editSrc = useAtomValue(srcOnEditAtom);
-  const trackMarks = cmIDB.useAudioTrackMarks(ccom.wid);
-  const marksOnUpdating = useAtomValue(cmComEditorAudioMarksEditPacksAtom);
-  const { commentCssNode } = useCmComCommentBlockCss(ccom, true);
+    const { controls: audioMarkButtons, slides: { slides } = {} } = useCmComOrderAudioMarkControlButtonsContext() ?? {};
 
-  const audioMarkControl = useCmComOrderAudioMarkControlButtons(
-    preSwitchTimeAtom,
-    true,
-    ccom,
-    false,
-    (playNode, time) =>
-      time === 0 ? (
-        <div
-          key={time}
-          className="my-3"
-        >
-          {playNode}
-        </div>
-      ) : (
-        <div
-          key={time}
-          className="flex flex-col gap-2"
-        >
-          {playNode}
-          <Button
-            icon="Settings01"
-            onClick={() => cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.set(time)}
-          />
-        </div>
-      ),
-  );
+    const addTime = (value: CmComAudioMarkEditPackValue) => {
+      if (!editSrc || takeCmComAudioPlayerCurrentTime() < 0.001) {
+        toast('Песня не воспроизводилась', makeToastKOMoodConfig());
+        return;
+      }
 
-  useEffect(() => {
-    if (!ccom.audio.length) {
-      srcOnEditAtom.reset();
-      return;
-    }
+      let fixedTime = +takeCmComAudioPlayerCurrentTime().toFixed(2);
+      if (Math.trunc(fixedTime) === fixedTime) fixedTime += 0.11;
 
-    if (editSrc == null) {
-      srcOnEditAtom.set(ccom.audio[0]);
-      return;
-    }
+      cmComEditorAudioMarksEditPacksAtom.do.putMarks(ccom.wid, editSrc, {
+        [fixedTime]: value,
+      });
+    };
 
-    if (!ccom.audio.includes(editSrc)) {
-      srcOnEditAtom.set(ccom.audio[0]);
-      return;
-    }
-  }, [ccom.audio, editSrc]);
+    useEffect(() => {
+      if (!ccom.audio.length) {
+        srcOnEditAtom().reset();
+        return;
+      }
 
-  return (
-    <div className="mt-10">
-      <ButtonGroup.Root className="mb-10">
-        {ccom.audio.length > 1 &&
-          ccom.audio.map((src, i) => (
-            <Button
-              key={i}
-              variant={src === editSrc ? 'secondary' : 'link'}
-              onClick={() => srcOnEditAtom.set(src)}
-            >
-              {i + 1}
-            </Button>
-          ))}
-      </ButtonGroup.Root>
+      if (editSrc == null) {
+        srcOnEditAtom().set(ccom.audio[0]);
+        return;
+      }
 
-      <CmEditorTabComAudioMarksShowSlideListButton
-        ccom={ccom}
-        src={editSrc}
-      />
+      if (!ccom.audio.includes(editSrc)) {
+        srcOnEditAtom().set(ccom.audio[0]);
+        return;
+      }
+    }, [ccom.audio, editSrc]);
 
-      <WithState<CmComAudioMarkPackTime | null> init={null}>
-        {(pinTime, setPinTime) => (
-          <ConditionalRender
-            value={editSrc}
-            render={editSrc => {
-              return (
-                <>
-                  <CmComAudioPlayer
-                    className="mb-20 sticky top-8! bg-x1 pb-5"
-                    audioLinks={[editSrc]}
-                    addRender={src => (
-                      <div className="flex gap-5 w-full">
-                        <Button
-                          icon="PlusSign"
-                          onClick={() => {
-                            if (editSrc == null || takeCmComAudioPlayerCurrentTime() < 0.001) {
-                              toast('Песня не воспроизводилась', makeToastKOMoodConfig());
-                              return;
-                            }
+    return (
+      <div className="mt-10">
+        <ButtonGroup.Root className="mb-10">
+          {ccom.audio.length > 1 &&
+            ccom.audio.map((src, i) => (
+              <Button
+                key={i}
+                variant={src === editSrc ? 'secondary' : 'link'}
+                onClick={() => srcOnEditAtom().set(src)}
+              >
+                {i + 1}
+              </Button>
+            ))}
+        </ButtonGroup.Root>
 
-                            let fixedTime = +takeCmComAudioPlayerCurrentTime().toFixed(2);
-                            if (Math.trunc(fixedTime) === fixedTime) fixedTime += 0.11;
+        <CmEditorTabComAudioMarksShowSlideListButton
+          ccom={ccom}
+          src={editSrc}
+        />
 
-                            cmComEditorAudioMarksEditPacksAtom.do.putMarks(ccom.wid, editSrc, {
-                              [fixedTime]: `+${fixedTime}+`,
-                            });
-                          }}
-                        />
-                        <CmComAudioPlayerMarksMovers
-                          src={src}
-                          com={ccom}
-                          repeatButtonClassName="max-w-[calc(100vw-228px)]"
-                          preSwitchTimeAtom={preSwitchTimeAtom}
-                        />
-                      </div>
-                    )}
-                  />
-
-                  {mapObjectEntries(marksOnUpdating[ccom.wid]?.[editSrc], (time, selector) => {
-                    return (
-                      !selector || (
-                        <div
-                          key={time}
-                          className="flex gap-3"
-                        >
-                          <span>
-                            {time} ({mylib.convertSecondsInStrTime(+time)})
-                          </span>
-                          <TheIconLoading />
+        <WithState<CmComAudioMarkPackTime | null> init={null}>
+          {(pinTime, setPinTime) => (
+            <ConditionalRender
+              value={editSrc}
+              render={editSrc => {
+                return (
+                  <>
+                    <CmComAudioPlayer
+                      className="mb-20 sticky top-8! bg-x1 pb-5"
+                      audioLinks={[editSrc]}
+                      addRender={src => (
+                        <div className="flex gap-5 w-full">
                           <Button
-                            icon="Cancel01"
-                            onClick={() =>
-                              cmComEditorAudioMarksEditPacksAtom.do.removeMark(ccom.wid, editSrc, extractNumber(time))
-                            }
+                            icon="PlusSign"
+                            onClick={() => addTime(mylib.convertSecondsInStrTime(takeCmComAudioPlayerCurrentTime()))}
+                          />
+                          <CmComAudioPlayerMarksMovers
+                            src={src}
+                            com={ccom}
+                            repeatButtonClassName="max-w-[calc(100vw-228px)]"
+                            preSwitchTimeAtom={preSwitchTimeAtom()}
                           />
                         </div>
-                      )
-                    );
-                  })}
-
-                  {mapObjectEntries(trackMarks?.marks?.[editSrc], (time, selector) => (
-                    <CmEditorComAudioMarksConfigurerTimeMark
-                      key={time}
-                      selector={selector}
-                      time={extractNumber(time)}
-                      src={editSrc}
-                      com={ccom}
-                      pinTime={pinTime}
-                      onPin={setPinTime}
+                      )}
                     />
-                  ))}
 
-                  {audioMarkControl.afterTargetOrdwOtherPlayButtonNodeDict.before}
-
-                  {commentCssNode}
-
-                  <CmComOrderList
-                    chordVisibleVariant={ChordVisibleVariant.None}
-                    fontSize={20}
-                    com={ccom}
-                    chordHardLevel={3}
-                    asAfterSolidOrdNode={({ ord }) => audioMarkControl.afterTargetOrdwOtherPlayButtonNodeDict[ord.wid]}
-                    asLineNode={props => (
-                      <div className="flex gap-2 custom-align-items">
-                        <span className="text-x7">{props.solidLinei + 1}</span>
-                        <CmComOrderLine {...props} />
-                      </div>
-                    )}
-                    asHeaderNode={({ node, ord }) =>
-                      ord.isVisibleOrd() && (
-                        <div className="flex flex-wrap gap-3">
-                          {pinTime == null ? (
+                    {mapObjectEntries(marksOnUpdating[ccom.wid]?.[editSrc], (time, selector) => {
+                      return (
+                        !selector || (
+                          <div
+                            key={time}
+                            className="flex gap-3"
+                          >
+                            <span>
+                              {time} ({mylib.convertSecondsInStrTime(+time)})
+                            </span>
+                            <TheIconLoading />
                             <Button
-                              icon="PlusSign"
-                              onClick={() => {
-                                if (editSrc == null || takeCmComAudioPlayerCurrentTime() < 0.001) {
-                                  toast('Песня не воспроизводилась', makeToastKOMoodConfig());
-                                  return;
-                                }
-
-                                let fixedTime = +takeCmComAudioPlayerCurrentTime().toFixed(2);
-                                if (Math.trunc(fixedTime) === fixedTime) fixedTime += 0.11;
-
-                                cmComEditorAudioMarksEditPacksAtom.do.putMarks(ccom.wid, editSrc, {
-                                  [fixedTime]: [ord.wid],
-                                });
-                              }}
+                              icon="Cancel01"
+                              onClick={() =>
+                                cmComEditorAudioMarksEditPacksAtom.do.removeMark(ccom.wid, editSrc, extractNumber(time))
+                              }
                             />
+                          </div>
+                        )
+                      );
+                    })}
+
+                    {audioMarkButtons?.afterIdDict.before}
+
+                    {slides?.map(({ lines, id, ord, linei, repeati, samei }) => {
+                      const selector = makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, samei);
+
+                      return (
+                        <div
+                          key={id}
+                          className="mt-10"
+                        >
+                          {checkIsNil(pinTime) ? (
+                            <>
+                              <Button
+                                icon="PlusSign"
+                                onClick={() => addTime(selector)}
+                                className="bg-x2!"
+                              />
+                              <div className="flex flex-wrap my-3">{audioMarkButtons?.idDict[id]}</div>
+                            </>
                           ) : (
                             <Button
                               icon="PinLocation01"
+                              disabled={pinTime === slideIdTimeDict[id]}
                               onClick={() =>
                                 cmEditComExternalsClientTsjrpcMethods
                                   .updateAudioMarks_v2({
                                     comw: ccom.wid,
                                     src: editSrc,
                                     time: pinTime,
-                                    val: [ord.wid] as [CmComWid],
+                                    sel: selector,
                                   })
                                   .then(() => setPinTime(null))
                               }
                             />
                           )}
-                          {node}
-                          {audioMarkControl.ordwPlayButtonNodeDict[ord.wid]}
-                        </div>
-                      )
-                    }
-                  />
+                          <div className={twMerge(ord.isChBlock() && 'text-x7')}>
+                            {lines.map((line, linei) => (
+                              <div key={linei}>{line}</div>
+                            ))}
+                          </div>
 
-                  <Modal openAtom={cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom}>
-                    {time => (
-                      <CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner
-                        time={time}
-                        com={ccom}
-                        src={editSrc}
-                      />
-                    )}
-                  </Modal>
-                </>
-              );
-            }}
-          />
-        )}
-      </WithState>
-    </div>
-  );
-};
+                          {audioMarkButtons?.afterIdDict[id]}
+                        </div>
+                      );
+                    })}
+
+                    <Modal openAtom={cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom}>
+                      {time => (
+                        <CmBroadcastSlidesContext
+                          com={ccom}
+                          textCase={null}
+                        >
+                          <CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner
+                            time={time}
+                            com={ccom}
+                            src={editSrc}
+                            setPinTime={setPinTime}
+                          />
+                        </CmBroadcastSlidesContext>
+                      )}
+                    </Modal>
+                  </>
+                );
+              }}
+            />
+          )}
+        </WithState>
+      </div>
+    );
+  };
+
+  return ({ ccom }: { ccom: EditableCom }) => {
+    return (
+      <CmComOrderAudioMarkControlButtonsContext
+        com={ccom}
+        isNeedCompute
+        preTimeAtom={preSwitchTimeAtom()}
+        mapNode={(playNode, time) =>
+          time === 0 ? (
+            <div
+              key={time}
+              className="my-3"
+            >
+              {playNode}
+            </div>
+          ) : (
+            <div
+              key={time}
+              className="flex flex-col gap-2"
+            >
+              {playNode}
+              <Button
+                icon="Settings01"
+                onClick={() => cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.set(time)}
+              />
+            </div>
+          )
+        }
+      >
+        <Child ccom={ccom} />
+      </CmComOrderAudioMarkControlButtonsContext>
+    );
+  };
+});

@@ -9,16 +9,20 @@ import {
   useCmComCurrentComPackContext,
   useCmComCurrentFixedCom,
 } from '$cm/entities/com';
+import { isCmComAudioPlayerOpenMoversAtom } from '$cm/entities/com-audio-player';
 import { cmComCommentRedactOrdSelectorIdAtom } from '$cm/entities/com-comment';
 import { CmComToolList, useCmComToolMigratableTop } from '$cm/entities/com-tool';
 import { cmComChordVisibleVariantAtom, cmComIsShowCatBindsInCompositionAtom } from '$cm/entities/index';
+import { CmComOrderAudioMarkControlButtonsContext } from '$cm/ext';
 import {
   CmComCommentConstructorTextRulesConstructor,
   useCmComCommentConstructorListenChanges,
 } from '$cm/features/ComCommentConstructor';
+import { cmComTrackPreSwitchTimeAtom } from '$cm/shared/state';
 import { Link } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
+import { checkIsNil, checkIsString } from 'shared/utils/checkIs';
 import { useCmComCompositionControls } from '../lib/useComCompositionControls';
 import { StyledCmComCompositionContainer } from '../style/Composition';
 import { CmComAudioPlayerInCompositionPage } from './AudioPlayer';
@@ -32,10 +36,11 @@ export function TheCmComComposition() {
   const chordVisibleVariant = useAtomValue(cmComChordVisibleVariantAtom);
   const comToolsNode = useCmComToolMigratableTop();
   const { list } = useCmComCurrentComPackContext();
+  const isOpenMoversButtons = useAtomValue(isCmComAudioPlayerOpenMoversAtom);
 
   useCmComCommentConstructorListenChanges();
 
-  if (ccom == null) return <CmComNotFoundPage />;
+  if (checkIsNil(ccom)) return <CmComNotFoundPage />;
 
   return (
     <StyledCmComCompositionContainer
@@ -75,11 +80,30 @@ export function TheCmComComposition() {
             </div>
           </WithAtomTruthfulValue>
 
-          <TheCmComControlled
+          <CmComOrderAudioMarkControlButtonsContext
             com={ccom}
-            comList={list}
-            chordVisibleVariant={chordVisibleVariant}
-          />
+            preTimeAtom={cmComTrackPreSwitchTimeAtom}
+            isHideShortTime
+            isNeedCompute={isOpenMoversButtons}
+            mapNode={(node, time, selector) =>
+              checkIsString(selector) ? (
+                <div
+                  key={time}
+                  className="my-3"
+                >
+                  {node}
+                </div>
+              ) : (
+                node
+              )
+            }
+          >
+            <TheCmComControlled
+              com={ccom}
+              comList={list}
+              chordVisibleVariant={chordVisibleVariant}
+            />
+          </CmComOrderAudioMarkControlButtonsContext>
 
           <FullContent
             key="com-comment-constructor"

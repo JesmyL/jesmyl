@@ -106,7 +106,7 @@ export const cmComCommentLocalCommentsUpdater = async (
 ) => {
   const localCommentBlock = await cmIDB.tb.localComCommentBlocks.get(comw);
   const commentBlock = await cmIDB.tb.comCommentBlocks.get(comw);
-  const ordTextsDict: PRecord<CmComCommentBlockSimpleSelector, string[]> = {};
+  const ordTextsDict: SPRecord<CmComCommentBlockSimpleSelector, string[]> = {};
   const ordKindTextsDict: PRecord<CmComBlockKindKey, string> = {};
   const kindDict = takeCmComCommentKindBlockDict(comw, localCommentBlock, commentBlock, commentAlti);
 

@@ -22,10 +22,11 @@ export const enum CmComMod {
   def = -1,
 }
 
-export const enum CmComOrderWid {
-  def = -1,
-  never = -100000,
-}
+export type CmComOrderWid = NumberBrand<'CmComOrderWid'>;
+
+export const CmComOrderWidDef = -1 as -1 | CmComOrderWid;
+export const CmComOrderWidZero = -1 as CmComOrderWid;
+export const CmComOrderWidNever = -10000 as CmComOrderWid;
 
 export const enum CmCatWid {
   def = -1,

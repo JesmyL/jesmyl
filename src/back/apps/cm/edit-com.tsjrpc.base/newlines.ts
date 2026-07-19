@@ -1,10 +1,13 @@
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import {
+  CmComLinei,
   CmComMod,
-  CmComNewlinerLinei,
   CmComNewlinerRepeati,
   CmComNewlinerStrConfig,
   CmComNewlinerWordi,
+  CmComNewlinerWordiNewLine,
+  CmComNewlinerWordiNotNewLine,
+  CmComNewlinerWordiZero,
   CmComOrderWid,
   CmComWid,
 } from 'shared/api';
@@ -12,6 +15,8 @@ import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model
 import { CmCom } from 'shared/const/cm/Com';
 import { CmComOrder } from 'shared/const/cm/order/Order';
 import { howMillisecondsInMin } from 'shared/const/ms';
+import { TextCase } from 'shared/model/common';
+import { absoluteNumber, multipliedNumber, nagativeNumber } from 'shared/utils';
 import { checkIsNotNil } from 'shared/utils/checkIs';
 import {
   cmComNewlinerLineConfigToSet,
@@ -32,10 +37,10 @@ export const cmEditComServerTsjrpcNewlines = () =>
 
       updateSetByHoldSet(getSets, set, wordi, repeati);
 
-      if (set.has(wordi) || set.has(-wordi)) {
+      if (set.has(wordi) || set.has(nagativeNumber(wordi))) {
         set.delete(wordi);
-        set.delete(-wordi);
-      } else set.add(Math.abs(wordi));
+        set.delete(nagativeNumber(wordi));
+      } else set.add(absoluteNumber(wordi));
     }),
 
     switchNLBr: updateNewlinerLineSet(({ repeati, wordi }, itRepeati, set, getSets) => {
@@ -46,18 +51,18 @@ export const cmEditComServerTsjrpcNewlines = () =>
 
         if (set.has(wordi)) {
           del = wordi;
-          add = -wordi;
-        } else if (set.has(-wordi)) {
-          del = -wordi;
+          add = nagativeNumber(wordi);
+        } else if (set.has(nagativeNumber(wordi))) {
+          del = nagativeNumber(wordi);
           add = wordi;
-        } else add = (!repeati ? -1 : 1) * Math.abs(wordi);
+        } else add = multipliedNumber(absoluteNumber(wordi), !repeati ? -1 : 1);
 
         if (checkIsNotNil(add)) set.add(add);
         if (checkIsNotNil(del)) set.delete(del);
       }
 
-      set.delete(0);
-      if (!repeati) set.delete(1);
+      set.delete(CmComNewlinerWordiZero);
+      if (!repeati) set.delete(CmComNewlinerWordiNotNewLine);
     }),
 
     removeNL: updateNewlinerLineSet(({ repeati }, itRepeati, set) => {
@@ -82,7 +87,7 @@ const retLabel = (comw: CmComWid) => {
 
 const updateSetByHoldSet = (
   getSets: () => Sets | nil,
-  set: Set<number>,
+  set: Set<CmComNewlinerWordi>,
   wordi: CmComNewlinerWordi,
   repeati: CmComNewlinerRepeati,
 ) => {
@@ -95,15 +100,15 @@ const updateSetByHoldSet = (
     if (!firstSet && !repeati) return isNotFixed;
 
     if (set.size) {
-      if (wordi === 1) {
-        if (holdSet.has(-1) && set.has(1)) {
-          set.delete(1);
-          set.add(-1);
+      if (wordi === CmComNewlinerWordiNotNewLine) {
+        if (holdSet.has(CmComNewlinerWordiNewLine) && set.has(CmComNewlinerWordiNotNewLine)) {
+          set.delete(CmComNewlinerWordiNotNewLine);
+          set.add(CmComNewlinerWordiNewLine);
 
           isNotFixed = false;
-        } else if (!holdSet.has(-1) && set.has(-1)) {
-          set.delete(-1);
-          set.delete(1);
+        } else if (!holdSet.has(CmComNewlinerWordiNewLine) && set.has(CmComNewlinerWordiNewLine)) {
+          set.delete(CmComNewlinerWordiNewLine);
+          set.delete(CmComNewlinerWordiNotNewLine);
 
           isNotFixed = false;
         }
@@ -111,13 +116,13 @@ const updateSetByHoldSet = (
     } else if (holdSet.size) {
       holdSet.forEach(num => set.add(num));
 
-      if (wordi === 1) {
-        if (holdSet.has(-1)) {
-          set.add(1);
-          set.delete(-1);
+      if (wordi === CmComNewlinerWordiNotNewLine) {
+        if (holdSet.has(CmComNewlinerWordiNewLine)) {
+          set.add(CmComNewlinerWordiNotNewLine);
+          set.delete(CmComNewlinerWordiNewLine);
         } else {
-          set.add(-1);
-          set.delete(1);
+          set.add(CmComNewlinerWordiNewLine);
+          set.delete(CmComNewlinerWordiNotNewLine);
         }
 
         isNotFixed = false;
@@ -125,8 +130,8 @@ const updateSetByHoldSet = (
         if (holdSet.has(wordi)) {
           set.add(wordi);
 
-          if (holdSet.has(-1)) set.add(-1);
-          else set.add(1);
+          if (holdSet.has(CmComNewlinerWordiNewLine)) set.add(CmComNewlinerWordiNewLine);
+          else set.add(CmComNewlinerWordiNotNewLine);
         }
       }
     }
@@ -136,9 +141,14 @@ const updateSetByHoldSet = (
 };
 
 const updateNewlinerLineSet = <
-  Props extends { comw: CmComWid; linei: CmComNewlinerLinei; ordw: CmComOrderWid; repeati: CmComNewlinerRepeati | nil },
+  Props extends { comw: CmComWid; linei: CmComLinei; ordw: CmComOrderWid; repeati: CmComNewlinerRepeati | nil },
 >(
-  updater: (props: Props, currentRepeati: CmComNewlinerRepeati, set: Set<number>, getSets: () => Sets | nil) => void,
+  updater: (
+    props: Props,
+    currentRepeati: CmComNewlinerRepeati,
+    set: Set<CmComNewlinerWordi>,
+    getSets: () => Sets | nil,
+  ) => void,
 ) =>
   modifyCom<Props>('COM_TR', (com, props) => {
     const { linei, ordw, repeati } = props;
@@ -151,11 +161,11 @@ const updateNewlinerLineSet = <
     const repeatConfigList = takeCmComNewlinerRepeatFullConfig(wholeNLConfig, linei);
 
     arrayByLength(Math.max(repeatConfigList.length, (repeati || 0) + 1), itRepeati => {
-      const set = cmComNewlinerLineConfigToSet(wholeNLConfig, linei, itRepeati);
-      updater(props, itRepeati, set, () => {
+      const set = cmComNewlinerLineConfigToSet(wholeNLConfig, linei, itRepeati as CmComNewlinerRepeati);
+      updater(props, itRepeati as CmComNewlinerRepeati, set, () => {
         let sets: Sets | nil = null;
 
-        new CmCom({ ...com, m: CmComMod.def, al: [] }, null, null).makeExpandLines(false).find(slide => {
+        new CmCom({ ...com, m: CmComMod.def, al: [] }, null, null).makeExpandLines(false, TextCase.AsIs).find(slide => {
           sets = slide.ord.makeNewlinerSets(slide.line, slide.linei, slide.repeati);
 
           return slide.ord.wid === ordw && slide.linei === linei && slide.repeati === itRepeati;

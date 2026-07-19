@@ -1,11 +1,12 @@
 import { ICmComOrderProps } from '#shared/model/cm/order/regions';
+import { CmComLinei } from 'shared/api';
 import { CmComOrder } from 'shared/const/cm/order/Order';
 
 export interface ICmComOrderLineAsComponentProps extends ICmComOrderProps {
   line: string;
-  linei: number;
+  linei: CmComLinei;
   linesLen: number;
-  solidLinei: number;
+  solidLinei: CmComLinei;
   wordCount: number;
   words: string[];
   prevLinesCount?: number;

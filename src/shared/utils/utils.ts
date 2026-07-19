@@ -23,6 +23,11 @@ export const trimTextLines = (text: string) => text.trim().replace(makeRegExp('/
 
 export const iife = <Val>(fun: () => Val) => fun();
 
+export const incrementNumber = <T extends number>(value: T, delta: number = 1) => (value + delta) as T;
+export const multipliedNumber = <T extends number>(value: T, factor: number) => (value * factor) as T;
+export const nagativeNumber = <T extends number>(value: T) => -value as T;
+export const absoluteNumber = <T extends number>(value: T) => Math.abs(value) as T;
+
 type ParseNumber<T extends string | number> = T extends `${infer N extends number}` ? N : T;
 export const extractNumber = <T extends string | number>(value: T) => {
   const val = parseFloat(`${value}`);

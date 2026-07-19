@@ -4,7 +4,7 @@ import { CmComOrderEditableRegion, ICmComOrderExportableMe } from '#shared/model
 import { makeRegExp } from 'regexpert';
 import {
   CmComLineText,
-  CmComNewlinerLinei,
+  CmComLinei,
   CmComNewlinerRepeati,
   CmComTextSquareBracketsMode,
   InheritancableOrder,
@@ -295,7 +295,7 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
 
   isVisibleOrd = () => !this.isHeaderNoneForce && this.isVisible;
 
-  makeNewlinerSets = (line: CmComLineText, linei: CmComNewlinerLinei, repeati: CmComNewlinerRepeati) => {
+  makeNewlinerSets = (line: CmComLineText, linei: CmComLinei, repeati: CmComNewlinerRepeati) => {
     const setHolder = this.com.newlinerSetHolder;
     const ownSet = cmComNewlinerLineConfigToSet(this.com.top.nl?.[0]?.[this.wid], linei, repeati);
     let firstSet;

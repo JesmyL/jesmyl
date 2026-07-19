@@ -6,7 +6,7 @@ import { CmComAudioMarkPack, CmComAudioMarkPackTime, CmComWid, HttpNumLeadLink }
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
 import { extractNumber, itNumSort, smylib } from 'shared/utils';
 import { checkIsNil } from 'shared/utils/checkIs';
-import { objectEntries, objectKeys, objectLength } from 'shared/utils/object.utils';
+import { objectEntries, objectKeys } from 'shared/utils/object.utils';
 import { takeComwTiny } from '../com.tiny';
 import { makeCmComHttpLinkFromNumLead, makeCmComNumLeadLinkFromHttp } from '../complect/com-http-links';
 
@@ -16,7 +16,7 @@ export const cmEditComExternalsTsjrpcAudioMarks = {
     let description: string | null = null;
 
     const retPack: CmComAudioMarkPack = {};
-    const packEntries = objectEntries('marks' in args ? args.marks : { [args.src]: { [args.time]: args.val } });
+    const packEntries = objectEntries('marks' in args ? args.marks : { [args.src]: { [args.time]: args.sel } });
     const comMarks = (await db.select({ am: comDB.am }).from(comDB).where(eq(comDB.w, comw)).limit(1)).at(0)?.am ?? {};
 
     for (const [src, newPack] of packEntries) {
@@ -67,12 +67,12 @@ export const cmEditComExternalsTsjrpcAudioMarks = {
           sortedMarksPack[time] = srcPackMarks[time];
         });
 
-      await updateComPack(comw, sortedMarksPack);
+      await updateComPack(comw, { ...comMarks, [src]: sortedMarksPack });
     }
 
     return {
       description,
-      value: { cMarks: retPack, comw },
+      value: { marks: retPack, comw },
     };
   },
 
@@ -98,15 +98,11 @@ export const cmEditComExternalsTsjrpcAudioMarks = {
         sortedMarksPack[time] = linkMarks[time];
       });
 
-    await updateComPack(comw, sortedMarksPack);
+    await updateComPack(comw, { ...comMarks, [src]: sortedMarksPack });
 
-    return { value: { cMarks: sortedMarksPack, comw }, description: null };
+    return { value: { marks: sortedMarksPack, comw }, description: null };
   },
 } satisfies ServerTsjrpcSatisfy<CmEditComExternalsTsjrpcModel>;
 
-const updateComPack = (comw: CmComWid, sortedMarksPack: CmComAudioMarkPack[HttpNumLeadLink]) =>
-  dbUpdate(
-    comDB,
-    { am: objectLength(sortedMarksPack) < 2 ? null : sortedMarksPack, amMod: Date.now() },
-    eq(comDB.w, comw),
-  );
+const updateComPack = (comw: CmComWid, sortedMarksPack: CmComAudioMarkPack) =>
+  dbUpdate(comDB, { am: sortedMarksPack, amMod: Date.now() }, eq(comDB.w, comw));

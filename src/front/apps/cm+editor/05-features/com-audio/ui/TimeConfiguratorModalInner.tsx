@@ -1,7 +1,6 @@
-import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Button } from '#shared/components/ui/button';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
-import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
+import { ModalBody, ModalFooter, ModalHeader, usePrompt } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom } from '$cm+editor/entities/com-audio';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
@@ -12,36 +11,46 @@ import {
   cmComAudioPlayerSwitchIsPlay,
   cmComAudioPlayerUpdateCurrentTime,
   cmIDB,
+  useCmComMarkTextValuesMaker,
 } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
-import { useState } from 'react';
-import { CmComAudioMarkPackTime, CmComTextSquareBracketsMode, HttpNumLeadLink } from 'shared/api';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
 import { makeCmComAudioMarkTitleBySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { extractNumber } from 'shared/utils';
-import { comNbspReg } from 'shared/utils/cm/com/const';
-import { CmEditorComAudioSolidOrdTextController } from './SolidOrdText';
+import { checkIsArray, checkIsNil } from 'shared/utils/checkIs';
 
 interface Props {
   time: CmComAudioMarkPackTime;
   com: EditableCom;
   src: HttpNumLeadLink;
+  setPinTime: Dispatch<SetStateAction<CmComAudioMarkPackTime | null>>;
 }
 
-export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ time, com, src }: Props) => {
-  const disabledReason = 'Песня не проигрывается';
+export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ time, com, src, setPinTime }: Props) => {
+  const prompt = usePrompt();
+  const deltaButton = (delta: number, isAdd?: 1) => (
+    <Button
+      icon={isAdd ? 'PlusSign' : 'MinusSign'}
+      onClick={addMaker(delta)}
+      disabled={isPause}
+      disabledReason="Песня не проигрывается"
+    />
+  );
 
   const trackMarks = cmIDB.useAudioTrackMarks(com.wid);
   const selector = trackMarks?.marks?.[src]?.[time];
-  const { title, ord, isReplaceBlockText, fullTitle, isShortTime } = makeCmComAudioMarkTitleBySelector(
+  const { title, isReplaceBlockText, isShortTime } = makeCmComAudioMarkTitleBySelector(
     time,
     com,
     selector,
     trackMarks?.marks?.[src],
   );
   const [currentTime, setCurrentTime] = useState(() => extractNumber(time));
-  const [isTextEdit, setIsTextEdit] = useState(false);
   const isPlayState = useAtomValue(cmComAudioPlayerIsPlayAtom);
   const isPause = useDebounceValue(!isPlayState, 500);
+
+  const { timeSlideDict } = useCmComMarkTextValuesMaker(com, src);
 
   const addMaker = (add: number) => () => {
     setCurrentTime(prev => {
@@ -66,12 +75,29 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
       <ModalHeader className="flex w-full justify-between">
         <span className={isShortTime ? 'text-xKO' : ''}>{isReplaceBlockText ? title.split('\n', 1)[0] : title}</span>
         <span className="flex gap-3">
-          {isTextEdit || (
-            <Button
-              icon="Edit01"
-              onClick={() => setIsTextEdit(true)}
-            />
-          )}
+          <Button
+            icon="Edit01"
+            onClick={async () => {
+              const newTitle = await prompt(
+                checkIsArray(selector) ? 'При переименовании привязка к блоку будет утеряна' : '',
+                'Новое значение',
+                checkIsArray(selector) ? '' : selector || title,
+              );
+
+              if (checkIsNil(newTitle)) return;
+
+              cmComEditorAudioMarksEditPacksAtom.do.renameMark(com.wid, src, time, newTitle);
+            }}
+          />
+
+          <Button
+            icon="PinLocation01"
+            onClick={() => {
+              cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.reset();
+              setPinTime(time);
+            }}
+          />
+
           <TheIconButton
             icon="Delete02"
             className="text-xKO"
@@ -94,80 +120,18 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
           />
           <div>
             <div className="flex gap-2 justify-center">
-              <Button
-                icon="PlusSign"
-                onClick={addMaker(1)}
-                disabled={isPause}
-                disabledReason={disabledReason}
-              />
-              .
-              <Button
-                icon="PlusSign"
-                onClick={addMaker(0.1)}
-                disabled={isPause}
-                disabledReason={disabledReason}
-              />
-              <Button
-                icon="PlusSign"
-                onClick={addMaker(0.01)}
-                disabled={isPause}
-                disabledReason={disabledReason}
-              />
+              {deltaButton(1, 1)}.{deltaButton(0.1, 1)}
+              {deltaButton(0.01, 1)}
             </div>
             <div className="flex justify-center text-2xl">{currentTime.toFixed(2)}</div>
             <div className="flex gap-2 justify-center">
-              <Button
-                icon="MinusSign"
-                onClick={addMaker(-1)}
-                disabled={isPause}
-                disabledReason={disabledReason}
-              />
-              .
-              <Button
-                icon="MinusSign"
-                onClick={addMaker(-0.1)}
-                disabled={isPause}
-                disabledReason={disabledReason}
-              />
-              <Button
-                icon="MinusSign"
-                onClick={addMaker(-0.01)}
-                disabled={isPause}
-                disabledReason={disabledReason}
-              />
+              {deltaButton(-1)}.{deltaButton(-0.1)}
+              {deltaButton(-0.01)}
             </div>
           </div>
         </div>
 
-        {isTextEdit ? (
-          <InputWithLoadingIcon
-            icon="TextAlignLeft"
-            multiline
-            defaultValue={
-              isReplaceBlockText
-                ? fullTitle
-                : `+${ord?.transformedText(CmComTextSquareBracketsMode.Remove).replace(comNbspReg, '')}`
-            }
-            strongDefaultValue
-            onChanged={value =>
-              cmEditComExternalsClientTsjrpcMethods
-                .updateAudioMarks_v2({ comw: com.wid, src, time, val: value.trim() })
-                .then(() => setIsTextEdit(false))
-            }
-          />
-        ) : isReplaceBlockText ? (
-          <div className="pre-text my-5">{fullTitle}</div>
-        ) : (
-          ord && (
-            <CmEditorComAudioSolidOrdTextController
-              com={com}
-              ord={ord}
-              selector={selector}
-              src={src}
-              time={time}
-            />
-          )
-        )}
+        {timeSlideDict[time]?.lines.map((line, linei) => <div key={linei}>{line}</div>)}
       </ModalBody>
       <ModalFooter>
         <Button

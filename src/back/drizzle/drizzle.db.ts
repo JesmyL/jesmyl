@@ -10,7 +10,16 @@ const queryClient = postgres(lazyEnvJson().dbUrl);
 const dbNative = drizzle(queryClient, { schema });
 export const db = dbNative as OmitOwn<typeof dbNative, 'update'>;
 
-export const dbUpdate = <TTable extends PgTable>(schema: TTable, set: Partial<TTable['$inferInsert']>, where: SQL) => {
+const anywhere = 'ANYWHERE!';
+
+export const dbUpdate = <TTable extends PgTable>(
+  schema: TTable,
+  set: Partial<TTable['$inferInsert']>,
+  where: SQL | typeof anywhere,
+) => {
   if (checkIsNil(where)) throw `Where is empty - parameter of db.update(${schema._.name})`;
-  return dbNative.update(schema).set(set).where(where);
+  return dbNative
+    .update(schema)
+    .set(set)
+    .where(where === anywhere ? undefined : where);
 };

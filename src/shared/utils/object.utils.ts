@@ -31,6 +31,11 @@ export const forEachObjectEntries = <T>(
   if (checkIsObject(it)) for (const key in it) eacher(key as never, it[key] as never);
 };
 
+export const forEachObjectEntriesSimple: <T>(
+  it: T,
+  eacher: (key: keyof NonNullable<T>, value: NonNullable<T>[keyof T]) => void,
+) => void = forEachObjectEntries as never;
+
 export const mapObjectEntries = <T, Ret>(
   it: T,
   mapper: (

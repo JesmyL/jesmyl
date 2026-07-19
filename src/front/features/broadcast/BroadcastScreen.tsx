@@ -1,8 +1,10 @@
 import { BibleBroadcastScreenCurrentScreen } from '$bible/entities/broadcast-screen/ui/BibleBroadcastCurrentScreen';
 import { BibleCurrentTextsContext } from '$bible/shared/state/CurrentTextsContext';
 import { BibleTranslatesContextProvider } from '$bible/shared/state/TranslatesContext';
+import { useCmComCurrent } from '$cm/entities/com';
 import { CmBroadcastSlidesContext } from '$cm/features/broadcast';
 import { cmIsTrackBroadcastAtom } from '$cm/shared/state';
+import { useCmBroadcastScreenConfig } from '$cm/widgets/broadcast';
 import { CmBroadcastCurrentComTrackScreen } from '$cm/widgets/broadcast/ui/CurrentComTrackScreen';
 import { CmBroadcastCurrentScreen } from '$cm/widgets/broadcast/ui/CurrentScreen';
 import { css, Global } from '@emotion/react';
@@ -21,6 +23,8 @@ export const BroadcastScreen = (props: BroadcastScreenProps) => {
   const initialSlide = useBroadcastInitialSlideValue();
   const isShowTranslatedText = useAtomValue(isShowBroadcastTextAtom);
   const isTrackBroadcast = useAtomValue(cmIsTrackBroadcastAtom);
+  const config = useCmBroadcastScreenConfig(props.configi ?? 0);
+  const com = useCmComCurrent();
 
   return (
     <>
@@ -61,9 +65,14 @@ export const BroadcastScreen = (props: BroadcastScreenProps) => {
           ) : isTrackBroadcast ? (
             <CmBroadcastCurrentComTrackScreen {...props} />
           ) : (
-            <CmBroadcastSlidesContext configi={props.configi ?? 0}>
-              <CmBroadcastCurrentScreen {...props} />
-            </CmBroadcastSlidesContext>
+            com && (
+              <CmBroadcastSlidesContext
+                textCase={config?.case}
+                com={com}
+              >
+                <CmBroadcastCurrentScreen {...props} />
+              </CmBroadcastSlidesContext>
+            )
           )}
         </BroadcastTextScreen>
       </StyledNextSiblingVisibiliter>

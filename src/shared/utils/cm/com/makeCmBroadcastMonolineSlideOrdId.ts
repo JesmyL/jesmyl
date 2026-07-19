@@ -1,16 +1,34 @@
-import { CmComNewlinerLinei, CmComNewlinerRepeati, CmComOrderWid } from 'shared/api';
-import { CmBroadcastMonolineSlideLineId, CmBroadcastMonolineSlideOrdStrId } from 'shared/model/cm/broadcast';
+import {
+  CmComLinei,
+  CmComLineiZero,
+  CmComNewlinerRepeati,
+  CmComNewlinerRepeatiZero,
+  CmComNewlinerSamei,
+  CmComOrderWid,
+} from 'shared/api';
+import { CmBroadcastMonolineSlideOrdStrId, CmBroadcastMonolineSlideSelectorId } from 'shared/model/cm/broadcast';
+
+export const convertCmBroadcastMonolineSlideOrdLineId = (it: CmBroadcastMonolineSlideSelectorId) =>
+  makeCmBroadcastMonolineSlideOrdLineStrId(it[0], it[1] ?? CmComLineiZero, it[2], it[3]);
 
 export const makeCmBroadcastMonolineSlideOrdLineId = (
   ordw: CmComOrderWid,
-  linei: CmComNewlinerLinei,
+  linei: CmComLinei,
   repeati: CmComNewlinerRepeati | nil,
-  sameLinei: number | nil,
-): CmBroadcastMonolineSlideOrdStrId => `w${ordw}l${makeCmBroadcastMonolineSlideLineId(linei, repeati, sameLinei)}`;
+  samei: CmComNewlinerSamei | nil,
+): CmBroadcastMonolineSlideSelectorId =>
+  samei
+    ? [ordw, linei, repeati ?? CmComNewlinerRepeatiZero, samei]
+    : repeati
+      ? [ordw, linei, repeati]
+      : linei
+        ? [ordw, linei]
+        : [ordw];
 
-export const makeCmBroadcastMonolineSlideLineId = (
-  linei: CmComNewlinerLinei,
+export const makeCmBroadcastMonolineSlideOrdLineStrId = (
+  ordw: CmComOrderWid,
+  linei: CmComLinei,
   repeati: CmComNewlinerRepeati | nil,
-  sameLinei: number | nil,
-): CmBroadcastMonolineSlideLineId =>
-  `${linei}${repeati ? (`r${repeati}` as const) : ('' as const)}${sameLinei ? (`s${sameLinei}` as const) : ('' as const)}`;
+  samei: CmComNewlinerSamei | nil,
+): CmBroadcastMonolineSlideOrdStrId =>
+  `w${ordw}l${linei}${repeati ? (`r${repeati}` as const) : ('' as const)}${samei ? (`s${samei}` as const) : ('' as const)}`;

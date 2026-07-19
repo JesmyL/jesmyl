@@ -5,7 +5,7 @@ import { cmComChordHardLevelAtom } from '$cm/entities/index';
 import { useAtomValue } from 'atomaric';
 import React from 'react';
 import { makeRegExp } from 'regexpert';
-import { CmComTextSquareBracketsMode } from 'shared/api';
+import { CmComLinei, CmComLineiNe, CmComTextSquareBracketsMode } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { commentHolderNodes } from 'shared/const/cm/commentHolderNodes';
 import { CmComOrder } from 'shared/const/cm/order/Order';
@@ -159,8 +159,8 @@ export function TheCmComOrder(props: Props) {
         const lineProps: ICmComOrderLineAsComponentProps = {
           chordedOrd,
           line: textLine,
-          linei: textLinei,
-          solidLinei: -1,
+          linei: textLinei as CmComLinei,
+          solidLinei: CmComLineiNe,
           linesLen: textLinea.length,
           ord,
           ordi,

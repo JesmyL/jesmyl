@@ -1,6 +1,7 @@
 import { makeRegExp } from 'regexpert';
-import { CmComLangi, IExportableOrder } from 'shared/api';
+import { CmComLangi, CmComOrderWidZero, IExportableOrder } from 'shared/api';
 import { enRuLetterVisualEquivalentLazy } from 'shared/const/letter-eqs';
+import { incrementNumber } from 'shared/utils';
 import { checkIsNil, checkIsNotNil, checkIsString } from 'shared/utils/checkIs';
 import { checkIsChordLineReg, slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 import { objectLength } from 'shared/utils/object.utils';
@@ -28,7 +29,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
     };
 
     const units: Unit[] = [];
-    let wid = 0;
+    let wid = CmComOrderWidZero;
     const errors: string[] = [];
     const slogUnits: Record<number, Unit[]> = {};
     const inheritStyle = comBlockKinds?.kinds.find(({ isInherit }) => isInherit);
@@ -151,7 +152,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
         unit.chordsi = chordsi;
       }
 
-      const ord: IExportableOrder = { w: wid++ };
+      const ord: IExportableOrder = { w: (wid = incrementNumber(wid, 1)) };
 
       const similarOrd = orders.find(ord => ord.c === unit.chordsi && ord.t === unit.texti && ord.k === unit.kind?.key);
       if (similarOrd) {

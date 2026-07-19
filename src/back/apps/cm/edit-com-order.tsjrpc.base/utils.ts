@@ -1,5 +1,13 @@
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
-import { CmComMod, CmComOrderWid, CmComWid, CmComWidDef, IExportableCom, IExportableOrder } from 'shared/api';
+import {
+  CmComMod,
+  CmComOrderWid,
+  CmComOrderWidDef,
+  CmComWid,
+  CmComWidDef,
+  IExportableCom,
+  IExportableOrder,
+} from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { CmComOrder } from 'shared/const/cm/order/Order';
 import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
@@ -70,7 +78,7 @@ export const modifyOrd = <Props extends { ordw: CmComOrderWid; comw: CmComWid }>
   });
 
 export const getNextOrdWid = (ords: { w: CmComOrderWid }[]) =>
-  ords.reduce((max, curr) => (curr.w > max ? curr.w : max), CmComOrderWid.def) + 1;
+  (ords.reduce((max, curr) => (curr.w > max ? curr.w : max), CmComOrderWidDef) + 1) as CmComOrderWid;
 
 export const clearNullableOrderInheritValues = (ord: IExportableOrder, key: '_r' | '_v') => {
   if (checkIsNil(ord[key])) return;

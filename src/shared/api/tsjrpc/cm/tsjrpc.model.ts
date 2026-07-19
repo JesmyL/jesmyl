@@ -15,7 +15,7 @@ export type CmTsjrpcModel = {
   takeComwVisitsCount: (args: { comw: CmComWid }) => number;
   getComwVisits: () => PRecord<CmComWid, number>;
 
-  takeFreshComAudioMarksPack: (args: { mod: number; comw: CmComWid }) => null | {
+  takeFreshComAudioMarksPack_v1: (args: { mod: number; comw: CmComWid }) => null | {
     marks: CmComAudioMarkPack | nil;
     comw: CmComWid;
     m: number;

@@ -13,7 +13,7 @@ export const useCmEditorCompositionTrySendAudioMarks = () => {
 
     const timeout = setTimeout(() => {
       forEachObjectEntries(marksOnLoad, (comw, marks) => {
-        if (!marks) return;
+        if (!objectLength(marks)) return;
         cmEditComExternalsClientTsjrpcMethods.updateAudioMarks_v2({ comw: extractNumber(comw), marks });
       });
     }, 200);

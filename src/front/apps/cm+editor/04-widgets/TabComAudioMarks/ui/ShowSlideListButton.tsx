@@ -4,6 +4,7 @@ import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { useCmComCurrentMarkTimei, useCmComMarkTextValuesMaker } from '$cm/ext';
 import { Atom, atom } from 'atomaric';
 import { HttpNumLeadLink } from 'shared/api';
+import { twMerge } from 'tailwind-merge';
 
 let openSlidesAtom: Atom<boolean>;
 
@@ -16,7 +17,7 @@ export const CmEditorTabComAudioMarksShowSlideListButton = ({
 }) => {
   openSlidesAtom ??= atom(false);
 
-  const { makeText, markTimes } = useCmComMarkTextValuesMaker(ccom, src);
+  const { takeSlide, markTimes } = useCmComMarkTextValuesMaker(ccom, src);
   const currentMarkTimei = useCmComCurrentMarkTimei(markTimes);
 
   return (
@@ -30,15 +31,13 @@ export const CmEditorTabComAudioMarksShowSlideListButton = ({
       <Modal openAtom={openSlidesAtom}>
         <ModalHeader>{ccom.name}</ModalHeader>
         <ModalBody>
-          {markTimes.map((_, timei) => {
-            return (
-              <div
-                key={timei}
-                className={'pre-text my-5' + (currentMarkTimei === timei ? ' text-x7' : '')}
-                dangerouslySetInnerHTML={{ __html: makeText(timei).text || '' }}
-              />
-            );
-          })}
+          {markTimes.map((_, timei) => (
+            <div
+              key={timei}
+              className={twMerge('pre-text my-5', currentMarkTimei === timei && 'text-x7')}
+              dangerouslySetInnerHTML={{ __html: takeSlide(timei)?.lines.join('\n') || '' }}
+            />
+          ))}
         </ModalBody>
       </Modal>
     </>

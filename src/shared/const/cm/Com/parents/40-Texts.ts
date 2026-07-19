@@ -1,12 +1,21 @@
 import md5 from 'md5';
 import { escapeRegExpSymbols, makeNamedRegExp, makeRegExp } from 'regexpert';
-import { CmComAudioMarkPackTime, CmComLineText, CmComOrderWid, CmComTextSquareBracketsMode } from 'shared/api';
+import {
+  CmComAudioMarkPackTime,
+  CmComLinei,
+  CmComLineText,
+  CmComNewlinerRepeati,
+  CmComNewlinerSameiZero,
+  CmComOrderWid,
+  CmComOrderWidNever,
+  CmComTextSquareBracketsMode,
+} from 'shared/api';
 import { makeCmComAudioMarkTitleEmptySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { CmBroadcastMonolineSlide, CmBroadcastSlideLine } from 'shared/model/cm/broadcast';
 import { TextCase } from 'shared/model/common';
-import { itIt } from 'shared/utils';
+import { incrementNumber, itIt } from 'shared/utils';
 import { comNbsp } from 'shared/utils/cm/com/const';
-import { makeCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
+import { makeCmBroadcastMonolineSlideOrdLineStrId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
 import { CmComOrdRepeatSlashPlacement, makeCmComOrderRepeats } from 'shared/utils/cm/order';
 import { CmComOrder } from '../../order/Order';
 import { CmComChords } from './30-Chords';
@@ -19,7 +28,7 @@ export class CmComTexts extends CmComChords {
     return orders.concat(
       new CmComOrder(
         {
-          top: { w: CmComOrderWid.never, c: 0 },
+          top: { w: CmComOrderWidNever, c: 0 },
           header: () =>
             makeCmComAudioMarkTitleEmptySelector(
               '',
@@ -33,7 +42,7 @@ export class CmComTexts extends CmComChords {
     );
   }
 
-  makeExpandLines = (isFinalChordedOrd: boolean) => {
+  makeExpandLines = (isFinalChordedOrd: boolean, textCase: TextCase | nil) => {
     try {
       const comOrders = this.ordersWithFinalChordedOrd(isFinalChordedOrd);
       let totalLinei = -1;
@@ -45,9 +54,7 @@ export class CmComTexts extends CmComChords {
           if (ord.isDisplayNone) return '';
 
           const ordLines = (
-            ord.isChBlock()
-              ? ord.me.header()
-              : ord.repeatedText(CmComTextSquareBracketsMode.AsIs, undefined, TextCase.AsIs)
+            ord.isChBlock() ? ord.me.header() : ord.repeatedText(CmComTextSquareBracketsMode.AsIs, undefined, textCase)
           ).split('\n');
 
           blocki++;
@@ -89,7 +96,8 @@ export class CmComTexts extends CmComChords {
   makeExpandSlides = (
     isFinalChordedOrd: boolean,
     isShowInvisibleSlides: boolean,
-    expandLines: CmBroadcastSlideLine[] = this.makeExpandLines(isFinalChordedOrd),
+    textCase?: TextCase | nil,
+    expandLines: CmBroadcastSlideLine[] = this.makeExpandLines(isFinalChordedOrd, textCase),
   ) => {
     let slides: CmBroadcastMonolineSlide[] = [];
     let prevSlide: CmBroadcastMonolineSlide | nil;
@@ -106,9 +114,13 @@ export class CmComTexts extends CmComChords {
 
       const fillSlide = () => {
         prevInitWordi = 0;
-        const zeroSameId = makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, 0);
-        const samei = prevSlide?.lines.length && prevSlide?._id === zeroSameId ? (prevSlide?.samei ?? 0) + 1 : 0;
-        const id = makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, samei);
+        const zeroSameId = makeCmBroadcastMonolineSlideOrdLineStrId(ord.wid, linei, repeati, CmComNewlinerSameiZero);
+        const samei =
+          prevSlide?.lines.length && prevSlide?._id === zeroSameId
+            ? incrementNumber(prevSlide?.samei ?? CmComNewlinerSameiZero)
+            : CmComNewlinerSameiZero;
+
+        const id = makeCmBroadcastMonolineSlideOrdLineStrId(ord.wid, linei, repeati, samei);
 
         prevSlide = {
           id,
@@ -119,7 +131,7 @@ export class CmComTexts extends CmComChords {
           repeati,
           samei,
           fromLinei: totalLinei,
-          toLinei: totalLinei + 1,
+          toLinei: incrementNumber(totalLinei),
           textHash: '',
           _id: zeroSameId,
         };
@@ -146,7 +158,7 @@ export class CmComTexts extends CmComChords {
       prevOrdw = ord.wid;
       prevOrdLinei = linei;
 
-      let samei = 0;
+      let samei = CmComNewlinerSameiZero;
       const { currentSet } = ord.makeNewlinerSets(line, linei, repeati);
 
       currentSet.union(new Set([lineWords.length + 10])).forEach(initWordi => {
@@ -160,9 +172,11 @@ export class CmComTexts extends CmComChords {
         prevWordi = wordi;
 
         if (line) {
-          prevSlide.toLinei = totalLinei + 1;
+          prevSlide.toLinei = incrementNumber(totalLinei);
           prevSlide.lines.push(line);
-          prevSlide.ids.add(makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, samei++));
+          prevSlide.ids.add(
+            makeCmBroadcastMonolineSlideOrdLineStrId(ord.wid, linei, repeati, (samei = incrementNumber(samei))),
+          );
         }
       });
     });
@@ -305,8 +319,14 @@ const digitDiapasons = [
 const padStart = (num: number) => `${num}`.padStart(StartDigits.it, '0');
 const allStartDigits = digitDiapasons[Diapasoni.Last];
 
-const sliceDiapasoniNum = (line: string | nil, diapasoni: Diapasoni) =>
-  +(line?.slice(digitDiapasons[diapasoni], digitDiapasons[diapasoni + 1]) || 0);
+const sliceDiapasoniNum = <Dia extends Diapasoni>(
+  line: string | nil,
+  diapasoni: Dia,
+): Dia extends Diapasoni.TotalLine | Diapasoni.Line
+  ? CmComLinei
+  : Dia extends Diapasoni.Repeat
+    ? CmComNewlinerRepeati
+    : number => +(line?.slice(digitDiapasons[diapasoni], digitDiapasons[diapasoni + 1]) || 0) as never;
 
 const setDiapasoniNum = (line: string, diapasoni: Diapasoni, num: number) => {
   return `${line.slice(0, digitDiapasons[diapasoni])}${padStart(num)}${line.slice(digitDiapasons[diapasoni + 1])}`;

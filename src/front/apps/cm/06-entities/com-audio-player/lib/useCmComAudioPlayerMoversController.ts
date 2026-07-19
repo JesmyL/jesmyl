@@ -5,14 +5,10 @@ import { useAtomValue } from 'atomaric';
 import { useEffect, useRef } from 'react';
 import { CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
-import {
-  checkIsCmComAudioMarkTitleIsLineSelector,
-  makeCmComAudioMarkLineiFromSelector,
-  makeCmComAudioMarkTitleBySelector,
-} from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
+import { makeCmComAudioMarkTitleBySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { CmComOrder } from 'shared/const/cm/order/Order';
 import { emptyFunc, extractNumber } from 'shared/utils';
-import { checkIsNil } from 'shared/utils/checkIs';
+import { checkIsArray, checkIsNil } from 'shared/utils/checkIs';
 import { objectKeys } from 'shared/utils/object.utils';
 import {
   cmComAudioPlayerAddEventListenerPipe,
@@ -88,10 +84,8 @@ export const useCmComAudioPlayerMoversController = (
 
               if (+preSwitchTime >= 0) {
                 const ordSelector = `[solid-ord-selector="${titleProps.ord?.wid}"]` as const;
-                const lineNode = checkIsCmComAudioMarkTitleIsLineSelector(selector)
-                  ? document.querySelector(
-                      `${ordSelector} [solid-ord-linei="${makeCmComAudioMarkLineiFromSelector(selector)}"]`,
-                    )
+                const lineNode = checkIsArray(selector)
+                  ? document.querySelector(`${ordSelector} [solid-ord-linei="${selector[1]}"]`)
                   : null;
 
                 (lineNode ?? block ?? button ?? document.querySelector(ordSelector))?.scrollIntoView({

@@ -1,26 +1,28 @@
-import { makeRegExp } from 'regexpert';
 import {
   CmComAudioMarkPack,
   CmComAudioMarkPackTime,
   CmComAudioMarkSelector,
+  CmComLineiZero,
   CmComOrderWid,
-  CmComTextSquareBracketsMode,
+  CmComOrderWidNever,
   HttpNumLeadLink,
 } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
+import { CmBroadcastMonolineSlideLineSelectorId } from 'shared/model/cm/broadcast';
 import { checkIsArray, checkIsNaN, checkIsStartsWith, checkIsString } from 'shared/utils/checkIs';
-import { comNbsp } from 'shared/utils/cm/com/const';
 import { CmComOrdRepeatSlashPlacement, makeCmComOrderRepeats } from 'shared/utils/cm/order';
 import { objectKeys } from 'shared/utils/object.utils';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 import { comBlockKindsConfig } from 'shared/values/cm/block-kinds/comBlockKinds.config';
 import { CmComOrder } from './Order';
 
-export const makeCmComAudioMarkTitleAsLineSelector = (linei: number) => `~${linei + 1}`;
-export const makeCmComAudioMarkLineiFromSelector = (selector: string) => +selector.slice(1) - 1;
+/** @deprecated */
+export const makeCmComAudioMarkLineiFromSelector = (selector: CmBroadcastMonolineSlideLineSelectorId) =>
+  selector[1] || CmComLineiZero;
 
+/** @deprecated */
 export const checkIsCmComAudioMarkTitleIsLineSelector = (selector: CmComAudioMarkSelector | nil): selector is string =>
-  checkIsString(selector) && selector.startsWith('~') && !checkIsNaN(+selector.slice(1));
+  checkIsString(selector) && checkIsStartsWith(selector, '~') && !checkIsNaN(+selector.slice(1));
 
 const enterBlockKind = comBlockKindsConfig.find(it => it.key === CmComBlockKindKey.Enter);
 const finalBlockKind = comBlockKindsConfig.find(it => it.key === CmComBlockKindKey.Final);
@@ -78,7 +80,7 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
   }
 
   let repeats = 1;
-  let lastSelector: CmComAudioMarkSelector[0] = CmComOrderWid.never;
+  let lastSelector = CmComOrderWidNever;
 
   if (comMarks != null) {
     comMarkKeys.find(itTime => {
@@ -93,30 +95,8 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
     });
   }
 
-  const { ord, visibleOrdi } = com.getOrd(lastSelector);
+  const { ord } = com.getOrd(lastSelector);
   let title = makeCmComAudioMarkTitleEmptySelector(selector, comMarks, time, com.langi ?? 0);
-
-  if (checkIsCmComAudioMarkTitleIsLineSelector(selector) && ord) {
-    let lines = ord.transformedText(CmComTextSquareBracketsMode.Remove).split('\n');
-    const linei = makeCmComAudioMarkLineiFromSelector(selector);
-    let lineText = lines[linei];
-
-    if (lineText == null) {
-      let nextOrd: CmComOrder | nil = ord.me.next;
-
-      while (nextOrd?.isInSolidLineWithInvisibles()) {
-        if (nextOrd.isVisible)
-          lines = lines.concat(nextOrd.transformedText(CmComTextSquareBracketsMode.Remove).split('\n'));
-
-        if ((lineText = lines[linei]) != null) break;
-        nextOrd = nextOrd?.me.next;
-      }
-    }
-
-    title = lineText
-      ? `#${visibleOrdi + 1}:${linei + 1} ${lineText.replace(makeRegExp(`/ *([/\\\\]|${comNbsp})+ */g`), ' ').trim()}`
-      : title;
-  }
 
   const repeatsText = `${repeats > 1 ? `${makeCmComOrderRepeats(CmComOrdRepeatSlashPlacement.Before, repeats)} ` : ''}`;
   const isReplaceBlockText = checkIsStartsWith(title, '+');

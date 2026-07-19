@@ -1,4 +1,8 @@
 export { CmEditorCompositionsCatSpecialSearches } from '$cm+editor/pages/CompositionsPage/ui/SpecialSearches';
+export {
+  CmAudioMarkControlButtonsContext as CmComOrderAudioMarkControlButtonsContext,
+  useCmAudioMarkControlButtonsContext as useCmComOrderAudioMarkControlButtonsContext,
+} from '$cm/entities/AudioMarkControlButtonsContext';
 export { useCmCatICcat } from '$cm/entities/cat';
 export { CmChordCard } from '$cm/entities/chord-card/ui/ChordCard';
 export { CmChordCardTracked } from '$cm/entities/chord-card/ui/ChordCardTracked';
@@ -21,10 +25,12 @@ export {
 export { CmComAudioPlayerMarksMovers } from '$cm/entities/com-audio-player/ui/ComPlayerMarksMovers';
 export { useCmComCommentBlockCss } from '$cm/entities/com-comment';
 export { CmComFaceList } from '$cm/entities/com-face';
-export { CmComOrderList, TheCmComOrder, useCmComOrderAudioMarkControlButtons } from '$cm/entities/com-order';
+export { CmComOrderList, TheCmComOrder } from '$cm/entities/com-order';
 export { CmComOrderLine } from '$cm/entities/com-order-line';
 export { TheCmComOrderSolid } from '$cm/entities/com-order/ui/TheOrderSolid';
 export { CmComJoinGroupList } from '$cm/entities/ComJoinGroupList';
+export { CmBroadcastSlidesContext, useCmBroadcastSlidesContext } from '$cm/features/broadcast';
+export { type CmBroadcastSlidesContextState } from '$cm/features/broadcast/model/slides';
 export { cmOnUserLogout } from '$cm/shared/lib/onUserLogout';
 export { useCmComCurrentMarkTimei } from '$cm/shared/lib/useCmComCurrentMarkTime';
 export { useCmComCurrentMarkValues } from '$cm/shared/lib/useCmComCurrentMarkValues';

@@ -1,6 +1,6 @@
 import { ScreenBroadcastPositionConfig, ScreenBroadcastTextConfig } from '#features/broadcast/complect/model';
 import { BackgroundConfigProps } from '#shared/ui/configurators/model';
-import { CmComLineText, CmComNewlinerLinei, CmComNewlinerRepeati, CmComOrderWid } from 'shared/api';
+import { CmComLineText, CmComLinei, CmComNewlinerRepeati, CmComNewlinerSamei, CmComOrderWid } from 'shared/api';
 import { CmComOrder } from 'shared/const/cm/order/Order';
 
 export type CmBroadcastTextScreenConfig = ScreenBroadcastPositionConfig & ScreenBroadcastTextConfig;
@@ -16,14 +16,28 @@ export interface CmBroadcastScreenConfig extends CmBroadcastTextScreenConfig, Ba
   subs?: Partial<CmBroadcastScreenConfigSubConfigs>;
 }
 
-export type CmBroadcastMonolineSlideLineId =
-  `${CmComNewlinerLinei}${`r${CmComNewlinerRepeati}` | ''}${`s${number}` | ''}`;
-export type CmBroadcastMonolineSlideOrdStrId = `w${CmComOrderWid}l${CmBroadcastMonolineSlideLineId}`;
-export type CmBroadcastMonolineSlideOrdId =
-  | [CmComOrderWid]
-  | [CmComOrderWid, CmComNewlinerLinei]
-  | [CmComOrderWid, CmComNewlinerLinei, CmComNewlinerRepeati]
-  | [CmComOrderWid, CmComNewlinerLinei, CmComNewlinerRepeati, number];
+export type CmBroadcastMonolineSlideOrdStrId =
+  `w${CmComOrderWid}l${CmComLinei}${`r${CmComNewlinerRepeati}` | ''}${`s${CmComNewlinerSamei}` | ''}`;
+
+export type CmBroadcastMonolineSlideSelectorId =
+  | CmBroadcastMonolineSlideOrdSelectorId
+  | CmBroadcastMonolineSlideLineSelectorId
+  | CmBroadcastMonolineSlideRepeatSelectorId
+  | CmBroadcastMonolineSlideSameSelectorId;
+
+export type CmBroadcastMonolineSlideOrdSelectorId = [CmComOrderWid];
+
+export type CmBroadcastMonolineSlideLineSelectorId =
+  | CmBroadcastMonolineSlideOrdSelectorId
+  | [CmComOrderWid, CmComLinei];
+
+export type CmBroadcastMonolineSlideRepeatSelectorId =
+  | CmBroadcastMonolineSlideLineSelectorId
+  | [CmComOrderWid, CmComLinei, CmComNewlinerRepeati];
+
+export type CmBroadcastMonolineSlideSameSelectorId =
+  | CmBroadcastMonolineSlideRepeatSelectorId
+  | [CmComOrderWid, CmComLinei, CmComNewlinerRepeati, CmComNewlinerSamei];
 
 export type CmBroadcastMonolineSlide = {
   /** zero-samei technical id */
@@ -37,15 +51,15 @@ export type CmBroadcastMonolineSlide = {
   /** slide text lines */
   lines: string[];
   /** order line index */
-  linei: CmComNewlinerLinei;
+  linei: CmComLinei;
   /** repeat order index */
   repeati: CmComNewlinerRepeati;
   /** same line divide index */
-  samei: number;
+  samei: CmComNewlinerSamei;
   /** total from line index */
-  fromLinei: number;
+  fromLinei: CmComLinei;
   /** total to line index */
-  toLinei: number;
+  toLinei: CmComLinei;
   /** technical field for calculating slide repeats */
   textHash: string;
   /** repeats of same slides */
@@ -57,9 +71,9 @@ export type CmBroadcastSlideLine = {
   ord: CmComOrder;
   line: CmComLineText;
   blocki: number;
-  linei: CmComNewlinerLinei;
+  linei: CmComLinei;
   repeati: CmComNewlinerRepeati;
-  totalLinei: number;
+  totalLinei: CmComLinei;
 };
 
 export type CmComNewlinerSymbolFreeUpperCaseLine = `_${Uppercase<CmComLineText>}`;

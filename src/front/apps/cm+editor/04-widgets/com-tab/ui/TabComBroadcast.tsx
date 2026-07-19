@@ -5,10 +5,18 @@ import { WithAtom } from '#shared/ui/WithAtom';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import React, { useMemo, useState } from 'react';
-import { CmComNewlinerWordi, CmComTextSquareBracketsMode } from 'shared/api';
+import {
+  CmComLinei,
+  CmComNewlinerSameiZero,
+  CmComNewlinerWordi,
+  CmComNewlinerWordiNewLine,
+  CmComNewlinerWordiNotNewLine,
+  CmComTextSquareBracketsMode,
+} from 'shared/api';
 import { CmBroadcastMonolineSlideOrdStrId, CmComNewlinerSymbolFreeUpperCaseLine } from 'shared/model/cm/broadcast';
+import { incrementNumber, nagativeNumber } from 'shared/utils';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
-import { makeCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
+import { makeCmBroadcastMonolineSlideOrdLineStrId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
 import { takeCmComNewlinerLineFullConfig } from 'shared/utils/cm/com/newliner';
 import { squareBracketsReplacers } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 import { twMerge } from 'tailwind-merge';
@@ -21,7 +29,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
     const warns: PRecord<CmBroadcastMonolineSlideOrdStrId, [className: string, text: string]> = {};
 
     slides.forEach(({ linei, lines, ord, repeati, samei }) => {
-      const ordLineId = makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, samei);
+      const ordLineId = makeCmBroadcastMonolineSlideOrdLineStrId(ord.wid, linei, repeati, samei);
 
       if (lines.length > 5) {
         warns[ordLineId] = ['text-x3 bg-xKO', 'Много строк'];
@@ -85,7 +93,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                       cmEditComClientTsjrpcMethods.removeNL({
                         comw: ccom.wid,
                         ordw: ord.wid,
-                        linei: lineConfigi,
+                        linei: lineConfigi as CmComLinei,
                         repeati: null,
                       })
                     }
@@ -103,7 +111,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
             className="mt-20"
           >
             {group?.map(({ line, ord, linei, repeati }, groupi) => {
-              let samei = 0;
+              let samei = CmComNewlinerSameiZero;
               let prevLineId = '';
 
               const props = { 'solid-ord-selector': ord.wid };
@@ -130,25 +138,32 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                 !isFirstLine && !firstSet && new Set([1]).union(holdSet.symmetricDifference(ownSet)).size === 1;
 
               const cloneSet = ownSet._clone();
-              cloneSet.delete(CmComNewlinerWordi.NewLine);
-              cloneSet.delete(CmComNewlinerWordi.NotNewLine);
+              cloneSet.delete(CmComNewlinerWordiNewLine);
+              cloneSet.delete(CmComNewlinerWordiNotNewLine);
 
               upperLinesDict[upperLine] = 1;
 
-              const renderBreakButton = (wordi: number, isNeedHr?: boolean) => {
+              const renderBreakButton = (wordi: CmComNewlinerWordi, isNeedHr?: boolean) => {
                 let beforeNode;
+                const neWordi = -wordi as CmComNewlinerWordi;
 
-                if (currentSet.has(-wordi) || isNeedHr) {
-                  const zeroOrdLineId = makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, 0);
+                if (currentSet.has(neWordi) || isNeedHr) {
+                  const zeroOrdLineId = makeCmBroadcastMonolineSlideOrdLineStrId(
+                    ord.wid,
+                    linei,
+                    repeati,
+                    CmComNewlinerSameiZero,
+                  );
 
-                  if (prevLineId === zeroOrdLineId) samei++;
-                  else samei = 0;
+                  if (prevLineId === zeroOrdLineId) samei = incrementNumber(samei, 1);
+                  else samei = CmComNewlinerSameiZero;
+
                   prevLineId = zeroOrdLineId;
-                  const ordLineId = makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, samei);
+                  const ordLineId = makeCmBroadcastMonolineSlideOrdLineStrId(ord.wid, linei, repeati, samei);
 
                   beforeNode = (
                     <>
-                      <div className={`my-3 h-1 ${currentSet.has(-wordi) && isNeedHr ? 'bg-xKO' : 'bg-x2'}`} />
+                      <div className={`my-3 h-1 ${currentSet.has(neWordi) && isNeedHr ? 'bg-xKO' : 'bg-x2'}`} />
 
                       {warns[ordLineId] && (
                         <div className={twMerge('mb-3 text-center', warns[ordLineId][0])}>{warns[ordLineId][1]}</div>
@@ -162,7 +177,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                     {beforeNode}
                     <Button
                       size="sx"
-                      {...(currentSet.has(-wordi) && !firstSet?.size
+                      {...(currentSet.has(neWordi) && !firstSet?.size
                         ? {
                             icon: 'MinusSignCircle',
                             className: isSameDigitsWithHolder ? 'bg-xKO! text-x6' : 'text-x6',
@@ -196,7 +211,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                   {...props}
                 >
                   {ord.isAnyInherited || !!linei || !!repeati || <div>{ord.me.header()}</div>}
-                  {renderBreakButton(1, !groupi)}
+                  {renderBreakButton(CmComNewlinerWordiNotNewLine, !groupi)}
 
                   {words.map((word, initWordi) => {
                     if (!initWordi)
@@ -246,10 +261,11 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                         </Button>
                       );
 
-                    const wordi = initWordi + 1;
-                    const isHasAbsWordi = currentSet.has(wordi) || currentSet.has(-wordi);
+                    const wordi = (initWordi + 1) as CmComNewlinerWordi;
+                    const neWordi = nagativeNumber(wordi);
+                    const isHasAbsWordi = currentSet.has(wordi) || currentSet.has(neWordi);
                     cloneSet.delete(wordi);
-                    cloneSet.delete(-wordi);
+                    cloneSet.delete(neWordi);
 
                     return (
                       <React.Fragment key={wordi}>

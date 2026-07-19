@@ -1,6 +1,6 @@
 import {
   CmComIntensityLevel,
-  CmComNewlinerLinei,
+  CmComLinei,
   CmComNewlinerRepeati,
   CmComNewlinerWordi,
   CmComOrderWid,
@@ -44,7 +44,7 @@ export type CmEditComTsjrpcModel = {
   switchNLWord: (args: {
     comw: CmComWid;
     ordw: CmComOrderWid;
-    linei: CmComNewlinerLinei;
+    linei: CmComLinei;
     repeati: CmComNewlinerRepeati;
     wordi: CmComNewlinerWordi;
   }) => void;
@@ -52,14 +52,14 @@ export type CmEditComTsjrpcModel = {
   removeNL: (args: {
     comw: CmComWid;
     ordw: CmComOrderWid;
-    linei: CmComNewlinerLinei;
+    linei: CmComLinei;
     repeati: CmComNewlinerRepeati | null;
   }) => void;
 
   switchNLBr: (args: {
     comw: CmComWid;
     ordw: CmComOrderWid;
-    linei: CmComNewlinerLinei;
+    linei: CmComLinei;
     repeati: CmComNewlinerRepeati;
     wordi: CmComNewlinerWordi;
   }) => void;
