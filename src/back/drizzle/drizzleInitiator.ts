@@ -1,47 +1,18 @@
-import { hostCwdOptions } from 'back/const';
 import { hostRootDir } from 'back/envJson';
-import { makeCyanLogText, makeGreenLogText, makeRedLogText, runCommand } from 'back/utils.exec';
+import { makeCyanLogText } from 'back/utils.exec';
 import * as path from 'path';
-import { checkIsObject } from 'shared/utils/checkIs';
 
 export const drizzleInitiator = async () => {
-  console.info(makeCyanLogText('[Drizzle] Запуск автоматической генерации миграций...'));
+  const drizzleKitMain = require.resolve('drizzle-kit');
+  const binPath = path.resolve(path.dirname(drizzleKitMain), 'bin.cjs');
 
-  try {
-    const drizzleKitMain = require.resolve('drizzle-kit');
-    const binPath = path.resolve(path.dirname(drizzleKitMain), 'bin.cjs');
+  const makeCommand = (command: string) => `node "${binPath}" ${command} --config="${hostRootDir}/drizzle.config.cjs"`;
 
-    const makeCommand = (command: string) =>
-      `node "${binPath}" ${command} --config="${hostRootDir}/drizzle.config.cjs"`;
-
-    await runCommand(makeCommand('generate'), '', { stdio: 'inherit', ...hostCwdOptions });
-
-    console.info(makeGreenLogText('[Drizzle Успешно]: SQL-миграции успешно сгенерированы по конфигу .cjs!'));
-
-    try {
-      await runCommand(makeCommand('migrate'), '', {
-        stdio: 'inherit',
-        ...hostCwdOptions,
-        env: {
-          ...process.env,
-          PGOPTIONS: '-c client_min_messages=warning',
-        },
-      });
-    } catch (error) {
-      console.error(makeRedLogText(`${error}`, ''));
-      console.error(
-        makeRedLogText('👆👆👆 Ошибка при выполнении команды. Можно выполнить последовательность команд вручную:'),
-      );
-      console.info(makeGreenLogText(makeCommand('generate'), ''));
-      console.info(makeGreenLogText(makeCommand('migrate'), ''));
-      console.info(makeGreenLogText(makeCommand('push')));
-    }
-
-    return true;
-  } catch (error) {
-    console.error(makeRedLogText('[Drizzle Ошибка]: Не удалось сгенерировать миграции на бэкенде:'));
-    console.error((checkIsObject(error) && error.message) || error);
-
-    throw error;
-  }
+  setTimeout(() => {
+    console.info(makeCyanLogText('.'.repeat(100)), '\n');
+    console.info(makeCyanLogText(makeCommand('generate'), ''));
+    console.info(makeCyanLogText(makeCommand('migrate'), ''));
+    console.info(makeCyanLogText(makeCommand('push')));
+    console.info(makeCyanLogText('.'.repeat(100)));
+  }, 5000);
 };
