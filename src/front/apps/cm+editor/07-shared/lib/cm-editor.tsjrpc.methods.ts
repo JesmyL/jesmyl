@@ -58,14 +58,14 @@ export const cmEditComExternalsClientTsjrpcMethods =
         methods: {
           updateAudioMarks_v2: {
             onResponse: ({ marks, comw }) => {
-              cmIDB.tb.comAudioTrackMarks_v2.put({ marks, comw });
+              cmIDB.tb.comAudioTrackMarks_v3.put({ marks, comw });
               cmComEditorAudioMarksEditPacksAtom.do.removeMarks(comw, marks);
             },
           },
           changeAudioMarkTime_v1: {
             onResponse: pack => {
               if (!pack) return;
-              cmIDB.tb.comAudioTrackMarks_v2.put({ marks: pack.marks, comw: pack.comw });
+              cmIDB.tb.comAudioTrackMarks_v3.put({ marks: pack.marks, comw: pack.comw });
               cmComEditorAudioMarksEditPacksAtom.do.removeMarks(pack.comw, pack.marks);
             },
           },

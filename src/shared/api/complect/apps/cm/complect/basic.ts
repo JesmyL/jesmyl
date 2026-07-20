@@ -271,10 +271,11 @@ export type HttpNumLeadLink = `${HttpNumLeadLinkKey}${string}`;
 export type CmComAudioMarkSelector = CmBroadcastMonolineSlideSelectorId | string;
 
 export type CmComAudioMarkPackTime = NumberBrand<'CmComAudioMarkPackTime'>;
+export const CmComAudioMarkPackTimeZero = 0 as CmComAudioMarkPackTime;
 
 export type CmComAudioMarkPack = SPRecord<HttpNumLeadLink, SPRecord<CmComAudioMarkPackTime, CmComAudioMarkSelector>>;
 
-export type CmComAudioMarkEditPackValue = CmComAudioMarkSelector | `+${CmComAudioMarkPackTime}+` | null;
+export type CmComAudioMarkEditPackValue = CmComAudioMarkSelector | null;
 
 export type CmComAudioMarkEditPack = SPRecord<
   CmComWid,

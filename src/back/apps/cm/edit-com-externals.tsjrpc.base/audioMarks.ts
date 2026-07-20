@@ -2,12 +2,18 @@ import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { comDB } from 'back/drizzle.schema';
 import { db, dbUpdate } from 'back/drizzle/drizzle.db';
 import { eq } from 'drizzle-orm';
-import { CmComAudioMarkPack, CmComAudioMarkPackTime, CmComWid, HttpNumLeadLink } from 'shared/api';
+import {
+  CmComAudioMarkPack,
+  CmComAudioMarkPackTime,
+  CmComAudioMarkPackTimeZero,
+  CmComWid,
+  HttpNumLeadLink,
+} from 'shared/api';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
-import { extractNumber, itNumSort, smylib } from 'shared/utils';
-import { checkIsNil } from 'shared/utils/checkIs';
+import { CmBroadcastMonolineSlideSelectorId } from 'shared/model/cm/broadcast';
+import { extractNumber, itNumSort } from 'shared/utils';
+import { checkIsNil, checkIsNotNil } from 'shared/utils/checkIs';
 import { objectEntries, objectKeys } from 'shared/utils/object.utils';
-import { takeComwTiny } from '../com.tiny';
 import { makeCmComHttpLinkFromNumLead, makeCmComNumLeadLinkFromHttp } from '../complect/com-http-links';
 
 export const cmEditComExternalsTsjrpcAudioMarks = {
@@ -23,16 +29,29 @@ export const cmEditComExternalsTsjrpcAudioMarks = {
       if (!newPack) continue;
 
       const numLink = makeCmComNumLeadLinkFromHttp(src);
+      let firstOrdw;
 
       if (checkIsNil(comMarks[numLink])) {
         description = `Создан новый пак аудио-маркеров для ссылки ${makeCmComHttpLinkFromNumLead(numLink)}`;
 
-        const comTiny = await takeComwTiny({ w: extractNumber(comw) }, false);
+        const comTiny = (
+          await db
+            .select({ n: comDB.n, o: comDB.o })
+            .from(comDB)
+            .where(eq(comDB.w, extractNumber(comw)))
+            .limit(1)
+        ).at(0);
 
-        if (comTiny) description += `\n\nпесня:\n${comTiny.n}`;
+        if (comTiny) {
+          description += `\n\nпесня:\n${comTiny.n}`;
+          const ordw = comTiny.o?.[0].w;
+
+          if (checkIsNotNil(ordw))
+            firstOrdw = { [CmComAudioMarkPackTimeZero]: [ordw] as CmBroadcastMonolineSlideSelectorId };
+        }
       }
 
-      const srcPackMarks = comMarks[numLink] ?? {};
+      const srcPackMarks = comMarks[numLink] ?? firstOrdw ?? {};
 
       objectEntries(newPack).forEach(([time, selector]) => {
         if (checkIsNil(selector)) {
@@ -42,18 +61,11 @@ export const cmEditComExternalsTsjrpcAudioMarks = {
 
         let timeScalar = +time;
         if (timeScalar === 0.11) timeScalar = 0;
-        if (selector === `+0.11+`) selector = `+0+`;
 
-        const addTime = `+${timeScalar}+`;
         timeScalar = +timeScalar.toFixed(2);
         if (timeScalar !== 0 && Math.trunc(timeScalar) === timeScalar) timeScalar += 0.11;
 
         time = timeScalar as CmComAudioMarkPackTime;
-
-        if (selector === addTime || selector === `+${time}+`) {
-          srcPackMarks[time] = smylib.convertSecondsInStrTime(time);
-          return;
-        }
 
         srcPackMarks[time] = selector;
       });
@@ -63,17 +75,13 @@ export const cmEditComExternalsTsjrpcAudioMarks = {
       objectKeys(srcPackMarks)
         .map(extractNumber)
         .sort(itNumSort)
-        .forEach(time => {
-          sortedMarksPack[time] = srcPackMarks[time];
-        });
-
-      await updateComPack(comw, { ...comMarks, [src]: sortedMarksPack });
+        .forEach(time => (sortedMarksPack[time] = srcPackMarks[time]));
     }
 
-    return {
-      description,
-      value: { marks: retPack, comw },
-    };
+    const marks = { ...comMarks, ...retPack };
+    await updateComPack(comw, marks);
+
+    return { value: { marks, comw }, description };
   },
 
   changeAudioMarkTime_v1: async ({ newTime, src, time, comw }) => {
@@ -83,8 +91,7 @@ export const cmEditComExternalsTsjrpcAudioMarks = {
     const linkMarks = comMarks[numLeadSrc];
 
     if (checkIsNil(linkMarks)) return { value: null };
-
-    if (linkMarks[newTime] != null) throw 'Такое время уже зарегистрировано';
+    if (checkIsNotNil(linkMarks[newTime])) throw 'Такое время уже зарегистрировано';
 
     linkMarks[newTime] = linkMarks[time];
     delete linkMarks[time];
@@ -94,13 +101,12 @@ export const cmEditComExternalsTsjrpcAudioMarks = {
     objectKeys(linkMarks)
       .map(extractNumber)
       .sort(itNumSort)
-      .forEach(time => {
-        sortedMarksPack[time] = linkMarks[time];
-      });
+      .forEach(time => (sortedMarksPack[time] = linkMarks[time]));
 
-    await updateComPack(comw, { ...comMarks, [src]: sortedMarksPack });
+    const marks = { ...comMarks, [src]: sortedMarksPack };
+    await updateComPack(comw, marks);
 
-    return { value: { marks: sortedMarksPack, comw }, description: null };
+    return { value: { marks, comw } };
   },
 } satisfies ServerTsjrpcSatisfy<CmEditComExternalsTsjrpcModel>;
 

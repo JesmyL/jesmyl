@@ -3,7 +3,6 @@ import { ButtonGroup } from '#shared/components/ui/button-group';
 import { mylib } from '#shared/lib/my-lib';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
 import { makeToastKOMoodConfig, Modal } from '#shared/ui/modal';
-import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { WithState } from '#shared/ui/WithState';
 import { cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom } from '$cm+editor/entities/com-audio';
 import { CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner } from '$cm+editor/features/com-audio';
@@ -22,11 +21,10 @@ import {
 import { atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { CmComAudioMarkEditPackValue, CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
-import { extractNumber, iife } from 'shared/utils';
+import { iife } from 'shared/utils';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { makeCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
 import { lazyInit } from 'shared/utils/lazyInit';
-import { mapObjectEntries } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import { CmEditorTabComAudioMarksShowSlideListButton } from './ShowSlideListButton';
@@ -37,7 +35,6 @@ const preSwitchTimeAtom = lazyInit(() => atom(-1, 'cm+editor:comAudioPreSwitchTi
 export const CmEditorTabComAudioMarks = iife(() => {
   const Child = ({ ccom }: { ccom: EditableCom }) => {
     const editSrc = useAtomValue(srcOnEditAtom());
-    const marksOnUpdating = useAtomValue(cmComEditorAudioMarksEditPacksAtom);
     const { slideIdTimeDict } = useCmComMarkTextValuesMaker(ccom, editSrc);
 
     const { controls: audioMarkButtons, slides: { slides } = {} } = useCmComOrderAudioMarkControlButtonsContext() ?? {};
@@ -118,28 +115,6 @@ export const CmEditorTabComAudioMarks = iife(() => {
                         </div>
                       )}
                     />
-
-                    {mapObjectEntries(marksOnUpdating[ccom.wid]?.[editSrc], (time, selector) => {
-                      return (
-                        !selector || (
-                          <div
-                            key={time}
-                            className="flex gap-3"
-                          >
-                            <span>
-                              {time} ({mylib.convertSecondsInStrTime(+time)})
-                            </span>
-                            <TheIconLoading />
-                            <Button
-                              icon="Cancel01"
-                              onClick={() =>
-                                cmComEditorAudioMarksEditPacksAtom.do.removeMark(ccom.wid, editSrc, extractNumber(time))
-                              }
-                            />
-                          </div>
-                        )
-                      );
-                    })}
 
                     {audioMarkButtons?.afterIdDict.before}
 
