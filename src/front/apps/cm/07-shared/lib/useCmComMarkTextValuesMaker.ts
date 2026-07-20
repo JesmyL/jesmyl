@@ -13,7 +13,7 @@ import { cmIDB } from '../state';
 export const useCmComMarkTextValuesMaker = (com: CmCom | und, src: HttpNumLeadLink | nil) => {
   const marks = cmIDB.useAudioTrackMarks(com?.wid);
   const trackMarks = com && checkIsNotNil(src) ? marks?.marks?.[src] : null;
-  const markTimes: CmComAudioMarkPackTime[] = useMemo(() => objectKeys(trackMarks).map(extractNumber), [trackMarks]);
+  const markTimes = useMemo(() => objectKeys(trackMarks).map(extractNumber), [trackMarks]);
   const slides = useCmBroadcastSlidesContext();
 
   const { timeSlideDict, slideIdTimeDict } = useMemo(() => {
