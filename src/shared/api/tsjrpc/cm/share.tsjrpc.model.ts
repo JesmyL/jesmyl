@@ -27,7 +27,7 @@ export type CmShareTsjrpcModel = {
   favTools: (args: { tools: MigratableComToolName[]; mod: number }) => void;
   refreshComFavs: (args: { comws: CmComWid[]; mod: number }) => void;
 
-  freshSchEvComIntp: (args: { intps: ComsInScheduleIntp[]; mod: number }) => void;
+  freshSchEvComIntp_v1: (args: { intps: ComsInScheduleIntp[]; mod: number }) => void;
   freshSchDayEvComws: (args: { packs: CmScheduleDayEventComwsPack[] | CmScheduleDayEventComwsPack }) => void;
 
   /** @deprecated */

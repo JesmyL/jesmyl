@@ -25,12 +25,14 @@ import {
   ICmComCommentBlock,
   ScheduleWidgetDayEventMi,
   ScheduleWidgetDayi,
+  ScheduleWidgetWid,
 } from 'shared/api';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
 import { Bool, Do } from 'shared/enums';
 import { checkIsNotNil } from 'shared/utils/checkIs';
 import { objectLength, objectValues } from 'shared/utils/object.utils';
 import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from '../client-selectors-by-visit';
+import { takeComwTiny } from '../com.tiny';
 import { catsFileStorage, chordPackFileStore, cmComWidRefGroupDictFileStore } from '../file-stores';
 import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
 
@@ -85,23 +87,23 @@ export const cmServerTsjrpcBaseRequestFreshes = {
     }
 
     if (visitInfo && visitInfo.version >= 1230) {
-      const freshComsInSchEvent = await db
-        .select({ it: sch2ComDB })
-        .from(sch2ComDB)
-        .where(gt(sch2ComDB.intpMod, lastModfiedAt));
+      const freshComsInSchEvent = await db.select().from(sch2ComDB).where(gt(sch2ComDB.intpMod, lastModfiedAt));
 
       if (objectLength(freshComsInSchEvent)) {
         let mod = 0;
-        const intps: ComsInScheduleIntp[] = [];
+        const intpsDict: Record<ScheduleWidgetWid, ComsInScheduleIntp> = {};
 
-        for (const { it } of freshComsInSchEvent) {
-          mod = Math.max(it.intpMod, mod);
-          const sch = await takeScheduleWidgetTiny({ id: it.schId }, false);
+        for (const { comId, intp, intpMod, schId } of freshComsInSchEvent) {
+          mod = Math.max(intpMod, mod);
+          const sch = await takeScheduleWidgetTiny({ id: schId }, false);
+          const com = await takeComwTiny({ id: comId }, false);
 
-          if (it && sch) intps.push({ schw: sch.w, intp: it.intp ?? undefined });
+          if (com && sch) {
+            ((intpsDict[sch.w] ??= { schw: sch.w, intp: {} }).intp ??= {})[com.w] = intp;
+          }
         }
 
-        cmShareServerTsjrpcMethods.freshSchEvComIntp({ intps, mod }, client);
+        cmShareServerTsjrpcMethods.freshSchEvComIntp_v1({ intps: objectValues(intpsDict), mod }, client);
       }
 
       const allSchedules = await db.select({ id: scheduleDB.id }).from(scheduleDB);

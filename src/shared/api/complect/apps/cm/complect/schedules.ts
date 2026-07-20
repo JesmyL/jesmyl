@@ -15,7 +15,7 @@ export type ScheduleComPackHistoryItem = {
 export type ComsInScheduleIntp = {
   schw: ScheduleWidgetWid;
   /** специальная интерпритация для мероприятия */
-  intp?: PRecord<CmComWid, IExportableComInterpretation>;
+  intp?: PRecord<CmComWid, IExportableComInterpretation | nil>;
 };
 
 export type ComsInSchEventComwsPack = {

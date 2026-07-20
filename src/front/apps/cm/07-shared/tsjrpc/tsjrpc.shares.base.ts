@@ -93,8 +93,13 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
           updateMod(mod);
         },
 
-        freshSchEvComIntp: async ({ intps, mod }) => {
-          cmIDB.db.scheduleComIntp.bulkPut(intps);
+        freshSchEvComIntp_v1: async ({ intps, mod }) => {
+          for (const schIntp of intps) {
+            const prev = await cmIDB.db.scheduleComIntp.get(schIntp.schw);
+
+            await cmIDB.db.scheduleComIntp.put({ schw: schIntp.schw, intp: { ...prev?.intp, ...schIntp.intp } });
+          }
+
           updateMod(mod);
         },
 

@@ -29,6 +29,14 @@ export const makePgCheckedSelectExportableComSqlRaw = <Adds extends Parameters<t
     ...adds,
   });
 
-export const selectPgCheckedExportableCom = async (comw: CmComWid) =>
-  (await db.select({ c: makePgCheckedSelectExportableComSqlRaw() }).from(comDB).where(eq(comDB.w, comw)).limit(1)).at(0)
-    ?.c;
+export const selectPgCheckedExportableCom = async (
+  comw: CmComWid,
+  adds?: Parameters<typeof makePgCheckedSelectSqlRaw>[1],
+) =>
+  (
+    await db
+      .select({ c: makePgCheckedSelectExportableComSqlRaw(adds) })
+      .from(comDB)
+      .where(eq(comDB.w, comw))
+      .limit(1)
+  ).at(0)?.c;
