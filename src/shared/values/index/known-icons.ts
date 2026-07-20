@@ -157,6 +157,7 @@ export const knownStameskaIconNames = {
   PencilEdit01: 0,
   PencilEdit02: 0,
   PinLocation01: 0,
+  PinLocation02: 0,
   Play: 0,
   PlayCircle: 0,
   Playlist01: 0,

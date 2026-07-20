@@ -26,14 +26,16 @@ export const forEachObjectEntries = <T>(
   eacher: (
     key: T extends object | nil ? (keyof T extends number ? `${keyof T}` : keyof T) : string,
     value: NonNullable<T>[keyof T],
+    index: number,
   ) => void,
 ) => {
-  if (checkIsObject(it)) for (const key in it) eacher(key as never, it[key] as never);
+  let i = 0;
+  if (checkIsObject(it)) for (const key in it) eacher(key as never, it[key] as never, i++);
 };
 
 export const forEachObjectEntriesSimple: <T>(
   it: T,
-  eacher: (key: keyof NonNullable<T>, value: NonNullable<T>[keyof T]) => void,
+  eacher: (key: keyof NonNullable<T>, value: NonNullable<T>[keyof T], index: number) => void,
 ) => void = forEachObjectEntries as never;
 
 export const mapObjectEntries = <T, Ret>(
