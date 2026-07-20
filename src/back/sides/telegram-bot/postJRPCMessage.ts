@@ -41,7 +41,7 @@ export const postJRPCMessage = async (
     tg?: TgBot.SendMessageOptions & { chatId?: number };
     email?: Mail.Options;
   },
-  emailKey = EmailerAuthConfigKey.Space,
+  emailKey = EmailerAuthConfigKey.Self,
 ) => {
   if (backConfig.isTest) return;
 
