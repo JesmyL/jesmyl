@@ -22,7 +22,7 @@ export const cloneDrizzleToLocal = async () => {
 
       mkConfig(userRoleDB, table => dbUpdate(table, { m: Date.now() }, 'ANYWHERE!')),
 
-      mkConfig(comDB, table => dbUpdate(table, { m: Date.now() }, 'ANYWHERE!')),
+      mkConfig(comDB, table => dbUpdate(table, { m: Date.now(), amMod: Date.now() }, 'ANYWHERE!')),
 
       mkConfig(scheduleDB, table => dbUpdate(table, { m: Date.now() }, 'ANYWHERE!')),
 
