@@ -1,5 +1,5 @@
 import { contextCreator } from '#shared/lib/contextCreator';
-import { CmBroadcastSlidesContextState } from '$cm/ext';
+import { useCmComMarkTextValuesMaker } from '$cm/ext';
 import { CmAudioMarkControlButtonsContextAfterIdDict, CmAudioMarkControlButtonsContextIdDict } from '../model/common';
 
 export const [CmAudioMarkControlButtonsContextInner, useCmAudioMarkControlButtonsContext] = contextCreator<{
@@ -7,5 +7,5 @@ export const [CmAudioMarkControlButtonsContextInner, useCmAudioMarkControlButton
     idDict: CmAudioMarkControlButtonsContextIdDict;
     afterIdDict: CmAudioMarkControlButtonsContextAfterIdDict;
   };
-  slides: CmBroadcastSlidesContextState;
+  slides: ReturnType<typeof useCmComMarkTextValuesMaker>;
 } | null>(null);

@@ -1,4 +1,3 @@
-import { useCmBroadcastSlidesContext } from '$cm/ext';
 import { useMemo } from 'react';
 import { CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
@@ -9,26 +8,23 @@ import { convertCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/ma
 import { forEachObjectEntries, objectKeys } from 'shared/utils/object.utils';
 import { cmIDB } from '../state';
 
-/** @deprecated  make contexted */
 export const useCmComMarkTextValuesMaker = (com: CmCom | und, src: HttpNumLeadLink | nil) => {
   const marks = cmIDB.useAudioTrackMarks(com?.wid);
   const trackMarks = com && checkIsNotNil(src) ? marks?.marks?.[src] : null;
   const markTimes = useMemo(() => objectKeys(trackMarks).map(extractNumber), [trackMarks]);
-  const slides = useCmBroadcastSlidesContext();
+  const slides = useMemo(() => com?.makeExpandSlides(true, false, null) ?? [], [com]);
 
-  const { timeSlideDict, slideIdTimeDict } = useMemo(() => {
+  const { timeSlideDict, slideIdTimeSetDict } = useMemo(() => {
     const timeSlideDict: SPRecord<CmComAudioMarkPackTime, CmBroadcastMonolineSlide> = {};
-    const slideIdTimeDict: SPRecord<CmBroadcastMonolineSlideOrdStrId, CmComAudioMarkPackTime> = {};
+    const slideIdTimeSetDict: SPRecord<CmBroadcastMonolineSlideOrdStrId, Set<CmComAudioMarkPackTime>> = {};
 
-    const result = { timeSlideDict, slideIdTimeDict };
+    const result = { timeSlideDict, slideIdTimeSetDict };
 
-    if (checkIsNil(trackMarks) || !slides?.slides.length) return result;
+    if (checkIsNil(trackMarks) || !slides.length) return result;
 
     const idSlideDict: Record<CmBroadcastMonolineSlideOrdStrId, CmBroadcastMonolineSlide> = {};
 
-    slides.slides.forEach(slide => {
-      idSlideDict[slide.id] = slide;
-    });
+    slides.forEach(slide => (idSlideDict[slide.id] = slide));
 
     forEachObjectEntries(trackMarks, (time, selector) => {
       if (!checkIsArray(selector)) return;
@@ -36,16 +32,17 @@ export const useCmComMarkTextValuesMaker = (com: CmCom | und, src: HttpNumLeadLi
       const id = convertCmBroadcastMonolineSlideOrdLineId(selector);
       timeSlideDict[time] = idSlideDict[id];
 
-      slideIdTimeDict[id] = extractNumber(time);
+      (slideIdTimeSetDict[id] ??= new Set()).add(extractNumber(time));
     });
 
     return result;
-  }, [slides?.slides, trackMarks]);
+  }, [slides, trackMarks]);
 
   return {
+    slides,
     markTimes,
     timeSlideDict,
-    slideIdTimeDict,
+    slideIdTimeSetDict,
     takeSlide: (timei: number) => timeSlideDict[markTimes[timei]],
   };
 };

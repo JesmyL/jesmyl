@@ -13,21 +13,22 @@ import {
   cmIDB,
   useCmComMarkTextValuesMaker,
 } from '$cm/ext';
-import { useAtomValue } from 'atomaric';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Atom, useAtomValue } from 'atomaric';
+import { useState } from 'react';
 import { CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
 import { makeCmComAudioMarkTitleBySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { extractNumber } from 'shared/utils';
 import { checkIsArray, checkIsNil } from 'shared/utils/checkIs';
+import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
 
 interface Props {
   time: CmComAudioMarkPackTime;
   com: EditableCom;
   src: HttpNumLeadLink;
-  setPinTime: Dispatch<SetStateAction<CmComAudioMarkPackTime | null>>;
+  pinTimeAtom: Atom<CmComAudioMarkPackTime | null>;
 }
 
-export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ time, com, src, setPinTime }: Props) => {
+export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ time, com, src, pinTimeAtom }: Props) => {
   const prompt = usePrompt();
   const deltaButton = (delta: number, isAdd?: 1) => (
     <Button
@@ -40,12 +41,7 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
 
   const trackMarks = cmIDB.useAudioTrackMarks(com.wid);
   const selector = trackMarks?.marks?.[src]?.[time];
-  const { title, isReplaceBlockText, isShortTime } = makeCmComAudioMarkTitleBySelector(
-    time,
-    com,
-    selector,
-    trackMarks?.marks?.[src],
-  );
+  const { title, isShortTime } = makeCmComAudioMarkTitleBySelector(time, com, selector, trackMarks?.marks?.[src]);
   const [currentTime, setCurrentTime] = useState(() => extractNumber(time));
   const isPlayState = useAtomValue(cmComAudioPlayerIsPlayAtom);
   const isPause = useDebounceValue(!isPlayState, 500);
@@ -73,7 +69,7 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
   return (
     <>
       <ModalHeader className="flex w-full justify-between">
-        <span className={isShortTime ? 'text-xKO' : ''}>{isReplaceBlockText ? title.split('\n', 1)[0] : title}</span>
+        <span className={isShortTime ? 'text-xKO' : ''}>{title}</span>
         <span className="flex gap-3">
           <Button
             icon="Edit01"
@@ -91,10 +87,10 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
           />
 
           <Button
-            icon="PinLocation01"
+            icon="PinLocation02"
             onClick={() => {
               cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.reset();
-              setPinTime(time);
+              pinTimeAtom.set(time);
             }}
           />
 
@@ -131,7 +127,10 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
           </div>
         </div>
 
-        {timeSlideDict[time]?.lines.map((line, linei) => <div key={linei}>{line}</div>)}
+        <div
+          className="white-pre"
+          {...makeCmComTextInnerHtmlProp(timeSlideDict[time]?.lines.join('\n'))}
+        />
       </ModalBody>
       <ModalFooter>
         <Button

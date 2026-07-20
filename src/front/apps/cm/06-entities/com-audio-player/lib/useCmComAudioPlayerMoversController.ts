@@ -43,7 +43,7 @@ export const useCmComAudioPlayerMoversController = (
 
     const titleNode = titleRef.current;
     const markTimeList = objectKeys(audioMarkPack).map(extractNumber);
-    const selectorToTitlePropsDict: PRecord<number, { title: string; ord: CmComOrder | nil }> = {};
+    const selectorToTitlePropsDict: PRecord<number, { title: string; ord?: CmComOrder | nil }> = {};
     const timePositions$ = { prev: 0, current: 0, next: 0, preprev: 0 } as never as Record<
       'prev' | 'current' | 'next' | 'preprev',
       CmComAudioMarkPackTime
