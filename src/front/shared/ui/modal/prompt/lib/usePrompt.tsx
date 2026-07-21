@@ -44,7 +44,7 @@ export const usePrompt = () => {
             {content}
             <TextInput
               defaultValue={defaultValue}
-              selectOnFocus
+              selectOnFocus={!multiline}
               multiline={multiline}
               onInput={eventValue => (defaultValue = eventValue)}
             />
