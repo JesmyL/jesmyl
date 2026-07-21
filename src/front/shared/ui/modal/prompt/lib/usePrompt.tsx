@@ -1,9 +1,9 @@
 import { Button } from '#shared/components/ui/button';
-import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import { TextInput } from '#shared/ui/TextInput';
 import { useSetRootAnchoredContent } from '#shared/ui/useSetRootAnchoredContent';
 import { Atom, atom } from 'atomaric';
-import { ReactNode, useCallback, useEffect } from 'react';
+import { ReactNode, useCallback } from 'react';
+import { KeyboardListeners } from '../../../KeyboardListeners';
 import { Modal } from '../../modal/ui/Modal';
 import { ModalBody } from '../../modal/ui/ModalBody';
 import { ModalFooter } from '../../modal/ui/ModalFooter';
@@ -17,9 +17,14 @@ export const usePrompt = () => {
   const setContent = useSetRootAnchoredContent(isOpenAtom);
 
   return useCallback(
-    (content: ReactNode, header?: ReactNode, defaultValue = '') => {
+    (content: ReactNode, header?: ReactNode, defaultValue = '', { multiline }: { multiline?: boolean } = {}) => {
       const resolvers = Promise.withResolvers<string | null>();
       isOpenAtom.set(true);
+
+      const onAction = (value: string | null) => {
+        resolvers.resolve(value);
+        isOpenAtom.set(false);
+      };
 
       setContent(
         <Modal
@@ -30,10 +35,9 @@ export const usePrompt = () => {
             isOpenAtom.reset();
           }}
         >
-          <PromptListeners
-            confirmationResolvers={resolvers}
-            onClose={() => isOpenAtom.set(false)}
-            getValue={() => defaultValue}
+          <KeyboardListeners
+            onEnter={() => onAction(defaultValue)}
+            onEscape={() => onAction(null)}
           />
           <ModalHeader>{header ?? 'Заполни'}</ModalHeader>
           <ModalBody>
@@ -41,6 +45,7 @@ export const usePrompt = () => {
             <TextInput
               defaultValue={defaultValue}
               selectOnFocus
+              multiline={multiline}
               onInput={eventValue => (defaultValue = eventValue)}
             />
           </ModalBody>
@@ -76,26 +81,4 @@ export const usePrompt = () => {
     },
     [setContent],
   );
-};
-
-// eslint-disable-next-line react-refresh/only-export-components
-const PromptListeners = ({
-  confirmationResolvers,
-  onClose,
-  getValue,
-}: {
-  confirmationResolvers: PromiseWithResolvers<string | null>;
-  onClose: (is: false) => void;
-  getValue: () => string;
-}) => {
-  useEffect(() => {
-    return ThrowEvent.listenKeyUp('Enter', event => {
-      event.stopPropagation();
-      confirmationResolvers.resolve(getValue());
-      onClose(false);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [confirmationResolvers, onClose]);
-
-  return <></>;
 };

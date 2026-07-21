@@ -62,9 +62,7 @@ export const checkWhatOfUserScopeOperationAccessRight = async <
 ): Promise<Record<CRUDOperation, boolean>> => {
   const result = {} as Record<CRUDOperation, boolean>;
 
-  for (const operationStr in accessRightsCRUDOperations) {
-    const operation = operationStr as CRUDOperation;
-
+  for (const operation of accessRightsCRUDOperations) {
     try {
       if (await throwIfNoUserScopeAccessRight(selector, scope, rule, operation)) throw '';
       result[operation] = true;

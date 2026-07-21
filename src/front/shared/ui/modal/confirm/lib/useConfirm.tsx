@@ -2,11 +2,11 @@ import { useSetRootAnchoredContent } from '#shared/ui/useSetRootAnchoredContent'
 import { Atom, atom } from 'atomaric';
 import { ReactNode, useCallback, useRef } from 'react';
 import { emptyFunc } from 'shared/utils';
+import { KeyboardListeners } from '../../../KeyboardListeners';
 import { Modal } from '../../modal/ui/Modal';
 import { ModalBody } from '../../modal/ui/ModalBody';
 import { ModalFooter } from '../../modal/ui/ModalFooter';
 import { ModalHeader } from '../../modal/ui/ModalHeader';
-import { ConfirmListeners } from '../ui/Listeners';
 
 let isOpenConfirmAtom: Atom<boolean>;
 
@@ -21,6 +21,12 @@ export const useConfirm = () => {
       const resolvers = Promise.withResolvers<boolean>();
       isOpenConfirmAtom.set(true);
 
+      const onAction = (resolve: boolean) => {
+        resolvers.resolve(resolve);
+        onCloseRef.current();
+        isOpenConfirmAtom.reset();
+      };
+
       setContent(
         <Modal
           isRenderHere
@@ -30,12 +36,9 @@ export const useConfirm = () => {
             isOpenConfirmAtom.reset();
           }}
         >
-          <ConfirmListeners
-            confirmationResolvers={resolvers}
-            onClose={() => {
-              onCloseRef.current();
-              isOpenConfirmAtom.set(false);
-            }}
+          <KeyboardListeners
+            onEnter={() => onAction(true)}
+            onEscape={() => onAction(false)}
           />
           <ModalHeader>{header ?? 'Подтверди'}</ModalHeader>
           <ModalBody>{content}</ModalBody>
