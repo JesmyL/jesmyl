@@ -100,7 +100,14 @@ export const useCmComAudioPlayerMoversController = (
           };
 
     const updatePoints = () => {
-      const currentMarkTimei = takeCmComTrackCurrentTimeMark(markTimeList, timePositions$);
+      const currentMarkTimei = takeCmComTrackCurrentTimeMark(markTimeList);
+
+      if (checkIsNil(timePositions$)) return currentMarkTimei;
+
+      timePositions$.preprev = (markTimeList[currentMarkTimei - 2] ?? 0) as CmComAudioMarkPackTime;
+      timePositions$.prev = (markTimeList[currentMarkTimei - 1] ?? 0) as CmComAudioMarkPackTime;
+      timePositions$.current = (markTimeList[currentMarkTimei] ?? 0) as CmComAudioMarkPackTime;
+      timePositions$.next = (markTimeList[currentMarkTimei + 1] ?? 0) as CmComAudioMarkPackTime;
 
       if (nextRef.current !== null) {
         nextRef.current.disabled = currentMarkTimei === markTimeList.length - 1;

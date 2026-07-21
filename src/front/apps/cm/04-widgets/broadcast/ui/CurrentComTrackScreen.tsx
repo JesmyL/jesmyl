@@ -20,7 +20,7 @@ export const CmBroadcastCurrentComTrackScreen = (props: BroadcastScreenProps & P
 
   const comw = useAtomValue(cmPlayerBroadcastComwAtom);
   const com = useCmCom(comw);
-  const { html, nextHtml, isNextTechnicalText, isTechnicalText } = useCmComCurrentMarkValues(com);
+  const { html, nextHtml, isNextChorded, isChorded, minText } = useCmComCurrentMarkValues(com, currentConfig?.case);
   const switchDirection = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
 
   return (
@@ -29,13 +29,11 @@ export const CmBroadcastCurrentComTrackScreen = (props: BroadcastScreenProps & P
       cmConfig={currentConfig}
       html={html ?? ''}
       nextText={nextHtml ?? ''}
-      isChorded={!!isTechnicalText}
-      isNextChorded={!!isNextTechnicalText}
       isVisible={isVisible}
       subUpdates={'' + currentConfigi + forceUpdates + getCurrentConfig(currentConfigi)?.proportion}
-      isTechnicalText={isTechnicalText}
-      isNextTechnicalText={isNextTechnicalText}
-      freshSlideKey={html ?? ''}
+      isChorded={isChorded}
+      isNextChorded={isNextChorded}
+      freshSlideKey={minText ?? ''}
       slideSwitchDir={switchDirection}
     />
   );

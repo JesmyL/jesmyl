@@ -61,7 +61,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                   <div
                     key={slidei}
                     className="my-5 white-pre"
-                    {...makeCmComTextInnerHtmlProp(slide.lines.join('\n'))}
+                    {...makeCmComTextInnerHtmlProp(slide.text)}
                   />
                 ))
               }

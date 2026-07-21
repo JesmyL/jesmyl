@@ -8,15 +8,16 @@ export const enum CmComOrdRepeatSlashPlacement {
   After,
 }
 
-const slashDict: Record<CmComOrdRepeatSlashPlacement, [string, string]> = {
-  [CmComOrdRepeatSlashPlacement.Before]: ['/', comNbsp],
-  [CmComOrdRepeatSlashPlacement.After]: ['\\', comNbsp],
+const slashDict: Record<CmComOrdRepeatSlashPlacement, string> = {
+  [CmComOrdRepeatSlashPlacement.Before]: '/',
+  [CmComOrdRepeatSlashPlacement.After]: '\\',
 };
 
 export const makeCmComOrderRepeats = (
   slashPlacement: CmComOrdRepeatSlashPlacement,
   repeatsCount: number,
   fadeCount?: number,
+  nbsp: string = comNbsp,
 ) => {
   const slash = slashDict[slashPlacement];
   let invisibleSlash = '';
@@ -24,15 +25,20 @@ export const makeCmComOrderRepeats = (
 
   if (checkIsNotNil(fadeCount) && repeatsCount > fadeCount) {
     slashRepeat = fadeCount;
-    invisibleSlash = `<span style=opacity:.4!important>${slash[0].repeat(repeatsCount - fadeCount)}</span>`;
+    invisibleSlash = `<span style=opacity:.4!important>${slash.repeat(repeatsCount - fadeCount)}</span>`;
   }
 
-  const slashes = slash[0].repeat(slashRepeat);
+  const slashes = slash.repeat(slashRepeat);
 
   return slashPlacement === CmComOrdRepeatSlashPlacement.Before
-    ? `${invisibleSlash}${slashes}${slash[1]}`
-    : `${slash[1]}${slashes}${invisibleSlash}`;
+    ? `${invisibleSlash}${slashes}${nbsp}`
+    : `${nbsp}${slashes}${invisibleSlash}`;
 };
 
-export const makeCmComOrderRepeatedText = (text: string, repeatsCount: number, fadeCount?: number) =>
-  `${makeCmComOrderRepeats(CmComOrdRepeatSlashPlacement.Before, repeatsCount, fadeCount)}${text}${makeCmComOrderRepeats(CmComOrdRepeatSlashPlacement.After, repeatsCount, fadeCount)}`;
+export const makeCmComOrderRepeatedText = (
+  text: string,
+  repeatsCount: number,
+  fadeCount?: number,
+  nbsp: string = comNbsp,
+) =>
+  `${makeCmComOrderRepeats(CmComOrdRepeatSlashPlacement.Before, repeatsCount, fadeCount, nbsp)}${text}${makeCmComOrderRepeats(CmComOrdRepeatSlashPlacement.After, repeatsCount, fadeCount, nbsp)}`;

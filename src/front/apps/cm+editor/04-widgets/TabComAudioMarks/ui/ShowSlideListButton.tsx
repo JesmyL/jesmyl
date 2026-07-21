@@ -1,12 +1,12 @@
 import { Button } from '#shared/components';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
+import { WithAtom } from '#shared/ui/WithAtom';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
-import { useCmComCurrentMarkTimei, useCmComMarkTextValuesMaker } from '$cm/ext';
-import { Atom, atom } from 'atomaric';
+import { useCmComAudioMarkSlides, useCmComCurrentMarkTimei } from '$cm/ext';
 import { HttpNumLeadLink } from 'shared/api';
+import { TextCase } from 'shared/model/common';
+import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
 import { twMerge } from 'tailwind-merge';
-
-let openSlidesAtom: Atom<boolean>;
 
 export const CmEditorTabComAudioMarksShowSlideListButton = ({
   ccom,
@@ -15,31 +15,33 @@ export const CmEditorTabComAudioMarksShowSlideListButton = ({
   ccom: EditableCom;
   src: HttpNumLeadLink | nil;
 }) => {
-  openSlidesAtom ??= atom(false);
-
-  const { takeSlide, markTimes } = useCmComMarkTextValuesMaker(ccom, src);
-  const currentMarkTimei = useCmComCurrentMarkTimei(markTimes);
+  const { audioSlides, markTimes } = useCmComAudioMarkSlides(ccom, src, TextCase.AsIs);
+  const currentMarkTimei = useCmComCurrentMarkTimei(markTimes, audioSlides);
 
   return (
-    <>
-      <Button
-        icon="Computer"
-        className="my-5"
-        onClick={openSlidesAtom.do.toggle}
-      />
+    <WithAtom init={false}>
+      {openSlidesAtom => (
+        <>
+          <Button
+            icon="Computer"
+            className="my-5"
+            onClick={openSlidesAtom.do.toggle}
+          />
 
-      <Modal openAtom={openSlidesAtom}>
-        <ModalHeader>{ccom.name}</ModalHeader>
-        <ModalBody>
-          {markTimes.map((_, timei) => (
-            <div
-              key={timei}
-              className={twMerge('pre-text my-5', currentMarkTimei === timei && 'text-x7')}
-              dangerouslySetInnerHTML={{ __html: takeSlide(timei)?.lines.join('\n') || '' }}
-            />
-          ))}
-        </ModalBody>
-      </Modal>
-    </>
+          <Modal openAtom={openSlidesAtom}>
+            <ModalHeader>{ccom.name}</ModalHeader>
+            <ModalBody>
+              {audioSlides.map(({ text, timei }) => (
+                <div
+                  key={timei}
+                  className={twMerge('pre-text my-5', currentMarkTimei === timei && 'text-x7')}
+                  {...makeCmComTextInnerHtmlProp(text)}
+                />
+              ))}
+            </ModalBody>
+          </Modal>
+        </>
+      )}
+    </WithAtom>
   );
 };

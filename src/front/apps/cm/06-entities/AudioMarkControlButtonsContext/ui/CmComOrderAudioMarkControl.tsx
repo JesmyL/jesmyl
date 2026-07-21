@@ -50,7 +50,7 @@ const Child = ({ com, isHideShortTime, isNeedCompute, mapNode, preTimeAtom, chil
   const audioTrackMarks = cmIDB.useAudioTrackMarks(com.wid);
   const actualMapNodeRef = useActualRef(mapNode);
   const comMarks = src ? audioTrackMarks?.marks?.[src] : null;
-  const slides = useCmComMarkTextValuesMaker(com, src);
+  const slides = useCmComMarkTextValuesMaker(com, src, TextCase.AsIs);
 
   const controls = useMemo(() => {
     const idDict: CmAudioMarkControlButtonsContextIdDict = {};

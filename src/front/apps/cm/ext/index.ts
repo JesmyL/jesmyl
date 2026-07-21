@@ -32,6 +32,7 @@ export { CmComJoinGroupList } from '$cm/entities/ComJoinGroupList';
 export { CmBroadcastSlidesContext, useCmBroadcastSlidesContext } from '$cm/features/broadcast';
 export { type CmBroadcastSlidesContextState } from '$cm/features/broadcast/model/slides';
 export { cmOnUserLogout } from '$cm/shared/lib/onUserLogout';
+export { useCmComAudioMarkSlides } from '$cm/shared/lib/useCmComAudioMarkSlides';
 export { useCmComCurrentMarkTimei } from '$cm/shared/lib/useCmComCurrentMarkTime';
 export { useCmComCurrentMarkValues } from '$cm/shared/lib/useCmComCurrentMarkValues';
 export { useCmComMarkTextValuesMaker } from '$cm/shared/lib/useCmComMarkTextValuesMaker';

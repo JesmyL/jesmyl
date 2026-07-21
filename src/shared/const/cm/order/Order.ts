@@ -15,8 +15,8 @@ import { defaultTextCase } from 'shared/const/textCase';
 import { TextCase } from 'shared/model/common';
 import { checkIsNil, checkIsNumber, checkIsObject } from 'shared/utils/checkIs';
 import { cmComOrderCheckIsOrdVisibleInInterpretation } from 'shared/utils/cm/checkIs';
-import { chordInterpretedRegsLazy } from 'shared/utils/cm/com/const';
-import { cmComNewlinerLineConfigToSet, cmComNewlinerSymbolFreeUpperCaseText } from 'shared/utils/cm/com/newliner';
+import { chordInterpretedRegsLazy, makeSymbolFreeUpperCaseSlavicText } from 'shared/utils/cm/com/const';
+import { cmComNewlinerLineConfigToSet } from 'shared/utils/cm/com/newliner';
 import { cmComOrderMakeRegions } from 'shared/utils/cm/makeRegions';
 import { cmComOrderMakeRepeatedText } from 'shared/utils/cm/makeRepeatedText';
 import {
@@ -301,7 +301,7 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
     let firstSet;
     let currentSet = ownSet;
 
-    const upperLine = (setHolder[line] ??= cmComNewlinerSymbolFreeUpperCaseText(line));
+    const upperLine = (setHolder[line] ??= makeSymbolFreeUpperCaseSlavicText(line));
     setHolder[upperLine] ??= ownSet;
 
     if (!ownSet.size) currentSet = firstSet = setHolder[upperLine];

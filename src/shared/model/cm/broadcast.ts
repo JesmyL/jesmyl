@@ -50,6 +50,8 @@ export type CmBroadcastMonolineSlide = {
   ord: CmComOrder;
   /** slide text lines */
   lines: string[];
+  /** repeated text */
+  text: string;
   /** order line index */
   linei: CmComLinei;
   /** repeat order index */
@@ -60,11 +62,11 @@ export type CmBroadcastMonolineSlide = {
   fromLinei: CmComLinei;
   /** total to line index */
   toLinei: CmComLinei;
-  /** technical field for calculating slide repeats */
-  textHash: string;
+  minText?: string;
   /** repeats of same slides */
-  repeated?: { r: number };
-  repeatsRemaining?: number;
+  r?: { r: number };
+  /** repeats remaining */
+  rem?: number;
 };
 
 export type CmBroadcastSlideLine = {

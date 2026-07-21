@@ -77,10 +77,10 @@ export const CmBroadcastSlidesContext = ({
     (): CmBroadcastSlidesContextState => ({
       slides,
 
-      html: makeCmComNbspHtmlText(slides.at(currentSlidei)?.lines.join('\n')),
-      nextHtml: makeCmComNbspHtmlText(slides.at(nextSlidei)?.lines.join('\n')),
+      html: makeCmComNbspHtmlText(slides.at(currentSlidei)?.text),
+      nextHtml: makeCmComNbspHtmlText(slides.at(nextSlidei)?.text),
 
-      hash: slides.at(currentSlidei)?.textHash ?? '',
+      hash: slides.at(currentSlidei)?.minText ?? '',
       slidei: currentSlidei,
       nextSlidei,
       slideId: slides.at(currentSlidei)?.id ?? slideId,

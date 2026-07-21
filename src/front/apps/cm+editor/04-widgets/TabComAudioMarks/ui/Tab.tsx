@@ -20,6 +20,7 @@ import {
 import { atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { CmComAudioMarkEditPackValue, CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
+import { TextCase } from 'shared/model/common';
 import { iife, wait } from 'shared/utils';
 import { checkIsNil, checkIsNotNil } from 'shared/utils/checkIs';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
@@ -38,7 +39,7 @@ const pinTimeAtom = lazyInit(() => atom<CmComAudioMarkPackTime | null>(null));
 export const CmEditorTabComAudioMarks = iife(() => {
   const Child = ({ ccom }: { ccom: EditableCom }) => {
     const editSrc = useAtomValue(srcOnEditAtom());
-    const { slideIdTimeSetDict, markTimes } = useCmComMarkTextValuesMaker(ccom, editSrc);
+    const { slideIdTimeSetDict, markTimes } = useCmComMarkTextValuesMaker(ccom, editSrc, TextCase.AsIs);
     const pinTime = useAtomValue(pinTimeAtom());
 
     useEffect(() => {
@@ -152,7 +153,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
 
             {audioMarkButtons?.afterIdDict.before}
 
-            {slides?.map(({ lines, id, ord, linei, repeati, samei }) => {
+            {slides?.map(({ text, id, ord, linei, repeati, samei }) => {
               const selector = makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, samei);
 
               return (
@@ -193,7 +194,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
                   )}
                   <div
                     className={twMerge('white-pre', ord.isChBlock() && 'text-x7')}
-                    {...makeCmComTextInnerHtmlProp(lines.join('\n'))}
+                    {...makeCmComTextInnerHtmlProp(text)}
                   />
 
                   {audioMarkButtons?.afterIdDict[id]}

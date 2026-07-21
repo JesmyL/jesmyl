@@ -1,14 +1,4 @@
-import { makeRegExp } from 'regexpert';
-import {
-  CmComLineText,
-  CmComLinei,
-  CmComNewlinerRepeati,
-  CmComNewlinerStrConfig,
-  CmComNewlinerWordi,
-} from 'shared/api';
-import { CmComNewlinerSymbolFreeUpperCaseLine } from 'shared/model/cm/broadcast';
-import { textToUpperCase } from 'shared/utils/string.utils';
-import { slavicLowerLettersStr } from './const';
+import { CmComLinei, CmComNewlinerRepeati, CmComNewlinerStrConfig, CmComNewlinerWordi } from 'shared/api';
 
 export const takeCmComNewlinerRepeatFullConfig = (nlConfig: CmComNewlinerStrConfig.whole | nil, linei: CmComLinei) =>
   (takeCmComNewlinerLineFullConfig(nlConfig)[linei]?.split('/') ?? []) as (CmComNewlinerStrConfig.repeat | nil)[];
@@ -68,7 +58,3 @@ export const cmComNewlinerLineSetToNewlinerConfig = (
 
   return result as CmComNewlinerStrConfig.repeat;
 };
-
-const reg = makeRegExp(`/[^- ${slavicLowerLettersStr}]/gi`);
-export const cmComNewlinerSymbolFreeUpperCaseText = (line: CmComLineText): CmComNewlinerSymbolFreeUpperCaseLine =>
-  `_${textToUpperCase(line.replace(reg, '') as CmComLineText)}` as const;

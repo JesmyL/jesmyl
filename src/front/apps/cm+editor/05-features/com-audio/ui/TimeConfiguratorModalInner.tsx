@@ -17,6 +17,7 @@ import { Atom, useAtomValue } from 'atomaric';
 import { useState } from 'react';
 import { CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
 import { makeCmComAudioMarkTitleBySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
+import { TextCase } from 'shared/model/common';
 import { extractNumber } from 'shared/utils';
 import { checkIsArray, checkIsNil } from 'shared/utils/checkIs';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
@@ -46,7 +47,7 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
   const isPlayState = useAtomValue(cmComAudioPlayerIsPlayAtom);
   const isPause = useDebounceValue(!isPlayState, 500);
 
-  const { timeSlideDict } = useCmComMarkTextValuesMaker(com, src);
+  const { timeSlideDict } = useCmComMarkTextValuesMaker(com, src, TextCase.AsIs);
 
   const addMaker = (add: number) => () => {
     setCurrentTime(prev => {
@@ -132,7 +133,7 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
 
         <div
           className="white-pre"
-          {...makeCmComTextInnerHtmlProp(timeSlideDict[time]?.lines.join('\n'))}
+          {...makeCmComTextInnerHtmlProp(timeSlideDict[time]?.text)}
         />
       </ModalBody>
       <ModalFooter>

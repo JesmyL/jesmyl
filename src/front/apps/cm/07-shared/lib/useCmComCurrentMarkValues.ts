@@ -1,34 +1,26 @@
 import { useAtomValue } from 'atomaric';
 import { CmCom } from 'shared/const/cm/Com';
-import { checkIsNotNil } from 'shared/utils/checkIs';
+import { TextCase } from 'shared/model/common';
+import { makeCmComNbspHtmlText } from 'shared/utils/cm/com/const';
 import { cmPlayerBroadcastAudioSrcAtom } from '../state/broadcast.atoms';
+import { useCmComAudioMarkSlides } from './useCmComAudioMarkSlides';
 import { useCmComCurrentMarkTimei } from './useCmComCurrentMarkTime';
-import { useCmComMarkTextValuesMaker } from './useCmComMarkTextValuesMaker';
 
-export const useCmComCurrentMarkValues = (com: CmCom | und) => {
+export const useCmComCurrentMarkValues = (com: CmCom | und, textCase: TextCase | nil) => {
   const link = useAtomValue(cmPlayerBroadcastAudioSrcAtom);
-  const { takeSlide, timeSlideDict, markTimes } = useCmComMarkTextValuesMaker(com, link);
-  const currentMarkTimei = useCmComCurrentMarkTimei(markTimes);
+  const { markTimes, audioSlides } = useCmComAudioMarkSlides(com, link, textCase);
+  const slidei = useCmComCurrentMarkTimei(markTimes, audioSlides);
 
-  const currentTimeMark = markTimes[currentMarkTimei];
-
-  const nextTimeMark =
-    markTimes
-      .slice(currentMarkTimei + 1)
-      .find(
-        (time, timei, timea) =>
-          checkIsNotNil(timeSlideDict[currentTimeMark]) &&
-          timeSlideDict[time] !== timeSlideDict[currentTimeMark] &&
-          Math.abs(time - timea[timei + 1]) > 1,
-      ) ?? markTimes[currentMarkTimei + 1];
-
-  const nextSlide = timeSlideDict[nextTimeMark];
-  const slide = takeSlide(currentMarkTimei);
+  const nextSlide = audioSlides.at(slidei + 1);
+  const slide = audioSlides.at(slidei);
 
   return {
-    isTechnicalText: slide?.ord.isChBlock(),
-    isNextTechnicalText: nextSlide?.ord.isChBlock(),
-    html: slide?.lines.join('\n') || '',
-    nextHtml: nextSlide?.lines.join('\n') || '',
+    isChorded: slide?.isChorded,
+    isNextChorded: nextSlide?.isChorded,
+    html: makeCmComNbspHtmlText(slide?.text || ''),
+    nextHtml: makeCmComNbspHtmlText(nextSlide?.text || ''),
+    minText: slide?.minText,
+    audioSlides,
+    slidei,
   };
 };

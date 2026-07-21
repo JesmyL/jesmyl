@@ -1,4 +1,3 @@
-import md5 from 'md5';
 import { escapeRegExpSymbols, makeNamedRegExp, makeRegExp } from 'regexpert';
 import {
   CmComAudioMarkPackTimeOne,
@@ -13,10 +12,10 @@ import {
 import { makeCmComAudioMarkTitleEmptySelectorLazy } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { CmBroadcastMonolineSlide, CmBroadcastSlideLine } from 'shared/model/cm/broadcast';
 import { TextCase } from 'shared/model/common';
-import { incrementNumber, itIt } from 'shared/utils';
-import { comNbsp } from 'shared/utils/cm/com/const';
+import { incrementNumber } from 'shared/utils';
+import { comNbsp, makeSymbolFreeUpperCaseSlavicText } from 'shared/utils/cm/com/const';
 import { makeCmBroadcastMonolineSlideOrdLineStrId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
-import { CmComOrdRepeatSlashPlacement, makeCmComOrderRepeats } from 'shared/utils/cm/order';
+import { makeCmComOrderRepeatedText } from 'shared/utils/cm/order';
 import { CmComOrder } from '../../order/Order';
 import { CmComChords } from './30-Chords';
 
@@ -132,7 +131,7 @@ export class CmComTexts extends CmComChords {
           samei,
           fromLinei: totalLinei,
           toLinei: incrementNumber(totalLinei),
-          textHash: '',
+          text: '',
           _id: zeroSameId,
         };
 
@@ -186,14 +185,20 @@ export class CmComTexts extends CmComChords {
     for (let slidei = slides.length - 1; slidei >= 0; slidei--) {
       const slide = slides.at(slidei);
 
-      if (slide && (slide.ord.isVisible || isShowInvisibleSlides)) {
-        const nextSlide = slides.at(slidei + 1);
-        slide.textHash = md5(slide.lines.join('\n'));
+      if (slide) {
+        slide.text = slide.lines.join('\n').trim();
 
-        if (nextSlide?.textHash === slide.textHash) {
-          slide.repeatsRemaining = (nextSlide.repeatsRemaining ??= 1) + 1;
-          slide.repeated = nextSlide.repeated ??= { r: 1 };
-          slide.repeated.r++;
+        if (slide.ord.isVisible || isShowInvisibleSlides) {
+          const nextSlide = slides.at(slidei + 1);
+
+          if (nextSlide) nextSlide.minText ??= makeSymbolFreeUpperCaseSlavicText(nextSlide.text);
+          slide.minText ??= makeSymbolFreeUpperCaseSlavicText(slide.text);
+
+          if (nextSlide?.minText === slide.minText) {
+            slide.rem = (nextSlide.rem ??= 1) + 1;
+            slide.r = nextSlide.r ??= { r: 1 };
+            slide.r.r++;
+          }
         }
       }
     }
@@ -201,18 +206,8 @@ export class CmComTexts extends CmComChords {
     for (let slidei = 0; slidei < slides.length; slidei++) {
       const slide = slides.at(slidei);
 
-      if (slide?.repeated) {
-        const lines = slide.lines;
-
-        if (lines[0]) {
-          lines[0] = `${makeCmComOrderRepeats(CmComOrdRepeatSlashPlacement.Before, slide.repeated.r, slide.repeatsRemaining)}${lines[0]}`;
-        }
-        const lasti = lines.findLastIndex(itIt);
-
-        if (lines[lasti]) {
-          lines[lasti] =
-            `${lines[lasti]}${makeCmComOrderRepeats(CmComOrdRepeatSlashPlacement.After, slide.repeated.r, slide.repeatsRemaining)}`;
-        }
+      if (slide?.r) {
+        slide.text = makeCmComOrderRepeatedText(slide.text, slide.r.r, slide.rem);
       }
     }
 

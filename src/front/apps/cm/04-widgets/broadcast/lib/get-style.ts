@@ -8,7 +8,7 @@ export const useCmBroadcastScreenStyle = (isVisible: boolean, currentConfig: CmB
   const position = useScreenBroadcastPositionsStyles(currentConfig);
 
   return useMemo((): CSSProperties => {
-    return currentConfig !== undefined
+    return currentConfig
       ? {
           ...textStyles,
           ...position,

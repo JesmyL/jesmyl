@@ -15,6 +15,7 @@ import { CmBroadcastScreenConfig } from 'shared/model/cm/broadcast';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
 import { useApplyScreenFontFamilyEffect, useMyFileNode } from 'x/my-files';
+import { cmBroadcastDefaultConfig } from '../hooks/configs';
 import { useCmBroadcastScreenStyle } from '../lib/get-style';
 import { CmBroadcastSubScreen } from './SubScreen';
 
@@ -24,10 +25,8 @@ type Props = BroadcastScreenProps &
     html: string | string[];
     nextText: string;
     isVisible: boolean;
-    isTechnicalText?: boolean;
-    isNextTechnicalText?: boolean;
-    isChorded: boolean;
-    isNextChorded: boolean;
+    isChorded?: boolean;
+    isNextChorded?: boolean;
     freshSlideKey: string;
     slideSwitchDir: HorizontalDirection;
   };
@@ -37,17 +36,20 @@ export const CmBroadcastScreen = (props: Props) => {
   const showChordedSlideMode = useAtomValue(cmShowChordedSlideModeAtom);
   const isBlindMode = showChordedSlideMode === CmBroadcastShowChordedSlideMode.Blind;
 
-  const style = useCmBroadcastScreenStyle(
-    props.isVisible,
-    props.isChorded ? (props.cmConfig?.subs?.chorded ?? props.cmConfig) : props.cmConfig,
-  );
+  const style = useCmBroadcastScreenStyle(props.isVisible, {
+    ...cmBroadcastDefaultConfig,
+    ...props.cmConfig,
+    ...makeBroadcastTextStroke(props.cmConfig),
+    ['--direction' as 'left']: props.slideSwitchDir,
+    ...(props.isChorded ? props.cmConfig?.subs?.chorded : null),
+  });
 
   const background = useMyFileNode(props.cmConfig?.withBg ? props.cmConfig.bgFileId : null);
 
   useApplyScreenFontFamilyEffect(props.cmConfig?.fontFileId, props.win);
   let nextSlideNode = null;
 
-  if (props.cmConfig?.subs?.next != null) {
+  if (props.cmConfig?.subs?.next) {
     nextSlideNode = (
       <CmBroadcastSubScreen
         config={
@@ -62,7 +64,7 @@ export const CmBroadcastScreen = (props: Props) => {
         isTech={props.isTech}
         parentConfig={props.cmConfig}
         isVisible={props.isVisible}
-        isTechnicalText={props.isNextTechnicalText}
+        isNextChorded={props.isNextChorded}
       />
     );
   }
@@ -84,12 +86,7 @@ export const CmBroadcastScreen = (props: Props) => {
       <StyledFontSizeContain
         key={props.freshSlideKey}
         className="inline-flex white-pre-children"
-        style={{
-          ['--direction' as 'left']: props.slideSwitchDir,
-          ...style,
-          ...makeBroadcastTextStroke(props.cmConfig),
-          opacity: props.isTechnicalText ? Math.min(+(style.opacity || 1) || 1, 0.3) : style.opacity,
-        }}
+        style={style}
         html={(isBlindMode && props.isChorded) || checkIsArray(props.html) ? undefined : props.html}
         content={
           checkIsArray(props.html)
@@ -103,7 +100,7 @@ export const CmBroadcastScreen = (props: Props) => {
               ))
             : undefined
         }
-        subUpdates={`${props.subUpdates}${props.cmConfig == null ? '' : props.cmConfig.width + props.cmConfig.height}`}
+        subUpdates={`${props.subUpdates}${props.cmConfig ? props.cmConfig.width + props.cmConfig.height : ''}`}
       />
     </div>
   );

@@ -18,7 +18,7 @@ interface Props {
   wrapperRef: React.RefObject<HTMLDivElement | null>;
   parentConfig: CmBroadcastScreenConfig;
   isVisible: boolean;
-  isTechnicalText?: boolean;
+  isNextChorded?: boolean;
 }
 
 export const CmBroadcastSubScreen = (props: Props & Partial<FontSizeContainProps>) => {
@@ -44,7 +44,7 @@ export const CmBroadcastSubScreen = (props: Props & Partial<FontSizeContainProps
     <>
       <FontSizeContain
         className="inline-flex white-pre-children"
-        style={props.isTechnicalText ? { ...style, opacity: Math.min(+(style.opacity || 1) || 1, 0.3) } : style}
+        style={style}
         html={props.text}
         subUpdates={'' + props.subUpdates + props.config.width + props.config.height}
       />

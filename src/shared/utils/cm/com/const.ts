@@ -1,6 +1,7 @@
 import { escapeRegExpNames, makeNamedRegExp, makeRegExp } from 'regexpert';
 import { lazyInit } from 'shared/utils/lazyInit';
 import { forEachObjectEntries, objectKeys } from 'shared/utils/object.utils';
+import { textToUpperCase } from 'shared/utils/string.utils';
 
 export const hardModificators =
   `(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))` as const;
@@ -34,6 +35,10 @@ export const comNbspReg = makeRegExp(`/${comNbsp}/g`);
 export const makeCmComTextInnerHtmlProp = (text: string | nil) => ({
   dangerouslySetInnerHTML: text ? { __html: makeCmComNbspHtmlText(text) } : undefined,
 });
+
+const reg = makeRegExp(`/[^- \\n${slavicLowerLettersStr}]/gi`);
+export const makeSymbolFreeUpperCaseSlavicText = <Str extends string>(line: Str) =>
+  `_${textToUpperCase(line.replace(reg, '') as Str)}` as const;
 
 export const makeCmComNbspHtmlText = (text: string | nil): string => text?.replace(comNbspReg, nbsp) ?? '';
 

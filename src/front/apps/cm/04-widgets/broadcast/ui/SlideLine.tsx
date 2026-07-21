@@ -37,9 +37,7 @@ export const CmBroadcastSlideLine = () => {
               )}
             >
               <div
-                {...makeCmComTextInnerHtmlProp(
-                  squareBracketsReplacers[CmComTextSquareBracketsMode.Remove](slide.lines.join('\n')),
-                )}
+                {...makeCmComTextInnerHtmlProp(squareBracketsReplacers[CmComTextSquareBracketsMode.Remove](slide.text))}
               />
             </div>
           </div>
