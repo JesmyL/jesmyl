@@ -78,6 +78,7 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
                 checkIsArray(selector) ? 'При переименовании привязка к блоку будет утеряна' : '',
                 'Новое значение',
                 checkIsArray(selector) ? '' : selector || title,
+                { multiline: true },
               );
 
               if (checkIsNil(newTitle)) return;
@@ -86,13 +87,15 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
             }}
           />
 
-          <Button
-            icon="PinLocation02"
-            onClick={() => {
-              cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.reset();
-              pinTimeAtom.set(time);
-            }}
-          />
+          {(checkIsArray(selector) || !selector) && (
+            <Button
+              icon="PinLocation02"
+              onClick={() => {
+                cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.reset();
+                pinTimeAtom.set(time);
+              }}
+            />
+          )}
 
           <TheIconButton
             icon="Delete02"

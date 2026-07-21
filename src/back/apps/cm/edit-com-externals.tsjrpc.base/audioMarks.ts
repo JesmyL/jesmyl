@@ -53,6 +53,8 @@ export const cmEditComExternalsTsjrpcAudioMarks = {
 
       const srcPackMarks = comMarks[numLink] ?? firstOrdw ?? {};
 
+      srcPackMarks[CmComAudioMarkPackTimeZero] ??= '';
+
       objectEntries(newPack).forEach(([time, selector]) => {
         if (checkIsNil(selector)) {
           delete srcPackMarks[time];

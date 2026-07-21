@@ -5,6 +5,7 @@ import {
   IExportableComInterpretation,
   IFixedCom,
 } from 'shared/api';
+import { checkIsNowInCurrentDay } from 'shared/const/ms';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { cmComLanguages } from 'shared/utils/cm/com/const';
 import { BaseNamed } from '../../BaseNamed';
@@ -67,5 +68,5 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
     return cmComLanguages[this.langi + 1] || cmComLanguages[CmComLangi.Ru];
   }
 
-  isDayFromCreate = (createdAt?: number | nil) => (createdAt ?? this.wid) > Date.now() - 24 * 60 * 60 * 1000;
+  isDayFromCreate = (createdAt?: number | nil) => checkIsNowInCurrentDay(createdAt ?? this.wid);
 }

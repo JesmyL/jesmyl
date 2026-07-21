@@ -3,6 +3,7 @@ import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { makeRegExp } from 'regexpert';
 import { CmEditComOrderTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-order.tsjrpc.model';
 import { CmComOrder } from 'shared/const/cm/order/Order';
+import { checkIsNowInCurrentDay } from 'shared/const/ms';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { objectLength } from 'shared/utils/object.utils';
 import { removeEmptyRightValues } from 'shared/utils/removeEmptyRightValues';
@@ -68,7 +69,7 @@ export const cmEditComOrderServerTsjrpcBase =
 
           remove: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', async (ord, { ordw }, { auth }, com, getCmComOrd) => {
             if (
-              (ord.cre ?? com.w) < Date.now() - 24 * 60 * 60 * 1000 &&
+              !checkIsNowInCurrentDay(ord.cre ?? com.w) &&
               (await throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'D'))
             )
               throw '';

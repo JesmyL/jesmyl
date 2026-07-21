@@ -20,6 +20,7 @@ import { checkIsArray, checkIsNil, checkIsNotNil, checkIsString } from 'shared/u
 import { convertCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 import styled from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 import { CmAudioMarkControlButtonsContextAfterIdDict, CmAudioMarkControlButtonsContextIdDict } from '../model/common';
 import { CmAudioMarkControlButtonsContextInner } from '../state/context';
 
@@ -76,14 +77,14 @@ const Child = ({ com, isHideShortTime, isNeedCompute, mapNode, preTimeAtom, chil
             icon="PlayCircle"
             com-audio-mark-time-selector={time}
             data-meta={dataMeta}
-            className={className}
+            className={twMerge('relative mx-[.2em] max-w-[80vw]', className)}
             onClick={event => {
               event.stopPropagation();
               cmComAudioPlayerUpdateCurrentTime(+time - takeMinusTime());
               cmComAudioPlayerSwitchIsPlay(true);
             }}
           >
-            {node}
+            {node && <span className="ellipsis w-full">{node}</span>}
           </ButtonWithMeta>,
           extractNumber(time),
           selector,
@@ -131,10 +132,7 @@ const Child = ({ com, isHideShortTime, isNeedCompute, mapNode, preTimeAtom, chil
   );
 };
 
-const ButtonWithMeta = styled(Button)`
-  position: relative;
-  margin-inline: 0.2em;
-
+const ButtonWithMeta = styled(Button)<{ 'data-meta': string }>`
   &:before {
     content: attr(data-meta);
     position: absolute;

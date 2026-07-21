@@ -19,7 +19,7 @@ import {
   takeCmComAudioPlayerCurrentTime,
 } from '../state/current-play-com';
 
-const currentAccentClassName = 'text-x7';
+const currentButtonElemAccentClassName = 'text-x7';
 const windowDocument = window.document;
 
 export const useCmComAudioPlayerMoversController = (
@@ -50,7 +50,7 @@ export const useCmComAudioPlayerMoversController = (
     >;
 
     let lastMarkTime = 0;
-    let prevButton: Element | nil = null;
+    let prevButtonElem: Element | nil = null;
     let isInitialButtonClassNameNeedSet = true;
 
     const updateMarkBlockView =
@@ -75,28 +75,25 @@ export const useCmComAudioPlayerMoversController = (
                 audioMarkPack,
               ));
 
-              titleNode.innerText = titleProps.title;
+              titleNode.innerHTML = titleProps.title;
 
-              const htmlButtonSelector = `[com-audio-mark-time-selector="${actualMarkTime}"]` as const;
-              const block = document.querySelector(`.composition-block:has(${htmlButtonSelector})`);
-
-              const button = (block ?? document)?.querySelector(htmlButtonSelector);
-
-              if (+preSwitchTime >= 0) {
+              if (preSwitchTime >= 0) {
                 const ordSelector = `[solid-ord-selector="${titleProps.ord?.wid}"]` as const;
-                const lineNode = checkIsArray(selector)
-                  ? document.querySelector(`${ordSelector} [solid-ord-linei="${selector[1]}"]`)
+                const lineElem = checkIsArray(selector)
+                  ? document.querySelector(`${ordSelector} [solid-ord-linei="${selector[1] ?? 0}"]`)
                   : null;
 
-                (lineNode ?? block ?? button ?? document.querySelector(ordSelector))?.scrollIntoView({
+                (lineElem ?? document.querySelector(ordSelector))?.scrollIntoView({
                   block: 'center',
                   behavior: 'smooth',
                 });
               }
 
-              prevButton?.classList.remove(currentAccentClassName);
-              button?.classList.add(currentAccentClassName);
-              prevButton = button;
+              const buttonElem = document?.querySelector(`[com-audio-mark-time-selector="${actualMarkTime}"]`);
+
+              prevButtonElem?.classList.remove(currentButtonElemAccentClassName);
+              buttonElem?.classList.add(currentButtonElemAccentClassName);
+              prevButtonElem = buttonElem;
             }
 
             lastMarkTime = actualMarkTime;
@@ -142,7 +139,7 @@ export const useCmComAudioPlayerMoversController = (
           updatePoints();
         }),
       )
-      .effect(() => prevButton?.classList.remove(currentAccentClassName));
+      .effect(() => prevButtonElem?.classList.remove(currentButtonElemAccentClassName));
   }, [audioTrackMarks?.marks, com, currentSrc, document, preSwitchTime, src]);
 
   return {

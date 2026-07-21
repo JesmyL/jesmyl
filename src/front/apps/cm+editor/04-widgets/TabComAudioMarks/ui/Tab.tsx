@@ -18,11 +18,12 @@ import {
 import { atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { CmComAudioMarkEditPackValue, CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
-import { iife } from 'shared/utils';
+import { iife, wait } from 'shared/utils';
 import { checkIsNil, checkIsNotNil } from 'shared/utils/checkIs';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
 import { makeCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
 import { lazyInit } from 'shared/utils/lazyInit';
+import { arrayByLength } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
 import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
@@ -37,6 +38,27 @@ export const CmEditorTabComAudioMarks = iife(() => {
     const editSrc = useAtomValue(srcOnEditAtom());
     const { slideIdTimeSetDict } = useCmComMarkTextValuesMaker(ccom, editSrc);
     const pinTime = useAtomValue(pinTimeAtom());
+
+    useEffect(() => {
+      const scroll = async () => {
+        await wait(100);
+        for (const timer of arrayByLength(10, () => 10)) {
+          const elem = document.querySelector(`[com-audio-mark-time-selector="${pinTime}"],[data-cancel-button]`);
+
+          if (elem) {
+            elem?.scrollIntoView({ block: 'center' });
+            break;
+          }
+          await wait(timer);
+        }
+      };
+
+      scroll();
+
+      return () => {
+        scroll();
+      };
+    }, [pinTime]);
 
     const { controls: audioMarkButtons, slides: { slides } = {} } = useCmComOrderAudioMarkControlButtonsContext() ?? {};
 
@@ -135,7 +157,8 @@ export const CmEditorTabComAudioMarks = iife(() => {
                     <Button
                       icon="Cancel01"
                       className="text-xKO"
-                      onClick={() => pinTimeAtom().set(null)}
+                      data-cancel-button=""
+                      onClick={pinTimeAtom().reset}
                     />
                   ) : (
                     <Button
@@ -148,7 +171,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
                             time: pinTime,
                             sel: selector,
                           })
-                          .then(() => pinTimeAtom().reset())
+                          .then(pinTimeAtom().reset)
                       }
                     />
                   )}
@@ -196,7 +219,8 @@ export const CmEditorTabComAudioMarks = iife(() => {
               <Button
                 icon="Cancel01"
                 className="text-xKO"
-                onClick={() => pinTimeAtom().reset()}
+                data-cancel-button=""
+                onClick={pinTimeAtom().reset}
               />
             ) : checkIsNotNil(pinTime) || !time ? (
               <Button

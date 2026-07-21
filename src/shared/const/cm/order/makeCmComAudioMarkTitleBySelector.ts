@@ -2,14 +2,13 @@ import {
   CmComAudioMarkPack,
   CmComAudioMarkPackTime,
   CmComAudioMarkSelector,
-  CmComLangi,
   CmComLineiZero,
-  CmComOrderWid,
   HttpNumLeadLink,
 } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { CmBroadcastMonolineSlideLineSelectorId } from 'shared/model/cm/broadcast';
-import { checkIsArray, checkIsNaN, checkIsStartsWith, checkIsString } from 'shared/utils/checkIs';
+import { checkIsArray, checkIsNaN, checkIsNotNil, checkIsStartsWith, checkIsString } from 'shared/utils/checkIs';
+import { lazyInit } from 'shared/utils/lazyInit';
 import { objectKeys } from 'shared/utils/object.utils';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 import { comBlockKindsConfig } from 'shared/values/cm/block-kinds/comBlockKinds.config';
@@ -22,12 +21,12 @@ export const makeCmComAudioMarkLineiFromSelector = (selector: CmBroadcastMonolin
 export const checkIsCmComAudioMarkTitleIsLineSelector = (selector: CmComAudioMarkSelector | nil): selector is string =>
   checkIsString(selector) && checkIsStartsWith(selector, '~') && !checkIsNaN(+selector.slice(1));
 
-const enterBlockKind = comBlockKindsConfig.find(it => it.key === CmComBlockKindKey.Enter);
-const finalBlockKind = comBlockKindsConfig.find(it => it.key === CmComBlockKindKey.Final);
-const playBlockKind = comBlockKindsConfig.find(it => it.key === CmComBlockKindKey.Play);
+export const makeCmComAudioMarkTitleEmptySelectorLazy = lazyInit(() => {
+  const enterBlockKind = comBlockKindsConfig.find(it => it.key === CmComBlockKindKey.Enter);
+  const finalBlockKind = comBlockKindsConfig.find(it => it.key === CmComBlockKindKey.Final);
+  const playBlockKind = comBlockKindsConfig.find(it => it.key === CmComBlockKindKey.Play);
 
-export const makeCmComAudioMarkTitleEmptySelector =
-  !enterBlockKind || !finalBlockKind || !playBlockKind
+  return !enterBlockKind || !finalBlockKind || !playBlockKind
     ? (selector: string | nil) => selector || '---'
     : (
         selector: string | nil,
@@ -37,14 +36,15 @@ export const makeCmComAudioMarkTitleEmptySelector =
       ) => {
         if (selector) return selector;
 
-        if (+time === 0) return enterBlockKind.title[language];
+        if (!time) return enterBlockKind.title[language];
 
-        cMarks = cMarks != null ? (checkIsArray(cMarks) ? cMarks : objectKeys(cMarks)) : (cMarks ?? []);
+        cMarks = checkIsNotNil(cMarks) ? (checkIsArray(cMarks) ? cMarks : objectKeys(cMarks)) : [];
 
-        if (+cMarks[cMarks.length - 1] === +time) return finalBlockKind.title[language];
+        if (+cMarks.at(-1)! === time) return finalBlockKind.title[language];
 
         return playBlockKind.title[language];
       };
+});
 
 export const makeCmComAudioMarkTitleBySelector = (
   time: CmComAudioMarkPackTime,
@@ -57,39 +57,17 @@ export const makeCmComAudioMarkTitleBySelector = (
 
   if (checkIsArray(selector)) {
     const { ord, visibleOrdi } = com.getOrd(selector[0]);
-    if (!comMarks || !ord) return { title: '??', ord: null, isShortTime };
-
-    const repeats = computeOrdRepeats(time, comMarks, selector[0]);
+    if (!ord) return { title: '??', ord: null, isShortTime };
 
     return {
       ord,
       isShortTime,
-      title: `#${visibleOrdi + 1} ${ord.me.header()}${Math.trunc(selector[0]) === selector[0] ? '' : '+'}${repeats > 1 ? ` ×${repeats}` : ''}`,
+      title: `#${visibleOrdi + 1} ${ord.me.header()}`,
     };
   }
 
   return {
     isShortTime,
-    title: makeCmComAudioMarkTitleEmptySelector(selector, comMarks, time, CmComLangi.Ru),
+    title: makeCmComAudioMarkTitleEmptySelectorLazy()(selector, comMarks, time, com.langi),
   };
-};
-
-const computeOrdRepeats = (
-  time: CmComAudioMarkPackTime,
-  cMarks: CmComAudioMarkPack[HttpNumLeadLink],
-  ordw: CmComOrderWid,
-) => {
-  let repeats = 0;
-
-  if (cMarks)
-    objectKeys(cMarks).find(itTime => {
-      if (checkIsArray(cMarks[itTime])) {
-        if (ordw === cMarks[itTime][0]) repeats++;
-        else repeats = 0;
-
-        return time === +itTime;
-      }
-    });
-
-  return repeats;
 };

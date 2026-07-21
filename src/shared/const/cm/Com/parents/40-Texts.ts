@@ -1,7 +1,7 @@
 import md5 from 'md5';
 import { escapeRegExpSymbols, makeNamedRegExp, makeRegExp } from 'regexpert';
 import {
-  CmComAudioMarkPackTime,
+  CmComAudioMarkPackTimeOne,
   CmComLinei,
   CmComLineText,
   CmComNewlinerRepeati,
@@ -10,7 +10,7 @@ import {
   CmComOrderWidNever,
   CmComTextSquareBracketsMode,
 } from 'shared/api';
-import { makeCmComAudioMarkTitleEmptySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
+import { makeCmComAudioMarkTitleEmptySelectorLazy } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { CmBroadcastMonolineSlide, CmBroadcastSlideLine } from 'shared/model/cm/broadcast';
 import { TextCase } from 'shared/model/common';
 import { incrementNumber, itIt } from 'shared/utils';
@@ -30,10 +30,10 @@ export class CmComTexts extends CmComChords {
         {
           top: { w: CmComOrderWidNever, c: 0 },
           header: () =>
-            makeCmComAudioMarkTitleEmptySelector(
+            makeCmComAudioMarkTitleEmptySelectorLazy()(
               '',
-              [0, 1.1 as CmComAudioMarkPackTime],
-              1.1 as CmComAudioMarkPackTime,
+              [0, CmComAudioMarkPackTimeOne],
+              CmComAudioMarkPackTimeOne,
               this.langi,
             ),
         },

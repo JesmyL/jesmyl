@@ -272,6 +272,7 @@ export type CmComAudioMarkSelector = CmBroadcastMonolineSlideSelectorId | string
 
 export type CmComAudioMarkPackTime = NumberBrand<'CmComAudioMarkPackTime'>;
 export const CmComAudioMarkPackTimeZero = 0 as CmComAudioMarkPackTime;
+export const CmComAudioMarkPackTimeOne = 1 as CmComAudioMarkPackTime;
 
 export type CmComAudioMarkPack = SPRecord<HttpNumLeadLink, SPRecord<CmComAudioMarkPackTime, CmComAudioMarkSelector>>;
 
