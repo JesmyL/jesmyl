@@ -77,19 +77,19 @@ export const useCmComAudioPlayerMoversController = (
 
               titleNode.innerHTML = titleProps.title;
 
+              const buttonElem = document?.querySelector(`[com-audio-mark-time-selector="${actualMarkTime}"]`);
+
               if (preSwitchTime >= 0) {
                 const ordSelector = `[solid-ord-selector="${titleProps.ord?.wid}"]` as const;
                 const lineElem = checkIsArray(selector)
                   ? document.querySelector(`${ordSelector} [solid-ord-linei="${selector[1] ?? 0}"]`)
                   : null;
 
-                (lineElem ?? document.querySelector(ordSelector))?.scrollIntoView({
+                (lineElem ?? buttonElem ?? document.querySelector(ordSelector))?.scrollIntoView({
                   block: 'center',
                   behavior: 'smooth',
                 });
               }
-
-              const buttonElem = document?.querySelector(`[com-audio-mark-time-selector="${actualMarkTime}"]`);
 
               prevButtonElem?.classList.remove(currentButtonElemAccentClassName);
               buttonElem?.classList.add(currentButtonElemAccentClassName);

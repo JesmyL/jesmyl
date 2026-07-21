@@ -10,6 +10,8 @@ import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/shared/state/com'
 import {
   CmComAudioPlayer,
   CmComAudioPlayerMarksMovers,
+  cmComAudioPlayerSwitchIsPlay,
+  cmComAudioPlayerUpdateCurrentTime,
   CmComOrderAudioMarkControlButtonsContext,
   takeCmComAudioPlayerCurrentTime,
   useCmComMarkTextValuesMaker,
@@ -36,7 +38,7 @@ const pinTimeAtom = lazyInit(() => atom<CmComAudioMarkPackTime | null>(null));
 export const CmEditorTabComAudioMarks = iife(() => {
   const Child = ({ ccom }: { ccom: EditableCom }) => {
     const editSrc = useAtomValue(srcOnEditAtom());
-    const { slideIdTimeSetDict } = useCmComMarkTextValuesMaker(ccom, editSrc);
+    const { slideIdTimeSetDict, markTimes } = useCmComMarkTextValuesMaker(ccom, editSrc);
     const pinTime = useAtomValue(pinTimeAtom());
 
     useEffect(() => {
@@ -70,7 +72,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
 
       let fixedTime = +takeCmComAudioPlayerCurrentTime().toFixed(2);
       if (Math.trunc(fixedTime) === fixedTime) fixedTime += 0.11;
-      if (`${fixedTime}`.at(-2) === '.') fixedTime += 0.01;
+      if (!findInctorrectTime(fixedTime)) fixedTime += 0.01;
 
       cmComEditorAudioMarksEditPacksAtom.do.putMarks(ccom.wid, editSrc, {
         [fixedTime]: value,
@@ -132,6 +134,20 @@ export const CmEditorTabComAudioMarks = iife(() => {
                   />
                 </div>
               )}
+            />
+
+            <Button
+              icon="SearchFocus"
+              onClick={() => {
+                const time = markTimes.findLast(findInctorrectTime);
+                if (!time) {
+                  toast('Не нашлось некорректного времени');
+                  return;
+                }
+
+                cmComAudioPlayerUpdateCurrentTime(time);
+                cmComAudioPlayerSwitchIsPlay(true);
+              }}
             />
 
             {audioMarkButtons?.afterIdDict.before}
@@ -261,3 +277,5 @@ const ButtonWithMeta = styled(Button)<{ 'data-meta': string | number; 'meta-dot-
     font-size: 0.8em;
   }
 `;
+
+const findInctorrectTime = (time: number) => `${time}`.at(-2) !== '.';
