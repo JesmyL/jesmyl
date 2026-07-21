@@ -31,9 +31,7 @@ export const cmComEditorAudioMarksEditPacksAtom = atom((): CmComAudioMarkEditPac
       });
     },
     renameMark: (comw: CmComWid, src: HttpNumLeadLink, time: CmComAudioMarkPackTime, title: string) => {
-      self.do.update(prev => {
-        ((prev[comw] ??= {})[src] ??= {})[time] = ` ${title}`;
-      });
+      self.do.update(prev => (((prev[comw] ??= {})[src] ??= {})[time] = title));
     },
     removeMarks: (comw: CmComWid, cMarks: CmComAudioMarkPack | und) => {
       if (!cMarks) return;
