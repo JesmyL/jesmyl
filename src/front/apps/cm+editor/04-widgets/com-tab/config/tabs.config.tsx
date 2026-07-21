@@ -19,16 +19,6 @@ export const cmEditorComTabCompositionNavs = {
     icon: 'View',
     scope: 'COM',
   },
-  aps: {
-    Component: CmEditorComTabChordApplications,
-    icon: 'Umbrella',
-    scope: 'COM_APPS',
-  },
-  ord: {
-    Component: CmEditorComTabComOrders,
-    icon: 'DistributeVerticalTop',
-    scope: 'COM_ORD',
-  },
   txt: {
     Component: CmEditorComTabTextBlocks,
     icon: 'TextVerticalAlignment',
@@ -39,30 +29,40 @@ export const cmEditorComTabCompositionNavs = {
     icon: 'Playlist03',
     scope: 'COM_CH',
   },
-  audio: {
-    Component: CmEditorComTabAudio,
-    icon: 'Voice',
-    scope: 'COM_AUDIO',
+  ord: {
+    Component: CmEditorComTabComOrders,
+    icon: 'DistributeVerticalTop',
+    scope: 'COM_ORD',
   },
-  points: {
-    Component: CmEditorTabComAudioMarks,
-    icon: 'PinLocation01',
-    scope: 'COM_AMARK',
-  },
-  cat: {
-    Component: CmEditorComTabCategoryBinds,
-    icon: 'BookOpen02',
-    scope: 'COM_CAT',
+  aps: {
+    Component: CmEditorComTabChordApplications,
+    icon: 'Umbrella',
+    scope: 'COM_APPS',
   },
   rep: {
     Component: CmEditorTabComRepeats,
     icon: 'Layers01',
     scope: 'COM_REP',
   },
+  cat: {
+    Component: CmEditorComTabCategoryBinds,
+    icon: 'BookOpen02',
+    scope: 'COM_CAT',
+  },
+  audio: {
+    Component: CmEditorComTabAudio,
+    icon: 'Voice',
+    scope: 'COM_AUDIO',
+  },
   tr: {
     Component: CmEditorComTabComBroadcast,
     icon: 'Computer',
     scope: 'COM_TR',
+  },
+  points: {
+    Component: CmEditorTabComAudioMarks,
+    icon: 'PinLocation01',
+    scope: 'COM_AMARK',
   },
   ref: {
     Component: CmEditorComTabComRefs,

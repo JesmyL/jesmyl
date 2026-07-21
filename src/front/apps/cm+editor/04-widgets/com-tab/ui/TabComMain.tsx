@@ -1,7 +1,6 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Button } from '#shared/components';
-import { MyLib } from '#shared/lib/my-lib';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
@@ -25,6 +24,7 @@ import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { emptyFunc } from 'shared/utils';
 import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
+import { mapObjectEntries } from 'shared/utils/object.utils';
 
 export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
   const [name, setName] = useState('');
@@ -55,7 +55,7 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
       />
       <CmEditorTextCorrectMessages corrects={nameCorrects} />
 
-      {ccom.bpm == null || !canFixIntp || (
+      {(ccom.bpm == null || canFixIntp) && (
         <CmEditorComEditBpm
           def={ccom.beatsPerMinute}
           onChange={value => cmEditComClientTsjrpcMethods.setBpM({ comw: ccom.wid, value })}
@@ -69,10 +69,7 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
           </>
         }
         id={ccom.meterSize ?? CmComMetricNum.Four}
-        items={MyLib.entries(cmComMetricNumTitles).map(([idStr, title]) => ({
-          id: +idStr,
-          title,
-        }))}
+        items={mapObjectEntries(cmComMetricNumTitles, (id, title) => ({ id: +id, title }))}
         onSelectId={value => cmEditComClientTsjrpcMethods.setMeterSize({ comw: ccom.wid, value })}
       />
       <Dropdown
@@ -83,7 +80,7 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
           </>
         }
         id={ccom.top.d ?? CmComIntensityLevel.Medium}
-        items={MyLib.entries(cmComIntensityLevelTitleDict).map(([id, title]) => ({ id: +id, title }))}
+        items={mapObjectEntries(cmComIntensityLevelTitleDict, (id, title) => ({ id: +id, title }))}
         onSelectId={value => cmEditComClientTsjrpcMethods.changeDrive({ comw: ccom.wid, value })}
       />
       <TheIconButton
