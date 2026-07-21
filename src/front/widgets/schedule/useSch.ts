@@ -1,13 +1,15 @@
-import { mylib } from '#shared/lib/my-lib';
-import { indexIDB } from '$index/shared/state/index-idb';
+import { atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import { ScheduleWidgetWid } from 'shared/api';
+import { ScheduleWidgetWid, ScheduleWidgetWidNone } from 'shared/api';
+import { checkIsNaN, checkIsNil } from 'shared/utils/checkIs';
 
-export const useFixActualSchw = (schw: ScheduleWidgetWid | NaN) => {
+const schwAtom = atom(ScheduleWidgetWidNone);
+
+export const useFixActualSchw = (schw: ScheduleWidgetWid | nil) => {
   useEffect(() => {
-    if (mylib.isNaN(schw)) return;
-    indexIDB.set.lastScheduleWid(schw);
+    if (checkIsNaN(schw) || checkIsNil(schw)) return;
+    schwAtom.set(schw);
   }, [schw]);
 };
 
-export const useActualSchw = (): ScheduleWidgetWid | NaN => indexIDB.useValue.lastScheduleWid();
+export const useActualSchw = (): ScheduleWidgetWid | nil => useAtomValue(schwAtom);

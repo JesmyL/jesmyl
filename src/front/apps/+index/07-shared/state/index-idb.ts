@@ -1,6 +1,6 @@
 import { DexieDB } from '#shared/lib/DexieDB';
 import { soki } from '#shared/soki';
-import { DeviceId, IScheduleWidget, ScheduleWidgetPhotoKey, ScheduleWidgetWid } from 'shared/api';
+import { DeviceId, IScheduleWidget, ScheduleWidgetPhotoKey } from 'shared/api';
 import { StameskaIconPack } from 'stameska-icon/utils';
 import { MyFileBoxId } from 'x/my-files';
 
@@ -10,7 +10,6 @@ interface Storage {
   deviceId: DeviceId | null;
 
   schs: IScheduleWidget[];
-  lastScheduleWid: ScheduleWidgetWid | NaN;
   schedulePhotos: { key: ScheduleWidgetPhotoKey; src: string }[];
   iconPacks: { key: KnownStameskaIconName; pack: StameskaIconPack }[];
 }
@@ -21,7 +20,6 @@ class IndexIDB extends DexieDB<Storage> {
       lastModifiedAt: [0],
       appFontFamilyId: [null],
       deviceId: [null],
-      lastScheduleWid: [NaN as ScheduleWidgetWid],
 
       schs: {
         w: '++',

@@ -9,9 +9,10 @@ export function ScheduleWidgetAlarm({ isForceShow }: { isForceShow?: boolean }) 
 
   return (
     <CatchBoundary getResetKey={() => 'ScheduleWidgetAlarm'}>
-      {(isForceShow || schedules?.some(schedule => schedule.start)) && (
-        <ScheduleWidgetAlarmContent observeSchw={schw} />
-      )}
+      {!schw ||
+        ((isForceShow || schedules?.some(schedule => schedule.start)) && (
+          <ScheduleWidgetAlarmContent observeSchw={schw} />
+        ))}
     </CatchBoundary>
   );
 }
