@@ -4,7 +4,6 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import { useBibleBroadcastSearchResultSelectedSet } from '../lib/results';
 import { bibleBroadcastSearchZoneAtom } from '../state/atoms';
 import { BibleBroadcastSearchPanelAddressInput } from './AddressInput';
 import { BibleBroadcastSearchPanelSearchTextInput } from './SearchTextInput';
@@ -16,7 +15,6 @@ interface Props {
 
 export function BibleBroadcastSearchInputPanel({ inputRef, setSearchZone }: Props) {
   const searchZone = useAtomValue(bibleBroadcastSearchZoneAtom);
-  const setResultSelected = useBibleBroadcastSearchResultSelectedSet();
 
   useEffect(() => {
     if (inputRef.current === null) return;
@@ -33,7 +31,7 @@ export function BibleBroadcastSearchInputPanel({ inputRef, setSearchZone }: Prop
         }),
       )
       .effect();
-  }, [inputRef, setResultSelected]);
+  }, [inputRef]);
 
   return (
     <div className="flex gap-2 mt-5">

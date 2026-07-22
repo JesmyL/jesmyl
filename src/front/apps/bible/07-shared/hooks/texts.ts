@@ -1,4 +1,5 @@
-import { mylib, MyLib } from '#shared/lib/my-lib';
+import { checkIsArray } from 'shared/utils/checkIs';
+import { mapObjectEntries } from 'shared/utils/object.utils';
 import { bibleTitles } from '../const/bibleTitles';
 import { useBibleTranslatesContext } from '../contexts/translates';
 import { BibleBroadcastAnyAddress } from '../model/base';
@@ -20,18 +21,16 @@ export const makeBibleJoinedAddressText = (
 ) => {
   if (addressCode == null) return '';
 
-  if (mylib.isArr(addressCode)) {
+  if (checkIsArray(addressCode)) {
     const [booki, chapteri, versei] = addressCode;
     return `${bibleTitles.titles[booki][titleVariant]} ${chapteri + 1}:${versei + 1}`;
   }
 
-  return MyLib.entries(addressCode)
-    .map(([booki, book]) => {
+  return mapObjectEntries(addressCode, (booki, book) => {
       return (
         bibleTitles.titles[booki][titleVariant] +
         ' ' +
-        MyLib.entries(book)
-          .map(([chapteri, chapter]) => {
+        mapObjectEntries(book, (chapteri, chapter) => {
             let versesStr = '';
             const verses = [...chapter].sort(numSortFunc);
 

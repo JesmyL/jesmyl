@@ -7,3 +7,9 @@ export const enum IsInvitedGuestCome {
   WillBe,
   Pass,
 }
+
+export const enum CmComLangi {
+  Ru = 0,
+  Ua = 1,
+  Kz = 2,
+}

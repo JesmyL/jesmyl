@@ -1,9 +1,9 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { mylib } from '#shared/lib/my-lib';
 import { useAtomValue } from 'atomaric';
 import React, { JSX, useEffect, useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
 import { Eventer } from 'shared/utils';
+import { checkIsObject } from 'shared/utils/checkIs';
 import { bibleAllTranslates } from '../const/consts';
 import { BibleTranslatesContext } from '../contexts/translates';
 import { useBibleShowTranslatesValue } from '../hooks/translates';
@@ -106,12 +106,12 @@ const onTranslateSetEvents = Eventer.createValue<{ tName: BibleTranslateName; va
 const tNames = new Set(bibleAllTranslates);
 
 bibleTranslatesIDB.hook('updating', (_, tName, obj) => {
-  if (mylib.isObj(obj) && 'val' in obj)
+  if (checkIsObject(obj) && 'val' in obj)
     if (tNames.has(tName as never)) onTranslateSetEvents.invoke({ tName: tName as never, value: obj.val as never });
 });
 
 bibleTranslatesIDB.hook('creating', (tName, obj) => {
-  if (mylib.isObj(obj) && 'val' in obj)
+  if (checkIsObject(obj) && 'val' in obj)
     if (tNames.has(tName as never)) onTranslateSetEvents.invoke({ tName: tName as never, value: obj.val as never });
 });
 

@@ -24,6 +24,7 @@ export const uaDifferentLowerLettersStr = 'іґїє' as const;
 export const ruLowerLettersStr = `а-яё` as const;
 export const ruConsonantLettersStr = 'йцкнгшщзхъфвпрлджчсмтьб';
 export const slavicLowerLettersStr = `${ruLowerLettersStr}${uaDifferentLowerLettersStr}` as const;
+export const kzLowerLettersStr = `іғқңүұһәө` as const;
 export const displayableTextBlockSingleWritedSymbolsStr = `(),":;'?` as const;
 export const displayableTextBlockSymbolsStr = `-_.!${displayableTextBlockSingleWritedSymbolsStr}` as const;
 export const displayableTextBlockCharsStr = `${displayableTextBlockSymbolsStr}${slavicLowerLettersStr}\\s` as const;

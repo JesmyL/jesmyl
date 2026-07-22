@@ -1,10 +1,11 @@
 import { addEventListenerPipe, clearTimeoutPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { mylib } from '#shared/lib/my-lib';
 import { useBibleAddressVersei, useBibleBroadcastJoinAddress } from '$bible/shared/hooks';
 import { useBibleBroadcastSlideSyncContentSetter } from '$bible/shared/hooks/slide-sync';
 import { BibleBooki, BibleBroadcastJoinAddress, BibleChapteri } from '$bible/shared/model/base';
 import { bibleJoinAddressAtom, bibleVerseiAtom } from '$bible/shared/state/atoms';
 import { useEffect } from 'react';
+import { checkIsNaN } from 'shared/utils/checkIs';
+import { objectLength } from 'shared/utils/object.utils';
 import { bibleBroadcastListVerseiIdPrefix } from '../const/ids';
 
 export const useBibleBroadcastListVerseListeners = (
@@ -34,7 +35,7 @@ export const useBibleBroadcastListVerseListeners = (
           const shiftKey = event.shiftKey;
           const versei = +verseNode.id.slice(bibleBroadcastListVerseiIdPrefix.length);
 
-          if (mylib.isNaN(versei)) return;
+          if (checkIsNaN(versei)) return;
 
           clearTimeout(clickTimeout);
           if (isDblClick) {
@@ -97,9 +98,9 @@ export const useBibleBroadcastListVerseListeners = (
 
               if (chapter.length === 0) {
                 delete newJoin[currentBooki][currentChapteri];
-                if (mylib.keys(newJoin[currentBooki]).length === 0) {
+                if (objectLength(newJoin[currentBooki]) === 0) {
                   delete newJoin[currentBooki];
-                  if (mylib.keys(newJoin).length === 0) newJoin = null!;
+                  if (objectLength(newJoin) === 0) newJoin = null!;
                 }
               }
             }

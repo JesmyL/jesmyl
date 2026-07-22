@@ -1,18 +1,18 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { MyLib } from '#shared/lib/my-lib';
 import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
 import {
+  takeJoinedAddressMaxValues,
   useBibleAddressBooki,
   useBibleAddressChapteri,
   useBibleAddressVersei,
   useBibleBroadcastJoinAddress,
-  useGetterJoinedAddressMaxValues,
 } from '$bible/shared/hooks';
 import { BibleBooki, BibleBroadcastJoinAddress, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
 import { BibleTranslatesContextProvider } from '$bible/shared/state/TranslatesContext';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useEffect } from 'react';
+import { mapObjectEntries } from 'shared/utils/object.utils';
 import {
   bibleBroadcastListBookiIdPrefix,
   bibleBroadcastListChapteriIdPrefix,
@@ -31,7 +31,6 @@ export function BibleBroadcastList() {
   const currentChapteri = useBibleAddressChapteri();
   const currentVersei = useBibleAddressVersei();
   const translates = useBibleTranslatesContext();
-  const getJoinAddressMaxes = useGetterJoinedAddressMaxValues();
 
   useEffect(() => {
     return hookEffectPipe()
@@ -41,7 +40,7 @@ export function BibleBroadcastList() {
           let chapteri = currentChapteri;
           let versei = currentVersei;
 
-          if (joinAddress != null) [booki, chapteri, versei] = getJoinAddressMaxes(joinAddress);
+          if (joinAddress != null) [booki, chapteri, versei] = takeJoinedAddressMaxValues(joinAddress);
 
           document
             .getElementById(bibleBroadcastListBookiIdPrefix + booki)
@@ -55,7 +54,7 @@ export function BibleBroadcastList() {
         }, 100),
       )
       .effect();
-  }, [translates, currentBooki, currentChapteri, currentVersei, joinAddress, getJoinAddressMaxes]);
+  }, [translates, currentBooki, currentChapteri, currentVersei, joinAddress]);
 
   return (
     <Lists
@@ -96,7 +95,7 @@ const Lists = styled.div<{
 }>`
   ${props => {
     if (props.$joinAddress)
-      return MyLib.entries(props.$joinAddress).map(([booki, book]) => {
+      return mapObjectEntries(props.$joinAddress, (booki, book) => {
         return css`
           #${bibleBroadcastListBookiIdPrefix}${booki} {
             ${selectedStyle}
@@ -106,8 +105,9 @@ const Lists = styled.div<{
             }
           }
 
-          ${MyLib.entries(book).map(
-            ([chapteri, chapter]) => css`
+          ${mapObjectEntries(
+            book,
+            (chapteri, chapter) => css`
               #${bibleBroadcastListChapteriIdPrefix}${chapteri} {
                 ${selectedStyle}
               }

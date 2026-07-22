@@ -1,27 +1,27 @@
 import { CmComBlockKindKey, IExportableKindProp } from './BlockKind.model';
 
-const each1 = ['каждый', 'кожен'] as const;
-const each2 = ['каждая', 'кожна'] as const;
-const each3 = ['каждое', 'кожне'] as const;
+const each1 = ['каждый', 'кожен', 'әрқайсысы'] as const;
+const each2 = ['каждая', 'кожна', 'әрқайсысы'] as const;
+const each3 = ['каждое', 'кожне', 'әрқайсысы'] as const;
 
 export const comBlockKindsConfig: IExportableKindProp[] = [
   {
     key: CmComBlockKindKey.Enter,
-    title: ['Вступление', 'Вступ'],
-    each: ['каждое', 'кожен'],
+    title: ['Вступление', 'Вступ', 'Кіріспе'],
+    each: ['каждое', 'кожен', 'әрқайсысы'],
     tags: ['вступление', 'вступ', 'интро', 'intro'],
     forChordedBlock: 1,
   },
   {
     key: CmComBlockKindKey.OneWithShift,
-    title: ['Куплет', 'Куплет'],
+    title: ['Куплет', 'Куплет', 'Шумақ'],
     each: each1,
     group: 1,
     isBlockForTextableOnly: true,
   },
   {
     key: CmComBlockKindKey.One,
-    title: ['Куплет', 'Куплет'],
+    title: ['Куплет', 'Куплет', 'Шумақ'],
     each: each1,
     tags: ['куплет', 'купліт', 'куплєт'],
     group: 1,
@@ -29,7 +29,7 @@ export const comBlockKindsConfig: IExportableKindProp[] = [
   },
   {
     key: CmComBlockKindKey.PTwo,
-    title: ['Предприпев', 'Передприспів'],
+    title: ['Предприпев', 'Передприспів', 'Қайырма'],
     each: each1,
     tags: [
       'пред припев',
@@ -45,7 +45,7 @@ export const comBlockKindsConfig: IExportableKindProp[] = [
   },
   {
     key: CmComBlockKindKey.Two,
-    title: ['Припев', 'Приспів'],
+    title: ['Припев', 'Приспів', 'Қайырма'],
     each: each1,
     tags: ['припев', 'приспів', 'припів'],
     group: 2,
@@ -53,7 +53,7 @@ export const comBlockKindsConfig: IExportableKindProp[] = [
   },
   {
     key: CmComBlockKindKey.Bridge,
-    title: ['Мост', 'Мост'],
+    title: ['Мост', 'Мост', 'Көпір'],
     each: each1,
     tags: ['мост', 'бридж', 'брідж', 'міст', 'bridge'],
     group: 3,
@@ -61,7 +61,7 @@ export const comBlockKindsConfig: IExportableKindProp[] = [
   },
   {
     key: CmComBlockKindKey.Play,
-    title: ['Проигрыш', 'Програш'],
+    title: ['Проигрыш', 'Програш', 'Жоғалту'],
     each: each1,
     tags: ['проигрыш', 'програш'],
     forChordedBlock: 2,
@@ -69,20 +69,20 @@ export const comBlockKindsConfig: IExportableKindProp[] = [
   },
   {
     key: CmComBlockKindKey.Modulation,
-    title: ['Модуляция', 'Модуляція'],
+    title: ['Модуляция', 'Модуляція', 'Модуляция'],
     each: each2,
     tags: ['модуляция', 'модуляція'],
     isModulation: true,
   },
   {
     key: CmComBlockKindKey.Final,
-    title: ['Финал', 'Фінал'],
+    title: ['Финал', 'Фінал', 'Финал'],
     each: each1,
     tags: ['финал', 'фінал', 'фiнал', 'конец', 'концовка', 'кінець', 'final'],
   },
   {
     key: CmComBlockKindKey.Thirdo,
-    title: ['Запев', 'Заспів'],
+    title: ['Запев', 'Заспів', 'Кіріспе шумақ'],
     each: each1,
     tags: ['запев', 'заспів', 'запів'],
     group: 4,
@@ -90,13 +90,13 @@ export const comBlockKindsConfig: IExportableKindProp[] = [
   },
   {
     key: CmComBlockKindKey.Insert,
-    title: ['Вставка', 'Вставка'],
+    title: ['Вставка', 'Вставка', 'Енгізу'],
     each: each2,
     tags: ['вставка'],
   },
   {
     key: CmComBlockKindKey.Plus,
-    title: [':ПРОДОЛЖЕНИЕ:', ':ПРОДОВЖЕННЯ:'],
+    title: [':ПРОДОЛЖЕНИЕ:', ':ПРОДОВЖЕННЯ:', ':ЖАЛҒАСЫ:'],
     each: each3,
     alt: '+',
     isInherit: true,
@@ -105,7 +105,7 @@ export const comBlockKindsConfig: IExportableKindProp[] = [
   },
   {
     key: CmComBlockKindKey.PlusPlus,
-    title: [':ПРОДОЛЖЕНИЕ С ОТСТУПОМ:', ':ПРОДОВЖЕННЯ З ВІДСТУПОМ:'],
+    title: [':ПРОДОЛЖЕНИЕ С ОТСТУПОМ:', ':ПРОДОВЖЕННЯ З ВІДСТУПОМ:', ':ШЕГІНІСПЕН БЕРІЛГЕН ЖАЛҒАСЫ:'],
     each: each3,
     alt: '++',
     isInherit: true,
@@ -113,7 +113,7 @@ export const comBlockKindsConfig: IExportableKindProp[] = [
   },
   {
     key: CmComBlockKindKey.Shift,
-    title: [':ПРОДОЛЖЕНИЕ СО СМЕЩЕНИЕМ:', ':ПРОДОВЖЕННЯ З ЗМІЩЕННЯМ:'],
+    title: [':ПРОДОЛЖЕНИЕ СО СМЕЩЕНИЕМ:', ':ПРОДОВЖЕННЯ З ЗМІЩЕННЯМ:', ':ЫҒЫСУМЕН ЖАЛҒАСТЫРУ:'],
     each: each3,
     alt: '+>',
     isInherit: true,
@@ -121,7 +121,11 @@ export const comBlockKindsConfig: IExportableKindProp[] = [
   },
   {
     key: CmComBlockKindKey.PlusPlusShift,
-    title: [':ПРОДОЛЖЕНИЕ СО СМЕЩЕНИЕМ И ОТСТУПОМ:', ':ПРОДОВЖЕННЯ З ЗМІЩЕННЯМ ТА ВІДСТУПОМ:'],
+    title: [
+      ':ПРОДОЛЖЕНИЕ СО СМЕЩЕНИЕМ И ОТСТУПОМ:',
+      ':ПРОДОВЖЕННЯ З ЗМІЩЕННЯМ ТА ВІДСТУПОМ:',
+      ':ЫҒЫСУМЕН ЖӘНЕ ШЕГІНІСПЕН ЖАЛҒАСТЫРУ:',
+    ],
     each: each3,
     alt: '++>',
     isInherit: true,

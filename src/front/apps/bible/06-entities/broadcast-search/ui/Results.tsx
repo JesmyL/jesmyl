@@ -6,9 +6,13 @@ import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { JSX, useCallback, useEffect, useState } from 'react';
-import { escapeRegExpSymbols, makeRegExp } from 'regexpert';
+import { makeRegExp } from 'regexpert';
+import { checkIsUndefined } from 'shared/utils/checkIs';
+import { lazyInit } from 'shared/utils/lazyInit';
+import { arrayByLength } from 'shared/utils/object.utils';
 import { transcriptEnToRuText } from 'shared/utils/ru-en-letters';
-import { useBibleBroadcastSearchResultSelectedValue, useBibleBroadcastSearchSearchResultList } from '../lib/results';
+import { internationalWordRegInner } from 'shared/utils/searchRate';
+import { bibleBroadcastSearchResultSelectedListAtom, useBibleBroadcastSearchResultSelectedValue } from '../lib/results';
 import { bibleBroadcastSearchTermAtom, bibleBroadcastSearchZoneAtom } from '../state/atoms';
 import { BibleBroadcastSearchResultVerse } from './ResultVerse';
 
@@ -19,10 +23,7 @@ interface Props {
   onClick?: (booki: BibleBooki, chapteri: BibleChapteri, versei: BibleVersei) => void;
 }
 
-const mapWordsReplaceYoLetter = (word: string) => escapeRegExpSymbols(word).replace(makeRegExp('/[ёе]/g'), '[её]');
 const mapRetArrFunc = (): BibleBroadcastSingleAddress[] => [];
-const getSplitReg = (lowerWords: string[]) =>
-  makeRegExp(`/(${lowerWords.map(mapWordsReplaceYoLetter).sort(sortStringsByLength).join('|')})/gi`);
 
 const maxItems = 49;
 
@@ -35,7 +36,7 @@ export function BibleBroadcastSearchResults({ inputRef, height = '100px', innerZ
   const lowerChapters = useBibleTranslatesContext()[showTranslates[0]]?.lowerChapters;
   const [list, setList] = useState<JSX.Element[]>([]);
   const resultSelected = useBibleBroadcastSearchResultSelectedValue();
-  const [resultList, setResultList] = useBibleBroadcastSearchSearchResultList();
+  const resultList = useAtomValue(bibleBroadcastSearchResultSelectedListAtom);
   const onClick = useCallback(() => inputRef.current?.focus(), [inputRef]);
 
   let currentBooki = useBibleAddressBooki();
@@ -46,16 +47,22 @@ export function BibleBroadcastSearchResults({ inputRef, height = '100px', innerZ
   }
 
   useEffect(() => {
-    if (lowerChapters === undefined || searchTerm.trim().length < 3) return;
+    if (checkIsUndefined(lowerChapters) || searchTerm.trim().length < 3) return;
     const freeTerm = searchTerm.trim();
     if (freeTerm.length < 3) return;
 
     const lowerTerm = freeTerm.trim().toLowerCase();
-    const transcriptedWords = transcriptEnToRuText(lowerTerm).split(makeRegExp('/ +/'));
-    const lowerWords = lowerTerm.split(makeRegExp('/ +/'));
+    const transcriptedWordsLazy = lazyInit(() =>
+      transcriptEnToRuText(lowerTerm)
+        .split(makeRegExp('/ +/'))
+        .map(word => internationalWordRegInner()(word, false)),
+    );
+    const lowerWords = lowerTerm.split(makeRegExp('/ +/')).map(word => internationalWordRegInner()(word, false));
 
-    const founds = Array(lowerWords.length).fill(0).map(mapRetArrFunc);
-    const splitReg = getSplitReg(lowerWords);
+    const founds = arrayByLength(lowerWords.length, mapRetArrFunc);
+    const splitRegLazy = lazyInit(() =>
+      makeRegExp(`/(${transcriptedWordsLazy().concat(lowerWords).sort(sortStringsByLength).join('|')})/gi`),
+    );
     const lastFounds = founds[founds.length - 1];
 
     const searchInChapter = (booki: BibleBooki, chapteri: BibleChapteri, chapter: string[]) => {
@@ -64,7 +71,7 @@ export function BibleBroadcastSearchResults({ inputRef, height = '100px', innerZ
         let foundWordsCount = -1;
 
         for (const lowerWordi in lowerWords) {
-          if (verse.includes(lowerWords[lowerWordi]) || verse.includes(transcriptedWords[lowerWordi]))
+          if (verse.match(lowerWords[lowerWordi]) || verse.match(transcriptedWordsLazy()[lowerWordi]))
             foundWordsCount++;
         }
 
@@ -102,7 +109,7 @@ export function BibleBroadcastSearchResults({ inputRef, height = '100px', innerZ
       .flat()
       .slice(0, maxItems + 1);
 
-    setResultList(list);
+    bibleBroadcastSearchResultSelectedListAtom.set(list);
 
     setList(
       list.map(([booki, chapteri, versei], resulti) => (
@@ -111,13 +118,13 @@ export function BibleBroadcastSearchResults({ inputRef, height = '100px', innerZ
           booki={booki}
           chapteri={chapteri}
           versei={versei}
-          splitReg={splitReg}
+          splitRegLazy={splitRegLazy}
           resulti={resulti}
           onClick={userOnClick}
         />
       )),
     );
-  }, [currentBooki, currentChapteri, innerZone, lowerChapters, searchTerm, searchZone, setResultList, userOnClick]);
+  }, [currentBooki, currentChapteri, innerZone, lowerChapters, searchTerm, searchZone, userOnClick]);
 
   useEffect(() => {
     if (resultSelected === null || resultList[resultSelected] == null) return;

@@ -9,7 +9,7 @@ interface Props {
   booki: BibleBooki;
   chapteri: BibleChapteri;
   versei: BibleVersei;
-  splitReg: RegExp;
+  splitRegLazy: () => RegExp;
   resulti: number;
   onClick?: (booki: BibleBooki, chapteri: BibleChapteri, versei: BibleVersei) => void;
 }
@@ -18,14 +18,14 @@ export const BibleBroadcastSearchResultVerse = memo(function BibleSearchResultVe
   booki,
   chapteri,
   versei,
-  splitReg,
+  splitRegLazy,
   resulti,
   onClick,
 }: Props): JSX.Element {
   const showTranslates = useBibleShowTranslatesValue();
   const books = useBibleBookList();
   const textBits =
-    useBibleTranslatesContext()[showTranslates[0]]?.chapters?.[booki]?.[chapteri]?.[versei]?.split(splitReg);
+    useBibleTranslatesContext()[showTranslates[0]]?.chapters?.[booki]?.[chapteri]?.[versei]?.split(splitRegLazy());
   const addressSetter = useBibleBroadcastAddressIndexesSetter();
 
   return (

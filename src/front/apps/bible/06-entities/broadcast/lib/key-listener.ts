@@ -5,7 +5,6 @@ import {
   setTimeoutPipe,
 } from '#shared/lib/hookEffectPipe';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
-import { mylib } from '#shared/lib/my-lib';
 import { useBibleBroadcastPlanAddToPlan } from '$bible/entities/broadcast-plan';
 import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
 import {
@@ -19,6 +18,7 @@ import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
 import { BibleBroadcastAddress, BibleBroadcastJoinAddress, BibleVersei } from '$bible/shared/model/base';
 import { bibleJoinAddressAtom, bibleVerseiAtom } from '$bible/shared/state/atoms';
 import { useEffect, useState } from 'react';
+import { objectKeys } from 'shared/utils/object.utils';
 
 export const BibleBroadcastScreenKeyListener = (versei: BibleVersei, win?: Window) => {
   const [numberCollection, setNumberCollection] = useState('');
@@ -116,8 +116,8 @@ export const BibleBroadcastScreenKeyListener = (versei: BibleVersei, win?: Windo
             let chapteri = currentChapteri;
 
             if (event.ctrlKey) {
-              booki = Math[mathMethod](...mylib.keys(currentJoinAddress));
-              chapteri = Math[mathMethod](...mylib.keys(currentJoinAddress[booki]));
+              booki = Math[mathMethod](...(objectKeys(currentJoinAddress) as never as number[]));
+              chapteri = Math[mathMethod](...(objectKeys(currentJoinAddress[booki]) as never as number[]));
             }
 
             const verses = currentJoinAddress[booki]?.[chapteri] as BibleVersei[] | nil;
@@ -164,9 +164,9 @@ export const BibleBroadcastScreenKeyListener = (versei: BibleVersei, win?: Windo
           } as never;
 
           if (verses.size === 0) delete newJoin[currentBooki]?.[currentChapteri];
-          if (mylib.keys(newJoin[currentBooki]).length === 0) delete newJoin[currentBooki];
+          if (objectKeys(newJoin[currentBooki]).length === 0) delete newJoin[currentBooki];
 
-          bibleJoinAddressAtom.set(mylib.keys(newJoin).length === 0 ? null : newJoin);
+          bibleJoinAddressAtom.set(objectKeys(newJoin).length === 0 ? null : newJoin);
         }),
       )
       .effect();

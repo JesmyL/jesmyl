@@ -36,6 +36,7 @@ export const bibleTranslatesIDB = new BibleTranslatesIDB('bibleTranslates', {
   rst: [{ chapters: [] }],
   nrt: [null],
   kas: [null],
+  kzb: [null],
 });
 
 class BibleIDB extends DexieDB<BibleIDBStorage> {}

@@ -5,7 +5,12 @@ import { useAtomValue } from 'atomaric';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { fixedResizerLinesAtom } from '../atoms';
 import { defaultScreenBroadcastPositionConfig } from '../defaults';
-import { BroadcastResizeBorderPositions, FixedResizerLines, ScreenBroadcastPositionConfig } from '../model';
+import {
+  broadcastResizeBorderCssPositionDict,
+  BroadcastResizeBorderPositions,
+  FixedResizerLines,
+  ScreenBroadcastPositionConfig,
+} from '../model';
 import { PositionConfiguratorsResizersHalfWrapperFixer } from './complect/HalfWrapperFixer';
 import { ShowHalfFixersKeyActiveMode } from './complect/model';
 import { PositionConfiguratorsResizers } from './complect/Resizers';
@@ -163,7 +168,10 @@ const borderColorInclude = (
   inc: BroadcastResizeBorderPositions[],
   param: BroadcastResizeBorderPositions,
   borderColor?: string,
-) => (inc.includes(param) ? `border-${param}-color: ${borderColor ?? visibleBorderColor};` : '');
+) =>
+  inc.includes(param)
+    ? `border-${broadcastResizeBorderCssPositionDict[param]}-color: ${borderColor ?? visibleBorderColor};`
+    : '';
 
 const Rect = styled.div<{
   $top: number;

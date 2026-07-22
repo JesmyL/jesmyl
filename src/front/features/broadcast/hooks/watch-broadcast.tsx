@@ -9,13 +9,12 @@ import { useCurrentForceViweAppContext } from '../Broadcast.contexts';
 import { BroadcastScreen } from '../BroadcastScreen';
 import { broadcastConnectionDto } from '../lib/connection.dto';
 import { useGetScreenBroadcastConfig } from './configs';
-import { useScreenBroadcastWindows, useUpdateScreenBroadcastWindows } from './windows';
+import { setScreenBroadcastWindows, useScreenBroadcastWindows } from './windows';
 
 export const useWatchScreenBroadcast = () => {
   const getCurrentConfig = useGetScreenBroadcastConfig();
   const windows = useScreenBroadcastWindows();
   const configs = useScreenBroadcastConfigsValue();
-  const updateWindows = useUpdateScreenBroadcastWindows();
   const forceViewApp = useCurrentForceViweAppContext();
 
   const watchBroadcast = useCallback(async () => {
@@ -47,7 +46,7 @@ export const useWatchScreenBroadcast = () => {
             const newWindows = [...windows];
 
             newWindows[windowi] = null;
-            updateWindows(newWindows);
+            setScreenBroadcastWindows(newWindows);
           });
 
           return (
@@ -78,8 +77,8 @@ export const useWatchScreenBroadcast = () => {
       watch(windowi);
     }
 
-    updateWindows(newWindows);
-  }, [configs.length, forceViewApp, getCurrentConfig, updateWindows, windows]);
+    setScreenBroadcastWindows(newWindows);
+  }, [configs.length, forceViewApp, getCurrentConfig, windows]);
 
   return watchBroadcast;
 };

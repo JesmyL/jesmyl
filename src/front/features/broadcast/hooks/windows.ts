@@ -1,4 +1,4 @@
-import { atom, useAtomSet, useAtomValue } from 'atomaric';
+import { atom, useAtomValue } from 'atomaric';
 import { currentBroadcastConfigiAtom } from '../atoms';
 
 export type BroadcastWindow = {
@@ -11,6 +11,6 @@ export type BroadcastWindow = {
 const windowsAtom = atom<(nil | BroadcastWindow)[]>([]);
 
 export const useScreenBroadcastWindows = () => useAtomValue(windowsAtom);
-export const useUpdateScreenBroadcastWindows = () => useAtomSet(windowsAtom);
+export const setScreenBroadcastWindows = windowsAtom.set;
 export const useScreenBroadcastCurrentWindow = () =>
   useAtomValue(windowsAtom)[useAtomValue(currentBroadcastConfigiAtom)];

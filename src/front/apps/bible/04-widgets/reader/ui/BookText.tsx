@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
 import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
-import { useBibleBroadcastListSingleAddressSetter } from '$bible/entities/broadcast-list';
+import { bibleBroadcastListSingleAddressSet } from '$bible/entities/broadcast-list';
 import { bibleTagControledContentGlobalCssNode } from '$bible/shared/const/bibleTagControledContentGlobalCssNode';
 import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
 import styled from '@emotion/styled';
@@ -23,7 +23,6 @@ export const BibleReaderBookText = ({ chapterList, currentChapteri, currentVerse
   const listRef = useRef<HTMLDivElement>(null);
   const isScrollingRef = useRef(false);
   const [resizeNum, setResizeNum] = useState(0);
-  const setAddress = useBibleBroadcastListSingleAddressSetter();
 
   useEffect(() => {
     if (
@@ -56,10 +55,10 @@ export const BibleReaderBookText = ({ chapterList, currentChapteri, currentVerse
         const chapteri = +elem.getAttribute('attr-chapteri')!;
         const versei = +elem.getAttribute('attr-versei')!;
 
-        setAddress(undefined, chapteri, versei);
+        bibleBroadcastListSingleAddressSet(undefined, chapteri, versei);
       },
     );
-  }, [currentBooki, resizeNum, setAddress, chapterList]);
+  }, [currentBooki, resizeNum, chapterList]);
 
   return (
     <>

@@ -1,11 +1,13 @@
 import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
 import { bibleBookiAtom, bibleChapteriAtom, bibleVerseiAtom } from '$bible/shared/state/atoms';
-import { useCallback } from 'react';
+import { checkIsNotUndefined } from 'shared/utils/checkIs';
 
-export const useBibleBroadcastListSingleAddressSetter = () => {
-  return useCallback((booki?: BibleBooki, chapteri?: BibleChapteri, versei?: BibleVersei) => {
-    if (booki !== undefined) bibleBookiAtom.set(booki);
-    if (chapteri !== undefined) bibleChapteriAtom.set(chapteri);
-    if (versei !== undefined) bibleVerseiAtom.set(versei);
-  }, []);
+export const bibleBroadcastListSingleAddressSet = (
+  booki?: BibleBooki,
+  chapteri?: BibleChapteri,
+  versei?: BibleVersei,
+) => {
+  if (checkIsNotUndefined(booki)) bibleBookiAtom.set(booki);
+  if (checkIsNotUndefined(chapteri)) bibleChapteriAtom.set(chapteri);
+  if (checkIsNotUndefined(versei)) bibleVerseiAtom.set(versei);
 };

@@ -1,7 +1,7 @@
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BibleAddressSingle } from '$bible/entities/address';
-import { useBibleBroadcastListSingleAddressSetter } from '$bible/entities/broadcast-list';
+import { bibleBroadcastListSingleAddressSet } from '$bible/entities/broadcast-list';
 import { BibleTranslateModulesControl } from '$bible/entities/translate';
 import { BibleTranslatesContextProvider, useBibleTranslatesContext } from '$bible/ext';
 import { bibleTranslateFilter } from '$bible/shared/const/consts';
@@ -40,7 +40,6 @@ function Content() {
   const chapters = useBibleTranslatesContext()[showTranslates[0]]?.chapters;
   const [selectedBooki, setSelectedBooki] = useState(currentBooki);
   const [selectedChapteri, setSelectedChapteri] = useState(currentChapteri);
-  const setAddress = useBibleBroadcastListSingleAddressSetter();
   const onBookCloseRef = useRef(emptyFunc);
   const onChapterCloseRef = useRef(emptyFunc);
 
@@ -139,7 +138,7 @@ function Content() {
                     (versei === currentVersei ? ' text-x7 font-bold underline' : '')
                   }
                   onClick={() => {
-                    setAddress(selectedBooki, selectedChapteri, versei);
+                    bibleBroadcastListSingleAddressSet(selectedBooki, selectedChapteri, versei);
                     onBookCloseRef.current();
                     onChapterCloseRef.current();
 

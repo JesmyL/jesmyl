@@ -1,4 +1,4 @@
-import { smylib } from './SMyLib';
+import { objectKeys } from './object.utils';
 
 export const transcriptEnLetterToRuDict = {
   q: 'й',
@@ -47,7 +47,7 @@ export const transcriptEnToRuSymbolDict = {
   ...transcriptEnLetterToRuDict,
 };
 
-export const enLowerLettersSet = new Set(smylib.keys(transcriptEnLetterToRuDict));
+export const enLowerLettersSet = new Set(objectKeys(transcriptEnLetterToRuDict));
 
 export const transcriptEnToRuText = (text: string) => {
   let transcriptedText = '';

@@ -1,5 +1,6 @@
 import { CmCatKind } from '#shared/model/cm/cat/Cat.model';
 import { StrRegExp } from 'regexpert';
+import { CmComLangi } from 'shared/api';
 import { ScheduleWidgetDayEventMi, ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
 import {
   CmBroadcastMonolineSlide,
@@ -11,7 +12,6 @@ import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model'
 import {
   CmCatWid,
   CmComIntensityLevel,
-  CmComLangi,
   CmComMod,
   CmComOrderWid,
   CmComWid,

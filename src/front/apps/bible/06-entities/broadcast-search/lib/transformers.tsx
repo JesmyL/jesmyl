@@ -1,13 +1,15 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { bibleLowerBooks, checkEachBibleTitles } from '$bible/shared/const/bibleTitles';
 import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
-import { useSetBibleAddressIndexes } from '$bible/shared/hooks';
+import { bibleAddressIndexesUpdate } from '$bible/shared/hooks';
 import { useBibleBookList } from '$bible/shared/hooks/texts';
 import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
 import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { makeNamedRegExp, makeRegExp } from 'regexpert';
+import { Do } from 'shared/enums';
 import { emptyFunc } from 'shared/utils';
+import { checkIsUndefined } from 'shared/utils/checkIs';
 import { ruLowerLettersStr } from 'shared/utils/cm/com/const';
 import { transcriptEnToRuText } from 'shared/utils/ru-en-letters';
 
@@ -19,7 +21,6 @@ export const useBibleBroadcastSearchTransformAddressTermToAddress = (
   const chapters = useBibleTranslatesContext().rst?.chapters;
   const [address, setAddress] = useState<ReactNode>(null);
   const onEnterPressRef = useRef(emptyFunc);
-  const setAddressIndexes = useSetBibleAddressIndexes();
 
   useEffect(() => {
     if (inputRef.current === null) return;
@@ -44,9 +45,9 @@ export const useBibleBroadcastSearchTransformAddressTermToAddress = (
 
     const chips = makePropsFromAddressArgs(match);
 
-    const chapterNumberi = chips.chapter === undefined ? 0 : ((+chips.chapter - 1) as BibleChapteri);
-    let verseNumber = (chips.verse === undefined ? 1 : (+chips.verse as BibleVersei)) || 1;
-    const finishVerseNumber = chips.finishVerse === undefined ? undefined : +chips.finishVerse;
+    const chapterNumberi = checkIsUndefined(chips.chapter) ? 0 : ((+chips.chapter - 1) as BibleChapteri);
+    let verseNumber = (checkIsUndefined(chips.verse) ? 1 : (+chips.verse as BibleVersei)) || 1;
+    const finishVerseNumber = checkIsUndefined(chips.finishVerse) ? undefined : +chips.finishVerse;
 
     let booki = BibleBooki.none;
 
@@ -114,12 +115,12 @@ export const useBibleBroadcastSearchTransformAddressTermToAddress = (
 
       onEnterPressRef.current = () => {
         if (finishVerseNumber === undefined) {
-          setAddressIndexes(booki, chapterNumberi, verseNumber - 1);
+          bibleAddressIndexesUpdate(booki, chapterNumberi, verseNumber - 1);
           bibleJoinAddressAtom.set(null);
         } else {
           const arrLen = finishVerseNumber - verseNumber + 1;
 
-          setAddressIndexes(booki, chapterNumberi, finishVerseNumber - 1);
+          bibleAddressIndexesUpdate(booki, chapterNumberi, finishVerseNumber - 1);
           bibleJoinAddressAtom.set({
             [booki]: {
               [chapterNumberi]:
@@ -132,8 +133,7 @@ export const useBibleBroadcastSearchTransformAddressTermToAddress = (
           } as never);
         }
       };
-      // eslint-disable-next-line no-constant-condition
-    } while (false);
+    } while (Do.Not);
 
     const address = (
       <>
@@ -148,7 +148,7 @@ export const useBibleBroadcastSearchTransformAddressTermToAddress = (
     );
 
     setAddress(address);
-  }, [books, chapters, setAddressIndexes, term]);
+  }, [books, chapters, term]);
 
   return address;
 };

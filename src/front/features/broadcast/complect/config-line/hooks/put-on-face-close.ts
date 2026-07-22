@@ -1,6 +1,6 @@
 import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
 import { useRemoveScreenBroadcastConfig } from '#features/broadcast/hooks/configs';
-import { BroadcastWindow, useUpdateScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
+import { BroadcastWindow, setScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
 import { useUpdateScreenBroadcastConfig } from '#features/broadcast/hooks/with-config';
 import { ScreenBroadcastConfig } from '#features/broadcast/model';
 import { useCallback } from 'react';
@@ -12,7 +12,6 @@ export const useScreenBroadcastPutOnFaceClose = <Config>(
   updateExternalConfig: (config: Config | null, configi: number) => void,
 ) => {
   const updateConfig = useUpdateScreenBroadcastConfig();
-  const updateWindows = useUpdateScreenBroadcastWindows();
   const removeConfig = useRemoveScreenBroadcastConfig();
 
   return useCallback(
@@ -30,7 +29,7 @@ export const useScreenBroadcastPutOnFaceClose = <Config>(
           const newWindows = [...windows];
           newWindows.splice(configi, 1);
 
-          updateWindows(newWindows);
+          setScreenBroadcastWindows(newWindows);
         });
 
         if (currentConfigi === configs.length - 1) {
@@ -43,6 +42,6 @@ export const useScreenBroadcastPutOnFaceClose = <Config>(
         }
       };
     },
-    [removeConfig, updateConfig, updateExternalConfig, windows, currentConfigi, configs.length, updateWindows],
+    [removeConfig, updateConfig, updateExternalConfig, windows, currentConfigi, configs.length],
   );
 };

@@ -1,9 +1,9 @@
 import { useScreenBroadcastPositionsStyles } from '#features/broadcast/complect/hooks/position-styles';
 import { useScreenBroadcastTextStyles } from '#features/broadcast/complect/hooks/text-styles';
-import { MyLib } from '#shared/lib/my-lib';
 import { verseTranslateTitleCssVariableName } from '$bible/shared/const/ids';
 import { CSSProperties, useMemo } from 'react';
 import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
+import { objectEntries } from 'shared/utils/object.utils';
 
 export const bibleBroadcastScreenGridArea = 'screen-grid-area';
 
@@ -12,7 +12,7 @@ const packInnerStyles = <Config extends Partial<Record<'insertedtext' | 'textinb
   currentConfig: Config,
   isVisible: boolean,
 ) => {
-  return MyLib.entries(currentConfig[area] ?? {}).reduce((innerStyles, [key, val]) => {
+  return objectEntries(currentConfig[area] ?? {}).reduce((innerStyles, [key, val]) => {
     if (val == null || (key === 'color' && !isVisible)) return innerStyles;
 
     innerStyles[('--' + area + '-' + key) as never] = ('' + val) as never;

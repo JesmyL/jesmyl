@@ -1,6 +1,8 @@
-import { makeRegExp } from 'regexpert';
+import { escapeRegExpSymbols, makeRegExp } from 'regexpert';
 import { checkIsArray, checkIsString } from './checkIs';
-import { ruLowerLettersStr, slavicLowerLettersStr } from './cm/com/const';
+import { kzLowerLettersStr, ruLowerLettersStr, slavicLowerLettersStr } from './cm/com/const';
+import { lazyInit } from './lazyInit';
+import { objectKeys } from './object.utils';
 import { quickSort } from './sort';
 import { itIt } from './utils';
 
@@ -22,17 +24,17 @@ export const searchRate = <
   items: T[],
   searchWord: string,
   places: (Trace[] | Trace)[],
-  isNumberSearch?: boolean,
+  isNumberSearch: boolean = false,
   mapNumListItem: (num: number) => number = itIt,
 ): RetItem[] => {
   const normalWords = (
     isNumberSearch
       ? searchWord.split(makeRegExp('/0+/'))
-      : searchWord.split(makeRegExp(`/[^a-z0-9'ʼ${slavicLowerLettersStr}]+/i`))
+      : searchWord.split(makeRegExp(`/[^a-z0-9'ʼ${slavicLowerLettersStr}${kzLowerLettersStr}]+/i`))
   ).filter(itIt);
 
   const words = normalWords.map(word => word.toLowerCase());
-  const wordRegs = normalWords.map(word => internationalWordReg(word, isNumberSearch));
+  const wordRegs = normalWords.map(word => makeRegExp(`/${internationalWordRegInner()(word, isNumberSearch)}/`));
 
   return items.reduce((ferries: RetItem[], item, itemi) => {
     const ferry = { item, deep: 0, rate: 0, pos: [] } as never as RetItem;
@@ -119,34 +121,49 @@ export const searchRate = <
   }, []);
 };
 
-const numberSearchReplacements: [RegExp, string][] = [
-  [/0/g, '[ 0]'],
-  [/1/g, `[^${ruLowerLettersStr}1`],
-  [/2/g, '[абвг2]'],
-  [/3/g, '[деёжз3]'],
-  [/4/g, '[ийкл4]'],
-  [/5/g, '[мноп5]'],
-  [/6/g, '[рсту6]'],
-  [/7/g, '[фхцч7]'],
-  [/8/g, '[шщъы8]'],
-  [/9/g, '[ьэюя9]'],
-];
+export const internationalWordRegInner = lazyInit(() => {
+  const numberReps: Record<string, string> = {
+    0: ' ',
+    1: `^${ruLowerLettersStr}`,
+    2: 'абвг',
+    3: 'деёжз',
+    4: 'ийкл',
+    5: 'мноп',
+    6: 'рсту',
+    7: 'фхцч',
+    8: 'шщъы',
+    9: 'ьэюя',
+  };
 
-const textSearchReplacements: [RegExp, string][] = [
-  [/[ыіi]/g, '[ыії]'],
-  [/[ъ'ʼ]/g, "[ъ'ʼ]"],
-  [/[эє]/g, '[эє]'],
-  [/[гґ]/g, '[гґ]'],
-  [/[её]/g, '[её]'],
-];
+  const letterReps: Record<string, string> = {
+    ы: 'їiі',
+    ъ: "'ʼ",
+    э: 'є',
+    г: 'ґғ',
+    е: 'ё',
+    к: 'қ',
+    н: 'ң',
+    у: 'үұ',
+    о: 'ө',
+    а: 'ә',
+  };
 
-const internationalWordReg = (word: string, isNumberSearch?: boolean) => {
-  return makeRegExp(
-    `/${(isNumberSearch ? numberSearchReplacements : textSearchReplacements)
-      .reduce((acc, [from, to]) => acc.replace(from, to), word)
-      .toLowerCase()}/`,
-  );
-};
+  const letters = objectKeys(letterReps);
+  const numbers = objectKeys(numberReps);
+
+  letters.forEach(lead => (letterReps[lead] = `[${letterReps[lead]}${lead}]`));
+  numbers.forEach(lead => (numberReps[lead] = `[${numberReps[lead]}${lead}]`));
+
+  const letterReg = makeRegExp(`/[${letters.join('')}]/gi`);
+  const numberReg = makeRegExp(`/\\d/g`);
+
+  const letterRepl = (all: string) => letterReps[all] || letterReps[all.toLowerCase()];
+  const numberRepl = (all: string) => letterReps[all];
+
+  return (word: string, isNumberSearch: boolean) => {
+    return `${(isNumberSearch ? escapeRegExpSymbols(word).replace(numberReg, numberRepl) : escapeRegExpSymbols(word).replace(letterReg, letterRepl)).toLowerCase()}`;
+  };
+});
 
 export const searchRateWithSort = <
   T,

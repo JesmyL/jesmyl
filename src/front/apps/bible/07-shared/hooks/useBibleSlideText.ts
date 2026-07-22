@@ -1,6 +1,7 @@
-import { mylib, MyLib } from '#shared/lib/my-lib';
 import { BibleTranslateName } from 'shared/api';
 import { itIt } from 'shared/utils';
+import { checkIsArray } from 'shared/utils/checkIs';
+import { objectEntries } from 'shared/utils/object.utils';
 import { textToUpperCase } from 'shared/utils/string.utils';
 import { bibleTitles } from '../const/bibleTitles';
 import { translateDescriptions } from '../const/consts';
@@ -20,7 +21,7 @@ export const useBibleSlideText = (
   const showTranslates = useBibleShowTranslatesValue();
   const translates = useBibleTranslatesContext();
 
-  if (mylib.isArr(address))
+  if (checkIsArray(address))
     return makeSlideSingleAddressText(showTranslates, translates, address, isSetFirstTranslate, isSetAddress);
 
   return makeSlideJoinedAddressText(showTranslates, translates, address, isSetFirstTranslate, isSetAddress);
@@ -62,9 +63,9 @@ const makeSlideJoinedAddressText = (
   const pasteText = (chapters: ((string[] | und)[] | nil)[] | und) => {
     if (chapters === undefined) return '';
 
-    return MyLib.entries(joinAddress)
+    return objectEntries(joinAddress)
       .map(([booki, book], _, booka) => {
-        const bookEntries = MyLib.entries(book);
+        const bookEntries = objectEntries(book);
 
         if (!chapters[booki]?.[0]?.[0]) return '';
 

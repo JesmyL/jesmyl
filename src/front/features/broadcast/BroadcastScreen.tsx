@@ -98,15 +98,19 @@ const StyledBlackBoard = styled.div`
   width: 100%;
 `;
 
+const transparent = 'transparent !important';
+
+const invisibleCss = css`
+  *,
+  * * {
+    color: ${transparent};
+    stroke: ${transparent};
+    -webkit-text-stroke: ${transparent};
+  }
+`;
+
 const StyledNextSiblingVisibiliter = styled(StyledBlackBoard)<{ $isShowTranslatedText: boolean }>`
-  ${props =>
-    !props.$isShowTranslatedText &&
-    css`
-      *,
-      * * {
-        color: transparent !important;
-      }
-    `}
+  ${props => props.$isShowTranslatedText || invisibleCss}
 `;
 
 const StyledInfo = styled.div`

@@ -1,19 +1,17 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { mylib } from '#shared/lib/my-lib';
 import { BibleBroadcastArchive } from '$bible/entities/broadcast-archive';
-import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '$bible/shared/hooks';
+import { bibleAddressIndexesUpdate, takeJoinedAddressMaxValues } from '$bible/shared/hooks';
 import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
+import { bibleIDB } from '$bible/shared/state/bibleIDB';
 import styled from '@emotion/styled';
 import { JSX, memo, useEffect, useRef, useState } from 'react';
-import { useBibleBroadcastPlan, useBibleBroadcastPlanClearSetter } from '../lib/plan';
+import { checkIsArray } from 'shared/utils/checkIs';
+import { bibleBroadcastPlanClear } from '../lib/plan';
 
 export const BibleBroadcastPlanArchive = memo(function BibleBroadcastPlanArchive(): JSX.Element {
-  const plan = useBibleBroadcastPlan();
-  const clearPlan = useBibleBroadcastPlanClearSetter();
+  const plan = bibleIDB.useValue.broadcastPlan();
   const [selectedItemi, setSelectedItemi] = useState<number | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const setAddress = useSetBibleAddressIndexes();
-  const getJoinAddressMaxes = useGetterJoinedAddressMaxValues();
 
   useEffect(() => {
     if (inputRef.current === null) return;
@@ -47,12 +45,12 @@ export const BibleBroadcastPlanArchive = memo(function BibleBroadcastPlanArchive
                 setSelectedItemi(null);
                 inputNode.blur();
                 const item = plan[selectedItemi];
-                if (mylib.isArr(item)) {
-                  setAddress(...item);
+                if (checkIsArray(item)) {
+                  bibleAddressIndexesUpdate(...item);
                   bibleJoinAddressAtom.set(null);
                 } else {
                   bibleJoinAddressAtom.set(item);
-                  setAddress(...getJoinAddressMaxes(item));
+                  bibleAddressIndexesUpdate(...takeJoinedAddressMaxValues(item));
                 }
 
                 break;
@@ -68,7 +66,7 @@ export const BibleBroadcastPlanArchive = memo(function BibleBroadcastPlanArchive
         addEventListenerPipe(inputNode, 'blur', () => setSelectedItemi(null)),
       )
       .effect();
-  }, [getJoinAddressMaxes, plan, selectedItemi, setAddress]);
+  }, [plan, selectedItemi]);
 
   useEffect(() => {
     if (selectedItemi === null) return;
@@ -87,7 +85,7 @@ export const BibleBroadcastPlanArchive = memo(function BibleBroadcastPlanArchive
         <BibleBroadcastArchive
           title="План"
           list={plan}
-          onRemove={clearPlan}
+          onRemove={bibleBroadcastPlanClear}
         />
       </Plan>
     </>

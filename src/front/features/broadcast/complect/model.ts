@@ -39,3 +39,10 @@ export const enum BroadcastResizeBorderPositions {
   Bottom,
   Left,
 }
+
+export const broadcastResizeBorderCssPositionDict: Record<BroadcastResizeBorderPositions, string> = {
+  [BroadcastResizeBorderPositions.Bottom]: 'bottom',
+  [BroadcastResizeBorderPositions.Left]: 'left',
+  [BroadcastResizeBorderPositions.Right]: 'right',
+  [BroadcastResizeBorderPositions.Top]: 'top',
+};

@@ -1,8 +1,3 @@
-export const enum CmComLangi {
-  Ru = 0,
-  Ua,
-}
-
 export type CmComWid = NumberBrand<'CmComWid'>;
 
 export const CmComWidZero = 0 as CmComWid;

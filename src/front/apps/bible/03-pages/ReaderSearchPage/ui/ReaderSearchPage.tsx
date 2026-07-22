@@ -3,8 +3,8 @@ import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import {
   BibleBroadcastSearchPanelSearchTextInput,
   BibleBroadcastSearchResults,
+  bibleBroadcastSearchResultSelectedAtom,
   bibleBroadcastSearchZoneAtom,
-  useBibleBroadcastSearchResultSelectedSet,
 } from '$bible/entities/broadcast-search';
 import { useBibleAddressBooki, useBibleAddressChapteri } from '$bible/shared/hooks';
 import { useBibleBookList } from '$bible/shared/hooks/texts';
@@ -19,10 +19,8 @@ export function BibleReaderSearchPage() {
   const searchZone = useAtomValue(bibleBroadcastSearchZoneAtom);
   const bookTitles = useBibleBookList();
   const [innerZone, setInnerZone] = useState<'book' | 'chapter'>('book');
-  const setResultSelected = useBibleBroadcastSearchResultSelectedSet();
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => setResultSelected(null), []);
+  useEffect(() => bibleBroadcastSearchResultSelectedAtom.set(null), []);
 
   const inputRef = useRef<HTMLInputElement>(null);
 

@@ -1,9 +1,9 @@
-import { mylib } from '#shared/lib/my-lib';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '$bible/shared/hooks';
+import { bibleAddressIndexesUpdate, takeJoinedAddressMaxValues } from '$bible/shared/hooks';
 import { BibleBroadcastAddress } from '$bible/shared/model/base';
 import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
 import { JSX, memo } from 'react';
+import { checkIsArray } from 'shared/utils/checkIs';
 import { BibleBroadcastArchiveJoinedAddressText } from './JoinedAddress';
 import { BibleBroadcastArchiveJoinedContentText } from './JoinedContentText';
 import { BibleBroadcastArchiveSingleAddressText } from './SingleAddressText';
@@ -22,9 +22,6 @@ export const BibleBroadcastArchive = memo(function BibleBroadcastArchive({
   list,
   onRemove,
 }: Props): JSX.Element {
-  const setAddress = useSetBibleAddressIndexes();
-  const getJoinAddressMaxes = useGetterJoinedAddressMaxValues();
-
   return (
     <>
       <div className="archive-title flex gap-2 text-x3 bg-x2 mb-2">
@@ -37,7 +34,7 @@ export const BibleBroadcastArchive = memo(function BibleBroadcastArchive({
         />
       </div>
       {list.map((item, itemi) => {
-        if (mylib.isArr(item))
+        if (checkIsArray(item))
           return (
             <div
               key={item[0] + ' ' + item[1] + ':' + item[2]}
@@ -45,7 +42,7 @@ export const BibleBroadcastArchive = memo(function BibleBroadcastArchive({
               className={itemClassName}
               onClick={() => {
                 bibleJoinAddressAtom.set(null);
-                setAddress(...item);
+                bibleAddressIndexesUpdate(...item);
               }}
             >
               <span className="text-x7">
@@ -63,7 +60,7 @@ export const BibleBroadcastArchive = memo(function BibleBroadcastArchive({
             className={itemClassName}
             onClick={() => {
               bibleJoinAddressAtom.set(item);
-              setAddress(...getJoinAddressMaxes(item));
+              bibleAddressIndexesUpdate(...takeJoinedAddressMaxValues(item));
             }}
           >
             <span className="text-x7">

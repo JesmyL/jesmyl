@@ -1,4 +1,4 @@
-import { useSetBibleAddressWithForceJoinReset } from '$bible/shared/hooks';
+import { bibleAddressWithForceJoinReset } from '$bible/shared/hooks';
 import { useBibleCurrentChapterList } from '$bible/shared/hooks/texts';
 import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
@@ -15,10 +15,9 @@ export function BibleBroadcastListChapters() {
   fastChaptersCountAtom ??= atom(0, 'bible:fastChaptersCount');
 
   const chapters = useBibleCurrentChapterList();
-  const setAddress = useSetBibleAddressWithForceJoinReset();
 
   const listRef = useBibleBroadcastListFaceClickListener(bibleBroadcastListChapteriIdPrefix, faceClassName, chapteri =>
-    setAddress(undefined, chapteri, 0),
+    bibleAddressWithForceJoinReset(undefined, chapteri, 0),
   );
 
   const chapterNumbers = useMemo(() => {

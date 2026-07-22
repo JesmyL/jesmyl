@@ -1,12 +1,12 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { useSetBibleAddressIndexes } from '$bible/shared/hooks';
+import { bibleAddressIndexesUpdate } from '$bible/shared/hooks';
 import { useBibleBroadcastSlideSyncContentSetter } from '$bible/shared/hooks/slide-sync';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import {
-  useBibleBroadcastSearchResultSelectedSet,
+  bibleBroadcastSearchResultSelectedAtom,
+  bibleBroadcastSearchResultSelectedListAtom,
   useBibleBroadcastSearchResultSelectedValue,
-  useBibleBroadcastSearchSearchResultList,
 } from '../lib/results';
 import { bibleBroadcastSearchTermAtom } from '../state/atoms';
 import { BibleBroadcastSearchPanelInput } from './Input';
@@ -20,17 +20,15 @@ const onChange = (event: React.ChangeEvent<HTMLInputElement>) => bibleBroadcastS
 export const BibleBroadcastSearchPanelSearchTextInput = ({ inputRef }: Props) => {
   const searchTerm = useAtomValue(bibleBroadcastSearchTermAtom);
   const resultSelected = useBibleBroadcastSearchResultSelectedValue();
-  const setResultSelected = useBibleBroadcastSearchResultSelectedSet();
   const syncSlide = useBibleBroadcastSlideSyncContentSetter();
 
-  const setAddress = useSetBibleAddressIndexes();
-  const [resultList] = useBibleBroadcastSearchSearchResultList();
+  const resultList = useAtomValue(bibleBroadcastSearchResultSelectedListAtom);
 
   useEffect(() => {
     if (resultSelected === null || resultList[resultSelected] === undefined) return;
 
-    setAddress(...resultList[resultSelected]);
-  }, [resultList, resultSelected, setAddress]);
+    bibleAddressIndexesUpdate(...resultList[resultSelected]);
+  }, [resultList, resultSelected]);
 
   useEffect(() => {
     if (inputRef.current === null) return;
@@ -43,15 +41,16 @@ export const BibleBroadcastSearchPanelSearchTextInput = ({ inputRef }: Props) =>
             case 'Enter':
               inputNode.blur();
               syncSlide();
-              setResultSelected(null);
+              bibleBroadcastSearchResultSelectedAtom.set(null);
 
               return;
             case 'ArrowUp':
-              if (resultSelected !== null && resultSelected > 0) setResultSelected(resultSelected - 1);
+              if (resultSelected !== null && resultSelected > 0)
+                bibleBroadcastSearchResultSelectedAtom.set(resultSelected - 1);
               break;
             case 'ArrowDown':
               if (resultSelected === null || resultSelected < resultList.length - 1)
-                setResultSelected((resultSelected ?? -1) + 1);
+                bibleBroadcastSearchResultSelectedAtom.set((resultSelected ?? -1) + 1);
               break;
             default:
               return;
@@ -62,7 +61,7 @@ export const BibleBroadcastSearchPanelSearchTextInput = ({ inputRef }: Props) =>
         }),
       )
       .effect();
-  }, [inputRef, resultList.length, resultSelected, setResultSelected, syncSlide]);
+  }, [inputRef, resultList.length, resultSelected, syncSlide]);
 
   return (
     <BibleBroadcastSearchPanelInput
