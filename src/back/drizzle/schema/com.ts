@@ -2,12 +2,12 @@ import { bigint, integer, jsonb, pgTable, serial, smallint, text, varchar } from
 import {
   CmComAudioMarkPack,
   CmComIntensityLevel,
-  CmComLangi,
   CmComMod,
   CmComWid,
   HttpNumLeadLink,
   IExportableCom,
   IExportableOrder,
+  Langi,
 } from 'shared/api';
 import { Bool, Do } from 'shared/enums';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
@@ -45,7 +45,7 @@ export const comDB = pgTable('coms', {
 
   d: integer('tempDrive').$type<CmComIntensityLevel>(),
 
-  l: integer('language').$type<CmComLangi>().default(CmComLangi.Ru).notNull(),
+  l: integer('language').$type<Langi>().default(Langi.Ru).notNull(),
 
   p: integer('transposition'),
 

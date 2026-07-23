@@ -1,6 +1,7 @@
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { scheduleDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
+import { langLocaleBaseFileStoragesLazy, langLocaleDynamicFileStoragesLazy } from 'back/locales/file-storages';
 import { and, eq, gt } from 'drizzle-orm';
 import { makePgCheckedSelectSqlRaw, PgCheckFieldMode } from 'p/d';
 import {
@@ -15,6 +16,7 @@ import {
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { Bool } from 'shared/enums';
 import { itNNil } from 'shared/utils';
+import { checkIsNotNil } from 'shared/utils/checkIs';
 import { objectKeys, objectLength } from 'shared/utils/object.utils';
 import { knownStameskaIconNames, knownStameskaIconNamesMd5Hash } from 'shared/values/index/known-icons';
 import { StameskaIconPack } from 'stameska-icon/utils';
@@ -29,7 +31,7 @@ import { makeUserAccessRights } from './makeUserAccessRights';
 export const indexTSJRPCBaseRequestFreshes = {
   requestFreshes: async (
     { lastModfiedAt, iconPacks: userIconPacks, iconsMd5Hash: userIconsMd5Hash },
-    { client, auth },
+    { client, auth, visitInfo },
   ) => {
     lastModfiedAt = Math.trunc(lastModfiedAt);
 
@@ -139,6 +141,22 @@ export const indexTSJRPCBaseRequestFreshes = {
     }
 
     if (schedules.length) schServerTsjrpcShareMethods.refreshSchedules({ schs: schedules }, client);
+
+    if (checkIsNotNil(visitInfo?.langi) && visitInfo.version > 1239) {
+      const baseFileStorage = langLocaleBaseFileStoragesLazy()[visitInfo.langi];
+      const { items, maxMod } = (await langLocaleDynamicFileStoragesLazy()).getFreshItems(lastModfiedAt);
+
+      if (baseFileStorage.fileModifiedAt() > lastModfiedAt) {
+        indexServerTsjrpcShareMethods.baseLocConf(
+          { base: baseFileStorage.getValue(), mod: baseFileStorage.fileModifiedAt() },
+          client,
+        );
+      }
+
+      if (items.length) {
+        indexServerTsjrpcShareMethods.dynLocConf({ dyns: items, mod: maxMod }, client);
+      }
+    }
   },
 } satisfies ServerTsjrpcSatisfy<IndexTsjrpcModel>;
 

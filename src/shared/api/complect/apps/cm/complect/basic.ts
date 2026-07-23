@@ -1,6 +1,6 @@
 import { CmCatKind } from '#shared/model/cm/cat/Cat.model';
 import { StrRegExp } from 'regexpert';
-import { CmComLangi } from 'shared/api';
+import { Langi } from 'shared/api';
 import { ScheduleWidgetDayEventMi, ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
 import {
   CmBroadcastMonolineSlide,
@@ -156,7 +156,7 @@ export type IExportableCom = NullifyOptionals<
     nl?: (PRecord<CmComOrderWid, CmComNewlinerStrConfig.whole> | nil)[];
 
     /** язык песни */
-    l: CmComLangi;
+    l: Langi;
 
     /** аудио файлы */
     al?: HttpNumLeadLink[];

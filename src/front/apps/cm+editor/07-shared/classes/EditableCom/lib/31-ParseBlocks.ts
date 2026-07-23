@@ -1,5 +1,5 @@
 import { makeRegExp } from 'regexpert';
-import { CmComLangi, CmComOrderWidZero, IExportableOrder } from 'shared/api';
+import { CmComOrderWidZero, IExportableOrder, Langi } from 'shared/api';
 import { enRuLetterVisualEquivalentLazy } from 'shared/const/letter-eqs';
 import { incrementNumber } from 'shared/utils';
 import { checkIsNil, checkIsNotNil, checkIsString } from 'shared/utils/checkIs';
@@ -168,7 +168,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
 
     return {
       com: {
-        l: CmComLangi.Ru,
+        l: Langi.Ru,
         c: objectLength(chords) ? chords : [''],
         t: objectLength(texts) ? texts.map(text => enRuLetterVisualEquivalentLazy().repl(text)) : [''],
         o: orders.filter(ord => checkIsNotNil(ord.t) || checkIsNotNil(ord.c) || checkIsNotNil(ord.a)),

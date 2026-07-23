@@ -1,3 +1,6 @@
+import { Langi } from 'shared/api/complect/enums';
+import { LocaleBase } from 'shared/model/+locale/base';
+import { LocaleDynamic } from 'shared/model/+locale/dynamic';
 import { ConstantsConfig } from 'shared/model/constantsConfig';
 import { IndexAccessScopeRules } from 'shared/model/index/access-rights';
 import { toast } from 'sonner';
@@ -23,4 +26,7 @@ export type IndexTsjrpcSharesModel = {
   }) => void;
 
   constConfig: (args: { config: Partial<ConstantsConfig>; mod: number }) => unknown;
+
+  baseLocConf: (args: { base: LocaleBase<Langi>; mod: number }) => unknown;
+  dynLocConf: (args: { dyns: LocaleDynamic<Langi>[]; mod: number }) => unknown;
 };

@@ -4,7 +4,7 @@ import { dbUpdate } from 'back/drizzle/drizzle.db';
 import { selectPgCheckedExportableCom } from 'back/drizzle/ex/com.selectors';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
 import { eq } from 'drizzle-orm';
-import { CmComLangi, CmComWid, IExportableCom } from 'shared/api';
+import { CmComWid, IExportableCom, Langi } from 'shared/api';
 import { checkIsNowInCurrentDay } from 'shared/const/ms';
 import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
 import { checkIsString } from 'shared/utils/checkIs';
@@ -54,7 +54,7 @@ export const modifyCom =
     });
 
     if (isChanged) {
-      await dbUpdate(comDB, { ...comUpdates, m, l: comUpdates.l ?? CmComLangi.Ru }, eq(comDB.w, props.comw));
+      await dbUpdate(comDB, { ...comUpdates, m, l: comUpdates.l ?? Langi.Ru }, eq(comDB.w, props.comw));
 
       cmShareServerTsjrpcMethods.editedCom({ com, mod: m }, null);
     }

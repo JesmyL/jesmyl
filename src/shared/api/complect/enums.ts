@@ -8,8 +8,10 @@ export const enum IsInvitedGuestCome {
   Pass,
 }
 
-export const enum CmComLangi {
+export const enum Langi {
   Ru = 0,
   Ua = 1,
   Kz = 2,
 }
+
+export type LangCode = 'ru' | 'ua' | 'kz';

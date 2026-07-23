@@ -5,7 +5,7 @@ import { db } from 'back/drizzle/drizzle.db';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { eq } from 'drizzle-orm';
-import { CmComIntensityLevel, CmComLangi, CmComWid } from 'shared/api';
+import { CmComIntensityLevel, CmComWid, Langi } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
 import { cmComIntensityLevelTitleDict } from 'shared/const/cm/cmComDriveLevelTitleDict';
 import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
@@ -96,7 +96,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
             w,
             m: w,
             t: newCom.t?.map(text => transformToClearText(text)),
-            l: newCom.l || CmComLangi.Ru,
+            l: newCom.l || Langi.Ru,
             al: newCom.al?.map(makeCmComNumLeadLinkFromHttp) || [],
           };
 

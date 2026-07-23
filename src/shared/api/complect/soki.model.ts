@@ -1,7 +1,7 @@
 import { JsonSecureString } from 'back/json-secure';
 import { User } from 'node-telegram-bot-api';
 import { IndexAccessScopeRules, UserAccessRole } from 'shared/model/index/access-rights';
-import { DeviceId } from './enums';
+import { DeviceId, Langi } from './enums';
 
 export const sokiAppNames = ['index', 'cm', 'tuner', 'q', 'bible', 'storages', 'gamer'] as const;
 export type SokiAppName = (typeof sokiAppNames)[number];
@@ -17,6 +17,7 @@ export interface SokiVisit {
   version: number;
   clientTm: number;
   agent: string;
+  langi: Langi;
 }
 
 export interface TelegramNativeAuthUserData extends OmitOwn<User, 'language_code' | 'is_bot'> {

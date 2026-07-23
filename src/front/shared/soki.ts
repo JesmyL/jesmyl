@@ -1,3 +1,4 @@
+import { currentLangAtom } from '#basis/locale';
 import { tsjrpcBaseClientNext } from '#basis/tsjrpc/TsjrpcBase.client';
 import { authIDB, indexDeviceEmojiAtom, indexDeviceIdAtom } from '$index/shared/state';
 import { makeRegExp } from 'regexpert';
@@ -50,6 +51,7 @@ export class SokiTrip {
           urls: this.urls.length ? this.urls : [this.getCurrentUrl()],
           clientTm: Date.now(),
           agent: navigator.userAgent,
+          langi: currentLangAtom.get(),
         },
       });
 

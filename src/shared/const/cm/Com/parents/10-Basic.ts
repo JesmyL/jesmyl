@@ -1,10 +1,4 @@
-import {
-  CmComBracketLevelHolder,
-  CmComLangi,
-  IExportableCom,
-  IExportableComInterpretation,
-  IFixedCom,
-} from 'shared/api';
+import { CmComBracketLevelHolder, IExportableCom, IExportableComInterpretation, IFixedCom, Langi } from 'shared/api';
 import { checkIsNowInCurrentDay } from 'shared/const/ms';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { cmComLanguages } from 'shared/utils/cm/com/const';
@@ -58,14 +52,14 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
   }
 
   get langi() {
-    return this.top.l ?? CmComLangi.Ru;
+    return this.top.l ?? Langi.Ru;
   }
 
   get langn() {
     return cmComLanguages[this.langi];
   }
   get nextLangn() {
-    return cmComLanguages[this.langi + 1] || cmComLanguages[CmComLangi.Ru];
+    return cmComLanguages[this.langi + 1] || cmComLanguages[Langi.Ru];
   }
 
   isDayFromCreate = (createdAt?: number | nil) => checkIsNowInCurrentDay(createdAt ?? this.wid);

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { CmAudioSlide, CmComLangi, HttpNumLeadLink } from 'shared/api';
+import { CmAudioSlide, HttpNumLeadLink, Langi } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { makeCmComAudioMarkTitleEmptySelectorLazy } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { TextCase } from 'shared/model/common';
@@ -10,7 +10,7 @@ import { useCmComMarkTextValuesMaker } from './useCmComMarkTextValuesMaker';
 
 export const useCmComAudioMarkSlides = (com: CmCom | und, src: HttpNumLeadLink | nil, textCase: TextCase | nil) => {
   const { markTimes, timeSlideDict, srcMarks } = useCmComMarkTextValuesMaker(com, src, textCase);
-  const langi = com?.langi ?? CmComLangi.Ru;
+  const langi = com?.langi ?? Langi.Ru;
 
   const audioSlides = useMemo(() => {
     const audioSlides: CmAudioSlide[] = [];

@@ -1,4 +1,4 @@
-import { CmComLangi, CmComMod, CmComWidDef, IExportableCom } from 'shared/api';
+import { CmComMod, CmComWidDef, IExportableCom, Langi } from 'shared/api';
 
 export const cmDefaultCom = (w = CmComWidDef): IExportableCom => ({
   m: CmComMod.def,
@@ -6,5 +6,5 @@ export const cmDefaultCom = (w = CmComWidDef): IExportableCom => ({
   w,
   c: [],
   t: [],
-  l: CmComLangi.Ru,
+  l: Langi.Ru,
 });

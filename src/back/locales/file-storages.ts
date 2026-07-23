@@ -1,0 +1,59 @@
+import { DirStorage } from 'back/complect/DirStorage';
+import { FileStore } from 'back/complect/FileStore';
+import { Langi } from 'shared/api';
+import { LocaleBase } from 'shared/model/+locale/base';
+import { LocaleDynamic } from 'shared/model/+locale/dynamic';
+import { extractNumber, wait } from 'shared/utils';
+import { checkIsEq } from 'shared/utils/checkIsEq';
+import { lazyInit } from 'shared/utils/lazyInit';
+import { forEachObjectEntries, objectEntries } from 'shared/utils/object.utils';
+import { localeBaseKz } from './base/kz';
+import { localeBaseRu } from './base/ru';
+import { localeBaseUa } from './base/ua';
+import { localeDynamicKz } from './dynamic/kz';
+import { localeDynamicRu } from './dynamic/ru';
+import { localeDynamicUa } from './dynamic/ua';
+
+export const langLocaleDynamicFileStoragesLazy = lazyInit(async () => {
+  const langLocaleDynamicDict: { [L in Langi]: LocaleDynamic<L> } = {
+    [Langi.Ru]: localeDynamicRu,
+    [Langi.Ua]: localeDynamicUa,
+    [Langi.Kz]: localeDynamicKz,
+  };
+
+  const dirStorage = new DirStorage<LocaleDynamic<Langi>, Langi, 'lng'>({
+    dirPath: `/locales/dynamic/`,
+    idKey: 'lng',
+    makeNewItem: () => ({}) as LocaleDynamic<Langi>,
+  });
+
+  for (const [langiStr, config] of objectEntries(langLocaleDynamicDict)) {
+    const langi = extractNumber(langiStr);
+    const savedConfig = await dirStorage.getOrCreateItem(langi, () => ({ lng: langi }) as never);
+
+    if (!checkIsEq(savedConfig, config)) {
+      dirStorage.saveItem(langi, config);
+      await wait(100);
+    }
+  }
+
+  return dirStorage;
+});
+
+export const langLocaleBaseFileStoragesLazy = lazyInit(() => {
+  const dict = {} as { [L in Langi]: FileStore<LocaleBase<Langi>> };
+
+  const langLocaleBaseDict: { [L in Langi]: LocaleBase<L> } = {
+    [Langi.Ru]: localeBaseRu,
+    [Langi.Ua]: localeBaseUa,
+    [Langi.Kz]: localeBaseKz,
+  };
+
+  forEachObjectEntries(langLocaleBaseDict, (langi, config) => {
+    const fileStorage = (dict[langi] ??= new FileStore(`/locales/base/${langi}.json`, {} as typeof config));
+
+    if (!checkIsEq(fileStorage.getValue(), config)) fileStorage.setValue(config);
+  });
+
+  return dict;
+});

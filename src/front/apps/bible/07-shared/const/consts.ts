@@ -1,4 +1,4 @@
-import { BibleTranslateName, CmComLangi } from 'shared/api';
+import { BibleTranslateName, Langi } from 'shared/api';
 import { objectKeys } from 'shared/utils/object.utils';
 import { BibleBooki } from '../model/base';
 
@@ -9,11 +9,11 @@ export const translateDescriptions: Record<BibleTranslateName, string> = {
   [BibleTranslateName.kzb]: 'Казахский перевод',
 };
 
-export const translateLanguage: Record<BibleTranslateName, CmComLangi> = {
-  [BibleTranslateName.rst]: CmComLangi.Ru,
-  [BibleTranslateName.nrt]: CmComLangi.Ru,
-  [BibleTranslateName.kas]: CmComLangi.Ru,
-  [BibleTranslateName.kzb]: CmComLangi.Kz,
+export const translateLanguage: Record<BibleTranslateName, Langi> = {
+  [BibleTranslateName.rst]: Langi.Ru,
+  [BibleTranslateName.nrt]: Langi.Ru,
+  [BibleTranslateName.kas]: Langi.Ru,
+  [BibleTranslateName.kzb]: Langi.Kz,
 };
 
 export const bibleTranslateFilter: Record<BibleTranslateName, (booki: BibleBooki) => boolean> = {

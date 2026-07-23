@@ -1,10 +1,11 @@
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
+import { takeBaseLanguageAtom, takeDynamicLanguageAtom } from '#basis/state/locale';
 import { TsjrpcBaseClient } from '#basis/tsjrpc/TsjrpcBase.client';
 import { rootAppModalTextContentAtom } from '#shared/lib/atoms/rootAppModalTextContentAtom';
-import { MyLib } from '#shared/lib/my-lib';
 import { makeToastKOMoodConfig, makeToastOKMoodConfig } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { IndexTsjrpcSharesModel } from 'shared/api/tsjrpc/index/tsjrpc.methods.model';
+import { forEachObjectEntries } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
 import { indexIDB, indexUserAccessRightsAtom, lastUpdatedIconsMd5HashAtom } from '../state';
 
@@ -18,7 +19,7 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
           indexIDB.updateLastModifiedAt(lastModifiedAt);
         },
         updateKnownIconPacks: async ({ actualIconPacks, iconsMd5Hash }) => {
-          MyLib.entries(actualIconPacks).forEach(([iconName, pack]) => {
+          forEachObjectEntries(actualIconPacks, (iconName, pack) => {
             if (pack !== null) indexIDB.tb.iconPacks.put({ key: iconName, pack });
             else indexIDB.tb.iconPacks.delete(iconName);
           });
@@ -47,6 +48,16 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
 
         constConfig: async ({ config, mod }) => {
           constantsConfigAtom.set(prev => ({ ...prev, ...config }));
+          await indexIDB.updateLastModifiedAt(mod);
+        },
+
+        baseLocConf: async ({ base, mod }) => {
+          takeBaseLanguageAtom().set(base);
+          await indexIDB.updateLastModifiedAt(mod);
+        },
+
+        dynLocConf: async ({ mod, dyns }) => {
+          dyns.forEach(config => takeDynamicLanguageAtom(config.lng).set(config));
           await indexIDB.updateLastModifiedAt(mod);
         },
       },

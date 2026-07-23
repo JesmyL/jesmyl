@@ -1,6 +1,6 @@
 import { db } from 'back/drizzle/drizzle.db';
 import { eq } from 'drizzle-orm';
-import { CmComIntensityLevel, CmComLangi, CmComWid } from 'shared/api';
+import { CmComIntensityLevel, CmComWid, Langi } from 'shared/api';
 import { Bool } from 'shared/enums';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { makePgCheckedSelectSqlRaw, PgCheckFieldMode } from '.';
@@ -10,7 +10,7 @@ export const makePgCheckedSelectExportableComSqlRaw = <Adds extends Parameters<t
   adds?: Adds,
 ) =>
   makePgCheckedSelectSqlRaw(comDB, {
-    l: `=${CmComLangi.Ru}`,
+    l: `=${Langi.Ru}`,
     s: `=${CmComMetricNum.Four}`,
     d: `=${CmComIntensityLevel.Medium}`,
     al: `len=0`,

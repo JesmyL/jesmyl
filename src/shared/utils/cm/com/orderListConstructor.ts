@@ -1,6 +1,6 @@
 import { CmComOrderWidClass } from '#shared/model/cm/order/OrderWid';
 import { CmComOrderTopHeaderBag, ICmComOrderExportableMe } from '#shared/model/cm/order/regions';
-import { CmComLangi, IExportableComInterpretation } from 'shared/api';
+import { IExportableComInterpretation, Langi } from 'shared/api';
 import { checkIsFalseOrZero, checkIsNil, checkIsNotNil, checkIsTrueOrOne } from 'shared/utils/checkIs';
 import { comBlockKinds } from 'shared/values/cm/block-kinds/BlockKind';
 import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';
@@ -10,7 +10,7 @@ export const cmComOrderListConstructor = <OrderConstructor extends CmComOrderWid
   orderConstructor: (me: ICmComOrderExportableMe<OrderConstructor>) => OrderConstructor,
   ords: ICmComOrderExportableMe<OrderConstructor>[],
   intp: IExportableComInterpretation | nil,
-  langi: CmComLangi,
+  langi: Langi,
 ) => {
   if (!comBlockKinds) return null;
   const orders: OrderConstructor[] = [];
@@ -57,7 +57,7 @@ export const cmComOrderListConstructor = <OrderConstructor extends CmComOrderWid
       bag ??= {};
 
       return (
-        (style.title[langi] || style.title[CmComLangi.Ru]) +
+        (style.title[langi] || style.title[Langi.Ru]) +
         (bag.isEdit
           ? ' №'
           : (bag.numered !== false && numered ? (groups[type] < 2 || !number ? '' : ` ${number}`) : '') +
