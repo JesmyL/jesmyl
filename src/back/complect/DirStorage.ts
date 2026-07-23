@@ -138,8 +138,14 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
   };
 
   saveItem = (id: Id, item?: Item) => {
-    this.getFileStore(id)?.saveValue(item);
-    return this.getItemModTime(id);
+    const fileStore = this.getFileStore(id);
+
+    if (fileStore) {
+      if (item) fileStore.setValue(item);
+      else fileStore.deleteFile();
+
+      return this.getItemModTime(id);
+    }
   };
 
   getItemModTime = (id: Id) => this.getFileStore(id)?.fileModifiedAt();
