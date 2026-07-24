@@ -1,3 +1,4 @@
+import { currentLangiAtom } from '#basis/locale';
 import { bibleShowTranslatesAtom, useBibleTranslatesContext } from '$bible/ext';
 import { cmComIsComMiniAnchorAtom } from '$cm/entities/index';
 import { makeStyleNode } from '$cm/shared/lib/makeStyleNode';
@@ -41,6 +42,7 @@ export const useCmComCommentBlockCss = (
   const takeCommentTexts = useCmComCommentTextBlockTaker(com.wid, localCommentBlock, commentBlock);
   const commentKindsBlock = takeCmComCommentKindBlockDict(com.wid, localCommentBlock, commentBlock);
   const currentBibleTranslate = useAtomValue(bibleShowTranslatesAtom)[0];
+  const langi = useAtomValue(currentLangiAtom);
 
   useEffect(() => {
     const timeout = setTimeout(async () => {
@@ -103,7 +105,7 @@ export const useCmComCommentBlockCss = (
               accentsCss,
               makeCommentWithTextCss,
               makeCommentWithTextLinksOnlyCss,
-            } = await cmComCommentMakeStartCommentCss(currentBibleTranslate, line, translates);
+            } = await cmComCommentMakeStartCommentCss(langi, currentBibleTranslate, line, translates);
 
             isThereUnsettedTranslate ||= isUnset;
             isThereCorrectBibleText ||= isWithText;
@@ -196,6 +198,7 @@ export const useCmComCommentBlockCss = (
     commentKindsBlock,
     customPropsForOrder,
     delay,
+    langi,
   ]);
 
   return useAtomValue(cmComIsComMiniAnchorAtom) ? {} : styles;

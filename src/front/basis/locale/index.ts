@@ -1,15 +1,12 @@
 import { takeBaseLanguageAtom, takeDynamicLanguageAtom } from '#basis/state/locale';
-import { atom } from 'atomaric';
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import { atom, useAtomValue } from 'atomaric';
 import { makeRegExp } from 'regexpert';
 import { Langi } from 'shared/api';
-import { langCodeDict, localeDefaultNameSpace, localeKeySeparator } from 'shared/const/+locale';
-import { LocaleNameSpace, LocaleNameSpaceConfigs } from 'shared/model/+locale';
+import { langCodeDict } from 'shared/const/+locale';
 import { checkIsNil } from 'shared/utils/checkIs';
-import { objectKeys } from 'shared/utils/object.utils';
+import { translateBaseDefine } from 'shared/utils/locale/translate';
 
-export const currentLangAtom = atom(() => {
+export const currentLangiAtom = atom(() => {
   const langDict: Record<string, Langi> = {
     ru: Langi.Ru,
 
@@ -27,31 +24,19 @@ export const currentLangAtom = atom(() => {
   return langDict[navLang] ?? Langi.Ru;
 }, 'app:lang');
 
-let lng = langCodeDict[currentLangAtom.get()];
+let lng = langCodeDict[currentLangiAtom.get()];
 
 if (checkIsNil(lng)) {
-  currentLangAtom.reset();
-  lng = langCodeDict[currentLangAtom.get()];
+  currentLangiAtom.reset();
+  lng = langCodeDict[currentLangiAtom.get()];
 }
 
-const nsConfigs: { [K in LocaleNameSpace]: LocaleNameSpaceConfigs[K] } = {
-  B: takeBaseLanguageAtom().get(),
-  [`D${Langi.Ru}`]: takeDynamicLanguageAtom(Langi.Ru).get(),
-  [`D${Langi.Ua}`]: takeDynamicLanguageAtom(Langi.Ua).get(),
-  [`D${Langi.Kz}`]: takeDynamicLanguageAtom(Langi.Kz).get(),
+export const translateBase = translateBaseDefine(() => takeBaseLanguageAtom().get());
+
+export const useTranslateBase = () => {
+  const dict = useAtomValue(takeBaseLanguageAtom());
+
+  return translateBaseDefine(dict);
 };
 
-i18n.use(initReactI18next).init({
-  lng,
-  fallbackLng: langCodeDict[Langi.Ru],
-  ns: objectKeys(nsConfigs),
-  resources: { [lng]: nsConfigs },
-  interpolation: { escapeValue: false },
-
-  nsSeparator: localeKeySeparator,
-  keySeparator: localeKeySeparator,
-
-  defaultNS: localeDefaultNameSpace,
-});
-
-export { i18n };
+export const translateDynamic = (langi: Langi) => translateBaseDefine(takeDynamicLanguageAtom(langi).get());

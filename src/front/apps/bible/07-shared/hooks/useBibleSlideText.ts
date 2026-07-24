@@ -1,17 +1,16 @@
-import { BibleTranslateName } from 'shared/api';
-import { itIt } from 'shared/utils';
+import { BibleTranslateName, Langi } from 'shared/api';
+import { itIt, itNumSort } from 'shared/utils';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { objectEntries } from 'shared/utils/object.utils';
 import { textToUpperCase } from 'shared/utils/string.utils';
-import { bibleTitles } from '../const/bibleTitles';
+import { takeBibleLangBooks } from '../const/bibleTitles';
 import { translateDescriptions } from '../const/consts';
 import { verseTranslateTitleCssClassName } from '../const/ids';
 import { useBibleTranslatesContext } from '../contexts/translates';
 import { BibleBroadcastAnyAddress, BibleBroadcastJoinAddress, BibleSingleAddressCode } from '../model/base';
+import { useBibleCurrentLangi } from '../state/atoms';
 import { BibleBookTranslates } from '../state/TranslatesContext';
 import { useBibleShowTranslatesValue } from './translates';
-
-const numSortFunc = (a: number, b: number) => a - b;
 
 export const useBibleSlideText = (
   address: BibleBroadcastAnyAddress | nil,
@@ -20,11 +19,12 @@ export const useBibleSlideText = (
 ) => {
   const showTranslates = useBibleShowTranslatesValue();
   const translates = useBibleTranslatesContext();
+  const langi = useBibleCurrentLangi();
 
   if (checkIsArray(address))
     return makeSlideSingleAddressText(showTranslates, translates, address, isSetFirstTranslate, isSetAddress);
 
-  return makeSlideJoinedAddressText(showTranslates, translates, address, isSetFirstTranslate, isSetAddress);
+  return makeSlideJoinedAddressText(langi, showTranslates, translates, address, isSetFirstTranslate, isSetAddress);
 };
 
 const makeSlideSingleAddressText = (
@@ -52,6 +52,7 @@ const makeSlideSingleAddressText = (
 };
 
 const makeSlideJoinedAddressText = (
+  langi: Langi,
   showTranslates: BibleTranslateName[],
   translates: BibleBookTranslates,
   joinAddress: BibleBroadcastJoinAddress | nil,
@@ -71,14 +72,16 @@ const makeSlideJoinedAddressText = (
 
         return (
           (isSetAddress !== false && booka.length > 1
-            ? bibleTitles.titles[booki].full + (bookEntries.length > 1 ? '' : ', ' + (1 + +bookEntries[0][0])) + ':\n'
+            ? takeBibleLangBooks(langi)[booki].full +
+              (bookEntries.length > 1 ? '' : ', ' + (1 + +bookEntries[0][0])) +
+              ':\n'
             : '') +
           bookEntries
             .map(([chapteri, chapter], _, chaptera) => {
               const chapterPrefix = isSetAddress === false ? '' : chaptera.length > 1 ? +chapteri + 1 + ':' : '';
               return chapter
                 .slice(0)
-                .sort(numSortFunc)
+                .sort(itNumSort)
                 .map(
                   versei =>
                     (isSetAddress === false ? '' : `${chapterPrefix}${versei + 1}. `) +

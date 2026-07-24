@@ -1,113 +1,135 @@
+import { takeDynamicLanguageAtom } from '#basis/state/locale';
+import { Langi } from 'shared/api';
+import { langCodeDict } from 'shared/const/+locale';
+import { BibleTitleCodei } from 'shared/model/bible/enums';
+import { extractNumber, iife } from 'shared/utils';
+import { checkIsNotNil, checkIsNumber } from 'shared/utils/checkIs';
+import { forEachObjectEntries } from 'shared/utils/object.utils';
+
 let color = '';
 
-export const bibleTitles = {
-  titles: [
-    { setColor: 'text-[#300570] dark:text-[#966BD6]' },
-    { short: 'Быт', full: 'Бытие', textColor: '' },
-    { short: 'Исх', full: 'Исход', textColor: '' },
-    { short: 'Лев', full: 'Левит', textColor: '' },
-    { short: 'Чис', full: 'Числа', textColor: '' },
-    { short: 'Втор', full: 'Второзаконие', textColor: '' },
+const bibleTitles = [
+  'text-[#300570] dark:text-[#966BD6]',
+  BibleTitleCodei.aБыт,
+  BibleTitleCodei.Исх,
+  BibleTitleCodei.Лев,
+  BibleTitleCodei.Чис,
+  BibleTitleCodei.Втор,
 
-    { setColor: 'text-[#A56800] dark:text-[#FFB840]' },
-    { short: 'Нав', full: 'Иисус Навин', textColor: '' },
-    { short: 'Суд', full: 'Судьи', textColor: '' },
-    { short: 'Руф', full: 'Руфь', textColor: '' },
-    { short: '1Цар', full: '1-я Царств', min: '1Царств', textColor: '' },
-    { short: '2Цар', full: '2-я Царств', min: '2Царств', textColor: '' },
-    { short: '3Цар', full: '3-я Царств', min: '3Царств', textColor: '' },
-    { short: '4Цар', full: '4-я Царств', min: '4Царств', textColor: '' },
-    { short: '1Пар', full: '1-я Паралипоменон', min: '1Паралипоменон', textColor: '' },
-    { short: '2Пар', full: '2-я Паралипоменон', min: '2Паралипоменон', textColor: '' },
-    { short: 'Ездр', full: 'Ездра', textColor: '' },
-    { short: 'Неем', full: 'Неемия', textColor: '' },
-    { short: 'Есф', full: 'Есфирь', textColor: '' },
+  'text-[#A56800] dark:text-[#FFB840]',
+  BibleTitleCodei.Нав,
+  BibleTitleCodei.Суд,
+  BibleTitleCodei.Руф,
+  BibleTitleCodei.Цар1,
+  BibleTitleCodei.Цар2,
+  BibleTitleCodei.Цар3,
+  BibleTitleCodei.Цар4,
+  BibleTitleCodei.Пар1,
+  BibleTitleCodei.Пар2,
+  BibleTitleCodei.Ездр,
+  BibleTitleCodei.Неем,
+  BibleTitleCodei.Есф,
 
-    { setColor: 'text-[#007141] dark:text-[#61D7A4]' },
-    { short: 'Иов', full: 'Иов', textColor: '' },
-    { short: 'Пс', full: 'Псалтирь', textColor: '' },
-    { short: 'Прит', full: 'Притчи', textColor: '' },
-    { short: 'Еккл', full: 'Екклесиаст', textColor: '' },
-    { short: 'Песн', full: 'Песня песней', textColor: '' },
+  'text-[#007141] dark:text-[#61D7A4]',
+  BibleTitleCodei.Иов,
+  BibleTitleCodei.Пс,
+  BibleTitleCodei.Прит,
+  BibleTitleCodei.Еккл,
+  BibleTitleCodei.Песн,
 
-    { setColor: 'text-[#93002F] dark:text-[#F16D97]' },
-    { short: 'Ис', full: 'Исаия', textColor: '' },
-    { short: 'Иер', full: 'Иеремия', textColor: '' },
-    { short: 'Плач', full: 'Плач Иеремии', textColor: '' },
-    { short: 'Иез', full: 'Иезекииль', textColor: '' },
-    { short: 'Дан', full: 'Даниил', textColor: '' },
+  'text-[#93002F] dark:text-[#F16D97]',
+  BibleTitleCodei.Ис,
+  BibleTitleCodei.Иер,
+  BibleTitleCodei.Плач,
+  BibleTitleCodei.Иез,
+  BibleTitleCodei.Дан,
 
-    { setColor: 'text-[#A56800] dark:text-[#FFCB73]' },
-    { short: 'Ос', full: 'Осия', textColor: '' },
-    { short: 'Иоил', full: 'Иоиль', textColor: '' },
-    { short: 'Ам', full: 'Амос', textColor: '' },
-    { short: 'Авд', full: 'Авдий', textColor: '' },
-    { short: 'Ион', full: 'Иона', textColor: '' },
-    { short: 'Мих', full: 'Михей', textColor: '' },
-    { short: 'Наум', full: 'Наум', textColor: '' },
-    { short: 'Авв', full: 'Аввакум', textColor: '' },
-    { short: 'Соф', full: 'Софония', textColor: '' },
-    { short: 'Агг', full: 'Аггей', textColor: '' },
-    { short: 'Зах', full: 'Захария', textColor: '' },
-    { short: 'Мал', full: 'Малахия', textColor: '' },
+  'text-[#A56800] dark:text-[#FFCB73]',
+  BibleTitleCodei.Ос,
+  BibleTitleCodei.Иоил,
+  BibleTitleCodei.Ам,
+  BibleTitleCodei.Авд,
+  BibleTitleCodei.Ион,
+  BibleTitleCodei.Мих,
+  BibleTitleCodei.Наум,
+  BibleTitleCodei.Авв,
+  BibleTitleCodei.Соф,
+  BibleTitleCodei.Агг,
+  BibleTitleCodei.Зах,
+  BibleTitleCodei.Мал,
 
-    { setColor: 'text-[#071C71] dark:text-[#66A3D1]' },
-    { short: 'Мат', full: 'От Матфея', textColor: '' },
-    { short: 'Мар', full: 'От Марка', textColor: '' },
-    { short: 'Лук', full: 'От Луки', textColor: '' },
-    { short: 'Ин', full: 'От Иоанна', textColor: '' },
+  'text-[#071C71] dark:text-[#66A3D1]',
+  BibleTitleCodei.Мат,
+  BibleTitleCodei.Мар,
+  BibleTitleCodei.Лук,
+  BibleTitleCodei.Ин,
 
-    { setColor: 'text-[#9C0019] dark:text-[#F87085]' },
-    { short: 'Деян', full: 'Деяния', textColor: '' },
+  'text-[#9C0019] dark:text-[#F87085]',
+  BibleTitleCodei.Деян,
 
-    { setColor: 'text-[#3F046F] dark:text-[#A468D5]' },
-    { short: 'Иак', full: 'Иакова', textColor: '' },
-    { short: '1Пет', full: '1-е Петра', min: '1Петра', textColor: '' },
-    { short: '2Пет', full: '2-е Петра', min: '2Петра', textColor: '' },
-    { short: '1Ин', full: '1-е Иоанна', min: '1Иоанна', textColor: '' },
-    { short: '2Ин', full: '2-е Иоанна', min: '2Иоанна', textColor: '' },
-    { short: '3Ин', full: '3-е Иоанна', min: '3Иоанна', textColor: '' },
-    { short: 'Иуд', full: 'Иуды', textColor: '' },
+  'text-[#3F046F] dark:text-[#A468D5]',
+  BibleTitleCodei.Иак,
+  BibleTitleCodei.Пет1,
+  BibleTitleCodei.Пет2,
+  BibleTitleCodei.Ин1,
+  BibleTitleCodei.Ин2,
+  BibleTitleCodei.Ин3,
+  BibleTitleCodei.Иуд,
 
-    { setColor: 'text-[#A5A500] dark:text-[#FFFF73]' },
-    { short: 'Рим', full: 'К Римлянам', textColor: '' },
-    { short: '1Кор', full: '1-е Коринфянам', min: '1Коринфянам', textColor: '' },
-    { short: '2Кор', full: '2-е Коринфянам', min: '2Коринфянам', textColor: '' },
-    { short: 'Гал', full: 'К Галатам', textColor: '' },
-    { short: 'Еф', full: 'К Ефесянам', textColor: '' },
-    { short: 'Флп', full: 'К Филиппийцам', textColor: '' },
-    { short: 'Кол', full: 'К Колоссянам', textColor: '' },
-    { short: '1Фес', full: '1-е Фессалоникийцам', min: '1Фессалоникийцам', textColor: '' },
-    { short: '2Фес', full: '2-е Фессалоникийцам', min: '2Фессалоникийцам', textColor: '' },
-    { short: '1Тим', full: '1-е Тимофею', min: '1Тимофею', textColor: '' },
-    { short: '2Тим', full: '2-е Тимофею', min: '2Тимофею', textColor: '' },
-    { short: 'Тит', full: 'К Титу', textColor: '' },
-    { short: 'Флм', full: 'К Филимону', textColor: '' },
-    { short: 'Евр', full: 'К Евреям', textColor: '' },
+  'text-[#A5A500] dark:text-[#FFFF73]',
+  BibleTitleCodei.Рим,
+  BibleTitleCodei.Кор1,
+  BibleTitleCodei.Кор2,
+  BibleTitleCodei.Гал,
+  BibleTitleCodei.Еф,
+  BibleTitleCodei.Флп,
+  BibleTitleCodei.Кол,
+  BibleTitleCodei.Фес1,
+  BibleTitleCodei.Фес2,
+  BibleTitleCodei.Тим1,
+  BibleTitleCodei.Тим2,
+  BibleTitleCodei.Тит,
+  BibleTitleCodei.Флм,
+  BibleTitleCodei.Евр,
 
-    { setColor: 'text-[#A51300] dark:text-[#FF8373]' },
-    { short: 'Откр', full: 'Откровение', textColor: '' },
-  ]
-    .map(it => {
-      if (it.setColor) color = it.setColor;
-      else it.textColor = color;
+  'text-[#A51300] dark:text-[#FF8373]',
+  BibleTitleCodei.Откр,
+]
+  .map(key => {
+    if (checkIsNumber(key)) return { key, color };
+    else color = key;
+  })
+  .filter(checkIsNotNil);
 
-      return it;
-    })
-    .filter(it => it.setColor == null),
+export const findIndexInBibleTitles = (langi: Langi, checker: (title: string) => boolean) => {
+  return takeBibleLangBooks(langi).findIndex(({ lfull, lshort }) => checker(lfull) || checker(lshort));
 };
 
-export const checkEachBibleTitles = (
-  book: OmitOwn<(typeof bibleTitles)['titles'][number], 'setColor' | 'textColor'>,
-  checker: (title: string) => boolean,
-) => {
-  return checker(book.short) || checker(book.full) || checker(book.min ?? '');
-};
+const lowerTitleDict = {} as Record<Langi, Record<'lfull' | 'lshort' | 'full' | 'short' | 'color', string>[]>;
 
-export const bibleLowerBooks = bibleTitles.titles.map(book => {
-  return {
-    full: book.full.toLowerCase(),
-    short: book.short.toLowerCase(),
-    min: book.min?.toLowerCase(),
-  };
+forEachObjectEntries(langCodeDict, langi => {
+  takeDynamicLanguageAtom(extractNumber(langi)).subscribe(() => delete lowerTitleDict[langi]);
 });
+
+export const takeBibleLangBooks = (langi: Langi) =>
+  (lowerTitleDict[langi] ??= iife(() => {
+    try {
+      const bookTranslations = takeDynamicLanguageAtom(langi).get().bible.title;
+
+      return bibleTitles.map(book => ({
+        color: book.color,
+        full: bookTranslations.full[book.key],
+        short: bookTranslations.short[book.key],
+        lfull: bookTranslations.full[book.key].toLowerCase(),
+        lshort: bookTranslations.short[book.key].toLowerCase(),
+      }));
+    } catch {
+      return bibleTitles.map(it => ({
+        color: it.color,
+        full: '',
+        short: '',
+        lfull: '',
+        lshort: '',
+      }));
+    }
+  }));

@@ -1,6 +1,7 @@
 import { useBibleAddressBooki, useBibleAddressChapteri, useBibleAddressVersei } from '$bible/shared/hooks';
 import { makeBibleJoinedAddressText } from '$bible/shared/hooks/texts';
 import { BibleBroadcastSingleAddress } from '$bible/shared/model/base';
+import { useBibleCurrentLangi } from '$bible/shared/state/atoms';
 
 export const BibleAddressSingle = (props: { address?: BibleBroadcastSingleAddress }) => {
   if (props.address === undefined) return <Current />;
@@ -9,11 +10,15 @@ export const BibleAddressSingle = (props: { address?: BibleBroadcastSingleAddres
 };
 
 const Propped = (props: { address: BibleBroadcastSingleAddress }) => {
-  return <>{makeBibleJoinedAddressText(props.address)}</>;
+  const langi = useBibleCurrentLangi();
+  return <>{makeBibleJoinedAddressText(langi, props.address)}</>;
 };
 
 const Current = () => {
+  const langi = useBibleCurrentLangi();
   return (
-    <>{makeBibleJoinedAddressText([useBibleAddressBooki(), useBibleAddressChapteri(), useBibleAddressVersei()])}</>
+    <>
+      {makeBibleJoinedAddressText(langi, [useBibleAddressBooki(), useBibleAddressChapteri(), useBibleAddressVersei()])}
+    </>
   );
 };

@@ -6,6 +6,7 @@ import { useBibleAddressVersei } from '../hooks/address/verses';
 import { useBibleShowSlideAddressCode } from '../hooks/slide-sync';
 import { makeBibleJoinedAddressText } from '../hooks/texts';
 import { useBibleSlideText } from '../hooks/useBibleSlideText';
+import { useBibleCurrentLangi } from './atoms';
 
 interface Props {
   children?: React.ReactNode;
@@ -20,7 +21,8 @@ export const BibleCurrentTextsContext = (props: Props) => {
   const showAddressCode = useBibleShowSlideAddressCode();
 
   const addressCode = props.isPreview ? (actualJoinAddress ?? [booki, chapteri, versei]) : showAddressCode;
-  const addressText = makeBibleJoinedAddressText(addressCode);
+  const langi = useBibleCurrentLangi();
+  const addressText = makeBibleJoinedAddressText(langi, addressCode);
   const slideText = useBibleSlideText(addressCode);
 
   return (

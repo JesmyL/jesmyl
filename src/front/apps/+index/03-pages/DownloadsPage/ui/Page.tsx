@@ -1,4 +1,5 @@
 import { useIndexValuesQuery } from '#basis/api/useIndexValuesQuery';
+import { translateBase } from '#basis/locale';
 import { Skeleton } from '#shared/components';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
@@ -10,7 +11,7 @@ export function IndexDownloadsPage() {
   return (
     <PageContainerConfigurer
       className=""
-      headTitle="Загрузки"
+      headTitle={translateBase(it => it.downloads)}
       content={
         <div className="h-full w-full">
           {valuesQuery.isLoading ? (
@@ -23,7 +24,7 @@ export function IndexDownloadsPage() {
               >
                 <BrutalItem
                   iconNode={<LazyIcon icon="WindowsOld" />}
-                  title="JesmyL для Windows"
+                  title={translateBase(it => it.jesmylForDesctop, { j: 'JesmyL', d: 'Window' })}
                 />
               </a>
               <a
@@ -32,7 +33,7 @@ export function IndexDownloadsPage() {
               >
                 <BrutalItem
                   iconNode={<LazyIcon icon="CloudDownload" />}
-                  title="JesmyL для Linux"
+                  title={translateBase(it => it.jesmylForDesctop, { j: 'JesmyL', d: 'Linux' })}
                 />
               </a>
             </>

@@ -1,5 +1,6 @@
 import { ICmComOrderExportableMe } from '#shared/model/cm/order/regions';
-import { CmComNewlinerLineTextSetHolder, CmComOrderWid, IExportableOrder } from 'shared/api';
+import { CmComNewlinerLineTextSetHolder, CmComOrderWid, IExportableOrder, Langi } from 'shared/api';
+import { LocaleDynamic } from 'shared/model/+locale/dynamic';
 import { cmComOrderListConstructor } from 'shared/utils/cm/com/orderListConstructor';
 import { CmComOrder } from '../../order/Order';
 import { CmComBasic } from './10-Basic';
@@ -7,6 +8,8 @@ import { CmComBasic } from './10-Basic';
 export class CmComOrders extends CmComBasic {
   protected _o?: CmComOrder[] | nil;
   protected _ords?: ICmComOrderExportableMe<CmComOrder>[];
+
+  static getLangLocales: (langi: Langi) => LocaleDynamic<Langi>;
 
   get ords() {
     if (this._ords == null) this._ords = this.top.o?.map(this.mapTopOrdInOrdMe) ?? [];
@@ -54,7 +57,13 @@ export class CmComOrders extends CmComBasic {
   };
 
   setOrders = () =>
-    (this._o = cmComOrderListConstructor(me => this.orderConstructor(me), this.ords, this.intp, this.langi));
+    (this._o = cmComOrderListConstructor(
+      CmComOrders.getLangLocales,
+      me => this.orderConstructor(me),
+      this.ords,
+      this.intp,
+      this.langi,
+    ));
 
   newlinerSetHolder: CmComNewlinerLineTextSetHolder = {};
 }

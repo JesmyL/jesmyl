@@ -7,6 +7,7 @@ import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { JSX, useCallback, useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
+import { BibleTitleCodei } from 'shared/model/bible/enums';
 import { checkIsUndefined } from 'shared/utils/checkIs';
 import { lazyInit } from 'shared/utils/lazyInit';
 import { arrayByLength } from 'shared/utils/object.utils';
@@ -42,7 +43,7 @@ export function BibleBroadcastSearchResults({ inputRef, height = '100px', innerZ
   let currentBooki = useBibleAddressBooki();
   let currentChapteri = useBibleAddressChapteri();
   if (searchZone === 'global') {
-    currentBooki = BibleBooki.none;
+    currentBooki = BibleTitleCodei.aБыт;
     currentChapteri = BibleChapteri.none;
   }
 

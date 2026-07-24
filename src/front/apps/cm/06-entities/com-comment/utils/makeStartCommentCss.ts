@@ -1,6 +1,6 @@
-import { BibleBookTranslates, bibleLowerBooks, bibleTitles, translateDescriptions } from '$bible/ext';
+import { BibleBookTranslates, takeBibleLangBooks, translateDescriptions } from '$bible/ext';
 import { makeRegExp } from 'regexpert';
-import { BibleTranslateName } from 'shared/api';
+import { BibleTranslateName, Langi } from 'shared/api';
 import { checkIsNaN } from 'shared/utils/checkIs';
 import {
   cmComCommentMakePseudoCommentContentAccentsColorCss,
@@ -10,25 +10,26 @@ import {
 import { textToUpperCase } from 'shared/utils/string.utils';
 import { cmComCommentHeadBibleAddressRegExp } from './commentHeadBibleAddressRegExp';
 
-let titlesMap: Map<string, number>;
+const titlesLangMap: PRecord<Langi, Map<string, number>> = {};
 let titlesLine: string[];
 
 export const cmComCommentMakeStartCommentCss = async (
+  langi: Langi,
   currentBibleTranslate: BibleTranslateName,
   startComment: string,
   translates: BibleBookTranslates,
 ) => {
-  titlesMap ??= new Map(
-    bibleLowerBooks
+  const titlesMap = (titlesLangMap[langi] ??= new Map(
+    takeBibleLangBooks(langi)
       .map(
-        ({ full, short }, i) =>
+        ({ lfull, lshort }, i) =>
           [
-            [full, i],
-            [short, i],
+            [lfull, i],
+            [lshort, i],
           ] as const,
       )
       .flat(),
-  );
+  ));
 
   const accentsCss = cmComCommentMakePseudoCommentContentAccentsColorCss(startComment);
   let isThereUnsettedTranslate = false;
@@ -81,7 +82,7 @@ export const cmComCommentMakeStartCommentCss = async (
 
       if (booki == null) return `\n${tNameUpper}:<КНИГА ${bookTitle} НЕ НАЙДЕНА> ${addr.chapter}:${addr.verseDiapason}`;
 
-      const fullBibleTitle = bibleTitles.titles[booki]?.full || bookTitle;
+      const fullBibleTitle = takeBibleLangBooks(langi)[booki]?.full || bookTitle;
       const book = translate.chapters[booki];
 
       if (book == null)

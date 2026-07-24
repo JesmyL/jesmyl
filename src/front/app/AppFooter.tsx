@@ -1,4 +1,5 @@
 import { FooterPlacementManager } from '#basis/lib/FooterPlacementManager';
+import { translateBase } from '#basis/locale';
 import { AppName } from '#basis/model/App.model';
 import { CurrentAppFooterItemPlaceContext } from '#basis/state/App.contexts';
 import { isTouchDevice } from '#shared/lib/device-differences';
@@ -85,7 +86,7 @@ export function AppFooter({ children }: { children: () => React.ReactNode[]; app
         <FooterTrack className="other-track min-w-20">
           <AppFooterItem
             icon="CircleArrowRight02"
-            title="Иное"
+            title={translateBase(it => it.inoe)}
             to={`/!other/${(appName === '!other' ? place : appName) as never}`}
             idPostfix="other"
           />

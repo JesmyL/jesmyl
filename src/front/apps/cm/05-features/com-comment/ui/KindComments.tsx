@@ -1,3 +1,4 @@
+import { currentLangiAtom, translateDynamic } from '#basis/locale';
 import { TextInput } from '#shared/ui/TextInput';
 import {
   cmComCommentExtractSelector,
@@ -5,8 +6,10 @@ import {
   useCmComCommentBlock,
 } from '$cm/entities/com-comment';
 import { cmIDB } from '$cm/ext';
+import { useAtomValue } from 'atomaric';
 import { CmComCommentBlockSpecialSelector } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
+import { checkIsNil, checkIsNotNil } from 'shared/utils/checkIs';
 import { useDeferredCallback } from 'shared/utils/useDeferredCallback';
 import { comBlockKindsConfig } from 'shared/values/cm/block-kinds/comBlockKinds.config';
 import { twMerge } from 'tailwind-merge';
@@ -15,6 +18,7 @@ export const CmComCommentKindComments = ({ commentAlti, com }: { commentAlti: nu
   const deferredCallback = useDeferredCallback();
   const { localCommentBlock, commentBlock } = useCmComCommentBlock(com.wid);
   const kindCommentTexts = takeCmComCommentKindBlockDict(com.wid, localCommentBlock, commentBlock);
+  const langi = useAtomValue(currentLangiAtom);
 
   const usedKindCountDict =
     com.orders?.reduce(
@@ -34,12 +38,13 @@ export const CmComCommentKindComments = ({ commentAlti, com }: { commentAlti: nu
         const usedKindCount = usedKindCountDict[kind.key];
 
         return (
-          ((kind.key > 0 && !kind.isInherit && (usedKindCount ?? 0) > 1) || kindCommentTexts?.[kind.key] != null) && (
+          ((kind.key > 0 && !kind.isInherit && (usedKindCount ?? 0) > 1) ||
+            checkIsNotNil(kindCommentTexts?.[kind.key])) && (
             <TextInput
               key={kind.key}
               label={
-                <span className={twMerge(usedKindCount == null ? 'text-xKO' : usedKindCount < 2 && 'opacity-50')}>
-                  {kind.title[0]}
+                <span className={twMerge(checkIsNil(usedKindCount) ? 'text-xKO' : usedKindCount < 2 && 'opacity-50')}>
+                  {translateDynamic(langi)(it => it.cm.com.kind[kind.key])}
                 </span>
               }
               className="mb-3"

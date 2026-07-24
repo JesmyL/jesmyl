@@ -1,3 +1,4 @@
+import { translateDynamic } from '#basis/locale';
 import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -101,7 +102,9 @@ export const CmEditorComAddOrderAdditionsEtapsModalInner = ({ com, onClose, firs
           {nextEtapFooter}
         </>
       );
-    case CmEditorComAddOrderNewOrderMakeEtap.Type:
+    case CmEditorComAddOrderNewOrderMakeEtap.Type: {
+      const td = translateDynamic(com.langi);
+
       return (
         <>
           <ModalHeader>Тип нового блока</ModalHeader>
@@ -109,7 +112,7 @@ export const CmEditorComAddOrderAdditionsEtapsModalInner = ({ com, onClose, firs
             {comBlockKinds.kinds.map(styleBlock => {
               if (selectedTexti == null ? styleBlock.isBlockForTextableOnly : styleBlock.isBlockForChordedOnly)
                 return null;
-              const typeTitle = styleBlock.title[com.langi || 0];
+              const orderTitle = td(it => it.cm.com.kind[styleBlock.key]);
 
               return (
                 <IconCheckbox
@@ -118,7 +121,7 @@ export const CmEditorComAddOrderAdditionsEtapsModalInner = ({ com, onClose, firs
                   disabled={styleBlock === selectedStyleBlock}
                   className="mt-2"
                   onChange={() => setStyleBlock(styleBlock)}
-                  postfix={typeTitle}
+                  postfix={orderTitle}
                 />
               );
             })}
@@ -126,5 +129,6 @@ export const CmEditorComAddOrderAdditionsEtapsModalInner = ({ com, onClose, firs
           {nextEtapFooter}
         </>
       );
+    }
   }
 };

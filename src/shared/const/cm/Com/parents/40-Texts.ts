@@ -9,7 +9,7 @@ import {
   CmComOrderWidNever,
   CmComTextSquareBracketsMode,
 } from 'shared/api';
-import { makeCmComAudioMarkTitleEmptySelectorLazy } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
+import { makeCmComAudioMarkTitleEmptySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { CmBroadcastMonolineSlide, CmBroadcastSlideLine } from 'shared/model/cm/broadcast';
 import { TextCase } from 'shared/model/common';
 import { incrementNumber } from 'shared/utils';
@@ -29,7 +29,7 @@ export class CmComTexts extends CmComChords {
         {
           top: { w: CmComOrderWidNever, c: 0 },
           header: () =>
-            makeCmComAudioMarkTitleEmptySelectorLazy()(
+            makeCmComAudioMarkTitleEmptySelector(
               '',
               [0, CmComAudioMarkPackTimeOne],
               CmComAudioMarkPackTimeOne,

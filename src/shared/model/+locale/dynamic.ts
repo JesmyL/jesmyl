@@ -1,16 +1,21 @@
-import { AppName } from '#basis/model/App.model';
 import { Langi } from 'shared/api';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
+import { BibleTitleCodei } from '../bible/enums';
+import { LocaleSatisfies, LocaleStrRecord } from './model';
 
-type Satisfies<T extends PRecord<AppName, object>> = T;
-type Rec<T extends string | number> = Record<T, string>;
-
-export type LocaleDynamic<L extends Langi> = Satisfies<{
+export type LocaleDynamic<L extends Langi> = LocaleSatisfies<{
   lng: L;
 
   cm: {
     com: {
-      kind: Rec<CmComBlockKindKey>;
+      kind: LocaleStrRecord<CmComBlockKindKey>;
+    };
+  };
+
+  bible: {
+    title: {
+      short: LocaleStrRecord<BibleTitleCodei>;
+      full: LocaleStrRecord<BibleTitleCodei>;
     };
   };
 }>;

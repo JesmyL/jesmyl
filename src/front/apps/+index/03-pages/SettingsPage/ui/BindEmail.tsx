@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { makeToastOKMoodConfig } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -14,7 +15,7 @@ export const IndexSettingsBindEmail = () => {
     <>
       <BrutalItem
         iconNode={<LazyIcon icon="Mail01" />}
-        title="Привязать E-mail"
+        title={translateBase(it => it.bindEmail)}
         onClick={() => setIsOpen(itNIt)}
         box={<LazyIcon icon={isOpen ? 'ArrowUp01' : 'ArrowDown01'} />}
       />
@@ -23,7 +24,10 @@ export const IndexSettingsBindEmail = () => {
           onSend={email => indexTsjrpcClientMethods.sendBindEmailOTP({ email })}
           onConfirm={async otp => {
             const { fioOrNick } = await indexTsjrpcClientMethods.bindEmailByOTP({ otp });
-            toast(`${fioOrNick} привязан к текущему аккаунту`, makeToastOKMoodConfig());
+            toast(
+              translateBase(it => it.emailBindedToCurrentAuth, { fio: fioOrNick }),
+              makeToastOKMoodConfig(),
+            );
             setIsOpen(false);
           }}
         />

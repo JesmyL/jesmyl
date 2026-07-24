@@ -17,7 +17,7 @@ type LocaleKeyList<N extends LocaleNameSpace> = Exclude<
 export type LocaleNameSpaceConfigs = {
   B: LocaleBase<Langi>;
 } & {
-  [K in `D${Langi}`]: LocaleDynamic<K extends `D${infer L extends Langi}` ? L : never>;
+  [K in `D${Langi}`]: LocaleDynamic<K extends `D${infer L extends Langi}` ? L : Langi>;
 };
 
 export type LocaleNameSpace = keyof LocaleNameSpaceConfigs;

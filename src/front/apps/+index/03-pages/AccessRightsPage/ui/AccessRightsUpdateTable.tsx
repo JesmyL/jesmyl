@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { MyLib } from '#shared/lib/my-lib';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
@@ -73,10 +74,10 @@ export function IndexAccessRightsUpdateTable({
 const crudTableTHeader = (
   <thead>
     <tr>
-      {accessRightsCRUDOperations.map(operation => {
-        return <th key={operation}>{operation}</th>;
-      })}
-      <th>Название</th>
+      {accessRightsCRUDOperations.map(operation => (
+        <th key={operation}>{operation}</th>
+      ))}
+      <th>{translateBase(it => it.name)}</th>
     </tr>
   </thead>
 );

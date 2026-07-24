@@ -1,6 +1,6 @@
 export { BibleTranslateModulesControl } from '$bible/entities/translate/ui/ModulesBroadcastControl';
 export { BibleTranslateModulesRedactButton } from '$bible/entities/translate/ui/ModulesBroadcastRedactButton';
-export { bibleLowerBooks, bibleTitles } from '$bible/shared/const/bibleTitles';
+export { takeBibleLangBooks } from '$bible/shared/const/bibleTitles';
 export { bibleAllTranslates, translateDescriptions } from '$bible/shared/const/consts';
 export { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
 export { bibleMyTranslatesAtom, bibleShowTranslatesAtom } from '$bible/shared/state/atoms';

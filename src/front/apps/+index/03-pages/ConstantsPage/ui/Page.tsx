@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
@@ -13,7 +14,7 @@ export const IndexConstantsPage = () => {
   return (
     <PageContainerConfigurer
       className="constants-editor"
-      headTitle="Константы"
+      headTitle={translateBase(it => it.constants)}
       content={
         <>
           {mapObjectEntries(constantsConfigurator, (key, configItem) => {

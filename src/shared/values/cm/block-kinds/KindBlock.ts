@@ -15,10 +15,6 @@ export class KindBlock extends SourceBased<IExportableKindProp> {
     return this.top.alt;
   }
 
-  get title() {
-    return this.top.title;
-  }
-
   get isInherit() {
     return this.top.isInherit;
   }

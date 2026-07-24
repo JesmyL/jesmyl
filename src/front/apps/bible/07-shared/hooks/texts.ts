@@ -1,7 +1,8 @@
+import { translateDynamic } from '#basis/locale';
+import { Langi } from 'shared/api';
 import { itNumSort } from 'shared/utils';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { mapObjectEntries } from 'shared/utils/object.utils';
-import { bibleTitles } from '../const/bibleTitles';
 import { useBibleTranslatesContext } from '../contexts/translates';
 import { BibleBroadcastAnyAddress } from '../model/base';
 import { useBibleAddressBooki } from './address/books';
@@ -12,9 +13,9 @@ export const useBibleCurrentChapterList = () => {
   const showTranslates = useBibleShowTranslatesValue();
   return useBibleTranslatesContext()[showTranslates[0]]?.chapters?.[currentBooki];
 };
-export const useBibleBookList = () => bibleTitles.titles;
 
 export const makeBibleJoinedAddressText = (
+  langi: Langi,
   addressCode: BibleBroadcastAnyAddress | nil,
   titleVariant: 'full' | 'short' = 'full',
 ) => {
@@ -22,12 +23,15 @@ export const makeBibleJoinedAddressText = (
 
   if (checkIsArray(addressCode)) {
     const [booki, chapteri, versei] = addressCode;
-    return `${bibleTitles.titles[booki][titleVariant]} ${chapteri + 1}:${versei + 1}`;
+    const title = translateDynamic(langi)(it => it.bible.title[titleVariant][booki]);
+    return `${title} ${chapteri + 1}:${versei + 1}`;
   }
 
   return mapObjectEntries(addressCode, (booki, book) => {
+    const title = translateDynamic(langi)(it => it.bible.title[titleVariant][booki]);
+
     return (
-      bibleTitles.titles[booki][titleVariant] +
+      title +
       ' ' +
       mapObjectEntries(book, (chapteri, chapter) => {
         let versesStr = '';

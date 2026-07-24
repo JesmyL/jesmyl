@@ -1,3 +1,4 @@
+import { currentLangiAtom, translateBase, translateDynamic } from '#basis/locale';
 import { Button } from '#shared/components';
 import { mylib } from '#shared/lib/my-lib';
 import { cmComCommentCurrentComw2OpenAltiDictAtom, useCmComCommentBlockCss } from '$cm/entities/com-comment';
@@ -28,6 +29,7 @@ export const CmComCommentConstructorTextRulesConstructor = ({
   const isShowComments = useAtomValue(cmIsShowMyCommentsAtom);
   const simpleSelectorPrefix = `s${selector}` as const;
   const [isRedactKinds, setIsRedactKinds] = useState(false);
+  const langi = useAtomValue(currentLangiAtom);
 
   const { commentCssNode } = useCmComCommentBlockCss(
     com,
@@ -60,7 +62,13 @@ export const CmComCommentConstructorTextRulesConstructor = ({
           {!ordKind || (
             <CmComCommentConstructorTextWithAccentRedactor
               blockKey={`${variativeSelectorPrefix}b0`}
-              label={<span className="text-x7">Для каждого блока "{ordKind.top.title[0]}"</span>}
+              label={
+                <span className="text-x7">
+                  {translateBase(it => it.cm.com.forEachBlock, {
+                    n: translateDynamic(langi)(it => it.cm.com.kind[ordKind.top.key]),
+                  })}
+                </span>
+              }
               blockPropsHolder={propsDict}
               multiline
               type={CmComCommentConstructorRuleType.Block}

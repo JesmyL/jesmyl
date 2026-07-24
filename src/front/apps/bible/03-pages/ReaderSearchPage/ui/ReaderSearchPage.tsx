@@ -6,8 +6,9 @@ import {
   bibleBroadcastSearchResultSelectedAtom,
   bibleBroadcastSearchZoneAtom,
 } from '$bible/entities/broadcast-search';
+import { takeBibleLangBooks } from '$bible/ext';
 import { useBibleAddressBooki, useBibleAddressChapteri } from '$bible/shared/hooks';
-import { useBibleBookList } from '$bible/shared/hooks/texts';
+import { useBibleCurrentLangi } from '$bible/shared/state/atoms';
 import { useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
@@ -17,8 +18,8 @@ export function BibleReaderSearchPage() {
   const currentBooki = useBibleAddressBooki();
   const currentChapteri = useBibleAddressChapteri();
   const searchZone = useAtomValue(bibleBroadcastSearchZoneAtom);
-  const bookTitles = useBibleBookList();
   const [innerZone, setInnerZone] = useState<'book' | 'chapter'>('book');
+  const langi = useBibleCurrentLangi();
 
   useEffect(() => bibleBroadcastSearchResultSelectedAtom.set(null), []);
 
@@ -41,7 +42,7 @@ export function BibleReaderSearchPage() {
               checked={searchZone === 'inner' && innerZone === 'book'}
               postfix={
                 <>
-                  Поиск по книге <i>{bookTitles[currentBooki].full}</i>
+                  Поиск по книге <i>{takeBibleLangBooks(langi)[currentBooki].full}</i>
                 </>
               }
               onChange={() => {
@@ -55,7 +56,7 @@ export function BibleReaderSearchPage() {
                 <>
                   {'Поиск по главе '}
                   <i>
-                    {bookTitles[currentBooki].full} {currentChapteri + 1}
+                    {takeBibleLangBooks(langi)[currentBooki].full} {currentChapteri + 1}
                   </i>
                 </>
               }

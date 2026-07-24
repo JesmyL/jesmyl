@@ -1,6 +1,8 @@
 import { makeBibleJoinedAddressText } from '$bible/shared/hooks/texts';
 import { BibleBroadcastSingleAddress } from '$bible/shared/model/base';
+import { useBibleCurrentLangi } from '$bible/shared/state/atoms';
 
 export function BibleBroadcastArchiveSingleAddressText({ item }: { item: BibleBroadcastSingleAddress }) {
-  return <>{makeBibleJoinedAddressText(item, 'short')}</>;
+  const langi = useBibleCurrentLangi();
+  return <>{makeBibleJoinedAddressText(langi, item, 'short')}</>;
 }

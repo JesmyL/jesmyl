@@ -1,8 +1,10 @@
 import { FooterPlacementManager } from '#basis/lib/FooterPlacementManager';
 import { useFingersActions } from '#basis/lib/global-listeners/useFingersActions';
 import { useGlobalFontFamilySetter } from '#basis/lib/global-listeners/useGlobalFontFamilySetter';
+import { translateBase } from '#basis/locale';
 import { currentAppNameAtom } from '#basis/state/currentAppNameAtom';
 import { hideAppFooterAtom } from '#basis/state/hideAppFooterAtom';
+import { takeBaseLanguageAtom, takeDynamicLanguageAtom } from '#basis/state/locale';
 import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
 import { isFullscreenAtom } from '#shared/lib/atoms/fullscreen';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
@@ -14,6 +16,7 @@ import { schLinkAction } from '#widgets/schedule/links';
 import { Outlet, ParsedLocation, useLocation, useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
+import { Langi } from 'shared/api';
 import { toast } from 'sonner';
 import { appInitialInvokes } from './app-initial-invokes';
 import { AppFooter } from './AppFooter';
@@ -29,9 +32,16 @@ export const AppComponent = () => {
   const hideAppFooter = useAtomValue(hideAppFooterAtom);
   const isFullscreen = useAtomValue(isFullscreenAtom);
 
+  // for reinits
+  useAtomValue(takeDynamicLanguageAtom(Langi.Ru));
+  useAtomValue(takeBaseLanguageAtom());
+
   useEffect(() => {
     const unauthListener = soki.onTokenInvalidEvent.listen(() => {
-      toast('Авторизация не действительна', makeToastKOMoodConfig());
+      toast(
+        translateBase(it => it.authIncorrect),
+        makeToastKOMoodConfig(),
+      );
     });
 
     const errorMessageListener = soki.onInvokeErrorMessageEvent.listen(errorMessage => {
@@ -96,7 +106,7 @@ export const AppComponent = () => {
                 key="choose"
                 className="size-full flex justify-center items-center pb-3"
               >
-                Выберите программу
+                {translateBase(it => it.selProgram)}
               </div>,
             ]}
           />

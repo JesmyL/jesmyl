@@ -1,5 +1,6 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { useConnectionState } from '#basis/lib/useConnectionState';
+import { translateBase } from '#basis/locale';
 import { useAppNameContext } from '#basis/state/contexts';
 import { MyLib } from '#shared/lib/my-lib';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
@@ -53,7 +54,7 @@ export function IndexSettingsPage() {
       >
         <BrutalItem
           iconNode={<LazyIcon icon="UserGroup" />}
-          title="Права доступа"
+          title={translateBase(it => it.accessRights)}
         />
       </Link>,
 
@@ -80,7 +81,7 @@ export function IndexSettingsPage() {
               kind="TwotoneRounded"
             />
           }
-          title="Константы"
+          title={translateBase(it => it.constants)}
           idPostfix="constants"
         />
       </Link>,
@@ -88,21 +89,21 @@ export function IndexSettingsPage() {
     <BrutalItem
       key="show-player"
       iconNode={<LazyIcon icon="PlayListFavourite02" />}
-      title="Показывать плеер"
+      title={translateBase(it => it.cm.com.showPlayer)}
       onClick={indexIsShowPlayerInFooterAtom.do.toggle}
       box={<IconCheckbox valueAtom={indexIsShowPlayerInFooterAtom} />}
     />,
     <BrutalItem
       key="animations"
       iconNode={<LazyIcon icon="PaintBoard" />}
-      title="Анимации"
+      title={translateBase(it => it.anims)}
       onClick={indexIsPlayAnimationsAtom.do.toggle}
       box={<IconCheckbox valueAtom={indexIsPlayAnimationsAtom} />}
     />,
     <BrutalItem
       key="fonts"
       iconNode={<LazyIcon icon="Text" />}
-      title="Шрифт"
+      title={translateBase(it => it.font)}
       box={
         <MyFilesFontFamilySelector
           fileId={fontFamilyFileId}
@@ -113,7 +114,7 @@ export function IndexSettingsPage() {
     <BrutalItem
       key="errors"
       iconNode={<LazyIcon icon="RssError" />}
-      title="Показать ошибки"
+      title={translateBase(it => it.showErrors)}
       onClick={() => {
         const container = document.getElementById('error-log-list');
 
@@ -135,7 +136,7 @@ export function IndexSettingsPage() {
   return (
     <PageContainerConfigurer
       className="index-settings"
-      headTitle="Настройки"
+      headTitle={translateBase(it => it.settings)}
       head={connectionNode}
       content={
         <>
@@ -144,7 +145,7 @@ export function IndexSettingsPage() {
               return <React.Fragment key={buttoni}>{button}</React.Fragment>;
             })
           ) : (
-            <div className="text-center">Раздел пуст</div>
+            <div className="text-center">{translateBase(it => it.chapterEmpty)}</div>
           )}
         </>
       }

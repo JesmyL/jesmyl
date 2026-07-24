@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Accordion } from '#shared/components/ui/accordion';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
@@ -31,7 +32,7 @@ export function IndexAccessRightsPage() {
   return (
     <PageContainerConfigurer
       className="index-access-rights"
-      headTitle="Права доступа"
+      headTitle={translateBase(it => it.accessRights)}
       content={
         <>
           <Accordion.Root

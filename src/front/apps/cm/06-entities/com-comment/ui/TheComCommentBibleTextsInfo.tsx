@@ -1,9 +1,10 @@
+import { currentLangiAtom } from '#basis/locale';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import {
   bibleAllTranslates,
   bibleMyTranslatesAtom,
-  bibleTitles,
   BibleTranslateModulesRedactButton,
+  takeBibleLangBooks,
   translateDescriptions,
 } from '$bible/ext';
 import { useAtomValue } from 'atomaric';
@@ -12,6 +13,7 @@ import { CmComCommentForExample } from './ForExample';
 
 export function TheCmComCommentBibleTextsInfo() {
   const myTranslates = useAtomValue(bibleMyTranslatesAtom);
+  const langi = useAtomValue(currentLangiAtom);
 
   return (
     <div className="">
@@ -63,7 +65,7 @@ export function TheCmComCommentBibleTextsInfo() {
 
         <p>
           Для идентификации Библейской книги укажите сокращение или полное название:
-          {bibleTitles.titles.map(({ full: fullName, short: shortName }, titlei) => {
+          {takeBibleLangBooks(langi).map(({ full: fullName, short: shortName }, titlei) => {
             return (
               <React.Fragment key={shortName}>
                 <br />

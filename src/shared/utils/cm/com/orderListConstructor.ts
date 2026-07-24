@@ -1,18 +1,24 @@
 import { CmComOrderWidClass } from '#shared/model/cm/order/OrderWid';
 import { CmComOrderTopHeaderBag, ICmComOrderExportableMe } from '#shared/model/cm/order/regions';
 import { IExportableComInterpretation, Langi } from 'shared/api';
+import { LocaleDynamic } from 'shared/model/+locale/dynamic';
 import { checkIsFalseOrZero, checkIsNil, checkIsNotNil, checkIsTrueOrOne } from 'shared/utils/checkIs';
+import { translateBaseDefine } from 'shared/utils/locale/translate';
+import { iife } from 'shared/utils/utils';
 import { comBlockKinds } from 'shared/values/cm/block-kinds/BlockKind';
+import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';
 import { cmComOrderCheckIsOrdVisibleInInterpretation, cmComOrderGetWithExtendableFields } from '../checkIs';
 
 export const cmComOrderListConstructor = <OrderConstructor extends CmComOrderWidClass<OrderConstructor>>(
+  getLangLocales: (langi: Langi) => LocaleDynamic<Langi>,
   orderConstructor: (me: ICmComOrderExportableMe<OrderConstructor>) => OrderConstructor,
   ords: ICmComOrderExportableMe<OrderConstructor>[],
   intp: IExportableComInterpretation | nil,
   langi: Langi,
 ) => {
   if (!comBlockKinds) return null;
+  const kindTitleDict = {} as Record<CmComBlockKindKey, string>;
   const orders: OrderConstructor[] = [];
   let minimals: [number | nil, number | nil][] = [];
   const styles = comBlockKinds.kinds;
@@ -53,11 +59,16 @@ export const cmComOrderListConstructor = <OrderConstructor extends CmComOrderWid
       } else number = 0;
     }
 
+    const kindTitle = (kindTitleDict[style.key] ||= iife(() => {
+      const sel = (it: LocaleDynamic<Langi>) => it.cm.com.kind[style.key];
+      return translateBaseDefine(getLangLocales(langi))(sel) || translateBaseDefine(getLangLocales(Langi.Ru))(sel);
+    }));
+
     return (bag: CmComOrderTopHeaderBag | nil) => {
       bag ??= {};
 
       return (
-        (style.title[langi] || style.title[Langi.Ru]) +
+        kindTitle +
         (bag.isEdit
           ? ' №'
           : (bag.numered !== false && numered ? (groups[type] < 2 || !number ? '' : ` ${number}`) : '') +

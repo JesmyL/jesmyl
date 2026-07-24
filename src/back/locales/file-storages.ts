@@ -3,7 +3,7 @@ import { FileStore } from 'back/complect/FileStore';
 import { Langi } from 'shared/api';
 import { LocaleBase } from 'shared/model/+locale/base';
 import { LocaleDynamic } from 'shared/model/+locale/dynamic';
-import { extractNumber, wait } from 'shared/utils';
+import { extractNumber } from 'shared/utils';
 import { checkIsEq } from 'shared/utils/checkIsEq';
 import { lazyInit } from 'shared/utils/lazyInit';
 import { forEachObjectEntries, objectEntries } from 'shared/utils/object.utils';
@@ -33,7 +33,6 @@ export const langLocaleDynamicFileStoragesLazy = lazyInit(async () => {
 
     if (!checkIsEq(savedConfig, config)) {
       dirStorage.saveItem(langi, config);
-      await wait(100);
     }
   }
 

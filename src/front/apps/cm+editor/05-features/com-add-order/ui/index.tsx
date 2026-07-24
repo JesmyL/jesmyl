@@ -1,3 +1,4 @@
+import { translateDynamic } from '#basis/locale';
 import { Modal } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
@@ -41,11 +42,13 @@ export const CmEditorComAddOrderRedactorAdditions = ({ com, setClickBetweenOrds 
             firstEtap={firstEtap}
             onClose={selectFirstEtapAtom.reset}
             onOrderBuilt={(kindBlock, chordi, texti) => {
+              const orderTitle = translateDynamic(com.langi)(it => it.cm.com.kind[kindBlock.key]);
+
               selectFirstEtapAtom.set(null);
               setClickBetweenOrds({
                 buttonTitle: (
                   <>
-                    Новый блок <span className="text-x7">{kindBlock.title[com.langi]}</span>
+                    Новый блок <span className="text-x7">{orderTitle}</span>
                   </>
                 ),
                 checkIsShowButton: ({ ordAbove }) => {
@@ -55,7 +58,7 @@ export const CmEditorComAddOrderRedactorAdditions = ({ com, setClickBetweenOrds 
                 onClick: async ({ aboveLeadOrdw }) => {
                   cmEditComOrderClientTsjrpcMethods.insertNewBlock({
                     comw: com.wid,
-                    orderTitle: kindBlock.title[com.langi],
+                    orderTitle,
                     insertAfterOrdwOrFirst: aboveLeadOrdw,
                     chordi: chordi,
                     kind: kindBlock.key,

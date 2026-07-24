@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { usePrompt } from '#shared/ui/modal';
@@ -22,10 +23,10 @@ export const IndexAccessRightsUserRoleSelector = ({
   return (
     <>
       <div className="flex gap-3 mb-5 ml-3">
-        Роль
+        {translateBase(it => it.role)}
         <Dropdown
           id={userInfo.r ?? null}
-          nullTitle="Без роли"
+          nullTitle={translateBase(it => it.withoutRole)}
           items={objectKeys(userRightsAndRoles).map(id => ({ id, title: id }))}
           renderItem={({ node, id, afterClickAction }) => (
             <div className="flex gap-2 w-max">
@@ -48,12 +49,15 @@ export const IndexAccessRightsUserRoleSelector = ({
               icon="PlusSign"
               className="text-x7 w-max"
               onClick={async () => {
-                const roleName = await prompt('Введите название для роли', 'Новая роль');
+                const roleName = await prompt(
+                  translateBase(it => it.enterRoleName),
+                  translateBase(it => it.newRole),
+                );
                 if (!roleName) return;
                 return indexTsjrpcClientMethods.addNewAccessRole({ role: roleName as 'TOP' });
               }}
             >
-              Роль
+              {translateBase(it => it.role)}
             </Button>
           }
         />

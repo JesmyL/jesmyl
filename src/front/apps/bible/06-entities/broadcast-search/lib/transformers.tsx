@@ -1,26 +1,28 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { bibleLowerBooks, checkEachBibleTitles } from '$bible/shared/const/bibleTitles';
+import { findIndexInBibleTitles, takeBibleLangBooks } from '$bible/shared/const/bibleTitles';
 import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
 import { bibleAddressIndexesUpdate } from '$bible/shared/hooks';
-import { useBibleBookList } from '$bible/shared/hooks/texts';
-import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
-import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
+import { BibleChapteri, BibleVersei } from '$bible/shared/model/base';
+import { bibleJoinAddressAtom, useBibleCurrentLangi } from '$bible/shared/state/atoms';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { makeNamedRegExp, makeRegExp } from 'regexpert';
 import { Do } from 'shared/enums';
+import { BibleTitleCodei } from 'shared/model/bible/enums';
 import { emptyFunc } from 'shared/utils';
 import { checkIsUndefined } from 'shared/utils/checkIs';
 import { ruLowerLettersStr } from 'shared/utils/cm/com/const';
+import { objectKeys } from 'shared/utils/object.utils';
 import { transcriptEnToRuText } from 'shared/utils/ru-en-letters';
 
 export const useBibleBroadcastSearchTransformAddressTermToAddress = (
   term: string,
   inputRef: React.RefObject<HTMLInputElement | null>,
 ) => {
-  const books = useBibleBookList();
-  const chapters = useBibleTranslatesContext().rst?.chapters;
+  const translates = useBibleTranslatesContext();
+  const chapters = translates.rst?.chapters ?? translates[objectKeys(translates)[0]]?.chapters;
   const [address, setAddress] = useState<ReactNode>(null);
   const onEnterPressRef = useRef(emptyFunc);
+  const langi = useBibleCurrentLangi();
 
   useEffect(() => {
     if (inputRef.current === null) return;
@@ -37,11 +39,11 @@ export const useBibleBroadcastSearchTransformAddressTermToAddress = (
   }, [inputRef]);
 
   useEffect(() => {
-    if (chapters === undefined || term.length < 1) return;
+    if (checkIsUndefined(chapters) || term.length < 1) return;
 
-    const match = term.toLowerCase().match(addressReg);
+    const match = transcriptEnToRuText(term).match(addressReg) ?? term.toLowerCase().match(addressReg);
 
-    if (match === null) return;
+    if (!match?.[0]) return;
 
     const chips = makePropsFromAddressArgs(match);
 
@@ -49,27 +51,28 @@ export const useBibleBroadcastSearchTransformAddressTermToAddress = (
     let verseNumber = (checkIsUndefined(chips.verse) ? 1 : (+chips.verse as BibleVersei)) || 1;
     const finishVerseNumber = checkIsUndefined(chips.finishVerse) ? undefined : +chips.finishVerse;
 
-    let booki = BibleBooki.none;
+    let booki = -1 as BibleTitleCodei;
 
     const ruBookName = chips.bookName ?? transcriptEnToRuText(chips.bookNameEn ?? '');
     const bookTitle = `${chips.bookNum}${ruBookName}`;
 
-    if (booki < 0) booki = bibleLowerBooks.findIndex(book => checkEachBibleTitles(book, title => title === bookTitle));
-    if (booki < 0)
-      booki = bibleLowerBooks.findIndex(book => checkEachBibleTitles(book, title => title.startsWith(bookTitle)));
-    if (booki < 0)
-      booki = bibleLowerBooks.findIndex(book => checkEachBibleTitles(book, title => title.includes(bookTitle)));
+    if (booki < 0) booki = findIndexInBibleTitles(langi, title => title === bookTitle);
+    if (booki < 0) booki = findIndexInBibleTitles(langi, title => title.startsWith(bookTitle));
+    if (booki < 0) booki = findIndexInBibleTitles(langi, title => title.includes(bookTitle));
     if (booki < 0 && ruBookName.length > 1) {
       const bookTitleRegStr =
         `/^${chips.bookNum}${ruBookName[0]}[${ruLowerLettersStr}]?${ruBookName[1]}[${ruLowerLettersStr}]?${ruBookName.slice(2)}[${ruLowerLettersStr}]*$/` as const;
 
-      booki = bibleLowerBooks.findIndex(book =>
-        checkEachBibleTitles(book, title => !!title.match(makeRegExp(bookTitleRegStr))),
-      );
+      booki = findIndexInBibleTitles(langi, title => !!title.match(makeRegExp(bookTitleRegStr)));
     }
     if (booki < 0) booki = 0;
 
-    const bookNameNode = booki === 0 ? <span className="text-x7">{books[booki].full}</span> : books[booki].full;
+    const bookNameNode =
+      booki === 0 ? (
+        <span className="text-x7">{takeBibleLangBooks(langi)[booki].full}</span>
+      ) : (
+        takeBibleLangBooks(langi)[booki].full
+      );
 
     let chapterNode: ReactNode = chapterNumberi + 1;
     let verseNode: ReactNode = verseNumber;
@@ -148,7 +151,7 @@ export const useBibleBroadcastSearchTransformAddressTermToAddress = (
     );
 
     setAddress(address);
-  }, [books, chapters, term]);
+  }, [chapters, langi, term]);
 
   return address;
 };

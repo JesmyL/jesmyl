@@ -1,8 +1,9 @@
+import { translateDynamic } from '#basis/locale';
 import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
 import { useBibleBroadcastAddressIndexesSetter } from '$bible/shared/hooks';
-import { useBibleBookList } from '$bible/shared/hooks/texts';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
 import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
+import { useBibleCurrentLangi } from '$bible/shared/state/atoms';
 import { JSX, memo } from 'react';
 
 interface Props {
@@ -23,10 +24,10 @@ export const BibleBroadcastSearchResultVerse = memo(function BibleSearchResultVe
   onClick,
 }: Props): JSX.Element {
   const showTranslates = useBibleShowTranslatesValue();
-  const books = useBibleBookList();
   const textBits =
     useBibleTranslatesContext()[showTranslates[0]]?.chapters?.[booki]?.[chapteri]?.[versei]?.split(splitRegLazy());
   const addressSetter = useBibleBroadcastAddressIndexesSetter();
+  const langi = useBibleCurrentLangi();
 
   return (
     <div
@@ -35,7 +36,7 @@ export const BibleBroadcastSearchResultVerse = memo(function BibleSearchResultVe
       onClick={addressSetter(booki, chapteri, versei, resulti, onClick)}
     >
       <span className="text-x3 mr-2 nowrap">
-        {books[booki].short} {chapteri + 1} {versei + 1}
+        {translateDynamic(langi)(it => it.bible.title.short[booki])} {chapteri + 1} {versei + 1}
       </span>
       <span>
         {textBits?.map((__html, biti) => {

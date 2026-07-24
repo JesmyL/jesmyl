@@ -1,5 +1,6 @@
+import { takeBibleLangBooks } from '$bible/ext';
 import { bibleAddressWithForceJoinReset } from '$bible/shared/hooks';
-import { useBibleBookList } from '$bible/shared/hooks/texts';
+import { useBibleCurrentLangi } from '$bible/shared/state/atoms';
 import styled from '@emotion/styled';
 import { twMerge } from 'tailwind-merge';
 import { bibleBroadcastListBookiIdPrefix } from '../const/ids';
@@ -9,14 +10,14 @@ import { useBibleBroadcastListFaceClickListener } from '../lib/useBibleListFaceC
 const faceClassName = 'bible-list-chapter-face';
 
 export function BibleBroadcastListBooks() {
-  const books = useBibleBookList();
+  const langi = useBibleCurrentLangi();
   const listRef = useBibleBroadcastListFaceClickListener(bibleBroadcastListBookiIdPrefix, faceClassName, booki =>
     bibleAddressWithForceJoinReset(booki, 0, 0),
   );
 
   return (
     <Container ref={listRef}>
-      {books.map((book, booki) => {
+      {takeBibleLangBooks(langi).map((book, booki) => {
         return (
           <Face
             key={booki}

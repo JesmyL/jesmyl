@@ -1,5 +1,6 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { useConnectionState } from '#basis/lib/useConnectionState';
+import { translateBase } from '#basis/locale';
 import { appNames } from '#basis/model/App.model';
 import { useAppNameContext } from '#basis/state/contexts';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
@@ -59,7 +60,7 @@ export const IndexOtherPage = () => {
             {routingApps[currentAppName].title}
           </span>
         ) : (
-          'Другое'
+          translateBase(it => it.inoe)
         )
       }
       head={
@@ -81,7 +82,7 @@ export const IndexOtherPage = () => {
           >
             <BrutalItem
               iconNode={<LazyIcon icon="Settings02" />}
-              title="Настройки"
+              title={translateBase(it => it.settings)}
               idPostfix="settings"
             />
           </Link>
@@ -93,18 +94,18 @@ export const IndexOtherPage = () => {
             <BrutalItem
               idPostfix="actions"
               iconNode={<LazyIcon icon="ComputerSettings" />}
-              title="Взаимодействие"
+              title={translateBase(it => it.interactive)}
             />
           </Link>
           <BrutalItem
             iconNode={<LazyIcon icon="InformationCircle" />}
-            title="О приложении"
+            title={translateBase(it => it.aboutApp)}
             onClick={isAboutOpenAtom.do.toggle}
           />
 
           {!appList.length || (
             <BrutalScreen>
-              <div className="title">Другие программы</div>
+              <div className="title">{translateBase(it => it.otherApps)}</div>
               {appList}
             </BrutalScreen>
           )}

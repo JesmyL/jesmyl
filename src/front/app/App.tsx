@@ -1,4 +1,6 @@
 import { defaultQueryClient } from '#basis/config/queryClient';
+import { translateBase } from '#basis/locale';
+import { takeDynamicLanguageAtom } from '#basis/state/locale';
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
 import { rootAppModalTextContentAtom } from '#shared/lib/atoms/rootAppModalTextContentAtom';
 import { soki } from '#shared/soki';
@@ -10,6 +12,7 @@ import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { configureAtomaric } from 'atomaric';
 import { useSyncExternalStore } from 'react';
 import { routeTree } from 'routeTree.gen';
+import { CmComOrders } from 'shared/const/cm/Com/parents/20-Orders';
 import { Toaster } from 'sonner';
 import './App.scss';
 import './tw.css';
@@ -43,7 +46,7 @@ export const App = () => {
           <WithAtomValue atom={rootAppModalTextContentAtom}>
             {props => (
               <>
-                <ModalHeader>{props.header || 'Сообщение'}</ModalHeader>
+                <ModalHeader>{props.header || translateBase(it => it.msg)}</ModalHeader>
                 <ModalBody>{props.text}</ModalBody>
                 {props.footer && <ModalFooter>{props.footer}</ModalFooter>}
               </>
@@ -65,3 +68,5 @@ soki.onTokenInvalidEvent.listen(() => {
   authIDB.remove.auth();
   authIDB.remove.token();
 });
+
+CmComOrders.getLangLocales = langi => takeDynamicLanguageAtom(langi).get();

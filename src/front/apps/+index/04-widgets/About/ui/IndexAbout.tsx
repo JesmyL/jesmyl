@@ -1,5 +1,6 @@
 import { useIndexValuesQuery } from '#basis/api/useIndexValuesQuery';
 import { useConnectionState, useIsOnline } from '#basis/lib/useConnectionState';
+import { translateBase } from '#basis/locale';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { checkIsThereNewSWAtom, reloadSW } from '#shared/sw-register';
 import { QRCode } from '#shared/ui/qr-code/QRCode';
@@ -54,7 +55,7 @@ export function IndexAbout() {
           <QRCode text="https://t.me/danikpon" />
           <div className="flex center gap-2">
             <LazyIcon icon="Telegram" />
-            <a href="https://t.me/danikpon">дизайн (3</a>
+            <a href="https://t.me/danikpon">Design (3</a>
           </div>
         </div>
       </div>
@@ -68,9 +69,9 @@ export function IndexAbout() {
           <TheIconLoading />
         ) : appVersion ? (
           jversion.num === appVersion ? (
-            ' - Актуальная'
+            translateBase(it => it.actualVer)
           ) : (
-            ` (Новая - v${appVersion})`
+            translateBase(it => it.newVer, { v: appVersion })
           )
         ) : (
           ''
@@ -85,7 +86,7 @@ export function IndexAbout() {
                 icon="Refresh"
                 className={isThereNewSW ? 'text-x7' : ''}
                 withoutAnimation
-                confirm="Убедитесь в наличии интернет-соединения! Обновить приложение?"
+                confirm={translateBase(it => it.refreshAppConfirm)}
                 onClick={event => {
                   event.stopPropagation();
                   setIsRefreshProcess(true);
@@ -96,7 +97,7 @@ export function IndexAbout() {
               <TheIconButton
                 icon="Refresh"
                 withoutAnimation
-                confirm="Это действие требует немедленного обновления сразу после своего завершения. Убедитесь, пожалуйста, что у вас есть интернет-соединение, ибо, в противном случае, возникнет проблема"
+                confirm={translateBase(it => it.immediateRefreshOnFinish)}
                 onClick={event => {
                   event.stopPropagation();
                   setIsRefreshProcess(true);

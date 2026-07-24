@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { CmAudioSlide, HttpNumLeadLink, Langi } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
-import { makeCmComAudioMarkTitleEmptySelectorLazy } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
+import { makeCmComAudioMarkTitleEmptySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { TextCase } from 'shared/model/common';
 import { checkIsString } from 'shared/utils/checkIs';
 import { makeSymbolFreeUpperCaseSlavicText } from 'shared/utils/cm/com/const';
@@ -26,7 +26,7 @@ export const useCmComAudioMarkSlides = (com: CmCom | und, src: HttpNumLeadLink |
 
       if (checkIsString(srcMarks?.[time]))
         audioSlide = {
-          text: makeCmComAudioMarkTitleEmptySelectorLazy()(srcMarks[time], srcMarks, time, langi),
+          text: makeCmComAudioMarkTitleEmptySelector(srcMarks[time], srcMarks, time, langi),
           time,
           timei,
           isChorded: !srcMarks[time],

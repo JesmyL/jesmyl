@@ -3,11 +3,11 @@ import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContaine
 import { BibleAddressSingle } from '$bible/entities/address';
 import { bibleBroadcastListSingleAddressSet } from '$bible/entities/broadcast-list';
 import { BibleTranslateModulesControl } from '$bible/entities/translate';
-import { BibleTranslatesContextProvider, useBibleTranslatesContext } from '$bible/ext';
+import { BibleTranslatesContextProvider, takeBibleLangBooks, useBibleTranslatesContext } from '$bible/ext';
 import { bibleTranslateFilter } from '$bible/shared/const/consts';
 import { useBibleAddressBooki, useBibleAddressChapteri, useBibleAddressVersei } from '$bible/shared/hooks';
-import { useBibleBookList } from '$bible/shared/hooks/texts';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
+import { useBibleCurrentLangi } from '$bible/shared/state/atoms';
 import { BibleReaderBookText } from '$bible/widgets/reader';
 import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
@@ -35,13 +35,13 @@ function Content() {
   const currentBooki = useBibleAddressBooki();
   const currentChapteri = useBibleAddressChapteri();
   const currentVersei = useBibleAddressVersei();
-  const bookTitles = useBibleBookList();
   const showTranslates = useBibleShowTranslatesValue();
   const chapters = useBibleTranslatesContext()[showTranslates[0]]?.chapters;
   const [selectedBooki, setSelectedBooki] = useState(currentBooki);
   const [selectedChapteri, setSelectedChapteri] = useState(currentChapteri);
   const onBookCloseRef = useRef(emptyFunc);
   const onChapterCloseRef = useRef(emptyFunc);
+  const langi = useBibleCurrentLangi();
 
   useEffect(() => {
     if (currentBooki) setSelectedBooki(booki => booki || currentBooki);
@@ -77,14 +77,14 @@ function Content() {
             containerClassName="p-0 pt-15"
           >
             <div className="grid grid-cols-6 gap-1 @container h-full">
-              {bookTitles.map(({ short: bookTitle, textColor }, booki) => {
+              {takeBibleLangBooks(langi).map(({ color, short }, booki) => {
                 return (
                   <div
-                    key={bookTitle}
+                    key={short}
                     className={twMerge(
                       'flex justify-center h-[calc(100cvh/11)] bg-x2 pointer',
 
-                      booki === selectedBooki ? 'text-[black]' : textColor,
+                      booki === selectedBooki ? 'text-[black]' : color,
                       booki === currentBooki && 'bg-x7',
                       bibleTranslateFilter[showTranslates[0]](booki) && 'disabled',
                     )}
@@ -93,7 +93,7 @@ function Content() {
                       isOpenChapterSelectorAtom.set(true);
                     }}
                   >
-                    {bookTitle}
+                    {short}
                   </div>
                 );
               })}

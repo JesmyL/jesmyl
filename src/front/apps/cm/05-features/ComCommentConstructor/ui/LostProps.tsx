@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { mylib } from '#shared/lib/my-lib';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
@@ -39,12 +40,12 @@ export const CmComCommentConstructorLostProps = ({ ordw, com }: { ordw: CmComOrd
       prevLen = lines.length;
     });
 
+    const each = firstOrd?.me.kind?.top.each;
+
     return {
       lensAdd,
       usedKeys,
-      ordHeader: firstOrd?.me.kind
-        ? `${firstOrd.me.kind.top.each[com.langi]} ${firstOrd.me.header({ numered: false })}`
-        : '',
+      ordHeader: each ? `${translateBase(it => it[each])} ${firstOrd.me.header({ numered: false })}` : '',
       list: mylib
         .values(propsDict.dict ?? {})
         .filter(props => props && 'linei' in props && !usedKeys.has(`${props.pre}l${props.linei}`)),

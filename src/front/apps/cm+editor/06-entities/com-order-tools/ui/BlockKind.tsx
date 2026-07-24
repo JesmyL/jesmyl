@@ -1,3 +1,4 @@
+import { translateDynamic } from '#basis/locale';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
@@ -12,6 +13,7 @@ let isModalOpenAtom: Atom<boolean>;
 
 export const CmEditorComOrderToolsBlockKind = ({ com, ord, ordi }: CmEditorComOrderToolsProps) => {
   isModalOpenAtom ??= atom(false);
+  const td = translateDynamic(com.langi);
 
   return (
     <>
@@ -35,7 +37,8 @@ export const CmEditorComOrderToolsBlockKind = ({ com, ord, ordi }: CmEditorComOr
             if ((ordi === 0 || ord.me.isTarget) && kindBlock.isInherit) return null;
             if (ord.texti == null ? kindBlock.isBlockForTextableOnly : kindBlock.isBlockForChordedOnly) return null;
 
-            const newBlockn = kindBlock.title[com.langi || 0];
+            const newBlockTitle = td(it => it.cm.com.kind[kindBlock.key]);
+
             return (
               <IconCheckbox
                 key={kindBlock.key}
@@ -43,13 +46,13 @@ export const CmEditorComOrderToolsBlockKind = ({ com, ord, ordi }: CmEditorComOr
                 disabled={kindBlock.key === ord.kind}
                 className="mt-2"
                 onChange={isModalOpenAtom.reset}
-                postfix={newBlockn}
+                postfix={newBlockTitle}
                 onClick={() =>
                   cmEditComOrderClientTsjrpcMethods.setKind({
                     ordw: ord.wid,
                     comw: com.wid,
                     kind: kindBlock.key,
-                    newTypeTitle: kindBlock.title[com.langi],
+                    newTypeTitle: newBlockTitle,
                   })
                 }
               />

@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { useAppNameContext } from '#basis/state/contexts';
 import { LinkAppActionFabric } from '#shared/lib/link-app-actions';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
@@ -20,13 +21,13 @@ export function IndexActionsPage() {
   return (
     <PageContainerConfigurer
       className=""
-      headTitle="Взаимодействие"
+      headTitle={translateBase(it => it.interactive)}
       contentClass="flex column p-2"
       content={
         <>
           <BrutalItem
             iconNode={<LazyIcon icon="QrCode01" />}
-            title="Читать QR"
+            title={translateBase(it => it.readQR)}
             onClick={isOpenAtom.do.toggle}
           />
           <Link
@@ -36,7 +37,7 @@ export function IndexActionsPage() {
           >
             <BrutalItem
               iconNode={<LazyIcon icon="File02" />}
-              title="Мои файлы"
+              title={translateBase(it => it.myFiles)}
               idPostfix="files"
             />
           </Link>
@@ -47,7 +48,7 @@ export function IndexActionsPage() {
           >
             <BrutalItem
               iconNode={<LazyIcon icon="CloudDownload" />}
-              title="Загрузки"
+              title={translateBase(it => it.downloads)}
               idPostfix="down"
             />
           </Link>

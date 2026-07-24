@@ -1,9 +1,7 @@
 import { BibleTranslateName } from 'shared/api';
+import { BibleTitleCodei } from 'shared/model/bible/enums';
 
-export const enum BibleBooki {
-  def = 0,
-  none = -1,
-}
+export type BibleBooki = BibleTitleCodei;
 
 export const enum BibleChapteri {
   def = 0,
