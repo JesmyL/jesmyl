@@ -1,25 +1,13 @@
-import { translateDynamic } from '#basis/locale';
-import {
-  CmComAudioMarkPack,
-  CmComAudioMarkPackTime,
-  CmComAudioMarkSelector,
-  CmComLineiZero,
-  HttpNumLeadLink,
-  Langi,
-} from 'shared/api';
+import { CmComAudioMarkPack, CmComAudioMarkPackTime, CmComAudioMarkSelector, HttpNumLeadLink, Langi } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
-import { CmBroadcastMonolineSlideLineSelectorId } from 'shared/model/cm/broadcast';
-import { checkIsArray, checkIsNaN, checkIsNotNil, checkIsStartsWith, checkIsString } from 'shared/utils/checkIs';
+import { checkIsArray, checkIsNotNil } from 'shared/utils/checkIs';
+import { translateBaseDefine } from 'shared/utils/locale/translate';
 import { objectKeys } from 'shared/utils/object.utils';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
+import { CmComOrders } from '../Com/parents/20-Orders';
 
-/** @deprecated */
-export const makeCmComAudioMarkLineiFromSelector = (selector: CmBroadcastMonolineSlideLineSelectorId) =>
-  selector[1] || CmComLineiZero;
-
-/** @deprecated */
-export const checkIsCmComAudioMarkTitleIsLineSelector = (selector: CmComAudioMarkSelector | nil): selector is string =>
-  checkIsString(selector) && checkIsStartsWith(selector, '~') && !checkIsNaN(+selector.slice(1));
+const takeTitle = (langi: Langi, key: CmComBlockKindKey) =>
+  translateBaseDefine(CmComOrders.getLangLocales(langi))(it => it.cm.com.kind[key]);
 
 export const makeCmComAudioMarkTitleEmptySelector = (
   selector: string | nil,
@@ -29,13 +17,13 @@ export const makeCmComAudioMarkTitleEmptySelector = (
 ) => {
   if (selector) return selector;
 
-  if (!time) return translateDynamic(langi)(it => it.cm.com.kind[CmComBlockKindKey.Enter]);
+  if (!time) return takeTitle(langi, CmComBlockKindKey.Enter);
 
   cMarks = checkIsNotNil(cMarks) ? (checkIsArray(cMarks) ? cMarks : objectKeys(cMarks)) : [];
 
-  if (+cMarks.at(-1)! === time) return translateDynamic(langi)(it => it.cm.com.kind[CmComBlockKindKey.Final]);
+  if (+cMarks.at(-1)! === time) return takeTitle(langi, CmComBlockKindKey.Final);
 
-  return translateDynamic(langi)(it => it.cm.com.kind[CmComBlockKindKey.Play]);
+  return takeTitle(langi, CmComBlockKindKey.Play);
 };
 
 export const makeCmComAudioMarkTitleBySelector = (
