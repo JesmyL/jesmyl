@@ -1,4 +1,4 @@
-import { nounsFileStore, pronounsFileStore } from 'back/apps/index/file-stores';
+import { nounsFileStorage, pronounsFileStorage } from 'back/apps/index/file-stores';
 import { makeRegExp } from 'regexpert';
 import { randomItem } from 'shared/randoms';
 import { checkIsFunction } from 'shared/utils/checkIs';
@@ -109,8 +109,8 @@ export const makeTwiceKnownName = (
   fixedNoun?: string,
   isReverse = randomItem(boolItems),
 ): string => {
-  const pronoun = fixedPronoun ?? randomItem(objectKeys(pronounsFileStore.getValue().words), -1);
-  const noun = fixedNoun ?? randomItem(objectKeys(nounsFileStore.getValue().words), -1);
+  const pronoun = fixedPronoun ?? randomItem(objectKeys(pronounsFileStorage.getValue().words), -1);
+  const noun = fixedNoun ?? randomItem(objectKeys(nounsFileStorage.getValue().words), -1);
 
   for (let i = 0; i < regEnds.length; i++) {
     const match = regEnds[i][0].exec(noun);

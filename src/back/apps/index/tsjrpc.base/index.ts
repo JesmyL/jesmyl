@@ -26,8 +26,8 @@ import {
   accessRightTitlesFileStore,
   appVersionFileStore,
   indexStameskaIconsFileStore,
-  nounsFileStore,
-  pronounsFileStore,
+  nounsFileStorage,
+  pronounsFileStorage,
   valuesFileStore,
 } from '../file-stores';
 import { schGeneralTsjrpcBaseServer } from '../schedules/base-tsjrpc/general.tsjrpc.base';
@@ -213,8 +213,8 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         getIconPack: async ({ icon }) => ({ value: { pack: indexStameskaIconsFileStore.getValue()[icon] } }),
 
         getNounPron: args => {
-          const allNouns = objectKeys(nounsFileStore.getValue().words);
-          const allProns = objectKeys(pronounsFileStore.getValue().words);
+          const allNouns = objectKeys(nounsFileStorage.getValue().words);
+          const allProns = objectKeys(pronounsFileStorage.getValue().words);
           const e$e: Record<string, string> = { е: '[её]', ё: '[её]', Е: '[её]', Ё: '[её]' };
           let nouns: string[] | und = undefined;
           let prons: string[] | und = undefined;
@@ -252,23 +252,23 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
 
         writeNounPron: ({ noun, pron, level }) => {
           if (noun) {
-            const { words } = nounsFileStore.getValue();
+            const { words } = nounsFileStorage.getValue();
             delete words[''];
             words[noun] = level || 1;
             words[''] = 0;
 
-            nounsFileStore.saveValue();
+            nounsFileStorage.saveValue();
           }
           if (pron) {
             if (!pron.endsWith('й') && !pron.endsWith('йся'))
               throw 'Прилагательное должно заканчиваться на `й` или `йся`';
 
-            const { words } = pronounsFileStore.getValue();
+            const { words } = pronounsFileStorage.getValue();
             delete words[''];
             words[pron] = level || 1;
             words[''] = 0;
 
-            pronounsFileStore.saveValue();
+            pronounsFileStorage.saveValue();
           }
         },
 

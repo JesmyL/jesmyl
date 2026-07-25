@@ -1,6 +1,14 @@
 import { takeComwTiny } from 'back/apps/cm/com.tiny';
+import {
+  catsFileStorage,
+  chordPackFileStore,
+  eePackFileStore,
+  mp3ResourcesFileStorage,
+} from 'back/apps/cm/file-stores';
+import { nounsFileStorage, pronounsFileStorage } from 'back/apps/index/file-stores';
 import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
 import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
+import { FileStore } from 'back/complect/FileStore';
 import { comDB, sch2ComDB, schComHistoryDB, scheduleDB, user2ComDB, userDB, userRoleDB } from 'back/drizzle.schema';
 import { db, dbUpdate } from 'back/drizzle/drizzle.db';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
@@ -26,6 +34,21 @@ type FileMeta<K extends keyof PullPushFileDirNameNet, File extends keyof PullPus
   data: PullPushFileDirNameNet[K][File] extends { T: infer Type } ? Type : never;
   name: string;
 };
+
+const makeFileStoreConfig =
+  <Key extends keyof PullPushFileDirNameNet, File extends keyof PullPushFileDirNameNet[Key]>() =>
+  <T extends FileMeta<Key, File>['data']>(fileStore: FileStore<T>) => {
+    return {
+      pull: async (file: File, _type: T) => {
+        return {
+          data: fileStore.getValue(),
+          file,
+          name: file,
+        };
+      },
+      PUSH: (data: T) => fileStore.setValue(data),
+    };
+  };
 
 export const pullPushDirFilesDictLazy = lazyInit(
   (): {
@@ -221,6 +244,11 @@ export const pullPushDirFilesDictLazy = lazyInit(
             });
           },
         },
+
+        cats: makeFileStoreConfig<'apps/cm/', 'cats'>()(catsFileStorage),
+        chordTracks: makeFileStoreConfig<'apps/cm/', 'chordTracks'>()(chordPackFileStore),
+        eeStorage: makeFileStoreConfig<'apps/cm/', 'eeStorage'>()(eePackFileStore),
+        mp3Rules: makeFileStoreConfig<'apps/cm/', 'mp3Rules'>()(mp3ResourcesFileStorage),
       },
 
       'apps/index/': {
@@ -336,6 +364,9 @@ export const pullPushDirFilesDictLazy = lazyInit(
             });
           },
         },
+
+        nouns: makeFileStoreConfig<'apps/index/', 'nouns'>()(nounsFileStorage),
+        pronouns: makeFileStoreConfig<'apps/index/', 'pronouns'>()(pronounsFileStorage),
       },
     };
   },

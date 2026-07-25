@@ -1,9 +1,14 @@
+import { NounPronsType } from 'back/complect/model';
 import { UserId } from 'back/drizzle.schema';
 import {
+  ChordPack,
   CmComAudioMarkPack,
   CmComCommentBlockDict,
   CmComInSchDayEvWr,
   CmComWid,
+  CmMp3Rule,
+  EeStorePack,
+  IExportableCat,
   IExportableCom,
   IExportableComInterpretation,
   IScheduleWidget,
@@ -53,6 +58,10 @@ const T = <Type, FileName extends string>() => 1 as never as { F: FileName; T: T
 export const pullPushFileDirNameNet = {
   'apps/cm/': {
     comwVisits: T<PRecord<CmComWid, number>, string>(),
+    chordTracks: T<ChordPack, string>(),
+    eeStorage: T<EeStorePack, string>(),
+    mp3Rules: T<CmMp3Rule[], string>(),
+    cats: T<IExportableCat[], string>(),
 
     'coms/': T<IExportableCom & { am?: CmComAudioMarkPack | nil }, `${CmComWid}`>(),
 
@@ -75,5 +84,7 @@ export const pullPushFileDirNameNet = {
     'schedules/': T<OmitOwn<IScheduleWidget, 'm' | 'w'>, `${ScheduleWidgetWid}`>(),
 
     userRoles: T<UserAccessRoleStoraged, string>(),
+    nouns: T<NounPronsType, string>(),
+    pronouns: T<NounPronsType, string>(),
   },
 } satisfies Record<string, Record<string, { F: unknown; T: unknown }>>;

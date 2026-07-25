@@ -6,8 +6,8 @@ import { IndexValues } from 'shared/model/index/other';
 import { emptyFunc } from 'shared/utils';
 import { stameskaIconPack } from 'stameska-icon/pack';
 
-export const nounsFileStore = new FileStore<NounPronsType>('/apps/index/nouns.json', { words: {} });
-export const pronounsFileStore = new FileStore<NounPronsType>('/apps/index/pronouns.json', { words: {} });
+export const nounsFileStorage = new FileStore<NounPronsType>('/apps/index/nouns.json', { words: {} });
+export const pronounsFileStorage = new FileStore<NounPronsType>('/apps/index/pronouns.json', { words: {} });
 
 export const accessRightTitlesFileStore = new FileStore<IndexAppAccessRightTitles>(
   '/apps/index/rightTitles.json',
