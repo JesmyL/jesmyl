@@ -1,150 +1,129 @@
 import { makeRegExp } from 'regexpert';
-import { checkIsFunction, checkIsNil, checkIsString } from '../checkIs';
+import { checkIsFunction, checkIsNumber, checkIsString } from '../checkIs';
 import { checkIsEq } from '../checkIsEq';
 import { objectKeys, objectLength } from '../object.utils';
 import { declension, itIt, itNIt } from '../utils';
 
-export type StringTemplaterArgs<Adds = object> = {
-  ink: (num: number, post: string, pre: string) => string;
-  switch: () => string;
-} & Adds;
+export const stringTemplater = (
+  str: string,
+  topArgs: PRecord<string, unknown>,
+  onUnknownArg?: (argName: string) => unknown,
+) => {
+  const symbolBoxDict: Record<string, { key: string; slashes: string; all: string; val: string }> = {};
+  const symbolList: string[] = [];
 
-const dob = '{{';
-const ocb = '}{';
-const dcb = '}}';
+  let currSymbolCode = 10000;
+  let isFound = true;
 
-const noObj = {};
-const norm = (val: unknown, op?: string) =>
-  op === '?'
-    ? val
-      ? val
-      : noObj
-    : op === '!'
-      ? val
-        ? noObj
-        : val
-      : op === '!!'
-        ? val == null
-          ? ''
-          : noObj
-        : val == null
-          ? noObj
-          : val;
+  while (isFound) {
+    isFound = false;
 
-export const stringTemplater = <Args>(str: string, topArgs: Args, onUnknownArg?: (argName: string) => unknown) => {
-  let lim = 1000;
+    str = str.replace(makeRegExp('/(\\\\*)\\$(\\w+){({[^{}]*})+}/g'), (all, slashes, key) => {
+      isFound = true;
 
-  const inline = (parts: unknown[]) => {
-    lim--;
-    if (lim < 0) return;
-    let line: unknown[] = [];
+      const symbol = String.fromCharCode(currSymbolCode++);
 
-    const addNorm = (val: unknown, op?: string) => {
-      const value = norm(val, op);
-      line = line.concat(value == noObj || checkIsNil(value) ? '' : value);
-    };
+      symbolBoxDict[symbol] = { all, key, slashes, val: '' };
+      symbolList.unshift(symbol);
 
-    const getDiapason = (diapason: unknown[], district: number | null, structItems = false) => {
-      let ballance: number = null as never;
-      let distBallance = 0;
-      let struct: unknown[] = [];
-      const dists: unknown[] = [];
-
-      const diap = (diapason[0] === dob ? diapason : []).filter(txt => {
-        if (ballance === 0) return false;
-
-        if (structItems) {
-          if ((txt === ocb || txt === dcb) && ballance === 1) {
-            dists.push(inline(struct));
-            struct = [];
-          } else if (ballance) struct.push(txt);
-        } else if (district != null) {
-          if (distBallance === district) dists.push(txt);
-          if (ballance === 1 && txt === ocb) distBallance++;
-        }
-
-        if (txt === dob) ballance++;
-        else if (txt === dcb) ballance--;
-
-        return true;
-      });
-
-      return {
-        list: structItems || district != null ? dists : diap,
-        len: diap.length,
-        diap,
-        dists,
-      };
-    };
-
-    let escLim = 0;
-
-    parts.forEach((part, parti, parta) => {
-      if (parti && parti <= escLim) return;
-
-      const invokeFunc = (func: Function) => {
-        const diapason = getDiapason(parta.slice(parti + 1), null, true);
-        escLim += diapason.len;
-
-        addNorm(func.apply(this, inline(diapason.list) as never));
-      };
-
-      if (part === dob) {
-        //
-      } else if (part === dcb || part === ocb) escLim++;
-      else if (checkIsString(part)) {
-        const match = part.match(makeRegExp('/^\\$(\\w+)(!{1,2}|\\?{1,2})?(;?)/'));
-        const [, topArgName, op, semicolon] = (match || []) as [unknown, keyof StringTemplaterArgs, string, string];
-
-        if (topArgName != null) {
-          let val = topArgs[topArgName as keyof Args] as unknown;
-          if (val === undefined) {
-            val = stringTemplaterFunctions[topArgName];
-            if (val === undefined && onUnknownArg) val = onUnknownArg(topArgName);
-          }
-
-          if (semicolon) {
-            if (checkIsFunction(val)) invokeFunc(val);
-            else {
-              escLim++;
-              addNorm(val, op);
-            }
-          } else if (parta[parti + 1] === dob) {
-            if (!op && checkIsFunction(val)) invokeFunc(val);
-            else {
-              const value = norm(val, op);
-              const diapason = getDiapason(parta.slice(parti + 1), value != noObj ? 0 : 1);
-              escLim += diapason.len;
-
-              addNorm(inline(diapason.list));
-            }
-          } else if (checkIsFunction(val)) invokeFunc(val);
-          else {
-            if (parti) escLim++;
-            addNorm(val, op);
-          }
-        } else {
-          if (parti) escLim++;
-          addNorm(part.replace(makeRegExp('/^\\\\/'), ''), op);
-        }
-      } else addNorm(part);
+      return symbol;
     });
+  }
 
-    return line;
+  const allSymbols = symbolList.join('');
+
+  const invokeIfEmptyFunc = (value: unknown) => {
+    if (checkIsFunction(value)) return value();
+    return value;
   };
 
-  return (
-    inline(
-      (str || '').split(makeRegExp('/(\\\\?\\$\\w+!{0,2}\\?{0,2};?|\\\\?{{|\\\\?}{|\\\\?}})/')).filter(s => s),
-    )?.join('') || ''
-  );
+  const stringify = (value: unknown) => {
+    if (checkIsNumber(value) || checkIsString(value)) return `${value}`;
+    return '';
+  };
+
+  const takeCorrectValue = (val: unknown) => {
+    if (!val) return val;
+
+    if (checkIsString(val)) {
+      const varMatch = val.match(makeRegExp('/^\\$(\\w+);?$/'));
+
+      if (varMatch) {
+        return invokeIfEmptyFunc(topArgs[varMatch[1]]);
+      }
+
+      if (val in symbolBoxDict) return takeBoxValue(symbolBoxDict[val]);
+
+      return replaceSymbolsAndVars(val);
+    }
+
+    while (checkIsFunction(val)) val = val();
+    return val;
+  };
+
+  const takeBoxValue: (box: (typeof symbolBoxDict)[string]) => string = box => {
+    const { all, key, slashes } = box;
+
+    if (slashes.length % 2) return box.all;
+
+    const args = all.slice(key.length + 3, -2);
+
+    if (checkIsFunction(topArgs[key])) {
+      return topArgs[key](...args.split('}{').map(takeCorrectValue));
+    }
+
+    if (checkIsFunction(stringTemplaterFunctions[key]))
+      return stringTemplaterFunctions[key](...args.split('}{').map(takeCorrectValue));
+
+    if (key === 'if') {
+      const firstArg = args.split('}{', 1)[0];
+      const condition = takeCorrectValue(firstArg);
+
+      if (condition) {
+        const ifTrue = takeCorrectValue(args.slice(firstArg.length + 2).split('}{', 1)[0]);
+
+        return ifTrue;
+      } else {
+        const thirdArg = args.slice(firstArg.length + 2).split('}{', 2)[1];
+        const ifFalse = takeCorrectValue(thirdArg);
+
+        return ifFalse;
+      }
+    }
+
+    return onUnknownArg?.(key);
+  };
+
+  const replaceSymbolsAndVars: (str: string) => string = str =>
+    str.replace(makeRegExp(`/([${allSymbols}])|(\\\\*)(\\$(\\w+);?)/g`), (_all, symbol, slashes, whole, varKey) => {
+      if (symbol) {
+        return stringify(takeBoxValue(symbolBoxDict[symbol]));
+      }
+
+      if (slashes.length % 2) return whole;
+
+      return stringify(takeCorrectValue(topArgs[varKey]));
+    });
+
+  return replaceSymbolsAndVars(str);
 };
 
 /////////////////////////////
 /////////////////////////////
 /////////////////////////////
 
-const stringTemplaterFunctions = {
+const isEq = (...args: unknown[]) => {
+  let val: unknown;
+
+  return !args.some((arg, argi) => {
+    if (argi) return !checkIsEq(arg, val);
+    val = arg;
+    return false;
+  });
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const stringTemplaterFunctions: Record<string, (...args: any[]) => unknown> = {
   ink: (num: number, post = '', pre = '') => (num == null ? null : `${pre}${num - -1}${post}`),
   switch: (...args: []) => {
     let val: unknown, found: unknown;
@@ -166,20 +145,12 @@ const stringTemplaterFunctions = {
   keys: objectKeys,
   join: (by: string, ...arr: []) => arr.join(by),
   len: (obj: object) => objectLength(obj),
-  isEq: (...args: unknown[]) => {
-    let val: unknown;
-
-    return !args.some((arg, argi) => {
-      if (argi) return !checkIsEq(arg, val);
-      val = arg;
-      return false;
-    });
-  },
+  isEq,
+  isNEq: (...args: unknown[]) => !isEq(...args),
   isGt: (first: number | string, second: number | string) => first > second,
   isGte: (first: number | string, second: number | string) => first >= second,
   isLt: (first: number | string, second: number | string) => first < second,
   isLte: (first: number | string, second: number | string) => first <= second,
   or: (...args: []) => args.some(itIt),
   and: (...args: []) => !args.some(itNIt),
-  if: (condition: unknown, ifTrue: unknown, ifFalse: unknown) => (condition ? ifTrue : ifFalse),
 };

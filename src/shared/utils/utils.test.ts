@@ -24,14 +24,6 @@ describe('utils', () => {
     expect(stringTemplater('Пустые "$noValue" кавычки', { num: 8 })).toBe('Пустые "" кавычки');
 
     expect(stringTemplater('Тут ноль "$zero"', { zero: 0 })).toBe('Тут ноль "0"');
-    expect(stringTemplater('Тут ноль "$zero?"', { zero: 0 })).toBe('Тут ноль ""');
-
-    expect(stringTemplater('Тернарник "$ter?{{есть}{нет}}"', { ter: 5 })).toBe('Тернарник "есть"');
-    expect(stringTemplater('Тернарник "$ter?{{есть}{нет}}"', { ter: 0 })).toBe('Тернарник "нет"');
-    expect(stringTemplater('Тернарник "$ter??{{есть}{нет}}"', { ter: 0 })).toBe('Тернарник "есть"');
-    expect(stringTemplater('Тернарник "$ter!{{есть}{нет}}"', { ter: 0 })).toBe('Тернарник "есть"');
-    expect(stringTemplater('Тернарник "$ter!!{{есть}{нет}}"', { ter: 0 })).toBe('Тернарник "нет"');
-    expect(stringTemplater('Тернарник "$ter{{есть}{нет}}"', { ter: 0 })).toBe('Тернарник "есть"');
   });
 
   it('stringTemplater:default functions', () => {
@@ -66,24 +58,24 @@ describe('utils', () => {
         sum: 50,
         write: (sum: number) => typeof sum,
       }),
-    ).toBe('Тут строка "number"');
+    ).toBe('Тут строка "string"');
 
     expect(
-      stringTemplater('Тут цифра $ret?{{$num}}', {
+      stringTemplater('Тут цифра $ret{{$num}}', {
         num: 100,
         ret: (num: number) => num,
       }),
     ).toBe('Тут цифра 100');
 
     expect(
-      stringTemplater('Тут пусто $ret?{{$num}}', {
+      stringTemplater('Тут пусто $ret{{$num}}', {
         // num: 0,
         ret: (num: number) => num,
       }),
     ).toBe('Тут пусто ');
 
     expect(
-      stringTemplater('Каскад ф-ций $fun{{$fun{{$fun{{$fun{{$fun{{$start}}}} }}}} }}', {
+      stringTemplater('Каскад ф-ций $fun{{$fun{{$fun{{$fun{{$fun{{$start}}}}}}}}}}', {
         start: 0,
         fun: (num: number) => num + 1,
       }),
@@ -97,17 +89,40 @@ describe('utils', () => {
 
     expect(
       stringTemplater('$true || $funF;', {
-        funF: () => 'F',
+        funF: () => () => () => () => () => () => 'F',
         true: true,
       }),
-    ).toBe('true || F');
+    ).toBe(' || F');
 
     expect(
       stringTemplater('$on && $tw', {
         on: () => true,
         tw: () => false,
       }),
-    ).toBe('true && false');
+    ).toBe(' && ');
+
+    expect(stringTemplater('$if{{$cond}{0}{1}}', { cond: 0 })).toBe('1');
+
+    expect(stringTemplater('$if{{$cond}{0}{1}}', { cond: 1 })).toBe('0');
+
+    expect(stringTemplater('$if{{$cond}{}{1}}', { cond: 1 })).toBe('');
+
+    expect(stringTemplater('$if{{$cond}{$obj}}', { cond: 1, obj: {} })).toBe('');
+
+    expect(stringTemplater('$if{{$cond}{never}}', { cond: 0 })).toBe('');
+
+    expect(stringTemplater('$cond{{}}', { cond: 0 }, () => 'not a func')).toBe('not a func');
+
+    expect(stringTemplater('Hi$if{{$cond}{$p$o;potam &}} Me', { cond: 1, p: 'pp', o: 'o' })).toBe('Hippopotam & Me');
+
+    let check = 0;
+
+    stringTemplater('$if{{$cond}{}{$noInvoke}}', {
+      cond: 1,
+      noInvoke: () => check++,
+    });
+
+    expect(check).toBe(0);
   });
 });
 
