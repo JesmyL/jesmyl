@@ -5,6 +5,7 @@ import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model'
 
 export const localeDynamicRu: LocaleDynamic<Langi.Ru> = {
   lng: Langi.Ru,
+  v: 0,
 
   cm: {
     com: {

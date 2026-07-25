@@ -5,6 +5,7 @@ import { localeBaseRu } from './ru';
 export const localeBaseUa: LocaleBase<Langi.Ua> = {
   ...localeBaseRu,
   lng: Langi.Ua,
+  v: 0,
 
   cm: {
     com: {

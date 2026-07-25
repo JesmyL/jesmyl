@@ -9,6 +9,7 @@ import {
 
 export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   lng: L;
+  v: 0;
 
   cm: {
     com: {

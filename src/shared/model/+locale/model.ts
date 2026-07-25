@@ -1,6 +1,6 @@
 import { AppName } from '#basis/model/App.model';
 
-export type LocaleSatisfies<T extends PRecord<AppName, object>> = T;
+export type LocaleSatisfies<T extends PRecord<AppName, object> & { v: number }> = T;
 
 export type LocaleStrRecord<T extends string | number> = Record<`${T}`, LocaleSimpleString>;
 

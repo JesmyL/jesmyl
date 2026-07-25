@@ -5,6 +5,7 @@ import { LocaleSatisfies, LocaleStrRecord } from './model';
 
 export type LocaleDynamic<L extends Langi> = LocaleSatisfies<{
   lng: L;
+  v: number;
 
   cm: {
     com: {

@@ -5,6 +5,7 @@ import { localeBaseRu } from './ru';
 export const localeBaseKz: LocaleBase<Langi.Kz> = {
   ...localeBaseRu,
   lng: Langi.Kz,
+  v: 0,
 
   each0: 'әрқайсысы',
   each1: 'әрқайсысы',
