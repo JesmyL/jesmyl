@@ -15,7 +15,7 @@ export const IndexSettingsBindEmail = () => {
     <>
       <BrutalItem
         iconNode={<LazyIcon icon="Mail01" />}
-        title={translateBase(it => it.bindEmail)}
+        title={translateBase(it => it.email.toBind)}
         onClick={() => setIsOpen(itNIt)}
         box={<LazyIcon icon={isOpen ? 'ArrowUp01' : 'ArrowDown01'} />}
       />
@@ -25,7 +25,7 @@ export const IndexSettingsBindEmail = () => {
           onConfirm={async otp => {
             const { fioOrNick } = await indexTsjrpcClientMethods.bindEmailByOTP({ otp });
             toast(
-              translateBase(it => it.emailBindedToCurrentAuth, { fio: fioOrNick }),
+              translateBase(it => it.email.bindedToCurrentAuth, { fio: fioOrNick }),
               makeToastOKMoodConfig(),
             );
             setIsOpen(false);
