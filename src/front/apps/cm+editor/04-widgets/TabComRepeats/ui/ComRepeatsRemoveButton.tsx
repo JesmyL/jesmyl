@@ -1,6 +1,5 @@
 import { Button } from '#shared/components/ui/button';
 import { propagationStopper } from '#shared/lib/event-funcs';
-import { mylib } from '#shared/lib/my-lib';
 import { Modal, ModalBody, ModalHeader, useConfirm } from '#shared/ui/modal';
 import { TheButton } from '#shared/ui/TheButton';
 import { WithAtom } from '#shared/ui/WithAtom';
@@ -10,6 +9,7 @@ import { useAtomValue } from 'atomaric';
 import { makeRegExp } from 'regexpert';
 import { CmComOrder } from 'shared/const/cm/order/Order';
 import { checkIsNotNumber } from 'shared/utils/checkIs';
+import { deepClone } from 'shared/utils/clone';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
 import { CmComOrdRepeatSlashPlacement, makeCmComOrderRepeats } from 'shared/utils/cm/order';
 import { cmComOrderCheckRepeatKeyIsFlag, makeCmComOrderRepeatOrSelf } from 'shared/utils/cm/repeat-keys';
@@ -116,7 +116,7 @@ export const CmEditorTabComRepeatsRemoveButton = ({ ord, textLinei, wordi }: Pro
                         color="x3"
                         onClick={async () => {
                           const { startOrd, finOrd, startKey, finKey } = flash;
-                          const startRrepeats = mylib.clone(startOrd?.repeats);
+                          const startRrepeats = deepClone(startOrd?.repeats);
 
                           if (startRrepeats && checkIsNotNumber(startRrepeats)) {
                             delete startRrepeats[startKey];

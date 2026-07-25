@@ -1,14 +1,3 @@
-import md5 from 'md5';
-import { makeRegExp } from 'regexpert';
-import { checkIsEq } from './checkIsEq';
-import { deepClone } from './clone';
-import { itIt, itNIt } from './utils';
-
-export type StringTemplaterArgs<Adds = object> = {
-  ink: (num: number, post: string, pre: string) => string;
-  switch: () => string;
-} & Adds;
-
 const inSec = 1000;
 const inMin = inSec * 60;
 const inHour = inMin * 60;
@@ -72,15 +61,6 @@ export class SMyLib {
     return result;
   };
 
-  toRandomSorted = <Item>(arr: Item[]) => {
-    const items: Item[] = [];
-    const arrClone = [...arr];
-
-    for (let i = 0; i < arr.length; i++) items.push(arrClone.splice(this.randomOf(0, arrClone.length - 1), 1)[0]);
-
-    return items;
-  };
-
   static groupBy: typeof Object.groupBy = (iterable, keySelector) => {
     const result: Record<string, unknown[]> = {};
     iterable = Array.from(iterable);
@@ -92,23 +72,6 @@ export class SMyLib {
 
     return result as never;
   };
-
-  randomOf = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
-  randomIndex = (arr: unknown[] | string, sliceEnd?: number) =>
-    this.randomOf(0, arr.length - 1 + (sliceEnd === undefined ? 0 : sliceEnd));
-  randomItem = <Item extends unknown[] | string, RetItem extends Item extends (infer It)[] ? It : string>(
-    arr: Item,
-    sliceEnd?: number,
-  ): RetItem => arr[this.randomIndex(arr, sliceEnd)] as RetItem;
-
-  ellipsisText(text: string | nil, maxLen: number = 30) {
-    if (!text) return '';
-    const cutText = text.slice(0, maxLen);
-    return `${cutText}${cutText.length !== text.length ? ' ...' : ''}`;
-  }
-
-  /** @deprecated */
-  clone = deepClone;
 
   takeNextMi<Mi extends number, Item extends { [k in MiKey]: Mi }, MiKey extends string = 'mi'>(
     list: Item[],
@@ -125,196 +88,6 @@ export class SMyLib {
     return id as Id;
   }
 
-  isEq = checkIsEq;
-
-  md5(content: string) {
-    return md5(content);
-  }
-
-  declension(num: number, one?: string, two?: string, five?: string) {
-    if (num % 1) return two!;
-    let absNum = Math.abs(num) % 100;
-
-    if (absNum > 10 && absNum < 20) return five ?? two!;
-
-    absNum %= 10;
-
-    return absNum > 1 && absNum < 5 ? two! : absNum === 1 ? one! : (five ?? two!);
-  }
-
-  stringTemplaterFunctions = {
-    ink: (num: number, post = '', pre = '') => (num == null ? null : `${pre}${num - -1}${post}`),
-    switch: (...args: []) => {
-      let val: unknown, found: unknown;
-
-      const ret = args.find((arg, argi) => {
-        if (!argi) {
-          val = arg;
-          return false;
-        }
-
-        if (found) return true;
-        if (argi % 2 && arg == val) found = true;
-        return false;
-      });
-
-      return ret == null ? args[args.length - 1] : ret;
-    },
-    declension: this.declension,
-    keys: this.keys,
-    join: (by: string, ...arr: []) => arr.join(by),
-    count: (obj: object) => this.keys(obj).length,
-    isEq: (...args: unknown[]) => {
-      let val: unknown;
-
-      return !args.some((arg, argi) => {
-        if (argi) return !this.isEq(arg, val);
-        val = arg;
-        return false;
-      });
-    },
-    isGt: (first: number | string, second: number | string) => first > second,
-    isGte: (first: number | string, second: number | string) => first >= second,
-    isLt: (first: number | string, second: number | string) => first < second,
-    isLte: (first: number | string, second: number | string) => first <= second,
-    or: (...args: []) => args.some(itIt),
-    and: (...args: []) => !args.some(itNIt),
-    if: (condition: unknown, ifTrue: unknown, ifFalse: unknown) => (condition ? ifTrue : ifFalse),
-  };
-
-  stringTemplater<Args>(str: string, topArgs: Args, onUnknownArg?: (argName: string) => unknown) {
-    const dob = '{{';
-    const ocb = '}{';
-    const dcb = '}}';
-    const noObj = {};
-    const norm = (val: unknown, op?: string) =>
-      op === '?'
-        ? val
-          ? val
-          : noObj
-        : op === '!'
-          ? val
-            ? noObj
-            : val
-          : op === '!!'
-            ? val == null
-              ? ''
-              : noObj
-            : val == null
-              ? noObj
-              : val;
-    let lim = 1000;
-
-    const inline = (parts: unknown[]) => {
-      lim--;
-      if (lim < 0) return;
-      let line: unknown[] = [];
-
-      const addNorm = (val: unknown, op?: string) => {
-        const value = norm(val, op);
-        line = line.concat(value == noObj || value == null ? '' : value);
-      };
-
-      const getDiapason = (diapason: unknown[], district: number | null, structItems = false) => {
-        let ballance: number = null as never;
-        let distBallance = 0;
-        let struct: unknown[] = [];
-        const dists: unknown[] = [];
-
-        const diap = (diapason[0] === dob ? diapason : []).filter(txt => {
-          if (ballance === 0) return false;
-
-          if (structItems) {
-            if ((txt === ocb || txt === dcb) && ballance === 1) {
-              dists.push(inline(struct));
-              struct = [];
-            } else if (ballance) struct.push(txt);
-          } else if (district != null) {
-            if (distBallance === district) dists.push(txt);
-            if (ballance === 1 && txt === ocb) distBallance++;
-          }
-
-          if (txt === dob) ballance++;
-          else if (txt === dcb) ballance--;
-
-          return true;
-        });
-
-        return {
-          list: structItems || district != null ? dists : diap,
-          len: diap.length,
-          diap,
-          dists,
-        };
-      };
-
-      let escLim = 0;
-
-      parts.forEach((part, parti, parta) => {
-        if (parti && parti <= escLim) return;
-
-        const invokeFunc = (func: Function) => {
-          const diapason = getDiapason(parta.slice(parti + 1), null, true);
-          escLim += diapason.len;
-
-          addNorm(func.apply(this, inline(diapason.list) as never));
-        };
-
-        if (part === dob) {
-          //
-        } else if (part === dcb || part === ocb) escLim++;
-        else if (this.isStr(part)) {
-          const match = part.match(makeRegExp('/^\\$(\\w+)(!{1,2}|\\?{1,2})?(;?)/'));
-          const [, topArgName, op, semicolon] = (match || []) as [unknown, keyof StringTemplaterArgs, string, string];
-
-          if (topArgName != null) {
-            let val = topArgs[topArgName as keyof Args] as unknown;
-            if (val === undefined) {
-              val = this.stringTemplaterFunctions[topArgName];
-              if (val === undefined && onUnknownArg) val = onUnknownArg(topArgName);
-            }
-
-            if (semicolon) {
-              if (this.isFunc(val)) invokeFunc(val);
-              else {
-                escLim++;
-                addNorm(val, op);
-              }
-            } else if (parta[parti + 1] === dob) {
-              if (!op && this.isFunc(val)) invokeFunc(val);
-              else {
-                const value = norm(val, op);
-                const diapason = getDiapason(parta.slice(parti + 1), value != noObj ? 0 : 1);
-                escLim += diapason.len;
-
-                addNorm(inline(diapason.list));
-              }
-            } else if (this.isFunc(val)) invokeFunc(val);
-            else {
-              if (parti) escLim++;
-              addNorm(val, op);
-            }
-          } else {
-            if (parti) escLim++;
-            addNorm(part.replace(makeRegExp('/^\\\\/'), ''), op);
-          }
-        } else addNorm(part);
-      });
-
-      return line;
-    };
-
-    return (
-      inline(
-        (str || '').split(makeRegExp('/(\\\\?\\$\\w+!{0,2}\\?{0,2};?|\\\\?{{|\\\\?}{|\\\\?}})/')).filter(s => s),
-      )?.join('') || ''
-    );
-  }
-
-  toSorted<Item>(items: Item[], compareFunction?: (a: Item, b: Item) => number) {
-    return [...items].sort(compareFunction);
-  }
-
   withInsertedBeforei<Item>(list: Item[], beforei: number, targeti: number) {
     const fakeEvent = {} as Item;
     list = [...list];
@@ -322,24 +95,6 @@ export class SMyLib {
     list.splice(beforei, 0, event);
 
     return list.filter(event => event !== fakeEvent);
-  }
-
-  sort<Item>(items: Item[], compareFunction?: (a: Item, b: Item) => number) {
-    const len = items.length - 1;
-    const compare =
-      compareFunction !== undefined
-        ? (j: number) => compareFunction(items[j], items[j + 1]) > 0
-        : (j: number) => items[j] > items[j + 1];
-
-    for (let i = 0; i < len; i++) {
-      for (let j = 0; j < len - i; j++) {
-        if (compare(j)) {
-          [items[j], items[j + 1]] = [items[j + 1], items[j]];
-        }
-      }
-    }
-
-    return items;
   }
 
   convertSecondsInStrTime(seconds: number) {

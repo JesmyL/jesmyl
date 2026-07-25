@@ -2,7 +2,7 @@ import { makeRegExp } from 'regexpert';
 import { CmComBracketLevelHolder, CmComTextSquareBracketsMode, EeStorePack } from 'shared/api';
 import { IIncorrects } from 'shared/model/cm/Incorrects';
 import { TextCase } from 'shared/model/common';
-import { smylib } from 'shared/utils/SMyLib';
+import { declension } from 'shared/utils/utils';
 import { cmTransformToReadableText } from '../transformToReadableText';
 import {
   displayableTextBlockCharsStr,
@@ -51,7 +51,7 @@ export const takeTextBlockIncorrects = (text: string | und = '', eeStore: EeStor
   if (level) {
     const pre = level < 0 ? 'открывающ' : 'закрывающ';
     const absLevel = Math.abs(level);
-    const text = smylib.declension(absLevel, `${pre}ую кавычку`, `${pre}их кавычки`, `${pre}их кавычек`);
+    const text = declension(absLevel, `${pre}ую кавычку`, `${pre}их кавычки`, `${pre}их кавычек`);
 
     return {
       warnings: [

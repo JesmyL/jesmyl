@@ -1,4 +1,3 @@
-import { mylib } from '#shared/lib/my-lib';
 import { HTMLAttributes, useState } from 'react';
 
 export const EllipsisText = ({
@@ -20,8 +19,14 @@ export const EllipsisText = ({
       onClick={() => cantExtend || setIsNeedTrim(it => !it)}
     >
       {prefix}
-      {isNeedTrim ? mylib.ellipsisText(textValue, maxLength) : textValue}
+      {isNeedTrim ? ellipsisText(textValue, maxLength) : textValue}
       {postfix}
     </span>
   );
+};
+
+const ellipsisText = (text: string | nil, maxLen: number = 30) => {
+  if (!text) return '';
+  const cutText = text.slice(0, maxLen);
+  return `${cutText}${cutText.length !== text.length ? ' ...' : ''}`;
 };

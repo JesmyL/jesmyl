@@ -7,9 +7,11 @@ import {
   ScheduleWidgetDayListItemTypeBox,
 } from 'shared/api';
 import { howMillisecondsInDay, howMillisecondsInHour, howMillisecondsInMin } from 'shared/const/ms';
-import { SMyLib, smylib } from 'shared/utils';
+import { declension } from 'shared/utils';
 import { ruLowerLettersStr } from 'shared/utils/cm/com/const';
+import { mapObjectEntries, objectKeys } from 'shared/utils/object.utils';
 import { textToCapitalizeCase } from 'shared/utils/string.utils';
+import { stringTemplater } from 'shared/utils/stringTemplater';
 
 const singleTitleSymbols = '- ().,/';
 const incorrectsTitleReg = makeRegExp(`/[^${singleTitleSymbols}\\d${ruLowerLettersStr}]/gi`);
@@ -54,7 +56,7 @@ const likeLetters: Record<string, string> = {
   T: 'Т',
 };
 
-const likeLettersReg = makeRegExp(`/[${SMyLib.keys(likeLetters).join('')}]/g`);
+const likeLettersReg = makeRegExp(`/[${objectKeys(likeLetters).join('')}]/g`);
 const repLikeLetters = (letter: string) => likeLetters[letter];
 
 export class ScheduleWidgetCleans {
@@ -82,25 +84,25 @@ export class ScheduleWidgetCleans {
 
   static daysToText = (days: number, isNeedCalculate?: boolean) => {
     const daysTo = isNeedCalculate ? Math.ceil(days / howMillisecondsInDay) : days;
-    return daysTo + ' ' + smylib.declension(daysTo, 'день', 'дня', 'дней');
+    return daysTo + ' ' + declension(daysTo, 'день', 'дня', 'дней');
   };
-  static hoursToText = (hoursTo: number) => hoursTo + ' ' + smylib.declension(hoursTo, 'час', 'часа', 'часов');
+  static hoursToText = (hoursTo: number) => hoursTo + ' ' + declension(hoursTo, 'час', 'часа', 'часов');
   static minutesToText = (minutes: number, isNeedCalculate?: boolean) => {
     const minutesTo = isNeedCalculate ? Math.ceil(minutes / howMillisecondsInMin) : minutes;
-    return minutesTo + ' ' + smylib.declension(minutesTo, 'минуту', 'минуты', 'минут');
+    return minutesTo + ' ' + declension(minutesTo, 'минуту', 'минуты', 'минут');
   };
 
   static minutesToTextTemplate = (minutes: number, text: string) => {
     const minutesTo = Math.ceil(minutes / howMillisecondsInMin);
 
-    return smylib.stringTemplater(text, {
+    return stringTemplater(text, {
       num: minutesTo,
       onNum: (one: string, more: string) => (minutesTo === 1 ? one : more),
-      txt: smylib.declension(minutesTo, minutesTo % 10 === 1 ? 'минута' : 'минуту', 'минуты', 'минут'),
+      txt: declension(minutesTo, minutesTo % 10 === 1 ? 'минута' : 'минуту', 'минуты', 'минут'),
     });
   };
 
-  static termsToText = (termsTo: number) => termsTo + ' ' + smylib.declension(termsTo, 'раз', 'раза', 'раз');
+  static termsToText = (termsTo: number) => termsTo + ' ' + declension(termsTo, 'раз', 'раза', 'раз');
 
   static attachmentTypeTitleNormalize = (text: string, isWithTopic?: boolean) => {
     if (isWithTopic) {
@@ -255,7 +257,7 @@ export class ScheduleWidgetCleans {
     });
 
     return {
-      newTypes: SMyLib.entries(tattTimes).map(([title, tm]) => ({ title, tm })),
+      newTypes: mapObjectEntries(tattTimes, (title, tm) => ({ title, tm })),
       dayWup: ScheduleWidgetCleans.packDayWakeUpTime(lines[0].slice(0, 5)),
       list: lines.map(line => {
         const tattTitle = eventTitles[line];

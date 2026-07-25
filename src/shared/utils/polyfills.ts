@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { emptyFunc, smylib } from 'shared/utils';
+import { emptyFunc } from 'shared/utils';
 
 export const setSharedPolyfills = () => {
   const setArrayProtoMethod = <Name extends keyof typeof Array.prototype>(
@@ -221,11 +221,25 @@ export const setSharedPolyfills = () => {
   ///////////////////////////////////
 
   Array.prototype.toSorted = function (compareFunction) {
-    return smylib.toSorted(this, compareFunction);
+    return this.slice(0).sort(compareFunction);
   };
 
   Array.prototype.sort = function (compareFunction) {
-    return smylib.sort(this, compareFunction);
+    const compare =
+      compareFunction !== undefined
+        ? (j: number) => compareFunction(this[j], this[j + 1]) > 0
+        : (j: number) => this[j] > this[j + 1];
+
+    const len = this.length - 1;
+    for (let i = 0; i < len; i++) {
+      for (let j = 0; j < len - i; j++) {
+        if (compare(j)) {
+          [this[j], this[j + 1]] = [this[j + 1], this[j]];
+        }
+      }
+    }
+
+    return this;
   };
 
   (BigInt.prototype as never as { toJSON: unknown }).toJSON = function () {

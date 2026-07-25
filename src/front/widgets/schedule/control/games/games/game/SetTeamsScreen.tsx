@@ -1,5 +1,4 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TextInput } from '#shared/ui/TextInput';
@@ -9,6 +8,7 @@ import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { schGamesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { useEffect, useState } from 'react';
 import { IScheduleWidgetExportableTeam, ScheduleWidgetUserMi } from 'shared/api';
+import { toRandomSorted } from 'shared/randoms';
 import { ScheduleWidgetRemovableUserFace } from '../../RemovableUserFace';
 import { useScheduleGameContext } from '../lib/contexts';
 
@@ -59,7 +59,7 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
 
           const setInDiffMap = () => {
             const teams: number[][] = Array.from(arrayImage, arrayMapper);
-            const randomUsers = mylib.toRandomSorted(sortedUsers);
+            const randomUsers = toRandomSorted(sortedUsers);
 
             for (let i = 0; i < randomUsers.length; i++) {
               teams[i % teamsCount].push(randomUsers[i]);

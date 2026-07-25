@@ -1,7 +1,6 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { Button } from '#shared/components/ui/button';
 import { propagationStopper } from '#shared/lib/event-funcs';
-import { MyLib, mylib } from '#shared/lib/my-lib';
 import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -13,7 +12,11 @@ import { useNavigate, useSearch } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { ChordPack, ChordTrack } from 'shared/api';
+import { checkIsArray } from 'shared/utils/checkIs';
+import { checkIsEq } from 'shared/utils/checkIsEq';
+import { deepClone } from 'shared/utils/clone';
 import { correctChordRegsLazy } from 'shared/utils/cm/com/const';
+import { forEachObjectEntries, objectKeys, objectLength } from 'shared/utils/object.utils';
 import { cmEditorChordRedactableChordsAtom } from '../state/atoms';
 import { StyledCmEditorChordPageContainer } from '../style/Page';
 import { CmEditorChordChordNodes } from './ChordNodes';
@@ -40,10 +43,10 @@ export const CmEditorChordPage = () => {
 
   const setExecution = (pack = redactableChords) => {
     const value: ChordPack = {};
-    MyLib.entries(pack).forEach(([chordName, track]) => {
+    forEachObjectEntries(pack, (chordName, track) => {
       const realTrack = [...track];
       while (realTrack.at(-1) === 0) realTrack.pop();
-      if (!mylib.isEq(chords[chordName], realTrack)) value[chordName] = realTrack as ChordTrack;
+      if (!checkIsEq(chords[chordName], realTrack)) value[chordName] = realTrack as ChordTrack;
     });
     chordsToSendAtom.set(value);
   };
@@ -66,10 +69,10 @@ export const CmEditorChordPage = () => {
   }, [newChordName, redactableChords, chords, isNewChord, currentChordName]);
 
   const modifyTrack = (map: (track: ChordTrack) => ChordTrack | void) => {
-    let track: ChordTrack = mylib.clone(redactableChord);
+    let track: ChordTrack = deepClone(redactableChord);
     const newTrack = map(track);
 
-    if (mylib.isArr(newTrack)) track = newTrack;
+    if (checkIsArray(newTrack)) track = newTrack;
 
     const newRedactableChords = {
       ...redactableChords,
@@ -93,10 +96,10 @@ export const CmEditorChordPage = () => {
 
             <TheIconButton
               icon="Sent"
-              disabled={!mylib.keys(chordsToSend).length}
+              disabled={!objectLength(chordsToSend)}
               disabledReason="Изменений нет"
               className="m-2"
-              confirm={`Отправить аккорды ${mylib.keys(chordsToSend).join('; ')} ?`}
+              confirm={`Отправить аккорды ${objectKeys(chordsToSend).join('; ')} ?`}
               onClick={async () => {
                 await cmEditorClientTsjrpcMethods.setChords({ chords: chordsToSend });
                 chordsToSendAtom.set({});

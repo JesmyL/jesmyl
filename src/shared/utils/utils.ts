@@ -41,3 +41,14 @@ export type JsonString<T> = string & { readonly [jsonBrand]: T };
 export const jsonStringify = <Val>(val: Val) => JSON.stringify(val) as JsonString<Val>;
 export const jsonParse = <T>(val: JsonString<T>) => JSON.parse(val) as T;
 // JSON
+
+export const declension = (num: number, one?: string, two?: string, five?: string) => {
+  if (num % 1) return two!;
+  let absNum = Math.abs(num) % 100;
+
+  if (absNum > 10 && absNum < 20) return five ?? two!;
+
+  absNum %= 10;
+
+  return absNum > 1 && absNum < 5 ? two! : absNum === 1 ? one! : (five ?? two!);
+};

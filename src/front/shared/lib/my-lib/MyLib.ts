@@ -134,105 +134,10 @@ export class MyLib extends SMyLib {
     return obj ? Object.values(obj) : [];
   }
 
-  findMap<Item, Val, Def extends Val>(items: Item[], cb: (item: Item, index: number, items: Item[]) => Val, def?: Def) {
-    for (let i = 0; i < items.length; i++) {
-      const val = cb(items[i], i, items);
-      if (val) return val;
-    }
-    return def as Def;
-  }
-
   setInputHeightByContent(inputNode: HTMLInputElement | HTMLTextAreaElement) {
     inputNode.style.height = '1px';
     inputNode.style.transition = 'height .2s linear';
     inputNode.style.height = inputNode.scrollHeight ? `${inputNode.scrollHeight}px` : '1.5em';
-  }
-
-  groupByFieldsSoftly<Item, Fieldn extends keyof Item>(
-    fieldns: (Fieldn | ((item: Item) => number))[],
-    items: Item[],
-    numOf: number,
-    addRestMode: AddRestMode,
-  ) {
-    const lastFieldn = fieldns[fieldns.length - 1];
-    const wraps = items
-      .map(item => ({ item }))
-      .sort(({ item: a }, { item: b }) => {
-        return this.findMap(
-          fieldns,
-          (fieldn, fieldni, fieldna) => {
-            const theA = typeof fieldn === 'function' ? fieldn(a) : a[fieldn as never];
-            const theB = typeof fieldn === 'function' ? fieldn(b) : b[fieldn as never];
-
-            return theA > theB ? -1 : theA < theB ? 1 : fieldni === fieldna.length - 1 ? this.randomOf(-1, 1) : 0;
-          },
-          0,
-        );
-      });
-    const groups: Item[][] = this.netFromLine(wraps, numOf, ({ item }) => item);
-    const teams: Item[][] = [];
-    let rest: Item[] = [];
-
-    for (let i = 0; i < numOf; i++) {
-      const team: Item[] = [];
-      teams.push(team);
-      groups.forEach(group => {
-        if (group.length === numOf) team.push(group[i]);
-        else rest = group;
-      });
-    }
-
-    const sorter: (a: number[], b: number[]) => number =
-      addRestMode === 'strong'
-        ? ([a], [b]) => b - a
-        : addRestMode === 'weak'
-          ? ([a], [b]) => a - b
-          : () => this.randomOf(-1, 1);
-
-    const map = teams
-      .map((team, teami) => [team.reduce((rate, item) => rate + item[lastFieldn as never], 0), teami])
-      .sort(sorter);
-
-    rest.forEach((item, itemi) => {
-      const [, index] = map[itemi];
-      teams[index].push(item);
-    });
-
-    teams.sort(() => this.randomOf(-1, 1)).forEach(team => team.sort(() => this.randomOf(-1, 1)));
-
-    return teams;
-  }
-
-  netFromLine<Item, FillItem>(line: Item[], cols: number, map: (item: Item, rowi: number, index: number) => FillItem) {
-    if (cols < 2) return line.map((item, itemi) => [map(item, itemi, itemi)]);
-
-    let lastRow: FillItem[] = [];
-    const rows: FillItem[][] = [];
-    let rowi = 0;
-
-    line.forEach((item, itemi) => {
-      if (!(itemi % cols)) {
-        rows.push((lastRow = []));
-        rowi++;
-      }
-      lastRow.push(map(item, rowi, itemi));
-    });
-
-    return rows;
-  }
-
-  findNext<Item>(items: Item[], item: Item, step = 1) {
-    return items[(items.indexOf(item) + Math.abs(step)) % items.length];
-  }
-
-  nextCircularIndex(currentIndex: number, line: unknown[], dir: 1 | -1 = 1) {
-    return dir < 0
-      ? currentIndex <= 0
-        ? line.length - 1
-        : currentIndex - 1
-      : currentIndex >= line.length - 1
-        ? 0
-        : currentIndex + 1;
   }
 
   onChildInViewPort(
@@ -310,66 +215,6 @@ export class MyLib extends SMyLib {
       )
       .effect();
   }
-
-  makeMaxMinReqInfo = (props: {
-    min: number | nil;
-    max: number | nil;
-    isRequired: boolean;
-    length: number;
-    infoBetweenText: string;
-    checkBetweenText: string;
-    infoEqText: string;
-    checkEqText: string;
-    checkMinText: string;
-    infoMinText: string;
-    checkMaxText: string;
-    infoMaxText: string;
-    checkRequiredText: string;
-  }): { check: string | null; info: null | string } => {
-    if (props.min != null && props.max != null) {
-      const info = props.max === props.min ? props.infoEqText : props.infoBetweenText;
-      const check = props.max === props.min ? props.checkEqText : props.checkBetweenText;
-
-      if (props.isRequired && !props.length) return { check, info };
-      else if (!props.isRequired && !props.length) return { check: null, info };
-
-      return {
-        info,
-        check:
-          props.max === props.min
-            ? props.length === props.min
-              ? null
-              : check
-            : props.length < props.min || props.length > props.max
-              ? check
-              : null,
-      };
-    } else if (props.min != null) {
-      return {
-        info: props.infoMinText,
-        check:
-          props.isRequired && !props.length ? props.checkMinText : props.length < props.min ? props.checkMinText : null,
-      };
-    } else if (props.max != null) {
-      return {
-        info: props.infoMaxText,
-        check:
-          props.isRequired && !props.length
-            ? props.checkRequiredText
-            : props.length > props.max
-              ? props.checkMaxText
-              : null,
-      };
-    }
-
-    if (props.isRequired && !props.length)
-      return {
-        check: props.checkRequiredText,
-        info: null,
-      };
-
-    return { check: null, info: null };
-  };
 
   resortByOrder = <Item>(orderedIndexes: number[] | nil, listToSort: Item[]) => {
     if (orderedIndexes == null) return { list: listToSort, indexes: {} };

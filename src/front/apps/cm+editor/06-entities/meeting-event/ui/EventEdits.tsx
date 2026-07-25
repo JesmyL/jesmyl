@@ -1,8 +1,8 @@
-import { mylib } from '#shared/lib/my-lib';
 import { Modal } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { useCmComSelectedList } from '$cm/ext';
 import { Atom, atom } from 'atomaric';
+import { checkIsEq } from 'shared/utils/checkIsEq';
 import { CmEditorMeetingEventEditProps } from '../model/model';
 import { CmEditorMeetingEventEditsHistoryModalInner } from './EventEditsHistoryModal';
 import { CmEditorMeetingEventSendComsModalInner } from './SendComsInEventModalInner';
@@ -18,7 +18,7 @@ export const CmEditorMeetingEventEdits = (props: CmEditorMeetingEventEditProps) 
 
   return (
     <>
-      {!selectedComws.length || mylib.isEq(selectedComws, props.packComws) || (
+      {!selectedComws.length || checkIsEq(selectedComws, props.packComws) || (
         <BottomPopupItem
           icon="Sent"
           title="Отправить выбранные песни"

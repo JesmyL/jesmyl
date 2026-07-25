@@ -1,6 +1,5 @@
 import { Button } from '#shared/components/ui/button';
 import { ExcelValueListExtracter } from '#shared/lib/hooks/ExcelValueListExtracter';
-import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { EllipsisText } from '#shared/ui/EllipsisText';
 import { ModalBody, ModalFooter, ModalHeader, useConfirm } from '#shared/ui/modal';
@@ -8,6 +7,8 @@ import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.metho
 import { useState } from 'react';
 import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
 import { StoragesRack, StoragesRackCard } from 'shared/model/storages/list.model';
+import { declension } from 'shared/utils';
+import { objectKeys } from 'shared/utils/object.utils';
 
 type AssociationKey = keyof StoragesRackCard | number;
 
@@ -20,7 +21,7 @@ export const StoragesRackImportFromExcelModalInner = (props: { rack: StoragesRac
   const keysDropdown = (key: AssociationKey) => (
     <Dropdown
       id={associations[key]}
-      items={mylib.keys(keyValues).map(id => ({ id, title: id }))}
+      items={objectKeys(keyValues).map(id => ({ id, title: id }))}
       onSelectId={id => setAssociations(prev => ({ ...prev, [key]: id }))}
       renderItem={({ id }) => (
         <>
@@ -133,7 +134,7 @@ export const StoragesRackImportFromExcelModalInner = (props: { rack: StoragesRac
             const isRevert =
               cards.length !== valueList.length &&
               (await confirm(
-                `Не все строки из файла были преобразованы в карточки. Получилось корректно сформировать ${cards.length} ${mylib.declension(cards.length, 'карточку', 'карточки', 'карточек')}`,
+                `Не все строки из файла были преобразованы в карточки. Получилось корректно сформировать ${cards.length} ${declension(cards.length, 'карточку', 'карточки', 'карточек')}`,
               ));
 
             if (!isRevert) return;

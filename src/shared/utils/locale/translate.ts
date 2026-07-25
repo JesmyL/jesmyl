@@ -4,8 +4,8 @@ import {
   LocaleStrWithInterpolation,
   LocaleStrWithTwoInterpolations,
 } from 'shared/model/+locale/model';
-import { checkIsFunction, checkIsString } from '../checkIs';
-import { smylib } from '../SMyLib';
+import { checkIsArray, checkIsFunction, checkIsString } from '../checkIs';
+import { stringTemplater } from '../stringTemplater';
 
 interface DefinedTranslateFunction<Dict> {
   <
@@ -33,8 +33,8 @@ export const translateBaseDefine = <Dict extends object>(
     try {
       if (interpolation) {
         const value = selector(checkIsFunction(dictScalar) ? dictScalar() : dictScalar);
-        if (checkIsString(value)) return smylib.stringTemplater(value, interpolation);
-        return value || '';
+
+        return checkIsString(value) ? stringTemplater(value, interpolation) : checkIsArray(value) ? value || '' : '';
       }
 
       return selector(checkIsFunction(dictScalar) ? dictScalar() : dictScalar);

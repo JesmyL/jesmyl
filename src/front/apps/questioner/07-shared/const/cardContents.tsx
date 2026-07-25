@@ -1,4 +1,3 @@
-import { mylib } from '#shared/lib/my-lib';
 import { JSX } from 'react';
 import { QuestionerAdminTemplateContentProps, QuestionerType } from 'shared/model/q';
 import {
@@ -6,6 +5,8 @@ import {
   QuestionerResultContentProps,
   QuestionerUserAnswerContentProps,
 } from 'shared/model/q/answer';
+import { declension } from 'shared/utils';
+import { objectLength, objectValues } from 'shared/utils/object.utils';
 import { QuestionerAdminCheckTemplateCardContent } from '../ui/admin-templates/Check.admin';
 import { QuestionerAdminCommentTemplateCardContent } from '../ui/admin-templates/Comment.admin';
 import { QuestionerAdminRadioTemplateCardContent } from '../ui/admin-templates/Radio.admin';
@@ -72,20 +73,20 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
       takeShowError: takeShowErrorVarianted,
       customRequireMessage: null,
       takeUserAnswerError: props => {
-        const variantsLen = mylib.values(props.template.variants).filter(v => v?.title).length - 1;
+        const variantsLen = objectValues(props.template.variants).filter(v => v?.title).length - 1;
         const title = props.template.title ?? questionerTemplateDescriptions[props.template.type].title;
         const min = props.template.min && Math.min(props.template.min, variantsLen);
         const max = props.template.max && Math.min(props.template.max, variantsLen);
 
-        const _maxVars = max == null ? '' : `${max} ${mylib.declension(max, 'вариант', 'варианта', 'вариантов')}`;
-        const _minVars = min == null ? '' : `${min} ${mylib.declension(min, 'вариант', 'варианта', 'вариантов')}`;
+        const _maxVars = max == null ? '' : `${max} ${declension(max, 'вариант', 'варианта', 'вариантов')}`;
+        const _minVars = min == null ? '' : `${min} ${declension(min, 'вариант', 'варианта', 'вариантов')}`;
 
         const infoPrefix = `${props.template.req ? 'Нужно' : 'Можно'} выбрать`;
         const checkPrefix = `Ответ на вопрос "${title}" ${props.template.req ? 'должен' : 'может'} содержать`;
 
         return {
           isFill: !!props.userAnswer?.v.length,
-          ...mylib.makeMaxMinReqInfo({
+          ...makeMaxMinReqInfo({
             length: props.userAnswer?.v.length ?? 0,
             isRequired: !!props.template.req,
             max,
@@ -146,7 +147,7 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
       resultRender: props => <QuestionerResultTextIncludeTemplateCardContent {...props} />,
       conditionConfigureRender: props => <QuestionerTemplateConditionTextIncludeCardContent {...props} />,
       takeUserAnswerError: props => {
-        const isFill = mylib.keys(props.userAnswer?.v ?? {}).length === props.template.len;
+        const isFill = objectLength(props.userAnswer?.v) === props.template.len;
 
         return {
           check:
@@ -162,4 +163,64 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
   }))()[type]();
 
 const takeShowErrorVarianted = (props: { template: { variants: Record<string, { title: string }> } }) =>
-  mylib.values(props.template.variants).filter(v => v?.title).length ? '' : 'Нет варианотов ответа';
+  objectValues(props.template.variants).filter(v => v?.title).length ? '' : 'Нет варианотов ответа';
+
+const makeMaxMinReqInfo = (props: {
+  min: number | nil;
+  max: number | nil;
+  isRequired: boolean;
+  length: number;
+  infoBetweenText: string;
+  checkBetweenText: string;
+  infoEqText: string;
+  checkEqText: string;
+  checkMinText: string;
+  infoMinText: string;
+  checkMaxText: string;
+  infoMaxText: string;
+  checkRequiredText: string;
+}): { check: string | null; info: null | string } => {
+  if (props.min != null && props.max != null) {
+    const info = props.max === props.min ? props.infoEqText : props.infoBetweenText;
+    const check = props.max === props.min ? props.checkEqText : props.checkBetweenText;
+
+    if (props.isRequired && !props.length) return { check, info };
+    else if (!props.isRequired && !props.length) return { check: null, info };
+
+    return {
+      info,
+      check:
+        props.max === props.min
+          ? props.length === props.min
+            ? null
+            : check
+          : props.length < props.min || props.length > props.max
+            ? check
+            : null,
+    };
+  } else if (props.min != null) {
+    return {
+      info: props.infoMinText,
+      check:
+        props.isRequired && !props.length ? props.checkMinText : props.length < props.min ? props.checkMinText : null,
+    };
+  } else if (props.max != null) {
+    return {
+      info: props.infoMaxText,
+      check:
+        props.isRequired && !props.length
+          ? props.checkRequiredText
+          : props.length > props.max
+            ? props.checkMaxText
+            : null,
+    };
+  }
+
+  if (props.isRequired && !props.length)
+    return {
+      check: props.checkRequiredText,
+      info: null,
+    };
+
+  return { check: null, info: null };
+};

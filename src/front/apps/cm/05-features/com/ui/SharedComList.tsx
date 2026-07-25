@@ -1,4 +1,3 @@
-import { mylib } from '#shared/lib/my-lib';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { TheButton } from '#shared/ui/TheButton';
 import { cmComSelectedComwsAtom, useCmComSelectedList } from '$cm/entities/com';
@@ -7,7 +6,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from '@tanstack/react-router';
 import { Atom, useAtomValue } from 'atomaric';
 import { CmComWid } from 'shared/api';
-import { emptyFunc } from 'shared/utils';
+import { declension, emptyFunc } from 'shared/utils';
 
 export const CmComSharedListActionInterpretator = ({
   comListOnActionAtom,
@@ -51,7 +50,7 @@ export const CmComSharedListActionInterpretator = ({
                 Добавить к выбранным
               </TheButton>
               <StyledButtonDescription>
-                Добавится {addComsCount} {mylib.declension(addComsCount, 'песня', 'песни', 'песен')}
+                Добавится {addComsCount} {declension(addComsCount, 'песня', 'песни', 'песен')}
               </StyledButtonDescription>
 
               <TheButton
@@ -65,7 +64,7 @@ export const CmComSharedListActionInterpretator = ({
               </TheButton>
 
               <StyledButtonDescription>
-                Потеряется {lessComsCount} {mylib.declension(lessComsCount, 'песня', 'песни', 'песен')}
+                Потеряется {lessComsCount} {declension(lessComsCount, 'песня', 'песни', 'песен')}
               </StyledButtonDescription>
             </div>
           </>

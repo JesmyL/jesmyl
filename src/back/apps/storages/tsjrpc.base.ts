@@ -32,7 +32,7 @@ import {
   StoragesNestedCellSelectors,
   StoragesRackColumn,
 } from 'shared/model/storages/rack.model';
-import { itNNull, SMyLib, smylib } from 'shared/utils';
+import { declension, itNNull, SMyLib, smylib } from 'shared/utils';
 import { makeDeepProxyObject } from 'shared/utils/makeDeepProxyObject';
 import { storagesDirStorage } from './file-stores';
 import { storagesStoresSharesServerTsjrpcMethods } from './tsjrpc.shares';
@@ -166,7 +166,7 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           if (unsavedCards) {
             if (unsavedCards === cards.length) throw 'Не добавлено ни одной карточки';
 
-            throw smylib.declension(
+            throw declension(
               unsavedCards,
               `Не добавлена ${unsavedCards} карточка`,
               `Не добавлено ${unsavedCards} карточки`,

@@ -1,7 +1,7 @@
 import { backConfig } from 'back/config/backConfig';
 import fs from 'fs';
-import { smylib, wait } from 'shared/utils';
-import { checkIsNumber } from 'shared/utils/checkIs';
+import { wait } from 'shared/utils';
+import { checkIsNaN, checkIsNotUndefined, checkIsNumber } from 'shared/utils/checkIs';
 import { FileStore } from './FileStore';
 
 const initialFileDir = `${__dirname}${backConfig.fileStoreDir}`;
@@ -53,7 +53,7 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
 
       if (fileStores[id] !== undefined) return fileStores[id];
 
-      if (!fs.existsSync(`${absoluteDirPath}${id}.json`)) return null;
+      if (!fs.existsSync(`${absoluteDirPath}${id}.json`)) return undefined;
 
       fileStores[id] = new FileStore(`${dirPath}${id}.json`, makeNewItem());
 
@@ -108,7 +108,7 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
         }
       }
 
-      if (smylib.isNum(firstCreatedItem[idKey])) this.ids = this.ids.map(id => (smylib.isNaN(+id) ? id : +id)) as never;
+      if (checkIsNumber(firstCreatedItem[idKey])) this.ids = this.ids.map(id => (checkIsNaN(+id) ? id : +id)) as never;
 
       this.ids.forEach(this.getItemModTime);
     };
@@ -126,10 +126,12 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
 
   getOrCreateItem = async (id: Id, ...createArgs: Parameters<typeof this.createItem>) => {
     try {
-      return this.getFileStore(id)!.getValue();
-    } catch (_) {
-      return (await this.createItem(...createArgs)).item;
+      const val = this.getFileStore(id)?.getValue();
+      if (checkIsNotUndefined(val)) return val;
+    } catch {
+      //
     }
+    return (await this.createItem(...createArgs)).item;
   };
 
   deleteItem = (id: Id) => {
@@ -142,7 +144,6 @@ export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | numb
 
     if (fileStore) {
       if (item) fileStore.setValue(item);
-      else fileStore.deleteFile();
 
       return this.getItemModTime(id);
     }

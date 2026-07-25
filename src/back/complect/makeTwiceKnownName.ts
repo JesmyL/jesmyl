@@ -1,7 +1,9 @@
 import { nounsFileStore, pronounsFileStore } from 'back/apps/index/file-stores';
 import { makeRegExp } from 'regexpert';
-import { SMyLib, smylib } from 'shared/utils';
+import { randomItem } from 'shared/randoms';
+import { checkIsFunction } from 'shared/utils/checkIs';
 import { ruLowerLettersStr } from 'shared/utils/cm/com/const';
+import { mapObjectEntries, objectKeys } from 'shared/utils/object.utils';
 
 type Replacer<Ret> = (substring: string, ...args: string[]) => Ret;
 
@@ -82,9 +84,9 @@ const wordRegEnds: Record<string, Record<string, EndVariantsDict>> = {
   },
 };
 
-const regEnds: [RegExp, [RegExp, EndVariantsDict][]][] = SMyLib.entries(wordRegEnds).map(([end, variants]) => [
+const regEnds: [RegExp, [RegExp, EndVariantsDict][]][] = mapObjectEntries(wordRegEnds, (end, variants) => [
   makeRegExp(`/${end}/`),
-  SMyLib.entries(variants).map(([end, dict]) => [makeRegExp(`/${end}/`), dict]),
+  mapObjectEntries(variants, (end, dict) => [makeRegExp(`/${end}/`), dict]),
 ]);
 
 const allAll = (all: string) => all;
@@ -105,17 +107,17 @@ export const makeTwiceKnownName = (
   joinBy = ' ',
   fixedPronoun?: string,
   fixedNoun?: string,
-  isReverse = smylib.randomItem(boolItems),
+  isReverse = randomItem(boolItems),
 ): string => {
-  const pronoun = fixedPronoun ?? smylib.randomItem(smylib.keys(pronounsFileStore.getValue().words), -1);
-  const noun = fixedNoun ?? smylib.randomItem(smylib.keys(nounsFileStore.getValue().words), -1);
+  const pronoun = fixedPronoun ?? randomItem(objectKeys(pronounsFileStore.getValue().words), -1);
+  const noun = fixedNoun ?? randomItem(objectKeys(nounsFileStore.getValue().words), -1);
 
   for (let i = 0; i < regEnds.length; i++) {
     const match = regEnds[i][0].exec(noun);
     if (match) {
       const regEnd = regEnds[i][1];
       const invoke = (funcOrString: string | ((...match: string[]) => void)) => {
-        return smylib.isFunc(funcOrString) ? funcOrString(...match) : funcOrString || allAll;
+        return checkIsFunction(funcOrString) ? funcOrString(...match) : funcOrString || allAll;
       };
 
       for (let j = 0; j < regEnd.length; j++) {

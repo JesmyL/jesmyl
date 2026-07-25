@@ -3,7 +3,9 @@ import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { QuestionerUserTsjrpcModel } from 'shared/api/tsjrpc/q/user.tsjrpc.model';
 import { QuestionerTemplate, QuestionerTemplateId, QuestionerType, QuestionerVariatedType } from 'shared/model/q';
 import { QuestionerUserAnswerValueBox } from 'shared/model/q/answer';
-import { itIt, SMyLib, smylib } from 'shared/utils';
+import { toRandomSorted } from 'shared/randoms';
+import { itIt } from 'shared/utils';
+import { forEachObjectEntries, objectKeys, objectLength, objectValues } from 'shared/utils/object.utils';
 import { textToUpperCase } from 'shared/utils/string.utils';
 import { questionerBlanksDirStorage, questionerUserAnswersFileStore } from '../file-stores';
 
@@ -19,13 +21,13 @@ export const questionerUserServerTsjrpcBase =
 
             const tmp: PRecord<QuestionerTemplateId, QuestionerTemplate> = { ...blank.tmp };
 
-            smylib.keys(tmp).forEach(templateId => {
+            objectKeys(tmp).forEach(templateId => {
               const templateForUser = { ...tmp[templateId] } as QuestionerTemplate;
 
               if (templateForUser.type === QuestionerType.TextInclude) {
-                const texts = smylib.values(templateForUser.correct ?? {});
+                const texts = objectValues(templateForUser.correct ?? {});
 
-                templateForUser.textVariants = smylib.toRandomSorted(
+                templateForUser.textVariants = toRandomSorted(
                   Array.from(
                     new Set(
                       texts
@@ -39,7 +41,7 @@ export const questionerUserServerTsjrpcBase =
                 templateForUser.len = texts.length;
                 delete templateForUser.addTexts;
               } else if (templateForUser.type === QuestionerType.Sorter) {
-                templateForUser.len = smylib.keys(templateForUser.correct ?? {}).length;
+                templateForUser.len = objectKeys(templateForUser.correct ?? {}).length;
               }
 
               if ('correct' in templateForUser) delete templateForUser.correct;
@@ -63,7 +65,7 @@ export const questionerUserServerTsjrpcBase =
               totalAnswers[blankw] ??= { answers: [] };
               totalAnswers[blankw].answers.push(answer);
 
-              SMyLib.entries(answer.a).forEach(([templateId, answerValue]) => {
+              forEachObjectEntries(answer.a, (templateId, answerValue) => {
                 if (answerValue == null) return;
                 if (answerValue.v == null) {
                   delete answer.a[templateId];
@@ -75,7 +77,7 @@ export const questionerUserServerTsjrpcBase =
 
                 if (template.type === QuestionerType.Check || template.type === QuestionerType.Radio) {
                   const userAnswer = answerValue as QuestionerUserAnswerValueBox[QuestionerVariatedType];
-                  userAnswer.len = smylib.keys(template.variants).length ?? 0;
+                  userAnswer.len = objectLength(template.variants);
                 }
               });
 

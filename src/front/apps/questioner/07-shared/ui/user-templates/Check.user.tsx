@@ -1,8 +1,9 @@
-import { mylib } from '#shared/lib/my-lib';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { useMemo } from 'react';
 import { QuestionerType } from 'shared/model/q';
 import { QuestionerUserAnswerContentProps } from 'shared/model/q/answer';
+import { toRandomSorted } from 'shared/randoms';
+import { objectKeys } from 'shared/utils/object.utils';
 
 export const QuestionerUserCheckTemplateCardContent = ({
   template,
@@ -10,8 +11,8 @@ export const QuestionerUserCheckTemplateCardContent = ({
   userAnswer,
 }: QuestionerUserAnswerContentProps<QuestionerType.Check>) => {
   const keys = useMemo(() => {
-    const keys = mylib.keys(template.variants);
-    return template.rSort ? mylib.toRandomSorted(keys) : keys;
+    const keys = objectKeys(template.variants);
+    return template.rSort ? toRandomSorted(keys) : keys;
   }, [template.rSort, template.variants]);
 
   return (

@@ -1,9 +1,10 @@
 import { currentLangiAtom } from '#basis/locale';
 import { tsjrpcBaseClientNext } from '#basis/tsjrpc/TsjrpcBase.client';
 import { authIDB, indexDeviceEmojiAtom, indexDeviceIdAtom } from '$index/shared/state';
+import md5 from 'md5';
 import { makeRegExp } from 'regexpert';
 import { SokiError, TsjrpcClientEvent, TsjrpcClientTool, TsjrpcServerEvent } from 'shared/api';
-import { Eventer, smylib } from 'shared/utils';
+import { Eventer } from 'shared/utils';
 import { jversion } from 'shared/values';
 import { environment } from './environment';
 
@@ -147,7 +148,7 @@ export class SokiTrip {
     tool?: TsjrpcClientTool | nil | void,
   ): Promise<InvokedResult> => {
     const strEvent = JSON.stringify(event);
-    const requestId = smylib.md5(strEvent);
+    const requestId = md5(strEvent);
 
     if (this.requests[requestId] != null) {
       return this.requests[requestId].promise as never;

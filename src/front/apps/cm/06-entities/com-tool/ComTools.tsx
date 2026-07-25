@@ -1,5 +1,4 @@
 import { Badge } from '#shared/components/ui/badge';
-import { mylib } from '#shared/lib/my-lib';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
@@ -11,6 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { CmComWidDef } from 'shared/api';
+import { declension } from 'shared/utils';
 import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { twMerge } from 'tailwind-merge';
 import { useCmComCurrentFixedCom } from '../com/lib/com-selections';
@@ -125,7 +125,7 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
         ) : (
           <>
             {' '}
-            {visitsCountQuery.data} {mylib.declension(visitsCountQuery.data ?? 0, 'раз', 'раза', 'раз')}
+            {visitsCountQuery.data} {declension(visitsCountQuery.data ?? 0, 'раз', 'раза', 'раз')}
           </>
         )}
       </div>

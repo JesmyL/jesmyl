@@ -1,9 +1,9 @@
-import { mylib } from '#shared/lib/my-lib';
 import { indexIsDarkModeAtom } from '$index/shared/state';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { memo } from 'react';
+import { randomIndex, randomOf } from 'shared/randoms';
 
 const nodes: Record<number, React.ReactNode> = {};
 let countAtom: Atom<number>;
@@ -28,15 +28,15 @@ export const SnowWeather = memo(
             key={i}
             className="absolute bg-white -top-[30px]"
             style={{
-              width: `${mylib.randomOf(1, 10) / 10}em`,
-              height: `${mylib.randomOf(1, 10) / 10}em`,
-              fontSize: `${mylib.randomOf(1, 3) / 8}em`,
-              left: `${mylib.randomOf(0, 100)}%`,
-              opacity: `${mylib.randomOf(1, 90) / 100}`,
-              filter: `blur(${mylib.randomOf(1, 30) / 10}px)`,
-              animation: `${animationPrefix}${mylib.randomIndex(animations)} ${mylib.randomOf(60, 300)}s linear infinite`,
+              width: `${randomOf(1, 10) / 10}em`,
+              height: `${randomOf(1, 10) / 10}em`,
+              fontSize: `${randomOf(1, 3) / 8}em`,
+              left: `${randomOf(0, 100)}%`,
+              opacity: `${randomOf(1, 90) / 100}`,
+              filter: `blur(${randomOf(1, 30) / 10}px)`,
+              animation: `${animationPrefix}${randomIndex(animations)} ${randomOf(60, 300)}s linear infinite`,
 
-              animationDelay: `${mylib.randomOf(-100, 200)}s`,
+              animationDelay: `${randomOf(-100, 200)}s`,
             }}
           />
         ))}
@@ -54,7 +54,7 @@ const animations = Array.from({ length: 30 }, () => 0).map(
         transform: translate(0, -30px) rotate(0deg);
       }
       to {
-        transform: translate(${mylib.randomOf(-500, 500)}px, 110vh) rotate(${mylib.randomOf(-5000, 5000)}deg);
+        transform: translate(${randomOf(-500, 500)}px, 110vh) rotate(${randomOf(-5000, 5000)}deg);
       }
     }
   `,

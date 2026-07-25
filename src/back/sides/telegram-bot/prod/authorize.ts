@@ -1,6 +1,7 @@
 import { CallbackQuery, ChatMember, SendMessageOptions } from 'node-telegram-bot-api';
 import { hostConfig } from 'shared/api';
-import { smylib } from 'shared/utils';
+import { randomOf } from 'shared/randoms';
+import { declension } from 'shared/utils';
 import { jesmylTgBot } from '../bot';
 import { tglogger } from '../log/log-bot';
 import { JTgBotCallbackQuery } from '../model';
@@ -12,10 +13,10 @@ let minutesText = '';
 
 if (codeExparingTime / 60000 < 1) {
   const num = (codeExparingTime / 60000) * 60;
-  minutesText = `${num} ${smylib.declension(num, 'секунда', 'секунды', 'секунд')}`;
+  minutesText = `${num} ${declension(num, 'секунда', 'секунды', 'секунд')}`;
 } else {
   const num = codeExparingTime / 60000;
-  minutesText = `${num} ${smylib.declension(num, 'минута', 'минуты', 'минут')}`;
+  minutesText = `${num} ${declension(num, 'минута', 'минуты', 'минут')}`;
 }
 
 const unsubscribedAlert = {
@@ -63,7 +64,7 @@ export const authorizeTelegramCb: JTgBotCallbackQuery = async (prodBot, query, a
 
   let randId: number = -1;
 
-  do randId = smylib.randomOf(10000, 999999);
+  do randId = randomOf(10000, 999999);
   while (supportTelegramAuthorizations[randId] !== undefined);
 
   const timeout = setTimeout(() => {

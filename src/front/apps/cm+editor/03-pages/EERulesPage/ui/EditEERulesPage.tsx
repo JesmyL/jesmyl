@@ -2,7 +2,6 @@ import { Badge } from '#shared/components/ui/badge';
 import { Button } from '#shared/components/ui/button';
 import { ButtonGroup } from '#shared/components/ui/button-group';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
-import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
 import { Modal } from '#shared/ui/modal';
@@ -16,6 +15,8 @@ import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContaine
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { EeStorePack } from 'shared/api';
+import { declension } from 'shared/utils';
+import { objectKeys } from 'shared/utils/object.utils';
 import { CmEditorEERulesListComputer } from './EERulesListComputer';
 
 const sizes = [10, 30, 50, 100];
@@ -48,8 +49,8 @@ export const CmEditorEERulesPage = () => {
 
   useEffect(() => setIsShowListComputer(false), [updates]);
 
-  const editedWords = mylib.keys(editedWordsRef.current);
-  const eeStoreKeys = mylib.keys(eeStoreRef.current);
+  const editedWords = objectKeys(editedWordsRef.current);
+  const eeStoreKeys = objectKeys(eeStoreRef.current);
 
   return (
     <PageCmEditorContainer
@@ -61,7 +62,7 @@ export const CmEditorEERulesPage = () => {
           disabled={!editedWords.length}
           className="m-2"
           confirm={
-            `Отправить ${editedWords.length} ${mylib.declension(editedWords.length, 'слово', 'слова', 'слов')}: ` +
+            `Отправить ${editedWords.length} ${declension(editedWords.length, 'слово', 'слова', 'слов')}: ` +
             `${editedWords.join(', ')}`
           }
           onSend={() => cmEditorClientTsjrpcMethods.setEEWords({ words: editedWordsRef.current })}

@@ -1,4 +1,3 @@
-import { mylib } from '#shared/lib/my-lib';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
@@ -7,6 +6,8 @@ import { memo, useReducer, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { EeStorePack } from 'shared/api';
 import { itIt, itNIt } from 'shared/utils';
+import { checkIsArray } from 'shared/utils/checkIs';
+import { checkIsEq } from 'shared/utils/checkIsEq';
 import { twMerge } from 'tailwind-merge';
 
 const radioTitles = ['е/ё', 'е!!', 'ё!!'].map((typeName, type) => <div key={type}>{typeName}</div>);
@@ -34,8 +35,8 @@ export const CmEditorEERulesWord = memo(function CmEditorEERulesWord({
   const trackState = editedWordsRef.current[word] ?? eeStoreRef.current[word];
   const [isIgnored, setIsIgnored] = useState(ignoredWordsSetRef.current.has(word));
   const parts = word.split(makeRegExp('/([а-дж-я]*е)/')).filter(itIt);
-  const typesLine = mylib.isArr(trackState) ? trackState : [trackState];
-  const isVariated = mylib.isArr(trackState) ? trackState.includes(0) : !trackState;
+  const typesLine = checkIsArray(trackState) ? trackState : [trackState];
+  const isVariated = checkIsArray(trackState) ? trackState.includes(0) : !trackState;
 
   return (
     <StyledTable className="my-5">
@@ -49,7 +50,7 @@ export const CmEditorEERulesWord = memo(function CmEditorEERulesWord({
               {isVariated && <div>{part}</div>}
               <div>
                 {part.endsWith('е') &&
-                (mylib.isArr(trackState)
+                (checkIsArray(trackState)
                   ? typesLine[parti] === 2 || !typesLine[parti]
                   : !trackState || trackState === 2)
                   ? part.slice(0, -1) + 'ё'
@@ -119,7 +120,7 @@ export const CmEditorEERulesWord = memo(function CmEditorEERulesWord({
                           else track = typei;
                         }
 
-                        if (typei === 2 && mylib.isArr(track)) {
+                        if (typei === 2 && checkIsArray(track)) {
                           track = track.map(trace => (trace === 2 ? 1 : trace));
                           track[parti] = typei;
                         }
@@ -127,7 +128,7 @@ export const CmEditorEERulesWord = memo(function CmEditorEERulesWord({
                         forceUpdate();
 
                         setEditedWords(prev => {
-                          if (mylib.isEq(eeStoreRef.current[word], track)) {
+                          if (checkIsEq(eeStoreRef.current[word], track)) {
                             const news = { ...prev };
                             delete news[word];
                             return news;

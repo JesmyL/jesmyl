@@ -2,7 +2,7 @@ import { backConfig } from 'back/config/backConfig';
 import { jsonParseSecure, jsonStringifySecure } from 'back/json-secure';
 import crypto from 'crypto';
 import fs, { StatsListener } from 'fs';
-import { smylib } from 'shared/utils';
+import { checkIsFunction } from 'shared/utils/checkIs';
 
 const registeredPaths = new Set<string>();
 
@@ -82,7 +82,7 @@ export class FileStore<Value> {
       .slice(0, -1)
       .forEach(pathPart => {
         const path = `${prev}${pathPart}`;
-        if (!fs.existsSync(path)) fs.mkdirSync(path);
+        if (!fs.existsSync(path)) fs.mkdirSync(path, { recursive: true });
         prev = `${path}/`;
       });
   };
@@ -94,7 +94,7 @@ export class FileStore<Value> {
   };
 
   setValue = (val: Value | ((value: Value) => Value)) => {
-    const value = smylib.isFunc(val) ? val(this.getValue()) : val;
+    const value = checkIsFunction(val) ? val(this.getValue()) : val;
 
     this.value = value;
     this.writeValue(value);

@@ -17,7 +17,8 @@ import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { constantsConfigurator } from 'shared/const/cm/constants.def';
 import { emojiList } from 'shared/const/emojiList';
 import { UserAccessRole, UserAccessRoleInfo } from 'shared/model/index/access-rights';
-import { iife, smylib } from 'shared/utils';
+import { randomItem } from 'shared/randoms';
+import { iife } from 'shared/utils';
 import { switchCRUDAccesRightValue } from 'shared/utils/index/utils';
 import { forEachObjectEntries, objectKeys, objectLength } from 'shared/utils/object.utils';
 import { textToUpperCase } from 'shared/utils/string.utils';
@@ -157,7 +158,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
             '_' +
             Array(5)
               .fill(0)
-              .map(() => smylib.randomItem(deviceIdPostfixSymbols))
+              .map(() => randomItem(deviceIdPostfixSymbols))
               .join('');
 
           return {
@@ -168,7 +169,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         },
 
         getDeviceEmoji: async () => {
-          const value = smylib.randomItem(emojiList);
+          const value = randomItem(emojiList);
 
           return {
             value,

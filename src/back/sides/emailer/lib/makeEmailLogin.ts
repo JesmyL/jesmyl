@@ -1,6 +1,6 @@
+import md5 from 'md5';
 import { LocalSokiAuth, SokiAuthLogin } from 'shared/api';
 import { validEmailRegExp } from 'shared/const/index/regExp.validators';
-import { smylib } from 'shared/utils';
 
 export const makeAuthFromEmail = (email: string, auth: LocalSokiAuth | nil): LocalSokiAuth => {
   if (!email.match(validEmailRegExp)) throw 'Incorrect E-mail';
@@ -13,5 +13,5 @@ export const makeAuthFromEmail = (email: string, auth: LocalSokiAuth | nil): Loc
 
 export const makeLoginFromEmail = (email: string) => {
   if (!email.match(validEmailRegExp)) throw 'Incorrect E-mail';
-  return `@${smylib.md5(email.toLowerCase())}` as SokiAuthLogin;
+  return `@${md5(email.toLowerCase())}` as SokiAuthLogin;
 };

@@ -4,7 +4,7 @@ import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { postJRPCMessage, PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
 import { JesmylTelegramBot } from 'back/sides/telegram-bot/tg-bot';
 import nodeSchedule from 'node-schedule';
-import { itIt, itNNaN, smylib } from 'shared/utils';
+import { declension, itIt, itNNaN, smylib } from 'shared/utils';
 
 type CrAlarm = {
   hours: number;
@@ -131,7 +131,7 @@ export const startCrTgAlarm = () => {
           `\n\nНапоминание будет: ` +
           crData.days
             .map(daysNum =>
-              daysNum ? `\n  за ${daysNum} ${smylib.declension(daysNum, 'день', 'дня', 'дней')}` : '\n  в день платежа',
+              daysNum ? `\n  за ${daysNum} ${declension(daysNum, 'день', 'дня', 'дней')}` : '\n  в день платежа',
             )
             .join(', ') +
           `\n\nВремя напоминания: ` +

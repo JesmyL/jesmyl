@@ -1,4 +1,4 @@
-import { smylib } from 'shared/utils';
+import md5 from 'md5';
 import { ScheduleWidgetUserMi, ScheduleWidgetWid } from './main';
 import { ScheduleWidgetRightsCtrl, ScheduleWidgetRightTexts } from './rights-constructor';
 
@@ -165,5 +165,5 @@ export const scheduleWidgetRegTypeTitles: ScheduleWidgetRightTexts<ScheduleWidge
 export const scheduleWidgetRegTypeRights = new ScheduleWidgetRightsCtrl(scheduleWidgetRegTypeTitles);
 
 export const packScheduleWidgetInviteLink = (schedulew: ScheduleWidgetWid, userMi: ScheduleWidgetUserMi) => {
-  return smylib.md5(schedulew + ':' + userMi);
+  return md5(schedulew + ':' + userMi);
 };

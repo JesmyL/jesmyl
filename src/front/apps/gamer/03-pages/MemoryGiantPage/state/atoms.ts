@@ -1,5 +1,6 @@
-import { mylib } from '#shared/lib/my-lib';
 import { atom } from 'atomaric';
+import { toRandomSorted } from 'shared/randoms';
+import { checkIsNaN } from 'shared/utils/checkIs';
 
 export const gamerMemoryGiantShowAllImagesAtom = atom(false);
 export const gamerMemoryGiantGuessedImageisAtom = atom(new Set<number>(), 'gamer:MemoryGiant:guessedImageis');
@@ -11,7 +12,7 @@ export const gamerMemoryGiantShownImageisAtom = atom(new Set<number>(), {
   do: (_, __, self) => ({
     touch: (index: number) => {
       if (
-        mylib.isNaN(index) ||
+        checkIsNaN(index) ||
         index < 0 ||
         self.get().size > 1 ||
         gamerMemoryGiantGuessedImageisAtom.get().has(index)
@@ -67,7 +68,7 @@ export const gamerMemoryGiantBoardImageisAtom = atom(null as number[] | null, {
       if (get()) return;
 
       const indexes = gamerMemoryGiantUsedImagesAtom.get().map((_, i) => i);
-      set(mylib.toRandomSorted(indexes.concat(indexes)));
+      set(toRandomSorted(indexes.concat(indexes)));
     },
   }),
 });

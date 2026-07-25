@@ -4,6 +4,7 @@ import { mylib } from '#shared/lib/my-lib';
 import { useEffect, useMemo } from 'react';
 import { QuestionerType } from 'shared/model/q';
 import { QuestionerUserAnswerContentProps } from 'shared/model/q/answer';
+import { toRandomSorted } from 'shared/randoms';
 import { twMerge } from 'tailwind-merge';
 
 export const QuestionerUserSorterTemplateCardContent = ({
@@ -13,7 +14,7 @@ export const QuestionerUserSorterTemplateCardContent = ({
   isCantRedact,
 }: QuestionerUserAnswerContentProps<QuestionerType.Sorter>) => {
   const variantKeys = useMemo(() => {
-    return mylib.toRandomSorted(mylib.keys(template.variants));
+    return toRandomSorted(mylib.keys(template.variants));
   }, [template.variants]);
 
   const sortAnswerIds = useMemo(

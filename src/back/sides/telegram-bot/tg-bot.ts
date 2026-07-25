@@ -1,7 +1,8 @@
+import md5 from 'md5';
 import TgBot, { InlineKeyboardButton, InlineKeyboardMarkup, SendMessageOptions, User } from 'node-telegram-bot-api';
 import { makeRegExp } from 'regexpert';
 import { SokiAuthLogin } from 'shared/api';
-import { emptyFunc, smylib } from 'shared/utils';
+import { emptyFunc } from 'shared/utils';
 import { Stream } from 'stream';
 import { TgLogger } from './log/log-bot';
 import { JTgBotCallbackQuery, JTgBotChatMessageCallback } from './model';
@@ -90,7 +91,7 @@ export class JesmylTelegramBot {
     return (id: number, addTPrefix?: boolean) => (addTPrefix === false ? '' : 't:') + ('' + id).replace(reg, callback);
   })();
 
-  static makeLoginFromId = (id: number): SokiAuthLogin => ('T' + smylib.md5('' + id).slice(1)) as never;
+  static makeLoginFromId = (id: number): SokiAuthLogin => ('T' + md5('' + id).slice(1)) as never;
 
   makeSendMessageOptions(keyboard: (InlineKeyboardButton & { cb: JTgBotCallbackQuery })[][], keyPrefix?: string) {
     return this._bot.makeOptionsKeyboard(this, keyboard, false, keyPrefix);

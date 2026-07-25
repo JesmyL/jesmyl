@@ -17,7 +17,8 @@ import { LocalSokiAuth } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { constantsConfigurator } from 'shared/const/cm/constants.def';
 import { howMillisecondsInMin } from 'shared/const/ms';
-import { smylib, wait } from 'shared/utils';
+import { randomItem, randomOf } from 'shared/randoms';
+import { declension, wait } from 'shared/utils';
 import { emailTextingLetterVariantsFileStorage, sentEmailOTPFileStorage } from '../../file-stores';
 import { constantsConfigFileStore } from '../../schedules/file-stores';
 
@@ -35,7 +36,7 @@ const getRandomBibleChapterText = () => {
   clearTimeout(bibleTextsExpireTimeOut);
   bibleTextsExpireTimeOut = setTimeout(() => (bibleTexts = null), howMillisecondsInMin * 30);
 
-  return smylib.randomItem(smylib.randomItem(bibleTexts.chapters)).join(' ');
+  return randomItem(randomItem(bibleTexts.chapters)).join(' ');
 };
 
 const subjects = [
@@ -105,7 +106,7 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
   let otp;
   const oldOtpSet = new Set(verifies.map(it => it.otp));
 
-  do otp = smylib.randomOf(12345, 987654);
+  do otp = randomOf(12345, 987654);
   while (oldOtpSet.has(otp));
 
   const defaultVerify = {
@@ -122,7 +123,7 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
 
   sentEmailOTPFileStorage.saveValue();
 
-  const text = smylib.randomItem(emailTextingLetterVariantsFileStorage.getValue().texts);
+  const text = randomItem(emailTextingLetterVariantsFileStorage.getValue().texts);
 
   const expire = () => {
     clearTimeout(timeout);
@@ -132,7 +133,7 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
   let randomBibleText = '';
 
   try {
-    randomBibleText = `\n\n\n${smylib.randomItem(randomBibleChapterTextingList)}:\n\n${getRandomBibleChapterText()}`;
+    randomBibleText = `\n\n\n${randomItem(randomBibleChapterTextingList)}:\n\n${getRandomBibleChapterText()}`;
   } catch {
     //
   }
@@ -140,7 +141,7 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
   const makeText = (asHtml = true) =>
     `${text.replace(makeRegExp('/{c}/'), asHtml ? `<b style='font-size:1.5em'>${otp}</b>` : `${otp}`).replace(makeRegExp('/{n}/'), 'JesmyL')}\n\nЧерез ${minutesUntilExpire} ${
       //
-      smylib.declension(minutesUntilExpire, 'минуту', 'минуты', 'минут')
+      declension(minutesUntilExpire, 'минуту', 'минуты', 'минут')
     } код станет недействительным${randomBibleText}`;
 
   let logScope = PostJRPCMessageScope.Support;
@@ -150,7 +151,7 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
   try {
     await sendEmailMessage(EmailerAuthConfigKey.Space, {
       to: email,
-      subject: smylib.randomItem(subjects),
+      subject: randomItem(subjects),
       html,
     });
   } catch (e) {
@@ -161,7 +162,7 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
       postJRPCMessage(
         `${makeMailtoButton({
           email,
-          subject: smylib.randomItem(subjects),
+          subject: randomItem(subjects),
           text: makeText(false),
           buttonText: 'СФОРМИРОВАТЬ ПИСЬМО',
         })}\n\n\n\n\n${html}`,
