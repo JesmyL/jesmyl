@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { useConfirm } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { QrCodeFullScreen } from '#shared/ui/qr-code/QrCodeFullScreen';
@@ -17,16 +18,16 @@ export const IndexUserMore = ({ onClose }: { onClose: (isOpen: false) => void })
     <>
       <BottomPopupItem
         id="log-out-button"
-        title="Показать мой QR"
+        title={translateBase(it => it.showMyQr)}
         icon="QrCode"
         onClick={isOpenQrAtom.do.toggle}
       />
       <BottomPopupItem
         id="log-out-button"
-        title="Выйти из системы"
+        title={translateBase(it => it.logout)}
         icon="User"
         onClick={async () => {
-          if (await confirm('Произвести выход из системы?', 'Разлогиниться')) {
+          if (await confirm(translateBase(it => it.logout))) {
             await authIDB.remove.auth();
             await authIDB.remove.token();
             await indexIDB.resetLastModifiedAt();

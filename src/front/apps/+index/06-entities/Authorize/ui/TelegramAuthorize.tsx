@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TextInput } from '#shared/ui/TextInput';
@@ -24,10 +25,10 @@ export const IndexAuthorizeByTelegram = () => {
   return (
     <div className="relative flex column w-full">
       <div>
-        Для авторизации нужно:
+        {translateBase(it => it.tg.authNeeds)}:
         <ol>
           <li className="children-middle">
-            Запустить бота
+            {translateBase(it => it.tg.startBot)}
             <span className="m-2">
               <a
                 href="https://t.me/jesmylbot"
@@ -42,7 +43,7 @@ export const IndexAuthorizeByTelegram = () => {
             </span>
           </li>
           <li>
-            Состоять в канале
+            {translateBase(it => it.tg.beInChannel)}
             <span className="m-2">
               <a
                 id="go-to-chanel-link"
@@ -58,9 +59,11 @@ export const IndexAuthorizeByTelegram = () => {
             </span>
             {isSendTgCode && (
               <ol type="a">
-                <li>Перейти в него</li>
-                <li>Нажать кнопку "Авторизоваться" в закрепе</li>
-                <li>Ввести код из личного сообщения от бота сюда:</li>
+                {translateBase(it => it.tg.steps)
+                  .split('\n')
+                  .map(line => (
+                    <li key={line}>{line}</li>
+                  ))}
               </ol>
             )}
           </li>
@@ -68,13 +71,13 @@ export const IndexAuthorizeByTelegram = () => {
             <li>
               <div className="flex gap-2">
                 <IndexAuthorizeTgNativeAuth />
-                или
+                {translateBase(it => it.or)}
                 <span
                   id="input-the-tg-code-button"
                   className="text-x7 pointer"
                   onClick={() => setIsSendTgCode(true)}
                 >
-                  ввести код
+                  {translateBase(it => it.enterCode)}
                 </span>
               </div>
             </li>
@@ -89,7 +92,7 @@ export const IndexAuthorizeByTelegram = () => {
               className="input-wrapper"
             >
               <TextInput
-                placeholder="Одноразовый код"
+                placeholder={translateBase(it => it.oneTimeCode)}
                 className="input"
                 onInput={setAuthCode}
                 value={authCode}
@@ -98,7 +101,7 @@ export const IndexAuthorizeByTelegram = () => {
           </div>
           <SendButton
             id="tg-auth-code-send-button"
-            title="Авторизоваться"
+            title={translateBase(it => it.toAuth)}
             className="send-button"
             disabled={isLoading || authCode.length < 3}
             onSuccess={async () => {

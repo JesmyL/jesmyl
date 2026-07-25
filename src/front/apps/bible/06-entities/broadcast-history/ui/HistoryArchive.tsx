@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { BibleBroadcastArchive } from '$bible/entities/broadcast-archive';
 import { memo } from 'react';
 import { useBibleBroadcastHistory, useBibleBroadcastHistoryClearHistorySetter } from '../lib/history';
@@ -8,7 +9,7 @@ export const BibleBroadcastHistoryArchive = memo(function BibleBroadcastHistoryA
 
   return (
     <BibleBroadcastArchive
-      title="История"
+      title={translateBase(it => it.history)}
       list={history}
       onRemove={clearHistory}
     />

@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { ScreenBroadcastFaceLine } from '#features/broadcast/complect/config-line/FaceLine';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { useBibleBroadcastScreenCurrentConfig, useBibleBroadcastUpdateCurrentConfig } from '$bible/entities/broadcast';
@@ -12,7 +13,7 @@ export const BibleBroadcastScreenConfigurations = memo(function BibleTranslateSc
     <div className="mt-5">
       <ScreenBroadcastFaceLine updateConfig={updateConfig} />
       {currentConfig && (
-        <ExpandableContent title="Настроить">
+        <ExpandableContent title={translateBase(it => it.setup)}>
           <div className="ml-2">
             <BibleBroadcastCurrentScreenConfigurations currentConfig={currentConfig} />
           </div>

@@ -1,5 +1,6 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { useCurrentAppSetter } from '#basis/lib/useCurrentAppSetter';
+import { translateBase } from '#basis/locale';
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
@@ -47,7 +48,10 @@ export const CmApp = () => {
       const copySelected = [...selectedComws];
       copySelected.length = maxSelectedComsCount;
       cmComSelectedComwsAtom.set(copySelected);
-      toast(`Можно выбрать максимум ${maxSelectedComsCount} песен`, makeToastKOMoodConfig());
+      toast(
+        translateBase(it => it.cm.com.maxSel, { s: maxSelectedComsCount }),
+        makeToastKOMoodConfig(),
+      );
     }
   }, [maxSelectedComsCount, selectedComws]);
 

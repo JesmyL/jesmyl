@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { BibleSearchZone } from '$bible/shared/model/base';
 import { css } from '@emotion/react';
@@ -36,7 +37,12 @@ export function BibleBroadcastSearchInputPanel({ inputRef, setSearchZone }: Prop
   return (
     <div className="flex gap-2 mt-5">
       <span className="nowrap">
-        {searchZone === 'global' ? 'Поиск в тексте:' : searchZone === 'inner' ? 'Поиск по главе:' : 'Поиск по ссылке:'}
+        {searchZone === 'global'
+          ? translateBase(it => it.bible.searchInText)
+          : searchZone === 'inner'
+            ? translateBase(it => it.bible.searchInChapter)
+            : translateBase(it => it.bible.searchByLink)}
+        :
       </span>
       {searchZone === 'address' ? (
         <BibleBroadcastSearchPanelAddressInput inputRef={inputRef} />
@@ -48,21 +54,21 @@ export function BibleBroadcastSearchInputPanel({ inputRef, setSearchZone }: Prop
         $active={searchZone === 'global'}
         onClick={() => setSearchZone('global', inputRef)}
       >
-        текст
+        {translateBase(it => it.txt)}
       </SwitchButton>
       <SwitchButton
         className="pointer"
         $active={searchZone === 'inner'}
         onClick={() => setSearchZone('inner', inputRef)}
       >
-        глава
+        {translateBase(it => it.bible.chapter)}
       </SwitchButton>
       <SwitchButton
         className="pointer"
         $active={searchZone === 'address'}
         onClick={() => setSearchZone('address', inputRef)}
       >
-        ссылка
+        {translateBase(it => it.link)}
       </SwitchButton>
     </div>
   );

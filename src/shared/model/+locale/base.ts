@@ -1,4 +1,4 @@
-import { Langi } from 'shared/api';
+import { BibleTranslateName, Langi } from 'shared/api';
 import {
   LocaleSatisfies,
   LocaleSimpleString,
@@ -13,10 +13,32 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
 
   cm: {
     com: {
-      tool: LocaleStrRecord<'redact'>;
       forEachBlock: LocaleStrWithInterpolation<'n'>;
+      maxSel: LocaleStrWithInterpolation<'s'>;
       showPlayer: LocaleSimpleString;
     };
+  };
+
+  bible: {
+    t: LocaleSimpleString;
+    chapter: LocaleSimpleString;
+    searchInText: LocaleSimpleString;
+    searchInChapter: LocaleSimpleString;
+    searchByLink: LocaleSimpleString;
+    insertion: LocaleSimpleString;
+    txtInBrkts: LocaleSimpleString;
+    JesusWords: LocaleSimpleString;
+    /** translates */
+    tr: LocaleSimpleString;
+    /** loaded translates */
+    loadedTr: LocaleSimpleString;
+    /** translation titles */
+    trs: LocaleStrRecord<BibleTranslateName>;
+
+    chapterNum: LocaleStrWithInterpolation<'c'>;
+    clearChapter: LocaleStrWithInterpolation<'c'>;
+    searchByBook: LocaleStrWithInterpolation<'b'>;
+    searchByChapter: LocaleStrWithTwoInterpolations<'c', 'b'>;
   };
 
   /** **каждое** Вступление */
@@ -28,6 +50,7 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   /** **каждое** Продолжение */
   each3: LocaleSimpleString;
 
+  lasts: LocaleSimpleString;
   msg: LocaleSimpleString;
   authIncorrect: LocaleSimpleString;
   selProgram: LocaleSimpleString;
@@ -39,19 +62,16 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   enterRoleName: LocaleSimpleString;
   newRole: LocaleSimpleString;
   interactive: LocaleSimpleString;
-  readQR: LocaleSimpleString;
   myFiles: LocaleSimpleString;
   downloads: LocaleSimpleString;
   constants: LocaleSimpleString;
 
-  jesmylForDesctop: LocaleStrWithTwoInterpolations<'j', 'd'>;
-  emailBindedToCurrentAuth: LocaleStrWithInterpolation<'fio'>;
+  oneForTwo: LocaleStrWithTwoInterpolations<'o', 't'>;
   newVer: LocaleStrWithInterpolation<'v'>;
 
   settings: LocaleSimpleString;
   aboutApp: LocaleSimpleString;
   otherApps: LocaleSimpleString;
-  bindEmail: LocaleSimpleString;
   anims: LocaleSimpleString;
   font: LocaleSimpleString;
   showErrors: LocaleSimpleString;
@@ -59,4 +79,40 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   actualVer: LocaleSimpleString;
   refreshAppConfirm: LocaleSimpleString;
   immediateRefreshOnFinish: LocaleSimpleString;
+
+  toAuth: LocaleSimpleString;
+  authSuccess: LocaleSimpleString;
+  logout: LocaleSimpleString;
+
+  history: LocaleSimpleString;
+  plan: LocaleSimpleString;
+
+  oneTimeCode: LocaleSimpleString;
+  enterCode: LocaleSimpleString;
+  or: LocaleSimpleString;
+  link: LocaleSimpleString;
+  txt: LocaleSimpleString;
+
+  setup: LocaleSimpleString;
+  preview: LocaleSimpleString;
+  slide: LocaleSimpleString;
+
+  showMyQr: LocaleSimpleString;
+  readQR: LocaleSimpleString;
+  search: LocaleSimpleString;
+  globSearch: LocaleSimpleString;
+  broadcast: LocaleSimpleString;
+
+  tg: {
+    beInChannel: LocaleSimpleString;
+    steps: LocaleSimpleString;
+    startBot: LocaleSimpleString;
+    authNeeds: LocaleSimpleString;
+  };
+
+  email: {
+    bindedToCurrentAuth: LocaleStrWithInterpolation<'fio'>;
+    otpSent: LocaleStrWithInterpolation<'e'>;
+    toBind: LocaleSimpleString;
+  };
 }>;

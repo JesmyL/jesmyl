@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { BibleBroadcastArchive } from '$bible/entities/broadcast-archive';
 import { bibleAddressIndexesUpdate, takeJoinedAddressMaxValues } from '$bible/shared/hooks';
@@ -83,7 +84,7 @@ export const BibleBroadcastPlanArchive = memo(function BibleBroadcastPlanArchive
       <Plan>
         <HiddenInput ref={inputRef} />
         <BibleBroadcastArchive
-          title="План"
+          title={translateBase(it => it.plan)}
           list={plan}
           onRemove={bibleBroadcastPlanClear}
         />

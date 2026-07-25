@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { ScreenBroadcastControlPanel } from '#features/broadcast/controls/ControllPanel';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
@@ -45,7 +46,7 @@ export default function BibleBroadcastControlled({ head, headTitle }: Props): JS
   return (
     <PageContainerConfigurer
       className=""
-      headTitle={headTitle ?? 'Библия'}
+      headTitle={headTitle ?? translateBase(it => it.bible.t)}
       head={head}
       content={
         <Container>

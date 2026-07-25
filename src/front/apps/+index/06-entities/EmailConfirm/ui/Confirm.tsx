@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { Button } from '#shared/components';
 import { makeToastOKMoodConfig } from '#shared/ui/modal';
@@ -16,7 +17,7 @@ export const IndexEmailConfirm = ({
 }) => {
   const [email, setEmail] = useState('');
   const [otp, setOTP] = useState('');
-  const otpLabel = 'Одноразовый код';
+  const otpLabel = translateBase(it => it.oneTimeCode);
   const { availEmailDomainZone } = useAtomValue(constantsConfigAtom);
   const availEmailDomainZoneError = constantsConfigurator.availEmailDomainZone.error(availEmailDomainZone, email);
 
@@ -37,7 +38,10 @@ export const IndexEmailConfirm = ({
           disabled={!email || !!availEmailDomainZoneError}
           onClick={async () => {
             const result = await onSend(email);
-            toast(`${otpLabel} отправлен на почту ${result.email}`, makeToastOKMoodConfig());
+            toast(
+              translateBase(it => it.email.otpSent, { e: result.email }),
+              makeToastOKMoodConfig(),
+            );
           }}
         />
       </div>

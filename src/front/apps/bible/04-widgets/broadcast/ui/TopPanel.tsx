@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { BroadcastSlidePreview } from '#features/broadcast/controls/Preview';
 import { useBibleBroadcastUpdateCurrentConfig } from '$bible/entities/broadcast';
 import { BibleBroadcastList } from '$bible/entities/broadcast-list';
@@ -16,9 +17,9 @@ export const BibleBroadcastControlledTopPanel = function TopPanel(): JSX.Element
           className="flex gap-2 mb-2"
           onClick={() => setIsPreview(is => !is)}
         >
-          <div className={twMerge('pointer', isPreview && 'text-x7')}>Предпросмотр</div>
+          <div className={twMerge('pointer', isPreview && 'text-x7')}>{translateBase(it => it.preview)}</div>
           {' / '}
-          <div className={twMerge('pointer', !isPreview && 'text-x7')}>Слайд</div>
+          <div className={twMerge('pointer', !isPreview && 'text-x7')}>{translateBase(it => it.slide)}</div>
         </div>
         <BroadcastSlidePreview
           isPreview={isPreview}

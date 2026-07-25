@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { isMobileDevice } from '#shared/lib/device-differences';
 import { AppFooter } from '$app/AppFooter';
 import { AppFooterItem } from '$app/AppFooterItem';
@@ -10,14 +11,14 @@ export const BibleFooter = () => {
           key="main"
           idPostfix="main"
           to="/bible/i"
-          title="Глава"
+          title={translateBase(it => it.bible.chapter)}
           icon="File02"
         />,
         <AppFooterItem
           key="search"
           idPostfix="search"
           to="/bible/search"
-          title="Поиск"
+          title={translateBase(it => it.search)}
           icon="FileSearch"
         />,
 
@@ -26,7 +27,7 @@ export const BibleFooter = () => {
             key="tran"
             idPostfix="tran"
             to="/bible/tran"
-            title="Трансляция"
+            title={translateBase(it => it.broadcast)}
             icon="Computer"
           />
         ),

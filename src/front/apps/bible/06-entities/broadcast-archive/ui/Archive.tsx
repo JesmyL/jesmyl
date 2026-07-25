@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { bibleAddressIndexesUpdate, takeJoinedAddressMaxValues } from '$bible/shared/hooks';
 import { BibleBroadcastAddress } from '$bible/shared/model/base';
@@ -29,7 +30,7 @@ export const BibleBroadcastArchive = memo(function BibleBroadcastArchive({
         <TheIconButton
           icon="Delete01"
           className="text-xKO"
-          confirm={`Очистить раздел ${title}?`}
+          confirm={translateBase(it => it.bible.clearChapter, { c: title })}
           onClick={onRemove}
         />
       </div>

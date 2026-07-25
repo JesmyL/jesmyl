@@ -1,6 +1,6 @@
 import { useConnectionState } from '#basis/lib/useConnectionState';
+import { translateBase } from '#basis/locale';
 import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
-import { Button } from '#shared/components';
 import { soki } from '#shared/soki';
 import { makeToastOKMoodConfig } from '#shared/ui/modal';
 import { IndexEmailConfirm } from '$index/entities/EmailConfirm';
@@ -8,7 +8,6 @@ import { authIDB } from '$index/shared/state';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
-import { itNIt } from 'shared/utils';
 import { toast } from 'sonner';
 import { IndexAuthorizeTelegramStyledPage } from '../style/IndexTelegramAuth.styled';
 import { IndexAuthorizeByTelegram } from './TelegramAuthorize';
@@ -22,11 +21,11 @@ export const IndexAuthorizePage = () => {
   return (
     <IndexAuthorizeTelegramStyledPage
       className=""
-      headTitle="Авторизация"
+      headTitle={translateBase(it => it.toAuth)}
       head={
         <>
           {connectionNode}
-          {isTgAuth ? (
+          {/* {isTgAuth ? (
             <Button
               icon="Mail01"
               onClick={() => setIsTgAuth(itNIt)}
@@ -40,7 +39,7 @@ export const IndexAuthorizePage = () => {
             >
               По tg
             </Button>
-          )}
+          )} */}
         </>
       }
       content={
@@ -68,7 +67,10 @@ export const IndexAuthorizePage = () => {
                   setTimeout(() => soki.onAuthorizeEvent.invoke(), 100);
 
                   navigate({ to: '..' });
-                  toast(`Успешная авторизация`, makeToastOKMoodConfig());
+                  toast(
+                    translateBase(it => it.authSuccess),
+                    makeToastOKMoodConfig(),
+                  );
                 }}
               />
             )}

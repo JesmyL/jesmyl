@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { BibleChapteri } from '$bible/shared/model/base';
 import { JSX, memo } from 'react';
 import { BibleReaderVerseText } from './VerseText';
@@ -16,7 +17,7 @@ export const BibleReaderChapterText = memo(function BibleChapterText({
         attr-chapteri={chapteri}
         attr-versei={0}
       >
-        Глава {chapteri + 1}
+        {translateBase(it => it.bible.chapterNum, { c: chapteri + 1 })}
       </div>
       {list.map((verseHTML, versei) => {
         return (

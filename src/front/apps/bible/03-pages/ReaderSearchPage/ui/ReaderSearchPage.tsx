@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import {
@@ -29,21 +30,25 @@ export function BibleReaderSearchPage() {
     <PageContainerConfigurer
       className=""
       withoutBackButton
-      headTitle="Поиск"
+      headTitle={translateBase(it => it.search)}
       content={
         <>
           <div className="full-size">
             <IconCheckbox
               checked={searchZone === 'global'}
-              postfix="Глобальный поиск"
+              postfix={translateBase(it => it.globSearch)}
               onChange={() => bibleBroadcastSearchZoneAtom.set('global')}
             />
             <IconCheckbox
               checked={searchZone === 'inner' && innerZone === 'book'}
               postfix={
-                <>
-                  Поиск по книге <i>{takeBibleLangBooks(langi)[currentBooki].full}</i>
-                </>
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: translateBase(it => it.bible.searchByBook, {
+                      b: takeBibleLangBooks(langi)[currentBooki].full,
+                    }),
+                  }}
+                />
               }
               onChange={() => {
                 bibleBroadcastSearchZoneAtom.set('inner');
@@ -53,12 +58,14 @@ export function BibleReaderSearchPage() {
             <IconCheckbox
               checked={searchZone === 'inner' && innerZone === 'chapter'}
               postfix={
-                <>
-                  {'Поиск по главе '}
-                  <i>
-                    {takeBibleLangBooks(langi)[currentBooki].full} {currentChapteri + 1}
-                  </i>
-                </>
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: translateBase(it => it.bible.searchByChapter, {
+                      b: takeBibleLangBooks(langi)[currentBooki].full,
+                      c: currentChapteri + 1,
+                    }),
+                  }}
+                />
               }
               onChange={() => {
                 bibleBroadcastSearchZoneAtom.set('inner');

@@ -24,7 +24,7 @@ export function IndexDownloadsPage() {
               >
                 <BrutalItem
                   iconNode={<LazyIcon icon="WindowsOld" />}
-                  title={translateBase(it => it.jesmylForDesctop, { j: 'JesmyL', d: 'Window' })}
+                  title={translateBase(it => it.oneForTwo, { o: 'JesmyL', t: 'Window' })}
                 />
               </a>
               <a
@@ -33,7 +33,7 @@ export function IndexDownloadsPage() {
               >
                 <BrutalItem
                   iconNode={<LazyIcon icon="CloudDownload" />}
-                  title={translateBase(it => it.jesmylForDesctop, { j: 'JesmyL', d: 'Linux' })}
+                  title={translateBase(it => it.oneForTwo, { o: 'JesmyL', t: 'Linux' })}
                 />
               </a>
             </>

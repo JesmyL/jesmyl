@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { useAppNameContext } from '#basis/state/contexts';
 import { TelegramWebAppApiOr } from '#basis/ui/tg-app/getTgApi';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
@@ -21,7 +22,7 @@ export const IndexAuthorizeTelegramInlineAuthButton = () => {
           >
             <BrutalItem
               iconNode={<LazyIcon icon="Authorized" />}
-              title="Авторизоваться"
+              title={translateBase(it => it.toAuth)}
               box={
                 api?.initDataUnsafe?.user && (
                   // todo edd event.stopPropagation();

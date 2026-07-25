@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { ScreenTranslateConfigurationNameChanger } from '#features/broadcast/complect/NameChanger';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { useDebounceAction } from '#shared/lib/hooks/useDebounceAction';
@@ -64,7 +65,7 @@ export function BibleBroadcastCurrentScreenConfigurations({ currentConfig }: Pro
         updateConfig={update}
       />
       {currentConfig.insertedtext && (
-        <ExpandableContent title="Вставка">
+        <ExpandableContent title={translateBase(it => it.bible.insertion)}>
           <div className="ml-2">
             <ColorConfigurator
               config={currentConfig.insertedtext}
@@ -90,7 +91,7 @@ export function BibleBroadcastCurrentScreenConfigurations({ currentConfig }: Pro
         </ExpandableContent>
       )}
       {currentConfig.textinbrackets && (
-        <ExpandableContent title="Текст в [скобках]">
+        <ExpandableContent title={translateBase(it => it.bible.txtInBrkts)}>
           <div className="ml-2">
             <ColorConfigurator
               config={currentConfig.textinbrackets}
@@ -116,7 +117,7 @@ export function BibleBroadcastCurrentScreenConfigurations({ currentConfig }: Pro
         </ExpandableContent>
       )}
       {currentConfig.godswords && (
-        <ExpandableContent title="Слова Христа">
+        <ExpandableContent title={translateBase(it => it.bible.JesusWords)}>
           <div className="ml-2">
             <ColorConfigurator
               config={currentConfig.godswords}
@@ -137,7 +138,7 @@ export function BibleBroadcastCurrentScreenConfigurations({ currentConfig }: Pro
           </div>
         </ExpandableContent>
       )}
-      <ExpandableContent title="Ссылка">
+      <ExpandableContent title={translateBase(it => it.link)}>
         <div className="ml-2">
           <ColorConfigurator
             config={currentConfig.address}

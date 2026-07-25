@@ -31,13 +31,15 @@ export const translateBaseDefine = <Dict extends object>(
 ): DefinedTranslateFunction<Dict> => {
   return (selector: (translates: Dict) => unknown, interpolation?: unknown) => {
     try {
-      if (interpolation) {
-        const value = selector(checkIsFunction(dictScalar) ? dictScalar() : dictScalar);
+      const value = selector(checkIsFunction(dictScalar) ? dictScalar() : dictScalar);
 
-        return checkIsString(value) ? stringTemplater(value, interpolation) : checkIsArray(value) ? value || '' : '';
-      }
-
-      return selector(checkIsFunction(dictScalar) ? dictScalar() : dictScalar);
+      return checkIsString(value)
+        ? interpolation
+          ? stringTemplater(value, interpolation)
+          : value
+        : checkIsArray(value)
+          ? value
+          : '';
     } catch {
       return `${selector}`.replace(makeRegExp('/^[^.[]+\\.?/'), '');
     }

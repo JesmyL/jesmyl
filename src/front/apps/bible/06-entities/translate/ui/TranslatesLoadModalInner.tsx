@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -16,10 +17,10 @@ export default function TranslatesLoadModalInner() {
 
   return (
     <>
-      <ModalHeader>Переводы Библии</ModalHeader>
+      <ModalHeader>{translateBase(it => it.bible.chapter)}</ModalHeader>
 
       <ModalBody>
-        <h3 className="my-2 font-bold">Загруженные переводы</h3>
+        <h3 className="my-2 font-bold">{translateBase(it => it.bible.loadedTr)}</h3>
         {myTranslates.map(tName => {
           const isUnremovable = myTranslates.length < 2;
           const title = `${translateDescriptions[tName]} (${textToUpperCase(tName)})`;
