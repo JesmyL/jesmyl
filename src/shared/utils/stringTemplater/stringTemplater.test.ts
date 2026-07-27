@@ -1,4 +1,4 @@
-import { AND, FN, IF, OR, STR, stringTemplater, SWITCH, toNUM, toSTR } from '.';
+import { AND, FN, IF, isUtil, OR, STR, stringTemplater, SWITCH, toNUM, toSTR } from '.';
 import { stringTemplaterSrartSymbolCharCode } from './const';
 
 describe('stringTemplater', () => {
@@ -9,16 +9,25 @@ describe('stringTemplater', () => {
     expect(stringTemplater('Пустые "$noValue" кавычки', { num: 8 })).toBe('Пустые "" кавычки');
 
     expect(stringTemplater('Тут ноль "$zero"', { zero: 0 })).toBe('Тут ноль "0"');
+    expect(stringTemplater('', {})).toBe('');
   });
 
   it('stringTemplater:default functions', () => {
-    expect(stringTemplater('Я люблю $switch{{$num}{1}{бaнaны}{2}{яблоки}{3}{апельсины}}!', { num: 2 })).toBe(
+    expect(stringTemplater('Я люблю $SWITCH{{$num}{1}{бaнaны}{2}{яблоки}{3}{апельсины}}!', { num: '2' })).toBe(
       'Я люблю яблоки!',
+    );
+
+    expect(stringTemplater('Я люблю $SWITCH{{$num}{1}{бaнaны}{2}{яблоки}{3}{апельсины}}!', { num: 0 })).toBe(
+      'Я люблю !',
     );
 
     expect(stringTemplater('Лежит $num $declension{{$num}{яблоко}{яблока}{яблок}}))', { num: 8 })).toBe(
       'Лежит 8 яблок))',
     );
+
+    expect(
+      stringTemplater(STR`Лежит $num ${FN('$declension', '$num', 'яблоко', 'яблока', 'яблок')}`, { num: 81 }),
+    ).toBe('Лежит 81 яблоко');
   });
 
   it('stringTemplater:custom functions', () => {
@@ -100,8 +109,8 @@ describe('stringTemplater', () => {
 
     expect(stringTemplater('Hi$IF{{$cond}{$p$o;potam &}} Me', { cond: 1, p: 'pp', o: 'o' })).toBe('Hippopotam & Me');
 
-    expect(stringTemplater('$IF{{$isEq{{$v1}{$v2}}}{eq}{not eq}}', { v1: 1, v2: 1 })).toBe('eq');
-    expect(stringTemplater('$IF{{$isEq{{$v1}{$v2}}}{eq}{not eq}}', { v1: 1, v2: 2 })).toBe('not eq');
+    expect(stringTemplater('$IF{{$isEQ{{$v1}{$v2}}}{eq}{not eq}}', { v1: 1, v2: 1 })).toBe('eq');
+    expect(stringTemplater('$IF{{$isEQ{{$v1}{$v2}}}{eq}{not eq}}', { v1: 1, v2: 2 })).toBe('not eq');
 
     expect(stringTemplater('$IF{{}{}{empty}}', {})).toBe('empty');
     expect(stringTemplater('100$;and', {})).toBe('100$and');
@@ -123,7 +132,7 @@ const func = () => indexForCheck++;
 const checkFunc = () => expect(indexForCheck).toBe(0);
 
 describe('stringTemplater:concepts', () => {
-  it('object, NaN', () => {
+  it('object, NaN, empty', () => {
     const str = STR`ret nothing $fn $nan`;
 
     expect(
@@ -132,6 +141,8 @@ describe('stringTemplater:concepts', () => {
         fn: () => ({ OBJ: 'OBJ' }),
       }),
     ).toBe('ret nothing  ');
+
+    expect(stringTemplater(STR``, {})).toBe('');
 
     checkFunc();
   });
@@ -156,6 +167,14 @@ describe('stringTemplater:concepts', () => {
     const str = STR`${IF('$o').THEN`TRUE_o`.ELSE`FALSE_o ${funcConcept}`}`;
 
     expect(stringTemplater(str, { o: '!!!', func })).toBe('TRUE_o');
+
+    checkFunc();
+  });
+
+  it('IF->ELSE', () => {
+    const str = STR`${IF('$o').THEN`TRUE_o ${funcConcept}`.ELSE`FALSE_o`}`;
+
+    expect(stringTemplater(str, { o: '', func })).toBe('FALSE_o');
 
     checkFunc();
   });
@@ -277,8 +296,48 @@ describe('stringTemplater:concepts', () => {
     const symbol1 = String.fromCharCode(stringTemplaterSrartSymbolCharCode + 1);
     const symbol2 = String.fromCharCode(stringTemplaterSrartSymbolCharCode + 2);
 
-    const str = STR` $symbol $symbol1 $symbol2 `;
+    const str = STR` $symbol $symbol1 $symbol2 \u0002 `;
 
-    expect(stringTemplater(str, { symbol, symbol1, symbol2 })).toBe(` ${symbol} ${symbol1} ${symbol2} `);
+    expect(stringTemplater(str, { symbol, symbol1, symbol2 })).toBe(` ${symbol} ${symbol1} ${symbol2} \u0002 `);
+  });
+  describe('utils', () => {
+    it('EQ', () => {
+      const str = STR`${IF(isUtil.EQ('$var1', '$var2')).THEN`T`.ELSE`F`}`;
+      expect(stringTemplater(str, { var1: 4, var2: 4 })).toBe('T');
+      expect(stringTemplater(str, { var1: 3, var2: 4 })).toBe('F');
+    });
+
+    it('NEQ', () => {
+      const str = STR`${IF(isUtil.NEQ('$var1', '$var2')).THEN`T`.ELSE`F`}`;
+      expect(stringTemplater(str, { var1: 3, var2: 4 })).toBe('T');
+      expect(stringTemplater(str, { var1: 5, var2: 5 })).toBe('F');
+    });
+
+    it('GT', () => {
+      const str = STR`${IF(isUtil.GT('$var1', '$var2')).THEN`T`.ELSE`F`}`;
+      expect(stringTemplater(str, { var1: 10, var2: 5 })).toBe('T');
+      expect(stringTemplater(str, { var1: 5, var2: 5 })).toBe('F');
+      expect(stringTemplater(str, { var1: 3, var2: 8 })).toBe('F');
+    });
+
+    it('GTE', () => {
+      const str = STR`${IF(isUtil.GTE('$var1', '$var2')).THEN`T`.ELSE`F`}`;
+      expect(stringTemplater(str, { var1: 10, var2: 5 })).toBe('T');
+      expect(stringTemplater(str, { var1: 5, var2: 5 })).toBe('T');
+      expect(stringTemplater(str, { var1: 2, var2: 7 })).toBe('F');
+    });
+
+    it('LT', () => {
+      const str = STR`${IF(isUtil.LT('$var1', '$var2')).THEN`T`.ELSE`F`}`;
+      expect(stringTemplater(str, { var1: 3, var2: 8 })).toBe('T');
+      expect(stringTemplater(str, { var1: 5, var2: 5 })).toBe('F');
+    });
+
+    it('LTE', () => {
+      const str = STR`${IF(isUtil.LTE('$var1', '$var2')).THEN`T`.ELSE`F`}`;
+      expect(stringTemplater(str, { var1: 3, var2: 8 })).toBe('T');
+      expect(stringTemplater(str, { var1: 5, var2: 5 })).toBe('T');
+      expect(stringTemplater(str, { var1: 9, var2: 4 })).toBe('F');
+    });
   });
 });
