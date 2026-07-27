@@ -1,11 +1,6 @@
 import { BibleTranslateName, Langi } from 'shared/api';
-import {
-  LocaleSatisfies,
-  LocaleSimpleString,
-  LocaleStrRecord,
-  LocaleStrWithInterpolation,
-  LocaleStrWithTwoInterpolations,
-} from './model';
+import { StringTemplaterInterpolation, StringTemplaterWithTwoInterpolations } from 'shared/utils/stringTemplater/model';
+import { LocaleSatisfies, LocaleSimpleString, LocaleStrRecord } from './model';
 
 export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   lng: L;
@@ -13,8 +8,8 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
 
   cm: {
     com: {
-      forEachBlock: LocaleStrWithInterpolation<'n'>;
-      maxSel: LocaleStrWithInterpolation<'s'>;
+      forEachBlock: StringTemplaterInterpolation<'n'>;
+      maxSel: StringTemplaterInterpolation<'s'>;
       showPlayer: LocaleSimpleString;
     };
   };
@@ -35,10 +30,10 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
     /** translation titles */
     trs: LocaleStrRecord<BibleTranslateName>;
 
-    chapterNum: LocaleStrWithInterpolation<'c'>;
-    clearChapter: LocaleStrWithInterpolation<'c'>;
-    searchByBook: LocaleStrWithInterpolation<'b'>;
-    searchByChapter: LocaleStrWithTwoInterpolations<'c', 'b'>;
+    chapterNum: StringTemplaterInterpolation<'c'>;
+    clearChapter: StringTemplaterInterpolation<'c'>;
+    searchByBook: StringTemplaterInterpolation<'b'>;
+    searchByChapter: StringTemplaterWithTwoInterpolations<'c', 'b'>;
   };
 
   /** **каждое** Вступление */
@@ -66,8 +61,8 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   downloads: LocaleSimpleString;
   constants: LocaleSimpleString;
 
-  oneForTwo: LocaleStrWithTwoInterpolations<'o', 't'>;
-  newVer: LocaleStrWithInterpolation<'v'>;
+  oneForTwo: StringTemplaterWithTwoInterpolations<'o', 't'>;
+  newVer: StringTemplaterInterpolation<'v'>;
 
   settings: LocaleSimpleString;
   aboutApp: LocaleSimpleString;
@@ -111,8 +106,10 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   };
 
   email: {
-    bindedToCurrentAuth: LocaleStrWithInterpolation<'fio'>;
-    otpSent: LocaleStrWithInterpolation<'e'>;
+    bindedToCurrentAuth: StringTemplaterInterpolation<'fio'>;
+    otpSent: StringTemplaterInterpolation<'e'>;
     toBind: LocaleSimpleString;
   };
+
+  fromOf: StringTemplaterWithTwoInterpolations<'f', 'o'>;
 }>;

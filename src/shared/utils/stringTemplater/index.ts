@@ -1,33 +1,38 @@
 import { makeRegExp } from 'regexpert';
-import { checkIsFunction, checkIsNumber, checkIsString } from '../checkIs';
+import { checkIsFunction, checkIsNotFunction, checkIsNumber, checkIsStartsWith, checkIsString } from '../checkIs';
 import { checkIsEq } from '../checkIsEq';
-import { objectKeys, objectLength } from '../object.utils';
-import { declension, itIt, itNIt } from '../utils';
+import * as concepts from './concepts';
+import { stringTemplaterSrartSymbolCharCode, strTplArgLastEdge, strTplArgSeparator, strTplSysLen } from './const';
 
+export * from './concepts';
+
+/** replace simple $ -> $; */
 export const stringTemplater = (
   str: string,
   topArgs: PRecord<string, unknown>,
   onUnknownArg?: (argName: string) => unknown,
 ) => {
-  const symbolBoxDict: Record<string, { key: string; slashes: string; all: string; val: string }> = {};
+  const symbolBoxDict: Record<string, { key: keyof typeof concepts; all: string }> = {};
   const symbolList: string[] = [];
 
-  let currSymbolCode = 10000;
+  let currSymbolCode = stringTemplaterSrartSymbolCharCode;
+  const takeNextSymbol = () => String.fromCharCode(currSymbolCode++);
   let isFound = true;
+
+  const replaceBoxes = (all: string, key: string) => {
+    isFound = true;
+
+    const symbol = takeNextSymbol();
+
+    symbolBoxDict[symbol] = { all, key: key as never };
+    symbolList.unshift(symbol);
+
+    return symbol;
+  };
 
   while (isFound) {
     isFound = false;
-
-    str = str.replace(makeRegExp('/(\\\\*)\\$(\\w+){({[^{}]*})+}/g'), (all, slashes, key) => {
-      isFound = true;
-
-      const symbol = String.fromCharCode(currSymbolCode++);
-
-      symbolBoxDict[symbol] = { all, key, slashes, val: '' };
-      symbolList.unshift(symbol);
-
-      return symbol;
-    });
+    str = str.replace(makeRegExp('/\\$(\\w+){({[^{}]*})+}/g'), replaceBoxes);
   }
 
   const allSymbols = symbolList.join('');
@@ -38,7 +43,7 @@ export const stringTemplater = (
   };
 
   const stringify = (value: unknown) => {
-    if (checkIsNumber(value) || checkIsString(value)) return `${value}`;
+    if ((checkIsNumber(value) && !isNaN(value)) || checkIsString(value)) return `${value}`;
     return '';
   };
 
@@ -62,95 +67,100 @@ export const stringTemplater = (
   };
 
   const takeBoxValue: (box: (typeof symbolBoxDict)[string]) => string = box => {
-    const { all, key, slashes } = box;
+    const { all, key } = box;
 
-    if (slashes.length % 2) return box.all;
+    const args = all.slice(key.length + strTplSysLen, -strTplArgLastEdge.length);
 
-    const args = all.slice(key.length + 3, -2);
+    let func: unknown = topArgs[key];
 
-    if (checkIsFunction(topArgs[key])) {
-      return topArgs[key](...args.split('}{').map(takeCorrectValue));
+    if (checkIsNotFunction(func) && checkIsStartsWith(key, 'is')) {
+      const prop = key.slice(2) as keyof typeof isUtilConceptResultDict;
+      func = isUtilConceptResultDict[prop];
     }
 
-    if (checkIsFunction(stringTemplaterFunctions[key]))
-      return stringTemplaterFunctions[key](...args.split('}{').map(takeCorrectValue));
+    if (checkIsFunction(func)) return func(...args.split(strTplArgSeparator).map(takeCorrectValue));
 
-    if (key === 'if') {
-      const firstArg = args.split('}{', 1)[0];
-      const condition = takeCorrectValue(firstArg);
+    let floatArgs = args;
+    let argi = -1;
+    let takePrevValue = () => ({ v: NaN as unknown });
+    let firstValue: { v: unknown };
 
-      if (condition) {
-        const ifTrue = takeCorrectValue(args.slice(firstArg.length + 2).split('}{', 1)[0]);
+    do {
+      argi++;
+      const arg = floatArgs.split(strTplArgSeparator, 1)[0];
+      floatArgs = floatArgs.slice(calculateArgLen(arg));
 
-        return ifTrue;
-      } else {
-        const thirdArg = args.slice(firstArg.length + 2).split('}{', 2)[1];
-        const ifFalse = takeCorrectValue(thirdArg);
+      firstValue ??= { v: takeCorrectValue(arg) };
 
-        return ifFalse;
+      switch (key) {
+        case 'IF': {
+          if (argi === 1 && firstValue.v) return takeCorrectValue(arg);
+          if (argi === 2) return takeCorrectValue(arg);
+          break;
+        }
+        case 'SWITCH': {
+          if (!floatArgs) return takeCorrectValue(arg);
+          if (argi && !(argi % 2) && firstValue.v === takePrevValue().v) return takeCorrectValue(arg);
+
+          let prevValue: { v: unknown };
+          takePrevValue = () => (prevValue ??= { v: takeCorrectValue(arg) });
+
+          break;
+        }
+        case 'AND': {
+          const value = takeCorrectValue(arg);
+          if (!value) return value;
+          break;
+        }
+        case 'OR': {
+          const value = takeCorrectValue(arg);
+          if (value) return value;
+          break;
+        }
+        case 'toNUM': {
+          return parseFloat(takeCorrectValue(arg));
+        }
+        case 'toSTR': {
+          return JSON.stringify(takeCorrectValue(arg));
+        }
+
+        case 'FN':
+        case 'STR':
+        case 'isUtil':
+          break;
+
+        default: {
+          const _never: never = key;
+        }
       }
-    }
+    } while (floatArgs);
 
     return onUnknownArg?.(key);
   };
 
-  const replaceSymbolsAndVars: (str: string) => string = str =>
-    str.replace(makeRegExp(`/([${allSymbols}])|(\\\\*)(\\$(\\w+);?)/g`), (_all, symbol, slashes, whole, varKey) => {
-      if (symbol) {
-        return stringify(takeBoxValue(symbolBoxDict[symbol]));
-      }
+  const reg = makeRegExp(`/([${allSymbols}])|\\$(\\w+);?/g`);
+  const rep = (_all: string, symbol: string, varKey: string) => {
+    if (symbol) return stringify(takeBoxValue(symbolBoxDict[symbol]));
+    return stringify(takeCorrectValue(topArgs[varKey]));
+  };
 
-      if (slashes.length % 2) return whole;
+  const replaceSymbolsAndVars: (str: string) => string = str => str.replace(reg, rep);
 
-      return stringify(takeCorrectValue(topArgs[varKey]));
-    });
+  const escapeSymbol = takeNextSymbol();
 
-  return replaceSymbolsAndVars(str);
+  return replaceSymbolsAndVars(str.replace(makeRegExp('/\\$;/g'), escapeSymbol)).replace(
+    makeRegExp(`/${escapeSymbol}/g`),
+    '$',
+  );
 };
 
-/////////////////////////////
-/////////////////////////////
-/////////////////////////////
+const calculateArgLen = (arg: string) => arg.length + strTplArgSeparator.length;
 
-const isEq = (...args: unknown[]) => {
-  let val: unknown;
-
-  return !args.some((arg, argi) => {
-    if (argi) return !checkIsEq(arg, val);
-    val = arg;
-    return false;
-  });
-};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const stringTemplaterFunctions: Record<string, (...args: any[]) => unknown> = {
-  ink: (num: number, post = '', pre = '') => (num == null ? null : `${pre}${num - -1}${post}`),
-  switch: (...args: []) => {
-    let val: unknown, found: unknown;
-
-    const ret = args.find((arg, argi) => {
-      if (!argi) {
-        val = arg;
-        return false;
-      }
-
-      if (found) return true;
-      if (argi % 2 && arg == val) found = true;
-      return false;
-    });
-
-    return ret == null ? args[args.length - 1] : ret;
-  },
-  declension,
-  keys: objectKeys,
-  join: (by: string, ...arr: []) => arr.join(by),
-  len: (obj: object) => objectLength(obj),
-  isEq,
-  isNEq: (...args: unknown[]) => !isEq(...args),
-  isGt: (first: number | string, second: number | string) => first > second,
-  isGte: (first: number | string, second: number | string) => first >= second,
-  isLt: (first: number | string, second: number | string) => first < second,
-  isLte: (first: number | string, second: number | string) => first <= second,
-  or: (...args: []) => args.some(itIt),
-  and: (...args: []) => !args.some(itNIt),
+const isUtilConceptResultDict: Record<keyof typeof concepts.isUtil, (arg1: unknown, arg2: unknown) => boolean> = {
+  EQ: checkIsEq,
+  NEQ: (arg1, arg2) => !checkIsEq(arg1, arg2),
+  GT: (arg1, arg2) => (arg1 as number) > (arg2 as number),
+  GTE: (arg1, arg2) => (arg1 as number) >= (arg2 as number),
+  LT: (arg1, arg2) => (arg1 as number) < (arg2 as number),
+  LTE: (arg1, arg2) => (arg1 as number) <= (arg2 as number),
 };

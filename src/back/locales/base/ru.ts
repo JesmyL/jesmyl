@@ -1,5 +1,6 @@
 import { BibleTranslateName, Langi } from 'shared/api';
 import { LocaleBase } from 'shared/model/+locale/base';
+import { IF, isUtil, STR } from 'shared/utils/stringTemplater';
 
 export const localeBaseRu: LocaleBase<Langi.Ru> = {
   lng: Langi.Ru,
@@ -107,4 +108,6 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
     toBind: 'Привязать E-mail',
     otpSent: 'Код отправлен на почту $e;',
   },
+
+  fromOf: STR(['$f', '$o'])`${IF(isUtil.NEQ('$f', '$o')).THEN`$f из `}$o`,
 };

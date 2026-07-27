@@ -1,18 +1,15 @@
 import { makeRegExp } from 'regexpert';
-import {
-  LocaleSimpleString,
-  LocaleStrWithInterpolation,
-  LocaleStrWithTwoInterpolations,
-} from 'shared/model/+locale/model';
+import { LocaleSimpleString } from 'shared/model/+locale/model';
 import { checkIsArray, checkIsFunction, checkIsString } from '../checkIs';
 import { stringTemplater } from '../stringTemplater';
+import { StringTemplaterInterpolation, StringTemplaterWithTwoInterpolations } from '../stringTemplater/model';
 
 interface DefinedTranslateFunction<Dict> {
   <
-    const Val extends LocaleStrWithTwoInterpolations<string, string> | LocaleStrWithInterpolation<string>,
-    const Interpolation extends Val extends LocaleStrWithTwoInterpolations<infer V1, infer V2>
+    const Val extends StringTemplaterWithTwoInterpolations<string, string> | StringTemplaterInterpolation<string>,
+    const Interpolation extends Val extends StringTemplaterWithTwoInterpolations<infer V1, infer V2>
       ? Record<V1 | V2, string | number>
-      : Val extends LocaleStrWithInterpolation<infer V>
+      : Val extends StringTemplaterInterpolation<infer V>
         ? Record<V, string | number>
         : never,
   >(
