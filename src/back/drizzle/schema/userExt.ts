@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { eq } from 'drizzle-orm';
-import { bigint, PgSelectBase, pgTable, SelectedFields, text } from 'drizzle-orm/pg-core';
+import { bigint, integer, PgSelectBase, pgTable, SelectedFields, text } from 'drizzle-orm/pg-core';
 import { MenuComToolName, SokiAppName } from 'shared/api';
 import { db } from '../drizzle.db';
 import { emptyTextArraySQL } from './lib/const';
@@ -22,6 +22,7 @@ export const userExtDB = pgTable('userExt', {
   ...modColumn('cmFavComToolsMod'),
 
   cmFavComTools: text('cmFavComTools').array().$type<MenuComToolName[]>().notNull().default(emptyTextArraySQL),
+  cmComTools: integer('cmComTools').array().$type<MenuComToolName[]>().notNull().default([]),
 
   cmCommAlts: text('cmCommAlts').array().notNull().default(emptyTextArraySQL),
 });

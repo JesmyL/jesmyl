@@ -9,7 +9,16 @@ import { nounsFileStorage, pronounsFileStorage } from 'back/apps/index/file-stor
 import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
 import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { FileStore } from 'back/complect/FileStore';
-import { comDB, sch2ComDB, schComHistoryDB, scheduleDB, user2ComDB, userDB, userRoleDB } from 'back/drizzle.schema';
+import {
+  comDB,
+  sch2ComDB,
+  schComHistoryDB,
+  scheduleDB,
+  user2ComDB,
+  userDB,
+  userExtDB,
+  userRoleDB,
+} from 'back/drizzle.schema';
 import { db, dbUpdate } from 'back/drizzle/drizzle.db';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
 import { selectUser2Com, upsertUser2ComProps } from 'back/drizzle/ex/user2Com.utils';
@@ -120,27 +129,39 @@ export const pullPushDirFilesDictLazy = lazyInit(
 
         'user2Com/': {
           pull: async (_dir, _type) => {
-            const comw_user2ComsDict = {} as Record<UserLogin, typeof _type>;
+            const resultDict: Record<UserLogin, typeof _type> = {};
+
             const user2Coms = await selectUser2Com({
               c: user2ComDB.comment,
               w: comDB.w,
               f: user2ComDB.isFav,
               l: userDB.l,
+              a: userExtDB.cmCommAlts,
+              t: userExtDB.cmComTools,
             }).orderBy(user2ComDB.userId, comDB.id);
 
-            user2Coms.forEach(({ c, f, w, l }) => {
+            user2Coms.forEach(({ c, f, w, l, a, t }) => {
               if (!w || !l) return;
 
-              const dict = ((comw_user2ComsDict[l] ??= {})[w] ??= {});
+              const dict = (resultDict[l] ??= {});
+              dict.ext ??= {};
+              dict.coms ??= {};
 
-              if (c) dict.comm = c;
-              if (f) dict.fav = 1;
+              const comDict = (dict.coms[w] ??= {});
 
-              if (!objectLength(dict)) delete comw_user2ComsDict[l][w];
+              if (c) comDict.comm = c;
+              if (f) comDict.fav = 1;
+
+              if (a?.length) dict.ext.commAlts = a;
+              if (t?.length) dict.ext.tools = t;
+
+              if (!objectLength(comDict)) delete dict.coms?.[w];
+              if (!objectLength(dict.coms)) delete dict.coms;
+              if (!objectLength(dict.ext)) delete dict.ext;
             });
 
             return Promise.all(
-              mapObjectEntries(comw_user2ComsDict, async (login, data) => ({
+              mapObjectEntries(resultDict, async (login, data) => ({
                 data,
                 file: login,
                 name: (await takeUserTiny({ l: login }, false))?.uauth.fio ?? login,
@@ -148,8 +169,8 @@ export const pullPushDirFilesDictLazy = lazyInit(
             );
           },
 
-          PUSH: (u2c, login) => {
-            forEachObjectEntries(u2c, async (comwStr, val) => {
+          PUSH: async (u2c, login) => {
+            forEachObjectEntries(u2c.coms, async (comwStr, val) => {
               if (!val) return;
 
               await upsertUser2ComProps(
@@ -162,6 +183,16 @@ export const pullPushDirFilesDictLazy = lazyInit(
                 false,
               );
             });
+
+            const dict: Partial<typeof userExtDB.$inferSelect> = {};
+
+            if (u2c.ext?.commAlts) dict.cmCommAlts = u2c.ext.commAlts;
+            if (u2c.ext?.tools) dict.cmComTools = u2c.ext.tools;
+
+            if (objectLength(dict)) {
+              const user = await takeUserTiny({ l: login });
+              await dbUpdate(userExtDB, dict, eq(userExtDB.userId, user.id));
+            }
           },
         },
         'schDayEvComHistory/': {

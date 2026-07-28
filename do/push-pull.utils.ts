@@ -12,6 +12,7 @@ import {
   IExportableCom,
   IExportableComInterpretation,
   IScheduleWidget,
+  MenuComToolName,
   ScheduleWidgetDayEventMi,
   ScheduleWidgetDayi,
   ScheduleWidgetWid,
@@ -65,7 +66,13 @@ export const pullPushFileDirNameNet = {
 
     'coms/': T<IExportableCom & { am?: CmComAudioMarkPack | nil }, `${CmComWid}`>(),
 
-    'user2Com/': T<PRecord<CmComWid, { fav?: 1; comm?: (CmComCommentBlockDict | nil)[] }>, UserLogin>(),
+    'user2Com/': T<
+      {
+        coms?: PRecord<CmComWid, { fav?: 1; comm?: (CmComCommentBlockDict | nil)[] }>;
+        ext?: { commAlts?: string[]; tools?: MenuComToolName[] };
+      },
+      UserLogin
+    >(),
 
     'schDayEvComHistory/': T<
       Record<

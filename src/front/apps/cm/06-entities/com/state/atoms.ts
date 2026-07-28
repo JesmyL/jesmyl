@@ -12,7 +12,7 @@ export const cmComChordVisibleVariantAtom = atom(ChordVisibleVariant.Maximal, 'c
 export const cmComFavoriteComsAtom = atom<CmComWid[]>([], 'cm:favoriteComs');
 export const cmComTopToolsAtom = atom<MenuComToolName[]>(
   [MenuComToolName.MarkCom, MenuComToolName.FullscreenMode, MenuComToolName.ChordsVariant],
-  'cm:comTopTools',
+  'cm:comTopTools_v1',
 );
 
 export const cmComFontSizeAtom = atom(16, {

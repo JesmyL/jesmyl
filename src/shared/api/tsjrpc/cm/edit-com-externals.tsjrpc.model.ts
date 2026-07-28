@@ -56,7 +56,7 @@ export type CmEditComExternalsTsjrpcModel = {
     ),
   ) => {
     comw: CmComWid;
-    marks?: CmComAudioMarkPack;
+    marks?: CmComAudioMarkPack | nil;
   };
 
   changeAudioMarkTime_v1: (args: {
@@ -66,7 +66,7 @@ export type CmEditComExternalsTsjrpcModel = {
     comw: CmComWid;
   }) => null | {
     comw: CmComWid;
-    marks?: CmComAudioMarkPack;
+    marks?: CmComAudioMarkPack | nil;
   };
 
   switchComwRefs: (args: { comw: CmComWid; withComw: CmComWid }) => void;

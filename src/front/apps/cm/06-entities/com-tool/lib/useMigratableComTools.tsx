@@ -88,7 +88,7 @@ export const useCmComToolMigratableList = () => {
       comTopTools.indexOf(tool) < 0 ? [...comTopTools, tool] : comTopTools.filter(currTool => tool !== currTool);
     cmComTopToolsAtom.set(tools);
 
-    if (auth.login == null) return;
+    if (!auth.login) return;
     clearTimeout(saveTimeout);
     saveTimeout = setTimeout(() => {
       cmUserStoreTsjrpcClient.favTools_v1({ tools });

@@ -41,7 +41,7 @@ export const cmUserStoreTsjrpcBaseServer = new (class CmUserStore extends Tsjrpc
 
           const mod = Date.now();
 
-          await dbUpdate(userExtDB, { cmFavComTools: tools, cmFavComToolsMod: mod }, eq(userExtDB.userId, user.id));
+          await dbUpdate(userExtDB, { cmComTools: tools, cmFavComToolsMod: mod }, eq(userExtDB.userId, user.id));
 
           cmShareServerTsjrpcMethods.favTools_v1({ tools, mod }, makeFilter(tool));
         },

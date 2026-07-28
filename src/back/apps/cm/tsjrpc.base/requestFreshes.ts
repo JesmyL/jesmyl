@@ -189,7 +189,7 @@ export const cmServerTsjrpcBaseRequestFreshes = {
             cmShareServerTsjrpcMethods.favTools_v1(
               {
                 mod: userExt.cmFavComToolsMod,
-                tools: userExt.cmFavComTools,
+                tools: userExt.cmComTools,
               },
               client,
             );
