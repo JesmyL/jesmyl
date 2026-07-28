@@ -1,4 +1,4 @@
-import { mylib } from '#shared/lib/my-lib';
+import { checkIsNumber } from 'shared/utils/checkIs';
 import { IExportableKindProp } from './BlockKind.model';
 import { comBlockKindsConfig } from './comBlockKinds.config';
 import { KindBlock } from './KindBlock';
@@ -26,12 +26,12 @@ export class BlockKind {
   }
 
   getNextLevelSortedStyle(style: KindBlock | number) {
-    const styles = mylib.isNum(style)
+    const styles = checkIsNumber(style)
       ? this.levelSorted[style]
       : this.levelSorted.find(styles => styles.includes(style));
 
     if (styles) {
-      const stylei = mylib.isNum(style) ? 0 : styles.indexOf(style);
+      const stylei = checkIsNumber(style) ? 0 : styles.indexOf(style);
       if (stylei < 0) return null;
       else return styles[stylei > styles.length - 2 ? 0 : stylei + 1];
     }

@@ -20,7 +20,7 @@ export const buildBackIndexFile = async () => {
         minifySyntax: true,
 
         charset: 'utf8',
-        external: ['node-schedule', 'ws', 'MyLib', 'postgres', 'drizzle-orm', 'drizzle-kit', './.env.json'],
+        external: ['node-schedule', 'ws', 'postgres', 'drizzle-orm', 'drizzle-kit', './.env.json'],
         // drop: ['console', 'debugger'],
         dropLabels: ['DEV', 'TEST'],
       });

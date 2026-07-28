@@ -1,5 +1,5 @@
-import { MyLib } from '#shared/lib/my-lib';
 import { useEffect } from 'react';
+import { mapObjectEntries, objectEntries } from 'shared/utils/object.utils';
 import { useCmEditorCompositionsCatSpecialSearches } from '../lib/useCmCatSpecialSearches';
 import { ICmEditorCompositionsCatSpecialSearches } from '../model';
 
@@ -13,14 +13,14 @@ export const CmEditorCompositionsCatSpecialSearches = ({ setTerm, setMapper, ter
   const catSpecialSearches = useCmEditorCompositionsCatSpecialSearches();
 
   useEffect(() => {
-    const mapper = MyLib.entries(catSpecialSearches).find(([key]) => term.startsWith(key))?.[1].map;
+    const mapper = objectEntries(catSpecialSearches).find(([key]) => term.startsWith(key))?.[1].map;
     if (mapper == null) return;
     setMapper(() => mapper);
   }, [catSpecialSearches, setMapper, term]);
 
   return (
     <div className="m-2 bg-x2 p-2">
-      {MyLib.entries(catSpecialSearches).map(([key, { map, title, isRerenderOnInput }]) => {
+      {mapObjectEntries(catSpecialSearches, (key, { map, title, isRerenderOnInput }) => {
         if (term.length > 1 && !term.startsWith(key)) return null;
 
         return (

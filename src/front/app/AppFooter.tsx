@@ -5,13 +5,13 @@ import { CurrentAppFooterItemPlaceContext } from '#basis/state/App.contexts';
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { getParentNodeWithClassName } from '#shared/lib/getParentNodeWithClassName';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { mylib } from '#shared/lib/my-lib';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useLocation, useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import React, { FC, useEffect, useRef } from 'react';
 import { makeRegExp } from 'regexpert';
+import { checkIsNotBoolean, checkIsNotNil } from 'shared/utils/checkIs';
 import { twMerge } from 'tailwind-merge';
 import { AppFooterItem } from './AppFooterItem';
 import { currentAppPhaseAtom } from './store/atoms';
@@ -38,7 +38,7 @@ export function AppFooter({ children }: { children: () => React.ReactNode[]; app
     FooterPlacementManager.onPlaceUrlChange(appName, place, url);
   }, [appName, loc.hash, loc.pathname, loc.searchStr, place]);
 
-  const childList = children().filter(it => !mylib.isBool(it) && !mylib.isNil(it));
+  const childList = children().filter(it => checkIsNotBoolean(it) && checkIsNotNil(it));
 
   useEffect(() => {
     if (footerRef.current === null) return;

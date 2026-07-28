@@ -1,6 +1,5 @@
 import { Button } from '#shared/components/ui/button';
 import { ButtonGroup } from '#shared/components/ui/button-group';
-import { mylib } from '#shared/lib/my-lib';
 import { makeToastKOMoodConfig, Modal } from '#shared/ui/modal';
 import { cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom } from '$cm+editor/entities/com-audio';
 import { CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner } from '$cm+editor/features/com-audio';
@@ -21,7 +20,7 @@ import { atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { CmComAudioMarkEditPackValue, CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
 import { TextCase } from 'shared/model/common';
-import { iife, wait } from 'shared/utils';
+import { convertSecondsInStrTime, iife, wait } from 'shared/utils';
 import { checkIsNil, checkIsNotNil } from 'shared/utils/checkIs';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
 import { makeCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
@@ -125,7 +124,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
                 <div className="flex gap-5 w-full">
                   <Button
                     icon="PlusSign"
-                    onClick={() => addTime(mylib.convertSecondsInStrTime(takeCmComAudioPlayerCurrentTime()))}
+                    onClick={() => addTime(convertSecondsInStrTime(takeCmComAudioPlayerCurrentTime()))}
                   />
                   <CmComAudioPlayerMarksMovers
                     src={src}

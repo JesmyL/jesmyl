@@ -1,10 +1,10 @@
-import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { questionerIfConditionOperatorDescriptionDict } from '$q/shared/const/ifConditionDescriptions';
 import { questionerAdminTsjrpcClient } from '$q/shared/tsjrpc/admin.tsjrpc';
 import { QuestionerType } from 'shared/model/q';
 import { QuestionerConditionContentProps } from 'shared/model/q/answer';
 import { QuestionerTemplateTypeConditionDict } from 'shared/model/q/condition';
+import { objectKeys } from 'shared/utils/object.utils';
 
 export const QuestionerTemplateConditionCardOperatorSelector = <
   Type extends QuestionerType,
@@ -18,7 +18,7 @@ export const QuestionerTemplateConditionCardOperatorSelector = <
   return (
     <Dropdown<ConditionOperator>
       id={props.operator}
-      items={mylib.keys(props.operatorSelectorDict).map(id => ({
+      items={objectKeys(props.operatorSelectorDict).map(id => ({
         id: +id as ConditionOperator,
         title: questionerIfConditionOperatorDescriptionDict[id as ConditionOperator],
       }))}

@@ -1,4 +1,3 @@
-import { mylib, MyLib } from '#shared/lib/my-lib';
 import { cmIDB } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -10,7 +9,8 @@ import {
   ICmComCommentBlock,
 } from 'shared/api';
 import { CmComCommentConstructorPropsDictSelectorRulePropsKey } from 'shared/model/cm/com-comment';
-import { checkIsStartsWith } from 'shared/utils/checkIs';
+import { checkIsFunction, checkIsNumber, checkIsStartsWith } from 'shared/utils/checkIs';
+import { forEachObjectEntries } from 'shared/utils/object.utils';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 import { cmComCommentCurrentComw2OpenAltiDictAtom } from '../state/atoms';
 
@@ -88,7 +88,7 @@ export const cmComCommentExtractSelector = <
 >(
   selector: Selector,
 ): Ret =>
-  mylib.isNum(selector)
+  checkIsNumber(selector)
     ? (Math.abs(selector) as never)
     : selector === CmComCommentBlockSpecialSelector.Head
       ? (selector as never)
@@ -112,13 +112,13 @@ export const cmComCommentLocalCommentsUpdater = async (
 
   let isChanged = false;
 
-  MyLib.entries(ordUpdaters).forEach(([ordSelector, updater]) => {
+  forEachObjectEntries(ordUpdaters, (ordSelector, updater) => {
     if (!updater) return;
 
     if (checkIsStartsWith(ordSelector, 'k')) {
       const kind = cmComCommentExtractSelector(ordSelector);
       const commentText = kindDict?.[kind] ?? '';
-      const texts = mylib.isFunc(updater) ? updater([commentText]) : updater;
+      const texts = checkIsFunction(updater) ? updater([commentText]) : updater;
 
       if (commentText === (texts[0] ?? '')) return;
       isChanged = true;
@@ -137,7 +137,7 @@ export const cmComCommentLocalCommentsUpdater = async (
     );
 
     const prev = [...(prevTexts ?? [])];
-    const texts = mylib.isFunc(updater) ? updater(prev) : updater;
+    const texts = checkIsFunction(updater) ? updater(prev) : updater;
 
     const isNoChanges = !Array.from({ length: Math.max(prev.length, texts.length) }).some(
       (_, texti) => (prev[texti] ?? '') !== (texts[texti] ?? ''),

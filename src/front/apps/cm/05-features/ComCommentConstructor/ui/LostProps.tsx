@@ -1,5 +1,4 @@
 import { translateBase } from '#basis/locale';
-import { mylib } from '#shared/lib/my-lib';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
@@ -13,6 +12,7 @@ import {
 import { itIt } from 'shared/utils';
 import { cmComCommentAccentsColorClassNameList } from 'shared/utils/cm';
 import { makeCmComCommentConstructorPropsKey } from 'shared/utils/cm/com/makeCommentTextFromRuleProps';
+import { objectValues } from 'shared/utils/object.utils';
 
 export const CmComCommentConstructorLostProps = ({ ordw, com }: { ordw: CmComOrderWid; com: CmCom }) => {
   const propsDict = useAtomValue(cmComCommentConstructorRulePropsDictAtom);
@@ -46,9 +46,9 @@ export const CmComCommentConstructorLostProps = ({ ordw, com }: { ordw: CmComOrd
       lensAdd,
       usedKeys,
       ordHeader: each ? `${translateBase(it => it[each])} ${firstOrd.me.header({ numered: false })}` : '',
-      list: mylib
-        .values(propsDict.dict ?? {})
-        .filter(props => props && 'linei' in props && !usedKeys.has(`${props.pre}l${props.linei}`)),
+      list: objectValues(propsDict.dict ?? {}).filter(
+        props => props && 'linei' in props && !usedKeys.has(`${props.pre}l${props.linei}`),
+      ),
     };
   }, [com, ordw, propsDict.dict]);
 

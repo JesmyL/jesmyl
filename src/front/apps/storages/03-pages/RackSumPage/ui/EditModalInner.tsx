@@ -1,6 +1,5 @@
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { DatePicker } from '#shared/components/DatePicker';
-import { mylib } from '#shared/lib/my-lib';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
@@ -11,6 +10,7 @@ import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnCo
 import { storagesSummaryTypePropsDict, storagesSummaryTypeTitlesOrder } from 'shared/const/storages/summary.dicts';
 import { StoragesRackSummaryMi, StoragesRackSummaryType, StoragesRackWid } from 'shared/model/storages/list.model';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
+import { checkIsNaN } from 'shared/utils/checkIs';
 
 const computableColTypes = new Set([StoragesColumnType.Dates, StoragesColumnType.Formula, StoragesColumnType.Number]);
 
@@ -52,7 +52,7 @@ export const StoragesRackSumEditModalInner = ({
                     storagesTsjrpcClient.putAtRackSummary({
                       rackw,
                       summaryMi,
-                      put: { date: mylib.isNaN(date?.getTime()) ? undefined : date?.getTime() },
+                      put: { date: checkIsNaN(date?.getTime()) ? undefined : date?.getTime() },
                     });
                   }}
                 />

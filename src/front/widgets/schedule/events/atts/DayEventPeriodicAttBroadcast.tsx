@@ -1,4 +1,3 @@
-import { mylib, MyLib } from '#shared/lib/my-lib';
 import { ScheduleWidgetTopicTitle } from '#widgets/schedule/complect/TopicTitle';
 import { ScheduleWidgetAppAtt } from '#widgets/schedule/ScheduleWidget.model';
 import React, { ReactNode } from 'react';
@@ -13,6 +12,10 @@ import {
   ScheduleWidgetDayi,
 } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
+import { checkIsArray } from 'shared/utils/checkIs';
+import { forEachObjectEntries } from 'shared/utils/object.utils';
+
+const dayShortTitles = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 
 export function ScheduleWidgetDayEventPeriodicBroadcast(props: {
   day: IScheduleWidgetDay;
@@ -39,9 +42,9 @@ export function ScheduleWidgetDayEventPeriodicBroadcast(props: {
 
       switch (attTranslatorType) {
         case AttTranslatorType.AllTime: {
-          if (date === undefined) date = new Date(props.schedule.start);
+          date ??= new Date(props.schedule.start);
 
-          title = mylib.dayShortTitles[(date.getDay() + dayi) % 7] + ', день ' + (dayi + 1);
+          title = dayShortTitles[(date.getDay() + dayi) % 7] + ', день ' + (dayi + 1);
           break;
         }
         case AttTranslatorType.Today: {
@@ -96,8 +99,8 @@ export function ScheduleWidgetDayEventPeriodicBroadcast(props: {
         const type = types[event.type];
 
         if (event.atts)
-          MyLib.entries(event.atts).forEach(([attKey, att]) => {
-            if (attKey !== props.attKey || mylib.isArr(att)) return;
+          forEachObjectEntries(event.atts, (attKey, att) => {
+            if (attKey !== props.attKey || checkIsArray(att)) return;
             node.push(
               <>
                 <ScheduleWidgetTopicTitle

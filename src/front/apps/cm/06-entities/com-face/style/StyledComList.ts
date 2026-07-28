@@ -1,8 +1,8 @@
-import { MyLib } from '#shared/lib/my-lib';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { CmComWid } from 'shared/api';
 import { cmComCommentMakePseudoCommentContentPropCss } from 'shared/utils/cm';
+import { mapObjectEntries } from 'shared/utils/object.utils';
 import { cmComFaceCurrentComwIdPrefix } from '../const/ids';
 
 export const StyledCmComFaceList = styled.div<{
@@ -17,7 +17,7 @@ export const StyledCmComFaceList = styled.div<{
   ${props => {
     if (props.$comTitles == null) return;
 
-    return MyLib.entries(props.$comTitles).map(([index, title]) => {
+    return mapObjectEntries(props.$comTitles, (index, title) => {
       return css`
         .face-item:nth-of-type(${+index + 1}) {
           margin-top: 2em;

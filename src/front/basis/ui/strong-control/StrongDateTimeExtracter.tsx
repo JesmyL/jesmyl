@@ -1,6 +1,6 @@
-import { mylib } from '#shared/lib/my-lib';
 import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
+import { howMillisecondsInHour, howMillisecondsInMin, howMillisecondsInSec } from 'shared/const/ms';
 import { itIt } from 'shared/utils';
 import { StrongEditableField } from './field/StrongEditableField';
 
@@ -61,21 +61,21 @@ export function StrongInputDateTimeExtracter(props: {
 
       if ((tkHours === 0 || tkMin === 0 || tkSec > -1) && (tkMs > 0 || tkSec > -1)) {
         const txt = takeInPeriod(takeNextDigit(), '59');
-        timeDelta += +txt.trim() * mylib.howMs.inSec;
+        timeDelta += +txt.trim() * howMillisecondsInSec;
         date.setSeconds(+txt.trim());
         timeString = txt + timeString;
       }
 
       if ((tkHours === 0 || tkMin > -1) && (tkMs > 0 || tkSec > 0 || tkMin > -1)) {
         const txt = takeInPeriod(takeNextDigit(), '59');
-        timeDelta += +txt.trim() * mylib.howMs.inMin;
+        timeDelta += +txt.trim() * howMillisecondsInMin;
         date.setMinutes(+txt.trim());
         timeString = txt + timeString;
       }
 
       if (tkHours > -1 && (tkMs > 0 || tkSec > 0 || tkMin > 0 || tkHours > -1)) {
         const txt = takeInPeriod(takeNextDigit(), '23');
-        timeDelta += +txt.trim() * mylib.howMs.inHour;
+        timeDelta += +txt.trim() * howMillisecondsInHour;
         date.setHours(+txt.trim());
         timeString = txt + timeString;
       }

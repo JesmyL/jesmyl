@@ -1,4 +1,3 @@
-import { MyLib } from '#shared/lib/my-lib';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { useScheduleWidgetAppAttsContext } from '#widgets/schedule/useScheduleWidget';
 import {
@@ -10,6 +9,7 @@ import {
   ScheduleWidgetDayListItemTypeBox,
   scheduleWidgetUserRights,
 } from 'shared/api';
+import { objectEntries } from 'shared/utils/object.utils';
 import { ScheduleDayEventAtt } from './DayEventAtt';
 
 export function ScheduleWidgetDayEventAtts(props: {
@@ -24,9 +24,9 @@ export function ScheduleWidgetDayEventAtts(props: {
   const [appAtts] = useScheduleWidgetAppAttsContext();
   const rights = useScheduleWidgetRightsContext();
   const userR = rights.myUser?.R ?? rights.schedule.ctrl.defu;
-  const atts = MyLib.entries(props.event.atts);
+  const atts = objectEntries(props.event.atts);
 
-  MyLib.entries(props.typeBox.atts).forEach(attEntry => {
+  objectEntries(props.typeBox.atts).forEach(attEntry => {
     if (!atts.some(entry => entry[0] === attEntry[0])) atts.push(attEntry);
   });
 

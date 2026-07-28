@@ -1,5 +1,4 @@
 import { useIsRedactArea } from '#shared/lib/hooks/useIsRedactArea';
-import { mylib } from '#shared/lib/my-lib';
 import { useIsRememberExpand } from '#shared/ui/expand/useIsRememberExpand';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ScheduleWidgetTopicTitle } from '#widgets/schedule/complect/TopicTitle';
@@ -15,6 +14,7 @@ import {
   ScheduleWidgetDayi,
 } from 'shared/api';
 import { isNIs, retNull } from 'shared/utils';
+import { checkIsArray } from 'shared/utils/checkIs';
 import { ScheduleWidgetDayEventAttResult } from './DayEventAttResult';
 import { ScheduleWidgetDayEventPeriodicBroadcast } from './DayEventPeriodicAttBroadcast';
 
@@ -44,7 +44,7 @@ export const DayEventKnownAtt = (props: ScheduleDayEventKnownAttProps) => {
   );
 
   const useActionPanelNode = (appAtt.im ? appAtts[appAtt.im].useActionPanelNode : appAtt.useActionPanelNode) ?? retNull;
-  const isCanRedact = props.isCanRedact && (!mylib.isArr(props.att) || props.att[0] < 0);
+  const isCanRedact = props.isCanRedact && (!checkIsArray(props.att) || props.att[0] < 0);
   const { isRedact, editIcon, setIsSelfRedact } = useIsRedactArea({
     redactable: true,
     canRedact: props.isCanRedact,
@@ -71,7 +71,7 @@ export const DayEventKnownAtt = (props: ScheduleDayEventKnownAttProps) => {
   try {
     let attValue = props.att;
 
-    if (mylib.isArr(attValue)) {
+    if (checkIsArray(attValue)) {
       const [dayi, eventMi] = attValue;
       const day = props.schedule.days[dayi];
       const event = day?.list.find(event => event.mi === eventMi);

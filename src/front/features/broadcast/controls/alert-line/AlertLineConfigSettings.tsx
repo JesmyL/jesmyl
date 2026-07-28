@@ -2,7 +2,6 @@ import { AlertLineConfig } from '#features/broadcast/model';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { useDebounceAction } from '#shared/lib/hooks/useDebounceAction';
-import { mylib } from '#shared/lib/my-lib';
 import { BackgroundConfigurator } from '#shared/ui/configurators/Background';
 import { ColorConfigurator } from '#shared/ui/configurators/Color';
 import { FontFamilyConfigurator } from '#shared/ui/configurators/FontFamily';
@@ -14,15 +13,13 @@ import { TextInput } from '#shared/ui/TextInput';
 import { complectIDB } from '$index/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React, { useDeferredValue, useEffect, useRef, useState } from 'react';
+import { isNNlButUnd } from 'shared/utils';
 
 const LazyAlertLineConfigIcon = React.lazy(() => import('./AlertLineConfigIcon'));
 const LazyIconConfigurator = React.lazy(() => import('#shared/ui/configurators/Icon'));
 
 export const AlertLineConfigSettingsInner = ({ configId }: { configId: number }) => {
-  const config = useLiveQuery(
-    () => mylib.isNNlButUnd(configId) && complectIDB.tb.alertLineConfigs.get(configId),
-    [configId],
-  );
+  const config = useLiveQuery(() => isNNlButUnd(configId) && complectIDB.tb.alertLineConfigs.get(configId), [configId]);
 
   return (
     config && (

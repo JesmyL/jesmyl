@@ -1,10 +1,10 @@
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Button } from '#shared/components/ui/button';
-import { mylib } from '#shared/lib/my-lib';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { questionerAdminTsjrpcClient } from '$q/shared/tsjrpc/admin.tsjrpc';
 import { QuestionerAdminTemplateContentProps, QuestionerAnswerId, QuestionerVariatedType } from 'shared/model/q';
+import { objectKeys } from 'shared/utils/object.utils';
 import { StameskaIconKind } from 'stameska-icon/utils';
 
 export const QuestionerAdminVariantedTemplateCardContent = ({
@@ -19,7 +19,7 @@ export const QuestionerAdminVariantedTemplateCardContent = ({
   addIcon: KnownStameskaIconName;
   makeVariantIconProps: (answerId: QuestionerAnswerId) => { icon: KnownStameskaIconName; kind?: StameskaIconKind };
 }) => {
-  const variantKeys = mylib.keys(template.variants);
+  const variantKeys = objectKeys(template.variants);
 
   return (
     <>

@@ -1,5 +1,4 @@
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
-import { mylib, MyLib } from '#shared/lib/my-lib';
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { cmIDB } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
@@ -7,8 +6,10 @@ import { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmComTextSquareBracketsMode } from 'shared/api';
 import { itIt } from 'shared/utils';
+import { checkIsArray, checkIsNumber } from 'shared/utils/checkIs';
 import { slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 import { takeTextLineOverLengthIndex } from 'shared/utils/cm/com/takeTextLineOverLengthIndex';
+import { objectKeys } from 'shared/utils/object.utils';
 import { ICmEditorCompositionsCatSpecialSearches } from '../model';
 
 const delayedValueSetDefiner = <Value, RetValue>(
@@ -40,7 +41,7 @@ const delayedValueSetDefiner = <Value, RetValue>(
 const knownChordsSet = delayedValueSetDefiner(
   () => cmIDB.get.chordPack,
   new Set<string>(),
-  chords => new Set(MyLib.keys(chords)),
+  chords => new Set(objectKeys(chords)),
 );
 
 const eeIncorrectWordsReg = delayedValueSetDefiner(
@@ -51,8 +52,8 @@ const eeIncorrectWordsReg = delayedValueSetDefiner(
     return new RegExp(
       notRuLetter +
         '(' +
-        MyLib.keys(value)
-          .filter(word => value[word] === 2 || (mylib.isArr(value[word]) && value[word].includes(2)))
+        objectKeys(value)
+          .filter(word => value[word] === 2 || (checkIsArray(value[word]) && value[word].includes(2)))
           .join('|') +
         ')' +
         notRuLetter,
@@ -87,9 +88,9 @@ export const useCmEditorCompositionsCatSpecialSearches = (): Record<
 
             return coms.filter(com =>
               com.ords?.some(ord =>
-                mylib.isNum(ord.top.r)
+                checkIsNumber(ord.top.r)
                   ? `${ord.top.r}`.match(reg)
-                  : MyLib.keys(ord.top.r).some(key => `${key}`.match(reg)),
+                  : objectKeys(ord.top.r).some(key => `${key}`.match(reg)),
               ),
             );
           } catch (_error) {

@@ -1,11 +1,11 @@
-import { MyLib } from '#shared/lib/my-lib';
 import { SendableDropdown } from '#shared/ui/sends/dropdown/SendableDropdown';
 import { makeAttStorage } from '#widgets/schedule/makeAttStorage';
 import { useMemo } from 'react';
+import { mapObjectEntries } from 'shared/utils/object.utils';
 
 export const ScheduleWidgetCustomAttLocalImagineSelector = ({ id }: { id: `[SCH]:${string}` | nil }) => {
   const localAttsItems = useMemo(() => {
-    return MyLib.entries(makeAttStorage()[0]).map(([id, att]) => {
+    return mapObjectEntries(makeAttStorage()[0], (id, att) => {
       return {
         id,
         title: <>Образ "{att.title}"</>,

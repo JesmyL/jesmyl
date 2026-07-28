@@ -8,7 +8,7 @@ import {
   CmComCommentConstructorRulePropsDict,
   CmComCommentTextDetectorRuleProps,
 } from 'shared/model/cm/com-comment';
-import { smylib } from 'shared/utils/SMyLib';
+import { objectKeys, objectValues } from 'shared/utils/object.utils';
 import { itIt } from 'shared/utils/utils';
 
 export const fillCmComCommentConstructorCommentInKey2PropsDict = (
@@ -50,9 +50,9 @@ export const makeCmComCommentConstructorCommentOrdSelector2TextsDictFromRuleProp
     const commentOrdBlocks: PRecord<CmComCommentConstructorPropsDictSelectorRulePropsKey, string[]> = {};
     const usedSelectorsSet = new Set<CmComCommentConstructorPropsDictSelectorRulePropsKey>();
 
-    const propsList = smylib.values(propsDict);
+    const propsList = objectValues(propsDict);
     propsList.sort((a, b) => a!.rate - b!.rate);
-    const propsKeysSet = new Set(smylib.keys(propsDict));
+    const propsKeysSet = new Set(objectKeys(propsDict));
 
     for (let propsi = 0; propsi < propsList.length; propsi++) {
       const props = propsList[propsi];

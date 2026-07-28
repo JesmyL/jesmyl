@@ -1,6 +1,5 @@
 import { currentLangiAtom, translateBase, translateDynamic } from '#basis/locale';
 import { Button } from '#shared/components';
-import { mylib } from '#shared/lib/my-lib';
 import { cmComCommentCurrentComw2OpenAltiDictAtom, useCmComCommentBlockCss } from '$cm/entities/com-comment';
 import { CmComCommentAlternativeSelector } from '$cm/entities/ComCommentAlternativeSelector';
 import { CmComCommentSavedLocalMarker } from '$cm/entities/ComCommentSavedLocalMarker';
@@ -14,6 +13,7 @@ import { CmComCommentBlockSimpleSelector, CmComCommentBlockSpecialSelector } fro
 import { CmCom } from 'shared/const/cm/Com';
 import { CmComCommentConstructorRuleType } from 'shared/model/cm/com-comment';
 import { itNIt, itNUnd, retNull } from 'shared/utils';
+import { objectValues } from 'shared/utils/object.utils';
 import { CmComCommentConstructorCurrentInnerKindContext } from '../state/CurrentInnerKind';
 import { CmComCommentConstructorBlockView } from './BlockView';
 import { CmComCommentConstructorTextWithAccentRedactor } from './TextWithAccentRedactor';
@@ -34,7 +34,7 @@ export const CmComCommentConstructorTextRulesConstructor = ({
   const { commentCssNode } = useCmComCommentBlockCss(
     com,
     false,
-    useMemo(() => mylib.values(propsDict.dict).filter(itNUnd), [propsDict.dict]),
+    useMemo(() => objectValues(propsDict.dict).filter(itNUnd), [propsDict.dict]),
     400,
   );
 

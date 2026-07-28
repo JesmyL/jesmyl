@@ -1,5 +1,4 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
-import { MyLib } from '#shared/lib/my-lib';
 import { useIsExpand } from '#shared/ui/expand/useIsExpand';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -9,6 +8,7 @@ import styled from '@emotion/styled';
 import { ReactNode } from 'react';
 import { IScheduleWidgetDayEvent, ScheduleDayEventScopeProps } from 'shared/api';
 import { emptyAsyncFunc, itNNull } from 'shared/utils';
+import { objectValues } from 'shared/utils/object.utils';
 import { twMerge } from 'tailwind-merge';
 
 const ratePoints = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5] as const;
@@ -21,7 +21,7 @@ export function ScheduleWidgetDayEventRating(props: {
   const rights = useScheduleWidgetRightsContext();
 
   const ratingSum =
-    props.event.rate === undefined ? 0 : MyLib.values(props.event.rate).reduce((sum, [rate]) => sum + rate, 0);
+    props.event.rate === undefined ? 0 : objectValues(props.event.rate).reduce((sum, [rate]) => sum + rate, 0);
 
   const [titleNode, isExpand] = useIsExpand(
     false,

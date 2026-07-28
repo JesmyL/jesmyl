@@ -51,3 +51,15 @@ export const mapObjectEntries = <T, Ret>(
   if (checkIsObject(it)) for (const key in it) result.push(mapper(key as never, it[key] as never, i++));
   return result;
 };
+
+export const objectGroupBy: typeof Object.groupBy = (iterable, keySelector) => {
+  const result: Record<string, unknown[]> = {};
+  iterable = Array.from(iterable);
+  for (let i = 0; i < (iterable as []).length; i++) {
+    const key = keySelector(iterable[i as never] as never, i);
+    result[key as never] ??= [];
+    result[key as never].push(iterable[i as never]);
+  }
+
+  return result as never;
+};

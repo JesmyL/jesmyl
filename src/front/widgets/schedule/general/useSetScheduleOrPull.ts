@@ -1,9 +1,9 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { mylib } from '#shared/lib/my-lib';
 import { useIndexSchedules } from '$index/shared/state';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { IScheduleWidget, ScheduleWidgetWid } from 'shared/api';
+import { checkIsString } from 'shared/utils/checkIs';
 
 let scheduleAtom: Atom<IScheduleWidget | null>;
 
@@ -16,9 +16,9 @@ export const useGetScheduleOrPull = (scheduleInstance: string | ScheduleWidgetWi
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (!mylib.isStr(scheduleInstance) && isNaN(scheduleInstance)) return;
+    if (!checkIsString(scheduleInstance) && isNaN(scheduleInstance)) return;
 
-    const find = mylib.isStr(scheduleInstance)
+    const find = checkIsString(scheduleInstance)
       ? (sch: IScheduleWidget) => sch.tgChatReqs?.endsWith(scheduleInstance)
       : (sch: IScheduleWidget) => sch.w === scheduleInstance;
 

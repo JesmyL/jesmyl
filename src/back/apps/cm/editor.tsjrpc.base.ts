@@ -1,7 +1,7 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { CmEditorTsjrpcModel } from 'shared/api/tsjrpc/cm/editor.tsjrpc.model';
-import { smylib } from 'shared/utils';
+import { objectKeys } from 'shared/utils/object.utils';
 import { cmEditComBusyTsjrpcMethods } from './complect/edit-com-busy';
 import { cmGetResourceHTMLString } from './complect/mp3-rules';
 import { cmShareEditorServerTsjrpcMethods } from './editor.tsjrpc.shares';
@@ -22,7 +22,7 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
           const modifiedAt = chordPackFileStore.fileModifiedAt();
           cmShareServerTsjrpcMethods.editedChords({ chords, modifiedAt }, null);
 
-          return { value: chords, description: `Изменены аккорды ${smylib.keys(chords).join(', ')}` };
+          return { value: chords, description: `Изменены аккорды ${objectKeys(chords).join(', ')}` };
         },
 
         setEEWords: async ({ words }, { auth }) => {
@@ -45,7 +45,7 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
             },
           );
 
-          return { value: words, description: `Изменены ё/е-правила в словах ${smylib.keys(words).join(', ')}` };
+          return { value: words, description: `Изменены ё/е-правила в словах ${objectKeys(words).join(', ')}` };
         },
 
         getResourceHTMLString: cmGetResourceHTMLString,

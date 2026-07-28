@@ -9,7 +9,7 @@ import {
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
 import { SchAttachmentTypesTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
-import { smylib } from 'shared/utils';
+import { takeNextMi } from 'shared/utils';
 import { knownStameskaIconNamesMd5Hash } from 'shared/values/index/known-icons';
 import { indexStameskaIconsFileStore } from '../../file-stores';
 import { indexServerTsjrpcShareMethods } from '../../tsjrpc.methods';
@@ -45,7 +45,7 @@ export const schAttachmentTypesTsjrpcBaseServer =
           create: modifySchedule(false, sch => {
             sch.tatts.push({
               ...newTatt(),
-              mi: smylib.takeNextMi(sch.tatts, ScheduleWidgetAttachmentTypeMi.def),
+              mi: takeNextMi(sch.tatts, ScheduleWidgetAttachmentTypeMi.def),
             });
 
             return `${this.inSchTitle(sch)} создан тип вложений`;

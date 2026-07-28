@@ -1,6 +1,5 @@
 import { Button } from '#shared/components/ui/button';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
-import { mylib } from '#shared/lib/my-lib';
 import {
   cmComAudioPlayerPlaySrcAtom,
   cmComAudioPlayerSwitchIsPlay,
@@ -15,7 +14,7 @@ import { CmCom } from 'shared/const/cm/Com';
 import { makeCmComAudioMarkTitleBySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { CmBroadcastMonolineSlideSelectorId } from 'shared/model/cm/broadcast';
 import { TextCase } from 'shared/model/common';
-import { extractNumber } from 'shared/utils';
+import { convertSecondsInStrTime, extractNumber } from 'shared/utils';
 import { checkIsArray, checkIsNil, checkIsNotNil, checkIsString } from 'shared/utils/checkIs';
 import { convertCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
@@ -64,7 +63,7 @@ const Child = ({ com, isHideShortTime, isNeedCompute, mapNode, preTimeAtom, chil
     const takeMinusTime = () => (preTimeAtom.get() < 0 ? 0 : preTimeAtom.get());
 
     forEachObjectEntries(comMarks, (time, selector, timei) => {
-      const dataMeta = `${timei + 1} ${mylib.convertSecondsInStrTime(+time)}`;
+      const dataMeta = `${timei + 1} ${convertSecondsInStrTime(+time)}`;
       const titleProps = makeCmComAudioMarkTitleBySelector(extractNumber(time), com, selector, comMarks);
 
       if (checkIsNil(selector) || (isHideShortTime && titleProps.isShortTime)) return;

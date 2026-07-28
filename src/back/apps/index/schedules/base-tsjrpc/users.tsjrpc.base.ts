@@ -7,7 +7,8 @@ import {
   scheduleWidgetUserRights,
 } from 'shared/api';
 import { SchUsersTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
-import { smylib } from 'shared/utils';
+import { takeNextMi } from 'shared/utils';
+import { objectLength } from 'shared/utils/object.utils';
 import { modifySchedule } from '../schedule-modificators';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
@@ -26,7 +27,7 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
       scope: 'SchUsers',
       methods: {
         addUsersByExcel: modifySchedule(false, (sch, { users }) => {
-          let lastUserMi = smylib.takeNextMi(sch.ctrl.users, ScheduleWidgetUserMi.def);
+          let lastUserMi = takeNextMi(sch.ctrl.users, ScheduleWidgetUserMi.def);
           users.forEach(user => sch.ctrl.users.push({ ...user, mi: ++lastUserMi }));
 
           return (
@@ -39,7 +40,7 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
           if (sch.ctrl.users.some(user => user.login === auth.login)) throw new Error('user exists');
           const authClone: IScheduleWidgetUser & { level?: number } = {
             ...auth,
-            mi: smylib.takeNextMi(sch.ctrl.users, ScheduleWidgetUserMi.def),
+            mi: takeNextMi(sch.ctrl.users, ScheduleWidgetUserMi.def),
           };
 
           delete authClone.level;
@@ -67,7 +68,7 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
         removeUserListUnitMembership: modifyUser((user, { props }, sch) => {
           if (user.li == null) return null;
           delete user.li[props.cati];
-          if (!smylib.keys(user.li).length) delete user.li;
+          if (!objectLength(user.li)) delete user.li;
 
           return (
             `В расписании ${scheduleTitleInBrackets(sch)} ` +

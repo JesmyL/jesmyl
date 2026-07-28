@@ -1,8 +1,8 @@
 import { isIOS } from '#shared/lib/device-differences';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { mylib } from '#shared/lib/my-lib';
 import { useCmComLastOpenComw } from '$cm/entities/com';
 import { useEffect, useMemo, useState } from 'react';
+import { checkIsNumber } from 'shared/utils/checkIs';
 import { CmComFaceListProps } from '../ui/_ComList';
 
 const initComsBefore = 10;
@@ -25,7 +25,7 @@ export const useCmComFaceListShownLimitsController = (
     if (props.titles) {
       initialLimits = { start: 0, finish: props.list.length, initStart: 0, initFinish: props.list.length };
     } else {
-      let ccomi = mylib.isNum(lastOpenComw) ? props.list.findIndex(com => com.wid === lastOpenComw) || 0 : 0;
+      let ccomi = checkIsNumber(lastOpenComw) ? props.list.findIndex(com => com.wid === lastOpenComw) || 0 : 0;
       ccomi = ccomi < 0 ? 0 : 0;
 
       const startLimitPlus = initComsAfter - (props.list.length - ccomi);

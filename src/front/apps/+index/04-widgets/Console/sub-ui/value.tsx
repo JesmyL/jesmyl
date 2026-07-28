@@ -1,4 +1,12 @@
-import { mylib } from '#shared/lib/my-lib';
+import {
+  checkIsArray,
+  checkIsBoolean,
+  checkIsFunction,
+  checkIsNumber,
+  checkIsObject,
+  checkIsRegExp,
+  checkIsString,
+} from 'shared/utils/checkIs';
 import { IndexConsoleCoderResultComponent } from '../model/model';
 import { IndexConsoleCoderResultArray } from './array';
 import { IndexConsoleCoderResultFunction } from './function';
@@ -14,10 +22,10 @@ export const IndexConsoleCoderResultValue: IndexConsoleCoderResultComponent<unkn
   if (
     value === null ||
     value === undefined ||
-    mylib.isNum(value) ||
-    mylib.isStr(value) ||
-    mylib.isBool(value) ||
-    mylib.isRegExp(value) ||
+    checkIsNumber(value) ||
+    checkIsString(value) ||
+    checkIsBoolean(value) ||
+    checkIsRegExp(value) ||
     value instanceof Error
   )
     return (
@@ -27,7 +35,7 @@ export const IndexConsoleCoderResultValue: IndexConsoleCoderResultComponent<unkn
       />
     );
 
-  if (mylib.isArr(value))
+  if (checkIsArray(value))
     return (
       <IndexConsoleCoderResultArray
         value={value}
@@ -36,7 +44,7 @@ export const IndexConsoleCoderResultValue: IndexConsoleCoderResultComponent<unkn
       />
     );
 
-  if (mylib.isFunc(value))
+  if (checkIsFunction(value))
     return (
       <IndexConsoleCoderResultFunction
         value={value}
@@ -45,7 +53,7 @@ export const IndexConsoleCoderResultValue: IndexConsoleCoderResultComponent<unkn
       />
     );
 
-  if (mylib.isObj(value))
+  if (checkIsObject(value))
     return (
       <IndexConsoleCoderResultObject
         value={value}

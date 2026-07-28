@@ -1,11 +1,11 @@
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Button } from '#shared/components/ui/button';
-import { mylib } from '#shared/lib/my-lib';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { questionerAdminTsjrpcClient } from '$q/shared/tsjrpc/admin.tsjrpc';
 import { useMemo } from 'react';
 import { QuestionerAdminTemplateContentProps, QuestionerAnswerId, QuestionerType } from 'shared/model/q';
+import { objectKeys } from 'shared/utils/object.utils';
 
 export const QuestionerAdminSorterTemplateCardContent = ({
   blank,
@@ -15,7 +15,7 @@ export const QuestionerAdminSorterTemplateCardContent = ({
   const variantKeys = useMemo(
     () =>
       Array.from(
-        new Set([...(template.correct ?? []), ...mylib.keys(template.variants).map(it => +it as QuestionerAnswerId)]),
+        new Set([...(template.correct ?? []), ...objectKeys(template.variants).map(it => +it as QuestionerAnswerId)]),
       ),
     [template.correct, template.variants],
   );

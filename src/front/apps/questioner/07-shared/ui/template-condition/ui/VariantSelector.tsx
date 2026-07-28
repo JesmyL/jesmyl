@@ -1,9 +1,9 @@
-import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { questionerAdminTsjrpcClient } from '$q/shared/tsjrpc/admin.tsjrpc';
 import { QuestionerType } from 'shared/model/q';
 import { QuestionerConditionContentProps } from 'shared/model/q/answer';
 import { QuestionerTemplateTypeConditionDict } from 'shared/model/q/condition';
+import { objectKeys } from 'shared/utils/object.utils';
 
 export const QuestionerTemplateConditionCardVariantSelector = <
   Type extends QuestionerType.Check | QuestionerType.Sorter | QuestionerType.Radio,
@@ -15,7 +15,7 @@ export const QuestionerTemplateConditionCardVariantSelector = <
   return (
     <Dropdown
       id={props.ifCondition?.val}
-      items={mylib.keys(props.template.variants).map(answerId => ({
+      items={objectKeys(props.template.variants).map(answerId => ({
         id: +answerId,
         title: props.template.variants[answerId]?.title,
       }))}

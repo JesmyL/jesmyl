@@ -1,7 +1,6 @@
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { DatePicker } from '#shared/components/DatePicker';
 import { Button } from '#shared/components/ui/button';
-import { mylib } from '#shared/lib/my-lib';
 import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { StoragesAddColumn } from '$storages/entities/AddColumn';
 import { StoragesDateTimestampTitle } from '$storages/entities/DateTimestampTitle';
@@ -13,6 +12,7 @@ import { useState } from 'react';
 import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
 import { SortDirection } from 'shared/model/common';
 import { StoragesColumnType, StoragesNestedCellMi } from 'shared/model/storages/rack.model';
+import { checkIsNaN } from 'shared/utils/checkIs';
 import { storagesCellComponents } from '../const/cellComponents';
 import { StoragesCellTypeProps } from '../model/model';
 
@@ -57,7 +57,7 @@ export const StoragesCellDatesNestedDateCell = (
               disabled={disabledDates}
               onSelect={date => {
                 const dateTime = date?.getTime();
-                if (!dateTime || mylib.isNaN(dateTime)) return;
+                if (!dateTime || checkIsNaN(dateTime)) return;
 
                 return storagesTsjrpcClient.editNestedCellProp({
                   ...props.nestedSelectors,

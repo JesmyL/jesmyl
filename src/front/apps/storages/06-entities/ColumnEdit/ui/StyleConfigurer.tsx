@@ -1,5 +1,4 @@
 import { Button } from '#shared/components/ui/button';
-import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { atom } from 'atomaric';
@@ -9,6 +8,8 @@ import { StoragesRack } from 'shared/model/storages/list.model';
 import { StoragesColumnType, StoragesRackColumn } from 'shared/model/storages/rack.model';
 import { StoragesColumnUiDict } from 'shared/model/storages/ui.model';
 import { itNIt } from 'shared/utils';
+import { checkIsString } from 'shared/utils/checkIs';
+import { objectKeys } from 'shared/utils/object.utils';
 
 const colorChangeAtom = atom<Parameters<typeof storagesTsjrpcClient.editColumnType>[0] | null>(null);
 
@@ -32,7 +33,7 @@ export const StoragesColumnEditStyleConfigurer = (props: { rack: StoragesRack; c
 
       {isOpenStypesConfig && (
         <>
-          {mylib.keys(storagesStypePropTitles).map(propKey => {
+          {objectKeys(storagesStypePropTitles).map(propKey => {
             const styleKeyList = Array.from(storagesStylePropKeysMatrix[propKey]);
             const styleKey = column.uil?.find(key => storagesStylePropKeysMatrix[propKey].has(+key));
 
@@ -43,7 +44,7 @@ export const StoragesColumnEditStyleConfigurer = (props: { rack: StoragesRack; c
               >
                 {storagesStypePropTitles[propKey]}
                 <Dropdown
-                  id={!mylib.isStr(styleKey) ? styleKey : null}
+                  id={!checkIsString(styleKey) ? styleKey : null}
                   nullTitle="Обычный"
                   items={styleKeyList.map((id, idi) => ({
                     id,

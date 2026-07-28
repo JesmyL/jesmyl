@@ -1,4 +1,3 @@
-import { MyLib, mylib } from '#shared/lib/my-lib';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -13,6 +12,8 @@ import {
   ScheduleWidgetWid,
 } from 'shared/api';
 import { itNNull } from 'shared/utils';
+import { checkIsArray } from 'shared/utils/checkIs';
+import { forEachObjectEntries } from 'shared/utils/object.utils';
 import { ScheduleWidgetTopicTitle } from '../complect/TopicTitle';
 import { useScheduleWidgetRightsContext } from '../contexts';
 import { schGeneralTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
@@ -65,13 +66,13 @@ export function ScheduleWidgetCopy(props: { schw: ScheduleWidgetWid }) {
                         const atts: ScheduleWidgetDayEventAttValues = {};
 
                         if (event.atts)
-                          MyLib.entries(event.atts).forEach(([attKey, attValue]) => {
-                            if (mylib.isArr(attValue) || !mylib.isArr(attValue.values)) {
-                              if (attKey === '[SCH]:chlist' && !mylib.isArr(attValue) && mylib.isArr(attValue.list))
+                          forEachObjectEntries(event.atts, (attKey, attValue) => {
+                            if (checkIsArray(attValue) || !checkIsArray(attValue.values)) {
+                              if (attKey === '[SCH]:chlist' && !checkIsArray(attValue) && checkIsArray(attValue.list))
                                 atts[attKey] = {
                                   ...attValue,
                                   list: attValue.list.map(att => {
-                                    return mylib.isArr(att) && att[0] === 1 ? [0, ...att.slice(1)] : att;
+                                    return checkIsArray(att) && att[0] === 1 ? [0, ...att.slice(1)] : att;
                                   }),
                                 };
                               else atts[attKey] = attValue;
@@ -80,11 +81,11 @@ export function ScheduleWidgetCopy(props: { schw: ScheduleWidgetWid }) {
                                 ...attValue,
                                 values: attValue.values
                                   .map(val => {
-                                    return mylib.isArr(val) &&
+                                    return checkIsArray(val) &&
                                       typeof val[1] === 'number' &&
                                       ScheduleWidgetCleans.checkIsTaleIdUnit(val[1], CustomAttUseTaleId.Users)
                                       ? null
-                                      : mylib.isArr(val) && val[0] === true
+                                      : checkIsArray(val) && val[0] === true
                                         ? [false, ...val.slice(1)]
                                         : val;
                                   })

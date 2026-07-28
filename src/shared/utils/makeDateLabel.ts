@@ -22,6 +22,7 @@ export const makeDateLabel = (inputDate: number | Date | string) => {
           hour: '2-digit',
           day: 'numeric',
           month: 'long',
+          dateStyle: 'full',
         })
         .slice(-8)
     );

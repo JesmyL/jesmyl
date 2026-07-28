@@ -1,7 +1,7 @@
-import { mylib } from '#shared/lib/my-lib';
 import { QuestionerTemplateId, QuestionerType } from 'shared/model/q';
 import { QuestionerUserAnswer } from 'shared/model/q/answer';
 import { QuestionerTemplateConditionNext, QuestionerTemplateConditionOperator } from 'shared/model/q/condition';
+import { checkIsArray, checkIsString } from 'shared/utils/checkIs';
 
 const _hideQuestion = true;
 const _showQuestion = false;
@@ -15,7 +15,7 @@ type Checker<Type extends QuestionerType> = (
 const inOutChecker =
   <Type extends QuestionerType>(): Checker<Type> =>
   (next, answer, operator) => {
-    if (next.val == null || answer == null || !mylib.isArr(answer.v)) {
+    if (next.val == null || answer == null || !checkIsArray(answer.v)) {
       return operator === QuestionerTemplateConditionOperator.In;
     }
 
@@ -38,7 +38,7 @@ export const questionerTypeIfConditionCheckerDict: { [T in QuestionerType]: Chec
   },
 
   [QuestionerType.Comment]: (next, answer, operator) => {
-    if (next.val == null || answer == null || !mylib.isStr(answer.v)) {
+    if (next.val == null || answer == null || !checkIsString(answer.v)) {
       return operator === QuestionerTemplateConditionOperator.LessThenLength;
     }
 

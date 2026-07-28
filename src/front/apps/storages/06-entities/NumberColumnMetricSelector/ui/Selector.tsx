@@ -1,10 +1,10 @@
 import { Button } from '#shared/components';
-import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { usePrompt } from '#shared/ui/modal';
 import { StoragesColumnEditTypeProps } from '$storages/shared/model/col-edit';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
+import { objectKeys } from 'shared/utils/object.utils';
 
 export const StoragesNumberColumnMetricSelector = (props: StoragesColumnEditTypeProps<StoragesColumnType.Number>) => {
   const prompt = usePrompt();
@@ -50,8 +50,7 @@ export const StoragesNumberColumnMetricSelector = (props: StoragesColumnEditType
       id={value}
       nullTitle="-"
       hiddenArrow
-      items={mylib
-        .keys(metrics)
+      items={objectKeys(metrics)
         .map(id => ({ id, title: id }) as { id: string; title: React.ReactNode })
         .concat(
           value && !(value in metrics) ? { id: value, title: <div className="text-x7 opacity-50">{value}</div> } : [],

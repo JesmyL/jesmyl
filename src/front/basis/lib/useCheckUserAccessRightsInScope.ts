@@ -1,6 +1,6 @@
-import { mylib } from '#shared/lib/my-lib';
 import { indexUserAccessRightsAtom } from '$index/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
+import { howMillisecondsInDay } from 'shared/const/ms';
 import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
 import { checkUserScopeAccessRight, CRUDOperation } from 'shared/utils/index/utils';
 
@@ -17,7 +17,7 @@ export const useCheckUserAccessRightsInScope = () => {
     /** one day access */
     createdAt?: number,
   ) => {
-    if (createdAt && createdAt > Date.now() - mylib.howMs.inDay) return true;
+    if (createdAt && createdAt > Date.now() - howMillisecondsInDay) return true;
 
     return checkUserScopeAccessRight(null, rights, scope, rule, operation);
   };

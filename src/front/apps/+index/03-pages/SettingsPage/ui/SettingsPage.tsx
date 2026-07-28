@@ -2,7 +2,6 @@ import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRi
 import { useConnectionState } from '#basis/lib/useConnectionState';
 import { translateBase } from '#basis/locale';
 import { useAppNameContext } from '#basis/state/contexts';
-import { MyLib } from '#shared/lib/my-lib';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
@@ -11,6 +10,7 @@ import { authIDB, indexIDB, indexIsPlayAnimationsAtom, indexIsShowPlayerInFooter
 import { Link } from '@tanstack/react-router';
 import React from 'react';
 import { itIt } from 'shared/utils';
+import { forEachObjectEntries, objectKeys } from 'shared/utils/object.utils';
 import { MyFilesFontFamilySelector } from 'x/my-files';
 import { IndexSettingsBindEmail } from './BindEmail';
 
@@ -120,10 +120,10 @@ export function IndexSettingsPage() {
 
         if (container == null) return;
 
-        MyLib.entries(styles).forEach(([key, val]) => (container.style[key] = val!));
+        forEachObjectEntries(styles, (key, val) => (container.style[key] = val!));
 
         container.onclick = () => {
-          MyLib.keys(styles).forEach(key => (container.style[key] = null!));
+          objectKeys(styles).forEach(key => (container.style[key] = null!));
           container.style.display = 'none';
         };
       }}

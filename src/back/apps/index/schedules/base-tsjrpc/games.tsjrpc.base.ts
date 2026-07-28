@@ -9,7 +9,7 @@ import {
   ScheduleWidgetTeamGameMi,
 } from 'shared/api';
 import { SchGamesTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
-import { smylib } from 'shared/utils';
+import { takeNextMi } from 'shared/utils';
 import { modifySchedule } from '../schedule-modificators';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
@@ -42,7 +42,7 @@ export const schGamesTsjrpcBaseServer = new (class SchGames extends TsjrpcBaseSe
           sch.games ??= { criterias: [], list: [] };
           sch.games.list.push({
             title: `Игра ${sch.games.list.length + 1}`,
-            mi: smylib.takeNextMi(sch.games.list, ScheduleWidgetTeamGameMi.def),
+            mi: takeNextMi(sch.games.list, ScheduleWidgetTeamGameMi.def),
             teams: [],
           });
 

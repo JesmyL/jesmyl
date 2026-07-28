@@ -4,7 +4,9 @@ import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { postJRPCMessage, PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
 import { JesmylTelegramBot } from 'back/sides/telegram-bot/tg-bot';
 import nodeSchedule from 'node-schedule';
-import { declension, itIt, itNNaN, smylib } from 'shared/utils';
+import { howMillisecondsInDay } from 'shared/const/ms';
+import { declension, itIt, itNNaN } from 'shared/utils';
+import { checkIsArray } from 'shared/utils/checkIs';
 
 type CrAlarm = {
   hours: number;
@@ -125,7 +127,7 @@ export const startCrTgAlarm = () => {
       await bot.editMessageText(
         query.message.message_id,
         `Следующий платёж ${nextPaymentInTimeDate.toLocaleDateString('ru')} (${timeFormatter.format(
-          Math.floor((nextPaymentInTimeDate.getTime() - todayDate.getTime()) / smylib.howMs.inDay),
+          Math.floor((nextPaymentInTimeDate.getTime() - todayDate.getTime()) / howMillisecondsInDay),
           'days',
         )})` +
           `\n\nНапоминание будет: ` +
@@ -137,7 +139,7 @@ export const startCrTgAlarm = () => {
           `\n\nВремя напоминания: ` +
           `${crData.hours.toString().padStart(2, '0')}:${crData.minutes.toString().padStart(2, '0')}` +
           `\nСледующее напоминание ${nextAlarmDate.toLocaleString('ru').slice(0, -3)} (${timeFormatter.format(
-            Math.floor((nextAlarmDate.getTime() - todayDate.getTime()) / smylib.howMs.inDay),
+            Math.floor((nextAlarmDate.getTime() - todayDate.getTime()) / howMillisecondsInDay),
             'days',
           )})`,
       );
@@ -247,7 +249,7 @@ export const startCrTgAlarm = () => {
   const setAlarm = (dayDate = new Date()) => {
     const crData = getCrData();
 
-    if (!smylib.isArr(crData?.dates)) return;
+    if (!checkIsArray(crData?.dates)) return;
 
     const dayDateISO = dayDate.toISOString();
     const nearDateStr = crData.dates.find(date => date > dayDateISO);
@@ -266,7 +268,7 @@ export const startCrTgAlarm = () => {
     const nowDate = new Date();
 
     const alarmInTimeTs = crData.days
-      .map(daysTo => nextPaymentInTimeTs - daysTo * smylib.howMs.inDay)
+      .map(daysTo => nextPaymentInTimeTs - daysTo * howMillisecondsInDay)
       .find(
         nowDate.getHours() >= crData.hours && nowDate.getMinutes() >= crData.minutes
           ? timeTo => timeTo > todayInTimeTs
@@ -300,14 +302,14 @@ export const startCrTgAlarm = () => {
         todayInTimeDate.setHours(crData.hours, crData.minutes, 0, 0);
 
         nextAlarmInfo = `Следующее напоминание ${timeFormatter.format(
-          Math.floor((nextAlarmDate.getTime() - todayInTimeDate.getTime()) / smylib.howMs.inDay),
+          Math.floor((nextAlarmDate.getTime() - todayInTimeDate.getTime()) / howMillisecondsInDay),
           'day',
         )}`;
       }
 
       postJRPCMessage(
         'Оплата кредита ' +
-          timeFormatter.format((nextPaymentInTimeTs - alarmInTimeTs) / smylib.howMs.inDay, 'day') +
+          timeFormatter.format((nextPaymentInTimeTs - alarmInTimeTs) / howMillisecondsInDay, 'day') +
           `\n\n${nextAlarmInfo}`,
         postMessageOptions,
       );

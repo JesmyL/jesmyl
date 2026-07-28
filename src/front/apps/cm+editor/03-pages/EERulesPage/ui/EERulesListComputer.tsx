@@ -1,4 +1,3 @@
-import { mylib } from '#shared/lib/my-lib';
 import { bibleTranslatesIDB } from '$bible/ext';
 import { useEditableCats } from '$cm+editor/shared/lib/useEditableCat';
 import { useEditableComs } from '$cm+editor/shared/lib/useEditableCom';
@@ -8,6 +7,7 @@ import { makeRegExp } from 'regexpert';
 import { BibleTranslateName, EeStorePack } from 'shared/api';
 import { itIt } from 'shared/utils';
 import { slavicLowerLettersStr } from 'shared/utils/cm/com/const';
+import { objectKeys } from 'shared/utils/object.utils';
 
 type Props = {
   isCheckBible: boolean;
@@ -29,7 +29,7 @@ export const CmEditorEERulesListComputer = memo(function ListComputer({
   const ignoredWordsSet = cmEditorIDB.useValue.ignoredEESet();
 
   useEffect(() => {
-    cmEditorIDB.get.eeStore().then(store => setStoreWords(mylib.keys(store ?? {})));
+    cmEditorIDB.get.eeStore().then(store => setStoreWords(objectKeys(store)));
   }, []);
 
   useEffect(() => {

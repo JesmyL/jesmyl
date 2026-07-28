@@ -1,6 +1,6 @@
-import { mylib } from '#shared/lib/my-lib';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode } from 'react';
+import { checkIsString } from 'shared/utils/checkIs';
 import { Modal, ModalBody, ModalHeader } from './modal';
 import { TheIconButton } from './the-icon/TheIconButton';
 
@@ -39,7 +39,7 @@ export function TheIconShareButton({
         className={className}
         onClick={event => {
           event.stopPropagation();
-          const textToWrite = mylib.isStr(text) ? text : text?.();
+          const textToWrite = checkIsString(text) ? text : text?.();
           if (!textToWrite && prepare === undefined) return;
 
           const prepared =
@@ -56,7 +56,7 @@ export function TheIconShareButton({
           try {
             navigator.share({
               ...prepared,
-              text: mylib.isStr(prepared.text) ? prepared.text : prepared.text?.(),
+              text: checkIsString(prepared.text) ? prepared.text : prepared.text?.(),
             });
           } catch (_e) {
             bodyNodeAtom.set(

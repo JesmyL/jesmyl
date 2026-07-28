@@ -1,5 +1,5 @@
-import { mylib } from '#shared/lib/my-lib';
 import { CmCom } from 'shared/const/cm/Com';
+import { checkIsNumber } from 'shared/utils/checkIs';
 import { ICmComFaceList } from '../model/model';
 import { CmComFaceListComList } from './_ComList';
 import { CmComFaceWidList } from './_WidList';
@@ -13,7 +13,7 @@ interface Props extends ICmComFaceList {
 export const CmComFaceList = (props: Props) => {
   if (props.list == null) return null;
 
-  if (mylib.isNum(props.list[0]))
+  if (checkIsNumber(props.list[0]))
     return (
       <CmComFaceWidList
         {...props}

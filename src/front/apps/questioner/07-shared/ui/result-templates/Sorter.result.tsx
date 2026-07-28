@@ -1,13 +1,13 @@
-import { mylib } from '#shared/lib/my-lib';
 import { EllipsisText } from '#shared/ui/EllipsisText';
 import { QuestionerAnswerId, QuestionerType } from 'shared/model/q';
 import { QuestionerResultContentProps } from 'shared/model/q/answer';
+import { objectKeys } from 'shared/utils/object.utils';
 
 export const QuestionerResultSorterTemplateCardContent = ({
   userAnswer,
   template,
 }: QuestionerResultContentProps<QuestionerType.Sorter>) => {
-  const variantKeys = mylib.keys(template.variants);
+  const variantKeys = objectKeys(template.variants);
   let newAnswerIds: SKey<QuestionerAnswerId>[] = [];
   const variantKeySet = new Set(variantKeys.map(Number));
   userAnswer?.v.forEach(answerId => variantKeySet.delete(answerId));

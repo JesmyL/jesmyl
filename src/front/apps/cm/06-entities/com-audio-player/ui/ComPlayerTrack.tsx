@@ -1,7 +1,7 @@
 import { Slider } from '#shared/components/ui/slider';
-import { mylib } from '#shared/lib/my-lib';
 import { useAtomValue } from 'atomaric';
 import { HttpNumLeadLink } from 'shared/api';
+import { convertSecondsInStrTime } from 'shared/utils';
 import {
   cmComAudioPlayerPlaySrcAtom,
   cmComAudioPlayerSwitchIsPlay,
@@ -23,7 +23,7 @@ export const CmComAudioPlayerTrack = (props: Props) => {
 
   if (!playSrc || playSrc === props.src) return <TrackWithCurrents {...props} />;
 
-  const time = <TimeRender time={mylib.convertSecondsInStrTime(0)} />;
+  const time = <TimeRender time={convertSecondsInStrTime(0)} />;
 
   return (
     <Track
@@ -56,7 +56,7 @@ const TimeRender = ({ time }: { time: React.ReactNode }) => {
 
 const TrackWithCurrents = (props: Props) => {
   const currentTime = useCmComAudioPlayerCurrentTime();
-  const time = <TimeRender time={mylib.convertSecondsInStrTime(currentTime)} />;
+  const time = <TimeRender time={convertSecondsInStrTime(currentTime)} />;
 
   return (
     <Track

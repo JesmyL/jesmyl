@@ -1,8 +1,8 @@
-import { mylib } from '#shared/lib/my-lib';
 import { CopyTextButton } from '#shared/ui/CopyTextButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { CustomAttUseTaleId, ScheduleWidgetAppAttCustomizableValueItem, ScheduleWidgetCleans } from 'shared/api';
 import { itNNil } from 'shared/utils';
+import { checkIsArray, checkIsNumber, checkIsString } from 'shared/utils/checkIs';
 
 const mapSetItemNumber = (l: string | nil, li: number) => li + 1 + '. ' + l!;
 
@@ -25,21 +25,21 @@ export function ScheduleKeyValueListAttStatistic(props: { list: ScheduleWidgetAp
       checked++;
     } else if (key === false) {
       checks++;
-    } else if (mylib.isNum(key) && ScheduleWidgetCleans.checkIsTaleIdUnit(key, CustomAttUseTaleId.Users)) {
+    } else if (checkIsNumber(key) && ScheduleWidgetCleans.checkIsTaleIdUnit(key, CustomAttUseTaleId.Users)) {
       users++;
     }
 
-    if (mylib.isArr(value)) {
+    if (checkIsArray(value)) {
       lists++;
 
       value.forEach(val => {
         subLists++;
 
-        if (mylib.isNum(val) && ScheduleWidgetCleans.checkIsTaleIdUnit(val, CustomAttUseTaleId.Users)) {
+        if (checkIsNumber(val) && ScheduleWidgetCleans.checkIsTaleIdUnit(val, CustomAttUseTaleId.Users)) {
           users++;
         }
       });
-    } else if (mylib.isNum(value) && ScheduleWidgetCleans.checkIsTaleIdUnit(value, CustomAttUseTaleId.Users)) {
+    } else if (checkIsNumber(value) && ScheduleWidgetCleans.checkIsTaleIdUnit(value, CustomAttUseTaleId.Users)) {
       users++;
     }
   });
@@ -76,18 +76,18 @@ export function ScheduleKeyValueListAttStatistic(props: { list: ScheduleWidgetAp
 
               if (key === true) text += '[+] ';
               else if (key === false) text += '[ ] ';
-              else if (mylib.isStr(key)) text += key;
-              else if (mylib.isNum(key)) text += takeTextById(key);
+              else if (checkIsString(key)) text += key;
+              else if (checkIsNumber(key)) text += takeTextById(key);
               else text += key;
 
-              if (mylib.isStr(value)) text += (mylib.isStr(key) ? ':\n' : '') + value;
-              else if (mylib.isNum(value)) text += takeTextById(value);
-              else if (mylib.isArr(value))
+              if (checkIsString(value)) text += (checkIsString(key) ? ':\n' : '') + value;
+              else if (checkIsNumber(value)) text += takeTextById(value);
+              else if (checkIsArray(value))
                 text +=
                   '\n' +
                   value
                     .map(val => {
-                      if (mylib.isStr(val)) return val;
+                      if (checkIsString(val)) return val;
                       const id = Math.trunc(val);
 
                       if (ScheduleWidgetCleans.checkIsTaleIdUnit(val, CustomAttUseTaleId.Users)) {

@@ -1,6 +1,5 @@
 import { Button } from '#shared/components/ui/button';
 import { Card } from '#shared/components/ui/card';
-import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { questionerCardContents } from '$q/shared/const/cardContents';
 import { questionerTemplateDescriptions } from '$q/shared/const/templateDescriptions';
@@ -8,6 +7,7 @@ import { questionerAdminTsjrpcClient } from '$q/shared/tsjrpc/admin.tsjrpc';
 import { questionerTypeDefaultIfConditionOperatorDict } from 'shared/const/q/typeDefaultIfConditionOperator';
 import { QuestionerBlank, QuestionerBlankWid, QuestionerTemplate, QuestionerTemplateId } from 'shared/model/q';
 import { QuestionerTemplateConditionType } from 'shared/model/q/condition';
+import { objectKeys, objectLength } from 'shared/utils/object.utils';
 
 export const QuestionerTemplateVisibilityRedactorModalBodyInner = ({
   template,
@@ -77,7 +77,7 @@ export const QuestionerTemplateVisibilityRedactorModalBodyInner = ({
                     <div className="flex gap-3 flex-wrap">
                       <Dropdown
                         id={nextItem.tmpId}
-                        items={mylib.keys(blank.tmp).map(id => {
+                        items={objectKeys(blank.tmp).map(id => {
                           if (+id === +templateId || !blank.tmp[id]) return null;
                           return {
                             id: +id,
@@ -149,7 +149,7 @@ export const QuestionerTemplateVisibilityRedactorModalBodyInner = ({
       <Button
         icon="PlusSign"
         className="mt-5"
-        disabled={mylib.keys(blank.tmp).length < 2}
+        disabled={objectLength(blank.tmp) < 2}
         disabledReason="Других вопросов нет"
         onClick={() => questionerAdminTsjrpcClient.addTemplateConditionNext({ blankw, templateId })}
       >

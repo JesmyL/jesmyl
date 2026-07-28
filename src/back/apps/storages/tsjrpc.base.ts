@@ -32,8 +32,10 @@ import {
   StoragesNestedCellSelectors,
   StoragesRackColumn,
 } from 'shared/model/storages/rack.model';
-import { declension, itNNull, SMyLib, smylib } from 'shared/utils';
+import { declension, itNNull, takeNextMi, withInsertedBeforei } from 'shared/utils';
+import { checkIsArray, checkIsObject } from 'shared/utils/checkIs';
 import { makeDeepProxyObject } from 'shared/utils/makeDeepProxyObject';
+import { objectGroupBy, objectKeys, objectLength } from 'shared/utils/object.utils';
 import { storagesDirStorage } from './file-stores';
 import { storagesStoresSharesServerTsjrpcMethods } from './tsjrpc.shares';
 
@@ -63,7 +65,7 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
                 racks: racks
                   .map(rack => {
                     if ('parent' in rack) {
-                      rackwRack ??= SMyLib.groupBy(racks, rack => rack.w);
+                      rackwRack ??= objectGroupBy(racks, rack => rack.w);
 
                       const parentRack = rackwRack[rack.parent]?.[0] ?? storagesDirStorage.getItem(rack.parent);
                       if (!parentRack || 'parent' in parentRack) return null;
@@ -193,7 +195,7 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
 
         moveColumn: updateRack((rack, props) => {
           rack.colsOrd ??= rack.cols.map((_, i) => i);
-          rack.colsOrd = smylib.withInsertedBeforei(rack.colsOrd, props.newi ?? rack.colsOrd.length, props.coli);
+          rack.colsOrd = withInsertedBeforei(rack.colsOrd, props.newi ?? rack.colsOrd.length, props.coli);
 
           let expectedi = 0;
           if (!rack.colsOrd.some(i => i !== expectedi++)) delete rack.colsOrd;
@@ -244,7 +246,7 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
         resortRackStatuses: updateRack((rack, { statusi }) => {
           rack.statusOrd ??= rack.statuses.map((_, i) => i);
           const index = rack.statusOrd.indexOf(statusi);
-          rack.statusOrd = smylib.withInsertedBeforei(rack.statusOrd, index - 1, index);
+          rack.statusOrd = withInsertedBeforei(rack.statusOrd, index - 1, index);
 
           let expectedi = 0;
           if (!rack.statusOrd.some(i => i !== expectedi++)) delete rack.statusOrd;
@@ -296,18 +298,18 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
 
           cell[1].nst.push({
             row: [],
-            mi: smylib.takeNextMi(cell[1].nst, StoragesNestedCellMi.min),
+            mi: takeNextMi(cell[1].nst, StoragesNestedCellMi.min),
             ts,
           });
         }),
 
         editNestedCellProp: updateCell((cell, props) => {
-          if (!smylib.isObj(cell[1]) || !smylib.isArr(cell[1].nst) || props.nestedCellMi == null) return;
+          if (!checkIsObject(cell[1]) || !checkIsArray(cell[1].nst) || props.nestedCellMi == null) return;
 
           const nestedCell = cell[1].nst.find(cell => cell.mi === props.nestedCellMi);
           if (nestedCell == null) return;
 
-          smylib.keys(props.partialProps).forEach(key => {
+          objectKeys(props.partialProps).forEach(key => {
             nestedCell[key] = props.partialProps[key];
           });
 
@@ -420,11 +422,11 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           if (props.dict) {
             const uid = (rack.cols[props.coli].uid = { ...rack.cols[props.coli].uid, ...props.dict });
 
-            smylib.keys(uid).forEach(key => {
+            objectKeys(uid).forEach(key => {
               if (uid[key] == null) delete uid[key];
             });
 
-            if (!smylib.keys(uid).length) delete rack.cols[props.coli].uid;
+            if (!objectLength(uid)) delete rack.cols[props.coli].uid;
           }
         }),
 
@@ -445,7 +447,7 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           rack.sum ??= [];
 
           rack.sum.push({
-            mi: smylib.takeNextMi(rack.sum, StoragesRackSummaryMi.min),
+            mi: takeNextMi(rack.sum, StoragesRackSummaryMi.min),
             formula: '',
             title: props.title,
             type: StoragesRackSummaryType.Total,
@@ -530,7 +532,7 @@ function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret exte
     if (parentRack != null && !('parent' in parentRack))
       storagesStoresSharesServerTsjrpcMethods.refreshRacks(
         { maxMod: mod, racks: [parentRack] },
-        { logins: SMyLib.keys(parentRack.team) },
+        { logins: objectKeys(parentRack.team) },
       );
 
     if ('parent' in item) {
@@ -542,7 +544,7 @@ function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret exte
 
     storagesStoresSharesServerTsjrpcMethods.refreshRacks(
       { maxMod: mod, racks: [rack] },
-      { logins: SMyLib.keys(rack.team) },
+      { logins: objectKeys(rack.team) },
     );
 
     return ret;
@@ -607,10 +609,10 @@ function updateCellOrNestedCell<
 
     card.row ??= [];
     const cardCell = card.row[props.coli];
-    if (cardCell == null || !smylib.isObj(cardCell[1])) throw 'Error 1862531839123';
+    if (cardCell == null || !checkIsObject(cardCell[1])) throw 'Error 1862531839123';
 
     const rowHolder = cardCell[1]?.nst.find(it => it.mi === props.nestedCellMi);
-    if (!smylib.isObj(rowHolder)) throw 'Error 192644527841210';
+    if (!checkIsObject(rowHolder)) throw 'Error 192644527841210';
 
     return updater(
       { rowHolder, columni: props.nestedColi, colType: column.cols?.[props.nestedColi].t, colsHolder: column },

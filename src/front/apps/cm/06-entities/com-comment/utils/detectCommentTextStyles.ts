@@ -1,4 +1,3 @@
-import { mylib } from '#shared/lib/my-lib';
 import { css, SerializedStyles } from '@emotion/react';
 import {
   CmComCommentConstructorPropsDictChordRulePropsKeyPrefix,
@@ -13,6 +12,7 @@ import {
   cmComCommentMakePseudoCommentContentPropCss,
   cmComCommentMakePseudoElementCorrectContentText,
 } from 'shared/utils/cm';
+import { objectValues } from 'shared/utils/object.utils';
 import { PRecord } from 'tsjrpc/types/base.model';
 import { cmComCommentHeaderHolderSelectors } from '../const/commentHolderSelectors';
 import { cmComCommentExtractSelector } from '../lib/useCmComCommentBlock';
@@ -38,7 +38,7 @@ export const cmComCommentDetectCommentTextStyles = () => {
     styles: () => {
       const selectorsCssList = Array.from(usedOrdSelectorSet).map(selector => {
         const rules = css`
-          ${mylib.values(sidePlacedChordsOnWait).map(chordProps => {
+          ${objectValues(sidePlacedChordsOnWait).map(chordProps => {
             const preProps = chordProps?.['<'];
             const replaceProps = chordProps?.['^'];
             const postProps = chordProps?.['>'];
@@ -128,7 +128,7 @@ export const cmComCommentDetectCommentTextStyles = () => {
         }
 
         ${selectorsCssList}
-        ${mylib.values(ordKind2StylesDict)}
+        ${objectValues(ordKind2StylesDict)}
       `;
     },
     onDetect: (props: CmComCommentTextDetectorRuleProps) => {

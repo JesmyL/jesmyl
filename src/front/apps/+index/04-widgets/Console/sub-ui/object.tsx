@@ -1,5 +1,5 @@
-import { mylib } from '#shared/lib/my-lib';
 import { makeRegExp } from 'regexpert';
+import { objectKeys } from 'shared/utils/object.utils';
 import { IndexConsoleCoderResultComponent } from '../model/model';
 import { IndexConsoleCoderResultValue } from './value';
 import { IndexConsoleCoderValueExpandable } from './value-expandable';
@@ -10,7 +10,7 @@ export const IndexConsoleCoderResultObject: IndexConsoleCoderResultComponent<obj
   scope,
   isObjectParent,
 }) => {
-  const keys = mylib.keys(value);
+  const keys = objectKeys(value);
   const resultName = name ?? value.constructor.name;
   const scopeName = isObjectParent
     ? scope

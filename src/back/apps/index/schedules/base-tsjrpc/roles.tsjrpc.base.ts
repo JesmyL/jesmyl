@@ -2,7 +2,7 @@ import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { title } from 'process';
 import { IScheduleWidget, IScheduleWidgetRole, ScheduleRoleScopeProps } from 'shared/api';
 import { SchRolesTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
-import { smylib } from 'shared/utils';
+import { takeNextMi } from 'shared/utils';
 import { knownStameskaIconNamesMd5Hash } from 'shared/values/index/known-icons';
 import { indexStameskaIconsFileStore } from '../../file-stores';
 import { indexServerTsjrpcShareMethods } from '../../tsjrpc.methods';
@@ -24,7 +24,7 @@ export const schRolesTsjrpcBaseServer = new (class SchRoles extends TsjrpcBaseSe
       scope: 'SchRoles',
       methods: {
         createRole: modifySchedule(false, sch => {
-          sch.ctrl.roles.push({ mi: smylib.takeNextMi(sch.ctrl.roles, 0 as number), title: 'Помощьник' });
+          sch.ctrl.roles.push({ mi: takeNextMi(sch.ctrl.roles, 0 as number), title: 'Помощьник' });
 
           return `В расписании ${scheduleTitleInBrackets(sch)} добавлена новая категория ролей`;
         }),

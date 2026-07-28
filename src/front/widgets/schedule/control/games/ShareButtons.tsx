@@ -1,4 +1,3 @@
-import { mylib } from '#shared/lib/my-lib';
 import { Modal } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -8,6 +7,7 @@ import { schPhotosTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { indexIDB } from '$index/shared/state';
 import { Atom, atom } from 'atomaric';
 import { ScheduleWidgetPhotoKey } from 'shared/api';
+import { objectLength } from 'shared/utils/object.utils';
 import { ScheduleWidgetPhotoGalery } from './PhotoGalery';
 import { checkIsUserPhotoable } from './utils';
 
@@ -48,7 +48,7 @@ export const ScheduleWidgetShareButtons = function ShareButtons({ prefix }: Prop
             value[key] = photo.src;
           }
 
-          if (!mylib.keys(value).length) return;
+          if (!objectLength(value)) return;
 
           return schPhotosTsjrpcClient.putSharedPhotos({ schw: rights.schedule.w, photoDict: value });
         }}

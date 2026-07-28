@@ -1,4 +1,3 @@
-import { mylib } from '#shared/lib/my-lib';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
@@ -14,6 +13,7 @@ import {
   ScheduleWidgetAppAttCustomized,
 } from 'shared/api';
 import { itIt } from 'shared/utils';
+import { checkIsArray, checkIsNumber, checkIsString } from 'shared/utils/checkIs';
 import { textToUpperCase } from 'shared/utils/string.utils';
 
 export const scheduleWidgetKeyValueListAttMakeGamesAdder = (
@@ -23,7 +23,7 @@ export const scheduleWidgetKeyValueListAttMakeGamesAdder = (
   exclusiveGames: IScheduleWidgetTeamGame[] | und,
 ) => {
   const subItems: (item: ScheduleWidgetAppAttCustomizableValueItem) => React.ReactNode = ([key, value, itemMi]) => {
-    if (!mylib.isNum(key) || !mylib.isArr(value) || rights.schedule.games == null) return;
+    if (!checkIsNumber(key) || !checkIsArray(value) || rights.schedule.games == null) return;
     const gameMi = key - CustomAttUseTaleId.Games;
 
     const game = rights.schedule.games.list.find(game => game.mi === gameMi);
@@ -32,7 +32,7 @@ export const scheduleWidgetKeyValueListAttMakeGamesAdder = (
     return (
       <>
         {game.teams.map(team => {
-          if (value.some(val => (mylib.isStr(val) ? makeRegExp(`/${team.title}/i`).test(val) : false))) return null;
+          if (value.some(val => (checkIsString(val) ? makeRegExp(`/${team.title}/i`).test(val) : false))) return null;
 
           return (
             <div key={team.mi}>

@@ -1,4 +1,3 @@
-import { mylib } from '#shared/lib/my-lib';
 import { Modal } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
@@ -15,6 +14,7 @@ import { Atom, atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
 import { StoragesRackMemberRole, StoragesRackWid } from 'shared/model/storages/list.model';
+import { checkIsNotString, checkIsObject } from 'shared/utils/checkIs';
 import { StoragesRackImportFromExcelModalInner } from './ImportFromExcelModalInner';
 
 let isOpenImportFromExcelModalAtom: Atom<boolean>;
@@ -65,11 +65,11 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
               const auth = JSON.parse(value) as unknown;
 
               if (
-                !mylib.isObj(auth) ||
+                !checkIsObject(auth) ||
                 !('fio' in auth) ||
                 !('login' in auth) ||
-                !mylib.isStr(auth.fio) ||
-                !mylib.isStr(auth.login)
+                checkIsNotString(auth.fio) ||
+                checkIsNotString(auth.login)
               )
                 return;
 

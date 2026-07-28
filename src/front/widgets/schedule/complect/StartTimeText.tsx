@@ -1,5 +1,6 @@
-import { mylib } from '#shared/lib/my-lib';
 import { IScheduleWidget, ScheduleWidgetCleans } from 'shared/api';
+import { howMillisecondsInMin } from 'shared/const/ms';
+import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { useScheduleWidgetRights } from '../useScheduleWidget';
 
 interface Props {
@@ -20,7 +21,7 @@ export function ScheduleWidgetStartTimeText({ schedule, date: topDate }: Props) 
   if (!rights.isCanReadSpecials)
     firstDay?.list.some(event => {
       if (event.secret) {
-        firstWup += (event.tm ?? types[event.type]?.tm ?? 0) * mylib.howMs.inMin;
+        firstWup += (event.tm ?? types[event.type]?.tm ?? 0) * howMillisecondsInMin;
         return false;
       }
 
@@ -32,7 +33,7 @@ export function ScheduleWidgetStartTimeText({ schedule, date: topDate }: Props) 
     <>
       {!schedule.start || (
         <div>
-          Начало: {date.getDate()} {mylib.monthFullTitles[date.getMonth()]} {date.getFullYear()}
+          Начало: {makeDateLabel(date)}
           {!firstWup ||
             ', ' +
               timeDate.getHours().toString().padStart(2, '0') +

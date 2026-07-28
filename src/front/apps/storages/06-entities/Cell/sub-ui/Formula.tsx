@@ -1,9 +1,9 @@
-import { mylib } from '#shared/lib/my-lib';
 import { StoragesFormulaEditValue } from '$storages/entities/FormulaEdit';
 import { StoragesFormulaTexted } from '$storages/entities/FormulaTexted';
 import { storagesComputeFormula, storagesMakeActualFormulaProps } from '$storages/shared/lib/formulaComputing';
 import { useStoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
+import { checkIsString } from 'shared/utils/checkIs';
 import { twMerge } from 'tailwind-merge';
 import { StoragesCellTypeProps } from '../model/model';
 
@@ -35,7 +35,7 @@ export const StoragesCellOfTypeFormula = (props: StoragesCellTypeProps<StoragesC
     !result || (
       <div className="flex gap-2">
         <span>{props.column.title} =</span>
-        <span className={twMerge('font-bold', mylib.isStr(result) ? 'text-xKO' : 'text-x3')}>{result}</span>
+        <span className={twMerge('font-bold', checkIsString(result) ? 'text-xKO' : 'text-x3')}>{result}</span>
       </div>
     )
   );

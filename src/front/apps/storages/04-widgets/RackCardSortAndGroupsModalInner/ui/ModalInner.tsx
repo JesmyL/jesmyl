@@ -1,4 +1,3 @@
-import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
@@ -9,6 +8,7 @@ import { SortDirection } from 'shared/model/common';
 import { StoragesRack, StoragesRackCard } from 'shared/model/storages/list.model';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
 import { itNNull } from 'shared/utils';
+import { checkIsNumber } from 'shared/utils/checkIs';
 
 type DropdownItem = { title: string; id: keyof StoragesRackCard | number };
 
@@ -38,7 +38,7 @@ export const StoragesRackCardSortAndGroupsModalInner = (props: { rack: StoragesR
       <ModalBody className="flex flex-col gap-4 custom-align-items">
         {props.rack.parent != null && (
           <IconCheckbox
-            checked={mylib.isNum(rackSortRules)}
+            checked={checkIsNumber(rackSortRules)}
             postfix={
               <>
                 Использовать правила
@@ -49,13 +49,13 @@ export const StoragesRackCardSortAndGroupsModalInner = (props: { rack: StoragesR
             }
             onChange={() =>
               storagesSortAndGroupAtom.do.setPartial({
-                [props.rack.w]: mylib.isNum(rackSortRules) ? undefined : props.rack.parent,
+                [props.rack.w]: checkIsNumber(rackSortRules) ? undefined : props.rack.parent,
               })
             }
           />
         )}
 
-        {mylib.isNum(rackSortRules) || (
+        {checkIsNumber(rackSortRules) || (
           <>
             <Dropdown
               label="Группировка"

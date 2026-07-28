@@ -1,5 +1,5 @@
 import { HttpLink, HttpNumLeadLink, HttpNumLeadLinkKey } from 'shared/api';
-import { SMyLib } from 'shared/utils';
+import { objectEntries } from 'shared/utils/object.utils';
 
 export const numLeadToHttpLinks: Record<HttpNumLeadLinkKey, HttpLink> = {
   '1~': 'https://holychords.pro/uploads/music/',
@@ -17,7 +17,7 @@ export const numLeadToHttpLinks: Record<HttpNumLeadLinkKey, HttpLink> = {
 const httpToNumLeadLinks: Record<HttpLink, HttpNumLeadLinkKey> = {};
 const timeSeparator = '~~';
 
-SMyLib.entries(numLeadToHttpLinks)
+objectEntries(numLeadToHttpLinks)
   .sort((a, b) => b[1].length - a[1].length)
   .forEach(([key, value]) => (httpToNumLeadLinks[value] = key));
 

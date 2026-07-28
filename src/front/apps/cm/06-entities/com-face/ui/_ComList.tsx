@@ -2,12 +2,12 @@ import { translateBase } from '#basis/locale';
 import { FaceItem } from '#basis/ui/FaceItem';
 import { isIOS } from '#shared/lib/device-differences';
 import { useListInfiniteScrollController } from '#shared/lib/hooks/useListInfiniteScrollController';
-import { mylib } from '#shared/lib/my-lib';
 import { CmComNumber, useCmComLastOpenComw } from '$cm/entities/com';
 import { useCmComSetListLimitsExtracterContext } from '$cm/entities/index';
 import { useRef } from 'react';
 import { CmCom } from 'shared/const/cm/Com';
 import { retNull } from 'shared/utils';
+import { objectLength } from 'shared/utils/object.utils';
 import { cmComFaceCurrentComwIdPrefix, cmComFaceItemDescriptionClassName } from '../const/ids';
 import { useCmComFaceListClickListener } from '../lib/useComListClickListener';
 import { useCmComFaceScrollToCurrentComFace } from '../lib/useScrollToCurrentComFace';
@@ -34,7 +34,7 @@ export const CmComFaceListComList = (props: CmComFaceListProps) => {
   useCmComFaceScrollToCurrentComFace(listRef, props, [lastOpenComw]);
   useCmComFaceListClickListener(listRef, props.importantOnClick, props.list);
 
-  const isSetWids = !(props.titles && mylib.keys(props.titles).length);
+  const isSetWids = !(props.titles && objectLength(props.titles));
   const setComDescription = props.comDescription
     ? (com: CmCom, comi: number) => (
         <div className={cmComFaceItemDescriptionClassName}>{props.comDescription!(com, comi)}</div>

@@ -1,6 +1,5 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { useIsRedactArea } from '#shared/lib/hooks/useIsRedactArea';
-import { mylib, MyLib } from '#shared/lib/my-lib';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -17,6 +16,8 @@ import {
   ScheduleWidgetDayi,
 } from 'shared/api';
 import { isNIs } from 'shared/utils';
+import { objectValues } from 'shared/utils/object.utils';
+import { textToCapitalizeCase } from 'shared/utils/string.utils';
 import { ScheduleAlarmDay } from '../alarm/AlarmDay';
 import { ScheduleDayScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
@@ -53,7 +54,7 @@ export const ScheduleWidgetDay = ({
 
   const date = new Date(indexScheduleGetDayStartMs(schedule, dayi));
   const isPastDay = indexScheduleCheckIsDayIsPast(schedule, dayi);
-  const title = mylib.dayFullTitles[date.getDay()];
+  const title = textToCapitalizeCase(date.toLocaleDateString('ru', { weekday: 'long' }));
   const times: number[] = [];
   const [isShowDay, setIsShowDay] = useState(!isPastDay);
   const rights = useScheduleWidgetRightsContext();
@@ -72,7 +73,7 @@ export const ScheduleWidgetDay = ({
   const dayRating = useMemo(() => {
     let rating = 0;
     day.list.forEach(event => {
-      if (event.rate) MyLib.values(event.rate).forEach(rate => (rating += rate[0]));
+      if (event.rate) objectValues(event.rate).forEach(rate => (rating += rate[0]));
     });
     return rating;
   }, [day.list]);

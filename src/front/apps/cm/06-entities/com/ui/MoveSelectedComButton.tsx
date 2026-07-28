@@ -1,6 +1,6 @@
-import { mylib } from '#shared/lib/my-lib';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import styled from '@emotion/styled';
+import { withInsertedBeforei } from 'shared/utils';
 import { cmComSelectedComwsAtom } from '../state/atoms';
 
 export const CmComMoveSelectedButton = ({ comi }: { comi: number }) => {
@@ -10,7 +10,7 @@ export const CmComMoveSelectedButton = ({ comi }: { comi: number }) => {
         icon="ArrowDataTransferVertical"
         onClick={() => {
           cmComSelectedComwsAtom.set(prev => {
-            return mylib.withInsertedBeforei(prev, comi - 1, comi);
+            return withInsertedBeforei(prev, comi - 1, comi);
           });
         }}
       />

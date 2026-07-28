@@ -1,6 +1,6 @@
-import { mylib } from '#shared/lib/my-lib';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import React, { useState } from 'react';
+import { checkIsArray } from 'shared/utils/checkIs';
 import { textToUpperCase } from 'shared/utils/string.utils';
 import { twMerge } from 'tailwind-merge';
 import { Button } from './ui/button';
@@ -31,7 +31,7 @@ export function Autocomplete<Item extends { title: React.ReactNode; value: strin
 
   const selectedNode =
     props.selected != null &&
-    (mylib.isArr(props.selected) ? (
+    (checkIsArray(props.selected) ? (
       <span className="flex flex-wrap gap-x-1.5 max-w-[calc(100cqw-30px)]">
         {props.selected.map(index => (
           <span

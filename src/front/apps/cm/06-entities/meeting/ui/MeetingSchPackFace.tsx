@@ -1,10 +1,10 @@
-import { mylib } from '#shared/lib/my-lib';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useMemo, useState } from 'react';
 import { IScheduleWidget, ScheduleComPackEventPath, ScheduleWidgetDayEventMi, ScheduleWidgetDayi } from 'shared/api';
 import { isNIs } from 'shared/utils';
+import { objectKeys } from 'shared/utils/object.utils';
 import { useCmMeetingLinkToEvent } from '../state/meeting';
 
 export const CmMeetingSchPackFace = ({ schedule }: { schedule: IScheduleWidget }) => {
@@ -30,7 +30,7 @@ export const CmMeetingSchPackFace = ({ schedule }: { schedule: IScheduleWidget }
     return paths;
   }, [schedule.days, schedule.types]);
 
-  const pathsKeys = mylib.keys(paths);
+  const pathsKeys = objectKeys(paths);
 
   if (!pathsKeys.length) return null;
 

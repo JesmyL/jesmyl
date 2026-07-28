@@ -1,8 +1,8 @@
 import { Input } from '#shared/components/ui/input';
 import { Textarea } from '#shared/components/ui/textarea';
 import { propagationStopper } from '#shared/lib/event-funcs';
-import { mylib } from '#shared/lib/my-lib';
 import { AllHTMLAttributes, useEffect, useRef, useState } from 'react';
+import { checkIsFunction } from 'shared/utils/checkIs';
 
 type Props = OmitOwn<
   AllHTMLAttributes<HTMLInputElement & HTMLTextAreaElement>,
@@ -67,7 +67,7 @@ export const TextInput = ({
       ref={
         ((elem: (HTMLInputElement & HTMLTextAreaElement) | nil) => {
           if (elem == null) return;
-          if (mylib.isFunc(props.inputRef)) props.inputRef(elem);
+          if (checkIsFunction(props.inputRef)) props.inputRef(elem);
           else if (props.inputRef) props.inputRef.current = elem;
         }) as never
       }
@@ -111,7 +111,7 @@ const StrongDefaultValueInput = ({
               if (elem == null) return;
 
               localInputRef.current = elem;
-              if (mylib.isFunc(inputRef)) inputRef(elem);
+              if (checkIsFunction(inputRef)) inputRef(elem);
               else inputRef.current = localInputRef.current;
             }) as never
       }

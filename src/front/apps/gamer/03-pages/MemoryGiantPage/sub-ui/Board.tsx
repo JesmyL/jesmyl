@@ -1,10 +1,10 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { mylib } from '#shared/lib/my-lib';
 import { With4AtomsValue } from '#shared/ui/With4AtomsValue';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
+import { checkIsNaN } from 'shared/utils/checkIs';
 import {
   gamerMemoryGiantBoardImageisAtom,
   gamerMemoryGiantCurrentKeyNumberAtom,
@@ -25,7 +25,7 @@ export const GamerMemoryGiantBoard = (props: { win: Window; minusWinHeight?: num
     return hookEffectPipe()
       .pipe(
         addEventListenerPipe(props.win, 'keydown', event => {
-          if (mylib.isNaN(+event.key)) return;
+          if (checkIsNaN(+event.key)) return;
 
           gamerMemoryGiantCurrentKeyNumberAtom.set(currentNumber => {
             if (event.key === ' ') {

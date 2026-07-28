@@ -1,8 +1,8 @@
-import { mylib } from '#shared/lib/my-lib';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover';
 import { useState } from 'react';
 import { Matcher } from 'react-day-picker';
+import { checkIsNaN } from 'shared/utils/checkIs';
 import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { twMerge } from 'tailwind-merge';
 import { Button } from './ui/button';
@@ -21,7 +21,7 @@ export const DatePicker = (props: {
   const [date, setDate] = useState(() => {
     if (!props.initValue) return;
     const date = new Date(props.initValue);
-    if (mylib.isNaN(date.getTime())) return;
+    if (checkIsNaN(date.getTime())) return;
 
     return date;
   });

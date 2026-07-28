@@ -1,4 +1,3 @@
-import { mylib } from '#shared/lib/my-lib';
 import { SendableDropdown } from '#shared/ui/sends/dropdown/SendableDropdown';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useState } from 'react';
@@ -9,6 +8,7 @@ import {
   IScheduleWidgetUser,
   ScheduleWidgetAppAttCustomizableValueItem,
 } from 'shared/api';
+import { checkIsArray } from 'shared/utils/checkIs';
 import { KeyValueListAttNumberMember } from './KeyValueListAttNumberMember';
 
 const zeroFunc = () => 0;
@@ -36,16 +36,18 @@ export function ScheduleKeyValueListAttLiItemDropdown({
   const filter = (id: number) =>
     !value.includes(id) &&
     (isShowAll ||
-      !topValues.some(value => value[0] === id || value[1] === id || (mylib.isArr(value[1]) && value[1].includes(id))));
+      !topValues.some(
+        value => value[0] === id || value[1] === id || (checkIsArray(value[1]) && value[1].includes(id)),
+      ));
 
   const sort = isShowAll
     ? zeroFunc
     : (aid: number, bid: number) => {
         const isAIn = topValues.some(
-          value => value[0] === aid || value[1] === aid || (mylib.isArr(value[1]) && value[1].includes(aid)),
+          value => value[0] === aid || value[1] === aid || (checkIsArray(value[1]) && value[1].includes(aid)),
         );
         const isBIn = topValues.some(
-          value => value[0] === bid || value[1] === bid || (mylib.isArr(value[1]) && value[1].includes(bid)),
+          value => value[0] === bid || value[1] === bid || (checkIsArray(value[1]) && value[1].includes(bid)),
         );
 
         return isAIn ? (isBIn ? 0 : 1) : -1;

@@ -1,6 +1,5 @@
 import { StrongDiv } from '#basis/ui/strong-control/StrongDiv';
 import { propagationStopper } from '#shared/lib/event-funcs';
-import { MyLib, mylib } from '#shared/lib/my-lib';
 import { Modal, ModalBody, ModalFooter } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import styled from '@emotion/styled';
@@ -14,6 +13,8 @@ import {
   ScheduleWidgetDayEventAttValues,
   scheduleWidgetUserRights,
 } from 'shared/api';
+import { checkIsArray } from 'shared/utils/checkIs';
+import { objectEntries } from 'shared/utils/object.utils';
 import { useScheduleWidgetRightsContext } from '../contexts';
 import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
 import { useScheduleWidgetAppAttsContext } from '../useScheduleWidget';
@@ -50,11 +51,11 @@ export const ScheduleWidgetBindAtts = ({
   isModalOpenAtom ??= atom(false);
 
   const [appAtts, attRefs] = useScheduleWidgetAppAttsContext();
-  const appAttList = MyLib.entries(appAtts);
+  const appAttList = objectEntries(appAtts);
   const rights = useScheduleWidgetRightsContext();
   const myUserR = rights.myUser?.R ?? rights.schedule.ctrl.defu;
 
-  const attEntries = atts ? MyLib.entries(atts) : [];
+  const attEntries = objectEntries(atts);
 
   return (
     <>
@@ -118,7 +119,7 @@ export const ScheduleWidgetBindAtts = ({
                 tatt={appAtts[attKey]}
                 attKey={attKey}
                 typeTitle={forTitle}
-                isLink={mylib.isArr(atts?.[attKey])}
+                isLink={checkIsArray(atts?.[attKey])}
                 customAttTopContent={customAttTopContent}
                 onRemoveAttSend={onRemoveAttSend}
               />

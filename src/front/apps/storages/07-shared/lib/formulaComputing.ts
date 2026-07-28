@@ -1,4 +1,3 @@
-import { mylib } from '#shared/lib/my-lib';
 import { makeRegExp } from 'regexpert';
 import {
   StoragesCell,
@@ -6,7 +5,8 @@ import {
   StoragesNestedCellMi,
   StoragesRackColumn,
 } from 'shared/model/storages/rack.model';
-import { itIt, smylib } from 'shared/utils';
+import { itIt } from 'shared/utils';
+import { checkIsArray, checkIsNumber, checkIsObject } from 'shared/utils/checkIs';
 import { textToUpperCase } from 'shared/utils/string.utils';
 
 type UtilProps = {
@@ -36,7 +36,7 @@ export const storagesMakeActualFormulaProps = ({ cardRow, coli, nestedCellMi, ne
     cells:
       nestedCellMi == null || cardRow == null || cardRow[coli] == null
         ? cardRow
-        : smylib.isObj(cardRow[coli][1]) && smylib.isArr(cardRow[coli][1].nst)
+        : checkIsObject(cardRow[coli][1]) && checkIsArray(cardRow[coli][1].nst)
           ? cardRow[coli][1].nst.find(cell => cell.mi === nestedCellMi)?.row
           : null,
   };
@@ -80,7 +80,7 @@ export const storagesReplaceFormulaNumbers = <Ret extends unknown | string = unk
               innerCall + 1,
             );
 
-            if (mylib.isNum(result)) return '' + result;
+            if (checkIsNumber(result)) return '' + result;
 
             return `%${result}%`;
           } catch (_) {
@@ -118,7 +118,7 @@ export const storagesComputeFormula = (props: UtilProps, innerCall: number) => {
       `return dict.res = ${storagesReplaceFormulaNumbers(props, innerCall + 1, retZero).join('')};`,
     )(dict);
 
-    return mylib.isNum(dict.res) ? +dict.res.toFixed(props.resultFix ?? 2) : 0;
+    return checkIsNumber(dict.res) ? +dict.res.toFixed(props.resultFix ?? 2) : 0;
   } catch (_e) {
     return 'Ошибка';
   }

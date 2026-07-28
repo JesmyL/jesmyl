@@ -1,6 +1,5 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { useIsRedactArea } from '#shared/lib/hooks/useIsRedactArea';
-import { mylib, MyLib } from '#shared/lib/my-lib';
 import { useIsRememberExpand } from '#shared/ui/expand/useIsRememberExpand';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -23,10 +22,10 @@ import {
   ScheduleWidgetCleans,
   ScheduleWidgetDayi,
 } from 'shared/api';
+import { howMillisecondsInMin } from 'shared/const/ms';
+import { objectEntries, objectLength } from 'shared/utils/object.utils';
 import { ScheduleWidgetDayEventRating } from './DayEventRating';
 import { DayEventRedactControls } from './RedactControls';
-
-const msInMin = mylib.howMs.inMin;
 
 interface Props {
   schedule: IScheduleWidget;
@@ -74,7 +73,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
     props.dayi,
     props.eventTimes[props.eventi],
   );
-  const eventStartMs = eventFinishMs - eventTm * msInMin;
+  const eventStartMs = eventFinishMs - eventTm * howMillisecondsInMin;
   let isPrevEvent = now > eventFinishMs;
 
   if (eventTm === 0) {
@@ -91,7 +90,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
         const nextEventTm = ScheduleWidgetCleans.takeEventTm(nextEvent, nextBox);
 
         if (nextEventTm !== 0) {
-          eventTmMs += nextEventTm * mylib.howMs.inMin;
+          eventTmMs += nextEventTm * howMillisecondsInMin;
           break;
         }
       }
@@ -112,7 +111,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
   const isCanExpandEvent =
     props.isForceExpand ??
     (((rights.myUser && rights.isCanReadTitles) ||
-      (props.event.atts && MyLib.entries(props.event.atts).some(item => item[0] === '[cm]:coms'))) &&
+      (props.event.atts && objectEntries(props.event.atts).some(item => item[0] === '[cm]:coms'))) &&
       !props.redact);
 
   const isExpandEvent = (isSelfRedact || isExpand) && isCanExpandEvent;
@@ -196,7 +195,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
           {(props.isForceCanRedact ?? rights.isCanRedact)
             ? isExpand || isRedact
               ? editIcon
-              : (props.event.dsc || MyLib.keys(props.event.atts).length !== 0) && <LazyIcon icon="ArrowDown01" />
+              : (props.event.dsc || objectLength(props.event.atts) !== 0) && <LazyIcon icon="ArrowDown01" />
             : props.isForceExpand ||
               (isCanExpandEvent ? isExpand ? <LazyIcon icon="ArrowUp01" /> : <LazyIcon icon="ArrowDown01" /> : null)}
         </div>

@@ -1,5 +1,4 @@
 import { StrongDiv } from '#basis/ui/strong-control/StrongDiv';
-import { mylib } from '#shared/lib/my-lib';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { Atom, atom } from 'atomaric';
@@ -10,6 +9,7 @@ import {
   ScheduleWidgetAttRef,
   ScheduleWidgetDayEventAttValues,
 } from 'shared/api';
+import { howMillisecondsInDay } from 'shared/const/ms';
 import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
 import { ScheduleWidgetAttFace } from './AttFace';
 
@@ -55,15 +55,24 @@ export function ScheduleWidgetBindAttRefKeyButton({
 
         <ModalBody>
           {refs.map(attRef => {
-            if (!schedule.days) return null;
+            if (!schedule.days) return;
             const [dayi, eventMi] = attRef;
             const day = schedule.days[dayi];
 
-            if (day == null) return null;
+            if (!day) return;
 
             const event = day.list?.find(event => event.mi === eventMi);
             if (!event) return null;
-            const dayDate = new Date(schedule.start + dayi * mylib.howMs.inDay);
+            let dayTitle = null;
+            if (schedule.days.length > 1) {
+              const dayDate = new Date(schedule.start + dayi * howMillisecondsInDay);
+              dayTitle = (
+                <>
+                  {dayi + 1} день, {dayDate.toLocaleDateString('ru', { weekday: 'long' })}
+                  {' - '}
+                </>
+              );
+            }
 
             return (
               <StrongDiv
@@ -73,7 +82,8 @@ export function ScheduleWidgetBindAttRefKeyButton({
                 onSend={() => onSend(attRef)}
               >
                 <div className="text-x7">
-                  {dayi + 1} день, {mylib.dayFullTitles[dayDate.getDay()]} - {schedule.types[event.type].title}
+                  {dayTitle}
+                  {schedule.types[event.type].title}
                 </div>
                 <div className={'flex gap-2 bg-x1 p-2 pointer' + (atts?.[attKey] ? ' disabled ' : '')}>
                   <ScheduleWidgetAttFace

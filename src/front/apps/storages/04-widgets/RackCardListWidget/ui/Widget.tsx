@@ -1,6 +1,5 @@
 import { Accordion } from '#shared/components/ui/accordion';
 import { Button } from '#shared/components/ui/button';
-import { mylib } from '#shared/lib/my-lib';
 import { useConfirm } from '#shared/ui/modal';
 import { StoragesRackStatusFace } from '$storages/entities/RackStatusFace';
 import { storagesSortAndGroupAtom } from '$storages/shared/state/atoms';
@@ -11,6 +10,8 @@ import { memo } from 'react';
 import { SortDirection } from 'shared/model/common';
 import { StoragesRack, StoragesRackCard, StoragesRackWid } from 'shared/model/storages/list.model';
 import { StoragesColumnType, StoragesDictItemi, StoragesRackColumn } from 'shared/model/storages/rack.model';
+import { checkIsNumber, checkIsString } from 'shared/utils/checkIs';
+import { objectKeys } from 'shared/utils/object.utils';
 import { textToUpperCase } from 'shared/utils/string.utils';
 
 const noValue = '<Без значения>';
@@ -27,8 +28,8 @@ export const StoragesRackCardListWidget = memo((props: { rack: StoragesRack }) =
 
   const allSortRules = useAtomValue(storagesSortAndGroupAtom);
   let rackSortRules = allSortRules[props.rack.w];
-  if (mylib.isNum(rackSortRules)) rackSortRules = allSortRules[rackSortRules];
-  if (mylib.isNum(rackSortRules)) return;
+  if (checkIsNumber(rackSortRules)) rackSortRules = allSortRules[rackSortRules];
+  if (checkIsNumber(rackSortRules)) return;
 
   const { dir, group, sort } = rackSortRules ?? {};
 
@@ -96,13 +97,13 @@ export const StoragesRackCardListWidget = memo((props: { rack: StoragesRack }) =
       });
     }
 
-    if (mylib.isStr(sort)) {
+    if (checkIsString(sort)) {
       return cards.slice().sort((aCard, bCard) => {
         let result = 0;
 
-        if (mylib.isStr(aCard[sort]) && mylib.isStr(bCard[sort])) {
+        if (checkIsString(aCard[sort]) && checkIsString(bCard[sort])) {
           result = compareStrings(aCard[sort], bCard[sort]);
-        } else if (mylib.isNum(aCard[sort]) && mylib.isNum(bCard[sort])) {
+        } else if (checkIsNumber(aCard[sort]) && checkIsNumber(bCard[sort])) {
           result = compareNumbers(aCard[sort], bCard[sort]);
         }
 
@@ -118,9 +119,9 @@ export const StoragesRackCardListWidget = memo((props: { rack: StoragesRack }) =
 
       let result = 0;
 
-      if (mylib.isNum(aVal) && mylib.isNum(bVal)) {
+      if (checkIsNumber(aVal) && checkIsNumber(bVal)) {
         result = compareNumbers(aVal, bVal);
-      } else if (mylib.isStr(aVal) && mylib.isStr(bVal)) {
+      } else if (checkIsString(aVal) && checkIsString(bVal)) {
         result = compareStrings(aVal, bVal);
       }
 
@@ -133,22 +134,22 @@ export const StoragesRackCardListWidget = memo((props: { rack: StoragesRack }) =
   if (group == null) return sortCards(props.rack.cards).map(cardMapper);
 
   const groupedCards = Object.groupBy(props.rack.cards, card => {
-    if (mylib.isStr(group)) {
+    if (checkIsString(group)) {
       if (group === 'status') return props.rack.statuses[card.status || 0]?.title;
-      if (mylib.isNum(card[group]) || mylib.isStr(card[group])) return card[group];
+      if (checkIsNumber(card[group]) || checkIsString(card[group])) return card[group];
       return noValue;
     }
 
     if (card.row?.[group]?.[1] == null) return noValue;
 
-    if (mylib.isNum(group)) {
+    if (checkIsNumber(group)) {
       const col = props.rack.cols[group] as StoragesRackColumn<StoragesColumnType.String>;
 
-      if (col.t === StoragesColumnType.String && mylib.isNum(card.row[group][1]))
+      if (col.t === StoragesColumnType.String && checkIsNumber(card.row[group][1]))
         return props.rack.dicts[col.di ?? 0].li[card.row[group][1]] || card.row[group][1];
     }
 
-    if (mylib.isNum(card.row[group][1]) || mylib.isStr(card.row[group][1])) return card.row[group][1];
+    if (checkIsNumber(card.row[group][1]) || checkIsString(card.row[group][1])) return card.row[group][1];
 
     return noValue;
   });
@@ -161,7 +162,7 @@ export const StoragesRackCardListWidget = memo((props: { rack: StoragesRack }) =
           defaultValue={openGroups}
           onValueChange={value => openGroupsAtom.set(value)}
         >
-          {mylib.keys(groupedCards).map(groupKey => {
+          {objectKeys(groupedCards).map(groupKey => {
             return (
               <Accordion.Item
                 key={groupKey}

@@ -2,8 +2,8 @@ import { useNavigate, UseNavigateResult } from '@tanstack/react-router';
 import { atom, useAtomValue } from 'atomaric';
 import { useCallback, useEffect } from 'react';
 import { SokiAppName } from 'shared/api';
+import { objectKeys } from 'shared/utils/object.utils';
 import { useActualRef } from '../hooks/useActualRef';
-import { MyLib } from '../my-lib';
 
 type ActionFor = SokiAppName | `*/${string}`;
 
@@ -49,7 +49,7 @@ export class LinkAppActionFabric<Props extends Record<string, unknown> = Record<
   makeLink(props: Props) {
     const url = new URL(window.location.origin);
     url.searchParams.set(searchParamName, this.actionFor);
-    MyLib.keys(props).forEach(key => url.searchParams.set(key, JSON.stringify(props[key])));
+    objectKeys(props).forEach(key => url.searchParams.set(key, JSON.stringify(props[key])));
     return url.toString();
   }
 

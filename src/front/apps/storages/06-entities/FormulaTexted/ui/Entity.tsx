@@ -1,6 +1,6 @@
-import { mylib } from '#shared/lib/my-lib';
 import { storagesComputeFormula, storagesReplaceFormulaNumbers } from '$storages/shared/lib/formulaComputing';
 import { StoragesCell, StoragesColumnType, StoragesRackColumn } from 'shared/model/storages/rack.model';
+import { checkIsString } from 'shared/utils/checkIs';
 
 type Props = {
   formula: string;
@@ -45,7 +45,7 @@ export const StoragesFormulaTexted = (props: Props) => {
           ),
         )}
         {' = '}
-        <span className="font-bold">{mylib.isStr(result) ? <span className="text-xKO">{result}</span> : result}</span>
+        <span className="font-bold">{checkIsString(result) ? <span className="text-xKO">{result}</span> : result}</span>
       </span>
     </div>
   );

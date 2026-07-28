@@ -1,7 +1,6 @@
 import * as React from 'react';
 
-import { mylib } from '#shared/lib/my-lib';
-import { cn } from '#shared/lib/utils';
+import { cn, setInputHeightByContent } from '#shared/lib/utils';
 
 function Textarea({ className, ...props }: React.ComponentProps<'textarea'>) {
   return (
@@ -21,11 +20,11 @@ function Textarea({ className, ...props }: React.ComponentProps<'textarea'>) {
       {...props}
       onFocus={event => {
         props.onFocus?.(event);
-        mylib.setInputHeightByContent(event.currentTarget);
+        setInputHeightByContent(event.currentTarget);
       }}
       onInput={event => {
         props.onInput?.(event);
-        mylib.setInputHeightByContent(event.currentTarget);
+        setInputHeightByContent(event.currentTarget);
       }}
     />
   );

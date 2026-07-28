@@ -1,5 +1,6 @@
 import TgBot, { BotCommand, InlineKeyboardButton, User } from 'node-telegram-bot-api';
-import { Eventer, EventerCallback, EventerListeners, smylib } from 'shared/utils';
+import { Eventer, EventerCallback, EventerListeners } from 'shared/utils';
+import { checkIsNumber, checkIsString } from 'shared/utils/checkIs';
 import { TgLogger } from './log/log-bot';
 import {
   JTgBotCallbackQuery,
@@ -62,7 +63,7 @@ export class JesmylTelegramBotWrapper {
 
         this.bot.answerCallbackQuery(
           query.id,
-          smylib.isStr(options)
+          checkIsString(options)
             ? { text: options, callback_query_id: query.id }
             : { show_alert: true, ...options, callback_query_id: query.id },
         );
@@ -95,7 +96,7 @@ export class JesmylTelegramBotWrapper {
 
       if (this.personalQueryListeners.length > 0 && query.from.id === query.message?.chat.id) {
         const event = await Eventer.invoke(this.personalQueryListeners, query);
-        if (event.stoppedValue !== undefined && (smylib.isStr(event.stoppedValue) || event.stoppedValue.text))
+        if (event.stoppedValue !== undefined && (checkIsString(event.stoppedValue) || event.stoppedValue.text))
           answer(event.stoppedValue);
       }
     });
@@ -124,7 +125,7 @@ export class JesmylTelegramBotWrapper {
   sendMessage(userOrId: User | number, text: string, logger: TgLogger, options?: TgBot.SendMessageOptions | null) {
     return new Promise<{ ok: false; value: string } | { ok: true; value: TgBot.Message }>(res => {
       this.bot
-        .sendMessage(smylib.isNum(userOrId) ? userOrId : userOrId.id, text, {
+        .sendMessage(checkIsNumber(userOrId) ? userOrId : userOrId.id, text, {
           parse_mode: 'HTML',
           ...options,
         })

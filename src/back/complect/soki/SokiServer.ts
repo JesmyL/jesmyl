@@ -4,8 +4,8 @@ import { userAuthStringified, userVisitStringified } from 'back/utils';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 import { makeRegExp } from 'regexpert';
 import { LocalSokiAuth, SokiAuthLogin, SokiError, SokiVisit, TsjrpcClientEvent, TsjrpcServerEvent } from 'shared/api';
-import { setSharedPolyfills, smylib } from 'shared/utils';
-import { checkIsString } from 'shared/utils/checkIs';
+import { setSharedPolyfills } from 'shared/utils';
+import { checkIsFunction, checkIsObject, checkIsString } from 'shared/utils/checkIs';
 import WebSocket, { WebSocketServer } from 'ws';
 import { ErrorCatcher } from '../ErrorCatcher';
 import { tokenSecretFileStore } from './file-stores';
@@ -136,7 +136,7 @@ export class SokiServer {
     }
 
     const stringEvent = JSON.stringify(event);
-    if (smylib.isFunc(clientSelector)) {
+    if (checkIsFunction(clientSelector)) {
       this.clients.forEach(client => {
         if (clientSelector(this.visits.get(client), this.auths.get(client), client)) client.send(stringEvent);
       });
@@ -144,7 +144,7 @@ export class SokiServer {
     }
 
     if ('forEach' in clientSelector) {
-      if (!smylib.isFunc(clientSelector.forEach)) return;
+      if (!checkIsFunction(clientSelector.forEach)) return;
       clientSelector.forEach((client: WebSocket) => client.send(stringEvent));
       return;
     }
@@ -174,7 +174,7 @@ export class SokiServer {
       {
         ...event,
         invokedResult:
-          smylib.isObj(event.invokedResult) && 'value' in event.invokedResult
+          checkIsObject(event.invokedResult) && 'value' in event.invokedResult
             ? event.invokedResult.value
             : event.invokedResult,
       },

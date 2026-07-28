@@ -1,7 +1,7 @@
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { attTranslatorTypes } from 'shared/api';
 import { SchEventTypesTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
-import { smylib } from 'shared/utils';
+import { objectLength } from 'shared/utils/object.utils';
 import { modifySchedule } from '../schedule-modificators';
 import { onScheduleEventTypesAddManyEvent } from '../specific-modify-events';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
@@ -69,7 +69,7 @@ export const schEventTypesTsjrpcBaseServer =
             const type = sch.types[props.typei];
             if (type.atts == null) return null;
             delete type.atts[props.attKey];
-            if (!smylib.keys(type.atts).length) delete type.atts;
+            if (!objectLength(type.atts)) delete type.atts;
 
             return (
               `В расписании ${scheduleTitleInBrackets(sch)} из типа событий ` +

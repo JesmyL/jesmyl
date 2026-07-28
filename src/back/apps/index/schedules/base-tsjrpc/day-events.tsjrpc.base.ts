@@ -9,7 +9,9 @@ import {
   ScheduleWidgetAppAttCustomizableValueItem,
 } from 'shared/api';
 import { SchDayEventsTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
-import { smylib } from 'shared/utils';
+import { takeNextMi, withInsertedBeforei } from 'shared/utils';
+import { checkIsArray } from 'shared/utils/checkIs';
+import { objectLength } from 'shared/utils/object.utils';
 import { modifyScheduleDay } from '../schedule-modificators';
 import { onScheduleDayEventIsNeedTgInformSetEvent } from '../specific-modify-events';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
@@ -74,7 +76,7 @@ export const schDayEventsTsjrpcBaseServer =
 
           let att = event.atts[props.props.attKey] as ScheduleWidgetAppAttCustomizableValue;
 
-          if (smylib.isArr(att)) {
+          if (checkIsArray(att)) {
             if (+att[0]! < 0) throw new Error('attachment type is anchor');
             const [dayi, eventMi] = att as unknown as [number, number];
 
@@ -115,7 +117,7 @@ export const schDayEventsTsjrpcBaseServer =
         modifyKeyValueAttachmentValueList<Props, 'values'>('values', (values, props, itemi, sch) => {
           if (itemi == null) throw 'Error 76521387462345';
           const [, itemValue] = values[itemi];
-          if (!smylib.isArr(itemValue)) throw new Error('att value list item not array type');
+          if (!checkIsArray(itemValue)) throw new Error('att value list item not array type');
 
           return { description: modifier(itemValue, props, values[itemi], sch) };
         });
@@ -176,7 +178,7 @@ export const schDayEventsTsjrpcBaseServer =
           removeAttachment: modifyEvent((event, { props, attKey }, sch) => {
             event.atts ??= {};
             delete event.atts[attKey];
-            if (!smylib.keys(event.atts).length) delete event.atts;
+            if (!objectLength(event.atts)) delete event.atts;
 
             return `${inEventTypeTtileOfDay(sch, props)} удалено вложение ${attKey}`;
           }),
@@ -186,7 +188,7 @@ export const schDayEventsTsjrpcBaseServer =
             (values, { itemMi, key, value, props }, _, sch) => {
               if (itemMi == null) {
                 if (key == null || value == null) return { description: null };
-                values.push([key, value, smylib.takeNextMi(values, 0 as number, '2')]);
+                values.push([key, value, takeNextMi(values, 0 as number, '2')]);
                 return { description: null };
               }
 
@@ -212,7 +214,7 @@ export const schDayEventsTsjrpcBaseServer =
                 const index = values.findIndex(([, , mi]) => mi === key);
                 if (index < 0) throw new Error('value not found');
                 values.splice(index, 1);
-              } else values.push([key, value, smylib.takeNextMi(values, 0 as number, '2')]);
+              } else values.push([key, value, takeNextMi(values, 0 as number, '2')]);
 
               return {
                 description:
@@ -306,7 +308,7 @@ export const schDayEventsTsjrpcBaseServer =
               const index = itemValue.findIndex(val => val === value);
               if (index < 0) throw new Error('value not found 238716818');
 
-              item[1] = smylib.withInsertedBeforei(itemValue, index === 0 ? 2 : index - 1, index);
+              item[1] = withInsertedBeforei(itemValue, index === 0 ? 2 : index - 1, index);
 
               return (
                 `${inEventTypeTtileOfDay(sch, props)} изменён ` +
@@ -321,7 +323,7 @@ export const schDayEventsTsjrpcBaseServer =
               if (grabbedItemMi == null) return { description: null };
 
               return {
-                list: smylib.withInsertedBeforei(
+                list: withInsertedBeforei(
                   values,
                   targetItemMi == null ? values.length : values.findIndex(item => targetItemMi === item[2]),
                   values.findIndex(item => grabbedItemMi === item[2]),

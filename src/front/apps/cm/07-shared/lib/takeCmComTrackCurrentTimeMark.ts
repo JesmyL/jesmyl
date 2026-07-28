@@ -1,5 +1,5 @@
-import { mylib } from '#shared/lib/my-lib';
 import { takeCmComAudioPlayerCurrentTime } from '$cm/ext';
+import { binarySearch } from 'shared/utils';
 import { checkIsNil } from 'shared/utils/checkIs';
 
 export const takeCmComTrackCurrentTimeMark = (timeMarks: number[]) => {
@@ -7,7 +7,7 @@ export const takeCmComTrackCurrentTimeMark = (timeMarks: number[]) => {
 
   return Math.max(
     0,
-    mylib.binarySearch(timeMarks, (time, timei, compare) => {
+    binarySearch(timeMarks, (time, timei, compare) => {
       return time < pivotTime && (checkIsNil(timeMarks[timei + 1]) || timeMarks[timei + 1] > pivotTime)
         ? compare.eq
         : pivotTime - time;

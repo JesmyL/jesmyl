@@ -2,8 +2,8 @@ import { Button } from '#shared/components/ui/button';
 import { Script } from '#shared/ui/tags/Script';
 import { RefObject, useEffect, useRef } from 'react';
 import { itIt } from 'shared/utils';
+import { objectKeys } from 'shared/utils/object.utils';
 import { addEventListenerPipe, hookEffectPipe } from '../hookEffectPipe';
-import { mylib } from '../my-lib';
 import { excel2jsonParserBox } from '../parseExcel2Json';
 import { useActualRef } from './useActualRef';
 
@@ -37,7 +37,7 @@ export const ExcelValueListExtracter = (props: {
               const keyValues: Record<string, Set<string>> = {};
 
               list.forEach(value => {
-                mylib.keys(value).forEach(key => {
+                objectKeys(value).forEach(key => {
                   keyValues[key] ??= new Set();
                   keyValues[key].add(value[key]);
                 });

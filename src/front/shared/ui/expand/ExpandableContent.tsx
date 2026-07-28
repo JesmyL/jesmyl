@@ -1,5 +1,5 @@
-import { mylib } from '#shared/lib/my-lib';
 import { FunctionComponent, HTMLAttributes, ReactNode, useState } from 'react';
+import { checkIsFunction } from 'shared/utils/checkIs';
 import { LazyIcon } from '../the-icon/LazyIcon';
 
 interface Props<Element extends HTMLElement> {
@@ -25,10 +25,10 @@ export const ExpandableContent = <Element extends HTMLElement>({
         onClick={() => setIsExpand(!isExpand)}
       >
         {icon && <LazyIcon icon={icon} />}
-        {mylib.isFunc(title) ? title(isExpand) : title}
+        {checkIsFunction(title) ? title(isExpand) : title}
         {isExpand ? <LazyIcon icon="ArrowUp01" /> : <LazyIcon icon="ArrowDown01" />}
       </span>
-      {mylib.isFunc(postfix) ? postfix(isExpand) : postfix}
+      {checkIsFunction(postfix) ? postfix(isExpand) : postfix}
     </>
   );
   const className = 'flex w-full between';
@@ -36,7 +36,7 @@ export const ExpandableContent = <Element extends HTMLElement>({
   return (
     <>
       {HeaderNode ? <HeaderNode className={className}>{header}</HeaderNode> : <div className={className}>{header}</div>}
-      {isExpand && (mylib.isFunc(children) ? children(isExpand) : children)}
+      {isExpand && (checkIsFunction(children) ? children(isExpand) : children)}
     </>
   );
 };

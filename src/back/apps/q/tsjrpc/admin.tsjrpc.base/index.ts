@@ -14,7 +14,7 @@ import {
   QuestionerTemplateSelector,
   QuestionerType,
 } from 'shared/model/q';
-import { smylib } from 'shared/utils';
+import { takeKeyId, withInsertedBeforei } from 'shared/utils';
 import { objectKeys } from 'shared/utils/object.utils';
 import { questionerBlanksDirStorage } from '../../file-stores';
 import { questionerAdminServerTsjrpcShare } from '../admin.tsjrpc.share';
@@ -59,7 +59,7 @@ export const questionerAdminServerTsjrpcBase =
               new Set([...blank.ord, ...objectKeys(blank.tmp).map(Number)]),
             );
             const index = templateKeys.indexOf(+templateId);
-            blank.ord = smylib.withInsertedBeforei(templateKeys, index - 1, index);
+            blank.ord = withInsertedBeforei(templateKeys, index - 1, index);
           }),
 
           changeTemplateTitle: updateTemplate((template, { value }) => (template.title = value)),
@@ -88,7 +88,7 @@ export const questionerAdminServerTsjrpcBase =
               template.needSelect = template.needSelect ? undefined : 1;
 
               if (!template.needSelect) {
-                const answerIds = smylib.keys(template.variants).map(Number);
+                const answerIds = objectKeys(template.variants).map(Number);
                 if (template.correct?.length !== answerIds.length) {
                   template.correct = Array.from(new Set([...(template.correct ?? []), ...answerIds]));
                 }
@@ -121,7 +121,7 @@ export const questionerAdminServerTsjrpcBase =
               template.type === QuestionerType.Sorter
             ) {
               template.variants ??= {};
-              const answerId = smylib.takeKeyId(template.variants, QuestionerAnswerId.min);
+              const answerId = takeKeyId(template.variants, QuestionerAnswerId.min);
               template.variants[answerId] = { title: '' };
 
               if (template.type === QuestionerType.Sorter) template.correct?.push(answerId);
@@ -148,7 +148,7 @@ export const questionerAdminServerTsjrpcBase =
             if (template.type === QuestionerType.Sorter) {
               template.correct ??= objectKeys(template.variants).map(Number);
               const answeri = template.correct.indexOf(+answerId);
-              template.correct = smylib.withInsertedBeforei(template.correct, answeri - 1, answeri);
+              template.correct = withInsertedBeforei(template.correct, answeri - 1, answeri);
 
               return;
             }

@@ -1,5 +1,4 @@
 import { isTouchDevice } from '#shared/lib/device-differences';
-import { mylib } from '#shared/lib/my-lib';
 import { ScheduleDayEventPathProps } from '#widgets/schedule/ScheduleWidget.model';
 import { CmBroadcastFullscreen } from '$cm/entities/broadcast';
 import { CmComListContextValue, CmComOpenRouteProps } from '$cm/entities/com';
@@ -14,6 +13,7 @@ import { FileRoutesByPath, Link, useParams, useSearch } from '@tanstack/react-ro
 import { useMemo } from 'react';
 import { ScheduleWidgetWid } from 'shared/api';
 import { extractNumber } from 'shared/utils';
+import { checkIsFunction } from 'shared/utils/checkIs';
 import { makeCmComNestedRoute } from './cmComNestedRouteMaker';
 
 interface Props<Path extends keyof FileRoutesByPath> {
@@ -82,7 +82,7 @@ export const makeCmEventNestedRoute = <Path extends keyof FileRoutesByPath>(prop
     ...comRoute,
     validateSearch: (search: PRecord<string, unknown>): ScheduleDayEventPathProps & CmComOpenRouteProps => {
       return {
-        ...(mylib.isFunc(comRoute?.validateSearch) ? comRoute.validateSearch(search) : {}),
+        ...(checkIsFunction(comRoute?.validateSearch) ? comRoute.validateSearch(search) : {}),
         schw: isNaN(+search.schw!) ? undefined : (+search.schw! as never),
         dayi: isNaN(+search.dayi!) ? undefined : (+search.dayi! as never),
         eventMi: isNaN(+search.eventMi!) ? undefined : (+search.eventMi! as never),

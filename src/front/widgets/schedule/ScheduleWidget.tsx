@@ -3,7 +3,6 @@ import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { StrongInputDateTimeExtracter } from '#basis/ui/strong-control/StrongDateTimeExtracter';
 import { useIsRedactArea } from '#shared/lib/hooks/useIsRedactArea';
-import { mylib } from '#shared/lib/my-lib';
 import { QrCodeFullScreen } from '#shared/ui/qr-code/QrCodeFullScreen';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
@@ -13,6 +12,7 @@ import { Atom, atom } from 'atomaric';
 import { useEffect, useMemo, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { IScheduleWidget, ScheduleScopeProps, ScheduleWidgetDayi, ScheduleWidgetWidDef } from 'shared/api';
+import { howMillisecondsInMin } from 'shared/const/ms';
 import { ScheduleWidgetCustomAttachments } from './atts/custom/CustomAttachments';
 import { ScheduleWidgetStartTimeText } from './complect/StartTimeText';
 import { ScheduleWidgetTopicTitle } from './complect/TopicTitle';
@@ -28,7 +28,6 @@ import { ScheduleWidgetMyUserTgInform } from './tg-inform/UserTgInform';
 import { schDaysTsjrpcClient, schGeneralTsjrpcClient, schUsersTsjrpcClient } from './tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetRights, useScheduleWidgetRights } from './useScheduleWidget';
 
-const msInMin = mylib.howMs.inMin;
 let isOpenInviteQrAtom: Atom<boolean>;
 
 export function ScheduleWidget({
@@ -83,7 +82,7 @@ export function ScheduleWidget({
 
   const [updates, setUpdates] = useState<null | number>(null);
   useEffect(() => {
-    let time = msInMin;
+    let time = howMillisecondsInMin;
     if (updates === null) {
       const now = Date.now();
       time = time - Math.floor((now / time - Math.floor(now / time)) * time);

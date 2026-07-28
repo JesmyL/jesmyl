@@ -1,7 +1,8 @@
-import { MyLib, mylib } from '#shared/lib/my-lib';
 import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { ChordPack } from 'shared/api';
+import { checkIsString } from 'shared/utils/checkIs';
+import { mapObjectEntries, objectEntries } from 'shared/utils/object.utils';
 import { cmEditorChordRedactableChordsAtom } from '../state/atoms';
 
 export const CmEditorChordChordNodes = ({
@@ -18,14 +19,14 @@ export const CmEditorChordChordNodes = ({
   const chordNodes = useMemo(() => {
     const chordBoxes: Record<string, string[]> = {};
     let box: [string, number][] = [];
-    const sorted = MyLib.entries({ ...redactableChords, ...chords }).sort(([a], [b]) => (a > b ? 1 : a < b ? -1 : 0));
+    const sorted = objectEntries({ ...redactableChords, ...chords }).sort(([a], [b]) => (a > b ? 1 : a < b ? -1 : 0));
     const pushBox = () => {
       const names = box.map(([name, lad]) => [name, Math.trunc(lad)] as [string, number]).map(([name]) => name);
       chordBoxes[names[0]?.[0]] = names;
     };
 
     sorted.forEach(([chordName, [lad]]) => {
-      if (!mylib.isStr(chordName)) return;
+      if (!checkIsString(chordName)) return;
       const chordBase = box[0]?.[0]?.[0];
       if (chordBase === undefined || chordName.startsWith(chordBase)) {
         box.push([chordName, lad as number]);
@@ -36,7 +37,7 @@ export const CmEditorChordChordNodes = ({
     });
     pushBox();
 
-    return MyLib.entries(chordBoxes).map(([chordBase, names]) => {
+    return mapObjectEntries(chordBoxes, (chordBase, names) => {
       return (
         <div key={chordBase}>
           <div className={`sticky chord-base-title ${currentChordName[0] === chordBase ? 'font-bold' : ''}`}>

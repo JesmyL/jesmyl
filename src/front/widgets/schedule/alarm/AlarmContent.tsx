@@ -1,5 +1,4 @@
 import { useAppNameContext } from '#basis/state/contexts';
-import { mylib } from '#shared/lib/my-lib';
 import { FullContentValue } from '#shared/ui/fullscreen-content/FullContent';
 import { useFullContent } from '#shared/ui/fullscreen-content/useFullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -15,15 +14,13 @@ import {
   ScheduleWidgetDayi,
   ScheduleWidgetDayListItemTypeBox,
 } from 'shared/api';
+import { howMillisecondsInDay, howMillisecondsInHour, howMillisecondsInMin } from 'shared/const/ms';
 import { itNNull } from 'shared/utils';
+import { checkIsArray, checkIsFunction, checkIsNaN } from 'shared/utils/checkIs';
 import { twMerge } from 'tailwind-merge';
 import { ScheduleWidgetTopicTitle } from '../complect/TopicTitle';
 import { ScheduleAlarmDay } from './AlarmDay';
 import { ScheduleWidgetAlarmInfoContent } from './InfoContent';
-
-const msInDay = mylib.howMs.inDay;
-const msInHour = mylib.howMs.inHour;
-const msInMin = mylib.howMs.inMin;
 
 const makeNextDayFirstEventNode = (
   scheduleTitle: string | und,
@@ -70,7 +67,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
 
   const [updates, setUpdates] = useState<null | number>(null);
   useEffect(() => {
-    let time = msInMin;
+    let time = howMillisecondsInMin;
     if (updates === null) {
       const now = Date.now();
       time = time - Math.floor((now / time - Math.floor(now / time)) * time);
@@ -79,16 +76,30 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
     return () => clearTimeout(to);
   }, [updates]);
 
+  const findLastIndex = <Value,>(
+    arr?: Value[],
+    cb: (val: Value, index: number, array: Value[]) => unknown = () => false,
+  ) => {
+    if (!checkIsArray(arr)) return null;
+    if (!checkIsFunction(cb)) return arr.length - 1;
+
+    for (let i = arr.length - 1; i >= 0; i--) if (cb(arr[i], i, arr)) return i;
+
+    return -1;
+  };
+
   const scheduleBoxes = useMemo(() => {
     return (schedule ? [schedule] : [...(schedules ?? [])].sort((a, b) => a.start - b.start))
       .map(sch => {
-        const lastFullDayIndex = mylib.findLastIndex(sch.days, day => day.list.length) ?? -1;
+        const lastFullDayIndex = findLastIndex(sch.days, day => day.list.length) ?? -1;
         const days = sch.days.slice(0, lastFullDayIndex + 1) ?? [];
         const dayStartMsList = days.map(day => {
           return ScheduleWidgetCleans.computeDayWakeUpTime(day.wup, 'number');
         });
         const dayMsList = days.map(
-          day => day.list.reduce((sum, event) => sum + (event.tm ?? sch.types[event.type]?.tm ?? 0), 0) * msInMin,
+          day =>
+            day.list.reduce((sum, event) => sum + (event.tm ?? sch.types[event.type]?.tm ?? 0), 0) *
+            howMillisecondsInMin,
         );
 
         return {
@@ -111,7 +122,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
       let fullValue: FullContentValue | und;
       let schBox;
 
-      if (observeSchw !== undefined && !mylib.isNaN(observeSchw)) {
+      if (observeSchw !== undefined && !checkIsNaN(observeSchw)) {
         schBox = scheduleBoxes.find(wr => wr.sch.w === observeSchw);
         if (schBox === undefined) node = <span className="text-xKO">Мероприятие не найдено</span>;
         else if (schBox.days.length === 0)
@@ -130,20 +141,20 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
       if (node === null) {
         const filter: (box: (typeof scheduleBoxes)[number]) => boolean = box => {
           if (box.days.length === 0) return false;
-          const endMs = box.startMs + box.days.length * msInDay + box.lastDayTm;
+          const endMs = box.startMs + box.days.length * howMillisecondsInDay + box.lastDayTm;
           return endMs > today.getTime() && box.sch.start <= today.getTime();
         };
         const currSchBox = schBox === undefined ? scheduleBoxes.find(filter) : filter(schBox) ? schBox : undefined;
 
         if (currSchBox) {
-          const start = currSchBox.sch.start - (currSchBox.sch.withTech ? msInDay : 0);
+          const start = currSchBox.sch.start - (currSchBox.sch.withTech ? howMillisecondsInDay : 0);
           const currDayi = currSchBox.days.findIndex((_, dayi) => {
-            return start + dayi * msInDay < now && start + (dayi + 1) * msInDay > now;
+            return start + dayi * howMillisecondsInDay < now && start + (dayi + 1) * howMillisecondsInDay > now;
           }) as ScheduleWidgetDayi;
 
           if (currDayi > -1 && currDayi < currSchBox.days.length) {
             const currDay = currSchBox.days[currDayi];
-            const dayBeginMs = start + currDayi * msInDay;
+            const dayBeginMs = start + currDayi * howMillisecondsInDay;
             const dayStartMs = dayBeginMs + currSchBox.dayStartMsList[currDayi];
             const dayFinishMs = dayStartMs + currSchBox.dayMsList[currDayi];
             const events = currDay.list;
@@ -151,7 +162,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
             let currEventMs = dayStartMs;
             let lastCompEventMs = 0;
             const currEventi = events.findIndex(event => {
-              lastCompEventMs = (event.tm ?? currSchBox.types[event.type]?.tm ?? 0) * msInMin;
+              lastCompEventMs = (event.tm ?? currSchBox.types[event.type]?.tm ?? 0) * howMillisecondsInMin;
               if (now > currEventMs && now < currEventMs + lastCompEventMs) return true;
 
               currEventMs += lastCompEventMs;
@@ -177,8 +188,8 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
               if (now < dayStartMs) {
                 let timeMessage = '';
 
-                if (dayStartMs - now < msInHour) {
-                  const minutesTo = Math.ceil((dayStartMs - now) / msInMin);
+                if (dayStartMs - now < howMillisecondsInHour) {
+                  const minutesTo = Math.ceil((dayStartMs - now) / howMillisecondsInMin);
                   timeMessage = `через ${ScheduleWidgetCleans.minutesToText(minutesTo)}`;
                 } else timeMessage = `в ${ScheduleWidgetCleans.computeDayWakeUpTime(currDay.wup, 'string')}`;
 
@@ -207,7 +218,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
                   content={rights => {
                     let event: IScheduleWidgetDayEvent | null = events[currEventi];
                     let nextEvent: IScheduleWidgetDayEvent | null = events[currEventi + 1];
-                    let minTo = Math.ceil((currEventMs + lastCompEventMs - now) / msInMin);
+                    let minTo = Math.ceil((currEventMs + lastCompEventMs - now) / howMillisecondsInMin);
 
                     if (!rights.isCanReadSpecials) {
                       if (event.secret) {
@@ -339,15 +350,15 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
                 topicBox={willSchBox.sch}
               />
               {startDate.getDate() === nowDate.getDate() ? (
-                msTo / msInHour < 1 ? (
+                msTo / howMillisecondsInHour < 1 ? (
                   <>до начала меньше часа</>
                 ) : (
-                  <>до начала {ScheduleWidgetCleans.hoursToText(Math.floor(msTo / msInHour))}</>
+                  <>до начала {ScheduleWidgetCleans.hoursToText(Math.floor(msTo / howMillisecondsInHour))}</>
                 )
               ) : startDate.getDate() === nowDate.getDate() + 1 && startDate.getFullYear() === nowDate.getFullYear() ? (
                 <>начало завтра</>
               ) : (
-                <>до начала {ScheduleWidgetCleans.daysToText(Math.floor(msTo / msInDay))}</>
+                <>до начала {ScheduleWidgetCleans.daysToText(Math.floor(msTo / howMillisecondsInDay))}</>
               )}
             </div>
           );

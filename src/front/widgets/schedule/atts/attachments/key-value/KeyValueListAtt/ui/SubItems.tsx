@@ -1,6 +1,5 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { markdown } from '#shared/config/markdown';
-import { mylib } from '#shared/lib/my-lib';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { css } from '@emotion/react';
@@ -16,6 +15,7 @@ import {
   ScheduleWidgetAppAttCustomizableValueItem,
   ScheduleWidgetAppAttCustomized,
 } from 'shared/api';
+import { checkIsBoolean, checkIsNumber, checkIsString } from 'shared/utils/checkIs';
 import { KeyValueListAttNumberMember } from '../../KeyValueListAttNumberMember';
 import { ScheduleKeyValueListAttLiItemDropdown } from '../../LiItemDropdown';
 
@@ -48,13 +48,13 @@ export const ScheduleWidgetAttKeyValueListSubItemsRedact = ({
   return (
     <>
       {(isRedact || value !== '+') &&
-        !mylib.isNum(value) &&
-        (mylib.isStr(value) ? (
+        !checkIsNumber(value) &&
+        (checkIsString(value) ? (
           <StrongField
-            $indent={!isRedact && mylib.isBool(valueKey)}
+            $indent={!isRedact && checkIsBoolean(valueKey)}
             className={
               `ml-3 ${isRedact ? '-mt-3' : '-mt-9'} mood-for-2 relative z-5 ` +
-              (mylib.isBool(valueKey) ? (valueKey ? 'text-x3 opacity-50' : 'text-x3') : '')
+              (checkIsBoolean(valueKey) ? (valueKey ? 'text-x3 opacity-50' : 'text-x3') : '')
             }
             value={value}
             multiline
@@ -104,7 +104,7 @@ export const ScheduleWidgetAttKeyValueListSubItemsRedact = ({
                     </div>
                   )}
                   <div className="w-full">
-                    {mylib.isNum(val) ? (
+                    {checkIsNumber(val) ? (
                       <div className="my-2">
                         <KeyValueListAttNumberMember value={val} />
                       </div>
@@ -176,7 +176,7 @@ export const ScheduleWidgetAttKeyValueListSubItemsRedact = ({
                   className="flex gap-2 ml-10"
                 >
                   <span className="flex self-start">{vali + 1}.</span>
-                  {mylib.isNum(val) ? (
+                  {checkIsNumber(val) ? (
                     <KeyValueListAttNumberMember value={val} />
                   ) : (
                     <div dangerouslySetInnerHTML={{ __html: markdown.render(val) }} />

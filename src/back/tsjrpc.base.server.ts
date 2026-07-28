@@ -1,5 +1,6 @@
 import { LocalSokiAuth, SokiVisit } from 'shared/api';
-import { emptyFunc, smylib } from 'shared/utils';
+import { emptyFunc } from 'shared/utils';
+import { checkIsFunction } from 'shared/utils/checkIs';
 import { makeTSJRPCBaseMaker } from 'tsjrpc';
 import { WebSocket } from 'ws';
 import { backConfig } from './config/backConfig';
@@ -39,7 +40,7 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
           tool,
         } = props;
 
-        const title = smylib.isFunc(feedback.description) ? feedback.description(tool) : feedback.description;
+        const title = checkIsFunction(feedback.description) ? feedback.description(tool) : feedback.description;
         if (!title) return;
 
         const text = `<code>${scope}.${method}</code>\n\n<b>${title}</b>`;

@@ -1,6 +1,6 @@
-import { MyLib } from '#shared/lib/my-lib';
 import { defaultTextCase, textCaseTitles } from 'shared/const/textCase';
 import { TextCase } from 'shared/model/common';
+import { mapObjectEntries } from 'shared/utils/object.utils';
 import { Dropdown } from '../dropdown/Dropdown';
 import { ConfiguratorEditProps } from './model';
 
@@ -11,7 +11,7 @@ export const TextCaseConfigurator = ({ config, updateConfig, title = 'Высот
     {title}
     <Dropdown
       id={config.case ?? defaultTextCase}
-      items={MyLib.entries(textCaseTitles).map(([caseStr, title]) => ({ id: +caseStr, title }))}
+      items={mapObjectEntries(textCaseTitles, (caseStr, title) => ({ id: +caseStr, title }))}
       onSelectId={textCase => updateConfig({ case: textCase })}
     />
   </div>

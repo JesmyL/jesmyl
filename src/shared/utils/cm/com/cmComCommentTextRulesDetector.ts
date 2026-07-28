@@ -7,7 +7,7 @@ import {
   CmComCommentTextDetectorRuleProps,
   CmComCommentTextDetectorWordRuleProps,
 } from 'shared/model/cm/com-comment';
-import { smylib } from 'shared/utils/SMyLib';
+import { checkIsNumber } from 'shared/utils/checkIs';
 import {
   cmComCommentPseudoCommentContentAccentsType,
   cmComCommentTrimHighlightMarkers,
@@ -79,7 +79,7 @@ export const cmComCommentTextRulesDetector = (
   Array.from(lineCommentKeys).map(commentKey => {
     let comment = lineComments[commentKey].join('\n');
 
-    if (smylib.isNum(commentKey)) {
+    if (checkIsNumber(commentKey)) {
       onFound({
         pre: selectorPrefix,
         linei: commentKey - 1,

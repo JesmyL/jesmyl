@@ -1,5 +1,4 @@
 import { DatePicker } from '#shared/components/DatePicker';
-import { mylib } from '#shared/lib/my-lib';
 import { useStoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
@@ -26,7 +25,7 @@ export const StoragesCellOfTypeDate = (props: StoragesCellTypeProps<StoragesColu
                 cardi: props.card.i,
                 rackw: props.rack.w,
                 coli: props.coli,
-                value: mylib.isNaN(date?.getTime()) ? undefined : date?.getTime(),
+                value: checkIsNaN(date?.getTime()) ? undefined : date?.getTime(),
               });
             }}
           />

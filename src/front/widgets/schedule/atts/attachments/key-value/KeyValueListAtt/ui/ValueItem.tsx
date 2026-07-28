@@ -1,6 +1,5 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { Button } from '#shared/components/ui/button';
-import { mylib } from '#shared/lib/my-lib';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import {
@@ -22,6 +21,7 @@ import {
   ScheduleWidgetAppAttCustomized,
   ScheduleWidgetCleans,
 } from 'shared/api';
+import { checkIsArray, checkIsBoolean, checkIsNil, checkIsNumber, checkIsString } from 'shared/utils/checkIs';
 import { twMerge } from 'tailwind-merge';
 import { ScheduleKeyValueListAttArrayItemKeyChange } from '../../ArrayItemSignChange';
 import { KeyValueListAttNumberMember } from '../../KeyValueListAttNumberMember';
@@ -65,7 +65,7 @@ export const ScheduleWidgetKeyValueListValueItem = ({
 
   let setSelfRedact = !rights.isCanTotalRedact;
 
-  if (mylib.isNum(valueKey)) {
+  if (checkIsNumber(valueKey)) {
     generalNode = <KeyValueListAttNumberMember value={valueKey} />;
 
     if (ScheduleWidgetCleans.checkIsTaleIdUnit(valueKey, CustomAttUseTaleId.Roles))
@@ -85,13 +85,13 @@ export const ScheduleWidgetKeyValueListValueItem = ({
   return (
     <div
       key={itemMi}
-      className={twMerge('dropdown-ancestor', mylib.isArr(value) ? (isRedact ? 'mb-15 mt-10' : 'mb-10') : 'mb-2')}
+      className={twMerge('dropdown-ancestor', checkIsArray(value) ? (isRedact ? 'mb-15 mt-10' : 'mb-10') : 'mb-2')}
     >
       <div className="flex gap-2 between mb-2">
         <div className="flex gap-2">
           {generalNode !== null ? (
             generalNode
-          ) : mylib.isBool(valueKey) ? (
+          ) : checkIsBoolean(valueKey) ? (
             <div className={twMerge('flex gap-2 text-x3', valueKey && 'opacity-50')}>
               <TheIconSendButton
                 className="self-start relative z-15"
@@ -105,10 +105,10 @@ export const ScheduleWidgetKeyValueListValueItem = ({
                   })
                 }
               />
-              {mylib.isNum(value) && <KeyValueListAttNumberMember value={value} />}
+              {checkIsNumber(value) && <KeyValueListAttNumberMember value={value} />}
             </div>
           ) : (
-            mylib.isStr(valueKey) && (
+            checkIsString(valueKey) && (
               <StrongEditableField
                 className="ml-3 -mt-4 mood-for-2 relative z-5"
                 value={valueKey}
@@ -126,24 +126,24 @@ export const ScheduleWidgetKeyValueListValueItem = ({
           )}
           {isRedact && (
             <>
-              {!mylib.isNum(value) &&
-                !mylib.isBool(valueKey) &&
-                !mylib.isNil(value) &&
+              {!checkIsNumber(value) &&
+                !checkIsBoolean(valueKey) &&
+                !checkIsNil(value) &&
                 (value === '+' || value.length < 1) && (
                   <Button size="icon">
                     <TheIconSendButton
-                      icon={mylib.isArr(value) ? 'Text' : 'LeftToRightListDash'}
+                      icon={checkIsArray(value) ? 'Text' : 'LeftToRightListDash'}
                       onSend={() =>
                         schDayEventsTsjrpcClient.setKeyValueAttachmentValue({
                           props: scopeProps,
                           itemMi,
-                          value: mylib.isArr(value) ? '+' : [],
+                          value: checkIsArray(value) ? '+' : [],
                         })
                       }
                     />
                   </Button>
                 )}
-              {mylib.isNum(valueKey) && (
+              {checkIsNumber(valueKey) && (
                 <ScheduleKeyValueListAttArrayItemKeyChange
                   dayEventAttScopeProps={scopeProps}
                   theKey={valueKey}

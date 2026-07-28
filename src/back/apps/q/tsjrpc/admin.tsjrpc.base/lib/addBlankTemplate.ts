@@ -10,7 +10,7 @@ import {
   QuestionerTextIncludeTemplate,
   QuestionerType,
 } from 'shared/model/q';
-import { smylib } from 'shared/utils';
+import { takeKeyId } from 'shared/utils';
 import { questionerAdminServerTsjrpcBase } from '..';
 
 export const questionerTSJRPCAddBlankTemplate: typeof questionerAdminServerTsjrpcBase.addBlankTemplate = async (
@@ -48,7 +48,7 @@ export const questionerTSJRPCAddBlankTemplate: typeof questionerAdminServerTsjrp
       break;
   }
 
-  const keyId = smylib.takeKeyId(blank.tmp, QuestionerTemplateId.min);
+  const keyId = takeKeyId(blank.tmp, QuestionerTemplateId.min);
   blank.ord.push(keyId);
   blank.tmp[keyId] = blankTmp;
   questionerBlanksDirStorage.saveItem(blankw);

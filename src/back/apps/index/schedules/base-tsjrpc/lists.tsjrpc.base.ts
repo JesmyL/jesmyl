@@ -7,7 +7,7 @@ import {
   ScheduleUnitScopeProps,
 } from 'shared/api';
 import { SchListsTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
-import { smylib } from 'shared/utils';
+import { takeNextMi } from 'shared/utils';
 import { knownStameskaIconNamesMd5Hash } from 'shared/values/index/known-icons';
 import { indexStameskaIconsFileStore } from '../../file-stores';
 import { indexServerTsjrpcShareMethods } from '../../tsjrpc.methods';
@@ -48,7 +48,7 @@ export const schListsTsjrpcBaseServer = new (class SchLists extends TsjrpcBaseSe
         }),
 
         createUnit: modifySchedule(false, (sch, { cati }) => {
-          const mi = smylib.takeNextMi(sch.lists.units, 0 as number);
+          const mi = takeNextMi(sch.lists.units, 0 as number);
 
           sch.lists.units.push({
             mi,

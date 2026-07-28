@@ -1,9 +1,9 @@
 import { Button } from '#shared/components/ui/button';
-import { mylib } from '#shared/lib/my-lib';
 import { questionerIDB } from '$q/shared/state/qIdb';
 import { questionerAdminTsjrpcClient } from '$q/shared/tsjrpc/admin.tsjrpc';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { QuestionerBlankWid, QuestionerTemplateId } from 'shared/model/q';
+import { objectLength } from 'shared/utils/object.utils';
 import { twMerge } from 'tailwind-merge';
 import { QuestionerTemplateVisibilityRedactorModalBodyInner } from './ModalBodyInner';
 
@@ -31,7 +31,7 @@ export const QuestionerTemplateVisibilityRedactor = ({
       >
         Сделать {template?.hidden ? 'видимым' : 'невидимым'}
       </Button>
-      {template && blank && !template.hidden && mylib.keys(blank.tmp).length > 1 && (
+      {template && blank && !template.hidden && objectLength(blank.tmp) > 1 && (
         <QuestionerTemplateVisibilityRedactorModalBodyInner
           blankw={blankw}
           templateId={templateId}

@@ -1,10 +1,11 @@
 import { Badge } from '#shared/components/ui/badge';
 import { Button } from '#shared/components/ui/button';
-import { mylib } from '#shared/lib/my-lib';
 import { useEffect, useMemo } from 'react';
 import { QuestionerType } from 'shared/model/q';
 import { QuestionerUserAnswerContentProps } from 'shared/model/q/answer';
 import { toRandomSorted } from 'shared/randoms';
+import { withInsertedBeforei } from 'shared/utils';
+import { objectKeys } from 'shared/utils/object.utils';
 import { twMerge } from 'tailwind-merge';
 
 export const QuestionerUserSorterTemplateCardContent = ({
@@ -14,7 +15,7 @@ export const QuestionerUserSorterTemplateCardContent = ({
   isCantRedact,
 }: QuestionerUserAnswerContentProps<QuestionerType.Sorter>) => {
   const variantKeys = useMemo(() => {
-    return toRandomSorted(mylib.keys(template.variants));
+    return toRandomSorted(objectKeys(template.variants));
   }, [template.variants]);
 
   const sortAnswerIds = useMemo(
@@ -45,7 +46,7 @@ export const QuestionerUserSorterTemplateCardContent = ({
                   onClick={() => {
                     onUpdate(prev => {
                       return prev?.includes(+answerId)
-                        ? prev.filter(it => it != answerId)
+                        ? prev.filter(it => it != +answerId)
                         : (prev?.concat(+answerId) ?? [+answerId]);
                     });
                   }}
@@ -79,7 +80,7 @@ export const QuestionerUserSorterTemplateCardContent = ({
                     const prevKeys = prev ?? variantKeys.map(Number);
                     const answeri = prevKeys.indexOf(+answerId);
 
-                    return mylib.withInsertedBeforei(prevKeys, answeri - 1, answeri);
+                    return withInsertedBeforei(prevKeys, answeri - 1, answeri);
                   })
                 }
               />
@@ -97,7 +98,7 @@ export const QuestionerUserSorterTemplateCardContent = ({
                     const prevKeys = prev ?? variantKeys.map(Number);
                     const answeri = prevKeys.indexOf(+answerId);
 
-                    return mylib.withInsertedBeforei(prevKeys, answeri + 2, answeri);
+                    return withInsertedBeforei(prevKeys, answeri + 2, answeri);
                   })
                 }
               />

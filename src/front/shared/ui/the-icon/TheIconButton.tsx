@@ -1,6 +1,6 @@
 import { Button } from '#shared/components/ui/button';
-import { mylib } from '#shared/lib/my-lib';
 import { ReactNode } from 'react';
+import { checkIsFunction } from 'shared/utils/checkIs';
 import { toast } from 'sonner';
 import { StameskaIconKind } from 'stameska-icon/utils';
 import { twMerge } from 'tailwind-merge';
@@ -45,7 +45,7 @@ export const TheIconButton = (props: Props) => {
                         if (props.disabled) {
                           if (props.disabledReason) {
                             toast(
-                              mylib.isFunc(props.disabledReason) ? props.disabledReason() : props.disabledReason,
+                              checkIsFunction(props.disabledReason) ? props.disabledReason() : props.disabledReason,
                               makeToastKOMoodConfig(),
                             );
                           }

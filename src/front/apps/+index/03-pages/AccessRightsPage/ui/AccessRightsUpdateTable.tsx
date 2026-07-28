@@ -1,10 +1,10 @@
 import { translateBase } from '#basis/locale';
-import { MyLib } from '#shared/lib/my-lib';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useQuery } from '@tanstack/react-query';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { accessRightsCRUDOperations, CRUDOperation } from 'shared/utils/index/utils';
+import { mapObjectEntries } from 'shared/utils/object.utils';
 
 export function IndexAccessRightsUpdateTable({
   onChange,
@@ -22,11 +22,9 @@ export function IndexAccessRightsUpdateTable({
 
   if (rightTitles == null) return;
 
-  const rightTitlesEntries = MyLib.entries(rightTitles);
-
   return (
     <>
-      {rightTitlesEntries.map(([scope, { info, ...rightTitles }]) => {
+      {mapObjectEntries(rightTitles, (scope, { info, ...rightTitles }) => {
         return (
           <div
             key={scope}
@@ -39,7 +37,7 @@ export function IndexAccessRightsUpdateTable({
             <table className="ml-2">
               {crudTableTHeader}
               <tbody>
-                {MyLib.entries(rightTitles).map(([rule, title]) => {
+                {mapObjectEntries(rightTitles, (rule, title) => {
                   return (
                     <tr
                       key={rule}
@@ -51,7 +49,7 @@ export function IndexAccessRightsUpdateTable({
                             <IconCheckbox
                               className="ml-1"
                               checked={takeIsChecked(scope, rule, operation)}
-                              onClick={() => onChange({ operation, rule, scope, role: '-' as 'TOP' })}
+                              onClick={() => onChange({ operation, rule, scope, role: '-' } as never)}
                             />
                           </td>
                         );

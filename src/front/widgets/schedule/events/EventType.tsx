@@ -1,6 +1,5 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { StrongDiv } from '#basis/ui/strong-control/StrongDiv';
-import { MyLib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { SendableDropdown } from '#shared/ui/sends/dropdown/SendableDropdown';
@@ -9,6 +8,7 @@ import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { useMemo, useState } from 'react';
 import { AttTranslatorType, attTranslatorTypes, IScheduleWidget, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
+import { objectLength } from 'shared/utils/object.utils';
 import { ScheduleWidgetBindAtts } from '../atts/BindAtts';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { schEventTypesTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
@@ -30,7 +30,7 @@ export function ScheduleWidgetEventType(props: {
   const error = useAttTypeTitleError(title, props.schedule, props.isRedact, props.typei);
   const [attTranslatorType, setAttTranslatorType] = useState(AttTranslatorType.Today);
 
-  const attEntries = (props.typeBox.atts ? MyLib.keys(props.typeBox.atts) : []).length;
+  const attEntries = objectLength(props.typeBox.atts);
 
   const scheduleScopeProps = useScheduleScopePropsContext();
   const eventTypeScopeProps = useMemo(

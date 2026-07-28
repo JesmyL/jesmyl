@@ -1,5 +1,4 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { mylib } from '#shared/lib/my-lib';
 import { excel2jsonParserBox } from '#shared/lib/parseExcel2Json';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
@@ -9,6 +8,7 @@ import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/con
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { schUsersTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { objectKeys } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
 
 interface Props {
@@ -80,7 +80,7 @@ export function ScheduleWidgetUserAddByExcelContent({ close }: Props) {
               setWetUsers(wetUsers);
               const titlesSet = new Set<string>();
 
-              wetUsers.forEach(wetUser => mylib.keys(wetUser).forEach(name => titlesSet.add(name)));
+              wetUsers.forEach(wetUser => objectKeys(wetUser).forEach(name => titlesSet.add(name)));
 
               setTitles(Array.from(titlesSet));
             } catch (error) {

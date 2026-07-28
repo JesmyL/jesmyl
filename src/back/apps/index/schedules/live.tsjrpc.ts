@@ -3,7 +3,8 @@ import { TsjrpcServerMethods } from 'back/tsjrpc.server';
 import { ScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
 import { SchLiveTsjrpcModel, SchLiveTsjrpcSharesModel } from 'shared/api/tsjrpc/schedules/live.tsjrpc.model';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
-import { itNNull, SMyLib } from 'shared/utils';
+import { itNNull } from 'shared/utils';
+import { mapObjectEntries } from 'shared/utils/object.utils';
 import { WebSocket } from 'ws';
 
 const theLiveData = {} as PRecord<ScheduleWidgetWid, PRecord<SokiAuthLogin, IndexSchWBroadcastLiveDataValue>>;
@@ -35,7 +36,7 @@ export const schLiveTsjrpcServer = new (class SchLive extends TsjrpcBaseServer<S
           theLiveData[schw] ??= {};
           theLiveData[schw][auth.login] = data;
 
-          const streamers = SMyLib.entries(theLiveData[schw]).map(([login, data]) => {
+          const streamers = mapObjectEntries(theLiveData[schw], (login, data) => {
             return { fio: data?.fio ?? '*Завершена*', login };
           });
 
@@ -50,12 +51,10 @@ export const schLiveTsjrpcServer = new (class SchLive extends TsjrpcBaseServer<S
 
           const streamers =
             (theLiveData[schw] &&
-              SMyLib.entries(theLiveData[schw])
-                .map(([login, data]) => {
-                  if (data == null) return null;
-                  return { fio: data.fio, login };
-                })
-                .filter(itNNull)) ??
+              mapObjectEntries(theLiveData[schw], (login, data) => {
+                if (data == null) return null;
+                return { fio: data.fio, login };
+              }).filter(itNNull)) ??
             [];
 
           if (streamers.length) {

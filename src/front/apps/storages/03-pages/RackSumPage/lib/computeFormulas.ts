@@ -1,8 +1,7 @@
-import { mylib } from '#shared/lib/my-lib';
 import { storagesComputeFormula } from '$storages/shared/lib/formulaComputing';
 import { StoragesRack, StoragesRackSummary, StoragesRackSummaryType } from 'shared/model/storages/list.model';
 import { StoragesColumnType, StoragesRackColumn } from 'shared/model/storages/rack.model';
-import { smylib } from 'shared/utils';
+import { checkIsNumber, checkIsObject, checkIsString } from 'shared/utils/checkIs';
 
 export const storagesRackSumComputeFormulas = (summary: StoragesRackSummary, rack: StoragesRack) => {
   let sum = 0;
@@ -47,7 +46,7 @@ export const storagesRackSumComputeFormulas = (summary: StoragesRackSummary, rac
 
           return (
             card.row?.reduce((sum, cell) => {
-              if (mylib.isObj(cell?.[1]) && cell[1].nst) {
+              if (checkIsObject(cell?.[1]) && cell[1].nst) {
                 return (
                   sum +
                   cell[1].nst.reduce((sum, rowItem) => {
@@ -71,7 +70,7 @@ export const storagesRackSumComputeFormulas = (summary: StoragesRackSummary, rac
                         -20,
                       );
 
-                      if (smylib.isNum(result)) return sum + result;
+                      if (checkIsNumber(result)) return sum + result;
 
                       return sum;
                     }
@@ -89,7 +88,7 @@ export const storagesRackSumComputeFormulas = (summary: StoragesRackSummary, rac
       0,
     );
 
-    if (mylib.isStr(result)) return result;
+    if (checkIsString(result)) return result;
 
     sum += result;
   }

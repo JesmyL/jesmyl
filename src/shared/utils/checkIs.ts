@@ -49,6 +49,7 @@ export const checkIsNull = (it: unknown): it is null => it === null;
 export const checkIsNotNull = <It>(it: It): it is Exclude<It, null> => it !== null;
 
 export const checkIsNil = (it: unknown): it is null | undefined => checkIsNull(it) || checkIsUndefined(it);
+export const checkIsNl = (it: unknown): it is null | undefined => checkIsNil(it) || checkIsNaN(it);
 export const checkIsNotNil = <It>(it: It): it is Exclude<It, null | undefined> => it != null;
 
 export const checkIsNaN = (it: unknown) => checkIsNumber(it) && isNaN(it);

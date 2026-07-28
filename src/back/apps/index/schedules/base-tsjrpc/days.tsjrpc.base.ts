@@ -2,7 +2,7 @@ import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { makeRegExp } from 'regexpert';
 import { ScheduleWidgetDayEventMi, ScheduleWidgetDayEventMiDef, ScheduleWidgetDayi } from 'shared/api';
 import { SchDaysTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
-import { smylib } from 'shared/utils';
+import { takeNextMi, withInsertedBeforei } from 'shared/utils';
 import { modifySchedule, modifyScheduleDay } from '../schedule-modificators';
 import { onScheduleDayBeginTimeSetEvent, onScheduleDayEventListSetEvent } from '../specific-modify-events';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
@@ -39,7 +39,7 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
         addDay: modifySchedule(true, sch => {
           sch.days.push({
             list: [],
-            i: smylib.takeNextMi(sch.days, 0 as ScheduleWidgetDayi, 'i'),
+            i: takeNextMi(sch.days, 0 as ScheduleWidgetDayi, 'i'),
             wup: 7,
           });
 
@@ -72,7 +72,7 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
         addEvent: modifyScheduleDay(true, (day, { value, props }, sch) => {
           day.list.push({
             type: value,
-            mi: smylib.takeNextMi(day.list, ScheduleWidgetDayEventMiDef),
+            mi: takeNextMi(day.list, ScheduleWidgetDayEventMiDef),
           });
 
           return (
@@ -93,7 +93,7 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
           const eventi = day.list.findIndex(event => event.mi === eventMi);
           if (eventi < 0) throw new Error('event not found');
 
-          day.list = smylib.withInsertedBeforei(day.list, beforei, eventi);
+          day.list = withInsertedBeforei(day.list, beforei, eventi);
 
           return `В расписании ${scheduleTitleInBrackets(props.schw)}, в ${props.dayi + 1} дне перемещено событие`;
         }),

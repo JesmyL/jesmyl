@@ -1,5 +1,5 @@
-import { mylib } from '#shared/lib/my-lib';
 import { IndexAccessScopeRules, IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
+import { checkIsArray } from '../checkIs';
 import { objectKeys } from '../object.utils';
 
 const operations = {
@@ -27,8 +27,8 @@ export const checkUserScopeAccessRight = <
   operation: CRUDOperation | CRUDOperation[] = 'R',
 ) => {
   try {
-    rule = mylib.isArr(rule) ? rule : [rule];
-    operation = mylib.isArr(operation) ? operation : [operation];
+    rule = checkIsArray(rule) ? rule : [rule];
+    operation = checkIsArray(operation) ? operation : [operation];
 
     if (operation.length === 0 || rule.length === 0) return isUser_HasNo_AccessRights;
 

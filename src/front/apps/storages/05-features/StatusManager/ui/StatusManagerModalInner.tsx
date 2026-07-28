@@ -1,7 +1,7 @@
 import { Button } from '#shared/components/ui/button';
-import { mylib } from '#shared/lib/my-lib';
 import { Modal, ModalBody, ModalFooter, usePrompt } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { resortByOrder } from '$storages/shared/lib/utils';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { StoragesRackStatusEditModalInner } from '$storages/widgets/RackStatusEditModalInner';
 import { StoragesRack } from 'shared/model/storages/list.model';
@@ -9,7 +9,7 @@ import { storagesStatusManagerRackEditStatusiAtom } from '../state/atoms';
 
 export const StoragesStatusManagerModalInner = ({ rack }: { rack: StoragesRack }) => {
   const prompt = usePrompt();
-  const { indexes, list } = mylib.resortByOrder(rack.statusOrd, rack.statuses);
+  const { indexes, list } = resortByOrder(rack.statusOrd, rack.statuses);
 
   return (
     <>

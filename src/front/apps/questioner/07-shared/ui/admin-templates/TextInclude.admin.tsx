@@ -1,12 +1,12 @@
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Badge } from '#shared/components/ui/badge';
 import { Button } from '#shared/components/ui/button';
-import { MyLib } from '#shared/lib/my-lib';
 import { questionerAdminTsjrpcClient } from '$q/shared/tsjrpc/admin.tsjrpc';
 import { useState } from 'react';
 import { questionerTextIncludeSymbols, takeQuestionerTextIncludeSymbols } from 'shared/const/q/textIncludeSymbols';
 import { QuestionerAdminTemplateContentProps, QuestionerType } from 'shared/model/q';
 import { itNIt } from 'shared/utils';
+import { mapObjectEntries } from 'shared/utils/object.utils';
 import { QuestionerTextIncludeResultText } from '../-inner-ui/TextIncludeResultText';
 
 export const QuestionerAdminTextIncludeTemplateCardContent = ({
@@ -70,7 +70,7 @@ export const QuestionerAdminTextIncludeTemplateCardContent = ({
       />
 
       <div>
-        {MyLib.entries(template.correct ?? {}).map(([textCode, textValue]) => {
+        {mapObjectEntries(template.correct, (textCode, textValue) => {
           return (
             <InputWithLoadingIcon
               key={textCode}

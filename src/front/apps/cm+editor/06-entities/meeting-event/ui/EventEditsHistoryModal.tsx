@@ -1,5 +1,4 @@
 import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
-import { mylib } from '#shared/lib/my-lib';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -35,7 +34,7 @@ export const CmEditorMeetingEventEditsHistoryModalInner = ({
     [schw, dayi],
   );
 
-  if (mylib.isNaN(schw) || mylib.isNaN(dayi)) return null;
+  if (checkIsNaN(schw) || checkIsNaN(dayi)) return null;
 
   if (isLoading)
     return (

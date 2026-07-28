@@ -1,4 +1,4 @@
-import { mylib } from '#shared/lib/my-lib';
+import { onChildInViewPort } from '#shared/lib/utils';
 import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
 import { bibleBroadcastListSingleAddressSet } from '$bible/entities/broadcast-list';
 import { bibleTagControledContentGlobalCssNode } from '$bible/shared/const/bibleTagControledContentGlobalCssNode';
@@ -46,7 +46,7 @@ export const BibleReaderBookText = ({ chapterList, currentChapteri, currentVerse
   useEffect(() => {
     if (chapterList == null || listRef.current === null) return;
 
-    return mylib.onChildInViewPort(
+    return onChildInViewPort(
       listRef.current,
       isScrollingRef,
       setResizeNum,

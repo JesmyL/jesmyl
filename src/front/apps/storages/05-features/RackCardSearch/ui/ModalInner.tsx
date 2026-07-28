@@ -1,13 +1,13 @@
 import { Badge } from '#shared/components/ui/badge';
 import { Button } from '#shared/components/ui/button';
 import { Command } from '#shared/components/ui/command';
-import { mylib } from '#shared/lib/my-lib';
 import { makeToastKOMoodConfig, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { QrReader } from '#shared/ui/qr-code/QrReader';
 import { StoragesRackStatusFace } from '$storages/entities/RackStatusFace';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { StoragesRack, StoragesRackCard } from 'shared/model/storages/list.model';
 import { StoragesColumnType, StoragesRackColumn } from 'shared/model/storages/rack.model';
+import { checkIsNumber } from 'shared/utils/checkIs';
 import { toast } from 'sonner';
 
 const searchFields: { key: keyof StoragesRackCard | number; title: string }[] = [
@@ -51,7 +51,7 @@ export const StoragesRackCardSearchModalInner = ({
                 .concat(rack.cols.map((col, coli) => ({ key: coli, title: col.title })))
                 .map(({ key, title }) => {
                   if (
-                    mylib.isNum(key) &&
+                    checkIsNumber(key) &&
                     rack.cols[key].t !== StoragesColumnType.Link &&
                     rack.cols[key].t !== StoragesColumnType.Text &&
                     rack.cols[key].t !== StoragesColumnType.String
@@ -88,7 +88,7 @@ export const StoragesRackCardSearchModalInner = ({
               rack.cards.map(card => {
                 const fieldsText = Array.from(searchByKeySet)
                   .map(coli => {
-                    if (!mylib.isNum(coli)) return '';
+                    if (!checkIsNumber(coli)) return '';
                     const cell = card.row?.[coli];
 
                     if (cell == null) return '';
