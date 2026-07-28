@@ -1,10 +1,11 @@
-import { MyLib } from '#shared/lib/my-lib';
 import { cmComTopToolsAtom } from '$cm/entities/index';
 import { cmUserStoreTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useAuth } from '$index/shared/state';
 import { useAtomValue } from 'atomaric';
 import React from 'react';
 import { MenuComToolName } from 'shared/api';
+import { extractNumber } from 'shared/utils';
+import { objectKeys } from 'shared/utils/object.utils';
 import { CmComToolIsComToolIconItemsContext, CmComToolItemAttrsContext, CmComToolNameContext } from '../state/contexts';
 import { CmComToolBroadcast } from '../ui/BroadcastComTool';
 import { CmComToolCatsBinds } from '../ui/CatsBindsComTool';
@@ -25,23 +26,25 @@ const RedactComTool = React.lazy(() => import('../ui/RedactComTool'));
 
 const mapToolsSelf = {} as { fun: (tool: MenuComToolName) => void; comTopTools: MenuComToolName[] };
 
-function mapTools(this: und | typeof mapToolsSelf, key: MenuComToolName) {
+function mapTools(this: und | typeof mapToolsSelf, keyStr: SKey<MenuComToolName>) {
   if (this === undefined)
     return (
       <CmComToolNameContext
-        key={key}
-        value={`${key} tool-in-top`}
+        key={keyStr}
+        value={`${keyStr} tool-in-top`}
       >
-        {toolsDict[key]}
+        {toolsDict[keyStr]}
       </CmComToolNameContext>
     );
 
+  const key = extractNumber(keyStr);
+
   return (
     <div
-      key={key}
+      key={keyStr}
       className={this.comTopTools.includes(key) ? '[&_.icon-box]:bg-x4 [&_.icon-box]:text-x2' : ''}
     >
-      <CmComToolNameContext value={`${key}`}>
+      <CmComToolNameContext value={`${keyStr}`}>
         <CmComToolItemAttrsContext
           value={{
             onIconClick: event => {
@@ -51,7 +54,7 @@ function mapTools(this: und | typeof mapToolsSelf, key: MenuComToolName) {
             },
           }}
         >
-          {toolsDict[key]}
+          {toolsDict[keyStr]}
         </CmComToolItemAttrsContext>
       </CmComToolNameContext>
     </div>
@@ -75,7 +78,7 @@ const toolsDict: Record<MenuComToolName, React.ReactNode> = {
   [MenuComToolName.ChordHardLevel]: <CmComToolChordHardLevel />,
   [MenuComToolName.EditCom]: <RedactComTool />,
 };
-const toolKeys = MyLib.keys(toolsDict);
+const toolKeys = objectKeys(toolsDict);
 
 let saveTimeout: TimeOut;
 export const useCmComToolMigratableList = () => {
