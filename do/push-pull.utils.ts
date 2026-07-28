@@ -7,6 +7,7 @@ import {
   CmComInSchDayEvWr,
   CmComWid,
   CmMp3Rule,
+  ConstantsConfig,
   EeStorePack,
   IExportableCat,
   IExportableCom,
@@ -93,5 +94,6 @@ export const pullPushFileDirNameNet = {
     userRoles: T<UserAccessRoleStoraged, string>(),
     nouns: T<NounPronsType, string>(),
     pronouns: T<NounPronsType, string>(),
+    constantsConfig: T<ConstantsConfig, string>(),
   },
 } satisfies Record<string, Record<string, { F: unknown; T: unknown }>>;

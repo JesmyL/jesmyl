@@ -26,22 +26,11 @@ if (!Do.It) {
   /** @deprecated */
   const pull = async () => {
     const paths = [
-      ['apps/index/schedules'],
+      //
       ['apps/index', 'rights'],
-      ['apps/index', 'constantsConfig'],
-      ['apps/index', 'nouns'],
-      ['apps/index', 'pronouns'],
-      ['apps/index', 'emailTextingLetterVariants', ''],
-      ['apps/index', 'userLoginBinds', '.secure'],
       ['apps/q'],
       ['apps/q/blanks'],
       ['apps/storages/list'],
-
-      ['apps/cm'],
-      ['apps/cm', 'cats'],
-      ['apps/cm/comComments'],
-      ['apps/cm/comsInSchEvent'],
-      ['apps/cm/comsInSchEventHistory'],
     ];
 
     const joinPath = (listPaths: string[]) => listPaths.filter(i => i).join('/');
