@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { BrutalScreen } from '#shared/ui/brutal-screen/BrutalScreen';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
@@ -15,7 +16,7 @@ export const CmListsPage = () => {
     <StyledPhaseContainerConfigurer
       className="lists-container"
       withoutBackButton
-      headTitle="Списки"
+      headTitle={translateBase(it => it.lists)}
       contentClass="flex between column p-2"
       content={
         <>
@@ -25,7 +26,7 @@ export const CmListsPage = () => {
           >
             <BrutalItem
               iconNode={<LazyIcon icon="Star" />}
-              title="Избранное"
+              title={translateBase(it => it.fav)}
             />
           </Link>
           <Link
@@ -34,7 +35,7 @@ export const CmListsPage = () => {
           >
             <BrutalItem
               iconNode={<LazyIcon icon="Calendar02" />}
-              title="События"
+              title={translateBase(it => it.events)}
             />
           </Link>
           {selectedComws.length ? (
@@ -44,12 +45,12 @@ export const CmListsPage = () => {
             >
               <BrutalItem
                 iconNode={<LazyIcon icon="CheckmarkBadge01" />}
-                title="Выбранное"
+                title={translateBase(it => it.sel)}
               />
             </Link>
           ) : null}
           <BrutalScreen>
-            <div className="title sticky bg-inherit">Тематические:</div>
+            <div className="title sticky bg-inherit">{translateBase(it => it.cm.thematics)}:</div>
             {cats.map(cat => {
               return !cat.wid ? null : (
                 <Link

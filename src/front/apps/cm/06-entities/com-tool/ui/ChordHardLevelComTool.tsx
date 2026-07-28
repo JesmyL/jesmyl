@@ -1,5 +1,7 @@
+import { translateBase } from '#basis/locale';
 import { cmComChordHardLevelAtom } from '$cm/entities/index';
 import { useAtomValue } from 'atomaric';
+import { MenuComToolName } from 'shared/api';
 import { CmComTool } from '../ComTool';
 
 export const CmComToolChordHardLevel = () => {
@@ -22,7 +24,7 @@ export const CmComToolChordHardLevel = () => {
 
   return (
     <CmComTool
-      title={`Уровень сложности аккорда - ${hardLevel}`}
+      title={translateBase(it => it.cm.com.tool[MenuComToolName.ChordHardLevel], { v: hardLevel })}
       icon={changesDict[hardLevel].icon}
       onClick={() => cmComChordHardLevelAtom.set(changesDict[hardLevel].next)}
     />

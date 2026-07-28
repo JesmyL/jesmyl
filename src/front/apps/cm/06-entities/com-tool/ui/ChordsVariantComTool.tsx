@@ -1,6 +1,8 @@
+import { translateBase } from '#basis/locale';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { cmComChordVisibleVariantAtom } from '$cm/entities/com';
 import { useAtomValue } from 'atomaric';
+import { MenuComToolName } from 'shared/api';
 import { toast } from 'sonner';
 import { CmComTool } from '../ComTool';
 
@@ -9,7 +11,7 @@ export const CmComToolChordsVariant = () => {
 
   return (
     <CmComTool
-      title="Показать аккорды"
+      title={translateBase(it => it.cm.com.tool[MenuComToolName.ChordsVariant])}
       icon={
         chordVisibleVariant === ChordVisibleVariant.Maximal
           ? 'ApproximatelyEqualSquare'
@@ -25,23 +27,26 @@ export const CmComToolChordsVariant = () => {
               ? ChordVisibleVariant.Minimal
               : ChordVisibleVariant.Maximal;
 
-        if (newVariant === ChordVisibleVariant.Maximal) toast('Максимальное количество аккордов');
+        if (newVariant === ChordVisibleVariant.Maximal) toast(translateBase(it => it.cm.maxChCount));
         if (newVariant === ChordVisibleVariant.Minimal)
-          toast('Текст с минимальным количеством аккордов', {
-            action: {
-              label: 'Подробнее',
-              onClick: () => {
-                toast(
-                  'В режиме минимального количества аккордов они присутствуют в блоках, где впервые встречаются или меняются (для одноимённых)',
-                  {
-                    duration: 10000,
-                    closeButton: true,
-                  },
-                );
+          toast(
+            translateBase(it => it.cm.minChCount),
+            {
+              action: {
+                label: translateBase(it => it.detailed),
+                onClick: () => {
+                  toast(
+                    translateBase(it => it.cm.minChCountDsc),
+                    {
+                      duration: 10000,
+                      closeButton: true,
+                    },
+                  );
+                },
               },
             },
-          });
-        if (newVariant === ChordVisibleVariant.None) toast('Текст без аккордов');
+          );
+        if (newVariant === ChordVisibleVariant.None) toast(translateBase(it => it.cm.noChTxt));
 
         cmComChordVisibleVariantAtom.set(newVariant);
 

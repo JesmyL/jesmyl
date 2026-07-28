@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { useScreenBroadcastFaceLineListeners } from '#features/broadcast/complect/config-line/hooks/listeners';
 import { ScreenBroadcastControlPanel } from '#features/broadcast/controls/ControllPanel';
 import { BroadcastSlidePreview } from '#features/broadcast/controls/Preview';
@@ -69,7 +70,10 @@ export function CmBroadcastControlled(props: Props) {
       cmPlayerBroadcastComwAtom.reset();
       cmComAudioPlayerSetSrc(null);
       cmPlayerBroadcastAudioSrcAtom.reset();
-      toast('Для этого трека маркеры не установлены', makeToastKOMoodConfig());
+      toast(
+        translateBase(it => it.cm.trackMarksNotSetted),
+        makeToastKOMoodConfig(),
+      );
     });
 
     navigate({
@@ -106,7 +110,10 @@ export function CmBroadcastControlled(props: Props) {
             {comPack.pageTitlePostfix}
           </>
         ) : (
-          <>Трансляция{comPack.pageTitlePostfix}</>
+          <>
+            {translateBase(it => it.broadcast)}
+            {comPack.pageTitlePostfix}
+          </>
         )
       }
       head={

@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
@@ -25,7 +26,7 @@ export const CmComCommentConstructorWordConstructor = ({
   return (
     <>
       <div className="rounded bg-x2 my-10 p-3">
-        <div>Слово {wordi + 1}</div>
+        <div>{translateBase(it => it.wordN, { n: wordi + 1 })}</div>
 
         <CmComCommentConstructorAccentKindRedactor
           blockPropsHolder={propsDict}
@@ -46,8 +47,8 @@ export const CmComCommentConstructorWordConstructor = ({
           postKey={`${wordKeyPrefix}>`}
           type={CmComCommentConstructorRuleType.Word}
           blockPropsHolder={propsDict}
-          preLabel="Текст до"
-          postLabel="Текст после"
+          preLabel={translateBase(it => it.txtBefore)}
+          postLabel={translateBase(it => it.txtAfter)}
           getDefaultPropsDict={place => ({
             pre: selectorPrefix,
             place,
@@ -99,7 +100,7 @@ export const CmComCommentConstructorWordConstructor = ({
           });
         }}
       >
-        Создать правило для следующего аккорда
+        {translateBase(it => it.cm.creNxChRule)}
       </Button>
     </>
   );

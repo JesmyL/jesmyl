@@ -1,10 +1,11 @@
-import { mylib } from '#shared/lib/my-lib';
+import { translateBase } from '#basis/locale';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { CmComFaceList } from '$cm/entities/com-face';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { CmCom } from 'shared/const/cm/Com';
+import { objectValues } from 'shared/utils/object.utils';
 
 interface Props {
   coms: CmCom[];
@@ -24,7 +25,9 @@ export const CmComRatingSortedComList = ({ coms }: Props) => {
   return (
     <>
       <div className="sticky top-0 py-5 bg-x5">
-        Просмотры песен (общ. {mylib.values(visits).reduce((sum, curr) => (sum ?? 0) + (curr ?? 0), 0)})
+        {translateBase(it => it.cm.com.watcheds, {
+          c: objectValues(visits).reduce((sum, curr) => sum! + curr!, 0) || 0,
+        })}
       </div>
       {isLoading ? (
         <TheIconLoading />

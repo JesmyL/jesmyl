@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
@@ -22,14 +23,14 @@ export const CmComLocalListToolsPopup = (props: { coms: CmCom[] | und; children?
     <>
       <BottomPopupItem
         icon="BookOpen02"
-        title="Раскрыть песни списка"
+        title={translateBase(it => it.cm.com.expandList)}
         onClick={isOpenListAtom.do.toggle}
       />
       {linkToCom({
         children: (
           <BottomPopupItem
             icon={isTouchDevice ? 'Play' : 'Computer'}
-            title="Показывать слайды списка"
+            title={translateBase(it => it.cm.com.showLiSlides)}
           />
         ),
         search: {
@@ -39,7 +40,7 @@ export const CmComLocalListToolsPopup = (props: { coms: CmCom[] | und; children?
       })}
       <BottomPopupItem
         icon="QrCode01"
-        title="Поделиться списком"
+        title={translateBase(it => it.cm.com.shareLi)}
         onClick={isOpenQrAtom.do.toggle}
       />
 

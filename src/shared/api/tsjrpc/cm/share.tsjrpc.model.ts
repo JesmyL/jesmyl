@@ -9,7 +9,7 @@ import {
   ICmComCommentBlock,
   IExportableCat,
   IExportableCom,
-  MigratableComToolName,
+  MenuComToolName,
 } from 'shared/api/complect/apps';
 
 export type CmShareTsjrpcModel = {
@@ -24,7 +24,7 @@ export type CmShareTsjrpcModel = {
 
   refreshComComments: (args: { comments: ICmComCommentBlock[]; mod: number; alts: string[] | nil }) => void;
   comFav_v1: (args: { fav: Record<CmComWid, Bool>; mod: number }) => void;
-  favTools: (args: { tools: MigratableComToolName[]; mod: number }) => void;
+  favTools_v1: (args: { tools: MenuComToolName[]; mod: number }) => void;
   refreshComFavs: (args: { comws: CmComWid[]; mod: number }) => void;
 
   freshSchEvComIntp_v1: (args: { intps: ComsInScheduleIntp[]; mod: number }) => void;

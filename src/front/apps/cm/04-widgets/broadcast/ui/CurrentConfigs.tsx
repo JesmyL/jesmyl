@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { defaultScreenBroadcastTextConfig } from '#features/broadcast/complect/defaults';
 import { ScreenBroadcastTextConfig } from '#features/broadcast/complect/model';
 import { ScreenTranslateConfigurationNameChanger } from '#features/broadcast/complect/NameChanger';
@@ -52,7 +53,7 @@ export const CmBroadcastCurrentScreenConfigurations = ({ currentConfig }: Props)
   );
 
   return (
-    <ExpandableContent title="Настроить">
+    <ExpandableContent title={translateBase(it => it.setup)}>
       <div className="ml-2">
         <ScreenTranslateConfigurationNameChanger />
 
@@ -84,22 +85,22 @@ export const CmBroadcastCurrentScreenConfigurations = ({ currentConfig }: Props)
           config={currentConfig}
           updateConfig={update}
         />
-        <ExpandableContent title="Блоки">
+        <ExpandableContent title={translateBase(it => it.cm.blocks)}>
           <CmBroadcastSubBlockConfigurator
-            blockTitle="Конфиг следующего блока"
+            blockTitle={translateBase(it => it.cm.nxBlockConfig)}
             subKey="next"
-            plusButtonPostfix="Вставить окно следующего блока"
-            deleteButtonPostfix="Убрать текст следующего блока"
+            plusButtonPostfix={translateBase(it => it.cm.insertNxBlock)}
+            deleteButtonPostfix={translateBase(it => it.cm.hideNxBlock)}
             putSubConfigUpdate={putSubConfigUpdate}
             currentConfig={currentConfig}
             defaultConfig={cmBroadcastSubConfigNext}
           />
 
           <CmBroadcastSubBlockConfigurator
-            blockTitle="Конфиг аккордного блока"
+            blockTitle={translateBase(it => it.cm.chBlockConfig)}
             subKey="chorded"
-            plusButtonPostfix="Добавить конфиг аккордного блока"
-            deleteButtonPostfix="Убрать конфиг аккордного блока"
+            plusButtonPostfix={translateBase(it => it.cm.insertChBlock)}
+            deleteButtonPostfix={translateBase(it => it.cm.hideChBlock)}
             putSubConfigUpdate={putSubConfigUpdate}
             currentConfig={currentConfig}
             defaultConfig={defaultScreenBroadcastTextConfig}

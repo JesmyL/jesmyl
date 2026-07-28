@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { isMobileDevice } from '#shared/lib/device-differences';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
@@ -180,7 +181,10 @@ export const CmPlayerPage = () => {
                           const pack = await getCmComFreshAudioMarksPack(com.wid);
 
                           if (pack == null) {
-                            toast('Для этого трека маркеры не установлены', makeToastKOMoodConfig());
+                            toast(
+                              translateBase(it => it.cm.trackMarksNotSetted),
+                              makeToastKOMoodConfig(),
+                            );
                             return;
                           }
 

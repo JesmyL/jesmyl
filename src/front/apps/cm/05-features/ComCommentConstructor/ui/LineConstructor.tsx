@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
 import { CmComOrderWid } from 'shared/api';
@@ -21,10 +22,10 @@ export const CmComCommentConstructorLineConstructor = ({
   return (
     <>
       <div className="rounded bg-x2 my-10 p-3">
-        <div>Строка {solidLinei + 1}</div>
+        <div>{translateBase(it => it.lineN, { n: solidLinei + 1 })}</div>
         <CmComCommentConstructorTextWithAccentRedactor
           blockKey={`${selectorPrefix}l${linei}`}
-          label="Коммент для строки"
+          label={translateBase(it => it.cm.comm.forLine)}
           blockPropsHolder={propsDict}
           type={CmComCommentConstructorRuleType.Line}
           getDefaultPropsDict={() => ({

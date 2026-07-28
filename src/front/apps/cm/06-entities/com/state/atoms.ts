@@ -1,7 +1,7 @@
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { cmComMaxFontSize, cmComMinFontSize } from '$cm/shared/const';
 import { atom } from 'atomaric';
-import { CmComWid, MigratableComToolName } from 'shared/api';
+import { CmComWid, MenuComToolName } from 'shared/api';
 
 export const cmComChordHardLevelAtom = atom<1 | 2 | 3>(2, 'cm:chord-hard-level');
 export const cmComIsComMiniAnchorAtom = atom(false, 'cm:is-com-mini-anchor');
@@ -10,8 +10,8 @@ export const cmComIsShowCatBindsInCompositionAtom = atom(false);
 export const cmComChordVisibleVariantAtom = atom(ChordVisibleVariant.Maximal, 'cm:chordVisibleVariant');
 
 export const cmComFavoriteComsAtom = atom<CmComWid[]>([], 'cm:favoriteComs');
-export const cmComTopToolsAtom = atom<MigratableComToolName[]>(
-  ['mark-com', 'fullscreen-mode', 'chords-variant'],
+export const cmComTopToolsAtom = atom<MenuComToolName[]>(
+  [MenuComToolName.MarkCom, MenuComToolName.FullscreenMode, MenuComToolName.ChordsVariant],
   'cm:comTopTools',
 );
 

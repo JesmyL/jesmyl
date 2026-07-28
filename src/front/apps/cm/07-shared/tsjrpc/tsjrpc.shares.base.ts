@@ -88,7 +88,7 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
           updateMod(mod);
         },
 
-        favTools: async ({ tools, mod }) => {
+        favTools_v1: async ({ tools, mod }) => {
           cmComTopToolsAtom.set(tools);
           updateMod(mod);
         },

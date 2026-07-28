@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
@@ -49,7 +50,10 @@ export const useCmComFavouriteList = () => {
       cmComFavoriteComsAtom.set(comws.slice(0, maxFavouritesCount).sort(itNumSort));
 
       if (isOverLimit) {
-        toast(`Лимит - ${maxFavouritesCount} избранных`, makeToastKOMoodConfig());
+        toast(
+          translateBase(it => it.favNLim, { n: maxFavouritesCount }),
+          makeToastKOMoodConfig(),
+        );
         return;
       }
 

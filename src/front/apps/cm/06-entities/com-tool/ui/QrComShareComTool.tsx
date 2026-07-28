@@ -1,9 +1,10 @@
+import { translateBase } from '#basis/locale';
 import { QrCodeFullScreen } from '#shared/ui/qr-code/QrCodeFullScreen';
 import { useCmComCurrent } from '$cm/entities/com';
 import { cmAppActions } from '$cm/shared/const';
 import { useComNumber } from '$cm/shared/lib';
 import { Atom, atom } from 'atomaric';
-import { CmComWidDef } from 'shared/api';
+import { CmComWidDef, MenuComToolName } from 'shared/api';
 import { CmComTool } from '../ComTool';
 
 let isOpenQrAtom: Atom<boolean>;
@@ -17,7 +18,7 @@ export const CmComToolQrComShare = () => {
 
   const toolNode = (
     <CmComTool
-      title="Поделиться по QR"
+      title={translateBase(it => it.cm.com.tool[MenuComToolName.QrShare])}
       icon="QrCode"
       onClick={isOpenQrAtom.do.toggle}
     />

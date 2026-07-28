@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { QRCode } from '#shared/ui/qr-code/QRCode';
 import styled from '@emotion/styled';
 import { ScheduleWidgetWid, hostConfig } from 'shared/api';
@@ -8,7 +9,7 @@ export const CmBroadcastFollowInitialSlide = ({ schw }: { schw: ScheduleWidgetWi
       <StyledQRCode
         text={`${hostConfig.url}/!other/cm/schs?schw=${schw}&now=${Date.now()}${Math.random()}&follow=desktop-link`}
       />
-      <h1 className="text-center">Следите за текущей трансляцией у себя в телефоне</h1>
+      <h1 className="text-center">{translateBase(it => it.bro.followInPhone)}</h1>
     </StyledSlide>
   );
 };

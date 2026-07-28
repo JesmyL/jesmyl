@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { broadcastCurrentTextAppAtom } from '#features/broadcast/atoms';
 import { useScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
 import { cmInitialSlideAtom } from '#features/broadcast/initial-slide-context';
@@ -40,8 +41,10 @@ export const CmScheduleWidgetBroadcast = ({ schw }: { schw: ScheduleWidgetWid | 
       .effect();
   }, [schedule?.w, windows]);
 
-  if (auth.fio === undefined) return <div className="flex center full-size text-xKO">Не авторизован</div>;
-  if (schedule == null) return <div className="flex center full-size text-xKO">Расписание не найдено</div>;
+  if (auth.fio === undefined)
+    return <div className="flex center full-size text-xKO">{translateBase(it => it.notAuthed)}</div>;
+  if (schedule == null)
+    return <div className="flex center full-size text-xKO">{translateBase(it => it.sch.notFound)}</div>;
 
   return isCm ? (
     <CmScheduleWidgetBroadcastLiveCm

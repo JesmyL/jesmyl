@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { CmBroadcastShowChordedSlideMode } from '#shared/model/cm/Cm.model';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
@@ -9,25 +10,25 @@ export const CmBroadcastShowChordedSlideModeSelector = () => {
   return (
     <>
       <Dropdown
-        label="Аккордные блоки"
+        label={translateBase(it => it.cm.chBlocks)}
         id={showMode}
         onSelectId={cmShowChordedSlideModeAtom.set}
         items={[
           {
             id: CmBroadcastShowChordedSlideMode.Show,
-            title: 'Показывать',
+            title: translateBase(it => it.cm.toShow),
           },
           {
             id: CmBroadcastShowChordedSlideMode.Pass,
-            title: 'Пропускать',
+            title: translateBase(it => it.cm.toPass),
           },
           {
             id: CmBroadcastShowChordedSlideMode.Hide,
-            title: 'Скрывать',
+            title: translateBase(it => it.cm.toHide),
           },
           {
             id: CmBroadcastShowChordedSlideMode.Blind,
-            title: 'Пустой слайд',
+            title: translateBase(it => it.cm.emptySlide),
           },
         ]}
       />

@@ -116,7 +116,7 @@ export const CmComCommentConstructorTextRulesConstructor = ({
         selector={selector}
       />
       {!isShowComments ? (
-        <div className="w-full h-full flex justify-center text-xKO">Комментарии скрыты</div>
+        <div className="w-full h-full flex justify-center text-xKO">{translateBase(it => it.cm.comm.areHidden)}</div>
       ) : (
         <>
           {commentCssNode}
@@ -138,7 +138,7 @@ export const CmComCommentConstructorTextRulesConstructor = ({
                 <CmComCommentConstructorTextWithAccentRedactor
                   key={blocki}
                   blockKey={`${simpleSelectorPrefix}b${blocki}`}
-                  label={`Коммент №${blocki + 1}`}
+                  label={translateBase(it => it.cm.comm.N, { n: blocki + 1 })}
                   blockPropsHolder={propsDict}
                   multiline
                   type={

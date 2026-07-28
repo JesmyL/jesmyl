@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { FaceItem } from '#basis/ui/FaceItem';
 import { isIOS } from '#shared/lib/device-differences';
 import { useListInfiniteScrollController } from '#shared/lib/hooks/useListInfiniteScrollController';
@@ -53,7 +54,9 @@ export const CmComFaceListComList = (props: CmComFaceListProps) => {
             className={`flex between pointer ${comi}-comi`}
           >
             <FaceItem.Logo>{!com.name || <CmComNumber comw={com.wid} />}</FaceItem.Logo>
-            <FaceItem.Title>{com.name || <span className="text-xKO">Неизвестная песня</span>}</FaceItem.Title>
+            <FaceItem.Title>
+              {com.name || <span className="text-xKO">{translateBase(it => it.cm.com.unk)}</span>}
+            </FaceItem.Title>
             {setComDescription(com, comi)}
           </FaceItem.Root>
         );

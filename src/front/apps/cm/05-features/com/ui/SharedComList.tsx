@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { TheButton } from '#shared/ui/TheButton';
 import { cmComSelectedComwsAtom, useCmComSelectedList } from '$cm/entities/com';
@@ -6,7 +7,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from '@tanstack/react-router';
 import { Atom, useAtomValue } from 'atomaric';
 import { CmComWid } from 'shared/api';
-import { declension, emptyFunc } from 'shared/utils';
+import { emptyFunc } from 'shared/utils';
 
 export const CmComSharedListActionInterpretator = ({
   comListOnActionAtom,
@@ -34,7 +35,7 @@ export const CmComSharedListActionInterpretator = ({
       >
         {comws => (
           <>
-            <h3>С вами поделились списком</h3>
+            <h3>{translateBase(it => it.cm.com.sharedListToYou)}</h3>
             <CmComFaceList
               list={comws}
               importantOnClick={emptyFunc}
@@ -47,10 +48,10 @@ export const CmComSharedListActionInterpretator = ({
                   close(true);
                 }}
               >
-                Добавить к выбранным
+                {translateBase(it => it.cm.com.addToSel)}
               </TheButton>
               <StyledButtonDescription>
-                Добавится {addComsCount} {declension(addComsCount, 'песня', 'песни', 'песен')}
+                {translateBase(it => it.cm.com.willAdd, { c: addComsCount })}
               </StyledButtonDescription>
 
               <TheButton
@@ -60,11 +61,11 @@ export const CmComSharedListActionInterpretator = ({
                   close(true);
                 }}
               >
-                Заменить выбранные
+                {translateBase(it => it.cm.com.changeSel)}
               </TheButton>
 
               <StyledButtonDescription>
-                Потеряется {lessComsCount} {declension(lessComsCount, 'песня', 'песни', 'песен')}
+                {translateBase(it => it.cm.com.willLost, { c: lessComsCount })}
               </StyledButtonDescription>
             </div>
           </>

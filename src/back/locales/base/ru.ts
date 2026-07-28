@@ -1,6 +1,6 @@
-import { BibleTranslateName, Langi } from 'shared/api';
+import { BibleTranslateName, Langi, MenuComToolName } from 'shared/api';
 import { LocaleBase } from 'shared/model/+locale/base';
-import { IF, isUtil, STR } from 'shared/utils/stringTemplater';
+import { IF, isUtil, STR, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeBaseRu: LocaleBase<Langi.Ru> = {
   lng: Langi.Ru,
@@ -8,27 +8,113 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
 
   cm: {
     com: {
-      forEachBlock: 'Для каждого блока "$n;"',
+      tool: {
+        [MenuComToolName.MarkCom]: STR(['$v'])`${IF('$v').THEN`Удалить избранное`.ELSE`Добавить избранное`}`,
+        [MenuComToolName.SelectedToggle]: STR(['$v'])`${IF('$v').THEN`Убрать из выбранных`.ELSE`Выбрать песню`}`,
+        [MenuComToolName.IsMiniAnchor]: STR(['$v'])`${IF('$v').THEN`Раскрыть ссылки`.ELSE`Свернуть ссылки`}`,
+
+        [MenuComToolName.FullscreenMode]: 'На весь экран',
+        [MenuComToolName.ChordsVariant]: 'Показать аккорды',
+        [MenuComToolName.ShowTranslation]: 'Слайды',
+        [MenuComToolName.ChordImages]: 'Аппликатура аккордов',
+        [MenuComToolName.OpenPlayer]: 'Проигрыватель',
+        [MenuComToolName.HideMetronome]: 'Метроном',
+        [MenuComToolName.QrShare]: 'Поделиться по QR',
+        [MenuComToolName.CatsBinds]: 'Показывать сборники',
+        [MenuComToolName.ComComment]: 'Мои заметки',
+        [MenuComToolName.CopyCom]: 'Копировать текст песни',
+        [MenuComToolName.ChordHardLevel]: 'Уровень сложности аккорда - $v',
+        [MenuComToolName.EditCom]: 'Редактировать',
+      },
+
       showPlayer: 'Показывать плеер',
+      sharedListToYou: 'С вами поделились списком',
+      addToSel: 'Добавить к выбранным',
+
+      changeSel: 'Заменить выбранные',
+
+      forEachBlock: 'Для каждого блока "$n"',
       maxSel: `Можно выбрать максимум $s песен`,
+      watcheds: 'Просмотры песен (общ. $c)',
+      willAdd: `Добавится $c $declension{{$c}{песня}{песни}{песен}}`,
+      willLost: `Потеряется $c $declension{{$c}{песня}{песни}{песен}}`,
+
+      twiceClickPrev: 'дважды клик&nbsp;-\nпредыдущая песня',
+      twiceClickNx: 'дважды клик&nbsp;-\nследующая песня',
+
+      clickNxSlide: 'клик&nbsp;-\nследующий слайд',
+      clickPrevSlide: 'клик&nbsp;-\nпредыдущий слайд',
+      notFound: 'Песня не найдена',
+      expandList: 'Раскрыть песни списка',
+      showLiSlides: 'Показывать слайды списка',
+      shareLi: 'Поделиться списком',
+      unk: 'Неизвестная песня',
     },
+
+    cat: {
+      t: {
+        all: 'Все песни',
+      },
+    },
+
+    comm: {
+      N: `Коммент №$n`,
+      areHidden: 'Комментарии скрыты',
+      forLine: 'Коммент для строки',
+
+      wordLabel: STR(['$p'])`${SWITCH('$p').CASE('>')`после`.CASE('<')`до`.DEFAULT`цвет`} слова`,
+      unreachs: 'Недостижимые комментарии',
+    },
+
+    trackMarksNotSetted: 'Для этого трека маркеры не установлены',
+    sel: 'Выбранное',
+    thematics: 'Тематические',
+    blocks: 'Блоки',
+
+    nxBlockConfig: 'Конфиг следующего блока',
+    insertNxBlock: 'Вставить окно следующего блока',
+    hideNxBlock: 'Убрать текст следующего блока',
+
+    chBlockConfig: 'Конфиг аккордного блока',
+    hideChBlock: 'Убрать конфиг аккордного блока',
+    insertChBlock: 'Добавить конфиг аккордного блока',
+
+    linnes: 'Строчки',
+    chBlocks: 'Аккордные блоки',
+    toShow: 'Показывать',
+    toPass: 'Пропускать',
+    toHide: 'Скрывать',
+    emptySlide: 'Пустой слайд',
+    chordN: 'Аккорд $n',
+    creNxChRule: 'Создать правило для следующего аккорда',
+    unkCh: 'Неизвестный аккорд',
+    coms: 'Песни',
+    toComList: 'К списку песен',
+    maxChCount: 'Максимальное количество аккордов',
+    minChCount: 'Текст с минимальным количеством аккордов',
+    noChTxt: 'Текст без аккордов',
+    minChCountDsc:
+      'В режиме минимального количества аккордов они присутствуют в блоках, где впервые встречаются или меняются (для одноимённых)',
   },
 
   bible: {
     t: 'Библия',
     chapter: 'Глава',
-    chapterNum: 'Глава $c;',
     searchInText: 'Поиск в тексте',
     searchInChapter: 'Поиск по главе',
     searchByLink: 'Поиск по ссылке',
-    searchByBook: 'Поиск по книге <i>$b;</i>',
-    searchByChapter: 'Поиск по главе <i>$b; $c;</i>',
     insertion: 'Вставка',
     txtInBrkts: 'Текст в [скобках]',
     JesusWords: 'Слова Христа',
-    clearChapter: 'Очистить раздел $c;?',
     tr: 'Переводы Библии',
     loadedTr: 'Загруженные переводы',
+    modulesForLoad: 'Доступные к загрузке',
+
+    chapterNum: 'Глава $c',
+    searchByBook: 'Поиск по книге <i>$b</i>',
+    searchByChapter: 'Поиск по главе <i>$b $c</i>',
+    clearChapter: 'Очистить раздел $c?',
+    removeModule: 'Удалить безвозвратно модуль "$n"',
 
     trs: {
       [BibleTranslateName.rst]: 'Русский Синодальный Перевод',
@@ -36,6 +122,14 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
       [BibleTranslateName.kzb]: 'Казахский перевод',
       [BibleTranslateName.nrt]: 'Новый русский перевод',
     },
+  },
+
+  sch: {
+    notFound: 'Расписание не найдено',
+  },
+
+  bro: {
+    followInPhone: 'Следите за текстами на экране у себя в телефоне',
   },
 
   each0: 'каждое',
@@ -46,6 +140,7 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
   lasts: 'Последние',
   msg: 'Сообщение',
   authIncorrect: 'Авторизация не действительна',
+  notAuthed: 'Не авторизован',
   selProgram: 'Выберите программу',
   accessRights: 'Права доступа',
   inoe: 'Иное',
@@ -59,7 +154,8 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
   downloads: 'Загрузки',
   constants: 'Константы',
 
-  oneForTwo: '$o для $t;',
+  oneForTwo: '$o для $t',
+  newVer: ' (Новая - v$v;)',
 
   settings: 'Настройки',
   aboutApp: 'О приложении',
@@ -69,7 +165,6 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
   showErrors: 'Показать ошибки',
   chapterEmpty: 'Раздел пуст',
   actualVer: ' - Актуальная',
-  newVer: ' (Новая - v$v;)',
   refreshAppConfirm: 'Убедитесь в наличии интернет-соединения! Обновить приложение?',
   immediateRefreshOnFinish:
     'Это действие требует немедленного обновления сразу после своего завершения. Убедитесь, пожалуйста, что у вас есть интернет-соединение, ибо, в противном случае, возникнет проблема',
@@ -84,6 +179,7 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
 
   logout: 'Выйти из системы',
   link: 'Ссылка',
+  events: 'События',
   txt: 'Текст',
   preview: 'Предпросмотр',
   slide: 'Слайд',
@@ -105,9 +201,30 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
 
   email: {
     bindedToCurrentAuth: '$fio привязан к текущему аккаунту',
+    otpSent: 'Код отправлен на почту $e',
     toBind: 'Привязать E-mail',
-    otpSent: 'Код отправлен на почту $e;',
   },
 
   fromOf: STR(['$f', '$o'])`${IF(isUtil.NEQ('$f', '$o')).THEN`$f из `}$o`,
+
+  fav: 'Избранное',
+  favNLim: `Лимит - $n избранных`,
+
+  sel: 'Выбранное',
+  clearSelList: 'Очистить список выбранных',
+
+  color: 'Цвет',
+  before: 'До',
+  instead: 'Вместо',
+  after: 'После',
+  lists: 'Списки',
+  lineN: 'Строка $n',
+  word: 'Слово',
+  wordN: 'Слово $n',
+  del: 'Удалить $t',
+  txtBefore: 'Текст до',
+  txtAfter: 'Текст после',
+  close: 'Закрыть',
+  Nsec: '$n сек.',
+  detailed: 'Подробнее',
 };

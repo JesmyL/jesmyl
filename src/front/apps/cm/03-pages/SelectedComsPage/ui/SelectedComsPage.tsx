@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { CmComLocalListToolsPopup, CmComMoveSelectedButton, useCmComSelectedList } from '$cm/entities/com';
@@ -11,7 +12,7 @@ export function CmSelectedComs() {
   return (
     <PageContainerConfigurer
       className="favorites-container"
-      headTitle="Выбранное"
+      headTitle={translateBase(it => it.sel)}
       onMoreClick={setIsToolsOpen}
       content={
         <>

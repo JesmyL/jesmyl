@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { isNumberSearchAtom } from '#basis/state/isNumberSearchAtom';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { useCmCatList } from '$cm/entities/cat';
@@ -166,7 +167,7 @@ export const CmComWithComListSearchFilterInput = <ComConstructor extends CmCom>(
   return props.children({
     inputNode: (
       <DebouncedSearchInput
-        placeholder="Песни"
+        placeholder={translateBase(it => it.cm.coms)}
         className="com-search debounced-searcher round-styled"
         debounce={500}
         termAtom={props.termAtom}

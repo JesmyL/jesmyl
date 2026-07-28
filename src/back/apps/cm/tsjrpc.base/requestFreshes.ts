@@ -186,7 +186,7 @@ export const cmServerTsjrpcBaseRequestFreshes = {
 
         if (userExt) {
           if (userExt.cmFavComToolsMod > lastModfiedAt) {
-            cmShareServerTsjrpcMethods.favTools(
+            cmShareServerTsjrpcMethods.favTools_v1(
               {
                 mod: userExt.cmFavComToolsMod,
                 tools: userExt.cmFavComTools,

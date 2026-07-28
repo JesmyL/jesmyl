@@ -1,9 +1,10 @@
+import { translateBase } from '#basis/locale';
 import { ContextMenu } from '#shared/components/ui/context-menu';
 import { useConfirm } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmComSelectedComwsAtom, useCmComSelectedList } from '$cm/entities/com';
 import { useCmComFavouriteList } from '$cm/entities/com-favourite';
-import { CmComWid } from 'shared/api';
+import { CmComWid, MenuComToolName } from 'shared/api';
 
 interface Props {
   onClick: (reset: null) => void;
@@ -28,7 +29,7 @@ export const CmComFaceContextMenu = ({ onClick, comWid }: Props) => {
           icon="Star"
           kind={isComMarked ? 'SolidRounded' : undefined}
         />
-        {isComMarked ? 'Удалить из Избранного' : 'Добавить в Избранное'}
+        {translateBase(it => it.cm.com.tool[MenuComToolName.MarkCom], { v: +isComMarked })}
       </ContextMenu.Item>
 
       <ContextMenu.Item
@@ -38,19 +39,19 @@ export const CmComFaceContextMenu = ({ onClick, comWid }: Props) => {
         }}
       >
         <LazyIcon icon={isSelected(comWid) ? 'RemoveCircleHalfDot' : 'AddCircleHalfDot'} />
-        {isSelected(comWid) ? 'Отменить выбор' : 'Выбрать'}
+        {translateBase(it => it.cm.com.tool[MenuComToolName.SelectedToggle], { v: +isSelected(comWid) })}
       </ContextMenu.Item>
 
       {!selectedComws.length || (
         <ContextMenu.Item
           onClick={async () => {
-            if (!(await confirm('Очистить список выбранных?'))) return;
+            if (!(await confirm(translateBase(it => it.clearSelList)))) return;
             onClick(null);
             cmComSelectedComwsAtom.set([]);
           }}
         >
           <LazyIcon icon="CancelCircleHalfDot" />
-          Очистить выбранные
+          {translateBase(it => it.clearSelList)}
         </ContextMenu.Item>
       )}
     </>

@@ -4,7 +4,7 @@ import { cmUserStoreTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useAuth } from '$index/shared/state';
 import { useAtomValue } from 'atomaric';
 import React from 'react';
-import { MigratableComToolName } from 'shared/api';
+import { MenuComToolName } from 'shared/api';
 import { CmComToolIsComToolIconItemsContext, CmComToolItemAttrsContext, CmComToolNameContext } from '../state/contexts';
 import { CmComToolBroadcast } from '../ui/BroadcastComTool';
 import { CmComToolCatsBinds } from '../ui/CatsBindsComTool';
@@ -23,9 +23,9 @@ import { CmComToolSelected } from '../ui/SelectedComTool';
 
 const RedactComTool = React.lazy(() => import('../ui/RedactComTool'));
 
-const mapToolsSelf = {} as { fun: (tool: MigratableComToolName) => void; comTopTools: MigratableComToolName[] };
+const mapToolsSelf = {} as { fun: (tool: MenuComToolName) => void; comTopTools: MenuComToolName[] };
 
-function mapTools(this: und | typeof mapToolsSelf, key: MigratableComToolName) {
+function mapTools(this: und | typeof mapToolsSelf, key: MenuComToolName) {
   if (this === undefined)
     return (
       <CmComToolNameContext
@@ -41,7 +41,7 @@ function mapTools(this: und | typeof mapToolsSelf, key: MigratableComToolName) {
       key={key}
       className={this.comTopTools.includes(key) ? '[&_.icon-box]:bg-x4 [&_.icon-box]:text-x2' : ''}
     >
-      <CmComToolNameContext value={key}>
+      <CmComToolNameContext value={`${key}`}>
         <CmComToolItemAttrsContext
           value={{
             onIconClick: event => {
@@ -58,23 +58,22 @@ function mapTools(this: und | typeof mapToolsSelf, key: MigratableComToolName) {
   );
 }
 
-const toolsDict: Record<MigratableComToolName, React.ReactNode> = {
-  'mark-com': <CmComToolFavorite />,
-  'fullscreen-mode': <CmComToolFullscreen />,
-  'chords-variant': <CmComToolChordsVariant />,
-  'show-translation': <CmComToolBroadcast />,
-  'chord-images': <CmComToolChordImages />,
-  'selected-toggle': <CmComToolSelected />,
-  'open-player': <CmComToolOpenPlayer />,
-  'hide-metronome': <CmComToolHideMetronome />,
-  'is-mini-anchor': <CmComToolMiniAnchorSwitch />,
-  'qr-share': <CmComToolQrComShare />,
-  'cats-binds': <CmComToolCatsBinds />,
-  'com-comment': <CmComToolComComment />,
-  'copy-com': <CmComToolCopyText />,
-  'chord-hard-level': <CmComToolChordHardLevel />,
-
-  'edit-com': <RedactComTool />,
+const toolsDict: Record<MenuComToolName, React.ReactNode> = {
+  [MenuComToolName.MarkCom]: <CmComToolFavorite />,
+  [MenuComToolName.FullscreenMode]: <CmComToolFullscreen />,
+  [MenuComToolName.ChordsVariant]: <CmComToolChordsVariant />,
+  [MenuComToolName.ShowTranslation]: <CmComToolBroadcast />,
+  [MenuComToolName.ChordImages]: <CmComToolChordImages />,
+  [MenuComToolName.SelectedToggle]: <CmComToolSelected />,
+  [MenuComToolName.OpenPlayer]: <CmComToolOpenPlayer />,
+  [MenuComToolName.HideMetronome]: <CmComToolHideMetronome />,
+  [MenuComToolName.IsMiniAnchor]: <CmComToolMiniAnchorSwitch />,
+  [MenuComToolName.QrShare]: <CmComToolQrComShare />,
+  [MenuComToolName.CatsBinds]: <CmComToolCatsBinds />,
+  [MenuComToolName.ComComment]: <CmComToolComComment />,
+  [MenuComToolName.CopyCom]: <CmComToolCopyText />,
+  [MenuComToolName.ChordHardLevel]: <CmComToolChordHardLevel />,
+  [MenuComToolName.EditCom]: <RedactComTool />,
 };
 const toolKeys = MyLib.keys(toolsDict);
 
@@ -84,7 +83,7 @@ export const useCmComToolMigratableList = () => {
   const auth = useAuth();
 
   mapToolsSelf.comTopTools = comTopTools;
-  mapToolsSelf.fun = (tool: MigratableComToolName) => {
+  mapToolsSelf.fun = (tool: MenuComToolName) => {
     const tools =
       comTopTools.indexOf(tool) < 0 ? [...comTopTools, tool] : comTopTools.filter(currTool => tool !== currTool);
     cmComTopToolsAtom.set(tools);
@@ -92,7 +91,7 @@ export const useCmComToolMigratableList = () => {
     if (auth.login == null) return;
     clearTimeout(saveTimeout);
     saveTimeout = setTimeout(() => {
-      cmUserStoreTsjrpcClient.favTools({ tools });
+      cmUserStoreTsjrpcClient.favTools_v1({ tools });
     }, 1000);
   };
 

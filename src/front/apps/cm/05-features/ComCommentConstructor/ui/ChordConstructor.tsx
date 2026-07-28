@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
@@ -34,7 +35,7 @@ export const CmComCommentConstructorChordConstructor = ({
         className="rounded bg-x2 my-10 p-3"
       >
         <div className="flex w-full justify-between">
-          <span>Аккорд {chordi + 1}</span>
+          <span>{translateBase(it => it.cm.chordN, { n: chordi + 1 })}</span>
           {isLast && (
             <Button
               icon="Delete02"
@@ -75,7 +76,7 @@ export const CmComCommentConstructorChordConstructor = ({
             blockKey={`${chordKeyPrefix}<`}
             type={CmComCommentConstructorRuleType.Chord}
             blockPropsHolder={propsDict}
-            label="До"
+            label={translateBase(it => it.before)}
             getDefaultPropsDict={() => ({
               pre: selectorPrefix,
               linei,
@@ -92,7 +93,7 @@ export const CmComCommentConstructorChordConstructor = ({
             blockKey={`${chordKeyPrefix}^`}
             type={CmComCommentConstructorRuleType.Chord}
             blockPropsHolder={propsDict}
-            label="Вместо"
+            label={translateBase(it => it.instead)}
             getDefaultPropsDict={() => ({
               pre: selectorPrefix,
               linei,
@@ -109,7 +110,7 @@ export const CmComCommentConstructorChordConstructor = ({
             blockKey={`${selectorPrefix}l${linei}w${wordi}c${chordi}>`}
             type={CmComCommentConstructorRuleType.Chord}
             blockPropsHolder={propsDict}
-            label="После"
+            label={translateBase(it => it.after)}
             getDefaultPropsDict={() => ({
               pre: selectorPrefix,
               linei,

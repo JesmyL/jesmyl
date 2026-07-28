@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { propsOfClicker } from '#shared/lib/clicker/propsOfClicker';
 import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
@@ -43,7 +44,9 @@ export const CmBroadcastFullscreen = () => {
         className="BroadcastFullscreen relative z-300 justify-center items-center bg-black w-[100vw] h-[100vh]"
         $isShowInfo={isShowInfo}
       >
-        <div className="absolute rotate-[-90deg] text-xKO top-[4em] left-[-3.5em] z-200">⇣ Закрыть ⇣</div>
+        <div className="absolute rotate-[-90deg] text-xKO top-[4em] left-[-3.5em] z-200">
+          ⇣ {translateBase(it => it.close)} ⇣
+        </div>
 
         <StyledWrapper className="bg-black z-1000 transition-transform duration-100 text-white w-[100vw] h-[100vh]">
           <FontSizeContain
@@ -56,21 +59,19 @@ export const CmBroadcastFullscreen = () => {
             className="top-area info-area top-(--safe-gap) left-(--safe-gap) pointer"
             {...propsOfClicker({ onDblClick: prevCom })}
           >
-            <div className="description">
-              дважды клик&nbsp;-
-              <br />
-              предыдущая песня
-            </div>
+            <div
+              className="description whitespace-break-spaces"
+              dangerouslySetInnerHTML={{ __html: translateBase(it => it.cm.com.twiceClickPrev) }}
+            />
           </div>
           <div
             className="top-area info-area top-(--safe-gap) right-(--safe-gap) pointer"
             {...propsOfClicker({ onDblClick: nextCom })}
           >
-            <div className="description">
-              дважды клик&nbsp;-
-              <br />
-              следующая песня
-            </div>
+            <div
+              className="description whitespace-break-spaces"
+              dangerouslySetInnerHTML={{ __html: translateBase(it => it.cm.com.twiceClickNx) }}
+            />
           </div>
           <LazyIcon
             icon="Cancel01"
@@ -81,21 +82,19 @@ export const CmBroadcastFullscreen = () => {
             className="bottom-area info-area bottom-(--safe-gap) left-(--safe-gap) pointer"
             onClick={() => toSlide(-1)}
           >
-            <div className="description">
-              клик&nbsp;-
-              <br />
-              предыдущий слайд
-            </div>
+            <div
+              className="description whitespace-break-spaces"
+              dangerouslySetInnerHTML={{ __html: translateBase(it => it.cm.com.clickPrevSlide) }}
+            />
           </div>
           <div
             className="bottom-area info-area bottom-(--safe-gap) right-(--safe-gap) pointer"
             onClick={() => toSlide(1)}
           >
-            <div className="description">
-              клик&nbsp;-
-              <br />
-              следующий слайд
-            </div>
+            <div
+              className="description whitespace-break-spaces"
+              dangerouslySetInnerHTML={{ __html: translateBase(it => it.cm.com.clickNxSlide) }}
+            />
           </div>
         </StyledWrapper>
       </StyledContainer>

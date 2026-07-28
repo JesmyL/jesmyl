@@ -35,7 +35,7 @@ export const cmUserStoreTsjrpcBaseServer = new (class CmUserStore extends Tsjrpc
           cmShareServerTsjrpcMethods.comFav_v1({ fav, mod }, makeFilter(tool, 1233));
         },
 
-        favTools: async ({ tools }, tool) => {
+        favTools_v1: async ({ tools }, tool) => {
           const auth = takeLogginedAuthOrThrow(tool.auth);
           const user = await takeUserTiny({ l: auth.login });
 
@@ -43,7 +43,7 @@ export const cmUserStoreTsjrpcBaseServer = new (class CmUserStore extends Tsjrpc
 
           await dbUpdate(userExtDB, { cmFavComTools: tools, cmFavComToolsMod: mod }, eq(userExtDB.userId, user.id));
 
-          cmShareServerTsjrpcMethods.favTools({ tools, mod }, makeFilter(tool));
+          cmShareServerTsjrpcMethods.favTools_v1({ tools, mod }, makeFilter(tool));
         },
       },
     });

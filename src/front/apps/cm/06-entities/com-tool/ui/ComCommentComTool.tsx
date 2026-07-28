@@ -1,7 +1,8 @@
+import { translateBase } from '#basis/locale';
 import { useCmComCurrent } from '$cm/entities/com';
 import { cmComCommentRedactOrdSelectorIdAtom } from '$cm/entities/com-comment';
 import { updateCmComCommentConstructorRulePropsDict } from '$cm/shared/lib/updateComCommentConstructorRulePropsDict';
-import { CmComCommentBlockSpecialSelector } from 'shared/api';
+import { CmComCommentBlockSpecialSelector, MenuComToolName } from 'shared/api';
 import { CmComTool } from '../ComTool';
 
 export const CmComToolComComment = () => {
@@ -9,7 +10,7 @@ export const CmComToolComComment = () => {
 
   return (
     <CmComTool
-      title="Мои заметки"
+      title={translateBase(it => it.cm.com.tool[MenuComToolName.ComComment])}
       icon="TextAlignLeft"
       onClick={async () => {
         if (ccom == null) return;

@@ -48,7 +48,6 @@ export function CmComOrderList(props: ICmComOrderListProps) {
                       setExcludedModulations(props.com.toggleModulationExclusion(headerProps.ord));
                     }}
                   >
-                    <span className="absolute top-[2.2em] w-[100%] text-[.7em] opacity-50 text-center">Мод</span>
                     <LazyIcon icon={excludedModulations.has(headerProps.ord.wid) ? 'View' : 'ViewOffSlash'} />
                   </span>
                   {headerProps.node}

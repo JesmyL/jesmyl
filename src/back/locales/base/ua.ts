@@ -7,13 +7,6 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
   lng: Langi.Ua,
   v: 0,
 
-  cm: {
-    com: {
-      ...localeBaseRu.cm.com,
-      forEachBlock: 'Для кожного блоку "$n;"',
-    },
-  },
-
   each0: 'кожен',
   each1: 'кожен',
   each2: 'кожна',

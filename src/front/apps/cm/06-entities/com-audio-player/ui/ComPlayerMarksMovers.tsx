@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { useFetchFreshComAudioMarksPack } from '$cm/shared/api/useFetchFreshComAudioMarksPack';
@@ -42,7 +43,7 @@ export const CmComAudioPlayerMarksMovers = (props: Props) => {
         id={preSwitchTime}
         items={[-1, 0, 1, 2, 3, 4].map(id => ({ id, title: id < 0 ? '×' : id }))}
         onSelectId={props.preSwitchTimeAtom.set}
-        renderItem={attrs => (attrs.id < 0 ? '×' : `${attrs.id} сек.`)}
+        renderItem={attrs => (attrs.id < 0 ? '×' : translateBase(it => it.Nsec, { n: attrs.id }))}
         hiddenArrow
       />
 

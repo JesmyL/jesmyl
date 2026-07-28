@@ -264,10 +264,6 @@ export interface IExportableCols {
   cats: IExportableCat[];
 }
 
-export type MigratableEditableComToolName = 'edit-com';
-
-export type MigratableComToolName = MenuComToolNameList | MigratableEditableComToolName;
-
 export type HttpLink = `http${string}`;
 export type HttpNumLeadLinkKey = `${number}~`;
 export type HttpNumLeadLink = `${HttpNumLeadLinkKey}${string}`;
@@ -287,22 +283,23 @@ export type CmComAudioMarkEditPack = SPRecord<
   PRecord<HttpNumLeadLink, PRecord<SKey<CmComAudioMarkPackTime>, CmComAudioMarkEditPackValue>>
 >;
 
-/** @deprecated make enum */
-export type MenuComToolNameList =
-  | 'fullscreen-mode'
-  | 'mark-com'
-  | 'show-translation'
-  | 'chords-variant'
-  | 'chord-images'
-  | 'selected-toggle'
-  | 'is-mini-anchor'
-  | 'open-player'
-  | 'hide-metronome'
-  | 'qr-share'
-  | 'com-comment'
-  | 'copy-com'
-  | 'chord-hard-level'
-  | 'cats-binds';
+export const enum MenuComToolName {
+  MarkCom = 93,
+  FullscreenMode = 42,
+  ChordsVariant = 92,
+  ShowTranslation = 61,
+  ChordImages = 50,
+  SelectedToggle = 20,
+  OpenPlayer = 87,
+  HideMetronome = 69,
+  IsMiniAnchor = 53,
+  QrShare = 90,
+  CatsBinds = 76,
+  ComComment = 11,
+  CopyCom = 84,
+  ChordHardLevel = 98,
+  EditCom = 77,
+}
 
 export type CmComWidRefGroupDict = SPRecord<CmComWid, CmComWidRefGroupId>;
 

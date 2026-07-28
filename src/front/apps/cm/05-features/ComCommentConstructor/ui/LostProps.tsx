@@ -62,19 +62,17 @@ export const CmComCommentConstructorLostProps = ({ ordw, com }: { ordw: CmComOrd
       let isColorFix = false;
 
       if ('linei' in props) {
-        lineTitle = `Стр. ${props.linei + 1 + (lostProps.lensAdd[props.pre] ?? 0)}`;
+        lineTitle = translateBase(it => it.lineN, { n: props.linei + 1 + (lostProps.lensAdd[props.pre] ?? 0) });
 
         if ('wordi' in props) {
           const isChord = 'chordi' in props;
-          const titlePrefix = isChord
-            ? ''
-            : `${({ '>': 'после', '<': 'до', '^': 'цвет' } as const)[props.place]} слова`;
+          const titlePrefix = isChord ? '' : translateBase(it => it.cm.comm.wordLabel, { p: props.place });
           isColorFix = !isChord && props.place === '^';
 
-          wordTitle = `${titlePrefix || 'слово'} ${props.wordi + 1}`;
+          wordTitle = `${titlePrefix || translateBase(it => it.word)} ${props.wordi + 1}`;
 
           if (isChord) {
-            chordTitle = `Акк ${props.chordi + 1}`;
+            chordTitle = translateBase(it => it.cm.chordN, { n: props.chordi + 1 });
           }
         }
       } else return;
@@ -96,7 +94,12 @@ export const CmComCommentConstructorLostProps = ({ ordw, com }: { ordw: CmComOrd
             key={propsKey}
             icon="Delete01"
             postfix={joinTitle}
-            confirm={<>Удалить {joinTitle}?</>}
+            confirm={
+              <>
+                {translateBase(it => it.del, { t: '' })}
+                {joinTitle}?
+              </>
+            }
             onClick={() => {
               cmComCommentConstructorRulePropsDictAtom.do.update(dict => {
                 const blockDict = dict.dict?.[propsKey];
@@ -114,7 +117,7 @@ export const CmComCommentConstructorLostProps = ({ ordw, com }: { ordw: CmComOrd
   return (
     !nodes.length || (
       <>
-        <div>Недостижимые комментарии</div>
+        <div>{translateBase(it => it.cm.comm.unreachs)}</div>
         {nodes}
       </>
     )

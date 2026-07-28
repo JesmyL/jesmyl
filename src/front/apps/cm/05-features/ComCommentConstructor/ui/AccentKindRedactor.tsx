@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button, ButtonGroup } from '#shared/components';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { CmComCommentConstructorPropKey, CmComCommentConstructorRulePropsDict } from 'shared/model/cm/com-comment';
@@ -40,7 +41,7 @@ export const CmComCommentConstructorAccentKindRedactor = <Key extends CmComComme
             className={blockProps?.type === type ? color : cmComCommentAccentsColorClassNameList[type]}
             onClick={() => onKindChange(type)}
           >
-            акцент
+            {translateBase(it => it.color)}
           </Button>
         ))}
       </ButtonGroup.Root>

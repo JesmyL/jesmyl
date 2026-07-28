@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { cmIDB } from '$cm/shared/state';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
@@ -13,7 +14,10 @@ export const useCmComCommentTrySendBlocks = () => {
   useEffect(() => {
     if (!localBlocks?.length) return;
     if (!auth.login) {
-      toast('Не авторизован', makeToastKOMoodConfig());
+      toast(
+        translateBase(it => it.notAuthed),
+        makeToastKOMoodConfig(),
+      );
       return;
     }
 

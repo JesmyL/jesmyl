@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LoadIndicatedContent } from '#shared/ui/load-indicated-content/LoadIndicatedContent';
@@ -90,10 +91,7 @@ export const CmCatPage = (props: Props) => {
                       ref={categoryTitleRef}
                     >
                       <div>{props.cat.name}:</div>
-                      <div>
-                        {props.comsCount === foundComsLength ? '' : `${foundComsLength} из `}
-                        {props.comsCount}
-                      </div>
+                      <div>{translateBase(it => it.fromOf, { f: foundComsLength, o: props.comsCount })}</div>
                     </div>
                     <div className="com-list">
                       <CmComSetListLimitsExtracterContext

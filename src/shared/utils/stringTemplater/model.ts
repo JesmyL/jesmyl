@@ -1,5 +1,11 @@
-export type StringTemplaterInterpolation<Name extends string> = `${string}$${Name}${';' | ' ' | '{' | '}'}${string}`;
+type DefEnd = ';' | ' ' | '{' | '}';
+type End = DefEnd | '\n' | '(' | ')' | '&' | '!' | '"' | '-' | '<' | '>' | '?';
 
-export type StringTemplaterWithTwoInterpolations<Name1 extends string, Name2 extends string> =
-  | `${StringTemplaterInterpolation<Name1>}${StringTemplaterInterpolation<Name2>}`
-  | `${StringTemplaterInterpolation<Name2>}${StringTemplaterInterpolation<Name1>}`;
+export type StringTemplaterInterpolation<
+  Name extends string,
+  E extends End = DefEnd,
+> = `${string}${`$${Name}${E}${string | ''}` | `$${Name}`}`;
+
+export type StringTemplaterWithTwoInterpolations<Name1 extends string, Name2 extends string, E extends End = DefEnd> =
+  | `${StringTemplaterInterpolation<Name1, E> | ''}${StringTemplaterInterpolation<Name2, E>}`
+  | `${StringTemplaterInterpolation<Name2, E> | ''}${StringTemplaterInterpolation<Name1, E>}`;

@@ -14,7 +14,7 @@ import {
   IExportableCat,
   IExportableCom,
   IFixedCom,
-  MigratableComToolName,
+  MenuComToolName,
 } from 'shared/api';
 import { CmBroadcastScreenConfig } from 'shared/model/cm/broadcast';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
@@ -37,7 +37,7 @@ export interface CmIDBStorage {
 
   broadcastScreenConfigs: CmBroadcastScreenConfig[];
 
-  comTopTools: MigratableComToolName[] | null;
+  comTopTools: MenuComToolName[] | null;
   lastOpenComw?: CmComWid | null;
   isShowFavouritesInBroadcast: boolean | null;
   selectedComws: CmComWid[] | null;

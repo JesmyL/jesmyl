@@ -1,6 +1,6 @@
-import { BibleTranslateName, Langi } from 'shared/api';
+import { BibleTranslateName, Langi, MenuComToolName } from 'shared/api';
 import { StringTemplaterInterpolation, StringTemplaterWithTwoInterpolations } from 'shared/utils/stringTemplater/model';
-import { LocaleSatisfies, LocaleSimpleString, LocaleStrRecord } from './model';
+import { LocaleSatisfies, LocaleSimpleString, LocaleStrOrInterpolationRecord, LocaleStrRecord } from './model';
 
 export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   lng: L;
@@ -8,10 +8,81 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
 
   cm: {
     com: {
-      forEachBlock: StringTemplaterInterpolation<'n'>;
+      tool: LocaleStrOrInterpolationRecord<
+        MenuComToolName,
+        | MenuComToolName.SelectedToggle
+        | MenuComToolName.IsMiniAnchor
+        | MenuComToolName.ChordHardLevel
+        | MenuComToolName.MarkCom,
+        'v'
+      >;
+
+      forEachBlock: StringTemplaterInterpolation<'n', '"'>;
       maxSel: StringTemplaterInterpolation<'s'>;
+      watcheds: StringTemplaterInterpolation<'c', ')'>;
+      willAdd: StringTemplaterInterpolation<'c'>;
+      willLost: StringTemplaterInterpolation<'c'>;
+
       showPlayer: LocaleSimpleString;
+      sharedListToYou: LocaleSimpleString;
+      addToSel: LocaleSimpleString;
+      changeSel: LocaleSimpleString;
+
+      twiceClickPrev: LocaleSimpleString;
+      twiceClickNx: LocaleSimpleString;
+      clickPrevSlide: LocaleSimpleString;
+      clickNxSlide: LocaleSimpleString;
+      notFound: LocaleSimpleString;
+      expandList: LocaleSimpleString;
+      showLiSlides: LocaleSimpleString;
+      shareLi: LocaleSimpleString;
+      unk: LocaleSimpleString;
     };
+
+    cat: {
+      t: {
+        all: LocaleSimpleString;
+      };
+    };
+
+    comm: {
+      N: StringTemplaterInterpolation<'n'>;
+      wordLabel: StringTemplaterInterpolation<'p'>;
+      areHidden: LocaleSimpleString;
+      forLine: LocaleSimpleString;
+      unreachs: LocaleSimpleString;
+    };
+
+    trackMarksNotSetted: LocaleSimpleString;
+
+    sel: LocaleSimpleString;
+    thematics: LocaleSimpleString;
+    blocks: LocaleSimpleString;
+
+    nxBlockConfig: LocaleSimpleString;
+    insertNxBlock: LocaleSimpleString;
+    hideNxBlock: LocaleSimpleString;
+
+    chBlockConfig: LocaleSimpleString;
+    insertChBlock: LocaleSimpleString;
+    hideChBlock: LocaleSimpleString;
+
+    linnes: LocaleSimpleString;
+    chBlocks: LocaleSimpleString;
+    toShow: LocaleSimpleString;
+    toPass: LocaleSimpleString;
+    toHide: LocaleSimpleString;
+    emptySlide: LocaleSimpleString;
+
+    chordN: StringTemplaterInterpolation<'n'>;
+    maxChCount: LocaleSimpleString;
+    noChTxt: LocaleSimpleString;
+    minChCount: LocaleSimpleString;
+    minChCountDsc: LocaleSimpleString;
+    creNxChRule: LocaleSimpleString;
+    unkCh: LocaleSimpleString;
+    coms: LocaleSimpleString;
+    toComList: LocaleSimpleString;
   };
 
   bible: {
@@ -30,10 +101,21 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
     /** translation titles */
     trs: LocaleStrRecord<BibleTranslateName>;
 
+    modulesForLoad: LocaleSimpleString;
+
     chapterNum: StringTemplaterInterpolation<'c'>;
-    clearChapter: StringTemplaterInterpolation<'c'>;
-    searchByBook: StringTemplaterInterpolation<'b'>;
+    clearChapter: StringTemplaterInterpolation<'c', '?'>;
+    searchByBook: StringTemplaterInterpolation<'b', '<'>;
+    removeModule: StringTemplaterInterpolation<'n', '"'>;
     searchByChapter: StringTemplaterWithTwoInterpolations<'c', 'b'>;
+  };
+
+  sch: {
+    notFound: LocaleSimpleString;
+  };
+
+  bro: {
+    followInPhone: LocaleSimpleString;
   };
 
   /** **каждое** Вступление */
@@ -48,6 +130,7 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   lasts: LocaleSimpleString;
   msg: LocaleSimpleString;
   authIncorrect: LocaleSimpleString;
+  notAuthed: LocaleSimpleString;
   selProgram: LocaleSimpleString;
   accessRights: LocaleSimpleString;
   inoe: LocaleSimpleString;
@@ -78,6 +161,7 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   toAuth: LocaleSimpleString;
   authSuccess: LocaleSimpleString;
   logout: LocaleSimpleString;
+  events: LocaleSimpleString;
 
   history: LocaleSimpleString;
   plan: LocaleSimpleString;
@@ -111,5 +195,27 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
     toBind: LocaleSimpleString;
   };
 
+  lineN: StringTemplaterInterpolation<'n'>;
+  wordN: StringTemplaterInterpolation<'n'>;
+  del: StringTemplaterInterpolation<'t'>;
+  Nsec: StringTemplaterInterpolation<'n'>;
+
   fromOf: StringTemplaterWithTwoInterpolations<'f', 'o'>;
+
+  fav: LocaleSimpleString;
+  favNLim: StringTemplaterInterpolation<'n'>;
+
+  sel: LocaleSimpleString;
+  clearSelList: LocaleSimpleString;
+
+  color: LocaleSimpleString;
+  before: LocaleSimpleString;
+  instead: LocaleSimpleString;
+  after: LocaleSimpleString;
+  word: LocaleSimpleString;
+  lists: LocaleSimpleString;
+  txtBefore: LocaleSimpleString;
+  txtAfter: LocaleSimpleString;
+  close: LocaleSimpleString;
+  detailed: LocaleSimpleString;
 }>;

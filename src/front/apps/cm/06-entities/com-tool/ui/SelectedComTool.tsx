@@ -1,22 +1,17 @@
+import { translateBase } from '#basis/locale';
 import { cmComSelectedComwsAtom, useCmComCurrent, useCmComSelectedList } from '$cm/entities/com';
+import { MenuComToolName } from 'shared/api';
 import { CmComTool } from '../ComTool';
 
 export const CmComToolSelected = () => {
   const ccom = useCmComCurrent();
   const { selectedComPosition } = useCmComSelectedList();
-  const selTitle = 'Выбрать песню';
 
-  if (ccom == null)
-    return (
-      <CmComTool
-        title={selTitle}
-        icon="CheckmarkBadge01"
-      />
-    );
+  if (ccom == null) return <CmComTool icon="CheckmarkBadge01" />;
 
   return (
     <CmComTool
-      title={selectedComPosition(ccom.wid) ? 'Убрать из выбранных' : selTitle}
+      title={translateBase(it => it.cm.com.tool[MenuComToolName.SelectedToggle], { v: +selectedComPosition(ccom.wid) })}
       icon="CheckmarkBadge01"
       iconKind={selectedComPosition(ccom.wid) ? 'SolidRounded' : undefined}
       onClick={() => cmComSelectedComwsAtom.do.toggle(ccom.wid)}

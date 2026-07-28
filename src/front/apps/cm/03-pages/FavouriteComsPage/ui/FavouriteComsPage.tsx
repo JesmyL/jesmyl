@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { CmComLocalListToolsPopup } from '$cm/entities/com';
@@ -12,7 +13,7 @@ export const CmFavouriteComsPage = () => {
   return (
     <PageContainerConfigurer
       className="favorites-container"
-      headTitle="Избранное"
+      headTitle={translateBase(it => it.fav)}
       onMoreClick={setIsOpenTools}
       content={
         <>

@@ -32,13 +32,13 @@ export default function TranslatesLoadModalInner() {
               className="ml-2 my-2"
               iconClassName={isUnremovable ? undefined : 'text-xKO'}
               disabled={isUnremovable}
-              confirm={`Удалить безвозвратно модуль "${title}"`}
+              confirm={translateBase(it => it.bible.removeModule, { n: title })}
               postfix={title}
               onClick={() => removeBibleTranslate(tName)}
             />
           );
         })}
-        <h3 className="my-2 font-bold">Доступные к загрузке</h3>
+        <h3 className="my-2 font-bold">{translateBase(it => it.bible.modulesForLoad)}</h3>
         {bibleAllTranslates.map(tName => {
           if (myTranslates.includes(tName)) return null;
           const title = `${translateDescriptions[tName]} (${textToUpperCase(tName)})`;
