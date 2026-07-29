@@ -4,13 +4,15 @@ import { checkIsArray, checkIsFunction, checkIsString } from '../checkIs';
 import { stringTemplater } from '../stringTemplater';
 import { StringTemplaterInterpolation, StringTemplaterWithTwoInterpolations } from '../stringTemplater/model';
 
+type SimpleDictValue = string | number | boolean;
+
 interface DefinedTranslateFunction<Dict> {
   <
     const Val extends StringTemplaterWithTwoInterpolations<string, string> | StringTemplaterInterpolation<string>,
     const Interpolation extends Val extends StringTemplaterWithTwoInterpolations<infer V1, infer V2>
-      ? Record<V1 | V2, string | number>
+      ? Record<V1 | V2, SimpleDictValue>
       : Val extends StringTemplaterInterpolation<infer V>
-        ? Record<V, string | number>
+        ? Record<V, SimpleDictValue>
         : never,
   >(
     selector: (translates: Dict) => Val,
