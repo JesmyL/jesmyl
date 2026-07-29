@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { useAppNameContext } from '#basis/state/contexts';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ScheduleWidgetAppAtts } from '#widgets/schedule/ScheduleWidget.model';
@@ -17,8 +18,8 @@ import { CmExternalComListAtt } from './ui/CmExternalComListAtt';
 export const cmExternalOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
   '[cm]:coms': {
     icon: 'Playlist02',
-    title: 'Песни',
-    description: 'Список известных песен',
+    title: translateBase(it => it.cm.com.t2),
+    description: translateBase(it => it.cm.com.dsc),
     initVal: {},
     R: ScheduleWidgetUserRoleRight.Free,
     U: scheduleWidgetUserRights.includeRights(ScheduleWidgetUserRoleRight.Redact),
@@ -38,7 +39,7 @@ const path = '/!other/$appName/schs/';
 
 const route = makeCmEventNestedRoute({
   path,
-  RouteComponent: () => <>Ошибка 6517923985</>,
+  RouteComponent: () => <>Error 6517923985</>,
   useComListPack,
 });
 

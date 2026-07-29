@@ -1,4 +1,5 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components';
 import { Modal } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -82,9 +83,7 @@ export const CmEditorComTabTextBlocks = ({ ccom }: { ccom: EditableCom }) => {
                   <Button
                     icon="Code"
                     onClick={() => {
-                      toast(
-                        `Текст в [квадратных скобках] не показывается в слайдах, но приводится к (тексту в круглых скобках) в тексте песен. Используйте [[две открывающие скобки] для переноса строки. Перед "[" должен быть пробел, а после "]" быть ничего не должно`,
-                      );
+                      toast(translateBase(it => it.cm.com.sqBrInTxtRep));
                     }}
                   />
                 )}
@@ -98,7 +97,7 @@ export const CmEditorComTabTextBlocks = ({ ccom }: { ccom: EditableCom }) => {
                 {checkAccess('cm', 'COM_TXT', 'D') && (
                   <TheIconButton
                     icon="Cancel01"
-                    confirm={`Удалить${text ? '' : ' новый'} блок?\n\n${text}`}
+                    confirm={translateBase(it => it.cm.com.rmTBlock, { t: text })}
                     onClick={() =>
                       cmEditComClientTsjrpcMethods.removeTextBlock({
                         comw: ccom.wid,

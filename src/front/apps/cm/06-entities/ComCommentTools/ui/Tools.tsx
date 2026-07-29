@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button, DropdownMenu } from '#shared/components';
 import { makeToastOKMoodConfig } from '#shared/ui/modal';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
@@ -21,7 +22,7 @@ export const CmComCommentTools = ({ comw }: { comw: CmComWid }) => {
               <DropdownMenu.Item onClick={cmIsShowMyCommentsAtom.do.toggle}>
                 <IconCheckbox
                   checked={isShow}
-                  postfix="Показать комменты"
+                  postfix={translateBase(it => it.cm.showComms)}
                   className="w-full"
                 />
               </DropdownMenu.Item>
@@ -31,10 +32,13 @@ export const CmComCommentTools = ({ comw }: { comw: CmComWid }) => {
                   className="w-full"
                   onClick={async () => {
                     await cmTsjrpcClient.pullComComments({ comw });
-                    toast('Свежие комментарии стянуты', makeToastOKMoodConfig());
+                    toast(
+                      translateBase(it => it.cm.comm.freshPulled),
+                      makeToastOKMoodConfig(),
+                    );
                   }}
                 >
-                  Стянуть коменты
+                  {translateBase(it => it.cm.comm.pull)}
                 </Button>
               </DropdownMenu.Item>
             </>

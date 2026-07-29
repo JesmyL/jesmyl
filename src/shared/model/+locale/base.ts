@@ -22,11 +22,14 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
       watcheds: StringTemplaterInterpolation<'c', ')'>;
       willAdd: StringTemplaterInterpolation<'c'>;
       willLost: StringTemplaterInterpolation<'c'>;
+      addMod: StringTemplaterWithTwoInterpolations<'w', 'm'>;
 
       showPlayer: LocaleSimpleString;
       sharedListToYou: LocaleSimpleString;
       addToSel: LocaleSimpleString;
       changeSel: LocaleSimpleString;
+      t2: LocaleSimpleString;
+      dsc: LocaleSimpleString;
 
       twiceClickPrev: LocaleSimpleString;
       twiceClickNx: LocaleSimpleString;
@@ -37,6 +40,16 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
       showLiSlides: LocaleSimpleString;
       shareLi: LocaleSimpleString;
       unk: LocaleSimpleString;
+      ton: LocaleSimpleString;
+      addToolByClick: LocaleSimpleString;
+      crossLinks: LocaleSimpleString;
+
+      /// EDITOR:
+      /** square brackets in text replacing */
+      sqBrInTxtRep: LocaleSimpleString;
+      rmTBlock: StringTemplaterInterpolation<'t'>;
+
+      /// :EDITOR
     };
 
     cat: {
@@ -48,9 +61,15 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
     comm: {
       N: StringTemplaterInterpolation<'n'>;
       wordLabel: StringTemplaterInterpolation<'p'>;
+      soLongName: StringTemplaterInterpolation<'l'>;
       areHidden: LocaleSimpleString;
       forLine: LocaleSimpleString;
       unreachs: LocaleSimpleString;
+      base: LocaleSimpleString;
+      addedMaxAlts: LocaleSimpleString;
+      addAlt: LocaleSimpleString;
+      freshPulled: LocaleSimpleString;
+      pull: LocaleSimpleString;
     };
 
     trackMarksNotSetted: LocaleSimpleString;
@@ -58,6 +77,7 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
     sel: LocaleSimpleString;
     thematics: LocaleSimpleString;
     blocks: LocaleSimpleString;
+    showComms: LocaleSimpleString;
 
     nxBlockConfig: LocaleSimpleString;
     insertNxBlock: LocaleSimpleString;
@@ -199,6 +219,8 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   wordN: StringTemplaterInterpolation<'n'>;
   del: StringTemplaterInterpolation<'t'>;
   Nsec: StringTemplaterInterpolation<'n'>;
+  lookedN: StringTemplaterInterpolation<'n'>;
+  NDay: StringTemplaterInterpolation<'n'>;
 
   fromOf: StringTemplaterWithTwoInterpolations<'f', 'o'>;
 
@@ -218,4 +240,7 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   txtAfter: LocaleSimpleString;
   close: LocaleSimpleString;
   detailed: LocaleSimpleString;
+  fontSize: LocaleSimpleString;
+  toAdd: LocaleSimpleString;
+  savedLoc: LocaleSimpleString;
 }>;

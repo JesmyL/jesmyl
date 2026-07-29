@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -68,7 +69,12 @@ export const CmMeetingSchPackFace = ({ schedule }: { schedule: IScheduleWidget }
               <TheIconButton
                 className="pointer m-5"
                 icon="ArrowRight02"
-                prefix={`${parseInt(path) + 1}-й день ${paths[path].title}`}
+                prefix={
+                  // TODO: conditionally NDay by single day
+                  <>
+                    {translateBase(it => it.NDay, { n: parseInt(path) + 1 })} {paths[path].title}
+                  </>
+                }
               />
             ),
             search: {

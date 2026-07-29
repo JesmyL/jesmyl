@@ -1,5 +1,5 @@
 import { AppName } from '#basis/model/App.model';
-import { StringTemplaterInterpolation, StringTemplaterWithTwoInterpolations } from 'shared/utils/stringTemplater/model';
+import { StringTemplaterInterpolation } from 'shared/utils/stringTemplater/model';
 
 export type LocaleSatisfies<T extends PRecord<AppName, object> & { v: number }> = T;
 
@@ -12,9 +12,3 @@ export type LocaleStrOrInterpolationRecord<All extends string | number, T extend
   Record<`${T}`, StringTemplaterInterpolation<Name>>;
 
 export type LocaleSimpleString = `${Uppercase<string> | Lowercase<string>}${string}`;
-
-export type LocaleAnyType =
-  | StringTemplaterWithTwoInterpolations<string, string>
-  | StringTemplaterInterpolation<string>
-  | LocaleSimpleString
-  | LocaleSimpleString[];

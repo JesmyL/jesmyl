@@ -30,6 +30,8 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
       showPlayer: 'Показывать плеер',
       sharedListToYou: 'С вами поделились списком',
       addToSel: 'Добавить к выбранным',
+      t2: 'Песни',
+      dsc: 'Список известных песен',
 
       changeSel: 'Заменить выбранные',
 
@@ -49,6 +51,14 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
       showLiSlides: 'Показывать слайды списка',
       shareLi: 'Поделиться списком',
       unk: 'Неизвестная песня',
+      sqBrInTxtRep:
+        'Текст в [квадратных скобках] не показывается в слайдах, но приводится к (тексту в круглых скобках) в тексте песен. Используйте [[две открывающие скобки] для переноса строки. Перед "[" должен быть пробел, а после "]" быть ничего не должно',
+      rmTBlock: STR(['$t'])`Удалить${IF('$t').ELSE` новый`} блок?\n\n$t`,
+
+      ton: 'Тональность',
+      addToolByClick: 'Клик на иконку для добавления в быстрое меню',
+      crossLinks: 'Связанные песни',
+      addMod: STR(['$w', '$m'])`Добавлена: $w${IF(isUtil.NEQ('$w', '$m')).THEN`\nОбновлена: $m`}`,
     },
 
     cat: {
@@ -64,6 +74,12 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
 
       wordLabel: STR(['$p'])`${SWITCH('$p').CASE('>')`после`.CASE('<')`до`.DEFAULT`цвет`} слова`,
       unreachs: 'Недостижимые комментарии',
+      base: 'База',
+      addedMaxAlts: 'Добавлено максимальное количество альтернатив',
+      addAlt: 'Добавить новую альтернативу',
+      soLongName: `Слишком длинное название ($l;+)`,
+      freshPulled: 'Свежие комментарии стянуты',
+      pull: 'Стянуть коменты',
     },
 
     trackMarksNotSetted: 'Для этого трека маркеры не установлены',
@@ -89,6 +105,7 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
     creNxChRule: 'Создать правило для следующего аккорда',
     unkCh: 'Неизвестный аккорд',
     coms: 'Песни',
+    showComms: 'Показать комменты',
     toComList: 'К списку песен',
     maxChCount: 'Максимальное количество аккордов',
     minChCount: 'Текст с минимальным количеством аккордов',
@@ -227,4 +244,9 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
   close: 'Закрыть',
   Nsec: '$n сек.',
   detailed: 'Подробнее',
+  fontSize: 'Размер шрифта',
+  lookedN: 'Просмотрели $n $declension{{$n}{раз}{раза}{раз}}',
+  toAdd: 'Добавить',
+  NDay: '$n;-й день',
+  savedLoc: 'Сохранено локально',
 };

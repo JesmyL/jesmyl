@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { Button } from '#shared/components';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
@@ -25,7 +26,7 @@ export const CmComCommentAlternativeSelector = ({ comw }: { comw: CmComWid }) =>
         }
         items={registeredAltKeys.map((key, keyi) => ({
           id: keyi,
-          title: keyi ? key : <span className="text-x7">Общ</span>,
+          title: keyi ? key : <span className="text-x7">{translateBase(it => it.cm.comm.base)}</span>,
         }))}
         renderItem={({ node }) => (
           <>
@@ -41,18 +42,18 @@ export const CmComCommentAlternativeSelector = ({ comw }: { comw: CmComWid }) =>
               disabled={registeredAltKeys.length >= maxComCommentAlternativesCount}
               onClick={async () => {
                 if (registeredAltKeys.length >= maxComCommentAlternativesCount) {
-                  toast('Добавлено максимальное количество альтернатив');
+                  toast(translateBase(it => it.cm.comm.addedMaxAlts));
                   return;
                 }
 
-                const commentAlti = (await prompt('Добавить новую альтернативу'))?.toLowerCase();
+                const commentAlti = (await prompt(translateBase(it => it.cm.comm.addAlt)))?.toLowerCase();
 
                 if (!commentAlti) return;
 
                 const maxLen = 10;
 
                 if (commentAlti.length > maxLen) {
-                  toast(`Слишком длинное название (${maxLen}+)`);
+                  toast(translateBase(it => it.cm.comm.soLongName, { l: maxLen }));
                   return;
                 }
 
@@ -61,7 +62,7 @@ export const CmComCommentAlternativeSelector = ({ comw }: { comw: CmComWid }) =>
               }}
             >
               <LazyIcon icon="PlusSign" />
-              Добавить
+              {translateBase(it => it.toAdd)}
             </Button>
           </div>
         }

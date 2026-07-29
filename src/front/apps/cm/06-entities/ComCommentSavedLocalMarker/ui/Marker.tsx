@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmComCommentCurrentComw2OpenAltiDictAtom, useCmComCommentBlock } from '$cm/entities/com-comment';
@@ -31,13 +32,13 @@ const SavedLocalLabel = () => {
 
   return (
     isShow && (
-      <>
-        Сохранено локально
+      <div className="flex gap-2">
+        {translateBase(it => it.savedLoc)}
         <LazyIcon
           icon="FileValidation"
           className="text-xOK"
         />
-      </>
+      </div>
     )
   );
 };

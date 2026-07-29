@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Badge } from '#shared/components/ui/badge';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
@@ -10,7 +11,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { CmComWidDef } from 'shared/api';
-import { declension } from 'shared/utils';
 import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { twMerge } from 'tailwind-merge';
 import { useCmComCurrentFixedCom } from '../com/lib/com-selections';
@@ -40,7 +40,7 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
         id="transpose-tool"
         icon="SlidersHorizontal"
         className={chordVisibleVariant === ChordVisibleVariant.None ? 'disabled' : ''}
-        titleNode={<span className="@min-[100px]:visible invisible">Тональность</span>}
+        titleNode={<span className="@min-[100px]:visible invisible">{translateBase(it => it.cm.com.ton)}</span>}
         onClick={event => event.stopPropagation()}
         rightNode={
           <div className="flex justify-between gap-1">
@@ -71,7 +71,7 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
       <BottomPopupItem
         id="font-size-tool"
         icon="TextFont"
-        titleNode={<span className="@min-[120px]:visible invisible">Размер шрифта</span>}
+        titleNode={<span className="@min-[120px]:visible invisible">{translateBase(it => it.fontSize)}</span>}
         onClick={event => event.stopPropagation()}
         rightNode={
           <div className="flex justify-between gap-1">
@@ -99,7 +99,7 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
       />
 
       <div className="flex justify-center text-center w-full opacity-50 text-xs mt-3">
-        Клик на иконку для добавления в быстрое меню
+        {translateBase(it => it.cm.com.addToolByClick)}
       </div>
       {comToolsNode}
 
@@ -110,7 +110,9 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
       <div className="ml-7 my-5 [&_.face-logo]:bg-x2!">
         <CmComJoinGroupList
           com={ccom}
-          children={comJoinsList => !comJoinsList.length || <div className="mb-2">Связанные песни</div>}
+          children={comJoinsList =>
+            !comJoinsList.length || <div className="mb-2">{translateBase(it => it.cm.com.crossLinks)}</div>
+          }
           importantOnClick={({ defaultClick }) => {
             onClose(false);
             defaultClick();
@@ -119,19 +121,17 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
       </div>
 
       <div className="w-full opacity-50 flex center gap-2 text-xs py-3">
-        Просмотрели
         {visitsCountQuery.isLoading ? (
           <TheIconLoading />
         ) : (
-          <>
-            {' '}
-            {visitsCountQuery.data} {declension(visitsCountQuery.data ?? 0, 'раз', 'раза', 'раз')}
-          </>
+          translateBase(it => it.lookedN, { n: visitsCountQuery.data ?? 0 })
         )}
       </div>
-      <div className="w-full opacity-50 flex flex-col text-xs py-3">
-        <div>Добавлена: {makeDateLabel(ccom.wid)}</div>
-        {Math.trunc(ccom.wid) !== Math.trunc(ccom.mod) && <div>Обновлена: {makeDateLabel(ccom.mod)}</div>}
+      <div className="w-full opacity-50 text-center text-xs py-3 white-pre">
+        {translateBase(it => it.cm.com.addMod, {
+          w: makeDateLabel(ccom.wid),
+          m: makeDateLabel(ccom.mod),
+        })}
       </div>
     </>
   );
