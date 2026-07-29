@@ -36,10 +36,11 @@ import * as secret from './secret.json';
           await walk(`${dir}${fileName}`, fs.readdirSync(makeCaseDir(`${dir}${fileName}`)), fileName);
           continue;
         }
+        const fileNameExt = `${fileName}.json`;
 
-        if (fileName[0] === '.' || !fs.statSync(`${caseDirPath}${fileName}`).isFile()) continue;
+        if (fileName[0] === '.' || !fs.statSync(`${caseDirPath}${fileNameExt}`).isFile()) continue;
 
-        const data = JSON.parse(fs.readFileSync(`${caseDirPath}${fileName}`, 'utf-8'));
+        const data = JSON.parse(fs.readFileSync(`${caseDirPath}${fileNameExt}`, 'utf-8'));
 
         const response = await fetch(
           `${url}${pushFilesExpressRoutePath}?${pullFilesExpressSecretQueryName}=${secret.secret}`,
