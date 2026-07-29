@@ -7,6 +7,8 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
   v: 0,
 
   cm: {
+    t: 'Песни возрождённых',
+
     com: {
       tool: {
         [MenuComToolName.MarkCom]: STR(['$v'])`${IF('$v').THEN`Удалить избранное`.ELSE`Добавить избранное`}`,
@@ -30,7 +32,6 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
       showPlayer: 'Показывать плеер',
       sharedListToYou: 'С вами поделились списком',
       addToSel: 'Добавить к выбранным',
-      t2: 'Песни',
       dsc: 'Список известных песен',
 
       changeSel: 'Заменить выбранные',
@@ -62,9 +63,30 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
     },
 
     cat: {
-      t: {
+      t: 'Категория',
+      li: {
         all: 'Все песни',
+        child: 'Детские',
+        youth: 'Молодёжные',
+        PesnVzr: 'Песнь Возрождения',
+        RU: 'Русскоязычные',
+        UA: 'Украиноязычные',
+        solo: 'Соло',
+        Christmass: 'На Рождество',
+        Easter: 'На Пасху',
+        tooSlow: 'Очень медленные',
+        slow: 'Медленные',
+        middle: 'Средней интенсивности',
+        fast: 'Быстрые',
+        tooFast: 'Очень быстрые',
       },
+    },
+
+    li: {
+      all: 'Все',
+      li: 'Списки',
+      player: 'Плеер',
+      admin: 'Админ',
     },
 
     comm: {
@@ -101,17 +123,31 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
     toPass: 'Пропускать',
     toHide: 'Скрывать',
     emptySlide: 'Пустой слайд',
-    chordN: 'Аккорд $n',
+
+    chN: 'Аккорд $n',
+    chs: 'Аккорды',
+    comeBackCh: 'Вернуть аккорд',
+    delCh: 'Удалить аккорд',
+    chExists: 'Такой аккорд существует',
+    incCh: 'Не правильное написание аккорда',
     creNxChRule: 'Создать правило для следующего аккорда',
     unkCh: 'Неизвестный аккорд',
-    coms: 'Песни',
-    showComms: 'Показать комменты',
-    toComList: 'К списку песен',
+    selChEdit: 'Выбери аккорд для редактирования',
     maxChCount: 'Максимальное количество аккордов',
     minChCount: 'Текст с минимальным количеством аккордов',
     noChTxt: 'Текст без аккордов',
     minChCountDsc:
       'В режиме минимального количества аккордов они присутствуют в блоках, где впервые встречаются или меняются (для одноимённых)',
+
+    toComList: 'К списку песен',
+    coms: 'Песни',
+    showComms: 'Показать комменты',
+    unkChN: 'Неизвестные аккорды ($n)',
+    noEditorsMore: 'Больше редактирующих нет',
+    editsToo: STR(['$m', '$l'])`${IF('$m').THEN`Редактируют`.ELSE`Редактирует`} также $l`,
+    edits: 'Редактирует $f',
+    comRemoved: 'Песня удалена',
+    comeBack: 'Восстановить',
   },
 
   bible: {
@@ -143,6 +179,7 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
 
   sch: {
     notFound: 'Расписание не найдено',
+    evMod: `Обновлено: $m`,
   },
 
   bro: {
@@ -249,4 +286,10 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
   toAdd: 'Добавить',
   NDay: '$n;-й день',
   savedLoc: 'Сохранено локально',
+  noChanges: 'Изменений нет',
+  toSendSmth: 'Отправить $s',
+  backToEdit: 'Вернуться к редактированию',
+  cre: 'Создать',
+  redact: 'Редактировать',
+  noAccess: 'Нет доступа',
 };

@@ -1,4 +1,5 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { translateBase } from '#basis/locale';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContainer';
@@ -11,7 +12,7 @@ export const CmEditorPage = () => {
     <PageCmEditorContainer
       className="cm-editor"
       withoutBackButton
-      headTitle="Редактор"
+      headTitle={translateBase(it => it.cm.li.admin)}
       content={
         <>
           {checkAccess('cm', 'COM') && (
@@ -23,7 +24,7 @@ export const CmEditorPage = () => {
                     kind="TwotoneRounded"
                   />
                 }
-                title="Песни"
+                title={translateBase(it => it.cm.coms)}
                 idPostfix="coms"
               />
             </Link>
@@ -37,7 +38,7 @@ export const CmEditorPage = () => {
                     kind="TwotoneRounded"
                   />
                 }
-                title="События"
+                title={translateBase(it => it.events)}
                 idPostfix="events"
               />
             </Link>
@@ -54,7 +55,7 @@ export const CmEditorPage = () => {
                     kind="TwotoneRounded"
                   />
                 }
-                title="Редактор аккордов"
+                title={translateBase(it => it.cm.chs)}
                 idPostfix="chord"
               />
             </Link>
@@ -68,7 +69,7 @@ export const CmEditorPage = () => {
                     kind="TwotoneRounded"
                   />
                 }
-                title="Редактор MP3 правил"
+                title="MP3"
                 idPostfix="mp3Rules"
               />
             </Link>

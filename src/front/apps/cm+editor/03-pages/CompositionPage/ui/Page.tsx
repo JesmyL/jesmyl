@@ -1,5 +1,6 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { useConnectionState } from '#basis/lib/useConnectionState';
+import { translateBase } from '#basis/locale';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
@@ -61,10 +62,10 @@ export const CmEditorCompositionPage = ({
         headTitle={removedComs[ccomw]}
         content={
           <div className="flex column">
-            <h2 className="text-xKO">Песня удалена</h2>
+            <h2 className="text-xKO">{translateBase(it => it.cm.comRemoved)}</h2>
             <TheIconButton
               icon="MapsRefresh"
-              postfix="Восстановить"
+              postfix={translateBase(it => it.cm.comeBack)}
               className="text-xOK"
               onClick={() => cmEditComClientTsjrpcMethods.bringBackToLife({ comw: ccomw })}
             />

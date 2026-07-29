@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { CmComListContextValue } from '$cm/entities/com';
 import { useCmComSelectedList } from '$cm/ext';
 import { CmSelectedComs } from '$cm/pages/SelectedComsPage';
@@ -24,7 +25,7 @@ function useComListPack(): CmComListContextValue {
   return useMemo(() => {
     return {
       list,
-      pageTitlePostfix: ' - Выбранное',
+      pageTitlePostfix: ' - ' + translateBase(it => it.sel),
     };
   }, [list]);
 }

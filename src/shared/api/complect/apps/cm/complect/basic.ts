@@ -256,6 +256,23 @@ export interface IExportableCat {
   /** вид категории (список, по номерам из сборника, итд) */
   k: CmCatKind;
 
+  /** title code */
+  t:
+    | 'all'
+    | 'child'
+    | 'youth'
+    | 'PesnVzr'
+    | 'RU'
+    | 'UA'
+    | 'solo'
+    | 'Christmass'
+    | 'Easter'
+    | 'tooSlow'
+    | 'slow'
+    | 'middle'
+    | 'fast'
+    | 'tooFast';
+
   isRemoved?: 1;
 }
 

@@ -1,4 +1,4 @@
-import { BibleTranslateName, Langi, MenuComToolName } from 'shared/api';
+import { BibleTranslateName, IExportableCat, Langi, MenuComToolName } from 'shared/api';
 import { StringTemplaterInterpolation, StringTemplaterWithTwoInterpolations } from 'shared/utils/stringTemplater/model';
 import { LocaleSatisfies, LocaleSimpleString, LocaleStrOrInterpolationRecord, LocaleStrRecord } from './model';
 
@@ -7,6 +7,8 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   v: 0;
 
   cm: {
+    t: LocaleSimpleString;
+
     com: {
       tool: LocaleStrOrInterpolationRecord<
         MenuComToolName,
@@ -28,7 +30,6 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
       sharedListToYou: LocaleSimpleString;
       addToSel: LocaleSimpleString;
       changeSel: LocaleSimpleString;
-      t2: LocaleSimpleString;
       dsc: LocaleSimpleString;
 
       twiceClickPrev: LocaleSimpleString;
@@ -52,10 +53,16 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
       /// :EDITOR
     };
 
+    li: {
+      all: LocaleSimpleString;
+      li: LocaleSimpleString;
+      player: LocaleSimpleString;
+      admin: LocaleSimpleString;
+    };
+
     cat: {
-      t: {
-        all: LocaleSimpleString;
-      };
+      t: LocaleSimpleString;
+      li: LocaleStrRecord<IExportableCat['t']>;
     };
 
     comm: {
@@ -94,15 +101,31 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
     toHide: LocaleSimpleString;
     emptySlide: LocaleSimpleString;
 
-    chordN: StringTemplaterInterpolation<'n'>;
+    chN: StringTemplaterInterpolation<'n'>;
+    chs: LocaleSimpleString;
     maxChCount: LocaleSimpleString;
     noChTxt: LocaleSimpleString;
     minChCount: LocaleSimpleString;
     minChCountDsc: LocaleSimpleString;
     creNxChRule: LocaleSimpleString;
     unkCh: LocaleSimpleString;
+
     coms: LocaleSimpleString;
     toComList: LocaleSimpleString;
+
+    // EDIT:
+    comeBackCh: LocaleSimpleString;
+    delCh: LocaleSimpleString;
+    chExists: LocaleSimpleString;
+    incCh: LocaleSimpleString;
+    selChEdit: LocaleSimpleString;
+    noEditorsMore: LocaleSimpleString;
+    comRemoved: LocaleSimpleString;
+    comeBack: LocaleSimpleString;
+    unkChN: StringTemplaterInterpolation<'n', ')'>;
+    editsToo: StringTemplaterWithTwoInterpolations<'m', 'l'>;
+    edits: StringTemplaterInterpolation<'f'>;
+    // :EDIT
   };
 
   bible: {
@@ -132,6 +155,7 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
 
   sch: {
     notFound: LocaleSimpleString;
+    evMod: StringTemplaterInterpolation<'m'>;
   };
 
   bro: {
@@ -243,4 +267,10 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   fontSize: LocaleSimpleString;
   toAdd: LocaleSimpleString;
   savedLoc: LocaleSimpleString;
+  noChanges: LocaleSimpleString;
+  backToEdit: LocaleSimpleString;
+  cre: LocaleSimpleString;
+  redact: LocaleSimpleString;
+  noAccess: LocaleSimpleString;
+  toSendSmth: StringTemplaterInterpolation<'s'>;
 }>;

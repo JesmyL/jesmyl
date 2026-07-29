@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { useCmCat } from '$cm/entities/cat';
 import { CmComListContextValue } from '$cm/entities/com';
 import { CmCatPage } from '$cm/pages/CatPage';
@@ -41,6 +42,6 @@ function useComListPack(): CmComListContextValue {
   const cat = useCmCat(+catw);
 
   return useMemo(() => {
-    return { list: cat?.coms ?? [], pageTitlePostfix: ` - ${cat?.name ?? 'Категория'}` };
+    return { list: cat?.coms ?? [], pageTitlePostfix: ` - ${cat?.name ?? translateBase(it => it.cm.cat.t)}` };
   }, [cat?.coms, cat?.name]);
 }

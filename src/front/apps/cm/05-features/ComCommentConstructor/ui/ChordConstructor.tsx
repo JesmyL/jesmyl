@@ -35,7 +35,7 @@ export const CmComCommentConstructorChordConstructor = ({
         className="rounded bg-x2 my-10 p-3"
       >
         <div className="flex w-full justify-between">
-          <span>{translateBase(it => it.cm.chordN, { n: chordi + 1 })}</span>
+          <span>{translateBase(it => it.cm.chN, { n: chordi + 1 })}</span>
           {isLast && (
             <Button
               icon="Delete02"

@@ -15,7 +15,7 @@ export const useCmCat = (catw: CmCatWid) => {
 
   return useMemo(() => {
     if (catw === CmCatWid.all)
-      return new CmCat({ k: 'full', m: 0, n: translateBase(it => it.cm.cat.t.all), w: 0 }, coms);
+      return new CmCat({ k: 'full', m: 0, t: 'all', n: translateBase(it => it.cm.cat.li.all), w: 0 }, coms);
 
     return icat && coms && new CmCat(icat, coms);
   }, [catw, coms, icat]);

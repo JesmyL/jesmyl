@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { CmComListContextValue } from '$cm/entities/com';
 import { useCmComFavouriteList } from '$cm/entities/com-favourite';
 import { CmFavouriteComsPage } from '$cm/pages/FavouriteComsPage';
@@ -22,6 +23,6 @@ function useComListPack(): CmComListContextValue {
   const list = useCmComFavouriteList().favouriteComs;
 
   return useMemo(() => {
-    return { list, pageTitlePostfix: ' - Избранное' };
+    return { list, pageTitlePostfix: ' - ' + translateBase(it => it.fav) };
   }, [list]);
 }

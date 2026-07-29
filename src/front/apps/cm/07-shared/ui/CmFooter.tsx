@@ -1,4 +1,5 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { translateBase } from '#basis/locale';
 import { AppFooter } from '$app/AppFooter';
 import { AppFooterItem } from '$app/AppFooterItem';
 import { indexIsShowPlayerInFooterAtom } from '$index/shared/state';
@@ -15,7 +16,7 @@ export const CmFooter = () => {
           key="all"
           idPostfix="cm-all"
           to="/cm/i/"
-          title="Все"
+          title={translateBase(it => it.cm.li.all)}
           icon="LeftToRightListBullet"
         />,
 
@@ -23,7 +24,7 @@ export const CmFooter = () => {
           key="lists"
           idPostfix="cm-lists"
           to="/cm/li/"
-          title="Списки"
+          title={translateBase(it => it.cm.li.li)}
           icon="Playlist01"
         />,
 
@@ -32,7 +33,7 @@ export const CmFooter = () => {
             key="player"
             idPostfix="cm-player"
             to="/cm/player/"
-            title="Плеер"
+            title={translateBase(it => it.cm.li.player)}
             icon="PlayListFavourite02"
           />
         ),
@@ -42,7 +43,7 @@ export const CmFooter = () => {
             key="edit"
             idPostfix="cm-edit"
             to="/cm/edit/"
-            title="Админ"
+            title={translateBase(it => it.cm.li.admin)}
             icon="Edit02"
           />
         ),

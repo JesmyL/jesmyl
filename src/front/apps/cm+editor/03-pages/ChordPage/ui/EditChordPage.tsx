@@ -1,4 +1,5 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { TextInput } from '#shared/ui/TextInput';
@@ -61,9 +62,9 @@ export const CmEditorChordPage = () => {
       isNewChord
         ? correctChordRegsLazy().regExp.exec(newChordName)
           ? chords[newChordName] || redactableChords[newChordName]
-            ? 'Такой аккорд существует'
+            ? translateBase(it => it.cm.chExists)
             : ''
-          : 'Не правильное написание аккорда'
+          : translateBase(it => it.cm.incCh)
         : '',
     );
   }, [newChordName, redactableChords, chords, isNewChord, currentChordName]);
@@ -88,7 +89,7 @@ export const CmEditorChordPage = () => {
     <StyledCmEditorChordPageContainer
       className="chord-redactor"
       contentClass={`chord-redactor-content p-2 ${isNewChord ? 'chord-addition' : ''}`}
-      headTitle="Редактор аккордов"
+      headTitle={translateBase(it => it.cm.chs)}
       head={
         (checkAccess('cm', 'CHORD', 'U') || checkAccess('cm', 'CHORD', 'C')) && (
           <div className="flex gap-2">
@@ -97,9 +98,9 @@ export const CmEditorChordPage = () => {
             <TheIconButton
               icon="Sent"
               disabled={!objectLength(chordsToSend)}
-              disabledReason="Изменений нет"
+              disabledReason={translateBase(it => it.noChanges)}
               className="m-2"
-              confirm={`Отправить аккорды ${objectKeys(chordsToSend).join('; ')} ?`}
+              confirm={translateBase(it => it.toSendSmth, { s: objectKeys(chordsToSend).join('; ') })}
               onClick={async () => {
                 await cmEditorClientTsjrpcMethods.setChords({ chords: chordsToSend });
                 chordsToSendAtom.set({});
@@ -146,7 +147,7 @@ export const CmEditorChordPage = () => {
                     navigate({ to: '.', search: { newChordName: undefined } });
                   }}
                 >
-                  Вернуться к редактированию
+                  {translateBase(it => it.backToEdit)}
                 </Button>
               </>
             ) : currentChordName ? (
@@ -155,7 +156,7 @@ export const CmEditorChordPage = () => {
                 <CmChordCard chordName={currentChordName} />
               </>
             ) : (
-              <div>Выбери аккорд для редактирования</div>
+              <div>{translateBase(it => it.cm.selChEdit)}</div>
             )}
           </div>
           {checkAccess('cm', 'CHORD', 'U') && (
@@ -196,16 +197,16 @@ export const CmEditorChordPage = () => {
                     }}
                   >
                     {isNewChord
-                      ? 'Создать'
+                      ? translateBase(it => it.cre)
                       : redactableChord
                         ? isExists
-                          ? 'Вернуть аккорд'
-                          : 'Удалить аккорд'
-                        : 'Редактировать'}
+                          ? translateBase(it => it.cm.comeBackCh)
+                          : translateBase(it => it.cm.delCh)
+                        : translateBase(it => it.redact)}
                   </TheButton>
                 </>
               ) : (
-                <div>Выбери аккорд для редактирования</div>
+                <div>{translateBase(it => it.cm.selChEdit)}</div>
               )}
             </div>
           )}

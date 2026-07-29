@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmEditorClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
@@ -24,14 +25,17 @@ export const CmEditorCompositionBusyInfo = ({ comw }: { comw: CmComWid }) => {
 
   const comBusies = busies.filter(busy => busy.comw === comw);
 
-  if (comBusies.length < 2) return <div className="text-xOK">Больше редактирующих нет</div>;
+  if (comBusies.length < 2) return <div className="text-xOK">{translateBase(it => it.cm.noEditorsMore)}</div>;
 
   if (comBusies[0].deviceId === deviceId) {
     return (
       <div className="text-xKO nowrap flex gap-2">
-        Редактиру{comBusies.length > 3 ? 'ю' : 'е'}т также
-        {comBusies.slice(1).map(({ fio, deviceId }) => {
-          return <span key={deviceId}>{fio}</span>;
+        {translateBase(it => it.cm.editsToo, {
+          m: comBusies.length > 3,
+          l: comBusies
+            .slice(1)
+            .map(({ fio }) => fio)
+            .join('; '),
         })}
       </div>
     );
@@ -40,7 +44,7 @@ export const CmEditorCompositionBusyInfo = ({ comw }: { comw: CmComWid }) => {
   return (
     <StyledCmEditorCompositionIsThereOtherFirstRedactorUserDetect className="text-xKO flex gap-2">
       <LazyIcon icon="InformationCircle" />
-      Редактирует {comBusies[0].fio}
+      {translateBase(it => it.cm.edits, { f: comBusies[0].fio })}
     </StyledCmEditorCompositionIsThereOtherFirstRedactorUserDetect>
   );
 };

@@ -72,7 +72,7 @@ export const CmComCommentConstructorLostProps = ({ ordw, com }: { ordw: CmComOrd
           wordTitle = `${titlePrefix || translateBase(it => it.word)} ${props.wordi + 1}`;
 
           if (isChord) {
-            chordTitle = translateBase(it => it.cm.chordN, { n: props.chordi + 1 });
+            chordTitle = translateBase(it => it.cm.chN, { n: props.chordi + 1 });
           }
         }
       } else return;

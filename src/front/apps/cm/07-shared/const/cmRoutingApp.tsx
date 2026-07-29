@@ -1,9 +1,10 @@
+import { translateBase } from '#basis/locale';
 import { RoutingAppConfig } from '$app/lib/configs';
 import { CmFooter } from '../ui/CmFooter';
 
 export const cmRoutingApp: RoutingAppConfig = {
   appName: 'cm',
-  title: 'Песни возрождённых',
+  title: translateBase(it => it.cm.t),
   footer: <CmFooter />,
   icon: 'BookOpen02',
 };

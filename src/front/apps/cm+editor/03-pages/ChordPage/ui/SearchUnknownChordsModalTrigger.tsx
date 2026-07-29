@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { ButtonGroup } from '#shared/components/ui/button-group';
 import { getParentNodeWithClassName } from '#shared/lib/getParentNodeWithClassName';
@@ -83,7 +84,7 @@ export const CmEditorChordSearchUnknownChordsModalTrigger = () => {
       />
 
       <Modal openAtom={isOpenAtom}>
-        <ModalHeader>Неизвестные аккорды ({unknownChords.length})</ModalHeader>
+        <ModalHeader>{translateBase(it => it.cm.unkChN, { n: unknownChords.length })}</ModalHeader>
 
         <StyledModalBody
           $lastClickedChord={lastClickedChord}

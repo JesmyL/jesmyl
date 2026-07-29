@@ -18,7 +18,7 @@ import { CmExternalComListAtt } from './ui/CmExternalComListAtt';
 export const cmExternalOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
   '[cm]:coms': {
     icon: 'Playlist02',
-    title: translateBase(it => it.cm.com.t2),
+    title: translateBase(it => it.cm.coms),
     description: translateBase(it => it.cm.com.dsc),
     initVal: {},
     R: ScheduleWidgetUserRoleRight.Free,
