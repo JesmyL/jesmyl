@@ -1,16 +1,16 @@
-type DefEnd = ';' | ' ' | '{' | '}';
-type End = DefEnd | '\n' | '(' | ')' | '&' | '!' | '"' | '-' | '<' | '>' | '?';
+type DefEnd = ';' | ' ' | '{' | '}' | '-';
+type End = DefEnd | '\n' | '(' | ')' | '&' | '!' | '"' | '<' | '>' | '?';
 
 export type StringTemplaterInterpolation<
   Name extends string,
   E extends End = DefEnd,
-> = StringTemplaterInterpolationInner<Name, E>;
+> = StringTemplaterInterpolationInner<Name, E | DefEnd>;
 
 export type StringTemplaterWithTwoInterpolations<
   Name1 extends string,
   Name2 extends string,
   E extends End = DefEnd,
-> = StringTemplaterWithTwoInterpolationsInner<Name1, Name2, E>;
+> = StringTemplaterWithTwoInterpolationsInner<Name1, Name2, E | DefEnd>;
 
 /////////
 /////////
