@@ -4,7 +4,7 @@ import { BibleTitleCodei } from 'shared/model/bible/enums';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 
 export const localeDynamicRu: LocaleDynamic<Langi.Ru> = {
-  lng: Langi.Ru,
+  langi: Langi.Ru,
   v: 0,
 
   cm: {

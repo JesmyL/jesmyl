@@ -3,8 +3,8 @@ import { StringTemplaterInterpolation, StringTemplaterWithTwoInterpolations } fr
 import { LocaleSatisfies, LocaleSimpleString, LocaleStrOrInterpolationRecord, LocaleStrRecord } from './model';
 
 export type LocaleBase<L extends Langi> = LocaleSatisfies<{
-  lng: L;
-  v: 0;
+  langi: L;
+  v: number;
 
   cm: {
     t: LocaleSimpleString;

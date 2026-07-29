@@ -22,13 +22,13 @@ export const currentLangiAtom = atom(() => {
     ('userLanguage' in navigator ? `${navigator.userLanguage}` : '').split(makeRegExp('/[-_]/'), 1)[0].toLowerCase();
 
   return langDict[navLang] ?? Langi.Ru;
-}, 'app:lang');
+}, 'app:langi');
 
-let lng = langCodeDict[currentLangiAtom.get()];
+let langi = langCodeDict[currentLangiAtom.get()];
 
-if (checkIsNil(lng)) {
+if (checkIsNil(langi)) {
   currentLangiAtom.reset();
-  lng = langCodeDict[currentLangiAtom.get()];
+  langi = langCodeDict[currentLangiAtom.get()];
 }
 
 export const translateBase = translateBaseDefine(() => takeBaseLanguageAtom().get());

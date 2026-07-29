@@ -3,7 +3,7 @@ import { LocaleBase } from 'shared/model/+locale/base';
 import { IF, isUtil, STR, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeBaseRu: LocaleBase<Langi.Ru> = {
-  lng: Langi.Ru,
+  langi: Langi.Ru,
   v: 0,
 
   cm: {

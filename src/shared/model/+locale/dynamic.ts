@@ -4,7 +4,7 @@ import { BibleTitleCodei } from '../bible/enums';
 import { LocaleSatisfies, LocaleStrRecord } from './model';
 
 export type LocaleDynamic<L extends Langi> = LocaleSatisfies<{
-  lng: L;
+  langi: L;
   v: number;
 
   cm: {

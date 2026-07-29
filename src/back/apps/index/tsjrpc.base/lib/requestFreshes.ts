@@ -30,7 +30,7 @@ import { makeUserAccessRights } from './makeUserAccessRights';
 
 export const indexTSJRPCBaseRequestFreshes = {
   requestFreshes: async (
-    { lastModfiedAt, iconPacks: userIconPacks, iconsMd5Hash: userIconsMd5Hash },
+    { lastModfiedAt, iconPacks: userIconPacks, iconsMd5Hash: userIconsMd5Hash, prevLangi },
     { client, auth, visitInfo },
   ) => {
     lastModfiedAt = Math.trunc(lastModfiedAt);
@@ -146,7 +146,10 @@ export const indexTSJRPCBaseRequestFreshes = {
       const baseFileStorage = langLocaleBaseFileStoragesLazy()[visitInfo.langi];
       const { items, maxMod } = (await langLocaleDynamicFileStoragesLazy()).getFreshItems(lastModfiedAt);
 
-      if (baseFileStorage.fileModifiedAt() > lastModfiedAt) {
+      if (
+        baseFileStorage.fileModifiedAt() > lastModfiedAt ||
+        (checkIsNotNil(prevLangi) && prevLangi !== visitInfo.langi)
+      ) {
         indexServerTsjrpcShareMethods.baseLocConf(
           { base: baseFileStorage.getValue(), mod: baseFileStorage.fileModifiedAt() },
           client,

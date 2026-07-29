@@ -21,15 +21,15 @@ export const langLocaleDynamicFileStoragesLazy = lazyInit(async () => {
     [Langi.Kz]: localeDynamicKz,
   };
 
-  const dirStorage = new DirStorage<LocaleDynamic<Langi>, Langi, 'lng'>({
+  const dirStorage = new DirStorage<LocaleDynamic<Langi>, Langi, 'langi'>({
     dirPath: `/locales/dynamic/`,
-    idKey: 'lng',
+    idKey: 'langi',
     makeNewItem: () => ({}) as LocaleDynamic<Langi>,
   });
 
   for (const [langiStr, config] of objectEntries(langLocaleDynamicDict)) {
     const langi = extractNumber(langiStr);
-    const savedConfig = await dirStorage.getOrCreateItem(langi, () => ({ lng: langi }) as never);
+    const savedConfig = await dirStorage.getOrCreateItem(langi, () => ({ langi }) as never);
 
     if (!checkIsEq(savedConfig, config)) {
       dirStorage.saveItem(langi, config);

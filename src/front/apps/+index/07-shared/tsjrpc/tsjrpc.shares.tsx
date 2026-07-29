@@ -57,7 +57,7 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
         },
 
         dynLocConf: async ({ mod, dyns }) => {
-          dyns.forEach(config => takeDynamicLanguageAtom(config.lng).set(config));
+          dyns.forEach(config => takeDynamicLanguageAtom(config.langi).set(config));
           await indexIDB.updateLastModifiedAt(mod);
         },
       },
