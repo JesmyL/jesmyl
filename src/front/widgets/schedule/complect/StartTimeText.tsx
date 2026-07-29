@@ -1,3 +1,4 @@
+import { languageSystemCode } from '#basis/locale';
 import { IScheduleWidget, ScheduleWidgetCleans } from 'shared/api';
 import { howMillisecondsInMin } from 'shared/const/ms';
 import { makeDateLabel } from 'shared/utils/makeDateLabel';
@@ -33,7 +34,7 @@ export function ScheduleWidgetStartTimeText({ schedule, date: topDate }: Props) 
     <>
       {!schedule.start || (
         <div>
-          Начало: {makeDateLabel(date)}
+          Начало: {makeDateLabel(date, languageSystemCode)}
           {!firstWup ||
             ', ' +
               timeDate.getHours().toString().padStart(2, '0') +

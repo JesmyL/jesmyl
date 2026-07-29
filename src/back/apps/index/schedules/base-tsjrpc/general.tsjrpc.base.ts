@@ -21,6 +21,7 @@ import { SchGeneralTsjrpcModel } from 'shared/api/tsjrpc/schedules/tsjrpc.model'
 import { Bool } from 'shared/enums';
 import { checkIsNumber } from 'shared/utils/checkIs';
 import { deepClone } from 'shared/utils/clone';
+import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { schLiveTsjrpcServer } from '../live.tsjrpc';
 import { modifySchedule } from '../schedule-modificators';
 import { takeScheduleWidgetTiny } from '../schedule.tiny';
@@ -196,7 +197,7 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
 
           return (
             `В расписании ${await scheduleTitleInBrackets(sch)} установлена дата начала - ` +
-            `${new Date(sch.start).toLocaleDateString('ru')}`
+            `${makeDateLabel(sch.start)}`
           );
         }),
 

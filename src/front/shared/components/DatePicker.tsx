@@ -1,3 +1,4 @@
+import { languageSystemCode } from '#basis/locale';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover';
 import { useState } from 'react';
@@ -37,7 +38,7 @@ export const DatePicker = (props: {
           id="date"
           className={twMerge('w-48 justify-between font-normal', props.className)}
         >
-          {date ? (props.dateTitle ?? makeDateLabel(date)) : (props.placeholder ?? 'Дата')}
+          {date ? (props.dateTitle ?? makeDateLabel(date, languageSystemCode)) : (props.placeholder ?? 'Дата')}
           <TheIconLoading
             icon="ArrowDown01"
             isLoading={isLoading}
@@ -53,11 +54,11 @@ export const DatePicker = (props: {
           defaultMonth={date}
           disabled={props.disabled}
           formatters={{
-            formatWeekdayName: weekdate => weekdate.toLocaleDateString('ru', { weekday: 'short' }),
+            formatWeekdayName: weekdate => weekdate.toLocaleDateString(languageSystemCode, { weekday: 'short' }),
           }}
           components={{
             MonthCaption: props => (
-              <>{props.calendarMonth.date.toLocaleDateString('ru', { month: 'long', year: 'numeric' })}</>
+              <>{props.calendarMonth.date.toLocaleDateString(languageSystemCode, { month: 'long', year: 'numeric' })}</>
             ),
           }}
           onSelect={async date => {

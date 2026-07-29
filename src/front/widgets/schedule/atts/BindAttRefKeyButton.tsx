@@ -1,3 +1,4 @@
+import { languageSystemCode } from '#basis/locale';
 import { StrongDiv } from '#basis/ui/strong-control/StrongDiv';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -68,7 +69,7 @@ export function ScheduleWidgetBindAttRefKeyButton({
               const dayDate = new Date(schedule.start + dayi * howMillisecondsInDay);
               dayTitle = (
                 <>
-                  {dayi + 1} день, {dayDate.toLocaleDateString('ru', { weekday: 'long' })}
+                  {dayi + 1} день, {dayDate.toLocaleDateString(languageSystemCode, { weekday: 'long' })}
                   {' - '}
                 </>
               );

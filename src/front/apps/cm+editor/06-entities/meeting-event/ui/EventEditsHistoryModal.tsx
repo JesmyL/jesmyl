@@ -1,4 +1,5 @@
 import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
+import { languageSystemCode } from '#basis/locale';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -64,7 +65,7 @@ export const CmEditorMeetingEventEditsHistoryModalInner = ({
           return (
             <div key={pack.w}>
               <h3 className="flex gap-2 w-full between">
-                {makeDateLabel(pack.w)}
+                {makeDateLabel(pack.w, languageSystemCode)}
 
                 <TheIconSendButton
                   icon="Delete02"

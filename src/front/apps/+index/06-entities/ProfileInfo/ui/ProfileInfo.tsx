@@ -24,7 +24,10 @@ export const IndexProfileInfo = ({ auth }: { auth: LocalSokiAuth }) => {
         )}
       </div>
       {isUserMoreOpen && (
-        <BottomPopup onClose={setIsUserMoreOpen}>
+        <BottomPopup
+          title={<Name className="ellipsis">{auth.fio}</Name>}
+          onClose={setIsUserMoreOpen}
+        >
           <IndexUserMore onClose={setIsUserMoreOpen} />
         </BottomPopup>
       )}

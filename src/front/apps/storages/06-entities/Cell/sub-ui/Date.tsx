@@ -1,3 +1,4 @@
+import { languageSystemCode } from '#basis/locale';
 import { DatePicker } from '#shared/components/DatePicker';
 import { useStoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
@@ -31,7 +32,7 @@ export const StoragesCellOfTypeDate = (props: StoragesCellTypeProps<StoragesColu
           />
         ) : (
           <div className="flex gap-3">
-            <span className="font-bold">{makeDateLabel(date)}</span>
+            <span className="font-bold">{makeDateLabel(date, languageSystemCode)}</span>
           </div>
         )}
       </div>

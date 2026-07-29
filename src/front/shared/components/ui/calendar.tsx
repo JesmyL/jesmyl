@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { DayButton, DayPicker, getDefaultClassNames } from 'react-day-picker';
 
+import { languageSystemCode } from '#basis/locale';
 import { Button, buttonVariants } from '#shared/components/ui/button';
 import { cn } from '#shared/lib/utils';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -30,7 +31,7 @@ function Calendar({
       )}
       captionLayout={captionLayout}
       formatters={{
-        formatMonthDropdown: date => date.toLocaleString('ru', { month: 'short' }),
+        formatMonthDropdown: date => date.toLocaleString(languageSystemCode, { month: 'short' }),
         ...formatters,
       }}
       classNames={{

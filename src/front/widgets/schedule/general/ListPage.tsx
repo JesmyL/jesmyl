@@ -1,5 +1,6 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { useConnectionState } from '#basis/lib/useConnectionState';
+import { languageSystemCode } from '#basis/locale';
 import { useAppNameContext } from '#basis/state/contexts';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -60,7 +61,7 @@ export const ScheduleWidgetListPage = () => {
                     {schedule.topic ? `: ${schedule.topic}` : ''}
                   </div>
 
-                  <div className="col-span-12 text-xs">{makeDateLabel(schedule.start)}</div>
+                  <div className="col-span-12 text-xs">{makeDateLabel(schedule.start, languageSystemCode)}</div>
                 </Link>
               );
             })}

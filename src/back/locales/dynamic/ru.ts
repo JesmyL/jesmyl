@@ -7,6 +7,12 @@ export const localeDynamicRu: LocaleDynamic<Langi.Ru> = {
   langi: Langi.Ru,
   v: 0,
 
+  lang: {
+    [Langi.Ru]: 'Русский язык',
+    [Langi.Ua]: 'Украинский язык',
+    [Langi.Kz]: 'Казахский язык',
+  },
+
   cm: {
     com: {
       kind: {

@@ -54,6 +54,7 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
         baseLocConf: async ({ base, mod }) => {
           takeBaseLanguageAtom().set(base);
           await indexIDB.updateLastModifiedAt(mod);
+          if (base.langi !== prevLangi && takeBaseLanguageAtom().get().langi === base.langi) location.reload();
         },
 
         dynLocConf: async ({ mod, dyns }) => {
@@ -64,3 +65,5 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
     });
   }
 })();
+
+const prevLangi = takeBaseLanguageAtom().get().langi;

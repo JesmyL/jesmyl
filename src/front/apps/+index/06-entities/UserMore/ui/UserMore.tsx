@@ -1,4 +1,4 @@
-import { translateBase } from '#basis/locale';
+import { applicationLangi, translateBase, translateDynamic } from '#basis/locale';
 import { useConfirm } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { QrCodeFullScreen } from '#shared/ui/qr-code/QrCodeFullScreen';
@@ -41,6 +41,10 @@ export const IndexUserMore = ({ onClose }: { onClose: (isOpen: false) => void })
           }
         }}
       />
+
+      <div className="flex justify-center mt-5 w-full">
+        {translateDynamic(applicationLangi)(it => it.lang[applicationLangi])}
+      </div>
 
       <QrCodeFullScreen
         openAtom={isOpenQrAtom}

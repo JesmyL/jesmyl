@@ -1,5 +1,5 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
-import { translateBase } from '#basis/locale';
+import { languageSystemCode, translateBase } from '#basis/locale';
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
 import { isMobileDevice } from '#shared/lib/device-differences';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
@@ -74,7 +74,8 @@ export const CmMeetingEvent = ({ dayi, eventMi, schw }: Props) => {
         <AppDialogProvider title="cm-meeting-event-coms">
           {comFaceListNode}
           <div className="text-center opacity-50 text-sm">
-            {!mod.data?.mod || translateBase(it => it.sch.evMod, { m: makeDateLabel(mod.data.mod) })}
+            {!mod.data?.mod ||
+              translateBase(it => it.sch.evMod, { m: makeDateLabel(mod.data.mod, languageSystemCode) })}
           </div>
           {isToolsOpen && (
             <BottomPopup onClose={setIsToolsOpen}>

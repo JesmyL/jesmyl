@@ -13,6 +13,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { IScheduleWidget, ScheduleScopeProps, ScheduleWidgetDayi, ScheduleWidgetWidDef } from 'shared/api';
 import { howMillisecondsInMin } from 'shared/const/ms';
+import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { ScheduleWidgetCustomAttachments } from './atts/custom/CustomAttachments';
 import { ScheduleWidgetStartTimeText } from './complect/StartTimeText';
 import { ScheduleWidgetTopicTitle } from './complect/TopicTitle';
@@ -116,7 +117,7 @@ export function ScheduleWidget({
 
   const prevDateNode = prevDate && (
     <StyledPrevDateText className={schedule && prevDate.getTime() > schedule.start ? 'text-xKO' : undefined}>
-      Предыдущее - {prevDate.toLocaleDateString('ru', { month: 'long', day: '2-digit', year: 'numeric' })}
+      Предыдущее - {makeDateLabel(prevDate)}
     </StyledPrevDateText>
   );
 

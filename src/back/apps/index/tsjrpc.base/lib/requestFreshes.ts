@@ -7,6 +7,7 @@ import { makePgCheckedSelectSqlRaw, PgCheckFieldMode } from 'p/d';
 import {
   IScheduleWidget,
   IScheduleWidgetUser,
+  Langi,
   ScheduleWidgetRegType,
   scheduleWidgetRegTypeRights,
   scheduleWidgetUserRights,
@@ -142,8 +143,8 @@ export const indexTSJRPCBaseRequestFreshes = {
 
     if (schedules.length) schServerTsjrpcShareMethods.refreshSchedules({ schs: schedules }, client);
 
-    if (checkIsNotNil(visitInfo?.langi) && visitInfo.version > 1239) {
-      const baseFileStorage = langLocaleBaseFileStoragesLazy()[visitInfo.langi];
+    if (checkIsNotNil(visitInfo) && visitInfo.version > 1239) {
+      const baseFileStorage = langLocaleBaseFileStoragesLazy()[visitInfo.langi ?? Langi.Ru];
       const { items, maxMod } = (await langLocaleDynamicFileStoragesLazy()).getFreshItems(lastModfiedAt);
 
       if (

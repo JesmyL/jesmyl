@@ -17,19 +17,29 @@ export const currentLangiAtom = atom(() => {
     kk: Langi.Kz,
   };
 
-  const navLang =
-    navigator.language ||
-    ('userLanguage' in navigator ? `${navigator.userLanguage}` : '').split(makeRegExp('/[-_]/'), 1)[0].toLowerCase();
+  const navLang = (navigator.language || ('userLanguage' in navigator ? `${navigator.userLanguage}` : ''))
+    .split(makeRegExp('/[-_]/'), 1)[0]
+    .toLowerCase();
 
   return langDict[navLang] ?? Langi.Ru;
 }, 'app:langi');
 
-let langi = langCodeDict[currentLangiAtom.get()];
+export const langSystemCodeDict: Record<Langi, string> = {
+  [Langi.Ru]: 'ru-RU',
+  [Langi.Ua]: 'uk-UA',
+  [Langi.Kz]: 'kk-KZ',
+};
 
-if (checkIsNil(langi)) {
+export let applicationLangi = currentLangiAtom.get();
+let lang = langCodeDict[applicationLangi];
+
+if (checkIsNil(lang)) {
   currentLangiAtom.reset();
-  langi = langCodeDict[currentLangiAtom.get()];
+  applicationLangi = currentLangiAtom.get();
+  lang = langCodeDict[applicationLangi];
 }
+
+export const languageSystemCode = langSystemCodeDict[applicationLangi];
 
 export const translateBase = translateBaseDefine(() => takeBaseLanguageAtom().get());
 

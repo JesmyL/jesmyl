@@ -1,3 +1,4 @@
+import { languageSystemCode } from '#basis/locale';
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { useIsRedactArea } from '#shared/lib/hooks/useIsRedactArea';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
@@ -54,7 +55,7 @@ export const ScheduleWidgetDay = ({
 
   const date = new Date(indexScheduleGetDayStartMs(schedule, dayi));
   const isPastDay = indexScheduleCheckIsDayIsPast(schedule, dayi);
-  const title = textToCapitalizeCase(date.toLocaleDateString('ru', { weekday: 'long' }));
+  const title = textToCapitalizeCase(date.toLocaleDateString(languageSystemCode, { weekday: 'long' }));
   const times: number[] = [];
   const [isShowDay, setIsShowDay] = useState(!isPastDay);
   const rights = useScheduleWidgetRightsContext();
