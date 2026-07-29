@@ -126,4 +126,4 @@ export const chordDiezEquivalent = lazyInit(() => {
 
 export const simpleHashChords = objectKeys(chordBemoleEquivalent);
 
-export const cmComLanguages = ['русский', 'украинский'];
+export const cmComLanguages = ['русский', 'украинский', 'казахский'];

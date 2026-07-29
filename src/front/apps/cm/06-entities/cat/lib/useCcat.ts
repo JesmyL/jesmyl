@@ -1,4 +1,3 @@
-import { translateBase } from '#basis/locale';
 import { useCmComList } from '$cm/entities/com';
 import { cmIDB } from '$cm/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -14,8 +13,7 @@ export const useCmCat = (catw: CmCatWid) => {
   const coms = useCmComList(comws);
 
   return useMemo(() => {
-    if (catw === CmCatWid.all)
-      return new CmCat({ k: 'full', m: 0, t: 'all', n: translateBase(it => it.cm.cat.li.all), w: 0 }, coms);
+    if (catw === CmCatWid.all) return new CmCat({ k: 'full', m: 0, t: 'all', n: '', w: 0 }, coms);
 
     return icat && coms && new CmCat(icat, coms);
   }, [catw, coms, icat]);

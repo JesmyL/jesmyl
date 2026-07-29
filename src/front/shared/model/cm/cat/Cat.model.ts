@@ -9,12 +9,6 @@ export interface CmCatComWrap<C = CmCom> {
   rate?: number;
 }
 
-export type CmCatKind = 'full' | 'dict' | 'list' | `lang:${'ru' | 'ua'}` | `int:${CmComIntensityLevel}`;
+export type CmCatKind = 'full' | 'dict' | 'list' | `lang:${'ru' | 'ua' | 'kz'}` | `int:${CmComIntensityLevel}`;
 
-export type CmCatTracker = Record<
-  CmCatKind,
-  {
-    title: string;
-    select: (com: CmCom, cat: CmCat) => boolean;
-  }
->;
+export type CmCatTracker = Record<CmCatKind, (com: CmCom, cat: CmCat) => boolean>;

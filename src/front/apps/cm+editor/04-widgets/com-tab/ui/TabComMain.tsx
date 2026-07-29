@@ -23,6 +23,7 @@ import { cmComIntensityLevelTitleDict } from 'shared/const/cm/cmComDriveLevelTit
 import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { emptyFunc } from 'shared/utils';
+import { cmComLanguages } from 'shared/utils/cm/com/const';
 import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 import { mapObjectEntries } from 'shared/utils/object.utils';
 
@@ -83,22 +84,16 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
         items={mapObjectEntries(cmComIntensityLevelTitleDict, (id, title) => ({ id: +id, title }))}
         onSelectId={value => cmEditComClientTsjrpcMethods.changeDrive({ comw: ccom.wid, value })}
       />
-      <TheIconButton
-        icon="Flag03"
-        confirm={
+      <Dropdown
+        label={
           <>
-            Переключить язык песни на <span className="text-x7">{ccom.nextLangn}</span>?
+            <LazyIcon icon="Flag03" />
+            Язык
           </>
         }
-        postfix={
-          <>
-            Язык — <span className="text-x7">{ccom.langn}</span>
-          </>
-        }
-        onClick={event => {
-          event.stopPropagation();
-          cmEditComClientTsjrpcMethods.changeLanguage({ comw: ccom.wid, value: ccom.langi ? 0 : 1 });
-        }}
+        id={ccom.langi}
+        items={cmComLanguages.map((lang, langi) => ({ id: langi, title: lang }))}
+        onSelectId={value => cmEditComClientTsjrpcMethods.changeLanguage({ comw: ccom.wid, value })}
       />
       {canFixIntp && (
         <>
