@@ -36,9 +36,9 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
 
       changeSel: 'Заменить выбранные',
 
-      forEachBlock: 'Для каждого блока "$n"',
+      forEachBlock: 'Для каждого блока "$n;"',
       maxSel: `Можно выбрать максимум $s песен`,
-      watcheds: 'Просмотры песен (общ. $c)',
+      watcheds: 'Просмотры песен (общ. $c;)',
       willAdd: `Добавится $c $declension{{$c}{песня}{песни}{песен}}`,
       willLost: `Потеряется $c $declension{{$c}{песня}{песни}{песен}}`,
 
@@ -142,7 +142,7 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
     toComList: 'К списку песен',
     coms: 'Песни',
     showComms: 'Показать комменты',
-    unkChN: 'Неизвестные аккорды ($n)',
+    unkChN: 'Неизвестные аккорды ($n;)',
     noEditorsMore: 'Больше редактирующих нет',
     editsToo: STR(['$m', '$l'])`${IF('$m').THEN`Редактируют`.ELSE`Редактирует`} также $l`,
     edits: 'Редактирует $f',
@@ -164,10 +164,10 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
     modulesForLoad: 'Доступные к загрузке',
 
     chapterNum: 'Глава $c',
-    searchByBook: 'Поиск по книге <i>$b</i>',
-    searchByChapter: 'Поиск по главе <i>$b $c</i>',
-    clearChapter: 'Очистить раздел $c?',
-    removeModule: 'Удалить безвозвратно модуль "$n"',
+    searchByBook: 'Поиск по книге <i>$b;</i>',
+    searchByChapter: 'Поиск по главе <i>$b; $c;</i>',
+    clearChapter: 'Очистить раздел $c;?',
+    removeModule: 'Удалить безвозвратно модуль "$n;"',
 
     trs: {
       [BibleTranslateName.rst]: 'Русский Синодальный Перевод',

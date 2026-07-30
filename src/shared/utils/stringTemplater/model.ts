@@ -1,16 +1,14 @@
 type DefEnd = ';' | ' ' | '{' | '}' | '-';
-type End = DefEnd | '\n' | '(' | ')' | '&' | '!' | '"' | '<' | '>' | '?';
 
-export type StringTemplaterInterpolation<
-  Name extends string,
-  E extends End = DefEnd,
-> = StringTemplaterInterpolationInner<Name, E | DefEnd>;
+export type StringTemplaterInterpolation<Name extends string, GenKey extends string = string> =
+  | StringTemplaterInterpolationInner<Name, GenKey>
+  | `${GenKey}$${Name}`;
 
 export type StringTemplaterWithTwoInterpolations<
   Name1 extends string,
   Name2 extends string,
-  E extends End = DefEnd,
-> = StringTemplaterWithTwoInterpolationsInner<Name1, Name2, E | DefEnd>;
+  GenKey extends string = string,
+> = StringTemplaterWithTwoInterpolationsInner<Name1, Name2, GenKey>;
 
 /////////
 /////////
@@ -18,9 +16,9 @@ export type StringTemplaterWithTwoInterpolations<
 
 type StringTemplaterInterpolationInner<
   Name extends string,
-  E extends End = DefEnd,
-> = `${string}${`$${Name}${E}${string | ''}` | `$${Name}`}`;
+  GenKey extends string,
+> = `${GenKey | ''}$${Name}${DefEnd}${string}`;
 
-type StringTemplaterWithTwoInterpolationsInner<Name1 extends string, Name2 extends string, E extends End = DefEnd> =
-  | `${StringTemplaterInterpolationInner<Name1, E> | ''}${StringTemplaterInterpolationInner<Name2, E>}`
-  | `${StringTemplaterInterpolationInner<Name2, E> | ''}${StringTemplaterInterpolationInner<Name1, E>}`;
+type StringTemplaterWithTwoInterpolationsInner<Name1 extends string, Name2 extends string, GenKey extends string> =
+  | `${StringTemplaterInterpolationInner<Name1, GenKey>}${StringTemplaterInterpolationInner<Name2, GenKey> | `${GenKey | ''}$${Name1 | Name2}`}`
+  | `${StringTemplaterInterpolationInner<Name2, GenKey>}${StringTemplaterInterpolationInner<Name1, GenKey> | `${GenKey | ''}$${Name1 | Name2}`}`;

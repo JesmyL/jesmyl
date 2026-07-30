@@ -36,9 +36,9 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
 
       changeSel: 'Таңдалғандарды ауыстыру',
 
-      forEachBlock: 'Әрбір "$n" блогы үшін',
+      forEachBlock: 'Әрбір "$n;" блогы үшін',
       maxSel: `Ең көбі $s ән таңдауға болады`,
-      watcheds: 'Әндерді көру саны (жалпы $c)',
+      watcheds: 'Әндерді көру саны (жалпы $c;)',
       willAdd: `Қосылады: $c $declension{{$c}{ән}{ән}{ән}}`,
       willLost: `Жоғалады: $c $declension{{$c}{ән}{ән}{ән}}`,
 
@@ -141,7 +141,7 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
     toComList: 'Әндер тізіміне',
     coms: 'Әндер',
     showComms: 'Пікірлерді көрсету',
-    unkChN: 'Белгісіз аккордтар ($n)',
+    unkChN: 'Белгісіз аккордтар ($n;)',
     noEditorsMore: 'Басқа редакциялаушылар жоқ',
     editsToo: STR(['$m', '$l'])`Сондай-ақ $l ${IF('$m').THEN`редакциялап жатыр`.ELSE`редакциялауда`}`,
     edits: '$f редакциялауда',
@@ -163,10 +163,10 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
     modulesForLoad: 'Жүктеуге қолжетімді',
 
     chapterNum: '$c-тарау',
-    searchByBook: '<i>$b</i> кітабы бойынша іздеу',
-    searchByChapter: '<i>$b $c</i> тарауы бойынша іздеу',
+    searchByBook: '<i>$b;</i> кітабы бойынша іздеу',
+    searchByChapter: '<i>$b $c;</i> тарауы бойынша іздеу',
     clearChapter: '$c бөлімін тазалау керек пе?',
-    removeModule: '"$n" модулін біржола өшіру',
+    removeModule: '"$n;" модулін біржола өшіру',
 
     trs: {
       [BibleTranslateName.rst]: 'Орыс Синодалды аудармасы',

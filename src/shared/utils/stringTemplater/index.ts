@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { makeRegExp } from 'regexpert';
 import { checkIsFunction, checkIsNotFunction, checkIsNumber, checkIsStartsWith, checkIsString } from '../checkIs';
 import { checkIsEq } from '../checkIsEq';
 import { declension } from '../utils';
 import * as concepts from './concepts';
 import { stringTemplaterSrartSymbolCharCode, strTplArgLastEdge, strTplArgSeparator, strTplSysLen } from './const';
+import { StringTemplaterInterpolation, StringTemplaterWithTwoInterpolations } from './model';
 
 export * from './concepts';
 
@@ -38,12 +40,24 @@ const stringify = (value: unknown) => {
   return '';
 };
 
-export const stringTemplater = (
+type NEXTcb<Key extends string, Ret = unknown> = (key: Key, value: string, index: number) => Ret;
+
+export const stringTemplater: <
+  const Str extends StringTemplaterInterpolation<string, string> | StringTemplaterWithTwoInterpolations<string, string>,
+  const GenKey extends Str extends StringTemplaterInterpolation<string, infer K>
+    ? K
+    : Str extends StringTemplaterWithTwoInterpolations<string, string, infer K>
+      ? K
+      : string,
+  const TopArgs extends PRecord<string, unknown> & { NEXT?: NEXTcb<GenKey> },
+  Ret extends TopArgs extends { NEXT: NEXTcb<GenKey, infer R> } ? R[] : string,
+>(
   str: string,
-  topArgs: PRecord<string, unknown>,
+  topArgs: TopArgs,
   onUnknownArg?: (argName: string) => unknown,
-) => {
-  const symbolBoxDict: Record<string, { key: keyof typeof concepts; all: string }> = {};
+) => Ret = (str, topArgs, onUnknownArg) => {
+  type Box = { key: keyof typeof concepts; all: string };
+  const symbolBoxDict: PRecord<string, Box> = {};
   let currSymbolCode = stringTemplaterSrartSymbolCharCode;
 
   const takeNextSymbol = () => String.fromCodePoint(currSymbolCode++);
@@ -73,14 +87,10 @@ export const stringTemplater = (
       }
 
       if (val.length === 1) {
+        const box = symbolBoxDict[val];
         const code = val.codePointAt(0);
-        if (
-          code !== undefined &&
-          code >= stringTemplaterSrartSymbolCharCode &&
-          code < endCode &&
-          val in symbolBoxDict
-        ) {
-          return takeBoxValue(symbolBoxDict[val]);
+        if (box && code !== undefined && code >= stringTemplaterSrartSymbolCharCode && code < endCode) {
+          return takeBoxValue(box);
         }
       }
 
@@ -91,7 +101,7 @@ export const stringTemplater = (
     return val;
   };
 
-  const takeBoxValue: (box: (typeof symbolBoxDict)[string]) => unknown = box => {
+  const takeBoxValue: (box: Box) => unknown = box => {
     const { all, key } = box;
     const args = all.slice(key.length + strTplSysLen, -strTplArgLastEdge.length);
 
@@ -109,8 +119,10 @@ export const stringTemplater = (
     }
 
     let argi = -1;
+    let index = 0;
     let position = 0;
     let hasMoreArgs = args.length > 0;
+    let result: any;
 
     let cachedPrevValue: { v: unknown } | null = null;
     let selectorValue: { v: unknown } | null = null;
@@ -162,6 +174,20 @@ export const stringTemplater = (
           }
           break;
         }
+        case 'GENERATE': {
+          if (!('NEXT' in topArgs && checkIsFunction(topArgs.NEXT))) return '';
+
+          result ??= [];
+
+          if (argi % 2 === 1) {
+            result.push(topArgs.NEXT(stringify(cachedPrevValue?.v) as never, takeCorrectValue(arg), index++));
+          } else {
+            cachedPrevValue = { v: takeCorrectValue(arg) };
+          }
+
+          if (hasMoreArgs) break;
+          return result;
+        }
         case 'AND': {
           const value = takeCorrectValue(arg);
           if (!value) return value;
@@ -191,7 +217,7 @@ export const stringTemplater = (
 
     if (stringTemplaterSrartSymbolCharCode !== endCode) {
       currentStr = currentStr.replace(TOKENS_REGEXP, char => {
-        if (char in symbolBoxDict) {
+        if (symbolBoxDict[char]) {
           return stringify(takeBoxValue(symbolBoxDict[char]));
         }
         return char;
@@ -209,9 +235,14 @@ export const stringTemplater = (
   };
 
   const preparedStr = str.replace(ESCAPE_INPUT_REGEXP, escapeMarker);
+
+  if (symbolBoxDict[preparedStr]?.key === 'GENERATE') {
+    return takeBoxValue(symbolBoxDict[preparedStr]) as never;
+  }
+
   const result = replaceSymbolsAndVars(preparedStr);
 
-  return result.split(escapeMarker).join('$');
+  return result.split(escapeMarker).join('$') as never;
 };
 
 const randomSalt = Math.floor(Math.random() * 1000000);

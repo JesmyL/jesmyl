@@ -1,4 +1,5 @@
-import { AND, FN, IF, isUtil, OR, STR, stringTemplater, SWITCH, toNUM, toSTR } from '.';
+import { AND, FN, GENERATE, IF, isUtil, OR, STR, stringTemplater, SWITCH, toNUM, toSTR } from '.';
+import { itIt } from '../utils';
 import { stringTemplaterSrartSymbolCharCode } from './const';
 
 describe('stringTemplater', () => {
@@ -225,38 +226,16 @@ describe('stringTemplater:concepts', () => {
     expect(i).toBe(1);
   });
 
-  it('SWITCH.DEFAULT', () => {
-    const str = STR`ret-$;def ${SWITCH('$cond').CASE('@@')`${FN('$inv')}`.CASE('777')`$sw`.CASE('PoPuP')`${funcConcept}`.DEFAULT`$def`}`;
+  it('GENERATE', () => {
+    const str = GENERATE<'%' | '*'>().NEXT('%')`SIMPLE $text`.NEXT('*')`TOO$s`.toString(['$s']);
+    const ret = stringTemplater(str, {
+      NEXT: (key, value, index) => [`${key}-${value}/${key}[${index}]`] as const,
+      text: () => () => () => 'TEXT',
+    });
 
-    expect(
-      stringTemplater(str, {
-        cond: 'WoW',
-        def: 77.77,
-        func,
-        inv: () => {
-          throw 'This Func Cant Be Invoke';
-        },
-      }),
-    ).toBe('ret-$def 77.77');
+    itIt<(readonly [`${string}-${string}/${string}[${number}]`])[]>(ret);
 
-    checkFunc();
-  });
-
-  it('SWITCH.DEFAULT', () => {
-    const str = STR`ret-$;def ${SWITCH('$cond').CASE('@@')`${FN('$inv')}`.CASE('777')`$sw`.CASE('PoPuP')`${funcConcept}`.DEFAULT`$def`}`;
-
-    expect(
-      stringTemplater(str, {
-        cond: 'WoW',
-        def: 77.77,
-        func,
-        inv: () => {
-          throw 'This Func Cant Be Invoke';
-        },
-      }),
-    ).toBe('ret-$def 77.77');
-
-    checkFunc();
+    expect(JSON.stringify(ret)).toBe(JSON.stringify([['%-SIMPLE TEXT/%[0]'], ['*-TOO/*[1]']]));
   });
 
   it('FN', () => {

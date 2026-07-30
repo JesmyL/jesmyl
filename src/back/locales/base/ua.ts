@@ -36,9 +36,9 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
 
       changeSel: 'Замінити вибрані',
 
-      forEachBlock: 'Для кожного блоку "$n"',
+      forEachBlock: 'Для кожного блоку "$n;"',
       maxSel: `Можно вибрати максимум $s пісень`,
-      watcheds: 'Перегляди пісень (заг. $c)',
+      watcheds: 'Перегляди пісень (заг. $c;)',
       willAdd: `Додасться $c $declension{{$c}{пісня}{пісні}{пісень}}`,
       willLost: `Втратиться $c $declension{{$c}{пісня}{пісні}{пісень}}`,
 
@@ -141,7 +141,7 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
     toComList: 'До списку пісень',
     coms: 'Пісні',
     showComms: 'Показати коменти',
-    unkChN: 'Невідомі акорди ($n)',
+    unkChN: 'Невідомі акорди ($n;)',
     noEditorsMore: 'Більше ніхто не редагує',
     editsToo: STR(['$m', '$l'])`${IF('$m').THEN`Редагують`.ELSE`Редагує`} також $l`,
     edits: 'Редагує $f',
@@ -162,10 +162,10 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
     modulesForLoad: 'Доступні для завантаження',
 
     chapterNum: 'Глава $c',
-    searchByBook: 'Пошук по книзі <i>$b</i>',
-    searchByChapter: 'Пошук по главі <i>$b $c</i>',
-    clearChapter: 'Очистити розділ $c?',
-    removeModule: 'Видалити безповоротно модуль "$n"',
+    searchByBook: 'Пошук по книзі <i>$b;</i>',
+    searchByChapter: 'Пошук по главі <i>$b $c;</i>',
+    clearChapter: 'Очистити розділ $c;?',
+    removeModule: 'Видалити безповоротно модуль "$n;"',
 
     trs: {
       [BibleTranslateName.rst]: 'Російський Синодальний Переклад',

@@ -19,9 +19,9 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
         'v'
       >;
 
-      forEachBlock: StringTemplaterInterpolation<'n', '"'>;
+      forEachBlock: StringTemplaterInterpolation<'n'>;
       maxSel: StringTemplaterInterpolation<'s'>;
-      watcheds: StringTemplaterInterpolation<'c', ')'>;
+      watcheds: StringTemplaterInterpolation<'c'>;
       willAdd: StringTemplaterInterpolation<'c'>;
       willLost: StringTemplaterInterpolation<'c'>;
       addMod: StringTemplaterWithTwoInterpolations<'w', 'm'>;
@@ -122,7 +122,7 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
     noEditorsMore: LocaleSimpleString;
     comRemoved: LocaleSimpleString;
     comeBack: LocaleSimpleString;
-    unkChN: StringTemplaterInterpolation<'n', ')'>;
+    unkChN: StringTemplaterInterpolation<'n'>;
     editsToo: StringTemplaterWithTwoInterpolations<'m', 'l'>;
     edits: StringTemplaterInterpolation<'f'>;
     // :EDIT
@@ -147,9 +147,9 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
     modulesForLoad: LocaleSimpleString;
 
     chapterNum: StringTemplaterInterpolation<'c'>;
-    clearChapter: StringTemplaterInterpolation<'c', '?'>;
-    searchByBook: StringTemplaterInterpolation<'b', '<'>;
-    removeModule: StringTemplaterInterpolation<'n', '"'>;
+    clearChapter: StringTemplaterInterpolation<'c'>;
+    searchByBook: StringTemplaterInterpolation<'b'>;
+    removeModule: StringTemplaterInterpolation<'n'>;
     searchByChapter: StringTemplaterWithTwoInterpolations<'c', 'b'>;
   };
 

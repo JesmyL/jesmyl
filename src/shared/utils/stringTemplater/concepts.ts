@@ -5,7 +5,7 @@ import { objectKeys } from '../object.utils';
 import { strTplArgSeparator } from './const';
 import { StringTemplaterInterpolation, StringTemplaterWithTwoInterpolations } from './model';
 
-type Vara = `$${string}`;
+type VarKey = `$${string}${string}`;
 
 const enum ConceptKey {
   Condition = 30,
@@ -21,18 +21,20 @@ const enum TypeKey {
   IfElse,
   Switch,
   Util,
+  Generate,
 }
 
-type TplArg = OmitConceptKeys<Concept<ConceptKey, TypeKey>, 'ELSE'>;
+type TplArg = OmitConceptKeys<Concept<ConceptKey, Exclude<TypeKey, TypeKey.Generate>>, 'ELSE'>;
 
 type AnyCondition =
   | string
+  | number
   | OmitConceptKeys<Concept<ConceptKey.Condition | ConceptKey.Func | ConceptKey.Util, TypeKey>, ''>;
 
 type OmitConceptKeys<C extends Concept<ConceptKey, TypeKey>, K extends keyof C | string> = Omit<C, K | 'k'>;
 
 class Concept<Concept extends ConceptKey, Type extends TypeKey> {
-  k?: Vara;
+  k?: VarKey;
 
   constructor(
     key: string,
@@ -46,6 +48,7 @@ class Concept<Concept extends ConceptKey, Type extends TypeKey> {
 type ConceptValueMap = {
   [TypeKey.IfElse]: IfElseStructConcept;
   [TypeKey.Switch]: SwitchStructConcept;
+  [TypeKey.Generate]: GenerateStructConcept<string>;
 
   [TypeKey.And]: AndConditionConcept;
   [TypeKey.Or]: OrConditionConcept;
@@ -78,9 +81,10 @@ const stringifyConcept: (concept: AnyConcept) => string = concept => {
     case TypeKey.Or:
     case TypeKey.And:
     case TypeKey.Fn:
+    case TypeKey.Generate:
     case TypeKey.Util: {
       const cond = takeConceptValue(concept);
-      return `${key}${cond.c.map(c => stringifyCondition(c)).join(strTplArgSeparator)}}}`;
+      return `${key}${cond.c.map(stringifyCondition).join(strTplArgSeparator)}}}`;
     }
     case TypeKey.Switch: {
       const cond = takeConceptValue(concept);
@@ -158,14 +162,14 @@ const OR = makeCondition('OR');
 
 class FunctionConcept extends Concept<ConceptKey.Func, TypeKey.Fn> {
   constructor(
-    k: Vara,
+    k: VarKey,
     public c: any[],
   ) {
     super(k.slice(1), ConceptKey.Func, TypeKey.Fn);
   }
 }
 
-const FN = (vara: Vara, ...args: any[]) => new FunctionConcept(vara, args);
+const FN = (vara: VarKey, ...args: any[]) => new FunctionConcept(vara, args);
 
 ///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
@@ -236,21 +240,21 @@ class SwitchStructConcept extends Concept<ConceptKey.Struct, TypeKey.Switch> {
   }
 }
 
-const SWITCH = (cond: AnyCondition): { CASE: CaseCb } => {
-  const CASE =
-    (cond: AnyCondition) =>
-    (template: TemplateStringsArray, ...args: TplArg[]) => {
+const SWITCH = (cond: AnyCondition) => {
+  const CASE: CaseCb =
+    cond =>
+    (template, ...args) => {
       concept.cs.push([cond, stringifyTemplate(template, args)]);
       return concept;
     };
 
-  const DEFAULT = (template: TemplateStringsArray, ...args: TplArg[]) => {
+  const DEFAULT: DefaultCb = (template, ...args) => {
     concept.cs.push([stringifyTemplate(template, args)]);
     delete (concept as any).CASE;
     return concept;
   };
 
-  const concept = new SwitchStructConcept(cond, CASE, DEFAULT as never);
+  const concept = new SwitchStructConcept(cond, CASE, DEFAULT);
 
   return { CASE };
 };
@@ -260,35 +264,82 @@ const SWITCH = (cond: AnyCondition): { CASE: CaseCb } => {
 ///////////////////////////////////////////
 ///////////////////////////////////////////
 
-const STR = <const TemplateScalar extends TemplateStringsArray | Vara[]>(
+type NextCb<Key extends string> = (
+  key: Key,
+) => (template: TemplateStringsArray, ...args: TplArg[]) => OmitConceptKeys<GenerateStructConcept<Key>, 'c'>;
+
+export class GenerateStructConcept<Key extends string> extends Concept<ConceptKey.Struct, TypeKey.Generate> {
+  c: (string | number)[] = [];
+
+  constructor(public NEXT: NextCb<Key>) {
+    super('GENERATE', ConceptKey.Struct, TypeKey.Generate);
+  }
+
+  toString<const VarKeys extends [VarKey] | [VarKey, VarKey]>(vars: VarKeys) {
+    const result = `${this.k}{{${this.c.join('}{')}}}` as Interpolation<Key, VarKeys>;
+
+    checkVarUsage(result, vars);
+
+    return result;
+  }
+}
+
+type CorrectKey<Key extends string> = Key extends `$${string}` ? '<ERROR: $-started Key>' : Key;
+
+const GENERATE = <Key extends string = never>() => {
+  const NEXT: NextCb<CorrectKey<Key>> =
+    key =>
+    (template, ...args) => {
+      concept.c.push(key, stringifyTemplate(template, args));
+      return concept;
+    };
+
+  const concept = new GenerateStructConcept<CorrectKey<Key>>(NEXT);
+
+  return { NEXT };
+};
+
+///////////////////////////////////////////
+///////////////////////////////////////////
+///////////////////////////////////////////
+///////////////////////////////////////////
+
+type Interpolation<GenKey extends string, T extends VarKey[]> = T extends [`$${infer V1}`, `$${infer V2}`]
+  ? StringTemplaterWithTwoInterpolations<V1, V2, GenKey>
+  : T extends [`$${infer V1}`]
+    ? StringTemplaterInterpolation<V1, GenKey>
+    : string;
+
+const STR = <const TemplateScalar extends TemplateStringsArray | VarKey[]>(
   templateScalar: TemplateScalar,
   ...args: TplArg[]
-): TemplateScalar extends Vara[]
-  ? TemplateScalar extends [`$${infer V1}`, `$${infer V2}`]
-    ? (tpl: TemplateStringsArray, ...args: TplArg[]) => StringTemplaterWithTwoInterpolations<V1, V2>
-    : TemplateScalar extends [`$${infer V1}`]
-      ? (tpl: TemplateStringsArray, ...args: TplArg[]) => StringTemplaterInterpolation<V1>
-      : string
+): TemplateScalar extends VarKey[]
+  ? (tpl: TemplateStringsArray, ...args: TplArg[]) => Interpolation<string, TemplateScalar>
   : string => {
   if (isTemplateStringsArray(templateScalar)) {
-    return stringifyTemplate(templateScalar as any, args) as never;
+    return stringifyTemplate(templateScalar, args) as never;
   }
 
   return ((template: TemplateStringsArray, ...args: TplArg[]) => {
     const result = stringifyTemplate(template, args);
-    const usedKeySet = new Set(templateScalar);
 
-    result.replace(makeRegExp('/\\$(\\w+);?/g'), (all, key) => {
-      usedKeySet.delete(`$${key};`);
-      usedKeySet.delete(`$${key}`);
-
-      return all;
-    });
-
-    if (usedKeySet.size) throw `The args ${Array.from(usedKeySet).join(', ')} is not used in template`;
+    checkVarUsage(result, templateScalar);
 
     return result;
   }) as never;
+};
+
+const checkVarUsage = (resultStr: string, vars: string[]) => {
+  const usedKeySet = new Set(vars);
+
+  resultStr.replace(makeRegExp('/\\$(\\w+);?/g'), (all, key) => {
+    usedKeySet.delete(`$${key};`);
+    usedKeySet.delete(`$${key}`);
+
+    return all;
+  });
+
+  if (usedKeySet.size) throw `The args ${Array.from(usedKeySet).join(', ')} is not used in template`;
 };
 
 const isTemplateStringsArray = (arr: any): arr is TemplateStringsArray => {
@@ -335,4 +386,4 @@ const isUtil = makeUtils({
 ///////////////////////////////////////////
 ///////////////////////////////////////////
 
-export { AND, FN, IF, isUtil, OR, STR, SWITCH, toNUM, toSTR };
+export { AND, FN, GENERATE, IF, isUtil, OR, STR, SWITCH, toNUM, toSTR };
