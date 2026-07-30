@@ -4,7 +4,7 @@ import { BibleFooter } from './BibleFooter';
 
 export const bibleRoutingApp: RoutingAppConfig = {
   appName: 'bible',
-  title: translateBase(it => it.bible.t),
+  title: () => translateBase(it => it.bible.t),
   footer: <BibleFooter />,
   icon: 'Book02',
 };

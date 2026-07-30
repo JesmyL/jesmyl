@@ -3,7 +3,7 @@ import { StoragesFooter } from '$storages/entities/Footer';
 
 export const storagesRoutingApp: RoutingAppConfig = {
   appName: 'storages',
-  title: 'Склад',
+  title: () => 'Склад',
   footer: <StoragesFooter />,
   icon: 'Database',
 };

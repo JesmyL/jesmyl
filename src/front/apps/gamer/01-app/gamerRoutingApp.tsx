@@ -3,7 +3,7 @@ import { GamerFooter } from '$gamer/entities/Footer';
 
 export const gamerRoutingApp: RoutingAppConfig = {
   appName: 'gamer',
-  title: 'Игрок',
+  title: () => 'Игрок',
   footer: <GamerFooter />,
   icon: 'GameController03',
 };

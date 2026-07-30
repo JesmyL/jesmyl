@@ -22,7 +22,7 @@ export const IndexAppFace = ({ config: { appName, icon, title }, favouriteApps }
         className={twMerge('flex gap-2 pointer', currentAppName === appName && 'text-x7!')}
       >
         <LazyIcon icon={icon} />
-        <span>{title}</span>
+        <span>{title()}</span>
       </Link>
 
       <IconCheckbox

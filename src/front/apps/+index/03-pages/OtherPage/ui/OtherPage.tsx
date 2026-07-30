@@ -57,7 +57,7 @@ export const IndexOtherPage = () => {
         routingApps[currentAppName]?.title ? (
           <span className="flex gap-2">
             <LazyIcon icon={routingApps[currentAppName].icon} />
-            {routingApps[currentAppName].title}
+            {routingApps[currentAppName].title()}
           </span>
         ) : (
           translateBase(it => it.inoe)

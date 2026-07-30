@@ -1,4 +1,3 @@
-import { takeBaseLanguageAtom } from '#basis/state/locale';
 import { soki } from '#shared/soki';
 import { schTsjrpcBaseClient } from '#widgets/schedule/tsjrpc/tsjrpc.base';
 import { bibleTsjrpcBaseClient } from '$bible/shared/lib/tsjrpc';
@@ -52,7 +51,6 @@ export const appInitialInvokes = () => {
       lastModfiedAt,
       iconPacks,
       iconsMd5Hash: lastUpdatedIconsMd5HashAtom.get(),
-      prevLangi: takeBaseLanguageAtom().get().langi,
     });
   };
 

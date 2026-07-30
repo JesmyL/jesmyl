@@ -1,4 +1,4 @@
-import { DeviceId, Langi } from 'shared/api/complect/enums';
+import { DeviceId } from 'shared/api/complect/enums';
 import {
   LocalSokiAuth,
   SokiAuthLogin,
@@ -17,7 +17,6 @@ export type IndexTsjrpcModel = {
     lastModfiedAt: number;
     iconPacks: KnownStameskaIconName[] | nil;
     iconsMd5Hash: string;
-    prevLangi: Langi | nil;
   }) => void;
   getDeviceId: () => DeviceId;
   getDeviceEmoji: () => string;

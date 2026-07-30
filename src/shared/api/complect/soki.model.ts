@@ -18,6 +18,7 @@ export interface SokiVisit {
   clientTm: number;
   agent: string;
   langi: Langi;
+  prevLangi: Langi | nil;
 }
 
 export interface TelegramNativeAuthUserData extends OmitOwn<User, 'language_code' | 'is_bot'> {

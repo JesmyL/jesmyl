@@ -3,7 +3,7 @@ import { QuestionerFooter } from './QuestionerFooter';
 
 export const questionerRoutingApp: RoutingAppConfig = {
   appName: 'q',
-  title: 'Опросник',
+  title: () => 'Опросник',
   footer: <QuestionerFooter />,
   icon: 'MessageQuestion',
 };

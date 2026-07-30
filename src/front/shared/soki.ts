@@ -1,4 +1,5 @@
 import { currentLangiAtom } from '#basis/locale';
+import { takeBaseLanguageAtom } from '#basis/state/locale';
 import { tsjrpcBaseClientNext } from '#basis/tsjrpc/TsjrpcBase.client';
 import { authIDB, indexDeviceEmojiAtom, indexDeviceIdAtom } from '$index/shared/state';
 import md5 from 'md5';
@@ -53,6 +54,7 @@ export class SokiTrip {
           clientTm: Date.now(),
           agent: navigator.userAgent,
           langi: currentLangiAtom.get(),
+          prevLangi: takeBaseLanguageAtom().get().langi,
         },
       });
 

@@ -9,7 +9,7 @@ import { tunerRoutingApp } from '$tuner/tunerRoutingApp';
 export type RoutingAppConfig = {
   appName: AppName;
   footer: React.ReactNode;
-  title: React.ReactNode;
+  title: () => React.ReactNode;
   icon: KnownStameskaIconName;
 };
 

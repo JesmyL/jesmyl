@@ -3,7 +3,7 @@ import { TheTunerFooter } from './TheTunerFooter';
 
 export const tunerRoutingApp: RoutingAppConfig = {
   appName: 'tuner',
-  title: 'Тюнер',
+  title: () => 'Тюнер',
   footer: <TheTunerFooter />,
   icon: 'DashboardSpeed02',
 };

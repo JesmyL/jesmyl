@@ -31,7 +31,7 @@ import { makeUserAccessRights } from './makeUserAccessRights';
 
 export const indexTSJRPCBaseRequestFreshes = {
   requestFreshes: async (
-    { lastModfiedAt, iconPacks: userIconPacks, iconsMd5Hash: userIconsMd5Hash, prevLangi },
+    { lastModfiedAt, iconPacks: userIconPacks, iconsMd5Hash: userIconsMd5Hash },
     { client, auth, visitInfo },
   ) => {
     lastModfiedAt = Math.trunc(lastModfiedAt);
@@ -149,7 +149,7 @@ export const indexTSJRPCBaseRequestFreshes = {
 
       if (
         baseFileStorage.fileModifiedAt() > lastModfiedAt ||
-        (checkIsNotNil(prevLangi) && prevLangi !== visitInfo.langi)
+        (checkIsNotNil(visitInfo.prevLangi) && visitInfo.prevLangi !== visitInfo.langi)
       ) {
         indexServerTsjrpcShareMethods.baseLocConf(
           { base: baseFileStorage.getValue(), mod: baseFileStorage.fileModifiedAt() },
