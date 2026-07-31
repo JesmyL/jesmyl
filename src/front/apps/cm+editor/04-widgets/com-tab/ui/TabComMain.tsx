@@ -1,4 +1,5 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { translateBase } from '#basis/locale';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Button } from '#shared/components';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
@@ -48,7 +49,7 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
     <>
       <InputWithLoadingIcon
         icon="SchoolReportCard"
-        label="Название"
+        label={translateBase(it => it.name)}
         defaultValue={ccom.name}
         isError={!!nameCorrects.errors?.length}
         onChanged={value => cmEditComClientTsjrpcMethods.rename({ comw: ccom.wid, value })}
@@ -66,7 +67,7 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
         label={
           <>
             <LazyIcon icon="Ruler" />
-            Размерность
+            {translateBase(it => it.cm.com.size)}
           </>
         }
         id={ccom.meterSize ?? CmComMetricNum.Four}
@@ -77,7 +78,7 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
         label={
           <>
             <LazyIcon icon="SpeedTrain01" />
-            Интенсивность
+            {translateBase(it => it.cm.com.temp)}
           </>
         }
         id={ccom.top.d ?? CmComIntensityLevel.Medium}
@@ -88,7 +89,7 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
         label={
           <>
             <LazyIcon icon="Flag03" />
-            Язык
+            {translateBase(it => it.lang)}
           </>
         }
         id={ccom.langi}
@@ -112,12 +113,8 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
           <TheIconButton
             icon="Delete01"
             className="text-xKO"
-            confirm={
-              <>
-                Удалить песню <span className="text-x7">{ccom.name}</span>?
-              </>
-            }
-            postfix="Удалить песню"
+            confirm={<>{translateBase(it => it.delX, { x: ccom.name })}</>}
+            postfix={translateBase(it => it.del)}
             onClick={() => {
               removedCompositionsAtom.set(prev => ({ ...prev, [ccom.wid]: ccom.name }));
               return cmEditComClientTsjrpcMethods.remove({ comw: ccom.wid });
@@ -130,13 +127,15 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
                   icon="Code"
                   onClick={openAtom.do.toggle}
                 >
-                  Посмотреть JSON
+                  {translateBase(it => it.lookJSON)}
                 </Button>
                 <FullContent openAtom={openAtom}>
                   {isOpen =>
                     isOpen && (
                       <>
-                        <div className="my-3">{JSON.stringify(ccom.top).length} символов</div>
+                        <div className="my-3">
+                          {translateBase(it => it.NSymbols, { n: JSON.stringify(ccom.top).length })}
+                        </div>
                         <textarea
                           className="size-full bg-x2!"
                           onChange={emptyFunc}

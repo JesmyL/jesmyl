@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
@@ -59,14 +60,14 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
     }
   };
 
-  const noTitleprefix = 'Нет разобранных ';
+  const noTitlePrefix = (x: 't' | 'c' | 'o') => translateBase(it => it.cm.com.new.noParsedX, { x });
   const errorNodes = mapObjectEntries(
     {
-      'Некореектное название': newICom.n && !nameIncorrects.errors?.at(0)?.message,
-      'Нет прикреплённых аудио': !innerHTML || objectLength(newICom.al),
-      [`${noTitleprefix}текстов`]: objectLength(newICom.t?.filter(itIt)),
-      [`${noTitleprefix}аккордов`]: objectLength(newICom.c?.filter(itIt)),
-      [`${noTitleprefix}порядковых блоков`]: objectLength(newICom.o),
+      [translateBase(it => it.incName)]: newICom.n && !nameIncorrects.errors?.at(0)?.message,
+      [translateBase(it => it.cm.com.new.noBindAudio)]: !innerHTML || objectLength(newICom.al),
+      [noTitlePrefix('t')]: objectLength(newICom.t?.filter(itIt)),
+      [noTitlePrefix('c')]: objectLength(newICom.c?.filter(itIt)),
+      [noTitlePrefix('o')]: objectLength(newICom.o),
     },
     (errorText, value) =>
       !value && (
@@ -91,7 +92,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
         className="new-composition p-2"
         onClick={propagationStopper}
       >
-        <h2 className="title">Новая песня</h2>
+        <h2 className="title">{translateBase(it => it.cm.com.new.t)}</h2>
 
         <CmEditorComCreateNameChange
           name={newICom.n}
@@ -121,7 +122,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
           value={value}
           className="my-2 w-full h-full text-(--text-color) border-(--text-color) border-2 border-dashed resize-none"
           multiline
-          placeholder="Начни писать или вставь текст для создания песни"
+          placeholder={translateBase(it => it.cm.com.new.startWrite)}
           onInput={setTextAsValue}
         />
 
@@ -140,12 +141,12 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
             setNewICom(prev => ({ ...prev, ...com }));
           }}
         >
-          Разобрать текст
+          {translateBase(it => it.cm.com.new.parseTxt)}
         </TheButton>
 
         {innerHTML && (
           <>
-            <h2>Прикреплённые аудио</h2>
+            <h2>{translateBase(it => it.cm.com.new.bindedAudio)}</h2>
             {newICom.al?.length ? (
               <CmEditorComAudioControlledList
                 srcs={newICom.al?.filter(itIt)}
@@ -158,10 +159,10 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
                 }}
               />
             ) : (
-              <div>Нет треков</div>
+              <div>{translateBase(it => it.cm.com.new.noTracks)}</div>
             )}
 
-            <h2 id="header-new-audio">Новые аудио</h2>
+            <h2 id="header-new-audio">{translateBase(it => it.cm.com.new.newAudios)}</h2>
             <CmEditorComAudioControlledList
               srcs={hrefs}
               icon="PlusSignCircle"
@@ -177,7 +178,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
 
         {newICom.t && (
           <CmEditorComCreateComTextableListRedactor
-            title="Тексты"
+            title={translateBase(it => it.txts)}
             corrects={textsErrors}
             list={newICom.t}
             onInput={(value, texti) => setNewICom(prev => ({ ...prev, t: newICom.t?.with(texti, value) }))}
@@ -186,7 +187,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
 
         {newICom.c && (
           <CmEditorComCreateComTextableListRedactor
-            title="Аккорды"
+            title={translateBase(it => it.cm.chs)}
             corrects={chordsErrors}
             list={newICom.c}
             onInput={(value, texti) => setNewICom(prev => ({ ...prev, c: newICom.c?.with(texti, value) }))}
@@ -195,7 +196,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
 
         {newICom.o && (
           <>
-            <h2>Порядковые блоки</h2>
+            <h2>{translateBase(it => it.cm.ords)}</h2>
             <CmComOrderList
               chordVisibleVariant={ChordVisibleVariant.None}
               com={newCom}
@@ -220,7 +221,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
         <SendButton
           id="public-new-com-button"
           className="mb-10"
-          title="Опубликовать песню"
+          title={translateBase(it => it.cm.com.new.pub)}
           disabled={
             !!errorNodes.length ||
             !!parseErrors.length ||

@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
@@ -22,7 +23,7 @@ export const CmEditorComRemovedComsModalInner = () => {
 
   return (
     <>
-      <ModalHeader>Удалённые песни</ModalHeader>
+      <ModalHeader>{translateBase(it => it.cm.com.rms)}</ModalHeader>
       <ModalBody>
         <CmComFaceList
           list={coms}
@@ -50,13 +51,13 @@ const comControls = (com: CmCom) => (
     <TheIconSendButton
       icon="PlusSignCircle"
       className="text-xOK"
-      confirm="Восстановить эту песню?"
+      confirm={translateBase(it => it.cm.com.backup)}
       onSend={() => cmEditComClientTsjrpcMethods.bringBackToLife({ comw: com.wid })}
     />
     <TheIconSendButton
       icon="CancelCircleHalfDot"
       className="text-xKO"
-      confirm="Уничтожить эту песню?"
+      confirm={translateBase(it => it.cm.com.destroy)}
       onSend={() => cmEditComClientTsjrpcMethods.destroy({ comw: com.wid })}
     />
   </div>

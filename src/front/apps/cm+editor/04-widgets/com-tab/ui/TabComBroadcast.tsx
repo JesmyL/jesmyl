@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components';
 import { propsOfClicker } from '#shared/lib/clicker/propsOfClicker';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
@@ -32,11 +33,11 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
       const ordLineId = makeCmBroadcastMonolineSlideOrdLineStrId(ord.wid, linei, repeati, samei);
 
       if (lines.length > 5) {
-        warns[ordLineId] = ['text-x3 bg-xKO', 'Много строк'];
+        warns[ordLineId] = ['text-x3 bg-xKO', translateBase(it => it.manyStrs)];
       } else if (lines.length > 4) {
-        warns[ordLineId] = ['text-x1 bg-x3 opacity-50', 'Максимальное количество строк'];
+        warns[ordLineId] = ['text-x1 bg-x3 opacity-50', translateBase(it => it.maxStrsCount)];
       } else if (lines.length < 2) {
-        warns[ordLineId] = ['text-x3 bg-orange-500 opacity-60', 'Мало строк'];
+        warns[ordLineId] = ['text-x3 bg-orange-500 opacity-60', translateBase(it => it.fewStrs)];
       }
     });
 
@@ -98,7 +99,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                       })
                     }
                   >
-                    Конфиг стр {lineConfigi + 1}
+                    {translateBase(it => it.cm.com.cnfStrN, { n: lineConfigi + 1 })}
                   </Button>
                 </div>
               );

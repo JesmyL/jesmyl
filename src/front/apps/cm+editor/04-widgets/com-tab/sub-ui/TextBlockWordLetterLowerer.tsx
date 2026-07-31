@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
@@ -40,7 +41,7 @@ export const CmEditorComTabTextBlockWordLetterLowerer = ({ com, onUpdate }: { co
             onUpdate();
           }}
         >
-          Отправить
+          {translateBase(it => it.send)}
         </Button>
       </ModalHeader>
       <ModalBody>

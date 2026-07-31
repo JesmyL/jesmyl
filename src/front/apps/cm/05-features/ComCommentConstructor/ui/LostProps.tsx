@@ -96,7 +96,7 @@ export const CmComCommentConstructorLostProps = ({ ordw, com }: { ordw: CmComOrd
             postfix={joinTitle}
             confirm={
               <>
-                {translateBase(it => it.del, { t: '' })}
+                {translateBase(it => it.del)}
                 {joinTitle}?
               </>
             }

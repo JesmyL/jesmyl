@@ -1,6 +1,6 @@
 import { BibleTranslateName, Langi, MenuComToolName } from 'shared/api';
 import { LocaleBase } from 'shared/model/+locale/base';
-import { IF, isUtil, STR, SWITCH } from 'shared/utils/stringTemplater';
+import { GENERATE, IF, isUtil, STR, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeBaseRu: LocaleBase<Langi.Ru> = {
   langi: Langi.Ru,
@@ -52,14 +52,45 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
       showLiSlides: 'Показывать слайды списка',
       shareLi: 'Поделиться списком',
       unk: 'Неизвестная песня',
-      sqBrInTxtRep:
-        'Текст в [квадратных скобках] не показывается в слайдах, но приводится к (тексту в круглых скобках) в тексте песен. Используйте [[две открывающие скобки] для переноса строки. Перед "[" должен быть пробел, а после "]" быть ничего не должно',
-      rmTBlock: STR(['$t'])`Удалить${IF('$t').ELSE` новый`} блок?\n\n$t`,
 
       ton: 'Тональность',
       addToolByClick: 'Клик на иконку для добавления в быстрое меню',
       crossLinks: 'Связанные песни',
       addMod: STR(['$w', '$m'])`Добавлена: $w${IF(isUtil.NEQ('$w', '$m')).THEN`\nОбновлена: $m`}`,
+
+      size: 'Размерность',
+      temp: 'Интенсивность',
+
+      // EDITOR:
+      sqBrInTxtRep:
+        'Текст в [квадратных скобках] не показывается в слайдах, но приводится к (тексту в круглых скобках) в тексте песен. Используйте [[две открывающие скобки] для переноса строки. Перед "[" должен быть пробел, а после "]" быть ничего не должно',
+      rmTBlock: STR(['$t'])`Удалить${IF('$t').ELSE` новый`} блок?\n\n$t`,
+      rms: 'Удалённые песни',
+      backup: 'Восстановить эту песню',
+      destroy: 'Уничтожить эту песню',
+      insPrevTxt: 'Вставка предыдущего текста',
+      repTxt: 'Заменить на этот текст',
+      willClear: 'Будет очищено при вставке новых блоков',
+      rmAudios: 'Удалённые аудио',
+      addAudio: 'Добавить аудио',
+      cnfStrN: 'Конфиг стр $n',
+      clearDictNumN: 'Очистить номер из сборника $n',
+      insNwBlockAtX: STR(['$x'])`Вставить новый блок ${SWITCH('$x').CASE('b')`в самое начало`.DEFAULT`сюда`}`,
+
+      new: {
+        t: 'Новая песня',
+        noParsedX: STR(['$x'])`Нет разобранных ${SWITCH('$x')
+          //
+          .CASE('t')`текстов`.CASE('c')`аккордов`.CASE('o')`порядковых блоков`}`,
+        noBindAudio: 'Нет прикреплённых аудио',
+        startWrite: 'Начни писать или вставь текст для создания песни',
+        parseTxt: 'Разобрать текст',
+        bindedAudio: 'Прикреплённые аудио',
+        noTracks: 'Нет треков',
+        newAudios: 'Новые аудио',
+        pub: 'Опубликовать песню',
+      },
+      // :EDITOR
     },
 
     cat: {
@@ -148,6 +179,8 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
     edits: 'Редактирует $f',
     comRemoved: 'Песня удалена',
     comeBack: 'Восстановить',
+
+    ords: 'Порядковые блоки',
   },
 
   bible: {
@@ -180,6 +213,14 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
   sch: {
     notFound: 'Расписание не найдено',
     evMod: `Обновлено: $m`,
+
+    insWatchAtt: GENERATE<'s' | ''>()
+      //
+      .NEXT('')`Шаблон `
+      //
+      .NEXT('s')`$t`
+      //
+      .NEXT('')` - Вставить обзорное вложение`.toString(['$t']),
   },
 
   bro: {
@@ -275,7 +316,8 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
   lineN: 'Строка $n',
   word: 'Слово',
   wordN: 'Слово $n',
-  del: 'Удалить $t',
+  delX: 'Удалить $x',
+  del: 'Удалить',
   txtBefore: 'Текст до',
   txtAfter: 'Текст после',
   close: 'Закрыть',
@@ -292,4 +334,18 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
   cre: 'Создать',
   redact: 'Редактировать',
   noAccess: 'Нет доступа',
+
+  durationMin: 'Продолжительность, мин',
+  min_minute: ' мин',
+  incName: 'Некореектное название',
+  txts: 'Тексты',
+  send: 'Отправить',
+  manyStrs: 'Много строк',
+  maxStrsCount: 'Максимальное количество строк',
+  fewStrs: 'Мало строк',
+  dicts: 'Сборники',
+  denied: 'Заперщено',
+  lang: 'Язык',
+  lookJSON: 'Посмотреть JSON',
+  NSymbols: '$n $declension{{$n}{символ}{символа}{символов}}',
 };

@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { TextInput } from '#shared/ui/TextInput';
 import { CmEditorTextCorrectMessages } from '$cm+editor/entities/text';
 import { IExportableCom } from 'shared/api';
@@ -15,7 +16,7 @@ export const CmEditorComCreateNameChange = ({
   return (
     <>
       <div className="flex w-full">
-        <span className="mx-2">Название </span>
+        <span className="mx-2">{translateBase(it => it.name)} </span>
         <div
           id="new-com-input-wrapper"
           className="w-full"

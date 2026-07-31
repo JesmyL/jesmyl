@@ -1,4 +1,5 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { translateBase } from '#basis/locale';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
@@ -27,7 +28,7 @@ export const CmEditorComTabAudio = ({ ccom }: { ccom: EditableCom }) => {
 
   return (
     <>
-      <h2>Прикреплённые аудио</h2>
+      <h2>{translateBase(it => it.cm.com.new.bindedAudio)}</h2>
       {ccom.audio.length ? (
         <CmEditorComAudioControlledList
           srcs={ccom.audio}
@@ -39,11 +40,11 @@ export const CmEditorComTabAudio = ({ ccom }: { ccom: EditableCom }) => {
           }}
         />
       ) : (
-        <div>Нет треков</div>
+        <div>{translateBase(it => it.cm.com.new.noTracks)}</div>
       )}
       {!removedHrefs.length || (
         <>
-          <h2>Удалённые аудио</h2>
+          <h2>{translateBase(it => it.cm.com.rmAudios)}</h2>
           <CmEditorComAudioControlledList
             srcs={removedHrefs}
             icon="PlusSignCircle"
@@ -57,7 +58,7 @@ export const CmEditorComTabAudio = ({ ccom }: { ccom: EditableCom }) => {
       {checkAccess('cm', 'COM_AUDIO', 'C') &&
         (openAddBlock ? (
           <>
-            <h2>Добавить аудио</h2>
+            <h2>{translateBase(it => it.cm.com.addAudio)}</h2>
             {
               <ObserveUrlResource
                 onSuccess={({ html, rule }) => {

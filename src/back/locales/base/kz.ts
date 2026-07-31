@@ -1,6 +1,6 @@
 import { BibleTranslateName, Langi, MenuComToolName } from 'shared/api';
 import { LocaleBase } from 'shared/model/+locale/base';
-import { IF, isUtil, STR, SWITCH } from 'shared/utils/stringTemplater';
+import { GENERATE, IF, isUtil, STR, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeBaseKz: LocaleBase<Langi.Kz> = {
   langi: Langi.Kz,
@@ -52,14 +52,46 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
       showLiSlides: 'Тізім слайдтарын көрсету',
       shareLi: 'Тізіммен бөлісу',
       unk: 'Белгісіз ән',
-      sqBrInTxtRep:
-        '[Квадрат жақшадағы] мәтін слайдтарда көрсетілмейді, бірақ ән мәтінінде (дөңгелек жақшадағы мәтінге) айналады. Жолды ауыстыру үшін [[екі ашылатын жақшаны] пайдаланыңыз. "[" белгісінің алдында бос орын болуы керек, ал "]" белгісінен кейін ештеңе болмауы тиіс',
-      rmTBlock: STR(['$t'])`${IF('$t').THEN`Блокты`.ELSE` Жаңа блокты`} өшіру керек пе?\n\n$t`,
 
       ton: 'Тональділік',
       addToolByClick: 'Жылдам мәзірге қосу үшін белгішені басыңыз',
       crossLinks: 'Байланысты әндер',
       addMod: STR(['$w', '$m'])`Қосылды: $w${IF(isUtil.NEQ('$w', '$m')).THEN`\nЖаңартылды: $m`}`,
+
+      size: 'Өлшемділік',
+      temp: 'Қарқындылық',
+
+      // EDITOR:
+      sqBrInTxtRep:
+        '[Квадрат жақшадағы] мәтін слайдтарда көрсетілмейді, бірақ ән мәтінінде (дөңгелек жақшадағы мәтінге) айналады. Жолды ауыстыру үшін [[екі ашылатын жақшаны] пайдаланыңыз. "[" белгісінің алдында бос орын болуы керек, ал "]" белгісінен кейін ештеңе болмауы тиіс',
+      rmTBlock: STR(['$t'])`${IF('$t').THEN`Блокты`.ELSE` Жаңа блокты`} өшіру керек пе?\n\n$t`,
+
+      rms: 'Жойылған әндер',
+      backup: 'Бұл әнді қалпына келтіру',
+      destroy: 'Бұл әнді біржола жою',
+      insPrevTxt: 'Алдыңғы мәтінді кірістіру',
+      repTxt: 'Осы мәтінмен алмастыру',
+      willClear: 'Жаңа блоктарды кірістіру кезінде тазартылады',
+      rmAudios: 'Жойылған аудиолар',
+      addAudio: 'Аудио қосу',
+      cnfStrN: '$n беттің конфигі',
+      clearDictNumN: '$n жинағынан нөмірді тазарту',
+      insNwBlockAtX: STR(['$x'])`Жаңа блокты ${SWITCH('$x').CASE('b')`ең басына`.DEFAULT`осы жерге`} кірістіру`,
+
+      new: {
+        t: 'Жаңа ән',
+        noParsedX: STR(['$x'])`Талданған ${SWITCH('$x')
+          //
+          .CASE('t')`мәтіндер`.CASE('c')`аккордтар`.CASE('o')`реттік блоктар`} жоқ`,
+        noBindAudio: 'Тіркелген аудиолар жоқ',
+        startWrite: 'Ән шығару үшін жаза бастаңыз немесе мәтінді кірістіріңіз',
+        parseTxt: 'Мәтінді талдау',
+        bindedAudio: 'Тіркелген аудиолар',
+        noTracks: 'Тректер жоқ',
+        newAudios: 'Жаңа аудиолар',
+        pub: 'Әнді жариялау',
+      },
+      // :EDITOR
     },
     cat: {
       t: 'Санат',
@@ -147,6 +179,8 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
     edits: '$f редакциялауда',
     comRemoved: 'Ән өшірілді',
     comeBack: 'Қалпына келтіру',
+
+    ords: 'Реттік блоктар',
   },
 
   bible: {
@@ -179,6 +213,14 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
   sch: {
     notFound: 'Кесте табылмады',
     evMod: `Жаңартылды: $m`,
+
+    insWatchAtt: GENERATE<'s' | ''>()
+      //
+      .NEXT('')`Үлгі `
+      //
+      .NEXT('s')`$t`
+      //
+      .NEXT('')` - Шолу тіркемесін кірістіру`.toString(['$t']),
   },
 
   bro: {
@@ -275,14 +317,15 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
   lineN: '$n-жол',
   word: 'Сөз',
   wordN: '$n-сөз',
-  del: '$t өшіру',
+  delX: '$x өшіру',
+  del: 'Жою',
   txtBefore: 'Дейінгі мәтін',
   txtAfter: 'Кейінгі мәтін',
   close: 'Жабу',
   Nsec: '$n сек.',
   detailed: 'Толығырақ',
   fontSize: 'Қаріп өлшемі',
-  lookedN: '$n рет қаралды $declension{{$n}{}{}{}}',
+  lookedN: '$n рет қаралды',
   toAdd: 'Қосу',
   NDay: '$n-күн',
   savedLoc: 'Жергілікті сақталды',
@@ -292,4 +335,18 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
   cre: 'Жасау',
   redact: 'Редакциялау',
   noAccess: 'Қолжетімділік жоқ',
+
+  durationMin: 'Ұзақтығы, мин',
+  min_minute: ' мин',
+  incName: 'Қате атау',
+  txts: 'Мәтіндер',
+  send: 'Жіберу',
+  manyStrs: 'Жолдар көп',
+  maxStrsCount: 'Жолдардың максималды саны',
+  fewStrs: 'Жолдар аз',
+  dicts: 'Жинақтар',
+  denied: 'Тыйым салынған',
+  lang: 'Тіл',
+  lookJSON: 'JSON көру',
+  NSymbols: '$n $declension{{$n}{таңба}{таңба}{таңба}}',
 };

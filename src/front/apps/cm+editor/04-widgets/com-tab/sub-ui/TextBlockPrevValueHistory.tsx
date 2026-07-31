@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { Card } from '#shared/components/ui/card';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
@@ -37,7 +38,7 @@ export const CmEditorComTabTextBlockPrevValueUpdateModal = (
 
   return (
     <Modal openAtom={openHistoryAtom}>
-      <ModalHeader>Вставка предыдущего текста</ModalHeader>
+      <ModalHeader>{translateBase(it => it.cm.com.insPrevTxt)}</ModalHeader>
       <ModalBody>
         {texti != null &&
           history?.[texti]?.map((text, txti) => {
@@ -54,14 +55,14 @@ export const CmEditorComTabTextBlockPrevValueUpdateModal = (
                       openHistoryAtom.reset();
                     }}
                   >
-                    Заменить на этот текст
+                    {translateBase(it => it.cm.com.repTxt)}
                   </Button>
                 </Card.Footer>
               </Card.Root>
             );
           })}
       </ModalBody>
-      <ModalFooter>Будет очищено при вставке новых блоков</ModalFooter>
+      <ModalFooter>{translateBase(it => it.cm.com.willClear)}</ModalFooter>
     </Modal>
   );
 };

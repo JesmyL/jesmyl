@@ -1,4 +1,5 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { translateBase } from '#basis/locale';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { CmEditorChordBlockRedactor } from '$cm+editor/entities/chord';
@@ -22,7 +23,7 @@ export const CmEditorComTabChordsBlocks = ({ ccom }: { ccom: EditableCom }) => {
       {checkAccess('cm', 'COM_CH', 'C') && (
         <TheIconButton
           icon="PlusSignCircle"
-          confirm="Вставить новый блок в самое начало?"
+          confirm={translateBase(it => it.cm.com.insNwBlockAtX, { x: 'b' })}
           onClick={() =>
             cmEditComClientTsjrpcMethods.insertChordBlock({
               value: '',
@@ -62,7 +63,7 @@ export const CmEditorComTabChordsBlocks = ({ ccom }: { ccom: EditableCom }) => {
                 {checkAccess('cm', 'COM_CH', 'D') && (
                   <TheIconButton
                     icon="Cancel01"
-                    confirm={`Удалить блок?\n\n${text}`}
+                    confirm={translateBase(it => it.delX, { x: `\n\n${text}` })}
                     onClick={() =>
                       cmEditComClientTsjrpcMethods.removeChordBlock({
                         comw: ccom.wid,
@@ -83,7 +84,7 @@ export const CmEditorComTabChordsBlocks = ({ ccom }: { ccom: EditableCom }) => {
             {checkAccess('cm', 'COM_CH', 'C') && (
               <TheIconButton
                 icon="PlusSignCircle"
-                confirm="Вставить новый блок сюда?"
+                confirm={translateBase(it => it.cm.com.insNwBlockAtX, { x: 'h' })}
                 onClick={() =>
                   cmEditComClientTsjrpcMethods.insertChordBlock({
                     value: '',

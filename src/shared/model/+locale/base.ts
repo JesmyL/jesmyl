@@ -44,11 +44,36 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
       ton: LocaleSimpleString;
       addToolByClick: LocaleSimpleString;
       crossLinks: LocaleSimpleString;
+      size: LocaleSimpleString;
+      temp: LocaleSimpleString;
 
       /// EDITOR:
       /** square brackets in text replacing */
       sqBrInTxtRep: LocaleSimpleString;
+      rms: LocaleSimpleString;
+      backup: LocaleSimpleString;
+      destroy: LocaleSimpleString;
+      insPrevTxt: LocaleSimpleString;
+      repTxt: LocaleSimpleString;
+      willClear: LocaleSimpleString;
+      rmAudios: LocaleSimpleString;
+      addAudio: LocaleSimpleString;
+      insNwBlockAtX: StringTemplaterInterpolation<'x'>;
+      cnfStrN: StringTemplaterInterpolation<'n'>;
       rmTBlock: StringTemplaterInterpolation<'t'>;
+      clearDictNumN: StringTemplaterInterpolation<'n'>;
+
+      new: {
+        t: LocaleSimpleString;
+        noParsedX: StringTemplaterInterpolation<'x'>;
+        noBindAudio: LocaleSimpleString;
+        startWrite: LocaleSimpleString;
+        parseTxt: LocaleSimpleString;
+        bindedAudio: LocaleSimpleString;
+        noTracks: LocaleSimpleString;
+        newAudios: LocaleSimpleString;
+        pub: LocaleSimpleString;
+      };
 
       /// :EDITOR
     };
@@ -103,6 +128,7 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
 
     chN: StringTemplaterInterpolation<'n'>;
     chs: LocaleSimpleString;
+    ords: LocaleSimpleString;
     maxChCount: LocaleSimpleString;
     noChTxt: LocaleSimpleString;
     minChCount: LocaleSimpleString;
@@ -156,6 +182,8 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   sch: {
     notFound: LocaleSimpleString;
     evMod: StringTemplaterInterpolation<'m'>;
+
+    insWatchAtt: StringTemplaterInterpolation<'t', 's' | ''>;
   };
 
   bro: {
@@ -179,6 +207,10 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   accessRights: LocaleSimpleString;
   inoe: LocaleSimpleString;
   name: LocaleSimpleString;
+  incName: LocaleSimpleString;
+  dicts: LocaleSimpleString;
+  durationMin: LocaleSimpleString;
+  min_minute: LocaleSimpleString;
   role: LocaleSimpleString;
   withoutRole: LocaleSimpleString;
   enterRoleName: LocaleSimpleString;
@@ -215,6 +247,7 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   or: LocaleSimpleString;
   link: LocaleSimpleString;
   txt: LocaleSimpleString;
+  txts: LocaleSimpleString;
 
   setup: LocaleSimpleString;
   preview: LocaleSimpleString;
@@ -241,7 +274,8 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
 
   lineN: StringTemplaterInterpolation<'n'>;
   wordN: StringTemplaterInterpolation<'n'>;
-  del: StringTemplaterInterpolation<'t'>;
+  del: LocaleSimpleString;
+  delX: StringTemplaterInterpolation<'x'>;
   Nsec: StringTemplaterInterpolation<'n'>;
   lookedN: StringTemplaterInterpolation<'n'>;
   NDay: StringTemplaterInterpolation<'n'>;
@@ -273,4 +307,13 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   redact: LocaleSimpleString;
   noAccess: LocaleSimpleString;
   toSendSmth: StringTemplaterInterpolation<'s'>;
+  NSymbols: StringTemplaterInterpolation<'n'>;
+
+  send: LocaleSimpleString;
+  manyStrs: LocaleSimpleString;
+  maxStrsCount: LocaleSimpleString;
+  fewStrs: LocaleSimpleString;
+  denied: LocaleSimpleString;
+  lang: LocaleSimpleString;
+  lookJSON: LocaleSimpleString;
 }>;

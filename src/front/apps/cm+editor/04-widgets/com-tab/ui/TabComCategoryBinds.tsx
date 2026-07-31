@@ -1,4 +1,5 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { translateBase } from '#basis/locale';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -20,7 +21,7 @@ export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => 
 
   return (
     <>
-      <div className="cat-list-title">Сборники</div>
+      <div className="cat-list-title">{translateBase(it => it.dicts)}</div>
       {cats.map(cat => {
         return (
           cat.kind === 'dict' && (
@@ -50,11 +51,11 @@ export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => 
               {cat.dict?.[ccom.wid] != null && (
                 <TheIconButton
                   icon="Cancel01"
-                  postfix={isNaN(cat.dict?.[ccom.wid] as never) ? 'Корректно очистить' : 'Удалить'}
-                  confirm={`Очистить номер из сборника ${cat.name}?`}
+                  postfix={translateBase(it => it.del)}
+                  confirm={translateBase(it => it.cm.com.clearDictNumN, { n: cat.name })}
                   className="pointer text-xKO ml-5 mb-2"
                   disabled={!checkAccess('cm', 'COM_CAT', 'U')}
-                  disabledReason="Заперщено"
+                  disabledReason={translateBase(it => it.denied)}
                   onClick={() =>
                     cmEditCatClientTsjrpcMethods.removeNativeComNum({
                       comw: ccom.wid,
@@ -67,7 +68,7 @@ export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => 
           )
         );
       })}
-      <div className="cat-list-title">Списки</div>
+      <div className="cat-list-title">{translateBase(it => it.lists)}</div>
       {cats.map(cat => {
         return (
           cat.kind === 'list' && (

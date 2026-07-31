@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { StrongDiv } from '#basis/ui/strong-control/StrongDiv';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
@@ -45,7 +46,7 @@ export function ScheduleWidgetEventType(props: {
         value={props.typeBox}
         isRedact={props.isRedact}
         icon="SchoolReportCard"
-        title="Название"
+        title={translateBase(it => it.name)}
         isImpossibleEmptyValue
         onChanged={setTitle}
         onSend={value =>
@@ -65,9 +66,9 @@ export function ScheduleWidgetEventType(props: {
       <StrongEditableField
         type="tel"
         value={'' + (props.typeBox.tm ?? '')}
-        postfix=" мин"
+        postfix={translateBase(it => it.min_minute)}
         isRedact={props.isRedact}
-        title="Продолжительность, мин"
+        title={translateBase(it => it.durationMin)}
         icon="Clock01"
         onSend={value => schEventTypesTsjrpcClient.setTm({ props: eventTypeScopeProps, tm: +value })}
       />
@@ -77,7 +78,13 @@ export function ScheduleWidgetEventType(props: {
           atts={props.typeBox.atts}
           forTitle={
             <>
-              Шаблон <span className="text-x7">{props.typeBox.title}</span> - Вставить обзорное вложение
+              {translateBase(it => it.sch.insWatchAtt, {
+                NEXT: (key, value) => {
+                  if (!key) return value;
+                  return <span className="text-x7">{value}</span>;
+                },
+                t: props.typeBox.title,
+              })}
             </>
           }
           topContent={

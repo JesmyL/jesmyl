@@ -1,6 +1,6 @@
 import { BibleTranslateName, Langi, MenuComToolName } from 'shared/api';
 import { LocaleBase } from 'shared/model/+locale/base';
-import { IF, isUtil, STR, SWITCH } from 'shared/utils/stringTemplater';
+import { GENERATE, IF, isUtil, STR, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeBaseUa: LocaleBase<Langi.Ua> = {
   langi: Langi.Ua,
@@ -52,14 +52,45 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
       showLiSlides: 'Показувати слайди списку',
       shareLi: 'Поділитися списком',
       unk: 'Невідома пісня',
-      sqBrInTxtRep:
-        'Текст у [квадратних дужках] не показується у слайдах, але зводиться до (тексту в круглих дужках) у тексті пісень. Використовуйте [[дві відкриваючі дужки] для перенесення рядка. Перед "[" має бути пробіл, а після "]" нічого не повинно бути',
-      rmTBlock: STR(['$t'])`Видалити${IF('$t').ELSE` новий`} блок?\n\n$t`,
 
       ton: 'Тональність',
       addToolByClick: 'Клік на іконку для додавання у швидке меню',
       crossLinks: "Пов'язані пісні",
       addMod: STR(['$w', '$m'])`Додана: $w${IF(isUtil.NEQ('$w', '$m')).THEN`\nОновлена: $m`}`,
+
+      size: 'Розмірність',
+      temp: 'Інтенсивність',
+
+      // EDITOR:
+      sqBrInTxtRep:
+        'Текст у [квадратних дужках] не показується в слайдах, але зводиться до (тексту в круглих дужках) у тексті пісень. Використовуйте [[дві відкривальні дужки] для перенесення рядка. Перед "[" має бути пробіл, а після "]" не повинно бути нічого',
+      rmTBlock: STR(['$t'])`Видалити${IF('$t').ELSE` новий`} блок?\n\n$t`,
+      rms: 'Видалені пісні',
+      backup: 'Відновити цю пісню',
+      destroy: 'Знищити цю пісню',
+      insPrevTxt: 'Вставка попереднього тексту',
+      repTxt: 'Замінити на цей текст',
+      willClear: 'Буде очищено при вставці нових блоків',
+      rmAudios: 'Видалені аудіо',
+      addAudio: 'Додати аудіо',
+      cnfStrN: 'Конфіг стор $n',
+      clearDictNumN: 'Очистити номер зі збірника $n',
+      insNwBlockAtX: STR(['$x'])`Вставити новий блок ${SWITCH('$x').CASE('b')`на самий початок`.DEFAULT`сюди`}`,
+
+      new: {
+        t: 'Нова пісня',
+        noParsedX: STR(['$x'])`Немає розібраних ${SWITCH('$x')
+          //
+          .CASE('t')`текстів`.CASE('c')`акордів`.CASE('o')`порядкових блоків`}`,
+        noBindAudio: 'Немає прикріплених аудіо',
+        startWrite: 'Почни писати або встав текст для створення пісні',
+        parseTxt: 'Розібрати текст',
+        bindedAudio: 'Прикріплені аудіо',
+        noTracks: 'Немає треків',
+        newAudios: 'Нові аудіо',
+        pub: 'Опублікувати пісню',
+      },
+      // :EDITOR
     },
     cat: {
       t: 'Категорія',
@@ -147,6 +178,8 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
     edits: 'Редагує $f',
     comRemoved: 'Пісня видалена',
     comeBack: 'Відновити',
+
+    ords: 'Порядкові блоки',
   },
   bible: {
     t: 'Біблія',
@@ -178,6 +211,14 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
   sch: {
     notFound: 'Розклад не знайдено',
     evMod: `Оновлено: $m`,
+
+    insWatchAtt: GENERATE<'s' | ''>()
+      //
+      .NEXT('')`Шаблон `
+      //
+      .NEXT('s')`$t`
+      //
+      .NEXT('')` - Вставити оглядове вкладення`.toString(['$t']),
   },
 
   bro: {
@@ -274,7 +315,8 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
   lineN: 'Рядок $n',
   word: 'Слово',
   wordN: 'Слово $n',
-  del: 'Видалити $t',
+  delX: 'Видалити $x',
+  del: 'Видалити',
   txtBefore: 'Текст до',
   txtAfter: 'Текст після',
   close: 'Закрити',
@@ -291,4 +333,18 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
   cre: 'Створити',
   redact: 'Редагувати',
   noAccess: 'Немає доступу',
+
+  durationMin: 'Тривалість, хв',
+  min_minute: ' хв',
+  incName: 'Некоректна назва',
+  txts: 'Тексти',
+  send: 'Надіслати',
+  manyStrs: 'Багато рядків',
+  maxStrsCount: 'Максимальна кількість рядків',
+  fewStrs: 'Мало рядків',
+  dicts: 'Збірники',
+  denied: 'Заборонено',
+  lang: 'Мова',
+  lookJSON: 'Переглянути JSON',
+  NSymbols: '$n $declension{{$n}{символ}{символи}{символів}}',
 };
