@@ -101,6 +101,6 @@
       "p/d": ["./back/drizzle/ex/index.ts"]
     }
   },
-  "include": ["src", "cypress/**/*.ts", "regexpert.gen"],
+  "include": ["src", "regexpert.gen"],
   "exclude": ["**/*.*js"]
 }
