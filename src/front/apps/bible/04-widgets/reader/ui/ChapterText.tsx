@@ -15,7 +15,6 @@ export const BibleReaderChapterText = memo(function BibleChapterText({
       <div
         className="text-5xl my-10 font-bold text-x3"
         attr-chapteri={chapteri}
-        attr-versei={0}
       >
         {translateBase(it => it.bible.chapterNum, { c: chapteri + 1 })}
       </div>

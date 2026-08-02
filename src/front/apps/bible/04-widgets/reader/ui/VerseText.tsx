@@ -11,10 +11,8 @@ export const BibleReaderVerseText = memo(function BibleReaderVerseText({ html, v
   return (
     <div
       attr-chapteri={chapteri}
-      attr-versei={versei}
-    >
-      <span className="text-x7">{versei + 1 + '. '}</span>
-      <span dangerouslySetInnerHTML={{ __html: html }} />
-    </div>
+      attr-versen={versei + 1}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
   );
 });

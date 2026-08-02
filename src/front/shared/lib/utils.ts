@@ -15,15 +15,47 @@ export const onChildInViewPort = (
   let scrollTimeout: TimeOut;
   let isScrollingTimeout: TimeOut;
   let resizeDebounceTimeOut: TimeOut;
+  const children = listNode.children;
 
-  (Array.from(listNode.children) as HTMLElement[]).forEach(child => {
+  for (let i = 0; i < children.length; i++) {
+    const child = children.item(i) as HTMLElement;
     if (filterElements(child)) topsMap.set(child.offsetTop, child);
-  });
+  }
+
   const tops = Array.from(topsMap.keys());
   let isResizing = false;
+  let isScaling = false;
 
   return hookEffectPipe()
     .pipe(
+      addEventListenerPipe(listNode, 'touchstart', e => {
+        if (e.touches.length > 1) {
+          isScaling = true;
+          isScrollingRef.current = false;
+        }
+      }),
+
+      addEventListenerPipe(
+        listNode,
+        'touchmove',
+        e => {
+          if (isScaling || e.touches.length > 1) {
+            e.preventDefault();
+          }
+        },
+        { passive: false },
+      ),
+
+      addEventListenerPipe(listNode, 'touchend', e => {
+        if (e.touches.length < 2) {
+          isScaling = false;
+          isScrollingRef.current = true;
+        }
+      }),
+
+      addEventListenerPipe(listNode, 'gesturestart' as 'click', e => e.preventDefault(), { passive: false }),
+      addEventListenerPipe(listNode, 'gesturechange' as 'click', e => e.preventDefault(), { passive: false }),
+
       addEventListenerPipe(window, 'resize', () => {
         isResizing = true;
         clearTimeout(resizeDebounceTimeOut);
@@ -32,8 +64,12 @@ export const onChildInViewPort = (
           onResizeNum(num => num + 1);
         }, 100);
       }),
-      addEventListenerPipe(listNode, 'scroll', () => {
-        if (isResizing) return;
+
+      addEventListenerPipe(listNode, 'scroll', e => {
+        if (isScaling || isResizing) {
+          e.preventDefault();
+          return;
+        }
 
         isScrollingRef.current = true;
         clearTimeout(isScrollingTimeout);
