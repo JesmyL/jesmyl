@@ -1,5 +1,6 @@
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { usePinchValue } from '#shared/lib/usePinchValue';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
 import { isCmComAudioPlayerOpenMoversAtom } from '$cm/entities/com-audio-player';
@@ -33,7 +34,10 @@ interface Props {
 }
 
 export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props) => {
-  const fontSize = useAtomValue(cmComFontSizeAtom);
+  const fontSizeReal = useAtomValue(cmComFontSizeAtom);
+  const screenRef = useRef<HTMLDivElement | null>(null);
+  const fontSize = usePinchValue(screenRef, fontSizeReal, cmComFontSizeAtom.set);
+
   const isMiniAnchor = useAtomValue(cmComIsComMiniAnchorAtom);
   const altCommentKeys = useAtomValue(cmComCommentCurrentComw2OpenAltiDictAtom);
   const commentAltTitle = useAtomValue(cmComCommentRegisteredAltKeysAtom)[
@@ -77,6 +81,7 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
       >
         <WithScrollProgress
           {...swiper}
+          ref={screenRef}
           className="relative h-full"
           $listHeight={listRef.current?.clientHeight}
         >

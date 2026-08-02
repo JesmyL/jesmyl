@@ -1,5 +1,4 @@
 import { isNumberSearchAtom } from '#basis/state/isNumberSearchAtom';
-import styled from '@emotion/styled';
 import { atom, Atom, useAtomValue } from 'atomaric';
 import { useEffect, useId } from 'react';
 import { twMerge } from 'tailwind-merge';
@@ -42,12 +41,12 @@ export const DebouncedSearchInput = ({ debounce = 300, className = '', placehold
       />
       <WithAtomValue atom={termAtom}>
         {term => (
-          <StyledInput
+          <input
             key={iconName}
             id="debounced-input"
             type={isNumberSearch ? 'tel' : 'text'}
             value={term}
-            className="input"
+            className="input placeholder-shown:text-x4"
             placeholder={placeholder}
             onFocus={event => event.currentTarget.select()}
             onChange={event => {
@@ -65,11 +64,3 @@ export const DebouncedSearchInput = ({ debounce = 300, className = '', placehold
     </label>
   );
 };
-
-const StyledInput = styled.input`
-  --text-color: var(--color--3);
-
-  &::placeholder {
-    color: var(--color--4);
-  }
-`;
