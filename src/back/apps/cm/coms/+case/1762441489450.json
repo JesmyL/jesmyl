@@ -10,7 +10,7 @@
   ],
   "c": [
     "Em\nAm\nH\nC H\nE\nAm\nF# H",
-    "Em\nAm\nH\nC H\nE\nAm/G# Am\nF# H",
+    "Em\nAm\nH\nC H\nE7\nE7/G# Am\nF# H",
     "Am\nDdim7 D7\nG\nC#dim7\nAm/F# H\nEm C#dim7\nF# H C\nAm H Em",
     "Am Ddim7-D7\nG C#dim7\nAm/F# H\nEm C#dim7\nF# H",
     "Em D A/C# C\nEm D A/C# C\nEm D A/C# C\nAm/F#-Am Hsus H7"
@@ -33,8 +33,7 @@
         [3, 13]
       ],
       "t": 2,
-      "w": 7,
-      "cre": 1784826317559
+      "w": 7
     },
     { "a": 1, "w": 6 }
   ]
