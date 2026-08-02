@@ -14,9 +14,11 @@ import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { schLinkAction } from '#widgets/schedule/links';
 import { Outlet, ParsedLocation, useLocation, useNavigate } from '@tanstack/react-router';
-import { useAtomValue } from 'atomaric';
-import { useEffect, useState } from 'react';
-import { Langi } from 'shared/api';
+import { atom, useAtomValue } from 'atomaric';
+import React, { useEffect, useState } from 'react';
+import { langCodeDict } from 'shared/const/+locale';
+import { extractNumber } from 'shared/utils';
+import { forEachObjectEntries } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
 import { appInitialInvokes } from './app-initial-invokes';
 import { AppFooter } from './AppFooter';
@@ -24,17 +26,22 @@ import { routingApps } from './lib/configs';
 
 appInitialInvokes();
 
+const forceUpdateAtom = atom(0);
+
+takeBaseLanguageAtom().subscribe(() => forceUpdateAtom.do.increment());
+forEachObjectEntries(langCodeDict, langiStr =>
+  takeDynamicLanguageAtom(extractNumber(langiStr)).subscribe(() => forceUpdateAtom.do.increment()),
+);
+
 export const AppComponent = () => {
+  const num = useAtomValue(forceUpdateAtom);
+
   const loc = useLocation();
   const [isNeedFirstNavigate, setIsNeedFirstNavigate] = useState(true);
   const [isShowLogo, setIsShowLogo] = useState(true);
   const appName = useAtomValue(currentAppNameAtom);
   const hideAppFooter = useAtomValue(hideAppFooterAtom);
   const isFullscreen = useAtomValue(isFullscreenAtom);
-
-  // for reinits
-  useAtomValue(takeDynamicLanguageAtom(Langi.Ru));
-  useAtomValue(takeBaseLanguageAtom());
 
   useEffect(() => {
     const unauthListener = soki.onTokenInvalidEvent.listen(() => {
@@ -80,7 +87,7 @@ export const AppComponent = () => {
           className="application-container"
           st-fullscreen={isFullscreen ? '' : undefined}
         >
-          <Outlet />
+          <Outlet key={num} />
           {isFullscreen && (
             <LazyIcon
               icon="ArrowShrink02"
@@ -97,20 +104,22 @@ export const AppComponent = () => {
         />
       )}
 
-      {appName &&
-        (routingApps[appName]?.footer ?? (
-          <AppFooter
-            appName={appName}
-            children={() => [
-              <div
-                key="choose"
-                className="size-full flex justify-center items-center pb-3"
-              >
-                {translateBase(it => it.selProgram)}
-              </div>,
-            ]}
-          />
-        ))}
+      <React.Fragment key={num}>
+        {appName &&
+          (routingApps[appName]?.footer ?? (
+            <AppFooter
+              appName={appName}
+              children={() => [
+                <div
+                  key={0}
+                  className="size-full flex justify-center items-center pb-3"
+                >
+                  {translateBase(it => it.selProgram)}
+                </div>,
+              ]}
+            />
+          ))}
+      </React.Fragment>
     </>
   );
 };
