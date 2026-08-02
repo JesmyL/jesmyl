@@ -73,7 +73,7 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
       willClear: 'Буде очищено при вставці нових блоків',
       rmAudios: 'Видалені аудіо',
       addAudio: 'Додати аудіо',
-      cnfStrN: 'Конфіг стор $n',
+      cnfStrN: 'Конфіг стр. $n',
       clearDictNumN: 'Очистити номер зі збірника $n',
       insNwBlockAtX: STR(['$x'])`Вставити новий блок ${SWITCH('$x').CASE('b')`на самий початок`.DEFAULT`сюди`}`,
 
