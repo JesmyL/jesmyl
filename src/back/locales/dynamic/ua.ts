@@ -1,17 +1,18 @@
 import { Langi } from 'shared/api';
 import { LocaleDynamic } from 'shared/model/+locale/dynamic';
 import { BibleTitleCodei } from 'shared/model/bible/enums';
+import { convertObjectToArray } from 'shared/utils/object.utils';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 
 export const localeDynamicUa: LocaleDynamic<Langi.Ua> = {
   langi: Langi.Ua,
   v: 0,
 
-  lang: {
+  lang: convertObjectToArray({
     [Langi.Ru]: 'Російська мова',
     [Langi.Ua]: 'Українська мова',
     [Langi.Kz]: 'Казахська мова',
-  },
+  }),
 
   cm: {
     com: {
@@ -37,7 +38,7 @@ export const localeDynamicUa: LocaleDynamic<Langi.Ua> = {
 
   bible: {
     title: {
-      full: {
+      full: convertObjectToArray({
         [BibleTitleCodei.aБыт]: 'Буття',
         [BibleTitleCodei.Исх]: 'Вихід',
         [BibleTitleCodei.Лев]: 'Левит',
@@ -105,8 +106,8 @@ export const localeDynamicUa: LocaleDynamic<Langi.Ua> = {
         [BibleTitleCodei.Флм]: 'Филимона',
         [BibleTitleCodei.Евр]: 'Євреїв',
         [BibleTitleCodei.Откр]: 'Об’явлення',
-      },
-      short: {
+      }),
+      short: convertObjectToArray({
         [BibleTitleCodei.aБыт]: 'Бут',
         [BibleTitleCodei.Исх]: 'Вих',
         [BibleTitleCodei.Лев]: 'Лев',
@@ -174,7 +175,7 @@ export const localeDynamicUa: LocaleDynamic<Langi.Ua> = {
         [BibleTitleCodei.Флм]: 'Флм',
         [BibleTitleCodei.Евр]: 'Євр',
         [BibleTitleCodei.Откр]: 'Об',
-      },
+      }),
     },
   },
 };

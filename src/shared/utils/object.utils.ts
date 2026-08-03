@@ -63,3 +63,9 @@ export const objectGroupBy: typeof Object.groupBy = (iterable, keySelector) => {
 
   return result as never;
 };
+
+export const convertObjectToArray = <Value, Obj extends Record<number, Value>>(obj: Obj) => {
+  const result: Value[] = [];
+  forEachObjectEntries(obj, (key, value) => (result[key as number] = value as never));
+  return result as Obj & Value[];
+};

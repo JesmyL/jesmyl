@@ -1,17 +1,18 @@
 import { Langi } from 'shared/api';
 import { LocaleDynamic } from 'shared/model/+locale/dynamic';
 import { BibleTitleCodei } from 'shared/model/bible/enums';
+import { convertObjectToArray } from 'shared/utils/object.utils';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 
 export const localeDynamicKz: LocaleDynamic<Langi.Kz> = {
   langi: Langi.Kz,
   v: 0,
 
-  lang: {
+  lang: convertObjectToArray({
     [Langi.Ru]: 'Орыс тілі',
     [Langi.Ua]: 'Украин тілі',
     [Langi.Kz]: 'Қазақ тілі',
-  },
+  }),
 
   cm: {
     com: {
@@ -37,7 +38,7 @@ export const localeDynamicKz: LocaleDynamic<Langi.Kz> = {
 
   bible: {
     title: {
-      full: {
+      full: convertObjectToArray({
         [BibleTitleCodei.aБыт]: 'Жаратылыстың басталуы',
         [BibleTitleCodei.Исх]: 'Мысырдан шығу',
         [BibleTitleCodei.Лев]: 'Левит',
@@ -105,8 +106,8 @@ export const localeDynamicKz: LocaleDynamic<Langi.Kz> = {
         [BibleTitleCodei.Флм]: 'Філімонға хат',
         [BibleTitleCodei.Евр]: 'Еврейлерге хат',
         [BibleTitleCodei.Откр]: 'Аян',
-      },
-      short: {
+      }),
+      short: convertObjectToArray({
         [BibleTitleCodei.aБыт]: 'Жар',
         [BibleTitleCodei.Исх]: 'Мыс',
         [BibleTitleCodei.Лев]: 'Лев',
@@ -173,7 +174,7 @@ export const localeDynamicKz: LocaleDynamic<Langi.Kz> = {
         [BibleTitleCodei.Флм]: 'Філім',
         [BibleTitleCodei.Евр]: 'Еврей',
         [BibleTitleCodei.Откр]: 'Аян',
-      },
+      }),
     },
   },
 };
