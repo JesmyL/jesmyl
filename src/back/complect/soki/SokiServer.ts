@@ -5,7 +5,7 @@ import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 import { makeRegExp } from 'regexpert';
 import { LocalSokiAuth, SokiAuthLogin, SokiError, SokiVisit, TsjrpcClientEvent, TsjrpcServerEvent } from 'shared/api';
 import { setSharedPolyfills } from 'shared/utils';
-import { checkIsFunction, checkIsObject, checkIsString } from 'shared/utils/checkIs';
+import { checkIsFunction, checkIsObject } from 'shared/utils/checkIs';
 import WebSocket, { WebSocketServer } from 'ws';
 import { ErrorCatcher } from '../ErrorCatcher';
 import { tokenSecretFileStore } from './file-stores';
@@ -36,7 +36,7 @@ export class SokiServer {
       });
 
       client.on('message', async (data: Buffer) => {
-        const event: TsjrpcClientEvent = JSON.parse('' + data, parseReciever);
+        const event: TsjrpcClientEvent = JSON.parse('' + data);
 
         if (event.ping) {
           this.send({ pong: 1, requestId: event.requestId, invokedResult: { serverTimeStamp: Date.now() } }, client);
@@ -193,19 +193,3 @@ function sendToEachClient(this: string, client: WebSocket) {
 }
 
 export const sokiServer = new SokiServer();
-
-const parseReciever = (() => {
-  const nlSplitRegexp = makeRegExp('/\\s*?\\n/');
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (_key: string, value: any) => {
-    if (checkIsString(value)) {
-      if (value.trim().includes('\n')) {
-        for (value = value.trimEnd().split(nlSplitRegexp); value[0] === ''; value.shift());
-        value = value.join('\n');
-      } else value = value.trim();
-    }
-
-    return value;
-  };
-})();
