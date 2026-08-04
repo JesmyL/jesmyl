@@ -12,7 +12,7 @@ import { CmEditorComAddOrderRedactorAdditions } from '$cm+editor/features/com-ad
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { CmComOrderOnClickBetweenData } from '$cm+editor/shared/model/Orders';
-import { TheCmComOrder } from '$cm/ext';
+import { TheCmComOrder, useCmComPinchFontSize } from '$cm/ext';
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
 
@@ -23,6 +23,7 @@ export const CmEditorComTabComOrders = ({ ccom }: { ccom: EditableCom }) => {
   const checkAccess = useCheckUserAccessRightsInScope();
   const isCanCreate = checkAccess('cm', 'COM_ORD', 'C');
   const isCanUpdate = checkAccess('cm', 'COM_ORD', 'U');
+  const { fontSize, ref } = useCmComPinchFontSize();
 
   const zeroProps = {
     aboveLeadOrdw: null,
@@ -39,19 +40,10 @@ export const CmEditorComTabComOrders = ({ ccom }: { ccom: EditableCom }) => {
   );
 
   return (
-    <StyledOrdersRedactor>
-      <>
-        {newBlockAdderPopupCom && (
-          <BottomPopup onClose={setNewBlockAdderPopupCom}>
-            <CmEditorComAddOrderRedactorAdditions
-              com={newBlockAdderPopupCom}
-              onClose={setNewBlockAdderPopupCom}
-              setClickBetweenOrds={setClickBetweenOrds}
-            />
-          </BottomPopup>
-        )}
-      </>
-
+    <StyledOrdersRedactor
+      ref={ref}
+      style={{ fontSize }}
+    >
       {clickBetweenData && clickBetweenData.checkIsShowButton(zeroProps) && (
         <div className="flex gap-2 mt-5 center">
           <TheButton
@@ -163,6 +155,16 @@ export const CmEditorComTabComOrders = ({ ccom }: { ccom: EditableCom }) => {
       {isCanUpdate && toolProps && (
         <BottomPopup onClose={setToolProps}>
           <CmEditorComOrderToolsRedactorOrderTools {...toolProps} />
+        </BottomPopup>
+      )}
+
+      {newBlockAdderPopupCom && (
+        <BottomPopup onClose={setNewBlockAdderPopupCom}>
+          <CmEditorComAddOrderRedactorAdditions
+            com={newBlockAdderPopupCom}
+            onClose={setNewBlockAdderPopupCom}
+            setClickBetweenOrds={setClickBetweenOrds}
+          />
         </BottomPopup>
       )}
     </StyledOrdersRedactor>

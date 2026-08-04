@@ -4,7 +4,7 @@ import { StyledLoadingSpinner } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { CmComOrderLine, TheCmCom, TheCmComOrder } from '$cm/ext';
+import { CmComOrderLine, TheCmCom, TheCmComOrder, useCmComPinchFontSize } from '$cm/ext';
 import React from 'react';
 import { makeRegExp } from 'regexpert';
 import { useCmEditorComTabUpdateLinePositions } from '../lib/useUpdateChordLinePositions';
@@ -13,6 +13,7 @@ import { CmEditorComTabChordApplicationsStyledContent } from '../style/CmEditorT
 export const CmEditorComTabChordApplications = ({ ccom }: { ccom: EditableCom }) => {
   const { updateLinePositions, linesOnUpdateSet, ordLinePositionsOnSend } = useCmEditorComTabUpdateLinePositions();
   const checkAccess = useCheckUserAccessRightsInScope();
+  const { fontSize, ref } = useCmComPinchFontSize();
 
   if (!checkAccess('cm', 'COM_APPS', 'U'))
     return (
@@ -20,11 +21,17 @@ export const CmEditorComTabChordApplications = ({ ccom }: { ccom: EditableCom })
         com={ccom}
         chordVisibleVariant={ChordVisibleVariant.Maximal}
         isMiniAnchor={false}
+        listRef={ref}
+        fontSize={fontSize}
       />
     );
 
   return (
-    <CmEditorComTabChordApplicationsStyledContent id="chord-application-redactor">
+    <CmEditorComTabChordApplicationsStyledContent
+      id="chord-application-redactor"
+      ref={ref}
+      style={{ fontSize }}
+    >
       {ccom.orders?.map((ord, ordi) => {
         if (!ord.isVisible) return null;
 

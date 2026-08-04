@@ -5,7 +5,7 @@ import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { CmComOrderLine, TheCmComOrder } from '$cm/ext';
+import { CmComOrderLine, TheCmComOrder, useCmComPinchFontSize } from '$cm/ext';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
@@ -20,6 +20,7 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
   const confirm = useConfirm();
   const checkAccess = useCheckUserAccessRightsInScope();
   const isCantRedact = !checkAccess('cm', 'COM_REP', 'U');
+  const { fontSize, ref } = useCmComPinchFontSize();
 
   const ordwsOnLoadSet = useAtomValue(cmEditorTabComRepeatsOnLoadAtom);
   const { flashCount, isChordBlock, start, comw } = useAtomValue(cmEditorTabComRepeatsStateAtom);
@@ -41,7 +42,11 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
 
   return (
     (comw === ccom.wid || comw === CmComWidZero) && (
-      <Content className={twMerge('relative', start != null && 'active', isCantRedact && 'disabled pointers-none')}>
+      <Content
+        className={twMerge('relative', start != null && 'active', isCantRedact && 'disabled pointers-none')}
+        ref={ref}
+        style={{ fontSize }}
+      >
         {ccom.orders?.map((ord, ordi) => {
           if (!ord.isVisible) return null;
 

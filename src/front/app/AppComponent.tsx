@@ -6,7 +6,7 @@ import { currentAppNameAtom } from '#basis/state/currentAppNameAtom';
 import { hideAppFooterAtom } from '#basis/state/hideAppFooterAtom';
 import { takeBaseLanguageAtom, takeDynamicLanguageAtom } from '#basis/state/locale';
 import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
-import { isFullscreenAtom } from '#shared/lib/atoms/fullscreen';
+import { isFullscreenAtom, switchFullScreen } from '#shared/lib/atoms/fullscreen';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { LinkAppActionFabric } from '#shared/lib/link-app-actions';
 import { soki } from '#shared/soki';
@@ -92,7 +92,7 @@ export const AppComponent = () => {
             <LazyIcon
               icon="ArrowShrink02"
               className="pointer absolute top-0 right-0 z-50 m-[10px]"
-              onClick={() => isFullscreenAtom.set(false)}
+              onClick={() => switchFullScreen(false)}
             />
           )}
         </div>

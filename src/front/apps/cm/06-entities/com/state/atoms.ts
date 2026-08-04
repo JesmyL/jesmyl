@@ -17,7 +17,7 @@ export const cmComTopToolsAtom = atom<MenuComToolName[]>(
 
 export const cmComFontSizeAtom = atom(16, {
   storageKey: 'cm:comFontSize',
-  map: val => Math.sign(val) * Math.min(Math.max(Math.abs(Math.trunc(val)), cmComMinFontSize), cmComMaxFontSize),
+  map: val => (val < 0 ? val : Math.min(Math.max(Math.abs(Math.trunc(val)), cmComMinFontSize), cmComMaxFontSize)),
 });
 
 export const cmComSpeedRollKfAtom = atom(10, 'cm:speedRollKf');

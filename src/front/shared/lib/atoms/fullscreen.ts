@@ -1,12 +1,16 @@
 import { atom } from 'atomaric';
 
-export const isFullscreenAtom = atom(false);
+const match = () => window.matchMedia('(display-mode:fullscreen)');
+const checkIsFullscreen = () => !!document.fullscreenElement || match().matches;
 
-isFullscreenAtom.subscribe(isFullscreen => {
-  if (isFullscreen) document.body.requestFullscreen();
-  else if (document.fullscreenElement) document.exitFullscreen();
-});
+export const isFullscreenAtom = atom(checkIsFullscreen());
 
-window.addEventListener('fullscreenchange', () => {
-  isFullscreenAtom.set(!!document.fullscreenElement);
-});
+export const switchFullScreen = async (set: boolean) => {
+  isFullscreenAtom.set(set);
+
+  if (!set || checkIsFullscreen()) await document.exitFullscreen();
+  else await document.body.requestFullscreen({ navigationUI: 'hide' });
+};
+
+match().addEventListener('change', ({ matches }) => isFullscreenAtom.set(matches));
+document.addEventListener('fullscreenchange', () => isFullscreenAtom.set(checkIsFullscreen()));

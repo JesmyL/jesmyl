@@ -1,15 +1,15 @@
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { usePinchValue } from '#shared/lib/usePinchValue';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
+import { useCmComPinchFontSize } from '$cm/entities/com';
 import { isCmComAudioPlayerOpenMoversAtom } from '$cm/entities/com-audio-player';
 import {
   cmComCommentCurrentComw2OpenAltiDictAtom,
   cmComCommentRegisteredAltKeysAtom,
   useCmComCommentBlockFastReactions,
 } from '$cm/entities/com-comment';
-import { cmComFontSizeAtom, cmComIsComMiniAnchorAtom, cmComSpeedRollKfAtom } from '$cm/entities/index';
+import { cmComIsComMiniAnchorAtom, cmComSpeedRollKfAtom } from '$cm/entities/index';
 import { useCmComOrderAudioMarkControlButtonsContext } from '$cm/ext';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -34,9 +34,7 @@ interface Props {
 }
 
 export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props) => {
-  const fontSizeReal = useAtomValue(cmComFontSizeAtom);
-  const screenRef = useRef<HTMLDivElement | null>(null);
-  const fontSize = usePinchValue(screenRef, fontSizeReal, cmComFontSizeAtom.set);
+  const { fontSize, ref: screenRef } = useCmComPinchFontSize();
 
   const isMiniAnchor = useAtomValue(cmComIsComMiniAnchorAtom);
   const altCommentKeys = useAtomValue(cmComCommentCurrentComw2OpenAltiDictAtom);
@@ -98,7 +96,7 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
               listRef={listRef}
               {...(isOpenMoversButtons
                 ? {
-                    fontSize: Math.abs(fontSize),
+                    fontSize: fontSize,
                     asAfterSolidOrdNode: ({ ord }) => audioMarkControl?.controls.afterIdDict[ord.wid],
                     asHeaderNode: ({ ord, node }) => (
                       <div className="flex gap-1 flex-wrap max-w-[80%]">
@@ -107,9 +105,7 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
                       </div>
                     ),
                   }
-                : {
-                    fontSize,
-                  })}
+                : { fontSize })}
             />
           </TheCmComWithComments>
         </WithScrollProgress>

@@ -1,7 +1,6 @@
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { useBibleBroadcastScreenFontSizeAdapter } from '#shared/lib/hooks/useFontSizeAdapter';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import styled from '@emotion/styled';
 import { ReactNode, useEffect, useState } from 'react';
 import { CmCom } from 'shared/const/cm/Com';
 import { twMerge } from 'tailwind-merge';
@@ -15,10 +14,13 @@ export function CmComOrderList(props: ICmComOrderListProps) {
   let specTextedi = 0;
 
   const content = (
-    <StyledOrdList
-      className={twMerge('com-ord-list inline-block pt-[0.06em] pb-[100px] min-h-full text-x3', props.className)}
+    <div
+      className={twMerge(
+        'com-ord-list inline-block pt-[0.06em] pb-[100px] min-h-full text-x3 transition-[padding] duration-200',
+        props.className,
+      )}
       ref={props.listRef}
-      $fontSize={props.fontSize}
+      style={{ fontSize: props.fontSize }}
     >
       {props.com.orders?.map((ord, ordi) => {
         if (ord.isInSolidLineWithInvisibles()) return;
@@ -70,7 +72,7 @@ export function CmComOrderList(props: ICmComOrderListProps) {
             })
           : node;
       })}
-    </StyledOrdList>
+    </div>
   );
 
   return props.fontSize && props.fontSize > 0 ? (
@@ -95,16 +97,12 @@ const OrdersWithAdaptiveFontSize = ({ content, com }: { content: ReactNode; com:
 
   return (
     <div ref={wrapperRef}>
-      <FlexFontSizeContent ref={contentRef}>{content}</FlexFontSizeContent>
+      <div
+        className="w-max"
+        ref={contentRef}
+      >
+        {content}
+      </div>
     </div>
   );
 };
-
-const FlexFontSizeContent = styled.div`
-  width: max-content;
-`;
-
-const StyledOrdList = styled.div<{ $fontSize: number | und }>`
-  transition: padding 0.2s;
-  font-size: ${props => props.$fontSize}px;
-`;

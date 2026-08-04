@@ -3,6 +3,7 @@ export * from './lib/coms-selections';
 export * from './lib/current-com-list';
 export { type CmComListContextValue } from './lib/current-com-list';
 export * from './lib/useLaterComList';
+export * from './lib/usePinchFontSize';
 export * from './lib/useSelectedComs';
 export * from './model/com';
 export * from './state/atoms';
