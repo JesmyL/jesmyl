@@ -77,7 +77,7 @@ export const CmEditorChordPage = () => {
 
     const newRedactableChords = {
       ...redactableChords,
-      [currentChordName]: JSON.parse(JSON.stringify(track)).map((point: number) => point || 0),
+      [currentChordName]: deepClone(track).map(point => point || 0),
     } as ChordPack;
 
     cmEditorChordRedactableChordsAtom.set(newRedactableChords);
