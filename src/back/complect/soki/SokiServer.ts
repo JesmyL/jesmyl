@@ -125,7 +125,6 @@ export class SokiServer {
   }
 
   send(event: TsjrpcServerEvent, clientSelector: SokiServerClientSelector | nil | void) {
-    // console.log({ event });
     if (clientSelector instanceof WebSocket) {
       clientSelector.send(JSON.stringify(event));
       return;

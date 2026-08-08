@@ -1,4 +1,5 @@
 import { HttpLink, HttpNumLeadLink, HttpNumLeadLinkKey } from 'shared/api';
+import { checkIsStartsWith } from 'shared/utils/checkIs';
 import { objectEntries } from 'shared/utils/object.utils';
 
 export const numLeadToHttpLinks: Record<HttpNumLeadLinkKey, HttpLink> = {
@@ -25,14 +26,14 @@ export const makeCmComNumLeadLinkFromHttp = (httpLink: string): HttpNumLeadLink 
   let httpLinkPrefix: HttpLink;
 
   for (httpLinkPrefix in httpToNumLeadLinks) {
-    if (httpLink.startsWith(httpLinkPrefix)) {
+    if (checkIsStartsWith(httpLink, httpLinkPrefix)) {
       const numLead = httpToNumLeadLinks[httpLinkPrefix];
       let linkPostfix = httpLink.slice(httpLinkPrefix.length);
 
       if (numLead === '1~') {
         const [firstRoute, routePostfix] = linkPostfix.split('/', 2);
 
-        if (routePostfix.startsWith(firstRoute)) {
+        if (checkIsStartsWith(routePostfix, firstRoute)) {
           linkPostfix = `${firstRoute}${timeSeparator}${linkPostfix.slice(firstRoute.length * 2 + 1)}`;
         }
       }
@@ -44,7 +45,7 @@ export const makeCmComNumLeadLinkFromHttp = (httpLink: string): HttpNumLeadLink 
   return httpLink as never;
 };
 
-export const makeCmComHttpLinkFromNumLead = (numLeadLink: string): HttpLink => {
+export const makeCmComHttpLinkFromNumLead = (numLeadLink: HttpNumLeadLink): HttpLink => {
   if (numLeadLink.startsWith('http')) return numLeadLink as never;
 
   const prefix = `${parseFloat(numLeadLink)}~` as const;
