@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { CmComWidDef } from 'shared/api';
+import { checkIsNil } from 'shared/utils/checkIs';
 import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { twMerge } from 'tailwind-merge';
 import { useCmComCurrentFixedCom } from '../com/lib/com-selections';
@@ -32,7 +33,7 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
     enabled: !!ccom?.wid,
   });
 
-  if (!ccom) return null;
+  if (!ccom) return;
 
   return (
     <>
@@ -47,22 +48,21 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
             <TheIconButton
               icon="MinusSign"
               className="minus"
-              onClick={() => cmIDB.tb.fixedComs.put({ w: ccom.wid, ton: (ccom.transPosition ?? 0) - 1 })}
+              onClick={() => cmIDB.fixComTransPos(ccom.wid, ccom.transPosition - 1)}
             />
             <Badge
-              className={twMerge('min-w-13 flex justify-center bg-x2', ifixedCom?.ton == null ? 'text-x7' : 'text-x3')}
-              onClick={async () => {
-                const fixed = { ...(await cmIDB.tb.fixedComs.get(ccom.wid)) };
-                delete fixed.ton;
-                await cmIDB.tb.fixedComs.put(fixed);
-              }}
+              className={twMerge(
+                'min-w-13 flex justify-center',
+                checkIsNil(ifixedCom?.ton) ? 'text-x3 bg-x2' : 'bg-x7 text-x2',
+              )}
+              onClick={() => cmIDB.fixComTransPos(ccom.wid, null)}
             >
-              {ccom.getFirstSimpleChord()}
+              {ccom.getFixedTonica()}
             </Badge>
             <TheIconButton
               icon="PlusSign"
               className="plus"
-              onClick={() => cmIDB.tb.fixedComs.put({ w: ccom.wid, ton: (ccom.transPosition ?? 0) + 1 })}
+              onClick={() => cmIDB.fixComTransPos(ccom.wid, ccom.transPosition + 1)}
             />
           </div>
         }

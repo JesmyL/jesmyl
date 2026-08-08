@@ -1,11 +1,13 @@
 import { makeRegExp } from 'regexpert';
-import { checkIsString } from 'shared/utils/checkIs';
+import { checkIsNotNil, checkIsString } from 'shared/utils/checkIs';
 import {
+  aSharpToBChord,
   chordBemoleEquivalent,
   simpleHashChordReg_g,
   simpleHashChords,
   simpleHashedEachLetterChordReg_g,
 } from 'shared/utils/cm/com/const';
+import { objectLength } from 'shared/utils/object.utils';
 import { CmComOrder } from '../../order/Order';
 import { CmComOrders } from './20-Orders';
 
@@ -40,16 +42,10 @@ export class CmComChords extends CmComOrders {
     return this._usedChords;
   }
 
-  getFirstSimpleChord() {
-    return (this.chordLabels?.[0]?.[0]?.[0] ?? this.orders?.[0]?.chords ?? this.chords?.[0])?.match(
-      makeRegExp('/[A-H]#?m?/'),
-    )?.[0];
-  }
-
-  transposeChord(chord: string, delta: number | nil) {
+  transposeChord(chord: string, delta: number | nil = this.transPosition) {
     const currentIndex = simpleHashChords.indexOf(chord);
-    const di = currentIndex + (delta ?? 1);
-    const len = simpleHashChords.length;
+    const di = currentIndex + (delta ?? 0);
+    const len = objectLength(simpleHashChords);
     const nextIndex = di < 0 ? len - -di : di > len ? di % len : di === len || -di === len ? 0 : di;
 
     return simpleHashChords[nextIndex];
@@ -66,7 +62,7 @@ export class CmComChords extends CmComOrders {
   private updateChordLabels() {
     this._chordLabels = [];
     this._usedChords = {};
-    let currTransPosition = this.transPosition || 0;
+    let currTransPosition = this.transPosition;
 
     this.orders?.forEach(ord => {
       const ordLabels: string[][] = [];
@@ -108,4 +104,24 @@ export class CmComChords extends CmComOrders {
 
     return this.excludedModulations;
   }
+
+  private _tonica?: string;
+  get tonica() {
+    let tonica = this._tonica;
+    if (checkIsString(tonica)) return tonica;
+
+    const chordi = this.top.o?.find(ord => ord.o !== 0 && checkIsNotNil(ord.c))?.c;
+    tonica = this.top.c[chordi ?? -1]?.match(makeRegExp('/[A-H]#?m?/'))?.[0] ?? 'A';
+
+    return (this._tonica = tonica);
+  }
+
+  getFixedTonica = () => {
+    let resultTonica = this.transposeChord(this.tonica);
+
+    if (this.isBemoled) resultTonica = chordBemoleEquivalent[resultTonica] || resultTonica;
+    else resultTonica = aSharpToBChord[resultTonica] || resultTonica;
+
+    return resultTonica;
+  };
 }

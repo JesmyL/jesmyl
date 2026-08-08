@@ -7,6 +7,7 @@ import { CmComOrderList } from '$cm/ext';
 import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
 import { CmCom } from 'shared/const/cm/Com';
+import { arrayByLength } from 'shared/utils/object.utils';
 import { twMerge } from 'tailwind-merge';
 
 let isOpenModalAtom: Atom<boolean>;
@@ -22,7 +23,6 @@ export const CmEditorComEditTransposition = ({
 
   const [initialPosition] = useState(ccom.transPosition);
   const [iconOnLoad, setIconOnLoad] = useState('');
-  const firstChord = ccom.getFirstSimpleChord();
 
   return (
     <>
@@ -31,7 +31,7 @@ export const CmEditorComEditTransposition = ({
         icon="Notification01"
         postfix={
           <>
-            Тональность — <span className="text-x7">{firstChord}</span>
+            Тональность — <span className="text-x7">{ccom.tonica}</span>
           </>
         }
       />
@@ -40,13 +40,10 @@ export const CmEditorComEditTransposition = ({
         <ModalHeader>Тональность песни</ModalHeader>
 
         <ModalBody>
-          {'.'
-            .repeat(12)
-            .split('')
-            .map((_, i) => i)
+          {arrayByLength(12, i => i)
             .reverse()
             .map(position => {
-              const transposedChord = ccom.transposeBlock(firstChord ?? '', position - (ccom.transPosition ?? 0));
+              const transposedChord = ccom.transposeBlock(ccom.tonica, position - ccom.transPosition);
 
               return transposedChord === iconOnLoad ? (
                 <TheIconLoading

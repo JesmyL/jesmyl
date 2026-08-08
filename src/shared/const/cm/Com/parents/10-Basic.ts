@@ -14,8 +14,6 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
     public intp: IExportableComInterpretation | nil,
   ) {
     super(top);
-
-    this.transPosition = this.fix?.ton ?? this.intp?.p ?? top.p;
   }
 
   get mod() {
@@ -43,12 +41,7 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
   }
 
   get transPosition() {
-    return this.top.p;
-  }
-  set transPosition(value) {
-    const v = value || 0;
-    const val = v > 11 ? v % 12 : v < 0 ? 12 + v : v;
-    this.top.p = val;
+    return this.fix?.ton ?? this.intp?.p ?? this.top.p ?? 0;
   }
 
   get langi() {
