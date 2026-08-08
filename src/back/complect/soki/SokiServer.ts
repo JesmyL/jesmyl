@@ -22,7 +22,7 @@ export class SokiServer {
   private abortedRequestIdsSet = new Set<string>();
 
   start() {
-    const ws = new WebSocketServer({ noServer: true }).on('connection', (client: WebSocket) => {
+    const ws = new WebSocketServer({ noServer: true }).on('connection', client => {
       this.clients.add(client);
       client.on('close', () => {
         const auth = this.auths.get(client);
@@ -35,7 +35,7 @@ export class SokiServer {
         this.clientsByLogin.get(auth.login)?.delete(client);
       });
 
-      client.on('message', async (data: Buffer) => {
+      client.on('message', async data => {
         const event: TsjrpcClientEvent = JSON.parse('' + data);
 
         if (event.ping) {
@@ -125,6 +125,7 @@ export class SokiServer {
   }
 
   send(event: TsjrpcServerEvent, clientSelector: SokiServerClientSelector | nil | void) {
+    // console.log({ event });
     if (clientSelector instanceof WebSocket) {
       clientSelector.send(JSON.stringify(event));
       return;
@@ -185,7 +186,7 @@ export class SokiServer {
   private isLocalhost = (url: string | nil) =>
     !url ||
     url.includes('localhost') ||
-    url.split(makeRegExp('/^[^?]+?\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}:\\d{3,5}/')).length > 1;
+    url.split(makeRegExp('/^[^?]+?\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}:\\d{3,5}/'), 2).length > 1;
 }
 
 function sendToEachClient(this: string, client: WebSocket) {
