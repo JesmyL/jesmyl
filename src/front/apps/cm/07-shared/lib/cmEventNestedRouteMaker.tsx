@@ -1,17 +1,16 @@
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { ScheduleDayEventPathProps } from '#widgets/schedule/ScheduleWidget.model';
 import { CmBroadcastFullscreen } from '$cm/entities/broadcast';
-import { CmComListContextValue, CmComOpenRouteProps } from '$cm/entities/com';
+import { CmComOpenRouteProps } from '$cm/entities/com';
 import {
   CmMeetingEvent,
   CmMeetingLinkToEvent,
   CmMeetingToEventLinkRender,
-  useCmMeetingComFaceList,
+  useCmMeetingComwList,
 } from '$cm/entities/meeting';
 import { CmScheduleWidgetBroadcast } from '$cm/widgets/schedule-widget-broadcast';
 import { FileRoutesByPath, Link, useParams, useSearch } from '@tanstack/react-router';
-import { useMemo } from 'react';
-import { ScheduleWidgetWid } from 'shared/api';
+import { CmComWid, ScheduleWidgetWid } from 'shared/api';
 import { extractNumber } from 'shared/utils';
 import { checkIsFunction } from 'shared/utils/checkIs';
 import { makeCmComNestedRoute } from './cmComNestedRouteMaker';
@@ -19,7 +18,7 @@ import { makeCmComNestedRoute } from './cmComNestedRouteMaker';
 interface Props<Path extends keyof FileRoutesByPath> {
   path: Path;
   RouteComponent: () => React.ReactNode;
-  useComListPack?: () => CmComListContextValue;
+  useComListPack?: () => CmComWid[];
 }
 
 type Search = ScheduleDayEventPathProps & CmComOpenRouteProps;
@@ -57,17 +56,15 @@ export const makeCmEventNestedRoute = <Path extends keyof FileRoutesByPath>(prop
     );
   };
 
-  function useComListPack(): CmComListContextValue {
+  function useComListPack() {
     const { dayi, eventMi, schw } = useSearch({ from: props.path }) as Search;
-    const { coms } = useCmMeetingComFaceList({ schw, dayi, eventMi });
-
-    return useMemo(() => ({ list: coms, pageTitlePostfix: '' }), [coms]);
+    return useCmMeetingComwList({ schw, dayi, eventMi });
   }
 
   const comRoute = makeCmComNestedRoute({
     path: props.path,
     RouteComponent: EventRouteComponent,
-    useComListPack: props.useComListPack ?? useComListPack,
+    useComwList: props.useComListPack ?? useComListPack,
     isIgnoreSearch: true,
     BroadcastComponent: () => {
       const { schw: paramSchw } = useParams({ from: props.path }) as { schw?: `${ScheduleWidgetWid}` };

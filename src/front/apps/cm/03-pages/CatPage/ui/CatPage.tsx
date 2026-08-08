@@ -21,19 +21,17 @@ import styled from '@emotion/styled';
 import { FileRoutesByPath } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode, useEffect, useRef } from 'react';
-import { CmCatWid } from 'shared/api';
-import { CmCat } from 'shared/const/cm/Cat';
-import { CmCom } from 'shared/const/cm/Com';
+import { CmCatWid, CmComWid, IExportableCat, IExportableCom } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 
 interface Props {
-  cat: CmCat | und;
+  icat: IExportableCat | und;
   topNodeRender?: (term: string) => ReactNode;
   comsCount: number;
   backButtonPath?: keyof FileRoutesByPath;
   withoutBackButton?: boolean;
-  coms: CmCom[];
-  comDescription?: (com: CmCom, comi: number) => ReactNode;
+  comws: CmComWid[];
+  comDescription?: (com: IExportableCom, comi: number) => ReactNode;
 }
 
 let isOpenRatingSortedComsAtom: Atom<boolean>;
@@ -41,7 +39,7 @@ let isOpenRatingSortedComsAtom: Atom<boolean>;
 export const CmCatPage = (props: Props) => {
   isOpenRatingSortedComsAtom ??= atom(false);
 
-  const termAtom = takeCatTermAtom(props.cat?.wid ?? CmCatWid.all);
+  const termAtom = takeCatTermAtom(props.icat?.w ?? CmCatWid.all);
   const term = useAtomValue(termAtom);
   const debouncedTerm = useDebounceValue(term);
 
@@ -60,10 +58,9 @@ export const CmCatPage = (props: Props) => {
   }, [term.length]);
 
   return (
-    <LoadIndicatedContent isLoading={!props.cat}>
+    <LoadIndicatedContent isLoading={!props.icat}>
       <CmComWithComListSearchFilterInput
-        Constructor={CmCom}
-        coms={props.coms}
+        comws={props.comws}
         termAtom={termAtom}
       >
         {({ inputNode, catNumberSearch, limitedComs, foundComsLength }) => {
@@ -77,7 +74,7 @@ export const CmCatPage = (props: Props) => {
               head={inputNode}
               contentRef={listRef}
               content={
-                props.cat && (
+                props.icat && (
                   <>
                     {playComSrc && (
                       <CmComAudioPlayer
@@ -90,7 +87,7 @@ export const CmCatPage = (props: Props) => {
                       className="flex between sticky list-title"
                       ref={categoryTitleRef}
                     >
-                      <div>{props.cat.name}:</div>
+                      <div>{props.icat.n}:</div>
                       <div>{translateBase(it => it.fromOf, { f: foundComsLength, o: props.comsCount })}</div>
                     </div>
                     <div className="com-list">
@@ -104,7 +101,7 @@ export const CmCatPage = (props: Props) => {
                             list={catNumberSearch.comws}
                             comDescription={com => (
                               <div className="text-[.7em] absolute -bottom-[.5em] left-[64px] text-x7/50">
-                                {catNumberSearch.descriptions[com.wid]}
+                                {catNumberSearch.descriptions[com.w]}
                               </div>
                             )}
                           />
@@ -122,7 +119,7 @@ export const CmCatPage = (props: Props) => {
                       closable
                       containerClassName="pt-0"
                     >
-                      <CmComRatingSortedComList coms={props.coms} />
+                      <CmComRatingSortedComList comws={props.comws} />
                     </FullContent>
                   </>
                 )

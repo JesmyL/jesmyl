@@ -19,6 +19,11 @@ export const useCmComCurrentFixedCom = (): CmCom | und => {
   return useMemo(() => icom && new CmCom(icom, ifixedCom, schIntp?.[icom.w]), [icom, schIntp, ifixedCom]);
 };
 
+export const useCmComOrCurrent = (comw: CmComWid | und, interpretationSchw?: ScheduleWidgetWid): CmCom | und => {
+  const ccomw = useCmComLastOpenComw();
+  return useCmCom(comw?? ccomw, interpretationSchw)
+}
+
 export const useCmCom = (comw: CmComWid | und, interpretationSchw?: ScheduleWidgetWid): CmCom | und => {
   const icom = useLiveQuery(() => (comw ? cmIDB.tb.coms.get(comw) : und), [comw]);
   const schw = useCmComInScheduleWid() ?? interpretationSchw;

@@ -17,7 +17,7 @@ import { CmComFaceList } from '$cm/entities/com-face';
 import { CmComToolHideMetronome } from '$cm/entities/com-tool';
 import { CmComListPackKindSelector } from '$cm/entities/ComListPackKindSelector';
 import { CmComAudioPlayerMarksMovers } from '$cm/ext';
-import { useCmBroadcastScreenComNavigations, useCmBroadcastSlidesContext } from '$cm/features/broadcast';
+import { useCmBroadcastScreenComNavigationComws, useCmBroadcastSlidesContext } from '$cm/features/broadcast';
 import { getCmComFreshAudioMarksPack } from '$cm/shared/lib/getFresh';
 import { cmComTrackPreSwitchTimeAtom, cmIsTrackBroadcastAtom } from '$cm/shared/state';
 import { cmPlayerBroadcastAudioSrcAtom, cmPlayerBroadcastComwAtom } from '$cm/shared/state/broadcast.atoms';
@@ -26,7 +26,6 @@ import { useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { ReactNode } from 'react';
 import { CmComWid, HttpNumLeadLink } from 'shared/api';
-import { CmCom } from 'shared/const/cm/Com';
 import { checkIsNotNil } from 'shared/utils/checkIs';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
@@ -38,7 +37,7 @@ import { CmBroadcastSlideLine } from './SlideLine';
 
 interface Props {
   head?: ReactNode;
-  comList?: CmCom[];
+  comws?: CmComWid[];
   headTitle?: ReactNode;
   backButtonPath?: string;
 }
@@ -50,13 +49,11 @@ export function CmBroadcastControlled(props: Props) {
   const updateCmConfig = useCmBroadcastUpdateCurrentConfig();
   const { toSlide } = useCmBroadcastSlidesContext();
 
-  const { comPack, coms } = useCmBroadcastScreenComNavigations();
+  const { comPack, comws } = useCmBroadcastScreenComNavigationComws();
   const { setSlidei } = useCmBroadcastSlidesContext();
   const linkToCom = useCmComOpenComLinkRendererContext();
 
-  let comList = props.comList ?? coms;
-  if (isTrackBroadcast) comList = comList.filter(com => com.audio?.length);
-
+  const comwList = props.comws ?? comws;
   const com = useCmComCurrent();
 
   useScreenBroadcastFaceLineListeners();
@@ -98,7 +95,7 @@ export function CmBroadcastControlled(props: Props) {
           linkRef,
           children: backButtonNode,
           search: {
-            comw: comList[0]?.wid,
+            comw: comwList[0],
             tran: undefined,
           },
         })
@@ -137,7 +134,7 @@ export function CmBroadcastControlled(props: Props) {
               </div>
 
               <StyledComFaceList
-                list={comList}
+                list={comwList}
                 titles={comPack.titles}
                 importantOnClick={({ defaultClick, com }) => {
                   if (!isTrackBroadcast) {
@@ -146,18 +143,18 @@ export function CmBroadcastControlled(props: Props) {
                     return;
                   }
 
-                  if (com.audio) onStartBroadcast(com.wid, com.audio[0]);
+                  if (com.al) onStartBroadcast(com.w, com.al[0]);
                 }}
                 comDescription={
                   isTrackBroadcast
                     ? com =>
-                        com.audio?.map(src => (
+                        com.al?.map(src => (
                           <Button
                             key={src}
                             icon="ComputerVideo"
                             withoutAnimation
                             className={broadcastSrc === src ? 'text-x7' : ''}
-                            onClick={() => onStartBroadcast(com.wid, src)}
+                            onClick={() => onStartBroadcast(com.w, src)}
                           />
                         ))
                     : undefined

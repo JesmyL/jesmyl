@@ -16,6 +16,7 @@ import styled from '@emotion/styled';
 import { Link } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useRef } from 'react';
+import { CmComWid } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { TheCmCom } from './TheCom';
 import { TheCmComWithComments } from './TheComWithComments';
@@ -29,11 +30,11 @@ const swiper = backSwipableContainerMaker(
 
 interface Props {
   com: CmCom;
-  comList: CmCom[];
+  comws: CmComWid[];
   chordVisibleVariant: ChordVisibleVariant;
 }
 
-export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props) => {
+export const TheCmComControlled = ({ com, comws, chordVisibleVariant }: Props) => {
   const { fontSize, ref: screenRef } = useCmComPinchFontSize();
 
   const isMiniAnchor = useAtomValue(cmComIsComMiniAnchorAtom);
@@ -46,9 +47,9 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
 
   const audioMarkControl = useCmComOrderAudioMarkControlButtonsContext();
 
-  const comi = comList.findIndex(c => c.wid === com.wid);
-  const nextComw = comi < comList.length - 1 ? comList[comi + 1]?.wid : comList[0]?.wid;
-  const prevComw = comi > 0 ? comList[comi - 1]?.wid : comList[comList.length - 1]?.wid;
+  const comi = comws.findIndex(w => w === com.wid);
+  const nextComw = comi < comws.length - 1 ? comws[comi + 1] : comws[0];
+  const prevComw = comi > 0 ? comws[comi - 1] : comws[comws.length - 1];
 
   const nextComLinkRef = useRef<HTMLAnchorElement>(null);
   const prevComLinkRef = useRef<HTMLAnchorElement>(null);
@@ -90,7 +91,7 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
             beforeCommentsNode={<div className="sticky uppercase -top-30!">{commentAltTitle}</div>}
           >
             <TheCmCom
-              com={com}
+              comw={com.wid}
               chordVisibleVariant={chordVisibleVariant}
               isMiniAnchor={isMiniAnchor}
               listRef={listRef}

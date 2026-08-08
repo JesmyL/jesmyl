@@ -4,22 +4,22 @@ import { CmComFaceList } from '$cm/entities/com-face';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
-import { CmCom } from 'shared/const/cm/Com';
+import { CmComWid } from 'shared/api';
 import { objectValues } from 'shared/utils/object.utils';
 
 interface Props {
-  coms: CmCom[];
+  comws: CmComWid[];
 }
 
-export const CmComRatingSortedComList = ({ coms }: Props) => {
+export const CmComRatingSortedComList = ({ comws }: Props) => {
   const { data: visits = {}, isLoading } = useQuery({
     queryKey: ['CmRatingSortedComList visits'],
     queryFn: () => cmTsjrpcClient.getComwVisits(),
   });
 
-  const sortedComs = useMemo(
-    () => [...coms].sort((a, b) => (visits[b.wid] ?? 0) - (visits[a.wid] ?? 0)),
-    [coms, visits],
+  const sortedComws = useMemo(
+    () => [...comws].sort((aw, bw) => (visits[bw] ?? 0) - (visits[aw] ?? 0)),
+    [comws, visits],
   );
 
   return (
@@ -32,12 +32,12 @@ export const CmComRatingSortedComList = ({ coms }: Props) => {
       {isLoading ? (
         <TheIconLoading />
       ) : (
-        !sortedComs.length || (
+        !sortedComws.length || (
           <CmComFaceList
-            list={sortedComs}
+            list={sortedComws}
             className="min-h-[110%]"
             isPutCcomFaceOff
-            comDescription={com => <span className="nowrap">{visits[com.wid] ?? 0}</span>}
+            comDescription={com => <span className="nowrap">{visits[com.w] ?? 0}</span>}
           />
         )
       )}

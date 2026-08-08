@@ -4,7 +4,6 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ScheduleWidgetAppAtts } from '#widgets/schedule/ScheduleWidget.model';
 import { makeCmEventNestedRoute } from '$cm/shared/lib';
 import { Link, useSearch } from '@tanstack/react-router';
-import { useMemo } from 'react';
 import {
   CmComBindAttach,
   ScheduleDayEventAttachmentScopeProps,
@@ -12,7 +11,7 @@ import {
   scheduleWidgetUserRights,
 } from 'shared/api';
 import { extractNumber } from 'shared/utils';
-import { useCmMeetingComFaceList } from '../meeting/lib/useMeetingComFaceList';
+import { useCmMeetingComwList } from '../meeting/lib/useMeetingComFaceList';
 import { CmExternalComListAtt } from './ui/CmExternalComListAtt';
 
 export const cmExternalOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
@@ -45,9 +44,7 @@ const route = makeCmEventNestedRoute({
 
 function useComListPack() {
   const { dayi, eventMi, schw } = useSearch({ from: path });
-  const { coms } = useCmMeetingComFaceList({ dayi, eventMi, schw: extractNumber(schw!) });
-
-  return useMemo(() => ({ list: coms }), [coms]);
+  return useCmMeetingComwList({ dayi, eventMi, schw: extractNumber(schw!) });
 }
 
 function useActionPanelNode(

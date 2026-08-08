@@ -3,25 +3,27 @@ import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { CmComOrderList } from '$cm/ext';
 import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
-import { CmCom } from 'shared/const/cm/Com';
+import { IExportableCom } from 'shared/api';
 import { arrayByLength } from 'shared/utils/object.utils';
 import { twMerge } from 'tailwind-merge';
 
 let isOpenModalAtom: Atom<boolean>;
 
 export const CmEditorComEditTransposition = ({
-  ccom,
+  icom,
   onChange,
 }: {
-  ccom: CmCom;
+  icom: IExportableCom;
   onChange: (position: number) => Promise<unknown>;
 }) => {
   isOpenModalAtom ??= atom(false);
+  const com = new EditableCom(icom, null, null);
 
-  const [initialPosition] = useState(ccom.transPosition);
+  const [initialPosition] = useState(com.transPosition);
   const [iconOnLoad, setIconOnLoad] = useState('');
 
   return (
@@ -31,7 +33,7 @@ export const CmEditorComEditTransposition = ({
         icon="Notification01"
         postfix={
           <>
-            Тональность — <span className="text-x7">{ccom.tonica}</span>
+            Тональность — <span className="text-x7">{com.tonica}</span>
           </>
         }
       />
@@ -43,7 +45,7 @@ export const CmEditorComEditTransposition = ({
           {arrayByLength(12, i => i)
             .reverse()
             .map(position => {
-              const transposedChord = ccom.transposeBlock(ccom.tonica, position - ccom.transPosition);
+              const transposedChord = com.transposeBlock(com.tonica, position - com.transPosition);
 
               return transposedChord === iconOnLoad ? (
                 <TheIconLoading
@@ -53,8 +55,8 @@ export const CmEditorComEditTransposition = ({
               ) : (
                 <IconCheckbox
                   key={position}
-                  checked={position === ccom.transPosition}
-                  disabled={position === ccom.transPosition}
+                  checked={position === com.transPosition}
+                  disabled={position === com.transPosition}
                   className={twMerge('mt-2', position === initialPosition ? 'font-bold' : '')}
                   onChange={async () => {
                     setIconOnLoad(transposedChord);
@@ -67,7 +69,7 @@ export const CmEditorComEditTransposition = ({
               );
             })}
           <CmComOrderList
-            com={ccom}
+            com={com}
             chordVisibleVariant={ChordVisibleVariant.Maximal}
             chordHardLevel={3}
           />

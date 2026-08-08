@@ -2,8 +2,7 @@ import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe
 import { cmComSelectedComwsAtom } from '$cm/entities/com';
 import { useNavigate } from '@tanstack/react-router';
 import { useEffect } from 'react';
-import { CmComWid } from 'shared/api';
-import { CmCom } from 'shared/const/cm/Com';
+import { CmComWid, IExportableCom } from 'shared/api';
 import { checkIsNaN } from 'shared/utils/checkIs';
 import { cmComFaceCurrentComwIdPrefix, cmComFaceItemDescriptionClassName } from '../const/ids';
 import { ICmComFaceList } from '../model/model';
@@ -11,7 +10,7 @@ import { ICmComFaceList } from '../model/model';
 export const useCmComFaceListClickListener = (
   listRef: React.RefObject<HTMLDivElement | null>,
   importantOnClick: ICmComFaceList['importantOnClick'],
-  list: CmCom[],
+  list: IExportableCom[],
 ) => {
   const navigate = useNavigate();
 
@@ -61,7 +60,7 @@ export const useCmComFaceListClickListener = (
           };
 
           if (importantOnClick) {
-            const com = list.find(com => com.wid === comw);
+            const com = list.find(com => com.w === comw);
             if (!com) return;
             const comi = Array.from(foundElementWithFaceItemClassName.classList.values()).find(className =>
               className.endsWith('-comi'),

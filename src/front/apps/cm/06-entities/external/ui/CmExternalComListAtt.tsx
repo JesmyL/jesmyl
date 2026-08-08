@@ -23,7 +23,7 @@ export function CmExternalComListAtt({ scopeProps }: Props) {
           dayi: scopeProps.dayi,
           eventMi: scopeProps.eventMi,
           schw: scopeProps.schw,
-          comw: com.wid,
+          comw: com.w,
         },
       });
     },

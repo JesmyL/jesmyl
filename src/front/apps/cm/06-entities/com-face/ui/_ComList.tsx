@@ -5,7 +5,7 @@ import { useListInfiniteScrollController } from '#shared/lib/hooks/useListInfini
 import { CmComNumber, useCmComLastOpenComw } from '$cm/entities/com';
 import { useCmComSetListLimitsExtracterContext } from '$cm/entities/index';
 import { useRef } from 'react';
-import { CmCom } from 'shared/const/cm/Com';
+import { IExportableCom } from 'shared/api';
 import { retNull } from 'shared/utils';
 import { objectLength } from 'shared/utils/object.utils';
 import { cmComFaceCurrentComwIdPrefix, cmComFaceItemDescriptionClassName } from '../const/ids';
@@ -15,7 +15,7 @@ import { ICmComFaceList } from '../model/model';
 import { CmComFaceListControlledContainer } from './ComListControlledContainer';
 
 export interface CmComFaceListProps extends ICmComFaceList {
-  list: CmCom[];
+  list: IExportableCom[];
   titles?: Record<number, string>;
   className?: string;
 }
@@ -26,7 +26,7 @@ export const CmComFaceListComList = (props: CmComFaceListProps) => {
   const { limits, updateLimits } = useListInfiniteScrollController(
     listRef,
     props.list,
-    props.isPutCcomFaceOff ? (_, comi) => comi === 0 : com => com.wid === lastOpenComw,
+    props.isPutCcomFaceOff ? (_, comi) => comi === 0 : com => com.w === lastOpenComw,
     [lastOpenComw],
   );
 
@@ -36,7 +36,7 @@ export const CmComFaceListComList = (props: CmComFaceListProps) => {
 
   const isSetWids = !(props.titles && objectLength(props.titles));
   const setComDescription = props.comDescription
-    ? (com: CmCom, comi: number) => (
+    ? (com: IExportableCom, comi: number) => (
         <div className={cmComFaceItemDescriptionClassName}>{props.comDescription!(com, comi)}</div>
       )
     : retNull;
@@ -49,13 +49,13 @@ export const CmComFaceListComList = (props: CmComFaceListProps) => {
       {props.list.slice(isIOS ? 0 : limits.start, limits.finish).map((com, comi) => {
         return (
           <FaceItem.Root
-            key={isSetWids ? com.wid : comi}
-            id={`${cmComFaceCurrentComwIdPrefix}${com.wid}`}
+            key={isSetWids ? com.w : comi}
+            id={`${cmComFaceCurrentComwIdPrefix}${com.w}`}
             className={`flex between pointer ${comi}-comi`}
           >
-            <FaceItem.Logo>{!com.name || <CmComNumber comw={com.wid} />}</FaceItem.Logo>
+            <FaceItem.Logo>{!com.n || <CmComNumber comw={com.w} />}</FaceItem.Logo>
             <FaceItem.Title>
-              {com.name || <span className="text-xKO">{translateBase(it => it.cm.com.unk)}</span>}
+              {com.n || <span className="text-xKO">{translateBase(it => it.cm.com.unk)}</span>}
             </FaceItem.Title>
             {setComDescription(com, comi)}
           </FaceItem.Root>

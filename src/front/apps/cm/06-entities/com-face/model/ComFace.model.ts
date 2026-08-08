@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
-import { CmCom } from 'shared/const/cm/Com';
+import { IExportableCom } from 'shared/api';
 
 export interface CmComFaceInheritProps {
-  comDescription?: (com: CmCom, comi: number) => ReactNode;
+  comDescription?: (com: IExportableCom, comi: number) => ReactNode;
   isPutCcomFaceOff?: boolean;
 }

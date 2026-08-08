@@ -7,7 +7,7 @@ export const CmEditorComTabWatch = ({ ccom }: { ccom: EditableCom }) => {
 
   return (
     <TheCmCom
-      com={ccom}
+      comw={ccom.wid}
       chordVisibleVariant={ChordVisibleVariant.Maximal}
       isMiniAnchor={false}
       listRef={ref}

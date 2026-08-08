@@ -2,13 +2,11 @@ import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRi
 import { Button } from '#shared/components';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { WithHook } from '#shared/ui/WithHook';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { CmComFaceList, CmComJoinGroupList, CmComWithComListSearchFilterInput, useCmCom, useCmComList } from '$cm/ext';
+import { CmComFaceList, CmComJoinGroupList, CmComWithComListSearchFilterInput } from '$cm/ext';
 import { Atom, atom } from 'atomaric';
 import { CmComWid } from 'shared/api';
-import { CmCom } from 'shared/const/cm/Com';
 import { itIt } from 'shared/utils';
 
 let searchAtom: Atom<string>;
@@ -28,12 +26,7 @@ export const CmEditorComTabComRefs = ({ ccom }: { ccom: EditableCom }) => {
             <ModalHeader>Другая группа ассоциации</ModalHeader>
             <ModalBody>
               <div>Данная песня состоит в другой группе ассоциаций</div>
-              <WithHook
-                args={[withComw]}
-                hook={useCmCom}
-              >
-                {otherCom => otherCom && <CmComJoinGroupList com={otherCom} />}
-              </WithHook>
+              <CmComJoinGroupList comw={withComw} />
             </ModalBody>
             <ModalFooter>
               <Button
@@ -55,63 +48,55 @@ export const CmEditorComTabComRefs = ({ ccom }: { ccom: EditableCom }) => {
       </Modal>
 
       <CmComJoinGroupList
-        com={ccom}
+        comw={ccom.wid}
         emptyNode={<div className="my-5 text-x7 w-full text-center">Ссылок нет</div>}
         children={(comRefList, allRefs) =>
           checkAccess('cm', 'COM_REF', 'C') && (
-            <WithHook
-              args={[null, comRefList.concat(ccom.wid)]}
-              hook={useCmComList}
-            >
-              {coms => (
-                <>
-                  <CmComWithComListSearchFilterInput
-                    Constructor={CmCom}
-                    termAtom={searchAtom}
-                    coms={coms}
-                    children={({ inputNode, searchedComs, term }) => {
-                      return (
-                        <div className="flex flex-col gap-3 mt-15">
-                          {inputNode}
-                          <div className="w-full">
-                            {term && (
-                              <CmComFaceList
-                                list={searchedComs.slice(0, 10)}
-                                isPutCcomFaceOff={false}
-                                importantOnClick={itIt}
-                                comDescription={withCom => {
-                                  return (
-                                    <>
-                                      <Button
-                                        icon="PlusSignSquare"
-                                        className={allRefs[withCom.wid] != null ? '' : 'text-xOK'}
-                                        onClick={() => {
-                                          if (allRefs[withCom.wid] != null) {
-                                            otherRefGroupAtom.set(withCom.wid);
-                                            return;
-                                          }
+            <>
+              <CmComWithComListSearchFilterInput
+                termAtom={searchAtom}
+                comws={comRefList.concat(ccom.wid)}
+                children={({ inputNode, searchedComs, term }) => {
+                  return (
+                    <div className="flex flex-col gap-3 mt-15">
+                      {inputNode}
+                      <div className="w-full">
+                        {term && (
+                          <CmComFaceList
+                            list={searchedComs.slice(0, 10)}
+                            isPutCcomFaceOff={false}
+                            importantOnClick={itIt}
+                            comDescription={withCom => {
+                              return (
+                                <>
+                                  <Button
+                                    icon="PlusSignSquare"
+                                    className={allRefs[withCom.w] != null ? '' : 'text-xOK'}
+                                    onClick={() => {
+                                      if (allRefs[withCom.w] != null) {
+                                        otherRefGroupAtom.set(withCom.w);
+                                        return;
+                                      }
 
-                                          cmEditComExternalsClientTsjrpcMethods.switchComwRefs({
-                                            comw: ccom.wid,
-                                            withComw: withCom.wid,
-                                          });
-                                        }}
-                                      />
-                                    </>
-                                  );
-                                }}
-                              />
-                            )}
-                          </div>
-                        </div>
-                      );
-                    }}
-                  />
+                                      cmEditComExternalsClientTsjrpcMethods.switchComwRefs({
+                                        comw: ccom.wid,
+                                        withComw: withCom.w,
+                                      });
+                                    }}
+                                  />
+                                </>
+                              );
+                            }}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  );
+                }}
+              />
 
-                  <hr className="my-5" />
-                </>
-              )}
-            </WithHook>
+              <hr className="my-5" />
+            </>
           )
         }
         comDescription={
@@ -126,7 +111,7 @@ export const CmEditorComTabComRefs = ({ ccom }: { ccom: EditableCom }) => {
                       onClick={() =>
                         cmEditComExternalsClientTsjrpcMethods.switchComwRefs({
                           comw: ccom.wid,
-                          withComw: withCom.wid,
+                          withComw: withCom.w,
                         })
                       }
                     />

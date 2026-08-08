@@ -21,7 +21,7 @@ import { useCmMeetingComFaceList } from '../lib/useMeetingComFaceList';
 type Props = Required<ScheduleDayEventPathProps>;
 
 export const CmMeetingEvent = ({ dayi, eventMi, schw }: Props) => {
-  const { comFaceListNode, coms, packComws } = useCmMeetingComFaceList({ schw, dayi, eventMi });
+  const { comFaceListNode, icoms, packComws } = useCmMeetingComFaceList({ schw, dayi, eventMi });
   const schedule = useLiveQuery(() => indexIDB.db.schs.get(schw), [schw]);
   const auth = useAuth();
   const linkToCom = useCmComOpenComLinkRendererContext();
@@ -63,7 +63,7 @@ export const CmMeetingEvent = ({ dayi, eventMi, schw }: Props) => {
             linkToCom({
               children: <TheIconButton icon="Computer" />,
               search: {
-                comw: coms[0]?.wid,
+                comw: icoms[0]?.w,
                 tran: '-!-',
               },
             })
@@ -79,7 +79,7 @@ export const CmMeetingEvent = ({ dayi, eventMi, schw }: Props) => {
           </div>
           {isToolsOpen && (
             <BottomPopup onClose={setIsToolsOpen}>
-              <CmComLocalListToolsPopup coms={coms}>
+              <CmComLocalListToolsPopup icoms={icoms}>
                 {checkAccess('cm', 'EVENT', 'U') && (
                   <CmEditorMeetingEventEdits
                     packComws={packComws}

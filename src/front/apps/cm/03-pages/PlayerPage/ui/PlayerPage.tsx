@@ -6,7 +6,14 @@ import { renderComponentInNewWindow } from '#shared/lib/renders';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { DocTitle } from '#shared/ui/tags/DocTitle';
-import { CmComNumber, useCmCom, useCmComList, useCmComSelectedList } from '$cm/entities/com';
+import {
+  cmComFavoriteComsAtom,
+  CmComNumber,
+  cmComSelectedComwsAtom,
+  useCmCom,
+  useCmComAllIComList,
+  useCmComIComList,
+} from '$cm/entities/com';
 import {
   cmComAudioPlayerEndedTickAtom,
   cmComAudioPlayerErrorTickAtom,
@@ -16,7 +23,6 @@ import {
   CmComAudioPlayerTrack,
 } from '$cm/entities/com-audio-player';
 import { CmComFaceList } from '$cm/entities/com-face';
-import { useCmComFavouriteList } from '$cm/entities/com-favourite';
 import { CmComListPackKindSelector } from '$cm/entities/ComListPackKindSelector';
 import { cmComLastOpenComwAtom } from '$cm/entities/index';
 import { CmComAudioPlayerMarksMovers } from '$cm/ext';
@@ -27,8 +33,7 @@ import styled from '@emotion/styled';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useMemo } from 'react';
-import { CmComWid } from 'shared/api';
-import { CmCom } from 'shared/const/cm/Com';
+import { CmComWid, IExportableCom } from 'shared/api';
 import { toast } from 'sonner';
 import { CmPlayerBroadcast } from './Broadcast';
 
@@ -44,9 +49,11 @@ let comsWithErrorAtom: Atom<Set<CmComWid>>;
 export const CmPlayerPage = () => {
   comsWithErrorAtom ??= atom(new Set());
 
-  const favouriteComs = useCmComFavouriteList().favouriteComs;
-  const selectedComs = useCmComSelectedList().selectedComs;
-  const allComs = useCmComList();
+  const favComws = useCmComIComList(useAtomValue(cmComFavoriteComsAtom));
+  const selComws = useCmComIComList(useAtomValue(cmComSelectedComwsAtom));
+
+  const allIComs = useCmComAllIComList();
+
   const openComListMode = useAtomValue(cmOpenComListModeAtom);
   const debouncedOpenComListMode = useDebounceValue(openComListMode);
   const search = useSearch({ from: '/cm/player/' });
@@ -56,18 +63,19 @@ export const CmPlayerPage = () => {
   const errorTick = useAtomValue(cmComAudioPlayerErrorTickAtom);
   const broadcastSrc = useAtomValue(cmPlayerBroadcastAudioSrcAtom);
 
-  const coms = useMemo(
+  const icoms = useMemo(
     () =>
       (debouncedOpenComListMode === 'fav'
-        ? favouriteComs
+        ? favComws
         : debouncedOpenComListMode === 'sel'
-          ? selectedComs
-          : allComs
-      ).filter(com => com.audio?.length),
-    [allComs, favouriteComs, debouncedOpenComListMode, selectedComs],
+          ? selComws
+          : (allIComs ?? [])
+      ).filter(com => com.al?.length),
+    [allIComs, favComws, debouncedOpenComListMode, selComws],
   );
+  const comws = useMemo(() => icoms.map(com => com.w), [icoms]);
 
-  const com = useCmCom(search.comw ?? lastOpenComw) ?? (coms[0] as CmCom | und);
+  const com = useCmCom(search.comw ?? lastOpenComw ?? icoms[0].w);
   const [src] = com?.audio ?? [''];
 
   useEffect(resetIsCanPlayEffect, []);
@@ -87,13 +95,13 @@ export const CmPlayerPage = () => {
       search: search => {
         if (search.comw == null) return search as never;
 
-        const nextCom = findNextCom(search.comw, coms);
+        const nextCom = findNextCom(search.comw, icoms);
         if (nextCom == null) return search as never;
 
-        return { ...(search as object), comw: nextCom.wid };
+        return { ...(search as object), comw: nextCom.w };
       },
     });
-  }, [coms, navigate, src, com]);
+  }, [icoms, navigate, src, com]);
 
   useEffect(() => {
     if (!endedTick && !errorTick) return;
@@ -109,17 +117,17 @@ export const CmPlayerPage = () => {
           comsWithErrorAtom.set(comsWithError);
         }
 
-        const nextCom = findNextCom(search.comw, coms);
-        if (!nextCom?.audio) return search as never;
+        const nextCom = findNextCom(search.comw, icoms);
+        if (!nextCom?.al) return search as never;
 
-        cmComAudioPlayerSetSrc(nextCom.audio[0]);
+        cmComAudioPlayerSetSrc(nextCom.al[0]);
 
-        return { ...(search as object), comw: nextCom.wid };
+        return { ...(search as object), comw: nextCom.w };
       },
     });
 
     if (isCanPlay) return setTimeoutEffect(cmComAudioPlayerSwitchIsPlay, 1000, true);
-  }, [coms, navigate, endedTick, errorTick]);
+  }, [icoms, navigate, endedTick, errorTick]);
 
   return (
     <PageContainerConfigurer
@@ -162,7 +170,7 @@ export const CmPlayerPage = () => {
 
           <CmComFaceList
             key={openComListMode}
-            list={coms}
+            list={comws}
             importantOnClick={({ defaultClick }) => {
               isCanPlay = true;
               defaultClick();
@@ -171,14 +179,14 @@ export const CmPlayerPage = () => {
             comDescription={
               !isMobileDevice
                 ? com => {
-                    return com.audio?.map(src => (
+                    return com.al?.map(src => (
                       <Button
                         key={src}
                         icon="Computer"
                         withoutAnimation
                         className={broadcastSrc === src ? 'text-x7' : ''}
                         onClick={async () => {
-                          const pack = await getCmComFreshAudioMarksPack(com.wid);
+                          const pack = await getCmComFreshAudioMarksPack(com.w);
 
                           if (pack == null) {
                             toast(
@@ -188,11 +196,11 @@ export const CmPlayerPage = () => {
                             return;
                           }
 
-                          cmPlayerBroadcastComwAtom.set(com.wid);
+                          cmPlayerBroadcastComwAtom.set(com.w);
                           cmPlayerBroadcastAudioSrcAtom.set(src);
                           cmComAudioPlayerSetSrc(src);
 
-                          navigate({ to: '.', search: { comw: com.wid } });
+                          navigate({ to: '.', search: { comw: com.w } });
 
                           if (openWin != null) {
                             openWin.focus();
@@ -228,19 +236,19 @@ export const CmPlayerPage = () => {
 
 let openWin: Window | null = null;
 
-const findNextCom = (currentComw: CmComWid, coms: CmCom[]) => {
+const findNextCom = (currentComw: CmComWid, coms: IExportableCom[]) => {
   let isFoundCurrentCom = false;
   const comsWithError = comsWithErrorAtom.get();
 
   const nextCom = coms.find(com => {
-    if (currentComw === com.wid) {
+    if (currentComw === com.w) {
       isFoundCurrentCom = true;
       return false;
     }
-    return isFoundCurrentCom && !!com.audio && !comsWithError.has(com.wid);
+    return isFoundCurrentCom && !!com.al && !comsWithError.has(com.w);
   });
 
-  if (nextCom == null && coms[0]?.audio && !comsWithError.has(coms[0].wid)) return coms[0];
+  if (nextCom == null && coms[0]?.al && !comsWithError.has(coms[0].w)) return coms[0];
 
   return nextCom;
 };

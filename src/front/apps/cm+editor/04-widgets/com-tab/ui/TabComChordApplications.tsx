@@ -18,7 +18,7 @@ export const CmEditorComTabChordApplications = ({ ccom }: { ccom: EditableCom })
   if (!checkAccess('cm', 'COM_APPS', 'U'))
     return (
       <TheCmCom
-        com={ccom}
+        comw={ccom.wid}
         chordVisibleVariant={ChordVisibleVariant.Maximal}
         isMiniAnchor={false}
         listRef={ref}

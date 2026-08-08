@@ -19,7 +19,7 @@ export const CmFavouriteComsPage = () => {
         <>
           {isOpenTools && (
             <BottomPopup onClose={setIsOpenTools}>
-              <CmComLocalListToolsPopup coms={favouriteComs} />
+              <CmComLocalListToolsPopup icoms={favouriteComs} />
             </BottomPopup>
           )}
           <CmComFaceList list={favouriteComs} />

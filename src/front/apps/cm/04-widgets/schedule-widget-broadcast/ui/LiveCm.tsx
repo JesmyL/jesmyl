@@ -2,7 +2,7 @@ import { broadcastCurrentTextAppAtom } from '#features/broadcast/atoms';
 import { LiveBroadcastAppProps } from '#shared/model/cm/Cm.model';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useCmComCurrent } from '$cm/entities/com';
-import { CmBroadcastSlidesContext, useCmBroadcastScreenComNavigations } from '$cm/features/broadcast';
+import { CmBroadcastSlidesContext, useCmBroadcastScreenComNavigationComws } from '$cm/features/broadcast';
 import { CmLiveSlidesAudioTrackBroadcast } from '$cm/features/LiveSlidesAudioTrackBroadcast';
 import { CmLiveSlidesSimpleBroadcast } from '$cm/features/LiveSlidesSimpleBroadcast';
 import { cmIsTrackBroadcastAtom } from '$cm/shared/state';
@@ -10,7 +10,7 @@ import { CmBroadcastControlled, useCmBroadcastScreenConfig } from '$cm/widgets/b
 import { useAtomValue } from 'atomaric';
 
 export const CmScheduleWidgetBroadcastLiveCm = (props: LiveBroadcastAppProps) => {
-  const { coms } = useCmBroadcastScreenComNavigations();
+  const { comws } = useCmBroadcastScreenComNavigationComws();
   const isTrackBroadcast = useAtomValue(cmIsTrackBroadcastAtom);
   const config = useCmBroadcastScreenConfig(0);
   const com = useCmComCurrent();
@@ -34,7 +34,7 @@ export const CmScheduleWidgetBroadcastLiveCm = (props: LiveBroadcastAppProps) =>
             />
           )}
           <CmBroadcastControlled
-            comList={coms}
+            comws={comws}
             headTitle={props.headTitle}
             head={
               <LazyIcon

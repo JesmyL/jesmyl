@@ -1,24 +1,36 @@
-import { useCmComList } from '$cm/entities/com';
+import { translateBase } from '#basis/locale';
+import { useCmComIComList } from '$cm/entities/com';
 import { cmIDB } from '$cm/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
-import { CmCatWid } from 'shared/api';
+import { CmCatWid, IExportableCat } from 'shared/api';
 import { CmCat } from 'shared/const/cm/Cat';
 import { extractNumber } from 'shared/utils';
 import { objectKeys } from 'shared/utils/object.utils';
 
 export const useCmCat = (catw: CmCatWid) => {
   const icat = useCmCatICcat(catw);
-  const comws = useMemo(() => icat?.s ?? (icat?.d && objectKeys(icat.d).map(extractNumber)), [icat?.d, icat?.s]);
-  const coms = useCmComList(comws);
+  const icoms = useCmComIComList(useCmCatMapComws(icat));
 
   return useMemo(() => {
-    if (catw === CmCatWid.all) return new CmCat({ k: 'full', m: 0, t: 'all', n: '', w: 0 }, coms);
-
-    return icat && coms && new CmCat(icat, coms);
-  }, [catw, coms, icat]);
+    if (catw === CmCatWid.all) return new CmCat(makeDefICat(), icoms);
+    return icat && icoms && new CmCat(icat, icoms);
+  }, [catw, icoms, icat]);
 };
 
-export function useCmCatICcat(catw?: CmCatWid) {
-  return useLiveQuery(() => cmIDB.db.cats.where({ w: catw }).first(), [catw]);
-}
+export const useCmCatMapComws = (icat: IExportableCat | nil) =>
+  useMemo(() => icat?.s ?? (icat?.d && objectKeys(icat.d).map(extractNumber)) ?? [], [icat?.d, icat?.s]);
+
+export const useCmCatComws = (catw: CmCatWid) => useCmCatMapComws(useCmCatICcat(catw));
+
+export const useCmCatICcat = (catw?: CmCatWid) =>
+  useLiveQuery(async () => (catw ? cmIDB.db.cats.get(catw) : makeDefICat()), [catw]);
+
+const makeDefICat = () =>
+  ({
+    k: 'full',
+    m: 0,
+    t: 'all',
+    n: translateBase(it => it.cm.cat.li.all),
+    w: CmCatWid.all,
+  }) satisfies IExportableCat;

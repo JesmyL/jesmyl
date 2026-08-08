@@ -11,7 +11,9 @@ export {
   CmComNumber,
   CmComWithComListSearchFilterInput,
   useCmCom,
-  useCmComList,
+  useCmComAllIComList,
+  useCmComAllWidList,
+  useCmComIComList,
   useCmComPinchFontSize,
   useCmComSelectedList,
 } from '$cm/entities/com';

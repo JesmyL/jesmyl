@@ -109,7 +109,7 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
 
       <div className="ml-7 my-5 [&_.face-logo]:bg-x2!">
         <CmComJoinGroupList
-          com={ccom}
+          comw={ccom.wid}
           children={comJoinsList =>
             !comJoinsList.length || <div className="mb-2">{translateBase(it => it.cm.com.crossLinks)}</div>
           }

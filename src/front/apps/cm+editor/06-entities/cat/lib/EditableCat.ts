@@ -1,5 +1,4 @@
-import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
-import { IExportableCat } from 'shared/api';
+import { IExportableCat, IExportableCom } from 'shared/api';
 import { CmCat } from 'shared/const/cm/Cat';
 
 export class CmEditorCat extends CmCat {
@@ -7,7 +6,7 @@ export class CmEditorCat extends CmCat {
 
   constructor(
     top: IExportableCat,
-    public coms: EditableCom[],
+    public coms: IExportableCom[],
   ) {
     super(top, coms);
     this.initialName = this.name;

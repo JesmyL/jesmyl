@@ -1,47 +1,38 @@
-import { translateBase } from '#basis/locale';
-import { useCmCat } from '$cm/entities/cat';
-import { CmComListContextValue } from '$cm/entities/com';
+import { useCmCatComws, useCmCatICcat, useCmCatMapComws } from '$cm/entities/cat';
 import { CmCatPage } from '$cm/pages/CatPage';
 import { makeCmComNestedRoute } from '$cm/shared/lib';
 import { createFileRoute } from '@tanstack/react-router';
-import { useMemo } from 'react';
-import { CmCom } from 'shared/const/cm/Com';
 
 export const Route = createFileRoute('/cm/li/cat/$catw')(
   makeCmComNestedRoute({
     path: '/cm/li/cat/$catw',
     RouteComponent,
-    useComListPack,
+    useComwList: useComListPack,
   }),
 );
 
 function RouteComponent() {
   const { catw } = Route.useParams() as { catw: string };
-  const cat = useCmCat(+catw);
-
-  const comDescription =
-    cat?.kind === 'dict'
-      ? (com: CmCom) => (
-          <div className="text-[.7em] absolute -bottom-[.5em] left-[64px] text-x7/50">{cat.dict?.[com.wid]}</div>
-        )
-      : undefined;
+  const icat = useCmCatICcat(+catw);
+  const comws = useCmCatMapComws(icat);
+  const comDict = icat?.d;
 
   return (
     <CmCatPage
-      cat={cat}
-      comsCount={cat?.coms.length ?? 0}
+      icat={icat}
+      comsCount={comws.length}
       backButtonPath="/cm/li/"
-      coms={cat?.coms ?? []}
-      comDescription={comDescription}
+      comws={comws}
+      comDescription={
+        comDict
+          ? com => <div className="text-[.7em] absolute -bottom-[.5em] left-[64px] text-x7/50">{comDict[com.w]}</div>
+          : undefined
+      }
     />
   );
 }
 
-function useComListPack(): CmComListContextValue {
+function useComListPack() {
   const { catw } = Route.useParams() as { catw: string };
-  const cat = useCmCat(+catw);
-
-  return useMemo(() => {
-    return { list: cat?.coms ?? [], pageTitlePostfix: ` - ${cat?.name ?? translateBase(it => it.cm.cat.t)}` };
-  }, [cat?.coms, cat?.name]);
+  return useCmCatComws(+catw);
 }

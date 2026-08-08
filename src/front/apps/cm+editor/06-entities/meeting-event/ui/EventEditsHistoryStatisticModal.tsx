@@ -55,7 +55,7 @@ export const CmEditorMeetingEventEditsHistoryStatisticModalInner = ({ dayi, schw
             list={comws}
             isPutCcomFaceOff
             importantOnClick={emptyFunc}
-            comDescription={com => <span className="nowrap">{comwCount[com.wid]}</span>}
+            comDescription={com => <span className="nowrap">{comwCount[com.w]}</span>}
           />
         </ModalBody>
       )}

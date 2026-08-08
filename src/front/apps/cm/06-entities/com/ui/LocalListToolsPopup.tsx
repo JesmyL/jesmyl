@@ -3,7 +3,7 @@ import { isTouchDevice } from '#shared/lib/device-differences';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { Atom, atom } from 'atomaric';
-import { CmCom } from 'shared/const/cm/Com';
+import { IExportableCom } from 'shared/api';
 import { useCmComOpenComLinkRendererContext } from '../lib/current-com-list';
 import { CmComListQrShare } from './ComListShare';
 import { CmComFullscreenExpandList } from './FullscreenExpandComList';
@@ -11,13 +11,13 @@ import { CmComFullscreenExpandList } from './FullscreenExpandComList';
 let isOpenQrAtom: Atom<boolean>;
 let isOpenListAtom: Atom<boolean>;
 
-export const CmComLocalListToolsPopup = (props: { coms: CmCom[] | und; children?: React.ReactNode }) => {
+export const CmComLocalListToolsPopup = (props: { icoms: IExportableCom[] | und; children?: React.ReactNode }) => {
   isOpenQrAtom ??= atom(false);
   isOpenListAtom ??= atom(false);
 
   const linkToCom = useCmComOpenComLinkRendererContext();
 
-  return !props.coms?.length ? (
+  return !props.icoms?.length ? (
     props.children
   ) : (
     <>
@@ -34,7 +34,7 @@ export const CmComLocalListToolsPopup = (props: { coms: CmCom[] | und; children?
           />
         ),
         search: {
-          comw: props.coms[0].wid,
+          comw: props.icoms[0].w,
           tran: '-!-',
         },
       })}
@@ -48,14 +48,14 @@ export const CmComLocalListToolsPopup = (props: { coms: CmCom[] | und; children?
 
       <CmComListQrShare
         openAtom={isOpenQrAtom}
-        coms={props.coms}
+        icoms={props.icoms}
       />
 
       <FullContent
         openAtom={isOpenListAtom}
         containerClassName="p-0"
       >
-        <CmComFullscreenExpandList coms={props.coms} />
+        <CmComFullscreenExpandList coms={props.icoms} />
       </FullContent>
     </>
   );

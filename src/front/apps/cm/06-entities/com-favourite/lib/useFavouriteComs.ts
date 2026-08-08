@@ -2,7 +2,7 @@ import { translateBase } from '#basis/locale';
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
-import { useCmComList } from '$cm/entities/com';
+import { useCmComIComList } from '$cm/entities/com';
 import { cmComFavoriteComsAtom } from '$cm/entities/index';
 import { cmUserStoreTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useAuth } from '$index/shared/state';
@@ -36,7 +36,7 @@ export const useCmComFavouriteList = () => {
   }, [auth.login, favCache]);
 
   const ret = {
-    favouriteComs: useCmComList(favourites),
+    favouriteComs: useCmComIComList(favourites),
     isFavourite: (comw: CmComWid) => favouriteComsSet.has(comw),
     toggleFavourite: (comw: CmComWid) => {
       const isFav = ret.isFavourite(comw);

@@ -6,7 +6,7 @@ import { CmComFaceList } from '$cm/entities/com-face';
 import { useState } from 'react';
 
 export function CmSelectedComs() {
-  const { selectedComs, selectedComws } = useCmComSelectedList();
+  const { selectedIComs, selectedComws } = useCmComSelectedList();
   const [isToolsOpen, setIsToolsOpen] = useState(false);
 
   return (
@@ -18,7 +18,7 @@ export function CmSelectedComs() {
         <>
           {isToolsOpen && (
             <BottomPopup onClose={setIsToolsOpen}>
-              <CmComLocalListToolsPopup coms={selectedComs} />
+              <CmComLocalListToolsPopup icoms={selectedIComs} />
             </BottomPopup>
           )}
           <CmComFaceList

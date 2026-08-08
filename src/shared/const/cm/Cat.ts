@@ -1,6 +1,6 @@
 import { translateBase } from '#basis/locale';
 import { CmCatKind } from '#shared/model/cm/cat/Cat.model';
-import { CmComWid, IExportableCat } from 'shared/api';
+import { CmComWid, IExportableCat, IExportableCom } from 'shared/api';
 import { extractNumber } from 'shared/utils';
 import { objectKeys } from 'shared/utils/object.utils';
 import { searchConstants, searchRateWithSort } from 'shared/utils/searchRate';
@@ -13,7 +13,7 @@ export class CmCat extends BaseNamed<IExportableCat> {
 
   constructor(
     top: IExportableCat,
-    public coms: CmCom[],
+    public coms: IExportableCom[],
   ) {
     super(top);
 

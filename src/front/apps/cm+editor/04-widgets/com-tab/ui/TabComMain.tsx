@@ -36,7 +36,7 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
 
   const comNode = (
     <TheCmCom
-      com={ccom}
+      comw={ccom.wid}
       chordVisibleVariant={ChordVisibleVariant.Maximal}
       isMiniAnchor={false}
     />
@@ -99,7 +99,7 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
       {canFixIntp && (
         <>
           <CmEditorComEditTransposition
-            ccom={ccom}
+            icom={ccom.top}
             onChange={position => cmEditComClientTsjrpcMethods.changeTon({ comw: ccom.wid, value: position })}
           />
           <CmEditorComEditBemoled

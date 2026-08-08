@@ -3,16 +3,12 @@ import { cmIDB, useCmCatICcat } from '$cm/ext';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { CmCatWid } from 'shared/api';
-import { EditableCom } from '../classes/EditableCom';
 
 export const useEditableCcat = (catw: CmCatWid): CmEditorCat | und => {
   const icat = useCmCatICcat(catw);
   const icoms = useLiveQuery(() => cmIDB.db.coms.toArray());
 
-  return useMemo(
-    () => icat && new CmEditorCat(icat, icoms?.map(icom => new EditableCom(icom, null, null)) ?? []),
-    [icat, icoms],
-  );
+  return useMemo(() => icat && new CmEditorCat(icat, icoms ?? []), [icat, icoms]);
 };
 
 export const useEditableCats = () => {

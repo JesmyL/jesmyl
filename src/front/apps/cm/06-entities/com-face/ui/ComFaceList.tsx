@@ -1,11 +1,11 @@
-import { CmCom } from 'shared/const/cm/Com';
+import { CmComWid, IExportableCom } from 'shared/api';
 import { checkIsNumber } from 'shared/utils/checkIs';
 import { ICmComFaceList } from '../model/model';
 import { CmComFaceListComList } from './_ComList';
 import { CmComFaceWidList } from './_WidList';
 
 interface Props extends ICmComFaceList {
-  list: number[] | CmCom[] | nil;
+  list: CmComWid[] | IExportableCom[] | nil;
   titles?: Record<number, string>;
   className?: string;
 }

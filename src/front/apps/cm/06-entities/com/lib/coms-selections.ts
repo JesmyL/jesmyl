@@ -7,7 +7,13 @@ import { CmCom } from 'shared/const/cm/Com';
 import { cmDefaultCom } from 'shared/const/cm/def.com';
 import { itNNull } from 'shared/utils';
 
-export const useCmComList = (comwsList?: CmComWid[] | nil, excludeComwsList?: CmComWid[]) => {
+export const useCmComAllIComList = () => useLiveQuery(() => cmIDB.db.coms.toArray());
+export const useCmComAllWidList = () => {
+  const icoms = useCmComAllIComList();
+  return useMemo(() => icoms?.map(it => it.w) ?? [], [icoms]);
+};
+
+export const useCmComIComList = (comwsList?: CmComWid[] | nil, excludeComwsList?: CmComWid[]) => {
   const icoms = useLiveQuery(
     () =>
       (excludeComwsList == null
@@ -40,10 +46,7 @@ export const useCmComList = (comwsList?: CmComWid[] | nil, excludeComwsList?: Cm
         ?.map((comw): IExportableCom | null => (unknownComwSet.has(comw) ? cmDefaultCom(comw) : null))
         .filter(itNNull) ?? [];
 
-    return icoms
-      .concat(unknownComs)
-      .sort((a, b) => comwIndexDict[a.w] - comwIndexDict[b.w])
-      .map(icom => new CmCom(icom, null, null));
+    return icoms.concat(unknownComs).sort((a, b) => comwIndexDict[a.w] - comwIndexDict[b.w]);
   }, [comwsList, icoms]);
 };
 

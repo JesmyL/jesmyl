@@ -35,7 +35,7 @@ export function TheCmComComposition() {
   const { laterComws, comListRef } = useCmComCompositionControls(ccom);
   const chordVisibleVariant = useAtomValue(cmComChordVisibleVariantAtom);
   const comToolsNode = useCmComToolMigratableTop();
-  const { list } = useCmComCurrentComPackContext();
+  const { comws } = useCmComCurrentComPackContext();
   const isOpenMoversButtons = useAtomValue(isCmComAudioPlayerOpenMoversAtom);
 
   useCmComCommentConstructorListenChanges();
@@ -100,7 +100,7 @@ export function TheCmComComposition() {
           >
             <TheCmComControlled
               com={ccom}
-              comList={list}
+              comws={comws}
               chordVisibleVariant={chordVisibleVariant}
             />
           </CmComOrderAudioMarkControlButtonsContext>

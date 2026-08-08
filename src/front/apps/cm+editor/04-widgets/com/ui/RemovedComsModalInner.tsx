@@ -5,9 +5,7 @@ import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.ts
 import { CmComFaceList, TheCmCom } from '$cm/ext';
 import { useQuery } from '@tanstack/react-query';
 import { Atom, atom } from 'atomaric';
-import { useMemo } from 'react';
-import { CmComWid } from 'shared/api';
-import { CmCom } from 'shared/const/cm/Com';
+import { CmComWid, IExportableCom } from 'shared/api';
 
 let openComwAtom: Atom<CmComWid | null>;
 
@@ -19,15 +17,30 @@ export const CmEditorComRemovedComsModalInner = () => {
     queryFn: () => cmEditComClientTsjrpcMethods.takeRemovedComs(),
   });
 
-  const coms = useMemo(() => icoms?.map(icom => new CmCom(icom, null, null)) ?? [], [icoms]);
+  const comControls = (com: IExportableCom) => (
+    <div className="flex gap-2">
+      <TheIconSendButton
+        icon="PlusSignCircle"
+        className="text-xOK"
+        confirm={translateBase(it => it.cm.com.backup)}
+        onSend={() => cmEditComClientTsjrpcMethods.bringBackToLife({ comw: com.w })}
+      />
+      <TheIconSendButton
+        icon="CancelCircleHalfDot"
+        className="text-xKO"
+        confirm={translateBase(it => it.cm.com.destroy)}
+        onSend={() => cmEditComClientTsjrpcMethods.destroy({ comw: com.w })}
+      />
+    </div>
+  );
 
   return (
     <>
       <ModalHeader>{translateBase(it => it.cm.com.rms)}</ModalHeader>
       <ModalBody>
         <CmComFaceList
-          list={coms}
-          importantOnClick={({ com }) => openComwAtom.set(com.wid)}
+          list={icoms}
+          importantOnClick={({ com }) => openComwAtom.set(com.w)}
           comDescription={comControls}
         />
       </ModalBody>
@@ -38,27 +51,10 @@ export const CmEditorComRemovedComsModalInner = () => {
       >
         {openComw => (
           <ModalBody>
-            <TheCmCom com={coms.find(com => com.wid === openComw)} />
+            <TheCmCom comw={icoms?.find(com => com.w === openComw)?.w} />
           </ModalBody>
         )}
       </Modal>
     </>
   );
 };
-
-const comControls = (com: CmCom) => (
-  <div className="flex gap-2">
-    <TheIconSendButton
-      icon="PlusSignCircle"
-      className="text-xOK"
-      confirm={translateBase(it => it.cm.com.backup)}
-      onSend={() => cmEditComClientTsjrpcMethods.bringBackToLife({ comw: com.wid })}
-    />
-    <TheIconSendButton
-      icon="CancelCircleHalfDot"
-      className="text-xKO"
-      confirm={translateBase(it => it.cm.com.destroy)}
-      onSend={() => cmEditComClientTsjrpcMethods.destroy({ comw: com.wid })}
-    />
-  </div>
-);

@@ -1,19 +1,18 @@
 import { CmComFaceList, cmIDB } from '$cm/ext';
 import { useMemo } from 'react';
-import { CmComWid, CmComWidRefGroupDict } from 'shared/api';
-import { CmCom } from 'shared/const/cm/Com';
+import { CmComWid, CmComWidRefGroupDict, IExportableCom } from 'shared/api';
 import { extractNumber, itIt } from 'shared/utils';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 
 export const CmComJoinGroupList = ({
-  com,
+  comw,
   comDescription,
   children,
   importantOnClick = itIt,
   emptyNode,
 }: {
-  com: CmCom;
-  comDescription?: ((com: CmCom, comi: number) => React.ReactNode) | und;
+  comw: CmComWid;
+  comDescription?: ((com: IExportableCom, comi: number) => React.ReactNode) | und;
   children?: (comJoinsList: CmComWid[], allJoins: CmComWidRefGroupDict) => React.ReactNode;
   importantOnClick?: Parameters<typeof CmComFaceList>[0]['importantOnClick'];
   emptyNode?: React.ReactNode;
@@ -21,7 +20,6 @@ export const CmComJoinGroupList = ({
   const refs = cmIDB.useValue.comWidRefDict();
 
   const comJoinsList = useMemo(() => {
-    const comw = com.wid;
     if (refs[comw] == null) return [];
     const comJoinGroupId = refs[comw];
     const comws: CmComWid[] = [];
@@ -31,7 +29,7 @@ export const CmComJoinGroupList = ({
     });
 
     return comws;
-  }, [com.wid, refs]);
+  }, [comw, refs]);
 
   return (
     <>

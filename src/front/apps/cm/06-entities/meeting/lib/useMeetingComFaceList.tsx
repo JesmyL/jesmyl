@@ -1,36 +1,39 @@
+import { useCmComIComList } from '$cm/entities/com';
 import { CmComFaceList } from '$cm/entities/com-face';
-import { useCmComList } from '$cm/ext';
 import { cmIDB } from '$cm/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
-import { ScheduleWidgetDayEventMi, ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api';
-import { CmCom } from 'shared/const/cm/Com';
+import { IExportableCom, ScheduleWidgetDayEventMi, ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api';
 import { checkIsNotNil } from 'shared/utils/checkIs';
 
 interface Props {
   schw: ScheduleWidgetWid | und;
   dayi: ScheduleWidgetDayi | und;
   eventMi: ScheduleWidgetDayEventMi | und;
-  comImportantOnClick?: (props: { com: CmCom }) => void;
+  comImportantOnClick?: (props: { com: IExportableCom }) => void;
   isPutCcomFaceOff?: boolean;
 }
 
-export const useCmMeetingComFaceList = ({ dayi, eventMi, schw, comImportantOnClick, isPutCcomFaceOff }: Props) => {
+export const useCmMeetingComwList = ({ dayi, eventMi, schw }: Props) => {
   const pack = useLiveQuery(() => schw && cmIDB.db.scheduleComws.get({ schw }), [schw]);
-  const packComws = useMemo(
+  return useMemo(
     () => (checkIsNotNil(dayi) && checkIsNotNil(eventMi) ? (pack?.pack?.[dayi]?.[eventMi]?.s ?? []) : []),
     [dayi, eventMi, pack?.pack],
   );
-  const coms = useCmComList(packComws);
+};
+
+export const useCmMeetingComFaceList = (props: Props) => {
+  const packComws = useCmMeetingComwList(props);
+  const icoms = useCmComIComList(packComws);
 
   return {
-    coms,
+    icoms,
     packComws,
     comFaceListNode: (
       <CmComFaceList
-        list={coms}
-        importantOnClick={comImportantOnClick}
-        isPutCcomFaceOff={isPutCcomFaceOff}
+        list={icoms}
+        importantOnClick={props.comImportantOnClick}
+        isPutCcomFaceOff={props.isPutCcomFaceOff}
       />
     ),
   };

@@ -3,13 +3,14 @@ import { Button } from '#shared/components/ui/button';
 import { ButtonGroup } from '#shared/components/ui/button-group';
 import { getParentNodeWithClassName } from '#shared/lib/getParentNodeWithClassName';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
-import { cmIDB, useCmComList } from '$cm/ext';
+import { cmIDB, useCmComAllIComList } from '$cm/ext';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useNavigate } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useMemo, useRef } from 'react';
 import { makeRegExp } from 'regexpert';
+import { CmCom } from 'shared/const/cm/Com';
 import { arrayByLength } from 'shared/utils/object.utils';
 
 let isOpenAtom: Atom<boolean>;
@@ -19,7 +20,7 @@ export const CmEditorChordSearchUnknownChordsModalTrigger = () => {
   isOpenAtom ??= atom(false);
   lastClickedChordAtom ??= atom('', 'cm+editor:lastClickedChord');
 
-  const coms = useCmComList();
+  const coms = useCmComAllIComList();
   const chordPack = cmIDB.useValue.chordPack();
   const aRef = useRef<HTMLAnchorElement>(null);
   const lastClickedChord = useAtomValue(lastClickedChordAtom);
@@ -29,9 +30,9 @@ export const CmEditorChordSearchUnknownChordsModalTrigger = () => {
   const unknownChords = useMemo(() => {
     const unknownChordsSet = new Set<string>([lastClickedChordAtom.get()]);
 
-    coms.forEach(com => {
+    coms?.forEach(icom => {
       arrayByLength(12, i => i).forEach(delta =>
-        com.transposedBlocks(delta)?.forEach(block => {
+        new CmCom(icom, null, null).transposedBlocks(delta)?.forEach(block => {
           block.split(makeRegExp('/[-\\s.|]+/')).forEach(chord => {
             if (chord && chordPack[chord] === undefined) unknownChordsSet.add(chord);
           });

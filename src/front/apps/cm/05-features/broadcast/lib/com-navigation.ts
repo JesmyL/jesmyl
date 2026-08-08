@@ -1,67 +1,73 @@
-import { useCmComCurrent, useCmComCurrentComPackContext, useCmComSelectedList } from '$cm/entities/com';
+import {
+  cmComFavoriteComsAtom,
+  cmComSelectedComwsAtom,
+  useCmComCurrent,
+  useCmComCurrentComPackContext,
+} from '$cm/entities/com';
 import { cmComFaceCurrentComwIdPrefix } from '$cm/entities/com-face';
-import { useCmComFavouriteList } from '$cm/entities/com-favourite';
 import { cmOpenComListModeAtom } from '$cm/shared/state';
 import { useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
-import { CmCom } from 'shared/const/cm/Com';
+import { CmComWid } from 'shared/api';
 import { useCmBroadcastSlidesContext } from '../state/slides';
 
-export const useCmBroadcastScreenComNavigations = () => {
-  const favourite = useCmComFavouriteList();
-  const selected = useCmComSelectedList();
+export const useCmBroadcastScreenComNavigationComws = () => {
+  const favComws = useAtomValue(cmComFavoriteComsAtom);
+  const selComws = useAtomValue(cmComSelectedComwsAtom);
   const openListMode = useAtomValue(cmOpenComListModeAtom);
+
+  const comPack = useCmComCurrentComPackContext();
+
+  return {
+    comPack,
+    comws: openListMode === 'fav' ? favComws : openListMode === 'sel' ? selComws : comPack.comws,
+  };
+};
+
+export const useCmBroadcastScreenComNavigations = () => {
   const ccom = useCmComCurrent();
   const navigate = useNavigate();
-  const setCom: (com: CmCom) => void = useCallback(
-    (com: CmCom) =>
+  const setCom = useCallback(
+    (comw: CmComWid) =>
       navigate({
         to: '.',
-        search: prev =>
-          ({
-            ...(prev as object),
-            comw: com.wid,
-          }) as object,
+        search: prev => ({ ...(prev as object), comw }) as object,
       }),
     [navigate],
   );
 
-  const comPack = useCmComCurrentComPackContext();
-  const coms =
-    openListMode === 'fav' ? favourite.favouriteComs : openListMode === 'sel' ? selected.selectedComs : comPack.list;
+  const { comws } = useCmBroadcastScreenComNavigationComws();
   const { setSlidei } = useCmBroadcastSlidesContext();
 
   return {
-    coms,
-    comPack,
     prevCom: useCallback(() => {
-      const comi = getComi(ccom?.wid, coms);
+      const comi = getComi(ccom?.wid, comws);
       if (comi < 0) return;
-      const nextCom = coms[comi === 0 ? coms.length - 1 : comi - 1];
+      const nextCom = comws[comi === 0 ? comws.length - 1 : comi - 1];
 
       setCom(nextCom);
       setSlidei(0);
       scrollToView(nextCom);
-    }, [ccom?.wid, coms, setCom, setSlidei]),
+    }, [ccom?.wid, comws, setCom, setSlidei]),
     nextCom: useCallback(() => {
-      const comi = getComi(ccom?.wid, coms);
+      const comi = getComi(ccom?.wid, comws);
       if (comi < 0) return;
-      const nextCom = coms[comi === coms.length - 1 ? 0 : comi + 1];
+      const nextCom = comws[comi === comws.length - 1 ? 0 : comi + 1];
 
       setCom(nextCom);
       setSlidei(0);
       scrollToView(nextCom);
-    }, [ccom?.wid, coms, setCom, setSlidei]),
+    }, [ccom?.wid, comws, setCom, setSlidei]),
   };
 };
 
-const getComi = (comw?: number, coms?: CmCom[]) => {
+const getComi = (comw?: number, coms?: CmComWid[]) => {
   if (!coms || comw == null) return -1;
-  return coms.findIndex(com => comw === com.wid);
+  return coms.findIndex(cw => comw === cw);
 };
 
-const scrollToView = (com: CmCom) => {
-  const comFace = document.getElementById(`${cmComFaceCurrentComwIdPrefix}${com.wid}`);
+const scrollToView = (comw: CmComWid) => {
+  const comFace = document.getElementById(`${cmComFaceCurrentComwIdPrefix}${comw}`);
   if (comFace) comFace.scrollIntoView({ block: 'center' });
 };

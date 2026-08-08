@@ -2,7 +2,6 @@ import { metronomeCurrentBpmAtom, metronomeCurrentMeterSizeAtom } from '#widgets
 import { CmBroadcast } from '$cm/entities/broadcast';
 import {
   CmComCurrentComPackContext,
-  CmComListContextValue,
   CmComOpenComLinkRendererContext,
   CmComOpenLinkRenderer,
   CmComOpenRouteProps,
@@ -16,7 +15,6 @@ import { FileRoutesByPath, Link, useParams, useSearch } from '@tanstack/react-ro
 import { atom, useAtomValue } from 'atomaric';
 import { JSX, useEffect } from 'react';
 import { CmCatWid, CmComWid } from 'shared/api';
-import { CmCom } from 'shared/const/cm/Com';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { CmComInScheduleWid } from '../state/contexts';
@@ -26,7 +24,7 @@ interface Props<Path extends keyof FileRoutesByPath> {
   isIgnoreSearch?: boolean;
   path: Path;
   RouteComponent: () => JSX.Element;
-  useComListPack: () => CmComListContextValue;
+  useComwList: () => CmComWid[];
   BroadcastComponent?: () => JSX.Element;
 }
 
@@ -35,7 +33,7 @@ let emptyTextAtom;
 export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>({
   RouteComponent,
   path,
-  useComListPack,
+  useComwList,
   BroadcastComponent,
   isIgnoreSearch,
 }: Props<Path>) => {
@@ -43,7 +41,7 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>({
     const { comw, tran, schw } = useSearch({ from: path }) as CmComOpenRouteProps;
     const { catw } = useParams({ from: path }) as { catw?: string };
     const com = useCmCom(comw, schw);
-    const comListPack = useComListPack();
+    const comws = useComwList();
     const termAtom = isIgnoreSearch ? takeCatTermAtom(catw ? +catw : CmCatWid.all) : (emptyTextAtom ??= atom(''));
     const term = useAtomValue(termAtom);
     const meterSize = com?.meterSize ?? CmComMetricNum.Four;
@@ -59,12 +57,11 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>({
     const render = (node: React.ReactNode) =>
       comw != null && term && !schw ? (
         <CmComWithComListSearchFilterInput
-          Constructor={CmCom}
-          coms={comListPack.list}
+          comws={comws}
           termAtom={termAtom}
         >
           {({ searchedComs, wordFounds }) => (
-            <CmComCurrentComPackContext value={{ ...comListPack, list: searchedComs }}>
+            <CmComCurrentComPackContext value={{ comws: searchedComs }}>
               {wordFounds[comw] ? (
                 <CmComWithSearchedWords wordFounds={wordFounds[comw]}>{node}</CmComWithSearchedWords>
               ) : (
@@ -74,7 +71,7 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>({
           )}
         </CmComWithComListSearchFilterInput>
       ) : (
-        <CmComCurrentComPackContext value={comListPack}>{node}</CmComCurrentComPackContext>
+        <CmComCurrentComPackContext value={{ comws }}>{node}</CmComCurrentComPackContext>
       );
 
     return (

@@ -25,7 +25,7 @@ export const useCmComFaceListShownLimitsController = (
     if (props.titles) {
       initialLimits = { start: 0, finish: props.list.length, initStart: 0, initFinish: props.list.length };
     } else {
-      let ccomi = checkIsNumber(lastOpenComw) ? props.list.findIndex(com => com.wid === lastOpenComw) || 0 : 0;
+      let ccomi = checkIsNumber(lastOpenComw) ? props.list.findIndex(com => com.w === lastOpenComw) || 0 : 0;
       ccomi = ccomi < 0 ? 0 : 0;
 
       const startLimitPlus = initComsAfter - (props.list.length - ccomi);

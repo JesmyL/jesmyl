@@ -1,23 +1,21 @@
 import { translateBase } from '#basis/locale';
-import { useCmCat } from '$cm/entities/cat';
-import { useCmComLaterList, useCmComList } from '$cm/entities/com';
+import { useCmCatICcat } from '$cm/entities/cat';
+import { useCmComAllWidList, useCmComLaterList } from '$cm/entities/com';
 import { CmComFaceList } from '$cm/entities/com-face';
 import { CmCatPage } from '$cm/pages/CatPage';
-import { cmIDB } from '$cm/shared/state';
-import { useLiveQuery } from 'dexie-react-hooks';
+import { CmCatWid } from 'shared/api';
 
 export const CmAllCatPage = () => {
-  const cat = useCmCat(0);
+  const icat = useCmCatICcat(CmCatWid.all);
   const { laterComws } = useCmComLaterList();
-  const fullComsCount = useLiveQuery(() => cmIDB.db.coms.count());
-  const coms = useCmComList();
+  const comws = useCmComAllWidList();
 
   return (
     <CmCatPage
-      cat={cat}
-      comsCount={fullComsCount ?? 0}
+      icat={icat}
+      comsCount={comws?.length ?? 0}
       withoutBackButton
-      coms={coms}
+      comws={comws}
       topNodeRender={term => (
         <>
           {!term && !!laterComws?.length && (

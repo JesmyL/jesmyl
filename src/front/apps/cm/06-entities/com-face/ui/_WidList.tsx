@@ -1,4 +1,4 @@
-import { useCmComList } from '$cm/entities/com';
+import { useCmComIComList } from '$cm/entities/com';
 import { CmComWid } from 'shared/api';
 import { itNNil } from 'shared/utils';
 import { ICmComFaceList } from '../model/model';
@@ -10,15 +10,15 @@ interface Props extends ICmComFaceList {
 }
 
 export const CmComFaceWidList = ({ list, ...comProps }: Props) => {
-  const listComs = useCmComList(list);
+  const listComs = useCmComIComList(list);
   const filteredComs = listComs.filter(itNNil);
-  const coms = filteredComs.length === listComs.length ? listComs : filteredComs;
+  const icoms = filteredComs.length === listComs.length ? listComs : filteredComs;
 
   return (
     <>
-      {!coms.length || (
+      {!icoms.length || (
         <CmComFaceListComList
-          list={coms}
+          list={icoms}
           {...comProps}
         />
       )}

@@ -1,31 +1,18 @@
-import { translateBase } from '#basis/locale';
-import { CmComListContextValue } from '$cm/entities/com';
-import { useCmComSelectedList } from '$cm/ext';
+import { cmComSelectedComwsAtom } from '$cm/entities/com';
 import { CmSelectedComs } from '$cm/pages/SelectedComsPage';
 import { makeCmComNestedRoute } from '$cm/shared/lib';
 import { createFileRoute } from '@tanstack/react-router';
-import { useMemo } from 'react';
+import { useAtomValue } from 'atomaric';
 
 export const Route = createFileRoute('/cm/li/sel')(
   makeCmComNestedRoute({
     path: '/cm/li/sel',
     RouteComponent,
-    useComListPack,
+    useComwList: () => useAtomValue(cmComSelectedComwsAtom),
     isIgnoreSearch: true,
   }),
 );
 
 function RouteComponent() {
   return <CmSelectedComs />;
-}
-
-function useComListPack(): CmComListContextValue {
-  const list = useCmComSelectedList().selectedComs;
-
-  return useMemo(() => {
-    return {
-      list,
-      pageTitlePostfix: ' - ' + translateBase(it => it.sel),
-    };
-  }, [list]);
 }
