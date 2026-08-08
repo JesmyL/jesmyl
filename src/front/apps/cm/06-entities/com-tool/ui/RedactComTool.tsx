@@ -1,21 +1,21 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { translateBase } from '#basis/locale';
 import { CmEditorEditComTool } from '$cm+editor/ext';
-import { useCmComLastOpenComw } from '$cm/entities/com';
-import { useCmComInScheduleWid } from '$cm/shared/state/contexts';
+import { cmComLastOpenSchwAtom, useCmComLastOpenComw } from '$cm/entities/com';
+import { useAtomValue } from 'atomaric';
 import { MenuComToolName } from 'shared/api';
 import { CmComTool } from '../ComTool';
 
 export default function CmComToolRedact() {
   const checkAccess = useCheckUserAccessRightsInScope();
-  const ccomw = useCmComLastOpenComw();
-  const schw = useCmComInScheduleWid();
+  const comw = useCmComLastOpenComw();
+  const schw = useAtomValue(cmComLastOpenSchwAtom);
 
   if (!checkAccess('cm', 'EDIT')) return;
 
   return (
     <CmEditorEditComTool
-      ccomw={ccomw}
+      comw={comw}
       schw={schw}
       toolNode={
         <CmComTool

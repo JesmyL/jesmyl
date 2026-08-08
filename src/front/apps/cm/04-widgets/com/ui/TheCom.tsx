@@ -1,5 +1,5 @@
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
-import { cmComChordHardLevelAtom, CmComNotFoundPage, useCmComOrCurrent } from '$cm/entities/com';
+import { cmComChordHardLevelAtom, CmComNotFoundPage, useCmCom } from '$cm/entities/com';
 import { CmComOrderList } from '$cm/entities/com-order';
 import { useAtomValue } from 'atomaric';
 import { RefObject } from 'react';
@@ -19,7 +19,7 @@ interface Props {
 }
 
 export const TheCmCom = ({ comw, chordVisibleVariant, ...props }: Props) => {
-  const com = useCmComOrCurrent(comw);
+  const com = useCmCom(comw);
   const chordHardLevel = useAtomValue(cmComChordHardLevelAtom);
 
   if (com == null) return <CmComNotFoundPage />;

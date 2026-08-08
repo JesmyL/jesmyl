@@ -26,11 +26,10 @@ export const useCmCatComws = (catw: CmCatWid) => useCmCatMapComws(useCmCatICcat(
 export const useCmCatICcat = (catw?: CmCatWid) =>
   useLiveQuery(async () => (catw ? cmIDB.db.cats.get(catw) : makeDefICat()), [catw]);
 
-const makeDefICat = () =>
-  ({
-    k: 'full',
-    m: 0,
-    t: 'all',
-    n: translateBase(it => it.cm.cat.li.all),
-    w: CmCatWid.all,
-  }) satisfies IExportableCat;
+const makeDefICat = (): IExportableCat => ({
+  k: 'full',
+  m: 0,
+  t: 'all',
+  n: translateBase(it => it.cm.cat.li.all),
+  w: CmCatWid.all,
+});

@@ -1,7 +1,7 @@
 export { CmEditorCompositionsCatSpecialSearches } from '$cm+editor/pages/CompositionsPage/ui/SpecialSearches';
 export {
-  CmAudioMarkControlButtonsContext as CmComOrderAudioMarkControlButtonsContext,
-  useCmAudioMarkControlButtonsContext as useCmComOrderAudioMarkControlButtonsContext,
+  CmAudioMarkControlButtonsContext,
+  useCmAudioMarkControlButtonsContext,
 } from '$cm/entities/AudioMarkControlButtonsContext';
 export { useCmCatICcat } from '$cm/entities/cat';
 export { CmChordCard } from '$cm/entities/chord-card/ui/ChordCard';
@@ -14,6 +14,8 @@ export {
   useCmComAllIComList,
   useCmComAllWidList,
   useCmComIComList,
+  useCmComMapFromICom,
+  useCmComMapFromIComWithoutComFixes,
   useCmComPinchFontSize,
   useCmComSelectedList,
 } from '$cm/entities/com';

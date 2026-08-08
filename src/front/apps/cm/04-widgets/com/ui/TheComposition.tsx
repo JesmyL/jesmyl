@@ -6,14 +6,15 @@ import {
   CmComCatMentions,
   CmComNotFoundPage,
   CmComNumber,
+  useCmCom,
   useCmComCurrentComPackContext,
-  useCmComCurrentFixedCom,
+  useCmComLastOpenComw,
 } from '$cm/entities/com';
 import { isCmComAudioPlayerOpenMoversAtom } from '$cm/entities/com-audio-player';
 import { cmComCommentRedactOrdSelectorIdAtom } from '$cm/entities/com-comment';
 import { CmComToolList, useCmComToolMigratableTop } from '$cm/entities/com-tool';
 import { cmComChordVisibleVariantAtom, cmComIsShowCatBindsInCompositionAtom } from '$cm/entities/index';
-import { CmComOrderAudioMarkControlButtonsContext } from '$cm/ext';
+import { CmAudioMarkControlButtonsContext } from '$cm/ext';
 import {
   CmComCommentConstructorTextRulesConstructor,
   useCmComCommentConstructorListenChanges,
@@ -31,7 +32,8 @@ import { TheCmComControlled } from './TheControlledCom';
 export function TheCmComComposition() {
   const [isOpenTools, setIsOpenTools] = useState(false);
 
-  const ccom = useCmComCurrentFixedCom();
+  const comw = useCmComLastOpenComw();
+  const ccom = useCmCom(comw);
   const { laterComws, comListRef } = useCmComCompositionControls(ccom);
   const chordVisibleVariant = useAtomValue(cmComChordVisibleVariantAtom);
   const comToolsNode = useCmComToolMigratableTop();
@@ -80,7 +82,7 @@ export function TheCmComComposition() {
             </div>
           </WithAtomTruthfulValue>
 
-          <CmComOrderAudioMarkControlButtonsContext
+          <CmAudioMarkControlButtonsContext
             com={ccom}
             preTimeAtom={cmComTrackPreSwitchTimeAtom}
             isHideShortTime
@@ -103,7 +105,7 @@ export function TheCmComComposition() {
               comws={comws}
               chordVisibleVariant={chordVisibleVariant}
             />
-          </CmComOrderAudioMarkControlButtonsContext>
+          </CmAudioMarkControlButtonsContext>
 
           <FullContent
             key="com-comment-constructor"

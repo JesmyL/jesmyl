@@ -1,16 +1,16 @@
 import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
+import { WithHook } from '#shared/ui/WithHook';
 import { cmComCommentCurrentComw2OpenAltiDictAtom } from '$cm/entities/com-comment';
 import { CmComOrderList } from '$cm/entities/com-order';
 import { TheCmComWithComments } from '$cm/widgets/com';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
-import React from 'react';
 import { IExportableCom } from 'shared/api';
-import { CmCom } from 'shared/const/cm/Com';
+import { useCmCom } from '../lib/com-selections';
 import { cmComChordHardLevelAtom, cmComSpeedRollKfAtom } from '../state/atoms';
 import { CmComNumber } from './ComNumber';
 
-export function CmComFullscreenExpandList({ coms }: { coms: IExportableCom[] }) {
+export function CmComFullscreenExpandList({ icoms }: { icoms: IExportableCom[] }) {
   const altCommentKeys = useAtomValue(cmComCommentCurrentComw2OpenAltiDictAtom);
   const chordHardLevel = useAtomValue(cmComChordHardLevelAtom);
 
@@ -18,23 +18,31 @@ export function CmComFullscreenExpandList({ coms }: { coms: IExportableCom[] }) 
     <ExpandContent className="com-expand-content h-full">
       <RolledContent speedKfAtom={cmComSpeedRollKfAtom}>
         <div className="inner-content">
-          {coms?.map(icom => {
-            const com = new CmCom(icom, null, null);
-
+          {icoms?.map(icom => {
             return (
-              <React.Fragment key={icom.w}>
-                <div className="com-number">#{<CmComNumber comw={icom.w} />}</div>
-                <div className="uppercase">{altCommentKeys[icom.w] ?? altCommentKeys.lasti}</div>
-                <TheCmComWithComments com={com}>
-                  <CmComOrderList
-                    com={com}
-                    fontSize={-1}
-                    chordVisibleVariant={2}
-                    isMiniAnchor={false}
-                    chordHardLevel={chordHardLevel}
-                  />
-                </TheCmComWithComments>
-              </React.Fragment>
+              <WithHook
+                key={icom.w}
+                hook={useCmCom}
+                args={[icom.w]}
+              >
+                {com =>
+                  com && (
+                    <>
+                      <div className="com-number">#{<CmComNumber comw={icom.w} />}</div>
+                      <div className="uppercase">{altCommentKeys[icom.w] ?? altCommentKeys.lasti}</div>
+                      <TheCmComWithComments com={com}>
+                        <CmComOrderList
+                          com={com}
+                          fontSize={-1}
+                          chordVisibleVariant={2}
+                          isMiniAnchor={false}
+                          chordHardLevel={chordHardLevel}
+                        />
+                      </TheCmComWithComments>
+                    </>
+                  )
+                }
+              </WithHook>
             );
           })}
         </div>

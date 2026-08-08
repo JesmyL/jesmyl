@@ -10,7 +10,7 @@ import {
   useCmComCommentBlockFastReactions,
 } from '$cm/entities/com-comment';
 import { cmComIsComMiniAnchorAtom, cmComSpeedRollKfAtom } from '$cm/entities/index';
-import { useCmComOrderAudioMarkControlButtonsContext } from '$cm/ext';
+import { useCmAudioMarkControlButtonsContext } from '$cm/ext';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Link } from '@tanstack/react-router';
@@ -45,7 +45,7 @@ export const TheCmComControlled = ({ com, comws, chordVisibleVariant }: Props) =
   const listRef = useRef<HTMLDivElement>(null);
   const isOpenMoversButtons = useAtomValue(isCmComAudioPlayerOpenMoversAtom);
 
-  const audioMarkControl = useCmComOrderAudioMarkControlButtonsContext();
+  const audioMarkControl = useCmAudioMarkControlButtonsContext();
 
   const comi = comws.findIndex(w => w === com.wid);
   const nextComw = comi < comws.length - 1 ? comws[comi + 1] : comws[0];

@@ -7,14 +7,14 @@ import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/shared/state/com';
 import {
+  CmAudioMarkControlButtonsContext,
   CmComAudioPlayer,
   CmComAudioPlayerMarksMovers,
   cmComAudioPlayerSwitchIsPlay,
   cmComAudioPlayerUpdateCurrentTime,
-  CmComOrderAudioMarkControlButtonsContext,
   takeCmComAudioPlayerCurrentTime,
+  useCmAudioMarkControlButtonsContext,
   useCmComMarkTextValuesMaker,
-  useCmComOrderAudioMarkControlButtonsContext,
 } from '$cm/ext';
 import { atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
@@ -62,7 +62,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
       };
     }, [pinTime]);
 
-    const { controls: audioMarkButtons, slides: { slides } = {} } = useCmComOrderAudioMarkControlButtonsContext() ?? {};
+    const { controls: audioMarkButtons, slides: { slides } = {} } = useCmAudioMarkControlButtonsContext() ?? {};
 
     const addTime = (value: CmComAudioMarkEditPackValue) => {
       if (!editSrc || takeCmComAudioPlayerCurrentTime() < 0.001) {
@@ -222,7 +222,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
     const pinTime = useAtomValue(pinTimeAtom());
 
     return (
-      <CmComOrderAudioMarkControlButtonsContext
+      <CmAudioMarkControlButtonsContext
         com={ccom}
         isNeedCompute
         preTimeAtom={preSwitchTimeAtom()}
@@ -256,7 +256,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
         )}
       >
         <Child ccom={ccom} />
-      </CmComOrderAudioMarkControlButtonsContext>
+      </CmAudioMarkControlButtonsContext>
     );
   };
 });

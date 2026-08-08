@@ -14,14 +14,15 @@ import { CmComWidDef } from 'shared/api';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { twMerge } from 'tailwind-merge';
-import { useCmComCurrentFixedCom } from '../com/lib/com-selections';
+import { useCmCom, useCmComLastOpenComw } from '../com/lib/com-selections';
 import { cmComChordVisibleVariantAtom, cmComFontSizeAtom } from '../com/state/atoms';
 import { CmComCatMentions } from '../com/ui/ComCatMentions';
 import { CmComJoinGroupList } from '../ComJoinGroupList';
 import { useCmComToolMigratableList } from './lib/useMigratableComTools';
 
 export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => {
-  const ccom = useCmComCurrentFixedCom();
+  const comw = useCmComLastOpenComw();
+  const ccom = useCmCom(comw);
   const fontSize = useAtomValue(cmComFontSizeAtom);
   const chordVisibleVariant = useAtomValue(cmComChordVisibleVariantAtom);
   const comToolsNode = useCmComToolMigratableList();

@@ -3,11 +3,11 @@ import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
-import { CmComOrderList } from '$cm/ext';
+import { CmComOrderList, useCmComMapFromIComWithoutComFixes } from '$cm/ext';
 import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
 import { IExportableCom } from 'shared/api';
+import { chordBemoleEquivalent } from 'shared/utils/cm/com/const';
 import { arrayByLength } from 'shared/utils/object.utils';
 import { twMerge } from 'tailwind-merge';
 
@@ -21,10 +21,12 @@ export const CmEditorComEditTransposition = ({
   onChange: (position: number) => Promise<unknown>;
 }) => {
   isOpenModalAtom ??= atom(false);
-  const com = new EditableCom(icom, null, null);
+  const com = useCmComMapFromIComWithoutComFixes(icom);
 
-  const [initialPosition] = useState(com.transPosition);
+  const [initialPosition] = useState(com?.transPosition ?? 0);
   const [iconOnLoad, setIconOnLoad] = useState('');
+
+  if (!com) return;
 
   return (
     <>
@@ -33,7 +35,7 @@ export const CmEditorComEditTransposition = ({
         icon="Notification01"
         postfix={
           <>
-            Тональность — <span className="text-x7">{com.tonica}</span>
+            Тональность — <span className="text-x7">{com.getFixedTonica()}</span>
           </>
         }
       />
@@ -45,7 +47,7 @@ export const CmEditorComEditTransposition = ({
           {arrayByLength(12, i => i)
             .reverse()
             .map(position => {
-              const transposedChord = com.transposeBlock(com.tonica, position - com.transPosition);
+              const transposedChord = com.transposeBlock(com.tonica, position);
 
               return transposedChord === iconOnLoad ? (
                 <TheIconLoading
@@ -64,7 +66,7 @@ export const CmEditorComEditTransposition = ({
                     isOpenModalAtom.reset();
                     setIconOnLoad('');
                   }}
-                  postfix={transposedChord}
+                  postfix={com.isBemoled ? chordBemoleEquivalent[transposedChord] || transposedChord : transposedChord}
                 />
               );
             })}

@@ -55,7 +55,7 @@ export const CmComLocalListToolsPopup = (props: { icoms: IExportableCom[] | und;
         openAtom={isOpenListAtom}
         containerClassName="p-0"
       >
-        <CmComFullscreenExpandList coms={props.icoms} />
+        <CmComFullscreenExpandList icoms={props.icoms} />
       </FullContent>
     </>
   );

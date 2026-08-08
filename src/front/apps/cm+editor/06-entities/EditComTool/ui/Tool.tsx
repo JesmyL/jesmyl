@@ -3,18 +3,18 @@ import { Link } from '@tanstack/react-router';
 import { CmComWid, ScheduleWidgetWid } from 'shared/api';
 
 export const CmEditorEditComTool = ({
-  ccomw,
+  comw,
   toolNode,
   schw,
 }: {
   toolNode: React.ReactNode;
-  ccomw: CmComWid | nil;
+  comw: CmComWid | nil;
   schw: ScheduleWidgetWid | nil;
 }) => {
   const linkNode = (
     <Link
       to="/cm/edit/coms/$comw/$tab"
-      params={{ comw: `${ccomw ?? 0}`, tab: 'watch' }}
+      params={{ comw: `${comw ?? 0}`, tab: 'watch' }}
     >
       {toolNode}
     </Link>
@@ -24,7 +24,7 @@ export const CmEditorEditComTool = ({
     return (
       <CmEditorEditComEventInterpretation
         schw={schw}
-        comw={ccomw}
+        comw={comw}
         toolNode={toolNode}
         linkNode={linkNode}
       />

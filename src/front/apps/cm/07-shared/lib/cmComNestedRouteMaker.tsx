@@ -2,6 +2,8 @@ import { metronomeCurrentBpmAtom, metronomeCurrentMeterSizeAtom } from '#widgets
 import { CmBroadcast } from '$cm/entities/broadcast';
 import {
   CmComCurrentComPackContext,
+  cmComLastOpenComwAtom,
+  cmComLastOpenSchwAtom,
   CmComOpenComLinkRendererContext,
   CmComOpenLinkRenderer,
   CmComOpenRouteProps,
@@ -9,7 +11,6 @@ import {
   CmComWithSearchedWords,
   useCmCom,
 } from '$cm/entities/com';
-import { cmComLastOpenComwAtom } from '$cm/entities/index';
 import { TheCmComComposition } from '$cm/widgets/com';
 import { FileRoutesByPath, Link, useParams, useSearch } from '@tanstack/react-router';
 import { atom, useAtomValue } from 'atomaric';
@@ -17,7 +18,6 @@ import { JSX, useEffect } from 'react';
 import { CmCatWid, CmComWid } from 'shared/api';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
-import { CmComInScheduleWid } from '../state/contexts';
 import { takeCatTermAtom } from './Cat';
 
 interface Props<Path extends keyof FileRoutesByPath> {
@@ -49,10 +49,13 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>({
 
     useEffect(() => {
       if (comw) cmComLastOpenComwAtom.set(comw);
+      if (schw) cmComLastOpenSchwAtom.set(schw);
 
       metronomeCurrentMeterSizeAtom.set(meterSize);
       metronomeCurrentBpmAtom.set(beatsPerMinute);
-    }, [beatsPerMinute, comw, meterSize]);
+
+      return () => cmComLastOpenSchwAtom.set(null);
+    }, [beatsPerMinute, comw, meterSize, schw]);
 
     const render = (node: React.ReactNode) =>
       comw != null && term && !schw ? (
@@ -76,19 +79,17 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>({
 
     return (
       <CmComOpenComLinkRendererContext value={goToComLinkRenderer}>
-        <CmComInScheduleWid value={schw}>
-          {tran ? (
-            BroadcastComponent ? (
-              render(<BroadcastComponent />)
-            ) : (
-              render(<CmBroadcast />)
-            )
-          ) : com || comw != null ? (
-            render(<TheCmComComposition />)
+        {tran ? (
+          BroadcastComponent ? (
+            render(<BroadcastComponent />)
           ) : (
-            <RouteComponent />
-          )}
-        </CmComInScheduleWid>
+            render(<CmBroadcast />)
+          )
+        ) : com || comw != null ? (
+          render(<TheCmComComposition />)
+        ) : (
+          <RouteComponent />
+        )}
       </CmComOpenComLinkRendererContext>
     );
   };
