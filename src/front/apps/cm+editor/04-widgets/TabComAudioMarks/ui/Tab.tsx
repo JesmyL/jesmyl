@@ -80,7 +80,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
     };
 
     useEffect(() => {
-      if (!ccom.audio.length) {
+      if (!ccom.audio?.length) {
         srcOnEditAtom().reset();
         return;
       }
@@ -99,7 +99,8 @@ export const CmEditorTabComAudioMarks = iife(() => {
     return (
       <div className="mt-10">
         <ButtonGroup.Root className="mb-10">
-          {ccom.audio.length > 1 &&
+          {ccom.audio &&
+            ccom.audio.length > 1 &&
             ccom.audio.map((src, i) => (
               <Button
                 key={i}
@@ -119,7 +120,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
           <>
             <CmComAudioPlayer
               className="mb-20 sticky top-8! bg-x1 pb-5"
-              audioLinks={[editSrc]}
+              links={editSrc}
               addRender={src => (
                 <div className="flex gap-5 w-full">
                   <Button

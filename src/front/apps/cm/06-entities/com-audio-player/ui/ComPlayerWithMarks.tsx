@@ -9,7 +9,7 @@ import { CmComAudioPlayer } from './ComPlayer';
 import { CmComAudioPlayerMarksMovers } from './ComPlayerMarksMovers';
 
 interface Props {
-  audioLinks: HttpNumLeadLink[];
+  links: HttpNumLeadLink | HttpNumLeadLink[];
   com: CmCom;
   className?: string;
   hideMarksForce?: boolean;
@@ -21,7 +21,7 @@ export const CmComAudioPlayerWithMarks = (props: Props) => {
   return (
     <CmComAudioPlayer
       className={twMerge('fixed top-(--header-height) left-0 w-full z-20', props.className)}
-      audioLinks={props.audioLinks}
+      links={props.links}
       addRender={src =>
         !props.hideMarksForce &&
         isOpenButtons && (

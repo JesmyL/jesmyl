@@ -147,6 +147,7 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
     chBlockConfig: 'Аккорд блогының конфигі',
     hideChBlock: 'Аккорд блогының конфигін алып тастау',
     insertChBlock: 'Аккорд блогының конфигін қосу',
+    audioPlayErr: 'Аудионы ойнату қатесі',
 
     linnes: 'Жолдар',
     chBlocks: 'Аккорд блоктары',

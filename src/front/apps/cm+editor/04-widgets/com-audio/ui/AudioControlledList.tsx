@@ -21,7 +21,7 @@ export const CmEditorComAudioControlledList = ({ srcs, onToggle, icon, isCanDele
             key={src}
             className="com-audio-track flex gap-2 my-2 w-full"
           >
-            <CmComAudioPlayer audioLinks={[src]} />
+            <CmComAudioPlayer links={src} />
             {isCanDelete !== false && (
               <TheIconLoading
                 isLoading={tracksInProcess.includes(src)}

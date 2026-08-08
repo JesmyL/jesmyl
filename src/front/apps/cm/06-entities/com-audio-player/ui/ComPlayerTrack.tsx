@@ -15,7 +15,7 @@ let userChangeTimeout: TimeOut;
 
 interface Props {
   src: HttpNumLeadLink;
-  timeRender?: (timeNode: React.ReactNode, src: HttpNumLeadLink) => React.ReactNode;
+  timeRender?: (timeNode: React.ReactNode) => React.ReactNode;
 }
 
 export const CmComAudioPlayerTrack = (props: Props) => {
@@ -29,7 +29,7 @@ export const CmComAudioPlayerTrack = (props: Props) => {
     <Track
       currentTime={0}
       duration={0}
-      time={props.timeRender?.(time, props.src) ?? time}
+      time={props.timeRender?.(time) ?? time}
     />
   );
 };
@@ -62,7 +62,7 @@ const TrackWithCurrents = (props: Props) => {
     <Track
       currentTime={currentTime}
       duration={useCmComAudioPlayerDuration()}
-      time={props.timeRender?.(time, props.src) ?? time}
+      time={props.timeRender?.(time) ?? time}
     />
   );
 };

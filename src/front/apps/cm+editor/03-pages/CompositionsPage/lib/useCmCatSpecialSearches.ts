@@ -70,7 +70,7 @@ export const useCmEditorCompositionsCatSpecialSearches = (): Record<
 
   return useMemo(
     () => ({
-      '@audioLess': { title: 'Песни без аудио', map: async coms => coms.filter(com => !com.audio.length) },
+      '@audioLess': { title: 'Песни без аудио', map: async coms => coms.filter(com => !com.audio?.length) },
       '@lineLen:': {
         title: `Со сторкой больше чем:элементов[${maxAvailableComLineLength}]`,
         map: async (coms, term) => {

@@ -10,8 +10,7 @@ export const cmEditComBusyTsjrpcMethods = {
     const { auth, client, visitInfo } = tool;
 
     if (!(client instanceof WebSocket)) return;
-    if (auth == null || auth.fio == null || auth.login == null || visitInfo == null)
-      throw 'Авторизация не действительна';
+    if (!auth || !auth.fio || !auth.login || !visitInfo) throw 'Авторизация не действительна';
 
     const comBusy: ComEditBusy = {
       comw,

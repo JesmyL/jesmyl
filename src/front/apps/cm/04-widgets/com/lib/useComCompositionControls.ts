@@ -26,8 +26,8 @@ export const useCmComCompositionControls = (ccom: CmCom | nil) => {
   }, [addLaterComw, ccom?.wid]);
 
   useEffect(() => {
-    if (!cmComAudioPlayerIsPlayAtom.get() && !ccom?.audio.includes(cmComAudioPlayerGetSrc()!)) {
-      if (ccom?.audio[0]) cmComAudioPlayerSetSrc(ccom.audio[0]);
+    if (!cmComAudioPlayerIsPlayAtom.get() && !ccom?.audio?.includes(cmComAudioPlayerGetSrc() as never)) {
+      if (ccom?.audio?.[0]) cmComAudioPlayerSetSrc(ccom.audio[0]);
     }
   }, [ccom?.audio]);
 

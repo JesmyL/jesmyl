@@ -63,7 +63,7 @@ export const CmPlayerPage = () => {
         : debouncedOpenComListMode === 'sel'
           ? selectedComs
           : allComs
-      ).filter(com => com.audio.length),
+      ).filter(com => com.audio?.length),
     [allComs, favouriteComs, debouncedOpenComListMode, selectedComs],
   );
 
@@ -110,7 +110,7 @@ export const CmPlayerPage = () => {
         }
 
         const nextCom = findNextCom(search.comw, coms);
-        if (nextCom == null) return search as never;
+        if (!nextCom?.audio) return search as never;
 
         cmComAudioPlayerSetSrc(nextCom.audio[0]);
 
@@ -171,7 +171,7 @@ export const CmPlayerPage = () => {
             comDescription={
               !isMobileDevice
                 ? com => {
-                    return com.audio.map(src => (
+                    return com.audio?.map(src => (
                       <Button
                         key={src}
                         icon="Computer"

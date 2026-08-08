@@ -9,7 +9,7 @@ import { CmMp3Rule } from 'shared/api';
 
 export const CmEditorMp3RulesPage = () => {
   const [newRules, updateNewRules] = useState<CmMp3Rule[]>([]);
-  const [mp3Rules] = useCmMp3Rules();
+  const { data: mp3Rules } = useCmMp3Rules();
   const [isOpenNewRule, setIsOpenNewRule] = useState(false);
   const checkAccess = useCheckUserAccessRightsInScope();
   const isCanUpdate = checkAccess('cm', 'MP3', 'U');
@@ -20,7 +20,7 @@ export const CmEditorMp3RulesPage = () => {
       headTitle="Редактор MP3 правил"
       content={
         <>
-          {mp3Rules.map(rule => {
+          {mp3Rules?.map(rule => {
             return (
               <CmEditorMp3RuleEditor
                 key={rule.w}

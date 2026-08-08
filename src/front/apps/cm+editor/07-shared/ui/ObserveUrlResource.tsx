@@ -18,7 +18,7 @@ export const ObserveUrlResource = ({
 }) => {
   const [url, setUrl] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [mp3Rules] = useCmMp3Rules();
+  const { data: mp3Rules } = useCmMp3Rules();
 
   useEffect(() => {
     try {

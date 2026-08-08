@@ -4,20 +4,21 @@ import styled from '@emotion/styled';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { HttpNumLeadLink } from 'shared/api';
+import { checkIsArray } from 'shared/utils/checkIs';
 import { twMerge } from 'tailwind-merge';
 import { CmComAudioPlayerPlayButton } from './ComPlayerPlayButton';
 import { CmComAudioPlayerTrack } from './ComPlayerTrack';
 
 interface Props {
-  audioLinks: HttpNumLeadLink[];
-  timeRender?: (timeNode: React.ReactNode, currentSrc: HttpNumLeadLink) => React.ReactNode;
+  links: HttpNumLeadLink | HttpNumLeadLink[];
+  timeRender?: (timeNode: React.ReactNode) => React.ReactNode;
   addRender?: (currentSrc: HttpNumLeadLink) => React.ReactNode;
   className?: string;
 }
 
-export const CmComAudioPlayer = ({ audioLinks, timeRender, addRender, className }: Props) => {
+export const CmComAudioPlayer = ({ links, timeRender, addRender, className }: Props) => {
   const [currentVariant, setCurrentVariant] = useState(0);
-  const src = audioLinks[currentVariant];
+  const src = checkIsArray(links) ? links[currentVariant] : links;
   const linkLeadNum = parseInt(src, 10);
 
   const linkHostQuery = useQuery({
@@ -37,11 +38,11 @@ export const CmComAudioPlayer = ({ audioLinks, timeRender, addRender, className 
           {linkHostQuery.data?.host}
         </div>
 
-        {audioLinks.length > 1 && (
+        {checkIsArray(links) && links.length > 1 && (
           <div
             className="current-variant-badge bg-x3 text-x2 strong-size flex center pointer"
             onClick={() => {
-              setCurrentVariant(currentVariant > audioLinks.length - 2 ? 0 : currentVariant + 1);
+              setCurrentVariant(currentVariant > links.length - 2 ? 0 : currentVariant + 1);
             }}
           >
             {currentVariant + 1}

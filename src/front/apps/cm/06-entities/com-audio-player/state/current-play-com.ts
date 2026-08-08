@@ -1,8 +1,19 @@
+import { translateBase } from '#basis/locale';
 import { addEventListenerPipe } from '#shared/lib/hookEffectPipe';
+import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { atom, useAtomValue } from 'atomaric';
 import { HttpNumLeadLink, hostConfig } from 'shared/api';
+import { toast } from 'sonner';
 
 const audioElement = document.createElement('audio');
+
+audioElement.preload = 'none';
+audioElement.addEventListener('error', () =>
+  toast(
+    translateBase(it => it.cm.audioPlayErr),
+    makeToastKOMoodConfig(),
+  ),
+);
 
 const comPlayerDurationAtom = atom(0.01);
 const comPlayerCurrentTimeAtom = atom(0);

@@ -29,7 +29,7 @@ export const CmEditorComTabAudio = ({ ccom }: { ccom: EditableCom }) => {
   return (
     <>
       <h2>{translateBase(it => it.cm.com.new.bindedAudio)}</h2>
-      {ccom.audio.length ? (
+      {ccom.audio?.length ? (
         <CmEditorComAudioControlledList
           srcs={ccom.audio}
           icon="CancelCircle"

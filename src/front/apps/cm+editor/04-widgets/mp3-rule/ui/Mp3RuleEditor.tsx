@@ -14,7 +14,7 @@ export const CmEditorMp3RuleEditor = (
     isCanRedact?: boolean;
   },
 ) => {
-  const [mp3Rules] = useCmMp3Rules();
+  const { data: mp3Rules } = useCmMp3Rules();
   const [url, setUrl] = useState(props.url || '');
   const [attr, setAttr] = useState(props.attr || '');
   const [redirect, setRedirect] = useState(props.rdir || '');
@@ -62,7 +62,7 @@ export const CmEditorMp3RuleEditor = (
           error={redirectError}
           setText={value => {
             setRedirectError(
-              mp3Rules.some(rule => rule.url === value) ? '' : 'Редирект должен быть на известный ресурс',
+              mp3Rules?.some(rule => rule.url === value) ? '' : 'Редирект должен быть на известный ресурс',
             );
 
             setRedirect(value);

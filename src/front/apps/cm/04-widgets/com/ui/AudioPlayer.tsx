@@ -16,10 +16,10 @@ export const CmComAudioPlayerInCompositionPage = ({ ccom }: { ccom: CmCom }) => 
   const isPlay = useAtomValue(cmComAudioPlayerIsPlayAtom);
   const isPlayerHidden = useAtomValue(cmComIsAudioPlayerHiddenAtom);
 
-  const isPlayOtherAudio = !!playSrc && !ccom.audio.includes(playSrc);
+  const isPlayOtherAudio = !!playSrc && !ccom.audio?.includes(playSrc);
 
   useEffect(() => {
-    if (!isPlay && isPlayOtherAudio) cmComAudioPlayerSetSrc(ccom.audio[0]);
+    if (!isPlay && isPlayOtherAudio && ccom.audio?.[0]) cmComAudioPlayerSetSrc(ccom.audio[0]);
   }, [ccom.audio, isPlay, isPlayOtherAudio]);
 
   return (
@@ -28,14 +28,14 @@ export const CmComAudioPlayerInCompositionPage = ({ ccom }: { ccom: CmCom }) => 
       <>
         {!!ccom.audio?.length && (
           <CmComAudioPlayerWithMarks
-            audioLinks={ccom.audio}
+            links={ccom.audio}
             com={ccom}
             className={isPlayOtherAudio ? 'top-[calc(var(--header-height)+31px)]' : ''}
           />
         )}
         {isPlayOtherAudio && isPlay && (
           <CmComAudioPlayerWithMarks
-            audioLinks={[playSrc]}
+            links={playSrc}
             com={ccom}
             hideMarksForce
           />

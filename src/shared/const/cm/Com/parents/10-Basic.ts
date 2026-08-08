@@ -39,7 +39,7 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
   }
 
   get audio() {
-    return this.top.al ?? [];
+    return this.top.al;
   }
 
   get transPosition() {

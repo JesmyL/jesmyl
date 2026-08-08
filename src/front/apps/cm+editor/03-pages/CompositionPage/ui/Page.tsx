@@ -136,7 +136,7 @@ export const CmEditorCompositionPage = ({
             <div className="sticky com-player">
               <CmComAudioPlayerWithMarks
                 className="static"
-                audioLinks={ccom.audio}
+                links={ccom.audio}
                 com={ccom}
               />
             </div>

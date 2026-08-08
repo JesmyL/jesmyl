@@ -45,7 +45,7 @@ export const CmAudioMarkControlButtonsContext = (props: Props) => {
 
 const Child = ({ com, isHideShortTime, isNeedCompute, mapNode, preTimeAtom, children }: Props) => {
   const src = useAtomValue(cmComAudioPlayerPlaySrcAtom);
-  const isActualSrc = !!src && com.audio.includes(src);
+  const isActualSrc = !!src && com.audio?.includes(src);
   const audioTrackMarks = cmIDB.useAudioTrackMarks(com.wid);
   const actualMapNodeRef = useActualRef(mapNode);
   const comMarks = src ? audioTrackMarks?.marks?.[src] : null;

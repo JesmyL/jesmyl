@@ -1,10 +1,9 @@
-import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
+import { useQuery } from '@tanstack/react-query';
 import { cmEditorClientTsjrpcMethods } from './cm-editor.tsjrpc.methods';
 
 export const useCmMp3Rules = () => {
-  return useInvocatedValue(
-    [],
-    ({ aborter }) => cmEditorClientTsjrpcMethods.getMp3RulesList(undefined, { aborter }),
-    [],
-  );
+  return useQuery({
+    queryKey: ['useCmMp3Rules'],
+    queryFn: () => cmEditorClientTsjrpcMethods.getMp3RulesList(),
+  });
 };

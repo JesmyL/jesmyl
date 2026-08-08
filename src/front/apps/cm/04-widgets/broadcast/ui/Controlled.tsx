@@ -55,7 +55,7 @@ export function CmBroadcastControlled(props: Props) {
   const linkToCom = useCmComOpenComLinkRendererContext();
 
   let comList = props.comList ?? coms;
-  if (isTrackBroadcast) comList = comList.filter(com => com.audio.length);
+  if (isTrackBroadcast) comList = comList.filter(com => com.audio?.length);
 
   const com = useCmComCurrent();
 
@@ -146,12 +146,12 @@ export function CmBroadcastControlled(props: Props) {
                     return;
                   }
 
-                  onStartBroadcast(com.wid, com.audio[0] ?? '');
+                  if (com.audio) onStartBroadcast(com.wid, com.audio[0]);
                 }}
                 comDescription={
                   isTrackBroadcast
                     ? com =>
-                        com.audio.map(src => (
+                        com.audio?.map(src => (
                           <Button
                             key={src}
                             icon="ComputerVideo"
