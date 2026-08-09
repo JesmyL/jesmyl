@@ -47,7 +47,7 @@ export const CmEditorComEditTransposition = ({
           {arrayByLength(12, i => i)
             .reverse()
             .map(position => {
-              const transposedChord = com.transposeBlock(com.tonica, position);
+              const transposedChord = com.transposeBlock(com.getTonicaMatch()[0], position);
 
               return transposedChord === iconOnLoad ? (
                 <TheIconLoading

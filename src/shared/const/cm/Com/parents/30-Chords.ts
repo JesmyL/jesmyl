@@ -1,5 +1,5 @@
 import { makeRegExp } from 'regexpert';
-import { checkIsNotNil, checkIsString } from 'shared/utils/checkIs';
+import { checkIsArray, checkIsNotNil, checkIsString } from 'shared/utils/checkIs';
 import {
   aSharpToBChord,
   chordBemoleEquivalent,
@@ -105,23 +105,26 @@ export class CmComChords extends CmComOrders {
     return this.excludedModulations;
   }
 
-  private _tonica?: string;
-  get tonica() {
-    let tonica = this._tonica;
-    if (checkIsString(tonica)) return tonica;
+  private _tonicaParts?: [string, string, string];
+  getTonicaMatch() {
+    let tonicaParts = this._tonicaParts;
+    if (checkIsArray(tonicaParts)) return tonicaParts;
 
-    const chordi = this.top.o?.find(ord => ord.o !== 0 && checkIsNotNil(ord.c))?.c;
-    tonica = this.top.c[chordi ?? -1]?.match(makeRegExp('/[A-H]#?m?/'))?.[0] ?? 'A';
+    const chordi = this.top.o?.find(ord => ord.v !== 0 && checkIsNotNil(ord.c))?.c;
+    const match = this.top.c[chordi ?? -1]?.match(makeRegExp('/([A-H]#?)(m?)/'));
 
-    return (this._tonica = tonica);
+    if (match && checkIsString(match[1]) && checkIsString(match[2])) tonicaParts = [match[0], match[1], match[2]];
+
+    return (this._tonicaParts = tonicaParts ?? ['', '', '']);
   }
 
   getFixedTonica = () => {
-    let resultTonica = this.transposeChord(this.tonica);
+    const match = this.getTonicaMatch();
+    let resultTonica = this.transposeChord(match[1]);
 
     if (this.isBemoled) resultTonica = chordBemoleEquivalent[resultTonica] || resultTonica;
     else resultTonica = aSharpToBChord[resultTonica] || resultTonica;
 
-    return resultTonica;
+    return `${resultTonica}${match[2]}`;
   };
 }
