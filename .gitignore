@@ -42,3 +42,5 @@ yarn-error.log*
 .passw
 
 host-config.json
+
+audio-tmp
