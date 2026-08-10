@@ -3,6 +3,7 @@ import { checkIsArray, checkIsString } from './checkIs';
 import { kzLowerLettersStr, ruLowerLettersStr, slavicLowerLettersStr } from './cm/com/const';
 import { lazyInit } from './lazyInit';
 import { objectKeys } from './object.utils';
+import { transcriptEnToRuText, transcriptRuToEnText } from './ru-en-letters';
 import { quickSort } from './sort';
 import { itIt } from './utils';
 
@@ -30,92 +31,124 @@ export const searchRate = <
   const normalWords = (
     isNumberSearch
       ? searchWord.split(makeRegExp('/0+/'))
-      : searchWord.split(makeRegExp(`/[^a-z0-9'ʼ${slavicLowerLettersStr}${kzLowerLettersStr}]+/i`))
+      : searchWord.split(makeRegExp(`/[^a-z0-9'ʼ\\[\\]\\;,\\.${slavicLowerLettersStr}${kzLowerLettersStr}]+/i`))
   ).filter(itIt);
 
-  const words = normalWords.map(word => word.toLowerCase());
-  const wordRegs = normalWords.map(word => makeRegExp(`/${internationalWordRegInner()(word, isNumberSearch)}/`));
+  const wordsForPositions: string[] = [];
+  const wordGroups: RegExp[][] = [];
+  const innerRegFn = internationalWordRegInner();
+
+  normalWords.forEach(word => {
+    const wordLower = word.toLowerCase();
+    const toRu = transcriptEnToRuText(wordLower);
+    const toEn = transcriptRuToEnText(wordLower);
+
+    const group: RegExp[] = [];
+
+    wordsForPositions.push(wordLower);
+    group.push(makeRegExp(`/${innerRegFn(wordLower, isNumberSearch)}/`));
+
+    if (toRu !== wordLower) {
+      wordsForPositions.push(toRu);
+      group.push(makeRegExp(`/${innerRegFn(toRu, isNumberSearch)}/`));
+    }
+    if (toEn !== wordLower) {
+      wordsForPositions.push(toEn);
+      group.push(makeRegExp(`/${innerRegFn(toEn, isNumberSearch)}/`));
+    }
+
+    wordGroups.push(group);
+  });
 
   return items.reduce((ferries: RetItem[], item, itemi) => {
     const ferry = { item, deep: 0, rate: 0, pos: [] } as never as RetItem;
+    const missingGroupIndices = new Set<number>(wordGroups.keys());
 
-    if (
-      places.some((place, placei) => {
-        ferry.deep = placei;
-        const index = constantPositions.indexOf(place as never);
+    const searchInPlace = (searchPath: unknown[], str: string, level: number) => {
+      str = str.toLowerCase();
+      let hasMatches = false;
 
-        if (index + 1) {
-          const rateIndex = words.findIndex(word =>
-            word && words.length > 1
-              ? `${mapNumListItem(itemi + index)}` === word
-              : `${itemi + index}`.startsWith(word),
-          );
+      for (const g of [...missingGroupIndices]) {
+        const group = wordGroups[g];
+        let bestGroupIndex = -1;
 
-          if (rateIndex + 1) {
-            ferry.rate = 1;
-            return true;
+        for (let i = 0; i < group.length; i++) {
+          const index = str.search(group[i]);
+          if (index >= 0) {
+            if (bestGroupIndex === -1 || index < bestGroupIndex) {
+              bestGroupIndex = index;
+            }
           }
-          return false;
         }
 
-        const searchInPlace = (searchPath: unknown[], str: string, level: number) => {
-          str = str.toLowerCase();
-          let noWord = false;
+        if (bestGroupIndex >= 0) {
+          missingGroupIndices.delete(g);
+          ferry.pos.push(searchPath.concat(bestGroupIndex).join('/'));
+          ferry.rate += bestGroupIndex + level;
+          hasMatches = true;
+        }
+      }
 
-          const currRate = words.reduce((accRate: number | null, _word, wordi) => {
-            if (noWord || !wordRegs[wordi]) return null;
-            const index = str.search(wordRegs[wordi]);
-            if (index < 0) {
-              noWord = true;
-              return null;
+      return hasMatches;
+    };
+
+    const search = (searchPath: unknown[], track: Trace[] | Trace, target: unknown, level: number) => {
+      let searched = false;
+
+      [track].flat().reduce((nestedTarget, trace, tracei, tracea) => {
+        if (!nestedTarget) return null;
+
+        if (trace === searchConstants.INDEX && checkIsArray(nestedTarget)) {
+          nestedTarget.forEach((o, oi) => {
+            const nextTrack = track.slice(tracei + 1);
+            const currentPath = searchPath.concat(`${searchConstants.INDEX}:${oi}`);
+
+            if (nextTrack.length === 0 && checkIsString(o)) {
+              if (searchInPlace(currentPath, o, level)) searched = true;
+            } else {
+              if (search(currentPath, nextTrack, o, (level + tracei) * 10)) searched = true;
             }
+          });
 
-            ferry.pos.push(searchPath.concat(index).join('/'));
+          return null;
+        }
 
-            return (accRate ?? 0) + index + level;
-          }, null);
+        const nextStr = (nestedTarget as Record<string, unknown>)?.['' + trace];
 
-          if (noWord || currRate == null) return false;
+        if (tracei >= tracea.length - 1 && checkIsString(nextStr)) {
+          if (searchInPlace(searchPath.concat(trace), nextStr, level)) searched = true;
+        }
 
-          ferry.rate = currRate;
-          return true;
-        };
+        return nextStr;
+      }, target);
 
-        const search = (searchPath: unknown[], track: Trace[] | Trace, target: unknown, level: number) => {
-          let searched = false;
+      return searched;
+    };
 
-          [track].flat().reduce((nestedTarget, trace, tracei, tracea) => {
-            if (!nestedTarget) return null;
+    places.forEach((place, placei) => {
+      ferry.deep = placei;
+      const index = constantPositions.indexOf(place as never);
 
-            if (trace === searchConstants.INDEX && checkIsArray(nestedTarget)) {
-              searched = nestedTarget.some((o, oi) =>
-                search(
-                  searchPath.concat(`${searchConstants.INDEX[0]}:${oi}`),
-                  track.slice(tracei + 1),
-                  o,
-                  (level + tracei) * 10,
-                ),
-              );
+      if (index + 1) {
+        const rateIndex = wordsForPositions.findIndex(word =>
+          word && wordsForPositions.length > 1
+            ? `${mapNumListItem(itemi + index)}` === word
+            : `${itemi + index}`.startsWith(word),
+        );
 
-              return null;
-            }
+        if (rateIndex + 1) {
+          ferry.rate = 1;
+          wordGroups.forEach((_, g) => missingGroupIndices.delete(g));
+        }
+        return;
+      }
 
-            const nextStr = (nestedTarget as Record<string, unknown>)?.['' + trace];
+      search(checkIsArray(place) ? [place] : [], place, item, placei);
+    });
 
-            if (tracei >= tracea.length - 1 && checkIsString(nextStr)) {
-              searched = searchInPlace(searchPath.concat(trace), nextStr, level);
-            }
-
-            return nextStr;
-          }, target);
-
-          return searched;
-        };
-
-        return search(checkIsArray(place) ? [place[0]] : [], place, item, placei);
-      })
-    )
+    if (missingGroupIndices.size === 0) {
       ferries.push(ferry as never);
+    }
 
     return ferries;
   }, []);
@@ -158,7 +191,7 @@ export const internationalWordRegInner = lazyInit(() => {
   const numberReg = makeRegExp(`/\\d/g`);
 
   const letterRepl = (all: string) => letterReps[all] || letterReps[all.toLowerCase()];
-  const numberRepl = (all: string) => letterReps[all];
+  const numberRepl = (all: string) => numberReps[all];
 
   return (word: string, isNumberSearch: boolean) => {
     return `${(isNumberSearch ? escapeRegExpSymbols(word).replace(numberReg, numberRepl) : escapeRegExpSymbols(word).replace(letterReg, letterRepl)).toLowerCase()}`;
@@ -176,11 +209,11 @@ export const searchRateWithSort = <
   isNumberSearch?: boolean,
 ): { list: Promise<RetItem[]>; reset: () => void } => {
   const { promise, reject, resolve } = Promise.withResolvers<RetItem[]>();
-  const reseter: { t: TimeOut } = { t: undefined };
+  const reseter: { t: ReturnType<typeof setTimeout> | undefined } = { t: undefined };
 
   const result = searchRate<T, R, RetItem>(items, searchWord, places, isNumberSearch);
 
-  setTimeout(() => {
+  reseter.t = setTimeout(() => {
     resolve(quickSort(result, (a, b) => a.rate - b.rate, 3, reseter));
   }, 0);
 
@@ -188,7 +221,7 @@ export const searchRateWithSort = <
     list: promise,
     reset: () => {
       reject();
-      clearTimeout(reseter.t);
+      if (reseter.t) clearTimeout(reseter.t);
     },
   };
 };

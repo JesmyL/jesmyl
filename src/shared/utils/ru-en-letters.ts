@@ -1,4 +1,4 @@
-import { objectKeys } from './object.utils';
+import { mapObjectEntries, objectKeys } from './object.utils';
 
 export const transcriptEnLetterToRuDict = {
   q: 'й',
@@ -47,6 +47,10 @@ export const transcriptEnToRuSymbolDict = {
   ...transcriptEnLetterToRuDict,
 };
 
+export const transcriptRuToEnSymbolDict = Object.fromEntries(
+  mapObjectEntries(transcriptEnToRuSymbolDict, (en, ru) => [ru.toLowerCase(), en]),
+);
+
 export const enLowerLettersSet = new Set(objectKeys(transcriptEnLetterToRuDict));
 
 export const transcriptEnToRuText = (text: string) => {
@@ -55,6 +59,17 @@ export const transcriptEnToRuText = (text: string) => {
 
   for (const letter of text) {
     transcriptedText += transcriptEnToRuSymbolDict[letter as 'a'] ?? letter;
+  }
+
+  return transcriptedText;
+};
+
+export const transcriptRuToEnText = (text: string) => {
+  let transcriptedText = '';
+  text = text.toLowerCase();
+
+  for (const letter of text) {
+    transcriptedText += transcriptRuToEnSymbolDict[letter] ?? letter;
   }
 
   return transcriptedText;
