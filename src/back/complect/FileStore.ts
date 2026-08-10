@@ -2,7 +2,7 @@ import { backConfig } from 'back/config/backConfig';
 import { jsonParseSecure, jsonStringifySecure } from 'back/json-secure';
 import crypto from 'crypto';
 import fs, { StatsListener } from 'fs';
-import { checkIsFunction } from 'shared/utils/checkIs';
+import { checkIsFunction, checkIsNil } from 'shared/utils/checkIs';
 
 const registeredPaths = new Set<string>();
 
@@ -48,11 +48,13 @@ export class FileStore<Value> {
     }
   };
 
-  private writeValue = (value: Value) => {
+  private writeValue = (value: Value, formatIndent: number | nil) => {
     const write = () => {
       const content = this.options?.secureKey
         ? jsonStringifySecure(value, this.options?.secureKey)
-        : JSON.stringify(value);
+        : checkIsNil(formatIndent)
+          ? JSON.stringify(value)
+          : JSON.stringify(value, null, formatIndent);
 
       fs.writeFileSync(this.filePath, content);
     };
@@ -93,20 +95,21 @@ export class FileStore<Value> {
     return { result, mod: this.fileModifiedAt() };
   };
 
-  setValue = (val: Value | ((value: Value) => Value)) => {
+  setValue = (val: Value | ((value: Value) => Value), formatIndent?: number | nil) => {
     const value = checkIsFunction(val) ? val(this.getValue()) : val;
 
     this.value = value;
-    this.writeValue(value);
+    this.writeValue(value, formatIndent);
   };
 
-  updateValue = (updater: (value: Value) => Value) => {
+  updateValue = (updater: (value: Value) => Value, formatIndent?: number | nil) => {
     this.value = updater(this.getValue());
-    this.writeValue(this.getValue());
+    this.writeValue(this.getValue(), formatIndent);
   };
 
-  saveValue = (value?: Value) => {
-    this.writeValue(value ?? this.getValue());
+  saveValue = (formatIndent?: number | nil) => {
+    this.writeValue(this.getValue(), formatIndent);
+    return this.filePath;
   };
 
   fileModifiedAt = (): number => {
