@@ -44,6 +44,8 @@ iife(async () => {
   startCrTgAlarm();
 
   if (hostConfig.isUpdateAllStarts) updateAllStarts();
+
+  if (Do.It) if (backConfig.isTest) await import('./downloadCmAudios').then(m => m.downloadCmAudios());
 });
 
 const langLocales = {
