@@ -4,13 +4,14 @@ import { useConfirm } from '#shared/ui/modal';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
+import { EditableComOrder } from '$cm+editor/shared/classes/EditableComOrder';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { CmComOrderLine, TheCmComOrder, useCmComPinchFontSize } from '$cm/ext';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
-import { CmComWidZero } from 'shared/api';
-import { cmComOrderMakeRepeatPortalKey } from 'shared/utils/cm/repeat-keys';
+import { CmComWidZero, OrderRepeats } from 'shared/api';
+import { cmComOrderMakeRepeatPortalKey, makeCmComOrderRepeatOrSelf } from 'shared/utils/cm/repeat-keys';
 import { twMerge } from 'tailwind-merge';
 import { cmEditorTabComRepeatsOnLoadAtom, cmEditorTabComRepeatsStateAtom } from '../state/atoms';
 import { CmEditorTabComRepeatsCountButtonPanel } from './CountButtonPanel';
@@ -35,7 +36,7 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
 
   useEffect(() => {
     if (isReadySetChordBlock) {
-      cmEditorTabComRepeatsStateAtom.do.$setField(startOrd, flashCount);
+      cmEditorTabComRepeatsStateAtom.do.$setField([startOrd, flashCount]);
       setIsReadySetChordBlock(false);
     }
   }, [flashCount, isReadySetChordBlock, startOrd]);
@@ -216,16 +217,26 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
                                   cmComOrderMakeRepeatPortalKey(+linei, +wordiStr, nextLetter, false),
                                 ];
 
-                          if (startDiap)
-                            cmEditorTabComRepeatsStateAtom.do.$setField(
-                              startOrd,
-                              { [startDiap]: flashCount },
-                              startOrd?.repeats,
-                            );
+                          const start = startDiap
+                            ? ([
+                                [
+                                  startOrd,
+                                  {
+                                    ...makeCmComOrderRepeatOrSelf(startOrd?.repeats),
+                                    [startDiap]: flashCount,
+                                  },
+                                ],
+                              ] satisfies [EditableComOrder | nil, OrderRepeats | nil][])
+                            : [];
 
-                          if (startOrd !== ord && finishDiap) {
-                            cmEditorTabComRepeatsStateAtom.do.$setField(ord, { [finishDiap]: flashCount }, ord.repeats);
-                          }
+                          const finish =
+                            startOrd !== ord && finishDiap
+                              ? ([
+                                  [ord, { ...makeCmComOrderRepeatOrSelf(ord.repeats), [finishDiap]: flashCount }],
+                                ] satisfies [EditableComOrder | nil, OrderRepeats | nil][])
+                              : [];
+
+                          cmEditorTabComRepeatsStateAtom.do.$setField(...start, ...finish);
                         }
                       }}
                     />

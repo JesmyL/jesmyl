@@ -4,6 +4,7 @@ import { propagationStopper } from '#shared/lib/event-funcs';
 import { EditableComOrder } from '$cm+editor/shared/classes/EditableComOrder';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
+import { makeCmComOrderRepeatOrSelf } from 'shared/utils/cm/repeat-keys';
 import { arrayByLength } from 'shared/utils/object.utils';
 import { twMerge } from 'tailwind-merge';
 import { cmEditorTabComRepeatsStateAtom } from '../state/atoms';
@@ -59,11 +60,13 @@ export const CmEditorTabComRepeatsCountButtonPanel = ({ ord }: Props) => {
           icon="Flag03"
           className="button text-x6! bg-x2!"
           onClick={() => {
-            cmEditorTabComRepeatsStateAtom.do.$setField(
+            cmEditorTabComRepeatsStateAtom.do.$setField([
               startOrd,
-              { [`~${startLinei}:${startWordi}`]: flashCount - 1 },
-              start.ord.repeats,
-            );
+              {
+                ...makeCmComOrderRepeatOrSelf(start.ord.repeats),
+                [`~${startLinei}:${startWordi}`]: flashCount - 1,
+              },
+            ]);
           }}
         />
       )}

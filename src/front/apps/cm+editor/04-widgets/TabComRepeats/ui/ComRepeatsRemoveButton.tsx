@@ -120,14 +120,14 @@ export const CmEditorTabComRepeatsRemoveButton = ({ ord, textLinei, wordi }: Pro
 
                           if (startRrepeats && checkIsNotNumber(startRrepeats)) {
                             delete startRrepeats[startKey];
-                            await cmEditorTabComRepeatsStateAtom.do.$setField(startOrd, startRrepeats);
-                          } else await cmEditorTabComRepeatsStateAtom.do.$setField(startOrd, 0);
+                            await cmEditorTabComRepeatsStateAtom.do.$setField([startOrd, startRrepeats]);
+                          } else await cmEditorTabComRepeatsStateAtom.do.$setField([startOrd, 0]);
 
                           if (startOrd !== finOrd && finOrd) {
                             const frepeats = { ...makeCmComOrderRepeatOrSelf(finOrd.repeats) };
 
                             delete frepeats[finKey || '.'];
-                            await cmEditorTabComRepeatsStateAtom.do.$setField(finOrd, frepeats);
+                            await cmEditorTabComRepeatsStateAtom.do.$setField([finOrd, frepeats]);
                           }
 
                           isOpenModalAtom.reset();

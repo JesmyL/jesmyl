@@ -4,6 +4,7 @@ import { IEditableComLineProps } from '$cm+editor/shared/model/Repeats';
 import { atom } from 'atomaric';
 import { CSSProperties } from 'react';
 import { CmComOrderWid, CmComWid, CmComWidZero, OrderRepeats } from 'shared/api';
+import { extractNumber } from 'shared/utils';
 import { makeCmComOrderRepeatOrSelf } from 'shared/utils/cm/repeat-keys';
 import { objectKeys, objectLength } from 'shared/utils/object.utils';
 
@@ -24,28 +25,32 @@ export const cmEditorTabComRepeatsStateAtom = atom(
         return () => set({ ...self.initialValue, comw: CmComWidZero });
       },
 
-      $setField: async (ord: EditableComOrder | nil, repeateds: OrderRepeats | nil, prevs?: OrderRepeats | nil) => {
+      $setField: async (...repArgs: [EditableComOrder | nil, OrderRepeats | nil][]) => {
         const comw = get().comw;
-        if (comw === CmComWidZero || !ord) return;
+        if (comw === CmComWidZero) return;
 
-        const ordw = ord.me.isAnchorInherit ? ord.wid : (ord.me.leadOrd?.wid ?? ord.wid);
-        cmEditorTabComRepeatsOnLoadAtom.do.add(ordw);
-        cmEditorTabComRepeatsStateAtom.do.reComw(comw);
+        const comwRepeatsDict: Record<CmComOrderWid, OrderRepeats> = {};
 
-        const repeats = { ...makeCmComOrderRepeatOrSelf(prevs), ...makeCmComOrderRepeatOrSelf(repeateds) };
-        if (repeats['.'] === 0) delete repeats['.'];
-        const keys = objectKeys(repeats);
+        new Map(repArgs).forEach((repeatsTop, ord) => {
+          if (!ord) return;
+          const ordw = ord.me.isAnchorInherit ? ord.wid : (ord.me.leadOrd?.wid ?? ord.wid);
+          cmEditorTabComRepeatsOnLoadAtom.do.add(ordw);
+          cmEditorTabComRepeatsStateAtom.do.reComw(comw);
 
-        const value =
-          (objectLength(keys) ? (objectLength(keys) === 1 && keys[0] === '.' ? repeats['.'] : repeats) : 0) ?? 0;
+          const repeats = { ...makeCmComOrderRepeatOrSelf(repeatsTop) };
+          if (repeats['.'] === 0) delete repeats['.'];
+          const keys = objectKeys(repeats);
 
-        await cmEditComOrderClientTsjrpcMethods.setRepeats({
-          comw,
-          ordw: ord.wid,
-          value,
+          const value =
+            (objectLength(keys) ? (objectLength(keys) === 1 && keys[0] === '.' ? repeats['.'] : repeats) : 0) ?? 0;
+
+          comwRepeatsDict[ord.wid] = value;
         });
 
-        cmEditorTabComRepeatsOnLoadAtom.do.delete(ordw);
+        if (!objectLength(comwRepeatsDict)) return;
+        await cmEditComOrderClientTsjrpcMethods.setRepeats_v1({ comw, upd: comwRepeatsDict });
+
+        objectKeys(comwRepeatsDict).forEach(key => cmEditorTabComRepeatsOnLoadAtom.do.delete(extractNumber(key)));
       },
     }),
   },

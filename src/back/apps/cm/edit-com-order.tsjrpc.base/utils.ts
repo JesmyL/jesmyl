@@ -1,13 +1,5 @@
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
-import {
-  CmComMod,
-  CmComOrderWid,
-  CmComOrderWidDef,
-  CmComWid,
-  CmComWidDef,
-  IExportableCom,
-  IExportableOrder,
-} from 'shared/api';
+import { CmComOrderWid, CmComOrderWidDef, CmComWid, IExportableCom, IExportableOrder } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { CmComOrder } from 'shared/const/cm/order/Order';
 import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
@@ -48,7 +40,7 @@ export const modifyOrd = <Props extends { ordw: CmComOrderWid; comw: CmComWid }>
     let cmOrd: CmComOrder | nil;
     let ord = com.o?.find(o => o.w === props.ordw);
 
-    const getCmCom = () => (cmCom ??= new CmCom({ ...com, m: CmComMod.def, w: CmComWidDef, al: [] }, null, null));
+    const getCmCom = () => (cmCom ??= new CmCom(com, null, null));
     const getCmComOrds = () => (comOrds ??= getCmCom().setOrders() ?? []);
 
     let getCmComOrd = () => {

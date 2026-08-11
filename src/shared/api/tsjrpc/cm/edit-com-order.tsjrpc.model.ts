@@ -2,7 +2,7 @@ import { CmComOrderWid, CmComWid, OrderRepeats } from 'shared/api/complect/apps'
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 
 export type CmEditComOrderTsjrpcModel = {
-  setRepeats: (args: { comw: CmComWid; ordw: CmComOrderWid; value: OrderRepeats }) => CmComWid;
+  setRepeats_v1: (args: { comw: CmComWid; upd: Record<CmComOrderWid, OrderRepeats> }) => CmComWid;
 
   clearOwnRepeats: (args: { ordw: CmComOrderWid; comw: CmComWid }) => CmComWid;
 

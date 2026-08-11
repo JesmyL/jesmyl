@@ -1,13 +1,16 @@
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { CmComTextSquareBracketsMode, OrderRepeats, SpecialOrderRepeats } from 'shared/api';
 import { CmEditComOrderTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-order.tsjrpc.model';
+import { CmCom } from 'shared/const/cm/Com';
+import { extractNumber } from 'shared/utils';
 import { checkIsNil, checkIsNotNil, checkIsNotObject, checkIsObject } from 'shared/utils/checkIs';
 import { checkIsEq } from 'shared/utils/checkIsEq';
 import { comNbspReg } from 'shared/utils/cm/com/const';
 import { cmComOrderMakeRegions } from 'shared/utils/cm/makeRegions';
 import { cmComOrderMakeRepeatedText } from 'shared/utils/cm/makeRepeatedText';
 import { takeCmComOrderRepeatPortalKeyLetter } from 'shared/utils/cm/repeat-keys';
-import { objectKeys, objectLength } from 'shared/utils/object.utils';
+import { forEachObjectEntries, objectKeys, objectLength } from 'shared/utils/object.utils';
+import { modifyCom } from '../edit-com.tsjrpc.base';
 import { clearNullableOrderInheritValues, modifyOrd, ModifyOrdParent } from './utils';
 
 export const cmEditComOrderServerTsjrpcRepeats = {
@@ -77,53 +80,63 @@ export const cmEditComOrderServerTsjrpcRepeats = {
     return `сброшено значение повторений для блока ${getCmComOrd().me.header()}`;
   }),
 
-  setRepeats: modifyOrd(
-    ModifyOrdParent.LeadOrSelf,
-    'COM_REP',
-    (ord, { value }, _, _com, getCmComOrd, _getCmCom, getCmComOrds) => {
-      const comOrd = getCmComOrd();
-      const inhi = comOrd.me.anchorInheritIndex;
+  setRepeats_v1: modifyCom('COM_REP', (icom, { upd }) => {
+    const com = new CmCom(icom, null, null);
+    const ords = com.setOrders();
+    const titles: string[] = [];
 
-      const prevValue = checkIsNotNil(inhi) ? ord._r?.[inhi] : ord.r;
-      const ordText = comOrd.text;
+    if (ords)
+      forEachObjectEntries(upd, (ordwStr, value) => {
+        const ordw = extractNumber(ordwStr);
+        const comOrd = ords.find(ord => ord.wid === ordw);
+        const ord = comOrd?.me.leadOrd?.me.source?.top ?? comOrd?.me.source?.top;
 
-      const makeTitle = (value: OrderRepeats | nil) => {
-        const regions = cmComOrderMakeRegions(comOrd, ordText, value, getCmComOrds());
+        if (!comOrd || !ord) throw 'Блок не найден';
 
-        return ordText
-          ? cmComOrderMakeRepeatedText(comOrd.transformedText(CmComTextSquareBracketsMode.AsIs), regions).replace(
-              comNbspReg,
-              ' ',
-            )
-          : comOrd.me.header({ repeats: comOrd.repeatsTitle });
-      };
+        const inhi = comOrd.me.anchorInheritIndex;
 
-      let isDel = false;
-      let newValueHolder;
+        const prevValue = checkIsNotNil(inhi) ? ord._r?.[inhi] : ord.r;
+        const ordText = comOrd.text;
 
-      if (comOrd.me.isAnchorInherit) isDel = checkIsEq(value, comOrd.getWatchValue('r'));
-      else if (comOrd.isAnchor) isDel = checkIsEq(value, comOrd.me.targetOrd?.repeats);
-      else isDel = !value;
+        const makeTitle = (value: OrderRepeats | nil) => {
+          const regions = cmComOrderMakeRegions(comOrd, ordText, value, ords);
 
-      if (value === 1) value = 0;
+          return ordText
+            ? cmComOrderMakeRepeatedText(comOrd.transformedText(CmComTextSquareBracketsMode.AsIs), regions).replace(
+                comNbspReg,
+                ' ',
+              )
+            : comOrd.me.header({ repeats: comOrd.repeatsTitle });
+        };
 
-      if (checkIsNotNil(inhi)) {
-        ord._r ??= [];
+        let isDel = false;
+        let newValueHolder;
 
-        if (isDel) delete ord._r[inhi];
-        else ord._r[inhi] = value;
+        if (comOrd.me.isAnchorInherit) isDel = checkIsEq(value, comOrd.getWatchValue('r'));
+        else if (comOrd.isAnchor) isDel = checkIsEq(value, comOrd.me.targetOrd?.repeats);
+        else isDel = !value;
 
-        clearNullableOrderInheritValues(ord, '_r');
+        if (value === 1) value = 0;
 
-        newValueHolder = { v: ord._r[inhi] };
-      } else if (isDel) delete ord.r;
-      else ord.r = value;
+        if (checkIsNotNil(inhi)) {
+          ord._r ??= [];
 
-      newValueHolder ??= { v: ord.r };
+          if (isDel) delete ord._r[inhi];
+          else ord._r[inhi] = value;
 
-      return `изменены повторения для блока ${comOrd.me.header()}:\n\n${makeTitle(newValueHolder.v)}\n\nбыло:\n${makeTitle(prevValue)}`;
-    },
-  ),
+          clearNullableOrderInheritValues(ord, '_r');
+
+          newValueHolder = { v: ord._r[inhi] };
+        } else if (isDel) delete ord.r;
+        else ord.r = value;
+
+        newValueHolder ??= { v: ord.r };
+
+        titles.push(`${comOrd.me.header()}:\n${makeTitle(newValueHolder.v)}\n\nбыло:\n${makeTitle(prevValue)}`);
+      });
+
+    return `изменены повторения для блок${titles.length > 1 ? 'ов' : 'а'} ${titles.join('\n\n')}`;
+  }),
 
   removeRepeats: modifyOrd(ModifyOrdParent.Self, 'COM_REP', (ord, _, __, ___, getCmComOrd) => {
     delete ord.r;
