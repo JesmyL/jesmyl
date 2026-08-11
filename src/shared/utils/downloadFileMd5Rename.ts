@@ -1,12 +1,29 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { lazyEnvJson } from 'back/envJson';
+import nodeID3 from 'node-id3';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
-import { Readable } from 'node:stream';
+import { Readable, pipeline } from 'node:stream';
 import { checkIsEndsWith } from 'shared/utils/checkIs';
 
-export const downloadFileMd5Rename = async (saveDir: `${string}/`, url: string): Promise<string> => {
+interface DownloadOptions {
+  removeTags?: boolean;
+  title?: string;
+  artist?: string;
+}
+
+const cleanText = (text: string | undefined): string => {
+  if (!text) return '';
+  return text.replace(/^([\w.-]+\.[a-z]{2,4}\s*[-–—:]*\s*)|(\s*[-–—:]*\s*[\w.-]+\.[a-z]{2,4})$/gi, '').trim();
+};
+
+export const downloadFileMd5Rename = async (
+  saveDir: `${string}/`,
+  url: string,
+  options: DownloadOptions = { removeTags: true },
+): Promise<string> => {
+  const { removeTags = true, title, artist } = options;
   const { hostRootDir } = lazyEnvJson();
 
   const baseDir = path.resolve(hostRootDir, saveDir);
@@ -40,13 +57,9 @@ export const downloadFileMd5Rename = async (saveDir: `${string}/`, url: string):
     }
 
     fileStream = fs.createWriteStream(tempPath);
-    const hash = crypto.createHash('md5');
-
     const nodeReadable = Readable.fromWeb(response.body as any);
     for await (const chunk of nodeReadable) {
-      const buffer = Buffer.from(chunk);
-      fileStream.write(buffer);
-      hash.update(buffer);
+      fileStream.write(Buffer.from(chunk));
     }
 
     await new Promise<void>(resolve => {
@@ -55,7 +68,47 @@ export const downloadFileMd5Rename = async (saveDir: `${string}/`, url: string):
     });
     fileStream = null;
 
-    const fileMd5 = hash.digest('hex');
+    let targetArtist = artist;
+    let targetTitle = title;
+
+    if (ext.toLowerCase() === 'mp3' && removeTags) {
+      try {
+        const currentTags = nodeID3.read(tempPath) || {};
+
+        if (!targetArtist) targetArtist = cleanText(currentTags.artist);
+        if (!targetTitle) targetTitle = cleanText(currentTags.title);
+
+        nodeID3.removeTags(tempPath);
+      } catch (id3Error) {
+        console.error('[ID3 Clean Error]', id3Error);
+      }
+    }
+
+    // Потоковый подсчет MD5 (не забивает память)
+    const fileMd5 = await new Promise<string>((resolve, reject) => {
+      const hash = crypto.createHash('md5');
+      const readStream = fs.createReadStream(tempPath);
+
+      pipeline(readStream, hash, err => {
+        if (err) reject(err);
+        else resolve(hash.digest('hex'));
+      });
+    });
+
+    if (ext.toLowerCase() === 'mp3' && removeTags) {
+      try {
+        const newTags: nodeID3.Tags = {};
+        if (targetArtist) newTags.artist = targetArtist;
+        if (targetTitle) newTags.title = targetTitle;
+
+        if (Object.keys(newTags).length > 0) {
+          nodeID3.write(newTags, tempPath);
+        }
+      } catch (id3Error) {
+        console.error('[ID3 Write Error]', id3Error);
+      }
+    }
+
     const finalFileName = `${fileMd5}.${ext}`;
     const finalPath = path.join(baseDir, finalFileName);
 
