@@ -10,7 +10,7 @@ export const questionerTSJRPCCreateBlank: typeof questionerAdminServerTsjrpcBase
   const login = auth.login;
 
   const { item } = await questionerBlanksDirStorage.createItem(() => ({
-    w: Date.now() + Math.random(),
+    w: Date.now(),
     m: Date.now(),
     title: 'Новый опрос',
     dsc: '',

@@ -148,7 +148,7 @@ export const CmEditorMp3RuleEditor = (
                   repText,
                   rdir: redirect,
                   url: new URL(url).origin,
-                  w: props.w ?? Date.now() + Math.random(),
+                  w: props.w ?? Date.now(),
                 });
               }}
             />

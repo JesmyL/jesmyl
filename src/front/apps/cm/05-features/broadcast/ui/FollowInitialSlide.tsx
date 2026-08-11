@@ -6,9 +6,7 @@ import { ScheduleWidgetWid, hostConfig } from 'shared/api';
 export const CmBroadcastFollowInitialSlide = ({ schw }: { schw: ScheduleWidgetWid }) => {
   return (
     <StyledSlide className="full-size flex center column">
-      <StyledQRCode
-        text={`${hostConfig.url}/!other/cm/schs?schw=${schw}&now=${Date.now()}${Math.random()}&follow=desktop-link`}
-      />
+      <StyledQRCode text={`${hostConfig.url}/!other/cm/schs?schw=${schw}&now=${Date.now()}&follow=desktop-link`} />
       <h1 className="text-center">{translateBase(it => it.bro.followInPhone)}</h1>
     </StyledSlide>
   );

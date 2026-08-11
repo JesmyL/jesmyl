@@ -13,7 +13,7 @@ export const questionerBlanksDirStorage = new DirStorage<QuestionerBlank, Questi
     team: {},
     title: '',
     tmp: {},
-    w: Date.now() + Math.random(),
+    w: Date.now(),
   }),
 });
 

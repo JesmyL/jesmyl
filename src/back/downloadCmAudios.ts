@@ -1,4 +1,5 @@
 import { HttpNumLeadLink } from 'shared/api';
+import { checkIsUndefined } from 'shared/utils/checkIs';
 import { downloadFileMd5Rename } from 'shared/utils/downloadFileMd5Rename';
 import { makeCmComHttpLinkFromNumLead } from './apps/cm/complect/com-http-links';
 import { FileStore } from './complect/FileStore';
@@ -15,18 +16,21 @@ export const downloadCmAudios = async () => {
     if (!com.al?.length) continue;
 
     for (const link of com.al) {
-      if (linkDict[link]) {
-        console.info(`Аудио для "${com.n}" уже сохранено`);
-        continue;
-      }
+      if (!checkIsUndefined(linkDict[link])) continue;
+      const prev = linkDict[link];
 
       try {
-        linkDict[link] = await downloadFileMd5Rename('audio/', makeCmComHttpLinkFromNumLead(link));
+        console.info(`Скачивание аудио-файла для песни "${com.n}"`);
+        linkDict[link] = await downloadFileMd5Rename('audio/', makeCmComHttpLinkFromNumLead(link), {
+          title: com.n,
+        });
       } catch {
         linkDict[link] = null;
       }
 
-      linkDictFileStorage.saveValue(2);
+      if (linkDict[link] !== prev) linkDictFileStorage.saveValue(2);
     }
   }
+
+  console.info('Все возможные аудио файлы скачаны');
 };

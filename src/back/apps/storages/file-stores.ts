@@ -5,7 +5,7 @@ export const storagesDirStorage = new DirStorage({
   dirPath: '/apps/storages/list/',
   idKey: 'w',
   makeNewItem: (): StoragesRackStorageSaved => ({
-    w: Date.now() + Math.random(),
+    w: Date.now(),
     title: '',
     team: {},
     cards: [],
