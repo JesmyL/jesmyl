@@ -13,7 +13,7 @@ import { takeLogginedAuthOrThrow } from 'back/utils';
 import { arrayOverlaps, eq, or } from 'drizzle-orm';
 import jwt from 'jsonwebtoken';
 import { makeRegExp } from 'regexpert';
-import { LocalSokiAuth } from 'shared/api';
+import { UserAuth } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { constantsConfigurator } from 'shared/const/cm/constants.def';
 import { howMillisecondsInMin } from 'shared/const/ms';
@@ -21,6 +21,7 @@ import { randomItem, randomOf } from 'shared/randoms';
 import { declension, wait } from 'shared/utils';
 import { emailTextingLetterVariantsFileStorage, sentEmailOTPFileStorage } from '../../file-stores';
 import { constantsConfigFileStore } from '../../schedules/file-stores';
+import { resetUserTiny } from '../../tinies/userTiny';
 
 const minutesUntilExpire = 5;
 const expireOTP = (otp: number) => sentEmailOTPFileStorage.setValue(verifies => verifies.filter(it => it.otp !== otp));
@@ -271,14 +272,26 @@ export const otpTSJRPCMethods = {
     const rootAuth = user?.auth ? jsonParseSecure(user.auth) : null;
 
     const emailNick = from.auth.email.split('@', 1)[0];
-    const auth: LocalSokiAuth = {
+    const auth = {
       ...rootAuth,
       ...emailAuth,
       login: user?.l ?? loginByEmail,
       email: rootAuth?.email ?? emailAuth.email,
       nick: rootAuth?.nick || emailNick,
       fio: rootAuth?.fio || emailNick,
-    };
+    } satisfies UserAuth;
+
+    if (!user) {
+      await db.insert(userDB).values({
+        l: auth.login,
+        ls: [],
+        auth: jsonStringifySecure(auth),
+        rights: {},
+      });
+
+      resetUserTiny({ l: auth.login });
+    }
+
     expireOTP(otp);
 
     return {
