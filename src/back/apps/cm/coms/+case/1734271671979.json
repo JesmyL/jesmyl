@@ -26,7 +26,7 @@
   "c": [
     "Em F#m7\nH F#dim Em/C#\nC7 Hm7\nD D#dim Em",
     "Em F#m7\nH F#dim Em/C#\nC7 Hm7\nD D#dim Em Hdim-G#dim-Fdim",
-    "Am Em\nD G-F-E7\nAm Em/G-C9\nH",
+    "Am Em\nD G-G/F#-G/F E7\nAm Em/G-C9\nH",
     "Am9 Em4 D4 G-F-E7\nAm Em/G-C9 Am H Em9",
     "Am Em\nD G-F-E7\nAm Em/G-C9\nH Em C7",
     "H Em C7",
@@ -42,9 +42,9 @@
       "k": 39,
       "p": [
         [4, 12],
-        [1, 4, 8],
+        [4, 8, 14],
         [5, 13],
-        [2, 4, 7]
+        [4, 7, 13]
       ],
       "t": 0,
       "w": 0
@@ -54,9 +54,9 @@
       "k": 39,
       "p": [
         [4, 13],
-        [2, 4, 8],
+        [4, 8, 15],
         [4, 13],
-        [2, 6, 9, 14]
+        [-2, 6, 9, 14]
       ],
       "t": 1,
       "w": 1
@@ -66,7 +66,7 @@
       "k": 94,
       "p": [
         [2, 12],
-        [4, 12],
+        [-2, 4, 12],
         [1, 10]
       ],
       "t": 2,
