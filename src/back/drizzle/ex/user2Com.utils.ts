@@ -17,14 +17,12 @@ export const upsertUser2ComProps = async (
   props: { comment?: (CmComCommentBlockDict | nil)[] | nil; isFav?: boolean },
   isSetModifies = true,
 ) => {
-  const user = await takeUserTiny({ l: userLogin }, false);
-  const com = await takeComwTiny({ w: comw }, false);
+  if (!objectLength(props)) return;
 
-  if (!user || !com) return;
+  const user = await takeUserTiny({ l: userLogin });
+  const com = await takeComwTiny({ w: comw });
 
   return await db.transaction(async tx => {
-    if (!objectLength(props)) return;
-
     const propsWithMod =
       checkIsNotUndefined(props.comment) && isSetModifies ? { ...props, commentMod: Date.now() } : props;
     let cmFavComMod = 0;
