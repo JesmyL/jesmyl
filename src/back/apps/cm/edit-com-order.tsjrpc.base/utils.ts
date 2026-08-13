@@ -26,10 +26,10 @@ export const modifyOrd = <Props extends { ordw: CmComOrderWid; comw: CmComWid }>
     | [keyof OmitOwn<IndexAppAccessRightTitles['cm'], 'info'>, CRUDOperation],
   modifier: (
     ord: IExportableOrder,
+    getCmComOrd: () => CmComOrder,
     props: Props,
     tool: ServerTSJRPCTool,
     com: IExportableCom,
-    getCmComOrd: () => CmComOrder,
     getCmCom: () => CmCom,
     getCmComOrds: () => CmComOrder[],
   ) => PromiseOr<string | null>,
@@ -66,7 +66,7 @@ export const modifyOrd = <Props extends { ordw: CmComOrderWid; comw: CmComWid }>
 
     if (checkIsNil(ord)) throw 'Порядковый блок не найден';
 
-    return await modifier(ord, props, tool, com, getCmComOrd, getCmCom, getCmComOrds);
+    return await modifier(ord, getCmComOrd, props, tool, com, getCmCom, getCmComOrds);
   });
 
 export const getNextOrdWid = (ords: { w: CmComOrderWid }[]) =>

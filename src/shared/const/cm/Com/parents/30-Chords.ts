@@ -1,5 +1,5 @@
 import { makeRegExp } from 'regexpert';
-import { checkIsArray, checkIsNotNil, checkIsString } from 'shared/utils/checkIs';
+import { checkIsArray, checkIsNotNil, checkIsNumber, checkIsString } from 'shared/utils/checkIs';
 import {
   aSharpToBChord,
   chordBemoleEquivalent,
@@ -8,22 +8,19 @@ import {
   simpleHashedEachLetterChordReg_g,
 } from 'shared/utils/cm/com/const';
 import { objectLength } from 'shared/utils/object.utils';
+import { TonType } from '../../enums';
 import { CmComOrder } from '../../order/Order';
 import { CmComOrders } from './20-Orders';
 
 export class CmComChords extends CmComOrders {
-  excludedModulations = new Set<number>();
+  excludedModificateds = new Set<number>();
   protected _chordLabels?: string[][][];
   protected _usedChords?: Record<string, string>;
 
-  static withBemoles(chords?: string, isSet?: boolean | num | nil) {
-    return (
-      isSet ? chords?.replace(simpleHashedEachLetterChordReg_g, all => chordBemoleEquivalent[all] || all) : chords
-    )?.replace(makeRegExp('/A#/g'), 'B');
-  }
-
-  get isBemoled() {
-    return this.intp?.b ?? this.top.b ?? 0;
+  static withBemoles(chords: string, tonType: TonType) {
+    return tonType
+      ? chords.replace(simpleHashedEachLetterChordReg_g, all => chordBemoleEquivalent[all] || all)
+      : chords.replace(makeRegExp('/A#/g'), 'B');
   }
 
   get chords() {
@@ -63,17 +60,23 @@ export class CmComChords extends CmComOrders {
     this._chordLabels = [];
     this._usedChords = {};
     let currTransPosition = this.transPosition;
+    let isBemoled = this.isBemoled;
 
     this.orders?.forEach(ord => {
       const ordLabels: string[][] = [];
       this._chordLabels?.push(ordLabels);
       const prevTransPosition = currTransPosition;
 
-      if (!this.excludedModulations.has(ord.wid) && ord.isModulated) {
+      if (!this.excludedModificateds.has(ord.wid)) {
         currTransPosition = currTransPosition + (ord?.modulation || 0);
+        if (ord.isBemoledSwitch) isBemoled = +!isBemoled;
       }
 
-      const chords = this.actualChords(ord.chordsi, ord.me.kind?.isModulation ? prevTransPosition : currTransPosition);
+      const chords = this.actualChords(
+        isBemoled,
+        ord.me.kind?.isModulation ? prevTransPosition : currTransPosition,
+        ord.chordsi,
+      );
 
       (chords || '').split(makeRegExp('/\\n/')).forEach(line => {
         const lineLabels: string[] = [];
@@ -89,20 +92,20 @@ export class CmComChords extends CmComOrders {
     });
   }
 
-  actualChords(chordsScalar?: string | number | nil, position = this.transPosition) {
-    const chords = checkIsString(chordsScalar) ? (chordsScalar as string) : this.chords?.[chordsScalar as number];
-    return chords && CmComChords.withBemoles(this.transposeBlock(chords, position), this.isBemoled);
+  actualChords(ordTonType: TonType, position: number, chordsScalar?: string | number | nil) {
+    const chords = checkIsNumber(chordsScalar) ? this.chords?.[chordsScalar] : chordsScalar;
+    return chords && CmComChords.withBemoles(this.transposeBlock(chords, position), ordTonType);
   }
 
   toggleModulationExclusion(order: CmComOrder) {
-    this.excludedModulations = new Set(this.excludedModulations);
+    this.excludedModificateds = new Set(this.excludedModificateds);
 
-    if (this.excludedModulations.has(order.wid)) this.excludedModulations.delete(order.wid);
-    else this.excludedModulations.add(order.wid);
+    if (this.excludedModificateds.has(order.wid)) this.excludedModificateds.delete(order.wid);
+    else this.excludedModificateds.add(order.wid);
 
     this.updateChordLabels();
 
-    return this.excludedModulations;
+    return this.excludedModificateds;
   }
 
   private _tonicaParts?: [string, string, string];

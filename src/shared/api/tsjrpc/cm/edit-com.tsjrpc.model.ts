@@ -8,6 +8,7 @@ import {
   HttpNumLeadLink,
   IExportableCom,
 } from 'shared/api/complect/apps';
+import { TonType } from 'shared/const/cm/enums';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 
 type SimpleComValueSetter<Value> = (args: { comw: CmComWid; value: Value }) => CmComWid;
@@ -22,7 +23,7 @@ export type CmEditComTsjrpcModel = {
   changeLanguage: SimpleComValueSetter<number>;
   changeDrive: SimpleComValueSetter<CmComIntensityLevel>;
   changeTon: SimpleComValueSetter<number>;
-  makeBemoled: SimpleComValueSetter<Bool>;
+  makeBemoled: SimpleComValueSetter<TonType>;
 
   toggleAudioLink: (args: { comw: CmComWid; link: HttpNumLeadLink }) => void;
 

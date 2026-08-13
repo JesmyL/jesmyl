@@ -1,6 +1,6 @@
-import { retNull } from 'shared/utils';
+import { arrayByLength } from 'shared/utils/object.utils';
 
-export const commentHolderNodes = Array.from({ length: 4 }, retNull).map((_, i) => (
+export const commentHolderNodes = arrayByLength(4, i => (
   <span
     key={i}
     className="comment-holder"

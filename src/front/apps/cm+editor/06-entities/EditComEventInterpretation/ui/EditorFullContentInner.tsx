@@ -1,15 +1,23 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { Button } from '#shared/components';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
+import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
+import {
+  CmEditorComOrderToolsChangeTonType,
+  CmEditorComOrderToolsModulation,
+  CmEditorComOrderToolsOrderVisibility,
+} from '$cm+editor/entities/com-order-tools';
 import { CmEditorComEditBemoled } from '$cm+editor/features/ComEditBemoled';
 import { CmEditorComEditBpm } from '$cm+editor/features/ComEditBpm';
 import { CmEditorComEditTransposition } from '$cm+editor/features/ComEditTransposition';
+import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
+import { EditableComOrder } from '$cm+editor/shared/classes/EditableComOrder';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { TheCmComOrder, useCmCom } from '$cm/ext';
 import { indexIDB } from '$index/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { CmComWid, CmComWidDef, ScheduleWidgetWid } from 'shared/api';
-import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
+import { useState } from 'react';
+import { CmComOrderWid, CmComWid, CmComWidDef, ScheduleWidgetWid } from 'shared/api';
 
 export const CmEditorEditComEventInterpretationFullContentInner = ({
   comw,
@@ -24,6 +32,13 @@ export const CmEditorEditComEventInterpretationFullContentInner = ({
   const schedule = useLiveQuery(() => indexIDB.db.schs.get(schw), [schw]);
   const checkAccess = useCheckUserAccessRightsInScope();
   const canFixIntp = checkAccess('cm', 'COM_INTP', 'U');
+  const [editOrdw, setEditOrdw] = useState<CmComOrderWid | nil>(null);
+  const onEditClose = () => setEditOrdw(null);
+  const ordOnEditi = (editOrdw && com?.orders?.findIndex(o => o.wid === editOrdw)) ?? -1;
+  const ordOnEdit = com?.orders?.[ordOnEditi];
+
+  const editCom = com && new EditableCom(com.top, com.fix, com.intp);
+  const editOrd = editCom && ordOnEdit && new EditableComOrder(ordOnEdit.me, editCom);
 
   return (
     <>
@@ -54,7 +69,7 @@ export const CmEditorEditComEventInterpretationFullContentInner = ({
             return (
               <div
                 key={ord.wid}
-                className={ord.isVisible ? '' : 'opacity-40'}
+                className={ord.isVisible ? '' : 'opacity-70'}
               >
                 <TheCmComOrder
                   ord={ord}
@@ -63,29 +78,61 @@ export const CmEditorEditComEventInterpretationFullContentInner = ({
                   chordHardLevel={3}
                   chordVisibleVariant={ChordVisibleVariant.Maximal}
                   showInvisibles
-                  asHeaderNode={({ node, ord }) =>
-                    ord.me.isInherit && ord.me.kind?.key !== CmComBlockKindKey.PlusPlus ? (
-                      node
-                    ) : (
-                      <div className="flex gap-3">
-                        {node}
-                        <Button
-                          icon={ord.isVisible ? 'View' : 'ViewOff'}
-                          onClick={() =>
-                            cmEditComExternalsClientTsjrpcMethods.ordVisIntp({
-                              comw,
-                              ordw: ord.wid,
-                              schw,
-                            })
-                          }
-                        />
-                      </div>
-                    )
-                  }
+                  asHeaderNode={({ node, ord }) => (
+                    <div className="flex gap-3">
+                      {node}
+                      <Button
+                        icon="Edit03"
+                        onClick={() => setEditOrdw(ord.wid)}
+                      />
+                    </div>
+                  )}
                 />
               </div>
             );
           })}
+
+          {!editOrd || (
+            <BottomPopup onClose={onEditClose}>
+              <CmEditorComOrderToolsOrderVisibility
+                ord={editOrd}
+                onClose={onEditClose}
+                onEdit={() =>
+                  cmEditComExternalsClientTsjrpcMethods.ordVisIntp({
+                    comw,
+                    ordw: ordOnEdit.wid,
+                    schw,
+                  })
+                }
+              />
+
+              <CmEditorComOrderToolsModulation
+                com={editCom}
+                ord={editOrd}
+                ordi={ordOnEditi}
+                onEdit={md =>
+                  cmEditComExternalsClientTsjrpcMethods.ordMudlIntp({
+                    comw,
+                    ordw: ordOnEdit.wid,
+                    schw,
+                    md,
+                  })
+                }
+              />
+
+              <CmEditorComOrderToolsChangeTonType
+                com={editCom}
+                ord={editOrd}
+                onEdit={() =>
+                  cmEditComExternalsClientTsjrpcMethods.ordMdSwitchIntp({
+                    comw,
+                    ordw: ordOnEdit.wid,
+                    schw,
+                  })
+                }
+              />
+            </BottomPopup>
+          )}
         </>
       )}
     </>

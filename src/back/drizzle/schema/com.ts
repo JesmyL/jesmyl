@@ -9,6 +9,7 @@ import {
   IExportableOrder,
   Langi,
 } from 'shared/api';
+import { TonType } from 'shared/const/cm/enums';
 import { Bool, Do } from 'shared/enums';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { itIt } from 'shared/utils';
@@ -39,7 +40,7 @@ export const comDB = pgTable('coms', {
 
   c: initStringArray('chords').notNull(),
 
-  b: smallint('isBemoled').default(Bool.False).$type<Bool>(),
+  b: smallint('isBemoled').default(TonType.Diezed).$type<TonType>(),
 
   bpm: integer('bpm'),
 

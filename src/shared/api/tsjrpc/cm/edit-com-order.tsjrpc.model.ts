@@ -53,6 +53,7 @@ export type CmEditComOrderTsjrpcModel = {
   trimOverPositions: (args: { comw: CmComWid; ordw: CmComOrderWid }) => CmComWid;
 
   setModulationValue: (args: { comw: CmComWid; ordw: CmComOrderWid; value: number }) => CmComWid;
+  isBmSwitch: (args: { comw: CmComWid; ordw: CmComOrderWid }) => CmComWid;
 
   removeRepeats: (args: { comw: CmComWid; ordw: CmComOrderWid }) => CmComWid;
 };

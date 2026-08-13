@@ -14,6 +14,7 @@ import { checkIsEq } from 'shared/utils/checkIsEq';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { objectLength } from 'shared/utils/object.utils';
 import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
+import { updateCmComOrderModulationValue, updateCmComOrderTonTypeSwitcherValue } from '../utils';
 
 export const cmEditComExternalsTsjrpcInterpretations = () =>
   ({
@@ -57,6 +58,14 @@ export const cmEditComExternalsTsjrpcInterpretations = () =>
       intp.bpm = takeCorrectMetronomeBpm(bpm);
 
       if (takeCorrectMetronomeBpm(com.bpm) === takeCorrectMetronomeBpm(intp.bpm)) delete intp.bpm;
+    }),
+
+    ordMudlIntp: updateInterptetation((_, intp, { md, ordw }) => {
+      updateCmComOrderModulationValue(((intp.o ??= {})[ordw] ??= {}), md);
+    }),
+
+    ordMdSwitchIntp: updateInterptetation((_, intp, { ordw }) => {
+      updateCmComOrderTonTypeSwitcherValue(((intp.o ??= {})[ordw] ??= {}));
     }),
   }) satisfies ServerTsjrpcSatisfy<CmEditComExternalsTsjrpcModel>;
 

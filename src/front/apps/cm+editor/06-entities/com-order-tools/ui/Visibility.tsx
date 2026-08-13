@@ -6,7 +6,11 @@ import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-edit
 import { useState } from 'react';
 import { CmEditorComOrderToolsProps } from '../model';
 
-export const CmEditorComOrderToolsOrderVisibility = ({ onClose, ord }: CmEditorComOrderToolsProps) => {
+export const CmEditorComOrderToolsOrderVisibility = ({
+  onClose,
+  ord,
+  onEdit,
+}: Pick<CmEditorComOrderToolsProps, 'onClose' | 'ord'> & { onEdit?: () => Promise<unknown> }) => {
   const confirm = useConfirm();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -25,10 +29,14 @@ export const CmEditorComOrderToolsOrderVisibility = ({ onClose, ord }: CmEditorC
       onClick={async () => {
         if (await confirm(`Скрыть блок ${ord.me.header()}?`)) {
           setIsLoading(true);
-          await cmEditComOrderClientTsjrpcMethods.toggleVisibility({
-            ordw: ord.wid,
-            comw: ord.com.wid,
-          });
+
+          if (onEdit) await onEdit();
+          else
+            await cmEditComOrderClientTsjrpcMethods.toggleVisibility({
+              ordw: ord.wid,
+              comw: ord.com.wid,
+            });
+
           setIsLoading(false);
         }
 

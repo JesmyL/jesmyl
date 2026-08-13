@@ -45,15 +45,23 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   }
 
   get isMin() {
-    return this.top.m;
+    return this.me.min;
   }
 
-  get isModulated() {
-    return !(!this.me.source?.top.md || this.me.isAnchorInherit || this.me.isAnchorInheritPlus);
+  get isBemoledSwitch() {
+    return !this.me.isAnchorInherit && (this.modificateds ?? 0) !== this.modulation;
+  }
+
+  get isModificated() {
+    return !(!this.modificateds || this.me.isAnchorInherit || this.me.isAnchorInheritPlus);
   }
 
   get modulation() {
-    return this.me.source?.top.md;
+    return (this.modificateds && Math.trunc(this.modificateds)) ?? 0;
+  }
+
+  get modificateds() {
+    return this.com.intp?.o?.[this.wid]?.md ?? this.me.source?.top.md;
   }
 
   get isAnchor() {
@@ -81,13 +89,7 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   }
 
   get positions(): (number[] | nil)[] | nil {
-    return (
-      this.getWatchInheritance('p') ??
-      this.me.watchOrd?.me.source?.top.p ??
-      this.me.source?.top.p ??
-      this.me.targetOrd?.me.source?.top.p ??
-      this.getLeadInheritance('p')
-    );
+    return this.me.watchOrd?.me.source?.top.p ?? this.me.source?.top.p ?? this.me.targetOrd?.me.source?.top.p;
   }
 
   get kind() {

@@ -2,6 +2,7 @@ import { CmCatKind } from '#shared/model/cm/cat/Cat.model';
 import { StrRegExp } from 'regexpert';
 import { Langi } from 'shared/api';
 import { ScheduleWidgetDayEventMi, ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
+import { TonType } from 'shared/const/cm/enums';
 import {
   CmBroadcastMonolineSlide,
   CmBroadcastMonolineSlideSelectorId,
@@ -65,14 +66,12 @@ export type SpecialOrderRepeatsInnerAnyKey =
 export type SpecialOrderRepeats = SPRecord<SpecialOrderRepeatsKey, number>;
 export type OrderRepeats = number | SpecialOrderRepeats;
 
-export interface InheritancableOrder {
+export type InheritancableOrder = {
   /** Повторения */
   r?: OrderRepeats | nil;
-  /** Позиции аккордов */
-  p?: (number[] | nil)[] | nil;
   /** Видимость блока */
-  v?: boolean | num | nil;
-}
+  v?: Bool | nil;
+};
 
 type WatchInherited<K extends keyof InheritancableOrder> = (InheritancableOrder[K] | nil)[];
 
@@ -84,35 +83,36 @@ export type IExportableOrder = NullifyOptionals<
     /** Ссылка на блок */
     a?: CmComOrderWid;
 
-    /** Текстовый блок */
+    /** Индекс текстового блока */
     t?: number;
 
-    /** Блок аккордов */
+    /** Индекс блока аккордов */
     c?: number;
 
     /** Без названия */
-    e?: boolean | num;
-
-    /** Значение модуляции */
-    md?: number;
-
-    /** Минималка */
-    m?: 1;
+    e?: boolean | Bool;
 
     /** Открыто в свёрнутом режиме */
-    o?: boolean | num;
+    o?: boolean | Bool;
 
     /** Тип блока */
     k?: CmComBlockKindKey;
 
+    /** Позиции аккордов */
+    p?: (number[] | nil)[] | nil;
+
     _v?: WatchInherited<'v'>;
     _r?: WatchInherited<'r'>;
-    _p?: WatchInherited<'p'>;
 
     /**
      * время создания (существует при времени жизни менее суток)
      */
     cre?: number;
+
+    /** Модификаторы текущих состояний:
+     * целая часть - значение модуляции
+     * если дробная часть содержит "1" (2.1) - сменя типа тональности */
+    md?: number;
   }
 >;
 
@@ -128,12 +128,14 @@ export type IExportableComInterpretationSimpleValues = {
   bpm?: number | nil;
 
   /** бемольная ли песня */
-  b?: num | nil;
+  b?: TonType | nil;
 };
 
 export type IExportableOrderInterpretation = {
   /** видимость блока **в специальной интерпритации** */
-  v?: num | nil;
+  v?: Bool | nil;
+
+  md?: number;
 };
 
 export type IExportableComInterpretation = IExportableComInterpretationSimpleValues & {

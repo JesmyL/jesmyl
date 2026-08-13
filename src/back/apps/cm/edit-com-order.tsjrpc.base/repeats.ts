@@ -14,7 +14,7 @@ import { modifyCom } from '../edit-com.tsjrpc.base';
 import { clearNullableOrderInheritValues, modifyOrd, ModifyOrdParent } from './utils';
 
 export const cmEditComOrderServerTsjrpcRepeats = {
-  clearOwnRepeats: modifyOrd(ModifyOrdParent.LeadOrSelf, 'COM_REP', (ord, _, __, com, getCmComOrd) => {
+  clearOwnRepeats: modifyOrd(ModifyOrdParent.LeadOrSelf, 'COM_REP', (ord, getCmComOrd, _, __, com) => {
     const removeAllJoinRepeats = (ordRepeats: OrderRepeats | nil) => {
       if (checkIsNotObject(ordRepeats)) return;
 
@@ -138,7 +138,7 @@ export const cmEditComOrderServerTsjrpcRepeats = {
     return `изменены повторения для блок${titles.length > 1 ? 'ов' : 'а'} ${titles.join('\n\n')}`;
   }),
 
-  removeRepeats: modifyOrd(ModifyOrdParent.Self, 'COM_REP', (ord, _, __, ___, getCmComOrd) => {
+  removeRepeats: modifyOrd(ModifyOrdParent.Self, 'COM_REP', (ord, getCmComOrd) => {
     delete ord.r;
 
     return `убраны повторения в блоке ${getCmComOrd().me.header()}`;

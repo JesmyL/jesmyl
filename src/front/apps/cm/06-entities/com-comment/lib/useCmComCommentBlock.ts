@@ -10,7 +10,7 @@ import {
 } from 'shared/api';
 import { CmComCommentConstructorPropsDictSelectorRulePropsKey } from 'shared/model/cm/com-comment';
 import { checkIsFunction, checkIsNumber, checkIsStartsWith } from 'shared/utils/checkIs';
-import { forEachObjectEntries } from 'shared/utils/object.utils';
+import { arrayByLength, forEachObjectEntries } from 'shared/utils/object.utils';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 import { cmComCommentCurrentComw2OpenAltiDictAtom } from '../state/atoms';
 
@@ -139,7 +139,7 @@ export const cmComCommentLocalCommentsUpdater = async (
     const prev = [...(prevTexts ?? [])];
     const texts = checkIsFunction(updater) ? updater(prev) : updater;
 
-    const isNoChanges = !Array.from({ length: Math.max(prev.length, texts.length) }).some(
+    const isNoChanges = !arrayByLength(Math.max(prev.length, texts.length), i => i).some(
       (_, texti) => (prev[texti] ?? '') !== (texts[texti] ?? ''),
     );
 

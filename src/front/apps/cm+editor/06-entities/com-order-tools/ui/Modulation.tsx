@@ -6,16 +6,20 @@ import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-edit
 import { TheCmComOrder } from '$cm/ext';
 import { Atom, atom } from 'atomaric';
 import { aSharpToBChord, bToASharpChord } from 'shared/utils/cm/com/const';
+import { arrayByLength } from 'shared/utils/object.utils';
 import { CmEditorComOrderToolsProps } from '../model';
-
-const intervals = Array.from({ length: 12 }, (_, i) => i);
 
 let isModalOpenAtom: Atom<boolean>;
 
-export const CmEditorComOrderToolsModulation = ({ com, ord, ordi }: CmEditorComOrderToolsProps) => {
+export const CmEditorComOrderToolsModulation = ({
+  com,
+  ord,
+  ordi,
+  onEdit,
+}: Pick<CmEditorComOrderToolsProps, 'com' | 'ord' | 'ordi'> & { onEdit?: (md: number) => Promise<unknown> }) => {
   isModalOpenAtom ??= atom(false);
 
-  let firstChord = com.chordLabels[ordi][0][0];
+  let firstChord = com.getFixedTonica();
 
   if (firstChord[1] === '#') firstChord = firstChord.slice(0, 1);
   else firstChord = firstChord[0];
@@ -41,7 +45,7 @@ export const CmEditorComOrderToolsModulation = ({ com, ord, ordi }: CmEditorComO
             chordHardLevel={3}
             com={com}
           />
-          {intervals.map(position => {
+          {arrayByLength(12, position => {
             const resultChord = com.transposeChord(firstChord, -(modulationDelta - position));
 
             return (
@@ -51,11 +55,13 @@ export const CmEditorComOrderToolsModulation = ({ com, ord, ordi }: CmEditorComO
                 disabled={modulationDelta === position}
                 className="mt-2"
                 onClick={() =>
-                  cmEditComOrderClientTsjrpcMethods.setModulationValue({
-                    comw: com.wid,
-                    ordw: ord.wid,
-                    value: position,
-                  })
+                  onEdit
+                    ? onEdit(position)
+                    : cmEditComOrderClientTsjrpcMethods.setModulationValue({
+                        comw: com.wid,
+                        ordw: ord.wid,
+                        value: position,
+                      })
                 }
                 onChange={isModalOpenAtom.reset}
                 postfix={

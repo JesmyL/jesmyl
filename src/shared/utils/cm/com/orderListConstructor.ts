@@ -27,14 +27,16 @@ export const cmComOrderListConstructor = <OrderConstructor extends CmComOrderWid
   let prev, prevOrd;
 
   const getStyle = (ord: ICmComOrderExportableMe<OrderConstructor> | nil) => {
-    return ord?.top.k != null ? styles.find((prop: KindBlock) => prop.key === ord.top.k) : null;
+    return checkIsNotNil(ord?.top.k) ? styles.find((prop: KindBlock) => prop.key === ord.top.k) : null;
   };
 
-  const setMin = (me: ICmComOrderExportableMe<OrderConstructor>) => {
-    const styleName = Math.abs(me.kind?.key ?? 0);
-    if (me.top?.md) minimals = [];
-    me.top.m = minimals.some(([s, c]) => styleName === s && me.top.c === c) ? undefined : 1;
-    minimals.push([styleName, me.top.c]);
+  const updateCurrents = (me: ICmComOrderExportableMe<OrderConstructor>) => {
+    const styleKey = Math.abs(me.kind?.key ?? 0);
+
+    if (me.top.md) minimals = [];
+    else me.min = !minimals.some(([s, c]) => styleKey === s && me.top.c === c);
+
+    minimals.push([styleKey, me.top.c]);
   };
 
   const headerMaker = (ordMe: ICmComOrderExportableMe<OrderConstructor>, style: KindBlock, numered: boolean) => {
@@ -105,7 +107,7 @@ export const cmComOrderListConstructor = <OrderConstructor extends CmComOrderWid
     me.isTarget = ords.some(me => me.top.a === ordMe.top.w);
     me.sourceIndex = ords.indexOf(ordMe);
 
-    setMin(me);
+    updateCurrents(me);
 
     const newOrder = orderConstructor(me);
     orders.push(newOrder);
@@ -152,7 +154,7 @@ export const cmComOrderListConstructor = <OrderConstructor extends CmComOrderWid
         ancMe.anchorInheritIndex = anchorInheritIndex++;
         ancMe.sourceIndex = ords.indexOf(targetOrd.me);
 
-        setMin(ancMe);
+        updateCurrents(ancMe);
 
         const newAncOrd = orderConstructor(ancMe);
         orders.push(newAncOrd);
@@ -182,7 +184,7 @@ export const cmComOrderListConstructor = <OrderConstructor extends CmComOrderWid
       nextMe.source = next;
       nextMe.sourceIndex = ords.indexOf(next);
 
-      setMin(nextMe);
+      updateCurrents(nextMe);
 
       const newNextOrd = orderConstructor(nextMe);
       orders.push(newNextOrd);

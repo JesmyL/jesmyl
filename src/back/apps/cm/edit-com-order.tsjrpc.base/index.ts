@@ -7,6 +7,7 @@ import { checkIsNowInCurrentDay } from 'shared/const/ms';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { objectLength } from 'shared/utils/object.utils';
 import { removeEmptyRightValues } from 'shared/utils/removeEmptyRightValues';
+import { updateCmComOrderModulationValue, updateCmComOrderTonTypeSwitcherValue } from '../utils';
 import { cmEditComOrderServerTsjrpcOutside } from './outside';
 import { cmEditComOrderServerTsjrpcRepeats } from './repeats';
 import { modifyOrd, ModifyOrdParent } from './utils';
@@ -20,7 +21,7 @@ export const cmEditComOrderServerTsjrpcBase =
           ...cmEditComOrderServerTsjrpcRepeats,
           ...cmEditComOrderServerTsjrpcOutside,
 
-          setKind: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, { kind, newTypeTitle }, __, _, getCmComOrd) => {
+          setKind: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, getCmComOrd, { kind, newTypeTitle }) => {
             if (kind == null) throw 'Неизвестный тип';
 
             ord.k = kind;
@@ -28,13 +29,13 @@ export const cmEditComOrderServerTsjrpcBase =
             return `название блока ${makeOrdTitle(getCmComOrd)} изменено на ${newTypeTitle}`;
           }),
 
-          bindChordBlock: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, { chordi }, __, _, getCmComOrd) => {
+          bindChordBlock: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, getCmComOrd, { chordi }) => {
             ord.c = chordi;
 
             return `к ${getCmComOrd().isAnchor ? 'ссылке на блок' : 'блоку'} ${makeOrdTitle(getCmComOrd)} прикреплён ${chordi + 1}-й блок Аккордов`;
           }),
 
-          toggleVisibility: modifyOrd(ModifyOrdParent.Self, ['COM_ORD', 'D'], (ord, _, ___, __, getCmComOrd) => {
+          toggleVisibility: modifyOrd(ModifyOrdParent.Self, ['COM_ORD', 'D'], (ord, getCmComOrd) => {
             const isVisible = getCmComOrd().isVisible;
             const targetOrd = getCmComOrd().me.targetOrd;
 
@@ -42,7 +43,7 @@ export const cmEditComOrderServerTsjrpcBase =
 
             if (isVisible === getCmComOrd().isVisible) {
               if (targetOrd) ord.v = targetOrd.isVisible ? (isVisible ? 0 : undefined) : isVisible ? undefined : 1;
-              else ord.v = isVisible ? 0 : 1;
+              else ord.v = +!isVisible;
             }
 
             if (checkIsNil(ord.v)) delete ord.v;
@@ -50,7 +51,7 @@ export const cmEditComOrderServerTsjrpcBase =
             return `порядковый блок ${makeOrdTitle(getCmComOrd)} сделан ${ord.v ? '' : 'не'}видимым`;
           }),
 
-          toggleAnchorInhVis: modifyOrd(ModifyOrdParent.Lead, 'COM_ORD', (leadOrd, _, ___, __, getCmComOrd) => {
+          toggleAnchorInhVis: modifyOrd(ModifyOrdParent.Lead, 'COM_ORD', (leadOrd, getCmComOrd) => {
             const cmOrd = getCmComOrd();
             const inhi = cmOrd.me.anchorInheritIndex;
 
@@ -67,7 +68,7 @@ export const cmEditComOrderServerTsjrpcBase =
             return `часть ссылки на ${cmOrd.me.leadOrd.me.header()} сделана ${checkIsNil(leadOrd._v?.[inhi]) ? '' : 'не'}видимой`;
           }),
 
-          remove: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', async (ord, { ordw }, { auth }, com, getCmComOrd) => {
+          remove: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', async (ord, getCmComOrd, { ordw }, { auth }, com) => {
             if (
               !checkIsNowInCurrentDay(ord.cre ?? com.w) &&
               (await throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'D'))
@@ -82,19 +83,19 @@ export const cmEditComOrderServerTsjrpcBase =
             return description;
           }),
 
-          setTexti: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, { texti }, __, _, getCmComOrd) => {
+          setTexti: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, getCmComOrd, { texti }) => {
             ord.t = texti;
 
             return `к порядковому блоку ${makeOrdTitle(getCmComOrd)} прикреплён ${texti + 1} текст`;
           }),
 
-          toggleVisibilityInMiniMode: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, _, ___, __, getCmComOrd) => {
+          toggleVisibilityInMiniMode: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, getCmComOrd) => {
             ord.o = ord.o ? undefined : 1;
 
             return `ссылка на блок ${makeOrdTitle(getCmComOrd)} сделана ${ord.o ? 'видимой' : 'невидимой'} в мини-режиме`;
           }),
 
-          toggleTitleVisibility: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, _, __, ___, getCmComOrd) => {
+          toggleTitleVisibility: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, getCmComOrd) => {
             ord.e = ord.e ? undefined : 1;
 
             return `заголовок в порядковом блоке ${makeOrdTitle(getCmComOrd)} сделан ${ord.e ? 'видимым' : 'невидимым'}`;
@@ -103,7 +104,7 @@ export const cmEditComOrderServerTsjrpcBase =
           setPositionsLine: modifyOrd(
             ModifyOrdParent.WatchOrSelf,
             'COM_APPS',
-            (ord, { linei, line, lineChangesText }, __, _, getCmComOrd) => {
+            (ord, getCmComOrd, { linei, line, lineChangesText }) => {
               ord.p ??= [];
               ord.p[linei] = Array.from(new Set(line)).sort((a, b) => a - b);
 
@@ -111,7 +112,7 @@ export const cmEditComOrderServerTsjrpcBase =
             },
           ),
 
-          trimOverPositions: modifyOrd(ModifyOrdParent.TargetOrSelf, 'COM_APPS', (ord, _, __, com, getCmComOrd) => {
+          trimOverPositions: modifyOrd(ModifyOrdParent.TargetOrSelf, 'COM_APPS', (ord, getCmComOrd, _, __, com) => {
             if (checkIsNil(com.t)) throw 'В песне нет текстов';
 
             if (checkIsNil(ord.t) || !com.t[ord.t]) throw 'Текста нет';
@@ -123,10 +124,16 @@ export const cmEditComOrderServerTsjrpcBase =
             return `в блоке ${makeOrdTitle(getCmComOrd)} удалены лишние строки аппликатуры`;
           }),
 
-          setModulationValue: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, { value }, _, __, getCmComOrd) => {
-            ord.md = value || undefined;
+          setModulationValue: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, getCmComOrd, { value }) => {
+            updateCmComOrderModulationValue(ord, value);
 
             return `установлено значение модулирования блока ${makeOrdTitle(getCmComOrd)} - ${value}`;
+          }),
+
+          isBmSwitch: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, getCmComOrd) => {
+            const isAdd = updateCmComOrderTonTypeSwitcherValue(ord);
+
+            return `${isAdd ? 'установлена' : 'снята'} смена тональности в блоке ${makeOrdTitle(getCmComOrd)}`;
           }),
         },
       });

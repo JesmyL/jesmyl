@@ -44,32 +44,31 @@ export const CmEditorComEditTransposition = ({
         <ModalHeader>Тональность песни</ModalHeader>
 
         <ModalBody>
-          {arrayByLength(12, i => i)
-            .reverse()
-            .map(position => {
-              const transposedChord = com.transposeBlock(com.getTonicaMatch()[0], position);
+          {arrayByLength(12, (i, len) => {
+            const position = len - i;
+            const transposedChord = com.transposeBlock(com.getTonicaMatch()[0], position);
 
-              return transposedChord === iconOnLoad ? (
-                <TheIconLoading
-                  key={position}
-                  className="mt-2"
-                />
-              ) : (
-                <IconCheckbox
-                  key={position}
-                  checked={position === com.transPosition}
-                  disabled={position === com.transPosition}
-                  className={twMerge('mt-2', position === initialPosition ? 'font-bold' : '')}
-                  onChange={async () => {
-                    setIconOnLoad(transposedChord);
-                    await onChange(position);
-                    isOpenModalAtom.reset();
-                    setIconOnLoad('');
-                  }}
-                  postfix={com.isBemoled ? chordBemoleEquivalent[transposedChord] || transposedChord : transposedChord}
-                />
-              );
-            })}
+            return transposedChord === iconOnLoad ? (
+              <TheIconLoading
+                key={position}
+                className="mt-2"
+              />
+            ) : (
+              <IconCheckbox
+                key={position}
+                checked={position === com.transPosition}
+                disabled={position === com.transPosition}
+                className={twMerge('mt-2', position === initialPosition ? 'font-bold' : '')}
+                onChange={async () => {
+                  setIconOnLoad(transposedChord);
+                  await onChange(position);
+                  isOpenModalAtom.reset();
+                  setIconOnLoad('');
+                }}
+                postfix={com.isBemoled ? chordBemoleEquivalent[transposedChord] || transposedChord : transposedChord}
+              />
+            );
+          })}
           <CmComOrderList
             com={com}
             chordVisibleVariant={ChordVisibleVariant.Maximal}

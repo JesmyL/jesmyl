@@ -8,7 +8,7 @@ import { ICmComOrderListProps } from '../model/ComOrders.model';
 import { TheCmComOrderSolid } from './TheOrderSolid';
 
 export function CmComOrderList(props: ICmComOrderListProps) {
-  const [excludedModulations, setExcludedModulations] = useState(props.com.excludedModulations);
+  const [excludedModulations, setExcludedModulations] = useState(props.com.excludedModificateds);
 
   let specChordedi = 0;
   let specTextedi = 0;
@@ -36,7 +36,7 @@ export function CmComOrderList(props: ICmComOrderListProps) {
             ord={ord}
             ordi={ordi}
             asHeaderNode={headerProps => {
-              const node = headerProps.ord.isModulated ? (
+              const node = headerProps.ord.isModificated ? (
                 <div
                   className={
                     'pointer flex gap-2 min-h-[1lh] ' +
@@ -44,13 +44,16 @@ export function CmComOrderList(props: ICmComOrderListProps) {
                   }
                 >
                   <span
-                    className="relative -mt-[1em]"
+                    className="-mt-[.5em]"
                     onClick={event => {
                       propagationStopper(event);
                       setExcludedModulations(props.com.toggleModulationExclusion(headerProps.ord));
                     }}
                   >
-                    <LazyIcon icon={excludedModulations.has(headerProps.ord.wid) ? 'View' : 'ViewOffSlash'} />
+                    <LazyIcon
+                      icon={excludedModulations.has(headerProps.ord.wid) ? 'FlashOff' : 'Flash'}
+                      kind="SolidRounded"
+                    />
                   </span>
                   {headerProps.node}
                 </div>

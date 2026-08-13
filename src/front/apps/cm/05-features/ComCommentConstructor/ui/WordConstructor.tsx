@@ -5,6 +5,7 @@ import { useAtomValue } from 'atomaric';
 import { CmComOrderWid } from 'shared/api';
 import { CmComCommentConstructorRuleType } from 'shared/model/cm/com-comment';
 import { cmComCommentTextDetectorCalculateRate } from 'shared/utils/cm';
+import { arrayByLength } from 'shared/utils/object.utils';
 import { useCmComCommentConstructorCurrentInnerKindContext } from '../state/CurrentInnerKind';
 import { CmComCommentConstructorAccentKindRedactor } from './AccentKindRedactor';
 import { CmComCommentConstructorBlockRedactor } from './BlockRedactor';
@@ -61,7 +62,7 @@ export const CmComCommentConstructorWordConstructor = ({
         />
       </div>
 
-      {Array.from({ length: propsDict.wordChordiMaxDict[wordKeyPrefix] ?? 0 }, () => 0).map((_, chordi, chorda) => {
+      {arrayByLength(propsDict.wordChordiMaxDict[wordKeyPrefix] ?? 0, (chordi, len) => {
         return (
           <CmComCommentConstructorChordConstructor
             key={chordi}
@@ -69,7 +70,7 @@ export const CmComCommentConstructorWordConstructor = ({
             chordi={chordi}
             linei={linei}
             wordi={wordi}
-            isLast={chorda.length - 1 === chordi}
+            isLast={len - 1 === chordi}
           />
         );
       })}

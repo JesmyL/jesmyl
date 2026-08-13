@@ -4,7 +4,7 @@ import { CmComWid, CmMeetingEventWid } from './enums';
 export interface IExportableMeetingsEvent {
   n: string; // название из IExportableMeetings.names
   w: CmMeetingEventWid; // уникальный айди
-  r: num; // регулярное ли
+  r: Bool; // регулярное ли
   b: number; // время начала
   e: number; // время окончания
   s: CmComWid[]; // список песен

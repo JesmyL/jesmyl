@@ -58,6 +58,8 @@ export type ICmComOrderExportableMe<OrderConstructor extends CmComOrderWidClass<
   sourceIndex: number;
   viewIndex: number;
   kind: KindBlock;
+
+  min?: boolean;
 }>;
 
 export interface CmComOrderTopHeaderBag {

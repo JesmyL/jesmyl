@@ -4,6 +4,7 @@ import { CmEditorComOrderToolsAnchor } from './Anchor';
 import { CmEditorComOrderToolsAnchorDelete } from './AnchorDelete';
 import { CmEditorComOrderToolsBlockKind } from './BlockKind';
 import { CmEditorComOrderToolsChangeText } from './ChangeText';
+import { CmEditorComOrderToolsChangeTonType } from './ChangeTonType';
 import { CmEditorComOrderToolsChordBind } from './ChordBind';
 import { CmEditorComOrderToolsEmptyHeader } from './EmptyHeader';
 import { CmEditorComOrderToolsHiddenOnMin } from './HiddenOnMin';
@@ -32,6 +33,7 @@ export const CmEditorComOrderToolsRedactorOrderTools = (props: CmEditorComOrderT
         <CmEditorComOrderToolsOrderVisibility {...props} />
       )}
       <CmEditorComOrderToolsModulation {...props} />
+      {checkAccess('cm', 'COM_INTP', 'U') && <CmEditorComOrderToolsChangeTonType {...props} />}
 
       <CmEditorComOrderToolsEmptyHeader {...props} />
       <CmEditorComOrderToolsMoveBlock {...props} />

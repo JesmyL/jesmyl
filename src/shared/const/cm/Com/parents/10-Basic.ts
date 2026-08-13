@@ -3,6 +3,7 @@ import { checkIsNowInCurrentDay } from 'shared/const/ms';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { cmComLanguages } from 'shared/utils/cm/com/const';
 import { BaseNamed } from '../../BaseNamed';
+import { TonType } from '../../enums';
 
 export class CmComBasic extends BaseNamed<IExportableCom> {
   ton?: number;
@@ -18,6 +19,10 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
 
   get mod() {
     return this.top.m;
+  }
+
+  get isBemoled() {
+    return this.intp?.b ?? this.top.b ?? TonType.Diezed;
   }
 
   get texts() {

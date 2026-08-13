@@ -1,9 +1,9 @@
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { Bool } from 'shared/enums';
+import { TonType } from 'shared/const/cm/enums';
 
 export const CmEditorComEditBemoled = (props: {
-  value: Bool | nil;
-  onChange: (isBemoled: Bool) => Promise<unknown>;
+  value: TonType | nil;
+  onChange: (isBemoled: TonType) => Promise<unknown>;
 }) => (
   <TheIconButton
     icon="Grid"
@@ -14,9 +14,9 @@ export const CmEditorComEditBemoled = (props: {
     }
     postfix={
       <>
-        <span className="text-x7">{props.value ? 'Бемольная' : 'Диезная'}</span> песня
+        Тип тональности - <span className="text-x7">{props.value ? 'бемольная' : 'диезная'}</span>
       </>
     }
-    onClick={() => props.onChange(props.value === Bool.True ? Bool.False : Bool.True)}
+    onClick={() => props.onChange(props.value === TonType.Diezed ? TonType.Bemoled : TonType.Diezed)}
   />
 );
