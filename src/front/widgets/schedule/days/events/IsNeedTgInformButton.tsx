@@ -3,7 +3,7 @@ import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIcon
 type Props = {
   disabled: boolean;
   isNeedInform: boolean;
-  onSend: (value: num) => Promise<unknown>;
+  onSend: (value: Bool) => Promise<unknown>;
 };
 
 export const DayEventIsNeedTgInformButton = ({ disabled, isNeedInform, onSend }: Props) => {

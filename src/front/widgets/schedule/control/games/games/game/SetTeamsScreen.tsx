@@ -9,6 +9,7 @@ import { schGamesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { useEffect, useState } from 'react';
 import { IScheduleWidgetExportableTeam, ScheduleWidgetUserMi } from 'shared/api';
 import { toRandomSorted } from 'shared/randoms';
+import { arrayByLength } from 'shared/utils/object.utils';
 import { ScheduleWidgetRemovableUserFace } from '../../RemovableUserFace';
 import { useScheduleGameContext } from '../lib/contexts';
 
@@ -50,7 +51,7 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
             .sort((a, b) => criteria[a.mi] - criteria[b.mi])
             .map(user => user.mi);
 
-          let teamsNumbers: ScheduleWidgetUserMi[][] = Array.from({ length: teamsCount }, () => []);
+          let teamsNumbers: ScheduleWidgetUserMi[][] = arrayByLength(teamsCount, () => []);
           const mapToPower = (team: ScheduleWidgetUserMi[]) =>
             team.reduce((sum, userMi) => sum + criteria[userMi] + 1, 0);
 

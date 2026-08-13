@@ -5,10 +5,10 @@ import { ScheduleDayEventScopeProps } from 'shared/api';
 import { DayEventIsNeedTgInformButton } from './IsNeedTgInformButton';
 
 type Props = {
-  isSecret: num | und;
+  isSecret: Bool | und;
   eventTypeTitle: string;
   eventTopic: string | und;
-  tgInform: num | und;
+  tgInform: Bool | und;
   isPastEvent: boolean;
   dayEventScopeProps: ScheduleDayEventScopeProps;
   eventTm: number;

@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { memo } from 'react';
 import { randomIndex, randomOf } from 'shared/randoms';
+import { arrayByLength } from 'shared/utils/object.utils';
 
 const nodes: Record<number, React.ReactNode> = {};
 let countAtom: Atom<number>;
@@ -23,7 +24,7 @@ export const SnowWeather = memo(
 
     return (nodes[count] ??= (
       <StyledSnowWeather className="relative top-0 left-0 w-[100vw] h-[100vh] overflow-hidden z-100000000">
-        {Array.from({ length: count }, () => 0).map((_, i) => (
+        {arrayByLength(count, i => (
           <div
             key={i}
             className="absolute bg-white -top-[30px]"
@@ -47,8 +48,9 @@ export const SnowWeather = memo(
 
 const animationPrefix = `snow-flake-fall-${Date.now()}-`;
 
-const animations = Array.from({ length: 30 }, () => 0).map(
-  (_, i) => css`
+const animations = arrayByLength(
+  30,
+  i => css`
     @keyframes ${animationPrefix}${i} {
       from {
         transform: translate(0, -30px) rotate(0deg);

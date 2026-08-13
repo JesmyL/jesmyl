@@ -148,7 +148,7 @@ export type ScheduleWidgetAppAttCustomizableValueItem = [
   number,
 ];
 
-export type ScheduleWidgetAppAttCheckListValueItem = [num, string, number];
+export type ScheduleWidgetAppAttCheckListValueItem = [Bool, string, number];
 
 export interface ScheduleWidgetAppAttCustomizableValue {
   values?: ScheduleWidgetAppAttCustomizableValueItem[];
@@ -206,7 +206,7 @@ export interface IScheduleWidgetUser {
   R?: number;
   li?: Record<number, ScheduleWidgetUserUnitMi>;
   tgId?: ScheduleWidgetUserTgId;
-  tgInform?: num;
+  tgInform?: Bool;
 }
 
 export type AttKey = SokiAppName | 'SCH';

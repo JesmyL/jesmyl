@@ -45,7 +45,7 @@ export type SchGeneralTsjrpcModel = {
   toggleIsTgInform: Callback<void>;
   setTgInformTime: Callback<number>;
 
-  setIsTgInformMe: (args: { props: ScheduleScopeProps; type: num }) => IScheduleWidget;
+  setIsTgInformMe: (args: { props: ScheduleScopeProps; type: Bool }) => IScheduleWidget;
 };
 
 export type SchUsersTsjrpcMethods = {
@@ -154,7 +154,7 @@ export type SchDaysTsjrpcMethods = {
 export type SchDayEventsTsjrpcMethods = {
   setTopic: (args: { props: ScheduleDayEventScopeProps; value: string }) => IScheduleWidget;
   setDescription: (args: { props: ScheduleDayEventScopeProps; value: string }) => IScheduleWidget;
-  setIsNeedTgInform: (args: { props: ScheduleDayEventScopeProps; value: num }) => IScheduleWidget;
+  setIsNeedTgInform: (args: { props: ScheduleDayEventScopeProps; value: Bool }) => IScheduleWidget;
   setTm: (args: { props: ScheduleDayEventScopeProps; value: number }) => IScheduleWidget;
   toggleIsSecret: (args: { props: ScheduleDayEventScopeProps; value: void }) => IScheduleWidget;
 
@@ -176,7 +176,7 @@ export type SchDayEventsTsjrpcMethods = {
   updateCheckListAttachmentValue: (args: {
     props: ScheduleDayEventAttachmentScopeProps;
     itemMi: number | null;
-    key: num | null;
+    key: Bool | null;
     value: string | null;
   }) => IScheduleWidget;
 

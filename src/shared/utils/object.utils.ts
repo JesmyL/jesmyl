@@ -13,8 +13,8 @@ export const objectKeys = <T>(
 export const objectValues = <T>(it: T): NonNullable<T>[keyof T][] =>
   checkIsObject(it) ? (Object.values(it) as never) : [];
 
-export const arrayByLength = <Value>(length: number, map: (index: number, value: unknown) => Value): Value[] =>
-  Array.from({ length }, (v, i) => map(i, v));
+export const arrayByLength = <Value>(length: number, map: (index: number, length: number) => Value): Value[] =>
+  Array.from({ length }, (_v, i) => map(i, length));
 
 export const objectLength = <const It extends object | unknown[] | string | nil>(
   it: It,

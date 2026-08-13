@@ -20,7 +20,7 @@ export const onScheduleDayEventListSetEvent = Eventer.createValue<
 export const onScheduleDayEventIsNeedTgInformSetEvent = Eventer.createValue<
   {
     dayEventProps: ScheduleDayEventScopeProps;
-    value: num;
+    value: Bool;
     isNeedRefreshTgInformTime: boolean;
   },
   Promise<IScheduleWidget>
@@ -29,7 +29,7 @@ export const onScheduleDayEventIsNeedTgInformSetEvent = Eventer.createValue<
 export const onScheduleUserTgInformSetEvent = Eventer.createValue<
   {
     schProps: ScheduleScopeProps;
-    isNotInform: num;
+    isNotInform: Bool;
     userLogin: SokiAuthLogin | nil;
   },
   Promise<{ value: IScheduleWidget; description: string | null }>
