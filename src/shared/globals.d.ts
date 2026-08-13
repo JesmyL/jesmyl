@@ -6,7 +6,6 @@ enum NotANumber {
 }
 
 declare global {
-  type num = 0 | 1;
   type Bool = BoolType;
   type nil = null | undefined;
   type und = undefined;
