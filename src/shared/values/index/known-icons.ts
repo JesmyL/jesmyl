@@ -99,6 +99,7 @@ export const knownStameskaIconNames = {
   FileValidation: 0,
   Flag03: 0,
   Flash: 0,
+  FlashOff: 0,
   Folder01: 0,
   FolderAdd: 0,
   GameController03: 0,
