@@ -17,7 +17,7 @@
     "A-E H C#m\nA-E H C#m\nA-E H C#m\nA-H E-A-E-A",
     "A-E H C#m\nA-E H C#m\nA-E H C#m\nA-H E",
     "A C#m\nE H\nA E\nC#m H",
-    "A H C#m G#m\nA H C#m G#m"
+    "A H C#m G#m\nA H C#m G#m\nA H C#m G#m\nA H C#m G#m\nA H"
   ],
   "o": [
     { "c": 0, "k": 15, "r": 2, "w": 0 },
@@ -49,7 +49,7 @@
       "t": 3,
       "w": 6
     },
-    { "c": 5, "k": 80, "r": 2, "w": 7 },
+    { "c": 5, "k": 80, "w": 7 },
     { "a": 2, "r": { "0-3:1": 2 }, "w": 8 }
   ],
   "am": {

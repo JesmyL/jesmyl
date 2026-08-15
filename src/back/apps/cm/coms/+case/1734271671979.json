@@ -28,9 +28,9 @@
     "Em F#m7\nH F#dim Em/C#\nC7 Em7\nD D#dim Em Hdim-G#dim-Fdim",
     "Am Em\nD G-G/F#-G/F E7\nAm Em/G-C9\nH",
     "Am9 Em4 D4 G-F-E7\nAm Em/G-C9 Am H Em9",
-    "Am Em\nD G-F-E7\nAm Em/G-C9\nH Em C7",
+    "Am Em\nD G-G/F#-G/F E7\nAm Em/G-C9\nH Em C7",
     "H Em C7",
-    "Fm Gm7\nC Gdim Fm/D\nC#7 Cm7\nD# Edim Em",
+    "Fm Gm7\nC Gdim Fm/D\nC#7 Fm7\nD# Edim Fm",
     "A#m Fm\nD# G#-G#/G-G#/F# F7\nA#m Fm/G#-C#9\nC7 Gdim Fm",
     "C7 Gdim",
     "A#m Fm\nD# G#-G#/G-G#/F# F7\nA#m Fm/G#-C#9\nC7 Gdim Fm\nC7 Gdim Fm",
@@ -91,13 +91,13 @@
       "k": 94,
       "p": [
         [2, 12],
-        [4, 12],
+        [-2, 4, 12],
         [1, 10]
       ],
       "t": 2,
       "w": 5
     },
-    { "c": 5, "k": 58, "p": [[5, 8, 14]], "t": 6, "w": 12 },
+    { "c": 5, "k": 58, "p": [[-2, 5, 14]], "t": 6, "w": 12 },
     {
       "c": 6,
       "k": 39,
