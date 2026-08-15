@@ -13,11 +13,12 @@ import { soki } from '#shared/soki';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { schLinkAction } from '#widgets/schedule/links';
+import { indexIDB } from '$index/shared/state';
 import { Outlet, ParsedLocation, useLocation, useNavigate } from '@tanstack/react-router';
 import { atom, useAtomValue } from 'atomaric';
 import React, { useEffect, useState } from 'react';
 import { langCodeDict } from 'shared/const/+locale';
-import { extractNumber } from 'shared/utils';
+import { extractNumber, iife } from 'shared/utils';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
 import { appInitialInvokes } from './app-initial-invokes';
@@ -141,3 +142,10 @@ const FirstNaver = ({ onSet, loc }: { onSet: (is: false) => void; loc: ParsedLoc
 
   return <></>;
 };
+
+iife(async () => {
+  const schs = await indexIDB.tb.schs.toCollection().keys();
+  const keys = schs.flatMap(schw => (schw === Math.trunc(+schw) ? [] : [schw]));
+
+  await indexIDB.tb.schs.where('w').anyOf(keys).delete();
+});
