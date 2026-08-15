@@ -33,7 +33,7 @@ export const CmEditorComOrderToolsRedactorOrderTools = (props: CmEditorComOrderT
         <CmEditorComOrderToolsOrderVisibility {...props} />
       )}
       <CmEditorComOrderToolsModulation {...props} />
-      {checkAccess('cm', 'COM_INTP', 'U') && <CmEditorComOrderToolsChangeTonType {...props} />}
+      {checkAccess('cm', 'COM_INTP', 'C') && <CmEditorComOrderToolsChangeTonType {...props} />}
 
       <CmEditorComOrderToolsEmptyHeader {...props} />
       <CmEditorComOrderToolsMoveBlock {...props} />

@@ -4,6 +4,8 @@ export const updateCmComOrderModulationValue = <MdHolder extends { md?: number |
 ) => {
   if (mdHolder.md) mdHolder.md = (value ?? 0) + Math.abs(mdHolder.md - Math.trunc(mdHolder.md));
   else mdHolder.md = value || undefined;
+
+  if (!mdHolder.md) delete mdHolder.md;
 };
 
 export const updateCmComOrderTonTypeSwitcherValue = <MdHolder extends { md?: number | nil }>(mdHolder: MdHolder) => {
@@ -16,6 +18,8 @@ export const updateCmComOrderTonTypeSwitcherValue = <MdHolder extends { md?: num
       isAdd = false;
     }
   } else mdHolder.md = 0.1;
+
+  if (!mdHolder.md) delete mdHolder.md;
 
   return isAdd;
 };

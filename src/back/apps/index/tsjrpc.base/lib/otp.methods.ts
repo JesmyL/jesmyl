@@ -19,6 +19,7 @@ import { constantsConfigurator } from 'shared/const/cm/constants.def';
 import { howMillisecondsInMin } from 'shared/const/ms';
 import { randomItem, randomOf } from 'shared/randoms';
 import { declension, wait } from 'shared/utils';
+import { checkIsStartsWith } from 'shared/utils/checkIs';
 import { emailTextingLetterVariantsFileStorage, sentEmailOTPFileStorage } from '../../file-stores';
 import { constantsConfigFileStore } from '../../schedules/file-stores';
 import { resetUserTiny } from '../../tinies/userTiny';
@@ -285,7 +286,12 @@ export const otpTSJRPCMethods = {
       await db.insert(userDB).values({
         l: auth.login,
         ls: [],
-        auth: jsonStringifySecure(auth),
+        auth: jsonStringifySecure({
+          ...auth,
+          login: undefined,
+          fio: auth.nick === auth.fio ? undefined : auth.fio,
+          nick: auth.email && auth.nick && checkIsStartsWith(auth.email, `${auth.nick}@`) ? undefined : auth.nick,
+        }),
         rights: {},
       });
 

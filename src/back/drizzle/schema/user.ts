@@ -17,7 +17,7 @@ export const userDB = pgTable('users', {
     .notNull()
     .$defaultFn(() => Date.now()),
 
-  auth: text('secureAuth').$type<JsonSecureString<UserAuth>>().notNull(),
+  auth: text('secureAuth').$type<JsonSecureString<OmitOwn<UserAuth, 'login'>>>().notNull(),
 
   rights: jsonb('rules').$type<IndexAccessScopeRules>().notNull(),
 
