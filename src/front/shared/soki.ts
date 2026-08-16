@@ -13,8 +13,6 @@ export class SokiTrip {
   private ws: WebSocket = null!;
   private isTokenSent = false;
 
-  private isConnected = false;
-  private connectionState = Eventer.createValue<boolean>();
   private requests: PRecord<
     string,
     {
@@ -26,17 +24,11 @@ export class SokiTrip {
 
   private isOpened = false;
 
-  private setIsConnected(value: boolean) {
-    this.isConnected = value;
-    this.connectionState.invoke(value);
-  }
-
   onConnectionOpenEvent = Eventer.createValue<boolean>();
   onBeforeAuthorizeEvent = Eventer.createValue<void>();
   onAuthorizeEvent = Eventer.createValue<void>();
   onInvokeErrorMessageEvent = Eventer.createValue<string>();
   onTokenInvalidEvent = Eventer.createValue<void>();
-  onConnectionState = (cb: (is: boolean) => void) => this.connectionState.listen(cb, this.isConnected);
 
   constructor() {
     this.onBeforeAuthorizeEvent.listen(() => this.sendRegistrationToken());
@@ -92,12 +84,6 @@ export class SokiTrip {
 
           this.requests[event.requestId]!.action(event);
           delete this.requests[event.requestId];
-        }
-
-        if (event.pong) {
-          this.setIsConnected(true);
-          clearTimeout(this.pingDisconnectedSetterTimeout);
-          return;
         }
 
         if (event.invoke === undefined) return;
@@ -195,37 +181,6 @@ export class SokiTrip {
     }
 
     return withResolvers.promise;
-  };
-
-  private pingTimeout: TimeOut;
-  private pingDisconnectedSetterTimeout: TimeOut;
-  ping = (timeout?: number) => {
-    return new Promise<{ start: number; finish: number; ts: number }>(resolve => {
-      if (this.pingTimeout === undefined) {
-        clearTimeout(this.pingDisconnectedSetterTimeout);
-        this.pingDisconnectedSetterTimeout = setTimeout(() => this.setIsConnected(false), 500);
-      }
-
-      clearTimeout(this.pingTimeout);
-      this.pingTimeout = setTimeout(async () => {
-        this.pingTimeout = undefined;
-        const start = Date.now();
-        const result = await this.send({ ping: 1 }, { timeout });
-
-        if (
-          result &&
-          typeof result === 'object' &&
-          'serverTimeStamp' in result &&
-          typeof result.serverTimeStamp === 'number'
-        ) {
-          resolve({
-            start,
-            ts: result.serverTimeStamp,
-            finish: Date.now(),
-          });
-        }
-      }, 0);
-    });
   };
 }
 

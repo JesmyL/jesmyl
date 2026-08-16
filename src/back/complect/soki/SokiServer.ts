@@ -38,11 +38,6 @@ export class SokiServer {
       client.on('message', async data => {
         const event: TsjrpcClientEvent = JSON.parse('' + data);
 
-        if (event.ping) {
-          this.send({ pong: 1, requestId: event.requestId, invokedResult: { serverTimeStamp: Date.now() } }, client);
-          return;
-        }
-
         if (event.abort !== undefined) {
           this.abortedRequestIdsSet.add(event.abort);
           return;

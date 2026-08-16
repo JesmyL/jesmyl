@@ -15,14 +15,11 @@ export type TsjrpcBaseEvent = {
   abort?: string;
 };
 
-export type TsjrpcServerEvent = TsjrpcBaseEvent & {
-  pong?: 1;
-};
+export type TsjrpcServerEvent = TsjrpcBaseEvent;
 
 export type TsjrpcClientEvent = TsjrpcBaseEvent & {
   token?: string | nil;
   visitInfo?: SokiVisit;
-  ping?: 1;
 };
 
 export type TsjrpcClientTool = { aborter?: { signal: AbortSignal }; timeout?: number };
