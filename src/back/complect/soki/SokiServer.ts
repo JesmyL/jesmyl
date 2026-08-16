@@ -5,7 +5,14 @@ import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 import { makeRegExp } from 'regexpert';
 import { LocalSokiAuth, SokiAuthLogin, SokiError, SokiVisit, TsjrpcClientEvent, TsjrpcServerEvent } from 'shared/api';
 import { setSharedPolyfills } from 'shared/utils';
-import { checkIsFunction, checkIsObject } from 'shared/utils/checkIs';
+import {
+  checkIsFunction,
+  checkIsNil,
+  checkIsNotUndefined,
+  checkIsNull,
+  checkIsObject,
+  checkIsUndefined,
+} from 'shared/utils/checkIs';
 import WebSocket, { WebSocketServer } from 'ws';
 import { ErrorCatcher } from '../ErrorCatcher';
 import { tokenSecretFileStore } from './file-stores';
@@ -31,23 +38,23 @@ export class SokiServer {
         this.visits.delete(client);
         this.auths.delete(client);
 
-        if (auth?.login === undefined) return;
+        if (checkIsUndefined(auth?.login)) return;
         this.clientsByLogin.get(auth.login)?.delete(client);
       });
 
       client.on('message', async data => {
         const event: TsjrpcClientEvent = JSON.parse('' + data);
 
-        if (event.abort !== undefined) {
+        if (checkIsNotUndefined(event.abort)) {
           this.abortedRequestIdsSet.add(event.abort);
           return;
         }
 
-        if (event.token !== undefined) {
-          if (event.token === null) {
+        if (checkIsNotUndefined(event.token)) {
+          if (checkIsNull(event.token)) {
             this.send({ requestId: event.requestId }, client);
 
-            if (event.visitInfo !== undefined) {
+            if (checkIsNotUndefined(event.visitInfo)) {
               this.visits.set(client, event.visitInfo);
 
               if (!this.isLocalhost(event.visitInfo.urls[0])) {
@@ -71,7 +78,7 @@ export class SokiServer {
 
           const auth = jwt.decode(event.token) as LocalSokiAuth;
 
-          if (event.visitInfo !== undefined) {
+          if (checkIsNotUndefined(event.visitInfo)) {
             this.visits.set(client, event.visitInfo);
 
             if (!this.isLocalhost(event.visitInfo.urls[0]))
@@ -96,14 +103,14 @@ export class SokiServer {
         const auth = this.auths.get(client);
         const visitInfo = this.visits.get(client);
 
-        if (event.errorMessage !== undefined) {
+        if (checkIsNotUndefined(event.errorMessage)) {
           if (!this.isLocalhost(visitInfo?.urls[0]))
             tglogger.userErrors(
               `${event.errorMessage}\n\n${userAuthStringified(auth)}\n\n${userVisitStringified(visitInfo)}`,
             );
         }
 
-        if (event.invoke === undefined) return;
+        if (checkIsUndefined(event.invoke)) return;
 
         tsjrpcBaseServerNext({
           invoke: event.invoke,
@@ -125,7 +132,7 @@ export class SokiServer {
       return;
     }
 
-    if (clientSelector == null) {
+    if (checkIsNil(clientSelector)) {
       this.clients.forEach(sendToEachClient, JSON.stringify(event));
       return;
     }
