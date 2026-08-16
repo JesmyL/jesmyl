@@ -7,7 +7,6 @@ import { LocalSokiAuth, SokiAuthLogin, SokiError, SokiVisit, TsjrpcClientEvent, 
 import { setSharedPolyfills } from 'shared/utils';
 import {
   checkIsFunction,
-  checkIsNil,
   checkIsNotUndefined,
   checkIsNull,
   checkIsObject,
@@ -132,7 +131,7 @@ export class SokiServer {
       return;
     }
 
-    if (checkIsNil(clientSelector)) {
+    if (clientSelector == null) {
       this.clients.forEach(sendToEachClient, JSON.stringify(event));
       return;
     }
