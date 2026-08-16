@@ -1,5 +1,5 @@
 import { makeRegExp } from 'regexpert';
-import { checkIsNaN, checkIsNl } from './checkIs';
+import { checkIsEndsWith, checkIsNaN, checkIsNl, checkIsStartsWith } from './checkIs';
 
 export const itIt = <It>(it: It) => it;
 export const itTrim = (it: string) => it.trim();
@@ -42,6 +42,18 @@ export type JsonString<T> = string & { readonly [jsonBrand]: T };
 export const jsonStringify = <Val>(val: Val) => JSON.stringify(val) as JsonString<Val>;
 export const jsonParse = <T>(val: JsonString<T>) => JSON.parse(val) as T;
 // JSON
+
+export const sliceStringIfEndsWith = <Value extends string, End extends string>(
+  value: Value,
+  end: End,
+): Value extends `${infer S}${End}` ? S : Value =>
+  checkIsEndsWith(value, end) ? (value.slice(0, -end.length) as never) : (value as never);
+
+export const sliceStringIfStartsWith = <Value extends string, Start extends string>(
+  value: Value,
+  start: Start,
+): Value extends `${Start}${infer S}` ? S : Value =>
+  checkIsStartsWith(value, start) ? (value.slice(start.length) as never) : (value as never);
 
 export const declension = (num: number, one?: string, two?: string, five?: string) => {
   if (num % 1) return two!;

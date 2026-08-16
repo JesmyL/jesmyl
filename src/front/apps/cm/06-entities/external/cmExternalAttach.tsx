@@ -10,7 +10,7 @@ import {
   ScheduleWidgetUserRoleRight,
   scheduleWidgetUserRights,
 } from 'shared/api';
-import { extractNumber } from 'shared/utils';
+import { extractNumber, sliceStringIfEndsWith } from 'shared/utils';
 import { useCmMeetingComwList } from '../meeting/lib/useMeetingComFaceList';
 import { CmExternalComListAtt } from './ui/CmExternalComListAtt';
 
@@ -56,7 +56,7 @@ function useActionPanelNode(
 
   return (
     <Link
-      to="/!other/$appName/schs"
+      to={sliceStringIfEndsWith(path, '/')}
       params={{ appName }}
       search={{
         dayi: scopeProps.dayi,
