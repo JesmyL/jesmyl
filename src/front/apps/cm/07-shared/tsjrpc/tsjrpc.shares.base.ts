@@ -3,9 +3,11 @@ import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { TsjrpcBaseClient } from '#basis/tsjrpc/TsjrpcBase.client';
 import { cmComCommentRegisteredAltKeysAtom } from '$cm/entities/com-comment';
 import { cmComFavoriteComsAtom, cmComTopToolsAtom } from '$cm/entities/index';
+import { cmMeetingGetSchEventComPackModQueryKey } from '$cm/entities/meeting';
+import { ComsInSchEventComwsPack, ScheduleWidgetWid } from 'shared/api';
 import { CmShareTsjrpcModel } from 'shared/api/tsjrpc/cm/share.tsjrpc.model';
-import { extractNumber, itNumSort } from 'shared/utils';
-import { mapObjectEntries } from 'shared/utils/object.utils';
+import { extractNumber, itInvokeIt, itNumSort } from 'shared/utils';
+import { mapObjectEntries, objectValues } from 'shared/utils/object.utils';
 import { cmIDB } from '../state/cmIDB';
 
 const updateMod = (mod: number) => cmIDB.updateLastModifiedAt(mod);
@@ -104,29 +106,31 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
         },
 
         freshSchDayEvComws: async ({ packs }) => {
-          [packs].flat().forEach(async ({ comws, dayi, eventMi, schw, fio, w }) => {
-            const prev = await cmIDB.db.scheduleComws.get(schw);
+          const schwPackDict: PRecord<ScheduleWidgetWid, ComsInSchEventComwsPack['pack']> = {};
+          const invalidateDict: Record<string, () => void> = {};
+          let maxw = 0;
 
-            await cmIDB.db.scheduleComws.put({
-              schw,
-              pack: {
-                ...prev?.pack,
-                [dayi]: {
-                  ...prev?.pack[dayi],
-                  [eventMi]: {
-                    ...prev?.pack[dayi]?.[eventMi],
-                    s: comws,
-                    fio,
-                    w,
-                  },
-                },
-              },
-            });
+          for (const { comws, dayi, eventMi, schw, fio, w } of [packs].flat()) {
+            const prev = (schwPackDict[schw] ??= (await cmIDB.db.scheduleComws.get(schw))?.pack ?? {});
 
-            defaultQueryClient.invalidateQueries({ queryKey: ['getSchEventComPackMod', schw, dayi] });
+            (prev[dayi] ??= {})[eventMi] = { fio, s: comws, w };
 
-            updateMod(w);
-          });
+            invalidateDict[`${schw}.${dayi}`] ??= () => {
+              defaultQueryClient.invalidateQueries({ queryKey: [cmMeetingGetSchEventComPackModQueryKey, schw, dayi] });
+            };
+
+            maxw = Math.max(maxw, w);
+          }
+
+          await Promise.all(
+            mapObjectEntries(schwPackDict, async (schwStr, pack) => {
+              const schw = extractNumber(schwStr);
+              await cmIDB.db.scheduleComws.put({ schw, pack });
+            }),
+          );
+
+          objectValues(invalidateDict).forEach(itInvokeIt);
+          updateMod(maxw);
         },
 
         refreshConstConfig: async ({ config, mod }) => {

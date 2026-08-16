@@ -20,6 +20,8 @@ import { useCmMeetingComFaceList } from '../lib/useMeetingComFaceList';
 
 type Props = Required<ScheduleDayEventPathProps>;
 
+export const cmMeetingGetSchEventComPackModQueryKey = 'getSchEventComPackMod';
+
 export const CmMeetingEvent = ({ dayi, eventMi, schw }: Props) => {
   const { comFaceListNode, icoms, packComws } = useCmMeetingComFaceList({ schw, dayi, eventMi });
   const schedule = useLiveQuery(() => indexIDB.db.schs.get(schw), [schw]);
@@ -28,7 +30,7 @@ export const CmMeetingEvent = ({ dayi, eventMi, schw }: Props) => {
   const checkAccess = useCheckUserAccessRightsInScope();
   const [isToolsOpen, setIsToolsOpen] = useState(false);
   const mod = useQuery({
-    queryKey: ['getSchEventComPackMod', schw, dayi],
+    queryKey: [cmMeetingGetSchEventComPackModQueryKey, schw, dayi],
     queryFn: () => cmTsjrpcClient.getSchEventComPackMod({ schw, dayi }),
   });
 
