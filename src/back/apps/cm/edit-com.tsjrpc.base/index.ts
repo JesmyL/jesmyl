@@ -1,7 +1,7 @@
 import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { comDB } from 'back/drizzle.schema';
-import { db } from 'back/drizzle/drizzle.db';
+import { db, dbDelete } from 'back/drizzle/drizzle.db';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { eq } from 'drizzle-orm';
@@ -137,12 +137,14 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'U')) throw '';
           if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'D')) throw '';
 
-          const [com] = await db.select({ n: comDB.n, is: comDB.isRemoved }).from(comDB).where(eq(comDB.w, comw));
+          const whereComw = eq(comDB.w, comw);
+
+          const [com] = await db.select({ n: comDB.n, is: comDB.isRemoved }).from(comDB).where(whereComw);
 
           if (!com) throw 'Неизвестная песня';
           if (!com.is) throw 'Сначала песню нужно удалить';
 
-          await db.delete(comDB).where(eq(comDB.w, comw));
+          await dbDelete(comDB, whereComw);
 
           return { value: com.n, description: `Песня ${com.n} уничтожена` };
         },

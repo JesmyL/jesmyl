@@ -1,7 +1,7 @@
 import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
 import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
-import { db, dbUpdate } from 'back/drizzle/drizzle.db';
+import { db, dbDelete, dbUpdate } from 'back/drizzle/drizzle.db';
 import { schComHistoryDB } from 'back/drizzle/schema/schComHistory';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { takeLogginedAuthOrThrow } from 'back/utils';
@@ -135,18 +135,14 @@ export const cmEditComExternalsTsjrpcBaseServer =
 
           removeSchEvHistoryItem: async ({ schw, dayi, writedAt }) => {
             const sch = await takeScheduleWidgetTiny({ w: schw });
-            const result = (
-              await db
-                .delete(schComHistoryDB)
-                .where(
-                  and(
+            const whereDelete = and(
                     eq(schComHistoryDB.schId, sch.id),
                     eq(schComHistoryDB.dayi, dayi),
                     eq(schComHistoryDB.w, writedAt),
-                  ),
-                )
-                .returning({ w: schComHistoryDB.w })
-            ).at(0);
+            );
+            if (checkIsNil(whereDelete)) throw '0761624561238993';
+
+            const result = (await dbDelete(schComHistoryDB, whereDelete).returning({ w: schComHistoryDB.w })).at(0);
 
             if (result?.w !== writedAt) throw 'Ошибка удаления';
 
