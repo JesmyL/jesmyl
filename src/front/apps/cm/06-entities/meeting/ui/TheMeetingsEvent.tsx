@@ -9,9 +9,7 @@ import { ScheduleWidgetWatchLiveBroadcastButton } from '#widgets/schedule/live-b
 import { ScheduleDayEventPathProps } from '#widgets/schedule/ScheduleWidget.model';
 import { CmEditorMeetingEventEdits } from '$cm+editor/ext';
 import { CmComLocalListToolsPopup, useCmComOpenComLinkRendererContext } from '$cm/entities/com';
-import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { indexIDB, useAuth } from '$index/shared/state';
-import { useQuery } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useState } from 'react';
@@ -23,16 +21,12 @@ type Props = Required<ScheduleDayEventPathProps>;
 export const cmMeetingGetSchEventComPackModQueryKey = 'getSchEventComPackMod';
 
 export const CmMeetingEvent = ({ dayi, eventMi, schw }: Props) => {
-  const { comFaceListNode, icoms, packComws } = useCmMeetingComFaceList({ schw, dayi, eventMi });
+  const { comFaceListNode, icoms, pack } = useCmMeetingComFaceList({ schw, dayi, eventMi });
   const schedule = useLiveQuery(() => indexIDB.db.schs.get(schw), [schw]);
   const auth = useAuth();
   const linkToCom = useCmComOpenComLinkRendererContext();
   const checkAccess = useCheckUserAccessRightsInScope();
   const [isToolsOpen, setIsToolsOpen] = useState(false);
-  const mod = useQuery({
-    queryKey: [cmMeetingGetSchEventComPackModQueryKey, schw, dayi],
-    queryFn: () => cmTsjrpcClient.getSchEventComPackMod({ schw, dayi }),
-  });
 
   if (!schedule) return;
 
@@ -76,15 +70,14 @@ export const CmMeetingEvent = ({ dayi, eventMi, schw }: Props) => {
         <AppDialogProvider title="cm-meeting-event-coms">
           {comFaceListNode}
           <div className="text-center opacity-50 text-sm">
-            {!mod.data?.mod ||
-              translateBase(it => it.sch.evMod, { m: makeDateLabel(mod.data.mod, languageSystemCode) })}
+            {!pack.w || translateBase(it => it.sch.evMod, { m: makeDateLabel(pack.w, languageSystemCode) })}
           </div>
           {isToolsOpen && (
             <BottomPopup onClose={setIsToolsOpen}>
               <CmComLocalListToolsPopup icoms={icoms}>
                 {checkAccess('cm', 'EVENT', 'U') && (
                   <CmEditorMeetingEventEdits
-                    packComws={packComws}
+                    packComws={pack.s}
                     dayi={dayi}
                     eventMi={eventMi}
                     schw={schw}

@@ -22,5 +22,6 @@ export type CmTsjrpcModel = {
   };
   getLinkLeadNumHost: (args: { num: number }) => { host: string | nil };
 
+  /** @deprecated */
   getSchEventComPackMod: (args: { schw: ScheduleWidgetWid; dayi: ScheduleWidgetDayi }) => { mod: number };
 };

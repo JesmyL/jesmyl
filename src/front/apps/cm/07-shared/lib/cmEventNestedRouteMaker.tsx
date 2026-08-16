@@ -58,7 +58,7 @@ export const makeCmEventNestedRoute = <Path extends keyof FileRoutesByPath>(prop
 
   function useComListPack() {
     const { dayi, eventMi, schw } = useSearch({ from: props.path }) as Search;
-    return useCmMeetingComwList({ schw, dayi, eventMi });
+    return useCmMeetingComwList({ schw, dayi, eventMi }).s;
   }
 
   const comRoute = makeCmComNestedRoute({

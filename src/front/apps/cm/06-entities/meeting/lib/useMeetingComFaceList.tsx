@@ -16,19 +16,24 @@ interface Props {
 
 export const useCmMeetingComwList = ({ dayi, eventMi, schw }: Props) => {
   const pack = useLiveQuery(() => schw && cmIDB.db.scheduleComws.get({ schw }), [schw]);
-  return useMemo(
-    () => (checkIsNotNil(dayi) && checkIsNotNil(eventMi) ? (pack?.pack?.[dayi]?.[eventMi]?.s ?? []) : []),
-    [dayi, eventMi, pack?.pack],
-  );
+  return useMemo(() => {
+    const eventPack = checkIsNotNil(dayi) && checkIsNotNil(eventMi) ? pack?.pack?.[dayi]?.[eventMi] : null;
+
+    return {
+      ...eventPack,
+      s: eventPack?.s ?? [],
+      w: eventPack?.w ?? 0,
+    };
+  }, [dayi, eventMi, pack?.pack]);
 };
 
 export const useCmMeetingComFaceList = (props: Props) => {
-  const packComws = useCmMeetingComwList(props);
-  const icoms = useCmComIComList(packComws);
+  const pack = useCmMeetingComwList(props);
+  const icoms = useCmComIComList(pack.s);
 
   return {
     icoms,
-    packComws,
+    pack,
     comFaceListNode: (
       <CmComFaceList
         list={icoms}

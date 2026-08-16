@@ -44,7 +44,7 @@ const route = makeCmEventNestedRoute({
 
 function useComListPack() {
   const { dayi, eventMi, schw } = useSearch({ from: path });
-  return useCmMeetingComwList({ dayi, eventMi, schw: extractNumber(schw!) });
+  return useCmMeetingComwList({ dayi, eventMi, schw: extractNumber(schw!) }).s;
 }
 
 function useActionPanelNode(
