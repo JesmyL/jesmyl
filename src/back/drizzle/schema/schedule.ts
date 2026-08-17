@@ -1,5 +1,5 @@
 import { bigint, integer, jsonb, pgTable, serial, smallint, text } from 'p/d';
-import {
+import type {
   IScheduleWidget,
   IScheduleWidgetCtrl,
   IScheduleWidgetDay,

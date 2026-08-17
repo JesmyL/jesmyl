@@ -1,5 +1,5 @@
 import { bigint, jsonb, pgTable, primaryKey } from 'drizzle-orm/pg-core';
-import { IExportableComInterpretation } from 'shared/api';
+import type { IExportableComInterpretation } from 'shared/api';
 import { comDB, ComId } from './com';
 import { scheduleDB, SchId } from './schedule';
 

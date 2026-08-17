@@ -1,7 +1,6 @@
 import fs from 'fs';
 import { hostConfig } from 'shared/api';
 import { Do } from 'shared/enums';
-import { wait } from 'shared/utils';
 import { checkIsStartsWith } from 'shared/utils/checkIs';
 import { objectKeys } from 'shared/utils/object.utils';
 import { deployPathsBasicDict } from '../../paths.basic';
@@ -10,7 +9,7 @@ import { lazyEnvJson } from './envJson';
 import { makeCyanLogText, makeGreenLogText, makeYellowLogText, rewriteAndDo, runCommand } from './utils.exec';
 
 export const initBack = async () => {
-  const { DB_USER, DB_NAME, DB_PASSWORD, DB_PORT, hostRootDir } = lazyEnvJson();
+  const { DB_USER, DB_NAME, DB_PASSWORD, DB_PORT, hostRootDir, envFilePath } = lazyEnvJson();
 
   fs.mkdirSync(systemdPath, { recursive: true });
   fs.mkdirSync(hostRootDir, { recursive: true });
@@ -20,7 +19,46 @@ export const initBack = async () => {
     fs.mkdirSync(`${hostRootDir}${cleanDir}`, { recursive: true });
   });
 
-  await runCommand(`sudo chmod 755 ${hostRootDir}/`, 'root chmod');
+  try {
+    await runCommand(`sudo chmod 755 ${hostRootDir}/`, 'root chmod');
+    await runCommand(`sudo chmod 600 ${envFilePath}`, 'secure env json');
+  } catch {
+    //
+  }
+
+  try {
+    await rewriteAndDo(
+      '/etc/logrotate.d/rsyslog',
+      `/var/log/syslog
+/var/log/mail.log
+/var/log/kern.log
+/var/log/auth.log
+/var/log/user.log
+/var/log/cron.log
+{
+  su root syslog
+  size 50M
+  rotate 2
+  missingok
+  notifempty
+  compress
+  delaycompress
+  sharedscripts
+  postrotate
+          /usr/lib/rsyslog/rsyslog-rotate
+  endscript
+}`,
+      async () => {
+        await runCommand('sudo logrotate -f /etc/logrotate.d/rsyslog');
+        await runCommand('sudo sed -i "s/#SystemMaxUse=/SystemMaxUse=100M/g" /etc/systemd/journald.conf');
+        await runCommand('sudo sed -i "s/SystemMaxUse=.*/SystemMaxUse=100M/g" /etc/systemd/journald.conf');
+        await runCommand('sudo systemctl restart systemd-journald');
+        await runCommand('sudo journalctl --vacuum-size=100M');
+      },
+    );
+  } catch {
+    //
+  }
 
   try {
     await rewriteAndDo(
@@ -33,7 +71,11 @@ Description=The Soki Service
 Restart=on-failure
 RestartSec=5s
 WorkingDirectory=${hostRootDir}
-ExecStart=node ${hostRootDir}/back.index.cjs`,
+ExecStart=node ${hostRootDir}/back.index.cjs
+StandardOutput=journal
+StandardError=journal
+LogRateLimitIntervalSec=30s
+LogRateLimitBurst=1000`,
       () => runCommand('sudo systemctl daemon-reload'),
     );
   } catch {
@@ -83,82 +125,54 @@ ExecStart=node ${hostRootDir}/back.index.cjs`,
     ),
   );
 
-  if (!Do.It) {
-    await runCommand('sudo apt update', '', hostCwdOptions);
-    await runCommand('sudo apt install -y docker.io docker-compose-v2', '', hostCwdOptions);
-    await runCommand('sudo systemctl enable --now docker', '', hostCwdOptions);
-    await runCommand('sudo usermod -aG docker $USER', '', hostCwdOptions);
-  }
+  await runCommand('sudo apt update', '', hostCwdOptions);
+  await runCommand('sudo apt install -y postgresql postgresql-contrib', '', hostCwdOptions);
+  await runCommand('sudo systemctl enable --now postgresql', '', hostCwdOptions);
 
   if (Do.It) {
-    const dockerComposeFileName = `${hostRootDir}/docker-compose.yml`;
+    console.info(makeCyanLogText('[Процесс] Проверка и настройка локального PostgreSQL...'));
 
-    await rewriteAndDo(
-      dockerComposeFileName,
-      `services:
-  postgres:
-    image: postgres:15-alpine
-    container_name: drizzle-postgres
-    restart: always
-    environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
-    ports:
-      - "${DB_PORT}:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
+    try {
+      await runCommand(`sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD '${DB_PASSWORD}';"`);
+      await runCommand(
+        `sudo -u postgres psql -lqt | cut -d \\| -f 1 | grep -qw ${DB_NAME} || sudo -u postgres psql -c "CREATE DATABASE ${DB_NAME} OWNER ${DB_USER};"`,
+      );
 
-volumes:
-  pgdata:
-`,
-      async () => {
-        await runCommand(`sudo docker compose -f ${dockerComposeFileName} down -v`).catch(() => {});
-        await runCommand(
-          `sudo docker compose -f ${dockerComposeFileName} up -d`,
-          'Запуск контейнера PostgreSQL',
-          hostCwdOptions,
-        );
-      },
-    );
+      const pgHbaPath = '/etc/postgresql/*/main/pg_hba.conf';
+      await runCommand(`echo "host all all 127.0.0.1/32 md5" | sudo tee -a ${pgHbaPath} > /dev/null`);
+      await runCommand(`echo "host all all ::1/128 md5" | sudo tee -a ${pgHbaPath} > /dev/null`);
+      await runCommand('sudo systemctl restart postgresql');
+    } catch {
+      console.error(makeYellowLogText('[Ошибка] Не удалось настроить базу данных и авторизацию'));
+    }
 
-    console.info(makeCyanLogText('[Процесс] Динамическое ожидание инициализации PostgreSQL базы...'));
-
-    let isDbReady = false;
-    let attempts = 0;
-    const maxAttempts = 15;
-
-    while (!isDbReady && attempts < maxAttempts) {
-      attempts++;
+    if (DB_PORT !== '5432') {
       try {
-        await runCommand(
-          `sudo docker compose -f ${dockerComposeFileName} exec postgres pg_isready -U postgres`,
-          '',
-          hostCwdOptions,
-        );
-        isDbReady = true;
+        await runCommand(`sudo sed -i "s/#port = 5432/port = ${DB_PORT}/g" /etc/postgresql/*/main/postgresql.conf`);
+        await runCommand(`sudo sed -i "s/port = .*/port = ${DB_PORT}/g" /etc/postgresql/*/main/postgresql.conf`);
+        await runCommand('sudo systemctl restart postgresql');
       } catch {
-        console.info(
-          makeYellowLogText(`[Инфо] База данных создается и настраивается... Попытка ${attempts}/${maxAttempts}`),
-        );
-        await wait(2000);
+        //
       }
     }
 
-    if (!isDbReady) {
-      throw new Error(
-        'Критическая ошибка: PostgreSQL не успел запуститься. Проверьте логи командой `sudo docker compose logs`',
-      );
-    }
-
-    console.info(makeGreenLogText('[Успешно] PostgreSQL база готова к работе'));
+    console.info(makeGreenLogText('[Успешно] Локальная база PostgreSQL готова к работе'));
   }
 
   console.info(`
-    // 1. Натравить айпи на домен и установить сертификаты:
+    // Натравить айпи на домен и установить сертификаты:
       sudo apt update
       sudo apt install certbot
       sudo certbot certonly --standalone -d ${hostConfig.host}
       (crontab -l 2>/dev/null; echo '0 3 * * 1 certbot renew --pre-hook "systemctl stop jesmyl_soki" --post-hook "systemctl start jesmyl_soki"') | crontab -
   `);
+
+  console.info(`# Для создания файла подкачки на 1 ГБ    
+sudo fallocate -l 1G /swapfile
+sudo chmod 600 /swapfile
+
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab`);
 };

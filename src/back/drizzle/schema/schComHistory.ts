@@ -1,5 +1,5 @@
 import { bigint, integer, pgTable } from 'drizzle-orm/pg-core';
-import { CmComInSchDayEvWr, CmComWid, ScheduleWidgetDayEventMi, ScheduleWidgetDayi } from 'shared/api';
+import type { CmComInSchDayEvWr, CmComWid, ScheduleWidgetDayEventMi, ScheduleWidgetDayi } from 'shared/api';
 import { scheduleDB, SchId } from './schedule';
 import { userDB, UserId } from './user';
 

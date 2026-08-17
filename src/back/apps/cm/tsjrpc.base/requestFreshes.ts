@@ -3,20 +3,12 @@ import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny'
 import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { FileStore } from 'back/complect/FileStore';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
-import {
-  comDB,
-  sch2ComDB,
-  schComHistoryDB,
-  scheduleDB,
-  SchId,
-  selectUserExt,
-  user2ComDB,
-  userDB,
-  userExtDB,
-} from 'back/drizzle.schema';
+import { comDB, sch2ComDB, schComHistoryDB, scheduleDB, user2ComDB, userDB, userExtDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
 import { selectUser2Com } from 'back/drizzle/ex/user2Com.utils';
+import { SchId } from 'back/drizzle/schema/schedule';
+import { selectUserExt } from 'back/drizzle/schema/userExt';
 import { and, desc, DrizzleQueryError, eq, gt } from 'drizzle-orm';
 import {
   CmComInSchDayEvWr,

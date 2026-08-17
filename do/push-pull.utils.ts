@@ -1,5 +1,5 @@
 import { NounPronsType } from 'back/complect/model';
-import { UserId } from 'back/drizzle.schema';
+import { UserId } from 'back/drizzle/schema/user';
 import {
   ChordPack,
   CmComAudioMarkPack,

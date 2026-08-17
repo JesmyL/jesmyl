@@ -13,11 +13,12 @@ import * as secret from './secret.json';
 
 (async () => {
   const { url } = hostConfig;
+  const fetchUrl = `${url}${pushFilesExpressRoutePath}?${pullFilesExpressSecretQueryName}=${secret.secret}`;
+  const makeCaseDir = (path: `${string}/`) => `src/back/${path}+case/` as const;
 
   for (const dirStr in pullPushFileDirNameNet) {
     const dir = dirStr as keyof PullPushFileDirNameNet;
     const dirBox = pullPushFileDirNameNet[dir];
-    const makeCaseDir = (path: `${string}/`) => `src/back/${path}+case/` as const;
 
     try {
       await walk(dir, objectKeys(dirBox), null);
@@ -36,15 +37,18 @@ import * as secret from './secret.json';
           await walk(`${dir}${fileName}`, fs.readdirSync(makeCaseDir(`${dir}${fileName}`)), fileName);
           continue;
         }
-        const fileNameExt = `${fileName}.json`;
+        if (fileName[0] === '.') continue;
 
-        if (fileName[0] === '.' || !fs.statSync(`${caseDirPath}${fileNameExt}`).isFile()) continue;
+        const filePath = [`${caseDirPath}${fileName}`, `${caseDirPath}${fileName}.json`].find(path =>
+          fs.statSync(path).isFile(),
+        );
 
-        const data = JSON.parse(fs.readFileSync(`${caseDirPath}${fileNameExt}`, 'utf-8'));
+        if (!filePath) continue;
 
-        const response = await fetch(
-          `${url}${pushFilesExpressRoutePath}?${pullFilesExpressSecretQueryName}=${secret.secret}`,
-          {
+        const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+
+        try {
+          const response = await fetch(fetchUrl, {
             method: 'post',
             headers: { 'Content-Type': 'text/plain; charset=utf-8' },
             body: stringifyPulledFileDatasNl(
@@ -60,10 +64,12 @@ import * as secret from './secret.json';
               },
               data,
             ),
-          },
-        );
+          });
 
-        console.info(await response.text());
+          console.info(await response.text());
+        } catch {
+          //
+        }
       }
     }
   }
