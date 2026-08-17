@@ -1,5 +1,7 @@
+import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { comDB, user2ComDB, userDB, userExtDB } from 'back/drizzle.schema';
+import { db } from 'back/drizzle/drizzle.db';
 import { selectUser2Com, upsertUser2ComProps } from 'back/drizzle/ex/user2Com.utils';
 import { takeLogginedAuthOrThrow } from 'back/utils';
 import { and, eq } from 'drizzle-orm';
@@ -69,14 +71,18 @@ export const cmServerTsjrpcBaseExchangeFreshComCommentBlocks = {
     }
 
     if (localSavedCommentsMaxModifiedAt) {
-      const user2ComHolder = (
-        await selectUser2Com({ alts: userExtDB.cmCommAlts })
-          .where(and(eq(userDB.l, auth.login)))
+      const user = await takeUserTiny({ l: auth.login });
+
+      const userExt = (
+        await db
+          .select({ alts: userExtDB.cmCommAlts })
+          .from(userExtDB)
+          .where(and(eq(userExtDB.userId, user.id)))
           .limit(1)
       ).at(0);
 
       cmShareServerTsjrpcMethods.refreshComComments(
-        { comments: freshComments, mod: localSavedCommentsMaxModifiedAt, alts: user2ComHolder?.alts },
+        { comments: freshComments, mod: localSavedCommentsMaxModifiedAt, alts: userExt?.alts },
         { login: auth.login },
       );
     }
