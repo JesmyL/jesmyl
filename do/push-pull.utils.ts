@@ -58,6 +58,17 @@ export type PullPushFileDirNameNet = typeof pullPushFileDirNameNet;
 const T = <Type, FileName extends string>() => 1 as never as { F: FileName; T: Type };
 
 export const pullPushFileDirNameNet = {
+  'apps/index/': {
+    'users/': T<UserInfo & { id: UserId }, UserLogin>(),
+
+    'schedules/': T<OmitOwn<IScheduleWidget, 'm' | 'w'>, `${ScheduleWidgetWid}`>(),
+
+    userRoles: T<UserAccessRoleStoraged, string>(),
+    nouns: T<NounPronsType, string>(),
+    pronouns: T<NounPronsType, string>(),
+    constantsConfig: T<ConstantsConfig, string>(),
+  },
+
   'apps/cm/': {
     comwVisits: T<PRecord<CmComWid, number>, string>(),
     chordTracks: T<ChordPack, string>(),
@@ -84,16 +95,5 @@ export const pullPushFileDirNameNet = {
     >(),
 
     'sch2Com/': T<Record<CmComWid, { intp?: IExportableComInterpretation }>, `${ScheduleWidgetWid}`>(),
-  },
-
-  'apps/index/': {
-    'users/': T<UserInfo & { id: UserId }, UserLogin>(),
-
-    'schedules/': T<OmitOwn<IScheduleWidget, 'm' | 'w'>, `${ScheduleWidgetWid}`>(),
-
-    userRoles: T<UserAccessRoleStoraged, string>(),
-    nouns: T<NounPronsType, string>(),
-    pronouns: T<NounPronsType, string>(),
-    constantsConfig: T<ConstantsConfig, string>(),
   },
 } satisfies Record<string, Record<string, { F: unknown; T: unknown }>>;

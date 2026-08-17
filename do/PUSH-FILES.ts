@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { hostConfig } from '../freshHostConfig';
-import { checkIsEndsWith } from '../src/shared/utils/checkIs';
+import { checkIsEndsWith, checkIsStartsWith } from '../src/shared/utils/checkIs';
 import {
   objectKeys,
   pullFilesExpressSecretQueryName,
@@ -30,18 +30,17 @@ import * as secret from './secret.json';
       const caseDirPath = makeCaseDir(caseDir);
       const len = files.length;
 
-      for (let filei = 0; filei < files.length; filei++) {
+      for (let filei = 0; filei < len; filei++) {
         const fileName = files[filei];
+        if (checkIsStartsWith(fileName, '.')) continue;
 
         if (checkIsEndsWith(fileName, '/')) {
           await walk(`${dir}${fileName}`, fs.readdirSync(makeCaseDir(`${dir}${fileName}`)), fileName);
           continue;
         }
-        if (fileName[0] === '.') continue;
 
-        const filePath = [`${caseDirPath}${fileName}`, `${caseDirPath}${fileName}.json`].find(path =>
-          fs.statSync(path).isFile(),
-        );
+        const fPath = `${caseDirPath}${fileName}`;
+        const filePath = [fPath, `${fPath}.json`].find(path => fs.existsSync(path) && fs.statSync(path).isFile());
 
         if (!filePath) continue;
 
@@ -67,7 +66,8 @@ import * as secret from './secret.json';
           });
 
           console.info(await response.text());
-        } catch {
+        } catch (e) {
+          console.error(caseDir, e);
           //
         }
       }

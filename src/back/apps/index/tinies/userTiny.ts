@@ -1,6 +1,7 @@
-import { userDB, UserId } from 'back/drizzle.schema';
+import { userDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
 import { tinyMakerGenerator } from 'back/drizzle/ex/tinyMaker';
+import { UserId } from 'back/drizzle/schema/user';
 import { jsonParseSecure } from 'back/json-secure';
 import { UserInfoUnsecure } from 'shared/api';
 

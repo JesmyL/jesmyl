@@ -1,8 +1,10 @@
-import { SQL } from 'drizzle-orm';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { getTableColumns, sql, SQL } from 'drizzle-orm';
 import { PgTable } from 'drizzle-orm/pg-core';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { checkIsNil } from 'shared/utils/checkIs';
+import { objectKeys } from 'shared/utils/object.utils';
 import * as schema from '../drizzle.schema';
 import { lazyEnvJson } from '../envJson';
 
@@ -41,4 +43,29 @@ export const dbDelete = <TTable extends PgTable>(schema: TTable, where: SQL | ty
   checkWhere(schema, where, 'delete');
 
   return dbNative.delete(schema).where(where === anywhere ? undefined : where);
+};
+
+export const dbUpsert = async <TTable extends PgTable, TInsert extends TTable['$inferInsert']>(
+  table: TTable,
+  values: TInsert | TInsert[],
+  targetKeys: (keyof TInsert)[],
+) => {
+  const columns = getTableColumns(table);
+  const target = targetKeys.map(key => columns[key as string]);
+
+  const updateSet = objectKeys(columns).reduce(
+    (acc, colName) => {
+      if (!targetKeys.includes(colName as keyof TInsert)) {
+        acc[colName] = sql.raw(`excluded."${colName}"`);
+      }
+      return acc;
+    },
+    {} as Record<string, unknown>,
+  );
+
+  return db
+    .insert(table)
+    .values(values as any)
+    .onConflictDoUpdate({ target, set: updateSet })
+    .returning();
 };

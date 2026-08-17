@@ -20,7 +20,7 @@ import {
   userExtDB,
   userRoleDB,
 } from 'back/drizzle.schema';
-import { db, dbUpdate } from 'back/drizzle/drizzle.db';
+import { db, dbUpdate, dbUpsert } from 'back/drizzle/drizzle.db';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
 import { selectUser2Com, upsertUser2ComProps } from 'back/drizzle/ex/user2Com.utils';
 import { jsonParseSecure } from 'back/json-secure';
@@ -185,14 +185,14 @@ export const pullPushDirFilesDictLazy = lazyInit(
               );
             });
 
-            const dict: Partial<typeof userExtDB.$inferSelect> = {};
+            const dict: Partial<typeof userExtDB.$inferInsert> = {};
 
             if (u2c.ext?.commAlts) dict.cmCommAlts = u2c.ext.commAlts;
             if (u2c.ext?.tools) dict.cmComTools = u2c.ext.tools;
 
             if (objectLength(dict)) {
               const user = await takeUserTiny({ l: login });
-              await dbUpdate(userExtDB, dict, eq(userExtDB.userId, user.id));
+              await dbUpsert(userExtDB, { ...dict, userId: user.id }, ['userId']);
             }
           },
         },
@@ -340,7 +340,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
 
           PUSH: roles => {
             forEachObjectEntries(roles, async (role, rules) => {
-              await dbUpdate(userRoleDB, { r: rules?.r ?? null }, eq(userRoleDB.n, role));
+              await dbUpsert(userRoleDB, { r: rules?.r ?? null, n: role }, ['n']);
             });
           },
         },

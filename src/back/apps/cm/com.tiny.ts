@@ -1,6 +1,7 @@
-import { comDB, ComId } from 'back/drizzle.schema';
+import { comDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
 import { tinyMakerGenerator } from 'back/drizzle/ex/tinyMaker';
+import { ComId } from 'back/drizzle/schema/com';
 import { and, eq, lt } from 'drizzle-orm';
 import { IExportableCom } from 'shared/api';
 import { Bool } from 'shared/enums';

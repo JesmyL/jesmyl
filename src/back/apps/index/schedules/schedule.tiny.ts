@@ -1,6 +1,7 @@
-import { scheduleDB, SchId } from 'back/drizzle.schema';
+import { scheduleDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
 import { tinyMakerGenerator } from 'back/drizzle/ex/tinyMaker';
+import { SchId } from 'back/drizzle/schema/schedule';
 import { IScheduleWidget } from 'shared/api';
 import { itIt } from 'shared/utils';
 

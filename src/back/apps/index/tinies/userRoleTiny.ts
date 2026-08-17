@@ -1,6 +1,7 @@
-import { userRoleDB, UserRoleId } from 'back/drizzle.schema';
+import { userRoleDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
 import { tinyMakerGenerator } from 'back/drizzle/ex/tinyMaker';
+import { UserRoleId } from 'back/drizzle/schema/userRole';
 import { UserAccessRoleInfo } from 'shared/model/index/access-rights';
 import { itIt } from 'shared/utils';
 
