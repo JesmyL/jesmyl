@@ -4,6 +4,7 @@
   "dsc": "",
   "start": 1786906800000,
   "prevStart": 1786820400000,
+  "tgInform": 0,
   "tgInformTime": 10,
   "ctrl": {
     "cats": ["Основное"],
@@ -36,12 +37,12 @@
       "wup": 16,
       "list": [
         { "mi": 0, "tm": 180, "rate": { "0": [0, ""] }, "type": 0, "tgInform": 0 },
-        { "mi": 1, "tm": 60, "type": 1 },
-        { "mi": 2, "tm": 60, "type": 2 },
+        { "mi": 1, "tm": 60, "type": 1, "tgInform": 0 },
+        { "mi": 2, "tm": 60, "type": 2, "tgInform": 0 },
         { "mi": 3, "tm": 60, "type": 3, "tgInform": 0 },
         { "mi": 4, "tm": 60, "type": 4, "tgInform": 0 },
-        { "mi": 5, "tm": 30, "type": 5 },
-        { "mi": 6, "tm": 5, "rate": { "0": [0, "оу"] }, "type": 6 }
+        { "mi": 5, "tm": 30, "type": 5, "tgInform": 0 },
+        { "mi": 6, "tm": 5, "rate": { "0": [0, "оу"] }, "type": 6, "tgInform": 0 }
       ],
       "topic": ""
     },
@@ -49,10 +50,10 @@
       "mi": 1,
       "wup": 7,
       "list": [
-        { "mi": 0, "tm": 30, "type": 7 },
-        { "mi": 1, "tm": 60, "type": 8 },
+        { "mi": 0, "tm": 30, "type": 7, "tgInform": 0 },
+        { "mi": 1, "tm": 60, "type": 8, "tgInform": 0 },
         { "mi": 2, "tm": 30, "type": 9, "tgInform": 0 },
-        { "mi": 3, "tm": 60, "type": 10 },
+        { "mi": 3, "tm": 60, "type": 10, "tgInform": 0 },
         { "mi": 4, "tm": 40, "type": 11 },
         { "mi": 5, "tm": 20, "type": 12, "tgInform": 0 },
         { "mi": 6, "tm": 40, "type": 11, "tgInform": 0 },
