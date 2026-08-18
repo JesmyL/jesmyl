@@ -33,7 +33,7 @@ export const CmEditorComTabChordApplications = ({ ccom }: { ccom: EditableCom })
       style={{ fontSize }}
     >
       {ccom.orders?.map((ord, ordi) => {
-        if (!ord.isVisible) return null;
+        if (!ord.isVisible) return;
 
         return (
           <React.Fragment key={ordi}>

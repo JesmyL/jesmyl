@@ -125,9 +125,11 @@ LogRateLimitBurst=1000`,
     ),
   );
 
-  await runCommand('sudo apt update', '', hostCwdOptions);
-  await runCommand('sudo apt install -y postgresql postgresql-contrib', '', hostCwdOptions);
-  await runCommand('sudo systemctl enable --now postgresql', '', hostCwdOptions);
+  if (!Do.It) {
+    await runCommand('sudo apt update', '', hostCwdOptions);
+    await runCommand('sudo apt install -y postgresql postgresql-contrib', '', hostCwdOptions);
+    await runCommand('sudo systemctl enable --now postgresql', '', hostCwdOptions);
+  }
 
   if (Do.It) {
     console.info(makeCyanLogText('[Процесс] Проверка и настройка локального PostgreSQL...'));

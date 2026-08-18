@@ -139,7 +139,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
               l: userDB.l,
               a: userExtDB.cmCommAlts,
               t: userExtDB.cmComTools,
-            }).orderBy(user2ComDB.userId, comDB.id);
+            }).orderBy(user2ComDB.userId, comDB.w);
 
             user2Coms.forEach(({ c, f, w, l, a, t }) => {
               if (!w || !l) return;
@@ -201,21 +201,26 @@ export const pullPushDirFilesDictLazy = lazyInit(
             const dict: Record<ScheduleWidgetWid, { d: typeof _type; n: string }> = {};
 
             const history = await db
-              .select()
+              .select({
+                h: schComHistoryDB,
+                schw: scheduleDB.w,
+                schTitle: scheduleDB.title,
+              })
               .from(schComHistoryDB)
+              .innerJoin(scheduleDB, eq(schComHistoryDB.schId, scheduleDB.id))
               .orderBy(
-                asc(schComHistoryDB.schId),
+                asc(scheduleDB.w),
                 asc(schComHistoryDB.dayi),
                 asc(schComHistoryDB.eventMi),
                 desc(schComHistoryDB.w),
               );
 
-            for (const { comws, dayi, eventMi, schId, userId, w } of history) {
-              const sch = await takeScheduleWidgetTiny({ id: schId }, false);
-              if (!sch) continue;
-              const schw = sch.w;
-
-              dict[schw] ??= { d: {}, n: sch.title };
+            for (const {
+              h: { comws, dayi, eventMi, userId, w },
+              schw,
+              schTitle,
+            } of history) {
+              dict[schw] ??= { d: {}, n: schTitle };
               dict[schw].d[dayi] ??= {};
               dict[schw].d[dayi][eventMi] ??= [];
 
@@ -252,16 +257,21 @@ export const pullPushDirFilesDictLazy = lazyInit(
           pull: async (_, _type) => {
             const dict: Record<ScheduleWidgetWid, { d: typeof _type; n: string }> = {};
 
-            const list = await db.select().from(sch2ComDB).orderBy(sch2ComDB.schId, asc(sch2ComDB.comId));
+            const list = await db
+              .select({
+                intp: sch2ComDB.intp,
+                comw: comDB.w,
+                schw: scheduleDB.w,
+                schTitle: scheduleDB.title,
+              })
+              .from(sch2ComDB)
+              .innerJoin(comDB, eq(sch2ComDB.comId, comDB.id))
+              .innerJoin(scheduleDB, eq(sch2ComDB.schId, scheduleDB.id))
+              .orderBy(sch2ComDB.schId, comDB.w);
 
-            for (const { comId, intp, schId } of list) {
-              const sch = await takeScheduleWidgetTiny({ id: schId }, false);
-              const com = await takeComwTiny({ id: comId }, false);
-
-              if (!sch || !com) continue;
-
-              dict[sch.w] ??= { d: {}, n: sch.title };
-              dict[sch.w].d[com.w] = { intp: intp ?? und };
+            for (const { intp, comw, schw, schTitle } of list) {
+              dict[schw] ??= { d: {}, n: schTitle };
+              dict[schw].d[comw] = { intp: intp ?? und };
             }
 
             return mapObjectEntries(dict, (schw, { d, n }) => ({ data: d, file: schw, name: n }));

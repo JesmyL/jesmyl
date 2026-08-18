@@ -4,7 +4,7 @@ import { makeRegExp } from 'regexpert';
 import { CmEditComOrderTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-order.tsjrpc.model';
 import { CmComOrder } from 'shared/const/cm/order/Order';
 import { checkIsNowInCurrentDay } from 'shared/const/ms';
-import { checkIsNil } from 'shared/utils/checkIs';
+import { checkIsNil, checkIsNotNil } from 'shared/utils/checkIs';
 import { objectLength } from 'shared/utils/object.utils';
 import { removeEmptyRightValues } from 'shared/utils/removeEmptyRightValues';
 import { updateCmComOrderModulationValue, updateCmComOrderTonTypeSwitcherValue } from '../utils';
@@ -104,7 +104,14 @@ export const cmEditComOrderServerTsjrpcBase =
           setPositionsLine: modifyOrd(
             ModifyOrdParent.WatchOrSelf,
             'COM_APPS',
-            (ord, getCmComOrd, { linei, line, lineChangesText }) => {
+            (ord, getCmComOrd, { linei, line, lineChangesText }, _tool, _com, _, getCmComOrds) => {
+              if (checkIsNotNil(ord.a)) {
+                const targetOrd = getCmComOrds().find(o => o.wid === ord.a)?.me.source?.top;
+
+                if (!targetOrd) throw 'Блок не найден';
+                ord = targetOrd;
+              }
+
               ord.p ??= [];
               ord.p[linei] = Array.from(new Set(line)).sort((a, b) => a - b);
 

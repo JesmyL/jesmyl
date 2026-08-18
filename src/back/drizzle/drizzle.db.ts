@@ -56,7 +56,7 @@ export const dbUpsert = async <TTable extends PgTable, TInsert extends TTable['$
   const updateSet = objectKeys(columns).reduce(
     (acc, colName) => {
       if (!targetKeys.includes(colName as keyof TInsert)) {
-        acc[colName] = sql.raw(`excluded."${colName}"`);
+        acc[colName] = sql.raw(`excluded."${columns[colName].name}"`);
       }
       return acc;
     },
