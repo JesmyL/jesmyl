@@ -93,6 +93,7 @@ export class CmComTexts extends CmComChords {
   };
 
   makeExpandSlides = (
+    nameSpaceiVariants: number[],
     isFinalChordedOrd: boolean,
     isShowInvisibleSlides: boolean,
     textCase?: TextCase | nil,
@@ -158,7 +159,7 @@ export class CmComTexts extends CmComChords {
       prevOrdLinei = linei;
 
       let samei = CmComNewlinerSameiZero;
-      const { currentSet } = ord.makeNewlinerSets(line, linei, repeati);
+      const { currentSet } = ord.makeNewlinerSets(nameSpaceiVariants, line, linei, repeati);
 
       currentSet.union(new Set([lineWords.length + 10])).forEach(initWordi => {
         if (prevInitWordi < 0 || !prevSlide) prevSlide = fillSlide();

@@ -1,6 +1,10 @@
 import { CmBroadcastShowChordedSlideMode } from '#shared/model/cm/Cm.model';
 import { HorizontalDirection } from '#shared/model/Direction';
-import { cmBroadcastCurrentSlideiAtom, cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
+import {
+  cmBroadcastCurrentNameSpaceiAtom,
+  cmBroadcastCurrentSlideiAtom,
+  cmBroadcastSwitchBlockDirectionAtom,
+} from '$cm/entities/broadcast';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useMemo } from 'react';
@@ -14,15 +18,26 @@ import { CmBroadcastInnerSlidesContext } from '../state/slides';
 export const CmBroadcastSlidesContext = ({
   children,
   textCase,
-  com,
+  com: propsCom,
 }: {
   children: React.ReactNode;
   textCase: TextCase | nil;
   com: CmCom;
 }) => {
+  const nameSpacei = useAtomValue(cmBroadcastCurrentNameSpaceiAtom);
+  const com = useMemo(() => {
+    if (nameSpacei) {
+      //
+    }
+    return new CmCom(propsCom.top, propsCom.fix, propsCom.intp);
+  }, [propsCom.fix, propsCom.intp, propsCom.top, nameSpacei]);
+
   const { slidei, slideId } = useAtomValue(cmBroadcastCurrentSlideiAtom);
   const showChordedSlideMode = useAtomValue(cmShowChordedSlideModeAtom);
-  const slides = useMemo(() => com?.makeExpandSlides(true, false, textCase) ?? [], [com, textCase]);
+  const slides = useMemo(
+    () => com?.makeExpandSlides([nameSpacei, 0], true, false, textCase) ?? [],
+    [com, textCase, nameSpacei],
+  );
   const isHiddenChordsMode =
     showChordedSlideMode === CmBroadcastShowChordedSlideMode.Hide ||
     showChordedSlideMode === CmBroadcastShowChordedSlideMode.Pass;

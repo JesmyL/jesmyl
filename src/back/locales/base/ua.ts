@@ -155,6 +155,12 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
     toHide: 'Приховувати',
     emptySlide: 'Порожній слайд',
 
+    bro: {
+      lineSep: 'Розбивка рядків',
+      duo: 'Макс. дві',
+      five: 'Макс. пʼять',
+    },
+
     chN: 'Акорд $n',
     chs: 'Акорди',
     comeBackCh: 'Повернути акорд',
@@ -260,8 +266,7 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
   chapterEmpty: 'Розділ порожній',
   actualVer: ' - Актуальна',
   refreshAppConfirm: "Переконайтеся в наявності інтернет-з'єднання! Оновити додаток?",
-  immediateRefreshOnFinish:
-    "Ця дія вимагає негайного оновлення відразу після свого завершення. Переконайтеся, будь ласка, що у вас є інтернет-з'єднання, бо, в іншому випадку, виникне проблема",
+  immediateRefreshOnFinish: 'Ця дія повністю видалить нутрощі додатка, тому офлайн-режим деякий час буде недоступним',
   toAuth: 'Авторизуватися',
   authSuccess: `Успішна авторизація`,
   oneTimeCode: 'Одноразовий код',

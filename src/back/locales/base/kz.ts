@@ -156,6 +156,12 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
     toHide: 'Жасыру',
     emptySlide: 'Бос слайд',
 
+    bro: {
+      lineSep: 'Жолдарға бөлу',
+      duo: 'Макс. екі',
+      five: 'Макс. бес',
+    },
+
     chN: 'Аккорд $n',
     chs: 'Аккордтар',
     comeBackCh: 'Аккордты қайтару',
@@ -262,8 +268,7 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
   chapterEmpty: 'Бөлім бос',
   actualVer: ' - Өзекті',
   refreshAppConfirm: 'Интернет байланысы бар екеніне көз жеткізіңіз! Қосымшаны жаңарту керек пе?',
-  immediateRefreshOnFinish:
-    'Бұл әрекет аяқталғаннан кейін дереу жаңартуды талап етеді. Интернет байланысыңыз бар екеніне көз жеткізіңіз, әйтпесе мәселе туындайды',
+  immediateRefreshOnFinish: 'Бұл әрекет қолданба деректерін толық өшіреді — оффлайн режим уақытша жұмыс істемейді.',
   toAuth: 'Авторизациядан өту',
   authSuccess: `Сәтті авторизация`,
   oneTimeCode: 'Бір реттік код',

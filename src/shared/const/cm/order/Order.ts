@@ -297,9 +297,18 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
 
   isVisibleOrd = () => !this.isHeaderNoneForce && this.isVisible;
 
-  makeNewlinerSets = (line: CmComLineText, linei: CmComLinei, repeati: CmComNewlinerRepeati) => {
+  makeNewlinerSets = (
+    nameSpaceiVariants: number[],
+    line: CmComLineText,
+    linei: CmComLinei,
+    repeati: CmComNewlinerRepeati,
+  ) => {
     const setHolder = this.com.newlinerSetHolder;
-    const ownSet = cmComNewlinerLineConfigToSet(this.com.top.nl?.[0]?.[this.wid], linei, repeati);
+    const ownSet = cmComNewlinerLineConfigToSet(
+      (this.com.top.nl?.[nameSpaceiVariants[0]] ?? this.com.top.nl?.[nameSpaceiVariants[1]])?.[this.wid],
+      linei,
+      repeati,
+    );
     let firstSet;
     let currentSet = ownSet;
 

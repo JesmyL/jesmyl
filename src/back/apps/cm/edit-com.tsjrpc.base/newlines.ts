@@ -32,7 +32,7 @@ type Sets = ReturnType<CmComOrder['makeNewlinerSets']>;
 
 export const cmEditComServerTsjrpcNewlines = () =>
   ({
-    switchNLWord: updateNewlinerLineSet(({ repeati, wordi }, itRepeati, set, getSets) => {
+    switchNLWord_v1: updateNewlinerLineSet(({ repeati, wordi }, itRepeati, set, getSets) => {
       if (itRepeati !== repeati) return;
 
       updateSetByHoldSet(getSets, set, wordi, repeati);
@@ -43,7 +43,7 @@ export const cmEditComServerTsjrpcNewlines = () =>
       } else set.add(absoluteNumber(wordi));
     }),
 
-    switchNLBr: updateNewlinerLineSet(({ repeati, wordi }, itRepeati, set, getSets) => {
+    switchNLBr_v1: updateNewlinerLineSet(({ repeati, wordi }, itRepeati, set, getSets) => {
       if (itRepeati !== repeati) return;
 
       if (updateSetByHoldSet(getSets, set, wordi, repeati)) {
@@ -65,7 +65,7 @@ export const cmEditComServerTsjrpcNewlines = () =>
       if (!repeati) set.delete(CmComNewlinerWordiNotNewLine);
     }),
 
-    removeNL: updateNewlinerLineSet(({ repeati }, itRepeati, set) => {
+    removeNL_v1: updateNewlinerLineSet(({ repeati }, itRepeati, set) => {
       if (repeati != null && itRepeati !== repeati) return;
       set.clear();
     }),
@@ -141,7 +141,13 @@ const updateSetByHoldSet = (
 };
 
 const updateNewlinerLineSet = <
-  Props extends { comw: CmComWid; linei: CmComLinei; ordw: CmComOrderWid; repeati: CmComNewlinerRepeati | nil },
+  Props extends {
+    comw: CmComWid;
+    linei: CmComLinei;
+    ordw: CmComOrderWid;
+    repeati: CmComNewlinerRepeati | nil;
+    spacei: number;
+  },
 >(
   updater: (
     props: Props,
@@ -154,9 +160,9 @@ const updateNewlinerLineSet = <
     const { linei, ordw, repeati } = props;
 
     com.nl ??= [];
-    com.nl[0] ??= {};
+    const nlSpace = (com.nl[props.spacei] ??= {});
 
-    const wholeNLConfig = com.nl[0]?.[ordw];
+    const wholeNLConfig = nlSpace[ordw];
     const lineConfigList = takeCmComNewlinerLineFullConfig(wholeNLConfig);
     const repeatConfigList = takeCmComNewlinerRepeatFullConfig(wholeNLConfig, linei);
 
@@ -166,7 +172,7 @@ const updateNewlinerLineSet = <
         let sets: Sets | nil = null;
 
         new CmCom({ ...com, m: CmComMod.def, al: [] }, null, null).makeExpandLines(false, TextCase.AsIs).find(slide => {
-          sets = slide.ord.makeNewlinerSets(slide.line, slide.linei, slide.repeati);
+          sets = slide.ord.makeNewlinerSets([props.spacei], slide.line, slide.linei, slide.repeati);
 
           return slide.ord.wid === ordw && slide.linei === linei && slide.repeati === itRepeati;
         });
@@ -184,10 +190,10 @@ const updateNewlinerLineSet = <
 
     const repeatConfig = lineConfigList.join(' ') as CmComNewlinerStrConfig.whole;
 
-    if (repeatConfig) com.nl[0][ordw] = repeatConfig;
-    else delete com.nl[0][ordw];
+    if (repeatConfig) nlSpace[ordw] = repeatConfig;
+    else delete nlSpace[ordw];
 
-    if (!objectLength(com.nl[0])) com.nl = [];
+    if (!objectLength(nlSpace)) com.nl = [];
 
     return retLabel(com.w);
   });

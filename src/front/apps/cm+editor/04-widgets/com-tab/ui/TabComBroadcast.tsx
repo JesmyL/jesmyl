@@ -1,10 +1,11 @@
 import { translateBase } from '#basis/locale';
-import { Button } from '#shared/components';
+import { Button, ButtonGroup } from '#shared/components';
 import { propsOfClicker } from '#shared/lib/clicker/propsOfClicker';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { WithAtom } from '#shared/ui/WithAtom';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
+import { atom, useAtomValue } from 'atomaric';
 import React, { useMemo, useState } from 'react';
 import {
   CmComLinei,
@@ -22,32 +23,67 @@ import { takeCmComNewlinerLineFullConfig } from 'shared/utils/cm/com/newliner';
 import { squareBracketsReplacers } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 import { twMerge } from 'tailwind-merge';
 
+const redactNameSpaceAtom = atom(0);
+
 export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
+  const nameSpacei = useAtomValue(redactNameSpaceAtom);
+  const com = useMemo(() => {
+    if (nameSpacei) {
+      //
+    }
+    return new EditableCom(ccom.top, null, null);
+  }, [ccom.top, nameSpacei]);
+
   const targetHighlightMap = useState(() => new Map<Element, TimeOut>())[0];
 
   const { warns, slides, groups } = useMemo(() => {
-    const slides = ccom.makeExpandSlides(false, true);
+    const slides = com.makeExpandSlides([nameSpacei], false, true);
     const warns: PRecord<CmBroadcastMonolineSlideOrdStrId, [className: string, text: string]> = {};
+
+    let manyLinesLen;
+    let maxLinesLen;
+    let fewLinesLen;
+
+    if (nameSpacei === 1) {
+      manyLinesLen = 3;
+      maxLinesLen = 2;
+      fewLinesLen = 1;
+    } else {
+      manyLinesLen = 5;
+      maxLinesLen = 4;
+      fewLinesLen = 2;
+    }
 
     slides.forEach(({ linei, lines, ord, repeati, samei }) => {
       const ordLineId = makeCmBroadcastMonolineSlideOrdLineStrId(ord.wid, linei, repeati, samei);
 
-      if (lines.length > 5) {
+      if (lines.length > manyLinesLen) {
         warns[ordLineId] = ['text-x3 bg-xKO', translateBase(it => it.manyStrs)];
-      } else if (lines.length > 4) {
+      } else if (lines.length > maxLinesLen) {
         warns[ordLineId] = ['text-x1 bg-x3 opacity-50', translateBase(it => it.maxStrsCount)];
-      } else if (lines.length < 2) {
+      } else if (lines.length < fewLinesLen) {
         warns[ordLineId] = ['text-x3 bg-orange-500 opacity-60', translateBase(it => it.fewStrs)];
       }
     });
 
-    return { warns, slides, groups: ccom.makeExpandGroupedLines(false) };
-  }, [ccom]);
+    return { warns, slides, groups: com.makeExpandGroupedLines(false) };
+  }, [com, nameSpacei]);
 
   const upperLinesDict: PRecord<CmComNewlinerSymbolFreeUpperCaseLine, 1> = {};
 
   return (
-    <>
+    <React.Fragment key={nameSpacei}>
+      <ButtonGroup.Root>
+        {[0, 1].map(spacei => (
+          <Button
+            key={spacei}
+            className={nameSpacei === spacei ? 'bg-x7! text-x1' : ''}
+            onClick={() => redactNameSpaceAtom.set(spacei)}
+          >
+            {spacei}
+          </Button>
+        ))}
+      </ButtonGroup.Root>
       <WithAtom init={false}>
         {openAtom => (
           <>
@@ -77,7 +113,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
 
         if (firstGroup && !firstGroup.repeati && !firstGroup.ord.isAnyInherited) {
           const ord = firstGroup.ord;
-          const ordNl = ccom.top.nl?.[0]?.[ord.wid];
+          const ordNl = com.top.nl?.[nameSpacei]?.[ord.wid];
           const lineWholeConfigList = takeCmComNewlinerLineFullConfig(ordNl);
           const lines = ord.text.split('\n');
 
@@ -91,11 +127,12 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                     icon="Delete01"
                     className="bg-xKO! text-x3"
                     onClick={() =>
-                      cmEditComClientTsjrpcMethods.removeNL({
-                        comw: ccom.wid,
+                      cmEditComClientTsjrpcMethods.removeNL_v1({
+                        comw: com.wid,
                         ordw: ord.wid,
                         linei: lineConfigi as CmComLinei,
                         repeati: null,
+                        spacei: nameSpacei,
                       })
                     }
                   >
@@ -131,7 +168,12 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                   </div>
                 );
 
-              const { currentSet, ownSet, firstSet, holdSet, upperLine } = ord.makeNewlinerSets(line, linei, repeati);
+              const { currentSet, ownSet, firstSet, holdSet, upperLine } = ord.makeNewlinerSets(
+                [nameSpacei],
+                line,
+                linei,
+                repeati,
+              );
 
               const isHasSelfChanges = !!ownSet.size;
               const isFirstLine = !upperLinesDict[upperLine];
@@ -188,12 +230,13 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                             className: isSameDigitsWithHolder ? 'bg-xKO! text-x6' : 'text-xOK',
                           })}
                       onClick={() =>
-                        cmEditComClientTsjrpcMethods.switchNLBr({
-                          comw: ccom.wid,
+                        cmEditComClientTsjrpcMethods.switchNLBr_v1({
+                          comw: com.wid,
                           ordw: ord.wid,
                           repeati,
                           linei,
                           wordi,
+                          spacei: nameSpacei,
                         })
                       }
                     />
@@ -229,11 +272,12 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                             ? {
                                 icon: 'Delete01',
                                 onClick: () =>
-                                  cmEditComClientTsjrpcMethods.removeNL({
-                                    comw: ccom.wid,
+                                  cmEditComClientTsjrpcMethods.removeNL_v1({
+                                    comw: com.wid,
                                     ordw: ord.wid,
                                     linei,
                                     repeati,
+                                    spacei: nameSpacei,
                                   }),
                               }
                             : isFirstLine
@@ -281,12 +325,13 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                           icon={isHasAbsWordi ? 'SquareArrowMoveLeftUp' : 'SquareArrowMoveDownLeft'}
                           className={`has-[>svg]:px-0! px-0! ${isHasAbsWordi ? `${isSameDigitsWithHolder ? 'bg-xKO! text-x6!' : 'bg-x7! text-x1!'}${isHasSelfChanges ? '' : ' opacity-50!'}` : ''}`}
                           onClick={() =>
-                            cmEditComClientTsjrpcMethods.switchNLWord({
-                              comw: ccom.wid,
+                            cmEditComClientTsjrpcMethods.switchNLWord_v1({
+                              comw: com.wid,
                               linei,
                               repeati,
                               wordi,
                               ordw: ord.wid,
+                              spacei: nameSpacei,
                             })
                           }
                         >
@@ -302,12 +347,13 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                       size="sx"
                       className="text-x3 bg-xKO!"
                       onClick={() =>
-                        cmEditComClientTsjrpcMethods.switchNLWord({
-                          comw: ccom.wid,
+                        cmEditComClientTsjrpcMethods.switchNLWord_v1({
+                          comw: com.wid,
                           ordw: ord.wid,
                           linei,
                           repeati,
                           wordi,
+                          spacei: nameSpacei,
                         })
                       }
                     >
@@ -321,6 +367,6 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
           </div>
         );
       })}
-    </>
+    </React.Fragment>
   );
 };

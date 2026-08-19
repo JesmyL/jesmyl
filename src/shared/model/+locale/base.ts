@@ -126,6 +126,12 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
     toHide: LocaleSimpleString;
     emptySlide: LocaleSimpleString;
 
+    bro: {
+      lineSep: LocaleSimpleString;
+      five: LocaleSimpleString;
+      duo: LocaleSimpleString;
+    };
+
     chN: StringTemplaterInterpolation<'n'>;
     chs: LocaleSimpleString;
     ords: LocaleSimpleString;

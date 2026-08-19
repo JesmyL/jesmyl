@@ -33,6 +33,7 @@ import { useCmBroadcastUpdateCurrentConfig } from '../hooks/update-config';
 import { useCmBroadcastScreenKeyDownListen } from '../lib/keydown-listen';
 import { CmBroadcastScreenConfigurations } from './ScreenConfigurations';
 import { CmBroadcastShowChordedSlideModeSelector } from './ShowChordedSlideModeSelector';
+import { CmBroadcastShowNlNameSpaceSelector } from './ShowNlNameSpaceSelector';
 import { CmBroadcastSlideLine } from './SlideLine';
 
 interface Props {
@@ -189,7 +190,10 @@ export function CmBroadcastControlled(props: Props) {
               <CmBroadcastSlideLine />
               <ScreenBroadcastControlPanel onChange={toSlide} />
               <div className="flex w-full justify-between mt-5">
-                <CmBroadcastShowChordedSlideModeSelector />
+                <div>
+                  <CmBroadcastShowChordedSlideModeSelector />
+                  <CmBroadcastShowNlNameSpaceSelector />
+                </div>
                 <div className="w-53">
                   <CmComToolHideMetronome />
                 </div>
