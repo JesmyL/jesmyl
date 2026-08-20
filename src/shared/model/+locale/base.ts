@@ -239,7 +239,8 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   chapterEmpty: LocaleSimpleString;
   actualVer: LocaleSimpleString;
   refreshAppConfirm: LocaleSimpleString;
-  immediateRefreshOnFinish: LocaleSimpleString;
+  immediateRefreshOnFinish: StringTemplaterInterpolation<'c'>;
+  incCode: LocaleSimpleString;
 
   toAuth: LocaleSimpleString;
   authSuccess: LocaleSimpleString;
