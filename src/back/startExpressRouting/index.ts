@@ -8,6 +8,7 @@ import { makeRegExp } from 'regexpert';
 import { CmComWid, HttpNumLeadLink, ScheduleWidgetWid, hostConfig } from 'shared/api';
 import { extractNumber } from 'shared/utils';
 import { WebSocketServer } from 'ws';
+import { vitePWAOptions } from '../../../vite-pwa.options';
 import { takeComwTiny } from '../apps/cm/com.tiny';
 import { makeCmComHttpLinkFromNumLead } from '../apps/cm/complect/com-http-links';
 import { catsFileStorage } from '../apps/cm/file-stores';
@@ -144,6 +145,15 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
       });
 
     res.sendFile(`${hostRootDir}${req.url}`);
+  });
+
+  app.get(`/${vitePWAOptions.manifestFilename}`, (_req, res) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    res.setHeader('Content-Type', 'application/manifest+json');
+
+    res.sendFile(path.join(__dirname, 'build', vitePWAOptions.manifestFilename));
   });
 
   app.use(async (req: Request, res: Response) => {

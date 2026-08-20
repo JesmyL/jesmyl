@@ -1,21 +1,25 @@
 import { VitePWAOptions } from 'vite-plugin-pwa';
 
-export const vitePWAOptions: Partial<VitePWAOptions> = {
+export const vitePWAOptions = {
   injectRegister: 'auto',
   strategies: 'generateSW',
   registerType: 'autoUpdate',
+  manifestFilename: 'app-manifest-v2.json' as const,
   workbox: {
-    cleanupOutdatedCaches: false,
+    cleanupOutdatedCaches: true,
+    skipWaiting: false,
+    clientsClaim: false,
+    navigateFallback: '/index.html',
   },
   manifest: {
     name: 'Jesus my Lord',
     short_name: 'Jes.myL',
     description: 'Сборник приложений',
     prefer_related_applications: false,
-    start_url: '.',
+    start_url: '/',
     display: 'standalone',
-    theme_color: '#000000',
-    background_color: '#000000',
+    theme_color: '#587455',
+    background_color: '#587455',
     categories: ['christian', 'христианское', 'песни', 'хвала', 'для Иисуса Христа', 'JesmyL'],
     icons: [
       {
@@ -32,6 +36,7 @@ export const vitePWAOptions: Partial<VitePWAOptions> = {
     share_target: {
       action: '/share',
       method: 'GET',
+      enctype: 'application/x-www-form-urlencoded',
       params: {
         title: 'shareText',
         text: 'shareDescription',
@@ -46,26 +51,5 @@ export const vitePWAOptions: Partial<VitePWAOptions> = {
     launch_handler: {
       client_mode: 'focus-existing',
     },
-    // window.launchQueue
-    file_handlers: [
-      {
-        action: '/',
-        accept: {
-          'image/*': ['.jpeg', '.jpg', '.png'],
-        },
-      },
-    ],
-
-    // capture_links: 'existing_client_event',
-    // url_handlers: [
-    //   {
-    //     origin: hostConfig.url,
-    //   },
-    // ],
-    // intent_filters: {
-    //   scope_url_scheme: 'https',
-    //   scope_url_host: hostConfig.host,
-    //   scope_url_path: '/',
-    // },
   },
-};
+} satisfies Partial<VitePWAOptions>;

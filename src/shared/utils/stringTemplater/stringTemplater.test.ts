@@ -1,3 +1,6 @@
+// @vitest-environment node
+import { describe, expect } from 'vitest';
+
 import { AND, FN, GENERATE, IF, isUtil, OR, STR, stringTemplater, SWITCH, toNUM, toSTR } from '.';
 import { itIt } from '../utils';
 import { stringTemplaterSrartSymbolCharCode } from './const';

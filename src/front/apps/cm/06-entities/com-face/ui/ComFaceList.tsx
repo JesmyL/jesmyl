@@ -1,3 +1,4 @@
+import { cmComwListLazyInit } from '$cm/shared/state';
 import { CmComWid, IExportableCom } from 'shared/api';
 import { checkIsNumber } from 'shared/utils/checkIs';
 import { ICmComFaceList } from '../model/model';
@@ -12,6 +13,8 @@ interface Props extends ICmComFaceList {
 
 export const CmComFaceList = (props: Props) => {
   if (props.list == null) return null;
+
+  cmComwListLazyInit();
 
   if (checkIsNumber(props.list[0]))
     return (

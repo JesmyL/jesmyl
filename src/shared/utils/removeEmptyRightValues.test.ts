@@ -1,4 +1,7 @@
+// @vitest-environment node
 /* eslint-disable no-sparse-arrays */
+import { describe, expect } from 'vitest';
+
 import { removeEmptyRightValues } from './removeEmptyRightValues';
 
 describe('removeEmptyRightValues', () => {

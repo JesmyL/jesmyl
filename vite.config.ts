@@ -23,11 +23,32 @@ Object.entries(tsConfig.compilerOptions.paths).forEach(([aliasKey, [path]]) => {
 
 export default defineConfig(() => {
   return {
-    build: { outDir: 'build' },
+    build: {
+      outDir: 'build',
+      target: 'es2020',
+      minify: 'esbuild',
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              if (id.includes('tone')) return 'vendor-audio';
+              if (id.includes('dexie')) return 'vendor-db';
+
+              return 'vendor';
+            }
+          },
+        },
+      },
+    },
     server: { port: 3627 },
     test: {
       globals: true,
       environment: 'jsdom',
+      server: {
+        deps: {
+          inline: ['html-encoding-sniffer', 'jsdom'],
+        },
+      },
     },
     plugins: [
       regExpertVitePlugin(),
@@ -36,10 +57,7 @@ export default defineConfig(() => {
       eslint({
         emitWarning: false,
         failOnError: true,
-        // failOnWarning: false,
-        // lintOnStart: false,
       }),
-      // basicSsl(),
       VitePWA(vitePWAOptions),
       tailwindcss(),
       react({

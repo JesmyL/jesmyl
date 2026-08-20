@@ -17,6 +17,20 @@
       name="apple-mobile-web-app-title"
       content="JesmyL"
     />
+
+    <meta
+      name="mobile-web-app-capable"
+      content="yes"
+    />
+    <meta
+      name="apple-mobile-web-app-capable"
+      content="yes"
+    />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
     <meta
       name="msapplication-TileColor"
       content="#7cae7d"
@@ -48,21 +62,22 @@
       href="/safari-pinned-tab.svg"
       color="#587455"
     />
-    <link
-      rel="manifest"
-      href="/manifest.json"
-    />
+
+    <style id="black-bg-style">
+      body,
+      html {
+        background: black !important;
+        background-color: black !important;
+      }
+    </style>
+
+    <script
+      type="module"
+      src="/src/front/front.index.tsx"
+    ></script>
 
     <title>JesmyL</title>
   </head>
-
-  <style id="black-bg-style">
-    body,
-    html {
-      background: black !important;
-      background-color: black !important;
-    }
-  </style>
 
   <body translate="no">
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -70,9 +85,4 @@
     <div id="root"></div>
     <div id="qr-code-application-container"></div>
   </body>
-
-  <script
-    type="module"
-    src="/src/front/front.index.tsx"
-  ></script>
 </html>

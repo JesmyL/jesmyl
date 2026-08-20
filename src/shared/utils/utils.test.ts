@@ -1,3 +1,6 @@
+// @vitest-environment node
+import { describe, expect } from 'vitest';
+
 import { checkIsEq } from './checkIsEq';
 import { deepClone } from './clone';
 

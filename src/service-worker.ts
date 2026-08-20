@@ -10,7 +10,7 @@
 // import { clientsClaim } from 'workbox-core';
 import { precacheAndRoute } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import { NetworkFirst } from 'workbox-strategies';
+import { CacheFirst } from 'workbox-strategies';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -21,7 +21,8 @@ registerRoute(
     !props.url.pathname.endsWith('.png') &&
     !props.url.pathname.endsWith('.svg') &&
     !props.url.pathname.endsWith('.jpg'),
-  new NetworkFirst(),
+
+  new CacheFirst({ cacheName: 'images-cache' }),
 );
 
 self.addEventListener('message', messageEvent => {

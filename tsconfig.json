@@ -17,7 +17,12 @@
     "jsx": "react-jsx",
     "jsxImportSource": "@emotion/react",
     "baseUrl": "src",
-    "types": ["vite-plugin-pwa/info.d.ts", "vite-plugin-pwa/client.d.ts"],
+    "types": [
+      "vite-plugin-pwa/info.d.ts",
+      "vite-plugin-pwa/client.d.ts",
+      "vitest/globals", 
+      "vite-plugin-pwa/client"
+    ],
     "paths": {
       "x/*": ["./front/x/*"],
 

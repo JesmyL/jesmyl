@@ -3,7 +3,15 @@ import { ServerTSJRPCTool, tsjrpcBaseServerNext } from 'back/tsjrpc.base.server'
 import { userAuthStringified, userVisitStringified } from 'back/utils';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 import { makeRegExp } from 'regexpert';
-import { LocalSokiAuth, SokiAuthLogin, SokiError, SokiVisit, TsjrpcClientEvent, TsjrpcServerEvent } from 'shared/api';
+import {
+  LocalSokiAuth,
+  SokiAuthLogin,
+  SokiError,
+  SokiVisit,
+  TsjrpcClientEvent,
+  TsjrpcServerEvent,
+  UserAuth,
+} from 'shared/api';
 import { setSharedPolyfills } from 'shared/utils';
 import {
   checkIsFunction,
@@ -75,7 +83,7 @@ export class SokiServer {
             }
           }
 
-          const auth = jwt.decode(event.token) as LocalSokiAuth;
+          const auth = jwt.decode(event.token) as UserAuth | nil;
 
           if (checkIsNotUndefined(event.visitInfo)) {
             this.visits.set(client, event.visitInfo);

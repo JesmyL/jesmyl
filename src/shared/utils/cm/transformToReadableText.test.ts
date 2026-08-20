@@ -1,3 +1,6 @@
+// @vitest-environment node
+import { describe, expect } from 'vitest';
+
 import { CmComTextSquareBracketsMode } from 'shared/api';
 import { textCaseTitles } from 'shared/const/textCase';
 import { TextCase } from 'shared/model/common';

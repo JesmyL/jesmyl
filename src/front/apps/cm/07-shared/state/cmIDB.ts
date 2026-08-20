@@ -19,6 +19,7 @@ import {
 import { CmBroadcastScreenConfig } from 'shared/model/cm/broadcast';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
+import { lazyInit } from 'shared/utils/lazyInit';
 import { objectLength } from 'shared/utils/object.utils';
 
 export interface CmIDBStorage {
@@ -119,18 +120,33 @@ const justUseLiveQuery = useLiveQuery;
 
 export const cmIDB = new CmIDB();
 
-cmIDB.tb.coms
-  .toCollection()
-  .keys()
-  .then(keys => {
-    const comwNumberDict: PRecord<CmComWid, number> = {};
-    const numberComwDict: PRecord<number, CmComWid> = {};
+export const cmComwListLazyInit = lazyInit(() => {
+  cmIDB.tb.coms
+    .toCollection()
+    .keys()
+    .then(keys => {
+      const comwNumberDict: PRecord<CmComWid, number> = {};
+      const numberComwDict: PRecord<number, CmComWid> = {};
 
-    keys.forEach((key, keyi) => {
-      const comNumber = takeCorrectComNumber(keyi + 1);
-      comwNumberDict[key as CmComWid] = comNumber;
-      numberComwDict[comNumber] = key as CmComWid;
+      let index = 0;
+      const chunkSize = 100;
+
+      function processChunk() {
+        const end = Math.min(index + chunkSize, keys.length);
+
+        for (let i = index; i < end; i++) {
+          const key = keys[i];
+          const comNumber = takeCorrectComNumber(i + 1);
+          comwNumberDict[key as CmComWid] = comNumber;
+          numberComwDict[comNumber] = key as CmComWid;
+        }
+
+        index = end;
+
+        if (index < keys.length) requestAnimationFrame(processChunk);
+        else cmComWidNumberDictAtom.set(comwNumberDict);
+      }
+
+      processChunk();
     });
-
-    cmComWidNumberDictAtom.set(comwNumberDict);
-  });
+});

@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import Dexie, { EntityTable, TableHooks } from 'dexie';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useCallback } from 'react';
 import { checkIsArray, checkIsFunction } from 'shared/utils/checkIs';
 import { forEachObjectEntriesSimple, mapObjectEntries, objectLength } from 'shared/utils/object.utils';
+import { toast } from 'sonner';
 
 const keyvalues = '%keyvalues%';
 
@@ -48,6 +50,17 @@ export class DexieDB<Store> {
   ) {
     this.tb = this.db = new Dexie(storageName) as never;
 
+    this.db.on('versionchange', () => {
+      this.db.close();
+      if (typeof window !== 'undefined') {
+        window.location.reload();
+      }
+    });
+
+    this.db.on('blocked', () => {
+      toast('Доступ к базе данных заблокирован другой вкладкой.', makeToastKOMoodConfig());
+    });
+
     const returnIfKeyInDefaults = <Cb>(key: keyof Store | string | symbol, cb: Cb) => {
       if (key in defaults) return cb;
     };
@@ -62,22 +75,37 @@ export class DexieDB<Store> {
 
     const proxyGetForGet = (_: unknown, key: keyof Store) =>
       returnIfKeyInDefaults(key, async () => {
-        const store = await this.getKeyvalues().get({ key });
-        if (store === undefined) return takeValueFromDefaults(key);
-        return store.val;
+        try {
+          const store = await this.getKeyvalues().get({ key });
+          if (store === undefined) return takeValueFromDefaults(key);
+          return store.val;
+        } catch {
+          return takeValueFromDefaults(key);
+        }
       });
 
     this.get = new Proxy(this.get, { get: proxyGetForGet as never });
 
     const proxyGetForUseValue = (_: unknown, key: keyof Store) =>
       returnIfKeyInDefaults(key, () => {
-        return justUseLiveQuery(() => this.getKeyvalues().get({ key }))?.val ?? takeValueFromDefaults(key);
+        try {
+          return justUseLiveQuery(() => this.getKeyvalues().get({ key }))?.val ?? takeValueFromDefaults(key);
+        } catch {
+          return takeValueFromDefaults(key);
+        }
       });
 
     this.useValue = new Proxy(this.useValue, { get: proxyGetForUseValue as never });
 
     this.remove = new Proxy(this.remove, {
-      get: (_, key) => returnIfKeyInDefaults(key, () => this.getKeyvalues().where({ key }).delete()),
+      get: (_, key) =>
+        returnIfKeyInDefaults(key, async () => {
+          try {
+            return await this.getKeyvalues().where({ key }).delete();
+          } catch {
+            return 0;
+          }
+        }),
     });
 
     this.use = new Proxy(this.use, {
@@ -95,13 +123,17 @@ export class DexieDB<Store> {
     this.set = new Proxy(this.set, {
       get: (_, key) => {
         return returnIfKeyInDefaults(key, async (value: Parameters<(typeof this.set)[keyof Store]>[0]) => {
-          if (checkIsFunction(value)) {
-            return await this.getKeyvalues().put({
-              val: value(await this.get[key as keyof Store]()),
-              key,
-            } as never);
-          } else {
-            return await this.getKeyvalues().put({ val: value, key } as never);
+          try {
+            if (checkIsFunction(value)) {
+              return await this.getKeyvalues().put({
+                val: value(await this.get[key as keyof Store]()),
+                key,
+              } as never);
+            } else {
+              return await this.getKeyvalues().put({ val: value, key } as never);
+            }
+          } catch {
+            //
           }
         });
       },
@@ -122,7 +154,13 @@ export class DexieDB<Store> {
       (async () => {
         type WithLastModifiedAt = { lastModifiedAt(set?: number): Promise<number> };
 
-        let lastModifiedLocal: number = await (this.get as WithLastModifiedAt).lastModifiedAt();
+        let lastModifiedLocal: number = 0;
+        try {
+          lastModifiedLocal = await (this.get as WithLastModifiedAt).lastModifiedAt();
+        } catch {
+          //
+        }
+
         let timeout: TimeOut;
 
         const update = (modifiedAt: number) => {
@@ -131,8 +169,10 @@ export class DexieDB<Store> {
 
           clearTimeout(timeout);
           timeout = setTimeout(() => {
-            (this.set as WithLastModifiedAt).lastModifiedAt(modifiedAt);
-            resolve(modifiedAt);
+            (this.set as WithLastModifiedAt)
+              .lastModifiedAt(modifiedAt)
+              .then(() => resolve(modifiedAt))
+              .catch(() => resolve(modifiedAt));
           }, 100);
 
           return promise;
@@ -147,26 +187,42 @@ export class DexieDB<Store> {
       })();
     }
 
-    indexedDB.open(storageName).onsuccess = event => {
-      const db = (event.target as IDBOpenDBRequest).result;
-      const currentVersion = db.version;
-      const updates = Array.from(db.objectStoreNames).filter(tableName => !(tableName in stores));
+    if (typeof window !== 'undefined') {
+      setTimeout(() => {
+        try {
+          const openRequest = indexedDB.open(storageName);
+          openRequest.onsuccess = event => {
+            const dbInstance = (event.target as IDBOpenDBRequest).result;
+            const currentVersion = dbInstance.version;
+            const updates = Array.from(dbInstance.objectStoreNames).filter(tableName => !(tableName in stores));
 
-      if (objectLength(updates)) {
-        const upgradeRequest = indexedDB.open(storageName, currentVersion + 1);
+            if (objectLength(updates)) {
+              dbInstance.close();
 
-        upgradeRequest.onupgradeneeded = e => {
-          const db = (e.target as IDBOpenDBRequest).result;
-          updates.forEach(tableName => db.deleteObjectStore(tableName));
-        };
-
-        upgradeRequest.onsuccess = e => {
-          (e.target as IDBOpenDBRequest).result.close();
-        };
-      }
-
-      db.close();
-    };
+              const upgradeRequest = indexedDB.open(storageName, currentVersion + 1);
+              upgradeRequest.onupgradeneeded = e => {
+                const upgradeDb = (e.target as IDBOpenDBRequest).result;
+                updates.forEach(tableName => {
+                  if (upgradeDb.objectStoreNames.contains(tableName)) {
+                    upgradeDb.deleteObjectStore(tableName);
+                  }
+                });
+              };
+              upgradeRequest.onsuccess = e => {
+                (e.target as IDBOpenDBRequest).result.close();
+              };
+            } else {
+              dbInstance.close();
+            }
+          };
+          openRequest.onerror = e => {
+            console.error('Ошибка проверки структуры таблиц через нативный indexedDB:', e);
+          };
+        } catch (e) {
+          console.error('Не удалось запустить очистку старых таблиц:', e);
+        }
+      }, 500);
+    }
   }
 
   private getKeyvalues = () =>
