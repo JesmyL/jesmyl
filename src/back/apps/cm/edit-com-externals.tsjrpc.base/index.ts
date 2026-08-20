@@ -136,9 +136,9 @@ export const cmEditComExternalsTsjrpcBaseServer =
           removeSchEvHistoryItem: async ({ schw, dayi, writedAt }) => {
             const sch = await takeScheduleWidgetTiny({ w: schw });
             const whereDelete = and(
-                    eq(schComHistoryDB.schId, sch.id),
-                    eq(schComHistoryDB.dayi, dayi),
-                    eq(schComHistoryDB.w, writedAt),
+              eq(schComHistoryDB.schId, sch.id),
+              eq(schComHistoryDB.dayi, dayi),
+              eq(schComHistoryDB.w, writedAt),
             );
             if (checkIsNil(whereDelete)) throw '0761624561238993';
 
