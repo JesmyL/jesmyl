@@ -15,7 +15,7 @@
   "c": [
     "Dm Dsus2 A/D A#dim/D\nCadd2 Edim7/A# A7 A7/F-A7/E\nDm Dsus2/E Dsus2/F Gm Gm/F Gm/E\nGm/D A7/C# A7/A# A7/C# Dm",
     "Dm D2/C Gm7\nC7 Fmaj7 A7\nDm Dm/C A#maj7 Edim7\nGm/A# A7b9 Dm",
-    "Gm7 C7/E F Dm7\nGm7 A7b9 Dm7-D7b9\nGm7 C7/E F Hdim\nEdim7 A7b9 Dm7",
+    "Gm7 C7/E F Dm7\nGm7 A7b9 Dm7-D7b9\nGm7 C7/E F Hdim\nEdim7/A# A7b9 Dm7",
     "|Dm A/D| Dm A/D|\n|Cadd2 Edim7/A#|\n|A7 A7/F-A7/E|\n|Dm A/D| Dm A/D|\n|Cadd2 Edim7/A#|\n|E A7|"
   ],
   "o": [
@@ -56,7 +56,7 @@
       "t": 2,
       "w": 3
     },
-    { "a": 2, "w": 4 }
+    { "a": 2, "r": 2, "w": 4 }
   ],
   "am": {
     "1~20200312~~00215028.mp3": {
