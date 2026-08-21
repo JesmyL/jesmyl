@@ -41,11 +41,12 @@
     "H Em C7",
     "Em F#m7\nH F#dim Em/C#\nC7 Em7\nD D#dim Em",
     "Am Em\nD G-G/F#-G/F E7\nAm Em/G-C9\nH7 F#dim Em",
-    "H7 Gdim",
+    "H7 F#dim",
     "Am Em\nD G-G/F#-G/F E7\nAm Em/G-C9\nH7 F#dim Em\nH7 F#dim Em",
     "H7 F#dim Em"
   ],
   "o": [
+    { "c": 2, "k": 15, "w": 13, "cre": 1787226538125 },
     {
       "c": 0,
       "k": 39,
