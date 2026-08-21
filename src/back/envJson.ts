@@ -1,28 +1,27 @@
 import fs from 'fs';
 import path from 'path';
-import { hostConfig } from 'shared/api';
-import { iife } from 'shared/utils';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
+import hostConfig from '../../host-config.json';
 import * as jsonForType from './.env.json';
 import { makeCyanLogText, makeGreenLogText, makeRedLogText, makeYellowLogText } from './utils.exec';
 
-export const hostRootDir = iife(() => {
-  const dir = [`/var/www/${hostConfig.host}` as const, path.resolve('./src/back'), path.resolve()].find(dir =>
-    fs.existsSync(path.resolve(dir, 'root-orientir.js')),
-  );
+export const hostRootDir = (() => {
+  const dirs = [`/var/www/${hostConfig.host}` as const, path.resolve('./src/back'), path.resolve()];
+  const dir = dirs.find(dir => fs.existsSync(path.resolve(dir, 'root-orientir.js')));
 
   if (!dir) throw makeRedLogText('Корневая директория не найдена');
 
   return dir;
-});
+})();
 
 const cacheDict: Record<
   string,
-  typeof jsonForType & {
-    envFilePath: string;
-    dbUrl: string;
-    hostRootDir: string;
-  }
+  typeof jsonForType &
+    typeof hostConfig & {
+      envFilePath: string;
+      dbUrl: string;
+      hostRootDir: string;
+    }
 > = {};
 
 export const lazyEnvJson = (filePostfix: '' | `.${string}` = '') => {
@@ -72,6 +71,7 @@ export const lazyEnvJson = (filePostfix: '' | `.${string}` = '') => {
 
   return (cacheDict[filePostfix] = {
     ...envJson,
+    ...hostConfig,
     envFilePath,
     dbUrl,
     hostRootDir,
