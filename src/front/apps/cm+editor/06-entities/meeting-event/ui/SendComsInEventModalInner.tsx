@@ -1,8 +1,8 @@
 import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { CmComFaceList, CmComMoveSelectedButton, useCmComSelectedList } from '$cm/ext';
-import { Atom } from 'atomaric';
+import { CmComFaceList, CmComMoveSelectedButton, cmComSelectedComwsAtom } from '$cm/ext';
+import { Atom, useAtomValue } from 'atomaric';
 import { emptyFunc } from 'shared/utils';
 import { checkIsEq } from 'shared/utils/checkIsEq';
 import { CmEditorMeetingEventEditProps } from '../model/model';
@@ -12,16 +12,16 @@ export const CmEditorMeetingEventSendComsModalInner = ({
   eventMi,
   schw,
   openAtom,
-  packComws,
-}: CmEditorMeetingEventEditProps & { openAtom: Atom<boolean> }) => {
-  const comws = useCmComSelectedList().selectedComws;
+  comws: packComws,
+}: Required<CmEditorMeetingEventEditProps> & { openAtom: Atom<boolean> }) => {
+  const selectedComws = useAtomValue(cmComSelectedComwsAtom);
 
   return (
     <>
       <ModalHeader>Отправка песен в событие</ModalHeader>
       <ModalBody>
         <CmComFaceList
-          list={comws}
+          list={selectedComws}
           importantOnClick={emptyFunc}
           comDescription={(_, comi) => <CmComMoveSelectedButton comi={comi} />}
         />
@@ -30,7 +30,7 @@ export const CmEditorMeetingEventSendComsModalInner = ({
         <TheIconSendButton
           icon="Sent"
           prefix="Отправить"
-          disabled={checkIsEq(comws, packComws)}
+          disabled={checkIsEq(selectedComws, packComws)}
           disabledReason="Этот список уже загружен"
           onSuccess={openAtom.reset}
           onSend={() =>
@@ -38,7 +38,7 @@ export const CmEditorMeetingEventSendComsModalInner = ({
               schw,
               dayi,
               eventMi,
-              comws,
+              comws: selectedComws,
             })
           }
         />

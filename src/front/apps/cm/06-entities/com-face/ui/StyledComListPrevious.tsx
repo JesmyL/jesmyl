@@ -1,13 +1,14 @@
-import { useCmComSelectedList } from '$cm/entities/com';
+import { cmComSelectedComwsAtom } from '$cm/entities/com';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { useAtomValue } from 'atomaric';
 import { memo } from 'react';
 import { CmComWid } from 'shared/api';
 import { cmComFaceCurrentComwIdPrefix } from '../const/ids';
 import { StyledCmComFaceList } from '../style/StyledComList';
 
 export const CmComFaceListPreviousSibling = memo(() => {
-  const { selectedComws } = useCmComSelectedList();
+  const selectedComws = useAtomValue(cmComSelectedComwsAtom);
 
   return <CmComFaceStyledListPrevious $selectedComws={selectedComws} />;
 });

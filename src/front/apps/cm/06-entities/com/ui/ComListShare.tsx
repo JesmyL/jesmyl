@@ -1,11 +1,10 @@
 import { QrCodeFullScreen } from '#shared/ui/qr-code/QrCodeFullScreen';
 import { cmAppActions } from '$cm/shared/const';
 import { Atom, useAtomValue } from 'atomaric';
-import { IExportableCom } from 'shared/api';
+import { CmComWid } from 'shared/api';
 import { cmComWidNumberDictAtom } from '../state/atoms';
 
-export const CmComListQrShare = ({ icoms, openAtom }: { openAtom: Atom<boolean>; icoms: IExportableCom[] }) => {
-  const comws = icoms.map(com => com.w);
+export const CmComListQrShare = ({ comws, openAtom }: { openAtom: Atom<boolean>; comws: CmComWid[] }) => {
   const comwListLink = cmAppActions.makeLink({ comws });
   const comNumbers = useAtomValue(cmComWidNumberDictAtom);
 
@@ -13,8 +12,8 @@ export const CmComListQrShare = ({ icoms, openAtom }: { openAtom: Atom<boolean>;
     <QrCodeFullScreen
       openAtom={openAtom}
       text={comwListLink}
-      copyText={`${comwListLink}\n\n${icoms
-        .map(com => `${!comNumbers[com.w] ? '' : `${comNumbers[com.w]}. `}${com.n}`)
+      copyText={`${comwListLink}\n\n${comws
+        .flatMap(comw => (comNumbers[comw] ? [`${comNumbers[comw].i}. ${comNumbers[comw].n}`] : []))
         .join('\n')}`}
     />
   );

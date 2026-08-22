@@ -11,7 +11,7 @@ import {
   scheduleWidgetUserRights,
 } from 'shared/api';
 import { extractNumber, sliceStringIfEndsWith } from 'shared/utils';
-import { useCmMeetingComwList } from '../meeting/lib/useMeetingComFaceList';
+import { useCmMeetingComwList } from '../meeting/lib/useCmMeetingComwList';
 import { CmExternalComListAtt } from './ui/CmExternalComListAtt';
 
 export const cmExternalOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
@@ -39,10 +39,10 @@ const path = '/!other/$appName/schs/';
 const route = makeCmEventNestedRoute({
   path,
   RouteComponent: () => <>Error 6517923985</>,
-  useComListPack,
+  useComwListPack,
 });
 
-function useComListPack() {
+function useComwListPack() {
   const { dayi, eventMi, schw } = useSearch({ from: path });
   return useCmMeetingComwList({ dayi, eventMi, schw: extractNumber(schw!) }).s;
 }

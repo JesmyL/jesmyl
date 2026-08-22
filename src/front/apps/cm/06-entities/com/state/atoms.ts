@@ -9,7 +9,7 @@ export const cmComIsShowCatBindsInCompositionAtom = atom(false);
 
 export const cmComChordVisibleVariantAtom = atom(ChordVisibleVariant.Maximal, 'cm:chordVisibleVariant');
 
-export const cmComFavoriteComsAtom = atom<CmComWid[]>([], 'cm:favoriteComs');
+export const cmComFavoriteComwsAtom = atom<CmComWid[]>([], 'cm:favoriteComs');
 export const cmComTopToolsAtom = atom<MenuComToolName[]>(
   [MenuComToolName.MarkCom, MenuComToolName.FullscreenMode, MenuComToolName.ChordsVariant],
   'cm:comTopTools_v1',
@@ -27,4 +27,4 @@ export const cmComSelectedComwsAtom = atom<CmComWid[]>([], 'cm:selectedComws');
 export const cmComLastOpenComwAtom = atom<CmComWid | und>(undefined, 'cm:lastOpenComw');
 export const cmComLastOpenSchwAtom = atom<ScheduleWidgetWid | nil>(null);
 
-export const cmComWidNumberDictAtom = atom<PRecord<CmComWid, number>>({});
+export const cmComWidNumberDictAtom = atom<PRecord<CmComWid, { i: number; n: string }>>({});

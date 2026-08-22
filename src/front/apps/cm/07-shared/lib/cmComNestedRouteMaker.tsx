@@ -4,19 +4,18 @@ import {
   CmComCurrentComPackContext,
   cmComLastOpenComwAtom,
   cmComLastOpenSchwAtom,
-  CmComOpenComLinkRendererContext,
-  CmComOpenLinkRenderer,
   CmComOpenRouteProps,
   CmComWithComListSearchFilterInput,
   CmComWithSearchedWords,
   useCmCom,
 } from '$cm/entities/com';
 import { TheCmComComposition } from '$cm/widgets/com';
-import { FileRoutesByPath, Link, useParams, useSearch } from '@tanstack/react-router';
+import { FileRoutesByPath, useParams, useSearch } from '@tanstack/react-router';
 import { atom, useAtomValue } from 'atomaric';
 import { JSX, useEffect } from 'react';
 import { CmCatWid, CmComWid } from 'shared/api';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
+import { checkIsNotNil } from 'shared/utils/checkIs';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { takeCatTermAtom } from './Cat';
 
@@ -77,20 +76,16 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>({
         <CmComCurrentComPackContext value={{ comws }}>{node}</CmComCurrentComPackContext>
       );
 
-    return (
-      <CmComOpenComLinkRendererContext value={goToComLinkRenderer}>
-        {tran ? (
-          BroadcastComponent ? (
-            render(<BroadcastComponent />)
-          ) : (
-            render(<CmBroadcast />)
-          )
-        ) : com || comw != null ? (
-          render(<TheCmComComposition />)
-        ) : (
-          <RouteComponent />
-        )}
-      </CmComOpenComLinkRendererContext>
+    return tran ? (
+      BroadcastComponent ? (
+        render(<BroadcastComponent />)
+      ) : (
+        render(<CmBroadcast />)
+      )
+    ) : com || comw != null ? (
+      render(<TheCmComComposition />)
+    ) : (
+      <RouteComponent />
     );
   };
 
@@ -99,17 +94,7 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>({
     component: ComRouteComponent,
     validateSearch: (search: PRecord<string, unknown>): CmComOpenRouteProps => ({
       comw: (+search.comw! as CmComWid) || undefined,
-      tran: search.tran != null ? '-!-' : undefined,
+      tran: checkIsNotNil(search.tran) ? '-!-' : undefined,
     }),
   };
 };
-
-const goToComLinkRenderer: CmComOpenLinkRenderer = ({ linkRef, children, search }) => (
-  <Link
-    ref={linkRef}
-    to="."
-    search={prev => ({ ...(prev as object), ...(search as object) })}
-  >
-    {children}
-  </Link>
-);

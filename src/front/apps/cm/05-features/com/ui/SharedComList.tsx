@@ -1,7 +1,7 @@
 import { translateBase } from '#basis/locale';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { TheButton } from '#shared/ui/TheButton';
-import { cmComSelectedComwsAtom, useCmComSelectedList } from '$cm/entities/com';
+import { cmComSelectedComwsAtom } from '$cm/entities/com';
 import { CmComFaceList } from '$cm/entities/com-face';
 import styled from '@emotion/styled';
 import { useNavigate } from '@tanstack/react-router';
@@ -16,9 +16,9 @@ export const CmComSharedListActionInterpretator = ({
 }) => {
   const comws = useAtomValue(comListOnActionAtom);
   const navigate = useNavigate();
-  const selected = useCmComSelectedList();
+  const selectedComws = useAtomValue(cmComSelectedComwsAtom);
   const incomingComwsSet = new Set(comws);
-  const localComwsSet = new Set(selected.selectedComws);
+  const localComwsSet = new Set(selectedComws);
   const close = (isNavigate: boolean) => {
     comListOnActionAtom.set(null);
     if (isNavigate) navigate({ to: '/cm/li/sel' });

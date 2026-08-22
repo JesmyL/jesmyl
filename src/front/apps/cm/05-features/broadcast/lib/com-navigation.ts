@@ -1,5 +1,5 @@
 import {
-  cmComFavoriteComsAtom,
+  cmComFavoriteComwsAtom,
   cmComSelectedComwsAtom,
   useCmComCurrent,
   useCmComCurrentComPackContext,
@@ -13,7 +13,7 @@ import { CmComWid } from 'shared/api';
 import { useCmBroadcastSlidesContext } from '../state/slides';
 
 export const useCmBroadcastScreenComNavigationComws = () => {
-  const favComws = useAtomValue(cmComFavoriteComsAtom);
+  const favComws = useAtomValue(cmComFavoriteComwsAtom);
   const selComws = useAtomValue(cmComSelectedComwsAtom);
   const openListMode = useAtomValue(cmOpenComListModeAtom);
 

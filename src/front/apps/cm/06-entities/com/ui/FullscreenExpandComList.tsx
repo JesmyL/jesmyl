@@ -5,12 +5,12 @@ import { CmComOrderList } from '$cm/entities/com-order';
 import { TheCmComWithComments } from '$cm/widgets/com';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
-import { IExportableCom } from 'shared/api';
+import { CmComWid } from 'shared/api';
 import { useCmCom } from '../lib/com-selections';
 import { cmComChordHardLevelAtom, cmComSpeedRollKfAtom } from '../state/atoms';
 import { CmComNumber } from './ComNumber';
 
-export function CmComFullscreenExpandList({ icoms }: { icoms: IExportableCom[] }) {
+export function CmComFullscreenExpandList({ comws }: { comws: CmComWid[] }) {
   const altCommentKeys = useAtomValue(cmComCommentCurrentComw2OpenAltiDictAtom);
   const chordHardLevel = useAtomValue(cmComChordHardLevelAtom);
 
@@ -18,18 +18,18 @@ export function CmComFullscreenExpandList({ icoms }: { icoms: IExportableCom[] }
     <ExpandContent className="com-expand-content h-full">
       <RolledContent speedKfAtom={cmComSpeedRollKfAtom}>
         <div className="inner-content">
-          {icoms?.map(icom => {
+          {comws.map(comw => {
             return (
               <WithHook
-                key={icom.w}
+                key={comw}
                 hook={useCmCom}
-                args={[icom.w]}
+                args={[comw]}
               >
                 {com =>
                   com && (
                     <>
-                      <div className="com-number">#{<CmComNumber comw={icom.w} />}</div>
-                      <div className="uppercase">{altCommentKeys[icom.w] ?? altCommentKeys.lasti}</div>
+                      <div className="com-number">#{<CmComNumber comw={comw} />}</div>
+                      <div className="uppercase">{altCommentKeys[comw] ?? altCommentKeys.lasti}</div>
                       <TheCmComWithComments com={com}>
                         <CmComOrderList
                           com={com}

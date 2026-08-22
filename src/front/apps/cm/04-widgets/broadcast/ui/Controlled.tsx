@@ -7,7 +7,7 @@ import { Button } from '#shared/components/ui/button';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useCmComCurrent, useCmComOpenComLinkRendererContext } from '$cm/entities/com';
+import { useCmComCurrent } from '$cm/entities/com';
 import {
   CmComAudioPlayerPlayButton,
   cmComAudioPlayerSetSrc,
@@ -22,7 +22,7 @@ import { getCmComFreshAudioMarksPack } from '$cm/shared/lib/getFresh';
 import { cmComTrackPreSwitchTimeAtom, cmIsTrackBroadcastAtom } from '$cm/shared/state';
 import { cmPlayerBroadcastAudioSrcAtom, cmPlayerBroadcastComwAtom } from '$cm/shared/state/broadcast.atoms';
 import styled from '@emotion/styled';
-import { useNavigate } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { ReactNode } from 'react';
 import { CmComWid, HttpNumLeadLink } from 'shared/api';
@@ -52,7 +52,6 @@ export function CmBroadcastControlled(props: Props) {
 
   const { comPack, comws } = useCmBroadcastScreenComNavigationComws();
   const { setSlidei } = useCmBroadcastSlidesContext();
-  const linkToCom = useCmComOpenComLinkRendererContext();
 
   const comwList = props.comws ?? comws;
   const com = useCmComCurrent();
@@ -91,16 +90,19 @@ export function CmBroadcastControlled(props: Props) {
   return (
     <PageContainerConfigurer
       className=""
-      backButtonRender={(linkRef, backButtonNode) =>
-        linkToCom({
-          linkRef,
-          children: backButtonNode,
-          search: {
-            comw: comwList[0],
+      backButtonRender={(linkRef, backButtonNode) => (
+        <Link
+          to="."
+          ref={linkRef}
+          search={prev => ({
+            ...(prev as object),
+            comw: prev.comw ?? comwList[0],
             tran: undefined,
-          },
-        })
-      }
+          })}
+        >
+          {backButtonNode}
+        </Link>
+      )}
       headTitle={
         props.headTitle ? (
           <>

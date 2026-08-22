@@ -5,7 +5,6 @@ import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { Metronome } from '#widgets/metronome';
-import { useCmComSelectedList } from '$cm/entities/com';
 import { cmComSelectedComwsAtom } from '$cm/entities/index';
 import { CmComSharedListActionInterpretator } from '$cm/features/com';
 import { cmAppActions } from '$cm/shared/const';
@@ -27,7 +26,7 @@ export const CmApp = () => {
   const { maxSelectedComsCount } = useAtomValue(constantsConfigAtom);
   const checkAccess = useCheckUserAccessRightsInScope();
 
-  const { selectedComws } = useCmComSelectedList();
+  const selectedComws = useAtomValue(cmComSelectedComwsAtom);
 
   cmAppActions.useOnAction(({ props, navigateFromRoot }) => {
     if ('comws' in props && props.comws?.length) {

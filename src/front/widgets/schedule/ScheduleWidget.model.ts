@@ -20,8 +20,8 @@ export type ScheduleWidgetAppAtts<AttAppName extends AttKey = AttKey, AttValue =
 >;
 
 export interface ScheduleDayEventPathProps {
-  schw?: ScheduleWidgetWid;
-  dayi?: ScheduleWidgetDayi;
+  schw: ScheduleWidgetWid;
+  dayi: ScheduleWidgetDayi;
   eventMi?: ScheduleWidgetDayEventMi;
 }
 

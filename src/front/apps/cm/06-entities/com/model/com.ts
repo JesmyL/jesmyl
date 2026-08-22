@@ -6,10 +6,4 @@ export interface CmComOpenRouteProps {
   schw?: ScheduleWidgetWid;
 }
 
-export type CmComOpenLinkRenderer = (props: {
-  children: React.ReactNode;
-  search: CmComOpenRouteProps;
-  linkRef?: React.RefObject<HTMLAnchorElement | null>;
-}) => React.ReactNode;
-
 export type CmComWordFounds = PRecord<CmComWid, { ordw: CmComOrderWid; linei: number; wordi: number }[]>;

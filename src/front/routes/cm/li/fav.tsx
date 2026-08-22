@@ -1,4 +1,4 @@
-import { cmComFavoriteComsAtom } from '$cm/entities/com';
+import { cmComFavoriteComwsAtom } from '$cm/entities/com';
 import { CmFavouriteComsPage } from '$cm/pages/FavouriteComsPage';
 import { makeCmComNestedRoute } from '$cm/shared/lib';
 import { createFileRoute } from '@tanstack/react-router';
@@ -8,7 +8,7 @@ export const Route = createFileRoute('/cm/li/fav')(
   makeCmComNestedRoute({
     path: '/cm/li/fav',
     RouteComponent: () => <CmFavouriteComsPage />,
-    useComwList: () => useAtomValue(cmComFavoriteComsAtom),
+    useComwList: () => useAtomValue(cmComFavoriteComwsAtom),
     isIgnoreSearch: true,
   }),
 );

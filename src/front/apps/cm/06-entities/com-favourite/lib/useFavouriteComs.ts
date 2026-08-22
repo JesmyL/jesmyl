@@ -2,8 +2,7 @@ import { translateBase } from '#basis/locale';
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
-import { useCmComIComList } from '$cm/entities/com';
-import { cmComFavoriteComsAtom } from '$cm/entities/index';
+import { cmComFavoriteComwsAtom } from '$cm/entities/index';
 import { cmUserStoreTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useAuth } from '$index/shared/state';
 import { atom, useAtomValue } from 'atomaric';
@@ -16,9 +15,9 @@ import { toast } from 'sonner';
 const favCacheAtom = atom<Record<CmComWid, Bool>>({}, 'cm:comFavCache');
 
 export const useCmComFavouriteList = () => {
-  const favourites = useAtomValue(cmComFavoriteComsAtom);
+  const favouriteComws = useAtomValue(cmComFavoriteComwsAtom);
   const { maxFavouritesCount } = useAtomValue(constantsConfigAtom);
-  const favouriteComsSet = new Set(favourites);
+  const favouriteComsSet = new Set(favouriteComws);
   const auth = useAuth();
   const favCache = useAtomValue(favCacheAtom);
 
@@ -36,7 +35,7 @@ export const useCmComFavouriteList = () => {
   }, [auth.login, favCache]);
 
   const ret = {
-    favouriteComs: useCmComIComList(favourites),
+    favouriteComws,
     isFavourite: (comw: CmComWid) => favouriteComsSet.has(comw),
     toggleFavourite: (comw: CmComWid) => {
       const isFav = ret.isFavourite(comw);
@@ -47,7 +46,7 @@ export const useCmComFavouriteList = () => {
       const comws = Array.from(favouriteComsSet);
       const isOverLimit = comws.length > maxFavouritesCount;
 
-      cmComFavoriteComsAtom.set(comws.slice(0, maxFavouritesCount).sort(itNumSort));
+      cmComFavoriteComwsAtom.set(comws.slice(0, maxFavouritesCount).sort(itNumSort));
 
       if (isOverLimit) {
         toast(

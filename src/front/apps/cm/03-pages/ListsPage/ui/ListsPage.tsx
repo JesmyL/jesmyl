@@ -4,13 +4,14 @@ import { BrutalScreen } from '#shared/ui/brutal-screen/BrutalScreen';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useCmCatList } from '$cm/entities/cat';
-import { useCmComSelectedList } from '$cm/entities/com';
+import { cmComSelectedComwsAtom } from '$cm/entities/com';
 import styled from '@emotion/styled';
 import { Link } from '@tanstack/react-router';
+import { useAtomValue } from 'atomaric';
 
 export const CmListsPage = () => {
   const cats = useCmCatList();
-  const { selectedComws } = useCmComSelectedList();
+  const selectedComws = useAtomValue(cmComSelectedComwsAtom);
 
   return (
     <StyledPhaseContainerConfigurer

@@ -1,89 +1,46 @@
-import { translateBase } from '#basis/locale';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { useMemo, useState } from 'react';
-import { IScheduleWidget, ScheduleComPackEventPath, ScheduleWidgetDayEventMi, ScheduleWidgetDayi } from 'shared/api';
-import { isNIs } from 'shared/utils';
-import { objectKeys } from 'shared/utils/object.utils';
-import { useCmMeetingLinkToEvent } from '../state/meeting';
+import { Link } from '@tanstack/react-router';
+import { useAtomValue } from 'atomaric';
+import { IScheduleWidget, ScheduleWidgetDayi } from 'shared/api';
+import { cmMeetingLastOpenEventMiAtom } from '../state/atoms';
 
 export const CmMeetingSchPackFace = ({ schedule }: { schedule: IScheduleWidget }) => {
-  const link = useCmMeetingLinkToEvent();
-  const [isOpenList, setIsOpenList] = useState(false);
-  const paths = useMemo(() => {
-    const paths = {} as Record<
-      ScheduleComPackEventPath,
-      { title: string; dayi: ScheduleWidgetDayi; eventMi: ScheduleWidgetDayEventMi }
-    >;
+  const lastOpenEventMi = useAtomValue(cmMeetingLastOpenEventMiAtom);
+  const eventBoxes = schedule.days.flatMap((day, dayi) => {
+    const events = day.list.filter(event => event.atts?.['[cm]:coms']);
 
-    schedule.days.forEach((day, dayi) => {
-      day.list.forEach(event => {
-        if (event.atts?.['[cm]:coms'] == null) return;
-        paths[`${dayi}/${event.mi}`] = {
-          title: schedule.types[event.type].title,
-          dayi: dayi as ScheduleWidgetDayi,
-          eventMi: event.mi,
-        };
-      });
-    });
+    return events.length ? [{ dayi: dayi as ScheduleWidgetDayi, events }] : [];
+  });
+  const firstEventBox = eventBoxes.at(0);
+  const firstEvent = firstEventBox?.events.at(0);
 
-    return paths;
-  }, [schedule.days, schedule.types]);
-
-  const pathsKeys = objectKeys(paths);
-
-  if (!pathsKeys.length) return null;
+  if (!firstEvent || !firstEventBox) return;
+  const [dayi = firstEventBox.dayi, eventMi = firstEvent.mi] = lastOpenEventMi[schedule.w] ?? [];
+  const isOnlyEvent = eventBoxes.length < 2 && firstEventBox.events.length < 2;
 
   return (
     <>
-      {pathsKeys.length === 1 ? (
-        link({
-          children: (
-            <BrutalItem
-              iconNode={<LazyIcon icon="Calendar02" />}
-              title={schedule.title}
-              box={<LazyIcon icon="ArrowRight02" />}
-              description={paths[pathsKeys[0]].title}
-            />
-          ),
-          search: {
-            dayi: paths[pathsKeys[0]].dayi,
-            eventMi: paths[pathsKeys[0]].eventMi,
-            schw: schedule.w,
-          },
-        })
-      ) : (
+      <Link
+        to="."
+        search={prev => ({
+          ...(prev as object),
+          dayi,
+          eventMi,
+          schw: schedule.w,
+        })}
+      >
         <BrutalItem
           iconNode={<LazyIcon icon="Calendar02" />}
           title={schedule.title}
-          onClick={() => setIsOpenList(isNIs)}
-          box={isOpenList ? <LazyIcon icon="ArrowUp01" /> : <LazyIcon icon="ArrowDown01" />}
+          description={isOnlyEvent && schedule.types[firstEvent.type]?.title}
+          onClick={
+            isOnlyEvent
+              ? undefined
+              : () => cmMeetingLastOpenEventMiAtom.do.update(dict => (dict[schedule.w] ??= [dayi, eventMi]))
+          }
         />
-      )}
-
-      {isOpenList &&
-        pathsKeys.map(path => {
-          return link({
-            children: (
-              <TheIconButton
-                className="pointer m-5"
-                icon="ArrowRight02"
-                prefix={
-                  // TODO: conditionally NDay by single day
-                  <>
-                    {translateBase(it => it.NDay, { n: parseInt(path) + 1 })} {paths[path].title}
-                  </>
-                }
-              />
-            ),
-            search: {
-              dayi: paths[path].dayi,
-              eventMi: paths[path].eventMi,
-              schw: schedule.w,
-            },
-          });
-        })}
+      </Link>
     </>
   );
 };

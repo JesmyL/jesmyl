@@ -121,32 +121,29 @@ const justUseLiveQuery = useLiveQuery;
 export const cmIDB = new CmIDB();
 
 export const cmComwListLazyInit = lazyInit(() => {
-  cmIDB.tb.coms
-    .toCollection()
-    .keys()
-    .then(keys => {
-      const comwNumberDict: PRecord<CmComWid, number> = {};
-      const numberComwDict: PRecord<number, CmComWid> = {};
+  cmIDB.tb.coms.toArray().then(coms => {
+    const comwNumberDict: PRecord<CmComWid, { i: number; n: string }> = {};
+    const numberComwDict: PRecord<number, CmComWid> = {};
 
-      let index = 0;
-      const chunkSize = 100;
+    let index = 0;
+    const chunkSize = 100;
 
-      function processChunk() {
-        const end = Math.min(index + chunkSize, keys.length);
+    function processChunk() {
+      const end = Math.min(index + chunkSize, coms.length);
 
-        for (let i = index; i < end; i++) {
-          const key = keys[i];
-          const comNumber = takeCorrectComNumber(i + 1);
-          comwNumberDict[key as CmComWid] = comNumber;
-          numberComwDict[comNumber] = key as CmComWid;
-        }
-
-        index = end;
-
-        if (index < keys.length) requestAnimationFrame(processChunk);
-        else cmComWidNumberDictAtom.set(comwNumberDict);
+      for (let i = index; i < end; i++) {
+        const com = coms[i];
+        const comNumber = takeCorrectComNumber(i + 1);
+        comwNumberDict[com.w] = { i: comNumber, n: com.n };
+        numberComwDict[comNumber] = com.w;
       }
 
-      processChunk();
-    });
+      index = end;
+
+      if (index < coms.length) requestAnimationFrame(processChunk);
+      else cmComWidNumberDictAtom.set(comwNumberDict);
+    }
+
+    processChunk();
+  });
 });

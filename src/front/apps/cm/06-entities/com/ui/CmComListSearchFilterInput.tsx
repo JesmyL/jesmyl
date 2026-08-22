@@ -93,9 +93,11 @@ export const CmComWithComListSearchFilterInput = (props: {
 
         result.comws =
           props.comws
-            ?.filter(comw => comwNumberDict[comw]! in searchNumberIndexDict)
+            ?.filter(comw => (comwNumberDict[comw]?.i as never) in searchNumberIndexDict)
             .sort(
-              (aw, bw) => searchNumberIndexDict[comwNumberDict[aw]!] - searchNumberIndexDict[comwNumberDict[bw]!],
+              (aw, bw) =>
+                searchNumberIndexDict[comwNumberDict[aw]?.i as never] -
+                searchNumberIndexDict[comwNumberDict[bw]?.i as never],
             ) ?? [];
 
         return result;

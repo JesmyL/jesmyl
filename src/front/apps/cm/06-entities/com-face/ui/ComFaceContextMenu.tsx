@@ -2,8 +2,9 @@ import { translateBase } from '#basis/locale';
 import { ContextMenu } from '#shared/components/ui/context-menu';
 import { useConfirm } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { cmComSelectedComwsAtom, useCmComSelectedList } from '$cm/entities/com';
+import { cmComSelectedComwsAtom } from '$cm/entities/com';
 import { useCmComFavouriteList } from '$cm/entities/com-favourite';
+import { useAtomValue } from 'atomaric';
 import { CmComWid, MenuComToolName } from 'shared/api';
 
 interface Props {
@@ -14,8 +15,9 @@ interface Props {
 export const CmComFaceContextMenu = ({ onClick, comWid }: Props) => {
   const { isFavourite, toggleFavourite } = useCmComFavouriteList();
   const isComMarked = isFavourite(comWid);
-  const { selectedComws, selectedComPosition: isSelected } = useCmComSelectedList();
+  const selectedComws = useAtomValue(cmComSelectedComwsAtom);
   const confirm = useConfirm();
+  const comNum = selectedComws.indexOf(comWid) + 1;
 
   return (
     <>
@@ -38,8 +40,8 @@ export const CmComFaceContextMenu = ({ onClick, comWid }: Props) => {
           cmComSelectedComwsAtom.do.toggle(comWid);
         }}
       >
-        <LazyIcon icon={isSelected(comWid) ? 'RemoveCircleHalfDot' : 'AddCircleHalfDot'} />
-        {translateBase(it => it.cm.com.tool[MenuComToolName.SelectedToggle], { v: +isSelected(comWid) })}
+        <LazyIcon icon={comNum ? 'RemoveCircleHalfDot' : 'AddCircleHalfDot'} />
+        {translateBase(it => it.cm.com.tool[MenuComToolName.SelectedToggle], { v: comNum })}
       </ContextMenu.Item>
 
       {!selectedComws.length || (

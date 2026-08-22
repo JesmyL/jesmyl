@@ -7,7 +7,7 @@ import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { DocTitle } from '#shared/ui/tags/DocTitle';
 import {
-  cmComFavoriteComsAtom,
+  cmComFavoriteComwsAtom,
   CmComNumber,
   cmComSelectedComwsAtom,
   useCmCom,
@@ -49,7 +49,7 @@ let comsWithErrorAtom: Atom<Set<CmComWid>>;
 export const CmPlayerPage = () => {
   comsWithErrorAtom ??= atom(new Set());
 
-  const favComws = useCmComIComList(useAtomValue(cmComFavoriteComsAtom));
+  const favComws = useCmComIComList(useAtomValue(cmComFavoriteComwsAtom));
   const selComws = useCmComIComList(useAtomValue(cmComSelectedComwsAtom));
 
   const allIComs = useCmComAllIComList();

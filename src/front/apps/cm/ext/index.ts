@@ -9,6 +9,7 @@ export { CmChordCardTracked } from '$cm/entities/chord-card/ui/ChordCardTracked'
 export {
   CmComMoveSelectedButton,
   CmComNumber,
+  cmComSelectedComwsAtom,
   CmComWithComListSearchFilterInput,
   useCmCom,
   useCmComAllIComList,
@@ -17,7 +18,6 @@ export {
   useCmComMapFromICom,
   useCmComMapFromIComWithoutComFixes,
   useCmComPinchFontSize,
-  useCmComSelectedList,
 } from '$cm/entities/com';
 export {
   CmComAudioPlayer,

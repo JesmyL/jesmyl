@@ -1,5 +1,5 @@
 import { makeRegExp } from 'regexpert';
-import { checkIsEndsWith, checkIsNaN, checkIsNl, checkIsStartsWith } from './checkIs';
+import { checkIsEndsWith, checkIsNaN, checkIsNl, checkIsStartsWith, checkIsString } from './checkIs';
 
 export const itIt = <It>(it: It) => it;
 export const itTrim = (it: string) => it.trim();
@@ -30,9 +30,12 @@ export const nagativeNumber = <T extends number>(value: T) => -value as T;
 export const absoluteNumber = <T extends number>(value: T) => Math.abs(value) as T;
 
 type ParseNumber<T extends string | number> = T extends `${infer N extends number}` ? N : T;
-export const extractNumber = <T extends string | number>(value: T) => {
-  const val = parseFloat(`${value}`);
-  return (checkIsNaN(val) ? value : val) as ParseNumber<T>;
+export const extractNumber = <T extends string | number | nil>(
+  value: T,
+): T extends nil ? T : ParseNumber<Exclude<T, nil>> => {
+  if (!checkIsString(value)) return value as never;
+  const val = parseFloat(value);
+  return (checkIsNaN(val) ? value : val) as never;
 };
 
 // JSON

@@ -20,6 +20,14 @@ declare global {
 
   type SKey<Key extends number | string> = Key | `${Key}`;
 
+  type SValRecord<Model> = {
+    [K in keyof Model]: Model[K] extends nil
+      ? Model[K]
+      : Exclude<Model[K], undefined> extends string | number
+        ? `${Exclude<Model[K], undefined>}` | Extract<Model[K], undefined>
+        : string | Extract<Model[K], undefined>;
+  };
+
   type OmitOwn<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
   type NaN = NotANumber & number;

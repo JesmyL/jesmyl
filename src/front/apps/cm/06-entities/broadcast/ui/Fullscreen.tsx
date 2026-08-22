@@ -3,26 +3,39 @@ import { propsOfClicker } from '#shared/lib/clicker/propsOfClicker';
 import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { useCmComCurrent } from '$cm/entities/com';
 import {
+  CmBroadcastSlidesContext,
   useCmBroadcastClose,
   useCmBroadcastScreenComNavigations,
   useCmBroadcastSlidesContext,
 } from '$cm/features/broadcast';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Atom, atom, useAtomValue } from 'atomaric';
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
+import { TextCase } from 'shared/model/common';
 
 const forceUpdater = (it: number) => it + 1;
 const style = { padding: '5px' };
 
-let isShowInfoAtom: Atom<boolean>;
-
 export const CmBroadcastFullscreen = () => {
-  isShowInfoAtom ??= atom(true);
+  const com = useCmComCurrent();
 
+  return (
+    com && (
+      <CmBroadcastSlidesContext
+        textCase={TextCase.AsIs}
+        com={com}
+      >
+        <CmBroadcastFullscreenInContext />
+      </CmBroadcastSlidesContext>
+    )
+  );
+};
+
+const CmBroadcastFullscreenInContext = () => {
   const [forceUpdates, forceUpdate] = useReducer(forceUpdater, 0);
-  const isShowInfo = useAtomValue(isShowInfoAtom);
+  const [isShowInfo, setIsShowInfo] = useState(true);
 
   const { html, toSlide } = useCmBroadcastSlidesContext();
   const { nextCom, prevCom } = useCmBroadcastScreenComNavigations();
@@ -76,7 +89,7 @@ export const CmBroadcastFullscreen = () => {
           <LazyIcon
             icon="Cancel01"
             className="close-info-button pointer absolute top-(--half-safe-gap) right-(--half-safe-gap) opacity-0"
-            onClick={() => isShowInfoAtom.set(false)}
+            onClick={() => setIsShowInfo(false)}
           />
           <div
             className="bottom-area info-area bottom-(--safe-gap) left-(--safe-gap) pointer"

@@ -1,9 +1,7 @@
-import { defaultQueryClient } from '#basis/config/queryClient';
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { TsjrpcBaseClient } from '#basis/tsjrpc/TsjrpcBase.client';
 import { cmComCommentRegisteredAltKeysAtom } from '$cm/entities/com-comment';
-import { cmComFavoriteComsAtom, cmComTopToolsAtom } from '$cm/entities/index';
-import { cmMeetingGetSchEventComPackModQueryKey } from '$cm/entities/meeting';
+import { cmComFavoriteComwsAtom, cmComTopToolsAtom } from '$cm/entities/index';
 import { ComsInSchEventComwsPack, ScheduleWidgetWid } from 'shared/api';
 import { CmShareTsjrpcModel } from 'shared/api/tsjrpc/cm/share.tsjrpc.model';
 import { extractNumber, itInvokeIt, itNumSort } from 'shared/utils';
@@ -73,20 +71,20 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
         },
 
         comFav_v1: async ({ fav, mod }) => {
-          const prevSet = new Set(cmComFavoriteComsAtom.get());
+          const prevSet = new Set(cmComFavoriteComwsAtom.get());
 
           mapObjectEntries(fav, (comw, is) => {
             if (is) prevSet.add(extractNumber(comw));
             else prevSet.delete(extractNumber(comw));
           });
 
-          cmComFavoriteComsAtom.set(Array.from(prevSet).sort(itNumSort));
+          cmComFavoriteComwsAtom.set(Array.from(prevSet).sort(itNumSort));
 
           updateMod(mod);
         },
 
         refreshComFavs: async ({ comws, mod }) => {
-          cmComFavoriteComsAtom.set(comws);
+          cmComFavoriteComwsAtom.set(comws);
           updateMod(mod);
         },
 
@@ -114,10 +112,6 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
             const prev = (schwPackDict[schw] ??= (await cmIDB.db.scheduleComws.get(schw))?.pack ?? {});
 
             (prev[dayi] ??= {})[eventMi] = { fio, s: comws, w };
-
-            invalidateDict[`${schw}.${dayi}`] ??= () => {
-              defaultQueryClient.invalidateQueries({ queryKey: [cmMeetingGetSchEventComPackModQueryKey, schw, dayi] });
-            };
 
             maxw = Math.max(maxw, w);
           }

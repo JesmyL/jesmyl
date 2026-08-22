@@ -1,7 +1,5 @@
 import { contextCreator } from '#shared/lib/contextCreator';
 import { CmComWid } from 'shared/api';
-import { retNull } from 'shared/utils';
-import { CmComOpenLinkRenderer } from '../model/com';
 
 type Titles = Record<number, string>;
 
@@ -14,6 +12,3 @@ export type CmComListContextValue = {
 export const [CmComCurrentComPackContext, useCmComCurrentComPackContext] = contextCreator<CmComListContextValue>({
   comws: [],
 });
-
-export const [CmComOpenComLinkRendererContext, useCmComOpenComLinkRendererContext] =
-  contextCreator<CmComOpenLinkRenderer>(retNull);
