@@ -2,7 +2,6 @@ import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRi
 import { isMobileDevice } from '#shared/lib/device-differences';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { ScheduleWidgetWatchLiveBroadcastButton } from '#widgets/schedule/live-broadcast/WatchLiveButton';
 import { CmEditorMeetingEventEdits } from '$cm+editor/ext';
 import { CmComLocalListToolsPopup } from '$cm/entities/com';
 import { useAuth } from '$index/shared/state';
@@ -29,23 +28,19 @@ export const CmMeetingControls = ({
 
   return (
     <div className="flex gap-2">
-      {isMobileDevice ? (
-        <ScheduleWidgetWatchLiveBroadcastButton schw={schw} />
-      ) : (
-        !auth.login || (
-          <Link
-            to="."
-            search={prev => ({
-              ...(prev as object),
-              comw: comws[0],
-              eventMi,
-              dayi,
-              tran: '-!-',
-            })}
-          >
-            <TheIconButton icon="Computer" />
-          </Link>
-        )
+      {isMobileDevice || !auth.login || (
+        <Link
+          to="."
+          search={prev => ({
+            ...(prev as object),
+            comw: comws[0],
+            eventMi,
+            dayi,
+            tran: '-!-',
+          })}
+        >
+          <TheIconButton icon="Computer" />
+        </Link>
       )}
 
       <TheIconButton

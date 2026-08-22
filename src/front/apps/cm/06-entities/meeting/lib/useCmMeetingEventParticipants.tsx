@@ -19,45 +19,36 @@ export const useCmMeetingEventParticipants = (schedule: IScheduleWidget | nil, d
   });
   const isOnlyEvent = (eventBoxes?.length ?? 0) < 2 && (eventBoxes?.at(0)?.events.length ?? 0) < 2;
 
-  const pack = useLiveQuery(
-    () => (isOnlyEvent && schw ? cmIDB.db.scheduleComws.get({ schw }) : undefined),
-    [schw, isOnlyEvent],
-  );
+  const pack = useLiveQuery(() => (schw ? cmIDB.db.scheduleComws.get({ schw }) : undefined), [schw]);
 
   let controls, content;
   let headTitle: React.ReactNode = schedule?.title;
 
-  if (isOnlyEvent && schw) {
-    const firstEvent = eventBoxes?.at(0)?.events.at(0);
-    const eventPack = firstEvent && pack?.pack[dayi]?.[firstEvent.mi];
+  const firstEvent = eventBoxes?.at(0)?.events.at(0);
+  const eventPack = firstEvent && pack?.pack[dayi]?.[firstEvent.mi];
 
-    if (eventPack) {
-      controls = (
-        <div className="flex gap-3 pr-3">
-          {eventPack && (
-            <CmMeetingControls
-              comws={eventPack.s}
-              dayi={dayi}
-              eventMi={firstEvent.mi}
-              schw={schw}
-            />
-          )}
-        </div>
-      );
+  if (isOnlyEvent && schw && eventPack) {
+    controls = (
+      <CmMeetingControls
+        comws={eventPack.s}
+        dayi={dayi}
+        eventMi={firstEvent.mi}
+        schw={schw}
+      />
+    );
 
-      content = eventPack && (
-        <>
-          <CmComFaceList list={eventPack.s} />
-          <CmMeetingEventModLabel mod={eventPack.w} />
-        </>
-      );
+    content = (
+      <>
+        <CmComFaceList list={eventPack.s} />
+        <CmMeetingEventModLabel mod={eventPack.w} />
+      </>
+    );
 
-      headTitle = (
-        <>
-          {headTitle} - {schedule.types[firstEvent.type].title}
-        </>
-      );
-    }
+    headTitle = (
+      <>
+        {headTitle} - {schedule.types[firstEvent.type].title}
+      </>
+    );
   }
 
   return { controls, content, headTitle, eventBoxes, isOnlyDay: dayiSet.size > 1 };

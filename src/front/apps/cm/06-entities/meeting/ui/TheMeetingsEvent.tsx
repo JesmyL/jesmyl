@@ -1,6 +1,8 @@
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
 import { Accordion } from '#shared/components';
+import { isMobileDevice } from '#shared/lib/device-differences';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
+import { ScheduleWidgetWatchLiveBroadcastButton } from '#widgets/schedule/live-broadcast/WatchLiveButton';
 import { ScheduleDayEventPathProps } from '#widgets/schedule/ScheduleWidget.model';
 import { indexIDB } from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
@@ -32,7 +34,12 @@ export const CmMeetingEvent = ({ dayi, eventMi, schw }: ScheduleDayEventPathProp
           {children}
         </Link>
       )}
-      head={controls}
+      head={
+        <div className="flex gap-2">
+          {isMobileDevice && <ScheduleWidgetWatchLiveBroadcastButton schw={schw} />}
+          {controls}
+        </div>
+      }
       content={
         <AppDialogProvider title="cm-meeting-event-coms">
           <Accordion.Root
