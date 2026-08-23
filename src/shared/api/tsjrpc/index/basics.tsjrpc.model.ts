@@ -1,4 +1,4 @@
-import { DeviceId } from 'shared/api/complect/enums';
+import { DeviceId, Langi } from 'shared/api/complect/enums';
 import {
   LocalSokiAuth,
   SokiAuthLogin,
@@ -78,4 +78,7 @@ export type IndexTsjrpcModel = {
   };
 
   updateConstConfig: (args: { config: Partial<ConstantsConfig> }) => void;
+
+  reqLocaleBaseConfig: () => void;
+  reqLocaleDynConfig: (args: { langi: Langi }) => void;
 };

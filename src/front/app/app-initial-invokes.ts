@@ -13,6 +13,7 @@ import {
 import { indexTsjrpcBaseClient, indexTsjrpcClientMethods, schLiveTsjrpcBaseClient } from '$index/shared/tsjrpc';
 import { DeviceId } from 'shared/api';
 import { checkUserScopeAccessRight } from 'shared/utils/index/utils';
+import { appInitEvent } from './store/triggers';
 
 export const appInitialInvokes = () => {
   const rights = indexUserAccessRightsAtom.get();
@@ -52,6 +53,8 @@ export const appInitialInvokes = () => {
       iconPacks,
       iconsMd5Hash: lastUpdatedIconsMd5HashAtom.get(),
     });
+
+    appInitEvent.invoke();
   };
 
   soki.onBeforeAuthorizeEvent.listen(() => indexIDB.remove.lastModifiedAt());
