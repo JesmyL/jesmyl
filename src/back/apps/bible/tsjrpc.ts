@@ -3,6 +3,7 @@ import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { TsjrpcServerMethods } from 'back/tsjrpc.server';
 import fs from 'fs';
 import { BibleTsjrpcBaseModel, BibleTsjrpcModel } from 'shared/api/tsjrpc/bible/tsjrpc.model';
+import { getMinifiedBibleJson } from './util';
 
 export const bibleTsjrpcBaseServer = new (class Bible extends TsjrpcBaseServer<BibleTsjrpcModel> {
   constructor() {
@@ -12,16 +13,16 @@ export const bibleTsjrpcBaseServer = new (class Bible extends TsjrpcBaseServer<B
         requestFreshes: async ({ lastModifiedAt, myTranslates }, { client }) => {
           lastModifiedAt = Math.trunc(lastModifiedAt);
 
-          myTranslates.forEach(tName => {
+          myTranslates.forEach(async tName => {
             try {
-              const modifiedAt = fs.statSync(makeBibleTranslateFileName(tName)).mtimeMs;
+              const modifiedAt = Math.trunc(fs.statSync(makeBibleTranslateFileName(tName)).mtimeMs);
               if (lastModifiedAt >= modifiedAt) return;
 
-              bibleTsjrpcServer.refreshTranslate(
+              await bibleTsjrpcServer.refreshTranslate(
                 {
                   tName: tName,
-                  stringifiedTranslate: '' + fs.readFileSync(makeBibleTranslateFileName(tName)),
-                  modifiedAt: modifiedAt,
+                  stringifiedTranslate: await getMinifiedBibleJson(tName),
+                  modifiedAt,
                 },
                 client,
               );

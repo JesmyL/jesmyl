@@ -4,6 +4,7 @@ import { userDB, userRoleDB } from 'back/drizzle.schema';
 import { db, dbUpdate } from 'back/drizzle/drizzle.db';
 import { hostRootDir } from 'back/envJson';
 import { jsonParseSecure } from 'back/json-secure';
+import { langLocaleBaseFileStoragesLazy, langLocaleDynamicFileStoragesLazy } from 'back/locales/file-storages';
 import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
 import { supportTelegramAuthorizations } from 'back/sides/telegram-bot/prod/authorize';
@@ -12,7 +13,7 @@ import { takeLogginedAuthOrThrow } from 'back/utils';
 import { exec } from 'child_process';
 import { eq } from 'drizzle-orm';
 import { escapeRegExpSymbols, makeRegExp } from 'regexpert';
-import { UserInfoUnsecure, UserLogin } from 'shared/api';
+import { Langi, UserInfoUnsecure, UserLogin } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { constantsConfigurator } from 'shared/const/cm/constants.def';
 import { emojiList } from 'shared/const/emojiList';
@@ -311,6 +312,27 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
           );
 
           return { description: `Константы\n\n${updates.join('\n')}` };
+        },
+
+        reqLocaleBaseConfig: (_, { visitInfo, client }) => {
+          const baseFileStorage = langLocaleBaseFileStoragesLazy()[visitInfo?.langi ?? Langi.Ru];
+
+          if (!client) throw 'Client not found';
+
+          indexServerTsjrpcShareMethods.baseLocConf(
+            { base: baseFileStorage.getValue(), mod: baseFileStorage.fileModifiedAt() },
+            client,
+          );
+        },
+
+        reqLocaleDynConfig: async ({ langi }, { client }) => {
+          const conf = (await langLocaleDynamicFileStoragesLazy()).getItem(langi);
+          const mod = (await langLocaleDynamicFileStoragesLazy()).getItemModTime(langi);
+
+          if (!client) throw 'Client not found';
+          if (!conf || !mod) throw 'Языковая конфигурация не найдена';
+
+          indexServerTsjrpcShareMethods.dynLocConf({ dyns: [conf], mod }, client);
         },
       },
     });
