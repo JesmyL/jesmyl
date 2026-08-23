@@ -6,7 +6,7 @@ export let reloadSW = () => {};
 
 if ('serviceWorker' in navigator) {
   reloadSW = registerSW({
-    immediate: true,
+    immediate: false,
     onNeedRefresh: () => checkIsThereNewSWAtom.set(true),
   });
 }

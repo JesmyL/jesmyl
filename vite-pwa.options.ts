@@ -3,7 +3,7 @@ import { VitePWAOptions } from 'vite-plugin-pwa';
 export const vitePWAOptions = {
   injectRegister: 'auto',
   strategies: 'generateSW',
-  registerType: 'autoUpdate',
+  registerType: 'prompt',
   manifestFilename: 'app-manifest-v2.json' as const,
   workbox: {
     cleanupOutdatedCaches: true,
@@ -13,7 +13,7 @@ export const vitePWAOptions = {
   },
   manifest: {
     name: 'Jesus my Lord',
-    short_name: 'Jes.myL',
+    short_name: 'JesmyL',
     description: 'Сборник приложений',
     prefer_related_applications: false,
     start_url: '/',
