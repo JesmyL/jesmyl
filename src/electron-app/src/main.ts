@@ -21,20 +21,41 @@ const webPreferences = {
   partition: 'persist:jesmyl',
 };
 
+let isUpdateDownloaded = false;
+let isQuittingForUpdate = false;
+
 app.whenReady().then(async () => {
   if (app.isPackaged) {
     try {
+      autoUpdater.logger = console;
       autoUpdater.setFeedURL({
         provider: 'generic',
-        url: makeElectronDownHostUrl(host),
+        url: makeElectronDownHostUrl(host, true),
       });
-      autoUpdater.checkForUpdatesAndNotify().catch(() => {});
-    } catch {
-      console.error('Ошибка автообновления приложения');
+
+      autoUpdater.autoInstallOnAppQuit = false;
+      autoUpdater.on('update-downloaded', () => (isUpdateDownloaded = true));
+
+      setTimeout(() => {
+        autoUpdater.checkForUpdatesAndNotify().catch(() => {});
+      }, 4000);
+    } catch (e) {
+      console.error(`Ошибка автообновления приложения v${app.getVersion()}`, e);
     }
   }
 
   let presentationWin: BrowserWindow;
+
+  app.on('before-quit', e => {
+    if (isUpdateDownloaded && !isQuittingForUpdate) {
+      e.preventDefault();
+      isQuittingForUpdate = true;
+
+      app.removeAllListeners('window-all-closed');
+
+      autoUpdater.quitAndInstall(false, true);
+    }
+  });
 
   const appQuit = () => {
     if (process.platform !== 'darwin') app.quit();
@@ -58,10 +79,8 @@ app.whenReady().then(async () => {
   if (!url.startsWith('https')) win.webContents.openDevTools();
 
   win.webContents.on('did-finish-load', async () => {
-    const appVersion = app.getVersion();
-
     win.webContents.executeJavaScript(`
-      localStorage.setItem('atom\\\\index:extVersion', '["${appVersion}"]');
+      localStorage.setItem('atom\\\\index:extVersion', '["${app.getVersion()}"]');
     `);
   });
 
@@ -89,27 +108,20 @@ app.whenReady().then(async () => {
     };
   };
 
-  await win.loadURL(`${url}/cm/i`, {
+  await win.loadURL(url, {
     httpReferrer: '',
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
   });
 
-  win.on('close', appQuit);
-  win.webContents.session.cookies.set(makeCookieEvent('DESCTOP'));
+  win.on('close', () => {
+    if (presentationWin && !presentationWin.isDestroyed()) {
+      presentationWin.close();
+    }
 
-  win.webContents.session.webRequest.onHeadersReceived((details, callback) => {
-    callback({
-      responseHeaders: {
-        ...details.responseHeaders,
-        'Content-Security-Policy': [
-          "default-src 'self' https: http: data: blob: 'unsafe-inline'; " +
-            "script-src 'self' 'unsafe-inline' https: http: blob:; " +
-            "style-src 'self' 'unsafe-inline' https: http: blob:; " +
-            'connect-src *; img-src *; media-src *; frame-src *',
-        ],
-      },
-    });
+    appQuit();
   });
+
+  win.webContents.session.cookies.set(makeCookieEvent('DESKTOP'));
 
   win.webContents.session.webRequest.onHeadersReceived((details, callback) => {
     callback({

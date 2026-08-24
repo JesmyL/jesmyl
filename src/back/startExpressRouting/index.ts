@@ -30,6 +30,63 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
   app.use(express.json());
   app.use('/assets', express.static(`${hostRootDir}/assets`));
   app.use('/sounds', express.static(`${hostRootDir}/sounds`));
+
+  app.use('/down', async (req, res, next) => {
+    const rangeHeader = req.headers.range;
+
+    if (!rangeHeader || !rangeHeader.includes(',')) {
+      return next();
+    }
+
+    const filePath = path.join(`${hostRootDir}/down`, req.path);
+
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).end();
+    }
+
+    const stat = fs.statSync(filePath);
+    const fileSize = stat.size;
+
+    const ranges = rangeHeader.replace(/bytes=/, '').split(',');
+    const boundary = 'ELECTRON_UPDATER_BOUNDARY';
+
+    res.status(206);
+    res.setHeader('Content-Type', `multipart/byteranges; boundary=${boundary}`);
+
+    const sendRange = (r: string) => {
+      return new Promise((resolve, reject) => {
+        const [startStr, endStr] = r.split('-');
+        const start = parseInt(startStr, 10);
+        const end = endStr ? parseInt(endStr, 10) : fileSize - 1;
+
+        let head = `\r\n--${boundary}\r\n`;
+        head += `Content-Type: application/octet-stream\r\n`;
+        head += `Content-Range: bytes ${start}-${end}/${fileSize}\r\n\r\n`;
+
+        res.write(head);
+
+        const fileStream = fs.createReadStream(filePath, { start, end });
+        fileStream.pipe(res, { end: false });
+
+        fileStream.on('end', () => resolve(1));
+        fileStream.on('error', err => reject(err));
+      });
+    };
+
+    try {
+      for (const r of ranges) {
+        await sendRange(r);
+      }
+      res.write(`\r\n--${boundary}--\r\n`);
+      res.end();
+    } catch (err) {
+      console.error('Ошибка отправки блоков:', err);
+      if (!res.writableEnded) {
+        res.status(500).end();
+      }
+    }
+  });
+
   app.use('/down', express.static(`${hostRootDir}/down`));
 
   pullFilesExpressRoute(app);
