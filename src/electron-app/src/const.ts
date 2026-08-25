@@ -1,4 +1,6 @@
-const https = 'https://';
+import { BrowserWindow } from 'electron';
 
-export const makeElectronDownHostUrl = (host: string, isIncludeHttps = false) =>
-  `${isIncludeHttps ? https : ''}${host.startsWith(https) ? host.slice(https.length) : host}/down` as const;
+export * from '../../shared/const/electron';
+export * from '../../shared/utils/lazyInit';
+
+export const electronAppWinHolder: { win?: BrowserWindow } = {};

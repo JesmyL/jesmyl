@@ -1,5 +1,5 @@
-import { broadcastNextLiveDataAtom } from '#features/broadcast/atoms';
 import { isShowBroadcastTextAtom } from '#features/broadcast/initial-slide-context';
+import { broadcastConnectionDto } from '#features/broadcast/lib/connection.dto';
 import { LiveBroadcastAppProps } from '#shared/model/cm/Cm.model';
 import { cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
 import { useCmBroadcastSlidesContext } from '$cm/ext';
@@ -49,7 +49,7 @@ export const CmLiveSlidesSimpleBroadcast = (props: LiveBroadcastAppProps & { com
         },
       };
 
-      broadcastNextLiveDataAtom.set({ schw: props.schedule?.w ?? ScheduleWidgetWidNone, data: liveData });
+      broadcastConnectionDto.sendLiveData({ schw: props.schedule?.w ?? ScheduleWidgetWidNone, data: liveData });
     }, 100);
   }, [
     config,

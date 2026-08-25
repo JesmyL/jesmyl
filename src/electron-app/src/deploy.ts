@@ -1,6 +1,6 @@
 import { exec } from 'child_process';
 import { lazyEnvJson } from '../../back/envJson';
-import { makeElectronDownHostUrl } from './const';
+import { makeElectronDownHostUrl } from './lib';
 
 async function runDeploy(): Promise<void> {
   const targetDir = makeElectronDownHostUrl(lazyEnvJson().host);

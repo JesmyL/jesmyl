@@ -11,4 +11,5 @@ export default defineConfig({
   treeshake: true,
   minify: true,
   external: ['electron', 'electron-updater'],
+  noExternal: ['tsjrpc'],
 });

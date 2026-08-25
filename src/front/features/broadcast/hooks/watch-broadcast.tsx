@@ -1,5 +1,6 @@
 import { cursors } from '#shared/const/cursorsBase64';
 import { renderComponentInNewWindow } from '#shared/lib/renders';
+import { electronClientApi } from '#shared/tsjrpc.electron/tsjrpc.electron.client';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { Global, css } from '@emotion/react';
 import { useCallback } from 'react';
@@ -65,7 +66,7 @@ export const useWatchScreenBroadcast = () => {
     const len = configs.length - windows.length;
 
     for (let windowi = 0; windowi < len; windowi++) {
-      if (windowi === 0) {
+      if (windowi === 0 && electronClientApi) {
         try {
           newWindows[windowi] = await broadcastConnectionDto.init();
 

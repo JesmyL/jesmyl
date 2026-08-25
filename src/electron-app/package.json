@@ -1,12 +1,13 @@
 {
   "name": "JESMYL_PRO",
-  "version": "0.0.29792635",
+  "version": "0.0.29792690",
   "description": "Jesmyl Pro Desktop",
   "author": "gfirf",
   "private": true,
   "main": "dist/main.cjs",
   "dependencies": {
-    "electron-updater": "^6.8.9"
+    "electron-updater": "^6.8.9",
+    "tsjrpc": "^0.0.24"
   },
   "devDependencies": {
     "electron": "^43.4.1"

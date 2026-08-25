@@ -1,4 +1,5 @@
-import { broadcastCurrentTextAppAtom, broadcastNextLiveDataAtom } from '#features/broadcast/atoms';
+import { broadcastCurrentTextAppAtom } from '#features/broadcast/atoms';
+import { broadcastConnectionDto } from '#features/broadcast/lib/connection.dto';
 import { LiveBroadcastAppProps } from '#shared/model/cm/Cm.model';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { BibleBroadcastLive } from '$bible/ext';
@@ -16,7 +17,7 @@ export const CmScheduleWidgetBroadcastBibleControlled = memo(function BibleTr({
 }: LiveBroadcastAppProps) {
   const onSend = useCallback(
     (liveData: IndexSchWBroadcastLiveDataValue) =>
-      broadcastNextLiveDataAtom.set({ schw: schedule?.w ?? ScheduleWidgetWidNone, data: liveData }),
+      broadcastConnectionDto.sendLiveData({ schw: schedule?.w ?? ScheduleWidgetWidNone, data: liveData }),
     [schedule?.w],
   );
 
