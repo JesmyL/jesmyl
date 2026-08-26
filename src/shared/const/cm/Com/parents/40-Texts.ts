@@ -20,9 +20,12 @@ import { CmComOrder } from '../../order/Order';
 import { CmComChords } from './30-Chords';
 
 export class CmComTexts extends CmComChords {
-  ordersWithFinalChordedOrd(isFinalChordedOrd: boolean) {
+  ordersWithFinalChordedOrd() {
     const orders = this.orders;
-    if (!isFinalChordedOrd || !orders || !orders.at(-1)?.isChBlock()) return orders ?? [];
+    if (!orders) return [];
+
+    const lastVisibleOrd = orders.findLast(ord => ord.isVisible);
+    if (lastVisibleOrd?.isChBlock()) return orders;
 
     return orders.concat(
       new CmComOrder(
@@ -41,9 +44,9 @@ export class CmComTexts extends CmComChords {
     );
   }
 
-  makeExpandLines = (isFinalChordedOrd: boolean, textCase: TextCase | nil) => {
+  makeExpandLines = (textCase: TextCase | nil) => {
     try {
-      const comOrders = this.ordersWithFinalChordedOrd(isFinalChordedOrd);
+      const comOrders = this.ordersWithFinalChordedOrd();
       let totalLinei = -1;
       let blocki = -1;
       const headSolidOrders: CmComOrder[] = [];
@@ -94,10 +97,9 @@ export class CmComTexts extends CmComChords {
 
   makeExpandSlides = (
     nameSpaceiVariants: number[],
-    isFinalChordedOrd: boolean,
     isShowInvisibleSlides: boolean,
     textCase?: TextCase | nil,
-    expandLines: CmBroadcastSlideLine[] = this.makeExpandLines(isFinalChordedOrd, textCase),
+    expandLines: CmBroadcastSlideLine[] = this.makeExpandLines(textCase),
   ) => {
     let slides: CmBroadcastMonolineSlide[] = [];
     let prevSlide: CmBroadcastMonolineSlide | nil;

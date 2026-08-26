@@ -37,7 +37,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
   const targetHighlightMap = useState(() => new Map<Element, TimeOut>())[0];
 
   const { warns, slides, groups } = useMemo(() => {
-    const slides = com.makeExpandSlides([nameSpacei], false, true);
+    const slides = com.makeExpandSlides([nameSpacei], true);
     const warns: PRecord<CmBroadcastMonolineSlideOrdStrId, [className: string, text: string]> = {};
 
     let manyLinesLen;
@@ -66,7 +66,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
       }
     });
 
-    return { warns, slides, groups: com.makeExpandGroupedLines(false) };
+    return { warns, slides, groups: com.makeExpandGroupedLines() };
   }, [com, nameSpacei]);
 
   const upperLinesDict: PRecord<CmComNewlinerSymbolFreeUpperCaseLine, 1> = {};

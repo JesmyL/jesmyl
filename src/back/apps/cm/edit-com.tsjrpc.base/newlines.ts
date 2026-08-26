@@ -1,7 +1,6 @@
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import {
   CmComLinei,
-  CmComMod,
   CmComNewlinerRepeati,
   CmComNewlinerStrConfig,
   CmComNewlinerWordi,
@@ -171,7 +170,7 @@ const updateNewlinerLineSet = <
       updater(props, itRepeati as CmComNewlinerRepeati, set, () => {
         let sets: Sets | nil = null;
 
-        new CmCom({ ...com, m: CmComMod.def, al: [] }, null, null).makeExpandLines(false, TextCase.AsIs).find(slide => {
+        new CmCom(com, null, null).makeExpandLines(TextCase.AsIs).find(slide => {
           sets = slide.ord.makeNewlinerSets([props.spacei], slide.line, slide.linei, slide.repeati);
 
           return slide.ord.wid === ordw && slide.linei === linei && slide.repeati === itRepeati;

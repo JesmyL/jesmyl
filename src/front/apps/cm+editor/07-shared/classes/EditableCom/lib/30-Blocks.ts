@@ -28,13 +28,13 @@ export class EditableComBlocks extends EditableComOrders {
     });
   }
 
-  makeExpandGroupedLines = (isFinalChordedOrd: boolean, textCase?: TextCase | nil) => {
+  makeExpandGroupedLines = (textCase?: TextCase | nil) => {
     let prevOrd: CmComOrder | null = null;
     let prevTotalLinei = -1;
 
     const slides: CmBroadcastSlideLine[][] = [];
 
-    this.makeExpandLines(isFinalChordedOrd, textCase).forEach(slide => {
+    this.makeExpandLines(textCase).forEach(slide => {
       if ((slide.ord !== prevOrd || slide.totalLinei < prevTotalLinei) && !slide.ord.isAnyInherited) slides.push([]);
       slides.at(-1)?.push(slide);
 

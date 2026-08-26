@@ -35,7 +35,7 @@ export const CmBroadcastSlidesContext = ({
   const { slidei, slideId } = useAtomValue(cmBroadcastCurrentSlideiAtom);
   const showChordedSlideMode = useAtomValue(cmShowChordedSlideModeAtom);
   const slides = useMemo(
-    () => com?.makeExpandSlides([nameSpacei, 0], true, false, textCase) ?? [],
+    () => com?.makeExpandSlides([nameSpacei, 0], false, textCase) ?? [],
     [com, textCase, nameSpacei],
   );
   const isHiddenChordsMode =

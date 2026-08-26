@@ -18,7 +18,7 @@ import {
 } from '$cm/ext';
 import { atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import { CmComAudioMarkEditPackValue, CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
+import { CmComAudioMarkEditPackValue, CmComAudioMarkPackTime, CmComOrderWidNever, HttpNumLeadLink } from 'shared/api';
 import { TextCase } from 'shared/model/common';
 import { convertSecondsInStrTime, iife, wait } from 'shared/utils';
 import { checkIsNil, checkIsNotNil } from 'shared/utils/checkIs';
@@ -85,12 +85,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
         return;
       }
 
-      if (editSrc == null) {
-        srcOnEditAtom().set(ccom.audio[0]);
-        return;
-      }
-
-      if (!ccom.audio.includes(editSrc)) {
+      if (editSrc == null || !ccom.audio.includes(editSrc)) {
         srcOnEditAtom().set(ccom.audio[0]);
         return;
       }
@@ -154,6 +149,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
             {audioMarkButtons?.afterIdDict.before}
 
             {slides?.map(({ text, id, ord, linei, repeati, samei }) => {
+              if (ord.wid === CmComOrderWidNever) return;
               const selector = makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, samei);
 
               return (
