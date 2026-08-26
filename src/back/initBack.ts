@@ -135,7 +135,10 @@ LogRateLimitBurst=1000`,
     console.info(makeCyanLogText('[Процесс] Проверка и настройка локального PostgreSQL...'));
 
     try {
-      await runCommand(`sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD '${DB_PASSWORD}';"`);
+      await runCommand(
+        `sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD '${DB_PASSWORD}';"`,
+        'alter user with password',
+      );
       await runCommand(
         `sudo -u postgres psql -lqt | cut -d \\| -f 1 | grep -qw ${DB_NAME} || sudo -u postgres psql -c "CREATE DATABASE ${DB_NAME} OWNER ${DB_USER};"`,
       );
