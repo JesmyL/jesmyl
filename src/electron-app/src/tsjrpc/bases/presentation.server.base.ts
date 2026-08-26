@@ -23,7 +23,7 @@ export const electronAppPresentationTsjrpcBase =
             focusWin(win);
           }),
 
-          show: async (liveData, { host }) => {
+          show: async (liveData, { host, win }) => {
             if (presentationWin && !presentationWin.isDestroyed()) {
               if (presentationWin.isMinimized()) {
                 presentationWin.maximize();
@@ -36,12 +36,14 @@ export const electronAppPresentationTsjrpcBase =
                 electronPresentationTsjrpcAppMethods.liveData(liveData);
               });
 
-              presentationWin.on('close', () => {
+              presentationWin.on('close', event => {
+                if (isPreventClosePresentation) event.preventDefault();
                 presentationWin = undefined;
               });
             }
 
             if (presentationWin) focusWin(presentationWin);
+            focusWin(win);
           },
 
           liveData: data => electronPresentationTsjrpcAppMethods.liveData(data),
@@ -55,6 +57,7 @@ export const electronAppPresentationTsjrpcBase =
 ///////////////////////////////////////////////
 
 let presentationWin: BrowserWindow | undefined;
+let isPreventClosePresentation = true;
 
 const createSlideshowWindow = async (display: Display | undefined, host: string) => {
   const { bounds: { x, y, width, height } = { x: 1000, y: 200, width: 800, height: 600 } } = display ?? {};
@@ -82,17 +85,13 @@ const createSlideshowWindow = async (display: Display | undefined, host: string)
 };
 
 const focusWin = (win: BrowserWindow) => {
-  const interval = setInterval(() => {
-    try {
-      win.focus();
-      win.setAlwaysOnTop(true);
-      win.setAlwaysOnTop(false);
-    } catch {
-      //
-    }
-  }, 50);
-
-  setTimeout(() => clearInterval(interval), 1000);
+  try {
+    win.focus();
+    win.setAlwaysOnTop(true);
+    win.setAlwaysOnTop(false);
+  } catch {
+    //
+  }
 };
 
 let isInited = false;
@@ -103,6 +102,7 @@ const init = (tool: ElectronTsjrpcTool) => {
   const { win } = tool;
 
   win.on('close', () => {
+    isPreventClosePresentation = false;
     if (presentationWin && !presentationWin.isDestroyed()) {
       presentationWin.close();
     }

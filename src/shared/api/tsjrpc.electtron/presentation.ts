@@ -1,8 +1,10 @@
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 import { ScheduleWidgetWid } from '../complect/schedule-widget';
 
+type LiveData = { schw: ScheduleWidgetWid; data: IndexSchWBroadcastLiveDataValue };
+
 export type ElectronPresentationTsjrpcModel = {
   close: () => void;
-  show: (args: { schw: ScheduleWidgetWid; data: IndexSchWBroadcastLiveDataValue }) => void;
-  liveData: (args: { schw: ScheduleWidgetWid; data: IndexSchWBroadcastLiveDataValue }) => void;
+  show: (args: LiveData) => void;
+  liveData: (args: LiveData) => void;
 };

@@ -76,7 +76,7 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
             await db.select({ marks: comDB.am, m: comDB.amMod }).from(comDB).where(eq(comDB.w, comw)).limit(1)
           ).at(0);
 
-          return { value: !marksHolder || marksHolder.m <= mod ? null : { comw, ...marksHolder } };
+          return { value: !marksHolder || (marksHolder.m <= mod && marksHolder.m) ? null : { comw, ...marksHolder } };
         },
 
         getSchEventComPackMod: async ({ schw, dayi }) => {
