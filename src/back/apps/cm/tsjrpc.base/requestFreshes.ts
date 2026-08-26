@@ -5,6 +5,7 @@ import { FileStore } from 'back/complect/FileStore';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { comDB, sch2ComDB, schComHistoryDB, scheduleDB, user2ComDB, userDB, userExtDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
+import { PgCheckFieldMode } from 'back/drizzle/ex';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
 import { selectUser2Com } from 'back/drizzle/ex/user2Com.utils';
 import { SchId } from 'back/drizzle/schema/schedule';
@@ -48,7 +49,11 @@ export const cmServerTsjrpcBaseRequestFreshes = {
     }
 
     const freshComs = await db
-      .select({ c: makePgCheckedSelectExportableComSqlRaw() })
+      .select({
+        c: makePgCheckedSelectExportableComSqlRaw({
+          am: PgCheckFieldMode.Remove,
+        }),
+      })
       .from(comDB)
       .where(and(gt(comDB.m, lastModfiedAt), eq(comDB.isRemoved, Bool.False)));
 

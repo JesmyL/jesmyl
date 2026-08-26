@@ -100,12 +100,6 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
             al: newCom.al?.map(makeCmComNumLeadLinkFromHttp) || [],
           };
 
-          try {
-            com.al = com.al?.map(makeCmComNumLeadLinkFromHttp);
-          } catch {
-            //
-          }
-
           await db.insert(comDB).values(com);
 
           cmShareServerTsjrpcMethods.editedCom({ com, mod: w }, null);

@@ -28,7 +28,7 @@ export const modifyCom =
     const [scope, operator] = checkIsString(rightsCheck) ? [rightsCheck] : rightsCheck;
     if (await throwIfNoUserScopeAccessRight(tool.auth?.login, 'cm', scope, operator)) throw '';
 
-    const com = await selectPgCheckedExportableCom(props.comw);
+    const com = await selectPgCheckedExportableCom(props.comw, {});
 
     if (!com) throw new Error(`Песня не найдена`);
     const comName = com.n;
@@ -36,27 +36,31 @@ export const modifyCom =
 
     const description = await mapper(com, props, tool);
 
-    const m = Date.now();
+    const now = Date.now();
 
     com.o?.forEach(ord => {
       if (ord.cre && !checkIsNowInCurrentDay(ord.cre)) delete ord.cre;
     });
 
-    const comUpdates: Partial<IExportableCom> = {};
-    let isChanged = false;
+    const comUpdates: Partial<typeof comDB.$inferInsert> = {};
 
     forEachObjectEntries(com, (key, value) => {
-      if (!checkIsEq(value, comClone[key])) {
-        isChanged = true;
-        comUpdates[key as never] = value as never;
-        resetComwTiny({ w: props.comw }, key);
-      }
+      if (checkIsEq(value, comClone[key])) return;
+
+      if (key === 'am') comUpdates.amMod = now;
+      else comUpdates.m = now;
+
+      comUpdates[key as never] = value as never;
+      resetComwTiny({ w: props.comw }, key);
     });
 
-    if (isChanged) {
-      await dbUpdate(comDB, { ...comUpdates, m, l: comUpdates.l ?? Langi.Ru }, eq(comDB.w, props.comw));
+    const mod = comUpdates.amMod ?? comUpdates.m;
 
-      cmShareServerTsjrpcMethods.editedCom({ com, mod: m }, null);
+    if (mod) {
+      await dbUpdate(comDB, { ...comUpdates, l: comUpdates.l ?? Langi.Ru }, eq(comDB.w, props.comw));
+      const isComUpdated = !!comUpdates.m;
+
+      cmShareServerTsjrpcMethods.editedCom({ com: { ...com, am: undefined }, mod }, isComUpdated ? null : tool.client);
     }
 
     return {
