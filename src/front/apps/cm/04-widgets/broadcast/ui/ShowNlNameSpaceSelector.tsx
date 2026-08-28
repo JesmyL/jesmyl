@@ -4,13 +4,13 @@ import { cmBroadcastCurrentNameSpaceiAtom } from '$cm/entities/broadcast';
 import { useAtomValue } from 'atomaric';
 
 export const CmBroadcastShowNlNameSpaceSelector = () => {
-  const showMode = useAtomValue(cmBroadcastCurrentNameSpaceiAtom);
+  const nameSpacei = useAtomValue(cmBroadcastCurrentNameSpaceiAtom);
 
   return (
     <>
       <Dropdown
         label={translateBase(it => it.cm.bro.lineSep)}
-        id={showMode}
+        id={nameSpacei}
         onSelectId={cmBroadcastCurrentNameSpaceiAtom.set}
         items={[
           {

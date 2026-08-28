@@ -1,11 +1,12 @@
 import { translateBase } from '#basis/locale';
-import { Button, ButtonGroup } from '#shared/components';
+import { Button } from '#shared/components';
 import { propsOfClicker } from '#shared/lib/clicker/propsOfClicker';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { WithAtom } from '#shared/ui/WithAtom';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { atom, useAtomValue } from 'atomaric';
+import { cmBroadcastCurrentNameSpaceiAtom, CmBroadcastShowNlNameSpaceSelector } from '$cm/ext';
+import { useAtomValue } from 'atomaric';
 import React, { useMemo, useState } from 'react';
 import {
   CmComLinei,
@@ -23,10 +24,8 @@ import { takeCmComNewlinerLineFullConfig } from 'shared/utils/cm/com/newliner';
 import { squareBracketsReplacers } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 import { twMerge } from 'tailwind-merge';
 
-const redactNameSpaceAtom = atom(0);
-
 export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
-  const nameSpacei = useAtomValue(redactNameSpaceAtom);
+  const nameSpacei = useAtomValue(cmBroadcastCurrentNameSpaceiAtom);
   const com = useMemo(() => {
     if (nameSpacei) {
       //
@@ -73,17 +72,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
 
   return (
     <React.Fragment key={nameSpacei}>
-      <ButtonGroup.Root>
-        {[0, 1].map(spacei => (
-          <Button
-            key={spacei}
-            className={nameSpacei === spacei ? 'bg-x7! text-x1' : ''}
-            onClick={() => redactNameSpaceAtom.set(spacei)}
-          >
-            {spacei}
-          </Button>
-        ))}
-      </ButtonGroup.Root>
+      <CmBroadcastShowNlNameSpaceSelector />
       <WithAtom init={false}>
         {openAtom => (
           <>
@@ -250,8 +239,13 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
               return (
                 <div
                   key={groupi}
-                  className={twMerge('mt-5', invisibleOrdClassName)}
                   upper-line={upperLine}
+                  className={twMerge(
+                    'mt-5',
+                    invisibleOrdClassName,
+                    repeati && '*:underline',
+                    repeati > 1 && '*:decoration-double',
+                  )}
                   {...props}
                 >
                   {ord.isAnyInherited || !!linei || !!repeati || <div>{ord.me.header()}</div>}

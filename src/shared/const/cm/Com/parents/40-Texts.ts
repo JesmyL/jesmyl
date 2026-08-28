@@ -176,9 +176,13 @@ export class CmComTexts extends CmComChords {
         if (line) {
           prevSlide.toLinei = incrementNumber(totalLinei);
           prevSlide.lines.push(line);
-          prevSlide.ids.add(
-            makeCmBroadcastMonolineSlideOrdLineStrId(ord.wid, linei, repeati, (samei = incrementNumber(samei))),
-          );
+          samei = incrementNumber(samei);
+
+          prevSlide.ids.add(makeCmBroadcastMonolineSlideOrdLineStrId(ord.wid, linei, repeati, samei));
+          if (samei)
+            prevSlide.ids.add(
+              makeCmBroadcastMonolineSlideOrdLineStrId(ord.wid, linei, repeati, CmComNewlinerSameiZero),
+            );
         }
       });
     });

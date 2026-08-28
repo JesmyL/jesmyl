@@ -1,7 +1,7 @@
 import { isShowBroadcastTextAtom } from '#features/broadcast/initial-slide-context';
 import { broadcastConnectionDto } from '#features/broadcast/lib/connection.dto';
 import { LiveBroadcastAppProps } from '#shared/model/cm/Cm.model';
-import { cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
+import { cmBroadcastCurrentNameSpaceiAtom, cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
 import { useCmComCurrentMarkValues } from '$cm/ext';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { useCmBroadcastScreenConfigs } from '$cm/widgets/broadcast';
@@ -17,6 +17,7 @@ export const CmLiveSlidesAudioTrackBroadcast = (props: LiveBroadcastAppProps & {
   const chordedMode = useAtomValue(cmShowChordedSlideModeAtom);
   const dir = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
   const isHide = !useAtomValue(isShowBroadcastTextAtom);
+  const nameSpacei = useAtomValue(cmBroadcastCurrentNameSpaceiAtom);
 
   const { html, nextHtml, audioSlides, slidei } = useCmComCurrentMarkValues(props.com, config.case);
 
@@ -73,6 +74,7 @@ export const CmLiveSlidesAudioTrackBroadcast = (props: LiveBroadcastAppProps & {
     nextHtml,
     schw,
     toLinei,
+    nameSpacei,
   ]);
 
   return <></>;

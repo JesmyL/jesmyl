@@ -28,7 +28,12 @@ type Props = {
   isNeedCompute?: boolean;
   com: CmCom;
   isHideShortTime?: boolean;
-  mapNode: (node: React.ReactNode, time: CmComAudioMarkPackTime, selector: CmComAudioMarkSelector) => React.ReactNode;
+  mapNode: (
+    node: React.ReactNode,
+    time: CmComAudioMarkPackTime,
+    selector: CmComAudioMarkSelector,
+    isUnknownMark: boolean,
+  ) => React.ReactNode;
   children: React.ReactNode;
 };
 
@@ -67,9 +72,9 @@ const Child = ({ com, isHideShortTime, isNeedCompute, mapNode, preTimeAtom, chil
       const titleProps = makeCmComAudioMarkTitleBySelector(extractNumber(time), com, selector, comMarks);
 
       if (checkIsNil(selector) || (isHideShortTime && titleProps.isShortTime)) return;
-      const className = titleProps.isShortTime ? 'text-xKO' : undefined;
+      const className = titleProps.isShortTime && 'text-xKO';
 
-      const make = (node: React.ReactNode) => {
+      const make = (node: React.ReactNode, isUnknownMark?: boolean) => {
         return actualMapNodeRef.current(
           <ButtonWithMeta
             key={time}
@@ -87,33 +92,41 @@ const Child = ({ com, isHideShortTime, isNeedCompute, mapNode, preTimeAtom, chil
           </ButtonWithMeta>,
           extractNumber(time),
           selector,
+          !!isUnknownMark,
         );
       };
 
       if (checkIsString(selector)) {
         if (selector === '-') return;
 
-        const value = make(<span className={className ?? 'text-x3'}>{titleProps.title}</span>);
+        const value = make(<span className={className || 'text-x3'}>{titleProps.title}</span>);
 
-        if (checkIsArray(prevSelectorOrBefore)) {
-          (afterIdDict[convertCmBroadcastMonolineSlideOrdLineId(prevSelectorOrBefore)] ??= []).push(value);
-          (afterIdDict[prevSelectorOrBefore[0]] ??= []).push(value);
-        } else {
-          (afterIdDict[prevSelectorOrBefore] ??= []).push(value);
-        }
+        if (value)
+          if (checkIsArray(prevSelectorOrBefore)) {
+            (afterIdDict[convertCmBroadcastMonolineSlideOrdLineId(prevSelectorOrBefore)] ??= []).push(value);
+            (afterIdDict[prevSelectorOrBefore[0]] ??= []).push(value);
+          } else {
+            (afterIdDict[prevSelectorOrBefore] ??= []).push(value);
+          }
 
         return;
       }
 
-      const value = make(null);
+      const value = make('');
 
-      (idDict[selector[0]] ??= []).push(value);
-      const slideId = convertCmBroadcastMonolineSlideOrdLineId(selector);
+      if (value) (idDict[selector[0]] ??= []).push(value);
 
-      if (checkIsNotNil(slides.timeSlideDict[time])) (idDict[slideId] ??= []).push(value);
-      else if (checkIsArray(prevSelectorOrBefore)) {
-        const prevSlideId = convertCmBroadcastMonolineSlideOrdLineId(prevSelectorOrBefore);
-        (afterIdDict[prevSlideId] ??= []).push(make(<span className="text-xKO">?????</span>));
+      if (checkIsNotNil(slides.timeSlideDict[time])) {
+        if (value) {
+          const slideId = convertCmBroadcastMonolineSlideOrdLineId(selector);
+          (idDict[slideId] ??= []).push(value);
+        }
+      } else if (checkIsArray(prevSelectorOrBefore)) {
+        const value = make('', true);
+        if (value) {
+          const prevSlideId = convertCmBroadcastMonolineSlideOrdLineId(prevSelectorOrBefore);
+          (afterIdDict[prevSlideId] ??= []).push(value);
+        }
       }
 
       prevSelectorOrBefore = selector;

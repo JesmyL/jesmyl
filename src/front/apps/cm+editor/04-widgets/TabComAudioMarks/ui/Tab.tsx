@@ -1,6 +1,9 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { ButtonGroup } from '#shared/components/ui/button-group';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { makeToastKOMoodConfig, Modal } from '#shared/ui/modal';
+import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom } from '$cm+editor/entities/com-audio';
 import { CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner } from '$cm+editor/features/com-audio';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
@@ -8,22 +11,29 @@ import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-
 import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/shared/state/com';
 import {
   CmAudioMarkControlButtonsContext,
+  cmBroadcastCurrentNameSpaceiAtom,
+  CmBroadcastShowNlNameSpaceSelector,
   CmComAudioPlayer,
   CmComAudioPlayerMarksMovers,
   cmComAudioPlayerSwitchIsPlay,
   cmComAudioPlayerUpdateCurrentTime,
+  cmComAudioPlayerUpdatePlaybackRate,
   takeCmComAudioPlayerCurrentTime,
   useCmAudioMarkControlButtonsContext,
   useCmComMarkTextValuesMaker,
 } from '$cm/ext';
 import { atom, useAtomValue } from 'atomaric';
-import { useEffect } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { CmComAudioMarkEditPackValue, CmComAudioMarkPackTime, CmComOrderWidNever, HttpNumLeadLink } from 'shared/api';
+import { CmBroadcastMonolineSlide } from 'shared/model/cm/broadcast';
 import { TextCase } from 'shared/model/common';
 import { convertSecondsInStrTime, iife, wait } from 'shared/utils';
-import { checkIsNil, checkIsNotNil } from 'shared/utils/checkIs';
+import { checkIsNil, checkIsNotNil, checkIsNumber, checkIsString } from 'shared/utils/checkIs';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
-import { makeCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
+import {
+  convertCmBroadcastMonolineSlideOrdLineId,
+  makeCmBroadcastMonolineSlideOrdLineId,
+} from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
 import { lazyInit } from 'shared/utils/lazyInit';
 import { arrayByLength } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
@@ -62,7 +72,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
       };
     }, [pinTime]);
 
-    const { controls: audioMarkButtons, slides: { slides } = {} } = useCmAudioMarkControlButtonsContext() ?? {};
+    const { controls: audioMarkButtons, slides } = useCmAudioMarkControlButtonsContext() ?? {};
 
     const addTime = (value: CmComAudioMarkEditPackValue) => {
       if (!editSrc || takeCmComAudioPlayerCurrentTime() < 0.001) {
@@ -114,7 +124,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
         {editSrc && (
           <>
             <CmComAudioPlayer
-              className="mb-20 sticky top-8! bg-x1 pb-5"
+              className="-mx-2 w-[100vw] mb-20 sticky top-8! bg-x1 pb-5"
               links={editSrc}
               addRender={src => (
                 <div className="flex gap-5 w-full">
@@ -125,8 +135,14 @@ export const CmEditorTabComAudioMarks = iife(() => {
                   <CmComAudioPlayerMarksMovers
                     src={src}
                     com={ccom}
-                    repeatButtonClassName="max-w-[calc(100vw-228px)]"
+                    repeatButtonClassName="max-w-[calc(100vw-288px)]"
                     preSwitchTimeAtom={preSwitchTimeAtom()}
+                  />
+                  <Dropdown
+                    id={1}
+                    items={[1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5].map(num => ({ id: num, title: num.toFixed(1) }))}
+                    onSelectId={cmComAudioPlayerUpdatePlaybackRate}
+                    hiddenArrow
                   />
                 </div>
               )}
@@ -148,14 +164,14 @@ export const CmEditorTabComAudioMarks = iife(() => {
 
             {audioMarkButtons?.afterIdDict.before}
 
-            {slides?.map(({ text, id, ord, linei, repeati, samei }) => {
+            {slides?.slides?.map(({ text, id, ord, linei, repeati, samei, ids }) => {
               if (ord.wid === CmComOrderWidNever) return;
               const selector = makeCmBroadcastMonolineSlideOrdLineId(ord.wid, linei, repeati, samei);
 
               return (
                 <div
                   key={id}
-                  className="mt-10"
+                  className={twMerge('mt-10', repeati && '*:underline', repeati > 1 && '*:decoration-double')}
                 >
                   {checkIsNil(pinTime) ? (
                     <>
@@ -193,7 +209,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
                     {...makeCmComTextInnerHtmlProp(text)}
                   />
 
-                  {audioMarkButtons?.afterIdDict[id]}
+                  {audioMarkButtons && Array.from(ids).map(id => audioMarkButtons.afterIdDict[id])}
                 </div>
               );
             })}
@@ -215,43 +231,107 @@ export const CmEditorTabComAudioMarks = iife(() => {
   };
 
   return ({ ccom }: { ccom: EditableCom }) => {
+    const nameSpacei = useAtomValue(cmBroadcastCurrentNameSpaceiAtom);
+    const com = useMemo(() => {
+      if (nameSpacei) {
+        //
+      }
+      return new EditableCom(ccom.top, null, null);
+    }, [ccom.top, nameSpacei]);
+    const nameSpaceTitleList = [translateBase(it => it.cm.bro.five), translateBase(it => it.cm.bro.duo)];
+
     const pinTime = useAtomValue(pinTimeAtom());
+    const cache = useMemo((): CmBroadcastMonolineSlide[][] => (nameSpacei ? [] : []), [nameSpacei]);
+    const [isShowOtherMarks, setIsShowOtherMarks] = useState(false);
+    const key = `${nameSpacei}-${isShowOtherMarks}`;
 
     return (
       <CmAudioMarkControlButtonsContext
-        com={ccom}
+        key={key}
+        com={com}
         isNeedCompute
         preTimeAtom={preSwitchTimeAtom()}
-        mapNode={(playNode, time) => (
-          <div
-            key={time}
-            className="flex flex-col gap-2 my-3"
-          >
-            {playNode}
-            {pinTime === time ? (
-              <Button
-                icon="Cancel01"
-                className="text-xKO"
-                data-cancel-button=""
-                onClick={pinTimeAtom().reset}
-              />
-            ) : checkIsNotNil(pinTime) || !time ? (
-              <Button
-                icon="PinLocation02"
-                onClick={() => pinTimeAtom().set(time)}
-              />
-            ) : (
-              <ButtonWithMeta
-                icon="Settings01"
-                data-meta={time}
-                meta-dot-pos={`${time}`.at(-2)}
-                onClick={() => cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.set(time)}
-              />
-            )}
-          </div>
-        )}
+        mapNode={(playNode, time, sel, isUnknownMark) => {
+          const selStrId = checkIsString(sel) ? '' : convertCmBroadcastMonolineSlideOrdLineId(sel);
+          let innerNode: ReactNode = (
+            <>
+              {pinTime === time ? (
+                <Button
+                  icon="Cancel01"
+                  className="text-xKO"
+                  data-cancel-button=""
+                  onClick={pinTimeAtom().reset}
+                />
+              ) : checkIsNotNil(pinTime) || !time ? (
+                <Button
+                  icon="PinLocation02"
+                  onClick={() => pinTimeAtom().set(time)}
+                />
+              ) : (
+                <ButtonWithMeta
+                  icon="Settings01"
+                  data-meta={time}
+                  meta-dot-pos={`${time}`.at(-2)}
+                  onClick={() => cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.set(time)}
+                />
+              )}
+            </>
+          );
+
+          if (isUnknownMark) {
+            const otherNlIndex =
+              isUnknownMark &&
+              selStrId &&
+              com.top.nl?.findIndex(
+                (_, nli) =>
+                  nameSpacei !== nli &&
+                  (cache[nli] ??= new EditableCom(ccom.top, null, null).makeExpandSlides(
+                    [nli],
+                    false,
+                    TextCase.AsIs,
+                  )).some(slide => slide.id === selStrId),
+              );
+
+            if (checkIsNumber(otherNlIndex) && otherNlIndex > -1) {
+              innerNode = isShowOtherMarks && (
+                <span className="text-x7">{nameSpaceTitleList[otherNlIndex] || 'Др. набор'}</span>
+              );
+            } else {
+              innerNode = (
+                <>
+                  <span className="text-xKO">?????</span>
+                  {innerNode}
+                </>
+              );
+            }
+          }
+
+          return (
+            innerNode && (
+              <div
+                key={time}
+                className="flex flex-col gap-2 my-3"
+              >
+                {playNode}
+                {innerNode}
+              </div>
+            )
+          );
+        }}
       >
-        <Child ccom={ccom} />
+        <div className="mt-10">
+          <CmBroadcastShowNlNameSpaceSelector />
+          <IconCheckbox
+            checked={isShowOtherMarks}
+            onChange={setIsShowOtherMarks}
+            postfix="Показывать другие метки"
+          />
+        </div>
+
+        <Child
+          key={key}
+          ccom={com}
+        />
       </CmAudioMarkControlButtonsContext>
     );
   };

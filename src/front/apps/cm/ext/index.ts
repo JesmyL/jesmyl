@@ -3,6 +3,7 @@ export {
   CmAudioMarkControlButtonsContext,
   useCmAudioMarkControlButtonsContext,
 } from '$cm/entities/AudioMarkControlButtonsContext';
+export { cmBroadcastCurrentNameSpaceiAtom } from '$cm/entities/broadcast';
 export { useCmCatICcat } from '$cm/entities/cat';
 export { CmChordCard } from '$cm/entities/chord-card/ui/ChordCard';
 export { CmChordCardTracked } from '$cm/entities/chord-card/ui/ChordCardTracked';
@@ -24,6 +25,7 @@ export {
   cmComAudioPlayerIsPlayAtom,
   cmComAudioPlayerSwitchIsPlay,
   cmComAudioPlayerUpdateCurrentTime,
+  cmComAudioPlayerUpdatePlaybackRate,
   CmComAudioPlayerWithMarks,
   takeCmComAudioPlayerCurrentTime,
 } from '$cm/entities/com-audio-player';
@@ -45,5 +47,6 @@ export { cmIDB } from '$cm/shared/state';
 export { cmPlayerBroadcastAudioSrcAtom } from '$cm/shared/state/broadcast.atoms';
 export { useCmBroadcastCurrentScreenConfig } from '$cm/widgets/broadcast';
 export { CmBroadcastScreenConfigurationPushKind } from '$cm/widgets/broadcast/ui/PushKind';
+export { CmBroadcastShowNlNameSpaceSelector } from '$cm/widgets/broadcast/ui/ShowNlNameSpaceSelector';
 export { TheCmCom } from '$cm/widgets/com';
 export { CmScheduleWidgetBroadcastLiveCm } from '$cm/widgets/schedule-widget-broadcast/ui/LiveCm';

@@ -121,7 +121,14 @@ export const CmBroadcastSlidesContext = ({
     [currentSlidei, isHiddenChordsMode, nextSlidei, slideId, slides],
   );
 
-  return <CmBroadcastInnerSlidesContext value={state}>{children}</CmBroadcastInnerSlidesContext>;
+  return (
+    <CmBroadcastInnerSlidesContext
+      key={nameSpacei}
+      value={state}
+    >
+      {children}
+    </CmBroadcastInnerSlidesContext>
+  );
 };
 
 const checkIsSlideOrdRealText = (slide: CmBroadcastMonolineSlide) => !slide.ord.isChBlock();

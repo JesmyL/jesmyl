@@ -27,7 +27,7 @@ export const CmComAudioPlayer = ({ links, timeRender, addRender, className }: Pr
   });
 
   return (
-    <div className={twMerge(className, 'w-full')}>
+    <div className={twMerge('w-full', className)}>
       <StyledCmComAudioPlayer className="composition-player flex gap-2 px-2 w-full">
         <CmComAudioPlayerPlayButton src={src} />
         <CmComAudioPlayerTrack

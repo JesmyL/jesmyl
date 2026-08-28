@@ -1,3 +1,5 @@
+import { cmBroadcastCurrentNameSpaceiAtom } from '$cm/entities/broadcast';
+import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
@@ -13,7 +15,11 @@ export const useCmComMarkTextValuesMaker = (com: CmCom | und, src: HttpNumLeadLi
   const marks = cmIDB.useAudioTrackMarks(com?.wid);
   const srcMarks = com && checkIsNotNil(src) ? marks?.marks?.[src] : null;
   const markTimes = useMemo(() => objectKeys(srcMarks).map(extractNumber), [srcMarks]);
-  const slides = useMemo(() => com?.makeExpandSlides([0], true, textCase) ?? [], [com, textCase]);
+  const nameSpacei = useAtomValue(cmBroadcastCurrentNameSpaceiAtom);
+  const slides = useMemo(
+    () => com?.makeExpandSlides([nameSpacei, 0], true, textCase) ?? [],
+    [com, nameSpacei, textCase],
+  );
 
   const { timeSlideDict, slideIdTimeSetDict } = useMemo(() => {
     const timeSlideDict: SPRecord<CmComAudioMarkPackTime, CmBroadcastMonolineSlide> = {};
@@ -31,9 +37,11 @@ export const useCmComMarkTextValuesMaker = (com: CmCom | und, src: HttpNumLeadLi
       if (!checkIsArray(selector)) return;
 
       const id = convertCmBroadcastMonolineSlideOrdLineId(selector);
-      timeSlideDict[time] = idSlideDict[id];
+      if (idSlideDict[id]) {
+        timeSlideDict[time] = idSlideDict[id];
 
-      (slideIdTimeSetDict[id] ??= new Set()).add(extractNumber(time));
+        (slideIdTimeSetDict[id] ??= new Set()).add(extractNumber(time));
+      }
     });
 
     return result;
@@ -44,7 +52,6 @@ export const useCmComMarkTextValuesMaker = (com: CmCom | und, src: HttpNumLeadLi
     markTimes,
     timeSlideDict,
     slideIdTimeSetDict,
-    takeSlide: (timei: number) => timeSlideDict[markTimes[timei]],
     srcMarks,
   };
 };

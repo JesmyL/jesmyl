@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { CmAudioSlide, HttpNumLeadLink, Langi } from 'shared/api';
+import { CmAudioSlide, CmComAudioMarkPackTime, HttpNumLeadLink, Langi } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { makeCmComAudioMarkTitleEmptySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { TextCase } from 'shared/model/common';
@@ -9,28 +9,38 @@ import { makeCmComOrderRepeatedText } from 'shared/utils/cm/order';
 import { useCmComMarkTextValuesMaker } from './useCmComMarkTextValuesMaker';
 
 export const useCmComAudioMarkSlides = (com: CmCom | und, src: HttpNumLeadLink | nil, textCase: TextCase | nil) => {
-  const { markTimes, timeSlideDict, srcMarks } = useCmComMarkTextValuesMaker(com, src, textCase);
+  const { markTimes: wholeMarkTimes, timeSlideDict, srcMarks } = useCmComMarkTextValuesMaker(com, src, textCase);
   const langi = com?.langi ?? Langi.Ru;
 
-  const audioSlides = useMemo(() => {
+  const { audioSlides, markTimes } = useMemo(() => {
     const audioSlides: CmAudioSlide[] = [];
+    const markTimes: CmComAudioMarkPackTime[] = [];
+    const result = { markTimes, audioSlides };
 
-    for (let timei = markTimes.length - 1; timei >= 0; timei--) {
-      const time = markTimes[timei];
+    for (let timei = wholeMarkTimes.length - 1; timei >= 0; timei--) {
+      const time = wholeMarkTimes[timei];
 
-      let audioSlide: CmAudioSlide = { text: '', time, timei, isChorded: true };
+      let audioSlide: CmAudioSlide;
 
-      const slide = timeSlideDict[time];
-
-      if (slide) audioSlide = { slide, text: slide.lines.join('\n'), time, timei, isChorded: slide.ord.isChBlock() };
-
-      if (checkIsString(srcMarks?.[time]))
+      if (checkIsString(srcMarks?.[time])) {
         audioSlide = {
           text: makeCmComAudioMarkTitleEmptySelector(srcMarks[time], srcMarks, time, langi),
           time,
           timei,
           isChorded: !srcMarks[time],
         };
+      } else {
+        const slide = timeSlideDict[time];
+        if (!slide) continue;
+
+        audioSlide = {
+          slide,
+          text: slide.lines.join('\n'),
+          time,
+          timei,
+          isChorded: slide.ord.isChBlock(),
+        };
+      }
 
       if (audioSlide) {
         const prevSlide = audioSlides.at(0);
@@ -44,6 +54,7 @@ export const useCmComAudioMarkSlides = (com: CmCom | und, src: HttpNumLeadLink |
         }
 
         audioSlides.unshift(audioSlide);
+        markTimes.unshift(time);
       }
     }
 
@@ -51,8 +62,8 @@ export const useCmComAudioMarkSlides = (com: CmCom | und, src: HttpNumLeadLink |
       if (slide.r) slide.text = makeCmComOrderRepeatedText(slide.text, slide.r.r, slide.rem);
     });
 
-    return audioSlides;
-  }, [langi, markTimes, srcMarks, timeSlideDict]);
+    return result;
+  }, [langi, srcMarks, timeSlideDict, wholeMarkTimes]);
 
   return { audioSlides, markTimes, timeSlideDict };
 };

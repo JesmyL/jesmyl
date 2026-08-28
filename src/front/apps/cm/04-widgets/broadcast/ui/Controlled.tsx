@@ -48,10 +48,9 @@ export function CmBroadcastControlled(props: Props) {
   const broadcastSrc = useAtomValue(cmPlayerBroadcastAudioSrcAtom);
   const navigate = useNavigate();
   const updateCmConfig = useCmBroadcastUpdateCurrentConfig();
-  const { toSlide } = useCmBroadcastSlidesContext();
+  const { toSlide, setSlidei } = useCmBroadcastSlidesContext();
 
   const { comPack, comws } = useCmBroadcastScreenComNavigationComws();
-  const { setSlidei } = useCmBroadcastSlidesContext();
 
   const comwList = props.comws ?? comws;
   const com = useCmComCurrent();
@@ -167,6 +166,10 @@ export function CmBroadcastControlled(props: Props) {
           </div>
           {isTrackBroadcast ? (
             <>
+              <div>
+                <CmBroadcastShowChordedSlideModeSelector />
+                <CmBroadcastShowNlNameSpaceSelector />
+              </div>
               {broadcastSrc && (
                 <div className="mt-5 bg-x2 flex min-h-20 gap-3 px-3 mb-3">
                   <CmComAudioPlayerPlayButton
