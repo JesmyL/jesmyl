@@ -25,24 +25,16 @@ export const deployTheCode = async (
     const [num, resetVersion] = await updateVersion(process.argv.includes('--IVU'));
 
     try {
-      console.info(`Lint check for v${num} is running...`);
+      console.info(`v${num} ${versionFilePath}`);
       await execAsync('npm run lint');
       await execAsync('npm run test');
-
-      console.info(`Build v${num} is running...`);
       await execAsync('npm run build');
-
-      console.info(`...Build ${num} is finished`);
-      console.info('Copying files on server');
 
       await sendFilesOnServer(builtFiles, back);
       await sendFilesOnServer([`./${versionFilePath}`], back);
 
-      console.info('Front files sent on server');
-
       await execAsync('rm -rf build');
     } catch (error) {
-      console.error('Build failure');
       console.error(error);
       resetVersion();
     }
@@ -52,8 +44,6 @@ export const deployTheCode = async (
     console.info('back.index file build is running...');
 
     const filePaths = (await buildBackIndexFile()).map(fileName => `./${fileName}`);
-
-    console.info('...sending back files on server');
 
     await sendFilesOnServer(filePaths, back);
 
@@ -69,27 +59,27 @@ export const deployTheCode = async (
     }
 
     await Promise.all(filePaths.map(filePath => execAsync(`rm ${filePath}`)));
-    console.info('Back files sent on server');
   }
 };
 
 const sendFilesOnServer = (files: string[], back: { targetDir: string }) => {
-  console.info('try load files', files);
+  return execAsync(`scp -r ${files.join(' ')} root@${hostConfig.host}:/var/www/${back.targetDir}`);
+};
+
+export const execAsync = (stringCommand: string) => {
+  console.info(stringCommand);
   return new Promise((res, rej) =>
-    exec(`scp -r ${files.join(' ')} root@${hostConfig.host}:/var/www/${back.targetDir}`, err => {
-      if (err) rej(err);
-      else res(0);
+    exec(stringCommand, error => {
+      if (error) {
+        console.error('FAILED', stringCommand);
+        rej(error);
+      } else {
+        console.info('Finished', stringCommand);
+        res(0);
+      }
     }),
   );
 };
-
-export const execAsync = (stringCommand: string) =>
-  new Promise((res, rej) =>
-    exec(stringCommand, error => {
-      if (error) rej(error);
-      else res(0);
-    }),
-  );
 
 const updateVersion = (isIgnoreVersionUpdate: boolean) => {
   const setVersion = (version: string, cb?: () => void) =>
