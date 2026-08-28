@@ -72,7 +72,12 @@ export default defineConfig(() => {
     },
     plugins: [
       regExpertVitePlugin(),
-      TanStackRouterVite({ target: 'react', autoCodeSplitting: true, routesDirectory: 'src/front/routes' }),
+      TanStackRouterVite({
+        target: 'react',
+        autoCodeSplitting: true,
+        routesDirectory: 'src/front/routes/tree/',
+        generatedRouteTree: 'src/front/routes/routeTree.gen.ts',
+      }),
       tsconfigPaths(),
       eslint({
         emitWarning: false,

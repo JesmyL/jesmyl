@@ -30,6 +30,7 @@
       "#features/*": ["./front/features/*"],
       "#widgets/*": ["./front/widgets/*"],
       "#basis/*": ["./front/basis/*"],
+      "#routes/*": ["./front/routes/*"],
 
       "$cm+editor/app/*": ["./front/apps/cm+editor/01-app/*"],
       "$cm+editor/processes/*": ["./front/apps/cm+editor/02-processes/*"],
@@ -95,6 +96,8 @@
       "$gamer/entities/*": ["./front/apps/gamer/06-entities/*"],
       "$gamer/shared/*": ["./front/apps/gamer/07-shared/*"],
       "$gamer/*": ["./front/components/gamer/*"],
+
+      "$freeshow/*": ["./front/apps/freeshow/*"],
 
       "$app/*": ["./front/app/*"],
 

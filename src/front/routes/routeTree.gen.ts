@@ -10,39 +10,39 @@
 
 import { createFileRoute } from '@tanstack/react-router'
 
-import { Route as rootRouteImport } from './front/routes/__root'
-import { Route as IndexRouteImport } from './front/routes/index'
-import { Route as BibleRouteRouteImport } from './front/routes/bible/route'
-import { Route as CmRouteRouteImport } from './front/routes/cm/route'
-import { Route as TunerRouteRouteImport } from './front/routes/tuner/route'
-import { Route as Char33otherAppNameRouteRouteImport } from './front/routes/!other.$appName/route'
-import { Route as BibleIndexRouteImport } from './front/routes/bible/index'
-import { Route as BibleIRouteImport } from './front/routes/bible/i'
-import { Route as BibleSearchRouteImport } from './front/routes/bible/search'
-import { Route as BibleTranRouteImport } from './front/routes/bible/tran'
-import { Route as CmIndexRouteImport } from './front/routes/cm/index'
-import { Route as QIRouteImport } from './front/routes/q/i'
-import { Route as TunerIndexRouteImport } from './front/routes/tuner/index'
-import { Route as TunerIRouteImport } from './front/routes/tuner/i'
-import { Route as Char33otherAppNameIndexRouteImport } from './front/routes/!other.$appName/index'
-import { Route as CmEditChordRouteImport } from './front/routes/cm/edit/chord'
-import { Route as CmIIndexRouteImport } from './front/routes/cm/i/index'
-import { Route as CmLiIndexRouteImport } from './front/routes/cm/li/index'
-import { Route as CmLiEventsRouteImport } from './front/routes/cm/li/events'
-import { Route as CmLiFavRouteImport } from './front/routes/cm/li/fav'
-import { Route as CmLiSelRouteImport } from './front/routes/cm/li/sel'
-import { Route as CmPlayerIndexRouteImport } from './front/routes/cm/player/index'
-import { Route as Char33otherAppNameActionsIndexRouteImport } from './front/routes/!other.$appName/actions/index'
-import { Route as Char33otherAppNameAuthIndexRouteImport } from './front/routes/!other.$appName/auth/index'
-import { Route as Char33otherAppNameSchsIndexRouteImport } from './front/routes/!other.$appName/schs/index'
-import { Route as Char33otherAppNameSettingsIndexRouteImport } from './front/routes/!other.$appName/settings/index'
-import { Route as Char33otherAppNameSettingsConsoleRouteImport } from './front/routes/!other.$appName/settings/console'
-import { Route as Char33otherAppNameSettingsRightsRouteImport } from './front/routes/!other.$appName/settings/rights'
-import { Route as CmLiCatCatwRouteImport } from './front/routes/cm/li/cat.$catw'
-import { Route as Char33otherAppNameActionsDownIndexRouteImport } from './front/routes/!other.$appName/actions/down/index'
-import { Route as Char33otherAppNameActionsFilesIndexRouteImport } from './front/routes/!other.$appName/actions/files/index'
-import { Route as Char33otherAppNameSettingsNoun_pronsIndexRouteImport } from './front/routes/!other.$appName/settings/noun_prons/index'
-import { Route as StoragesIRackwSumIndexRouteImport } from './front/routes/storages/i/$rackw/sum/index'
+import { Route as rootRouteImport } from './tree/__root'
+import { Route as IndexRouteImport } from './tree/index'
+import { Route as BibleRouteRouteImport } from './tree/bible/route'
+import { Route as CmRouteRouteImport } from './tree/cm/route'
+import { Route as TunerRouteRouteImport } from './tree/tuner/route'
+import { Route as Char33otherAppNameRouteRouteImport } from './tree/!other.$appName/route'
+import { Route as BibleIndexRouteImport } from './tree/bible/index'
+import { Route as BibleIRouteImport } from './tree/bible/i'
+import { Route as BibleSearchRouteImport } from './tree/bible/search'
+import { Route as BibleTranRouteImport } from './tree/bible/tran'
+import { Route as CmIndexRouteImport } from './tree/cm/index'
+import { Route as QIRouteImport } from './tree/q/i'
+import { Route as TunerIndexRouteImport } from './tree/tuner/index'
+import { Route as TunerIRouteImport } from './tree/tuner/i'
+import { Route as Char33otherAppNameIndexRouteImport } from './tree/!other.$appName/index'
+import { Route as CmEditChordRouteImport } from './tree/cm/edit/chord'
+import { Route as CmIIndexRouteImport } from './tree/cm/i/index'
+import { Route as CmLiIndexRouteImport } from './tree/cm/li/index'
+import { Route as CmLiEventsRouteImport } from './tree/cm/li/events'
+import { Route as CmLiFavRouteImport } from './tree/cm/li/fav'
+import { Route as CmLiSelRouteImport } from './tree/cm/li/sel'
+import { Route as CmPlayerIndexRouteImport } from './tree/cm/player/index'
+import { Route as Char33otherAppNameActionsIndexRouteImport } from './tree/!other.$appName/actions/index'
+import { Route as Char33otherAppNameAuthIndexRouteImport } from './tree/!other.$appName/auth/index'
+import { Route as Char33otherAppNameSchsIndexRouteImport } from './tree/!other.$appName/schs/index'
+import { Route as Char33otherAppNameSettingsIndexRouteImport } from './tree/!other.$appName/settings/index'
+import { Route as Char33otherAppNameSettingsConsoleRouteImport } from './tree/!other.$appName/settings/console'
+import { Route as Char33otherAppNameSettingsRightsRouteImport } from './tree/!other.$appName/settings/rights'
+import { Route as CmLiCatCatwRouteImport } from './tree/cm/li/cat.$catw'
+import { Route as Char33otherAppNameActionsDownIndexRouteImport } from './tree/!other.$appName/actions/down/index'
+import { Route as Char33otherAppNameActionsFilesIndexRouteImport } from './tree/!other.$appName/actions/files/index'
+import { Route as Char33otherAppNameSettingsNoun_pronsIndexRouteImport } from './tree/!other.$appName/settings/noun_prons/index'
+import { Route as StoragesIRackwSumIndexRouteImport } from './tree/storages/i/$rackw/sum/index'
 
 const GamerRouteLazyRouteImport = createFileRoute('/gamer')()
 const QRouteLazyRouteImport = createFileRoute('/q')()
@@ -106,21 +106,17 @@ const GamerRouteLazyRoute = GamerRouteLazyRouteImport.update({
   id: '/gamer',
   path: '/gamer',
   getParentRoute: () => rootRouteImport,
-} as any).lazy(() =>
-  import('./front/routes/gamer/route.lazy').then((d) => d.Route),
-)
+} as any).lazy(() => import('./tree/gamer/route.lazy').then((d) => d.Route))
 const QRouteLazyRoute = QRouteLazyRouteImport.update({
   id: '/q',
   path: '/q',
   getParentRoute: () => rootRouteImport,
-} as any).lazy(() => import('./front/routes/q/route.lazy').then((d) => d.Route))
+} as any).lazy(() => import('./tree/q/route.lazy').then((d) => d.Route))
 const StoragesRouteLazyRoute = StoragesRouteLazyRouteImport.update({
   id: '/storages',
   path: '/storages',
   getParentRoute: () => rootRouteImport,
-} as any).lazy(() =>
-  import('./front/routes/storages/route.lazy').then((d) => d.Route),
-)
+} as any).lazy(() => import('./tree/storages/route.lazy').then((d) => d.Route))
 const TunerRouteRoute = TunerRouteRouteImport.update({
   id: '/tuner',
   path: '/tuner',
@@ -160,22 +156,18 @@ const CmEditRouteLazyRoute = CmEditRouteLazyRouteImport.update({
   id: '/edit',
   path: '/edit',
   getParentRoute: () => CmRouteRoute,
-} as any).lazy(() =>
-  import('./front/routes/cm/edit/route.lazy').then((d) => d.Route),
-)
+} as any).lazy(() => import('./tree/cm/edit/route.lazy').then((d) => d.Route))
 const GamerIndexLazyRoute = GamerIndexLazyRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => GamerRouteLazyRoute,
-} as any).lazy(() =>
-  import('./front/routes/gamer/index.lazy').then((d) => d.Route),
-)
+} as any).lazy(() => import('./tree/gamer/index.lazy').then((d) => d.Route))
 const PresentationIndexLazyRoute = PresentationIndexLazyRouteImport.update({
   id: '/presentation/',
   path: '/presentation/',
   getParentRoute: () => rootRouteImport,
 } as any).lazy(() =>
-  import('./front/routes/presentation/index.lazy').then((d) => d.Route),
+  import('./tree/presentation/index.lazy').then((d) => d.Route),
 )
 const QIRoute = QIRouteImport.update({
   id: '/i',
@@ -187,7 +179,7 @@ const ScheduleDayIndexLazyRoute = ScheduleDayIndexLazyRouteImport.update({
   path: '/schedule-day/',
   getParentRoute: () => rootRouteImport,
 } as any).lazy(() =>
-  import('./front/routes/schedule-day/index.lazy').then((d) => d.Route),
+  import('./tree/schedule-day/index.lazy').then((d) => d.Route),
 )
 const TunerIndexRoute = TunerIndexRouteImport.update({
   id: '/',
@@ -208,9 +200,7 @@ const CmEditIndexLazyRoute = CmEditIndexLazyRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => CmEditRouteLazyRoute,
-} as any).lazy(() =>
-  import('./front/routes/cm/edit/index.lazy').then((d) => d.Route),
-)
+} as any).lazy(() => import('./tree/cm/edit/index.lazy').then((d) => d.Route))
 const CmEditChordRoute = CmEditChordRouteImport.update({
   id: '/chord',
   path: '/chord',
@@ -220,22 +210,18 @@ const CmEditEELazyRoute = CmEditEELazyRouteImport.update({
   id: '/e-e',
   path: '/e-e',
   getParentRoute: () => CmEditRouteLazyRoute,
-} as any).lazy(() =>
-  import('./front/routes/cm/edit/e-e.lazy').then((d) => d.Route),
-)
+} as any).lazy(() => import('./tree/cm/edit/e-e.lazy').then((d) => d.Route))
 const CmEditEventsLazyRoute = CmEditEventsLazyRouteImport.update({
   id: '/events',
   path: '/events',
   getParentRoute: () => CmEditRouteLazyRoute,
-} as any).lazy(() =>
-  import('./front/routes/cm/edit/events.lazy').then((d) => d.Route),
-)
+} as any).lazy(() => import('./tree/cm/edit/events.lazy').then((d) => d.Route))
 const CmEditMp3RulesLazyRoute = CmEditMp3RulesLazyRouteImport.update({
   id: '/mp3Rules',
   path: '/mp3Rules',
   getParentRoute: () => CmEditRouteLazyRoute,
 } as any).lazy(() =>
-  import('./front/routes/cm/edit/mp3Rules.lazy').then((d) => d.Route),
+  import('./tree/cm/edit/mp3Rules.lazy').then((d) => d.Route),
 )
 const CmIIndexRoute = CmIIndexRouteImport.update({
   id: '/i/',
@@ -271,51 +257,41 @@ const GamerIIndexLazyRoute = GamerIIndexLazyRouteImport.update({
   id: '/i/',
   path: '/i/',
   getParentRoute: () => GamerRouteLazyRoute,
-} as any).lazy(() =>
-  import('./front/routes/gamer/i/index.lazy').then((d) => d.Route),
-)
+} as any).lazy(() => import('./tree/gamer/i/index.lazy').then((d) => d.Route))
 const QAIndexLazyRoute = QAIndexLazyRouteImport.update({
   id: '/a/',
   path: '/a/',
   getParentRoute: () => QRouteLazyRoute,
-} as any).lazy(() =>
-  import('./front/routes/q/a/index.lazy').then((d) => d.Route),
-)
+} as any).lazy(() => import('./tree/q/a/index.lazy').then((d) => d.Route))
 const QABlankLazyRoute = QABlankLazyRouteImport.update({
   id: '/a/$blank',
   path: '/a/$blank',
   getParentRoute: () => QRouteLazyRoute,
-} as any).lazy(() =>
-  import('./front/routes/q/a/$blank.lazy').then((d) => d.Route),
-)
+} as any).lazy(() => import('./tree/q/a/$blank.lazy').then((d) => d.Route))
 const QRIndexLazyRoute = QRIndexLazyRouteImport.update({
   id: '/r/',
   path: '/r/',
   getParentRoute: () => QRouteLazyRoute,
-} as any).lazy(() =>
-  import('./front/routes/q/r/index.lazy').then((d) => d.Route),
-)
+} as any).lazy(() => import('./tree/q/r/index.lazy').then((d) => d.Route))
 const QRBlankLazyRoute = QRBlankLazyRouteImport.update({
   id: '/r/$blank',
   path: '/r/$blank',
   getParentRoute: () => QRouteLazyRoute,
-} as any).lazy(() =>
-  import('./front/routes/q/r/$blank.lazy').then((d) => d.Route),
-)
+} as any).lazy(() => import('./tree/q/r/$blank.lazy').then((d) => d.Route))
 const ScheduleDaySchwIndexLazyRoute =
   ScheduleDaySchwIndexLazyRouteImport.update({
     id: '/schedule-day/$schw/',
     path: '/schedule-day/$schw/',
     getParentRoute: () => rootRouteImport,
   } as any).lazy(() =>
-    import('./front/routes/schedule-day/$schw/index.lazy').then((d) => d.Route),
+    import('./tree/schedule-day/$schw/index.lazy').then((d) => d.Route),
   )
 const StoragesIIndexLazyRoute = StoragesIIndexLazyRouteImport.update({
   id: '/i/',
   path: '/i/',
   getParentRoute: () => StoragesRouteLazyRoute,
 } as any).lazy(() =>
-  import('./front/routes/storages/i/index.lazy').then((d) => d.Route),
+  import('./tree/storages/i/index.lazy').then((d) => d.Route),
 )
 const Char33otherAppNameActionsIndexRoute =
   Char33otherAppNameActionsIndexRouteImport.update({
@@ -353,7 +329,7 @@ const Char33otherAppNameSettingsConstantLazyRoute =
     path: '/settings/constant',
     getParentRoute: () => Char33otherAppNameRouteRoute,
   } as any).lazy(() =>
-    import('./front/routes/!other.$appName/settings/constant.lazy').then(
+    import('./tree/!other.$appName/settings/constant.lazy').then(
       (d) => d.Route,
     ),
   )
@@ -368,7 +344,7 @@ const CmEditComsIndexLazyRoute = CmEditComsIndexLazyRouteImport.update({
   path: '/coms/',
   getParentRoute: () => CmEditRouteLazyRoute,
 } as any).lazy(() =>
-  import('./front/routes/cm/edit/coms/index.lazy').then((d) => d.Route),
+  import('./tree/cm/edit/coms/index.lazy').then((d) => d.Route),
 )
 const CmLiCatCatwRoute = CmLiCatCatwRouteImport.update({
   id: '/li/cat/$catw',
@@ -381,16 +357,14 @@ const GamerIMemoryGiantIndexLazyRoute =
     path: '/i/memory-giant/',
     getParentRoute: () => GamerRouteLazyRoute,
   } as any).lazy(() =>
-    import('./front/routes/gamer/i/memory-giant/index.lazy').then(
-      (d) => d.Route,
-    ),
+    import('./tree/gamer/i/memory-giant/index.lazy').then((d) => d.Route),
   )
 const StoragesIRackwIndexLazyRoute = StoragesIRackwIndexLazyRouteImport.update({
   id: '/i/$rackw/',
   path: '/i/$rackw/',
   getParentRoute: () => StoragesRouteLazyRoute,
 } as any).lazy(() =>
-  import('./front/routes/storages/i/$rackw/index.lazy').then((d) => d.Route),
+  import('./tree/storages/i/$rackw/index.lazy').then((d) => d.Route),
 )
 const Char33otherAppNameActionsDownIndexRoute =
   Char33otherAppNameActionsDownIndexRouteImport.update({
@@ -415,7 +389,7 @@ const CmEditComsComwIndexLazyRoute = CmEditComsComwIndexLazyRouteImport.update({
   path: '/coms/$comw/',
   getParentRoute: () => CmEditRouteLazyRoute,
 } as any).lazy(() =>
-  import('./front/routes/cm/edit/coms/$comw/index.lazy').then((d) => d.Route),
+  import('./tree/cm/edit/coms/$comw/index.lazy').then((d) => d.Route),
 )
 const StoragesIRackwCardiIndexLazyRoute =
   StoragesIRackwCardiIndexLazyRouteImport.update({
@@ -423,9 +397,7 @@ const StoragesIRackwCardiIndexLazyRoute =
     path: '/i/$rackw/$cardi/',
     getParentRoute: () => StoragesRouteLazyRoute,
   } as any).lazy(() =>
-    import('./front/routes/storages/i/$rackw/$cardi/index.lazy').then(
-      (d) => d.Route,
-    ),
+    import('./tree/storages/i/$rackw/$cardi/index.lazy').then((d) => d.Route),
   )
 const StoragesIRackwEditIndexLazyRoute =
   StoragesIRackwEditIndexLazyRouteImport.update({
@@ -433,9 +405,7 @@ const StoragesIRackwEditIndexLazyRoute =
     path: '/i/$rackw/edit/',
     getParentRoute: () => StoragesRouteLazyRoute,
   } as any).lazy(() =>
-    import('./front/routes/storages/i/$rackw/edit/index.lazy').then(
-      (d) => d.Route,
-    ),
+    import('./tree/storages/i/$rackw/edit/index.lazy').then((d) => d.Route),
   )
 const StoragesIRackwSumIndexRoute = StoragesIRackwSumIndexRouteImport.update({
   id: '/i/$rackw/sum/',
@@ -448,9 +418,7 @@ const CmEditComsComwTabIndexLazyRoute =
     path: '/coms/$comw/$tab/',
     getParentRoute: () => CmEditRouteLazyRoute,
   } as any).lazy(() =>
-    import('./front/routes/cm/edit/coms/$comw/$tab/index.lazy').then(
-      (d) => d.Route,
-    ),
+    import('./tree/cm/edit/coms/$comw/$tab/index.lazy').then((d) => d.Route),
   )
 
 export interface FileRoutesByFullPath {
