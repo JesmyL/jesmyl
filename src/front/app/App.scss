@@ -40,16 +40,6 @@ body {
     height: 100%;
     overflow: hidden;
 
-    @keyframes blur-in {
-      from {
-        filter: blur(50px);
-      }
-
-      to {
-        filter: blur(0px);
-      }
-    }
-
     .phase-container {
       height: var(--phase-container-height);
     }
