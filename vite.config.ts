@@ -26,15 +26,35 @@ export default defineConfig(() => {
     build: {
       outDir: 'build',
       target: 'es2020',
-      minify: 'esbuild',
+      // minify: 'esbuild',
+      minify: false,
+      sourcemap: true,
       rollupOptions: {
         output: {
           manualChunks(id) {
             if (id.includes('node_modules')) {
-              if (id.includes('tone')) return 'vendor-audio';
-              if (id.includes('dexie')) return 'vendor-db';
+              let file = [
+                'react/',
+                'react-dom/',
+                'scheduler/',
+                '@tanstack',
+                '@emotion',
+                '@radix-ui',
+                'date-fns',
+                'tone/',
+              ].find(file => id.includes(`node_modules/${file}`));
 
-              return 'vendor';
+              if (file) {
+                if (file.startsWith('@')) file = file.slice(1);
+                if (file.endsWith('/')) file = file.slice(0, -1);
+
+                return `vendor-${file}`;
+              }
+
+              if (id.includes('node_modules/dexie/') || id.includes('node_modules/dexie-react-hooks/'))
+                return 'vendor-dexie';
+
+              return 'vendor-utils';
             }
           },
         },
