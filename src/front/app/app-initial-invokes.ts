@@ -28,6 +28,7 @@ export const appInitialInvokes = () => {
   if (rights && checkUserScopeAccessRight(null, rights, 'cm', 'EDIT')) cmEditorInitialInvokes();
 
   const getFreshes = async () => {
+    appInitEvent.invoke();
     const lastModfiedAt = await indexIDB.get.lastModifiedAt();
 
     try {
@@ -53,8 +54,6 @@ export const appInitialInvokes = () => {
       iconPacks,
       iconsMd5Hash: lastUpdatedIconsMd5HashAtom.get(),
     });
-
-    appInitEvent.invoke();
   };
 
   soki.onBeforeAuthorizeEvent.listen(() => indexIDB.remove.lastModifiedAt());

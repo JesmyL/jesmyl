@@ -1,7 +1,7 @@
 import { FooterPlacementManager } from '#basis/lib/FooterPlacementManager';
 import { useFingersActions } from '#basis/lib/global-listeners/useFingersActions';
 import { useGlobalFontFamilySetter } from '#basis/lib/global-listeners/useGlobalFontFamilySetter';
-import { translateBase } from '#basis/locale';
+import { currentLangiAtom, translateBase } from '#basis/locale';
 import { currentAppNameAtom } from '#basis/state/currentAppNameAtom';
 import { hideAppFooterAtom } from '#basis/state/hideAppFooterAtom';
 import { takeBaseLanguageAtom, takeDynamicLanguageAtom } from '#basis/state/locale';
@@ -10,6 +10,7 @@ import { isFullscreenAtom, switchFullScreen } from '#shared/lib/atoms/fullscreen
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { LinkAppActionFabric } from '#shared/lib/link-app-actions';
 import { soki } from '#shared/soki';
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { schLinkAction } from '#widgets/schedule/links';
@@ -17,13 +18,14 @@ import { indexIDB } from '$index/shared/state';
 import { Outlet, ParsedLocation, useLocation, useNavigate } from '@tanstack/react-router';
 import { atom, useAtomValue } from 'atomaric';
 import React, { useEffect, useState } from 'react';
-import { langCodeDict } from 'shared/const/+locale';
+import { langCodeDict, langCodeLoadingTitleDict } from 'shared/const/+locale';
 import { extractNumber, iife } from 'shared/utils';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
 import { appInitialInvokes } from './app-initial-invokes';
 import { AppFooter } from './AppFooter';
 import { routingApps } from './lib/configs';
+import { localeIsLoadingAtom } from './store/triggers';
 
 appInitialInvokes();
 
@@ -43,6 +45,7 @@ export const AppComponent = () => {
   const appName = useAtomValue(currentAppNameAtom);
   const hideAppFooter = useAtomValue(hideAppFooterAtom);
   const isFullscreen = useAtomValue(isFullscreenAtom);
+  const currentLangi = useAtomValue(currentLangiAtom);
 
   useEffect(() => {
     const unauthListener = soki.onTokenInvalidEvent.listen(() => {
@@ -121,6 +124,13 @@ export const AppComponent = () => {
             />
           ))}
       </React.Fragment>
+      <FullContent
+        openAtom={localeIsLoadingAtom}
+        checkIsOpen={num => num > 0}
+        containerClassName="flex justify-center items-center w-full h-full"
+      >
+        {langCodeLoadingTitleDict[currentLangi] ?? 'Texts is loading'}
+      </FullContent>
     </>
   );
 };

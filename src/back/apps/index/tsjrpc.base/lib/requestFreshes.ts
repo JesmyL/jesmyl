@@ -40,6 +40,25 @@ export const indexTSJRPCBaseRequestFreshes = {
     const login = auth?.login;
     const someScheduleUser = (user: IScheduleWidgetUser) => user.login === login;
 
+    if (lastModfiedAt && checkIsNotNil(visitInfo) && visitInfo.version > 1239) {
+      const baseFileStorage = langLocaleBaseFileStoragesLazy()[visitInfo.langi ?? Langi.Ru];
+      const { items, maxMod } = (await langLocaleDynamicFileStoragesLazy()).getFreshItems(lastModfiedAt);
+
+      if (
+        baseFileStorage.fileModifiedAt() > lastModfiedAt ||
+        (checkIsNotNil(visitInfo.prevLangi) && visitInfo.prevLangi !== visitInfo.langi)
+      ) {
+        indexServerTsjrpcShareMethods.baseLocConf(
+          { base: baseFileStorage.getValue(), mod: baseFileStorage.fileModifiedAt() },
+          client,
+        );
+      }
+
+      if (items.length) {
+        indexServerTsjrpcShareMethods.dynLocConf({ dyns: items, mod: maxMod }, client);
+      }
+    }
+
     if (login && client) {
       const userInfo = await takeUserTiny({ l: login }, false);
 
@@ -142,25 +161,6 @@ export const indexTSJRPCBaseRequestFreshes = {
     }
 
     if (schedules.length) schServerTsjrpcShareMethods.refreshSchedules({ schs: schedules }, client);
-
-    if (checkIsNotNil(visitInfo) && visitInfo.version > 1239) {
-      const baseFileStorage = langLocaleBaseFileStoragesLazy()[visitInfo.langi ?? Langi.Ru];
-      const { items, maxMod } = (await langLocaleDynamicFileStoragesLazy()).getFreshItems(lastModfiedAt);
-
-      if (
-        baseFileStorage.fileModifiedAt() > lastModfiedAt ||
-        (checkIsNotNil(visitInfo.prevLangi) && visitInfo.prevLangi !== visitInfo.langi)
-      ) {
-        indexServerTsjrpcShareMethods.baseLocConf(
-          { base: baseFileStorage.getValue(), mod: baseFileStorage.fileModifiedAt() },
-          client,
-        );
-      }
-
-      if (items.length) {
-        indexServerTsjrpcShareMethods.dynLocConf({ dyns: items, mod: maxMod }, client);
-      }
-    }
   },
 } satisfies ServerTsjrpcSatisfy<IndexTsjrpcModel>;
 

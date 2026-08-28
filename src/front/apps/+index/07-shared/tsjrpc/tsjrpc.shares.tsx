@@ -4,6 +4,7 @@ import { TsjrpcBaseClient } from '#basis/tsjrpc/TsjrpcBase.client';
 import { rootAppModalTextContentAtom } from '#shared/lib/atoms/rootAppModalTextContentAtom';
 import { makeToastKOMoodConfig, makeToastOKMoodConfig } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { localeIsLoadingAtom } from '$app/store/triggers';
 import { IndexTsjrpcSharesModel } from 'shared/api/tsjrpc/index/tsjrpc.methods.model';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
@@ -53,11 +54,13 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
 
         baseLocConf: async ({ base, mod }) => {
           takeBaseLanguageAtom().set(base);
+          localeIsLoadingAtom.do.increment(-1);
           await indexIDB.updateLastModifiedAt(mod);
         },
 
         dynLocConf: async ({ mod, dyns }) => {
           dyns.forEach(config => takeDynamicLanguageAtom(config.langi).set(config));
+          localeIsLoadingAtom.do.increment(-dyns.length);
           await indexIDB.updateLastModifiedAt(mod);
         },
       },
