@@ -44,12 +44,18 @@ import { CmEditorTabComAudioMarksShowSlideListButton } from './ShowSlideListButt
 const srcOnEditAtom = lazyInit(() => atom<null | HttpNumLeadLink>(null, 'cm+editor:srcOnMarkEdit'));
 const preSwitchTimeAtom = lazyInit(() => atom(-1, 'cm+editor:comAudioPreSwitchTime'));
 const pinTimeAtom = lazyInit(() => atom<CmComAudioMarkPackTime | null>(null));
+const playbackRateAtom = lazyInit(() => atom(1));
 
 export const CmEditorTabComAudioMarks = iife(() => {
   const Child = ({ ccom }: { ccom: EditableCom }) => {
     const editSrc = useAtomValue(srcOnEditAtom());
     const { slideIdTimeSetDict, markTimes } = useCmComMarkTextValuesMaker(ccom, editSrc, TextCase.AsIs);
     const pinTime = useAtomValue(pinTimeAtom());
+    const playbackRate = useAtomValue(playbackRateAtom());
+
+    useEffect(() => {
+      cmComAudioPlayerUpdatePlaybackRate(playbackRate);
+    }, [playbackRate]);
 
     useEffect(() => {
       const scroll = async () => {
@@ -139,9 +145,9 @@ export const CmEditorTabComAudioMarks = iife(() => {
                     preSwitchTimeAtom={preSwitchTimeAtom()}
                   />
                   <Dropdown
-                    id={1}
+                    id={playbackRate}
                     items={[1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5].map(num => ({ id: num, title: num.toFixed(1) }))}
-                    onSelectId={cmComAudioPlayerUpdatePlaybackRate}
+                    onSelectId={playbackRateAtom().set}
                     hiddenArrow
                   />
                 </div>
