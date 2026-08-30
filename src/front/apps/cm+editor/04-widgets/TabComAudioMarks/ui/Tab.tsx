@@ -22,6 +22,7 @@ import {
   useCmAudioMarkControlButtonsContext,
   useCmComMarkTextValuesMaker,
 } from '$cm/ext';
+import styled from '@emotion/styled';
 import { atom, useAtomValue } from 'atomaric';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { CmComAudioMarkEditPackValue, CmComAudioMarkPackTime, CmComOrderWidNever, HttpNumLeadLink } from 'shared/api';
@@ -37,7 +38,6 @@ import {
 import { lazyInit } from 'shared/utils/lazyInit';
 import { arrayByLength } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
-import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 import { CmEditorTabComAudioMarksShowSlideListButton } from './ShowSlideListButton';
 

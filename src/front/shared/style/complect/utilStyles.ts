@@ -99,10 +99,6 @@ export const utilStyles = () => css`
       flex-wrap: wrap;
     }
 
-    &:not(.custom-align-items) {
-      align-items: center;
-    }
-
     &.between {
       justify-content: space-between;
     }

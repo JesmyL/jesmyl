@@ -51,7 +51,7 @@ export const BottomPopup = ({ children, onClose, isPreventCloseOnClick, id, titl
       >
         <Drawer.Close>
           <Drawer.Header>
-            <Drawer.Title className="flex gap-3">
+            <Drawer.Title className="flex gap-3 ml-7">
               {title}
               <LazyIcon icon="Cancel01" />
             </Drawer.Title>

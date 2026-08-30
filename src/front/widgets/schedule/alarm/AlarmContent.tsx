@@ -377,7 +377,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
       {fullValue?.(() => {}, null) ??
         node ??
         (schedule && (
-          <div className="flex center column full-size">
+          <div className="flex items-center column full-size">
             <h2>{schedule.title}</h2>
             {schedule.topic && <h4>{schedule.topic}</h4>}
             {schedule.dsc && <p className="text-center">{schedule.dsc}</p>}
@@ -388,7 +388,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
     <>
       {fullNode}
       <Alarm
-        className={twMerge('flex gap-2 between py-5 px-2 bg-x1', fullValue && 'pointer')}
+        className={twMerge('flex items-center gap-2 between py-5 px-2 bg-x1', fullValue && 'pointer')}
         onClick={fullValue && (() => setIsFullOpen(true))}
       >
         <Link
@@ -396,7 +396,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
           params={{ appName }}
           search={{ schw: observeSchedule && observeSchedule.sch.w }}
         >
-          <div className="flex">
+          <div className="flex items-center">
             <LazyIcon
               icon="Calendar01"
               className="m-5"

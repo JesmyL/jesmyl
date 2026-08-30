@@ -35,7 +35,7 @@ export const BottomPopupItem = ({
   return (
     <li
       {...attrs}
-      className={twMerge('pointer px-7 xl:px-12 py-1.5 my-0 flex hover:bg-x2', className)}
+      className={twMerge('pointer px-7 xl:px-12 py-1.5 my-0 flex items-center hover:bg-x2', className)}
       onClick={event => {
         onClick?.(event);
         if (event.isPropagationStopped()) return;

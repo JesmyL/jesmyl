@@ -12,12 +12,12 @@ type Props = {
 
 export function BrutalItem({ onClick, iconNode, title, box, description, idPostfix }: Props) {
   const inner = (
-    <Item className="pointer flex between relative w-full">
-      <div className="nowrap over-hidden flex center">
+    <Item className="pointer flex items-center between relative w-full">
+      <div className="nowrap over-hidden flex items-center center">
         <div className="m-5">{iconNode}</div>
         <div className="ellipsis inline-block">{title}</div>
       </div>
-      {box && <div className="m-5 flex">{box}</div>}
+      {box && <div className="m-5 flex items-center">{box}</div>}
       {description && (
         <div className="item-description">
           <div className="item-description-inner">

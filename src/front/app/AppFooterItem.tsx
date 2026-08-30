@@ -23,7 +23,7 @@ export function AppFooterItem({ to, icon, title, className, children, idPostfix 
       id={`footer-button-${idPostfix}`}
       link-to={linkTo}
       className={twMerge(
-        'footer-item relative z-10 pointer px-3 py-1 min-w-17 h-(--item-s) flex flex-col text-sm',
+        'footer-item relative z-10 pointer px-3 py-1 min-w-17 h-(--item-s) flex items-center flex-col text-sm',
         isActive && 'active bg-x2 rounded-full',
         className,
       )}

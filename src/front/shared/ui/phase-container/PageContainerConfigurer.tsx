@@ -47,7 +47,7 @@ export const PageContainerConfigurer = (props: PageContainerConfigurerProps) => 
       className={twMerge('phase-container relative', props.className)}
     >
       <div
-        className="header flex between w-full bg-x1 mt-(--header-top) p-(--header-padding) w-[100vw] h-(--header-height) transition-(--fullscreen-transition)"
+        className="header flex items-center between w-full bg-x1 mt-(--header-top) p-(--header-padding) w-[100vw] h-(--header-height) transition-(--fullscreen-transition)"
         st-hide-footer-menu={props.hideFooterMenu || (isMobileDevice && focusedInput) ? '' : undefined}
       >
         {props.withoutBackButton
