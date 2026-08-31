@@ -7,7 +7,7 @@ export const TsjrpcServerMethods = makeTSJRPCMethodsMaker<SokiServerClientSelect
   send: (invoke, clientSelector) => {
     const promiseWith = Promise.withResolvers();
     try {
-      sokiServer.send({ invoke, requestId: '' + Date.now() }, clientSelector);
+      sokiServer.send({ invoke, requestId: `${Date.now()}${Math.random()}` }, clientSelector);
       promiseWith.resolve(undefined);
     } catch (e) {
       promiseWith.reject('' + e);

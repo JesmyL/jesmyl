@@ -10,7 +10,7 @@ import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.sele
 import { selectUser2Com } from 'back/drizzle/ex/user2Com.utils';
 import { SchId } from 'back/drizzle/schema/schedule';
 import { selectUserExt } from 'back/drizzle/schema/userExt';
-import { and, desc, DrizzleQueryError, eq, gt } from 'drizzle-orm';
+import { and, desc, eq, gt } from 'drizzle-orm';
 import {
   CmComInSchDayEvWr,
   CmScheduleDayEventComwsPack,
@@ -154,65 +154,60 @@ export const cmServerTsjrpcBaseRequestFreshes = {
 
     if (auth?.login != null) {
       const login = auth.login;
+      const userExt = (await selectUserExt({ u: userExtDB }).where(eq(userDB.l, login)).limit(1)).at(0)?.u;
 
-      try {
-        const userExt = (await selectUserExt({ u: userExtDB }).where(eq(userDB.l, login)).limit(1)).at(0)?.u;
+      do {
+        let maxMod = 0;
 
-        do {
-          let maxMod = 0;
+        const commentHolders = await selectUser2Com({
+          dl: user2ComDB.comment,
+          mod: user2ComDB.commentMod,
+          comw: comDB.w,
+        }).where(and(eq(userDB.l, login), gt(user2ComDB.commentMod, lastModfiedAt)));
 
-          const commentHolders = await selectUser2Com({
-            dl: user2ComDB.comment,
-            mod: user2ComDB.commentMod,
-            comw: comDB.w,
-          }).where(and(eq(userDB.l, login), gt(user2ComDB.commentMod, lastModfiedAt)));
+        if (commentHolders.length > 0) {
+          const comments: ICmComCommentBlock[] = [];
 
-          if (commentHolders.length > 0) {
-            const comments: ICmComCommentBlock[] = [];
+          commentHolders.forEach(({ dl, mod, comw }) => {
+            if (!comw) return;
+            if (mod) maxMod = Math.max(maxMod, mod);
 
-            commentHolders.forEach(({ dl, mod, comw }) => {
-              if (!comw) return;
-              if (mod) maxMod = Math.max(maxMod, mod);
+            return comments.push({ comw, m: 0, dl: dl || undefined });
+          });
 
-              return comments.push({ comw, m: 0, dl: dl || undefined });
-            });
-
-            cmShareServerTsjrpcMethods.refreshComComments({ comments, mod: maxMod, alts: userExt?.cmCommAlts }, client);
-          }
-        } while (Do.Not);
-
-        if (userExt) {
-          if (userExt.cmFavComToolsMod > lastModfiedAt) {
-            cmShareServerTsjrpcMethods.favTools_v1(
-              {
-                mod: userExt.cmFavComToolsMod,
-                tools: userExt.cmComTools,
-              },
-              client,
-            );
-          }
-
-          if (userExt.cmFavComMod > lastModfiedAt) {
-            cmShareServerTsjrpcMethods.refreshComFavs(
-              {
-                comws: (
-                  await db
-                    .select({ w: comDB.w })
-                    .from(user2ComDB)
-                    .leftJoin(comDB, eq(comDB.id, user2ComDB.comId))
-                    .where(and(eq(user2ComDB.isFav, true), eq(user2ComDB.userId, userExt.userId)))
-                    .orderBy(comDB.w)
-                )
-                  .map(it => it.w)
-                  .filter(checkIsNotNil),
-                mod: userExt.cmFavComMod,
-              },
-              client,
-            );
-          }
+          cmShareServerTsjrpcMethods.refreshComComments({ comments, mod: maxMod, alts: userExt?.cmCommAlts }, client);
         }
-      } catch (error) {
-        throw error instanceof DrizzleQueryError ? (error.cause?.message ?? error.stack ?? error.message) : error;
+      } while (Do.Not);
+
+      if (userExt) {
+        if (userExt.cmFavComToolsMod > lastModfiedAt) {
+          cmShareServerTsjrpcMethods.favTools_v1(
+            {
+              mod: userExt.cmFavComToolsMod,
+              tools: userExt.cmComTools,
+            },
+            client,
+          );
+        }
+
+        if (userExt.cmFavComMod > lastModfiedAt) {
+          cmShareServerTsjrpcMethods.refreshComFavs(
+            {
+              comws: (
+                await db
+                  .select({ w: comDB.w })
+                  .from(user2ComDB)
+                  .leftJoin(comDB, eq(comDB.id, user2ComDB.comId))
+                  .where(and(eq(user2ComDB.isFav, true), eq(user2ComDB.userId, userExt.userId)))
+                  .orderBy(comDB.w)
+              )
+                .map(it => it.w)
+                .filter(checkIsNotNil),
+              mod: userExt.cmFavComMod,
+            },
+            client,
+          );
+        }
       }
     }
   },

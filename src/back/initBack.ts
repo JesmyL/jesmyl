@@ -4,6 +4,7 @@ import { Do } from 'shared/enums';
 import { checkIsStartsWith } from 'shared/utils/checkIs';
 import { objectKeys } from 'shared/utils/object.utils';
 import { deployPathsBasicDict } from '../../paths.basic';
+import { backConfig } from './config/backConfig';
 import { hostCwdOptions, systemdPath } from './const';
 import { lazyEnvJson } from './envJson';
 import { makeCyanLogText, makeGreenLogText, makeYellowLogText, rewriteAndDo, runCommand } from './utils.exec';
@@ -59,7 +60,6 @@ export const initBack = async () => {
   } catch {
     //
   }
-
   try {
     await rewriteAndDo(
       `${systemdPath}/jesmyl_soki.service`,
@@ -71,11 +71,13 @@ Description=The Soki Service
 Restart=on-failure
 RestartSec=5s
 WorkingDirectory=${hostRootDir}
-ExecStart=node ${hostRootDir}/back.index.cjs
+ExecStart=node --max-old-space-size=450 ${hostRootDir}/back.index.cjs
 StandardOutput=journal
 StandardError=journal
 LogRateLimitIntervalSec=30s
-LogRateLimitBurst=1000`,
+LogRateLimitBurst=1000
+MemoryMax=550M
+MemoryHigh=500M`,
       () => runCommand('sudo systemctl daemon-reload'),
     );
   } catch {
@@ -172,12 +174,19 @@ LogRateLimitBurst=1000`,
       (crontab -l 2>/dev/null; echo '0 3 * * 1 certbot renew --pre-hook "systemctl stop jesmyl_soki" --post-hook "systemctl start jesmyl_soki"') | crontab -
   `);
 
-  console.info(`# Для создания файла подкачки на 1 ГБ    
-sudo fallocate -l 1G /swapfile
-sudo chmod 600 /swapfile
-
-sudo mkswap /swapfile
-sudo swapon /swapfile
-
-echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab`);
+  if (!backConfig.isTest)
+    try {
+      const swapCheck = await runCommand('swapon --show');
+      if (!swapCheck.includes('/swapfile')) {
+        console.info(makeCyanLogText('[Процесс] Настройка SWAP файла на 2 ГБ...'));
+        await runCommand('sudo fallocate -l 2G /swapfile');
+        await runCommand('sudo chmod 600 /swapfile');
+        await runCommand('sudo mkswap /swapfile');
+        await runCommand('sudo swapon /swapfile');
+        await runCommand('echo "/swapfile none swap sw 0 0" | sudo tee -a /etc/fstab');
+        console.info(makeGreenLogText('[Успешно] SWAP файл успешно подключен'));
+      }
+    } catch {
+      console.error(makeYellowLogText('[Ошибка] Не удалось автоматически настроить SWAP'));
+    }
 };

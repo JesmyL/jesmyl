@@ -5,8 +5,7 @@ import { checkIsNil } from 'shared/utils/checkIs';
 import { makeTSJRPCBaseMaker, makeTSJRPCMethodsMaker } from 'tsjrpc';
 
 export const electronClientApi = window[electronAppInterfaceWindowKey as never] as never as
-  | ElectronAppWindowInvokeApiBox
-  | nil;
+  ElectronAppWindowInvokeApiBox | nil;
 
 export const ElectronTsjrpcClient = makeTSJRPCMethodsMaker<void>({
   isNeedCheckClassName: environment.isTest,
@@ -33,7 +32,7 @@ if (electronClientApi) {
       invoke,
       requestId: `${Date.now()}${Math.random()}`,
       sendResponse: event => {
-        if (event.errorMessage) promiseWith.reject(event.errorMessage);
+        if (event.error) promiseWith.reject(event.error);
         else promiseWith.resolve(event.invokedResult);
       },
       tool: undefined,

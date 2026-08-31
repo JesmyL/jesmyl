@@ -15,7 +15,7 @@ export const makeYellowLogText = (text: string, endl = nl) => `${mk(33)}${text}$
 export const makeCyanLogText = (text: string, endl = nl) => `${mk(36)}${text}${resetAll}${endl}`;
 export const makeGreenLogTextBg = (text: string, endl = nl) => `${mk(30)}${mk(42)}${text}${resetAll}${endl}`;
 
-export const runCommand = async (command: string, description?: string, options = {}) => {
+export const runCommand = async (command: string, description?: string, options = {}): Promise<string> => {
   description ||= command;
   console.info(makeCyanLogText(`[RUN COMMAND] ${description}`));
 
@@ -24,6 +24,8 @@ export const runCommand = async (command: string, description?: string, options 
     if (stdout) console.info(stdout);
     if (stderr && !stderr.includes('WARNING')) console.warn(makeYellowLogText(`[Предупреждение] ${stderr}`));
     console.info(makeGreenLogText(`[Успешно] ${description}`));
+
+    return stdout;
   } catch (error) {
     console.error(makeRedLogText(`[Ошибка]: ${description}`));
     console.error(checkIsObject(error) && error.message);

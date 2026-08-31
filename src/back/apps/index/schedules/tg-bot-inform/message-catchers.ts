@@ -133,8 +133,8 @@ jesmylTgBot.catchCallbackQuery(async (query, bot, answer) => {
 
   try {
     [schedule, dayi] = await getScheduleAndTodayiByRequisit(`%/${query.chat_instance}`);
-  } catch (errorMessage) {
-    return ret('' + errorMessage);
+  } catch (error) {
+    return ret('' + error);
   }
 
   if (schedule.days[dayi]?.list.length) return ret('Для обновления расписания список событий должен быть пустым');

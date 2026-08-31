@@ -4,9 +4,10 @@ import { tsjrpcBaseClientNext } from '#basis/tsjrpc/TsjrpcBase.client';
 import { authIDB, indexDeviceEmojiAtom, indexDeviceIdAtom } from '$index/shared/state';
 import md5 from 'md5';
 import { makeRegExp } from 'regexpert';
-import { SokiError, TsjrpcClientEvent, TsjrpcClientTool, TsjrpcServerEvent } from 'shared/api';
+import { SokiError, TsjrpcClientTool, TsjrpcFromClientEvent, TsjrpcFromServerEvent } from 'shared/api';
 import { Eventer } from 'shared/utils';
 import { jversion } from 'shared/values';
+import { TSJRPCEvent } from 'tsjrpc';
 import { environment } from './environment';
 
 export class SokiTrip {
@@ -16,7 +17,7 @@ export class SokiTrip {
   private requests: PRecord<
     string,
     {
-      action: (event: TsjrpcClientEvent) => void;
+      action: (event: TsjrpcFromClientEvent) => void;
       promise: Promise<unknown>;
       event: string;
     }
@@ -54,8 +55,8 @@ export class SokiTrip {
       this.urls = [];
       this.onConnectionOpenEvent.invoke(true);
       this.isOpened = true;
-    } catch (errorMessage) {
-      if (errorMessage === SokiError.InvalidToken) {
+    } catch (error) {
+      if (error === SokiError.InvalidToken) {
         this.onTokenInvalidEvent.invoke();
       }
     }
@@ -75,7 +76,7 @@ export class SokiTrip {
 
     this.ws.onmessage = async ({ data }: { data: string }) => {
       try {
-        const event: TsjrpcServerEvent = JSON.parse(data);
+        const event: TsjrpcFromServerEvent = JSON.parse(data);
 
         if (this.requests[event.requestId] !== undefined) {
           console.info(event);
@@ -90,7 +91,7 @@ export class SokiTrip {
 
         tsjrpcBaseClientNext({
           invoke: event.invoke,
-          sendResponse: this.send,
+          sendResponse: this.sendResp,
           tool: undefined,
           requestId: event.requestId,
         });
@@ -131,10 +132,16 @@ export class SokiTrip {
     this.ws.addEventListener('open', send);
   }
 
-  send = <InvokedResult = unknown>(
-    event: OmitOwn<TsjrpcClientEvent, 'requestId'>,
+  sendResp({ error, ...event }: TSJRPCEvent, tool?: TsjrpcClientTool | nil | void) {
+    if (error) {
+      this.send({ ...event, errorMessage: `${error}` }, tool);
+    } else this.send(event, tool);
+  }
+
+  send = (
+    event: OmitOwn<TsjrpcFromClientEvent, 'requestId'>,
     tool?: TsjrpcClientTool | nil | void,
-  ): Promise<InvokedResult> => {
+  ): Promise<unknown> => {
     const strEvent = JSON.stringify(event);
     const requestId = md5(strEvent);
 
@@ -143,12 +150,12 @@ export class SokiTrip {
     }
 
     const fullEvent = `${strEvent.slice(0, -1)},"requestId":"${requestId}"}`;
-    const withResolvers = Promise.withResolvers<InvokedResult>();
+    const withResolvers = Promise.withResolvers();
 
     this.requests[requestId] = {
       action: event => {
         if (event.errorMessage) withResolvers.reject(event.errorMessage);
-        else withResolvers.resolve(event.invokedResult as never);
+        else withResolvers.resolve(event.invokedResult);
       },
       event: fullEvent,
       promise: withResolvers.promise,

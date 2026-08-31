@@ -15,9 +15,9 @@ export type TsjrpcBaseEvent = {
   abort?: string;
 };
 
-export type TsjrpcServerEvent = TsjrpcBaseEvent;
+export type TsjrpcFromServerEvent = TsjrpcBaseEvent;
 
-export type TsjrpcClientEvent = TsjrpcBaseEvent & {
+export type TsjrpcFromClientEvent = TsjrpcBaseEvent & {
   token?: string | nil;
   visitInfo?: SokiVisit;
 };

@@ -1,6 +1,7 @@
 import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { ServerTSJRPCTool, tsjrpcBaseServerNext } from 'back/tsjrpc.base.server';
 import { userAuthStringified, userVisitStringified } from 'back/utils';
+import { DrizzleQueryError } from 'drizzle-orm';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 import { makeRegExp } from 'regexpert';
 import {
@@ -8,8 +9,8 @@ import {
   SokiAuthLogin,
   SokiError,
   SokiVisit,
-  TsjrpcClientEvent,
-  TsjrpcServerEvent,
+  TsjrpcFromClientEvent,
+  TsjrpcFromServerEvent,
   UserAuth,
 } from 'shared/api';
 import { setSharedPolyfills } from 'shared/utils';
@@ -20,6 +21,7 @@ import {
   checkIsObject,
   checkIsUndefined,
 } from 'shared/utils/checkIs';
+import { TSJRPCEvent } from 'tsjrpc';
 import WebSocket, { WebSocketServer } from 'ws';
 import { ErrorCatcher } from '../ErrorCatcher';
 import { tokenSecretFileStore } from './file-stores';
@@ -50,7 +52,7 @@ export class SokiServer {
       });
 
       client.on('message', async data => {
-        const event: TsjrpcClientEvent = JSON.parse('' + data);
+        const event: TsjrpcFromClientEvent = JSON.parse('' + data);
 
         if (checkIsNotUndefined(event.abort)) {
           this.abortedRequestIdsSet.add(event.abort);
@@ -133,7 +135,7 @@ export class SokiServer {
     return ws;
   }
 
-  send(event: TsjrpcServerEvent, clientSelector: SokiServerClientSelector | nil | void) {
+  send(event: TsjrpcFromServerEvent, clientSelector: SokiServerClientSelector | nil | void) {
     if (clientSelector instanceof WebSocket) {
       clientSelector.send(JSON.stringify(event));
       return;
@@ -173,19 +175,21 @@ export class SokiServer {
     });
   }
 
-  private sendInvokeEvent = (event: TsjrpcServerEvent, tool: ServerTSJRPCTool) => {
+  private sendInvokeEvent = ({ error, invokedResult, ...event }: TSJRPCEvent, tool: ServerTSJRPCTool) => {
     if (this.abortedRequestIdsSet.has(event.requestId)) {
       this.abortedRequestIdsSet.delete(event.requestId);
       return;
     }
 
+    let errorMessage;
+
+    if (error) errorMessage = error instanceof DrizzleQueryError ? 'Ошибка сервера' : `${error}`;
+
     this.send(
       {
         ...event,
-        invokedResult:
-          checkIsObject(event.invokedResult) && 'value' in event.invokedResult
-            ? event.invokedResult.value
-            : event.invokedResult,
+        errorMessage,
+        invokedResult: checkIsObject(invokedResult) && 'value' in invokedResult ? invokedResult.value : invokedResult,
       },
       tool.client,
     );

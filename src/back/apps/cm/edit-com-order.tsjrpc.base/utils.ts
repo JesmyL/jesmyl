@@ -35,16 +35,13 @@ export const modifyOrd = <Props extends { ordw: CmComOrderWid; comw: CmComWid }>
   ) => PromiseOr<string | null>,
 ) =>
   modifyCom<Props>(rightsCheck, async (com, props, tool) => {
-    let cmCom: CmCom | nil;
-    let comOrds: CmComOrder[] | nil;
-    let cmOrd: CmComOrder | nil;
     let ord = com.o?.find(o => o.w === props.ordw);
 
-    const getCmCom = () => (cmCom ??= new CmCom(com, null, null));
-    const getCmComOrds = () => (comOrds ??= getCmCom().setOrders() ?? []);
+    const getCmCom = () => new CmCom(com, null, null);
+    const getCmComOrds = () => getCmCom().setOrders() ?? [];
 
     let getCmComOrd = () => {
-      cmOrd ??= getCmComOrds()?.find(ord => ord.wid === props.ordw);
+      const cmOrd = getCmComOrds()?.find(ord => ord.wid === props.ordw);
       if (checkIsNil(cmOrd)) throw 'Порядковый блок не найден (при поиске по собственному ID)';
       const cmComOrd = cmOrd;
       getCmComOrd = () => cmComOrd;

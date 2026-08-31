@@ -1,4 +1,5 @@
-import { LocalSokiAuth, SokiVisit } from 'shared/api';
+import { DrizzleQueryError } from 'drizzle-orm';
+import { SokiVisit, UserAuth } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import { checkIsFunction } from 'shared/utils/checkIs';
 import { makeTSJRPCBaseMaker } from 'tsjrpc';
@@ -11,7 +12,7 @@ import { userAuthStringified, userVisitStringified } from './utils';
 
 export type ServerTSJRPCTool = {
   client: WebSocket | null;
-  auth: LocalSokiAuth | und;
+  auth: UserAuth | und;
   visitInfo: SokiVisit | und;
 };
 export type ServerTSJRPCBeforeEachTool = { minVersion?: number };
@@ -23,7 +24,12 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
 >({
   onErrorMessage: backConfig.isTest
     ? emptyFunc
-    : ({ errorMessage, invoke: { method, scope, args }, tool: { auth, visitInfo } }) => {
+    : ({ error, invoke: { method, scope, args }, tool: { auth, visitInfo } }) => {
+        let errorMessage = `${error}`;
+
+        if (error instanceof DrizzleQueryError)
+          errorMessage = `<b>${error.cause?.message ?? error.stack ?? ''}</b>\n\n${error}`;
+
         tglogger.userErrors(
           `${scope}.${method}()\n\n${errorMessage}\n\n${userAuthStringified(auth)}\n\n${userVisitStringified(visitInfo)}\n\n\nАргументы:\n${JSON.stringify(args)}`,
         );
