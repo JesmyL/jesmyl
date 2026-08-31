@@ -1,5 +1,6 @@
 import { DirStorage } from 'back/complect/DirStorage';
 import { FileStore } from 'back/complect/FileStore';
+import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { Langi } from 'shared/api';
 import { LocaleBase } from 'shared/model/+locale/base';
 import { LocaleDynamic } from 'shared/model/+locale/dynamic';
@@ -13,6 +14,9 @@ import { localeBaseUa } from './base/ua';
 import { localeDynamicKz } from './dynamic/kz';
 import { localeDynamicRu } from './dynamic/ru';
 import { localeDynamicUa } from './dynamic/ua';
+
+const log = (scope: string, langi: SKey<Langi>) =>
+  tglogger.log(`Изменён набор ${scope} переводов - ${localeDynamicRu.lang[langi]}`);
 
 export const langLocaleDynamicFileStoragesLazy = lazyInit(async () => {
   const langLocaleDynamicDict: { [L in Langi]: LocaleDynamic<L> } = {
@@ -32,6 +36,7 @@ export const langLocaleDynamicFileStoragesLazy = lazyInit(async () => {
     const savedConfig = await dirStorage.getOrCreateItem(langi, () => ({ langi }) as never);
 
     if (!checkIsEq(savedConfig, config)) {
+      log('динамических', langi);
       dirStorage.saveItem(langi, config);
     }
   }
@@ -51,7 +56,10 @@ export const langLocaleBaseFileStoragesLazy = lazyInit(() => {
   forEachObjectEntries(langLocaleBaseDict, (langi, config) => {
     const fileStorage = (dict[langi] ??= new FileStore(`/locales/base/${langi}.json`, {} as typeof config));
 
-    if (!checkIsEq(fileStorage.getValue(), config)) fileStorage.setValue(config);
+    if (!checkIsEq(fileStorage.getValue(), config)) {
+      log('базовых', langi);
+      fileStorage.setValue(config);
+    }
   });
 
   return dict;
