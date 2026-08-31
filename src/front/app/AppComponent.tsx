@@ -5,9 +5,7 @@ import { currentLangiAtom, translateBase } from '#basis/locale';
 import { currentAppNameAtom } from '#basis/state/currentAppNameAtom';
 import { hideAppFooterAtom } from '#basis/state/hideAppFooterAtom';
 import { takeBaseLanguageAtom, takeDynamicLanguageAtom } from '#basis/state/locale';
-import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
 import { isFullscreenAtom, switchFullScreen } from '#shared/lib/atoms/fullscreen';
-import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { LinkAppActionFabric } from '#shared/lib/link-app-actions';
 import { soki } from '#shared/soki';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
@@ -41,7 +39,6 @@ export const AppComponent = () => {
 
   const loc = useLocation();
   const [isNeedFirstNavigate, setIsNeedFirstNavigate] = useState(true);
-  const [isShowLogo, setIsShowLogo] = useState(true);
   const appName = useAtomValue(currentAppNameAtom);
   const hideAppFooter = useAtomValue(hideAppFooterAtom);
   const isFullscreen = useAtomValue(isFullscreenAtom);
@@ -70,23 +67,12 @@ export const AppComponent = () => {
 
   useEffect(() => soki.pushCurrentUrl(), [loc.href]);
 
-  useEffect(() => {
-    return hookEffectPipe()
-      .pipe(setTimeoutPipe(setIsShowLogo, 1200, false))
-      .effect();
-  }, []);
-
   return (
     <>
       <div
         className="above-container"
         st-hide-footer-menu={hideAppFooter ? '' : undefined}
       >
-        {isShowLogo && (
-          <div className="jesmyl-smile-box flex center absolute w-full h-full z-5">
-            <JesmylLogo className="no-fade-in-effect" />
-          </div>
-        )}
         <div
           className="application-container"
           st-fullscreen={isFullscreen ? '' : undefined}
