@@ -28,16 +28,13 @@ export type CmBroadcastMonolineSlideSelectorId =
 export type CmBroadcastMonolineSlideOrdSelectorId = [CmComOrderWid];
 
 export type CmBroadcastMonolineSlideLineSelectorId =
-  | CmBroadcastMonolineSlideOrdSelectorId
-  | [CmComOrderWid, CmComLinei];
+  CmBroadcastMonolineSlideOrdSelectorId | [CmComOrderWid, CmComLinei];
 
 export type CmBroadcastMonolineSlideRepeatSelectorId =
-  | CmBroadcastMonolineSlideLineSelectorId
-  | [CmComOrderWid, CmComLinei, CmComNewlinerRepeati];
+  CmBroadcastMonolineSlideLineSelectorId | [CmComOrderWid, CmComLinei, CmComNewlinerRepeati];
 
 export type CmBroadcastMonolineSlideSameSelectorId =
-  | CmBroadcastMonolineSlideRepeatSelectorId
-  | [CmComOrderWid, CmComLinei, CmComNewlinerRepeati, CmComNewlinerSamei];
+  CmBroadcastMonolineSlideRepeatSelectorId | [CmComOrderWid, CmComLinei, CmComNewlinerRepeati, CmComNewlinerSamei];
 
 export type CmBroadcastMonolineSlide = {
   /** zero-samei technical id */

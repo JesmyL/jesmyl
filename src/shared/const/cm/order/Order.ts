@@ -105,11 +105,9 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   }
 
   get isVisible(): boolean {
-    if (this.me.isAnchorInheritPlus || this.me.isAnchorInherit)
-      return !(
-        !this.me.leadOrd?.isVisible ||
-        (this.getWatchInheritance('v') ?? this.getLeadInheritance('v') ?? this.me.source?.top.v) === 0
-      );
+    if (this.me.isAnchorInheritPlus || this.me.isAnchorInherit) {
+      return (this.getLeadInheritance('v') ?? this.getWatchInheritance('v')) !== 0;
+    }
 
     if (this.me.isInherit) return !(this.top.v === 0 || (this.me.leadOrd && !this.me.leadOrd.isVisible));
 
