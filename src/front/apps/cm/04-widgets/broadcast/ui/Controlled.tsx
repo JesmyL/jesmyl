@@ -6,9 +6,9 @@ import { BroadcastGridTabConfig } from '#widgets/broadcast/model/TabConfig';
 import { useCmBroadcastScreenComNavigationComws } from '$cm/features/broadcast';
 import { CmBroadcastTabId } from '$cm/shared/model/broadcast';
 import {
-  broadcastGridActiveTabiAtom,
-  broadcastGridSizesAtom,
-  broadcastGridTabsAtom,
+  cmBroadcastGridActiveTabiAtom,
+  cmBroadcastGridSizesAtom,
+  cmBroadcastGridTabsAtom,
 } from '$cm/shared/state/broadcast.atoms';
 import { Link } from '@tanstack/react-router';
 import { ReactNode } from 'react';
@@ -24,9 +24,9 @@ interface Props {
 }
 
 const config: BroadcastGridTabConfig<CmBroadcastTabId> = {
-  gridSizesAtom: broadcastGridSizesAtom,
-  tabNetAtom: broadcastGridTabsAtom,
-  activeTabiAtom: broadcastGridActiveTabiAtom,
+  gridSizesAtom: cmBroadcastGridSizesAtom,
+  tabNetAtom: cmBroadcastGridTabsAtom,
+  activeTabiAtom: cmBroadcastGridActiveTabiAtom,
   tabs: cmBroadcastTabConfigDict,
 };
 
