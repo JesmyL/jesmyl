@@ -60,9 +60,6 @@ export const useScreenBroadcastFaceLineListeners = () => {
           onKeyDown(event);
         };
 
-        // eslint-disable-next-line @eslint-react/web-api/no-leaked-event-listener
-        window.addEventListener('keydown', onSubWinKeyDown);
-
         if (parentWin.win == null) return;
 
         const win = parentWin.win;
@@ -78,6 +75,9 @@ export const useScreenBroadcastFaceLineListeners = () => {
 
         win.onfocus = () => currentBroadcastConfigiAtom.set(wini);
         win.onkeydown = onSubWinKeyDown;
+
+        // eslint-disable-next-line @eslint-react/web-api/no-leaked-event-listener
+        window.addEventListener('keydown', onSubWinKeyDown);
 
         return () => {
           win.onresize = null;

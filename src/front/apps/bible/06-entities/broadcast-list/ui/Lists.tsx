@@ -13,11 +13,6 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useEffect } from 'react';
 import { mapObjectEntries } from 'shared/utils/object.utils';
-import {
-  bibleBroadcastListBookiIdPrefix,
-  bibleBroadcastListChapteriIdPrefix,
-  bibleBroadcastListVerseiIdPrefix,
-} from '../const/ids';
 import { BibleBroadcastListBooks } from './BookList';
 import { BibleBroadcastListChapters } from './ChapterList';
 import { BibleBroadcastListVerseList } from './VerseList';
@@ -42,15 +37,9 @@ export const BibleBroadcastList = () => {
 
           if (joinAddress != null) [booki, chapteri, versei] = takeJoinedAddressMaxValues(joinAddress);
 
-          document
-            .getElementById(bibleBroadcastListBookiIdPrefix + booki)
-            ?.scrollIntoView(scrollIntoViewBookAndChapterOptions);
-          document
-            .getElementById(bibleBroadcastListChapteriIdPrefix + chapteri)
-            ?.scrollIntoView(scrollIntoViewBookAndChapterOptions);
-          document
-            .getElementById(bibleBroadcastListVerseiIdPrefix + versei)
-            ?.scrollIntoView(scrollIntoViewVerseOptions);
+          document.querySelector(`[data-booki='${booki}']`)?.scrollIntoView(scrollIntoViewBookAndChapterOptions);
+          document.querySelector(`[data-chapteri='${chapteri}']`)?.scrollIntoView(scrollIntoViewBookAndChapterOptions);
+          document.querySelector(`[data-versei='${versei}']`)?.scrollIntoView(scrollIntoViewVerseOptions);
         }, 100),
       )
       .effect();
@@ -73,9 +62,16 @@ export const BibleBroadcastList = () => {
   );
 };
 
+const color = css`
+  &,
+  &::before {
+    color: var(--color-x1) !important;
+  }
+`;
+
 const selectedStyle = css`
-  background-color: var(--color--7);
-  color: var(--color--1);
+  background-color: var(--color-x7);
+  ${color}
 
   &.current {
     opacity: 0.7;
@@ -83,8 +79,8 @@ const selectedStyle = css`
 `;
 
 const currentStyle = css`
-  background-color: var(--color--3);
-  color: var(--color--1);
+  background-color: var(--color-x3);
+  ${color}
 `;
 
 const Lists = styled.div<{
@@ -97,24 +93,25 @@ const Lists = styled.div<{
     if (props.$joinAddress)
       return mapObjectEntries(props.$joinAddress, (booki, book) => {
         return css`
-          #${bibleBroadcastListBookiIdPrefix}${booki} {
+          [data-booki='${booki}'] {
             ${selectedStyle}
 
             .title {
-              color: var(--color--1);
+              color: var(--color-x1);
             }
           }
 
           ${mapObjectEntries(
             book,
             (chapteri, chapter) => css`
-              #${bibleBroadcastListChapteriIdPrefix}${chapteri} {
+              [data-chapteri='${chapteri}'] {
                 ${selectedStyle}
               }
 
               ${chapter.map(
                 versei => css`
-                  #${bibleBroadcastListVerseiIdPrefix}${versei} {
+                  [data-versei='${versei}'] {
+                    border-top: 1px solid var(--color-x1);
                     ${selectedStyle}
                   }
                 `,
@@ -125,17 +122,16 @@ const Lists = styled.div<{
       });
 
     return css`
-      #${bibleBroadcastListBookiIdPrefix}${props.$booki} {
+      [data-booki='${props.$booki}'] {
         ${currentStyle}
 
         .title {
-          color: var(--color--1);
+          color: var(--color-x1);
         }
       }
-      #${bibleBroadcastListChapteriIdPrefix}${props.$chapteri} {
-        ${currentStyle}
-      }
-      #${bibleBroadcastListVerseiIdPrefix}${props.$versei} {
+
+      [data-chapteri='${props.$chapteri}'],
+      [data-versei='${props.$versei}'] {
         ${currentStyle}
       }
     `;

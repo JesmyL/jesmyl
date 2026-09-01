@@ -21,7 +21,7 @@ export const BibleBroadcastSearchPanelAddressInput = ({ inputRef }: Props) => {
         term={addressTerm}
         onChange={termAtom.set}
       />
-      <div className="left-0 absolute mt-[1em] mx-auto flex text-center justify-center">{address}</div>
+      <div className="left-0 absolute mt-[1em] mx-auto nowrap flex text-center justify-center">{address}</div>
     </div>
   );
 };

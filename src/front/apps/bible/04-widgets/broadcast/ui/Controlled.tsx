@@ -1,4 +1,5 @@
 import { translateBase } from '#basis/locale';
+import { useScreenBroadcastFaceLineListeners } from '#features/broadcast/complect/config-line/hooks/listeners';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BroadcastResizableGrid } from '#widgets/broadcast';
@@ -27,6 +28,8 @@ const config: BroadcastGridTabConfig<BibleBroadcastTabId> = {
 
 export const BibleBroadcastControlled = ({ head, headTitle }: Props) => {
   const printShowAddress = useBiblePrintShowSlideAddressCode();
+
+  useScreenBroadcastFaceLineListeners();
 
   useEffect(() => {
     printShowAddress();

@@ -4,7 +4,6 @@ import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
 import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { JSX, useEffect, useRef } from 'react';
-import { bibleBroadcastListVerseiIdPrefix } from '../const/ids';
 import { useBibleBroadcastListVerseListeners } from '../lib/useVerseListListeners';
 
 let fastVersesAtom: Atom<string[]>;
@@ -29,13 +28,16 @@ export function BibleBroadcastListVerseList(): JSX.Element {
   useBibleBroadcastListVerseListeners(verseListRef, currentBooki, currentChapteri);
 
   return (
-    <StyledContainer ref={verseListRef}>
+    <StyledContainer
+      className="w-full overflow-y-auto overflow-x-hidden list-decimal list-inside"
+      ref={verseListRef}
+    >
       {(verses ?? fastVersesAtom.get())?.map((__html, versei) => {
         return (
-          <StyledFace
+          <li
             key={versei}
-            id={bibleBroadcastListVerseiIdPrefix + versei}
-            className="bible-list-face pointer"
+            data-versei={versei}
+            className="bible-list-face pointer max-w-full transition-colors duration-500 before:transition-colors before:duration-500 odd:bg-x2"
             dangerouslySetInnerHTML={{ __html }}
           />
         );
@@ -44,16 +46,17 @@ export function BibleBroadcastListVerseList(): JSX.Element {
   );
 }
 
-const StyledFace = styled.li`
-  max-width: 100%;
-  transition-property: background-color, color;
-  transition-duration: 0.5s;
-
-  &:nth-of-type(odd) {
-    background-color: var(--color--2);
+const StyledContainer = styled.ol`
+  [data-versei]::before {
+    content: counter(verse) '. ';
+    color: var(--color-x7);
   }
 
-  &:nth-of-type(10n):not(:last-child) {
+  [data-versei] {
+    counter-increment: verse;
+  }
+
+  .bible-list-face:nth-of-type(10n):not(:last-child) {
     margin-bottom: 10px;
     position: relative;
 
@@ -67,14 +70,6 @@ const StyledFace = styled.li`
       background: red;
     }
   }
-`;
-
-const StyledContainer = styled.ol`
-  overflow-y: auto;
-  overflow-x: hidden;
-  width: calc(100vw - 300px - 2.5em - 7em);
-  list-style: decimal;
-  list-style-position: inside;
 
   insertedtext,
   textinbrackets,

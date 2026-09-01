@@ -6,7 +6,6 @@ import { bibleJoinAddressAtom, bibleVerseiAtom } from '$bible/shared/state/atoms
 import { useEffect } from 'react';
 import { checkIsNaN } from 'shared/utils/checkIs';
 import { objectLength } from 'shared/utils/object.utils';
-import { bibleBroadcastListVerseiIdPrefix } from '../const/ids';
 
 export const useBibleBroadcastListVerseListeners = (
   verseListNodeRef: { current: HTMLOListElement | null },
@@ -28,14 +27,12 @@ export const useBibleBroadcastListVerseListeners = (
     return hookEffectPipe()
       .pipe(
         addEventListenerPipe(verseListNode, 'mousedown', event => {
-          const verseNode = event.target as HTMLDivElement | null;
-
-          if (verseNode === null || !verseNode.id.startsWith(bibleBroadcastListVerseiIdPrefix)) return;
-          const ctrlKey = event.ctrlKey;
-          const shiftKey = event.shiftKey;
-          const versei = +verseNode.id.slice(bibleBroadcastListVerseiIdPrefix.length);
+          const versei = +((event.target as HTMLDivElement | null)?.getAttribute?.('data-versei') as string)!;
 
           if (checkIsNaN(versei)) return;
+
+          const ctrlKey = event.ctrlKey;
+          const shiftKey = event.shiftKey;
 
           clearTimeout(clickTimeout);
           if (isDblClick) {

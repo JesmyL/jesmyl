@@ -1,10 +1,8 @@
 import { bibleAddressWithForceJoinReset } from '$bible/shared/hooks';
 import { useBibleCurrentChapterList } from '$bible/shared/hooks/texts';
-import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { bibleBroadcastListChapteriIdPrefix } from '../const/ids';
 import { useBibleBroadcastListFaceClickListener } from '../lib/useBibleListFaceClickListener';
 
 const faceClassName = 'bible-list-chapter-face';
@@ -16,7 +14,7 @@ export function BibleBroadcastListChapters() {
 
   const chapters = useBibleCurrentChapterList();
 
-  const listRef = useBibleBroadcastListFaceClickListener(bibleBroadcastListChapteriIdPrefix, faceClassName, chapteri =>
+  const listRef = useBibleBroadcastListFaceClickListener('data-chapteri', faceClassName, chapteri =>
     bibleAddressWithForceJoinReset(undefined, chapteri, 0),
   );
 
@@ -31,25 +29,21 @@ export function BibleBroadcastListChapters() {
   }, [chapters?.length]);
 
   return (
-    <Container ref={listRef}>
+    <div
+      ref={listRef}
+      className="w-[2.5em] min-w-[2.5em] overflow-y-auto overflow-x-hidden"
+    >
       {chapterNumbers?.map(chapteri => {
         return (
           <div
             key={chapteri}
-            id={bibleBroadcastListChapteriIdPrefix + chapteri}
+            data-chapteri={chapteri}
             className={twMerge('bible-list-face pointer', faceClassName)}
           >
             {chapteri + 1}
           </div>
         );
       })}
-    </Container>
+    </div>
   );
 }
-
-const Container = styled.div`
-  width: 2.5em;
-
-  overflow-y: auto;
-  overflow-x: hidden;
-`;

@@ -34,7 +34,6 @@ export function CmBroadcastControlled(props: Props) {
   const { comPack, comws } = useCmBroadcastScreenComNavigationComws();
 
   useScreenBroadcastFaceLineListeners();
-
   useCmBroadcastScreenKeyDownListen();
 
   return (

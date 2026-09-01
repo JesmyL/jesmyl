@@ -48,4 +48,3 @@ export { cmPlayerBroadcastAudioSrcAtom } from '$cm/shared/state/broadcast.atoms'
 export { CmBroadcastScreenConfigurationPushKind } from '$cm/widgets/broadcast/ui/PushKind';
 export { CmBroadcastShowNlNameSpaceSelector } from '$cm/widgets/broadcast/ui/ShowNlNameSpaceSelector';
 export { TheCmCom } from '$cm/widgets/com';
-export { CmScheduleWidgetBroadcastLiveCm } from '$cm/widgets/schedule-widget-broadcast/ui/LiveCm';

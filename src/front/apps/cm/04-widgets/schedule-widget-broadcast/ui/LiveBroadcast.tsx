@@ -2,7 +2,7 @@ import { translateBase } from '#basis/locale';
 import { electronPresentationTsjrpcBaseClient } from '#basis/tsjrpc.electron/presentation.cli.base';
 import { broadcastCurrentTextAppAtom } from '#features/broadcast/atoms';
 import { useScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
-import { cmInitialSlideAtom } from '#features/broadcast/initial-slide-context';
+import { scheduleFollowBroadcastSlideAtom } from '#features/broadcast/initial-slide-context';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { BibleTranslatesContextProvider } from '$bible/ext';
 import { CmBroadcastFollowInitialSlide } from '$cm/features/broadcast';
@@ -26,7 +26,7 @@ export const CmScheduleWidgetBroadcast = ({ schw }: { schw: ScheduleWidgetWid | 
   useEffect(() => {
     if (!schedule) return;
 
-    cmInitialSlideAtom.set(<CmBroadcastFollowInitialSlide schw={schedule.w} />);
+    scheduleFollowBroadcastSlideAtom.set(<CmBroadcastFollowInitialSlide schw={schedule.w} />);
   }, [schedule]);
 
   useEffect(() => {
