@@ -6,6 +6,7 @@ import { CmBroadcastShowChordedSlideMode } from '#shared/model/cm/Cm.model';
 import { HorizontalDirection } from '#shared/model/Direction';
 import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
+import { cmBroadcastDefaultConfig } from '$cm/shared/const/broadcast';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -15,7 +16,6 @@ import { CmBroadcastScreenConfig } from 'shared/model/cm/broadcast';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
 import { useApplyScreenFontFamilyEffect, useMyFileNode } from 'x/my-files';
-import { cmBroadcastDefaultConfig } from '../hooks/configs';
 import { useCmBroadcastScreenStyle } from '../lib/get-style';
 import { CmBroadcastSubScreen } from './SubScreen';
 

@@ -11,6 +11,7 @@ import { StrokeConfigurator } from '#shared/ui/configurators/Stroke';
 import { ScreenTranslateConfigurationTextAlign } from '#shared/ui/configurators/TextAlign';
 import { TextCaseConfigurator } from '#shared/ui/configurators/TextCase';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
+import { useCmBroadcastUpdateCurrentConfig } from '$cm/shared/lib/broadcast';
 import { useCallback } from 'react';
 import {
   CmBroadcastScreenConfig,
@@ -18,7 +19,6 @@ import {
   CmBroadcastTextScreenConfig,
 } from 'shared/model/cm/broadcast';
 import { cmBroadcastSubConfigNext } from '../const/defaults';
-import { useCmBroadcastUpdateCurrentConfig } from '../hooks/update-config';
 import { CmBroadcastSubBlockConfigurator } from './SubBlockConfigurator';
 
 interface Props {

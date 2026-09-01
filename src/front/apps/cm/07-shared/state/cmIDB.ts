@@ -1,7 +1,6 @@
 import { DexieDB } from '#shared/lib/DexieDB';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { cmComWidNumberDictAtom } from '$cm/entities/index';
-import { cmBroadcastDefaultConfig } from '$cm/widgets/broadcast';
 import { useLiveQuery } from 'dexie-react-hooks';
 import {
   ChordPack,
@@ -21,6 +20,7 @@ import { checkIsNil } from 'shared/utils/checkIs';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
 import { lazyInit } from 'shared/utils/lazyInit';
 import { objectLength } from 'shared/utils/object.utils';
+import { cmBroadcastDefaultConfig } from '../const/broadcast';
 
 export interface CmIDBStorage {
   chordPack: ChordPack;

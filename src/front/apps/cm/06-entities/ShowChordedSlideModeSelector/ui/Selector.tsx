@@ -4,7 +4,7 @@ import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
 
-export const CmBroadcastShowChordedSlideModeSelector = () => {
+export const CmShowChordedSlideModeSelector = () => {
   const showMode = useAtomValue(cmShowChordedSlideModeAtom);
 
   return (

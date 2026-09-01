@@ -49,7 +49,7 @@ const playbackRateAtom = lazyInit(() => atom(1));
 export const CmEditorTabComAudioMarks = iife(() => {
   const Child = ({ ccom }: { ccom: EditableCom }) => {
     const editSrc = useAtomValue(srcOnEditAtom());
-    const { slideIdTimeSetDict, markTimes } = useCmComMarkTextValuesMaker(ccom, editSrc, TextCase.AsIs);
+    const { slideIdTimeSetDict, markTimes } = useCmComMarkTextValuesMaker(editSrc, TextCase.AsIs);
     const pinTime = useAtomValue(pinTimeAtom());
     const playbackRate = useAtomValue(playbackRateAtom());
 
@@ -141,7 +141,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
                   <CmComAudioPlayerMarksMovers
                     src={src}
                     com={ccom}
-                    repeatButtonClassName="max-w-[calc(100vw-288px)]"
+                    repeatButtonClassName="max-w-[calc(100cqw-288px)]"
                     preSwitchTimeAtom={preSwitchTimeAtom()}
                   />
                   <Dropdown

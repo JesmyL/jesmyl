@@ -1,5 +1,5 @@
 import { translateBase } from '#basis/locale';
-import { BroadcastSlidePreview } from '#features/broadcast/controls/Preview';
+import { BroadcastSlidePreview } from '#features/broadcast/SlidePreview';
 import { useBibleBroadcastUpdateCurrentConfig } from '$bible/entities/broadcast';
 import { BibleBroadcastList } from '$bible/entities/broadcast-list';
 import styled from '@emotion/styled';

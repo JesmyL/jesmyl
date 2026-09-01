@@ -1,9 +1,9 @@
 import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
+import { cmBroadcastDefaultConfig } from '$cm/shared/const/broadcast';
 import { cmIDB } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
 import { CmBroadcastScreenConfig } from 'shared/model/cm/broadcast';
-import { cmBroadcastDefaultConfig } from './configs';
 
 export const useCmBroadcastUpdateConfig = () => {
   const [configs, setConfigs] = cmIDB.use.broadcastScreenConfigs();

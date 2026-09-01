@@ -15,8 +15,8 @@ export {
   useCmCom,
   useCmComAllIComList,
   useCmComAllWidList,
+  useCmComCurrentParts,
   useCmComIComList,
-  useCmComMapFromICom,
   useCmComMapFromIComWithoutComFixes,
   useCmComPinchFontSize,
 } from '$cm/entities/com';
@@ -45,7 +45,6 @@ export { useCmComCurrentMarkValues } from '$cm/shared/lib/useCmComCurrentMarkVal
 export { useCmComMarkTextValuesMaker } from '$cm/shared/lib/useCmComMarkTextValuesMaker';
 export { cmIDB } from '$cm/shared/state';
 export { cmPlayerBroadcastAudioSrcAtom } from '$cm/shared/state/broadcast.atoms';
-export { useCmBroadcastCurrentScreenConfig } from '$cm/widgets/broadcast';
 export { CmBroadcastScreenConfigurationPushKind } from '$cm/widgets/broadcast/ui/PushKind';
 export { CmBroadcastShowNlNameSpaceSelector } from '$cm/widgets/broadcast/ui/ShowNlNameSpaceSelector';
 export { TheCmCom } from '$cm/widgets/com';

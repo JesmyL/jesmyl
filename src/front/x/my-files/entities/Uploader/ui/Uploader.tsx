@@ -48,7 +48,7 @@ export const MyFilesUploader = ({
     <div className={twMerge('h-full w-full relative', className)}>
       <input
         key={updated}
-        className="h-full w-full opacity-0 absolute z-70"
+        className="h-full w-full opacity-0 absolute z-20"
         type="file"
         multiple
         onClick={defaultPreventer}

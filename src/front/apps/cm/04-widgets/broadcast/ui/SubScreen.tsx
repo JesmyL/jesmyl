@@ -2,11 +2,11 @@ import { ScreenBroadcastPositionConfig } from '#features/broadcast/complect/mode
 import { ScreenTranslateCurrentPositionConfigurators } from '#features/broadcast/complect/position/Position';
 import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
+import { useCmBroadcastUpdateCurrentConfig } from '$cm/shared/lib/broadcast';
 import { useCallback } from 'react';
 import { CmBroadcastScreenConfig, CmBroadcastTextScreenConfig } from 'shared/model/cm/broadcast';
 import { useApplyScreenFontFamilyEffect } from 'x/my-files';
 import { cmBroadcastSubConfigNext } from '../const/defaults';
-import { useCmBroadcastUpdateCurrentConfig } from '../hooks/update-config';
 import { useCmBroadcastScreenStyle } from '../lib/get-style';
 
 interface Props {

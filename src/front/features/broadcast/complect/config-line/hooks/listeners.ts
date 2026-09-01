@@ -69,7 +69,7 @@ export const useScreenBroadcastFaceLineListeners = () => {
 
         let timeout: TimeOut;
 
-        const resize = () => updateConfig(wini, { proportion: win.innerWidth / win.innerHeight });
+        const resize = () => updateConfig(wini, { proportion: +(win.innerWidth / win.innerHeight).toFixed(2) });
 
         win.onresize = () => {
           clearTimeout(timeout);

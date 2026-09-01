@@ -3,7 +3,6 @@ import { propsOfClicker } from '#shared/lib/clicker/propsOfClicker';
 import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useCmComCurrent } from '$cm/entities/com';
 import {
   CmBroadcastSlidesContext,
   useCmBroadcastClose,
@@ -19,17 +18,10 @@ const forceUpdater = (it: number) => it + 1;
 const style = { padding: '5px' };
 
 export const CmBroadcastFullscreen = () => {
-  const com = useCmComCurrent();
-
   return (
-    com && (
-      <CmBroadcastSlidesContext
-        textCase={TextCase.AsIs}
-        com={com}
-      >
-        <CmBroadcastFullscreenInContext />
-      </CmBroadcastSlidesContext>
-    )
+    <CmBroadcastSlidesContext textCase={TextCase.AsIs}>
+      <CmBroadcastFullscreenInContext />
+    </CmBroadcastSlidesContext>
   );
 };
 

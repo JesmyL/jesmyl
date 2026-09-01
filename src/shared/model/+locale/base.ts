@@ -230,7 +230,10 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   oneForTwo: StringTemplaterWithTwoInterpolations<'o', 't'>;
   newVer: StringTemplaterInterpolation<'v'>;
 
+  /** Настройки */
   settings: LocaleSimpleString;
+
+  /** О приложении */
   aboutApp: LocaleSimpleString;
   otherApps: LocaleSimpleString;
   anims: LocaleSimpleString;
@@ -257,9 +260,23 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   txt: LocaleSimpleString;
   txts: LocaleSimpleString;
 
+  /** Настроить */
   setup: LocaleSimpleString;
+
+  /** Предпросмотр */
   preview: LocaleSimpleString;
+
+  /** Предупреждение */
+  alert: LocaleSimpleString;
+
+  /** Слайд */
   slide: LocaleSimpleString;
+
+  /** Слайды */
+  slides: LocaleSimpleString;
+
+  /** Конфиги */
+  configs: LocaleSimpleString;
 
   showMyQr: LocaleSimpleString;
   readQR: LocaleSimpleString;

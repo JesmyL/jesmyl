@@ -1,8 +1,8 @@
 import { cmBroadcastCurrentNameSpaceiAtom } from '$cm/entities/broadcast';
+import { useCmComCurrent } from '$cm/entities/com';
 import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
-import { CmCom } from 'shared/const/cm/Com';
 import { CmBroadcastMonolineSlide, CmBroadcastMonolineSlideOrdStrId } from 'shared/model/cm/broadcast';
 import { TextCase } from 'shared/model/common';
 import { extractNumber } from 'shared/utils';
@@ -11,7 +11,8 @@ import { convertCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/ma
 import { forEachObjectEntries, objectKeys, objectLength } from 'shared/utils/object.utils';
 import { cmIDB } from '../state';
 
-export const useCmComMarkTextValuesMaker = (com: CmCom | und, src: HttpNumLeadLink | nil, textCase: TextCase | nil) => {
+export const useCmComMarkTextValuesMaker = (src: HttpNumLeadLink | nil, textCase: TextCase | nil) => {
+  const com = useCmComCurrent();
   const marks = cmIDB.useAudioTrackMarks(com?.wid);
   const srcMarks = com && checkIsNotNil(src) ? marks?.marks?.[src] : null;
   const markTimes = useMemo(() => objectKeys(srcMarks).map(extractNumber), [srcMarks]);

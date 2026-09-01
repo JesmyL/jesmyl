@@ -1,6 +1,5 @@
 import { ScreenBroadcastFaceLine } from '#features/broadcast/complect/config-line/FaceLine';
-import { useCmBroadcastCurrentScreenConfig } from '../hooks/configs';
-import { useCmBroadcastUpdateConfig } from '../hooks/update-config';
+import { useCmBroadcastCurrentScreenConfig, useCmBroadcastUpdateConfig } from '$cm/shared/lib/broadcast';
 import { CmBroadcastCurrentScreenConfigurations } from './CurrentConfigs';
 
 export const CmBroadcastScreenConfigurations = () => {

@@ -290,6 +290,10 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
   history: 'Історія',
   plan: 'План',
 
+  configs: 'Конфіги',
+  alert: 'Сповіщення',
+  slides: 'Слайди',
+
   search: 'Пошук',
   globSearch: 'Глобальний пошук',
   broadcast: 'Трансляція',

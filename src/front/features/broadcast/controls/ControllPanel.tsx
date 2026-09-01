@@ -6,13 +6,12 @@ import { useScreenBroadcastConfigsValue } from '../atoms';
 import { useWatchScreenBroadcast } from '../hooks/watch-broadcast';
 import { useScreenBroadcastCurrentWindow, useScreenBroadcastWindows } from '../hooks/windows';
 import { isShowBroadcastInitialSlideAtom } from '../initial-slide-context';
-import { AlertLineInput } from './alert-line/AlertLineInput';
 import { ScreenBroadcastControlPanelShowMdButton } from './ShowMdButton';
 
 export const ScreenBroadcastControlPanel = memo(function ControlPanel({
   onChange,
 }: {
-  onChange: (dir: 1 | -1) => void;
+  onChange?: (dir: 1 | -1) => void;
 }) {
   const configs = useScreenBroadcastConfigsValue();
   const windows = useScreenBroadcastWindows();
@@ -24,21 +23,26 @@ export const ScreenBroadcastControlPanel = memo(function ControlPanel({
   return (
     <div>
       <div className="flex gap-2 between">
-        <button
-          className={buttonClassName}
-          onClick={() => onChange(-1)}
-        >
-          <LazyIcon icon="ArrowLeft01" />
-        </button>
-        <button
-          className={buttonClassName}
-          onClick={() => onChange(1)}
-        >
-          <LazyIcon icon="ArrowRight01" />
-        </button>
+        {onChange && (
+          <>
+            <button
+              className={buttonClassName}
+              onClick={() => onChange(-1)}
+            >
+              <LazyIcon icon="ArrowLeft01" />
+            </button>
+            <button
+              className={buttonClassName}
+              onClick={() => onChange(1)}
+            >
+              <LazyIcon icon="ArrowRight01" />
+            </button>
+          </>
+        )}
+
         <button
           title={currWin ? 'Enter' : undefined}
-          className={twMerge(buttonClassName, 'bg-x7 text-x5 min-w-[40vw]')}
+          className={twMerge(buttonClassName, 'bg-x7 text-x5 min-w-[60cqw]')}
           disabled={!configs.length}
           onClick={watchBroadcast}
         >
@@ -60,8 +64,6 @@ export const ScreenBroadcastControlPanel = memo(function ControlPanel({
           )}
         </button>
       </div>
-
-      <AlertLineInput />
     </div>
   );
 });

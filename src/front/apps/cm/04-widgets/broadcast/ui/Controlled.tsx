@@ -1,40 +1,20 @@
 import { translateBase } from '#basis/locale';
 import { useScreenBroadcastFaceLineListeners } from '#features/broadcast/complect/config-line/hooks/listeners';
-import { ScreenBroadcastControlPanel } from '#features/broadcast/controls/ControllPanel';
-import { BroadcastSlidePreview } from '#features/broadcast/controls/Preview';
-import { useWatchScreenBroadcast } from '#features/broadcast/hooks/watch-broadcast';
-import { Button } from '#shared/components/ui/button';
-import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useCmComCurrent } from '$cm/entities/com';
+import { BroadcastResizableGrid } from '#widgets/broadcast';
+import { BroadcastGridTabConfig } from '#widgets/broadcast/model/TabConfig';
+import { useCmBroadcastScreenComNavigationComws } from '$cm/features/broadcast';
+import { CmBroadcastTabId } from '$cm/shared/model/broadcast';
 import {
-  CmComAudioPlayerPlayButton,
-  cmComAudioPlayerSetSrc,
-  CmComAudioPlayerTrack,
-} from '$cm/entities/com-audio-player';
-import { CmComFaceList } from '$cm/entities/com-face';
-import { CmComToolHideMetronome } from '$cm/entities/com-tool';
-import { CmComListPackKindSelector } from '$cm/entities/ComListPackKindSelector';
-import { CmComAudioPlayerMarksMovers } from '$cm/ext';
-import { useCmBroadcastScreenComNavigationComws, useCmBroadcastSlidesContext } from '$cm/features/broadcast';
-import { getCmComFreshAudioMarksPack } from '$cm/shared/lib/getFresh';
-import { cmComTrackPreSwitchTimeAtom, cmIsTrackBroadcastAtom } from '$cm/shared/state';
-import { cmPlayerBroadcastAudioSrcAtom, cmPlayerBroadcastComwAtom } from '$cm/shared/state/broadcast.atoms';
-import styled from '@emotion/styled';
-import { Link, useNavigate } from '@tanstack/react-router';
-import { useAtomValue } from 'atomaric';
+  broadcastGridActiveTabiAtom,
+  broadcastGridSizesAtom,
+  broadcastGridTabsAtom,
+} from '$cm/shared/state/broadcast.atoms';
+import { Link } from '@tanstack/react-router';
 import { ReactNode } from 'react';
-import { CmComWid, HttpNumLeadLink } from 'shared/api';
-import { checkIsNotNil } from 'shared/utils/checkIs';
-import { toast } from 'sonner';
-import { twMerge } from 'tailwind-merge';
-import { useCmBroadcastUpdateCurrentConfig } from '../hooks/update-config';
+import { CmComWid } from 'shared/api';
+import { cmBroadcastTabConfigDict } from '../const/tabs';
 import { useCmBroadcastScreenKeyDownListen } from '../lib/keydown-listen';
-import { CmBroadcastScreenConfigurations } from './ScreenConfigurations';
-import { CmBroadcastShowChordedSlideModeSelector } from './ShowChordedSlideModeSelector';
-import { CmBroadcastShowNlNameSpaceSelector } from './ShowNlNameSpaceSelector';
-import { CmBroadcastSlideLine } from './SlideLine';
 
 interface Props {
   head?: ReactNode;
@@ -43,46 +23,17 @@ interface Props {
   backButtonPath?: string;
 }
 
-export function CmBroadcastControlled(props: Props) {
-  const isTrackBroadcast = useAtomValue(cmIsTrackBroadcastAtom);
-  const broadcastSrc = useAtomValue(cmPlayerBroadcastAudioSrcAtom);
-  const navigate = useNavigate();
-  const updateCmConfig = useCmBroadcastUpdateCurrentConfig();
-  const { toSlide, setSlidei } = useCmBroadcastSlidesContext();
+const config: BroadcastGridTabConfig<CmBroadcastTabId> = {
+  gridSizesAtom: broadcastGridSizesAtom,
+  tabNetAtom: broadcastGridTabsAtom,
+  activeTabiAtom: broadcastGridActiveTabiAtom,
+  tabs: cmBroadcastTabConfigDict,
+};
 
+export function CmBroadcastControlled(props: Props) {
   const { comPack, comws } = useCmBroadcastScreenComNavigationComws();
 
-  const comwList = props.comws ?? comws;
-  const com = useCmComCurrent();
-
   useScreenBroadcastFaceLineListeners();
-
-  const watchBroadcast = useWatchScreenBroadcast();
-
-  const onStartBroadcast = async (comw: CmComWid, src: HttpNumLeadLink) => {
-    getCmComFreshAudioMarksPack(comw).then(pack => {
-      if (checkIsNotNil(pack)) return;
-
-      cmPlayerBroadcastComwAtom.reset();
-      cmComAudioPlayerSetSrc(null);
-      cmPlayerBroadcastAudioSrcAtom.reset();
-      toast(
-        translateBase(it => it.cm.trackMarksNotSetted),
-        makeToastKOMoodConfig(),
-      );
-    });
-
-    navigate({
-      to: '.',
-      search: prev => ({ ...(prev as object), comw }) as object,
-    });
-
-    cmPlayerBroadcastComwAtom.set(comw);
-    cmComAudioPlayerSetSrc(src);
-    cmPlayerBroadcastAudioSrcAtom.set(src);
-
-    watchBroadcast();
-  };
 
   useCmBroadcastScreenKeyDownListen();
 
@@ -95,7 +46,7 @@ export function CmBroadcastControlled(props: Props) {
           ref={linkRef}
           search={prev => ({
             ...(prev as object),
-            comw: prev.comw ?? comwList[0],
+            comw: prev.comw ?? comws[0],
             tran: undefined,
           })}
         >
@@ -115,122 +66,15 @@ export function CmBroadcastControlled(props: Props) {
           </>
         )
       }
-      head={
-        <div className="flex gap-2">
-          <LazyIcon
-            icon="MusicNote01"
-            className={twMerge('pointer mr-2', isTrackBroadcast && 'text-x7')}
-            onClick={cmIsTrackBroadcastAtom.do.toggle}
-          />
-          {props.head}
-        </div>
-      }
+      head={props.head}
       content={
-        <Container>
-          <div className="flex">
-            <BroadcastSlidePreview onBgFileIdChange={box => updateCmConfig({ bgFileId: box.id, withBg: true })} />
-
-            <div className="broadcast-com-list">
-              <div className="m-5">
-                <CmComListPackKindSelector />
-              </div>
-
-              <StyledComFaceList
-                list={comwList}
-                titles={comPack.titles}
-                importantOnClick={({ defaultClick, com }) => {
-                  if (!isTrackBroadcast) {
-                    setSlidei(0);
-                    defaultClick();
-                    return;
-                  }
-
-                  if (com.al) onStartBroadcast(com.w, com.al[0]);
-                }}
-                comDescription={
-                  isTrackBroadcast
-                    ? com =>
-                        com.al?.map(src => (
-                          <Button
-                            key={src}
-                            icon="ComputerVideo"
-                            withoutAnimation
-                            className={broadcastSrc === src ? 'text-x7' : ''}
-                            onClick={() => onStartBroadcast(com.w, src)}
-                          />
-                        ))
-                    : undefined
-                }
-              />
-            </div>
-          </div>
-          {isTrackBroadcast ? (
-            <>
-              <div>
-                <CmBroadcastShowChordedSlideModeSelector />
-                <CmBroadcastShowNlNameSpaceSelector />
-              </div>
-              {broadcastSrc && (
-                <div className="mt-5 bg-x2 flex min-h-20 gap-3 px-3 mb-3">
-                  <CmComAudioPlayerPlayButton
-                    src={broadcastSrc}
-                    className="mx-5 scale-300!"
-                  />
-
-                  <CmComAudioPlayerTrack src={broadcastSrc} />
-                </div>
-              )}
-              {com && broadcastSrc && (
-                <div className="mb-10">
-                  <CmComAudioPlayerMarksMovers
-                    com={com}
-                    preSwitchTimeAtom={cmComTrackPreSwitchTimeAtom}
-                    src={broadcastSrc}
-                  />
-                </div>
-              )}
-            </>
-          ) : (
-            <>
-              <CmBroadcastSlideLine />
-              <ScreenBroadcastControlPanel onChange={toSlide} />
-              <div className="flex w-full justify-between mt-5">
-                <div>
-                  <CmBroadcastShowChordedSlideModeSelector />
-                  <CmBroadcastShowNlNameSpaceSelector />
-                </div>
-                <div className="w-53">
-                  <CmComToolHideMetronome />
-                </div>
-              </div>
-            </>
-          )}
-          <CmBroadcastScreenConfigurations />
-        </Container>
+        <div
+          className="w-full h-full"
+          st-hide-footer-menu=""
+        >
+          <BroadcastResizableGrid config={config} />
+        </div>
       }
     />
   );
 }
-
-const StyledComFaceList = styled(CmComFaceList)`
-  min-height: calc(var(--max-size) + 1px);
-`;
-
-const Container = styled.div`
-  --size: 50vmin;
-  --max-size: 300px;
-  --min-size: 200px;
-
-  .broadcast-com-list {
-    width: calc(100vw - var(--max-size));
-    height: 50vmin;
-    min-height: 200px;
-    max-height: var(--max-size);
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    .face-item.current {
-      font-weight: bold;
-    }
-  }
-`;
