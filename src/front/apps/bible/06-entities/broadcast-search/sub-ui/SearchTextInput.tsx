@@ -12,10 +12,8 @@ import { bibleBroadcastSearchTermAtom } from '../state/atoms';
 import { BibleBroadcastSearchPanelInput } from './Input';
 
 interface Props {
-  inputRef: React.RefObject<HTMLInputElement | null>;
+  inputRef: React.RefObject<(HTMLInputElement & HTMLTextAreaElement) | null>;
 }
-
-const onChange = (event: React.ChangeEvent<HTMLInputElement>) => bibleBroadcastSearchTermAtom.set(event.target.value);
 
 export const BibleBroadcastSearchPanelSearchTextInput = ({ inputRef }: Props) => {
   const searchTerm = useAtomValue(bibleBroadcastSearchTermAtom);
@@ -67,7 +65,7 @@ export const BibleBroadcastSearchPanelSearchTextInput = ({ inputRef }: Props) =>
     <BibleBroadcastSearchPanelInput
       inputRef={inputRef}
       term={searchTerm}
-      onChange={onChange}
+      onChange={bibleBroadcastSearchTermAtom.set}
     />
   );
 };

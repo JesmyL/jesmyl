@@ -1,6 +1,8 @@
+import { TextInput } from '#shared/ui/TextInput';
+
 interface Props {
-  inputRef: React.RefObject<HTMLInputElement | null>;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  inputRef: React.RefObject<(HTMLInputElement & HTMLTextAreaElement) | null>;
+  onChange: (value: string) => void;
   term: string;
 }
 
@@ -12,12 +14,11 @@ const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
 export const BibleBroadcastSearchPanelInput = ({ inputRef, term, onChange }: Props) => {
   return (
     <>
-      <input
-        ref={inputRef}
-        className="bg-x2 w-full"
+      <TextInput
+        inputRef={inputRef}
         value={term}
         onKeyDown={onKeyDown}
-        onChange={onChange}
+        onInput={onChange}
       />
     </>
   );

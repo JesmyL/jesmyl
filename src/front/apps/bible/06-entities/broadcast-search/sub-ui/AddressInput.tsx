@@ -3,11 +3,10 @@ import { useBibleBroadcastSearchTransformAddressTermToAddress } from '../lib/tra
 import { BibleBroadcastSearchPanelInput } from './Input';
 
 interface Props {
-  inputRef: React.RefObject<HTMLInputElement | null>;
+  inputRef: React.RefObject<(HTMLInputElement & HTMLTextAreaElement) | null>;
 }
 
 let termAtom: Atom<string>;
-const onChange = (event: React.ChangeEvent<HTMLInputElement | null>) => termAtom.set(event.target.value);
 
 export const BibleBroadcastSearchPanelAddressInput = ({ inputRef }: Props) => {
   termAtom ??= atom('', 'bible:addressTerm');
@@ -16,13 +15,13 @@ export const BibleBroadcastSearchPanelAddressInput = ({ inputRef }: Props) => {
   const address = useBibleBroadcastSearchTransformAddressTermToAddress(addressTerm, inputRef);
 
   return (
-    <>
+    <div className="relative w-full">
       <BibleBroadcastSearchPanelInput
         inputRef={inputRef}
         term={addressTerm}
-        onChange={onChange}
+        onChange={termAtom.set}
       />
-      <div className="w-full">{address}</div>
-    </>
+      <div className="left-0 absolute mt-[1em] mx-auto flex text-center justify-center">{address}</div>
+    </div>
   );
 };

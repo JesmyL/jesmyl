@@ -173,6 +173,7 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
     selChEdit: 'Редакциялау үшін аккордты таңдаңыз',
     maxChCount: 'Аккордтардың maximalды саны',
     minChCount: 'Аккордтардың минималды саны бар мәтін',
+
     noChTxt: 'Аккордсыз мәтін',
     minChCountDsc:
       'Аккордтардың минималды саны режимінде олар алғаш рет кездесетін немесе өзгеретін (бірдей атаулылар үшін) блоктарда болады',
@@ -252,6 +253,7 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
   enterRoleName: 'Рөл үшін атау енгізіңіз',
   newRole: 'Жаңа рөл',
   interactive: 'Өзра әрекеттесу',
+  control: 'Басқару',
   myFiles: 'Менің файлдарым',
   downloads: 'Жүктеулер',
   constants: 'Константалар',

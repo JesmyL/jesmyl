@@ -356,6 +356,7 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
   maxStrsCount: 'Максимальна кількість рядків',
   fewStrs: 'Мало рядків',
   dicts: 'Збірники',
+  control: 'Керування',
   denied: 'Заборонено',
   lang: 'Мова',
   lookJSON: 'Переглянути JSON',

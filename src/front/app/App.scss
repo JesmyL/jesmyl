@@ -8,8 +8,8 @@ body {
     --footer-opacity: 0;
 
     .footer-menu {
-      padding: 0;
-      pointer-events: none;
+      display: none;
+      visibility: hidden;
     }
   }
 

@@ -300,6 +300,8 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
   globSearch: 'Глобальный поиск',
   broadcast: 'Трансляция',
 
+  control: 'Управление',
+
   tg: {
     beInChannel: 'Состоять в канале',
     steps: 'Перейти в него\nНажать кнопку "Авторизоваться" в закрепе\nВвести код из личного сообщения от бота сюда:',

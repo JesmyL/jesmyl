@@ -1,4 +1,5 @@
 import { broadcastCurrentTextAppAtom } from '#features/broadcast/atoms';
+import { BroadcastWelcomeQrSwitchButton } from '#features/broadcast/ui/WelcomeQrSwitchButton';
 import { LiveBroadcastAppProps } from '#shared/model/cm/Cm.model';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useCmComCurrent } from '$cm/entities/com';
@@ -33,11 +34,14 @@ export const CmScheduleWidgetBroadcastLiveCm = (props: LiveBroadcastAppProps) =>
           <CmBroadcastControlled
             headTitle={props.headTitle}
             head={
-              <LazyIcon
-                icon="BookOpen02"
-                className="pointer mr-2"
-                onClick={broadcastCurrentTextAppAtom.do.switch}
-              />
+              <div className="flex">
+                <BroadcastWelcomeQrSwitchButton />
+                <LazyIcon
+                  icon="BookOpen02"
+                  className="pointer mr-2"
+                  onClick={broadcastCurrentTextAppAtom.do.switch}
+                />
+              </div>
             }
           />
         </CmBroadcastSlidesContext>

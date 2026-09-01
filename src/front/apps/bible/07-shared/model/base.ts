@@ -23,7 +23,16 @@ export type BibleBroadcastAnyAddress = BibleBroadcastJoinAddress | [BibleBooki, 
 export type BibleBroadcastSingleAddress = [number, number, number];
 export type BibleBroadcastAddress = BibleBroadcastSingleAddress | BibleBroadcastJoinAddress;
 
-export type BibleSearchZone = 'global' | 'inner' | 'address';
+export const enum BibleSearchZone {
+  Global,
+  Inner,
+  Address,
+}
+
+export const enum BibleSearchInnerZone {
+  Book,
+  Chapter,
+}
 
 export interface BibleStorage extends Record<BibleTranslateName, null | BibleTranslate> {
   [BibleTranslateName.rst]: BibleTranslate;

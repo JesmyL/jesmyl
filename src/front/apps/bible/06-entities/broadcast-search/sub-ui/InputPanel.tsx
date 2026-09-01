@@ -10,7 +10,7 @@ import { BibleBroadcastSearchPanelAddressInput } from './AddressInput';
 import { BibleBroadcastSearchPanelSearchTextInput } from './SearchTextInput';
 
 interface Props {
-  inputRef: React.RefObject<HTMLInputElement | null>;
+  inputRef: React.RefObject<(HTMLInputElement & HTMLTextAreaElement) | null>;
   setSearchZone: (zone: BibleSearchZone, inputRef: React.RefObject<HTMLInputElement | null>) => void;
 }
 
@@ -35,41 +35,39 @@ export function BibleBroadcastSearchInputPanel({ inputRef, setSearchZone }: Prop
   }, [inputRef]);
 
   return (
-    <div className="flex gap-2 mt-5">
+    <div className="flex gap-2 w-full">
       <span className="nowrap">
-        {searchZone === 'global'
+        {searchZone === BibleSearchZone.Global
           ? translateBase(it => it.bible.searchInText)
-          : searchZone === 'inner'
+          : searchZone === BibleSearchZone.Inner
             ? translateBase(it => it.bible.searchInChapter)
             : translateBase(it => it.bible.searchByLink)}
         :
       </span>
-      {searchZone === 'address' ? (
+      {searchZone === BibleSearchZone.Address ? (
         <BibleBroadcastSearchPanelAddressInput inputRef={inputRef} />
       ) : (
         <BibleBroadcastSearchPanelSearchTextInput inputRef={inputRef} />
       )}
-      <SwitchButton
-        className="pointer"
-        $active={searchZone === 'global'}
-        onClick={() => setSearchZone('global', inputRef)}
-      >
-        {translateBase(it => it.txt)}
-      </SwitchButton>
-      <SwitchButton
-        className="pointer"
-        $active={searchZone === 'inner'}
-        onClick={() => setSearchZone('inner', inputRef)}
-      >
-        {translateBase(it => it.bible.chapter)}
-      </SwitchButton>
-      <SwitchButton
-        className="pointer"
-        $active={searchZone === 'address'}
-        onClick={() => setSearchZone('address', inputRef)}
-      >
-        {translateBase(it => it.link)}
-      </SwitchButton>
+      {(
+        [
+          [BibleSearchZone.Global, translateBase(it => it.txt), 'F2'],
+          [BibleSearchZone.Inner, translateBase(it => it.bible.chapter), 'F3'],
+          [BibleSearchZone.Address, translateBase(it => it.link), 'F4'],
+        ] as const
+      ).map(([zone, title, htmlTitle]) => {
+        return (
+          <SwitchButton
+            key={zone}
+            title={htmlTitle}
+            className="pointer hover:text-x7"
+            $active={searchZone === zone}
+            onClick={() => setSearchZone(zone, inputRef)}
+          >
+            {title}
+          </SwitchButton>
+        );
+      })}
     </div>
   );
 }
@@ -80,8 +78,4 @@ const SwitchButton = styled.div<{ $active: boolean }>`
     css`
       text-decoration: underline;
     `}
-
-  &:hover {
-    color: var(--color--7);
-  }
 `;

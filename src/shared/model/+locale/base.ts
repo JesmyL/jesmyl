@@ -280,9 +280,14 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
 
   showMyQr: LocaleSimpleString;
   readQR: LocaleSimpleString;
+
+  /** Поиск */
   search: LocaleSimpleString;
   globSearch: LocaleSimpleString;
   broadcast: LocaleSimpleString;
+
+  /** Управление */
+  control: LocaleSimpleString;
 
   tg: {
     beInChannel: LocaleSimpleString;

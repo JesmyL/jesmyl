@@ -27,6 +27,7 @@ export const TextInput = ({
   label,
   strongDefaultValue,
   selectOnFocus,
+  inputRef,
   ...props
 }: Props) => {
   const Comp = multiline ? Textarea : Input;
@@ -34,7 +35,12 @@ export const TextInput = ({
 
   const attrs: AllHTMLAttributes<HTMLInputElement & HTMLTextAreaElement> = {
     ...props,
-    onKeyDown: propagationStopper,
+    onKeyDown: onChanged
+      ? event => {
+          props.onKeyDown?.(event);
+          propagationStopper(event);
+        }
+      : props.onKeyDown,
     onChange: onInput ? event => onInput(event.currentTarget.value) : undefined,
     onFocus: selectOnFocus
       ? event => {
@@ -52,14 +58,14 @@ export const TextInput = ({
           }
           props.onBlur?.(event as never);
         }
-      : undefined,
+      : props.onBlur,
   };
 
   const node = strongDefaultValue ? (
     <StrongDefaultValueInput
       Comp={Comp}
       {...(attrs as object)}
-      inputRef={props.inputRef}
+      inputRef={inputRef}
     />
   ) : (
     <Comp
@@ -67,8 +73,8 @@ export const TextInput = ({
       ref={
         ((elem: (HTMLInputElement & HTMLTextAreaElement) | nil) => {
           if (elem == null) return;
-          if (checkIsFunction(props.inputRef)) props.inputRef(elem);
-          else if (props.inputRef) props.inputRef.current = elem;
+          if (checkIsFunction(inputRef)) inputRef(elem);
+          else if (inputRef) inputRef.current = elem;
         }) as never
       }
     />

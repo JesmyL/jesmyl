@@ -1,12 +1,9 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useAtomValue } from 'atomaric';
 import { memo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { useScreenBroadcastConfigsValue } from '../atoms';
 import { useWatchScreenBroadcast } from '../hooks/watch-broadcast';
 import { useScreenBroadcastCurrentWindow, useScreenBroadcastWindows } from '../hooks/windows';
-import { isShowBroadcastInitialSlideAtom } from '../initial-slide-context';
-import { ScreenBroadcastControlPanelShowMdButton } from './ShowMdButton';
 
 export const ScreenBroadcastControlPanel = memo(function ControlPanel({
   onChange,
@@ -17,27 +14,18 @@ export const ScreenBroadcastControlPanel = memo(function ControlPanel({
   const windows = useScreenBroadcastWindows();
   const currWin = useScreenBroadcastCurrentWindow();
   const watchBroadcast = useWatchScreenBroadcast();
-  const isInitialSlideShow = useAtomValue(isShowBroadcastInitialSlideAtom);
   const buttonClassName = 'pointer flex justify-center items-center rounded-[15px] bg-x1 text-x4 w-full h-[30px]';
 
   return (
     <div>
       <div className="flex gap-2 between">
         {onChange && (
-          <>
-            <button
-              className={buttonClassName}
-              onClick={() => onChange(-1)}
-            >
-              <LazyIcon icon="ArrowLeft01" />
-            </button>
-            <button
-              className={buttonClassName}
-              onClick={() => onChange(1)}
-            >
-              <LazyIcon icon="ArrowRight01" />
-            </button>
-          </>
+          <button
+            className={buttonClassName}
+            onClick={() => onChange(-1)}
+          >
+            <LazyIcon icon="ArrowLeft01" />
+          </button>
         )}
 
         <button
@@ -48,21 +36,15 @@ export const ScreenBroadcastControlPanel = memo(function ControlPanel({
         >
           {windows.length ? <LazyIcon icon="Computer" /> : <LazyIcon icon="Play" />}
         </button>
-        <ScreenBroadcastControlPanelShowMdButton />
-        <button
-          className={buttonClassName}
-          title="Backspace"
-          onClick={isShowBroadcastInitialSlideAtom.do.toggle}
-        >
-          {isInitialSlideShow ? (
-            <LazyIcon
-              icon="QrCode"
-              kind="SolidRounded"
-            />
-          ) : (
-            <LazyIcon icon="QrCode" />
-          )}
-        </button>
+
+        {onChange && (
+          <button
+            className={buttonClassName}
+            onClick={() => onChange(1)}
+          >
+            <LazyIcon icon="ArrowRight01" />
+          </button>
+        )}
       </div>
     </div>
   );

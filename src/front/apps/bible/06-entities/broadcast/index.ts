@@ -9,4 +9,3 @@ export * from './style/screen-style';
 export * from './style/wrapper-style';
 
 export * from './ui/BibleBroadcastSlide';
-export * from './ui/BottomPanel';

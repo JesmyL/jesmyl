@@ -1,5 +1,5 @@
 import { Atom } from 'atomaric';
-import { ReactNode } from 'react';
+import { NamedExoticComponent, ReactNode } from 'react';
 
 export type BroadcastGridTabConfig<TabId extends number> = {
   tabs: BroadcastGridTabDict<TabId>;
@@ -8,7 +8,10 @@ export type BroadcastGridTabConfig<TabId extends number> = {
   tabNetAtom: Atom<BroadcastGridTabNet<TabId>>;
 };
 
-export type BroadcastGridTabDict<TabId extends number> = Record<TabId, { Comp: () => ReactNode; title: () => string }>;
+export type BroadcastGridTabDict<TabId extends number> = Record<
+  TabId,
+  { Comp: (() => ReactNode) | NamedExoticComponent<object>; title: () => string }
+>;
 
 export type BroadcastGridNumberNetPack = [number, number, number, number, number, number];
 

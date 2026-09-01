@@ -16,7 +16,7 @@ interface Props {
   onRemove: () => void;
 }
 
-const itemClassName = 'nowrap pointer mb-2';
+const itemClassName = 'nowrap pointer mb-2 ellipsis pl-3';
 
 export const BibleBroadcastArchive = memo(function BibleBroadcastArchive({
   title,
@@ -25,7 +25,7 @@ export const BibleBroadcastArchive = memo(function BibleBroadcastArchive({
 }: Props): JSX.Element {
   return (
     <>
-      <div className="archive-title flex gap-2 text-x3 bg-x2 mb-2">
+      <div className="archive-title flex flex-end gap-2 text-x3 bg-x2 mb-2 pr-3 py-1">
         {title}
         <TheIconButton
           icon="Delete01"

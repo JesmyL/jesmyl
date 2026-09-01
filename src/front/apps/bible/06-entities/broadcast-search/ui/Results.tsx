@@ -1,7 +1,14 @@
 import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
 import { useBibleAddressBooki, useBibleAddressChapteri } from '$bible/shared/hooks';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
-import { BibleBooki, BibleBroadcastSingleAddress, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
+import {
+  BibleBooki,
+  BibleBroadcastSingleAddress,
+  BibleChapteri,
+  BibleSearchInnerZone,
+  BibleSearchZone,
+  BibleVersei,
+} from '$bible/shared/model/base';
 import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
@@ -19,8 +26,7 @@ import { BibleBroadcastSearchResultVerse } from './ResultVerse';
 
 interface Props {
   inputRef: React.RefObject<HTMLInputElement | null>;
-  height?: string;
-  innerZone: 'book' | 'chapter';
+  innerZone: BibleSearchInnerZone;
   onClick?: (booki: BibleBooki, chapteri: BibleChapteri, versei: BibleVersei) => void;
 }
 
@@ -30,7 +36,7 @@ const maxItems = 49;
 
 const sortStringsByLength = (a: string, b: string) => b.length - a.length;
 
-export function BibleBroadcastSearchResults({ inputRef, height = '100px', innerZone, onClick: userOnClick }: Props) {
+export const BibleBroadcastSearchResults = ({ inputRef, innerZone, onClick: userOnClick }: Props) => {
   const searchZone = useAtomValue(bibleBroadcastSearchZoneAtom);
   const searchTerm = useAtomValue(bibleBroadcastSearchTermAtom);
   const showTranslates = useBibleShowTranslatesValue();
@@ -42,7 +48,7 @@ export function BibleBroadcastSearchResults({ inputRef, height = '100px', innerZ
 
   let currentBooki = useBibleAddressBooki();
   let currentChapteri = useBibleAddressChapteri();
-  if (searchZone === 'global') {
+  if (searchZone === BibleSearchZone.Global) {
     currentBooki = BibleTitleCodei.aБыт;
     currentChapteri = BibleChapteri.none;
   }
@@ -84,7 +90,7 @@ export function BibleBroadcastSearchResults({ inputRef, height = '100px', innerZ
       }
     };
 
-    if (searchZone === 'global')
+    if (searchZone === BibleSearchZone.Global)
       bibleSearchLoop: for (let booki = 0; booki < lowerChapters.length; booki++) {
         const book = lowerChapters[booki];
         if (book == null) continue;
@@ -95,7 +101,7 @@ export function BibleBroadcastSearchResults({ inputRef, height = '100px', innerZ
         }
       }
     else {
-      if (innerZone === 'book') {
+      if (innerZone === BibleSearchInnerZone.Book) {
         const book = lowerChapters[currentBooki];
         if (book != null)
           for (let chapteri = 0; chapteri < book.length; chapteri++) {
@@ -141,21 +147,17 @@ export function BibleBroadcastSearchResults({ inputRef, height = '100px', innerZ
 
   return (
     <List
-      $height={height}
+      className="h-full overflow-y-auto overflow-x-hidden"
       onClick={onClick}
     >
       {list}
     </List>
   );
-}
+};
 
-const List = styled.div<{ $height: string }>`
-  height: ${props => props.$height};
-  overflow-y: auto;
-  overflow-x: hidden;
-
+const List = styled.div`
   .bible-search-result.selected {
-    background-color: var(--color--2);
-    color: var(--color--3);
+    background-color: var(--color-x2);
+    color: var(--color-x3);
   }
 `;

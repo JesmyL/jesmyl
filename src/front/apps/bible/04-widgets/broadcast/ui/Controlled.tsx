@@ -1,22 +1,31 @@
 import { translateBase } from '#basis/locale';
-import { ScreenBroadcastControlPanel } from '#features/broadcast/controls/ControllPanel';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
-import { BibleBroadcastControlledBottomPanel } from '$bible/entities/broadcast';
-import { BibleBroadcastSearchPanel } from '$bible/entities/broadcast-search';
-import { BibleTranslateModulesControl } from '$bible/entities/translate';
+import { BroadcastResizableGrid } from '#widgets/broadcast';
+import { BroadcastGridTabConfig } from '#widgets/broadcast/model/TabConfig';
+import { bibleBroadcastTabConfigDict } from '$bible/shared/const';
 import { useBiblePrintShowSlideAddressCode } from '$bible/shared/hooks/slide-sync';
-import { bibleVerseiAtom } from '$bible/shared/state/atoms';
-import styled from '@emotion/styled';
-import { JSX, ReactNode, useEffect } from 'react';
-import { BibleBroadcastControlledTopPanel } from './TopPanel';
+import { BibleBroadcastTabId } from '$bible/shared/model/broadcast';
+import {
+  bibleBroadcastGridActiveTabiAtom,
+  bibleBroadcastGridSizesAtom,
+  bibleBroadcastGridTabsAtom,
+} from '$bible/shared/state';
+import { ReactNode, useEffect } from 'react';
 
 interface Props {
   head: ReactNode;
   headTitle: ReactNode;
 }
 
-export default function BibleBroadcastControlled({ head, headTitle }: Props): JSX.Element {
+const config: BroadcastGridTabConfig<BibleBroadcastTabId> = {
+  gridSizesAtom: bibleBroadcastGridSizesAtom,
+  tabNetAtom: bibleBroadcastGridTabsAtom,
+  activeTabiAtom: bibleBroadcastGridActiveTabiAtom,
+  tabs: bibleBroadcastTabConfigDict,
+};
+
+export const BibleBroadcastControlled = ({ head, headTitle }: Props) => {
   const printShowAddress = useBiblePrintShowSlideAddressCode();
 
   useEffect(() => {
@@ -49,20 +58,13 @@ export default function BibleBroadcastControlled({ head, headTitle }: Props): JS
       headTitle={headTitle ?? translateBase(it => it.bible.t)}
       head={head}
       content={
-        <Container>
-          <BibleBroadcastControlledTopPanel />
-          <BibleTranslateModulesControl />
-          <ScreenBroadcastControlPanel onChange={bibleVerseiAtom.do.increment} />
-          <BibleBroadcastSearchPanel />
-          <BibleBroadcastControlledBottomPanel />
-        </Container>
+        <div
+          className="w-full h-full"
+          st-hide-footer-menu=""
+        >
+          <BroadcastResizableGrid config={config} />
+        </div>
       }
     />
   );
-}
-
-const Container = styled.div`
-  --size: 50vmin;
-  --max-size: 300px;
-  --min-size: 200px;
-`;
+};

@@ -25,7 +25,7 @@ import { BibleBroadcastListVerseList } from './VerseList';
 const scrollIntoViewBookAndChapterOptions = { block: 'center' } as const;
 const scrollIntoViewVerseOptions = { block: 'center', behavior: 'smooth' } as const;
 
-export function BibleBroadcastList() {
+export const BibleBroadcastList = () => {
   const joinAddress = useBibleBroadcastJoinAddress();
   const currentBooki = useBibleAddressBooki();
   const currentChapteri = useBibleAddressChapteri();
@@ -58,7 +58,7 @@ export function BibleBroadcastList() {
 
   return (
     <Lists
-      className="flex gap-2 custom-align-items over-hidden"
+      className="flex gap-2 custom-align-items over-hidden h-full"
       $joinAddress={joinAddress}
       $booki={currentBooki}
       $chapteri={currentChapteri}
@@ -71,7 +71,7 @@ export function BibleBroadcastList() {
       </BibleTranslatesContextProvider>
     </Lists>
   );
-}
+};
 
 const selectedStyle = css`
   background-color: var(--color--7);

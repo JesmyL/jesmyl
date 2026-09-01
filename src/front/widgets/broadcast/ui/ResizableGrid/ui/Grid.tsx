@@ -1,5 +1,6 @@
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '#shared/components/ui/resizable';
 import { BroadcastGridTabConfig } from '#widgets/broadcast/model/TabConfig';
+import styled from '@emotion/styled';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
@@ -63,7 +64,7 @@ export const BroadcastResizableGrid = <TabId extends number>({ config }: { confi
   return (
     <DragDropContext onDragEnd={onDragEnd as never}>
       <div className="w-full h-full max-h-[94vh]">
-        <ResizablePanelGroup
+        <StyledResizablePanelGroup
           orientation="vertical"
           id="main-vertical-group"
         >
@@ -134,8 +135,20 @@ export const BroadcastResizableGrid = <TabId extends number>({ config }: { confi
               </ResizablePanel>
             </ResizablePanelGroup>
           </ResizablePanel>
-        </ResizablePanelGroup>
+        </StyledResizablePanelGroup>
       </div>
     </DragDropContext>
   );
 };
+
+const StyledResizablePanelGroup = styled(ResizablePanelGroup)`
+  [data-slot='resizable-handle'] {
+    background-color: var(--color-x3);
+    opacity: 0.2;
+
+    &:hover {
+      background-color: var(--color-x7);
+      opacity: 1;
+    }
+  }
+`;
