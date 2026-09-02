@@ -52,6 +52,7 @@ export const MyFilesUploader = ({
         type="file"
         multiple
         onClick={defaultPreventer}
+        title=""
         onChange={handleOnChange}
       />
       {withButton && (

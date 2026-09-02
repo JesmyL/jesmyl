@@ -52,15 +52,13 @@ export const BroadcastSlidePreview = ({ isPreview = true, onBgFileIdChange }: Pr
                     {isOpen =>
                       isOpen &&
                       currentConfig && (
-                        <div className="flex center mt-5">
-                          <StyledFullContainer className="flex center bg-x3 strong-size">
-                            <ScreenWithBackground $proportion={currentConfig.proportion}>
-                              <BroadcastScreen
-                                isTech
-                                isPreview={isPreview}
-                              />
-                            </ScreenWithBackground>
-                          </StyledFullContainer>
+                        <div className="flex center h-full items-center">
+                          <ScreenWithBackground $proportion={currentConfig.proportion}>
+                            <BroadcastScreen
+                              isTech
+                              isPreview={isPreview}
+                            />
+                          </ScreenWithBackground>
                         </div>
                       )
                     }
@@ -74,10 +72,6 @@ export const BroadcastSlidePreview = ({ isPreview = true, onBgFileIdChange }: Pr
     </>
   );
 };
-
-const StyledFullContainer = styled.div`
-  --strong-size: 94.5vmin;
-`;
 
 const ScreenWithBackground = styled.div<{ $proportion: number }>`
   --prop: ${props => props.$proportion};

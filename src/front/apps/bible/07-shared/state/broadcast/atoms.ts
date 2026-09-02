@@ -19,7 +19,4 @@ export const bibleBroadcastGridSizesAtom = atom<BroadcastGridNumberNetPack>(
   [50, 25, 25, 25, 0, 25],
   'bible-bro:gridSizes',
 );
-export const bibleBroadcastGridActiveTabiAtom = atom<BroadcastGridNumberNetPack>(
-  [0, 0, 0, 0, 0, 0],
-  'bible-bro:activeTabi',
-);
+export const bibleBroadcastGridActiveTabiAtom = atom<BroadcastGridNumberNetPack>([0, 0, 0, 0, 0, 0]);

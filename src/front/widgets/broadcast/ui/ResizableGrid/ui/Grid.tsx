@@ -5,7 +5,6 @@ import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { PanelSize } from 'react-resizable-panels';
-import { extractNumber } from 'shared/utils';
 import { ResizableGridCell } from '../../GridCell/ui/Cell';
 
 export const BroadcastResizableGrid = <TabId extends number>({ config }: { config: BroadcastGridTabConfig<TabId> }) => {
@@ -47,17 +46,48 @@ export const BroadcastResizableGrid = <TabId extends number>({ config }: { confi
   };
 
   const onDragEnd = (result: DropResult<`${TabId}`>) => {
-    const { source, destination } = result;
+    if (!result.destination) return;
+    const { droppableId: srcId, index: srci } = result.source;
+    const { droppableId: dstId, index: dsti } = result.destination;
 
-    if (!destination) return;
-    if (source.droppableId === destination.droppableId && source.index === destination.index) return;
+    if (srcId === dstId && srci === dsti) return;
 
     config.tabNetAtom.do.update(draft => {
-      const sourceCell = draft[extractNumber(source.droppableId)];
-      const destCell = draft[extractNumber(destination.droppableId)];
+      const sourceCell = draft[+srcId];
+      const destCell = draft[+dstId];
 
-      const [movedTab] = sourceCell.splice(source.index, 1);
-      destCell.splice(destination.index, 0, movedTab);
+      const [movedTab] = sourceCell.splice(srci, 1);
+      destCell.splice(dsti, 0, movedTab);
+    });
+
+    config.activeTabiAtom.do.update(draft => {
+      const currentSrcActive = draft[+srcId] ?? 0;
+      const currentDstActive = draft[+dstId] ?? 0;
+
+      if (srcId === dstId) {
+        if (srci === currentSrcActive) {
+          draft[+srcId] = dsti;
+        } else {
+          let newActive = currentSrcActive;
+          if (srci < currentSrcActive && dsti >= currentSrcActive) {
+            newActive--;
+          } else if (srci > currentSrcActive && dsti <= currentSrcActive) {
+            newActive++;
+          }
+          draft[+srcId] = newActive;
+        }
+        return;
+      }
+
+      if (srci < currentSrcActive) {
+        draft[+srcId] = currentSrcActive - 1;
+      } else if (srci === currentSrcActive) {
+        draft[+srcId] = Math.max(0, currentSrcActive - 1);
+      }
+
+      if (dsti <= currentDstActive) {
+        draft[+dstId] = currentDstActive + 1;
+      }
     });
   };
 
@@ -144,7 +174,7 @@ export const BroadcastResizableGrid = <TabId extends number>({ config }: { confi
 const StyledResizablePanelGroup = styled(ResizablePanelGroup)`
   [data-slot='resizable-handle'] {
     background-color: var(--color-x3);
-    opacity: 0.2;
+    opacity: 0.4;
 
     &:hover {
       background-color: var(--color-x7);

@@ -1,5 +1,6 @@
 import { BroadcastGridTabConfig } from '#widgets/broadcast/model/TabConfig';
 import { Draggable, Droppable } from '@hello-pangea/dnd';
+import { twJoin } from 'tailwind-merge';
 
 export const ResizableGridCell = <TabId extends number>({
   cellId,
@@ -27,10 +28,13 @@ export const ResizableGridCell = <TabId extends number>({
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
-            className={`w-full h-full flex flex-col bg-background ${snapshot.isDraggingOver ? 'bg-accent/10' : ''}`}
+            className={twJoin(
+              'w-full h-full flex flex-col bg-background relative transition-colors',
+              snapshot.isDraggingOver && 'bg-accent/10',
+            )}
           >
             {tabOrder && tabOrder.length > 1 && (
-              <div className="flex gap-1 border-b bg-muted/30 px-2 h-9 overflow-x-auto select-none">
+              <div className="flex gap-1 border-b bg-muted/30 px-2 h-9 w-full items-end overflow-x-auto select-none z-10 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                 {tabOrder.map((tabId, tabIdi) => (
                   <Draggable
                     key={tabId}
@@ -42,13 +46,14 @@ export const ResizableGridCell = <TabId extends number>({
                         ref={dragProvided.innerRef}
                         {...dragProvided.draggableProps}
                         {...dragProvided.dragHandleProps}
-                        className={`px-3 h-7 flex text-xs font-medium border rounded-t-md transition-all ${
+                        className={twJoin(
+                          'px-3 h-7 flex items-center text-xs font-medium border rounded-t-md transition-all shrink-0',
                           dragSnapshot.isDragging
-                            ? 'bg-primary text-primary-foreground shadow-lg scale-105'
+                            ? 'shadow-lg scale-105 z-50'
                             : tabIdi === activeTabi
                               ? 'bg-background border-b-transparent text-foreground'
-                              : 'bg-transparent border-transparent text-muted-foreground hover:text-foreground'
-                        }`}
+                              : 'bg-transparent border-transparent text-muted-foreground hover:text-foreground',
+                        )}
                         onClick={() => onActivate(tabIdi)}
                       >
                         {config.tabs[tabId].title()}
@@ -56,15 +61,16 @@ export const ResizableGridCell = <TabId extends number>({
                     )}
                   </Draggable>
                 ))}
-                {provided.placeholder}
               </div>
             )}
 
             {Inner && (
-              <div className="[container-type:size] flex-1 w-full h-full overflow-auto relative">
+              <div className="[container-type:size] flex-1 w-full h-full relative">
                 <Inner />
               </div>
             )}
+
+            <div className="absolute inset-0 pointer-events-none flex items-end">{provided.placeholder}</div>
           </div>
         );
       }}
