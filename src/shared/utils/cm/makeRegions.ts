@@ -24,7 +24,7 @@ export const cmComOrderMakeRegions = <Ord extends CmComOrder>(
 
   return repeats === 0
     ? []
-    : mapObjectEntries(makeCmComOrderRepeatOrSelf(repeats), (key, count): CmComOrderEditableRegion<Ord> => {
+    : mapObjectEntries(makeCmComOrderRepeatOrSelf(repeats), (key, count = 0): CmComOrderEditableRegion<Ord> => {
         if (key === SpecialOrderRepeatsKey.Self)
           return calculateRate({
             startLinei: 0,

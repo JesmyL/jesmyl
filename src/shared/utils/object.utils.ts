@@ -2,15 +2,17 @@ import { checkIsArray, checkIsNil, checkIsObject, checkIsString } from './checkI
 
 export const objectEntries = <T>(
   it: T,
-): [T extends object | nil ? (keyof T extends number ? `${keyof T}` : keyof T) : string, NonNullable<T>[keyof T]][] =>
-  checkIsObject(it) ? (Object.entries(it) as never) : [];
+): [
+  T extends object | nil ? (keyof T extends number ? `${keyof T}` : keyof T) : string,
+  NonNullable<T>[RealKey<T>],
+][] => (checkIsObject(it) ? (Object.entries(it) as never) : []);
 
 export const objectKeys = <T>(
   it: T,
 ): (T extends object | nil ? (keyof T extends number ? `${keyof T}` : keyof T) : string)[] =>
   checkIsObject(it) ? (Object.keys(it) as never) : [];
 
-export const objectValues = <T>(it: T): NonNullable<T>[keyof T][] =>
+export const objectValues = <T>(it: T): NonNullable<T>[RealKey<T>][] =>
   checkIsObject(it) ? (Object.values(it) as never) : [];
 
 export const arrayByLength = <Value>(length: number, map: (index: number, length: number) => Value): Value[] =>
@@ -25,7 +27,7 @@ export const forEachObjectEntries = <T>(
   it: T,
   eacher: (
     key: T extends object | nil ? (keyof T extends number ? `${keyof T}` : keyof T) : string,
-    value: NonNullable<T>[keyof T],
+    value: NonNullable<T>[RealKey<T>],
     index: number,
   ) => void,
 ) => {
@@ -33,16 +35,18 @@ export const forEachObjectEntries = <T>(
   if (checkIsObject(it)) for (const key in it) eacher(key as never, it[key] as never, i++);
 };
 
+type RealKey<T> = keyof NonNullable<T>;
+
 export const forEachObjectEntriesSimple: <T>(
   it: T,
-  eacher: (key: keyof NonNullable<T>, value: NonNullable<T>[keyof T], index: number) => void,
+  eacher: (key: RealKey<T>, value: NonNullable<T>[RealKey<T>], index: number) => void,
 ) => void = forEachObjectEntries as never;
 
 export const mapObjectEntries = <T, Ret>(
   it: T,
   mapper: (
     key: T extends object | nil ? (keyof T extends number ? `${keyof T}` : keyof T) : string,
-    value: NonNullable<T>[keyof T],
+    value: NonNullable<T>[RealKey<T>],
     index: number,
   ) => Ret,
 ): Ret[] => {
