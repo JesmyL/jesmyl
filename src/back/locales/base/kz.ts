@@ -357,6 +357,7 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
   txts: 'Мәтіндер',
   send: 'Жіберу',
   manyStrs: 'Жолдар көп',
+  emptyList: 'Тізім бос',
   maxStrsCount: 'Жолдардың максималды саны',
   fewStrs: 'Жолдар аз',
   dicts: 'Жинақтар',
