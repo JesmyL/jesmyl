@@ -360,6 +360,7 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
   fewStrs: 'Мало строк',
   dicts: 'Сборники',
   denied: 'Заперщено',
+  emptyList: 'Список пуст',
   lang: 'Язык',
   lookJSON: 'Посмотреть JSON',
   NSymbols: '$n $declension{{$n}{символ}{символа}{символов}}',

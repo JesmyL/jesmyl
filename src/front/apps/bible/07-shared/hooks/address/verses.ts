@@ -3,6 +3,7 @@ import { BibleVersei } from '$bible/shared/model/base';
 import { bibleJoinAddressAtom, bibleVerseiAtom } from '$bible/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
+import { checkIsNil } from 'shared/utils/checkIs';
 import { useBibleBroadcastSlideSyncContentSetter } from '../slide-sync';
 import { useBibleShowTranslatesValue } from '../translates';
 import { useBibleBroadcastJoinAddress } from './address';
@@ -14,9 +15,9 @@ export const useBibleAddressIsCurrentVersei = (versei: BibleVersei) => {
   const currentBooki = useBibleAddressBooki();
   const currentChapteri = useBibleAddressChapteri();
   const currentVersei = useBibleAddressVersei();
-  return joinAddress === null
+  return checkIsNil(joinAddress[0])
     ? currentVersei === versei
-    : (joinAddress?.[currentBooki]?.[currentChapteri].includes(versei) ?? false);
+    : (joinAddress[0][currentBooki]?.[currentChapteri]?.includes(versei) ?? false);
 };
 
 export const useBibleAddressVersei = (): BibleVersei => {
@@ -42,12 +43,12 @@ export const usePutBibleAddressVerseiSetter = () => {
   return useCallback(
     (versei: BibleVersei, isDblClick: boolean): (() => void) | null => {
       if (isDblClick) syncSlide();
-      else bibleJoinAddressAtom.set(null);
+      else bibleJoinAddressAtom.reset();
 
       bibleVerseiAtom.set(versei);
 
       return () => {
-        if (currentJoinAddress?.[currentBooki]?.[currentChapteri]?.includes(versei)) {
+        if (currentJoinAddress[0]?.[currentBooki]?.[currentChapteri]?.includes(versei)) {
           bibleJoinAddressAtom.set(currentJoinAddress);
         }
       };

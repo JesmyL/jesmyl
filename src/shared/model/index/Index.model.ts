@@ -1,4 +1,5 @@
 import { AppName } from '#basis/model/App.model';
+import { BibleBroadcastTextMapBlock } from '$bible/shared/model/base';
 import { LocalSokiAuth } from 'shared/api';
 import { BibleBroadcastScreenConfig } from '../bible/broadcast';
 import { CmBroadcastSchWgtLiveDataValue } from '../cm/SchWgtLive';
@@ -9,7 +10,7 @@ export type IndexSchWBroadcastLiveDataValue = {
   fio: string;
   isHide: boolean;
   cm?: CmBroadcastSchWgtLiveDataValue;
-  bible?: { text: string; addressText: string; config: BibleBroadcastScreenConfig };
+  bible?: { texts: BibleBroadcastTextMapBlock[]; addressText: string; config: BibleBroadcastScreenConfig };
   markdown?: string;
 };
 

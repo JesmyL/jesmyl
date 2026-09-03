@@ -1,118 +1,123 @@
 import { BibleTranslateName, Langi } from 'shared/api';
 import { itIt, itNumSort } from 'shared/utils';
-import { checkIsArray } from 'shared/utils/checkIs';
+import { checkIsArray, checkIsNotNil } from 'shared/utils/checkIs';
 import { objectEntries } from 'shared/utils/object.utils';
 import { textToUpperCase } from 'shared/utils/string.utils';
 import { takeBibleLangBooks } from '../const/bibleTitles';
-import { translateDescriptions } from '../const/consts';
-import { verseTranslateTitleCssClassName } from '../const/ids';
+import { translateDescriptions, translateLanguage } from '../const/consts';
 import { useBibleTranslatesContext } from '../contexts/translates';
-import { BibleBroadcastAnyAddress, BibleBroadcastJoinAddress, BibleSingleAddressCode } from '../model/base';
-import { useBibleCurrentLangi } from '../state/atoms';
+import {
+  BibleBroadcastAnyAddress,
+  BibleBroadcastJoinAddress,
+  BibleBroadcastTextMapBlock,
+  BibleSingleAddressCode,
+} from '../model/base';
 import { BibleBookTranslates } from '../state/TranslatesContext';
 import { useBibleShowTranslatesValue } from './translates';
 
-export const useBibleSlideText = (
+export const useBibleSlideMapBlocks = (
   address: BibleBroadcastAnyAddress | nil,
   isSetFirstTranslate?: boolean,
   isSetAddress?: boolean,
 ) => {
   const showTranslates = useBibleShowTranslatesValue();
   const translates = useBibleTranslatesContext();
-  const langi = useBibleCurrentLangi();
 
   if (checkIsArray(address))
-    return makeSlideSingleAddressText(showTranslates, translates, address, isSetFirstTranslate, isSetAddress);
+    return makeSlideSingleAddressMapBlocks(showTranslates, translates, address, isSetFirstTranslate, isSetAddress);
 
-  return makeSlideJoinedAddressText(langi, showTranslates, translates, address, isSetFirstTranslate, isSetAddress);
+  return makeSlideJoinedAddressMapBlocks(showTranslates, translates, address, isSetFirstTranslate, isSetAddress);
 };
 
-const makeSlideSingleAddressText = (
+const makeSlideSingleAddressMapBlocks = (
   showTranslates: BibleTranslateName[],
   translates: BibleBookTranslates,
   [booki, chapteri, versei]: BibleSingleAddressCode,
   isSetFirstTranslate?: boolean,
   isSetAddress?: boolean,
-) => {
+): BibleBroadcastTextMapBlock[] => {
   const verseNum = isSetAddress === false || showTranslates.length > 1 ? '' : versei + 1 + '. ';
 
   if (isSetFirstTranslate)
-    return `${verseNum}${translates[showTranslates[0]]?.chapters?.[booki]?.[chapteri]?.[versei] ?? ''}`;
+    return [
+      {
+        texts: [{ text: `${verseNum}${translates[showTranslates[0]]?.chapters?.[booki]?.[chapteri]?.[versei] ?? ''}` }],
+      },
+    ];
 
-  return showTranslates.reduce((verse, tName) => {
+  return showTranslates.map(tName => {
     const text = translates[tName]?.chapters?.[booki]?.[chapteri]?.[versei];
-    return text
-      ? showTranslates.length > 1
-        ? `${verse}<div><h3 class="${verseTranslateTitleCssClassName}">${
-            translateDescriptions[tName]
-          } (${textToUpperCase(tName)})</h3>${text ? verseNum + text : ''}</div>`
-        : text
-      : verse;
-  }, '');
+    const texts = [{ text: text ? verseNum + text : '' }];
+
+    return showTranslates.length > 1
+      ? {
+          texts,
+          head: `${translateDescriptions[tName]} (${textToUpperCase(tName)})`,
+        }
+      : { texts };
+  });
 };
 
-const makeSlideJoinedAddressText = (
-  langi: Langi,
+const makeSlideJoinedAddressMapBlocks = (
   showTranslates: BibleTranslateName[],
   translates: BibleBookTranslates,
   joinAddress: BibleBroadcastJoinAddress | nil,
   isSetFirstTranslate?: boolean,
   isSetAddress?: boolean,
-) => {
-  if (joinAddress == null) return '';
+): BibleBroadcastTextMapBlock[] => {
+  if (!joinAddress) return [];
 
-  const pasteText = (chapters: ((string[] | und)[] | nil)[] | und) => {
-    if (chapters === undefined) return '';
+  const pasteText = (
+    langi: Langi,
+    chapters: ((string[] | und)[] | nil)[] | und,
+  ): { address: string; text: string }[] => {
+    if (!chapters) return [];
 
     return objectEntries(joinAddress)
       .map(([booki, book], _, booka) => {
+        if (!chapters[booki]?.[0]?.[0]) return;
         const bookEntries = objectEntries(book);
 
-        if (!chapters[booki]?.[0]?.[0]) return '';
+        return {
+          address:
+            isSetAddress !== false && booka.length > 1
+              ? takeBibleLangBooks(langi)[booki].full +
+                (bookEntries.length > 1 ? '' : ', ' + (1 + +bookEntries[0][0])) +
+                ':\n'
+              : '',
 
-        return (
-          (isSetAddress !== false && booka.length > 1
-            ? takeBibleLangBooks(langi)[booki].full +
-              (bookEntries.length > 1 ? '' : ', ' + (1 + +bookEntries[0][0])) +
-              ':\n'
-            : '') +
-          bookEntries
-            .map(([chapteri, chapter], _, chaptera) => {
+          text: bookEntries
+            .map(([chapteri, chapter = []], _, chaptera) => {
               const chapterPrefix = isSetAddress === false ? '' : chaptera.length > 1 ? +chapteri + 1 + ':' : '';
+
               return chapter
                 .slice(0)
                 .sort(itNumSort)
                 .map(
                   versei =>
                     (isSetAddress === false ? '' : `${chapterPrefix}${versei + 1}. `) +
-                    (chapters[booki]![chapteri]?.[versei] ?? ''),
+                    (chapters[booki]?.[chapteri]?.[versei] ?? `${booki};${chapteri};${versei}`),
                 )
                 .filter(itIt)
                 .join('\n');
             })
-            .join('\n')
-        );
+            .join('\n'),
+        };
       })
-      .filter(itIt)
-      .join('\n\n');
+      .filter(checkIsNotNil);
   };
 
-  if (isSetFirstTranslate) return pasteText(translates[showTranslates[0]]?.chapters);
+  if (isSetFirstTranslate || showTranslates.length < 2)
+    return [
+      {
+        texts: pasteText(translateLanguage[showTranslates[0]], translates[showTranslates[0]]?.chapters),
+      },
+    ];
 
-  return showTranslates
-    .map(tName => {
-      const text = pasteText(translates[tName]?.chapters);
-
-      return (
-        text &&
-        (showTranslates.length > 1
-          ? `<h3 class="${verseTranslateTitleCssClassName}">${
-              translateDescriptions[tName]
-            } (${textToUpperCase(tName)})</h3>`
-          : '') +
-          '<br>' +
-          text
-      );
-    })
-    .join('</br>');
+  return showTranslates.map(tName => {
+    return {
+      head: `${translateDescriptions[tName]} (${textToUpperCase(tName)})`,
+      texts: pasteText(translateLanguage[tName], translates[tName]?.chapters),
+    };
+  });
 };

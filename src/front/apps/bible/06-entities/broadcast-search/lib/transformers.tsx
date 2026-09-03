@@ -11,7 +11,7 @@ import { BibleTitleCodei } from 'shared/model/bible/enums';
 import { emptyFunc } from 'shared/utils';
 import { checkIsUndefined } from 'shared/utils/checkIs';
 import { ruLowerLettersStr } from 'shared/utils/cm/com/const';
-import { objectKeys } from 'shared/utils/object.utils';
+import { arrayByLength, objectKeys } from 'shared/utils/object.utils';
 import { transcriptEnToRuText } from 'shared/utils/ru-en-letters';
 
 export const useBibleBroadcastSearchTransformAddressTermToAddress = (
@@ -119,7 +119,7 @@ export const useBibleBroadcastSearchTransformAddressTermToAddress = (
       onEnterPressRef.current = () => {
         if (finishVerseNumber === undefined) {
           bibleAddressIndexesUpdate(booki, chapterNumberi, verseNumber - 1);
-          bibleJoinAddressAtom.set(null);
+          bibleJoinAddressAtom.reset();
         } else {
           const arrLen = finishVerseNumber - verseNumber + 1;
 
@@ -129,9 +129,7 @@ export const useBibleBroadcastSearchTransformAddressTermToAddress = (
               [chapterNumberi]:
                 chips.verseSeparator?.trim() === ','
                   ? [verseNumber - 1, finishVerseNumber - 1]
-                  : Array(arrLen < 0 ? 0 : arrLen)
-                      .fill(0)
-                      .map((_, i) => i + verseNumber - 1),
+                  : arrayByLength(arrLen < 0 ? 0 : arrLen, i => i + verseNumber - 1),
             },
           } as never);
         }
@@ -141,7 +139,7 @@ export const useBibleBroadcastSearchTransformAddressTermToAddress = (
     const address = (
       <>
         {bookNameNode} {chapterNode}:{verseNode}
-        {finishVerseNode === undefined ? null : (
+        {checkIsUndefined(finishVerseNode) ? null : (
           <>
             {chips.verseSeparator?.trim() === ',' ? ',' : '-'}
             {finishVerseNode}

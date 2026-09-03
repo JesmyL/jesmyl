@@ -4,11 +4,9 @@ import { useCallback } from 'react';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { checkIsEq } from 'shared/utils/checkIsEq';
 
-export const useBibleBroadcastHistory = () => bibleIDB.useValue.broadcastHistory();
-
 export const useBibleBroadcastHistoryAddToHistory = () => {
   return useCallback(async (item: BibleBroadcastAddress, isReplaceFirstNearVersei = false) => {
-    const history = await bibleIDB.get.broadcastHistory();
+    const history = (await bibleIDB.get.broadcastHistory()) ?? [];
 
     const previ = history.findIndex(historyItem => checkIsEq(historyItem, item, true));
     const newHistory = [...history];
@@ -26,8 +24,4 @@ export const useBibleBroadcastHistoryAddToHistory = () => {
 
     bibleIDB.set.broadcastHistory(newHistory);
   }, []);
-};
-
-export const useBibleBroadcastHistoryClearHistorySetter = () => {
-  return useCallback(() => bibleIDB.set.broadcastHistory([]), []);
 };

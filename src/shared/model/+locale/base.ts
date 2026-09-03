@@ -338,6 +338,7 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   noAccess: LocaleSimpleString;
   toSendSmth: StringTemplaterInterpolation<'s'>;
   NSymbols: StringTemplaterInterpolation<'n'>;
+  emptyList: LocaleSimpleString;
 
   send: LocaleSimpleString;
   manyStrs: LocaleSimpleString;

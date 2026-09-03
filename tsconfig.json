@@ -109,6 +109,6 @@
       "p/d": ["./back/drizzle/ex/index.ts"]
     }
   },
-  "include": ["src", "regexpert.gen"],
+  "include": ["src", "regexpert.gen", "src/front/apps/bible/06-entities/BroadcastArchive/lib/.ts"],
   "exclude": ["**/*.*js"]
 }

@@ -21,8 +21,7 @@ export function BibleBroadcastListVerseList(): JSX.Element {
   const verses = translates[showTranslates[0]]?.chapters?.[currentBooki]?.[currentChapteri];
 
   useEffect(() => {
-    if (verses === undefined || !verses.length) return;
-    fastVersesAtom.set(verses);
+    if (verses?.length) fastVersesAtom.set(verses);
   }, [verses]);
 
   useBibleBroadcastListVerseListeners(verseListRef, currentBooki, currentChapteri);
@@ -31,6 +30,7 @@ export function BibleBroadcastListVerseList(): JSX.Element {
     <StyledContainer
       className="w-full overflow-y-auto overflow-x-hidden list-decimal list-inside"
       ref={verseListRef}
+      title="[0-9] - перейти к стиху; Shift+[@v>] - добавить диапазон стихов; Ctrl+@ - добавить/удалить один стих"
     >
       {(verses ?? fastVersesAtom.get())?.map((__html, versei) => {
         return (
@@ -47,13 +47,13 @@ export function BibleBroadcastListVerseList(): JSX.Element {
 }
 
 const StyledContainer = styled.ol`
-  [data-versei]::before {
-    content: counter(verse) '. ';
-    color: var(--color-x7);
-  }
-
   [data-versei] {
     counter-increment: verse;
+
+    &:before {
+      content: counter(verse) '. ';
+      color: var(--color-x7);
+    }
   }
 
   .bible-list-face:nth-of-type(10n):not(:last-child) {

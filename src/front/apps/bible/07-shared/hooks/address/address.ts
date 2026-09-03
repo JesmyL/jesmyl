@@ -1,29 +1,24 @@
 import { bibleBroadcastListSingleAddressSet } from '$bible/entities/broadcast-list';
-import { bibleBroadcastSearchResultSelectedAtom } from '$bible/entities/broadcast-search';
 import { BibleBooki, BibleBroadcastJoinAddress, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
 import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
 import { checkIsNotUndefined } from 'shared/utils/checkIs';
 import { objectKeys } from 'shared/utils/object.utils';
 
-export const useBibleBroadcastAddressIndexesSetter = () => {
-  return (
-    booki: BibleBooki,
-    chapteri: BibleChapteri,
-    versei: BibleVersei,
-    resultSelectedi?: number,
-    onClick?: (booki: BibleBooki, chapteri: BibleChapteri, versei: BibleVersei) => void,
-  ) => {
-    return () => {
-      bibleBroadcastListSingleAddressSet(booki, chapteri, versei);
-      if (checkIsNotUndefined(resultSelectedi)) {
-        bibleBroadcastSearchResultSelectedAtom.set(resultSelectedi);
-        bibleJoinAddressAtom.set(null);
-      }
+export const bibleBroadcastAddressSetIndexes = (
+  booki: BibleBooki,
+  chapteri: BibleChapteri,
+  versei: BibleVersei,
+  resultSelectedi?: number,
+  onClick?: (booki: BibleBooki, chapteri: BibleChapteri, versei: BibleVersei) => void,
+) => {
+  bibleBroadcastListSingleAddressSet(booki, chapteri, versei);
+  if (checkIsNotUndefined(resultSelectedi)) {
+    // bibleBroadcastSearchResultSelectedAtom.set(resultSelectedi);
+    bibleJoinAddressAtom.reset();
+  }
 
-      onClick?.(booki, chapteri, versei);
-    };
-  };
+  onClick?.(booki, chapteri, versei);
 };
 
 export const bibleAddressIndexesUpdate = (
@@ -35,21 +30,25 @@ export const bibleAddressIndexesUpdate = (
   bibleBroadcastListSingleAddressSet(booki, chapteri, versei);
 
   if (checkIsNotUndefined(resultSelectedi)) {
-    bibleBroadcastSearchResultSelectedAtom.set(resultSelectedi);
-    bibleJoinAddressAtom.set(null);
+    // bibleBroadcastSearchResultSelectedAtom.set(resultSelectedi);
+    bibleJoinAddressAtom.reset();
   }
 };
 
-export const bibleAddressWithForceJoinReset = (booki?: BibleBooki, chapteri?: BibleChapteri, versei?: BibleVersei) => {
-  bibleJoinAddressAtom.set(null);
+export const bibleAddressWithForceJoinReset = (
+  booki?: BibleBooki | nil,
+  chapteri?: BibleChapteri | nil,
+  versei?: BibleVersei | nil,
+) => {
+  bibleJoinAddressAtom.reset();
   bibleBroadcastListSingleAddressSet(booki, chapteri, versei);
 };
 
 export const useBibleBroadcastJoinAddress = () => useAtomValue(bibleJoinAddressAtom);
 
 export const takeJoinedAddressMaxValues = (joinAddress: BibleBroadcastJoinAddress) => {
-  const booki = Math.max(...(objectKeys(joinAddress) as never as number[])) as BibleBooki;
-  const chapteri = Math.max(...(objectKeys(joinAddress[booki]) as never as number[])) as BibleChapteri;
+  const booki = Math.max(...objectKeys(joinAddress));
+  const chapteri = Math.max(...objectKeys(joinAddress[booki]));
 
-  return [booki, chapteri, Math.max(...joinAddress[booki][chapteri]) as BibleVersei] as const;
+  return [booki, chapteri, Math.max(...(joinAddress?.[booki]?.[chapteri] ?? [])) || BibleVersei.def] as const;
 };

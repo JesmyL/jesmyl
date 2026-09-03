@@ -35,37 +35,44 @@ export const ResizableGridCell = <TabId extends number>({
           >
             {tabOrder && tabOrder.length > 1 && (
               <div className="flex gap-1 border-b bg-muted/30 px-2 h-9 w-full items-end overflow-x-auto select-none z-10 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-                {tabOrder.map((tabId, tabIdi) => (
-                  <Draggable
-                    key={tabId}
-                    draggableId={`${tabId}`}
-                    index={tabIdi}
-                  >
-                    {(dragProvided, dragSnapshot) => (
-                      <div
-                        ref={dragProvided.innerRef}
-                        {...dragProvided.draggableProps}
-                        {...dragProvided.dragHandleProps}
-                        className={twJoin(
-                          'px-3 h-7 flex items-center text-xs font-medium border rounded-t-md transition-all shrink-0',
-                          dragSnapshot.isDragging
-                            ? 'shadow-lg scale-105 z-50'
-                            : tabIdi === activeTabi
-                              ? 'bg-background border-b-transparent text-foreground'
-                              : 'bg-transparent border-transparent text-muted-foreground hover:text-foreground',
-                        )}
-                        onClick={() => onActivate(tabIdi)}
+                {tabOrder.map((tabId, tabIdi) => {
+                  const tabConfig = config.tabs[tabId];
+
+                  return (
+                    tabConfig && (
+                      <Draggable
+                        key={tabId}
+                        draggableId={`${tabId}`}
+                        index={tabIdi}
                       >
-                        {config.tabs[tabId].title()}
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
+                        {(dragProvided, dragSnapshot) => (
+                          <div
+                            ref={dragProvided.innerRef}
+                            {...dragProvided.draggableProps}
+                            {...dragProvided.dragHandleProps}
+                            title={tabConfig.htmlTitle?.()}
+                            className={twJoin(
+                              'px-3 h-7 flex items-center text-xs font-medium border rounded-t-md transition-all shrink-0',
+                              dragSnapshot.isDragging
+                                ? 'shadow-lg scale-105 z-50'
+                                : tabIdi === activeTabi
+                                  ? 'bg-background border-b-transparent text-foreground'
+                                  : 'bg-transparent border-transparent text-muted-foreground hover:text-foreground',
+                            )}
+                            onClick={() => onActivate(tabIdi)}
+                          >
+                            {tabConfig.title()}
+                          </div>
+                        )}
+                      </Draggable>
+                    )
+                  );
+                })}
               </div>
             )}
 
             {Inner && (
-              <div className="[container-type:size] flex-1 w-full h-full relative">
+              <div className="[container-type:size] flex-1 w-full h-full relative overflow-auto">
                 <Inner />
               </div>
             )}

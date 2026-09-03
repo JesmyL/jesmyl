@@ -1,17 +1,18 @@
-import { BibleAddressTextContext, BibleTextContentContext } from '../contexts/texts';
+import { BibleAddressTextContext, BibleTextMapBlocksContentContext } from '../contexts/texts';
+import { BibleBroadcastTextMapBlock } from '../model/base';
 
 export const BibleBroadcastScreenKnownTextsContext = ({
   addressText,
-  text,
+  texts,
   children,
 }: {
   addressText: string;
-  text: string;
+  texts: BibleBroadcastTextMapBlock[];
   children?: React.ReactNode;
 }) => {
   return (
-    <BibleTextContentContext value={text}>
+    <BibleTextMapBlocksContentContext value={texts}>
       <BibleAddressTextContext value={addressText}>{children}</BibleAddressTextContext>
-    </BibleTextContentContext>
+    </BibleTextMapBlocksContentContext>
   );
 };

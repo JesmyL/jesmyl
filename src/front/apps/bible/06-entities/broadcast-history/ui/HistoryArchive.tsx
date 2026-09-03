@@ -1,17 +1,21 @@
 import { translateBase } from '#basis/locale';
-import { BibleBroadcastArchive } from '$bible/entities/broadcast-archive';
+import { BibleBroadcastArchive } from '$bible/entities/BroadcastArchive';
+import { BibleBroadcastKeyListenScope } from '$bible/shared/model/broadcast';
+import { bibleIDB } from '$bible/shared/state/bibleIDB';
 import { memo } from 'react';
-import { useBibleBroadcastHistory, useBibleBroadcastHistoryClearHistorySetter } from '../lib/history';
+import { checkIsNil } from 'shared/utils/checkIs';
 
 export const BibleBroadcastHistoryArchive = memo(function BibleBroadcastHistoryArchive() {
-  const history = useBibleBroadcastHistory();
-  const clearHistory = useBibleBroadcastHistoryClearHistorySetter();
+  const history = bibleIDB.useValue.broadcastHistory();
 
   return (
     <BibleBroadcastArchive
       title={translateBase(it => it.history)}
       list={history}
-      onRemove={clearHistory}
+      onRemove={itemi =>
+        bibleIDB.set.broadcastHistory(prev => (checkIsNil(itemi) ? [] : prev?.filter((_, iti) => iti !== itemi)))
+      }
+      scope={BibleBroadcastKeyListenScope.History}
     />
   );
 });

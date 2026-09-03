@@ -7,7 +7,7 @@ import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { itInvokeIt, itNNil } from 'shared/utils';
 
-export const useScreenBroadcastFaceLineListeners = () => {
+export const useBroadcastListeners = () => {
   const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
   const currentConfigiRef = useActualRef(currentConfigi);
   const configs = useScreenBroadcastConfigsValue();

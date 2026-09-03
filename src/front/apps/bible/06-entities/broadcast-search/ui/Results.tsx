@@ -1,59 +1,58 @@
+import { bibleBroadcastSearchAreaConfigDict } from '$bible/shared/const';
 import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
-import { useBibleAddressBooki, useBibleAddressChapteri } from '$bible/shared/hooks';
+import { bibleAddressIndexesUpdate, useBibleAddressBooki, useBibleAddressChapteri } from '$bible/shared/hooks';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
+import { BibleBooki, BibleBroadcastSingleAddress, BibleChapteri } from '$bible/shared/model/base';
+import { BibleBroadcastKeyListenScope } from '$bible/shared/model/broadcast';
 import {
-  BibleBooki,
-  BibleBroadcastSingleAddress,
-  BibleChapteri,
-  BibleSearchInnerZone,
-  BibleSearchZone,
-  BibleVersei,
-} from '$bible/shared/model/base';
+  bibleBroadcastCurrentListLengthAtom,
+  bibleBroadcastCurrentSelectedIndexAtom,
+  bibleBroadcastKeyListenScopeAtom,
+} from '$bible/shared/state';
 import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
-import { JSX, useCallback, useEffect, useState } from 'react';
+import { JSX, useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { BibleTitleCodei } from 'shared/model/bible/enums';
-import { checkIsUndefined } from 'shared/utils/checkIs';
+import { checkIsNil, checkIsUndefined } from 'shared/utils/checkIs';
 import { lazyInit } from 'shared/utils/lazyInit';
 import { arrayByLength } from 'shared/utils/object.utils';
 import { transcriptEnToRuText } from 'shared/utils/ru-en-letters';
 import { internationalWordRegInner } from 'shared/utils/searchRate';
-import { bibleBroadcastSearchResultSelectedListAtom, useBibleBroadcastSearchResultSelectedValue } from '../lib/results';
-import { bibleBroadcastSearchTermAtom, bibleBroadcastSearchZoneAtom } from '../state/atoms';
+import { bibleBroadcastSearchResultSelectedListAtom } from '../lib/results';
+import { bibleBroadcastSearchTermAtom } from '../state/atoms';
 import { BibleBroadcastSearchResultVerse } from './ResultVerse';
 
-interface Props {
-  inputRef: React.RefObject<HTMLInputElement | null>;
-  innerZone: BibleSearchInnerZone;
-  onClick?: (booki: BibleBooki, chapteri: BibleChapteri, versei: BibleVersei) => void;
-}
-
 const mapRetArrFunc = (): BibleBroadcastSingleAddress[] => [];
-
 const maxItems = 49;
-
 const sortStringsByLength = (a: string, b: string) => b.length - a.length;
 
-export const BibleBroadcastSearchResults = ({ inputRef, innerZone, onClick: userOnClick }: Props) => {
-  const searchZone = useAtomValue(bibleBroadcastSearchZoneAtom);
+export const BibleBroadcastSearchResults = () => {
+  const listenScope = useAtomValue(bibleBroadcastKeyListenScopeAtom);
   const searchTerm = useAtomValue(bibleBroadcastSearchTermAtom);
   const showTranslates = useBibleShowTranslatesValue();
   const lowerChapters = useBibleTranslatesContext()[showTranslates[0]]?.lowerChapters;
   const [list, setList] = useState<JSX.Element[]>([]);
-  const resultSelected = useBibleBroadcastSearchResultSelectedValue();
+  const selectedItemi = useAtomValue(bibleBroadcastCurrentSelectedIndexAtom);
   const resultList = useAtomValue(bibleBroadcastSearchResultSelectedListAtom);
-  const onClick = useCallback(() => inputRef.current?.focus(), [inputRef]);
 
   let currentBooki = useBibleAddressBooki();
   let currentChapteri = useBibleAddressChapteri();
-  if (searchZone === BibleSearchZone.Global) {
+  if (listenScope === BibleBroadcastKeyListenScope.SearchInText) {
     currentBooki = BibleTitleCodei.aБыт;
     currentChapteri = BibleChapteri.none;
   }
 
   useEffect(() => {
+    if (
+      listenScope !== BibleBroadcastKeyListenScope.SearchInChapter &&
+      listenScope !== BibleBroadcastKeyListenScope.SearchInText
+    ) {
+      setList([]);
+      return;
+    }
+
     if (checkIsUndefined(lowerChapters) || searchTerm.trim().length < 3) return;
     const freeTerm = searchTerm.trim();
     if (freeTerm.length < 3) return;
@@ -90,7 +89,7 @@ export const BibleBroadcastSearchResults = ({ inputRef, innerZone, onClick: user
       }
     };
 
-    if (searchZone === BibleSearchZone.Global)
+    if (listenScope === BibleBroadcastKeyListenScope.SearchInText)
       bibleSearchLoop: for (let booki = 0; booki < lowerChapters.length; booki++) {
         const book = lowerChapters[booki];
         if (book == null) continue;
@@ -101,14 +100,7 @@ export const BibleBroadcastSearchResults = ({ inputRef, innerZone, onClick: user
         }
       }
     else {
-      if (innerZone === BibleSearchInnerZone.Book) {
-        const book = lowerChapters[currentBooki];
-        if (book != null)
-          for (let chapteri = 0; chapteri < book.length; chapteri++) {
-            searchInChapter(currentBooki, chapteri, book[chapteri]);
-            if (lastFounds.length > maxItems) break;
-          }
-      } else searchInChapter(currentBooki, currentChapteri, lowerChapters[currentBooki]?.[currentChapteri] ?? []);
+      searchInChapter(currentBooki, currentChapteri, lowerChapters[currentBooki]?.[currentChapteri] ?? []);
     }
 
     const list = founds
@@ -121,38 +113,39 @@ export const BibleBroadcastSearchResults = ({ inputRef, innerZone, onClick: user
     setList(
       list.map(([booki, chapteri, versei], resulti) => (
         <BibleBroadcastSearchResultVerse
-          key={booki + ' ' + chapteri + ' ' + versei}
+          key={`${booki} ${chapteri} ${versei}`}
           booki={booki}
           chapteri={chapteri}
           versei={versei}
           splitRegLazy={splitRegLazy}
           resulti={resulti}
-          onClick={userOnClick}
         />
       )),
     );
-  }, [currentBooki, currentChapteri, innerZone, lowerChapters, searchTerm, searchZone, userOnClick]);
+  }, [currentBooki, currentChapteri, lowerChapters, searchTerm, listenScope]);
 
   useEffect(() => {
-    if (resultSelected === null || resultList[resultSelected] == null) return;
-    const [booki, chapteri, versei] = resultList[resultSelected];
+    if (!(listenScope in bibleBroadcastSearchAreaConfigDict)) return;
+    bibleBroadcastCurrentListLengthAtom.set(resultList.length + 1);
+
+    const resultItem = resultList[selectedItemi - 1];
+    if (checkIsNil(resultItem)) return;
+
+    bibleAddressIndexesUpdate(...resultItem);
+
+    const [booki, chapteri, versei] = resultItem;
     const node = document.getElementById(`bible-search-result-${booki}-${chapteri}-${versei}`);
-    bibleJoinAddressAtom.set(null);
-    if (node === null) return;
-    node.scrollIntoView({ block: 'nearest' });
+
+    if (!node) return;
+
+    bibleJoinAddressAtom.reset();
+    node.scrollIntoView({ block: 'center', behavior: 'smooth' });
 
     node.classList.add('selected');
     return () => node.classList.remove('selected');
-  }, [resultList, resultSelected]);
+  }, [listenScope, resultList, selectedItemi]);
 
-  return (
-    <List
-      className="h-full overflow-y-auto overflow-x-hidden"
-      onClick={onClick}
-    >
-      {list}
-    </List>
-  );
+  return <List className="h-full overflow-y-auto overflow-x-hidden">{list}</List>;
 };
 
 const List = styled.div`

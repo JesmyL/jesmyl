@@ -1,11 +1,11 @@
 import { translateBase } from '#basis/locale';
-import { useScreenBroadcastFaceLineListeners } from '#features/broadcast/complect/config-line/hooks/listeners';
-import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { useBroadcastListeners } from '#features/broadcast/complect/config-line/hooks/listeners';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BroadcastResizableGrid } from '#widgets/broadcast';
 import { BroadcastGridTabConfig } from '#widgets/broadcast/model/TabConfig';
 import { bibleBroadcastTabConfigDict } from '$bible/shared/const';
 import { useBiblePrintShowSlideAddressCode } from '$bible/shared/hooks/slide-sync';
+import { useBibleBroadcastKeyListener } from '$bible/shared/lib/useBibleBroadcastKeyListener';
 import { BibleBroadcastTabId } from '$bible/shared/model/broadcast';
 import {
   bibleBroadcastGridActiveTabiAtom,
@@ -29,31 +29,12 @@ const config: BroadcastGridTabConfig<BibleBroadcastTabId> = {
 export const BibleBroadcastControlled = ({ head, headTitle }: Props) => {
   const printShowAddress = useBiblePrintShowSlideAddressCode();
 
-  useScreenBroadcastFaceLineListeners();
+  useBroadcastListeners();
+  useBibleBroadcastKeyListener(window);
 
   useEffect(() => {
     printShowAddress();
   }, [printShowAddress]);
-
-  useEffect(() => {
-    return hookEffectPipe()
-      .pipe(
-        addEventListenerPipe(window, 'keydown', event => {
-          switch (event.code) {
-            case 'F2':
-            case 'F3':
-            case 'F4':
-            case 'ArrowUp':
-            case 'ArrowDown':
-            case 'ArrowLeft':
-            case 'ArrowRight':
-              event.preventDefault();
-              return;
-          }
-        }),
-      )
-      .effect();
-  }, []);
 
   return (
     <PageContainerConfigurer

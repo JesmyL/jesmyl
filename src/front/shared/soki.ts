@@ -132,11 +132,11 @@ export class SokiTrip {
     this.ws.addEventListener('open', send);
   }
 
-  sendResp({ error, ...event }: TSJRPCEvent, tool?: TsjrpcClientTool | nil | void) {
+  sendResp = ({ error, ...event }: TSJRPCEvent, tool?: TsjrpcClientTool | nil | void) => {
     if (error) {
       this.send({ ...event, errorMessage: `${error}` }, tool);
     } else this.send(event, tool);
-  }
+  };
 
   send = (
     event: OmitOwn<TsjrpcFromClientEvent, 'requestId'>,

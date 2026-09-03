@@ -1,5 +1,7 @@
 import { checkIsArray, checkIsNil, checkIsObject, checkIsString } from './checkIs';
 
+type RealKey<T> = keyof NonNullable<T>;
+
 export const objectEntries = <T>(
   it: T,
 ): [
@@ -34,13 +36,6 @@ export const forEachObjectEntries = <T>(
   let i = 0;
   if (checkIsObject(it)) for (const key in it) eacher(key as never, it[key] as never, i++);
 };
-
-type RealKey<T> = keyof NonNullable<T>;
-
-export const forEachObjectEntriesSimple: <T>(
-  it: T,
-  eacher: (key: RealKey<T>, value: NonNullable<T>[RealKey<T>], index: number) => void,
-) => void = forEachObjectEntries as never;
 
 export const mapObjectEntries = <T, Ret>(
   it: T,

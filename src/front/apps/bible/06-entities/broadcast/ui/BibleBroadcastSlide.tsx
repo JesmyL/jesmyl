@@ -7,7 +7,7 @@ import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model'
 
 export function BibleBroadcastSlide({
   config,
-  text,
+  texts: text,
   addressText,
 }: Required<IndexSchWBroadcastLiveDataValue>['bible']): JSX.Element {
   const [updates, setUpdates] = useState(0);
@@ -23,7 +23,7 @@ export function BibleBroadcastSlide({
   return (
     <Container className="flex center full-size">
       <BibleBroadcastScreenKnownTextsContext
-        text={text}
+        texts={text}
         addressText={addressText}
       >
         <BibleBroadcastScreenScreen

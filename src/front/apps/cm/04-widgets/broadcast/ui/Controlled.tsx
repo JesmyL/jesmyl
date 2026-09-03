@@ -1,5 +1,5 @@
 import { translateBase } from '#basis/locale';
-import { useScreenBroadcastFaceLineListeners } from '#features/broadcast/complect/config-line/hooks/listeners';
+import { useBroadcastListeners } from '#features/broadcast/complect/config-line/hooks/listeners';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BroadcastResizableGrid } from '#widgets/broadcast';
 import { BroadcastGridTabConfig } from '#widgets/broadcast/model/TabConfig';
@@ -33,7 +33,7 @@ const config: BroadcastGridTabConfig<CmBroadcastTabId> = {
 export function CmBroadcastControlled(props: Props) {
   const { comPack, comws } = useCmBroadcastScreenComNavigationComws();
 
-  useScreenBroadcastFaceLineListeners();
+  useBroadcastListeners();
   useCmBroadcastScreenKeyDownListen();
 
   return (

@@ -35,7 +35,7 @@ export const makeBibleJoinedAddressText = (
       ' ' +
       mapObjectEntries(book, (chapteri, chapter) => {
         let versesStr = '';
-        const verses = [...chapter].sort(itNumSort);
+        const verses = [...(chapter ?? [])].sort(itNumSort);
 
         for (let i = 0; i < verses.length; i++) {
           const versei = verses[i];

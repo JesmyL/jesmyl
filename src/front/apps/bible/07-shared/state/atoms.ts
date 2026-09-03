@@ -7,8 +7,9 @@ import { BibleBroadcastJoinAddress, BibleChapteri, BibleVersei } from '../model/
 export const bibleBookiAtom = atom(BibleTitleCodei.aБыт, 'bible:booki');
 export const bibleChapteriAtom = atom(BibleChapteri.def, 'bible:chapteri');
 export const bibleVerseiAtom = atom(BibleVersei.def, 'bible:versei');
+
 export const bibleShowTranslatesAtom = atom<BibleTranslateName[]>([BibleTranslateName.rst], 'bible:showTranslates');
 export const bibleMyTranslatesAtom = atom<BibleTranslateName[]>([BibleTranslateName.rst], 'bible:myTranslates');
-export const bibleJoinAddressAtom = atom<BibleBroadcastJoinAddress | nil>(null, 'bible:joinAddress');
+export const bibleJoinAddressAtom = atom<[BibleBroadcastJoinAddress | nil]>([null], 'bible:joinAddress_v1');
 
 export const useBibleCurrentLangi = () => translateLanguage[useAtomValue(bibleShowTranslatesAtom)[0]] ?? Langi.Ru;

@@ -1,8 +1,9 @@
 import { translateDynamic } from '#basis/locale';
 import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
-import { useBibleBroadcastAddressIndexesSetter } from '$bible/shared/hooks';
+import { bibleBroadcastAddressSetIndexes } from '$bible/shared/hooks';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
 import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
+import { bibleBroadcastCurrentSelectedIndexAtom } from '$bible/shared/state';
 import { useBibleCurrentLangi } from '$bible/shared/state/atoms';
 import { JSX, memo } from 'react';
 
@@ -26,14 +27,16 @@ export const BibleBroadcastSearchResultVerse = memo(function BibleSearchResultVe
   const showTranslates = useBibleShowTranslatesValue();
   const textBits =
     useBibleTranslatesContext()[showTranslates[0]]?.chapters?.[booki]?.[chapteri]?.[versei]?.split(splitRegLazy());
-  const addressSetter = useBibleBroadcastAddressIndexesSetter();
   const langi = useBibleCurrentLangi();
 
   return (
     <div
       id={`bible-search-result-${booki}-${chapteri}-${versei}`}
       className="bible-search-result pointer mt-2 flex"
-      onClick={addressSetter(booki, chapteri, versei, resulti, onClick)}
+      onClick={() => {
+        bibleBroadcastAddressSetIndexes(booki, chapteri, versei, resulti, onClick);
+        bibleBroadcastCurrentSelectedIndexAtom.set(resulti + 1);
+      }}
     >
       <span className="text-x3 mr-2 nowrap">
         {translateDynamic(langi)(it => it.bible.title.short[booki])} {chapteri + 1} {versei + 1}

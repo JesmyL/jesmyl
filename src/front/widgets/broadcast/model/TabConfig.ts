@@ -10,7 +10,11 @@ export type BroadcastGridTabConfig<TabId extends number> = {
 
 export type BroadcastGridTabDict<TabId extends number> = Record<
   TabId,
-  { Comp: (() => ReactNode) | NamedExoticComponent<object>; title: () => string }
+  {
+    Comp: (() => ReactNode) | NamedExoticComponent<object>;
+    title: () => string;
+    htmlTitle?: () => string;
+  }
 >;
 
 export type BroadcastGridNumberNetPack = [number, number, number, number, number, number];

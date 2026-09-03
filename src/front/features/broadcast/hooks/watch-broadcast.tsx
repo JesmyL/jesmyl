@@ -41,7 +41,10 @@ export const useWatchScreenBroadcast = () => {
 
           const closeWin = () => win.close();
 
+          win.onfocus = () => window.focus();
+
           window.addEventListener('unload', closeWin);
+
           win.addEventListener('unload', () => {
             window.removeEventListener('unload', closeWin);
             const newWindows = [...windows];

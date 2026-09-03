@@ -1,11 +1,11 @@
-import { BibleAddressTextContext, BibleTextContentContext } from '../contexts/texts';
+import { BibleAddressTextContext, BibleTextMapBlocksContentContext } from '../contexts/texts';
 import { useBibleBroadcastJoinAddress } from '../hooks/address/address';
 import { useBibleAddressBooki } from '../hooks/address/books';
 import { useBibleAddressChapteri } from '../hooks/address/chapters';
 import { useBibleAddressVersei } from '../hooks/address/verses';
 import { useBibleShowSlideAddressCode } from '../hooks/slide-sync';
 import { makeBibleJoinedAddressText } from '../hooks/texts';
-import { useBibleSlideText } from '../hooks/useBibleSlideText';
+import { useBibleSlideMapBlocks } from '../hooks/useBibleSlideText';
 import { useBibleCurrentLangi } from './atoms';
 
 interface Props {
@@ -20,14 +20,14 @@ export const BibleCurrentTextsContext = (props: Props) => {
   const actualJoinAddress = useBibleBroadcastJoinAddress();
   const showAddressCode = useBibleShowSlideAddressCode();
 
-  const addressCode = props.isPreview ? (actualJoinAddress ?? [booki, chapteri, versei]) : showAddressCode;
+  const addressCode = props.isPreview ? (actualJoinAddress[0] ?? [booki, chapteri, versei]) : showAddressCode;
   const langi = useBibleCurrentLangi();
   const addressText = makeBibleJoinedAddressText(langi, addressCode);
-  const slideText = useBibleSlideText(addressCode);
+  const slideText = useBibleSlideMapBlocks(addressCode);
 
   return (
-    <BibleTextContentContext value={slideText}>
+    <BibleTextMapBlocksContentContext value={slideText}>
       <BibleAddressTextContext value={addressText}>{props.children}</BibleAddressTextContext>
-    </BibleTextContentContext>
+    </BibleTextMapBlocksContentContext>
   );
 };

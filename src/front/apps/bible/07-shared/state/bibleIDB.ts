@@ -18,8 +18,8 @@ export interface BibleIDBStorage {
   myTranslates: BibleTranslateName[] | null;
   joinAddress: BibleBroadcastJoinAddress | nil;
 
-  broadcastPlan: BibleBroadcastAddress[];
-  broadcastHistory: BibleBroadcastAddress[];
+  broadcastPlan: BibleBroadcastAddress[] | nil;
+  broadcastHistory: BibleBroadcastAddress[] | nil;
   broadcastScreenConfigs: BibleBroadcastScreenConfig[];
 }
 
@@ -48,7 +48,7 @@ export const bibleIDB = new BibleIDB('bible', {
   showTranslates: [null],
   myTranslates: [null],
 
-  broadcastPlan: [[]],
-  broadcastHistory: [[]],
+  broadcastPlan: [null],
+  broadcastHistory: [null],
   broadcastScreenConfigs: [[]],
 });

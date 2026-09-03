@@ -4,7 +4,7 @@ import Dexie, { EntityTable, TableHooks } from 'dexie';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useCallback } from 'react';
 import { checkIsArray, checkIsFunction } from 'shared/utils/checkIs';
-import { forEachObjectEntriesSimple, mapObjectEntries, objectLength } from 'shared/utils/object.utils';
+import { forEachObjectEntries, mapObjectEntries, objectLength } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
 
 const keyvalues = '%keyvalues%';
@@ -141,10 +141,13 @@ export class DexieDB<Store> {
 
     const stores = {} as Record<keyof Store, string>;
 
-    forEachObjectEntriesSimple(defaults, (key, values) => {
+    forEachObjectEntries(defaults, (key, values) => {
       if (checkIsArray(values)) return;
 
-      stores[key] = mapObjectEntries(values, (key, val) => `${val === '++' ? val : ''}${key as never}`).join(', ');
+      stores[key as keyof Store] = mapObjectEntries(
+        values,
+        (key, val) => `${val === '++' ? val : ''}${key as never}`,
+      ).join(', ');
     });
 
     stores[keyvalues as keyof Store] = '++key';

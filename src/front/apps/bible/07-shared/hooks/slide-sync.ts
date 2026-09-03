@@ -10,7 +10,7 @@ const showAddressCodeAtom = atom<BibleBroadcastAnyAddress | nil>(null);
 export const useBiblePrintShowSlideAddressCode = () =>
   useCallback(() => {
     showAddressCodeAtom.set(
-      bibleJoinAddressAtom.get() ?? [bibleBookiAtom.get(), bibleChapteriAtom.get(), bibleVerseiAtom.get()],
+      bibleJoinAddressAtom.get()[0] ?? [bibleBookiAtom.get(), bibleChapteriAtom.get(), bibleVerseiAtom.get()],
     );
   }, []);
 
@@ -26,7 +26,7 @@ export const useBibleBroadcastSlideSyncContentSetter = () => {
 
       setTimeout(() => {
         addToHistory(
-          bibleJoinAddressAtom.get() ?? [bibleBookiAtom.get(), bibleChapteriAtom.get(), bibleVerseiAtom.get()],
+          bibleJoinAddressAtom.get()[0] ?? [bibleBookiAtom.get(), bibleChapteriAtom.get(), bibleVerseiAtom.get()],
           isReplaceFirstNearVersei,
         );
         printShowAddress();

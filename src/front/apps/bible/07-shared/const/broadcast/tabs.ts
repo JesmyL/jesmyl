@@ -31,10 +31,12 @@ export const bibleBroadcastTabConfigDict: BroadcastGridTabDict<BibleBroadcastTab
   [BibleBroadcastTabId.History]: {
     title: () => translateBase(it => it.history),
     Comp: BibleBroadcastHistoryArchive,
+    htmlTitle: () => 'F1 F1',
   },
   [BibleBroadcastTabId.Plan]: {
     title: () => translateBase(it => it.plan),
     Comp: BibleBroadcastPlanArchive,
+    htmlTitle: () => 'F1',
   },
   [BibleBroadcastTabId.Search]: {
     title: () => translateBase(it => it.search),

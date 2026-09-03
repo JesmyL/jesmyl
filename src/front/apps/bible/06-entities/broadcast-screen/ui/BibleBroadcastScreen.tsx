@@ -1,7 +1,6 @@
 import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { BibleBroadcastScreenKeyListener, useBibleBroadcastScreenWrapperStyle } from '$bible/entities/broadcast';
-import { useBibleAddressVersei } from '$bible/shared/hooks';
+import { useBibleBroadcastScreenWrapperStyle } from '$bible/entities/broadcast';
 import { useRef, useState } from 'react';
 import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 import { useApplyScreenFontFamilyEffect, useMyFileNode } from 'x/my-files';
@@ -21,9 +20,6 @@ export const BibleBroadcastScreenScreen = (props: Props) => {
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const screenWrapperRef = useRef<HTMLDivElement>(null);
-  const versei = useBibleAddressVersei();
-
-  BibleBroadcastScreenKeyListener(versei, props.win);
 
   const wrapperStyle = useBibleBroadcastScreenWrapperStyle(props.bibleConfig);
 

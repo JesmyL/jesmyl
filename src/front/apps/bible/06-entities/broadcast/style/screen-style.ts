@@ -1,6 +1,5 @@
 import { useScreenBroadcastPositionsStyles } from '#features/broadcast/complect/hooks/position-styles';
 import { useScreenBroadcastTextStyles } from '#features/broadcast/complect/hooks/text-styles';
-import { verseTranslateTitleCssVariableName } from '$bible/shared/const/ids';
 import { CSSProperties, useMemo } from 'react';
 import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 import { objectEntries } from 'shared/utils/object.utils';
@@ -49,7 +48,6 @@ export const useBibleBroadcastScreenScreenStyle = (
       textDecoration: 'italic',
 
       color: isVisible ? currentConfig.color : 'transparent',
-      [verseTranslateTitleCssVariableName]: isVisible ? 'grey' : 'transparent',
     } as never;
   }, [currentConfig, isVisible, positions, textStyles]);
 };

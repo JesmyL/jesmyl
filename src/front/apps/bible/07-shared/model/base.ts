@@ -17,22 +17,13 @@ export type BibleTranslate = { chapters: string[][][] };
 
 export type BibleSingleAddressCode = [BibleBooki, BibleChapteri, BibleVersei];
 
-export type BibleBroadcastJoinAddress = Record<BibleBooki, Record<BibleChapteri, BibleVersei[]>>;
-export type BibleBroadcastAnyAddress = BibleBroadcastJoinAddress | [BibleBooki, BibleChapteri, BibleVersei];
+export type BibleBroadcastJoinAddress = PRecord<BibleBooki, PRecord<BibleChapteri, BibleVersei[]>>;
+export type BibleBroadcastAnyAddress = BibleBroadcastJoinAddress | BibleSingleAddressCode;
 
 export type BibleBroadcastSingleAddress = [number, number, number];
-export type BibleBroadcastAddress = BibleBroadcastSingleAddress | BibleBroadcastJoinAddress;
+export type BibleBroadcastAddress = BibleSingleAddressCode | BibleBroadcastJoinAddress;
 
-export const enum BibleSearchZone {
-  Global,
-  Inner,
-  Address,
-}
-
-export const enum BibleSearchInnerZone {
-  Book,
-  Chapter,
-}
+export type BibleBroadcastTextMapBlock = { head?: string; texts: { text: string; address?: string }[] };
 
 export interface BibleStorage extends Record<BibleTranslateName, null | BibleTranslate> {
   [BibleTranslateName.rst]: BibleTranslate;
