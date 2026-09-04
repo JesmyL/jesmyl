@@ -1,9 +1,7 @@
 import { BroadcastScreen } from '#features/broadcast/BroadcastScreen';
 import { useScreenBroadcastCurrentConfig } from '#features/broadcast/hooks/configs';
-import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
-import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { WithAtom } from '#shared/ui/WithAtom';
-import styled from '@emotion/styled';
+import { StyledBroadcastScreenProportioned } from '#shared/style/StyledBroadcastScreenProportioned';
+import { ScreensConfigurator } from '#shared/ui/configurators/Screens';
 import { MyFileBox, MyFilesUploader, MyFileType } from 'x/my-files';
 
 interface Props {
@@ -31,50 +29,20 @@ export const BroadcastSlidePreview = ({ isPreview = true, onBgFileIdChange }: Pr
         ) : (
           <>
             <div className="flex center full-size bg-x2">
-              <ScreenWithBackground $proportion={currentConfig.proportion}>
+              <StyledBroadcastScreenProportioned $proportion={currentConfig.proportion}>
                 <BroadcastScreen
                   win={window}
                   isPreview={isPreview}
                 />
-              </ScreenWithBackground>
+              </StyledBroadcastScreenProportioned>
             </div>
 
-            <WithAtom init={false}>
-              {isSettingsOpenAtom => (
-                <>
-                  <TheIconButton
-                    className="absolute top-[5px] right-[5px] z-20"
-                    icon="PencilEdit02"
-                    onClick={isSettingsOpenAtom.do.toggle}
-                  />
-
-                  <FullContent openAtom={isSettingsOpenAtom}>
-                    {isOpen =>
-                      isOpen &&
-                      currentConfig && (
-                        <div className="flex center h-full items-center">
-                          <ScreenWithBackground $proportion={currentConfig.proportion}>
-                            <BroadcastScreen
-                              isTech
-                              isPreview={isPreview}
-                            />
-                          </ScreenWithBackground>
-                        </div>
-                      )
-                    }
-                  </FullContent>
-                </>
-              )}
-            </WithAtom>
+            <div className="absolute top-[5px] right-[5px] z-20">
+              <ScreensConfigurator isButtonOnly />
+            </div>
           </>
         )}
       </MyFilesUploader>
     </>
   );
 };
-
-const ScreenWithBackground = styled.div<{ $proportion: number }>`
-  --prop: ${props => props.$proportion};
-  width: min(100cqw, calc(100cqh * var(--prop)));
-  height: min(100cqh, calc(100cqw / var(--prop)));
-`;

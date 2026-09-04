@@ -27,6 +27,7 @@ export function BibleBroadcastSlide({
         addressText={addressText}
       >
         <BibleBroadcastScreenScreen
+          win={window}
           isVisible
           bibleConfig={config}
           windowResizeUpdatesNum={updates}

@@ -12,9 +12,11 @@ import { bibleBroadcastKeyListenScopeAtom } from '$bible/shared/state';
 import { BibleTranslatesContextProvider } from '$bible/shared/state/TranslatesContext';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { extractNumber } from 'shared/utils';
 import { mapObjectEntries } from 'shared/utils/object.utils';
+import { twJoin } from 'tailwind-merge';
 import { BibleBroadcastListBooks } from './BookList';
 import { BibleBroadcastListChapters } from './ChapterList';
 import { BibleBroadcastListVerseList } from './VerseList';
@@ -28,6 +30,7 @@ export const BibleBroadcastList = () => {
   const currentChapteri = useBibleAddressChapteri();
   const currentVersei = useBibleAddressVersei();
   const translates = useBibleTranslatesContext();
+  const listenScope = useAtomValue(bibleBroadcastKeyListenScopeAtom);
 
   useEffect(() => {
     return hookEffectPipe()
@@ -45,7 +48,10 @@ export const BibleBroadcastList = () => {
 
   return (
     <Lists
-      className="flex gap-2 custom-align-items over-hidden h-full"
+      className={twJoin(
+        'flex gap-2 custom-align-items over-hidden h-full',
+        listenScope === BibleBroadcastKeyListenScope.AAAddressNav && 'bg-x3/10',
+      )}
       $joinAddress={joinAddress[0]}
       $booki={currentBooki}
       $chapteri={currentChapteri}

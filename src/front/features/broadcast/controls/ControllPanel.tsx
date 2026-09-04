@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { useScreenBroadcastConfigsValue } from '../atoms';
 import { useWatchScreenBroadcast } from '../hooks/watch-broadcast';
-import { useScreenBroadcastCurrentWindow, useScreenBroadcastWindows } from '../hooks/windows';
+import { useScreenBroadcastWindows } from '../hooks/windows';
 
 export const ScreenBroadcastControlPanel = memo(function ControlPanel({
   onChange,
@@ -12,7 +12,6 @@ export const ScreenBroadcastControlPanel = memo(function ControlPanel({
 }) {
   const configs = useScreenBroadcastConfigsValue();
   const windows = useScreenBroadcastWindows();
-  const currWin = useScreenBroadcastCurrentWindow();
   const watchBroadcast = useWatchScreenBroadcast();
   const buttonClassName = 'pointer flex justify-center items-center rounded-[15px] bg-x1 text-x4 w-full h-[30px]';
 
@@ -29,7 +28,7 @@ export const ScreenBroadcastControlPanel = memo(function ControlPanel({
         )}
 
         <button
-          title={currWin ? 'Enter' : undefined}
+          title="F5"
           className={twMerge(buttonClassName, 'bg-x7 text-x5 min-w-[60cqw]')}
           disabled={!configs.length}
           onClick={watchBroadcast}

@@ -1,5 +1,7 @@
+import { Skeleton } from '#shared/components';
 import { BroadcastGridTabConfig } from '#widgets/broadcast/model/TabConfig';
 import { Draggable, Droppable } from '@hello-pangea/dnd';
+import { Suspense } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 export const ResizableGridCell = <TabId extends number>({
@@ -73,7 +75,9 @@ export const ResizableGridCell = <TabId extends number>({
 
             {Inner && (
               <div className="[container-type:size] flex-1 w-full h-full relative overflow-auto">
-                <Inner />
+                <Suspense fallback={<Skeleton className="w-[100cqw] h-[100cqh] m-auto" />}>
+                  <Inner />
+                </Suspense>
               </div>
             )}
 

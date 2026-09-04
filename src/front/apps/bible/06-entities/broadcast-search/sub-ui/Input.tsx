@@ -1,3 +1,4 @@
+import { propagationStopper } from '#shared/lib/event-funcs';
 import { TextInput } from '#shared/ui/TextInput';
 import { bibleBroadcastSearchAreaConfigDict } from '$bible/shared/const';
 import { bibleBroadcastKeyListenSameScopeAtom, bibleBroadcastKeyListenScopeAtom } from '$bible/shared/state';
@@ -9,6 +10,8 @@ interface Props {
   onChange: (value: string) => void;
   term: string;
 }
+
+const stopPropagationEventCodeSet = new Set(['Backspace', 'Space']);
 
 export const BibleBroadcastSearchPanelInput = ({ inputRef, term, onChange }: Props) => {
   const listenScope = useAtomValue(bibleBroadcastKeyListenScopeAtom);
@@ -26,8 +29,11 @@ export const BibleBroadcastSearchPanelInput = ({ inputRef, term, onChange }: Pro
         inputRef={inputRef}
         value={term}
         onInput={onChange}
+        title="Shift - для передачи контроля выше"
         onKeyDown={event => {
-          if (!event.shiftKey && event.code === 'Backspace') event.stopPropagation();
+          if (!event.shiftKey && stopPropagationEventCodeSet.has(event.code)) {
+            propagationStopper(event);
+          }
           if (event.code === 'Escape') event.currentTarget.blur();
         }}
       />

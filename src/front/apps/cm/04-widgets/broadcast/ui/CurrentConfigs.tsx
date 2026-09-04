@@ -7,6 +7,7 @@ import { BackgroundConfigurator } from '#shared/ui/configurators/Background';
 import { ColorConfigurator } from '#shared/ui/configurators/Color';
 import { FontFamilyConfigurator } from '#shared/ui/configurators/FontFamily';
 import { FontWeightConfigurator } from '#shared/ui/configurators/FontWeight/ui';
+import { ScreensConfigurator } from '#shared/ui/configurators/Screens';
 import { StrokeConfigurator } from '#shared/ui/configurators/Stroke';
 import { ScreenTranslateConfigurationTextAlign } from '#shared/ui/configurators/TextAlign';
 import { TextCaseConfigurator } from '#shared/ui/configurators/TextCase';
@@ -56,7 +57,7 @@ export const CmBroadcastCurrentScreenConfigurations = ({ currentConfig }: Props)
     <ExpandableContent title={translateBase(it => it.setup)}>
       <div className="ml-2">
         <ScreenTranslateConfigurationNameChanger />
-
+        <ScreensConfigurator />
         <ColorConfigurator
           config={currentConfig}
           updateConfig={update}

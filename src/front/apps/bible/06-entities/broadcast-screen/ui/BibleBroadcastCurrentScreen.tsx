@@ -2,6 +2,9 @@ import { currentBroadcastConfigiAtom, isBroadcastTextVisibleAtom } from '#featur
 import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
 import { useScreenBroadcastCurrentConfig } from '#features/broadcast/hooks/configs';
 import { useBibleBroadcastScreenConfig } from '$bible/entities/broadcast';
+import { BibleTranslatesContextProvider } from '$bible/ext';
+import { useBibleBroadcastKeyListener } from '$bible/shared/lib/useBibleBroadcastKeyListener';
+import { BibleCurrentTextsContext } from '$bible/shared/state/CurrentTextsContext';
 import { useAtomValue } from 'atomaric';
 import { BibleBroadcastScreenScreen } from './BibleBroadcastScreen';
 
@@ -14,11 +17,21 @@ export function BibleBroadcastScreenCurrentScreen(props: BroadcastScreenProps) {
   const config = useScreenBroadcastCurrentConfig();
 
   return (
-    <BibleBroadcastScreenScreen
-      {...props}
-      bibleConfig={currentConfig}
-      windowResizeUpdatesNum={config?.proportion}
-      isVisible={props.isPreview ? true : isActualVisible}
-    />
+    <BibleTranslatesContextProvider>
+      <BibleCurrentTextsContext isPreview={props.isPreview}>
+        <BibleBroadcastScreenScreen
+          {...props}
+          bibleConfig={currentConfig}
+          windowResizeUpdatesNum={config?.proportion}
+          isVisible={props.isPreview ? true : isActualVisible}
+        />
+        {props.win !== window && <Listen win={props.win} />}
+      </BibleCurrentTextsContext>
+    </BibleTranslatesContextProvider>
   );
 }
+
+const Listen = ({ win }: { win: Window }) => {
+  useBibleBroadcastKeyListener(win);
+  return <></>;
+};

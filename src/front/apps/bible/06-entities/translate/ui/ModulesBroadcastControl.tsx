@@ -3,7 +3,7 @@ import { bibleBookiAtom, bibleMyTranslatesAtom, bibleShowTranslatesAtom } from '
 import { useAtomValue } from 'atomaric';
 import { JSX, memo } from 'react';
 import { textToUpperCase } from 'shared/utils/string.utils';
-import { twMerge } from 'tailwind-merge';
+import { twJoin } from 'tailwind-merge';
 import { BibleTranslateModulesRedactButton } from './ModulesBroadcastRedactButton';
 
 export const BibleTranslateModulesControl = memo(function BibleModules({
@@ -24,7 +24,7 @@ export const BibleTranslateModulesControl = memo(function BibleModules({
         return (
           <div
             key={tName}
-            className={twMerge('pointer', isShow && 'underline', showTranslates[0] === tName && 'text-x7')}
+            className={twJoin('pointer', isShow && 'underline', showTranslates[0] === tName && 'text-x7')}
             onClick={event => {
               if (!event.ctrlKey) {
                 bibleShowTranslatesAtom.set([tName]);

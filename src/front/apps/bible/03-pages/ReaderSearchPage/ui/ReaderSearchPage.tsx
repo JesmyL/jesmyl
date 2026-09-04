@@ -13,7 +13,7 @@ import { useBibleCurrentLangi } from '$bible/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
 import { useRef } from 'react';
 
-export function BibleReaderSearchPage() {
+export const BibleReaderSearchPage = () => {
   const currentBooki = useBibleAddressBooki();
   const currentChapteri = useBibleAddressChapteri();
   const listenScope = useAtomValue(bibleBroadcastKeyListenScopeAtom);
@@ -67,4 +67,4 @@ export function BibleReaderSearchPage() {
       }
     />
   );
-}
+};

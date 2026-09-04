@@ -13,7 +13,7 @@ import {
   bibleBroadcastKeyListenSameScopeAtom,
   bibleBroadcastKeyListenScopeAtom,
 } from '../state';
-import { bibleBroadcastCurrentSelectedIndexAtom } from '../state/broadcast/atoms';
+import { bibleBroadcastCurrentListLengthAtom, bibleBroadcastCurrentSelectedIndexAtom } from '../state/broadcast/atoms';
 import { useBibleBroadcastAddressKeyListener } from './useBibleBroadcastAddressKeyListener';
 
 const indexSelectableScopeSet = new Set<number>([
@@ -22,13 +22,13 @@ const indexSelectableScopeSet = new Set<number>([
   BibleBroadcastKeyListenScope.Plan,
 ]);
 
-export const useBibleBroadcastKeyListener = (win: Window | nil) => {
+export const useBibleBroadcastKeyListener = (win: Window) => {
   useBibleBroadcastAddressKeyListener(win);
 
   useEffect(() => {
     return hookEffectPipe()
       .pipe(
-        addEventListenerPipe(win ?? window, 'keydown', event => {
+        addEventListenerPipe(win, 'keydown', event => {
           const currentListenScope = bibleBroadcastKeyListenScopeAtom.get();
           let nextListenScope: BibleBroadcastKeyListenScope | nil;
           let isPreventDefault = true;
@@ -53,16 +53,20 @@ export const useBibleBroadcastKeyListener = (win: Window | nil) => {
               nextListenScope = BibleBroadcastKeyListenScope.SearchByAddress;
               break;
             case 'ArrowUp':
-              if (indexSelectableScopeSet.has(currentListenScope) && bibleBroadcastCurrentSelectedIndexAtom.get() > 0)
+              if (event.ctrlKey) {
+                bibleBroadcastCurrentSelectedIndexAtom.set(0);
+              } else if (
+                indexSelectableScopeSet.has(currentListenScope) &&
+                bibleBroadcastCurrentSelectedIndexAtom.get() > 0
+              )
                 bibleBroadcastCurrentSelectedIndexAtom.do.increment(-1);
               break;
             case 'ArrowDown':
-              if (indexSelectableScopeSet.has(currentListenScope))
+              if (event.ctrlKey) {
+                bibleBroadcastCurrentSelectedIndexAtom.set(bibleBroadcastCurrentListLengthAtom.get() - 1);
+              } else if (indexSelectableScopeSet.has(currentListenScope))
                 bibleBroadcastCurrentSelectedIndexAtom.do.increment();
               break;
-            // case 'ArrowLeft':
-            // case 'ArrowRight':
-            //   event.preventDefault();
 
             default:
               isPreventDefault = false;

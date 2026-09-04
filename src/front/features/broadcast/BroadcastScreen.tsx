@@ -1,6 +1,4 @@
 import { BibleBroadcastScreenCurrentScreen } from '$bible/entities/broadcast-screen/ui/BibleBroadcastCurrentScreen';
-import { BibleCurrentTextsContext } from '$bible/shared/state/CurrentTextsContext';
-import { BibleTranslatesContextProvider } from '$bible/shared/state/TranslatesContext';
 import { CmBroadcastSlidesContext } from '$cm/features/broadcast';
 import { useCmBroadcastScreenConfig } from '$cm/shared/lib/broadcast';
 import { cmIsTrackBroadcastAtom } from '$cm/shared/state';
@@ -24,22 +22,20 @@ export const BroadcastScreen = (props: BroadcastScreenProps) => {
   const isTrackBroadcast = useAtomValue(cmIsTrackBroadcastAtom);
   const config = useCmBroadcastScreenConfig(props.configi ?? 0);
 
+  const isShowInitialSlide = !(props.isTech || !initialSlide);
+
   return (
     <>
       {globalsNode}
 
       <StyledNextSiblingVisibiliter
-        hidden={!!initialSlide}
+        hidden={isShowInitialSlide}
         key="StyledNextSiblingVisibiliter"
-        $isShowTranslatedText={isShowTranslatedText && !initialSlide}
+        $isShowTranslatedText={isShowTranslatedText && !isShowInitialSlide}
       >
         <BroadcastTextScreen key="BroadcastTextScreen">
           {(forceViewApp ?? props.forceViewApp ?? app) === 'bible' ? (
-            <BibleTranslatesContextProvider>
-              <BibleCurrentTextsContext isPreview={props.isPreview}>
-                <BibleBroadcastScreenCurrentScreen {...props} />
-              </BibleCurrentTextsContext>
-            </BibleTranslatesContextProvider>
+            <BibleBroadcastScreenCurrentScreen {...props} />
           ) : (
             <CmBroadcastSlidesContext textCase={config?.case}>
               {isTrackBroadcast ? (
@@ -52,7 +48,7 @@ export const BroadcastScreen = (props: BroadcastScreenProps) => {
         </BroadcastTextScreen>
       </StyledNextSiblingVisibiliter>
 
-      {initialSlide && (
+      {isShowInitialSlide && (
         <>
           <StyledBlackBoard
             key="StyledInitialSlide"

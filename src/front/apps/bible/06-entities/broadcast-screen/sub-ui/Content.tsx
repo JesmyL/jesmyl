@@ -7,7 +7,7 @@ import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 
 interface Props {
   configi: number | und;
-  win: Window | und;
+  win: Window;
   isPreview: boolean | und;
   windowResizeUpdatesNum: number | und;
   bibleConfig: BibleBroadcastScreenConfig | und;

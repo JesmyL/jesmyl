@@ -31,14 +31,15 @@ export const BibleBroadcastArchive = memo(function BibleBroadcastArchive({ title
 
   const selectedItemi = useAtomValue(bibleBroadcastCurrentSelectedIndexAtom);
   const listenScope = useAtomValue(bibleBroadcastKeyListenScopeAtom);
+  const isCurrentScope = listenScope === scope;
 
-  const takeClassName = listenScope === scope ? (itemi: number) => selectedItemi === itemi && 'bg-x2' : () => null;
+  const takeClassName = isCurrentScope ? (itemi: number) => selectedItemi === itemi && 'bg-x2' : () => null;
   const listLength = list?.length;
 
   useEffect(() => {
-    if (listenScope !== scope || checkIsNil(listLength)) return;
+    if (!isCurrentScope || checkIsNil(listLength)) return;
     bibleBroadcastCurrentListLengthAtom.set(listLength);
-  }, [listLength, listenScope, scope]);
+  }, [isCurrentScope, listLength]);
 
   const nodeList = list?.map((item, itemi) => {
     const className = twJoin(stopClassName, 'nowrap w-full pointer py-1 ellipsis pl-3', takeClassName(itemi));
@@ -87,15 +88,15 @@ export const BibleBroadcastArchive = memo(function BibleBroadcastArchive({ title
     <StyledList
       ref={listRef}
       title={`${modifyKeyPrefix}+@ - добавить ссылку; ${modifyKeyPrefix}+${deleteKeyPrefix}+@ - вырезать ссылку; Enter - применить; Del - удалить пункт; Ctrl+Del - очистить список "${title}"`}
-      className="h-full"
+      className={twJoin(isCurrentScope && 'bg-x3/10')}
     >
-      {nodeList?.length ? (
-        nodeList
-      ) : (
-        <div className={twJoin('flex items-center justify-center h-full', scope === listenScope && 'text-x3')}>
-          {translateBase(it => it.emptyList)}
-        </div>
-      )}
+      {nodeList?.length
+        ? nodeList
+        : nodeList && (
+            <div className={twJoin('flex items-center justify-center h-full', scope === listenScope && 'text-x3')}>
+              {translateBase(it => it.emptyList)}
+            </div>
+          )}
     </StyledList>
   );
 });

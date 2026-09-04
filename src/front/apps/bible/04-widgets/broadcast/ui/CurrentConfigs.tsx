@@ -9,6 +9,7 @@ import { FontFamilyConfigurator } from '#shared/ui/configurators/FontFamily';
 import { FontStyleConfigurator } from '#shared/ui/configurators/FontStyle';
 import { FontWeightConfigurator } from '#shared/ui/configurators/FontWeight/ui';
 import { OpacityConfigurator } from '#shared/ui/configurators/Opacity';
+import { ScreensConfigurator } from '#shared/ui/configurators/Screens';
 import { StrokeConfigurator } from '#shared/ui/configurators/Stroke';
 import { ScreenTranslateConfigurationTextAlign } from '#shared/ui/configurators/TextAlign';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
@@ -36,6 +37,7 @@ export function BibleBroadcastCurrentScreenConfigurations({ currentConfig }: Pro
   return (
     <>
       <ScreenTranslateConfigurationNameChanger />
+      <ScreensConfigurator />
       <ColorConfigurator
         config={currentConfig}
         updateConfig={update}
