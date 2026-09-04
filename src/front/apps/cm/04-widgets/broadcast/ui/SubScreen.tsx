@@ -11,7 +11,7 @@ import { useCmBroadcastScreenStyle } from '../lib/get-style';
 
 interface Props {
   config: CmBroadcastTextScreenConfig;
-  win?: Window;
+  win: Window;
   text: string;
   subUpdates: string | number | und;
   isTech: boolean | und;
