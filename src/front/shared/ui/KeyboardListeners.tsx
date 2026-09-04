@@ -9,14 +9,14 @@ export const KeyboardListeners = ({ onEnter, onEscape }: { onEnter: () => void; 
   useEffect(() => {
     if (isMobileDevice) return;
 
-    const enterListener = ThrowEvent.listenKeyUp('Enter', event => {
+    const enterListener = ThrowEvent.listenKeyDown('Enter', event => {
       if (event.value.shiftKey) return;
 
       event.stopPropagation();
       actions.current.onEnter();
     });
 
-    const escapeListener = ThrowEvent.listenKeyUp('Escape', event => {
+    const escapeListener = ThrowEvent.listenKeyDown('Escape', event => {
       event.stopPropagation();
       actions.current.onEscape();
     });
