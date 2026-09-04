@@ -227,6 +227,6 @@ export const knownStameskaIconNames = {
   Voice: 0,
   WindowsOld: 0,
   WorkHistory: 0,
-} satisfies Partial<Record<StameskaIconName, 0>>;
+} satisfies PRecord<StameskaIconName, 0>;
 
 export const knownStameskaIconNamesMd5Hash = md5(JSON.stringify(knownStameskaIconNames));
