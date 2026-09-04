@@ -2,7 +2,7 @@ import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/shared/model/base
 import { bibleBookiAtom, bibleChapteriAtom, bibleVerseiAtom } from '$bible/shared/state/atoms';
 import { checkIsNotNil } from 'shared/utils/checkIs';
 
-export const bibleBroadcastListSingleAddressSet = (
+export const bibleBroadcastListSetSingleAddress = (
   booki?: BibleBooki | nil,
   chapteri?: BibleChapteri | nil,
   versei?: BibleVersei | nil,

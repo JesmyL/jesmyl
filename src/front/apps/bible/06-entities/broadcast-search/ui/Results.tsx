@@ -1,6 +1,7 @@
+import { bibleBroadcastListSetSingleAddress } from '$bible/entities/broadcast-list';
 import { bibleBroadcastSearchAreaConfigDict } from '$bible/shared/const';
 import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
-import { bibleAddressIndexesUpdate, useBibleAddressBooki, useBibleAddressChapteri } from '$bible/shared/hooks';
+import { useBibleAddressBooki, useBibleAddressChapteri } from '$bible/shared/hooks';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
 import { BibleBooki, BibleBroadcastSingleAddress, BibleChapteri } from '$bible/shared/model/base';
 import { BibleBroadcastKeyListenScope } from '$bible/shared/model/broadcast';
@@ -131,7 +132,7 @@ export const BibleBroadcastSearchResults = () => {
     const resultItem = resultList[selectedItemi - 1];
     if (checkIsNil(resultItem)) return;
 
-    bibleAddressIndexesUpdate(...resultItem);
+    bibleBroadcastListSetSingleAddress(...resultItem);
 
     const [booki, chapteri, versei] = resultItem;
     const node = document.getElementById(`bible-search-result-${booki}-${chapteri}-${versei}`);

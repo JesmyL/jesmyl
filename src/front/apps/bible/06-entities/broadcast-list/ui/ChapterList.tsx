@@ -5,7 +5,7 @@ import { Atom, atom } from 'atomaric';
 import { useMemo } from 'react';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { twJoin } from 'tailwind-merge';
-import { bibleBroadcastListSingleAddressSet } from '../lib/hooks';
+import { bibleBroadcastListSetSingleAddress } from '../lib/hooks';
 import { useBibleBroadcastListFaceClickListener } from '../lib/useBibleListFaceClickListener';
 
 const faceClassName = 'bible-list-chapter-face';
@@ -25,7 +25,7 @@ export function BibleBroadcastListChapters() {
         bibleJoinAddressAtom.set([{ [bibleBookiAtom.get()]: { [currentChapteri]: [currentVersei] } }]);
       }
     } else bibleAddressWithForceJoinReset(null, chapteri);
-    bibleBroadcastListSingleAddressSet(null, chapteri);
+    bibleBroadcastListSetSingleAddress(null, chapteri);
   });
 
   const chapterNumbers = useMemo(() => {

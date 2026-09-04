@@ -1,39 +1,8 @@
-import { bibleBroadcastListSingleAddressSet } from '$bible/entities/broadcast-list';
+import { bibleBroadcastListSetSingleAddress } from '$bible/entities/broadcast-list';
 import { BibleBooki, BibleBroadcastJoinAddress, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
 import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
-import { checkIsNotUndefined } from 'shared/utils/checkIs';
 import { objectKeys } from 'shared/utils/object.utils';
-
-export const bibleBroadcastAddressSetIndexes = (
-  booki: BibleBooki,
-  chapteri: BibleChapteri,
-  versei: BibleVersei,
-  resultSelectedi?: number,
-  onClick?: (booki: BibleBooki, chapteri: BibleChapteri, versei: BibleVersei) => void,
-) => {
-  bibleBroadcastListSingleAddressSet(booki, chapteri, versei);
-  if (checkIsNotUndefined(resultSelectedi)) {
-    // bibleBroadcastSearchResultSelectedAtom.set(resultSelectedi);
-    bibleJoinAddressAtom.reset();
-  }
-
-  onClick?.(booki, chapteri, versei);
-};
-
-export const bibleAddressIndexesUpdate = (
-  booki?: BibleBooki,
-  chapteri?: BibleChapteri,
-  versei?: BibleVersei,
-  resultSelectedi?: number,
-) => {
-  bibleBroadcastListSingleAddressSet(booki, chapteri, versei);
-
-  if (checkIsNotUndefined(resultSelectedi)) {
-    // bibleBroadcastSearchResultSelectedAtom.set(resultSelectedi);
-    bibleJoinAddressAtom.reset();
-  }
-};
 
 export const bibleAddressWithForceJoinReset = (
   booki?: BibleBooki | nil,
@@ -41,7 +10,7 @@ export const bibleAddressWithForceJoinReset = (
   versei?: BibleVersei | nil,
 ) => {
   bibleJoinAddressAtom.reset();
-  bibleBroadcastListSingleAddressSet(booki, chapteri, versei);
+  bibleBroadcastListSetSingleAddress(booki, chapteri, versei);
 };
 
 export const useBibleBroadcastJoinAddress = () => useAtomValue(bibleJoinAddressAtom);

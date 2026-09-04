@@ -1,7 +1,7 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { bibleBroadcastListSetSingleAddress } from '$bible/entities/broadcast-list';
 import { findIndexInBibleTitles, takeBibleLangBooks } from '$bible/shared/const/bibleTitles';
 import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
-import { bibleAddressIndexesUpdate } from '$bible/shared/hooks';
 import { BibleChapteri, BibleVersei } from '$bible/shared/model/base';
 import { bibleJoinAddressAtom, useBibleCurrentLangi } from '$bible/shared/state/atoms';
 import { ReactNode, useEffect, useRef, useState } from 'react';
@@ -9,7 +9,7 @@ import { makeNamedRegExp, makeRegExp } from 'regexpert';
 import { Do } from 'shared/enums';
 import { BibleTitleCodei } from 'shared/model/bible/enums';
 import { emptyFunc } from 'shared/utils';
-import { checkIsUndefined } from 'shared/utils/checkIs';
+import { checkIsNil, checkIsUndefined } from 'shared/utils/checkIs';
 import { ruLowerLettersStr } from 'shared/utils/cm/com/const';
 import { arrayByLength, objectKeys } from 'shared/utils/object.utils';
 import { transcriptEnToRuText } from 'shared/utils/ru-en-letters';
@@ -111,19 +111,19 @@ export const useBibleBroadcastSearchTransformAddressTermToAddress = (
 
       if (isVerseDiapasonIncorrect) {
         verseNode = <span className="text-xKO">{verseNumber}</span>;
-        if (finishVerseNumber !== undefined) finishVerseNode = <span className="text-xKO">{finishVerseNumber}</span>;
+        if (!checkIsNil(finishVerseNumber)) finishVerseNode = <span className="text-xKO">{finishVerseNumber}</span>;
 
         verseNumber = 1;
       }
 
       onEnterPressRef.current = () => {
-        if (finishVerseNumber === undefined) {
-          bibleAddressIndexesUpdate(booki, chapterNumberi, verseNumber - 1);
+        if (checkIsNil(finishVerseNumber)) {
+          bibleBroadcastListSetSingleAddress(booki, chapterNumberi, verseNumber - 1);
           bibleJoinAddressAtom.reset();
         } else {
           const arrLen = finishVerseNumber - verseNumber + 1;
 
-          bibleAddressIndexesUpdate(booki, chapterNumberi, finishVerseNumber - 1);
+          bibleBroadcastListSetSingleAddress(booki, chapterNumberi, finishVerseNumber - 1);
           bibleJoinAddressAtom.set({
             [booki]: {
               [chapterNumberi]:

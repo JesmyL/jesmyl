@@ -2,97 +2,63 @@ import { currentBroadcastConfigiAtom, useScreenBroadcastConfigsValue } from '#fe
 import { useScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
 import { useUpdateScreenBroadcastConfig } from '#features/broadcast/hooks/with-config';
 import { isShowBroadcastInitialSlideAtom, isShowBroadcastTextAtom } from '#features/broadcast/initial-slide-context';
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
-import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import { itInvokeIt, itNNil } from 'shared/utils';
 
-export const useBroadcastListeners = () => {
-  const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
-  const currentConfigiRef = useActualRef(currentConfigi);
+export const useBroadcastListeners = (win: Window, configi: number) => {
+  const currentConfigiRef = useActualRef(configi);
   const configs = useScreenBroadcastConfigsValue();
   const updateConfig = useUpdateScreenBroadcastConfig();
-  const windows = useScreenBroadcastWindows();
+  const parentWinRef = useActualRef(useScreenBroadcastWindows().at(configi));
 
   useEffect(() => {
-    const onKeyDown = async (event: KeyboardEvent) => {
-      switch (event.code) {
-        case 'Tab':
-          event.preventDefault();
-          currentBroadcastConfigiAtom.set(
-            event.shiftKey
-              ? currentConfigiRef.current === 0
-                ? configs.length - 1
-                : currentConfigiRef.current - 1
-              : currentConfigiRef.current === configs.length - 1
-                ? 0
-                : currentConfigiRef.current + 1,
-          );
-          break;
+    let timeout: TimeOut;
 
-        case 'Space':
-          event.preventDefault();
-          isShowBroadcastTextAtom.do.toggle();
-          break;
+    const resize = () => updateConfig(configi, { proportion: +(win.innerWidth / win.innerHeight).toFixed(2) });
 
-        case 'Backspace':
-          event.preventDefault();
-          isShowBroadcastInitialSlideAtom.do.toggle();
-          break;
-      }
-    };
-
-    const listeners = windows
-      .map((parentWin, wini) => {
-        if (parentWin == null) return null;
-
-        const onSubWinKeyDown = async (event: KeyboardEvent) => {
+    return hookEffectPipe()
+      .pipe(
+        addEventListenerPipe(win, 'focus', () => currentBroadcastConfigiAtom.set(configi)),
+        addEventListenerPipe(win, 'resize', () => {
+          clearTimeout(timeout);
+          timeout = setTimeout(resize);
+        }),
+        addEventListenerPipe(win, 'keydown', async event => {
           switch (event.code) {
             case 'Enter':
-              parentWin.focus();
+              parentWinRef.current?.focus();
               return;
 
             case 'Escape':
-              parentWin.blur();
+              parentWinRef.current?.blur();
               return;
+
+            case 'Tab':
+              event.preventDefault();
+              currentBroadcastConfigiAtom.set(
+                event.shiftKey
+                  ? currentConfigiRef.current === 0
+                    ? configs.length - 1
+                    : currentConfigiRef.current - 1
+                  : currentConfigiRef.current === configs.length - 1
+                    ? 0
+                    : currentConfigiRef.current + 1,
+              );
+              break;
+
+            case 'Space':
+              event.preventDefault();
+              isShowBroadcastTextAtom.do.toggle();
+              break;
+
+            case 'Backspace':
+              event.preventDefault();
+              isShowBroadcastInitialSlideAtom.do.toggle();
+              break;
           }
-
-          onKeyDown(event);
-        };
-
-        if (parentWin.win == null) return;
-
-        const win = parentWin.win;
-
-        let timeout: TimeOut;
-
-        const resize = () => updateConfig(wini, { proportion: +(win.innerWidth / win.innerHeight).toFixed(2) });
-
-        win.onresize = () => {
-          clearTimeout(timeout);
-          timeout = setTimeout(resize);
-        };
-
-        win.onfocus = () => currentBroadcastConfigiAtom.set(wini);
-        win.onkeydown = onSubWinKeyDown;
-
-        // eslint-disable-next-line @eslint-react/web-api/no-leaked-event-listener
-        window.addEventListener('keydown', onSubWinKeyDown);
-
-        return () => {
-          win.onresize = null;
-          win.onkeydown = null;
-          win.onfocus = null;
-          window.removeEventListener('keydown', onSubWinKeyDown);
-        };
-      })
-      .filter(itNNil);
-
-    window.addEventListener('keydown', onKeyDown);
-
-    return () => {
-      listeners.forEach(itInvokeIt);
-      window.removeEventListener('keydown', onKeyDown);
-    };
-  }, [configs, currentConfigiRef, updateConfig, windows]);
+        }),
+      )
+      .effect();
+  }, [configi, configs.length, currentConfigiRef, parentWinRef, updateConfig, win]);
 };

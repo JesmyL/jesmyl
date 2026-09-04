@@ -1,3 +1,4 @@
+import { useBroadcastListeners } from '#features/broadcast/complect/config-line/hooks/listeners';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { useEffect } from 'react';
@@ -15,6 +16,7 @@ import {
 } from '../state';
 import { bibleBroadcastCurrentListLengthAtom, bibleBroadcastCurrentSelectedIndexAtom } from '../state/broadcast/atoms';
 import { useBibleBroadcastAddressKeyListener } from './useBibleBroadcastAddressKeyListener';
+import { useBibleBroadcastArchiveKeyListener } from './useBibleBroadcastArchiveKeyListener';
 
 const indexSelectableScopeSet = new Set<number>([
   ...objectKeys(bibleBroadcastSearchAreaConfigDict).map(extractNumber),
@@ -22,7 +24,9 @@ const indexSelectableScopeSet = new Set<number>([
   BibleBroadcastKeyListenScope.Plan,
 ]);
 
-export const useBibleBroadcastKeyListener = (win: Window) => {
+export const useBibleBroadcastKeyListener = (win: Window, configi: number) => {
+  useBroadcastListeners(win, configi);
+  useBibleBroadcastArchiveKeyListener(win);
   useBibleBroadcastAddressKeyListener(win);
 
   useEffect(() => {
@@ -110,8 +114,7 @@ export const useBibleBroadcastKeyListener = (win: Window) => {
         }),
       )
       .effect(
-        ThrowEvent.listenKeyDown('Escape', event => {
-          event.stopPropagation();
+        ThrowEvent.listenKeyDown('Escape', () => {
           bibleBroadcastKeyListenScopeAtom.set(BibleBroadcastKeyListenScope.AAAddressNav);
         }),
       );

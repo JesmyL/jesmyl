@@ -10,7 +10,8 @@ import { BibleBroadcastScreenScreen } from './BibleBroadcastScreen';
 
 export function BibleBroadcastScreenCurrentScreen(props: BroadcastScreenProps) {
   const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
-  const currentConfig = useBibleBroadcastScreenConfig(props.configi ?? currentConfigi);
+  const configi = props.configi ?? currentConfigi;
+  const currentConfig = useBibleBroadcastScreenConfig(configi);
 
   const isActualVisible = useAtomValue(isBroadcastTextVisibleAtom);
 
@@ -25,13 +26,19 @@ export function BibleBroadcastScreenCurrentScreen(props: BroadcastScreenProps) {
           windowResizeUpdatesNum={config?.proportion}
           isVisible={props.isPreview ? true : isActualVisible}
         />
-        {props.win !== window && <Listen win={props.win} />}
+        {props.win !== window && (
+          <Listen
+            win={props.win}
+            configi={configi}
+          />
+        )}
       </BibleCurrentTextsContext>
     </BibleTranslatesContextProvider>
   );
 }
 
-const Listen = ({ win }: { win: Window }) => {
-  useBibleBroadcastKeyListener(win);
+const Listen = ({ win, configi }: { win: Window; configi: number }) => {
+  useBibleBroadcastKeyListener(win, configi);
+
   return <></>;
 };

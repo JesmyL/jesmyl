@@ -4,7 +4,7 @@ import { bibleBookiAtom, bibleJoinAddressAtom, useBibleCurrentLangi } from '$bib
 import styled from '@emotion/styled';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { twJoin } from 'tailwind-merge';
-import { bibleBroadcastListSingleAddressSet } from '../lib/hooks';
+import { bibleBroadcastListSetSingleAddress } from '../lib/hooks';
 import { useBibleBroadcastListFaceClickListener } from '../lib/useBibleListFaceClickListener';
 
 const faceClassName = 'bible-list-chapter-face';
@@ -21,7 +21,7 @@ export function BibleBroadcastListBooks() {
       }
     } else bibleAddressWithForceJoinReset(booki);
 
-    bibleBroadcastListSingleAddressSet(booki);
+    bibleBroadcastListSetSingleAddress(booki);
   });
 
   return (

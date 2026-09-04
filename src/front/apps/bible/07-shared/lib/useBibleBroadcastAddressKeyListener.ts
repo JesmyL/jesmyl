@@ -2,10 +2,10 @@ import { useWatchScreenBroadcast } from '#features/broadcast/hooks/watch-broadca
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import { addEventListenerPipe, hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
+import { bibleBroadcastListSetSingleAddress } from '$bible/entities/broadcast-list';
 import { bibleBroadcastPlanAddToPlan } from '$bible/entities/broadcast-plan';
 import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
 import {
-  bibleBroadcastAddressSetIndexes,
   useBibleAddressBooki,
   useBibleAddressChapteri,
   useBibleAddressVersei,
@@ -16,6 +16,7 @@ import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
 import { BibleBroadcastAddress, BibleBroadcastJoinAddress } from '$bible/shared/model/base';
 import { bibleJoinAddressAtom, bibleVerseiAtom } from '$bible/shared/state/atoms';
 import { useEffect, useState } from 'react';
+import { emptyFunc } from 'shared/utils';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { objectKeys } from 'shared/utils/object.utils';
 import { BibleBroadcastKeyListenScope } from '../model/broadcast';
@@ -38,18 +39,20 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
     joinAddress[0] ?? [currentBooki, currentChapteri, currentVersei],
   );
   const watchWindows = useWatchScreenBroadcast();
+  const isSubWindow = win !== window;
 
   useEffect(() => {
     return hookEffectPipe()
       .pipe(
-        addEventListenerPipe(win ?? window, 'keydown', event => {
+        addEventListenerPipe(win, 'keydown', event => {
           if (checkIsNotMainProcess() || event.key === 'Shift' || event.key === 'Control' || event.key === 'Meta')
             return;
 
+          const currentChapter = htmlChapters?.[currentBooki]?.[currentChapteri];
+
           const limitStepJump = (dir: number) => {
             const makeCorrectVersei = (versei: number) => {
-              const chapter = htmlChapters?.[currentBooki]?.[currentChapteri];
-              return dir < 0 ? Math.max(0, versei + dir) : Math.min((chapter?.length ?? 1) - 1, versei + dir);
+              return dir < 0 ? Math.max(0, versei + dir) : Math.min((currentChapter?.length ?? 1) - 1, versei + dir);
             };
 
             if (event.shiftKey || checkIsNil(currentJoinAddress[0])) {
@@ -70,7 +73,7 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
             if (verses == null) return;
             const versei = makeCorrectVersei(Math[mathMethod](...verses) + dir);
 
-            bibleBroadcastAddressSetIndexes(booki, chapteri, versei);
+            bibleBroadcastListSetSingleAddress(booki, chapteri, versei);
             bibleJoinAddressAtom.reset();
           };
 
@@ -98,14 +101,12 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
           verses.add(currentVersei);
 
           if (event.code === 'ArrowDown' || event.code === 'ArrowRight') {
-            const chapter = htmlChapters?.[currentBooki]?.[currentChapteri];
-
-            if (chapter)
+            if (currentChapter)
               if (event.ctrlKey) {
-                for (let versei = currentVersei; versei < chapter.length; versei++) {
+                for (let versei = currentVersei; versei < currentChapter.length; versei++) {
                   verses.add(versei);
                 }
-              } else if (currentVersei < chapter.length - 1) verses.add(currentVersei + 1);
+              } else if (currentVersei < currentChapter.length - 1) verses.add(currentVersei + 1);
           } else if (currentVersei > 0) verses.delete(currentVersei);
 
           const newJoin: BibleBroadcastJoinAddress = {
@@ -124,20 +125,23 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
 
   useEffect(() => {
     if (numberCollection === '') return;
+
+    const currentChapter = htmlChapters?.[currentBooki]?.[currentChapteri];
+
     return hookEffectPipe()
       .pipe(
         setTimeoutPipe(() => {
-          bibleVerseiAtom.set(+numberCollection - 1);
+          bibleVerseiAtom.set(Math.min(+numberCollection - 1, (currentChapter?.length ?? 1) - 1));
           setNumberCollection('');
         }, 300),
       )
       .effect();
-  }, [numberCollection]);
+  }, [currentBooki, currentChapteri, htmlChapters, numberCollection]);
 
   useEffect(() => {
     return hookEffectPipe()
       .pipe(
-        addEventListenerPipe(window, 'keydown', event => {
+        addEventListenerPipe(win, 'keydown', event => {
           if (checkIsNotMainProcess()) return;
 
           if (event.code.startsWith('Numpad')) {
@@ -151,12 +155,17 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
         }),
       )
       .effect();
-  }, []);
+  }, [win]);
 
   useEffect(() => {
+    const onEnter = (isCtrlKey: boolean) => {
+      if (isCtrlKey) bibleBroadcastPlanAddToPlan(actualAddressRef.current);
+      else syncSlide();
+    };
+
     return hookEffectPipe()
       .pipe(
-        addEventListenerPipe(win ?? window, 'keydown', event => {
+        addEventListenerPipe(win, 'keydown', event => {
           switch (event.code) {
             case 'F5':
             case 'NumpadEnter':
@@ -167,17 +176,17 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
                 watchWindows();
               }
               break;
+
             case 'KeyR':
-              if (event.ctrlKey && win !== window) event.preventDefault();
+              if (event.ctrlKey && isSubWindow) event.preventDefault();
+              break;
+
+            case 'Enter':
+              if (isSubWindow) onEnter(event.ctrlKey);
               break;
           }
         }),
       )
-      .effect(
-        ThrowEvent.listenKeyDown('Enter', event => {
-          if (event.value.ctrlKey) bibleBroadcastPlanAddToPlan(actualAddressRef.current);
-          else syncSlide();
-        }),
-      );
-  }, [actualAddressRef, watchWindows, syncSlide, win]);
+      .effect(isSubWindow ? emptyFunc : ThrowEvent.listenKeyDown('Enter', event => onEnter(event.value.ctrlKey)));
+  }, [actualAddressRef, watchWindows, syncSlide, win, isSubWindow]);
 };

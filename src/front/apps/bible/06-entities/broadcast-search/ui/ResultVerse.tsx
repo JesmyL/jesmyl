@@ -1,10 +1,10 @@
 import { translateDynamic } from '#basis/locale';
+import { bibleBroadcastListSetSingleAddress } from '$bible/entities/broadcast-list';
 import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
-import { bibleBroadcastAddressSetIndexes } from '$bible/shared/hooks';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
 import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
 import { bibleBroadcastCurrentSelectedIndexAtom } from '$bible/shared/state';
-import { useBibleCurrentLangi } from '$bible/shared/state/atoms';
+import { bibleJoinAddressAtom, useBibleCurrentLangi } from '$bible/shared/state/atoms';
 import { JSX, memo } from 'react';
 
 interface Props {
@@ -34,8 +34,10 @@ export const BibleBroadcastSearchResultVerse = memo(function BibleSearchResultVe
       id={`bible-search-result-${booki}-${chapteri}-${versei}`}
       className="bible-search-result pointer mt-2 flex"
       onClick={() => {
-        bibleBroadcastAddressSetIndexes(booki, chapteri, versei, resulti, onClick);
+        bibleBroadcastListSetSingleAddress(booki, chapteri, versei);
+        onClick?.(booki, chapteri, versei);
         bibleBroadcastCurrentSelectedIndexAtom.set(resulti + 1);
+        bibleJoinAddressAtom.reset();
       }}
     >
       <span className="text-x3 mr-2 nowrap">

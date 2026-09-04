@@ -3,36 +3,56 @@ import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { useConfirm } from '#shared/ui/modal';
+import { bibleBroadcastListSetSingleAddress } from '$bible/entities/broadcast-list';
 import { BibleTranslatesContextProvider } from '$bible/ext';
-import { bibleAddressIndexesUpdate, takeJoinedAddressMaxValues } from '$bible/shared/hooks';
+import { takeJoinedAddressMaxValues } from '$bible/shared/hooks';
 import { BibleBroadcastAddress } from '$bible/shared/model/base';
 import { BibleBroadcastKeyListenScope } from '$bible/shared/model/broadcast';
 import { bibleBroadcastCurrentSelectedIndexAtom, bibleBroadcastKeyListenScopeAtom } from '$bible/shared/state';
 import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
-import { ReactNode, useEffect } from 'react';
+import { useEffect } from 'react';
+import { emptyFunc } from 'shared/utils';
 import { checkIsArray } from 'shared/utils/checkIs';
+import { BibleBroadcastArchiveList } from '../ui/ArchiveList';
 
 export const useBibleBroadcastArchiveListKeyListener = (
+  win: Window,
   title: string,
   scope: BibleBroadcastKeyListenScope,
   list: BibleBroadcastAddress[] | nil,
-  nodeList: ReactNode[] | nil,
   onRemove: (itemi?: number) => void,
 ) => {
   const confirm = useConfirm();
-  const actualRef = useActualRef({ nodeList, onRemove });
+  const actualRef = useActualRef({ onRemove });
   const listenScope = useAtomValue(bibleBroadcastKeyListenScopeAtom);
+  const isSubWindow = win !== window;
 
   useEffect(() => {
     if (listenScope !== scope || !list) return;
 
+    const onEnter = () => {
+      const selectedItemi = bibleBroadcastCurrentSelectedIndexAtom.get();
+
+      const item = list[selectedItemi];
+      if (checkIsArray(item)) {
+        bibleBroadcastListSetSingleAddress(...item);
+        bibleJoinAddressAtom.reset();
+      } else {
+        bibleJoinAddressAtom.set([item]);
+        bibleBroadcastListSetSingleAddress(...takeJoinedAddressMaxValues(item));
+      }
+    };
+
     return hookEffectPipe()
       .pipe(
-        addEventListenerPipe(window, 'keydown', async event => {
+        addEventListenerPipe(win, 'keydown', async event => {
           const selectedItemi = bibleBroadcastCurrentSelectedIndexAtom.get();
 
           switch (event.code) {
+            case 'Enter':
+              if (isSubWindow) onEnter();
+              break;
             case 'Delete':
               if (event.ctrlKey) {
                 if (await confirm(translateBase(it => it.bible.clearChapter, { c: title })))
@@ -40,7 +60,12 @@ export const useBibleBroadcastArchiveListKeyListener = (
               } else if (
                 await confirm(
                   <BibleTranslatesContextProvider>
-                    {actualRef.current.nodeList?.[selectedItemi]}
+                    <BibleBroadcastArchiveList
+                      list={list}
+                      scope={scope}
+                    >
+                      {nodeList => nodeList?.[selectedItemi]}
+                    </BibleBroadcastArchiveList>
                   </BibleTranslatesContextProvider>,
                   translateBase(it => it.del),
                 )
@@ -51,20 +76,6 @@ export const useBibleBroadcastArchiveListKeyListener = (
           }
         }),
       )
-      .effect(
-        ThrowEvent.listenKeyDown('Enter', event => {
-          const selectedItemi = bibleBroadcastCurrentSelectedIndexAtom.get();
-          // event.stopPropagation();
-
-          const item = list[selectedItemi];
-          if (checkIsArray(item)) {
-            bibleAddressIndexesUpdate(...item);
-            bibleJoinAddressAtom.reset();
-          } else {
-            bibleJoinAddressAtom.set([item]);
-            bibleAddressIndexesUpdate(...takeJoinedAddressMaxValues(item));
-          }
-        }),
-      );
-  }, [actualRef, confirm, list, listenScope, scope]);
+      .effect(isSubWindow ? emptyFunc : ThrowEvent.listenKeyDown('Enter', onEnter));
+  }, [actualRef, confirm, isSubWindow, list, listenScope, scope, title, win]);
 };

@@ -11,7 +11,7 @@ interface Props {
   term: string;
 }
 
-const stopPropagationEventCodeSet = new Set(['Backspace', 'Space']);
+const stopPropagationEventCodeSet = new Set(['Backspace', 'Space', 'Escape']);
 
 export const BibleBroadcastSearchPanelInput = ({ inputRef, term, onChange }: Props) => {
   const listenScope = useAtomValue(bibleBroadcastKeyListenScopeAtom);
@@ -34,7 +34,8 @@ export const BibleBroadcastSearchPanelInput = ({ inputRef, term, onChange }: Pro
           if (!event.shiftKey && stopPropagationEventCodeSet.has(event.code)) {
             propagationStopper(event);
           }
-          if (event.code === 'Escape') event.currentTarget.blur();
+
+          if (event.code === 'Escape') bibleBroadcastKeyListenScopeAtom.reset();
         }}
       />
     </>

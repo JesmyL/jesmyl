@@ -1,5 +1,5 @@
 import { translateBase } from '#basis/locale';
-import { useBroadcastListeners } from '#features/broadcast/complect/config-line/hooks/listeners';
+import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BroadcastResizableGrid } from '#widgets/broadcast';
 import { BroadcastGridTabConfig } from '#widgets/broadcast/model/TabConfig';
@@ -12,6 +12,7 @@ import {
   bibleBroadcastGridSizesAtom,
   bibleBroadcastGridTabsAtom,
 } from '$bible/shared/state';
+import { useAtomValue } from 'atomaric';
 import { ReactNode, useEffect } from 'react';
 
 interface Props {
@@ -28,9 +29,9 @@ const config: BroadcastGridTabConfig<BibleBroadcastTabId> = {
 
 export const BibleBroadcastControlled = ({ head, headTitle }: Props) => {
   const printShowAddress = useBiblePrintShowSlideAddressCode();
+  const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
 
-  useBroadcastListeners();
-  useBibleBroadcastKeyListener(window);
+  useBibleBroadcastKeyListener(window, currentConfigi);
 
   useEffect(() => {
     printShowAddress();

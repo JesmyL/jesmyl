@@ -13,3 +13,5 @@ export const bibleMyTranslatesAtom = atom<BibleTranslateName[]>([BibleTranslateN
 export const bibleJoinAddressAtom = atom<[BibleBroadcastJoinAddress | nil]>([null], 'bible:joinAddress_v1');
 
 export const useBibleCurrentLangi = () => translateLanguage[useAtomValue(bibleShowTranslatesAtom)[0]] ?? Langi.Ru;
+
+export const biblePlanCurrentItemiAtom = atom(0);
