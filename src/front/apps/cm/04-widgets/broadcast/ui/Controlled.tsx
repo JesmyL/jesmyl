@@ -1,8 +1,9 @@
 import { translateBase } from '#basis/locale';
-import { useBroadcastListeners } from '#features/broadcast/complect/config-line/hooks/listeners';
+import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BroadcastResizableGrid } from '#widgets/broadcast';
 import { BroadcastGridTabConfig } from '#widgets/broadcast/model/TabConfig';
+import { cmComLastOpenComwAtom } from '$cm/entities/index';
 import { useCmBroadcastScreenComNavigationComws } from '$cm/features/broadcast';
 import { CmBroadcastTabId } from '$cm/shared/model/broadcast';
 import {
@@ -10,11 +11,12 @@ import {
   cmBroadcastGridSizesAtom,
   cmBroadcastGridTabsAtom,
 } from '$cm/shared/state/broadcast.atoms';
-import { Link } from '@tanstack/react-router';
-import { ReactNode } from 'react';
+import { Link, useNavigate } from '@tanstack/react-router';
+import { useAtomValue } from 'atomaric';
+import { ReactNode, useEffect } from 'react';
 import { CmComWid } from 'shared/api';
 import { cmBroadcastTabConfigDict } from '../const/tabs';
-import { useCmBroadcastScreenKeyDownListen } from '../lib/keydown-listen';
+import { useCmBroadcastScreenKeyDownListen } from '../lib/useCmBroadcastScreenKeyDownListen';
 
 interface Props {
   head?: ReactNode;
@@ -31,10 +33,19 @@ const config: BroadcastGridTabConfig<CmBroadcastTabId> = {
 };
 
 export function CmBroadcastControlled(props: Props) {
+  const navigate = useNavigate();
   const { comPack, comws } = useCmBroadcastScreenComNavigationComws();
+  const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
+  const ccomw = useAtomValue(cmComLastOpenComwAtom);
 
-  useBroadcastListeners();
-  useCmBroadcastScreenKeyDownListen();
+  useEffect(() => {
+    navigate({
+      to: '.',
+      search: prev => ({ ...(prev as object), comw: ccomw }) as object,
+    });
+  }, [ccomw, navigate]);
+
+  useCmBroadcastScreenKeyDownListen(window, currentConfigi);
 
   return (
     <PageContainerConfigurer

@@ -1,4 +1,5 @@
 import { currentBroadcastConfigiAtom, useScreenBroadcastConfigsValue } from '#features/broadcast/atoms';
+import { useWatchScreenBroadcast } from '#features/broadcast/hooks/watch-broadcast';
 import { useScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
 import { useUpdateScreenBroadcastConfig } from '#features/broadcast/hooks/with-config';
 import { isShowBroadcastInitialSlideAtom, isShowBroadcastTextAtom } from '#features/broadcast/initial-slide-context';
@@ -11,6 +12,7 @@ export const useBroadcastListeners = (win: Window, configi: number) => {
   const configs = useScreenBroadcastConfigsValue();
   const updateConfig = useUpdateScreenBroadcastConfig();
   const parentWinRef = useActualRef(useScreenBroadcastWindows().at(configi));
+  const watchWindows = useWatchScreenBroadcast();
 
   useEffect(() => {
     let timeout: TimeOut;
@@ -26,7 +28,9 @@ export const useBroadcastListeners = (win: Window, configi: number) => {
         }),
         addEventListenerPipe(win, 'keydown', async event => {
           switch (event.code) {
+            case 'F5':
             case 'Enter':
+              watchWindows();
               parentWinRef.current?.focus();
               return;
 
@@ -60,5 +64,5 @@ export const useBroadcastListeners = (win: Window, configi: number) => {
         }),
       )
       .effect();
-  }, [configi, configs.length, currentConfigiRef, parentWinRef, updateConfig, win]);
+  }, [configi, configs.length, currentConfigiRef, parentWinRef, updateConfig, watchWindows, win]);
 };

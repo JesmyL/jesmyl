@@ -1,4 +1,3 @@
-import { useWatchScreenBroadcast } from '#features/broadcast/hooks/watch-broadcast';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import { addEventListenerPipe, hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
@@ -38,7 +37,6 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
   const actualAddressRef = useActualRef<BibleBroadcastAddress>(
     joinAddress[0] ?? [currentBooki, currentChapteri, currentVersei],
   );
-  const watchWindows = useWatchScreenBroadcast();
   const isSubWindow = win !== window;
 
   useEffect(() => {
@@ -173,7 +171,6 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
               if (event.ctrlKey) bibleBroadcastPlanAddToPlan(actualAddressRef.current);
               else {
                 syncSlide();
-                watchWindows();
               }
               break;
 
@@ -188,5 +185,5 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
         }),
       )
       .effect(isSubWindow ? emptyFunc : ThrowEvent.listenKeyDown('Enter', event => onEnter(event.value.ctrlKey)));
-  }, [actualAddressRef, watchWindows, syncSlide, win, isSubWindow]);
+  }, [actualAddressRef, syncSlide, win, isSubWindow]);
 };

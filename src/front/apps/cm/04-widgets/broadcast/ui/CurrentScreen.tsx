@@ -6,6 +6,7 @@ import { cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
 import { useCmBroadcastSlidesContext } from '$cm/features/broadcast';
 import { useCmBroadcastScreenConfig } from '$cm/shared/lib/broadcast';
 import { useAtomValue } from 'atomaric';
+import { useCmBroadcastScreenKeyDownListen } from '../lib/useCmBroadcastScreenKeyDownListen';
 import { useCmBroadcastScreenWinResizeListen } from '../lib/win-resize-lesten';
 import { CmBroadcastScreen } from './Screen';
 
@@ -21,17 +22,31 @@ export const CmBroadcastCurrentScreen = (props: BroadcastScreenProps & Partial<F
   const switchDirection = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
 
   return (
-    <CmBroadcastScreen
-      {...props}
-      cmConfig={currentConfig}
-      html={html}
-      nextText={nextHtml}
-      isChorded={!!slides[slidei]?.ord.isChBlock()}
-      isNextChorded={!!slides[nextSlidei]?.ord.isChBlock()}
-      isVisible={isVisible}
-      subUpdates={`${currentConfigi}${forceUpdates}${getCurrentConfig(currentConfigi)?.proportion}`}
-      freshSlideKey={slides[slidei]?.minText || hash || html}
-      slideSwitchDir={switchDirection}
-    />
+    <>
+      <CmBroadcastScreen
+        {...props}
+        cmConfig={currentConfig}
+        html={html}
+        nextText={nextHtml}
+        isChorded={!!slides[slidei]?.ord.isChBlock()}
+        isNextChorded={!!slides[nextSlidei]?.ord.isChBlock()}
+        isVisible={isVisible}
+        subUpdates={`${currentConfigi}${forceUpdates}${getCurrentConfig(currentConfigi)?.proportion}`}
+        freshSlideKey={slides[slidei]?.minText || hash || html}
+        slideSwitchDir={switchDirection}
+      />
+      {props.win !== window && (
+        <Listen
+          win={props.win}
+          configi={props.configi ?? 0}
+        />
+      )}
+    </>
   );
+};
+
+const Listen = ({ win, configi }: { win: Window; configi: number }) => {
+  useCmBroadcastScreenKeyDownListen(win, configi);
+
+  return <></>;
 };

@@ -1,12 +1,12 @@
 import {
   cmComFavoriteComwsAtom,
+  cmComLastOpenComwAtom,
   cmComSelectedComwsAtom,
   useCmComCurrent,
   useCmComCurrentComPackContext,
 } from '$cm/entities/com';
 import { cmComFaceCurrentComwIdPrefix } from '$cm/entities/com-face';
 import { cmOpenComListModeAtom } from '$cm/shared/state';
-import { useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
 import { CmComWid } from 'shared/api';
@@ -27,15 +27,6 @@ export const useCmBroadcastScreenComNavigationComws = () => {
 
 export const useCmBroadcastScreenComNavigations = () => {
   const ccom = useCmComCurrent();
-  const navigate = useNavigate();
-  const setCom = useCallback(
-    (comw: CmComWid) =>
-      navigate({
-        to: '.',
-        search: prev => ({ ...(prev as object), comw }) as object,
-      }),
-    [navigate],
-  );
 
   const { comws } = useCmBroadcastScreenComNavigationComws();
   const { setSlidei } = useCmBroadcastSlidesContext();
@@ -44,21 +35,21 @@ export const useCmBroadcastScreenComNavigations = () => {
     prevCom: useCallback(() => {
       const comi = getComi(ccom?.wid, comws);
       if (comi < 0) return;
-      const nextCom = comws[comi === 0 ? comws.length - 1 : comi - 1];
+      const nextComw = comws[comi === 0 ? comws.length - 1 : comi - 1];
 
-      setCom(nextCom);
+      cmComLastOpenComwAtom.set(nextComw);
       setSlidei(0);
-      scrollToView(nextCom);
-    }, [ccom?.wid, comws, setCom, setSlidei]),
+      scrollToView(nextComw);
+    }, [ccom?.wid, comws, setSlidei]),
     nextCom: useCallback(() => {
       const comi = getComi(ccom?.wid, comws);
       if (comi < 0) return;
-      const nextCom = comws[comi === comws.length - 1 ? 0 : comi + 1];
+      const nextComw = comws[comi === comws.length - 1 ? 0 : comi + 1];
 
-      setCom(nextCom);
+      cmComLastOpenComwAtom.set(nextComw);
       setSlidei(0);
-      scrollToView(nextCom);
-    }, [ccom?.wid, comws, setCom, setSlidei]),
+      scrollToView(nextComw);
+    }, [ccom?.wid, comws, setSlidei]),
   };
 };
 
