@@ -72,10 +72,10 @@ if (!gotTheLock) {
     if (isQuittingForUpdate) return;
 
     const win = (electronAppWinHolder.win = new BrowserWindow({
-      width: 1700,
-      height: 800,
-      x: 100,
-      y: 100,
+      height: 700,
+      width: 800,
+      x: 0,
+      y: 0,
       icon: path.join(__dirname, '../assets/img/ico-512x512.png'),
       webPreferences: electronAppWebPreferences,
     }));
@@ -108,6 +108,7 @@ if (!gotTheLock) {
       );
     });
 
+    win.setMenu(null);
     await win.loadURL(url, {
       httpReferrer: '',
       userAgent: `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 JESMYL_PRO/${app.getVersion()}`,
