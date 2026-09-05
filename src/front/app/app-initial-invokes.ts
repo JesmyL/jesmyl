@@ -3,6 +3,7 @@ import { schTsjrpcBaseClient } from '#widgets/schedule/tsjrpc/tsjrpc.base';
 import { bibleTsjrpcBaseClient } from '$bible/shared/lib/tsjrpc';
 import { cmEditorInitialInvokes } from '$cm+editor/shared/lib/cm+editor-initial-invokes';
 import { cmShareEditorTsjrpcBaseClient } from '$cm+editor/shared/lib/cm-editor.tsjrpc.base';
+import { cmShareTsjrpcBaseClient } from '$cm/shared/tsjrpc';
 import {
   authIDB,
   indexDeviceEmojiAtom,
@@ -12,6 +13,8 @@ import {
   lastUpdatedIconsMd5HashAtom,
 } from '$index/shared/state';
 import { indexTsjrpcBaseClient, indexTsjrpcClientMethods, schLiveTsjrpcBaseClient } from '$index/shared/tsjrpc';
+import { questionerAdminTsjrpcClientBase } from '$q/shared/tsjrpc/admin.tsjrpc';
+import { storagesStoresSharesTsjrpcBaseClient } from '$storages/shared/tsjrpc/tsjrpc.base';
 import { DeviceId } from 'shared/api';
 import { checkUserScopeAccessRight } from 'shared/utils/index/utils';
 import { appInitEvent } from './store/triggers';
@@ -22,10 +25,12 @@ export const appInitialInvokes = () => {
   indexTsjrpcBaseClient.$$register();
   schTsjrpcBaseClient.$$register();
   schLiveTsjrpcBaseClient.$$register();
-
   bibleTsjrpcBaseClient.$$register();
-
+  cmShareTsjrpcBaseClient.$$register();
+  storagesStoresSharesTsjrpcBaseClient.$$register();
+  questionerAdminTsjrpcClientBase.$$register();
   cmShareEditorTsjrpcBaseClient.$$register();
+
   if (rights && checkUserScopeAccessRight(null, rights, 'cm', 'EDIT')) cmEditorInitialInvokes();
 
   const getFreshes = async () => {

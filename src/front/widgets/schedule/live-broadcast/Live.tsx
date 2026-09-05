@@ -6,7 +6,7 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { BibleBroadcastSlide } from '$bible/entities/broadcast';
 import { CmBroadcastLiveScreen } from '$cm/features/broadcast/ui/Screen';
 import { liveDataAtom, liveDataStreamersAtom } from '$index/shared/state';
-import { schLiveTsjrpcBaseClient, schLiveTsjrpcClient } from '$index/shared/tsjrpc/live.tsjrpc';
+import { schLiveTsjrpcClient } from '$index/shared/tsjrpc/live.tsjrpc';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { ScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
@@ -102,5 +102,3 @@ export const ScheduleWidgetLiveBroadcast = ({ schw, isShowMarkdownOnly }: Props)
     </>
   );
 };
-
-schLiveTsjrpcBaseClient.$$register();

@@ -1,5 +1,4 @@
 import { BibleBroadcastSlide } from '$bible/entities/broadcast';
-import { bibleTsjrpcBaseClient } from '$bible/shared/lib/tsjrpc';
 import { CmBroadcastLiveScreen } from '$cm/features/broadcast/ui/Screen';
 import { configureAtomaric, useAtomValue } from 'atomaric';
 import { useSyncExternalStore } from 'react';
@@ -27,5 +26,3 @@ export const PresentationPage = () => {
     )
   );
 };
-
-bibleTsjrpcBaseClient.$$register();
