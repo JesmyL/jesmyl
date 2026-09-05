@@ -32,7 +32,7 @@
     "D G\nD/F# A\nD/F# G A Hm",
     "F#m Hm/G\nD/H A/G\nD/F# G A D",
     "Hm A D G\nEm D/F# G\nAsus4 A Asus4 A",
-    "D G D/F# G\nD G D/F# G"
+    "D Em D/F# G\nD Em D/F# G"
   ],
   "o": [
     { "c": 7, "k": 15, "w": 9 },
@@ -86,7 +86,7 @@
       "t": 3,
       "w": 4
     },
-    { "a": 1, "c": 4, "w": 5 },
+    { "a": 1, "c": 5, "w": 5 },
     { "c": 6, "k": 80, "w": 8 },
     {
       "c": 2,
