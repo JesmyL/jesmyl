@@ -1,16 +1,9 @@
 import { BrowserWindow, Display, screen } from 'electron';
 import { electronAppWinHolder } from '../../const';
 import { electronAppWebPreferences } from '../../webPreferences';
-import { ElectronTsjrpcTool, TsjrpcElectronAppBase } from '../init/tsjrpc.base.electron';
+import { TsjrpcElectronAppBase } from '../init/tsjrpc.base.electron';
 import { electronPresentationTsjrpcAppMethods } from '../methods/presentation.server.methods';
 import { ElectronPresentationTsjrpcModel } from '../model';
-
-const register = <Props>(mapper: (props: Props, tool: ElectronTsjrpcTool) => void) => {
-  return async (props: Props, tool: ElectronTsjrpcTool) => {
-    init(tool);
-    return mapper(props, tool);
-  };
-};
 
 export const electronAppPresentationTsjrpcBase =
   new (class BaseClient extends TsjrpcElectronAppBase<ElectronPresentationTsjrpcModel> {
@@ -18,10 +11,10 @@ export const electronAppPresentationTsjrpcBase =
       super({
         scope: 'Presentation2',
         methods: {
-          close: register((_, { win }) => {
+          close: async (_, { win }) => {
             presentationWin?.minimize();
             focusWin(win);
-          }),
+          },
 
           show: async (liveData, { host, win }) => {
             if (presentationWin && !presentationWin.isDestroyed()) {
@@ -30,6 +23,7 @@ export const electronAppPresentationTsjrpcBase =
               }
             } else {
               const projector = screen.getAllDisplays().find(d => d.bounds.x !== 0 || d.bounds.y !== 0);
+              init(win);
               presentationWin = await createSlideshowWindow(projector, host);
 
               presentationWin.webContents.on('did-finish-load', () => {
@@ -42,8 +36,10 @@ export const electronAppPresentationTsjrpcBase =
               });
             }
 
-            if (presentationWin) focusWin(presentationWin);
-            focusWin(win);
+            if (presentationWin) {
+              focusWin(presentationWin);
+              setTimeout(() => focusWin(win), 150);
+            } else focusWin(win);
           },
 
           liveData: data => electronPresentationTsjrpcAppMethods.liveData(data),
@@ -96,10 +92,9 @@ const focusWin = (win: BrowserWindow) => {
 
 let isInited = false;
 
-const init = (tool: ElectronTsjrpcTool) => {
+const init = (win: BrowserWindow) => {
   if (isInited) return;
   isInited = true;
-  const { win } = tool;
 
   win.on('close', () => {
     isPreventClosePresentation = false;

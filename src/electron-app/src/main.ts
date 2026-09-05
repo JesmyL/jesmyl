@@ -103,9 +103,9 @@ if (!gotTheLock) {
     if (!url.startsWith('https')) win.webContents.openDevTools();
 
     win.webContents.on('did-finish-load', async () => {
-      win.webContents.executeJavaScript(`
-      localStorage.setItem('atom\\\\index:extVersion', '["${app.getVersion()}"]');
-    `);
+      win.webContents.executeJavaScript(
+        `localStorage.setItem('atom\\\\index:extVersion', '["${app.getVersion().replace(/^\d+\.\d+\.(\d+)(\d{3})(\d{3})$/, '$1.$2.$3')}"]');`,
+      );
     });
 
     await win.loadURL(url, {
