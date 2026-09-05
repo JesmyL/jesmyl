@@ -80,7 +80,8 @@ export const RenderEditorOnce = memo(() => {
         .effect(),
     [],
   );
-  if (isCantRender) return null;
+  if (isCantRender) return;
+
   return (
     <div hidden>
       <Suspense>

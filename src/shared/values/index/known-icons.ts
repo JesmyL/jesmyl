@@ -118,6 +118,7 @@ export const knownStameskaIconNames = {
   IceCubes: 0,
   Image02: 0,
   InformationCircle: 0,
+  InsertBottomImage: 0,
   Layers01: 0,
   LayoutBottom: 0,
   LayoutTop: 0,

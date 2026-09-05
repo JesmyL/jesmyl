@@ -64,7 +64,7 @@ export const CmEditorComTabComOrders = ({ ccom }: { ccom: EditableCom }) => {
       {ccom.orders?.map((ord, ordi, orda) => {
         const editNode = isCanUpdate && !ord.me.isAnchorInherit && (
           <LazyIcon
-            icon={ord.isAnchor ? 'Link02' : 'Edit02'}
+            icon={ord.me.isAnchorInheritPlus ? 'InsertBottomImage' : ord.isAnchor ? 'Link02' : 'Edit02'}
             className="mx-2 mb-2 pointer align-middle"
             onClick={() => setToolProps({ com: ccom, onClose: setToolProps, ord, ordi, setClickBetweenOrds })}
           />
@@ -78,7 +78,7 @@ export const CmEditorComTabComOrders = ({ ccom }: { ccom: EditableCom }) => {
 
         return (
           <React.Fragment key={ordi}>
-            <div className={ord.me.isAnchorInherit ? 'text-x7 opacity-70' : ''}>
+            <div className={ord.me.isAnchorInherit || ord.me.isAnchorInheritPlus ? 'text-x7 opacity-70' : ''}>
               <div className="mx-10 mt-2">
                 {clickBetweenData || isWithHead ? null : ord.me.isAnchorInherit &&
                   ord.me.leadOrd &&
