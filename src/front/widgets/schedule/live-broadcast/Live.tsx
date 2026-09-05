@@ -31,7 +31,7 @@ export const ScheduleWidgetLiveBroadcast = ({ schw, isShowMarkdownOnly }: Props)
   useEffect(() => {
     if (isNetworkConnected) return;
 
-    if (streamerLogin != null) {
+    if (streamerLogin) {
       schLiveTsjrpcClient.watch({ schw, streamerLogin });
 
       return () => {

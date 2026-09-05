@@ -1,5 +1,4 @@
 import { isShowBroadcastTextAtom } from '#features/broadcast/initial-slide-context';
-import { useScheduleCurrentSchwContext } from '#widgets/schedule/complect/lib/contexts';
 import { useBibleBroadcastScreenConfigs } from '$bible/entities/broadcast';
 import { useBibleAddressTextContext, useBibleTextMapBlocksContentContext } from '$bible/shared/contexts/texts';
 import { BibleCurrentTextsContext } from '$bible/shared/state/CurrentTextsContext';
@@ -21,7 +20,6 @@ export function BibleBroadcastLive(props: Props): JSX.Element {
 }
 
 const Live = ({ fio, onSend }: Props) => {
-  const schw = useScheduleCurrentSchwContext();
   const addressText = useBibleAddressTextContext();
   const texts = useBibleTextMapBlocksContentContext();
   const isHide = !useAtomValue(isShowBroadcastTextAtom);
@@ -30,8 +28,6 @@ const Live = ({ fio, onSend }: Props) => {
 
   useEffect(() => {
     return setTimeoutEffect(() => {
-      if (isNaN(schw)) return;
-
       const liveData: IndexSchWBroadcastLiveDataValue = {
         fio: fio ?? '',
         isHide,
@@ -40,7 +36,7 @@ const Live = ({ fio, onSend }: Props) => {
 
       onSend(liveData);
     }, 100);
-  }, [addressText, config, fio, isHide, onSend, schw, texts]);
+  }, [addressText, config, fio, isHide, onSend, texts]);
 
   return <></>;
 };
