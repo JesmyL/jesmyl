@@ -7,7 +7,7 @@ import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { useEffect } from 'react';
 
-export const useBroadcastListeners = (win: Window, configi: number) => {
+export const useBroadcastListeners = (win: Window, configi: number, isCanBlurBroadcast: boolean) => {
   const currentConfigiRef = useActualRef(configi);
   const configs = useScreenBroadcastConfigsValue();
   const updateConfig = useUpdateScreenBroadcastConfig();
@@ -35,7 +35,7 @@ export const useBroadcastListeners = (win: Window, configi: number) => {
               return;
 
             case 'Escape':
-              parentWinRef.current?.blur();
+              if (isCanBlurBroadcast) parentWinRef.current?.blur();
               return;
 
             case 'Tab':
@@ -64,5 +64,5 @@ export const useBroadcastListeners = (win: Window, configi: number) => {
         }),
       )
       .effect();
-  }, [configi, configs.length, currentConfigiRef, parentWinRef, updateConfig, watchWindows, win]);
+  }, [configi, configs.length, currentConfigiRef, isCanBlurBroadcast, parentWinRef, updateConfig, watchWindows, win]);
 };

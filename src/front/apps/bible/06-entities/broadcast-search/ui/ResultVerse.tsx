@@ -6,6 +6,7 @@ import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/shared/model/base
 import { bibleBroadcastCurrentSelectedIndexAtom } from '$bible/shared/state';
 import { bibleJoinAddressAtom, useBibleCurrentLangi } from '$bible/shared/state/atoms';
 import { JSX, memo } from 'react';
+import { makeRegExp } from 'regexpert';
 
 interface Props {
   booki: BibleBooki;
@@ -25,8 +26,10 @@ export const BibleBroadcastSearchResultVerse = memo(function BibleSearchResultVe
   onClick,
 }: Props): JSX.Element {
   const showTranslates = useBibleShowTranslatesValue();
-  const textBits =
-    useBibleTranslatesContext()[showTranslates[0]]?.chapters?.[booki]?.[chapteri]?.[versei]?.split(splitRegLazy());
+  const texts = useBibleTranslatesContext();
+  const textBits = texts[showTranslates[0]]?.chapters?.[booki]?.[chapteri]?.[versei]
+    ?.replace(makeRegExp('/</?.+?>/gi'), '')
+    .split(splitRegLazy());
   const langi = useBibleCurrentLangi();
 
   return (

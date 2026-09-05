@@ -58,7 +58,7 @@ export const BibleBroadcastSearchResults = () => {
     const freeTerm = searchTerm.trim();
     if (freeTerm.length < 3) return;
 
-    const lowerTerm = freeTerm.trim().toLowerCase();
+    const lowerTerm = freeTerm.toLowerCase();
     const transcriptedWordsLazy = lazyInit(() =>
       transcriptEnToRuText(lowerTerm)
         .split(makeRegExp('/ +/'))

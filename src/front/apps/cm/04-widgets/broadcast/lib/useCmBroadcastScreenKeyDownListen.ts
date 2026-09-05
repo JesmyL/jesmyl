@@ -5,7 +5,7 @@ import { useCmBroadcastScreenComNavigations, useCmBroadcastSlidesContext } from 
 import { useEffect } from 'react';
 
 export const useCmBroadcastScreenKeyDownListen = (win: Window, configi: number) => {
-  useBroadcastListeners(win, configi);
+  useBroadcastListeners(win, configi, true);
 
   const comActionsRef = useActualRef(useCmBroadcastScreenComNavigations());
   const comTextActionsRef = useActualRef(useCmBroadcastSlidesContext());

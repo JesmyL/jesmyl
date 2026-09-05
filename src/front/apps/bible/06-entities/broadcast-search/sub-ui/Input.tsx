@@ -1,6 +1,7 @@
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { TextInput } from '#shared/ui/TextInput';
 import { bibleBroadcastSearchAreaConfigDict } from '$bible/shared/const';
+import { BibleBroadcastKeyListenScope } from '$bible/shared/model/broadcast';
 import { bibleBroadcastKeyListenSameScopeAtom, bibleBroadcastKeyListenScopeAtom } from '$bible/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
@@ -36,6 +37,10 @@ export const BibleBroadcastSearchPanelInput = ({ inputRef, term, onChange }: Pro
           }
 
           if (event.code === 'Escape') bibleBroadcastKeyListenScopeAtom.reset();
+        }}
+        onFocus={() => {
+          if (listenScope in bibleBroadcastSearchAreaConfigDict) return;
+          bibleBroadcastKeyListenScopeAtom.set(BibleBroadcastKeyListenScope.SearchInText);
         }}
       />
     </>

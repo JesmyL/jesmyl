@@ -1,6 +1,7 @@
 import { useBroadcastListeners } from '#features/broadcast/complect/config-line/hooks/listeners';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { extractNumber } from 'shared/utils';
 import { checkIsNotNil } from 'shared/utils/checkIs';
@@ -25,7 +26,8 @@ const indexSelectableScopeSet = new Set<number>([
 ]);
 
 export const useBibleBroadcastKeyListener = (win: Window, configi: number) => {
-  useBroadcastListeners(win, configi);
+  const listenScope = useAtomValue(bibleBroadcastKeyListenScopeAtom);
+  useBroadcastListeners(win, configi, listenScope === BibleBroadcastKeyListenScope.AAAddressNav);
   useBibleBroadcastArchiveKeyListener(win);
   useBibleBroadcastAddressKeyListener(win);
 
