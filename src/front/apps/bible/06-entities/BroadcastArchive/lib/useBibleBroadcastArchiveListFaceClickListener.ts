@@ -15,7 +15,7 @@ import {
   bibleBroadcastCurrentSelectedIndexAtom,
   bibleBroadcastKeyListenScopeAtom,
 } from '$bible/shared/state';
-import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
+import { bibleJoinAddressAtom, biblePlanCurrentItemiAtom } from '$bible/shared/state/atoms';
 import { itNumSort } from 'shared/utils';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { forEachObjectEntries, objectLength } from 'shared/utils/object.utils';
@@ -44,6 +44,7 @@ export const useBibleBroadcastArchiveListFaceClickListener = (
 
       bibleBroadcastKeyListenScopeAtom.set(scope);
       bibleBroadcastCurrentListLengthAtom.set(() => list.length);
+      biblePlanCurrentItemiAtom.set(itemi);
       bibleBroadcastCurrentSelectedIndexAtom.set(itemi);
 
       if (checkIsArray(item)) {
