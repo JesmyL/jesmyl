@@ -11,6 +11,7 @@ import { CmComOrderWid, CmComWid } from 'shared/api';
 import { itNNil } from 'shared/utils';
 import { checkIsNaN } from 'shared/utils/checkIs';
 import { takeCorrectComIndex, takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
+import { objectLength } from 'shared/utils/object.utils';
 import { searchConstants, searchRate } from 'shared/utils/searchRate';
 import { CmComWordFounds } from '../model/com';
 import { cmComWidNumberDictAtom } from '../state/atoms';
@@ -51,7 +52,7 @@ export const CmComWithComListSearchFilterInput = (props: {
 
     cats.forEach(cat => {
       const catDict = cat.dict;
-      if (catDict == null) return;
+      if (!objectLength(catDict)) return;
 
       cat.comws.forEach(comw => {
         if (catDict[comw] !== termNumber) return;

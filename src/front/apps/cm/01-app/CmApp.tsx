@@ -8,6 +8,7 @@ import { Metronome } from '#widgets/metronome';
 import { cmComSelectedComwsAtom } from '$cm/entities/index';
 import { CmComSharedListActionInterpretator } from '$cm/features/com';
 import { cmAppActions } from '$cm/shared/const';
+import { cmInitialInvokes } from '$cm/shared/tsjrpc';
 import { Global } from '@emotion/react';
 import { Outlet } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
@@ -88,3 +89,5 @@ export const RenderEditorOnce = memo(() => {
     </div>
   );
 });
+
+cmInitialInvokes();

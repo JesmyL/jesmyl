@@ -7,6 +7,7 @@ import { BibleTranslatesContextProvider, takeBibleLangBooks, useBibleTranslatesC
 import { bibleTranslateFilter } from '$bible/shared/const/consts';
 import { useBibleAddressBooki, useBibleAddressChapteri, useBibleAddressVersei } from '$bible/shared/hooks';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
+import { bibleInitialInvokes } from '$bible/shared/lib';
 import { useBibleCurrentLangi } from '$bible/shared/state/atoms';
 import { BibleReaderBookText } from '$bible/widgets/reader';
 import styled from '@emotion/styled';
@@ -22,6 +23,8 @@ export function BibleReaderCurrentBookPage() {
     </BibleTranslatesContextProvider>
   );
 }
+
+bibleInitialInvokes();
 
 let isOpenBookSelectorAtom: Atom<boolean>;
 let isOpenChapterSelectorAtom: Atom<boolean>;

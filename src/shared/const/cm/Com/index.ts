@@ -1,3 +1,4 @@
+import { checkIsNotNil } from 'shared/utils/checkIs';
 import { ruUaReg_i } from 'shared/utils/cm/com/const';
 import { CmCat } from '../Cat';
 import { CmComTexts } from './parents/40-Texts';
@@ -16,7 +17,7 @@ export class CmCom extends CmComTexts {
 
     const inCats = cats
       .filter(cat => {
-        if (cat.dict?.[wid] != null) natives.push(`${cat.name} ${cat.dict[wid]}`);
+        if (checkIsNotNil(cat.dict[wid])) natives.push(`${cat.name} ${cat.dict[wid]}`);
         return cat.stackSet.has(wid);
       })
       .map(cat => cat.name);

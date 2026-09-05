@@ -4,6 +4,7 @@ import { bibleTsjrpcBaseClient } from '$bible/shared/lib/tsjrpc';
 import { cmEditorInitialInvokes } from '$cm+editor/shared/lib/cm+editor-initial-invokes';
 import { cmShareEditorTsjrpcBaseClient } from '$cm+editor/shared/lib/cm-editor.tsjrpc.base';
 import {
+  authIDB,
   indexDeviceEmojiAtom,
   indexDeviceIdAtom,
   indexIDB,
@@ -60,4 +61,13 @@ export const appInitialInvokes = () => {
   soki.onAuthorizeEvent.listen(getFreshes);
 
   soki.listenOnConnectionOpenEvent(getFreshes);
+
+  soki.onAuthorizeEvent.listen(async () => {
+    await indexIDB.remove.lastModifiedAt();
+  });
+
+  soki.onTokenInvalidEvent.listen(() => {
+    authIDB.remove.auth();
+    authIDB.remove.token();
+  });
 };

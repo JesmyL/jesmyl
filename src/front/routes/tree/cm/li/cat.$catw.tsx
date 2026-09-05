@@ -1,4 +1,4 @@
-import { useCmCatComws, useCmCatICcat, useCmCatMapComws } from '$cm/entities/cat';
+import { useCmCatComws, useCmCatICcat } from '$cm/entities/cat';
 import { CmCatPage } from '$cm/pages/CatPage';
 import { makeCmComNestedRoute } from '$cm/shared/lib';
 import { createFileRoute } from '@tanstack/react-router';
@@ -14,7 +14,7 @@ export const Route = createFileRoute('/cm/li/cat/$catw')(
 function RouteComponent() {
   const { catw } = Route.useParams() as { catw: string };
   const icat = useCmCatICcat(+catw);
-  const comws = useCmCatMapComws(icat);
+  const comws = useCmCatComws(icat);
   const comDict = icat?.d;
 
   return (
@@ -34,5 +34,5 @@ function RouteComponent() {
 
 function useComListPack() {
   const { catw } = Route.useParams() as { catw: string };
-  return useCmCatComws(+catw);
+  return useCmCatComws(useCmCatICcat(+catw));
 }

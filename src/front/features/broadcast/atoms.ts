@@ -27,6 +27,6 @@ export const broadcastNextLiveDataAtom = atom(
 );
 
 broadcastNextLiveDataAtom.subscribe(value => {
-  if (value.schw === ScheduleWidgetWidNone) return;
+  if (value.schw === ScheduleWidgetWidNone || value.schw === ScheduleWidgetWidDef) return;
   schLiveTsjrpcClient.next(value);
 });

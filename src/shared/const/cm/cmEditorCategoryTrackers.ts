@@ -1,12 +1,13 @@
 import { CmCatTracker } from '#shared/model/cm/cat/Cat.model';
 import { CmComIntensityLevel, Langi } from 'shared/api';
+import { checkIsNil } from 'shared/utils/checkIs';
 
 export const cmEditorCategoryTrackers: CmCatTracker = {
   full: () => true,
-  dict: (com, cat) => !!cat.dict?.[com.w],
+  dict: (com, cat) => !!cat.dict[com.w],
   list: (com, cat) => cat.stackSet.has(com.w),
 
-  'lang:ru': com => com.l === Langi.Ru,
+  'lang:ru': com => com.l === Langi.Ru || checkIsNil(com.l),
   'lang:ua': com => com.l === Langi.Ua,
   'lang:kz': com => com.l === Langi.Kz,
 

@@ -1,23 +1,11 @@
 import { defaultQueryClient } from '#basis/config/queryClient';
-import { translateBase } from '#basis/locale';
-import { takeDynamicLanguageAtom } from '#basis/state/locale';
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
 import { routeTree } from '#routes/routeTree.gen';
-import { rootAppModalTextContentAtom } from '#shared/lib/atoms/rootAppModalTextContentAtom';
-import { soki } from '#shared/soki';
-import { Modal, ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
-import { WithAtomValue } from '#shared/ui/WithAtomValue';
-import { authIDB } from '$index/shared/state';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
-import { configureAtomaric } from 'atomaric';
-import { useSyncExternalStore } from 'react';
-import { CmComOrders } from 'shared/const/cm/Com/parents/20-Orders';
 import { Toaster } from 'sonner';
 import './App.scss';
 import './tw.css';
-
-configureAtomaric({ useSyncExternalStore, keyPathSeparator: '/' });
 
 declare module 'atomaric' {
   interface Register {
@@ -38,21 +26,6 @@ export const App = () => {
     <QueryClientProvider client={defaultQueryClient}>
       <AppDialogProvider title="app">
         <RouterProvider router={router} />
-
-        <Modal
-          openAtom={rootAppModalTextContentAtom}
-          checkIsOpen={checkUserModalTextContentShow}
-        >
-          <WithAtomValue atom={rootAppModalTextContentAtom}>
-            {props => (
-              <>
-                <ModalHeader>{props.header || translateBase(it => it.msg)}</ModalHeader>
-                <ModalBody>{props.text}</ModalBody>
-                {props.footer && <ModalFooter>{props.footer}</ModalFooter>}
-              </>
-            )}
-          </WithAtomValue>
-        </Modal>
       </AppDialogProvider>
       <Toaster
         position="bottom-center"
@@ -61,12 +34,3 @@ export const App = () => {
     </QueryClientProvider>
   );
 };
-
-const checkUserModalTextContentShow = (it: { text: React.ReactNode }) => !!it.text;
-
-soki.onTokenInvalidEvent.listen(() => {
-  authIDB.remove.auth();
-  authIDB.remove.token();
-});
-
-CmComOrders.getLangLocales = langi => takeDynamicLanguageAtom(langi).get();

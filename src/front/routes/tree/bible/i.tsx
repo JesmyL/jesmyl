@@ -1,5 +1,4 @@
 import { BibleReaderCurrentBookPage } from '$bible/pages/ReaderCurrentBookPage';
-import { bibleInitialInvokes } from '$bible/shared/lib';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/bible/i')({
@@ -9,5 +8,3 @@ export const Route = createFileRoute('/bible/i')({
 function RouteComponent() {
   return <BibleReaderCurrentBookPage />;
 }
-
-bibleInitialInvokes();
