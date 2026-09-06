@@ -39,6 +39,7 @@ export class SokiTrip {
     try {
       await this.send({
         token: await authIDB.get.token(),
+        stopAll: environment.isPresentationMode || undefined,
         visitInfo: {
           deviceId: indexDeviceIdAtom.get(),
           deviceEmoji: indexDeviceEmojiAtom.get(),
