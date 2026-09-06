@@ -3,7 +3,7 @@ import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import { extractNumber } from 'shared/utils';
+import { emptyFunc, extractNumber } from 'shared/utils';
 import { checkIsNotNil } from 'shared/utils/checkIs';
 import { objectKeys } from 'shared/utils/object.utils';
 import { bibleBroadcastSearchAreaConfigDict } from '../const';
@@ -32,6 +32,19 @@ export const useBibleBroadcastKeyListener = (win: Window, configi: number) => {
   useBibleBroadcastAddressKeyListener(win);
 
   useEffect(() => {
+    const onEnter = () => {
+      const currentListenScope = bibleBroadcastKeyListenScopeAtom.get();
+      if (indexSelectableScopeSet.has(currentListenScope))
+        bibleBroadcastKeyListenScopeAtom.set(BibleBroadcastKeyListenScope.AAAddressNav);
+    };
+
+    const onEscape = () => {
+      bibleBroadcastKeyListenScopeAtom.set(BibleBroadcastKeyListenScope.AAAddressNav);
+    };
+
+    const [onWinEnter, onEffectEnter] = win === window ? [emptyFunc, onEnter] : [onEnter, emptyFunc];
+    const [onWinEscape, onEffectEscape] = win === window ? [emptyFunc, onEscape] : [onEscape, emptyFunc];
+
     return hookEffectPipe()
       .pipe(
         addEventListenerPipe(win, 'keydown', event => {
@@ -57,6 +70,12 @@ export const useBibleBroadcastKeyListener = (win: Window, configi: number) => {
               break;
             case 'F4':
               nextListenScope = BibleBroadcastKeyListenScope.SearchByAddress;
+              break;
+            case 'Enter':
+              onWinEnter();
+              break;
+            case 'Escape':
+              onWinEscape();
               break;
             case 'ArrowUp':
               if (event.ctrlKey) {
@@ -115,10 +134,6 @@ export const useBibleBroadcastKeyListener = (win: Window, configi: number) => {
           }
         }),
       )
-      .effect(
-        ThrowEvent.listenKeyDown('Escape', () => {
-          bibleBroadcastKeyListenScopeAtom.set(BibleBroadcastKeyListenScope.AAAddressNav);
-        }),
-      );
+      .effect(ThrowEvent.listenKeyDown('Escape', onEffectEscape), ThrowEvent.listenKeyDown('Enter', onEffectEnter));
   }, [win]);
 };
