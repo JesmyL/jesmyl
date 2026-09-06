@@ -1,5 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
+import windowStateKeeper from 'electron-window-state';
 import path from 'path';
 import { TSJRPCInvokeData } from 'tsjrpc';
 import hostConfig from '../../../host-config.json';
@@ -71,14 +72,22 @@ if (!gotTheLock) {
 
     if (isQuittingForUpdate) return;
 
+    const { height, width, y, x, manage } = windowStateKeeper({
+      defaultWidth: 800,
+      defaultHeight: 600,
+    });
+
     const win = (electronAppWinHolder.win = new BrowserWindow({
-      height: 700,
-      width: 800,
-      x: 0,
-      y: 0,
+      height,
+      width,
+      x,
+      y,
+      backgroundColor: '#000000',
       icon: path.join(__dirname, '../assets/img/ico-512x512.png'),
       webPreferences: electronAppWebPreferences,
     }));
+
+    manage(win);
 
     ipcMain.removeHandler(electronAppClientEventKey);
     ipcMain.handle(
