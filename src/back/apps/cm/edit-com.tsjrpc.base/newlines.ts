@@ -58,10 +58,10 @@ export const cmEditComServerTsjrpcNewlines = () =>
 
         if (checkIsNotNil(add)) set.add(add);
         if (checkIsNotNil(del)) set.delete(del);
+        if (!repeati) set.delete(CmComNewlinerWordiNotNewLine);
       }
 
       set.delete(CmComNewlinerWordiZero);
-      if (!repeati) set.delete(CmComNewlinerWordiNotNewLine);
     }),
 
     removeNL_v1: updateNewlinerLineSet(({ repeati }, itRepeati, set) => {
