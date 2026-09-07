@@ -1,15 +1,14 @@
 {
-  "title": "тест чат",
+  "title": "Уральск",
   "topic": "",
   "dsc": "",
-  "start": 1766523600000,
-  "prevStart": 1766869200000,
-  "tgChatReqs": "-1003002037661/-166719061088134157",
+  "start": 1798052400000,
+  "prevStart": 1766523600000,
   "tgInformTime": 15,
   "ctrl": {
     "cats": ["Основное"],
     "defu": 43,
-    "type": 1,
+    "type": 3,
     "roles": [{ "mi": 0, "icon": "Teacher", "title": "Координатор", "userMi": 0 }],
     "users": [
       {
