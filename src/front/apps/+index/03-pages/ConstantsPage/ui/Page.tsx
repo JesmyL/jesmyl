@@ -35,9 +35,7 @@ export const IndexConstantsPage = () => {
                 icon="RightToLeftListTriangle"
                 placeholder={'' + constantsDefaultConfig[key]}
                 defaultValue={configItem.str(constants[key])}
-                onChanged={value =>
-                  indexTsjrpcClientMethods.updateConstConfig({ config: { [key]: configItem.unzip(value) } })
-                }
+                onChanged={value => indexTsjrpcClientMethods.updateConstConfig({ config: { [key]: value } })}
               />
             );
           })}

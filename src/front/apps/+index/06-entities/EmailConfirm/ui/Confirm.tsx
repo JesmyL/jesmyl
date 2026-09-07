@@ -7,6 +7,7 @@ import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
 import { constantsConfigurator } from 'shared/const/cm/constants.def';
 import { toast } from 'sonner';
+import { twJoin } from 'tailwind-merge';
 
 export const IndexEmailConfirm = ({
   onConfirm,
@@ -19,7 +20,7 @@ export const IndexEmailConfirm = ({
   const [otp, setOTP] = useState('');
   const otpLabel = translateBase(it => it.oneTimeCode);
   const { availEmailDomainZone } = useAtomValue(constantsConfigAtom);
-  const availEmailDomainZoneError = constantsConfigurator.availEmailDomainZone.error(availEmailDomainZone, email);
+  const availEmailDomainZoneError = constantsConfigurator.availEmailDomainZone.error?.(availEmailDomainZone, email);
 
   return (
     <div className="flex flex-col gap-3">
@@ -34,8 +35,8 @@ export const IndexEmailConfirm = ({
         />
         <Button
           icon="Sent"
-          className="mt-[1.7em]"
-          disabled={!email || !!availEmailDomainZoneError}
+          className={twJoin('mt-[1.7em]', availEmailDomainZoneError && 'opacity-50')}
+          disabled={!email}
           onClick={async () => {
             const result = await onSend(email);
             toast(
