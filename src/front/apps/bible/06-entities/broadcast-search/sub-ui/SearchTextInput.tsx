@@ -1,6 +1,6 @@
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { useBibleBroadcastSlideSyncContentSetter } from '$bible/shared/hooks/slide-sync';
+import { bibleBroadcastSyncSlide } from '$bible/shared/hooks/slide-sync';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { bibleBroadcastSearchTermAtom } from '../state/atoms';
@@ -12,7 +12,6 @@ interface Props {
 
 export const BibleBroadcastSearchPanelSearchTextInput = ({ inputRef }: Props) => {
   const searchTerm = useAtomValue(bibleBroadcastSearchTermAtom);
-  const syncSlide = useBibleBroadcastSlideSyncContentSetter();
 
   useEffect(() => {
     if (!inputRef.current) return;
@@ -31,10 +30,10 @@ export const BibleBroadcastSearchPanelSearchTextInput = ({ inputRef }: Props) =>
       .effect(
         ThrowEvent.listenKeyDown('Enter', () => {
           inputNode.blur();
-          syncSlide();
+          bibleBroadcastSyncSlide();
         }),
       );
-  }, [inputRef, syncSlide]);
+  }, [inputRef]);
 
   return (
     <BibleBroadcastSearchPanelInput

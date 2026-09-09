@@ -26,7 +26,6 @@ export const useBibleBroadcastArchiveListKeyListener = (
   const confirm = useConfirm();
   const actualRef = useActualRef({ onRemove });
   const listenScope = useAtomValue(bibleBroadcastKeyListenScopeAtom);
-  const isSubWindow = win !== window;
 
   useEffect(() => {
     if (listenScope !== scope || !list) return;
@@ -44,6 +43,9 @@ export const useBibleBroadcastArchiveListKeyListener = (
       }
     };
 
+    const [onWinEnter, onEffectEnter] =
+      win === window ? [emptyFunc, ThrowEvent.listenKeyDown('Enter', onEnter)] : [onEnter, emptyFunc];
+
     return hookEffectPipe()
       .pipe(
         addEventListenerPipe(win, 'keydown', async event => {
@@ -51,7 +53,7 @@ export const useBibleBroadcastArchiveListKeyListener = (
 
           switch (event.code) {
             case 'Enter':
-              if (isSubWindow) onEnter();
+              onWinEnter();
               break;
             case 'Delete':
               if (event.ctrlKey) {
@@ -76,6 +78,6 @@ export const useBibleBroadcastArchiveListKeyListener = (
           }
         }),
       )
-      .effect(isSubWindow ? emptyFunc : ThrowEvent.listenKeyDown('Enter', onEnter));
-  }, [actualRef, confirm, isSubWindow, list, listenScope, scope, title, win]);
+      .effect(onEffectEnter);
+  }, [actualRef, confirm, list, listenScope, scope, title, win]);
 };

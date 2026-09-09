@@ -13,8 +13,7 @@ import { ScreensConfigurator } from '#shared/ui/configurators/Screens';
 import { StrokeConfigurator } from '#shared/ui/configurators/Stroke';
 import { ScreenTranslateConfigurationTextAlign } from '#shared/ui/configurators/TextAlign';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
-import { useBibleBroadcastUpdateCurrentConfig } from '$bible/entities/broadcast';
-import { useCallback } from 'react';
+import { bibleBroadcastUpdateCurrentConfig } from '$bible/entities/broadcast';
 import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 
 interface Props {
@@ -22,17 +21,14 @@ interface Props {
 }
 
 export function BibleBroadcastCurrentScreenConfigurations({ currentConfig }: Props) {
-  const updateConfig = useBibleBroadcastUpdateCurrentConfig();
-  const update = useDebounceAction(updateConfig);
+  const update = useDebounceAction(bibleBroadcastUpdateCurrentConfig);
   const configRef = useActualRef(currentConfig);
 
-  const putUpdateConfigInner = useCallback(
+  const putUpdateConfigInner =
     <Area extends 'address' | 'insertedtext' | 'textinbrackets' | 'godswords'>(area: Area) =>
-      (configInner: Partial<BibleBroadcastScreenConfig[Area]>) => {
-        update({ ...configRef.current, [area]: { ...configRef.current[area], ...configInner } });
-      },
-    [configRef, update],
-  );
+    (configInner: Partial<BibleBroadcastScreenConfig[Area]>) => {
+      update({ ...configRef.current, [area]: { ...configRef.current[area], ...configInner } });
+    };
 
   return (
     <>
@@ -48,19 +44,19 @@ export function BibleBroadcastCurrentScreenConfigurations({ currentConfig }: Pro
       />
       <FontStyleConfigurator
         config={currentConfig}
-        updateConfig={updateConfig}
+        updateConfig={bibleBroadcastUpdateCurrentConfig}
       />
       <FontWeightConfigurator
         config={currentConfig}
-        updateConfig={updateConfig}
+        updateConfig={bibleBroadcastUpdateCurrentConfig}
       />
       <ScreenTranslateConfigurationTextAlign
         config={currentConfig}
-        updateConfig={updateConfig}
+        updateConfig={bibleBroadcastUpdateCurrentConfig}
       />
       <FontFamilyConfigurator
         config={currentConfig}
-        updateConfig={updateConfig}
+        updateConfig={bibleBroadcastUpdateCurrentConfig}
       />
       <BackgroundConfigurator
         config={currentConfig}

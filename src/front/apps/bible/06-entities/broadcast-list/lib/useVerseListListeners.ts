@@ -1,6 +1,6 @@
 import { addEventListenerPipe, clearTimeoutPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { useBibleAddressVersei, useBibleBroadcastJoinAddress } from '$bible/shared/hooks';
-import { useBibleBroadcastSlideSyncContentSetter } from '$bible/shared/hooks/slide-sync';
+import { bibleBroadcastSyncSlide } from '$bible/shared/hooks/slide-sync';
 import { BibleBooki, BibleBroadcastJoinAddress, BibleChapteri } from '$bible/shared/model/base';
 import { bibleJoinAddressAtom, bibleVerseiAtom } from '$bible/shared/state/atoms';
 import { useEffect } from 'react';
@@ -13,7 +13,6 @@ export const useBibleBroadcastListVerseListeners = (
   currentChapteri: BibleChapteri,
 ) => {
   const currentJoinAddress = useBibleBroadcastJoinAddress();
-  const syncSlide = useBibleBroadcastSlideSyncContentSetter();
   const currentVersei = useBibleAddressVersei();
   const currentJoin = currentJoinAddress[0]?.[currentBooki]?.[currentChapteri];
 
@@ -40,7 +39,7 @@ export const useBibleBroadcastListVerseListeners = (
               bibleJoinAddressAtom.reset();
               bibleVerseiAtom.set(versei);
             }
-            syncSlide();
+            bibleBroadcastSyncSlide();
             isDblClick = false;
             return;
           }
@@ -107,5 +106,5 @@ export const useBibleBroadcastListVerseListeners = (
         clearTimeoutPipe(clickTimeout),
       )
       .effect();
-  }, [currentBooki, currentChapteri, currentJoin, currentJoinAddress, currentVersei, syncSlide, verseListNodeRef]);
+  }, [currentBooki, currentChapteri, currentJoin, currentJoinAddress, currentVersei, verseListNodeRef]);
 };

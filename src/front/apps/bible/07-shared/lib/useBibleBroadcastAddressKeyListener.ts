@@ -10,7 +10,7 @@ import {
   useBibleAddressVersei,
   useBibleBroadcastJoinAddress,
 } from '$bible/shared/hooks';
-import { useBibleBroadcastSlideSyncContentSetter } from '$bible/shared/hooks/slide-sync';
+import { bibleBroadcastSyncSlide } from '$bible/shared/hooks/slide-sync';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
 import { BibleBroadcastAddress, BibleBroadcastJoinAddress } from '$bible/shared/model/base';
 import { bibleJoinAddressAtom, bibleVerseiAtom } from '$bible/shared/state/atoms';
@@ -32,12 +32,10 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
   const showTranslates = useBibleShowTranslatesValue();
   const htmlChapters = useBibleTranslatesContext()[showTranslates[0]]?.chapters;
   const currentJoinAddress = useBibleBroadcastJoinAddress();
-  const syncSlide = useBibleBroadcastSlideSyncContentSetter();
   const joinAddress = useBibleBroadcastJoinAddress();
   const actualAddressRef = useActualRef<BibleBroadcastAddress>(
     joinAddress[0] ?? [currentBooki, currentChapteri, currentVersei],
   );
-  const isSubWindow = win !== window;
 
   useEffect(() => {
     return hookEffectPipe()
@@ -78,11 +76,11 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
           switch (event.code) {
             case 'ArrowLeft':
               limitStepJump(-1);
-              syncSlide(true);
+              bibleBroadcastSyncSlide(true);
               break;
             case 'ArrowRight':
               limitStepJump(1);
-              syncSlide(true);
+              bibleBroadcastSyncSlide(true);
               break;
             case 'ArrowUp':
               limitStepJump(event.ctrlKey ? -Infinity : -1);
@@ -119,7 +117,7 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
         }),
       )
       .effect();
-  }, [htmlChapters, currentBooki, currentChapteri, currentJoinAddress, syncSlide, currentVersei, win]);
+  }, [htmlChapters, currentBooki, currentChapteri, currentJoinAddress, currentVersei, win]);
 
   useEffect(() => {
     if (numberCollection === '') return;
@@ -158,8 +156,13 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
   useEffect(() => {
     const onEnter = (isCtrlKey: boolean) => {
       if (isCtrlKey) bibleBroadcastPlanAddToPlan(actualAddressRef.current);
-      else syncSlide();
+      else bibleBroadcastSyncSlide();
     };
+
+    const [onWinEnter, onEffectEnter, onWinKeyR] =
+      win === window
+        ? [emptyFunc, ThrowEvent.listenKeyDown('Enter', event => onEnter(event.value.ctrlKey)), emptyFunc]
+        : [onEnter, emptyFunc, (event: KeyboardEvent) => event.ctrlKey && event.preventDefault()];
 
     return hookEffectPipe()
       .pipe(
@@ -169,21 +172,19 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
             case 'NumpadEnter':
               event.preventDefault();
               if (event.ctrlKey) bibleBroadcastPlanAddToPlan(actualAddressRef.current);
-              else {
-                syncSlide();
-              }
+              else bibleBroadcastSyncSlide();
               break;
 
             case 'KeyR':
-              if (event.ctrlKey && isSubWindow) event.preventDefault();
+              onWinKeyR(event);
               break;
 
             case 'Enter':
-              if (isSubWindow) onEnter(event.ctrlKey);
+              onWinEnter(event.ctrlKey);
               break;
           }
         }),
       )
-      .effect(isSubWindow ? emptyFunc : ThrowEvent.listenKeyDown('Enter', event => onEnter(event.value.ctrlKey)));
-  }, [actualAddressRef, syncSlide, win, isSubWindow]);
+      .effect(onEffectEnter);
+  }, [actualAddressRef, win]);
 };

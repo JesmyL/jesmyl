@@ -4,7 +4,7 @@ import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContaine
 import { BroadcastResizableGrid } from '#widgets/broadcast';
 import { BroadcastGridTabConfig } from '#widgets/broadcast/model/TabConfig';
 import { bibleBroadcastTabConfigDict } from '$bible/shared/const';
-import { useBiblePrintShowSlideAddressCode } from '$bible/shared/hooks/slide-sync';
+import { biblePrintShowSlideAddressCode } from '$bible/shared/hooks/slide-sync';
 import { useBibleBroadcastKeyListener } from '$bible/shared/lib/useBibleBroadcastKeyListener';
 import { BibleBroadcastTabId } from '$bible/shared/model/broadcast';
 import {
@@ -29,14 +29,13 @@ const config: BroadcastGridTabConfig<BibleBroadcastTabId> = {
 };
 
 export const BibleBroadcastControlled = ({ head, headTitle }: Props) => {
-  const printShowAddress = useBiblePrintShowSlideAddressCode();
   const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
 
   useBibleBroadcastKeyListener(window, currentConfigi);
 
   useEffect(() => {
-    printShowAddress();
-  }, [printShowAddress]);
+    biblePrintShowSlideAddressCode();
+  }, []);
 
   return (
     <PageContainerConfigurer

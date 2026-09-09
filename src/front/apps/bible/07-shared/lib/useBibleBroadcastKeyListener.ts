@@ -42,8 +42,11 @@ export const useBibleBroadcastKeyListener = (win: Window, configi: number) => {
       bibleBroadcastKeyListenScopeAtom.set(BibleBroadcastKeyListenScope.AAAddressNav);
     };
 
-    const [onWinEnter, onEffectEnter] = win === window ? [emptyFunc, onEnter] : [onEnter, emptyFunc];
-    const [onWinEscape, onEffectEscape] = win === window ? [emptyFunc, onEscape] : [onEscape, emptyFunc];
+    const [onWinEnter, onEffectEnter] =
+      win === window ? [emptyFunc, ThrowEvent.listenKeyDown('Enter', onEnter)] : [onEnter, emptyFunc];
+
+    const [onWinEscape, onEffectEscape] =
+      win === window ? [emptyFunc, ThrowEvent.listenKeyDown('Escape', onEscape)] : [onEscape, emptyFunc];
 
     return hookEffectPipe()
       .pipe(
@@ -134,6 +137,6 @@ export const useBibleBroadcastKeyListener = (win: Window, configi: number) => {
           }
         }),
       )
-      .effect(ThrowEvent.listenKeyDown('Escape', onEffectEscape), ThrowEvent.listenKeyDown('Enter', onEffectEnter));
+      .effect(onEffectEscape, onEffectEnter);
   }, [win]);
 };
