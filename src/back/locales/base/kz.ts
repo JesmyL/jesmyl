@@ -301,6 +301,7 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
   search: 'Іздеу',
   globSearch: 'Жаһандық іздеу',
   broadcast: 'Трансляция',
+  folder: 'Бума',
 
   tg: {
     beInChannel: 'Арнада болу',

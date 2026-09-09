@@ -276,6 +276,8 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
   alert: 'Предупреждение',
   slides: 'Слайды',
 
+  folder: 'Папка',
+
   toAuth: 'Авторизоваться',
   authSuccess: `Успешная авторизация`,
   oneTimeCode: 'Одноразовый код',

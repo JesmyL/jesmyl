@@ -30,6 +30,7 @@ const config: BroadcastGridTabConfig<CmBroadcastTabId> = {
   tabNetAtom: cmBroadcastGridTabsAtom,
   activeTabiAtom: cmBroadcastGridActiveTabiAtom,
   tabs: cmBroadcastTabConfigDict,
+  forceShownTabIdSet: new Set(),
 };
 
 export function CmBroadcastControlled(props: Props) {

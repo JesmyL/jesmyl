@@ -35,7 +35,7 @@ export const ResizableGridCell = <TabId extends number>({
               snapshot.isDraggingOver && 'bg-accent/10',
             )}
           >
-            {tabOrder && tabOrder.length > 1 && (
+            {tabOrder && (tabOrder.length > 1 || config.forceShownTabIdSet.has(tabOrder[0])) && (
               <div className="flex gap-1 border-b bg-muted/30 px-2 h-9 w-full items-end overflow-x-auto select-none z-10 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                 {tabOrder.map((tabId, tabIdi) => {
                   const tabConfig = config.tabs[tabId];
@@ -46,6 +46,7 @@ export const ResizableGridCell = <TabId extends number>({
                         key={tabId}
                         draggableId={`${tabId}`}
                         index={tabIdi}
+                        isDragDisabled={tabOrder.length < 2}
                       >
                         {(dragProvided, dragSnapshot) => (
                           <div

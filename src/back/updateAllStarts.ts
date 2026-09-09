@@ -15,8 +15,8 @@ export const updateAllStarts = () => {
       ...prev,
       // chatUrl: '',
       // iconSearchLink: '',
-      // desktopLinuxDownLink: `${hostConfig.url}/down/JESMYL_PRO.AppImage`,
-      // desktopWindowsDownLink: `${hostConfig.url}/down/JESMYL_PRO.exe`,
+      // desktopLinuxDownLink: `${hostConfig.url}/down/${electronAppName}.AppImage`,
+      // desktopWindowsDownLink: `${hostConfig.url}/down/${electronAppName}.exe`,
     }));
 
   if (!Do.It) tokenSecretFileStore.setValue({ token: randomBytes(60).toString('hex') });

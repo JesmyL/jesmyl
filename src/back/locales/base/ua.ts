@@ -297,6 +297,7 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
   search: 'Пошук',
   globSearch: 'Глобальний пошук',
   broadcast: 'Трансляція',
+  folder: 'Папка',
 
   tg: {
     beInChannel: 'Перебувати в каналі',

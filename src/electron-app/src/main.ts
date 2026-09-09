@@ -4,7 +4,7 @@ import windowStateKeeper from 'electron-window-state';
 import path from 'path';
 import { TSJRPCInvokeData } from 'tsjrpc';
 import hostConfig from '../../../host-config.json';
-import { electronAppClientEventKey, electronAppWinHolder } from './const';
+import { electronAppClientEventKey, electronAppName, electronAppWinHolder } from './const';
 import { makeElectronDownHostUrl } from './lib';
 import { electronAppBasicTsjrpcBase } from './tsjrpc/bases/basic.server.base';
 import { electronAppPresentationTsjrpcBase } from './tsjrpc/bases/presentation.server.base';
@@ -120,7 +120,7 @@ if (!gotTheLock) {
     win.setMenu(null);
     await win.loadURL(url, {
       httpReferrer: '',
-      userAgent: `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 JESMYL_PRO/${app.getVersion()}`,
+      userAgent: `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ${electronAppName}/${app.getVersion()}`,
     });
 
     win.on('close', () => {

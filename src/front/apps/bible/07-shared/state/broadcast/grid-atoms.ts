@@ -1,14 +1,18 @@
-import { BroadcastGridNumberNetPack, BroadcastGridTabNet } from '#widgets/broadcast/model/TabConfig';
+import { makeBroadcastGridNetElectronTabIdFreeAtom } from '#widgets/broadcast/lib/makeBroadcastGridNetElectronTabIdFree';
+import { BroadcastGridNumberNetPack } from '#widgets/broadcast/model/TabConfig';
 import { BibleBroadcastKeyListenScope, BibleBroadcastTabId } from '$bible/shared/model/broadcast';
 import { atom } from 'atomaric';
 
-export const bibleBroadcastGridTabsAtom = atom<BroadcastGridTabNet<BibleBroadcastTabId>>(
+const electronTabIdSet = new Set<BibleBroadcastTabId>([BibleBroadcastTabId.WorkDir]);
+
+export const bibleBroadcastGridTabsAtom = makeBroadcastGridNetElectronTabIdFreeAtom(
+  electronTabIdSet,
   [
     [BibleBroadcastTabId.Preview, BibleBroadcastTabId.Slide],
     [BibleBroadcastTabId.List],
     [BibleBroadcastTabId.Control, BibleBroadcastTabId.Alert],
     //
-    [BibleBroadcastTabId.Configs],
+    [BibleBroadcastTabId.Configs, BibleBroadcastTabId.WorkDir],
     [BibleBroadcastTabId.Search],
     [BibleBroadcastTabId.History, BibleBroadcastTabId.Plan],
   ],

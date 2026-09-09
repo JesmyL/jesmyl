@@ -8,4 +8,5 @@ export const enum BibleBroadcastTabId {
   Search = 22,
   Control = 68,
   Alert = 61,
+  WorkDir = 83,
 }

@@ -101,6 +101,8 @@ export const knownStameskaIconNames = {
   Flash: 0,
   FlashOff: 0,
   Folder01: 0,
+  FolderSearch: 0,
+  FolderOpen: 0,
   FolderAdd: 0,
   GameController03: 0,
   Github: 0,

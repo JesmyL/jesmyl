@@ -281,6 +281,8 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   showMyQr: LocaleSimpleString;
   readQR: LocaleSimpleString;
 
+  folder: LocaleSimpleString;
+
   /** Поиск */
   search: LocaleSimpleString;
   globSearch: LocaleSimpleString;

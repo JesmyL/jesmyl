@@ -1,4 +1,5 @@
 import { lazyEnvJson } from '../back/envJson';
+import { electronAppName } from './src/const';
 import { makeElectronDownHostUrl } from './src/lib';
 
 const downUrl = `https://${makeElectronDownHostUrl(lazyEnvJson().host)}`;
@@ -13,7 +14,7 @@ const publish = [
 
 const config = {
   appId: 'cm.com.presentation',
-  productName: 'JESMYL_PRO',
+  productName: electronAppName,
   files: [
     'package.json',
     {
@@ -34,12 +35,12 @@ const config = {
   win: {
     target: ['nsis'],
     icon,
-    artifactName: 'JESMYL_PRO.${ext}',
+    artifactName: `${electronAppName}.\${ext}`,
   },
   linux: {
     target: ['AppImage'],
     icon,
-    artifactName: 'JESMYL_PRO.AppImage',
+    artifactName: `${electronAppName}.AppImage`,
     publish,
   },
 };

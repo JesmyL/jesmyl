@@ -25,6 +25,7 @@ const config: BroadcastGridTabConfig<BibleBroadcastTabId> = {
   tabNetAtom: bibleBroadcastGridTabsAtom,
   activeTabiAtom: bibleBroadcastGridActiveTabiAtom,
   tabs: bibleBroadcastTabConfigDict,
+  forceShownTabIdSet: new Set<BibleBroadcastTabId>([BibleBroadcastTabId.History, BibleBroadcastTabId.Plan]),
 };
 
 export const BibleBroadcastControlled = ({ head, headTitle }: Props) => {
