@@ -1,20 +1,14 @@
-import { addEventListenerPipe, clearTimeoutPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { useBibleAddressVersei, useBibleBroadcastJoinAddress } from '$bible/shared/hooks';
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { takeBibleSimpleCheckedSingleAddress, useBibleBroadcastJoinAddress } from '$bible/shared/hooks';
 import { bibleBroadcastSyncSlide } from '$bible/shared/hooks/slide-sync';
-import { BibleBooki, BibleBroadcastJoinAddress, BibleChapteri } from '$bible/shared/model/base';
+import { BibleBroadcastJoinAddress } from '$bible/shared/model/base';
 import { bibleJoinAddressAtom, bibleVerseiAtom } from '$bible/shared/state/atoms';
 import { useEffect } from 'react';
 import { checkIsNaN, checkIsNil } from 'shared/utils/checkIs';
 import { objectLength } from 'shared/utils/object.utils';
 
-export const useBibleBroadcastListVerseListeners = (
-  verseListNodeRef: { current: HTMLOListElement | null },
-  currentBooki: BibleBooki,
-  currentChapteri: BibleChapteri,
-) => {
+export const useBibleBroadcastListVerseListeners = (verseListNodeRef: { current: HTMLOListElement | null }) => {
   const currentJoinAddress = useBibleBroadcastJoinAddress();
-  const currentVersei = useBibleAddressVersei();
-  const currentJoin = currentJoinAddress[0]?.[currentBooki]?.[currentChapteri];
 
   useEffect(() => {
     if (verseListNodeRef.current === null) return;
@@ -28,6 +22,13 @@ export const useBibleBroadcastListVerseListeners = (
         addEventListenerPipe(verseListNode, 'mousedown', event => {
           const versei = +((event.target as HTMLDivElement | null)?.getAttribute?.('data-versei') as string);
 
+          const [currentBooki, currentChapteri, currentVersei] = takeBibleSimpleCheckedSingleAddress(
+            null,
+            null,
+            null,
+            null,
+          );
+
           if (checkIsNaN(versei)) return;
 
           const ctrlKey = event.ctrlKey;
@@ -35,6 +36,7 @@ export const useBibleBroadcastListVerseListeners = (
 
           clearTimeout(clickTimeout);
           if (isDblClick) {
+            const currentJoin = currentJoinAddress[0]?.[currentBooki]?.[currentChapteri];
             if (!currentJoin?.includes(versei)) {
               bibleJoinAddressAtom.reset();
               bibleVerseiAtom.set(versei);
@@ -47,6 +49,8 @@ export const useBibleBroadcastListVerseListeners = (
           isDblClick = true;
 
           clickTimeout = setTimeout(() => {
+            isDblClick = false;
+
             if (!ctrlKey && !shiftKey) {
               bibleJoinAddressAtom.reset();
               bibleVerseiAtom.set(versei);
@@ -103,8 +107,7 @@ export const useBibleBroadcastListVerseListeners = (
             bibleJoinAddressAtom.set([newJoin]);
           }, 150);
         }),
-        clearTimeoutPipe(clickTimeout),
       )
-      .effect();
-  }, [currentBooki, currentChapteri, currentJoin, currentJoinAddress, currentVersei, verseListNodeRef]);
+      .effect(() => clearTimeout(clickTimeout));
+  }, [currentJoinAddress, verseListNodeRef]);
 };

@@ -1,23 +1,9 @@
 import { DexieDB } from '#shared/lib/DexieDB';
-import { BibleTranslateName } from 'shared/api';
+import { BibleTbcvKey, BibleTranslateName } from 'shared/model/bible';
 import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
-import {
-  BibleBooki,
-  BibleBroadcastAddress,
-  BibleBroadcastJoinAddress,
-  BibleChapteri,
-  BibleTranslate,
-  BibleVersei,
-} from '../model/base';
+import { BibleBroadcastAddress, BibleTranslate } from '../model/base';
 
 export interface BibleIDBStorage {
-  booki: BibleBooki | null;
-  chapteri: BibleChapteri | null;
-  versei: BibleVersei | null;
-  showTranslates: BibleTranslateName[] | null;
-  myTranslates: BibleTranslateName[] | null;
-  joinAddress: BibleBroadcastJoinAddress | nil;
-
   broadcastPlan: BibleBroadcastAddress[] | nil;
   broadcastHistory: BibleBroadcastAddress[] | nil;
   broadcastScreenConfigs: BibleBroadcastScreenConfig[];
@@ -29,25 +15,40 @@ interface BibleTranslatesIDBStorage extends Record<BibleTranslateName, null | Bi
   lastModifiedAt: number;
 }
 
-class BibleTranslatesIDB extends DexieDB<BibleTranslatesIDBStorage> {}
-export const bibleTranslatesIDB = new BibleTranslatesIDB('bibleTranslates', {
-  lastModifiedAt: [0],
+/** @deprecated */
+const bibleTranslatesIDB = new (class BibleTranslatesIDB extends DexieDB<BibleTranslatesIDBStorage> {
+  constructor() {
+    super('bibleTranslates', {
+      lastModifiedAt: [0],
 
-  rst: [{ chapters: [] }],
-  nrt: [null],
-  kas: [null],
-  kzb: [null],
-});
+      rst: [{ chapters: [] }],
+      nrt: [null],
+      kas: [null],
+      kzb: [null],
+    });
+  }
+})();
+
+bibleTranslatesIDB.remove.kas();
+bibleTranslatesIDB.remove.kzb();
+bibleTranslatesIDB.remove.nrt();
+bibleTranslatesIDB.remove.rst();
+
+export const bibleTBCVTranslatesIDB = new (class BibleTranslatesIDB extends DexieDB<{
+  list: { k: BibleTbcvKey; v: string }[];
+  lastModifiedAt: number;
+}> {
+  constructor() {
+    super('bibleTBCV', {
+      lastModifiedAt: [0],
+
+      list: { k: '++' },
+    });
+  }
+})();
 
 class BibleIDB extends DexieDB<BibleIDBStorage> {}
 export const bibleIDB = new BibleIDB('bible', {
-  booki: [null],
-  chapteri: [null],
-  versei: [null],
-  joinAddress: [null],
-  showTranslates: [null],
-  myTranslates: [null],
-
   broadcastPlan: [null],
   broadcastHistory: [null],
   broadcastScreenConfigs: [[]],

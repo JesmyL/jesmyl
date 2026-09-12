@@ -1,9 +1,12 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { bibleBroadcastListSetSingleAddress } from '$bible/entities/broadcast-list';
 import { findIndexInBibleTitles, takeBibleLangBooks } from '$bible/shared/const/bibleTitles';
-import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
+import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
+import { takeBibleTranslateBookSizesAtom } from '$bible/shared/lib/takeBibleTranslateBookSizesAtom';
+import { useBibleCurrentLangi } from '$bible/shared/lib/useBibleCurrentLangi';
 import { BibleChapteri, BibleVersei } from '$bible/shared/model/base';
-import { bibleJoinAddressAtom, useBibleCurrentLangi } from '$bible/shared/state/atoms';
+import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
+import { useAtomValue } from 'atomaric';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { makeNamedRegExp, makeRegExp } from 'regexpert';
 import { Do } from 'shared/enums';
@@ -11,15 +14,16 @@ import { BibleTitleCodei } from 'shared/model/bible/enums';
 import { emptyFunc } from 'shared/utils';
 import { checkIsNil, checkIsUndefined } from 'shared/utils/checkIs';
 import { ruLowerLettersStr } from 'shared/utils/cm/com/const';
-import { arrayByLength, objectKeys } from 'shared/utils/object.utils';
+import { arrayByLength, objectLength } from 'shared/utils/object.utils';
 import { transcriptEnToRuText } from 'shared/utils/ru-en-letters';
+import { textToLowerCase } from 'shared/utils/string.utils';
 
 export const useBibleBroadcastSearchTransformAddressTermToAddress = (
   term: string,
   inputRef: React.RefObject<HTMLInputElement | null>,
 ) => {
-  const translates = useBibleTranslatesContext();
-  const chapters = translates.rst?.chapters ?? translates[objectKeys(translates)[0]]?.chapters;
+  const showTranslates = useBibleShowTranslatesValue();
+  const sizes = useAtomValue(takeBibleTranslateBookSizesAtom(showTranslates[0]));
   const [address, setAddress] = useState<ReactNode>(null);
   const onEnterPressRef = useRef(emptyFunc);
   const langi = useBibleCurrentLangi();
@@ -39,9 +43,9 @@ export const useBibleBroadcastSearchTransformAddressTermToAddress = (
   }, [inputRef]);
 
   useEffect(() => {
-    if (checkIsUndefined(chapters) || term.length < 1) return;
+    if (!objectLength(sizes) || term.length < 1) return;
 
-    const match = transcriptEnToRuText(term).match(addressReg) ?? term.toLowerCase().match(addressReg);
+    const match = transcriptEnToRuText(textToLowerCase(term)).match(addressReg);
 
     if (!match?.[0]) return;
 
@@ -53,7 +57,7 @@ export const useBibleBroadcastSearchTransformAddressTermToAddress = (
 
     let booki = -1 as BibleTitleCodei;
 
-    const ruBookName = chips.bookName ?? transcriptEnToRuText(chips.bookNameEn ?? '');
+    const ruBookName = chips.bookName ?? transcriptEnToRuText(textToLowerCase(chips.bookNameEn ?? ''));
     const bookTitle = `${chips.bookNum}${ruBookName}`;
 
     if (booki < 0) booki = findIndexInBibleTitles(langi, title => title === bookTitle);
@@ -78,11 +82,11 @@ export const useBibleBroadcastSearchTransformAddressTermToAddress = (
     let verseNode: ReactNode = verseNumber;
     let finishVerseNode: ReactNode = finishVerseNumber;
 
-    if (chapters[booki] == null) return;
-    const book = chapters[booki]!;
+    const bookSizes = sizes[booki];
+    if (!bookSizes) return;
 
     do {
-      const isChapterOverOfBookLength = chapterNumberi >= book.length;
+      const isChapterOverOfBookLength = chapterNumberi >= bookSizes.length;
 
       if (isChapterOverOfBookLength) {
         chapterNode = <span className="text-xKO">{chapterNumberi + 1}</span>;
@@ -94,7 +98,7 @@ export const useBibleBroadcastSearchTransformAddressTermToAddress = (
         break;
       }
 
-      const chapterLength = book[chapterNumberi]?.length ?? 0;
+      const chapterLength = bookSizes[chapterNumberi] ?? 0;
       const isFinishVerseOverOfCurrentChapter = finishVerseNumber !== undefined && finishVerseNumber > chapterLength;
 
       if (isFinishVerseOverOfCurrentChapter) {
@@ -149,7 +153,7 @@ export const useBibleBroadcastSearchTransformAddressTermToAddress = (
     );
 
     setAddress(address);
-  }, [chapters, langi, term]);
+  }, [langi, sizes, term]);
 
   return address;
 };

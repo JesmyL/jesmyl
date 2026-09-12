@@ -1,41 +1,27 @@
-import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { BibleBroadcastScreenScreen } from '$bible/entities/broadcast-screen';
-import { BibleBroadcastScreenKnownTextsContext } from '$bible/shared/state/KnownTextsContext';
+import { BibleAddressTextContext, BibleTextMapBlocksContentContext } from '$bible/shared/contexts/texts';
 import styled from '@emotion/styled';
-import { JSX, useEffect, useState } from 'react';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 
-export function BibleBroadcastSlide({
+export const BibleBroadcastSlide = ({
   config,
-  texts: text,
+  texts,
   addressText,
-}: Required<IndexSchWBroadcastLiveDataValue>['bible']): JSX.Element {
-  const [updates, setUpdates] = useState(0);
-
-  useEffect(() => {
-    let i = 0;
-
-    return hookEffectPipe()
-      .pipe(addEventListenerPipe(window, 'resize', () => setUpdates(++i)))
-      .effect();
-  }, []);
-
+}: Required<IndexSchWBroadcastLiveDataValue>['bible']) => {
   return (
     <Container className="flex center full-size">
-      <BibleBroadcastScreenKnownTextsContext
-        texts={text}
-        addressText={addressText}
-      >
-        <BibleBroadcastScreenScreen
-          win={window}
-          isVisible
-          bibleConfig={config}
-          windowResizeUpdatesNum={updates}
-        />
-      </BibleBroadcastScreenKnownTextsContext>
+      <BibleTextMapBlocksContentContext value={texts}>
+        <BibleAddressTextContext value={addressText}>
+          <BibleBroadcastScreenScreen
+            win={window}
+            isVisible
+            bibleConfig={config}
+          />
+        </BibleAddressTextContext>
+      </BibleTextMapBlocksContentContext>
     </Container>
   );
-}
+};
 
 const Container = styled.div`
   overflow: hidden;

@@ -9,6 +9,13 @@ export const objectEntries = <T>(
   NonNullable<T>[RealKey<T>],
 ][] => (checkIsObject(it) ? (Object.entries(it) as never) : []);
 
+export const objectFromEntries = <Item, Key extends PropertyKey, Value>(
+  arr: Item[] | nil,
+  mapper: (item: Item, index: number, items: Item[]) => readonly [Key, Value],
+): Record<Key, Value> => {
+  return checkIsArray(arr) ? (Object.fromEntries(arr.map(mapper)) as never) : ({} as never);
+};
+
 export const objectKeys = <T>(
   it: T,
 ): (T extends object | nil ? (keyof T extends number ? `${keyof T}` : keyof T) : string)[] =>

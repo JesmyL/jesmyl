@@ -1,10 +1,13 @@
 import { translateDynamic } from '#basis/locale';
 import { bibleBroadcastListSetSingleAddress } from '$bible/entities/broadcast-list';
-import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
+import { bibleTbcvEncode } from '$bible/shared/lib/tbcv.parser';
+import { useBibleCurrentLangi } from '$bible/shared/lib/useBibleCurrentLangi';
 import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
 import { bibleBroadcastCurrentSelectedIndexAtom } from '$bible/shared/state';
-import { bibleJoinAddressAtom, useBibleCurrentLangi } from '$bible/shared/state/atoms';
+import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
+import { bibleTBCVTranslatesIDB } from '$bible/shared/state/bibleIDB';
+import { useLiveQuery } from 'dexie-react-hooks';
 import { JSX, memo } from 'react';
 import { makeRegExp } from 'regexpert';
 
@@ -12,7 +15,7 @@ interface Props {
   booki: BibleBooki;
   chapteri: BibleChapteri;
   versei: BibleVersei;
-  splitRegLazy: () => RegExp;
+  splitReg: RegExp;
   resulti: number;
   onClick?: (booki: BibleBooki, chapteri: BibleChapteri, versei: BibleVersei) => void;
 }
@@ -21,15 +24,17 @@ export const BibleBroadcastSearchResultVerse = memo(function BibleSearchResultVe
   booki,
   chapteri,
   versei,
-  splitRegLazy,
+  splitReg,
   resulti,
   onClick,
 }: Props): JSX.Element {
   const showTranslates = useBibleShowTranslatesValue();
-  const texts = useBibleTranslatesContext();
-  const textBits = texts[showTranslates[0]]?.chapters?.[booki]?.[chapteri]?.[versei]
-    ?.replace(makeRegExp('/</?.+?>/gi'), '')
-    .split(splitRegLazy());
+  const tName = showTranslates[0];
+  const texts = useLiveQuery(
+    () => bibleTBCVTranslatesIDB.tb.list.get(bibleTbcvEncode(tName, booki, chapteri, versei)),
+    [tName, booki, chapteri, versei],
+  );
+  const textBits = texts?.v?.replace(makeRegExp('/</?.+?>/gi'), '').split(splitReg);
   const langi = useBibleCurrentLangi();
 
   return (

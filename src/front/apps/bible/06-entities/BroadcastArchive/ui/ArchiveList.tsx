@@ -1,16 +1,14 @@
+import { makeBibleJoinedAddressText } from '$bible/shared/hooks/texts';
+import { useBibleCurrentLangi } from '$bible/shared/lib/useBibleCurrentLangi';
 import { BibleBroadcastAddress } from '$bible/shared/model/base';
 import { BibleBroadcastKeyListenScope } from '$bible/shared/model/broadcast';
 import { bibleBroadcastCurrentSelectedIndexAtom, bibleBroadcastKeyListenScopeAtom } from '$bible/shared/state';
 import { useAtomValue } from 'atomaric';
 import { memo, ReactNode } from 'react';
 import { itIt } from 'shared/utils';
-import { checkIsArray } from 'shared/utils/checkIs';
 import { twJoin } from 'tailwind-merge';
 import { bibleBroadcastArchiveStopClassName } from '../const/common';
-import { BibleBroadcastArchiveJoinedAddressText } from './JoinedAddress';
-import { BibleBroadcastArchiveJoinedContentText } from './JoinedContentText';
-import { BibleBroadcastArchiveSingleAddressText } from './SingleAddressText';
-import { BibleBroadcastArchiveSingleContentText } from './SingleContentText';
+import { BibleBroadcastArchiveContentText } from './ContentText';
 
 interface Props {
   list: BibleBroadcastAddress[];
@@ -22,45 +20,34 @@ export const BibleBroadcastArchiveList = memo(function BibleBroadcastArchive({ l
   const selectedItemi = useAtomValue(bibleBroadcastCurrentSelectedIndexAtom);
   const listenScope = useAtomValue(bibleBroadcastKeyListenScopeAtom);
   const isCurrentScope = listenScope === scope;
+  const langi = useBibleCurrentLangi();
 
   const takeClassName = isCurrentScope ? (itemi: number) => selectedItemi === itemi && 'bg-x2' : () => null;
 
-  const nodeList = list.map((item, itemi) => {
-    const className = twJoin(
-      bibleBroadcastArchiveStopClassName,
-      'nowrap w-full pointer py-1 ellipsis pl-3',
-      takeClassName(itemi),
-    );
+  return (
+    <>
+      {children(
+        list.map((item, itemi) => {
+          const address = makeBibleJoinedAddressText(langi, item, 'short');
 
-    if (checkIsArray(item))
-      return (
-        <div
-          key={item[0] + ' ' + item[1] + ':' + item[2]}
-          data-archive-itemi={itemi}
-          className={className}
-        >
-          <span className="text-x7">
-            <BibleBroadcastArchiveSingleAddressText item={item} />
-          </span>
-          {' - '}
-          <BibleBroadcastArchiveSingleContentText item={item} />
-        </div>
-      );
-
-    return (
-      <div
-        key={itemi}
-        data-archive-itemi={itemi}
-        className={className}
-      >
-        <span className="text-x7">
-          <BibleBroadcastArchiveJoinedAddressText item={item} />
-        </span>
-        {' - '}
-        <BibleBroadcastArchiveJoinedContentText item={item} />
-      </div>
-    );
-  });
-
-  return <>{children(nodeList)}</>;
+          return (
+            <div
+              key={address}
+              id={address}
+              data-archive-itemi={itemi}
+              className={twJoin(
+                bibleBroadcastArchiveStopClassName,
+                'nowrap w-full pointer py-1 ellipsis pl-3',
+                takeClassName(itemi),
+              )}
+            >
+              <span className="text-x7">{address}</span>
+              {' - '}
+              <BibleBroadcastArchiveContentText item={item} />
+            </div>
+          );
+        }),
+      )}
+    </>
+  );
 });

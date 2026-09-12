@@ -8,7 +8,7 @@ import { removeBibleTranslate } from '$bible/shared/lib/utils';
 import { bibleMyTranslatesAtom } from '$bible/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
-import { BibleTranslateName } from 'shared/api';
+import { BibleTranslateName } from 'shared/model/bible';
 import { textToUpperCase } from 'shared/utils/string.utils';
 
 export const BibleTranslateLoadModalInner = () => {

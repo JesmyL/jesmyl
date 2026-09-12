@@ -4,7 +4,6 @@ import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { useConfirm } from '#shared/ui/modal';
 import { bibleBroadcastListSetSingleAddress } from '$bible/entities/broadcast-list';
-import { BibleTranslatesContextProvider } from '$bible/ext';
 import { takeJoinedAddressMaxValues } from '$bible/shared/hooks';
 import { BibleBroadcastAddress } from '$bible/shared/model/base';
 import { BibleBroadcastKeyListenScope } from '$bible/shared/model/broadcast';
@@ -61,14 +60,12 @@ export const useBibleBroadcastArchiveListKeyListener = (
                   actualRef.current.onRemove();
               } else if (
                 await confirm(
-                  <BibleTranslatesContextProvider>
-                    <BibleBroadcastArchiveList
-                      list={list}
-                      scope={scope}
-                    >
-                      {nodeList => nodeList?.[selectedItemi]}
-                    </BibleBroadcastArchiveList>
-                  </BibleTranslatesContextProvider>,
+                  <BibleBroadcastArchiveList
+                    list={list}
+                    scope={scope}
+                  >
+                    {nodeList => nodeList?.[selectedItemi]}
+                  </BibleBroadcastArchiveList>,
                   translateBase(it => it.del),
                 )
               )

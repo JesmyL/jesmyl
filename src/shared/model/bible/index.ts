@@ -4,3 +4,5 @@ export const enum BibleTranslateName {
   kas = 'kas',
   kzb = 'kzb',
 }
+
+export type BibleTbcvKey = StringBrand<'BibleTbcvKey'>;

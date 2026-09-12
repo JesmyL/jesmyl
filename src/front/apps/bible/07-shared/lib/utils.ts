@@ -1,9 +1,10 @@
-import { BibleTranslateName } from 'shared/api';
+import { BibleTranslateName } from 'shared/model/bible';
 import { bibleMyTranslatesAtom, bibleShowTranslatesAtom } from '../state/atoms';
-import { bibleTranslatesIDB } from '../state/bibleIDB';
+import { bibleTBCVTranslatesIDB } from '../state/bibleIDB';
+import { makeBibleTbcvPrefix } from './tbcv.parser';
 
 export const removeBibleTranslate = async (tName: BibleTranslateName) => {
-  await bibleTranslatesIDB.remove[tName]();
+  await bibleTBCVTranslatesIDB.tb.list.where('k').startsWith(makeBibleTbcvPrefix(tName)).delete();
 
   const showTranslates = new Set(bibleShowTranslatesAtom.get());
   const myTranslatesSet = new Set(bibleMyTranslatesAtom.get());

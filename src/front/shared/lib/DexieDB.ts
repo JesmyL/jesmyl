@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import Dexie, { EntityTable, TableHooks } from 'dexie';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useCallback } from 'react';
 import { checkIsArray, checkIsFunction } from 'shared/utils/checkIs';
 import { forEachObjectEntries, mapObjectEntries, objectLength } from 'shared/utils/object.utils';
-import { toast } from 'sonner';
 
 const keyvalues = '%keyvalues%';
 
@@ -58,7 +56,7 @@ export class DexieDB<Store> {
     });
 
     this.db.on('blocked', () => {
-      toast('Доступ к базе данных заблокирован другой вкладкой.', makeToastKOMoodConfig());
+      console.error('Доступ к базе данных заблокирован другой вкладкой.');
     });
 
     const returnIfKeyInDefaults = <Cb>(key: keyof Store | string | symbol, cb: Cb) => {

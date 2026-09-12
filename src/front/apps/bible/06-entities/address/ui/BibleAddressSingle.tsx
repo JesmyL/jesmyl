@@ -1,24 +1,17 @@
-import { useBibleAddressBooki, useBibleAddressChapteri, useBibleAddressVersei } from '$bible/shared/hooks';
+import { useBibleSimpleCheckedSingleAddress } from '$bible/shared/hooks';
 import { makeBibleJoinedAddressText } from '$bible/shared/hooks/texts';
+import { useBibleCurrentLangi } from '$bible/shared/lib/useBibleCurrentLangi';
 import { BibleBroadcastSingleAddress } from '$bible/shared/model/base';
-import { useBibleCurrentLangi } from '$bible/shared/state/atoms';
+import { Langi } from 'shared/api';
 
 export const BibleAddressSingle = (props: { address?: BibleBroadcastSingleAddress }) => {
-  if (props.address === undefined) return <Current />;
+  const langi = useBibleCurrentLangi();
 
-  return <Propped address={props.address} />;
+  if (props.address) return makeBibleJoinedAddressText(langi, props.address);
+
+  return <Current langi={langi} />;
 };
 
-const Propped = (props: { address: BibleBroadcastSingleAddress }) => {
-  const langi = useBibleCurrentLangi();
-  return <>{makeBibleJoinedAddressText(langi, props.address)}</>;
-};
-
-const Current = () => {
-  const langi = useBibleCurrentLangi();
-  return (
-    <>
-      {makeBibleJoinedAddressText(langi, [useBibleAddressBooki(), useBibleAddressChapteri(), useBibleAddressVersei()])}
-    </>
-  );
+const Current = ({ langi }: { langi: Langi }) => {
+  return <>{makeBibleJoinedAddressText(langi, useBibleSimpleCheckedSingleAddress())}</>;
 };

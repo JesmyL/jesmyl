@@ -1,15 +1,8 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
-import {
-  useBibleAddressBooki,
-  useBibleAddressChapteri,
-  useBibleAddressVersei,
-  useBibleBroadcastJoinAddress,
-} from '$bible/shared/hooks';
+import { useBibleBroadcastJoinAddress, useBibleSimpleCheckedSingleAddress } from '$bible/shared/hooks';
 import { BibleBooki, BibleBroadcastJoinAddress, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
 import { BibleBroadcastKeyListenScope } from '$bible/shared/model/broadcast';
 import { bibleBroadcastKeyListenScopeAtom } from '$bible/shared/state';
-import { BibleTranslatesContextProvider } from '$bible/shared/state/TranslatesContext';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
@@ -26,10 +19,7 @@ const scrollIntoViewVerseOptions = { block: 'center', behavior: 'smooth' } as co
 
 export const BibleBroadcastList = () => {
   const joinAddress = useBibleBroadcastJoinAddress();
-  const currentBooki = useBibleAddressBooki();
-  const currentChapteri = useBibleAddressChapteri();
-  const currentVersei = useBibleAddressVersei();
-  const translates = useBibleTranslatesContext();
+  const [currentBooki, currentChapteri, currentVersei] = useBibleSimpleCheckedSingleAddress();
   const listenScope = useAtomValue(bibleBroadcastKeyListenScopeAtom);
 
   useEffect(() => {
@@ -44,7 +34,7 @@ export const BibleBroadcastList = () => {
         }, 100),
       )
       .effect();
-  }, [translates, currentBooki, currentChapteri, currentVersei]);
+  }, [currentBooki, currentChapteri, currentVersei]);
 
   return (
     <Lists
@@ -61,10 +51,8 @@ export const BibleBroadcastList = () => {
       }}
     >
       <BibleBroadcastListBooks />
-      <BibleTranslatesContextProvider>
-        <BibleBroadcastListChapters />
-        <BibleBroadcastListVerseList />
-      </BibleTranslatesContextProvider>
+      <BibleBroadcastListChapters />
+      <BibleBroadcastListVerseList />
     </Lists>
   );
 };

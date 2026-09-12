@@ -1,11 +1,10 @@
-import { bibleTranslatesIDB } from '$bible/ext';
+import { bibleTBCVTranslatesIDB } from '$bible/shared/state/bibleIDB';
 import { useEditableCats } from '$cm+editor/shared/lib/useEditableCat';
 import { useEditableComs } from '$cm+editor/shared/lib/useEditableCom';
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { memo, useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
-import { BibleTranslateName, EeStorePack } from 'shared/api';
-import { itIt } from 'shared/utils';
+import { EeStorePack } from 'shared/api';
 import { slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 import { objectKeys } from 'shared/utils/object.utils';
 
@@ -43,9 +42,7 @@ export const CmEditorEERulesListComputer = memo(function ListComputer({
       const texts: string[] = [
         cats?.map(col => col.name) ?? [],
         coms?.map(col => (col.texts ? [col.name, ...col.texts] : col.name)) ?? [],
-        isCheckBible ? ((await bibleTranslatesIDB.get[BibleTranslateName.rst]())?.chapters ?? []) : [],
-        isCheckBible ? ((await bibleTranslatesIDB.get[BibleTranslateName.nrt]())?.chapters ?? []) : [],
-        isCheckBible ? ((await bibleTranslatesIDB.get[BibleTranslateName.kas]())?.chapters?.filter(itIt) ?? []) : [],
+        isCheckBible ? ((await bibleTBCVTranslatesIDB.tb.list.toArray()).map(it => it.v) ?? []) : [],
       ].flat(10);
 
       etap('Преобразование в монолит', () => {

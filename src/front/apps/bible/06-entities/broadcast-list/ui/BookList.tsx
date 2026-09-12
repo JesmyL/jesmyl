@@ -1,6 +1,7 @@
 import { takeBibleLangBooks } from '$bible/ext';
-import { bibleAddressWithForceJoinReset, useBibleAddressChapteri, useBibleAddressVersei } from '$bible/shared/hooks';
-import { bibleBookiAtom, bibleJoinAddressAtom, useBibleCurrentLangi } from '$bible/shared/state/atoms';
+import { bibleAddressWithForceJoinReset, takeBibleSimpleCheckedSingleAddress } from '$bible/shared/hooks';
+import { useBibleCurrentLangi } from '$bible/shared/lib/useBibleCurrentLangi';
+import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
 import styled from '@emotion/styled';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { twJoin } from 'tailwind-merge';
@@ -11,13 +12,12 @@ const faceClassName = 'bible-list-chapter-face';
 
 export function BibleBroadcastListBooks() {
   const langi = useBibleCurrentLangi();
-  const currentChapteri = useBibleAddressChapteri();
-  const currentVersei = useBibleAddressVersei();
 
   const listRef = useBibleBroadcastListFaceClickListener('data-booki', faceClassName, (booki, event) => {
     if (event.ctrlKey) {
       if (checkIsNil(bibleJoinAddressAtom.get()[0])) {
-        bibleJoinAddressAtom.set([{ [bibleBookiAtom.get()]: { [currentChapteri]: [currentVersei] } }]);
+        const [booki, chapteri, versei] = takeBibleSimpleCheckedSingleAddress(null, null, null, null);
+        bibleJoinAddressAtom.set([{ [booki]: { [chapteri]: [versei] } }]);
       }
     } else bibleAddressWithForceJoinReset(booki);
 

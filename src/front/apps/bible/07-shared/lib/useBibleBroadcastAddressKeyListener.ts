@@ -1,41 +1,36 @@
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import { addEventListenerPipe, hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { bibleBroadcastListSetSingleAddress } from '$bible/entities/broadcast-list';
 import { bibleBroadcastPlanAddToPlan } from '$bible/entities/broadcast-plan';
-import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
-import {
-  useBibleAddressBooki,
-  useBibleAddressChapteri,
-  useBibleAddressVersei,
-  useBibleBroadcastJoinAddress,
-} from '$bible/shared/hooks';
+import { takeBibleSimpleCheckedSingleAddress } from '$bible/shared/hooks';
 import { bibleBroadcastSyncSlide } from '$bible/shared/hooks/slide-sync';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
-import { BibleBroadcastAddress, BibleBroadcastJoinAddress } from '$bible/shared/model/base';
-import { bibleJoinAddressAtom, bibleVerseiAtom } from '$bible/shared/state/atoms';
+import { BibleBroadcastJoinAddress } from '$bible/shared/model/base';
+import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
-import { emptyFunc } from 'shared/utils';
+import { emptyFunc, itNumSort } from 'shared/utils';
 import { checkIsNil } from 'shared/utils/checkIs';
-import { objectKeys } from 'shared/utils/object.utils';
+import { objectKeys, objectLength } from 'shared/utils/object.utils';
 import { BibleBroadcastKeyListenScope } from '../model/broadcast';
 import { bibleBroadcastKeyListenScopeAtom } from '../state';
+import { bibleJoinAddressAtom, bibleVerseiAtom } from '../state/atoms';
+import { takeBibleTranslateBookSizesAtom } from './takeBibleTranslateBookSizesAtom';
 
 const checkIsNotMainProcess = () =>
   bibleBroadcastKeyListenScopeAtom.get() !== BibleBroadcastKeyListenScope.AAAddressNav;
 
+const takeActuals = () => {
+  const join = bibleJoinAddressAtom.get();
+  const single = takeBibleSimpleCheckedSingleAddress(null, null, null, null);
+  const [currentBooki, currentChapteri, currentVersei] = single;
+
+  return { currentBooki, currentChapteri, currentVersei, join, current: join[0] ?? single };
+};
+
 export const useBibleBroadcastAddressKeyListener = (win: Window) => {
   const [numberCollection, setNumberCollection] = useState('');
-  const currentVersei = useBibleAddressVersei();
-  const currentBooki = useBibleAddressBooki();
-  const currentChapteri = useBibleAddressChapteri();
   const showTranslates = useBibleShowTranslatesValue();
-  const htmlChapters = useBibleTranslatesContext()[showTranslates[0]]?.chapters;
-  const currentJoinAddress = useBibleBroadcastJoinAddress();
-  const joinAddress = useBibleBroadcastJoinAddress();
-  const actualAddressRef = useActualRef<BibleBroadcastAddress>(
-    joinAddress[0] ?? [currentBooki, currentChapteri, currentVersei],
-  );
+  const bookSizes = useAtomValue(takeBibleTranslateBookSizesAtom(showTranslates[0]));
 
   useEffect(() => {
     return hookEffectPipe()
@@ -43,15 +38,16 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
         addEventListenerPipe(win, 'keydown', event => {
           if (checkIsNotMainProcess() || event.key === 'Shift' || event.key === 'Control' || event.key === 'Meta')
             return;
+          const { currentBooki, currentChapteri, currentVersei, join } = takeActuals();
 
-          const currentChapter = htmlChapters?.[currentBooki]?.[currentChapteri];
+          const currentChapterLen = bookSizes?.[currentBooki]?.[currentChapteri];
 
           const limitStepJump = (dir: number) => {
             const makeCorrectVersei = (versei: number) => {
-              return dir < 0 ? Math.max(0, versei + dir) : Math.min((currentChapter?.length ?? 1) - 1, versei + dir);
+              return dir < 0 ? Math.max(0, versei + dir) : Math.min((currentChapterLen ?? 1) - 1, versei + dir);
             };
 
-            if (event.shiftKey || checkIsNil(currentJoinAddress[0])) {
+            if (event.shiftKey || checkIsNil(join?.[0])) {
               bibleVerseiAtom.set(makeCorrectVersei);
               return;
             }
@@ -61,13 +57,13 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
             let chapteri = currentChapteri;
 
             if (event.ctrlKey) {
-              booki = Math[mathMethod](...objectKeys(currentJoinAddress[0]));
-              chapteri = Math[mathMethod](...objectKeys(currentJoinAddress[0]?.[booki]));
+              booki = Math[mathMethod](...objectKeys(join[0]));
+              chapteri = Math[mathMethod](...objectKeys(join[0]?.[booki]));
             }
 
-            const verses = currentJoinAddress[0][booki]?.[chapteri];
-            if (verses == null) return;
-            const versei = makeCorrectVersei(Math[mathMethod](...verses) + dir);
+            const verses = join[0][booki]?.[chapteri];
+            if (!verses) return;
+            const versei = makeCorrectVersei(Math[mathMethod](...verses));
 
             bibleBroadcastListSetSingleAddress(booki, chapteri, versei);
             bibleJoinAddressAtom.reset();
@@ -75,12 +71,12 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
 
           switch (event.code) {
             case 'ArrowLeft':
-              limitStepJump(-1);
               bibleBroadcastSyncSlide(true);
+              limitStepJump(event.ctrlKey ? -Infinity : -1);
               break;
             case 'ArrowRight':
-              limitStepJump(1);
               bibleBroadcastSyncSlide(true);
+              limitStepJump(event.ctrlKey ? Infinity : 1);
               break;
             case 'ArrowUp':
               limitStepJump(event.ctrlKey ? -Infinity : -1);
@@ -92,61 +88,65 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
 
           if (!event.shiftKey) return;
 
-          const verses = new Set(currentJoinAddress[0]?.[currentBooki]?.[currentChapteri] ?? []);
+          const verses = new Set(join[0]?.[currentBooki]?.[currentChapteri] ?? []);
 
           verses.add(currentVersei);
 
           if (event.code === 'ArrowDown' || event.code === 'ArrowRight') {
-            if (currentChapter)
+            if (currentChapterLen)
               if (event.ctrlKey) {
-                for (let versei = currentVersei; versei < currentChapter.length; versei++) {
+                for (let versei = currentVersei; versei < currentChapterLen; versei++) {
                   verses.add(versei);
                 }
-              } else if (currentVersei < currentChapter.length - 1) verses.add(currentVersei + 1);
+              } else if (currentVersei < currentChapterLen - 1) verses.add(currentVersei + 1);
           } else if (currentVersei > 0) verses.delete(currentVersei);
 
           const newJoin: BibleBroadcastJoinAddress = {
-            ...currentJoinAddress[0],
-            [currentBooki]: { ...currentJoinAddress[0]?.[currentBooki], [currentChapteri]: Array.from(verses) },
+            ...join[0],
+            [currentBooki]: { ...join[0]?.[currentBooki], [currentChapteri]: Array.from(verses).sort(itNumSort) },
           };
 
           if (verses.size === 0) delete newJoin[currentBooki]?.[currentChapteri];
-          if (objectKeys(newJoin[currentBooki]).length === 0) delete newJoin[currentBooki];
+          if (objectLength(newJoin[currentBooki]) === 0) delete newJoin[currentBooki];
 
-          bibleJoinAddressAtom.set([objectKeys(newJoin).length === 0 ? null : newJoin]);
+          bibleJoinAddressAtom.set([objectLength(newJoin) === 0 ? null : newJoin]);
         }),
       )
       .effect();
-  }, [htmlChapters, currentBooki, currentChapteri, currentJoinAddress, currentVersei, win]);
+  }, [bookSizes, win]);
 
   useEffect(() => {
     if (numberCollection === '') return;
 
-    const currentChapter = htmlChapters?.[currentBooki]?.[currentChapteri];
+    const { currentBooki, currentChapteri } = takeActuals();
+    const versei = bookSizes?.[currentBooki]?.[currentChapteri] ?? 1;
+    const num = +numberCollection;
 
-    return hookEffectPipe()
-      .pipe(
-        setTimeoutPipe(() => {
-          bibleVerseiAtom.set(Math.min(+numberCollection - 1, (currentChapter?.length ?? 1) - 1));
-          setNumberCollection('');
-        }, 300),
-      )
-      .effect();
-  }, [currentBooki, currentChapteri, htmlChapters, numberCollection]);
+    const isFinalMatch = num === 0 || num * 10 > versei;
+
+    const jump = () => {
+      bibleVerseiAtom.set(Math.min(num - 1, versei - 1));
+      setNumberCollection('');
+    };
+
+    if (isFinalMatch) {
+      jump();
+      return;
+    }
+
+    return hookEffectPipe().pipe(setTimeoutPipe(jump, 300)).effect();
+  }, [bookSizes, numberCollection]);
 
   useEffect(() => {
     return hookEffectPipe()
       .pipe(
         addEventListenerPipe(win, 'keydown', event => {
-          if (checkIsNotMainProcess()) return;
+          if (checkIsNotMainProcess() || event.altKey || event.ctrlKey || event.shiftKey) return;
 
-          if (event.code.startsWith('Numpad')) {
-            setNumberCollection(collection => collection + event.code.slice('Numpad'.length));
-            return;
-          }
-          if (event.code.startsWith('Digit')) {
-            setNumberCollection(collection => collection + event.code.slice('Digit'.length));
-            return;
+          const match = event.code.match(/(Numpad|Digit)(\d)/);
+
+          if (match) {
+            setNumberCollection(collection => collection + match[2]);
           }
         }),
       )
@@ -155,7 +155,7 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
 
   useEffect(() => {
     const onEnter = (isCtrlKey: boolean) => {
-      if (isCtrlKey) bibleBroadcastPlanAddToPlan(actualAddressRef.current);
+      if (isCtrlKey) bibleBroadcastPlanAddToPlan(takeActuals().current);
       else bibleBroadcastSyncSlide();
     };
 
@@ -171,7 +171,7 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
             case 'F5':
             case 'NumpadEnter':
               event.preventDefault();
-              if (event.ctrlKey) bibleBroadcastPlanAddToPlan(actualAddressRef.current);
+              if (event.ctrlKey) bibleBroadcastPlanAddToPlan(takeActuals().current);
               else bibleBroadcastSyncSlide();
               break;
 
@@ -186,5 +186,5 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
         }),
       )
       .effect(onEffectEnter);
-  }, [actualAddressRef, win]);
+  }, [win]);
 };

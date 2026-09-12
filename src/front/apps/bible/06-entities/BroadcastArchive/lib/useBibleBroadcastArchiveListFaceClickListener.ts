@@ -2,12 +2,7 @@ import {
   bibleBroadcastListSetSingleAddress,
   useBibleBroadcastListFaceClickListener,
 } from '$bible/entities/broadcast-list';
-import {
-  takeJoinedAddressMaxValues,
-  useBibleAddressBooki,
-  useBibleAddressChapteri,
-  useBibleAddressVersei,
-} from '$bible/shared/hooks';
+import { takeBibleSimpleCheckedSingleAddress, takeJoinedAddressMaxValues } from '$bible/shared/hooks';
 import { BibleBroadcastAddress, BibleBroadcastJoinAddress } from '$bible/shared/model/base';
 import { BibleBroadcastKeyListenScope } from '$bible/shared/model/broadcast';
 import {
@@ -30,17 +25,20 @@ export const useBibleBroadcastArchiveListFaceClickListener = (
   scope: BibleBroadcastKeyListenScope,
   list: nil | BibleBroadcastAddress[],
 ) => {
-  const currentBooki = useBibleAddressBooki();
-  const currentChapteri = useBibleAddressChapteri();
-  const currentVersei = useBibleAddressVersei();
-  const defaultJoin: BibleBroadcastJoinAddress = { [currentBooki]: { [currentChapteri]: [currentVersei] } };
-
   const listRef = useBibleBroadcastListFaceClickListener(
     'data-archive-itemi',
     bibleBroadcastArchiveStopClassName,
     (itemi, event) => {
       const item = list?.[itemi];
       if (!item) return;
+
+      const [currentBooki, currentChapteri, currentVersei] = takeBibleSimpleCheckedSingleAddress(
+        null,
+        null,
+        null,
+        null,
+      );
+      const defaultJoin: BibleBroadcastJoinAddress = { [currentBooki]: { [currentChapteri]: [currentVersei] } };
 
       bibleBroadcastKeyListenScopeAtom.set(scope);
       bibleBroadcastCurrentListLengthAtom.set(() => list.length);

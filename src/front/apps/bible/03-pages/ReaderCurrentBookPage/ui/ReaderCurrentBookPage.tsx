@@ -1,45 +1,29 @@
-import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BibleAddressSingle } from '$bible/entities/address';
-import { bibleBroadcastListSetSingleAddress } from '$bible/entities/broadcast-list';
 import { BibleTranslateModulesControl } from '$bible/entities/translate';
-import { BibleTranslatesContextProvider, takeBibleLangBooks, useBibleTranslatesContext } from '$bible/ext';
-import { bibleTranslateFilter } from '$bible/shared/const/consts';
-import { useBibleAddressBooki, useBibleAddressChapteri, useBibleAddressVersei } from '$bible/shared/hooks';
+import { useBibleSimpleCheckedSingleAddress } from '$bible/shared/hooks';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
-import { bibleInitialInvokes } from '$bible/shared/lib';
-import { useBibleCurrentLangi } from '$bible/shared/state/atoms';
-import { BibleReaderBookText } from '$bible/widgets/reader';
+import { makeBibleTbcvPrefix } from '$bible/shared/lib/tbcv.parser';
+import { useBibleCurrentLangi } from '$bible/shared/lib/useBibleCurrentLangi';
+import { bibleTBCVTranslatesIDB } from '$bible/shared/state/bibleIDB';
 import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
+import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useRef, useState } from 'react';
 import { emptyFunc } from 'shared/utils';
-import { twMerge } from 'tailwind-merge';
 
 export function BibleReaderCurrentBookPage() {
-  return (
-    <BibleTranslatesContextProvider>
-      <Content />
-    </BibleTranslatesContextProvider>
-  );
-}
-
-bibleInitialInvokes();
-
-let isOpenBookSelectorAtom: Atom<boolean>;
-let isOpenChapterSelectorAtom: Atom<boolean>;
-let isOpenVerseSelectorAtom: Atom<boolean>;
-
-function Content() {
   isOpenVerseSelectorAtom ??= atom(false);
   isOpenChapterSelectorAtom ??= atom(false);
   isOpenBookSelectorAtom ??= atom(false);
 
-  const currentBooki = useBibleAddressBooki();
-  const currentChapteri = useBibleAddressChapteri();
-  const currentVersei = useBibleAddressVersei();
+  const [currentBooki, currentChapteri, currentVersei] = useBibleSimpleCheckedSingleAddress();
   const showTranslates = useBibleShowTranslatesValue();
-  const chapters = useBibleTranslatesContext()[showTranslates[0]]?.chapters;
+  const tName = showTranslates[0];
+  const bookChapters = useLiveQuery(
+    () => bibleTBCVTranslatesIDB.tb.list.where('k').startsWith(makeBibleTbcvPrefix(tName, currentBooki)).toArray(),
+    [],
+  );
   const [selectedBooki, setSelectedBooki] = useState(currentBooki);
   const [selectedChapteri, setSelectedChapteri] = useState(currentChapteri);
   const onBookCloseRef = useRef(emptyFunc);
@@ -66,16 +50,16 @@ function Content() {
       head={<BibleTranslateModulesControl isHideEmptyBook />}
       content={
         <>
-          {chapters && (
+          {/* {bookChapters && (
             <BibleReaderBookText
-              chapterList={chapters[currentBooki]}
+              chapterList={bookChapters.map(({ v }) => v)}
               currentChapteri={currentChapteri}
               currentVersei={currentVersei}
               currentBooki={currentBooki}
             />
-          )}
+          )} */}
 
-          <FullContent
+          {/* <FullContent
             openAtom={isOpenBookSelectorAtom}
             containerClassName="p-0 pt-15"
           >
@@ -101,9 +85,9 @@ function Content() {
                 );
               })}
             </div>
-          </FullContent>
+          </FullContent> */}
 
-          <FullContent
+          {/* <FullContent
             openAtom={isOpenChapterSelectorAtom}
             containerClassName="p-0 pt-15"
           >
@@ -126,9 +110,9 @@ function Content() {
                 </ItemFace>
               );
             })}
-          </FullContent>
+          </FullContent> */}
 
-          <FullContent
+          {/* <FullContent
             openAtom={isOpenVerseSelectorAtom}
             containerClassName="p-0 pt-15"
           >
@@ -154,12 +138,16 @@ function Content() {
                 </ItemFace>
               );
             })}
-          </FullContent>
+          </FullContent> */}
         </>
       }
     />
   );
 }
+
+let isOpenBookSelectorAtom: Atom<boolean>;
+let isOpenChapterSelectorAtom: Atom<boolean>;
+let isOpenVerseSelectorAtom: Atom<boolean>;
 
 const ItemFace = styled.div`
   --strong-size: calc((100vw - 12 * 3px) / 5);

@@ -1,6 +1,6 @@
 import { backConfig } from 'back/config/backConfig';
 import fs from 'fs';
-import { BibleTranslateName } from 'shared/api';
+import { BibleTranslateName } from 'shared/model/bible';
 
 export const makeBibleTranslateFileName = (tName: BibleTranslateName) =>
   `${__dirname}${backConfig.fileStoreDir}/apps/bible/${tName}.json`;

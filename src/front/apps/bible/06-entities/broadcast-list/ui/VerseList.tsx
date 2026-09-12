@@ -1,30 +1,29 @@
-import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
-import { useBibleAddressBooki, useBibleAddressChapteri } from '$bible/shared/hooks';
+import { useBibleSimpleCheckedSingleAddress } from '$bible/shared/hooks';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
+import { makeBibleTbcvPrefix } from '$bible/shared/lib/tbcv.parser';
+import { bibleTBCVTranslatesIDB } from '$bible/shared/state/bibleIDB';
 import styled from '@emotion/styled';
-import { Atom, atom } from 'atomaric';
-import { JSX, useEffect, useRef } from 'react';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { JSX, useRef } from 'react';
+import { BibleTranslateName } from 'shared/model/bible';
 import { useBibleBroadcastListVerseListeners } from '../lib/useVerseListListeners';
 
-let fastVersesAtom: Atom<string[]>;
-
 export function BibleBroadcastListVerseList(): JSX.Element {
-  fastVersesAtom ??= atom<string[]>([], 'bible:fastVerses');
-
   const verseListRef = useRef<HTMLOListElement>(null);
 
-  const currentBooki = useBibleAddressBooki();
-  const currentChapteri = useBibleAddressChapteri();
+  const [currentBooki, currentChapteri] = useBibleSimpleCheckedSingleAddress();
   const showTranslates = useBibleShowTranslatesValue();
-  const translates = useBibleTranslatesContext();
+  const tName = showTranslates[0];
+  const verses = useLiveQuery(
+    () =>
+      bibleTBCVTranslatesIDB.tb.list
+        .where('k')
+        .startsWith(makeBibleTbcvPrefix(tName, currentBooki, currentChapteri))
+        .toArray(),
+    [tName, currentBooki, currentChapteri],
+  );
 
-  const verses = translates[showTranslates[0]]?.chapters?.[currentBooki]?.[currentChapteri];
-
-  useEffect(() => {
-    if (verses?.length) fastVersesAtom.set(verses);
-  }, [verses]);
-
-  useBibleBroadcastListVerseListeners(verseListRef, currentBooki, currentChapteri);
+  useBibleBroadcastListVerseListeners(verseListRef);
 
   return (
     <StyledContainer
@@ -32,19 +31,32 @@ export function BibleBroadcastListVerseList(): JSX.Element {
       ref={verseListRef}
       title="[0-9] - перейти к стиху; Shift+[@v>] - добавить диапазон стихов; Ctrl+@ - добавить/удалить один стих"
     >
-      {(verses ?? fastVersesAtom.get())?.map((__html, versei) => {
+      {verses?.map((verse, versei) => {
         return (
           <li
             key={versei}
             data-versei={versei}
             className="bible-list-face pointer max-w-full transition-colors duration-500 before:transition-colors before:duration-500 odd:bg-x2"
-            dangerouslySetInnerHTML={{ __html }}
+            dangerouslySetInnerHTML={{ __html: verse.v }}
           />
         );
       })}
+      {verses?.length === 0 && <NoTranslationLabel tName={tName} />}
     </StyledContainer>
   );
 }
+
+const NoTranslationLabel = ({ tName }: { tName: BibleTranslateName }) => {
+  const translation = useLiveQuery(
+    () => bibleTBCVTranslatesIDB.tb.list.where('k').startsWith(makeBibleTbcvPrefix(tName)).first(),
+    [tName],
+  );
+
+  if (!translation)
+    return <div className="flex justify-center items-center size-full text-center">Перевод не загружен</div>;
+
+  return <></>;
+};
 
 const StyledContainer = styled.ol`
   [data-versei] {

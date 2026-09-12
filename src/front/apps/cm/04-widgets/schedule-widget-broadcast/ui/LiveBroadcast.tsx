@@ -4,7 +4,6 @@ import { broadcastCurrentTextAppAtom } from '#features/broadcast/atoms';
 import { useScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
 import { scheduleFollowBroadcastSlideAtom } from '#features/broadcast/initial-slide-context';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { BibleTranslatesContextProvider } from '$bible/ext';
 import { CmBroadcastFollowInitialSlide } from '$cm/features/broadcast';
 import { indexIDB, useAuth } from '$index/shared/state';
 import { schLiveTsjrpcClient } from '$index/shared/tsjrpc';
@@ -55,14 +54,12 @@ export const CmScheduleWidgetBroadcast = ({ schw }: { schw: ScheduleWidgetWid | 
       schedule={schedule}
     />
   ) : (
-    <BibleTranslatesContextProvider>
-      <CmScheduleWidgetBroadcastBibleControlled
-        isCantTranslateLive={isCantTranslateLive}
-        fio={auth.fio}
-        headTitle={schedule.title}
-        schedule={schedule}
-      />
-    </BibleTranslatesContextProvider>
+    <CmScheduleWidgetBroadcastBibleControlled
+      isCantTranslateLive={isCantTranslateLive}
+      fio={auth.fio}
+      headTitle={schedule.title}
+      schedule={schedule}
+    />
   );
 };
 

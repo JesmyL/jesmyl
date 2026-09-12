@@ -1,5 +1,6 @@
 import { soki } from '#shared/soki';
 import { schTsjrpcBaseClient } from '#widgets/schedule/tsjrpc/tsjrpc.base';
+import { bibleInitialInvokes } from '$bible/shared/lib';
 import { bibleTsjrpcBaseClient } from '$bible/shared/lib/tsjrpc';
 import { cmEditorInitialInvokes } from '$cm+editor/shared/lib/cm+editor-initial-invokes';
 import { cmShareEditorTsjrpcBaseClient } from '$cm+editor/shared/lib/cm-editor.tsjrpc.base';
@@ -30,6 +31,8 @@ export const appInitialInvokes = () => {
   storagesStoresSharesTsjrpcBaseClient.$$register();
   questionerAdminTsjrpcClientBase.$$register();
   cmShareEditorTsjrpcBaseClient.$$register();
+
+  bibleInitialInvokes();
 
   if (rights && checkUserScopeAccessRight(null, rights, 'cm', 'EDIT')) cmEditorInitialInvokes();
 

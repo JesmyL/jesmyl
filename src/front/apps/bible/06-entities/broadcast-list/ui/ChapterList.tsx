@@ -1,42 +1,30 @@
-import { bibleAddressWithForceJoinReset, useBibleAddressChapteri, useBibleAddressVersei } from '$bible/shared/hooks';
-import { useBibleCurrentChapterList } from '$bible/shared/hooks/texts';
+import { bibleAddressWithForceJoinReset, takeBibleSimpleCheckedSingleAddress } from '$bible/shared/hooks';
+import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
+import { takeBibleTranslateBookSizesAtom } from '$bible/shared/lib/takeBibleTranslateBookSizesAtom';
 import { bibleBookiAtom, bibleJoinAddressAtom } from '$bible/shared/state/atoms';
-import { Atom, atom } from 'atomaric';
-import { useMemo } from 'react';
+import { useAtomValue } from 'atomaric';
 import { checkIsNil } from 'shared/utils/checkIs';
+import { arrayByLength } from 'shared/utils/object.utils';
 import { twJoin } from 'tailwind-merge';
 import { bibleBroadcastListSetSingleAddress } from '../lib/hooks';
 import { useBibleBroadcastListFaceClickListener } from '../lib/useBibleListFaceClickListener';
 
 const faceClassName = 'bible-list-chapter-face';
 
-let fastChaptersCountAtom: Atom<number>;
-
 export function BibleBroadcastListChapters() {
-  fastChaptersCountAtom ??= atom(0, 'bible:fastChaptersCount');
-  const currentChapteri = useBibleAddressChapteri();
-  const currentVersei = useBibleAddressVersei();
-
-  const chapters = useBibleCurrentChapterList();
+  const showTranslates = useBibleShowTranslatesValue();
+  const currentBooki = useAtomValue(bibleBookiAtom);
+  const sizes = useAtomValue(takeBibleTranslateBookSizesAtom(showTranslates[0]));
 
   const listRef = useBibleBroadcastListFaceClickListener('data-chapteri', faceClassName, (chapteri, event) => {
     if (event.ctrlKey) {
       if (checkIsNil(bibleJoinAddressAtom.get()[0])) {
-        bibleJoinAddressAtom.set([{ [bibleBookiAtom.get()]: { [currentChapteri]: [currentVersei] } }]);
+        const [booki, chapteri, versei] = takeBibleSimpleCheckedSingleAddress(null, null, null, null);
+        bibleJoinAddressAtom.set([{ [booki]: { [chapteri]: [versei] } }]);
       }
     } else bibleAddressWithForceJoinReset(null, chapteri);
     bibleBroadcastListSetSingleAddress(null, chapteri);
   });
-
-  const chapterNumbers = useMemo(() => {
-    const chaptersCount = chapters?.length ?? fastChaptersCountAtom.get();
-    const numbers: number[] = [];
-
-    for (let i = 0; i < chaptersCount; i++) numbers.push(i);
-
-    fastChaptersCountAtom.set(chaptersCount);
-    return numbers;
-  }, [chapters?.length]);
 
   return (
     <div
@@ -44,7 +32,7 @@ export function BibleBroadcastListChapters() {
       className="w-[2.5em] min-w-[2.5em] overflow-y-auto overflow-x-hidden"
       title="Ctrl - добавить из главы"
     >
-      {chapterNumbers?.map(chapteri => {
+      {arrayByLength(sizes[currentBooki]?.length ?? 20, chapteri => {
         return (
           <div
             key={chapteri}

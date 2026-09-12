@@ -1,5 +1,6 @@
-import { BibleTranslateName, IExportableCat, Langi, MenuComToolName } from 'shared/api';
+import { IExportableCat, Langi, MenuComToolName } from 'shared/api';
 import { StringTemplaterInterpolation, StringTemplaterWithTwoInterpolations } from 'shared/utils/stringTemplater/model';
+import { BibleTranslateName } from '../bible';
 import { LocaleSatisfies, LocaleSimpleString, LocaleStrOrInterpolationRecord, LocaleStrRecord } from './model';
 
 export type LocaleBase<L extends Langi> = LocaleSatisfies<{

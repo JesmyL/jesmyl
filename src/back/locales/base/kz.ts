@@ -1,5 +1,6 @@
-import { BibleTranslateName, Langi, MenuComToolName } from 'shared/api';
+import { Langi, MenuComToolName } from 'shared/api';
 import { LocaleBase } from 'shared/model/+locale/base';
+import { BibleTranslateName } from 'shared/model/bible';
 import { GENERATE, IF, isUtil, STR, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeBaseKz: LocaleBase<Langi.Kz> = {

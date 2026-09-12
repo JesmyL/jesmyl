@@ -6,16 +6,15 @@ import {
   BibleBroadcastSearchResults,
 } from '$bible/entities/broadcast-search';
 import { takeBibleLangBooks } from '$bible/ext';
-import { useBibleAddressBooki, useBibleAddressChapteri } from '$bible/shared/hooks';
+import { useBibleSimpleCheckedSingleAddress } from '$bible/shared/hooks';
+import { useBibleCurrentLangi } from '$bible/shared/lib/useBibleCurrentLangi';
 import { BibleBroadcastKeyListenScope } from '$bible/shared/model/broadcast';
 import { bibleBroadcastKeyListenScopeAtom } from '$bible/shared/state';
-import { useBibleCurrentLangi } from '$bible/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
 import { useRef } from 'react';
 
 export const BibleReaderSearchPage = () => {
-  const currentBooki = useBibleAddressBooki();
-  const currentChapteri = useBibleAddressChapteri();
+  const [currentBooki, currentChapteri] = useBibleSimpleCheckedSingleAddress();
   const listenScope = useAtomValue(bibleBroadcastKeyListenScopeAtom);
   const langi = useBibleCurrentLangi();
 

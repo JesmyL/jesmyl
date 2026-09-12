@@ -6,12 +6,10 @@ import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 export const useBibleBroadcastScreenFontSizeAddressAdapter = (
   content: string,
   currentConfig: BibleBroadcastScreenConfig | und,
-  windowResizeUpdatesNum: number | und,
 ) => {
   return useBibleBroadcastScreenFontSizeAdapter(
     content,
     '' +
-      windowResizeUpdatesNum +
       useAtomValue(isBroadcastTextVisibleAtom) +
       (currentConfig === undefined
         ? '-'

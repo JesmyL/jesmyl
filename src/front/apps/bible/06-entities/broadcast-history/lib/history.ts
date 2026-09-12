@@ -9,7 +9,7 @@ export const bibleBroadcastHistoryAddToHistory = async (
 ) => {
   const history = (await bibleIDB.get.broadcastHistory()) ?? [];
 
-  const previ = history.findIndex(historyItem => checkIsEq(historyItem, item, true));
+  const previ = history.findIndex(historyItem => checkIsEq(historyItem, item));
   const newHistory = [...history];
   if (previ > -1) newHistory.splice(previ, 1);
 

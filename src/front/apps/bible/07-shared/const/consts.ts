@@ -1,5 +1,6 @@
 import { translateBase } from '#basis/locale';
-import { BibleTranslateName, Langi } from 'shared/api';
+import { Langi } from 'shared/api';
+import { BibleTranslateName } from 'shared/model/bible';
 import { forEachObjectEntries, objectKeys } from 'shared/utils/object.utils';
 import { BibleBooki } from '../model/base';
 

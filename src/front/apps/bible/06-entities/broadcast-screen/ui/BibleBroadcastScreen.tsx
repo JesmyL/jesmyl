@@ -11,7 +11,6 @@ import { BibleBroadcastScreenContentConfiguration } from '../sub-ui/ContentConfi
 
 interface Props extends BroadcastScreenProps {
   bibleConfig: BibleBroadcastScreenConfig | und;
-  windowResizeUpdatesNum: number | und;
   isVisible: boolean;
 }
 
@@ -66,7 +65,6 @@ export const BibleBroadcastScreenScreen = (props: Props) => {
           configi={props.configi}
           win={props.win}
           isPreview={props.isPreview}
-          windowResizeUpdatesNum={props.windowResizeUpdatesNum}
           bibleConfig={props.bibleConfig}
           isVisible={props.isVisible}
         />
@@ -77,7 +75,6 @@ export const BibleBroadcastScreenScreen = (props: Props) => {
         isPreview={props.isPreview}
         configi={props.configi}
         bibleConfig={props.bibleConfig}
-        windowResizeUpdatesNum={props.windowResizeUpdatesNum}
         isVisible={props.isVisible}
       />
     </div>

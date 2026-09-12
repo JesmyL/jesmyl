@@ -3,23 +3,14 @@ import { Langi } from 'shared/api';
 import { itNumSort } from 'shared/utils';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { mapObjectEntries } from 'shared/utils/object.utils';
-import { useBibleTranslatesContext } from '../contexts/translates';
 import { BibleBroadcastAnyAddress } from '../model/base';
-import { useBibleAddressBooki } from './address/books';
-import { useBibleShowTranslatesValue } from './translates';
-
-export const useBibleCurrentChapterList = () => {
-  const currentBooki = useBibleAddressBooki();
-  const showTranslates = useBibleShowTranslatesValue();
-  return useBibleTranslatesContext()[showTranslates[0]]?.chapters?.[currentBooki];
-};
 
 export const makeBibleJoinedAddressText = (
   langi: Langi,
   addressCode: BibleBroadcastAnyAddress | nil,
   titleVariant: 'full' | 'short' = 'full',
 ) => {
-  if (addressCode == null) return '';
+  if (!addressCode) return '';
 
   if (checkIsArray(addressCode)) {
     const [booki, chapteri, versei] = addressCode;

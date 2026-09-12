@@ -9,19 +9,17 @@ interface Props {
   configi: number | und;
   win: Window;
   isPreview: boolean | und;
-  windowResizeUpdatesNum: number | und;
   bibleConfig: BibleBroadcastScreenConfig | und;
   isVisible: boolean;
 }
 
-export function BibleBroadcastScreenContent(props: Props) {
+export const BibleBroadcastScreenContent = (props: Props) => {
   const screenStyle = useBibleBroadcastScreenScreenStyle(props.isVisible, props.bibleConfig);
   const texts = useBibleTextMapBlocksContentContext();
 
-  const [screenWrapperRef, screenContentRef] = useBibleBroadcastScreenFontSizeScreenAdapter(
-    texts.map(it => `${it.head}/${it.texts.map(({ text, address }) => `${address}|${text}`)}`).join(''),
+  const [screenWrapperRef, screenContentRef, isReady] = useBibleBroadcastScreenFontSizeScreenAdapter(
+    texts.map(it => `${it.head || ''}${it.texts.map(({ text, address }) => `${address || ''}${text || ''}`)}`).join(''),
     props.bibleConfig,
-    props.windowResizeUpdatesNum,
   );
 
   return (
@@ -35,10 +33,14 @@ export function BibleBroadcastScreenContent(props: Props) {
         <div
           className="opacity-0"
           ref={screenContentRef}
+          style={{
+            opacity: isReady ? 1 : 0,
+            transition: isReady ? 'opacity .3s' : 'none',
+          }}
         >
           <BibleBroadcastTextMapBlocks blocks={texts} />
         </div>
       </div>
     </>
   );
-}
+};

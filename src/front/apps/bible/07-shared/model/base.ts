@@ -1,4 +1,3 @@
-import { BibleTranslateName } from 'shared/api';
 import { BibleTitleCodei } from 'shared/model/bible/enums';
 
 export type BibleBooki = BibleTitleCodei;
@@ -24,7 +23,3 @@ export type BibleBroadcastSingleAddress = [number, number, number];
 export type BibleBroadcastAddress = BibleSingleAddressCode | BibleBroadcastJoinAddress;
 
 export type BibleBroadcastTextMapBlock = { head?: string; texts: { text: string; address?: string }[] };
-
-export interface BibleStorage extends Record<BibleTranslateName, null | BibleTranslate> {
-  [BibleTranslateName.rst]: BibleTranslate;
-}
