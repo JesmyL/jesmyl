@@ -15,7 +15,6 @@ import { BibleBroadcastListChapters } from './ChapterList';
 import { BibleBroadcastListVerseList } from './VerseList';
 
 const scrollIntoViewBookAndChapterOptions = { block: 'center' } as const;
-const scrollIntoViewVerseOptions = { block: 'center', behavior: 'smooth' } as const;
 
 export const BibleBroadcastList = () => {
   const joinAddress = useBibleBroadcastJoinAddress();
@@ -30,11 +29,10 @@ export const BibleBroadcastList = () => {
           document
             .querySelector(`[data-chapteri='${currentChapteri}']`)
             ?.scrollIntoView(scrollIntoViewBookAndChapterOptions);
-          document.querySelector(`[data-versei='${currentVersei}']`)?.scrollIntoView(scrollIntoViewVerseOptions);
         }, 100),
       )
       .effect();
-  }, [currentBooki, currentChapteri, currentVersei]);
+  }, [currentBooki, currentChapteri]);
 
   return (
     <Lists

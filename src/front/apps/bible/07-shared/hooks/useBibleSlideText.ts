@@ -3,7 +3,13 @@ import { BibleTbcvKey, BibleTranslateName } from 'shared/model/bible';
 import { BibleTitleCodei } from 'shared/model/bible/enums';
 import { extractNumber, itIt, itNumSort } from 'shared/utils';
 import { checkIsArray, checkIsNotNil } from 'shared/utils/checkIs';
-import { forEachObjectEntries, objectEntries, objectFromEntries, objectKeys } from 'shared/utils/object.utils';
+import {
+  forEachObjectEntries,
+  objectEntries,
+  objectFromEntries,
+  objectKeys,
+  objectLength,
+} from 'shared/utils/object.utils';
 import { textToUpperCase } from 'shared/utils/string.utils';
 import { takeBibleLangBooks } from '../const/bibleTitles';
 import { translateDescriptions, translateLanguage } from '../const/consts';
@@ -13,7 +19,7 @@ import {
   BibleBroadcastJoinAddress,
   BibleBroadcastTextMapBlock,
   BibleChapteri,
-  BibleVersei,
+  BibleSingleAddressCode,
 } from '../model/base';
 import { bibleTBCVTranslatesIDB } from '../state/bibleIDB';
 import { useBibleShowTranslatesValue } from './translates';
@@ -26,19 +32,18 @@ export const useBibleSlideMapBlocks = (
   const showTranslates = useBibleShowTranslatesValue();
 
   let liveQuerySelector;
-  let showLen = 0;
-  let chaptersCount = 0;
+  let showBooksCount = 0;
+  let showChaptersCount = 0;
   let shownVersesTBCVKeySet: Set<BibleTbcvKey> | und;
+  let showBooki: BibleTitleCodei | und;
+  let showChapteri: BibleChapteri | und;
 
   if (checkIsArray(address)) {
     const [booki, chapteri, versei] = address;
-    showLen = showTranslates.length;
+    shownVersesTBCVKeySet = new Set(showTranslates.map(tName => bibleTbcvEncode(tName, booki, chapteri, versei)));
 
-    liveQuerySelector = () =>
-      bibleTBCVTranslatesIDB.tb.list
-        .where('k')
-        .anyOf(showTranslates.map(tName => bibleTbcvEncode(tName, booki, chapteri, versei)))
-        .toArray();
+    showBooki = booki;
+    showChapteri = chapteri;
   } else {
     if (isSetFirstVerse) {
       const minBooki = Math.min(...objectKeys(address));
@@ -51,40 +56,30 @@ export const useBibleSlideMapBlocks = (
           .equals(bibleTbcvEncode(showTranslates[0], minBooki, minChapteri, minVersei))
           .toArray();
     } else {
-      const selects: BibleTbcvKey[] = [];
-      let lastBookiStr: `${BibleTitleCodei}`;
-      let lastChapteriStr: `${BibleChapteri}`;
+      const selectedTbcvKeys: BibleTbcvKey[] = [];
 
       forEachObjectEntries(address, (bookiStr, chapterDict) => {
-        lastBookiStr = bookiStr;
+        showBooksCount++;
+        showBooki ??= extractNumber(bookiStr);
 
         forEachObjectEntries(chapterDict, (chapteriStr, verses) => {
-          if (showTranslates.length === 1) {
-            chaptersCount++;
-            lastChapteriStr = chapteriStr;
-          }
+          showChaptersCount++;
+          showChapteri ??= extractNumber(chapteriStr);
 
           verses?.forEach(versei => {
             showTranslates.forEach(tName => {
-              showLen++;
-              selects.push(bibleTbcvEncode(tName, extractNumber(bookiStr), extractNumber(chapteriStr), versei));
+              selectedTbcvKeys.push(
+                bibleTbcvEncode(tName, extractNumber(bookiStr), extractNumber(chapteriStr), versei),
+              );
             });
           });
         });
       });
 
-      if (chaptersCount === 1) {
-        shownVersesTBCVKeySet = new Set(selects);
-
-        liveQuerySelector = () =>
-          bibleTBCVTranslatesIDB.tb.list
-            .where('k')
-            .startsWith(
-              makeBibleTbcvPrefix(showTranslates[0], extractNumber(lastBookiStr), extractNumber(lastChapteriStr)),
-            )
-            .toArray();
-      } else {
-        liveQuerySelector = () => bibleTBCVTranslatesIDB.tb.list.where('k').anyOf(selects).toArray();
+      if (showTranslates.length === 1) {
+        shownVersesTBCVKeySet = new Set(selectedTbcvKeys);
+      } else if (showBooksCount !== 1 || showChaptersCount !== 1) {
+        liveQuerySelector = () => bibleTBCVTranslatesIDB.tb.list.where('k').anyOf(selectedTbcvKeys).toArray();
       }
     }
   }
@@ -92,43 +87,58 @@ export const useBibleSlideMapBlocks = (
   const [biblei, chapteri, versei] = checkIsArray(address) ? address : [];
   const joinAddress = checkIsArray(address) ? null : address;
 
-  const verses = useLiveQuery(liveQuerySelector, [showTranslates.join('/'), biblei, chapteri, versei, joinAddress]);
+  if (!liveQuerySelector) {
+    const showTranslatePrefixes =
+      checkIsNotNil(showBooki) && checkIsNotNil(showChapteri)
+        ? (showTranslates.length === 1 ? showTranslates.slice(0, 1) : showTranslates).map(tName =>
+            makeBibleTbcvPrefix(tName, showBooki, showChapteri),
+          )
+        : [];
 
-  if (checkIsArray(address) && verses?.length !== showLen) return [];
-
-  if (checkIsArray(address)) {
-    const tbcvTextDict = objectFromEntries(verses, ({ k, v }) => [k[0], v]);
-
-    return makeSlideSingleAddressMapBlocks(showTranslates, tbcvTextDict, address[2], isSetFirstVerse, isSetVerseNum);
+    liveQuerySelector = () =>
+      bibleTBCVTranslatesIDB.tb.list.where('k').startsWithAnyOf(showTranslatePrefixes).toArray();
   }
 
-  const tbcvTextDict = Object.fromEntries(
-    (shownVersesTBCVKeySet
-      ? verses?.map(({ k, v }) => (shownVersesTBCVKeySet.has(k) ? [[k, v]] : [])).flat()
-      : verses?.map(({ k, v }) => [k, v])) ?? [],
+  const verses = useLiveQuery(liveQuerySelector, [showTranslates.join('/'), biblei, chapteri, versei, joinAddress]);
+
+  const tbcvTextDict = objectFromEntries(
+    shownVersesTBCVKeySet
+      ? verses?.filter(({ k }) => shownVersesTBCVKeySet.has(k)).map(({ k, v }) => [k, v])
+      : verses?.map(({ k, v }) => [k, v]),
   );
+
+  const len = objectLength(tbcvTextDict);
+  if (!len) return [];
+
+  if (checkIsArray(address)) {
+    return makeSlideSingleAddressMapBlocks(showTranslates, tbcvTextDict, address, isSetFirstVerse, isSetVerseNum);
+  }
+
   return makeSlideJoinedAddressMapBlocks(showTranslates, tbcvTextDict, address, isSetFirstVerse, isSetVerseNum);
 };
 
 const makeSlideSingleAddressMapBlocks = (
   showTranslates: BibleTranslateName[],
   tbcvTextDict: Record<string, string>,
-  versei: BibleVersei,
+  address: BibleSingleAddressCode,
   isSetFirstVerse?: boolean,
   isSetVerseNum?: boolean,
 ): BibleBroadcastTextMapBlock[] => {
+  const [booki, chapteri, versei] = address;
   if (isSetFirstVerse) {
     const verseNum = isSetVerseNum === false || showTranslates.length > 1 ? '' : versei + 1 + '. ';
 
     return [
       {
-        texts: [{ text: `${verseNum}${tbcvTextDict[makeBibleTbcvPrefix(showTranslates[0])] ?? ''}` }],
+        texts: [
+          { text: `${verseNum}${tbcvTextDict[bibleTbcvEncode(showTranslates[0], booki, chapteri, versei)] ?? ''}` },
+        ],
       },
     ];
   }
 
   return showTranslates.map(tName => {
-    const verseText = tbcvTextDict[makeBibleTbcvPrefix(tName)];
+    const verseText = tbcvTextDict[bibleTbcvEncode(tName, booki, chapteri, versei)];
     const texts = [{ text: verseText ? verseText : '' }];
 
     return showTranslates.length > 1
@@ -149,7 +159,7 @@ const makeSlideJoinedAddressMapBlocks = (
 ): BibleBroadcastTextMapBlock[] => {
   if (!joinAddress) return [];
 
-  const pasteText = (tName: BibleTranslateName): { address: string; text: string }[] => {
+  const pasteText = (tName: BibleTranslateName, isEllipsis?: boolean): { address: string; text: string }[] => {
     const langi = translateLanguage[tName];
 
     return objectEntries(joinAddress)
@@ -164,23 +174,24 @@ const makeSlideJoinedAddressMapBlocks = (
                 ':\n'
               : '',
 
-          text: bookEntries
-            .map(([chapteri, chapter = []], _, chaptera) => {
-              const chapterPrefix = isSetVerseNum === false ? '' : chaptera.length > 1 ? +chapteri + 1 + ':' : '';
+          text:
+            bookEntries
+              .map(([chapteri, chapter = []], _, chaptera) => {
+                const chapterPrefix = isSetVerseNum === false ? '' : chaptera.length > 1 ? +chapteri + 1 + ':' : '';
 
-              return chapter
-                .slice(0)
-                .sort(itNumSort)
-                .map(versei => {
-                  const verse =
-                    tbcvTextDict[bibleTbcvEncode(tName, extractNumber(booki), extractNumber(chapteri), versei)];
+                return chapter
+                  .slice(0)
+                  .sort(itNumSort)
+                  .map(versei => {
+                    const verse =
+                      tbcvTextDict[bibleTbcvEncode(tName, extractNumber(booki), extractNumber(chapteri), versei)];
 
-                  return verse ? (isSetVerseNum === false ? verse : `${chapterPrefix}${versei + 1}. ${verse}`) : '';
-                })
-                .filter(itIt)
-                .join('\n');
-            })
-            .join('\n'),
+                    return verse ? (isSetVerseNum === false ? verse : `${chapterPrefix}${versei + 1}. ${verse}`) : '';
+                  })
+                  .filter(itIt)
+                  .join('\n');
+              })
+              .join('\n') + (isEllipsis ? '...' : ''),
         };
       })
       .filter(checkIsNotNil);
@@ -189,7 +200,7 @@ const makeSlideJoinedAddressMapBlocks = (
   if (isSetFirstVerse || showTranslates.length < 2)
     return [
       {
-        texts: pasteText(showTranslates[0]),
+        texts: pasteText(showTranslates[0], isSetFirstVerse),
       },
     ];
 

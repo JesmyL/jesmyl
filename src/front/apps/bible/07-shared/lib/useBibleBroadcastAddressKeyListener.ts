@@ -8,9 +8,9 @@ import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
 import { BibleBroadcastJoinAddress } from '$bible/shared/model/base';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
-import { emptyFunc, itNumSort } from 'shared/utils';
+import { emptyFunc, extractNumber, itNumSort } from 'shared/utils';
 import { checkIsNil } from 'shared/utils/checkIs';
-import { objectKeys, objectLength } from 'shared/utils/object.utils';
+import { objectKeys } from 'shared/utils/object.utils';
 import { BibleBroadcastKeyListenScope } from '../model/broadcast';
 import { bibleBroadcastKeyListenScopeAtom } from '../state';
 import { bibleJoinAddressAtom, bibleVerseiAtom } from '../state/atoms';
@@ -55,34 +55,35 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
             const mathMethod = dir < 0 ? 'min' : 'max';
             let booki = currentBooki;
             let chapteri = currentChapteri;
+            let versei = currentVersei;
 
             if (event.ctrlKey) {
               booki = Math[mathMethod](...objectKeys(join[0]));
               chapteri = Math[mathMethod](...objectKeys(join[0]?.[booki]));
+
+              const verses = join[0][booki]?.[chapteri];
+              if (!verses) return;
+              versei = Math[mathMethod](...verses);
             }
 
-            const verses = join[0][booki]?.[chapteri];
-            if (!verses) return;
-            const versei = makeCorrectVersei(Math[mathMethod](...verses));
-
-            bibleBroadcastListSetSingleAddress(booki, chapteri, versei);
+            bibleBroadcastListSetSingleAddress(booki, chapteri, makeCorrectVersei(versei));
             bibleJoinAddressAtom.reset();
           };
 
           switch (event.code) {
             case 'ArrowLeft':
               bibleBroadcastSyncSlide(true);
-              limitStepJump(event.ctrlKey ? -Infinity : -1);
+              limitStepJump(-1);
               break;
             case 'ArrowRight':
               bibleBroadcastSyncSlide(true);
-              limitStepJump(event.ctrlKey ? Infinity : 1);
+              limitStepJump(1);
               break;
             case 'ArrowUp':
-              limitStepJump(event.ctrlKey ? -Infinity : -1);
+              limitStepJump(-1);
               break;
             case 'ArrowDown':
-              limitStepJump(event.ctrlKey ? Infinity : 1);
+              limitStepJump(1);
               break;
           }
 
@@ -107,9 +108,18 @@ export const useBibleBroadcastAddressKeyListener = (win: Window) => {
           };
 
           if (verses.size === 0) delete newJoin[currentBooki]?.[currentChapteri];
-          if (objectLength(newJoin[currentBooki]) === 0) delete newJoin[currentBooki];
+          const chapterJoinKeys = objectKeys(newJoin[currentBooki]);
+          if (chapterJoinKeys.length === 0) delete newJoin[currentBooki];
+          const bookJoinKeys = objectKeys(newJoin);
 
-          bibleJoinAddressAtom.set([objectLength(newJoin) === 0 ? null : newJoin]);
+          if (verses.size === 1 && chapterJoinKeys.length === 1 && bookJoinKeys.length === 1) {
+            bibleJoinAddressAtom.set([null]);
+            bibleBroadcastListSetSingleAddress(
+              extractNumber(bookJoinKeys[0]),
+              extractNumber(chapterJoinKeys[0]),
+              Array.from(verses)[0],
+            );
+          } else bibleJoinAddressAtom.set([bookJoinKeys.length === 0 ? null : newJoin]);
         }),
       )
       .effect();

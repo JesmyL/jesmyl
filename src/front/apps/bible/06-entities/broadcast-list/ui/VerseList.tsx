@@ -1,17 +1,20 @@
+import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { useBibleSimpleCheckedSingleAddress } from '$bible/shared/hooks';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
 import { makeBibleTbcvPrefix } from '$bible/shared/lib/tbcv.parser';
 import { bibleTBCVTranslatesIDB } from '$bible/shared/state/bibleIDB';
 import styled from '@emotion/styled';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { JSX, useRef } from 'react';
+import { JSX, useEffect, useRef } from 'react';
 import { BibleTranslateName } from 'shared/model/bible';
 import { useBibleBroadcastListVerseListeners } from '../lib/useVerseListListeners';
+
+const scrollIntoViewVerseOptions = { block: 'center', behavior: 'smooth' } as const;
 
 export function BibleBroadcastListVerseList(): JSX.Element {
   const verseListRef = useRef<HTMLOListElement>(null);
 
-  const [currentBooki, currentChapteri] = useBibleSimpleCheckedSingleAddress();
+  const [currentBooki, currentChapteri, currentVersei] = useBibleSimpleCheckedSingleAddress();
   const showTranslates = useBibleShowTranslatesValue();
   const tName = showTranslates[0];
   const verses = useLiveQuery(
@@ -22,6 +25,18 @@ export function BibleBroadcastListVerseList(): JSX.Element {
         .toArray(),
     [tName, currentBooki, currentChapteri],
   );
+
+  useEffect(() => {
+    if (!verses?.length) return;
+
+    return hookEffectPipe()
+      .pipe(
+        setTimeoutPipe(() => {
+          document.querySelector(`[data-versei='${currentVersei}']`)?.scrollIntoView(scrollIntoViewVerseOptions);
+        }, 100),
+      )
+      .effect();
+  }, [currentVersei, verses?.length]);
 
   useBibleBroadcastListVerseListeners(verseListRef);
 

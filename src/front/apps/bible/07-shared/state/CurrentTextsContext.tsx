@@ -26,7 +26,7 @@ export const BibleCurrentTextsContext = (props: Props) => {
 
   return (
     <BibleTextMapBlocksContentContext value={slideText}>
-      <BibleAddressTextContext value={addressText}>{props.children}</BibleAddressTextContext>
+      <BibleAddressTextContext value={slideText.length ? addressText : ''}>{props.children}</BibleAddressTextContext>
     </BibleTextMapBlocksContentContext>
   );
 };

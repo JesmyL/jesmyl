@@ -6,6 +6,7 @@ import { bibleBroadcastCurrentSelectedIndexAtom, bibleBroadcastKeyListenScopeAto
 import { useAtomValue } from 'atomaric';
 import { memo, ReactNode } from 'react';
 import { itIt } from 'shared/utils';
+import { checkIsArray } from 'shared/utils/checkIs';
 import { twJoin } from 'tailwind-merge';
 import { bibleBroadcastArchiveStopClassName } from '../const/common';
 import { BibleBroadcastArchiveContentText } from './ContentText';
@@ -33,7 +34,6 @@ export const BibleBroadcastArchiveList = memo(function BibleBroadcastArchive({ l
           return (
             <div
               key={address}
-              id={address}
               data-archive-itemi={itemi}
               className={twJoin(
                 bibleBroadcastArchiveStopClassName,
@@ -41,7 +41,7 @@ export const BibleBroadcastArchiveList = memo(function BibleBroadcastArchive({ l
                 takeClassName(itemi),
               )}
             >
-              <span className="text-x7">{address}</span>
+              <span className={twJoin('text-x7', !checkIsArray(item) && 'underline decoration-x3')}>{address}</span>
               {' - '}
               <BibleBroadcastArchiveContentText item={item} />
             </div>

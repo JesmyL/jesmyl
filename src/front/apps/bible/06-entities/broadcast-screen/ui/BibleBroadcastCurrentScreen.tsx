@@ -18,7 +18,7 @@ export function BibleBroadcastScreenCurrentScreen(props: BroadcastScreenProps) {
       <BibleBroadcastScreenScreen
         {...props}
         bibleConfig={currentConfig}
-        isVisible={props.isPreview ? true : isActualVisible}
+        isVisible={props.isPreview || isActualVisible}
       />
       {props.win !== window && (
         <Listen

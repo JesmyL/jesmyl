@@ -5,6 +5,8 @@ import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { useConfirm } from '#shared/ui/modal';
 import { bibleBroadcastListSetSingleAddress } from '$bible/entities/broadcast-list';
 import { takeJoinedAddressMaxValues } from '$bible/shared/hooks';
+import { makeBibleJoinedAddressText } from '$bible/shared/hooks/texts';
+import { useBibleCurrentLangi } from '$bible/shared/lib/useBibleCurrentLangi';
 import { BibleBroadcastAddress } from '$bible/shared/model/base';
 import { BibleBroadcastKeyListenScope } from '$bible/shared/model/broadcast';
 import { bibleBroadcastCurrentSelectedIndexAtom, bibleBroadcastKeyListenScopeAtom } from '$bible/shared/state';
@@ -13,7 +15,7 @@ import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { emptyFunc } from 'shared/utils';
 import { checkIsArray } from 'shared/utils/checkIs';
-import { BibleBroadcastArchiveList } from '../ui/ArchiveList';
+import { BibleBroadcastArchiveContentText } from '../ui/ContentText';
 
 export const useBibleBroadcastArchiveListKeyListener = (
   win: Window,
@@ -23,7 +25,8 @@ export const useBibleBroadcastArchiveListKeyListener = (
   onRemove: (itemi?: number) => void,
 ) => {
   const confirm = useConfirm();
-  const actualRef = useActualRef({ onRemove });
+  const langi = useBibleCurrentLangi();
+  const actualRef = useActualRef({ onRemove, langi });
   const listenScope = useAtomValue(bibleBroadcastKeyListenScopeAtom);
 
   useEffect(() => {
@@ -48,30 +51,28 @@ export const useBibleBroadcastArchiveListKeyListener = (
     return hookEffectPipe()
       .pipe(
         addEventListenerPipe(win, 'keydown', async event => {
-          const selectedItemi = bibleBroadcastCurrentSelectedIndexAtom.get();
-
           switch (event.code) {
             case 'Enter':
               onWinEnter();
               break;
-            case 'Delete':
+            case 'Delete': {
+              const selectedItemi = bibleBroadcastCurrentSelectedIndexAtom.get();
               if (event.ctrlKey) {
                 if (await confirm(translateBase(it => it.bible.clearChapter, { c: title })))
                   actualRef.current.onRemove();
               } else if (
                 await confirm(
-                  <BibleBroadcastArchiveList
-                    list={list}
-                    scope={scope}
-                  >
-                    {nodeList => nodeList?.[selectedItemi]}
-                  </BibleBroadcastArchiveList>,
+                  <>
+                    {makeBibleJoinedAddressText(actualRef.current.langi, list[selectedItemi], 'short')} -{' '}
+                    <BibleBroadcastArchiveContentText item={list[selectedItemi]} />
+                  </>,
                   translateBase(it => it.del),
                 )
               )
                 actualRef.current.onRemove(selectedItemi);
 
               break;
+            }
           }
         }),
       )
