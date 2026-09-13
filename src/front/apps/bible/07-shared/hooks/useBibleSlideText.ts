@@ -30,6 +30,7 @@ export const useBibleSlideMapBlocks = (
   isSetVerseNum?: boolean,
 ) => {
   const showTranslates = useBibleShowTranslatesValue();
+  const isSingleAddress = checkIsArray(address);
 
   let liveQuerySelector;
   let showBooksCount = 0;
@@ -38,54 +39,50 @@ export const useBibleSlideMapBlocks = (
   let showBooki: BibleTitleCodei | und;
   let showChapteri: BibleChapteri | und;
 
-  if (checkIsArray(address)) {
+  if (isSetFirstVerse) {
+    const booki = isSingleAddress ? address[0] : Math.min(...objectKeys(address));
+    const chapteri = isSingleAddress ? address[1] : Math.min(...objectKeys(address?.[booki]));
+    const versei = isSingleAddress ? address[2] : Math.min(...(address?.[booki]?.[chapteri] ?? []));
+
+    liveQuerySelector = () =>
+      bibleTBCVTranslatesIDB.tb.list
+        .where('k')
+        .equals(bibleTbcvEncode(showTranslates[0], booki, chapteri, versei))
+        .toArray();
+  } else if (isSingleAddress) {
     const [booki, chapteri, versei] = address;
     shownVersesTBCVKeySet = new Set(showTranslates.map(tName => bibleTbcvEncode(tName, booki, chapteri, versei)));
 
     showBooki = booki;
     showChapteri = chapteri;
   } else {
-    if (isSetFirstVerse) {
-      const minBooki = Math.min(...objectKeys(address));
-      const minChapteri = Math.min(...objectKeys(address?.[minBooki]));
-      const minVersei = Math.min(...(address?.[minBooki]?.[minChapteri] ?? []));
+    const selectedTbcvKeys: BibleTbcvKey[] = [];
 
-      liveQuerySelector = () =>
-        bibleTBCVTranslatesIDB.tb.list
-          .where('k')
-          .equals(bibleTbcvEncode(showTranslates[0], minBooki, minChapteri, minVersei))
-          .toArray();
-    } else {
-      const selectedTbcvKeys: BibleTbcvKey[] = [];
+    forEachObjectEntries(address, (bookiStr, chapterDict) => {
+      showBooksCount++;
+      showBooki ??= extractNumber(bookiStr);
 
-      forEachObjectEntries(address, (bookiStr, chapterDict) => {
-        showBooksCount++;
-        showBooki ??= extractNumber(bookiStr);
+      forEachObjectEntries(chapterDict, (chapteriStr, verses) => {
+        showChaptersCount++;
+        showChapteri ??= extractNumber(chapteriStr);
 
-        forEachObjectEntries(chapterDict, (chapteriStr, verses) => {
-          showChaptersCount++;
-          showChapteri ??= extractNumber(chapteriStr);
-
-          verses?.forEach(versei => {
-            showTranslates.forEach(tName => {
-              selectedTbcvKeys.push(
-                bibleTbcvEncode(tName, extractNumber(bookiStr), extractNumber(chapteriStr), versei),
-              );
-            });
+        verses?.forEach(versei => {
+          showTranslates.forEach(tName => {
+            selectedTbcvKeys.push(bibleTbcvEncode(tName, extractNumber(bookiStr), extractNumber(chapteriStr), versei));
           });
         });
       });
+    });
 
-      if (showTranslates.length === 1) {
-        shownVersesTBCVKeySet = new Set(selectedTbcvKeys);
-      } else if (showBooksCount !== 1 || showChaptersCount !== 1) {
-        liveQuerySelector = () => bibleTBCVTranslatesIDB.tb.list.where('k').anyOf(selectedTbcvKeys).toArray();
-      }
+    if (showTranslates.length === 1) {
+      shownVersesTBCVKeySet = new Set(selectedTbcvKeys);
+    } else if (showBooksCount !== 1 || showChaptersCount !== 1) {
+      liveQuerySelector = () => bibleTBCVTranslatesIDB.tb.list.where('k').anyOf(selectedTbcvKeys).toArray();
     }
   }
 
-  const [biblei, chapteri, versei] = checkIsArray(address) ? address : [];
-  const joinAddress = checkIsArray(address) ? null : address;
+  const [biblei, chapteri, versei] = isSingleAddress ? address : [];
+  const joinAddress = isSingleAddress ? null : address;
 
   if (!liveQuerySelector) {
     const showTranslatePrefixes =
@@ -110,7 +107,7 @@ export const useBibleSlideMapBlocks = (
   const len = objectLength(tbcvTextDict);
   if (!len) return [];
 
-  if (checkIsArray(address)) {
+  if (isSingleAddress) {
     return makeSlideSingleAddressMapBlocks(showTranslates, tbcvTextDict, address, isSetFirstVerse, isSetVerseNum);
   }
 

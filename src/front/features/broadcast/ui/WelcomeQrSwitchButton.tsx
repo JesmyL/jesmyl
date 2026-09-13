@@ -1,7 +1,7 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmComLastOpenSchwAtom } from '$cm/entities/index';
 import { useAtomValue } from 'atomaric';
-import { ScheduleWidgetWidNone } from 'shared/api';
+import { ScheduleWidgetWidDef } from 'shared/api';
 import { broadcastCurrentTextAppAtom } from '../atoms';
 import { isShowBroadcastInitialSlideAtom } from '../initial-slide-context';
 
@@ -9,7 +9,7 @@ export const BroadcastWelcomeQrSwitchButton = ({ toggleAppIcon }: { toggleAppIco
   const isInitialSlideShow = useAtomValue(isShowBroadcastInitialSlideAtom);
   const schw = useAtomValue(cmComLastOpenSchwAtom);
 
-  if (!schw || schw === ScheduleWidgetWidNone) return;
+  if (!schw || schw === ScheduleWidgetWidDef) return;
 
   return (
     <div className="flex">

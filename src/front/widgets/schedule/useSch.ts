@@ -1,9 +1,9 @@
 import { atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import { ScheduleWidgetWid, ScheduleWidgetWidNone } from 'shared/api';
+import { ScheduleWidgetWid, ScheduleWidgetWidDef } from 'shared/api';
 import { checkIsNaN, checkIsNil } from 'shared/utils/checkIs';
 
-const schwAtom = atom(ScheduleWidgetWidNone);
+const schwAtom = atom(ScheduleWidgetWidDef);
 
 export const useFixActualSchw = (schw: ScheduleWidgetWid | nil) => {
   useEffect(() => {

@@ -3,7 +3,7 @@ import { BroadcastWelcomeQrSwitchButton } from '#features/broadcast/ui/WelcomeQr
 import { LiveBroadcastAppProps } from '#shared/model/cm/Cm.model';
 import { BibleBroadcastLive } from '$bible/ext';
 import React, { memo, useCallback } from 'react';
-import { ScheduleWidgetWidNone } from 'shared/api';
+import { ScheduleWidgetWidDef } from 'shared/api';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 
 const BibleBroadcastControlled = React.lazy(() =>
@@ -18,7 +18,7 @@ export const CmScheduleWidgetBroadcastBibleControlled = memo(function BibleTr({
 }: LiveBroadcastAppProps) {
   const onSend = useCallback(
     (liveData: IndexSchWBroadcastLiveDataValue) =>
-      broadcastConnectionDto.sendLiveData({ schw: schedule?.w ?? ScheduleWidgetWidNone, data: liveData }),
+      broadcastConnectionDto.sendLiveData({ schw: schedule?.w ?? ScheduleWidgetWidDef, data: liveData }),
     [schedule?.w],
   );
 
