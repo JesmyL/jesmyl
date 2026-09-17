@@ -202,7 +202,6 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
     loadedTr: 'Завантажені переклади',
     modulesForLoad: 'Доступні для завантаження',
 
-    chapterNum: 'Глава $c',
     searchByBook: 'Пошук по книзі <i>$b;</i>',
     searchByChapter: 'Пошук по главі <i>$b $c;</i>',
     clearChapter: 'Очистити розділ $c;?',

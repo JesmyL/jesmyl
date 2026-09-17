@@ -180,7 +180,6 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
 
     modulesForLoad: LocaleSimpleString;
 
-    chapterNum: StringTemplaterInterpolation<'c'>;
     clearChapter: StringTemplaterInterpolation<'c'>;
     searchByBook: StringTemplaterInterpolation<'b'>;
     removeModule: StringTemplaterInterpolation<'n'>;

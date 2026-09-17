@@ -6,7 +6,7 @@ import { BibleTbcvKey } from 'shared/model/bible';
 import { BibleTranslate } from '../model/base';
 import { bibleTBCVTranslatesIDB } from '../state/bibleIDB';
 import { takeBibleTranslateBookSizesAtom } from './takeBibleTranslateBookSizesAtom';
-import { bibleTbcvEncode } from './tbcv.parser';
+import { bibleTbcvEncode, makeBibleTbcvPrefix } from './tbcv.parser';
 
 export const bibleTsjrpcClient = new (class Bible extends TsjrpcClient<BibleTsjrpcModel> {
   constructor() {
@@ -47,6 +47,7 @@ export const bibleTsjrpcBaseClient = new (class BibleTsjrpcBaseClient extends Ts
 
           takeBibleTranslateBookSizesAtom(tName).set(bookSizesNet);
 
+          await bibleTBCVTranslatesIDB.tb.list.where('k').startsWith(makeBibleTbcvPrefix(tName)).delete();
           await bibleTBCVTranslatesIDB.tb.list.bulkPut(recordsToInsert);
           await bibleTBCVTranslatesIDB.updateLastModifiedAt(modifiedAt);
 

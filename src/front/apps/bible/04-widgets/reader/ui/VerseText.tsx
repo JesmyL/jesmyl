@@ -11,7 +11,7 @@ export const BibleReaderVerseText = memo(function BibleReaderVerseText({ html, v
   return (
     <div
       attr-chapteri={chapteri}
-      attr-versen={versei + 1}
+      data-versen={versei + 1}
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

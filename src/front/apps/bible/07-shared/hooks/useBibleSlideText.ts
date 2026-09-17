@@ -12,7 +12,7 @@ import {
 } from 'shared/utils/object.utils';
 import { textToUpperCase } from 'shared/utils/string.utils';
 import { takeBibleLangBooks } from '../const/bibleTitles';
-import { translateDescriptions, translateLanguage } from '../const/consts';
+import { bibleTranslateLanguage, translateDescriptions } from '../const/consts';
 import { bibleTbcvEncode, makeBibleTbcvPrefix } from '../lib/tbcv.parser';
 import {
   BibleBroadcastAnyAddress,
@@ -157,7 +157,7 @@ const makeSlideJoinedAddressMapBlocks = (
   if (!joinAddress) return [];
 
   const pasteText = (tName: BibleTranslateName, isEllipsis?: boolean): { address: string; text: string }[] => {
-    const langi = translateLanguage[tName];
+    const langi = bibleTranslateLanguage[tName];
 
     return objectEntries(joinAddress)
       .map(([booki, book], _, booka) => {

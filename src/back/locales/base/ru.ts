@@ -204,7 +204,6 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
     loadedTr: 'Загруженные переводы',
     modulesForLoad: 'Доступные к загрузке',
 
-    chapterNum: 'Глава $c',
     searchByBook: 'Поиск по книге <i>$b;</i>',
     searchByChapter: 'Поиск по главе <i>$b; $c;</i>',
     clearChapter: 'Очистить раздел $c;?',

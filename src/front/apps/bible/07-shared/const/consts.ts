@@ -4,7 +4,7 @@ import { BibleTranslateName } from 'shared/model/bible';
 import { forEachObjectEntries, objectKeys } from 'shared/utils/object.utils';
 import { BibleBooki } from '../model/base';
 
-export const translateLanguage: Record<BibleTranslateName, Langi> = {
+export const bibleTranslateLanguage: Record<BibleTranslateName, Langi> = {
   [BibleTranslateName.rst]: Langi.Ru,
   [BibleTranslateName.nrt]: Langi.Ru,
   [BibleTranslateName.kas]: Langi.Ru,
@@ -13,7 +13,7 @@ export const translateLanguage: Record<BibleTranslateName, Langi> = {
 
 export const translateDescriptions = {} as Record<BibleTranslateName, string>;
 
-forEachObjectEntries(translateLanguage, tName => {
+forEachObjectEntries(bibleTranslateLanguage, tName => {
   translateDescriptions[tName] = translateBase(it => it.bible.trs[tName]);
 });
 

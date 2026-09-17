@@ -205,7 +205,6 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
     loadedTr: 'Жүктелген аудармалар',
     modulesForLoad: 'Жүктеуге қолжетімді',
 
-    chapterNum: '$c-тарау',
     searchByBook: '<i>$b;</i> кітабы бойынша іздеу',
     searchByChapter: '<i>$b $c;</i> тарауы бойынша іздеу',
     clearChapter: '$c бөлімін тазалау керек пе?',
