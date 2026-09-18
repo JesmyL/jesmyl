@@ -143,16 +143,18 @@ const List = styled.div<{ $langi: Langi; $booki: BibleBooki }>`
   }
 
   ${props => css`
-    [data-chaptern]::before {
-      content: '${translateDynamic(props.$langi)(it => it.bible.chapterNum, {
-        c: "'attr(data-chaptern)'",
-        b: `${props.$booki}`,
-      })}';
-
+    [data-chaptern] {
       font-size: 1.5em;
-      margin-block: 2em;
+      margin-block: 0.5em;
       font-weight: bold;
       color: var(--color-x3);
+
+      &::before {
+        content: '${translateDynamic(props.$langi)(it => it.bible.chapterNum, {
+          c: "'attr(data-chaptern)'",
+          b: `${props.$booki}`,
+        })}';
+      }
     }
   `}
 `;

@@ -15,7 +15,7 @@ export function BibleReaderCurrentBookPage() {
   const tName = showTranslates[0];
   const bookChapters = useLiveQuery(
     () => bibleTBCVTranslatesIDB.tb.list.where('k').startsWith(makeBibleTbcvPrefix(tName, currentBooki)).toArray(),
-    [],
+    [tName, currentBooki],
   );
 
   const chapterList = useMemo(() => {
