@@ -103,7 +103,7 @@ const StrongDefaultValueInput = ({
   const localInputRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (localInputRef?.current == null) return;
+    if (!localInputRef?.current) return;
     localInputRef.current.value = '' + (props.defaultValue ?? '');
   }, [props.defaultValue]);
 
