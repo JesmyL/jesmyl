@@ -4,17 +4,19 @@ import { bibleTBCVTranslatesIDB } from '$bible/shared/state/bibleIDB';
 import { makeRegExp } from 'regexpert';
 import { Langi } from 'shared/api';
 import { BibleTranslateName } from 'shared/model/bible';
-import { checkIsNaN } from 'shared/utils/checkIs';
+import { checkIsNaN, checkIsNil, checkIsNotNil } from 'shared/utils/checkIs';
 import {
   cmComCommentMakePseudoCommentContentAccentsColorCss,
   cmComCommentMakePseudoCommentContentPropCss,
   cmComCommentTrimHighlightMarkers,
 } from 'shared/utils/cm';
-import { textToUpperCase } from 'shared/utils/string.utils';
+import { textToLowerCase, textToUpperCase } from 'shared/utils/string.utils';
 import { cmComCommentHeadBibleAddressRegExp } from './commentHeadBibleAddressRegExp';
 
 const titlesLangMap: PRecord<Langi, Map<string, number>> = {};
 let titlesLine: string[];
+
+const makeSafeText = (text: string) => text.replace(makeRegExp('/</?[^>]+>/g'), '');
 
 export const cmComCommentMakeStartCommentCss = async (
   langi: Langi,
@@ -45,6 +47,7 @@ export const cmComCommentMakeStartCommentCss = async (
           currentBibleTranslate ||
           BibleTranslateName.rst
         ).toLowerCase() as BibleTranslateName;
+
         const tNameUpper = textToUpperCase(tName) as BibleTranslateName;
         const translate = await bibleTBCVTranslatesIDB.tb.list
           .where('k')
@@ -56,8 +59,9 @@ export const cmComCommentMakeStartCommentCss = async (
         }
 
         let booki = null as number | nil;
-        if (addr.bookTitle != null) {
-          const lowerBookTitle = addr.bookTitle.toLowerCase();
+
+        if (checkIsNotNil(addr.bookTitle)) {
+          const lowerBookTitle = textToLowerCase(addr.bookTitle);
           booki =
             titlesMap.get(`${addr.bookNumber ?? ''}${lowerBookTitle}`) ??
             titlesMap.get(`${addr.bookNumber}-я ${lowerBookTitle}`) ??
@@ -68,7 +72,7 @@ export const cmComCommentMakeStartCommentCss = async (
             titlesMap.get(`1-е ${lowerBookTitle}`) ??
             titlesMap.get(`1-я ${lowerBookTitle}`);
 
-          if (booki == null) {
+          if (checkIsNil(booki)) {
             titlesLine = Array.from(titlesMap.keys());
             const titleName =
               titlesLine.find(t => t.startsWith(lowerBookTitle)) ?? titlesLine.find(t => t.includes(lowerBookTitle));
@@ -79,21 +83,56 @@ export const cmComCommentMakeStartCommentCss = async (
         const bookTitle =
           (addr.bookNumber ? `${addr.bookNumber}${addr.bookNumberSuffix ? `-${addr.bookNumberSuffix}` : ''} ` : '') +
           addr.bookTitle;
-        if (booki == null)
+
+        if (checkIsNil(booki))
           return `\n${tNameUpper}:<КНИГА ${bookTitle} НЕ НАЙДЕНА> ${addr.chapter}:${addr.verseDiapason}`;
 
+        const chapteri = +addr.chapter - 1;
+        if (checkIsNaN(chapteri)) return addr.$0;
+
+        const fromVersei = +addr.verseFrom - 1;
         const fullBibleTitle = takeBibleLangBooks(langi)[booki]?.full || bookTitle;
+        let text = `\n${fullBibleTitle} ${addr.chapter}:${addr.verseFrom}${addr.verseTo ? `-${addr.verseTo}` : ''} ${tNameUpper} (${translateDescriptions[tName]})`;
+
+        if (addr.verseTo) {
+          const toVersei = +addr.verseTo - 1;
+
+          const verses = await bibleTBCVTranslatesIDB.tb.list
+            .where('k')
+            .between(
+              bibleTbcvEncode(tName, booki, chapteri, fromVersei),
+              bibleTbcvEncode(tName, booki, chapteri, toVersei + 1),
+            )
+            .toArray();
+
+          if (verses.length) {
+            isThereCorrectBibleText = true;
+
+            if (isWithoutText) return text;
+            for (let versei = 0; versei < verses.length; versei++) {
+              text += `\n${versei + fromVersei + 1}. ${verses[versei].v}`;
+            }
+
+            return makeSafeText(text);
+          }
+        } else {
+          const verse = await bibleTBCVTranslatesIDB.tb.list.get(bibleTbcvEncode(tName, booki, chapteri, fromVersei));
+
+          if (verse) {
+            isThereCorrectBibleText = true;
+
+            return isWithoutText ? text : `${text}\n${makeSafeText(verse.v)}`;
+          }
+        }
 
         const book = await bibleTBCVTranslatesIDB.tb.list
           .where('k')
           .startsWith(makeBibleTbcvPrefix(tName, booki))
           .first();
 
-        if (book == null)
+        if (checkIsNil(book))
           return `\n${tNameUpper}:<КНИГИ "${fullBibleTitle}" В ПЕРЕВОДЕ ${tNameUpper} ${translateDescriptions[tName] || ''} НЕТ> ${addr.chapter}:${addr.verseDiapason}`;
 
-        const chapteri = +addr.chapter! - 1;
-        if (checkIsNaN(chapteri)) return addr.$0;
         const chapter = await bibleTBCVTranslatesIDB.tb.list
           .where('k')
           .startsWith(makeBibleTbcvPrefix(tName, booki, chapteri))
@@ -101,48 +140,28 @@ export const cmComCommentMakeStartCommentCss = async (
 
         if (!chapter) return `\n${tNameUpper}:${fullBibleTitle} <${addr.chapter} ГЛАВЫ НЕТ>:${addr.verseDiapason}`;
 
-        let text = '';
-        if (!isWithoutText && addr.verseDiapason) {
-          const [verseFromStr, verseToStr] = addr.verseDiapason.split('-');
-          const fromVersei = +verseFromStr - 1;
-
+        if (!isWithoutText) {
           const fromVerse = await bibleTBCVTranslatesIDB.tb.list.get(
             bibleTbcvEncode(tName, booki, chapteri, fromVersei),
           );
 
           if (checkIsNaN(fromVersei) || !fromVerse) {
-            return (
-              `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:<${addr.verseFrom} СТИХА НЕТ>` + (addr.verseTail || '')
-            );
+            return `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:<${addr.verseFrom} СТИХА НЕТ>${addr.verseTail || ''}`;
           }
 
-          if (verseToStr != null) {
-            const toVersei = +verseToStr - 1;
+          if (checkIsNotNil(addr.verseTo)) {
+            const toVersei = +addr.verseTo - 1;
             const toVerse = await bibleTBCVTranslatesIDB.tb.list.get(bibleTbcvEncode(tName, booki, chapteri, toVersei));
 
             if (checkIsNaN(toVersei) || !toVerse)
-              return `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:${addr.verseFrom}-<${verseToStr} СТИХА НЕТ>`;
+              return `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:${addr.verseFrom}-<${addr.verseTo} СТИХА НЕТ>`;
+
             if (toVersei <= fromVersei)
               return `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:<${addr.verseFrom}${addr.verseTail || ''} ОШИБКА ДИАПАЗОНА>`;
-
-            const verses = await bibleTBCVTranslatesIDB.tb.list
-              .where('k')
-              .between(
-                bibleTbcvEncode(tName, booki, chapteri, fromVersei),
-                bibleTbcvEncode(tName, booki, chapteri, toVersei),
-              )
-              .toArray();
-
-            for (let versei = fromVersei, i = 0; versei <= toVersei; versei++, i++) {
-              text += `\n${versei + 1}. ${verses[i].v}`;
-            }
-          } else text += `\n${fromVerse.v}`;
-
-          text = text.replace(makeRegExp('/</?[^>]+>/g'), '');
+          }
         }
 
-        isThereCorrectBibleText = true;
-        return `\n${fullBibleTitle} ${addr.chapter}:${addr.verseFrom}${addr.verseTo ? `-${addr.verseTo}` : ''} ${tNameUpper} (${translateDescriptions[tName]})${text}`;
+        return '';
       }),
     );
 

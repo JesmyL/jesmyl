@@ -16,7 +16,6 @@ import { objectValues } from 'shared/utils/object.utils';
 import { PRecord } from 'tsjrpc/types/base.model';
 import { cmComCommentHeaderHolderSelectors } from '../const/commentHolderSelectors';
 import { cmComCommentExtractSelector } from '../lib/useCmComCommentBlock';
-import { cmComCommentPseudoCommentStaticPropsCss } from './pseudoCommentStaticPropsCss';
 
 export const cmComCommentDetectCommentTextStyles = () => {
   const ordSelector2StylesDict: PRecord<
@@ -115,18 +114,6 @@ export const cmComCommentDetectCommentTextStyles = () => {
       });
 
       return css`
-        ::before,
-        :after {
-          color: var(--color-x3);
-        }
-
-        .comment-holder {
-          &:after,
-          &:before {
-            ${cmComCommentPseudoCommentStaticPropsCss}
-          }
-        }
-
         ${selectorsCssList}
         ${objectValues(ordKind2StylesDict)}
       `;

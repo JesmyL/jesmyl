@@ -130,6 +130,11 @@ export const useCmComCommentBlockCss = (
           --comment-opacity: 0.6;
           --comment-margin-left: 1rem;
 
+          ::before,
+          :after {
+            color: var(--color-x3);
+          }
+
           ${headCommentContents}
 
           .styled-header {
@@ -151,6 +156,13 @@ export const useCmComCommentBlockCss = (
               display: block;
               text-decoration: underline;
               margin-left: var(--comment-margin-left);
+            }
+          }
+
+          .comment-holder {
+            &:after,
+            &:before {
+              ${cmComCommentPseudoCommentStaticPropsCss}
             }
           }
 
