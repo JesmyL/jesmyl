@@ -50,3 +50,4 @@ src/electron-app/dist/
 src/electron-app/release-builds/
 src/electron-app/builder.config.json
 src/electron-app/builder.config.cjs
+src/electron-app/**/test-results

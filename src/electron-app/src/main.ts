@@ -9,11 +9,12 @@ import { makeElectronDownHostUrl } from './lib';
 import { electronAppBasicTsjrpcBase } from './tsjrpc/bases/basic.server.base';
 import { electronAppPresentationTsjrpcBase } from './tsjrpc/bases/presentation.server.base';
 import { tsjrpcElectronAppBaseNext } from './tsjrpc/init/tsjrpc.base.electron';
-import { electronAppWebPreferences } from './webPreferences';
+import { takeElectronAppWebPreferences } from './webPreferences';
 
 const gotTheLock = app.requestSingleInstanceLock();
+const isTestMode = process.env.JESMYL_TEST_RUNNER === 'true';
 
-if (!gotTheLock) {
+if (!gotTheLock && !isTestMode) {
   app.quit();
 } else {
   app.on('second-instance', () => {
@@ -26,15 +27,21 @@ if (!gotTheLock) {
   });
 
   const host = hostConfig.host;
-  const url = app.isPackaged ? `https://${host}` : 'http://localhost:3627';
+  const isProd = app.isPackaged || process.env.NODE_ENV === 'production';
+  const url = isProd ? `https://${host}` : 'http://localhost:3627';
 
   let isUpdateDownloaded = false;
   let isQuittingForUpdate = false;
 
   app.whenReady().then(async () => {
-    if (app.isPackaged) {
+    if (isProd) {
       try {
         autoUpdater.logger = console;
+
+        if (!app.isPackaged) {
+          autoUpdater.forceDevUpdateConfig = true;
+        }
+
         autoUpdater.setFeedURL({
           provider: 'generic',
           url: makeElectronDownHostUrl(host, true),
@@ -51,9 +58,9 @@ if (!gotTheLock) {
       }
     }
 
-    const appQuit = () => {
-      if (process.platform !== 'darwin') app.quit();
-    };
+    const isDarwin = process.platform === 'darwin';
+
+    const appQuit = isDarwin ? () => {} : () => app.quit();
 
     app.on('before-quit', e => {
       if (isUpdateDownloaded && !isQuittingForUpdate) {
@@ -84,10 +91,29 @@ if (!gotTheLock) {
       y,
       backgroundColor: '#000000',
       icon: path.join(__dirname, '../assets/img/ico-512x512.png'),
-      webPreferences: electronAppWebPreferences,
+      webPreferences: isTestMode
+        ? takeElectronAppWebPreferences('persist:jesmyl_test')
+        : takeElectronAppWebPreferences(),
     }));
 
     manage(win);
+
+    win.webContents.on('before-input-event', (event, input) => {
+      if (
+        input.shift &&
+        input.alt &&
+        (isDarwin ? input.meta : input.control) &&
+        input.type === 'keyDown' &&
+        input.key.toLowerCase() === 'i'
+      ) {
+        if (win.webContents.isDevToolsOpened()) {
+          win.webContents.closeDevTools();
+        } else {
+          win.webContents.openDevTools();
+        }
+        event.preventDefault();
+      }
+    });
 
     ipcMain.removeHandler(electronAppClientEventKey);
     ipcMain.handle(

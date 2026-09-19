@@ -1,6 +1,6 @@
 import { BrowserWindow, Display, screen } from 'electron';
 import { electronAppWinHolder } from '../../const';
-import { electronAppWebPreferences } from '../../webPreferences';
+import { takeElectronAppWebPreferences } from '../../webPreferences';
 import { TsjrpcElectronAppBase } from '../init/tsjrpc.base.electron';
 import { electronPresentationTsjrpcAppMethods } from '../methods/presentation.server.methods';
 import { ElectronPresentationTsjrpcModel } from '../model';
@@ -67,10 +67,7 @@ const createSlideshowWindow = async (display: Display | undefined, host: string)
     kiosk: true,
     show: false,
     backgroundColor: '#000000',
-    webPreferences: {
-      ...electronAppWebPreferences,
-      partition: 'persist:jesmyl_presentation',
-    },
+    webPreferences: takeElectronAppWebPreferences(),
   });
 
   presentationWin.setBackgroundColor('#000000');

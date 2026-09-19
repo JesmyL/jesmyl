@@ -1,16 +1,20 @@
 {
   "name": "JESMYL_PRO",
-  "version": "0.0.29811137",
+  "version": "0.0.29829962",
   "description": "Jesmyl Pro Desktop",
   "author": "gfirf",
   "private": true,
   "main": "dist/main.cjs",
+  "scripts": {
+    "test": "playwright test"
+  },
   "dependencies": {
     "electron-updater": "^6.8.9",
     "electron-window-state": "^5.0.3",
     "tsjrpc": "^0.0.24"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "electron": "^43.4.1"
   }
 }

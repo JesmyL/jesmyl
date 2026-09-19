@@ -17,7 +17,8 @@
     "el-bump": "tsx src/electron-app/src/set-date-version.ts",
     "el-compile": "tsup --config src/electron-app/tsup.config.ts",
     "el-gen-config": "tsx src/electron-app/src/generate-config.ts",
-    "el-build": "npm run el-install && npm run el-compile && npm run el-gen-config && npx electron-builder --config builder.config.json --projectDir src/electron-app -c.extraMetadata.main=dist/main.cjs --linux && npx electron-builder --config builder.config.json --projectDir src/electron-app -c.extraMetadata.main=dist/main.cjs --win",
+    "el-test": "npm run el-compile && npm run test --prefix src/electron-app",
+    "el-build": "npm run el-install && npm run el-test && npm run el-gen-config && npx electron-builder --config builder.config.json --projectDir src/electron-app -c.extraMetadata.main=dist/main.cjs --linux && npx electron-builder --config builder.config.json --projectDir src/electron-app -c.extraMetadata.main=dist/main.cjs --win",
     "el-start": "npm run el-compile && electron src/electron-app/dist/main.cjs",
     "el-deploy": "npm run el-bump && npm run el-build && tsx src/electron-app/src/deploy.ts"
   },
