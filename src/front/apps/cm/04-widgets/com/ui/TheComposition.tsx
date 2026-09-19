@@ -10,7 +10,7 @@ import {
   useCmComCurrentComPackContext,
   useCmComLastOpenComw,
 } from '$cm/entities/com';
-import { isCmComAudioPlayerOpenMoversAtom } from '$cm/entities/com-audio-player';
+import { cmComAudioPlayerPlaySrcAtom, isCmComAudioPlayerOpenMoversAtom } from '$cm/entities/com-audio-player';
 import { cmComCommentRedactOrdSelectorIdAtom } from '$cm/entities/com-comment';
 import { CmComToolList, useCmComToolMigratableTop } from '$cm/entities/com-tool';
 import { cmComChordVisibleVariantAtom, cmComIsShowCatBindsInCompositionAtom } from '$cm/entities/index';
@@ -39,6 +39,7 @@ export function TheCmComComposition() {
   const comToolsNode = useCmComToolMigratableTop();
   const { comws } = useCmComCurrentComPackContext();
   const isOpenMoversButtons = useAtomValue(isCmComAudioPlayerOpenMoversAtom);
+  const currentSrc = useAtomValue(cmComAudioPlayerPlaySrcAtom);
 
   useCmComCommentConstructorListenChanges();
 
@@ -72,7 +73,7 @@ export function TheCmComComposition() {
       }
       content={
         <>
-          <DocTitle title={ccom.name} />
+          {(!currentSrc || ccom.audio?.includes(currentSrc)) && <DocTitle title={ccom.name} />}
 
           <CmComAudioPlayerInCompositionPage ccom={ccom} />
 
