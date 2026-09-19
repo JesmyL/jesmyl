@@ -2,9 +2,10 @@ import { getParentNodeWithClassName } from '#shared/lib/getParentNodeWithClassNa
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { useEffect, useRef } from 'react';
+import { checkIsNaN } from 'shared/utils/checkIs';
 
 export const useBibleBroadcastListFaceClickListener = (
-  idPrefix: `${string}-`,
+  attrName: `${string}-${string}`,
   faceClassName: string,
   onClick: (itemi: number, event: MouseEvent) => void,
 ) => {
@@ -19,15 +20,15 @@ export const useBibleBroadcastListFaceClickListener = (
       .pipe(
         addEventListenerPipe(listNode, 'mousedown', event => {
           const chapterFace = getParentNodeWithClassName(event, faceClassName);
-          const idStr = chapterFace.node?.id.slice(idPrefix.length);
+          const index = +(chapterFace.node?.getAttribute(attrName) as string)!;
 
-          if (idStr == null) return;
+          if (checkIsNaN(index)) return;
 
-          onClickRef.current(+idStr, event);
+          onClickRef.current(index, event);
         }),
       )
       .effect();
-  }, [faceClassName, idPrefix.length, onClickRef]);
+  }, [faceClassName, attrName, onClickRef]);
 
   return listRef;
 };

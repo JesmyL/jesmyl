@@ -8,16 +8,16 @@ import { removeBibleTranslate } from '$bible/shared/lib/utils';
 import { bibleMyTranslatesAtom } from '$bible/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
-import { BibleTranslateName } from 'shared/api';
+import { BibleTranslateName } from 'shared/model/bible';
 import { textToUpperCase } from 'shared/utils/string.utils';
 
-export default function TranslatesLoadModalInner() {
+export const BibleTranslateLoadModalInner = () => {
   const myTranslates = useAtomValue(bibleMyTranslatesAtom);
   const [translateOnLoad, setTranslateOnLoad] = useState<BibleTranslateName | null>(null);
 
   return (
     <>
-      <ModalHeader>{translateBase(it => it.bible.chapter)}</ModalHeader>
+      <ModalHeader>{translateBase(it => it.bible.tr)}</ModalHeader>
 
       <ModalBody>
         <h3 className="my-2 font-bold">{translateBase(it => it.bible.loadedTr)}</h3>
@@ -61,4 +61,4 @@ export default function TranslatesLoadModalInner() {
       </ModalBody>
     </>
   );
-}
+};

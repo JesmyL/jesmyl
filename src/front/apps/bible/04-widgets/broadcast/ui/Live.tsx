@@ -1,7 +1,6 @@
 import { isShowBroadcastTextAtom } from '#features/broadcast/initial-slide-context';
-import { useScheduleCurrentSchwContext } from '#widgets/schedule/complect/lib/contexts';
 import { useBibleBroadcastScreenConfigs } from '$bible/entities/broadcast';
-import { useBibleAddressTextContext, useBibleTextContentContext } from '$bible/shared/contexts/texts';
+import { useBibleAddressTextContext, useBibleTextMapBlocksContentContext } from '$bible/shared/contexts/texts';
 import { BibleCurrentTextsContext } from '$bible/shared/state/CurrentTextsContext';
 import { useAtomValue } from 'atomaric';
 import { JSX, useEffect } from 'react';
@@ -21,26 +20,23 @@ export function BibleBroadcastLive(props: Props): JSX.Element {
 }
 
 const Live = ({ fio, onSend }: Props) => {
-  const schw = useScheduleCurrentSchwContext();
   const addressText = useBibleAddressTextContext();
-  const text = useBibleTextContentContext();
+  const texts = useBibleTextMapBlocksContentContext();
   const isHide = !useAtomValue(isShowBroadcastTextAtom);
 
   const [config] = useBibleBroadcastScreenConfigs();
 
   useEffect(() => {
     return setTimeoutEffect(() => {
-      if (isNaN(schw)) return;
-
       const liveData: IndexSchWBroadcastLiveDataValue = {
         fio: fio ?? '',
         isHide,
-        bible: { text, addressText, config },
+        bible: { texts, addressText, config },
       };
 
       onSend(liveData);
     }, 100);
-  }, [addressText, config, fio, isHide, onSend, schw, text]);
+  }, [addressText, config, fio, isHide, onSend, texts]);
 
   return <></>;
 };

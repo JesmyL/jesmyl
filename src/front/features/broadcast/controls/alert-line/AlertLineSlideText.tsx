@@ -11,21 +11,21 @@ export const AlertLineSlideText = () => {
   const showAlertConfigId = useAtomValue(broadcastShowAlertLineConfigIdAtom);
   const config = useLiveQuery(() => complectIDB.tb.alertLineConfigs.get(showAlertConfigId ?? -1), [showAlertConfigId]);
 
-  if (config == null) return null;
+  if (!config) return;
 
   const { icon, id, title, withBg, bgFileId, top, bg, bgColor, ...styles } = config;
 
   const text = alertLineText || config.text;
 
   return (
-    <StyledAlertLineContainer style={styles}>
+    <StyledAlertLineContainer style={{ ...styles, backgroundColor: '' }}>
       <StyledAlertLine
+        $speed={config.speed}
         style={{
           top: `${top}%`,
           ...(withBg ? { background: bg, backgroundColor: bgColor } : {}),
           ...makeBroadcastTextStroke(styles),
         }}
-        $speed={config.speed}
       >
         <StyledItem>{text}</StyledItem>
         <StyledItem>{text}</StyledItem>
@@ -64,6 +64,7 @@ const StyledItem = styled.div`
 
 const StyledAlertLineContainer = styled.div`
   position: absolute;
+  overflow: hidden;
   height: 100%;
   width: 100%;
   top: 0;

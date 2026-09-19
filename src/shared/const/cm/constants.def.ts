@@ -1,5 +1,6 @@
 import { makeRegExp } from 'regexpert';
 import { ConstantsConfig, ConstantsConfigConfigurator, ConstantsConfigConfiguratorItem } from 'shared/api';
+import { iife } from 'shared/utils';
 import { checkIsNaN, checkIsNotNumber, checkIsStartsWith, checkIsString } from 'shared/utils/checkIs';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 
@@ -7,35 +8,9 @@ const numberZips = (def: number, title: string) =>
   ({
     title,
     def,
-    unzip: str => +str,
     str: str => `${checkIsNaN(+`${str}`) ? def : str}`,
-    error: () => null,
     checked: strNum => (checkIsNaN(+`${strNum}`) ? def : +`${strNum}`),
-  }) satisfies Partial<ConstantsConfigConfiguratorItem<number, number>>;
-
-const stringSetZips = (def: string, title: string) => {
-  const unzip = (str: string) => new Set(str.split(makeRegExp('/[^a-z]+/')));
-  const str = (str: unknown) => Array.from(unzip(checkIsString(str) ? str : def)).join(' ');
-
-  return {
-    def,
-    title,
-    unzip,
-    str,
-    checked: it => (checkIsString(it) ? it : def),
-    error: (value, checkValue) => {
-      if (checkIsString(checkValue)) {
-        const set = unzip(value);
-
-        return set.has(checkValue.split('.').at(-1) || '')
-          ? null
-          : `Допустимые доменные зоны - .${Array.from(set).join(', .')}`;
-      }
-
-      return 'String expected!';
-    },
-  } satisfies Partial<ConstantsConfigConfiguratorItem<string, Set<string>>>;
-};
+  }) satisfies Partial<ConstantsConfigConfiguratorItem<number>>;
 
 export const constantsConfigurator: ConstantsConfigConfigurator = {
   '>cm - комменты': 0,
@@ -53,7 +28,34 @@ export const constantsConfigurator: ConstantsConfigConfigurator = {
   maxSelectedComsCount: numberZips(50, 'макс. выбр. песен'),
 
   '>index - общее': 0,
-  availEmailDomainZone: stringSetZips('ru', 'E-mail доменные зоны'),
+  availEmailDomainZone: iife(() => {
+    const def = 'ru';
+
+    const unzip = (str: string) => {
+      const set = new Set(str.split(makeRegExp('/[^a-z]+/')));
+      set.delete('');
+      return set;
+    };
+    const str = (str: unknown) => (checkIsString(str) ? Array.from(unzip(str)).join(' ') : def);
+
+    return {
+      title: 'E-mail доменные зоны',
+      def,
+      str,
+      checked: str,
+      error: (value, checkValue) => {
+        if (checkIsString(checkValue)) {
+          const set = unzip(value);
+
+          return set.has(checkValue.split('.').at(-1) || '')
+            ? null
+            : `Допустимые доменные зоны - .${Array.from(set).join(', .')}`;
+        }
+
+        return 'String expected!';
+      },
+    } satisfies ConstantsConfigConfigurator['availEmailDomainZone'];
+  }),
 };
 
 export const constantsDefaultConfig = (() => {

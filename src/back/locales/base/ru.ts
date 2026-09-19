@@ -1,5 +1,6 @@
-import { BibleTranslateName, Langi, MenuComToolName } from 'shared/api';
+import { Langi, MenuComToolName } from 'shared/api';
 import { LocaleBase } from 'shared/model/+locale/base';
+import { BibleTranslateName } from 'shared/model/bible';
 import { GENERATE, IF, isUtil, STR, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeBaseRu: LocaleBase<Langi.Ru> = {
@@ -203,7 +204,6 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
     loadedTr: 'Загруженные переводы',
     modulesForLoad: 'Доступные к загрузке',
 
-    chapterNum: 'Глава $c',
     searchByBook: 'Поиск по книге <i>$b;</i>',
     searchByChapter: 'Поиск по главе <i>$b; $c;</i>',
     clearChapter: 'Очистить раздел $c;?',
@@ -272,6 +272,12 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
     'Этим действием вы полностью удалите внутренности приложения - оффлайн режим будет недоступен некоторое время. Для подтверждения данного действия введите код $c в поле ввода',
   incCode: 'Некорректный код',
 
+  configs: 'Конфиги',
+  alert: 'Предупреждение',
+  slides: 'Слайды',
+
+  folder: 'Папка',
+
   toAuth: 'Авторизоваться',
   authSuccess: `Успешная авторизация`,
   oneTimeCode: 'Одноразовый код',
@@ -295,6 +301,8 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
   search: 'Поиск',
   globSearch: 'Глобальный поиск',
   broadcast: 'Трансляция',
+
+  control: 'Управление',
 
   tg: {
     beInChannel: 'Состоять в канале',
@@ -354,6 +362,7 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
   fewStrs: 'Мало строк',
   dicts: 'Сборники',
   denied: 'Заперщено',
+  emptyList: 'Список пуст',
   lang: 'Язык',
   lookJSON: 'Посмотреть JSON',
   NSymbols: '$n $declension{{$n}{символ}{символа}{символов}}',

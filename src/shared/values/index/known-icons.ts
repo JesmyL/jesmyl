@@ -101,6 +101,8 @@ export const knownStameskaIconNames = {
   Flash: 0,
   FlashOff: 0,
   Folder01: 0,
+  FolderSearch: 0,
+  FolderOpen: 0,
   FolderAdd: 0,
   GameController03: 0,
   Github: 0,
@@ -118,6 +120,7 @@ export const knownStameskaIconNames = {
   IceCubes: 0,
   Image02: 0,
   InformationCircle: 0,
+  InsertBottomImage: 0,
   Layers01: 0,
   LayoutBottom: 0,
   LayoutTop: 0,
@@ -227,6 +230,6 @@ export const knownStameskaIconNames = {
   Voice: 0,
   WindowsOld: 0,
   WorkHistory: 0,
-} satisfies Partial<Record<StameskaIconName, 0>>;
+} satisfies PRecord<StameskaIconName, 0>;
 
 export const knownStameskaIconNamesMd5Hash = md5(JSON.stringify(knownStameskaIconNames));

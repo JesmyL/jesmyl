@@ -1,11 +1,12 @@
+import { environment } from '#shared/environment';
 import { IndexAppVersionLabel } from '$index/entities/AppVersionLabel/ui/Label';
-import { createRootRoute, Outlet, useLocation } from '@tanstack/react-router';
+import { createRootRoute, Outlet } from '@tanstack/react-router';
 import React from 'react';
 
 const AppComponent = React.lazy(() => import('$app/AppComponent').then(m => ({ default: m.AppComponent })));
 
 export const Route = createRootRoute({
-  component: Component,
+  component: () => (environment.isPresentationMode ? <Outlet /> : <AppComponent />),
   errorComponent: () => (
     <div className="flex justify-center flex-col ites-center w-full h-full gap-3 text-center">
       <div>
@@ -18,9 +19,3 @@ export const Route = createRootRoute({
     </div>
   ),
 });
-
-function Component() {
-  const loc = useLocation();
-
-  return loc.href.startsWith('/presentation') ? <Outlet /> : <AppComponent />;
-}

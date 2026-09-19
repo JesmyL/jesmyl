@@ -1,47 +1,57 @@
 import { takeBibleLangBooks } from '$bible/ext';
-import { bibleAddressWithForceJoinReset } from '$bible/shared/hooks';
-import { useBibleCurrentLangi } from '$bible/shared/state/atoms';
+import { bibleAddressWithForceJoinReset, takeBibleSimpleCheckedSingleAddress } from '$bible/shared/hooks';
+import { useBibleCurrentLangi } from '$bible/shared/lib/useBibleCurrentLangi';
+import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
 import styled from '@emotion/styled';
-import { twMerge } from 'tailwind-merge';
-import { bibleBroadcastListBookiIdPrefix } from '../const/ids';
-import { bibleBroadcastListSingleAddressSet } from '../lib/hooks';
+import { checkIsNil } from 'shared/utils/checkIs';
+import { twJoin } from 'tailwind-merge';
+import { bibleBroadcastListSetSingleAddress } from '../lib/hooks';
 import { useBibleBroadcastListFaceClickListener } from '../lib/useBibleListFaceClickListener';
 
 const faceClassName = 'bible-list-chapter-face';
 
 export function BibleBroadcastListBooks() {
   const langi = useBibleCurrentLangi();
-  const listRef = useBibleBroadcastListFaceClickListener(bibleBroadcastListBookiIdPrefix, faceClassName, booki =>
-    bibleAddressWithForceJoinReset(booki, 0, 0),
-  );
+
+  const listRef = useBibleBroadcastListFaceClickListener('data-booki', faceClassName, (booki, event) => {
+    if (event.ctrlKey) {
+      if (checkIsNil(bibleJoinAddressAtom.get()[0])) {
+        const [booki, chapteri, versei] = takeBibleSimpleCheckedSingleAddress(null, null, null, null);
+        bibleJoinAddressAtom.set([{ [booki]: { [chapteri]: [versei] } }]);
+      }
+    } else bibleAddressWithForceJoinReset(booki);
+
+    bibleBroadcastListSetSingleAddress(booki);
+  });
 
   return (
-    <Container ref={listRef}>
+    <StyledList
+      ref={listRef}
+      className="overflow-y-auto overflow-x-hidden"
+      title="Ctrl - добавить из книги"
+    >
       {takeBibleLangBooks(langi).map((book, booki) => {
         return (
-          <Face
+          <div
             key={booki}
-            id={bibleBroadcastListBookiIdPrefix + booki}
-            className={twMerge('bible-list-face pointer', faceClassName)}
-            onClick={() => bibleBroadcastListSingleAddressSet(booki, 0, 0)}
+            data-booki={booki}
+            className={twJoin('bible-list-face pointer w-[7em] min-w-[7em] text-x7', faceClassName)}
           >
-            {booki + 1} <span className="title">{book.short}</span>
-          </Face>
+            {book.short}
+          </div>
         );
       })}
-    </Container>
+    </StyledList>
   );
 }
 
-const Face = styled.div`
-  width: 7em;
+const StyledList = styled.div`
+  [data-booki] {
+    counter-increment: book;
 
-  .title {
-    color: var(--color--7);
+    &:before {
+      content: counter(book) ' ';
+      color: var(--color-x3);
+    }
   }
-`;
-
-const Container = styled.div`
-  overflow-y: auto;
-  overflow-x: hidden;
 `;

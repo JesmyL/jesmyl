@@ -1,12 +1,10 @@
-import { BibleAddressTextContext, BibleTextContentContext } from '../contexts/texts';
-import { useBibleBroadcastJoinAddress } from '../hooks/address/address';
-import { useBibleAddressBooki } from '../hooks/address/books';
-import { useBibleAddressChapteri } from '../hooks/address/chapters';
-import { useBibleAddressVersei } from '../hooks/address/verses';
+import { BibleAddressTextContext, BibleTextMapBlocksContentContext } from '../contexts/texts';
+import { useBibleBroadcastJoinAddress } from '../hooks/address/join.address';
+import { useBibleSimpleCheckedSingleAddress } from '../hooks/address/simple.address';
 import { useBibleShowSlideAddressCode } from '../hooks/slide-sync';
 import { makeBibleJoinedAddressText } from '../hooks/texts';
-import { useBibleSlideText } from '../hooks/useBibleSlideText';
-import { useBibleCurrentLangi } from './atoms';
+import { useBibleSlideMapBlocks } from '../hooks/useBibleSlideText';
+import { useBibleCurrentLangi } from '../lib/useBibleCurrentLangi';
 
 interface Props {
   children?: React.ReactNode;
@@ -14,20 +12,21 @@ interface Props {
 }
 
 export const BibleCurrentTextsContext = (props: Props) => {
-  const booki = useBibleAddressBooki();
-  const chapteri = useBibleAddressChapteri();
-  const versei = useBibleAddressVersei();
+  const [currentBooki, currentChapteri, currentVersei] = useBibleSimpleCheckedSingleAddress();
   const actualJoinAddress = useBibleBroadcastJoinAddress();
   const showAddressCode = useBibleShowSlideAddressCode();
 
-  const addressCode = props.isPreview ? (actualJoinAddress ?? [booki, chapteri, versei]) : showAddressCode;
+  const addressCode = props.isPreview
+    ? (actualJoinAddress[0] ?? [currentBooki, currentChapteri, currentVersei])
+    : showAddressCode;
+
   const langi = useBibleCurrentLangi();
   const addressText = makeBibleJoinedAddressText(langi, addressCode);
-  const slideText = useBibleSlideText(addressCode);
+  const slideText = useBibleSlideMapBlocks(addressCode);
 
   return (
-    <BibleTextContentContext value={slideText}>
-      <BibleAddressTextContext value={addressText}>{props.children}</BibleAddressTextContext>
-    </BibleTextContentContext>
+    <BibleTextMapBlocksContentContext value={slideText}>
+      <BibleAddressTextContext value={slideText.length ? addressText : ''}>{props.children}</BibleAddressTextContext>
+    </BibleTextMapBlocksContentContext>
   );
 };

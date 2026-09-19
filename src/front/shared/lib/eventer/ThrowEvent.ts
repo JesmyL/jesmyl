@@ -17,13 +17,13 @@ class ThrowEventClass {
 
   constructor() {
     window.addEventListener('keydown', event => {
-      if (this.keyDownListens[event.code as ThrowEventKeyDownKey])
+      // Защита от неописанных в ThrowEventKeyDownKey клавиш (event.code может быть любым)
+      if (event.code in this.keyDownListens)
         Eventer.invoke(this.keyDownListens[event.code as ThrowEventKeyDownKey], event);
     });
 
     window.addEventListener('keyup', event => {
-      if (this.keyUpListens[event.code as ThrowEventKeyDownKey])
-        Eventer.invoke(this.keyUpListens[event.code as ThrowEventKeyDownKey], event);
+      if (event.code in this.keyUpListens) Eventer.invoke(this.keyUpListens[event.code as ThrowEventKeyDownKey], event);
     });
 
     window.addEventListener('focus', () => {
@@ -58,8 +58,9 @@ class ThrowEventClass {
   };
 
   listenIsOnline = (cb: EventerValueCallback<boolean>) => {
-    cb(window.navigator?.onLine);
-    return this.windowOnlineEvents.listen(cb);
+    // Безопасное извлечение начального значения и передача в listen как initValue (второй аргумент)
+    const currentStatus = typeof window !== 'undefined' ? window.navigator?.onLine : true;
+    return this.windowOnlineEvents.listen(cb, currentStatus);
   };
 
   muteIsOnline = (cb: EventerValueCallback<boolean>) => {
@@ -67,7 +68,9 @@ class ThrowEventClass {
   };
 
   listenIsWinFocused = (cb: EventerValueCallback<boolean>) => {
-    return this.windowFocusEvents.listen(cb);
+    // Передаем текущий фокус как initValue, чтобы коллбек сразу получил актуальное состояние
+    const currentFocus = typeof document !== 'undefined' ? document.hasFocus() : true;
+    return this.windowFocusEvents.listen(cb, currentFocus);
   };
 
   muteIsWinFocused = (cb: EventerValueCallback<boolean>) => {

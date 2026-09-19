@@ -5,5 +5,5 @@ import { CmCat } from 'shared/const/cm/Cat';
 export const useCmCatList = () => {
   const icats = useLiveQuery(() => cmIDB.db.cats.toArray());
 
-  return icats?.map(icat => new CmCat(icat, [])) ?? [];
+  return icats?.map(icat => new CmCat(icat)) ?? [];
 };

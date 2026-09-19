@@ -53,7 +53,6 @@ export const RolledContent = ({
       .pipe(
         addEventListenerPipe(window, 'keydown', event => {
           if (event.code !== 'Space') return;
-          event.preventDefault();
           setIsRolling(itNIt);
         }),
       )

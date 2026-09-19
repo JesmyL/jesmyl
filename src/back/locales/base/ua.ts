@@ -1,5 +1,6 @@
-import { BibleTranslateName, Langi, MenuComToolName } from 'shared/api';
+import { Langi, MenuComToolName } from 'shared/api';
 import { LocaleBase } from 'shared/model/+locale/base';
+import { BibleTranslateName } from 'shared/model/bible';
 import { GENERATE, IF, isUtil, STR, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeBaseUa: LocaleBase<Langi.Ua> = {
@@ -201,7 +202,6 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
     loadedTr: 'Завантажені переклади',
     modulesForLoad: 'Доступні для завантаження',
 
-    chapterNum: 'Глава $c',
     searchByBook: 'Пошук по книзі <i>$b;</i>',
     searchByChapter: 'Пошук по главі <i>$b $c;</i>',
     clearChapter: 'Очистити розділ $c;?',
@@ -290,9 +290,14 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
   history: 'Історія',
   plan: 'План',
 
+  configs: 'Конфіги',
+  alert: 'Сповіщення',
+  slides: 'Слайди',
+
   search: 'Пошук',
   globSearch: 'Глобальний пошук',
   broadcast: 'Трансляція',
+  folder: 'Папка',
 
   tg: {
     beInChannel: 'Перебувати в каналі',
@@ -352,6 +357,8 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
   maxStrsCount: 'Максимальна кількість рядків',
   fewStrs: 'Мало рядків',
   dicts: 'Збірники',
+  emptyList: 'Список порожній',
+  control: 'Керування',
   denied: 'Заборонено',
   lang: 'Мова',
   lookJSON: 'Переглянути JSON',

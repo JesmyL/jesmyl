@@ -50,7 +50,7 @@ export const CmComAudioPlayerMarksMovers = (props: Props) => {
       <Button
         ref={repeatRef}
         icon="Refresh"
-        className={twMerge('w-full max-w-[calc(100vw-173px)]', props.repeatButtonClassName)}
+        className={twMerge('w-full max-w-[calc(100cqw-173px)]', props.repeatButtonClassName)}
       >
         <span
           className="ellipsis"

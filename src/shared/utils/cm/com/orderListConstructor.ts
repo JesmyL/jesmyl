@@ -129,7 +129,7 @@ export const cmComOrderListConstructor = <OrderConstructor extends CmComOrderWid
       prevOrd = newOrder;
     }
 
-    let isAnchorInheritPlus = me.top.a != null;
+    let isAnchorInheritPlus = false;
 
     if (targetOrd && me.top.a != null) {
       const srcIndex = targetOrd.me.sourceIndex || 0;
@@ -179,7 +179,7 @@ export const cmComOrderListConstructor = <OrderConstructor extends CmComOrderWid
       nextMe.leadOrd = newOrder;
       nextMe.prev = prev;
       nextMe.isNextInherit = !!getStyle(ords[nexti + 1])?.isInherit;
-      nextMe.isAnchorInheritPlus = isAnchorInheritPlus;
+      if (isAnchorInheritPlus) nextMe.isAnchorInheritPlus = true;
       nextMe.header = me.header;
       nextMe.source = next;
       nextMe.sourceIndex = ords.indexOf(next);

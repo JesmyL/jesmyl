@@ -1,10 +1,16 @@
 import { escapeRegExpSymbols, makeRegExp } from 'regexpert';
 import { checkIsArray, checkIsString } from './checkIs';
-import { kzLowerLettersStr, ruLowerLettersStr, slavicLowerLettersStr } from './cm/com/const';
+import {
+  allDisplayableTextBlockSymbolsStr,
+  kzLowerLettersStr,
+  ruLowerLettersStr,
+  slavicLowerLettersStr,
+} from './cm/com/const';
 import { lazyInit } from './lazyInit';
 import { objectKeys } from './object.utils';
 import { transcriptEnToRuText, transcriptRuToEnText, transcriptSimilarEnToRuText } from './ru-en-letters';
 import { quickSort } from './sort';
+import { textToLowerCase } from './string.utils';
 import { itIt } from './utils';
 
 export const searchConstants = {
@@ -17,12 +23,7 @@ const constantPositions = [searchConstants.INDEX, searchConstants.POSITION];
 
 type Trace = string | (typeof searchConstants)[keyof typeof searchConstants];
 
-export const internationalWordReg = (word: string, isNumberSearch?: boolean) => {
-  const innerRegFn = internationalWordRegInner();
-  return innerRegFn(word, !!isNumberSearch);
-};
-
-export const internationalWordRegInner = lazyInit(() => {
+export const internationalWordRegInnerLazy = lazyInit(() => {
   const numberReps: Record<string, string> = {
     0: ' ',
     1: `^${ruLowerLettersStr}`,
@@ -64,8 +65,10 @@ export const internationalWordRegInner = lazyInit(() => {
   const letterRepl = (all: string) => letterReps[all] || letterReps[all.toLowerCase()];
   const numberRepl = (all: string) => numberReps[all];
 
-  return (word: string, isNumberSearch: boolean) => {
-    return `${(isNumberSearch ? escapeRegExpSymbols(word).replace(numberReg, numberRepl) : escapeRegExpSymbols(word).replace(letterReg, letterRepl)).toLowerCase()}`;
+  const boundaries = `[${allDisplayableTextBlockSymbolsStr}]|\\s`;
+
+  return (word: string, isNumberSearch: boolean | nil, isWholeWordBoundary: boolean | nil) => {
+    return `${isWholeWordBoundary ? `(?:^|${boundaries})` : ''}${isNumberSearch ? escapeRegExpSymbols(word).replace(numberReg, numberRepl) : escapeRegExpSymbols(word).replace(letterReg, letterRepl)}${isWholeWordBoundary ? `(?:$|${boundaries})` : ''}`;
   };
 });
 
@@ -83,10 +86,12 @@ export const searchRate = <
   const normalWords = isNumberSearch
     ? searchWord.split(makeRegExp('/0+/')).filter(itIt)
     : searchWord
-        .split(makeRegExp(`/[^a-z0-9'ʼ\\[\\]<>{}:"\\;,\\.${slavicLowerLettersStr}${kzLowerLettersStr}]+/i`))
+        .split(
+          makeRegExp(`/[^a-z0-9${allDisplayableTextBlockSymbolsStr}${slavicLowerLettersStr}${kzLowerLettersStr}]+/i`),
+        )
         .filter(itIt);
 
-  const lowerWords = normalWords.map(word => word.toLowerCase());
+  const lowerWords = normalWords.map(word => textToLowerCase(word));
 
   const hasNumericWord = lowerWords.some(word => !isNaN(Number(word)) || !isNaN(Number(transcriptEnToRuText(word))));
 
@@ -96,16 +101,16 @@ export const searchRate = <
     const toEn = transcriptRuToEnText(wordLower);
     const similarRu = transcriptSimilarEnToRuText(word);
 
-    const variants = [internationalWordReg(wordLower, isNumberSearch)];
+    const variants = [internationalWordRegInnerLazy()(wordLower, isNumberSearch, wordLower.length < 3)];
 
     if (toRu !== wordLower) {
-      variants.push(internationalWordReg(toRu, isNumberSearch));
+      variants.push(internationalWordRegInnerLazy()(toRu, isNumberSearch, wordLower.length < 3));
     }
     if (toEn !== wordLower) {
-      variants.push(internationalWordReg(toEn, isNumberSearch));
+      variants.push(internationalWordRegInnerLazy()(toEn, isNumberSearch, wordLower.length < 3));
     }
     if (similarRu !== wordLower && similarRu !== toRu) {
-      variants.push(internationalWordReg(similarRu, isNumberSearch));
+      variants.push(internationalWordRegInnerLazy()(similarRu, isNumberSearch, wordLower.length < 3));
     }
 
     const regPattern = `(?:${variants.join('|')})`;

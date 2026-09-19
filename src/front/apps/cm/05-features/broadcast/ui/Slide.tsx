@@ -10,6 +10,7 @@ export const CmBroadcastLiveSlide = (props: Props) => {
     <div className="flex center full-size overflow-hidden m-auto">
       <CmBroadcastScreen
         {...props}
+        win={window}
         className="inline-flex center white-pre-children"
         cmConfig={props.config}
         isVisible

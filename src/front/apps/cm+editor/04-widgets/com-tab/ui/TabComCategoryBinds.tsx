@@ -11,13 +11,14 @@ import { cmIDB } from '$cm/ext';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React, { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
+import { checkIsNil } from 'shared/utils/checkIs';
 
 export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => {
   const icats = useLiveQuery(() => cmIDB.db.cats.toArray());
-  const cats = useMemo(() => icats?.map(icat => new CmEditorCat(icat, [])), [icats]);
+  const cats = useMemo(() => icats?.map(icat => new CmEditorCat(icat)), [icats]);
   const checkAccess = useCheckUserAccessRightsInScope();
 
-  if (cats == null) return null;
+  if (!cats) return;
 
   return (
     <>
@@ -32,7 +33,7 @@ export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => 
                 type="tel"
                 inputClassName="bg-x1!"
                 disabled={!checkAccess('cm', 'COM_CAT', 'U')}
-                defaultValue={`${cat.dict?.[ccom.wid] || ''}`}
+                defaultValue={`${cat.dict[ccom.wid] || ''}`}
                 strongDefaultValue
                 onChanged={value => {
                   if (!+value) {
@@ -48,7 +49,7 @@ export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => 
                   });
                 }}
               />
-              {cat.dict?.[ccom.wid] != null && (
+              {checkIsNil(cat.dict[ccom.wid]) || (
                 <TheIconButton
                   icon="Cancel01"
                   postfix={translateBase(it => it.del)}

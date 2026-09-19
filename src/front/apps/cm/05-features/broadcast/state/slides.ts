@@ -1,17 +1,12 @@
 import { contextCreator } from '#shared/lib/contextCreator';
-import { emptyFunc } from 'shared/utils';
 import { CmBroadcastSlidesContextState } from '../model/slides';
 
-const html = 'Not In Context';
+export const useCmBroadcastSlidesContext = () => {
+  const state = useCtx();
+  if (!state) throw 'Lost Slides Context';
+  return state;
+};
 
-export const [CmBroadcastInnerSlidesContext, useCmBroadcastSlidesContext] =
-  contextCreator<CmBroadcastSlidesContextState>({
-    slidei: -2,
-    nextSlidei: -2,
-    html,
-    nextHtml: html,
-    hash: '',
-    setSlidei: emptyFunc,
-    slides: [],
-    toSlide: emptyFunc,
-  });
+const [Context, useCtx] = contextCreator(null as never as CmBroadcastSlidesContextState);
+
+export { Context as CmBroadcastInnerSlidesContext };

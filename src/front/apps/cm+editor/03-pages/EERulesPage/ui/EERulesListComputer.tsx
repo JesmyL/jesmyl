@@ -1,13 +1,14 @@
-import { bibleTranslatesIDB } from '$bible/ext';
+import { bibleTranslateLanguage } from '$bible/shared/const/consts';
+import { makeBibleTbcvPrefix } from '$bible/shared/lib/tbcv.parser';
+import { bibleTBCVTranslatesIDB } from '$bible/shared/state/bibleIDB';
 import { useEditableCats } from '$cm+editor/shared/lib/useEditableCat';
 import { useEditableComs } from '$cm+editor/shared/lib/useEditableCom';
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { memo, useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
-import { BibleTranslateName, EeStorePack } from 'shared/api';
-import { itIt } from 'shared/utils';
+import { EeStorePack, Langi } from 'shared/api';
 import { slavicLowerLettersStr } from 'shared/utils/cm/com/const';
-import { objectKeys } from 'shared/utils/object.utils';
+import { objectEntries, objectKeys } from 'shared/utils/object.utils';
 
 type Props = {
   isCheckBible: boolean;
@@ -42,11 +43,20 @@ export const CmEditorEERulesListComputer = memo(function ListComputer({
     etap('Считывание текстов', async () => {
       const texts: string[] = [
         cats?.map(col => col.name) ?? [],
-        coms?.map(col => (col.texts ? [col.name, ...col.texts] : col.name)) ?? [],
-        isCheckBible ? ((await bibleTranslatesIDB.get[BibleTranslateName.rst]())?.chapters ?? []) : [],
-        isCheckBible ? ((await bibleTranslatesIDB.get[BibleTranslateName.nrt]())?.chapters ?? []) : [],
-        isCheckBible ? ((await bibleTranslatesIDB.get[BibleTranslateName.kas]())?.chapters?.filter(itIt) ?? []) : [],
-      ].flat(10);
+        coms?.filter(com => com.langi === Langi.Ru).map(col => (col.texts ? [col.name, col.texts] : col.name)) ?? [],
+        isCheckBible
+          ? (
+              await bibleTBCVTranslatesIDB.tb.list
+                .where('k')
+                .startsWithAnyOf(
+                  objectEntries(bibleTranslateLanguage)
+                    .filter(([, v]) => v === Langi.Ru)
+                    .map(([k]) => makeBibleTbcvPrefix(k)),
+                )
+                .toArray()
+            ).map(it => it.v)
+          : [],
+      ].flat(5);
 
       etap('Преобразование в монолит', () => {
         const text = texts.join(' ');

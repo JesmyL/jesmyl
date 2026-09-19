@@ -1,33 +1,27 @@
 import { BibleBroadcastAddress } from '$bible/shared/model/base';
 import { bibleIDB } from '$bible/shared/state/bibleIDB';
-import { useCallback } from 'react';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { checkIsEq } from 'shared/utils/checkIsEq';
 
-export const useBibleBroadcastHistory = () => bibleIDB.useValue.broadcastHistory();
+export const bibleBroadcastHistoryAddToHistory = async (
+  item: BibleBroadcastAddress,
+  isReplaceFirstNearVersei = false,
+) => {
+  const history = (await bibleIDB.get.broadcastHistory()) ?? [];
 
-export const useBibleBroadcastHistoryAddToHistory = () => {
-  return useCallback(async (item: BibleBroadcastAddress, isReplaceFirstNearVersei = false) => {
-    const history = await bibleIDB.get.broadcastHistory();
+  const previ = history.findIndex(historyItem => checkIsEq(historyItem, item));
+  const newHistory = [...history];
+  if (previ > -1) newHistory.splice(previ, 1);
 
-    const previ = history.findIndex(historyItem => checkIsEq(historyItem, item, true));
-    const newHistory = [...history];
-    if (previ > -1) newHistory.splice(previ, 1);
-
-    if (isReplaceFirstNearVersei && checkIsArray(newHistory[0])) {
-      const [biblei, chapteri, versei] = newHistory[0];
-      if (checkIsEq(item, [biblei, chapteri, versei + 1]) || checkIsEq(item, [biblei, chapteri, versei - 1])) {
-        newHistory.shift();
-      }
+  if (isReplaceFirstNearVersei && checkIsArray(newHistory[0])) {
+    const [biblei, chapteri, versei] = newHistory[0];
+    if (checkIsEq(item, [biblei, chapteri, versei + 1]) || checkIsEq(item, [biblei, chapteri, versei - 1])) {
+      newHistory.shift();
     }
+  }
 
-    newHistory.unshift(item);
-    if (newHistory.length > 50) newHistory.length = 50;
+  newHistory.unshift(item);
+  if (newHistory.length > 50) newHistory.length = 50;
 
-    bibleIDB.set.broadcastHistory(newHistory);
-  }, []);
-};
-
-export const useBibleBroadcastHistoryClearHistorySetter = () => {
-  return useCallback(() => bibleIDB.set.broadcastHistory([]), []);
+  bibleIDB.set.broadcastHistory(newHistory);
 };

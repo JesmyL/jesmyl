@@ -9,9 +9,9 @@ namespace N816029c951da2f00df2effa4682c97bd_1 {
   type $bookPrefix = `${$bookNumberWithSuffix}${OptRepeatingString<` `>}`;
   type $bookNumberWithSuffix = `${$bookNumber}${`-` | ''}${$bookNumberSuffix}` | $bookTitleFrom;
   type $bookNumber = `${number}`;
-  type $bookNumberSuffix = string | '';
+  type $bookNumberSuffix = `${string}${`${string}` | ''}`;
   type $bookTitleFrom = `От`;
-  type $bookTitle = RepeatingString<string>;
+  type $bookTitle = `${string}${RepeatingString<`${string}`>}`;
   type $chapter = `${number}`;
   type $verseDiapason = `${$verseFrom}${$verseTail | ''}`;
   type $verseFrom = `${number}`;
@@ -26,14 +26,18 @@ namespace N816029c951da2f00df2effa4682c97bd_1 {
       book: $book;
       bookPrefix?: $bookPrefix;
       bookNumberWithSuffix?: $bookNumberWithSuffix;
+      /** characters: **0 1 2 3 4 5 6 7 8 9** */
       bookNumber?: $bookNumber;
       bookNumberSuffix?: $bookNumberSuffix;
       bookTitleFrom?: $bookTitleFrom;
       bookTitle: $bookTitle;
+      /** characters: **0 1 2 3 4 5 6 7 8 9** */
       chapter: $chapter;
       verseDiapason: $verseDiapason;
+      /** characters: **0 1 2 3 4 5 6 7 8 9** */
       verseFrom: $verseFrom;
       verseTail?: $verseTail;
+      /** characters: **0 1 2 3 4 5 6 7 8 9** */
       verseTo?: $verseTo
     }>
   > { '': '' }

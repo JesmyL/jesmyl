@@ -1,26 +1,37 @@
 import { currentBroadcastConfigiAtom, isBroadcastTextVisibleAtom } from '#features/broadcast/atoms';
 import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
-import { useScreenBroadcastFaceLineListeners } from '#features/broadcast/complect/config-line/hooks/listeners';
-import { useScreenBroadcastCurrentConfig } from '#features/broadcast/hooks/configs';
 import { useBibleBroadcastScreenConfig } from '$bible/entities/broadcast';
+import { useBibleBroadcastKeyListener } from '$bible/shared/lib/useBibleBroadcastKeyListener';
+import { BibleCurrentTextsContext } from '$bible/shared/state/CurrentTextsContext';
 import { useAtomValue } from 'atomaric';
 import { BibleBroadcastScreenScreen } from './BibleBroadcastScreen';
 
 export function BibleBroadcastScreenCurrentScreen(props: BroadcastScreenProps) {
   const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
-  const currentConfig = useBibleBroadcastScreenConfig(props.configi ?? currentConfigi);
+  const configi = props.configi ?? currentConfigi;
+  const currentConfig = useBibleBroadcastScreenConfig(configi);
 
   const isActualVisible = useAtomValue(isBroadcastTextVisibleAtom);
 
-  const config = useScreenBroadcastCurrentConfig();
-  useScreenBroadcastFaceLineListeners();
-
   return (
-    <BibleBroadcastScreenScreen
-      {...props}
-      bibleConfig={currentConfig}
-      windowResizeUpdatesNum={config?.proportion}
-      isVisible={props.isPreview ? true : isActualVisible}
-    />
+    <BibleCurrentTextsContext isPreview={props.isPreview}>
+      <BibleBroadcastScreenScreen
+        {...props}
+        bibleConfig={currentConfig}
+        isVisible={props.isPreview || isActualVisible}
+      />
+      {props.win !== window && (
+        <Listen
+          win={props.win}
+          configi={configi}
+        />
+      )}
+    </BibleCurrentTextsContext>
   );
 }
+
+const Listen = ({ win, configi }: { win: Window; configi: number }) => {
+  useBibleBroadcastKeyListener(win, configi);
+
+  return <></>;
+};

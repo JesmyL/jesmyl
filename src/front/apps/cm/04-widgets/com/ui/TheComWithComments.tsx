@@ -1,12 +1,8 @@
 import { Button } from '#shared/components/ui/button';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
-import { BibleTranslateModulesControl, BibleTranslatesContextProvider } from '$bible/ext';
-import {
-  cmComCommentRedactOrdSelectorIdAtom,
-  useCmComCommentBlockCss,
-  useCmComCommentCheckIsIncludesBibleAddress,
-} from '$cm/entities/com-comment';
+import { BibleTranslateModulesControl } from '$bible/ext';
+import { cmComCommentRedactOrdSelectorIdAtom, useCmComCommentBlockCss } from '$cm/entities/com-comment';
 import { cmIsShowMyCommentsAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
@@ -22,19 +18,6 @@ type Props = {
 };
 
 export const TheCmComWithComments = (props: Props) => {
-  const isComCommentIncludesBibleAddress = useCmComCommentCheckIsIncludesBibleAddress(props.com);
-
-  if (isComCommentIncludesBibleAddress)
-    return (
-      <BibleTranslatesContextProvider isSetAllTranslates>
-        <Content {...props} />
-      </BibleTranslatesContextProvider>
-    );
-
-  return <Content {...props} />;
-};
-
-const Content = (props: Props) => {
   const isShowMyComments = useAtomValue(cmIsShowMyCommentsAtom);
   const isCommentRedactorIsOpen = useDebounceValue(useAtomValue(cmComCommentRedactOrdSelectorIdAtom));
 

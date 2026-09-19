@@ -11,7 +11,6 @@ interface Props {
   isPreview: boolean | und;
   isChangeAddressPanelHeight: boolean;
   bibleConfig: BibleBroadcastScreenConfig | und;
-  windowResizeUpdatesNum: number | und;
   isVisible: boolean;
 }
 
@@ -41,7 +40,6 @@ export const BibleBroadcastScreenAddressContainer: React.FC<Props> = props => {
           configi={props.configi}
           isPreview={props.isPreview}
           bibleConfig={props.bibleConfig}
-          windowResizeUpdatesNum={props.windowResizeUpdatesNum}
         />
       </div>
     </>

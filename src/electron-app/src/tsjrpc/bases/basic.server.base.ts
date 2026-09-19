@@ -1,4 +1,6 @@
 import { dialog } from 'electron';
+import fs from 'fs';
+import path from 'path';
 import { TsjrpcElectronAppBase } from '../init/tsjrpc.base.electron';
 import { ElectronBasicTsjrpcModel } from '../model';
 
@@ -18,6 +20,20 @@ export const electronAppBasicTsjrpcBase =
             });
 
             return result.canceled ? [] : result.filePaths;
+          },
+
+          selectDir: async ({ create }) => {
+            const result = await dialog.showOpenDialog({
+              properties: ['openDirectory'],
+            });
+            let dir = result.filePaths[0];
+
+            if (create && dir) {
+              dir = path.resolve(dir, dir.split(create)[0], create);
+              fs.mkdirSync(dir, { recursive: true });
+            }
+
+            return dir;
           },
         },
       });

@@ -9,13 +9,12 @@ import { makeCmComOrderRepeatedText } from 'shared/utils/cm/order';
 import { useCmComMarkTextValuesMaker } from './useCmComMarkTextValuesMaker';
 
 export const useCmComAudioMarkSlides = (com: CmCom | und, src: HttpNumLeadLink | nil, textCase: TextCase | nil) => {
-  const { markTimes: wholeMarkTimes, timeSlideDict, srcMarks } = useCmComMarkTextValuesMaker(com, src, textCase);
+  const { markTimes: wholeMarkTimes, timeSlideDict, srcMarks } = useCmComMarkTextValuesMaker(src, textCase);
   const langi = com?.langi ?? Langi.Ru;
 
   const { audioSlides, markTimes } = useMemo(() => {
     const audioSlides: CmAudioSlide[] = [];
     const markTimes: CmComAudioMarkPackTime[] = [];
-    const result = { markTimes, audioSlides };
 
     for (let timei = wholeMarkTimes.length - 1; timei >= 0; timei--) {
       const time = wholeMarkTimes[timei];
@@ -62,7 +61,7 @@ export const useCmComAudioMarkSlides = (com: CmCom | und, src: HttpNumLeadLink |
       if (slide.r) slide.text = makeCmComOrderRepeatedText(slide.text, slide.r.r, slide.rem);
     });
 
-    return result;
+    return { markTimes, audioSlides };
   }, [langi, srcMarks, timeSlideDict, wholeMarkTimes]);
 
   return { audioSlides, markTimes, timeSlideDict };

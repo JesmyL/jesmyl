@@ -1,16 +1,22 @@
+import { translateDynamic } from '#basis/locale';
 import { usePinchValue } from '#shared/lib/usePinchValue';
 import { onChildInViewPort } from '#shared/lib/utils';
 import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
 import { bibleTagControledContentGlobalCssNode } from '$bible/shared/const/bibleTagControledContentGlobalCssNode';
+import { bibleTranslateLanguage } from '$bible/shared/const/consts';
+import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
 import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
 import { bibleChapteriAtom, bibleVerseiAtom } from '$bible/shared/state/atoms';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Atom, atom, useAtomValue } from 'atomaric';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Langi } from 'shared/api';
+import { checkIsNil } from 'shared/utils/checkIs';
 import { BibleReaderChapterText } from './ChapterText';
 
 interface Props {
-  chapterList: (string[] | und)[] | nil;
+  chapterList: (string[] | und)[];
   currentBooki: BibleBooki;
   currentChapteri?: BibleChapteri;
   currentVersei?: BibleVersei;
@@ -26,6 +32,9 @@ export const BibleReaderBookText = ({ chapterList, currentChapteri, currentVerse
     map: val => Math.min(Math.max(Math.abs(Math.trunc(val)), 10), 50),
   });
 
+  const showTranslates = useBibleShowTranslatesValue();
+  const tName = showTranslates[0];
+
   const listRef = useRef<HTMLDivElement>(null);
   const isScrollingRef = useRef(false);
   const [resizeNum, setResizeNum] = useState(0);
@@ -37,10 +46,10 @@ export const BibleReaderBookText = ({ chapterList, currentChapteri, currentVerse
       fontSizeAtom.set(fs);
       setResizeNum(it => it + 1);
 
-      if (listRef.current == null) return;
+      if (!listRef.current) return;
 
       const node = listRef.current.querySelector(
-        `[attr-chapteri="${currentChapteri}"][attr-versen="${currentVersei! + 1}"]`,
+        `[attr-chapteri="${currentChapteri}"][data-versen="${currentVersei! + 1}"]`,
       );
       node?.scrollIntoView({ block: 'start' });
 
@@ -52,16 +61,15 @@ export const BibleReaderBookText = ({ chapterList, currentChapteri, currentVerse
   useEffect(() => {
     if (
       isScrollingRef.current ||
-      chapterList == null ||
-      currentChapteri === undefined ||
-      currentVersei === undefined ||
-      listRef.current === null
+      checkIsNil(currentChapteri) ||
+      checkIsNil(currentVersei) ||
+      checkIsNil(listRef.current)
     )
       return;
     const listNode = listRef.current;
 
     setTimeout(() => {
-      const node = listNode.querySelector(`[attr-chapteri="${currentChapteri}"][attr-versen="${currentVersei + 1}"]`);
+      const node = listNode.querySelector(`[attr-chapteri="${currentChapteri}"][data-versen="${currentVersei + 1}"]`);
       node?.scrollIntoView({ block: 'start' });
 
       listNode.scrollTop += 3;
@@ -69,7 +77,7 @@ export const BibleReaderBookText = ({ chapterList, currentChapteri, currentVerse
   }, [currentChapteri, currentVersei, resizeNum, chapterList]);
 
   useEffect(() => {
-    if (chapterList == null || listRef.current === null) return;
+    if (checkIsNil(listRef.current)) return;
 
     return onChildInViewPort(
       listRef.current,
@@ -78,7 +86,7 @@ export const BibleReaderBookText = ({ chapterList, currentChapteri, currentVerse
       elem => elem.hasAttribute('attr-chapteri'),
       elem => {
         const chapteri = +elem.getAttribute('attr-chapteri')!;
-        const versei = +elem.getAttribute('attr-versen')! - 1;
+        const versei = +elem.getAttribute('data-versen')! - 1;
 
         bibleChapteriAtom.set(chapteri);
         bibleVerseiAtom.set(versei);
@@ -95,30 +103,33 @@ export const BibleReaderBookText = ({ chapterList, currentChapteri, currentVerse
         className="bible-tag-controled-content"
         style={{ fontSize }}
       >
-        <List ref={listRef}>
+        <List
+          ref={listRef}
+          $langi={bibleTranslateLanguage[tName]}
+          $booki={currentBooki}
+          className="relative h-full overflow-auto"
+        >
           {chapterList?.map((chapterList, chapteri) => {
             return (
-              chapterList && (
-                <BibleReaderChapterText
-                  key={chapteri}
-                  chapteri={chapteri}
-                  list={chapterList}
-                />
-              )
+              <React.Fragment key={chapteri}>
+                <div data-chaptern={chapteri + 1} />
+                {chapterList && (
+                  <BibleReaderChapterText
+                    chapteri={chapteri}
+                    list={chapterList}
+                  />
+                )}
+              </React.Fragment>
             );
           })}
-          <BottomBox />
+          <div className="h-[calc(100%-1.2em)]" />
         </List>
       </RolledContent>
     </>
   );
 };
 
-const List = styled.div`
-  position: relative;
-  height: 100%;
-  overflow: auto;
-
+const List = styled.div<{ $langi: Langi; $booki: BibleBooki }>`
   insertedtext,
   textinbrackets {
     opacity: 0.6;
@@ -126,12 +137,24 @@ const List = styled.div`
     pointer-events: none;
   }
 
-  [attr-versen]::before {
-    content: attr(attr-versen) '. ';
+  [data-versen]::before {
+    content: attr(data-versen) '. ';
     color: var(--color-x7);
   }
-`;
 
-const BottomBox = styled.div`
-  height: calc(100% - 1em);
+  ${props => css`
+    [data-chaptern] {
+      font-size: 1.5em;
+      margin-block: 0.5em;
+      font-weight: bold;
+      color: var(--color-x3);
+
+      &::before {
+        content: '${translateDynamic(props.$langi)(it => it.bible.chapterNum, {
+          c: "'attr(data-chaptern)'",
+          b: `${props.$booki}`,
+        })}';
+      }
+    }
+  `}
 `;

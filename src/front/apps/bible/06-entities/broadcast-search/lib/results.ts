@@ -1,10 +1,6 @@
-import { BibleBroadcastSingleAddress } from '$bible/shared/model/base';
-import { Atom, atom, useAtomValue } from 'atomaric';
+import { BibleSingleAddressCode } from '$bible/shared/model/base';
+import { atom } from 'atomaric';
 
-export const bibleBroadcastSearchResultSelectedListAtom: Atom<BibleBroadcastSingleAddress[]> = atom<
-  BibleBroadcastSingleAddress[]
->([]);
+export const bibleBroadcastSearchResultSelectedListAtom = atom<BibleSingleAddressCode[]>([]);
 
-export const bibleBroadcastSearchResultSelectedAtom = atom<number | null>(null);
-
-export const useBibleBroadcastSearchResultSelectedValue = () => useAtomValue(bibleBroadcastSearchResultSelectedAtom);
+export const bibleBroadcastSearchResultSelectedAtom = atom(0);

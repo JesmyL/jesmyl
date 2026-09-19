@@ -5,7 +5,6 @@ import { ScheduleWidgetRegType, ScheduleWidgetUserRoleRight } from './rights';
 export type ScheduleWidgetWid = NumberBrand<'ScheduleWidgetWid'>;
 
 export const ScheduleWidgetWidDef = 1 as ScheduleWidgetWid;
-export const ScheduleWidgetWidNone = -10 as ScheduleWidgetWid;
 
 export const enum ScheduleWidgetUserMi {
   def = 0,

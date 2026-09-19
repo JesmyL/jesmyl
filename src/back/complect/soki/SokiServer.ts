@@ -39,7 +39,6 @@ export class SokiServer {
 
   start() {
     const ws = new WebSocketServer({ noServer: true }).on('connection', client => {
-      this.clients.add(client);
       client.on('close', () => {
         const auth = this.auths.get(client);
 
@@ -60,18 +59,24 @@ export class SokiServer {
         }
 
         if (checkIsNotUndefined(event.token)) {
-          if (checkIsNull(event.token)) {
-            this.send({ requestId: event.requestId }, client);
+          if (!event.stopAll) this.clients.add(client);
 
+          const printVisit = (details?: string) => {
             if (checkIsNotUndefined(event.visitInfo)) {
               this.visits.set(client, event.visitInfo);
 
               if (!this.isLocalhost(event.visitInfo.urls[0])) {
                 tglogger.visit(
-                  `${event.visitInfo.deviceEmoji || '??'} ${event.visitInfo.deviceId || 'Не авторизованный'}\n\n${userVisitStringified(event.visitInfo)}\n\n`,
+                  `${event.visitInfo.deviceEmoji || '??'} ${details || event.visitInfo.deviceId || 'Не авторизованный'}\n\n${userVisitStringified(event.visitInfo)}\n\n`,
                 );
               }
             }
+          };
+
+          if (checkIsNull(event.token)) {
+            this.send({ requestId: event.requestId }, client);
+
+            printVisit();
 
             return;
           }
@@ -87,14 +92,7 @@ export class SokiServer {
 
           const auth = jwt.decode(event.token) as UserAuth | nil;
 
-          if (checkIsNotUndefined(event.visitInfo)) {
-            this.visits.set(client, event.visitInfo);
-
-            if (!this.isLocalhost(event.visitInfo.urls[0]))
-              tglogger.visit(
-                `${event.visitInfo.deviceEmoji || '??'} ${userAuthStringified(auth)}\n\n${userVisitStringified(event.visitInfo)}\n\n`,
-              );
-          }
+          printVisit(userAuthStringified(auth));
 
           if (auth) {
             this.auths.set(client, auth);

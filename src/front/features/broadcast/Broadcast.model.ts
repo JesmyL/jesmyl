@@ -1,6 +1,6 @@
 export type BroadcastScreenProps = {
   configi?: number;
-  win?: Window;
+  win: Window;
   isTech?: boolean;
   isPreview?: boolean;
   forceViewApp?: BroadcastViewApp;

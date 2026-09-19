@@ -18,11 +18,20 @@ export const useCmCom = (comw: CmComWid | und, interpretationSchw?: ScheduleWidg
   return useCmComMapFromICom(icom, interpretationSchw);
 };
 
-export const useCmComMapFromICom = (icom: IExportableCom | und, interpretationSchw?: ScheduleWidgetWid) => {
+const useCmComMapFromICom = (icom: IExportableCom | und, interpretationSchw?: ScheduleWidgetWid) => {
   const schIntp = useCurrentSchIntps(interpretationSchw);
   const ifixedCom = useComFixes(icom?.w);
 
   return useMemo(() => icom && new CmCom(icom, ifixedCom, schIntp?.[icom.w]), [icom, ifixedCom, schIntp]);
+};
+
+export const useCmComCurrentParts = () => {
+  const comw = useCmComLastOpenComw();
+  const icom = useLiveQuery(() => (comw ? cmIDB.tb.coms.get(comw) : und), [comw]);
+  const schIntp = useCurrentSchIntps();
+  const fix = useComFixes(icom?.w);
+
+  return { icom, schIntp, fix };
 };
 
 export const useCmComMapFromIComWithoutComFixes = (

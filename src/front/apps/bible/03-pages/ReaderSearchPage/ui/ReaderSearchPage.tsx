@@ -4,27 +4,21 @@ import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import {
   BibleBroadcastSearchPanelSearchTextInput,
   BibleBroadcastSearchResults,
-  bibleBroadcastSearchResultSelectedAtom,
-  bibleBroadcastSearchZoneAtom,
 } from '$bible/entities/broadcast-search';
 import { takeBibleLangBooks } from '$bible/ext';
-import { useBibleAddressBooki, useBibleAddressChapteri } from '$bible/shared/hooks';
-import { useBibleCurrentLangi } from '$bible/shared/state/atoms';
-import { useNavigate } from '@tanstack/react-router';
+import { useBibleSimpleCheckedSingleAddress } from '$bible/shared/hooks';
+import { useBibleCurrentLangi } from '$bible/shared/lib/useBibleCurrentLangi';
+import { BibleBroadcastKeyListenScope } from '$bible/shared/model/broadcast';
+import { bibleBroadcastKeyListenScopeAtom } from '$bible/shared/state';
 import { useAtomValue } from 'atomaric';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 
-export function BibleReaderSearchPage() {
-  const navigate = useNavigate();
-  const currentBooki = useBibleAddressBooki();
-  const currentChapteri = useBibleAddressChapteri();
-  const searchZone = useAtomValue(bibleBroadcastSearchZoneAtom);
-  const [innerZone, setInnerZone] = useState<'book' | 'chapter'>('book');
+export const BibleReaderSearchPage = () => {
+  const [currentBooki, currentChapteri] = useBibleSimpleCheckedSingleAddress();
+  const listenScope = useAtomValue(bibleBroadcastKeyListenScopeAtom);
   const langi = useBibleCurrentLangi();
 
-  useEffect(() => bibleBroadcastSearchResultSelectedAtom.set(null), []);
-
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null);
 
   return (
     <PageContainerConfigurer
@@ -35,12 +29,7 @@ export function BibleReaderSearchPage() {
         <>
           <div className="full-size">
             <IconCheckbox
-              checked={searchZone === 'global'}
-              postfix={translateBase(it => it.globSearch)}
-              onChange={() => bibleBroadcastSearchZoneAtom.set('global')}
-            />
-            <IconCheckbox
-              checked={searchZone === 'inner' && innerZone === 'book'}
+              checked={listenScope === BibleBroadcastKeyListenScope.SearchInText}
               postfix={
                 <span
                   dangerouslySetInnerHTML={{
@@ -51,12 +40,11 @@ export function BibleReaderSearchPage() {
                 />
               }
               onChange={() => {
-                bibleBroadcastSearchZoneAtom.set('inner');
-                setInnerZone('book');
+                bibleBroadcastKeyListenScopeAtom.set(BibleBroadcastKeyListenScope.SearchInText);
               }}
             />
             <IconCheckbox
-              checked={searchZone === 'inner' && innerZone === 'chapter'}
+              checked={listenScope === BibleBroadcastKeyListenScope.SearchInChapter}
               postfix={
                 <span
                   dangerouslySetInnerHTML={{
@@ -68,20 +56,14 @@ export function BibleReaderSearchPage() {
                 />
               }
               onChange={() => {
-                bibleBroadcastSearchZoneAtom.set('inner');
-                setInnerZone('chapter');
+                bibleBroadcastKeyListenScopeAtom.set(BibleBroadcastKeyListenScope.SearchInChapter);
               }}
             />
             <BibleBroadcastSearchPanelSearchTextInput inputRef={inputRef} />
-            <BibleBroadcastSearchResults
-              inputRef={inputRef}
-              height="calc(100% - 100px)"
-              innerZone={innerZone}
-              onClick={() => navigate({ to: '/bible/i' })}
-            />
+            <BibleBroadcastSearchResults />
           </div>
         </>
       }
     />
   );
-}
+};

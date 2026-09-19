@@ -2,6 +2,7 @@ import { Langi } from 'shared/api';
 import { LocaleDynamic } from 'shared/model/+locale/dynamic';
 import { BibleTitleCodei } from 'shared/model/bible/enums';
 import { convertObjectToArray } from 'shared/utils/object.utils';
+import { STR, SWITCH } from 'shared/utils/stringTemplater';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 
 export const localeDynamicKz: LocaleDynamic<Langi.Kz> = {
@@ -177,5 +178,7 @@ export const localeDynamicKz: LocaleDynamic<Langi.Kz> = {
         [BibleTitleCodei.Откр]: 'Аян',
       }),
     },
+
+    chapterNum: STR(['$b', '$c'])`${SWITCH('$b').CASE(BibleTitleCodei.Пс)`Забур $c`.DEFAULT`Бас $c`}`,
   },
 };

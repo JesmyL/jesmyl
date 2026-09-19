@@ -1,50 +1,46 @@
 import { useBibleBroadcastScreenScreenStyle } from '$bible/entities/broadcast';
+import { BibleBroadcastTextMapBlocks } from '$bible/features/BroadcastTextMapBlocks';
 import { bibleTagControledContentGlobalCssNode } from '$bible/shared/const/bibleTagControledContentGlobalCssNode';
-import { verseTranslateTitleCssClassName, verseTranslateTitleCssVariableName } from '$bible/shared/const/ids';
-import { useBibleTextContentContext } from '$bible/shared/contexts/texts';
+import { useBibleTextMapBlocksContentContext } from '$bible/shared/contexts/texts';
 import { useBibleBroadcastScreenFontSizeScreenAdapter } from '$bible/shared/lib';
-import styled from '@emotion/styled';
 import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 
 interface Props {
   configi: number | und;
-  win: Window | und;
+  win: Window;
   isPreview: boolean | und;
-  windowResizeUpdatesNum: number | und;
   bibleConfig: BibleBroadcastScreenConfig | und;
   isVisible: boolean;
 }
 
-export function BibleBroadcastScreenContent(props: Props) {
+export const BibleBroadcastScreenContent = (props: Props) => {
   const screenStyle = useBibleBroadcastScreenScreenStyle(props.isVisible, props.bibleConfig);
-  const textContent = useBibleTextContentContext();
+  const texts = useBibleTextMapBlocksContentContext();
 
-  const [screenWrapperRef, screenContentRef] = useBibleBroadcastScreenFontSizeScreenAdapter(
-    textContent,
+  const [screenWrapperRef, screenContentRef, isReady] = useBibleBroadcastScreenFontSizeScreenAdapter(
+    texts.map(it => `${it.head || ''}${it.texts.map(({ text, address }) => `${address || ''}${text || ''}`)}`).join(''),
     props.bibleConfig,
-    props.windowResizeUpdatesNum,
   );
 
   return (
     <>
       {bibleTagControledContentGlobalCssNode}
-      <StyledVerseText
+      <div
         className="bible-tag-controled-content absolute flex center"
         style={screenStyle}
         ref={screenWrapperRef}
       >
-        <span
+        <div
           className="opacity-0"
           ref={screenContentRef}
-          dangerouslySetInnerHTML={{ __html: textContent }}
-        />
-      </StyledVerseText>
+          style={{
+            opacity: isReady ? 1 : 0,
+            transition: isReady ? 'opacity .3s' : 'none',
+          }}
+        >
+          <BibleBroadcastTextMapBlocks blocks={texts} />
+        </div>
+      </div>
     </>
   );
-}
-
-const StyledVerseText = styled.div`
-  .${verseTranslateTitleCssClassName} {
-    color: var(${verseTranslateTitleCssVariableName});
-  }
-`;
+};

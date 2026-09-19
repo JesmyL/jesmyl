@@ -1,5 +1,6 @@
-import { BibleTranslateName, Langi, MenuComToolName } from 'shared/api';
+import { Langi, MenuComToolName } from 'shared/api';
 import { LocaleBase } from 'shared/model/+locale/base';
+import { BibleTranslateName } from 'shared/model/bible';
 import { GENERATE, IF, isUtil, STR, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeBaseKz: LocaleBase<Langi.Kz> = {
@@ -173,6 +174,7 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
     selChEdit: 'Редакциялау үшін аккордты таңдаңыз',
     maxChCount: 'Аккордтардың maximalды саны',
     minChCount: 'Аккордтардың минималды саны бар мәтін',
+
     noChTxt: 'Аккордсыз мәтін',
     minChCountDsc:
       'Аккордтардың минималды саны режимінде олар алғаш рет кездесетін немесе өзгеретін (бірдей атаулылар үшін) блоктарда болады',
@@ -203,7 +205,6 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
     loadedTr: 'Жүктелген аудармалар',
     modulesForLoad: 'Жүктеуге қолжетімді',
 
-    chapterNum: '$c-тарау',
     searchByBook: '<i>$b;</i> кітабы бойынша іздеу',
     searchByChapter: '<i>$b $c;</i> тарауы бойынша іздеу',
     clearChapter: '$c бөлімін тазалау керек пе?',
@@ -252,6 +253,7 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
   enterRoleName: 'Рөл үшін атау енгізіңіз',
   newRole: 'Жаңа рөл',
   interactive: 'Өзра әрекеттесу',
+  control: 'Басқару',
   myFiles: 'Менің файлдарым',
   downloads: 'Жүктеулер',
   constants: 'Константалар',
@@ -271,6 +273,10 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
   immediateRefreshOnFinish:
     'Бұл әрекет арқылы сіз қолданбаның ішкі деректерін толығымен жоясыз - офлайн режим белгілі бір уақытқа қолжетімсіз болады, бұл әрекетті растау үшін енгізу өрісіне $c кодын енгізіңіз',
   incCode: 'Қате код',
+
+  configs: 'Конфигтер',
+  alert: 'Ескерту',
+  slides: 'Слайдтар',
 
   toAuth: 'Авторизациядан өту',
   authSuccess: `Сәтті авторизация`,
@@ -295,6 +301,7 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
   search: 'Іздеу',
   globSearch: 'Жаһандық іздеу',
   broadcast: 'Трансляция',
+  folder: 'Бума',
 
   tg: {
     beInChannel: 'Арнада болу',
@@ -351,6 +358,7 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
   txts: 'Мәтіндер',
   send: 'Жіберу',
   manyStrs: 'Жолдар көп',
+  emptyList: 'Тізім бос',
   maxStrsCount: 'Жолдардың максималды саны',
   fewStrs: 'Жолдар аз',
   dicts: 'Жинақтар',

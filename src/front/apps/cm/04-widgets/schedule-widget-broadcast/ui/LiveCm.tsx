@@ -1,16 +1,15 @@
-import { broadcastCurrentTextAppAtom } from '#features/broadcast/atoms';
+import { BroadcastWelcomeQrSwitchButton } from '#features/broadcast/ui/WelcomeQrSwitchButton';
 import { LiveBroadcastAppProps } from '#shared/model/cm/Cm.model';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useCmComCurrent } from '$cm/entities/com';
-import { CmBroadcastSlidesContext, useCmBroadcastScreenComNavigationComws } from '$cm/features/broadcast';
+import { CmBroadcastSlidesContext } from '$cm/features/broadcast';
 import { CmLiveSlidesAudioTrackBroadcast } from '$cm/features/LiveSlidesAudioTrackBroadcast';
 import { CmLiveSlidesSimpleBroadcast } from '$cm/features/LiveSlidesSimpleBroadcast';
+import { useCmBroadcastScreenConfig } from '$cm/shared/lib/broadcast';
 import { cmIsTrackBroadcastAtom } from '$cm/shared/state';
-import { CmBroadcastControlled, useCmBroadcastScreenConfig } from '$cm/widgets/broadcast';
+import { CmBroadcastControlled } from '$cm/widgets/broadcast';
 import { useAtomValue } from 'atomaric';
 
 export const CmScheduleWidgetBroadcastLiveCm = (props: LiveBroadcastAppProps) => {
-  const { comws } = useCmBroadcastScreenComNavigationComws();
   const isTrackBroadcast = useAtomValue(cmIsTrackBroadcastAtom);
   const config = useCmBroadcastScreenConfig(0);
   const com = useCmComCurrent();
@@ -18,10 +17,7 @@ export const CmScheduleWidgetBroadcastLiveCm = (props: LiveBroadcastAppProps) =>
   return (
     com && (
       <>
-        <CmBroadcastSlidesContext
-          textCase={config?.case}
-          com={com}
-        >
+        <CmBroadcastSlidesContext textCase={config?.case}>
           {isTrackBroadcast ? (
             <CmLiveSlidesAudioTrackBroadcast
               {...props}
@@ -34,15 +30,8 @@ export const CmScheduleWidgetBroadcastLiveCm = (props: LiveBroadcastAppProps) =>
             />
           )}
           <CmBroadcastControlled
-            comws={comws}
             headTitle={props.headTitle}
-            head={
-              <LazyIcon
-                icon="BookOpen02"
-                className="pointer mr-2"
-                onClick={broadcastCurrentTextAppAtom.do.switch}
-              />
-            }
+            head={<BroadcastWelcomeQrSwitchButton toggleAppIcon="BookOpen02" />}
           />
         </CmBroadcastSlidesContext>
       </>

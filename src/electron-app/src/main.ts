@@ -1,9 +1,10 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
+import windowStateKeeper from 'electron-window-state';
 import path from 'path';
 import { TSJRPCInvokeData } from 'tsjrpc';
 import hostConfig from '../../../host-config.json';
-import { electronAppClientEventKey, electronAppWinHolder } from './const';
+import { electronAppClientEventKey, electronAppName, electronAppWinHolder } from './const';
 import { makeElectronDownHostUrl } from './lib';
 import { electronAppBasicTsjrpcBase } from './tsjrpc/bases/basic.server.base';
 import { electronAppPresentationTsjrpcBase } from './tsjrpc/bases/presentation.server.base';
@@ -71,14 +72,22 @@ if (!gotTheLock) {
 
     if (isQuittingForUpdate) return;
 
+    const { height, width, y, x, manage } = windowStateKeeper({
+      defaultWidth: 800,
+      defaultHeight: 600,
+    });
+
     const win = (electronAppWinHolder.win = new BrowserWindow({
-      width: 1700,
-      height: 800,
-      x: 100,
-      y: 100,
+      height,
+      width,
+      x,
+      y,
+      backgroundColor: '#000000',
       icon: path.join(__dirname, '../assets/img/ico-512x512.png'),
       webPreferences: electronAppWebPreferences,
     }));
+
+    manage(win);
 
     ipcMain.removeHandler(electronAppClientEventKey);
     ipcMain.handle(
@@ -103,14 +112,15 @@ if (!gotTheLock) {
     if (!url.startsWith('https')) win.webContents.openDevTools();
 
     win.webContents.on('did-finish-load', async () => {
-      win.webContents.executeJavaScript(`
-      localStorage.setItem('atom\\\\index:extVersion', '["${app.getVersion()}"]');
-    `);
+      win.webContents.executeJavaScript(
+        `localStorage.setItem('atom\\\\index:extVersion', '["${app.getVersion().replace(/^\d+\.\d+\.(\d+)(\d{3})(\d{3})$/, '$1.$2.$3')}"]');`,
+      );
     });
 
+    win.setMenu(null);
     await win.loadURL(url, {
       httpReferrer: '',
-      userAgent: `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 JESMYL_PRO/${app.getVersion()}`,
+      userAgent: `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ${electronAppName}/${app.getVersion()}`,
     });
 
     win.on('close', () => {

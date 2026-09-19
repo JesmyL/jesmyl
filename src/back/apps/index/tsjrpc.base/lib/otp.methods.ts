@@ -91,7 +91,7 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
   await wait(5000);
 
   const { availEmailDomainZone } = constantsConfigFileStore.getValue();
-  const availEmailDomainZoneError = constantsConfigurator.availEmailDomainZone.error(availEmailDomainZone, email);
+  const availEmailDomainZoneError = constantsConfigurator.availEmailDomainZone.error?.(availEmailDomainZone, email);
 
   if (availEmailDomainZoneError) throw `${email} - ${availEmailDomainZoneError}`;
 

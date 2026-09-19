@@ -1,7 +1,6 @@
 import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { BibleBroadcastScreenKeyListener, useBibleBroadcastScreenWrapperStyle } from '$bible/entities/broadcast';
-import { useBibleAddressVersei } from '$bible/shared/hooks';
+import { useBibleBroadcastScreenWrapperStyle } from '$bible/entities/broadcast';
 import { useRef, useState } from 'react';
 import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 import { useApplyScreenFontFamilyEffect, useMyFileNode } from 'x/my-files';
@@ -12,7 +11,6 @@ import { BibleBroadcastScreenContentConfiguration } from '../sub-ui/ContentConfi
 
 interface Props extends BroadcastScreenProps {
   bibleConfig: BibleBroadcastScreenConfig | und;
-  windowResizeUpdatesNum: number | und;
   isVisible: boolean;
 }
 
@@ -21,9 +19,6 @@ export const BibleBroadcastScreenScreen = (props: Props) => {
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const screenWrapperRef = useRef<HTMLDivElement>(null);
-  const versei = useBibleAddressVersei();
-
-  BibleBroadcastScreenKeyListener(versei, props.win);
 
   const wrapperStyle = useBibleBroadcastScreenWrapperStyle(props.bibleConfig);
 
@@ -70,7 +65,6 @@ export const BibleBroadcastScreenScreen = (props: Props) => {
           configi={props.configi}
           win={props.win}
           isPreview={props.isPreview}
-          windowResizeUpdatesNum={props.windowResizeUpdatesNum}
           bibleConfig={props.bibleConfig}
           isVisible={props.isVisible}
         />
@@ -81,7 +75,6 @@ export const BibleBroadcastScreenScreen = (props: Props) => {
         isPreview={props.isPreview}
         configi={props.configi}
         bibleConfig={props.bibleConfig}
-        windowResizeUpdatesNum={props.windowResizeUpdatesNum}
         isVisible={props.isVisible}
       />
     </div>

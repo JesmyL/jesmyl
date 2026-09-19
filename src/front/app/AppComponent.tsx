@@ -6,17 +6,20 @@ import { currentAppNameAtom } from '#basis/state/currentAppNameAtom';
 import { hideAppFooterAtom } from '#basis/state/hideAppFooterAtom';
 import { takeBaseLanguageAtom, takeDynamicLanguageAtom } from '#basis/state/locale';
 import { isFullscreenAtom, switchFullScreen } from '#shared/lib/atoms/fullscreen';
+import { rootAppModalTextContentAtom } from '#shared/lib/atoms/rootAppModalTextContentAtom';
 import { LinkAppActionFabric } from '#shared/lib/link-app-actions';
 import { soki } from '#shared/soki';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
-import { makeToastKOMoodConfig } from '#shared/ui/modal';
+import { makeToastKOMoodConfig, Modal, ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { WithAtomValue } from '#shared/ui/WithAtomValue';
 import { schLinkAction } from '#widgets/schedule/links';
 import { indexIDB } from '$index/shared/state';
 import { Outlet, ParsedLocation, useLocation, useNavigate } from '@tanstack/react-router';
-import { atom, useAtomValue } from 'atomaric';
-import React, { useEffect, useState } from 'react';
+import { atom, configureAtomaric, useAtomValue } from 'atomaric';
+import React, { useEffect, useState, useSyncExternalStore } from 'react';
 import { langCodeDict, langCodeLoadingTitleDict } from 'shared/const/+locale';
+import { CmComOrders } from 'shared/const/cm/Com/parents/20-Orders';
 import { extractNumber, iife } from 'shared/utils';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
@@ -25,6 +28,7 @@ import { AppFooter } from './AppFooter';
 import { routingApps } from './lib/configs';
 import { localeIsLoadingAtom } from './store/triggers';
 
+configureAtomaric({ useSyncExternalStore, keyPathSeparator: '/' });
 appInitialInvokes();
 
 const forceUpdateAtom = atom(0);
@@ -110,6 +114,7 @@ export const AppComponent = () => {
             />
           ))}
       </React.Fragment>
+
       <FullContent
         openAtom={localeIsLoadingAtom}
         checkIsOpen={num => num > 0}
@@ -117,6 +122,21 @@ export const AppComponent = () => {
       >
         {langCodeLoadingTitleDict[currentLangi] ?? 'Texts is loading'}
       </FullContent>
+
+      <Modal
+        openAtom={rootAppModalTextContentAtom}
+        checkIsOpen={it => !!it.text}
+      >
+        <WithAtomValue atom={rootAppModalTextContentAtom}>
+          {props => (
+            <>
+              <ModalHeader>{props.header || translateBase(it => it.msg)}</ModalHeader>
+              <ModalBody>{props.text}</ModalBody>
+              {props.footer && <ModalFooter>{props.footer}</ModalFooter>}
+            </>
+          )}
+        </WithAtomValue>
+      </Modal>
     </>
   );
 };
@@ -145,3 +165,5 @@ iife(async () => {
 
   await indexIDB.tb.schs.where('w').anyOf(keys).delete();
 });
+
+CmComOrders.getLangLocales = langi => takeDynamicLanguageAtom(langi).get();

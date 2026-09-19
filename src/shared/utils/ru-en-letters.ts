@@ -101,7 +101,7 @@ export const transcriptRuToEnSymbolDict = Object.fromEntries(
 
 export const enLowerLettersSet = new Set(objectKeys(transcriptEnLetterToRuDict));
 
-export const transcriptEnToRuText = (lowerCaseText: string) => {
+export const transcriptEnToRuText = (lowerCaseText: Lowercase<string>) => {
   let transcriptedText = '';
 
   for (const letter of lowerCaseText) {

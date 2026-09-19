@@ -4,10 +4,10 @@ import { useGetScreenBroadcastConfig } from '#features/broadcast/hooks/configs';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
 import { cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
 import { useCmCom } from '$cm/entities/com';
+import { useCmBroadcastScreenConfig } from '$cm/shared/lib/broadcast';
 import { useCmComCurrentMarkValues } from '$cm/shared/lib/useCmComCurrentMarkValues';
 import { cmPlayerBroadcastComwAtom } from '$cm/shared/state/broadcast.atoms';
 import { useAtomValue } from 'atomaric';
-import { useCmBroadcastScreenConfig } from '../hooks/configs';
 import { useCmBroadcastScreenWinResizeListen } from '../lib/win-resize-lesten';
 import { CmBroadcastScreen } from './Screen';
 

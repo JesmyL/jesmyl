@@ -12,7 +12,7 @@ export const ScreenTranslateConfigurationNameChanger = () => {
   const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
   const windows = useScreenBroadcastWindows();
 
-  if (config == null) return null;
+  if (!config) return;
 
   return (
     <div className="flex gap-2">

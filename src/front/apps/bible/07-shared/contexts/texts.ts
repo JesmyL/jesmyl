@@ -1,4 +1,7 @@
 import { contextCreator } from '#shared/lib/contextCreator';
+import { BibleBroadcastTextMapBlock } from '../model/base';
 
 export const [BibleAddressTextContext, useBibleAddressTextContext] = contextCreator('');
-export const [BibleTextContentContext, useBibleTextContentContext] = contextCreator('');
+export const [BibleTextMapBlocksContentContext, useBibleTextMapBlocksContentContext] = contextCreator(
+  <BibleBroadcastTextMapBlock[]>[],
+);

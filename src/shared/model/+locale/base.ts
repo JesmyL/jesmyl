@@ -1,5 +1,6 @@
-import { BibleTranslateName, IExportableCat, Langi, MenuComToolName } from 'shared/api';
+import { IExportableCat, Langi, MenuComToolName } from 'shared/api';
 import { StringTemplaterInterpolation, StringTemplaterWithTwoInterpolations } from 'shared/utils/stringTemplater/model';
+import { BibleTranslateName } from '../bible';
 import { LocaleSatisfies, LocaleSimpleString, LocaleStrOrInterpolationRecord, LocaleStrRecord } from './model';
 
 export type LocaleBase<L extends Langi> = LocaleSatisfies<{
@@ -179,7 +180,6 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
 
     modulesForLoad: LocaleSimpleString;
 
-    chapterNum: StringTemplaterInterpolation<'c'>;
     clearChapter: StringTemplaterInterpolation<'c'>;
     searchByBook: StringTemplaterInterpolation<'b'>;
     removeModule: StringTemplaterInterpolation<'n'>;
@@ -230,7 +230,10 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   oneForTwo: StringTemplaterWithTwoInterpolations<'o', 't'>;
   newVer: StringTemplaterInterpolation<'v'>;
 
+  /** Настройки */
   settings: LocaleSimpleString;
+
+  /** О приложении */
   aboutApp: LocaleSimpleString;
   otherApps: LocaleSimpleString;
   anims: LocaleSimpleString;
@@ -257,15 +260,36 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   txt: LocaleSimpleString;
   txts: LocaleSimpleString;
 
+  /** Настроить */
   setup: LocaleSimpleString;
+
+  /** Предпросмотр */
   preview: LocaleSimpleString;
+
+  /** Предупреждение */
+  alert: LocaleSimpleString;
+
+  /** Слайд */
   slide: LocaleSimpleString;
+
+  /** Слайды */
+  slides: LocaleSimpleString;
+
+  /** Конфиги */
+  configs: LocaleSimpleString;
 
   showMyQr: LocaleSimpleString;
   readQR: LocaleSimpleString;
+
+  folder: LocaleSimpleString;
+
+  /** Поиск */
   search: LocaleSimpleString;
   globSearch: LocaleSimpleString;
   broadcast: LocaleSimpleString;
+
+  /** Управление */
+  control: LocaleSimpleString;
 
   tg: {
     beInChannel: LocaleSimpleString;
@@ -316,6 +340,7 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
   noAccess: LocaleSimpleString;
   toSendSmth: StringTemplaterInterpolation<'s'>;
   NSymbols: StringTemplaterInterpolation<'n'>;
+  emptyList: LocaleSimpleString;
 
   send: LocaleSimpleString;
   manyStrs: LocaleSimpleString;

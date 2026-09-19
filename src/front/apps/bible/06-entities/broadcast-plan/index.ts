@@ -1,2 +1,2 @@
-export { useBibleBroadcastPlanAddToPlan } from './lib/plan';
+export { bibleBroadcastPlanAddToPlan } from './lib/plan';
 export { BibleBroadcastPlanArchive } from './ui/PlanArchive';

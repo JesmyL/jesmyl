@@ -1,0 +1,31 @@
+import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
+import { cmBroadcastDefaultConfig } from '$cm/shared/const/broadcast';
+import { cmIDB } from '$cm/shared/state';
+import { useAtomValue } from 'atomaric';
+import { useCallback } from 'react';
+import { CmBroadcastScreenConfig } from 'shared/model/cm/broadcast';
+
+export const useCmBroadcastUpdateConfig = () => {
+  const [configs, setConfigs] = cmIDB.use.broadcastScreenConfigs();
+
+  return useCallback(
+    (config: Partial<CmBroadcastScreenConfig> | null, configi: number) => {
+      const newConfigs = [...configs];
+      if (config === null) {
+        newConfigs.splice(configi, 1);
+      } else newConfigs[configi] = { ...cmBroadcastDefaultConfig, ...newConfigs[configi], ...config };
+      setConfigs(newConfigs);
+    },
+    [configs, setConfigs],
+  );
+};
+
+export const useCmBroadcastUpdateCurrentConfig = (): ((config: Partial<CmBroadcastScreenConfig> | null) => void) => {
+  const update = useCmBroadcastUpdateConfig();
+  const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
+
+  return useCallback(
+    (config: Partial<CmBroadcastScreenConfig> | null) => update(config, currentConfigi),
+    [currentConfigi, update],
+  );
+};

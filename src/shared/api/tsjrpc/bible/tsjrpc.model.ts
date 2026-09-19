@@ -1,4 +1,4 @@
-import { BibleTranslateName } from 'shared/api/complect/apps';
+import { BibleTranslateName } from 'shared/model/bible';
 
 export type BibleTsjrpcModel = {
   requestFreshes: (args: { lastModifiedAt: number; myTranslates: BibleTranslateName[] }) => void;

@@ -1,7 +1,6 @@
 import { useCmComAllWidList } from '$cm/entities/com';
 import { CmAllCatPage } from '$cm/pages/AllCatPage';
 import { makeCmComNestedRoute } from '$cm/shared/lib';
-import { cmInitialInvokes } from '$cm/shared/tsjrpc';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/cm/i/')(
@@ -11,5 +10,3 @@ export const Route = createFileRoute('/cm/i/')(
     useComwList: useCmComAllWidList,
   }),
 );
-
-cmInitialInvokes();

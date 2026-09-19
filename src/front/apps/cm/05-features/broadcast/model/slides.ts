@@ -1,7 +1,7 @@
 import { CmBroadcastMonolineSlide, CmBroadcastMonolineSlideOrdStrId } from 'shared/model/cm/broadcast';
 
 export type CmBroadcastSlidesContextState = {
-  slides: CmBroadcastMonolineSlide[];
+  slides: (CmBroadcastMonolineSlide | nil)[];
   html: string;
   nextHtml: string;
   hash: string;

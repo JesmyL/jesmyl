@@ -1,46 +1,40 @@
 import { translateBase } from '#basis/locale';
-import { ScreenBroadcastControlPanel } from '#features/broadcast/controls/ControllPanel';
-import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { currentBroadcastConfigiAtom } from '#features/broadcast/atoms';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
-import { BibleBroadcastControlledBottomPanel } from '$bible/entities/broadcast';
-import { BibleBroadcastSearchPanel } from '$bible/entities/broadcast-search';
-import { BibleTranslateModulesControl } from '$bible/entities/translate';
-import { useBiblePrintShowSlideAddressCode } from '$bible/shared/hooks/slide-sync';
-import { bibleVerseiAtom } from '$bible/shared/state/atoms';
-import styled from '@emotion/styled';
-import { JSX, ReactNode, useEffect } from 'react';
-import { BibleBroadcastControlledTopPanel } from './TopPanel';
+import { BroadcastResizableGrid } from '#widgets/broadcast';
+import { BroadcastGridTabConfig } from '#widgets/broadcast/model/TabConfig';
+import { bibleBroadcastTabConfigDict } from '$bible/shared/const';
+import { biblePrintShowSlideAddressCode } from '$bible/shared/hooks/slide-sync';
+import { useBibleBroadcastKeyListener } from '$bible/shared/lib/useBibleBroadcastKeyListener';
+import { BibleBroadcastTabId } from '$bible/shared/model/broadcast';
+import {
+  bibleBroadcastGridActiveTabiAtom,
+  bibleBroadcastGridSizesAtom,
+  bibleBroadcastGridTabsAtom,
+} from '$bible/shared/state';
+import { useAtomValue } from 'atomaric';
+import { ReactNode, useEffect } from 'react';
 
 interface Props {
   head: ReactNode;
   headTitle: ReactNode;
 }
 
-export default function BibleBroadcastControlled({ head, headTitle }: Props): JSX.Element {
-  const printShowAddress = useBiblePrintShowSlideAddressCode();
+const config: BroadcastGridTabConfig<BibleBroadcastTabId> = {
+  gridSizesAtom: bibleBroadcastGridSizesAtom,
+  tabNetAtom: bibleBroadcastGridTabsAtom,
+  activeTabiAtom: bibleBroadcastGridActiveTabiAtom,
+  tabs: bibleBroadcastTabConfigDict,
+  forceShownTabIdSet: new Set<BibleBroadcastTabId>([BibleBroadcastTabId.History, BibleBroadcastTabId.Plan]),
+};
+
+export const BibleBroadcastControlled = ({ head, headTitle }: Props) => {
+  const currentConfigi = useAtomValue(currentBroadcastConfigiAtom);
+
+  useBibleBroadcastKeyListener(window, currentConfigi);
 
   useEffect(() => {
-    printShowAddress();
-  }, [printShowAddress]);
-
-  useEffect(() => {
-    return hookEffectPipe()
-      .pipe(
-        addEventListenerPipe(window, 'keydown', event => {
-          switch (event.code) {
-            case 'F2':
-            case 'F3':
-            case 'F4':
-            case 'ArrowUp':
-            case 'ArrowDown':
-            case 'ArrowLeft':
-            case 'ArrowRight':
-              event.preventDefault();
-              return;
-          }
-        }),
-      )
-      .effect();
+    biblePrintShowSlideAddressCode();
   }, []);
 
   return (
@@ -49,20 +43,13 @@ export default function BibleBroadcastControlled({ head, headTitle }: Props): JS
       headTitle={headTitle ?? translateBase(it => it.bible.t)}
       head={head}
       content={
-        <Container>
-          <BibleBroadcastControlledTopPanel />
-          <BibleTranslateModulesControl />
-          <ScreenBroadcastControlPanel onChange={bibleVerseiAtom.do.increment} />
-          <BibleBroadcastSearchPanel />
-          <BibleBroadcastControlledBottomPanel />
-        </Container>
+        <div
+          className="w-full h-full"
+          st-hide-footer-menu=""
+        >
+          <BroadcastResizableGrid config={config} />
+        </div>
       }
     />
   );
-}
-
-const Container = styled.div`
-  --size: 50vmin;
-  --max-size: 300px;
-  --min-size: 200px;
-`;
+};

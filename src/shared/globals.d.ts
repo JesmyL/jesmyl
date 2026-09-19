@@ -53,6 +53,11 @@ declare global {
 
   type NumberBrand<Symbol> = number & NumberBrаnd<Symbol>;
   type StringBrand<Symbol> = `${StringBrаnd<Symbol>}`;
+
+  interface Math {
+    max<Num extends number | bigint>(...values: (Num | `${Num}`)[]): Num;
+    min<Num extends number | bigint>(...values: (Num | `${Num}`)[]): Num;
+  }
 }
 
 declare const brand: unique symbol;

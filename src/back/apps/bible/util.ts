@@ -1,6 +1,6 @@
 import { makeBibleTranslateFileName } from 'back/complect/lib/make-bible-texts';
 import fs from 'fs';
-import { BibleTranslateName } from 'shared/api';
+import { BibleTranslateName } from 'shared/model/bible';
 
 export const getMinifiedBibleJson = async (tName: BibleTranslateName) => {
   const filePath = makeBibleTranslateFileName(tName);

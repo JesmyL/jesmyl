@@ -19,8 +19,6 @@ export const questionerAdminTsjrpcClientBase =
     }
   })();
 
-questionerAdminTsjrpcClientBase.$$register();
-
 export const questionerAdminTsjrpcClient = new (class Questioner extends TsjrpcClient<QuestionerAdminTsjrpcModel> {
   constructor() {
     super({

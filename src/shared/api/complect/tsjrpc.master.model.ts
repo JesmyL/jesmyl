@@ -20,6 +20,7 @@ export type TsjrpcFromServerEvent = TsjrpcBaseEvent;
 export type TsjrpcFromClientEvent = TsjrpcBaseEvent & {
   token?: string | nil;
   visitInfo?: SokiVisit;
+  stopAll?: boolean;
 };
 
 export type TsjrpcClientTool = { aborter?: { signal: AbortSignal }; timeout?: number };

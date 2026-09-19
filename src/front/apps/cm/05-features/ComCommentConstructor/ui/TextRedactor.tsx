@@ -50,7 +50,7 @@ export const CmComCommentConstructorTextRedactor = <
           cmComCommentConstructorRulePropsDictAtom.do.update(dict => {
             dict.dict ??= {};
             const blockDict = (dict.dict[props.blockKey] ??= props.getDefaultPropsDict());
-            if (blockDict == null) return;
+            if (!blockDict) return;
             blockDict.text = value;
           });
         })

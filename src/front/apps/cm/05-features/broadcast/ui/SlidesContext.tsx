@@ -5,10 +5,12 @@ import {
   cmBroadcastCurrentSlideiAtom,
   cmBroadcastSwitchBlockDirectionAtom,
 } from '$cm/entities/broadcast';
+import { useCmComCurrentParts } from '$cm/ext';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useMemo } from 'react';
 import { CmCom } from 'shared/const/cm/Com';
+import { cmDefaultCom } from 'shared/const/cm/def.com';
 import { CmBroadcastMonolineSlide } from 'shared/model/cm/broadcast';
 import { TextCase } from 'shared/model/common';
 import { makeCmComNbspHtmlText } from 'shared/utils/cm/com/const';
@@ -18,19 +20,19 @@ import { CmBroadcastInnerSlidesContext } from '../state/slides';
 export const CmBroadcastSlidesContext = ({
   children,
   textCase,
-  com: propsCom,
 }: {
   children: React.ReactNode;
   textCase: TextCase | nil;
-  com: CmCom;
 }) => {
   const nameSpacei = useAtomValue(cmBroadcastCurrentNameSpaceiAtom);
+  const { fix, icom, schIntp } = useCmComCurrentParts();
   const com = useMemo(() => {
     if (nameSpacei) {
       //
     }
-    return new CmCom(propsCom.top, propsCom.fix, propsCom.intp);
-  }, [propsCom.fix, propsCom.intp, propsCom.top, nameSpacei]);
+
+    return new CmCom(icom ?? cmDefaultCom(), fix, schIntp);
+  }, [fix, icom, nameSpacei, schIntp]);
 
   const { slidei, slideId } = useAtomValue(cmBroadcastCurrentSlideiAtom);
   const showChordedSlideMode = useAtomValue(cmShowChordedSlideModeAtom);

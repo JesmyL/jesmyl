@@ -1,5 +1,4 @@
 import fs from 'fs';
-import { escapeRegExpSymbols } from 'regexpert';
 
 // HELP: https://astexplorer.net/
 
@@ -137,38 +136,6 @@ export default () => [
               rules: { [`${pluginName}/${name}`]: 'error' },
             };
           });
-        }),
-
-        definePluginName(`${appName}_import-other-app-checker`, pluginName => {
-          const name = 'check';
-
-          const appNameAliasStartAndNotExtRegExp = new RegExp(
-            `^\\$(${appNames
-              .filter(appn => appn !== appName)
-              .map(escapeRegExpSymbols)
-              .join('|')})/(?!ext$)(/.+)?`,
-          );
-
-          const rule = {
-            create(context) {
-              return {
-                ImportDeclaration(node) {
-                  if (node.source.value.startsWith('$') && node.source.value.match(appNameAliasStartAndNotExtRegExp)) {
-                    context.report({
-                      node,
-                      message: `Импорты в другом приложении могут быть только из /ext файла`,
-                    });
-                  }
-                },
-              };
-            },
-          };
-
-          return {
-            files: [`**/front/apps/${appName}/**/*.{ts,tsx}`],
-            plugins: { [pluginName]: { meta, rules: { [name]: rule } } },
-            rules: { [`${pluginName}/${name}`]: 'error' },
-          };
         }),
 
         definePluginName(`${appName}_deep-and-pages-checker`, pluginName => {

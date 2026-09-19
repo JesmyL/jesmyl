@@ -1,5 +1,5 @@
 import { currentLangiAtom } from '#basis/locale';
-import { bibleShowTranslatesAtom, useBibleTranslatesContext } from '$bible/ext';
+import { bibleShowTranslatesAtom } from '$bible/shared/state/atoms';
 import { cmComIsComMiniAnchorAtom } from '$cm/entities/index';
 import { makeStyleNode } from '$cm/shared/lib/makeStyleNode';
 import { css, SerializedStyles } from '@emotion/react';
@@ -37,7 +37,6 @@ export const useCmComCommentBlockCss = (
       isThereCorrectBibleText: boolean;
     }>
   >({});
-  const translates = useBibleTranslatesContext();
   const { localCommentBlock, commentBlock } = useCmComCommentBlock(com.wid);
   const takeCommentTexts = useCmComCommentTextBlockTaker(com.wid, localCommentBlock, commentBlock);
   const commentKindsBlock = takeCmComCommentKindBlockDict(com.wid, localCommentBlock, commentBlock);
@@ -105,7 +104,7 @@ export const useCmComCommentBlockCss = (
               accentsCss,
               makeCommentWithTextCss,
               makeCommentWithTextLinksOnlyCss,
-            } = await cmComCommentMakeStartCommentCss(langi, currentBibleTranslate, line, translates);
+            } = await cmComCommentMakeStartCommentCss(langi, currentBibleTranslate, line);
 
             isThereUnsettedTranslate ||= isUnset;
             isThereCorrectBibleText ||= isWithText;
@@ -131,6 +130,11 @@ export const useCmComCommentBlockCss = (
           --comment-opacity: 0.6;
           --comment-margin-left: 1rem;
 
+          ::before,
+          :after {
+            color: var(--color-x3);
+          }
+
           ${headCommentContents}
 
           .styled-header {
@@ -152,6 +156,13 @@ export const useCmComCommentBlockCss = (
               display: block;
               text-decoration: underline;
               margin-left: var(--comment-margin-left);
+            }
+          }
+
+          .comment-holder {
+            &:after,
+            &:before {
+              ${cmComCommentPseudoCommentStaticPropsCss}
             }
           }
 
@@ -192,7 +203,6 @@ export const useCmComCommentBlockCss = (
   }, [
     currentBibleTranslate,
     takeCommentTexts,
-    translates,
     com,
     isSetHashesOnly,
     commentKindsBlock,

@@ -1,59 +1,89 @@
-import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
-import { useBibleAddressBooki, useBibleAddressChapteri } from '$bible/shared/hooks';
+import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
+import { useBibleSimpleCheckedSingleAddress } from '$bible/shared/hooks';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
+import { makeBibleTbcvPrefix } from '$bible/shared/lib/tbcv.parser';
+import { bibleTBCVTranslatesIDB } from '$bible/shared/state/bibleIDB';
 import styled from '@emotion/styled';
-import { Atom, atom } from 'atomaric';
+import { useLiveQuery } from 'dexie-react-hooks';
 import { JSX, useEffect, useRef } from 'react';
-import { bibleBroadcastListVerseiIdPrefix } from '../const/ids';
+import { BibleTranslateName } from 'shared/model/bible';
 import { useBibleBroadcastListVerseListeners } from '../lib/useVerseListListeners';
 
-let fastVersesAtom: Atom<string[]>;
+const scrollIntoViewVerseOptions = { block: 'center', behavior: 'smooth' } as const;
 
 export function BibleBroadcastListVerseList(): JSX.Element {
-  fastVersesAtom ??= atom<string[]>([], 'bible:fastVerses');
-
   const verseListRef = useRef<HTMLOListElement>(null);
 
-  const currentBooki = useBibleAddressBooki();
-  const currentChapteri = useBibleAddressChapteri();
+  const [currentBooki, currentChapteri, currentVersei] = useBibleSimpleCheckedSingleAddress();
   const showTranslates = useBibleShowTranslatesValue();
-  const translates = useBibleTranslatesContext();
-
-  const verses = translates[showTranslates[0]]?.chapters?.[currentBooki]?.[currentChapteri];
+  const tName = showTranslates[0];
+  const verses = useLiveQuery(
+    () =>
+      bibleTBCVTranslatesIDB.tb.list
+        .where('k')
+        .startsWith(makeBibleTbcvPrefix(tName, currentBooki, currentChapteri))
+        .toArray(),
+    [tName, currentBooki, currentChapteri],
+  );
 
   useEffect(() => {
-    if (verses === undefined || !verses.length) return;
-    fastVersesAtom.set(verses);
-  }, [verses]);
+    if (!verses?.length) return;
 
-  useBibleBroadcastListVerseListeners(verseListRef, currentBooki, currentChapteri);
+    return hookEffectPipe()
+      .pipe(
+        setTimeoutPipe(() => {
+          document.querySelector(`[data-versei='${currentVersei}']`)?.scrollIntoView(scrollIntoViewVerseOptions);
+        }, 100),
+      )
+      .effect();
+  }, [currentVersei, verses?.length]);
+
+  useBibleBroadcastListVerseListeners(verseListRef);
 
   return (
-    <StyledContainer ref={verseListRef}>
-      {(verses ?? fastVersesAtom.get())?.map((__html, versei) => {
+    <StyledContainer
+      className="w-full overflow-y-auto overflow-x-hidden list-decimal list-inside"
+      ref={verseListRef}
+      title="[0-9] - перейти к стиху; Shift+[@v>] - добавить диапазон стихов; Ctrl+@ - добавить/удалить один стих"
+    >
+      {verses?.map((verse, versei) => {
         return (
-          <StyledFace
+          <li
             key={versei}
-            id={bibleBroadcastListVerseiIdPrefix + versei}
-            className="bible-list-face pointer"
-            dangerouslySetInnerHTML={{ __html }}
+            data-versei={versei}
+            className="bible-list-face pointer max-w-full transition-colors duration-500 before:transition-colors before:duration-500 odd:bg-x2"
+            dangerouslySetInnerHTML={{ __html: verse.v }}
           />
         );
       })}
+      {verses?.length === 0 && <NoTranslationLabel tName={tName} />}
     </StyledContainer>
   );
 }
 
-const StyledFace = styled.li`
-  max-width: 100%;
-  transition-property: background-color, color;
-  transition-duration: 0.5s;
+const NoTranslationLabel = ({ tName }: { tName: BibleTranslateName }) => {
+  const translation = useLiveQuery(
+    () => bibleTBCVTranslatesIDB.tb.list.where('k').startsWith(makeBibleTbcvPrefix(tName)).first(),
+    [tName],
+  );
 
-  &:nth-of-type(odd) {
-    background-color: var(--color--2);
+  if (!translation)
+    return <div className="flex justify-center items-center size-full text-center">Перевод не загружен</div>;
+
+  return <></>;
+};
+
+const StyledContainer = styled.ol`
+  [data-versei] {
+    counter-increment: verse;
+
+    &:before {
+      content: counter(verse) '. ';
+      color: var(--color-x7);
+    }
   }
 
-  &:nth-of-type(10n):not(:last-child) {
+  .bible-list-face:nth-of-type(10n):not(:last-child) {
     margin-bottom: 10px;
     position: relative;
 
@@ -67,14 +97,6 @@ const StyledFace = styled.li`
       background: red;
     }
   }
-`;
-
-const StyledContainer = styled.ol`
-  overflow-y: auto;
-  overflow-x: hidden;
-  width: calc(100vw - 300px - 2.5em - 7em);
-  list-style: decimal;
-  list-style-position: inside;
 
   insertedtext,
   textinbrackets,

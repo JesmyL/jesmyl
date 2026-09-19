@@ -7,7 +7,6 @@ interface Props {
   configi: number | und;
   isPreview: boolean | und;
   bibleConfig: BibleBroadcastScreenConfig | und;
-  windowResizeUpdatesNum: number | und;
 }
 
 export function BibleBroadcastScreenAddressContent(props: Props) {
@@ -17,7 +16,6 @@ export function BibleBroadcastScreenAddressContent(props: Props) {
   const [addressWrapperRef, addressContentRef] = useBibleBroadcastScreenFontSizeAddressAdapter(
     addressText,
     props.bibleConfig,
-    props.windowResizeUpdatesNum,
   );
 
   return (

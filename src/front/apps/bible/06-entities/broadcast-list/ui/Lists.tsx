@@ -1,81 +1,70 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
-import {
-  takeJoinedAddressMaxValues,
-  useBibleAddressBooki,
-  useBibleAddressChapteri,
-  useBibleAddressVersei,
-  useBibleBroadcastJoinAddress,
-} from '$bible/shared/hooks';
+import { useBibleBroadcastJoinAddress, useBibleSimpleCheckedSingleAddress } from '$bible/shared/hooks';
 import { BibleBooki, BibleBroadcastJoinAddress, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
-import { BibleTranslatesContextProvider } from '$bible/shared/state/TranslatesContext';
+import { BibleBroadcastKeyListenScope } from '$bible/shared/model/broadcast';
+import { bibleBroadcastKeyListenScopeAtom } from '$bible/shared/state';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
+import { extractNumber } from 'shared/utils';
 import { mapObjectEntries } from 'shared/utils/object.utils';
-import {
-  bibleBroadcastListBookiIdPrefix,
-  bibleBroadcastListChapteriIdPrefix,
-  bibleBroadcastListVerseiIdPrefix,
-} from '../const/ids';
+import { twJoin } from 'tailwind-merge';
 import { BibleBroadcastListBooks } from './BookList';
 import { BibleBroadcastListChapters } from './ChapterList';
 import { BibleBroadcastListVerseList } from './VerseList';
 
 const scrollIntoViewBookAndChapterOptions = { block: 'center' } as const;
-const scrollIntoViewVerseOptions = { block: 'center', behavior: 'smooth' } as const;
 
-export function BibleBroadcastList() {
+export const BibleBroadcastList = () => {
   const joinAddress = useBibleBroadcastJoinAddress();
-  const currentBooki = useBibleAddressBooki();
-  const currentChapteri = useBibleAddressChapteri();
-  const currentVersei = useBibleAddressVersei();
-  const translates = useBibleTranslatesContext();
+  const [currentBooki, currentChapteri, currentVersei] = useBibleSimpleCheckedSingleAddress();
+  const listenScope = useAtomValue(bibleBroadcastKeyListenScopeAtom);
 
   useEffect(() => {
     return hookEffectPipe()
       .pipe(
         setTimeoutPipe(() => {
-          let booki = currentBooki;
-          let chapteri = currentChapteri;
-          let versei = currentVersei;
-
-          if (joinAddress != null) [booki, chapteri, versei] = takeJoinedAddressMaxValues(joinAddress);
-
+          document.querySelector(`[data-booki='${currentBooki}']`)?.scrollIntoView(scrollIntoViewBookAndChapterOptions);
           document
-            .getElementById(bibleBroadcastListBookiIdPrefix + booki)
+            .querySelector(`[data-chapteri='${currentChapteri}']`)
             ?.scrollIntoView(scrollIntoViewBookAndChapterOptions);
-          document
-            .getElementById(bibleBroadcastListChapteriIdPrefix + chapteri)
-            ?.scrollIntoView(scrollIntoViewBookAndChapterOptions);
-          document
-            .getElementById(bibleBroadcastListVerseiIdPrefix + versei)
-            ?.scrollIntoView(scrollIntoViewVerseOptions);
         }, 100),
       )
       .effect();
-  }, [translates, currentBooki, currentChapteri, currentVersei, joinAddress]);
+  }, [currentBooki, currentChapteri]);
 
   return (
     <Lists
-      className="flex gap-2 custom-align-items over-hidden"
-      $joinAddress={joinAddress}
+      className={twJoin(
+        'flex gap-2 custom-align-items over-hidden h-full',
+        listenScope === BibleBroadcastKeyListenScope.AAAddressNav && 'bg-x3/10',
+      )}
+      $joinAddress={joinAddress[0]}
       $booki={currentBooki}
       $chapteri={currentChapteri}
       $versei={currentVersei}
+      onClick={() => {
+        bibleBroadcastKeyListenScopeAtom.set(BibleBroadcastKeyListenScope.AAAddressNav);
+      }}
     >
       <BibleBroadcastListBooks />
-      <BibleTranslatesContextProvider>
-        <BibleBroadcastListChapters />
-        <BibleBroadcastListVerseList />
-      </BibleTranslatesContextProvider>
+      <BibleBroadcastListChapters />
+      <BibleBroadcastListVerseList />
     </Lists>
   );
-}
+};
+
+const color = css`
+  &,
+  &::before {
+    color: var(--color-x1) !important;
+  }
+`;
 
 const selectedStyle = css`
-  background-color: var(--color--7);
-  color: var(--color--1);
+  background-color: var(--color-x7);
+  ${color}
 
   &.current {
     opacity: 0.7;
@@ -83,8 +72,8 @@ const selectedStyle = css`
 `;
 
 const currentStyle = css`
-  background-color: var(--color--3);
-  color: var(--color--1);
+  background-color: var(--color-x3);
+  ${color}
 `;
 
 const Lists = styled.div<{
@@ -94,50 +83,48 @@ const Lists = styled.div<{
   $versei: BibleVersei;
 }>`
   ${props => {
-    if (props.$joinAddress)
-      return mapObjectEntries(props.$joinAddress, (booki, book) => {
-        return css`
-          #${bibleBroadcastListBookiIdPrefix}${booki} {
-            ${selectedStyle}
-
-            .title {
-              color: var(--color--1);
-            }
-          }
-
-          ${mapObjectEntries(
-            book,
-            (chapteri, chapter) => css`
-              #${bibleBroadcastListChapteriIdPrefix}${chapteri} {
-                ${selectedStyle}
-              }
-
-              ${chapter.map(
-                versei => css`
-                  #${bibleBroadcastListVerseiIdPrefix}${versei} {
-                    ${selectedStyle}
-                  }
-                `,
-              )}
-            `,
-          )}
-        `;
-      });
-
-    return css`
-      #${bibleBroadcastListBookiIdPrefix}${props.$booki} {
-        ${currentStyle}
-
-        .title {
-          color: var(--color--1);
+    return mapObjectEntries(props.$joinAddress, (booki, book) => {
+      return css`
+        [data-booki='${booki}'] {
+          ${selectedStyle}
         }
-      }
-      #${bibleBroadcastListChapteriIdPrefix}${props.$chapteri} {
-        ${currentStyle}
-      }
-      #${bibleBroadcastListVerseiIdPrefix}${props.$versei} {
-        ${currentStyle}
-      }
-    `;
+
+        ${extractNumber(booki) === props.$booki &&
+        mapObjectEntries(
+          book,
+          (chapteri, chapter) => css`
+            [data-chapteri='${chapteri}'] {
+              ${selectedStyle}
+            }
+
+            ${extractNumber(chapteri) === props.$chapteri &&
+            chapter?.map(
+              versei => css`
+                [data-versei='${versei}'] {
+                  border-top: 1px solid var(--color-x1);
+                  ${selectedStyle}
+                }
+              `,
+            )}
+          `,
+        )}
+      `;
+    });
   }}
+
+  ${({ $booki, $chapteri, $joinAddress: j, $versei }) => [
+    css`
+      [data-booki='${$booki}'],
+      [data-chapteri='${$chapteri}'] {
+        ${currentStyle}
+      }
+    `,
+
+    (!j || j[$booki]?.[$chapteri]) &&
+      css`
+        [data-versei='${$versei}'] {
+          ${currentStyle}
+        }
+      `,
+  ]}
 `;

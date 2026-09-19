@@ -1,13 +1,14 @@
-import { broadcastCurrentTextAppAtom } from '#features/broadcast/atoms';
 import { broadcastConnectionDto } from '#features/broadcast/lib/connection.dto';
+import { BroadcastWelcomeQrSwitchButton } from '#features/broadcast/ui/WelcomeQrSwitchButton';
 import { LiveBroadcastAppProps } from '#shared/model/cm/Cm.model';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { BibleBroadcastLive } from '$bible/ext';
 import React, { memo, useCallback } from 'react';
-import { ScheduleWidgetWidNone } from 'shared/api';
+import { ScheduleWidgetWidDef } from 'shared/api';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 
-const BibleBroadcastControlled = React.lazy(() => import('$bible/widgets/broadcast/ui/Controlled'));
+const BibleBroadcastControlled = React.lazy(() =>
+  import('$bible/widgets/broadcast/ui/Controlled').then(m => ({ default: m.BibleBroadcastControlled })),
+);
 
 export const CmScheduleWidgetBroadcastBibleControlled = memo(function BibleTr({
   isCantTranslateLive,
@@ -17,7 +18,7 @@ export const CmScheduleWidgetBroadcastBibleControlled = memo(function BibleTr({
 }: LiveBroadcastAppProps) {
   const onSend = useCallback(
     (liveData: IndexSchWBroadcastLiveDataValue) =>
-      broadcastConnectionDto.sendLiveData({ schw: schedule?.w ?? ScheduleWidgetWidNone, data: liveData }),
+      broadcastConnectionDto.sendLiveData({ schw: schedule?.w ?? ScheduleWidgetWidDef, data: liveData }),
     [schedule?.w],
   );
 
@@ -30,13 +31,7 @@ export const CmScheduleWidgetBroadcastBibleControlled = memo(function BibleTr({
         />
       )}
       <BibleBroadcastControlled
-        head={
-          <LazyIcon
-            icon="Book02"
-            className="pointer mr-2"
-            onClick={broadcastCurrentTextAppAtom.do.switch}
-          />
-        }
+        head={<BroadcastWelcomeQrSwitchButton toggleAppIcon="Book02" />}
         headTitle={headTitle}
       />
     </>

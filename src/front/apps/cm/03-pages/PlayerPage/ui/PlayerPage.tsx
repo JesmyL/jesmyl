@@ -146,7 +146,7 @@ export const CmPlayerPage = () => {
       head={<CmComListPackKindSelector />}
       content={
         <>
-          <DocTitle title={com?.name} />
+          {com && <DocTitle title={com.name} />}
           {src && (
             <StyledPlayer className="sticky top-0 bg-x2 flex min-h-20 gap-3 px-3 mb-3">
               <CmComAudioPlayerPlayButton
