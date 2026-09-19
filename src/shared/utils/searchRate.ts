@@ -67,8 +67,12 @@ export const internationalWordRegInnerLazy = lazyInit(() => {
 
   const boundaries = `[${allDisplayableTextBlockSymbolsStr}]|\\s`;
 
-  return (word: string, isNumberSearch: boolean | nil, isWholeWordBoundary: boolean | nil) => {
-    return `${isWholeWordBoundary ? `(?:^|${boundaries})` : ''}${isNumberSearch ? escapeRegExpSymbols(word).replace(numberReg, numberRepl) : escapeRegExpSymbols(word).replace(letterReg, letterRepl)}${isWholeWordBoundary ? `(?:$|${boundaries})` : ''}`;
+  return (word: string, isNumberSearch: boolean | nil, isWholeWordBoundary: boolean | nil, isEscapeSpecs = true) => {
+    if (isEscapeSpecs) word = escapeRegExpSymbols(word);
+
+    const inner = isNumberSearch ? word.replace(numberReg, numberRepl) : word.replace(letterReg, letterRepl);
+
+    return isWholeWordBoundary ? `(?:^|${boundaries})${inner}(?:$|${boundaries})` : inner;
   };
 });
 
@@ -91,7 +95,7 @@ export const searchRate = <
         )
         .filter(itIt);
 
-  const lowerWords = normalWords.map(word => textToLowerCase(word));
+  const lowerWords = normalWords.map(textToLowerCase);
 
   const hasNumericWord = lowerWords.some(word => !isNaN(Number(word)) || !isNaN(Number(transcriptEnToRuText(word))));
 
@@ -101,24 +105,16 @@ export const searchRate = <
     const toEn = transcriptRuToEnText(wordLower);
     const similarRu = transcriptSimilarEnToRuText(word);
 
-    const variants = [internationalWordRegInnerLazy()(wordLower, isNumberSearch, wordLower.length < 3)];
+    const variants = new Set([wordLower, toRu, toEn, similarRu]);
 
-    if (toRu !== wordLower) {
-      variants.push(internationalWordRegInnerLazy()(toRu, isNumberSearch, wordLower.length < 3));
-    }
-    if (toEn !== wordLower) {
-      variants.push(internationalWordRegInnerLazy()(toEn, isNumberSearch, wordLower.length < 3));
-    }
-    if (similarRu !== wordLower && similarRu !== toRu) {
-      variants.push(internationalWordRegInnerLazy()(similarRu, isNumberSearch, wordLower.length < 3));
-    }
-
-    const regPattern = `(?:${variants.join('|')})`;
-    return makeRegExp(
-      wordLower.length < 3
-        ? `/(^|[^${slavicLowerLettersStr}${kzLowerLettersStr}])${regPattern}($|[^${slavicLowerLettersStr}${kzLowerLettersStr}])/`
-        : `/${regPattern}/`,
+    const regPattern = internationalWordRegInnerLazy()(
+      `(?:${Array.from(variants).join('|')})`,
+      isNumberSearch,
+      wordLower.length < 3,
+      false,
     );
+
+    return makeRegExp(`/${regPattern}/`);
   });
 
   return items.reduce((ferries: RetItem[], item, itemi) => {
