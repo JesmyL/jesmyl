@@ -1,15 +1,16 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { TSJRPCInvokeData } from 'tsjrpc';
 import { electronAppClientEventKey, electronAppInterfaceWindowKey, electronAppServerEventKey } from './const';
-import { ElectronAppWindowInvokeApiBox } from './model';
+import { ElectronAppWindowInvokeApiBox, ElectronAppWindowInvokeDataWithTool } from './model';
 
 const box: ElectronAppWindowInvokeApiBox = {
-  invoke: (invoke, requestId) => ipcRenderer.invoke(electronAppClientEventKey, { invoke, requestId }),
+  invoke: args => ipcRenderer.invoke(electronAppClientEventKey, args),
   onServerEvent: callback => {
-    const subscription = async (_: unknown, data: TSJRPCInvokeData) => callback(data);
+    const subscription = async (_: unknown, data: ElectronAppWindowInvokeDataWithTool) => callback(data);
 
     ipcRenderer.on(electronAppServerEventKey, subscription);
-    return () => ipcRenderer.off(electronAppServerEventKey, subscription);
+    return () => {
+      ipcRenderer.off(electronAppServerEventKey, subscription);
+    };
   },
 };
 

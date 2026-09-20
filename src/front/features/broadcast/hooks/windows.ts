@@ -1,4 +1,6 @@
 import { atom, useAtomValue } from 'atomaric';
+import { ScheduleWidgetWid } from 'shared/api';
+import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 import { currentBroadcastConfigiAtom } from '../atoms';
 
 export type BroadcastWindow = {
@@ -6,6 +8,7 @@ export type BroadcastWindow = {
   conn?: PresentationConnection;
   focus: () => void;
   blur: () => void;
+  send: (liveData: { schw: ScheduleWidgetWid; data: IndexSchWBroadcastLiveDataValue }) => void;
 };
 
 const windowsAtom = atom<(nil | BroadcastWindow)[]>([]);

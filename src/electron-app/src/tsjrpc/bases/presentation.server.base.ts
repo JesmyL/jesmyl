@@ -1,8 +1,8 @@
 import { BrowserWindow, Display, screen } from 'electron';
-import { electronAppWinHolder } from '../../const';
+import { electronAppWinListHolder } from '../../const';
 import { takeElectronAppWebPreferences } from '../../webPreferences';
 import { TsjrpcElectronAppBase } from '../init/tsjrpc.base.electron';
-import { electronPresentationTsjrpcAppMethods } from '../methods/presentation.server.methods';
+import { electronPresentationTsjrpcAppServerMethods } from '../methods/presentation.server.methods';
 import { ElectronPresentationTsjrpcModel } from '../model';
 
 export const electronAppPresentationTsjrpcBase =
@@ -11,28 +11,30 @@ export const electronAppPresentationTsjrpcBase =
       super({
         scope: 'Presentation2',
         methods: {
-          close: async (_, { win }) => {
-            presentationWin?.minimize();
+          close: async (_, { win, toWinNum }) => {
+            getWin(toWinNum)?.minimize();
             focusWin(win);
           },
 
-          show: async (liveData, { host, win }) => {
+          show: async (liveData, { host, win, toWinNum }) => {
+            init(win);
+
+            let presentationWin = getWin(toWinNum);
+
             if (presentationWin && !presentationWin.isDestroyed()) {
               if (presentationWin.isMinimized()) {
                 presentationWin.maximize();
               }
             } else {
               const projector = screen.getAllDisplays().find(d => d.bounds.x !== 0 || d.bounds.y !== 0);
-              init(win);
-              presentationWin = await createSlideshowWindow(projector, host);
+              presentationWin = await createSlideshowWindow(projector, host, toWinNum);
 
               presentationWin.webContents.on('did-finish-load', () => {
-                electronPresentationTsjrpcAppMethods.liveData(liveData);
+                electronPresentationTsjrpcAppServerMethods.liveData(liveData, { toWinNum, winNum: toWinNum });
               });
 
               presentationWin.on('close', event => {
                 if (isPreventClosePresentation) event.preventDefault();
-                presentationWin = undefined;
               });
             }
 
@@ -42,7 +44,8 @@ export const electronAppPresentationTsjrpcBase =
             } else focusWin(win);
           },
 
-          liveData: data => electronPresentationTsjrpcAppMethods.liveData(data),
+          liveData: (args, { winNum, toWinNum }) =>
+            electronPresentationTsjrpcAppServerMethods.liveData(args, { toWinNum, winNum }),
         },
       });
     }
@@ -52,13 +55,14 @@ export const electronAppPresentationTsjrpcBase =
 ///////////////////////////////////////////////
 ///////////////////////////////////////////////
 
-let presentationWin: BrowserWindow | undefined;
 let isPreventClosePresentation = true;
 
-const createSlideshowWindow = async (display: Display | undefined, host: string) => {
+const getWin = (winNum: number) => electronAppWinListHolder[winNum];
+
+const createSlideshowWindow = async (display: Display | undefined, host: string, winNum: number) => {
   const { bounds: { x, y, width, height } = { x: 1000, y: 200, width: 800, height: 600 } } = display ?? {};
 
-  electronAppWinHolder.win = presentationWin = new BrowserWindow({
+  const presentationWin = (electronAppWinListHolder[winNum] = new BrowserWindow({
     x,
     y,
     width,
@@ -68,6 +72,17 @@ const createSlideshowWindow = async (display: Display | undefined, host: string)
     show: false,
     backgroundColor: '#000000',
     webPreferences: takeElectronAppWebPreferences(),
+  }));
+
+  let timeout: NodeJS.Timeout;
+
+  presentationWin.on('resize', () => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      if (!presentationWin || presentationWin.isDestroyed()) return;
+      const [w, h] = presentationWin.getSize();
+      electronPresentationTsjrpcAppServerMethods.winResize({ h, w }, { toWinNum: 0, winNum });
+    }, 1000);
   });
 
   presentationWin.setBackgroundColor('#000000');
@@ -87,16 +102,14 @@ const focusWin = (win: BrowserWindow) => {
   }
 };
 
-let isInited = false;
-
-const init = (win: BrowserWindow) => {
-  if (isInited) return;
-  isInited = true;
+let init = (win: BrowserWindow) => {
+  init = () => {};
 
   win.on('close', () => {
     isPreventClosePresentation = false;
-    if (presentationWin && !presentationWin.isDestroyed()) {
-      presentationWin.close();
-    }
+
+    electronAppWinListHolder.forEach(win => {
+      if (win && !win.isDestroyed()) win.close();
+    });
   });
 };

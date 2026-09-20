@@ -1,5 +1,5 @@
+import { useScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
 import { isShowBroadcastTextAtom } from '#features/broadcast/initial-slide-context';
-import { broadcastConnectionDto } from '#features/broadcast/lib/connection.dto';
 import { LiveBroadcastAppProps } from '#shared/model/cm/Cm.model';
 import { cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
 import { useCmBroadcastSlidesContext } from '$cm/ext';
@@ -16,6 +16,7 @@ export const CmLiveSlidesSimpleBroadcast = (props: LiveBroadcastAppProps & { com
   const chordedMode = useAtomValue(cmShowChordedSlideModeAtom);
   const dir = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
   const isHide = !useAtomValue(isShowBroadcastTextAtom);
+  const windows = useScreenBroadcastWindows();
 
   const { slidei, html, nextSlidei, slides, nextHtml, slideId, hash } = useCmBroadcastSlidesContext();
 
@@ -49,7 +50,8 @@ export const CmLiveSlidesSimpleBroadcast = (props: LiveBroadcastAppProps & { com
         },
       };
 
-      broadcastConnectionDto.sendLiveData({ schw: props.schedule?.w ?? ScheduleWidgetWidDef, data: liveData });
+      const send = { schw: props.schedule?.w ?? ScheduleWidgetWidDef, data: liveData };
+      windows.forEach(win => win?.send(send));
     }, 100);
   }, [
     config,
@@ -67,6 +69,7 @@ export const CmLiveSlidesSimpleBroadcast = (props: LiveBroadcastAppProps & { com
     slideId,
     hash,
     props.com,
+    windows,
   ]);
 
   return <></>;

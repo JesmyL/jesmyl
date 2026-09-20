@@ -1,7 +1,7 @@
 import { TsjrpcElectronAppMethods } from '../init/tsjrpc.electron';
 import { ElectronPresentationBaseTsjrpcModel } from '../model';
 
-export const electronPresentationTsjrpcAppMethods =
+export const electronPresentationTsjrpcAppServerMethods =
   new (class Basic extends TsjrpcElectronAppMethods<ElectronPresentationBaseTsjrpcModel> {
     constructor() {
       super({

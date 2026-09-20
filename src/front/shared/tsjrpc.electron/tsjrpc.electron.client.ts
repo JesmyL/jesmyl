@@ -1,22 +1,24 @@
 import { environment } from '#shared/environment';
 import { electronAppInterfaceWindowKey } from 'shared/const/electron';
-import { ElectronAppWindowInvokeApiBox } from 'shared/model/electron';
+import { ElectronAppWindowInvokeApiBox, ElectronAppWindowInvokeTool } from 'shared/model/electron';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { makeTSJRPCBaseMaker, makeTSJRPCMethodsMaker } from 'tsjrpc';
 
 export const electronClientApi = window[electronAppInterfaceWindowKey as never] as never as
-  ElectronAppWindowInvokeApiBox | nil;
+  | ElectronAppWindowInvokeApiBox
+  | nil;
 
-export const ElectronTsjrpcClient = makeTSJRPCMethodsMaker<void>({
+export const ElectronTsjrpcClient = makeTSJRPCMethodsMaker<ElectronAppWindowInvokeTool>({
   isNeedCheckClassName: environment.isTest,
   send: checkIsNil(electronClientApi)
     ? async () => {}
-    : async invoke => electronClientApi.invoke(invoke, `${Date.now()}${Math.random()}`),
+    : async (invoke, { toWinNum, winNum }) =>
+        electronClientApi.invoke({ invoke, requestId: `${Date.now()}${Math.random()}`, toWinNum, winNum }),
 });
 
 export const { maker: ElectronTsjrpcBaseClient, next: electronTsjrpcBaseClientNext } = makeTSJRPCBaseMaker<
   void,
-  void,
+  ElectronAppWindowInvokeTool,
   void
 >({
   onErrorMessage: () => {},
@@ -25,17 +27,16 @@ export const { maker: ElectronTsjrpcBaseClient, next: electronTsjrpcBaseClientNe
 });
 
 if (electronClientApi) {
-  const unsub = electronClientApi.onServerEvent(invoke => {
+  const unsub = electronClientApi.onServerEvent(serverData => {
     const promiseWith = Promise.withResolvers();
 
     electronTsjrpcBaseClientNext({
-      invoke,
+      ...serverData,
       requestId: `${Date.now()}${Math.random()}`,
       sendResponse: event => {
         if (event.error) promiseWith.reject(event.error);
         else promiseWith.resolve(event.invokedResult);
       },
-      tool: undefined,
     });
 
     return promiseWith.promise;

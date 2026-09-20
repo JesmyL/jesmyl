@@ -1,5 +1,5 @@
 import { translateBase } from '#basis/locale';
-import { electronPresentationTsjrpcBaseClient } from '#basis/tsjrpc.electron/presentation.cli.base';
+import { electronPresentationTsjrpcClientBase } from '#basis/tsjrpc.electron/presentation.cli.base';
 import { broadcastCurrentTextAppAtom } from '#features/broadcast/atoms';
 import { useScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
 import { scheduleFollowBroadcastSlideAtom } from '#features/broadcast/initial-slide-context';
@@ -63,4 +63,4 @@ export const CmScheduleWidgetBroadcast = ({ schw }: { schw: ScheduleWidgetWid | 
   );
 };
 
-electronPresentationTsjrpcBaseClient.$$register();
+electronPresentationTsjrpcClientBase.$$register();

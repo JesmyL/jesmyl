@@ -2,13 +2,13 @@ import { cursors } from '#shared/const/cursorsBase64';
 import { renderComponentInNewWindow } from '#shared/lib/renders';
 import { electronClientApi } from '#shared/tsjrpc.electron/tsjrpc.electron.client';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
-import { Global, css } from '@emotion/react';
+import { css, Global } from '@emotion/react';
 import { useCallback } from 'react';
 import { toast } from 'sonner';
 import { useScreenBroadcastConfigsValue } from '../atoms';
 import { useCurrentForceViweAppContext } from '../Broadcast.contexts';
 import { BroadcastScreen } from '../BroadcastScreen';
-import { broadcastConnectionDto } from '../lib/connection.dto';
+import { BroadcastConnectionDto } from '../lib/connection.dto';
 import { useGetScreenBroadcastConfig } from './configs';
 import { setScreenBroadcastWindows, useScreenBroadcastWindows } from './windows';
 
@@ -35,6 +35,7 @@ export const useWatchScreenBroadcast = () => {
               win.focus();
               win.document.body.requestFullscreen();
             },
+            send: BroadcastConnectionDto.sendLiveData,
           };
 
           win.document.title = getCurrentConfig(windowi)?.title ?? win.document.title;
@@ -71,7 +72,7 @@ export const useWatchScreenBroadcast = () => {
     for (let windowi = 0; windowi < len; windowi++) {
       if (windowi === 0 && electronClientApi) {
         try {
-          newWindows[windowi] = await broadcastConnectionDto.init();
+          newWindows[windowi] = await new BroadcastConnectionDto(windowi + 1).init();
 
           continue;
         } catch (_) {

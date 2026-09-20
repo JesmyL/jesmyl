@@ -20,7 +20,7 @@ export const ElectronWorkDir = () => {
           icon="FolderOpen"
           title="Выбрать папку"
           onClick={async () => {
-            const dir = await electronBasicTsjrpcClient.selectDir({});
+            const dir = await electronBasicTsjrpcClient.selectDir({}, { toWinNum: -1111, winNum: -1000 });
             setDir(dir);
           }}
         />
@@ -28,7 +28,7 @@ export const ElectronWorkDir = () => {
           icon="FolderSearch"
           title="Выбрать папку"
           onClick={async () => {
-            const dir = await electronBasicTsjrpcClient.selectDir({});
+            const dir = await electronBasicTsjrpcClient.selectDir({}, { toWinNum: -1111, winNum: -1000 });
             setDir(dir);
           }}
         />
@@ -36,7 +36,10 @@ export const ElectronWorkDir = () => {
           icon="FolderAdd"
           title={`Выбрать папку и создать в ней рабочую "${electronAppName}"`}
           onClick={async () => {
-            const dir = await electronBasicTsjrpcClient.selectDir({ create: electronAppName });
+            const dir = await electronBasicTsjrpcClient.selectDir(
+              { create: electronAppName },
+              { toWinNum: -1111, winNum: -1000 },
+            );
             setDir(dir);
           }}
         />

@@ -2,10 +2,10 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import windowStateKeeper from 'electron-window-state';
 import path from 'path';
-import { TSJRPCInvokeData } from 'tsjrpc';
 import hostConfig from '../../../host-config.json';
-import { electronAppClientEventKey, electronAppName, electronAppWinHolder } from './const';
+import { electronAppClientEventKey, electronAppName, electronAppWinListHolder } from './const';
 import { makeElectronDownHostUrl } from './lib';
+import { ElectronAppWindowInvokeProps } from './model';
 import { electronAppBasicTsjrpcBase } from './tsjrpc/bases/basic.server.base';
 import { electronAppPresentationTsjrpcBase } from './tsjrpc/bases/presentation.server.base';
 import { tsjrpcElectronAppBaseNext } from './tsjrpc/init/tsjrpc.base.electron';
@@ -84,7 +84,7 @@ if (!gotTheLock && !isTestMode) {
       defaultHeight: 600,
     });
 
-    const win = (electronAppWinHolder.win = new BrowserWindow({
+    const win = (electronAppWinListHolder[0] = new BrowserWindow({
       height,
       width,
       x,
@@ -118,13 +118,13 @@ if (!gotTheLock && !isTestMode) {
     ipcMain.removeHandler(electronAppClientEventKey);
     ipcMain.handle(
       electronAppClientEventKey,
-      async (_event, { invoke, requestId }: { invoke: TSJRPCInvokeData; requestId: string }) => {
+      async (_event, { invoke, requestId, toWinNum, winNum }: ElectronAppWindowInvokeProps) => {
         const promiseWith = Promise.withResolvers();
 
         tsjrpcElectronAppBaseNext({
           invoke,
           requestId,
-          tool: { app, win, host: url },
+          tool: { app, win, host: url, toWinNum, winNum },
           sendResponse: event => {
             if (event.errorMessage) promiseWith.reject(event.errorMessage);
             else promiseWith.resolve(event.invokedResult);

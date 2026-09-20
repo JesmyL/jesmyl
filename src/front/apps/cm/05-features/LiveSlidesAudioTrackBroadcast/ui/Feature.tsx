@@ -1,5 +1,5 @@
+import { useScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
 import { isShowBroadcastTextAtom } from '#features/broadcast/initial-slide-context';
-import { broadcastConnectionDto } from '#features/broadcast/lib/connection.dto';
 import { LiveBroadcastAppProps } from '#shared/model/cm/Cm.model';
 import { cmBroadcastCurrentNameSpaceiAtom, cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
 import { useCmComCurrentMarkValues } from '$cm/ext';
@@ -18,6 +18,7 @@ export const CmLiveSlidesAudioTrackBroadcast = (props: LiveBroadcastAppProps & {
   const dir = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
   const isHide = !useAtomValue(isShowBroadcastTextAtom);
   const nameSpacei = useAtomValue(cmBroadcastCurrentNameSpaceiAtom);
+  const windows = useScreenBroadcastWindows();
 
   const { html, nextHtml, audioSlides, slidei } = useCmComCurrentMarkValues(props.com, config.case);
 
@@ -56,7 +57,8 @@ export const CmLiveSlidesAudioTrackBroadcast = (props: LiveBroadcastAppProps & {
         },
       };
 
-      broadcastConnectionDto.sendLiveData({ schw, data: liveData });
+      const sendData = { schw, data: liveData };
+      windows.forEach(win => win?.send(sendData));
     }, 100);
   }, [
     chordedMode,
@@ -75,6 +77,7 @@ export const CmLiveSlidesAudioTrackBroadcast = (props: LiveBroadcastAppProps & {
     schw,
     toLinei,
     nameSpacei,
+    windows,
   ]);
 
   return <></>;

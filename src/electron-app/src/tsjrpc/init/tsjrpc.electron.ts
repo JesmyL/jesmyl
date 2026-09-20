@@ -1,13 +1,15 @@
 import { makeTSJRPCMethodsMaker } from 'tsjrpc';
-import { electronAppServerEventKey, electronAppWinHolder } from '../../const';
+import { electronAppServerEventKey, electronAppWinListHolder } from '../../const';
+import { ElectronAppWindowInvokeTool } from '../../model';
 
-export const TsjrpcElectronAppMethods = makeTSJRPCMethodsMaker<void>({
+export const TsjrpcElectronAppMethods = makeTSJRPCMethodsMaker<ElectronAppWindowInvokeTool>({
   isNeedCheckClassName: false,
-  send: invoke => {
+  send: (invoke, tool) => {
     const promiseWith = Promise.withResolvers();
     try {
-      electronAppWinHolder.win?.webContents.send(electronAppServerEventKey, invoke);
-      promiseWith.resolve(undefined);
+      electronAppWinListHolder[tool.toWinNum]?.webContents.send(electronAppServerEventKey, { invoke, tool });
+
+      promiseWith.resolve(0);
     } catch (e) {
       promiseWith.reject('' + e);
     }

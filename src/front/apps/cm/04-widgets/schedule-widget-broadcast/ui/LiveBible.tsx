@@ -1,4 +1,4 @@
-import { broadcastConnectionDto } from '#features/broadcast/lib/connection.dto';
+import { useScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
 import { BroadcastWelcomeQrSwitchButton } from '#features/broadcast/ui/WelcomeQrSwitchButton';
 import { LiveBroadcastAppProps } from '#shared/model/cm/Cm.model';
 import { BibleBroadcastLive } from '$bible/ext';
@@ -16,10 +16,12 @@ export const CmScheduleWidgetBroadcastBibleControlled = memo(function BibleTr({
   headTitle,
   schedule,
 }: LiveBroadcastAppProps) {
+  const windows = useScreenBroadcastWindows();
+
   const onSend = useCallback(
     (liveData: IndexSchWBroadcastLiveDataValue) =>
-      broadcastConnectionDto.sendLiveData({ schw: schedule?.w ?? ScheduleWidgetWidDef, data: liveData }),
-    [schedule?.w],
+      windows.forEach(win => win?.send({ schw: schedule?.w ?? ScheduleWidgetWidDef, data: liveData })),
+    [schedule?.w, windows],
   );
 
   return (

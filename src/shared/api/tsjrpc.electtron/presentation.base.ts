@@ -3,4 +3,5 @@ import { ScheduleWidgetWid } from '../complect/schedule-widget';
 
 export type ElectronPresentationBaseTsjrpcModel = {
   liveData: (liveData: { schw: ScheduleWidgetWid; data: IndexSchWBroadcastLiveDataValue }) => void;
+  winResize: (args: { w: number; h: number }) => void;
 };
