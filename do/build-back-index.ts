@@ -15,13 +15,11 @@ export const buildBackIndexFile = async () => {
         format: 'cjs',
         keepNames: true,
         minifyWhitespace: true,
-        // minifyIdentifiers: true,
         treeShaking: true,
         minifySyntax: true,
 
         charset: 'utf8',
         external: ['node-schedule', 'ws', 'postgres', 'drizzle-orm', 'drizzle-kit', './.env.json'],
-        // drop: ['console', 'debugger'],
         dropLabels: ['DEV', 'TEST'],
       });
 

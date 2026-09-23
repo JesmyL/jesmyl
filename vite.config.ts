@@ -24,12 +24,16 @@ Object.entries(tsConfig.compilerOptions.paths).forEach(([aliasKey, [path]]) => {
 
 export default defineConfig(() => {
   return {
+    esbuild: {
+      pure: ['console.log'],
+      legalComments: 'none',
+    },
     build: {
       outDir: 'build',
       target: 'es2020',
-      // minify: 'esbuild',
-      minify: false,
-      sourcemap: true,
+      minify: 'esbuild',
+      cssMinify: true,
+      sourcemap: false,
       rollupOptions: {
         output: {
           manualChunks(id) {
@@ -49,13 +53,12 @@ export default defineConfig(() => {
                 if (file.startsWith('@')) file = file.slice(1);
                 if (file.endsWith('/')) file = file.slice(0, -1);
 
-                return `vendor-${file}`;
+                return `v-${file}`;
               }
 
-              if (id.includes('node_modules/dexie/') || id.includes('node_modules/dexie-react-hooks/'))
-                return 'vendor-dexie';
+              if (id.includes('node_modules/dexie/') || id.includes('node_modules/dexie-react-hooks/')) return 'v-dx';
 
-              return 'vendor-utils';
+              return 'v-u';
             }
           },
         },
