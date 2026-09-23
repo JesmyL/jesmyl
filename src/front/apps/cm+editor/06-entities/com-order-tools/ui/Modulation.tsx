@@ -42,7 +42,6 @@ export const CmEditorComOrderToolsModulation = ({
             ord={ord}
             ordi={ordi}
             chordVisibleVariant={ChordVisibleVariant.Maximal}
-            chordHardLevel={3}
             com={com}
           />
           {arrayByLength(12, position => {

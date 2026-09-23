@@ -89,7 +89,6 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
             >
               <TheCmComOrder
                 chordVisibleVariant={ChordVisibleVariant.None}
-                chordHardLevel={3}
                 com={ccom}
                 ord={ord}
                 ordi={ordi}

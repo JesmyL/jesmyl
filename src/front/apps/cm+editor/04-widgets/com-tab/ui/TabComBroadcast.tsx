@@ -16,6 +16,7 @@ import {
   CmComNewlinerWordiNotNewLine,
   CmComTextSquareBracketsMode,
 } from 'shared/api';
+import { Bool } from 'shared/enums';
 import { CmBroadcastMonolineSlideOrdStrId, CmComNewlinerSymbolFreeUpperCaseLine } from 'shared/model/cm/broadcast';
 import { incrementNumber, nagativeNumber } from 'shared/utils';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
@@ -30,7 +31,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
     if (nameSpacei) {
       //
     }
-    return new EditableCom(ccom.top, null, null);
+    return new EditableCom(ccom.top, null, null, Bool.False);
   }, [ccom.top, nameSpacei]);
 
   const targetHighlightMap = useState(() => new Map<Element, TimeOut>())[0];

@@ -2,6 +2,7 @@ import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { CmComTextSquareBracketsMode, OrderRepeats, SpecialOrderRepeats } from 'shared/api';
 import { CmEditComOrderTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-order.tsjrpc.model';
 import { CmCom } from 'shared/const/cm/Com';
+import { Bool } from 'shared/enums';
 import { extractNumber } from 'shared/utils';
 import { checkIsNil, checkIsNotNil, checkIsNotObject, checkIsObject } from 'shared/utils/checkIs';
 import { checkIsEq } from 'shared/utils/checkIsEq';
@@ -81,7 +82,7 @@ export const cmEditComOrderServerTsjrpcRepeats = {
   }),
 
   setRepeats_v1: modifyCom('COM_REP', (icom, { upd }) => {
-    const com = new CmCom(icom, null, null);
+    const com = new CmCom(icom, null, null, Bool.False);
     const ords = com.setOrders();
     const titles: string[] = [];
 

@@ -15,7 +15,7 @@ import { defaultTextCase } from 'shared/const/textCase';
 import { TextCase } from 'shared/model/common';
 import { checkIsNil, checkIsNumber, checkIsObject } from 'shared/utils/checkIs';
 import { cmComOrderCheckIsOrdVisibleInInterpretation } from 'shared/utils/cm/checkIs';
-import { chordInterpretedRegsLazy, makeSymbolFreeUpperCaseSlavicText } from 'shared/utils/cm/com/const';
+import { makeSymbolFreeUpperCaseSlavicText } from 'shared/utils/cm/com/const';
 import { cmComNewlinerLineConfigToSet } from 'shared/utils/cm/com/newliner';
 import { cmComOrderMakeRegions } from 'shared/utils/cm/makeRegions';
 import { cmComOrderMakeRepeatedText } from 'shared/utils/cm/makeRepeatedText';
@@ -209,31 +209,8 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   isRealText = () => !!(this.text && this.isVisible);
   isChBlock = () => this.texti == null;
 
-  lineChordLabels = (chordHardLevel: 2 | 1 | 3, specialLinei: number, specialOrdi: number) => {
-    let chordsLabels = this.com.chordLabels[specialOrdi]?.[specialLinei] ?? [];
-
-    if (chordHardLevel < 3) {
-      chordsLabels = chordsLabels.map(chord => {
-        const chordsList = chord.split(makeRegExp('/(-| |\\.+)/'));
-
-        if (chordsList === null) return chord;
-
-        return chordsList
-          .map(chord => {
-            return chord.replace(chordInterpretedRegsLazy().regExp, (...args) => {
-              const chips = chordInterpretedRegsLazy().transform(args);
-
-              if (chordHardLevel === 1)
-                return `${chips.simpleChord}${chips.simpleChord_bass ? '/' : ''}${chips.simpleChord_bass ?? ''}`;
-
-              return `${chips.simpleChord}${chips.lightModificators}${chips.simpleChord_bass ? '/' : ''}${chips.simpleChord_bass ?? ''}${chips.lightModificators_bass ?? ''}`;
-            });
-          })
-          .join('');
-      });
-    }
-
-    return chordsLabels;
+  lineChordLabels = (specialLinei: number, specialOrdi: number) => {
+    return this.com.chordLabels[specialOrdi]?.[specialLinei] ?? [];
   };
 
   setRegions = <Ord extends CmComOrder>() =>

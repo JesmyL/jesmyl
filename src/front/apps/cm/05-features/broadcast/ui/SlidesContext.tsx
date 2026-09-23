@@ -11,6 +11,7 @@ import { useAtomValue } from 'atomaric';
 import { useEffect, useMemo } from 'react';
 import { CmCom } from 'shared/const/cm/Com';
 import { cmDefaultCom } from 'shared/const/cm/def.com';
+import { Bool } from 'shared/enums';
 import { CmBroadcastMonolineSlide } from 'shared/model/cm/broadcast';
 import { TextCase } from 'shared/model/common';
 import { makeCmComNbspHtmlText } from 'shared/utils/cm/com/const';
@@ -31,7 +32,7 @@ export const CmBroadcastSlidesContext = ({
       //
     }
 
-    return new CmCom(icom ?? cmDefaultCom(), fix, schIntp);
+    return new CmCom(icom ?? cmDefaultCom(), fix, schIntp, Bool.False);
   }, [fix, icom, nameSpacei, schIntp]);
 
   const { slidei, slideId } = useAtomValue(cmBroadcastCurrentSlideiAtom);

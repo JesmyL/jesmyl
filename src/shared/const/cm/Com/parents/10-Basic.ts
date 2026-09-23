@@ -9,12 +9,17 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
   ton?: number;
   bracketLevelHolder: CmComBracketLevelHolder = { level: 0 };
 
+  chords: string[];
+
   constructor(
     top: IExportableCom,
     public fix: IFixedCom | nil,
     public intp: IExportableComInterpretation | nil,
+    public isHardChords: Bool,
   ) {
     super(top);
+
+    this.chords = this.isHardChords ? (this.top.c1 ?? this.top.c) : this.top.c;
   }
 
   get mod() {

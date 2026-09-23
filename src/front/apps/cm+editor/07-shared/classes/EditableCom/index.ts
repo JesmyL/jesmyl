@@ -9,6 +9,7 @@ import { EditableComOrder } from '../EditableComOrder';
 import { EditableComParseBlocks } from './lib/31-ParseBlocks';
 
 export class EditableCom extends EditableComParseBlocks {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   orderConstructor = (me: ICmComOrderExportableMe<any>) => new EditableComOrder(me, this);
 
   replaceBemoles(coli: number) {
@@ -19,7 +20,12 @@ export class EditableCom extends EditableComParseBlocks {
 
     const val = col.replace(simpleBemoleChordReg_g, chord => chordDiezEquivalent()[chord] || chord);
 
-    cmEditComClientTsjrpcMethods.changeChordBlock({ texti: coli, comw: this.wid, value: val });
+    cmEditComClientTsjrpcMethods.changeChordBlock({
+      texti: coli,
+      comw: this.wid,
+      value: val,
+      isHard: this.isHardChords,
+    });
   }
 
   getRegionNextLetter() {

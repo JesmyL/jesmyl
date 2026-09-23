@@ -15,6 +15,9 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
         [MenuComToolName.MarkCom]: STR(['$v'])`${IF('$v').THEN`Видалити з обраного`.ELSE`Додати до обраного`}`,
         [MenuComToolName.SelectedToggle]: STR(['$v'])`${IF('$v').THEN`Прибрати з вибраних`.ELSE`Вибрати пісню`}`,
         [MenuComToolName.IsMiniAnchor]: STR(['$v'])`${IF('$v').THEN`Розгорнути посилання`.ELSE`Згорнути посилання`}`,
+        [MenuComToolName.ChordHardLevel]: STR([
+          '$v',
+        ])`${SWITCH('$v').CASE(0)`Прості акорди`.CASE(1)`Складні акорди`.DEFAULT`!Необхідно оновити додаток!`}`,
 
         [MenuComToolName.FullscreenMode]: 'На весь екран',
         [MenuComToolName.ChordsVariant]: 'Показати акорди',
@@ -26,7 +29,6 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
         [MenuComToolName.CatsBinds]: 'Показувати збірки',
         [MenuComToolName.ComComment]: 'Мої замітки',
         [MenuComToolName.CopyCom]: 'Копіювати текст пісні',
-        [MenuComToolName.ChordHardLevel]: 'Рівень складності акорду - $v',
         [MenuComToolName.EditCom]: 'Редагувати',
       },
 
@@ -77,6 +79,9 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
       cnfStrN: 'Конфіг стр. $n',
       clearDictNumN: 'Очистити номер зі збірника $n',
       insNwBlockAtX: STR(['$x'])`Вставити новий блок ${SWITCH('$x').CASE('b')`на самий початок`.DEFAULT`сюди`}`,
+
+      chLenHardLvlNotEq: 'Не збігається кількість акордів по рядках у версіях складності в рядку $n',
+      chBlockLenHardLvlNotEq: 'Невідповідність кількості блоків акордів',
 
       new: {
         t: 'Нова пісня',

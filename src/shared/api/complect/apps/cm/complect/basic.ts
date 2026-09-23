@@ -168,6 +168,8 @@ export type IExportableCom = NullifyOptionals<
 
     /** список аккорлов */
     c: string[];
+    /** список сложных аккорлов */
+    c1?: string[];
 
     /** порядковые блоки */
     o?: IExportableOrder[];

@@ -3,6 +3,7 @@ import { Button } from '#shared/components/ui/button';
 import { ButtonGroup } from '#shared/components/ui/button-group';
 import { getParentNodeWithClassName } from '#shared/lib/getParentNodeWithClassName';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
+import { cmComIsChordHardLevelAtom } from '$cm/entities/index';
 import { cmIDB, useCmComAllIComList } from '$cm/ext';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -26,13 +27,14 @@ export const CmEditorChordSearchUnknownChordsModalTrigger = () => {
   const lastClickedChord = useAtomValue(lastClickedChordAtom);
   const isOpen = useAtomValue(isOpenAtom);
   const navigate = useNavigate();
+  const isHardChords = useAtomValue(cmComIsChordHardLevelAtom);
 
   const unknownChords = useMemo(() => {
     const unknownChordsSet = new Set<string>([lastClickedChordAtom.get()]);
 
     coms?.forEach(icom => {
-      arrayByLength(12, i => i).forEach(delta =>
-        new CmCom(icom, null, null).transposedBlocks(delta)?.forEach(block => {
+      arrayByLength(12, delta =>
+        new CmCom(icom, null, null, isHardChords).transposedBlocks(delta)?.forEach(block => {
           block.split(makeRegExp('/[-\\s.|]+/')).forEach(chord => {
             if (chord && chordPack[chord] === undefined) unknownChordsSet.add(chord);
           });
@@ -56,7 +58,7 @@ export const CmEditorChordSearchUnknownChordsModalTrigger = () => {
           </div>
         );
       });
-  }, [chordPack, coms]);
+  }, [chordPack, coms, isHardChords]);
 
   useEffect(() => {
     if (!isOpen) return;

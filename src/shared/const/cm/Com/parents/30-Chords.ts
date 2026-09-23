@@ -23,38 +23,34 @@ export class CmComChords extends CmComOrders {
       : chords.replace(makeRegExp('/A#/g'), 'B');
   }
 
-  get chords() {
-    return this.top.c;
-  }
-
   get chordLabels(): string[][][] {
-    if (this._chordLabels == null) this.updateChordLabels();
+    if (!this._chordLabels) this.updateChordLabels();
 
     return this._chordLabels as string[][][];
   }
 
   get usedChords() {
-    if (this._usedChords == null) this.updateChordLabels();
+    if (!this._usedChords) this.updateChordLabels();
 
     return this._usedChords;
   }
 
-  transposeChord(chord: string, delta: number | nil = this.transPosition) {
+  transposeChord = (chord: string, delta: number | nil = this.transPosition) => {
     const currentIndex = simpleHashChords.indexOf(chord);
     const di = currentIndex + (delta ?? 0);
     const len = objectLength(simpleHashChords);
     const nextIndex = di < 0 ? len - -di : di > len ? di % len : di === len || -di === len ? 0 : di;
 
     return simpleHashChords[nextIndex];
-  }
+  };
 
-  transposeBlock(cblock: string, delta?: number | nil) {
-    return cblock?.replace(simpleHashChordReg_g, chord => this.transposeChord(chord, delta ?? this.transPosition));
-  }
+  transposeBlock = (cblock: string, delta?: number | nil) => {
+    return cblock.replace(simpleHashChordReg_g, chord => this.transposeChord(chord, delta ?? this.transPosition));
+  };
 
-  transposedBlocks(delta?: number) {
-    return this.chords?.map((cblock: string) => this.transposeBlock(cblock, delta));
-  }
+  transposedBlocks = (delta?: number, chords = this.chords) => {
+    return chords.map((cblock: string) => this.transposeBlock(cblock, delta));
+  };
 
   private updateChordLabels() {
     this._chordLabels = [];

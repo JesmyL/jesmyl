@@ -2,8 +2,9 @@ import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { cmComMaxFontSize, cmComMinFontSize } from '$cm/shared/const';
 import { atom } from 'atomaric';
 import { CmComWid, MenuComToolName, ScheduleWidgetWid } from 'shared/api';
+import { Bool } from 'shared/enums';
 
-export const cmComChordHardLevelAtom = atom<1 | 2 | 3>(2, 'cm:chord-hard-level');
+export const cmComIsChordHardLevelAtom = atom(Bool.False, 'cm:isChordHardLevel');
 export const cmComIsComMiniAnchorAtom = atom(false, 'cm:is-com-mini-anchor');
 export const cmComIsShowCatBindsInCompositionAtom = atom(false);
 

@@ -27,11 +27,11 @@ export type CmEditComTsjrpcModel = {
 
   toggleAudioLink: (args: { comw: CmComWid; link: HttpNumLeadLink }) => void;
 
-  changeChordBlock: (args: { texti: number; comw: CmComWid; value: string }) => CmComWid;
+  changeChordBlock: (args: { texti: number; comw: CmComWid; value: string; isHard: Bool }) => CmComWid;
   changeTextBlock: (args: { texti: number; comw: CmComWid; value: string }) => CmComWid;
   textCaps: (args: { comw: CmComWid; texts: string[] }) => CmComWid;
 
-  insertChordBlock: (args: { value: string; comw: CmComWid; insertToi: number }) => CmComWid;
+  insertChordBlock: (args: { value: string; comw: CmComWid; insertToi: number; isHard: Bool }) => CmComWid;
   removeChordBlock: (args: { comw: CmComWid; value: string; removei: number }) => CmComWid;
 
   insertTextBlock: (args: { value: string; comw: CmComWid; insertToi: number }) => CmComWid;

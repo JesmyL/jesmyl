@@ -16,7 +16,8 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
         | MenuComToolName.SelectedToggle
         | MenuComToolName.IsMiniAnchor
         | MenuComToolName.ChordHardLevel
-        | MenuComToolName.MarkCom,
+        | MenuComToolName.MarkCom
+        | MenuComToolName.ChordHardLevel,
         'v'
       >;
 
@@ -47,6 +48,9 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
       crossLinks: LocaleSimpleString;
       size: LocaleSimpleString;
       temp: LocaleSimpleString;
+
+      chLenHardLvlNotEq: StringTemplaterInterpolation<'n'>;
+      chBlockLenHardLvlNotEq: LocaleSimpleString;
 
       /// EDITOR:
       /** square brackets in text replacing */

@@ -5,7 +5,7 @@ import { textToUpperCase } from 'shared/utils/string.utils';
 
 export const hardModificators =
   `(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))` as const;
-export const lightModificators = `(?<lightModificators>\\+|(?:(?:min|sus|maj|dim|add)?(?:\\d{1,2}(?:/\\d{1,2})?)?))`;
+export const lightModificators = `(?<lightModificators>\\+|(?:(?:\\d{,2}(?:min|sus|maj|dim|add))?(?:\\d{1,2}(?:/\\d{1,2})?)?))`;
 export const chordLeadLetter = `[ACDFG]#?|[EH]`;
 export const chordLikeStr =
   `(?<simpleChord>(?:${chordLeadLetter})m?7?)${lightModificators}${hardModificators}?` as const;
@@ -47,7 +47,7 @@ export const makeCmComNbspHtmlText = (text: string | nil): string => text?.repla
 export const textedChordRegsLazy = lazyInit(() =>
   makeNamedRegExp(
     // regexpert:
-    // stringify $0 U23
+    // stringify $0 U25
     `/^\\|?\\.*-?${chordLikeStr}(?<bassChord>/${
       //
       escapeRegExpNames(chordLikeStr, '_bass')

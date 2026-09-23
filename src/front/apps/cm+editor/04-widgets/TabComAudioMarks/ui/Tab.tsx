@@ -26,6 +26,7 @@ import styled from '@emotion/styled';
 import { atom, useAtomValue } from 'atomaric';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { CmComAudioMarkEditPackValue, CmComAudioMarkPackTime, CmComOrderWidNever, HttpNumLeadLink } from 'shared/api';
+import { Bool } from 'shared/enums';
 import { CmBroadcastMonolineSlide } from 'shared/model/cm/broadcast';
 import { TextCase } from 'shared/model/common';
 import { convertSecondsInStrTime, iife, wait } from 'shared/utils';
@@ -242,7 +243,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
       if (nameSpacei) {
         //
       }
-      return new EditableCom(ccom.top, null, null);
+      return new EditableCom(ccom.top, null, null, Bool.False);
     }, [ccom.top, nameSpacei]);
     const nameSpaceTitleList = [translateBase(it => it.cm.bro.five), translateBase(it => it.cm.bro.duo)];
 
@@ -291,7 +292,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
               com.top.nl?.findIndex(
                 (_, nli) =>
                   nameSpacei !== nli &&
-                  (cache[nli] ??= new EditableCom(ccom.top, null, null).makeExpandSlides(
+                  (cache[nli] ??= new EditableCom(ccom.top, null, null, Bool.False).makeExpandSlides(
                     [nli],
                     false,
                     TextCase.AsIs,

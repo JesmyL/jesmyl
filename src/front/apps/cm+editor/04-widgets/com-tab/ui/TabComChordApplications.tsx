@@ -42,7 +42,6 @@ export const CmEditorComTabChordApplications = ({ ccom }: { ccom: EditableCom })
               ordi={ordi}
               chordVisibleVariant={ChordVisibleVariant.Maximal}
               com={ccom}
-              chordHardLevel={3}
               asHeaderNode={({ node }) => (
                 <div className="flex gap-2">
                   {node}

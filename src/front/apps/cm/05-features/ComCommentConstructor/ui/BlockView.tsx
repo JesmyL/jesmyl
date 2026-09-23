@@ -1,6 +1,6 @@
 import { getParentNodeWithAttributeName } from '#shared/lib/getParentNodeWithClassName';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
-import { cmComChordHardLevelAtom, cmComFontSizeAtom } from '$cm/entities/index';
+import { cmComFontSizeAtom } from '$cm/entities/index';
 import { CmComOrderList } from '$cm/ext';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -16,7 +16,6 @@ import { CmComCommentConstructorWordConstructor } from './WordConstructor';
 
 export const CmComCommentConstructorBlockView = ({ ordw: ordwSelector, com }: { ordw: CmComOrderWid; com: CmCom }) => {
   const fontSize = useAtomValue(cmComFontSizeAtom);
-  const chordHardLevel = useAtomValue(cmComChordHardLevelAtom);
   const selectorPrefix = useCmComCommentConstructorCurrentInnerKindContext();
 
   const [{ linei, wordi, ordw, solidLinei }, setSelection] = useState<{
@@ -47,7 +46,6 @@ export const CmComCommentConstructorBlockView = ({ ordw: ordwSelector, com }: { 
         }}
       >
         <CmComOrderList
-          chordHardLevel={chordHardLevel}
           chordVisibleVariant={ChordVisibleVariant.Maximal}
           com={com}
           isMiniAnchor={false}

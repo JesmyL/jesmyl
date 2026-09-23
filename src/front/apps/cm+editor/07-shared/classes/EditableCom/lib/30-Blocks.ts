@@ -15,6 +15,7 @@ export class EditableComBlocks extends EditableComOrders {
       texti: coli,
       comw: this.wid,
       value: trimmedLinesValue,
+      isHard: this.isHardChords,
     });
   }
 

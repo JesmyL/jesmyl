@@ -30,7 +30,6 @@ export const CmEditorComOrderToolsBlockKind = ({ com, ord, ordi }: CmEditorComOr
             ord={ord}
             ordi={ordi}
             chordVisibleVariant={ChordVisibleVariant.Maximal}
-            chordHardLevel={3}
             com={com}
           />
           {comBlockKinds?.kinds.map(kindBlock => {

@@ -13,8 +13,10 @@ import { CmEditorComEditTransposition } from '$cm+editor/features/ComEditTranspo
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { EditableComOrder } from '$cm+editor/shared/classes/EditableComOrder';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
+import { cmComIsChordHardLevelAtom } from '$cm/entities/index';
 import { TheCmComOrder, useCmCom } from '$cm/ext';
 import { indexIDB } from '$index/shared/state';
+import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useState } from 'react';
 import { CmComOrderWid, CmComWid, CmComWidDef, ScheduleWidgetWid } from 'shared/api';
@@ -36,8 +38,9 @@ export const CmEditorEditComEventInterpretationFullContentInner = ({
   const onEditClose = () => setEditOrdw(null);
   const ordOnEditi = (editOrdw && com?.orders?.findIndex(o => o.wid === editOrdw)) ?? -1;
   const ordOnEdit = com?.orders?.[ordOnEditi];
+  const isHardChords = useAtomValue(cmComIsChordHardLevelAtom);
 
-  const editCom = com && new EditableCom(com.top, com.fix, com.intp);
+  const editCom = com && new EditableCom(com.top, com.fix, com.intp, isHardChords);
   const editOrd = editCom && ordOnEdit && new EditableComOrder(ordOnEdit.me, editCom);
 
   return (
@@ -75,7 +78,6 @@ export const CmEditorEditComEventInterpretationFullContentInner = ({
                   ord={ord}
                   ordi={ordi}
                   com={com}
-                  chordHardLevel={3}
                   chordVisibleVariant={ChordVisibleVariant.Maximal}
                   showInvisibles
                   asHeaderNode={({ node, ord }) => (

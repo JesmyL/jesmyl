@@ -39,6 +39,7 @@ export const comDB = pgTable('coms', {
   t: initStringArray('texts').notNull(),
 
   c: initStringArray('chords').notNull(),
+  c1: initStringArray('hardChords'),
 
   b: smallint('isBemoled').default(TonType.Diezed).$type<TonType>(),
 

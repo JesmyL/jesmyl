@@ -1,32 +1,29 @@
 import { translateBase } from '#basis/locale';
-import { cmComChordHardLevelAtom } from '$cm/entities/index';
+import { cmComIsChordHardLevelAtom } from '$cm/entities/index';
 import { useAtomValue } from 'atomaric';
 import { MenuComToolName } from 'shared/api';
+import { Bool } from 'shared/enums';
 import { CmComTool } from '../ComTool';
 
 export const CmComToolChordHardLevel = () => {
-  const hardLevel = useAtomValue(cmComChordHardLevelAtom);
+  const isHardChords = useAtomValue(cmComIsChordHardLevelAtom);
 
   const changesDict = {
-    1: {
-      next: 2,
+    [Bool.False]: {
+      next: Bool.True,
       icon: 'BatteryLow',
     },
-    2: {
-      next: 3,
-      icon: 'BatteryMedium01',
-    },
-    3: {
-      next: 1,
+    [Bool.True]: {
+      next: Bool.False,
       icon: 'BatteryFull',
     },
   } as const;
 
   return (
     <CmComTool
-      title={translateBase(it => it.cm.com.tool[MenuComToolName.ChordHardLevel], { v: hardLevel })}
-      icon={changesDict[hardLevel].icon}
-      onClick={() => cmComChordHardLevelAtom.set(changesDict[hardLevel].next)}
+      title={translateBase(it => it.cm.com.tool[MenuComToolName.ChordHardLevel], { v: `${isHardChords}` })}
+      icon={changesDict[isHardChords].icon}
+      onClick={() => cmComIsChordHardLevelAtom.set(changesDict[isHardChords].next)}
     />
   );
 };

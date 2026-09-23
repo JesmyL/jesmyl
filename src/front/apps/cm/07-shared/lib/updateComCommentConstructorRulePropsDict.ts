@@ -5,6 +5,7 @@ import {
 } from '$cm/entities/com-comment';
 import { CmComCommentBlockSimpleSelector, CmComCommentBlockSpecialSelector, CmComWid } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
+import { Bool } from 'shared/enums';
 import {
   CmComCommentConstructorPropsDictWordRulePropsKeyPrefix,
   CmComCommentConstructorRulePropsDict,
@@ -43,7 +44,7 @@ export const updateCmComCommentConstructorRulePropsDict = async (
   } else {
     let isFound = false;
     const icom = await cmIDB.tb.coms.get(comw);
-    const orders = icom ? new CmCom(icom, null, null)?.orders : null;
+    const orders = icom ? new CmCom(icom, null, null, Bool.False)?.orders : null;
 
     if (orders) {
       const usedOrdKindsSet = new Set<CmComBlockKindKey>();

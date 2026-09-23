@@ -22,7 +22,6 @@ export const CmComOrderLine = (props: ICmComOrderLineAsComponentProps) => {
     prevLinesCount,
     setWordClass,
     solidLinei: solidTextLinei,
-    chordHardLevel,
     ...attrs
   } = props;
 
@@ -54,7 +53,7 @@ export const CmComOrderLine = (props: ICmComOrderLineAsComponentProps) => {
   let chordIndex = 0;
   let points = vowelPositions;
 
-  const chordsLabels = ord.lineChordLabels(chordHardLevel, linei, ordi);
+  const chordsLabels = ord.lineChordLabels(linei, ordi);
   const linePositions = new Set(positions ?? ord.positions?.[linei]);
 
   if (isJoinLetters !== false)

@@ -19,6 +19,7 @@ import { makeRegExp } from 'regexpert';
 import { CmMp3Rule, HttpNumLeadLink } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { cmDefaultCom } from 'shared/const/cm/def.com';
+import { Bool } from 'shared/enums';
 import { itIt } from 'shared/utils';
 import { chordsBlockIncorrectMessage } from 'shared/utils/cm/com/chordsBlockIncorrectMessage';
 import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
@@ -38,7 +39,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
   const eeStore = cmEditorIDB.useValue.eeStore();
   const { maxAvailableComLineLength } = useAtomValue(constantsConfigAtom);
 
-  const newCom = useMemo(() => new CmCom(newICom, null, null), [newICom]);
+  const newCom = useMemo(() => new CmCom(newICom, null, null, Bool.False), [newICom]);
   const nameIncorrects = takeTextBlockIncorrects(newICom.n, eeStore);
 
   const [hrefs, setHrefs] = useState<HttpNumLeadLink[]>([]);
@@ -84,7 +85,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
     newICom.t?.map(
       text => textLinesLengthIncorrects(text, maxAvailableComLineLength) ?? takeTextBlockIncorrects(text, eeStore),
     ) ?? [];
-  const chordsErrors = newICom.c?.map(text => chordsBlockIncorrectMessage(text)) ?? [];
+  const chordsErrors = newICom.c?.map(text => chordsBlockIncorrectMessage(text, Bool.False)) ?? [];
 
   return (
     <>
@@ -200,7 +201,6 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
             <CmComOrderList
               chordVisibleVariant={ChordVisibleVariant.None}
               com={newCom}
-              chordHardLevel={3}
               showInvisibles
             />
           </>

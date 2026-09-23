@@ -15,6 +15,9 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
         [MenuComToolName.MarkCom]: STR(['$v'])`${IF('$v').THEN`Удалить избранное`.ELSE`Добавить избранное`}`,
         [MenuComToolName.SelectedToggle]: STR(['$v'])`${IF('$v').THEN`Убрать из выбранных`.ELSE`Выбрать песню`}`,
         [MenuComToolName.IsMiniAnchor]: STR(['$v'])`${IF('$v').THEN`Раскрыть ссылки`.ELSE`Свернуть ссылки`}`,
+        [MenuComToolName.ChordHardLevel]: STR([
+          '$v',
+        ])`${SWITCH('$v').CASE(0)`Простые аккорды`.CASE(1)`Сложные аккорды`.DEFAULT`!Нужно обновить приложение!`}`,
 
         [MenuComToolName.FullscreenMode]: 'На весь экран',
         [MenuComToolName.ChordsVariant]: 'Показать аккорды',
@@ -26,7 +29,6 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
         [MenuComToolName.CatsBinds]: 'Показывать сборники',
         [MenuComToolName.ComComment]: 'Мои заметки',
         [MenuComToolName.CopyCom]: 'Копировать текст песни',
-        [MenuComToolName.ChordHardLevel]: 'Уровень сложности аккорда - $v',
         [MenuComToolName.EditCom]: 'Редактировать',
       },
 
@@ -45,6 +47,9 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
 
       twiceClickPrev: 'дважды клик&nbsp;-\nпредыдущая песня',
       twiceClickNx: 'дважды клик&nbsp;-\nследующая песня',
+
+      chLenHardLvlNotEq: 'Не совпадает количество аккордов по строкам в версиях сложности в строке $n',
+      chBlockLenHardLvlNotEq: 'Не соответствие количества блоков аккордов',
 
       clickNxSlide: 'клик&nbsp;-\nследующий слайд',
       clickPrevSlide: 'клик&nbsp;-\nпредыдущий слайд',

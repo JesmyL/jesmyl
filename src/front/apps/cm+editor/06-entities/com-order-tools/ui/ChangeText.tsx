@@ -31,7 +31,6 @@ export const CmEditorComOrderToolsChangeText = ({ com, ord, ordi }: CmEditorComO
             ordi={ordi}
             chordVisibleVariant={ChordVisibleVariant.Maximal}
             com={com}
-            chordHardLevel={3}
           />
           {com.texts?.map((text, texti) => {
             if (!text) return null;

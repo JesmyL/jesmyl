@@ -14,6 +14,7 @@ import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model
 import { CmCom } from 'shared/const/cm/Com';
 import { CmComOrder } from 'shared/const/cm/order/Order';
 import { howMillisecondsInMin } from 'shared/const/ms';
+import { Bool } from 'shared/enums';
 import { TextCase } from 'shared/model/common';
 import { absoluteNumber, multipliedNumber, nagativeNumber } from 'shared/utils';
 import { checkIsNotNil } from 'shared/utils/checkIs';
@@ -170,7 +171,7 @@ const updateNewlinerLineSet = <
       updater(props, itRepeati as CmComNewlinerRepeati, set, () => {
         let sets: Sets | nil = null;
 
-        new CmCom(com, null, null).makeExpandLines(TextCase.AsIs).find(slide => {
+        new CmCom(com, null, null, Bool.False).makeExpandLines(TextCase.AsIs).find(slide => {
           sets = slide.ord.makeNewlinerSets([props.spacei], slide.line, slide.linei, slide.repeati);
 
           return slide.ord.wid === ordw && slide.linei === linei && slide.repeati === itRepeati;

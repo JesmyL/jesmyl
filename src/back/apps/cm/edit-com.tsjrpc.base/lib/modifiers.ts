@@ -46,6 +46,7 @@ export const modifyCom =
 
     forEachObjectEntries(com, (key, value) => {
       if (checkIsEq(value, comClone[key])) return;
+      if ((key === 'c' || key === 'c1') && comClone.c1 && comClone.c.length !== comClone.c1.length) return;
 
       if (key === 'am') comUpdates.amMod = now;
       else comUpdates.m = now;

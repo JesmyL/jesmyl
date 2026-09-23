@@ -10,6 +10,7 @@ import { and, eq } from 'drizzle-orm';
 import { CmComMod, CmComWid, IExportableCom, IExportableComInterpretation, ScheduleWidgetWid } from 'shared/api';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
 import { CmCom } from 'shared/const/cm/Com';
+import { Bool } from 'shared/enums';
 import { checkIsEq } from 'shared/utils/checkIsEq';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { objectLength } from 'shared/utils/object.utils';
@@ -20,7 +21,7 @@ export const cmEditComExternalsTsjrpcInterpretations = () =>
   ({
     ordVisIntp: updateInterptetation((com, intp, { ordw }) => {
       const getOrd = () => {
-        const cmOrds = new CmCom({ ...com, al: [], m: CmComMod.def }, null, intp).orders;
+        const cmOrds = new CmCom({ ...com, al: [], m: CmComMod.def }, null, intp, Bool.False).orders;
         return cmOrds?.find(o => o.wid === ordw);
       };
 

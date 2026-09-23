@@ -4,7 +4,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { CmComWid, IExportableCom, ScheduleWidgetWid } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
-import { cmComLastOpenComwAtom, cmComLastOpenSchwAtom } from '../state/atoms';
+import { cmComIsChordHardLevelAtom, cmComLastOpenComwAtom, cmComLastOpenSchwAtom } from '../state/atoms';
 
 const und = undefined;
 
@@ -21,8 +21,12 @@ export const useCmCom = (comw: CmComWid | und, interpretationSchw?: ScheduleWidg
 const useCmComMapFromICom = (icom: IExportableCom | und, interpretationSchw?: ScheduleWidgetWid) => {
   const schIntp = useCurrentSchIntps(interpretationSchw);
   const ifixedCom = useComFixes(icom?.w);
+  const isHardChords = useAtomValue(cmComIsChordHardLevelAtom);
 
-  return useMemo(() => icom && new CmCom(icom, ifixedCom, schIntp?.[icom.w]), [icom, ifixedCom, schIntp]);
+  return useMemo(
+    () => icom && new CmCom(icom, ifixedCom, schIntp?.[icom.w], isHardChords),
+    [icom, ifixedCom, isHardChords, schIntp],
+  );
 };
 
 export const useCmComCurrentParts = () => {
@@ -39,7 +43,9 @@ export const useCmComMapFromIComWithoutComFixes = (
   interpretationSchw?: ScheduleWidgetWid,
 ) => {
   const schIntp = useCurrentSchIntps(interpretationSchw);
-  return useMemo(() => icom && new CmCom(icom, null, schIntp?.[icom.w]), [icom, schIntp]);
+  const isHardChords = useAtomValue(cmComIsChordHardLevelAtom);
+
+  return useMemo(() => icom && new CmCom(icom, null, schIntp?.[icom.w], isHardChords), [icom, isHardChords, schIntp]);
 };
 
 export const useCmComLastOpenComw = () => useAtomValue(cmComLastOpenComwAtom);

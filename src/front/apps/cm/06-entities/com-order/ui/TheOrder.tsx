@@ -1,15 +1,13 @@
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { ICmComOrderHeaderAsComponentProps } from '#shared/model/cm/order/regions';
 import { CmComOrderLine, ICmComOrderLineAsComponentProps } from '$cm/entities/com-order-line';
-import { cmComChordHardLevelAtom } from '$cm/entities/index';
-import { useAtomValue } from 'atomaric';
 import React from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmComLinei, CmComLineiNe, CmComTextSquareBracketsMode } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { commentHolderNodes } from 'shared/const/cm/commentHolderNodes';
 import { CmComOrder } from 'shared/const/cm/order/Order';
-import { twMerge } from 'tailwind-merge';
+import { twJoin, twMerge } from 'tailwind-merge';
 
 interface Props {
   asLineNode?: (props: ICmComOrderLineAsComponentProps) => React.ReactNode;
@@ -22,12 +20,10 @@ interface Props {
   showInvisibles?: boolean;
   specialClassId?: string;
   isHideRepeats?: boolean;
-  chordHardLevel: 1 | 2 | 3;
 }
 
 export function TheCmComOrder(props: Props) {
   const ord = props.ord;
-  const chordHardLevel = useAtomValue(cmComChordHardLevelAtom);
 
   if (
     (props.isMiniAnchor && (ord.me.isAnchorInherit || ord.me.isAnchorInheritPlus)) ||
@@ -98,9 +94,7 @@ export function TheCmComOrder(props: Props) {
       <div
         ord-selector={ord.wid}
         anchor-ord={ord.anchor}
-        className={
-          (props.specialClassId || '') + 'composition-block styled-block' + (ord.isVisible ? '' : ' opacity-30')
-        }
+        className={twJoin(props.specialClassId, 'composition-block styled-block', !ord.isVisible && ' opacity-30')}
         ref={el => {
           if (el) ord.element = el;
         }}
@@ -113,7 +107,7 @@ export function TheCmComOrder(props: Props) {
             {...styleAttributes}
           >
             {com.chordLabels[ordi]
-              .map((_, linei) => props.ord.lineChordLabels(chordHardLevel, linei, props.ordi))
+              .map((_, linei) => props.ord.lineChordLabels(linei, props.ordi))
               .map(line => line.join(' '))
               .join('\n')
               .split(makeRegExp('/(\\|)/'))
@@ -169,7 +163,6 @@ export function TheCmComOrder(props: Props) {
           prevLinesCount: 1,
           com: props.com,
           isJoinLetters: true,
-          chordHardLevel: props.chordHardLevel,
         };
 
         return (

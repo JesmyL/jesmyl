@@ -15,6 +15,9 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
         [MenuComToolName.MarkCom]: STR(['$v'])`${IF('$v').THEN`Таңдаулылардан өшіру`.ELSE`Таңдаулыларға қосу`}`,
         [MenuComToolName.SelectedToggle]: STR(['$v'])`${IF('$v').THEN`Таңдалғандардан алып тастау`.ELSE`Әнді таңдау`}`,
         [MenuComToolName.IsMiniAnchor]: STR(['$v'])`${IF('$v').THEN`Сілтемелерді ашу`.ELSE`Сілтемелерді жиру`}`,
+        [MenuComToolName.ChordHardLevel]: STR([
+          '$v',
+        ])`${SWITCH('$v').CASE(0)`Оңай аккордтар`.CASE(1)`Күрделі аккордтар`.DEFAULT`!Қосымшаны жаңарту қажет!`}`,
 
         [MenuComToolName.FullscreenMode]: 'Толық экран',
         [MenuComToolName.ChordsVariant]: 'Аккордтарды көрсету',
@@ -26,7 +29,6 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
         [MenuComToolName.CatsBinds]: 'Жинақтарды көрсету',
         [MenuComToolName.ComComment]: 'Менің жазбаларым',
         [MenuComToolName.CopyCom]: 'Ән мәтінін көшіру',
-        [MenuComToolName.ChordHardLevel]: 'Аккордтың қиындық деңгейі - $v',
         [MenuComToolName.EditCom]: 'Редакциялау',
       },
 
@@ -53,6 +55,9 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
       showLiSlides: 'Тізім слайдтарын көрсету',
       shareLi: 'Тізіммен бөлісу',
       unk: 'Белгісіз ән',
+
+      chLenHardLvlNotEq: '$n жолындағы күрделілік нұсқаларындағы жолдар бойынша аккордтар саны сәйкес келмейді',
+      chBlockLenHardLvlNotEq: 'Аккордтар блоктарының саны сәйкес келмейді',
 
       ton: 'Тональділік',
       addToolByClick: 'Жылдам мәзірге қосу үшін белгішені басыңыз',
