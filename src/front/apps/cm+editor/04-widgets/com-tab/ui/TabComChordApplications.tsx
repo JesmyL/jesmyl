@@ -9,6 +9,7 @@ import React from 'react';
 import { makeRegExp } from 'regexpert';
 import { useCmEditorComTabUpdateLinePositions } from '../lib/useUpdateChordLinePositions';
 import { CmEditorComTabChordApplicationsStyledContent } from '../style/CmEditorTabComChordApplicationsStyledContent.styled';
+import { CmEditorComTabChordHardLevelSelector } from '../sub-ui/ChordHardLevelSelector';
 
 export const CmEditorComTabChordApplications = ({ ccom }: { ccom: EditableCom }) => {
   const { updateLinePositions, linesOnUpdateSet, ordLinePositionsOnSend } = useCmEditorComTabUpdateLinePositions();
@@ -32,6 +33,7 @@ export const CmEditorComTabChordApplications = ({ ccom }: { ccom: EditableCom })
       ref={ref}
       style={{ fontSize }}
     >
+      <CmEditorComTabChordHardLevelSelector />
       {ccom.orders?.map((ord, ordi) => {
         if (!ord.isVisible) return;
 

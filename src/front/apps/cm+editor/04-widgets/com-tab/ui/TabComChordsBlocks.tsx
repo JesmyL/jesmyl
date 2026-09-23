@@ -1,6 +1,5 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { translateBase } from '#basis/locale';
-import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { CmEditorChordBlockRedactor } from '$cm+editor/entities/chord';
@@ -11,8 +10,8 @@ import { cmEditorComChordEditsHistoryAtom } from '$cm+editor/shared/state/atoms'
 import { cmComIsChordHardLevelAtom } from '$cm/entities/index';
 import { useAtomValue } from 'atomaric';
 import { makeRegExp } from 'regexpert';
-import { Bool } from 'shared/enums';
 import { arrayByLength } from 'shared/utils/object.utils';
+import { CmEditorComTabChordHardLevelSelector } from '../sub-ui/ChordHardLevelSelector';
 import {
   CmEditorComTabTextBlockPrevValueButton,
   CmEditorComTabTextBlockPrevValueUpdateModal,
@@ -61,14 +60,7 @@ export const CmEditorComTabChordsBlocks = ({ ccom }: { ccom: EditableCom }) => {
             }
           />
         )}
-        <Dropdown
-          id={isHardChords}
-          items={[
-            { id: Bool.False, title: 'Простые аккорды' },
-            { id: Bool.True, title: 'Сложные аккорды' },
-          ]}
-          onSelectId={cmComIsChordHardLevelAtom.set}
-        />
+        <CmEditorComTabChordHardLevelSelector />
       </div>
       {(textList?.length ? textList : ['']).map((text, texti) => {
         return (

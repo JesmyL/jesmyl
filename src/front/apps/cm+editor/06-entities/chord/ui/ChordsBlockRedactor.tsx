@@ -32,7 +32,7 @@ export const CmEditorChordBlockRedactor = ({ text, texti, ccom, isDisabled, notE
         strongDefaultValue
         onChanged={value => ccom.changeChordsBlock(texti, value)}
         onInput={setValue}
-        isError={notEqLenInLine !== false || !!corrects.errors?.length}
+        isError={!!corrects.errors?.length}
         disabled={isDisabled}
       />
       {checkIsNumber(notEqLenInLine) && (
