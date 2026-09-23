@@ -3,6 +3,7 @@ import { isTouchDevice } from '#shared/lib/device-differences';
 import { CmBroadcastSlidesContext } from '$cm/features/broadcast';
 import { useCmBroadcastScreenConfig } from '$cm/shared/lib/broadcast';
 import React from 'react';
+import { ScheduleWidgetWidDef } from 'shared/api';
 import { CmBroadcastFullscreen } from './Fullscreen';
 
 const CmScheduleWidgetBroadcastLiveCm = React.lazy(() =>
@@ -16,7 +17,7 @@ export const CmBroadcast = () => {
     <>
       <CurrentForceViweAppContext value="cm">
         <CmBroadcastSlidesContext textCase={config?.case}>
-          {isTouchDevice ? <CmBroadcastFullscreen /> : <CmScheduleWidgetBroadcastLiveCm />}
+          {isTouchDevice ? <CmBroadcastFullscreen /> : <CmScheduleWidgetBroadcastLiveCm schw={ScheduleWidgetWidDef} />}
         </CmBroadcastSlidesContext>
       </CurrentForceViweAppContext>
     </>

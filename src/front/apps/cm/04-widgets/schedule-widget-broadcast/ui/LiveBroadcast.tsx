@@ -4,6 +4,7 @@ import { broadcastCurrentTextAppAtom } from '#features/broadcast/atoms';
 import { useScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
 import { scheduleFollowBroadcastSlideAtom } from '#features/broadcast/initial-slide-context';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { BibleLiveControlled } from '$bible/features/Live/ui/LiveBible';
 import { CmBroadcastFollowInitialSlide } from '$cm/features/broadcast';
 import { indexIDB, useAuth } from '$index/shared/state';
 import { schLiveTsjrpcClient } from '$index/shared/tsjrpc';
@@ -12,7 +13,6 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
 import { ScheduleWidgetWid } from 'shared/api';
 import { itNNull } from 'shared/utils';
-import { CmScheduleWidgetBroadcastBibleControlled } from './LiveBible';
 import { CmScheduleWidgetBroadcastLiveCm } from './LiveCm';
 
 export const CmScheduleWidgetBroadcast = ({ schw }: { schw: ScheduleWidgetWid | und }) => {
@@ -51,14 +51,14 @@ export const CmScheduleWidgetBroadcast = ({ schw }: { schw: ScheduleWidgetWid | 
       isCantTranslateLive={isCantTranslateLive}
       fio={auth.fio}
       headTitle={schedule.title}
-      schedule={schedule}
+      schw={schedule.w}
     />
   ) : (
-    <CmScheduleWidgetBroadcastBibleControlled
+    <BibleLiveControlled
       isCantTranslateLive={isCantTranslateLive}
       fio={auth.fio}
       headTitle={schedule.title}
-      schedule={schedule}
+      schw={schedule.w}
     />
   );
 };

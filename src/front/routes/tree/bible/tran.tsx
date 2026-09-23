@@ -1,6 +1,7 @@
 import { CurrentForceViweAppContext } from '#features/broadcast/Broadcast.contexts';
-import { BibleBroadcastControlled } from '$bible/widgets/broadcast';
+import { BibleLiveControlled } from '$bible/features/Live';
 import { createFileRoute } from '@tanstack/react-router';
+import { ScheduleWidgetWidDef } from 'shared/api';
 
 export const Route = createFileRoute('/bible/tran')({
   component: RouteComponent,
@@ -9,9 +10,10 @@ export const Route = createFileRoute('/bible/tran')({
 function RouteComponent() {
   return (
     <CurrentForceViweAppContext value="bible">
-      <BibleBroadcastControlled
-        head
+      <BibleLiveControlled
         headTitle="Библия"
+        schw={ScheduleWidgetWidDef}
+        fio=""
       />
     </CurrentForceViweAppContext>
   );

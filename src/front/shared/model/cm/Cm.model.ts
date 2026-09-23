@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { IScheduleWidget } from 'shared/api';
+import { ScheduleWidgetWid } from 'shared/api';
 
 export type CmRollMode = 'pause' | 'play' | null;
 
@@ -13,7 +13,7 @@ export interface LiveBroadcastAppProps {
   isCantTranslateLive?: boolean;
   fio?: string;
   headTitle?: ReactNode;
-  schedule?: IScheduleWidget;
+  schw: ScheduleWidgetWid;
 }
 
 export const enum CmBroadcastShowChordedSlideMode {

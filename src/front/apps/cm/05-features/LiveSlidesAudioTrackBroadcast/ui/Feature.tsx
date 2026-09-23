@@ -8,7 +8,6 @@ import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { useAuth } from '$index/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import { ScheduleWidgetWidDef } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 
@@ -29,7 +28,6 @@ export const CmLiveSlidesAudioTrackBroadcast = (props: LiveBroadcastAppProps & {
   const { fromLinei, id, toLinei, minText } = currentSlide?.slide || {};
   const isChorded = !!currentSlide?.isChorded;
   const isNextChorded = !!nextSlide?.isChorded;
-  const schw = props.schedule?.w ?? ScheduleWidgetWidDef;
   const comw = props.com.wid;
 
   useEffect(() => {
@@ -57,7 +55,7 @@ export const CmLiveSlidesAudioTrackBroadcast = (props: LiveBroadcastAppProps & {
         },
       };
 
-      const sendData = { schw, data: liveData };
+      const sendData = { schw: props.schw, data: liveData };
       windows.forEach(win => win?.send(sendData));
     }, 100);
   }, [
@@ -74,10 +72,10 @@ export const CmLiveSlidesAudioTrackBroadcast = (props: LiveBroadcastAppProps & {
     isNextChorded,
     minText,
     nextHtml,
-    schw,
     toLinei,
     nameSpacei,
     windows,
+    props.schw,
   ]);
 
   return <></>;
