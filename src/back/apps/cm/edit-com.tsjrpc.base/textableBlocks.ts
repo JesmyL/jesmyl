@@ -1,7 +1,7 @@
 import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
-import { CmComWid } from 'shared/api';
+import { CmComWid, IExportableCom } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
 import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
 import { trimTextLines } from 'shared/utils';
@@ -19,11 +19,12 @@ export const cmEditComServerTsjrpcTextableBlocks = {
     com.c ??= [];
 
     if (isHard) {
-      com.c1 ??= com.c.slice(0);
+      com.c1 = fillHardChords(com);
+
       prev = com.c1[texti];
       com.c1[texti] = trimTextLines(value);
 
-      if (checkIsEq(com.c, com.c1)) delete com.c1;
+      if (checkIsEq(com.c, com.c1)) com.c1 = null;
     } else {
       prev = com.c[texti];
       com.c[texti] = trimTextLines(value);
@@ -89,20 +90,15 @@ function insertInTextableBlock<Props extends { value: string; comw: CmComWid; in
   dsc: (props: Props, tool: ServerTSJRPCTool) => string,
 ) {
   return modifyCom<Props>(rightsCheck, (com, props, tool) => {
-    const modify = (coln: 'c' | 'c1' | 't', value: string) => {
-      if (com[coln] == null) return '';
-      const list = com[coln];
-
-      list.splice(props.insertToi, 0, value);
-    };
-
-    modify(coln, props.isHard ? '' : props.value);
+    const modify = (coln: 'c' | 'c1' | 't', value: string) => com[coln]?.splice(props.insertToi, 0, value);
 
     if (coln === 'c') {
-      com.c1 ??= com.c.slice(0);
+      com.c1 = fillHardChords(com);
       modify('c1', props.isHard ? props.value : '');
-      if (checkIsEq(com.c, com.c1)) delete com.c1;
-    }
+      modify(coln, props.isHard ? '' : props.value);
+
+      if (checkIsEq(com.c, com.c1)) com.c1 = null;
+    } else modify(coln, props.value);
 
     com.o?.forEach(ord => {
       if (ord[coln] != null && ord[coln] >= props.insertToi) ord[coln]++;
@@ -120,19 +116,15 @@ function removeTextableBlock<Props extends { comw: CmComWid; removei: number }>(
   dsc: (props: Props, tool: ServerTSJRPCTool) => string,
 ) {
   return modifyCom<Props>(rightsCheck, (com, props, tool) => {
-    const modify = (coln: 'c' | 'c1' | 't') => {
-      if (com[coln] == null) return '';
-      const list = com[coln];
+    const modify = (coln: 'c' | 'c1' | 't') => com[coln]?.splice(props.removei, 1);
 
-      list.splice(props.removei, 1);
-    };
-
-    modify(coln);
     if (coln === 'c') {
-      com.c1 ??= com.c.slice(0);
+      com.c1 = fillHardChords(com);
       modify('c1');
-      if (checkIsEq(com.c, com.c1)) delete com.c1;
-    }
+      modify(coln);
+
+      if (checkIsEq(com.c, com.c1)) com.c1 = null;
+    } else modify(coln);
 
     com.o?.forEach(ord => {
       if (ord[coln] != null)
@@ -145,3 +137,12 @@ function removeTextableBlock<Props extends { comw: CmComWid; removei: number }>(
     return dsc(props, tool);
   });
 }
+
+const fillHardChords = (com: IExportableCom) => {
+  if (!com.c1) return (com.c1 = com.c.slice(0));
+
+  const hardChords = com.c1;
+  if (com.c1.length !== com.c.length) com.c.forEach((text, texti) => (hardChords[texti] ||= text));
+
+  return com.c1;
+};

@@ -9,6 +9,7 @@ import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.ts
 import { cmEditorComChordEditsHistoryAtom } from '$cm+editor/shared/state/atoms';
 import { cmComIsChordHardLevelAtom } from '$cm/entities/index';
 import { useAtomValue } from 'atomaric';
+import React from 'react';
 import { makeRegExp } from 'regexpert';
 import { arrayByLength } from 'shared/utils/object.utils';
 import { CmEditorComTabChordHardLevelSelector } from '../sub-ui/ChordHardLevelSelector';
@@ -25,23 +26,24 @@ export const CmEditorComTabChordsBlocks = ({ ccom }: { ccom: EditableCom }) => {
 
   const notEqLenInLineList = ccom.top.c1
     ? ccom.top.c1.length !== ccom.top.c.length
-      ? arrayByLength(30, () => true)
-      : ccom.top.c1.map((text, texti) => {
-          const text1Lines = ccom.top.c[texti]?.split('\n');
-          if (!text1Lines) return true;
+      ? arrayByLength(30, () => '!!!!!!')
+      : ccom.top.c1.map((hardText, hardTexti) => {
+          const textLines = ccom.top.c[hardTexti]?.split('\n');
+          if (!textLines) return '';
+          const hardLines = hardText.split('\n');
 
-          const notEqi = text
-            .split('\n')
-            .findIndex((line, linei) => line.split(' ').length !== text1Lines[linei]?.split(' ').length);
+          const notEqi = hardLines.findIndex(
+            (line, linei) => line.split(' ').length !== textLines[linei]?.split(' ').length,
+          );
 
-          if (notEqi < 0) return false;
+          if (notEqi < 0) return '';
 
-          return notEqi;
+          return `${notEqi + 1} <${isHardChords ? textLines[notEqi] : hardLines[notEqi]}>`;
         })
     : [];
 
   return (
-    <>
+    <React.Fragment key={isHardChords}>
       <div
         key={isHardChords}
         className="flex justify-between mt-2"
@@ -135,6 +137,6 @@ export const CmEditorComTabChordsBlocks = ({ ccom }: { ccom: EditableCom }) => {
         onPaste={(value, texti) => ccom.changeChordsBlock(texti, value)}
         texts={ccom.chords}
       />
-    </>
+    </React.Fragment>
   );
 };

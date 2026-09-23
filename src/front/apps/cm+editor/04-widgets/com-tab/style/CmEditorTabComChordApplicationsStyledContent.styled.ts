@@ -7,6 +7,13 @@ export const CmEditorComTabChordApplicationsStyledContent = styled.div`
 
   [ord-linei] {
     display: inline;
+
+    [attr-chord='.'][attr-chordi] {
+      &::before,
+      &::after {
+        color: inherit;
+      }
+    }
   }
 
   .binder {

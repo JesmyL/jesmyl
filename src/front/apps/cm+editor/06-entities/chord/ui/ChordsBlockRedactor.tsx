@@ -5,7 +5,6 @@ import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmComIsChordHardLevelAtom } from '$cm/entities/index';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
-import { checkIsNumber } from 'shared/utils/checkIs';
 import { chordsBlockIncorrectMessage } from 'shared/utils/cm/com/chordsBlockIncorrectMessage';
 
 interface Props {
@@ -13,7 +12,7 @@ interface Props {
   text: string;
   ccom: EditableCom;
   isDisabled: boolean;
-  notEqLenInLine: boolean | number;
+  notEqLenInLine: string;
 }
 
 export const CmEditorChordBlockRedactor = ({ text, texti, ccom, isDisabled, notEqLenInLine }: Props) => {
@@ -24,10 +23,9 @@ export const CmEditorChordBlockRedactor = ({ text, texti, ccom, isDisabled, notE
   return (
     <>
       <InputWithLoadingIcon
-        key={isHardChords}
         multiline
         icon="Playlist03"
-        inputClassName="bg-x1!"
+        inputClassName={isHardChords && !ccom.top.c1 ? 'bg-x2!' : 'bg-x1!'}
         defaultValue={text}
         strongDefaultValue
         onChanged={value => ccom.changeChordsBlock(texti, value)}
@@ -35,17 +33,10 @@ export const CmEditorChordBlockRedactor = ({ text, texti, ccom, isDisabled, notE
         isError={!!corrects.errors?.length}
         disabled={isDisabled}
       />
-      {checkIsNumber(notEqLenInLine) && (
+      {notEqLenInLine && (
         <CmEditorTextCorrectMessages
           corrects={{
-            errors: [{ message: translateBase(it => it.cm.com.chLenHardLvlNotEq, { n: notEqLenInLine + 1 }) }],
-          }}
-        />
-      )}
-      {notEqLenInLine === true && (
-        <CmEditorTextCorrectMessages
-          corrects={{
-            errors: [{ message: translateBase(it => it.cm.com.chBlockLenHardLvlNotEq) }],
+            errors: [{ message: translateBase(it => it.cm.com.chLenHardLvlNotEq, { n: notEqLenInLine }) }],
           }}
         />
       )}
