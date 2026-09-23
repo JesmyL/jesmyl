@@ -13,7 +13,7 @@ import { IndexAuthorizeTelegramStyledPage } from '../style/IndexTelegramAuth.sty
 import { IndexAuthorizeByTelegram } from './TelegramAuthorize';
 
 export const IndexAuthorizePage = () => {
-  const [isTgAuth, setIsTgAuth] = useState(false);
+  const [isTgAuth, _setIsTgAuth] = useState(false);
 
   const connectionNode = useConnectionState();
   const navigate = useNavigate();

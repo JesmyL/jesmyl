@@ -1,6 +1,7 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { useConnectionState } from '#basis/lib/useConnectionState';
 import { translateBase } from '#basis/locale';
+import { Skeleton } from '#shared/components';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
@@ -12,7 +13,7 @@ import { CmComAudioPlayerWithMarks, CmComNumber } from '$cm/ext';
 import styled from '@emotion/styled';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { CmComWid } from 'shared/api';
 import { checkIsNaN } from 'shared/utils/checkIs';
 import { objectEntries } from 'shared/utils/object.utils';
@@ -102,7 +103,7 @@ export const CmEditorCompositionPage = ({
             <div className="my-2">{connectionNode ?? <CmEditorCompositionBusyInfo comw={ccomw} />}</div>
           )}
 
-          <div className="flex justify-around gap-x-2 px-2 sticky nav-panel overflow-auto no-scrollbar">
+          <div className="flex justify-around gap-x-2 px-2 sticky -top-[8px] bg-x1 overflow-auto no-scrollbar">
             {objectEntries(cmEditorComTabCompositionNavs).map(
               ([tab, { icon, scope }]) =>
                 checkAccess('cm', scope) && (
@@ -141,7 +142,13 @@ export const CmEditorCompositionPage = ({
               />
             </div>
           )}
-          <StyledOutlet>{TabComponent && <TabComponent ccom={ccom} />}</StyledOutlet>
+          {TabComponent && (
+            <StyledOutlet>
+              <Suspense fallback={<Skeleton className="w-[100cqw] h-[100cqh] m-auto" />}>
+                <TabComponent ccom={ccom} />
+              </Suspense>
+            </StyledOutlet>
+          )}
         </>
       }
     />
@@ -153,15 +160,6 @@ const StyledOutlet = styled.div``;
 const StyledContainer = styled(PageCmEditorContainer)`
   &:has(${StyledCmEditorCompositionIsThereOtherFirstRedactorUserDetect}) ${StyledOutlet} {
     opacity: 0.3;
-  }
-
-  .cat-list-title {
-    background-color: var(--color--2);
-  }
-
-  .nav-panel {
-    top: -8px;
-    background: var(--color--1);
   }
 
   .com-player {

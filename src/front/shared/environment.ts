@@ -12,9 +12,11 @@ const isTest = import.meta.env.MODE === 'test';
 const initialUrl = new URL(location.href);
 const localhost = 'localhost';
 
+const postfix = import.meta.env.VITE_SOKI_POSTFIX;
+
 const sokiLink = isTest
-  ? `ws://${import.meta.env.VITE_DNS || localhost}${import.meta.env.VITE_SOKI_POSTFIX}`
-  : `wss://${hostConfig.host}${import.meta.env.VITE_SOKI_POSTFIX}`;
+  ? `ws://${import.meta.env.VITE_DNS || localhost}${postfix}`
+  : `wss://${hostConfig.host}${postfix}`;
 
 export const environment: Environment = {
   isTest,

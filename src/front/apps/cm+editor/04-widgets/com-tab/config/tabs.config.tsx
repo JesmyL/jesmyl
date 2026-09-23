@@ -1,17 +1,41 @@
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
-import { CmEditorTabComAudioMarks } from '$cm+editor/widgets/TabComAudioMarks';
-import { CmEditorTabComRepeats } from '$cm+editor/widgets/TabComRepeats';
+import React from 'react';
 import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
-import { CmEditorComTabAudio } from '../ui/TabComAudio';
-import { CmEditorComTabComBroadcast } from '../ui/TabComBroadcast';
-import { CmEditorComTabCategoryBinds } from '../ui/TabComCategoryBinds';
-import { CmEditorComTabChordApplications } from '../ui/TabComChordApplications';
-import { CmEditorComTabChordsBlocks } from '../ui/TabComChordsBlocks';
-import { CmEditorComTabMain } from '../ui/TabComMain';
-import { CmEditorComTabComOrders } from '../ui/TabComOrders';
-import { CmEditorComTabComRefs } from '../ui/TabComRefs';
-import { CmEditorComTabTextBlocks } from '../ui/TabComTextBlocks';
-import { CmEditorComTabWatch } from '../ui/TabComWatch';
+
+const CmEditorTabComAudioMarks = React.lazy(() =>
+  import('$cm+editor/widgets/TabComAudioMarks').then(m => ({ default: m.CmEditorTabComAudioMarks })),
+);
+const CmEditorTabComRepeats = React.lazy(() =>
+  import('$cm+editor/widgets/TabComRepeats').then(m => ({ default: m.CmEditorTabComRepeats })),
+);
+const CmEditorComTabAudio = React.lazy(() =>
+  import('../ui/TabComAudio').then(m => ({ default: m.CmEditorComTabAudio })),
+);
+const CmEditorComTabComBroadcast = React.lazy(() =>
+  import('../ui/TabComBroadcast').then(m => ({ default: m.CmEditorComTabComBroadcast })),
+);
+const CmEditorComTabCategoryBinds = React.lazy(() =>
+  import('../ui/TabComCategoryBinds').then(m => ({ default: m.CmEditorComTabCategoryBinds })),
+);
+const CmEditorComTabChordApplications = React.lazy(() =>
+  import('../ui/TabComChordApplications').then(m => ({ default: m.CmEditorComTabChordApplications })),
+);
+const CmEditorComTabChordsBlocks = React.lazy(() =>
+  import('../ui/TabComChordsBlocks').then(m => ({ default: m.CmEditorComTabChordsBlocks })),
+);
+const CmEditorComTabMain = React.lazy(() => import('../ui/TabComMain').then(m => ({ default: m.CmEditorComTabMain })));
+const CmEditorComTabComOrders = React.lazy(() =>
+  import('../ui/TabComOrders').then(m => ({ default: m.CmEditorComTabComOrders })),
+);
+const CmEditorComTabComRefs = React.lazy(() =>
+  import('../ui/TabComRefs').then(m => ({ default: m.CmEditorComTabComRefs })),
+);
+const CmEditorComTabTextBlocks = React.lazy(() =>
+  import('../ui/TabComTextBlocks').then(m => ({ default: m.CmEditorComTabTextBlocks })),
+);
+const CmEditorComTabWatch = React.lazy(() =>
+  import('../ui/TabComWatch').then(m => ({ default: m.CmEditorComTabWatch })),
+);
 
 export const cmEditorComTabCompositionNavs = {
   watch: {

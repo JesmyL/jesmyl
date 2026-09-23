@@ -22,7 +22,7 @@ export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => 
 
   return (
     <>
-      <div className="cat-list-title">{translateBase(it => it.dicts)}</div>
+      <div className="bg-x2">{translateBase(it => it.dicts)}</div>
       {cats.map(cat => {
         return (
           cat.kind === 'dict' && (
@@ -69,7 +69,7 @@ export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => 
           )
         );
       })}
-      <div className="cat-list-title">{translateBase(it => it.lists)}</div>
+      <div className="bg-x2">{translateBase(it => it.lists)}</div>
       {cats.map(cat => {
         return (
           cat.kind === 'list' && (

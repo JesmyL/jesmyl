@@ -2,17 +2,11 @@ import { StyledPhaseContainerConfigurerHead } from '#shared/ui/phase-container/P
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { CmEditorComListEditMore } from '$cm+editor/features/com';
 import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContainer';
-import {
-  CmComFaceList,
-  CmComWithComListSearchFilterInput,
-  CmEditorCompositionsCatSpecialSearches,
-  useCmComAllWidList,
-} from '$cm/ext';
+import { CmComFaceList, CmComWithComListSearchFilterInput, useCmComAllWidList } from '$cm/ext';
 import styled from '@emotion/styled';
 import { useNavigate } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
-import { ICmEditorCompositionsCatSpecialSearches } from '../model';
 
 let termAtom: Atom<string>;
 
@@ -22,7 +16,7 @@ export const CmEditorCompositionsPage = () => {
   const comws = useCmComAllWidList();
   const [isOpenMorePopup, setIsOpenMorePopup] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
-  const [mapper, setMapper] = useState<ICmEditorCompositionsCatSpecialSearches['map'] | null>(null);
+  // const [mapper, setMapper] = useState<ICmEditorCompositionsCatSpecialSearches['map'] | null>(null);
   const term = useAtomValue(termAtom);
   const navigate = useNavigate();
 
@@ -47,13 +41,13 @@ export const CmEditorCompositionsPage = () => {
               contentRef={listRef}
               content={
                 <>
-                  {term.startsWith('@') && (
+                  {/* {term.startsWith('@') && (
                     <CmEditorCompositionsCatSpecialSearches
                       term={term}
                       setTerm={termAtom.set}
                       setMapper={setMapper}
                     />
-                  )}
+                  )} */}
 
                   {catNumberSearch && (
                     <CmComFaceList

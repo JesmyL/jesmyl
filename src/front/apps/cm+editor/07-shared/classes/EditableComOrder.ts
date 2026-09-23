@@ -7,6 +7,7 @@ export class EditableComOrder extends CmComOrder {
   _regions?: CmComOrderEditableRegion<EditableComOrder>[];
   com: EditableCom;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(me: ICmComOrderExportableMe<any>, com: EditableCom) {
     super(me, com);
     this.com = com;

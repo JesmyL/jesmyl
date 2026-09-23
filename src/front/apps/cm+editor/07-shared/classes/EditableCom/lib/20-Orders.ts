@@ -8,6 +8,7 @@ export class EditableComOrders extends EditableComCorrects {
   get ords() {
     if (this._ords == null) this._ords = this.top.o?.map(this.mapTopOrdInOrdMe) ?? [];
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return this._ords as ICmComOrderExportableMe<any>[];
   }
 
