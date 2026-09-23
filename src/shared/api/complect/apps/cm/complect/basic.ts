@@ -118,6 +118,7 @@ export type IExportableOrder = NullifyOptionals<
 
 export type IFixedCom = { w: CmComWid } & Partial<{
   ton: number;
+  b: TonType | nil;
 }>;
 
 export type IExportableComInterpretationSimpleValues = {
@@ -320,6 +321,7 @@ export const enum MenuComToolName {
   CopyCom = 84,
   ChordHardLevel = 98,
   EditCom = 77,
+  BemoledChords = 81,
 }
 
 export type CmComWidRefGroupDict = SPRecord<CmComWid, CmComWidRefGroupId>;

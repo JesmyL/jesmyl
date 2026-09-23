@@ -101,15 +101,16 @@ class CmIDB extends DexieDB<CmIDBStorage> {
     justUseLiveQuery(async () => (comw ? this.tb.comAudioTrackMarks_v3.get({ comw }) : undefined), [comw]);
 
   fixComTransPos = async (comw: CmComWid, newTransPos: number | null) => {
+    await this.updateComFix(comw, async fixed => {
+      if (checkIsNil(newTransPos)) delete fixed.ton;
+      else fixed.ton = newTransPos;
+    });
+  };
+
+  updateComFix = async (comw: CmComWid, map: (com: IFixedCom) => void) => {
     const fixed = { ...(await cmIDB.tb.fixedComs.get(comw)), w: comw };
 
-    if (checkIsNil(newTransPos)) delete fixed.ton;
-    else {
-      const com = await cmIDB.tb.coms.get(comw);
-
-      if (com?.p === newTransPos) delete fixed.ton;
-      else fixed.ton = newTransPos;
-    }
+    map(fixed);
 
     if (objectLength(fixed) === 1) await cmIDB.tb.fixedComs.delete(comw);
     else await cmIDB.tb.fixedComs.put(fixed);

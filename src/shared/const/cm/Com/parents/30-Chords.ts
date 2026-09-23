@@ -20,7 +20,7 @@ export class CmComChords extends CmComOrders {
   static withBemoles(chords: string, tonType: TonType) {
     return tonType
       ? chords.replace(simpleHashedEachLetterChordReg_g, all => chordBemoleEquivalent[all] || all)
-      : chords.replace(makeRegExp('/A#/g'), 'B');
+      : chords;
   }
 
   get chordLabels(): string[][][] {

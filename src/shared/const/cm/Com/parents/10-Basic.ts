@@ -27,7 +27,7 @@ export class CmComBasic extends BaseNamed<IExportableCom> {
   }
 
   get isBemoled() {
-    return this.intp?.b ?? this.top.b ?? TonType.Diezed;
+    return this.fix?.b ?? this.intp?.b ?? this.top.b ?? TonType.Diezed;
   }
 
   get texts() {

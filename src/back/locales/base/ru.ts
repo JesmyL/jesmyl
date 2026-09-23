@@ -30,6 +30,7 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
         [MenuComToolName.ComComment]: 'Мои заметки',
         [MenuComToolName.CopyCom]: 'Копировать текст песни',
         [MenuComToolName.EditCom]: 'Редактировать',
+        [MenuComToolName.BemoledChords]: 'Бемольные/диезные аккорды',
       },
 
       showPlayer: 'Показывать плеер',

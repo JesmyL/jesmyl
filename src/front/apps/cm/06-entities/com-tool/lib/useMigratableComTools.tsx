@@ -5,8 +5,8 @@ import { useAtomValue } from 'atomaric';
 import React from 'react';
 import { MenuComToolName } from 'shared/api';
 import { extractNumber } from 'shared/utils';
-import { objectKeys } from 'shared/utils/object.utils';
 import { CmComToolIsComToolIconItemsContext, CmComToolItemAttrsContext, CmComToolNameContext } from '../state/contexts';
+import { CmComToolBemoledChords } from '../ui/BemoledChords';
 import { CmComToolBroadcast } from '../ui/BroadcastComTool';
 import { CmComToolCatsBinds } from '../ui/CatsBindsComTool';
 import { CmComToolChordHardLevel } from '../ui/ChordHardLevelComTool';
@@ -26,25 +26,25 @@ const RedactComTool = React.lazy(() => import('../ui/RedactComTool'));
 
 const mapToolsSelf = {} as { fun: (tool: MenuComToolName) => void; comTopTools: MenuComToolName[] };
 
-function mapTools(this: und | typeof mapToolsSelf, keyStr: SKey<MenuComToolName>) {
+function mapTools(this: und | typeof mapToolsSelf, toolKey: MenuComToolName) {
   if (this === undefined)
     return (
       <CmComToolNameContext
-        key={keyStr}
-        value={`${keyStr} tool-in-top`}
+        key={toolKey}
+        value={`${toolKey} tool-in-top`}
       >
-        {toolsDict[keyStr]}
+        {toolsDict[toolKey]}
       </CmComToolNameContext>
     );
 
-  const key = extractNumber(keyStr);
+  const key = extractNumber(toolKey);
 
   return (
     <div
-      key={keyStr}
+      key={toolKey}
       className={this.comTopTools.includes(key) ? '[&_.icon-box]:bg-x4 [&_.icon-box]:text-x2' : ''}
     >
-      <CmComToolNameContext value={`${keyStr}`}>
+      <CmComToolNameContext value={`${toolKey}`}>
         <CmComToolItemAttrsContext
           value={{
             onIconClick: event => {
@@ -54,7 +54,7 @@ function mapTools(this: und | typeof mapToolsSelf, keyStr: SKey<MenuComToolName>
             },
           }}
         >
-          {toolsDict[keyStr]}
+          {toolsDict[toolKey]}
         </CmComToolItemAttrsContext>
       </CmComToolNameContext>
     </div>
@@ -77,8 +77,28 @@ const toolsDict: Record<MenuComToolName, React.ReactNode> = {
   [MenuComToolName.CopyCom]: <CmComToolCopyText />,
   [MenuComToolName.ChordHardLevel]: <CmComToolChordHardLevel />,
   [MenuComToolName.EditCom]: <RedactComTool />,
+  [MenuComToolName.BemoledChords]: <CmComToolBemoledChords />,
 };
-const toolKeys = objectKeys(toolsDict);
+
+const toolKeys = [
+  MenuComToolName.MarkCom,
+  MenuComToolName.FullscreenMode,
+  MenuComToolName.ChordsVariant,
+  MenuComToolName.ShowTranslation,
+  MenuComToolName.ChordImages,
+  MenuComToolName.SelectedToggle,
+  MenuComToolName.OpenPlayer,
+  MenuComToolName.HideMetronome,
+  MenuComToolName.IsMiniAnchor,
+  MenuComToolName.QrShare,
+  MenuComToolName.CatsBinds,
+  MenuComToolName.ComComment,
+  MenuComToolName.CopyCom,
+  MenuComToolName.ChordHardLevel,
+  MenuComToolName.BemoledChords,
+
+  MenuComToolName.EditCom,
+];
 
 let saveTimeout: TimeOut;
 export const useCmComToolMigratableList = () => {

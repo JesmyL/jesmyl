@@ -30,6 +30,7 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
         [MenuComToolName.ComComment]: 'Менің жазбаларым',
         [MenuComToolName.CopyCom]: 'Ән мәтінін көшіру',
         [MenuComToolName.EditCom]: 'Редакциялау',
+        [MenuComToolName.BemoledChords]: 'Бемольді/диезді аккордтар',
       },
 
       showPlayer: 'Ойнатқышты көрсету',

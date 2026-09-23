@@ -1,5 +1,5 @@
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { TonType } from 'shared/const/cm/enums';
+import { takeCmComToggledTonType, TonType } from 'shared/const/cm/enums';
 
 export const CmEditorComEditBemoled = (props: {
   value: TonType | nil;
@@ -17,6 +17,6 @@ export const CmEditorComEditBemoled = (props: {
         Тип тональности - <span className="text-x7">{props.value ? 'бемольная' : 'диезная'}</span>
       </>
     }
-    onClick={() => props.onChange(props.value === TonType.Diezed ? TonType.Bemoled : TonType.Diezed)}
+    onClick={() => props.onChange(takeCmComToggledTonType(props.value))}
   />
 );

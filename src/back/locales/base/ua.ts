@@ -30,6 +30,7 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
         [MenuComToolName.ComComment]: 'Мої замітки',
         [MenuComToolName.CopyCom]: 'Копіювати текст пісні',
         [MenuComToolName.EditCom]: 'Редагувати',
+        [MenuComToolName.BemoledChords]: 'Бемольні/дієзні акорди',
       },
 
       showPlayer: 'Показувати плеєр',
