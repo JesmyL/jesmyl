@@ -3,15 +3,18 @@ import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeA
 import { takeLogginedAuthOrThrow } from 'back/utils';
 import { QuestionerBlankRole } from 'shared/model/q';
 import { questionerAdminServerTsjrpcBase } from '..';
+import { questionerAdminServerTsjrpcShare } from '../../admin.tsjrpc.share';
 
 export const questionerTSJRPCCreateBlank: typeof questionerAdminServerTsjrpcBase.createBlank = async (_, tool) => {
   const auth = takeLogginedAuthOrThrow(tool.auth);
   if (await throwIfNoUserScopeAccessRight(auth?.login, 'q', 'EDIT', 'C')) throw '';
   const login = auth.login;
 
+  const now = Date.now();
+
   const { item } = await questionerBlanksDirStorage.createItem(() => ({
-    w: Date.now(),
-    m: Date.now(),
+    w: now,
+    m: now,
     title: 'Новый опрос',
     dsc: '',
     tmp: {},
@@ -23,6 +26,8 @@ export const questionerTSJRPCCreateBlank: typeof questionerAdminServerTsjrpcBase
       },
     },
   }));
+
+  questionerAdminServerTsjrpcShare.updateBlanks({ blanks: [item], maxMod: now }, tool.client);
 
   return { value: item };
 };

@@ -4,6 +4,7 @@ import { Button } from '#shared/components/ui/button';
 import { Popover } from '#shared/components/ui/popover';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
+import { WithAtom } from '#shared/ui/WithAtom';
 import { WithAtomTruthfulValue } from '#shared/ui/WithAtomTruthfulValue';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { Modal } from '#shared/ui/modal';
@@ -30,11 +31,9 @@ import { QuestionerBlankRedactorAddTemplateModalInner } from './AddTemplateModal
 import { QuestionerBlankRedactorControls } from './Controls';
 
 let openVisibilityTemplateIdModalAtom: Atom<QuestionerTemplateId | null>;
-let isOpenAddModalAtom: Atom<boolean>;
 
 export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlankWid }) => {
   openVisibilityTemplateIdModalAtom ??= atom<QuestionerTemplateId | null>(null);
-  isOpenAddModalAtom ??= atom(false);
 
   const blank = useLiveQuery(() => questionerIDB.tb.blanks.get(blankw), [blankw]);
 
@@ -44,29 +43,50 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
       headTitle={blank?.title ?? 'Опрос'}
       head={
         <>
-          <Link
-            to="/q/i"
-            search={{ q: blank?.w }}
-          >
-            <Button
-              icon="BubbleChat"
-              className="text-xOK mr-2"
-            />
-          </Link>
-          <Link
-            to="/q/a/$blank"
-            params={{ blank: '' + blank?.w }}
-          >
-            <Button
-              icon="MessageUser01"
-              className="text-xOK mr-2"
-            />
-          </Link>
-          <Button
-            icon="AddCircleHalfDot"
-            className="text-xOK mr-2"
-            onClick={isOpenAddModalAtom.do.toggle}
-          />
+          {!blank?.w || (
+            <Link
+              to="/q/i"
+              search={{ q: blank.w }}
+            >
+              <Button
+                icon="BubbleChat"
+                className="text-xOK mr-2"
+              />
+            </Link>
+          )}
+
+          {!blank?.w || (
+            <Link
+              to="/q/a/$blank"
+              params={{ blank: '' + blank.w }}
+            >
+              <Button
+                icon="MessageUser01"
+                className="text-xOK mr-2"
+              />
+            </Link>
+          )}
+
+          {blank && (
+            <WithAtom init={false}>
+              {isOpenAddModalAtom => (
+                <>
+                  <Button
+                    icon="AddCircleHalfDot"
+                    className="text-xOK mr-2"
+                    onClick={isOpenAddModalAtom.do.toggle}
+                  />
+
+                  <Modal openAtom={isOpenAddModalAtom}>
+                    <QuestionerBlankRedactorAddTemplateModalInner
+                      blank={blank}
+                      openAtom={isOpenAddModalAtom}
+                    />
+                  </Modal>
+                </>
+              )}
+            </WithAtom>
+          )}
         </>
       }
       content={
@@ -213,15 +233,6 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
               )}
             </WithAtomTruthfulValue>
           </FullContent>
-
-          <Modal openAtom={isOpenAddModalAtom}>
-            {blank && (
-              <QuestionerBlankRedactorAddTemplateModalInner
-                blank={blank}
-                openAtom={isOpenAddModalAtom}
-              />
-            )}
-          </Modal>
         </>
       }
     />
