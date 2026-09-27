@@ -124,31 +124,31 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
     };
   }) => {
     return `<!DOCTYPE html>
-        <html>
-            <head>
-                <title>${title}</title>
+<html>
+  <head>
+    <title>${title}</title>
 
-                <meta name="description" content="${cmDescription}" />
-                <meta charset="UTF-8" />
+    <meta name="description" content="${cmDescription}" />
+    <meta charset="UTF-8" />
 
-                ${makeOgMeta('title', title)}
-                ${makeOgMeta('description', ogDescription)}
-                ${makeOgMeta('image', `${hostConfig.url}/android-chrome-512x512.png`)}
-                ${makeOgMeta('image:width', '512')}
-                ${makeOgMeta('image:height', '512')}
-                ${makeOgMeta('url', hostConfig.url)}
-                ${makeOgMeta('type', 'website')}
-                ${
-                  ogAudio
-                    ? `
-                      ${makeOgMeta('audio', ogAudio.url)}
-                      ${makeOgMeta('audio:title', ogAudio.title)}
-                      ${makeOgMeta('audio:type', 'audio/mpeg')}`
-                    : ''
-                }
-            </head>
-            <body>${bodyContent}</body>
-        </html>`;
+    ${makeOgMeta('title', title)}
+    ${makeOgMeta('description', ogDescription)}
+    ${makeOgMeta('image', `${hostConfig.url}/android-chrome-512x512.png`)}
+    ${makeOgMeta('image:width', '512')}
+    ${makeOgMeta('image:height', '512')}
+    ${makeOgMeta('url', hostConfig.url)}
+    ${makeOgMeta('type', 'website')}
+    ${
+      ogAudio
+        ? `
+          ${makeOgMeta('audio', ogAudio.url)}
+          ${makeOgMeta('audio:title', ogAudio.title)}
+          ${makeOgMeta('audio:type', 'audio/mpeg')}`
+        : ''
+    }
+  </head>
+  <body>${bodyContent}</body>
+</html>`;
   };
 
   app.get(/^[^?#]+\.(js|png|json|mp3)($|[?#])/, async (req: Request, res: Response) => {

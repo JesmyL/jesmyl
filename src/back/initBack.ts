@@ -46,7 +46,7 @@ export const initBack = async () => {
   delaycompress
   sharedscripts
   postrotate
-          /usr/lib/rsyslog/rsyslog-rotate
+    /usr/lib/rsyslog/rsyslog-rotate
   endscript
 }`,
       async () => {

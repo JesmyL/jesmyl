@@ -38,6 +38,11 @@ export const rewriteAndDo = async (
   newContent: string,
   doOnChanged?: () => Promise<unknown> | unknown,
 ) => {
+  if (!doOnChanged) {
+    fs.writeFileSync(path, newContent.trimStart());
+    return;
+  }
+
   let content = '';
   try {
     content = fs.readFileSync(path, 'utf-8');
@@ -48,6 +53,6 @@ export const rewriteAndDo = async (
   if (content.trim() !== newContent.trim()) {
     console.info(makeYellowLogText(`Содержимое файла ${path} было изменено`));
     fs.writeFileSync(path, newContent.trimStart());
-    await doOnChanged?.();
+    await doOnChanged();
   }
 };
