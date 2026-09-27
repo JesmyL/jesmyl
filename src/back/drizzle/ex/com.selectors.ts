@@ -15,6 +15,7 @@ export const makePgCheckedSelectExportableComSqlRaw = <Adds extends Parameters<t
     d: `=${CmComIntensityLevel.Medium}`,
     al: `len=0`,
     nl: `len=0`,
+    c1: `len=0`,
     b: `=${Bool.False}`,
     bpm: `=0`,
     p: `=0`,
