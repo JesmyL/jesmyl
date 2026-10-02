@@ -76,7 +76,9 @@ export const useBibleSlideMapBlocks = (
 
     if (showTranslates.length === 1) {
       shownVersesTBCVKeySet = new Set(selectedTbcvKeys);
-    } else if (showBooksCount !== 1 || showChaptersCount !== 1) {
+    }
+
+    if (showBooksCount !== 1 || showChaptersCount !== 1) {
       liveQuerySelector = () => bibleTBCVTranslatesIDB.tb.list.where('k').anyOf(selectedTbcvKeys).toArray();
     }
   }
@@ -188,6 +190,7 @@ const makeSlideJoinedAddressMapBlocks = (
                   .filter(itIt)
                   .join('\n');
               })
+              .filter(itIt)
               .join('\n') + (isEllipsis ? '...' : ''),
         };
       })

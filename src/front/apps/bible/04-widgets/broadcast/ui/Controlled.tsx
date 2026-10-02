@@ -12,6 +12,7 @@ import {
   bibleBroadcastGridSizesAtom,
   bibleBroadcastGridTabsAtom,
 } from '$bible/shared/state';
+import { Link } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { ReactNode, useEffect } from 'react';
 
@@ -42,6 +43,15 @@ export const BibleBroadcastControlled = ({ head, headTitle }: Props) => {
       className=""
       headTitle={headTitle ?? translateBase(it => it.bible.t)}
       head={head}
+      backButtonRender={(linkRef, backButtonNode) => (
+        <Link
+          to="."
+          ref={linkRef}
+          search={prev => ({ ...prev, tran: undefined })}
+        >
+          {backButtonNode}
+        </Link>
+      )}
       content={
         <div
           className="w-full h-full"

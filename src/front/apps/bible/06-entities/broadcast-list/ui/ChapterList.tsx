@@ -30,7 +30,7 @@ export function BibleBroadcastListChapters() {
     <div
       ref={listRef}
       className="w-[2.5em] min-w-[2.5em] overflow-y-auto overflow-x-hidden"
-      title="Ctrl - добавить из главы"
+      title="Ctrl+@ - добавить из главы"
     >
       {arrayByLength(sizes[currentBooki]?.length ?? 20, chapteri => {
         return (

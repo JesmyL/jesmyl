@@ -28,7 +28,7 @@ export function BibleBroadcastListBooks() {
     <StyledList
       ref={listRef}
       className="overflow-y-auto overflow-x-hidden"
-      title="Ctrl - добавить из книги"
+      title="Ctrl+@ - добавить из книги"
     >
       {takeBibleLangBooks(langi).map((book, booki) => {
         return (
