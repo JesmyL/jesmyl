@@ -98,6 +98,7 @@ export class FileStore<Value> {
   setValue = (val: Value | ((value: Value) => Value), formatIndent?: number | nil) => {
     const value = checkIsFunction(val) ? val(this.getValue()) : val;
 
+    if (value === this.value) return;
     this.value = value;
     this.writeValue(value, formatIndent);
   };
