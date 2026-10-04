@@ -1,8 +1,7 @@
-import { host, ip, isUpdateAllStarts } from '../../../../host-config.json';
+import { host, ip } from '../../../../host-config.json';
 
 export const hostConfig = {
   host,
   ip,
-  isUpdateAllStarts,
   url: `https://${host}` as const,
 };

@@ -34,6 +34,9 @@ secret.md5.json
 .env.test.local
 .env.production.local
 
+paths.basic.mjs
+paths.mjs
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

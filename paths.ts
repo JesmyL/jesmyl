@@ -2,7 +2,7 @@ import { hostConfigFileName } from './freshHostConfig';
 import { deployPathsBasicDict } from './paths.basic';
 
 export const deployPathsDict: Record<string, string[]> = {
-  '': [hostConfigFileName, 'hostConfig.mjs'],
+  '': [hostConfigFileName],
   ...deployPathsBasicDict,
 
   ...{

@@ -1,4 +1,4 @@
-import { LocalSokiAuth, SokiAuthLogin, SokiVisit } from 'shared/api';
+import { hostConfig, LocalSokiAuth, SokiAuthLogin, SokiVisit } from 'shared/api';
 import { appVersionFileStore } from './apps/index/file-stores';
 
 export const userVisitStringified = (visitInfo: SokiVisit | nil) =>
@@ -18,4 +18,8 @@ export const takeLogginedAuthOrThrow = (auth: LocalSokiAuth | nil): LocalSokiAut
   if (!auth?.login) throw 'Не авторизован';
 
   return auth as never;
+};
+
+export const makeCertBotFilePath = (fileName: string) => {
+  return `/etc/letsencrypt/live/${hostConfig.host}/${fileName}.pem`;
 };

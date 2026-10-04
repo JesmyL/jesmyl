@@ -1,6 +1,7 @@
 import { exec } from 'child_process';
 import file_system from 'fs';
 import { hostConfig } from '../freshHostConfig';
+import { makeGreenLogText, makeRedLogText } from '../src/back/utils.exec';
 import { buildBackIndexFile } from './build-back-index';
 
 const versionFilePath = 'src/shared/values/+version.json';
@@ -63,7 +64,9 @@ export const deployTheCode = async (
 };
 
 const sendFilesOnServer = (files: string[], back: { targetDir: string }) => {
-  return execAsync(`scp -r ${files.join(' ')} root@${hostConfig.host}:/var/www/${back.targetDir}`);
+  return execAsync(
+    `scp -r ${files.join(' ')} root@${process.env.TARGET_IP || hostConfig.ip}:/var/www/${back.targetDir}`,
+  );
 };
 
 export const execAsync = (stringCommand: string) => {
@@ -71,10 +74,10 @@ export const execAsync = (stringCommand: string) => {
   return new Promise((res, rej) =>
     exec(stringCommand, error => {
       if (error) {
-        console.error('FAILED', stringCommand);
+        console.error(makeRedLogText('FAILED'), makeRedLogText(stringCommand));
         rej(error);
       } else {
-        console.info('Finished', stringCommand);
+        console.info(makeGreenLogText('Finished'), makeGreenLogText(stringCommand));
         res(0);
       }
     }),

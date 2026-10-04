@@ -2,17 +2,23 @@ import { build } from 'esbuild';
 
 export const buildBackIndexFile = async () => {
   return Promise.all(
-    ['back.index', 'drizzle.schema', 'drizzle.config'].map(async fileName => {
-      const filePath = `src/back/${fileName}`;
-      const outfile = `${filePath}.cjs`;
+    [
+      'back.index.cjs',
+      'drizzle.schema.cjs',
+      'drizzle.config.cjs',
+      'initializeBack.cjs',
+      '/paths.basic.mjs',
+      '/paths.mjs',
+    ].map(async fileName => {
+      const outfile = fileName.startsWith('/') ? fileName.slice(1) : `src/back/${fileName}`;
 
       await build({
-        entryPoints: [`${filePath}.ts`],
+        entryPoints: [`${outfile.slice(0, -4)}.ts`],
         outfile,
         bundle: true,
         minify: false,
         platform: 'node',
-        format: 'cjs',
+        format: fileName.endsWith('.mjs') ? 'esm' : 'cjs',
         keepNames: true,
         minifyWhitespace: true,
         treeShaking: true,

@@ -1,15 +1,24 @@
+import { randomBytes } from 'crypto';
 import fs from 'fs';
 import { hostConfig } from 'shared/api';
+import { electronAppName } from 'shared/const/electron';
 import { Do } from 'shared/enums';
 import { checkIsStartsWith } from 'shared/utils/checkIs';
+import { checkIsEq } from 'shared/utils/checkIsEq';
 import { objectKeys } from 'shared/utils/object.utils';
+import { stameskaIconPack } from 'stameska-icon/pack';
 import { deployPathsBasicDict } from '../../paths.basic';
+import { indexStameskaIconsFileStore, valuesFileStore } from './apps/index/file-stores';
+import { tokenSecretFileStore } from './complect/soki/file-stores';
 import { backConfig } from './config/backConfig';
 import { hostCwdOptions, systemdPath } from './const';
 import { lazyEnvJson } from './envJson';
+import { emailerConfigFileStorage } from './sides/emailer/file-stores';
+import { tgBotConfig } from './sides/telegram-bot/file-stores';
+import { makeCertBotFilePath } from './utils';
 import { makeCyanLogText, makeGreenLogText, makeYellowLogText, rewriteAndDo, runCommand } from './utils.exec';
 
-export const initBack = async () => {
+export const initBack = async (isInitialize = false) => {
   const { DB_USER, DB_NAME, DB_PASSWORD, DB_PORT, hostRootDir, envFilePath } = lazyEnvJson();
 
   fs.mkdirSync(systemdPath, { recursive: true });
@@ -84,14 +93,13 @@ MemoryHigh=500M`,
     //
   }
 
+  const fusers = 'fuser -k 443/tcp & fuser -k 80/tcp & fuser -k 4446/tcp';
+
   const scripts = {
     scripts: {
-      relog: `fuser -k 443/tcp & fuser -k 80/tcp & node ${hostRootDir}/back.index.cjs`,
-      're-start': 'fuser -k 443/tcp & fuser -k 80/tcp & systemctl restart jesmyl_soki',
+      relog: `${fusers} & node ${hostRootDir}/back.index.cjs`,
+      're-start': `${fusers} & systemctl restart jesmyl_soki`,
       're-status': 'systemctl status jesmyl_soki',
-      'relog-s': 'fuser -k 3359/tcp & node /var/www/sub/back.index.cjs',
-      're-start-s': 'systemctl restart jsub',
-      're-status-s': 'systemctl status jsub',
     },
   };
 
@@ -166,13 +174,9 @@ MemoryHigh=500M`,
     console.info(makeGreenLogText('[Успешно] Локальная база PostgreSQL готова к работе'));
   }
 
-  console.info(`
-    // Натравить айпи на домен и установить сертификаты:
-      sudo apt update
-      sudo apt install certbot
-      sudo certbot certonly --standalone -d ${hostConfig.host}
-      (crontab -l 2>/dev/null; echo '0 3 * * 1 certbot renew --pre-hook "systemctl stop jesmyl_soki" --post-hook "systemctl start jesmyl_soki"') | crontab -
-  `);
+  if (!fs.existsSync(`${hostRootDir}/node_modules`)) {
+    await runCommand(`npm i --prefix /var/www/${hostConfig.host}/`);
+  }
 
   if (!backConfig.isTest)
     try {
@@ -189,4 +193,44 @@ MemoryHigh=500M`,
     } catch {
       console.error(makeYellowLogText('[Ошибка] Не удалось автоматически настроить SWAP'));
     }
+
+  if (isInitialize) {
+    if (indexStameskaIconsFileStore.getValue() == null) indexStameskaIconsFileStore.setValue(stameskaIconPack);
+
+    valuesFileStore.setValue(prev => {
+      const news = {
+        ...prev,
+        // chatUrl: '',
+        // iconSearchLink: '',
+        desktopLinuxDownLink: `${hostConfig.url}/down/${electronAppName}.AppImage`,
+        desktopWindowsDownLink: `${hostConfig.url}/down/${electronAppName}.exe`,
+      };
+
+      return checkIsEq(prev, news) ? prev : news;
+    });
+
+    // generate password in https://id.yandex.ru/security/app-passwords
+    // Некоторые хостинги блокируют 465 порт! Нужно разблочить!!!
+    emailerConfigFileStorage.setValue(prev => {
+      const news = {
+        ...prev,
+      };
+
+      return checkIsEq(prev, news) ? prev : news;
+    });
+
+    if (!Do.It) tokenSecretFileStore.setValue({ token: randomBytes(60).toString('hex') });
+    if (!Do.It) tgBotConfig.setValue({ token: '' });
+
+    if (!fs.existsSync(makeCertBotFilePath('fullchain'))) {
+      await runCommand(`sudo apt update`);
+      await runCommand(`sudo apt install certbot`);
+      await runCommand(`sudo certbot certonly --standalone -d ${hostConfig.host}`);
+      await runCommand(
+        `(crontab -l 2>/dev/null; echo '0 3 * * 1 certbot renew --pre-hook "systemctl stop jesmyl_soki" --post-hook "systemctl start jesmyl_soki"') | crontab -`,
+      );
+    }
+
+    process.exit(1);
+  }
 };

@@ -24,10 +24,9 @@ if (envHost) {
 
 const hostContent = '' + fs.readFileSync(hostConfigFilePath);
 if (!hostContent) throw `${hostConfigFileName} file is empty`;
-const { host, ip, isUpdateAllStarts } = JSON.parse(hostContent);
+const { host, ip } = JSON.parse(hostContent);
 
 export const hostConfig = {
-  isUpdateAllStarts,
   host,
   ip,
   url: `https://${host}`,

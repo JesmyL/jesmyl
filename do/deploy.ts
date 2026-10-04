@@ -24,8 +24,10 @@ deployTheCode(
 );
 
 function makePaths(prefix: string, dict: Record<string, string[]>) {
+  const isCases = false;
+
   const newDict: Record<string, string[]> = {};
-  const keyPostfix = hostConfig.isUpdateAllStarts ? '/+case' : '';
+  const keyPostfix = isCases ? '/+case' : '';
 
   Object.keys(dict).forEach(key => {
     const replace = (str: string) => str.replace('#', key + keyPostfix).replace('~', prefix);

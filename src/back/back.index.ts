@@ -1,4 +1,4 @@
-import { hostConfig, Langi } from 'shared/api';
+import { Langi } from 'shared/api';
 import { CmComOrders } from 'shared/const/cm/Com/parents/20-Orders';
 import { Do } from 'shared/enums';
 import { iife } from 'shared/utils';
@@ -17,7 +17,6 @@ import { localeDynamicKz } from './locales/dynamic/kz';
 import { localeDynamicRu } from './locales/dynamic/ru';
 import { localeDynamicUa } from './locales/dynamic/ua';
 import { baseMessagesCatcher } from './sides/telegram-bot/complect/message-catchers';
-import { updateAllStarts } from './updateAllStarts';
 
 iife(async () => {
   if (Do.It) await import('./initBack').then(m => m.initBack());
@@ -42,8 +41,6 @@ iife(async () => {
   scheduleWidgetMessageCatcher.register();
 
   startCrTgAlarm();
-
-  if (hostConfig.isUpdateAllStarts) updateAllStarts();
 
   if (Do.It) if (backConfig.isTest) await import('./downloadCmAudios').then(m => m.downloadCmAudios());
 });

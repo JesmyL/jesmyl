@@ -1,4 +1,5 @@
 import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
+import { makeCertBotFilePath } from 'back/utils';
 import express, { Request, Response } from 'express';
 import fs from 'fs';
 import http from 'http';
@@ -24,7 +25,11 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
   app.get('/sw.js', (_req, res) => {
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     res.setHeader('Content-Type', 'application/javascript');
-    res.sendFile(`${hostRootDir}/sw.js`);
+    res.sendFile(`${hostRootDir}/sw.js`, (err: Error) => {
+      if (err && !res.headersSent) {
+        res.status(404).send('File not found');
+      }
+    });
   });
 
   app.use(express.json());
@@ -191,6 +196,7 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
           return res.status(200).contentType('text/html').send(customPage);
         }
 
+        res.setHeader('Referrer-Policy', 'no-referrer');
         res.redirect(302, externalUrl);
       } catch (error) {
         console.error('Proxy error:', error);
@@ -206,7 +212,11 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
         'Cache-Control': 'public, max-age=3600',
       });
 
-    res.sendFile(`${hostRootDir}${req.url}`);
+    res.sendFile(`${hostRootDir}${req.url}`, (err: Error) => {
+      if (err && !res.headersSent) {
+        res.status(404).send('File not found');
+      }
+    });
   });
 
   app.get(`/${vitePWAOptions.manifestFilename}`, (_req, res) => {
@@ -215,7 +225,11 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
     res.setHeader('Expires', '0');
     res.setHeader('Content-Type', 'application/manifest+json');
 
-    res.sendFile(path.join(__dirname, 'build', vitePWAOptions.manifestFilename));
+    res.sendFile(path.join(__dirname, 'build', vitePWAOptions.manifestFilename), (err: Error) => {
+      if (err && !res.headersSent) {
+        res.status(404).send('File not found');
+      }
+    });
   });
 
   app.use(async (req: Request, res: Response) => {
@@ -266,12 +280,16 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
       return;
     }
 
-    res.sendFile(path.resolve(`${hostRootDir}/index.html`));
+    res.sendFile(path.resolve(`${hostRootDir}/index.html`), (err: Error) => {
+      if (err && !res.headersSent) {
+        res.status(404).send('File not found');
+      }
+    });
   });
 
   const readCert = (fileName: string) => {
     try {
-      return fs.readFileSync(`/etc/letsencrypt/live/${hostConfig.host}/${fileName}.pem`, 'utf8');
+      return fs.readFileSync(makeCertBotFilePath(fileName), 'utf8');
     } catch (_e) {
       //
     }
@@ -313,4 +331,12 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
       })
       .listen(+port, '0.0.0.0', () => console.info(`WS запущен локально`));
   }
+
+  process.on('uncaughtException', err => {
+    console.error('Критическая ошибка:', err);
+  });
+
+  process.on('unhandledRejection', reason => {
+    console.error('Необработанный промис:', reason);
+  });
 };
