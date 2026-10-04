@@ -174,10 +174,6 @@ MemoryHigh=500M`,
     console.info(makeGreenLogText('[Успешно] Локальная база PostgreSQL готова к работе'));
   }
 
-  if (!fs.existsSync(`${hostRootDir}/node_modules`)) {
-    await runCommand(`npm i --prefix /var/www/${hostConfig.host}/`);
-  }
-
   if (!backConfig.isTest)
     try {
       const swapCheck = await runCommand('swapon --show');
@@ -195,6 +191,10 @@ MemoryHigh=500M`,
     }
 
   if (isInitialize) {
+    if (!fs.existsSync(`${hostRootDir}/node_modules`)) {
+      await runCommand(`npm i --prefix /var/www/${hostConfig.host}/`);
+    }
+
     if (indexStameskaIconsFileStore.getValue() == null) indexStameskaIconsFileStore.setValue(stameskaIconPack);
 
     valuesFileStore.setValue(prev => {

@@ -6,7 +6,7 @@ export const buildBackIndexFile = async () => {
       'back.index.cjs',
       'drizzle.schema.cjs',
       'drizzle.config.cjs',
-      'initializeBack.cjs',
+      // 'initializeBack.cjs',
       '/paths.basic.mjs',
       '/paths.mjs',
     ].map(async fileName => {
