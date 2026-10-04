@@ -73,7 +73,9 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           const prev = makeCmComNumLeadAudioLinkList(com.al);
           const isThereInPrev = prev?.includes(link);
 
-          com.al = isThereInPrev ? prev?.filter(pLink => pLink !== link) : [...(prev ?? []), link];
+          com.al = isThereInPrev
+            ? prev?.filter(pLink => pLink !== link)
+            : [...(prev ?? []), makeCmComNumLeadLinkFromHttp(link)];
 
           return `изменение аудио-ссылок:\n\n${isThereInPrev ? 'удалено' : 'добавлено'}:\n${link}\n\nбыло:\n${prev}`;
         }),
