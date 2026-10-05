@@ -56,7 +56,9 @@ export class CmComTexts extends CmComChords {
           if (ord.isDisplayNone) return '';
 
           const ordLines = (
-            ord.isChBlock() ? ord.me.header() : ord.repeatedText(CmComTextSquareBracketsMode.AsIs, undefined, textCase)
+            ord.isChBlock()
+              ? ord.me.header()
+              : ord.repeatedText(CmComTextSquareBracketsMode.Remove, undefined, textCase)
           ).split('\n');
 
           blocki++;
@@ -107,6 +109,7 @@ export class CmComTexts extends CmComChords {
     let prevOrdw: CmComOrderWid;
     let prevInitWordi: number;
     let isPrevChordedSlide = false;
+
     const filterFullSlides = () =>
       slides.filter(({ lines, ord }) => lines.length && (ord.isVisible || isShowInvisibleSlides));
 
