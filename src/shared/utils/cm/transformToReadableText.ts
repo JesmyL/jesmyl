@@ -25,37 +25,10 @@ export const cmTransformToReadableText = (
 
     text = mappers[textCase ?? defaultTextCase](text, true);
     text = replaceInText(levelHolder, text);
-    if (textCase !== TextCase.Uppercase) text = upperCasesText(text);
+    if (textCase !== TextCase.Uppercase) text = upperCasesLeadLettersText(text);
   } else text = '';
 
   return { text, ...levelHolder };
-};
-
-export const cmTransformToReadableLines = (
-  levelHolder: CmComBracketLevelHolder,
-  lines: string[] | nil,
-  textCase: TextCase | nil,
-  squareBracketsMode: CmComTextSquareBracketsMode,
-) => {
-  if (!lines?.length) return { lines: [], level: 0 };
-
-  textCase ??= defaultTextCase;
-  let lastSymbol = '';
-
-  lines = lines.filter(itIt).map((line, linei) => {
-    line = squareBracketsReplacers[squareBracketsMode](line);
-
-    if (textCase !== TextCase.Capitalize && (!linei || prepsSet.has(lastSymbol)))
-      line = textToCapitalizeSlavicCase(line);
-
-    line = replaceInText(levelHolder, mappers[textCase](line, true)).trim();
-    if (textCase !== TextCase.Uppercase) line = upperCasesText(line);
-
-    lastSymbol = line.slice(-1);
-    return line;
-  });
-
-  return { lines, ...levelHolder };
 };
 
 /////////////////////////////////////////
@@ -83,11 +56,10 @@ const replaceInText = (levelHolder: CmComBracketLevelHolder, text: string) =>
     )
     .replace(makeRegExp(`/\\( [${anyQuotesStr}]\\)|\\([${anyQuotesStr}] \\)/g`), '');
 
-const upperCasesText = (text: string) =>
+const upperCasesLeadLettersText = (text: string) =>
   text.replace(makeRegExp(`/(?:[${preps}]\\s|[${anyQuotesStr}])[${slavicLowerLettersStr}]/g`), textToUpperCase);
 
 const preps = '.!?';
-const prepsSet = new Set(preps);
 
 const mappers: Record<TextCase, (line: string, isMultiline?: boolean) => string> = {
   [TextCase.Capitalize]: textToCapitalizeSlavicCase,
