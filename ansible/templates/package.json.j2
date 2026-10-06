@@ -1,0 +1,22 @@
+{
+  "name": "back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "relog": "fuser -k 443/tcp & fuser -k 80/tcp & fuser -k 4446/tcp & node {{ host_root_dir }}/back.index.cjs",
+    "re-start": "fuser -k 443/tcp & fuser -k 80/tcp & fuser -k 4446/tcp & systemctl restart jesmyl_soki",
+    "re-status": "systemctl status jesmyl_soki"
+  },
+  "dependencies": {
+    "ws": "^8.18.3",
+    "postgres": "^3.4.9",
+    "jsonwebtoken": "^9.0.2",
+    "node-schedule": "^2.1.1",
+    "drizzle-orm": "^0.45.2",
+    "drizzle-kit": "^0.31.10"
+  }
+}

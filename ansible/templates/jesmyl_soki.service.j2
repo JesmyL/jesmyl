@@ -1,0 +1,17 @@
+[Unit]
+Description=The Soki Service
+
+[Service]
+Restart=on-failure
+RestartSec=5s
+WorkingDirectory={{ host_root_dir }}
+ExecStart=node --max-old-space-size=450 {{ host_root_dir }}/back.index.cjs
+StandardOutput=journal
+StandardError=journal
+LogRateLimitIntervalSec=30s
+LogRateLimitBurst=1000
+MemoryMax=550M
+MemoryHigh=500M
+
+[Install]
+WantedBy=multi-user.target
