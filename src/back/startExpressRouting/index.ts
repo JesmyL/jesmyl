@@ -5,6 +5,7 @@ import fs from 'fs';
 import http from 'http';
 import https from 'https';
 import path from 'path';
+import { createSecureContext, type SecureContext } from 'tls';
 import { makeRegExp } from 'regexpert';
 import { CmComWid, HttpNumLeadLink, ScheduleWidgetWid, hostConfig } from 'shared/api';
 import { extractNumber } from 'shared/utils';
@@ -13,7 +14,7 @@ import { vitePWAOptions } from '../../../vite-pwa.options';
 import { takeComwTiny } from '../apps/cm/com.tiny';
 import { makeCmComHttpLinkFromNumLead } from '../apps/cm/complect/com-http-links';
 import { catsFileStorage } from '../apps/cm/file-stores';
-import { hostRootDir } from '../envJson';
+import { lazyEnvJson, hostRootDir } from '../envJson';
 import { tglogger } from '../sides/telegram-bot/log/log-bot';
 import { pullFilesExpressRoute } from './pullFiles';
 import { pushFilesExpressRoute } from './pushFiles';
@@ -287,9 +288,11 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
     });
   });
 
-  const readCert = (fileName: string) => {
+  const { subHost } = lazyEnvJson();
+
+  const readCert = (fileName: string, host = hostConfig.host) => {
     try {
-      return fs.readFileSync(makeCertBotFilePath(fileName), 'utf8');
+      return fs.readFileSync(makeCertBotFilePath(fileName, host), 'utf8');
     } catch (_e) {
       //
     }
@@ -299,6 +302,14 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
   const cert = readCert('fullchain');
 
   if (key && cert) {
+    const baseContext = createSecureContext({ key, cert });
+    const subKey = subHost ? readCert('privkey', subHost) : undefined;
+    const subCert = subHost ? readCert('fullchain', subHost) : undefined;
+
+    const sniContexts = new Map<string, SecureContext>([[hostConfig.host.toLowerCase(), baseContext]]);
+
+    if (subHost && subKey && subCert) sniContexts.set(subHost.toLowerCase(), createSecureContext({ key: subKey, cert: subCert }));
+
     http
       .createServer((req, res) => {
         res.writeHead(301, { Location: `https://${req.headers.host}${req.url}` });
@@ -307,7 +318,16 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
       .listen(80, '0.0.0.0', () => tglogger.log('HTTP редирект запущен на порту 80'));
 
     https
-      .createServer({ key, cert }, app)
+      .createServer(
+        {
+          key,
+          cert,
+          SNICallback: (servername, callback) => {
+            callback(null, sniContexts.get(servername?.toLowerCase() ?? '') ?? baseContext);
+          },
+        },
+        app,
+      )
       .on('upgrade', (request, socket, head) => {
         const pathname = request.url ? new URL(request.url, 'http://localhost').pathname : '';
         if (pathname === '/websocket/' || pathname === '/websocket') {

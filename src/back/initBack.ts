@@ -19,7 +19,7 @@ import { makeCertBotFilePath } from './utils';
 import { makeCyanLogText, makeGreenLogText, makeYellowLogText, rewriteAndDo, runCommand } from './utils.exec';
 
 export const initBack = async (isInitialize = false) => {
-  const { DB_USER, DB_NAME, DB_PASSWORD, DB_PORT, hostRootDir, envFilePath } = lazyEnvJson();
+  const { DB_USER, DB_NAME, DB_PASSWORD, DB_PORT, hostRootDir, envFilePath, subHost } = lazyEnvJson();
 
   fs.mkdirSync(systemdPath, { recursive: true });
   fs.mkdirSync(hostRootDir, { recursive: true });
@@ -229,6 +229,12 @@ MemoryHigh=500M`,
       await runCommand(
         `(crontab -l 2>/dev/null; echo '0 3 * * 1 certbot renew --pre-hook "systemctl stop jesmyl_soki" --post-hook "systemctl start jesmyl_soki"') | crontab -`,
       );
+    }
+
+    if (subHost && !fs.existsSync(makeCertBotFilePath('fullchain', subHost))) {
+      await runCommand(`sudo apt update`);
+      await runCommand(`sudo apt install certbot`);
+      await runCommand(`sudo certbot certonly --standalone -d ${subHost}`);
     }
 
     process.exit(1);

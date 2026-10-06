@@ -20,6 +20,6 @@ export const takeLogginedAuthOrThrow = (auth: LocalSokiAuth | nil): LocalSokiAut
   return auth as never;
 };
 
-export const makeCertBotFilePath = (fileName: string) => {
-  return `/etc/letsencrypt/live/${hostConfig.host}/${fileName}.pem`;
+export const makeCertBotFilePath = (fileName: string, host = hostConfig.host) => {
+  return `/etc/letsencrypt/live/${host}/${fileName}.pem`;
 };

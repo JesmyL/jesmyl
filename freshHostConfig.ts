@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
+import { makeSubHost } from './src/shared/utils/makeSubHost';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -24,12 +25,17 @@ if (envHost) {
 
 const hostContent = '' + fs.readFileSync(hostConfigFilePath);
 if (!hostContent) throw `${hostConfigFileName} file is empty`;
-const { host, ip } = JSON.parse(hostContent);
+const { host, ip, subdomain } = JSON.parse(hostContent) as {
+  host: string;
+  ip: string;
+  subdomain?: string | null;
+};
 
 export const hostConfig = {
   host,
   ip,
   url: `https://${host}`,
+  subHost: makeSubHost(host, subdomain),
 };
 
 const text = ` ${host} - ${ip} `;

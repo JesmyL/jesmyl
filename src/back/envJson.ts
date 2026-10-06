@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { makeSubHost } from 'shared/utils/makeSubHost';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 import hostConfig from '../../host-config.json';
 import * as jsonForType from './.env.json';
@@ -21,6 +22,7 @@ const cacheDict: Record<
       envFilePath: string;
       dbUrl: string;
       hostRootDir: string;
+      subHost: string | undefined;
     }
 > = {};
 
@@ -69,9 +71,17 @@ export const lazyEnvJson = (filePostfix: '' | `.${string}` = '') => {
   const dbUrl =
     `postgres://${envJson.DB_USER}:${envJson.DB_PASSWORD}@${envJson.DB_HOST}:${envJson.DB_PORT}/${envJson.DB_NAME}` as const;
 
+  // Явная пустая строка в .env.json НЕ отключает поддомен из host-config.json:
+  // makeSubHost('') → undefined, поэтому оператор ?? переходит к hostFileSubdomain.
+  // Нестроковые значения трактуются как отсутствующие внутри makeSubHost.
+  const envSubdomain: unknown = (envJson as { subdomain?: unknown }).subdomain;
+  const hostFileSubdomain: unknown = (hostConfig as { subdomain?: unknown }).subdomain;
+  const subHost = makeSubHost(hostConfig.host, envSubdomain) ?? makeSubHost(hostConfig.host, hostFileSubdomain);
+
   return (cacheDict[filePostfix] = {
     ...envJson,
     ...hostConfig,
+    subHost,
     envFilePath,
     dbUrl,
     hostRootDir,

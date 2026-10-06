@@ -129,6 +129,26 @@
         mode: "0600"
         force: false
 
+    # inventory `subdomain` мог быть раскомментирован уже после первой
+    # инициализации, а шаблон выше (force: false) существующий .env.json не
+    # трогает. Отдельно обновляем только ключ subdomain, иначе certbot выпустит
+    # сертификат, который бэкенд не будет использовать.
+    - name: Прочитать существующий .env.json для обновления поддомена
+      ansible.builtin.slurp:
+        src: "{{ host_root_dir }}/.env.json"
+      register: env_json_slurp
+      when: (subdomain | default('')) | length > 0
+
+    - name: Обновить ключ subdomain в .env.json
+      ansible.builtin.copy:
+        dest: "{{ host_root_dir }}/.env.json"
+        owner: root
+        group: root
+        mode: "0600"
+        content: "{{ (env_json_slurp.content | b64decode | from_json) | combine({'subdomain': subdomain}) | to_nice_json }}\n"
+      when: (subdomain | default('')) | length > 0
+      notify: restart jesmyl_soki
+
     # -------------------------------------------------------------------------
     # 4. PostgreSQL: пароль postgres, БД, pg_hba, порт
     #    В initBack.ts все шаги обёрнуты в try/catch -> failed_when: false.
@@ -341,6 +361,31 @@
       when: not cert_file.stat.exists
       # Порт 80 может быть занят сервисом; initBack.ts не глотает ошибку, но для
       # идемпотентного провижининга не валим весь плейбук.
+      failed_when: false
+
+    # Defense-in-depth: subdomain подставляется в DNS-имя и путь LE, поэтому
+    # до выпуска сертификата валидируем его как DNS-метку. Пустой/отсутствующий
+    # subdomain пропускается (см. when остальных задач блока).
+    - name: Проверить формат поддомена (DNS-label)
+      ansible.builtin.assert:
+        that:
+          - (subdomain | trim) is match('(?i)^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$')
+        fail_msg: >-
+          subdomain '{{ subdomain }}' не является корректной DNS-меткой
+          (^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$, регистр не важен).
+      when: (subdomain | default('')) | length > 0
+
+    # Поддомен (опционально, inventory var `subdomain`): отдельный сертификат
+    # под конкретное имя. При пустом/отсутствующем subdomain путь ведёт в
+    # несуществующую директорию, задача выпуска пропускается.
+    - name: Проверить наличие SSL-сертификата поддомена
+      ansible.builtin.stat:
+        path: /etc/letsencrypt/live/{{ subdomain | default('') }}.{{ host }}/fullchain.pem
+      register: subdomain_cert_file
+
+    - name: Выпустить SSL-сертификат Let's Encrypt для поддомена
+      ansible.builtin.command: certbot certonly --standalone -d {{ subdomain }}.{{ host }}
+      when: (subdomain | default('')) | length > 0 and not subdomain_cert_file.stat.exists
       failed_when: false
 
     - name: Добавить cron-задачу обновления сертификата
