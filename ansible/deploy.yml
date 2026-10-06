@@ -28,14 +28,9 @@
     # Каталоги из deployPathsBasicDict (paths.basic.ts) + корень.
     # initBack.ts создаёт их через fs.mkdirSync({ recursive: true }).
     deploy_dirs:
-      - ""
+      - ''
       - apps/cm
-      - apps/cm/coms
-      - apps/cm/comComments
-      - apps/cm/comsInSchEventHistory
-      - apps/cm/comsInSchEvent
       - apps/index
-      - apps/index/schedules
       - apps/q
       - apps/q/blanks
       - apps/storages/list
@@ -105,16 +100,16 @@
     # -------------------------------------------------------------------------
     - name: Создать корневую директорию и подкаталоги приложения
       ansible.builtin.file:
-        path: "{{ host_root_dir }}/{{ item }}"
+        path: '{{ host_root_dir }}/{{ item }}'
         state: directory
-        mode: "0755"
-      loop: "{{ deploy_dirs }}"
+        mode: '0755'
+      loop: '{{ deploy_dirs }}'
 
     - name: Выставить права 755 на корневую директорию
       ansible.builtin.file:
-        path: "{{ host_root_dir }}"
+        path: '{{ host_root_dir }}'
         state: directory
-        mode: "0755"
+        mode: '0755'
 
     # -------------------------------------------------------------------------
     # 3. .env.json — только если файла ещё нет (не перезаписываем секреты)
@@ -123,10 +118,10 @@
     - name: Создать .env.json (не перезаписывать существующий)
       ansible.builtin.template:
         src: templates/env.json.j2
-        dest: "{{ host_root_dir }}/.env.json"
+        dest: '{{ host_root_dir }}/.env.json'
         owner: root
         group: root
-        mode: "0600"
+        mode: '0600'
         force: false
 
     # inventory `subdomain` мог быть раскомментирован уже после первой
@@ -135,16 +130,16 @@
     # сертификат, который бэкенд не будет использовать.
     - name: Прочитать существующий .env.json для обновления поддомена
       ansible.builtin.slurp:
-        src: "{{ host_root_dir }}/.env.json"
+        src: '{{ host_root_dir }}/.env.json'
       register: env_json_slurp
       when: (subdomain | default('')) | length > 0
 
     - name: Обновить ключ subdomain в .env.json
       ansible.builtin.copy:
-        dest: "{{ host_root_dir }}/.env.json"
+        dest: '{{ host_root_dir }}/.env.json'
         owner: root
         group: root
-        mode: "0600"
+        mode: '0600'
         content: "{{ (env_json_slurp.content | b64decode | from_json) | combine({'subdomain': subdomain}) | to_nice_json }}\n"
       when: (subdomain | default('')) | length > 0
       notify: restart jesmyl_soki
@@ -187,19 +182,19 @@
 
     - name: Разрешить md5-аутентификацию по 127.0.0.1
       ansible.builtin.lineinfile:
-        path: "{{ item.path }}"
-        line: "host all all 127.0.0.1/32 md5"
+        path: '{{ item.path }}'
+        line: 'host all all 127.0.0.1/32 md5'
         state: present
-      loop: "{{ pg_hba_files.files | default([]) }}"
+      loop: '{{ pg_hba_files.files | default([]) }}'
       notify: restart postgresql
       failed_when: false
 
     - name: Разрешить md5-аутентификацию по ::1
       ansible.builtin.lineinfile:
-        path: "{{ item.path }}"
-        line: "host all all ::1/128 md5"
+        path: '{{ item.path }}'
+        line: 'host all all ::1/128 md5'
         state: present
-      loop: "{{ pg_hba_files.files | default([]) }}"
+      loop: '{{ pg_hba_files.files | default([]) }}'
       notify: restart postgresql
       failed_when: false
 
@@ -215,10 +210,10 @@
     # initBack.ts: sed port=... выполняется только при DB_PORT != 5432.
     - name: Изменить порт PostgreSQL (если DB_PORT не 5432)
       ansible.builtin.lineinfile:
-        path: "{{ item.path }}"
+        path: '{{ item.path }}'
         regexp: '^#?\s*port\s*='
-        line: "port = {{ DB_PORT }}"
-      loop: "{{ pg_conf_files.files | default([]) }}"
+        line: 'port = {{ DB_PORT }}'
+      loop: '{{ pg_conf_files.files | default([]) }}'
       when: DB_PORT | int != 5432
       notify: restart postgresql
       failed_when: false
@@ -232,7 +227,7 @@
         dest: /etc/logrotate.d/rsyslog
         owner: root
         group: root
-        mode: "0644"
+        mode: '0644'
         content: |
           /var/log/syslog
           /var/log/mail.log
@@ -262,7 +257,7 @@
       ansible.builtin.lineinfile:
         path: /etc/systemd/journald.conf
         regexp: '^#?\s*SystemMaxUse='
-        line: "SystemMaxUse=100M"
+        line: 'SystemMaxUse=100M'
         state: present
       notify: restart systemd-journald
       failed_when: false
@@ -286,7 +281,7 @@
         - name: Выставить права 600 на /swapfile
           ansible.builtin.file:
             path: /swapfile
-            mode: "0600"
+            mode: '0600'
           failed_when: false
 
         - name: Инициализировать swap
@@ -300,7 +295,7 @@
         - name: Прописать /swapfile в /etc/fstab
           ansible.builtin.lineinfile:
             path: /etc/fstab
-            line: "/swapfile none swap sw 0 0"
+            line: '/swapfile none swap sw 0 0'
             state: present
           failed_when: false
 
@@ -315,7 +310,7 @@
         dest: /etc/systemd/system/jesmyl_soki.service
         owner: root
         group: root
-        mode: "0644"
+        mode: '0644'
       notify: restart jesmyl_soki
 
     - name: Перечитать конфигурацию systemd
@@ -337,15 +332,15 @@
     - name: Установить package.json бэкенда
       ansible.builtin.template:
         src: templates/package.json.j2
-        dest: "{{ host_root_dir }}/package.json"
+        dest: '{{ host_root_dir }}/package.json'
         owner: root
         group: root
-        mode: "0644"
+        mode: '0644'
 
     - name: Установить зависимости бэкенда
       ansible.builtin.command: npm i --prefix {{ host_root_dir }}
       args:
-        creates: "{{ host_root_dir }}/node_modules"
+        creates: '{{ host_root_dir }}/node_modules'
 
     # -------------------------------------------------------------------------
     # 9. Certbot: выпуск сертификата и cron-обновление
@@ -390,10 +385,10 @@
 
     - name: Добавить cron-задачу обновления сертификата
       ansible.builtin.cron:
-        name: "certbot renew jesmyl"
-        minute: "0"
-        hour: "3"
-        weekday: "1"
+        name: 'certbot renew jesmyl'
+        minute: '0'
+        hour: '3'
+        weekday: '1'
         job: >-
           certbot renew --pre-hook "systemctl stop jesmyl_soki"
           --post-hook "systemctl start jesmyl_soki"
@@ -418,14 +413,14 @@
   tasks:
     - name: Проверить наличие локального каталога build/
       ansible.builtin.stat:
-        path: "{{ playbook_dir }}/../build"
+        path: '{{ playbook_dir }}/../build'
       delegate_to: localhost
       become: false
       register: local_build_dir
 
     - name: Проверить наличие локального back.index.cjs
       ansible.builtin.stat:
-        path: "{{ playbook_dir }}/../src/back/back.index.cjs"
+        path: '{{ playbook_dir }}/../src/back/back.index.cjs'
       delegate_to: localhost
       become: false
       register: local_back_index
@@ -440,18 +435,18 @@
 
     - name: Скопировать собранный frontend в {{ host_root_dir }}
       ansible.builtin.copy:
-        src: "{{ playbook_dir }}/../build/"
-        dest: "{{ host_root_dir }}/"
-        mode: "0644"
-        directory_mode: "0755"
+        src: '{{ playbook_dir }}/../build/'
+        dest: '{{ host_root_dir }}/'
+        mode: '0644'
+        directory_mode: '0755'
       when: local_build_dir.stat.exists
 
     - name: Скопировать back.index.cjs в {{ host_root_dir }}
       ansible.builtin.copy:
-        src: "{{ playbook_dir }}/../src/back/back.index.cjs"
-        dest: "{{ host_root_dir }}/back.index.cjs"
+        src: '{{ playbook_dir }}/../src/back/back.index.cjs'
+        dest: '{{ host_root_dir }}/back.index.cjs'
         owner: root
         group: root
-        mode: "0644"
+        mode: '0644'
       when: local_back_index.stat.exists
       notify: restart jesmyl_soki
