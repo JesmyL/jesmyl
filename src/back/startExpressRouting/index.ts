@@ -5,16 +5,16 @@ import fs from 'fs';
 import http from 'http';
 import https from 'https';
 import path from 'path';
-import { createSecureContext, type SecureContext } from 'tls';
 import { makeRegExp } from 'regexpert';
 import { CmComWid, HttpNumLeadLink, ScheduleWidgetWid, hostConfig } from 'shared/api';
-import { extractNumber } from 'shared/utils';
+import { extractNumber, itIt } from 'shared/utils';
+import { createSecureContext, type SecureContext } from 'tls';
 import { WebSocketServer } from 'ws';
 import { vitePWAOptions } from '../../../vite-pwa.options';
 import { takeComwTiny } from '../apps/cm/com.tiny';
 import { makeCmComHttpLinkFromNumLead } from '../apps/cm/complect/com-http-links';
 import { catsFileStorage } from '../apps/cm/file-stores';
-import { lazyEnvJson, hostRootDir } from '../envJson';
+import { hostRootDir, lazyEnvJson } from '../envJson';
 import { tglogger } from '../sides/telegram-bot/log/log-bot';
 import { pullFilesExpressRoute } from './pullFiles';
 import { pushFilesExpressRoute } from './pushFiles';
@@ -308,7 +308,8 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
 
     const sniContexts = new Map<string, SecureContext>([[hostConfig.host.toLowerCase(), baseContext]]);
 
-    if (subHost && subKey && subCert) sniContexts.set(subHost.toLowerCase(), createSecureContext({ key: subKey, cert: subCert }));
+    if (subHost && subKey && subCert)
+      sniContexts.set(subHost.toLowerCase(), createSecureContext({ key: subKey, cert: subCert }));
 
     http
       .createServer((req, res) => {
@@ -354,9 +355,11 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
 
   process.on('uncaughtException', err => {
     console.error('Критическая ошибка:', err);
+    tglogger.systemError([err.message, err.cause, err.stack].filter(itIt).join('\n\n\n'));
   });
 
   process.on('unhandledRejection', reason => {
     console.error('Необработанный промис:', reason);
+    tglogger.systemError(`${reason}`);
   });
 };

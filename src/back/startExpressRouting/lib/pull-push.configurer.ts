@@ -163,11 +163,15 @@ export const pullPushDirFilesDictLazy = lazyInit(
             });
 
             return Promise.all(
-              mapObjectEntries(resultDict, async (login, data) => ({
-                data,
-                file: login,
-                name: (await takeUserTiny({ l: login }, false))?.uauth.fio ?? login,
-              })),
+              mapObjectEntries(resultDict, async (login, data) => {
+                const { email, fio, nick } = (await takeUserTiny({ l: login }, false))?.uauth ?? {};
+
+                return {
+                  data,
+                  file: login,
+                  name: fio || nick || email || login || '???',
+                };
+              }),
             );
           },
 
@@ -309,12 +313,12 @@ export const pullPushDirFilesDictLazy = lazyInit(
                 })
                 .from(userDB)
             ).map(({ u }) => {
-              const auth = jsonParseSecure(u.auth);
+              const { email, fio, nick } = jsonParseSecure(u.auth);
 
               return {
                 data: u,
                 file: u.l,
-                name: auth.fio || auth.nick || auth.email || '??',
+                name: fio || nick || email || u.l || '??',
               };
             }),
 
