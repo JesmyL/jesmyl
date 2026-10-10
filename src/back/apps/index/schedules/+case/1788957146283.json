@@ -25,8 +25,8 @@
       "i": 0,
       "wup": 7,
       "list": [
-        { "mi": 1, "type": 0, "topic": "утро" },
-        { "mi": 2, "atts": { "[cm]:coms": {} }, "type": 0, "topic": "вечер" }
+        { "mi": 1, "type": 0, "topic": "утро", "tgInform": 0 },
+        { "mi": 2, "atts": { "[cm]:coms": {} }, "type": 0, "topic": "вечер", "tgInform": 0 }
       ]
     },
     {
