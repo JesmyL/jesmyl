@@ -9,9 +9,12 @@ import { nounsFileStorage, pronounsFileStorage } from 'back/apps/index/file-stor
 import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
 import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
+import { mapBlankRow } from 'back/apps/q/db-stores';
 import { FileStore } from 'back/complect/FileStore';
 import {
   comDB,
+  questionerBlankDB,
+  questionerUserAnswerDB,
   sch2ComDB,
   schComHistoryDB,
   scheduleDB,
@@ -35,6 +38,8 @@ import {
   PullPushFileDirNameNet,
 } from 'shared/api/pullFiles.utils';
 import { Bool } from 'shared/enums';
+import { QuestionerBlankWid } from 'shared/model/q';
+import { QuestionerUserAnswer } from 'shared/model/q/answer';
 import { lazyInit } from 'shared/utils/lazyInit';
 
 const und = undefined;
@@ -415,6 +420,67 @@ export const pullPushDirFilesDictLazy = lazyInit(
         nouns: makeFileStoreConfig<'apps/index/', 'nouns'>()(nounsFileStorage),
         pronouns: makeFileStoreConfig<'apps/index/', 'pronouns'>()(pronounsFileStorage),
         constantsConfig: makeFileStoreConfig<'apps/index/', 'constantsConfig'>()(constantsConfigFileStore),
+      },
+
+      'apps/q/': {
+        'blanks/': {
+          pull: async () =>
+            (await db.select().from(questionerBlankDB).orderBy(questionerBlankDB.w)).map(row => ({
+              data: mapBlankRow(row),
+              file: `${row.w}`,
+              name: row.title,
+            })),
+
+          PUSH: (blank, blankw) =>
+            db.insert(questionerBlankDB).values({
+              w: extractNumber(blankw),
+              m: blank.m,
+              title: blank.title,
+              dsc: blank.dsc,
+              anon: blank.anon ?? null,
+              tmp: blank.tmp,
+              ord: blank.ord,
+              team: blank.team,
+            }),
+        },
+
+        'answers/': {
+          pull: async () => {
+            const dict: Record<string, { blankw: QuestionerBlankWid; answers: QuestionerUserAnswer[]; name: string }> =
+              {};
+
+            const rows = await db
+              .select({ answer: questionerUserAnswerDB, blankTitle: questionerBlankDB.title })
+              .from(questionerUserAnswerDB)
+              .innerJoin(questionerBlankDB, eq(questionerUserAnswerDB.blankw, questionerBlankDB.w))
+              .orderBy(questionerUserAnswerDB.blankw, questionerUserAnswerDB.id);
+
+            for (const { answer, blankTitle } of rows) {
+              (dict[answer.blankw] ??= { blankw: answer.blankw, answers: [], name: blankTitle }).answers.push({
+                fio: answer.fio ?? undefined,
+                a: answer.a,
+              });
+            }
+
+            return mapObjectEntries(dict, (_, { blankw, answers, name }) => ({
+              data: answers,
+              file: `${blankw}`,
+              name,
+            }));
+          },
+
+          PUSH: (answers, blankw) => {
+            if (!answers.length) return;
+
+            return db.insert(questionerUserAnswerDB).values(
+              answers.map(answer => ({
+                blankw: extractNumber(blankw),
+                fio: answer.fio ?? null,
+                a: answer.a,
+              })),
+            );
+          },
+        },
       },
     };
   },

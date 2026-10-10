@@ -1,4 +1,4 @@
-import { questionerBlanksDirStorage } from 'back/apps/q/file-stores';
+import { questionerBlanksStore } from 'back/apps/q/db-stores';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import {
   QuestionerCheckTemplate,
@@ -12,14 +12,15 @@ import {
 } from 'shared/model/q';
 import { takeKeyId } from 'shared/utils';
 import { questionerAdminServerTsjrpcBase } from '..';
+import { questionerAdminServerTsjrpcShare } from '../../admin.tsjrpc.share';
 
 export const questionerTSJRPCAddBlankTemplate: typeof questionerAdminServerTsjrpcBase.addBlankTemplate = async (
   { blankw, type },
-  { auth },
+  { auth, client },
 ) => {
   if (await throwIfNoUserScopeAccessRight(auth, 'q', 'EDIT', 'R')) throw '';
 
-  const blank = questionerBlanksDirStorage.getItem(blankw);
+  const blank = await questionerBlanksStore.getItem(blankw);
   if (blank == null) throw 'Not Found';
 
   let blankTmp: QuestionerTemplate;
@@ -51,7 +52,7 @@ export const questionerTSJRPCAddBlankTemplate: typeof questionerAdminServerTsjrp
   const keyId = takeKeyId(blank.tmp, QuestionerTemplateId.min);
   blank.ord.push(keyId);
   blank.tmp[keyId] = blankTmp;
-  questionerBlanksDirStorage.saveItem(blankw);
+  await questionerBlanksStore.saveItem(blankw, blank);
 
-  return { value: { ...blank, w: blankw } };
+  questionerAdminServerTsjrpcShare.updateBlanks({ blanks: [blank], maxMod: blank.m }, client);
 };

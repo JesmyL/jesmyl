@@ -21,6 +21,8 @@ import {
   UserLogin,
 } from 'shared/api';
 import { UserAccessRoleStoraged } from 'shared/model/index/access-rights';
+import { QuestionerBlank, QuestionerBlankWid } from 'shared/model/q';
+import { QuestionerUserAnswer } from 'shared/model/q/answer';
 
 export * from '../src/shared/utils';
 export * from '../src/shared/utils/object.utils';
@@ -95,5 +97,10 @@ export const pullPushFileDirNameNet = {
     >(),
 
     'sch2Com/': T<Record<CmComWid, { intp?: IExportableComInterpretation }>, `${ScheduleWidgetWid}`>(),
+  },
+
+  'apps/q/': {
+    'blanks/': T<QuestionerBlank, `${QuestionerBlankWid}`>(),
+    'answers/': T<QuestionerUserAnswer[], `${QuestionerBlankWid}`>(),
   },
 } satisfies Record<string, Record<string, { F: unknown; T: unknown }>>;

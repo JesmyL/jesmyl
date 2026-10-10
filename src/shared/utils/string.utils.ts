@@ -1,5 +1,7 @@
 import { makeRegExp } from 'regexpert';
 import { slavicLowerLettersStr } from './cm/com/const';
+import { lazyInit } from './lazyInit';
+import { objectKeys } from './object.utils';
 
 export const textToUpperCase = <Str extends string>(text: Str | nil) => (text?.toUpperCase() ?? '') as Uppercase<Str>;
 export const textToLowerCase = <Str extends string>(text: Str | nil) => (text?.toLowerCase() ?? '') as Lowercase<Str>;
@@ -13,3 +15,16 @@ export const textToCapitalizeSlavicCase = (text: string, isMultiline = false) =>
     makeRegExp(`/^([^${slavicLowerLettersStr}]*)([${slavicLowerLettersStr}])/${isMultiline ? 'gim' : 'i'}`),
     capRep,
   );
+
+export const escapeHtmlLazy = lazyInit(() => {
+  const htmlReplaces: Record<string, string> = {
+    '&': '&amp;',
+    '>': '&gt;',
+    '<': '&lt;',
+  };
+
+  const replacer = (all: string) => htmlReplaces[all] || all;
+  const regexp = makeRegExp(`/[${objectKeys(htmlReplaces).join('')}]/g`);
+
+  return (text: string) => text.replace(regexp, replacer);
+});

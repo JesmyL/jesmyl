@@ -1,4 +1,4 @@
-import { questionerBlanksDirStorage } from 'back/apps/q/file-stores';
+import { questionerBlanksStore } from 'back/apps/q/db-stores';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { takeLogginedAuthOrThrow } from 'back/utils';
 import { QuestionerBlankRole } from 'shared/model/q';
@@ -12,7 +12,7 @@ export const questionerTSJRPCCreateBlank: typeof questionerAdminServerTsjrpcBase
 
   const now = Date.now();
 
-  const { item } = await questionerBlanksDirStorage.createItem(() => ({
+  const { item } = await questionerBlanksStore.createItem(() => ({
     w: now,
     m: now,
     title: 'Новый опрос',
@@ -29,5 +29,5 @@ export const questionerTSJRPCCreateBlank: typeof questionerAdminServerTsjrpcBase
 
   questionerAdminServerTsjrpcShare.updateBlanks({ blanks: [item], maxMod: now }, tool.client);
 
-  return { value: item };
+  return { value: item.w };
 };

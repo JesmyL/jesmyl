@@ -2,6 +2,7 @@ import {
   QuestionerAnswerId,
   QuestionerBlank,
   QuestionerBlankSelector,
+  QuestionerBlankWid,
   QuestionerTemplateId,
   QuestionerTemplateSelector,
   QuestionerType,
@@ -10,8 +11,8 @@ import { QuestionerTemplateConditionType, QuestionerTemplateTypeConditionDict } 
 
 export type QuestionerAdminTsjrpcModel = {
   requestFreshes: (args: { lastModfiedAt: number }) => void;
-  createBlank: () => QuestionerBlank;
-  addBlankTemplate: (args: QuestionerBlankSelector<{ type: QuestionerType }>) => QuestionerBlank;
+  createBlank: () => QuestionerBlankWid;
+  addBlankTemplate: (args: QuestionerBlankSelector<{ type: QuestionerType }>) => void;
 
   getAdminBlank: (args: QuestionerBlankSelector) => QuestionerBlank | null;
 

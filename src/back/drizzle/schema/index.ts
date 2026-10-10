@@ -1,4 +1,5 @@
 export { comDB } from './com';
+export { questionerBlankDB, questionerUserAnswerDB } from './questioner';
 export { sch2ComDB } from './sch2Com';
 export { schComHistoryDB } from './schComHistory';
 export { scheduleDB } from './schedule';

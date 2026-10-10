@@ -5,11 +5,11 @@ import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { questionerIDB } from '$q/shared/state/qIdb';
 import { Link, useNavigate } from '@tanstack/react-router';
+import { useLiveQuery } from 'dexie-react-hooks';
 import { useState } from 'react';
 import { useQuestionerBlankListCreateBlankMutation } from '../api/useQuestionerCreateBlankMutation';
-import { useLiveQuery } from 'dexie-react-hooks';
-import { questionerIDB } from '$q/shared/state/qIdb';
 
 export const QuestionerBlankListPage = () => {
   const checkAccess = useCheckUserAccessRightsInScope();
@@ -53,9 +53,9 @@ export const QuestionerBlankListPage = () => {
                 title="Новый опрос"
                 onClick={async event => {
                   event.stopPropagation();
-                  const newBlank = await createBlankMutation.mutateAsync();
+                  const newBlankw = await createBlankMutation.mutateAsync();
 
-                  navigate({ to: '/q/r/$blank', params: { blank: '' + newBlank.w } });
+                  navigate({ to: '/q/r/$blank', params: { blank: '' + newBlankw } });
                   setIsOpenTools(false);
                 }}
               />
