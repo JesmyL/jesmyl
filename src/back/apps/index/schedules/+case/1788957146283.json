@@ -33,16 +33,16 @@
       "i": 1,
       "wup": 7,
       "list": [
-        { "mi": 1, "atts": { "[cm]:coms": {} }, "type": 0, "topic": "утро" },
-        { "mi": 2, "atts": { "[cm]:coms": {} }, "type": 0, "topic": "вечер" }
+        { "mi": 1, "atts": { "[cm]:coms": {} }, "type": 0, "topic": "утро", "tgInform": 0 },
+        { "mi": 2, "atts": { "[cm]:coms": {} }, "type": 0, "topic": "вечер", "tgInform": 0 }
       ]
     },
     {
       "i": 2,
       "wup": 7,
       "list": [
-        { "mi": 1, "atts": { "[cm]:coms": {} }, "type": 0, "topic": "утро" },
-        { "mi": 2, "type": 0 }
+        { "mi": 1, "atts": { "[cm]:coms": {} }, "type": 0, "topic": "утро", "tgInform": 0 },
+        { "mi": 2, "type": 0, "tgInform": 0 }
       ]
     }
   ],
