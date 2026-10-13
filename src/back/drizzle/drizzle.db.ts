@@ -14,6 +14,9 @@ type OmitKey = (typeof omitKeys)[number];
 const queryClient = postgres(lazyEnvJson().dbUrl);
 const dbNative = drizzle(queryClient, { schema });
 
+/** Closes the connection pool. Meant for short-lived scripts — never call from the long-running backend. */
+export const closeDb = () => queryClient.end({ timeout: 5 });
+
 const dbProtected = Object.create(dbNative);
 
 omitKeys.forEach(key => (dbProtected[key] = null));

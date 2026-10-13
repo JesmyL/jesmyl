@@ -41,8 +41,6 @@ iife(async () => {
   scheduleWidgetMessageCatcher.register();
 
   startCrTgAlarm();
-
-  if (Do.It) if (backConfig.isTest) await import('./downloadCmAudios').then(m => m.downloadCmAudios());
 });
 
 const langLocales = {
