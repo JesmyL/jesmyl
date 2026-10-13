@@ -20,3 +20,15 @@
 
 ## OpenCode house rules
 - `.opencode/opencode.jsonc` sets `instructions: .opencode/tools/philosophy.md` — before writing code you MUST load the matching skill: `frontend-philosophy` for UI work, `code-philosophy` for logic/backend. See `.opencode/README.md` for agent/profile details.
+
+### Code writing rules
+- Write optimal code: reuse what already exists — search hard for an existing implementation (`shared/`, utils) before writing a new one.
+- Keep code local and minimal — the final bundle should contain as few characters as possible.
+- Performance: hoist regexps out of functions (build once via `lazyInit`), build char-class regexps from object keys (`objectKeys(dict).join('')`), and prefer a single `.replace` pass with a replacer dict over chained `.replace` calls.
+- Reference example: `escapeHtmlLazy` in `src/shared/utils/string.utils.ts`.
+- Never write redundant null-coalescing like `rows[0]?.mod ?? null` — `null` and `undefined` are treated as the same thing; use the `nil` type everywhere instead of `null | undefined`.
+
+## Assistant reply formatting
+- Every assistant reply must be bilingual: write the English text FIRST, then immediately the Russian translation in parentheses. No markup, no HTML, no ANSI color codes.
+- Apply this to every piece/chunk of text in the reply, not just the first paragraph.
+- Example: Done. (Готово.)
