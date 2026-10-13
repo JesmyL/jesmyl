@@ -181,7 +181,10 @@ export class SokiServer {
 
     let errorMessage;
 
-    if (error) errorMessage = error instanceof DrizzleQueryError ? 'Ошибка сервера' : `${error}`;
+    if (error) {
+      console.info(error);
+      errorMessage = error instanceof DrizzleQueryError ? 'Ошибка сервера' : `${error}`;
+    }
 
     this.send(
       {
