@@ -17,7 +17,7 @@ export const makeBroadcastGridNetElectronTabIdFreeAtom = <TabId extends number>(
     const exclusiveTabIdSet = new Set<TabId>();
 
     const resultNet = resultAtom.get().map((oldRow, rowi) => {
-      return filteredNet[rowi]
+      return (filteredNet[rowi] ?? [])
         .filter(id => !oldTabIdSet.has(id))
         .concat(
           oldRow.filter(id => {

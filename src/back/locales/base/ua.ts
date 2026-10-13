@@ -305,6 +305,12 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
   broadcast: 'Трансляція',
   folder: 'Папка',
 
+  workDir: {
+    notSelected: 'Робочу папку не вибрано',
+    pickFolder: 'Вибрати папку (WorkDir = $a всередині неї, якщо її звати інакше)',
+    folders: 'Папки',
+  },
+
   tg: {
     beInChannel: 'Перебувати в каналі',
     steps:

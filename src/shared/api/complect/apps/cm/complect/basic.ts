@@ -119,6 +119,8 @@ export type IExportableOrder = NullifyOptionals<
 export type IFixedCom = { w: CmComWid } & Partial<{
   ton: number;
   b: TonType | nil;
+  /** MyFiles box id attached to this com; the cm broadcast screen uses it as the background (com fix wins over the screen config). */
+  bgFileId: string;
 }>;
 
 export type IExportableComInterpretationSimpleValues = {

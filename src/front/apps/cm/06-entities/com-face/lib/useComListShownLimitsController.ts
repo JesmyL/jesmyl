@@ -1,9 +1,9 @@
 import { isIOS } from '#shared/lib/device-differences';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { useCmComLastOpenComw } from '$cm/entities/com';
-import { useEffect, useMemo, useState } from 'react';
+import { RefObject, useEffect, useMemo, useState } from 'react';
 import { checkIsNumber } from 'shared/utils/checkIs';
-import { CmComFaceListProps } from '../ui/_ComList';
+import { CmComFaceListProps } from '../model/model';
 
 const initComsBefore = 10;
 const initComsAfter = 18;
@@ -13,7 +13,7 @@ const inkNumFunc = (n: number) => n + 1;
 const isRejectScrollDivision = isIOS;
 
 export const useCmComFaceListShownLimitsController = (
-  listRef: React.RefObject<HTMLDivElement>,
+  listRef: RefObject<HTMLDivElement>,
   props: CmComFaceListProps,
 ) => {
   const [, forceUpdate] = useState(0);

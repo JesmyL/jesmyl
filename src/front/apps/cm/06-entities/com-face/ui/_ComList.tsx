@@ -4,25 +4,21 @@ import { isIOS } from '#shared/lib/device-differences';
 import { useListInfiniteScrollController } from '#shared/lib/hooks/useListInfiniteScrollController';
 import { CmComNumber, useCmComLastOpenComw } from '$cm/entities/com';
 import { useCmComSetListLimitsExtracterContext } from '$cm/entities/index';
-import { useRef } from 'react';
-import { IExportableCom } from 'shared/api';
+import { useRef, useState } from 'react';
+import { CmComWid, IExportableCom } from 'shared/api';
 import { retNull } from 'shared/utils';
 import { objectLength } from 'shared/utils/object.utils';
 import { cmComFaceCurrentComwIdPrefix, cmComFaceItemDescriptionClassName } from '../const/ids';
 import { useCmComFaceListClickListener } from '../lib/useComListClickListener';
 import { useCmComFaceScrollToCurrentComFace } from '../lib/useScrollToCurrentComFace';
-import { ICmComFaceList } from '../model/model';
+import { CmComFaceListProps } from '../model/model';
 import { CmComFaceListControlledContainer } from './ComListControlledContainer';
-
-export interface CmComFaceListProps extends ICmComFaceList {
-  list: IExportableCom[];
-  titles?: Record<number, string>;
-  className?: string;
-}
 
 export const CmComFaceListComList = (props: CmComFaceListProps) => {
   const listRef = useRef<HTMLDivElement>(null);
   const lastOpenComw = useCmComLastOpenComw();
+  const [dropTargetComw, setDropTargetComw] = useState<CmComWid | nil>(null);
+  const { importantDropOnCom } = props;
   const { limits, updateLimits } = useListInfiniteScrollController(
     listRef,
     props.list,
@@ -47,11 +43,37 @@ export const CmComFaceListComList = (props: CmComFaceListProps) => {
       listRef={listRef}
     >
       {props.list.slice(isIOS ? 0 : limits.start, limits.finish).map((com, comi) => {
+        const isDropTarget = dropTargetComw === com.w;
+
         return (
           <FaceItem.Root
             key={isSetWids ? com.w : comi}
             id={`${cmComFaceCurrentComwIdPrefix}${com.w}`}
-            className={`flex between pointer ${comi}-comi`}
+            className={`flex between pointer ${comi}-comi${isDropTarget ? ' face-item-drop-target' : ''}`}
+            onDragOver={
+              importantDropOnCom
+                ? event => {
+                    event.preventDefault();
+                    setDropTargetComw(prev => (prev === com.w ? prev : com.w));
+                  }
+                : undefined
+            }
+            onDragLeave={
+              importantDropOnCom
+                ? event => {
+                    if (event.currentTarget.contains(event.relatedTarget as Node | null)) return;
+                    setDropTargetComw(prev => (prev === com.w ? null : prev));
+                  }
+                : undefined
+            }
+            onDrop={
+              importantDropOnCom
+                ? event => {
+                    setDropTargetComw(null);
+                    importantDropOnCom({ com, comi, event });
+                  }
+                : undefined
+            }
           >
             <FaceItem.Logo>{!com.n || <CmComNumber comw={com.w} />}</FaceItem.Logo>
             <FaceItem.Title>

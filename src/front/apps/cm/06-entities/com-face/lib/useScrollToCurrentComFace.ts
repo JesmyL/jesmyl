@@ -1,11 +1,11 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { useCmComLastOpenComw } from '$cm/entities/com';
-import { useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 import { cmComFaceCurrentComwIdPrefix } from '../const/ids';
-import { CmComFaceListProps } from '../ui/_ComList';
+import { CmComFaceListProps } from '../model/model';
 
 export const useCmComFaceScrollToCurrentComFace = (
-  listRef: React.RefObject<HTMLDivElement | null>,
+  listRef: RefObject<HTMLDivElement | null>,
   props: CmComFaceListProps,
   deps: unknown[],
 ) => {

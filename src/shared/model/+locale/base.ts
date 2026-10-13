@@ -287,6 +287,12 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
 
   folder: LocaleSimpleString;
 
+  workDir: {
+    notSelected: LocaleSimpleString;
+    pickFolder: StringTemplaterInterpolation<'a'>;
+    folders: LocaleSimpleString;
+  };
+
   /** Поиск */
   search: LocaleSimpleString;
   globSearch: LocaleSimpleString;

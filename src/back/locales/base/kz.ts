@@ -309,6 +309,12 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
   broadcast: 'Трансляция',
   folder: 'Бума',
 
+  workDir: {
+    notSelected: 'Жұмыс қалтасы таңдалмаған',
+    pickFolder: 'Буманы таңдау (WorkDir = $a ішінде, егер ол басқаша аталса)',
+    folders: 'Қалталар',
+  },
+
   tg: {
     beInChannel: 'Арнада болу',
     steps:

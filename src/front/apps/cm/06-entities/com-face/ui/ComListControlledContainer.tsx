@@ -1,17 +1,17 @@
 import { ContextMenu } from '#shared/components/ui/context-menu';
 import { useCmComLastOpenComw } from '$cm/entities/com';
-import { useState } from 'react';
+import { ReactNode, RefObject, useState } from 'react';
 import { CmComWid } from 'shared/api';
 import { checkIsNaN } from 'shared/utils/checkIs';
 import { cmComFaceCurrentComwIdPrefix } from '../const/ids';
 import { StyledCmComFaceList } from '../style/StyledComList';
-import { CmComFaceListProps } from './_ComList';
+import { CmComFaceListProps } from '../model/model';
 import { CmComFaceContextMenu } from './ComFaceContextMenu';
 import { CmComFaceListPreviousSibling } from './StyledComListPrevious';
 
 interface Props extends CmComFaceListProps {
-  children: React.ReactNode;
-  listRef: React.RefObject<HTMLDivElement | null>;
+  children: ReactNode;
+  listRef: RefObject<HTMLDivElement | null>;
 }
 
 export const CmComFaceListControlledContainer = (props: Props) => {

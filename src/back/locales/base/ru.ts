@@ -284,6 +284,12 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
 
   folder: 'Папка',
 
+  workDir: {
+    notSelected: 'Рабочая папка не выбрана',
+    pickFolder: 'Выбрать папку (WorkDir = $a внутри неё, если её зовут иначе)',
+    folders: 'Папки',
+  },
+
   toAuth: 'Авторизоваться',
   authSuccess: `Успешная авторизация`,
   oneTimeCode: 'Одноразовый код',

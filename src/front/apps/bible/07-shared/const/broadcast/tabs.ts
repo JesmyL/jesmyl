@@ -67,6 +67,8 @@ export const bibleBroadcastTabConfigDict: BroadcastGridTabDict<BibleBroadcastTab
 
   [BibleBroadcastTabId.WorkDir]: {
     title: () => translateBase(it => it.folder),
-    Comp: React.lazy(() => import('#features/ElectronWorkDir').then(m => ({ default: m.ElectronWorkDir }))),
+    Comp: React.lazy(() =>
+      import('$bible/widgets/BroadcastWorkDir').then(m => ({ default: m.BibleBroadcastWorkDir })),
+    ),
   },
 };

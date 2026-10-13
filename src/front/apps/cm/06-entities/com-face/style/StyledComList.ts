@@ -14,6 +14,12 @@ export const StyledCmComFaceList = styled.div<{
     transition: opacity 0.4s;
   }
 
+  .face-item-drop-target {
+    outline: 2px solid var(--color--3);
+    outline-offset: -2px;
+    border-radius: 0.3em;
+  }
+
   ${props => {
     if (props.$comTitles == null) return;
 

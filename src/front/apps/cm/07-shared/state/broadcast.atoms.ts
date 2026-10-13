@@ -1,4 +1,5 @@
-import { BroadcastGridNumberNetPack, BroadcastGridTabNet } from '#widgets/broadcast/model/TabConfig';
+import { makeBroadcastGridNetElectronTabIdFreeAtom } from '#widgets/broadcast/lib/makeBroadcastGridNetElectronTabIdFree';
+import { BroadcastGridNumberNetPack } from '#widgets/broadcast/model/TabConfig';
 import { atom } from 'atomaric';
 import { CmComWidDef, HttpNumLeadLink } from 'shared/api';
 import { CmBroadcastTabId } from '../model/broadcast';
@@ -6,13 +7,16 @@ import { CmBroadcastTabId } from '../model/broadcast';
 export const cmPlayerBroadcastComwAtom = atom(CmComWidDef);
 export const cmPlayerBroadcastAudioSrcAtom = atom<HttpNumLeadLink | null>(null);
 
-export const cmBroadcastGridTabsAtom = atom<BroadcastGridTabNet<CmBroadcastTabId>>(
+const electronTabIdSet = new Set<CmBroadcastTabId>([CmBroadcastTabId.WorkDir]);
+
+export const cmBroadcastGridTabsAtom = makeBroadcastGridNetElectronTabIdFreeAtom(
+  electronTabIdSet,
   [
     [CmBroadcastTabId.List],
     [CmBroadcastTabId.Preview],
     [CmBroadcastTabId.Alert],
     //
-    [CmBroadcastTabId.Configs],
+    [CmBroadcastTabId.Configs, CmBroadcastTabId.WorkDir],
     [CmBroadcastTabId.Slides],
     [CmBroadcastTabId.Dropdowns],
   ],

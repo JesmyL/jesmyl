@@ -38,4 +38,10 @@ export const cmBroadcastTabConfigDict: BroadcastGridTabDict<CmBroadcastTabId> = 
     title: () => translateBase(it => it.settings),
     Comp: React.lazy(() => import('$cm/widgets/BroadcastDropdowns').then(m => ({ default: m.CmBroadcastDropdowns }))),
   },
+  [CmBroadcastTabId.WorkDir]: {
+    title: () => translateBase(it => it.folder),
+    Comp: React.lazy(() =>
+      import('$cm/widgets/BroadcastWorkDir').then(m => ({ default: m.CmBroadcastWorkDir })),
+    ),
+  },
 };
