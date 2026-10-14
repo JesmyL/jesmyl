@@ -1,5 +1,5 @@
 import { useScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
-import { isShowBroadcastTextAtom } from '#features/broadcast/initial-slide-context';
+import { isShowBroadcastTextAtom, useIsShowBroadcastInitialSlide } from '#features/broadcast/initial-slide-context';
 import { LiveBroadcastAppProps } from '#shared/model/cm/Cm.model';
 import { cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
 import { useCmBroadcastSlidesContext } from '$cm/ext';
@@ -15,6 +15,7 @@ export const CmLiveSlidesSimpleBroadcast = (props: LiveBroadcastAppProps & { com
   const chordedMode = useAtomValue(cmShowChordedSlideModeAtom);
   const dir = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
   const isHide = !useAtomValue(isShowBroadcastTextAtom);
+  const isShowInitialSlide = useIsShowBroadcastInitialSlide();
   const windows = useScreenBroadcastWindows();
 
   const { slidei, html, nextSlidei, slides, nextHtml, slideId, hash } = useCmBroadcastSlidesContext();
@@ -29,6 +30,7 @@ export const CmLiveSlidesSimpleBroadcast = (props: LiveBroadcastAppProps & { com
       const liveData: IndexSchWBroadcastLiveDataValue = {
         fio: props.fio ?? '',
         isHide,
+        isShowInitialSlide,
         cm: {
           config,
           comw: props.com.wid,
@@ -60,6 +62,7 @@ export const CmLiveSlidesSimpleBroadcast = (props: LiveBroadcastAppProps & { com
     nextSlidei,
     dir,
     isHide,
+    isShowInitialSlide,
     slides,
     html,
     nextHtml,

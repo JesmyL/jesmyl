@@ -1,4 +1,4 @@
-import { isShowBroadcastTextAtom } from '#features/broadcast/initial-slide-context';
+import { isShowBroadcastTextAtom, useIsShowBroadcastInitialSlide } from '#features/broadcast/initial-slide-context';
 import { useBibleBroadcastScreenConfigs } from '$bible/entities/broadcast';
 import { useBibleAddressTextContext, useBibleTextMapBlocksContentContext } from '$bible/shared/contexts/texts';
 import { BibleCurrentTextsContext } from '$bible/shared/state/CurrentTextsContext';
@@ -23,6 +23,7 @@ const Live = ({ fio, onSend }: Props) => {
   const addressText = useBibleAddressTextContext();
   const texts = useBibleTextMapBlocksContentContext();
   const isHide = !useAtomValue(isShowBroadcastTextAtom);
+  const isShowInitialSlide = useIsShowBroadcastInitialSlide();
 
   const [config] = useBibleBroadcastScreenConfigs();
 
@@ -31,12 +32,13 @@ const Live = ({ fio, onSend }: Props) => {
       const liveData: IndexSchWBroadcastLiveDataValue = {
         fio: fio ?? '',
         isHide,
+        isShowInitialSlide,
         bible: { texts, addressText, config },
       };
 
       onSend(liveData);
     }, 100);
-  }, [addressText, config, fio, isHide, onSend, texts]);
+  }, [addressText, config, fio, isHide, isShowInitialSlide, onSend, texts]);
 
   return <></>;
 };

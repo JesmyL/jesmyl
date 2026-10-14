@@ -1,5 +1,5 @@
 import { useScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
-import { isShowBroadcastTextAtom } from '#features/broadcast/initial-slide-context';
+import { isShowBroadcastTextAtom, useIsShowBroadcastInitialSlide } from '#features/broadcast/initial-slide-context';
 import { LiveBroadcastAppProps } from '#shared/model/cm/Cm.model';
 import { cmBroadcastCurrentNameSpaceiAtom, cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
 import { useCmComCurrentMarkValues } from '$cm/ext';
@@ -16,6 +16,7 @@ export const CmLiveSlidesAudioTrackBroadcast = (props: LiveBroadcastAppProps & {
   const chordedMode = useAtomValue(cmShowChordedSlideModeAtom);
   const dir = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
   const isHide = !useAtomValue(isShowBroadcastTextAtom);
+  const isShowInitialSlide = useIsShowBroadcastInitialSlide();
   const nameSpacei = useAtomValue(cmBroadcastCurrentNameSpaceiAtom);
   const windows = useScreenBroadcastWindows();
 
@@ -35,6 +36,7 @@ export const CmLiveSlidesAudioTrackBroadcast = (props: LiveBroadcastAppProps & {
       const liveData: IndexSchWBroadcastLiveDataValue = {
         fio,
         isHide,
+        isShowInitialSlide,
         cm: {
           config,
           comw,
@@ -69,6 +71,7 @@ export const CmLiveSlidesAudioTrackBroadcast = (props: LiveBroadcastAppProps & {
     id,
     isChorded,
     isHide,
+    isShowInitialSlide,
     isNextChorded,
     minText,
     nextHtml,

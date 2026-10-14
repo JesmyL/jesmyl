@@ -9,6 +9,7 @@ export type IndexErrorScope = keyof ClientRegisterData;
 export type IndexSchWBroadcastLiveDataValue = {
   fio: string;
   isHide: boolean;
+  isShowInitialSlide?: boolean;
   cm?: CmBroadcastSchWgtLiveDataValue;
   bible?: { texts: BibleBroadcastTextMapBlock[]; addressText: string; config: BibleBroadcastScreenConfig };
   markdown?: string;

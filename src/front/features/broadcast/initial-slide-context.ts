@@ -13,4 +13,6 @@ export const useBroadcastInitialSlideValue = () => {
   return null;
 };
 
+export const useIsShowBroadcastInitialSlide = () => useBroadcastInitialSlideValue() != null;
+
 export const broadcastShowAlertLineConfigIdAtom = atom<number | null>(null);
