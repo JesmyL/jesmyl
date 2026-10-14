@@ -37,6 +37,8 @@
 - Keep code maximally laconic: prefer compact literals (e.g. space-separated extension lists keyed by prefix) converted at runtime via `lazyInit`, over verbose hand-written dicts.
 - Reuse existing object utils instead of `Object.entries(...).map(...)` — e.g. `mapObjectEntries` from `shared/utils/object.utils`.
 - In JSX conditional rendering, avoid double negation (`!!cond && (<X/>)`): express a render-on-truthy condition as `!cond || (<X/>)` instead — when `cond` is truthy, `!cond` is `false` and the right side renders; when falsy, the expression short-circuits to `true`, which React renders as nothing. Same semantics, no `!!`.
+- Icons: if a needed icon is missing from `knownStameskaIconNames`, just add it there rather than working around it.
+- Locale strings: always write user-facing text translations via `translateBase` / `translateDynamic` — never inline raw text.
 
 ## Assistant reply formatting
 
