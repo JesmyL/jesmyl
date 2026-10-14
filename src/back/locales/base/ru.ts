@@ -156,6 +156,9 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
     insertChBlock: 'Добавить конфиг аккордного блока',
     audioPlayErr: 'Ошибка воспроизведения аудио',
     cacheTrackDelDsc: 'Удалить трек из кэша?',
+    shuffle: 'Случайный порядок',
+    prevCom: 'Предыдущая песня',
+    nextCom: 'Следующая песня',
 
     linnes: 'Строчки',
     chBlocks: 'Аккордные блоки',

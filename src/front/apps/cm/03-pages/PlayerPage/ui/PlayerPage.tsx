@@ -1,14 +1,13 @@
 import { translateBase } from '#basis/locale';
-import { Button } from '#shared/components/ui/button';
-import { isMobileDevice } from '#shared/lib/device-differences';
+import { Slider } from '#shared/components/ui/slider';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
-import { renderComponentInNewWindow } from '#shared/lib/renders';
-import { makeToastKOMoodConfig } from '#shared/ui/modal';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { DocTitle } from '#shared/ui/tags/DocTitle';
 import {
   cmComFavoriteComwsAtom,
   CmComNumber,
+  cmComPlayerIsShuffleAtom,
   cmComSelectedComwsAtom,
   useCmCom,
   useCmComAllIComList,
@@ -17,38 +16,120 @@ import {
 import {
   cmComAudioPlayerEndedTickAtom,
   cmComAudioPlayerErrorTickAtom,
-  CmComAudioPlayerPlayButton,
+  cmComAudioPlayerIsPlayAtom,
+  cmComAudioPlayerPlaySrcAtom,
+  cmComAudioPlayerSetMediaTitle,
   cmComAudioPlayerSetSrc,
   cmComAudioPlayerSwitchIsPlay,
-  CmComAudioPlayerTrack,
+  cmComAudioPlayerUpdateCurrentTime,
+  cmComAudioPlayerUpdatePlaybackRate,
+  cmComAudioPlayerComsWithErrorAtom,
+  cmComAudioPlayerFindAdvanceCom,
+  cmComAudioPlayerFindNextCom,
+  cmComAudioPlayerGoToAdjacentCom,
+  cmComAudioPlayerRegisterNavigation,
+  StyledCmComAudioPlayerPlayButton,
+  useCmComAudioPlayerCurrentTime,
+  useCmComAudioPlayerDuration,
 } from '$cm/entities/com-audio-player';
 import { CmComFaceList } from '$cm/entities/com-face';
 import { CmComListPackKindSelector } from '$cm/entities/ComListPackKindSelector';
 import { cmComLastOpenComwAtom } from '$cm/entities/index';
 import { CmComAudioPlayerMarksMovers } from '$cm/ext';
-import { getCmComFreshAudioMarksPack } from '$cm/shared/lib/getFresh';
 import { cmComTrackPreSwitchTimeAtom, cmOpenComListModeAtom } from '$cm/shared/state';
-import { cmPlayerBroadcastAudioSrcAtom, cmPlayerBroadcastComwAtom } from '$cm/shared/state/broadcast.atoms';
+import { cmPlayerBroadcastAudioSrcAtom } from '$cm/shared/state/broadcast.atoms';
+import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useNavigate, useSearch } from '@tanstack/react-router';
-import { Atom, atom, useAtomValue } from 'atomaric';
+import { useAtomValue } from 'atomaric';
 import { useEffect, useMemo } from 'react';
-import { CmComWid, IExportableCom } from 'shared/api';
-import { toast } from 'sonner';
-import { CmPlayerBroadcast } from './Broadcast';
+import { convertSecondsInStrTime } from 'shared/utils';
+import { twMerge } from 'tailwind-merge';
 
 let isCanPlay = false;
+
+const controlClass =
+  'inline-flex items-center justify-center text-[var(--color--3)] bg-transparent border-0 align-middle [transition:transform_.16s_ease,opacity_.16s_ease,color_.16s_ease] active:scale-[0.88]';
+const sideControlClass = `${controlClass} size-[2.6rem] opacity-62 [&_svg]:[--icon-size:1.7rem] hover:opacity-100 hover:text-[var(--color--7)]`;
+const mainControlClass = `${controlClass} size-[4.4rem] p-[1.1rem] rounded-full text-[var(--color--5)] bg-[var(--color--7)] shadow-[0_14px_30px_-10px_var(--color--7)] hover:scale-105`;
+const playerClass = `sticky top-0 z-1 relative isolate overflow-hidden mx-3 mt-3 mb-4 pt-[1.4rem] px-5 pb-4 rounded-3xl text-[var(--color--3)] bg-[var(--color--2)] shadow-[0_1px_0_0_color-mix(in_srgb,var(--color--3)_12%,transparent)_inset,0_26px_44px_-24px_var(--color--3)] before:absolute before:inset-[-55%_35%_45%_-25%] before:z-[-1] before:bg-[radial-gradient(circle_at_center,var(--color--7)_0%,transparent_68%)] before:opacity-55 before:content-['']`;
+const tracklineClass = `flex items-center gap-[0.65rem] min-h-[1.7rem] mt-4 [&_[data-slot=slider-track]]:bg-[color-mix(in_srgb,var(--color--3)_22%,transparent)] [&_[data-slot=slider-range]]:bg-[var(--color--3)] [&_[data-slot=slider-thumb]]:border-2 [&_[data-slot=slider-thumb]]:border-[var(--color--2)] [&_[data-slot=slider-thumb]]:bg-[var(--color--3)]`;
+const variantClass = `min-w-[1.9rem] h-[1.9rem] px-[0.35rem] text-[var(--color--3)] bg-[color-mix(in_srgb,var(--color--3)_22%,transparent)] border-0 rounded-[0.6rem] text-[0.8rem] [transition:transform_.16s_ease,background_.16s_ease,color_.16s_ease] hover:-translate-y-0.5 pointer`;
+const variantActiveClass = 'text-[var(--color--5)] bg-[var(--color--7)] scale-[1.08] shadow-[0_6px_14px_-6px_var(--color--7)]';
+
+const playerEnter = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+`;
+
+const StyledPlayer = styled.div`
+  animation: ${playerEnter} 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+`;
+
+let userChangeTimeout: TimeOut;
+let playbackRateTimeout: TimeOut;
+
+/** Long-press (touch) temporarily speeds playback up to 2x, same as the inline player. */
+const TimeLabel = ({ time }: { time: string }) => (
+  <code
+    className="h-[1.5rem]"
+    onTouchStart={event => {
+      event.preventDefault();
+      clearTimeout(playbackRateTimeout);
+      playbackRateTimeout = setTimeout(() => cmComAudioPlayerUpdatePlaybackRate(2), 100);
+    }}
+    onTouchEnd={() => {
+      clearTimeout(playbackRateTimeout);
+      cmComAudioPlayerUpdatePlaybackRate(1);
+    }}
+  >
+    {time}
+  </code>
+);
+
+const PlayerTrack = () => {
+  const currentTime = useCmComAudioPlayerCurrentTime();
+  const duration = useCmComAudioPlayerDuration();
+
+  return (
+    <>
+      <TimeLabel time={convertSecondsInStrTime(currentTime)} />
+
+      <Slider
+        className="flex-1 min-w-0"
+        value={[currentTime || 0]}
+        min={0}
+        step={1}
+        max={duration}
+        disabled={duration < 2}
+        onValueChange={times => {
+          cmComAudioPlayerSwitchIsPlay(false);
+          clearTimeout(userChangeTimeout);
+          userChangeTimeout = setTimeout(cmComAudioPlayerSwitchIsPlay, 300, true);
+
+          cmComAudioPlayerUpdateCurrentTime(times[0]);
+        }}
+      />
+
+      {duration <= 0 || <TimeLabel time={`-${convertSecondsInStrTime(duration - currentTime)}`} />}
+    </>
+  );
+};
 
 const resetIsCanPlayEffect = () => {
   return () => {
     isCanPlay = false;
   };
 };
-let comsWithErrorAtom: Atom<Set<CmComWid>>;
 
 export const CmPlayerPage = () => {
-  comsWithErrorAtom ??= atom(new Set());
-
   const favComws = useCmComIComList(useAtomValue(cmComFavoriteComwsAtom));
   const selComws = useCmComIComList(useAtomValue(cmComSelectedComwsAtom));
 
@@ -62,6 +143,9 @@ export const CmPlayerPage = () => {
   const endedTick = useAtomValue(cmComAudioPlayerEndedTickAtom);
   const errorTick = useAtomValue(cmComAudioPlayerErrorTickAtom);
   const broadcastSrc = useAtomValue(cmPlayerBroadcastAudioSrcAtom);
+  const isShuffle = useAtomValue(cmComPlayerIsShuffleAtom);
+  const playSrc = useAtomValue(cmComAudioPlayerPlaySrcAtom);
+  const isPlay = useAtomValue(cmComAudioPlayerIsPlayAtom);
 
   const icoms = useMemo(
     () =>
@@ -75,10 +159,21 @@ export const CmPlayerPage = () => {
   );
   const comws = useMemo(() => icoms.map(com => com.w), [icoms]);
 
-  const com = useCmCom(search.comw ?? lastOpenComw ?? icoms[0].w);
-  const [src] = com?.audio ?? [''];
+  const com = useCmCom(search.comw ?? lastOpenComw ?? icoms[0]?.w);
+  const comAudio = com?.audio;
+  const [src] = comAudio ?? [''];
+  const displaySrc = playSrc && comAudio?.includes(playSrc) ? playSrc : src;
+  const isPlayOtherSrc = playSrc && playSrc !== displaySrc;
 
   useEffect(resetIsCanPlayEffect, []);
+
+  useEffect(() => {
+    cmComAudioPlayerRegisterNavigation(comw =>
+      navigate({ to: '/cm/player', search: search => ({ ...(search as object), comw }) }),
+    );
+
+    return () => cmComAudioPlayerRegisterNavigation(null);
+  }, [navigate]);
 
   useEffect(() => {
     if (!com) return;
@@ -86,6 +181,7 @@ export const CmPlayerPage = () => {
     if (src) {
       cmComLastOpenComwAtom.set(com.wid);
       cmComAudioPlayerSetSrc(src);
+      cmComAudioPlayerSetMediaTitle(com.name);
       if (isCanPlay) cmComAudioPlayerSwitchIsPlay(true);
       return;
     }
@@ -95,7 +191,7 @@ export const CmPlayerPage = () => {
       search: search => {
         if (search.comw == null) return search as never;
 
-        const nextCom = findNextCom(search.comw, icoms);
+        const nextCom = cmComAudioPlayerFindNextCom(search.comw, icoms);
         if (nextCom == null) return search as never;
 
         return { ...(search as object), comw: nextCom.w };
@@ -112,12 +208,12 @@ export const CmPlayerPage = () => {
         if (!search.comw) return search as never;
 
         if (errorTick) {
-          const comsWithError = new Set(comsWithErrorAtom.get());
+          const comsWithError = new Set(cmComAudioPlayerComsWithErrorAtom.get());
           comsWithError.add(search.comw);
-          comsWithErrorAtom.set(comsWithError);
+          cmComAudioPlayerComsWithErrorAtom.set(comsWithError);
         }
 
-        const nextCom = findNextCom(search.comw, icoms);
+        const nextCom = cmComAudioPlayerFindAdvanceCom(search.comw, icoms, isShuffle);
         if (!nextCom?.al) return search as never;
 
         cmComAudioPlayerSetSrc(nextCom.al[0]);
@@ -127,34 +223,90 @@ export const CmPlayerPage = () => {
     });
 
     if (isCanPlay) return setTimeoutEffect(cmComAudioPlayerSwitchIsPlay, 1000, true);
-  }, [icoms, navigate, endedTick, errorTick]);
+  }, [icoms, navigate, endedTick, errorTick, isShuffle]);
+
+  const goToAdjacentCom = (direction: 'prev' | 'next') => {
+    isCanPlay = true;
+    void cmComAudioPlayerGoToAdjacentCom(direction);
+  };
 
   return (
     <PageContainerConfigurer
       className="com-player"
       withoutBackButton
       withoutBackSwipe
-      headTitle={
-        com && (
-          <>
-            #<CmComNumber comw={com.wid} /> {com.name}
-          </>
-        )
-      }
       headClass="mr-3"
       contentClass="p-0"
       head={<CmComListPackKindSelector />}
       content={
         <>
           {com && <DocTitle title={com.name} />}
-          {src && (
-            <StyledPlayer className="sticky top-0 bg-x2 flex min-h-20 gap-3 px-3 mb-3">
-              <CmComAudioPlayerPlayButton
-                src={src}
-                className="mx-5 scale-300!"
-              />
+          {com && displaySrc && (
+            <StyledPlayer className={playerClass}>
+              <span className="block opacity-62 text-[0.7rem] font-bold tracking-[0.34em] uppercase">
+                #<CmComNumber comw={com.wid} />
+              </span>
+              <div className="mt-[0.35rem] text-[1.7rem] font-extrabold leading-[1.08] tracking-[-0.01em] text-balance">
+                {com.name}
+              </div>
 
-              <CmComAudioPlayerTrack src={src} />
+              <div className="relative flex items-center justify-center gap-[1.35rem] mt-[1.15rem]">
+                <button
+                  className={`${sideControlClass} pointer`}
+                  aria-label={translateBase(it => it.cm.prevCom)}
+                  onClick={() => goToAdjacentCom('prev')}
+                >
+                  <LazyIcon icon="Previous" />
+                </button>
+
+                <StyledCmComAudioPlayerPlayButton
+                  src={displaySrc}
+                  $isPlaying={isPlay && !isPlayOtherSrc}
+                  className={mainControlClass}
+                />
+
+                <button
+                  className={`${sideControlClass} pointer`}
+                  aria-label={translateBase(it => it.cm.nextCom)}
+                  onClick={() => goToAdjacentCom('next')}
+                >
+                  <LazyIcon icon="Next" />
+                </button>
+
+                <button
+                  className={twMerge(
+                    sideControlClass,
+                    'absolute right-0 pointer',
+                    isShuffle && 'opacity-100 text-[var(--color--7)]',
+                  )}
+                  aria-label={translateBase(it => it.cm.shuffle)}
+                  onClick={cmComPlayerIsShuffleAtom.do.toggle}
+                >
+                  <LazyIcon icon="Shuffle" />
+                </button>
+              </div>
+
+              <div className={tracklineClass}>
+                <PlayerTrack />
+              </div>
+
+              {comAudio && comAudio.length > 1 && (
+                <div className="flex justify-center gap-[0.4rem] mt-[0.85rem]">
+                  {comAudio.map((variant, varianti) => (
+                    <button
+                      key={variant}
+                      className={twMerge(variantClass, variant === displaySrc && variantActiveClass)}
+                      onClick={() => {
+                        cmComAudioPlayerSetSrc(variant);
+                        cmComAudioPlayerSetMediaTitle(com.name);
+                        if (isPlay) cmComAudioPlayerSwitchIsPlay(true);
+                      }}
+                    >
+                      {varianti + 1}
+                    </button>
+                  ))}
+                </div>
+              )}
             </StyledPlayer>
           )}
           {com && broadcastSrc && (
@@ -163,7 +315,6 @@ export const CmPlayerPage = () => {
                 com={com}
                 preSwitchTimeAtom={cmComTrackPreSwitchTimeAtom}
                 src={broadcastSrc}
-                win={openWin}
               />
             </div>
           )}
@@ -176,57 +327,6 @@ export const CmPlayerPage = () => {
               defaultClick();
               cmComAudioPlayerSwitchIsPlay();
             }}
-            comDescription={
-              !isMobileDevice
-                ? com => {
-                    return com.al?.map(src => (
-                      <Button
-                        key={src}
-                        icon="Computer"
-                        withoutAnimation
-                        className={broadcastSrc === src ? 'text-x7' : ''}
-                        onClick={async () => {
-                          const pack = await getCmComFreshAudioMarksPack(com.w);
-
-                          if (pack == null) {
-                            toast(
-                              translateBase(it => it.cm.trackMarksNotSetted),
-                              makeToastKOMoodConfig(),
-                            );
-                            return;
-                          }
-
-                          cmPlayerBroadcastComwAtom.set(com.w);
-                          cmPlayerBroadcastAudioSrcAtom.set(src);
-                          cmComAudioPlayerSetSrc(src);
-
-                          navigate({ to: '.', search: { comw: com.w } });
-
-                          if (openWin != null) {
-                            openWin.focus();
-                            return;
-                          }
-
-                          renderComponentInNewWindow({
-                            target: 'player-page',
-                            reactNode: win => {
-                              openWin = win;
-
-                              window.addEventListener('unload', () => win.close());
-                              win.addEventListener('unload', () => {
-                                openWin = null;
-                                cmPlayerBroadcastAudioSrcAtom.set(null);
-                              });
-
-                              return <CmPlayerBroadcast />;
-                            },
-                          });
-                        }}
-                      />
-                    ));
-                  }
-                : undefined
-            }
           />
         </>
       }
@@ -234,23 +334,3 @@ export const CmPlayerPage = () => {
   );
 };
 
-let openWin: Window | null = null;
-
-const findNextCom = (currentComw: CmComWid, coms: IExportableCom[]) => {
-  let isFoundCurrentCom = false;
-  const comsWithError = comsWithErrorAtom.get();
-
-  const nextCom = coms.find(com => {
-    if (currentComw === com.w) {
-      isFoundCurrentCom = true;
-      return false;
-    }
-    return isFoundCurrentCom && !!com.al && !comsWithError.has(com.w);
-  });
-
-  if (nextCom == null && coms[0]?.al && !comsWithError.has(coms[0].w)) return coms[0];
-
-  return nextCom;
-};
-
-const StyledPlayer = styled.div``;

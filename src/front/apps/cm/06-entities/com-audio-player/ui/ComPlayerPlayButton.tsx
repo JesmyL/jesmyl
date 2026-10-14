@@ -21,14 +21,17 @@ export const CmComAudioPlayerPlayButton = ({ src, className }: Props) => {
   const isPlay = isOtherPlaySrc ? false : isCurrentPlay;
 
   return (
-    <LazyIcon
-      icon={isPlay ? 'Pause' : 'Play'}
+    <span
       className={twMerge('pointer', isOtherPlaySrc && 'text-x5', className)}
-      withoutAnimation
       onClick={() => {
         cmComAudioPlayerSetSrc(src);
         cmComAudioPlayerSwitchIsPlay();
       }}
-    />
+    >
+      <LazyIcon
+        icon={isPlay ? 'Pause' : 'Play'}
+        withoutAnimation
+      />
+    </span>
   );
 };

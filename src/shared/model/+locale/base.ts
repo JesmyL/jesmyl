@@ -151,6 +151,9 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
     toComList: LocaleSimpleString;
     audioPlayErr: LocaleSimpleString;
     cacheTrackDelDsc: LocaleSimpleString;
+    shuffle: LocaleSimpleString;
+    prevCom: LocaleSimpleString;
+    nextCom: LocaleSimpleString;
 
     // EDIT:
     comeBackCh: LocaleSimpleString;

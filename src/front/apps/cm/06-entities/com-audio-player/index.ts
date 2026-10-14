@@ -1,4 +1,6 @@
+export * from './lib/adjacent-coms';
 export * from './lib/audioCache';
+export * from './lib/mediaSession';
 export * from './state/atoms';
 export * from './state/current-play-com';
 export * from './style/com-player';

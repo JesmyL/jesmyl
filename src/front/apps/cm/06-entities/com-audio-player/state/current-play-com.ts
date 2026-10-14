@@ -25,6 +25,9 @@ export const cmComAudioPlayerEndedTickAtom = atom(false);
 export const cmComAudioPlayerErrorTickAtom = atom(false);
 export const cmComAudioPlayerIsPlayAtom = atom(false);
 
+/** Resolvable track title shown on the media session (lock screen); falls back to the play src. */
+export const cmComAudioPlayerMediaTitleAtom = atom<string | nil>(null);
+
 export const useCmComAudioPlayerDuration = () => useAtomValue(comPlayerDurationAtom);
 export const useCmComAudioPlayerCurrentTime = () => useAtomValue(comPlayerCurrentTimeAtom);
 
@@ -61,6 +64,8 @@ audioElement.addEventListener('timeupdate', () => {
 
 export const cmComAudioPlayerUpdateCurrentTime = (time: number) => (audioElement.currentTime = time);
 export const takeCmComAudioPlayerCurrentTime = () => audioElement.currentTime;
+export const takeCmComAudioPlayerDuration = () => audioElement.duration;
+export const takeCmComAudioPlayerPlaybackRate = () => audioElement.playbackRate;
 
 export const cmComAudioPlayerUpdatePlaybackRate = (playbackRate: number) => {
   audioElement.playbackRate = playbackRate;
@@ -77,6 +82,7 @@ export const cmComAudioPlayerAddEventListenerPipe = <
 };
 
 export const cmComAudioPlayerGetSrc = () => cmComAudioPlayerPlaySrcAtom.get();
+export const cmComAudioPlayerSetMediaTitle = (title: string | nil) => cmComAudioPlayerMediaTitleAtom.set(title);
 
 let trackObjectUrl: string | nil = null;
 let isCmComAudioPlayerSrcApplying = false;
@@ -112,6 +118,7 @@ export const cmComAudioPlayerSetSrc = (src: HttpNumLeadLink | null) => {
   cmComAudioPlayerUpdateCurrentTime(0);
   cmComAudioPlayerSwitchIsPlay(false);
   cmComAudioPlayerPlaySrcAtom.set(src);
+  cmComAudioPlayerSetMediaTitle(null);
   revokeCmComAudioPlayerTrackUrl();
 
   const applyId = ++cmComAudioPlayerSrcApplyId;
@@ -138,5 +145,5 @@ export const cmComAudioPlayerSwitchIsPlay = (isPlay: boolean = audioElement.paus
 
   if (isCmComAudioPlayerSrcApplying) return;
 
-  audioElement.play();
+  audioElement.play().catch(() => cmComAudioPlayerIsPlayAtom.set(false));
 };
