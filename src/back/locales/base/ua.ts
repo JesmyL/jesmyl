@@ -19,6 +19,8 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
           '$v',
         ])`${SWITCH('$v').CASE(0)`Прості акорди`.CASE(1)`Складні акорди`.DEFAULT`!Необхідно оновити додаток!`}`,
 
+        [MenuComToolName.CacheTracks]: STR(['$v'])`${IF('$v').THEN`Прибрати з кешу`.ELSE`Кешувати треки`}`,
+
         [MenuComToolName.FullscreenMode]: 'На весь екран',
         [MenuComToolName.ChordsVariant]: 'Показати акорди',
         [MenuComToolName.ShowTranslation]: 'Слайди',

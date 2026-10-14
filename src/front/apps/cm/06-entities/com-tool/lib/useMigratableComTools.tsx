@@ -8,6 +8,7 @@ import { extractNumber } from 'shared/utils';
 import { CmComToolIsComToolIconItemsContext, CmComToolItemAttrsContext, CmComToolNameContext } from '../state/contexts';
 import { CmComToolBemoledChords } from '../ui/BemoledChords';
 import { CmComToolBroadcast } from '../ui/BroadcastComTool';
+import { CmComToolCacheTracks } from '../ui/CacheTracksComTool';
 import { CmComToolCatsBinds } from '../ui/CatsBindsComTool';
 import { CmComToolChordHardLevel } from '../ui/ChordHardLevelComTool';
 import { CmComToolChordImages } from '../ui/ChordImagesComTool';
@@ -78,6 +79,7 @@ const toolsDict: Record<MenuComToolName, React.ReactNode> = {
   [MenuComToolName.ChordHardLevel]: <CmComToolChordHardLevel />,
   [MenuComToolName.EditCom]: <RedactComTool />,
   [MenuComToolName.BemoledChords]: <CmComToolBemoledChords />,
+  [MenuComToolName.CacheTracks]: <CmComToolCacheTracks />,
 };
 
 const toolKeys = [
@@ -96,6 +98,7 @@ const toolKeys = [
   MenuComToolName.CopyCom,
   MenuComToolName.ChordHardLevel,
   MenuComToolName.BemoledChords,
+  MenuComToolName.CacheTracks,
 
   MenuComToolName.EditCom,
 ];

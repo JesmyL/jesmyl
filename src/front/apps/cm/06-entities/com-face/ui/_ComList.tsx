@@ -85,10 +85,12 @@ export const CmComFaceListComList = (props: CmComFaceListProps) => {
               {com.n || <span className="text-xKO">{translateBase(it => it.cm.com.unk)}</span>}
             </FaceItem.Title>
             {setComDescription(com, comi)}
-            <CmComAudioPlayerCacheMarks
-              srcs={com.al}
-              className={cmComFaceItemAudioMarksClassName}
-            />
+            {props.withoutCacheMarks || (
+              <CmComAudioPlayerCacheMarks
+                srcs={com.al}
+                className={cmComFaceItemAudioMarksClassName}
+              />
+            )}
           </FaceItem.Root>
         );
       })}

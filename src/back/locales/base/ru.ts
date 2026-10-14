@@ -19,6 +19,8 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
           '$v',
         ])`${SWITCH('$v').CASE(0)`Простые аккорды`.CASE(1)`Сложные аккорды`.DEFAULT`!Нужно обновить приложение!`}`,
 
+        [MenuComToolName.CacheTracks]: STR(['$v'])`${IF('$v').THEN`Убрать из кэша`.ELSE`Кэшировать треки`}`,
+
         [MenuComToolName.FullscreenMode]: 'На весь экран',
         [MenuComToolName.ChordsVariant]: 'Показать аккорды',
         [MenuComToolName.ShowTranslation]: 'Слайды',

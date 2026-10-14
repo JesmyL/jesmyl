@@ -322,6 +322,7 @@ export const CmPlayerPage = () => {
           <CmComFaceList
             key={openComListMode}
             list={comws}
+            withoutCacheMarks={openComListMode === 'sel'}
             importantOnClick={({ defaultClick }) => {
               isCanPlay = true;
               defaultClick();

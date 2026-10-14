@@ -17,7 +17,7 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
         | MenuComToolName.IsMiniAnchor
         | MenuComToolName.ChordHardLevel
         | MenuComToolName.MarkCom
-        | MenuComToolName.ChordHardLevel,
+        | MenuComToolName.CacheTracks,
         'v'
       >;
 

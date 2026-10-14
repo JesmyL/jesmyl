@@ -61,6 +61,7 @@ export const knownStameskaIconNames = {
   CircleArrowRight02: 0,
   Clock01: 0,
   CloudDownload: 0,
+  CloudSavingDone01: 0,
   CloudUpload: 0,
   Code: 0,
   Computer: 0,

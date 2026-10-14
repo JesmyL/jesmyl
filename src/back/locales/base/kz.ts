@@ -19,6 +19,8 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
           '$v',
         ])`${SWITCH('$v').CASE(0)`Оңай аккордтар`.CASE(1)`Күрделі аккордтар`.DEFAULT`!Қосымшаны жаңарту қажет!`}`,
 
+        [MenuComToolName.CacheTracks]: STR(['$v'])`${IF('$v').THEN`Кэштен алу`.ELSE`Тректерді кэштеу`}`,
+
         [MenuComToolName.FullscreenMode]: 'Толық экран',
         [MenuComToolName.ChordsVariant]: 'Аккордтарды көрсету',
         [MenuComToolName.ShowTranslation]: 'Слайдтар',

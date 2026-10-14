@@ -326,6 +326,7 @@ export const enum MenuComToolName {
   ChordHardLevel = 98,
   EditCom = 77,
   BemoledChords = 81,
+  CacheTracks = 99,
 }
 
 export type CmComWidRefGroupDict = SPRecord<CmComWid, CmComWidRefGroupId>;

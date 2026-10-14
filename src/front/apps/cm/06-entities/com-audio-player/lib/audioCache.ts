@@ -140,18 +140,39 @@ export const cmComAudioPlayerUncacheCom = async (comw: CmComWid) => {
 /** srcs already reconciled with Cache Storage in this session, so remounts don't re-check (nor reset an `error` retry state). */
 const hydratedSrcs = new Set<HttpNumLeadLink>();
 
+/**
+ * The state is runtime-only, so hydrate it from Cache Storage once per src; otherwise every
+ * reload (incl. HMR) would show already-downloaded tracks as "not cached" until clicked again.
+ */
+const hydrateCmComAudioPlayerSrc = (src: HttpNumLeadLink) => {
+  if (hydratedSrcs.has(src)) return;
+
+  hydratedSrcs.add(src);
+  void isCmComAudioPlayerSrcCached(src).catch(emptyFunc);
+};
+
 /** Reactive per-track cache state; `undefined` means "not cached". */
 export const useCmComAudioPlayerSrcState = (src: HttpNumLeadLink) => {
   const state = useAtomValue(cmComAudioPlayerSrcStatesAtom)[src];
 
-  // The state is runtime-only, so hydrate it from Cache Storage once per src; otherwise every
-  // reload (incl. HMR) would show already-downloaded tracks as "not cached" until clicked again.
   useEffect(() => {
-    if (hydratedSrcs.has(src)) return;
-
-    hydratedSrcs.add(src);
-    void isCmComAudioPlayerSrcCached(src).catch(emptyFunc);
+    hydrateCmComAudioPlayerSrc(src);
   }, [src]);
 
   return state;
+};
+
+/** Aggregated cache state of a com's tracks, for the bulk cache tool. */
+export const useCmComAudioPlayerComCacheState = (srcs: HttpNumLeadLink[] | nil): 'none' | 'some' | 'all' => {
+  const states = useAtomValue(cmComAudioPlayerSrcStatesAtom);
+
+  useEffect(() => {
+    srcs?.forEach(hydrateCmComAudioPlayerSrc);
+  }, [srcs]);
+
+  const cachedCount = srcs?.reduce((count, src) => count + (states[src] === 'cached' ? 1 : 0), 0) ?? 0;
+
+  if (!srcs?.length || !cachedCount) return 'none';
+
+  return cachedCount === srcs.length ? 'all' : 'some';
 };

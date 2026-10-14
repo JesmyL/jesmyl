@@ -20,7 +20,7 @@ if (mediaSession) {
   const updateMetadata = () => {
     const title = cmComAudioPlayerMediaTitleAtom.get() ?? cmComAudioPlayerPlaySrcAtom.get() ?? '';
 
-    mediaSession.metadata = new MediaMetadata({ title, artist: 'CM' });
+    mediaSession.metadata = new MediaMetadata({ title, artist: 'JesmyL' });
   };
 
   const updatePositionState = () => {
