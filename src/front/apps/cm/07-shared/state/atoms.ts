@@ -6,4 +6,4 @@ export const cmIsTrackBroadcastAtom = atom(false, 'cm:cmIsTrackBroadcast');
 export const cmIsShowMyCommentsAtom = atom(true, 'cm:isShowMyComments');
 export const cmShowChordedSlideModeAtom = atom(CmBroadcastShowChordedSlideMode.Show, 'cm:showChordedSlideMode');
 
-export const cmOpenComListModeAtom = atom<'all' | 'fav' | 'sel'>('all', 'com-player:openComListMode');
+export const cmOpenComListModeAtom = atom<'all' | 'fav' | 'sel' | 'cached'>('all', 'com-player:openComListMode');

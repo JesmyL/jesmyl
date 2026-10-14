@@ -2,13 +2,15 @@ import {
   cmComFavoriteComwsAtom,
   cmComLastOpenComwAtom,
   cmComSelectedComwsAtom,
+  useCmComAllIComList,
   useCmComCurrent,
   useCmComCurrentComPackContext,
 } from '$cm/entities/com';
+import { isCmComAudioPlayerComCached, useCmComAudioPlayerCachedSrcs } from '$cm/entities/com-audio-player';
 import { cmComFaceCurrentComwIdPrefix } from '$cm/entities/com-face';
 import { cmOpenComListModeAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { CmComWid } from 'shared/api';
 import { useCmBroadcastSlidesContext } from '../state/slides';
 
@@ -16,12 +18,29 @@ export const useCmBroadcastScreenComNavigationComws = () => {
   const favComws = useAtomValue(cmComFavoriteComwsAtom);
   const selComws = useAtomValue(cmComSelectedComwsAtom);
   const openListMode = useAtomValue(cmOpenComListModeAtom);
+  const cachedSrcs = useCmComAudioPlayerCachedSrcs();
+  const allIComs = useCmComAllIComList();
 
   const comPack = useCmComCurrentComPackContext();
 
+  const cachedComws = useMemo(
+    () =>
+      openListMode === 'cached'
+        ? (allIComs?.filter(com => isCmComAudioPlayerComCached(com, cachedSrcs)).map(com => com.w) ?? [])
+        : [],
+    [openListMode, allIComs, cachedSrcs],
+  );
+
   return {
     comPack,
-    comws: openListMode === 'fav' ? favComws : openListMode === 'sel' ? selComws : comPack.comws,
+    comws:
+      openListMode === 'fav'
+        ? favComws
+        : openListMode === 'sel'
+          ? selComws
+          : openListMode === 'cached'
+            ? cachedComws
+            : comPack.comws,
   };
 };
 

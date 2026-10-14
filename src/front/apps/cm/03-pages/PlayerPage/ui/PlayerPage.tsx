@@ -28,7 +28,9 @@ import {
   cmComAudioPlayerFindNextCom,
   cmComAudioPlayerGoToAdjacentCom,
   cmComAudioPlayerRegisterNavigation,
+  isCmComAudioPlayerComCached,
   StyledCmComAudioPlayerPlayButton,
+  useCmComAudioPlayerCachedSrcs,
   useCmComAudioPlayerCurrentTime,
   useCmComAudioPlayerDuration,
 } from '$cm/entities/com-audio-player';
@@ -137,6 +139,7 @@ export const CmPlayerPage = () => {
 
   const openComListMode = useAtomValue(cmOpenComListModeAtom);
   const debouncedOpenComListMode = useDebounceValue(openComListMode);
+  const cachedSrcs = useCmComAudioPlayerCachedSrcs();
   const search = useSearch({ from: '/cm/player/' });
   const lastOpenComw = useAtomValue(cmComLastOpenComwAtom);
   const navigate = useNavigate();
@@ -153,9 +156,11 @@ export const CmPlayerPage = () => {
         ? favComws
         : debouncedOpenComListMode === 'sel'
           ? selComws
-          : (allIComs ?? [])
+          : debouncedOpenComListMode === 'cached'
+            ? (allIComs ?? []).filter(com => isCmComAudioPlayerComCached(com, cachedSrcs))
+            : (allIComs ?? [])
       ).filter(com => com.al?.length),
-    [allIComs, favComws, debouncedOpenComListMode, selComws],
+    [allIComs, favComws, cachedSrcs, debouncedOpenComListMode, selComws],
   );
   const comws = useMemo(() => icoms.map(com => com.w), [icoms]);
 

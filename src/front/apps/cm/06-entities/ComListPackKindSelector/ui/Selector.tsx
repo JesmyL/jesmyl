@@ -29,6 +29,13 @@ export const CmComListPackKindSelector = () => {
         className={classNameDict.sel}
         onClick={() => cmOpenComListModeAtom.set('sel')}
       />
+
+      <Button
+        icon="CloudDownload"
+        iconKind="TwotoneRounded"
+        className={classNameDict.cached}
+        onClick={() => cmOpenComListModeAtom.set('cached')}
+      />
     </ButtonGroup.Root>
   );
 };

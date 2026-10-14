@@ -2,6 +2,7 @@ import { cmComFavoriteComwsAtom, cmComLastOpenComwAtom, cmComPlayerIsShuffleAtom
 import { cmIDB, cmOpenComListModeAtom } from '$cm/shared/state';
 import { atom } from 'atomaric';
 import { CmComWid, IExportableCom } from 'shared/api';
+import { isCmComAudioPlayerComCached, takeCmComAudioPlayerCachedSrcs } from './audioCache';
 import {
   cmComAudioPlayerPlaySrcAtom,
   cmComAudioPlayerSetMediaTitle,
@@ -20,11 +21,17 @@ export const cmComAudioPlayerRegisterNavigation = (handler: typeof navigateToPla
 
 const hasAudio = (com: IExportableCom) => !!com.al?.length;
 
-/** Resolves the visible tracklist (all / favorites / selected) straight from atoms + IndexedDB. */
+/** Resolves the visible tracklist (all / favorites / selected / cached) straight from atoms + IndexedDB. */
 const takeTracklistComs = async () => {
   const mode = cmOpenComListModeAtom.get();
 
   if (mode === 'all') return (await cmIDB.db.coms.toArray()).filter(hasAudio);
+
+  if (mode === 'cached') {
+    const [cachedSrcs, coms] = await Promise.all([takeCmComAudioPlayerCachedSrcs(), cmIDB.db.coms.toArray()]);
+
+    return coms.filter(com => isCmComAudioPlayerComCached(com, cachedSrcs));
+  }
 
   const comws = mode === 'fav' ? cmComFavoriteComwsAtom.get() : cmComSelectedComwsAtom.get();
 

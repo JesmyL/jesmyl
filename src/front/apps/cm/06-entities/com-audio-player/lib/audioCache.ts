@@ -2,7 +2,7 @@ import { cmIDB } from '$cm/shared/state';
 import { environment } from '#shared/environment';
 import { atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import { CmComWid, HttpNumLeadLink } from 'shared/api';
+import { CmComWid, HttpNumLeadLink, IExportableCom } from 'shared/api';
 import { Bool } from 'shared/enums';
 import { emptyFunc } from 'shared/utils';
 
@@ -17,6 +17,9 @@ const cmComAudioPlayerCacheMaxEntries = 200;
 
 /** Per-track cache state: `cached` plays from storage; `error` marks the last failed attempt. Absence is "not cached". */
 export const cmComAudioPlayerSrcStatesAtom = atom<PRecord<HttpNumLeadLink, 'cached' | 'error'>>({});
+
+/** Srcs present in Cache Storage, mirrored reactively so the "cached" tracklist reacts to cache/uncache actions. */
+export const cmComAudioPlayerCachedSrcsAtom = atom<Set<HttpNumLeadLink>>(new Set());
 
 const trackUrlPrefix = `${environment.backHttpUrl}/track/`;
 const trackFileUrlPrefix = `${environment.backHttpUrl}/track-file/`;
@@ -43,6 +46,36 @@ const clearCmComAudioPlayerSrcStates = (srcs: HttpNumLeadLink[]) =>
   });
 
 const takeSrcFromCacheUrl = (url: string) => url.slice(trackFileUrlPrefix.length) as HttpNumLeadLink;
+
+const addCmComAudioPlayerCachedSrc = (src: HttpNumLeadLink) =>
+  cmComAudioPlayerCachedSrcsAtom.set(prev => (prev.has(src) ? prev : new Set(prev).add(src)));
+
+const deleteCmComAudioPlayerCachedSrcs = (srcs: HttpNumLeadLink[]) =>
+  cmComAudioPlayerCachedSrcsAtom.set(prev => {
+    if (srcs.every(src => !prev.has(src))) return prev;
+
+    const next = new Set(prev);
+    srcs.forEach(src => next.delete(src));
+
+    return next;
+  });
+
+/**
+ * Reads every src currently present in Cache Storage; the reactive counterpart is {@link useCmComAudioPlayerCachedSrcs}.
+ * Only `/track-file/` keys count: the service worker writes `/track/` range requests into this same bucket, and they are
+ * deliberately excluded so the list keeps the manual-cache semantics of the cloud button.
+ */
+export const takeCmComAudioPlayerCachedSrcs = async () => {
+  if (typeof caches === 'undefined') return new Set<HttpNumLeadLink>();
+
+  const keys = await (await caches.open(cmComAudioPlayerCacheName)).keys();
+
+  return new Set(keys.filter(key => key.url.startsWith(trackFileUrlPrefix)).map(key => takeSrcFromCacheUrl(key.url)));
+};
+
+/** Whether a com has at least one audio src present in Cache Storage. */
+export const isCmComAudioPlayerComCached = (com: IExportableCom, cachedSrcs: Set<HttpNumLeadLink>) =>
+  !!com.al?.some(src => cachedSrcs.has(src));
 
 export const isCmComAudioPlayerSrcCached = async (src: HttpNumLeadLink): Promise<Bool> => {
   const cachedResponse = await (await caches.open(cmComAudioPlayerCacheName)).match(takeCmComAudioPlayerCacheUrl(src));
@@ -71,8 +104,10 @@ const pruneCmComAudioPlayerCache = async (cache: Cache) => {
   if (overflow <= 0) return;
 
   const evicted = keys.slice(0, overflow);
+  const evictedSrcs = evicted.map(key => takeSrcFromCacheUrl(key.url));
   await Promise.all(evicted.map(key => cache.delete(key)));
-  clearCmComAudioPlayerSrcStates(evicted.map(key => takeSrcFromCacheUrl(key.url)));
+  clearCmComAudioPlayerSrcStates(evictedSrcs);
+  deleteCmComAudioPlayerCachedSrcs(evictedSrcs);
 };
 
 /**
@@ -95,6 +130,7 @@ export const cmComAudioPlayerCacheSrc = (src: HttpNumLeadLink): Promise<void> =>
       const cache = await caches.open(cmComAudioPlayerCacheName);
       await cache.put(url, response);
       setCmComAudioPlayerSrcState(src, 'cached');
+      addCmComAudioPlayerCachedSrc(src);
       await pruneCmComAudioPlayerCache(cache);
     } catch (error) {
       setCmComAudioPlayerSrcState(src, 'error');
@@ -120,6 +156,7 @@ export const cmComAudioPlayerUncacheSrc = async (src: HttpNumLeadLink) => {
     console.error('[cm audio cache]', src, error);
   } finally {
     clearCmComAudioPlayerSrcStates([src]);
+    deleteCmComAudioPlayerCachedSrcs([src]);
   }
 };
 
@@ -132,6 +169,7 @@ export const cmComAudioPlayerUncacheCom = async (comw: CmComWid) => {
     const cache = await caches.open(cmComAudioPlayerCacheName);
     await Promise.all(srcs.map(src => cache.delete(takeCmComAudioPlayerCacheUrl(src))));
     clearCmComAudioPlayerSrcStates(srcs);
+    deleteCmComAudioPlayerCachedSrcs(srcs);
   } catch (error) {
     console.error('[cm audio cache]', comw, error);
   }
@@ -175,4 +213,22 @@ export const useCmComAudioPlayerComCacheState = (srcs: HttpNumLeadLink[] | nil):
   if (!srcs?.length || !cachedCount) return 'none';
 
   return cachedCount === srcs.length ? 'all' : 'some';
+};
+
+/** Whether the whole bucket was already reconciled in this session, so remounts don't re-read it. */
+let cachedSrcsHydrated = false;
+
+/** Reactive set of srcs present in Cache Storage; the full bucket is read once on mount, then kept fresh by cache/uncache actions. */
+export const useCmComAudioPlayerCachedSrcs = () => {
+  useEffect(() => {
+    if (cachedSrcsHydrated) return;
+
+    cachedSrcsHydrated = true;
+    void takeCmComAudioPlayerCachedSrcs().then(
+      srcs => cmComAudioPlayerCachedSrcsAtom.set(srcs),
+      error => console.error('[cm audio cache]', error),
+    );
+  }, []);
+
+  return useAtomValue(cmComAudioPlayerCachedSrcsAtom);
 };
