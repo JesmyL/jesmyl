@@ -10,6 +10,18 @@ export const vitePWAOptions = {
     skipWaiting: false,
     clientsClaim: false,
     navigateFallback: '/index.html',
+    runtimeCaching: [
+      {
+        // Same-origin only, mirroring src/service-worker.ts. The cache name lives once, as
+        // `cmComAudioPlayerCacheName` in $cm/entities/com-audio-player (front app code isn't importable here).
+        urlPattern: ({ url }) => url.origin === self.location.origin && url.pathname.startsWith('/track/'),
+        handler: 'CacheFirst',
+        options: {
+          cacheName: 'audio-cache',
+          expiration: { maxEntries: 200, purgeOnQuotaError: true },
+        },
+      },
+    ],
   },
   manifest: {
     name: 'Jesus my Lord',

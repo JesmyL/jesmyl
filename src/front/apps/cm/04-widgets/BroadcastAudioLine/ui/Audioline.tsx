@@ -3,6 +3,7 @@ import { useWatchScreenBroadcast } from '#features/broadcast/hooks/watch-broadca
 import { Button, ButtonGroup } from '#shared/components';
 import { useCmComCurrent } from '$cm/entities/com';
 import {
+  CmComAudioPlayerCacheMarks,
   CmComAudioPlayerPlayButton,
   cmComAudioPlayerSetSrc,
   CmComAudioPlayerTrack,
@@ -81,6 +82,7 @@ export const CmBroadcastAudioLine = ({ topNode }: { topNode: (nodes?: ReactNode)
                 className="mx-5 scale-300!"
               />
 
+              <CmComAudioPlayerCacheMarks srcs={comAudio} />
               <CmComAudioPlayerTrack src={broadcastSrc} />
             </div>
           )}

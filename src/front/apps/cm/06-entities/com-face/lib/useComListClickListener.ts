@@ -4,7 +4,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { CmComWid, IExportableCom } from 'shared/api';
 import { checkIsNaN } from 'shared/utils/checkIs';
-import { cmComFaceCurrentComwIdPrefix, cmComFaceItemDescriptionClassName } from '../const/ids';
+import { cmComFaceCurrentComwIdPrefix, cmComFaceItemAudioMarksClassName, cmComFaceItemDescriptionClassName } from '../const/ids';
 import { ICmComFaceList } from '../model/model';
 
 export const useCmComFaceListClickListener = (
@@ -23,6 +23,7 @@ export const useCmComFaceListClickListener = (
           let foundElementWithFaceItemClassName = event.target as HTMLElement | null;
           let isFaceLogo = false;
           let isFaceDescription = false;
+          let isAudioMarks = false;
 
           while (foundElementWithFaceItemClassName) {
             if (foundElementWithFaceItemClassName.classList.contains('face-logo')) {
@@ -33,12 +34,16 @@ export const useCmComFaceListClickListener = (
               isFaceDescription = true;
             }
 
+            if (foundElementWithFaceItemClassName.classList.contains(cmComFaceItemAudioMarksClassName)) {
+              isAudioMarks = true;
+            }
+
             if (foundElementWithFaceItemClassName.classList.contains('face-item')) break;
 
             foundElementWithFaceItemClassName = foundElementWithFaceItemClassName.parentElement;
           }
 
-          if (isFaceDescription || !foundElementWithFaceItemClassName?.id.startsWith(cmComFaceCurrentComwIdPrefix))
+          if (isFaceDescription || isAudioMarks || !foundElementWithFaceItemClassName?.id.startsWith(cmComFaceCurrentComwIdPrefix))
             return;
 
           const comw = +foundElementWithFaceItemClassName.id.slice(cmComFaceCurrentComwIdPrefix.length) as CmComWid;

@@ -2,6 +2,7 @@ import { translateBase } from '#basis/locale';
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
+import { cmComAudioPlayerUncacheCom } from '$cm/entities/com-audio-player';
 import { cmComFavoriteComwsAtom } from '$cm/entities/index';
 import { cmUserStoreTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useAuth } from '$index/shared/state';
@@ -55,6 +56,8 @@ export const useCmComFavouriteList = () => {
         );
         return;
       }
+
+      if (isFav) cmComAudioPlayerUncacheCom(comw);
 
       if (!auth.login) return;
 

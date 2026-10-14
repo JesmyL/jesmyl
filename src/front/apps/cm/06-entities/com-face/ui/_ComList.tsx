@@ -3,12 +3,17 @@ import { FaceItem } from '#basis/ui/FaceItem';
 import { isIOS } from '#shared/lib/device-differences';
 import { useListInfiniteScrollController } from '#shared/lib/hooks/useListInfiniteScrollController';
 import { CmComNumber, useCmComLastOpenComw } from '$cm/entities/com';
+import { CmComAudioPlayerCacheMarks } from '$cm/entities/com-audio-player';
 import { useCmComSetListLimitsExtracterContext } from '$cm/entities/index';
 import { useRef, useState } from 'react';
 import { CmComWid, IExportableCom } from 'shared/api';
 import { retNull } from 'shared/utils';
 import { objectLength } from 'shared/utils/object.utils';
-import { cmComFaceCurrentComwIdPrefix, cmComFaceItemDescriptionClassName } from '../const/ids';
+import {
+  cmComFaceCurrentComwIdPrefix,
+  cmComFaceItemAudioMarksClassName,
+  cmComFaceItemDescriptionClassName,
+} from '../const/ids';
 import { useCmComFaceListClickListener } from '../lib/useComListClickListener';
 import { useCmComFaceScrollToCurrentComFace } from '../lib/useScrollToCurrentComFace';
 import { CmComFaceListProps } from '../model/model';
@@ -80,6 +85,10 @@ export const CmComFaceListComList = (props: CmComFaceListProps) => {
               {com.n || <span className="text-xKO">{translateBase(it => it.cm.com.unk)}</span>}
             </FaceItem.Title>
             {setComDescription(com, comi)}
+            <CmComAudioPlayerCacheMarks
+              srcs={com.al}
+              className={cmComFaceItemAudioMarksClassName}
+            />
           </FaceItem.Root>
         );
       })}

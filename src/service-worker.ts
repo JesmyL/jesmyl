@@ -11,10 +11,19 @@
 import { precacheAndRoute } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { CacheFirst } from 'workbox-strategies';
+import { cmComAudioPlayerCacheName } from '$cm/entities/com-audio-player/lib/audioCache';
 
 declare const self: ServiceWorkerGlobalScope;
 
 precacheAndRoute(self.__WB_MANIFEST);
+
+registerRoute(
+  props =>
+    props.request.method === 'GET' &&
+    props.url.origin === self.location.origin &&
+    props.url.pathname.startsWith('/track/'),
+  new CacheFirst({ cacheName: cmComAudioPlayerCacheName }),
+);
 
 registerRoute(
   props =>

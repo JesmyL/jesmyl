@@ -154,6 +154,7 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
     hideChBlock: 'Прибрати конфіг акордного блоку',
     insertChBlock: 'Додати конфіг акордного блоку',
     audioPlayErr: 'Помилка відтворення аудіо',
+    cacheTrackDelDsc: 'Видалити трек з кешу?',
 
     linnes: 'Рядки',
     chBlocks: 'Акордні блоки',

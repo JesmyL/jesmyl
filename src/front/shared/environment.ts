@@ -3,6 +3,7 @@ import { hostConfig } from 'shared/api';
 type Environment = {
   isTest: boolean;
   sokiLink: string;
+  backHttpUrl: string;
   authIDBStoreName: string;
   initialUrl: URL;
   isPresentationMode: boolean;
@@ -18,9 +19,13 @@ const sokiLink = isTest
   ? `ws://${import.meta.env.VITE_DNS || localhost}${postfix}`
   : `wss://${hostConfig.host}${postfix}`;
 
+/** Local back dev server port (src/back/startExpressRouting/index.ts); production uses the host. */
+const backHttpUrl = isTest ? `http://${import.meta.env.VITE_DNS || localhost}:4446` : hostConfig.url;
+
 export const environment: Environment = {
   isTest,
   sokiLink,
+  backHttpUrl,
   initialUrl,
   isPresentationMode: initialUrl.pathname.startsWith('/presentation'),
   authIDBStoreName:

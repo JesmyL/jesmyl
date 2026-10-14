@@ -2,8 +2,10 @@ import { translateBase } from '#basis/locale';
 import { addEventListenerPipe } from '#shared/lib/hookEffectPipe';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { atom, useAtomValue } from 'atomaric';
-import { HttpNumLeadLink, hostConfig } from 'shared/api';
+import { HttpNumLeadLink } from 'shared/api';
+import { retNull } from 'shared/utils';
 import { toast } from 'sonner';
+import { takeCmComAudioPlayerCachedBlob, takeCmComAudioPlayerTrackUrl } from '../lib/audioCache';
 
 const audioElement = document.createElement('audio');
 
@@ -75,14 +77,53 @@ export const cmComAudioPlayerAddEventListenerPipe = <
 };
 
 export const cmComAudioPlayerGetSrc = () => cmComAudioPlayerPlaySrcAtom.get();
+
+let trackObjectUrl: string | nil = null;
+let isCmComAudioPlayerSrcApplying = false;
+/** Monotonic id of the latest `cmComAudioPlayerSetSrc` call; a slower in-flight apply with an older id must not win. */
+let cmComAudioPlayerSrcApplyId = 0;
+
+const revokeCmComAudioPlayerTrackUrl = () => {
+  if (!trackObjectUrl) return;
+
+  URL.revokeObjectURL(trackObjectUrl);
+  trackObjectUrl = null;
+};
+
+/** Cache-first: a cached track plays from a local blob URL so it keeps working offline. */
+const applyCmComAudioPlayerSrc = async (src: HttpNumLeadLink, applyId: number) => {
+  const blob = await takeCmComAudioPlayerCachedBlob(src).catch(retNull);
+  if (applyId !== cmComAudioPlayerSrcApplyId || cmComAudioPlayerPlaySrcAtom.get() !== src) return;
+
+  revokeCmComAudioPlayerTrackUrl();
+
+  if (blob?.size) {
+    trackObjectUrl = URL.createObjectURL(blob);
+    audioElement.src = trackObjectUrl;
+  } else audioElement.src = takeCmComAudioPlayerTrackUrl(src);
+
+  isCmComAudioPlayerSrcApplying = false;
+  if (cmComAudioPlayerIsPlayAtom.get()) void audioElement.play().catch(() => cmComAudioPlayerIsPlayAtom.set(false));
+};
+
 export const cmComAudioPlayerSetSrc = (src: HttpNumLeadLink | null) => {
   if (cmComAudioPlayerPlaySrcAtom.get() === src) return;
 
   cmComAudioPlayerUpdateCurrentTime(0);
   cmComAudioPlayerSwitchIsPlay(false);
-  audioElement.src = src! && `${hostConfig.url}/track/${src}`;
+  cmComAudioPlayerPlaySrcAtom.set(src);
+  revokeCmComAudioPlayerTrackUrl();
 
-  setTimeout(cmComAudioPlayerPlaySrcAtom.set, 0, src);
+  const applyId = ++cmComAudioPlayerSrcApplyId;
+
+  if (src == null) {
+    isCmComAudioPlayerSrcApplying = false;
+    audioElement.removeAttribute('src');
+    return;
+  }
+
+  isCmComAudioPlayerSrcApplying = true;
+  void applyCmComAudioPlayerSrc(src, applyId);
 };
 
 export const cmComAudioPlayerSwitchIsPlay = (isPlay: boolean = audioElement.paused) => {
@@ -90,6 +131,12 @@ export const cmComAudioPlayerSwitchIsPlay = (isPlay: boolean = audioElement.paus
 
   cmComAudioPlayerIsPlayAtom.set(isPlay);
 
-  if (isPlay) audioElement.play();
-  else audioElement.pause();
+  if (!isPlay) {
+    audioElement.pause();
+    return;
+  }
+
+  if (isCmComAudioPlayerSrcApplying) return;
+
+  audioElement.play();
 };

@@ -5,9 +5,10 @@ import fs from 'fs';
 import http from 'http';
 import https from 'https';
 import path from 'path';
+import { Readable, pipeline } from 'node:stream';
 import { makeRegExp } from 'regexpert';
 import { CmComWid, HttpNumLeadLink, ScheduleWidgetWid, hostConfig } from 'shared/api';
-import { extractNumber, itIt } from 'shared/utils';
+import { emptyFunc, extractNumber, itIt } from 'shared/utils';
 import { createSecureContext, type SecureContext } from 'tls';
 import { WebSocketServer } from 'ws';
 import { vitePWAOptions } from '../../../vite-pwa.options';
@@ -114,6 +115,7 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
   const cmDescription = 'Приложение для вашего служения';
   const audioPathPrefix = '/audio/';
   const trackPathPrefix = '/track/';
+  const trackFilePathPrefix = '/track-file/';
 
   const makePage = ({
     bodyContent = '',
@@ -156,6 +158,40 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
   <body>${bodyContent}</body>
 </html>`;
   };
+
+  app.get(/^\/track-file\//, async (req: Request, res: Response) => {
+    const trackLink = req.url.slice(trackFilePathPrefix.length) as HttpNumLeadLink;
+
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    // Only whitelisted numLead links may be proxied; raw http(s) input would turn this into an open proxy.
+    if (trackLink.startsWith('http')) {
+      res.status(400).end();
+      return;
+    }
+
+    try {
+      const upstream = await fetch(makeCmComHttpLinkFromNumLead(trackLink));
+
+      if (!upstream.body) {
+        res.status(502).end();
+        return;
+      }
+
+      res.status(upstream.status);
+      res.setHeader('Content-Type', upstream.headers.get('content-type') || 'audio/mpeg');
+
+      // With content-encoding present undici already decoded the body, so upstream content-length is wrong.
+      const contentLength = upstream.headers.get('content-length');
+      if (contentLength && !upstream.headers.get('content-encoding')) res.setHeader('Content-Length', contentLength);
+
+      req.on('close', () => upstream.body?.cancel().catch(emptyFunc));
+      pipeline(Readable.fromWeb(upstream.body as never), res, emptyFunc);
+    } catch (error) {
+      console.error('Track-file proxy error:', error);
+      if (!res.headersSent) res.status(502).end();
+    }
+  });
 
   app.get(/^[^?#]+\.(js|png|json|mp3)($|[?#])/, async (req: Request, res: Response) => {
     if (req.params[0] === 'mp3') {
