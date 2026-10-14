@@ -1,12 +1,8 @@
 import { electronBasicTsjrpcClient } from '#basis/tsjrpc.electron/basic';
 import { convertFileToBase64 } from '#shared/lib/convertFileToBase64';
-import md5 from 'md5';
-import { ElectronWorkDirFile, ElectronWorkDirFolderPack } from 'shared/api/tsjrpc.electtron/basic';
+import { ElectronWorkDirFolderPack } from 'shared/api/tsjrpc.electtron/basic';
 import { lazyInit } from 'shared/utils/lazyInit';
 import { mapObjectEntries, objectKeys } from 'shared/utils/object.utils';
-import { MyFileBoxId } from 'x/my-files';
-import { takeFileType } from 'x/my-files/entities/Uploader/lib/takeFileType';
-import { myFilesIDB } from 'x/my-files/shared/state/idb';
 
 const workDirTool = { toWinNum: -1111, winNum: -1000 };
 
@@ -116,30 +112,3 @@ export const readWorkDirFileDataUrl = async (filePath: string): Promise<string |
   return dataUrl;
 };
 
-const base64ToBytes = (base64: string) => {
-  const binary = atob(base64);
-  const bytes = new Uint8Array(binary.length);
-
-  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-
-  return bytes;
-};
-
-/**
- * Copies a work-dir media file into MyFiles storage under an md5 id — the same convention as MyFilesUploader
- * (md5 of the file data-url). Returns the box id, or nil when the file could not be read.
- */
-export const importWorkDirFileToMyFiles = async (file: ElectronWorkDirFile): Promise<MyFileBoxId | nil> => {
-  const dataUrl = await readWorkDirFileDataUrl(file.path);
-  if (!dataUrl) return undefined;
-
-  const id = md5(dataUrl) as MyFileBoxId;
-  if (await myFilesIDB.tb.files.get(id)) return id;
-
-  const mime = takeMediaMimeByFileName(file.name);
-  const myFile = new File([base64ToBytes(takeBase64FromDataUrl(dataUrl))], file.name, { type: mime });
-
-  await myFilesIDB.tb.files.put({ id, file: myFile, type: takeFileType(mime) });
-
-  return id;
-};

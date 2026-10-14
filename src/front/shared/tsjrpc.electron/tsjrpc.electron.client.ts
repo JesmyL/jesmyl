@@ -8,6 +8,9 @@ export const electronClientApi = window[electronAppInterfaceWindowKey as never] 
   | ElectronAppWindowInvokeApiBox
   | nil;
 
+/** True only in the Electron renderer, where `window[electronAppInterfaceWindowKey]` is exposed by the preload. */
+export const isElectronApp = !!electronClientApi;
+
 export const ElectronTsjrpcClient = makeTSJRPCMethodsMaker<ElectronAppWindowInvokeTool>({
   isNeedCheckClassName: environment.isTest,
   send: checkIsNil(electronClientApi)

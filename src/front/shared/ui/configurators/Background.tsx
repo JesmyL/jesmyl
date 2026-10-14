@@ -1,3 +1,5 @@
+import { ElectronWorkDirBackgroundSelector } from '#features/ElectronWorkDir/ui/BackgroundSelector';
+import { isElectronApp } from '#shared/tsjrpc.electron/tsjrpc.electron.client';
 import { MyFileBackgroundSelector } from 'x/my-files';
 import { IconCheckbox } from '../the-icon/IconCheckbox';
 import { BackgroundConfigProps, ConfiguratorEditProps } from './model';
@@ -13,10 +15,17 @@ export const BackgroundConfigurator = ({ config, updateConfig, title = 'Фон' 
           checked={config.withBg}
           onChange={() => updateConfig({ withBg: !config.withBg })}
         />
-        <MyFileBackgroundSelector
-          bgFileId={config.bgFileId}
-          onSelect={bgFileId => updateConfig({ bgFileId })}
-        />
+        {isElectronApp ? (
+          <ElectronWorkDirBackgroundSelector
+            bgFilePath={config.bgFilePath}
+            onSelect={bgFilePath => updateConfig({ bgFilePath })}
+          />
+        ) : (
+          <MyFileBackgroundSelector
+            bgFileId={config.bgFileId}
+            onSelect={bgFileId => updateConfig({ bgFileId })}
+          />
+        )}
         <input
           className="bg-x3 text-x1"
           value={config.bg}

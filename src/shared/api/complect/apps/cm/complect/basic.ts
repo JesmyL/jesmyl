@@ -121,6 +121,8 @@ export type IFixedCom = { w: CmComWid } & Partial<{
   b: TonType | nil;
   /** MyFiles box id attached to this com; the cm broadcast screen uses it as the background (com fix wins over the screen config). */
   bgFileId: string;
+  /** Electron WorkDir file path — the background source in the Electron build (com fix wins over the screen config). */
+  bgFilePath: string;
 }>;
 
 export type IExportableComInterpretationSimpleValues = {

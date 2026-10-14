@@ -1,5 +1,6 @@
 import { BroadcastScreen } from '#features/broadcast/BroadcastScreen';
 import { useScreenBroadcastCurrentConfig } from '#features/broadcast/hooks/configs';
+import { isElectronApp } from '#shared/tsjrpc.electron/tsjrpc.electron.client';
 import { StyledBroadcastScreenProportioned } from '#shared/style/StyledBroadcastScreenProportioned';
 import { ScreensConfigurator } from '#shared/ui/configurators/Screens';
 import { MyFileBox, MyFilesUploader, MyFileType } from 'x/my-files';
@@ -12,37 +13,40 @@ interface Props {
 export const BroadcastSlidePreview = ({ isPreview = true, onBgFileIdChange }: Props) => {
   const currentConfig = useScreenBroadcastCurrentConfig();
 
-  return (
+  const content = !currentConfig ? (
+    <BroadcastScreen
+      win={window}
+      isPreview={isPreview}
+    />
+  ) : (
     <>
-      <MyFilesUploader
-        className="pointer"
-        onChange={boxes => {
-          const box = boxes.find(b => [MyFileType.Image, MyFileType.Video].includes(b.type));
-          if (box) onBgFileIdChange(box);
-        }}
-      >
-        {!currentConfig ? (
+      <div className="flex center full-size bg-x2">
+        <StyledBroadcastScreenProportioned $proportion={currentConfig.proportion}>
           <BroadcastScreen
             win={window}
             isPreview={isPreview}
           />
-        ) : (
-          <>
-            <div className="flex center full-size bg-x2">
-              <StyledBroadcastScreenProportioned $proportion={currentConfig.proportion}>
-                <BroadcastScreen
-                  win={window}
-                  isPreview={isPreview}
-                />
-              </StyledBroadcastScreenProportioned>
-            </div>
+        </StyledBroadcastScreenProportioned>
+      </div>
 
-            <div className="absolute top-[5px] right-[5px] z-20">
-              <ScreensConfigurator isButtonOnly />
-            </div>
-          </>
-        )}
-      </MyFilesUploader>
+      <div className="absolute top-[5px] right-[5px] z-20">
+        <ScreensConfigurator isButtonOnly />
+      </div>
     </>
+  );
+
+  // The Electron build applies the background only from the WorkDir tab — never through the MyFiles IDB uploader.
+  if (isElectronApp) return <>{content}</>;
+
+  return (
+    <MyFilesUploader
+      className="pointer"
+      onChange={boxes => {
+        const box = boxes.find(b => [MyFileType.Image, MyFileType.Video].includes(b.type));
+        if (box) onBgFileIdChange(box);
+      }}
+    >
+      {content}
+    </MyFilesUploader>
   );
 };

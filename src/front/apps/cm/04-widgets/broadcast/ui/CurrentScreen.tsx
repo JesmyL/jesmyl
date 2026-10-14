@@ -2,8 +2,8 @@ import { currentBroadcastConfigiAtom, isBroadcastTextVisibleAtom } from '#featur
 import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
 import { useGetScreenBroadcastConfig } from '#features/broadcast/hooks/configs';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
-import { useCmComCurrentParts } from '$cm/entities/com';
 import { cmBroadcastSwitchBlockDirectionAtom } from '$cm/entities/broadcast';
+import { useCmComCurrentParts } from '$cm/entities/com';
 import { useCmBroadcastSlidesContext } from '$cm/features/broadcast';
 import { useCmBroadcastScreenConfig } from '$cm/shared/lib/broadcast';
 import { useAtomValue } from 'atomaric';
@@ -22,12 +22,18 @@ export const CmBroadcastCurrentScreen = (props: BroadcastScreenProps & Partial<F
 
   const { fix } = useCmComCurrentParts();
   const fixBgFileId = fix?.bgFileId;
+  const fixBgFilePath = fix?.bgFilePath;
 
   const cmConfig = useMemo(() => {
-    if (!currentConfig || !fixBgFileId) return currentConfig;
+    if (!currentConfig || (!fixBgFileId && !fixBgFilePath)) return currentConfig;
 
-    return { ...currentConfig, bgFileId: fixBgFileId as MyFileBoxId, withBg: true };
-  }, [currentConfig, fixBgFileId]);
+    return {
+      ...currentConfig,
+      ...(fixBgFileId ? { bgFileId: fixBgFileId as MyFileBoxId } : {}),
+      ...(fixBgFilePath ? { bgFilePath: fixBgFilePath } : {}),
+      withBg: true,
+    };
+  }, [currentConfig, fixBgFileId, fixBgFilePath]);
 
   const { html, nextHtml, slides, slidei, nextSlidei, hash } = useCmBroadcastSlidesContext();
 

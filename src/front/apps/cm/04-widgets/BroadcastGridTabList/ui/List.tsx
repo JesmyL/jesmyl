@@ -1,5 +1,4 @@
-import { importWorkDirFileToMyFiles } from '#features/ElectronWorkDir/lib/electronWorkDir';
-import { takeWorkDirBgFromDataTransfer } from '#features/ElectronWorkDir/lib/workDirDrag';
+import { takeWorkDirBgFromDataTransfer, workDirNoBgDragValue } from '#features/ElectronWorkDir/lib/workDirDrag';
 import { CmComListPackKindSelector } from '$cm/entities/ComListPackKindSelector';
 import { CmComFaceList, cmIDB } from '$cm/ext';
 import { useCmBroadcastScreenComNavigationComws, useCmBroadcastSlidesContext } from '$cm/features/broadcast';
@@ -11,17 +10,18 @@ export const CmBroadcastGridTabList = () => {
   const { comPack, comws } = useCmBroadcastScreenComNavigationComws();
   const { setSlidei } = useCmBroadcastSlidesContext();
 
-  const dropWorkDirBgOnCom = async ({ com, event }: { com: IExportableCom; event: DragEvent }) => {
+  const dropWorkDirBgOnCom = ({ com, event }: { com: IExportableCom; event: DragEvent }) => {
     event.preventDefault();
 
-    const file = takeWorkDirBgFromDataTransfer(event.dataTransfer);
-    if (!file) return;
-
-    const boxId = await importWorkDirFileToMyFiles(file);
-    if (boxId == null) return;
+    const payload = takeWorkDirBgFromDataTransfer(event.dataTransfer);
+    if (!payload) return;
 
     void cmIDB.updateComFix(com.w, fix => {
-      fix.bgFileId = boxId;
+      if (payload === workDirNoBgDragValue) {
+        // No-bg marker — drop the com fix so the song falls back to the base broadcast config background.
+        delete fix.bgFilePath;
+        delete fix.bgFileId;
+      } else fix.bgFilePath = payload.path;
     });
   };
 

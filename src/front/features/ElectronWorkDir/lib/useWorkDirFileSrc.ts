@@ -22,5 +22,5 @@ export const useWorkDirFileSrc = (filePath: string) => {
     };
   }, [filePath]);
 
-  return src;
+  return filePath ? src : undefined;
 };

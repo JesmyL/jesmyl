@@ -1,8 +1,14 @@
 import { ElectronWorkDir } from '#features/ElectronWorkDir';
-import { useCmBroadcastUpdateCurrentConfig } from '$cm/shared/lib/broadcast';
+import { useCmBroadcastCurrentScreenConfig, useCmBroadcastUpdateCurrentConfig } from '$cm/shared/lib/broadcast';
 
 export const CmBroadcastWorkDir = () => {
   const updateCmConfig = useCmBroadcastUpdateCurrentConfig();
+  const currentConfig = useCmBroadcastCurrentScreenConfig();
 
-  return <ElectronWorkDir onApplyBg={boxId => updateCmConfig({ bgFileId: boxId, withBg: true })} />;
+  return (
+    <ElectronWorkDir
+      bgFilePath={currentConfig?.bgFilePath}
+      onApplyBg={filePath => updateCmConfig({ bgFilePath: filePath, withBg: !!filePath })}
+    />
+  );
 };

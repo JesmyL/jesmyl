@@ -1,7 +1,7 @@
+import { useBroadcastBackgroundNode } from '#features/broadcast/complect/hooks/useBroadcastBackgroundNode';
 import { useBibleBroadcastScreenAddressStyle } from '$bible/entities/broadcast';
 import { useRef } from 'react';
 import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
-import { useMyFileNode } from 'x/my-files';
 import { BibleBroadcastScreenAddressContent } from './AddressContent';
 import { BibleBroadcastScreenAddressContentPositionConfiguration } from './AddressContentPositionConfiguration';
 
@@ -15,9 +15,11 @@ interface Props {
 }
 
 export const BibleBroadcastScreenAddressContainer: React.FC<Props> = props => {
-  const addressBackground = useMyFileNode(
-    props.bibleConfig?.address.withBg ? props.bibleConfig.address.bgFileId : undefined,
-  );
+  const addressBackground = useBroadcastBackgroundNode({
+    bgFileId: props.bibleConfig?.address.bgFileId,
+    bgFilePath: props.bibleConfig?.address.bgFilePath,
+    withBg: props.bibleConfig?.address.withBg,
+  });
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const addressContainerStyle = useBibleBroadcastScreenAddressStyle(props.isVisible, props.bibleConfig);

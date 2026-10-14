@@ -1,6 +1,7 @@
 import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
 import { makeBroadcastTextStroke } from '#features/broadcast/complect/defaults';
 import { takeScreenBroadcastBackgroundStyles } from '#features/broadcast/complect/hooks/background-styles';
+import { useBroadcastBackgroundNode } from '#features/broadcast/complect/hooks/useBroadcastBackgroundNode';
 import { ScreenTranslateCurrentPositionConfigurators } from '#features/broadcast/complect/position/Position';
 import { CmBroadcastShowChordedSlideMode } from '#shared/model/cm/Cm.model';
 import { HorizontalDirection } from '#shared/model/Direction';
@@ -15,7 +16,7 @@ import { useRef } from 'react';
 import { CmBroadcastScreenConfig } from 'shared/model/cm/broadcast';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
-import { useApplyScreenFontFamilyEffect, useMyFileNode } from 'x/my-files';
+import { useApplyScreenFontFamilyEffect } from 'x/my-files';
 import { useCmBroadcastScreenStyle } from '../lib/get-style';
 import { CmBroadcastSubScreen } from './SubScreen';
 
@@ -44,7 +45,11 @@ export const CmBroadcastScreen = (props: Props) => {
     ...(props.isChorded ? props.cmConfig?.subs?.chorded : null),
   });
 
-  const background = useMyFileNode(props.cmConfig?.withBg ? props.cmConfig.bgFileId : null);
+  const background = useBroadcastBackgroundNode({
+    bgFileId: props.cmConfig?.bgFileId,
+    bgFilePath: props.cmConfig?.bgFilePath,
+    withBg: props.cmConfig?.withBg,
+  });
 
   useApplyScreenFontFamilyEffect(props.cmConfig?.fontFileId, props.win);
   let nextSlideNode = null;

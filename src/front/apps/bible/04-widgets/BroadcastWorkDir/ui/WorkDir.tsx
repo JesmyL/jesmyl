@@ -1,8 +1,13 @@
 import { ElectronWorkDir } from '#features/ElectronWorkDir';
-import { bibleBroadcastUpdateCurrentConfig } from '$bible/entities/broadcast';
+import { bibleBroadcastUpdateCurrentConfig, useBibleBroadcastScreenCurrentConfig } from '$bible/entities/broadcast';
 
 export const BibleBroadcastWorkDir = () => {
+  const currentConfig = useBibleBroadcastScreenCurrentConfig();
+
   return (
-    <ElectronWorkDir onApplyBg={boxId => bibleBroadcastUpdateCurrentConfig({ bgFileId: boxId, withBg: true })} />
+    <ElectronWorkDir
+      bgFilePath={currentConfig?.bgFilePath}
+      onApplyBg={filePath => bibleBroadcastUpdateCurrentConfig({ bgFilePath: filePath, withBg: !!filePath })}
+    />
   );
 };

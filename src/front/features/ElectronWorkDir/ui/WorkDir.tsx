@@ -10,11 +10,9 @@ import { ElectronWorkDirFile, electronWorkDirFileMaxBytes } from 'shared/api/tsj
 import { electronAppName } from 'shared/const/electron';
 import { objectValues } from 'shared/utils/object.utils';
 import { twJoin } from 'tailwind-merge';
-import { MyFileBoxId } from 'x/my-files';
 import {
   createWorkDirFolder,
   ensureWorkDirFolders,
-  importWorkDirFileToMyFiles,
   saveDroppedWorkDirFiles,
   selectWorkDir,
   watchWorkDir,
@@ -22,10 +20,15 @@ import {
 } from '../lib/electronWorkDir';
 import { useWorkDirFileSrc } from '../lib/useWorkDirFileSrc';
 import { useWorkDirPack } from '../lib/useWorkDirPack';
-import { dataTransferHasFiles, putWorkDirBgToDataTransfer, takeWorkDirBgFromDataTransfer } from '../lib/workDirDrag';
+import {
+  dataTransferHasFiles,
+  putWorkDirBgToDataTransfer,
+  putWorkDirNoBgToDataTransfer,
+  takeWorkDirBgFromDataTransfer,
+} from '../lib/workDirDrag';
 import { ElectronWorkDirProps } from '../model';
 
-export const ElectronWorkDir = ({ onApplyBg }: ElectronWorkDirProps) => {
+export const ElectronWorkDir = ({ onApplyBg, bgFilePath }: ElectronWorkDirProps) => {
   const workDir = useAtomValue(electronWorkDirAtom);
 
   if (!workDir) return <WorkDirPicker />;
@@ -34,6 +37,7 @@ export const ElectronWorkDir = ({ onApplyBg }: ElectronWorkDirProps) => {
     <WorkDirBrowser
       key={workDir}
       dirPath={workDir}
+      bgFilePath={bgFilePath}
       onApplyBg={onApplyBg}
     />
   );
@@ -89,7 +93,7 @@ const WorkDirPicker = () => (
   </div>
 );
 
-const WorkDirBrowser = ({ dirPath, onApplyBg }: ElectronWorkDirProps & { dirPath: string }) => {
+const WorkDirBrowser = ({ dirPath, bgFilePath, onApplyBg }: ElectronWorkDirProps & { dirPath: string }) => {
   const subPath = useAtomValue(electronWorkDirSubPathAtom);
   const [refreshi, setRefreshi] = useState(0);
   const [isFileDropTarget, setIsFileDropTarget] = useState(false);
@@ -170,10 +174,15 @@ const WorkDirBrowser = ({ dirPath, onApplyBg }: ElectronWorkDirProps & { dirPath
           void acceptDroppedFiles(Array.from(dataTransfer.files));
         }}
       >
+        <WorkDirNoBgTile
+          isNoBgApplied={!bgFilePath}
+          onApplyBg={onApplyBg}
+        />
         {currentPack?.files.map(file => (
           <WorkDirFileTile
             key={file.path}
             file={file}
+            bgFilePath={bgFilePath}
             onApplyBg={onApplyBg}
           />
         ))}
@@ -225,30 +234,57 @@ const renderPreview = (file: ElectronWorkDirFile, src: string | nil) => {
   );
 };
 
+const workDirTileClass = 'aspect-square flex flex-col gap-1 bg-x2 border border-x5 rounded p-1';
+
+/** First grid cell — always draggable/clickable: applies the empty path, clearing the broadcast background. */
+const WorkDirNoBgTile = ({
+  isNoBgApplied,
+  onApplyBg,
+}: {
+  isNoBgApplied: boolean;
+  onApplyBg?: (filePath: string) => void;
+}) => (
+  <div
+    className={twJoin(workDirTileClass, isNoBgApplied && 'ring-2 ring-x7', 'pointer')}
+    title="Без фона"
+    onClick={() => onApplyBg?.('')}
+  >
+    <div
+      className="flex-1 min-h-0 flex center"
+      draggable
+      onDragStart={event => putWorkDirNoBgToDataTransfer(event.dataTransfer)}
+    >
+      <LazyIcon icon="ViewOff" />
+    </div>
+
+    <div className="text-xs ellipsis shrink-0">Без фона</div>
+  </div>
+);
+
 const WorkDirFileTile = ({
   file,
+  bgFilePath,
   onApplyBg,
 }: {
   file: ElectronWorkDirFile;
-  onApplyBg?: (boxId: MyFileBoxId) => void;
+  bgFilePath?: string;
+  onApplyBg?: (filePath: string) => void;
 }) => {
   const isAudio = file.kind === 'audio';
   const isOversized = file.size > electronWorkDirFileMaxBytes;
-  const isBgUsable = !isAudio && !isOversized && !!onApplyBg;
+  const isBgUsable = !isAudio && !isOversized && onApplyBg != null;
+  const isBgApplied = file.path === bgFilePath;
   const src = useWorkDirFileSrc(isAudio || isOversized ? '' : file.path);
 
-  const applyBg = async () => {
-    if (!onApplyBg) return;
-
-    const boxId = await importWorkDirFileToMyFiles(file);
-    if (boxId) onApplyBg(boxId);
-  };
+  const applyBg = () => onApplyBg?.(file.path);
 
   return (
-    <div className="aspect-square flex flex-col gap-1 bg-x2 border border-x5 rounded p-1">
+    <div
+      className={twJoin(workDirTileClass, isBgApplied && 'ring-2 ring-x7', isBgUsable && 'pointer')}
+      onClick={isBgUsable ? applyBg : undefined}
+    >
       <div
-        className={twJoin('relative flex-1 min-h-0 flex center overflow-hidden rounded', isBgUsable && 'pointer')}
-        onClick={applyBg}
+        className="relative flex-1 min-h-0 flex center overflow-hidden rounded"
         draggable={isBgUsable}
         onDragStart={isBgUsable ? event => putWorkDirBgToDataTransfer(event.dataTransfer, file) : undefined}
       >

@@ -1,13 +1,9 @@
 import { convertFileToBase64 } from '#shared/lib/convertFileToBase64';
+import { BackgroundMediaNode } from '#shared/ui/BackgroundMediaNode';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { CSSProperties, ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { MyFileBoxId, MyFileType } from 'x/my-files';
 import { myFilesIDB } from '../state/idb';
-
-const style: CSSProperties = {
-  position: 'absolute',
-  objectFit: 'cover',
-};
 
 export const useMyFileNode = (bgFileId: MyFileBoxId | nil) => {
   const [background, setBackground] = useState<ReactNode>(null);
@@ -17,42 +13,26 @@ export const useMyFileNode = (bgFileId: MyFileBoxId | nil) => {
   );
 
   useEffect(() => {
-    if (fileBox == null) {
-      setBackground(fileBox);
+    if (fileBox == null || (fileBox.type !== MyFileType.Image && fileBox.type !== MyFileType.Video)) {
+      setBackground(null);
       return;
     }
 
-    (async () => {
-      const src = await convertFileToBase64(fileBox.file);
+    let isActive = true;
 
-      switch (fileBox.type) {
-        case MyFileType.Video: {
-          setBackground(
-            <video
-              autoPlay
-              muted
-              loop
-              src={src}
-              className="full-size pointers-none"
-              style={style}
-            />,
-          );
-          break;
-        }
+    convertFileToBase64(fileBox.file).then(src => {
+      if (isActive)
+        setBackground(
+          <BackgroundMediaNode
+            src={src}
+            isVideo={fileBox.type === MyFileType.Video}
+          />,
+        );
+    });
 
-        case MyFileType.Image: {
-          setBackground(
-            <img
-              alt=""
-              src={src}
-              className="full-size pointers-none"
-              style={style}
-            />,
-          );
-          break;
-        }
-      }
-    })();
+    return () => {
+      isActive = false;
+    };
   }, [fileBox]);
 
   return background;

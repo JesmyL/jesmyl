@@ -1,9 +1,10 @@
 import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
+import { useBroadcastBackgroundNode } from '#features/broadcast/complect/hooks/useBroadcastBackgroundNode';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useBibleBroadcastScreenWrapperStyle } from '$bible/entities/broadcast';
 import { useRef, useState } from 'react';
 import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
-import { useApplyScreenFontFamilyEffect, useMyFileNode } from 'x/my-files';
+import { useApplyScreenFontFamilyEffect } from 'x/my-files';
 import { BibleBroadcastScreenAddressContainer } from '../sub-ui/AddressContainer';
 import { BibleBroadcastScreenAddressPanel } from '../sub-ui/AddressPanel';
 import { BibleBroadcastScreenContent } from '../sub-ui/Content';
@@ -22,7 +23,11 @@ export const BibleBroadcastScreenScreen = (props: Props) => {
 
   const wrapperStyle = useBibleBroadcastScreenWrapperStyle(props.bibleConfig);
 
-  const background = useMyFileNode(props.bibleConfig?.withBg ? props.bibleConfig.bgFileId : undefined);
+  const background = useBroadcastBackgroundNode({
+    bgFileId: props.bibleConfig?.bgFileId,
+    bgFilePath: props.bibleConfig?.bgFilePath,
+    withBg: props.bibleConfig?.withBg,
+  });
 
   useApplyScreenFontFamilyEffect(props.bibleConfig?.bgFileId, props.win);
 
