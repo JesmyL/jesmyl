@@ -1,10 +1,11 @@
 import { exec } from 'child_process';
-import { lazyEnvJson } from '../../back/envJson';
+import { hostConfig } from '../../../freshHostConfig';
 import { makeElectronDownHostUrl } from './lib';
 
 async function runDeploy(): Promise<void> {
-  const targetDir = makeElectronDownHostUrl(lazyEnvJson().host);
-  const targetRemoteDir = `root@${lazyEnvJson().ip}:/var/www/${targetDir}/` as const;
+  const { host, ip } = hostConfig;
+  const targetDir = makeElectronDownHostUrl(host);
+  const targetRemoteDir = `root@${ip}:/var/www/${targetDir}/` as const;
 
   const execAsync = (stringCommand: string): Promise<number | string> =>
     new Promise((res, rej) =>
