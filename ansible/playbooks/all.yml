@@ -1,0 +1,19 @@
+---
+# Единая точка входа: полный провижининг + деплой одного хоста.
+# Хост и IP задаются на лету (см. inventory.py), inventory-файлы править не нужно:
+#
+#   cd ansible
+#   TARGET_HOST=<host> TARGET_IP=<ip> ansible-playbook playbooks/all.yml --ask-vault-pass
+#
+# Теги этапов: provision / backend / frontend (на весь импортированный плейбук),
+# плюс внутренние теги: packages, postgres, swap, certs, systemd, deploy, build.
+# Примеры: --tags backend, --skip-tags certs, --tags deploy.
+
+- import_playbook: provision.yml
+  tags: provision
+
+- import_playbook: deploy-backend.yml
+  tags: backend
+
+- import_playbook: deploy-frontend.yml
+  tags: frontend

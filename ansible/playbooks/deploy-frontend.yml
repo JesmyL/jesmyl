@@ -1,0 +1,64 @@
+---
+# =============================================================================
+# Деплой frontend (хост берётся из inventory.py): копирует локальный build/ в {{ app_dir }}/build.
+# Сборка НЕ выполняется здесь — запустите `npm run build` заранее.
+#
+# Запуск (из каталога ansible/, секреты vault не нужны):
+#   ansible-playbook playbooks/deploy-frontend.yml
+# =============================================================================
+
+- name: Деплой frontend
+  hosts: target
+  become: true
+  gather_facts: false
+
+  handlers:
+    - name: restart jesmyl_soki
+      ansible.builtin.systemd:
+        name: "{{ service_name }}"
+        state: restarted
+        daemon_reload: true
+
+  tasks:
+    # Fail Fast: без собранного build/ деплоить нечего.
+    - name: Проверить локальный каталог build/
+      ansible.builtin.stat:
+        path: "{{ playbook_dir }}/../../build"
+      delegate_to: localhost
+      become: false
+      register: local_build
+      tags: deploy
+
+    - name: Убедиться, что frontend собран
+      ansible.builtin.assert:
+        that:
+          - local_build.stat.isdir | default(false)
+        fail_msg: >-
+          Каталог build/ не найден. Соберите frontend командой `npm run build`
+          в корне репозитория и повторите деплой.
+      tags: deploy
+
+    - name: Синхронизировать build/ на сервер
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../../build/"
+        dest: "{{ app_dir }}/build/"
+        mode: '0644'
+        directory_mode: '0755'
+      tags: deploy
+
+    # Файл версии, который кладёт и do/deploy-the-code.ts.
+    - name: Проверить локальный +version.json
+      ansible.builtin.stat:
+        path: "{{ playbook_dir }}/../../src/shared/values/+version.json"
+      delegate_to: localhost
+      become: false
+      register: version_file
+      tags: deploy
+
+    - name: Скопировать +version.json на сервер
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../../src/shared/values/+version.json"
+        dest: "{{ app_dir }}/+version.json"
+        mode: '0644'
+      when: version_file.stat.exists
+      tags: deploy

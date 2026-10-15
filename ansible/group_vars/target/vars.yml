@@ -1,0 +1,24 @@
+---
+# Несекретные переменные хоста.
+# host / ip / app_dir приходят из inventory.py (TARGET_HOST / TARGET_IP),
+# поэтому здесь их НЕ дублируем — это делает деплой host-agnostic.
+
+# Express слушает порты напрямую, без nginx.
+http_port: 80
+https_port: 443
+app_port: 4446
+
+service_name: jesmyl_soki
+
+# Публичные имена .env.json маппятся на секреты из vault.yml.
+DB_USER: "{{ vault_db_user }}"
+DB_PASSWORD: "{{ vault_db_password }}"
+DB_NAME: "{{ vault_db_name }}"
+DB_PORT: "{{ vault_db_port }}"
+# DB_HOST по умолчанию = ip сервера из инвентаря; переопределяется vault_db_host.
+DB_HOST: "{{ vault_db_host | default(ip, true) }}"
+SECURE_KEY: "{{ vault_secure_key }}"
+isProd: "{{ vault_is_prod }}"
+
+# Опциональный поддомен (пусто = без поддомена).
+subdomain: ''

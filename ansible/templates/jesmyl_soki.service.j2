@@ -4,8 +4,8 @@ Description=The Soki Service
 [Service]
 Restart=on-failure
 RestartSec=5s
-WorkingDirectory={{ host_root_dir }}
-ExecStart=node --max-old-space-size=450 {{ host_root_dir }}/back.index.cjs
+WorkingDirectory={{ app_dir }}
+ExecStart=node --max-old-space-size=450 {{ app_dir }}/back.index.cjs
 StandardOutput=journal
 StandardError=journal
 LogRateLimitIntervalSec=30s

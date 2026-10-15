@@ -1,0 +1,344 @@
+---
+# =============================================================================
+# Одноразовый провижининг сервера (хост берётся из inventory.py).
+# Идемпотентно повторяет настройку из src/back/initBack.ts:
+#   пакеты, PostgreSQL (пароль/БД/pg_hba/порт), swap, journald/logrotate,
+#   certbot + cron-обновление, systemd-юнит jesmyl_soki, package.json + npm i,
+#   drizzle push.
+#
+# Запуск (из каталога ansible/):
+#   ansible-playbook playbooks/provision.yml --ask-vault-pass
+#
+# Секреты — в group_vars/target/vault.yml (ansible-vault).
+# =============================================================================
+
+- name: Провижининг сервера
+  hosts: target
+  become: true
+  gather_facts: true
+
+  vars:
+    # Каталоги приложения (deployPathsBasicDict из paths.basic.ts).
+    deploy_dirs:
+      - apps/cm
+      - apps/index
+      - apps/q
+      - apps/q/blanks
+      - apps/storages/list
+
+  handlers:
+    - name: daemon-reload
+      ansible.builtin.systemd:
+        daemon_reload: true
+
+    - name: restart jesmyl_soki
+      ansible.builtin.systemd:
+        name: "{{ service_name }}"
+        state: restarted
+        daemon_reload: true
+
+    - name: restart postgresql
+      ansible.builtin.systemd:
+        name: postgresql
+        state: restarted
+
+    - name: apply logrotate
+      ansible.builtin.command: logrotate -f /etc/logrotate.d/rsyslog
+      changed_when: false
+      failed_when: false
+
+    - name: restart systemd-journald
+      ansible.builtin.systemd:
+        name: systemd-journald
+        state: restarted
+      listen: journald changed
+      failed_when: false
+
+    - name: vacuum systemd journal
+      ansible.builtin.command: journalctl --vacuum-size=100M
+      changed_when: false
+      failed_when: false
+      listen: journald changed
+
+  tasks:
+    # Fail Fast: без секретов провижининг бессмысленен.
+    # Теги [provision, backend] (не always): frontend-only прогон не должен требовать секретов.
+    - name: Проверить, что секреты vault заданы
+      ansible.builtin.assert:
+        that:
+          - vault_db_user | default('') not in ['', 'CHANGE_ME']
+          - vault_db_password | default('') not in ['', 'CHANGE_ME']
+          - vault_db_name | default('') not in ['', 'CHANGE_ME']
+          - vault_secure_key | default('') not in ['', 'CHANGE_ME']
+        fail_msg: >-
+          Заполните секреты в ansible/group_vars/target/vault.yml
+          (ansible-vault create) и запустите с --ask-vault-pass.
+      tags: [provision, backend]
+
+    # ---------------------------------------------------------------- packages
+    - name: Установить системные пакеты
+      ansible.builtin.apt:
+        name:
+          - postgresql
+          - postgresql-contrib
+          - certbot
+          - psmisc # fuser (скрипты relog / re-start)
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+      tags: packages
+
+    # Отдельная задача с тегом postgres: задачи postgres ниже требуют драйвер,
+    # а `--tags postgres` не должен тянуть весь набор пакетов.
+    - name: Установить драйвер Python для PostgreSQL
+      ansible.builtin.apt:
+        name: python3-psycopg2 # драйвер для community.postgresql
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+      tags: postgres
+
+    - name: Включить и запустить PostgreSQL
+      ansible.builtin.systemd:
+        name: postgresql
+        enabled: true
+        state: started
+      tags: packages
+
+    # ---------------------------------------------------------------- postgres
+    - name: Задать пароль пользователю БД
+      community.postgresql.postgresql_user:
+        name: "{{ vault_db_user }}"
+        password: "{{ vault_db_password }}"
+        state: present
+      become_user: postgres
+      tags: postgres
+
+    - name: Создать базу данных
+      community.postgresql.postgresql_db:
+        name: "{{ vault_db_name }}"
+        owner: "{{ vault_db_user }}"
+        state: present
+      become_user: postgres
+      tags: postgres
+
+    - name: Найти pg_hba.conf
+      ansible.builtin.find:
+        paths: /etc/postgresql
+        patterns: pg_hba.conf
+        recurse: true
+        file_type: file
+      register: pg_hba_files
+      tags: postgres
+
+    - name: Разрешить md5-аутентификацию по 127.0.0.1
+      ansible.builtin.lineinfile:
+        path: "{{ item.path }}"
+        line: host all all 127.0.0.1/32 md5
+        state: present
+      loop: "{{ pg_hba_files.files | default([]) }}"
+      loop_control:
+        label: "{{ item.path }}"
+      notify: restart postgresql
+      tags: postgres
+
+    - name: Разрешить md5-аутентификацию по ::1
+      ansible.builtin.lineinfile:
+        path: "{{ item.path }}"
+        line: host all all ::1/128 md5
+        state: present
+      loop: "{{ pg_hba_files.files | default([]) }}"
+      loop_control:
+        label: "{{ item.path }}"
+      notify: restart postgresql
+      tags: postgres
+
+    - name: Найти postgresql.conf
+      ansible.builtin.find:
+        paths: /etc/postgresql
+        patterns: postgresql.conf
+        recurse: true
+        file_type: file
+      register: pg_conf_files
+      when: vault_db_port | int != 5432
+      tags: postgres
+
+    - name: Изменить порт PostgreSQL (если DB_PORT не 5432)
+      ansible.builtin.lineinfile:
+        path: "{{ item.path }}"
+        regexp: '^#?\s*port\s*='
+        line: port = {{ vault_db_port }}
+      loop: "{{ pg_conf_files.files | default([]) }}"
+      loop_control:
+        label: "{{ item.path }}"
+      when: vault_db_port | int != 5432
+      notify: restart postgresql
+      tags: postgres
+
+    # -------------------------------------------------------------------- swap
+    - name: Проверить наличие /swapfile
+      ansible.builtin.stat:
+        path: /swapfile
+      register: swap_file
+      tags: swap
+
+    - name: Настроить swap-файл 2 ГБ
+      when: not swap_file.stat.exists
+      tags: swap
+      block:
+        - name: Создать /swapfile размером 2 ГБ
+          ansible.builtin.command: fallocate -l 2G /swapfile
+          args:
+            creates: /swapfile
+
+        - name: Выставить права 600 на /swapfile
+          ansible.builtin.file:
+            path: /swapfile
+            mode: '0600'
+
+        - name: Инициализировать swap
+          ansible.builtin.command: mkswap /swapfile
+          changed_when: true
+
+        - name: Включить swap
+          ansible.builtin.command: swapon /swapfile
+          changed_when: true
+
+        - name: Прописать /swapfile в /etc/fstab
+          ansible.builtin.lineinfile:
+            path: /etc/fstab
+            line: /swapfile none swap sw 0 0
+            state: present
+
+    # ------------------------------------------------------------ journal/logs
+    - name: Ограничить размер журнала systemd (SystemMaxUse=100M)
+      ansible.builtin.lineinfile:
+        path: /etc/systemd/journald.conf
+        regexp: '^#?\s*SystemMaxUse='
+        line: SystemMaxUse=100M
+        state: present
+      notify: journald changed
+      tags: systemd
+
+    - name: Настроить ротацию системных логов
+      ansible.builtin.copy:
+        dest: /etc/logrotate.d/rsyslog
+        mode: '0644'
+        content: |
+          /var/log/syslog
+          /var/log/mail.log
+          /var/log/kern.log
+          /var/log/auth.log
+          /var/log/user.log
+          /var/log/cron.log
+          {
+            su root syslog
+            size 50M
+            rotate 2
+            missingok
+            notifempty
+            compress
+            delaycompress
+            sharedscripts
+            postrotate
+              /usr/lib/rsyslog/rsyslog-rotate
+            endscript
+          }
+      notify: apply logrotate
+      tags: systemd
+
+    # ----------------------------------------------------------------- systemd
+    - name: Установить unit-файл jesmyl_soki.service
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/../templates/jesmyl_soki.service.j2"
+        dest: /etc/systemd/system/{{ service_name }}.service
+        mode: '0644'
+      notify:
+        - daemon-reload
+        - restart jesmyl_soki
+      tags: systemd
+
+    # ------------------------------------------------------------------- certs
+    - name: Проверить наличие SSL-сертификата
+      ansible.builtin.stat:
+        path: /etc/letsencrypt/live/{{ host }}/fullchain.pem
+      register: cert_file
+      tags: certs
+
+    # initBack требует свободный порт 80, поэтому при занятом порте выпуск
+    # пропускается — как и в оригинальном скрипте (failed_when: false).
+    - name: Выпустить SSL-сертификат Let's Encrypt
+      ansible.builtin.command: certbot certonly --standalone -d {{ host }}
+      when: not cert_file.stat.exists
+      failed_when: false
+      tags: certs
+
+    - name: Добавить cron-задачу обновления сертификата
+      ansible.builtin.cron:
+        name: certbot renew jesmyl
+        minute: '0'
+        hour: '3'
+        weekday: '1'
+        job: >-
+          certbot renew --pre-hook "systemctl stop {{ service_name }}"
+          --post-hook "systemctl start {{ service_name }}"
+      tags: certs
+
+    # ------------------------------------------------------------------ deploy
+    - name: Создать каталог приложения и подкаталоги
+      ansible.builtin.file:
+        path: "{{ app_dir }}/{{ item }}"
+        state: directory
+        mode: '0755'
+      loop: "{{ [''] + deploy_dirs }}"
+      tags: deploy
+
+    - name: Создать .env.json, если отсутствует (chmod 600)
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/../templates/env.json.j2"
+        dest: "{{ app_dir }}/.env.json"
+        mode: '0600'
+        force: false
+      tags: deploy
+
+    - name: Установить package.json бэкенда
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/../templates/package.json.j2"
+        dest: "{{ app_dir }}/package.json"
+        mode: '0644'
+      tags: deploy
+
+    - name: Установить зависимости бэкенда
+      ansible.builtin.command: npm i --prefix {{ app_dir }}
+      args:
+        creates: "{{ app_dir }}/node_modules"
+      tags: deploy
+
+    - name: Проверить наличие drizzle.config.cjs
+      ansible.builtin.stat:
+        path: "{{ app_dir }}/drizzle.config.cjs"
+      register: drizzle_config
+      tags: deploy
+
+    # --force: без него push ждёт интерактивного подтверждения и вешает Ansible.
+    - name: Применить схему БД (drizzle push)
+      ansible.builtin.command: >-
+        node {{ app_dir }}/node_modules/drizzle-kit/bin.cjs push
+        --config="{{ app_dir }}/drizzle.config.cjs" --force
+      when: drizzle_config.stat.exists
+      changed_when: false
+      tags: deploy
+
+    - name: Включить сервис jesmyl_soki
+      ansible.builtin.systemd:
+        name: "{{ service_name }}"
+        enabled: true
+      tags: deploy
+
+    # Артефакты могут быть ещё не задеплоены (provision → deploy-backend).
+    - name: Запустить сервис jesmyl_soki
+      ansible.builtin.systemd:
+        name: "{{ service_name }}"
+        state: started
+      failed_when: false
+      tags: deploy

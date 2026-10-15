@@ -1,0 +1,24 @@
+---
+# ПЛЕЙСХОЛДЕР СЕКРЕТОВ. Реальные значения НЕ коммитить.
+#
+# Создать зашифрованный файл заново (рекомендуется):
+#   cd ansible
+#   ansible-vault create group_vars/target/vault.yml
+# Либо зашифровать этот файл после заполнения:
+#   ansible-vault encrypt group_vars/target/vault.yml
+# Правка зашифрованного файла:
+#   ansible-vault edit group_vars/target/vault.yml
+#
+# Значения можно взять из src/back/.env.server.json.
+# Плейбуки проверяют, что CHANGE_ME не осталось (fail fast).
+#
+# Секреты общие для всех хостов — при смене хоста достаточно перезапустить
+# ansible-vault edit group_vars/target/vault.yml (или выпустить новый файл).
+
+vault_db_user: CHANGE_ME
+vault_db_password: CHANGE_ME
+vault_db_name: CHANGE_ME
+vault_db_port: '5432'
+# vault_db_host: ""   # опц.: переопределить DB_HOST (иначе = ip из инвентаря)
+vault_secure_key: CHANGE_ME
+vault_is_prod: 'true'

@@ -25,6 +25,10 @@
   tags: [init]
 
   vars:
+    # Общий шаблон jesmyl_soki.service.j2 теперь использует app_dir
+    # (структура we_in); для jesmyl.ru указываем его через host_root_dir.
+    app_dir: '{{ host_root_dir }}'
+
     # Каталоги из deployPathsBasicDict (paths.basic.ts) + корень.
     # initBack.ts создаёт их через fs.mkdirSync({ recursive: true }).
     deploy_dirs:

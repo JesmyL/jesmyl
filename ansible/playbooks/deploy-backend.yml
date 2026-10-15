@@ -1,0 +1,113 @@
+---
+# =============================================================================
+# Деплой backend (хост берётся из inventory.py).
+# Собирает артефакты локально (npx tsx do/build-back-index.ts), копирует их и
+# .env.json на сервер, ставит зависимости и применяет схему БД (drizzle push).
+#
+# Запуск (из каталога ansible/):
+#   ansible-playbook playbooks/deploy-backend.yml --ask-vault-pass
+# =============================================================================
+
+- name: Деплой backend
+  hosts: target
+  become: true
+  gather_facts: false
+
+  vars:
+    # Артефакты из do/build-back-index.ts: .cjs кладутся в src/back/, *.mjs — в корень репо.
+    backend_artifacts:
+      - name: back.index.cjs
+        src_dir: src/back
+      - name: drizzle.schema.cjs
+        src_dir: src/back
+      - name: drizzle.config.cjs
+        src_dir: src/back
+      - name: paths.mjs
+        src_dir: .
+      - name: paths.basic.mjs
+        src_dir: .
+
+  handlers:
+    - name: restart jesmyl_soki
+      ansible.builtin.systemd:
+        name: "{{ service_name }}"
+        state: restarted
+        daemon_reload: true
+
+  tasks:
+    # Fail Fast: секреты нужны для рендера .env.json.
+    - name: Проверить, что секреты vault заданы
+      ansible.builtin.assert:
+        that:
+          - vault_db_user | default('') not in ['', 'CHANGE_ME']
+          - vault_db_password | default('') not in ['', 'CHANGE_ME']
+          - vault_db_name | default('') not in ['', 'CHANGE_ME']
+          - vault_secure_key | default('') not in ['', 'CHANGE_ME']
+        fail_msg: >-
+          Заполните секреты в ansible/group_vars/target/vault.yml
+          (ansible-vault create) и запустите с --ask-vault-pass.
+      tags: [backend]
+
+    - name: Собрать артефакты backend локально
+      ansible.builtin.command: npx tsx do/build-back-index.ts
+      args:
+        chdir: "{{ playbook_dir }}/../.."
+      delegate_to: localhost
+      become: false
+      changed_when: true
+      tags: build
+
+    - name: Проверить собранные артефакты локально
+      ansible.builtin.stat:
+        path: "{{ playbook_dir }}/../../{{ item.src_dir }}/{{ item.name }}"
+      delegate_to: localhost
+      become: false
+      loop: "{{ backend_artifacts }}"
+      register: built_artifacts
+      tags: build
+
+    - name: Убедиться, что артефакты собраны
+      ansible.builtin.assert:
+        that:
+          - built_artifacts.results | rejectattr('stat.exists') | list | length == 0
+        fail_msg: >-
+          Не собраны артефакты:
+          {{ built_artifacts.results | rejectattr('stat.exists') | map(attribute='item.name') | join(', ') }}
+      tags: build
+
+    - name: Скопировать артефакты backend
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../../{{ item.src_dir }}/{{ item.name }}"
+        dest: "{{ app_dir }}/{{ item.name }}"
+        mode: '0644'
+      loop: "{{ backend_artifacts }}"
+      notify: restart jesmyl_soki
+      tags: deploy
+
+    - name: Отрендерить .env.json (chmod 600)
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/../templates/env.json.j2"
+        dest: "{{ app_dir }}/.env.json"
+        mode: '0600'
+      notify: restart jesmyl_soki
+      tags: deploy
+
+    - name: Установить зависимости бэкенда
+      ansible.builtin.command: npm i --prefix {{ app_dir }}
+      args:
+        creates: "{{ app_dir }}/node_modules"
+      tags: deploy
+
+    # --force: без него push ждёт интерактивного подтверждения и вешает Ansible.
+    - name: Применить схему БД (drizzle push)
+      ansible.builtin.command: >-
+        node {{ app_dir }}/node_modules/drizzle-kit/bin.cjs push
+        --config="{{ app_dir }}/drizzle.config.cjs" --force
+      changed_when: false
+      tags: deploy
+
+    - name: Включить сервис jesmyl_soki
+      ansible.builtin.systemd:
+        name: "{{ service_name }}"
+        enabled: true
+      tags: deploy

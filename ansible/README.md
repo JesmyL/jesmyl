@@ -1,95 +1,168 @@
-# Ansible для Jesmyl
+# Ansible: провижининг и деплой jesmyl на произвольный хост
 
-Плейбук инициализации сервера и деплоя, повторяющий логику `src/back/initBack.ts`.
+Провижининг и деплой любого хоста **одной командой**, без правки inventory и
+`group_vars`. Хост и IP передаются через переменные окружения, а динамический
+инвентарь `inventory.py` строит всю модель хоста на лету.
+Плейбуки повторяют (идемпотентно) логику `src/back/initBack.ts` и
+`do/deploy-the-code.ts`.
 
-## Файлы
+```bash
+cd ansible
+TARGET_HOST=we-in.ru TARGET_IP=121.127.37.119 ansible-playbook playbooks/all.yml --ask-vault-pass
+```
+
+## Структура
 
 ```
 ansible/
-├── deploy.yml                    # основной плейбук (init + deploy)
-├── inventory.ini                 # хосты и переменные
-├── README.md
+├── ansible.cfg                     # inventory=inventory.py, remote_user=root, host_key_checking=False
+│                                   #   + ssh_common_args=-o StrictHostKeyChecking=accept-new
+├── inventory.py                    # динамический инвентарь (TARGET_HOST/TARGET_IP)
+├── group_vars/target/
+│   ├── vars.yml                    # несекретные переменные (порты, маппинг секретов)
+│   └── vault.yml                   # секреты (ansible-vault, общие для всех хостов)
+├── playbooks/
+│   ├── all.yml                     # ЕДИНАЯ точка входа: provision + backend + frontend
+│   ├── provision.yml               # одноразовый провижининг сервера
+│   ├── deploy-backend.yml          # сборка + back.index.cjs и т.д. → сервер
+│   └── deploy-frontend.yml         # build/ → /var/www/<host>/build
 └── templates/
-    ├── env.json.j2               # {{ host_root_dir }}/.env.json
-    ├── jesmyl_soki.service.j2    # systemd-юнит
-    └── package.json.j2           # package.json бэкенда
+    ├── jesmyl_soki.service.j2      # systemd-юнит
+    ├── env.json.j2                 # {{ app_dir }}/.env.json (chmod 600)
+    └── package.json.j2             # {{ app_dir }}/package.json
+```
+
+## Как задаётся хост
+
+`inventory.py` (stdlib-only, исполняемый) читает `TARGET_HOST` / `TARGET_IP`
+(или флаги `--target-host` / `--target-ip`) и отдаёт один хост в группе `target`:
+
+- `host` — домен (например `we-in.ru`);
+- `ip` — IP сервера (имя хоста в инвентаре и `ansible_host`);
+- `app_dir` — `/var/www/{{ host }}`.
+
+Из этих значений выводится всё остальное: каталог приложения, `certbot -d`,
+`DB_HOST` (по умолчанию = `ip`, см. ниже). Никаких `we-in.ru`/IP в
+`playbooks/` и `group_vars/` нет — деплой host-agnostic.
+
+Так как `inventory.py` лежит рядом с `group_vars/`, Ansible сам подхватывает
+`group_vars/target/`. Путь `inventory = inventory.py` в `ansible.cfg` считается
+относительно самого конфига, поэтому запуск из корня репозитория тоже работает
+(достаточно указать `ANSIBLE_CONFIG`):
+
+```bash
+cd /home/gfirf/Documents/pro/jesmyl
+ANSIBLE_CONFIG=ansible/ansible.cfg \
+TARGET_HOST=we-in.ru TARGET_IP=121.127.37.119 \
+  ansible-playbook ansible/playbooks/all.yml --ask-vault-pass
+```
+
+Скрипт можно вызвать и вручную (например, для отладки инвентаря); флаги
+`--target-host` / `--target-ip` — альтернатива переменным окружения:
+
+```bash
+ansible/inventory.py --target-host we-in.ru --target-ip 121.127.37.119
 ```
 
 ## Требования
 
-- Управляющая машина: `ansible` (>= 2.14), доступ по SSH к серверу (root или sudo без пароля).
-- Коллекций сверх `ansible.builtin` не требуется.
-- На управляющей машине до деплоя должны быть собран **frontend** и **бэкенд**:
+- `ansible >= 2.14`; коллекция `community.postgresql` (`ansible-galaxy collection install community.postgresql`).
+- SSH-доступ root к серверу.
+- На сервере предустановлен `node`/`npm` (systemd `ExecStart=node ...`).
+- Локально собран frontend перед деплоем: `npm run build`; backend
+  `deploy-backend.yml` собирает сам.
+
+## Секреты
+
+`group_vars/target/vault.yml` пока содержит плейсхолдеры `CHANGE_ME`. Плейбуки
+падают, если секреты не заданы (fail fast). Создайте зашифрованный файл:
 
 ```bash
-npm run build                       # frontend -> ./build/
-npx tsx do/build-back-index.ts      # -> src/back/back.index.cjs
+cd ansible
+ansible-vault create group_vars/target/vault.yml
 ```
 
-## Настройка инвентори
+Значения ключей (`vault_db_user`, `vault_db_password`, `vault_db_name`,
+`vault_db_port`, `vault_secure_key`, `vault_is_prod`) можно взять из
+`src/back/.env.server.json`. Секреты **общие для всех хостов**; чтобы сменить их
+(в т.ч. при переезде на новый хост) — `ansible-vault edit group_vars/target/vault.yml`.
 
-Откройте `inventory.ini` и задайте:
-
-- `ansible_host` — IP или DNS сервера;
-- `host` — домен (например, `jesmyl.ru`);
-- `DB_USER`, `DB_NAME`, `DB_PASSWORD`, `DB_PORT` (по умолчанию `5432`);
-- `SECURE_KEY`, `isProd`;
-- при необходимости `app_port`.
-
-`host_root_dir` вычисляется автоматически: `/var/www/{{ host }}`.
+`DB_HOST` в `.env.json` по умолчанию равен `ip` сервера из инвентаря. Если нужен
+другой адрес БД, раскомментируйте `vault_db_host` в `vault.yml`.
 
 ## Запуск
 
-Полная инициализация сервера (пакеты, PostgreSQL, каталоги, systemd, certbot и т.д.):
+Команды выполняются **из каталога `ansible/`**, чтобы подхватились `ansible.cfg`
+и `group_vars`:
 
 ```bash
-ansible-playbook -i ansible/inventory.ini ansible/deploy.yml
+cd ansible
+
+# Всё сразу: провижининг + backend + frontend (одной командой)
+TARGET_HOST=we-in.ru TARGET_IP=121.127.37.119 ansible-playbook playbooks/all.yml --ask-vault-pass
+
+# только этапы (теги all.yml)
+TARGET_HOST=we-in.ru TARGET_IP=121.127.37.119 ansible-playbook playbooks/all.yml --tags backend  --ask-vault-pass
+TARGET_HOST=we-in.ru TARGET_IP=121.127.37.119 ansible-playbook playbooks/all.yml --tags frontend   # нужен собранный build/; vault не нужен
+TARGET_HOST=we-in.ru TARGET_IP=121.127.37.119 ansible-playbook playbooks/all.yml --skip-tags frontend --ask-vault-pass
+
+# только провижининг (внутренние теги provision.yml: packages, postgres, swap, certs, systemd, deploy)
+TARGET_HOST=we-in.ru TARGET_IP=121.127.37.119 ansible-playbook playbooks/provision.yml --tags postgres --ask-vault-pass
+
+# пропустить выпуск сертификатов
+TARGET_HOST=we-in.ru TARGET_IP=121.127.37.119 ansible-playbook playbooks/all.yml --skip-tags certs --ask-vault-pass
 ```
 
-Только копирование собранных артефактов на сервер:
+Проверка синтаксиса и dry-run (все плейбуки, без подключения к серверу):
 
 ```bash
-ansible-playbook -i ansible/inventory.ini ansible/deploy.yml --tags deploy
+cd ansible
+for p in provision deploy-backend deploy-frontend all; do
+  TARGET_HOST=we-in.ru TARGET_IP=121.127.37.119 ansible-playbook --syntax-check playbooks/$p.yml
+done
+TARGET_HOST=we-in.ru TARGET_IP=121.127.37.119 ansible-playbook playbooks/provision.yml --check --diff --ask-vault-pass
 ```
 
-Только этап инициализации (без копирования артефактов):
+Сборка артефактов (если запускаете этапы по отдельности):
+
+```bash
+npm run build                    # frontend -> ./build/ (перед --tags frontend)
+# backend-артефакты собирает deploy-backend.yml (тег build)
+```
+
+## Согласование с host-configs
+
+Для того же хоста в репозитории есть `host-configs/<host>.json` (например
+`host-configs/we-in.ru.json` = `{"ip": "..."}`). `freshHostConfig.ts` строит из
+него корневой `host-config.json` = `{ip, host}` для локального тулинга. При
+добавлении нового хоста заведите `host-configs/<host>.json`, чтобы локальные
+`do/*`-скрипты видели тот же таргет, что и Ansible.
+
+## Legacy: старый флоу jesmyl.ru
+
+Старые файлы оставлены нетронутыми и **не используются** новым флоу:
+
+- `deploy.yml` + `inventory.ini` — старый плейбук jesmyl.ru (самодостаточный,
+  собственные `vars` в inventory, групповой хост `jesmyl`);
+- `README.jesmyl.ru.md` — его описание.
+
+Они запускаются только с явным `-i`:
 
 ```bash
 ansible-playbook -i ansible/inventory.ini ansible/deploy.yml --tags init
 ```
 
-Проверка без изменений:
-
-```bash
-ansible-playbook -i ansible/inventory.ini ansible/deploy.yml --check --diff
-```
-
-## Что делает плейбук (`init`)
-
-1. `apt update` и установка `postgresql`, `postgresql-contrib`, `certbot`, `nodejs`, `npm`; `systemctl enable --now postgresql`.
-2. Создание `{{ host_root_dir }}` и подкаталогов из `paths.basic.ts`; права `755`.
-3. Генерация `{{ host_root_dir }}/.env.json` (права `0600`) — **только если файла ещё нет**, секреты не перезаписываются.
-4. PostgreSQL: пароль пользователя `postgres`, создание БД при отсутствии, добавление в `pg_hba.conf` строк `host all all 127.0.0.1/32 md5` и `::1/128 md5`, смена порта в `postgresql.conf` (если `DB_PORT != 5432`), перезапуск.
-5. Ротация логов: `/etc/logrotate.d/rsyslog` (size 50M, rotate 2, compress), `SystemMaxUse=100M` для journald, перезапуск `systemd-journald` и `journalctl --vacuum-size=100M`.
-6. SWAP 2 ГБ в `/swapfile`, если его ещё нет (права 600, `mkswap`, `swapon`, запись в `/etc/fstab`).
-7. systemd-юнит `/etc/systemd/system/jesmyl_soki.service` (`MemoryMax=550M`, `MemoryHigh=500M`, `Restart=on-failure`), `daemon-reload`, `enable --now`.
-8. `{{ host_root_dir }}/package.json` и `npm i` при отсутствии `node_modules`.
-9. `certbot certonly --standalone -d {{ host }}` при отсутствии сертификата и cron-задача еженедельного обновления.
-
-Идемпотентность: повторный запуск не меняет уже настроенное. Ошибки шагов, которые `initBack.ts` проглатывает, помечены `failed_when: false`.
-
-## Что делает плейбук (`deploy`)
-
-- Копирует содержимое локального `build/` в `{{ host_root_dir }}/`.
-- Копирует `src/back/back.index.cjs` в `{{ host_root_dir }}/back.index.cjs`.
-- Если артефакты локально не собраны — выводит предупреждение и ничего не копирует.
+`ansible.cfg` по умолчанию указывает на `inventory.py`, поэтому legacy-плейбук
+обязательно требует `-i inventory.ini`.
 
 ## Замечания
 
-- Сертификат выпускается в режиме `--standalone` (нужен свободный порт 80). Если сервис уже занимает порт, остановите его перед первым выпуском сертификата.
-- `app_port` носит справочный характер: initBack жёстко использует порты 80/443/4446 в скриптах `relog`/`re-start`.
-- После первого деплоя проверьте сервис: `systemctl status jesmyl_soki` и `journalctl -u jesmyl_soki -n 100`.
-
-## DNS для поддоменов
-
-Чтобы `sub.jesmyl.ru` резолвился, в DNS-зоне нужна A-запись на IP сервера. Удобно один раз добавить wildcard A-запись `*` — тогда любой поддомен будет резолвиться автоматически, и при деплое с новым `subdomain` не придётся менять DNS. Это именно DNS-запись, к сертификатам отношения не имеет: сертификат выпускается `certbot --standalone` под конкретное имя (wildcard-сертификаты не используются).
+- `drizzle push` запускается с `--force`: без него drizzle-kit ждёт интерактивного
+  подтверждения и подвешивает Ansible.
+- Первый выпуск сертификата `certbot --standalone` требует свободный порт 80; если
+  сервис уже занимает порт, остановите его (`systemctl stop jesmyl_soki`) перед
+  провижинингом.
+- Провижининг создаёт `.env.json` только при отсутствии (не перезаписывает секреты);
+  `deploy-backend.yml` рендерит `.env.json` из vault как источник истины.
+- Аналог ручного `do/deploy-the-code.ts`: `all.yml` (или `deploy-backend.yml` /
+  `deploy-frontend.yml` по отдельности).
