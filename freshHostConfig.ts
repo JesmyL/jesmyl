@@ -6,7 +6,10 @@ import { makeSubHost } from './src/shared/utils/makeSubHost';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const envHost = process.env.HOST;
+type KnownHost = 'jesmyl.ru' | 'we-in.ru';
+
+const envHost: KnownHost = 'we-in.ru';
+
 export const hostConfigFileName = 'host-config.json';
 const hostConfigFilePath = join(__dirname, hostConfigFileName);
 

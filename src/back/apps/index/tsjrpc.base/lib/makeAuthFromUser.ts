@@ -30,7 +30,7 @@ export const indexAuthByTgUser =
     return {
       value: {
         auth,
-        token: jwt.sign(auth, tokenSecretFileStore.getValue().token, { expiresIn: '100 D' }),
+        token: jwt.sign(auth, tokenSecretFileStore.getValue().token, { expiresIn: '300 D' }),
       },
       description:
         `Авторизация ${auth?.fio} (@${auth?.nick ?? '??'}) ${title}\n\n` +

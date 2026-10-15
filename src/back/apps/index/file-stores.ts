@@ -19,11 +19,6 @@ export const indexStameskaIconsFileStore = new FileStore<typeof stameskaIconPack
 export const appVersionFileStore = new FileStore<{ num: number }>('/+version.json', { num: 0 });
 export const valuesFileStore = new FileStore<IndexValues>('/values', {});
 
-export const emailTextingLetterVariantsFileStorage = new FileStore<{ texts: string[] }>(
-  '/apps/index/emailTextingLetterVariants',
-  { texts: [] },
-);
-
 export const sentEmailOTPFileStorage = new FileStore<
   { otp: number; ts: number; deviceId: DeviceId | nil; auth: LocalSokiAuth }[]
 >('/apps/index/sentEmailOTP', []);

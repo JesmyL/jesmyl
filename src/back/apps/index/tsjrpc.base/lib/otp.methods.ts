@@ -20,9 +20,10 @@ import { howMillisecondsInMin } from 'shared/const/ms';
 import { randomItem, randomOf } from 'shared/randoms';
 import { declension, wait } from 'shared/utils';
 import { checkIsStartsWith } from 'shared/utils/checkIs';
-import { emailTextingLetterVariantsFileStorage, sentEmailOTPFileStorage } from '../../file-stores';
+import { sentEmailOTPFileStorage } from '../../file-stores';
 import { constantsConfigFileStore } from '../../schedules/file-stores';
 import { resetUserTiny } from '../../tinies/userTiny';
+import { emailSentOTPLetters } from '../const/emailSentOTPLetters';
 
 const minutesUntilExpire = 5;
 const expireOTP = (otp: number) => sentEmailOTPFileStorage.setValue(verifies => verifies.filter(it => it.otp !== otp));
@@ -125,7 +126,7 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
 
   sentEmailOTPFileStorage.saveValue();
 
-  const text = randomItem(emailTextingLetterVariantsFileStorage.getValue().texts);
+  const text = randomItem(emailSentOTPLetters.texts);
 
   const expire = () => {
     clearTimeout(timeout);

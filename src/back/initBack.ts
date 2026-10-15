@@ -1,4 +1,3 @@
-import { randomBytes } from 'crypto';
 import fs from 'fs';
 import { hostConfig } from 'shared/api';
 import { electronAppName } from 'shared/const/electron';
@@ -9,14 +8,19 @@ import { objectKeys } from 'shared/utils/object.utils';
 import { stameskaIconPack } from 'stameska-icon/pack';
 import { deployPathsBasicDict } from '../../paths.basic';
 import { indexStameskaIconsFileStore, valuesFileStore } from './apps/index/file-stores';
-import { tokenSecretFileStore } from './complect/soki/file-stores';
 import { backConfig } from './config/backConfig';
 import { hostCwdOptions, systemdPath } from './const';
 import { lazyEnvJson } from './envJson';
 import { emailerConfigFileStorage } from './sides/emailer/file-stores';
-import { tgBotConfig } from './sides/telegram-bot/file-stores';
 import { makeCertBotFilePath } from './utils';
-import { makeCyanLogText, makeGreenLogText, makeYellowLogText, rewriteAndDo, runCommand } from './utils.exec';
+import {
+  makeCyanLogText,
+  makeGreenLogText,
+  makeRedLogText,
+  makeYellowLogText,
+  rewriteAndDo,
+  runCommand,
+} from './utils.exec';
 
 export const initBack = async (isInitialize = false) => {
   const { DB_USER, DB_NAME, DB_PASSWORD, DB_PORT, hostRootDir, envFilePath, subHost } = lazyEnvJson();
@@ -135,6 +139,11 @@ MemoryHigh=500M`,
     ),
   );
 
+  if (!fs.existsSync(`${hostRootDir}/apps/bible/rst.json`)) {
+    console.error(makeRedLogText('Перевод Библии RST не загружен на сервер'));
+    process.exit(0);
+  }
+
   if (!Do.It) {
     await runCommand('sudo apt update', '', hostCwdOptions);
     await runCommand('sudo apt install -y postgresql postgresql-contrib', '', hostCwdOptions);
@@ -218,9 +227,6 @@ MemoryHigh=500M`,
 
       return checkIsEq(prev, news) ? prev : news;
     });
-
-    if (!Do.It) tokenSecretFileStore.setValue({ token: randomBytes(60).toString('hex') });
-    if (!Do.It) tgBotConfig.setValue({ token: '' });
 
     if (!fs.existsSync(makeCertBotFilePath('fullchain'))) {
       await runCommand(`sudo apt update`);
