@@ -8,7 +8,7 @@ const __dirname = dirname(__filename);
 
 type KnownHost = 'jesmyl.ru' | 'we-in.ru';
 
-const envHost: KnownHost = 'we-in.ru';
+const envHost: KnownHost = 'jesmyl.ru';
 
 export const hostConfigFileName = 'host-config.json';
 const hostConfigFilePath = join(__dirname, hostConfigFileName);
@@ -46,3 +46,5 @@ const fullLen = text.length * 3;
 const slashes = '/'.repeat(text.length);
 
 console.info(`${'/'.repeat(fullLen)}\n${slashes}${text}${slashes}\n${'/'.repeat(fullLen)}`);
+
+//// 64 bytes from 194-67-124-130.cloudvps.regruhosting.ru (194.67.124.130): icmp_seq=30 ttl=51 time=34.9 ms
