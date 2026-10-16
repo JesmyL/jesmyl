@@ -152,6 +152,7 @@ export type LocaleBase<L extends Langi> = LocaleSatisfies<{
     audioPlayErr: LocaleSimpleString;
     cacheTrackDelDsc: LocaleSimpleString;
     shuffle: LocaleSimpleString;
+    textSlides: LocaleSimpleString;
     prevCom: LocaleSimpleString;
     nextCom: LocaleSimpleString;
 

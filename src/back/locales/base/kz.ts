@@ -159,6 +159,7 @@ export const localeBaseKz: LocaleBase<Langi.Kz> = {
     audioPlayErr: 'Аудионы ойнату қатесі',
     cacheTrackDelDsc: 'Тректі кэштен жою?',
     shuffle: 'Араластыру',
+    textSlides: 'Мәтін слайдтары',
     prevCom: 'Алдыңғы ән',
     nextCom: 'Келесі ән',
 

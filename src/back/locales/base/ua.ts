@@ -158,6 +158,7 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
     audioPlayErr: 'Помилка відтворення аудіо',
     cacheTrackDelDsc: 'Видалити трек з кешу?',
     shuffle: 'Перемішати',
+    textSlides: 'Слайди тексту',
     prevCom: 'Попередня пісня',
     nextCom: 'Наступна пісня',
 
@@ -313,7 +314,7 @@ export const localeBaseUa: LocaleBase<Langi.Ua> = {
 
   workDir: {
     notSelected: 'Робочу папку не вибрано',
-    pickFolder: 'Вибрати папку (WorkDir = $a всередині неї, якщо її звати інакше)',
+    pickFolder: 'Вибрати папку (WorkDir = $a всередині неї, якщо вона називається інакше)',
     folders: 'Папки',
   },
 

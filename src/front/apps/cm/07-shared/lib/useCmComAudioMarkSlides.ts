@@ -8,8 +8,17 @@ import { makeSymbolFreeUpperCaseSlavicText } from 'shared/utils/cm/com/const';
 import { makeCmComOrderRepeatedText } from 'shared/utils/cm/order';
 import { useCmComMarkTextValuesMaker } from './useCmComMarkTextValuesMaker';
 
-export const useCmComAudioMarkSlides = (com: CmCom | und, src: HttpNumLeadLink | nil, textCase: TextCase | nil) => {
-  const { markTimes: wholeMarkTimes, timeSlideDict, srcMarks } = useCmComMarkTextValuesMaker(src, textCase);
+export const useCmComAudioMarkSlides = (
+  com: CmCom | und,
+  src: HttpNumLeadLink | nil,
+  textCase: TextCase | nil,
+  nameSpaceiVariants?: number[],
+) => {
+  const { markTimes: wholeMarkTimes, timeSlideDict, srcMarks } = useCmComMarkTextValuesMaker(
+    src,
+    textCase,
+    nameSpaceiVariants,
+  );
   const langi = com?.langi ?? Langi.Ru;
 
   const { audioSlides, markTimes } = useMemo(() => {

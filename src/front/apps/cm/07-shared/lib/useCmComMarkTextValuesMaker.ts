@@ -11,15 +11,19 @@ import { convertCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/ma
 import { forEachObjectEntries, objectKeys, objectLength } from 'shared/utils/object.utils';
 import { cmIDB } from '../state';
 
-export const useCmComMarkTextValuesMaker = (src: HttpNumLeadLink | nil, textCase: TextCase | nil) => {
+export const useCmComMarkTextValuesMaker = (
+  src: HttpNumLeadLink | nil,
+  textCase: TextCase | nil,
+  nameSpaceiVariants?: number[],
+) => {
   const com = useCmComCurrent();
   const marks = cmIDB.useAudioTrackMarks(com?.wid);
   const srcMarks = com && checkIsNotNil(src) ? marks?.marks?.[src] : null;
   const markTimes = useMemo(() => objectKeys(srcMarks).map(extractNumber), [srcMarks]);
   const nameSpacei = useAtomValue(cmBroadcastCurrentNameSpaceiAtom);
   const slides = useMemo(
-    () => com?.makeExpandSlides([nameSpacei, 0], true, textCase) ?? [],
-    [com, nameSpacei, textCase],
+    () => com?.makeExpandSlides(nameSpaceiVariants ?? [nameSpacei, 0], true, textCase) ?? [],
+    [com, nameSpacei, nameSpaceiVariants, textCase],
   );
 
   const { timeSlideDict, slideIdTimeSetDict } = useMemo(() => {

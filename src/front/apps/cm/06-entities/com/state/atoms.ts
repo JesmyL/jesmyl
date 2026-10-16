@@ -25,6 +25,7 @@ export const cmComSpeedRollKfAtom = atom(10, 'cm:speedRollKf');
 export const cmComIsAudioPlayerHiddenAtom = atom(false, 'cm:isAudioPlayerHidden');
 
 export const cmComPlayerIsShuffleAtom = atom(false, 'cm:isPlayerShuffle');
+export const cmComPlayerIsTextSlidesAtom = atom(false);
 export const cmComLaterComwListAtom = atom<CmComWid[]>([], 'cm:laterComwList');
 export const cmComSelectedComwsAtom = atom<CmComWid[]>([], 'cm:selectedComws');
 export const cmComLastOpenComwAtom = atom<CmComWid | und>(undefined, 'cm:lastOpenComw');

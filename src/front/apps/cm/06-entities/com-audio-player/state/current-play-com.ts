@@ -62,7 +62,14 @@ audioElement.addEventListener('timeupdate', () => {
 
 // methods
 
-export const cmComAudioPlayerUpdateCurrentTime = (time: number) => (audioElement.currentTime = time);
+/**
+ * `timeupdate` only fires during playback and lags a seek by a task, so the atom would stay stale
+ * (or never move while paused) unless a seek updates it synchronously too.
+ */
+export const cmComAudioPlayerUpdateCurrentTime = (time: number) => {
+  audioElement.currentTime = time;
+  comPlayerCurrentTimeAtom.set(time);
+};
 export const takeCmComAudioPlayerCurrentTime = () => audioElement.currentTime;
 export const takeCmComAudioPlayerDuration = () => audioElement.duration;
 export const takeCmComAudioPlayerPlaybackRate = () => audioElement.playbackRate;

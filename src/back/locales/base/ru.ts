@@ -159,6 +159,7 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
     audioPlayErr: 'Ошибка воспроизведения аудио',
     cacheTrackDelDsc: 'Удалить трек из кэша?',
     shuffle: 'Случайный порядок',
+    textSlides: 'Слайды текста',
     prevCom: 'Предыдущая песня',
     nextCom: 'Следующая песня',
 
@@ -292,7 +293,7 @@ export const localeBaseRu: LocaleBase<Langi.Ru> = {
 
   workDir: {
     notSelected: 'Рабочая папка не выбрана',
-    pickFolder: 'Выбрать папку (WorkDir = $a внутри неё, если её зовут иначе)',
+    pickFolder: 'Выбрать папку (WorkDir = $a внутри неё, если она называется иначе)',
     folders: 'Папки',
   },
 

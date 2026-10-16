@@ -1,6 +1,8 @@
 import { translateBase } from '#basis/locale';
 import { Slider } from '#shared/components/ui/slider';
+import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { DocTitle } from '#shared/ui/tags/DocTitle';
@@ -8,6 +10,7 @@ import {
   cmComFavoriteComwsAtom,
   CmComNumber,
   cmComPlayerIsShuffleAtom,
+  cmComPlayerIsTextSlidesAtom,
   cmComSelectedComwsAtom,
   useCmCom,
   useCmComAllIComList,
@@ -38,13 +41,15 @@ import { CmComFaceList } from '$cm/entities/com-face';
 import { CmComListPackKindSelector } from '$cm/entities/ComListPackKindSelector';
 import { cmComLastOpenComwAtom } from '$cm/entities/index';
 import { CmComAudioPlayerMarksMovers } from '$cm/ext';
-import { cmComTrackPreSwitchTimeAtom, cmOpenComListModeAtom } from '$cm/shared/state';
+import { CmPlayerTextSlides } from '$cm/features/PlayerTextSlides';
+import { getCmComFreshAudioMarksPack } from '$cm/shared/lib/getFresh';
+import { cmComIsFreshAudioMarksLoadingAtom, cmComTrackPreSwitchTimeAtom, cmOpenComListModeAtom } from '$cm/shared/state';
 import { cmPlayerBroadcastAudioSrcAtom } from '$cm/shared/state/broadcast.atoms';
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { convertSecondsInStrTime } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
 
@@ -147,6 +152,7 @@ export const CmPlayerPage = () => {
   const errorTick = useAtomValue(cmComAudioPlayerErrorTickAtom);
   const broadcastSrc = useAtomValue(cmPlayerBroadcastAudioSrcAtom);
   const isShuffle = useAtomValue(cmComPlayerIsShuffleAtom);
+  const isTextSlides = useAtomValue(cmComPlayerIsTextSlidesAtom);
   const playSrc = useAtomValue(cmComAudioPlayerPlaySrcAtom);
   const isPlay = useAtomValue(cmComAudioPlayerIsPlayAtom);
 
@@ -165,10 +171,25 @@ export const CmPlayerPage = () => {
   const comws = useMemo(() => icoms.map(com => com.w), [icoms]);
 
   const com = useCmCom(search.comw ?? lastOpenComw ?? icoms[0]?.w);
+  const comw = com?.wid;
   const comAudio = com?.audio;
   const [src] = comAudio ?? [''];
   const displaySrc = playSrc && comAudio?.includes(playSrc) ? playSrc : src;
   const isPlayOtherSrc = playSrc && playSrc !== displaySrc;
+
+  const playerRef = useRef<HTMLDivElement>(null);
+  const listWrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updatePlayerHeight = () =>
+      listWrapperRef.current?.style.setProperty('--cm-player-height', `${playerRef.current?.offsetHeight ?? 0}px`);
+
+    updatePlayerHeight();
+
+    return hookEffectPipe()
+      .pipe(addEventListenerPipe(window, 'resize', updatePlayerHeight))
+      .effect();
+  }, [com, displaySrc]);
 
   useEffect(resetIsCanPlayEffect, []);
 
@@ -179,6 +200,26 @@ export const CmPlayerPage = () => {
 
     return () => cmComAudioPlayerRegisterNavigation(null);
   }, [navigate]);
+
+  const comwRef = useActualRef(comw);
+
+  useEffect(() => {
+    if (!isTextSlides) return;
+
+    const targetComw = comwRef.current;
+    if (!targetComw) return;
+
+    let isCurrentComw = true;
+    cmComIsFreshAudioMarksLoadingAtom.set(true);
+
+    getCmComFreshAudioMarksPack(targetComw).finally(() => {
+      if (isCurrentComw) cmComIsFreshAudioMarksLoadingAtom.set(false);
+    });
+
+    return () => {
+      isCurrentComw = false;
+    };
+  }, [isTextSlides, comwRef]);
 
   useEffect(() => {
     if (!com) return;
@@ -247,7 +288,10 @@ export const CmPlayerPage = () => {
         <>
           {com && <DocTitle title={com.name} />}
           {com && displaySrc && (
-            <StyledPlayer className={playerClass}>
+            <StyledPlayer
+              ref={playerRef}
+              className={playerClass}
+            >
               <span className="block opacity-62 text-[0.7rem] font-bold tracking-[0.34em] uppercase">
                 #<CmComNumber comw={com.wid} />
               </span>
@@ -289,6 +333,18 @@ export const CmPlayerPage = () => {
                 >
                   <LazyIcon icon="Shuffle" />
                 </button>
+
+                <button
+                  className={twMerge(
+                    sideControlClass,
+                    'absolute left-0 pointer',
+                    isTextSlides && 'opacity-100 text-[var(--color--7)]',
+                  )}
+                  aria-label={translateBase(it => it.cm.textSlides)}
+                  onClick={cmComPlayerIsTextSlidesAtom.do.toggle}
+                >
+                  <LazyIcon icon="TextSmallcaps" />
+                </button>
               </div>
 
               <div className={tracklineClass}>
@@ -324,16 +380,28 @@ export const CmPlayerPage = () => {
             </div>
           )}
 
-          <CmComFaceList
-            key={openComListMode}
-            list={comws}
-            withoutCacheMarks={openComListMode === 'sel'}
-            importantOnClick={({ defaultClick }) => {
-              isCanPlay = true;
-              defaultClick();
-              cmComAudioPlayerSwitchIsPlay();
-            }}
-          />
+          <div
+            ref={listWrapperRef}
+            className="relative"
+          >
+            <CmComFaceList
+              key={openComListMode}
+              list={comws}
+              withoutCacheMarks={openComListMode === 'sel'}
+              importantOnClick={({ defaultClick }) => {
+                isCanPlay = true;
+                defaultClick();
+                cmComAudioPlayerSwitchIsPlay();
+              }}
+            />
+
+            {!isTextSlides || !com || !displaySrc || (
+              <CmPlayerTextSlides
+                com={com}
+                src={displaySrc}
+              />
+            )}
+          </div>
         </>
       }
     />
