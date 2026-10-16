@@ -34,6 +34,7 @@ import {
   extractNumber,
   forEachObjectEntries,
   mapObjectEntries,
+  objectEntries,
   objectLength,
   PullPushFileDirNameNet,
 } from 'shared/api/pullFiles.utils';
@@ -131,7 +132,11 @@ export const pullPushDirFilesDictLazy = lazyInit(
             }));
           },
 
-          PUSH: com => db.insert(comDB).values(com),
+          PUSH: com =>
+            db
+              .insert(comDB)
+              .values(com)
+              .onConflictDoUpdate({ target: comDB.w, set: com }),
         },
 
         'user2Com/': {
@@ -181,19 +186,25 @@ export const pullPushDirFilesDictLazy = lazyInit(
           },
 
           PUSH: async (u2c, login) => {
-            forEachObjectEntries(u2c.coms, async (comwStr, val) => {
+            const upserts: Promise<unknown>[] = [];
+
+            forEachObjectEntries(u2c.coms, (comwStr, val) => {
               if (!val) return;
 
-              await upsertUser2ComProps(
-                login,
-                extractNumber(comwStr),
-                {
-                  comment: val.comm,
-                  isFav: !!val.fav,
-                },
-                false,
+              upserts.push(
+                upsertUser2ComProps(
+                  login,
+                  extractNumber(comwStr),
+                  {
+                    comment: val.comm,
+                    isFav: !!val.fav,
+                  },
+                  false,
+                ),
               );
             });
+
+            await Promise.all(upserts);
 
             const dict: Partial<typeof userExtDB.$inferInsert> = {};
 
@@ -202,7 +213,10 @@ export const pullPushDirFilesDictLazy = lazyInit(
 
             if (objectLength(dict)) {
               const user = await takeUserTiny({ l: login });
-              await dbUpsert(userExtDB, { ...dict, userId: user.id }, ['userId']);
+              await db
+                .insert(userExtDB)
+                .values({ ...dict, userId: user.id })
+                .onConflictDoUpdate({ target: userExtDB.userId, set: dict });
             }
           },
         },
@@ -245,21 +259,29 @@ export const pullPushDirFilesDictLazy = lazyInit(
           },
           PUSH: async (data, schw) => {
             const sch = await takeScheduleWidgetTiny({ w: extractNumber(schw) });
+            const upserts: Promise<unknown>[] = [];
 
             forEachObjectEntries(data, (dayi, dayHistory) => {
               forEachObjectEntries(dayHistory, (eventMi, items) => {
-                items.forEach(async ({ s, u, w }) => {
-                  await db.insert(schComHistoryDB).values({
-                    dayi: extractNumber(dayi),
-                    eventMi: extractNumber(eventMi),
-                    schId: sch.id,
-                    userId: u,
-                    comws: s,
-                    w,
-                  });
-                });
+                for (const { s, u, w } of items)
+                  upserts.push(
+                    dbUpsert(
+                      schComHistoryDB,
+                      {
+                        dayi: extractNumber(dayi),
+                        eventMi: extractNumber(eventMi),
+                        schId: sch.id,
+                        userId: u,
+                        comws: s,
+                        w,
+                      },
+                      ['w'],
+                    ),
+                  );
               });
             });
+
+            await Promise.all(upserts);
           },
         },
 
@@ -287,13 +309,15 @@ export const pullPushDirFilesDictLazy = lazyInit(
             return mapObjectEntries(dict, (schw, { d, n }) => ({ data: d, file: schw, name: n }));
           },
           PUSH: async (data, schw) => {
-            forEachObjectEntries(data, async (comw, { intp }) => {
-              const sch = await takeScheduleWidgetTiny({ w: extractNumber(schw) }, false);
-              const com = await takeComwTiny({ w: extractNumber(comw) }, false);
-              if (!com || !sch) return;
+            const sch = await takeScheduleWidgetTiny({ w: extractNumber(schw) }, false);
+            if (!sch) return;
 
-              await db.insert(sch2ComDB).values({ comId: com.id, schId: sch.id, intp });
-            });
+            for (const [comw, { intp }] of objectEntries(data)) {
+              const com = await takeComwTiny({ w: extractNumber(comw) }, false);
+              if (!com) continue;
+
+              await dbUpsert(sch2ComDB, { comId: com.id, schId: sch.id, intp }, ['schId', 'comId']);
+            }
           },
         },
 
@@ -327,12 +351,13 @@ export const pullPushDirFilesDictLazy = lazyInit(
               };
             }),
 
-          PUSH: async user => {
-            await db.insert(userDB).values({
-              ...user,
-              ls: user.ls ?? [],
-              rights: user.rights ?? {},
-            });
+          PUSH: async ({ id, ...user }) => {
+            const values = { ...user, ls: user.ls ?? [], rights: user.rights ?? {} };
+
+            await db
+              .insert(userDB)
+              .values({ id, ...values })
+              .onConflictDoUpdate({ target: userDB.l, set: values });
           },
         },
         userRoles: {
@@ -358,10 +383,15 @@ export const pullPushDirFilesDictLazy = lazyInit(
             };
           },
 
-          PUSH: roles => {
-            forEachObjectEntries(roles, async (role, rules) => {
-              await dbUpsert(userRoleDB, { r: rules?.r ?? null, n: role }, ['n']);
-            });
+          PUSH: async roles => {
+            await Promise.all(
+              mapObjectEntries(roles, (role, rules) =>
+                db
+                  .insert(userRoleDB)
+                  .values({ n: role, r: rules?.r ?? null })
+                  .onConflictDoUpdate({ target: userRoleDB.n, set: { r: rules?.r ?? null } }),
+              ),
+            );
           },
         },
         'schedules/': {
@@ -407,13 +437,15 @@ export const pullPushDirFilesDictLazy = lazyInit(
             });
           },
           PUSH: async (sch, schwStr) => {
-            await db.insert(scheduleDB).values({
+            const values = {
               ...sch,
               w: extractNumber(schwStr),
               isRemoved: +!!sch.isRemoved,
               withTech: +!!sch.withTech,
               tgChatReqs: sch.tgChatReqs || '',
-            });
+            };
+
+            await db.insert(scheduleDB).values(values).onConflictDoUpdate({ target: scheduleDB.w, set: values });
           },
         },
 
@@ -432,16 +464,20 @@ export const pullPushDirFilesDictLazy = lazyInit(
             })),
 
           PUSH: (blank, blankw) =>
-            db.insert(questionerBlankDB).values({
-              w: extractNumber(blankw),
-              m: blank.m,
-              title: blank.title,
-              dsc: blank.dsc,
-              anon: blank.anon ?? null,
-              tmp: blank.tmp,
-              ord: blank.ord,
-              team: blank.team,
-            }),
+            dbUpsert(
+              questionerBlankDB,
+              {
+                w: extractNumber(blankw),
+                m: blank.m,
+                title: blank.title,
+                dsc: blank.dsc,
+                anon: blank.anon ?? null,
+                tmp: blank.tmp,
+                ord: blank.ord,
+                team: blank.team,
+              },
+              ['w'],
+            ),
         },
 
         'answers/': {
