@@ -139,7 +139,7 @@ MemoryHigh=500M`,
     ),
   );
 
-  if (!fs.existsSync(`${hostRootDir}/apps/bible/rst.json`)) {
+  if (!backConfig.isTest && !fs.existsSync(`${hostRootDir}/apps/bible/rst.json`)) {
     console.error(makeRedLogText('Перевод Библии RST не загружен на сервер'));
     process.exit(0);
   }

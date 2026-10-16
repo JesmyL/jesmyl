@@ -3,10 +3,11 @@ import { build } from 'esbuild';
 export const buildBackIndexFile = async () => {
   return Promise.all(
     [
+      // uncomment on back init
+      // 'initializeBack.cjs',
       'back.index.cjs',
       'drizzle.schema.cjs',
       'drizzle.config.cjs',
-      // 'initializeBack.cjs',
       '/paths.basic.mjs',
       '/paths.mjs',
     ].map(async fileName => {
