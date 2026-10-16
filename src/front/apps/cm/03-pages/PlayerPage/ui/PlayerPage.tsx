@@ -1,6 +1,5 @@
 import { translateBase } from '#basis/locale';
 import { Slider } from '#shared/components/ui/slider';
-import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -201,25 +200,21 @@ export const CmPlayerPage = () => {
     return () => cmComAudioPlayerRegisterNavigation(null);
   }, [navigate]);
 
-  const comwRef = useActualRef(comw);
-
+  /** Fresh marks must follow the current com: the player keeps the slides toggle alive while auto-advancing tracks. */
   useEffect(() => {
-    if (!isTextSlides) return;
-
-    const targetComw = comwRef.current;
-    if (!targetComw) return;
+    if (!isTextSlides || !comw) return;
 
     let isCurrentComw = true;
     cmComIsFreshAudioMarksLoadingAtom.set(true);
 
-    getCmComFreshAudioMarksPack(targetComw).finally(() => {
+    getCmComFreshAudioMarksPack(comw).finally(() => {
       if (isCurrentComw) cmComIsFreshAudioMarksLoadingAtom.set(false);
     });
 
     return () => {
       isCurrentComw = false;
     };
-  }, [isTextSlides, comwRef]);
+  }, [isTextSlides, comw]);
 
   useEffect(() => {
     if (!com) return;
