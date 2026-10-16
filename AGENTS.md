@@ -33,12 +33,14 @@
 - Performance: hoist regexps out of functions (build once via `lazyInit`), build char-class regexps from object keys (`objectKeys(dict).join('')`), and prefer a single `.replace` pass with a replacer dict over chained `.replace` calls.
 - Reference example: `escapeHtmlLazy` in `src/shared/utils/string.utils.ts`.
 - Never write redundant null-coalescing like `rows[0]?.mod ?? null` — `null` and `undefined` are treated as the same thing; use the `nil` type everywhere instead of `null | undefined`.
+- If a type can be `nil`, its default value should be `null` (not `undefined`); prefer `null` over `undefined` wherever possible.
 - Export types/interfaces/consts ONLY from model files (`model.ts`); component/UI files export only their components.
 - Keep code maximally laconic: prefer compact literals (e.g. space-separated extension lists keyed by prefix) converted at runtime via `lazyInit`, over verbose hand-written dicts.
 - Reuse existing object utils instead of `Object.entries(...).map(...)` — e.g. `mapObjectEntries` from `shared/utils/object.utils`.
 - In JSX conditional rendering, avoid double negation (`!!cond && (<X/>)`): express a render-on-truthy condition as `!cond || (<X/>)` instead — when `cond` is truthy, `!cond` is `false` and the right side renders; when falsy, the expression short-circuits to `true`, which React renders as nothing. Same semantics, no `!!`.
 - Icons: if a needed icon is missing from `knownStameskaIconNames`, just add it there rather than working around it.
 - Never write `cursor: pointer;` in CSS/styles — use the `.pointer` utility class on the element instead.
+- Never use raw `addEventListener`/`removeEventListener` — use the project's own `addEventListenerPipe` event/subscription system instead.
 - Small styles — via Tailwind utility classes; complex `@keyframes` (e.g. `playingPulse`) — keep in `styled` from `@emotion/styled`, not in the global Tailwind entry.
 - Locale strings: always write user-facing text translations via `translateBase` / `translateDynamic` — never inline raw text.
 
