@@ -22,6 +22,8 @@ export const useCmComAudioMarkSlides = (com: CmCom | und, src: HttpNumLeadLink |
       let audioSlide: CmAudioSlide;
 
       if (checkIsString(srcMarks?.[time])) {
+        if (srcMarks[time] === '-') continue;
+
         audioSlide = {
           text: makeCmComAudioMarkTitleEmptySelector(srcMarks[time], srcMarks, time, langi),
           time,
