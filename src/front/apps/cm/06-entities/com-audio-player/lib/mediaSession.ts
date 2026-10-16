@@ -1,3 +1,5 @@
+import { makeRegExp } from 'regexpert';
+import { lazyInit } from 'shared/utils/lazyInit';
 import {
   cmComAudioPlayerAddEventListenerPipe,
   cmComAudioPlayerIsPlayAtom,
@@ -10,15 +12,41 @@ import {
 } from '../state/current-play-com';
 import { cmComAudioPlayerGoToAdjacentCom } from './adjacent-coms';
 
+/** Trailing file extension: a dot plus up to five alphanumerics, e.g. `.mp3`. */
+const fileExtensionLazy = lazyInit(() => makeRegExp('/\\.[a-z0-9]{1,5}$/i'));
+/** Storage prefix of a numLead src (`9~`), never part of a track name. */
+const srcNumLeadLazy = lazyInit(() => makeRegExp('/^\\d+~/'));
+
+/**
+ * Human-readable track title derived from an audio src, used on the lock screen where no com
+ * context is set. Falls back to '' when the src carries no usable file name.
+ */
+const titleFromSrc = (src: string | nil) => {
+  if (!src || !URL.canParse(src, location.origin)) return '';
+
+  const pathname = new URL(src, location.origin).pathname;
+  const encodedName = pathname.slice(pathname.lastIndexOf('/') + 1);
+  if (!encodedName) return '';
+
+  let name = encodedName;
+  try {
+    name = decodeURIComponent(encodedName);
+  } catch {
+    // Malformed percent-encoding: keep the raw segment.
+  }
+
+  return name.replace(fileExtensionLazy(), '').replace(srcNumLeadLazy(), '');
+};
+
 /**
  * Media Session bridge: mirrors the shared audio element to the OS / lock-screen
  * controls. Safely no-ops where the Media Session API is not supported.
  */
-const mediaSession = 'mediaSession' in navigator ? navigator.mediaSession : undefined;
+const mediaSession = navigator.mediaSession;
 
 if (mediaSession) {
   const updateMetadata = () => {
-    const title = cmComAudioPlayerMediaTitleAtom.get() ?? cmComAudioPlayerPlaySrcAtom.get() ?? '';
+    const title = cmComAudioPlayerMediaTitleAtom.get() ?? titleFromSrc(cmComAudioPlayerPlaySrcAtom.get());
 
     mediaSession.metadata = new MediaMetadata({ title, artist: 'JesmyL' });
   };

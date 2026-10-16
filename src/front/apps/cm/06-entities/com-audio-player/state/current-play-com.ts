@@ -25,7 +25,7 @@ export const cmComAudioPlayerEndedTickAtom = atom(false);
 export const cmComAudioPlayerErrorTickAtom = atom(false);
 export const cmComAudioPlayerIsPlayAtom = atom(false);
 
-/** Resolvable track title shown on the media session (lock screen); falls back to the play src. */
+/** Resolvable track title shown on the media session (lock screen); falls back to a title derived from the play src. */
 export const cmComAudioPlayerMediaTitleAtom = atom<string | nil>(null);
 
 export const useCmComAudioPlayerDuration = () => useAtomValue(comPlayerDurationAtom);
