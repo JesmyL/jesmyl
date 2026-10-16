@@ -37,6 +37,7 @@ export const CmComRatingSortedComList = ({ comws }: Props) => {
             list={sortedComws}
             className="min-h-[110%]"
             isPutCcomFaceOff
+            withoutCacheMarks
             comDescription={com => <span className="nowrap">{visits[com.w] ?? 0}</span>}
           />
         )
