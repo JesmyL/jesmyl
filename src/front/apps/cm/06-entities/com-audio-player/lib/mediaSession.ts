@@ -17,14 +17,23 @@ const fileExtensionLazy = lazyInit(() => makeRegExp('/\\.[a-z0-9]{1,5}$/i'));
 /** Storage prefix of a numLead src (`9~`), never part of a track name. */
 const srcNumLeadLazy = lazyInit(() => makeRegExp('/^\\d+~/'));
 
+/** Parses an audio src against the current origin, yielding null for malformed input. */
+const parseSrc = (src: string) => {
+  try {
+    return new URL(src, location.origin);
+  } catch {
+    return null;
+  }
+};
+
 /**
  * Human-readable track title derived from an audio src, used on the lock screen where no com
  * context is set. Falls back to '' when the src carries no usable file name.
  */
 const titleFromSrc = (src: string | nil) => {
-  if (!src || !URL.canParse(src, location.origin)) return '';
+  const pathname = src ? parseSrc(src)?.pathname : null;
+  if (!pathname) return '';
 
-  const pathname = new URL(src, location.origin).pathname;
   const encodedName = pathname.slice(pathname.lastIndexOf('/') + 1);
   if (!encodedName) return '';
 

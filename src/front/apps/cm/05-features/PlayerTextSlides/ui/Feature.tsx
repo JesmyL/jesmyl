@@ -209,7 +209,7 @@ export const CmPlayerTextSlides = ({ com, src, className }: Props) => {
 
       <div
         ref={containerRef}
-        className="pointer-events-auto relative h-full overflow-y-auto overscroll-contain rounded-3xl px-[1.2rem] py-[2.4rem] text-[1.15rem] leading-[1.55] bg-[color-mix(in_srgb,var(--color--5)_93%,transparent)] backdrop-blur-md"
+        className="pointer-events-auto relative h-full overflow-y-auto overscroll-contain rounded-3xl px-[1.2rem] py-[2.4rem] text-[1.15rem] leading-[1.55] bg-[var(--color--5)] supports-[background:color-mix(in_srgb,red,blue)]:bg-[color-mix(in_srgb,var(--color--5)_93%,transparent)] backdrop-blur-md"
         st-no-scrollbar=""
       >
         {audioSlides.length ? (
