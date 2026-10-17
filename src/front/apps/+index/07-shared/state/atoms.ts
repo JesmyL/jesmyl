@@ -27,7 +27,7 @@ export const useIndexSchedules = () => useLiveQuery(() => indexIDB.db.schs.toArr
 export const useAuth = () => authIDB.useValue.auth();
 
 export const indexIsPlayAnimationsAtom = atom(false, 'index:isPlayAnimations');
-export const indexIsShowPlayerInFooterAtom = atom(false, 'index:isShowPlayerInFooter');
+export const indexIsShowPlayerInFooterAtom = atom(true, 'index:isShowPlayerInFooter');
 export const indexIsDarkModeAtom = atom(false, 'index:isDarkMode');
 
 export const indexAppUserInfoDictAtom = atom<PRecord<UserLogin, UserInfoUnsecure> | null>(null);
