@@ -18,9 +18,9 @@ export class FileStore<Value> {
   constructor(
     path: `/${string}`,
     private defaultValue: Value,
-    private options?: { secureKey?: string },
+    private options?: { secureKey?: string; baseDir?: string },
   ) {
-    this.filePath = `${initialFileDir}${path}`;
+    this.filePath = `${this.options?.baseDir ?? initialFileDir}${path}`;
     this.value = defaultValue;
     if (registeredPaths.has(path)) throw new Error(`The path ${path} was registered again`);
     registeredPaths.add(path);

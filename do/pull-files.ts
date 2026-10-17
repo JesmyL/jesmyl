@@ -127,4 +127,5 @@ if (!Do.It) {
   console.info('Скачивание аудио-файлов для песен...');
   await downloadCmAudios();
   await closeDb();
+  process.exit();
 })();

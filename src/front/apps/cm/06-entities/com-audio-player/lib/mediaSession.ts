@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { makeRegExp } from 'regexpert';
 import { lazyInit } from 'shared/utils/lazyInit';
 import {
@@ -86,3 +87,15 @@ if (mediaSession) {
 
   updateMetadata();
 }
+
+export const CmComAudioPlayerMediaSessionMeta = ({ album, artist, artwork, title }: Partial<MediaMetadata>) => {
+  useEffect(() => {
+    const meta = mediaSession.metadata;
+    if (!meta) return;
+
+    if (album) meta.album = album;
+    if (artist) meta.artist = artist;
+    if (artwork) meta.artwork = artwork;
+    if (title) meta.title = title;
+  }, [album, artist, artwork, title]);
+};
