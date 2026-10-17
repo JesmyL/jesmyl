@@ -124,7 +124,11 @@ const PlayerTrack = () => {
         }}
       />
 
-      {duration <= 0 || <TimeLabel time={`-${convertSecondsInStrTime(duration - currentTime)}`} />}
+      {duration <= 0 ||
+        !Number.isFinite(duration) ||
+        !Number.isFinite(currentTime) || (
+          <TimeLabel time={`-${convertSecondsInStrTime(duration - currentTime)}`} />
+        )}
     </>
   );
 };

@@ -12,6 +12,8 @@ import {
   cmComAudioPlayerSetSrc,
   cmComAudioPlayerSwitchIsPlay,
 } from '../state/current-play-com';
+import '../lib/mediaSession';
+import { CmComAudioPlayerMediaSessionMeta } from './CmComAudioPlayerMediaSessionMeta';
 import { CmComAudioPlayerPlayButton } from './ComPlayerPlayButton';
 import { CmComAudioPlayerTrack } from './ComPlayerTrack';
 
@@ -38,6 +40,7 @@ export const CmComAudioPlayer = ({ links, timeRender, addRender, className }: Pr
 
   return (
     <div className={twMerge('w-full', className)}>
+      <CmComAudioPlayerMediaSessionMeta />
       <div className="composition-player flex items-center gap-2 px-2 w-full [--com-player-size:30px] [--com-player-height:var(--com-player-size)] h-(--com-player-height) overflow-hidden text-[0.8em] whitespace-nowrap bg-[linear-gradient(100deg,var(--color--2),var(--color--1))] shadow-[0_10px_22px_-16px_var(--color--3)] [transition:opacity_0.2s,margin_0.2s]">
         <CmComAudioPlayerPlayButton src={src} />
         <CmComAudioPlayerTrack
