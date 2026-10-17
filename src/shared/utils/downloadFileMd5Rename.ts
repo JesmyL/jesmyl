@@ -13,6 +13,10 @@ interface DownloadOptions {
   artist?: string;
 }
 
+const id3v1 = { signature: 'TAG', size: 128 } as const;
+
+const extAliases: Record<string, string> = { mpeg: 'mp3', mpga: 'mp3' };
+
 const cleanText = (text: string | undefined): string => {
   if (!text) return '';
   return text.replace(/^([\w.-]+\.[a-z]{2,4}\s*[-–—:]*\s*)|(\s*[-–—:]*\s*[\w.-]+\.[a-z]{2,4})$/gi, '').trim();
@@ -55,6 +59,9 @@ export const downloadFileMd5Rename = async (
       ext = contentType.split('/')?.[1] || 'bin';
       ext = ext.split(';', 1)[0].trim();
     }
+    ext = extAliases[ext.toLowerCase()] ?? ext;
+
+    const isMp3Tagged = ext.toLowerCase() === 'mp3' && removeTags;
 
     fileStream = fs.createWriteStream(tempPath);
     const nodeReadable = Readable.fromWeb(response.body as any);
@@ -71,16 +78,28 @@ export const downloadFileMd5Rename = async (
     let targetArtist = artist;
     let targetTitle = title;
 
-    if (ext.toLowerCase() === 'mp3' && removeTags) {
+    if (isMp3Tagged) {
+      const currentTags = nodeID3.read(tempPath);
+
+      if (!targetArtist) targetArtist = cleanText(currentTags.artist);
+      if (!targetTitle) targetTitle = cleanText(currentTags.title);
+
+      const stripResult = nodeID3.removeTags(tempPath);
+      if (stripResult !== true) throw new Error(`ID3v2 strip failed: ${stripResult}`);
+
+      // nodeID3 снимает только ID3v2 — обрезаем хвостовой ID3v1 (128 байт) до подсчета MD5
+      const fileHandle = await fs.promises.open(tempPath, 'r+');
       try {
-        const currentTags = nodeID3.read(tempPath) || {};
-
-        if (!targetArtist) targetArtist = cleanText(currentTags.artist);
-        if (!targetTitle) targetTitle = cleanText(currentTags.title);
-
-        nodeID3.removeTags(tempPath);
-      } catch (id3Error) {
-        console.error('[ID3 Clean Error]', id3Error);
+        const { size } = await fileHandle.stat();
+        if (size > id3v1.size) {
+          const tail = Buffer.alloc(id3v1.size);
+          await fileHandle.read(tail, 0, id3v1.size, size - id3v1.size);
+          if (tail.toString('latin1', 0, id3v1.signature.length) === id3v1.signature) {
+            await fileHandle.truncate(size - id3v1.size);
+          }
+        }
+      } finally {
+        await fileHandle.close();
       }
     }
 
@@ -95,17 +114,14 @@ export const downloadFileMd5Rename = async (
       });
     });
 
-    if (ext.toLowerCase() === 'mp3' && removeTags) {
-      try {
-        const newTags: nodeID3.Tags = {};
-        if (targetArtist) newTags.artist = targetArtist;
-        if (targetTitle) newTags.title = targetTitle;
+    if (isMp3Tagged) {
+      const newTags: nodeID3.Tags = {};
+      if (targetArtist) newTags.artist = targetArtist;
+      if (targetTitle) newTags.title = targetTitle;
 
-        if (Object.keys(newTags).length > 0) {
-          nodeID3.write(newTags, tempPath);
-        }
-      } catch (id3Error) {
-        console.error('[ID3 Write Error]', id3Error);
+      if (Object.keys(newTags).length > 0) {
+        const writeResult = nodeID3.write(newTags, tempPath);
+        if (writeResult instanceof Error) throw writeResult;
       }
     }
 
@@ -121,7 +137,7 @@ export const downloadFileMd5Rename = async (
     return finalFileName;
   } catch (error) {
     if (fileStream) fileStream.destroy();
-    if (fs.existsSync(tempPath)) fs.unlinkSync(tempPath);
+    fs.rmSync(tempPath, { force: true });
 
     if (error instanceof Error) {
       throw new Error(`[downloadFileMd5Rename] ${error.message}`);
