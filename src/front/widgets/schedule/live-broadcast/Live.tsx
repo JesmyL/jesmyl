@@ -1,8 +1,9 @@
-import { useConnectionState } from '#basis/lib/useConnectionState';
+import { useIsOnline } from '#basis/lib/useConnectionState';
 import { ScreenBroadcastControlPanelShowMdButton } from '#features/broadcast/controls/ShowMdButton';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { soki } from '#shared/soki';
 import { BibleBroadcastSlide } from '$bible/entities/broadcast';
 import { CmBroadcastLiveScreen } from '$cm/features/broadcast/ui/Screen';
 import { liveDataAtom, liveDataStreamersAtom } from '$index/shared/state';
@@ -10,6 +11,7 @@ import { schLiveTsjrpcClient } from '$index/shared/tsjrpc/live.tsjrpc';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { ScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
+import { emptyFunc } from 'shared/utils';
 import { ScheduleWidgetMarkdownLiveBroadcast } from './MarkdownLive';
 
 interface Props {
@@ -26,25 +28,32 @@ export const ScheduleWidgetLiveBroadcast = ({ schw, isShowMarkdownOnly }: Props)
   const [streamerLogin, setStreamerLogin] = useState<SokiAuthLogin | null>(null);
   const streamers = useAtomValue(liveDataStreamersAtom);
   const [isLoading, setIsLoading] = useState(true);
-  const isNetworkConnected = useConnectionState();
+  const isOnline = useIsOnline();
 
   useEffect(() => {
-    if (isNetworkConnected) return;
+    if (!isOnline) return;
 
     if (streamerLogin) {
-      schLiveTsjrpcClient.watch({ schw, streamerLogin });
+      const unlisten = soki.listenOnConnectionOpenEvent(() => {
+        schLiveTsjrpcClient.watch({ schw, streamerLogin }).catch(emptyFunc);
+      });
 
       return () => {
-        schLiveTsjrpcClient.unwatch({ schw, streamerLogin });
+        unlisten();
+        schLiveTsjrpcClient.unwatch({ schw, streamerLogin }).catch(emptyFunc);
       };
     }
 
-    (async () => {
+    const unlisten = soki.listenOnConnectionOpenEvent(() => {
       setIsLoading(true);
-      await schLiveTsjrpcClient.requestStreamers({ schw });
-      setTimeout(setIsLoading, 1000, false);
-    })();
-  }, [isNetworkConnected, schw, streamerLogin]);
+      schLiveTsjrpcClient
+        .requestStreamers({ schw })
+        .catch(emptyFunc)
+        .finally(() => setTimeout(setIsLoading, 1000, false));
+    });
+
+    return unlisten;
+  }, [isOnline, schw, streamerLogin]);
 
   useEffect(() => {
     isSelectStreamerModalAtom.set(!!streamers?.length && !streamerLogin);

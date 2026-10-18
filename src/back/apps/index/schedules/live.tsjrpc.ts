@@ -60,8 +60,12 @@ export const schLiveTsjrpcServer = new (class SchLive extends TsjrpcBaseServer<S
           if (streamers.length) {
             await schLiveTsjrpcSharesServer.streamersList({ streamers } as never, client);
           } else {
-            streamersWaiters[schw] ??= new Set();
-            streamersWaiters[schw].add(client);
+            const waiters = (streamersWaiters[schw] ??= new Set());
+
+            if (!waiters.has(client)) {
+              waiters.add(client);
+              client.once('close', () => waiters.delete(client));
+            }
           }
         },
 
@@ -88,11 +92,13 @@ export const schLiveTsjrpcServer = new (class SchLive extends TsjrpcBaseServer<S
 
           liveDataWatchers[schw] ??= {};
           const watchers = (liveDataWatchers[schw][streamerLogin] ??= new Set());
-          watchers.add(client);
+
+          if (!watchers.has(client)) {
+            watchers.add(client);
+            client.once('close', () => watchers.delete(client));
+          }
 
           shareLiveData(schw, streamerLogin);
-
-          client.on('close', () => watchers.delete(client));
         },
 
         unwatch: async ({ schw, streamerLogin }, { client }) => {

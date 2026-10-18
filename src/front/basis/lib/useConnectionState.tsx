@@ -1,3 +1,4 @@
+import { addEventListenerPipe } from '#shared/lib/hookEffectPipe';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { atom, useAtomValue } from 'atomaric';
 import { twMerge } from 'tailwind-merge';
@@ -11,13 +12,16 @@ export const useConnectionState = (className?: string) =>
   );
 
 export let useIsOnline = () => {
-  const isOnlineAtom = atom(true);
-  const uav = useAtomValue;
-  const ret = () => uav(isOnlineAtom);
+  const isOnlineAtom = atom(navigator.onLine);
+  const syncWithNetwork = () => isOnlineAtom.set(navigator.onLine);
 
-  window.addEventListener('online', () => isOnlineAtom.set(true));
-  window.addEventListener('offline', () => isOnlineAtom.set(false));
-  useIsOnline = ret;
+  addEventListenerPipe(window, 'online', syncWithNetwork);
+  addEventListenerPipe(window, 'offline', syncWithNetwork);
+  addEventListenerPipe(document, 'visibilitychange', () => {
+    if (document.visibilityState === 'visible') syncWithNetwork();
+  });
 
-  return ret();
+  useIsOnline = () => useAtomValue(isOnlineAtom);
+
+  return useAtomValue(isOnlineAtom);
 };

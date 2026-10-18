@@ -8,16 +8,18 @@ class EffectPipeMember {
   }
 }
 
-type Elem = HTMLElement | typeof globalThis | Window | nil;
+type Elem = HTMLElement | typeof globalThis | Window | Document | nil;
 type EventListenerOptions = Parameters<(typeof window)['addEventListener']>[2];
 
 type EventMapForElement<T extends Elem> = T extends HTMLElement
   ? HTMLElementEventMap
   : T extends Window
     ? WindowEventMap
-    : T extends typeof globalThis
-      ? Record<string, any>
-      : never;
+    : T extends Document
+      ? DocumentEventMap
+      : T extends typeof globalThis
+        ? Record<string, any>
+        : never;
 
 export const addEventListenerPipe = <
   T extends NonNullable<Elem>,

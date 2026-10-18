@@ -1,6 +1,7 @@
 import { currentLangiAtom } from '#basis/locale';
 import { takeBaseLanguageAtom } from '#basis/state/locale';
 import { tsjrpcBaseClientNext } from '#basis/tsjrpc/TsjrpcBase.client';
+import { addEventListenerPipe } from '#shared/lib/hookEffectPipe';
 import { authIDB, indexDeviceEmojiAtom, indexDeviceIdAtom } from '$index/shared/state';
 import md5 from 'md5';
 import { makeRegExp } from 'regexpert';
@@ -18,12 +19,14 @@ export class SokiTrip {
     string,
     {
       action: (event: TsjrpcFromClientEvent) => void;
+      reject: (reason?: string) => void;
       promise: Promise<unknown>;
       event: string;
     }
   > = {};
 
   private isOpened = false;
+  private reconnectDelay = 500;
 
   onConnectionOpenEvent = Eventer.createValue<boolean>();
   onBeforeAuthorizeEvent = Eventer.createValue<void>();
@@ -33,7 +36,20 @@ export class SokiTrip {
 
   constructor() {
     this.onBeforeAuthorizeEvent.listen(() => this.sendRegistrationToken());
+
+    addEventListenerPipe(document, 'visibilitychange', () => {
+      if (document.visibilityState === 'visible') this.checkLiveness();
+    });
+    addEventListenerPipe(window, 'online', this.checkLiveness);
   }
+
+  private checkLiveness = () => {
+    if (this.ws.readyState === WebSocket.OPEN) {
+      this.sendRegistrationToken();
+      return;
+    }
+    if (this.ws.readyState !== WebSocket.CONNECTING) this.start();
+  };
 
   private sendRegistrationToken = async () => {
     try {
@@ -56,6 +72,7 @@ export class SokiTrip {
       this.urls = [];
       this.onConnectionOpenEvent.invoke(true);
       this.isOpened = true;
+      this.reconnectDelay = 500;
     } catch (error) {
       if (error === SokiError.InvalidToken) {
         this.onTokenInvalidEvent.invoke();
@@ -64,13 +81,19 @@ export class SokiTrip {
   };
 
   start() {
+    if (this.ws && this.ws.readyState !== WebSocket.CLOSED) return this;
+
     this.ws = new WebSocket(environment.sokiLink);
 
     this.ws.onclose = () => {
-      this.ws = new WebSocket(environment.sokiLink);
-      setTimeout(() => this.start(), 500);
       this.isOpened = false;
       this.isTokenSent = false;
+
+      Object.values(this.requests).forEach(request => request?.reject('#closed'));
+      this.requests = {};
+
+      setTimeout(() => this.start(), this.reconnectDelay);
+      this.reconnectDelay = Math.min(this.reconnectDelay * 2, 10_000);
     };
 
     this.ws.onopen = this.sendRegistrationToken;
@@ -113,10 +136,10 @@ export class SokiTrip {
 
   listenOnConnectionOpenEvent = (cb: () => void) => {
     if (this.isOpened) cb();
-    this.onConnectionOpenEvent.listen(cb);
+    return this.onConnectionOpenEvent.listen(cb);
   };
 
-  private async sendForce(requestId: string) {
+  private sendForce = (requestId: string) => {
     const event = this.requests[requestId]?.event;
     if (event == null) return;
 
@@ -125,13 +148,8 @@ export class SokiTrip {
       return;
     }
 
-    const send = async () => {
-      this.ws.send(event);
-      this.ws.removeEventListener('open', send);
-    };
-
-    this.ws.addEventListener('open', send);
-  }
+    this.onConnectionOpenEvent.listenFirst(() => this.ws.send(event));
+  };
 
   sendResp = ({ error, ...event }: TSJRPCEvent, tool?: TsjrpcClientTool | nil | void) => {
     if (error) {
@@ -158,6 +176,7 @@ export class SokiTrip {
         if (event.errorMessage) withResolvers.reject(event.errorMessage);
         else withResolvers.resolve(event.invokedResult);
       },
+      reject: withResolvers.reject,
       event: fullEvent,
       promise: withResolvers.promise,
     };

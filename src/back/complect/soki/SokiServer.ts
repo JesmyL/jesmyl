@@ -36,12 +36,19 @@ export class SokiServer {
   clientsByLogin = new Map<SokiAuthLogin, Set<WebSocket>>();
   private visits = new Map<WebSocket, SokiVisit>();
   private abortedRequestIdsSet = new Set<string>();
+  private sockets = new Set<WebSocket>();
+  private isAliveBySocket = new WeakMap<WebSocket, boolean>();
 
   start() {
     const ws = new WebSocketServer({ noServer: true }).on('connection', client => {
+      this.sockets.add(client);
+      this.isAliveBySocket.set(client, true);
+      client.on('pong', () => this.isAliveBySocket.set(client, true));
+
       client.on('close', () => {
         const auth = this.auths.get(client);
 
+        this.sockets.delete(client);
         this.clients.delete(client);
         this.visits.delete(client);
         this.auths.delete(client);
@@ -129,6 +136,18 @@ export class SokiServer {
     });
 
     console.info('SokiServer started!!!');
+
+    setInterval(() => {
+      this.sockets.forEach(client => {
+        if (client.readyState !== WebSocket.OPEN || !this.isAliveBySocket.get(client)) {
+          client.terminate();
+          return;
+        }
+
+        this.isAliveBySocket.set(client, false);
+        client.ping();
+      });
+    }, 30_000);
 
     return ws;
   }
