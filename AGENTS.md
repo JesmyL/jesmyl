@@ -31,6 +31,7 @@
 - Prefer built-ins over hand-rolled code — before writing a helper, check for a native one (`Array.isArray`, `Object.hasOwn`, `structuredClone`, `at`, `flat`, etc.) and only then for an existing util in `shared/utils`.
 - Keep code local and minimal — the final bundle should contain as few characters as possible.
 - Performance: hoist regexps out of functions (build once via `lazyInit`), build char-class regexps from object keys (`objectKeys(dict).join('')`), and prefer a single `.replace` pass with a replacer dict over chained `.replace` calls.
+- Never wrap a single static regexp in `lazyInit(() => makeRegExp('...'))` — a module-scope `makeRegExp('...')` is already built once at load; keep `lazyInit` only where deferred building is genuinely required (e.g. regexps composed from object keys at runtime).
 - Reference example: `escapeHtmlLazy` in `src/shared/utils/string.utils.ts`.
 - Never write redundant null-coalescing like `rows[0]?.mod ?? null` — `null` and `undefined` are treated as the same thing; use the `nil` type everywhere instead of `null | undefined`.
 - If a type can be `nil`, its default value should be `null` (not `undefined`); prefer `null` over `undefined` wherever possible.
@@ -43,6 +44,7 @@
 - Never use raw `addEventListener`/`removeEventListener` — use the project's own `addEventListenerPipe` event/subscription system instead.
 - Small styles — via Tailwind utility classes; complex `@keyframes` (e.g. `playingPulse`) — keep in `styled` from `@emotion/styled`, not in the global Tailwind entry.
 - Locale strings: always write user-facing text translations via `translateBase` / `translateDynamic` — never inline raw text.
+- Never write blind type casts like `as CmAudioTail` (branded/type asserts on unverified data) — write proper types and parse/validate at the boundary so the casts become unnecessary.
 
 ## Assistant reply formatting
 
