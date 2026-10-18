@@ -11,20 +11,29 @@
     "люблю, предвечный Бог,\nя Церковь- Твой алмаз;\nТы, как зрачок лучистых глаз,\nхранишь её порог.",
     "о Церкви дорогой,\nсобранье душ живых,\nвзываю сердцем и душой\nвсегда в мольбах своих.",
     "я рад иметь всегда\nобщенье духа с ней,\nнести все тяжести труда\nи крест её скорбей.",
-    "я знаю, разделю\nс ней славу я Твою;\nс ней буду петь я пред Тобой\nспасённою душой."
+    "я знаю, разделю\nс ней славу я Твою;\nс ней буду петь я пред Тобой\nспасённою душой.",
+    "с ней буду петь я пред Тобой\nспасённою душой."
   ],
   "c": [
     "Am E7 Am\nAm E7 Am\nDm G C F\nDm E7 Am",
     "Am E7 F\nAm E7 Am\nDm G C F\nDm E7 Am",
-    "Am E7 Am\nAm E7 Am\nDm G C F\nDm E7 Am"
+    "Am Esus4\nDm G#6dim Fmaj7-A7\nDm Am\nFmaj7 G#6dim Fmaj7-A7",
+    "Am E7 Am\nAm E7 Am\nDm G C F\nDm E7 Am",
+    "Am E7/H Fmaj7/C\nAm E7/H Fmaj7/C",
+    "Dm G Cmaj7 Fmaj7\nDm E7 Am-A\nDm G Cmaj7 Fmaj7\nDm E7 Am",
+    "Dm Am Fmaj7\nDm E7 Am"
   ],
   "c1": [
     "Am E7/H Fmaj7/C\nAm E7/H Fmaj7/C\nDm G Cmaj7 Fmaj7\nDm E7 Am",
     "Am E/G# Am/G-Am/F#\nFmaj7 Esus4 Dm-Am\nDm G Cmaj7 Fmaj7\nDm/H Esus4 Asus4-A..Am",
-    "Am E7/H Fmaj7/C\nAm E7/H Fmaj7/C\nDm G Cmaj7 Fmaj7\nDm E7 Am"
+    "Am Esus4\nDm G#6dim Fmaj7-A7\nDm Am\nFmaj7 G#6dim Fmaj7-A7",
+    "Am E7/H Fmaj7/C\nAm E7/H Fmaj7/C\nDm G Cmaj7 Fmaj7\nDm E7 Am",
+    "Am E7/H Fmaj7/C\nAm E7/H Fmaj7/C",
+    "Dm G Cmaj7 Fmaj7\nDm E7 Am-A\nDm G Cmaj7 Fmaj7\nDm E7 Am",
+    "Dm Am Fmaj7\nDm E7 Am"
   ],
   "o": [
-    { "c": 2, "k": 15, "w": 14 },
+    { "c": 3, "k": 15, "w": 14 },
     {
       "c": 0,
       "k": 39,
@@ -51,6 +60,7 @@
       "t": 1,
       "w": 1
     },
+    { "c": 4, "k": 80, "w": 16, "cre": 1792248353405 },
     {
       "c": 0,
       "k": 39,
@@ -77,18 +87,29 @@
       "t": 3,
       "w": 9
     },
+    { "c": 5, "k": 80, "w": 17, "cre": 1792250508729 },
     {
       "c": 0,
       "k": 39,
       "p": [
         [2, 5, 7],
         [3, 6, 9],
-        [3, 6, 10, 13],
+        [3, 6, 10, 12],
         [1, 3, 6]
       ],
-      "r": { "2-3": 2 },
       "t": 4,
       "w": 13
+    },
+    {
+      "c": 6,
+      "k": 88,
+      "p": [
+        [3, 10, 13],
+        [1, 3, 6]
+      ],
+      "t": 5,
+      "w": 15,
+      "cre": 1792244774879
     }
   ]
 }
