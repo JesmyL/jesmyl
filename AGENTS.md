@@ -11,7 +11,7 @@
 ## Structure
 
 - Single npm root, three targets:
-  - **Frontend PWA**: `src/front/` — React 19 + TanStack Router + vite-plugin-pwa. Routes live in `src/front/routes/tree/`; the route tree `src/front/routes/routeTree.gen.ts` is **generated** — never edit `*.gen.ts` files (also `src/regexpert.gen/`, `src/attr-styler.gen/`).
+  - **Frontend PWA**: `src/front/` — React 19 + TanStack Router + vite-plugin-pwa. Routes live in `src/front/routes/tree/`; the route tree `src/front/routes/routeTree.gen.ts` is **generated** — never edit `*.gen.ts` files (also `src/regexpert.gen/`, `src/attr-styler.gen/`). The contents of `src/regexpert.gen/` must not be modified manually — they regenerate automatically (e.g. on `vitest` runs), so just leave the generated output in place and never hand-edit it.
   - **Backend**: `src/back/` — Node/express (`back.index.ts`), runs from a compiled `back.index.cjs` built by `do/build-back-index.ts`; `start-local-back.ts` builds + runs it. In production it runs as systemd service `jesmyl_soki` (scripts `relog`/`re-start`/`re-status` in `src/back/package.json`). `src/back/**` contains live runtime data under `+case/` dirs (users, storages, configs as JSON) — these are data, not code; some are imported directly (e.g. `back/apps/index/+case/userRoles.json`).
   - **Electron app**: `src/electron-app/` has its **own package.json** and lockfile; use the `el-*` scripts from the root (`el-compile`, `el-test`, `el-build`, `el-deploy`), not plain npm there.
 
