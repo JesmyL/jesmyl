@@ -5,8 +5,8 @@ import { textToUpperCase } from 'shared/utils/string.utils';
 
 export const hardModificators =
   `(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))` as const;
-export const lightModificators = `(?<lightModificators>\\+|(?:(?:\\d{0,2}(?:min|sus|maj|dim|add)(?:\\d{1,2}(?:/\\d{1,2})?)?))?)`;
-export const chordLeadLetter = `[ACDFG]#?|[EH]`;
+export const lightModificators = `(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)|(?:[5679]|1[13])(?:/\\d{1,2})?)?`;
+export const chordLeadLetter = `(?:[ACDFG]#?|[EH])`;
 export const chordLikeStr =
   `(?<simpleChord>(?:${chordLeadLetter})m?7?)${lightModificators}${hardModificators}?` as const;
 export const chordInterpretedLikeStr =
@@ -51,13 +51,10 @@ export const textedChordRegsLazy = lazyInit(() =>
     `/^(?:\\|?\\.*-?${chordLikeStr}(?<bassChord>/${
       //
       escapeRegExpNames(chordLeadLetter, '_bass')
-    })?(?<repeats>(?:(?:\\.+|-|\\.+-)${
-      //
-      escapeRegExpNames(chordLikeStr, '_lastRepeat')
-    }(?:/${
+    })?(?<repeats>(?:(?:\\.+-?|-)${escapeRegExpNames(chordLikeStr, '_lastRepeat')}(?:/${
       //
       escapeRegExpNames(chordLeadLetter, `_lastRepeatBass`)
-    })?)*)\\|?|\\.)$/`,
+    })?|\\.?-\\.)*)\\|?|\\.)$/`,
   ),
 );
 
