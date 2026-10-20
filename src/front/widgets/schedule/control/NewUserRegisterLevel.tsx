@@ -1,7 +1,9 @@
+import { translateBase } from '#basis/locale';
 import { Modal, ModalBody } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { Atom, atom } from 'atomaric';
 import { scheduleWidgetUserRights } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
 import { schGeneralTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
@@ -20,7 +22,7 @@ export function ScheduleWidgetNewUserRegisterLevel() {
       <TheIconButton
         icon="ArrowRight01"
         className="my-5 ml-2"
-        prefix="Права по умолчанию"
+        prefix={translateBase(BaseLocaleKey.ScheduleDefaultRights)}
         onClick={isModalOpenAtom.do.toggle}
       />
 

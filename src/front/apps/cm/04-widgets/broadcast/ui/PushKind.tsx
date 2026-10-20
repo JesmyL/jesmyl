@@ -2,6 +2,7 @@ import { translateBase } from '#basis/locale';
 import { ConfiguratorEditProps } from '#shared/ui/configurators/model';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { cmComLineGroupingDefaultKinds } from 'shared/const/cm/comLineGroupingKind';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 type Props = ConfiguratorEditProps<{ pushKind?: number }>;
 
@@ -9,7 +10,7 @@ export const CmBroadcastScreenConfigurationPushKind = ({ config, updateConfig }:
   return (
     <>
       <div className="flex gap-2">
-        {translateBase(it => it.cm.linnes)}
+        {translateBase(BaseLocaleKey.CmLines)}
         <Dropdown
           id={config.pushKind}
           items={cmComLineGroupingDefaultKinds.map((title, id) => ({ title, id }))}

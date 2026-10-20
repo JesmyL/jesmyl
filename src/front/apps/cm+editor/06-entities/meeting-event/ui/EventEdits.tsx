@@ -1,8 +1,10 @@
+import { translateBase } from '#basis/locale';
 import { Modal } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { WithAtom } from '#shared/ui/WithAtom';
 import { cmComSelectedComwsAtom } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsEq } from 'shared/utils/checkIsEq';
 import { CmEditorMeetingEventEditProps } from '../model/model';
 import { CmEditorMeetingEventEditsHistoryModalInner } from './EventEditsHistoryModal';
@@ -19,7 +21,7 @@ export const CmEditorMeetingEventEdits = (props: Required<CmEditorMeetingEventEd
             <>
               <BottomPopupItem
                 icon="Sent"
-                title="Отправить выбранные песни"
+                title={translateBase(BaseLocaleKey.CmEditorSendSelected)}
                 onClick={isOpenSendModalAtom.do.toggle}
               />
               <Modal openAtom={isOpenSendModalAtom}>
@@ -37,7 +39,7 @@ export const CmEditorMeetingEventEdits = (props: Required<CmEditorMeetingEventEd
         {isOpenHistoryModalAtom => (
           <>
             <BottomPopupItem
-              title="История дня"
+              title={translateBase(BaseLocaleKey.CmEditorDayHistory)}
               icon="WorkHistory"
               onClick={isOpenHistoryModalAtom.do.toggle}
             />

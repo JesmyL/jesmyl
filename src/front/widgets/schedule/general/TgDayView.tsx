@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { TelegramWebAppApiOr } from '#basis/ui/tg-app/getTgApi';
 import { TelegramWebApp, TelegramWebAppInitData } from '#basis/ui/tg-app/model';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
@@ -6,6 +7,7 @@ import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import styled from '@emotion/styled';
 import { useEffect } from 'react';
 import { ScheduleWidgetWidDef } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ScheduleWidgetAlarmContent } from '../alarm/AlarmContent';
 import { ScheduleCurrentSchwContext } from '../complect/lib/contexts';
 import { extractTgRouteDataFromUrl } from './extractTgRouteDataFromUrl';
@@ -18,7 +20,9 @@ export const ScheduleWidgetTgDayView = () => {
     <TelegramWebAppApiOr>
       {(api, isLoading) =>
         initData === null ? (
-          <div className="flex center text-xKO full-size">Ошибка данных</div>
+          <div className="flex center text-xKO full-size">
+            {translateBase(BaseLocaleKey.ScheduleDataError)}
+          </div>
         ) : (
           <Child
             api={api}
@@ -62,7 +66,11 @@ const Child = ({ api, initData }: Props) => {
           />
         ) : (
           <div className="full-size flex center">
-            {isLoading ? <TheIconLoading /> : <span className="text-xKO">{error || 'Мероприятие не найдено'}</span>}
+            {isLoading ? (
+              <TheIconLoading />
+            ) : (
+              <span className="text-xKO">{error || translateBase(BaseLocaleKey.ScheduleEventNotFound)}</span>
+            )}
           </div>
         )}
       </StyledBox>

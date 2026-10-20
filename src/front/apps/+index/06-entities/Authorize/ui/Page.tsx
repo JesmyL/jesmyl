@@ -8,6 +8,7 @@ import { authIDB } from '$index/shared/state';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { toast } from 'sonner';
 import { IndexAuthorizeTelegramStyledPage } from '../style/IndexTelegramAuth.styled';
 import { IndexAuthorizeByTelegram } from './TelegramAuthorize';
@@ -21,7 +22,7 @@ export const IndexAuthorizePage = () => {
   return (
     <IndexAuthorizeTelegramStyledPage
       className=""
-      headTitle={translateBase(it => it.toAuth)}
+      headTitle={translateBase(BaseLocaleKey.LogIn)}
       head={
         <>
           {connectionNode}
@@ -68,7 +69,7 @@ export const IndexAuthorizePage = () => {
 
                   navigate({ to: '..' });
                   toast(
-                    translateBase(it => it.authSuccess),
+                    translateBase(BaseLocaleKey.AuthorizationSuccess),
                     makeToastOKMoodConfig(),
                   );
                 }}

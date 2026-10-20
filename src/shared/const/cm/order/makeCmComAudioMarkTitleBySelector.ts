@@ -1,5 +1,6 @@
 import { CmComAudioMarkPack, CmComAudioMarkPackTime, CmComAudioMarkSelector, HttpNumLeadLink, Langi } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
+import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
 import { checkIsArray, checkIsNotNil } from 'shared/utils/checkIs';
 import { translateBaseDefine } from 'shared/utils/locale/translate';
 import { objectKeys } from 'shared/utils/object.utils';
@@ -7,7 +8,7 @@ import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model'
 import { CmComOrders } from '../Com/parents/20-Orders';
 
 const takeTitle = (langi: Langi, key: CmComBlockKindKey) =>
-  translateBaseDefine(CmComOrders.getLangLocales(langi))(it => it.cm.com.kind[key]);
+  translateBaseDefine(CmComOrders.getLangLocales(langi))(it => it[DynLocaleKey.CmComKind][key]);
 
 export const makeCmComAudioMarkTitleEmptySelector = (
   selector: string | nil,

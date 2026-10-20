@@ -1,24 +1,26 @@
+import { translateBase } from '#basis/locale';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ConfiguratorEditProps } from '../model';
 import { TextAlignConfigurator } from './model';
 
-const items: DropdownItem<TextAlignConfigurator>[] = [
+const makeItems = (): DropdownItem<TextAlignConfigurator>[] => [
   {
     id: TextAlignConfigurator.Left,
-    title: 'Лево',
+    title: translateBase(BaseLocaleKey.ConfigLeft),
   },
   {
     id: TextAlignConfigurator.Center,
-    title: 'Центр',
+    title: translateBase(BaseLocaleKey.ConfigCenter),
   },
   {
     id: TextAlignConfigurator.Right,
-    title: 'Право',
+    title: translateBase(BaseLocaleKey.ConfigRight),
   },
   {
     id: TextAlignConfigurator.Justify,
-    title: 'Ширина',
+    title: translateBase(BaseLocaleKey.ConfigJustify),
   },
 ];
 
@@ -28,10 +30,10 @@ export const ScreenTranslateConfigurationTextAlign = ({ config, updateConfig }: 
   return (
     <>
       <div className="flex gap-2 flex-max">
-        Выравнивание
+        {translateBase(BaseLocaleKey.ConfigAlign)}
         <Dropdown
           id={config.textAlign}
-          items={items}
+          items={makeItems()}
           onSelectId={textAlign => updateConfig({ textAlign })}
         />
       </div>

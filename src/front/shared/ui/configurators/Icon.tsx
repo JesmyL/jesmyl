@@ -1,10 +1,12 @@
 import { useIndexValuesQuery } from '#basis/api/useIndexValuesQuery';
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useQuery } from '@tanstack/react-query';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itIt } from 'shared/utils';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
@@ -45,7 +47,7 @@ export default function IconConfigurator(props: Props) {
           isLoading={loadingIcon != null}
         >
           {props.iconNode ?? <LazyIcon icon={props.icon ?? 'HelpSquare'} />}
-          Изменить иконку
+          {translateBase(BaseLocaleKey.ConfigChangeIcon)}
         </Button>
       </div>
 

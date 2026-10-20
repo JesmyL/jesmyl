@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { Card } from '#shared/components/ui/card';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
@@ -7,6 +8,7 @@ import {
   questionerTemplateDescriptionsOrder,
 } from '$q/shared/const/templateDescriptions';
 import { Atom } from 'atomaric';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { QuestionerBlank } from 'shared/model/q';
 import { useQuestionerBlankRedactorAddBlankTemplateMutation } from '../api/useQuestionerAddBlankTemplateMutation';
 
@@ -22,7 +24,7 @@ export const QuestionerBlankRedactorAddTemplateModalInner = ({
   return (
     <>
       <ModalHeader>
-        <span className="text-x7">{blank.title}.</span> Новый вопрос
+        <span className="text-x7">{blank.title}.</span> {translateBase(BaseLocaleKey.QuestionerNewQuestion)}
       </ModalHeader>
       <ModalBody>
         {questionerTemplateDescriptionsOrder.map(type => {

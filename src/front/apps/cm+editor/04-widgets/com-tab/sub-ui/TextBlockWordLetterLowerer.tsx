@@ -5,6 +5,7 @@ import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.ts
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmCom } from 'shared/const/cm/Com';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { emptyAsyncFunc } from 'shared/utils';
 import { checkIsNotNil } from 'shared/utils/checkIs';
 import { checkIsEq } from 'shared/utils/checkIsEq';
@@ -41,7 +42,7 @@ export const CmEditorComTabTextBlockWordLetterLowerer = ({ com, onUpdate }: { co
             onUpdate();
           }}
         >
-          {translateBase(it => it.send)}
+          {translateBase(BaseLocaleKey.Send)}
         </Button>
       </ModalHeader>
       <ModalBody>

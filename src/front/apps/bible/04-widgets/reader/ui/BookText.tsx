@@ -12,6 +12,7 @@ import styled from '@emotion/styled';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import React, { useEffect, useRef, useState } from 'react';
 import { Langi } from 'shared/api';
+import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { BibleReaderChapterText } from './ChapterText';
 
@@ -150,7 +151,7 @@ const List = styled.div<{ $langi: Langi; $booki: BibleBooki }>`
       color: var(--color-x3);
 
       &::before {
-        content: '${translateDynamic(props.$langi)(it => it.bible.chapterNum, {
+        content: '${translateDynamic(props.$langi, DynLocaleKey.BibleChapterNum, {
           c: "'attr(data-chaptern)'",
           b: `${props.$booki}`,
         })}';

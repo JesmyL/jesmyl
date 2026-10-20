@@ -9,6 +9,7 @@ import eslint from 'vite-plugin-eslint';
 import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { configDefaults } from 'vitest/config';
+import { constEnumVitePlugin } from './do/vite-plugin-const-enums';
 import * as tsconf from './tsconfig.json';
 import { vitePWAOptions } from './vite-pwa.options';
 
@@ -76,6 +77,7 @@ export default defineConfig(() => {
       exclude: [...configDefaults.exclude, 'src/electron-app/**'],
     },
     plugins: [
+      constEnumVitePlugin(),
       regExpertVitePlugin(),
       TanStackRouterVite({
         target: 'react',

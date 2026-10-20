@@ -13,6 +13,7 @@ import { useNavigate, useSearch } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { ChordPack, ChordTrack } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { checkIsEq } from 'shared/utils/checkIsEq';
 import { deepClone } from 'shared/utils/clone';
@@ -62,9 +63,9 @@ export const CmEditorChordPage = () => {
       isNewChord
         ? correctChordRegsLazy().regExp.exec(newChordName)
           ? chords[newChordName] || redactableChords[newChordName]
-            ? translateBase(it => it.cm.chExists)
+            ? translateBase(BaseLocaleKey.CmChordExists)
             : ''
-          : translateBase(it => it.cm.incCh)
+          : translateBase(BaseLocaleKey.CmIncorrectChord)
         : '',
     );
   }, [newChordName, redactableChords, chords, isNewChord, currentChordName]);
@@ -89,7 +90,7 @@ export const CmEditorChordPage = () => {
     <StyledCmEditorChordPageContainer
       className="chord-redactor"
       contentClass={`chord-redactor-content p-2 ${isNewChord ? 'chord-addition' : ''}`}
-      headTitle={translateBase(it => it.cm.chs)}
+      headTitle={translateBase(BaseLocaleKey.CmChords)}
       head={
         (checkAccess('cm', 'CHORD', 'U') || checkAccess('cm', 'CHORD', 'C')) && (
           <div className="flex gap-2">
@@ -98,9 +99,9 @@ export const CmEditorChordPage = () => {
             <TheIconButton
               icon="Sent"
               disabled={!objectLength(chordsToSend)}
-              disabledReason={translateBase(it => it.noChanges)}
+              disabledReason={translateBase(BaseLocaleKey.NoChanges)}
               className="m-2"
-              confirm={translateBase(it => it.toSendSmth, { s: objectKeys(chordsToSend).join('; ') })}
+              confirm={translateBase(BaseLocaleKey.ToSendSomething, { s: objectKeys(chordsToSend).join('; ') })}
               onClick={async () => {
                 await cmEditorClientTsjrpcMethods.setChords({ chords: chordsToSend });
                 chordsToSendAtom.set({});
@@ -147,7 +148,7 @@ export const CmEditorChordPage = () => {
                     navigate({ to: '.', search: { newChordName: undefined } });
                   }}
                 >
-                  {translateBase(it => it.backToEdit)}
+                  {translateBase(BaseLocaleKey.BackToEdit)}
                 </Button>
               </>
             ) : currentChordName ? (
@@ -156,7 +157,7 @@ export const CmEditorChordPage = () => {
                 <CmChordCard chordName={currentChordName} />
               </>
             ) : (
-              <div>{translateBase(it => it.cm.selChEdit)}</div>
+              <div>{translateBase(BaseLocaleKey.CmSelectChordEdit)}</div>
             )}
           </div>
           {checkAccess('cm', 'CHORD', 'U') && (
@@ -197,16 +198,16 @@ export const CmEditorChordPage = () => {
                     }}
                   >
                     {isNewChord
-                      ? translateBase(it => it.cre)
+                      ? translateBase(BaseLocaleKey.Create)
                       : redactableChord
                         ? isExists
-                          ? translateBase(it => it.cm.comeBackCh)
-                          : translateBase(it => it.cm.delCh)
-                        : translateBase(it => it.redact)}
+                          ? translateBase(BaseLocaleKey.CmComeBackChord)
+                          : translateBase(BaseLocaleKey.CmDeleteChord)
+                        : translateBase(BaseLocaleKey.Redact)}
                   </TheButton>
                 </>
               ) : (
-                <div>{translateBase(it => it.cm.selChEdit)}</div>
+                <div>{translateBase(BaseLocaleKey.CmSelectChordEdit)}</div>
               )}
             </div>
           )}

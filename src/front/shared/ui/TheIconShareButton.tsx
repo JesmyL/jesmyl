@@ -1,5 +1,7 @@
+import { translateBase } from '#basis/locale';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsString } from 'shared/utils/checkIs';
 import { Modal, ModalBody, ModalHeader } from './modal';
 import { TheIconButton } from './the-icon/TheIconButton';
@@ -71,7 +73,7 @@ export function TheIconShareButton({
       />
 
       <Modal openAtom={bodyNodeAtom}>
-        <ModalHeader>Не удалось поделиться:</ModalHeader>
+        <ModalHeader>{translateBase(BaseLocaleKey.ShareFailed)}</ModalHeader>
         <ModalBody>{bodyNode}</ModalBody>
       </Modal>
     </>

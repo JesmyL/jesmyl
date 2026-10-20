@@ -15,6 +15,7 @@ import {
 import { Link } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { ReactNode, useEffect } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 interface Props {
   head: ReactNode;
@@ -41,7 +42,7 @@ export const BibleBroadcastControlled = ({ head, headTitle }: Props) => {
   return (
     <PageContainerConfigurer
       className=""
-      headTitle={headTitle ?? translateBase(it => it.bible.t)}
+      headTitle={headTitle ?? translateBase(BaseLocaleKey.Bible)}
       head={head}
       backButtonRender={(linkRef, backButtonNode) => (
         <Link

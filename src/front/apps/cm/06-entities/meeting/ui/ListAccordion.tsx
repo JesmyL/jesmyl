@@ -3,6 +3,7 @@ import { Accordion } from '#shared/components';
 import { useNavigate } from '@tanstack/react-router';
 import { ReactNode } from 'react';
 import { IScheduleWidget, ScheduleWidgetDayEventMi, ScheduleWidgetDayi } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { cmMeetingLastOpenEventMiAtom } from '../state/atoms';
 import { CmMeetingEventComPackListBlock } from './EventComPackListBlock';
 
@@ -34,7 +35,7 @@ export const CmMeetingEventListAccordion = ({
         }}
       >
         <span>
-          {isOnlyDay && <>{translateBase(it => it.NDay, { n: dayi + 1 })} </>}
+          {isOnlyDay && <>{translateBase(BaseLocaleKey.NumberDay, { n: dayi + 1 })} </>}
           <span className="text-x7">{sch.types[evType].title}</span>
           {evTopic && <>: {evTopic}</>}
         </span>

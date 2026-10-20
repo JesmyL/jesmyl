@@ -1,8 +1,10 @@
+import { translateBase } from '#basis/locale';
 import { takeBibleLangBooks, translateDescriptions } from '$bible/ext';
 import { bibleTbcvEncode, makeBibleTbcvPrefix } from '$bible/shared/lib/tbcv.parser';
 import { bibleTBCVTranslatesIDB } from '$bible/shared/state/bibleIDB';
 import { makeRegExp } from 'regexpert';
 import { Langi } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { BibleTranslateName } from 'shared/model/bible';
 import { checkIsNaN, checkIsNil, checkIsNotNil } from 'shared/utils/checkIs';
 import {
@@ -55,7 +57,7 @@ export const cmComCommentMakeStartCommentCss = async (
           .first();
 
         if (!translate) {
-          return `\n<ПЕРЕВОД ${tNameUpper} НЕ УСТАНОВЛЕН>:${addr.book} ${addr.chapter}:${addr.verseDiapason}`;
+          return `\n${translateBase(BaseLocaleKey.BibleTranslationsNotSet, { t: tNameUpper })}:${addr.book} ${addr.chapter}:${addr.verseDiapason}`;
         }
 
         let booki = null as number | nil;
@@ -85,7 +87,7 @@ export const cmComCommentMakeStartCommentCss = async (
           addr.bookTitle;
 
         if (checkIsNil(booki))
-          return `\n${tNameUpper}:<КНИГА ${bookTitle} НЕ НАЙДЕНА> ${addr.chapter}:${addr.verseDiapason}`;
+          return `\n${tNameUpper}:${translateBase(BaseLocaleKey.BibleBookNotFound, { t: bookTitle })} ${addr.chapter}:${addr.verseDiapason}`;
 
         const chapteri = +addr.chapter - 1;
         if (checkIsNaN(chapteri)) return addr.$0;
@@ -131,14 +133,18 @@ export const cmComCommentMakeStartCommentCss = async (
           .first();
 
         if (checkIsNil(book))
-          return `\n${tNameUpper}:<КНИГИ "${fullBibleTitle}" В ПЕРЕВОДЕ ${tNameUpper} ${translateDescriptions[tName] || ''} НЕТ> ${addr.chapter}:${addr.verseDiapason}`;
+          return `\n${tNameUpper}:${translateBase(BaseLocaleKey.BibleBookAbsent, {
+            b: fullBibleTitle,
+            t: `${tNameUpper} ${translateDescriptions[tName] || ''}`.trim(),
+          })} ${addr.chapter}:${addr.verseDiapason}`;
 
         const chapter = await bibleTBCVTranslatesIDB.tb.list
           .where('k')
           .startsWith(makeBibleTbcvPrefix(tName, booki, chapteri))
           .first();
 
-        if (!chapter) return `\n${tNameUpper}:${fullBibleTitle} <${addr.chapter} ГЛАВЫ НЕТ>:${addr.verseDiapason}`;
+        if (!chapter)
+          return `\n${tNameUpper}:${fullBibleTitle} ${translateBase(BaseLocaleKey.BibleChapterAbsent, { n: addr.chapter })}:${addr.verseDiapason}`;
 
         if (!isWithoutText) {
           const fromVerse = await bibleTBCVTranslatesIDB.tb.list.get(
@@ -146,7 +152,7 @@ export const cmComCommentMakeStartCommentCss = async (
           );
 
           if (checkIsNaN(fromVersei) || !fromVerse) {
-            return `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:<${addr.verseFrom} СТИХА НЕТ>${addr.verseTail || ''}`;
+            return `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:${translateBase(BaseLocaleKey.BibleVerseAbsent, { n: addr.verseFrom })}${addr.verseTail || ''}`;
           }
 
           if (checkIsNotNil(addr.verseTo)) {
@@ -154,10 +160,10 @@ export const cmComCommentMakeStartCommentCss = async (
             const toVerse = await bibleTBCVTranslatesIDB.tb.list.get(bibleTbcvEncode(tName, booki, chapteri, toVersei));
 
             if (checkIsNaN(toVersei) || !toVerse)
-              return `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:${addr.verseFrom}-<${addr.verseTo} СТИХА НЕТ>`;
+              return `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:${addr.verseFrom}-${translateBase(BaseLocaleKey.BibleVerseAbsent, { n: addr.verseTo })}`;
 
             if (toVersei <= fromVersei)
-              return `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:<${addr.verseFrom}${addr.verseTail || ''} ОШИБКА ДИАПАЗОНА>`;
+              return `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:${translateBase(BaseLocaleKey.BibleRangeError)}`;
           }
         }
 

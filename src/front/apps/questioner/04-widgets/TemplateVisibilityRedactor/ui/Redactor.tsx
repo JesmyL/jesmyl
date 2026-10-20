@@ -1,7 +1,9 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { questionerIDB } from '$q/shared/state/qIdb';
 import { questionerAdminTsjrpcClient } from '$q/shared/tsjrpc/admin.tsjrpc';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { QuestionerBlankWid, QuestionerTemplateId } from 'shared/model/q';
 import { objectLength } from 'shared/utils/object.utils';
 import { twMerge } from 'tailwind-merge';
@@ -19,9 +21,9 @@ export const QuestionerTemplateVisibilityRedactor = ({
 
   return (
     <>
-      <div>Управление видимостью</div>
+      <div>{translateBase(BaseLocaleKey.QuestionerVisibilityControl)}</div>
       <div className="mt-10">
-        Вопрос <span className="text-x7"> {template?.title}</span>
+        {translateBase(BaseLocaleKey.QuestionerSurvey)} <span className="text-x7"> {template?.title}</span>
       </div>
 
       <Button
@@ -29,7 +31,7 @@ export const QuestionerTemplateVisibilityRedactor = ({
         className={twMerge(template?.hidden && 'text-x7', 'my-5')}
         onClick={() => questionerAdminTsjrpcClient.switchTemplateHiddenSign({ blankw, templateId })}
       >
-        Сделать {template?.hidden ? 'видимым' : 'невидимым'}
+        {translateBase(it => (template?.hidden ? it[BaseLocaleKey.QuestionerMakeVisible] : it[BaseLocaleKey.QuestionerMakeInvisible]))}
       </Button>
       {template && blank && !template.hidden && objectLength(blank.tmp) > 1 && (
         <QuestionerTemplateVisibilityRedactorModalBodyInner

@@ -14,6 +14,7 @@ import { TextCaseConfigurator } from '#shared/ui/configurators/TextCase';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { useCmBroadcastUpdateCurrentConfig } from '$cm/shared/lib/broadcast';
 import { useCallback } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import {
   CmBroadcastScreenConfig,
   CmBroadcastScreenConfigSubConfigs,
@@ -54,7 +55,7 @@ export const CmBroadcastCurrentScreenConfigurations = ({ currentConfig }: Props)
   );
 
   return (
-    <ExpandableContent title={translateBase(it => it.setup)}>
+    <ExpandableContent title={translateBase(BaseLocaleKey.Setup)}>
       <div className="ml-2">
         <ScreenTranslateConfigurationNameChanger />
         <ScreensConfigurator />
@@ -86,22 +87,22 @@ export const CmBroadcastCurrentScreenConfigurations = ({ currentConfig }: Props)
           config={currentConfig}
           updateConfig={update}
         />
-        <ExpandableContent title={translateBase(it => it.cm.blocks)}>
+        <ExpandableContent title={translateBase(BaseLocaleKey.CmBlocks)}>
           <CmBroadcastSubBlockConfigurator
-            blockTitle={translateBase(it => it.cm.nxBlockConfig)}
+            blockTitle={translateBase(BaseLocaleKey.CmNextBlockConfig)}
             subKey="next"
-            plusButtonPostfix={translateBase(it => it.cm.insertNxBlock)}
-            deleteButtonPostfix={translateBase(it => it.cm.hideNxBlock)}
+            plusButtonPostfix={translateBase(BaseLocaleKey.CmInsertNextBlock)}
+            deleteButtonPostfix={translateBase(BaseLocaleKey.CmHideNextBlock)}
             putSubConfigUpdate={putSubConfigUpdate}
             currentConfig={currentConfig}
             defaultConfig={cmBroadcastSubConfigNext}
           />
 
           <CmBroadcastSubBlockConfigurator
-            blockTitle={translateBase(it => it.cm.chBlockConfig)}
+            blockTitle={translateBase(BaseLocaleKey.CmChordBlockConfig)}
             subKey="chorded"
-            plusButtonPostfix={translateBase(it => it.cm.insertChBlock)}
-            deleteButtonPostfix={translateBase(it => it.cm.hideChBlock)}
+            plusButtonPostfix={translateBase(BaseLocaleKey.CmInsertChordBlock)}
+            deleteButtonPostfix={translateBase(BaseLocaleKey.CmHideChordBlock)}
             putSubConfigUpdate={putSubConfigUpdate}
             currentConfig={currentConfig}
             defaultConfig={defaultScreenBroadcastTextConfig}

@@ -1,8 +1,10 @@
+import { translateBase } from '#basis/locale';
 import { takeBibleLangBooks } from '$bible/ext';
 import { bibleAddressWithForceJoinReset, takeBibleSimpleCheckedSingleAddress } from '$bible/shared/hooks';
 import { useBibleCurrentLangi } from '$bible/shared/lib/useBibleCurrentLangi';
 import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
 import styled from '@emotion/styled';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { twJoin } from 'tailwind-merge';
 import { bibleBroadcastListSetSingleAddress } from '../lib/hooks';
@@ -28,7 +30,7 @@ export function BibleBroadcastListBooks() {
     <StyledList
       ref={listRef}
       className="overflow-y-auto overflow-x-hidden"
-      title="Ctrl+@ - добавить из книги"
+      title={translateBase(BaseLocaleKey.BibleAddFromBook)}
     >
       {takeBibleLangBooks(langi).map((book, booki) => {
         return (

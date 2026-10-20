@@ -3,7 +3,7 @@ import { IScheduleWidget } from 'shared/api';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 import { ScheduleKeyValueListAtt } from './atts/attachments/key-value/KeyValueListAtt/Att';
-import { scheduleOwnAtts } from './atts/attachments/ownAtts';
+import { makeScheduleOwnAtts } from './atts/attachments/ownAtts';
 import { ScheduleWidgetAppAtts, ScheduleWidgetAttRefs } from './ScheduleWidget.model';
 
 export const makeAttStorage = (schedule?: IScheduleWidget): [ScheduleWidgetAppAtts<'SCH'>, ScheduleWidgetAttRefs] => {
@@ -36,5 +36,5 @@ export const makeAttStorage = (schedule?: IScheduleWidget): [ScheduleWidgetAppAt
       ExtRoute: () => <></>,
     };
   });
-  return [{ ...appAttsStore, ...scheduleOwnAtts, ...atts }, attRefs];
+  return [{ ...appAttsStore, ...makeScheduleOwnAtts(), ...atts }, attRefs];
 };

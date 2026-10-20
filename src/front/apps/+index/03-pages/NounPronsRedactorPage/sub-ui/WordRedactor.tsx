@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { ButtonGroup } from '#shared/components/ui/button-group';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
@@ -10,6 +11,7 @@ import styled from '@emotion/styled';
 import { useQuery } from '@tanstack/react-query';
 import { Atom, useAtomValue } from 'atomaric';
 import { useRef, useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { textToUpperCase } from 'shared/utils/string.utils';
 import { toast } from 'sonner';
 
@@ -59,10 +61,10 @@ export const IndexNounPronsRedactorWordRedactor = (props: {
             }
             confirm={
               <>
-                Для отправки убедись в адекватности словосочетания
+                {translateBase(BaseLocaleKey.IndexWordRedactHint)}
                 <span className="text-x7"> {query.data?.result}</span>
                 <div>
-                  И выбери уровень сложности слова
+                  {translateBase(BaseLocaleKey.IndexSelectComplexity)}
                   <Buttons
                     initLevel={levelRef.current}
                     onLevelChange={level => (levelRef.current = level)}
@@ -72,7 +74,10 @@ export const IndexNounPronsRedactorWordRedactor = (props: {
             }
             onSend={() => {
               if (!levelRef.current) {
-                toast('Нужно выбрать уровень сложности', makeToastKOMoodConfig());
+                toast(
+                  translateBase(BaseLocaleKey.IndexSelectComplexity),
+                  makeToastKOMoodConfig(),
+                );
                 return;
               }
 

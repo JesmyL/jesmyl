@@ -4,6 +4,7 @@ import { CmChordCardImageList } from '$cm/entities/chord-card';
 import { useCmCom, useCmComLastOpenComw } from '$cm/entities/com';
 import { Atom, atom } from 'atomaric';
 import { MenuComToolName } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmComTool } from '../ComTool';
 
 let isOpenAtom: Atom<boolean>;
@@ -17,7 +18,7 @@ export const CmComToolChordImages = () => {
   return (
     <>
       <CmComTool
-        title={translateBase(it => it.cm.com.tool[MenuComToolName.ChordImages])}
+        title={translateBase(it => it[BaseLocaleKey.CmMarkComTool][MenuComToolName.ChordImages])}
         icon="TwoFinger05"
         iconClassName="-scale-x-100!"
         onClick={isOpenAtom.do.toggle}

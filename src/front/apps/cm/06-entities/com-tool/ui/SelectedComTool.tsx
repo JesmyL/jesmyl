@@ -2,6 +2,7 @@ import { translateBase } from '#basis/locale';
 import { cmComSelectedComwsAtom, useCmComCurrent } from '$cm/entities/com';
 import { useAtomValue } from 'atomaric';
 import { MenuComToolName } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmComTool } from '../ComTool';
 
 export const CmComToolSelected = () => {
@@ -13,7 +14,7 @@ export const CmComToolSelected = () => {
 
   return (
     <CmComTool
-      title={translateBase(it => it.cm.com.tool[MenuComToolName.SelectedToggle], { v: comNum })}
+      title={translateBase(it => it[BaseLocaleKey.CmMarkComTool][MenuComToolName.SelectedToggle], { v: comNum })}
       icon="CheckmarkBadge01"
       iconKind={comNum ? 'SolidRounded' : undefined}
       onClick={() => cmComSelectedComwsAtom.do.toggle(ccom.wid)}

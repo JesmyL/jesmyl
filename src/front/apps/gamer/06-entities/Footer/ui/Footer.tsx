@@ -1,5 +1,7 @@
+import { translateBase } from '#basis/locale';
 import { AppFooter } from '$app/AppFooter';
 import { AppFooterItem } from '$app/AppFooterItem';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const GamerFooter = () => {
   return (
@@ -9,7 +11,7 @@ export const GamerFooter = () => {
           idPostfix="main"
           key="main"
           to="/gamer/i/"
-          title="Игры"
+          title={translateBase(BaseLocaleKey.Games)}
           icon="GameController03"
         />,
       ]}

@@ -1,8 +1,9 @@
-import { languageSystemCode } from '#basis/locale';
+import { languageSystemCode, translateBase } from '#basis/locale';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover';
 import { useState } from 'react';
 import { Matcher } from 'react-day-picker';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsNaN } from 'shared/utils/checkIs';
 import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { twMerge } from 'tailwind-merge';
@@ -38,7 +39,9 @@ export const DatePicker = (props: {
           id="date"
           className={twMerge('w-48 justify-between font-normal', props.className)}
         >
-          {date ? (props.dateTitle ?? makeDateLabel(date, languageSystemCode)) : (props.placeholder ?? 'Дата')}
+          {date
+            ? (props.dateTitle ?? makeDateLabel(date, languageSystemCode))
+            : (props.placeholder ?? translateBase(BaseLocaleKey.ConfigDate))}
           <TheIconLoading
             icon="ArrowDown01"
             isLoading={isLoading}

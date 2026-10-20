@@ -1,4 +1,4 @@
-import { languageSystemCode } from '#basis/locale';
+import { languageSystemCode, translateBase } from '#basis/locale';
 import { StrongDiv } from '#basis/ui/strong-control/StrongDiv';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -11,6 +11,7 @@ import {
   ScheduleWidgetDayEventAttValues,
 } from 'shared/api';
 import { howMillisecondsInDay } from 'shared/const/ms';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
 import { ScheduleWidgetAttFace } from './AttFace';
 
@@ -52,7 +53,10 @@ export function ScheduleWidgetBindAttRefKeyButton({
       />
 
       <Modal openAtom={isModalOpenAtom}>
-        <ModalHeader>{forTitle} - сослаться на вложение</ModalHeader>
+        <ModalHeader>
+          {forTitle}
+          {translateBase(BaseLocaleKey.ScheduleAttachmentLink)}
+        </ModalHeader>
 
         <ModalBody>
           {refs.map(attRef => {
@@ -69,7 +73,8 @@ export function ScheduleWidgetBindAttRefKeyButton({
               const dayDate = new Date(schedule.start + dayi * howMillisecondsInDay);
               dayTitle = (
                 <>
-                  {dayi + 1} день, {dayDate.toLocaleDateString(languageSystemCode, { weekday: 'long' })}
+                  {translateBase(BaseLocaleKey.ScheduleDayNumberComma, { n: dayi + 1 })}
+                  {dayDate.toLocaleDateString(languageSystemCode, { weekday: 'long' })}
                   {' - '}
                 </>
               );

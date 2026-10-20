@@ -1,7 +1,9 @@
+import { translateBase } from '#basis/locale';
 import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesRack } from 'shared/model/storages/list.model';
 import { StoragesNestedCellSelectors } from 'shared/model/storages/rack.model';
 import { itNNil } from 'shared/utils';
@@ -65,7 +67,7 @@ export const TheStoragesColumnEditColumn = (props: Props) => {
       </div>
 
       <TextInput
-        label="Название"
+        label={translateBase(BaseLocaleKey.Name)}
         defaultValue={column.title}
         strongDefaultValue
         onChanged={title =>
@@ -80,7 +82,7 @@ export const TheStoragesColumnEditColumn = (props: Props) => {
 
       {!usedValues.length || (
         <div className="mt-5">
-          Значения:
+          {translateBase(BaseLocaleKey.StoragesValues)}
           {usedValues}
         </div>
       )}

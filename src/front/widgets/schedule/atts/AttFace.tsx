@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -5,6 +6,7 @@ import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { ReactNode } from 'react';
 import { ScheduleWidgetAttKey, scheduleWidgetUserRights } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { useScheduleWidgetRightsContext } from '../contexts';
 import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
 import { ScheduleWidgetCustomAtt } from './custom/CustomAtt';
@@ -59,8 +61,9 @@ export function ScheduleWidgetAttFace({
             className="close-button"
             confirm={
               <>
-                Убрать {isLink ? 'ссылку вложения' : 'вложение'} <span className="text-x7">{tatt?.title || '??'}</span>
-                {' из события '}
+                {isLink
+                  ? translateBase(BaseLocaleKey.ScheduleRemoveAttachmentReference, { t: tatt?.title || '??' })
+                  : translateBase(BaseLocaleKey.ScheduleRemoveAttachment, { t: tatt?.title || '??' })}
                 {typeTitle}?
               </>
             }
@@ -78,7 +81,7 @@ export function ScheduleWidgetAttFace({
               icon="HelpCircle"
               className="text-xKO"
             />
-            <div className="text-xKO">Не изв.</div>
+            <div className="text-xKO">{translateBase(BaseLocaleKey.ScheduleUnknownShort)}</div>
           </>
         )}
       </Tatt>
@@ -88,7 +91,7 @@ export function ScheduleWidgetAttFace({
           checkIsOpen={tatt => tatt === attKey}
         >
           <ModalHeader>
-            Вложение <span className="text-x7">{tatt.title}</span>
+            {translateBase(BaseLocaleKey.ScheduleAttachment)} <span className="text-x7">{tatt.title}</span>
           </ModalHeader>
           <ModalBody>
             <ScheduleWidgetCustomAtt

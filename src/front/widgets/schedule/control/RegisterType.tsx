@@ -1,5 +1,7 @@
+import { translateBase } from '#basis/locale';
 import { useIsExpand } from '#shared/ui/expand/useIsExpand';
 import { scheduleWidgetRegTypeRights } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
 import { schGeneralTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
@@ -8,7 +10,10 @@ import { ScheduleWidgetRightControlList } from './RightControlList';
 
 export function ScheduleWidgetRegisterType() {
   const rights = useScheduleWidgetRightsContext();
-  const [expandNode, isExpand] = useIsExpand(false, <>Тип мероприятия</>);
+  const [expandNode, isExpand] = useIsExpand(
+    false,
+    <>{translateBase(BaseLocaleKey.ScheduleEventTypeTitle)}</>,
+  );
   const scheduleScopeProps = useScheduleScopePropsContext();
 
   return (

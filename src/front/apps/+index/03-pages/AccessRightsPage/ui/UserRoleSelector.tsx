@@ -6,6 +6,7 @@ import { indexAppUserRoleInfoDictAtom, indexOpenAccessRoleRedactorAtom } from '$
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useAtomValue } from 'atomaric';
 import { SokiAuthLogin, UserInfoUnsecure } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { objectKeys } from 'shared/utils/object.utils';
 
 export const IndexAccessRightsUserRoleSelector = ({
@@ -23,10 +24,10 @@ export const IndexAccessRightsUserRoleSelector = ({
   return (
     <>
       <div className="flex gap-3 mb-5 ml-3">
-        {translateBase(it => it.role)}
+        {translateBase(BaseLocaleKey.Role)}
         <Dropdown
           id={userInfo.r ?? null}
-          nullTitle={translateBase(it => it.withoutRole)}
+          nullTitle={translateBase(BaseLocaleKey.WithoutRole)}
           items={objectKeys(userRightsAndRoles).map(id => ({ id, title: id }))}
           renderItem={({ node, id, afterClickAction }) => (
             <div className="flex gap-2 w-max">
@@ -50,14 +51,14 @@ export const IndexAccessRightsUserRoleSelector = ({
               className="text-x7 w-max"
               onClick={async () => {
                 const roleName = await prompt(
-                  translateBase(it => it.enterRoleName),
-                  translateBase(it => it.newRole),
+                  translateBase(BaseLocaleKey.EnterRoleName),
+                  translateBase(BaseLocaleKey.NewRole),
                 );
                 if (!roleName) return;
                 return indexTsjrpcClientMethods.addNewAccessRole({ role: roleName as 'TOP' });
               }}
             >
-              {translateBase(it => it.role)}
+              {translateBase(BaseLocaleKey.Role)}
             </Button>
           }
         />

@@ -1,6 +1,8 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { Script } from '#shared/ui/tags/Script';
 import { RefObject, useEffect, useRef } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itIt } from 'shared/utils';
 import { objectKeys } from 'shared/utils/object.utils';
 import { addEventListenerPipe, hookEffectPipe } from '../hookEffectPipe';
@@ -62,7 +64,7 @@ export const ExcelValueListExtracter = (props: {
         icon="FileImport"
         onClick={() => inputRef.current?.click()}
       >
-        Выберите Excel файл
+        {translateBase(BaseLocaleKey.PickExcelFile)}
       </Button>
 
       <input

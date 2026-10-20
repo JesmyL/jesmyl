@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { CmComWidDef } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { twMerge } from 'tailwind-merge';
@@ -42,7 +43,7 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
         id="transpose-tool"
         icon="SlidersHorizontal"
         className={chordVisibleVariant === ChordVisibleVariant.None ? 'disabled' : ''}
-        titleNode={<span className="@min-[100px]:visible invisible">{translateBase(it => it.cm.com.ton)}</span>}
+        titleNode={<span className="@min-[100px]:visible invisible">{translateBase(BaseLocaleKey.CmKey)}</span>}
         onClick={event => event.stopPropagation()}
         rightNode={
           <div className="flex justify-between gap-1">
@@ -72,7 +73,7 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
       <BottomPopupItem
         id="font-size-tool"
         icon="TextFont"
-        titleNode={<span className="@min-[120px]:visible invisible">{translateBase(it => it.fontSize)}</span>}
+        titleNode={<span className="@min-[120px]:visible invisible">{translateBase(BaseLocaleKey.FontSize)}</span>}
         onClick={event => event.stopPropagation()}
         rightNode={
           <div className="flex justify-between gap-1">
@@ -100,7 +101,7 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
       />
 
       <div className="flex justify-center text-center w-full opacity-50 text-xs mt-3">
-        {translateBase(it => it.cm.com.addToolByClick)}
+        {translateBase(BaseLocaleKey.CmAddByClick)}
       </div>
       {comToolsNode}
 
@@ -112,7 +113,7 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
         <CmComJoinGroupList
           comw={ccom.wid}
           children={comJoinsList =>
-            !comJoinsList.length || <div className="mb-2">{translateBase(it => it.cm.com.crossLinks)}</div>
+            !comJoinsList.length || <div className="mb-2">{translateBase(BaseLocaleKey.CmCrossLinks)}</div>
           }
           importantOnClick={({ defaultClick }) => {
             onClose(false);
@@ -125,11 +126,11 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
         {visitsCountQuery.isLoading ? (
           <TheIconLoading />
         ) : (
-          translateBase(it => it.lookedN, { n: visitsCountQuery.data ?? 0 })
+          translateBase(BaseLocaleKey.LookedNumberTimes, { n: visitsCountQuery.data ?? 0 })
         )}
       </div>
       <div className="w-full opacity-50 text-center text-xs py-3 white-pre">
-        {translateBase(it => it.cm.com.addMod, {
+        {translateBase(BaseLocaleKey.CmAddOrModifiedLabel, {
           w: makeDateLabel(ccom.wid, languageSystemCode),
           m: makeDateLabel(ccom.mod, languageSystemCode),
         })}

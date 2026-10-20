@@ -5,6 +5,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { IndexEmailConfirm } from '$index/entities/EmailConfirm/ui/Confirm';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itNIt } from 'shared/utils';
 import { toast } from 'sonner';
 
@@ -15,7 +16,7 @@ export const IndexSettingsBindEmail = () => {
     <>
       <BrutalItem
         iconNode={<LazyIcon icon="Mail01" />}
-        title={translateBase(it => it.email.toBind)}
+        title={translateBase(BaseLocaleKey.EmailToBind)}
         onClick={() => setIsOpen(itNIt)}
         box={<LazyIcon icon={isOpen ? 'ArrowUp01' : 'ArrowDown01'} />}
       />
@@ -25,7 +26,7 @@ export const IndexSettingsBindEmail = () => {
           onConfirm={async otp => {
             const { fioOrNick } = await indexTsjrpcClientMethods.bindEmailByOTP({ otp });
             toast(
-              translateBase(it => it.email.bindedToCurrentAuth, { fio: fioOrNick }),
+              translateBase(BaseLocaleKey.EmailBoundToCurrentAccount, { fio: fioOrNick }),
               makeToastOKMoodConfig(),
             );
             setIsOpen(false);

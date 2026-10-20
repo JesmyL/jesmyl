@@ -1,6 +1,8 @@
+import { translateBase } from '#basis/locale';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { questionerAdminTsjrpcClient } from '$q/shared/tsjrpc/admin.tsjrpc';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { QuestionerBlank, QuestionerBlankWid } from 'shared/model/q';
 
 export const QuestionerBlankRedactorControls = ({
@@ -14,7 +16,7 @@ export const QuestionerBlankRedactorControls = ({
     <>
       <InputWithLoadingIcon
         icon="TextFont"
-        label="Название"
+        label={translateBase(BaseLocaleKey.Name)}
         strongDefaultValue
         defaultValue={blank.title}
         onChanged={value => questionerAdminTsjrpcClient.changeBlankTitle({ blankw, value })}
@@ -22,7 +24,7 @@ export const QuestionerBlankRedactorControls = ({
 
       <InputWithLoadingIcon
         icon="TextAlignLeft"
-        label="Описание"
+        label={translateBase(BaseLocaleKey.Description)}
         defaultValue={blank.dsc}
         multiline
         strongDefaultValue
@@ -34,11 +36,11 @@ export const QuestionerBlankRedactorControls = ({
         items={[
           {
             id: true,
-            title: 'Анонимный опрос',
+            title: translateBase(BaseLocaleKey.QuestionerAnonymous),
           },
           {
             id: false,
-            title: 'Запрашивать Фамилию/Имя',
+            title: translateBase(BaseLocaleKey.QuestionerAskFullName),
           },
         ]}
         onSelectId={() => questionerAdminTsjrpcClient.switchBlankIsAnonymous({ blankw })}

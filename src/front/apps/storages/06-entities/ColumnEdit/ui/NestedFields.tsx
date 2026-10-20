@@ -1,9 +1,11 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { StoragesAddColumn } from '$storages/entities/AddColumn';
 import { storagesExcludeColumnTypesForDatedNestedCell } from '$storages/shared/const/exclude.const';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesRack } from 'shared/model/storages/list.model';
 import { StoragesColumnType, StoragesRackColumn } from 'shared/model/storages/rack.model';
 import { itNIt } from 'shared/utils';
@@ -26,7 +28,7 @@ export const StoragesColumnEditNestedFields = (props: {
         icon={isExpand ? 'ArrowUp01' : 'ArrowDown01'}
         onClick={() => setIsExpand(itNIt)}
       >
-        Специальные поля
+        {translateBase(BaseLocaleKey.StoragesSpecialFields)}
       </Button>
 
       {isExpand && (
@@ -48,7 +50,7 @@ export const StoragesColumnEditNestedFields = (props: {
           <StoragesAddColumn
             isOpenModalAtom={isOpenAddColumnModalAtom}
             rack={props.rack}
-            andTextButton={<>во все {props.column.title} во всех карточках</>}
+            andTextButton={translateBase(BaseLocaleKey.StoragesNestedCards, { t: props.column.title })}
             excludeColumnTypes={storagesExcludeColumnTypesForDatedNestedCell}
             onAdd={({ newColumnType, title, colCustomProps }) =>
               storagesTsjrpcClient.createColumn({

@@ -22,6 +22,7 @@ import { FileRoutesByPath } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode, useEffect, useRef } from 'react';
 import { CmCatWid, CmComWid, IExportableCat, IExportableCom } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { emptyFunc } from 'shared/utils';
 
 interface Props {
@@ -88,7 +89,9 @@ export const CmCatPage = (props: Props) => {
                       ref={categoryTitleRef}
                     >
                       <div>{props.icat.n}:</div>
-                      <div>{translateBase(it => it.fromOf, { f: foundComsLength, o: props.comsCount })}</div>
+                      <div>
+                        {translateBase(BaseLocaleKey.FromOf, { f: foundComsLength, o: props.comsCount })}
+                      </div>
                     </div>
                     <div className="com-list">
                       <CmComSetListLimitsExtracterContext

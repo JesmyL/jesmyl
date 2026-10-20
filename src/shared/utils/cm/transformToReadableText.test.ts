@@ -2,16 +2,21 @@
 import { describe, expect } from 'vitest';
 
 import { CmComTextSquareBracketsMode } from 'shared/api';
-import { textCaseTitles } from 'shared/const/textCase';
 import { TextCase } from 'shared/model/common';
 import { comNbsp } from './com/const';
 import { cmTransformToReadableText } from './transformToReadableText';
+
+const textCaseLabels: Record<TextCase, string> = {
+  [TextCase.Capitalize]: 'Первое с большой',
+  [TextCase.AsIs]: 'так Как есть',
+  [TextCase.Uppercase]: 'ВСЕ С БОЛЬШОЙ',
+};
 
 describe('transformToReadableText', () => {
   it('eq', () => {
     const makeTexts = (textCase: TextCase, squareBracketsMode: CmComTextSquareBracketsMode) => {
       const text = `
-текущий кейс- ${textCaseTitles[textCase]}
+текущий кейс- ${textCaseLabels[textCase]}
 текст для проверки
 многострочного текста [[текст в квадратных скобках]
 -с разными. комбинациями

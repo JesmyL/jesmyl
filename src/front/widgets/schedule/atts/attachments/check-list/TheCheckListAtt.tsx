@@ -1,7 +1,9 @@
+import { translateBase } from '#basis/locale';
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { ScheduleDayEventAttachmentScopeProps } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ScheduleChListAtt } from './checkListAtt';
 
 export function ScheduleCheckListAtt({
@@ -55,9 +57,9 @@ export function ScheduleCheckListAtt({
       {isRedact && (
         <TheIconSendButton
           icon="PlusSign"
-          prefix="Пункт"
+          prefix={translateBase(BaseLocaleKey.SchedulePoint)}
           disabled={value.list.some(li => !li[1])}
-          disabledReason="Есть пустые пункты"
+          disabledReason={translateBase(BaseLocaleKey.ScheduleHasEmptyPoints)}
           onSend={() =>
             schDayEventsTsjrpcClient.updateCheckListAttachmentValue({
               props: scheduleDayEventAttachmentScopeProps,

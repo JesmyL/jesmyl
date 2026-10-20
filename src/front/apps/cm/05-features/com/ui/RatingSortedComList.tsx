@@ -5,6 +5,7 @@ import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { CmComWid } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { objectValues } from 'shared/utils/object.utils';
 
 interface Props {
@@ -25,7 +26,7 @@ export const CmComRatingSortedComList = ({ comws }: Props) => {
   return (
     <>
       <div className="sticky top-0 py-5 bg-x5">
-        {translateBase(it => it.cm.com.watcheds, {
+        {translateBase(BaseLocaleKey.CmWatchedCount, {
           c: objectValues(visits).reduce((sum, curr) => sum! + curr!, 0) || 0,
         })}
       </div>

@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { usePrompt } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
@@ -5,6 +6,7 @@ import { storagesIDB } from '$storages/shared/state/storagesIDB';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { Link } from '@tanstack/react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesRack, StoragesRackWid } from 'shared/model/storages/list.model';
 import { itNNull } from 'shared/utils';
 
@@ -44,18 +46,18 @@ export const StoragesListPage = () => {
   return (
     <PageContainerConfigurer
       className="StoragesListPage"
-      headTitle="Склад"
+      headTitle={translateBase(BaseLocaleKey.StoragesTitle)}
       withoutBackButton
       head={
         <Button
           icon="Add02"
           onClick={async () => {
-            const title = await prompt('Название стеллажа');
+            const title = await prompt(translateBase(BaseLocaleKey.StoragesRackTitle));
             if (!title) return;
             return storagesTsjrpcClient.createRack({ title });
           }}
         >
-          Стеллаж
+          {translateBase(BaseLocaleKey.StoragesRack)}
         </Button>
       }
       content={<>{rackParents?.map(mapRackNode)}</>}

@@ -1,6 +1,8 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { translateBase } from '#basis/locale';
 import { AppFooter } from '$app/AppFooter';
 import { AppFooterItem } from '$app/AppFooterItem';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const QuestionerFooter = () => {
   const checkAccessRights = useCheckUserAccessRightsInScope();
@@ -12,7 +14,7 @@ export const QuestionerFooter = () => {
           key="answers"
           idPostfix="answers"
           to="/q/i"
-          title="Ответ"
+          title={translateBase(BaseLocaleKey.QuestionerAnswer)}
           icon="BubbleChat"
         />,
         checkAccessRights('q', 'EDIT', 'U') && (
@@ -20,7 +22,7 @@ export const QuestionerFooter = () => {
             key="redactor"
             idPostfix="redactor"
             to="/q/r/"
-            title="Редактор"
+            title={translateBase(BaseLocaleKey.QuestionerEditor)}
             icon="MessageEdit01"
           />
         ),
@@ -29,7 +31,7 @@ export const QuestionerFooter = () => {
             key="answers"
             idPostfix="answers"
             to="/q/a/"
-            title="Проверка"
+            title={translateBase(BaseLocaleKey.QuestionerReview)}
             icon="MessageUser01"
           />
         ),

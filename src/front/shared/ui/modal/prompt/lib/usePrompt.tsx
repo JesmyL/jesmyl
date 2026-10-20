@@ -1,8 +1,10 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { TextInput } from '#shared/ui/TextInput';
 import { useSetRootAnchoredContent } from '#shared/ui/useSetRootAnchoredContent';
 import { Atom, atom } from 'atomaric';
 import { ReactNode, useCallback } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { KeyboardListeners } from '../../../KeyboardListeners';
 import { Modal } from '../../modal/ui/Modal';
 import { ModalBody } from '../../modal/ui/ModalBody';
@@ -39,7 +41,7 @@ export const usePrompt = () => {
             onEnter={() => onAction(defaultValue)}
             onEscape={() => onAction(null)}
           />
-          <ModalHeader>{header ?? 'Заполни'}</ModalHeader>
+          <ModalHeader>{header ?? translateBase(BaseLocaleKey.ConfigPromptHeader)}</ModalHeader>
           <ModalBody>
             {content}
             <TextInput
@@ -59,7 +61,7 @@ export const usePrompt = () => {
                   resolvers.resolve(defaultValue);
                 }}
               >
-                Принять
+                {translateBase(BaseLocaleKey.ConfigAccept)}
               </Button>
               <Button
                 id="confirm-button-NO"
@@ -70,7 +72,7 @@ export const usePrompt = () => {
                   isOpenAtom.set(false);
                 }}
               >
-                Отмена
+                {translateBase(BaseLocaleKey.ScheduleCancel)}
               </Button>
             </span>
           </ModalFooter>

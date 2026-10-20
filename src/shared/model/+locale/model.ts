@@ -1,15 +1,11 @@
-import { AppName } from '#basis/model/App.model';
-import { Langi } from 'shared/api';
 import { StringTemplaterInterpolation } from 'shared/utils/stringTemplater/model';
-
-export type LocaleSatisfies<T extends PRecord<AppName, object> & { v: number; langi: Langi }> = T;
 
 export type LocaleStrRecord<T extends string | number, Value extends string = LocaleSimpleString> = Record<
   `${T}`,
   Value
 >;
 
-export type LocaleNumStrRecord<T extends string | number, Value extends string = LocaleSimpleString> = Record<
+export type LocaleNumStrRecord<T extends string | number, Value extends string | object = LocaleSimpleString> = Record<
   `${T}`,
   Value
 > &

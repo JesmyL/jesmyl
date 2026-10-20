@@ -5,6 +5,7 @@ import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmComIsChordHardLevelAtom } from '$cm/entities/index';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { chordsBlockIncorrectMessage } from 'shared/utils/cm/com/chordsBlockIncorrectMessage';
 
 interface Props {
@@ -36,7 +37,7 @@ export const CmEditorChordBlockRedactor = ({ text, texti, ccom, isDisabled, notE
       {notEqLenInLine && (
         <CmEditorTextCorrectMessages
           corrects={{
-            errors: [{ message: translateBase(it => it.cm.com.chLenHardLvlNotEq, { n: notEqLenInLine }) }],
+            errors: [{ message: translateBase(BaseLocaleKey.CmChordLengthMismatch, { n: notEqLenInLine }) }],
           }}
         />
       )}

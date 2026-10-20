@@ -1,10 +1,12 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { translateBase } from '#basis/locale';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { Modal } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { CmEditorComCreate, CmEditorComRemovedComsModalInner } from '$cm+editor/widgets/com';
 import { Atom, atom } from 'atomaric';
 import { useEffect } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 let isRemovedComsOpenAtom: Atom<boolean>;
 let isComCreatorOpenAtom: Atom<boolean>;
@@ -24,7 +26,7 @@ export const CmEditorComListEditMore = ({ onClose }: { onClose(is: boolean): voi
           <BottomPopupItem
             id="create-com-button"
             icon="PlusSignCircle"
-            title="Новая песня"
+            title={translateBase(BaseLocaleKey.CmEditorNewCom)}
             onClick={isComCreatorOpenAtom.do.toggle}
           />
           <FullContent openAtom={isComCreatorOpenAtom}>
@@ -37,7 +39,7 @@ export const CmEditorComListEditMore = ({ onClose }: { onClose(is: boolean): voi
           <BottomPopupItem
             id="create-com-button"
             icon="FileRemove"
-            title="Удалённые песни"
+            title={translateBase(BaseLocaleKey.CmEditRemovedComs)}
             onClick={isRemovedComsOpenAtom.do.toggle}
           />
           <Modal openAtom={isRemovedComsOpenAtom}>

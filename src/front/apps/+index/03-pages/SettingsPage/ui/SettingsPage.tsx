@@ -9,6 +9,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { authIDB, indexIDB, indexIsPlayAnimationsAtom, indexIsShowPlayerInFooterAtom } from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
 import React from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itIt } from 'shared/utils';
 import { forEachObjectEntries, objectKeys } from 'shared/utils/object.utils';
 import { MyFilesFontFamilySelector } from 'x/my-files';
@@ -43,7 +44,7 @@ export function IndexSettingsPage() {
       >
         <BrutalItem
           iconNode={<LazyIcon icon="SourceCodeCircle" />}
-          title="Консоль"
+          title={translateBase(BaseLocaleKey.IndexConsole)}
         />
       </Link>,
 
@@ -54,7 +55,7 @@ export function IndexSettingsPage() {
       >
         <BrutalItem
           iconNode={<LazyIcon icon="UserGroup" />}
-          title={translateBase(it => it.accessRights)}
+          title={translateBase(BaseLocaleKey.AccessRights)}
         />
       </Link>,
 
@@ -65,7 +66,7 @@ export function IndexSettingsPage() {
       >
         <BrutalItem
           iconNode={<LazyIcon icon="TextFont" />}
-          title="Сущ/прил редактор"
+          title={translateBase(BaseLocaleKey.IndexNounPronounRedact)}
         />
       </Link>,
 
@@ -81,7 +82,7 @@ export function IndexSettingsPage() {
               kind="TwotoneRounded"
             />
           }
-          title={translateBase(it => it.constants)}
+          title={translateBase(BaseLocaleKey.Constants)}
           idPostfix="constants"
         />
       </Link>,
@@ -89,21 +90,21 @@ export function IndexSettingsPage() {
     <BrutalItem
       key="show-player"
       iconNode={<LazyIcon icon="PlayListFavourite02" />}
-      title={translateBase(it => it.cm.com.showPlayer)}
+      title={translateBase(BaseLocaleKey.CmShowPlayer)}
       onClick={indexIsShowPlayerInFooterAtom.do.toggle}
       box={<IconCheckbox valueAtom={indexIsShowPlayerInFooterAtom} />}
     />,
     <BrutalItem
       key="animations"
       iconNode={<LazyIcon icon="PaintBoard" />}
-      title={translateBase(it => it.anims)}
+      title={translateBase(BaseLocaleKey.Animations)}
       onClick={indexIsPlayAnimationsAtom.do.toggle}
       box={<IconCheckbox valueAtom={indexIsPlayAnimationsAtom} />}
     />,
     <BrutalItem
       key="fonts"
       iconNode={<LazyIcon icon="Text" />}
-      title={translateBase(it => it.font)}
+      title={translateBase(BaseLocaleKey.Font)}
       box={
         <MyFilesFontFamilySelector
           fileId={fontFamilyFileId}
@@ -114,7 +115,7 @@ export function IndexSettingsPage() {
     <BrutalItem
       key="errors"
       iconNode={<LazyIcon icon="RssError" />}
-      title={translateBase(it => it.showErrors)}
+      title={translateBase(BaseLocaleKey.ShowErrors)}
       onClick={() => {
         const container = document.getElementById('error-log-list');
 
@@ -136,7 +137,7 @@ export function IndexSettingsPage() {
   return (
     <PageContainerConfigurer
       className="index-settings"
-      headTitle={translateBase(it => it.settings)}
+      headTitle={translateBase(BaseLocaleKey.Settings)}
       head={connectionNode}
       content={
         <>
@@ -145,7 +146,7 @@ export function IndexSettingsPage() {
               return <React.Fragment key={buttoni}>{button}</React.Fragment>;
             })
           ) : (
-            <div className="text-center">{translateBase(it => it.chapterEmpty)}</div>
+            <div className="text-center">{translateBase(BaseLocaleKey.ChapterEmpty)}</div>
           )}
         </>
       }

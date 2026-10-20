@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { excel2jsonParserBox } from '#shared/lib/parseExcel2Json';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
@@ -8,6 +9,7 @@ import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/con
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { schUsersTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { objectKeys } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
 
@@ -95,7 +97,7 @@ export function ScheduleWidgetUserAddByExcelContent({ close }: Props) {
   if (wetUsers === null)
     return (
       <>
-        <h3>Файл Excel</h3>
+        <h3>{translateBase(BaseLocaleKey.ScheduleExcelFile)}</h3>
         <p>
           <input
             ref={inputRef}
@@ -109,33 +111,33 @@ export function ScheduleWidgetUserAddByExcelContent({ close }: Props) {
   return (
     <>
       <div>
-        <h3>Имя</h3>
+        <h3>{translateBase(BaseLocaleKey.ScheduleFirstName)}</h3>
         <Dropdown
           id={nameField}
           items={dropdownItems}
           onSelectId={setNameField}
           hiddenIds={hiddenIds}
         />
-        <h3>Фамилия</h3>
+        <h3>{translateBase(BaseLocaleKey.ScheduleLastName)}</h3>
         <Dropdown
           id={lastNameField}
           items={dropdownItems}
           onSelectId={setLastNameField}
           hiddenIds={hiddenIds}
-          nullTitle="Не выбирать"
+          nullTitle={translateBase(BaseLocaleKey.ScheduleNotChoose)}
         />
-        <h3>(Примечание)</h3>
+        <h3>{translateBase(BaseLocaleKey.ScheduleNote)}</h3>
         <Dropdown
           id={noteField}
           items={dropdownItems}
           onSelectId={setNoteField}
           hiddenIds={hiddenIds}
-          nullTitle="Не выбирать"
+          nullTitle={translateBase(BaseLocaleKey.ScheduleNotChoose)}
         />
         <div>
           {!!userList?.length && nameField && (
             <>
-              <h3>Сформированный список{resultUsers && <> ({resultUsers.length} уч)</>}:</h3>
+              <h3>{translateBase(BaseLocaleKey.ScheduleFormedList, { c: resultUsers?.length ?? 0 })}</h3>
               {userList.map((user: { fio: string }) => {
                 return (
                   <div
@@ -166,14 +168,14 @@ export function ScheduleWidgetUserAddByExcelContent({ close }: Props) {
       <div className="flex center m-5">
         <SendButton
           disabled={!resultUsers?.length}
-          title="Загрузить список"
+          title={translateBase(BaseLocaleKey.ScheduleUploadList)}
           onSuccess={close}
           onSend={() => schUsersTsjrpcClient.addUsersByExcel({ props: scheduleScopeProps, users: resultUsers ?? [] })}
         />
       </div>
       {!existsUsers?.length || (
         <>
-          <h3>Ранее добавленные участники</h3>
+          <h3>{translateBase(BaseLocaleKey.SchedulePreviousMembers)}</h3>
           {existsUsers?.map(fio => <div key={fio}>{fio}</div>)}
         </>
       )}

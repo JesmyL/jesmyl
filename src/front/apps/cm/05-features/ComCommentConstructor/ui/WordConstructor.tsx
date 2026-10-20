@@ -3,6 +3,7 @@ import { Button } from '#shared/components';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
 import { CmComOrderWid } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmComCommentConstructorRuleType } from 'shared/model/cm/com-comment';
 import { cmComCommentTextDetectorCalculateRate } from 'shared/utils/cm';
 import { arrayByLength } from 'shared/utils/object.utils';
@@ -27,7 +28,7 @@ export const CmComCommentConstructorWordConstructor = ({
   return (
     <>
       <div className="rounded bg-x2 my-10 p-3">
-        <div>{translateBase(it => it.wordN, { n: wordi + 1 })}</div>
+        <div>{translateBase(BaseLocaleKey.WordNumber, { n: wordi + 1 })}</div>
 
         <CmComCommentConstructorAccentKindRedactor
           blockPropsHolder={propsDict}
@@ -48,8 +49,8 @@ export const CmComCommentConstructorWordConstructor = ({
           postKey={`${wordKeyPrefix}>`}
           type={CmComCommentConstructorRuleType.Word}
           blockPropsHolder={propsDict}
-          preLabel={translateBase(it => it.txtBefore)}
-          postLabel={translateBase(it => it.txtAfter)}
+          preLabel={translateBase(BaseLocaleKey.TextBefore)}
+          postLabel={translateBase(BaseLocaleKey.TextAfter)}
           getDefaultPropsDict={place => ({
             pre: selectorPrefix,
             place,
@@ -101,7 +102,7 @@ export const CmComCommentConstructorWordConstructor = ({
           });
         }}
       >
-        {translateBase(it => it.cm.creNxChRule)}
+        {translateBase(BaseLocaleKey.CmCreateNextChordRule)}
       </Button>
     </>
   );

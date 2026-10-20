@@ -9,6 +9,7 @@ import { cmIDB } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
 import { CmComCommentBlockSpecialSelector } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
+import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
 import { checkIsNil, checkIsNotNil } from 'shared/utils/checkIs';
 import { useDeferredCallback } from 'shared/utils/useDeferredCallback';
 import { comBlockKindsConfig } from 'shared/values/cm/block-kinds/comBlockKinds.config';
@@ -44,7 +45,7 @@ export const CmComCommentKindComments = ({ commentAlti, com }: { commentAlti: nu
               key={kind.key}
               label={
                 <span className={twMerge(checkIsNil(usedKindCount) ? 'text-xKO' : usedKindCount < 2 && 'opacity-50')}>
-                  {translateDynamic(langi)(it => it.cm.com.kind[kind.key])}
+                  {translateDynamic(langi)(it => it[DynLocaleKey.CmComKind][kind.key])}
                 </span>
               }
               className="mb-3"

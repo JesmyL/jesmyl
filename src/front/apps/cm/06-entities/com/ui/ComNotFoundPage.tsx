@@ -2,6 +2,7 @@ import { translateBase } from '#basis/locale';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const CmComNotFoundPage = () => {
   const [firstNow] = useState(Date.now());
@@ -12,11 +13,11 @@ export const CmComNotFoundPage = () => {
     <PageContainerConfigurer
       className="com-container"
       contentClass="p-2 text-xKO flex full-size center"
-      headTitle={translateBase(it => it.cm.toComList)}
+      headTitle={translateBase(BaseLocaleKey.CmGoToComList)}
       content={
         <span className="flex gap-2">
           <LazyIcon icon="FileNotFound" />
-          {translateBase(it => it.cm.com.notFound)}
+          {translateBase(BaseLocaleKey.CmNotFound)}
         </span>
       }
     />

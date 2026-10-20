@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { ScreenBroadcastControlPanel } from '#features/broadcast/controls/ControllPanel';
 import { useWatchScreenBroadcast } from '#features/broadcast/hooks/watch-broadcast';
 import { Button, ButtonGroup } from '#shared/components';
@@ -15,6 +16,7 @@ import { cmPlayerBroadcastComwAtom } from '$cm/shared/state/broadcast.atoms';
 import { ReactNode } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsNil } from 'shared/utils/checkIs';
 
 export const CmBroadcastAudioLine = ({ topNode }: { topNode: (nodes?: ReactNode) => ReactNode }) => {
@@ -42,7 +44,9 @@ export const CmBroadcastAudioLine = ({ topNode }: { topNode: (nodes?: ReactNode)
     return (
       <>
         {topNode()}
-        <div className="flex items-center justify-center w-full h-[30%]">Выберите песню</div>
+        <div className="flex items-center justify-center w-full h-[30%]">
+          {translateBase(BaseLocaleKey.CmChooseCom)}
+        </div>
       </>
     );
 
@@ -70,9 +74,13 @@ export const CmBroadcastAudioLine = ({ topNode }: { topNode: (nodes?: ReactNode)
     <>
       {topNode(buttons)}
       {!comAudio?.length ? (
-        <div className="flex items-center justify-center w-full h-[30%]">В песне треков нет</div>
+        <div className="flex items-center justify-center w-full h-[30%]">
+          {translateBase(BaseLocaleKey.CmNoComTracks)}
+        </div>
       ) : isNoMarks ? (
-        <div className="flex items-center justify-center w-full h-[30%]">Слайды не настроены</div>
+        <div className="flex items-center justify-center w-full h-[30%]">
+          {translateBase(BaseLocaleKey.CmNoSlides)}
+        </div>
       ) : (
         <>
           {broadcastSrc && (

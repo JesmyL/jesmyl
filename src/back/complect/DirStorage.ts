@@ -6,7 +6,7 @@ import { FileStore } from './FileStore';
 
 const initialFileDir = `${__dirname}${backConfig.fileStoreDir}`;
 
-export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | number, IdKey extends string = 'w'> {
+export class DirStorage<Item extends Record<IdKey, Id>, Id extends string | number, IdKey extends PropertyKey = 'w'> {
   ids: Id[] = [];
   createItem: (mapper?: ((item: Item) => Item) | nil, id?: Id) => Promise<{ item: Item; mod: number }>;
   updateItem: (id: Id, updater: (item: Item) => void) => { item: Item; mod: number } | nil;

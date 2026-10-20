@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { makeElementGrabber } from '#shared/ui/ElementGrabber';
 import { Modal } from '#shared/ui/modal';
@@ -6,6 +7,7 @@ import { TheStoragesColumnEditColumn } from '$storages/entities/ColumnEdit';
 import { StoragesStatusManagerModalInner } from '$storages/features/StatusManager';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { Atom, atom } from 'atomaric';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesRack } from 'shared/model/storages/list.model';
 import { twMerge } from 'tailwind-merge';
 
@@ -25,10 +27,10 @@ export const StoragesRackEditColumnsRedactor = ({ rack }: { rack: StoragesRack }
         className="mt-5"
         onClick={isOpenStatusesRedactorModalAtom.do.toggle}
       >
-        Редактироввать статусы
+        {translateBase(BaseLocaleKey.StoragesEditStatuses)}
       </Button>
 
-      <div className="mt-15">Специальные поля</div>
+      <div className="mt-15">{translateBase(BaseLocaleKey.StoragesSpecialFields)}</div>
 
       <ItemGrabber.Root
         onDrop={({ grabbedValue, targetValue }) => {

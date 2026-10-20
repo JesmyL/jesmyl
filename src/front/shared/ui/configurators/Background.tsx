@@ -1,16 +1,18 @@
+import { translateBase } from '#basis/locale';
 import { ElectronWorkDirBackgroundSelector } from '#features/ElectronWorkDir/ui/BackgroundSelector';
 import { isElectronApp } from '#shared/tsjrpc.electron/tsjrpc.electron.client';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { MyFileBackgroundSelector } from 'x/my-files';
 import { IconCheckbox } from '../the-icon/IconCheckbox';
 import { BackgroundConfigProps, ConfiguratorEditProps } from './model';
 
 type Props = ConfiguratorEditProps<BackgroundConfigProps>;
 
-export const BackgroundConfigurator = ({ config, updateConfig, title = 'Фон' }: Props) => {
+export const BackgroundConfigurator = ({ config, updateConfig, title }: Props) => {
   return (
     <>
       <div className="flex gap-2 my-2">
-        {title}
+        {title ?? translateBase(BaseLocaleKey.ConfigBackground)}
         <IconCheckbox
           checked={config.withBg}
           onChange={() => updateConfig({ withBg: !config.withBg })}

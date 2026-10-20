@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { useIsRedactArea } from '#shared/lib/hooks/useIsRedactArea';
 import { useIsRememberExpand } from '#shared/ui/expand/useIsRememberExpand';
@@ -23,6 +24,7 @@ import {
   ScheduleWidgetDayi,
 } from 'shared/api';
 import { howMillisecondsInMin } from 'shared/const/ms';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { objectEntries, objectLength } from 'shared/utils/object.utils';
 import { ScheduleWidgetDayEventRating } from './DayEventRating';
 import { DayEventRedactControls } from './RedactControls';
@@ -116,10 +118,10 @@ export function ScheduleWidgetDayEvent(props: Props) {
 
   const isExpandEvent = (isSelfRedact || isExpand) && isCanExpandEvent;
 
-  if (!eventType) return <>Неизвестный шаблон события</>;
+  if (!eventType) return <>{translateBase(BaseLocaleKey.ScheduleUnknownEventTemplate)}</>;
 
   if (props.isShowPeriodsNotTs) {
-    timeMark = eventTm + props.secretTime + 'м';
+    timeMark = eventTm + props.secretTime + translateBase(BaseLocaleKey.ScheduleMinuteLetter);
     timerClassNamePlus =
       props.event.tm == null || props.event.tm === eventType.tm || (props.event.tm === 0 && eventType.tm == null)
         ? ''
@@ -135,8 +137,12 @@ export function ScheduleWidgetDayEvent(props: Props) {
   const timeToTitle = rights.isCanReadSpecials && !props.redact && isCurrentEvent && (
     <div className="absolute left-0 bottom-0 ml-5 text-xs">
       {props.isLastEvent
-        ? ScheduleWidgetCleans.minutesToTextTemplate(eventFinishMs - now, 'остал$onNum{{ась}{ось}} $num $txt')
-        : 'через ' + ScheduleWidgetCleans.minutesToText(eventFinishMs - now, true)}
+        ? translateBase(BaseLocaleKey.ScheduleMinutesLeft, {
+            num: Math.ceil((eventFinishMs - now) / howMillisecondsInMin),
+          })
+        : translateBase(BaseLocaleKey.ScheduleAfterMinutes, {
+            num: Math.ceil((eventFinishMs - now) / howMillisecondsInMin),
+          })}
     </div>
   );
 
@@ -217,7 +223,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
                 <TheIconButton
                   icon="ViewOffSlash"
                   className="text-xKO my-2"
-                  postfix="Это событие только для лидеров"
+                  postfix={translateBase(BaseLocaleKey.ScheduleLeadersOnly)}
                 />
               )
             )}
@@ -227,7 +233,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
                 multiline
                 value={props.event}
                 fieldKey="dsc"
-                title="Содержание"
+                title={translateBase(BaseLocaleKey.ScheduleContent)}
                 textClassName=" "
                 icon="File02"
                 onSend={value => schDayEventsTsjrpcClient.setDescription({ props: dayEventScopeProps, value })}
@@ -238,11 +244,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
                 <ScheduleWidgetBindAtts
                   atts={props.event.atts}
                   schedule={props.schedule}
-                  forTitle={
-                    <>
-                      <span className="text-x7">{eventType.title}</span> - вставить вложение
-                    </>
-                  }
+                  forTitle={translateBase(BaseLocaleKey.ScheduleInsertAttachment, { t: eventType.title })}
                   onAddAttSend={(attKey, defaultValue) =>
                     schDayEventsTsjrpcClient.addAttachment({ props: dayEventScopeProps, attKey, defaultValue })
                   }

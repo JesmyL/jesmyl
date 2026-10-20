@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { excel2jsonParserBox } from '#shared/lib/parseExcel2Json';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { Script } from '#shared/ui/tags/Script';
@@ -5,6 +6,7 @@ import { ContentOnLoad } from '#shared/ui/the-icon/ContentOnLoad';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { Atom, atom } from 'atomaric';
 import { useEffect, useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ScheduleWidgetUserAddByExcelContent } from './AddByExcelContent';
 
 let isOpenFullContentAtom: Atom<boolean>;
@@ -49,7 +51,7 @@ export function ScheduleWidgetUserAddByExcel() {
         <ContentOnLoad isLoading={isLoading}>
           {error ? (
             <div className="text-xKO">
-              <h3>Ошибка!</h3>
+              <h3>{translateBase(BaseLocaleKey.ScheduleErrorExclamation)}</h3>
               <p>{error}</p>
             </div>
           ) : (

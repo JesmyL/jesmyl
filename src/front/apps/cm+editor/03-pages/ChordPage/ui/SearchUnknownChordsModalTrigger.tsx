@@ -12,6 +12,7 @@ import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useMemo, useRef } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmCom } from 'shared/const/cm/Com';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { arrayByLength } from 'shared/utils/object.utils';
 
 let isOpenAtom: Atom<boolean>;
@@ -87,7 +88,7 @@ export const CmEditorChordSearchUnknownChordsModalTrigger = () => {
       />
 
       <Modal openAtom={isOpenAtom}>
-        <ModalHeader>{translateBase(it => it.cm.unkChN, { n: unknownChords.length })}</ModalHeader>
+        <ModalHeader>{translateBase(BaseLocaleKey.CmUnknownChordsCount, { n: unknownChords.length })}</ModalHeader>
 
         <StyledModalBody
           $lastClickedChord={lastClickedChord}

@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { useIsExpand } from '#shared/ui/expand/useIsExpand';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
@@ -7,6 +8,7 @@ import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.method
 import styled from '@emotion/styled';
 import { ReactNode } from 'react';
 import { IScheduleWidgetDayEvent, ScheduleDayEventScopeProps } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { emptyAsyncFunc, itNNull } from 'shared/utils';
 import { objectValues } from 'shared/utils/object.utils';
 import { twMerge } from 'tailwind-merge';
@@ -27,11 +29,14 @@ export function ScheduleWidgetDayEventRating(props: {
     false,
     <>
       <LazyIcon icon="Favourite" />
-      Рейтинг события
+      {translateBase(BaseLocaleKey.ScheduleEventRating)}
       <StyledReitingDisplay>{ratingSum}</StyledReitingDisplay>
     </>,
   );
-  const [otherRatesTitleNode, isOtherRatesTitleExpand] = useIsExpand(false, <>Другие оценки</>);
+  const [otherRatesTitleNode, isOtherRatesTitleExpand] = useIsExpand(
+    false,
+    <>{translateBase(BaseLocaleKey.ScheduleOtherRatings)}</>,
+  );
 
   const myUser = rights.myUser;
 
@@ -84,7 +89,11 @@ export function ScheduleWidgetDayEventRating(props: {
         <>
           <div className="text-x3">{otherRatesTitleNode}</div>
           {isOtherRatesTitleExpand &&
-            (usersRateNode?.length ? usersRateNode : <span className="text-x7 italic ml-2">Оценок нет</span>)}
+            (usersRateNode?.length ? (
+              usersRateNode
+            ) : (
+              <span className="text-x7 italic ml-2">{translateBase(BaseLocaleKey.ScheduleNoRatings)}</span>
+            ))}
         </>
       );
     }
@@ -129,7 +138,7 @@ export function ScheduleWidgetDayEventRating(props: {
           <StrongEditableField
             icon="Message01"
             value={myRate[1]}
-            title="Комментарий"
+            title={translateBase(BaseLocaleKey.Comment)}
             className="my-2"
             isRedact
             isSelfRedact

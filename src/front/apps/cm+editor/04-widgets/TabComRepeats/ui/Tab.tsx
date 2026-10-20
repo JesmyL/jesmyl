@@ -1,4 +1,5 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { translateBase } from '#basis/locale';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { useConfirm } from '#shared/ui/modal';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
@@ -11,6 +12,7 @@ import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { CmComWidZero, OrderRepeats } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { cmComOrderMakeRepeatPortalKey, makeCmComOrderRepeatOrSelf } from 'shared/utils/cm/repeat-keys';
 import { twMerge } from 'tailwind-merge';
 import { cmEditorTabComRepeatsOnLoadAtom, cmEditorTabComRepeatsStateAtom } from '../state/atoms';
@@ -109,7 +111,7 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
                             icon="RowDelete"
                             className={`align-middle pointer ${ord.isInheritValue('r') ? 'disabled' : ''}`}
                             onClick={async () => {
-                              const isClear = await confirm('Очистить собственные правила повторения?');
+                              const isClear = await confirm(translateBase(BaseLocaleKey.CmEditorClearOwnRepeats));
 
                               if (isClear)
                                 cmEditComOrderClientTsjrpcMethods.clearOwnRepeats({

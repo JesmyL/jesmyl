@@ -2,6 +2,7 @@ import { translateBase } from '#basis/locale';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
 import { CmComOrderWid } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmComCommentConstructorRuleType } from 'shared/model/cm/com-comment';
 import { cmComCommentTextDetectorCalculateRate } from 'shared/utils/cm';
 import { useCmComCommentConstructorCurrentInnerKindContext } from '../state/CurrentInnerKind';
@@ -22,10 +23,10 @@ export const CmComCommentConstructorLineConstructor = ({
   return (
     <>
       <div className="rounded bg-x2 my-10 p-3">
-        <div>{translateBase(it => it.lineN, { n: solidLinei + 1 })}</div>
+        <div>{translateBase(BaseLocaleKey.LineNumber, { n: solidLinei + 1 })}</div>
         <CmComCommentConstructorTextWithAccentRedactor
           blockKey={`${selectorPrefix}l${linei}`}
-          label={translateBase(it => it.cm.comm.forLine)}
+          label={translateBase(BaseLocaleKey.CmCommentForLine)}
           blockPropsHolder={propsDict}
           type={CmComCommentConstructorRuleType.Line}
           getDefaultPropsDict={() => ({

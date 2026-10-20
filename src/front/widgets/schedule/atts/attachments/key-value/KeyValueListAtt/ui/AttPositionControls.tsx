@@ -1,7 +1,9 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { ScheduleDayEventAttachmentScopeProps, ScheduleWidgetAppAttCustomizableValueItem } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsString } from 'shared/utils/checkIs';
 import { twMerge } from 'tailwind-merge';
 import { ScheduleWidgetKeyValueItemGrabber } from '../lib/itemGrabber';
@@ -25,7 +27,7 @@ export const ScheduleWidgetKeyValueListAttPositionControls = ({ dayEventAttScope
             >
               <TheIconSendButton
                 className="relative z-15 text-xKO"
-                confirm="Удалить пункт?"
+                confirm={translateBase(BaseLocaleKey.ScheduleRemovePointConfirm)}
                 icon="Delete02"
                 onSend={() =>
                   schDayEventsTsjrpcClient.putKeyValueAttachment({

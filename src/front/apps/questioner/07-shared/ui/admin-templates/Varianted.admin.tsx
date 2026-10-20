@@ -1,8 +1,10 @@
+import { translateBase } from '#basis/locale';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Button } from '#shared/components/ui/button';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { questionerAdminTsjrpcClient } from '$q/shared/tsjrpc/admin.tsjrpc';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { QuestionerAdminTemplateContentProps, QuestionerAnswerId, QuestionerVariatedType } from 'shared/model/q';
 import { objectKeys } from 'shared/utils/object.utils';
 import { StameskaIconKind } from 'stameska-icon/utils';
@@ -25,7 +27,7 @@ export const QuestionerAdminVariantedTemplateCardContent = ({
     <>
       <IconCheckbox
         checked={!!template.rSort}
-        postfix="Показывать варианты в случайном порядке"
+        postfix={translateBase(BaseLocaleKey.QuestionerShuffleVariants)}
         onChange={value =>
           questionerAdminTsjrpcClient.changeTemplateRandomSortSign({ blankw: blank.w, templateId, value })
         }
@@ -66,10 +68,10 @@ export const QuestionerAdminVariantedTemplateCardContent = ({
           icon={addIcon}
           className="mt-5"
           disabled={variantKeys.some(key => !template.variants[key]?.title)}
-          disabledReason="Есть варианты без названия"
+          disabledReason={translateBase(BaseLocaleKey.QuestionerVariantsNoTitle)}
           onClick={() => questionerAdminTsjrpcClient.addTemplateAnswerVariant({ blankw: blank.w, templateId })}
         >
-          Добавить вариант
+          {translateBase(BaseLocaleKey.QuestionerAddVariant)}
         </Button>
       </div>
     </>

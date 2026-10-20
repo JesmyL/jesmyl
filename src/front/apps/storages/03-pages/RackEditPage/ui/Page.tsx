@@ -1,9 +1,11 @@
+import { translateBase } from '#basis/locale';
 import IconConfigurator from '#shared/ui/configurators/Icon';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { TextInput } from '#shared/ui/TextInput';
 import { storagesIDB } from '$storages/shared/state/storagesIDB';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesRackWid } from 'shared/model/storages/list.model';
 import { StoragesRackEditColumnsRedactor } from './ColumnsRedactor';
 import { StoragesRackEditParentRackSelector } from './ParentRackSelector';
@@ -16,7 +18,7 @@ export const StoragesRackEditPage = ({ rackw }: { rackw: StoragesRackWid }) => {
       className="StoragesRackEditPage"
       headTitle={
         <>
-          Редактирование - <span className="text-x7">{rack?.title}</span>
+          {translateBase(BaseLocaleKey.StoragesEditRack)} - <span className="text-x7">{rack?.title}</span>
         </>
       }
       content={
@@ -25,7 +27,7 @@ export const StoragesRackEditPage = ({ rackw }: { rackw: StoragesRackWid }) => {
             <TextInput
               defaultValue={rack.title}
               strongDefaultValue
-              label="Название стеллажа"
+              label={translateBase(BaseLocaleKey.StoragesRackTitle)}
               onChanged={title => storagesTsjrpcClient.renameRack({ rackw, title })}
             />
 

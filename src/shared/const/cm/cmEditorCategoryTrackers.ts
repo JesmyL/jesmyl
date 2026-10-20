@@ -10,6 +10,7 @@ export const cmEditorCategoryTrackers: CmCatTracker = {
   'lang:ru': com => com.l === Langi.Ru || checkIsNil(com.l),
   'lang:ua': com => com.l === Langi.Ua,
   'lang:kz': com => com.l === Langi.Kz,
+  'lang:en': com => com.l === Langi.En,
 
   'int:1': com => com.d === CmComIntensityLevel.TooSlow,
   'int:2': com => com.d === CmComIntensityLevel.Slow,

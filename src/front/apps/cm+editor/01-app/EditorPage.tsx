@@ -4,6 +4,7 @@ import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContainer';
 import { Link } from '@tanstack/react-router';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const CmEditorPage = () => {
   const checkAccess = useCheckUserAccessRightsInScope();
@@ -12,7 +13,7 @@ export const CmEditorPage = () => {
     <PageCmEditorContainer
       className="cm-editor"
       withoutBackButton
-      headTitle={translateBase(it => it.cm.li.admin)}
+      headTitle={translateBase(BaseLocaleKey.CmListsAdmin)}
       content={
         <>
           {checkAccess('cm', 'COM') && (
@@ -24,7 +25,7 @@ export const CmEditorPage = () => {
                     kind="TwotoneRounded"
                   />
                 }
-                title={translateBase(it => it.cm.coms)}
+                title={translateBase(BaseLocaleKey.CmComs)}
                 idPostfix="coms"
               />
             </Link>
@@ -38,7 +39,7 @@ export const CmEditorPage = () => {
                     kind="TwotoneRounded"
                   />
                 }
-                title={translateBase(it => it.events)}
+                title={translateBase(BaseLocaleKey.Events)}
                 idPostfix="events"
               />
             </Link>
@@ -55,7 +56,7 @@ export const CmEditorPage = () => {
                     kind="TwotoneRounded"
                   />
                 }
-                title={translateBase(it => it.cm.chs)}
+                title={translateBase(BaseLocaleKey.CmChords)}
                 idPostfix="chord"
               />
             </Link>
@@ -69,7 +70,7 @@ export const CmEditorPage = () => {
                     kind="TwotoneRounded"
                   />
                 }
-                title="MP3"
+                title={translateBase(BaseLocaleKey.CmEditorMp3)}
                 idPostfix="mp3Rules"
               />
             </Link>
@@ -83,7 +84,7 @@ export const CmEditorPage = () => {
                     kind="TwotoneRounded"
                   />
                 }
-                title="Ё-Е правила"
+                title={translateBase(BaseLocaleKey.CmEditorYoYeRules)}
                 idPostfix="e-e"
               />
             </Link>

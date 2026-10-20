@@ -12,6 +12,7 @@ import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
 import { ScheduleWidgetWid } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itNNull } from 'shared/utils';
 import { CmScheduleWidgetBroadcastLiveCm } from './LiveCm';
 
@@ -42,9 +43,9 @@ export const CmScheduleWidgetBroadcast = ({ schw }: { schw: ScheduleWidgetWid | 
   }, [schedule?.w, windows]);
 
   if (auth.fio === undefined)
-    return <div className="flex center full-size text-xKO">{translateBase(it => it.notAuthed)}</div>;
+    return <div className="flex center full-size text-xKO">{translateBase(BaseLocaleKey.NotAuthorized)}</div>;
   if (schedule == null)
-    return <div className="flex center full-size text-xKO">{translateBase(it => it.sch.notFound)}</div>;
+    return <div className="flex center full-size text-xKO">{translateBase(BaseLocaleKey.ScheduleNotFound)}</div>;
 
   return isCm ? (
     <CmScheduleWidgetBroadcastLiveCm

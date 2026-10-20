@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { storagesMakeActualFormulaProps } from '$storages/shared/lib/formulaComputing';
@@ -5,6 +6,7 @@ import { useStoragesHighlighUsedFormulaRefs } from '$storages/shared/lib/useHigh
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { useRef } from 'react';
 import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesRack } from 'shared/model/storages/list.model';
 import { StoragesColumnType, StoragesNestedCellSelectors, StoragesRackColumn } from 'shared/model/storages/rack.model';
 
@@ -48,7 +50,9 @@ export const StoragesFormulaEditValue = (props: Props) => {
         id={props.column.fx ?? 2}
         hiddenArrow
         items={[0, 1, 2, 3, 4, 5].map(fx => ({ id: fx, title: fx }))}
-        renderItem={({ node }) => <div>После запятой - {node} зн.</div>}
+        renderItem={({ node }) => (
+          <div>{translateBase(BaseLocaleKey.StoragesDecimals, { n: '' + node })}</div>
+        )}
         onSelectId={fx =>
           storagesTsjrpcClient.editColumnFields({
             rackw: props.rack.w,

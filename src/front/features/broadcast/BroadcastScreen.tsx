@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { BibleBroadcastScreenCurrentScreen } from '$bible/entities/broadcast-screen/ui/BibleBroadcastCurrentScreen';
 import { CmBroadcastSlidesContext } from '$cm/features/broadcast';
 import { useCmBroadcastScreenConfig } from '$cm/shared/lib/broadcast';
@@ -7,6 +8,7 @@ import { CmBroadcastCurrentScreen } from '$cm/widgets/broadcast/ui/CurrentScreen
 import { css, Global } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { broadcastCurrentTextAppAtom } from './atoms';
 import { useCurrentForceViweAppContext } from './Broadcast.contexts';
 import { BroadcastScreenProps } from './Broadcast.model';
@@ -62,9 +64,9 @@ export const BroadcastScreen = (props: BroadcastScreenProps) => {
               key="StyledInitialSlide-info"
               className="full-size flex center text-center"
             >
-              Начальный слайд закрывается
+              {translateBase(BaseLocaleKey.SlideCloses)}
               <br />
-              по клавише Backspace
+              {translateBase(BaseLocaleKey.ByBackspace)}
             </StyledInfo>
           )}
         </>

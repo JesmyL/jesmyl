@@ -1,4 +1,6 @@
+import { translateBase } from '#basis/locale';
 import { useEffect, useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ConfiguratorEditProps } from './model';
 
 type Props = ConfiguratorEditProps<{ opacity?: number }>;
@@ -12,7 +14,7 @@ export const OpacityConfigurator = ({ config, updateConfig }: Props) => {
   return (
     <>
       <div className="flex gap-2 flex-max">
-        Прозрачность
+        {translateBase(BaseLocaleKey.ConfigOpacity)}
         <input
           type="range"
           value={opacity}

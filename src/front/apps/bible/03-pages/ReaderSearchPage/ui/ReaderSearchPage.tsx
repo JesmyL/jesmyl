@@ -12,6 +12,7 @@ import { BibleBroadcastKeyListenScope } from '$bible/shared/model/broadcast';
 import { bibleBroadcastKeyListenScopeAtom } from '$bible/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useRef } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const BibleReaderSearchPage = () => {
   const [currentBooki, currentChapteri] = useBibleSimpleCheckedSingleAddress();
@@ -24,7 +25,7 @@ export const BibleReaderSearchPage = () => {
     <PageContainerConfigurer
       className=""
       withoutBackButton
-      headTitle={translateBase(it => it.search)}
+      headTitle={translateBase(BaseLocaleKey.Search)}
       content={
         <>
           <div className="full-size">
@@ -33,7 +34,7 @@ export const BibleReaderSearchPage = () => {
               postfix={
                 <span
                   dangerouslySetInnerHTML={{
-                    __html: translateBase(it => it.bible.searchByBook, {
+                    __html: translateBase(BaseLocaleKey.BibleSearchBook, {
                       b: takeBibleLangBooks(langi)[currentBooki].full,
                     }),
                   }}
@@ -48,7 +49,7 @@ export const BibleReaderSearchPage = () => {
               postfix={
                 <span
                   dangerouslySetInnerHTML={{
-                    __html: translateBase(it => it.bible.searchByChapter, {
+                    __html: translateBase(BaseLocaleKey.BibleSearchChapterFull, {
                       b: takeBibleLangBooks(langi)[currentBooki].full,
                       c: currentChapteri + 1,
                     }),

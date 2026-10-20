@@ -273,6 +273,7 @@ export interface IExportableCat {
     | 'PesnVzr'
     | 'RU'
     | 'UA'
+    | 'EN'
     | 'solo'
     | 'Christmass'
     | 'Easter'

@@ -14,6 +14,7 @@ import { StrokeConfigurator } from '#shared/ui/configurators/Stroke';
 import { ScreenTranslateConfigurationTextAlign } from '#shared/ui/configurators/TextAlign';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { bibleBroadcastUpdateCurrentConfig } from '$bible/entities/broadcast';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 
 interface Props {
@@ -63,7 +64,7 @@ export function BibleBroadcastCurrentScreenConfigurations({ currentConfig }: Pro
         updateConfig={update}
       />
       {currentConfig.insertedtext && (
-        <ExpandableContent title={translateBase(it => it.bible.insertion)}>
+        <ExpandableContent title={translateBase(BaseLocaleKey.BibleInsertion)}>
           <div className="ml-2">
             <ColorConfigurator
               config={currentConfig.insertedtext}
@@ -89,7 +90,7 @@ export function BibleBroadcastCurrentScreenConfigurations({ currentConfig }: Pro
         </ExpandableContent>
       )}
       {currentConfig.textinbrackets && (
-        <ExpandableContent title={translateBase(it => it.bible.txtInBrkts)}>
+        <ExpandableContent title={translateBase(BaseLocaleKey.BibleTextInBrackets)}>
           <div className="ml-2">
             <ColorConfigurator
               config={currentConfig.textinbrackets}
@@ -115,7 +116,7 @@ export function BibleBroadcastCurrentScreenConfigurations({ currentConfig }: Pro
         </ExpandableContent>
       )}
       {currentConfig.godswords && (
-        <ExpandableContent title={translateBase(it => it.bible.JesusWords)}>
+        <ExpandableContent title={translateBase(BaseLocaleKey.BibleJesusWords)}>
           <div className="ml-2">
             <ColorConfigurator
               config={currentConfig.godswords}
@@ -136,7 +137,7 @@ export function BibleBroadcastCurrentScreenConfigurations({ currentConfig }: Pro
           </div>
         </ExpandableContent>
       )}
-      <ExpandableContent title={translateBase(it => it.link)}>
+      <ExpandableContent title={translateBase(BaseLocaleKey.Link)}>
         <div className="ml-2">
           <ColorConfigurator
             config={currentConfig.address}

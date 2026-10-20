@@ -1,6 +1,8 @@
+import { translateBase } from '#basis/locale';
 import { useConfirm } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmEditorComOrderToolsProps } from '../model';
 
 export const CmEditorComOrderToolsChangeTonType = ({
@@ -14,12 +16,16 @@ export const CmEditorComOrderToolsChangeTonType = ({
     <>
       <BottomPopupItem
         icon="Grid"
-        title={`${ord.isBemoledSwitch ? 'Снять' : 'Установить'} смену типа тональности`}
+        title={translateBase(it =>
+          ord.isBemoledSwitch ? it[BaseLocaleKey.CmEditorRemoveTonalitySwitch] : it[BaseLocaleKey.CmEditorSetTonalitySwitch],
+        )}
         onClick={async () => {
           const is = await confirm(
             <>
-              В этом блоке и после него тип тональности будет{' '}
-              <span className="text-x7">{ord.isBemoledSwitch ? 'диезный' : 'бемольный'}</span>
+              {translateBase(BaseLocaleKey.CmEditorTonalityTypeWillBe)}{' '}
+              <span className="text-x7">
+                {translateBase(it => (ord.isBemoledSwitch ? it[BaseLocaleKey.CmEditorSharp] : it[BaseLocaleKey.CmEditorFlat]))}
+              </span>
             </>,
           );
 

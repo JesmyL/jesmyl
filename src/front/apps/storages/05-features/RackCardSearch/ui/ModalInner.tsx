@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Badge } from '#shared/components/ui/badge';
 import { Button } from '#shared/components/ui/button';
 import { Command } from '#shared/components/ui/command';
@@ -5,14 +6,15 @@ import { makeToastKOMoodConfig, ModalBody, ModalHeader } from '#shared/ui/modal'
 import { QrReader } from '#shared/ui/qr-code/QrReader';
 import { StoragesRackStatusFace } from '$storages/entities/RackStatusFace';
 import { Atom, atom, useAtomValue } from 'atomaric';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesRack, StoragesRackCard } from 'shared/model/storages/list.model';
 import { StoragesColumnType, StoragesRackColumn } from 'shared/model/storages/rack.model';
 import { checkIsNumber } from 'shared/utils/checkIs';
 import { toast } from 'sonner';
 
-const searchFields: { key: keyof StoragesRackCard | number; title: string }[] = [
-  { key: 'title', title: 'Название' },
-  { key: 'note', title: 'Заметка' },
+const makeSearchFields = (): { key: keyof StoragesRackCard | number; title: string }[] => [
+  { key: 'title', title: translateBase(BaseLocaleKey.Name) },
+  { key: 'note', title: translateBase(BaseLocaleKey.StoragesNote) },
 ];
 
 let termAtom: Atom<string>;
@@ -36,7 +38,7 @@ export const StoragesRackCardSearchModalInner = ({
   return (
     <>
       <ModalHeader className="flex justify-between">
-        Поиск
+        {translateBase(BaseLocaleKey.Search)}
         <Button
           icon="QrCode"
           onClick={isOpenQrSearchAtom.do.toggle}
@@ -47,7 +49,7 @@ export const StoragesRackCardSearchModalInner = ({
         <Command.Root className="bg-x2">
           <div className="w-[100%] overflow-auto mb-5 no-scrollbar">
             <div className="flex gap-2">
-              {searchFields
+              {makeSearchFields()
                 .concat(rack.cols.map((col, coli) => ({ key: coli, title: col.title })))
                 .map(({ key, title }) => {
                   if (
@@ -128,7 +130,10 @@ export const StoragesRackCardSearchModalInner = ({
           const card = rack.cards.find(card => card.meta === meta);
 
           if (card == null) {
-            toast('Такой карточки нет', makeToastKOMoodConfig());
+            toast(
+              translateBase(BaseLocaleKey.CardNotFound),
+              makeToastKOMoodConfig(),
+            );
             return;
           }
 

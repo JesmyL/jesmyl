@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { useAppNameContext } from '#basis/state/contexts';
 import { FullContentValue } from '#shared/ui/fullscreen-content/FullContent';
 import { useFullContent } from '#shared/ui/fullscreen-content/useFullContent';
@@ -15,6 +16,7 @@ import {
   ScheduleWidgetDayListItemTypeBox,
 } from 'shared/api';
 import { howMillisecondsInDay, howMillisecondsInHour, howMillisecondsInMin } from 'shared/const/ms';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itNNull } from 'shared/utils';
 import { checkIsArray, checkIsFunction, checkIsNaN } from 'shared/utils/checkIs';
 import { twMerge } from 'tailwind-merge';
@@ -32,10 +34,10 @@ const makeNextDayFirstEventNode = (
   if (now > dayFinishMs && nextDay !== undefined && nextDay.list[0] !== undefined)
     return (
       <>
-        {'Завтра '}
-        {types[nextDay.list[0].type].title}
-        {' в '}
-        {ScheduleWidgetCleans.computeDayWakeUpTime(nextDay.wup, 'string')}
+        {translateBase(BaseLocaleKey.ScheduleNextStart, {
+          t: types[nextDay.list[0].type].title,
+          tm: ScheduleWidgetCleans.computeDayWakeUpTime(nextDay.wup, 'string'),
+        })}
       </>
     );
 
@@ -43,7 +45,7 @@ const makeNextDayFirstEventNode = (
     <div>
       {scheduleTitle && <div className="text-x7">{scheduleTitle}</div>}
       <div className="flex gap-2">
-        Это был последний день
+        {translateBase(BaseLocaleKey.ScheduleLastDayWas)}
         <LazyIcon icon="Smile" />
       </div>
     </div>
@@ -124,16 +126,17 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
 
       if (observeSchw !== undefined && !checkIsNaN(observeSchw)) {
         schBox = scheduleBoxes.find(wr => wr.sch.w === observeSchw);
-        if (schBox === undefined) node = <span className="text-xKO">Мероприятие не найдено</span>;
+        if (schBox === undefined)
+          node = <span className="text-xKO">{translateBase(BaseLocaleKey.ScheduleEventNotFound)}</span>;
         else if (schBox.days.length === 0)
           node = (
             <div className={isJustShowAllDay ? 'full-size flex center column' : undefined}>
               <ScheduleWidgetTopicTitle
                 titleBox={schBox.sch!}
-                altTitle="Мероприятие"
+                altTitle={translateBase(BaseLocaleKey.ScheduleEvent)}
                 topicBox={schBox.sch}
               />
-              <div className="italic">Составляется</div>
+              <div className="italic">{translateBase(BaseLocaleKey.ScheduleComposing)}</div>
             </div>
           );
       }
@@ -190,8 +193,11 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
 
                 if (dayStartMs - now < howMillisecondsInHour) {
                   const minutesTo = Math.ceil((dayStartMs - now) / howMillisecondsInMin);
-                  timeMessage = `через ${ScheduleWidgetCleans.minutesToText(minutesTo)}`;
-                } else timeMessage = `в ${ScheduleWidgetCleans.computeDayWakeUpTime(currDay.wup, 'string')}`;
+                  timeMessage = translateBase(BaseLocaleKey.ScheduleAfterMinutes, { num: minutesTo });
+                } else
+                  timeMessage = translateBase(BaseLocaleKey.ScheduleAtTime, {
+                    tm: ScheduleWidgetCleans.computeDayWakeUpTime(currDay.wup, 'string'),
+                  });
 
                 content = events[0] && (
                   <>
@@ -268,9 +274,11 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
                     return (
                       <div>
                         <div className="flex gap-5">
-                          <span>Сейчас</span>
+                          <span>{translateBase(BaseLocaleKey.ScheduleNow)}</span>
                           {event === null ? (
-                            <span className="text-x3 italic">Тех. перерыв</span>
+                            <span className="text-x3 italic">
+                              {translateBase(BaseLocaleKey.ScheduleTechBreak)}
+                            </span>
                           ) : (
                             <ScheduleWidgetTopicTitle
                               titleBox={currSchBox.types[event.type]}
@@ -280,9 +288,9 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
                         </div>
                         {nextEvent === null || nextEventType === null || (
                           <div className="flex gap-5">
-                            <span>Через {minTo}м.</span>
+                            <span>{translateBase(BaseLocaleKey.ScheduleThroughMinutes, { num: minTo })}</span>
                             {nextEventType === undefined ? (
-                              <div>конец дня</div>
+                              <div>{translateBase(BaseLocaleKey.ScheduleEndOfDay)}</div>
                             ) : (
                               <ScheduleWidgetTopicTitle
                                 titleBox={nextEventType}
@@ -346,19 +354,27 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
             <div className={isJustShowAllDay ? 'full-size flex center column' : undefined}>
               <ScheduleWidgetTopicTitle
                 titleBox={willSchBox.sch!}
-                altTitle="Мероприятие"
+                altTitle={translateBase(BaseLocaleKey.ScheduleEvent)}
                 topicBox={willSchBox.sch}
               />
               {startDate.getDate() === nowDate.getDate() ? (
                 msTo / howMillisecondsInHour < 1 ? (
-                  <>до начала меньше часа</>
+                  <>{translateBase(BaseLocaleKey.ScheduleLessThanHour)}</>
                 ) : (
-                  <>до начала {ScheduleWidgetCleans.hoursToText(Math.floor(msTo / howMillisecondsInHour))}</>
+                  <>
+                    {translateBase(BaseLocaleKey.ScheduleBeforeHours, {
+                      num: Math.floor(msTo / howMillisecondsInHour),
+                    })}
+                  </>
                 )
               ) : startDate.getDate() === nowDate.getDate() + 1 && startDate.getFullYear() === nowDate.getFullYear() ? (
-                <>начало завтра</>
+                <>{translateBase(BaseLocaleKey.ScheduleStartTomorrow)}</>
               ) : (
-                <>до начала {ScheduleWidgetCleans.daysToText(Math.floor(msTo / howMillisecondsInDay))}</>
+                <>
+                  {translateBase(BaseLocaleKey.ScheduleBeforeDays, {
+                    num: Math.floor(msTo / howMillisecondsInDay),
+                  })}
+                </>
               )}
             </div>
           );
@@ -406,13 +422,13 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
                 <div>
                   <ScheduleWidgetTopicTitle
                     titleBox={observeSchedule.sch!}
-                    altTitle="Мероприятие"
+                    altTitle={translateBase(BaseLocaleKey.ScheduleEvent)}
                     topicBox={observeSchedule.sch}
                   />
-                  <span className="italic">Мероприятие прошло</span>
+                  <span className="italic">{translateBase(BaseLocaleKey.ScheduleEventPassed)}</span>
                 </div>
               ) : (
-                <>Мероприятий нет</>
+                <>{translateBase(BaseLocaleKey.ScheduleEventsNotFound)}</>
               ))}
           </div>
         </Link>

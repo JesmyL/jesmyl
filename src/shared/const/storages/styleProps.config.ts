@@ -1,4 +1,6 @@
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesColumnUiListKey } from 'shared/model/storages/ui.model';
+import { translateBase } from 'shared/utils/locale/base';
 
 export const storagesStylePropKeysMatrix = {
   marginTop: new Set([
@@ -21,7 +23,13 @@ export const storagesStylePropKeysMatrix = {
 };
 
 export const storagesStypePropTitles: Record<keyof typeof storagesStylePropKeysMatrix, string> = {
-  fontSize: 'Размер шрифта',
-  marginTop: 'Отступ сверху',
-  marginBottom: 'Отступ снизу',
+  get fontSize() {
+    return translateBase(BaseLocaleKey.FontSize);
+  },
+  get marginTop() {
+    return translateBase(BaseLocaleKey.StoragesMarginTop);
+  },
+  get marginBottom() {
+    return translateBase(BaseLocaleKey.StoragesMarginBottom);
+  },
 };

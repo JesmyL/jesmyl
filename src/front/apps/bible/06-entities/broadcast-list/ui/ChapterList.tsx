@@ -1,8 +1,10 @@
+import { translateBase } from '#basis/locale';
 import { bibleAddressWithForceJoinReset, takeBibleSimpleCheckedSingleAddress } from '$bible/shared/hooks';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
 import { takeBibleTranslateBookSizesAtom } from '$bible/shared/lib/takeBibleTranslateBookSizesAtom';
 import { bibleBookiAtom, bibleJoinAddressAtom } from '$bible/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { arrayByLength } from 'shared/utils/object.utils';
 import { twJoin } from 'tailwind-merge';
@@ -30,7 +32,7 @@ export function BibleBroadcastListChapters() {
     <div
       ref={listRef}
       className="w-[2.5em] min-w-[2.5em] overflow-y-auto overflow-x-hidden"
-      title="Ctrl+@ - добавить из главы"
+      title={translateBase(BaseLocaleKey.BibleAddFromChapter)}
     >
       {arrayByLength(sizes[currentBooki]?.length ?? 20, chapteri => {
         return (

@@ -5,6 +5,7 @@ import { CmComLocalListToolsPopup, CmComMoveSelectedButton, cmComSelectedComwsAt
 import { CmComFaceList } from '$cm/entities/com-face';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export function CmSelectedComs() {
   const selectedComws = useAtomValue(cmComSelectedComwsAtom);
@@ -13,7 +14,7 @@ export function CmSelectedComs() {
   return (
     <PageContainerConfigurer
       className="favorites-container"
-      headTitle={translateBase(it => it.sel)}
+      headTitle={translateBase(BaseLocaleKey.Selected)}
       onMoreClick={setIsToolsOpen}
       content={
         <>

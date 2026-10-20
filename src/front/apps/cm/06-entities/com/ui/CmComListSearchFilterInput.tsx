@@ -8,6 +8,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmComOrderWid, CmComWid } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itNNil } from 'shared/utils';
 import { checkIsNaN } from 'shared/utils/checkIs';
 import { takeCorrectComIndex, takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
@@ -163,7 +164,7 @@ export const CmComWithComListSearchFilterInput = (props: {
   return props.children({
     inputNode: (
       <DebouncedSearchInput
-        placeholder={translateBase(it => it.cm.coms)}
+        placeholder={translateBase(BaseLocaleKey.CmComs)}
         className="com-search debounced-searcher round-styled"
         debounce={500}
         termAtom={props.termAtom}

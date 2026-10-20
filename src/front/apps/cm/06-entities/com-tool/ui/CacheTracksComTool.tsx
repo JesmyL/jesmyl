@@ -6,6 +6,7 @@ import {
   useCmComAudioPlayerComCacheState,
 } from '$cm/entities/com-audio-player';
 import { MenuComToolName } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { emptyFunc } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
 import { CmComTool } from '../ComTool';
@@ -25,7 +26,7 @@ export const CmComToolCacheTracks = () => {
 
   return (
     <CmComTool
-      title={translateBase(it => it.cm.com.tool[MenuComToolName.CacheTracks], { v: +isCached })}
+      title={translateBase(it => it[BaseLocaleKey.CmMarkComTool][MenuComToolName.CacheTracks], { v: +isCached })}
       icon={isCached ? 'CloudSavingDone01' : 'CloudDownload'}
       iconKind={cacheState === 'all' ? 'SolidRounded' : undefined}
       iconClassName={twMerge(isCached && 'text-xOK', cacheState === 'some' && 'text-x7')}

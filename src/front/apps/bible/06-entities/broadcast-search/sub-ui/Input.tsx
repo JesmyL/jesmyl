@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { TextInput } from '#shared/ui/TextInput';
 import { bibleBroadcastSearchAreaConfigDict } from '$bible/shared/const';
@@ -5,6 +6,7 @@ import { BibleBroadcastKeyListenScope } from '$bible/shared/model/broadcast';
 import { bibleBroadcastKeyListenSameScopeAtom, bibleBroadcastKeyListenScopeAtom } from '$bible/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 interface Props {
   inputRef: React.RefObject<(HTMLInputElement & HTMLTextAreaElement) | null>;
@@ -30,7 +32,7 @@ export const BibleBroadcastSearchPanelInput = ({ inputRef, term, onChange }: Pro
         inputRef={inputRef}
         value={term}
         onInput={onChange}
-        title="Shift - для передачи контроля выше"
+        title={translateBase(BaseLocaleKey.BibleShiftPass)}
         onKeyDown={event => {
           if (!event.shiftKey && stopPropagationEventCodeSet.has(event.code)) {
             propagationStopper(event);

@@ -18,6 +18,7 @@ import { IndexAbout } from '$index/widgets/About/ui/IndexAbout';
 import { Link } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import React from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itNNull } from 'shared/utils';
 
 let isAboutOpenAtom: Atom<boolean>;
@@ -60,7 +61,7 @@ export const IndexOtherPage = () => {
             {routingApps[currentAppName].title()}
           </span>
         ) : (
-          translateBase(it => it.inoe)
+          translateBase(BaseLocaleKey.Inoe)
         )
       }
       head={
@@ -82,7 +83,7 @@ export const IndexOtherPage = () => {
           >
             <BrutalItem
               iconNode={<LazyIcon icon="Settings02" />}
-              title={translateBase(it => it.settings)}
+              title={translateBase(BaseLocaleKey.Settings)}
               idPostfix="settings"
             />
           </Link>
@@ -94,18 +95,18 @@ export const IndexOtherPage = () => {
             <BrutalItem
               idPostfix="actions"
               iconNode={<LazyIcon icon="ComputerSettings" />}
-              title={translateBase(it => it.interactive)}
+              title={translateBase(BaseLocaleKey.Interactive)}
             />
           </Link>
           <BrutalItem
             iconNode={<LazyIcon icon="InformationCircle" />}
-            title={translateBase(it => it.aboutApp)}
+            title={translateBase(BaseLocaleKey.AboutApplication)}
             onClick={isAboutOpenAtom.do.toggle}
           />
 
           {!appList.length || (
             <BrutalScreen>
-              <div className="title">{translateBase(it => it.otherApps)}</div>
+              <div className="title">{translateBase(BaseLocaleKey.OtherPrograms)}</div>
               {appList}
             </BrutalScreen>
           )}

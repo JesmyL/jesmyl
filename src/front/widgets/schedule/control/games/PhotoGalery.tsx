@@ -1,9 +1,11 @@
+import { translateBase } from '#basis/locale';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { IScheduleWidgetUser } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { searchRate } from 'shared/utils/searchRate';
 import { ScheduleWidgetUserPhoto } from '../users/UserPhoto';
 import { ScheduleWidgetRemovableUserFace } from './RemovableUserFace';
@@ -26,10 +28,10 @@ export const ScheduleWidgetPhotoGalery = () => {
     <>
       <DebouncedSearchInput
         className="debounced-searcher round-styled"
-        placeholder="Фильтр по имени"
+        placeholder={translateBase(BaseLocaleKey.ScheduleFilterByName)}
         termAtom={termAtom}
       />
-      <ModalHeader>Фотографии (локально)</ModalHeader>
+      <ModalHeader>{translateBase(BaseLocaleKey.SchedulePhotosLocal)}</ModalHeader>
       <ModalBody>
         {filteredUsers.map(user => {
           if (!checkIsUserPhotoable(user)) return null;

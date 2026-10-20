@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Accordion } from '#shared/components/ui/accordion';
 import { Button } from '#shared/components/ui/button';
 import { Modal, usePrompt } from '#shared/ui/modal';
@@ -7,6 +8,7 @@ import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.metho
 import { Atom, atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { storagesSummaryTypePropsDict } from 'shared/const/storages/summary.dicts';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesRackSummaryMi, StoragesRackWid } from 'shared/model/storages/list.model';
 import { storagesRackSumComputeFormulas } from '../lib/computeFormulas';
 import { StoragesRackSumEditModalInner } from './EditModalInner';
@@ -24,14 +26,14 @@ export const StoragesRackSumPage = ({ rackw }: { rackw: StoragesRackWid }) => {
       className="StoragesRackEditPage"
       headTitle={
         <>
-          Сводки <span className="text-x7">{rack?.title}</span>
+          {translateBase(BaseLocaleKey.StoragesSums)} <span className="text-x7">{rack?.title}</span>
         </>
       }
       head={
         <Button
           icon="PlusSign"
           onClick={async () => {
-            const title = await prompt('Название свлдки');
+            const title = await prompt(translateBase(BaseLocaleKey.StoragesSumTitle));
             if (!title) return;
             return storagesTsjrpcClient.addRackSummary({ rackw, title });
           }}
@@ -56,8 +58,14 @@ export const StoragesRackSumPage = ({ rackw }: { rackw: StoragesRackWid }) => {
                   </Accordion.Trigger>
                   <Accordion.Content className="flex justify-between">
                     <div>
-                      <div>Тип: {storagesSummaryTypePropsDict[summary.type].title}</div>
-                      <div>Итог: {storagesRackSumComputeFormulas(summary, rack)}</div>
+                      <div>
+                        {translateBase(BaseLocaleKey.Type)}:{' '}
+                        {storagesSummaryTypePropsDict[summary.type].title}
+                      </div>
+                      <div>
+                        {translateBase(BaseLocaleKey.StoragesTotal)}:{' '}
+                        {storagesRackSumComputeFormulas(summary, rack)}
+                      </div>
                     </div>
                     <Button
                       asSpan

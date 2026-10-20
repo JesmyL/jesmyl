@@ -2,26 +2,17 @@ import { Langi } from 'shared/api';
 import { StringTemplaterWithTwoInterpolations } from 'shared/utils/stringTemplater/model';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 import { BibleTitleCodei } from '../bible/enums';
-import { LocaleNumStrRecord, LocaleSatisfies, LocaleStrRecord } from './model';
+import { DynLocaleKey } from './_DynLocaleKey';
+import { LocaleNumStrRecord, LocaleStrRecord } from './model';
 
-export type LocaleDynamic<L extends Langi> = LocaleSatisfies<{
-  langi: L;
-  v: number;
+export type LocaleDynamic<L extends Langi> = {
+  [DynLocaleKey.Langi]: L;
+  [DynLocaleKey.Version]: number;
 
-  lang: LocaleNumStrRecord<Langi>;
+  [DynLocaleKey.Lang]: LocaleNumStrRecord<Langi>;
+  [DynLocaleKey.CmComKind]: LocaleStrRecord<CmComBlockKindKey>;
 
-  cm: {
-    com: {
-      kind: LocaleStrRecord<CmComBlockKindKey>;
-    };
-  };
-
-  bible: {
-    title: {
-      short: LocaleNumStrRecord<BibleTitleCodei>;
-      full: LocaleNumStrRecord<BibleTitleCodei>;
-    };
-
-    chapterNum: StringTemplaterWithTwoInterpolations<'c', 'b'>;
-  };
-}>;
+  [DynLocaleKey.BibleTitleFull]: LocaleNumStrRecord<BibleTitleCodei>;
+  [DynLocaleKey.BibleTitleShort]: LocaleNumStrRecord<BibleTitleCodei>;
+  [DynLocaleKey.BibleChapterNum]: StringTemplaterWithTwoInterpolations<'c', 'b'>;
+};

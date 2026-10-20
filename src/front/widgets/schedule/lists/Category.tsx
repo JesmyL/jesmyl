@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
@@ -7,6 +8,7 @@ import { Atom, atom } from 'atomaric';
 import React, { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
 import { IScheduleWidgetListCat } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ruLowerLettersStr } from 'shared/utils/cm/com/const';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
@@ -26,7 +28,9 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
   const catScopeProps = useMemo(() => ({ ...scheduleScopeProps, cati }), [cati, scheduleScopeProps]);
-  const title = <>{cat.title || <span className="italic">Список</span>}</>;
+  const title = (
+    <>{cat.title || <span className="italic">{translateBase(BaseLocaleKey.ScheduleList)}</span>}</>
+  );
   const shortTitles: [string, string] = [cutTitle(cat.titles[0]), cutTitle(cat.titles[1])];
 
   return (
@@ -45,7 +49,7 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
               {!rights.schedule.lists?.units.some(unit => !unit.title) && (
                 <TheIconSendButton
                   icon="PlusSign"
-                  confirm={`Создать новое ${cat.title}?`}
+                  confirm={translateBase(BaseLocaleKey.ScheduleCreateNewX, { t: cat.title })}
                   onSend={() => schListsTsjrpcClient.createUnit({ props: catScopeProps, cati })}
                 />
               )}
@@ -82,27 +86,27 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
 
         <ModalBody>
           <LazyIconConfigurator
-            header={`Иконка для списка ${cat.title}`}
+            header={translateBase(BaseLocaleKey.ScheduleListIcon, { t: cat.title })}
             icon={cat.icon}
             used={[cat.icon]}
             onSend={icon => schListsTsjrpcClient.setCategoryIcon({ props: catScopeProps, value: icon })}
           />
           <StrongEditableField
             icon="SchoolReportCard"
-            title="Название списка"
+            title={translateBase(BaseLocaleKey.ScheduleListName)}
             value={cat}
             fieldKey="title"
             isRedact
             onSend={value => schListsTsjrpcClient.setCategoryTitle({ props: catScopeProps, value })}
           />
           <StrongEditableField
-            title="Заголовок руководителям"
+            title={translateBase(BaseLocaleKey.ScheduleMentorsTitle)}
             value={cat.titles[0]}
             isRedact
             onSend={value => schListsTsjrpcClient.setCategoryMentorsTitle({ props: catScopeProps, value })}
           />
           <StrongEditableField
-            title="Заголовок участникам"
+            title={translateBase(BaseLocaleKey.ScheduleMembersTitle)}
             value={cat.titles[1]}
             isRedact
             onSend={value => schListsTsjrpcClient.setCategoryMembersTitle({ props: catScopeProps, value })}

@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Accordion } from '#shared/components/ui/accordion';
 import { Button } from '#shared/components/ui/button';
 import { useConfirm } from '#shared/ui/modal';
@@ -7,6 +8,7 @@ import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.metho
 import { useNavigate } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { memo } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { SortDirection } from 'shared/model/common';
 import { StoragesRack, StoragesRackCard, StoragesRackWid } from 'shared/model/storages/list.model';
 import { StoragesColumnType, StoragesDictItemi, StoragesRackColumn } from 'shared/model/storages/rack.model';
@@ -14,7 +16,6 @@ import { checkIsNumber, checkIsString } from 'shared/utils/checkIs';
 import { objectKeys } from 'shared/utils/object.utils';
 import { textToUpperCase } from 'shared/utils/string.utils';
 
-const noValue = '<Без значения>';
 const openGroupsAtoms: PRecord<StoragesRackWid, Atom<string[]>> = {};
 
 export const StoragesRackCardListWidget = memo((props: { rack: StoragesRack }) => {
@@ -54,7 +55,9 @@ export const StoragesRackCardListWidget = memo((props: { rack: StoragesRack }) =
           }}
         >
           <span className="max-w-[calc(100vw-100px)] h-[1lh]">
-            <span className="ellipsis">{card.title || <span className="text-xKO">Новая карточка</span>}</span>
+            <span className="ellipsis">
+              {card.title || <span className="text-xKO">{translateBase(BaseLocaleKey.NewCard)}</span>}
+            </span>
           </span>
         </Button>
       </div>
@@ -133,6 +136,7 @@ export const StoragesRackCardListWidget = memo((props: { rack: StoragesRack }) =
 
   if (group == null) return sortCards(props.rack.cards).map(cardMapper);
 
+  const noValue = translateBase(BaseLocaleKey.NoValue);
   const groupedCards = Object.groupBy(props.rack.cards, card => {
     if (checkIsString(group)) {
       if (group === 'status') return props.rack.statuses[card.status || 0]?.title;
@@ -178,12 +182,7 @@ export const StoragesRackCardListWidget = memo((props: { rack: StoragesRack }) =
                       onChange={async statusi => {
                         if (groupedCards[groupKey] == null) return;
 
-                        if (
-                          !(await confirm(
-                            'Будут изменены статусы для всех карточек этого списка.\nВнести такие изменения?',
-                          ))
-                        )
-                          return;
+                        if (!(await confirm(translateBase(BaseLocaleKey.StoragesStatusesConfirm)))) return;
 
                         return storagesTsjrpcClient.setRackManyCardsStatus({
                           cardis: groupedCards[groupKey].map(card => card.i),

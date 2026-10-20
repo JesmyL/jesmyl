@@ -1,5 +1,7 @@
+import { translateBase } from '#basis/locale';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmEditorComOrderToolsProps } from '../model';
 
 export const CmEditorComOrderToolsAnchor = ({ com, ord, onClose, setClickBetweenOrds }: CmEditorComOrderToolsProps) => {
@@ -7,17 +9,13 @@ export const CmEditorComOrderToolsAnchor = ({ com, ord, onClose, setClickBetween
     <>
       <BottomPopupItem
         icon="Link02"
-        title={`Ссылка на ${ord.me.header()}`}
+        title={translateBase(BaseLocaleKey.CmEditorLinkToBlock, { h: ord.me.header() })}
         onClick={() => {
           onClose(false);
           let isAboveOrdAfterTarget = false;
 
           setClickBetweenOrds({
-            buttonTitle: (
-              <>
-                Ссылка на <span className="text-x7">{ord.me.header()}</span>
-              </>
-            ),
+            buttonTitle: <>{translateBase(BaseLocaleKey.CmEditorLinkToBlock, { h: ord.me.header() })}</>,
             onClick: async ({ aboveLeadOrdw }) => {
               if (aboveLeadOrdw == null) return;
 

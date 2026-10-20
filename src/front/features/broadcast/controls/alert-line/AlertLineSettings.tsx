@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { defaultAlertLineConfig } from '#features/broadcast/consts';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
@@ -6,6 +7,7 @@ import { complectIDB } from '$index/shared/state';
 import { Atom, atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { AlertLineConfigSettingsInner } from './AlertLineConfigSettings';
 
 const LazyAlertLineConfigIcon = React.lazy(() => import('./AlertLineConfigIcon'));
@@ -18,7 +20,7 @@ export const AlertLineSettingsModalInner = () => {
 
   return (
     <>
-      <ModalHeader>Строка важного сообщения</ModalHeader>
+      <ModalHeader>{translateBase(BaseLocaleKey.AlertLine)}</ModalHeader>
       <ModalBody>
         {configs?.map(config => {
           return (
@@ -38,7 +40,7 @@ export const AlertLineSettingsModalInner = () => {
         })}
         <TheIconButton
           icon="PlusSign"
-          postfix="Добавить шаблон"
+          postfix={translateBase(BaseLocaleKey.AddTemplate)}
           onClick={() => complectIDB.tb.alertLineConfigs.add(defaultAlertLineConfig)}
         />
       </ModalBody>

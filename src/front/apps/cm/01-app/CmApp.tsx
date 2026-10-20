@@ -14,6 +14,7 @@ import { Outlet } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import React, { memo, Suspense, useEffect, useState } from 'react';
 import { CmComWid } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { blockCmGlobalCss } from 'shared/values/cm/block-kinds/BlockKindsProvider';
 import { toast } from 'sonner';
 
@@ -48,10 +49,7 @@ export const CmApp = () => {
       const copySelected = [...selectedComws];
       copySelected.length = maxSelectedComsCount;
       cmComSelectedComwsAtom.set(copySelected);
-      toast(
-        translateBase(it => it.cm.com.maxSel, { s: maxSelectedComsCount }),
-        makeToastKOMoodConfig(),
-      );
+      toast(translateBase(BaseLocaleKey.CmCanSelectMaximumCount, { s: maxSelectedComsCount }), makeToastKOMoodConfig());
     }
   }, [maxSelectedComsCount, selectedComws]);
 

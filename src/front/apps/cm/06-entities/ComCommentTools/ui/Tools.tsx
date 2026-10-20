@@ -7,6 +7,7 @@ import { WithAtomValue } from '#shared/ui/WithAtomValue';
 import { cmIsShowMyCommentsAtom } from '$cm/shared/state';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { CmComWid } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { toast } from 'sonner';
 
 export const CmComCommentTools = ({ comw }: { comw: CmComWid }) => {
@@ -22,7 +23,7 @@ export const CmComCommentTools = ({ comw }: { comw: CmComWid }) => {
               <DropdownMenu.Item onClick={cmIsShowMyCommentsAtom.do.toggle}>
                 <IconCheckbox
                   checked={isShow}
-                  postfix={translateBase(it => it.cm.showComms)}
+                  postfix={translateBase(BaseLocaleKey.CmShowComments)}
                   className="w-full"
                 />
               </DropdownMenu.Item>
@@ -32,13 +33,10 @@ export const CmComCommentTools = ({ comw }: { comw: CmComWid }) => {
                   className="w-full"
                   onClick={async () => {
                     await cmTsjrpcClient.pullComComments({ comw });
-                    toast(
-                      translateBase(it => it.cm.comm.freshPulled),
-                      makeToastOKMoodConfig(),
-                    );
+                    toast(translateBase(BaseLocaleKey.CmCommentFreshPulled), makeToastOKMoodConfig());
                   }}
                 >
-                  {translateBase(it => it.cm.comm.pull)}
+                  {translateBase(BaseLocaleKey.CmCommentPull)}
                 </Button>
               </DropdownMenu.Item>
             </>

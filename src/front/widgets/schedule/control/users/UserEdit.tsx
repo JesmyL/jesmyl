@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { useScheduleUserScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
@@ -8,6 +9,7 @@ import {
   ScheduleWidgetUserRoleRight,
   ScheduleWidgetWidDef,
 } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ScheduleWidgetRightControlList } from '../RightControlList';
 
 const accessLevel = scheduleWidgetUserRights.rightLevel(ScheduleWidgetUserRoleRight.ReadTitles);
@@ -16,14 +18,15 @@ export function ScheduleWidgetUserEdit({ user }: { user: IScheduleWidgetUser }) 
   const rights = useScheduleWidgetRightsContext();
   const scheduleUserScopeProps = useScheduleUserScopePropsContext();
 
-  if (scheduleUserScopeProps.schw === ScheduleWidgetWidDef) return <div className="text-xKO">Не в контексте</div>;
+  if (scheduleUserScopeProps.schw === ScheduleWidgetWidDef)
+    return <div className="text-xKO">{translateBase(BaseLocaleKey.ScheduleNotInContext)}</div>;
 
   return (
     <>
       <StrongEditableField
         isRedact
         isSelfRedact
-        title="Имя"
+        title={translateBase(BaseLocaleKey.ScheduleFirstName)}
         icon="User"
         value={user.fio || user.nick}
         onSend={value => schUsersTsjrpcClient.setUserFio({ props: scheduleUserScopeProps, fio: value })}

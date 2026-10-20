@@ -10,6 +10,7 @@ import {
   ScheduleWidgetUserRoleRight,
   scheduleWidgetUserRights,
 } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { extractNumber, sliceStringIfEndsWith } from 'shared/utils';
 import { useCmMeetingComwList } from '../meeting/lib/useCmMeetingComwList';
 import { CmExternalComListAtt } from './ui/CmExternalComListAtt';
@@ -17,8 +18,8 @@ import { CmExternalComListAtt } from './ui/CmExternalComListAtt';
 export const cmExternalOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
   '[cm]:coms': {
     icon: 'Playlist02',
-    title: translateBase(it => it.cm.coms),
-    description: translateBase(it => it.cm.com.dsc),
+    title: translateBase(BaseLocaleKey.CmComs),
+    description: translateBase(BaseLocaleKey.CmKnownList),
     initVal: {},
     R: ScheduleWidgetUserRoleRight.Free,
     U: scheduleWidgetUserRights.includeRights(ScheduleWidgetUserRoleRight.Redact),

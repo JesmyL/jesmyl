@@ -1,6 +1,8 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { DropdownMenu } from '#shared/components/ui/dropdown-menu';
 import { useEffect, useMemo, useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import { makeToastKOMoodConfig } from '../modal';
@@ -48,7 +50,10 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
             >
               {selectedItem?.title ?? (
                 <span className="not-selected">
-                  {props.undTitle ?? props.nullTitle ?? props.placeholder ?? 'Не выбрано'}
+                  {props.undTitle ??
+                    props.nullTitle ??
+                    props.placeholder ??
+                    translateBase(BaseLocaleKey.ConfigNotSelected)}
                 </span>
               )}
 

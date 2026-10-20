@@ -1,3 +1,5 @@
+import { translateBase } from '#basis/locale';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { MyFileType } from '../model/enums';
 
 export const myFilesConfig: {
@@ -11,29 +13,45 @@ export const myFilesConfig: {
 } = {
   [MyFileType.Image]: {
     type: MyFileType.Image,
-    title: 'Картинки',
-    single: 'изображение',
+    get title() {
+      return translateBase(BaseLocaleKey.MyFilesTypesImages);
+    },
+    get single() {
+      return translateBase(BaseLocaleKey.MyFilesTypesImage);
+    },
     icon: 'Image02',
     ext: new Set(['jpeg', 'jpg', 'png', 'gif', 'svg']),
   },
   [MyFileType.Video]: {
     type: MyFileType.Video,
-    title: 'Видео',
-    single: 'видео-файл',
+    get title() {
+      return translateBase(BaseLocaleKey.MyFilesTypesVideo);
+    },
+    get single() {
+      return translateBase(BaseLocaleKey.MyFilesTypesVideoFile);
+    },
     icon: 'ComputerVideo',
     ext: new Set(['mp4']),
   },
   [MyFileType.Font]: {
     type: MyFileType.Font,
-    title: 'Шрифты',
-    single: 'файл шрифтов',
+    get title() {
+      return translateBase(BaseLocaleKey.MyFilesTypesFonts);
+    },
+    get single() {
+      return translateBase(BaseLocaleKey.MyFilesTypesFontFile);
+    },
     icon: 'TextAlignLeft',
     ext: new Set(['ttf', 'otf']),
   },
   [MyFileType.Other]: {
     type: MyFileType.Other,
-    title: 'Другие',
-    single: 'файл',
+    get title() {
+      return translateBase(BaseLocaleKey.MyFilesTypesOther);
+    },
+    get single() {
+      return translateBase(BaseLocaleKey.MyFilesTypesFile);
+    },
     icon: 'MoreVerticalCircle01',
     ext: new Set<string>([]),
   },

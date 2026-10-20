@@ -8,6 +8,7 @@ import { useAtomValue } from 'atomaric';
 import { DragEvent, useEffect, useState } from 'react';
 import { ElectronWorkDirFile, electronWorkDirFileMaxBytes } from 'shared/api/tsjrpc.electtron/basic';
 import { electronAppName } from 'shared/const/electron';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { objectValues } from 'shared/utils/object.utils';
 import { twJoin } from 'tailwind-merge';
 import {
@@ -50,7 +51,7 @@ const pathSeparatorsRegExp = /[/\\]+/;
 /** Last path segment, slash- or backslash-separated — `path` is not available in the renderer. */
 const takePathBaseName = (fullPath: string) => fullPath.split(pathSeparatorsRegExp).pop() ?? '';
 
-const workDirPickTitle = () => translateBase(it => it.workDir.pickFolder, { a: electronAppName });
+const workDirPickTitle = () => translateBase(BaseLocaleKey.WorkingDirectoryPickFolder, { a: electronAppName });
 
 const makeFolderOption = (folder: string): DropdownItem<string> => ({
   id: folder,
@@ -84,7 +85,7 @@ const establishWorkDir = async () => {
 
 const WorkDirPicker = () => (
   <div className="full-size flex gap-3 items-center justify-center">
-    {translateBase(it => it.workDir.notSelected)}
+    {translateBase(BaseLocaleKey.WorkingDirectoryNotSelected)}
     <Button
       icon="FolderOpen"
       title={workDirPickTitle()}
@@ -246,7 +247,7 @@ const WorkDirNoBgTile = ({
 }) => (
   <div
     className={twJoin(workDirTileClass, isNoBgApplied && 'ring-2 ring-x7', 'pointer')}
-    title="Без фона"
+    title={translateBase(BaseLocaleKey.WithoutBackground)}
     onClick={() => onApplyBg?.('')}
   >
     <div
@@ -257,7 +258,7 @@ const WorkDirNoBgTile = ({
       <LazyIcon icon="ViewOff" />
     </div>
 
-    <div className="text-xs ellipsis shrink-0">Без фона</div>
+    <div className="text-xs ellipsis shrink-0">{translateBase(BaseLocaleKey.WithoutBackground)}</div>
   </div>
 );
 

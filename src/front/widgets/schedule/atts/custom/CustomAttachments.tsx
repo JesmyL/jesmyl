@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -6,6 +7,7 @@ import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/con
 import { schAttachmentTypesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { Atom, atom } from 'atomaric';
 import { ScheduleWidgetAppAttCustomized } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ScheduleWidgetCustomAtt } from './CustomAtt';
 
 let isModalOpenAtom: Atom<boolean>;
@@ -21,7 +23,7 @@ export function ScheduleWidgetCustomAttachments(props: { tatts: ScheduleWidgetAp
         icon="Attachment02"
         postfix={
           <>
-            Шаблоны вложений
+            {translateBase(BaseLocaleKey.ScheduleAttachmentTemplates)}
             <LazyIcon icon="ArrowRight01" />
           </>
         }
@@ -32,12 +34,12 @@ export function ScheduleWidgetCustomAttachments(props: { tatts: ScheduleWidgetAp
       <Modal openAtom={isModalOpenAtom}>
         <ModalHeader>
           <div className="flex w-full between">
-            Шаблоны вложений
+            {translateBase(BaseLocaleKey.ScheduleAttachmentTemplates)}
             <TheIconSendButton
               icon="PlusSign"
-              confirm="Создать шаблон вложения?"
+              confirm={translateBase(BaseLocaleKey.ScheduleAddAttachmentTemplateConfirm)}
               disabled={props.tatts.some(att => !att.title || !att.description)}
-              disabledReason="Есть шаблоны вложений без названия или описания"
+              disabledReason={translateBase(BaseLocaleKey.ScheduleTemplatesNoName)}
               onSend={() => schAttachmentTypesTsjrpcClient.create({ props: scheduleScopeProps })}
             />
           </div>

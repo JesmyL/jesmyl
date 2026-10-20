@@ -1,6 +1,7 @@
-import { languageSystemCode } from '#basis/locale';
+import { languageSystemCode, translateBase } from '#basis/locale';
 import { IScheduleWidget, ScheduleWidgetCleans } from 'shared/api';
 import { howMillisecondsInMin } from 'shared/const/ms';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { useScheduleWidgetRights } from '../useScheduleWidget';
 
@@ -34,7 +35,7 @@ export function ScheduleWidgetStartTimeText({ schedule, date: topDate }: Props) 
     <>
       {!schedule.start || (
         <div>
-          Начало: {makeDateLabel(date, languageSystemCode)}
+          {translateBase(BaseLocaleKey.ScheduleStart)}: {makeDateLabel(date, languageSystemCode)}
           {!firstWup ||
             ', ' +
               timeDate.getHours().toString().padStart(2, '0') +

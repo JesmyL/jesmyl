@@ -1,8 +1,10 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { Modal, ModalBody, ModalHeader, usePrompt } from '#shared/ui/modal';
 import { TheStoragesColumnCreateColumn } from '$storages/entities/ColumnCreate';
 import { Atom } from 'atomaric';
 import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesRack } from 'shared/model/storages/list.model';
 import { StoragesColumnCustomProperties, StoragesColumnType } from 'shared/model/storages/rack.model';
 
@@ -37,14 +39,17 @@ export const StoragesAddColumn = (props: {
           icon="PlusSign"
           onClick={props.isOpenModalAtom.do.toggle}
         >
-          Новое поле
+          {translateBase(BaseLocaleKey.StoragesNewField)}
         </Button>
       </div>
 
       <Modal openAtom={props.isOpenModalAtom}>
-        <ModalHeader>Выберите тип нового специального поля</ModalHeader>
+        <ModalHeader>{translateBase(BaseLocaleKey.StoragesFieldType)}</ModalHeader>
         <ModalBody className="flex flex-col gap-3 *:w-full">
-          <div className="text-xKO font-bold">Будет добавлено {props.andTextButton ?? 'во все карточки'}</div>
+          <div className="text-xKO font-bold">
+            {translateBase(BaseLocaleKey.StoragesWillBeAdded)}{' '}
+            {props.andTextButton ?? translateBase(BaseLocaleKey.StoragesToAllCards)}
+          </div>
 
           {columnTypeOrder.map(colType => {
             if (props.excludeColumnTypes?.has(colType)) return;
@@ -63,11 +68,9 @@ export const StoragesAddColumn = (props: {
                         rack={props.rack}
                         colCustomProps={colCustomProps}
                       />
-                      Название для нового поля
+                      {translateBase(BaseLocaleKey.StoragesNewFieldTitle)}
                     </>,
-                    <>
-                      Новое поле с типом <span className="text-x7">{typeTitle}</span>
-                    </>,
+                    <>{translateBase(BaseLocaleKey.StoragesNewFieldType, { t: typeTitle })}</>,
                     typeTitle,
                   );
 

@@ -6,6 +6,7 @@ import { cmComSelectedComwsAtom } from '$cm/entities/com';
 import { useCmComFavouriteList } from '$cm/entities/com-favourite';
 import { useAtomValue } from 'atomaric';
 import { CmComWid, MenuComToolName } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 interface Props {
   onClick: (reset: null) => void;
@@ -31,7 +32,7 @@ export const CmComFaceContextMenu = ({ onClick, comWid }: Props) => {
           icon="Star"
           kind={isComMarked ? 'SolidRounded' : undefined}
         />
-        {translateBase(it => it.cm.com.tool[MenuComToolName.MarkCom], { v: +isComMarked })}
+        {translateBase(it => it[BaseLocaleKey.CmMarkComTool][MenuComToolName.MarkCom], { v: +isComMarked })}
       </ContextMenu.Item>
 
       <ContextMenu.Item
@@ -41,19 +42,19 @@ export const CmComFaceContextMenu = ({ onClick, comWid }: Props) => {
         }}
       >
         <LazyIcon icon={comNum ? 'RemoveCircleHalfDot' : 'AddCircleHalfDot'} />
-        {translateBase(it => it.cm.com.tool[MenuComToolName.SelectedToggle], { v: comNum })}
+        {translateBase(it => it[BaseLocaleKey.CmMarkComTool][MenuComToolName.SelectedToggle], { v: comNum })}
       </ContextMenu.Item>
 
       {!selectedComws.length || (
         <ContextMenu.Item
           onClick={async () => {
-            if (!(await confirm(translateBase(it => it.clearSelList)))) return;
+            if (!(await confirm(translateBase(BaseLocaleKey.ClearSelectedList)))) return;
             onClick(null);
             cmComSelectedComwsAtom.set([]);
           }}
         >
           <LazyIcon icon="CancelCircleHalfDot" />
-          {translateBase(it => it.clearSelList)}
+          {translateBase(BaseLocaleKey.ClearSelectedList)}
         </ContextMenu.Item>
       )}
     </>

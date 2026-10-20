@@ -1,4 +1,5 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { translateBase } from '#basis/locale';
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { StrongInputDateTimeExtracter } from '#basis/ui/strong-control/StrongDateTimeExtracter';
@@ -13,6 +14,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { IScheduleWidget, ScheduleScopeProps, ScheduleWidgetDayi, ScheduleWidgetWidDef } from 'shared/api';
 import { howMillisecondsInMin } from 'shared/const/ms';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { ScheduleWidgetCustomAttachments } from './atts/custom/CustomAttachments';
 import { ScheduleWidgetStartTimeText } from './complect/StartTimeText';
@@ -62,7 +64,7 @@ export function ScheduleWidget({
       <ScheduleWidgetTopicTitle
         prefix={<LazyIcon icon="Calendar03" />}
         titleBox={schedule ?? {}}
-        altTitle="Мероприятие"
+        altTitle={translateBase(BaseLocaleKey.ScheduleEvent)}
         topicBox={schedule}
       />
       <span className="flex gap-2">
@@ -99,25 +101,37 @@ export function ScheduleWidget({
       if (rights.isSwBeforeRegistration) {
         blockContent = (
           <SendButton
-            title="Буду участвовать"
-            confirm="Вы будете записаны как участник"
-            onSend={() => schUsersTsjrpcClient.addMe({ props: scheduleScopeProps, place: 'по кнопке в расписании' })}
+            title={translateBase(BaseLocaleKey.ScheduleWillParticipate)}
+            confirm={translateBase(BaseLocaleKey.ScheduleWillBeRegistered)}
+            onSend={() =>
+              schUsersTsjrpcClient.addMe({
+                props: scheduleScopeProps,
+                place: translateBase(BaseLocaleKey.ScheduleByScheduleButton),
+              })
+            }
           />
         );
       } else if (rights.isSwHideContent)
-        blockContent = <div className="text-x7 font-size:0.8em">Предварительной регистрации на мероприятие нет</div>;
+        blockContent = (
+          <div className="text-x7 font-size:0.8em">
+            {translateBase(BaseLocaleKey.ScheduleNoPreregistration)}
+          </div>
+        );
     }
   } else {
     if (rights.myUser.R === undefined || rights.myUser.R === 0) {
-      if (!rights.isSwPublic || rights.isSwHideContent) blockContent = <div className="text-x7">Заявка принята</div>;
+      if (!rights.isSwPublic || rights.isSwHideContent)
+        blockContent = <div className="text-x7">{translateBase(BaseLocaleKey.ScheduleRequestAccepted)}</div>;
     } else if (!rights.isCanRead) {
-      blockContent = <div className="text-xKO">Доступ к содержимому ограничен</div>;
+      blockContent = (
+        <div className="text-xKO">{translateBase(BaseLocaleKey.ScheduleContentAccessLimited)}</div>
+      );
     }
   }
 
   const prevDateNode = prevDate && (
     <StyledPrevDateText className={schedule && prevDate.getTime() > schedule.start ? 'text-xKO' : undefined}>
-      Предыдущее - {makeDateLabel(prevDate)}
+      {translateBase(BaseLocaleKey.SchedulePrevious, { d: makeDateLabel(prevDate) })}
     </StyledPrevDateText>
   );
 
@@ -161,7 +175,7 @@ export function ScheduleWidget({
           <div className="my-5">
             {rights.isCanRedact && isRedact ? (
               <StrongInputDateTimeExtracter
-                title="Начало"
+                title={translateBase(BaseLocaleKey.ScheduleStart)}
                 icon="Calendar03"
                 value={dateValue}
                 takeDate="day"
@@ -189,7 +203,7 @@ export function ScheduleWidget({
                       value={schedule}
                       isRedact
                       icon="SchoolReportCard"
-                      title="Заголовок"
+                      title={translateBase(BaseLocaleKey.ScheduleHeader)}
                       onSend={value => schGeneralTsjrpcClient.rename({ props: scheduleScopeProps, value })}
                     />
                     <StrongEditableField
@@ -197,7 +211,7 @@ export function ScheduleWidget({
                       value={schedule}
                       isRedact
                       icon="Bookmark03"
-                      title="Тема"
+                      title={translateBase(BaseLocaleKey.ScheduleTopic)}
                       onSend={value => schGeneralTsjrpcClient.setTopic({ props: scheduleScopeProps, value })}
                     />
                   </>
@@ -210,7 +224,7 @@ export function ScheduleWidget({
                     multiline
                     textClassName=" "
                     icon="File02"
-                    title="Описание"
+                    title={translateBase(BaseLocaleKey.Description)}
                     onSend={value => schGeneralTsjrpcClient.setDescription({ props: scheduleScopeProps, value })}
                   />
                 )}
@@ -228,7 +242,7 @@ export function ScheduleWidget({
 
                 <ScheduleWidgetWatchLiveBroadcastButton
                   schw={schedule.w}
-                  postfix="Следить за трансляцией"
+                  postfix={translateBase(BaseLocaleKey.ScheduleWatchBroadcast)}
                 />
 
                 {isRedact && (
@@ -236,7 +250,7 @@ export function ScheduleWidget({
                     <ScheduleWidgetEventTypeList
                       postfix={
                         <>
-                          Шаблоны событий <LazyIcon icon="ArrowRight01" />
+                          {translateBase(BaseLocaleKey.ScheduleEventTemplates)} <LazyIcon icon="ArrowRight01" />
                         </>
                       }
                       icon="Shapes"
@@ -249,8 +263,8 @@ export function ScheduleWidget({
                     {!schedule.start || (
                       <TheIconSendButton
                         icon="PlusSign"
-                        postfix="Добавить день"
-                        confirm="Дни удалять не возможно! Создать новый?"
+                        postfix={translateBase(BaseLocaleKey.ScheduleAddDay)}
+                        confirm={translateBase(BaseLocaleKey.ScheduleAddDayConfirm)}
                         className="my-2"
                         onSend={() => schDaysTsjrpcClient.addDay({ props: scheduleScopeProps })}
                       />
@@ -259,8 +273,8 @@ export function ScheduleWidget({
                       <TheIconSendButton
                         className="text-xKO"
                         icon="Delete02"
-                        confirm="Восстановить расписание будет не возможно. Продолжить?"
-                        postfix="Удалить расписание"
+                        confirm={translateBase(BaseLocaleKey.ScheduleRemoveConfirm)}
+                        postfix={translateBase(BaseLocaleKey.ScheduleRemove)}
                         onSend={() => schGeneralTsjrpcClient.remove({ props: scheduleScopeProps })}
                       />
                     )}
@@ -269,17 +283,17 @@ export function ScheduleWidget({
                 {rights.myUser === undefined &&
                   (rights.auth.login ? (
                     <SendButton
-                      title="Хочу комментить события"
+                      title={translateBase(BaseLocaleKey.ScheduleWantCommentEvents)}
                       className="mt-10"
                       onSend={() =>
                         schUsersTsjrpcClient.addMe({
                           props: scheduleScopeProps,
-                          place: 'по кнопке "Хочу комментить события"',
+                          place: translateBase(BaseLocaleKey.ScheduleByCommentButton),
                         })
                       }
                     />
                   ) : (
-                    <div className="mt-5">Комментировать события могут только регистрированные пользователи</div>
+                    <div className="mt-5">{translateBase(BaseLocaleKey.ScheduleOnlyRegComment)}</div>
                   ))}
                 {schedule.days.map((day, dayi) => {
                   if (dayi === 0 && schedule.withTech && !rights.isCanReadSpecials) return null;

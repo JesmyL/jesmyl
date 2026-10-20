@@ -1,6 +1,8 @@
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+
 export interface IExportableKindProp {
   key: CmComBlockKindKey;
-  each: `each${0 | 1 | 2 | 3}`;
+  each: BaseLocaleKey.Each0 | BaseLocaleKey.Each1 | BaseLocaleKey.Each2 | BaseLocaleKey.Each3;
   alt?: string;
   isInherit?: boolean;
   group?: number;

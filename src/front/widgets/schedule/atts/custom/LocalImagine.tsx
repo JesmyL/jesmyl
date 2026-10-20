@@ -1,6 +1,8 @@
+import { translateBase } from '#basis/locale';
 import { SendableDropdown } from '#shared/ui/sends/dropdown/SendableDropdown';
 import { makeAttStorage } from '#widgets/schedule/makeAttStorage';
 import { useMemo } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { mapObjectEntries } from 'shared/utils/object.utils';
 
 export const ScheduleWidgetCustomAttLocalImagineSelector = ({ id }: { id: `[SCH]:${string}` | nil }) => {
@@ -8,7 +10,7 @@ export const ScheduleWidgetCustomAttLocalImagineSelector = ({ id }: { id: `[SCH]
     return mapObjectEntries(makeAttStorage()[0], (id, att) => {
       return {
         id,
-        title: <>Образ "{att.title}"</>,
+        title: <>{translateBase(BaseLocaleKey.ScheduleImageOf, { t: att.title })}</>,
       };
     });
   }, []);
@@ -17,7 +19,7 @@ export const ScheduleWidgetCustomAttLocalImagineSelector = ({ id }: { id: `[SCH]
     <SendableDropdown
       id={id ?? undefined}
       items={localAttsItems}
-      nullTitle="Образ не выбран"
+      nullTitle={translateBase(BaseLocaleKey.ScheduleImageNotSelected)}
       // scope={scope}
       // fieldName="imagine"
       // cud="U"

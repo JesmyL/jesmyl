@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { cmIDB } from '$cm/ext';
@@ -5,6 +6,7 @@ import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmComTextSquareBracketsMode } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itIt } from 'shared/utils';
 import { checkIsArray, checkIsNumber } from 'shared/utils/checkIs';
 import { slavicLowerLettersStr } from 'shared/utils/cm/com/const';
@@ -70,9 +72,12 @@ export const useCmEditorCompositionsCatSpecialSearches = (): Record<
 
   return useMemo(
     () => ({
-      '@audioLess': { title: 'Песни без аудио', map: async coms => coms.filter(com => !com.audio?.length) },
+      '@audioLess': {
+        title: translateBase(BaseLocaleKey.CmEditorNoAudioComs),
+        map: async coms => coms.filter(com => !com.audio?.length),
+      },
       '@lineLen:': {
-        title: `Со сторкой больше чем:элементов[${maxAvailableComLineLength}]`,
+        title: translateBase(BaseLocaleKey.CmEditorLineLengthMore, { n: '' + maxAvailableComLineLength }),
         map: async (coms, term) => {
           const maxLength = +term.split(':')[1] || maxAvailableComLineLength;
 
@@ -80,7 +85,7 @@ export const useCmEditorCompositionsCatSpecialSearches = (): Record<
         },
       },
       '@repeatsMatch:': {
-        title: 'Ключи повторений по регулярке:/~/i',
+        title: translateBase(BaseLocaleKey.CmEditorRepeatsByRegExp),
         map: async (coms, term) => {
           try {
             const regStr = term.slice(term.indexOf(':') + 1) || '/~/i';
@@ -99,7 +104,7 @@ export const useCmEditorCompositionsCatSpecialSearches = (): Record<
         },
       },
       '@matchInRepeatedText:': {
-        title: 'Поиск по блоку с повторениями:/\\/\\//i',
+        title: translateBase(BaseLocaleKey.CmEditorMatchInRepeated),
         map: async (coms, term) => {
           try {
             const regStr = term.slice(term.indexOf(':') + 1) || '/\\/\\//i';
@@ -114,7 +119,7 @@ export const useCmEditorCompositionsCatSpecialSearches = (): Record<
         },
       },
       '@filterPositionsUnequalChordsCounts': {
-        title: 'Количество аккордов не равна аппликатуре',
+        title: translateBase(BaseLocaleKey.CmEditorChordsMismatch),
         map: async coms => {
           return coms.filter(com =>
             com.ords?.some(
@@ -134,7 +139,7 @@ export const useCmEditorCompositionsCatSpecialSearches = (): Record<
         },
       },
       '@withUnknownChords': {
-        title: 'С неизвестными аккордами',
+        title: translateBase(BaseLocaleKey.CmEditorUnknownChords),
         isRerenderOnInput: true,
         map: async coms => {
           const knownChordsSetLocal = await knownChordsSet();
@@ -153,7 +158,7 @@ export const useCmEditorCompositionsCatSpecialSearches = (): Record<
         },
       },
       '@incorrect-ЁЕ': {
-        title: 'Некорректные Ё-Е',
+        title: translateBase(BaseLocaleKey.CmEditorIncorrectYoYe),
         isRerenderOnInput: true,
         map: async coms => {
           const reg = await eeIncorrectWordsReg();

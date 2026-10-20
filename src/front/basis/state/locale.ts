@@ -3,15 +3,15 @@ import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { Atom, atom } from 'atomaric';
 import { Langi } from 'shared/api';
 import { LocaleNameSpaceConfigs } from 'shared/model/+locale';
+import { LocaleBase } from 'shared/model/+locale/base';
 import { LocaleDynamic } from 'shared/model/+locale/dynamic';
-import { checkIsNil } from 'shared/utils/checkIs';
 import { lazyInit } from 'shared/utils/lazyInit';
 import { objectLength } from 'shared/utils/object.utils';
 
 const dynamicLangAtoms: { [L in Langi]?: Atom<LocaleDynamic<L>> } = {};
 
-const checkValue = (value: { langi: Langi }, onRequest: () => void) => {
-  if (checkIsNil(value?.langi) && !objectLength(value)) {
+const checkValue = (value: LocaleBase<Langi> | LocaleDynamic<Langi>, onRequest: () => void) => {
+  if (!objectLength(value)) {
     appInitEvent.listen(onRequest);
     localeIsLoadingAtom.do.increment();
   }

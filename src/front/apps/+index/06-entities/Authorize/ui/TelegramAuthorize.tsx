@@ -7,6 +7,7 @@ import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc/tsjrpc.methods';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { toast } from 'sonner';
 import { IndexAuthorizeTgNativeAuth } from './TgNativeAuth';
 
@@ -25,10 +26,10 @@ export const IndexAuthorizeByTelegram = () => {
   return (
     <div className="relative flex column w-full">
       <div>
-        {translateBase(it => it.tg.authNeeds)}:
+        {translateBase(BaseLocaleKey.TelegramAuthorizationNeeds)}:
         <ol>
           <li className="children-middle">
-            {translateBase(it => it.tg.startBot)}
+            {translateBase(BaseLocaleKey.TelegramStartBot)}
             <span className="m-2">
               <a
                 href="https://t.me/jesmylbot"
@@ -43,7 +44,7 @@ export const IndexAuthorizeByTelegram = () => {
             </span>
           </li>
           <li>
-            {translateBase(it => it.tg.beInChannel)}
+            {translateBase(BaseLocaleKey.TelegramBeInChannel)}
             <span className="m-2">
               <a
                 id="go-to-chanel-link"
@@ -59,7 +60,7 @@ export const IndexAuthorizeByTelegram = () => {
             </span>
             {isSendTgCode && (
               <ol type="a">
-                {translateBase(it => it.tg.steps)
+                {translateBase(BaseLocaleKey.TelegramSteps)
                   .split('\n')
                   .map(line => (
                     <li key={line}>{line}</li>
@@ -71,13 +72,13 @@ export const IndexAuthorizeByTelegram = () => {
             <li>
               <div className="flex gap-2">
                 <IndexAuthorizeTgNativeAuth />
-                {translateBase(it => it.or)}
+                {translateBase(BaseLocaleKey.Or)}
                 <span
                   id="input-the-tg-code-button"
                   className="text-x7 pointer"
                   onClick={() => setIsSendTgCode(true)}
                 >
-                  {translateBase(it => it.enterCode)}
+                  {translateBase(BaseLocaleKey.EnterCode)}
                 </span>
               </div>
             </li>
@@ -92,7 +93,7 @@ export const IndexAuthorizeByTelegram = () => {
               className="input-wrapper"
             >
               <TextInput
-                placeholder={translateBase(it => it.oneTimeCode)}
+                placeholder={translateBase(BaseLocaleKey.OneTimeCode)}
                 className="input"
                 onInput={setAuthCode}
                 value={authCode}
@@ -101,7 +102,7 @@ export const IndexAuthorizeByTelegram = () => {
           </div>
           <SendButton
             id="tg-auth-code-send-button"
-            title={translateBase(it => it.toAuth)}
+            title={translateBase(BaseLocaleKey.LogIn)}
             className="send-button"
             disabled={isLoading || authCode.length < 3}
             onSuccess={async () => {

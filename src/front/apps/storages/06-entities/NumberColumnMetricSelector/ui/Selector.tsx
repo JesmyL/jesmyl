@@ -1,8 +1,10 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { usePrompt } from '#shared/ui/modal';
 import { StoragesColumnEditTypeProps } from '$storages/shared/model/col-edit';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
 import { objectKeys } from 'shared/utils/object.utils';
 
@@ -58,14 +60,16 @@ export const StoragesNumberColumnMetricSelector = (props: StoragesColumnEditType
       addContent={
         <Button
           onClick={async () => {
-            const customMeter = await prompt(`Введи название измерения (максимум символов - ${maxCustomMetricLen})`);
+            const customMeter = await prompt(
+              translateBase(BaseLocaleKey.StoragesNewMeasurement, { n: '' + maxCustomMetricLen }),
+            );
 
             if (!customMeter) return;
 
             return onSend(customMeter.slice(0, maxCustomMetricLen));
           }}
         >
-          Другое
+          {translateBase(BaseLocaleKey.StoragesOther)}
         </Button>
       }
       onSelectId={onSend}

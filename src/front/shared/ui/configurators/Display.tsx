@@ -1,3 +1,5 @@
+import { translateBase } from '#basis/locale';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { IconCheckbox } from '../the-icon/IconCheckbox';
 import { ConfiguratorEditProps } from './model';
 
@@ -9,7 +11,7 @@ export const DisplayConfigurator = ({ config, updateConfig }: Props) => {
   return (
     <>
       <div className="flex gap-2 flex-max">
-        Видимость
+        {translateBase(BaseLocaleKey.ConfigVisibility)}
         <IconCheckbox
           checked={config.display !== 'none'}
           onChange={() => updateConfig({ display: config.display === 'initial' ? 'none' : 'initial' })}

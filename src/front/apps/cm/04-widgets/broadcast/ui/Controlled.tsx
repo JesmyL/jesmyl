@@ -15,6 +15,7 @@ import { Link, useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { ReactNode, useEffect } from 'react';
 import { CmComWid } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { cmBroadcastTabConfigDict } from '../const/tabs';
 import { useCmBroadcastScreenKeyDownListen } from '../lib/useCmBroadcastScreenKeyDownListen';
 
@@ -72,7 +73,7 @@ export function CmBroadcastControlled(props: Props) {
           </>
         ) : (
           <>
-            {translateBase(it => it.broadcast)}
+            {translateBase(BaseLocaleKey.Broadcast)}
             {comPack.pageTitlePostfix}
           </>
         )

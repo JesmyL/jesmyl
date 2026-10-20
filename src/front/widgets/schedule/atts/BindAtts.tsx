@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { StrongDiv } from '#basis/ui/strong-control/StrongDiv';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { Modal, ModalBody, ModalFooter } from '#shared/ui/modal';
@@ -13,6 +14,7 @@ import {
   ScheduleWidgetDayEventAttValues,
   scheduleWidgetUserRights,
 } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { objectEntries } from 'shared/utils/object.utils';
 import { useScheduleWidgetRightsContext } from '../contexts';
@@ -99,7 +101,7 @@ export const ScheduleWidgetBindAtts = ({
 
       <div className="flex gap-2 my-3">
         <LazyIcon icon="Attachment01" />
-        Вложения
+        {translateBase(BaseLocaleKey.ScheduleAttachments)}
         <LazyIcon
           className="pointer"
           icon="PlusSign"
@@ -126,7 +128,7 @@ export const ScheduleWidgetBindAtts = ({
             );
           })
         ) : (
-          <span className="text-x7">Вложений нет</span>
+          <span className="text-x7">{translateBase(BaseLocaleKey.ScheduleNoAttachments)}</span>
         )}
       </StyledBoxes>
     </>

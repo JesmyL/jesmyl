@@ -9,6 +9,7 @@ import { CmEditorComAudioControlledList } from '$cm+editor/widgets/com-audio';
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmMp3Rule, HttpNumLeadLink } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 
 export const CmEditorComTabAudio = ({ ccom }: { ccom: EditableCom }) => {
@@ -28,7 +29,7 @@ export const CmEditorComTabAudio = ({ ccom }: { ccom: EditableCom }) => {
 
   return (
     <>
-      <h2>{translateBase(it => it.cm.com.new.bindedAudio)}</h2>
+      <h2>{translateBase(BaseLocaleKey.CmEditorNewBoundAudio)}</h2>
       {ccom.audio?.length ? (
         <CmEditorComAudioControlledList
           srcs={ccom.audio}
@@ -40,11 +41,11 @@ export const CmEditorComTabAudio = ({ ccom }: { ccom: EditableCom }) => {
           }}
         />
       ) : (
-        <div>{translateBase(it => it.cm.com.new.noTracks)}</div>
+        <div>{translateBase(BaseLocaleKey.CmEditorNewNoTracks)}</div>
       )}
       {!removedHrefs.length || (
         <>
-          <h2>{translateBase(it => it.cm.com.rmAudios)}</h2>
+          <h2>{translateBase(BaseLocaleKey.CmEditRemovedAudios)}</h2>
           <CmEditorComAudioControlledList
             srcs={removedHrefs}
             icon="PlusSignCircle"
@@ -58,7 +59,7 @@ export const CmEditorComTabAudio = ({ ccom }: { ccom: EditableCom }) => {
       {checkAccess('cm', 'COM_AUDIO', 'C') &&
         (openAddBlock ? (
           <>
-            <h2>{translateBase(it => it.cm.com.addAudio)}</h2>
+            <h2>{translateBase(BaseLocaleKey.CmEditAddAudio)}</h2>
             {
               <ObserveUrlResource
                 onSuccess={({ html, rule }) => {

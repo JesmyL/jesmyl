@@ -8,6 +8,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { Link } from '@tanstack/react-router';
 import { Atom, atom } from 'atomaric';
 import { hostConfig } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsStartsWith } from 'shared/utils/checkIs';
 
 let isOpenAtom: Atom<boolean>;
@@ -21,13 +22,13 @@ export function IndexActionsPage() {
   return (
     <PageContainerConfigurer
       className=""
-      headTitle={translateBase(it => it.interactive)}
+      headTitle={translateBase(BaseLocaleKey.Interactive)}
       contentClass="flex column p-2"
       content={
         <>
           <BrutalItem
             iconNode={<LazyIcon icon="QrCode01" />}
-            title={translateBase(it => it.readQR)}
+            title={translateBase(BaseLocaleKey.ReadQR)}
             onClick={isOpenAtom.do.toggle}
           />
           <Link
@@ -37,7 +38,7 @@ export function IndexActionsPage() {
           >
             <BrutalItem
               iconNode={<LazyIcon icon="File02" />}
-              title={translateBase(it => it.myFiles)}
+              title={translateBase(BaseLocaleKey.MyFiles)}
               idPostfix="files"
             />
           </Link>
@@ -48,7 +49,7 @@ export function IndexActionsPage() {
           >
             <BrutalItem
               iconNode={<LazyIcon icon="CloudDownload" />}
-              title={translateBase(it => it.downloads)}
+              title={translateBase(BaseLocaleKey.Downloads)}
               idPostfix="down"
             />
           </Link>

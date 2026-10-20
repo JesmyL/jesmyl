@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { DatePicker } from '#shared/components/DatePicker';
 import { Button } from '#shared/components/ui/button';
@@ -10,6 +11,7 @@ import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.metho
 import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
 import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { SortDirection } from 'shared/model/common';
 import { StoragesColumnType, StoragesNestedCellMi } from 'shared/model/storages/rack.model';
 import { checkIsNaN } from 'shared/utils/checkIs';
@@ -71,7 +73,7 @@ export const StoragesCellDatesNestedDateCell = (
             />
 
             <InputWithLoadingIcon
-              label={`Описание (${maxTitleLength} символов)`}
+              label={translateBase(BaseLocaleKey.StoragesDescriptionLength, { n: '' + maxTitleLength })}
               icon="Text"
               defaultValue={cardCell?.dsc}
               maxLength={maxTitleLength}
@@ -142,7 +144,7 @@ export const StoragesCellDatesNestedDateCell = (
             isOpenModalAtom={isOpenAddColumnModalAtom}
             excludeColumnTypes={storagesExcludeColumnTypesForDatedNestedCell}
             rack={props.rack}
-            andTextButton={<>во все {props.column.title} во всех карточках</>}
+            andTextButton={translateBase(BaseLocaleKey.StoragesNestedCards, { t: props.column.title })}
             onAdd={async ({ newColumnType, title, colCustomProps }) => {
               if (newColumnType === StoragesColumnType.Date || newColumnType === StoragesColumnType.Dates) return;
 

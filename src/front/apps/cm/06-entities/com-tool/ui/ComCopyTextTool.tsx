@@ -4,6 +4,7 @@ import { useCmComCurrent } from '$cm/entities/com';
 import { CmComCopyTextModalInner } from '$cm/features/com';
 import { Atom, atom } from 'atomaric';
 import { MenuComToolName } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmComTool } from '../ComTool';
 
 let isOpenAtom: Atom<boolean>;
@@ -16,7 +17,7 @@ export const CmComToolCopyText = () => {
   return (
     <>
       <CmComTool
-        title={translateBase(it => it.cm.com.tool[MenuComToolName.CopyCom])}
+        title={translateBase(it => it[BaseLocaleKey.CmMarkComTool][MenuComToolName.CopyCom])}
         icon="Copy01"
         onClick={isOpenAtom.do.toggle}
       />

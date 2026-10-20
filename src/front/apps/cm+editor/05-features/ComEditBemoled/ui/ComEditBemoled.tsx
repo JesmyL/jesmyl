@@ -1,5 +1,7 @@
+import { translateBase } from '#basis/locale';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { takeCmComToggledTonType, TonType } from 'shared/const/cm/enums';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const CmEditorComEditBemoled = (props: {
   value: TonType | nil;
@@ -7,14 +9,13 @@ export const CmEditorComEditBemoled = (props: {
 }) => (
   <TheIconButton
     icon="Grid"
-    confirm={
-      <>
-        Сделать песню <span className="text-x7">{props.value ? 'диезной' : 'бемольной'}</span>?
-      </>
-    }
+    confirm={<>{translateBase(it => (props.value ? it[BaseLocaleKey.CmEditorComFlat] : it[BaseLocaleKey.CmEditorComSharp]))}</>}
     postfix={
       <>
-        Тип тональности - <span className="text-x7">{props.value ? 'бемольная' : 'диезная'}</span>
+        {translateBase(BaseLocaleKey.CmEditorTonalityTypeIs)}{' '}
+        <span className="text-x7">
+          {translateBase(it => (props.value ? it[BaseLocaleKey.CmEditorFlat] : it[BaseLocaleKey.CmEditorSharp]))}
+        </span>
       </>
     }
     onClick={() => props.onChange(takeCmComToggledTonType(props.value))}

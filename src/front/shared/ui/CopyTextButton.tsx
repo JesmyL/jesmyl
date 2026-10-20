@@ -1,4 +1,6 @@
+import { translateBase } from '#basis/locale';
 import { ReactNode } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsString } from 'shared/utils/checkIs';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
@@ -30,7 +32,7 @@ export function CopyTextButton({ text, disabled, description, className, message
 
               try {
                 navigator.clipboard.writeText(textToWrite);
-                toast(message ?? 'Текст скопирован');
+                toast(message ?? translateBase(BaseLocaleKey.ConfigTextCopied));
                 onClose?.();
               } catch (_e) {
                 textToCopyAtom.set(textToWrite);
@@ -47,7 +49,7 @@ export function CopyTextButton({ text, disabled, description, className, message
           </span>
 
           <Modal openAtom={textToCopyAtom}>
-            <ModalHeader>Не удалось скопировать текст:</ModalHeader>
+            <ModalHeader>{translateBase(BaseLocaleKey.CopyTextFailed)}</ModalHeader>
             <ModalBody className="user-select-all">{textToCopy}</ModalBody>
           </Modal>
         </>

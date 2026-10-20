@@ -4,6 +4,7 @@ import { Skeleton } from '#shared/components';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export function IndexDownloadsPage() {
   const valuesQuery = useIndexValuesQuery();
@@ -11,7 +12,7 @@ export function IndexDownloadsPage() {
   return (
     <PageContainerConfigurer
       className=""
-      headTitle={translateBase(it => it.downloads)}
+      headTitle={translateBase(BaseLocaleKey.Downloads)}
       content={
         <div className="h-full w-full">
           {valuesQuery.isLoading ? (
@@ -24,7 +25,7 @@ export function IndexDownloadsPage() {
               >
                 <BrutalItem
                   iconNode={<LazyIcon icon="WindowsOld" />}
-                  title={translateBase(it => it.oneForTwo, { o: 'JesmyL', t: 'Window' })}
+                  title={translateBase(BaseLocaleKey.OneForTwo, { o: 'JesmyL', t: 'Window' })}
                 />
               </a>
               <a
@@ -33,7 +34,7 @@ export function IndexDownloadsPage() {
               >
                 <BrutalItem
                   iconNode={<LazyIcon icon="CloudDownload" />}
-                  title={translateBase(it => it.oneForTwo, { o: 'JesmyL', t: 'Linux' })}
+                  title={translateBase(BaseLocaleKey.OneForTwo, { o: 'JesmyL', t: 'Linux' })}
                 />
               </a>
             </>

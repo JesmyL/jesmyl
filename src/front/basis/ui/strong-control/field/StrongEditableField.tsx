@@ -1,9 +1,11 @@
+import { translateBase } from '#basis/locale';
 import { useIsRedactArea } from '#shared/lib/hooks/useIsRedactArea';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { TextInput } from '#shared/ui/TextInput';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useEffect, useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsString } from 'shared/utils/checkIs';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
@@ -166,7 +168,10 @@ export function StrongEditableField<Key extends string, Value extends string | P
               </div>
             )
           ) : (
-            <>{props.title && <>{props.title} - </>}Без значения</>
+            <>
+              {props.title && <>{props.title} - </>}
+              {translateBase(BaseLocaleKey.NoValue)}
+            </>
           )}
           {props.isRedact && props.isSelfRedact && editIcon}
         </div>

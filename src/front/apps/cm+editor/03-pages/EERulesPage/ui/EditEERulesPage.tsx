@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Badge } from '#shared/components/ui/badge';
 import { Button } from '#shared/components/ui/button';
 import { ButtonGroup } from '#shared/components/ui/button-group';
@@ -15,7 +16,7 @@ import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContaine
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { EeStorePack } from 'shared/api';
-import { declension } from 'shared/utils';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { objectKeys } from 'shared/utils/object.utils';
 import { CmEditorEERulesListComputer } from './EERulesListComputer';
 
@@ -55,14 +56,14 @@ export const CmEditorEERulesPage = () => {
   return (
     <PageCmEditorContainer
       className="e-e-rules-editor"
-      headTitle="Ё-Е правила"
+      headTitle={translateBase(BaseLocaleKey.CmEditorYoYeRules)}
       head={
         <TheIconSendButton
           icon="Sent"
           disabled={!editedWords.length}
           className="m-2"
           confirm={
-            `Отправить ${editedWords.length} ${declension(editedWords.length, 'слово', 'слова', 'слов')}: ` +
+            `${translateBase(BaseLocaleKey.CmEditorSendWords, { n: '' + editedWords.length })}: ` +
             `${editedWords.join(', ')}`
           }
           onSend={() => cmEditorClientTsjrpcMethods.setEEWords({ words: editedWordsRef.current })}
@@ -76,7 +77,7 @@ export const CmEditorEERulesPage = () => {
               className="m-2"
               onClick={() => setIsShowListComputer(true)}
             >
-              Проверить
+              {translateBase(BaseLocaleKey.CmEditorCheck)}
             </Button>
             <TheIconButton
               icon="SearchVisual"
@@ -84,7 +85,7 @@ export const CmEditorEERulesPage = () => {
             />
           </div>
           <IconCheckbox
-            postfix="включать библейские слова"
+            postfix={translateBase(BaseLocaleKey.CmEditorIncludeBibleWords)}
             checked={isCheckBible}
             onChange={isCheckBibleAtom.set}
           />
@@ -110,7 +111,7 @@ export const CmEditorEERulesPage = () => {
                   ))}
                 </ButtonGroup.Root>
                 <Badge className="mr-2 mb-2">
-                  Слов: {eeStoreKeys.length} / {listBox.list.length} (
+                  {translateBase(BaseLocaleKey.Word)}: {eeStoreKeys.length} / {listBox.list.length} (
                   {((eeStoreKeys.length / listBox.list.length) * 100).toFixed(3)}
                   %)
                 </Badge>

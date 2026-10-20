@@ -1,4 +1,6 @@
+import { translateBase } from '#basis/locale';
 import { storagesComputeFormula, storagesReplaceFormulaNumbers } from '$storages/shared/lib/formulaComputing';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesCell, StoragesColumnType, StoragesRackColumn } from 'shared/model/storages/rack.model';
 import { checkIsString } from 'shared/utils/checkIs';
 
@@ -17,7 +19,7 @@ export const StoragesFormulaTexted = (props: Props) => {
 
   return (
     <div className="my-3">
-      Итог:{' '}
+      {translateBase(BaseLocaleKey.StoragesTotal)}:{' '}
       <span className="text-x3">
         {storagesReplaceFormulaNumbers(
           {

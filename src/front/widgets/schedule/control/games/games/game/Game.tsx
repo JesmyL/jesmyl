@@ -1,9 +1,11 @@
+import { translateBase } from '#basis/locale';
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { schGamesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { useScheduleGameContext } from '../lib/contexts';
 import { ScheduleWidgetTeamGameTeam } from '../Team';
 import { ScheduleWidgetTeamGamePrintTeamsButton } from './PrintTeamsButton';
@@ -18,7 +20,7 @@ export function ScheduleWidgetTeamGame() {
     <h3 className="flex gap-2">
       <StrongEditableField
         value={game.title}
-        placeholder="Командная игра"
+        placeholder={translateBase(BaseLocaleKey.ScheduleTeamGame)}
         isRedact={isRenaming}
         onSend={value =>
           schGamesTsjrpcClient.setTitle({

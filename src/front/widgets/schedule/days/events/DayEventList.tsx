@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { StrongDiv } from '#basis/ui/strong-control/StrongDiv';
 import { useIsRedactArea } from '#shared/lib/hooks/useIsRedactArea';
 import { useIsRememberExpand } from '#shared/ui/expand/useIsRememberExpand';
@@ -16,6 +17,7 @@ import {
   ScheduleWidgetDayi,
   indexScheduleGetDayEventTimes,
 } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { isNIs } from 'shared/utils';
 import { ScheduleWidgetDayEvent, StyledScheduleWidgetDayEvent } from './DayEvent';
 import { ScheduleWidgetDayEventEventActions } from './EventActions';
@@ -46,8 +48,8 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
       <LazyIcon
         icon="LeftToRightListBullet"
         className="text-x7"
-      />
-      {' Распорядок'}
+      />{' '}
+      {translateBase(BaseLocaleKey.ScheduleRoutine)}
     </>,
     isExpand => (isExpand || isForceExpand) && editIcon,
   );
@@ -117,7 +119,7 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
                     {movementBox && (
                       <div className="flex gap-2 opacity-50">
                         <StyledMoveTitle className="ellipsis nowrap">{movementBox.title}</StyledMoveTitle>
-                        <div className="nowrap">будет здесь</div>
+                        <div className="nowrap">{translateBase(BaseLocaleKey.ScheduleWillBeHere)}</div>
                       </div>
                     )}
                     <LazyIcon icon="ArrowLeftDouble" />
@@ -191,7 +193,7 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
                         icon="Delete01"
                         confirm={
                           <ScheduleWidgetTopicTitle
-                            prefix="Удалить"
+                            prefix={translateBase(BaseLocaleKey.Delete)}
                             titleBox={rights.schedule.types[event.type]}
                             topicBox={event}
                           />
@@ -218,7 +220,7 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
           })}
           {isRedact && moveEventMi === null && (
             <ScheduleWidgetEventTypeList
-              postfix="Добавить событие"
+              postfix={translateBase(BaseLocaleKey.ScheduleAddEvent)}
               icon="CreditCardAdd"
               schedule={rights.schedule}
               usedCounts={usedCounts}

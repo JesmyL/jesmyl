@@ -1,8 +1,10 @@
+import { translateBase } from '#basis/locale';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { CmChordCardTracked } from '$cm/ext';
 import React from 'react';
 import { ChordTrack } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 const ladLine = Array(20).fill(0);
 
@@ -16,10 +18,13 @@ export const CmEditorChordRedactableTrack = ({
   return (
     <>
       <Dropdown
-        placeholder="Начальный лад"
+        placeholder={translateBase(BaseLocaleKey.CmEditorStartFret)}
         className="w-[50%]"
         id={Math.trunc(redactableChord[0])}
-        items={ladLine.map((_, lad) => ({ title: `Лад ${lad + 1}`, id: lad }))}
+        items={ladLine.map((_, lad) => ({
+          title: translateBase(BaseLocaleKey.CmEditorFretNumber, { n: '' + (lad + 1) }),
+          id: lad,
+        }))}
         onSelect={({ id }) => {
           modifyTrack(track => {
             track[0] = +`${id}.${('' + track[0]).split('.')[1] || ''}`;

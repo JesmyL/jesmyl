@@ -3,6 +3,7 @@ import { addEventListenerPipe } from '#shared/lib/hookEffectPipe';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { atom, useAtomValue } from 'atomaric';
 import { HttpNumLeadLink } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { retNull } from 'shared/utils';
 import { toast } from 'sonner';
 import { takeCmComAudioPlayerCachedBlob, takeCmComAudioPlayerTrackUrl } from '../lib/audioCache';
@@ -12,7 +13,7 @@ const audioElement = document.createElement('audio');
 audioElement.preload = 'none';
 audioElement.addEventListener('error', () =>
   toast(
-    translateBase(it => it.cm.audioPlayErr),
+    translateBase(BaseLocaleKey.CmAudioPlaybackError),
     makeToastKOMoodConfig(),
   ),
 );

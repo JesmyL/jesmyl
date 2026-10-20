@@ -1,3 +1,5 @@
+import { translateBase } from '#basis/locale';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const XLSX: { read(data: unknown, options: object): any; utils: { sheet_to_row_object_array(prop: any): any } };
 
@@ -8,7 +10,7 @@ export const excel2jsonParserBox = (awaitTimeMs: number = 10000) => {
     const tryGet = () => {
       if (typeof XLSX === 'undefined') {
         if (Date.now() < untilMs) setTimeout(tryGet, awaitTimeMs / 100);
-        else reject('Для чтения файлов Excel необходимо соединение с интернет');
+        else reject(translateBase(BaseLocaleKey.ExcelNeedsNetwork));
 
         return;
       }

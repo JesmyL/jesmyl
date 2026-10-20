@@ -6,6 +6,7 @@ import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIcon
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { Link } from '@tanstack/react-router';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const IndexAuthorizeTelegramInlineAuthButton = () => {
   const appName = useAppNameContext();
@@ -22,7 +23,7 @@ export const IndexAuthorizeTelegramInlineAuthButton = () => {
           >
             <BrutalItem
               iconNode={<LazyIcon icon="Authorized" />}
-              title={translateBase(it => it.toAuth)}
+              title={translateBase(BaseLocaleKey.LogIn)}
               box={
                 api?.initDataUnsafe?.user && (
                   // todo edd event.stopPropagation();

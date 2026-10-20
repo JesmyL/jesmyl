@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { markdown } from '#shared/config/markdown';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
@@ -15,6 +16,7 @@ import {
   ScheduleWidgetAppAttCustomizableValueItem,
   ScheduleWidgetAppAttCustomized,
 } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsBoolean, checkIsNumber, checkIsString } from 'shared/utils/checkIs';
 import { KeyValueListAttNumberMember } from '../../KeyValueListAttNumberMember';
 import { ScheduleKeyValueListAttLiItemDropdown } from '../../LiItemDropdown';
@@ -91,7 +93,7 @@ export const ScheduleWidgetAttKeyValueListSubItemsRedact = ({
                       )}
                       <TheIconSendButton
                         className="relative z-15 text-xKO"
-                        confirm="Удалить пункт?"
+                        confirm={translateBase(BaseLocaleKey.ScheduleRemovePointConfirm)}
                         icon="Delete02"
                         onSend={() =>
                           schDayEventsTsjrpcClient.removeKeyValueAttachmentListItemValue({
@@ -152,7 +154,7 @@ export const ScheduleWidgetAttKeyValueListSubItemsRedact = ({
 
             <StrongEditableField
               className="mood-for-2 relative z-5 mt-2"
-              placeholder="Новый подпункт"
+              placeholder={translateBase(BaseLocaleKey.ScheduleNewSubpoint)}
               isRedact={isRedact}
               isSelfRedact={setSelfRedact}
               multiline

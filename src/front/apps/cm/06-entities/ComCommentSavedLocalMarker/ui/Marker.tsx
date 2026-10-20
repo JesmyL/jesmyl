@@ -5,6 +5,7 @@ import { cmComCommentCurrentComw2OpenAltiDictAtom, useCmComCommentBlock } from '
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { CmComCommentBlockSimpleSelector, CmComWid } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const CmComCommentSavedLocalMarker = ({
   selector,
@@ -33,7 +34,7 @@ const SavedLocalLabel = () => {
   return (
     isShow && (
       <div className="flex gap-2">
-        {translateBase(it => it.savedLoc)}
+        {translateBase(BaseLocaleKey.SavedLocally)}
         <LazyIcon
           icon="FileValidation"
           className="text-xOK"

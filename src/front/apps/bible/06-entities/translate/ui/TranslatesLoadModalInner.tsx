@@ -8,6 +8,7 @@ import { removeBibleTranslate } from '$bible/shared/lib/utils';
 import { bibleMyTranslatesAtom } from '$bible/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { BibleTranslateName } from 'shared/model/bible';
 import { textToUpperCase } from 'shared/utils/string.utils';
 
@@ -17,10 +18,10 @@ export const BibleTranslateLoadModalInner = () => {
 
   return (
     <>
-      <ModalHeader>{translateBase(it => it.bible.tr)}</ModalHeader>
+      <ModalHeader>{translateBase(BaseLocaleKey.BibleTranslations)}</ModalHeader>
 
       <ModalBody>
-        <h3 className="my-2 font-bold">{translateBase(it => it.bible.loadedTr)}</h3>
+        <h3 className="my-2 font-bold">{translateBase(BaseLocaleKey.BibleLoadedTranslations)}</h3>
         {myTranslates.map(tName => {
           const isUnremovable = myTranslates.length < 2;
           const title = `${translateDescriptions[tName]} (${textToUpperCase(tName)})`;
@@ -32,13 +33,13 @@ export const BibleTranslateLoadModalInner = () => {
               className="ml-2 my-2"
               iconClassName={isUnremovable ? undefined : 'text-xKO'}
               disabled={isUnremovable}
-              confirm={translateBase(it => it.bible.removeModule, { n: title })}
+              confirm={translateBase(BaseLocaleKey.BibleRemoveModule, { n: title })}
               postfix={title}
               onClick={() => removeBibleTranslate(tName)}
             />
           );
         })}
-        <h3 className="my-2 font-bold">{translateBase(it => it.bible.modulesForLoad)}</h3>
+        <h3 className="my-2 font-bold">{translateBase(BaseLocaleKey.BibleLoadModules)}</h3>
         {bibleAllTranslates.map(tName => {
           if (myTranslates.includes(tName)) return null;
           const title = `${translateDescriptions[tName]} (${textToUpperCase(tName)})`;

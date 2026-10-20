@@ -1,10 +1,10 @@
 import { translateBase } from '#basis/locale';
 import { Slider } from '#shared/components/ui/slider';
-import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { DocTitle } from '#shared/ui/tags/DocTitle';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import {
   cmComFavoriteComwsAtom,
   CmComNumber,
@@ -16,20 +16,20 @@ import {
   useCmComIComList,
 } from '$cm/entities/com';
 import {
+  cmComAudioPlayerComsWithErrorAtom,
   cmComAudioPlayerEndedTickAtom,
   cmComAudioPlayerErrorTickAtom,
+  cmComAudioPlayerFindAdvanceCom,
+  cmComAudioPlayerFindNextCom,
+  cmComAudioPlayerGoToAdjacentCom,
   cmComAudioPlayerIsPlayAtom,
   cmComAudioPlayerPlaySrcAtom,
+  cmComAudioPlayerRegisterNavigation,
   cmComAudioPlayerSetMediaTitle,
   cmComAudioPlayerSetSrc,
   cmComAudioPlayerSwitchIsPlay,
   cmComAudioPlayerUpdateCurrentTime,
   cmComAudioPlayerUpdatePlaybackRate,
-  cmComAudioPlayerComsWithErrorAtom,
-  cmComAudioPlayerFindAdvanceCom,
-  cmComAudioPlayerFindNextCom,
-  cmComAudioPlayerGoToAdjacentCom,
-  cmComAudioPlayerRegisterNavigation,
   isCmComAudioPlayerComCached,
   StyledCmComAudioPlayerPlayButton,
   useCmComAudioPlayerCachedSrcs,
@@ -42,13 +42,18 @@ import { cmComLastOpenComwAtom } from '$cm/entities/index';
 import { CmComAudioPlayerMarksMovers } from '$cm/ext';
 import { CmPlayerTextSlides } from '$cm/features/PlayerTextSlides';
 import { getCmComFreshAudioMarksPack } from '$cm/shared/lib/getFresh';
-import { cmComIsFreshAudioMarksLoadingAtom, cmComTrackPreSwitchTimeAtom, cmOpenComListModeAtom } from '$cm/shared/state';
+import {
+  cmComIsFreshAudioMarksLoadingAtom,
+  cmComTrackPreSwitchTimeAtom,
+  cmOpenComListModeAtom,
+} from '$cm/shared/state';
 import { cmPlayerBroadcastAudioSrcAtom } from '$cm/shared/state/broadcast.atoms';
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useMemo, useRef } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { convertSecondsInStrTime } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
 
@@ -61,7 +66,8 @@ const mainControlClass = `${controlClass} size-[4.4rem] p-[1.1rem] rounded-full 
 const playerClass = `sticky top-0 z-1 relative isolate overflow-hidden mx-3 mt-3 mb-4 pt-[1.4rem] px-5 pb-4 rounded-3xl text-[var(--color--3)] bg-[var(--color--2)] shadow-[0_1px_0_0_color-mix(in_srgb,var(--color--3)_12%,transparent)_inset,0_26px_44px_-24px_var(--color--3)] before:absolute before:inset-[-55%_35%_45%_-25%] before:z-[-1] before:bg-[radial-gradient(circle_at_center,var(--color--7)_0%,transparent_68%)] before:opacity-55 before:content-['']`;
 const tracklineClass = `flex items-center gap-[0.65rem] min-h-[1.7rem] mt-4 [&_[data-slot=slider-track]]:bg-[color-mix(in_srgb,var(--color--3)_22%,transparent)] [&_[data-slot=slider-range]]:bg-[var(--color--3)] [&_[data-slot=slider-thumb]]:border-2 [&_[data-slot=slider-thumb]]:border-[var(--color--2)] [&_[data-slot=slider-thumb]]:bg-[var(--color--3)]`;
 const variantClass = `min-w-[1.9rem] h-[1.9rem] px-[0.35rem] text-[var(--color--3)] bg-[color-mix(in_srgb,var(--color--3)_22%,transparent)] border-0 rounded-[0.6rem] text-[0.8rem] [transition:transform_.16s_ease,background_.16s_ease,color_.16s_ease] hover:-translate-y-0.5 pointer`;
-const variantActiveClass = 'text-[var(--color--5)] bg-[var(--color--7)] scale-[1.08] shadow-[0_6px_14px_-6px_var(--color--7)]';
+const variantActiveClass =
+  'text-[var(--color--5)] bg-[var(--color--7)] scale-[1.08] shadow-[0_6px_14px_-6px_var(--color--7)]';
 
 const playerEnter = keyframes`
   from {
@@ -124,11 +130,9 @@ const PlayerTrack = () => {
         }}
       />
 
-      {duration <= 0 ||
-        !Number.isFinite(duration) ||
-        !Number.isFinite(currentTime) || (
-          <TimeLabel time={`-${convertSecondsInStrTime(duration - currentTime)}`} />
-        )}
+      {duration <= 0 || !Number.isFinite(duration) || !Number.isFinite(currentTime) || (
+        <TimeLabel time={`-${convertSecondsInStrTime(duration - currentTime)}`} />
+      )}
     </>
   );
 };
@@ -301,7 +305,7 @@ export const CmPlayerPage = () => {
               <div className="relative flex items-center justify-center gap-[1.35rem] mt-[1.15rem]">
                 <button
                   className={`${sideControlClass} pointer`}
-                  aria-label={translateBase(it => it.cm.prevCom)}
+                  aria-label={translateBase(BaseLocaleKey.CmPreviousCom)}
                   onClick={() => goToAdjacentCom('prev')}
                 >
                   <LazyIcon icon="Previous" />
@@ -315,7 +319,7 @@ export const CmPlayerPage = () => {
 
                 <button
                   className={`${sideControlClass} pointer`}
-                  aria-label={translateBase(it => it.cm.nextCom)}
+                  aria-label={translateBase(BaseLocaleKey.CmNextCom)}
                   onClick={() => goToAdjacentCom('next')}
                 >
                   <LazyIcon icon="Next" />
@@ -327,7 +331,7 @@ export const CmPlayerPage = () => {
                     'absolute right-0 pointer',
                     isShuffle && 'opacity-100 text-[var(--color--7)]',
                   )}
-                  aria-label={translateBase(it => it.cm.shuffle)}
+                  aria-label={translateBase(BaseLocaleKey.CmShuffle)}
                   onClick={cmComPlayerIsShuffleAtom.do.toggle}
                 >
                   <LazyIcon icon="Shuffle" />
@@ -339,7 +343,7 @@ export const CmPlayerPage = () => {
                     'absolute left-0 pointer',
                     isTextSlides && 'opacity-100 text-[var(--color--7)]',
                   )}
-                  aria-label={translateBase(it => it.cm.textSlides)}
+                  aria-label={translateBase(BaseLocaleKey.CmTextSlides)}
                   onClick={cmComPlayerIsTextSlidesAtom.do.toggle}
                 >
                   <LazyIcon icon="TextSmallcaps" />
@@ -406,4 +410,3 @@ export const CmPlayerPage = () => {
     />
   );
 };
-

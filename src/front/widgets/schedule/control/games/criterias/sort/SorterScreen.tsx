@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { schGamesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { Atom } from 'atomaric';
@@ -8,6 +9,7 @@ import {
   ScheduleGameCriteriaScopeProps,
   ScheduleWidgetUserMi,
 } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes } from './SortBoxes';
 
 interface Props {
@@ -52,14 +54,18 @@ export function ScheduleWidgetTeamsCriteriaSorterScreen({
   return (
     <div className="flex between column h-full">
       {singleInsertUser ? (
-        <h3>Переопределение участника ({criteria.title})</h3>
+        <h3>{translateBase(BaseLocaleKey.ScheduleMemberOverride, { t: criteria.title })}</h3>
       ) : (
         <h3>
-          Распределение участноков ({criteria.title}) {sortedUsers.length}/{usersForSort.length}
+          {translateBase(BaseLocaleKey.ScheduleMembersDistribution, {
+            t: criteria.title,
+            n: sortedUsers.length,
+            m: usersForSort.length,
+          })}
         </h3>
       )}
       {isStop ? (
-        <span>Участник определён</span>
+        <span>{translateBase(BaseLocaleKey.ScheduleMemberDetermined)}</span>
       ) : (
         <ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes
           singleInsertUser={singleInsertUser}
@@ -76,7 +82,7 @@ export function ScheduleWidgetTeamsCriteriaSorterScreen({
       )}
       <div className="w-full flex center">
         <SendButton
-          title="Отправить"
+          title={translateBase(BaseLocaleKey.Send)}
           onSuccess={openAtom.reset}
           onSend={() => {
             const value = {} as Record<ScheduleWidgetUserMi, number>;

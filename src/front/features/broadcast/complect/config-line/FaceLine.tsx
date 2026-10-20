@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { currentBroadcastConfigiAtom, useScreenBroadcastConfigsValue } from '#features/broadcast/atoms';
 import { useAddScreenBroadcastConfig } from '#features/broadcast/hooks/configs';
 import { useWatchScreenBroadcast } from '#features/broadcast/hooks/watch-broadcast';
@@ -6,6 +7,7 @@ import { ScreenBroadcastConfig } from '#features/broadcast/model';
 import { Button } from '#shared/components';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ScreenBroadcastFace } from './Face';
 import { useScreenBroadcastPutOnFaceClose } from './hooks/put-on-face-close';
 
@@ -54,7 +56,9 @@ export const ScreenBroadcastFaceLine = <Config,>(props: Props<Config>) => {
           className="ml-2"
           onClick={() => currentBroadcastConfigiAtom.set(addConfig())}
         />
-        {!configs.length && <div className="text-x1 bg-xKO w-full ml-3 pl-2">Конфигураций нет</div>}
+        {!configs.length && (
+          <div className="text-x1 bg-xKO w-full ml-3 pl-2">{translateBase(BaseLocaleKey.NoConfigs)}</div>
+        )}
       </ConfigLine>
     </div>
   );

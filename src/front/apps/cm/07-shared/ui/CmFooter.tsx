@@ -4,6 +4,7 @@ import { AppFooter } from '$app/AppFooter';
 import { AppFooterItem } from '$app/AppFooterItem';
 import { indexIsShowPlayerInFooterAtom } from '$index/shared/state';
 import { useAtomValue } from 'atomaric';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const CmFooter = () => {
   const isShowPlayer = useAtomValue(indexIsShowPlayerInFooterAtom);
@@ -16,7 +17,7 @@ export const CmFooter = () => {
           key="all"
           idPostfix="cm-all"
           to="/cm/i/"
-          title={translateBase(it => it.cm.li.all)}
+          title={translateBase(BaseLocaleKey.CmListsAll)}
           icon="LeftToRightListBullet"
         />,
 
@@ -24,7 +25,7 @@ export const CmFooter = () => {
           key="lists"
           idPostfix="cm-lists"
           to="/cm/li/"
-          title={translateBase(it => it.cm.li.li)}
+          title={translateBase(BaseLocaleKey.Lists)}
           icon="Playlist01"
         />,
 
@@ -33,7 +34,7 @@ export const CmFooter = () => {
             key="player"
             idPostfix="cm-player"
             to="/cm/player/"
-            title={translateBase(it => it.cm.li.player)}
+            title={translateBase(BaseLocaleKey.CmListsPlayer)}
             icon="PlayListFavourite02"
           />
         ),
@@ -43,7 +44,7 @@ export const CmFooter = () => {
             key="edit"
             idPostfix="cm-edit"
             to="/cm/edit/"
-            title={translateBase(it => it.cm.li.admin)}
+            title={translateBase(BaseLocaleKey.CmListsAdmin)}
             icon="Edit02"
           />
         ),

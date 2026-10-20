@@ -1,5 +1,7 @@
+import { translateBase } from '#basis/locale';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { MyFileBoxId, MyFileType } from 'x/my-files';
 import { myFilesIDB } from 'x/my-files/shared/state/idb';
 
@@ -15,7 +17,7 @@ export const MyFilesFontFamilySelector = ({ fileId: bgFileId, onSelect }: Props)
     <Dropdown
       id={bgFileId ?? undefined}
       items={fonts?.map(({ file, id }) => ({ id, title: file.name })) ?? []}
-      undTitle="По умолчанию"
+      undTitle={translateBase(BaseLocaleKey.ByDefault)}
       onSelectId={onSelect}
     />
   );

@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { defaultPreventer } from '#shared/lib/event-funcs';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -9,6 +10,7 @@ import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
 import { IScheduleWidgetUser } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { isNIs } from 'shared/utils';
 import { ScheduleWidgetUserPhoto } from './UserPhoto';
 
@@ -88,7 +90,7 @@ function Camera({ close, user }: Props & { close: () => void }) {
       } catch (error) {
         console.error(error);
         setRefresh(isNIs);
-        setError('Ошибка');
+        setError(translateBase(BaseLocaleKey.Error));
       }
     })();
 

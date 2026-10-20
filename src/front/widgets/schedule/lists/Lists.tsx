@@ -1,8 +1,10 @@
+import { translateBase } from '#basis/locale';
 import { useIsExpand } from '#shared/ui/expand/useIsExpand';
 import { useFullContent } from '#shared/ui/fullscreen-content/useFullContent';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
 import { ScheduleWidgetTeamGames } from '../control/games/games/Games';
@@ -15,14 +17,14 @@ export function ScheduleWidgetLists() {
   const scheduleScopeProps = useScheduleScopePropsContext();
   const [listsTitle, isExpand] = useIsExpand(
     true,
-    'Списки',
+    translateBase(BaseLocaleKey.Lists),
     isExpand =>
       isExpand &&
       rights.isCanTotalRedact && (
         <TheIconSendButton
           icon="PlusSign"
-          prefix="список"
-          confirm="Создать новый список?"
+          prefix={translateBase(BaseLocaleKey.ScheduleListLower)}
+          confirm={translateBase(BaseLocaleKey.ScheduleAddListConfirm)}
           onSend={() => schListsTsjrpcClient.createCategory({ props: scheduleScopeProps })}
         />
       ),
@@ -55,7 +57,7 @@ export function ScheduleWidgetLists() {
         icon="LeftToRightListBullet"
         postfix={
           <>
-            Списки <LazyIcon icon="ArrowRight01" />
+            {translateBase(BaseLocaleKey.Lists)} <LazyIcon icon="ArrowRight01" />
           </>
         }
         onClick={() => screen()}

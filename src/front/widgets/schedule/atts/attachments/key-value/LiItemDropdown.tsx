@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { SendableDropdown } from '#shared/ui/sends/dropdown/SendableDropdown';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useState } from 'react';
@@ -8,6 +9,7 @@ import {
   IScheduleWidgetUser,
   ScheduleWidgetAppAttCustomizableValueItem,
 } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { KeyValueListAttNumberMember } from './KeyValueListAttNumberMember';
 
@@ -96,7 +98,7 @@ export function ScheduleKeyValueListAttLiItemDropdown({
         onClick={() => setIsShowAll(!isShowAll)}
       />
       <SendableDropdown
-        placeholder="Из списка"
+        placeholder={translateBase(BaseLocaleKey.ScheduleFromList)}
         className="mood-for-2"
         items={[...titles, ...roles, ...lists, ...users]}
         onSend={onSend}

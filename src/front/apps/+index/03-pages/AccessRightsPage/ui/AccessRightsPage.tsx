@@ -11,6 +11,7 @@ import {
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc/tsjrpc.methods';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsNotNil } from 'shared/utils/checkIs';
 import { checkUserScopeAccessRight } from 'shared/utils/index/utils';
 import { mapObjectEntries, objectLength } from 'shared/utils/object.utils';
@@ -32,7 +33,7 @@ export function IndexAccessRightsPage() {
   return (
     <PageContainerConfigurer
       className="index-access-rights"
-      headTitle={translateBase(it => it.accessRights)}
+      headTitle={translateBase(BaseLocaleKey.AccessRights)}
       content={
         <>
           <Accordion.Root

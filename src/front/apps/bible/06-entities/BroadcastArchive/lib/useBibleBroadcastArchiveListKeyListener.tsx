@@ -13,6 +13,7 @@ import { bibleBroadcastCurrentSelectedIndexAtom, bibleBroadcastKeyListenScopeAto
 import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { emptyFunc } from 'shared/utils';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { BibleBroadcastArchiveContentText } from '../ui/ContentText';
@@ -58,7 +59,7 @@ export const useBibleBroadcastArchiveListKeyListener = (
             case 'Delete': {
               const selectedItemi = bibleBroadcastCurrentSelectedIndexAtom.get();
               if (event.ctrlKey) {
-                if (await confirm(translateBase(it => it.bible.clearChapter, { c: title })))
+                if (await confirm(translateBase(BaseLocaleKey.BibleClearChapter, { c: title })))
                   actualRef.current.onRemove();
               } else if (
                 await confirm(
@@ -66,7 +67,7 @@ export const useBibleBroadcastArchiveListKeyListener = (
                     {makeBibleJoinedAddressText(actualRef.current.langi, list[selectedItemi], 'short')} -{' '}
                     <BibleBroadcastArchiveContentText item={list[selectedItemi]} />
                   </>,
-                  translateBase(it => it.del),
+                  translateBase(BaseLocaleKey.Delete),
                 )
               )
                 actualRef.current.onRemove(selectedItemi);

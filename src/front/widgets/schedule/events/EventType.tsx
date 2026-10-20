@@ -9,6 +9,7 @@ import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { useMemo, useState } from 'react';
 import { AttTranslatorType, attTranslatorTypes, IScheduleWidget, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { objectLength } from 'shared/utils/object.utils';
 import { ScheduleWidgetBindAtts } from '../atts/BindAtts';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
@@ -46,7 +47,7 @@ export function ScheduleWidgetEventType(props: {
         value={props.typeBox}
         isRedact={props.isRedact}
         icon="SchoolReportCard"
-        title={translateBase(it => it.name)}
+        title={translateBase(BaseLocaleKey.Name)}
         isImpossibleEmptyValue
         onChanged={setTitle}
         onSend={value =>
@@ -66,9 +67,9 @@ export function ScheduleWidgetEventType(props: {
       <StrongEditableField
         type="tel"
         value={'' + (props.typeBox.tm ?? '')}
-        postfix={translateBase(it => it.min_minute)}
+        postfix={translateBase(BaseLocaleKey.MinuteShort)}
         isRedact={props.isRedact}
-        title={translateBase(it => it.durationMin)}
+        title={translateBase(BaseLocaleKey.DurationMinutes)}
         icon="Clock01"
         onSend={value => schEventTypesTsjrpcClient.setTm({ props: eventTypeScopeProps, tm: +value })}
       />
@@ -78,7 +79,7 @@ export function ScheduleWidgetEventType(props: {
           atts={props.typeBox.atts}
           forTitle={
             <>
-              {translateBase(it => it.sch.insWatchAtt, {
+              {translateBase(it => it[BaseLocaleKey.ScheduleInsertOverviewAttachment], {
                 NEXT: (key, value) => {
                   if (!key) return value;
                   return <span className="text-x7">{value}</span>;
@@ -122,7 +123,7 @@ export function ScheduleWidgetEventType(props: {
           <div>
             <div className="flex gap-2">
               <LazyIcon icon="Attachment" />
-              Вложения
+              {translateBase(BaseLocaleKey.ScheduleAttachments)}
             </div>
           </div>
         )
@@ -164,7 +165,8 @@ export function ScheduleWidgetEventType(props: {
           <ModalHeader>
             <span className="flex gap-2 w-full between">
               <span>
-                <span className="text-x7">{props.typeBox.title} </span>- Редактирование шаблона
+                <span className="text-x7">{props.typeBox.title} </span>
+                {translateBase(BaseLocaleKey.ScheduleTemplateRedact)}
               </span>
             </span>
           </ModalHeader>

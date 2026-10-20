@@ -3,6 +3,7 @@ import { cmBroadcastCurrentSlideiAtom } from '$cm/entities/broadcast';
 import { useCmComCurrent } from '$cm/entities/com';
 import { Link } from '@tanstack/react-router';
 import { MenuComToolName } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmComTool } from '../ComTool';
 
 export const CmComToolBroadcast = () => {
@@ -14,7 +15,7 @@ export const CmComToolBroadcast = () => {
       search={prev => ({ ...(prev as object), comw: ccom?.wid, tran: '-!-' })}
     >
       <CmComTool
-        title={translateBase(it => it.cm.com.tool[MenuComToolName.ShowTranslation])}
+        title={translateBase(it => it[BaseLocaleKey.CmMarkComTool][MenuComToolName.ShowTranslation])}
         icon="Computer"
         onClick={cmBroadcastCurrentSlideiAtom.reset}
       />

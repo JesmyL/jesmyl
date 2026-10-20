@@ -69,8 +69,19 @@ export const objectGroupBy: typeof Object.groupBy = (iterable, keySelector) => {
   return result as never;
 };
 
-export const convertObjectToArray = <Value, Obj extends Record<number, Value>>(obj: Obj) => {
-  const result: Value[] = [];
-  forEachObjectEntries(obj, (key, value) => (result[key as number] = value as never));
-  return result as Obj & Value[];
+export type ObjectToArrayed<T> = T extends object
+  ? keyof T extends number
+    ? T
+    : { [K in keyof T]: ObjectToArrayed<T[K]> }
+  : T;
+
+export const convertObjectToArray = <
+  Obj extends Record<number, Value>,
+  Value = ObjectToArrayed<Obj[Extract<keyof Obj, number>]>,
+>(
+  obj: Obj,
+): ObjectToArrayed<Obj> & Value[] => {
+  const result: unknown[] = [];
+  forEachObjectEntries(obj, (key, value) => (result[key as number] = value));
+  return result as never;
 };

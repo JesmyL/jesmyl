@@ -1,4 +1,6 @@
+import { translateBase } from '#basis/locale';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 type Props = {
   disabled: boolean;
@@ -11,7 +13,11 @@ export const DayEventIsNeedTgInformButton = ({ disabled, isNeedInform, onSend }:
     <TheIconSendButton
       disabled={disabled}
       icon={isNeedInform ? 'NotificationOff01' : 'Notification01'}
-      postfix={isNeedInform ? 'TG-Напоминания не будет' : 'TG-Напоминание будет'}
+      postfix={
+        isNeedInform
+          ? translateBase(BaseLocaleKey.ScheduleTelegramInformWontBe)
+          : translateBase(BaseLocaleKey.ScheduleTelegramInformWillBe)
+      }
       onSend={() => onSend(isNeedInform ? 1 : 0)}
     />
   );

@@ -5,6 +5,7 @@ import { cmAppActions } from '$cm/shared/const';
 import { useComNumber } from '$cm/shared/lib';
 import { Atom, atom } from 'atomaric';
 import { CmComWidDef, MenuComToolName } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmComTool } from '../ComTool';
 
 let isOpenQrAtom: Atom<boolean>;
@@ -18,7 +19,7 @@ export const CmComToolQrComShare = () => {
 
   const toolNode = (
     <CmComTool
-      title={translateBase(it => it.cm.com.tool[MenuComToolName.QrShare])}
+      title={translateBase(it => it[BaseLocaleKey.CmMarkComTool][MenuComToolName.QrShare])}
       icon="QrCode"
       onClick={isOpenQrAtom.do.toggle}
     />

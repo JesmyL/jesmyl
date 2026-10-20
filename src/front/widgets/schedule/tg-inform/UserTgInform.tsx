@@ -1,5 +1,7 @@
+import { translateBase } from '#basis/locale';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { IScheduleWidget, ScheduleScopeProps } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { schGeneralTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { useScheduleWidgetRights } from '../useScheduleWidget';
 
@@ -16,14 +18,14 @@ export const ScheduleWidgetMyUserTgInform = ({
   return rights.myUser.tgInform === 0 ? (
     <TheIconSendButton
       icon="NotificationOff01"
-      postfix="Не оповещать меня о событиях в TG"
+      postfix={translateBase(BaseLocaleKey.ScheduleDontInformMeTelegram)}
       className="mb-2"
       onSend={() => schGeneralTsjrpcClient.setIsTgInformMe({ props: scheduleScopeProps, type: 1 })}
     />
   ) : (
     <TheIconSendButton
       icon="Notification01"
-      postfix="Оповещать меня о событиях в TG"
+      postfix={translateBase(BaseLocaleKey.ScheduleInformMeTelegram)}
       className="mb-2"
       onSend={() => schGeneralTsjrpcClient.setIsTgInformMe({ props: scheduleScopeProps, type: 0 })}
     />

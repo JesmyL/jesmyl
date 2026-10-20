@@ -1,9 +1,11 @@
+import { translateBase } from '#basis/locale';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { CopyTextButton } from '#shared/ui/CopyTextButton';
 import { useStoragesIsEditInnersContext } from '$storages/shared/state/IsEditContext';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { Link } from '@tanstack/react-router';
 import { hostConfig } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
 import { StoragesCellTypeProps } from '../model/model';
 
@@ -44,7 +46,8 @@ export const StoragesCellOfTypeLink = (props: StoragesCellTypeProps<StoragesColu
             text={linkValue}
             message={
               <>
-                Скопировано <strong>{linkValue}</strong>
+                {translateBase(BaseLocaleKey.StoragesCopied)}
+                <strong>{linkValue}</strong>
               </>
             }
           />

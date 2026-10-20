@@ -5,6 +5,7 @@ import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { Link } from '@tanstack/react-router';
 import { Atom, atom } from 'atomaric';
 import { CmComWid } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmComListQrShare } from './ComListShare';
 import { CmComFullscreenExpandList } from './FullscreenExpandComList';
 
@@ -27,7 +28,7 @@ export const CmComLocalListToolsPopup = ({
     <>
       <BottomPopupItem
         icon="BookOpen02"
-        title={translateBase(it => it.cm.com.expandList)}
+        title={translateBase(BaseLocaleKey.CmExpandList)}
         onClick={isOpenListAtom.do.toggle}
       />
 
@@ -41,13 +42,13 @@ export const CmComLocalListToolsPopup = ({
       >
         <BottomPopupItem
           icon={isTouchDevice ? 'Play' : 'Computer'}
-          title={translateBase(it => it.cm.com.showLiSlides)}
+          title={translateBase(BaseLocaleKey.CmShowListSlides)}
         />
       </Link>
 
       <BottomPopupItem
         icon="QrCode01"
-        title={translateBase(it => it.cm.com.shareLi)}
+        title={translateBase(BaseLocaleKey.CmShareList)}
         onClick={isOpenQrAtom.do.toggle}
       />
 

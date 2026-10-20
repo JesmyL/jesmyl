@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { EllipsisText } from '#shared/ui/EllipsisText';
 import { QrReader } from '#shared/ui/qr-code/QrReader';
@@ -5,6 +6,7 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesRack, StoragesRackCard } from 'shared/model/storages/list.model';
 
 let isQrReaderOpenAtom: Atom<boolean>;
@@ -25,7 +27,7 @@ export const StoragesRackCardMetaInfoReader = ({
   return (
     <>
       <div>
-        <div>Мета-данные</div>
+        <div>{translateBase(BaseLocaleKey.StoragesMetadata)}</div>
         <div className="flex gap-3">
           <Button
             icon="QrCode"
@@ -46,7 +48,7 @@ export const StoragesRackCardMetaInfoReader = ({
             <TheIconButton
               icon="Delete01"
               className="text-xKO"
-              confirm="Удалить мета-информацию?"
+              confirm={translateBase(BaseLocaleKey.StoragesRemoveMetadataConfirm)}
               onClick={() => storagesTsjrpcClient.editRackCardMeta({ rackw: rack.w, meta: '', cardi: card.i })}
             />
           )}

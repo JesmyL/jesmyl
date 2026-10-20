@@ -9,6 +9,7 @@ import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useQuery } from '@tanstack/react-query';
 import { atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { randomOf } from 'shared/randoms';
 import { jversion } from 'shared/values';
 import { toast } from 'sonner';
@@ -54,9 +55,9 @@ export const IndexAppVersionLabel = ({ className }: { className?: string }) => {
         <TheIconLoading />
       ) : appVersion ? (
         jversion.num === appVersion ? (
-          translateBase(it => it.actualVer)
+          translateBase(BaseLocaleKey.ActualVersion)
         ) : (
-          translateBase(it => it.newVer, { v: appVersion })
+          translateBase(BaseLocaleKey.NewVersion, { v: appVersion })
         )
       ) : (
         ''
@@ -71,7 +72,7 @@ export const IndexAppVersionLabel = ({ className }: { className?: string }) => {
               icon="Refresh"
               className={isThereNewSW ? 'text-x7' : ''}
               withoutAnimation
-              confirm={translateBase(it => it.refreshAppConfirm)}
+              confirm={translateBase(BaseLocaleKey.RefreshApplicationConfirm)}
               onClick={event => {
                 event.stopPropagation();
                 setIsRefreshProcess(true);
@@ -85,12 +86,12 @@ export const IndexAppVersionLabel = ({ className }: { className?: string }) => {
               onClick={async event => {
                 event.stopPropagation();
                 const code = randomOf(12345, 9876543);
-                const answer = await prompt(translateBase(it => it.immediateRefreshOnFinish, { c: code }));
+                const answer = await prompt(translateBase(BaseLocaleKey.RefreshOnFinish, { c: code }));
                 if (answer == null) return;
 
                 if (+answer !== +code) {
                   toast(
-                    translateBase(it => it.incCode),
+                    translateBase(BaseLocaleKey.IncorrectCode),
                     makeToastKOMoodConfig(),
                   );
                   return;

@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { useIsRedactArea } from '#shared/lib/hooks/useIsRedactArea';
 import { useIsRememberExpand } from '#shared/ui/expand/useIsRememberExpand';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -13,6 +14,7 @@ import {
   ScheduleWidgetDayEventAttValue,
   ScheduleWidgetDayi,
 } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { isNIs, retNull } from 'shared/utils';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { ScheduleWidgetDayEventAttResult } from './DayEventAttResult';
@@ -116,11 +118,20 @@ export const DayEventKnownAtt = (props: ScheduleDayEventKnownAttProps) => {
               <ScheduleWidgetTopicTitle
                 titleBox={props.schedule.types[event.type]}
                 topicBox={event}
-                prefix={props.day.i !== day.i && <span>{`${props.schedule.days.indexOf(day) + 1} день, `}</span>}
+                prefix={
+                  props.day.i !== day.i && (
+                    <span>
+                      {translateBase(BaseLocaleKey.ScheduleDayNumberComma, {
+                        n: props.schedule.days.indexOf(day) + 1,
+                      })}
+                    </span>
+                  )
+                }
               />
             </div>
           );
-      } else attContent ??= <div className="text-xKO">Источник удалён</div>;
+      } else
+        attContent ??= <div className="text-xKO">{translateBase(BaseLocaleKey.ScheduleSourceRemoved)}</div>;
     }
 
     attContent ??= isExpand && (
@@ -140,7 +151,7 @@ export const DayEventKnownAtt = (props: ScheduleDayEventKnownAttProps) => {
     );
   } catch (error) {
     console.error(error);
-    attContent = <div className="text-xKO">Контент не доступен</div>;
+    attContent = <div className="text-xKO">{translateBase(BaseLocaleKey.ScheduleContentUnavailable)}</div>;
   }
 
   return (

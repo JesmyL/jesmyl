@@ -2,6 +2,7 @@ import { takeDynamicLanguageAtom } from '#basis/state/locale';
 import { Langi } from 'shared/api';
 import { langCodeDict } from 'shared/const/+locale';
 import { BibleTitleCodei } from 'shared/model/bible/enums';
+import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
 import { extractNumber, iife } from 'shared/utils';
 import { checkIsNotNil, checkIsNumber } from 'shared/utils/checkIs';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
@@ -114,14 +115,16 @@ forEachObjectEntries(langCodeDict, langi => {
 export const takeBibleLangBooks = (langi: Langi) =>
   (lowerTitleDict[langi] ??= iife(() => {
     try {
-      const bookTranslations = takeDynamicLanguageAtom(langi).get().bible.title;
+      const dynamic = takeDynamicLanguageAtom(langi).get();
+      const fullTitles = dynamic[DynLocaleKey.BibleTitleFull];
+      const shortTitles = dynamic[DynLocaleKey.BibleTitleShort];
 
       return bibleTitles.map(book => ({
         color: book.color,
-        full: bookTranslations.full[book.key],
-        short: bookTranslations.short[book.key],
-        lfull: bookTranslations.full[book.key].toLowerCase(),
-        lshort: bookTranslations.short[book.key].toLowerCase(),
+        full: fullTitles[book.key],
+        short: shortTitles[book.key],
+        lfull: fullTitles[book.key].toLowerCase(),
+        lshort: shortTitles[book.key].toLowerCase(),
       }));
     } catch {
       return bibleTitles.map(it => ({

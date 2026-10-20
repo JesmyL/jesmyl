@@ -3,6 +3,7 @@ import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { cmComChordVisibleVariantAtom } from '$cm/entities/com';
 import { useAtomValue } from 'atomaric';
 import { MenuComToolName } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { toast } from 'sonner';
 import { CmComTool } from '../ComTool';
 
@@ -11,7 +12,7 @@ export const CmComToolChordsVariant = () => {
 
   return (
     <CmComTool
-      title={translateBase(it => it.cm.com.tool[MenuComToolName.ChordsVariant])}
+      title={translateBase(it => it[BaseLocaleKey.CmMarkComTool][MenuComToolName.ChordsVariant])}
       icon={
         chordVisibleVariant === ChordVisibleVariant.Maximal
           ? 'ApproximatelyEqualSquare'
@@ -27,16 +28,16 @@ export const CmComToolChordsVariant = () => {
               ? ChordVisibleVariant.Minimal
               : ChordVisibleVariant.Maximal;
 
-        if (newVariant === ChordVisibleVariant.Maximal) toast(translateBase(it => it.cm.maxChCount));
+        if (newVariant === ChordVisibleVariant.Maximal) toast(translateBase(BaseLocaleKey.CmMaximumChordsCount));
         if (newVariant === ChordVisibleVariant.Minimal)
           toast(
-            translateBase(it => it.cm.minChCount),
+            translateBase(BaseLocaleKey.CmMinimumChordsCount),
             {
               action: {
-                label: translateBase(it => it.detailed),
+                label: translateBase(BaseLocaleKey.Detailed),
                 onClick: () => {
                   toast(
-                    translateBase(it => it.cm.minChCountDsc),
+                    translateBase(BaseLocaleKey.CmMinimumChordsCountDescription),
                     {
                       duration: 10000,
                       closeButton: true,
@@ -46,7 +47,7 @@ export const CmComToolChordsVariant = () => {
               },
             },
           );
-        if (newVariant === ChordVisibleVariant.None) toast(translateBase(it => it.cm.noChTxt));
+        if (newVariant === ChordVisibleVariant.None) toast(translateBase(BaseLocaleKey.CmNoChordsText));
 
         cmComChordVisibleVariantAtom.set(newVariant);
 

@@ -11,6 +11,8 @@ import { useAtomValue } from 'atomaric';
 import { useEffect, useMemo, useState } from 'react';
 import { CmComCommentBlockSimpleSelector, CmComCommentBlockSpecialSelector } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
 import { CmComCommentConstructorRuleType } from 'shared/model/cm/com-comment';
 import { itNIt, itNUnd, retNull } from 'shared/utils';
 import { objectValues } from 'shared/utils/object.utils';
@@ -64,8 +66,8 @@ export const CmComCommentConstructorTextRulesConstructor = ({
               blockKey={`${variativeSelectorPrefix}b0`}
               label={
                 <span className="text-x7">
-                  {translateBase(it => it.cm.com.forEachBlock, {
-                    n: translateDynamic(langi)(it => it.cm.com.kind[ordKind.top.key]),
+                  {translateBase(BaseLocaleKey.CmForEachBlock, {
+                    n: translateDynamic(langi)(it => it[DynLocaleKey.CmComKind][ordKind.top.key]),
                   })}
                 </span>
               }
@@ -116,7 +118,9 @@ export const CmComCommentConstructorTextRulesConstructor = ({
         selector={selector}
       />
       {!isShowComments ? (
-        <div className="w-full h-full flex justify-center text-xKO">{translateBase(it => it.cm.comm.areHidden)}</div>
+        <div className="w-full h-full flex justify-center text-xKO">
+          {translateBase(BaseLocaleKey.CmCommentAreHidden)}
+        </div>
       ) : (
         <>
           {commentCssNode}
@@ -138,7 +142,7 @@ export const CmComCommentConstructorTextRulesConstructor = ({
                 <CmComCommentConstructorTextWithAccentRedactor
                   key={blocki}
                   blockKey={`${simpleSelectorPrefix}b${blocki}`}
-                  label={translateBase(it => it.cm.comm.N, { n: blocki + 1 })}
+                  label={translateBase(BaseLocaleKey.CmCommentNumber, { n: blocki + 1 })}
                   blockPropsHolder={propsDict}
                   multiline
                   type={

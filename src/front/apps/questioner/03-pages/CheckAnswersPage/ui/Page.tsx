@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Accordion } from '#shared/components/ui/accordion';
 import { Button } from '#shared/components/ui/button';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
@@ -8,6 +9,7 @@ import { questionerIDB } from '$q/shared/state/qIdb';
 import { QuestionerAnswerCard } from '$q/shared/ui/AnswerCard';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { QuestionerBlankWid } from 'shared/model/q';
 import { itNIt } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
@@ -20,7 +22,12 @@ export const QuestionerCheckAnswersPage = ({ blankw }: { blankw: QuestionerBlank
   return (
     <PageContainerConfigurer
       className="QuestionerAnswersPage"
-      headTitle={<>{questionBlank?.title || 'Ответы'} - проверка</>}
+      headTitle={
+        <>
+          {questionBlank?.title || translateBase(BaseLocaleKey.QuestionerAnswers)} -{' '}
+          {translateBase(BaseLocaleKey.QuestionerReview)}
+        </>
+      }
       withoutBackButton
       head={
         <div className="flex gap-3">

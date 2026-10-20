@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
@@ -5,6 +6,7 @@ import { TextInput } from '#shared/ui/TextInput';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { schGeneralTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 
 let isModalOpenAtom: Atom<boolean>;
@@ -17,7 +19,7 @@ export const ScheduleCreateWidgetButton = () => {
   return (
     <>
       <SendButton
-        title="Создать расписание"
+        title={translateBase(BaseLocaleKey.ScheduleCreate)}
         onSend={() => {
           setTitle('');
           isModalOpenAtom.set(true);
@@ -25,9 +27,9 @@ export const ScheduleCreateWidgetButton = () => {
       />
 
       <Modal openAtom={isModalOpenAtom}>
-        <ModalHeader>Новое расписание</ModalHeader>
+        <ModalHeader>{translateBase(BaseLocaleKey.ScheduleNew)}</ModalHeader>
         <ModalBody>
-          <div>Создать расписание с названием</div>
+          <div>{translateBase(BaseLocaleKey.ScheduleCreateWithTitle)}</div>
           <div>
             <TextInput
               value={title}
@@ -40,7 +42,7 @@ export const ScheduleCreateWidgetButton = () => {
             <TheIconSendButton
               icon="PlusSign"
               className="text-xOK"
-              postfix="Создать"
+              postfix={translateBase(BaseLocaleKey.Create)}
               disabled={!title}
               onSuccess={() => {
                 setTitle('');
@@ -56,7 +58,7 @@ export const ScheduleCreateWidgetButton = () => {
             />
             <TheIconButton
               icon="Cancel01"
-              postfix="Отменить"
+              postfix={translateBase(BaseLocaleKey.ScheduleCancel)}
               className="text-xKO"
               onClick={() => {
                 setTitle('');

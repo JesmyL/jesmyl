@@ -1,4 +1,5 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
@@ -20,6 +21,7 @@ import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useState } from 'react';
 import { CmComOrderWid, CmComWid, CmComWidDef, ScheduleWidgetWid } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const CmEditorEditComEventInterpretationFullContentInner = ({
   comw,
@@ -46,7 +48,7 @@ export const CmEditorEditComEventInterpretationFullContentInner = ({
   return (
     <>
       <div className="my-3 max-w-[calc(100vw-80px)]">
-        Редактирование интерпритации для мероприятия
+        {translateBase(BaseLocaleKey.CmEditorInterpretationEdit)}
         <span className="text-x7"> {schedule?.title}</span>
       </div>
       {linkNode}

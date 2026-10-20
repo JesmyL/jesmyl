@@ -4,6 +4,7 @@ import { Card } from '#shared/components/ui/card';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { atom, Atom, useAtomValue } from 'atomaric';
 import { CmComWid } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { twMerge } from 'tailwind-merge';
 
 type Props = {
@@ -38,7 +39,7 @@ export const CmEditorComTabTextBlockPrevValueUpdateModal = (
 
   return (
     <Modal openAtom={openHistoryAtom}>
-      <ModalHeader>{translateBase(it => it.cm.com.insPrevTxt)}</ModalHeader>
+      <ModalHeader>{translateBase(BaseLocaleKey.CmEditInsertPreviousText)}</ModalHeader>
       <ModalBody>
         {texti != null &&
           history?.[texti]?.map((text, txti) => {
@@ -55,14 +56,14 @@ export const CmEditorComTabTextBlockPrevValueUpdateModal = (
                       openHistoryAtom.reset();
                     }}
                   >
-                    {translateBase(it => it.cm.com.repTxt)}
+                    {translateBase(BaseLocaleKey.CmEditReplaceText)}
                   </Button>
                 </Card.Footer>
               </Card.Root>
             );
           })}
       </ModalBody>
-      <ModalFooter>{translateBase(it => it.cm.com.willClear)}</ModalFooter>
+      <ModalFooter>{translateBase(BaseLocaleKey.CmEditWillClearOnInsert)}</ModalFooter>
     </Modal>
   );
 };

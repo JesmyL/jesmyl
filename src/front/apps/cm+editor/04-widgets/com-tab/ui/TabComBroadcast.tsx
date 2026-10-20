@@ -17,6 +17,7 @@ import {
   CmComTextSquareBracketsMode,
 } from 'shared/api';
 import { Bool } from 'shared/enums';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmBroadcastMonolineSlideOrdStrId, CmComNewlinerSymbolFreeUpperCaseLine } from 'shared/model/cm/broadcast';
 import { incrementNumber, nagativeNumber } from 'shared/utils';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
@@ -57,11 +58,11 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
       const ordLineId = makeCmBroadcastMonolineSlideOrdLineStrId(ord.wid, linei, repeati, samei);
 
       if (lines.length > manyLinesLen) {
-        warns[ordLineId] = ['text-x3 bg-xKO', translateBase(it => it.manyStrs)];
+        warns[ordLineId] = ['text-x3 bg-xKO', translateBase(BaseLocaleKey.ManyLines)];
       } else if (lines.length > maxLinesLen) {
-        warns[ordLineId] = ['text-x1 bg-x3 opacity-50', translateBase(it => it.maxStrsCount)];
+        warns[ordLineId] = ['text-x1 bg-x3 opacity-50', translateBase(BaseLocaleKey.MaximumLinesCount)];
       } else if (lines.length < fewLinesLen) {
-        warns[ordLineId] = ['text-x3 bg-orange-500 opacity-60', translateBase(it => it.fewStrs)];
+        warns[ordLineId] = ['text-x3 bg-orange-500 opacity-60', translateBase(BaseLocaleKey.FewLines)];
       }
     });
 
@@ -129,7 +130,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                       })
                     }
                   >
-                    {translateBase(it => it.cm.com.cnfStrN, { n: lineConfigi + 1 })}
+                    {translateBase(BaseLocaleKey.CmEditConfigStringNumber, { n: lineConfigi + 1 })}
                   </Button>
                 </div>
               );

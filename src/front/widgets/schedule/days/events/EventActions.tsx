@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -7,6 +8,7 @@ import { ScheduleWidgetEventType } from '#widgets/schedule/events/EventType';
 import { schDaysTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { Atom, atom } from 'atomaric';
 import { IScheduleWidget, IScheduleWidgetDayEvent, ScheduleDayScopeProps } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 type Props = {
   event: IScheduleWidgetDayEvent;
@@ -26,23 +28,23 @@ export function ScheduleWidgetDayEventEventActions({ schedule, event, onEventCut
     <>
       <TheIconButton
         icon="Shapes"
-        postfix="Редактировать шаблон события"
+        postfix={translateBase(BaseLocaleKey.ScheduleRedactEventTemplate)}
         className="flex-max my-2"
         onClick={isOpenModalAtom.do.toggle}
       />
       <TheIconButton
         icon="Crop"
-        postfix="Вырезать событие"
+        postfix={translateBase(BaseLocaleKey.ScheduleCutEvent)}
         className="flex-max my-2"
         onClick={onEventCut}
       />
       {schedule.types && (
         <TheIconSendButton
           icon="Delete01"
-          postfix="Удалить событие"
+          postfix={translateBase(BaseLocaleKey.ScheduleRemoveEvent)}
           confirm={
             <ScheduleWidgetTopicTitle
-              prefix="Удалить событие "
+              prefix={translateBase(BaseLocaleKey.ScheduleRemoveEvent) + ' '}
               titleBox={schedule.types[event.type]}
               topicBox={event}
             />
@@ -62,7 +64,7 @@ export function ScheduleWidgetDayEventEventActions({ schedule, event, onEventCut
 
       <Modal openAtom={isOpenModalAtom}>
         <ModalHeader>
-          Шаблон события <span className="text-x7">{schedule.types[event.type].title}</span>
+          {translateBase(BaseLocaleKey.ScheduleEventTemplate, { t: schedule.types[event.type].title })}
         </ModalHeader>
         <ModalBody>
           {schedule.types[event.type] ? (
@@ -73,7 +75,7 @@ export function ScheduleWidgetDayEventEventActions({ schedule, event, onEventCut
               isRedact
             />
           ) : (
-            <>Шаблон не найден</>
+            <>{translateBase(BaseLocaleKey.ScheduleTemplateNotFound)}</>
           )}
         </ModalBody>
       </Modal>

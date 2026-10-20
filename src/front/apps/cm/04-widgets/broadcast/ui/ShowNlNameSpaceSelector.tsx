@@ -2,6 +2,7 @@ import { translateBase } from '#basis/locale';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { cmBroadcastCurrentNameSpaceiAtom } from '$cm/entities/broadcast';
 import { useAtomValue } from 'atomaric';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const CmBroadcastShowNlNameSpaceSelector = () => {
   const nameSpacei = useAtomValue(cmBroadcastCurrentNameSpaceiAtom);
@@ -9,17 +10,17 @@ export const CmBroadcastShowNlNameSpaceSelector = () => {
   return (
     <>
       <Dropdown
-        label={translateBase(it => it.cm.bro.lineSep)}
+        label={translateBase(BaseLocaleKey.CmBroadcastLineSeparator)}
         id={nameSpacei}
         onSelectId={cmBroadcastCurrentNameSpaceiAtom.set}
         items={[
           {
             id: 0,
-            title: translateBase(it => it.cm.bro.five),
+            title: translateBase(BaseLocaleKey.CmBroadcastFive),
           },
           {
             id: 1,
-            title: translateBase(it => it.cm.bro.duo),
+            title: translateBase(BaseLocaleKey.CmBroadcastDuo),
           },
         ]}
       />

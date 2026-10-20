@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -11,6 +12,7 @@ import {
   ScheduleWidgetDayEventAttValues,
   ScheduleWidgetWid,
 } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itNNull } from 'shared/utils';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
@@ -33,17 +35,20 @@ export function ScheduleWidgetCopy(props: { schw: ScheduleWidgetWid }) {
     <>
       <TheIconButton
         icon="Copy02"
-        postfix="Скопировать расписание"
+        postfix={translateBase(BaseLocaleKey.ScheduleCopyAll)}
         onClick={isModalOpenAtom.do.toggle}
       />
 
       {schedule ? (
         <Modal openAtom={isModalOpenAtom}>
-          <ModalHeader>Копируем {schedule.title}</ModalHeader>
+          <ModalHeader>{translateBase(BaseLocaleKey.ScheduleCopying, { t: schedule.title })}</ModalHeader>
           <ModalBody>
             <TheIconSendButton
               icon="Copy02"
-              postfix={`Скопировать ${schedule.title} в ${rights.schedule.title}`}
+              postfix={translateBase(BaseLocaleKey.ScheduleCopyXToY, {
+                t: schedule.title,
+                o: rights.schedule.title,
+              })}
               onSuccess={isModalOpenAtom.reset}
               onSend={() => {
                 const myUser = schedule.ctrl.users.find(user => user.login === auth.login);
@@ -107,7 +112,7 @@ export function ScheduleWidgetCopy(props: { schw: ScheduleWidgetWid }) {
         </Modal>
       ) : (
         <Modal openAtom={isModalOpenAtom}>
-          <ModalHeader>Какое расписание копировать?</ModalHeader>
+          <ModalHeader>{translateBase(BaseLocaleKey.ScheduleWhichToCopy)}</ModalHeader>
           <ModalBody>
             {schedules?.map(schedule => {
               if (props.schw === schedule.w) return null;

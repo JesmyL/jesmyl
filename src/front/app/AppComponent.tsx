@@ -20,6 +20,7 @@ import { atom, configureAtomaric, useAtomValue } from 'atomaric';
 import React, { useEffect, useState, useSyncExternalStore } from 'react';
 import { langCodeDict, langCodeLoadingTitleDict } from 'shared/const/+locale';
 import { CmComOrders } from 'shared/const/cm/Com/parents/20-Orders';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { extractNumber, iife } from 'shared/utils';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
@@ -51,7 +52,7 @@ export const AppComponent = () => {
   useEffect(() => {
     const unauthListener = soki.onTokenInvalidEvent.listen(() => {
       toast(
-        translateBase(it => it.authIncorrect),
+        translateBase(BaseLocaleKey.AuthorizationIncorrect),
         makeToastKOMoodConfig(),
       );
     });
@@ -108,7 +109,7 @@ export const AppComponent = () => {
                   key={0}
                   className="size-full flex justify-center items-center pb-3"
                 >
-                  {translateBase(it => it.selProgram)}
+                  {translateBase(BaseLocaleKey.SelectProgram)}
                 </div>,
               ]}
             />
@@ -130,7 +131,7 @@ export const AppComponent = () => {
         <WithAtomValue atom={rootAppModalTextContentAtom}>
           {props => (
             <>
-              <ModalHeader>{props.header || translateBase(it => it.msg)}</ModalHeader>
+              <ModalHeader>{props.header || translateBase(BaseLocaleKey.Message)}</ModalHeader>
               <ModalBody>{props.text}</ModalBody>
               {props.footer && <ModalFooter>{props.footer}</ModalFooter>}
             </>

@@ -2,6 +2,7 @@ import { translateBase } from '#basis/locale';
 import { useBibleBroadcastArchiveListKeyListener } from '$bible/entities/BroadcastArchive';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { BibleBroadcastKeyListenScope } from '../model/broadcast';
 import {
@@ -51,7 +52,7 @@ export const useBibleBroadcastArchiveKeyListener = (win: Window) => {
 
   useBibleBroadcastArchiveListKeyListener(
     win,
-    translateBase(it => it.history),
+    translateBase(BaseLocaleKey.History),
     BibleBroadcastKeyListenScope.History,
     history,
     itemi => bibleIDB.set.broadcastHistory(prev => (checkIsNil(itemi) ? [] : prev?.filter((_, iti) => iti !== itemi))),
@@ -59,7 +60,7 @@ export const useBibleBroadcastArchiveKeyListener = (win: Window) => {
 
   useBibleBroadcastArchiveListKeyListener(
     win,
-    translateBase(it => it.plan),
+    translateBase(BaseLocaleKey.Plan),
     BibleBroadcastKeyListenScope.Plan,
     plan,
     itemi => bibleIDB.set.broadcastPlan(prev => (checkIsNil(itemi) ? [] : prev?.filter((_, iti) => iti !== itemi))),

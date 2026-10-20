@@ -1,10 +1,19 @@
+import { translateBase } from '#basis/locale';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { defaultScreenBroadcastBackgroundConfig } from './complect/defaults';
 import { AlertLineConfig, ScreenBroadcastConfig } from './model';
 
-export const defaultComplectConfig: ScreenBroadcastConfig = { title: 'Трансляция', proportion: 1 };
+export const defaultComplectConfig: ScreenBroadcastConfig = {
+  get title() {
+    return translateBase(BaseLocaleKey.Broadcast);
+  },
+  proportion: 1,
+};
 
 export const defaultAlertLineConfig: OmitOwn<AlertLineConfig, 'id'> = {
-  title: 'Срочно!',
+  get title() {
+    return translateBase(BaseLocaleKey.Urgent);
+  },
   icon: 'Alert01',
   fontSize: 30,
   top: 70,

@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
@@ -5,6 +6,7 @@ import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { TheCmComOrder } from '$cm/ext';
 import { Atom, atom } from 'atomaric';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmEditorComOrderToolsProps } from '../model';
 
 let isModalOpenAtom: Atom<boolean>;
@@ -16,16 +18,16 @@ export const CmEditorComOrderToolsChordBind = ({ com, ord, ordi }: CmEditorComOr
     <>
       <BottomPopupItem
         icon="Playlist03"
-        title="Аккорды"
+        title={translateBase(BaseLocaleKey.CmChords)}
         onClick={isModalOpenAtom.do.toggle}
       />
 
       <Modal openAtom={isModalOpenAtom}>
-        <ModalHeader>Аккорды</ModalHeader>
+        <ModalHeader>{translateBase(BaseLocaleKey.CmChords)}</ModalHeader>
 
         <ModalBody>
           <pre style={{ whiteSpace: 'normal' }}>
-            <b>Устанавливаем Аккорды для блока</b>
+            <b>{translateBase(BaseLocaleKey.CmEditorSetBlockChords)}</b>
             <br />
             <br />
             <TheCmComOrder

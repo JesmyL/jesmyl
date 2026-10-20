@@ -1,32 +1,27 @@
+import { translateBase } from '#basis/locale';
 import { DisabledArea } from '#shared/ui/DisabledArea';
 import { useConfirm } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { twMerge } from 'tailwind-merge';
 import { CmEditorComOrderToolsProps } from '../model';
 
 export const CmEditorComOrderToolsAnchorDelete = ({ com, ord, onClose }: CmEditorComOrderToolsProps) => {
   const confirm = useConfirm();
-  const ifAnchorSuffix = ord.isAnchor ? 'ссылку на ' : '';
+  const ifAnchorSuffix = ord.isAnchor ? `${translateBase(BaseLocaleKey.CmEditorLinkToBlock, { h: '' })}` : '';
   const isDisabled = ord.me.prev == null && ord.me.isNextInherit;
 
   return (
     <DisabledArea
       disabled={isDisabled}
-      disabledReason="Следующий блок - продолжение"
+      disabledReason={translateBase(BaseLocaleKey.CmEditorNextIsContinuation)}
       onClick={async () => {
         if (
           !(await confirm(
             <>
-              {'Удалить '}
-              <span className="text-x7">
-                {ifAnchorSuffix}
-                {ord.me.header()}
-              </span>
-              ?
-              {ord.top.p?.flat().length
-                ? ' Данное действие повлечёт за собой уничтожение аппликатуры в данном блоке.'
-                : ''}
+              {translateBase(BaseLocaleKey.CmEditorDeleteBlock)} <span className="text-x7">{ord.me.header()}</span>?
+              {ord.top.p?.flat().length ? ` ${translateBase(BaseLocaleKey.CmEditorAppliqueDestroyed)}` : ''}
             </>,
           ))
         )
@@ -43,7 +38,7 @@ export const CmEditorComOrderToolsAnchorDelete = ({ com, ord, onClose }: CmEdito
         <BottomPopupItem
           icon="Delete02"
           className={twMerge('text-xKO', className)}
-          title={`Удалить ${ifAnchorSuffix} ${ord.me.header()}`}
+          title={`${translateBase(BaseLocaleKey.CmEditorDeleteBlock)} ${ifAnchorSuffix}${ord.me.header()}`}
           onClick={onClick}
         />
       )}

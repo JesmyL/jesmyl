@@ -1,6 +1,8 @@
+import { translateBase } from '#basis/locale';
 import { useSetRootAnchoredContent } from '#shared/ui/useSetRootAnchoredContent';
 import { atom } from 'atomaric';
 import { ReactNode, useCallback, useMemo, useRef } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { emptyFunc } from 'shared/utils';
 import { KeyboardListeners } from '../../../KeyboardListeners';
 import { Modal } from '../../modal/ui/Modal';
@@ -38,7 +40,7 @@ export const useConfirm = () => {
             onEnter={() => onAction(true)}
             onEscape={() => onAction(false)}
           />
-          <ModalHeader>{header ?? 'Подтверди'}</ModalHeader>
+          <ModalHeader>{header ?? translateBase(BaseLocaleKey.ConfigConfirmHeader)}</ModalHeader>
           <ModalBody>{content}</ModalBody>
           <ModalFooter>
             <span className="flex gap-5">
@@ -51,7 +53,7 @@ export const useConfirm = () => {
                   resolvers.resolve(true);
                 }}
               >
-                Да
+                {translateBase(BaseLocaleKey.ConfigYes)}
               </span>
               <span
                 id="confirm-button-NO"
@@ -62,7 +64,7 @@ export const useConfirm = () => {
                   onCloseRef.current();
                 }}
               >
-                Нет
+                {translateBase(BaseLocaleKey.ConfigNo)}
               </span>
             </span>
           </ModalFooter>

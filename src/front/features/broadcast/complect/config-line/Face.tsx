@@ -1,6 +1,8 @@
+import { translateBase } from '#basis/locale';
 import { ScreenBroadcastConfig } from '#features/broadcast/model';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import styled from '@emotion/styled';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { twMerge } from 'tailwind-merge';
 
 interface ScreenBroadcastFaceProps {
@@ -27,7 +29,7 @@ export const ScreenBroadcastFace = ({
       {putOnClose && (
         <TheIconButton
           icon="Cancel01"
-          confirm="Закрыть окно?"
+          confirm={translateBase(BaseLocaleKey.CloseConfirm)}
           onClick={putOnClose(configi)}
         />
       )}

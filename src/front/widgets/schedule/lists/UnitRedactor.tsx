@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
@@ -8,6 +9,7 @@ import {
   ScheduleUnitScopeProps,
   ScheduleWidgetUserCati,
 } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ScheduleWidgetUserList } from '../control/users/UserList';
 import { schListsTsjrpcClient, schUsersTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 
@@ -20,7 +22,9 @@ type Props = {
 };
 
 export const ScheduleWidgetListUnitRedactor = ({ unit, cat, cati, shortTitles, unitScopeData }: Props) => {
-  const title = <>{unit.title || <span className="italic">Без названия</span>}</>;
+  const title = (
+    <>{unit.title || <span className="italic">{translateBase(BaseLocaleKey.ScheduleUntitled)}</span>}</>
+  );
 
   return (
     <>
@@ -33,7 +37,7 @@ export const ScheduleWidgetListUnitRedactor = ({ unit, cat, cati, shortTitles, u
       <ModalBody>
         <StrongEditableField
           icon="Bookmark03"
-          title="Название"
+          title={translateBase(BaseLocaleKey.Name)}
           value={unit}
           fieldKey="title"
           isRedact
@@ -41,7 +45,7 @@ export const ScheduleWidgetListUnitRedactor = ({ unit, cat, cati, shortTitles, u
         />
         <StrongEditableField
           icon="File02"
-          title="Описание"
+          title={translateBase(BaseLocaleKey.Description)}
           value={unit}
           fieldKey="dsc"
           multiline
@@ -49,7 +53,7 @@ export const ScheduleWidgetListUnitRedactor = ({ unit, cat, cati, shortTitles, u
           onSend={value => schListsTsjrpcClient.setUnitDescription({ props: unitScopeData, value, cati })}
         />
         <ScheduleWidgetUserList
-          title="Состав"
+          title={translateBase(BaseLocaleKey.ScheduleComposition)}
           filter={() => true}
           asUserPlusPrefix={(userNode, user, balance) => {
             const isForMember = balance < 3;

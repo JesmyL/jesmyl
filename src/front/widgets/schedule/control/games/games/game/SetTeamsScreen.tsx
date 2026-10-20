@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
@@ -8,6 +9,7 @@ import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { schGamesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { useEffect, useState } from 'react';
 import { IScheduleWidgetExportableTeam, ScheduleWidgetUserMi } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { toRandomSorted } from 'shared/randoms';
 import { arrayByLength } from 'shared/utils/object.utils';
 import { ScheduleWidgetRemovableUserFace } from '../../RemovableUserFace';
@@ -90,12 +92,10 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
 
   return (
     <>
-      <h3>
-        Составляем новые команды для игры <span className="text-x7">{game.title}</span>
-      </h3>
+      <h3>{translateBase(BaseLocaleKey.ScheduleNewTeams, { t: game.title })}</h3>
       {criterias && (
         <div className="my-2 mb-10">
-          Критерий сортировки
+          {translateBase(BaseLocaleKey.ScheduleSortCriteria)}
           <Dropdown
             id={criteriai}
             items={criterias.map(({ title }, id) => ({ id, title }))}
@@ -104,7 +104,7 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
         </div>
       )}
       <div className="mb-10">
-        Количество команд
+        {translateBase(BaseLocaleKey.ScheduleTeamsCount)}
         <TextInput
           value={teamsCountStr}
           type="tel"
@@ -112,7 +112,7 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
         />
       </div>
       <div className="flex between w-full mb-2">
-        Точность сортировки
+        {translateBase(BaseLocaleKey.ScheduleSortPrecision)}
         {retriesLine.map(rate => {
           return (
             <div
@@ -142,12 +142,12 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
         })}
       </div>
 
-      <h3>Команды</h3>
+      <h3>{translateBase(BaseLocaleKey.ScheduleTeams)}</h3>
       {isRecompute ? (
-        <div className="my-10">Перераспределяю...</div>
+        <div className="my-10">{translateBase(BaseLocaleKey.ScheduleRedistributing)}</div>
       ) : (
         <>
-          <h4>Разбег между командами - {diapason}</h4>
+          <h4>{translateBase(BaseLocaleKey.ScheduleTeamSpread, { n: diapason })}</h4>
 
           {teams.map((team, teami) => {
             return (
@@ -155,7 +155,7 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
                 key={teami}
                 className="my-10"
               >
-                <h3>Команда {teami + 1}</h3>
+                <h3>{translateBase(BaseLocaleKey.ScheduleTeamNumber, { n: teami + 1 })}</h3>
                 {team.users.map(({ mi }) => {
                   const user = schUsers.find(user => user.mi === mi);
 
@@ -173,9 +173,9 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
           })}
 
           <SendButton
-            title="Отправить"
+            title={translateBase(BaseLocaleKey.Send)}
             disabled={!criterias?.length || !teams.length}
-            confirm="Отправить список команд?"
+            confirm={translateBase(BaseLocaleKey.ScheduleSendTeams)}
             onSend={() =>
               schGamesTsjrpcClient.setTeams({ props: { ...scheduleScopeProps, gameMi: game.mi }, value: teams })
             }

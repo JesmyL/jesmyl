@@ -1,4 +1,4 @@
-import { currentLangiAtom } from '#basis/locale';
+import { currentLangiAtom, translateBase } from '#basis/locale';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import {
   bibleAllTranslates,
@@ -9,6 +9,7 @@ import {
 } from '$bible/ext';
 import { useAtomValue } from 'atomaric';
 import React from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmComCommentForExample } from './ForExample';
 
 export function TheCmComCommentBibleTextsInfo() {
@@ -17,33 +18,28 @@ export function TheCmComCommentBibleTextsInfo() {
 
   return (
     <div className="">
-      <ModalHeader>Библейские тексты в Предисловии</ModalHeader>
+      <ModalHeader>{translateBase(BaseLocaleKey.BiblePrefaceTexts)}</ModalHeader>
       <ModalBody>
-        <p>
-          Если в тексте для Предисловия вставить Библейскую ссылку в определённом формате, то в Предисловие будет
-          вставлен текст из Писания автоматически
-        </p>
+        <p>{translateBase(BaseLocaleKey.BiblePreface1)}</p>
 
         <p>
-          Последовательность Библейской ссылки выглядит так:
+          {translateBase(BaseLocaleKey.BiblePreface2)}
           <CmComCommentForExample>
             rst:1 Фес 1:2-3
             <br />
             rst:1пар2:13
           </CmComCommentForExample>
           <br />
-          Пробелы и высота букв не обязательны. Но пробела после кода перевода (rst:) быть не должно
+          {translateBase(BaseLocaleKey.BiblePreface3)}
         </p>
 
         <p>
-          Для вставки в Предисловие текста Писания обязательна приставка перевода с двоеточием (в предыдущем примере
-          "rst:")
-          <CmComCommentForExample>1 Фес 1:2-3</CmComCommentForExample> - такая ссылка не будет сопровождаться Библейским
-          текстом
+          {translateBase(BaseLocaleKey.BiblePreface4)}
+          <CmComCommentForExample>1 Фес 1:2-3</CmComCommentForExample>
         </p>
 
         <p>
-          Перевод задаётся латинскими буквами. На данный момент доступны такие переводы:
+          {translateBase(BaseLocaleKey.BiblePreface5)}
           {bibleAllTranslates.map(tName => {
             return (
               <React.Fragment key={tName}>
@@ -55,8 +51,8 @@ export function TheCmComCommentBibleTextsInfo() {
         </p>
 
         <p>
-          <span className="text-xKO">Нужный перевод должен быть загружен!</span>
-          {'Загруженные переводы: '}
+          <span className="text-xKO">{translateBase(BaseLocaleKey.BibleTranslationsMustBeLoaded)}</span>
+          {translateBase(BaseLocaleKey.BibleLoadedTranslations)}:{' '}
           <span className="text-x7">{myTranslates.join(', ')}</span>
           <span className="align-middle m-2">
             <BibleTranslateModulesRedactButton />
@@ -64,7 +60,7 @@ export function TheCmComCommentBibleTextsInfo() {
         </p>
 
         <p>
-          Для идентификации Библейской книги укажите сокращение или полное название:
+          {translateBase(BaseLocaleKey.BiblePreface6)}
           {takeBibleLangBooks(langi).map(({ full: fullName, short: shortName }, titlei) => {
             return (
               <React.Fragment key={shortName}>
@@ -77,8 +73,8 @@ export function TheCmComCommentBibleTextsInfo() {
         </p>
         <p>
           <br />
-          Можно указывать пробел после цифры в названии книги
-          <CmComCommentForExample>1 Цар и 1Цар</CmComCommentForExample> - одинаковые записи
+          {translateBase(BaseLocaleKey.BiblePreface7)}
+          <CmComCommentForExample>1 Цар и 1Цар</CmComCommentForExample>
         </p>
       </ModalBody>
     </div>

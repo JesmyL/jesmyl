@@ -2,6 +2,7 @@ import { translateBase } from '#basis/locale';
 import { isMobileDevice } from '#shared/lib/device-differences';
 import { AppFooter } from '$app/AppFooter';
 import { AppFooterItem } from '$app/AppFooterItem';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const BibleFooter = () => {
   return (
@@ -11,14 +12,14 @@ export const BibleFooter = () => {
           key="main"
           idPostfix="main"
           to="/bible/i"
-          title={translateBase(it => it.bible.chapter)}
+          title={translateBase(BaseLocaleKey.BibleChapter)}
           icon="File02"
         />,
         <AppFooterItem
           key="search"
           idPostfix="search"
           to="/bible/search"
-          title={translateBase(it => it.search)}
+          title={translateBase(BaseLocaleKey.Search)}
           icon="FileSearch"
         />,
 
@@ -27,7 +28,7 @@ export const BibleFooter = () => {
             key="tran"
             idPostfix="tran"
             to="/bible/tran"
-            title={translateBase(it => it.broadcast)}
+            title={translateBase(BaseLocaleKey.Broadcast)}
             icon="Computer"
           />
         ),

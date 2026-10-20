@@ -3,7 +3,10 @@ import { atom, useAtomValue } from 'atomaric';
 import { makeRegExp } from 'regexpert';
 import { Langi } from 'shared/api';
 import { langCodeDict } from 'shared/const/+locale';
+import { LocaleDynamic } from 'shared/model/+locale/dynamic';
 import { checkIsNil } from 'shared/utils/checkIs';
+import { setBaseLocaleProvider, translateBase } from 'shared/utils/locale/base';
+import { DefinedTranslateFunction, NEXTcb, SimpleDictValue, TranslateKeyResult } from 'shared/utils/locale/model';
 import { translateBaseDefine } from 'shared/utils/locale/translate';
 
 export const currentLangiAtom = atom(() => {
@@ -15,6 +18,8 @@ export const currentLangiAtom = atom(() => {
 
     kz: Langi.Kz,
     kk: Langi.Kz,
+
+    en: Langi.En,
   };
 
   const navLang = (navigator.language || ('userLanguage' in navigator ? `${navigator.userLanguage}` : ''))
@@ -28,6 +33,7 @@ export const langSystemCodeDict: Record<Langi, string> = {
   [Langi.Ru]: 'ru-RU',
   [Langi.Ua]: 'uk-UA',
   [Langi.Kz]: 'kk-KZ',
+  [Langi.En]: 'en-GB',
 };
 
 export let applicationLangi = currentLangiAtom.get();
@@ -41,7 +47,9 @@ if (checkIsNil(lang)) {
 
 export const languageSystemCode = langSystemCodeDict[applicationLangi];
 
-export const translateBase = translateBaseDefine(() => takeBaseLanguageAtom().get());
+setBaseLocaleProvider(() => takeBaseLanguageAtom().get());
+
+export { translateBase };
 
 export const useTranslateBase = () => {
   const dict = useAtomValue(takeBaseLanguageAtom());
@@ -49,4 +57,28 @@ export const useTranslateBase = () => {
   return translateBaseDefine(dict);
 };
 
-export const translateDynamic = (langi: Langi) => translateBaseDefine(takeDynamicLanguageAtom(langi).get());
+type DynamicLocale = LocaleDynamic<Langi>;
+
+export function translateDynamic(langi: Langi): DefinedTranslateFunction<DynamicLocale>;
+
+export function translateDynamic<
+  Key extends keyof DynamicLocale,
+  Interpolation extends Record<string, SimpleDictValue> & { NEXT?: NEXTcb<string> },
+>(
+  langi: Langi,
+  key: Key,
+  interpolation: Interpolation,
+): (Interpolation extends { NEXT: NEXTcb<string, infer R> } ? R[] : string) | '';
+
+export function translateDynamic<Key extends keyof DynamicLocale>(
+  langi: Langi,
+  key: Key,
+  interpolation?: nil | void,
+): TranslateKeyResult<DynamicLocale, Key>;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function translateDynamic(langi: Langi, key?: keyof DynamicLocale, interpolation?: unknown): any {
+  const translate = translateBaseDefine(takeDynamicLanguageAtom(langi).get());
+
+  return checkIsNil(key) ? translate : translate(key as never, interpolation as never);
+}

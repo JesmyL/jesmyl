@@ -1,8 +1,10 @@
+import { translateBase } from '#basis/locale';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useCmMp3Rules } from '$cm+editor/shared/lib/useCmMp3Rules';
 import { ReactNode, useState } from 'react';
 import { StrRegExp, makeRegExp } from 'regexpert';
 import { CmMp3Rule } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmEditorMp3RuleTextLine } from './TextLine';
 
 export const CmEditorMp3RuleEditor = (
@@ -34,7 +36,7 @@ export const CmEditorMp3RuleEditor = (
     <>
       <div className="flex flex-col m-5">
         <CmEditorMp3RuleTextLine
-          label="URL-адрес:"
+          label={translateBase(BaseLocaleKey.CmEditorUrlColon)}
           isRedact={isRedact}
           text={url}
           error={errorMessage}
@@ -43,26 +45,27 @@ export const CmEditorMp3RuleEditor = (
               const url = new URL(value);
               const unnecessary = value.replace(url.origin, '');
               if (props.newRule && mp3Rules?.some(rule => rule.url === url.origin))
-                setErrorMessage('Такой URL-адрес уже есть');
-              else if (url.protocol !== 'https:') setErrorMessage('Ссылка должна начинаться с https://');
+                setErrorMessage(translateBase(BaseLocaleKey.CmEditorUrlAlreadyExists));
+              else if (url.protocol !== 'https:')
+                setErrorMessage(translateBase(BaseLocaleKey.CmEditorUrlMustBeHttps));
               else if (unnecessary) {
-                setErrorMessage(`Ссылка должна быть на корень сайта (без ${unnecessary})`);
+                setErrorMessage(translateBase(BaseLocaleKey.CmEditorUrlMustBeRoot, { u: unnecessary }));
               } else setErrorMessage('');
             } catch (_e) {
-              setErrorMessage('Невалидный URL-адрес');
+              setErrorMessage(translateBase(BaseLocaleKey.CmEditorInvalidUrl));
             }
             setUrl(value);
           }}
         />
 
         <CmEditorMp3RuleTextLine
-          label="Redirect"
+          label={translateBase(BaseLocaleKey.CmEditorRedirect)}
           isRedact={isRedact}
           text={redirect}
           error={redirectError}
           setText={value => {
             setRedirectError(
-              mp3Rules?.some(rule => rule.url === value) ? '' : 'Редирект должен быть на известный ресурс',
+              mp3Rules?.some(rule => rule.url === value) ? '' : translateBase(BaseLocaleKey.CmEditorRedirectKnown),
             );
 
             setRedirect(value);
@@ -70,21 +73,21 @@ export const CmEditorMp3RuleEditor = (
         />
 
         <CmEditorMp3RuleTextLine
-          label="Query (mp3):"
+          label={translateBase(BaseLocaleKey.CmEditorQueryMp3)}
           isRedact={isRedact}
           text={query}
           setText={setQuery}
         />
 
         <CmEditorMp3RuleTextLine
-          label="Аттрибут с URL (mp3):"
+          label={translateBase(BaseLocaleKey.CmEditorAttributeUrlMp3)}
           isRedact={isRedact}
           text={attr}
           setText={setAttr}
         />
 
         <CmEditorMp3RuleTextLine
-          label="Аттрибут (текст):"
+          label={translateBase(BaseLocaleKey.CmEditorAttributeText)}
           isRedact={isRedact}
           text={textQuery}
           setText={setTextQuery}
@@ -92,7 +95,7 @@ export const CmEditorMp3RuleEditor = (
 
         {textQuery && (
           <div className="w-full">
-            innerHTML (Не innerText):
+            {translateBase(BaseLocaleKey.CmEditorHtmlMode)}
             {isRedact ? (
               <input
                 type="checkbox"
@@ -106,7 +109,7 @@ export const CmEditorMp3RuleEditor = (
         )}
 
         <CmEditorMp3RuleTextLine
-          label="Замена в строке URL (RegExp):"
+          label={translateBase(BaseLocaleKey.CmEditorReplaceUrlRegExp)}
           isRedact={isRedact}
           text={repReg}
           error={repRegError}
@@ -125,7 +128,7 @@ export const CmEditorMp3RuleEditor = (
         />
 
         <CmEditorMp3RuleTextLine
-          label="Заменить в строке URL (на текст):"
+          label={translateBase(BaseLocaleKey.CmEditorReplaceUrlText)}
           isRedact={isRedact}
           text={repText}
           setText={setRepText}

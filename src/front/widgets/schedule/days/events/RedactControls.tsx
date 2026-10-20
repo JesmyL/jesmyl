@@ -1,7 +1,9 @@
+import { translateBase } from '#basis/locale';
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { ScheduleDayEventScopeProps } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { DayEventIsNeedTgInformButton } from './IsNeedTgInformButton';
 
 type Props = {
@@ -28,12 +30,11 @@ export const DayEventRedactControls = ({
       <TheIconSendButton
         icon={isSecret ? 'CheckmarkSquare02' : 'Square'}
         confirm={
-          <>
-            Событие <span className="text-x7">{eventTypeTitle} </span>
-            {isSecret ? 'больше не скрытое' : 'сделать скрытым'}?
-          </>
+          isSecret
+            ? translateBase(BaseLocaleKey.ScheduleEventUnhide, { t: eventTypeTitle })
+            : translateBase(BaseLocaleKey.ScheduleEventMakeHidden, { t: eventTypeTitle })
         }
-        postfix="Скрытое событие"
+        postfix={translateBase(BaseLocaleKey.ScheduleHiddenEvent)}
         onSend={() => schDayEventsTsjrpcClient.toggleIsSecret({ props: dayEventScopeProps, value: undefined })}
       />
 
@@ -52,15 +53,15 @@ export const DayEventRedactControls = ({
         isRedact
         type="tel"
         value={'' + eventTm}
-        postfix=" мин"
-        title="Продолжительность, мин"
+        postfix={translateBase(BaseLocaleKey.MinuteShort)}
+        title={translateBase(BaseLocaleKey.DurationMinutes)}
         icon="Clock01"
         onSend={value => schDayEventsTsjrpcClient.setTm({ props: dayEventScopeProps, value: +value })}
       />
       <StrongEditableField
         isRedact
         value={eventTopic}
-        title="Тема"
+        title={translateBase(BaseLocaleKey.ScheduleTopic)}
         icon="Bookmark03"
         onSend={value => schDayEventsTsjrpcClient.setTopic({ props: dayEventScopeProps, value })}
       />

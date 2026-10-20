@@ -5,6 +5,7 @@ import { useMemo } from 'react';
 import { CmCatWid, IExportableCat } from 'shared/api';
 import { CmCat } from 'shared/const/cm/Cat';
 import { cmEditorCategoryTrackers } from 'shared/const/cm/cmEditorCategoryTrackers';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { extractNumber } from 'shared/utils';
 import { objectKeys } from 'shared/utils/object.utils';
 
@@ -39,6 +40,6 @@ const makeDefICat = (): IExportableCat => ({
   k: 'full',
   m: 0,
   t: 'all',
-  n: translateBase(it => it.cm.cat.li.all),
+  n: translateBase(it => it[BaseLocaleKey.CmCategoryList].all),
   w: CmCatWid.all,
 });

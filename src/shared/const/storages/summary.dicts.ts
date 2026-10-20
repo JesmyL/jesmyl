@@ -1,19 +1,27 @@
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesRackSummaryType } from 'shared/model/storages/list.model';
+import { translateBase } from 'shared/utils/locale/base';
 
 export const storagesSummaryTypePropsDict: Record<
   StoragesRackSummaryType,
   { title: string; mapDateString: (dateTs: number) => string | null }
 > = {
   [StoragesRackSummaryType.Total]: {
-    title: 'Общее',
+    get title() {
+      return translateBase(BaseLocaleKey.StoragesTotal);
+    },
     mapDateString: () => null,
   },
   [StoragesRackSummaryType.ByMonth]: {
-    title: 'За месяц',
+    get title() {
+      return translateBase(BaseLocaleKey.StoragesByMonth);
+    },
     mapDateString: ts => new Date(ts).toLocaleString('ru', { year: 'numeric', month: 'long' }),
   },
   [StoragesRackSummaryType.ByYear]: {
-    title: 'За год',
+    get title() {
+      return translateBase(BaseLocaleKey.StoragesByYear);
+    },
     mapDateString: ts => new Date(ts).toLocaleString('ru', { year: 'numeric' }),
   },
 };

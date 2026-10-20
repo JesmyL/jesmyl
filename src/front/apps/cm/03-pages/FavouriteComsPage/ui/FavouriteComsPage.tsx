@@ -5,6 +5,7 @@ import { cmComFavoriteComwsAtom, CmComLocalListToolsPopup } from '$cm/entities/c
 import { CmComFaceList } from '$cm/entities/com-face';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const CmFavouriteComsPage = () => {
   const favouriteComws = useAtomValue(cmComFavoriteComwsAtom);
@@ -13,7 +14,7 @@ export const CmFavouriteComsPage = () => {
   return (
     <PageContainerConfigurer
       className="favorites-container"
-      headTitle={translateBase(it => it.fav)}
+      headTitle={translateBase(BaseLocaleKey.Favorite)}
       onMoreClick={setIsOpenTools}
       content={
         <>

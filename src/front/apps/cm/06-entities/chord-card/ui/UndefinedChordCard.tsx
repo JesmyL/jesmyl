@@ -2,13 +2,14 @@ import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRi
 import { translateBase } from '#basis/locale';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { Link } from '@tanstack/react-router';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const CmChordCardUndefined = ({ chord }: { chord: string }) => {
   const checkAccess = useCheckUserAccessRightsInScope();
 
   return (
     <div className="text-xKO flex gap-2">
-      {translateBase(it => it.cm.unkCh)}
+      {translateBase(BaseLocaleKey.CmUnknownChord)}
       {checkAccess('cm', 'CHORD', 'U') && (
         <Link
           to="/cm/edit/chord"

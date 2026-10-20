@@ -34,13 +34,16 @@ export const indexTSJRPCBaseRequestFreshes = {
     { lastModfiedAt, iconPacks: userIconPacks, iconsMd5Hash: userIconsMd5Hash },
     { client, auth, visitInfo },
   ) => {
+    if (!visitInfo || visitInfo.version < 1301) return;
+
+    /** @deprecated */
     lastModfiedAt = Math.trunc(lastModfiedAt);
 
     const isNoAuth = auth == null;
     const login = auth?.login;
     const someScheduleUser = (user: IScheduleWidgetUser) => user.login === login;
 
-    if (lastModfiedAt && checkIsNotNil(visitInfo) && visitInfo.version > 1239) {
+    if (lastModfiedAt && checkIsNotNil(visitInfo)) {
       const baseFileStorage = langLocaleBaseFileStoragesLazy()[visitInfo.langi ?? Langi.Ru];
       const { items, maxMod } = (await langLocaleDynamicFileStoragesLazy()).getFreshItems(lastModfiedAt);
 

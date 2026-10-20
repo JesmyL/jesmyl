@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { convertFileToBase64 } from '#shared/lib/convertFileToBase64';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
@@ -16,6 +17,7 @@ import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import md5Func from 'md5';
 import { useEffect, useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { twMerge } from 'tailwind-merge';
 import {
   gamerMemoryGiantBoardImageisAtom,
@@ -63,7 +65,7 @@ export const GamerMemoryGiantPage = () => {
   return (
     <PageContainerConfigurer
       className="GamerMemoryGiantPage"
-      headTitle="Мемори-гигант"
+      headTitle={translateBase(BaseLocaleKey.GamerMemoryGiant)}
       head={
         <div className="flex gap-3">
           {currentKeyNumber}
@@ -73,7 +75,7 @@ export const GamerMemoryGiantPage = () => {
             hiddenArrow
             items={[1, 3, 5, 8, 10].map(num => ({ id: num, title: num }))}
             onSelectId={gamerMemoryGiantShowTimeSecondsAtom.set}
-            renderItem={({ id }) => <>{id} сек.</>}
+            renderItem={({ id }) => <>{translateBase(BaseLocaleKey.GamerSeconds, { n: '' + id })}</>}
           />
 
           <WithAtomValue atom={gamerMemoryGiantShowAllImagesAtom}>
@@ -112,7 +114,7 @@ export const GamerMemoryGiantPage = () => {
             disabled={!boardImages}
             variant="destructive"
             onClick={async () => {
-              if (!(await confirm('Закончить игру?'))) return;
+              if (!(await confirm(translateBase(BaseLocaleKey.GamerEndGameConfirm)))) return;
 
               gamerMemoryGiantBoardImageisAtom.do.abort();
               setWin(null);
@@ -159,7 +161,7 @@ export const GamerMemoryGiantPage = () => {
                         <TheIconButton
                           className="bg-xKO text-x3! rounded"
                           icon="Delete01"
-                          confirm="Удалить изображение?"
+                          confirm={translateBase(BaseLocaleKey.GamerRemoveImageConfirm)}
                           onClick={async () => {
                             await gamerIDB.tb.memoryGiantImages.delete(image.md5);
                             gamerMemoryGiantUsedImagesAtom.do.removeFirst(image.md5);

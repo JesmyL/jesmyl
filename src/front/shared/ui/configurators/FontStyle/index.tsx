@@ -1,16 +1,18 @@
+import { translateBase } from '#basis/locale';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ConfiguratorEditProps } from '../model';
 import { FontStyleType } from './model';
 
-const items: DropdownItem<FontStyleType>[] = [
+const makeItems = (): DropdownItem<FontStyleType>[] => [
   {
     id: FontStyleType.None,
-    title: 'Обычный',
+    title: translateBase(BaseLocaleKey.StoragesUsual),
   },
   {
     id: FontStyleType.Italic,
-    title: 'Наклон',
+    title: translateBase(BaseLocaleKey.ConfigItalic),
   },
 ];
 
@@ -19,10 +21,10 @@ type Props = ConfiguratorEditProps<{ fontStyle?: FontStyleType }>;
 export const FontStyleConfigurator = ({ config, updateConfig }: Props) => {
   return (
     <div className="flex gap-2 flex-max my-2">
-      Стиль текста
+      {translateBase(BaseLocaleKey.ConfigTextStyle)}
       <Dropdown
         id={config.fontStyle}
-        items={items}
+        items={makeItems()}
         onSelectId={fontStyle => updateConfig({ fontStyle })}
       />
     </div>

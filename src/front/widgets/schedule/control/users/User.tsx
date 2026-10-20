@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -12,6 +13,7 @@ import {
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ScheduleWidgetUserTakePhoto } from './TakePhoto';
 import { ScheduleWidgetUserEdit } from './UserEdit';
 import { ScheduleWidgetUserPhoto } from './UserPhoto';
@@ -45,7 +47,7 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
 
   const userName =
     user.nick === undefined
-      ? user.fio || <span className="text-x7 italic">Ссылка</span>
+      ? user.fio || <span className="text-x7 italic">{translateBase(BaseLocaleKey.Link)}</span>
       : `${user.fio && user.fio !== user.nick ? `${user.fio} (${user.nick})` : user.nick} `;
 
   const userNode = (
@@ -99,9 +101,10 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
               {userName}
               {balance < 0
                 ? user.R == null
-                  ? ' - Новый'
-                  : ' - в блоке'
-                : scheduleWidgetUserRights.texts[balance]?.role?.[0] || ' - Неизвестный'}
+                  ? translateBase(BaseLocaleKey.ScheduleNewUser)
+                  : translateBase(BaseLocaleKey.ScheduleInBlock)
+                : scheduleWidgetUserRights.texts[balance]?.role?.[0] ||
+                  translateBase(BaseLocaleKey.ScheduleUnknown)}
             </span>
             <span className="flex gap-2">
               <ScheduleWidgetUserTakePhoto user={user} />
@@ -116,13 +119,13 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
               !scheduleWidgetUserRights.checkIsHasRights(user.R, ScheduleWidgetUserRoleRight.Read) ? (
                 <TheIconButton
                   icon="NotificationOff01"
-                  postfix="Участник не получает TG-уведомления"
+                  postfix={translateBase(BaseLocaleKey.ScheduleUserNotReceiveTelegram)}
                   disabled
                 />
               ) : (
                 <TheIconButton
                   icon="Notification01"
-                  postfix="Участник получает TG-уведомления"
+                  postfix={translateBase(BaseLocaleKey.ScheduleUserReceiveTelegram)}
                   disabled
                 />
               )}

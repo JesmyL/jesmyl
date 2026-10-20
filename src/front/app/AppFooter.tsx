@@ -11,6 +11,7 @@ import { useLocation, useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import React, { FC, useEffect, useRef } from 'react';
 import { makeRegExp } from 'regexpert';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsNotBoolean, checkIsNotNil } from 'shared/utils/checkIs';
 import { twMerge } from 'tailwind-merge';
 import { AppFooterItem } from './AppFooterItem';
@@ -86,7 +87,7 @@ export function AppFooter({ children }: { children: () => React.ReactNode[]; app
         <FooterTrack className="other-track min-w-20">
           <AppFooterItem
             icon="CircleArrowRight02"
-            title={translateBase(it => it.inoe)}
+            title={translateBase(BaseLocaleKey.Inoe)}
             to={`/!other/${(appName === '!other' ? place : appName) as never}`}
             idPostfix="other"
           />

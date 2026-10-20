@@ -15,6 +15,7 @@ import { Link, useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { Suspense, useEffect, useState } from 'react';
 import { CmComWid } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsNaN } from 'shared/utils/checkIs';
 import { objectEntries } from 'shared/utils/object.utils';
 import { useCmEditorCompositionTrySendAudioMarks } from '../api/useCmComEditorTrySendAudioMarks';
@@ -63,10 +64,10 @@ export const CmEditorCompositionPage = ({
         headTitle={removedComs[ccomw]}
         content={
           <div className="flex column">
-            <h2 className="text-xKO">{translateBase(it => it.cm.comRemoved)}</h2>
+            <h2 className="text-xKO">{translateBase(BaseLocaleKey.CmComRemoved)}</h2>
             <TheIconButton
               icon="MapsRefresh"
-              postfix={translateBase(it => it.cm.comeBack)}
+              postfix={translateBase(BaseLocaleKey.CmComeBack)}
               className="text-xOK"
               onClick={() => cmEditComClientTsjrpcMethods.bringBackToLife({ comw: ccomw })}
             />

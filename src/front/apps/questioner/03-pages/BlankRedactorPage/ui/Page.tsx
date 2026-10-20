@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Accordion } from '#shared/components/ui/accordion';
 import { Button } from '#shared/components/ui/button';
@@ -20,6 +21,7 @@ import { QuestionerTemplateVisibilityRedactor } from '$q/widgets/TemplateVisibil
 import { Link } from '@tanstack/react-router';
 import { Atom, atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import {
   QuestionerAdminTemplateContentProps,
   QuestionerBlankWid,
@@ -40,7 +42,7 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
   return (
     <PageContainerConfigurer
       className="QuestionerRedactorPage"
-      headTitle={blank?.title ?? 'Опрос'}
+      headTitle={blank?.title ?? translateBase(BaseLocaleKey.QuestionerSurvey)}
       head={
         <>
           {!blank?.w || (
@@ -116,7 +118,7 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
 
                       const errors = [
                         contentProps.takeShowError?.(props as never),
-                        !template.dsc && 'Нет текста вопроса',
+                        !template.dsc && translateBase(BaseLocaleKey.QuestionerNoQuestionText),
                       ].filter(itIt);
 
                       return (
@@ -143,7 +145,9 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
                                     >
                                       <LazyIcon icon="ViewOffSlash" />
                                     </Popover.Trigger>
-                                    <Popover.Content>Вопрос скрыт</Popover.Content>
+                                    <Popover.Content>
+                                      {translateBase(BaseLocaleKey.QuestionerQuestionHidden)}
+                                    </Popover.Content>
                                   </Popover.Root>
                                 ) : (
                                   !!errors.length && (
@@ -186,7 +190,7 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
                           requiredSign={
                             <IconCheckbox
                               checked={!!template.req}
-                              postfix="Обязательно для заполнения"
+                              postfix={translateBase(BaseLocaleKey.QuestionerRequired)}
                               className="text-xKO"
                               onChange={value =>
                                 questionerAdminTsjrpcClient.changeTemplateRequiredSign({ blankw, value, templateId })
@@ -196,7 +200,9 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
                           innerTitle={
                             <InputWithLoadingIcon
                               icon="TextFont"
-                              label={`Заголовок (${questionerTemplateDescriptions[template.type].title})`}
+                              label={translateBase(BaseLocaleKey.QuestionerHeaderWithType, {
+                                t: questionerTemplateDescriptions[template.type].title,
+                              })}
                               defaultValue={template.title || questionerTemplateDescriptions[template.type].title}
                               onChanged={value =>
                                 questionerAdminTsjrpcClient.changeTemplateTitle({ blankw, value, templateId })
@@ -206,7 +212,7 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
                           description={
                             <InputWithLoadingIcon
                               icon="TextAlignLeft"
-                              label="Текст вопроса"
+                              label={translateBase(BaseLocaleKey.QuestionerQuestionText)}
                               defaultValue={template.dsc ?? ''}
                               multiline
                               onChanged={value =>

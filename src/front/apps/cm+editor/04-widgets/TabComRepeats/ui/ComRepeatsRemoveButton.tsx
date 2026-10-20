@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { Modal, ModalBody, ModalHeader, useConfirm } from '#shared/ui/modal';
@@ -8,6 +9,7 @@ import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-edit
 import { useAtomValue } from 'atomaric';
 import { makeRegExp } from 'regexpert';
 import { CmComOrder } from 'shared/const/cm/order/Order';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsNotNumber } from 'shared/utils/checkIs';
 import { deepClone } from 'shared/utils/clone';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
@@ -37,7 +39,12 @@ export const CmEditorTabComRepeatsRemoveButton = ({ ord, textLinei, wordi }: Pro
               propagationStopper(event);
 
               if (isChordBlock) {
-                if (await confirm(`Сбросить повторения блока "${start.ord.me.header() || ''}"?`, 'Сброс')) {
+                if (
+                  await confirm(
+                    translateBase(BaseLocaleKey.CmEditorResetRepeats, { h: start.ord.me.header() || '' }),
+                    translateBase(BaseLocaleKey.CmEditorReset),
+                  )
+                ) {
                   cmEditComOrderClientTsjrpcMethods.removeRepeats({
                     comw: start.ord.com.wid,
                     ordw: start.ord.wid,
@@ -52,7 +59,7 @@ export const CmEditorTabComRepeatsRemoveButton = ({ ord, textLinei, wordi }: Pro
           />
 
           <Modal openAtom={isOpenModalAtom}>
-            <ModalHeader>Сброс границ</ModalHeader>
+            <ModalHeader>{translateBase(BaseLocaleKey.CmEditorResetBounds)}</ModalHeader>
 
             <ModalBody>
               {ord.regions
@@ -133,7 +140,7 @@ export const CmEditorTabComRepeatsRemoveButton = ({ ord, textLinei, wordi }: Pro
                           isOpenModalAtom.reset();
                         }}
                       >
-                        Сбросить
+                        {translateBase(BaseLocaleKey.CmEditorReset)}
                       </TheButton>
                     </div>
                   );

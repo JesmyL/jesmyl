@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -18,6 +19,7 @@ import {
   ScheduleWidgetAppAttCustomized,
   ScheduleWidgetRightsCtrl,
 } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { twMerge } from 'tailwind-merge';
 import { ScheduleKeyValueListAttStatistic } from '../Statistic';
 import { ScheduleWidgetKeyValueItemGrabber } from './lib/itemGrabber';
@@ -66,7 +68,7 @@ export function ScheduleKeyValueListAtt({
     checkboxes = customAttUseRights.checkIsHasIndividualRights(att.use, CustomAttUseRights.Checkboxes) && (
       <Button className="flex gap-2 my-2">
         <LazyIcon icon="CheckmarkSquare02" />
-        <span className="italic">Пункт</span>
+        <span className="italic">{translateBase(BaseLocaleKey.SchedulePoint)}</span>
         <TheIconSendButton
           icon="PlusSign"
           onSend={() =>
@@ -137,13 +139,13 @@ export function ScheduleKeyValueListAtt({
     const itemNode = (
       <Button className="flex gap-2 my-7">
         <LazyIcon icon="Text" />
-        Пункт
+        {translateBase(BaseLocaleKey.SchedulePoint)}
         <TheIconSendButton
           icon="PlusSign"
           onSend={() =>
             schDayEventsTsjrpcClient.putKeyValueAttachment({
               props: dayEventAttScopeProps,
-              key: 'Пункт',
+              key: translateBase(BaseLocaleKey.SchedulePoint),
               value: '+',
             })
           }
@@ -154,7 +156,7 @@ export function ScheduleKeyValueListAtt({
     if (checkboxes || (users || titles || roles || lists || games || null)?.length) {
       insertionNode = (
         <>
-          <div className="my-2 text-x7">Вставить поле ввода:</div>
+          <div className="my-2 text-x7">{translateBase(BaseLocaleKey.ScheduleInsertInputField)}</div>
           {itemNode}
           <div className="my-10">{checkboxes}</div>
           <div className="my-10">{titles}</div>
@@ -164,7 +166,12 @@ export function ScheduleKeyValueListAtt({
           <div className="my-10">{games}</div>
         </>
       );
-    } else insertionNode = itemNode || <div className="my-10 italic">{att.title}. Вставлять нечего</div>;
+    } else
+      insertionNode = itemNode || (
+        <div className="my-10 italic">
+          {translateBase(BaseLocaleKey.ScheduleNothingToInsert, { t: att.title })}
+        </div>
+      );
   }
 
   return (

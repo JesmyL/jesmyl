@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
@@ -5,6 +6,7 @@ import { ScheduleWidgetRoleFace } from '#widgets/schedule/control/roles/RoleFace
 import { ScheduleWidgetListUnitFace } from '#widgets/schedule/lists/UnitFace';
 import { extractScheduleWidgetRole } from '#widgets/schedule/useScheduleWidget';
 import { CustomAttUseTaleId, ScheduleWidgetCleans } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export function KeyValueListAttNumberMember({ value }: { value: number }) {
   const rights = useScheduleWidgetRightsContext();
@@ -23,7 +25,7 @@ export function KeyValueListAttNumberMember({ value }: { value: number }) {
     const userMi = Math.trunc(value);
     const user = rights.schedule.ctrl.users.find(user => user.mi === userMi);
     return user === undefined ? (
-      <div className="text-xKO">Участник не найден</div>
+      <div className="text-xKO">{translateBase(BaseLocaleKey.ScheduleMemberNotFound)}</div>
     ) : (
       <div className="text-x3 flex gap-2">
         <LazyIcon icon="User" />
@@ -35,7 +37,7 @@ export function KeyValueListAttNumberMember({ value }: { value: number }) {
     const game = rights.schedule.games?.list.find(game => game.mi === gameMi);
 
     return game === undefined ? (
-      <div className="text-xKO">Ком. игра не найдена</div>
+      <div className="text-xKO">{translateBase(BaseLocaleKey.ScheduleGameNotFound)}</div>
     ) : (
       <div className="text-x3 flex gap-2">
         <LazyIcon icon="Basketball01" />
@@ -47,7 +49,7 @@ export function KeyValueListAttNumberMember({ value }: { value: number }) {
   return (
     <TheIconButton
       icon="HelpSquare"
-      postfix={<span className="text-xKO">Неизвестный пункт</span>}
+      postfix={<span className="text-xKO">{translateBase(BaseLocaleKey.ScheduleUnknownPoint)}</span>}
     />
   );
 }

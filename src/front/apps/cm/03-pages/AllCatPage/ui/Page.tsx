@@ -4,6 +4,7 @@ import { useCmComAllWidList, useCmComLaterList } from '$cm/entities/com';
 import { CmComFaceList } from '$cm/entities/com-face';
 import { CmCatPage } from '$cm/pages/CatPage';
 import { CmCatWid } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const CmAllCatPage = () => {
   const icat = useCmCatICcat(CmCatWid.all);
@@ -23,7 +24,7 @@ export const CmAllCatPage = () => {
               key="later-com-list"
               className="later-com-list"
             >
-              <div className="list-title sticky">{translateBase(it => it.lasts)}:</div>
+              <div className="list-title sticky">{translateBase(BaseLocaleKey.Lasts)}:</div>
               <CmComFaceList
                 list={laterComws}
                 isPutCcomFaceOff

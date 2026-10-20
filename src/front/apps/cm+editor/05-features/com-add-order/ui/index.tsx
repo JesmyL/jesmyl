@@ -1,10 +1,12 @@
-import { translateDynamic } from '#basis/locale';
+import { translateBase, translateDynamic } from '#basis/locale';
 import { Modal } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { CmComOrderOnClickBetweenData } from '$cm+editor/shared/model/Orders';
 import { Atom, atom } from 'atomaric';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
 import { CmEditorComAddOrderNewOrderMakeEtap } from '../model';
 import { CmEditorComAddOrderAdditionsEtapsModalInner } from './Etaps';
 
@@ -23,12 +25,12 @@ export const CmEditorComAddOrderRedactorAdditions = ({ com, setClickBetweenOrds 
     <>
       <BottomPopupItem
         icon="Text"
-        title="Текстовый блок"
+        title={translateBase(BaseLocaleKey.CmEditorTextBlock)}
         onClick={() => selectFirstEtapAtom.set(CmEditorComAddOrderNewOrderMakeEtap.Text)}
       />
       <BottomPopupItem
         icon="Option"
-        title="Аккордный блок"
+        title={translateBase(BaseLocaleKey.CmEditorChordedBlock)}
         onClick={() => selectFirstEtapAtom.set(CmEditorComAddOrderNewOrderMakeEtap.Chord)}
       />
 
@@ -42,13 +44,13 @@ export const CmEditorComAddOrderRedactorAdditions = ({ com, setClickBetweenOrds 
             firstEtap={firstEtap}
             onClose={selectFirstEtapAtom.reset}
             onOrderBuilt={(kindBlock, chordi, texti) => {
-              const orderTitle = translateDynamic(com.langi)(it => it.cm.com.kind[kindBlock.key]);
+              const orderTitle = translateDynamic(com.langi)(it => it[DynLocaleKey.CmComKind][kindBlock.key]);
 
               selectFirstEtapAtom.set(null);
               setClickBetweenOrds({
                 buttonTitle: (
                   <>
-                    Новый блок <span className="text-x7">{orderTitle}</span>
+                    {translateBase(BaseLocaleKey.CmEditorNewBlock)} <span className="text-x7">{orderTitle}</span>
                   </>
                 ),
                 checkIsShowButton: ({ ordAbove }) => {

@@ -3,6 +3,7 @@ import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useQuery } from '@tanstack/react-query';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { accessRightsCRUDOperations, CRUDOperation } from 'shared/utils/index/utils';
 import { mapObjectEntries } from 'shared/utils/object.utils';
 
@@ -75,7 +76,7 @@ const crudTableTHeader = (
       {accessRightsCRUDOperations.map(operation => (
         <th key={operation}>{operation}</th>
       ))}
-      <th>{translateBase(it => it.name)}</th>
+      <th>{translateBase(BaseLocaleKey.Name)}</th>
     </tr>
   </thead>
 );

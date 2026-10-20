@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { useIsExpand } from '#shared/ui/expand/useIsExpand';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -6,6 +7,7 @@ import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { schRolesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { useMemo, useState } from 'react';
 import { IScheduleWidgetRole } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ScheduleWidgetRole } from './Role';
 
 export function ScheduleWidgetRoleList() {
@@ -14,15 +16,15 @@ export function ScheduleWidgetRoleList() {
 
   const [rolesExpandNode, isRolesExpand] = useIsExpand(
     false,
-    <>Роли</>,
+    <>{translateBase(BaseLocaleKey.ScheduleRoles)}</>,
     isExpand =>
       isExpand &&
       rights.isCanTotalRedact &&
       !rights.schedule.ctrl?.roles.some(role => !role.title) && (
         <TheIconSendButton
           icon="PlusSign"
-          prefix="роль"
-          confirm="Добавить новую роль?"
+          prefix={translateBase(BaseLocaleKey.ScheduleRoleLower)}
+          confirm={translateBase(BaseLocaleKey.ScheduleAddRoleConfirm)}
           onSend={() => schRolesTsjrpcClient.createRole({ props: scheduleScopeProps })}
         />
       ),

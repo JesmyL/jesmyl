@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { currentAppNameAtom } from '#basis/state/currentAppNameAtom';
 import { Button } from '#shared/components';
 import { environment } from '#shared/environment';
@@ -5,6 +6,7 @@ import { IndexAppVersionLabel } from '$index/entities/AppVersionLabel/ui/Label';
 import { createRootRoute, Link, Outlet } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import React from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { toast } from 'sonner';
 
 const AppComponent = React.lazy(() => import('$app/AppComponent').then(m => ({ default: m.AppComponent })));
@@ -21,7 +23,7 @@ function ErrorComponent({ error }: { error: Error }) {
     <div className="flex justify-center flex-col ites-center w-full h-full gap-3 text-center">
       <div>
         <b className="flex items-center gap-3 w-full justify-center">
-          Упс... Что-то пошло не по плану...
+          {translateBase(BaseLocaleKey.Oops)}
           <Link to={`/!other/${appName && appName !== 'index' ? appName : 'cm'}` as never}>
             <Button icon="Home03" />
           </Link>
@@ -33,7 +35,7 @@ function ErrorComponent({ error }: { error: Error }) {
             }}
           />
         </b>
-        <div>Можно принудительно обновить версию приложения</div>
+        <div>{translateBase(BaseLocaleKey.UpdateHint)}</div>
       </div>
       <div className="flex gap-3 h-10">
         <IndexAppVersionLabel />

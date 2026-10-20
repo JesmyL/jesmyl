@@ -20,6 +20,7 @@ import { CmMp3Rule, HttpNumLeadLink } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { cmDefaultCom } from 'shared/const/cm/def.com';
 import { Bool } from 'shared/enums';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itIt } from 'shared/utils';
 import { chordsBlockIncorrectMessage } from 'shared/utils/cm/com/chordsBlockIncorrectMessage';
 import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
@@ -61,11 +62,11 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
     }
   };
 
-  const noTitlePrefix = (x: 't' | 'c' | 'o') => translateBase(it => it.cm.com.new.noParsedX, { x });
+  const noTitlePrefix = (x: 't' | 'c' | 'o') => translateBase(BaseLocaleKey.CmEditorNewNoParsed, { x });
   const errorNodes = mapObjectEntries(
     {
-      [translateBase(it => it.incName)]: newICom.n && !nameIncorrects.errors?.at(0)?.message,
-      [translateBase(it => it.cm.com.new.noBindAudio)]: !innerHTML || objectLength(newICom.al),
+      [translateBase(BaseLocaleKey.IncorrectName)]: newICom.n && !nameIncorrects.errors?.at(0)?.message,
+      [translateBase(BaseLocaleKey.CmEditorNewNoAudio)]: !innerHTML || objectLength(newICom.al),
       [noTitlePrefix('t')]: objectLength(newICom.t?.filter(itIt)),
       [noTitlePrefix('c')]: objectLength(newICom.c?.filter(itIt)),
       [noTitlePrefix('o')]: objectLength(newICom.o),
@@ -93,7 +94,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
         className="new-composition p-2"
         onClick={propagationStopper}
       >
-        <h2 className="title">{translateBase(it => it.cm.com.new.t)}</h2>
+        <h2 className="title">{translateBase(BaseLocaleKey.CmEditorNewCom)}</h2>
 
         <CmEditorComCreateNameChange
           name={newICom.n}
@@ -123,7 +124,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
           value={value}
           className="my-2 w-full h-full text-(--text-color) border-(--text-color) border-2 border-dashed resize-none"
           multiline
-          placeholder={translateBase(it => it.cm.com.new.startWrite)}
+          placeholder={translateBase(BaseLocaleKey.CmEditorNewStartWrite)}
           onInput={setTextAsValue}
         />
 
@@ -142,12 +143,12 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
             setNewICom(prev => ({ ...prev, ...com }));
           }}
         >
-          {translateBase(it => it.cm.com.new.parseTxt)}
+          {translateBase(BaseLocaleKey.CmEditorNewParseTextHeap)}
         </TheButton>
 
         {innerHTML && (
           <>
-            <h2>{translateBase(it => it.cm.com.new.bindedAudio)}</h2>
+            <h2>{translateBase(BaseLocaleKey.CmEditorNewBoundAudio)}</h2>
             {newICom.al?.length ? (
               <CmEditorComAudioControlledList
                 srcs={newICom.al?.filter(itIt)}
@@ -160,10 +161,10 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
                 }}
               />
             ) : (
-              <div>{translateBase(it => it.cm.com.new.noTracks)}</div>
+              <div>{translateBase(BaseLocaleKey.CmEditorNewNoTracks)}</div>
             )}
 
-            <h2 id="header-new-audio">{translateBase(it => it.cm.com.new.newAudios)}</h2>
+            <h2 id="header-new-audio">{translateBase(BaseLocaleKey.CmEditorNewNewAudios)}</h2>
             <CmEditorComAudioControlledList
               srcs={hrefs}
               icon="PlusSignCircle"
@@ -179,7 +180,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
 
         {newICom.t && (
           <CmEditorComCreateComTextableListRedactor
-            title={translateBase(it => it.txts)}
+            title={translateBase(BaseLocaleKey.Texts)}
             corrects={textsErrors}
             list={newICom.t}
             onInput={(value, texti) => setNewICom(prev => ({ ...prev, t: newICom.t?.with(texti, value) }))}
@@ -188,7 +189,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
 
         {newICom.c && (
           <CmEditorComCreateComTextableListRedactor
-            title={translateBase(it => it.cm.chs)}
+            title={translateBase(BaseLocaleKey.CmChords)}
             corrects={chordsErrors}
             list={newICom.c}
             onInput={(value, texti) => setNewICom(prev => ({ ...prev, c: newICom.c?.with(texti, value) }))}
@@ -197,7 +198,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
 
         {newICom.o && (
           <>
-            <h2>{translateBase(it => it.cm.ords)}</h2>
+            <h2>{translateBase(BaseLocaleKey.CmOrderBlocks)}</h2>
             <CmComOrderList
               chordVisibleVariant={ChordVisibleVariant.None}
               com={newCom}
@@ -221,7 +222,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
         <SendButton
           id="public-new-com-button"
           className="mb-10"
-          title={translateBase(it => it.cm.com.new.pub)}
+          title={translateBase(BaseLocaleKey.CmEditorNewPublishCom)}
           disabled={
             !!errorNodes.length ||
             !!parseErrors.length ||

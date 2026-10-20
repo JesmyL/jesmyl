@@ -1,9 +1,11 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { Modal, ModalBody, ModalFooter, usePrompt } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { resortByOrder } from '$storages/shared/lib/utils';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { StoragesRackStatusEditModalInner } from '$storages/widgets/RackStatusEditModalInner';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesRack } from 'shared/model/storages/list.model';
 import { storagesStatusManagerRackEditStatusiAtom } from '../state/atoms';
 
@@ -50,12 +52,15 @@ export const StoragesStatusManagerModalInner = ({ rack }: { rack: StoragesRack }
           icon="PlusSign"
           className="text-x7"
           onClick={async () => {
-            const newStatusTitle = await prompt('Название нового статуса', 'Новый статус');
+            const newStatusTitle = await prompt(
+              translateBase(BaseLocaleKey.StoragesNewStatusTitle),
+              translateBase(BaseLocaleKey.StoragesNewStatus),
+            );
             if (!newStatusTitle) return;
             return storagesTsjrpcClient.createRackStatus({ rackw: rack.w, title: newStatusTitle });
           }}
         >
-          Новый статус
+          {translateBase(BaseLocaleKey.StoragesNewStatus)}
         </Button>
       </ModalFooter>
 

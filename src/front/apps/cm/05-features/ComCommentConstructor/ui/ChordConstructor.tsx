@@ -3,6 +3,7 @@ import { Button } from '#shared/components';
 import { cmComCommentConstructorRulePropsDictAtom } from '$cm/shared/state/com-comment.atoms';
 import { useAtomValue } from 'atomaric';
 import { CmComOrderWid } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmComCommentConstructorRuleType } from 'shared/model/cm/com-comment';
 import { cmComCommentTextDetectorCalculateRate } from 'shared/utils/cm/com/cmComCommentTextRulesDetector';
 import { useCmComCommentConstructorCurrentInnerKindContext } from '../state/CurrentInnerKind';
@@ -35,7 +36,7 @@ export const CmComCommentConstructorChordConstructor = ({
         className="rounded bg-x2 my-10 p-3"
       >
         <div className="flex w-full justify-between">
-          <span>{translateBase(it => it.cm.chN, { n: chordi + 1 })}</span>
+          <span>{translateBase(BaseLocaleKey.CmChordNumber, { n: chordi + 1 })}</span>
           {isLast && (
             <Button
               icon="Delete02"
@@ -76,7 +77,7 @@ export const CmComCommentConstructorChordConstructor = ({
             blockKey={`${chordKeyPrefix}<`}
             type={CmComCommentConstructorRuleType.Chord}
             blockPropsHolder={propsDict}
-            label={translateBase(it => it.before)}
+            label={translateBase(BaseLocaleKey.Before)}
             getDefaultPropsDict={() => ({
               pre: selectorPrefix,
               linei,
@@ -93,7 +94,7 @@ export const CmComCommentConstructorChordConstructor = ({
             blockKey={`${chordKeyPrefix}^`}
             type={CmComCommentConstructorRuleType.Chord}
             blockPropsHolder={propsDict}
-            label={translateBase(it => it.instead)}
+            label={translateBase(BaseLocaleKey.Instead)}
             getDefaultPropsDict={() => ({
               pre: selectorPrefix,
               linei,
@@ -110,7 +111,7 @@ export const CmComCommentConstructorChordConstructor = ({
             blockKey={`${selectorPrefix}l${linei}w${wordi}c${chordi}>`}
             type={CmComCommentConstructorRuleType.Chord}
             blockPropsHolder={propsDict}
-            label={translateBase(it => it.after)}
+            label={translateBase(BaseLocaleKey.After)}
             getDefaultPropsDict={() => ({
               pre: selectorPrefix,
               linei,

@@ -1,6 +1,8 @@
+import { translateBase } from '#basis/locale';
 import { CopyTextButton } from '#shared/ui/CopyTextButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { CustomAttUseTaleId, ScheduleWidgetAppAttCustomizableValueItem, ScheduleWidgetCleans } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itNNil } from 'shared/utils';
 import { checkIsArray, checkIsNumber, checkIsString } from 'shared/utils/checkIs';
 
@@ -47,7 +49,7 @@ export function ScheduleKeyValueListAttStatistic(props: { list: ScheduleWidgetAp
   return (
     <>
       <CopyTextButton
-        description="Скопировать"
+        description={translateBase(BaseLocaleKey.ScheduleCopy)}
         text={() => {
           return props.list
             ?.map(([key, value]) => {
@@ -117,12 +119,20 @@ export function ScheduleKeyValueListAttStatistic(props: { list: ScheduleWidgetAp
       />
       {!len || (
         <div className="my-5">
-          {len === lists || len === users || <div className="">Пунктов: {len}</div>}
-          {!users || <div className="">Людей: {users}</div>}
-          {!checks || len === checks || <div className="">Выбираемых: {checks}</div>}
-          {!checked || <div className="">Отмеченных: {checked}</div>}
-          {!lists || <div className="">Списков: {lists}</div>}
-          {!subLists || <div className="">Под списками: {subLists}</div>}
+          {len === lists || len === users || (
+            <div className="">{translateBase(BaseLocaleKey.SchedulePointsCount, { n: len })}</div>
+          )}
+          {!users || <div className="">{translateBase(BaseLocaleKey.SchedulePeopleCount, { n: users })}</div>}
+          {!checks || len === checks || (
+            <div className="">{translateBase(BaseLocaleKey.ScheduleSelectableCount, { n: checks })}</div>
+          )}
+          {!checked || (
+            <div className="">{translateBase(BaseLocaleKey.ScheduleCheckedCount, { n: checked })}</div>
+          )}
+          {!lists || <div className="">{translateBase(BaseLocaleKey.ScheduleListsCount, { n: lists })}</div>}
+          {!subLists || (
+            <div className="">{translateBase(BaseLocaleKey.ScheduleSubListsCount, { n: subLists })}</div>
+          )}
         </div>
       )}
     </>

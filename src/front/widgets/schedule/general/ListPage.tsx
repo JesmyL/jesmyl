@@ -1,11 +1,12 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { useConnectionState } from '#basis/lib/useConnectionState';
-import { languageSystemCode } from '#basis/locale';
+import { languageSystemCode, translateBase } from '#basis/locale';
 import { useAppNameContext } from '#basis/state/contexts';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useIndexSchedules } from '$index/shared/state';
 import { Link, useNavigate } from '@tanstack/react-router';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { schLinkAction } from '../links';
 import { ScheduleCreateWidgetButton } from './CreateButton';
@@ -35,7 +36,7 @@ export const ScheduleWidgetListPage = () => {
   return (
     <PageContainerConfigurer
       className="ScheduleWidgetPage ScheduleWidgetListPage"
-      headTitle="Мероприятия"
+      headTitle={translateBase(BaseLocaleKey.ScheduleEventPlural)}
       head={<span className="flex gap-2 m-2">{connectionNode}</span>}
       content={
         <>

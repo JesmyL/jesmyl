@@ -1,4 +1,4 @@
-import { languageSystemCode } from '#basis/locale';
+import { languageSystemCode, translateBase } from '#basis/locale';
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { useIsRedactArea } from '#shared/lib/hooks/useIsRedactArea';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
@@ -16,6 +16,7 @@ import {
   ScheduleScopeProps,
   ScheduleWidgetDayi,
 } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { isNIs } from 'shared/utils';
 import { objectValues } from 'shared/utils/object.utils';
 import { textToCapitalizeCase } from 'shared/utils/string.utils';
@@ -95,12 +96,12 @@ export const ScheduleWidgetDay = ({
           {title}
           {schedule.withTech ? (
             dayi === 0 ? (
-              <span className="text-xKO"> подготовка</span>
+              <span className="text-xKO"> {translateBase(BaseLocaleKey.SchedulePreparation)}</span>
             ) : (
-              <>, {dayi} день</>
+              <>, {translateBase(BaseLocaleKey.ScheduleDayNumber, { n: dayi })}</>
             )
           ) : (
-            <>, {dayi + 1} день</>
+            <>, {translateBase(BaseLocaleKey.ScheduleDayNumber, { n: dayi + 1 })}</>
           )}
           {isPrint && (
             <LazyIcon
@@ -137,7 +138,7 @@ export const ScheduleWidgetDay = ({
                     fieldKey="topic"
                     isRedact={isRedact}
                     icon="Bookmark03"
-                    title="Тема дня"
+                    title={translateBase(BaseLocaleKey.ScheduleDayTopic)}
                     onSend={value => schDaysTsjrpcClient.setTopic({ props: dayScopeProps, value })}
                   />
                 )}
@@ -149,7 +150,7 @@ export const ScheduleWidgetDay = ({
                     multiline
                     textClassName=" "
                     icon="File02"
-                    title="Описание дня"
+                    title={translateBase(BaseLocaleKey.ScheduleDayDescription)}
                     onSend={value => schDaysTsjrpcClient.setDescription({ props: dayScopeProps, value })}
                   />
                 )}
@@ -164,7 +165,7 @@ export const ScheduleWidgetDay = ({
                   <TheIconButton
                     icon="Favourite"
                     className={'flex-max ' + (dayRating < 0 ? 'text-xKO' : dayRating > 0 ? 'text-xOK' : 'text-x3')}
-                    postfix={'Рейтинг дня: ' + dayRating}
+                    postfix={translateBase(BaseLocaleKey.ScheduleDayRating, { t: dayRating })}
                   />
                 )}
               </div>

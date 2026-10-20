@@ -1,15 +1,16 @@
 import { translateBase } from '#basis/locale';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { HttpNumLeadLink } from 'shared/api';
-import { CmCom } from 'shared/const/cm/Com';
-import { TextCase } from 'shared/model/common';
-import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
 import { cmComAudioPlayerUpdateCurrentTime, useCmComAudioPlayerCurrentTime } from '$cm/entities/com-audio-player';
 import { useCmComAudioMarkSlides } from '$cm/shared/lib/useCmComAudioMarkSlides';
 import { cmComIsFreshAudioMarksLoadingAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { HttpNumLeadLink } from 'shared/api';
+import { CmCom } from 'shared/const/cm/Com';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { TextCase } from 'shared/model/common';
+import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
 import { twMerge } from 'tailwind-merge';
 
 /** Player text slides prefer the second newliner variant, falling back to the first. */
@@ -237,7 +238,7 @@ export const CmPlayerTextSlides = ({ com, src, className }: Props) => {
           </>
         ) : (
           <div className="flex h-full items-center justify-center px-6 text-center text-[0.95rem] opacity-60">
-            {translateBase(it => it.cm.trackMarksNotSetted)}
+            {translateBase(BaseLocaleKey.CmMarksNotSet)}
           </div>
         )}
       </div>

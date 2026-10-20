@@ -1,4 +1,5 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { translateBase } from '#basis/locale';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmEditorClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { useCmMp3Rules } from '$cm+editor/shared/lib/useCmMp3Rules';
@@ -6,6 +7,7 @@ import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContaine
 import { CmEditorMp3RuleEditor } from '$cm+editor/widgets/mp3-rule';
 import { useState } from 'react';
 import { CmMp3Rule } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const CmEditorMp3RulesPage = () => {
   const [newRules, updateNewRules] = useState<CmMp3Rule[]>([]);
@@ -17,7 +19,7 @@ export const CmEditorMp3RulesPage = () => {
   return (
     <PageCmEditorContainer
       className="mp3-rules-redactor"
-      headTitle="Редактор MP3 правил"
+      headTitle={translateBase(BaseLocaleKey.CmEditorMp3RulesEditor)}
       content={
         <>
           {mp3Rules?.map(rule => {
@@ -42,7 +44,7 @@ export const CmEditorMp3RulesPage = () => {
                 );
               })}
               <h2 className="flex gap-2">
-                Новое правило
+                {translateBase(BaseLocaleKey.CmEditorNewRule)}
                 {!isOpenNewRule && (
                   <LazyIcon
                     icon="PlusSignCircle"

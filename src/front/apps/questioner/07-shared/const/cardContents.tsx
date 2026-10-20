@@ -1,11 +1,12 @@
+import { translateBase } from '#basis/locale';
 import { JSX } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { QuestionerAdminTemplateContentProps, QuestionerType } from 'shared/model/q';
 import {
   QuestionerConditionContentProps,
   QuestionerResultContentProps,
   QuestionerUserAnswerContentProps,
 } from 'shared/model/q/answer';
-import { declension } from 'shared/utils';
 import { objectLength, objectValues } from 'shared/utils/object.utils';
 import { QuestionerAdminCheckTemplateCardContent } from '../ui/admin-templates/Check.admin';
 import { QuestionerAdminCommentTemplateCardContent } from '../ui/admin-templates/Comment.admin';
@@ -60,7 +61,9 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
           check:
             !props.template.req || isFill
               ? null
-              : `Ответ на вопрос "${props.template.title ?? questionerTemplateDescriptions[props.template.type].title}" обязателен`,
+              : translateBase(BaseLocaleKey.QuestionerAnswerRequired, {
+                  t: props.template.title ?? questionerTemplateDescriptions[props.template.type].title,
+                }),
           isFill,
         };
       },
@@ -78,11 +81,18 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
         const min = props.template.min && Math.min(props.template.min, variantsLen);
         const max = props.template.max && Math.min(props.template.max, variantsLen);
 
-        const _maxVars = max == null ? '' : `${max} ${declension(max, 'вариант', 'варианта', 'вариантов')}`;
-        const _minVars = min == null ? '' : `${min} ${declension(min, 'вариант', 'варианта', 'вариантов')}`;
+        const _maxVars = max == null ? '' : translateBase(BaseLocaleKey.QuestionerVariantsNumber, { n: '' + max });
+        const _minVars = min == null ? '' : translateBase(BaseLocaleKey.QuestionerVariantsNumber, { n: '' + min });
 
-        const infoPrefix = `${props.template.req ? 'Нужно' : 'Можно'} выбрать`;
-        const checkPrefix = `Ответ на вопрос "${title}" ${props.template.req ? 'должен' : 'может'} содержать`;
+        const infoPrefix = translateBase(it =>
+          props.template.req ? it[BaseLocaleKey.QuestionerNeedChoose] : it[BaseLocaleKey.QuestionerCanChoose],
+        );
+        const checkPrefix = translateBase(
+          it => (props.template.req ? it[BaseLocaleKey.QuestionerAnswerMust] : it[BaseLocaleKey.QuestionerAnswerMay]),
+          {
+            t: title,
+          },
+        );
 
         return {
           isFill: !!props.userAnswer?.v.length,
@@ -93,16 +103,16 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
             min,
 
             infoEqText: `${infoPrefix} ${_minVars}`,
-            infoBetweenText: `${infoPrefix} от ${min} до ${max} вариантов`,
-            infoMinText: `${infoPrefix} минимум ${_minVars}`,
-            infoMaxText: `${infoPrefix} максимум ${_maxVars}`,
+            infoBetweenText: `${infoPrefix} ${translateBase(BaseLocaleKey.QuestionerFromToVariants, { a: '' + min, b: '' + max })}`,
+            infoMinText: `${infoPrefix} ${translateBase(BaseLocaleKey.QuestionerMinimumVariants, { a: _minVars })}`,
+            infoMaxText: `${infoPrefix} ${translateBase(BaseLocaleKey.QuestionerMaximumVariants, { a: _maxVars })}`,
 
             checkEqText: `${checkPrefix} ${_maxVars}`,
-            checkBetweenText: `${checkPrefix} от ${min} до ${max} вариантов`,
-            checkMinText: `${checkPrefix} минимум ${_minVars}`,
-            checkMaxText: `${checkPrefix} максимум ${_maxVars}`,
+            checkBetweenText: `${checkPrefix} ${translateBase(BaseLocaleKey.QuestionerFromToVariants, { a: '' + min, b: '' + max })}`,
+            checkMinText: `${checkPrefix} ${translateBase(BaseLocaleKey.QuestionerMinimumVariants, { a: _minVars })}`,
+            checkMaxText: `${checkPrefix} ${translateBase(BaseLocaleKey.QuestionerMaximumVariants, { a: _maxVars })}`,
 
-            checkRequiredText: `Ответ на вопрос "${title}" обязателен`,
+            checkRequiredText: translateBase(BaseLocaleKey.QuestionerAnswerRequired, { t: title }),
           }),
         };
       },
@@ -117,12 +127,12 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
           check:
             !props.template.req || props.userAnswer?.v
               ? null
-              : `Комментарий ${props.template.title ? `"${props.template.title}" ` : ''}является обязательным`,
+              : translateBase(BaseLocaleKey.QuestionerCommentRequiredFor, { t: props.template.title ?? '' }),
           info: null,
           isFill: !!props.userAnswer?.v,
         };
       },
-      customRequireMessage: <>Этот комментарий обязателен к заполнению</>,
+      customRequireMessage: translateBase(BaseLocaleKey.QuestionerCommentRequired),
     }),
     [QuestionerType.Sorter]: () => ({
       adminRender: props => <QuestionerAdminSorterTemplateCardContent {...props} />,
@@ -134,12 +144,14 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
 
         return {
           check:
-            !props.template.req || isFill ? null : `Нужно отсортировать значения в пункте "${props.template.title}"`,
+            !props.template.req || isFill
+              ? null
+              : translateBase(BaseLocaleKey.QuestionerSortValuesIn, { t: props.template.title ?? '' }),
           info: null,
           isFill,
         };
       },
-      customRequireMessage: <>Сортировка в этом блоке обязательна</>,
+      customRequireMessage: translateBase(BaseLocaleKey.QuestionerSorterRequired),
     }),
     [QuestionerType.TextInclude]: () => ({
       adminRender: props => <QuestionerAdminTextIncludeTemplateCardContent {...props} />,
@@ -153,17 +165,19 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
           check:
             !props.template.req || isFill
               ? null
-              : `Нужно восстановить все недостающие слова в пункте "${props.template.title}"`,
+              : translateBase(BaseLocaleKey.QuestionerRestoreIn, { t: props.template.title ?? '' }),
           info: null,
           isFill,
         };
       },
-      customRequireMessage: <>Нужно восстановить все недостающие слова</>,
+      customRequireMessage: translateBase(BaseLocaleKey.QuestionerRestoreRequired),
     }),
   }))()[type]();
 
 const takeShowErrorVarianted = (props: { template: { variants: Record<string, { title: string }> } }) =>
-  objectValues(props.template.variants).filter(v => v?.title).length ? '' : 'Нет варианотов ответа';
+  objectValues(props.template.variants).filter(v => v?.title).length
+    ? ''
+    : translateBase(BaseLocaleKey.QuestionerNoVariants);
 
 const makeMaxMinReqInfo = (props: {
   min: number | nil;

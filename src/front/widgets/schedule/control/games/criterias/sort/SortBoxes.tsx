@@ -1,9 +1,11 @@
+import { translateBase } from '#basis/locale';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import styled from '@emotion/styled';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { IScheduleWidgetUser, ScheduleWidgetUserMi } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { emptyFunc } from 'shared/utils';
 import { ScheduleWidgetTeamsCriteriaSorterScreenHistory } from './History';
 import { HistoryAdder } from './model';
@@ -59,7 +61,8 @@ export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes = function SortBox
 
   const addInHistoryRef = useRef<HistoryAdder>(emptyFunc);
 
-  if (insertUser == null || currUser == null) return <>Участники распределены</>;
+  if (insertUser == null || currUser == null)
+    return <>{translateBase(BaseLocaleKey.ScheduleMembersDistributed)}</>;
 
   const onCurrUserClick = () => {
     addInHistoryRef.current(start, end, sortedUsers, 'left');
@@ -145,14 +148,14 @@ export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes = function SortBox
 
               setSortedUsers(nextUser ? [nextUser] : []);
             }}
-            confirm={`${currUser.fio} - неизвестный участник?`}
+            confirm={translateBase(BaseLocaleKey.ScheduleUnknownMemberConfirm, { fio: currUser.fio || '' })}
             className={sortedUsers.length > 1 ? 'opacity-0' : undefined}
           />
-          У кого преимущество?
+          {translateBase(BaseLocaleKey.ScheduleWhoHasAdvantage)}
           <TheIconButton
             icon="MessageQuestion"
             onClick={() => setUnknownUsers([...unknownUsers, insertUser.mi])}
-            confirm={`${insertUser.fio} - неизвестный участник?`}
+            confirm={translateBase(BaseLocaleKey.ScheduleUnknownMemberConfirm, { fio: insertUser.fio || '' })}
           />
         </div>
 

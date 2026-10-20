@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Accordion } from '#shared/components/ui/accordion';
 import { Button } from '#shared/components/ui/button';
 import { Card } from '#shared/components/ui/card';
@@ -17,6 +18,7 @@ import { atom, useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useState } from 'react';
 import { questionerAnyTypeIfConditionCheckerDict } from 'shared/const/q/anyTypeIfConditionCheckerDict';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { QuestionerBlankWid, QuestionerType } from 'shared/model/q';
 import { QuestionerUserAnswer, QuestionerUserAnswerContentProps } from 'shared/model/q/answer';
 import { itNIt } from 'shared/utils';
@@ -48,14 +50,14 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
   return (
     <PageContainerConfigurer
       className="QuestionerAnswersPage"
-      headTitle={blank?.title || 'Мои ответы'}
+      headTitle={blank?.title || translateBase(BaseLocaleKey.QuestionerMyAnswers)}
       withoutBackButton
       head={
         <div className="flex gap-3">
           {questionBlank.isLoading && <TheIconLoading />}
           <CopyTextButton
             text={`${environment.initialUrl}/q/i?q=${blankw}`}
-            message="Ссылка скопирована"
+            message={translateBase(BaseLocaleKey.QuestionerLinkCopied)}
           />
           <Button
             icon="ArrowDownDouble"
@@ -68,14 +70,14 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
         <ConditionalRender
           value={blank}
           render={blank => {
-            if (!blank.anon && !userAnswer.fio) answerErrorsSet.add('Не вписаны Фамилия и Имя');
+            if (!blank.anon && !userAnswer.fio) answerErrorsSet.add(translateBase(BaseLocaleKey.QuestionerFullNameMissing));
 
             return (
               <Card.Root>
                 <Card.Header>
                   <Card.Title>
                     {blank.anon ? (
-                      <>Анонимный опрос</>
+                      <>{translateBase(BaseLocaleKey.QuestionerAnonymous)}</>
                     ) : userAnswer.isWasPublicate ? (
                       userAnswer.fio
                     ) : (
@@ -85,7 +87,8 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
                         disabled={userAnswer.isWasPublicate}
                         label={
                           <>
-                            Фамилия Имя<span className={userAnswer.fio ? 'text-xOK' : 'text-xKO'}> *</span>
+                            {translateBase(BaseLocaleKey.QuestionerFullName)}
+                            <span className={userAnswer.fio ? 'text-xOK' : 'text-xKO'}> *</span>
                           </>
                         }
                         onInput={value => answersAtom.do.setFio(value)}
@@ -168,7 +171,9 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
                               <>
                                 {!template.req || (
                                   <span className={answerIsFill ? 'text-xOK' : 'text-xKO'}>
-                                    ● {contentProps.customRequireMessage ?? 'Этот вопрос обязателен к ответу'}
+                                    ●{' '}
+                                    {contentProps.customRequireMessage ??
+                                      translateBase(BaseLocaleKey.QuestionerQuestionRequired)}
                                   </span>
                                 )}
                                 {answerInfoError && (
@@ -204,11 +209,14 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
                           })
                           .then(() => {
                             answersAtom.set(prev => ({ ...prev, isWasPublicate: true }));
-                            toast('Ответ отправлен', makeToastOKMoodConfig());
+                            toast(
+                              translateBase(BaseLocaleKey.QuestionerAnswerSent),
+                              makeToastOKMoodConfig(),
+                            );
                           })
                       }
                     >
-                      Отправить мои ответы
+                      {translateBase(BaseLocaleKey.QuestionerSendAnswers)}
                     </Button>
                   )}
                 </Card.Footer>

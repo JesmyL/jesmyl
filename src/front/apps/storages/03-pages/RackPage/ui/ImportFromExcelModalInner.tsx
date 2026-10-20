@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { ExcelValueListExtracter } from '#shared/lib/hooks/ExcelValueListExtracter';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
@@ -6,8 +7,8 @@ import { ModalBody, ModalFooter, ModalHeader, useConfirm } from '#shared/ui/moda
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { useState } from 'react';
 import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesRack, StoragesRackCard } from 'shared/model/storages/list.model';
-import { declension } from 'shared/utils';
 import { objectKeys } from 'shared/utils/object.utils';
 
 type AssociationKey = keyof StoragesRackCard | number;
@@ -37,7 +38,7 @@ export const StoragesRackImportFromExcelModalInner = (props: { rack: StoragesRac
 
   return (
     <>
-      <ModalHeader>Формирование карточек из Excel файла</ModalHeader>
+      <ModalHeader>{translateBase(BaseLocaleKey.StoragesFromExcelTitle)}</ModalHeader>
       <ModalBody>
         {!valueList ? (
           <ExcelValueListExtracter
@@ -48,15 +49,15 @@ export const StoragesRackImportFromExcelModalInner = (props: { rack: StoragesRac
           />
         ) : (
           <div className="*:my-2">
-            <div>Проведите ассоциации для полей:</div>
+            <div>{translateBase(BaseLocaleKey.StoragesMatchFields)}</div>
 
             <div className="flex gap-3">
-              <span className="text-x7">Название</span>
+              <span className="text-x7">{translateBase(BaseLocaleKey.Name)}</span>
               {keysDropdown('title')}
             </div>
 
             <div className="flex gap-3">
-              <span className="text-x7">Описание</span>
+              <span className="text-x7">{translateBase(BaseLocaleKey.Description)}</span>
               {keysDropdown('note')}
             </div>
 
@@ -133,16 +134,14 @@ export const StoragesRackImportFromExcelModalInner = (props: { rack: StoragesRac
 
             const isRevert =
               cards.length !== valueList.length &&
-              (await confirm(
-                `Не все строки из файла были преобразованы в карточки. Получилось корректно сформировать ${cards.length} ${declension(cards.length, 'карточку', 'карточки', 'карточек')}`,
-              ));
+              (await confirm(translateBase(BaseLocaleKey.StoragesPartialFormed, { n: cards.length })));
 
             if (!isRevert) return;
 
             await storagesTsjrpcClient.addManyCards({ cards, rackw: props.rack.w });
           }}
         >
-          Сформировать карточки
+          {translateBase(BaseLocaleKey.StoragesFormCards)}
         </Button>
       </ModalFooter>
     </>

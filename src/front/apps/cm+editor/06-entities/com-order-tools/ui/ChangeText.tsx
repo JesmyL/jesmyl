@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
@@ -5,6 +6,7 @@ import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { TheCmComOrder } from '$cm/ext';
 import { Atom, atom } from 'atomaric';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmEditorComOrderToolsProps } from '../model';
 
 let isModalOpenAtom: Atom<boolean>;
@@ -19,12 +21,12 @@ export const CmEditorComOrderToolsChangeText = ({ com, ord, ordi }: CmEditorComO
     <>
       <BottomPopupItem
         icon="Text"
-        title="Заменить текст"
+        title={translateBase(BaseLocaleKey.CmEditorReplaceText)}
         onClick={isModalOpenAtom.do.toggle}
       />
 
       <Modal openAtom={isModalOpenAtom}>
-        <ModalHeader>{blockHeaderHtml('Текстовый блок для блока')}</ModalHeader>
+        <ModalHeader>{blockHeaderHtml(translateBase(BaseLocaleKey.CmEditorTextForBlock))}</ModalHeader>
         <ModalBody>
           <TheCmComOrder
             ord={ord}

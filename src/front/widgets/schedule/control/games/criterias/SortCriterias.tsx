@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
@@ -6,6 +7,7 @@ import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/con
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { schGamesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { Atom, atom } from 'atomaric';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ScheduleWidgetShareButtons } from '../ShareButtons';
 import { ScheduleWidgetSortCriteria } from './SortCriteria';
 
@@ -19,19 +21,21 @@ export function ScheduleWidgetSortCriterias() {
 
   return (
     <>
-      <TheButton onClick={isOpenCriteriasAtom.do.toggle}>Посмотреть критерии сортировки</TheButton>
+      <TheButton onClick={isOpenCriteriasAtom.do.toggle}>
+        {translateBase(BaseLocaleKey.ScheduleViewCriterias)}
+      </TheButton>
 
       <FullContent openAtom={isOpenCriteriasAtom}>
         <h3 className="flex gap-2">
-          Список критериев
+          {translateBase(BaseLocaleKey.ScheduleCriteriaList)}
           <TheIconSendButton
             icon="PlusSign"
-            confirm="Добавить новый критерий?"
+            confirm={translateBase(BaseLocaleKey.ScheduleAddCriteria)}
             onSend={() => schGamesTsjrpcClient.addCriteria({ props: scheduleScopeProps })}
           />
         </h3>
 
-        <ScheduleWidgetShareButtons prefix="Фотографии" />
+        <ScheduleWidgetShareButtons prefix={translateBase(BaseLocaleKey.SchedulePhotos)} />
 
         {rights.schedule.games?.criterias.map((criteria, criteriai) => {
           return (

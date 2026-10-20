@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Modal } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
@@ -13,6 +14,7 @@ import { Link, useNavigate } from '@tanstack/react-router';
 import { Atom, atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesRackMemberRole, StoragesRackWid } from 'shared/model/storages/list.model';
 import { checkIsNotString, checkIsObject } from 'shared/utils/checkIs';
 import { StoragesRackImportFromExcelModalInner } from './ImportFromExcelModalInner';
@@ -48,7 +50,7 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
   return (
     <PageContainerConfigurer
       className="StoragesRackPage"
-      headTitle={rack.title ?? 'Стеллаж'}
+      headTitle={rack.title ?? translateBase(BaseLocaleKey.StoragesRack)}
       head={<StoragesRackCardSearch rack={rack} />}
       onMoreClick={setIsMoreOpen}
       content={
@@ -91,7 +93,7 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
             <BottomPopup onClose={setIsMoreOpen}>
               <BottomPopupItem
                 icon="PlusSign"
-                title="Создать карточку"
+                title={translateBase(BaseLocaleKey.StoragesCreateCard)}
                 onClick={async () => {
                   const cardi = await storagesTsjrpcClient.createRackCard({ rackw });
 
@@ -107,7 +109,7 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
 
               <BottomPopupItem
                 icon="SortingAZ01"
-                title="Сортировка и группировка карточек"
+                title={translateBase(BaseLocaleKey.StoragesSortAndGroup)}
                 onClick={isOpenGroupAnsSortingModalAtom.do.toggle}
               />
 
@@ -119,7 +121,7 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
                   icon="Edit02"
                   titleNode={
                     <>
-                      Редактировать <span className="text-x7">{rack.title}</span>
+                      {translateBase(BaseLocaleKey.Redact)} <span className="text-x7">{rack.title}</span>
                     </>
                   }
                 />
@@ -131,20 +133,20 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
               >
                 <BottomPopupItem
                   icon="CheckList"
-                  titleNode={<>Сводки</>}
+                  titleNode={<>{translateBase(BaseLocaleKey.StoragesSums)}</>}
                 />
               </Link>
 
               <BottomPopupItem
                 icon="FileImport"
                 onClick={isOpenImportFromExcelModalAtom.do.toggle}
-                title="Сформировать карточки из Excel"
+                title={translateBase(BaseLocaleKey.StoragesCardsFromExcel)}
               />
 
               <BottomPopupItem
                 icon="QrCode"
                 onClick={isOpenMemberAdderModalAtom.do.toggle}
-                title="Добавить участника"
+                title={translateBase(BaseLocaleKey.StoragesAddMember)}
               />
             </BottomPopup>
           )}

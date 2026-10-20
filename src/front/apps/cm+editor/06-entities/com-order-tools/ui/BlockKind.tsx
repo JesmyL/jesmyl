@@ -1,4 +1,4 @@
-import { translateDynamic } from '#basis/locale';
+import { translateBase, translateDynamic } from '#basis/locale';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
@@ -6,6 +6,8 @@ import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { TheCmComOrder } from '$cm/ext';
 import { Atom, atom } from 'atomaric';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
 import { comBlockKinds } from 'shared/values/cm/block-kinds/BlockKind';
 import { CmEditorComOrderToolsProps } from '../model';
 
@@ -19,12 +21,12 @@ export const CmEditorComOrderToolsBlockKind = ({ com, ord, ordi }: CmEditorComOr
     <>
       <BottomPopupItem
         icon="Cube"
-        title="Тип блока"
+        title={translateBase(BaseLocaleKey.CmEditorBlockKind)}
         onClick={isModalOpenAtom.do.toggle}
       />
 
       <Modal openAtom={isModalOpenAtom}>
-        <ModalHeader>Тип блока</ModalHeader>
+        <ModalHeader>{translateBase(BaseLocaleKey.CmEditorBlockKind)}</ModalHeader>
         <ModalBody>
           <TheCmComOrder
             ord={ord}
@@ -36,7 +38,7 @@ export const CmEditorComOrderToolsBlockKind = ({ com, ord, ordi }: CmEditorComOr
             if ((ordi === 0 || ord.me.isTarget) && kindBlock.isInherit) return null;
             if (ord.texti == null ? kindBlock.isBlockForTextableOnly : kindBlock.isBlockForChordedOnly) return null;
 
-            const newBlockTitle = td(it => it.cm.com.kind[kindBlock.key]);
+            const newBlockTitle = td(it => it[DynLocaleKey.CmComKind][kindBlock.key]);
 
             return (
               <IconCheckbox

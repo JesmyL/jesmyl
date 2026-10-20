@@ -1,4 +1,5 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { translateBase } from '#basis/locale';
 import { FaceItem } from '#basis/ui/FaceItem';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
@@ -9,6 +10,7 @@ import { questionerIDB } from '$q/shared/state/qIdb';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { useQuestionerBlankListCreateBlankMutation } from '../api/useQuestionerCreateBlankMutation';
 
 export const QuestionerBlankListPage = () => {
@@ -21,7 +23,7 @@ export const QuestionerBlankListPage = () => {
   return (
     <PageContainerConfigurer
       className="QuestionerRedactorPage"
-      headTitle="Опросы"
+      headTitle={translateBase(BaseLocaleKey.QuestionerSurveys)}
       onMoreClick={setIsOpenTools}
       withoutBackButton
       content={
@@ -50,7 +52,7 @@ export const QuestionerBlankListPage = () => {
               <BottomPopupItem
                 icon="PlusSign"
                 iconNode={createBlankMutation.isPending && <TheIconLoading />}
-                title="Новый опрос"
+                title={translateBase(BaseLocaleKey.QuestionerNewSurvey)}
                 onClick={async event => {
                   event.stopPropagation();
                   const newBlankw = await createBlankMutation.mutateAsync();

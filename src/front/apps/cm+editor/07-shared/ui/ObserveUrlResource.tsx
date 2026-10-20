@@ -1,8 +1,10 @@
+import { translateBase } from '#basis/locale';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useEffect, useState } from 'react';
 import { CmMp3ContainsPageResult } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itInvokeIt, itIt } from 'shared/utils';
 import { cmEditorClientTsjrpcMethods } from '../lib/cm-editor.tsjrpc.methods';
 import { useCmMp3Rules } from '../lib/useCmMp3Rules';
@@ -24,10 +26,10 @@ export const ObserveUrlResource = ({
     try {
       const theUrl = new URL(url);
       if (mp3Rules && !mp3Rules.some(u => new URL(u.url).origin === theUrl.origin)) {
-        setErrorMessage('Неизвестный источник');
+        setErrorMessage(translateBase(BaseLocaleKey.CmEditorUnknownSource));
       } else setErrorMessage('');
     } catch (_e) {
-      setErrorMessage('Невалидный URL-адрес');
+      setErrorMessage(translateBase(BaseLocaleKey.CmEditorInvalidUrl));
     }
   }, [url, mp3Rules]);
 
@@ -37,13 +39,13 @@ export const ObserveUrlResource = ({
         <TextInput
           className="url-observer-input-wrapper w-[50%]"
           st-mood="2"
-          placeholder="URL-адрес"
+          placeholder={translateBase(BaseLocaleKey.CmEditorUrl)}
           value={url}
           onInput={setUrl}
         />
         <SendButton
           className="url-observer-send-button"
-          title="Обзор URL"
+          title={translateBase(BaseLocaleKey.CmEditorObserveUrl)}
           disabled={!url || !!errorMessage}
           onSuccess={onSuccess}
           onSend={() => cmEditorClientTsjrpcMethods.getResourceHTMLString({ src: url })}
@@ -51,7 +53,7 @@ export const ObserveUrlResource = ({
       </div>
       {errorMessage && <div className="text-xKO">{errorMessage}</div>}
 
-      <h2>Известные ресурсы:</h2>
+      <h2>{translateBase(BaseLocaleKey.CmEditorKnownResources)}</h2>
       {mp3Rules?.map(rule => {
         return (
           (!availableWithTextQuery || rule.textQuery) && (

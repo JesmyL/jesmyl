@@ -2,6 +2,7 @@ import { translateBase } from '#basis/locale';
 import { useCmComCurrent } from '$cm/entities/com';
 import { useCmComFavouriteList } from '$cm/entities/com-favourite';
 import { MenuComToolName } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmComTool } from '../ComTool';
 
 export const CmComToolFavorite = () => {
@@ -12,7 +13,9 @@ export const CmComToolFavorite = () => {
 
   return (
     <CmComTool
-      title={translateBase(it => it.cm.com.tool[MenuComToolName.MarkCom], { v: +isFavourite(ccom.wid) })}
+      title={translateBase(it => it[BaseLocaleKey.CmMarkComTool][MenuComToolName.MarkCom], {
+        v: +isFavourite(ccom.wid),
+      })}
       icon="Star"
       iconKind={isFavourite(ccom.wid) ? 'SolidRounded' : undefined}
       onClick={() => toggleFavourite(ccom.wid)}

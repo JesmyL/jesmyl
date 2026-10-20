@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { StrongInputDateTimeExtracter } from '#basis/ui/strong-control/StrongDateTimeExtracter';
 import { renderComponentInNewWindow } from '#shared/lib/renders';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
@@ -5,6 +6,7 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { Atom, atom } from 'atomaric';
 import { makeRegExp } from 'regexpert';
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleScopeProps, ScheduleWidgetDayi } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { useScheduleDayScopePropsContext } from '../complect/lib/contexts';
 import { schDaysTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetEventListUpdater } from './EventListUpdater';
@@ -29,7 +31,7 @@ export function ScheduleWidgetDayEditPanel({ day, dayi, schedule, scheduleScopeP
       <StrongInputDateTimeExtracter
         value={day.wup?.toFixed?.(2).replace(makeRegExp('/\\./'), ' ') || ''}
         icon="Clock01"
-        title="Начало дня"
+        title={translateBase(BaseLocaleKey.ScheduleDayStart)}
         takeDate="NO"
         takeTime="hour-min"
         onSend={async (isChanged, value) =>
@@ -39,7 +41,7 @@ export function ScheduleWidgetDayEditPanel({ day, dayi, schedule, scheduleScopeP
       <TheIconButton
         icon="Printer"
         className="flex-max my-2"
-        postfix="Распечатать распорядок дня"
+        postfix={translateBase(BaseLocaleKey.SchedulePrintDay)}
         onClick={() =>
           renderComponentInNewWindow({
             target: 'sch/day-edit',
@@ -57,9 +59,9 @@ export function ScheduleWidgetDayEditPanel({ day, dayi, schedule, scheduleScopeP
       />
       <TheIconButton
         icon="CalendarUpload02"
-        postfix="Загрузить текстовое расписание"
+        postfix={translateBase(BaseLocaleKey.ScheduleUploadText)}
         disabled={day.list.length > 0}
-        disabledReason="Расписание дня должно быть пустым"
+        disabledReason={translateBase(BaseLocaleKey.ScheduleDayMustBeEmpty)}
         onClick={isOpenDayListUpdaterAtom.do.toggle}
       />
 

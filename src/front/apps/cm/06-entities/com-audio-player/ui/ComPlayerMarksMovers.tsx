@@ -5,6 +5,7 @@ import { useFetchFreshComAudioMarksPack } from '$cm/shared/api/useFetchFreshComA
 import { Atom, useAtomValue } from 'atomaric';
 import { HttpNumLeadLink } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { twMerge } from 'tailwind-merge';
 import { useCmComAudioPlayerMoversController } from '../lib/useCmComAudioPlayerMoversController';
@@ -43,7 +44,7 @@ export const CmComAudioPlayerMarksMovers = (props: Props) => {
         id={preSwitchTime}
         items={[-1, 0, 1, 2, 3, 4].map(id => ({ id, title: id < 0 ? '×' : id }))}
         onSelectId={props.preSwitchTimeAtom.set}
-        renderItem={attrs => (attrs.id < 0 ? '×' : translateBase(it => it.Nsec, { n: attrs.id }))}
+        renderItem={attrs => (attrs.id < 0 ? '×' : translateBase(BaseLocaleKey.NumberSeconds, { n: attrs.id }))}
         hiddenArrow
       />
 

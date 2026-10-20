@@ -1,9 +1,11 @@
+import { translateBase } from '#basis/locale';
 import { useConfirm } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { StyledLoadingSpinner } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmEditorComOrderToolsProps } from '../model';
 
 export const CmEditorComOrderToolsOrderVisibility = ({
@@ -25,9 +27,9 @@ export const CmEditorComOrderToolsOrderVisibility = ({
           <LazyIcon icon="View" />
         )
       }
-      title={ord.isVisible ? 'Скрыть блок' : 'Показать блок'}
+      title={translateBase(it => (ord.isVisible ? it[BaseLocaleKey.CmEditorHideBlock] : it[BaseLocaleKey.CmEditorShowBlock]))}
       onClick={async () => {
-        if (await confirm(`Скрыть блок ${ord.me.header()}?`)) {
+        if (await confirm(translateBase(BaseLocaleKey.CmEditorHideBlockConfirm, { h: ord.me.header() }))) {
           setIsLoading(true);
 
           if (onEdit) await onEdit();

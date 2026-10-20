@@ -1,10 +1,12 @@
-import { translateDynamic } from '#basis/locale';
+import { translateBase, translateDynamic } from '#basis/locale';
 import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { CmEditorComOrderAddTextableBlockAnchorTitles } from '$cm+editor/features/com-order';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { useEffect, useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
 import { comBlockKinds } from 'shared/values/cm/block-kinds/BlockKind';
 import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';
 import { cmEditorComAddOrderNewOrderMakeEtapQueue } from '../lib/consts';
@@ -35,7 +37,7 @@ export const CmEditorComAddOrderAdditionsEtapsModalInner = ({ com, onClose, firs
     <ModalFooter>
       <TheIconButton
         icon="ArrowRight01"
-        prefix="Следующий этап"
+        prefix={translateBase(BaseLocaleKey.CmEditorNextStage)}
         disabled={
           etap === CmEditorComAddOrderNewOrderMakeEtap.Text
             ? selectedTexti == null
@@ -52,7 +54,7 @@ export const CmEditorComAddOrderAdditionsEtapsModalInner = ({ com, onClose, firs
     case CmEditorComAddOrderNewOrderMakeEtap.Text:
       return (
         <>
-          <ModalHeader>Текст для нового блока</ModalHeader>
+          <ModalHeader>{translateBase(BaseLocaleKey.CmEditorNewBlockText)}</ModalHeader>
           <ModalBody>
             {com?.texts?.map((text, texti) => {
               return (
@@ -79,7 +81,7 @@ export const CmEditorComAddOrderAdditionsEtapsModalInner = ({ com, onClose, firs
     case CmEditorComAddOrderNewOrderMakeEtap.Chord:
       return (
         <>
-          <ModalHeader>Блок аккордов</ModalHeader>
+          <ModalHeader>{translateBase(BaseLocaleKey.CmEditorChordBlock)}</ModalHeader>
           <ModalBody>
             {com?.chords?.map((chord, chordi) => {
               return (
@@ -107,12 +109,12 @@ export const CmEditorComAddOrderAdditionsEtapsModalInner = ({ com, onClose, firs
 
       return (
         <>
-          <ModalHeader>Тип нового блока</ModalHeader>
+          <ModalHeader>{translateBase(BaseLocaleKey.CmEditorNewBlockType)}</ModalHeader>
           <ModalBody>
             {comBlockKinds.kinds.map(styleBlock => {
               if (selectedTexti == null ? styleBlock.isBlockForTextableOnly : styleBlock.isBlockForChordedOnly)
                 return null;
-              const orderTitle = td(it => it.cm.com.kind[styleBlock.key]);
+              const orderTitle = td(it => it[DynLocaleKey.CmComKind][styleBlock.key]);
 
               return (
                 <IconCheckbox

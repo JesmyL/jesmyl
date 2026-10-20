@@ -6,6 +6,7 @@ import { TextInput } from '#shared/ui/TextInput';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
 import { constantsConfigurator } from 'shared/const/cm/constants.def';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { toast } from 'sonner';
 import { twJoin } from 'tailwind-merge';
 
@@ -18,7 +19,7 @@ export const IndexEmailConfirm = ({
 }) => {
   const [email, setEmail] = useState('');
   const [otp, setOTP] = useState('');
-  const otpLabel = translateBase(it => it.oneTimeCode);
+  const otpLabel = translateBase(BaseLocaleKey.OneTimeCode);
   const { availEmailDomainZone } = useAtomValue(constantsConfigAtom);
   const availEmailDomainZoneError = constantsConfigurator.availEmailDomainZone.error?.(availEmailDomainZone, email);
 
@@ -26,7 +27,7 @@ export const IndexEmailConfirm = ({
     <div className="flex flex-col gap-3">
       <div className="flex gap-3">
         <TextInput
-          label="E-mail"
+          label={translateBase(BaseLocaleKey.EmailLabel)}
           type="email"
           className="w-full"
           autoComplete="bind-email"
@@ -40,7 +41,7 @@ export const IndexEmailConfirm = ({
           onClick={async () => {
             const result = await onSend(email);
             toast(
-              translateBase(it => it.email.otpSent, { e: result.email }),
+              translateBase(BaseLocaleKey.EmailCodeSent, { e: result.email }),
               makeToastOKMoodConfig(),
             );
           }}

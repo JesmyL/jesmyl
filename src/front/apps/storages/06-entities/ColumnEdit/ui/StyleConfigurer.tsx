@@ -1,9 +1,11 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { atom } from 'atomaric';
 import { useState } from 'react';
 import { storagesStylePropKeysMatrix, storagesStypePropTitles } from 'shared/const/storages/styleProps.config';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesRack } from 'shared/model/storages/list.model';
 import { StoragesColumnType, StoragesRackColumn } from 'shared/model/storages/rack.model';
 import { StoragesColumnUiDict } from 'shared/model/storages/ui.model';
@@ -28,7 +30,7 @@ export const StoragesColumnEditStyleConfigurer = (props: { rack: StoragesRack; c
         icon={isOpenStypesConfig ? 'ArrowUp01' : 'ArrowDown01'}
         onClick={() => setIsOpenStypesConfig(itNIt)}
       >
-        Стили
+        {translateBase(BaseLocaleKey.StoragesStyles)}
       </Button>
 
       {isOpenStypesConfig && (
@@ -45,10 +47,21 @@ export const StoragesColumnEditStyleConfigurer = (props: { rack: StoragesRack; c
                 {storagesStypePropTitles[propKey]}
                 <Dropdown
                   id={!checkIsString(styleKey) ? styleKey : null}
-                  nullTitle="Обычный"
+                  nullTitle={translateBase(BaseLocaleKey.StoragesUsual)}
                   items={styleKeyList.map((id, idi) => ({
                     id,
-                    title: <span className="text-x7">{['Маленький', 'Большой', 'Огромный'][idi]}</span>,
+                    title: (
+                      <span className="text-x7">
+                        {translateBase(
+                          it =>
+                            [
+                              it[BaseLocaleKey.StoragesSmall],
+                              it[BaseLocaleKey.StoragesBig],
+                              it[BaseLocaleKey.StoragesHuge],
+                            ][idi],
+                        )}
+                      </span>
+                    ),
                   }))}
                   onSelectId={styleKey =>
                     storagesTsjrpcClient.editColumnType({
@@ -63,7 +76,7 @@ export const StoragesColumnEditStyleConfigurer = (props: { rack: StoragesRack; c
           })}
 
           <ColorChanger
-            title="Цвет текста:"
+            title={translateBase(BaseLocaleKey.StoragesTextColor)}
             propKey="text"
             coli={props.coli}
             column={column}
@@ -71,7 +84,7 @@ export const StoragesColumnEditStyleConfigurer = (props: { rack: StoragesRack; c
           />
 
           <ColorChanger
-            title="Цвет фона:"
+            title={translateBase(BaseLocaleKey.StoragesBackgroundColor)}
             propKey="bg"
             coli={props.coli}
             column={column}

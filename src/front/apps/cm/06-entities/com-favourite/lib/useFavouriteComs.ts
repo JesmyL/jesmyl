@@ -9,6 +9,7 @@ import { useAuth } from '$index/shared/state';
 import { atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { CmComWid } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itNumSort } from 'shared/utils';
 import { objectLength } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
@@ -51,7 +52,7 @@ export const useCmComFavouriteList = () => {
 
       if (isOverLimit) {
         toast(
-          translateBase(it => it.favNLim, { n: maxFavouritesCount }),
+          translateBase(BaseLocaleKey.FavoriteNumberLimit, { n: maxFavouritesCount }),
           makeToastKOMoodConfig(),
         );
         return;

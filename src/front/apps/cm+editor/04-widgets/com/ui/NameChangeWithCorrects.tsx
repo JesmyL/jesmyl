@@ -2,6 +2,7 @@ import { translateBase } from '#basis/locale';
 import { TextInput } from '#shared/ui/TextInput';
 import { CmEditorTextCorrectMessages } from '$cm+editor/entities/text';
 import { IExportableCom } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { IIncorrects } from 'shared/model/cm/Incorrects';
 
 export const CmEditorComCreateNameChange = ({
@@ -16,7 +17,7 @@ export const CmEditorComCreateNameChange = ({
   return (
     <>
       <div className="flex w-full">
-        <span className="mx-2">{translateBase(it => it.name)} </span>
+        <span className="mx-2">{translateBase(BaseLocaleKey.Name)} </span>
         <div
           id="new-com-input-wrapper"
           className="w-full"

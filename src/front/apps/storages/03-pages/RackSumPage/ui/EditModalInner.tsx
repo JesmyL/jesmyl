@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { DatePicker } from '#shared/components/DatePicker';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
@@ -8,6 +9,7 @@ import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.metho
 import { useLiveQuery } from 'dexie-react-hooks';
 import { storagesColumnConfigDict } from 'shared/const/storages/storagesColumnConfigDict';
 import { storagesSummaryTypePropsDict, storagesSummaryTypeTitlesOrder } from 'shared/const/storages/summary.dicts';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesRackSummaryMi, StoragesRackSummaryType, StoragesRackWid } from 'shared/model/storages/list.model';
 import { StoragesColumnType } from 'shared/model/storages/rack.model';
 import { checkIsNaN } from 'shared/utils/checkIs';
@@ -32,7 +34,7 @@ export const StoragesRackSumEditModalInner = ({
             <ModalHeader>{summary.title}</ModalHeader>
             <ModalBody>
               <Dropdown
-                label="Тип"
+                label={translateBase(BaseLocaleKey.Type)}
                 id={summary.type}
                 items={storagesSummaryTypeTitlesOrder.map(type => ({
                   id: type,
@@ -60,7 +62,7 @@ export const StoragesRackSumEditModalInner = ({
 
               <InputWithLoadingIcon
                 icon="Text"
-                label="Название сводки"
+                label={translateBase(BaseLocaleKey.StoragesSumTitle)}
                 defaultValue={summary.title}
                 onChanged={title => storagesTsjrpcClient.putAtRackSummary({ put: { title }, rackw, summaryMi })}
               />
@@ -69,7 +71,7 @@ export const StoragesRackSumEditModalInner = ({
                 <InputWithLoadingIcon
                   icon={storagesColumnConfigDict[StoragesColumnType.Formula].icon}
                   multiline
-                  label="Формула по карточке"
+                  label={translateBase(BaseLocaleKey.StoragesSumFormula)}
                   defaultValue={summary.formula}
                   onChanged={formula => storagesTsjrpcClient.putAtRackSummary({ put: { formula }, rackw, summaryMi })}
                 />

@@ -1,11 +1,13 @@
+import { translateBase } from '#basis/locale';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ConfiguratorEditProps } from './model';
 
 type Props = ConfiguratorEditProps<{ stroke?: string; strokeW?: number }>;
 
-export const StrokeConfigurator = ({ config, updateConfig, title = 'Контур' }: Props) => {
+export const StrokeConfigurator = ({ config, updateConfig, title }: Props) => {
   return (
     <div className="flex gap-2 flex-max my-2">
-      {title}
+      {title ?? translateBase(BaseLocaleKey.ConfigStroke)}
       <input
         type="color"
         value={config.stroke}

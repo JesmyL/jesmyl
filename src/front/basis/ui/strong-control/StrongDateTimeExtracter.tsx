@@ -1,6 +1,8 @@
+import { translateBase } from '#basis/locale';
 import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { howMillisecondsInHour, howMillisecondsInMin, howMillisecondsInSec } from 'shared/const/ms';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itIt } from 'shared/utils';
 import { StrongEditableField } from './field/StrongEditableField';
 
@@ -117,7 +119,7 @@ export function StrongInputDateTimeExtracter(props: {
         {...props}
         isRedact
         description={timeImagine}
-        placeholder="Нецифра - разделитель"
+        placeholder={translateBase(BaseLocaleKey.NonDigitSeparator)}
         onChanged={setInputValue}
         onSend={() => props.onSend(initTs !== currentTs, timeImagine)}
       />

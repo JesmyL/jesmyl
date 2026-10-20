@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { ModalBody, ModalFooter, ModalHeader, usePrompt } from '#shared/ui/modal';
@@ -17,6 +18,7 @@ import { Atom, useAtomValue } from 'atomaric';
 import { useState } from 'react';
 import { CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
 import { makeCmComAudioMarkTitleBySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { TextCase } from 'shared/model/common';
 import { extractNumber } from 'shared/utils';
 import { checkIsArray, checkIsNil } from 'shared/utils/checkIs';
@@ -36,7 +38,7 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
       icon={isAdd ? 'PlusSign' : 'MinusSign'}
       onClick={addMaker(delta)}
       disabled={isPause}
-      disabledReason="Песня не проигрывается"
+      disabledReason={translateBase(BaseLocaleKey.CmEditorComNotPlaying)}
     />
   );
 
@@ -76,8 +78,8 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
             icon="Edit01"
             onClick={async () => {
               const newTitle = await prompt(
-                checkIsArray(selector) ? 'При переименовании привязка к блоку будет утеряна' : '',
-                'Новое значение',
+                checkIsArray(selector) ? translateBase(BaseLocaleKey.CmEditorRenameUnbinds) : '',
+                translateBase(BaseLocaleKey.CmEditorNewValue),
                 checkIsArray(selector) ? '' : selector || title,
                 { multiline: true },
               );
@@ -101,7 +103,7 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
           <TheIconButton
             icon="Delete02"
             className="text-xKO"
-            confirm={<>Удалить точку {title}?</>}
+            confirm={<>{translateBase(BaseLocaleKey.CmEditorRemovePoint, { t: title })}</>}
             onClick={() => {
               cmComEditorAudioMarksEditPacksAtom.do.removeMark(com.wid, src, time);
               cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.reset();
@@ -146,7 +148,7 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
               .then(() => cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.reset())
           }
         >
-          Применить
+          {translateBase(BaseLocaleKey.CmEditorApply)}
         </Button>
       </ModalFooter>
     </>

@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { Card } from '#shared/components/ui/card';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
@@ -5,6 +6,7 @@ import { questionerCardContents } from '$q/shared/const/cardContents';
 import { questionerTemplateDescriptions } from '$q/shared/const/templateDescriptions';
 import { questionerAdminTsjrpcClient } from '$q/shared/tsjrpc/admin.tsjrpc';
 import { questionerTypeDefaultIfConditionOperatorDict } from 'shared/const/q/typeDefaultIfConditionOperator';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { QuestionerBlank, QuestionerBlankWid, QuestionerTemplate, QuestionerTemplateId } from 'shared/model/q';
 import { QuestionerTemplateConditionType } from 'shared/model/q/condition';
 import { objectKeys, objectLength } from 'shared/utils/object.utils';
@@ -25,8 +27,8 @@ export const QuestionerTemplateVisibilityRedactorModalBodyInner = ({
       <Dropdown
         id={template?.if?.t ?? QuestionerTemplateConditionType.And}
         items={[
-          { id: QuestionerTemplateConditionType.And, title: 'Виден при всех условиях' },
-          { id: QuestionerTemplateConditionType.Or, title: 'Виден хотя бы при одном из условий' },
+          { id: QuestionerTemplateConditionType.And, title: translateBase(BaseLocaleKey.QuestionerVisibleAll) },
+          { id: QuestionerTemplateConditionType.Or, title: translateBase(BaseLocaleKey.QuestionerVisibleAny) },
         ]}
         onSelectId={id =>
           questionerAdminTsjrpcClient.setTemplateConditionOperator({ blankw, templateId, operator: id })
@@ -62,7 +64,9 @@ export const QuestionerTemplateVisibilityRedactorModalBodyInner = ({
                       })
                     }
                   >
-                    {template?.if?.next[conditioni].t ? 'ИЛИ' : 'И'}
+                    {translateBase(it =>
+                      template?.if?.next[conditioni].t ? it[BaseLocaleKey.QuestionerOr] : it[BaseLocaleKey.QuestionerAnd],
+                    )}
                   </Button>
                 </div>
               </Card.Header>
@@ -138,7 +142,7 @@ export const QuestionerTemplateVisibilityRedactorModalBodyInner = ({
                     })
                   }
                 >
-                  Подусловие
+                  {translateBase(BaseLocaleKey.QuestionerSubCondition)}
                 </Button>
               </Card.Footer>
             </Card.Content>
@@ -150,10 +154,10 @@ export const QuestionerTemplateVisibilityRedactorModalBodyInner = ({
         icon="PlusSign"
         className="mt-5"
         disabled={objectLength(blank.tmp) < 2}
-        disabledReason="Других вопросов нет"
+        disabledReason={translateBase(BaseLocaleKey.QuestionerNoOthers)}
         onClick={() => questionerAdminTsjrpcClient.addTemplateConditionNext({ blankw, templateId })}
       >
-        Добавить условие
+        {translateBase(BaseLocaleKey.QuestionerAddCondition)}
       </Button>
     </>
   );

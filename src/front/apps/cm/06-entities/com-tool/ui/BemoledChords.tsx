@@ -3,6 +3,7 @@ import { useCmComCurrent } from '$cm/entities/com';
 import { cmIDB } from '$cm/ext';
 import { MenuComToolName } from 'shared/api';
 import { takeCmComToggledTonType } from 'shared/const/cm/enums';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmComTool } from '../ComTool';
 
 export const CmComToolBemoledChords = () => {
@@ -11,7 +12,7 @@ export const CmComToolBemoledChords = () => {
 
   return (
     <CmComTool
-      title={translateBase(it => it.cm.com.tool[MenuComToolName.BemoledChords])}
+      title={translateBase(it => it[BaseLocaleKey.CmMarkComTool][MenuComToolName.BemoledChords])}
       icon="Grid"
       onClick={
         comw

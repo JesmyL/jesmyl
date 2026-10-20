@@ -7,6 +7,7 @@ import { CmComAudioPlayerCacheMarks } from '$cm/entities/com-audio-player';
 import { useCmComSetListLimitsExtracterContext } from '$cm/entities/index';
 import { useRef, useState } from 'react';
 import { CmComWid, IExportableCom } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { retNull } from 'shared/utils';
 import { objectLength } from 'shared/utils/object.utils';
 import {
@@ -82,7 +83,7 @@ export const CmComFaceListComList = (props: CmComFaceListProps) => {
           >
             <FaceItem.Logo>{!com.n || <CmComNumber comw={com.w} />}</FaceItem.Logo>
             <FaceItem.Title>
-              {com.n || <span className="text-xKO">{translateBase(it => it.cm.com.unk)}</span>}
+              {com.n || <span className="text-xKO">{translateBase(BaseLocaleKey.CmUnknown)}</span>}
             </FaceItem.Title>
             {setComDescription(com, comi)}
             {props.withoutCacheMarks || (

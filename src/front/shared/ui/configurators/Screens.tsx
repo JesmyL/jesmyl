@@ -1,11 +1,13 @@
+import { translateBase } from '#basis/locale';
 import { BroadcastScreen } from '#features/broadcast/BroadcastScreen';
 import { useScreenBroadcastCurrentConfig } from '#features/broadcast/hooks/configs';
 import { StyledBroadcastScreenProportioned } from '#shared/style/StyledBroadcastScreenProportioned';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { FullContent } from '../fullscreen-content/FullContent';
 import { TheIconButton } from '../the-icon/TheIconButton';
 import { WithAtom } from '../WithAtom';
 
-export const ScreensConfigurator = ({ title = 'Окошки', isButtonOnly }: { title?: string; isButtonOnly?: boolean }) => {
+export const ScreensConfigurator = ({ title, isButtonOnly }: { title?: string; isButtonOnly?: boolean }) => {
   const currentConfig = useScreenBroadcastCurrentConfig();
 
   if (!currentConfig) return;
@@ -43,7 +45,7 @@ export const ScreensConfigurator = ({ title = 'Окошки', isButtonOnly }: { 
     button
   ) : (
     <div className="flex gap-2 flex-max my-2">
-      {title}
+      {title ?? translateBase(BaseLocaleKey.ConfigScreens)}
       {button}
     </div>
   );

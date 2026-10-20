@@ -3,6 +3,7 @@ import { bibleBroadcastSearchAreaConfigDict } from '$bible/shared/const';
 import { BibleBroadcastKeyListenScope } from '$bible/shared/model/broadcast';
 import { bibleBroadcastKeyListenScopeAtom } from '$bible/shared/state';
 import { useAtomValue } from 'atomaric';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { extractNumber } from 'shared/utils';
 import { mapObjectEntries } from 'shared/utils/object.utils';
 import { twJoin } from 'tailwind-merge';
@@ -20,10 +21,10 @@ export function BibleBroadcastSearchInputPanel({ inputRef }: Props) {
     <div className="flex gap-2 w-full">
       <span className="nowrap">
         {listenScope === BibleBroadcastKeyListenScope.SearchInText
-          ? translateBase(it => it.bible.searchInText)
+          ? translateBase(BaseLocaleKey.BibleSearchText)
           : listenScope === BibleBroadcastKeyListenScope.SearchInChapter
-            ? translateBase(it => it.bible.searchInChapter)
-            : translateBase(it => it.bible.searchByLink)}
+            ? translateBase(BaseLocaleKey.BibleSearchChapter)
+            : translateBase(BaseLocaleKey.BibleSearchLink)}
         :
       </span>
       {listenScope === BibleBroadcastKeyListenScope.SearchByAddress ? (

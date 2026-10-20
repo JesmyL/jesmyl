@@ -8,6 +8,7 @@ import { cmComSelectedComwsAtom } from '$cm/entities/com';
 import styled from '@emotion/styled';
 import { Link } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const CmListsPage = () => {
   const cats = useCmCatList();
@@ -17,7 +18,7 @@ export const CmListsPage = () => {
     <StyledPhaseContainerConfigurer
       className="lists-container"
       withoutBackButton
-      headTitle={translateBase(it => it.lists)}
+      headTitle={translateBase(BaseLocaleKey.Lists)}
       contentClass="flex between column p-2"
       content={
         <>
@@ -27,7 +28,7 @@ export const CmListsPage = () => {
           >
             <BrutalItem
               iconNode={<LazyIcon icon="Star" />}
-              title={translateBase(it => it.fav)}
+              title={translateBase(BaseLocaleKey.Favorite)}
             />
           </Link>
           <Link
@@ -36,7 +37,7 @@ export const CmListsPage = () => {
           >
             <BrutalItem
               iconNode={<LazyIcon icon="Calendar02" />}
-              title={translateBase(it => it.events)}
+              title={translateBase(BaseLocaleKey.Events)}
             />
           </Link>
           {selectedComws.length ? (
@@ -46,12 +47,12 @@ export const CmListsPage = () => {
             >
               <BrutalItem
                 iconNode={<LazyIcon icon="CheckmarkBadge01" />}
-                title={translateBase(it => it.sel)}
+                title={translateBase(BaseLocaleKey.Selected)}
               />
             </Link>
           ) : null}
           <BrutalScreen>
-            <div className="title sticky bg-inherit">{translateBase(it => it.cm.thematics)}:</div>
+            <div className="title sticky bg-inherit">{translateBase(BaseLocaleKey.CmThematics)}:</div>
             {cats.map(cat => {
               return !cat.wid ? null : (
                 <Link

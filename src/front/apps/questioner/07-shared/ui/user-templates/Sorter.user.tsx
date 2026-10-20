@@ -1,6 +1,8 @@
+import { translateBase } from '#basis/locale';
 import { Badge } from '#shared/components/ui/badge';
 import { Button } from '#shared/components/ui/button';
 import { useEffect, useMemo } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { QuestionerType } from 'shared/model/q';
 import { QuestionerUserAnswerContentProps } from 'shared/model/q/answer';
 import { toRandomSorted } from 'shared/randoms';
@@ -34,7 +36,7 @@ export const QuestionerUserSorterTemplateCardContent = ({
     <>
       {!isCantRedact && template.needSelect && (
         <>
-          <div className="mb-3">Сначала нужно выбрать подходящие варианты для сортировки:</div>
+          <div className="mb-3">{translateBase(BaseLocaleKey.QuestionerSorterFirst)}</div>
           <div className="flex gap-3 flex-wrap">
             {variantKeys.map(answerId => {
               if (!template.variants[answerId]?.title) return;
@@ -56,7 +58,7 @@ export const QuestionerUserSorterTemplateCardContent = ({
               );
             })}
           </div>
-          {!userAnswer?.v.length || <div className="my-3">А потом их отсортировать:</div>}
+          {!userAnswer?.v.length || <div className="my-3">{translateBase(BaseLocaleKey.QuestionerSorterThen)}</div>}
         </>
       )}
 

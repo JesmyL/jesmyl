@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
@@ -5,7 +6,8 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import styled from '@emotion/styled';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode, useMemo } from 'react';
-import { IScheduleWidget, ScheduleWidgetCleans, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
+import { IScheduleWidget, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { searchRate } from 'shared/utils/searchRate';
 import { textToCapitalizeCase } from 'shared/utils/string.utils';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
@@ -60,7 +62,7 @@ export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCount
     return (sortedTypes.length ? [90, 60, 30, 15] : [120, 90, 60, 45, 30, 20, 15, 10, 5]).map(tm => {
       const node = (
         <>
-          {title} {tm}м.
+          {title} {translateBase(BaseLocaleKey.ScheduleMinuteShort, { n: tm })}
         </>
       );
 
@@ -71,7 +73,7 @@ export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCount
           icon="PlusSign"
           confirm={
             <>
-              Добавить шаблон события <span className="text-x7">{node}</span>
+              {translateBase(BaseLocaleKey.ScheduleAddEventTemplate)} <span className="text-x7">{node}</span>
             </>
           }
           postfix={node}
@@ -85,10 +87,10 @@ export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCount
     <>
       <Modal openAtom={isModalOpenAtom}>
         <ModalHeader>
-          <div>Шаблоны событий</div>
+          <div>{translateBase(BaseLocaleKey.ScheduleEventTemplates)}</div>
           <DebouncedSearchInput
             className="debounced-searcher round-styled"
-            placeholder="Фильтр по названию"
+            placeholder={translateBase(BaseLocaleKey.ScheduleFilterByTitle)}
             termAtom={termAtom}
           />
         </ModalHeader>
@@ -110,8 +112,8 @@ export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCount
                   <div className={'text-right' + (usedCounts[typei] ? '' : ' text-xKO')}>
                     {typeBox.title}
                     {usedCounts[typei]
-                      ? ` исп. ${ScheduleWidgetCleans.termsToText(usedCounts[typei])}`
-                      : ' не используется'}
+                      ? translateBase(BaseLocaleKey.ScheduleUsedCount, { num: usedCounts[typei] })
+                      : translateBase(BaseLocaleKey.ScheduleNotUsed)}
                   </div>
                 ) : null}
               </StyledItem>

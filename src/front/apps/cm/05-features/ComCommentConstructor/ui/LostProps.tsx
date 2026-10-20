@@ -5,6 +5,7 @@ import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { CmComOrderWid } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import {
   CmComCommentConstructorPropKey,
   CmComCommentConstructorPropsDictSelectorRulePropsKey,
@@ -62,17 +63,19 @@ export const CmComCommentConstructorLostProps = ({ ordw, com }: { ordw: CmComOrd
       let isColorFix = false;
 
       if ('linei' in props) {
-        lineTitle = translateBase(it => it.lineN, { n: props.linei + 1 + (lostProps.lensAdd[props.pre] ?? 0) });
+        lineTitle = translateBase(BaseLocaleKey.LineNumber, {
+          n: props.linei + 1 + (lostProps.lensAdd[props.pre] ?? 0),
+        });
 
         if ('wordi' in props) {
           const isChord = 'chordi' in props;
-          const titlePrefix = isChord ? '' : translateBase(it => it.cm.comm.wordLabel, { p: props.place });
+          const titlePrefix = isChord ? '' : translateBase(BaseLocaleKey.CmCommentWordLabel, { p: props.place });
           isColorFix = !isChord && props.place === '^';
 
-          wordTitle = `${titlePrefix || translateBase(it => it.word)} ${props.wordi + 1}`;
+          wordTitle = `${titlePrefix || translateBase(BaseLocaleKey.Word)} ${props.wordi + 1}`;
 
           if (isChord) {
-            chordTitle = translateBase(it => it.cm.chN, { n: props.chordi + 1 });
+            chordTitle = translateBase(BaseLocaleKey.CmChordNumber, { n: props.chordi + 1 });
           }
         }
       } else return;
@@ -96,7 +99,7 @@ export const CmComCommentConstructorLostProps = ({ ordw, com }: { ordw: CmComOrd
             postfix={joinTitle}
             confirm={
               <>
-                {translateBase(it => it.del)}
+                {translateBase(BaseLocaleKey.Delete)}
                 {joinTitle}?
               </>
             }
@@ -117,7 +120,7 @@ export const CmComCommentConstructorLostProps = ({ ordw, com }: { ordw: CmComOrd
   return (
     !nodes.length || (
       <>
-        <div>{translateBase(it => it.cm.comm.unreachs)}</div>
+        <div>{translateBase(BaseLocaleKey.CmCommentUnreachable)}</div>
         {nodes}
       </>
     )

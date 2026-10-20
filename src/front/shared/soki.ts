@@ -6,6 +6,7 @@ import { authIDB, indexDeviceEmojiAtom, indexDeviceIdAtom } from '$index/shared/
 import md5 from 'md5';
 import { makeRegExp } from 'regexpert';
 import { SokiError, TsjrpcClientTool, TsjrpcFromClientEvent, TsjrpcFromServerEvent } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { Eventer } from 'shared/utils';
 import { jversion } from 'shared/values';
 import { TSJRPCEvent } from 'tsjrpc';
@@ -64,7 +65,7 @@ export class SokiTrip {
           clientTm: Date.now(),
           agent: navigator.userAgent,
           langi: currentLangiAtom.get(),
-          prevLangi: takeBaseLanguageAtom().get().langi,
+          prevLangi: takeBaseLanguageAtom().get()[BaseLocaleKey.Langi],
         },
       });
 

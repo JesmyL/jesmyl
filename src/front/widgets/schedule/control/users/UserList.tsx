@@ -1,7 +1,9 @@
+import { translateBase } from '#basis/locale';
 import { useIsExpand } from '#shared/ui/expand/useIsExpand';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { ReactNode } from 'react';
 import { IScheduleWidgetUser, scheduleWidgetUserRights } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ScheduleWidgetUser } from './User';
 
 export function ScheduleWidgetUserList({
@@ -18,7 +20,11 @@ export function ScheduleWidgetUserList({
   isInitExpand?: boolean;
 }) {
   const rights = useScheduleWidgetRightsContext();
-  const [expandNode, isExpand] = useIsExpand(isInitExpand ?? false, title ?? <>Участники</>, titlePostfix);
+  const [expandNode, isExpand] = useIsExpand(
+    isInitExpand ?? false,
+    title ?? <>{translateBase(BaseLocaleKey.ScheduleMembers)}</>,
+    titlePostfix,
+  );
 
   const users = (
     filter === undefined ? [...rights.schedule.ctrl.users] : [...rights.schedule.ctrl.users].filter(filter)
@@ -51,7 +57,7 @@ export function ScheduleWidgetUserList({
               );
             })
           ) : (
-            <div className="italic text-x7">Список пуст</div>
+            <div className="italic text-x7">{translateBase(BaseLocaleKey.EmptyList)}</div>
           )}
         </div>
       )}

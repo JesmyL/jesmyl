@@ -3,6 +3,7 @@ import { cmComIsChordHardLevelAtom } from '$cm/entities/index';
 import { useAtomValue } from 'atomaric';
 import { MenuComToolName } from 'shared/api';
 import { Bool } from 'shared/enums';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmComTool } from '../ComTool';
 
 export const CmComToolChordHardLevel = () => {
@@ -21,7 +22,9 @@ export const CmComToolChordHardLevel = () => {
 
   return (
     <CmComTool
-      title={translateBase(it => it.cm.com.tool[MenuComToolName.ChordHardLevel], { v: `${isHardChords}` })}
+      title={translateBase(it => it[BaseLocaleKey.CmMarkComTool][MenuComToolName.ChordHardLevel], {
+        v: `${isHardChords}`,
+      })}
       icon={changesDict[isHardChords].icon}
       onClick={() => cmComIsChordHardLevelAtom.set(changesDict[isHardChords].next)}
     />

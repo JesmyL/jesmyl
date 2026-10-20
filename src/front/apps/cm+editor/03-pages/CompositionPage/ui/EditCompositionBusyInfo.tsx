@@ -8,6 +8,7 @@ import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { CmComWid } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const CmEditorCompositionBusyInfo = ({ comw }: { comw: CmComWid }) => {
   const deviceId = useAtomValue(indexDeviceIdAtom);
@@ -25,12 +26,13 @@ export const CmEditorCompositionBusyInfo = ({ comw }: { comw: CmComWid }) => {
 
   const comBusies = busies.filter(busy => busy.comw === comw);
 
-  if (comBusies.length < 2) return <div className="text-xOK">{translateBase(it => it.cm.noEditorsMore)}</div>;
+  if (comBusies.length < 2)
+    return <div className="text-xOK">{translateBase(BaseLocaleKey.CmNoEditorsMore)}</div>;
 
   if (comBusies[0].deviceId === deviceId) {
     return (
       <div className="text-xKO nowrap flex gap-2">
-        {translateBase(it => it.cm.editsToo, {
+        {translateBase(BaseLocaleKey.CmEditsToo, {
           m: comBusies.length > 3,
           l: comBusies
             .slice(1)
@@ -44,7 +46,7 @@ export const CmEditorCompositionBusyInfo = ({ comw }: { comw: CmComWid }) => {
   return (
     <StyledCmEditorCompositionIsThereOtherFirstRedactorUserDetect className="text-xKO flex gap-2">
       <LazyIcon icon="InformationCircle" />
-      {translateBase(it => it.cm.edits, { f: comBusies[0].fio })}
+      {translateBase(BaseLocaleKey.CmEdits, { f: comBusies[0].fio })}
     </StyledCmEditorCompositionIsThereOtherFirstRedactorUserDetect>
   );
 };

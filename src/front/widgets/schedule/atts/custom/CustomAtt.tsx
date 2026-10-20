@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
@@ -19,6 +20,7 @@ import {
   customAttUseRightsTitles,
   scheduleWidgetUserRights,
 } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itIt, itNIt } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
 import { ScheduleWidgetCustomAttTitles } from './CustomAttTitles';
@@ -31,19 +33,6 @@ enum WhoCan {
   Update,
   No,
 }
-
-const whoCanUnits: { action: string; rule: 'R' | 'U'; icon: KnownStameskaIconName }[] = [
-  {
-    action: 'видит',
-    rule: 'R',
-    icon: 'Eye',
-  },
-  {
-    action: 'редактирует',
-    rule: 'U',
-    icon: 'PencilEdit01',
-  },
-];
 
 let whoCaniAtom: Atom<WhoCan>;
 let openAttRedactorAtom: Atom<ScheduleWidgetAttachmentTypeMi | null>;
@@ -76,6 +65,19 @@ export function ScheduleWidgetCustomAtt(props: {
     })
     .filter(itIt);
 
+  const whoCanUnits: { action: string; rule: 'R' | 'U'; icon: KnownStameskaIconName }[] = [
+    {
+      action: translateBase(BaseLocaleKey.ScheduleSeesWord),
+      rule: 'R',
+      icon: 'Eye',
+    },
+    {
+      action: translateBase(BaseLocaleKey.ScheduleEditsWord),
+      rule: 'U',
+      icon: 'PencilEdit01',
+    },
+  ];
+
   const whoCani = useAtomValue(whoCaniAtom);
   const whoCan = whoCanUnits[whoCani];
   const userR = rights.myUser?.R ?? rights.schedule.ctrl.defu;
@@ -101,7 +103,7 @@ export function ScheduleWidgetCustomAtt(props: {
         {props.isRedact && (
           <LazyIconConfigurator
             icon={props.tatt.icon}
-            header={<>Иконка для вложения {props.tatt.title}</>}
+            header={translateBase(BaseLocaleKey.ScheduleAttachmentIcon, { t: props.tatt.title })}
             onSend={icon =>
               schAttachmentTypesTsjrpcClient.setIcon({
                 props: attachmentTypeScopeProps,
@@ -117,7 +119,7 @@ export function ScheduleWidgetCustomAtt(props: {
           isRedact={props.isRedact}
           isImpossibleEmptyValue
           icon={props.isRedact ? 'Bookmark01' : props.tatt.icon}
-          title="Название"
+          title={translateBase(BaseLocaleKey.Name)}
           onSend={value =>
             schAttachmentTypesTsjrpcClient.setTitle({
               props: attachmentTypeScopeProps,
@@ -133,7 +135,7 @@ export function ScheduleWidgetCustomAtt(props: {
           isRedact={props.isRedact}
           icon="File01"
           isImpossibleEmptyValue
-          title="Описание вложения"
+          title={translateBase(BaseLocaleKey.ScheduleAttachmentDescription)}
           onSend={value =>
             schAttachmentTypesTsjrpcClient.setDescription({
               props: attachmentTypeScopeProps,
@@ -154,7 +156,7 @@ export function ScheduleWidgetCustomAtt(props: {
                     postfix={
                       <div className="w-full flex between">
                         <span className="flex gap-2">
-                          Кто {whoCan.action}
+                          {translateBase(BaseLocaleKey.ScheduleWho)} {whoCan.action}
                           <span className="text-x7">
                             {scheduleWidgetUserRights.rightsBalance(props.tatt[whoCan.rule]) + 1}+
                           </span>
@@ -200,7 +202,7 @@ export function ScheduleWidgetCustomAtt(props: {
                               ? 'text-x7'
                               : '')
                           }
-                          postfix={(top ? '' : 'Использовать ') + title}
+                          postfix={(top ? '' : translateBase(BaseLocaleKey.ScheduleUseWord)) + title}
                           onSend={() =>
                             schAttachmentTypesTsjrpcClient.setUse({
                               props: attachmentTypeScopeProps,
@@ -256,7 +258,7 @@ export function ScheduleWidgetCustomAtt(props: {
                                     : 'Square'
                                 }
                                 disabled={!cat.title}
-                                disabledReason="Название пустое"
+                                disabledReason={translateBase(BaseLocaleKey.ScheduleEmptyName)}
                                 className={
                                   ScheduleWidgetRightsCtrl.checkIsHasIndividualRights(props.tatt.list, cati)
                                     ? 'text-x7'
@@ -305,7 +307,7 @@ export function ScheduleWidgetCustomAtt(props: {
                           <TheIconSendButton
                             icon="PlusSign"
                             disabled={props.tatt.titles?.some(itNIt)}
-                            disabledReason="Есть пустые заголовки"
+                            disabledReason={translateBase(BaseLocaleKey.ScheduleHasEmptyTitles)}
                             onSend={() =>
                               schAttachmentTypesTsjrpcClient.createTitleValue({
                                 props: attachmentTypeScopeProps,
@@ -326,7 +328,7 @@ export function ScheduleWidgetCustomAtt(props: {
                 )}
                 {!usedLists.length || (
                   <div className="mt-2 text-x4">
-                    Используются:
+                    {translateBase(BaseLocaleKey.ScheduleUsedColon)}
                     <span className="text-x3"> {usedLists.join(', ')}</span>
                   </div>
                 )}
@@ -342,7 +344,9 @@ export function ScheduleWidgetCustomAtt(props: {
           checkIsOpen={whoCani => whoCani !== WhoCan.No}
         >
           <ModalHeader>
-            Кто {whoCan.action} вложение <span className="text-x7">{props.tatt.title}</span>
+            {translateBase(BaseLocaleKey.ScheduleWho)} {whoCan.action}{' '}
+            {translateBase(BaseLocaleKey.ScheduleAttachment)}{' '}
+            <span className="text-x7">{props.tatt.title}</span>
           </ModalHeader>
           <ModalBody>
             <ScheduleWidgetRightControlList
@@ -359,7 +363,7 @@ export function ScheduleWidgetCustomAtt(props: {
                 })
               }
             />
-            <h3>... или участники</h3>
+            <h3>{translateBase(BaseLocaleKey.ScheduleOrMembers)}</h3>
             {rights.schedule.ctrl.users.map(user => {
               const isForceChecked =
                 !!user.R && scheduleWidgetUserRights.checkInvertIsCan(user.R, props.tatt[whoCan.rule]);
@@ -399,7 +403,8 @@ export function ScheduleWidgetCustomAtt(props: {
           <ModalHeader>
             <span className="flex gap-2 w-full between">
               <span>
-                <span className="text-x7">{props.tatt.title} </span>- Редактирование вложения
+                <span className="text-x7">{props.tatt.title} </span>
+                {translateBase(BaseLocaleKey.ScheduleAttachmentRedact)}
               </span>
             </span>
           </ModalHeader>

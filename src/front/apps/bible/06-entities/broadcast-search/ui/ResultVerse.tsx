@@ -10,6 +10,7 @@ import { bibleTBCVTranslatesIDB } from '$bible/shared/state/bibleIDB';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { JSX, memo } from 'react';
 import { makeRegExp } from 'regexpert';
+import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
 
 interface Props {
   booki: BibleBooki;
@@ -49,7 +50,7 @@ export const BibleBroadcastSearchResultVerse = memo(function BibleSearchResultVe
       }}
     >
       <span className="text-x3 mr-2 nowrap">
-        {translateDynamic(langi)(it => it.bible.title.short[booki])} {chapteri + 1} {versei + 1}
+        {translateDynamic(langi)(it => it[DynLocaleKey.BibleTitleShort][booki])} {chapteri + 1} {versei + 1}
       </span>
       <span>
         {textBits?.map((__html, biti) => {

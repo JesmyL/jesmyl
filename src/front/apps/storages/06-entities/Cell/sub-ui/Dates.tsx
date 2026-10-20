@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { ButtonGroup } from '#shared/components/ui/button-group';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
@@ -8,6 +9,7 @@ import { useStoragesIsEditInnersContext } from '$storages/shared/state/IsEditCon
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesColumnType, StoragesNestedCellMi } from 'shared/model/storages/rack.model';
 import { StoragesCellTypeProps } from '../model/model';
 import { StoragesCellDatesNestedDateCell } from './DatesNestedDate';
@@ -82,7 +84,7 @@ export const StoragesCellOfTypeDates = (props: StoragesCellTypeProps<StoragesCol
             </>
           )
         }
-        else={<div className="opacity-50 text-x7">Дат нет</div>}
+        else={<div className="opacity-50 text-x7">{translateBase(BaseLocaleKey.StoragesNoDates)}</div>}
       />
 
       {isEdit && (
@@ -97,7 +99,7 @@ export const StoragesCellOfTypeDates = (props: StoragesCellTypeProps<StoragesCol
               })
             }
           >
-            Новая дата
+            {translateBase(BaseLocaleKey.StoragesNewDate)}
           </Button>
         </ButtonGroup.Root>
       )}

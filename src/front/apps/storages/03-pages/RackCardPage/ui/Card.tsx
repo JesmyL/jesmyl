@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Button } from '#shared/components/ui/button';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
@@ -10,6 +11,7 @@ import { storagesIDB } from '$storages/shared/state/storagesIDB';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesRack, StoragesRackCard, StoragesRackWid } from 'shared/model/storages/list.model';
 
 export const StoragesRackCardPage = ({ cardi, rackw }: { cardi: number; rackw: StoragesRackWid }) => {
@@ -34,7 +36,7 @@ const Card = ({ card, rack }: { rack: StoragesRack; card: StoragesRackCard }) =>
       className=""
       headTitle={
         <div className="max-w-[calc(100vw-198px)]">
-          <span className="ellipsis">{card.title || 'Новая карточка'}</span>
+          <span className="ellipsis">{card.title || translateBase(BaseLocaleKey.NewCard)}</span>
         </div>
       }
       head={
@@ -59,7 +61,7 @@ const Card = ({ card, rack }: { rack: StoragesRack; card: StoragesRackCard }) =>
             <>
               <InputWithLoadingIcon
                 icon="BorderFull"
-                label="Название"
+                label={translateBase(BaseLocaleKey.Name)}
                 defaultValue={card.title}
                 strongDefaultValue
                 onChanged={title => storagesTsjrpcClient.editRackCardTitle({ rackw: rack.w, title, cardi: card.i })}
@@ -72,7 +74,7 @@ const Card = ({ card, rack }: { rack: StoragesRack; card: StoragesRackCard }) =>
           {isEdit ? (
             <InputWithLoadingIcon
               icon="TextAlignLeft"
-              label="Заметки"
+              label={translateBase(BaseLocaleKey.StoragesNote)}
               defaultValue={card.note}
               multiline
               strongDefaultValue

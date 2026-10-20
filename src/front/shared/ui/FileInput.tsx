@@ -1,5 +1,7 @@
+import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { InputHTMLAttributes, RefObject, useRef } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const FileInput = ({
   renderTrigger,
@@ -27,7 +29,9 @@ export const FileInput = ({
       {renderTrigger ? (
         renderTrigger({ fileInputRef: inputRef })
       ) : (
-        <Button onClick={() => inputRef.current?.click()}>Выбрать файл{attrs.multiple && 'ы'}</Button>
+        <Button onClick={() => inputRef.current?.click()}>
+          {translateBase(it => (attrs.multiple ? it[BaseLocaleKey.ConfigPickFiles] : it[BaseLocaleKey.ConfigPickFile]))}
+        </Button>
       )}
     </>
   );

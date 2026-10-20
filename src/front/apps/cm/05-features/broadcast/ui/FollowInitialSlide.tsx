@@ -3,9 +3,10 @@ import { useBibleBroadcastScreenFontSizeAdapter } from '#shared/lib/hooks/useFon
 import { QRCode } from '#shared/ui/qr-code/QRCode';
 import styled from '@emotion/styled';
 import { ScheduleWidgetWid, hostConfig } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const CmBroadcastFollowInitialSlide = ({ schw }: { schw: ScheduleWidgetWid }) => {
-  const text = translateBase(it => it.bro.followInPhone);
+  const text = translateBase(BaseLocaleKey.BroadcastFollowInPhone);
   const [wrapperRef, contentRef] = useBibleBroadcastScreenFontSizeAdapter(text, 0);
 
   return (

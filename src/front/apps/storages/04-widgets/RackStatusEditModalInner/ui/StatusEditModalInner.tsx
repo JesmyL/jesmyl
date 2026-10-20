@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import IconConfigurator from '#shared/ui/configurators/Icon';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TextInput } from '#shared/ui/TextInput';
@@ -6,6 +7,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { StoragesRackStatusFace } from '$storages/entities/RackStatusFace';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
 import { atom } from 'atomaric';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesRack, StoragesRackWid } from 'shared/model/storages/list.model';
 
 const colorChangeAtom = atom({ color: '', rackw: StoragesRackWid.def, statusi: -1 });
@@ -29,13 +31,13 @@ export const StoragesRackStatusEditModalInner = ({ rack, statusi }: { statusi: n
       </ModalHeader>
       <ModalBody>
         <TextInput
-          label="Название"
+          label={translateBase(BaseLocaleKey.Name)}
           defaultValue={rackStatus.title}
           onChanged={title => storagesTsjrpcClient.editRackStatusTitle({ rackw, statusi, title })}
         />
 
         <div className="flex gap-3 my-3">
-          <span>Цвет</span>
+          <span>{translateBase(BaseLocaleKey.Color)}</span>
           <input
             type="color"
             value={rackStatus.color || '#fff'}
@@ -51,16 +53,12 @@ export const StoragesRackStatusEditModalInner = ({ rack, statusi }: { statusi: n
               style={{ color: rackStatus.color }}
             />
           }
-          header={
-            <span>
-              Иконка для статуса <span className="text-x7">{rackStatus.title}</span>
-            </span>
-          }
+          header={<span>{translateBase(BaseLocaleKey.StoragesStatusIcon, { t: rackStatus.title })}</span>}
           onSend={icon => storagesTsjrpcClient.editRackStatusIcon({ icon, rackw, statusi })}
         />
 
         <div className="text-sm my-5">
-          Статусы, которые можно выбрать когда <span className="text-x7">{rackStatus.title}</span> - текущий
+          {translateBase(BaseLocaleKey.StoragesStatusNextDescription, { t: rackStatus.title })}
         </div>
         {rack.statuses.map((nextStatus, nextStatusi) => {
           if (nextStatusi === statusi) return;

@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { Modal } from '#shared/ui/modal';
@@ -6,6 +7,7 @@ import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { useMemo } from 'react';
 import { IScheduleWidgetListCat, IScheduleWidgetListUnit, ScheduleWidgetUserCati } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
 import { ScheduleWidgetUserList } from '../control/users/UserList';
@@ -27,7 +29,9 @@ export function ScheduleWidgetListUnit(props: Props) {
   const { unit, cat, cati } = props;
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
-  const title = <>{unit.title || <span className="italic">Без названия</span>}</>;
+  const title = (
+    <>{unit.title || <span className="italic">{translateBase(BaseLocaleKey.ScheduleUntitled)}</span>}</>
+  );
   const unitScopeData = useMemo(() => ({ ...scheduleScopeProps, unitMi: unit.mi }), [scheduleScopeProps, unit.mi]);
 
   return (
@@ -53,7 +57,7 @@ export function ScheduleWidgetListUnit(props: Props) {
             <StrongEditableField
               icon="File02"
               value={unit}
-              title="Описание"
+              title={translateBase(BaseLocaleKey.Description)}
               fieldKey="dsc"
               multiline
               isSelfRedact

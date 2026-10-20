@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { SendableDropdown } from '#shared/ui/sends/dropdown/SendableDropdown';
@@ -5,17 +6,13 @@ import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIcon
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { Atom, atom } from 'atomaric';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
 import { schGeneralTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetRegisterType } from './RegisterType';
 import { ScheduleWidgetUserAddByExcel } from './users/excel/AddByExcel';
 import { ScheduleWidgetUserList } from './users/UserList';
-
-const tgInformTimesItems = [
-  { title: 'Напоминать только по началу', id: 0 },
-  ...[5, 10, 15, 30].map(time => ({ title: 'Напоминать TG за ' + time + ' мин.', id: time })),
-];
 
 let isModalOpenAtom: Atom<boolean>;
 
@@ -24,6 +21,13 @@ export const ScheduleWidgetControl = () => {
 
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
+  const tgInformTimesItems = [
+    { title: translateBase(BaseLocaleKey.ScheduleInformOnlyByStart), id: 0 },
+    ...[5, 10, 15, 30].map(time => ({
+      title: translateBase(BaseLocaleKey.ScheduleInformTelegramBefore, { num: time }),
+      id: time,
+    })),
+  ];
 
   return (
     <>
@@ -32,7 +36,7 @@ export const ScheduleWidgetControl = () => {
           icon="Settings01"
           postfix={
             <>
-              Управление <LazyIcon icon="ArrowRight01" />
+              {translateBase(BaseLocaleKey.Control)} <LazyIcon icon="ArrowRight01" />
             </>
           }
           onClick={isModalOpenAtom.do.toggle}
@@ -43,7 +47,7 @@ export const ScheduleWidgetControl = () => {
           icon="User"
           postfix={
             <>
-              Участники <LazyIcon icon="ArrowRight01" />
+              {translateBase(BaseLocaleKey.ScheduleMembers)} <LazyIcon icon="ArrowRight01" />
             </>
           }
           onClick={isModalOpenAtom.do.toggle}
@@ -55,7 +59,7 @@ export const ScheduleWidgetControl = () => {
         {rights.isCanRedact ? (
           <>
             <ModalHeader>
-              Управление <span className="text-x7">{rights.schedule.title}</span>
+              {translateBase(BaseLocaleKey.Control)} <span className="text-x7">{rights.schedule.title}</span>
             </ModalHeader>
 
             <ModalBody>
@@ -67,8 +71,12 @@ export const ScheduleWidgetControl = () => {
                 <>
                   <TheIconSendButton
                     icon={rights.schedule.withTech ? 'CheckmarkSquare02' : 'Square'}
-                    postfix="Первый - технический день"
-                    confirm={`Сделать первый день ${rights.schedule.withTech ? 'обычным' : 'подготовительным'}?`}
+                    postfix={translateBase(BaseLocaleKey.ScheduleFirstIsTechDay)}
+                    confirm={
+                      rights.schedule.withTech
+                        ? translateBase(BaseLocaleKey.ScheduleMakeFirstDayUsual)
+                        : translateBase(BaseLocaleKey.ScheduleFirstDayPrep)
+                    }
                     className="mb-2"
                     onSend={() =>
                       schGeneralTsjrpcClient.setFirstDayAsTech({
@@ -81,7 +89,7 @@ export const ScheduleWidgetControl = () => {
                     value={rights.schedule.tgChatReqs}
                     isRedact
                     isSelfRedact
-                    title="TG-чат-реквизиты"
+                    title={translateBase(BaseLocaleKey.ScheduleTelegramChatDetails)}
                     onSend={value => schGeneralTsjrpcClient.setTgChatRequisites({ props: scheduleScopeProps, value })}
                   />
                   <TheIconSendButton
@@ -89,10 +97,12 @@ export const ScheduleWidgetControl = () => {
                     icon={rights.schedule.tgInform === 0 ? 'NotificationOff01' : 'Notification01'}
                     postfix={
                       rights.schedule.tgInform === 0
-                        ? 'TG-Напоминание: отключено'
+                        ? translateBase(BaseLocaleKey.ScheduleTelegramInformOff)
                         : rights.schedule.tgInformTime
-                          ? 'TG-Напоминание: за ' + rights.schedule.tgInformTime + ' мин. и в начале события'
-                          : 'TG-Напоминание: только по началу события'
+                          ? translateBase(BaseLocaleKey.ScheduleTelegramBeforeAndStart, {
+                              num: rights.schedule.tgInformTime,
+                            })
+                          : translateBase(BaseLocaleKey.ScheduleTelegramInformOnlyStart)
                     }
                     onSend={() =>
                       schGeneralTsjrpcClient.toggleIsTgInform({
@@ -114,7 +124,7 @@ export const ScheduleWidgetControl = () => {
           </>
         ) : (
           <>
-            <ModalHeader>Участники</ModalHeader>
+            <ModalHeader>{translateBase(BaseLocaleKey.ScheduleMembers)}</ModalHeader>
             <ModalBody>
               {rights.schedule.ctrl.users.map(user => {
                 if (!user.R || user.login === undefined) return null;

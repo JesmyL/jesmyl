@@ -3,13 +3,14 @@ import { BibleBroadcastArchive } from '$bible/entities/BroadcastArchive';
 import { BibleBroadcastKeyListenScope } from '$bible/shared/model/broadcast';
 import { bibleIDB } from '$bible/shared/state/bibleIDB';
 import { memo } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const BibleBroadcastHistoryArchive = memo(function BibleBroadcastHistoryArchive() {
   const history = bibleIDB.useValue.broadcastHistory();
 
   return (
     <BibleBroadcastArchive
-      title={translateBase(it => it.history)}
+      title={translateBase(BaseLocaleKey.History)}
       list={history}
       scope={BibleBroadcastKeyListenScope.History}
     />

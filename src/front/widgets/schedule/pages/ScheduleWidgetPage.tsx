@@ -1,8 +1,10 @@
 import { useConnectionState } from '#basis/lib/useConnectionState';
+import { translateBase } from '#basis/locale';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { useAuth, useIndexSchedules } from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { useScheduleCurrentSchwContext, useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { ScheduleWidget } from '../ScheduleWidget';
 import { schUsersTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
@@ -22,7 +24,7 @@ export const ScheduleWidgetPage = () => {
     <>
       <PageContainerConfigurer
         className="ScheduleWidgetPage"
-        headTitle={schedule?.title ?? 'Мероприятие'}
+        headTitle={schedule?.title ?? translateBase(BaseLocaleKey.ScheduleEvent)}
         head={<span className="flex gap-2 m-2">{connectionNode}</span>}
         backButtonRender={(linkRef, children) => {
           return (
@@ -45,18 +47,23 @@ export const ScheduleWidgetPage = () => {
           schedule ? (
             schedule.start === 0 ? (
               schedule.ctrl.users.some(user => user.login === auth.login) ? (
-                <>Заявка отправлена</>
+                <>{translateBase(BaseLocaleKey.ScheduleRequestSent)}</>
               ) : (
                 <SendButton
-                  title="Буду участвовать"
-                  onSend={() => schUsersTsjrpcClient.addMe({ props: scheduleScopeProps, place: 'по ссылке' })}
+                  title={translateBase(BaseLocaleKey.ScheduleWillParticipate)}
+                  onSend={() =>
+                    schUsersTsjrpcClient.addMe({
+                      props: scheduleScopeProps,
+                      place: translateBase(BaseLocaleKey.ScheduleByLink),
+                    })
+                  }
                 />
               )
             ) : (
               <ScheduleWidget schedule={schedule} />
             )
           ) : (
-            <div className="flex center text-xKO">Мероприятие не найдено</div>
+            <div className="flex center text-xKO">{translateBase(BaseLocaleKey.ScheduleEventNotFound)}</div>
           )
         }
       />

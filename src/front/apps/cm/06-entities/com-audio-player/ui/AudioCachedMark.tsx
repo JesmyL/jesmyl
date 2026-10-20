@@ -1,15 +1,12 @@
 import { translateBase } from '#basis/locale';
 import { useConfirm } from '#shared/ui/modal';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
-import { HttpNumLeadLink } from 'shared/api';
-import { emptyFunc } from 'shared/utils';
 import { useState } from 'react';
+import { HttpNumLeadLink } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { emptyFunc } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
-import {
-  cmComAudioPlayerCacheSrc,
-  cmComAudioPlayerUncacheSrc,
-  useCmComAudioPlayerSrcState,
-} from '../lib/audioCache';
+import { cmComAudioPlayerCacheSrc, cmComAudioPlayerUncacheSrc, useCmComAudioPlayerSrcState } from '../lib/audioCache';
 
 interface ButtonProps {
   src: HttpNumLeadLink;
@@ -38,7 +35,7 @@ export const CmComAudioPlayerCacheButton = ({ src, className }: ButtonProps) => 
         try {
           if (state !== 'cached') {
             await cmComAudioPlayerCacheSrc(src).catch(emptyFunc);
-          } else if (await confirm(translateBase(it => it.cm.cacheTrackDelDsc))) {
+          } else if (await confirm(translateBase(BaseLocaleKey.CmCacheDeleteDescription))) {
             await cmComAudioPlayerUncacheSrc(src);
           }
         } finally {

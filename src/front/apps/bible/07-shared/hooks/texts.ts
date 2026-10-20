@@ -1,5 +1,6 @@
 import { translateDynamic } from '#basis/locale';
 import { Langi } from 'shared/api';
+import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
 import { itNumSort } from 'shared/utils';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { mapObjectEntries } from 'shared/utils/object.utils';
@@ -12,14 +13,16 @@ export const makeBibleJoinedAddressText = (
 ) => {
   if (!addressCode) return '';
 
+  const titleKey = titleVariant === 'full' ? DynLocaleKey.BibleTitleFull : DynLocaleKey.BibleTitleShort;
+
   if (checkIsArray(addressCode)) {
     const [booki, chapteri, versei] = addressCode;
-    const title = translateDynamic(langi)(it => it.bible.title[titleVariant][booki]);
+    const title = translateDynamic(langi)(it => it[titleKey][booki]);
     return `${title} ${chapteri + 1}:${versei + 1}`;
   }
 
   return mapObjectEntries(addressCode, (booki, book) => {
-    const title = translateDynamic(langi)(it => it.bible.title[titleVariant][booki]);
+    const title = translateDynamic(langi)(it => it[titleKey][booki]);
 
     return (
       title +

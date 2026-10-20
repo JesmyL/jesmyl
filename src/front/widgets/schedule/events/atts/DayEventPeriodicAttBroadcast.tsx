@@ -1,3 +1,4 @@
+import { languageSystemCode, translateBase } from '#basis/locale';
 import { ScheduleWidgetTopicTitle } from '#widgets/schedule/complect/TopicTitle';
 import { ScheduleWidgetAppAtt } from '#widgets/schedule/ScheduleWidget.model';
 import React, { ReactNode } from 'react';
@@ -11,11 +12,13 @@ import {
   ScheduleWidgetAttRef,
   ScheduleWidgetDayi,
 } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { emptyFunc } from 'shared/utils';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 
-const dayShortTitles = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+const weekdayShort = (dayi: number) =>
+  new Date(2024, 0, 7 + dayi).toLocaleDateString(languageSystemCode, { weekday: 'short' });
 
 export function ScheduleWidgetDayEventPeriodicBroadcast(props: {
   day: IScheduleWidgetDay;
@@ -36,7 +39,7 @@ export function ScheduleWidgetDayEventPeriodicBroadcast(props: {
 
   if (todayi > -1)
     days.forEach((day, dayi) => {
-      let title = 'Период';
+      let title = translateBase(it => it[BaseLocaleKey.SchedulePeriod]);
       let titlePostfix = ', ';
       let blockText = '';
 
@@ -44,7 +47,9 @@ export function ScheduleWidgetDayEventPeriodicBroadcast(props: {
         case AttTranslatorType.AllTime: {
           date ??= new Date(props.schedule.start);
 
-          title = dayShortTitles[(date.getDay() + dayi) % 7] + ', день ' + (dayi + 1);
+          title =
+            weekdayShort((date.getDay() + dayi) % 7) +
+            translateBase(BaseLocaleKey.ScheduleDayWordNumber, { num: dayi + 1 });
           break;
         }
         case AttTranslatorType.Today: {
@@ -55,22 +60,22 @@ export function ScheduleWidgetDayEventPeriodicBroadcast(props: {
           break;
         }
         case AttTranslatorType.TodayTomorrow: {
-          if (dayi === todayi) title = 'Сегодня';
-          else if (dayi === todayi + 1) title = 'Завтра';
+          if (dayi === todayi) title = translateBase(BaseLocaleKey.ScheduleToday);
+          else if (dayi === todayi + 1) title = translateBase(BaseLocaleKey.ScheduleTomorrow);
           else return;
 
           break;
         }
         case AttTranslatorType.TodayYesterday: {
-          if (dayi === todayi) title = 'Сегодня';
-          else if (dayi === todayi - 1) title = 'Вчера';
+          if (dayi === todayi) title = translateBase(BaseLocaleKey.ScheduleToday);
+          else if (dayi === todayi - 1) title = translateBase(BaseLocaleKey.ScheduleYesterday);
           else return;
 
           break;
         }
         case AttTranslatorType.Tomorrow: {
           titlePostfix = '';
-          if (todayi === dayi) blockText = 'Сегодня последний день';
+          if (todayi === dayi) blockText = translateBase(BaseLocaleKey.ScheduleTodayLastDay);
 
           if (dayi === todayi + 1) title = '';
           else return;
@@ -85,7 +90,13 @@ export function ScheduleWidgetDayEventPeriodicBroadcast(props: {
           break;
         }
         case AttTranslatorType.TodayPrev: {
-          if (dayi <= todayi) title = dayi === todayi ? 'Сегодня' : dayi === todayi - 1 ? 'Вчера' : `${dayi + 1} день`;
+          if (dayi <= todayi)
+            title =
+              dayi === todayi
+                ? translateBase(it => it[BaseLocaleKey.ScheduleToday])
+                : dayi === todayi - 1
+                  ? translateBase(it => it[BaseLocaleKey.ScheduleYesterday])
+                  : translateBase(it => it[BaseLocaleKey.ScheduleDayNumber], { n: dayi + 1 });
           else return;
 
           break;
@@ -128,11 +139,11 @@ export function ScheduleWidgetDayEventPeriodicBroadcast(props: {
   return (
     <>
       <div className="flex gap-2 my-2">
-        Обзор на
+        {translateBase(BaseLocaleKey.ScheduleOverviewOf)}
         <span className="text-x7">{periodTitle}:</span>
       </div>
       {attTranslatorType === AttTranslatorType.Tomorrow && todayi === days.length - 1 ? (
-        <div>Сегодня последний день</div>
+        <div>{translateBase(BaseLocaleKey.ScheduleTodayLastDay)}</div>
       ) : (
         nodes.map((nodes, nodesi) => {
           return (

@@ -22,6 +22,7 @@ import { makeRegExp } from 'regexpert';
 import { CmComIntensityLevel } from 'shared/api';
 import { cmComIntensityLevelTitleDict } from 'shared/const/cm/cmComDriveLevelTitleDict';
 import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { emptyFunc } from 'shared/utils';
 import { cmComLanguages } from 'shared/utils/cm/com/const';
@@ -49,7 +50,7 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
     <>
       <InputWithLoadingIcon
         icon="SchoolReportCard"
-        label={translateBase(it => it.name)}
+        label={translateBase(BaseLocaleKey.Name)}
         defaultValue={ccom.name}
         isError={!!nameCorrects.errors?.length}
         onChanged={value => cmEditComClientTsjrpcMethods.rename({ comw: ccom.wid, value })}
@@ -67,7 +68,7 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
         label={
           <>
             <LazyIcon icon="Ruler" />
-            {translateBase(it => it.cm.com.size)}
+            {translateBase(BaseLocaleKey.CmSize)}
           </>
         }
         id={ccom.meterSize ?? CmComMetricNum.Four}
@@ -78,7 +79,7 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
         label={
           <>
             <LazyIcon icon="SpeedTrain01" />
-            {translateBase(it => it.cm.com.temp)}
+            {translateBase(BaseLocaleKey.CmIntensity)}
           </>
         }
         id={ccom.top.d ?? CmComIntensityLevel.Medium}
@@ -89,7 +90,7 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
         label={
           <>
             <LazyIcon icon="Flag03" />
-            {translateBase(it => it.lang)}
+            {translateBase(BaseLocaleKey.Language)}
           </>
         }
         id={ccom.langi}
@@ -113,8 +114,8 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
           <TheIconButton
             icon="Delete01"
             className="text-xKO"
-            confirm={<>{translateBase(it => it.delX, { x: ccom.name })}</>}
-            postfix={translateBase(it => it.del)}
+            confirm={<>{translateBase(BaseLocaleKey.DeleteX, { x: ccom.name })}</>}
+            postfix={translateBase(BaseLocaleKey.Delete)}
             onClick={() => {
               removedCompositionsAtom.set(prev => ({ ...prev, [ccom.wid]: ccom.name }));
               return cmEditComClientTsjrpcMethods.remove({ comw: ccom.wid });
@@ -127,14 +128,14 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
                   icon="Code"
                   onClick={openAtom.do.toggle}
                 >
-                  {translateBase(it => it.lookJSON)}
+                  {translateBase(BaseLocaleKey.LookJSON)}
                 </Button>
                 <FullContent openAtom={openAtom}>
                   {isOpen =>
                     isOpen && (
                       <>
                         <div className="my-3">
-                          {translateBase(it => it.NSymbols, { n: JSON.stringify(ccom.top).length })}
+                          {translateBase(BaseLocaleKey.NumberSymbols, { n: JSON.stringify(ccom.top).length })}
                         </div>
                         <textarea
                           className="size-full bg-x2!"

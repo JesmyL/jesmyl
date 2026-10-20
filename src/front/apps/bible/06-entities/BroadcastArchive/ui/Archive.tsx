@@ -5,6 +5,7 @@ import { bibleBroadcastKeyListenScopeAtom } from '$bible/shared/state';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { memo } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { twJoin } from 'tailwind-merge';
 import { useBibleBroadcastArchiveItemHighlight } from '../lib/useBibleBroadcastArchiveItemHighlight';
 import { useBibleBroadcastArchiveListFaceClickListener } from '../lib/useBibleBroadcastArchiveListFaceClickListener';
@@ -27,7 +28,11 @@ export const BibleBroadcastArchive = memo(function BibleBroadcastArchive({ title
   return (
     <StyledList
       ref={listRef}
-      title={`${modifyKeyPrefix}+@ - добавить ссылку; ${modifyKeyPrefix}+${deleteKeyPrefix}+@ - вырезать ссылку; Enter - применить; Del - удалить пункт; Ctrl+Del - очистить список "${title}"`}
+      title={translateBase(BaseLocaleKey.BibleArchiveKeys, {
+        m: modifyKeyPrefix,
+        d: deleteKeyPrefix,
+        t: title,
+      })}
       className={twJoin('min-h-full', isCurrentScope && 'bg-x3/10')}
     >
       {list?.length ? (
@@ -38,7 +43,7 @@ export const BibleBroadcastArchive = memo(function BibleBroadcastArchive({ title
       ) : (
         list && (
           <div className={twJoin('flex items-center justify-center h-full pt-5', scope === listenScope && 'text-x3')}>
-            {translateBase(it => it.emptyList)}
+            {translateBase(BaseLocaleKey.EmptyList)}
           </div>
         )
       )}

@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -5,6 +6,7 @@ import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { ScheduleWidgetMarkdownBroadcast } from '#widgets/schedule/live-broadcast/markdown/Broadcast';
 import { Atom, atom } from 'atomaric';
 import { useMemo, useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { useScheduleGameContext } from '../lib/contexts';
 
 let isOpenFullContentAtom: Atom<boolean>;
@@ -18,7 +20,7 @@ export const ScheduleWidgetTeamGameTranslateTeamsButton = function TranslateTeam
   const [cols, setCols] = useState(Math.floor(game.teams.length / 2));
 
   const grid: string = useMemo(() => {
-    let grid = `| |\n| :-: |\n| <h1>Игра <span className="text-x7">${game.title}</span></h1> |\n\n`;
+    let grid = `| |\n| :-: |\n| <h1>${translateBase(BaseLocaleKey.ScheduleGame)} <span className="text-x7">${game.title}</span></h1> |\n\n`;
     const scheduleUsers = rights.schedule.ctrl.users;
     let limit = 1000000;
 

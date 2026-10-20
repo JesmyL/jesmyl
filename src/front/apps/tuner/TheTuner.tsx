@@ -1,5 +1,7 @@
+import { translateBase } from '#basis/locale';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { useEffect, useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { TunerApplication } from './app';
 import './Tuner.scss';
 import './TunerStyle.scss';
@@ -17,7 +19,7 @@ export function TheTuner() {
     <PageContainerConfigurer
       className="tuner-application"
       withoutBackButton
-      headTitle="Тюнер"
+      headTitle={translateBase(BaseLocaleKey.TunerTitle)}
       contentClass={`tuner-container p-2 ${started ? 'started' : ''}`}
       content={
         <>

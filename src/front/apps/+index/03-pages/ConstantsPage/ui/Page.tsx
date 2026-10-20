@@ -5,6 +5,7 @@ import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContaine
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useAtomValue } from 'atomaric';
 import { constantsConfigurator, constantsDefaultConfig } from 'shared/const/cm/constants.def';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsNumber, checkIsStartsWith } from 'shared/utils/checkIs';
 import { mapObjectEntries } from 'shared/utils/object.utils';
 
@@ -14,7 +15,7 @@ export const IndexConstantsPage = () => {
   return (
     <PageContainerConfigurer
       className="constants-editor"
-      headTitle={translateBase(it => it.constants)}
+      headTitle={translateBase(BaseLocaleKey.Constants)}
       content={
         <>
           {mapObjectEntries(constantsConfigurator, (key, configItem) => {

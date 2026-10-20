@@ -3,6 +3,7 @@ import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContaine
 import { CmMeetingSchPackFace } from '$cm/entities/meeting';
 import { indexIDB } from '$index/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const CmMeetingsPage = () => {
   const schedules = useLiveQuery(() => indexIDB.db.schs.toArray());
@@ -10,7 +11,7 @@ export const CmMeetingsPage = () => {
   return (
     <PageContainerConfigurer
       className="meetings-container"
-      headTitle={translateBase(it => it.events)}
+      headTitle={translateBase(BaseLocaleKey.Events)}
       content={
         <>
           {schedules?.map(schedule => (

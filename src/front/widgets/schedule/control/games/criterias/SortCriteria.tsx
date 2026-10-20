@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
@@ -10,6 +11,7 @@ import { schGamesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useMemo, useState } from 'react';
 import { IScheduleWidgetTeamCriteria, IScheduleWidgetUser, ScheduleGameCriteriaScopeProps } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { isNIs } from 'shared/utils';
 import { searchRate } from 'shared/utils/searchRate';
 import { ScheduleWidgetRemovableUserFace } from '../RemovableUserFace';
@@ -77,7 +79,7 @@ export function ScheduleWidgetSortCriteria({ criteria, criteriai }: Props) {
           <div className="flex gap-2">
             <StrongEditableField
               value={criteria.title}
-              placeholder="Новый критерий"
+              placeholder={translateBase(BaseLocaleKey.ScheduleNewCriteria)}
               isRedact={isRenaming}
               onSend={value =>
                 schGamesTsjrpcClient.setCriteriaTitle({
@@ -96,12 +98,12 @@ export function ScheduleWidgetSortCriteria({ criteria, criteriai }: Props) {
       >
         <DebouncedSearchInput
           className="debounced-searcher round-styled"
-          placeholder="Фильтр по имени"
+          placeholder={translateBase(BaseLocaleKey.ScheduleFilterByName)}
           termAtom={termAtom}
         />
         {!sortedUsers.length || (
           <>
-            <h5>Отсортированные участники ({sortedUsers.length} чел)</h5>
+            <h5>{translateBase(BaseLocaleKey.ScheduleSortedMembers, { n: sortedUsers.length })}</h5>
 
             {filteredUsers.map(user => {
               return (
@@ -125,14 +127,16 @@ export function ScheduleWidgetSortCriteria({ criteria, criteriai }: Props) {
         )}
         {!uncriteriedUsers.length || (
           <>
-            <h5>Неопределённые участники ({uncriteriedUsers.length} чел)</h5>
+            <h5>{translateBase(BaseLocaleKey.ScheduleUndefinedMembers, { n: uncriteriedUsers.length })}</h5>
             {filteredUncriteriedUsers.map(user => (
               <ScheduleWidgetRemovableUserFace
                 key={user.mi}
                 user={user}
               />
             ))}
-            <TheButton onClick={isOpenAtom.do.toggle}>Распределить</TheButton>
+            <TheButton onClick={isOpenAtom.do.toggle}>
+              {translateBase(BaseLocaleKey.ScheduleDistribute)}
+            </TheButton>
           </>
         )}
 

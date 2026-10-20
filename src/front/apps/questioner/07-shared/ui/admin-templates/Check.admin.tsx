@@ -1,5 +1,7 @@
+import { translateBase } from '#basis/locale';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { questionerAdminTsjrpcClient } from '$q/shared/tsjrpc/admin.tsjrpc';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { QuestionerAdminTemplateContentProps, QuestionerType } from 'shared/model/q';
 import { QuestionerAdminVariantedTemplateCardContent } from './Varianted.admin';
 
@@ -15,7 +17,7 @@ export const QuestionerAdminCheckTemplateCardContent = (
             icon="LowSignal"
             defaultValue={'' + (props.template.min || (props.template.req ? '1' : ''))}
             strongDefaultValue
-            label="Минимум пунктов (1)"
+            label={translateBase(BaseLocaleKey.QuestionerMinimumPoints)}
             type="tel"
             onChanged={value =>
               questionerAdminTsjrpcClient.changeTemplateMinSign({
@@ -29,7 +31,7 @@ export const QuestionerAdminCheckTemplateCardContent = (
             icon="MinusSign"
             defaultValue={'' + (props.template.max || '')}
             strongDefaultValue
-            label="Максимум пунктов"
+            label={translateBase(BaseLocaleKey.QuestionerMaximumPoints)}
             type="tel"
             onChanged={value =>
               questionerAdminTsjrpcClient.changeTemplateMaxSign({

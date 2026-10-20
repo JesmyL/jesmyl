@@ -1,6 +1,8 @@
+import { translateBase } from '#basis/locale';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { TextInput } from '#shared/ui/TextInput';
 import { useAtomValue } from 'atomaric';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { currentBroadcastConfigiAtom } from '../atoms';
 import { useScreenBroadcastCurrentConfig } from '../hooks/configs';
 import { useScreenBroadcastWindows } from '../hooks/windows';
@@ -16,7 +18,7 @@ export const ScreenTranslateConfigurationNameChanger = () => {
 
   return (
     <div className="flex gap-2">
-      Название
+      {translateBase(BaseLocaleKey.Name)}
       <TextInput
         defaultValue={config.title}
         className="bg-x2 mb-3"

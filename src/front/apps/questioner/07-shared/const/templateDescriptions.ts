@@ -1,25 +1,47 @@
+import { translateBase } from '#basis/locale';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { QuestionerType } from 'shared/model/q';
 
 export const questionerTemplateDescriptions: Record<QuestionerType, { title: string; dsc: string }> = {
   [QuestionerType.Check]: {
-    title: 'Чек-лист',
-    dsc: 'В этом блоке можно выбрать несколько вариантов ответа',
+    get title() {
+      return translateBase(BaseLocaleKey.QuestionerTemplateCheck);
+    },
+    get dsc() {
+      return translateBase(BaseLocaleKey.QuestionerTemplateCheckDescription);
+    },
   },
   [QuestionerType.Radio]: {
-    title: 'Переключатель',
-    dsc: 'В этом блоке можно выбрать только один вариант ответа',
+    get title() {
+      return translateBase(BaseLocaleKey.QuestionerTemplateRadio);
+    },
+    get dsc() {
+      return translateBase(BaseLocaleKey.QuestionerTemplateRadioDescription);
+    },
   },
   [QuestionerType.Comment]: {
-    title: 'Комментарий',
-    dsc: 'Это блок для любого комментария',
+    get title() {
+      return translateBase(BaseLocaleKey.QuestionerTemplateComment);
+    },
+    get dsc() {
+      return translateBase(BaseLocaleKey.QuestionerTemplateCommentDescription);
+    },
   },
   [QuestionerType.Sorter]: {
-    title: 'Сортировка',
-    dsc: 'Нужно отсортировать список в правильном порядке',
+    get title() {
+      return translateBase(BaseLocaleKey.QuestionerTemplateSorter);
+    },
+    get dsc() {
+      return translateBase(BaseLocaleKey.QuestionerTemplateSorterDescription);
+    },
   },
   [QuestionerType.TextInclude]: {
-    title: 'Текстовая вставка',
-    dsc: 'В тексте есть пробелы - нужно их восстановить',
+    get title() {
+      return translateBase(BaseLocaleKey.QuestionerTemplateText);
+    },
+    get dsc() {
+      return translateBase(BaseLocaleKey.QuestionerTemplateTextDescription);
+    },
   },
 };
 

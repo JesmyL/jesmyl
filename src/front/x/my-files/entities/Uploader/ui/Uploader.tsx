@@ -1,7 +1,9 @@
+import { translateBase } from '#basis/locale';
 import { convertFileToBase64 } from '#shared/lib/convertFileToBase64';
 import { defaultPreventer } from '#shared/lib/event-funcs';
 import md5 from 'md5';
 import { ChangeEvent, useRef, useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { twMerge } from 'tailwind-merge';
 import { MyFileBox, MyFileBoxId } from 'x/my-files/shared/model/common';
 import { myFilesIDB } from 'x/my-files/shared/state/idb';
@@ -61,7 +63,7 @@ export const MyFilesUploader = ({
             className="flex flex-max p-2 bg-x6 text-x2 relative z-80"
             onClick={() => inputRef.current?.click()}
           >
-            Загрузить файлы
+            {translateBase(BaseLocaleKey.UploadFiles)}
           </div>
           <input
             key={updated + 100}

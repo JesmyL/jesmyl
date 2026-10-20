@@ -11,6 +11,7 @@ import { cmIDB } from '$cm/ext';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React, { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsNil } from 'shared/utils/checkIs';
 
 export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => {
@@ -22,7 +23,7 @@ export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => 
 
   return (
     <>
-      <div className="bg-x2">{translateBase(it => it.dicts)}</div>
+      <div className="bg-x2">{translateBase(BaseLocaleKey.Collections)}</div>
       {cats.map(cat => {
         return (
           cat.kind === 'dict' && (
@@ -52,11 +53,11 @@ export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => 
               {checkIsNil(cat.dict[ccom.wid]) || (
                 <TheIconButton
                   icon="Cancel01"
-                  postfix={translateBase(it => it.del)}
-                  confirm={translateBase(it => it.cm.com.clearDictNumN, { n: cat.name })}
+                  postfix={translateBase(BaseLocaleKey.Delete)}
+                  confirm={translateBase(BaseLocaleKey.CmEditClearCollectionNumber, { n: cat.name })}
                   className="pointer text-xKO ml-5 mb-2"
                   disabled={!checkAccess('cm', 'COM_CAT', 'U')}
-                  disabledReason={translateBase(it => it.denied)}
+                  disabledReason={translateBase(BaseLocaleKey.Denied)}
                   onClick={() =>
                     cmEditCatClientTsjrpcMethods.removeNativeComNum({
                       comw: ccom.wid,
@@ -69,7 +70,7 @@ export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => 
           )
         );
       })}
-      <div className="bg-x2">{translateBase(it => it.lists)}</div>
+      <div className="bg-x2">{translateBase(BaseLocaleKey.Lists)}</div>
       {cats.map(cat => {
         return (
           cat.kind === 'list' && (

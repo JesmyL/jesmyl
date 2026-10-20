@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { useBibleSimpleCheckedSingleAddress } from '$bible/shared/hooks';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
@@ -6,6 +7,7 @@ import { bibleTBCVTranslatesIDB } from '$bible/shared/state/bibleIDB';
 import styled from '@emotion/styled';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { JSX, useEffect, useRef } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { BibleTranslateName } from 'shared/model/bible';
 import { useBibleBroadcastListVerseListeners } from '../lib/useVerseListListeners';
 
@@ -44,7 +46,7 @@ export function BibleBroadcastListVerseList(): JSX.Element {
     <StyledContainer
       className="w-full overflow-y-auto overflow-x-hidden list-decimal list-inside"
       ref={verseListRef}
-      title="[0-9] - перейти к стиху; Shift+[@v>] - добавить диапазон стихов; Ctrl+@ - добавить/удалить один стих"
+      title={translateBase(BaseLocaleKey.BibleVerseKeys)}
     >
       {verses?.map((verse, versei) => {
         return (
@@ -68,7 +70,11 @@ const NoTranslationLabel = ({ tName }: { tName: BibleTranslateName }) => {
   );
 
   if (!translation)
-    return <div className="flex justify-center items-center size-full text-center">Перевод не загружен</div>;
+    return (
+      <div className="flex justify-center items-center size-full text-center">
+        {translateBase(BaseLocaleKey.BibleTranslationsNotLoaded)}
+      </div>
+    );
 
   return <></>;
 };

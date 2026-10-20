@@ -1,8 +1,10 @@
 /* eslint-disable no-console */
+import { translateBase } from '#basis/locale';
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { IndexConsoleCoderResultLine } from '../sub-ui/line';
 import { IndexConsoleCodeExecutionScreen } from './Coder';
 
@@ -40,7 +42,7 @@ export const IndexConsolePage = () => {
   return (
     <PageContainerConfigurer
       className="index-settings-console"
-      headTitle="Консоль"
+      headTitle={translateBase(BaseLocaleKey.IndexConsole)}
       content={
         <div
           className="h-full"

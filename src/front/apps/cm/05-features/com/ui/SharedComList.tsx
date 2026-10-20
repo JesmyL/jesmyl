@@ -7,6 +7,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from '@tanstack/react-router';
 import { Atom, useAtomValue } from 'atomaric';
 import { CmComWid } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { emptyFunc } from 'shared/utils';
 
 export const CmComSharedListActionInterpretator = ({
@@ -35,7 +36,7 @@ export const CmComSharedListActionInterpretator = ({
       >
         {comws => (
           <>
-            <h3>{translateBase(it => it.cm.com.sharedListToYou)}</h3>
+            <h3>{translateBase(BaseLocaleKey.CmListShared)}</h3>
             <CmComFaceList
               list={comws}
               importantOnClick={emptyFunc}
@@ -48,10 +49,10 @@ export const CmComSharedListActionInterpretator = ({
                   close(true);
                 }}
               >
-                {translateBase(it => it.cm.com.addToSel)}
+                {translateBase(BaseLocaleKey.CmAddToSelectedList)}
               </TheButton>
               <StyledButtonDescription>
-                {translateBase(it => it.cm.com.willAdd, { c: addComsCount })}
+                {translateBase(BaseLocaleKey.CmWillAdd, { c: addComsCount })}
               </StyledButtonDescription>
 
               <TheButton
@@ -61,11 +62,11 @@ export const CmComSharedListActionInterpretator = ({
                   close(true);
                 }}
               >
-                {translateBase(it => it.cm.com.changeSel)}
+                {translateBase(BaseLocaleKey.CmChangeSelectedList)}
               </TheButton>
 
               <StyledButtonDescription>
-                {translateBase(it => it.cm.com.willLost, { c: lessComsCount })}
+                {translateBase(BaseLocaleKey.CmWillLost, { c: lessComsCount })}
               </StyledButtonDescription>
             </div>
           </>

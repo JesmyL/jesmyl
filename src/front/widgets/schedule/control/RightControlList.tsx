@@ -1,6 +1,8 @@
+import { translateBase } from '#basis/locale';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import styled from '@emotion/styled';
 import { ScheduleWidgetRightsCtrl, ScheduleWidgetRightTexts } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export function ScheduleWidgetRightControlList({
   R,
@@ -27,7 +29,9 @@ export function ScheduleWidgetRightControlList({
 
   return (
     <>
-      {isDescriptionsCollect && <div className="text-x7 my-2  ml-2">Справедливы утверждения мелким шрифтом</div>}
+      {isDescriptionsCollect && (
+        <div className="text-x7 my-2  ml-2">{translateBase(BaseLocaleKey.ScheduleSmallFontStatements)}</div>
+      )}
       {rightCtrl.texts.map((type, typei) => {
         if (type.hidden || isHidden?.(type, typei)) return null;
         const isHas = (type.always || isCan) && rightCtrl.checkIsHasRights(R, type.id);

@@ -5,6 +5,7 @@ import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useAuth } from '$index/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { toast } from 'sonner';
 
 export const useCmComCommentTrySendBlocks = () => {
@@ -15,7 +16,7 @@ export const useCmComCommentTrySendBlocks = () => {
     if (!localBlocks?.length) return;
     if (!auth.login) {
       toast(
-        translateBase(it => it.notAuthed),
+        translateBase(BaseLocaleKey.NotAuthorized),
         makeToastKOMoodConfig(),
       );
       return;

@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TextInput } from '#shared/ui/TextInput';
@@ -12,6 +13,7 @@ import {
   ScheduleWidgetDayi,
   indexScheduleGetDayEventTimes,
 } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { emptyFunc, itNNull, retNull } from 'shared/utils';
 import { schDaysTsjrpcClient, schEventTypesTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetDayEvent } from './events/DayEvent';
@@ -67,17 +69,20 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
             <div className="mt-2">
               {!newTypes.length || (
                 <>
-                  <h2>Новые события</h2>
+                  <h2>{translateBase(BaseLocaleKey.ScheduleNewEvents)}</h2>
                   {newTypes.map(({ title, tm }) => {
                     return (
                       <div key={title}>
-                        {title} <span className="text-x7">{tm}м.</span>
+                        {title}{' '}
+                        <span className="text-x7">
+                          {translateBase(BaseLocaleKey.ScheduleMinuteShort, { n: tm })}
+                        </span>
                       </div>
                     );
                   })}
 
                   <SendButton
-                    title="Отправить только новые события"
+                    title={translateBase(BaseLocaleKey.ScheduleSendOnlyNewEvents)}
                     onSend={async () =>
                       schEventTypesTsjrpcClient.putMany({ props: scheduleScopeProps, tatts: newTypes })
                     }
@@ -87,7 +92,9 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
 
               {day.wup !== dayWup && (
                 <SendButton
-                  title={`Установить время начала дня: ${ScheduleWidgetCleans.computeDayWakeUpTime(dayWup, 'string')}`}
+                  title={translateBase(BaseLocaleKey.ScheduleDayStartTime, {
+                    t: ScheduleWidgetCleans.computeDayWakeUpTime(dayWup, 'string'),
+                  })}
                   onSend={async () =>
                     schDaysTsjrpcClient.setBeginTime({
                       props: { ...scheduleScopeProps, dayi },
@@ -104,7 +111,7 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
                       key={eventi}
                       className="text-xKO"
                     >
-                      Новое событие
+                      {translateBase(BaseLocaleKey.ScheduleNewEvent)}
                     </div>
                   );
 
@@ -134,7 +141,7 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
 
               <SendButton
                 disabled={isShowPeriodsNotTs}
-                title="Отправить расписание"
+                title={translateBase(BaseLocaleKey.ScheduleSend)}
                 onSuccess={() => onClose(false)}
                 onSend={() =>
                   schDaysTsjrpcClient.setEventList({

@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { useIsRedactArea } from '#shared/lib/hooks/useIsRedactArea';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
@@ -12,6 +13,7 @@ import { useAuth } from '$index/shared/state';
 import { Atom, atom } from 'atomaric';
 import React, { useMemo } from 'react';
 import { IScheduleWidgetRole, ScheduleRoleScopeProps, scheduleWidgetUserRights } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ScheduleWidgetRoleFace } from './RoleFace';
 
 const mainRoleRights = scheduleWidgetUserRights.getAllRights();
@@ -56,9 +58,7 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
 
       <Modal openAtom={isUserSetModalOpenAtom}>
         <ModalHeader>
-          <div className="flex">
-            Роль <span className="text-x7">{role.title}</span> займёт
-          </div>
+          <div className="flex">{translateBase(BaseLocaleKey.ScheduleRoleWillTake, { t: role.title })}</div>
         </ModalHeader>
         <ModalBody>
           {rights.schedule.ctrl.users.map((user, useri) => {
@@ -71,7 +71,10 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
             return (
               <TheIconSendButton
                 key={useri}
-                confirm={`Теперь ${user?.fio || user?.nick} займёт роль ${role.title}?`}
+                confirm={translateBase(BaseLocaleKey.ScheduleUserTakeRole, {
+                  u: user?.fio || user?.nick || '?',
+                  t: role.title,
+                })}
                 className="flex gap-2 pointer"
                 icon="User"
                 postfix={user?.fio || user?.nick}
@@ -93,9 +96,7 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
       <Modal openAtom={isCatSetModalOpenAtom}>
         <ModalHeader>
           <div className="flex between">
-            <span>
-              <span className="text-x7">{role.title}</span> в категорию
-            </span>
+            <span>{translateBase(BaseLocaleKey.ScheduleRoleToCategory, { t: role.title })}</span>
 
             {catsRedact.editIcon}
           </div>
@@ -150,11 +151,11 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
       </Modal>
 
       <Modal openAtom={isCatRedactModalOpenAtom}>
-        <ModalHeader>Редактирование роли {role.title}</ModalHeader>
+        <ModalHeader>{translateBase(BaseLocaleKey.ScheduleRoleRedact, { t: role.title })}</ModalHeader>
         <ModalBody>
           <StrongEditableField
             isRedact
-            title="Название"
+            title={translateBase(BaseLocaleKey.Name)}
             icon="SchoolReportCard"
             value={role}
             fieldKey="title"
@@ -162,7 +163,7 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
             onSend={value => schRolesTsjrpcClient.setRoleTitle({ props: roleScopeProps, value, prevTitle: role.title })}
           />
           <LazyIconConfigurator
-            header={`Иконка для роли ${role.title}`}
+            header={translateBase(BaseLocaleKey.ScheduleRoleIcon, { t: role.title })}
             icon={role.icon ?? 'Github01'}
             used={rights.schedule.ctrl.roles.map(role => role.icon)}
             onSend={icon =>
@@ -178,14 +179,11 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
               {role.mi !== 0 && roleUser && (
                 <TheIconSendButton
                   icon="UserRemove01"
-                  confirm={
-                    <>
-                      <span className="text-x7">{roleUser.fio || roleUser.nick} </span>
-                      больше не
-                      <span className="text-x7"> {role.title}</span>?
-                    </>
-                  }
-                  postfix="Освободить роль"
+                  confirm={translateBase(BaseLocaleKey.ScheduleUserNoMoreRole, {
+                    u: roleUser.fio || roleUser.nick || '?',
+                    t: role.title,
+                  })}
+                  postfix={translateBase(BaseLocaleKey.ScheduleFreeRole)}
                   className="flex-max my-2"
                   onSend={() => schRolesTsjrpcClient.makeFreeRole({ props: roleScopeProps, value: role.title })}
                 />
@@ -194,14 +192,14 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
                 <TheIconButton
                   icon="ArrowReloadHorizontal"
                   onClick={isUserSetModalOpenAtom.do.toggle}
-                  postfix="Заменить человека"
+                  postfix={translateBase(BaseLocaleKey.ScheduleReplacePerson)}
                   className="flex-max my-2"
                 />
               ) : (
                 <TheIconButton
                   icon="UserAdd01"
                   onClick={isUserSetModalOpenAtom.do.toggle}
-                  postfix="Назначить человека"
+                  postfix={translateBase(BaseLocaleKey.ScheduleAppointPerson)}
                   className="flex-max my-2"
                 />
               )}
@@ -209,7 +207,9 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
                 <TheIconButton
                   icon="GridView"
                   onClick={isCatSetModalOpenAtom.do.toggle}
-                  postfix={`Категория ${rights.schedule.ctrl.cats[role.cati || 0] || 'Основное'}`}
+                  postfix={translateBase(BaseLocaleKey.ScheduleCategory, {
+                    t: rights.schedule.ctrl.cats[role.cati || 0] || translateBase(BaseLocaleKey.ScheduleMain),
+                  })}
                   className="flex-max my-2"
                 />
               )}

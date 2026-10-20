@@ -1,4 +1,6 @@
+import { translateBase } from '#basis/locale';
 import { makeRegExp } from 'regexpert';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import {
   StoragesCell,
   StoragesColumnType,
@@ -120,7 +122,7 @@ export const storagesComputeFormula = (props: UtilProps, innerCall: number) => {
 
     return checkIsNumber(dict.res) ? +dict.res.toFixed(props.resultFix ?? 2) : 0;
   } catch (_e) {
-    return 'Ошибка';
+    return translateBase(BaseLocaleKey.Error);
   }
 };
 

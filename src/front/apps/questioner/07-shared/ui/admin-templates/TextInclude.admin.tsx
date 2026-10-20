@@ -1,9 +1,11 @@
+import { translateBase } from '#basis/locale';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Badge } from '#shared/components/ui/badge';
 import { Button } from '#shared/components/ui/button';
 import { questionerAdminTsjrpcClient } from '$q/shared/tsjrpc/admin.tsjrpc';
 import { useState } from 'react';
 import { questionerTextIncludeSymbols, takeQuestionerTextIncludeSymbols } from 'shared/const/q/textIncludeSymbols';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { QuestionerAdminTemplateContentProps, QuestionerType } from 'shared/model/q';
 import { itNIt } from 'shared/utils';
 import { mapObjectEntries } from 'shared/utils/object.utils';
@@ -23,10 +25,7 @@ export const QuestionerAdminTextIncludeTemplateCardContent = ({
   return (
     <>
       <div className="flex gap-3 my-3">
-        <span>
-          Вставьте <span className="font-bold">НЕПОСРЕДСТВЕННО</span> перед/в середине/после пропущенного слова такие
-          символы (можно несколько подряд)
-        </span>
+        <span dangerouslySetInnerHTML={{ __html: translateBase(BaseLocaleKey.QuestionerTextIncorrectHint) }} />
         <div className="flex gap-2 flex-wrap flex-max">
           {questionerTextIncludeSymbols.split('').map(symbol => {
             return (
@@ -51,7 +50,7 @@ export const QuestionerAdminTextIncludeTemplateCardContent = ({
               </Badge>
             );
           })}
-          <div className="opacity-50">Для корректировки набора употребляемых символов нажимайте на них</div>
+          <div className="opacity-50">{translateBase(BaseLocaleKey.QuestionerSymbolsAdjustHint)}</div>
         </div>
       </div>
       <InputWithLoadingIcon
@@ -61,7 +60,7 @@ export const QuestionerAdminTextIncludeTemplateCardContent = ({
         strongDefaultValue
         onChanged={text => questionerAdminTsjrpcClient.switchTemplateTextValue({ blankw: blank.w, templateId, text })}
       />
-      <div>Для обновления результата уберите фокус из текстового поля</div>
+      <div>{translateBase(BaseLocaleKey.QuestionerResultUpdateHint)}</div>
 
       <QuestionerTextIncludeResultText
         correctReplacements={correctReplacements}
@@ -93,7 +92,7 @@ export const QuestionerAdminTextIncludeTemplateCardContent = ({
         })}
       </div>
 
-      <div className="mt-7">Дополнительные варианты</div>
+      <div className="mt-7">{translateBase(BaseLocaleKey.QuestionerExtraVariants)}</div>
 
       {template.addTexts?.map((text, texti) => {
         return (
@@ -112,10 +111,10 @@ export const QuestionerAdminTextIncludeTemplateCardContent = ({
         icon="Add02"
         className="mt-5"
         disabled={template.addTexts?.some(itNIt)}
-        disabledReason="Есть варианты без названия"
+        disabledReason={translateBase(BaseLocaleKey.QuestionerVariantsNoTitle)}
         onClick={() => questionerAdminTsjrpcClient.addTemplateTextValue({ blankw: blank.w, templateId })}
       >
-        Добавить дополнительный вариант
+        {translateBase(BaseLocaleKey.QuestionerAddVariant)}
       </Button>
     </>
   );

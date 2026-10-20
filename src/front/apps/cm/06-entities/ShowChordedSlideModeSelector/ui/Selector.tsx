@@ -3,6 +3,7 @@ import { CmBroadcastShowChordedSlideMode } from '#shared/model/cm/Cm.model';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const CmShowChordedSlideModeSelector = () => {
   const showMode = useAtomValue(cmShowChordedSlideModeAtom);
@@ -10,25 +11,25 @@ export const CmShowChordedSlideModeSelector = () => {
   return (
     <>
       <Dropdown
-        label={translateBase(it => it.cm.chBlocks)}
+        label={translateBase(BaseLocaleKey.CmChordBlocks)}
         id={showMode}
         onSelectId={cmShowChordedSlideModeAtom.set}
         items={[
           {
             id: CmBroadcastShowChordedSlideMode.Show,
-            title: translateBase(it => it.cm.toShow),
+            title: translateBase(BaseLocaleKey.CmToShow),
           },
           {
             id: CmBroadcastShowChordedSlideMode.Pass,
-            title: translateBase(it => it.cm.toPass),
+            title: translateBase(BaseLocaleKey.CmToPass),
           },
           {
             id: CmBroadcastShowChordedSlideMode.Hide,
-            title: translateBase(it => it.cm.toHide),
+            title: translateBase(BaseLocaleKey.CmToHide),
           },
           {
             id: CmBroadcastShowChordedSlideMode.Blind,
-            title: translateBase(it => it.cm.emptySlide),
+            title: translateBase(BaseLocaleKey.CmEmptySlide),
           },
         ]}
       />

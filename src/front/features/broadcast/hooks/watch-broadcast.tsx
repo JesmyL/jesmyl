@@ -1,9 +1,11 @@
+import { translateBase } from '#basis/locale';
 import { cursors } from '#shared/const/cursorsBase64';
 import { renderComponentInNewWindow } from '#shared/lib/renders';
 import { electronClientApi } from '#shared/tsjrpc.electron/tsjrpc.electron.client';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { css, Global } from '@emotion/react';
 import { useCallback } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { toast } from 'sonner';
 import { useScreenBroadcastConfigsValue } from '../atoms';
 import { useCurrentForceViweAppContext } from '../Broadcast.contexts';
@@ -76,7 +78,10 @@ export const useWatchScreenBroadcast = () => {
 
           continue;
         } catch (_) {
-          toast('Не удалось подключить режим презентации', makeToastKOMoodConfig());
+          toast(
+            translateBase(BaseLocaleKey.BroadcastPresentModeFailed),
+            makeToastKOMoodConfig(),
+          );
         }
       }
       watch(windowi);

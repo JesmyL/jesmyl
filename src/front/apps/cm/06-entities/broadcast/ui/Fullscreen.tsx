@@ -12,6 +12,7 @@ import {
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useEffect, useReducer, useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { TextCase } from 'shared/model/common';
 
 const forceUpdater = (it: number) => it + 1;
@@ -50,7 +51,7 @@ const CmBroadcastFullscreenInContext = () => {
         $isShowInfo={isShowInfo}
       >
         <div className="absolute rotate-[-90deg] text-xKO top-[4em] left-[-3.5em] z-200">
-          ⇣ {translateBase(it => it.close)} ⇣
+          ⇣ {translateBase(BaseLocaleKey.Close)} ⇣
         </div>
 
         <StyledWrapper className="bg-black z-1000 transition-transform duration-100 text-white w-[100vw] h-[100vh]">
@@ -66,7 +67,7 @@ const CmBroadcastFullscreenInContext = () => {
           >
             <div
               className="description whitespace-break-spaces"
-              dangerouslySetInnerHTML={{ __html: translateBase(it => it.cm.com.twiceClickPrev) }}
+              dangerouslySetInnerHTML={{ __html: translateBase(BaseLocaleKey.CmTwiceClickPrevious) }}
             />
           </div>
           <div
@@ -75,7 +76,7 @@ const CmBroadcastFullscreenInContext = () => {
           >
             <div
               className="description whitespace-break-spaces"
-              dangerouslySetInnerHTML={{ __html: translateBase(it => it.cm.com.twiceClickNx) }}
+              dangerouslySetInnerHTML={{ __html: translateBase(BaseLocaleKey.CmTwiceClickNext) }}
             />
           </div>
           <LazyIcon
@@ -89,7 +90,7 @@ const CmBroadcastFullscreenInContext = () => {
           >
             <div
               className="description whitespace-break-spaces"
-              dangerouslySetInnerHTML={{ __html: translateBase(it => it.cm.com.clickPrevSlide) }}
+              dangerouslySetInnerHTML={{ __html: translateBase(BaseLocaleKey.CmClickPreviousSlide) }}
             />
           </div>
           <div
@@ -98,7 +99,7 @@ const CmBroadcastFullscreenInContext = () => {
           >
             <div
               className="description whitespace-break-spaces"
-              dangerouslySetInnerHTML={{ __html: translateBase(it => it.cm.com.clickNxSlide) }}
+              dangerouslySetInnerHTML={{ __html: translateBase(BaseLocaleKey.CmClickNextSlide) }}
             />
           </div>
         </StyledWrapper>

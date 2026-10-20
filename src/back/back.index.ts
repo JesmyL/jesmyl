@@ -13,6 +13,7 @@ import { questionerUserServerTsjrpcBase } from './apps/q/tsjrpc/user.tsjrpc.base
 import { storagesServerTsjrpcBase } from './apps/storages/tsjrpc.base';
 import { sokiServer } from './complect/soki/SokiServer';
 import { backConfig } from './config/backConfig';
+import { localeDynamicEn } from './locales/dynamic/en';
 import { localeDynamicKz } from './locales/dynamic/kz';
 import { localeDynamicRu } from './locales/dynamic/ru';
 import { localeDynamicUa } from './locales/dynamic/ua';
@@ -47,6 +48,7 @@ const langLocales = {
   [Langi.Kz]: localeDynamicKz,
   [Langi.Ru]: localeDynamicRu,
   [Langi.Ua]: localeDynamicUa,
+  [Langi.En]: localeDynamicEn,
 };
 
 CmComOrders.getLangLocales = langi => langLocales[langi];

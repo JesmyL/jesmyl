@@ -1,9 +1,11 @@
+import { translateBase } from '#basis/locale';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Button } from '#shared/components/ui/button';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { questionerAdminTsjrpcClient } from '$q/shared/tsjrpc/admin.tsjrpc';
 import { useMemo } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { QuestionerAdminTemplateContentProps, QuestionerAnswerId, QuestionerType } from 'shared/model/q';
 import { objectKeys } from 'shared/utils/object.utils';
 
@@ -25,20 +27,20 @@ export const QuestionerAdminSorterTemplateCardContent = ({
       <div className="mb-10">
         <IconCheckbox
           checked={!!template.noCorrect}
-          postfix="Нет правильного порядка"
+          postfix={translateBase(BaseLocaleKey.QuestionerNoOrder)}
           onChange={() => questionerAdminTsjrpcClient.switchTemplateNoCorrectsSign({ blankw: blank.w, templateId })}
         />
         <IconCheckbox
           checked={!!template.needSelect}
           disabled={!!template.noCorrect}
-          postfix="Нужно выбрать подходящие варианты"
+          postfix={translateBase(BaseLocaleKey.QuestionerChooseSuitable)}
           onChange={() => questionerAdminTsjrpcClient.switchTemplateNeedSelectSign({ blankw: blank.w, templateId })}
         />
 
         <InputWithLoadingIcon
           icon="LayoutTop"
           defaultValue={template.above || ''}
-          label="Верхняя ремарка"
+          label={translateBase(BaseLocaleKey.QuestionerTopNote)}
           strongDefaultValue
           onChanged={text => questionerAdminTsjrpcClient.changeTemplateAboveText({ blankw: blank.w, templateId, text })}
         />
@@ -46,13 +48,13 @@ export const QuestionerAdminSorterTemplateCardContent = ({
         <InputWithLoadingIcon
           icon="LayoutBottom"
           defaultValue={template.below || ''}
-          label="Нижняя ремарка"
+          label={translateBase(BaseLocaleKey.QuestionerBottomNote)}
           strongDefaultValue
           onChanged={text => questionerAdminTsjrpcClient.changeTemplateBelowText({ blankw: blank.w, templateId, text })}
         />
       </div>
 
-      <div>Отмеченные варианты являются правильными</div>
+      <div>{translateBase(BaseLocaleKey.QuestionerMarkedCorrect)}</div>
 
       <div className="text-x7">{template.above}</div>
 
@@ -111,10 +113,10 @@ export const QuestionerAdminSorterTemplateCardContent = ({
           icon="NodeAdd"
           className="mt-5"
           disabled={variantKeys.some(key => !template.variants[key]?.title)}
-          disabledReason="Есть пункты без названия"
+          disabledReason={translateBase(BaseLocaleKey.QuestionerPointsNoTitle)}
           onClick={() => questionerAdminTsjrpcClient.addTemplateAnswerVariant({ blankw: blank.w, templateId })}
         >
-          Добавить пункт
+          {translateBase(BaseLocaleKey.QuestionerAddPoint)}
         </Button>
       </div>
     </>

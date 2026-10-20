@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { AlertLineConfig } from '#features/broadcast/model';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
@@ -13,6 +14,7 @@ import { TextInput } from '#shared/ui/TextInput';
 import { complectIDB } from '$index/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React, { useDeferredValue, useEffect, useRef, useState } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { isNNlButUnd } from 'shared/utils';
 
 const LazyAlertLineConfigIcon = React.lazy(() => import('./AlertLineConfigIcon'));
@@ -64,7 +66,7 @@ const AlertLineConfigSettingsInnerWithConfig = ({
       .effect();
   }, []);
 
-  if (config == null) return <div className="text-xKO">Не найдено</div>;
+  if (config == null) return <div className="text-xKO">{translateBase(BaseLocaleKey.NotFound)}</div>;
 
   return (
     <>
@@ -72,9 +74,9 @@ const AlertLineConfigSettingsInnerWithConfig = ({
         <LazyAlertLineConfigIcon config={config} />
         {config.title}
       </h2>
-      <h2>Положение строки - вверх/вниз/+CTRL</h2>
+      <h2>{translateBase(BaseLocaleKey.AlertLinePosition)}</h2>
       <div className="flex gap-2 nowrap">
-        Нвазвание:
+        {translateBase(BaseLocaleKey.AlertTitle)}
         <TextInput
           value={config.title}
           onInput={title => update({ title })}
@@ -89,7 +91,7 @@ const AlertLineConfigSettingsInnerWithConfig = ({
       />
 
       <div className="flex gap-2 nowrap">
-        Альтернативный текст:
+        {translateBase(BaseLocaleKey.AlternativeText)}
         <TextInput
           value={config.text}
           onInput={text => update({ text })}
@@ -124,7 +126,7 @@ const AlertLineConfigSettingsInnerWithConfig = ({
         updateConfig={update}
       />
       <div className="flex gap-2 nowrap">
-        Время пробега:
+        {translateBase(BaseLocaleKey.RunTime)}
         <TextInput
           value={'' + config.speed}
           type="tel"

@@ -51,5 +51,6 @@
 - Every assistant reply must be bilingual: write the English text FIRST, then immediately the Russian translation in parentheses. No markup, no HTML, no ANSI color codes.
 - Apply this to every piece/chunk of text in the reply, not just the first paragraph.
 - Translation is sentence-by-sentence: each English sentence is immediately followed by its Russian translation.
+- Grouping several English sentences into a paragraph IS allowed, BUT each English sentence within it must still be immediately followed by its Russian translation in parentheses — no sentence may appear without its translation right after it.
 - When the user writes "zapiwi" (запиши), persist the instruction into this AGENTS.md so it applies to all future sessions.
 - Example: Done. (Готово.)

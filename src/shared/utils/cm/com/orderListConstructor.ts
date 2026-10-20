@@ -1,6 +1,7 @@
 import { CmComOrderWidClass } from '#shared/model/cm/order/OrderWid';
 import { CmComOrderTopHeaderBag, ICmComOrderExportableMe } from '#shared/model/cm/order/regions';
 import { IExportableComInterpretation, Langi } from 'shared/api';
+import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
 import { LocaleDynamic } from 'shared/model/+locale/dynamic';
 import { checkIsFalseOrZero, checkIsNil, checkIsNotNil, checkIsTrueOrOne } from 'shared/utils/checkIs';
 import { translateBaseDefine } from 'shared/utils/locale/translate';
@@ -62,7 +63,7 @@ export const cmComOrderListConstructor = <OrderConstructor extends CmComOrderWid
     }
 
     const kindTitle = (kindTitleDict[style.key] ||= iife(() => {
-      const sel = (it: LocaleDynamic<Langi>) => it.cm.com.kind[style.key];
+      const sel = (it: LocaleDynamic<Langi>) => it[DynLocaleKey.CmComKind][style.key];
       return translateBaseDefine(getLangLocales(langi))(sel) || translateBaseDefine(getLangLocales(Langi.Ru))(sel);
     }));
 

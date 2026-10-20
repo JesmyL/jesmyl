@@ -1,9 +1,10 @@
 import { useIsOnline } from '#basis/lib/useConnectionState';
+import { translateBase } from '#basis/locale';
 import { ScreenBroadcastControlPanelShowMdButton } from '#features/broadcast/controls/ShowMdButton';
+import { soki } from '#shared/soki';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { soki } from '#shared/soki';
 import { BibleBroadcastSlide } from '$bible/entities/broadcast';
 import { CmBroadcastLiveScreen } from '$cm/features/broadcast/ui/Screen';
 import { liveDataAtom, liveDataStreamersAtom } from '$index/shared/state';
@@ -11,6 +12,7 @@ import { schLiveTsjrpcClient } from '$index/shared/tsjrpc/live.tsjrpc';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { ScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { emptyFunc } from 'shared/utils';
 import { ScheduleWidgetMarkdownLiveBroadcast } from './MarkdownLive';
 
@@ -74,7 +76,9 @@ export const ScheduleWidgetLiveBroadcast = ({ schw, isShowMarkdownOnly }: Props)
     <>
       {liveData == null ? (
         <div className="flex center full-size">
-          {streamerLogin == null ? 'Трансляция не началась' : 'Трансляция завершена'}
+          {streamerLogin == null
+            ? translateBase(BaseLocaleKey.ScheduleBroadcastNotStarted)
+            : translateBase(BaseLocaleKey.ScheduleBroadcastFinished)}
         </div>
       ) : (
         <>
@@ -93,7 +97,7 @@ export const ScheduleWidgetLiveBroadcast = ({ schw, isShowMarkdownOnly }: Props)
       )}
 
       <Modal openAtom={isSelectStreamerModalAtom}>
-        <ModalHeader>Выбери стримера</ModalHeader>
+        <ModalHeader>{translateBase(BaseLocaleKey.ScheduleChooseStreamer)}</ModalHeader>
         <ModalBody>
           {streamers?.map(({ fio, login }) => {
             return (
@@ -105,7 +109,7 @@ export const ScheduleWidgetLiveBroadcast = ({ schw, isShowMarkdownOnly }: Props)
                 />
               </div>
             );
-          }) ?? 'Список пуст'}
+          }) ?? translateBase(BaseLocaleKey.EmptyList)}
         </ModalBody>
       </Modal>
     </>

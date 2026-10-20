@@ -12,6 +12,7 @@ export const enum Langi {
   Ru = 0,
   Ua = 1,
   Kz = 2,
+  En = 3,
 }
 
-export type LangCode = 'ru' | 'ua' | 'kz';
+export type LangCode = 'ru' | 'ua' | 'kz' | 'en';

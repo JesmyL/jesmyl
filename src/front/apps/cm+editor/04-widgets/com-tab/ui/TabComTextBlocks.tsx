@@ -10,6 +10,7 @@ import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.ts
 import { cmEditorComTextsEditsHistoryAtom } from '$cm+editor/shared/state/atoms';
 import React, { useReducer } from 'react';
 import { makeRegExp } from 'regexpert';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { toast } from 'sonner';
 import {
   CmEditorComTabTextBlockPrevValueButton,
@@ -55,7 +56,7 @@ export const CmEditorComTabTextBlocks = ({ ccom }: { ccom: EditableCom }) => {
       {checkAccess('cm', 'COM_TXT', 'C') && (
         <TheIconButton
           icon="PlusSignCircle"
-          confirm="Вставить новый блок в самое начало?"
+          confirm={translateBase(BaseLocaleKey.CmEditorInsertBlockStart)}
           onClick={() =>
             cmEditComClientTsjrpcMethods.insertTextBlock({
               value: '',
@@ -83,7 +84,7 @@ export const CmEditorComTabTextBlocks = ({ ccom }: { ccom: EditableCom }) => {
                   <Button
                     icon="Code"
                     onClick={() => {
-                      toast(translateBase(it => it.cm.com.sqBrInTxtRep));
+                      toast(translateBase(BaseLocaleKey.CmEditSquareBracketsHint));
                     }}
                   />
                 )}
@@ -97,7 +98,7 @@ export const CmEditorComTabTextBlocks = ({ ccom }: { ccom: EditableCom }) => {
                 {checkAccess('cm', 'COM_TXT', 'D') && (
                   <TheIconButton
                     icon="Cancel01"
-                    confirm={translateBase(it => it.cm.com.rmTBlock, { t: text })}
+                    confirm={translateBase(BaseLocaleKey.CmEditIsRemoveTextBlock, { t: text })}
                     onClick={() =>
                       cmEditComClientTsjrpcMethods.removeTextBlock({
                         comw: ccom.wid,
@@ -118,7 +119,7 @@ export const CmEditorComTabTextBlocks = ({ ccom }: { ccom: EditableCom }) => {
             {checkAccess('cm', 'COM_TXT', 'C') && (
               <TheIconButton
                 icon="PlusSignCircle"
-                confirm="Вставить новый блок сюда?"
+                confirm={translateBase(BaseLocaleKey.CmEditorInsertBlockHere)}
                 onClick={() =>
                   cmEditComClientTsjrpcMethods.insertTextBlock({
                     value: '',

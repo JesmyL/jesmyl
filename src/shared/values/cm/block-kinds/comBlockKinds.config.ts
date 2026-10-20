@@ -1,28 +1,29 @@
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmComBlockKindKey, IExportableKindProp } from './BlockKind.model';
 
 export const comBlockKindsConfig = [
   {
     key: CmComBlockKindKey.Enter,
-    each: 'each0',
+    each: BaseLocaleKey.Each0,
     tags: ['вступление', 'вступ', 'интро', 'intro'],
     forChordedBlock: 1,
   },
   {
     key: CmComBlockKindKey.OneWithShift,
-    each: 'each1',
+    each: BaseLocaleKey.Each1,
     group: 1,
     isBlockForTextableOnly: true,
   },
   {
     key: CmComBlockKindKey.One,
-    each: 'each1',
+    each: BaseLocaleKey.Each1,
     tags: ['куплет', 'купліт', 'куплєт'],
     group: 1,
     isBlockForTextableOnly: true,
   },
   {
     key: CmComBlockKindKey.PTwo,
-    each: 'each1',
+    each: BaseLocaleKey.Each1,
     tags: [
       'пред припев',
       'предприпев',
@@ -37,51 +38,51 @@ export const comBlockKindsConfig = [
   },
   {
     key: CmComBlockKindKey.Two,
-    each: 'each1',
+    each: BaseLocaleKey.Each1,
     tags: ['припев', 'приспів', 'припів'],
     group: 2,
     isBlockForTextableOnly: true,
   },
   {
     key: CmComBlockKindKey.Bridge,
-    each: 'each1',
+    each: BaseLocaleKey.Each1,
     tags: ['мост', 'бридж', 'брідж', 'міст', 'bridge'],
     group: 3,
     isBlockForTextableOnly: true,
   },
   {
     key: CmComBlockKindKey.Play,
-    each: 'each1',
+    each: BaseLocaleKey.Each1,
     tags: ['проигрыш', 'програш'],
     forChordedBlock: 2,
     isBlockForChordedOnly: true,
   },
   {
     key: CmComBlockKindKey.Modulation,
-    each: 'each2',
+    each: BaseLocaleKey.Each2,
     tags: ['модуляция', 'модуляція'],
     isModulation: true,
   },
   {
     key: CmComBlockKindKey.Final,
-    each: 'each1',
+    each: BaseLocaleKey.Each1,
     tags: ['финал', 'фінал', 'фiнал', 'конец', 'концовка', 'кінець', 'final'],
   },
   {
     key: CmComBlockKindKey.Thirdo,
-    each: 'each1',
+    each: BaseLocaleKey.Each1,
     tags: ['запев', 'заспів', 'запів'],
     group: 4,
     isBlockForTextableOnly: true,
   },
   {
     key: CmComBlockKindKey.Insert,
-    each: 'each2',
+    each: BaseLocaleKey.Each2,
     tags: ['вставка'],
   },
   {
     key: CmComBlockKindKey.Plus,
-    each: 'each3',
+    each: BaseLocaleKey.Each3,
     alt: '+',
     isInherit: true,
     isHeaderNoneForce: true,
@@ -89,21 +90,21 @@ export const comBlockKindsConfig = [
   },
   {
     key: CmComBlockKindKey.PlusPlus,
-    each: 'each3',
+    each: BaseLocaleKey.Each3,
     alt: '++',
     isInherit: true,
     isBlockForTextableOnly: true,
   },
   {
     key: CmComBlockKindKey.Shift,
-    each: 'each3',
+    each: BaseLocaleKey.Each3,
     alt: '+>',
     isInherit: true,
     isBlockForTextableOnly: true,
   },
   {
     key: CmComBlockKindKey.PlusPlusShift,
-    each: 'each3',
+    each: BaseLocaleKey.Each3,
     alt: '++>',
     isInherit: true,
     isBlockForTextableOnly: true,

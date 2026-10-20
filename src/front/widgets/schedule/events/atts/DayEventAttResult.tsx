@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { ScheduleWidgetAppAtt, ScheduleWidgetAppAtts } from '#widgets/schedule/ScheduleWidget.model';
 import {
   IScheduleWidget,
@@ -7,6 +8,7 @@ import {
   ScheduleWidgetDayEventAttValue,
   ScheduleWidgetDayi,
 } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 type Props = {
   day: IScheduleWidgetDay;
@@ -64,6 +66,6 @@ export function ScheduleWidgetDayEventAttResult({
     }
   } catch (error) {
     console.error(error);
-    return <div className="text-xKO">Контент не доступен</div>;
+    return <div className="text-xKO">{translateBase(BaseLocaleKey.ScheduleContentUnavailable)}</div>;
   }
 }

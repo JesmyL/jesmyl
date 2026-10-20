@@ -7,6 +7,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmComCommentCurrentComw2OpenAltiDictAtom, cmComCommentRegisteredAltKeysAtom } from '$cm/entities/com-comment';
 import { useAtomValue } from 'atomaric';
 import { CmComWid } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { toast } from 'sonner';
 
 export const CmComCommentAlternativeSelector = ({ comw }: { comw: CmComWid }) => {
@@ -26,7 +27,7 @@ export const CmComCommentAlternativeSelector = ({ comw }: { comw: CmComWid }) =>
         }
         items={registeredAltKeys.map((key, keyi) => ({
           id: keyi,
-          title: keyi ? key : <span className="text-x7">{translateBase(it => it.cm.comm.base)}</span>,
+          title: keyi ? key : <span className="text-x7">{translateBase(BaseLocaleKey.CmCommentBase)}</span>,
         }))}
         renderItem={({ node }) => (
           <>
@@ -42,27 +43,27 @@ export const CmComCommentAlternativeSelector = ({ comw }: { comw: CmComWid }) =>
               disabled={registeredAltKeys.length >= maxComCommentAlternativesCount}
               onClick={async () => {
                 if (registeredAltKeys.length >= maxComCommentAlternativesCount) {
-                  toast(translateBase(it => it.cm.comm.addedMaxAlts));
+                  toast(translateBase(BaseLocaleKey.CmCommentAddedMaximumAlternatives));
                   return;
                 }
 
-                const commentAlti = (await prompt(translateBase(it => it.cm.comm.addAlt)))?.toLowerCase();
+                const commentAlti = (await prompt(translateBase(BaseLocaleKey.CmCommentAddAlternative)))?.toLowerCase();
 
                 if (!commentAlti) return;
 
                 const maxLen = 10;
 
                 if (commentAlti.length > maxLen) {
-                  toast(translateBase(it => it.cm.comm.soLongName, { l: maxLen }));
+                  toast(translateBase(BaseLocaleKey.CmCommentSoLongName, { l: maxLen }));
                   return;
                 }
 
                 // TODO
-                toast('Функционал не доступен');
+                toast(translateBase(BaseLocaleKey.CmFeatureUnavailable));
               }}
             >
               <LazyIcon icon="PlusSign" />
-              {translateBase(it => it.toAdd)}
+              {translateBase(BaseLocaleKey.ToAdd)}
             </Button>
           </div>
         }

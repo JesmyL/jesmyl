@@ -1,3 +1,4 @@
+import { translateBase } from '#basis/locale';
 import { ScheduleWidgetAppAtts } from '#widgets/schedule/ScheduleWidget.model';
 import {
   ScheduleWidgetAppAttCheckListValueItem,
@@ -5,16 +6,17 @@ import {
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
 
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ScheduleCheckListAtt } from './TheCheckListAtt';
 
 export interface ScheduleChListAtt {
   list: ScheduleWidgetAppAttCheckListValueItem[];
 }
 
-export const checkListAtt: ScheduleWidgetAppAtts<'SCH', ScheduleChListAtt> = {
+export const makeCheckListAtt = (): ScheduleWidgetAppAtts<'SCH', ScheduleChListAtt> => ({
   '[SCH]:chlist': {
-    title: 'Выполнить',
-    description: 'Пункты с галочками',
+    title: translateBase(BaseLocaleKey.ScheduleExecute),
+    description: translateBase(BaseLocaleKey.ScheduleChecklistDescription),
     icon: 'CheckList',
     initVal: { list: [] },
     result: (value, scheduleDayEventAttachmentScopeProps, isRedact) => (
@@ -29,4 +31,4 @@ export const checkListAtt: ScheduleWidgetAppAtts<'SCH', ScheduleChListAtt> = {
     ExtRoute: () => <></>,
     useActionPanelNode: () => null,
   },
-};
+});
