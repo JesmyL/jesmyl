@@ -30,7 +30,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.CmTwiceClickPrevious]: LocaleSimpleString;
   [BaseLocaleKey.CmTwiceClickNext]: LocaleSimpleString;
   [BaseLocaleKey.CmChordLengthMismatch]: StringTemplaterInterpolation<'n'>;
-  [BaseLocaleKey.CmChordBlockLengthMismatch]: LocaleSimpleString;
+  [BaseLocaleKey.CmChordBlockLengthMismatch]: '';
   [BaseLocaleKey.CmClickNextSlide]: LocaleSimpleString;
   [BaseLocaleKey.CmClickPreviousSlide]: LocaleSimpleString;
   [BaseLocaleKey.CmNotFound]: LocaleSimpleString;
@@ -66,7 +66,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.CmEditorNewNoTracks]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorNewNewAudios]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorNewPublishCom]: LocaleSimpleString;
-  [BaseLocaleKey.CmCategoryTitle]: LocaleSimpleString;
+  [BaseLocaleKey.CmCategoryTitle]: '';
   [BaseLocaleKey.CmCategoryList]: LocaleStrRecord<IExportableCat['t']>;
   [BaseLocaleKey.CmListsAll]: LocaleSimpleString;
   [BaseLocaleKey.CmListsPlayer]: LocaleSimpleString;
@@ -276,7 +276,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.CmEditorRemoveRecord]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorUpdatedBy]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorNextIsContinuation]: LocaleSimpleString;
-  [BaseLocaleKey.CmEditorDeleteLink]: LocaleSimpleString;
+  [BaseLocaleKey.CmEditorDeleteLink]: '';
   [BaseLocaleKey.CmEditorDeleteBlock]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorHideBlock]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorShowBlock]: LocaleSimpleString;
@@ -308,7 +308,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.CmEditorInterpretationEdit]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorIncludeBibleWords]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorSendWords]: StringTemplaterInterpolation<'n'>;
-  [BaseLocaleKey.CmEditorBibleBooksInfo]: LocaleSimpleString;
+  [BaseLocaleKey.CmEditorBibleBooksInfo]: '';
   [BaseLocaleKey.CmEditorLinkPartHide]: StringTemplaterWithTwoInterpolations<'n', 'h'>;
   [BaseLocaleKey.CmEditorLinkPartShow]: StringTemplaterWithTwoInterpolations<'n', 'h'>;
   [BaseLocaleKey.CmEditorAppliqueDestroyed]: LocaleSimpleString;
@@ -661,7 +661,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.Folder]: LocaleSimpleString;
   [BaseLocaleKey.WorkingDirectoryNotSelected]: LocaleSimpleString;
   [BaseLocaleKey.WorkingDirectoryPickFolder]: StringTemplaterInterpolation<'a'>;
-  [BaseLocaleKey.WorkingDirectoryFolders]: LocaleSimpleString;
+  [BaseLocaleKey.WorkingDirectoryFolders]: '';
   [BaseLocaleKey.LogIn]: LocaleSimpleString;
   [BaseLocaleKey.AuthorizationSuccess]: LocaleSimpleString;
   [BaseLocaleKey.OneTimeCode]: LocaleSimpleString;
@@ -679,7 +679,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.History]: LocaleSimpleString;
   [BaseLocaleKey.Plan]: LocaleSimpleString;
   [BaseLocaleKey.Search]: LocaleSimpleString;
-  [BaseLocaleKey.GlobalSearch]: LocaleSimpleString;
+  [BaseLocaleKey.GlobalSearch]: '';
   [BaseLocaleKey.Broadcast]: LocaleSimpleString;
   [BaseLocaleKey.Control]: LocaleSimpleString;
   [BaseLocaleKey.TelegramBeInChannel]: LocaleSimpleString;
@@ -868,7 +868,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.SlideCloses]: LocaleSimpleString;
   [BaseLocaleKey.ByBackspace]: LocaleSimpleString;
   [BaseLocaleKey.PickExcelFile]: LocaleSimpleString;
-  [BaseLocaleKey.SelectAtLeast]: LocaleSimpleString;
+  [BaseLocaleKey.SelectAtLeast]: '';
   [BaseLocaleKey.AlertLine]: LocaleSimpleString;
   [BaseLocaleKey.AlertLinePosition]: LocaleSimpleString;
   [BaseLocaleKey.NotFound]: LocaleSimpleString;
