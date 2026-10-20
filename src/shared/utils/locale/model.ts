@@ -9,6 +9,14 @@ export type TranslateKeyResult<Dict, Key extends keyof Dict> = Dict[Key] extends
   ? Dict[Key] | ''
   : '';
 
+export type TemplateInterpolationKeys<Val> = [Val] extends [
+  StringTemplaterWithTwoInterpolations<infer V1, infer V2, string>,
+]
+  ? V1 | V2
+  : [Val] extends [StringTemplaterInterpolation<infer V, string>]
+    ? V
+    : string;
+
 export interface DefinedTranslateFunction<Dict extends object> {
   <
     const Val extends
@@ -39,7 +47,9 @@ export interface DefinedTranslateFunction<Dict extends object> {
 
   <
     Key extends keyof Dict,
-    Interpolation extends Record<string, SimpleDictValue> & { NEXT?: NEXTcb<string> },
+    Interpolation extends Record<TemplateInterpolationKeys<Dict[Key]>, SimpleDictValue> & {
+      NEXT?: NEXTcb<string>;
+    },
   >(
     key: Key,
     interpolation: Interpolation,

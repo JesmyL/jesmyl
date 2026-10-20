@@ -6,7 +6,13 @@ import { langCodeDict } from 'shared/const/+locale';
 import { LocaleDynamic } from 'shared/model/+locale/dynamic';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { setBaseLocaleProvider, translateBase } from 'shared/utils/locale/base';
-import { DefinedTranslateFunction, NEXTcb, SimpleDictValue, TranslateKeyResult } from 'shared/utils/locale/model';
+import {
+  DefinedTranslateFunction,
+  NEXTcb,
+  SimpleDictValue,
+  TemplateInterpolationKeys,
+  TranslateKeyResult,
+} from 'shared/utils/locale/model';
 import { translateBaseDefine } from 'shared/utils/locale/translate';
 
 export const currentLangiAtom = atom(() => {
@@ -63,7 +69,9 @@ export function translateDynamic(langi: Langi): DefinedTranslateFunction<Dynamic
 
 export function translateDynamic<
   Key extends keyof DynamicLocale,
-  Interpolation extends Record<string, SimpleDictValue> & { NEXT?: NEXTcb<string> },
+  Interpolation extends Record<TemplateInterpolationKeys<DynamicLocale[Key]>, SimpleDictValue> & {
+    NEXT?: NEXTcb<string>;
+  },
 >(
   langi: Langi,
   key: Key,
