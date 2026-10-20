@@ -64,9 +64,9 @@ export const QuestionerTemplateVisibilityRedactorModalBodyInner = ({
                       })
                     }
                   >
-                    {translateBase(it =>
-                      template?.if?.next[conditioni].t ? it[BaseLocaleKey.QuestionerOr] : it[BaseLocaleKey.QuestionerAnd],
-                    )}
+                    {template?.if?.next[conditioni].t
+                      ? translateBase(BaseLocaleKey.QuestionerOr)
+                      : translateBase(BaseLocaleKey.QuestionerAnd)}
                   </Button>
                 </div>
               </Card.Header>

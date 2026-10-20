@@ -9,12 +9,14 @@ export const CmEditorComEditBemoled = (props: {
 }) => (
   <TheIconButton
     icon="Grid"
-    confirm={<>{translateBase(it => (props.value ? it[BaseLocaleKey.CmEditorComFlat] : it[BaseLocaleKey.CmEditorComSharp]))}</>}
+    confirm={
+      <>{props.value ? translateBase(BaseLocaleKey.CmEditorComFlat) : translateBase(BaseLocaleKey.CmEditorComSharp)}</>
+    }
     postfix={
       <>
         {translateBase(BaseLocaleKey.CmEditorTonalityTypeIs)}{' '}
         <span className="text-x7">
-          {translateBase(it => (props.value ? it[BaseLocaleKey.CmEditorFlat] : it[BaseLocaleKey.CmEditorSharp]))}
+          {props.value ? translateBase(BaseLocaleKey.CmEditorFlat) : translateBase(BaseLocaleKey.CmEditorSharp)}
         </span>
       </>
     }

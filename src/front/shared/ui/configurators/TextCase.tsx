@@ -15,7 +15,7 @@ export const TextCaseConfigurator = ({ config, updateConfig, title }: Props) => 
       id={config.case ?? defaultTextCase}
       items={mapObjectEntries(textCaseTitles, (caseStr, title) => ({
         id: +caseStr,
-        title: translateBase(it => it[title]),
+        title: translateBase(title),
       }))}
       onSelectId={textCase => updateConfig({ case: textCase })}
     />

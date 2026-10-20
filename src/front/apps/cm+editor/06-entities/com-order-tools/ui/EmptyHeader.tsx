@@ -9,9 +9,11 @@ export const CmEditorComOrderToolsEmptyHeader = (props: CmEditorComOrderToolsPro
     <>
       <BottomPopupItem
         icon="Message01"
-        title={translateBase(it =>
-          props.ord.isEmptyHeader ? it[BaseLocaleKey.CmEditorRestoreBlockName] : it[BaseLocaleKey.CmEditorRemoveBlockName],
-        )}
+        title={
+          props.ord.isEmptyHeader
+            ? translateBase(BaseLocaleKey.CmEditorRestoreBlockName)
+            : translateBase(BaseLocaleKey.CmEditorRemoveBlockName)
+        }
         onClick={async () => {
           await cmEditComOrderClientTsjrpcMethods.toggleTitleVisibility({
             comw: props.com.wid,

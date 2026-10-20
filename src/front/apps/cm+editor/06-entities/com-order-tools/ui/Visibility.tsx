@@ -27,7 +27,11 @@ export const CmEditorComOrderToolsOrderVisibility = ({
           <LazyIcon icon="View" />
         )
       }
-      title={translateBase(it => (ord.isVisible ? it[BaseLocaleKey.CmEditorHideBlock] : it[BaseLocaleKey.CmEditorShowBlock]))}
+      title={
+        ord.isVisible
+          ? translateBase(BaseLocaleKey.CmEditorHideBlock)
+          : translateBase(BaseLocaleKey.CmEditorShowBlock)
+      }
       onClick={async () => {
         if (await confirm(translateBase(BaseLocaleKey.CmEditorHideBlockConfirm, { h: ord.me.header() }))) {
           setIsLoading(true);

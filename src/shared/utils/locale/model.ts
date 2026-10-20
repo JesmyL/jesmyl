@@ -1,5 +1,5 @@
 import { LocaleSimpleString } from 'shared/model/+locale/model';
-import { StringTemplaterInterpolation, StringTemplaterWithTwoInterpolations } from '../stringTemplater/model';
+import { StringTemplaterGenKey, StringTemplaterVals } from '../stringTemplater/model';
 
 export type SimpleDictValue = string | number | boolean | (() => unknown);
 
@@ -9,47 +9,34 @@ export type TranslateKeyResult<Dict, Key extends keyof Dict> = Dict[Key] extends
   ? Dict[Key] | ''
   : '';
 
-export type TemplateInterpolationKeys<Val> = [Val] extends [
-  StringTemplaterWithTwoInterpolations<infer V1, infer V2, string>,
-]
-  ? V1 | V2
-  : [Val] extends [StringTemplaterInterpolation<infer V, string>]
-    ? V
-    : string;
+export type TemplateInterpolationVals<Val> = [StringTemplaterVals<Val>] extends [never]
+  ? Record<string, SimpleDictValue>
+  : StringTemplaterVals<Val> extends object
+    ? StringTemplaterVals<Val>
+    : Record<string, SimpleDictValue>;
+
+export type TemplateInterpolationKeys<Val> = keyof TemplateInterpolationVals<Val> & string;
+
+export type TemplateInterpolationGenKey<Val> = StringTemplaterGenKey<Val>;
 
 export interface DefinedTranslateFunction<Dict extends object> {
   <
-    const Val extends
-      | StringTemplaterWithTwoInterpolations<string, string, string>
-      | StringTemplaterInterpolation<string, string>,
-    //
-    const VKey extends Val extends StringTemplaterWithTwoInterpolations<infer V1, infer V2, string>
-      ? V1 | V2
-      : Val extends StringTemplaterInterpolation<infer V, string>
-        ? V
-        : string,
-    //
-    const GenKey extends Val extends StringTemplaterWithTwoInterpolations<string, string, infer K>
-      ? K
-      : Val extends StringTemplaterInterpolation<string, infer K>
-        ? K
-        : string,
-    //
-    Interpolation extends Record<VKey, SimpleDictValue> & { NEXT?: NEXTcb<GenKey> },
-    //
-    Ret extends Interpolation extends { NEXT: NEXTcb<GenKey, infer R> } ? R[] : string,
+    const Val extends string,
+    const Vals extends object = TemplateInterpolationVals<Val>,
+    const GenKey extends string = TemplateInterpolationGenKey<Val>,
+    Interpolation extends Vals & { NEXT?: NEXTcb<GenKey> } = Vals & { NEXT?: NEXTcb<GenKey> },
   >(
     selector: (translates: Dict) => Val,
     interpolation: Interpolation,
-  ): Ret | '';
+  ): (Interpolation extends { NEXT: NEXTcb<string, infer R> } ? R[] : string) | '';
 
   <const Val extends LocaleSimpleString>(selector: (translates: Dict) => Val, interpolation?: nil | void): Val | '';
 
   <
     Key extends keyof Dict,
-    Interpolation extends Record<TemplateInterpolationKeys<Dict[Key]>, SimpleDictValue> & {
-      NEXT?: NEXTcb<string>;
-    },
+    const Vals extends object = TemplateInterpolationVals<Dict[Key]>,
+    const GenKey extends string = TemplateInterpolationGenKey<Dict[Key]>,
+    Interpolation extends Vals & { NEXT?: NEXTcb<GenKey> } = Vals & { NEXT?: NEXTcb<GenKey> },
   >(
     key: Key,
     interpolation: Interpolation,

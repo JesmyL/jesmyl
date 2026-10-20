@@ -3,9 +3,7 @@ import { makeRegExp } from 'regexpert';
 import { checkIsUndefined } from '../checkIs';
 import { objectKeys } from '../object.utils';
 import { strTplArgSeparator } from './const';
-import { StringTemplaterInterpolation, StringTemplaterWithTwoInterpolations } from './model';
-
-type VarKey = `$${string}${string}`;
+import { StringTemplaterGenKey, StringTemplaterInterpolation, StringTemplaterVals, VarKey } from './model';
 
 const enum ConceptKey {
   Condition = 30,
@@ -29,9 +27,21 @@ type TplArg = OmitConceptKeys<Concept<ConceptKey, Exclude<TypeKey, TypeKey.Gener
 type AnyCondition =
   | string
   | number
+  | boolean
   | OmitConceptKeys<Concept<ConceptKey.Condition | ConceptKey.Func | ConceptKey.Util, TypeKey>, ''>;
 
 type OmitConceptKeys<C extends Concept<ConceptKey, TypeKey>, K extends keyof C | string> = Omit<C, K | 'k'>;
+
+declare const switchMeta: unique symbol;
+declare const switchErrMeta: unique symbol;
+
+type SwitchPhantom<Key extends string, Cases> = <Vals extends object>(
+  vals: Key extends keyof Vals
+    ? [Cases] extends [Vals[Key & keyof Vals]]
+      ? Vals
+      : { readonly [switchErrMeta]: { key: Key; cases: Cases; allowed: Vals[Key & keyof Vals] } }
+    : { readonly [switchErrMeta]: { key: Key } },
+) => void;
 
 class Concept<Concept extends ConceptKey, Type extends TypeKey> {
   k?: VarKey;
@@ -219,42 +229,49 @@ const IF = (
 ///////////////////////////////////////////
 ///////////////////////////////////////////
 
-type CaseCb = (
-  cond: AnyCondition,
-) => (template: TemplateStringsArray, ...args: TplArg[]) => OmitConceptKeys<SwitchStructConcept, 'c' | 'cs'>;
+type CaseCb<Key extends string, Cases> = <const Cond extends AnyCondition>(
+  cond: Cond,
+) => (template: TemplateStringsArray, ...args: TplArg[]) => OmitConceptKeys<
+  SwitchStructConcept<Key, Cases | Cond>,
+  'c' | 'cs'
+>;
 
-type DefaultCb = (
+type DefaultCb<Key extends string, Cases> = (
   template: TemplateStringsArray,
   ...args: TplArg[]
-) => OmitConceptKeys<SwitchStructConcept, 'DEFAULT' | 'CASE' | 'c' | 'cs'>;
+) => OmitConceptKeys<SwitchStructConcept<Key, Cases>, 'DEFAULT' | 'CASE' | 'c' | 'cs'>;
 
-class SwitchStructConcept extends Concept<ConceptKey.Struct, TypeKey.Switch> {
+class SwitchStructConcept<Key extends string = string, Cases = never> extends Concept<
+  ConceptKey.Struct,
+  TypeKey.Switch
+> {
   cs: ([AnyCondition, string] | [string])[] = [];
+  declare readonly [switchMeta]?: SwitchPhantom<Key, Cases>;
 
   constructor(
     public c: AnyCondition,
-    public CASE: CaseCb,
-    public DEFAULT: DefaultCb,
+    public CASE: CaseCb<Key, Cases>,
+    public DEFAULT: DefaultCb<Key, Cases>,
   ) {
     super('SWITCH', ConceptKey.Struct, TypeKey.Switch);
   }
 }
 
-const SWITCH = (cond: AnyCondition) => {
-  const CASE: CaseCb =
+const SWITCH = <Key extends string>(cond: `$${Key}`) => {
+  const CASE: CaseCb<Key, never> =
     cond =>
     (template, ...args) => {
-      concept.cs.push([cond, stringifyTemplate(template, args)]);
+      concept.cs.push([cond as AnyCondition, stringifyTemplate(template, args)]);
       return concept;
     };
 
-  const DEFAULT: DefaultCb = (template, ...args) => {
+  const DEFAULT: DefaultCb<Key, never> = (template, ...args) => {
     concept.cs.push([stringifyTemplate(template, args)]);
     delete (concept as any).CASE;
     return concept;
   };
 
-  const concept = new SwitchStructConcept(cond, CASE, DEFAULT);
+  const concept = new SwitchStructConcept<Key, never>(cond, CASE, DEFAULT);
 
   return { CASE };
 };
@@ -286,15 +303,17 @@ export class GenerateStructConcept<Key extends string> extends Concept<ConceptKe
 
 type CorrectKey<Key extends string> = Key extends `$${string}` ? '<ERROR: $-started Key>' : Key;
 
-const GENERATE = <Key extends string = never>() => {
-  const NEXT: NextCb<CorrectKey<Key>> =
+const GENERATE = <GenKey extends string = string>() => {
+  type Key = CorrectKey<GenKey>;
+
+  const NEXT: NextCb<Key> =
     key =>
     (template, ...args) => {
       concept.c.push(key, stringifyTemplate(template, args));
       return concept;
     };
 
-  const concept = new GenerateStructConcept<CorrectKey<Key>>(NEXT);
+  const concept = new GenerateStructConcept<Key>(NEXT);
 
   return { NEXT };
 };
@@ -304,17 +323,51 @@ const GENERATE = <Key extends string = never>() => {
 ///////////////////////////////////////////
 ///////////////////////////////////////////
 
-type Interpolation<GenKey extends string, T extends VarKey[]> = T extends [`$${infer V1}`, `$${infer V2}`]
-  ? StringTemplaterWithTwoInterpolations<V1, V2, GenKey>
-  : T extends [`$${infer V1}`]
-    ? StringTemplaterInterpolation<V1, GenKey>
-    : string;
+type VarName<Var extends VarKey> = Var extends `$${infer Name}` ? Name : never;
 
-const STR = <const TemplateScalar extends TemplateStringsArray | VarKey[]>(
+type ValsOfVars<Vars extends readonly VarKey[]> = { [Key in VarName<Vars[number]>]: string | number | boolean };
+
+type Interpolation<GenKey extends string, T extends readonly VarKey[]> = T extends readonly [VarKey, ...VarKey[]]
+  ? StringTemplaterInterpolation<ValsOfVars<T>, GenKey>
+  : string;
+
+declare const noValsMeta: unique symbol;
+
+type NoVals = { readonly [noValsMeta]: never };
+
+type StrTplArg<Vals extends object> = [Vals] extends [NoVals]
+  ? TplArg
+  : TplArg & { readonly [switchMeta]?: (vals: Vals) => void };
+
+type StrInterpolation<
+  Vals extends object,
+  TemplateScalar extends readonly VarKey[],
+  GenKey extends string = string,
+> = [
+  Vals,
+] extends [NoVals]
+  ? Interpolation<string, TemplateScalar>
+  : StringTemplaterInterpolation<Vals, GenKey>;
+
+type ObjectVals<Vals> = [Vals] extends [never]
+  ? NoVals
+  : [Vals] extends [infer ObjVals extends object]
+    ? ObjVals
+    : NoVals;
+
+type StrVals<Interp extends string | NoVals> = ObjectVals<StringTemplaterVals<Interp>>;
+
+const STR = <
+  const Interp extends string | NoVals = NoVals,
+  const TemplateScalar extends TemplateStringsArray | readonly VarKey[] = VarKey[],
+>(
   templateScalar: TemplateScalar,
   ...args: TplArg[]
-): TemplateScalar extends VarKey[]
-  ? (tpl: TemplateStringsArray, ...args: TplArg[]) => Interpolation<string, TemplateScalar>
+): TemplateScalar extends readonly VarKey[]
+  ? (
+      tpl: TemplateStringsArray,
+      ...args: StrTplArg<StrVals<Interp>>[]
+    ) => StrInterpolation<StrVals<Interp>, TemplateScalar, StringTemplaterGenKey<Interp>>
   : string => {
   if (isTemplateStringsArray(templateScalar)) {
     return stringifyTemplate(templateScalar, args) as never;
@@ -329,7 +382,7 @@ const STR = <const TemplateScalar extends TemplateStringsArray | VarKey[]>(
   }) as never;
 };
 
-const checkVarUsage = (resultStr: string, vars: string[]) => {
+const checkVarUsage = (resultStr: string, vars: readonly string[]) => {
   const usedKeySet = new Set(vars);
 
   resultStr.replace(makeRegExp('/\\$(\\w+);?/g'), (all, key) => {

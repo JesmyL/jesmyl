@@ -11,10 +11,10 @@ export type LocaleNumStrRecord<T extends string | number, Value extends string |
 > &
   Value[];
 
-export type LocaleStrOrInterpolationRecord<All extends string | number, T extends All, Name extends string> = Record<
+export type LocaleStrOrInterpolationRecord<All extends string | number, T extends All, Vals extends object> = Record<
   `${Exclude<All, T>}`,
   LocaleSimpleString
 > &
-  Record<`${T}`, StringTemplaterInterpolation<Name>>;
+  Record<`${T}`, StringTemplaterInterpolation<Vals>>;
 
 export type LocaleSimpleString = `${Uppercase<string> | Lowercase<string>}${string}`;

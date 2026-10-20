@@ -3,6 +3,7 @@ import { describe, expect } from 'vitest';
 
 import { AND, FN, GENERATE, IF, isUtil, OR, STR, stringTemplater, SWITCH, toNUM, toSTR } from '.';
 import { itIt } from '../utils';
+import { StringTemplaterInterpolation } from './model';
 import { stringTemplaterSrartSymbolCharCode } from './const';
 
 describe('stringTemplater', () => {
@@ -229,8 +230,22 @@ describe('stringTemplater:concepts', () => {
     expect(i).toBe(1);
   });
 
+  it('SWITCH: CASE values are checked against STR Vals', () => {
+    const str = STR<StringTemplaterInterpolation<{ x: 't' | 'c' }>>(['$x'])`${SWITCH('$x').CASE('t')`T`.DEFAULT`C`}`;
+
+    expect(stringTemplater(str, { x: 't' })).toBe('T');
+    expect(stringTemplater(str, { x: 'c' })).toBe('C');
+
+    // @ts-expect-error 'z' is not assignable to Vals['x']
+    const _wrongValue = STR<StringTemplaterInterpolation<{ x: 't' | 'c' }>>(['$x'])`${SWITCH('$x').CASE('z')`Z`}`;
+    // @ts-expect-error '$y' is absent from STR Vals
+    const _wrongKey = STR<StringTemplaterInterpolation<{ x: 't' }>>(['$x'])`$x${SWITCH('$y').CASE('t')`T`}`;
+  });
+
   it('GENERATE', () => {
-    const str = GENERATE<'%' | '*'>().NEXT('%')`SIMPLE $text`.NEXT('*')`TOO$s`.toString(['$s']);
+    const str = GENERATE<'%' | '*'>()
+      .NEXT('%')`SIMPLE $text`
+      .NEXT('*')`TOO$s`.toString(['$s']);
     const ret = stringTemplater(str, {
       NEXT: (key, value, index) => [`${key}-${value}/${key}[${index}]`] as const,
       text: () => () => () => 'TEXT',

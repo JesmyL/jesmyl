@@ -2,8 +2,9 @@ import { Langi } from 'shared/api';
 import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
 import { LocaleDynamic } from 'shared/model/+locale/dynamic';
 import { BibleTitleCodei } from 'shared/model/bible/enums';
+import { dynamicLocaleTemplate } from 'shared/utils/locale/templates';
 import { convertObjectToArray } from 'shared/utils/object.utils';
-import { STR, SWITCH } from 'shared/utils/stringTemplater';
+import { SWITCH } from 'shared/utils/stringTemplater';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 
 export const localeDynamicKz = convertObjectToArray<LocaleDynamic<Langi.Kz>>({
@@ -175,5 +176,8 @@ export const localeDynamicKz = convertObjectToArray<LocaleDynamic<Langi.Kz>>({
     [BibleTitleCodei.Откр]: 'Аян',
   }),
 
-  [DynLocaleKey.BibleChapterNum]: STR(['$b', '$c'])`${SWITCH('$b').CASE(BibleTitleCodei.Пс)`Забур $c`.DEFAULT`Бас $c`}`,
+  ...dynamicLocaleTemplate(
+    DynLocaleKey.BibleChapterNum,
+    ['$b', '$c'],
+  )`${SWITCH('$b').CASE(BibleTitleCodei.Пс)`Забур $c`.DEFAULT`Бас $c`}`,
 });

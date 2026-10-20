@@ -2,22 +2,36 @@ import { Langi, MenuComToolName } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { LocaleBase } from 'shared/model/+locale/base';
 import { BibleTranslateName } from 'shared/model/bible';
+import { baseLocaleTemplate } from 'shared/utils/locale/templates';
 import { convertObjectToArray } from 'shared/utils/object.utils';
-import { GENERATE, IF, isUtil, STR, SWITCH } from 'shared/utils/stringTemplater';
+import { GENERATE, IF, isUtil, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.Langi]: Langi.Ua,
   [BaseLocaleKey.LocaleVersion]: 0,
   [BaseLocaleKey.CmApp]: 'Пісні відроджених',
   [BaseLocaleKey.CmMarkComTool]: {
-    [MenuComToolName.MarkCom]: STR(['$v'])`${IF('$v').THEN`Видалити з обраного`.ELSE`Додати до обраного`}`,
-    [MenuComToolName.SelectedToggle]: STR(['$v'])`${IF('$v').THEN`Прибрати з вибраних`.ELSE`Вибрати пісню`}`,
-    [MenuComToolName.IsMiniAnchor]: STR(['$v'])`${IF('$v').THEN`Розгорнути посилання`.ELSE`Згорнути посилання`}`,
-    [MenuComToolName.ChordHardLevel]: STR([
-      '$v',
-    ])`${SWITCH('$v').CASE(0)`Прості акорди`.CASE(1)`Складні акорди`.DEFAULT`!Необхідно оновити додаток!`}`,
+    ...baseLocaleTemplate(
+      BaseLocaleKey.CmMarkComTool,
+      MenuComToolName.MarkCom,
+    )`${IF('$v').THEN`Видалити з обраного`.ELSE`Додати до обраного`}`,
+    ...baseLocaleTemplate(
+      BaseLocaleKey.CmMarkComTool,
+      MenuComToolName.SelectedToggle,
+    )`${IF('$v').THEN`Прибрати з вибраних`.ELSE`Вибрати пісню`}`,
+    ...baseLocaleTemplate(
+      BaseLocaleKey.CmMarkComTool,
+      MenuComToolName.IsMiniAnchor,
+    )`${IF('$v').THEN`Розгорнути посилання`.ELSE`Згорнути посилання`}`,
+    ...baseLocaleTemplate(
+      BaseLocaleKey.CmMarkComTool,
+      MenuComToolName.ChordHardLevel,
+    )`${SWITCH('$v').CASE(0)`Прості акорди`.CASE(1)`Складні акорди`.DEFAULT`!Необхідно оновити додаток!`}`,
 
-    [MenuComToolName.CacheTracks]: STR(['$v'])`${IF('$v').THEN`Прибрати з кешу`.ELSE`Кешувати треки`}`,
+    ...baseLocaleTemplate(
+      BaseLocaleKey.CmMarkComTool,
+      MenuComToolName.CacheTracks,
+    )`${IF('$v').THEN`Прибрати з кешу`.ELSE`Кешувати треки`}`,
 
     [MenuComToolName.FullscreenMode]: 'На весь екран',
     [MenuComToolName.ChordsVariant]: 'Показати акорди',
@@ -56,12 +70,14 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.CmKey]: 'Тональність',
   [BaseLocaleKey.CmAddByClick]: 'Клік на іконку для додавання у швидке меню',
   [BaseLocaleKey.CmCrossLinks]: "Пов'язані пісні",
-  [BaseLocaleKey.CmAddOrModifiedLabel]: STR(['$w', '$m'])`Додана: $w${IF(isUtil.NEQ('$w', '$m')).THEN`\nОновлена: $m`}`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.CmAddOrModifiedLabel,
+  )`Додана: $w${IF(isUtil.NEQ('$w', '$m')).THEN`\nОновлена: $m`}`,
   [BaseLocaleKey.CmSize]: 'Розмірність',
   [BaseLocaleKey.CmIntensity]: 'Інтенсивність',
   [BaseLocaleKey.CmEditSquareBracketsHint]:
     'Текст у [квадратних дужках] не показується в слайдах, але зводиться до (тексту в круглих дужках) у тексті пісень. Використовуйте [[дві відкривальні дужки] для перенесення рядка. Перед "[" має бути пробіл, а після "]" не повинно бути нічого',
-  [BaseLocaleKey.CmEditIsRemoveTextBlock]: STR(['$t'])`Видалити${IF('$t').ELSE` новий`} блок?\n\n$t`,
+  ...baseLocaleTemplate(BaseLocaleKey.CmEditIsRemoveTextBlock, ['$t'])`Видалити${IF('$t').ELSE` новий`} блок?\n\n$t`,
   [BaseLocaleKey.CmEditRemovedComs]: 'Видалені пісні',
   [BaseLocaleKey.CmEditBackup]: 'Відновити цю пісню',
   [BaseLocaleKey.CmEditDestroy]: 'Знищити цю пісню',
@@ -72,11 +88,11 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.CmEditAddAudio]: 'Додати аудіо',
   [BaseLocaleKey.CmEditConfigStringNumber]: 'Конфіг стр. $n',
   [BaseLocaleKey.CmEditClearCollectionNumber]: 'Очистити номер зі збірника $n',
-  [BaseLocaleKey.CmEditInsertBlockX]: STR([
-    '$x',
-  ])`Вставити новий блок ${SWITCH('$x').CASE('b')`на самий початок`.DEFAULT`сюди`}`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.CmEditInsertBlockX,
+  )`Вставити новий блок ${SWITCH('$x').CASE('b')`на самий початок`.DEFAULT`сюди`}`,
   [BaseLocaleKey.CmEditorNewCom]: 'Нова пісня',
-  [BaseLocaleKey.CmEditorNewNoParsed]: STR(['$x'])`Немає розібраних ${SWITCH('$x')
+  ...baseLocaleTemplate(BaseLocaleKey.CmEditorNewNoParsed)`Немає розібраних ${SWITCH('$x')
     //
     .CASE('t')`текстів`.CASE('c')`акордів`.CASE('o')`порядкових блоків`}`,
   [BaseLocaleKey.CmEditorNewNoAudio]: 'Немає прикріплених аудіо',
@@ -110,7 +126,9 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.CmCommentNumber]: `Комент №$n`,
   [BaseLocaleKey.CmCommentAreHidden]: 'Коментарі приховані',
   [BaseLocaleKey.CmCommentForLine]: 'Комент для рядка',
-  [BaseLocaleKey.CmCommentWordLabel]: STR(['$p'])`${SWITCH('$p').CASE('>')`після`.CASE('<')`до`.DEFAULT`колір`} слова`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.CmCommentWordLabel,
+  )`${SWITCH('$p').CASE('>')`після`.CASE('<')`до`.DEFAULT`колір`} слова`,
   [BaseLocaleKey.CmCommentUnreachable]: 'Недосяжні коментарі',
   [BaseLocaleKey.CmCommentBase]: 'База',
   [BaseLocaleKey.CmCommentAddedMaximumAlternatives]: 'Додано максимальну кількість альтернатив',
@@ -165,7 +183,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.CmShowComments]: 'Показати коменти',
   [BaseLocaleKey.CmUnknownChordsCount]: 'Невідомі акорди ($n;)',
   [BaseLocaleKey.CmNoEditorsMore]: 'Більше ніхто не редагує',
-  [BaseLocaleKey.CmEditsToo]: STR(['$m', '$l'])`${IF('$m').THEN`Редагують`.ELSE`Редагує`} також $l`,
+  ...baseLocaleTemplate(BaseLocaleKey.CmEditsToo)`${IF('$m').THEN`Редагують`.ELSE`Редагує`} також $l`,
   [BaseLocaleKey.CmEdits]: 'Редагує $f',
   [BaseLocaleKey.CmComRemoved]: 'Пісня видалена',
   [BaseLocaleKey.CmComeBack]: 'Відновити',
@@ -420,7 +438,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   },
   [BaseLocaleKey.ScheduleNotFound]: 'Розклад не знайдено',
   [BaseLocaleKey.ScheduleUpdated]: `Оновлено: $m`,
-  [BaseLocaleKey.ScheduleInsertOverviewAttachment]: GENERATE<'s' | ''>()
+  [BaseLocaleKey.ScheduleInsertOverviewAttachment]: GENERATE<'' | 's'>()
     //
     .NEXT('')`Шаблон `
     //
@@ -525,7 +543,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.ScheduleExcelFile]: 'Файл Excel',
   [BaseLocaleKey.ScheduleNotChoose]: 'Не вибирати',
   [BaseLocaleKey.ScheduleNote]: '(Примітка)',
-  [BaseLocaleKey.ScheduleFormedList]: STR(['$c'])`Сформований список${IF('$c').THEN` ($c ос.)`}:`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleFormedList)`Сформований список${IF('$c').THEN` ($c ос.)`}:`,
   [BaseLocaleKey.ScheduleUploadList]: 'Завантажити список',
   [BaseLocaleKey.SchedulePreviousMembers]: 'Раніше додані учасники',
   [BaseLocaleKey.ScheduleGame]: 'Гра',
@@ -748,7 +766,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.EmailCodeSent]: 'Код надіслано на пошту $e',
   [BaseLocaleKey.EmailToBind]: "Прив'язати E-mail",
   [BaseLocaleKey.EmailLabel]: 'E-mail',
-  [BaseLocaleKey.FromOf]: STR(['$f', '$o'])`${IF(isUtil.NEQ('$f', '$o')).THEN`$f з `}$o`,
+  ...baseLocaleTemplate(BaseLocaleKey.FromOf)`${IF(isUtil.NEQ('$f', '$o')).THEN`$f з `}$o`,
   [BaseLocaleKey.Favorite]: 'Обране',
   [BaseLocaleKey.FavoriteNumberLimit]: `Ліміт - $n обраних`,
   [BaseLocaleKey.Selected]: 'Вибране',

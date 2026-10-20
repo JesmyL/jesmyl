@@ -153,7 +153,7 @@ const List = styled.div<{ $langi: Langi; $booki: BibleBooki }>`
       &::before {
         content: '${translateDynamic(props.$langi, DynLocaleKey.BibleChapterNum, {
           c: "'attr(data-chaptern)'",
-          b: `${props.$booki}`,
+          b: props.$booki,
         })}';
       }
     }

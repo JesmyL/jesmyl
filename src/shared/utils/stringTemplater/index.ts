@@ -5,7 +5,7 @@ import { checkIsEq } from '../checkIsEq';
 import { declension } from '../utils';
 import * as concepts from './concepts';
 import { stringTemplaterSrartSymbolCharCode, strTplArgLastEdge, strTplArgSeparator, strTplSysLen } from './const';
-import { StringTemplaterInterpolation, StringTemplaterWithTwoInterpolations } from './model';
+import { StringTemplaterGenKey } from './model';
 
 export * from './concepts';
 
@@ -43,29 +43,27 @@ const stringify = (value: unknown) => {
 type NEXTcb<Key extends string, Ret = unknown> = (key: Key, value: string, index: number) => Ret;
 
 export const stringTemplater: <
-  const Str extends StringTemplaterInterpolation<string, string> | StringTemplaterWithTwoInterpolations<string, string>,
-  const GenKey extends Str extends StringTemplaterInterpolation<string, infer K>
-    ? K
-    : Str extends StringTemplaterWithTwoInterpolations<string, string, infer K>
-      ? K
-      : string,
-  const TopArgs extends PRecord<string, unknown> & { NEXT?: NEXTcb<GenKey> },
-  Ret extends TopArgs extends { NEXT: NEXTcb<GenKey, infer R> } ? R[] : string,
+  const Str extends string,
+  const GenKey extends string = StringTemplaterGenKey<Str>,
+  const TopArgs extends PRecord<string, unknown> & { NEXT?: NEXTcb<GenKey> } = PRecord<string, unknown> & {
+    NEXT?: NEXTcb<GenKey>;
+  },
 >(
-  str: string,
+  str: Str,
   topArgs: TopArgs,
   onUnknownArg?: (argName: string) => unknown,
-) => Ret = (str, topArgs, onUnknownArg) => {
+) => TopArgs extends { NEXT: NEXTcb<GenKey, infer R> } ? R[] : string = (str, topArgs, onUnknownArg) => {
   type Box = { key: keyof typeof concepts; all: string };
   const symbolBoxDict: PRecord<string, Box> = {};
   let currSymbolCode = stringTemplaterSrartSymbolCharCode;
 
   const takeNextSymbol = () => String.fromCodePoint(currSymbolCode++);
   let isFound = true;
+  let currentStr: string = str;
 
   while (isFound) {
     isFound = false;
-    str = str.replace(BOX_REGEXP, (all: string, key: string) => {
+    currentStr = currentStr.replace(BOX_REGEXP, (all: string, key: string) => {
       isFound = true;
       const symbol = takeNextSymbol();
       symbolBoxDict[symbol] = { all, key: key as never };
@@ -234,7 +232,7 @@ export const stringTemplater: <
     return currentStr;
   };
 
-  const preparedStr = str.replace(ESCAPE_INPUT_REGEXP, escapeMarker);
+  const preparedStr = currentStr.replace(ESCAPE_INPUT_REGEXP, escapeMarker);
 
   if (symbolBoxDict[preparedStr]?.key === 'GENERATE') {
     return takeBoxValue(symbolBoxDict[preparedStr]) as never;

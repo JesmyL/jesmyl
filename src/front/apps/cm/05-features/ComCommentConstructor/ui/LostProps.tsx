@@ -46,7 +46,7 @@ export const CmComCommentConstructorLostProps = ({ ordw, com }: { ordw: CmComOrd
     return {
       lensAdd,
       usedKeys,
-      ordHeader: each ? `${translateBase(it => it[each])} ${firstOrd.me.header({ numered: false })}` : '',
+      ordHeader: each ? `${translateBase(each)} ${firstOrd.me.header({ numered: false })}` : '',
       list: objectValues(propsDict.dict ?? {}).filter(
         props => props && 'linei' in props && !usedKeys.has(`${props.pre}l${props.linei}`),
       ),

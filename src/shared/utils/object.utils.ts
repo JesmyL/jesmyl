@@ -69,11 +69,13 @@ export const objectGroupBy: typeof Object.groupBy = (iterable, keySelector) => {
   return result as never;
 };
 
-export type ObjectToArrayed<T> = T extends object
-  ? keyof T extends number
-    ? T
-    : { [K in keyof T]: ObjectToArrayed<T[K]> }
-  : T;
+export type ObjectToArrayed<T> = T extends string
+  ? T
+  : T extends object
+    ? keyof T extends number
+      ? T
+      : { [K in keyof T]: ObjectToArrayed<T[K]> }
+    : T;
 
 export const convertObjectToArray = <
   Obj extends Record<number, Value>,

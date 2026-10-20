@@ -9,9 +9,11 @@ export const CmEditorComOrderToolsHiddenOnMin = (props: CmEditorComOrderToolsPro
     <>
       <BottomPopupItem
         icon="Link02"
-        title={translateBase(it =>
-          props.ord.isOpened ? it[BaseLocaleKey.CmEditorHideInCollapsed] : it[BaseLocaleKey.CmEditorShowInCollapsed],
-        )}
+        title={
+          props.ord.isOpened
+            ? translateBase(BaseLocaleKey.CmEditorHideInCollapsed)
+            : translateBase(BaseLocaleKey.CmEditorShowInCollapsed)
+        }
         onClick={async () => {
           await cmEditComOrderClientTsjrpcMethods.toggleVisibilityInMiniMode({
             comw: props.com.wid,

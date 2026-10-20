@@ -144,7 +144,7 @@ export const cmComCommentMakeStartCommentCss = async (
           .first();
 
         if (!chapter)
-          return `\n${tNameUpper}:${fullBibleTitle} ${translateBase(BaseLocaleKey.BibleChapterAbsent, { n: addr.chapter })}:${addr.verseDiapason}`;
+          return `\n${tNameUpper}:${fullBibleTitle} ${translateBase(BaseLocaleKey.BibleChapterAbsent, { n: +addr.chapter })}:${addr.verseDiapason}`;
 
         if (!isWithoutText) {
           const fromVerse = await bibleTBCVTranslatesIDB.tb.list.get(
@@ -152,7 +152,7 @@ export const cmComCommentMakeStartCommentCss = async (
           );
 
           if (checkIsNaN(fromVersei) || !fromVerse) {
-            return `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:${translateBase(BaseLocaleKey.BibleVerseAbsent, { n: addr.verseFrom })}${addr.verseTail || ''}`;
+            return `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:${translateBase(BaseLocaleKey.BibleVerseAbsent, { n: +addr.verseFrom })}${addr.verseTail || ''}`;
           }
 
           if (checkIsNotNil(addr.verseTo)) {
@@ -160,7 +160,7 @@ export const cmComCommentMakeStartCommentCss = async (
             const toVerse = await bibleTBCVTranslatesIDB.tb.list.get(bibleTbcvEncode(tName, booki, chapteri, toVersei));
 
             if (checkIsNaN(toVersei) || !toVerse)
-              return `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:${addr.verseFrom}-${translateBase(BaseLocaleKey.BibleVerseAbsent, { n: addr.verseTo })}`;
+              return `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:${addr.verseFrom}-${translateBase(BaseLocaleKey.BibleVerseAbsent, { n: +addr.verseTo })}`;
 
             if (toVersei <= fromVersei)
               return `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:${translateBase(BaseLocaleKey.BibleRangeError)}`;

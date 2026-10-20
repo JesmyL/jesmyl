@@ -1,24 +1,38 @@
 type DefEnd = ';' | ' ' | '{' | '}' | '-';
 
-export type StringTemplaterInterpolation<Name extends string, GenKey extends string = string> =
-  | StringTemplaterInterpolationInner<Name, GenKey>
-  | `${GenKey}$${Name}`;
+export type VarKey = `$${string}${string}`;
 
-export type StringTemplaterWithTwoInterpolations<
-  Name1 extends string,
-  Name2 extends string,
-  GenKey extends string = string,
-> = StringTemplaterWithTwoInterpolationsInner<Name1, Name2, GenKey>;
+declare const stringTemplaterValsMeta: unique symbol;
+declare const stringTemplaterGenKeyMeta: unique symbol;
 
-/////////
-/////////
-/////////
+type StringTemplaterMeta<Vals extends object, GenKey extends string> = {
+  readonly [stringTemplaterValsMeta]?: (vals: Vals) => void;
+  readonly [stringTemplaterGenKeyMeta]?: GenKey;
+};
 
-type StringTemplaterInterpolationInner<
-  Name extends string,
-  GenKey extends string,
-> = `${GenKey | ''}$${Name}${DefEnd}${string}`;
+type StringTemplaterInterpolationTail<Keys extends string, GenKey extends string> = [Keys] extends [never]
+  ? string
+  : {
+      [Key in Keys]:
+        | `${GenKey | ''}$${Key}${DefEnd}${StringTemplaterInterpolationTail<Exclude<Keys, Key>, GenKey>}`
+        | ([Exclude<Keys, Key>] extends [never] ? `${GenKey}$${Key}` : never);
+    }[Keys];
 
-type StringTemplaterWithTwoInterpolationsInner<Name1 extends string, Name2 extends string, GenKey extends string> =
-  | `${StringTemplaterInterpolationInner<Name1, GenKey>}${StringTemplaterInterpolationInner<Name2, GenKey> | `${GenKey | ''}$${Name1 | Name2}`}`
-  | `${StringTemplaterInterpolationInner<Name2, GenKey>}${StringTemplaterInterpolationInner<Name1, GenKey> | `${GenKey | ''}$${Name1 | Name2}`}`;
+export type StringTemplaterInterpolation<Vals extends object, GenKey extends string = string> =
+  StringTemplaterInterpolationTail<keyof Vals & string, GenKey> extends infer Tail
+    ? Tail extends string
+      ? Tail & StringTemplaterMeta<Vals, GenKey>
+      : never
+    : never;
+
+export type StringTemplaterVals<Str> = [Str] extends [
+  { readonly [stringTemplaterValsMeta]?: (vals: infer Vals) => void },
+]
+  ? Vals
+  : never;
+
+export type StringTemplaterGenKey<Str> = [Str] extends [{ readonly [stringTemplaterGenKeyMeta]?: infer GenKey }]
+  ? GenKey extends string
+    ? GenKey
+    : string
+  : string;

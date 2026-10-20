@@ -39,7 +39,7 @@ export function ScheduleWidgetDayEventPeriodicBroadcast(props: {
 
   if (todayi > -1)
     days.forEach((day, dayi) => {
-      let title = translateBase(it => it[BaseLocaleKey.SchedulePeriod]);
+      let title: string = translateBase(it => it[BaseLocaleKey.SchedulePeriod]);
       let titlePostfix = ', ';
       let blockText = '';
 

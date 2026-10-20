@@ -2,8 +2,9 @@ import { Langi, MenuComToolName } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { LocaleBase } from 'shared/model/+locale/base';
 import { BibleTranslateName } from 'shared/model/bible';
+import { baseLocaleTemplate } from 'shared/utils/locale/templates';
 import { convertObjectToArray } from 'shared/utils/object.utils';
-import { GENERATE, IF, isUtil, STR, SWITCH } from 'shared/utils/stringTemplater';
+import { GENERATE, IF, isUtil, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.Langi]: Langi.Ru,
@@ -11,14 +12,27 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
 
   [BaseLocaleKey.CmApp]: 'Песни возрождённых',
   [BaseLocaleKey.CmMarkComTool]: {
-    [MenuComToolName.MarkCom]: STR(['$v'])`${IF('$v').THEN`Удалить избранное`.ELSE`Добавить избранное`}`,
-    [MenuComToolName.SelectedToggle]: STR(['$v'])`${IF('$v').THEN`Убрать из выбранных`.ELSE`Выбрать песню`}`,
-    [MenuComToolName.IsMiniAnchor]: STR(['$v'])`${IF('$v').THEN`Раскрыть ссылки`.ELSE`Свернуть ссылки`}`,
-    [MenuComToolName.ChordHardLevel]: STR([
-      '$v',
-    ])`${SWITCH('$v').CASE(0)`Простые аккорды`.CASE(1)`Сложные аккорды`.DEFAULT`!Нужно обновить приложение!`}`,
+    ...baseLocaleTemplate(
+      BaseLocaleKey.CmMarkComTool,
+      MenuComToolName.MarkCom,
+    )`${IF('$v').THEN`Удалить избранное`.ELSE`Добавить избранное`}`,
+    ...baseLocaleTemplate(
+      BaseLocaleKey.CmMarkComTool,
+      MenuComToolName.SelectedToggle,
+    )`${IF('$v').THEN`Убрать из выбранных`.ELSE`Выбрать песню`}`,
+    ...baseLocaleTemplate(
+      BaseLocaleKey.CmMarkComTool,
+      MenuComToolName.IsMiniAnchor,
+    )`${IF('$v').THEN`Раскрыть ссылки`.ELSE`Свернуть ссылки`}`,
+    ...baseLocaleTemplate(
+      BaseLocaleKey.CmMarkComTool,
+      MenuComToolName.ChordHardLevel,
+    )`${SWITCH('$v').CASE(0)`Простые аккорды`.CASE(1)`Сложные аккорды`.DEFAULT`!Нужно обновить приложение!`}`,
 
-    [MenuComToolName.CacheTracks]: STR(['$v'])`${IF('$v').THEN`Убрать из кэша`.ELSE`Кэшировать треки`}`,
+    ...baseLocaleTemplate(
+      BaseLocaleKey.CmMarkComTool,
+      MenuComToolName.CacheTracks,
+    )`${IF('$v').THEN`Убрать из кэша`.ELSE`Кэшировать треки`}`,
 
     [MenuComToolName.FullscreenMode]: 'На весь экран',
     [MenuComToolName.ChordsVariant]: 'Показать аккорды',
@@ -57,15 +71,14 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.CmKey]: 'Тональность',
   [BaseLocaleKey.CmAddByClick]: 'Клик на иконку для добавления в быстрое меню',
   [BaseLocaleKey.CmCrossLinks]: 'Связанные песни',
-  [BaseLocaleKey.CmAddOrModifiedLabel]: STR([
-    '$w',
-    '$m',
-  ])`Добавлена: $w${IF(isUtil.NEQ('$w', '$m')).THEN`\nОбновлена: $m`}`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.CmAddOrModifiedLabel,
+  )`Добавлена: $w${IF(isUtil.NEQ('$w', '$m')).THEN`\nОбновлена: $m`}`,
   [BaseLocaleKey.CmSize]: 'Размерность',
   [BaseLocaleKey.CmIntensity]: 'Интенсивность',
   [BaseLocaleKey.CmEditSquareBracketsHint]:
     'Текст в [квадратных скобках] не показывается в слайдах, но приводится к (тексту в круглых скобках) в тексте песен. Используйте [[две открывающие скобки] для переноса строки. Перед "[" должен быть пробел, а после "]" быть ничего не должно',
-  [BaseLocaleKey.CmEditIsRemoveTextBlock]: STR(['$t'])`Удалить${IF('$t').ELSE` новый`} блок?\n\n$t`,
+  ...baseLocaleTemplate(BaseLocaleKey.CmEditIsRemoveTextBlock, ['$t'])`Удалить${IF('$t').ELSE` новый`} блок?\n\n$t`,
   [BaseLocaleKey.CmEditRemovedComs]: 'Удалённые песни',
   [BaseLocaleKey.CmEditBackup]: 'Восстановить эту песню',
   [BaseLocaleKey.CmEditDestroy]: 'Уничтожить эту песню',
@@ -76,11 +89,11 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.CmEditAddAudio]: 'Добавить аудио',
   [BaseLocaleKey.CmEditConfigStringNumber]: 'Конфиг стр $n',
   [BaseLocaleKey.CmEditClearCollectionNumber]: 'Очистить номер из сборника $n',
-  [BaseLocaleKey.CmEditInsertBlockX]: STR([
-    '$x',
-  ])`Вставить новый блок ${SWITCH('$x').CASE('b')`в самое начало`.DEFAULT`сюда`}`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.CmEditInsertBlockX,
+  )`Вставить новый блок ${SWITCH('$x').CASE('b')`в самое начало`.DEFAULT`сюда`}`,
   [BaseLocaleKey.CmEditorNewCom]: 'Новая песня',
-  [BaseLocaleKey.CmEditorNewNoParsed]: STR(['$x'])`Нет разобранных ${SWITCH('$x')
+  ...baseLocaleTemplate(BaseLocaleKey.CmEditorNewNoParsed)`Нет разобранных ${SWITCH('$x')
     //
     .CASE('t')`текстов`
     //
@@ -121,7 +134,9 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.CmCommentNumber]: `Коммент №$n`,
   [BaseLocaleKey.CmCommentAreHidden]: 'Комментарии скрыты',
   [BaseLocaleKey.CmCommentForLine]: 'Коммент для строки',
-  [BaseLocaleKey.CmCommentWordLabel]: STR(['$p'])`${SWITCH('$p').CASE('>')`после`.CASE('<')`до`.DEFAULT`цвет`} слова`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.CmCommentWordLabel,
+  )`${SWITCH('$p').CASE('>')`после`.CASE('<')`до`.DEFAULT`цвет`} слова`,
   [BaseLocaleKey.CmCommentUnreachable]: 'Недостижимые комментарии',
   [BaseLocaleKey.CmCommentBase]: 'База',
   [BaseLocaleKey.CmCommentAddedMaximumAlternatives]: 'Добавлено максимальное количество альтернатив',
@@ -177,7 +192,7 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.CmShowComments]: 'Показать комменты',
   [BaseLocaleKey.CmUnknownChordsCount]: 'Неизвестные аккорды ($n;)',
   [BaseLocaleKey.CmNoEditorsMore]: 'Больше редактирующих нет',
-  [BaseLocaleKey.CmEditsToo]: STR(['$m', '$l'])`${IF('$m').THEN`Редактируют`.ELSE`Редактирует`} также $l`,
+  ...baseLocaleTemplate(BaseLocaleKey.CmEditsToo)`${IF('$m').THEN`Редактируют`.ELSE`Редактирует`} также $l`,
   [BaseLocaleKey.CmEdits]: 'Редактирует $f',
   [BaseLocaleKey.CmComRemoved]: 'Песня удалена',
   [BaseLocaleKey.CmComeBack]: 'Восстановить',
@@ -441,7 +456,7 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
 
   [BaseLocaleKey.ScheduleNotFound]: 'Расписание не найдено',
   [BaseLocaleKey.ScheduleUpdated]: `Обновлено: $m`,
-  [BaseLocaleKey.ScheduleInsertOverviewAttachment]: GENERATE<'s' | ''>()
+  [BaseLocaleKey.ScheduleInsertOverviewAttachment]: GENERATE<'' | 's'>()
     //
     .NEXT('')`Шаблон `
     //
@@ -546,7 +561,7 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.ScheduleExcelFile]: 'Файл Excel',
   [BaseLocaleKey.ScheduleNotChoose]: 'Не выбирать',
   [BaseLocaleKey.ScheduleNote]: '(Примечание)',
-  [BaseLocaleKey.ScheduleFormedList]: STR(['$c'])`Сформированный список${IF('$c').THEN` ($c уч)`}:`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleFormedList)`Сформированный список${IF('$c').THEN` ($c уч)`}:`,
   [BaseLocaleKey.ScheduleUploadList]: 'Загрузить список',
   [BaseLocaleKey.SchedulePreviousMembers]: 'Ранее добавленные участники',
   [BaseLocaleKey.ScheduleGame]: 'Игра',
@@ -770,7 +785,7 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.EmailCodeSent]: 'Код отправлен на почту $e',
   [BaseLocaleKey.EmailToBind]: 'Привязать E-mail',
   [BaseLocaleKey.EmailLabel]: 'E-mail',
-  [BaseLocaleKey.FromOf]: STR(['$f', '$o'])`${IF(isUtil.NEQ('$f', '$o')).THEN`$f из `}$o`,
+  ...baseLocaleTemplate(BaseLocaleKey.FromOf)`${IF(isUtil.NEQ('$f', '$o')).THEN`$f из `}$o`,
   [BaseLocaleKey.Favorite]: 'Избранное',
   [BaseLocaleKey.FavoriteNumberLimit]: `Лимит - $n избранных`,
   [BaseLocaleKey.Selected]: 'Выбранное',

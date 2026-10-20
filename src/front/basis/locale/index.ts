@@ -9,8 +9,8 @@ import { setBaseLocaleProvider, translateBase } from 'shared/utils/locale/base';
 import {
   DefinedTranslateFunction,
   NEXTcb,
-  SimpleDictValue,
-  TemplateInterpolationKeys,
+  TemplateInterpolationGenKey,
+  TemplateInterpolationVals,
   TranslateKeyResult,
 } from 'shared/utils/locale/model';
 import { translateBaseDefine } from 'shared/utils/locale/translate';
@@ -69,9 +69,9 @@ export function translateDynamic(langi: Langi): DefinedTranslateFunction<Dynamic
 
 export function translateDynamic<
   Key extends keyof DynamicLocale,
-  Interpolation extends Record<TemplateInterpolationKeys<DynamicLocale[Key]>, SimpleDictValue> & {
-    NEXT?: NEXTcb<string>;
-  },
+  const Vals extends object = TemplateInterpolationVals<DynamicLocale[Key]>,
+  const GenKey extends string = TemplateInterpolationGenKey<DynamicLocale[Key]>,
+  Interpolation extends Vals & { NEXT?: NEXTcb<GenKey> } = Vals & { NEXT?: NEXTcb<GenKey> },
 >(
   langi: Langi,
   key: Key,

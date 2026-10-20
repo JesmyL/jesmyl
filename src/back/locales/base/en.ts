@@ -2,8 +2,9 @@ import { Langi, MenuComToolName } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { LocaleBase } from 'shared/model/+locale/base';
 import { BibleTranslateName } from 'shared/model/bible';
+import { baseLocaleTemplate } from 'shared/utils/locale/templates';
 import { convertObjectToArray } from 'shared/utils/object.utils';
-import { GENERATE, IF, isUtil, STR, SWITCH } from 'shared/utils/stringTemplater';
+import { GENERATE, IF, isUtil, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.Langi]: Langi.En,
@@ -11,14 +12,27 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.CmApp]: 'Songs of the Renewed',
 
   [BaseLocaleKey.CmMarkComTool]: {
-    [MenuComToolName.MarkCom]: STR(['$v'])`${IF('$v').THEN`Remove from favourites`.ELSE`Add to favourites`}`,
-    [MenuComToolName.SelectedToggle]: STR(['$v'])`${IF('$v').THEN`Remove from selected`.ELSE`Select song`}`,
-    [MenuComToolName.IsMiniAnchor]: STR(['$v'])`${IF('$v').THEN`Expand links`.ELSE`Collapse links`}`,
-    [MenuComToolName.ChordHardLevel]: STR([
-      '$v',
-    ])`${SWITCH('$v').CASE(0)`Simple chords`.CASE(1)`Hard chords`.DEFAULT`!The app needs to be updated!`}`,
+    ...baseLocaleTemplate(
+      BaseLocaleKey.CmMarkComTool,
+      MenuComToolName.MarkCom,
+    )`${IF('$v').THEN`Remove from favourites`.ELSE`Add to favourites`}`,
+    ...baseLocaleTemplate(
+      BaseLocaleKey.CmMarkComTool,
+      MenuComToolName.SelectedToggle,
+    )`${IF('$v').THEN`Remove from selected`.ELSE`Select song`}`,
+    ...baseLocaleTemplate(
+      BaseLocaleKey.CmMarkComTool,
+      MenuComToolName.IsMiniAnchor,
+    )`${IF('$v').THEN`Expand links`.ELSE`Collapse links`}`,
+    ...baseLocaleTemplate(
+      BaseLocaleKey.CmMarkComTool,
+      MenuComToolName.ChordHardLevel,
+    )`${SWITCH('$v').CASE(0)`Simple chords`.CASE(1)`Hard chords`.DEFAULT`!The app needs to be updated!`}`,
 
-    [MenuComToolName.CacheTracks]: STR(['$v'])`${IF('$v').THEN`Remove from cache`.ELSE`Cache tracks`}`,
+    ...baseLocaleTemplate(
+      BaseLocaleKey.CmMarkComTool,
+      MenuComToolName.CacheTracks,
+    )`${IF('$v').THEN`Remove from cache`.ELSE`Cache tracks`}`,
 
     [MenuComToolName.FullscreenMode]: 'Fullscreen',
     [MenuComToolName.ChordsVariant]: 'Show chords',
@@ -58,12 +72,12 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.CmKey]: 'Key',
   [BaseLocaleKey.CmAddByClick]: 'Click an icon to add it to the quick menu',
   [BaseLocaleKey.CmCrossLinks]: 'Related songs',
-  [BaseLocaleKey.CmAddOrModifiedLabel]: STR(['$w', '$m'])`Added: $w${IF(isUtil.NEQ('$w', '$m')).THEN`\nUpdated: $m`}`,
+  ...baseLocaleTemplate(BaseLocaleKey.CmAddOrModifiedLabel)`Added: $w${IF(isUtil.NEQ('$w', '$m')).THEN`\nUpdated: $m`}`,
   [BaseLocaleKey.CmSize]: 'Meter',
   [BaseLocaleKey.CmIntensity]: 'Intensity',
   [BaseLocaleKey.CmEditSquareBracketsHint]:
     'Text in [square brackets] is not shown in slides, but is converted to (text in parentheses) in song texts. Use [[two opening brackets] for a line break. There must be a space before "[" and nothing after "]"',
-  [BaseLocaleKey.CmEditIsRemoveTextBlock]: STR(['$t'])`Delete${IF('$t').ELSE` the new`} block?\n\n$t`,
+  ...baseLocaleTemplate(BaseLocaleKey.CmEditIsRemoveTextBlock, ['$t'])`Delete${IF('$t').ELSE` the new`} block?\n\n$t`,
   [BaseLocaleKey.CmEditRemovedComs]: 'Removed songs',
   [BaseLocaleKey.CmEditBackup]: 'Restore this song',
   [BaseLocaleKey.CmEditDestroy]: 'Destroy this song',
@@ -74,11 +88,11 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.CmEditAddAudio]: 'Add audio',
   [BaseLocaleKey.CmEditConfigStringNumber]: 'Line $n config',
   [BaseLocaleKey.CmEditClearCollectionNumber]: 'Clear number from collection $n',
-  [BaseLocaleKey.CmEditInsertBlockX]: STR([
-    '$x',
-  ])`Insert new block ${SWITCH('$x').CASE('b')`at the very beginning`.DEFAULT`here`}`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.CmEditInsertBlockX,
+  )`Insert new block ${SWITCH('$x').CASE('b')`at the very beginning`.DEFAULT`here`}`,
   [BaseLocaleKey.CmEditorNewCom]: 'New song',
-  [BaseLocaleKey.CmEditorNewNoParsed]: STR(['$x'])`No parsed ${SWITCH('$x')
+  ...baseLocaleTemplate(BaseLocaleKey.CmEditorNewNoParsed)`No parsed ${SWITCH('$x')
     //
     .CASE('t')`texts`.CASE('c')`chords`.CASE('o')`order blocks`}`,
   [BaseLocaleKey.CmEditorNewNoAudio]: 'No attached audio',
@@ -112,9 +126,9 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.CmCommentNumber]: `Comment #$n`,
   [BaseLocaleKey.CmCommentAreHidden]: 'Comments are hidden',
   [BaseLocaleKey.CmCommentForLine]: 'Comment for line',
-  [BaseLocaleKey.CmCommentWordLabel]: STR([
-    '$p',
-  ])`${SWITCH('$p').CASE('>')`after`.CASE('<')`before`.DEFAULT`color`} the word`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.CmCommentWordLabel,
+  )`${SWITCH('$p').CASE('>')`after`.CASE('<')`before`.DEFAULT`color`} the word`,
   [BaseLocaleKey.CmCommentUnreachable]: 'Unreachable comments',
   [BaseLocaleKey.CmCommentBase]: 'Base',
   [BaseLocaleKey.CmCommentAddedMaximumAlternatives]: 'Maximum number of alternatives added',
@@ -169,7 +183,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.CmShowComments]: 'Show comments',
   [BaseLocaleKey.CmUnknownChordsCount]: 'Unknown chords ($n;)',
   [BaseLocaleKey.CmNoEditorsMore]: 'No more editors',
-  [BaseLocaleKey.CmEditsToo]: STR(['$m', '$l'])`${IF('$m').THEN`Are editing`.ELSE`Is editing`} also $l`,
+  ...baseLocaleTemplate(BaseLocaleKey.CmEditsToo)`${IF('$m').THEN`Are editing`.ELSE`Is editing`} also $l`,
   [BaseLocaleKey.CmEdits]: 'Edited by $f',
   [BaseLocaleKey.CmComRemoved]: 'Song removed',
   [BaseLocaleKey.CmComeBack]: 'Restore',
@@ -425,7 +439,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   },
   [BaseLocaleKey.ScheduleNotFound]: 'Schedule not found',
   [BaseLocaleKey.ScheduleUpdated]: `Updated: $m`,
-  [BaseLocaleKey.ScheduleInsertOverviewAttachment]: GENERATE<'s' | ''>()
+  [BaseLocaleKey.ScheduleInsertOverviewAttachment]: GENERATE<'' | 's'>()
     //
     .NEXT('')`Template `
     //
@@ -468,7 +482,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.ScheduleBeforeHours]: '$num; $declension{{$num}{hour}{hours}{hours}} to start',
   [BaseLocaleKey.ScheduleBeforeDays]: '$num; $declension{{$num}{day}{days}{days}} to start',
   [BaseLocaleKey.ScheduleThroughMinutes]: 'In $num; min.',
-  [BaseLocaleKey.ScheduleMinutesLeft]: STR(['$num'])`$num; $declension{{$num}{minute}{minutes}{minutes}} left`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleMinutesLeft)`$num; $declension{{$num}{minute}{minutes}{minutes}} left`,
   [BaseLocaleKey.ScheduleWillParticipate]: 'I will participate',
   [BaseLocaleKey.ScheduleByLink]: 'via link',
   [BaseLocaleKey.ScheduleByScheduleButton]: 'via the button in the schedule',
@@ -529,7 +543,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.ScheduleExcelFile]: 'Excel file',
   [BaseLocaleKey.ScheduleNotChoose]: 'Do not choose',
   [BaseLocaleKey.ScheduleNote]: '(Note)',
-  [BaseLocaleKey.ScheduleFormedList]: STR(['$c'])`Formed list${IF('$c').THEN` ($c ppl)`}:`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleFormedList)`Formed list${IF('$c').THEN` ($c ppl)`}:`,
   [BaseLocaleKey.ScheduleUploadList]: 'Upload list',
   [BaseLocaleKey.SchedulePreviousMembers]: 'Previously added members',
   [BaseLocaleKey.ScheduleGame]: 'Game',
@@ -751,7 +765,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.EmailCodeSent]: 'Code sent to email $e',
   [BaseLocaleKey.EmailToBind]: 'Bind E-mail',
   [BaseLocaleKey.EmailLabel]: 'E-mail',
-  [BaseLocaleKey.FromOf]: STR(['$f', '$o'])`${IF(isUtil.NEQ('$f', '$o')).THEN`$f of `}$o`,
+  ...baseLocaleTemplate(BaseLocaleKey.FromOf)`${IF(isUtil.NEQ('$f', '$o')).THEN`$f of `}$o`,
   [BaseLocaleKey.Favorite]: 'Favourites',
   [BaseLocaleKey.FavoriteNumberLimit]: `Limit - $n favourites`,
   [BaseLocaleKey.Selected]: 'Selected',

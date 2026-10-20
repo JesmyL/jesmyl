@@ -84,15 +84,12 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
         const _maxVars = max == null ? '' : translateBase(BaseLocaleKey.QuestionerVariantsNumber, { n: '' + max });
         const _minVars = min == null ? '' : translateBase(BaseLocaleKey.QuestionerVariantsNumber, { n: '' + min });
 
-        const infoPrefix = translateBase(it =>
-          props.template.req ? it[BaseLocaleKey.QuestionerNeedChoose] : it[BaseLocaleKey.QuestionerCanChoose],
-        );
-        const checkPrefix = translateBase(
-          it => (props.template.req ? it[BaseLocaleKey.QuestionerAnswerMust] : it[BaseLocaleKey.QuestionerAnswerMay]),
-          {
-            t: title,
-          },
-        );
+        const infoPrefix = props.template.req
+          ? translateBase(BaseLocaleKey.QuestionerNeedChoose)
+          : translateBase(BaseLocaleKey.QuestionerCanChoose);
+        const checkPrefix = props.template.req
+          ? translateBase(BaseLocaleKey.QuestionerAnswerMust, { t: title })
+          : translateBase(BaseLocaleKey.QuestionerAnswerMay, { t: title });
 
         return {
           isFill: !!props.userAnswer?.v.length,

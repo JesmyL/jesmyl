@@ -16,15 +16,19 @@ export const CmEditorComOrderToolsChangeTonType = ({
     <>
       <BottomPopupItem
         icon="Grid"
-        title={translateBase(it =>
-          ord.isBemoledSwitch ? it[BaseLocaleKey.CmEditorRemoveTonalitySwitch] : it[BaseLocaleKey.CmEditorSetTonalitySwitch],
-        )}
+        title={
+          ord.isBemoledSwitch
+            ? translateBase(BaseLocaleKey.CmEditorRemoveTonalitySwitch)
+            : translateBase(BaseLocaleKey.CmEditorSetTonalitySwitch)
+        }
         onClick={async () => {
           const is = await confirm(
             <>
               {translateBase(BaseLocaleKey.CmEditorTonalityTypeWillBe)}{' '}
               <span className="text-x7">
-                {translateBase(it => (ord.isBemoledSwitch ? it[BaseLocaleKey.CmEditorSharp] : it[BaseLocaleKey.CmEditorFlat]))}
+                {ord.isBemoledSwitch
+                  ? translateBase(BaseLocaleKey.CmEditorSharp)
+                  : translateBase(BaseLocaleKey.CmEditorFlat)}
               </span>
             </>,
           );

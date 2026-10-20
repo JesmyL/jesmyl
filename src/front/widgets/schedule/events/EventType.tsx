@@ -79,12 +79,12 @@ export function ScheduleWidgetEventType(props: {
           atts={props.typeBox.atts}
           forTitle={
             <>
-              {translateBase(it => it[BaseLocaleKey.ScheduleInsertOverviewAttachment], {
+              {translateBase(BaseLocaleKey.ScheduleInsertOverviewAttachment, {
+                t: props.typeBox.title,
                 NEXT: (key, value) => {
                   if (!key) return value;
                   return <span className="text-x7">{value}</span>;
                 },
-                t: props.typeBox.title,
               })}
             </>
           }

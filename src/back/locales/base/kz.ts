@@ -2,22 +2,36 @@ import { Langi, MenuComToolName } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { LocaleBase } from 'shared/model/+locale/base';
 import { BibleTranslateName } from 'shared/model/bible';
+import { baseLocaleTemplate } from 'shared/utils/locale/templates';
 import { convertObjectToArray } from 'shared/utils/object.utils';
-import { GENERATE, IF, isUtil, STR, SWITCH } from 'shared/utils/stringTemplater';
+import { GENERATE, IF, isUtil, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.Langi]: Langi.Kz,
   [BaseLocaleKey.LocaleVersion]: 0,
   [BaseLocaleKey.CmApp]: 'Қайта түлегендер әндері',
   [BaseLocaleKey.CmMarkComTool]: {
-    [MenuComToolName.MarkCom]: STR(['$v'])`${IF('$v').THEN`Таңдаулылардан өшіру`.ELSE`Таңдаулыларға қосу`}`,
-    [MenuComToolName.SelectedToggle]: STR(['$v'])`${IF('$v').THEN`Таңдалғандардан алып тастау`.ELSE`Әнді таңдау`}`,
-    [MenuComToolName.IsMiniAnchor]: STR(['$v'])`${IF('$v').THEN`Сілтемелерді ашу`.ELSE`Сілтемелерді жиру`}`,
-    [MenuComToolName.ChordHardLevel]: STR([
-      '$v',
-    ])`${SWITCH('$v').CASE(0)`Оңай аккордтар`.CASE(1)`Күрделі аккордтар`.DEFAULT`!Қосымшаны жаңарту қажет!`}`,
+    ...baseLocaleTemplate(
+      BaseLocaleKey.CmMarkComTool,
+      MenuComToolName.MarkCom,
+    )`${IF('$v').THEN`Таңдаулылардан өшіру`.ELSE`Таңдаулыларға қосу`}`,
+    ...baseLocaleTemplate(
+      BaseLocaleKey.CmMarkComTool,
+      MenuComToolName.SelectedToggle,
+    )`${IF('$v').THEN`Таңдалғандардан алып тастау`.ELSE`Әнді таңдау`}`,
+    ...baseLocaleTemplate(
+      BaseLocaleKey.CmMarkComTool,
+      MenuComToolName.IsMiniAnchor,
+    )`${IF('$v').THEN`Сілтемелерді ашу`.ELSE`Сілтемелерді жиру`}`,
+    ...baseLocaleTemplate(
+      BaseLocaleKey.CmMarkComTool,
+      MenuComToolName.ChordHardLevel,
+    )`${SWITCH('$v').CASE(0)`Оңай аккордтар`.CASE(1)`Күрделі аккордтар`.DEFAULT`!Қосымшаны жаңарту қажет!`}`,
 
-    [MenuComToolName.CacheTracks]: STR(['$v'])`${IF('$v').THEN`Кэштен алу`.ELSE`Тректерді кэштеу`}`,
+    ...baseLocaleTemplate(
+      BaseLocaleKey.CmMarkComTool,
+      MenuComToolName.CacheTracks,
+    )`${IF('$v').THEN`Кэштен алу`.ELSE`Тректерді кэштеу`}`,
 
     [MenuComToolName.FullscreenMode]: 'Толық экран',
     [MenuComToolName.ChordsVariant]: 'Аккордтарды көрсету',
@@ -57,17 +71,17 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.CmKey]: 'Тональділік',
   [BaseLocaleKey.CmAddByClick]: 'Жылдам мәзірге қосу үшін белгішені басыңыз',
   [BaseLocaleKey.CmCrossLinks]: 'Байланысты әндер',
-  [BaseLocaleKey.CmAddOrModifiedLabel]: STR([
-    '$w',
-    '$m',
-  ])`Қосылды: $w${IF(isUtil.NEQ('$w', '$m')).THEN`\nЖаңартылды: $m`}`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.CmAddOrModifiedLabel,
+  )`Қосылды: $w${IF(isUtil.NEQ('$w', '$m')).THEN`\nЖаңартылды: $m`}`,
   [BaseLocaleKey.CmSize]: 'Өлшемділік',
   [BaseLocaleKey.CmIntensity]: 'Қарқындылық',
   [BaseLocaleKey.CmEditSquareBracketsHint]:
     '[Квадрат жақшадағы] мәтін слайдтарда көрсетілмейді, бірақ ән мәтінінде (дөңгелек жақшадағы мәтінге) айналады. Жолды ауыстыру үшін [[екі ашылатын жақшаны] пайдаланыңыз. "[" белгісінің алдында бос орын болуы керек, ал "]" белгісінен кейін ештеңе болмауы тиіс',
-  [BaseLocaleKey.CmEditIsRemoveTextBlock]: STR([
-    '$t',
-  ])`${IF('$t').THEN`Блокты`.ELSE` Жаңа блокты`} өшіру керек пе?\n\n$t`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.CmEditIsRemoveTextBlock,
+    ['$t'],
+  )`${IF('$t').THEN`Блокты`.ELSE` Жаңа блокты`} өшіру керек пе?\n\n$t`,
   [BaseLocaleKey.CmEditRemovedComs]: 'Жойылған әндер',
   [BaseLocaleKey.CmEditBackup]: 'Бұл әнді қалпына келтіру',
   [BaseLocaleKey.CmEditDestroy]: 'Бұл әнді біржола жою',
@@ -78,11 +92,11 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.CmEditAddAudio]: 'Аудио қосу',
   [BaseLocaleKey.CmEditConfigStringNumber]: '$n беттің конфигі',
   [BaseLocaleKey.CmEditClearCollectionNumber]: '$n жинағынан нөмірді тазарту',
-  [BaseLocaleKey.CmEditInsertBlockX]: STR([
-    '$x',
-  ])`Жаңа блокты ${SWITCH('$x').CASE('b')`ең басына`.DEFAULT`осы жерге`} кірістіру`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.CmEditInsertBlockX,
+  )`Жаңа блокты ${SWITCH('$x').CASE('b')`ең басына`.DEFAULT`осы жерге`} кірістіру`,
   [BaseLocaleKey.CmEditorNewCom]: 'Жаңа ән',
-  [BaseLocaleKey.CmEditorNewNoParsed]: STR(['$x'])`Талданған ${SWITCH('$x')
+  ...baseLocaleTemplate(BaseLocaleKey.CmEditorNewNoParsed)`Талданған ${SWITCH('$x')
     //
     .CASE('t')`мәтіндер`.CASE('c')`аккордтар`.CASE('o')`реттік блоктар`} жоқ`,
   [BaseLocaleKey.CmEditorNewNoAudio]: 'Тіркелген аудиолар жоқ',
@@ -116,9 +130,9 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.CmCommentNumber]: `Пікір №$n`,
   [BaseLocaleKey.CmCommentAreHidden]: 'Пікірлер жасырылған',
   [BaseLocaleKey.CmCommentForLine]: 'Жолға арналған пікір',
-  [BaseLocaleKey.CmCommentWordLabel]: STR([
-    '$p',
-  ])`${SWITCH('$p').CASE('>')`кейін`.CASE('<')`дейін`.DEFAULT`түсі`} сөздің`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.CmCommentWordLabel,
+  )`${SWITCH('$p').CASE('>')`кейін`.CASE('<')`дейін`.DEFAULT`түсі`} сөздің`,
   [BaseLocaleKey.CmCommentUnreachable]: 'Қолжетімсіз пікірлер',
   [BaseLocaleKey.CmCommentBase]: 'База',
   [BaseLocaleKey.CmCommentAddedMaximumAlternatives]: 'Баламалардың максималды саны қосылды',
@@ -173,7 +187,7 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.CmShowComments]: 'Пікірлерді көрсету',
   [BaseLocaleKey.CmUnknownChordsCount]: 'Белгісіз аккордтар ($n;)',
   [BaseLocaleKey.CmNoEditorsMore]: 'Басқа редакциялаушылар жоқ',
-  [BaseLocaleKey.CmEditsToo]: STR(['$m', '$l'])`Сондай-ақ $l ${IF('$m').THEN`редакциялап жатыр`.ELSE`редакциялауда`}`,
+  ...baseLocaleTemplate(BaseLocaleKey.CmEditsToo)`Сондай-ақ $l ${IF('$m').THEN`редакциялап жатыр`.ELSE`редакциялауда`}`,
   [BaseLocaleKey.CmEdits]: '$f редакциялауда',
   [BaseLocaleKey.CmComRemoved]: 'Ән өшірілді',
   [BaseLocaleKey.CmComeBack]: 'Қалпына келтіру',
@@ -428,7 +442,7 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   },
   [BaseLocaleKey.ScheduleNotFound]: 'Кесте табылмады',
   [BaseLocaleKey.ScheduleUpdated]: `Жаңартылды: $m`,
-  [BaseLocaleKey.ScheduleInsertOverviewAttachment]: GENERATE<'s' | ''>()
+  [BaseLocaleKey.ScheduleInsertOverviewAttachment]: GENERATE<'' | 's'>()
     //
     .NEXT('')`Үлгі `
     //
@@ -471,7 +485,7 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.ScheduleBeforeHours]: 'басталуына $num; $declension{{$num}{сағат}{сағат}{сағат}}',
   [BaseLocaleKey.ScheduleBeforeDays]: 'басталуына $num; $declension{{$num}{күн}{күн}{күн}}',
   [BaseLocaleKey.ScheduleThroughMinutes]: '$num;мин. кейін',
-  [BaseLocaleKey.ScheduleMinutesLeft]: STR(['$num'])`$num; $declension{{$num}{минут}{минут}{минут}} қалды`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleMinutesLeft)`$num; $declension{{$num}{минут}{минут}{минут}} қалды`,
   [BaseLocaleKey.ScheduleWillParticipate]: 'Қатысамын',
   [BaseLocaleKey.ScheduleByLink]: 'сілтеме бойынша',
   [BaseLocaleKey.ScheduleByScheduleButton]: 'кестедегі түйме арқылы',
@@ -532,7 +546,7 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.ScheduleExcelFile]: 'Excel файлы',
   [BaseLocaleKey.ScheduleNotChoose]: 'Таңдамау',
   [BaseLocaleKey.ScheduleNote]: '(Ескертпе)',
-  [BaseLocaleKey.ScheduleFormedList]: STR(['$c'])`Құрылған тізім${IF('$c').THEN` ($c адам)`}:`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleFormedList)`Құрылған тізім${IF('$c').THEN` ($c адам)`}:`,
   [BaseLocaleKey.ScheduleUploadList]: 'Тізімді жүктеу',
   [BaseLocaleKey.SchedulePreviousMembers]: 'Бұрын қосылған қатысушылар',
   [BaseLocaleKey.ScheduleGame]: 'Ойын',
@@ -755,7 +769,7 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.EmailCodeSent]: 'Код $e поштасына жіберілді',
   [BaseLocaleKey.EmailToBind]: 'E-mail байланыстыру',
   [BaseLocaleKey.EmailLabel]: 'E-mail',
-  [BaseLocaleKey.FromOf]: STR(['$f', '$o'])`${IF(isUtil.NEQ('$f', '$o')).THEN`$o ішінен $f `}$o`,
+  ...baseLocaleTemplate(BaseLocaleKey.FromOf)`${IF(isUtil.NEQ('$f', '$o')).THEN`$o ішінен $f `}$o`,
   [BaseLocaleKey.Favorite]: 'Таңдаулылар',
   [BaseLocaleKey.FavoriteNumberLimit]: `Лимит - $n таңдаулы`,
   [BaseLocaleKey.Selected]: 'Таңдалғандар',
