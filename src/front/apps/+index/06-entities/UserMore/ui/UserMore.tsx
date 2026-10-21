@@ -36,7 +36,7 @@ export const IndexUserMore = ({ onClose }: { onClose: (isOpen: false) => void })
 
             indexUserAccessRightsAtom.reset();
 
-            cmOnUserLogout();
+            await cmOnUserLogout();
 
             window.location.reload();
             onClose(false);

@@ -2,13 +2,16 @@ import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRi
 import { isMobileDevice } from '#shared/lib/device-differences';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { CmEditorMeetingEventEdits } from '$cm+editor/ext';
 import { CmComLocalListToolsPopup } from '$cm/entities/com';
 import { useAuth } from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { CmComWid, ScheduleWidgetDayEventMi, ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api';
 import { itNIt } from 'shared/utils';
+
+const CmEditorMeetingEventEdits = lazy(() =>
+  import('$cm+editor/entities/meeting-event/ui/EventEdits').then(m => ({ default: m.CmEditorMeetingEventEdits })),
+);
 
 export const CmMeetingControls = ({
   eventMi,
@@ -52,12 +55,14 @@ export const CmMeetingControls = ({
         <BottomPopup onClose={setIsToolsOpen}>
           <CmComLocalListToolsPopup comws={comws}>
             {isCanUpdateEvent && (
-              <CmEditorMeetingEventEdits
-                comws={comws}
-                dayi={dayi}
-                eventMi={eventMi}
-                schw={schw}
-              />
+              <Suspense>
+                <CmEditorMeetingEventEdits
+                  comws={comws}
+                  dayi={dayi}
+                  eventMi={eventMi}
+                  schw={schw}
+                />
+              </Suspense>
             )}
           </CmComLocalListToolsPopup>
         </BottomPopup>

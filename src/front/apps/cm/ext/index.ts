@@ -1,4 +1,3 @@
-export { CmEditorCompositionsCatSpecialSearches } from '$cm+editor/pages/CompositionsPage/ui/SpecialSearches';
 export {
   CmAudioMarkControlButtonsContext,
   useCmAudioMarkControlButtonsContext,

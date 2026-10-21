@@ -37,6 +37,20 @@ export default defineConfig(() => {
       sourcemap: false,
       rollupOptions: {
         output: {
+          chunkFileNames(chunkInfo) {
+            // The entry chunk must always be pre-cached: a static import pulling editor
+            // modules into it would otherwise prefix it and silently drop the app shell
+            // from the manifest (which filters `cm-edit-`).
+            if (chunkInfo.isEntry) return 'assets/[name]-[hash].js';
+
+            // Prefixed chunks are excluded from the precache manifest and cached on
+            // first actual CmRedactor visit instead (see vite-pwa.options.ts).
+            const isCmEditorChunk = chunkInfo.moduleIds.some(
+              id => id.includes('apps/cm+editor/') || id.includes('routes/tree/cm/edit/'),
+            );
+
+            return `assets/${isCmEditorChunk ? 'cm-edit-' : ''}[name]-[hash].js`;
+          },
           manualChunks(id) {
             if (id.includes('node_modules')) {
               let file = [
