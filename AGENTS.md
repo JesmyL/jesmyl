@@ -46,6 +46,7 @@
 - Locale strings: always write user-facing text translations via `translateBase` / `translateDynamic` — never inline raw text.
 - Never write blind type casts like `as CmAudioTail` (branded/type asserts on unverified data) — write proper types and parse/validate at the boundary so the casts become unnecessary.
 - In this project, the term `songs` is not used — the correct name is `coms` (short for "compositions"). Name variables, types, files and identifiers accordingly.
+- Removing an entry from `BaseLocaleKey` (locale keys): never delete it outright — mark it `@deprecated` in `_BaseLocaleKey.ts` and change its translations in all `src/back/locales/base/{ru,en,kz,ua,...}.ts` files to `''` instead of removing the keys.
 
 ## Assistant reply formatting
 
