@@ -727,7 +727,6 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.ColorGamutIndigo]: 'Indigo',
   [BaseLocaleKey.ColorGamutLagoon]: 'Lagoon',
   [BaseLocaleKey.ColorGamutGraphite]: 'Graphite',
-  [BaseLocaleKey.ColorGamutMist]: 'Mist',
   [BaseLocaleKey.ColorGamutSun]: 'Sun',
   [BaseLocaleKey.ColorGamutNeon]: 'Neon',
   [BaseLocaleKey.ColorGamutFuchsia]: 'Fuchsia',

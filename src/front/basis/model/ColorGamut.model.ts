@@ -198,33 +198,6 @@ export const builtInColorGamuts: ColorGamutPalette[] = [
     },
   },
   {
-    localeKey: BaseLocaleKey.ColorGamutMist,
-    light: {
-      x1: '#ededed',
-      x2: '#dedede',
-      x3: '#151515',
-      x4: '#505050',
-      x5: '#fbfbfb',
-      x6: '#f3f3f3',
-      x7: '#1f1f1f',
-      x8: '#fbfbfb',
-      xOK: '#3d8b3d',
-      xKO: '#c93434',
-    },
-    dark: {
-      x1: '#1c1c1c',
-      x2: '#2e2e2e',
-      x3: '#e8e8e8',
-      x4: '#b4b4b4',
-      x5: '#111111',
-      x6: '#e8e8e8',
-      x7: '#f5f5f5',
-      x8: '#fbfbfb',
-      xOK: '#86c986',
-      xKO: '#ef7878',
-    },
-  },
-  {
     localeKey: BaseLocaleKey.ColorGamutSun,
     light: {
       x1: '#fff0c2',

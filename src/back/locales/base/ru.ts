@@ -747,7 +747,6 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.ColorGamutIndigo]: 'Индиго',
   [BaseLocaleKey.ColorGamutLagoon]: 'Лагуна',
   [BaseLocaleKey.ColorGamutGraphite]: 'Графит',
-  [BaseLocaleKey.ColorGamutMist]: 'Туман',
   [BaseLocaleKey.ColorGamutSun]: 'Солнце',
   [BaseLocaleKey.ColorGamutNeon]: 'Неон',
   [BaseLocaleKey.ColorGamutFuchsia]: 'Фуксия',

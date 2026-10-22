@@ -895,8 +895,7 @@ export const enum BaseLocaleKey {
   ColorGamutIndigo = 889,
   ColorGamutLagoon = 890,
   ColorGamutGraphite = 891,
-  ColorGamutMist = 892,
+  ColorGamutFuchsia = 892,
   ColorGamutSun = 893,
   ColorGamutNeon = 894,
-  ColorGamutFuchsia = 895,
 }

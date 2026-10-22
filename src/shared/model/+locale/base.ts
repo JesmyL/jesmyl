@@ -654,7 +654,6 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.ColorGamutIndigo]: LocaleSimpleString;
   [BaseLocaleKey.ColorGamutLagoon]: LocaleSimpleString;
   [BaseLocaleKey.ColorGamutGraphite]: LocaleSimpleString;
-  [BaseLocaleKey.ColorGamutMist]: LocaleSimpleString;
   [BaseLocaleKey.ColorGamutSun]: LocaleSimpleString;
   [BaseLocaleKey.ColorGamutNeon]: LocaleSimpleString;
   [BaseLocaleKey.ColorGamutFuchsia]: LocaleSimpleString;

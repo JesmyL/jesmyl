@@ -78,10 +78,9 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.CmIntensity]: 'Қарқындылық',
   [BaseLocaleKey.CmEditSquareBracketsHint]:
     '[Квадрат жақшадағы] мәтін слайдтарда көрсетілмейді, бірақ ән мәтінінде (дөңгелек жақшадағы мәтінге) айналады. Жолды ауыстыру үшін [[екі ашылатын жақшаны] пайдаланыңыз. "[" белгісінің алдында бос орын болуы керек, ал "]" белгісінен кейін ештеңе болмауы тиіс',
-  ...baseLocaleTemplate(
-    BaseLocaleKey.CmEditIsRemoveTextBlock,
-    ['$t'],
-  )`${IF('$t').THEN`Блокты`.ELSE` Жаңа блокты`} өшіру керек пе?\n\n$t`,
+  ...baseLocaleTemplate(BaseLocaleKey.CmEditIsRemoveTextBlock, [
+    '$t',
+  ])`${IF('$t').THEN`Блокты`.ELSE` Жаңа блокты`} өшіру керек пе?\n\n$t`,
   [BaseLocaleKey.CmEditRemovedComs]: 'Жойылған әндер',
   [BaseLocaleKey.CmEditBackup]: 'Бұл әнді қалпына келтіру',
   [BaseLocaleKey.CmEditDestroy]: 'Бұл әнді біржола жою',
@@ -730,7 +729,6 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.ColorGamutIndigo]: 'Индиго',
   [BaseLocaleKey.ColorGamutLagoon]: 'Лагуна',
   [BaseLocaleKey.ColorGamutGraphite]: 'Графит',
-  [BaseLocaleKey.ColorGamutMist]: 'Тұман',
   [BaseLocaleKey.ColorGamutSun]: 'Күн',
   [BaseLocaleKey.ColorGamutNeon]: 'Неон',
   [BaseLocaleKey.ColorGamutFuchsia]: 'Фуксия',

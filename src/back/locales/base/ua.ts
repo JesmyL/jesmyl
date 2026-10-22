@@ -727,7 +727,6 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.ColorGamutIndigo]: 'Індиго',
   [BaseLocaleKey.ColorGamutLagoon]: 'Лагуна',
   [BaseLocaleKey.ColorGamutGraphite]: 'Графіт',
-  [BaseLocaleKey.ColorGamutMist]: 'Туман',
   [BaseLocaleKey.ColorGamutSun]: 'Сонце',
   [BaseLocaleKey.ColorGamutNeon]: 'Неон',
   [BaseLocaleKey.ColorGamutFuchsia]: 'Фуксія',
