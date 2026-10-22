@@ -3,7 +3,7 @@ import { useConfirm } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { QrCodeFullScreen } from '#shared/ui/qr-code/QrCodeFullScreen';
 import { cmOnUserLogout } from '$cm/ext';
-import { authIDB, indexIDB, indexUserAccessRightsAtom, useAuth } from '$index/shared/state';
+import { authIDB, indexIDB, indexIsBindEmailOpenAtom, indexUserAccessRightsAtom, useAuth } from '$index/shared/state';
 import { Atom, atom } from 'atomaric';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
@@ -23,6 +23,15 @@ export const IndexUserMore = ({ onClose }: { onClose: (isOpen: false) => void })
         title={translateBase(BaseLocaleKey.ShowMyQr)}
         icon="QrCode"
         onClick={isOpenQrAtom.do.toggle}
+      />
+      <BottomPopupItem
+        id="bind-email-button"
+        title={translateBase(BaseLocaleKey.EmailToBind)}
+        icon="Mail01"
+        onClick={() => {
+          onClose(false);
+          indexIsBindEmailOpenAtom.set(true);
+        }}
       />
       <BottomPopupItem
         id="log-out-button"

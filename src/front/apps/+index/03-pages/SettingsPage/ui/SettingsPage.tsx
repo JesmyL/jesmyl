@@ -6,14 +6,13 @@ import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { authIDB, indexIDB, indexIsPlayAnimationsAtom, indexIsShowPlayerInFooterAtom } from '$index/shared/state';
+import { indexIDB, indexIsPlayAnimationsAtom, indexIsShowPlayerInFooterAtom } from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
 import React from 'react';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itIt } from 'shared/utils';
 import { forEachObjectEntries, objectKeys } from 'shared/utils/object.utils';
 import { MyFilesFontFamilySelector } from 'x/my-files';
-import { IndexSettingsBindEmail } from './BindEmail';
 import { IndexSettingsColorGamut } from './ColorGamutSettings';
 
 const styles = {
@@ -34,7 +33,6 @@ export function IndexSettingsPage() {
   const [fontFamilyFileId, setFontFamilyFileId] = indexIDB.use.appFontFamilyId();
   const connectionNode = useConnectionState('m-2');
   const checkAccess = useCheckUserAccessRightsInScope();
-  const token = authIDB.useValue.token();
 
   const settingsList = [
     checkAccess('general', 'ALL') && [
@@ -131,7 +129,6 @@ export function IndexSettingsPage() {
         };
       }}
     />,
-    !token || <IndexSettingsBindEmail key="bind-email" />,
   ]
     .flat()
     .filter(itIt);

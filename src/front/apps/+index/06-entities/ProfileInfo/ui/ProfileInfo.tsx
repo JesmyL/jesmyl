@@ -1,5 +1,7 @@
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
+import { IndexUserMoreBindEmailModal } from '$index/entities/UserMore/ui/BindEmail';
 import { IndexUserMore } from '$index/entities/UserMore/ui/UserMore';
+import { indexIsBindEmailOpenAtom } from '$index/shared/state';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { LocalSokiAuth } from 'shared/api';
@@ -32,6 +34,7 @@ export const IndexProfileInfo = ({ auth }: { auth: LocalSokiAuth }) => {
           <IndexUserMore onClose={setIsUserMoreOpen} />
         </BottomPopup>
       )}
+      <IndexUserMoreBindEmailModal openAtom={indexIsBindEmailOpenAtom} />
     </>
   );
 };
