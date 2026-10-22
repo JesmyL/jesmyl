@@ -646,6 +646,18 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.Animations]: LocaleSimpleString;
   [BaseLocaleKey.Font]: LocaleSimpleString;
   [BaseLocaleKey.ShowErrors]: LocaleSimpleString;
+  [BaseLocaleKey.ColorGamut]: LocaleSimpleString;
+  [BaseLocaleKey.ColorGamutMeadow]: LocaleSimpleString;
+  [BaseLocaleKey.ColorGamutInk]: LocaleSimpleString;
+  [BaseLocaleKey.ColorGamutAmber]: LocaleSimpleString;
+  [BaseLocaleKey.ColorGamutRaspberry]: LocaleSimpleString;
+  [BaseLocaleKey.ColorGamutIndigo]: LocaleSimpleString;
+  [BaseLocaleKey.ColorGamutLagoon]: LocaleSimpleString;
+  [BaseLocaleKey.ColorGamutGraphite]: LocaleSimpleString;
+  [BaseLocaleKey.ColorGamutMist]: LocaleSimpleString;
+  [BaseLocaleKey.ColorGamutSun]: LocaleSimpleString;
+  [BaseLocaleKey.ColorGamutNeon]: LocaleSimpleString;
+  [BaseLocaleKey.ColorGamutFuchsia]: LocaleSimpleString;
   [BaseLocaleKey.ChapterEmpty]: LocaleSimpleString;
   [BaseLocaleKey.ActualVersion]: LocaleSimpleString;
   [BaseLocaleKey.RefreshApplicationConfirm]: LocaleSimpleString;

@@ -14,6 +14,7 @@ import { itIt } from 'shared/utils';
 import { forEachObjectEntries, objectKeys } from 'shared/utils/object.utils';
 import { MyFilesFontFamilySelector } from 'x/my-files';
 import { IndexSettingsBindEmail } from './BindEmail';
+import { IndexSettingsColorGamut } from './ColorGamutSettings';
 
 const styles = {
   position: 'absolute',
@@ -112,6 +113,7 @@ export function IndexSettingsPage() {
         />
       }
     />,
+    <IndexSettingsColorGamut key="color-gamut" />,
     <BrutalItem
       key="errors"
       iconNode={<LazyIcon icon="RssError" />}

@@ -1,5 +1,6 @@
 import { FooterPlacementManager } from '#basis/lib/FooterPlacementManager';
 import { useFingersActions } from '#basis/lib/global-listeners/useFingersActions';
+import { useGlobalColorGamutSetter } from '#basis/lib/global-listeners/useGlobalColorGamutSetter';
 import { useGlobalFontFamilySetter } from '#basis/lib/global-listeners/useGlobalFontFamilySetter';
 import { currentLangiAtom, translateBase } from '#basis/locale';
 import { currentAppNameAtom } from '#basis/state/currentAppNameAtom';
@@ -68,6 +69,7 @@ export const AppComponent = () => {
   }, []);
 
   useFingersActions();
+  useGlobalColorGamutSetter();
   useGlobalFontFamilySetter();
 
   useEffect(() => soki.pushCurrentUrl(), [loc.href]);

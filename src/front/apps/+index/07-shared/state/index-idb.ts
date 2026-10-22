@@ -6,6 +6,7 @@ import { MyFileBoxId } from 'x/my-files';
 interface Storage {
   lastModifiedAt: number;
   appFontFamilyId: MyFileBoxId | null;
+  appColorGamutIndex: number | null;
   deviceId: DeviceId | null;
 
   schs: IScheduleWidget[];
@@ -18,6 +19,7 @@ class IndexIDB extends DexieDB<Storage> {
     super('index', {
       lastModifiedAt: [0],
       appFontFamilyId: [null],
+      appColorGamutIndex: [null],
       deviceId: [null],
 
       schs: {

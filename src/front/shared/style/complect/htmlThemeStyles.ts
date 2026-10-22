@@ -1,5 +1,25 @@
+import { ColorGamut, builtInColorGamuts } from '#basis/model/ColorGamut.model';
 import { cursors } from '#shared/const/cursorsBase64';
 import { css } from '@emotion/react';
+import { mapObjectEntries } from 'shared/utils/object.utils';
+
+const gamutCssVars = (gamut: ColorGamut) =>
+  mapObjectEntries(gamut, (key, color) => `--color-${key}: ${color};`).join('');
+
+const defaultLightGamutCssVars = gamutCssVars(builtInColorGamuts[0].light);
+const defaultDarkGamutCssVars = gamutCssVars(builtInColorGamuts[0].dark);
+
+const gamutStyles = builtInColorGamuts.map(
+  ({ light, dark }, gamuti) => css`
+    &.gamut-${gamuti + 1}:not(.dark) {
+      ${gamutCssVars(light)}
+    }
+
+    &.gamut-${gamuti + 1}.dark {
+      ${gamutCssVars(dark)}
+    }
+  `,
+);
 
 export const htmlThemeStyles = css`
   --color--1: var(--color-x1);
@@ -14,16 +34,7 @@ export const htmlThemeStyles = css`
   --color--ok: var(--color-xOK);
 
   &:not(.dark) {
-    --color-x1: #eaf1e9;
-    --color-x2: #d5e8d5;
-    --color-x3: #122217;
-    --color-x4: #414840;
-    --color-x5: #fbfdf8;
-    --color-x6: #f8fbf4;
-    --color-x7: #2d995a;
-    --color-x8: #fbfdf8;
-    --color-xOK: #47bb00;
-    --color-xKO: #ec6969;
+    ${defaultLightGamutCssVars}
 
     --url-icon-edit-02-stroke-rounded: var(--url-icon-for-light-edit-02-stroke-rounded);
     --url-icon-link-backward-stroke-rounded: var(--url-icon-for-light-link-backward-stroke-rounded);
@@ -36,16 +47,7 @@ export const htmlThemeStyles = css`
   }
 
   &.dark {
-    --color-x1: #242a26;
-    --color-x2: #3b4b40;
-    --color-x3: #d5e6d6;
-    --color-x4: #b2b9b1;
-    --color-x5: #1a1c19;
-    --color-x6: #d3e5d7;
-    --color-x7: #b5f2c8;
-    --color-x8: #fbfdf8;
-    --color-xKO: #ec6969;
-    --color-xOK: #9bec69;
+    ${defaultDarkGamutCssVars}
 
     --url-icon-edit-02-stroke-rounded: var(--url-icon-for-dark-edit-02-stroke-rounded);
     --url-icon-link-backward-stroke-rounded: var(--url-icon-for-dark-link-backward-stroke-rounded);
@@ -56,6 +58,8 @@ export const htmlThemeStyles = css`
     }
     ${pointer(cursors.pointerLight)}
   }
+
+  ${gamutStyles}
 `;
 
 function pointer(style: string) {
