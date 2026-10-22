@@ -4,7 +4,7 @@ import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContaine
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { QrReader } from '#shared/ui/qr-code/QrReader';
-import { useAuth } from '$index/shared/state';
+import { useAuth, useUserInfoDict } from '$index/shared/state';
 import { StoragesRackCardSearch } from '$storages/features/RackCardSearch';
 import { storagesIDB } from '$storages/shared/state/storagesIDB';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesRackMemberRole, StoragesRackWid } from 'shared/model/storages/list.model';
 import { checkIsNotString, checkIsObject } from 'shared/utils/checkIs';
+import { objectKeys } from 'shared/utils/object.utils';
 import { StoragesRackImportFromExcelModalInner } from './ImportFromExcelModalInner';
 
 let isOpenImportFromExcelModalAtom: Atom<boolean>;
@@ -31,11 +32,17 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
   const rack = useLiveQuery(() => storagesIDB.tb.racks.get(rackw), [rackw]);
   const [isMoreOpen, setIsMoreOpen] = useState(false);
   const auth = useAuth();
+  const { byLogin } = useUserInfoDict();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (rack == null || auth.login == null) return;
-    const member = rack.team[auth.login];
+    const myUserId = byLogin.get(auth.login)?.id;
+    if (myUserId == null) return;
+
+    const member = rack.team[myUserId];
+    if (member == null && objectKeys(rack.team).some(key => isNaN(+key))) return;
+
     if (
       member == null ||
       (member.role !== StoragesRackMemberRole.Admin && member.role !== StoragesRackMemberRole.Creator)
@@ -43,7 +50,7 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
       storagesIDB.tb.racks.delete(rack.w);
       navigate({ to: '/storages/i' });
     }
-  }, [auth.login, navigate, rack]);
+  }, [auth.login, byLogin, navigate, rack]);
 
   if (rack == null) return;
 
@@ -66,19 +73,12 @@ export const StoragesRackPage = ({ rackw }: { rackw: StoragesRackWid }) => {
             onReadData={value => {
               const auth = JSON.parse(value) as unknown;
 
-              if (
-                !checkIsObject(auth) ||
-                !('fio' in auth) ||
-                !('login' in auth) ||
-                checkIsNotString(auth.fio) ||
-                checkIsNotString(auth.login)
-              )
-                return;
+              if (!checkIsObject(auth) || !('login' in auth) || checkIsNotString(auth.login)) return;
 
               isOpenMemberAdderModalAtom.reset();
 
               return storagesTsjrpcClient.addRackMember({
-                member: { fio: auth.fio, role: StoragesRackMemberRole.Admin },
+                member: { role: StoragesRackMemberRole.Admin },
                 login: auth.login as never,
                 rackw,
               });

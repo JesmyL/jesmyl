@@ -1,6 +1,7 @@
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
+import { ScheduleWidgetRights, takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
 import {
   customAttUseRights,
   CustomAttUseRights,
@@ -13,6 +14,7 @@ import {
 export const scheduleWidgetKeyValueListAttMakeUsersAdder = (
   att: ScheduleWidgetAppAttCustomized,
   dayEventAttScopeProps: ScheduleDayEventAttachmentScopeProps,
+  rights: ScheduleWidgetRights,
   exclusiveUsers: IScheduleWidgetUser[],
 ) => {
   return exclusiveUsers.map(user =>
@@ -22,7 +24,7 @@ export const scheduleWidgetKeyValueListAttMakeUsersAdder = (
         className="flex gap-2"
       >
         <LazyIcon icon="CheckmarkSquare02" />
-        {user.fio || user.nick}
+        {takeScheduleWidgetUserName(rights, user)}
         <TheIconSendButton
           icon="PlusSign"
           onSend={() =>
@@ -39,7 +41,7 @@ export const scheduleWidgetKeyValueListAttMakeUsersAdder = (
         key={user.mi}
         className="flex gap-2"
       >
-        {user.fio || user.nick}
+        {takeScheduleWidgetUserName(rights, user)}
         <TheIconSendButton
           icon="PlusSign"
           onSend={() =>

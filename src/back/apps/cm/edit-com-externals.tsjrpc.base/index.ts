@@ -1,4 +1,5 @@
 import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
+import { throwIfNoScheduleComsListRedact } from 'back/apps/index/schedules/schedule-modificators';
 import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { db, dbDelete, dbUpdate } from 'back/drizzle/drizzle.db';
@@ -36,9 +37,9 @@ export const cmEditComExternalsTsjrpcBaseServer =
 
           addComwsInSchEvHistory: async ({ schw, dayi, eventMi, comws }, tool) => {
             const auth = takeLogginedAuthOrThrow(tool.auth);
-            if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'U')) throw '';
-
             const sch = await takeScheduleWidgetTiny({ w: schw });
+
+            await throwIfNoScheduleComsListRedact(sch, auth, dayi, eventMi);
 
             const prevItem = (
               await db

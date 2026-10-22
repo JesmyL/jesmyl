@@ -22,8 +22,13 @@ const defExcludedFios = new Set<string>();
 export function ScheduleWidgetUserAddByExcelContent({ close }: Props) {
   const rights = useScheduleWidgetRightsContext();
   const userFios = useMemo(
-    () => rights.schedule.ctrl.users.reduce((set, user) => (user.fio ? set.add(user.fio) : set), new Set<string>()),
-    [rights.schedule.ctrl.users],
+    () =>
+      rights.schedule.ctrl.users.reduce((set, user) => {
+        const fio = rights.userInfoById.get(user.id)?.uauth.fio;
+
+        return fio ? set.add(fio) : set;
+      }, new Set<string>()),
+    [rights.schedule.ctrl.users, rights.userInfoById],
   );
   const scheduleScopeProps = useScheduleScopePropsContext();
 

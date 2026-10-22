@@ -1,4 +1,5 @@
 import { questionerBlanksStore } from 'back/apps/q/db-stores';
+import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { takeLogginedAuthOrThrow } from 'back/utils';
 import { QuestionerBlankRole } from 'shared/model/q';
@@ -8,7 +9,7 @@ import { questionerAdminServerTsjrpcShare } from '../../admin.tsjrpc.share';
 export const questionerTSJRPCCreateBlank: typeof questionerAdminServerTsjrpcBase.createBlank = async (_, tool) => {
   const auth = takeLogginedAuthOrThrow(tool.auth);
   if (await throwIfNoUserScopeAccessRight(auth?.login, 'q', 'EDIT', 'C')) throw '';
-  const login = auth.login;
+  const authUser = await takeUserTiny({ l: auth.login });
 
   const now = Date.now();
 
@@ -20,8 +21,7 @@ export const questionerTSJRPCCreateBlank: typeof questionerAdminServerTsjrpcBase
     tmp: {},
     ord: [],
     team: {
-      [login]: {
-        fio: auth.fio ?? 'Неизвестный',
+      [authUser.id]: {
         r: QuestionerBlankRole.Owner,
       },
     },

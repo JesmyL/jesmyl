@@ -232,6 +232,8 @@ export const searchRate = <
   }, []);
 };
 
+export const sortBySearchRate = (a: { rate: number }, b: { rate: number }) => a.rate - b.rate;
+
 export const searchRateWithSort = <
   T,
   R extends { item: T; deep: number; rate: number; field: string; pos: string[] },
@@ -248,7 +250,7 @@ export const searchRateWithSort = <
   const result = searchRate<T, R, RetItem>(items, searchWord, places, isNumberSearch);
 
   reseter.t = setTimeout(() => {
-    resolve(quickSort(result, (a, b) => a.rate - b.rate, 3, reseter));
+    resolve(quickSort(result, sortBySearchRate, 3, reseter));
   }, 0);
 
   return {

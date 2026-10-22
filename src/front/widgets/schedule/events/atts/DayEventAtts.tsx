@@ -1,6 +1,7 @@
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { useScheduleWidgetAppAttsContext } from '#widgets/schedule/useScheduleWidget';
 import {
+  checkIsCanRedactScheduleComsList,
   IScheduleWidget,
   IScheduleWidgetDay,
   IScheduleWidgetDayEvent,
@@ -24,6 +25,9 @@ export function ScheduleWidgetDayEventAtts(props: {
   const [appAtts] = useScheduleWidgetAppAttsContext();
   const rights = useScheduleWidgetRightsContext();
   const userR = rights.myUser?.R ?? rights.schedule.ctrl.defu;
+  const myUserId = rights.myUser?.id;
+  const isCanRedactComsList =
+    myUserId != null && checkIsCanRedactScheduleComsList(props.schedule, myUserId, props.dayi, props.event.mi);
   const atts = objectEntries(props.event.atts);
 
   objectEntries(props.typeBox.atts).forEach(attEntry => {
@@ -43,8 +47,10 @@ export function ScheduleWidgetDayEventAtts(props: {
           return null;
 
         const isCanUpdate =
-          scheduleWidgetUserRights.checkInvertIsCan(userR, appAtt.U) ||
-          (appAtt.Us?.length ? !!rights.myUser && appAtt.Us.includes(rights.myUser.mi) : false);
+          attKey === '[cm]:coms'
+            ? isCanRedactComsList
+            : scheduleWidgetUserRights.checkInvertIsCan(userR, appAtt.U) ||
+              (appAtt.Us?.length ? !!rights.myUser && appAtt.Us.includes(rights.myUser.mi) : false);
 
         return (
           <ScheduleDayEventAtt

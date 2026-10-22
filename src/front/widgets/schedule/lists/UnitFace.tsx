@@ -2,6 +2,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ReactNode, useState } from 'react';
 import { IScheduleWidgetListUnit } from 'shared/api';
 import { useScheduleWidgetRightsContext } from '../contexts';
+import { takeScheduleWidgetUserName } from '../useScheduleWidget';
 
 export function ScheduleWidgetListUnitFace({
   unitMi,
@@ -30,7 +31,7 @@ export function ScheduleWidgetListUnitFace({
         <LazyIcon icon={cat?.icon} />
         {isShowMentors ? (
           mentors.length ? (
-            mentors.map(user => user.fio || user.nick).join(', ')
+            mentors.map(user => takeScheduleWidgetUserName(rights, user)).join(', ')
           ) : (
             <span className="italic">{cat.titles[0]}</span>
           )

@@ -1,4 +1,4 @@
-import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
+import { TsjrpcBaseServer, ServerTSJRPCTool } from 'back/tsjrpc.base.server';
 import {
   IScheduleWidget,
   IScheduleWidgetDay,
@@ -7,12 +7,17 @@ import {
   ScheduleDayEventScopeProps,
   ScheduleWidgetAppAttCustomizableValue,
   ScheduleWidgetAppAttCustomizableValueItem,
+  ScheduleWidgetAttKey,
 } from 'shared/api';
 import { SchDayEventsTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
 import { takeNextMi, withInsertedBeforei } from 'shared/utils';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { objectLength } from 'shared/utils/object.utils';
-import { modifyScheduleDay } from '../schedule-modificators';
+import {
+  modifyScheduleDay,
+  throwIfNoExternalMutationAuth,
+  throwIfNoScheduleComsListRedact,
+} from '../schedule-modificators';
 import { onScheduleDayEventIsNeedTgInformSetEvent } from '../specific-modify-events';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
@@ -42,15 +47,25 @@ const modifyEvent = <Props extends { props: ScheduleDayEventScopeProps }>(
     props: Props,
     sch: IScheduleWidget,
     day: IScheduleWidgetDay,
-  ) => string | null,
+    tool: ServerTSJRPCTool,
+  ) => PromiseOr<string | null>,
   isNeedRefreshTgInformTime?: boolean,
 ) =>
-  modifyScheduleDay<Props>(isNeedRefreshTgInformTime || false, (day, props, sch) => {
+  modifyScheduleDay<Props>(isNeedRefreshTgInformTime || false, (day, props, sch, tool) => {
     const event = day.list.find(event => event.mi === props.props.eventMi);
     if (event == null) throw new Error('day event not found');
 
-    return modifier(event, props, sch, day);
+    return modifier(event, props, sch, day, tool);
   });
+
+const throwIfNoComsListRedact = async (
+  attKey: ScheduleWidgetAttKey,
+  props: ScheduleDayEventScopeProps,
+  sch: IScheduleWidget,
+  tool: ServerTSJRPCTool,
+) => {
+  if (attKey === '[cm]:coms') await throwIfNoScheduleComsListRedact(sch, tool.auth, props.dayi, props.eventMi);
+};
 
 export const schDayEventsTsjrpcBaseServer =
   new (class SchDayEvents extends TsjrpcBaseServer<SchDayEventsTsjrpcMethods> {
@@ -70,7 +85,9 @@ export const schDayEventsTsjrpcBaseServer =
           description: string | null;
         },
       ) =>
-        modifyEvent<Props>((event, props, sch) => {
+        modifyEvent<Props>(async (event, props, sch, _day, tool) => {
+          await throwIfNoComsListRedact(props.props.attKey, props.props, sch, tool);
+
           event.atts ??= {};
           event.atts[props.props.attKey] ??= {};
 
@@ -141,7 +158,9 @@ export const schDayEventsTsjrpcBaseServer =
             return `${inEventTypeTtileOfDay(sch, props)} установлено время продолжительности - ${value}`;
           }, true),
 
-          setIsNeedTgInform: async ({ props: dayEventProps, value }) => {
+          setIsNeedTgInform: async ({ props: dayEventProps, value }, tool) => {
+            throwIfNoExternalMutationAuth(tool);
+
             const sch = await onScheduleDayEventIsNeedTgInformSetEvent.invoke({
               dayEventProps,
               value,
@@ -161,21 +180,27 @@ export const schDayEventsTsjrpcBaseServer =
             return `${inEventTypeTtileOfDay(sch, props)} установлен признак секретности`;
           }),
 
-          addAttachment: modifyEvent((event, { props, attKey, defaultValue }, sch) => {
+          addAttachment: modifyEvent(async (event, { props, attKey, defaultValue }, sch, _day, tool) => {
+            await throwIfNoComsListRedact(attKey, props, sch, tool);
+
             event.atts ??= {};
             event.atts[attKey] = defaultValue;
 
             return `${inEventTypeTtileOfDay(sch, props)} добавлено вложение ${attKey}`;
           }),
 
-          addAttachmentRef: modifyEvent((event, { props, attKey, attRef }, sch) => {
+          addAttachmentRef: modifyEvent(async (event, { props, attKey, attRef }, sch, _day, tool) => {
+            await throwIfNoComsListRedact(attKey, props, sch, tool);
+
             event.atts ??= {};
             event.atts[attKey] = attRef;
 
             return `${inEventTypeTtileOfDay(sch, props)} добавлена ссылка на вложение ${attKey} ${attRef[0] + 1}-го дня`;
           }),
 
-          removeAttachment: modifyEvent((event, { props, attKey }, sch) => {
+          removeAttachment: modifyEvent(async (event, { props, attKey }, sch, _day, tool) => {
+            await throwIfNoComsListRedact(attKey, props, sch, tool);
+
             event.atts ??= {};
             delete event.atts[attKey];
             if (!objectLength(event.atts)) delete event.atts;

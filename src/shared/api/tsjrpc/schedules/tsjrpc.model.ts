@@ -3,6 +3,7 @@ import {
   IScheduleWidget,
   IScheduleWidgetDayEvent,
   IScheduleWidgetExportableTeam,
+  IScheduleWidgetComsRights,
   ScheduleAttachmentTypeScopeProps,
   ScheduleDayEventAttachmentScopeProps,
   ScheduleDayEventScopeProps,
@@ -34,6 +35,7 @@ export type SchGeneralTsjrpcModel = {
   copySchedule: (args: { props: ScheduleScopeProps; schedule: IScheduleWidget }) => IScheduleWidget;
   setDefaultUserRights: (args: { props: ScheduleScopeProps; R: number }) => IScheduleWidget;
   setScheduleRegisterType: (args: { props: ScheduleScopeProps; type: number }) => IScheduleWidget;
+  setComsRights: (args: { props: ScheduleScopeProps; value: IScheduleWidgetComsRights | nil }) => IScheduleWidget;
 
   rename: Callback<string>;
   setTopic: Callback<string>;
@@ -51,7 +53,6 @@ export type SchGeneralTsjrpcModel = {
 export type SchUsersTsjrpcMethods = {
   addUsersByExcel: (args: { props: ScheduleScopeProps; users: { fio: string }[] }) => IScheduleWidget;
   addMe: (args: { props: ScheduleScopeProps; place: string }) => IScheduleWidget;
-  setUserFio: (args: { props: ScheduleUserScopeProps; fio: string }) => IScheduleWidget;
   setUserRights: (args: { props: ScheduleUserScopeProps; R: number }) => IScheduleWidget;
   addUserListUnitMembership: (args: { props: ScheduleUserListMemberScopeProps; value: number }) => IScheduleWidget;
   removeUserListUnitMembership: (args: { props: ScheduleUserListMemberScopeProps }) => IScheduleWidget;

@@ -1,5 +1,6 @@
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
+import { takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
 import { IScheduleWidgetTeam } from 'shared/api';
 
 interface Props {
@@ -17,7 +18,7 @@ export function ScheduleWidgetTeamGameTeam({ team }: Props) {
 
           if (user === undefined) return null;
 
-          return <div key={mi}>{user.fio}</div>;
+          return <div key={mi}>{takeScheduleWidgetUserName(rights, user)}</div>;
         })}
       </ExpandableContent>
     </div>

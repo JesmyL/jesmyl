@@ -1,5 +1,4 @@
 import { translateBase } from '#basis/locale';
-import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { useScheduleUserScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { schUsersTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
@@ -23,14 +22,6 @@ export function ScheduleWidgetUserEdit({ user }: { user: IScheduleWidgetUser }) 
 
   return (
     <>
-      <StrongEditableField
-        isRedact
-        isSelfRedact
-        title={translateBase(BaseLocaleKey.ScheduleFirstName)}
-        icon="User"
-        value={user.fio || user.nick}
-        onSend={value => schUsersTsjrpcClient.setUserFio({ props: scheduleUserScopeProps, fio: value })}
-      />
       {rights.myUser && (
         <ScheduleWidgetRightControlList
           rightCtrl={scheduleWidgetUserRights}

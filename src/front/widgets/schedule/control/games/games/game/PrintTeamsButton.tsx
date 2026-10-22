@@ -2,6 +2,7 @@ import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
+import { takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
@@ -48,7 +49,7 @@ export const ScheduleWidgetTeamGamePrintTeamsButton = function PrintTeamsButton(
                 {team.users.map(({ mi }) => {
                   const user = rights.schedule.ctrl.users.find(user => user.mi === mi);
 
-                  return user && <div key={mi}>{user.fio}</div>;
+                  return user && <div key={mi}>{takeScheduleWidgetUserName(rights, user)}</div>;
                 })}
               </div>
               {(teami + 1) % cols ? null : <br />}

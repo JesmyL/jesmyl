@@ -3,6 +3,7 @@ import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
+import { takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
 import { ScheduleWidgetMarkdownBroadcast } from '#widgets/schedule/live-broadcast/markdown/Broadcast';
 import { Atom, atom } from 'atomaric';
 import { useMemo, useState } from 'react';
@@ -66,7 +67,7 @@ export const ScheduleWidgetTeamGameTranslateTeamsButton = function TranslateTeam
 
           if (user == null) continue;
 
-          grid += `${leftBorder} ${user?.fio ?? ''} |`;
+          grid += `${leftBorder} ${takeScheduleWidgetUserName(rights, user)} |`;
         }
 
         useri++;
@@ -77,7 +78,7 @@ export const ScheduleWidgetTeamGameTranslateTeamsButton = function TranslateTeam
     }
 
     return grid;
-  }, [cols, game.teams, game.title, rights.schedule.ctrl.users]);
+  }, [cols, game.teams, game.title, rights]);
 
   return (
     <>

@@ -1,9 +1,8 @@
-import { SokiAuthLogin } from 'shared/api';
+import { UserId } from 'shared/api';
 import { QuestionerBlankRole, QuestionerBlankWid, QuestionerTemplateId } from './enums';
 import { QuestionerTemplate } from './template';
 
 export type QuestionerBlankUser = {
-  fio: string;
   /** role */
   r: QuestionerBlankRole;
 };
@@ -16,7 +15,7 @@ export type QuestionerBlank = {
   anon?: 1;
   tmp: PRecord<QuestionerTemplateId, QuestionerTemplate>;
   ord: QuestionerTemplateId[];
-  team: PRecord<SokiAuthLogin, QuestionerBlankUser>;
+  team: PRecord<UserId, QuestionerBlankUser>;
 };
 
 export type QuestionerBlankSelector<With = object> = With & {

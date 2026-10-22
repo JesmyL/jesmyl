@@ -51,7 +51,8 @@ export function ScheduleWidgetCopy(props: { schw: ScheduleWidgetWid }) {
               })}
               onSuccess={isModalOpenAtom.reset}
               onSend={() => {
-                const myUser = schedule.ctrl.users.find(user => user.login === auth.login);
+                const myUserId = auth.login ? rights.userInfoByLogin.get(auth.login)?.id : null;
+                const myUser = schedule.ctrl.users.find(user => user.id === myUserId);
                 if (auth == null || myUser == null) return;
 
                 const value: IScheduleWidget = {

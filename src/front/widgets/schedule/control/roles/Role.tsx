@@ -8,15 +8,13 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { schRolesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
-import { extractScheduleWidgetRoleUser } from '#widgets/schedule/useScheduleWidget';
-import { useAuth } from '$index/shared/state';
+import { extractScheduleWidgetRoleUser, takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
 import { Atom, atom } from 'atomaric';
 import React, { useMemo } from 'react';
-import { IScheduleWidgetRole, ScheduleRoleScopeProps, scheduleWidgetUserRights } from 'shared/api';
+import { IScheduleWidgetRole, ScheduleRoleScopeProps, scheduleWidgetUserRights, ScheduleWidgetUserRoleRight } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ScheduleWidgetRoleFace } from './RoleFace';
 
-const mainRoleRights = scheduleWidgetUserRights.getAllRights();
 const LazyIconConfigurator = React.lazy(() => import('../../../../shared/ui/configurators/Icon'));
 
 let isUserSetModalOpenAtom: Atom<boolean>;
@@ -29,7 +27,6 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
   isCatRedactModalOpenAtom ??= atom(false);
 
   const rights = useScheduleWidgetRightsContext();
-  const auth = useAuth();
   const roleUser = extractScheduleWidgetRoleUser(rights.schedule, 0, role);
   const catsRedact = useIsRedactArea({
     redactable: true,
@@ -48,7 +45,7 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
         schedule={rights.schedule}
         role={role}
       />
-      {(rights.isCanTotalRedact || (rights.isCanRedact && auth && auth.login === roleUser?.login)) && (
+      {(rights.isCanTotalRedact || (rights.isCanRedact && rights.myUser?.mi === roleUser?.mi)) && (
         <LazyIcon
           className="pointer"
           icon="Edit01"
@@ -63,8 +60,12 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
         <ModalBody>
           {rights.schedule.ctrl.users.map((user, useri) => {
             if (
-              (roleUser && user.login === roleUser.login) ||
-              (role.mi === 0 && (user.R ?? rights.schedule.ctrl.defu) !== mainRoleRights)
+              (roleUser && user.mi === roleUser.mi) ||
+              (role.mi === 0 &&
+                !scheduleWidgetUserRights.checkIsHasRights(
+                  user.R ?? rights.schedule.ctrl.defu,
+                  ScheduleWidgetUserRoleRight.TotalRedact,
+                ))
             )
               return null;
 
@@ -72,19 +73,19 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
               <TheIconSendButton
                 key={useri}
                 confirm={translateBase(BaseLocaleKey.ScheduleUserTakeRole, {
-                  u: user?.fio || user?.nick || '?',
+                  u: takeScheduleWidgetUserName(rights, user) || '?',
                   t: role.title,
                 })}
                 className="flex gap-2 pointer"
                 icon="User"
-                postfix={user?.fio || user?.nick}
+                postfix={takeScheduleWidgetUserName(rights, user)}
                 onSuccess={isUserSetModalOpenAtom.reset}
                 onSend={() =>
                   schRolesTsjrpcClient.setRoleUser({
                     props: roleScopeProps,
                     value: user.mi,
                     roleTitle: role.title,
-                    userName: user.fio ?? user.nick ?? '?',
+                    userName: takeScheduleWidgetUserName(rights, user) || '?',
                   })
                 }
               />
@@ -159,7 +160,7 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
             icon="SchoolReportCard"
             value={role}
             fieldKey="title"
-            postfix={roleUser && ' - ' + (roleUser.fio || roleUser.nick)}
+            postfix={roleUser && ' - ' + takeScheduleWidgetUserName(rights, roleUser)}
             onSend={value => schRolesTsjrpcClient.setRoleTitle({ props: roleScopeProps, value, prevTitle: role.title })}
           />
           <LazyIconConfigurator
@@ -180,7 +181,7 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
                 <TheIconSendButton
                   icon="UserRemove01"
                   confirm={translateBase(BaseLocaleKey.ScheduleUserNoMoreRole, {
-                    u: roleUser.fio || roleUser.nick || '?',
+                    u: takeScheduleWidgetUserName(rights, roleUser) || '?',
                     t: role.title,
                   })}
                   postfix={translateBase(BaseLocaleKey.ScheduleFreeRole)}

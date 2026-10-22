@@ -38,7 +38,7 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
   const { editIcon, isRedact } = useIsRedactArea({
     redactable: true,
     redact: isIndividualReplacement || null,
-    canRedact: rights.isCanRedact,
+    canRedact: rights.isCanAddEvents,
     isShowDoneButton: true,
     icon: 'DashboardSquareEdit',
   });
@@ -96,7 +96,8 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
 
             const isNeighbour = moveEventMi === event.mi || moveEventMi === eventa[eventi + 1]?.mi;
             const insertControl = (beforei: number) =>
-              isRedact && (
+              isRedact &&
+              rights.isCanAddEvents && (
                 <div className={'insert-panel flex gap-2' + (beforei === 0 ? ' first' : '')}>
                   <StrongDiv
                     className="flex gap-2 pointer"
@@ -161,7 +162,8 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
                   isShowPeriodsNotTs={isShowPeriodsNotTs}
                   onClickOnTs={() => setIsShowTsNotPeriods(isNIs)}
                   bottomContent={isRedact =>
-                    isRedact && (
+                    isRedact &&
+                    rights.isCanAddEvents && (
                       <>
                         {isReplacementInProcess && moveEventMi === event.mi ? (
                           <TheIconLoading />
@@ -180,7 +182,7 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
                     )
                   }
                 />
-                {!isIndividualReplacement && isRedact && (
+                {!isIndividualReplacement && isRedact && rights.isCanAddEvents && (
                   <>
                     <TheIconLoading isLoading={isReplacementInProcess && moveEventMi === event.mi}>
                       <LazyIcon
@@ -218,7 +220,7 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
 
             return node;
           })}
-          {isRedact && moveEventMi === null && (
+          {isRedact && rights.isCanAddEvents && moveEventMi === null && (
             <ScheduleWidgetEventTypeList
               postfix={translateBase(BaseLocaleKey.ScheduleAddEvent)}
               icon="CreditCardAdd"

@@ -1,4 +1,6 @@
 import md5 from 'md5';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { translateBase } from 'shared/utils/locale/base';
 import { ScheduleWidgetUserMi, ScheduleWidgetWid } from './main';
 import { ScheduleWidgetRightsCtrl, ScheduleWidgetRightTexts } from './rights-constructor';
 
@@ -10,6 +12,10 @@ export enum ScheduleWidgetUserRoleRight {
   ReadTitles,
   ReadSpecials,
   RedactUsers,
+  AddDays,
+  AddEvents,
+  RedactEventContent,
+  RedactComsList,
 }
 
 export enum CustomAttUseTaleId {
@@ -45,7 +51,63 @@ const rightsOrder = [
   ScheduleWidgetUserRoleRight.Redact,
   ScheduleWidgetUserRoleRight.RedactUsers,
   ScheduleWidgetUserRoleRight.TotalRedact,
+  ScheduleWidgetUserRoleRight.AddDays,
+  ScheduleWidgetUserRoleRight.AddEvents,
+  ScheduleWidgetUserRoleRight.RedactEventContent,
+  ScheduleWidgetUserRoleRight.RedactComsList,
 ];
+
+const rightTextFallbacks: Record<
+  number,
+  { title: string; role: [string, string]; description: string }
+> = {
+  [ScheduleWidgetUserRoleRight.AddDays]: {
+    title: 'Добавление дней',
+    role: ['Организатор дней', 'Организатора дней'],
+    description: 'Создание дней в расписании',
+  },
+  [ScheduleWidgetUserRoleRight.AddEvents]: {
+    title: 'Добавление событий',
+    role: ['Составитель событий', 'Составителя событий'],
+    description: 'Добавление событий в дни расписания',
+  },
+  [ScheduleWidgetUserRoleRight.RedactEventContent]: {
+    title: 'Редактирование событий',
+    role: ['Редактор событий', 'Редактора событий'],
+    description: 'Изменение темы, времени и описания событий',
+  },
+  [ScheduleWidgetUserRoleRight.RedactComsList]: {
+    title: 'Редактирование композиций',
+    role: ['Редактор композиций', 'Редактора композиций'],
+    description: 'Изменение списка композиций в событиях',
+  },
+};
+
+const makeRightText = (
+  id: ScheduleWidgetUserRoleRight,
+  titleKey: BaseLocaleKey,
+  roleKeys: [BaseLocaleKey, BaseLocaleKey],
+  descriptionKey: BaseLocaleKey,
+): ScheduleWidgetRightTexts<ScheduleWidgetUserRoleRight> => {
+  const fallback = rightTextFallbacks[id];
+
+  return {
+    id,
+    individual: true,
+    get title() {
+      return translateBase(titleKey) || fallback.title;
+    },
+    get role() {
+      return [
+        translateBase(roleKeys[0]) || fallback.role[0],
+        translateBase(roleKeys[1]) || fallback.role[1],
+      ];
+    },
+    get description(): [string] {
+      return [translateBase(descriptionKey) || fallback.description];
+    },
+  };
+};
 
 const textList: ScheduleWidgetRightTexts<ScheduleWidgetUserRoleRight>[] = [
   {
@@ -84,6 +146,30 @@ const textList: ScheduleWidgetRightTexts<ScheduleWidgetUserRoleRight>[] = [
     role: ['Управляющий', 'Управляющего'],
     description: ['Выдача прав, просмотр спец. информации'],
   },
+  makeRightText(
+    ScheduleWidgetUserRoleRight.AddDays,
+    BaseLocaleKey.ScheduleRightAddDays,
+    [BaseLocaleKey.ScheduleRightAddDaysRole, BaseLocaleKey.ScheduleRightAddDaysRoleGen],
+    BaseLocaleKey.ScheduleRightAddDaysDescription,
+  ),
+  makeRightText(
+    ScheduleWidgetUserRoleRight.AddEvents,
+    BaseLocaleKey.ScheduleRightAddEvents,
+    [BaseLocaleKey.ScheduleRightAddEventsRole, BaseLocaleKey.ScheduleRightAddEventsRoleGen],
+    BaseLocaleKey.ScheduleRightAddEventsDescription,
+  ),
+  makeRightText(
+    ScheduleWidgetUserRoleRight.RedactEventContent,
+    BaseLocaleKey.ScheduleRightRedactEventContent,
+    [BaseLocaleKey.ScheduleRightRedactEventContentRole, BaseLocaleKey.ScheduleRightRedactEventContentRoleGen],
+    BaseLocaleKey.ScheduleRightRedactEventContentDescription,
+  ),
+  makeRightText(
+    ScheduleWidgetUserRoleRight.RedactComsList,
+    BaseLocaleKey.ScheduleRightRedactComsList,
+    [BaseLocaleKey.ScheduleRightRedactComsListRole, BaseLocaleKey.ScheduleRightRedactComsListRoleGen],
+    BaseLocaleKey.ScheduleRightRedactComsListDescription,
+  ),
 ];
 
 export const scheduleWidgetUserRights = new ScheduleWidgetRightsCtrl(textList, rightsOrder);

@@ -13,11 +13,9 @@ import { itNNil } from 'shared/utils';
 import { checkIsNaN } from 'shared/utils/checkIs';
 import { takeCorrectComIndex, takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
 import { objectLength } from 'shared/utils/object.utils';
-import { searchConstants, searchRate } from 'shared/utils/searchRate';
+import { searchConstants, searchRate, sortBySearchRate } from 'shared/utils/searchRate';
 import { CmComWordFounds } from '../model/com';
 import { cmComWidNumberDictAtom } from '../state/atoms';
-
-const sortItemsByRate = (a: { rate: number }, b: { rate: number }) => a.rate - b.rate;
 
 export const CmComWithComListSearchFilterInput = (props: {
   comws: CmComWid[];
@@ -114,7 +112,7 @@ export const CmComWithComListSearchFilterInput = (props: {
       takeCorrectComNumber,
     );
 
-    result.comws = searchs.sort(sortItemsByRate).map(com => com.item.w);
+    result.comws = searchs.sort(sortBySearchRate).map(com => com.item.w);
 
     result.founds = searchs.reduce((acc, { item: com, pos }) => {
       const orderwWordiDict: PRecord<CmComOrderWid, Record<number, { linei: number; wordi: number }>> = {};

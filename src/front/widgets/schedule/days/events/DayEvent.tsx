@@ -13,6 +13,7 @@ import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.method
 import styled from '@emotion/styled';
 import { ReactNode, useMemo } from 'react';
 import {
+  checkIsCanRedactScheduleComsList,
   indexScheduleGetEventFinishMs,
   IScheduleWidget,
   IScheduleWidgetDay,
@@ -55,9 +56,13 @@ export function ScheduleWidgetDayEvent(props: Props) {
   let timerClassNamePlus = '';
   const rights = useScheduleWidgetRightsContext();
   const eventType = props.schedule.types[props.event.type];
+  const myUserId = rights.myUser?.id;
+  const isCanRedactComsList =
+    myUserId != null && checkIsCanRedactScheduleComsList(props.schedule, myUserId, props.dayi, props.event.mi);
+  const isCanRedactEvent = rights.isCanRedactEventContent || isCanRedactComsList;
   const { editIcon, isRedact, isSelfRedact, setIsSelfRedact } = useIsRedactArea({
     redactable: true,
-    canRedact: rights.isCanRedact,
+    canRedact: isCanRedactEvent,
     isShowDoneButton: true,
     icon: 'PropertyEdit',
   });
@@ -198,7 +203,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
               topicBox={props.event}
             />
           </div>
-          {(props.isForceCanRedact ?? rights.isCanRedact)
+          {(props.isForceCanRedact ?? isCanRedactEvent)
             ? isExpand || isRedact
               ? editIcon
               : (props.event.dsc || objectLength(props.event.atts) !== 0) && <LazyIcon icon="ArrowDown01" />
@@ -209,15 +214,17 @@ export function ScheduleWidgetDayEvent(props: Props) {
           <StyledContent className="no-scrollbar">
             <div className="sign-line" />
             {isRedact ? (
-              <DayEventRedactControls
-                isPastEvent={isPrevEvent || isCurrentEvent}
-                eventTopic={props.event.topic}
-                eventTypeTitle={eventType.title}
-                isSecret={props.event.secret}
-                tgInform={props.event.tgInform}
-                dayEventScopeProps={dayEventScopeProps}
-                eventTm={eventTm}
-              />
+              rights.isCanRedactEventContent && (
+                <DayEventRedactControls
+                  isPastEvent={isPrevEvent || isCurrentEvent}
+                  eventTopic={props.event.topic}
+                  eventTypeTitle={eventType.title}
+                  isSecret={props.event.secret}
+                  tgInform={props.event.tgInform}
+                  dayEventScopeProps={dayEventScopeProps}
+                  eventTm={eventTm}
+                />
+              )
             ) : (
               !!props.event.secret && (
                 <TheIconButton
@@ -227,9 +234,9 @@ export function ScheduleWidgetDayEvent(props: Props) {
                 />
               )
             )}
-            {(isRedact || props.event.dsc) && (
+            {((isRedact && rights.isCanRedactEventContent) || props.event.dsc) && (
               <StrongEditableField
-                isRedact={isRedact}
+                isRedact={isRedact && rights.isCanRedactEventContent}
                 multiline
                 value={props.event}
                 fieldKey="dsc"
@@ -244,6 +251,9 @@ export function ScheduleWidgetDayEvent(props: Props) {
                 <ScheduleWidgetBindAtts
                   atts={props.event.atts}
                   schedule={props.schedule}
+                  canRedactAtt={attKey =>
+                    attKey === '[cm]:coms' ? isCanRedactComsList : undefined
+                  }
                   forTitle={translateBase(BaseLocaleKey.ScheduleInsertAttachment, { t: eventType.title })}
                   onAddAttSend={(attKey, defaultValue) =>
                     schDayEventsTsjrpcClient.addAttachment({ props: dayEventScopeProps, attKey, defaultValue })

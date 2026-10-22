@@ -1,5 +1,5 @@
 import { bigint, bigserial, doublePrecision, index, jsonb, pgTable, text } from 'p/d';
-import { SokiAuthLogin } from 'shared/api';
+import { UserId } from 'shared/api';
 import {
   QuestionerBlankUser,
   QuestionerBlankWid,
@@ -22,7 +22,7 @@ export const questionerBlankDB = pgTable(
 
     tmp: jsonb('tmp').$type<PRecord<QuestionerTemplateId, QuestionerTemplate>>().notNull(),
     ord: jsonb('ord').$type<QuestionerTemplateId[]>().notNull(),
-    team: jsonb('team').$type<PRecord<SokiAuthLogin, QuestionerBlankUser>>().notNull(),
+    team: jsonb('team').$type<PRecord<UserId, QuestionerBlankUser>>().notNull(),
 
     mod: bigint('mod', { mode: 'number' })
       .notNull()

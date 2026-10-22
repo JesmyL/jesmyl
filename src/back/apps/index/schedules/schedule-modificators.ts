@@ -1,17 +1,75 @@
+import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { scheduleDB } from 'back/drizzle.schema';
 import { dbUpdate } from 'back/drizzle/drizzle.db';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
+import { takeLogginedAuthOrThrow } from 'back/utils';
 import { eq } from 'drizzle-orm';
-import { IScheduleWidget, IScheduleWidgetDay, ScheduleDayScopeProps, ScheduleScopeProps } from 'shared/api';
+import {
+  checkIsCanRedactScheduleComsList,
+  IScheduleWidget,
+  IScheduleWidgetDay,
+  LocalSokiAuth,
+  ScheduleDayScopeProps,
+  ScheduleScopeProps,
+  ScheduleWidgetDayEventMi,
+  ScheduleWidgetDayi,
+  scheduleWidgetUserRights,
+  ScheduleWidgetUserRoleRight,
+} from 'shared/api';
 import { Bool } from 'shared/enums';
 import { checkIsEq } from 'shared/utils/checkIsEq';
 import { deepClone } from 'shared/utils/clone';
 import { objectKeys, objectLength } from 'shared/utils/object.utils';
+import { takeUserTiny } from '../tinies/userTiny';
 import { takeScheduleWidgetTiny } from './schedule.tiny';
 import { scheduleTgInformer } from './tg-bot-inform/tg-inform';
 import { schServerTsjrpcShareMethods } from './tsjrpc.shares';
 
 const uncheckedKeysSet = new Set<keyof IScheduleWidget>(['w', 'm']);
+
+export const throwIfNoExternalMutationAuth = (tool: ServerTSJRPCTool) => {
+  if (tool.client != null) takeLogginedAuthOrThrow(tool.auth);
+};
+
+export const throwIfNoScheduleTotalRedact = async (sch: IScheduleWidget, auth: LocalSokiAuth | nil) => {
+  const authUser = await takeUserTiny({ l: takeLogginedAuthOrThrow(auth).login }, false);
+  const schUser = authUser && sch.ctrl.users.find(user => user.id === authUser.id);
+
+  if (
+    schUser == null ||
+    !scheduleWidgetUserRights.checkIsHasRights(schUser.R ?? sch.ctrl.defu, ScheduleWidgetUserRoleRight.TotalRedact)
+  )
+    throw new Error('Нет прав на изменение прав участников расписания');
+};
+
+export const throwIfNoScheduleComsListRedact = async (
+  sch: IScheduleWidget,
+  auth: LocalSokiAuth | nil,
+  dayi: ScheduleWidgetDayi,
+  eventMi: ScheduleWidgetDayEventMi,
+) => {
+  const loggedAuth = takeLogginedAuthOrThrow(auth);
+  const authUser = await takeUserTiny({ l: loggedAuth.login }, false);
+
+  if (authUser) {
+    if (checkIsCanRedactScheduleComsList(sch, authUser.id, dayi, eventMi)) return;
+
+    const schUser = sch.ctrl.users.find(user => user.id === authUser.id);
+
+    if (
+      schUser &&
+      scheduleWidgetUserRights.checkIsHasRights(schUser.R ?? sch.ctrl.defu, ScheduleWidgetUserRoleRight.TotalRedact)
+    )
+      return;
+  }
+
+  try {
+    await throwIfNoUserScopeAccessRight(loggedAuth, 'cm', 'EVENT', 'U');
+  } catch (error) {
+    if (typeof error !== 'string') throw error;
+    throw new Error('Нет прав на изменение списка композиций события');
+  }
+};
 
 export const modifySchedule =
   <Props extends { props: ScheduleScopeProps }>(
@@ -19,6 +77,8 @@ export const modifySchedule =
     modifier: (sch: IScheduleWidget, props: Props, tool: ServerTSJRPCTool) => PromiseOr<string | null>,
   ) =>
   async (props: Props, tool: ServerTSJRPCTool) => {
+    throwIfNoExternalMutationAuth(tool);
+
     const sch = await takeScheduleWidgetTiny({ w: props.props.schw });
     const clone = deepClone(sch);
 
@@ -57,7 +117,12 @@ export const modifySchedule =
 
 export const modifyScheduleDay = <Props extends { props: ScheduleDayScopeProps }>(
   isNeedRefreshTgInformTime: boolean,
-  modifier: (day: IScheduleWidgetDay, props: Props, sch: IScheduleWidget, tool: ServerTSJRPCTool) => string | null,
+  modifier: (
+    day: IScheduleWidgetDay,
+    props: Props,
+    sch: IScheduleWidget,
+    tool: ServerTSJRPCTool,
+  ) => PromiseOr<string | null>,
 ) =>
   modifySchedule<Props>(isNeedRefreshTgInformTime, (sch, props, tool) => {
     const day = sch.days[props.props.dayi];

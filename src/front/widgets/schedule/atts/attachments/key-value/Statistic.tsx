@@ -1,6 +1,7 @@
 import { translateBase } from '#basis/locale';
 import { CopyTextButton } from '#shared/ui/CopyTextButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
+import { takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
 import { CustomAttUseTaleId, ScheduleWidgetAppAttCustomizableValueItem, ScheduleWidgetCleans } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itNNil } from 'shared/utils';
@@ -60,7 +61,7 @@ export function ScheduleKeyValueListAttStatistic(props: { list: ScheduleWidgetAp
 
                 if (ScheduleWidgetCleans.checkIsTaleIdUnit(key, CustomAttUseTaleId.Users)) {
                   const user = rights.schedule.ctrl.users.find(user => user.mi === id);
-                  return user?.fio || user?.nick || key;
+                  return user ? takeScheduleWidgetUserName(rights, user) || key : key;
                 }
 
                 if (ScheduleWidgetCleans.checkIsTaleIdUnit(key, CustomAttUseTaleId.Roles)) {
@@ -94,7 +95,7 @@ export function ScheduleKeyValueListAttStatistic(props: { list: ScheduleWidgetAp
 
                       if (ScheduleWidgetCleans.checkIsTaleIdUnit(val, CustomAttUseTaleId.Users)) {
                         const user = rights.schedule.ctrl.users.find(user => user.mi === id);
-                        return user?.fio || user?.nick;
+                        return user ? takeScheduleWidgetUserName(rights, user) : null;
                       }
 
                       if (ScheduleWidgetCleans.checkIsTaleIdUnit(val, CustomAttUseTaleId.Roles)) {

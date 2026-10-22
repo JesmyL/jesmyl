@@ -10,7 +10,9 @@ import { CmEditorMeetingEventEditProps } from '../model/model';
 import { CmEditorMeetingEventEditsHistoryModalInner } from './EventEditsHistoryModal';
 import { CmEditorMeetingEventSendComsModalInner } from './SendComsInEventModalInner';
 
-export const CmEditorMeetingEventEdits = (props: Required<CmEditorMeetingEventEditProps>) => {
+export const CmEditorMeetingEventEdits = (
+  props: Required<CmEditorMeetingEventEditProps> & { isCanReadHistory: boolean },
+) => {
   const selectedComws = useAtomValue(cmComSelectedComwsAtom);
 
   return (
@@ -35,24 +37,26 @@ export const CmEditorMeetingEventEdits = (props: Required<CmEditorMeetingEventEd
         </WithAtom>
       )}
 
-      <WithAtom init={false}>
-        {isOpenHistoryModalAtom => (
-          <>
-            <BottomPopupItem
-              title={translateBase(BaseLocaleKey.CmEditorDayHistory)}
-              icon="WorkHistory"
-              onClick={isOpenHistoryModalAtom.do.toggle}
-            />
-
-            <Modal openAtom={isOpenHistoryModalAtom}>
-              <CmEditorMeetingEventEditsHistoryModalInner
-                dayi={props.dayi}
-                schw={props.schw}
+      {!props.isCanReadHistory || (
+        <WithAtom init={false}>
+          {isOpenHistoryModalAtom => (
+            <>
+              <BottomPopupItem
+                title={translateBase(BaseLocaleKey.CmEditorDayHistory)}
+                icon="WorkHistory"
+                onClick={isOpenHistoryModalAtom.do.toggle}
               />
-            </Modal>
-          </>
-        )}
-      </WithAtom>
+
+              <Modal openAtom={isOpenHistoryModalAtom}>
+                <CmEditorMeetingEventEditsHistoryModalInner
+                  dayi={props.dayi}
+                  schw={props.schw}
+                />
+              </Modal>
+            </>
+          )}
+        </WithAtom>
+      )}
     </>
   );
 };

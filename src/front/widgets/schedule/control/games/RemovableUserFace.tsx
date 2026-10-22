@@ -3,6 +3,7 @@ import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIcon
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
+import { takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
 import { schGamesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { Atom, atom } from 'atomaric';
 import { IScheduleWidgetUser } from 'shared/api';
@@ -23,6 +24,7 @@ export function ScheduleWidgetRemovableUserFace({ user, isStriked, buttons }: Pr
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
   const isUserStriked = isStriked ?? rights.schedule.games?.strikedUsers?.includes(user.mi);
+  const userName = takeScheduleWidgetUserName(rights, user);
 
   return (
     <>
@@ -30,7 +32,7 @@ export function ScheduleWidgetRemovableUserFace({ user, isStriked, buttons }: Pr
         key={user.mi}
         className="flex gap-2 my-2"
       >
-        <span className={isUserStriked ? 'text-xKO' : ''}>{user.fio}</span>
+        <span className={isUserStriked ? 'text-xKO' : ''}>{userName}</span>
         <ScheduleWidgetUserPhoto
           user={user}
           justRenderItOnEmpty={<ScheduleWidgetUserTakePhoto user={user} />}
@@ -50,14 +52,14 @@ export function ScheduleWidgetRemovableUserFace({ user, isStriked, buttons }: Pr
             schGamesTsjrpcClient.toggleStrikedUser({
               props: scheduleScopeProps,
               userMi: user.mi,
-              userName: user.fio ?? user.nick ?? '',
+              userName,
             })
           }
         />
       </div>
 
       <Modal openAtom={isPhotoOpenAtom}>
-        <ModalHeader>{user.fio}</ModalHeader>
+        <ModalHeader>{userName}</ModalHeader>
         <ScheduleWidgetUserPhoto user={user} />
         <div className="flex center">
           <ScheduleWidgetUserTakePhoto user={user} />

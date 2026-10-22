@@ -9,6 +9,7 @@ import { Atom, atom } from 'atomaric';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
+import { takeScheduleWidgetUserName } from '../useScheduleWidget';
 import { schGeneralTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetRegisterType } from './RegisterType';
 import { ScheduleWidgetUserAddByExcel } from './users/excel/AddByExcel';
@@ -127,13 +128,13 @@ export const ScheduleWidgetControl = () => {
             <ModalHeader>{translateBase(BaseLocaleKey.ScheduleMembers)}</ModalHeader>
             <ModalBody>
               {rights.schedule.ctrl.users.map(user => {
-                if (!user.R || user.login === undefined) return null;
+                if (!user.R) return null;
                 return (
                   <div
                     key={user.mi}
                     className="my-2"
                   >
-                    {user.fio && user.fio !== user.nick ? `${user.fio} (${user.nick})` : user.nick}
+                    {takeScheduleWidgetUserName(rights, user)}
                   </div>
                 );
               })}

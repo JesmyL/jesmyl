@@ -6,6 +6,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
+import { takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
 import { ScheduleWidgetRightControlList } from '#widgets/schedule/control/RightControlList';
 import { schAttachmentTypesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { Atom, atom, useAtomValue } from 'atomaric';
@@ -353,6 +354,7 @@ export function ScheduleWidgetCustomAtt(props: {
               rightCtrl={scheduleWidgetUserRights}
               R={props.tatt[whoCan.rule]}
               isReverse
+              isHidden={type => !!type.individual}
               isDisabled={type => myBalance < scheduleWidgetUserRights.rightLevel(type.id) + 2}
               onSend={value =>
                 schAttachmentTypesTsjrpcClient.setWhoCanLevel({
@@ -373,7 +375,7 @@ export function ScheduleWidgetCustomAtt(props: {
                   key={user.mi}
                   className="my-2 flex-max"
                   disabled={!user.R || isForceChecked}
-                  postfix={user.fio}
+                  postfix={takeScheduleWidgetUserName(rights, user)}
                   icon={
                     isForceChecked || (whoCan.rule === 'U' ? canUpdateUsers : canReadUsers).includes(user.mi)
                       ? 'CheckmarkSquare02'
@@ -385,7 +387,7 @@ export function ScheduleWidgetCustomAtt(props: {
                       rule: `${whoCan.rule}s`,
                       userMi: user.mi,
                       tattTitle: props.tatt.title,
-                      userName: user.fio ?? user.nick ?? '??',
+                      userName: takeScheduleWidgetUserName(rights, user) || '??',
                     })
                   }
                 />

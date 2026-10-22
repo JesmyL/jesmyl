@@ -1,6 +1,8 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
+import { takeUserLoginsByIds, takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { takeLogginedAuthOrThrow } from 'back/utils';
+import { UserId } from 'shared/api';
 import {
   StoragesTsjrpcCellSelector,
   StoragesTsjrpcModel,
@@ -15,6 +17,7 @@ import {
   StoragesRack,
   StoragesRackCard,
   StoragesRackCore,
+  StoragesRackMember,
   StoragesRackMemberRole,
   StoragesRackStatus,
   StoragesRackStorageSaved,
@@ -37,6 +40,7 @@ import { checkIsArray, checkIsObject } from 'shared/utils/checkIs';
 import { makeDeepProxyObject } from 'shared/utils/makeDeepProxyObject';
 import { objectGroupBy, objectKeys, objectLength } from 'shared/utils/object.utils';
 import { storagesDirStorage } from './file-stores';
+import { takeMigratedRack } from './migrate-rack-team';
 import { storagesStoresSharesServerTsjrpcMethods } from './tsjrpc.shares';
 
 export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseServer<StoragesTsjrpcModel> {
@@ -54,9 +58,20 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
             return;
           }
 
-          const login = auth.login;
-          const { items, maxMod } = storagesDirStorage.getFreshItems(lastModfiedAt);
-          const racks = items.filter(rack => rack.team[login]?.role);
+          const authUser = await takeUserTiny({ l: auth.login });
+          const { items, maxMod: initialMaxMod } = storagesDirStorage.getFreshItems(lastModfiedAt);
+          let maxMod = initialMaxMod;
+
+          for (let i = 0; i < items.length; i++) {
+            const migratedRack = await takeMigratedRack(items[i].w);
+            if (migratedRack == null) continue;
+
+            items[i] = migratedRack;
+            const mod = storagesDirStorage.getItemModTime(migratedRack.w);
+            if (mod != null && mod > maxMod) maxMod = mod;
+          }
+
+          const racks = items.filter(rack => rack.team[authUser.id]?.role);
           let rackwRack: Partial<Record<StoragesRackWid, StoragesRackStorageSaved[]>>;
 
           if (racks.length)
@@ -82,14 +97,13 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
         createRack: async ({ title }, tool) => {
           const auth = takeLogginedAuthOrThrow(tool.auth);
           if (await throwIfNoUserScopeAccessRight(auth?.login, 'storages', 'LIST', 'C')) throw '';
-          const login = auth.login;
+          const authUser = await takeUserTiny({ l: auth.login });
 
           const { item, mod } = await storagesDirStorage.createItem(store => ({
             ...store,
             title,
             team: {
-              [login]: {
-                fio: auth.fio ?? auth.nick ?? '??',
+              [authUser.id]: {
                 role: StoragesRackMemberRole.Creator,
               },
             },
@@ -100,9 +114,15 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           return { value: { rack: item, lastModfiedAt: mod } };
         },
 
-        addRackMember: updateRack((rack, { login, member }) => {
-          rack.team[login] = member;
-        }),
+        addRackMember: async (props, tool) => {
+          const memberUser = await takeUserTiny({ l: props.login });
+
+          return updateRack(
+            (rack, props: StoragesTsjrpcRackSelector & { member: StoragesRackMember }) => {
+              rack.team[memberUser.id] = props.member;
+            },
+          )(props, tool);
+        },
 
         setRackIcon: updateRack((rack, { icon }) => {
           rack.icon = icon;
@@ -496,9 +516,13 @@ function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret exte
   return async (props: Props, tool: ServerTSJRPCTool): Promise<Ret> => {
     const auth = takeLogginedAuthOrThrow(tool.auth);
     if (await throwIfNoUserScopeAccessRight(auth.login, 'storages', 'LIST', 'U')) throw '';
-    const login = auth.login;
+    const authUser = await takeUserTiny({ l: auth.login });
+    const authUserId = authUser.id;
     let ret: Ret = undefined!;
     let parentRack = null as StoragesRackStorageSaved | nil;
+
+    const existingRack = await takeMigratedRack(props.rackw);
+    if (existingRack != null && 'parent' in existingRack) await takeMigratedRack(existingRack.parent);
 
     const updated = storagesDirStorage.updateItem(props.rackw, rack => {
       if (!('parent' in rack)) {
@@ -514,7 +538,8 @@ function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret exte
         },
         onSet: (_, keys, key) => {
           if ((keys[0] ?? key) in rackCore) return true;
-          if (!parentRack?.team[login]?.role) throw 'Нет прав на это действие (изменение в родительском стеллаже)';
+          if (!parentRack?.team[authUserId]?.role)
+            throw 'Нет прав на это действие (изменение в родительском стеллаже)';
           return true;
         },
       });
@@ -532,7 +557,7 @@ function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret exte
     if (parentRack != null && !('parent' in parentRack))
       storagesStoresSharesServerTsjrpcMethods.refreshRacks(
         { maxMod: mod, racks: [parentRack] },
-        { logins: objectKeys(parentRack.team) },
+        { logins: await takeUserLoginsByIds(objectKeys(parentRack.team).map(key => +key as UserId)) },
       );
 
     if ('parent' in item) {
@@ -544,7 +569,7 @@ function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret exte
 
     storagesStoresSharesServerTsjrpcMethods.refreshRacks(
       { maxMod: mod, racks: [rack] },
-      { logins: objectKeys(rack.team) },
+      { logins: await takeUserLoginsByIds(objectKeys(rack.team).map(key => +key as UserId)) },
     );
 
     return ret;

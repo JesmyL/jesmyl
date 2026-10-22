@@ -1,6 +1,39 @@
-import { IScheduleWidget, IScheduleWidgetDay, ScheduleWidgetCleans, ScheduleWidgetDayi } from 'shared/api';
+import {
+  IScheduleWidget,
+  IScheduleWidgetDay,
+  ScheduleWidgetCleans,
+  ScheduleWidgetDayEventMi,
+  ScheduleWidgetDayi,
+  scheduleWidgetUserRights,
+  ScheduleWidgetUserRoleRight,
+  UserId,
+} from 'shared/api';
 import { howMillisecondsInDay, howMillisecondsInMin } from 'shared/const/ms';
 import { checkIsNumber } from 'shared/utils/checkIs';
+
+export const checkIsCanRedactScheduleComsList = (
+  schedule: IScheduleWidget,
+  userId: UserId,
+  dayi?: ScheduleWidgetDayi | nil,
+  eventMi?: ScheduleWidgetDayEventMi | nil,
+) => {
+  const ctrl = schedule.ctrl;
+  const comsRights = ctrl.comsRights;
+
+  if (comsRights?.users?.includes(userId)) return true;
+
+  if (dayi != null) {
+    if (eventMi != null && comsRights?.events?.[dayi]?.[eventMi]?.includes(userId)) return true;
+    if (comsRights?.days?.[dayi]?.includes(userId)) return true;
+  }
+
+  const userR = ctrl.users.find(user => user.id === userId)?.R ?? ctrl.defu;
+
+  return (
+    scheduleWidgetUserRights.checkIsHasIndividualRights(userR, ScheduleWidgetUserRoleRight.RedactComsList) ||
+    scheduleWidgetUserRights.checkIsHasRights(userR, ScheduleWidgetUserRoleRight.TotalRedact)
+  );
+};
 
 export const indexScheduleGetDayStartMs = (schedule: IScheduleWidget, dayi: ScheduleWidgetDayi) => {
   return schedule.start + howMillisecondsInDay * dayi - (schedule.withTech ? howMillisecondsInDay : 0);

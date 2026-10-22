@@ -2,7 +2,7 @@ import { useConnectionState } from '#basis/lib/useConnectionState';
 import { translateBase } from '#basis/locale';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
-import { useAuth, useIndexSchedules } from '$index/shared/state';
+import { useAuth, useIndexSchedules, useUserInfoDict } from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { useScheduleCurrentSchwContext, useScheduleScopePropsContext } from '../complect/lib/contexts';
@@ -16,7 +16,9 @@ export const ScheduleWidgetPage = () => {
   const schedule = schedules?.find(({ w }) => w === schw);
   const connectionNode = useConnectionState();
   const auth = useAuth();
+  const { byLogin } = useUserInfoDict();
   const scheduleScopeProps = useScheduleScopePropsContext();
+  const myUserId = auth.login ? byLogin.get(auth.login)?.id : null;
 
   useFixActualSchw(schw);
 
@@ -46,7 +48,7 @@ export const ScheduleWidgetPage = () => {
         content={
           schedule ? (
             schedule.start === 0 ? (
-              schedule.ctrl.users.some(user => user.login === auth.login) ? (
+              schedule.ctrl.users.some(user => user.id === myUserId) ? (
                 <>{translateBase(BaseLocaleKey.ScheduleRequestSent)}</>
               ) : (
                 <SendButton

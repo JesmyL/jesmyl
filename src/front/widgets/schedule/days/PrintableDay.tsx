@@ -36,6 +36,11 @@ export function ScheduleWidgetPrintableDay(props: ScheduleWidgetDayProps & { win
         isCanReadSpecials: false,
         isCanReadTitles: false,
         isCanRedact: false,
+        isCanRedactUsers: false,
+        isCanAddDays: false,
+        isCanAddEvents: false,
+        isCanRedactEventContent: false,
+        isCanRedactComsList: false,
       }}
     >
       <StyledForPrint

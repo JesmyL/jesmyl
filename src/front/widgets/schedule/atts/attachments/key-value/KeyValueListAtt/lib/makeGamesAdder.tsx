@@ -1,7 +1,7 @@
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
-import { ScheduleWidgetRights } from '#widgets/schedule/useScheduleWidget';
+import { ScheduleWidgetRights, takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
 import { makeRegExp } from 'regexpert';
 import {
   customAttUseRights,
@@ -46,7 +46,11 @@ export const scheduleWidgetKeyValueListAttMakeGamesAdder = (
                     value:
                       `####${textToUpperCase(team.title)}\n\n+ ` +
                       team.users
-                        .map(({ mi }) => rights.schedule.ctrl.users.find(user => user.mi === mi)?.fio ?? '')
+                        .map(({ mi }) => {
+                          const user = rights.schedule.ctrl.users.find(user => user.mi === mi);
+
+                          return user ? takeScheduleWidgetUserName(rights, user) : '';
+                        })
                         .filter(itIt)
                         .join('\n+ '),
                   });

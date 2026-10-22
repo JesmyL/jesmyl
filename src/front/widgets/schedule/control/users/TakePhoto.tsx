@@ -5,6 +5,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { getScheduleWidgetUserPhotoStorageKey } from '#widgets/schedule/storage';
+import { takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
 import { indexIDB } from '$index/shared/state';
 import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
@@ -107,7 +108,7 @@ function Camera({ close, user }: Props & { close: () => void }) {
     <>
       <div className="full-size flex column around">
         {error && <div className="text-xKO">{error}</div>}
-        <div>{user.fio}</div>
+        <div>{takeScheduleWidgetUserName(rights, user)}</div>
         <canvas
           ref={canvasRef}
           hidden

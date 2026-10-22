@@ -23,6 +23,7 @@ import { knownStameskaIconNames, knownStameskaIconNamesMd5Hash } from 'shared/va
 import { StameskaIconPack } from 'stameska-icon/utils';
 import { WebSocket } from 'ws';
 import { indexStameskaIconsFileStore } from '../../file-stores';
+import { migrateScheduleUsersAndSave } from '../../schedules/migrate-schedule-users';
 import { schServerTsjrpcShareMethods } from '../../schedules/tsjrpc.shares';
 import { takeUserRoleTiny } from '../../tinies/userRoleTiny';
 import { takeUserTiny } from '../../tinies/userTiny';
@@ -41,7 +42,9 @@ export const indexTSJRPCBaseRequestFreshes = {
 
     const isNoAuth = auth == null;
     const login = auth?.login;
-    const someScheduleUser = (user: IScheduleWidgetUser) => user.login === login;
+    const userInfo = login ? await takeUserTiny({ l: login }, false) : null;
+    const userId = userInfo?.id;
+    const someScheduleUser = (user: IScheduleWidgetUser) => user.id === userId;
 
     if (lastModfiedAt && checkIsNotNil(visitInfo)) {
       const baseFileStorage = langLocaleBaseFileStoragesLazy()[visitInfo.langi ?? Langi.Ru];
@@ -63,8 +66,6 @@ export const indexTSJRPCBaseRequestFreshes = {
     }
 
     if (login && client) {
-      const userInfo = await takeUserTiny({ l: login }, false);
-
       if (userInfo && userInfo.m > lastModfiedAt) {
         await refreshUserAccessRights(login, client, userInfo.m);
       } else {
@@ -92,6 +93,8 @@ export const indexTSJRPCBaseRequestFreshes = {
       })
       .from(scheduleDB)
       .where(and(gt(scheduleDB.m, lastModfiedAt), eq(scheduleDB.isRemoved, Bool.False)));
+
+    for (const { sch } of freshSchedules) await migrateScheduleUsersAndSave(sch);
 
     freshSchedules.forEach(({ sch }): number | null => {
       const removedSch = { w: sch.w, isRemoved: 1 } as IScheduleWidget;
@@ -136,7 +139,7 @@ export const indexTSJRPCBaseRequestFreshes = {
         } else {
           if (
             scheduleWidgetUserRights.checkIsHasRights(
-              sch.ctrl.users.find(user => user.login === login)?.R,
+              sch.ctrl.users.find(user => user.id === userId)?.R,
               ScheduleWidgetUserRoleRight.Read,
             )
           )

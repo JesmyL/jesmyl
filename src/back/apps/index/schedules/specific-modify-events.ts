@@ -5,7 +5,7 @@ import {
   ScheduleDayScopeProps,
   ScheduleScopeProps,
   ScheduleWidgetDayListItemTypeBox,
-  SokiAuthLogin,
+  UserId,
 } from 'shared/api';
 import { Eventer } from 'shared/utils';
 
@@ -30,7 +30,7 @@ export const onScheduleUserTgInformSetEvent = Eventer.createValue<
   {
     schProps: ScheduleScopeProps;
     isNotInform: Bool;
-    userLogin: SokiAuthLogin | nil;
+    userId: UserId;
   },
   Promise<{ value: IScheduleWidget; description: string | null }>
 >();

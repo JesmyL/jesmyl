@@ -74,7 +74,7 @@ export const ScheduleWidgetKeyValueListValueItem = ({
     if (!rights.isCanTotalRedact)
       if (ScheduleWidgetCleans.checkIsTaleIdUnit(valueKey, CustomAttUseTaleId.Roles))
         setSelfRedact =
-          !!rights.myUser && extractScheduleWidgetRoleUser(rights.schedule, 0, role)?.login !== rights.myUser.login;
+          !!rights.myUser && extractScheduleWidgetRoleUser(rights.schedule, 0, role)?.mi !== rights.myUser.mi;
       else if (rights.myUser?.li) {
         const id = Math.trunc(valueKey);
         const unit = rights.schedule.lists.units.find(unit => unit.mi === id);

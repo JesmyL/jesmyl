@@ -3,6 +3,7 @@ import { Button } from '#shared/components/ui/button';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
+import { takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
 import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { ReactNode } from 'react';
 import {
@@ -120,20 +121,23 @@ export function ScheduleKeyValueListAtt({
     }
 
     if (customAttUseRights.checkIsHasIndividualRights(att.use, CustomAttUseRights.Users)) {
-      dropdownUsers = [...rights.schedule.ctrl.users].sort((a, b) =>
-        (a.fio || a.nick || '') < (b.fio || b.nick || '') ? -1 : (a.fio || a.nick) === (b.fio || b.nick) ? 0 : 1,
-      );
+      dropdownUsers = [...rights.schedule.ctrl.users].sort((a, b) => {
+        const aName = takeScheduleWidgetUserName(rights, a);
+        const bName = takeScheduleWidgetUserName(rights, b);
+
+        return aName < bName ? -1 : aName === bName ? 0 : 1;
+      });
 
       exclusiveUsers = dropdownUsers.filter(user => {
         return (
-          (user.nick || user.fio) &&
+          takeScheduleWidgetUserName(rights, user) &&
           !attValue.values?.some(
             li => li[0] === user.mi + CustomAttUseTaleId.Users || li[1] === user.mi + CustomAttUseTaleId.Users,
           )
         );
       });
 
-      users = scheduleWidgetKeyValueListAttMakeUsersAdder(att, dayEventAttScopeProps, exclusiveUsers);
+      users = scheduleWidgetKeyValueListAttMakeUsersAdder(att, dayEventAttScopeProps, rights, exclusiveUsers);
     }
 
     const itemNode = (

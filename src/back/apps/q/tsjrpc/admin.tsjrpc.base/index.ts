@@ -1,6 +1,8 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
+import { takeUserLoginsByIds, takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { takeLogginedAuthOrThrow } from 'back/utils';
+import { UserId } from 'shared/api';
 import { QuestionerAdminTsjrpcModel } from 'shared/api/tsjrpc/q/admin.tsjrpc.model';
 import { questionerTextIncludeSymbols } from 'shared/const/q/textIncludeSymbols';
 import { questionerTypeDefaultIfConditionOperatorDict } from 'shared/const/q/typeDefaultIfConditionOperator';
@@ -35,9 +37,9 @@ export const questionerAdminServerTsjrpcBase =
             lastModfiedAt = Math.trunc(lastModfiedAt);
 
             if (auth?.login == null) return;
-            const login = auth?.login;
+            const authUser = await takeUserTiny({ l: auth.login });
             const { items, maxMod } = await questionerBlanksStore.getFreshItems(lastModfiedAt, item =>
-              adminRoles.has(item.team[login]?.r),
+              adminRoles.has(item.team[authUser.id]?.r),
             );
 
             if (items.length) questionerAdminServerTsjrpcShare.updateBlanks({ blanks: items, maxMod }, client);
@@ -262,9 +264,7 @@ export const questionerAdminServerTsjrpcBase =
     }
   })();
 
-const adminRoles = new Set([QuestionerBlankRole.Owner, QuestionerBlankRole.Admin, undefined, null]);
-adminRoles.delete(undefined);
-adminRoles.delete(null);
+const adminRoles = new Set<QuestionerBlankRole | nil>([QuestionerBlankRole.Owner, QuestionerBlankRole.Admin]);
 
 function updateBlank<Args extends QuestionerBlankSelector>(
   updater: (blank: OmitOwn<QuestionerBlank, 'w'>, args: Args) => void,
@@ -273,10 +273,11 @@ function updateBlank<Args extends QuestionerBlankSelector>(
     const auth = takeLogginedAuthOrThrow(tool.auth);
     if (await throwIfNoUserScopeAccessRight(auth.login, 'q', 'EDIT', 'U')) throw '';
 
+    const authUser = await takeUserTiny({ l: auth.login });
     const blank = await questionerBlanksStore.getItem(args.blankw);
 
     if (!blank) throw `Blank ${args.blankw} not found`;
-    if (!adminRoles.has(blank.team[auth.login]?.r)) throw 'Нет прав на это действие 63412393';
+    if (!adminRoles.has(blank.team[authUser.id]?.r)) throw 'Нет прав на это действие 63412393';
 
     updater(blank, args);
     blank.m = Date.now();
@@ -284,7 +285,10 @@ function updateBlank<Args extends QuestionerBlankSelector>(
     const maxMod = await questionerBlanksStore.saveItem(args.blankw, blank);
 
     if (maxMod != null)
-      questionerAdminServerTsjrpcShare.updateBlanks({ blanks: [blank], maxMod }, { logins: objectKeys(blank.team) });
+      questionerAdminServerTsjrpcShare.updateBlanks(
+        { blanks: [blank], maxMod },
+        { logins: await takeUserLoginsByIds(objectKeys(blank.team).map(key => +key as UserId)) },
+      );
   };
 }
 

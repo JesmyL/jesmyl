@@ -22,7 +22,7 @@ export const CmMeetingEventComPackListBlock = ({
           comws={pack.s}
           dayi={dayi}
           eventMi={eventMi}
-          schw={sch.w}
+          sch={sch}
         />
       </div>
 

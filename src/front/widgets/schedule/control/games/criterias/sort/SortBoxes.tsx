@@ -2,6 +2,7 @@ import { translateBase } from '#basis/locale';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
+import { takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
 import styled from '@emotion/styled';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { IScheduleWidgetUser, ScheduleWidgetUserMi } from 'shared/api';
@@ -58,7 +59,6 @@ export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes = function SortBox
 
   const middle = Math.floor((start + end) / 2);
   const currUser: IScheduleWidgetUser | und = sortedUsers[middle];
-
   const addInHistoryRef = useRef<HistoryAdder>(emptyFunc);
 
   if (insertUser == null || currUser == null)
@@ -148,20 +148,24 @@ export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes = function SortBox
 
               setSortedUsers(nextUser ? [nextUser] : []);
             }}
-            confirm={translateBase(BaseLocaleKey.ScheduleUnknownMemberConfirm, { fio: currUser.fio || '' })}
+            confirm={translateBase(BaseLocaleKey.ScheduleUnknownMemberConfirm, {
+              fio: takeScheduleWidgetUserName(rights, currUser),
+            })}
             className={sortedUsers.length > 1 ? 'opacity-0' : undefined}
           />
           {translateBase(BaseLocaleKey.ScheduleWhoHasAdvantage)}
           <TheIconButton
             icon="MessageQuestion"
             onClick={() => setUnknownUsers([...unknownUsers, insertUser.mi])}
-            confirm={translateBase(BaseLocaleKey.ScheduleUnknownMemberConfirm, { fio: insertUser.fio || '' })}
+            confirm={translateBase(BaseLocaleKey.ScheduleUnknownMemberConfirm, {
+              fio: takeScheduleWidgetUserName(rights, insertUser),
+            })}
           />
         </div>
 
         <StyledUserNames className="w-full">
-          <span>{currUser.fio}</span>
-          <span>{insertUser.fio}</span>
+          <span>{takeScheduleWidgetUserName(rights, currUser)}</span>
+          <span>{takeScheduleWidgetUserName(rights, insertUser)}</span>
         </StyledUserNames>
 
         <div className="flex around w-full">

@@ -260,7 +260,7 @@ export function ScheduleWidget({
                     {!schedule.days.length && !schedule.tatts.length && !schedule.types.length && (
                       <ScheduleWidgetCopy schw={schedule.w} />
                     )}
-                    {!schedule.start || (
+                    {!schedule.start || !rights.isCanAddDays || (
                       <TheIconSendButton
                         icon="PlusSign"
                         postfix={translateBase(BaseLocaleKey.ScheduleAddDay)}

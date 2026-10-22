@@ -12,3 +12,9 @@ export const [takeUserTiny, resetUserTiny] = tinyMakerGenerator(
   async mkSimpleWhere => (await db.select().from(userDB).where(mkSimpleWhere(userDB)).limit(1)).at(0),
   it => ({ ...it, uauth: jsonParseSecure(it.auth) }),
 );
+
+export const takeAllUsersTiny = async () =>
+  (await db.select().from(userDB)).map(it => ({ ...it, uauth: jsonParseSecure(it.auth) }));
+
+export const takeUserLoginsByIds = async (ids: UserId[]) =>
+  (await Promise.all(ids.map(id => takeUserTiny({ id }, false)))).filter(user => user != null).map(user => user.l);

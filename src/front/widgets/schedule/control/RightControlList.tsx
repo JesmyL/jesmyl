@@ -34,7 +34,11 @@ export function ScheduleWidgetRightControlList({
       )}
       {rightCtrl.texts.map((type, typei) => {
         if (type.hidden || isHidden?.(type, typei)) return null;
-        const isHas = (type.always || isCan) && rightCtrl.checkIsHasRights(R, type.id);
+        const isHas =
+          (type.always || type.individual || isCan) &&
+          (type.individual
+            ? rightCtrl.checkIsHasIndividualRights(R, type.id)
+            : rightCtrl.checkIsHasRights(R, type.id));
 
         const node = (
           <div
@@ -59,7 +63,7 @@ export function ScheduleWidgetRightControlList({
           </div>
         );
 
-        if (isCan) isCan = isHas;
+        if (isCan && !type.individual) isCan = isHas;
 
         return node;
       })}

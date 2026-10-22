@@ -3,7 +3,9 @@ import { soki } from '#shared/soki';
 import { LocalSokiAuth, UserInfoUnsecure, UserLogin } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { UserAccessRole, UserAccessRoleInfo } from 'shared/model/index/access-rights';
-import { authIDB, indexAppUserInfoDictAtom, indexAppUserRoleInfoDictAtom, indexIDB } from '../state';
+import { authIDB } from '../state/auth-idb';
+import { indexAppUserInfoDictAtom, indexAppUserRoleInfoDictAtom } from '../state/atoms';
+import { indexIDB } from '../state/index-idb';
 
 const tgAuthorize = async ({ auth, token }: { auth: LocalSokiAuth; token: string }) => {
   await authIDB.set.auth(auth);

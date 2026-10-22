@@ -13,6 +13,7 @@ import { ScheduleWidgetCustomAtt } from './custom/CustomAtt';
 
 type Props = {
   isRedact?: boolean;
+  isCanRedactOverride?: boolean;
   tatt?: ScheduleWidgetAppAtt;
   attKey: ScheduleWidgetAttKey;
   typeTitle: ReactNode;
@@ -28,6 +29,7 @@ export function ScheduleWidgetAttFace({
   typeTitle,
   attKey,
   isRedact,
+  isCanRedactOverride,
   isLink,
   customAttTopContent,
   onRemoveAttSend,
@@ -39,7 +41,7 @@ export function ScheduleWidgetAttFace({
 
   if (!scheduleWidgetUserRights.checkIsCan(myUserR, tatt?.R)) return null;
 
-  const isCanRedact = scheduleWidgetUserRights.checkIsCan(myUserR, tatt?.U);
+  const isCanRedact = isCanRedactOverride ?? scheduleWidgetUserRights.checkIsCan(myUserR, tatt?.U);
 
   return (
     <>

@@ -2,6 +2,7 @@ import { translateBase } from '#basis/locale';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
+import { takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
 import { ScheduleWidgetRoleFace } from '#widgets/schedule/control/roles/RoleFace';
 import { ScheduleWidgetListUnitFace } from '#widgets/schedule/lists/UnitFace';
 import { extractScheduleWidgetRole } from '#widgets/schedule/useScheduleWidget';
@@ -29,7 +30,7 @@ export function KeyValueListAttNumberMember({ value }: { value: number }) {
     ) : (
       <div className="text-x3 flex gap-2">
         <LazyIcon icon="User" />
-        {user.fio || user.nick}
+        {takeScheduleWidgetUserName(rights, user)}
       </div>
     );
   } else if (ScheduleWidgetCleans.checkIsTaleIdUnit(value, CustomAttUseTaleId.Games)) {

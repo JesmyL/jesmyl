@@ -1,4 +1,4 @@
-import { SokiAuthLogin } from 'shared/api';
+import { UserId } from 'shared/api';
 import { StoragesCell, StoragesColumnType, StoragesDictItemi, StoragesRackColumn } from './rack.model';
 
 export const enum StoragesRackWid {
@@ -38,7 +38,6 @@ export enum StoragesRackMemberRole {
 }
 
 export type StoragesRackMember = {
-  fio: string;
   role: StoragesRackMemberRole;
 };
 
@@ -59,7 +58,7 @@ export type StoragesRackSummary = {
 export type StoragesRackCore = {
   w: StoragesRackWid;
   icon?: KnownStameskaIconName;
-  team: PRecord<SokiAuthLogin, StoragesRackMember>;
+  team: PRecord<UserId, StoragesRackMember>;
   title: string;
   cards: StoragesRackCard[];
   sum?: StoragesRackSummary[];

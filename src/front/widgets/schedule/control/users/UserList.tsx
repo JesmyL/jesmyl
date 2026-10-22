@@ -1,6 +1,7 @@
 import { translateBase } from '#basis/locale';
 import { useIsExpand } from '#shared/ui/expand/useIsExpand';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
+import { takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
 import { ReactNode } from 'react';
 import { IScheduleWidgetUser, scheduleWidgetUserRights } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
@@ -33,7 +34,7 @@ export function ScheduleWidgetUserList({
       return {
         user,
         balance: scheduleWidgetUserRights.rightsBalance(user.R),
-        _: (user.fio === undefined ? '' : '' + user.fio) + user.nick,
+        _: takeScheduleWidgetUserName(rights, user),
       };
     })
     .sort((a, b) => {

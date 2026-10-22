@@ -27,6 +27,7 @@ export interface TelegramNativeAuthUserData extends OmitOwn<User, 'language_code
   hash?: string;
 }
 
+export type UserId = NumberBrand<'UserId'>;
 export type UserLogin = StringBrand<'UserLogin'>;
 
 export type SokiAuthLogin = UserLogin;
@@ -46,6 +47,7 @@ export interface LocalSokiAuth {
 export type UserInfoUnsecure = UserInfo & { uauth: UserAuth };
 
 export type UserInfo = NullifyOptionals<{
+  id: UserId;
   auth: JsonSecureString<UserAuth>;
   /** login */
   l: UserLogin;

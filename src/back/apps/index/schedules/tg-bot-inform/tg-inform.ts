@@ -381,7 +381,7 @@ class TgInformer {
         await onScheduleUserTgInformSetEvent.invoke({
           isNotInform: isSubscribe ? 1 : 0,
           schProps: { schw },
-          userLogin: user.login,
+          userId: user.id,
         });
 
         jesmylTgBot.sendMessage(userTgId, text, tglogger, {

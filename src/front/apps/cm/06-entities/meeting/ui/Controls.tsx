@@ -3,10 +3,16 @@ import { isMobileDevice } from '#shared/lib/device-differences';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { CmComLocalListToolsPopup } from '$cm/entities/com';
-import { useAuth } from '$index/shared/state';
+import { useAuth, useUserInfoDict } from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
 import { lazy, Suspense, useState } from 'react';
-import { CmComWid, ScheduleWidgetDayEventMi, ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api';
+import {
+  checkIsCanRedactScheduleComsList,
+  CmComWid,
+  IScheduleWidget,
+  ScheduleWidgetDayEventMi,
+  ScheduleWidgetDayi,
+} from 'shared/api';
 import { itNIt } from 'shared/utils';
 
 const CmEditorMeetingEventEdits = lazy(() =>
@@ -14,19 +20,23 @@ const CmEditorMeetingEventEdits = lazy(() =>
 );
 
 export const CmMeetingControls = ({
+  sch,
   eventMi,
   dayi,
   comws,
-  schw,
 }: {
-  schw: ScheduleWidgetWid;
+  sch: IScheduleWidget;
   eventMi: ScheduleWidgetDayEventMi;
   dayi: ScheduleWidgetDayi;
   comws: CmComWid[];
 }) => {
   const auth = useAuth();
+  const { byLogin } = useUserInfoDict();
   const checkAccess = useCheckUserAccessRightsInScope();
-  const isCanUpdateEvent = checkAccess('cm', 'EVENT', 'U');
+  const isCanReadHistory = checkAccess('cm', 'EVENT', 'R');
+  const myUserId = auth.login ? byLogin.get(auth.login)?.id : null;
+  const isCanRedactComsList = myUserId != null && checkIsCanRedactScheduleComsList(sch, myUserId, dayi, eventMi);
+  const isCanRedactEventComs = checkAccess('cm', 'EVENT', 'U') || isCanRedactComsList;
   const [isToolsOpen, setIsToolsOpen] = useState(false);
 
   return (
@@ -54,13 +64,14 @@ export const CmMeetingControls = ({
       {isToolsOpen && (
         <BottomPopup onClose={setIsToolsOpen}>
           <CmComLocalListToolsPopup comws={comws}>
-            {isCanUpdateEvent && (
+            {isCanRedactEventComs && (
               <Suspense>
                 <CmEditorMeetingEventEdits
                   comws={comws}
                   dayi={dayi}
                   eventMi={eventMi}
-                  schw={schw}
+                  schw={sch.w}
+                  isCanReadHistory={isCanReadHistory}
                 />
               </Suspense>
             )}

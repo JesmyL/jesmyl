@@ -27,13 +27,13 @@ export const useCmMeetingEventParticipants = (schedule: IScheduleWidget | nil, d
   const firstEvent = eventBoxes?.at(0)?.events.at(0);
   const eventPack = firstEvent && pack?.pack[dayi]?.[firstEvent.mi];
 
-  if (isOnlyEvent && schw && eventPack) {
+  if (isOnlyEvent && schedule && eventPack) {
     controls = (
       <CmMeetingControls
         comws={eventPack.s}
         dayi={dayi}
         eventMi={firstEvent.mi}
-        schw={schw}
+        sch={schedule}
       />
     );
 

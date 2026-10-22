@@ -2,7 +2,7 @@ import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { attTranslatorTypes } from 'shared/api';
 import { SchEventTypesTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
 import { objectLength } from 'shared/utils/object.utils';
-import { modifySchedule } from '../schedule-modificators';
+import { modifySchedule, throwIfNoExternalMutationAuth } from '../schedule-modificators';
 import { onScheduleEventTypesAddManyEvent } from '../specific-modify-events';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
@@ -90,7 +90,9 @@ export const schEventTypesTsjrpcBaseServer =
             );
           }),
 
-          putMany: async ({ props: schProps, tatts: typeList }) => {
+          putMany: async ({ props: schProps, tatts: typeList }, tool) => {
+            throwIfNoExternalMutationAuth(tool);
+
             return {
               value: await onScheduleEventTypesAddManyEvent.invoke({ schProps, typeList }),
               description:

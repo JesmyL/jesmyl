@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { SokiAppName, SokiAuthLogin } from '../../soki.model';
+import { SokiAppName, SokiAuthLogin, UserId } from '../../soki.model';
 import { ScheduleWidgetRegType, ScheduleWidgetUserRoleRight } from './rights';
 
 export type ScheduleWidgetWid = NumberBrand<'ScheduleWidgetWid'>;
@@ -112,6 +112,13 @@ export interface IScheduleWidgetCtrl {
   users: IScheduleWidgetUser[];
   type: ScheduleWidgetRegType;
   defu: ScheduleWidgetUserRoleRight;
+  comsRights?: IScheduleWidgetComsRights;
+}
+
+export interface IScheduleWidgetComsRights {
+  users?: UserId[];
+  days?: Record<ScheduleWidgetDayi, UserId[]>;
+  events?: Record<ScheduleWidgetDayi, Record<ScheduleWidgetDayEventMi, UserId[]>>;
 }
 
 export interface IScheduleWidgetDayEvent {
@@ -199,9 +206,7 @@ export interface IScheduleWidgetRole {
 
 export interface IScheduleWidgetUser {
   mi: ScheduleWidgetUserMi;
-  login?: SokiAuthLogin;
-  fio?: string;
-  nick?: string;
+  id: UserId;
   R?: number;
   li?: Record<number, ScheduleWidgetUserUnitMi>;
   tgId?: ScheduleWidgetUserTgId;

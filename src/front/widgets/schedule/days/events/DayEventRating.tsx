@@ -4,6 +4,7 @@ import { useIsExpand } from '#shared/ui/expand/useIsExpand';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
+import { takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
 import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import styled from '@emotion/styled';
 import { ReactNode } from 'react';
@@ -70,7 +71,7 @@ export function ScheduleWidgetDayEventRating(props: {
                     rate[0] < 0 ? 'text-xKO' : rate[0] > 0 ? 'text-xOK' : 'text-x3',
                   )}
                 >
-                  {user.fio || user.nick}: {rate[0]}
+                  {takeScheduleWidgetUserName(rights, user)}: {rate[0]}
                 </div>
                 {rate[1] && (
                   <StrongEditableField
@@ -123,7 +124,7 @@ export function ScheduleWidgetDayEventRating(props: {
                       props: props.dayEventScopeProps,
                       userMi: myUser.mi,
                       ratePoint: ratePoint,
-                      userName: myUser.fio ?? myUser.nick ?? '??',
+                      userName: takeScheduleWidgetUserName(rights, myUser) || '??',
                     })
                   }
                 />
@@ -148,7 +149,7 @@ export function ScheduleWidgetDayEventRating(props: {
                 props: props.dayEventScopeProps,
                 userMi: myUser.mi,
                 comment: value,
-                userName: myUser.fio ?? myUser.nick ?? '??',
+                userName: takeScheduleWidgetUserName(rights, myUser) || '??',
               })
             }
           />

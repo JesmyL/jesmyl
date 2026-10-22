@@ -6,6 +6,7 @@ export interface ScheduleWidgetRightTexts<Right> {
   description?: [string, string?];
   always?: boolean;
   hidden?: boolean;
+  individual?: boolean;
   role?: string[];
 }
 
@@ -73,12 +74,16 @@ export class ScheduleWidgetRightsCtrl<Right extends number = number> {
   rightsBalance = (R: number | nil): number => {
     if (isEmptyR(R)) return -1;
     const rstr = R.toString(2);
+    let balance = 0;
 
-    for (let i = 0; i < this.enumOrder.length; i++) {
-      if (rstr[this.enumOrder[i] as never] !== '1') return i;
+    for (const ruleKey of this.enumOrder) {
+      if (this.texts.find(text => text.id === ruleKey)?.individual) continue;
+      if (rstr[ruleKey] !== '1') return balance;
+
+      balance++;
     }
 
-    return this.enumOrder.length;
+    return balance;
   };
 
   checkIsHasIndividualRights = (R: number | nil, ruleKey: Right) => {

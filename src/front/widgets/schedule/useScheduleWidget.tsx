@@ -1,5 +1,5 @@
 import { contextCreator } from '#shared/lib/contextCreator';
-import { useAuth } from '$index/shared/state/atoms';
+import { useAuth, useUserInfoDict } from '$index/shared/state';
 import { useMemo } from 'react';
 import {
   IScheduleWidget,
@@ -10,6 +10,9 @@ import {
   scheduleWidgetRegTypeRights,
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
+  UserId,
+  UserInfoUnsecure,
+  UserLogin,
 } from 'shared/api';
 import { takeDefaultScheduleWidget } from 'shared/const/schedule-widget/const';
 import { ScheduleWidgetAppAtts, ScheduleWidgetAttRefs } from './ScheduleWidget.model';
@@ -22,6 +25,8 @@ export interface ScheduleWidgetRights extends ScheduleWidgetUserRights, Schedule
   myUser: IScheduleWidgetUser | undefined;
   schedule: IScheduleWidget;
   auth: LocalSokiAuth;
+  userInfoById: Map<UserId, UserInfoUnsecure>;
+  userInfoByLogin: Map<UserLogin, UserInfoUnsecure>;
 }
 
 type ScheduleWidgetUserRights = Record<`isCan${Exclude<keyof typeof ScheduleWidgetUserRoleRight, 'Free'>}`, boolean>;
@@ -34,10 +39,15 @@ export const defScheduleWidgetUserRights: ScheduleWidgetUserRights = {
   isCanReadTitles: false,
   isCanRedact: false,
   isCanRedactUsers: false,
+  isCanAddDays: false,
+  isCanAddEvents: false,
+  isCanRedactEventContent: false,
+  isCanRedactComsList: false,
 };
 
 export const useScheduleWidgetRights = (schedule: IScheduleWidget | nil, rights?: ScheduleWidgetRights) => {
   const auth = useAuth();
+  const userInfo = useUserInfoDict();
 
   return useMemo((): ScheduleWidgetRights => {
     if (rights !== undefined) return rights;
@@ -50,15 +60,22 @@ export const useScheduleWidgetRights = (schedule: IScheduleWidget | nil, rights?
         isCanRedact: false,
         isCanRedactUsers: false,
         isCanTotalRedact: false,
+        isCanAddDays: false,
+        isCanAddEvents: false,
+        isCanRedactEventContent: false,
+        isCanRedactComsList: false,
         isSwBeforeRegistration: false,
         isSwHideContent: false,
         isSwPublic: false,
         isSwPrivate: false,
         myUser: undefined,
         schedule: takeDefaultScheduleWidget(),
+        userInfoById: userInfo.byId,
+        userInfoByLogin: userInfo.byLogin,
       };
 
-    const myUser = schedule.ctrl.users.find(user => user.login === auth.login);
+    const myUserId = auth.login ? userInfo.byLogin.get(auth.login)?.id : null;
+    const myUser = myUserId == null ? undefined : schedule.ctrl.users.find(user => user.id === myUserId);
     const isSwPublic = scheduleWidgetRegTypeRights.checkIsHasRights(schedule.ctrl.type, ScheduleWidgetRegType.Public);
     const isSwBeforeRegistration = scheduleWidgetRegTypeRights.checkIsHasRights(
       schedule.ctrl.type,
@@ -90,6 +107,22 @@ export const useScheduleWidgetRights = (schedule: IScheduleWidget | nil, rights?
       myUserR,
       ScheduleWidgetUserRoleRight.TotalRedact,
     );
+    const isCanAddDays = scheduleWidgetUserRights.checkIsHasIndividualRights(
+      myUserR,
+      ScheduleWidgetUserRoleRight.AddDays,
+    );
+    const isCanAddEvents = scheduleWidgetUserRights.checkIsHasIndividualRights(
+      myUserR,
+      ScheduleWidgetUserRoleRight.AddEvents,
+    );
+    const isCanRedactEventContent = scheduleWidgetUserRights.checkIsHasIndividualRights(
+      myUserR,
+      ScheduleWidgetUserRoleRight.RedactEventContent,
+    );
+    const isCanRedactComsList = scheduleWidgetUserRights.checkIsHasIndividualRights(
+      myUserR,
+      ScheduleWidgetUserRoleRight.RedactComsList,
+    );
 
     return {
       auth,
@@ -100,13 +133,19 @@ export const useScheduleWidgetRights = (schedule: IScheduleWidget | nil, rights?
       isCanReadTitles,
       isCanRedact,
       isCanRedactUsers,
+      isCanAddDays,
+      isCanAddEvents,
+      isCanRedactEventContent,
+      isCanRedactComsList,
       isSwBeforeRegistration,
       isSwHideContent,
       isSwPublic,
       isSwPrivate: !isSwPublic,
       schedule,
+      userInfoById: userInfo.byId,
+      userInfoByLogin: userInfo.byLogin,
     };
-  }, [auth, schedule, rights]);
+  }, [auth, schedule, rights, userInfo]);
 };
 
 export const extractScheduleWidgetRole = (schedule: IScheduleWidget, roleMi: number) => {
@@ -123,4 +162,12 @@ export const extractScheduleWidgetRoleUser = (
   const roleUser = schedule.ctrl.users.find(user => user.mi === roleUserMi);
   if (roleUser === undefined) return null;
   return roleUser;
+};
+
+export const takeScheduleWidgetUserName = (rights: ScheduleWidgetRights, user: IScheduleWidgetUser) => {
+  const userAuth = rights.userInfoById.get(user.id)?.uauth;
+
+  return userAuth?.fio && userAuth.nick && userAuth.fio !== userAuth.nick
+    ? `${userAuth.fio} (${userAuth.nick})`
+    : userAuth?.fio || userAuth?.nick || '';
 };

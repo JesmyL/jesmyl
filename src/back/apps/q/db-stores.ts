@@ -5,6 +5,7 @@ import { QuestionerBlank, QuestionerBlankWid, QuestionerType, QuestionerVariated
 import { QuestionerUserAnswer, QuestionerUserAnswerValueBox } from 'shared/model/q/answer';
 import { forEachObjectEntries, objectLength } from 'shared/utils/object.utils';
 import { escapeHtmlLazy } from 'shared/utils/string.utils';
+import { migrateBlankTeam } from './migrate-blank-team';
 
 export const mapBlankRow = (row: typeof questionerBlankDB.$inferSelect): QuestionerBlank => ({
   w: row.w,
@@ -16,29 +17,6 @@ export const mapBlankRow = (row: typeof questionerBlankDB.$inferSelect): Questio
   ord: row.ord,
   team: row.team,
 });
-
-const getBlank = async (w: QuestionerBlankWid): Promise<QuestionerBlank | null> => {
-  const rows = await db.select().from(questionerBlankDB).where(eq(questionerBlankDB.w, w)).limit(1);
-
-  return rows[0] ? mapBlankRow(rows[0]) : null;
-};
-
-const createBlank = async (makeItem: () => QuestionerBlank): Promise<{ item: QuestionerBlank }> => {
-  const item = makeItem();
-
-  await db.insert(questionerBlankDB).values({
-    w: item.w,
-    m: item.m,
-    title: item.title,
-    dsc: item.dsc,
-    anon: item.anon ?? null,
-    tmp: item.tmp,
-    ord: item.ord,
-    team: item.team,
-  });
-
-  return { item };
-};
 
 const saveBlank = async (w: QuestionerBlankWid, blank: QuestionerBlank): Promise<number | null> => {
   const mod = Date.now();
@@ -61,6 +39,34 @@ const saveBlank = async (w: QuestionerBlankWid, blank: QuestionerBlank): Promise
   return rows[0]?.mod ?? null;
 };
 
+const getBlank = async (w: QuestionerBlankWid): Promise<QuestionerBlank | null> => {
+  const rows = await db.select().from(questionerBlankDB).where(eq(questionerBlankDB.w, w)).limit(1);
+
+  if (!rows[0]) return null;
+
+  const blank = mapBlankRow(rows[0]);
+  if (await migrateBlankTeam(blank)) await saveBlank(w, blank);
+
+  return blank;
+};
+
+const createBlank = async (makeItem: () => QuestionerBlank): Promise<{ item: QuestionerBlank }> => {
+  const item = makeItem();
+
+  await db.insert(questionerBlankDB).values({
+    w: item.w,
+    m: item.m,
+    title: item.title,
+    dsc: item.dsc,
+    anon: item.anon ?? null,
+    tmp: item.tmp,
+    ord: item.ord,
+    team: item.team,
+  });
+
+  return { item };
+};
+
 const getFreshBlanks = async (
   lastModfiedAt: number,
   filter: (blank: QuestionerBlank) => boolean,
@@ -72,6 +78,11 @@ const getFreshBlanks = async (
 
   for (const row of rows) {
     const item = mapBlankRow(row);
+
+    if (await migrateBlankTeam(item)) {
+      const mod = await saveBlank(item.w, item);
+      if (mod != null && mod > maxMod) maxMod = mod;
+    }
 
     if (!filter(item)) continue;
     if (row.mod > maxMod) maxMod = row.mod;

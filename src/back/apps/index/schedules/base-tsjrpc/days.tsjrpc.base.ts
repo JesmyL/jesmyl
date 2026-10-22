@@ -3,7 +3,7 @@ import { makeRegExp } from 'regexpert';
 import { ScheduleWidgetDayEventMi, ScheduleWidgetDayEventMiDef, ScheduleWidgetDayi } from 'shared/api';
 import { SchDaysTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
 import { takeNextMi, withInsertedBeforei } from 'shared/utils';
-import { modifySchedule, modifyScheduleDay } from '../schedule-modificators';
+import { modifySchedule, modifyScheduleDay, throwIfNoExternalMutationAuth } from '../schedule-modificators';
 import { onScheduleDayBeginTimeSetEvent, onScheduleDayEventListSetEvent } from '../specific-modify-events';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
@@ -46,13 +46,17 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
           return `В расписании ${scheduleTitleInBrackets(sch)} добавлен день`;
         }),
 
-        setBeginTime: async ({ props, value: strTm }) => {
+        setBeginTime: async ({ props, value: strTm }, tool) => {
+          throwIfNoExternalMutationAuth(tool);
+
           return {
             value: await onScheduleDayBeginTimeSetEvent.invoke({ dayProps: props, strWup: strTm }),
             description: `В расписании ${scheduleTitleInBrackets(props.schw)}, в ${props.dayi + 1} дне установлено время начала - ${strTm}`,
           };
         },
-        setEventList: async ({ props: dayProps, list }) => {
+        setEventList: async ({ props: dayProps, list }, tool) => {
+          throwIfNoExternalMutationAuth(tool);
+
           return {
             value: await onScheduleDayEventListSetEvent.invoke({ dayProps, list }),
             description: `В расписании ${scheduleTitleInBrackets(dayProps.schw)}, в ${dayProps.dayi + 1} дне установлено расписание из текста`,

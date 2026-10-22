@@ -11,5 +11,7 @@ export const ScheduleWidgetRightsContext = React.createContext<ScheduleWidgetRig
   isSwPublic: false,
   auth: {},
   schedule: takeDefaultScheduleWidget(),
+  userInfoById: new Map(),
+  userInfoByLogin: new Map(),
 });
 export const useScheduleWidgetRightsContext = () => use(ScheduleWidgetRightsContext);

@@ -27,6 +27,7 @@ type Props = {
   forTitle: ReactNode;
   atts?: ScheduleWidgetDayEventAttValues;
   schedule: IScheduleWidget;
+  canRedactAtt?: (attKey: ScheduleWidgetAttKey) => boolean | undefined;
   topContent?: ReactNode;
   customAttTopContent?: (attKey: ScheduleWidgetAttKey) => ReactNode;
   onAddAttSend: (attKey: ScheduleWidgetAttKey, value: ScheduleWidgetAttOwnValue) => Promise<unknown>;
@@ -44,6 +45,7 @@ export const ScheduleWidgetBindAtts = ({
   atts,
   forTitle,
   schedule,
+  canRedactAtt,
   topContent,
   customAttTopContent,
   onAddAttSend,
@@ -67,10 +69,14 @@ export const ScheduleWidgetBindAtts = ({
         <ModalBody>
           {topContent}
           {appAttList.map(([attKey, tatt]) => {
+            const isCanRedact = canRedactAtt?.(attKey);
+
             if (
               !tatt.title ||
-              !scheduleWidgetUserRights.checkIsCan(myUserR, tatt.R) ||
-              !scheduleWidgetUserRights.checkIsCan(myUserR, tatt.U)
+              isCanRedact === false ||
+              (isCanRedact !== true &&
+                (!scheduleWidgetUserRights.checkIsCan(myUserR, tatt.R) ||
+                  !scheduleWidgetUserRights.checkIsCan(myUserR, tatt.U)))
             )
               return null;
 
@@ -116,7 +122,8 @@ export const ScheduleWidgetBindAtts = ({
           attEntries.map(([attKey]) => {
             return (
               <ScheduleWidgetAttFace
-                isRedact
+                isRedact={canRedactAtt?.(attKey) ?? true}
+                isCanRedactOverride={canRedactAtt?.(attKey)}
                 key={attKey}
                 tatt={appAtts[attKey]}
                 attKey={attKey}

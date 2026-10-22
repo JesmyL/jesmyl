@@ -45,10 +45,11 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
 
   const rights = useScheduleWidgetRightsContext();
 
+  const userAuth = rights.userInfoById.get(user.id)?.uauth;
   const userName =
-    user.nick === undefined
-      ? user.fio || <span className="text-x7 italic">{translateBase(BaseLocaleKey.Link)}</span>
-      : `${user.fio && user.fio !== user.nick ? `${user.fio} (${user.nick})` : user.nick} `;
+    userAuth?.nick === undefined
+      ? userAuth?.fio || <span className="text-x7 italic">{translateBase(BaseLocaleKey.Link)}</span>
+      : `${userAuth.fio && userAuth.fio !== userAuth.nick ? `${userAuth.fio} (${userAuth.nick})` : userAuth.nick} `;
 
   const userNode = (
     <div className="flex gap-2 between my-2">
@@ -60,15 +61,7 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
             {userName}
             {balance !== undefined && (
               <span className="flex gap-2 text-x7">
-                {user.login === undefined ? (
-                  <>
-                    <LazyIcon
-                      icon="Link02"
-                      className="text-x7 icon-scale-05"
-                    />
-                    {balance < 0 ? null : balance}
-                  </>
-                ) : balance < 0 ? (
+                {balance < 0 ? (
                   <LazyIcon icon="UserRemove02" />
                 ) : (
                   balance

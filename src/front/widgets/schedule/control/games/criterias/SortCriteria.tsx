@@ -7,6 +7,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheButton } from '#shared/ui/TheButton';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
+import { takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
 import { schGamesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useMemo, useState } from 'react';
@@ -22,8 +23,6 @@ interface Props {
   criteriai: number;
   criteria: IScheduleWidgetTeamCriteria;
 }
-
-const itemIt = <Item,>({ item }: { item: Item }) => item;
 
 let termAtom: Atom<string>;
 let isOpenAtom: Atom<boolean>;
@@ -63,14 +62,24 @@ export function ScheduleWidgetSortCriteria({ criteria, criteriai }: Props) {
     return [usersForSort, uncriteriedUsers, sortedUsers.sort((a, b) => criteria.sorts[a.mi] - criteria.sorts[b.mi])];
   }, [criteria.sorts, rights.schedule.ctrl.users]);
 
-  const filteredUsers: IScheduleWidgetUser[] = useMemo(
-    () => (!term ? sortedUsers : searchRate(sortedUsers, term, ['fio']).map(itemIt)),
-    [sortedUsers, term],
-  );
-  const filteredUncriteriedUsers: IScheduleWidgetUser[] = useMemo(
-    () => (!term ? uncriteriedUsers : searchRate(uncriteriedUsers, term, ['fio']).map(itemIt)),
-    [uncriteriedUsers, term],
-  );
+  const filteredUsers: IScheduleWidgetUser[] = useMemo(() => {
+    if (!term) return sortedUsers;
+
+    return searchRate(
+      sortedUsers.map(user => ({ user, title: takeScheduleWidgetUserName(rights, user) })),
+      term,
+      ['title'],
+    ).map(box => box.item.user);
+  }, [rights, sortedUsers, term]);
+  const filteredUncriteriedUsers: IScheduleWidgetUser[] = useMemo(() => {
+    if (!term) return uncriteriedUsers;
+
+    return searchRate(
+      uncriteriedUsers.map(user => ({ user, title: takeScheduleWidgetUserName(rights, user) })),
+      term,
+      ['title'],
+    ).map(box => box.item.user);
+  }, [rights, uncriteriedUsers, term]);
 
   return (
     <>
