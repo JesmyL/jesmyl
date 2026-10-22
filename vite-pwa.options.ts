@@ -1,5 +1,5 @@
-import { cmEditorCacheName } from '$cm/shared/lib/cmEditorCache';
 import { VitePWAOptions } from 'vite-plugin-pwa';
+import { cmEditorCacheName } from './src/front/apps/cm/07-shared/lib/cmEditorCache';
 
 export const vitePWAOptions = {
   injectRegister: 'auto',

@@ -24,6 +24,7 @@ import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
 import { Bool, Do } from 'shared/enums';
 import { checkIsNotNil } from 'shared/utils/checkIs';
 import { objectLength, objectValues } from 'shared/utils/object.utils';
+import { takeUserAuthName } from 'shared/utils/user.utils';
 import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from '../client-selectors-by-visit';
 import { takeComwTiny } from '../com.tiny';
 import { catsFileStorage, chordPackFileStore, cmComWidRefGroupDictFileStore } from '../file-stores';
@@ -134,7 +135,7 @@ export const cmServerTsjrpcBaseRequestFreshes = {
 
           if (!user || !sch) continue;
 
-          packs.push({ fio: user.uauth.fio || '??', schw: sch.w, ...packRest });
+          packs.push({ fio: takeUserAuthName(user.uauth) || '??', schw: sch.w, ...packRest });
         }
 
         cmShareServerTsjrpcMethods.freshSchDayEvComws({ packs }, null);

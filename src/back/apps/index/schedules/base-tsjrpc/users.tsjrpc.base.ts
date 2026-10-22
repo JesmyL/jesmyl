@@ -11,6 +11,7 @@ import {
 import { SchUsersTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
 import { takeNextMi } from 'shared/utils';
 import { objectLength } from 'shared/utils/object.utils';
+import { takeUserAuthName } from 'shared/utils/user.utils';
 import { takeAllUsersTiny, takeUserTiny } from '../../tinies/userTiny';
 import { modifySchedule, throwIfNoScheduleTotalRedact } from '../schedule-modificators';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
@@ -20,7 +21,7 @@ const noteSuffixReg = makeRegExp('/\\s*\\([^)]*\\)\\s*$/');
 const takeUserName = async (user: IScheduleWidgetUser) => {
   const tiny = await takeUserTiny({ id: user.id }, false);
 
-  return tiny?.uauth.fio || tiny?.uauth.nick || tiny?.l || `mi=${user.mi}`;
+  return takeUserAuthName(tiny?.uauth) || tiny?.l || `mi=${user.mi}`;
 };
 
 export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseServer<SchUsersTsjrpcMethods> {
@@ -96,7 +97,7 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
 
           return (
             `В расписании ${scheduleTitleInBrackets(sch)} новый участник  ` +
-            `${place}: ${auth?.fio ?? '?'} (${auth?.nick ?? '?'})`
+            `${place}: ${takeUserAuthName(auth) || '?'}`
           );
         }),
 

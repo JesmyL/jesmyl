@@ -10,6 +10,7 @@ import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { CmCom } from 'shared/const/cm/Com';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
+import { takeUserAuthName } from 'shared/utils/user.utils';
 
 export const CmLiveSlidesAudioTrackBroadcast = (props: LiveBroadcastAppProps & { com: CmCom }) => {
   const config = useCmBroadcastScreenConfigs()[0];
@@ -22,7 +23,7 @@ export const CmLiveSlidesAudioTrackBroadcast = (props: LiveBroadcastAppProps & {
 
   const { html, nextHtml, audioSlides, slidei } = useCmComCurrentMarkValues(props.com, config.case);
 
-  const fio = useAuth().fio ?? '';
+  const fio = takeUserAuthName(useAuth());
   const currentSlide = audioSlides.at(slidei);
   const nextSlide = audioSlides.at(slidei + 1);
 

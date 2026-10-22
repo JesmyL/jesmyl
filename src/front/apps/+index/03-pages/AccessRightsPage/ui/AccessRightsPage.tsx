@@ -15,6 +15,7 @@ import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsNotNil } from 'shared/utils/checkIs';
 import { checkUserScopeAccessRight } from 'shared/utils/index/utils';
 import { mapObjectEntries, objectLength } from 'shared/utils/object.utils';
+import { takeUserAuthName } from 'shared/utils/user.utils';
 import { twMerge } from 'tailwind-merge';
 import { IndexAccessRightsUpdateTable } from './AccessRightsUpdateTable';
 import { IndexAccessRightsUserRoleSelector } from './UserRoleSelector';
@@ -50,7 +51,9 @@ export function IndexAccessRightsPage() {
                 >
                   <Accordion.Trigger>
                     <span className="flex gap-3">
-                      <span className={twMerge(objectLength(userInfo) < 2 && 'opacity-70')}>{userInfo.uauth.fio}</span>
+                      <span className={twMerge(objectLength(userInfo) < 2 && 'opacity-70')}>
+                        {takeUserAuthName(userInfo.uauth)}
+                      </span>
                       {userInfo.r && <span className="text-x7">({userInfo.r})</span>}
                     </span>
                   </Accordion.Trigger>

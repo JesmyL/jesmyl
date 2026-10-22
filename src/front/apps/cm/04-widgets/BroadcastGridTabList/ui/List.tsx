@@ -3,14 +3,14 @@ import { CmComListPackKindSelector } from '$cm/entities/ComListPackKindSelector'
 import { CmComFaceList, cmIDB } from '$cm/ext';
 import { useCmBroadcastScreenComNavigationComws, useCmBroadcastSlidesContext } from '$cm/features/broadcast';
 import styled from '@emotion/styled';
-import { DragEvent } from 'react';
+import { DragEvent, useCallback } from 'react';
 import { IExportableCom } from 'shared/api';
 
 export const CmBroadcastGridTabList = () => {
   const { comPack, comws } = useCmBroadcastScreenComNavigationComws();
   const { setSlidei } = useCmBroadcastSlidesContext();
 
-  const dropWorkDirBgOnCom = ({ com, event }: { com: IExportableCom; event: DragEvent }) => {
+  const dropWorkDirBgOnCom = useCallback(({ com, event }: { com: IExportableCom; event: DragEvent }) => {
     event.preventDefault();
 
     const payload = takeWorkDirBgFromDataTransfer(event.dataTransfer);
@@ -23,7 +23,7 @@ export const CmBroadcastGridTabList = () => {
         delete fix.bgFileId;
       } else fix.bgFilePath = payload.path;
     });
-  };
+  }, []);
 
   return (
     <div className="broadcast-com-list">

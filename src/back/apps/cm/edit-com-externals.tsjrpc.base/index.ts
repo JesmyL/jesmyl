@@ -19,6 +19,7 @@ import { checkIsNowInCurrentDay } from 'shared/const/ms';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
 import { objectLength, objectValues } from 'shared/utils/object.utils';
+import { takeUserAuthName } from 'shared/utils/user.utils';
 import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from '../client-selectors-by-visit';
 import { takeComwTiny } from '../com.tiny';
 import { cmComWidRefGroupDictFileStore } from '../file-stores';
@@ -71,7 +72,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
             }
 
             cmShareServerTsjrpcMethods.freshSchDayEvComws(
-              { packs: { dayi, eventMi, schw, comws, fio: auth.fio ?? '??', w: wr } },
+              { packs: { dayi, eventMi, schw, comws, fio: takeUserAuthName(auth) || '??', w: wr } },
               null,
             );
 
@@ -104,7 +105,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
             for (const { comws, dayi, eventMi, w, userId } of selPacks) {
               const user = await takeUserTiny({ id: userId }, false);
 
-              packs.push({ e: eventMi, fio: user?.uauth.fio || '<Неизвестный>', w, s: comws, d: dayi });
+              packs.push({ e: eventMi, fio: takeUserAuthName(user?.uauth) || '<Неизвестный>', w, s: comws, d: dayi });
             }
 
             return { value: packs };

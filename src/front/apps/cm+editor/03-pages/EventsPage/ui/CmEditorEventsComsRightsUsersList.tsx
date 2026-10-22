@@ -8,6 +8,7 @@ import { ReactNode, useMemo, useState } from 'react';
 import { UserId, UserInfoUnsecure } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { searchRate, sortBySearchRate } from 'shared/utils/searchRate';
+import { takeUserAuthName } from 'shared/utils/user.utils';
 
 interface Props {
   title: ReactNode;
@@ -17,13 +18,13 @@ interface Props {
   onChange: (userIds: UserId[]) => Promise<unknown>;
 }
 
-const searchPlaces = [['uauth', 'fio'], ['uauth', 'nick'], 'l'];
+const searchPlaces = [['uauth', 'fio'], ['uauth', 'nick'], ['uauth', 'email'], 'l'];
 const resultLimit = 30;
 
 const takeUserName = (id: UserId, userInfoById: Map<UserId, UserInfoUnsecure>) => {
   const userInfo = userInfoById.get(id);
 
-  return userInfo?.uauth.fio || userInfo?.uauth.nick || userInfo?.l || `${id}`;
+  return takeUserAuthName(userInfo?.uauth) || userInfo?.l || `${id}`;
 };
 
 export function CmEditorEventsComsRightsUsersList({ title, userIds, userInfoById, isCanUpdate, onChange }: Props) {

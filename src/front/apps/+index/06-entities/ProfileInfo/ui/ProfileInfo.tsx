@@ -3,6 +3,7 @@ import { IndexUserMore } from '$index/entities/UserMore/ui/UserMore';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { LocalSokiAuth } from 'shared/api';
+import { takeUserAuthName } from 'shared/utils/user.utils';
 
 export const IndexProfileInfo = ({ auth }: { auth: LocalSokiAuth }) => {
   const [isShowAva, setIsShowAva] = useState(true);
@@ -15,7 +16,7 @@ export const IndexProfileInfo = ({ auth }: { auth: LocalSokiAuth }) => {
         className="flex center gap-2"
         onClick={setIsUserMoreOpen}
       >
-        <Name className="ellipsis">{auth.fio}</Name>
+        <Name className="ellipsis">{takeUserAuthName(auth)}</Name>
         {isShowAva && auth.tgAva && (
           <Ava
             src={auth.tgAva}
@@ -25,7 +26,7 @@ export const IndexProfileInfo = ({ auth }: { auth: LocalSokiAuth }) => {
       </div>
       {isUserMoreOpen && (
         <BottomPopup
-          title={<Name className="ellipsis">{auth.fio}</Name>}
+          title={<Name className="ellipsis">{takeUserAuthName(auth)}</Name>}
           onClose={setIsUserMoreOpen}
         >
           <IndexUserMore onClose={setIsUserMoreOpen} />

@@ -20,6 +20,7 @@ import { howMillisecondsInMin } from 'shared/const/ms';
 import { randomItem, randomOf } from 'shared/randoms';
 import { declension, wait } from 'shared/utils';
 import { checkIsStartsWith } from 'shared/utils/checkIs';
+import { takeUserAuthName } from 'shared/utils/user.utils';
 import { sentEmailOTPFileStorage } from '../../file-stores';
 import { constantsConfigFileStore } from '../../schedules/file-stores';
 import { resetUserTiny } from '../../tinies/userTiny';
@@ -242,7 +243,7 @@ export const otpTSJRPCMethods = {
     }
 
     expireOTP(otp);
-    const fioOrNick = from.auth.fio ?? from.auth.nick ?? '???';
+    const fioOrNick = takeUserAuthName(from.auth) || '???';
 
     return {
       value: { fioOrNick },
@@ -306,7 +307,7 @@ export const otpTSJRPCMethods = {
         auth,
         token: jwt.sign(auth, tokenSecretFileStore.getValue().token, { expiresIn: '200 D' }),
       },
-      description: `Авторизация по E-mail ${from.auth.email} (${auth.fio ?? auth.nick ?? auth.login ?? '???'})`,
+      description: `Авторизация по E-mail ${from.auth.email} (${takeUserAuthName(auth) || '???'})`,
       logScope: PostJRPCMessageScope.Support,
     };
   },

@@ -4,6 +4,7 @@ import { extractScheduleWidgetRoleUser } from '#widgets/schedule/useScheduleWidg
 import { useAuth, useUserInfoDict } from '$index/shared/state';
 import { IScheduleWidget, IScheduleWidgetRole } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { takeUserAuthName } from 'shared/utils/user.utils';
 
 export function ScheduleWidgetRoleFace({ role, schedule }: { role?: IScheduleWidgetRole; schedule: IScheduleWidget }) {
   const auth = useAuth();
@@ -17,7 +18,7 @@ export function ScheduleWidgetRoleFace({ role, schedule }: { role?: IScheduleWid
   const roleUserName =
     roleUserAuth?.fio && roleUserAuth.nick && roleUserAuth.fio !== roleUserAuth.nick
       ? `${roleUserAuth.fio} (${roleUserAuth.nick})`
-      : roleUserAuth?.fio || roleUserAuth?.nick || '';
+      : takeUserAuthName(roleUserAuth);
 
   return (
     <div className={'flex gap-2' + (roleUser && myUserId === roleUser.id ? ' text-x7' : ' text-x3')}>

@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { ScheduleWidgetWid } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itNNull } from 'shared/utils';
+import { takeUserAuthName } from 'shared/utils/user.utils';
 import { CmScheduleWidgetBroadcastLiveCm } from './LiveCm';
 
 export const CmScheduleWidgetBroadcast = ({ schw }: { schw: ScheduleWidgetWid | und }) => {
@@ -42,22 +43,22 @@ export const CmScheduleWidgetBroadcast = ({ schw }: { schw: ScheduleWidgetWid | 
       .effect();
   }, [schedule?.w, windows]);
 
-  if (auth.fio === undefined)
-    return <div className="flex center full-size text-xKO">{translateBase(BaseLocaleKey.NotAuthorized)}</div>;
+  const userName = takeUserAuthName(auth);
+  if (!userName) return <div className="flex center full-size text-xKO">{translateBase(BaseLocaleKey.NotAuthorized)}</div>;
   if (schedule == null)
     return <div className="flex center full-size text-xKO">{translateBase(BaseLocaleKey.ScheduleNotFound)}</div>;
 
   return isCm ? (
     <CmScheduleWidgetBroadcastLiveCm
       isCantTranslateLive={isCantTranslateLive}
-      fio={auth.fio}
+      fio={userName}
       headTitle={schedule.title}
       schw={schedule.w}
     />
   ) : (
     <BibleLiveControlled
       isCantTranslateLive={isCantTranslateLive}
-      fio={auth.fio}
+      fio={userName}
       headTitle={schedule.title}
       schw={schedule.w}
     />

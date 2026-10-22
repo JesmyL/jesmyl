@@ -28,6 +28,7 @@ import { checkIsEq } from 'shared/utils/checkIsEq';
 import { deepClone } from 'shared/utils/clone';
 import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
+import { takeUserAuthName } from 'shared/utils/user.utils';
 import { schLiveTsjrpcServer } from '../live.tsjrpc';
 import { modifySchedule, throwIfNoScheduleTotalRedact } from '../schedule-modificators';
 import { schServerTsjrpcShareMethods } from '../tsjrpc.shares';
@@ -125,7 +126,7 @@ onScheduleUserTgInformSetEvent.listen(async ({ isNotInform, schProps, userId }) 
     const userAuth = userTiny?.uauth;
 
     description =
-      `В расписании ${await scheduleTitleInBrackets(sch)} участник ${userAuth?.fio ?? '?'} (${userAuth?.nick ?? '?'}) ` +
+      `В расписании ${await scheduleTitleInBrackets(sch)} участник ${takeUserAuthName(userAuth) || '?'} ` +
       `${isNotInform ? 'отключил' : 'включил'} TG-напоминания`;
 
     return description;

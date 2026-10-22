@@ -15,6 +15,7 @@ import {
   UserLogin,
 } from 'shared/api';
 import { takeDefaultScheduleWidget } from 'shared/const/schedule-widget/const';
+import { takeUserAuthName } from 'shared/utils/user.utils';
 import { ScheduleWidgetAppAtts, ScheduleWidgetAttRefs } from './ScheduleWidget.model';
 
 export const [ScheduleWidgetAppAttsContext, useScheduleWidgetAppAttsContext] = contextCreator<
@@ -169,5 +170,5 @@ export const takeScheduleWidgetUserName = (rights: ScheduleWidgetRights, user: I
 
   return userAuth?.fio && userAuth.nick && userAuth.fio !== userAuth.nick
     ? `${userAuth.fio} (${userAuth.nick})`
-    : userAuth?.fio || userAuth?.nick || '';
+    : takeUserAuthName(userAuth);
 };

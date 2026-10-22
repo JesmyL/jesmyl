@@ -14,6 +14,7 @@ import {
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { takeUserAuthName } from 'shared/utils/user.utils';
 import { ScheduleWidgetUserTakePhoto } from './TakePhoto';
 import { ScheduleWidgetUserEdit } from './UserEdit';
 import { ScheduleWidgetUserPhoto } from './UserPhoto';
@@ -48,7 +49,7 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
   const userAuth = rights.userInfoById.get(user.id)?.uauth;
   const userName =
     userAuth?.nick === undefined
-      ? userAuth?.fio || <span className="text-x7 italic">{translateBase(BaseLocaleKey.Link)}</span>
+      ? takeUserAuthName(userAuth) || <span className="text-x7 italic">{translateBase(BaseLocaleKey.Link)}</span>
       : `${userAuth.fio && userAuth.fio !== userAuth.nick ? `${userAuth.fio} (${userAuth.nick})` : userAuth.nick} `;
 
   const userNode = (
