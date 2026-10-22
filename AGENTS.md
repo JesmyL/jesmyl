@@ -45,6 +45,7 @@
 - Small styles — via Tailwind utility classes; complex `@keyframes` (e.g. `playingPulse`) — keep in `styled` from `@emotion/styled`, not in the global Tailwind entry.
 - Locale strings: always write user-facing text translations via `translateBase` / `translateDynamic` — never inline raw text.
 - Never write blind type casts like `as CmAudioTail` (branded/type asserts on unverified data) — write proper types and parse/validate at the boundary so the casts become unnecessary.
+- In this project, the term `songs` is not used — the correct name is `coms` (short for "compositions"). Name variables, types, files and identifiers accordingly.
 
 ## Assistant reply formatting
 
