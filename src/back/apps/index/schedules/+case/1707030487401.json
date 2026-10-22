@@ -11,23 +11,9 @@
     "type": 3,
     "roles": [{ "mi": 0, "icon": "Github", "user": 0, "title": "Координатор" }],
     "users": [
-      {
-        "R": 127,
-        "mi": 0,
-        "fio": "danikpon",
-        "nick": "danikpon",
-        "tgId": 370756745,
-        "login": "T7f21a14d3133065ca2e48254f87ecf3",
-        "tgInform": 1
-      },
-      { "mi": 1, "fio": "Павел 💾", "nick": "gfirf", "tgId": 958383738, "login": "T166cbf17596a0c2919e4df1a6d54e66" },
-      {
-        "mi": 2,
-        "fio": "Артём ✞",
-        "nick": "artemkadjam",
-        "tgId": 1035981397,
-        "login": "T5bf2641668ea893e95047be453a5044"
-      }
+      { "R": 127, "id": 3, "mi": 0, "tgId": 370756745, "tgInform": 1 },
+      { "id": 1, "mi": 1, "tgId": 958383738 },
+      { "id": 21, "mi": 2, "tgId": 1035981397 }
     ]
   },
   "days": [

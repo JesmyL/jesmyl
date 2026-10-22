@@ -14,73 +14,12 @@
       { "mi": 1, "title": "" }
     ],
     "users": [
-      {
-        "R": 127,
-        "mi": 0,
-        "fio": "Павел 💾",
-        "nick": "gfirf",
-        "tgId": 958383738,
-        "login": "T166cbf17596a0c2919e4df1a6d54e66",
-        "tgAlerts": 1,
-        "tgInform": 1
-      },
-      {
-        "R": 127,
-        "mi": 1,
-        "fio": "danikpon",
-        "nick": "danikpon",
-        "tgId": 370756745,
-        "login": "T7f21a14d3133065ca2e48254f87ecf3",
-        "tgInform": 1
-      },
-      {
-        "R": 43,
-        "mi": 2,
-        "fio": "Руслан",
-        "nick": "maunrus",
-        "tgId": 521630606,
-        "login": "T6558fe287d2ea93be3e19bbe64b5dfc",
-        "tgInform": 0
-      },
-      { "R": 21, "mi": 3, "fio": "yansmk", "nick": "yansmk", "login": "08a0e6ba7792e902569816a81b846b25" },
-      {
-        "R": 47,
-        "mi": 4,
-        "fio": "Жменька💙",
-        "nick": "Pashas_wife",
-        "tgId": 1086988826,
-        "login": "T2844a791f6cb5702a875a0bad8e9397",
-        "tgInform": 1
-      },
-      {
-        "R": 47,
-        "mi": 5,
-        "fio": "",
-        "nick": "AndreyKartyshin",
-        "tgId": 760378069,
-        "login": "T0798c1117b22e78af2e87c075b53ea2",
-        "tgInform": 0
-      },
-      { "R": 17, "mi": 6, "fio": "Андрей" },
-      {
-        "R": 47,
-        "mi": 7,
-        "fio": "Денис Евдокимов",
-        "nick": "EvdDenis",
-        "tgId": 426245780,
-        "login": "Ta6fc77b8901b55067f55c104839abde"
-      },
-      { "R": 127, "mi": 8, "fio": "JESMYL", "nick": "JESMYL", "login": "1cd799804adadac7bebf6f355fe7a58b" },
-      {
-        "R": 5,
-        "mi": 9,
-        "fio": "Юрий",
-        "nick": "t:esjimyimje",
-        "tgId": 1206346301,
-        "login": "T1c5a587ddebf63011b5aa6e54977b34"
-      },
-      { "mi": 10, "fio": "User", "nick": "User", "login": "8f9bfe9d1345237cb3b2b205864da075" }
-    ]
+      { "R": 127, "id": 1, "mi": 0, "tgId": 958383738, "tgInform": 1 },
+      { "R": 127, "id": 3, "mi": 1, "tgId": 370756745, "tgInform": 1 },
+      { "R": 43, "id": 5, "mi": 2, "tgId": 521630606, "tgInform": 0 },
+      { "R": 47, "id": 2, "mi": 4, "tgId": 1086988826, "tgInform": 1 }
+    ],
+    "comsRights": { "users": [5] }
   },
   "days": [
     {

@@ -14,23 +14,8 @@
       { "mi": 1, "title": "" }
     ],
     "users": [
-      {
-        "R": 127,
-        "mi": 1,
-        "fio": "danikpon",
-        "nick": "danikpon",
-        "tgId": 370756745,
-        "login": "T7f21a14d3133065ca2e48254f87ecf3",
-        "tgInform": 1
-      },
-      {
-        "R": 127,
-        "mi": 2,
-        "fio": "Павел 👨‍💻",
-        "nick": "gfirf",
-        "tgId": 958383738,
-        "login": "T166cbf17596a0c2919e4df1a6d54e66"
-      }
+      { "R": 127, "id": 3, "mi": 1, "tgId": 370756745, "tgInform": 1 },
+      { "R": 127, "id": 1, "mi": 2, "tgId": 958383738 }
     ]
   },
   "days": [

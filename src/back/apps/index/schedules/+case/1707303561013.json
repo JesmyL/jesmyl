@@ -11,34 +11,9 @@
     "type": 13,
     "roles": [{ "mi": 0, "icon": "Github", "user": 0, "title": "Координатор" }],
     "users": [
-      {
-        "R": 127,
-        "mi": 0,
-        "fio": "Павел 💾",
-        "nick": "gfirf",
-        "tgId": 958383738,
-        "login": "T166cbf17596a0c2919e4df1a6d54e66",
-        "tgInform": 1
-      },
-      {
-        "R": 21,
-        "mi": 1,
-        "fio": "Джексон_С💙",
-        "nick": "Pashas_wife",
-        "tgId": 1086988826,
-        "login": "T2844a791f6cb5702a875a0bad8e9397",
-        "tgInform": 1
-      },
-      {
-        "R": 127,
-        "mi": 2,
-        "fio": "danikpon",
-        "nick": "danikpon",
-        "tgId": 370756745,
-        "login": "T7f21a14d3133065ca2e48254f87ecf3"
-      },
-      { "R": 5, "mi": 3, "fio": "User", "nick": "User", "login": "8f9bfe9d1345237cb3b2b205864da075" },
-      { "R": 21, "mi": 4, "fio": "Artemkadjam", "nick": "Artemkadjam", "login": "16d0e0d747fd06d1a3d91ecb00ed39ec" }
+      { "R": 127, "id": 1, "mi": 0, "tgId": 958383738, "tgInform": 1 },
+      { "R": 21, "id": 2, "mi": 1, "tgId": 1086988826, "tgInform": 1 },
+      { "R": 127, "id": 3, "mi": 2, "tgId": 370756745 }
     ]
   },
   "days": [
