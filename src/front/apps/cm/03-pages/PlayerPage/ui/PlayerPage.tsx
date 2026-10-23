@@ -11,14 +11,21 @@ import {
   cmComPlayerIsShuffleAtom,
   cmComPlayerIsTextSlidesAtom,
   cmComSelectedComwsAtom,
+  CmComWithComListSearchFilterInput,
   useCmCom,
   useCmComAllIComList,
   useCmComIComList,
 } from '$cm/entities/com';
 import {
+  CmComToolFavorite,
+  CmComToolIsComToolIconItemsContext,
+  CmComToolNameContext,
+} from '$cm/entities/com-tool';
+import {
   cmComAudioPlayerComsWithErrorAtom,
   cmComAudioPlayerEndedTickAtom,
   cmComAudioPlayerErrorTickAtom,
+  cmComAudioPlayerFilteredComsAtom,
   cmComAudioPlayerFindAdvanceCom,
   cmComAudioPlayerFindNextCom,
   cmComAudioPlayerGoToAdjacentCom,
@@ -51,9 +58,9 @@ import { cmPlayerBroadcastAudioSrcAtom } from '$cm/shared/state/broadcast.atoms'
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useNavigate, useSearch } from '@tanstack/react-router';
-import { useAtomValue } from 'atomaric';
-import { useEffect, useMemo, useRef } from 'react';
-import { parseCmAudioSrc } from 'shared/api';
+import { atom, useAtomValue } from 'atomaric';
+import { ReactNode, useEffect, useMemo, useRef } from 'react';
+import { CmComWid, IExportableCom, MenuComToolName, parseCmAudioSrc } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { convertSecondsInStrTime } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
@@ -147,24 +154,12 @@ const resetIsCanPlayEffect = () => {
 export const CmPlayerPage = () => {
   const favComws = useCmComIComList(useAtomValue(cmComFavoriteComwsAtom));
   const selComws = useCmComIComList(useAtomValue(cmComSelectedComwsAtom));
-
   const allIComs = useCmComAllIComList();
-
-  const openComListMode = useAtomValue(cmOpenComListModeAtom);
-  const debouncedOpenComListMode = useDebounceValue(openComListMode);
+  const debouncedOpenComListMode = useDebounceValue(useAtomValue(cmOpenComListModeAtom));
   const cachedSrcs = useCmComAudioPlayerCachedSrcs();
-  const search = useSearch({ from: '/cm/player/' });
-  const lastOpenComw = useAtomValue(cmComLastOpenComwAtom);
-  const navigate = useNavigate();
-  const endedTick = useAtomValue(cmComAudioPlayerEndedTickAtom);
-  const errorTick = useAtomValue(cmComAudioPlayerErrorTickAtom);
-  const broadcastSrc = useAtomValue(cmPlayerBroadcastAudioSrcAtom);
-  const isShuffle = useAtomValue(cmComPlayerIsShuffleAtom);
-  const isTextSlides = useAtomValue(cmComPlayerIsTextSlidesAtom);
-  const playSrc = useAtomValue(cmComAudioPlayerPlaySrcAtom);
-  const isPlay = useAtomValue(cmComAudioPlayerIsPlayAtom);
+  const termAtom = useMemo(() => atom(''), []);
 
-  const icoms = useMemo(
+  const baseIComs = useMemo(
     () =>
       (debouncedOpenComListMode === 'fav'
         ? favComws
@@ -176,7 +171,65 @@ export const CmPlayerPage = () => {
       ).filter(com => com.al?.length),
     [allIComs, favComws, cachedSrcs, debouncedOpenComListMode, selComws],
   );
+  const baseComws = useMemo(() => baseIComs.map(com => com.w), [baseIComs]);
+
+  return (
+    <CmComWithComListSearchFilterInput
+      comws={baseComws}
+      termAtom={termAtom}
+    >
+      {({ inputNode, searchedComs, term }) => (
+        <CmPlayerPageContent
+          baseIComs={baseIComs}
+          searchedComs={searchedComs}
+          term={term}
+          inputNode={inputNode}
+        />
+      )}
+    </CmComWithComListSearchFilterInput>
+  );
+};
+
+const CmPlayerPageContent = ({
+  baseIComs,
+  searchedComs,
+  term,
+  inputNode,
+}: {
+  baseIComs: IExportableCom[];
+  searchedComs: CmComWid[];
+  term: string;
+  inputNode: ReactNode;
+}) => {
+  const openComListMode = useAtomValue(cmOpenComListModeAtom);
+  const search = useSearch({ from: '/cm/player/' });
+  const lastOpenComw = useAtomValue(cmComLastOpenComwAtom);
+  const navigate = useNavigate();
+  const endedTick = useAtomValue(cmComAudioPlayerEndedTickAtom);
+  const errorTick = useAtomValue(cmComAudioPlayerErrorTickAtom);
+  const broadcastSrc = useAtomValue(cmPlayerBroadcastAudioSrcAtom);
+  const isShuffle = useAtomValue(cmComPlayerIsShuffleAtom);
+  const isTextSlides = useAtomValue(cmComPlayerIsTextSlidesAtom);
+  const playSrc = useAtomValue(cmComAudioPlayerPlaySrcAtom);
+  const isPlay = useAtomValue(cmComAudioPlayerIsPlayAtom);
+
+  const icoms = useMemo(() => {
+    const comwIComDict = new Map(baseIComs.map(com => [com.w, com]));
+
+    return searchedComs.reduce<IExportableCom[]>((acc, comw) => {
+      const icom = comwIComDict.get(comw);
+      if (icom) acc.push(icom);
+      return acc;
+    }, []);
+  }, [baseIComs, searchedComs]);
   const comws = useMemo(() => icoms.map(com => com.w), [icoms]);
+
+  /** Keeps manual next/prev (buttons and lock screen) inside the same searched list auto-advance walks. */
+  useEffect(() => {
+    cmComAudioPlayerFilteredComsAtom.set(term ? icoms : null);
+
+    return () => cmComAudioPlayerFilteredComsAtom.set(null);
+  }, [icoms, term]);
 
   const com = useCmCom(search.comw ?? lastOpenComw ?? icoms[0]?.w);
   const comw = com?.wid;
@@ -286,9 +339,16 @@ export const CmPlayerPage = () => {
       className="com-player"
       withoutBackButton
       withoutBackSwipe
-      headClass="mr-3"
+      headClass="flex-1 min-w-0"
       contentClass="p-0"
-      head={<CmComListPackKindSelector />}
+      head={
+        <div className="flex items-center gap-2 w-full">
+          <div className="flex-1 min-w-0">{inputNode}</div>
+          <div className="shrink-0">
+            <CmComListPackKindSelector />
+          </div>
+        </div>
+      }
       content={
         <>
           {com && <DocTitle title={com.name} />}
@@ -297,11 +357,22 @@ export const CmPlayerPage = () => {
               ref={playerRef}
               className={playerClass}
             >
-              <span className="block opacity-62 text-[0.7rem] font-bold tracking-[0.34em] uppercase">
-                #<CmComNumber comw={com.wid} />
-              </span>
-              <div className="mt-[0.35rem] text-[1.7rem] font-extrabold leading-[1.08] tracking-[-0.01em] text-balance">
-                {com.name}
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <span className="block opacity-62 text-[0.7rem] font-bold tracking-[0.34em] uppercase">
+                    #<CmComNumber comw={com.wid} />
+                  </span>
+                  <div className="mt-[0.35rem] text-[1.7rem] font-extrabold leading-[1.08] tracking-[-0.01em] text-balance">
+                    {com.name}
+                  </div>
+                </div>
+                <div className="shrink-0">
+                  <CmComToolIsComToolIconItemsContext value>
+                    <CmComToolNameContext value={`${MenuComToolName.MarkCom} player`}>
+                      <CmComToolFavorite />
+                    </CmComToolNameContext>
+                  </CmComToolIsComToolIconItemsContext>
+                </div>
               </div>
 
               <div className="relative flex items-center justify-center gap-[1.35rem] mt-[1.15rem]">

@@ -46,7 +46,7 @@ export const DebouncedSearchInput = ({ debounce = 300, className = '', placehold
             id="debounced-input"
             type={isNumberSearch ? 'tel' : 'text'}
             value={term}
-            className="input placeholder-shown:text-x4"
+            className="input"
             placeholder={placeholder}
             onFocus={event => event.currentTarget.select()}
             onChange={event => {

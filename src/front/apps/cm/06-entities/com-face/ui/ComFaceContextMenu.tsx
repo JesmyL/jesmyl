@@ -29,7 +29,7 @@ export const CmComFaceContextMenu = ({ onClick, comWid }: Props) => {
         }}
       >
         <LazyIcon
-          icon="Star"
+          icon="Favourite"
           kind={isComMarked ? 'SolidRounded' : undefined}
         />
         {translateBase(it => it[BaseLocaleKey.CmMarkComTool][MenuComToolName.MarkCom], { v: +isComMarked })}

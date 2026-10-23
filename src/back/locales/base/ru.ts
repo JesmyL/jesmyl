@@ -1008,4 +1008,5 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.ScheduleRightRedactComsListRole]: 'Редактор композиций',
   [BaseLocaleKey.ScheduleRightRedactComsListRoleGen]: 'Редактора композиций',
   [BaseLocaleKey.ScheduleRightRedactComsListDescription]: 'Изменение списка композиций в событиях',
+  [BaseLocaleKey.Cached]: 'Кэш',
 });

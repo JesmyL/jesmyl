@@ -908,4 +908,5 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.ScheduleRightRedactComsListRole]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleRightRedactComsListRoleGen]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleRightRedactComsListDescription]: LocaleSimpleString;
+  [BaseLocaleKey.Cached]: LocaleSimpleString;
 };

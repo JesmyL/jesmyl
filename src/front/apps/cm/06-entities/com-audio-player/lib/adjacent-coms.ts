@@ -1,17 +1,23 @@
-import { cmComFavoriteComwsAtom, cmComLastOpenComwAtom, cmComPlayerIsShuffleAtom, cmComSelectedComwsAtom } from '$cm/entities/com';
+import {
+  cmComFavoriteComwsAtom,
+  cmComLastOpenComwAtom,
+  cmComPlayerIsShuffleAtom,
+  cmComSelectedComwsAtom,
+} from '$cm/entities/com';
 import { cmIDB, cmOpenComListModeAtom } from '$cm/shared/state';
 import { atom } from 'atomaric';
 import { CmComWid, IExportableCom } from 'shared/api';
-import { isCmComAudioPlayerComCached, takeCmComAudioPlayerCachedSrcs } from './audioCache';
 import {
   cmComAudioPlayerPlaySrcAtom,
   cmComAudioPlayerSetMediaTitle,
   cmComAudioPlayerSetSrc,
   cmComAudioPlayerSwitchIsPlay,
 } from '../state/current-play-com';
+import { isCmComAudioPlayerComCached, takeCmComAudioPlayerCachedSrcs } from './audioCache';
 
 /** Coms whose audio failed to load; they are skipped when picking the next/prev one. */
 export const cmComAudioPlayerComsWithErrorAtom = atom<Set<CmComWid>>(new Set());
+export const cmComAudioPlayerFilteredComsAtom = atom<IExportableCom[] | nil>(null);
 
 let navigateToPlayerComw: ((comw: CmComWid) => void) | nil = null;
 /** The player page registers its TanStack navigate here so lock-screen next/prev move the URL too. */
@@ -21,8 +27,11 @@ export const cmComAudioPlayerRegisterNavigation = (handler: typeof navigateToPla
 
 const hasAudio = (com: IExportableCom) => !!com.al?.length;
 
-/** Resolves the visible tracklist (all / favorites / selected / cached) straight from atoms + IndexedDB. */
+/** Resolves the visible tracklist (searched / all / favorites / selected / cached) straight from atoms + IndexedDB. */
 const takeTracklistComs = async () => {
+  const filteredComs = cmComAudioPlayerFilteredComsAtom.get();
+  if (filteredComs) return filteredComs;
+
   const mode = cmOpenComListModeAtom.get();
 
   if (mode === 'all') return (await cmIDB.db.coms.toArray()).filter(hasAudio);
@@ -48,7 +57,8 @@ export const cmComAudioPlayerGoToAdjacentCom = async (direction: 'prev' | 'next'
   const coms = await takeTracklistComs();
   const playSrc = cmComAudioPlayerPlaySrcAtom.get();
   const currentComw =
-    coms.find(com => playSrc != null && com.al?.some(audioSrc => audioSrc === playSrc))?.w ?? cmComLastOpenComwAtom.get();
+    coms.find(com => playSrc != null && com.al?.some(audioSrc => audioSrc === playSrc))?.w ??
+    cmComLastOpenComwAtom.get();
   const targetCom =
     direction === 'next'
       ? cmComAudioPlayerFindAdvanceCom(currentComw, coms, cmComPlayerIsShuffleAtom.get())
@@ -64,8 +74,11 @@ export const cmComAudioPlayerGoToAdjacentCom = async (direction: 'prev' | 'next'
   navigateToPlayerComw?.(targetCom.w);
 };
 
-export const cmComAudioPlayerFindAdvanceCom = (currentComw: CmComWid | und, coms: IExportableCom[], isShuffle: boolean) =>
-  isShuffle ? findRandomCom(currentComw, coms) : cmComAudioPlayerFindNextCom(currentComw, coms);
+export const cmComAudioPlayerFindAdvanceCom = (
+  currentComw: CmComWid | und,
+  coms: IExportableCom[],
+  isShuffle: boolean,
+) => (isShuffle ? findRandomCom(currentComw, coms) : cmComAudioPlayerFindNextCom(currentComw, coms));
 
 /** Random track that has not errored; falls back to the current one in single-track lists. */
 const findRandomCom = (currentComw: CmComWid | und, coms: IExportableCom[]) => {
@@ -92,5 +105,6 @@ export const cmComAudioPlayerFindNextCom = (currentComw: CmComWid | und, coms: I
   const currentComi = coms.findIndex(com => com.w === currentComw);
 
   for (let i = currentComi + 1; i < coms.length; i++) if (!comsWithError.has(coms[i].w)) return coms[i];
-  for (let i = 0; i < (currentComi < 0 ? coms.length : currentComi); i++) if (!comsWithError.has(coms[i].w)) return coms[i];
+  for (let i = 0; i < (currentComi < 0 ? coms.length : currentComi); i++)
+    if (!comsWithError.has(coms[i].w)) return coms[i];
 };

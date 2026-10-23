@@ -9,14 +9,14 @@ export const CmComToolFavorite = () => {
   const ccom = useCmComCurrent();
   const { isFavourite, toggleFavourite } = useCmComFavouriteList();
 
-  if (!ccom) return <CmComTool icon="Star" />;
+  if (!ccom) return <CmComTool icon="Favourite" />;
 
   return (
     <CmComTool
       title={translateBase(it => it[BaseLocaleKey.CmMarkComTool][MenuComToolName.MarkCom], {
         v: +isFavourite(ccom.wid),
       })}
-      icon="Star"
+      icon="Favourite"
       iconKind={isFavourite(ccom.wid) ? 'SolidRounded' : undefined}
       onClick={() => toggleFavourite(ccom.wid)}
     />

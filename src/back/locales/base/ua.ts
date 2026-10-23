@@ -985,4 +985,5 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.ScheduleRightRedactComsListRole]: 'Редактор композицій',
   [BaseLocaleKey.ScheduleRightRedactComsListRoleGen]: 'Редактора композицій',
   [BaseLocaleKey.ScheduleRightRedactComsListDescription]: 'Зміна списку композицій у подіях',
+  [BaseLocaleKey.Cached]: 'Кеш',
 });

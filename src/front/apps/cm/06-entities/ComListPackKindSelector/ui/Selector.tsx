@@ -1,41 +1,37 @@
-import { Button } from '#shared/components/ui/button';
-import { ButtonGroup } from '#shared/components/ui/button-group';
+import { translateBase } from '#basis/locale';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmOpenComListModeAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { objectKeys } from 'shared/utils/object.utils';
+
+const MODE_DICT = {
+  all: ['LeftToRightListBullet', 'TwotoneRounded', BaseLocaleKey.CmListsAll],
+  fav: ['Favourite', 'DuotoneRounded', BaseLocaleKey.Favorite],
+  sel: ['CheckmarkBadge01', 'DuotoneRounded', BaseLocaleKey.Selected],
+  cached: ['CloudDownload', 'TwotoneRounded', BaseLocaleKey.Cached],
+} as const;
 
 export const CmComListPackKindSelector = () => {
   const mode = useAtomValue(cmOpenComListModeAtom);
-  const classNameDict: PRecord<typeof mode, string> = { [mode]: 'text-x7' };
 
   return (
-    <ButtonGroup.Root>
-      <Button
-        icon="LeftToRightListBullet"
-        iconKind="TwotoneRounded"
-        className={classNameDict.all}
-        onClick={() => cmOpenComListModeAtom.set('all')}
-      />
+    <Dropdown
+      id={mode}
+      onSelectId={mode => cmOpenComListModeAtom.set(mode)}
+      items={objectKeys(MODE_DICT).map(id => {
+        const [icon, kind] = MODE_DICT[id];
 
-      <Button
-        icon="Star"
-        iconKind="DuotoneRounded"
-        className={classNameDict.fav}
-        onClick={() => cmOpenComListModeAtom.set('fav')}
-      />
-
-      <Button
-        icon="CheckmarkBadge01"
-        iconKind="DuotoneRounded"
-        className={classNameDict.sel}
-        onClick={() => cmOpenComListModeAtom.set('sel')}
-      />
-
-      <Button
-        icon="CloudDownload"
-        iconKind="TwotoneRounded"
-        className={classNameDict.cached}
-        onClick={() => cmOpenComListModeAtom.set('cached')}
-      />
-    </ButtonGroup.Root>
+        return { id, title: <LazyIcon icon={icon} kind={kind} /> };
+      })}
+      renderItem={({ node, id }) => (
+        <>
+          {node}
+          {translateBase(MODE_DICT[id][2])}
+        </>
+      )}
+      hiddenArrow
+    />
   );
 };

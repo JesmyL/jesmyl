@@ -984,4 +984,5 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.ScheduleRightRedactComsListRole]: 'Coms list editor',
   [BaseLocaleKey.ScheduleRightRedactComsListRoleGen]: 'Coms list editor',
   [BaseLocaleKey.ScheduleRightRedactComsListDescription]: 'Changing coms lists in events',
+  [BaseLocaleKey.Cached]: 'Cached',
 });

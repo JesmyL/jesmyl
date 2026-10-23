@@ -988,4 +988,5 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.ScheduleRightRedactComsListRole]: 'Композициялар редакторы',
   [BaseLocaleKey.ScheduleRightRedactComsListRoleGen]: 'Композициялар редакторының',
   [BaseLocaleKey.ScheduleRightRedactComsListDescription]: 'Оқиғалардағы композициялар тізімін өзгерту',
+  [BaseLocaleKey.Cached]: 'Кэш',
 });
