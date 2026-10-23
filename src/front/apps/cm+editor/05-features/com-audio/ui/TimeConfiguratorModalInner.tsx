@@ -49,7 +49,7 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
   const isPlayState = useAtomValue(cmComAudioPlayerIsPlayAtom);
   const isPause = useDebounceValue(!isPlayState, 500);
 
-  const { timeSlideDict } = useCmComMarkTextValuesMaker(src, TextCase.AsIs);
+  const { timeSlideDict } = useCmComMarkTextValuesMaker(com, src, TextCase.AsIs);
 
   const addMaker = (add: number) => () => {
     setCurrentTime(prev => {

@@ -15,6 +15,7 @@ export const useCmComAudioMarkSlides = (
   nameSpaceiVariants?: number[],
 ) => {
   const { markTimes: wholeMarkTimes, timeSlideDict, srcMarks } = useCmComMarkTextValuesMaker(
+    com,
     src,
     textCase,
     nameSpaceiVariants,
