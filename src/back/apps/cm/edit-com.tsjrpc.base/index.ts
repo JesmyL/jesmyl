@@ -78,6 +78,17 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
 
         toggleAudioLink: modifyCom('COM_AUDIO', async (com, { link }) => {
           const prev = com.al ?? [];
+
+          if (prev.some(pLink => pLink === link)) {
+            com.al = prev.filter(pLink => pLink !== link);
+
+            return {
+              description: 'изменение аудио-ссылок: удалено',
+              was: prev,
+              new: com.al,
+            };
+          }
+
           const key = await takeCmAudioKeyFromLink(link, com.n);
           const isThereInPrev = prev.includes(key);
 

@@ -107,6 +107,25 @@ export const takeCmAudioKeyFromLink = async (link: CmAudioSrc, title?: string): 
   return downloadAndResolveCmAudioKey(makeCmComNumLeadLinkFromHttp(link), title);
 };
 
+/** Доверенная http(s)-ссылка из значения; `nil` для прочих протоколов (`file:`, `javascript:` и т.п.) и невалидных URL. */
+const parseRawHttpLink = (value: string): HttpLink | nil => {
+  try {
+    const { protocol } = new URL(value);
+    return protocol === 'http:' || protocol === 'https:' ? (value as HttpLink) : null;
+  } catch (_error) {
+    return null;
+  }
+};
+
+/** Мягкое percent-декодирование: некорректные последовательности оставляют значение как есть. */
+const decodePercentValue = (value: string) => {
+  try {
+    return decodeURIComponent(value);
+  } catch (_error) {
+    return value;
+  }
+};
+
 /** Ссылка по ключу таблицы; `nil`, если такого ключа нет. */
 export const takeAudioLinkByTail = async (requestedKey: string): Promise<HttpLink | HttpNumLeadLink | nil> => {
   const tail = parseCmAudioTail(requestedKey);
@@ -127,3 +146,12 @@ export const takeCmComHttpLinkFromAudioRequest = async (requested: string): Prom
 
   return link ? makeCmComHttpLinkFromNumLead(link) : null;
 };
+
+/**
+ * http(s)-ссылка аудио: сырое значение (в том числе с query) либо его percent-декодированный вариант,
+ * иначе поиск по ключу таблицы аудио-ссылок.
+ */
+export const takeAudioHttpLink = async (requestedValue: string): Promise<HttpLink | nil> =>
+  parseRawHttpLink(requestedValue) ??
+  parseRawHttpLink(decodePercentValue(requestedValue)) ??
+  takeCmComHttpLinkFromAudioRequest(requestedValue);

@@ -166,8 +166,9 @@ MemoryHigh=500M`,
       await runCommand(`echo "host all all 127.0.0.1/32 md5" | sudo tee -a ${pgHbaPath} > /dev/null`);
       await runCommand(`echo "host all all ::1/128 md5" | sudo tee -a ${pgHbaPath} > /dev/null`);
       await runCommand('sudo systemctl restart postgresql');
-    } catch {
-      console.error(makeYellowLogText('[Ошибка] Не удалось настроить базу данных и авторизацию'));
+    } catch (error) {
+      console.error(makeRedLogText('[Ошибка] Не удалось настроить базу данных и авторизацию'));
+      console.error(error);
     }
 
     if (DB_PORT !== '5432') {

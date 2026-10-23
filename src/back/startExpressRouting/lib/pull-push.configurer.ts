@@ -12,6 +12,7 @@ import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { mapBlankRow } from 'back/apps/q/db-stores';
 import { FileStore } from 'back/complect/FileStore';
 import {
+  audioLinkDB,
   comDB,
   questionerBlankDB,
   questionerUserAnswerDB,
@@ -80,6 +81,19 @@ export const pullPushDirFilesDictLazy = lazyInit(
   } => {
     return {
       'apps/cm/': {
+        audioLinkMap: {
+          pull: async (file, _type) => ({
+            data: await db.select().from(audioLinkDB).orderBy(audioLinkDB.key),
+            file,
+            name: file,
+          }),
+
+          PUSH: rows => {
+            if (!rows.length) return;
+            return dbUpsert(audioLinkDB, rows, ['key']);
+          },
+        },
+
         comwVisits: {
           pull: async (file, _type) => {
             const data: typeof _type = {};

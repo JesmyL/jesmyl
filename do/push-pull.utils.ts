@@ -1,3 +1,4 @@
+import { AudioLinkRow } from 'back/audio/md5LinkRedirectDict.model';
 import { NounPronsType } from 'back/complect/model';
 import { UserId } from 'back/drizzle/schema/user';
 import {
@@ -76,6 +77,7 @@ export const pullPushFileDirNameNet = {
   },
 
   'apps/cm/': {
+    audioLinkMap: T<AudioLinkRow[], string>(),
     comwVisits: T<PRecord<CmComWid, number>, string>(),
     chordTracks: T<ChordPack, string>(),
     eeStorage: T<EeStorePack, string>(),

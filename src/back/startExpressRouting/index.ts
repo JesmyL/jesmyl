@@ -18,11 +18,7 @@ import { vitePWAOptions } from '../../../vite-pwa.options';
 import * as secret from '../../../do/secret.md5.json';
 import { takeComwTiny } from '../apps/cm/com.tiny';
 import { catsFileStorage } from '../apps/cm/file-stores';
-import {
-  takeAudioLinkByTail,
-  takeAudioTailFromRequestPath,
-  takeCmComHttpLinkFromAudioRequest,
-} from '../audio/md5LinkRedirectDict';
+import { takeAudioHttpLink, takeAudioLinkByTail, takeAudioTailFromRequestPath } from '../audio/md5LinkRedirectDict';
 import { db } from '../drizzle/drizzle.db';
 import { comDB } from '../drizzle.schema';
 import { hostRootDir, lazyEnvJson } from '../envJson';
@@ -206,8 +202,8 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
   app.get(/^\/track\//, async (req: Request, res: Response) => {
     const requestedValue = takeAudioTailFromRequestPath(req.url.slice(trackPathPrefix.length));
 
-    // Проксируются только треки из таблицы аудио-ссылок; сырой http(s) отсекается как открытый прокси.
-    const upstreamUrl = await takeCmComHttpLinkFromAudioRequest(requestedValue);
+    // Проксируется трек из таблицы аудио-ссылок либо сырая http(s)-ссылка; прочие протоколы отсекаются.
+    const upstreamUrl = await takeAudioHttpLink(requestedValue);
     if (!upstreamUrl) {
       res.sendStatus(404);
       return;
@@ -267,7 +263,7 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
           }
 
           const audioValue = [com.al].flat()[+num || 0];
-          const externalLink = await takeCmComHttpLinkFromAudioRequest(audioValue);
+          const externalLink = await takeAudioHttpLink(audioValue);
 
           if (!externalLink) {
             res.sendStatus(404);
