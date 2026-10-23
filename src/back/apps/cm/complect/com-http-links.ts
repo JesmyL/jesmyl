@@ -63,13 +63,3 @@ export const makeCmComHttpLinkFromNumLead = (numLeadLink: HttpLink | HttpNumLead
 
   return `${numLeadToHttpLinks[prefix]}${postfix}`;
 };
-
-export const makeCmComNumLeadAudioLinkList = (numLeadLinks: HttpNumLeadLink[] | HttpNumLeadLink | nil) => {
-  const links = numLeadLinks ? [numLeadLinks].flat() : [];
-  return !links.length ? undefined : links;
-};
-
-export const makeCmComHttpAudioLinks = (httpLinks: HttpNumLeadLink[] | nil) => {
-  const links = httpLinks ? httpLinks.flat() : [];
-  return links.length === 1 ? links[0] : !links.length ? undefined : links;
-};

@@ -8,7 +8,7 @@ import md5 from 'md5';
 import path from 'path';
 import { Readable, pipeline } from 'node:stream';
 import { makeRegExp } from 'regexpert';
-import { CmComWid, HttpNumLeadLink, ScheduleWidgetWid, hostConfig, parseHttpNumLeadLink } from 'shared/api';
+import { CmComWid, HttpLink, HttpNumLeadLink, ScheduleWidgetWid, hostConfig } from 'shared/api';
 import { pullCmAudiosExpressRoutePath, pullFilesExpressSecretQueryName } from 'shared/api/pullFiles.utils';
 import { emptyFunc, extractNumber, itIt } from 'shared/utils';
 import { checkIsString } from 'shared/utils/checkIs';
@@ -19,12 +19,9 @@ import * as secret from '../../../do/secret.md5.json';
 import { takeComwTiny } from '../apps/cm/com.tiny';
 import { catsFileStorage } from '../apps/cm/file-stores';
 import {
-  migrateLegacyCmAudioValue,
-  seedAudioLinkDBFromLegacyFiles,
+  takeAudioLinkByTail,
   takeAudioTailFromRequestPath,
   takeCmComHttpLinkFromAudioRequest,
-  takeKnownCmAudioKeyFromLink,
-  takeNumLeadLinkByAudioTail,
 } from '../audio/md5LinkRedirectDict';
 import { db } from '../drizzle/drizzle.db';
 import { comDB } from '../drizzle.schema';
@@ -35,13 +32,6 @@ import { pushFilesExpressRoute } from './pushFiles';
 
 export const startExpressRouting = async (wsServer: WebSocketServer) => {
   const app = express();
-
-  // JSON-словари переносятся в таблицу `audioLinks` один раз, пока она пуста.
-  try {
-    await seedAudioLinkDBFromLegacyFiles();
-  } catch (error) {
-    console.error('Audio link seed error:', error);
-  }
 
   const isSearchBotReg = /(google|bing|yandex|duckduck|telegram|twitter)bot|slurp|vk\.com/;
 
@@ -136,14 +126,12 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
 
     try {
       const coms = await db.select({ al: comDB.al, n: comDB.n }).from(comDB);
-      const audios: Record<HttpNumLeadLink, string> = {};
+      const audios: Record<HttpLink | HttpNumLeadLink, string> = {};
 
       for (const { al, n } of coms) {
         for (const audioValue of al ?? []) {
-          // `com.al` хранит хвосты md5; исходная numLead-ссылка берётся из словаря. Устаревшие numLead-значения проходят как есть.
-          const link =
-            // @deprecated md5-migration Убрать первую ветку, когда в al не останется numLead-значений.
-            parseHttpNumLeadLink(audioValue) ?? parseHttpNumLeadLink(await takeNumLeadLinkByAudioTail(audioValue));
+          // `com.al` хранит хвосты md5; исходная ссылка берётся из таблицы аудио-ссылок.
+          const link = await takeAudioLinkByTail(audioValue);
 
           if (!link) {
             console.warn(`Пропущено аудио "${audioValue}" песни "${n}": ссылка не найдена в словаре`);
@@ -218,7 +206,7 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
   app.get(/^\/track\//, async (req: Request, res: Response) => {
     const requestedValue = takeAudioTailFromRequestPath(req.url.slice(trackPathPrefix.length));
 
-    // Проксируются только треки из словаря или устаревшие numLead-ссылки; сырой http(s) отсекается как открытый прокси.
+    // Проксируются только треки из таблицы аудио-ссылок; сырой http(s) отсекается как открытый прокси.
     const upstreamUrl = await takeCmComHttpLinkFromAudioRequest(requestedValue);
     if (!upstreamUrl) {
       res.sendStatus(404);
@@ -288,14 +276,6 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
 
           externalUrl = externalLink;
           ogDescription = `${com.i + 1}. ${com.n}\n`;
-
-          // @deprecated md5-migration Удалить блок ленивой миграции, когда в БД не останется numLead-значений.
-          const knownKey = await takeKnownCmAudioKeyFromLink(audioValue);
-          if (knownKey && knownKey !== audioValue) {
-            void migrateLegacyCmAudioValue(com.w, +num || 0, com.al, knownKey).catch(error =>
-              console.error('Audio al migration error:', error),
-            );
-          }
 
           const cats = catsFileStorage.getValue();
 
