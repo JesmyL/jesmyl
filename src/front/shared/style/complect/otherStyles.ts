@@ -26,11 +26,11 @@ export const otherStyles = css`
       border: 0;
       background: none;
       width: calc(100% - 30px);
-      color: var(--text-color);
+      color: var(--color--3);
       font-family: inherit;
 
       &::placeholder {
-        color: var(--color--3);
+        color: var(--color--4);
       }
     }
 
