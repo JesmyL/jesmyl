@@ -898,8 +898,4 @@ export const enum BaseLocaleKey {
   ColorGamutFuchsia = 892,
   ColorGamutSun = 893,
   ColorGamutNeon = 894,
-  /** @deprecated Bundled fonts are labelled by their family name directly. */
-  FontMontserrat = 895,
-  /** @deprecated Bundled fonts are labelled by their family name directly. */
-  FontRoboto = 896,
 }

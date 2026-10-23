@@ -718,8 +718,6 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.OtherPrograms]: 'Other programs',
   [BaseLocaleKey.Animations]: 'Animations',
   [BaseLocaleKey.Font]: 'Font',
-  [BaseLocaleKey.FontMontserrat]: '',
-  [BaseLocaleKey.FontRoboto]: '',
   [BaseLocaleKey.ShowErrors]: 'Show errors',
   [BaseLocaleKey.ColorGamut]: 'Color gamut',
   [BaseLocaleKey.ColorGamutMeadow]: 'Meadow',

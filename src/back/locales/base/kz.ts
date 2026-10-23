@@ -720,8 +720,6 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.OtherPrograms]: 'Басқа бағдарламалар',
   [BaseLocaleKey.Animations]: 'Анимациялар',
   [BaseLocaleKey.Font]: 'Қаріп',
-  [BaseLocaleKey.FontMontserrat]: '',
-  [BaseLocaleKey.FontRoboto]: '',
   [BaseLocaleKey.ShowErrors]: 'Қателерді көрсету',
   [BaseLocaleKey.ColorGamut]: 'Түс гаммасы',
   [BaseLocaleKey.ColorGamutMeadow]: 'Шалғын',

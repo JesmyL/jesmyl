@@ -718,8 +718,6 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.OtherPrograms]: 'Інші програми',
   [BaseLocaleKey.Animations]: 'Анімації',
   [BaseLocaleKey.Font]: 'Шрифт',
-  [BaseLocaleKey.FontMontserrat]: '',
-  [BaseLocaleKey.FontRoboto]: '',
   [BaseLocaleKey.ShowErrors]: 'Показати помилки',
   [BaseLocaleKey.ColorGamut]: 'Колірна гама',
   [BaseLocaleKey.ColorGamutMeadow]: 'Луг',
