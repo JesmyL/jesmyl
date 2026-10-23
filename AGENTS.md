@@ -30,6 +30,9 @@
 - Write optimal code: reuse what already exists — search hard for an existing implementation (`shared/`, utils) before writing a new one.
 - Prefer built-ins over hand-rolled code — before writing a helper, check for a native one (`Array.isArray`, `Object.hasOwn`, `structuredClone`, `at`, `flat`, etc.) and only then for an existing util in `shared/utils`.
 - Keep code local and minimal — the final bundle should contain as few characters as possible.
+- Everything that ends up in the frontend bundle must be as small as possible — this is the core philosophy.
+- State/identifier values should be numbers, not strings — use enums instead of string literals for state identifiers (e.g. `montserrat = 'montserrat'` is bad practice).
+- Use only `const enum`, never plain `enum`.
 - Performance: hoist regexps out of functions (build once via `lazyInit`), build char-class regexps from object keys (`objectKeys(dict).join('')`), and prefer a single `.replace` pass with a replacer dict over chained `.replace` calls.
 - Never wrap a single static regexp in `lazyInit(() => makeRegExp('...'))` — a module-scope `makeRegExp('...')` is already built once at load; keep `lazyInit` only where deferred building is genuinely required (e.g. regexps composed from object keys at runtime).
 - Reference example: `escapeHtmlLazy` in `src/shared/utils/string.utils.ts`.
@@ -44,9 +47,11 @@
 - Never use raw `addEventListener`/`removeEventListener` — use the project's own `addEventListenerPipe` event/subscription system instead.
 - Small styles — via Tailwind utility classes; complex `@keyframes` (e.g. `playingPulse`) — keep in `styled` from `@emotion/styled`, not in the global Tailwind entry.
 - Locale strings: always write user-facing text translations via `translateBase` / `translateDynamic` — never inline raw text.
+- Do not add translations for a new locale key if the text is identical in all languages — just keep the single same value in each locale file (no need to invent per-language variants).
 - Never write blind type casts like `as CmAudioTail` (branded/type asserts on unverified data) — write proper types and parse/validate at the boundary so the casts become unnecessary.
 - In this project, the term `songs` is not used — the correct name is `coms` (short for "compositions"). Name variables, types, files and identifiers accordingly.
 - Removing an entry from `BaseLocaleKey` (locale keys): never delete it outright — mark it `@deprecated` in `_BaseLocaleKey.ts` and change its translations in all `src/back/locales/base/{ru,en,kz,ua,...}.ts` files to `''` instead of removing the keys.
+- When marking a `BaseLocaleKey` entry `@deprecated`, add the tag ONLY in `_BaseLocaleKey.ts` — do not add `@deprecated` tags or extra comments at usage sites or locale files.
 
 ## Assistant reply formatting
 
