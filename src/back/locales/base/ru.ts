@@ -738,6 +738,8 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.OtherPrograms]: 'Другие программы',
   [BaseLocaleKey.Animations]: 'Анимации',
   [BaseLocaleKey.Font]: 'Шрифт',
+  [BaseLocaleKey.FontMontserrat]: '',
+  [BaseLocaleKey.FontRoboto]: '',
   [BaseLocaleKey.ShowErrors]: 'Показать ошибки',
   [BaseLocaleKey.ColorGamut]: 'Цветовая гамма',
   [BaseLocaleKey.ColorGamutMeadow]: 'Луг',

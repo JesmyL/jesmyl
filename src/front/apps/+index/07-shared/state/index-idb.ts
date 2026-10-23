@@ -1,11 +1,11 @@
 import { DexieDB } from '#shared/lib/DexieDB';
 import { DeviceId, IScheduleWidget, ScheduleWidgetPhotoKey } from 'shared/api';
 import { StameskaIconPack } from 'stameska-icon/utils';
-import { MyFileBoxId } from 'x/my-files';
+import { MyFileId } from 'x/my-files';
 
 interface Storage {
   lastModifiedAt: number;
-  appFontFamilyId: MyFileBoxId | null;
+  appFontFamilyId: MyFileId | null;
   appColorGamutIndex: number | null;
   deviceId: DeviceId | null;
 

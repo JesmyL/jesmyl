@@ -28,6 +28,7 @@ export const useOnSendPromiseCallback = <Value, Dto = any>(
           promise
             .then(val => {
               setIsLoading(false);
+              setError('');
               onSuccessRef.current?.(val);
             })
             .catch(errorMessage => {

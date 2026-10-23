@@ -1,18 +1,33 @@
-import { emptyFunc } from 'shared/utils';
-import { MyFileBoxId } from '../model/common';
+import { bundledFontFamilies, MyFileId } from '../model/common';
 import { myFilesIDB } from '../state/idb';
 
-export const applyFontFamilyFromMyFiles = (win: Window | nil, fileId?: MyFileBoxId) => {
-  if (!fileId || !win) return;
+export const takeMyFileFontFamily = (fileId: MyFileId) =>
+  typeof fileId === 'number' ? (bundledFontFamilies.get(fileId)?.title ?? `${fileId}`) : fileId;
 
-  (async () => {
-    const font = await myFilesIDB.tb.files.get(fileId);
+/** Resolves `true` when the family is ready to render, `false` when it could not be loaded. */
+export const applyFontFamilyFromMyFiles = async (win: Window | nil, fileId: MyFileId | nil) => {
+  if (fileId == null) return true;
+  if (!win) return false;
 
-    if (font == null || Array.from(win.document.fonts.keys()).some(face => face.family === fileId)) return;
+  const family = takeMyFileFontFamily(fileId);
 
-    new FontFace(fileId, await font.file.arrayBuffer())
-      .load()
-      .then(face => win.document.fonts.add(face))
-      .catch(emptyFunc);
-  })();
+  if (Array.from(win.document.fonts).some(face => face.family === family && face.status === 'loaded')) return true;
+
+  const src =
+    typeof fileId === 'number'
+      ? bundledFontFamilies.get(fileId)?.src
+      : await myFilesIDB.tb.files.get(fileId).then(font => font?.file.arrayBuffer());
+
+  if (src == null) return false;
+
+  return new FontFace(family, typeof src === 'string' ? `url(${src})` : src)
+    .load()
+    .then(face => {
+      win.document.fonts.add(face);
+      return true;
+    })
+    .catch(reason => {
+      console.warn(`Failed to load font family "${family}"`, reason);
+      return false;
+    });
 };

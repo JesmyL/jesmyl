@@ -83,12 +83,18 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
       {isDropped && (
         <DropdownMenu.Content onClick={() => setDropped(false)}>
           {props.undTitle && (
-            <DropdownMenu.Item onClick={() => onClick({ id: undefined, title: props.undTitle })}>
+            <DropdownMenu.Item
+              disabled={isLoading}
+              onClick={() => onClick({ id: undefined, title: props.undTitle })}
+            >
               {renderItem({ node: props.undTitle, id: undefined!, afterClickAction })}
             </DropdownMenu.Item>
           )}
           {props.nullTitle && (
-            <DropdownMenu.Item onClick={() => onClick({ id: null, title: props.nullTitle })}>
+            <DropdownMenu.Item
+              disabled={isLoading}
+              onClick={() => onClick({ id: null, title: props.nullTitle })}
+            >
               {renderItem({ node: props.nullTitle, id: null!, afterClickAction })}
             </DropdownMenu.Item>
           )}
@@ -100,7 +106,7 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
               return (
                 <DropdownMenu.Item
                   key={JSON.stringify(item.id)}
-                  disabled={item.disabled || item.id === selectedId}
+                  disabled={isLoading || item.disabled || item.id === selectedId}
                   className={item.className}
                   onClick={event => {
                     event.stopPropagation();

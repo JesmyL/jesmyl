@@ -3,7 +3,7 @@ import { FontStyleType } from '#shared/ui/configurators/FontStyle/model';
 import { FontWeightType } from '#shared/ui/configurators/FontWeight';
 import { TextAlignConfigurator } from '#shared/ui/configurators/TextAlign/model';
 import { TextCase } from 'shared/model/common';
-import { MyFileBoxId } from 'x/my-files';
+import { MyFileId } from 'x/my-files';
 
 export interface ScreenBroadcastSimpleTextConfig {
   color: string;
@@ -16,7 +16,7 @@ export interface ScreenBroadcastSimpleTextConfig {
 }
 
 export interface ScreenBroadcastTextConfig extends ScreenBroadcastSimpleTextConfig {
-  fontFileId?: MyFileBoxId;
+  fontFileId?: MyFileId;
   fontWeight: FontWeightType;
   textAlign: TextAlignConfigurator;
 }

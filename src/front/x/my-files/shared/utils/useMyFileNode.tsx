@@ -2,10 +2,10 @@ import { convertFileToBase64 } from '#shared/lib/convertFileToBase64';
 import { BackgroundMediaNode } from '#shared/ui/BackgroundMediaNode';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { ReactNode, useEffect, useState } from 'react';
-import { MyFileBoxId, MyFileType } from 'x/my-files';
+import { MyFileId, MyFileType } from 'x/my-files';
 import { myFilesIDB } from '../state/idb';
 
-export const useMyFileNode = (bgFileId: MyFileBoxId | nil) => {
+export const useMyFileNode = (bgFileId: MyFileId | nil) => {
   const [background, setBackground] = useState<ReactNode>(null);
   const fileBox = useLiveQuery(
     async () => (bgFileId == null ? bgFileId : myFilesIDB.tb.files.get(bgFileId)),

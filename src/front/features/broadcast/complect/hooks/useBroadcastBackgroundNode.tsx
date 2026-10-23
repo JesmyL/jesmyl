@@ -1,10 +1,10 @@
 import { useWorkDirFileSrc } from '#features/ElectronWorkDir/lib/useWorkDirFileSrc';
 import { isElectronApp } from '#shared/tsjrpc.electron/tsjrpc.electron.client';
 import { BackgroundMediaNode } from '#shared/ui/BackgroundMediaNode';
-import { MyFileBoxId, useMyFileNode } from 'x/my-files';
+import { MyFileId, useMyFileNode } from 'x/my-files';
 
 type BroadcastBackgroundProps = {
-  bgFileId?: MyFileBoxId | nil;
+  bgFileId?: MyFileId | nil;
   bgFilePath?: string | nil;
   withBg: boolean | und;
 };

@@ -5,7 +5,7 @@ import md5 from 'md5';
 import { ChangeEvent, useRef, useState } from 'react';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { twMerge } from 'tailwind-merge';
-import { MyFileBox, MyFileBoxId } from 'x/my-files/shared/model/common';
+import { MyFileBox } from 'x/my-files/shared/model/common';
 import { myFilesIDB } from 'x/my-files/shared/state/idb';
 import { takeFileType } from '../lib/takeFileType';
 
@@ -32,7 +32,7 @@ export const MyFilesUploader = ({
 
         if (prevFileBox?.file.size === file.size) return prevFileBox;
 
-        const id = md5(await convertFileToBase64(file)) as MyFileBoxId;
+        const id = md5(await convertFileToBase64(file));
         const box = { file, id, type: takeFileType(file.type) };
 
         myFilesIDB.tb.files.put(box);

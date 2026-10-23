@@ -11,6 +11,7 @@ export const vitePWAOptions = {
     skipWaiting: false,
     clientsClaim: false,
     navigateFallback: '/index.html',
+    globPatterns: ['**/*.{js,wasm,css,html}'],
     manifestTransforms: [
       // `cm-edit-` chunks are built only from the rights-gated CmRedactor slice
       // (see chunkFileNames in vite.config.ts), so they must not be pre-downloaded on install.
@@ -25,6 +26,18 @@ export const vitePWAOptions = {
         options: {
           cacheName: 'audio-cache',
           expiration: { maxEntries: 200, purgeOnQuotaError: true },
+        },
+      },
+      {
+        // A @font-face src is fetched only when its family is rendered, so fonts stay out of
+        // the precache and enter this bucket one requested family at a time.
+        urlPattern: ({ url }) =>
+          url.origin === self.location.origin && url.pathname.startsWith('/resource/') && url.pathname.endsWith('.ttf'),
+        handler: 'CacheFirst',
+        options: {
+          cacheName: 'resource-fonts',
+          // Unversioned srcs: bound staleness so a replaced .ttf is refetched within a week.
+          expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 7, purgeOnQuotaError: true },
         },
       },
       {

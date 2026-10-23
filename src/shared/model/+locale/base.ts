@@ -645,6 +645,10 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.OtherPrograms]: LocaleSimpleString;
   [BaseLocaleKey.Animations]: LocaleSimpleString;
   [BaseLocaleKey.Font]: LocaleSimpleString;
+  /** @deprecated Kept for key completeness; bundled fonts are labelled by their family name. */
+  [BaseLocaleKey.FontMontserrat]: '';
+  /** @deprecated Kept for key completeness; bundled fonts are labelled by their family name. */
+  [BaseLocaleKey.FontRoboto]: '';
   [BaseLocaleKey.ShowErrors]: LocaleSimpleString;
   [BaseLocaleKey.ColorGamut]: LocaleSimpleString;
   [BaseLocaleKey.ColorGamutMeadow]: LocaleSimpleString;

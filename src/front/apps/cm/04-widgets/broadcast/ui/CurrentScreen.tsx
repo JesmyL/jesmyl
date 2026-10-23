@@ -8,7 +8,6 @@ import { useCmBroadcastSlidesContext } from '$cm/features/broadcast';
 import { useCmBroadcastScreenConfig } from '$cm/shared/lib/broadcast';
 import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
-import { MyFileBoxId } from 'x/my-files';
 import { useCmBroadcastScreenKeyDownListen } from '../lib/useCmBroadcastScreenKeyDownListen';
 import { useCmBroadcastScreenWinResizeListen } from '../lib/win-resize-lesten';
 import { CmBroadcastScreen } from './Screen';
@@ -29,7 +28,7 @@ export const CmBroadcastCurrentScreen = (props: BroadcastScreenProps & Partial<F
 
     return {
       ...currentConfig,
-      ...(fixBgFileId ? { bgFileId: fixBgFileId as MyFileBoxId } : {}),
+      ...(fixBgFileId ? { bgFileId: fixBgFileId } : {}),
       ...(fixBgFilePath ? { bgFilePath: fixBgFilePath } : {}),
       withBg: true,
     };

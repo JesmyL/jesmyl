@@ -1,9 +1,9 @@
 import { translateBase } from '#basis/locale';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
-import { MyFileBoxId, MyFilesFontFamilySelector } from 'x/my-files';
+import { MyFileId, MyFilesFontFamilySelector } from 'x/my-files';
 import { ConfiguratorEditProps } from './model';
 
-type Props = ConfiguratorEditProps<{ fontFileId?: MyFileBoxId }>;
+type Props = ConfiguratorEditProps<{ fontFileId?: MyFileId }>;
 
 export const FontFamilyConfigurator = ({ config, updateConfig }: Props) => {
   return (
