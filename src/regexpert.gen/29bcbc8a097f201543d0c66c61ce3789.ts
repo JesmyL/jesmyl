@@ -5,12 +5,12 @@ import('../shared/utils/cm/com/const');
 namespace N29bcbc8a097f201543d0c66c61ce3789_1 {
   type $0 = string; // U1;
   type $simpleChord = `${U2}${`m` | ''}${`7` | ''}`;
-  type $lightModificators = `+` | `aug` | `${number | ``}${U4}${U5}` | `${number | ``}dim${`7` | ''}` | `${number | ``}add${U6}` | `${number | ``}sus${U7}` | `${U8}${U9 | ''}`;
+  type $lightModificators = `+` | `aug` | `${number | ``}${U4}${U5}` | `${number | ``}dim${`7` | ''}` | `${number | ``}add${U6}` | `${number | ``}sus${U7 | ''}` | `${U8}${U9 | ''}`;
   type $hardModificators = U10;
   type $bassChord = `/${U16}`;
   type $repeats = U17 | '';
   type $simpleChord_lastRepeat = `${U19}${`m` | ''}${`7` | ''}`;
-  type $lightModificators_lastRepeat = `+` | `aug` | `${number | ``}${U21}${U22}` | `${number | ``}dim${`7` | ''}` | `${number | ``}add${U23}` | `${number | ``}sus${U24}` | `${U25}${U26 | ''}`;
+  type $lightModificators_lastRepeat = `+` | `aug` | `${number | ``}${U21}${U22}` | `${number | ``}dim${`7` | ''}` | `${number | ``}add${U23}` | `${number | ``}sus${U24 | ''}` | `${U25}${U26 | ''}`;
   type $hardModificators_lastRepeat = U27;
   
   type U1 = string; // `${`|` | ''}${OptRepeatingString<`.`>}${`-` | ''}${$simpleChord}${$lightModificators | ''}${$hardModificators | ''}${$bassChord | ''}${$repeats}${`|` | ''}` | `.`;
@@ -49,7 +49,7 @@ namespace N29bcbc8a097f201543d0c66c61ce3789_1 {
   type U34 = `${string}${`#` | ''}` | `${string}`;
 
   export interface I extends Record<
-    `/^(?:\\|?\\.*-?(?<simpleChord>(?:(?:[ACDFG]#?|[EH]))m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)|(?:[5679]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?(?<bassChord>/(?:[ACDFG]#?|[EH]))?(?<repeats>(?:(?:\\.+-?|-)(?<simpleChord>(?:(?:[ACDFG]#?|[EH]))m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)|(?:[5679]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?(?:/(?:[ACDFG]#?|[EH]))?|\\.?-\\.)*)\\|?|\\.)$/`,
+    `/^(?:\\|?\\.*-?(?<simpleChord>(?:(?:[ACDFG]#?|[EH]))m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)?|(?:[5679]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?(?<bassChord>/(?:[ACDFG]#?|[EH]))?(?<repeats>(?:(?:\\.+-?|-)(?<simpleChord>(?:(?:[ACDFG]#?|[EH]))m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)?|(?:[5679]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?(?:/(?:[ACDFG]#?|[EH]))?|\\.?-\\.)*)\\|?|\\.)$/`,
     {
       $0: $0;
       simpleChord?: $simpleChord;
@@ -67,10 +67,10 @@ namespace N29bcbc8a097f201543d0c66c61ce3789_1 {
 namespace N29bcbc8a097f201543d0c66c61ce3789_2 {
   type $0 = string; // `${$simpleChord}${$lightModificators | ''}${$hardModificators | ''}${U15 | ''}`;
   type $simpleChord = `${U1}${`m` | ''}${`7` | ''}`;
-  type $lightModificators = `+` | `aug` | `${number | ``}${U3}${U4}` | `${number | ``}dim${`7` | ''}` | `${number | ``}add${U5}` | `${number | ``}sus${U6}` | `${U7}${U8 | ''}`;
+  type $lightModificators = `+` | `aug` | `${number | ``}${U3}${U4}` | `${number | ``}dim${`7` | ''}` | `${number | ``}add${U5}` | `${number | ``}sus${U6 | ''}` | `${U7}${U8 | ''}`;
   type $hardModificators = U9;
   type $simpleChord_bass = `${U16}${`m` | ''}${`7` | ''}`;
-  type $lightModificators_bass = `+` | `aug` | `${number | ``}${U18}${U19}` | `${number | ``}dim${`7` | ''}` | `${number | ``}add${U20}` | `${number | ``}sus${U21}` | `${U22}${U23 | ''}`;
+  type $lightModificators_bass = `+` | `aug` | `${number | ``}${U18}${U19}` | `${number | ``}dim${`7` | ''}` | `${number | ``}add${U20}` | `${number | ``}sus${U21 | ''}` | `${U22}${U23 | ''}`;
   type $hardModificators_bass = U24;
   
   type U1 = U2;
@@ -104,7 +104,7 @@ namespace N29bcbc8a097f201543d0c66c61ce3789_2 {
   type U29 = `${string}13`;
 
   export interface I extends Record<
-    `/^(?<simpleChord>(?:(?:[ACDFG]#?|[EH]))m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)|(?:[5679]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?(?:/(?<simpleChord>(?:(?:[ACDFG]#?|[EH]))m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)|(?:[5679]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?)?$/`,
+    `/^(?<simpleChord>(?:(?:[ACDFG]#?|[EH]))m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)?|(?:[5679]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?(?:/(?<simpleChord>(?:(?:[ACDFG]#?|[EH]))m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)?|(?:[5679]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?)?$/`,
     {
       $0: $0;
       simpleChord: $simpleChord;
@@ -120,10 +120,10 @@ namespace N29bcbc8a097f201543d0c66c61ce3789_2 {
 namespace N29bcbc8a097f201543d0c66c61ce3789_3 {
   type $0 = string; // `${$simpleChord}${$lightModificators | ''}${$hardModificators | ''}${U15 | ''}`;
   type $simpleChord = `${U1}${`m` | ''}${`7` | ''}`;
-  type $lightModificators = `+` | `aug` | `${number | ``}${U3}${U4}` | `${number | ``}dim${`7` | ''}` | `${number | ``}add${U5}` | `${number | ``}sus${U6}` | `${U7}${U8 | ''}`;
+  type $lightModificators = `+` | `aug` | `${number | ``}${U3}${U4}` | `${number | ``}dim${`7` | ''}` | `${number | ``}add${U5}` | `${number | ``}sus${U6 | ''}` | `${U7}${U8 | ''}`;
   type $hardModificators = U9;
   type $simpleChord_bass = `${U16}${`m` | ''}${`7` | ''}`;
-  type $lightModificators_bass = `+` | `aug` | `${number | ``}${U18}${U19}` | `${number | ``}dim${`7` | ''}` | `${number | ``}add${U20}` | `${number | ``}sus${U21}` | `${U22}${U23 | ''}`;
+  type $lightModificators_bass = `+` | `aug` | `${number | ``}${U18}${U19}` | `${number | ``}dim${`7` | ''}` | `${number | ``}add${U20}` | `${number | ``}sus${U21 | ''}` | `${U22}${U23 | ''}`;
   type $hardModificators_bass = U24;
   
   type U1 = U2 | `B`;
@@ -157,7 +157,7 @@ namespace N29bcbc8a097f201543d0c66c61ce3789_3 {
   type U29 = `${string}13`;
 
   export interface I extends Record<
-    `/^(?<simpleChord>(?:(?:[ACDFG]#?|[EH])|B)m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)|(?:[5679]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?(?:/(?<simpleChord>(?:(?:[ACDFG]#?|[EH])|B)m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)|(?:[5679]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?)?$/`,
+    `/^(?<simpleChord>(?:(?:[ACDFG]#?|[EH])|B)m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)?|(?:[5679]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?(?:/(?<simpleChord>(?:(?:[ACDFG]#?|[EH])|B)m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)?|(?:[5679]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?)?$/`,
     {
       $0: $0;
       simpleChord: $simpleChord;

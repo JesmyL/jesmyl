@@ -5,7 +5,7 @@ import { textToUpperCase } from 'shared/utils/string.utils';
 
 export const hardModificators =
   `(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))` as const;
-export const lightModificators = `(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)|(?:[5679]|1[13])(?:/\\d{1,2})?)?`;
+export const lightModificators = `(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)?|(?:[5679]|1[13])(?:/\\d{1,2})?)?`;
 export const chordLeadLetter = `(?:[ACDFG]#?|[EH])`;
 export const chordLikeStr =
   `(?<simpleChord>(?:${chordLeadLetter})m?7?)${lightModificators}${hardModificators}?` as const;
