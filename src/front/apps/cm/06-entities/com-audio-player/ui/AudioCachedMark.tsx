@@ -2,14 +2,14 @@ import { translateBase } from '#basis/locale';
 import { useConfirm } from '#shared/ui/modal';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { useState } from 'react';
-import { HttpNumLeadLink } from 'shared/api';
+import { CmAudioSrc } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { emptyFunc } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
 import { cmComAudioPlayerCacheSrc, cmComAudioPlayerUncacheSrc, useCmComAudioPlayerSrcState } from '../lib/audioCache';
 
 interface ButtonProps {
-  src: HttpNumLeadLink;
+  src: CmAudioSrc;
   className?: string;
 }
 
@@ -47,7 +47,7 @@ export const CmComAudioPlayerCacheButton = ({ src, className }: ButtonProps) => 
 };
 
 interface MarksProps {
-  srcs: HttpNumLeadLink[] | nil;
+  srcs: CmAudioSrc[] | nil;
   className?: string;
 }
 

@@ -56,6 +56,9 @@ export const pushFilesExpressRoutePath = `/api/push-files`;
 export const pullCmAudiosExpressRoutePath = `/api/pull-cm-audios`;
 export const pullFilesExpressSecretQueryName = 'secret_word';
 
+/** Локальный каталог pull-push-файлов: всегда внутри `+case` рядом с кодом. */
+export const makePullPushLocalDirPath = (caseDir: `${string}/`) => `src/back/${caseDir}+case/`;
+
 export type PullPushFileDirNameNet = typeof pullPushFileDirNameNet;
 
 const T = <Type, FileName extends string>() => 1 as never as { F: FileName; T: Type };

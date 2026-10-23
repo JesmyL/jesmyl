@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { makeRegExp } from 'regexpert';
-import { CmMp3Rule, HttpNumLeadLink } from 'shared/api';
+import { CmAudioSrc, CmMp3Rule, HttpNumLeadLink } from 'shared/api';
 import { itIt, itNNull } from 'shared/utils';
 
 export const useCmExtractHrefsFromHTML = (
   html: string | nil,
   mp3Rule: CmMp3Rule | nil,
   setHrefs: (value: React.SetStateAction<HttpNumLeadLink[]>) => void,
-  audioLinks: HttpNumLeadLink[] | nil,
+  audioLinks: CmAudioSrc[] | nil,
 ) => {
   useEffect(() => {
     if (html && mp3Rule) {

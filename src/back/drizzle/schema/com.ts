@@ -1,10 +1,10 @@
 import { bigint, integer, jsonb, pgTable, serial, smallint, text, varchar } from 'p/d';
 import {
+  CmAudioTail,
   CmComAudioMarkPack,
   CmComIntensityLevel,
   CmComMod,
   CmComWid,
-  HttpNumLeadLink,
   IExportableCom,
   IExportableOrder,
   Langi,
@@ -55,7 +55,7 @@ export const comDB = pgTable('coms', {
 
   o: jsonb('orders').$type<IExportableOrder[]>(),
 
-  al: initStringArray('audios').$type<HttpNumLeadLink[]>(),
+  al: initStringArray('audios').$type<CmAudioTail[]>(),
 
   nl: jsonb('newliner').$type<Required<IExportableCom>['nl']>(),
 

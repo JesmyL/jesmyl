@@ -48,6 +48,13 @@ host-config.json
 
 audio-tmp
 
+# downloaded audio cache (backend runtime)
+/src/back/audio/*.mp3
+/src/back/audio/*.MP3
+/src/back/audio/*.m4a
+/src/back/audio/*.ogg
+/src/back/audio/*.wav
+
 # Electron build artifacts
 src/electron-app/dist/
 src/electron-app/release-builds/

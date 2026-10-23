@@ -1,4 +1,5 @@
 import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
+import { takeCmAudioKeyFromLink } from 'back/audio/md5LinkRedirectDict';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { comDB } from 'back/drizzle.schema';
 import { db, dbDelete } from 'back/drizzle/drizzle.db';
@@ -16,7 +17,6 @@ import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { cmComLanguages } from 'shared/utils/cm/com/const';
 import { textLinesLengthIncorrects } from 'shared/utils/cm/com/textLinesLengthIncorrects';
 import { transformToClearText } from 'shared/utils/cm/com/transformToClearText';
-import { makeCmComNumLeadAudioLinkList, makeCmComNumLeadLinkFromHttp } from '../complect/com-http-links';
 import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
 import { modifyCom } from './lib/modifiers';
 import { cmEditComServerTsjrpcNewlines } from './newlines';
@@ -76,13 +76,12 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           simpleUpdate((com.b = value), `теперь ${value ? 'бемольная' : 'диезная'}`),
         ),
 
-        toggleAudioLink: modifyCom('COM_AUDIO', (com, { link }) => {
-          const prev = makeCmComNumLeadAudioLinkList(com.al);
-          const isThereInPrev = prev?.includes(link);
+        toggleAudioLink: modifyCom('COM_AUDIO', async (com, { link }) => {
+          const prev = com.al ?? [];
+          const key = await takeCmAudioKeyFromLink(link, com.n);
+          const isThereInPrev = prev.includes(key);
 
-          com.al = isThereInPrev
-            ? prev?.filter(pLink => pLink !== link)
-            : [...(prev ?? []), makeCmComNumLeadLinkFromHttp(link)];
+          com.al = isThereInPrev ? prev.filter(pLink => pLink !== key) : [...prev, key];
 
           return {
             description: `изменение аудио-ссылок: ${isThereInPrev ? 'удалено' : 'добавлено'}`,
@@ -110,7 +109,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
             m: w,
             t: newCom.t?.map(text => transformToClearText(text)),
             l: newCom.l || Langi.Ru,
-            al: newCom.al?.map(makeCmComNumLeadLinkFromHttp) || [],
+            al: await Promise.all((newCom.al ?? []).map(link => takeCmAudioKeyFromLink(link, newCom.n))),
           };
 
           await db.insert(comDB).values(com);

@@ -5,6 +5,7 @@ import { downloadCmAudios } from '../src/back/downloadCmAudios';
 import { Do } from '../src/shared/enums';
 import {
   jsonStringify,
+  makePullPushLocalDirPath,
   parsePulledFileDatas,
   pullFilesExpressRoutePath,
   pullFilesExpressSecretQueryName,
@@ -99,7 +100,7 @@ if (!Do.It) {
 
       try {
         const { strData, meta } = parsePulledFileDatas(line);
-        const dir = `src/back/${meta.caseDir}+case/` as const;
+        const dir = makePullPushLocalDirPath(meta.caseDir);
         const filePath = `${dir}${meta.file}.json`;
 
         if (meta.isFirst) {

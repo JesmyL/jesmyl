@@ -1,4 +1,5 @@
 import {
+  CmAudioTail,
   CmComAudioMarkEditPack,
   CmComAudioMarkEditPackValue,
   CmComAudioMarkPack,
@@ -6,7 +7,6 @@ import {
   CmComInSchDayEvWr,
   CmComOrderWid,
   CmComWid,
-  HttpNumLeadLink,
   ScheduleComPackHistoryItem,
 } from 'shared/api/complect/apps';
 import { ScheduleWidgetDayEventMi, ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
@@ -50,7 +50,7 @@ export type CmEditComExternalsTsjrpcModel = {
       comw: CmComWid;
     } & (
       | {
-          src: HttpNumLeadLink;
+          src: CmAudioTail;
           time: CmComAudioMarkPackTime;
           sel: CmComAudioMarkEditPackValue;
         }
@@ -64,7 +64,7 @@ export type CmEditComExternalsTsjrpcModel = {
   };
 
   changeAudioMarkTime_v1: (args: {
-    src: HttpNumLeadLink;
+    src: CmAudioTail;
     time: CmComAudioMarkPackTime;
     newTime: CmComAudioMarkPackTime;
     comw: CmComWid;

@@ -1,4 +1,6 @@
 import {
+  CmAudioSrc,
+  CmAudioTail,
   CmComIntensityLevel,
   CmComLinei,
   CmComNewlinerRepeati,
@@ -13,8 +15,11 @@ import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 
 type SimpleComValueSetter<Value> = (args: { comw: CmComWid; value: Value }) => CmComWid;
 
+/** Полезная нагрузка создания песни: `al` несёт ещё не привязанные http-ссылки, которые сервер преобразует в хвосты md5. */
+export type CmComCreatePayload = OmitOwn<IExportableCom, 'w' | 'al'> & { al?: (HttpNumLeadLink | CmAudioTail)[] };
+
 export type CmEditComTsjrpcModel = {
-  newCom: (args: { value: OmitOwn<IExportableCom, 'w'> }) => CmComWid;
+  newCom: (args: { value: CmComCreatePayload }) => CmComWid;
 
   rename: SimpleComValueSetter<string>;
   destroy: (args: { comw: CmComWid }) => string;
@@ -25,7 +30,7 @@ export type CmEditComTsjrpcModel = {
   changeTon: SimpleComValueSetter<number>;
   makeBemoled: SimpleComValueSetter<TonType>;
 
-  toggleAudioLink: (args: { comw: CmComWid; link: HttpNumLeadLink }) => void;
+  toggleAudioLink: (args: { comw: CmComWid; link: CmAudioSrc }) => void;
 
   changeChordBlock: (args: { texti: number; comw: CmComWid; value: string; isHard: Bool }) => CmComWid;
   changeTextBlock: (args: { texti: number; comw: CmComWid; value: string }) => CmComWid;

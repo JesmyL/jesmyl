@@ -73,7 +73,7 @@ export function TheCmComComposition() {
       }
       content={
         <>
-          {(!currentSrc || ccom.audio?.includes(currentSrc)) && <DocTitle title={ccom.name} />}
+          {(!currentSrc || ccom.audio?.some(audioSrc => audioSrc === currentSrc)) && <DocTitle title={ccom.name} />}
 
           <CmComAudioPlayerInCompositionPage ccom={ccom} />
 

@@ -16,7 +16,7 @@ export const CmComAudioPlayerInCompositionPage = ({ ccom }: { ccom: CmCom }) => 
   const isPlay = useAtomValue(cmComAudioPlayerIsPlayAtom);
   const isPlayerHidden = useAtomValue(cmComIsAudioPlayerHiddenAtom);
 
-  const isPlayOtherAudio = !!playSrc && !ccom.audio?.includes(playSrc);
+  const isPlayOtherAudio = !!playSrc && !ccom.audio?.some(audioSrc => audioSrc === playSrc);
 
   useEffect(() => {
     if (!isPlay && isPlayOtherAudio && ccom.audio?.[0]) cmComAudioPlayerSetSrc(ccom.audio[0]);

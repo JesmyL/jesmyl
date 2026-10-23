@@ -1,7 +1,7 @@
 import { cmBroadcastCurrentNameSpaceiAtom } from '$cm/entities/broadcast';
 import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
-import { CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
+import { CmAudioSrc, CmComAudioMarkPackTime } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { CmBroadcastMonolineSlide, CmBroadcastMonolineSlideOrdStrId } from 'shared/model/cm/broadcast';
 import { TextCase } from 'shared/model/common';
@@ -13,7 +13,7 @@ import { cmIDB } from '../state';
 
 export const useCmComMarkTextValuesMaker = (
   com: CmCom | und,
-  src: HttpNumLeadLink | nil,
+  src: CmAudioSrc | nil,
   textCase: TextCase | nil,
   nameSpaceiVariants?: number[],
 ) => {

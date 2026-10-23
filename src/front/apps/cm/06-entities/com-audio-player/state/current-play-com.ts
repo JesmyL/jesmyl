@@ -2,7 +2,7 @@ import { translateBase } from '#basis/locale';
 import { addEventListenerPipe } from '#shared/lib/hookEffectPipe';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { atom, useAtomValue } from 'atomaric';
-import { HttpNumLeadLink } from 'shared/api';
+import { CmAudioSrc } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { retNull } from 'shared/utils';
 import { toast } from 'sonner';
@@ -21,7 +21,7 @@ audioElement.addEventListener('error', () =>
 const comPlayerDurationAtom = atom(0.01);
 const comPlayerCurrentTimeAtom = atom(0);
 
-export const cmComAudioPlayerPlaySrcAtom = atom<HttpNumLeadLink | null>(null);
+export const cmComAudioPlayerPlaySrcAtom = atom<CmAudioSrc | null>(null);
 export const cmComAudioPlayerEndedTickAtom = atom(false);
 export const cmComAudioPlayerErrorTickAtom = atom(false);
 export const cmComAudioPlayerIsPlayAtom = atom(false);
@@ -105,7 +105,7 @@ const revokeCmComAudioPlayerTrackUrl = () => {
 };
 
 /** Cache-first: a cached track plays from a local blob URL so it keeps working offline. */
-const applyCmComAudioPlayerSrc = async (src: HttpNumLeadLink, applyId: number) => {
+const applyCmComAudioPlayerSrc = async (src: CmAudioSrc, applyId: number) => {
   const blob = await takeCmComAudioPlayerCachedBlob(src).catch(retNull);
   if (applyId !== cmComAudioPlayerSrcApplyId || cmComAudioPlayerPlaySrcAtom.get() !== src) return;
 
@@ -120,7 +120,7 @@ const applyCmComAudioPlayerSrc = async (src: HttpNumLeadLink, applyId: number) =
   if (cmComAudioPlayerIsPlayAtom.get()) void audioElement.play().catch(() => cmComAudioPlayerIsPlayAtom.set(false));
 };
 
-export const cmComAudioPlayerSetSrc = (src: HttpNumLeadLink | null) => {
+export const cmComAudioPlayerSetSrc = (src: CmAudioSrc | null) => {
   if (cmComAudioPlayerPlaySrcAtom.get() === src) return;
 
   cmComAudioPlayerUpdateCurrentTime(0);

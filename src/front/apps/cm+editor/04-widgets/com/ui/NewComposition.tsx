@@ -16,7 +16,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { Atom, useAtomValue } from 'atomaric';
 import { useEffect, useMemo, useState } from 'react';
 import { makeRegExp } from 'regexpert';
-import { CmMp3Rule, HttpNumLeadLink } from 'shared/api';
+import { CmAudioSrc, CmMp3Rule, HttpNumLeadLink } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { cmDefaultCom } from 'shared/const/cm/def.com';
 import { Bool } from 'shared/enums';
@@ -44,9 +44,10 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
   const nameIncorrects = takeTextBlockIncorrects(newICom.n, eeStore);
 
   const [hrefs, setHrefs] = useState<HttpNumLeadLink[]>([]);
+  const [bindedLinks, setBindedLinks] = useState<CmAudioSrc[]>([]);
   const [removedAudioHrefs, setRemovedAudioHrefs] = useState<string[]>([]);
 
-  useCmExtractHrefsFromHTML(innerHTML, mp3Rule, setHrefs, newICom.al);
+  useCmExtractHrefsFromHTML(innerHTML, mp3Rule, setHrefs, bindedLinks);
 
   useEffect(() => {
     if (newICom.n) return;
@@ -66,7 +67,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
   const errorNodes = mapObjectEntries(
     {
       [translateBase(BaseLocaleKey.IncorrectName)]: newICom.n && !nameIncorrects.errors?.at(0)?.message,
-      [translateBase(BaseLocaleKey.CmEditorNewNoAudio)]: !innerHTML || objectLength(newICom.al),
+      [translateBase(BaseLocaleKey.CmEditorNewNoAudio)]: !innerHTML || objectLength(bindedLinks),
       [noTitlePrefix('t')]: objectLength(newICom.t?.filter(itIt)),
       [noTitlePrefix('c')]: objectLength(newICom.c?.filter(itIt)),
       [noTitlePrefix('o')]: objectLength(newICom.o),
@@ -149,13 +150,12 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
         {innerHTML && (
           <>
             <h2>{translateBase(BaseLocaleKey.CmEditorNewBoundAudio)}</h2>
-            {newICom.al?.length ? (
+            {bindedLinks.length ? (
               <CmEditorComAudioControlledList
-                srcs={newICom.al?.filter(itIt)}
+                srcs={bindedLinks}
                 icon="CancelCircle"
                 onToggle={async src => {
-                  const audio = Array.from(new Set(newICom.al?.filter(s => s && s !== src)));
-                  setNewICom(prev => ({ ...prev, al: audio }));
+                  setBindedLinks(bindedLinks.filter(link => link !== src));
 
                   setRemovedAudioHrefs(removedAudioHrefs.concat(src));
                 }}
@@ -169,8 +169,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
               srcs={hrefs}
               icon="PlusSignCircle"
               onToggle={async src => {
-                const audio = Array.from(new Set((newICom.al ?? []).concat(src).filter(itIt)));
-                setNewICom(prev => ({ ...prev, al: audio }));
+                setBindedLinks(Array.from(new Set(bindedLinks.concat(src))));
 
                 setHrefs(hrefs.filter(href => href !== src));
               }}
@@ -229,7 +228,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
             chordsErrors.some(corrects => corrects.errors?.length) ||
             textsErrors.some(corrects => corrects.errors?.length)
           }
-          onSend={() => cmEditComClientTsjrpcMethods.newCom({ value: newICom })}
+          onSend={() => cmEditComClientTsjrpcMethods.newCom({ value: { ...newICom, al: bindedLinks } })}
           onSuccess={comw => {
             openAtom.set(false);
             navigate({ to: '/cm/edit/coms/$comw/$tab', params: { comw: `${comw}`, tab: 'watch' } });

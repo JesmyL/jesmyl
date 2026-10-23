@@ -4,7 +4,7 @@ import { takeCmComTrackCurrentTimeMark } from '$cm/shared/lib/takeCmComTrackCurr
 import { useCmComAudioMarkSlides } from '$cm/shared/lib/useCmComAudioMarkSlides';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useRef } from 'react';
-import { CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
+import { CmAudioSrc, CmComAudioMarkPackTime, parseCmAudioSrc } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { makeCmComAudioMarkTitleBySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { CmComOrder } from 'shared/const/cm/order/Order';
@@ -24,13 +24,13 @@ const currentButtonElemAccentClassName = 'text-x7';
 const windowDocument = window.document;
 
 export const useCmComAudioPlayerMoversController = (
-  src: HttpNumLeadLink,
+  src: CmAudioSrc,
   com: CmCom,
   preSwitchTime: number,
   win: Window | nil,
 ) => {
   const document = win?.document ?? windowDocument;
-  const currentSrc = useAtomValue(cmComAudioPlayerPlaySrcAtom) ?? src;
+  const currentSrc = parseCmAudioSrc(useAtomValue(cmComAudioPlayerPlaySrcAtom) ?? src);
   const audioTrackMarks = cmIDB.useAudioTrackMarks(com.wid);
   const { markTimes } = useCmComAudioMarkSlides(com, currentSrc, TextCase.AsIs);
 
@@ -41,7 +41,7 @@ export const useCmComAudioPlayerMoversController = (
 
   useEffect(() => {
     if (checkIsNil(titleRef.current) || checkIsNil(audioTrackMarks?.marks)) return;
-    const audioMarkPack = audioTrackMarks.marks[currentSrc];
+    const audioMarkPack = currentSrc ? audioTrackMarks.marks[currentSrc] : null;
 
     const titleNode = titleRef.current;
     const selectorToTitlePropsDict: PRecord<number, { title: string; ord?: CmComOrder | nil }> = {};

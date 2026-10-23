@@ -8,7 +8,7 @@ import { ObserveUrlResource } from '$cm+editor/shared/ui/ObserveUrlResource';
 import { CmEditorComAudioControlledList } from '$cm+editor/widgets/com-audio';
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
-import { CmMp3Rule, HttpNumLeadLink } from 'shared/api';
+import { CmAudioSrc, CmMp3Rule, HttpNumLeadLink } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 
@@ -16,7 +16,7 @@ export const CmEditorComTabAudio = ({ ccom }: { ccom: EditableCom }) => {
   const [innerHTML, setInnerHTML] = useState('');
   const [mp3Rule, setMp3Rule] = useState<CmMp3Rule | und>(undefined);
   const [hrefs, setHrefs] = useState<HttpNumLeadLink[]>([]);
-  const [removedHrefs, setRemovedHrefs] = useState<HttpNumLeadLink[]>([]);
+  const [removedHrefs, setRemovedHrefs] = useState<CmAudioSrc[]>([]);
   const [openAddBlock, setOpenAddBlock] = useState(false);
   const checkAccess = useCheckUserAccessRightsInScope();
 
@@ -24,7 +24,7 @@ export const CmEditorComTabAudio = ({ ccom }: { ccom: EditableCom }) => {
 
   if (!ccom) return null;
 
-  const toggleLinkExistance = (link: HttpNumLeadLink) =>
+  const toggleLinkExistance = (link: CmAudioSrc) =>
     cmEditComClientTsjrpcMethods.toggleAudioLink({ comw: ccom.wid, link });
 
   return (

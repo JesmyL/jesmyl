@@ -6,7 +6,7 @@ import { useCmComAudioMarkSlides } from '$cm/shared/lib/useCmComAudioMarkSlides'
 import { cmComIsFreshAudioMarksLoadingAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { HttpNumLeadLink } from 'shared/api';
+import { CmAudioSrc } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { TextCase } from 'shared/model/common';
@@ -26,7 +26,7 @@ const IDLE_SLIDE_CLASS = 'text-[var(--color--3)] opacity-35 scale-[0.94]';
 
 interface Props {
   com: CmCom;
-  src: HttpNumLeadLink;
+  src: CmAudioSrc;
   className?: string;
 }
 

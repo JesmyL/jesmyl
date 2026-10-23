@@ -47,7 +47,8 @@ const takeTracklistComs = async () => {
 export const cmComAudioPlayerGoToAdjacentCom = async (direction: 'prev' | 'next') => {
   const coms = await takeTracklistComs();
   const playSrc = cmComAudioPlayerPlaySrcAtom.get();
-  const currentComw = coms.find(com => playSrc != null && com.al?.includes(playSrc))?.w ?? cmComLastOpenComwAtom.get();
+  const currentComw =
+    coms.find(com => playSrc != null && com.al?.some(audioSrc => audioSrc === playSrc))?.w ?? cmComLastOpenComwAtom.get();
   const targetCom =
     direction === 'next'
       ? cmComAudioPlayerFindAdvanceCom(currentComw, coms, cmComPlayerIsShuffleAtom.get())

@@ -8,7 +8,7 @@ import md5 from 'md5';
 import path from 'path';
 import { Readable, pipeline } from 'node:stream';
 import { makeRegExp } from 'regexpert';
-import { CmComWid, HttpNumLeadLink, ScheduleWidgetWid, hostConfig } from 'shared/api';
+import { CmComWid, HttpNumLeadLink, ScheduleWidgetWid, hostConfig, parseHttpNumLeadLink } from 'shared/api';
 import { pullCmAudiosExpressRoutePath, pullFilesExpressSecretQueryName } from 'shared/api/pullFiles.utils';
 import { emptyFunc, extractNumber, itIt } from 'shared/utils';
 import { checkIsString } from 'shared/utils/checkIs';
@@ -17,8 +17,15 @@ import { WebSocketServer } from 'ws';
 import { vitePWAOptions } from '../../../vite-pwa.options';
 import * as secret from '../../../do/secret.md5.json';
 import { takeComwTiny } from '../apps/cm/com.tiny';
-import { makeCmComHttpLinkFromNumLead } from '../apps/cm/complect/com-http-links';
 import { catsFileStorage } from '../apps/cm/file-stores';
+import {
+  migrateLegacyCmAudioValue,
+  seedAudioLinkDBFromLegacyFiles,
+  takeAudioTailFromRequestPath,
+  takeCmComHttpLinkFromAudioRequest,
+  takeKnownCmAudioKeyFromLink,
+  takeNumLeadLinkByAudioTail,
+} from '../audio/md5LinkRedirectDict';
 import { db } from '../drizzle/drizzle.db';
 import { comDB } from '../drizzle.schema';
 import { hostRootDir, lazyEnvJson } from '../envJson';
@@ -28,6 +35,14 @@ import { pushFilesExpressRoute } from './pushFiles';
 
 export const startExpressRouting = async (wsServer: WebSocketServer) => {
   const app = express();
+
+  // JSON-словари переносятся в таблицу `audioLinks` один раз, пока она пуста.
+  try {
+    await seedAudioLinkDBFromLegacyFiles();
+  } catch (error) {
+    console.error('Audio link seed error:', error);
+  }
+
   const isSearchBotReg = /(google|bing|yandex|duckduck|telegram|twitter)bot|slurp|vk\.com/;
 
   app.get('/sw.js', (_req, res) => {
@@ -124,8 +139,19 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
       const audios: Record<HttpNumLeadLink, string> = {};
 
       for (const { al, n } of coms) {
-        if (!al?.length) continue;
-        for (const link of al) audios[link] = n;
+        for (const audioValue of al ?? []) {
+          // `com.al` хранит хвосты md5; исходная numLead-ссылка берётся из словаря. Устаревшие numLead-значения проходят как есть.
+          const link =
+            // @deprecated md5-migration Убрать первую ветку, когда в al не останется numLead-значений.
+            parseHttpNumLeadLink(audioValue) ?? parseHttpNumLeadLink(await takeNumLeadLinkByAudioTail(audioValue));
+
+          if (!link) {
+            console.warn(`Пропущено аудио "${audioValue}" песни "${n}": ссылка не найдена в словаре`);
+            continue;
+          }
+
+          audios[link] = n;
+        }
       }
 
       res.json(audios);
@@ -146,7 +172,6 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
   const cmDescription = 'Приложение для вашего служения';
   const audioPathPrefix = '/audio/';
   const trackPathPrefix = '/track/';
-  const trackFilePathPrefix = '/track-file/';
 
   const makePage = ({
     bodyContent = '',
@@ -190,19 +215,30 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
 </html>`;
   };
 
-  app.get(/^\/track-file\//, async (req: Request, res: Response) => {
-    const trackLink = req.url.slice(trackFilePathPrefix.length) as HttpNumLeadLink;
+  app.get(/^\/track\//, async (req: Request, res: Response) => {
+    const requestedValue = takeAudioTailFromRequestPath(req.url.slice(trackPathPrefix.length));
 
-    res.setHeader('Access-Control-Allow-Origin', '*');
-
-    // Only whitelisted numLead links may be proxied; raw http(s) input would turn this into an open proxy.
-    if (trackLink.startsWith('http')) {
-      res.status(400).end();
+    // Проксируются только треки из словаря или устаревшие numLead-ссылки; сырой http(s) отсекается как открытый прокси.
+    const upstreamUrl = await takeCmComHttpLinkFromAudioRequest(requestedValue);
+    if (!upstreamUrl) {
+      res.sendStatus(404);
       return;
     }
 
+    if (isRequestFromSearchBot(req)) {
+      res
+        .status(200)
+        .contentType('text/html')
+        .send(
+          makePage({ ogDescription: 'Звуковая дорожка', ogAudio: { title: 'Звуковая дорожка', url: upstreamUrl } }),
+        );
+      return;
+    }
+
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
     try {
-      const upstream = await fetch(makeCmComHttpLinkFromNumLead(trackLink));
+      const upstream = await fetch(upstreamUrl);
 
       if (!upstream.body) {
         res.status(502).end();
@@ -219,7 +255,7 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
       req.on('close', () => upstream.body?.cancel().catch(emptyFunc));
       pipeline(Readable.fromWeb(upstream.body as never), res, emptyFunc);
     } catch (error) {
-      console.error('Track-file proxy error:', error);
+      console.error('Track proxy error:', error);
       if (!res.headersSent) res.status(502).end();
     }
   });
@@ -229,24 +265,37 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
       try {
         let externalUrl = req.url;
         let ogDescription = 'Звуковая дорожка';
-        let trackLink = '' as HttpNumLeadLink;
 
-        if (req.url.startsWith(trackPathPrefix)) {
-          trackLink = req.url.slice(trackPathPrefix.length) as never;
-          externalUrl = makeCmComHttpLinkFromNumLead(trackLink);
-        } else if (req.url.startsWith(audioPathPrefix)) {
+        if (req.url.startsWith(audioPathPrefix)) {
           const [comwStr, num] = req.url.slice(audioPathPrefix.length).split(makeRegExp('/\\.mp3|_/')) as [
             `${CmComWid}`,
             `${number}`,
           ];
           const com = await takeComwTiny({ w: extractNumber(comwStr) }, false);
 
-          if (!com?.al?.length) return res.status(404);
+          if (!com?.al?.length) {
+            res.sendStatus(404);
+            return;
+          }
 
-          trackLink = [com.al].flat()[+num || 0];
-          externalUrl = makeCmComHttpLinkFromNumLead(trackLink);
+          const audioValue = [com.al].flat()[+num || 0];
+          const externalLink = await takeCmComHttpLinkFromAudioRequest(audioValue);
 
+          if (!externalLink) {
+            res.sendStatus(404);
+            return;
+          }
+
+          externalUrl = externalLink;
           ogDescription = `${com.i + 1}. ${com.n}\n`;
+
+          // @deprecated md5-migration Удалить блок ленивой миграции, когда в БД не останется numLead-значений.
+          const knownKey = await takeKnownCmAudioKeyFromLink(audioValue);
+          if (knownKey && knownKey !== audioValue) {
+            void migrateLegacyCmAudioValue(com.w, +num || 0, com.al, knownKey).catch(error =>
+              console.error('Audio al migration error:', error),
+            );
+          }
 
           const cats = catsFileStorage.getValue();
 

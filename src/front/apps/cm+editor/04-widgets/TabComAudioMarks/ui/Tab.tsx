@@ -25,7 +25,7 @@ import {
 import styled from '@emotion/styled';
 import { atom, useAtomValue } from 'atomaric';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
-import { CmComAudioMarkEditPackValue, CmComAudioMarkPackTime, CmComOrderWidNever, HttpNumLeadLink } from 'shared/api';
+import { CmComAudioMarkEditPackValue, CmComAudioMarkPackTime, CmComOrderWidNever, CmAudioTail } from 'shared/api';
 import { Bool } from 'shared/enums';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmBroadcastMonolineSlide } from 'shared/model/cm/broadcast';
@@ -43,7 +43,7 @@ import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import { CmEditorTabComAudioMarksShowSlideListButton } from './ShowSlideListButton';
 
-const srcOnEditAtom = lazyInit(() => atom<null | HttpNumLeadLink>(null, 'cm+editor:srcOnMarkEdit'));
+const srcOnEditAtom = lazyInit(() => atom<null | CmAudioTail>(null, 'cm+editor:srcOnMarkEdit'));
 const preSwitchTimeAtom = lazyInit(() => atom(-1, 'cm+editor:comAudioPreSwitchTime'));
 const pinTimeAtom = lazyInit(() => atom<CmComAudioMarkPackTime | null>(null));
 const playbackRateAtom = lazyInit(() => atom(1));

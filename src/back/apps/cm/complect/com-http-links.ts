@@ -10,7 +10,7 @@ export const numLeadToHttpLinks: Record<HttpNumLeadLinkKey, HttpLink> = {
   '5~': 'https://kg-music.club/wp-content/uploads/',
   '6~': 'https://hvalite.com/uploads/audio/examples/',
   '7~': 'https://alliluya.com/attachments/article/',
-  '8~': 'https://ia801205.us.archive.org/13/items/songsofrevival/',
+  '8~': 'https://archive.org/download/songsofrevival/',
   '9~': 'https://livepleer.com/uploaded/mp3/',
   '10~': 'https://moosic.my.mail.ru/file/',
 };
@@ -45,7 +45,7 @@ export const makeCmComNumLeadLinkFromHttp = (httpLink: string): HttpNumLeadLink 
   return httpLink as never;
 };
 
-export const makeCmComHttpLinkFromNumLead = (numLeadLink: HttpNumLeadLink): HttpLink => {
+export const makeCmComHttpLinkFromNumLead = (numLeadLink: HttpLink | HttpNumLeadLink): HttpLink => {
   if (checkIsStartsWith(numLeadLink, 'http')) return numLeadLink;
 
   const prefix = `${parseFloat(numLeadLink)}~` as const;

@@ -2,6 +2,7 @@ import fs from 'fs';
 import { hostConfig } from '../freshHostConfig';
 import { checkIsEndsWith, checkIsStartsWith } from '../src/shared/utils/checkIs';
 import {
+  makePullPushLocalDirPath,
   objectKeys,
   pullFilesExpressSecretQueryName,
   PullPushFileDirNameNet,
@@ -14,7 +15,6 @@ import * as secret from './secret.json';
 (async () => {
   const { url } = hostConfig;
   const fetchUrl = `${url}${pushFilesExpressRoutePath}?${pullFilesExpressSecretQueryName}=${secret.secret}`;
-  const makeCaseDir = (path: `${string}/`) => `src/back/${path}+case/` as const;
 
   for (const dirStr in pullPushFileDirNameNet) {
     const dir = dirStr as keyof PullPushFileDirNameNet;
@@ -27,7 +27,7 @@ import * as secret from './secret.json';
     }
 
     async function walk(caseDir: `${string}/`, files: string[], topDirDir: string | null) {
-      const caseDirPath = makeCaseDir(caseDir);
+      const caseDirPath = makePullPushLocalDirPath(caseDir);
       const len = files.length;
 
       for (let filei = 0; filei < len; filei++) {
@@ -35,7 +35,7 @@ import * as secret from './secret.json';
         if (checkIsStartsWith(fileName, '.')) continue;
 
         if (checkIsEndsWith(fileName, '/')) {
-          await walk(`${dir}${fileName}`, fs.readdirSync(makeCaseDir(`${dir}${fileName}`)), fileName);
+          await walk(`${dir}${fileName}`, fs.readdirSync(makePullPushLocalDirPath(`${dir}${fileName}`)), fileName);
           continue;
         }
 

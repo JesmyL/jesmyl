@@ -1,5 +1,5 @@
 import { CmCatKind } from '#shared/model/cm/cat/Cat.model';
-import { StrRegExp } from 'regexpert';
+import { makeRegExp, StrRegExp } from 'regexpert';
 import { Langi } from 'shared/api';
 import { ScheduleWidgetDayEventMi, ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
 import { TonType } from 'shared/const/cm/enums';
@@ -9,6 +9,7 @@ import {
   CmComNewlinerSymbolFreeUpperCaseLine,
 } from 'shared/model/cm/broadcast';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
+import { forEachObjectEntries } from 'shared/utils/object.utils';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 import {
   CmCatWid,
@@ -165,8 +166,8 @@ export type IExportableCom = NullifyOptionals<
     /** язык песни */
     l: Langi;
 
-    /** аудио файлы */
-    al?: HttpNumLeadLink[];
+    /** аудио файлы: хвосты md5-имён файлов (без расширения `.mp3`) */
+    al?: CmAudioTail[];
 
     /** список текстов */
     t: string[];
@@ -295,19 +296,59 @@ export type HttpLink = `http${string}`;
 export type HttpNumLeadLinkKey = `${number}~`;
 export type HttpNumLeadLink = `${HttpNumLeadLinkKey}${string}`;
 
+/** Устаревшая numLead-ссылка вида `1~20220809~~112513.mp3`. */
+const httpNumLeadLinkReg = makeRegExp('/^\\d+~/');
+
+/** Разбирает строку в доверенный `HttpNumLeadLink`; `nil`, если строка не является numLead-ссылкой. */
+export const parseHttpNumLeadLink = (value: string | nil): HttpNumLeadLink | nil =>
+  value && httpNumLeadLinkReg.test(value) ? (value as HttpNumLeadLink) : null;
+
+/** Хвост md5-имени аудио-файла (не короче 3 символов, без расширения `.mp3`); по нему `/track/` находит исходную ссылку. */
+export type CmAudioTail = StringBrand<'CmAudioTail'>;
+
+/** Хвост md5-имени: hex-строка не короче 3 символов. */
+const cmAudioTailReg = makeRegExp('/^[0-9a-f]{3,}$/i');
+
+/** Разбирает строку в доверенный `CmAudioTail`; `nil`, если строка не является хвостом md5-имени аудио. */
+export const parseCmAudioTail = (value: string | nil): CmAudioTail | nil =>
+  value && cmAudioTailReg.test(value) ? (value as CmAudioTail) : null;
+
+/** Аудио-источник: сохранённый хвост md5 либо устаревшая numLead-ссылка (до завершения миграции). */
+export type CmAudioSrc = CmAudioTail | HttpNumLeadLink;
+
+/** Разбирает строку в доверенный `CmAudioSrc`; `nil`, если строка не является аудио-источником. */
+export const parseCmAudioSrc = (value: string | nil): CmAudioSrc | nil =>
+  parseCmAudioTail(value) ?? parseHttpNumLeadLink(value);
+
 export type CmComAudioMarkSelector = CmBroadcastMonolineSlideSelectorId | string;
 
 export type CmComAudioMarkPackTime = NumberBrand<'CmComAudioMarkPackTime'>;
 export const CmComAudioMarkPackTimeZero = 0 as CmComAudioMarkPackTime;
 export const CmComAudioMarkPackTimeOne = 1 as CmComAudioMarkPackTime;
 
-export type CmComAudioMarkPack = SPRecord<HttpNumLeadLink, SPRecord<CmComAudioMarkPackTime, CmComAudioMarkSelector>>;
+export type CmComAudioMarkPack = SPRecord<CmAudioSrc, SPRecord<CmComAudioMarkPackTime, CmComAudioMarkSelector>>;
+
+/** Отбрасывает паки маркеров, ключ которых не является md5-хвостом (устаревшие numLead-ключи). */
+export const filterCmComAudioMarkPack = (pack: CmComAudioMarkPack | nil): CmComAudioMarkPack | nil => {
+  if (!pack) return null;
+
+  const filteredPack: CmComAudioMarkPack = {};
+  let isFiltered = false;
+
+  forEachObjectEntries(pack, (src, marks) => {
+    const tail = parseCmAudioTail(src);
+    if (tail) filteredPack[tail] = marks;
+    else isFiltered = true;
+  });
+
+  return isFiltered ? filteredPack : pack;
+};
 
 export type CmComAudioMarkEditPackValue = CmComAudioMarkSelector | null;
 
 export type CmComAudioMarkEditPack = SPRecord<
   CmComWid,
-  PRecord<HttpNumLeadLink, PRecord<SKey<CmComAudioMarkPackTime>, CmComAudioMarkEditPackValue>>
+  PRecord<CmAudioSrc, PRecord<SKey<CmComAudioMarkPackTime>, CmComAudioMarkEditPackValue>>
 >;
 
 export const enum MenuComToolName {

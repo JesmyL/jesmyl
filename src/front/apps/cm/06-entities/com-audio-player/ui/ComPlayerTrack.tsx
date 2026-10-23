@@ -1,6 +1,6 @@
 import { Slider } from '#shared/components/ui/slider';
 import { useAtomValue } from 'atomaric';
-import { HttpNumLeadLink } from 'shared/api';
+import { CmAudioSrc } from 'shared/api';
 import { convertSecondsInStrTime } from 'shared/utils';
 import {
   cmComAudioPlayerPlaySrcAtom,
@@ -14,7 +14,7 @@ import {
 let userChangeTimeout: TimeOut;
 
 interface Props {
-  src: HttpNumLeadLink;
+  src: CmAudioSrc;
   timeRender?: (timeNode: React.ReactNode) => React.ReactNode;
 }
 

@@ -1,6 +1,7 @@
 import { DexieDB } from '#shared/lib/DexieDB';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { cmComWidNumberDictAtom } from '$cm/entities/index';
+import type { Transaction } from 'dexie';
 import { useLiveQuery } from 'dexie-react-hooks';
 import {
   ChordPack,
@@ -14,13 +15,47 @@ import {
   IExportableCom,
   IFixedCom,
   MenuComToolName,
+  filterCmComAudioMarkPack,
 } from 'shared/api';
 import { CmBroadcastScreenConfig } from 'shared/model/cm/broadcast';
-import { checkIsNil } from 'shared/utils/checkIs';
+import { checkIsNil, checkIsObject } from 'shared/utils/checkIs';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
 import { lazyInit } from 'shared/utils/lazyInit';
 import { objectLength } from 'shared/utils/object.utils';
 import { cmBroadcastDefaultConfig } from '../const/broadcast';
+
+type ComAudioMarksRow = { comw: CmComWid; marks: CmComAudioMarkPack | nil; m: number };
+type ComWithAudioMarks = { am?: CmComAudioMarkPack | nil };
+type MarksWithAudioPack = { marks?: CmComAudioMarkPack | nil };
+
+/** Пустой после фильтрации пак не храним: ни `null`, ни `{}` не должны попасть в store. */
+const takeCleanAudioMarkPack = (pack: CmComAudioMarkPack | nil): CmComAudioMarkPack | nil => {
+  const filteredPack = filterCmComAudioMarkPack(pack);
+
+  return filteredPack && objectLength(filteredPack) ? filteredPack : null;
+};
+
+const cleanComAudioMarks = (com: ComWithAudioMarks) => {
+  if (!com.am) return;
+
+  const marks = takeCleanAudioMarkPack(com.am);
+  if (marks) com.am = marks;
+  else delete com.am;
+};
+
+const cleanMarksHolder = (holder: MarksWithAudioPack) => {
+  if (holder.marks) holder.marks = takeCleanAudioMarkPack(holder.marks);
+};
+
+/** Одноразовая зачистка уже сохранённых legacy-паков при апгрейде схемы IDB. */
+const purgeLegacyAudioMarks = async (transaction: Transaction) => {
+  await transaction
+    .table<ComAudioMarksRow, CmComWid>('comAudioTrackMarks_v3')
+    .toCollection()
+    .modify(cleanMarksHolder);
+
+  await transaction.table<IExportableCom, CmComWid>('coms').toCollection().modify(cleanComAudioMarks);
+};
 
 export interface CmIDBStorage {
   chordPack: ChordPack;
@@ -34,7 +69,7 @@ export interface CmIDBStorage {
   /** user com interpretation */
   fixedComs: IFixedCom[];
   cats: IExportableCat[];
-  comAudioTrackMarks_v3: { comw: CmComWid; marks: CmComAudioMarkPack | nil; m: number }[];
+  comAudioTrackMarks_v3: ComAudioMarksRow[];
   scheduleComIntp: ComsInScheduleIntp[];
   scheduleComws: ComsInSchEventComwsPack[];
 
@@ -94,6 +129,16 @@ class CmIDB extends DexieDB<CmIDBStorage> {
       comAudioTrackMarks_v3: {
         comw: '++',
       },
+    }, 2, purgeLegacyAudioMarks);
+
+    this.db.coms.hook('creating', (_primKey, com) => cleanComAudioMarks(com));
+    this.db.coms.hook('updating', modifications => {
+      if (checkIsObject(modifications)) cleanComAudioMarks(modifications as ComWithAudioMarks);
+    });
+
+    this.db.comAudioTrackMarks_v3.hook('creating', (_primKey, row) => cleanMarksHolder(row));
+    this.db.comAudioTrackMarks_v3.hook('updating', modifications => {
+      if (checkIsObject(modifications)) cleanMarksHolder(modifications as MarksWithAudioPack);
     });
   }
 

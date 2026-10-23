@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { CmAudioSlide, CmComAudioMarkPackTime, HttpNumLeadLink, Langi } from 'shared/api';
+import { CmAudioSlide, CmComAudioMarkPackTime, CmAudioSrc, Langi } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { makeCmComAudioMarkTitleEmptySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { TextCase } from 'shared/model/common';
@@ -10,7 +10,7 @@ import { useCmComMarkTextValuesMaker } from './useCmComMarkTextValuesMaker';
 
 export const useCmComAudioMarkSlides = (
   com: CmCom | und,
-  src: HttpNumLeadLink | nil,
+  src: CmAudioSrc | nil,
   textCase: TextCase | nil,
   nameSpaceiVariants?: number[],
 ) => {

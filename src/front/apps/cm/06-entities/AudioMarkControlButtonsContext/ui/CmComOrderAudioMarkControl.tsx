@@ -10,7 +10,7 @@ import { cmIDB } from '$cm/shared/state';
 import styled from '@emotion/styled';
 import { Atom, useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
-import { CmComAudioMarkPackTime, CmComAudioMarkPackTimeZero, CmComAudioMarkSelector } from 'shared/api';
+import { CmComAudioMarkPackTime, CmComAudioMarkPackTimeZero, CmComAudioMarkSelector, parseCmAudioTail } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { makeCmComAudioMarkTitleBySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { CmBroadcastMonolineSlideSelectorId } from 'shared/model/cm/broadcast';
@@ -47,11 +47,12 @@ export const CmAudioMarkControlButtonsContext = (props: Props) => {
 
 const Child = ({ com, isHideShortTime, isNeedCompute, mapNode, preTimeAtom, children }: Props) => {
   const src = useAtomValue(cmComAudioPlayerPlaySrcAtom);
-  const isActualSrc = !!src && com.audio?.includes(src);
+  const isActualSrc = !!src && com.audio?.some(audioSrc => audioSrc === src);
   const audioTrackMarks = cmIDB.useAudioTrackMarks(com.wid);
   const actualMapNodeRef = useActualRef(mapNode);
-  const comMarks = src ? audioTrackMarks?.marks?.[src] : null;
-  const slides = useCmComMarkTextValuesMaker(com, src, TextCase.AsIs);
+  const marksSrc = parseCmAudioTail(src);
+  const comMarks = marksSrc ? audioTrackMarks?.marks?.[marksSrc] : null;
+  const slides = useCmComMarkTextValuesMaker(com, marksSrc, TextCase.AsIs);
 
   const controls = useMemo(() => {
     const idDict: CmAudioMarkControlButtonsContextIdDict = {};

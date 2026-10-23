@@ -53,6 +53,7 @@ import styled from '@emotion/styled';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useMemo, useRef } from 'react';
+import { parseCmAudioSrc } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { convertSecondsInStrTime } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
@@ -179,9 +180,10 @@ export const CmPlayerPage = () => {
 
   const com = useCmCom(search.comw ?? lastOpenComw ?? icoms[0]?.w);
   const comw = com?.wid;
-  const comAudio = com?.audio;
-  const [src] = comAudio ?? [''];
-  const displaySrc = playSrc && comAudio?.includes(playSrc) ? playSrc : src;
+  const comAudio = com?.audio ?? [];
+  const src = comAudio.at(0) ?? null;
+  const displaySrc = playSrc && comAudio.some(audioSrc => audioSrc === playSrc) ? playSrc : src;
+  const audioSrc = parseCmAudioSrc(displaySrc);
   const isPlayOtherSrc = playSrc && playSrc !== displaySrc;
 
   const playerRef = useRef<HTMLDivElement>(null);
@@ -398,10 +400,10 @@ export const CmPlayerPage = () => {
               }}
             />
 
-            {!isTextSlides || !com || !displaySrc || (
+            {!isTextSlides || !com || !audioSrc || (
               <CmPlayerTextSlides
                 com={com}
-                src={displaySrc}
+                src={audioSrc}
               />
             )}
           </div>

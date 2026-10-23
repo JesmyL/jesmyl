@@ -3,18 +3,17 @@ import { comDB } from 'back/drizzle.schema';
 import { db, dbUpdate } from 'back/drizzle/drizzle.db';
 import { eq } from 'drizzle-orm';
 import {
+  CmAudioTail,
   CmComAudioMarkPack,
   CmComAudioMarkPackTime,
   CmComAudioMarkPackTimeZero,
   CmComWid,
-  HttpNumLeadLink,
 } from 'shared/api';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
 import { CmBroadcastMonolineSlideSelectorId } from 'shared/model/cm/broadcast';
 import { extractNumber, itNumSort } from 'shared/utils';
 import { checkIsNil, checkIsNotNil } from 'shared/utils/checkIs';
 import { forEachObjectEntries, objectEntries, objectKeys, objectLength } from 'shared/utils/object.utils';
-import { makeCmComHttpLinkFromNumLead, makeCmComNumLeadLinkFromHttp } from '../complect/com-http-links';
 
 export const cmEditComExternalsTsjrpcAudioMarks = {
   updateAudioMarks_v2: async args => {
@@ -28,11 +27,10 @@ export const cmEditComExternalsTsjrpcAudioMarks = {
     for (const [src, newPack] of packEntries) {
       if (!newPack) continue;
 
-      const numLink = makeCmComNumLeadLinkFromHttp(src);
       let firstOrdw;
 
-      if (checkIsNil(comMarks[numLink])) {
-        description = `Создан новый пак аудио-маркеров для ссылки ${makeCmComHttpLinkFromNumLead(numLink)}`;
+      if (checkIsNil(comMarks[src])) {
+        description = `Создан новый пак аудио-маркеров для трека ${src}`;
 
         const comTiny = (
           await db
@@ -51,7 +49,7 @@ export const cmEditComExternalsTsjrpcAudioMarks = {
         }
       }
 
-      const srcPackMarks = comMarks[numLink] ?? firstOrdw ?? {};
+      const srcPackMarks = comMarks[src] ?? firstOrdw ?? {};
 
       srcPackMarks[CmComAudioMarkPackTimeZero] ??= '';
 
@@ -72,7 +70,7 @@ export const cmEditComExternalsTsjrpcAudioMarks = {
         srcPackMarks[time] = selector;
       });
 
-      const sortedMarksPack: CmComAudioMarkPack[HttpNumLeadLink] = (retPack[src] = {});
+      const sortedMarksPack: CmComAudioMarkPack[CmAudioTail] = (retPack[src] = {});
 
       objectKeys(srcPackMarks)
         .map(extractNumber)
@@ -86,10 +84,8 @@ export const cmEditComExternalsTsjrpcAudioMarks = {
   },
 
   changeAudioMarkTime_v1: async ({ newTime, src, time, comw }) => {
-    const numLeadSrc = makeCmComNumLeadLinkFromHttp(src);
-
     const comMarks = (await db.select({ am: comDB.am }).from(comDB).where(eq(comDB.w, comw)).limit(1)).at(0)?.am ?? {};
-    const linkMarks = comMarks[numLeadSrc];
+    const linkMarks = comMarks[src];
 
     if (checkIsNil(linkMarks)) return { value: null };
     if (checkIsNotNil(linkMarks[newTime])) throw 'Такое время уже зарегистрировано';
@@ -97,7 +93,7 @@ export const cmEditComExternalsTsjrpcAudioMarks = {
     linkMarks[newTime] = linkMarks[time];
     delete linkMarks[time];
 
-    const sortedMarksPack: CmComAudioMarkPack[HttpNumLeadLink] = {};
+    const sortedMarksPack: CmComAudioMarkPack[CmAudioTail] = {};
 
     objectKeys(linkMarks)
       .map(extractNumber)

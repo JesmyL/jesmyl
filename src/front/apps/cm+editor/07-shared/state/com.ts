@@ -4,7 +4,7 @@ import {
   CmComAudioMarkPack,
   CmComAudioMarkPackTime,
   CmComWid,
-  HttpNumLeadLink,
+  CmAudioTail,
 } from 'shared/api';
 import { ComEditBusy } from 'shared/api/tsjrpc/cm/editor.tsjrpc.shares.model';
 import { checkIsNil } from 'shared/utils/checkIs';
@@ -15,14 +15,14 @@ export const comEditorBusiesAtom = atom<ComEditBusy[] | nil>(null);
 
 export const cmComEditorAudioMarksEditPacksAtom = atom((): CmComAudioMarkEditPack => ({}), {
   do: (_set, _get, self) => ({
-    putMarks: (comw: CmComWid, src: HttpNumLeadLink, cMarks: CmComAudioMarkEditPack[CmComWid]) => {
+    putMarks: (comw: CmComWid, src: CmAudioTail, cMarks: CmComAudioMarkEditPack[CmComWid]) => {
       self.do.update(prev => {
         (prev[comw] ??= {})[src] ??= {};
 
         prev[comw][src] = { ...prev[comw][src], ...cMarks };
       });
     },
-    removeMark: (comw: CmComWid, src: HttpNumLeadLink, time: CmComAudioMarkPackTime) => {
+    removeMark: (comw: CmComWid, src: CmAudioTail, time: CmComAudioMarkPackTime) => {
       self.do.update(prev => {
         const linkPack = ((prev[comw] ??= {})[src] ??= {});
 
@@ -30,7 +30,7 @@ export const cmComEditorAudioMarksEditPacksAtom = atom((): CmComAudioMarkEditPac
         else linkPack[time] = null;
       });
     },
-    renameMark: (comw: CmComWid, src: HttpNumLeadLink, time: CmComAudioMarkPackTime, title: string) => {
+    renameMark: (comw: CmComWid, src: CmAudioTail, time: CmComAudioMarkPackTime, title: string) => {
       self.do.update(prev => (((prev[comw] ??= {})[src] ??= {})[time] = title));
     },
     removeMarks: (comw: CmComWid, cMarks: CmComAudioMarkPack | nil) => {

@@ -3,7 +3,7 @@ import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'atomaric';
-import { HttpNumLeadLink } from 'shared/api';
+import { CmAudioSrc } from 'shared/api';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { twMerge } from 'tailwind-merge';
 import {
@@ -18,9 +18,9 @@ import { CmComAudioPlayerPlayButton } from './ComPlayerPlayButton';
 import { CmComAudioPlayerTrack } from './ComPlayerTrack';
 
 interface Props {
-  links: HttpNumLeadLink | HttpNumLeadLink[];
+  links: CmAudioSrc | CmAudioSrc[];
   timeRender?: (timeNode: React.ReactNode) => React.ReactNode;
-  addRender?: (currentSrc: HttpNumLeadLink) => React.ReactNode;
+  addRender?: (currentSrc: CmAudioSrc) => React.ReactNode;
   className?: string;
 }
 

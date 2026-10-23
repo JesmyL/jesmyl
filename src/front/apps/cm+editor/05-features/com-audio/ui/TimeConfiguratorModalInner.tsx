@@ -16,7 +16,7 @@ import {
 } from '$cm/ext';
 import { Atom, useAtomValue } from 'atomaric';
 import { useState } from 'react';
-import { CmComAudioMarkPackTime, HttpNumLeadLink } from 'shared/api';
+import { CmComAudioMarkPackTime, CmAudioTail } from 'shared/api';
 import { makeCmComAudioMarkTitleBySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { TextCase } from 'shared/model/common';
@@ -27,7 +27,7 @@ import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
 interface Props {
   time: CmComAudioMarkPackTime;
   com: EditableCom;
-  src: HttpNumLeadLink;
+  src: CmAudioTail;
   pinTimeAtom: Atom<CmComAudioMarkPackTime | null>;
 }
 

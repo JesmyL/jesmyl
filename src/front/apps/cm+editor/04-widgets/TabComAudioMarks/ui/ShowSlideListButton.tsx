@@ -3,7 +3,7 @@ import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { WithAtom } from '#shared/ui/WithAtom';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { useCmComAudioMarkSlides, useCmComCurrentMarkTimei } from '$cm/ext';
-import { HttpNumLeadLink } from 'shared/api';
+import { CmAudioTail } from 'shared/api';
 import { TextCase } from 'shared/model/common';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
 import { twMerge } from 'tailwind-merge';
@@ -13,7 +13,7 @@ export const CmEditorTabComAudioMarksShowSlideListButton = ({
   src,
 }: {
   ccom: EditableCom;
-  src: HttpNumLeadLink | nil;
+  src: CmAudioTail | nil;
 }) => {
   const { audioSlides, markTimes } = useCmComAudioMarkSlides(ccom, src, TextCase.AsIs);
   const currentMarkTimei = useCmComCurrentMarkTimei(markTimes, audioSlides);

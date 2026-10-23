@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Dexie, { EntityTable, TableHooks } from 'dexie';
+import Dexie, { EntityTable, TableHooks, type Transaction } from 'dexie';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useCallback } from 'react';
 import { checkIsArray, checkIsFunction } from 'shared/utils/checkIs';
@@ -45,6 +45,7 @@ export class DexieDB<Store> {
         : [(() => Store[K]) | Store[K]];
     }>,
     version = 1,
+    upgrade?: (transaction: Transaction) => PromiseLike<unknown>,
   ) {
     this.tb = this.db = new Dexie(storageName) as never;
 
@@ -149,7 +150,8 @@ export class DexieDB<Store> {
     });
 
     stores[keyvalues as keyof Store] = '++key';
-    this.db.version(version).stores(stores);
+    const versionedDb = this.db.version(version).stores(stores);
+    if (upgrade) versionedDb.upgrade(upgrade);
 
     if ('lastModifiedAt' in defaults) {
       (async () => {

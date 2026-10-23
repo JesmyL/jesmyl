@@ -1,4 +1,4 @@
-import { CmComAudioMarkPack, CmComAudioMarkPackTime, CmComAudioMarkSelector, HttpNumLeadLink, Langi } from 'shared/api';
+import { CmAudioTail, CmComAudioMarkPack, CmComAudioMarkPackTime, CmComAudioMarkSelector, Langi } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
 import { checkIsArray, checkIsNotNil } from 'shared/utils/checkIs';
@@ -12,7 +12,7 @@ const takeTitle = (langi: Langi, key: CmComBlockKindKey) =>
 
 export const makeCmComAudioMarkTitleEmptySelector = (
   selector: string | nil,
-  cMarks: (number | `${number}`)[] | CmComAudioMarkPack[HttpNumLeadLink] | nil,
+  cMarks: (number | `${number}`)[] | CmComAudioMarkPack[CmAudioTail] | nil,
   time: CmComAudioMarkPackTime,
   langi: Langi,
 ) => {
@@ -31,7 +31,7 @@ export const makeCmComAudioMarkTitleBySelector = (
   time: CmComAudioMarkPackTime,
   com: CmCom,
   selector: CmComAudioMarkSelector | nil,
-  comMarks: CmComAudioMarkPack[HttpNumLeadLink] | nil,
+  comMarks: CmComAudioMarkPack[CmAudioTail] | nil,
 ) => {
   const comMarkKeys = objectKeys(comMarks);
   const isShortTime = Math.abs(time - +(comMarkKeys[comMarkKeys.indexOf(`${time}`) + 1] ?? 0)) < 1;

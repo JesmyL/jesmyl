@@ -1,6 +1,6 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useAtomValue } from 'atomaric';
-import { HttpNumLeadLink } from 'shared/api';
+import { CmAudioSrc } from 'shared/api';
 import { twMerge } from 'tailwind-merge';
 import {
   cmComAudioPlayerIsPlayAtom,
@@ -11,7 +11,7 @@ import {
 
 interface Props {
   className?: string;
-  src: HttpNumLeadLink;
+  src: CmAudioSrc;
 }
 
 export const CmComAudioPlayerPlayButton = ({ src, className }: Props) => {
