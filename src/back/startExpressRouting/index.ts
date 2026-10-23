@@ -4,17 +4,23 @@ import express, { Request, Response } from 'express';
 import fs from 'fs';
 import http from 'http';
 import https from 'https';
+import md5 from 'md5';
 import path from 'path';
 import { Readable, pipeline } from 'node:stream';
 import { makeRegExp } from 'regexpert';
 import { CmComWid, HttpNumLeadLink, ScheduleWidgetWid, hostConfig } from 'shared/api';
+import { pullCmAudiosExpressRoutePath, pullFilesExpressSecretQueryName } from 'shared/api/pullFiles.utils';
 import { emptyFunc, extractNumber, itIt } from 'shared/utils';
+import { checkIsString } from 'shared/utils/checkIs';
 import { createSecureContext, type SecureContext } from 'tls';
 import { WebSocketServer } from 'ws';
 import { vitePWAOptions } from '../../../vite-pwa.options';
+import * as secret from '../../../do/secret.md5.json';
 import { takeComwTiny } from '../apps/cm/com.tiny';
 import { makeCmComHttpLinkFromNumLead } from '../apps/cm/complect/com-http-links';
 import { catsFileStorage } from '../apps/cm/file-stores';
+import { db } from '../drizzle/drizzle.db';
+import { comDB } from '../drizzle.schema';
 import { hostRootDir, lazyEnvJson } from '../envJson';
 import { tglogger } from '../sides/telegram-bot/log/log-bot';
 import { pullFilesExpressRoute } from './pullFiles';
@@ -103,6 +109,31 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
 
   pullFilesExpressRoute(app);
   pushFilesExpressRoute(app);
+
+  app.get(pullCmAudiosExpressRoutePath, async (req, res) => {
+    if (
+      !checkIsString(req.query[pullFilesExpressSecretQueryName]) ||
+      md5(req.query[pullFilesExpressSecretQueryName]) !== secret.md5ecret
+    ) {
+      res.status(401).send('Secret Error');
+      return;
+    }
+
+    try {
+      const coms = await db.select({ al: comDB.al, n: comDB.n }).from(comDB);
+      const audios: Record<HttpNumLeadLink, string> = {};
+
+      for (const { al, n } of coms) {
+        if (!al?.length) continue;
+        for (const link of al) audios[link] = n;
+      }
+
+      res.json(audios);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('ERROR');
+    }
+  });
 
   const isRequestFromSearchBot = (req: Request) => {
     const ua = (req.get('User-Agent') || '').toLowerCase();

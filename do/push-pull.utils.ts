@@ -53,6 +53,7 @@ export const parsePulledFileDatas = (value: string) => {
 
 export const pullFilesExpressRoutePath = `/api/pull-files`;
 export const pushFilesExpressRoutePath = `/api/push-files`;
+export const pullCmAudiosExpressRoutePath = `/api/pull-cm-audios`;
 export const pullFilesExpressSecretQueryName = 'secret_word';
 
 export type PullPushFileDirNameNet = typeof pullPushFileDirNameNet;

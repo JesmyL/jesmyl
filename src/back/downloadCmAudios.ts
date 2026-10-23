@@ -1,11 +1,17 @@
 import { HttpNumLeadLink } from 'shared/api';
+import { pullCmAudiosExpressRoutePath, pullFilesExpressSecretQueryName } from 'shared/api/pullFiles.utils';
+import { checkIsObject, checkIsStartsWith, checkIsString } from 'shared/utils/checkIs';
 import { downloadFileMd5Rename } from 'shared/utils/downloadFileMd5Rename';
-import { makeCmComHttpLinkFromNumLead } from './apps/cm/complect/com-http-links';
+import { objectEntries } from 'shared/utils/object.utils';
+import { hostConfig } from '../../freshHostConfig';
+import * as secret from '../../do/secret.json';
+import { makeCmComHttpLinkFromNumLead, numLeadToHttpLinks } from './apps/cm/complect/com-http-links';
 import { FileStore } from './complect/FileStore';
-import { comDB } from './drizzle.schema';
-import { db } from './drizzle/drizzle.db';
 import { hostRootDir } from './envJson';
 import { makeRedLogText } from './utils.exec';
+
+const isHttpNumLeadLink = (link: string): link is HttpNumLeadLink =>
+  checkIsStartsWith(link, 'http') || Object.hasOwn(numLeadToHttpLinks, `${parseFloat(link)}~`);
 
 export const downloadCmAudios = async () => {
   // Файлы пишутся в `${hostRootDir}/audio/`, поэтому и словарь держим рядом, а не под fileStoreDir.
@@ -18,26 +24,35 @@ export const downloadCmAudios = async () => {
   );
   const linkDict = linkDictFileStorage.getValue();
 
-  const coms = await db.select({ al: comDB.al, n: comDB.n }).from(comDB);
+  const response = await fetch(
+    `${hostConfig.url}${pullCmAudiosExpressRoutePath}?${pullFilesExpressSecretQueryName}=${secret.secret}`,
+  );
 
-  for (const com of coms) {
-    if (!com.al?.length) continue;
+  if (!response.ok) throw new Error(`Не удалось получить список аудио с сервера: ${response.status}`);
 
-    for (const link of com.al) {
-      if (linkDict[link]) continue;
+  const audios = await response.json();
 
-      try {
-        console.info(`Скачивание аудио-файла для песни "${com.n}"`);
-        linkDict[link] = await downloadFileMd5Rename('audio/', makeCmComHttpLinkFromNumLead(link), {
-          title: com.n,
-        });
-      } catch (_) {
-        console.error(makeRedLogText(`Ошибка скачивания аудио "${com.n}" (${link}):`));
-        linkDict[link] = null;
-      }
+  if (!checkIsObject(audios)) throw new Error('Сервер вернул некорректный список аудио');
 
-      linkDictFileStorage.saveValue(2);
+  for (const [rawLink, title] of objectEntries(audios)) {
+    if (!checkIsString(title)) continue;
+
+    if (!isHttpNumLeadLink(rawLink)) {
+      console.warn(makeRedLogText(`Пропущена некорректная ссылка на аудио "${rawLink}"`));
+      continue;
     }
+
+    if (linkDict[rawLink]) continue;
+
+    try {
+      console.info(`Скачивание аудио-файла для песни "${title}"`);
+      linkDict[rawLink] = await downloadFileMd5Rename('audio/', makeCmComHttpLinkFromNumLead(rawLink), { title });
+    } catch (error) {
+      console.error(makeRedLogText(`Ошибка скачивания аудио "${title}" (${rawLink}): ${error}`));
+      linkDict[rawLink] = null;
+    }
+
+    linkDictFileStorage.saveValue(2);
   }
 
   console.info('Все возможные аудио файлы скачаны');

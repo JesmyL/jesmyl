@@ -2,7 +2,6 @@ import { exec } from 'child_process';
 import fs from 'fs';
 import { hostConfig } from '../freshHostConfig';
 import { downloadCmAudios } from '../src/back/downloadCmAudios';
-import { closeDb } from '../src/back/drizzle/drizzle.db';
 import { Do } from '../src/shared/enums';
 import {
   jsonStringify,
@@ -126,6 +125,5 @@ if (!Do.It) {
 
   console.info('Скачивание аудио-файлов для песен...');
   await downloadCmAudios();
-  await closeDb();
   process.exit();
 })();
