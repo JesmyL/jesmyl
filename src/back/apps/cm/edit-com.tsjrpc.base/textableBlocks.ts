@@ -16,21 +16,22 @@ import { modifyCom } from './lib/modifiers';
 export const cmEditComServerTsjrpcTextableBlocks = {
   changeChordBlock: modifyCom('COM_CH', (com, { texti, value, isHard }) => {
     let prev;
+    const next = trimTextLines(value);
     com.c ??= [];
 
     if (isHard) {
       com.c1 = fillHardChords(com);
 
       prev = com.c1[texti];
-      com.c1[texti] = trimTextLines(value);
+      com.c1[texti] = next;
 
       if (checkIsEq(com.c, com.c1)) com.c1 = null;
     } else {
       prev = com.c[texti];
-      com.c[texti] = trimTextLines(value);
+      com.c[texti] = next;
     }
 
-    return `изменён аккордный блок:\n\n${value}\n\nбыло:\n${prev}`;
+    return { description: 'изменён аккордный блок', was: prev, new: next };
   }),
   changeTextBlock: modifyCom('COM_TXT', (com, { texti, value }) => {
     const incorrects = textLinesLengthIncorrects(value, constantsConfigFileStore.getValue().maxAvailableComLineLength);
@@ -43,7 +44,7 @@ export const cmEditComServerTsjrpcTextableBlocks = {
 
     com.t[texti] = clearValue;
 
-    return `изменён текстовый блок:\n\n${value}\n\nбыло:\n${prev}`;
+    return { description: 'изменён текстовый блок', was: prev, new: clearValue };
   }),
   textCaps: modifyCom('COM_TXT', (com, { texts }) => {
     const newTexts: string[] = [];

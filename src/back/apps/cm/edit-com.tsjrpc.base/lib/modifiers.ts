@@ -3,6 +3,7 @@ import { comDB } from 'back/drizzle.schema';
 import { dbUpdate } from 'back/drizzle/drizzle.db';
 import { selectPgCheckedExportableCom } from 'back/drizzle/ex/com.selectors';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
+import type { TSJRPCFeedbackEntry } from 'back/tsjrpc.model';
 import { eq } from 'drizzle-orm';
 import { CmComWid, IExportableCom, Langi } from 'shared/api';
 import { checkIsNowInCurrentDay } from 'shared/const/ms';
@@ -15,12 +16,14 @@ import { forEachObjectEntries } from 'shared/utils/object.utils';
 import { resetComwTiny, takeComwTiny } from '../../com.tiny';
 import { cmShareServerTsjrpcMethods } from '../../tsjrpc.shares';
 
+type ComModifyResult = nil | string | TSJRPCFeedbackEntry;
+
 export const modifyCom =
   <Props extends { comw: CmComWid }>(
     rightsCheck:
       | keyof OmitOwn<IndexAppAccessRightTitles['cm'], 'info'>
       | [keyof OmitOwn<IndexAppAccessRightTitles['cm'], 'info'>, CRUDOperation],
-    mapper: (partialCom: IExportableCom, props: Props, tool: ServerTSJRPCTool) => PromiseOr<string | nil>,
+    mapper: (partialCom: IExportableCom, props: Props, tool: ServerTSJRPCTool) => PromiseOr<ComModifyResult>,
   ) =>
   async (props: Props, tool: ServerTSJRPCTool) => {
     if (await throwIfNoUserScopeAccessRight(tool.auth?.login, 'cm', 'COM', 'U')) throw '';
@@ -34,7 +37,8 @@ export const modifyCom =
     const comName = com.n;
     const comClone = deepClone(com);
 
-    const description = await mapper(com, props, tool);
+    const feedback = await mapper(com, props, tool);
+    const description = checkIsString(feedback) ? feedback : feedback?.description;
 
     const now = Date.now();
 
@@ -65,6 +69,7 @@ export const modifyCom =
 
     return {
       value: props.comw,
+      ...(checkIsString(feedback) || !feedback ? {} : feedback),
       description: description
         ? `Песня ${((await takeComwTiny({ w: props.comw }, false))?.i ?? -1) + 1}. "${comName}" - ${description}`
         : null,

@@ -85,6 +85,8 @@ export const cmEditComOrderServerTsjrpcRepeats = {
     const com = new CmCom(icom, null, null, Bool.False);
     const ords = com.setOrders();
     const titles: string[] = [];
+    const wasTitles: string[] = [];
+    const newTitles: string[] = [];
 
     if (ords)
       forEachObjectEntries(upd, (ordwStr, value) => {
@@ -133,10 +135,18 @@ export const cmEditComOrderServerTsjrpcRepeats = {
 
         newValueHolder ??= { v: ord.r };
 
-        titles.push(`${comOrd.me.header()}:\n${makeTitle(newValueHolder.v)}\n\nбыло:\n${makeTitle(prevValue)}`);
+        const header = comOrd.me.header();
+
+        titles.push(header);
+        wasTitles.push(`${header}:\n${makeTitle(prevValue)}`);
+        newTitles.push(`${header}:\n${makeTitle(newValueHolder.v)}`);
       });
 
-    return `изменены повторения для блок${titles.length > 1 ? 'ов' : 'а'} ${titles.join('\n\n')}`;
+    return {
+      description: `изменены повторения для блок${titles.length > 1 ? 'ов' : 'а'} ${titles.join(', ')}`,
+      was: wasTitles.join('\n\n'),
+      new: newTitles.join('\n\n'),
+    };
   }),
 
   removeRepeats: modifyOrd(ModifyOrdParent.Self, 'COM_REP', (ord, getCmComOrd) => {

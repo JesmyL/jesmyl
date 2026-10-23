@@ -7,8 +7,10 @@ import { WebSocket } from 'ws';
 import { backConfig } from './config/backConfig';
 import { jesmylChangesBot } from './sides/telegram-bot/control/jesmylChangesBot';
 import { tglogger } from './sides/telegram-bot/log/log-bot';
-import { postJRPCMessage, PostJRPCMessageScope } from './sides/telegram-bot/postJRPCMessage';
+import { postJRPCMessage } from './sides/telegram-bot/postJRPCMessage';
+import type { ServerTSJRPCFeedback } from './tsjrpc.model';
 import { userAuthStringified, userVisitStringified } from './utils';
+import { stringifyDiffValue, makeDiffHtml } from './tsjrpc.diff';
 
 export type ServerTSJRPCTool = {
   client: WebSocket | null;
@@ -18,7 +20,7 @@ export type ServerTSJRPCTool = {
 export type ServerTSJRPCBeforeEachTool = { minVersion?: number };
 
 export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRPCBaseMaker<
-  { description?: null | string | ((tool: ServerTSJRPCTool) => string); logScope?: PostJRPCMessageScope },
+  ServerTSJRPCFeedback,
   ServerTSJRPCTool,
   ServerTSJRPCBeforeEachTool
 >({
@@ -49,7 +51,11 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
         const title = checkIsFunction(feedback.description) ? feedback.description(tool) : feedback.description;
         if (!title) return;
 
-        const text = `<code>${scope}.${method}</code>\n\n<b>${title}</b>`;
+        let text = `<code>${scope}.${method}</code>\n\n<b>${title}</b>`;
+        const { was, new: newV } = feedback;
+        const wasText = stringifyDiffValue(was);
+        const newText = stringifyDiffValue(newV);
+        if (wasText !== newText && (wasText || newText)) text += `\n\n${makeDiffHtml(wasText ?? '', newText ?? '')}`;
 
         postJRPCMessage(
           tool.auth

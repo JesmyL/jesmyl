@@ -1,6 +1,7 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { takeUserLoginsByIds, takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
+import type { TSJRPCFeedbackDiff } from 'back/tsjrpc.model';
 import { takeLogginedAuthOrThrow } from 'back/utils';
 import { UserId } from 'shared/api';
 import {
@@ -501,7 +502,7 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
 ///////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////
 
-type UpdaterReturnType<RetValue> = und | void | { description?: string; value: RetValue };
+type UpdaterReturnType<RetValue> = und | void | (TSJRPCFeedbackDiff & { description?: string; value: RetValue });
 
 const rackCore: PRecord<keyof OmitOwn<StoragesRackCore, 'w'>, 0> = {
   cards: 0,

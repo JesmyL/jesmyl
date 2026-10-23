@@ -1,4 +1,5 @@
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
+import type { TSJRPCFeedbackEntry } from 'back/tsjrpc.model';
 import { CmComOrderWid, CmComOrderWidDef, CmComWid, IExportableCom, IExportableOrder } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { CmComOrder } from 'shared/const/cm/order/Order';
@@ -33,7 +34,7 @@ export const modifyOrd = <Props extends { ordw: CmComOrderWid; comw: CmComWid }>
     com: IExportableCom,
     getCmCom: () => CmCom,
     getCmComOrds: () => CmComOrder[],
-  ) => PromiseOr<string | null>,
+  ) => PromiseOr<nil | string | TSJRPCFeedbackEntry>,
 ) =>
   modifyCom<Props>(rightsCheck, async (com, props, tool) => {
     let ord = com.o?.find(o => o.w === props.ordw);

@@ -4,6 +4,7 @@ import { comDB } from 'back/drizzle.schema';
 import { db, dbDelete } from 'back/drizzle/drizzle.db';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
+import type { TSJRPCFeedbackDiff, TSJRPCFeedbackEntry } from 'back/tsjrpc.model';
 import { eq } from 'drizzle-orm';
 import { CmComIntensityLevel, CmComWid, Langi } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
@@ -33,37 +34,43 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           simpleUpdateReverse(`переименована на "${value}"`, (com.n = value)),
         ),
 
-        setBpM: modifyCom('COM_MAIN', (com, { value }) =>
-          simpleUpdateReverse(
-            `значение ударов в минуту установлено в ${value} (было ${com.bpm})`,
-            (com.bpm = takeCorrectMetronomeBpm(value)),
-          ),
-        ),
+        setBpM: modifyCom('COM_MAIN', (com, { value }) => {
+          const prev = com.bpm;
+          const next = (com.bpm = takeCorrectMetronomeBpm(value));
 
-        setMeterSize: modifyCom('COM_MAIN', (com, { value }) =>
-          simpleUpdateReverse(
-            `размерность теперь ${cmComMetricNumTitles[value]} (было ${cmComMetricNumTitles[com.s ?? 4]})`,
-            (com.s = value),
-          ),
-        ),
+          return simpleUpdateReverse('изменено значение ударов в минуту', next, { was: prev, new: next });
+        }),
 
-        changeLanguage: modifyCom('COM_MAIN', (com, { value }) =>
-          simpleUpdateReverse(
-            `язык изменён на ${cmComLanguages[value]} (было ${com.l == null ? null : cmComLanguages[com.l]})`,
-            (com.l = value),
-          ),
-        ),
+        setMeterSize: modifyCom('COM_MAIN', (com, { value }) => {
+          const was = cmComMetricNumTitles[com.s ?? 4];
+          const next = (com.s = value);
 
-        changeDrive: modifyCom('COM_MAIN', (com, { value }) =>
-          simpleUpdateReverse(
-            `уровень интенсивности установлен как "${cmComIntensityLevelTitleDict[com.d ?? CmComIntensityLevel.Medium]}" (было ${cmComIntensityLevelTitleDict[com.d ?? CmComIntensityLevel.Medium]})`,
-            (com.d = value),
-          ),
-        ),
+          return simpleUpdateReverse('размерность изменена', next, { was, new: cmComMetricNumTitles[next] });
+        }),
 
-        changeTon: modifyCom('COM_MAIN', (com, { value }) =>
-          simpleUpdateReverse(`тональность изменена на ${value} (было ${com.p})`, (com.p = value)),
-        ),
+        changeLanguage: modifyCom('COM_MAIN', (com, { value }) => {
+          const was = com.l == null ? null : cmComLanguages[com.l];
+          const next = (com.l = value);
+
+          return simpleUpdateReverse('язык изменён', next, { was, new: cmComLanguages[next] });
+        }),
+
+        changeDrive: modifyCom('COM_MAIN', (com, { value }) => {
+          const was = cmComIntensityLevelTitleDict[com.d ?? CmComIntensityLevel.Medium];
+          const next = (com.d = value);
+
+          return simpleUpdateReverse('уровень интенсивности изменён', next, {
+            was,
+            new: cmComIntensityLevelTitleDict[next],
+          });
+        }),
+
+        changeTon: modifyCom('COM_MAIN', (com, { value }) => {
+          const was = com.p;
+          const next = (com.p = value);
+
+          return simpleUpdateReverse('тональность изменена', next, { was, new: next });
+        }),
 
         makeBemoled: modifyCom('COM_MAIN', (com, { value }) =>
           simpleUpdate((com.b = value), `теперь ${value ? 'бемольная' : 'диезная'}`),
@@ -77,7 +84,11 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
             ? prev?.filter(pLink => pLink !== link)
             : [...(prev ?? []), makeCmComNumLeadLinkFromHttp(link)];
 
-          return `изменение аудио-ссылок:\n\n${isThereInPrev ? 'удалено' : 'добавлено'}:\n${link}\n\nбыло:\n${prev}`;
+          return {
+            description: `изменение аудио-ссылок: ${isThereInPrev ? 'удалено' : 'добавлено'}`,
+            was: prev,
+            new: com.al,
+          };
         }),
 
         newCom: async ({ value: newCom }, { auth }) => {
@@ -151,5 +162,12 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
 
 export * from './lib/modifiers';
 
-const simpleUpdate = (_result: unknown, dsc: string) => dsc;
-const simpleUpdateReverse = (dsc: string, _result: unknown) => dsc;
+const simpleUpdate = (_result: unknown, description: string, diff?: TSJRPCFeedbackDiff): TSJRPCFeedbackEntry => ({
+  description,
+  ...diff,
+});
+const simpleUpdateReverse = (
+  description: string,
+  _result: unknown,
+  diff?: TSJRPCFeedbackDiff,
+): TSJRPCFeedbackEntry => ({ description, ...diff });

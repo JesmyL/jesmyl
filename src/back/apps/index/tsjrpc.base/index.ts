@@ -277,22 +277,25 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
           const prevConfig = constantsConfigFileStore.getValue();
           const newConfig = { ...config };
           const updates: string[] = [];
+          const was: Record<string, unknown> = {};
+          const newValues: Record<string, unknown> = {};
 
           forEachObjectEntries(newConfig, (key, value) => {
             const configuration = constantsConfigurator[key];
-            const jsonValue = JSON.stringify(value);
-            let updateTitle;
 
             if (configuration == null) {
               delete newConfig[key];
-              updateTitle = `Неизвестный ключ (уже удалено) ${key} = ${jsonValue}`;
-            } else {
-              const checkedValue = (newConfig[key] = configuration.checked(value) as never);
-
-              updateTitle = `${configuration.title} = ${checkedValue}`;
+              updates.push(`Неизвестный ключ (уже удалено) ${key}`);
+              was[key] = prevConfig[key];
+              newValues[key] = null;
+              return;
             }
 
-            updates.push(`${updateTitle} (было ${prevConfig[key]})`);
+            const checkedValue = (newConfig[key] = configuration.checked(value) as never);
+
+            updates.push(configuration.title);
+            was[key] = prevConfig[key];
+            newValues[key] = checkedValue;
           });
 
           constantsConfigFileStore.setValue({ ...prevConfig, ...newConfig });
@@ -311,7 +314,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
             null,
           );
 
-          return { description: `Константы\n\n${updates.join('\n')}` };
+          return { description: `Константы\n\n${updates.join('\n')}`, was, new: newValues };
         },
 
         reqLocaleBaseConfig: (_, { visitInfo, client }) => {
