@@ -27,7 +27,7 @@ export const CmListsPage = () => {
             className="w-full"
           >
             <BrutalItem
-              iconNode={<LazyIcon icon="Star" />}
+              iconNode={<LazyIcon icon="Favourite" />}
               title={translateBase(BaseLocaleKey.Favorite)}
             />
           </Link>
