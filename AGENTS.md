@@ -49,6 +49,7 @@
 - Small styles — via Tailwind utility classes; complex `@keyframes` (e.g. `playingPulse`) — keep in `styled` from `@emotion/styled`, not in the global Tailwind entry.
 - Locale strings: always write user-facing text translations via `translateBase` / `translateDynamic` — never inline raw text.
 - Do not add translations for a new locale key if the text is identical in all languages — just keep the single same value in each locale file (no need to invent per-language variants).
+- In translated text/locale keys, name interpolation placeholders with single letters — e.g. `$d`/`$t`/`$f` instead of `$track`/`$total`/`$free` — and map descriptive local variables to them at the call site (e.g. `Удалено: $d МБ. Занято: $t МБ. Свободно: $f МБ.`).
 - Never write blind type casts like `as CmAudioTail` (branded/type asserts on unverified data) — write proper types and parse/validate at the boundary so the casts become unnecessary.
 - In this project, the term `songs` is not used — the correct name is `coms` (short for "compositions"). Name variables, types, files and identifiers accordingly.
 - Removing an entry from `BaseLocaleKey` (locale keys): never delete it outright — mark it `@deprecated` in `_BaseLocaleKey.ts` and change its translations in all `src/back/locales/base/{ru,en,kz,ua,...}.ts` files to `''` instead of removing the keys.
