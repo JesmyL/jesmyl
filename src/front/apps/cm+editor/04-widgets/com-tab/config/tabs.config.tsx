@@ -2,40 +2,36 @@ import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import React from 'react';
 import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
 
-const CmEditorTabComAudioMarks = React.lazy(() =>
-  import('$cm+editor/widgets/TabComAudioMarks').then(m => ({ default: m.CmEditorTabComAudioMarks })),
-);
-const CmEditorTabComRepeats = React.lazy(() =>
-  import('$cm+editor/widgets/TabComRepeats').then(m => ({ default: m.CmEditorTabComRepeats })),
-);
-const CmEditorComTabAudio = React.lazy(() =>
-  import('../ui/TabComAudio').then(m => ({ default: m.CmEditorComTabAudio })),
-);
-const CmEditorComTabComBroadcast = React.lazy(() =>
-  import('../ui/TabComBroadcast').then(m => ({ default: m.CmEditorComTabComBroadcast })),
-);
-const CmEditorComTabCategoryBinds = React.lazy(() =>
-  import('../ui/TabComCategoryBinds').then(m => ({ default: m.CmEditorComTabCategoryBinds })),
-);
-const CmEditorComTabChordApplications = React.lazy(() =>
-  import('../ui/TabComChordApplications').then(m => ({ default: m.CmEditorComTabChordApplications })),
-);
-const CmEditorComTabChordsBlocks = React.lazy(() =>
-  import('../ui/TabComChordsBlocks').then(m => ({ default: m.CmEditorComTabChordsBlocks })),
-);
-const CmEditorComTabMain = React.lazy(() => import('../ui/TabComMain').then(m => ({ default: m.CmEditorComTabMain })));
-const CmEditorComTabComOrders = React.lazy(() =>
-  import('../ui/TabComOrders').then(m => ({ default: m.CmEditorComTabComOrders })),
-);
-const CmEditorComTabComRefs = React.lazy(() =>
-  import('../ui/TabComRefs').then(m => ({ default: m.CmEditorComTabComRefs })),
-);
-const CmEditorComTabTextBlocks = React.lazy(() =>
-  import('../ui/TabComTextBlocks').then(m => ({ default: m.CmEditorComTabTextBlocks })),
-);
-const CmEditorComTabWatch = React.lazy(() =>
-  import('../ui/TabComWatch').then(m => ({ default: m.CmEditorComTabWatch })),
-);
+const importTabAudioMarks = () =>
+  import('$cm+editor/widgets/TabComAudioMarks').then(m => ({ default: m.CmEditorTabComAudioMarks }));
+const importTabRepeats = () =>
+  import('$cm+editor/widgets/TabComRepeats').then(m => ({ default: m.CmEditorTabComRepeats }));
+const importTabAudio = () => import('../ui/TabComAudio').then(m => ({ default: m.CmEditorComTabAudio }));
+const importTabBroadcast = () => import('../ui/TabComBroadcast').then(m => ({ default: m.CmEditorComTabComBroadcast }));
+const importTabCategoryBinds = () =>
+  import('../ui/TabComCategoryBinds').then(m => ({ default: m.CmEditorComTabCategoryBinds }));
+const importTabChordApplications = () =>
+  import('../ui/TabComChordApplications').then(m => ({ default: m.CmEditorComTabChordApplications }));
+const importTabChordsBlocks = () =>
+  import('../ui/TabComChordsBlocks').then(m => ({ default: m.CmEditorComTabChordsBlocks }));
+const importTabMain = () => import('../ui/TabComMain').then(m => ({ default: m.CmEditorComTabMain }));
+const importTabOrders = () => import('../ui/TabComOrders').then(m => ({ default: m.CmEditorComTabComOrders }));
+const importTabRefs = () => import('../ui/TabComRefs').then(m => ({ default: m.CmEditorComTabComRefs }));
+const importTabTextBlocks = () => import('../ui/TabComTextBlocks').then(m => ({ default: m.CmEditorComTabTextBlocks }));
+const importTabWatch = () => import('../ui/TabComWatch').then(m => ({ default: m.CmEditorComTabWatch }));
+
+const CmEditorTabComAudioMarks = React.lazy(importTabAudioMarks);
+const CmEditorTabComRepeats = React.lazy(importTabRepeats);
+const CmEditorComTabAudio = React.lazy(importTabAudio);
+const CmEditorComTabComBroadcast = React.lazy(importTabBroadcast);
+const CmEditorComTabCategoryBinds = React.lazy(importTabCategoryBinds);
+const CmEditorComTabChordApplications = React.lazy(importTabChordApplications);
+const CmEditorComTabChordsBlocks = React.lazy(importTabChordsBlocks);
+const CmEditorComTabMain = React.lazy(importTabMain);
+const CmEditorComTabComOrders = React.lazy(importTabOrders);
+const CmEditorComTabComRefs = React.lazy(importTabRefs);
+const CmEditorComTabTextBlocks = React.lazy(importTabTextBlocks);
+const CmEditorComTabWatch = React.lazy(importTabWatch);
 
 export const cmEditorComTabCompositionNavs = {
   watch: {
@@ -106,3 +102,22 @@ export const cmEditorComTabCompositionNavs = {
     scope: keyof OmitOwn<IndexAppAccessRightTitles['cm'], 'info'>;
   }
 >;
+
+/** Fetches every tab chunk so the tabs keep working after going offline. */
+export const cmEditorComTabChunksPreload = () =>
+  Promise.all(
+    [
+      importTabWatch,
+      importTabTextBlocks,
+      importTabChordsBlocks,
+      importTabOrders,
+      importTabChordApplications,
+      importTabRepeats,
+      importTabCategoryBinds,
+      importTabAudio,
+      importTabBroadcast,
+      importTabAudioMarks,
+      importTabRefs,
+      importTabMain,
+    ].map(importChunk => importChunk().catch(() => null)),
+  );
