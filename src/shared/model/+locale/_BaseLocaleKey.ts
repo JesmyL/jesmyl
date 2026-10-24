@@ -899,4 +899,8 @@ export const enum BaseLocaleKey {
   ColorGamutSun = 893,
   ColorGamutNeon = 894,
   Cached = 895,
+  CmAudioCached = 896,
+  CmAudioCachedNoQuota = 897,
+  CmAudioUncached = 898,
+  CmAudioUncachedNoQuota = 899,
 }

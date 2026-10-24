@@ -1009,4 +1009,8 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.ScheduleRightRedactComsListRoleGen]: 'Редактора композиций',
   [BaseLocaleKey.ScheduleRightRedactComsListDescription]: 'Изменение списка композиций в событиях',
   [BaseLocaleKey.Cached]: 'Кэш',
+  [BaseLocaleKey.CmAudioCached]: 'Добавлено «$n»: $d МБ. Занято: $t МБ. Свободно: $f МБ.',
+  [BaseLocaleKey.CmAudioCachedNoQuota]: 'Добавлено «$n»: $d МБ. Занято: $t МБ.',
+  [BaseLocaleKey.CmAudioUncached]: 'Удалено «$n»: $d МБ. Занято: $t МБ. Свободно: $f МБ.',
+  [BaseLocaleKey.CmAudioUncachedNoQuota]: 'Удалено «$n»: $d МБ. Занято: $t МБ.',
 });

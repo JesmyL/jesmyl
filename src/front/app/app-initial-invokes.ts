@@ -29,6 +29,8 @@ const runCmEditorInvokes = () => {
   if (isCmEditorInvokesRun) return;
   isCmEditorInvokesRun = true;
 
+  void import('$cm+editor/app/EditorPage').catch(() => null);
+
   void Promise.all([
     import('$cm+editor/shared/lib/cm+editor-initial-invokes'),
     import('$cm+editor/shared/lib/cm-editor.tsjrpc.base'),
@@ -38,7 +40,10 @@ const runCmEditorInvokes = () => {
   });
 };
 
-/** Editors preload the gated slice; non-editors drop its cached chunks (bootstrap, revocation, logout). */
+/**
+ * Editors preload the gated slice and the editor page chunk; non-editors drop its cached chunks
+ * (bootstrap, revocation, logout).
+ */
 const syncCmEditorAccess = (rights: IndexAccessScopeRules) => {
   if (hasCmEditRight(rights)) {
     isCmEditorCachePurgeScheduled = false;

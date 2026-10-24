@@ -3,11 +3,11 @@ import { useCmComCurrent } from '$cm/entities/com';
 import {
   cmComAudioPlayerCacheSrc,
   cmComAudioPlayerUncacheCom,
+  cmComAudioPlayerCacheToast,
   useCmComAudioPlayerComCacheState,
 } from '$cm/entities/com-audio-player';
 import { MenuComToolName } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
-import { emptyFunc } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
 import { CmComTool } from '../ComTool';
 
@@ -33,7 +33,11 @@ export const CmComToolCacheTracks = () => {
       onClick={() =>
         isCached
           ? void cmComAudioPlayerUncacheCom(ccom.wid)
-          : srcs.forEach(src => void cmComAudioPlayerCacheSrc(src).catch(emptyFunc))
+          : void Promise.all(
+              srcs.map(src =>
+                cmComAudioPlayerCacheSrc(src).then(isFreshlyCached => (isFreshlyCached ? src : null), () => null),
+              ),
+            ).then(freshSrcs => cmComAudioPlayerCacheToast(freshSrcs, ccom.name))
       }
     />
   );

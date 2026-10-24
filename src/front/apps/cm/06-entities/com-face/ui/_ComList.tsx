@@ -51,6 +51,7 @@ const CmComFaceListItem = memo(function CmComFaceListItem(props: ComListItemProp
       {withoutCacheMarks || (
         <CmComAudioPlayerCacheMarks
           srcs={com.al}
+          comName={com.n}
           className={cmComFaceItemAudioMarksClassName}
         />
       )}

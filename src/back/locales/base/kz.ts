@@ -989,4 +989,8 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.ScheduleRightRedactComsListRoleGen]: 'Композициялар редакторының',
   [BaseLocaleKey.ScheduleRightRedactComsListDescription]: 'Оқиғалардағы композициялар тізімін өзгерту',
   [BaseLocaleKey.Cached]: 'Кэш',
+  [BaseLocaleKey.CmAudioCached]: 'Қосылды «$n»: $d МБ. Алынған: $t МБ. Бос: $f МБ.',
+  [BaseLocaleKey.CmAudioCachedNoQuota]: 'Қосылды «$n»: $d МБ. Алынған: $t МБ.',
+  [BaseLocaleKey.CmAudioUncached]: 'Жойылды «$n»: $d МБ. Алынған: $t МБ. Бос: $f МБ.',
+  [BaseLocaleKey.CmAudioUncachedNoQuota]: 'Жойылды «$n»: $d МБ. Алынған: $t МБ.',
 });

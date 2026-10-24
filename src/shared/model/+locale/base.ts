@@ -4,6 +4,9 @@ import { BibleTranslateName } from '../bible';
 import { BaseLocaleKey } from './_BaseLocaleKey';
 import { LocaleSimpleString, LocaleStrOrInterpolationRecord, LocaleStrRecord } from './model';
 
+/** Four placeholders exceed the `StringTemplaterInterpolation` combinatorics, so these texts only enforce the name one. */
+type CmAudioCacheToastText = `${string}$n${string}`;
+
 export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.Langi]: L;
   [BaseLocaleKey.LocaleVersion]: number;
@@ -909,4 +912,8 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.ScheduleRightRedactComsListRoleGen]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleRightRedactComsListDescription]: LocaleSimpleString;
   [BaseLocaleKey.Cached]: LocaleSimpleString;
+  [BaseLocaleKey.CmAudioCached]: CmAudioCacheToastText;
+  [BaseLocaleKey.CmAudioCachedNoQuota]: CmAudioCacheToastText;
+  [BaseLocaleKey.CmAudioUncached]: CmAudioCacheToastText;
+  [BaseLocaleKey.CmAudioUncachedNoQuota]: CmAudioCacheToastText;
 };

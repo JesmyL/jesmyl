@@ -6,17 +6,23 @@ import { CmAudioSrc } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { emptyFunc } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
-import { cmComAudioPlayerCacheSrc, cmComAudioPlayerUncacheSrc, useCmComAudioPlayerSrcState } from '../lib/audioCache';
+import {
+  cmComAudioPlayerCacheSrc,
+  cmComAudioPlayerUncacheSrc,
+  cmComAudioPlayerCacheToast,
+  useCmComAudioPlayerSrcState,
+} from '../lib/audioCache';
 
 interface ButtonProps {
   src: CmAudioSrc;
+  comName: string;
   className?: string;
 }
 
 /**
  * Three-state cloud button for a single track: outlined downloads, solid is cached, red retries after a failure.
  */
-export const CmComAudioPlayerCacheButton = ({ src, className }: ButtonProps) => {
+export const CmComAudioPlayerCacheButton = ({ src, comName, className }: ButtonProps) => {
   const state = useCmComAudioPlayerSrcState(src);
   const confirm = useConfirm();
   const [isLoading, setIsLoading] = useState(false);
@@ -34,9 +40,9 @@ export const CmComAudioPlayerCacheButton = ({ src, className }: ButtonProps) => 
         setIsLoading(true);
         try {
           if (state !== 'cached') {
-            await cmComAudioPlayerCacheSrc(src).catch(emptyFunc);
+            if (await cmComAudioPlayerCacheSrc(src).catch(emptyFunc)) await cmComAudioPlayerCacheToast([src], comName);
           } else if (await confirm(translateBase(BaseLocaleKey.CmCacheDeleteDescription))) {
-            await cmComAudioPlayerUncacheSrc(src);
+            await cmComAudioPlayerUncacheSrc(src, comName);
           }
         } finally {
           setIsLoading(false);
@@ -48,11 +54,12 @@ export const CmComAudioPlayerCacheButton = ({ src, className }: ButtonProps) => 
 
 interface MarksProps {
   srcs: CmAudioSrc[] | nil;
+  comName: string;
   className?: string;
 }
 
 /** A cloud per track in order; renders nothing for coms without audio. */
-export const CmComAudioPlayerCacheMarks = ({ srcs, className }: MarksProps) => {
+export const CmComAudioPlayerCacheMarks = ({ srcs, comName, className }: MarksProps) => {
   if (!srcs?.length) return null;
 
   return (
@@ -61,6 +68,7 @@ export const CmComAudioPlayerCacheMarks = ({ srcs, className }: MarksProps) => {
         <CmComAudioPlayerCacheButton
           key={src}
           src={src}
+          comName={comName}
         />
       ))}
     </span>

@@ -986,4 +986,8 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.ScheduleRightRedactComsListRoleGen]: 'Редактора композицій',
   [BaseLocaleKey.ScheduleRightRedactComsListDescription]: 'Зміна списку композицій у подіях',
   [BaseLocaleKey.Cached]: 'Кеш',
+  [BaseLocaleKey.CmAudioCached]: 'Додано «$n»: $d МБ. Зайнято: $t МБ. Вільно: $f МБ.',
+  [BaseLocaleKey.CmAudioCachedNoQuota]: 'Додано «$n»: $d МБ. Зайнято: $t МБ.',
+  [BaseLocaleKey.CmAudioUncached]: 'Видалено «$n»: $d МБ. Зайнято: $t МБ. Вільно: $f МБ.',
+  [BaseLocaleKey.CmAudioUncachedNoQuota]: 'Видалено «$n»: $d МБ. Зайнято: $t МБ.',
 });

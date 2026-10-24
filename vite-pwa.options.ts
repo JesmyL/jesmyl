@@ -25,7 +25,6 @@ export const vitePWAOptions = {
         handler: 'CacheFirst',
         options: {
           cacheName: 'audio-cache',
-          expiration: { maxEntries: 200, purgeOnQuotaError: true },
         },
       },
       {
