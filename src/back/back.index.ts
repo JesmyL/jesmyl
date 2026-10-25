@@ -22,7 +22,7 @@ import { baseMessagesCatcher } from './sides/telegram-bot/complect/message-catch
 iife(async () => {
   if (Do.It) await import('./initBack').then(m => m.initBack());
 
-  if (Do.It) if (backConfig.isTest) await import('./drizzle/cloneDrizzleToLocal').then(m => m.cloneDrizzleToLocal());
+  if (!Do.It) if (backConfig.isTest) await import('./drizzle/cloneDrizzleToLocal').then(m => m.cloneDrizzleToLocal());
 
   if (Do.It) await import('./drizzle/drizzleInitiator').then(m => m.drizzleInitiator());
 
