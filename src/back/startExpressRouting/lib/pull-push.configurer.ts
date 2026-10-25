@@ -1,10 +1,6 @@
+import { exportableCatFromRow } from 'back/apps/cm/cat.db';
 import { takeComwTiny } from 'back/apps/cm/com.tiny';
-import {
-  catsFileStorage,
-  chordPackFileStore,
-  eePackFileStore,
-  mp3ResourcesFileStorage,
-} from 'back/apps/cm/file-stores';
+import { chordPackFileStore, eePackFileStore, mp3ResourcesFileStorage } from 'back/apps/cm/file-stores';
 import { nounsFileStorage, pronounsFileStorage } from 'back/apps/index/file-stores';
 import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
@@ -13,6 +9,7 @@ import { mapBlankRow } from 'back/apps/q/db-stores';
 import { FileStore } from 'back/complect/FileStore';
 import {
   audioLinkDB,
+  catDB,
   comDB,
   questionerBlankDB,
   questionerUserAnswerDB,
@@ -42,6 +39,7 @@ import {
 import { Bool } from 'shared/enums';
 import { QuestionerBlankWid } from 'shared/model/q';
 import { QuestionerUserAnswer } from 'shared/model/q/answer';
+import { parseLegacyICat } from 'shared/utils/cm/cat/parseLegacyICat';
 import { lazyInit } from 'shared/utils/lazyInit';
 
 const und = undefined;
@@ -146,11 +144,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
             }));
           },
 
-          PUSH: com =>
-            db
-              .insert(comDB)
-              .values(com)
-              .onConflictDoUpdate({ target: comDB.w, set: com }),
+          PUSH: com => db.insert(comDB).values(com).onConflictDoUpdate({ target: comDB.w, set: com }),
         },
 
         'user2Com/': {
@@ -335,7 +329,20 @@ export const pullPushDirFilesDictLazy = lazyInit(
           },
         },
 
-        cats: makeFileStoreConfig<'apps/cm/', 'cats'>()(catsFileStorage),
+        'cats/': {
+          pull: async () =>
+            (await db.select().from(catDB).orderBy(catDB.w)).map(row => {
+              const cat = exportableCatFromRow(row);
+
+              return { data: cat, file: `${cat.w}`, name: cat.n };
+            }),
+
+          PUSH: data => {
+            const cat = parseLegacyICat(data);
+            if (!cat) return;
+            return dbUpsert(catDB, [cat], ['w']);
+          },
+        },
         chordTracks: makeFileStoreConfig<'apps/cm/', 'chordTracks'>()(chordPackFileStore),
         eeStorage: makeFileStoreConfig<'apps/cm/', 'eeStorage'>()(eePackFileStore),
         mp3Rules: makeFileStoreConfig<'apps/cm/', 'mp3Rules'>()(mp3ResourcesFileStorage),

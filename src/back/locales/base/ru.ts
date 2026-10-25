@@ -1,4 +1,5 @@
 import { Langi, MenuComToolName } from 'shared/api';
+import { CmAdditionalCatKind } from 'shared/const/cm/enums';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { LocaleBase } from 'shared/model/+locale/base';
 import { BibleTranslateName } from 'shared/model/bible';
@@ -108,24 +109,18 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.CmEditorNewNewAudios]: 'Новые аудио',
   [BaseLocaleKey.CmEditorNewPublishCom]: 'Опубликовать песню',
   [BaseLocaleKey.CmCategoryTitle]: '',
-
   [BaseLocaleKey.CmCategoryList]: {
-    all: 'Все песни',
-    child: 'Детские',
-    youth: 'Молодёжные',
-    PesnVzr: 'Песнь Возрождения',
-    RU: 'Русскоязычные',
-    UA: 'Украиноязычные',
-    EN: 'Англоязычные',
-    solo: 'Соло',
-    Christmass: 'На Рождество',
-    Easter: 'На Пасху',
-    tooSlow: 'Очень медленные',
-    slow: 'Медленные',
-    middle: 'Средней интенсивности',
-    fast: 'Быстрые',
-    tooFast: 'Очень быстрые',
+    [CmAdditionalCatKind.intensityTooSlow]: 'Очень медленные',
+    [CmAdditionalCatKind.intensitySlow]: 'Медленные',
+    [CmAdditionalCatKind.intensityMedium]: 'Средняя интенсивность',
+    [CmAdditionalCatKind.intensityFast]: 'Быстрые',
+    [CmAdditionalCatKind.intensityTooFast]: 'Очень быстрые',
+    [CmAdditionalCatKind.langRu]: 'Русскоязычные',
+    [CmAdditionalCatKind.langUa]: 'Украиноязычные',
+    [CmAdditionalCatKind.langKz]: 'Казахоязычные',
+    [CmAdditionalCatKind.langEn]: 'Англоязычные',
   },
+
 
   [BaseLocaleKey.CmListsAll]: 'Все',
   [BaseLocaleKey.CmListsPlayer]: 'Плеер',
@@ -1013,4 +1008,13 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.CmAudioCachedNoQuota]: 'Добавлено «$n»: $d МБ. Занято: $t МБ.',
   [BaseLocaleKey.CmAudioUncached]: 'Удалено «$n»: $d МБ. Занято: $t МБ. Свободно: $f МБ.',
   [BaseLocaleKey.CmAudioUncachedNoQuota]: 'Удалено «$n»: $d МБ. Занято: $t МБ.',
+  [BaseLocaleKey.CmEditorCategories]: 'Категории',
+  [BaseLocaleKey.CmEditorCategoryCreate]: 'Создать категорию',
+  [BaseLocaleKey.CmEditorCategoryKind]: 'Вид категории',
+  [BaseLocaleKey.CmEditorCategoryTitle]: 'Название категории',
+  [BaseLocaleKey.CmEditorCategoryComsCount]: 'Песен: $c',
+  [BaseLocaleKey.CmEditorCategoryRemove]: 'Удалить категорию «$n;»?',
+  [BaseLocaleKey.CmAllCategoryName]: 'Все песни',
+  [BaseLocaleKey.CmEditorCategoryEdit]: 'Редактировать категорию',
+  [BaseLocaleKey.CmEditorCategoryKindLocked]: 'Вид нельзя изменить: в категории есть песни',
 });

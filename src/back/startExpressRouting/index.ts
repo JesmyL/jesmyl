@@ -1,6 +1,7 @@
 import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
 import { makeCertBotFilePath } from 'back/utils';
 import express, { Request, Response } from 'express';
+import { eq } from 'drizzle-orm';
 import fs from 'fs';
 import http from 'http';
 import https from 'https';
@@ -10,6 +11,7 @@ import { Readable, pipeline } from 'node:stream';
 import { makeRegExp } from 'regexpert';
 import { CmComWid, HttpLink, HttpNumLeadLink, ScheduleWidgetWid, hostConfig } from 'shared/api';
 import { pullCmAudiosExpressRoutePath, pullFilesExpressSecretQueryName } from 'shared/api/pullFiles.utils';
+import { Bool } from 'shared/enums';
 import { emptyFunc, extractNumber, itIt } from 'shared/utils';
 import { checkIsString } from 'shared/utils/checkIs';
 import { createSecureContext, type SecureContext } from 'tls';
@@ -17,10 +19,9 @@ import { WebSocketServer } from 'ws';
 import { vitePWAOptions } from '../../../vite-pwa.options';
 import * as secret from '../../../do/secret.md5.json';
 import { takeComwTiny } from '../apps/cm/com.tiny';
-import { catsFileStorage } from '../apps/cm/file-stores';
 import { takeAudioHttpLink, takeAudioLinkByTail, takeAudioTailFromRequestPath } from '../audio/md5LinkRedirectDict';
 import { db } from '../drizzle/drizzle.db';
-import { comDB } from '../drizzle.schema';
+import { catDB, comDB } from '../drizzle.schema';
 import { hostRootDir, lazyEnvJson } from '../envJson';
 import { tglogger } from '../sides/telegram-bot/log/log-bot';
 import { pullFilesExpressRoute } from './pullFiles';
@@ -273,7 +274,7 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
           externalUrl = externalLink;
           ogDescription = `${com.i + 1}. ${com.n}\n`;
 
-          const cats = catsFileStorage.getValue();
+          const cats = await db.select().from(catDB).where(eq(catDB.isRemoved, Bool.False));
 
           cats.forEach(cat => {
             if (cat.d?.[com.w]) ogDescription += `\n${cat.n} ${cat.d[com.w]}`;
@@ -350,7 +351,7 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
 
           if (com) {
             descriptionFromSearchParams += `\n\n${com.i + 1}. ${com.n}`;
-            const cats = catsFileStorage.getValue();
+            const cats = await db.select().from(catDB).where(eq(catDB.isRemoved, Bool.False));
             let categories = '';
 
             cats.forEach(cat => {

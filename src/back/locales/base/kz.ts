@@ -1,4 +1,5 @@
 import { Langi, MenuComToolName } from 'shared/api';
+import { CmAdditionalCatKind } from 'shared/const/cm/enums';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { LocaleBase } from 'shared/model/+locale/base';
 import { BibleTranslateName } from 'shared/model/bible';
@@ -107,21 +108,15 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.CmEditorNewPublishCom]: 'Әнді жариялау',
   [BaseLocaleKey.CmCategoryTitle]: '',
   [BaseLocaleKey.CmCategoryList]: {
-    all: 'Барлық әндер',
-    child: 'Балаларға арналған',
-    youth: 'Жастарға арналған',
-    PesnVzr: 'Қайта өрлеу әні',
-    RU: 'Орыс тіліндегі',
-    UA: 'Украин тіліндегі',
-    EN: 'Ағылшын тіліндегі',
-    solo: 'Соло',
-    Christmass: 'Рождествоға',
-    Easter: 'Пасхаға',
-    tooSlow: 'Өте баяу',
-    slow: 'Баяу',
-    middle: 'Орташа қарқынды',
-    fast: 'Жылдам',
-    tooFast: 'Өте жылдам',
+    [CmAdditionalCatKind.intensityTooSlow]: 'Өте баяу',
+    [CmAdditionalCatKind.intensitySlow]: 'Баяу',
+    [CmAdditionalCatKind.intensityMedium]: 'Орташа қарқынды',
+    [CmAdditionalCatKind.intensityFast]: 'Жылдам',
+    [CmAdditionalCatKind.intensityTooFast]: 'Өте жылдам',
+    [CmAdditionalCatKind.langRu]: 'Орыс тіліндегі',
+    [CmAdditionalCatKind.langUa]: 'Украин тіліндегі',
+    [CmAdditionalCatKind.langKz]: 'Қазақ тіліндегі',
+    [CmAdditionalCatKind.langEn]: 'Ағылшын тіліндегі',
   },
   [BaseLocaleKey.CmListsAll]: 'Барлығы',
   [BaseLocaleKey.CmListsPlayer]: 'Ойнатқыш',
@@ -993,4 +988,13 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.CmAudioCachedNoQuota]: 'Қосылды «$n»: $d МБ. Алынған: $t МБ.',
   [BaseLocaleKey.CmAudioUncached]: 'Жойылды «$n»: $d МБ. Алынған: $t МБ. Бос: $f МБ.',
   [BaseLocaleKey.CmAudioUncachedNoQuota]: 'Жойылды «$n»: $d МБ. Алынған: $t МБ.',
+  [BaseLocaleKey.CmEditorCategories]: 'Санаттар',
+  [BaseLocaleKey.CmEditorCategoryCreate]: 'Санат құру',
+  [BaseLocaleKey.CmEditorCategoryKind]: 'Санат түрі',
+  [BaseLocaleKey.CmEditorCategoryTitle]: 'Санат атауы',
+  [BaseLocaleKey.CmEditorCategoryComsCount]: 'Әндер: $c',
+  [BaseLocaleKey.CmEditorCategoryRemove]: '«$n;» санатын жою керек пе?',
+  [BaseLocaleKey.CmAllCategoryName]: 'Барлық әндер',
+  [BaseLocaleKey.CmEditorCategoryEdit]: 'Санатты өңдеу',
+  [BaseLocaleKey.CmEditorCategoryKindLocked]: 'Түрін өзгертуге болмайды: санатта әндер бар',
 });

@@ -28,6 +28,11 @@ export const enum CmCatWid {
   all = 0,
 }
 
+export const enum CmCatKind {
+  dict = 27,
+  list = 38,
+}
+
 export const enum CmMeetingWid {
   def = -1,
 }

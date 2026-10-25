@@ -903,4 +903,13 @@ export const enum BaseLocaleKey {
   CmAudioCachedNoQuota = 897,
   CmAudioUncached = 898,
   CmAudioUncachedNoQuota = 899,
+  CmEditorCategories = 900,
+  CmEditorCategoryCreate = 901,
+  CmEditorCategoryKind = 902,
+  CmEditorCategoryTitle = 903,
+  CmEditorCategoryComsCount = 904,
+  CmEditorCategoryRemove = 905,
+  CmAllCategoryName = 906,
+  CmEditorCategoryEdit = 907,
+  CmEditorCategoryKindLocked = 908,
 }

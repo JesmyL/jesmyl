@@ -1,45 +1,41 @@
-import { translateBase } from '#basis/locale';
 import { cmIDB } from '$cm/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
-import { CmCatWid, IExportableCat } from 'shared/api';
+import { CmCatKind, CmCatWid, IExportableCat } from 'shared/api';
 import { CmCat } from 'shared/const/cm/Cat';
-import { cmEditorCategoryTrackers } from 'shared/const/cm/cmEditorCategoryTrackers';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { extractNumber } from 'shared/utils';
 import { objectKeys } from 'shared/utils/object.utils';
+import { takeCmCatAdditional } from './additionalCat';
 
-export const useCmCatMapComws = (icat: IExportableCat | nil) =>
-  useMemo(() => icat?.s ?? (icat?.d && objectKeys(icat.d).map(extractNumber)), [icat?.d, icat?.s]);
+export const useCmCatMapComws = (cat: CmCat | nil) =>
+  useMemo(() => cat?.top.s ?? (cat?.top.d && objectKeys(cat.top.d).map(extractNumber)), [cat?.top.d, cat?.top.s]);
 
-export const useCmCatComws = (icat: IExportableCat | nil) => {
-  const catComws = useCmCatMapComws(icat);
+export const useCmCatComws = (cat: CmCat | nil) => {
+  const catComws = useCmCatMapComws(cat);
   const coms = useLiveQuery(async () => (catComws ? [] : cmIDB.db.coms.toArray()), [catComws]);
 
   return useMemo(() => {
     if (catComws) return catComws;
-    if (!coms || !icat) return [];
-    let resultComs;
+    if (!coms || !cat) return [];
 
-    if (icat.k === 'full') resultComs = coms;
-    else {
-      const cat = new CmCat(icat);
-      const select = cmEditorCategoryTrackers[icat.k];
-
-      resultComs = coms.filter(icom => select(icom, cat));
-    }
-
-    return resultComs.map(com => com.w);
-  }, [catComws, coms, icat]);
+    return coms.filter(icom => cat.hasCom(icom)).map(com => com.w);
+  }, [catComws, coms, cat]);
 };
 
-export const useCmCatICcat = (catw?: CmCatWid) =>
-  useLiveQuery(async () => (catw ? cmIDB.db.cats.get(catw) : makeDefICat()), [catw]);
+export const useCmCatICcat = (catw?: number) =>
+  useLiveQuery(async () => {
+    const additional = takeCmCatAdditional(catw);
+    if (additional) return additional;
+    if (!catw) return new CmCat(makeDefICat());
+
+    const icat = await cmIDB.db.cats.get(catw);
+
+    return icat && new CmCat(icat);
+  }, [catw]);
 
 const makeDefICat = (): IExportableCat => ({
-  k: 'full',
+  k: CmCatKind.list,
   m: 0,
-  t: 'all',
-  n: translateBase(it => it[BaseLocaleKey.CmCategoryList].all),
+  n: '',
   w: CmCatWid.all,
 });

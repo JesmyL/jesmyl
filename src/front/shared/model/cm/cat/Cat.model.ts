@@ -1,6 +1,8 @@
-import { CmComIntensityLevel, IExportableCom, LangCode } from 'shared/api';
-import { CmCat } from 'shared/const/cm/Cat';
-import { CmCom } from 'shared/const/cm/Com';
+import type { IExportableCom } from 'shared/api';
+import type { CmCom } from 'shared/const/cm/Com';
+import { CmAdditionalCatKind } from 'shared/const/cm/enums';
+
+export { CmAdditionalCatKind };
 
 export interface CmCatComWrap<C = CmCom> {
   item: C;
@@ -9,6 +11,10 @@ export interface CmCatComWrap<C = CmCom> {
   rate?: number;
 }
 
-export type CmCatKind = 'full' | 'dict' | 'list' | `lang:${LangCode}` | `int:${CmComIntensityLevel}`;
-
-export type CmCatTracker = Record<CmCatKind, (com: IExportableCom, cat: CmCat) => boolean>;
+export type CmAdditionalCategory = {
+  /** Номер в собственной нумерации виртуальных категорий. */
+  num: CmAdditionalCatKind;
+  /** ID маршрута: отрицательный, чтобы не пересекаться с `CmCatWid` из БД. */
+  w: number;
+  track: (com: IExportableCom) => boolean;
+};

@@ -1,9 +1,8 @@
 import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
 import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
-import { FileStore } from 'back/complect/FileStore';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
-import { comDB, sch2ComDB, schComHistoryDB, scheduleDB, user2ComDB, userDB, userExtDB } from 'back/drizzle.schema';
+import { catDB, comDB, sch2ComDB, schComHistoryDB, scheduleDB, user2ComDB, userDB, userExtDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
 import { PgCheckFieldMode } from 'back/drizzle/ex';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
@@ -26,8 +25,9 @@ import { checkIsNotNil } from 'shared/utils/checkIs';
 import { objectLength, objectValues } from 'shared/utils/object.utils';
 import { takeUserAuthName } from 'shared/utils/user.utils';
 import { cmShareServerTsjrpcMethodsRefreshComWidRefDictClientSelector } from '../client-selectors-by-visit';
+import { exportableCatFromRow } from '../cat.db';
 import { takeComwTiny } from '../com.tiny';
-import { catsFileStorage, chordPackFileStore, cmComWidRefGroupDictFileStore } from '../file-stores';
+import { chordPackFileStore, cmComWidRefGroupDictFileStore } from '../file-stores';
 import { cmShareServerTsjrpcMethods } from '../tsjrpc.shares';
 
 export const cmServerTsjrpcBaseRequestFreshes = {
@@ -69,10 +69,22 @@ export const cmServerTsjrpcBaseRequestFreshes = {
       cmShareServerTsjrpcMethods.refreshComList({ coms, modifiedAt: maxMod }, client);
     }
 
-    sendBasicModifiedableList(lastModfiedAt, catsFileStorage, catsFileStorage.getValue, (cats, modifiedAt) => {
-      const existCatws = catsFileStorage.getValue().filter(filterNotRemoved).map(extractItemw);
-      cmShareServerTsjrpcMethods.refreshCatList({ cats, modifiedAt, existCatws }, client);
-    });
+    const freshCats = await db.select().from(catDB).where(gt(catDB.m, lastModfiedAt));
+
+    if (freshCats.length) {
+      let maxMod = 0;
+
+      const cats = freshCats.map(row => {
+        maxMod = Math.max(maxMod, row.m);
+        return exportableCatFromRow(row);
+      });
+
+      const existCatws = (await db.select({ w: catDB.w }).from(catDB).where(eq(catDB.isRemoved, Bool.False))).map(
+        it => it.w,
+      );
+
+      cmShareServerTsjrpcMethods.refreshCatList({ cats, modifiedAt: maxMod, existCatws }, client);
+    }
 
     if (chordPackFileStore.fileModifiedAt() > lastModfiedAt) {
       cmShareServerTsjrpcMethods.refreshChordPack(
@@ -213,17 +225,3 @@ export const cmServerTsjrpcBaseRequestFreshes = {
     }
   },
 } satisfies ServerTsjrpcSatisfy<CmTsjrpcModel>;
-
-const sendBasicModifiedableList = <Item extends { m: number }, Value>(
-  lastModfiedAt: number,
-  store: FileStore<Value>,
-  listMapper: () => Item[],
-  send: (list: Item[], modifiedAt: number) => void,
-) => {
-  if (store.fileModifiedAt() <= lastModfiedAt) return;
-  const items = listMapper().filter(item => item.m > lastModfiedAt);
-  send(items, store.fileModifiedAt());
-};
-
-const filterNotRemoved = <Item extends { isRemoved?: 1 }>(item: Item) => item.isRemoved !== 1;
-const extractItemw = <Item extends { w: number }>(item: Item) => item.w;

@@ -21,12 +21,13 @@ import styled from '@emotion/styled';
 import { FileRoutesByPath } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode, useEffect, useRef } from 'react';
-import { CmCatWid, CmComWid, IExportableCat, IExportableCom } from 'shared/api';
+import { CmCatWid, CmComWid, IExportableCom } from 'shared/api';
+import type { CmCat } from 'shared/const/cm/Cat';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { emptyFunc } from 'shared/utils';
 
 interface Props {
-  icat: IExportableCat | und;
+  icat: CmCat | nil;
   topNodeRender?: (term: string) => ReactNode;
   comsCount: number;
   backButtonPath?: keyof FileRoutesByPath;
@@ -40,7 +41,7 @@ let isOpenRatingSortedComsAtom: Atom<boolean>;
 export const CmCatPage = (props: Props) => {
   isOpenRatingSortedComsAtom ??= atom(false);
 
-  const termAtom = takeCatTermAtom(props.icat?.w ?? CmCatWid.all);
+  const termAtom = takeCatTermAtom(props.icat?.wid ?? CmCatWid.all);
   const term = useAtomValue(termAtom);
   const debouncedTerm = useDebounceValue(term);
 
@@ -88,7 +89,7 @@ export const CmCatPage = (props: Props) => {
                       className="flex between sticky list-title"
                       ref={categoryTitleRef}
                     >
-                      <div>{props.icat.n}:</div>
+                      <div>{props.icat.name}:</div>
                       <div>
                         {translateBase(BaseLocaleKey.FromOf, { f: foundComsLength, o: props.comsCount })}
                       </div>

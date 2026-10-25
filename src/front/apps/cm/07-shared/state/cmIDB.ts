@@ -5,6 +5,7 @@ import type { Transaction } from 'dexie';
 import { useLiveQuery } from 'dexie-react-hooks';
 import {
   ChordPack,
+  CmCatWid,
   CmComAudioMarkPack,
   CmComWid,
   CmComWidRefGroupDict,
@@ -18,8 +19,9 @@ import {
   filterCmComAudioMarkPack,
 } from 'shared/api';
 import { CmBroadcastScreenConfig } from 'shared/model/cm/broadcast';
-import { checkIsNil, checkIsObject } from 'shared/utils/checkIs';
+import { checkIsNil, checkIsNotNil, checkIsObject } from 'shared/utils/checkIs';
 import { takeCorrectComNumber } from 'shared/utils/cm/com/takeCorrectComNumber';
+import { parseLegacyICat } from 'shared/utils/cm/cat/parseLegacyICat';
 import { lazyInit } from 'shared/utils/lazyInit';
 import { objectLength } from 'shared/utils/object.utils';
 import { cmBroadcastDefaultConfig } from '../const/broadcast';
@@ -55,6 +57,15 @@ const purgeLegacyAudioMarks = async (transaction: Transaction) => {
     .modify(cleanMarksHolder);
 
   await transaction.table<IExportableCom, CmComWid>('coms').toCollection().modify(cleanComAudioMarks);
+};
+
+/** Приводит legacy-категории IDB к актуальному виду: числовой `k` и без лишних полей. */
+const parseLegacyCats = async (transaction: Transaction) => {
+  const table = transaction.table<IExportableCat, CmCatWid>('cats');
+  const cats = (await table.toArray()).map(parseLegacyICat).filter(checkIsNotNil);
+
+  await table.clear();
+  if (cats.length) await table.bulkPut(cats);
 };
 
 export interface CmIDBStorage {
@@ -129,7 +140,10 @@ class CmIDB extends DexieDB<CmIDBStorage> {
       comAudioTrackMarks_v3: {
         comw: '++',
       },
-    }, 2, purgeLegacyAudioMarks);
+    }, 3, async transaction => {
+      await purgeLegacyAudioMarks(transaction);
+      await parseLegacyCats(transaction);
+    });
 
     this.db.coms.hook('creating', (_primKey, com) => cleanComAudioMarks(com));
     this.db.coms.hook('updating', modifications => {

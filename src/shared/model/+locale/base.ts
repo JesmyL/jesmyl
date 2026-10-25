@@ -1,4 +1,5 @@
-import { IExportableCat, Langi, MenuComToolName } from 'shared/api';
+import { Langi, MenuComToolName } from 'shared/api';
+import type { CmAdditionalCatKind } from 'shared/const/cm/enums';
 import { StringTemplaterInterpolation } from 'shared/utils/stringTemplater/model';
 import { BibleTranslateName } from '../bible';
 import { BaseLocaleKey } from './_BaseLocaleKey';
@@ -70,7 +71,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.CmEditorNewNewAudios]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorNewPublishCom]: LocaleSimpleString;
   [BaseLocaleKey.CmCategoryTitle]: '';
-  [BaseLocaleKey.CmCategoryList]: LocaleStrRecord<IExportableCat['t']>;
+  [BaseLocaleKey.CmCategoryList]: LocaleStrRecord<CmAdditionalCatKind>;
   [BaseLocaleKey.CmListsAll]: LocaleSimpleString;
   [BaseLocaleKey.CmListsPlayer]: LocaleSimpleString;
   [BaseLocaleKey.CmListsAdmin]: LocaleSimpleString;
@@ -916,4 +917,13 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.CmAudioCachedNoQuota]: CmAudioCacheToastText;
   [BaseLocaleKey.CmAudioUncached]: CmAudioCacheToastText;
   [BaseLocaleKey.CmAudioUncachedNoQuota]: CmAudioCacheToastText;
+  [BaseLocaleKey.CmEditorCategories]: LocaleSimpleString;
+  [BaseLocaleKey.CmEditorCategoryCreate]: LocaleSimpleString;
+  [BaseLocaleKey.CmEditorCategoryKind]: LocaleSimpleString;
+  [BaseLocaleKey.CmEditorCategoryTitle]: LocaleSimpleString;
+  [BaseLocaleKey.CmEditorCategoryComsCount]: StringTemplaterInterpolation<{ c: number }>;
+  [BaseLocaleKey.CmEditorCategoryRemove]: StringTemplaterInterpolation<{ n: string }>;
+  [BaseLocaleKey.CmAllCategoryName]: LocaleSimpleString;
+  [BaseLocaleKey.CmEditorCategoryEdit]: LocaleSimpleString;
+  [BaseLocaleKey.CmEditorCategoryKindLocked]: LocaleSimpleString;
 };

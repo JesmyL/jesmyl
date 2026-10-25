@@ -8,6 +8,7 @@ import { cmComSelectedComwsAtom } from '$cm/entities/com';
 import styled from '@emotion/styled';
 import { Link } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
+import { CmCat } from 'shared/const/cm/Cat';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
 export const CmListsPage = () => {
@@ -53,28 +54,34 @@ export const CmListsPage = () => {
           ) : null}
           <BrutalScreen>
             <div className="title sticky bg-inherit">{translateBase(BaseLocaleKey.CmThematics)}:</div>
-            {cats.map(cat => {
-              return !cat.wid ? null : (
-                <Link
+            {cats.map(cat =>
+              !cat.wid ? null : (
+                <CmCatLink
                   key={cat.wid}
-                  className="pointer item flex"
-                  to="/cm/li/cat/$catw"
-                  params={{ catw: `${cat.wid}` }}
-                >
-                  <LazyIcon
-                    icon="BookOpen02"
-                    className="m-5"
-                  />
-                  <div>{cat.name}</div>
-                </Link>
-              );
-            })}
+                  cat={cat}
+                />
+              ),
+            )}
           </BrutalScreen>
         </>
       }
     />
   );
 };
+
+const CmCatLink = ({ cat }: { cat: CmCat }) => (
+  <Link
+    className="pointer item flex"
+    to="/cm/li/cat/$catw"
+    params={{ catw: `${cat.wid}` }}
+  >
+    <LazyIcon
+      icon="BookOpen02"
+      className="m-5"
+    />
+    <div>{cat.name}</div>
+  </Link>
+);
 
 const StyledPhaseContainerConfigurer = styled(PageContainerConfigurer)`
   .brutal-screen > .title {

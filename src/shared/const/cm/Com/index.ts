@@ -12,16 +12,17 @@ export class CmCom extends CmComTexts {
 
   catMentions(cats: CmCat[] | nil) {
     if (!cats) return [];
+
     const wid = this.wid;
-    const natives: string[] = [];
+    const mentions: string[] = [];
 
-    const inCats = cats
-      .filter(cat => {
-        if (checkIsNotNil(cat.dict[wid])) natives.push(`${cat.name} ${cat.dict[wid]}`);
-        return cat.stackSet.has(wid);
-      })
-      .map(cat => cat.name);
+    cats.forEach(cat => {
+      const nativeNum = cat.dict[wid];
 
-    return inCats.concat(natives);
+      if (checkIsNotNil(nativeNum)) mentions.push(`${cat.name} ${nativeNum}`);
+      else if (cat.hasCom(this.top)) mentions.push(cat.name);
+    });
+
+    return mentions;
   }
 }

@@ -13,13 +13,13 @@ export const Route = createFileRoute('/cm/li/cat/$catw')(
 
 function RouteComponent() {
   const { catw } = Route.useParams() as { catw: string };
-  const icat = useCmCatICcat(+catw);
-  const comws = useCmCatComws(icat);
-  const comDict = icat?.d;
+  const cat = useCmCatICcat(+catw);
+  const comws = useCmCatComws(cat);
+  const comDict = cat?.top.d;
 
   return (
     <CmCatPage
-      icat={icat}
+      icat={cat}
       comsCount={comws.length}
       backButtonPath="/cm/li/"
       comws={comws}

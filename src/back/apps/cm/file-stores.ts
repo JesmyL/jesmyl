@@ -1,7 +1,5 @@
 import { FileStore } from 'back/complect/FileStore';
-import { ChordPack, CmComWidRefGroupDict, CmMp3Rule, EeStorePack, IExportableCat } from 'shared/api';
-
-export const catsFileStorage = new FileStore<IExportableCat[]>('/apps/cm/cats.json', []);
+import { ChordPack, CmComWidRefGroupDict, CmMp3Rule, EeStorePack } from 'shared/api';
 
 export const mp3ResourcesFileStorage = new FileStore<CmMp3Rule[]>('/apps/cm/mp3Rules.json', []);
 

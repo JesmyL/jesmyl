@@ -1,8 +1,8 @@
-import { CmCatKind } from '#shared/model/cm/cat/Cat.model';
 import { makeRegExp, StrRegExp } from 'regexpert';
 import { Langi } from 'shared/api';
 import { ScheduleWidgetDayEventMi, ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
 import { TonType } from 'shared/const/cm/enums';
+import { Bool } from 'shared/enums';
 import {
   CmBroadcastMonolineSlide,
   CmBroadcastMonolineSlideSelectorId,
@@ -12,6 +12,7 @@ import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 import {
+  CmCatKind,
   CmCatWid,
   CmComIntensityLevel,
   CmComMod,
@@ -252,11 +253,11 @@ export type ICmComCommentBlock = {
   dl?: (CmComCommentBlockDict | nil)[];
 };
 
-export interface IExportableCat {
+export type IExportableCat = NullifyOptionals<{
   /** время создания - уникальный ID */
   w: CmCatWid;
-  /** время изменения */
-  m: number;
+  /** время изменения; отсутствует в pull-артефактах, заполняется БД при импорте */
+  m?: number;
   /** название категории */
   n: string;
   /** список песен */
@@ -266,26 +267,8 @@ export interface IExportableCat {
   /** вид категории (список, по номерам из сборника, итд) */
   k: CmCatKind;
 
-  /** title code */
-  t:
-    | 'all'
-    | 'child'
-    | 'youth'
-    | 'PesnVzr'
-    | 'RU'
-    | 'UA'
-    | 'EN'
-    | 'solo'
-    | 'Christmass'
-    | 'Easter'
-    | 'tooSlow'
-    | 'slow'
-    | 'middle'
-    | 'fast'
-    | 'tooFast';
-
-  isRemoved?: 1;
-}
+  isRemoved?: Bool;
+}>;
 
 export interface IExportableCols {
   coms: IExportableCom[];

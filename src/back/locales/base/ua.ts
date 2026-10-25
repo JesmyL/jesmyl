@@ -1,4 +1,5 @@
 import { Langi, MenuComToolName } from 'shared/api';
+import { CmAdditionalCatKind } from 'shared/const/cm/enums';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { LocaleBase } from 'shared/model/+locale/base';
 import { BibleTranslateName } from 'shared/model/bible';
@@ -104,21 +105,15 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.CmEditorNewPublishCom]: 'Опублікувати пісню',
   [BaseLocaleKey.CmCategoryTitle]: '',
   [BaseLocaleKey.CmCategoryList]: {
-    all: 'Усі пісні',
-    child: 'Дитячі',
-    youth: 'Молодіжні',
-    PesnVzr: 'Пісня Відродження',
-    RU: 'Російськомовні',
-    UA: 'Україномовні',
-    EN: 'Англомовні',
-    solo: 'Соло',
-    Christmass: 'На Різдво',
-    Easter: 'На Великдень',
-    tooSlow: 'Дуже повільні',
-    slow: 'Повільні',
-    middle: 'Середньої інтенсивності',
-    fast: 'Швидкі',
-    tooFast: 'Дуже швидкі',
+    [CmAdditionalCatKind.intensityTooSlow]: 'Дуже повільні',
+    [CmAdditionalCatKind.intensitySlow]: 'Повільні',
+    [CmAdditionalCatKind.intensityMedium]: 'Середня інтенсивність',
+    [CmAdditionalCatKind.intensityFast]: 'Швидкі',
+    [CmAdditionalCatKind.intensityTooFast]: 'Дуже швидкі',
+    [CmAdditionalCatKind.langRu]: 'Російськомовні',
+    [CmAdditionalCatKind.langUa]: 'Україномовні',
+    [CmAdditionalCatKind.langKz]: 'Казахськомовні',
+    [CmAdditionalCatKind.langEn]: 'Англомовні',
   },
   [BaseLocaleKey.CmListsAll]: 'Усі',
   [BaseLocaleKey.CmListsPlayer]: 'Плеєр',
@@ -990,4 +985,13 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.CmAudioCachedNoQuota]: 'Додано «$n»: $d МБ. Зайнято: $t МБ.',
   [BaseLocaleKey.CmAudioUncached]: 'Видалено «$n»: $d МБ. Зайнято: $t МБ. Вільно: $f МБ.',
   [BaseLocaleKey.CmAudioUncachedNoQuota]: 'Видалено «$n»: $d МБ. Зайнято: $t МБ.',
+  [BaseLocaleKey.CmEditorCategories]: 'Категорії',
+  [BaseLocaleKey.CmEditorCategoryCreate]: 'Створити категорію',
+  [BaseLocaleKey.CmEditorCategoryKind]: 'Вид категорії',
+  [BaseLocaleKey.CmEditorCategoryTitle]: 'Назва категорії',
+  [BaseLocaleKey.CmEditorCategoryComsCount]: 'Пісень: $c',
+  [BaseLocaleKey.CmEditorCategoryRemove]: 'Видалити категорію «$n;»?',
+  [BaseLocaleKey.CmAllCategoryName]: 'Усі пісні',
+  [BaseLocaleKey.CmEditorCategoryEdit]: 'Редагувати категорію',
+  [BaseLocaleKey.CmEditorCategoryKindLocked]: 'Вид не можна змінити: у категорії є пісні',
 });

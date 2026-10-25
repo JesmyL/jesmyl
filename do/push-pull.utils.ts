@@ -3,6 +3,7 @@ import { NounPronsType } from 'back/complect/model';
 import { UserId } from 'back/drizzle/schema/user';
 import {
   ChordPack,
+  CmCatWid,
   CmComAudioMarkPack,
   CmComCommentBlockDict,
   CmComInSchDayEvWr,
@@ -82,8 +83,8 @@ export const pullPushFileDirNameNet = {
     chordTracks: T<ChordPack, string>(),
     eeStorage: T<EeStorePack, string>(),
     mp3Rules: T<CmMp3Rule[], string>(),
-    cats: T<IExportableCat[], string>(),
 
+    'cats/': T<IExportableCat, `${CmCatWid}`>(),
     'coms/': T<IExportableCom & { am?: CmComAudioMarkPack | nil }, `${CmComWid}`>(),
 
     'user2Com/': T<

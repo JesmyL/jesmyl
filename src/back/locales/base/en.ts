@@ -1,4 +1,5 @@
 import { Langi, MenuComToolName } from 'shared/api';
+import { CmAdditionalCatKind } from 'shared/const/cm/enums';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { LocaleBase } from 'shared/model/+locale/base';
 import { BibleTranslateName } from 'shared/model/bible';
@@ -104,21 +105,15 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.CmEditorNewPublishCom]: 'Publish song',
   [BaseLocaleKey.CmCategoryTitle]: '',
   [BaseLocaleKey.CmCategoryList]: {
-    all: 'All songs',
-    child: 'Children',
-    youth: 'Youth',
-    PesnVzr: 'Song of Revival',
-    RU: 'Russian-language',
-    UA: 'Ukrainian-language',
-    EN: 'English-language',
-    solo: 'Solo',
-    Christmass: 'For Christmas',
-    Easter: 'For Easter',
-    tooSlow: 'Very slow',
-    slow: 'Slow',
-    middle: 'Medium intensity',
-    fast: 'Fast',
-    tooFast: 'Very fast',
+    [CmAdditionalCatKind.intensityTooSlow]: 'Very slow',
+    [CmAdditionalCatKind.intensitySlow]: 'Slow',
+    [CmAdditionalCatKind.intensityMedium]: 'Medium intensity',
+    [CmAdditionalCatKind.intensityFast]: 'Fast',
+    [CmAdditionalCatKind.intensityTooFast]: 'Very fast',
+    [CmAdditionalCatKind.langRu]: 'Russian-language',
+    [CmAdditionalCatKind.langUa]: 'Ukrainian-language',
+    [CmAdditionalCatKind.langKz]: 'Kazakh-language',
+    [CmAdditionalCatKind.langEn]: 'English-language',
   },
   [BaseLocaleKey.CmListsAll]: 'All',
   [BaseLocaleKey.CmListsPlayer]: 'Player',
@@ -989,4 +984,13 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.CmAudioCachedNoQuota]: 'Added "$n": $d MB. Occupied: $t MB.',
   [BaseLocaleKey.CmAudioUncached]: 'Removed "$n": $d MB. Occupied: $t MB. Free: $f MB.',
   [BaseLocaleKey.CmAudioUncachedNoQuota]: 'Removed "$n": $d MB. Occupied: $t MB.',
+  [BaseLocaleKey.CmEditorCategories]: 'Categories',
+  [BaseLocaleKey.CmEditorCategoryCreate]: 'Create category',
+  [BaseLocaleKey.CmEditorCategoryKind]: 'Category kind',
+  [BaseLocaleKey.CmEditorCategoryTitle]: 'Category title',
+  [BaseLocaleKey.CmEditorCategoryComsCount]: 'Coms: $c',
+  [BaseLocaleKey.CmEditorCategoryRemove]: 'Delete category «$n;»?',
+  [BaseLocaleKey.CmAllCategoryName]: 'All songs',
+  [BaseLocaleKey.CmEditorCategoryEdit]: 'Edit category',
+  [BaseLocaleKey.CmEditorCategoryKindLocked]: 'Kind cannot be changed: the category has coms',
 });

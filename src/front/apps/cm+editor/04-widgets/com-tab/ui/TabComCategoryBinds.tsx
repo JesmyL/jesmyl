@@ -11,6 +11,7 @@ import { cmIDB } from '$cm/ext';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React, { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
+import { CmCatKind } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsNil } from 'shared/utils/checkIs';
 
@@ -26,7 +27,7 @@ export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => 
       <div className="bg-x2">{translateBase(BaseLocaleKey.Collections)}</div>
       {cats.map(cat => {
         return (
-          cat.kind === 'dict' && (
+          cat.kind === CmCatKind.dict && (
             <React.Fragment key={cat.wid}>
               <InputWithLoadingIcon
                 icon="BookOpen02"
@@ -73,7 +74,7 @@ export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => 
       <div className="bg-x2">{translateBase(BaseLocaleKey.Lists)}</div>
       {cats.map(cat => {
         return (
-          cat.kind === 'list' && (
+          cat.kind === CmCatKind.list && (
             <div
               key={cat.wid}
               className="my-5"

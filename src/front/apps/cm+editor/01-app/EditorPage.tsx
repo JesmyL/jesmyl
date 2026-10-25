@@ -44,6 +44,20 @@ export const CmEditorPage = () => {
               />
             </Link>
           )}
+          {checkAccess('cm', 'CAT', 'R') && (
+            <Link to="/cm/edit/categories">
+              <BrutalItem
+                iconNode={
+                  <LazyIcon
+                    icon="BookOpen02"
+                    kind="TwotoneRounded"
+                  />
+                }
+                title={translateBase(BaseLocaleKey.CmEditorCategories)}
+                idPostfix="categories"
+              />
+            </Link>
+          )}
           {checkAccess('cm', 'CHORD', 'R') && (
             <Link
               to="/cm/edit/chord"

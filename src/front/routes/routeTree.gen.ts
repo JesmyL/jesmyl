@@ -66,6 +66,7 @@ const QABlankLazyImport = createFileRoute('/q/a/$blank')()
 const CmEditMp3RulesLazyImport = createFileRoute('/cm/edit/mp3Rules')()
 const CmEditEventsLazyImport = createFileRoute('/cm/edit/events')()
 const CmEditEELazyImport = createFileRoute('/cm/edit/e-e')()
+const CmEditCategoriesLazyImport = createFileRoute('/cm/edit/categories')()
 const StoragesIRackwIndexLazyImport = createFileRoute('/storages/i/$rackw/')()
 const GamerIMemoryGiantIndexLazyImport = createFileRoute(
   '/gamer/i/memory-giant/',
@@ -306,6 +307,14 @@ const CmEditEELazyRoute = CmEditEELazyImport.update({
   path: '/e-e',
   getParentRoute: () => CmEditRouteLazyRoute,
 } as any).lazy(() => import('./tree/cm/edit/e-e.lazy').then((d) => d.Route))
+
+const CmEditCategoriesLazyRoute = CmEditCategoriesLazyImport.update({
+  id: '/categories',
+  path: '/categories',
+  getParentRoute: () => CmEditRouteLazyRoute,
+} as any).lazy(() =>
+  import('./tree/cm/edit/categories.lazy').then((d) => d.Route),
+)
 
 const CmLiSelRoute = CmLiSelImport.update({
   id: '/li/sel',
@@ -650,6 +659,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CmLiSelImport
       parentRoute: typeof CmRouteImport
     }
+    '/cm/edit/categories': {
+      id: '/cm/edit/categories'
+      path: '/categories'
+      fullPath: '/cm/edit/categories'
+      preLoaderRoute: typeof CmEditCategoriesLazyImport
+      parentRoute: typeof CmEditRouteLazyImport
+    }
     '/cm/edit/e-e': {
       id: '/cm/edit/e-e'
       path: '/e-e'
@@ -913,6 +929,7 @@ const BibleRouteRouteWithChildren = BibleRouteRoute._addFileChildren(
 
 interface CmEditRouteLazyRouteChildren {
   CmEditChordRoute: typeof CmEditChordRoute
+  CmEditCategoriesLazyRoute: typeof CmEditCategoriesLazyRoute
   CmEditEELazyRoute: typeof CmEditEELazyRoute
   CmEditEventsLazyRoute: typeof CmEditEventsLazyRoute
   CmEditMp3RulesLazyRoute: typeof CmEditMp3RulesLazyRoute
@@ -924,6 +941,7 @@ interface CmEditRouteLazyRouteChildren {
 
 const CmEditRouteLazyRouteChildren: CmEditRouteLazyRouteChildren = {
   CmEditChordRoute: CmEditChordRoute,
+  CmEditCategoriesLazyRoute: CmEditCategoriesLazyRoute,
   CmEditEELazyRoute: CmEditEELazyRoute,
   CmEditEventsLazyRoute: CmEditEventsLazyRoute,
   CmEditMp3RulesLazyRoute: CmEditMp3RulesLazyRoute,
@@ -1090,6 +1108,7 @@ export interface FileRoutesByFullPath {
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
   '/cm/li/sel': typeof CmLiSelRoute
+  '/cm/edit/categories': typeof CmEditCategoriesLazyRoute
   '/cm/edit/e-e': typeof CmEditEELazyRoute
   '/cm/edit/events': typeof CmEditEventsLazyRoute
   '/cm/edit/mp3Rules': typeof CmEditMp3RulesLazyRoute
@@ -1145,6 +1164,7 @@ export interface FileRoutesByTo {
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
   '/cm/li/sel': typeof CmLiSelRoute
+  '/cm/edit/categories': typeof CmEditCategoriesLazyRoute
   '/cm/edit/e-e': typeof CmEditEELazyRoute
   '/cm/edit/events': typeof CmEditEventsLazyRoute
   '/cm/edit/mp3Rules': typeof CmEditMp3RulesLazyRoute
@@ -1207,6 +1227,7 @@ export interface FileRoutesById {
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
   '/cm/li/sel': typeof CmLiSelRoute
+  '/cm/edit/categories': typeof CmEditCategoriesLazyRoute
   '/cm/edit/e-e': typeof CmEditEELazyRoute
   '/cm/edit/events': typeof CmEditEventsLazyRoute
   '/cm/edit/mp3Rules': typeof CmEditMp3RulesLazyRoute
@@ -1270,6 +1291,7 @@ export interface FileRouteTypes {
     | '/cm/li/events'
     | '/cm/li/fav'
     | '/cm/li/sel'
+    | '/cm/edit/categories'
     | '/cm/edit/e-e'
     | '/cm/edit/events'
     | '/cm/edit/mp3Rules'
@@ -1324,6 +1346,7 @@ export interface FileRouteTypes {
     | '/cm/li/events'
     | '/cm/li/fav'
     | '/cm/li/sel'
+    | '/cm/edit/categories'
     | '/cm/edit/e-e'
     | '/cm/edit/events'
     | '/cm/edit/mp3Rules'
@@ -1384,6 +1407,7 @@ export interface FileRouteTypes {
     | '/cm/li/events'
     | '/cm/li/fav'
     | '/cm/li/sel'
+    | '/cm/edit/categories'
     | '/cm/edit/e-e'
     | '/cm/edit/events'
     | '/cm/edit/mp3Rules'
@@ -1574,6 +1598,7 @@ export const routeTree = rootRoute
       "parent": "/cm",
       "children": [
         "/cm/edit/chord",
+        "/cm/edit/categories",
         "/cm/edit/e-e",
         "/cm/edit/events",
         "/cm/edit/mp3Rules",
@@ -1620,6 +1645,10 @@ export const routeTree = rootRoute
     "/cm/li/sel": {
       "filePath": "cm/li/sel.tsx",
       "parent": "/cm"
+    },
+    "/cm/edit/categories": {
+      "filePath": "cm/edit/categories.lazy.tsx",
+      "parent": "/cm/edit"
     },
     "/cm/edit/e-e": {
       "filePath": "cm/edit/e-e.lazy.tsx",

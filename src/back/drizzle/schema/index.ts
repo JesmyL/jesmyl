@@ -1,4 +1,5 @@
 export { audioLinkDB } from './audioLink';
+export { catDB } from './cat';
 export { comDB } from './com';
 export { questionerBlankDB, questionerUserAnswerDB } from './questioner';
 export { sch2ComDB } from './sch2Com';
