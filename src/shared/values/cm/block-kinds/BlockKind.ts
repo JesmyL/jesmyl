@@ -5,7 +5,7 @@ import { KindBlock } from './KindBlock';
 
 export class BlockKind {
   kinds: KindBlock[];
-  levelSorted: KindBlock[][];
+  private levelSorted: KindBlock[][];
   forChordedBlock: KindBlock[];
 
   constructor(styles: IExportableKindProp[]) {

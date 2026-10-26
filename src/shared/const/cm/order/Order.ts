@@ -35,7 +35,7 @@ import { objectLength } from 'shared/utils/object.utils';
 import { CmCom } from '../Com';
 
 export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
-  _regions?: CmComOrderEditableRegion<CmComOrder>[];
+  protected _regions?: CmComOrderEditableRegion<CmComOrder>[];
   com: CmCom;
   element?: HTMLDivElement;
 

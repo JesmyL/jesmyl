@@ -20,11 +20,11 @@ export const ScheduleWidgetDayEventMiDef = 1 as ScheduleWidgetDayEventMi;
 
 export type ScheduleWidgetDayi = NumberBrand<'ScheduleWidgetDayi'>;
 
-export enum ScheduleWidgetAttachmentTypeMi {
+export const enum ScheduleWidgetAttachmentTypeMi {
   def = 0,
 }
 
-export enum ScheduleWidgetUserCati {
+export const enum ScheduleWidgetUserCati {
   def = 0,
 }
 export const enum ScheduleWidgetUserUnitMi {
@@ -179,7 +179,7 @@ export interface IScheduleWidgetTeam extends IScheduleWidgetExportableTeam {
   mi: ScheduleWidgetTeamMi;
 }
 
-export enum IScheduleWidgetTeamGameStrikedMemberState {
+export const enum IScheduleWidgetTeamGameStrikedMemberState {
   Removed = 1,
   Exists,
 }

@@ -1,4 +1,4 @@
-export enum AttTranslatorType {
+export const enum AttTranslatorType {
   Today = -1,
   AllTime = -2,
   TodayTomorrow = -3,

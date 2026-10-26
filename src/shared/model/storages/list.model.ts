@@ -31,7 +31,7 @@ export type StoragesRackCard<DictItem extends string | StoragesDictItemi = Stora
   row?: (StoragesCell<StoragesColumnType, DictItem> | nil)[];
 };
 
-export enum StoragesRackMemberRole {
+export const enum StoragesRackMemberRole {
   Requester = 0,
   Creator,
   Admin,

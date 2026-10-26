@@ -4,7 +4,7 @@ import { translateBase } from 'shared/utils/locale/base';
 import { ScheduleWidgetUserMi, ScheduleWidgetWid } from './main';
 import { ScheduleWidgetRightsCtrl, ScheduleWidgetRightTexts } from './rights-constructor';
 
-export enum ScheduleWidgetUserRoleRight {
+export const enum ScheduleWidgetUserRoleRight {
   Free = 0,
   TotalRedact = 1,
   Read,
@@ -18,14 +18,14 @@ export enum ScheduleWidgetUserRoleRight {
   RedactComsList,
 }
 
-export enum CustomAttUseTaleId {
+export const enum CustomAttUseTaleId {
   Roles = 0,
   Lists = 0.1,
   Users = 0.2,
   Games = 0.3,
 }
 
-export enum CustomAttUseRights {
+export const enum CustomAttUseRights {
   Titles = 1,
   Checkboxes = 2,
   Roles = 3,
@@ -37,7 +37,7 @@ export enum CustomAttUseRights {
   CheckGames = 9,
 }
 
-export enum ScheduleWidgetRegType {
+export const enum ScheduleWidgetRegType {
   Private = 0,
   Public = 1,
   BeforeRegistration,

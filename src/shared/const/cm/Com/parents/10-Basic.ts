@@ -6,7 +6,6 @@ import { BaseNamed } from '../../BaseNamed';
 import { TonType } from '../../enums';
 
 export class CmComBasic extends BaseNamed<IExportableCom> {
-  ton?: number;
   bracketLevelHolder: CmComBracketLevelHolder = { level: 0 };
 
   chords: string[];

@@ -8,7 +8,7 @@ import { translateBase } from 'shared/utils/locale/base';
 import { objectKeys } from 'shared/utils/object.utils';
 
 export class CmCat extends SourceBased<IExportableCat> {
-  readonly additional: CmAdditionalCategory | null;
+  protected readonly additional: CmAdditionalCategory | null;
 
   constructor(top: IExportableCat, additional: CmAdditionalCategory | null = null) {
     super(top);

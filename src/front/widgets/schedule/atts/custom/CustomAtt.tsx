@@ -29,7 +29,7 @@ import { ScheduleWidgetCustomAttLocalImagineSelector } from './LocalImagine';
 
 const LazyIconConfigurator = React.lazy(() => import('../../../../shared/ui/configurators/Icon'));
 
-enum WhoCan {
+const enum WhoCan {
   Read,
   Update,
   No,

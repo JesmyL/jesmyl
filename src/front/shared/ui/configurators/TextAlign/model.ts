@@ -1,4 +1,4 @@
-export enum TextAlignConfigurator {
+export const enum TextAlignConfigurator {
   Left = 'left',
   Center = 'center',
   Right = 'right',

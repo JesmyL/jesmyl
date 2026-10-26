@@ -6,7 +6,7 @@ import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model'
 import { broadcastNextLiveDataAtom } from '../atoms';
 
 export class BroadcastConnectionDto {
-  tool: ElectronAppWindowInvokeTool;
+  private tool: ElectronAppWindowInvokeTool;
 
   constructor(toWinNum: number) {
     this.tool = { toWinNum, winNum: 0 };

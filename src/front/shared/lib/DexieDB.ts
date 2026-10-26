@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Dexie, { EntityTable, TableHooks, type Transaction } from 'dexie';
+import Dexie, { EntityTable, type Transaction } from 'dexie';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useCallback } from 'react';
 import { checkIsArray, checkIsFunction } from 'shared/utils/checkIs';
@@ -20,9 +20,6 @@ export class DexieDB<Store> {
   tb: Required<{
     [K in keyof Store]: Store[K] extends unknown[] ? EntityTable<Store[K][number], keyof Store[K][number]> : never;
   }>;
-
-  hook: TableHooks<unknown> = ((...args: []) =>
-    (this.getKeyvalues() as { hook(...args: unknown[]): unknown }).hook(...args)) as never;
 
   set = {} as { [K in keyof Required<Store>]: DexiedValueSetter<Store, K, Promise<void>> };
   get = {} as { [K in keyof Required<Store>]: () => Promise<Store[K]> };
