@@ -30,6 +30,7 @@ export const useConfirm = () => {
       setContent(
         <Modal
           isRenderHere
+          className="z-40"
           openAtom={isOpenConfirmAtom}
           onClose={() => {
             resolvers.resolve(false);

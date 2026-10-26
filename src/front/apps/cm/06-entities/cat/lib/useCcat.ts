@@ -12,7 +12,7 @@ export const useCmCatMapComws = (cat: CmCat | nil) =>
 
 export const useCmCatComws = (cat: CmCat | nil) => {
   const catComws = useCmCatMapComws(cat);
-  const coms = useLiveQuery(async () => (catComws ? [] : cmIDB.db.coms.toArray()), [catComws]);
+  const coms = useLiveQuery(async () => (catComws ? undefined : cmIDB.db.coms.toArray()), [catComws]);
 
   return useMemo(() => {
     if (catComws) return catComws;
@@ -22,16 +22,17 @@ export const useCmCatComws = (cat: CmCat | nil) => {
   }, [catComws, coms, cat]);
 };
 
-export const useCmCatICcat = (catw?: number) =>
-  useLiveQuery(async () => {
-    const additional = takeCmCatAdditional(catw);
+export const useCmCatICcat = (catw?: number) => {
+  const additional = useMemo(() => takeCmCatAdditional(catw), [catw]);
+  const isDbCat = !additional && catw != null && catw !== CmCatWid.all;
+  const icat = useLiveQuery(() => (isDbCat ? cmIDB.db.cats.get(catw) : undefined), [isDbCat, catw]);
+
+  return useMemo(() => {
     if (additional) return additional;
-    if (!catw) return new CmCat(makeDefICat());
-
-    const icat = await cmIDB.db.cats.get(catw);
-
+    if (catw == null || catw === CmCatWid.all) return new CmCat(makeDefICat());
     return icat && new CmCat(icat);
-  }, [catw]);
+  }, [additional, catw, icat]);
+};
 
 const makeDefICat = (): IExportableCat => ({
   k: CmCatKind.list,

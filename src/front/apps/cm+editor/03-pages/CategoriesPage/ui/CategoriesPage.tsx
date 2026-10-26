@@ -115,6 +115,11 @@ const CmEditorCatRow = ({ cat, isCanUpdate }: { cat: CmEditorCat; isCanUpdate: b
     isEditOpenAtom.reset();
   };
 
+  const remove = async () => {
+    await cmEditCatClientTsjrpcMethods.remove({ catw: cat.wid });
+    isEditOpenAtom.reset();
+  };
+
   return (
     <div className="my-3 pb-3 border-b border-x3 flex flex-wrap gap-2 items-center">
       <span className="font-bold">{cat.name}</span>
@@ -129,13 +134,21 @@ const CmEditorCatRow = ({ cat, isCanUpdate }: { cat: CmEditorCat; isCanUpdate: b
       )}
 
       <Modal openAtom={isEditOpenAtom}>
-        <ModalHeader>{translateBase(BaseLocaleKey.CmEditorCategoryEdit)}</ModalHeader>
+        <ModalHeader className="flex w-full justify-between">
+          <span>{translateBase(BaseLocaleKey.CmEditorCategoryEdit)}</span>
+          <TheIconButton
+            icon="Delete02"
+            className="text-xKO"
+            confirm={translateBase(BaseLocaleKey.DeleteX, { x: cat.name })}
+            onClick={remove}
+          />
+        </ModalHeader>
         <ModalBody>
           <div className="flex flex-col gap-2">
             <TextInput
               autoFocus
               placeholder={translateBase(BaseLocaleKey.CmEditorCategoryTitle)}
-              value={name}
+              defaultValue={storedName}
               onInput={setName}
             />
 
@@ -152,25 +165,13 @@ const CmEditorCatRow = ({ cat, isCanUpdate }: { cat: CmEditorCat; isCanUpdate: b
           </div>
         </ModalBody>
         <ModalFooter>
-          <span className="flex w-full justify-between">
-            <TheIconButton
-              icon="Delete02"
-              className="text-xKO"
-              confirm={translateBase(BaseLocaleKey.CmEditorCategoryRemove, { n: cat.name })}
-              onClick={async () => {
-                await cmEditCatClientTsjrpcMethods.remove({ catw: cat.wid });
-                isEditOpenAtom.reset();
-              }}
-            />
-
-            <Button
-              icon="CheckmarkCircle01"
-              disabled={!name.trim()}
-              onClick={save}
-            >
-              {translateBase(BaseLocaleKey.CmEditorApply)}
-            </Button>
-          </span>
+          <Button
+            icon="CheckmarkCircle01"
+            disabled={!name.trim()}
+            onClick={save}
+          >
+            {translateBase(BaseLocaleKey.CmEditorApply)}
+          </Button>
         </ModalFooter>
       </Modal>
     </div>

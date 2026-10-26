@@ -990,7 +990,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.CmEditorCategoryKind]: 'Вид категорії',
   [BaseLocaleKey.CmEditorCategoryTitle]: 'Назва категорії',
   [BaseLocaleKey.CmEditorCategoryComsCount]: 'Пісень: $c',
-  [BaseLocaleKey.CmEditorCategoryRemove]: 'Видалити категорію «$n;»?',
+  [BaseLocaleKey.CmEditorCategoryRemove]: '',
   [BaseLocaleKey.CmAllCategoryName]: 'Усі пісні',
   [BaseLocaleKey.CmEditorCategoryEdit]: 'Редагувати категорію',
   [BaseLocaleKey.CmEditorCategoryKindLocked]: 'Вид не можна змінити: у категорії є пісні',

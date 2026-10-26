@@ -989,7 +989,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.CmEditorCategoryKind]: 'Category kind',
   [BaseLocaleKey.CmEditorCategoryTitle]: 'Category title',
   [BaseLocaleKey.CmEditorCategoryComsCount]: 'Coms: $c',
-  [BaseLocaleKey.CmEditorCategoryRemove]: 'Delete category «$n;»?',
+  [BaseLocaleKey.CmEditorCategoryRemove]: '',
   [BaseLocaleKey.CmAllCategoryName]: 'All songs',
   [BaseLocaleKey.CmEditorCategoryEdit]: 'Edit category',
   [BaseLocaleKey.CmEditorCategoryKindLocked]: 'Kind cannot be changed: the category has coms',

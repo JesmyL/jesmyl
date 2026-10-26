@@ -45,6 +45,9 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
   app.use(express.json());
   app.use('/assets', express.static(`${hostRootDir}/assets`));
   app.use('/sounds', express.static(`${hostRootDir}/sounds`));
+  app.use('/resource', express.static(`${hostRootDir}/resource`));
+  // Отсутствующий ресурс не должен проваливаться в SPA-fallback: SW закеширует ответ 200 с index.html.
+  app.use('/resource', (_req, res) => res.sendStatus(404));
 
   const makeDownRoute = <Route extends `/down${string}`>(route: Route) => {
     app.use(route, async (req, res, next) => {

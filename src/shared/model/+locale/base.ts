@@ -922,7 +922,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.CmEditorCategoryKind]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorCategoryTitle]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorCategoryComsCount]: StringTemplaterInterpolation<{ c: number }>;
-  [BaseLocaleKey.CmEditorCategoryRemove]: StringTemplaterInterpolation<{ n: string }>;
+  [BaseLocaleKey.CmEditorCategoryRemove]: '';
   [BaseLocaleKey.CmAllCategoryName]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorCategoryEdit]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorCategoryKindLocked]: LocaleSimpleString;

@@ -34,7 +34,7 @@ export const vitePWAOptions = {
           url.origin === self.location.origin && url.pathname.startsWith('/resource/') && url.pathname.endsWith('.ttf'),
         handler: 'CacheFirst',
         options: {
-          cacheName: 'resource-fonts',
+          cacheName: 'resource-fonts-v2',
           // Unversioned srcs: bound staleness so a replaced .ttf is refetched within a week.
           expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 7, purgeOnQuotaError: true },
         },

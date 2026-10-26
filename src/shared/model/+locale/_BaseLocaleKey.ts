@@ -908,6 +908,7 @@ export const enum BaseLocaleKey {
   CmEditorCategoryKind = 902,
   CmEditorCategoryTitle = 903,
   CmEditorCategoryComsCount = 904,
+  /** @deprecated Replaced by `DeleteX`. */
   CmEditorCategoryRemove = 905,
   CmAllCategoryName = 906,
   CmEditorCategoryEdit = 907,

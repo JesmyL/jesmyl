@@ -3,12 +3,16 @@ import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { Atom, atom } from 'atomaric';
 import { Langi } from 'shared/api';
 import { LocaleNameSpaceConfigs } from 'shared/model/+locale';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { LocaleBase } from 'shared/model/+locale/base';
 import { LocaleDynamic } from 'shared/model/+locale/dynamic';
 import { lazyInit } from 'shared/utils/lazyInit';
 import { objectLength } from 'shared/utils/object.utils';
 
 const dynamicLangAtoms: { [L in Langi]?: Atom<LocaleDynamic<L>> } = {};
+
+/** Нумерация `BaseLocaleKey` непрерывная: словарь другой длины собран под другой набор ключей. */
+const baseLocaleKeysCount = BaseLocaleKey.CmEditorCategoryKindLocked + 1;
 
 const checkValue = (value: LocaleBase<Langi> | LocaleDynamic<Langi>, onRequest: () => void) => {
   if (!objectLength(value)) {
@@ -19,8 +23,15 @@ const checkValue = (value: LocaleBase<Langi> | LocaleDynamic<Langi>, onRequest: 
 
 export const takeBaseLanguageAtom = lazyInit(() => {
   const confAtom = atom({}, 'loc:B') as never as Atom<LocaleNameSpaceConfigs['B']>;
+  const cachedBaseLocale = confAtom.get();
 
-  checkValue(confAtom.get(), () => indexTsjrpcClientMethods.reqLocaleBaseConfig());
+  checkValue(cachedBaseLocale, () => indexTsjrpcClientMethods.reqLocaleBaseConfig());
+
+  // Кэш, собранный до перенумерации `BaseLocaleKey`, отдаёт старые тексты по старым индексам:
+  // обновляем его в фоне, не блокируя приложение устаревшим словарём.
+  if (objectLength(cachedBaseLocale) && objectLength(cachedBaseLocale) !== baseLocaleKeysCount) {
+    appInitEvent.listen(() => indexTsjrpcClientMethods.reqLocaleBaseConfig());
+  }
 
   return confAtom;
 });

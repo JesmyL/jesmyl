@@ -993,7 +993,7 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.CmEditorCategoryKind]: 'Санат түрі',
   [BaseLocaleKey.CmEditorCategoryTitle]: 'Санат атауы',
   [BaseLocaleKey.CmEditorCategoryComsCount]: 'Әндер: $c',
-  [BaseLocaleKey.CmEditorCategoryRemove]: '«$n;» санатын жою керек пе?',
+  [BaseLocaleKey.CmEditorCategoryRemove]: '',
   [BaseLocaleKey.CmAllCategoryName]: 'Барлық әндер',
   [BaseLocaleKey.CmEditorCategoryEdit]: 'Санатты өңдеу',
   [BaseLocaleKey.CmEditorCategoryKindLocked]: 'Түрін өзгертуге болмайды: санатта әндер бар',
