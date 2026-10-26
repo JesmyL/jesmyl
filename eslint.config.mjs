@@ -25,7 +25,7 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
 
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-      'react-hooks/exhaustive-deps': 'warn',
+      'react-hooks/exhaustive-deps': ['warn', { additionalHooks: '(useLiveQuery)' }],
 
       'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
 
