@@ -24,12 +24,12 @@ export const resetStyles = css`
   input,
   textarea {
     background-color: transparent;
-    color: var(--text-color);
+    color: var(--color--3);
     font-size: 1em;
     font-family: var(--font-family);
 
     &::placeholder {
-      color: var(--color--5);
+      color: var(--color--4);
     }
   }
 

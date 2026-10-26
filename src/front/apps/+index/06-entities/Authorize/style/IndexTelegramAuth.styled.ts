@@ -68,12 +68,7 @@ export const IndexAuthorizeTelegramStyledPage = styled(PageContainerConfigurer)`
         padding-right: 1.5em;
         width: 100%;
         height: 60px;
-        color: var(--text-color);
         font-size: 1.5em;
-
-        &::placeholder {
-          color: var(--text-color);
-        }
       }
 
       > .the-icon {
