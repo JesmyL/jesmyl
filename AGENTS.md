@@ -32,6 +32,7 @@
 - Prefer built-ins over hand-rolled code — before writing a helper, check for a native one (`Array.isArray`, `Object.hasOwn`, `structuredClone`, `at`, `flat`, etc.) and only then for an existing util in `shared/utils`.
 - Keep code local and minimal — the final bundle should contain as few characters as possible.
 - Everything that ends up in the frontend bundle must be as small as possible — this is the core philosophy.
+- Class fields that are not part of the public API must be `private`/`protected` — never expose a field that only the class itself reads or writes.
 - State/identifier values should be numbers, not strings — use enums instead of string literals for state identifiers (e.g. `montserrat = 'montserrat'` is bad practice).
 - Use only `const enum`, never plain `enum`.
 - Performance: hoist regexps out of functions (build once via `lazyInit`), build char-class regexps from object keys (`objectKeys(dict).join('')`), and prefer a single `.replace` pass with a replacer dict over chained `.replace` calls.
