@@ -34,6 +34,7 @@
 - Everything that ends up in the frontend bundle must be as small as possible — this is the core philosophy.
 - Class fields that are not part of the public API must be `private`/`protected` — never expose a field that only the class itself reads or writes.
 - State/identifier values should be numbers, not strings — use enums instead of string literals for state identifiers (e.g. `montserrat = 'montserrat'` is bad practice).
+- Encode string unions like `'prev' | 'next'` used as identifiers/state into numeric `const enum` instead of string literal unions.
 - Use only `const enum`, never plain `enum`.
 - Performance: hoist regexps out of functions (build once via `lazyInit`), build char-class regexps from object keys (`objectKeys(dict).join('')`), and prefer a single `.replace` pass with a replacer dict over chained `.replace` calls.
 - Never wrap a single static regexp in `lazyInit(() => makeRegExp('...'))` — a module-scope `makeRegExp('...')` is already built once at load; keep `lazyInit` only where deferred building is genuinely required (e.g. regexps composed from object keys at runtime).
@@ -50,11 +51,13 @@
 - Small styles — via Tailwind utility classes; complex `@keyframes` (e.g. `playingPulse`) — keep in `styled` from `@emotion/styled`, not in the global Tailwind entry.
 - Locale strings: always write user-facing text translations via `translateBase` / `translateDynamic` — never inline raw text.
 - Do not add translations for a new locale key if the text is identical in all languages — just keep the single same value in each locale file (no need to invent per-language variants).
+- Do not add new locale texts when existing keys can be reused — search the existing BaseLocaleKey entries first and only add a new key if no existing text fits.
 - In translated text/locale keys, name interpolation placeholders with single letters — e.g. `$d`/`$t`/`$f` instead of `$track`/`$total`/`$free` — and map descriptive local variables to them at the call site (e.g. `Удалено: $d МБ. Занято: $t МБ. Свободно: $f МБ.`).
 - Never write blind type casts like `as CmAudioTail` (branded/type asserts on unverified data) — write proper types and parse/validate at the boundary so the casts become unnecessary.
 - In this project, the term `songs` is not used — the correct name is `coms` (short for "compositions"). Name variables, types, files and identifiers accordingly.
 - Removing an entry from `BaseLocaleKey` (locale keys): never delete it outright — mark it `@deprecated` in `_BaseLocaleKey.ts` and change its translations in all `src/back/locales/base/{ru,en,kz,ua,...}.ts` files to `''` instead of removing the keys.
 - When marking a `BaseLocaleKey` entry `@deprecated`, add the tag ONLY in `_BaseLocaleKey.ts` — do not add `@deprecated` tags or extra comments at usage sites or locale files.
+- Inside useLiveQuery the callback must contain no extra logic and must return raw Dexie values only (or undefined to skip querying when there is nothing to fetch); never wrap/transform results inside — do it outside via useMemo (e.g. new CmCat(icat)).
 
 ## Assistant reply formatting
 
