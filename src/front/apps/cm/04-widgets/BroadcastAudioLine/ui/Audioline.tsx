@@ -16,6 +16,7 @@ import { cmPlayerBroadcastComwAtom } from '$cm/shared/state/broadcast.atoms';
 import { ReactNode } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
+import { CmComWidDef } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsNil } from 'shared/utils/checkIs';
 
@@ -29,12 +30,14 @@ export const CmBroadcastAudioLine = ({ topNode }: { topNode: (nodes?: ReactNode)
   const isNoMarks = checkIsNil(cmIDB.useAudioTrackMarks(comw)?.marks?.[broadcastSrc!]);
 
   useEffect(() => {
+    cmPlayerBroadcastComwAtom.set(comw ?? CmComWidDef);
+
     cmPlayerBroadcastAudioSrcAtom.set(prev => {
       if (prev && comAudio?.includes(prev)) return prev;
 
       return firstSrc ?? null;
     });
-  }, [comAudio, firstSrc]);
+  }, [comAudio, firstSrc, comw]);
 
   useEffect(() => {
     if (comw) getCmComFreshAudioMarksPack(comw);
