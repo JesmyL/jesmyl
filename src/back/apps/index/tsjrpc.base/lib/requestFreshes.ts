@@ -35,7 +35,7 @@ export const indexTSJRPCBaseRequestFreshes = {
     { lastModfiedAt, iconPacks: userIconPacks, iconsMd5Hash: userIconsMd5Hash },
     { client, auth, visitInfo },
   ) => {
-    if (!visitInfo || visitInfo.version < 1310) return;
+    if (!visitInfo || visitInfo.version < 1312) return;
 
     /** @deprecated */
     lastModfiedAt = Math.trunc(lastModfiedAt);

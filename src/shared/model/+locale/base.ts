@@ -34,7 +34,6 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.CmTwiceClickPrevious]: LocaleSimpleString;
   [BaseLocaleKey.CmTwiceClickNext]: LocaleSimpleString;
   [BaseLocaleKey.CmChordLengthMismatch]: StringTemplaterInterpolation<{ n: string }>;
-  [BaseLocaleKey.CmChordBlockLengthMismatch]: '';
   [BaseLocaleKey.CmClickNextSlide]: LocaleSimpleString;
   [BaseLocaleKey.CmClickPreviousSlide]: LocaleSimpleString;
   [BaseLocaleKey.CmNotFound]: LocaleSimpleString;
@@ -70,7 +69,6 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.CmEditorNewNoTracks]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorNewNewAudios]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorNewPublishCom]: LocaleSimpleString;
-  [BaseLocaleKey.CmCategoryTitle]: '';
   [BaseLocaleKey.CmCategoryList]: LocaleStrRecord<CmAdditionalCatKind>;
   [BaseLocaleKey.CmListsAll]: LocaleSimpleString;
   [BaseLocaleKey.CmListsPlayer]: LocaleSimpleString;
@@ -280,7 +278,6 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.CmEditorRemoveRecord]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorUpdatedBy]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorNextIsContinuation]: LocaleSimpleString;
-  [BaseLocaleKey.CmEditorDeleteLink]: '';
   [BaseLocaleKey.CmEditorDeleteBlock]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorHideBlock]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorShowBlock]: LocaleSimpleString;
@@ -312,7 +309,6 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.CmEditorInterpretationEdit]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorIncludeBibleWords]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorSendWords]: StringTemplaterInterpolation<{ n: string }>;
-  [BaseLocaleKey.CmEditorBibleBooksInfo]: '';
   [BaseLocaleKey.CmEditorLinkPartHide]: StringTemplaterInterpolation<{ n: string; h: string }>;
   [BaseLocaleKey.CmEditorLinkPartShow]: StringTemplaterInterpolation<{ n: string; h: string }>;
   [BaseLocaleKey.CmEditorAppliqueDestroyed]: LocaleSimpleString;
@@ -676,7 +672,6 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.Folder]: LocaleSimpleString;
   [BaseLocaleKey.WorkingDirectoryNotSelected]: LocaleSimpleString;
   [BaseLocaleKey.WorkingDirectoryPickFolder]: StringTemplaterInterpolation<{ a: string }>;
-  [BaseLocaleKey.WorkingDirectoryFolders]: '';
   [BaseLocaleKey.LogIn]: LocaleSimpleString;
   [BaseLocaleKey.AuthorizationSuccess]: LocaleSimpleString;
   [BaseLocaleKey.OneTimeCode]: LocaleSimpleString;
@@ -694,7 +689,6 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.History]: LocaleSimpleString;
   [BaseLocaleKey.Plan]: LocaleSimpleString;
   [BaseLocaleKey.Search]: LocaleSimpleString;
-  [BaseLocaleKey.GlobalSearch]: '';
   [BaseLocaleKey.Broadcast]: LocaleSimpleString;
   [BaseLocaleKey.Control]: LocaleSimpleString;
   [BaseLocaleKey.TelegramBeInChannel]: LocaleSimpleString;
@@ -883,7 +877,6 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.SlideCloses]: LocaleSimpleString;
   [BaseLocaleKey.ByBackspace]: LocaleSimpleString;
   [BaseLocaleKey.PickExcelFile]: LocaleSimpleString;
-  [BaseLocaleKey.SelectAtLeast]: '';
   [BaseLocaleKey.AlertLine]: LocaleSimpleString;
   [BaseLocaleKey.AlertLinePosition]: LocaleSimpleString;
   [BaseLocaleKey.NotFound]: LocaleSimpleString;
@@ -922,9 +915,12 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.CmEditorCategoryKind]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorCategoryTitle]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorCategoryComsCount]: StringTemplaterInterpolation<{ c: number }>;
-  [BaseLocaleKey.CmEditorCategoryRemove]: '';
   [BaseLocaleKey.CmAllCategoryName]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorCategoryEdit]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorCategoryKindLocked]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorRemovedCats]: LocaleSimpleString;
+  [BaseLocaleKey.Presentations]: LocaleSimpleString;
+  [BaseLocaleKey.PresentationsDesktopOnly]: LocaleSimpleString;
+  [BaseLocaleKey.PresentationsShowSlide]: LocaleSimpleString;
+  [BaseLocaleKey.PresentationsDropFile]: LocaleSimpleString;
 };
