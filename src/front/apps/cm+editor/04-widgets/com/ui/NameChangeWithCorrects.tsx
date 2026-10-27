@@ -6,11 +6,11 @@ import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { IIncorrects } from 'shared/model/cm/Incorrects';
 
 export const CmEditorComCreateNameChange = ({
-  name,
+  defaultName,
   setNewCom,
   incorrcets,
 }: {
-  name: string | und;
+  defaultName: string | und;
   setNewCom: (value: React.SetStateAction<IExportableCom>) => void;
   incorrcets: IIncorrects;
 }) => {
@@ -25,7 +25,8 @@ export const CmEditorComCreateNameChange = ({
           <TextInput
             className="w-full"
             st-mood="2"
-            value={name}
+            strongDefaultValue
+            defaultValue={defaultName}
             onInput={n => setNewCom(prev => ({ ...prev, n }))}
           />
         </div>

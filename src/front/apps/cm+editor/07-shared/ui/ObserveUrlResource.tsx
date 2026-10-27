@@ -40,7 +40,7 @@ export const ObserveUrlResource = ({
           className="url-observer-input-wrapper w-[50%]"
           st-mood="2"
           placeholder={translateBase(BaseLocaleKey.CmEditorUrl)}
-          value={url}
+          defaultValue={url}
           onInput={setUrl}
         />
         <SendButton

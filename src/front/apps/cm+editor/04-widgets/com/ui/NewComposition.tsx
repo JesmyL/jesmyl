@@ -32,6 +32,9 @@ import { CmEditorComCreateComTextableListRedactor } from './TextableListRedactor
 export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => {
   const navigate = useNavigate();
   const [value, setValue] = useState('');
+  const [externalText, setExternalText] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [parseVersion, setParseVersion] = useState(0);
   const [isTakeName, setIsTakeName] = useState(true);
   const [innerHTML, setInnerHTML] = useState('');
   const [mp3Rule, setMp3Rule] = useState<CmMp3Rule | und>();
@@ -54,13 +57,20 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
     setIsTakeName(true);
   }, [newICom.n]);
 
-  const setTextAsValue = (value: string) => {
-    setValue(value);
-    if (isTakeName) {
-      if (value.includes('\n')) setIsTakeName(false);
-      const name = EditableCom.takeCorrectName(value);
-      setNewICom(prev => ({ ...prev, n: name }));
-    }
+  const setTextAsValue = (nextValue: string) => {
+    setValue(nextValue);
+    if (!isTakeName) return;
+
+    if (nextValue.includes('\n')) setIsTakeName(false);
+
+    const name = EditableCom.takeCorrectName(nextValue);
+    setDisplayName(name);
+    setNewICom(prev => ({ ...prev, n: name }));
+  };
+
+  const setExternalTextAsValue = (text: string) => {
+    setExternalText(text);
+    setTextAsValue(text);
   };
 
   const noTitlePrefix = (x: 't' | 'c' | 'o') => translateBase(BaseLocaleKey.CmEditorNewNoParsed, { x });
@@ -98,7 +108,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
         <h2 className="title">{translateBase(BaseLocaleKey.CmEditorNewCom)}</h2>
 
         <CmEditorComCreateNameChange
-          name={newICom.n}
+          defaultName={displayName}
           setNewCom={setNewICom}
           incorrcets={nameIncorrects}
         />
@@ -114,15 +124,17 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
             if (rule.textQuery) {
               const pre: HTMLPreElement | null = div.querySelector(rule.textQuery);
               if (pre) {
-                if (rule.isHTML) setTextAsValue(pre.innerHTML.replace(makeRegExp('/<(\\/ ?)?br( ?\\/)?>/g'), '\n'));
-                else setTextAsValue(pre.innerText);
+                if (rule.isHTML)
+                  setExternalTextAsValue(pre.innerHTML.replace(makeRegExp('/<(\\/ ?)?br( ?\\/)?>/g'), '\n'));
+                else setExternalTextAsValue(pre.innerText);
               }
             }
           }}
         />
 
         <TextInput
-          value={value}
+          strongDefaultValue
+          defaultValue={externalText}
           className="my-2 w-full h-full text-(--text-color) border-(--text-color) border-2 border-dashed resize-none"
           multiline
           placeholder={translateBase(BaseLocaleKey.CmEditorNewStartWrite)}
@@ -142,6 +154,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
             }
 
             setNewICom(prev => ({ ...prev, ...com }));
+            setParseVersion(prev => prev + 1);
           }}
         >
           {translateBase(BaseLocaleKey.CmEditorNewParseTextHeap)}
@@ -179,6 +192,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
 
         {newICom.t && (
           <CmEditorComCreateComTextableListRedactor
+            key={parseVersion}
             title={translateBase(BaseLocaleKey.Texts)}
             corrects={textsErrors}
             list={newICom.t}
@@ -188,6 +202,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
 
         {newICom.c && (
           <CmEditorComCreateComTextableListRedactor
+            key={parseVersion}
             title={translateBase(BaseLocaleKey.CmChords)}
             corrects={chordsErrors}
             list={newICom.c}

@@ -20,7 +20,7 @@ export const CmEditorComCreateComTextableListRedactor = ({ title, onInput, list,
             key={texti}
           >
             <TextInput
-              value={text}
+              defaultValue={text}
               multiline
               onInput={value => onInput(value, texti)}
             />
