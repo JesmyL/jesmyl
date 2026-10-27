@@ -3,15 +3,20 @@ import { BibleBroadcastTextMapBlock } from '$bible/shared/model/base';
 import { LocalSokiAuth } from 'shared/api';
 import { BibleBroadcastScreenConfig } from '../bible/broadcast';
 import { CmBroadcastSchWgtLiveDataValue } from '../cm/SchWgtLive';
+import { PresentationBroadcastLiveData } from '../presentations';
 
 export type IndexErrorScope = keyof ClientRegisterData;
 
+export type BroadcastLiveApp = 'cm' | 'bible' | 'presentations';
+
 export type IndexSchWBroadcastLiveDataValue = {
+  app?: BroadcastLiveApp;
   fio: string;
   isHide: boolean;
   isShowInitialSlide?: boolean;
   cm?: CmBroadcastSchWgtLiveDataValue;
   bible?: { texts: BibleBroadcastTextMapBlock[]; addressText: string; config: BibleBroadcastScreenConfig };
+  presentations?: PresentationBroadcastLiveData;
   markdown?: string;
 };
 

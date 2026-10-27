@@ -55,6 +55,9 @@ audio-tmp
 /src/back/audio/*.ogg
 /src/back/audio/*.wav
 
+# presentation user data (runtime)
+/presentations/
+
 # Electron build artifacts
 src/electron-app/dist/
 src/electron-app/release-builds/

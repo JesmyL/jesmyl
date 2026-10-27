@@ -2,6 +2,7 @@ import { FontWeightType } from '#shared/ui/configurators/FontWeight';
 import { BackgroundConfigProps } from '#shared/ui/configurators/model';
 import { TextAlignConfigurator } from '#shared/ui/configurators/TextAlign/model';
 import { CSSProperties } from 'react';
+import { PresentationBroadcastConfig } from 'shared/model/presentations';
 import { ScreenBroadcastPositionConfig, ScreenBroadcastTextConfig } from './model';
 
 export const defaultScreenBroadcastPositionConfig: ScreenBroadcastPositionConfig = {
@@ -22,6 +23,15 @@ export const defaultScreenBroadcastBackgroundConfig: BackgroundConfigProps = {
   bg: '',
   bgColor: '#000000',
   withBg: false,
+};
+
+export const presentationBroadcastDefaultConfig: PresentationBroadcastConfig = {
+  ...defaultScreenBroadcastTextConfig,
+  color: '#f4efe4',
+  stroke: '#000000',
+  strokeW: 0,
+  textAlign: TextAlignConfigurator.Left,
+  bgColor: '#09090c',
 };
 
 export const makeBroadcastTextStroke = (config: { stroke?: string | nil; strokeW?: number } | nil) =>

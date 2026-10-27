@@ -27,7 +27,7 @@ export const CmBroadcastGridTabList = () => {
 
   return (
     <div className="broadcast-com-list">
-      <div className="m-5">
+      <div className="sticky top-0 z-1 bg-background px-5 py-5">
         <CmComListPackKindSelector />
       </div>
 

@@ -1,19 +1,29 @@
-import { dialog } from 'electron';
+import { dialog, net, protocol, session } from 'electron';
 import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
 import { pipeline } from 'stream';
+import { pathToFileURL } from 'url';
 import { lazyInit } from '../../const';
 import { TsjrpcElectronAppBase } from '../init/tsjrpc.base.electron';
 import { electronWorkDirFileMaxBytes, ElectronBasicTsjrpcModel, ElectronWorkDirFile, ElectronWorkDirFileKind } from '../model';
 
 const workDirNamesFileName = '.names.json';
 
+const workDirProtocolScheme = 'workdir';
+const workDirUrlPrefix = `${workDirProtocolScheme}://local/`;
+
+// Must run before `app.whenReady()`: otherwise media elements refuse to load the custom scheme at all.
+protocol.registerSchemesAsPrivileged([
+  { scheme: workDirProtocolScheme, privileges: { standard: true, secure: true, supportFetchAPI: true, stream: true } },
+]);
+
 const mediaKindByExtensionLazy = lazyInit(() => {
   const extensionsByKind: Record<ElectronWorkDirFileKind, string> = {
     image: 'jpg jpeg png gif webp avif svg bmp',
     video: 'mp4 webm mov avi mkv m4v',
     audio: 'mp3 wav ogg m4a flac aac opus',
+    pptx: 'pptx',
   };
 
   return Object.fromEntries(
@@ -115,6 +125,12 @@ export const electronAppBasicTsjrpcBase =
             }
           },
 
+          takeWorkDirFileUrl: async ({ filePath }) => {
+            const resolvedFilePath = parseAllowedWorkDirPath(filePath);
+
+            return resolvedFilePath ? workDirUrlPrefix + encodeURIComponent(resolvedFilePath) : null;
+          },
+
           createWorkDirFolder: async ({ dirPath, name }) => {
             const resolvedDirPath = parseAllowedWorkDirPath(dirPath);
             const cleanName = sanitizeWorkDirName(name);
@@ -174,6 +190,9 @@ export const electronAppBasicTsjrpcBase =
 ///////////////////////////////////////////////
 
 const allowedWorkDirRoots = new Set<string>();
+
+export const allowWorkDirRoot = (rootPath: string) => allowedWorkDirRoots.add(path.resolve(rootPath));
+
 const workDirWatchers = new Map<string, fs.FSWatcher>();
 const scheduledMd5Renames = new Map<string, ReturnType<typeof setTimeout>>();
 const workDirNamesWriteChains = new Map<string, Promise<unknown>>();
@@ -186,7 +205,7 @@ const md5RenameRetryDelayMs = 300;
 const workDirDropFileMaxBytes = 200 * 1024 * 1024;
 
 /** Resolves a renderer-supplied path and rejects it unless it lives inside a root the user picked or watched. */
-const parseAllowedWorkDirPath = (input: string): string | nil => {
+export const parseAllowedWorkDirPath = (input: string): string | nil => {
   const resolved = path.resolve(input);
 
   for (const root of allowedWorkDirRoots) {
@@ -195,6 +214,26 @@ const parseAllowedWorkDirPath = (input: string): string | nil => {
 
   return null;
 };
+
+const takeWorkDirProtocolFilePath = (url: string) => {
+  try {
+    return parseAllowedWorkDirPath(decodeURIComponent(new URL(url).pathname.slice(1)));
+  } catch {
+    return null;
+  }
+};
+
+/** Streams allowed WorkDir files through `workdir://` so large videos never load as a single base64 string. */
+export const registerWorkDirFileProtocol = (partition: string) =>
+  session.fromPartition(partition).protocol.handle(workDirProtocolScheme, request => {
+    const filePath = takeWorkDirProtocolFilePath(request.url);
+    if (!filePath) return new Response(null, { status: 403 });
+
+    // Forwarding the range header keeps video seeking working — the rest of the request is renderer noise.
+    const range = request.headers.get('Range');
+
+    return net.fetch(pathToFileURL(filePath).toString(), range ? { headers: { Range: range } } : undefined);
+  });
 
 const delay = (ms: number) => new Promise<void>(resolve => setTimeout(resolve, ms));
 

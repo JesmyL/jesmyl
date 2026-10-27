@@ -11,5 +11,6 @@ export default defineConfig({
   treeshake: true,
   minify: true,
   external: ['electron', 'electron-updater'],
-  noExternal: ['tsjrpc'],
+  // Root-only packages must be bundled: the packaged app ships only src/electron-app/node_modules.
+  noExternal: ['tsjrpc', 'regexpert', 'md5', 'pptxtojson'],
 });

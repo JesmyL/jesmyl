@@ -1,6 +1,11 @@
 import path from 'path';
 
-export const takeElectronAppWebPreferences = (partition = 'persist:jesmyl') => ({
+const defaultPartition = 'persist:jesmyl';
+
+export const takeElectronAppPartition = (isTestMode: boolean) =>
+  isTestMode ? 'persist:jesmyl_test' : defaultPartition;
+
+export const takeElectronAppWebPreferences = (partition = defaultPartition) => ({
   nodeIntegration: false,
   contextIsolation: true,
   enableRemoteModule: false,

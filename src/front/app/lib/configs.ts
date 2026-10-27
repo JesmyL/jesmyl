@@ -3,6 +3,7 @@ import { bibleRoutingApp } from '$bible/app/bibleRoutingApp';
 import { cmRoutingApp } from '$cm/shared/const';
 import { gamerRoutingApp } from '$gamer/app/gamerRoutingApp';
 import { questionerRoutingApp } from '$q/app/questionerRoutingApp';
+import { presentationsRoutingApp } from '$presentations/app/presentationsRoutingApp';
 import { storagesRoutingApp } from '$storages/app/storagesRoutingApp';
 import { tunerRoutingApp } from '$tuner/tunerRoutingApp';
 
@@ -20,4 +21,5 @@ export const routingApps: Partial<Record<AppName, RoutingAppConfig>> = {
   q: questionerRoutingApp,
   storages: storagesRoutingApp,
   gamer: gamerRoutingApp,
+  presentations: presentationsRoutingApp,
 };

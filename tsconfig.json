@@ -97,6 +97,15 @@
       "$gamer/shared/*": ["./front/apps/gamer/07-shared/*"],
       "$gamer/*": ["./front/components/gamer/*"],
 
+      "$presentations/app/*": ["./front/apps/presentations/01-app/*"],
+      "$presentations/processes/*": ["./front/apps/presentations/02-processes/*"],
+      "$presentations/pages/*": ["./front/apps/presentations/03-pages/*"],
+      "$presentations/widgets/*": ["./front/apps/presentations/04-widgets/*"],
+      "$presentations/features/*": ["./front/apps/presentations/05-features/*"],
+      "$presentations/entities/*": ["./front/apps/presentations/06-entities/*"],
+      "$presentations/shared/*": ["./front/apps/presentations/07-shared/*"],
+      "$presentations/*": ["./front/apps/presentations/*"],
+
       "$freeshow/*": ["./front/apps/freeshow/*"],
 
       "$app/*": ["./front/app/*"],

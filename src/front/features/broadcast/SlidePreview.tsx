@@ -1,5 +1,6 @@
 import { BroadcastScreen } from '#features/broadcast/BroadcastScreen';
 import { useScreenBroadcastCurrentConfig } from '#features/broadcast/hooks/configs';
+import { ElectronWorkDirBackgroundSelector } from '#features/ElectronWorkDir/ui/BackgroundSelector';
 import { isElectronApp } from '#shared/tsjrpc.electron/tsjrpc.electron.client';
 import { StyledBroadcastScreenProportioned } from '#shared/style/StyledBroadcastScreenProportioned';
 import { ScreensConfigurator } from '#shared/ui/configurators/Screens';
@@ -7,10 +8,17 @@ import { MyFileBox, MyFilesUploader, MyFileType } from 'x/my-files';
 
 interface Props {
   isPreview?: boolean;
+  bgFilePath?: string;
   onBgFileIdChange: (fileBox: MyFileBox) => void;
+  onBgFilePathChange?: (filePath: string | und) => void;
 }
 
-export const BroadcastSlidePreview = ({ isPreview = true, onBgFileIdChange }: Props) => {
+export const BroadcastSlidePreview = ({
+  isPreview = true,
+  bgFilePath,
+  onBgFileIdChange,
+  onBgFilePathChange,
+}: Props) => {
   const currentConfig = useScreenBroadcastCurrentConfig();
 
   const content = !currentConfig ? (
@@ -35,8 +43,21 @@ export const BroadcastSlidePreview = ({ isPreview = true, onBgFileIdChange }: Pr
     </>
   );
 
-  // The Electron build applies the background only from the WorkDir tab — never through the MyFiles IDB uploader.
-  if (isElectronApp) return <>{content}</>;
+  // The Electron build resolves backgrounds from the WorkDir — never through the MyFiles IDB uploader.
+  if (isElectronApp)
+    return (
+      <div className="full-size relative">
+        {content}
+        {!onBgFilePathChange || (
+          <div className="absolute top-[5px] left-[5px] z-20">
+            <ElectronWorkDirBackgroundSelector
+              bgFilePath={bgFilePath}
+              onSelect={onBgFilePathChange}
+            />
+          </div>
+        )}
+      </div>
+    );
 
   return (
     <MyFilesUploader

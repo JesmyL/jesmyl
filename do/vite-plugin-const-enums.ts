@@ -4,6 +4,7 @@ import ts from 'typescript';
 import type { Plugin } from 'vite';
 
 type EnumMemberValues = Map<string, string>;
+type EnumInfo = { file: string; values: EnumMemberValues };
 type Edit = { start: number; end: number; text: string };
 
 const ignoredDirectoryNames = new Set(['node_modules', '.git', 'build']);
@@ -46,20 +47,27 @@ const readEnumValues = (declaration: ts.EnumDeclaration, source: ts.SourceFile, 
   return values;
 };
 
-const collectEnums = (root: string) => {
+const readFileEnums = (file: string) => {
+  const code = fs.readFileSync(file, 'utf8');
+  if (!code.includes('const enum')) return null;
+
+  const source = ts.createSourceFile(file, code, ts.ScriptTarget.Latest, false);
   const enums = new Map<string, EnumMemberValues>();
+  const visit = (node: ts.Node) => {
+    if (isConstEnum(node)) enums.set(node.name.text, readEnumValues(node, source, file));
+    ts.forEachChild(node, visit);
+  };
+
+  visit(source);
+
+  return enums;
+};
+
+const collectEnums = (root: string) => {
+  const enums = new Map<string, EnumInfo>();
 
   const scanFile = (file: string) => {
-    const code = fs.readFileSync(file, 'utf8');
-    if (!code.includes('const enum')) return;
-
-    const source = ts.createSourceFile(file, code, ts.ScriptTarget.Latest, false);
-    const visit = (node: ts.Node) => {
-      if (isConstEnum(node)) enums.set(node.name.text, readEnumValues(node, source, file));
-      ts.forEachChild(node, visit);
-    };
-
-    visit(source);
+    readFileEnums(file)?.forEach((values, name) => enums.set(name, { file, values }));
   };
 
   const scanDirectory = (directory: string) => {
@@ -77,9 +85,36 @@ const collectEnums = (root: string) => {
   return enums;
 };
 
-const rewriteConstEnums = (file: string, code: string, enums: Map<string, EnumMemberValues>) => {
+const takeEnumMemberLiteral = (
+  enums: Map<string, EnumInfo>,
+  refreshedNames: Set<string>,
+  name: string,
+  member: string,
+) => {
+  let literal = enums.get(name)?.values.get(member);
+
+  // The snapshot is collected once per dev server, so a member added afterwards is
+  // unknown here and its import would survive into the code of a module whose enum
+  // declaration is stripped. Re-read the declaring file on the first miss instead.
+  if (literal === undefined && enums.has(name) && !refreshedNames.has(name)) {
+    refreshedNames.add(name);
+
+    const info = enums.get(name);
+    const values = info && readFileEnums(info.file)?.get(name);
+
+    if (info && values) {
+      info.values = values;
+      literal = values.get(member);
+    }
+  }
+
+  return literal;
+};
+
+const rewriteConstEnums = (file: string, code: string, enums: Map<string, EnumInfo>) => {
   const source = ts.createSourceFile(file, code, ts.ScriptTarget.Latest, false);
   const edits: Edit[] = [];
+  const refreshedNames = new Set<string>();
   const replaceNode = (node: ts.Node, text: string) => {
     edits.push({ start: node.getStart(source), end: node.getEnd(), text });
   };
@@ -91,7 +126,7 @@ const rewriteConstEnums = (file: string, code: string, enums: Map<string, EnumMe
     }
 
     if (ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.expression)) {
-      const literal = enums.get(node.expression.text)?.get(node.name.text);
+      const literal = takeEnumMemberLiteral(enums, refreshedNames, node.expression.text, node.name.text);
       if (literal !== undefined) {
         replaceNode(node, literal);
         return;
@@ -101,7 +136,7 @@ const rewriteConstEnums = (file: string, code: string, enums: Map<string, EnumMe
     if (ts.isElementAccessExpression(node) && ts.isIdentifier(node.expression)) {
       const argument = node.argumentExpression;
       if (argument && (ts.isStringLiteral(argument) || ts.isNoSubstitutionTemplateLiteral(argument))) {
-        const literal = enums.get(node.expression.text)?.get(argument.text);
+        const literal = takeEnumMemberLiteral(enums, refreshedNames, node.expression.text, argument.text);
         if (literal !== undefined) {
           replaceNode(node, literal);
           return;
@@ -141,7 +176,7 @@ const rewriteConstEnums = (file: string, code: string, enums: Map<string, EnumMe
 
 export const constEnumVitePlugin = (): Plugin => {
   let root = process.cwd();
-  let enums: Map<string, EnumMemberValues> | null = null;
+  let enums: Map<string, EnumInfo> | null = null;
   let enumNamesRegExp: RegExp | null = null;
 
   return {

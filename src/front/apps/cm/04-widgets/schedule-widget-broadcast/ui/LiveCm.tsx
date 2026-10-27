@@ -31,7 +31,7 @@ export const CmScheduleWidgetBroadcastLiveCm = (props: LiveBroadcastAppProps) =>
           )}
           <CmBroadcastControlled
             headTitle={props.headTitle}
-            head={<BroadcastWelcomeQrSwitchButton toggleAppIcon="BookOpen02" />}
+            head={<BroadcastWelcomeQrSwitchButton />}
           />
         </CmBroadcastSlidesContext>
       </>

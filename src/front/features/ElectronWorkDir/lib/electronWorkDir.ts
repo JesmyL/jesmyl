@@ -1,10 +1,12 @@
-import { electronBasicTsjrpcClient } from '#basis/tsjrpc.electron/basic';
-import { convertFileToBase64 } from '#shared/lib/convertFileToBase64';
+import { electronBasicTsjrpcClient, electronWorkDirTool } from '#basis/tsjrpc.electron/basic';
+import { convertFileToBase64, takeBase64FromDataUrl } from '#shared/lib/convertFileToBase64';
+import { electronWorkDirAtom } from '#shared/state/electron.atoms';
 import { ElectronWorkDirFolderPack } from 'shared/api/tsjrpc.electtron/basic';
 import { lazyInit } from 'shared/utils/lazyInit';
 import { mapObjectEntries, objectKeys } from 'shared/utils/object.utils';
-
-const workDirTool = { toWinNum: -1111, winNum: -1000 };
+import { takeFileExtension } from 'shared/utils/string.utils';
+import { fontWorkDirFolder, myFilesConfig } from 'x/my-files/shared/const/myFiles';
+import { MyFileType } from 'x/my-files/shared/model/enums';
 
 const mediaMimeByExtensionLazy = lazyInit(() => {
   const mimeByExtension: PRecord<string, string> = {};
@@ -23,37 +25,44 @@ const mediaMimeByExtensionLazy = lazyInit(() => {
 });
 
 export const takeMediaMimeByFileName = (fileName: string) =>
-  mediaMimeByExtensionLazy()[fileName.slice(fileName.lastIndexOf('.') + 1).toLowerCase()] ??
-  'application/octet-stream';
+  mediaMimeByExtensionLazy()[takeFileExtension(fileName)] ?? 'application/octet-stream';
+
+/** Dropped fonts are registered in myFiles (which also stores them in the WorkDir `fonts` folder), not routed as media. */
+export const isDroppedFontFile = (file: File) =>
+  myFilesConfig[MyFileType.Font].ext.has(takeFileExtension(file.name));
 
 export const selectWorkDir = (create?: string) =>
-  electronBasicTsjrpcClient.selectDir(create ? { create } : {}, workDirTool);
+  electronBasicTsjrpcClient.selectDir(create ? { create } : {}, electronWorkDirTool);
 
 export const readWorkDir = (dirPath: string): Promise<ElectronWorkDirFolderPack | nil> =>
-  electronBasicTsjrpcClient.readWorkDir({ dirPath }, workDirTool);
+  electronBasicTsjrpcClient.readWorkDir({ dirPath }, electronWorkDirTool);
 
 export const createWorkDirFolder = (dirPath: string, name: string) =>
-  electronBasicTsjrpcClient.createWorkDirFolder({ dirPath, name }, workDirTool);
+  electronBasicTsjrpcClient.createWorkDirFolder({ dirPath, name }, electronWorkDirTool);
 
 export const ensureWorkDirFolders = (dirPath: string, names: string[]) =>
-  electronBasicTsjrpcClient.ensureWorkDirFolders({ dirPath, names }, workDirTool);
+  electronBasicTsjrpcClient.ensureWorkDirFolders({ dirPath, names }, electronWorkDirTool);
 
-export const watchWorkDir = (dirPath: string) => electronBasicTsjrpcClient.watchWorkDir({ dirPath }, workDirTool);
+export const watchWorkDir = (dirPath: string) =>
+  electronBasicTsjrpcClient.watchWorkDir({ dirPath }, electronWorkDirTool);
 
 export const saveWorkDirFiles = (dirPath: string, files: { name: string; base64: string }[]) =>
-  electronBasicTsjrpcClient.saveWorkDirFiles({ dirPath, files }, workDirTool);
+  electronBasicTsjrpcClient.saveWorkDirFiles({ dirPath, files }, electronWorkDirTool);
 
-/** Preset folders living at the WorkDir root, keyed by media kind and the `other` fallback. */
-export const workDirPresetFolders = { image: 'images', video: 'video', audio: 'audio', other: 'other' } as const;
+/** Preset folders living at the WorkDir root, keyed by media kind, the font store and the `other` fallback. */
+export const workDirPresetFolders = {
+  image: 'images',
+  video: 'video',
+  audio: 'audio',
+  font: fontWorkDirFolder,
+  other: 'other',
+} as const;
 
 /** Preset folder at the WorkDir root matching a file's media kind, falling back to `other` for non-media files. */
 export const takeWorkDirPresetFolder = (fileName: string) =>
   workDirPresetFolders[
     takeMediaMimeByFileName(fileName).split('/')[0] as keyof typeof workDirPresetFolders
   ] ?? workDirPresetFolders.other;
-
-/** Strips the `data:<mime>;base64,` wrapper, leaving pure base64 with no line breaks. */
-const takeBase64FromDataUrl = (dataUrl: string) => dataUrl.slice(dataUrl.indexOf(',') + 1);
 
 /**
  * Saves dropped files, routing each file into its media-kind root preset folder
@@ -83,32 +92,17 @@ export const saveDroppedWorkDirFiles = async (rootDirPath: string, files: File[]
   return dirPaths.length === 1 ? dirPaths[0] : undefined;
 };
 
-const maxCachedWorkDirFileDataUrls = 40;
-const workDirFileDataUrlCache = new Map<string, string>();
+/** Custom-protocol URL for a WorkDir file — the main process streams it, so large videos never load as base64. */
+export const readWorkDirFileSrc = async (filePath: string): Promise<string | nil> => {
+  const url = await electronBasicTsjrpcClient.takeWorkDirFileUrl({ filePath }, electronWorkDirTool);
+  if (url) return url;
 
-export const takeCachedWorkDirFileDataUrl = (filePath: string) => workDirFileDataUrlCache.get(filePath);
+  // A restarted app forgets allowed roots, so re-watch the persisted root before giving up on the file.
+  const workDir = electronWorkDirAtom.get();
+  if (!workDir) return null;
 
-/** Inserts into the cache evicting the oldest entry once the cap is reached (md5-renamed paths make entries stale). */
-const cacheWorkDirFileDataUrl = (filePath: string, dataUrl: string) => {
-  if (workDirFileDataUrlCache.size >= maxCachedWorkDirFileDataUrls) {
-    const oldestKey = workDirFileDataUrlCache.keys().next().value;
-    if (oldestKey) workDirFileDataUrlCache.delete(oldestKey);
-  }
+  await watchWorkDir(workDir);
 
-  workDirFileDataUrlCache.set(filePath, dataUrl);
-};
-
-/** Reads a work-dir file once and caches its data-url — the same representation FileReader produces for uploads. */
-export const readWorkDirFileDataUrl = async (filePath: string): Promise<string | nil> => {
-  const cached = workDirFileDataUrlCache.get(filePath);
-  if (cached) return cached;
-
-  const base64 = await electronBasicTsjrpcClient.readWorkDirFileBase64({ filePath }, workDirTool);
-  if (!base64) return undefined;
-
-  const dataUrl = `data:${takeMediaMimeByFileName(filePath)};base64,${base64}`;
-  cacheWorkDirFileDataUrl(filePath, dataUrl);
-
-  return dataUrl;
+  return electronBasicTsjrpcClient.takeWorkDirFileUrl({ filePath }, electronWorkDirTool);
 };
 

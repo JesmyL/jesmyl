@@ -2,6 +2,9 @@ import { translateBase } from '#basis/locale';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { MyFileType } from '../model/enums';
 
+/** WorkDir root folder holding uploaded font files — the Electron counterpart of the PWA font cache. */
+export const fontWorkDirFolder = 'fonts';
+
 export const myFilesConfig: {
   [Type in MyFileType]: {
     type: Type;
@@ -42,7 +45,7 @@ export const myFilesConfig: {
       return translateBase(BaseLocaleKey.MyFilesTypesFontFile);
     },
     icon: 'TextAlignLeft',
-    ext: new Set(['ttf', 'otf']),
+    ext: new Set(['ttf', 'otf', 'woff2']),
   },
   [MyFileType.Other]: {
     type: MyFileType.Other,

@@ -50,8 +50,10 @@ import { Route as otherAppNameActionsDownIndexImport } from './tree/!other.$appN
 
 const StoragesRouteLazyImport = createFileRoute('/storages')()
 const QRouteLazyImport = createFileRoute('/q')()
+const PresentationsRouteLazyImport = createFileRoute('/presentations')()
 const GamerRouteLazyImport = createFileRoute('/gamer')()
 const ScheduleDayIndexLazyImport = createFileRoute('/schedule-day/')()
+const PresentationsIndexLazyImport = createFileRoute('/presentations/')()
 const PresentationIndexLazyImport = createFileRoute('/presentation/')()
 const GamerIndexLazyImport = createFileRoute('/gamer/')()
 const CmEditRouteLazyImport = createFileRoute('/cm/edit')()
@@ -59,6 +61,7 @@ const StoragesIIndexLazyImport = createFileRoute('/storages/i/')()
 const ScheduleDaySchwIndexLazyImport = createFileRoute('/schedule-day/$schw/')()
 const QRIndexLazyImport = createFileRoute('/q/r/')()
 const QAIndexLazyImport = createFileRoute('/q/a/')()
+const PresentationsIIndexLazyImport = createFileRoute('/presentations/i/')()
 const GamerIIndexLazyImport = createFileRoute('/gamer/i/')()
 const CmEditIndexLazyImport = createFileRoute('/cm/edit/')()
 const QRBlankLazyImport = createFileRoute('/q/r/$blank')()
@@ -100,6 +103,14 @@ const QRouteLazyRoute = QRouteLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./tree/q/route.lazy').then((d) => d.Route))
 
+const PresentationsRouteLazyRoute = PresentationsRouteLazyImport.update({
+  id: '/presentations',
+  path: '/presentations',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./tree/presentations/route.lazy').then((d) => d.Route),
+)
+
 const GamerRouteLazyRoute = GamerRouteLazyImport.update({
   id: '/gamer',
   path: '/gamer',
@@ -136,6 +147,14 @@ const ScheduleDayIndexLazyRoute = ScheduleDayIndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
   import('./tree/schedule-day/index.lazy').then((d) => d.Route),
+)
+
+const PresentationsIndexLazyRoute = PresentationsIndexLazyImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PresentationsRouteLazyRoute,
+} as any).lazy(() =>
+  import('./tree/presentations/index.lazy').then((d) => d.Route),
 )
 
 const PresentationIndexLazyRoute = PresentationIndexLazyImport.update({
@@ -239,6 +258,14 @@ const QAIndexLazyRoute = QAIndexLazyImport.update({
   path: '/a/',
   getParentRoute: () => QRouteLazyRoute,
 } as any).lazy(() => import('./tree/q/a/index.lazy').then((d) => d.Route))
+
+const PresentationsIIndexLazyRoute = PresentationsIIndexLazyImport.update({
+  id: '/i/',
+  path: '/i/',
+  getParentRoute: () => PresentationsRouteLazyRoute,
+} as any).lazy(() =>
+  import('./tree/presentations/i/index.lazy').then((d) => d.Route),
+)
 
 const GamerIIndexLazyRoute = GamerIIndexLazyImport.update({
   id: '/i/',
@@ -526,6 +553,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GamerRouteLazyImport
       parentRoute: typeof rootRoute
     }
+    '/presentations': {
+      id: '/presentations'
+      path: '/presentations'
+      fullPath: '/presentations'
+      preLoaderRoute: typeof PresentationsRouteLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/q': {
       id: '/q'
       path: '/q'
@@ -623,6 +657,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/presentation'
       preLoaderRoute: typeof PresentationIndexLazyImport
       parentRoute: typeof rootRoute
+    }
+    '/presentations/': {
+      id: '/presentations/'
+      path: '/'
+      fullPath: '/presentations/'
+      preLoaderRoute: typeof PresentationsIndexLazyImport
+      parentRoute: typeof PresentationsRouteLazyImport
     }
     '/schedule-day/': {
       id: '/schedule-day/'
@@ -742,6 +783,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/gamer/i'
       preLoaderRoute: typeof GamerIIndexLazyImport
       parentRoute: typeof GamerRouteLazyImport
+    }
+    '/presentations/i/': {
+      id: '/presentations/i/'
+      path: '/i'
+      fullPath: '/presentations/i'
+      preLoaderRoute: typeof PresentationsIIndexLazyImport
+      parentRoute: typeof PresentationsRouteLazyImport
     }
     '/q/a/': {
       id: '/q/a/'
@@ -1012,6 +1060,22 @@ const GamerRouteLazyRouteWithChildren = GamerRouteLazyRoute._addFileChildren(
   GamerRouteLazyRouteChildren,
 )
 
+interface PresentationsRouteLazyRouteChildren {
+  PresentationsIndexLazyRoute: typeof PresentationsIndexLazyRoute
+  PresentationsIIndexLazyRoute: typeof PresentationsIIndexLazyRoute
+}
+
+const PresentationsRouteLazyRouteChildren: PresentationsRouteLazyRouteChildren =
+  {
+    PresentationsIndexLazyRoute: PresentationsIndexLazyRoute,
+    PresentationsIIndexLazyRoute: PresentationsIIndexLazyRoute,
+  }
+
+const PresentationsRouteLazyRouteWithChildren =
+  PresentationsRouteLazyRoute._addFileChildren(
+    PresentationsRouteLazyRouteChildren,
+  )
+
 interface QRouteLazyRouteChildren {
   QIRoute: typeof QIRoute
   QABlankLazyRoute: typeof QABlankLazyRoute
@@ -1089,6 +1153,7 @@ export interface FileRoutesByFullPath {
   '/cm': typeof CmRouteRouteWithChildren
   '/tuner': typeof TunerRouteRouteWithChildren
   '/gamer': typeof GamerRouteLazyRouteWithChildren
+  '/presentations': typeof PresentationsRouteLazyRouteWithChildren
   '/q': typeof QRouteLazyRouteWithChildren
   '/storages': typeof StoragesRouteLazyRouteWithChildren
   '/!other/$appName': typeof otherAppNameRouteRouteWithChildren
@@ -1103,6 +1168,7 @@ export interface FileRoutesByFullPath {
   '/tuner/': typeof TunerIndexRoute
   '/gamer/': typeof GamerIndexLazyRoute
   '/presentation': typeof PresentationIndexLazyRoute
+  '/presentations/': typeof PresentationsIndexLazyRoute
   '/schedule-day': typeof ScheduleDayIndexLazyRoute
   '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/li/events': typeof CmLiEventsRoute
@@ -1120,6 +1186,7 @@ export interface FileRoutesByFullPath {
   '/cm/player': typeof CmPlayerIndexRoute
   '/cm/edit/': typeof CmEditIndexLazyRoute
   '/gamer/i': typeof GamerIIndexLazyRoute
+  '/presentations/i': typeof PresentationsIIndexLazyRoute
   '/q/a': typeof QAIndexLazyRoute
   '/q/r': typeof QRIndexLazyRoute
   '/schedule-day/$schw': typeof ScheduleDaySchwIndexLazyRoute
@@ -1159,6 +1226,7 @@ export interface FileRoutesByTo {
   '/tuner': typeof TunerIndexRoute
   '/gamer': typeof GamerIndexLazyRoute
   '/presentation': typeof PresentationIndexLazyRoute
+  '/presentations': typeof PresentationsIndexLazyRoute
   '/schedule-day': typeof ScheduleDayIndexLazyRoute
   '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/li/events': typeof CmLiEventsRoute
@@ -1176,6 +1244,7 @@ export interface FileRoutesByTo {
   '/cm/player': typeof CmPlayerIndexRoute
   '/cm/edit': typeof CmEditIndexLazyRoute
   '/gamer/i': typeof GamerIIndexLazyRoute
+  '/presentations/i': typeof PresentationsIIndexLazyRoute
   '/q/a': typeof QAIndexLazyRoute
   '/q/r': typeof QRIndexLazyRoute
   '/schedule-day/$schw': typeof ScheduleDaySchwIndexLazyRoute
@@ -1208,6 +1277,7 @@ export interface FileRoutesById {
   '/cm': typeof CmRouteRouteWithChildren
   '/tuner': typeof TunerRouteRouteWithChildren
   '/gamer': typeof GamerRouteLazyRouteWithChildren
+  '/presentations': typeof PresentationsRouteLazyRouteWithChildren
   '/q': typeof QRouteLazyRouteWithChildren
   '/storages': typeof StoragesRouteLazyRouteWithChildren
   '/!other/$appName': typeof otherAppNameRouteRouteWithChildren
@@ -1222,6 +1292,7 @@ export interface FileRoutesById {
   '/tuner/': typeof TunerIndexRoute
   '/gamer/': typeof GamerIndexLazyRoute
   '/presentation/': typeof PresentationIndexLazyRoute
+  '/presentations/': typeof PresentationsIndexLazyRoute
   '/schedule-day/': typeof ScheduleDayIndexLazyRoute
   '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/li/events': typeof CmLiEventsRoute
@@ -1239,6 +1310,7 @@ export interface FileRoutesById {
   '/cm/player/': typeof CmPlayerIndexRoute
   '/cm/edit/': typeof CmEditIndexLazyRoute
   '/gamer/i/': typeof GamerIIndexLazyRoute
+  '/presentations/i/': typeof PresentationsIIndexLazyRoute
   '/q/a/': typeof QAIndexLazyRoute
   '/q/r/': typeof QRIndexLazyRoute
   '/schedule-day/$schw/': typeof ScheduleDaySchwIndexLazyRoute
@@ -1272,6 +1344,7 @@ export interface FileRouteTypes {
     | '/cm'
     | '/tuner'
     | '/gamer'
+    | '/presentations'
     | '/q'
     | '/storages'
     | '/!other/$appName'
@@ -1286,6 +1359,7 @@ export interface FileRouteTypes {
     | '/tuner/'
     | '/gamer/'
     | '/presentation'
+    | '/presentations/'
     | '/schedule-day'
     | '/cm/edit/chord'
     | '/cm/li/events'
@@ -1303,6 +1377,7 @@ export interface FileRouteTypes {
     | '/cm/player'
     | '/cm/edit/'
     | '/gamer/i'
+    | '/presentations/i'
     | '/q/a'
     | '/q/r'
     | '/schedule-day/$schw'
@@ -1341,6 +1416,7 @@ export interface FileRouteTypes {
     | '/tuner'
     | '/gamer'
     | '/presentation'
+    | '/presentations'
     | '/schedule-day'
     | '/cm/edit/chord'
     | '/cm/li/events'
@@ -1358,6 +1434,7 @@ export interface FileRouteTypes {
     | '/cm/player'
     | '/cm/edit'
     | '/gamer/i'
+    | '/presentations/i'
     | '/q/a'
     | '/q/r'
     | '/schedule-day/$schw'
@@ -1388,6 +1465,7 @@ export interface FileRouteTypes {
     | '/cm'
     | '/tuner'
     | '/gamer'
+    | '/presentations'
     | '/q'
     | '/storages'
     | '/!other/$appName'
@@ -1402,6 +1480,7 @@ export interface FileRouteTypes {
     | '/tuner/'
     | '/gamer/'
     | '/presentation/'
+    | '/presentations/'
     | '/schedule-day/'
     | '/cm/edit/chord'
     | '/cm/li/events'
@@ -1419,6 +1498,7 @@ export interface FileRouteTypes {
     | '/cm/player/'
     | '/cm/edit/'
     | '/gamer/i/'
+    | '/presentations/i/'
     | '/q/a/'
     | '/q/r/'
     | '/schedule-day/$schw/'
@@ -1451,6 +1531,7 @@ export interface RootRouteChildren {
   CmRouteRoute: typeof CmRouteRouteWithChildren
   TunerRouteRoute: typeof TunerRouteRouteWithChildren
   GamerRouteLazyRoute: typeof GamerRouteLazyRouteWithChildren
+  PresentationsRouteLazyRoute: typeof PresentationsRouteLazyRouteWithChildren
   QRouteLazyRoute: typeof QRouteLazyRouteWithChildren
   StoragesRouteLazyRoute: typeof StoragesRouteLazyRouteWithChildren
   otherAppNameRouteRoute: typeof otherAppNameRouteRouteWithChildren
@@ -1465,6 +1546,7 @@ const rootRouteChildren: RootRouteChildren = {
   CmRouteRoute: CmRouteRouteWithChildren,
   TunerRouteRoute: TunerRouteRouteWithChildren,
   GamerRouteLazyRoute: GamerRouteLazyRouteWithChildren,
+  PresentationsRouteLazyRoute: PresentationsRouteLazyRouteWithChildren,
   QRouteLazyRoute: QRouteLazyRouteWithChildren,
   StoragesRouteLazyRoute: StoragesRouteLazyRouteWithChildren,
   otherAppNameRouteRoute: otherAppNameRouteRouteWithChildren,
@@ -1488,6 +1570,7 @@ export const routeTree = rootRoute
         "/cm",
         "/tuner",
         "/gamer",
+        "/presentations",
         "/q",
         "/storages",
         "/!other/$appName",
@@ -1535,6 +1618,13 @@ export const routeTree = rootRoute
         "/gamer/",
         "/gamer/i/",
         "/gamer/i/memory-giant/"
+      ]
+    },
+    "/presentations": {
+      "filePath": "presentations/route.lazy.tsx",
+      "children": [
+        "/presentations/",
+        "/presentations/i/"
       ]
     },
     "/q": {
@@ -1627,6 +1717,10 @@ export const routeTree = rootRoute
     "/presentation/": {
       "filePath": "presentation/index.lazy.tsx"
     },
+    "/presentations/": {
+      "filePath": "presentations/index.lazy.tsx",
+      "parent": "/presentations"
+    },
     "/schedule-day/": {
       "filePath": "schedule-day/index.lazy.tsx"
     },
@@ -1693,6 +1787,10 @@ export const routeTree = rootRoute
     "/gamer/i/": {
       "filePath": "gamer/i/index.lazy.tsx",
       "parent": "/gamer"
+    },
+    "/presentations/i/": {
+      "filePath": "presentations/i/index.lazy.tsx",
+      "parent": "/presentations"
     },
     "/q/a/": {
       "filePath": "q/a/index.lazy.tsx",

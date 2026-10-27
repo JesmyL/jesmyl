@@ -3,7 +3,7 @@ import { User } from 'node-telegram-bot-api';
 import { IndexAccessScopeRules, UserAccessRole } from 'shared/model/index/access-rights';
 import { DeviceId, Langi } from './enums';
 
-export const sokiAppNames = ['index', 'cm', 'tuner', 'q', 'bible', 'storages', 'gamer'] as const;
+export const sokiAppNames = ['index', 'cm', 'tuner', 'q', 'bible', 'storages', 'gamer', 'presentations'] as const;
 export type SokiAppName = (typeof sokiAppNames)[number];
 
 export const enum SokiError {

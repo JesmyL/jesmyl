@@ -1,3 +1,4 @@
+import { takeMediaMimeByFileName } from '#features/ElectronWorkDir/lib/electronWorkDir';
 import { useWorkDirFileSrc } from '#features/ElectronWorkDir/lib/useWorkDirFileSrc';
 import { isElectronApp } from '#shared/tsjrpc.electron/tsjrpc.electron.client';
 import { BackgroundMediaNode } from '#shared/ui/BackgroundMediaNode';
@@ -17,12 +18,14 @@ const useMyFileBackgroundNode = ({ bgFileId, withBg }: BroadcastBackgroundProps)
 const useWorkDirBackgroundNode = ({ bgFilePath, withBg }: BroadcastBackgroundProps) => {
   const src = useWorkDirFileSrc(withBg && bgFilePath ? bgFilePath : '');
 
-  return src ? (
+  if (!src || !bgFilePath) return null;
+
+  return (
     <BackgroundMediaNode
       src={src}
-      isVideo={src.startsWith('data:video/')}
+      isVideo={takeMediaMimeByFileName(bgFilePath).startsWith('video/')}
     />
-  ) : null;
+  );
 };
 
 const useBackgroundNodeByEnv = isElectronApp ? useWorkDirBackgroundNode : useMyFileBackgroundNode;

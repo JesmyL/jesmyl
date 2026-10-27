@@ -1,29 +1,49 @@
+import { translateBase } from '#basis/locale';
+import { isElectronApp } from '#shared/tsjrpc.electron/tsjrpc.electron.client';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmComLastOpenSchwAtom } from '$cm/entities/index';
 import { useAtomValue } from 'atomaric';
 import { ScheduleWidgetWidDef } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { BroadcastViewApp } from '../Broadcast.model';
 import { broadcastCurrentTextAppAtom } from '../atoms';
 import { isShowBroadcastInitialSlideAtom } from '../initial-slide-context';
+import { switchBroadcastApp } from '../lib/broadcast-live-data';
 
-export const BroadcastWelcomeQrSwitchButton = ({ toggleAppIcon }: { toggleAppIcon: KnownStameskaIconName }) => {
+const sourceAppConfigs: { app: BroadcastViewApp; icon: KnownStameskaIconName; title: BaseLocaleKey }[] = [
+  { app: 'bible', icon: 'Book02', title: BaseLocaleKey.Bible },
+  { app: 'cm', icon: 'BookOpen02', title: BaseLocaleKey.CmApp },
+  { app: 'presentations', icon: 'Presentation01', title: BaseLocaleKey.Presentations },
+];
+
+export const BroadcastWelcomeQrSwitchButton = () => {
+  const app = useAtomValue(broadcastCurrentTextAppAtom);
   const isInitialSlideShow = useAtomValue(isShowBroadcastInitialSlideAtom);
   const schw = useAtomValue(cmComLastOpenSchwAtom);
-
-  if (!schw || schw === ScheduleWidgetWidDef) return;
+  const isShowQr = schw != null && schw !== ScheduleWidgetWidDef;
 
   return (
     <div className="flex">
-      <LazyIcon
-        icon="QrCode"
-        className="pointer mr-2"
-        kind={isInitialSlideShow ? 'SolidRounded' : undefined}
-        onClick={isShowBroadcastInitialSlideAtom.do.toggle}
-      />
-      <LazyIcon
-        icon={toggleAppIcon}
-        className="pointer mr-2"
-        onClick={broadcastCurrentTextAppAtom.do.switch}
-      />
+      {!isShowQr || (
+        <LazyIcon
+          icon="QrCode"
+          className="pointer mr-2"
+          kind={isInitialSlideShow ? 'SolidRounded' : undefined}
+          onClick={isShowBroadcastInitialSlideAtom.do.toggle}
+        />
+      )}
+      {sourceAppConfigs.map(({ app: targetApp, icon, title }) =>
+        targetApp === 'presentations' && !isElectronApp ? null : (
+          <LazyIcon
+            key={targetApp}
+            icon={icon}
+            title={translateBase(title)}
+            className="pointer mr-2"
+            kind={targetApp === app ? 'SolidRounded' : undefined}
+            onClick={() => switchBroadcastApp(targetApp)}
+          />
+        ),
+      )}
     </div>
   );
 };

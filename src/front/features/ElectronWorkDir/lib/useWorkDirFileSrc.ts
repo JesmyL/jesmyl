@@ -1,19 +1,18 @@
 import { useEffect, useState } from 'react';
-import { readWorkDirFileDataUrl, takeCachedWorkDirFileDataUrl } from './electronWorkDir';
+import { readWorkDirFileSrc } from './electronWorkDir';
 
+/** Resolves a WorkDir file to its streamed custom-protocol URL. */
 export const useWorkDirFileSrc = (filePath: string) => {
-  const [src, setSrc] = useState<string | nil>(() =>
-    filePath ? takeCachedWorkDirFileDataUrl(filePath) : undefined,
-  );
+  const [resolved, setResolved] = useState<{ filePath: string; src: string } | nil>(null);
 
   useEffect(() => {
     if (!filePath) return;
 
     let isActive = true;
 
-    readWorkDirFileDataUrl(filePath)
-      .then(dataUrl => {
-        if (isActive && dataUrl) setSrc(dataUrl);
+    readWorkDirFileSrc(filePath)
+      .then(src => {
+        if (isActive && src) setResolved({ filePath, src });
       })
       .catch(() => {});
 
@@ -22,5 +21,5 @@ export const useWorkDirFileSrc = (filePath: string) => {
     };
   }, [filePath]);
 
-  return filePath ? src : undefined;
+  return filePath && resolved?.filePath === filePath ? resolved.src : undefined;
 };

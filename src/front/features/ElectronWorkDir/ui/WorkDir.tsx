@@ -3,17 +3,21 @@ import { Button, Skeleton } from '#shared/components';
 import { electronWorkDirAtom, electronWorkDirSubPathAtom } from '#shared/state/electron.atoms';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
+import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useAtomValue } from 'atomaric';
 import { DragEvent, useEffect, useState } from 'react';
-import { ElectronWorkDirFile, electronWorkDirFileMaxBytes } from 'shared/api/tsjrpc.electtron/basic';
+import { ElectronWorkDirFile } from 'shared/api/tsjrpc.electtron/basic';
 import { electronAppName } from 'shared/const/electron';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { objectValues } from 'shared/utils/object.utils';
+import { toast } from 'sonner';
 import { twJoin } from 'tailwind-merge';
+import { addFileToMyFiles, MyFilesFontFamilySelector, MyFileType } from 'x/my-files';
 import {
   createWorkDirFolder,
   ensureWorkDirFolders,
+  isDroppedFontFile,
   saveDroppedWorkDirFiles,
   selectWorkDir,
   watchWorkDir,
@@ -22,14 +26,21 @@ import {
 import { useWorkDirFileSrc } from '../lib/useWorkDirFileSrc';
 import { useWorkDirPack } from '../lib/useWorkDirPack';
 import {
-  dataTransferHasFiles,
+  markFileDragOver,
   putWorkDirBgToDataTransfer,
   putWorkDirNoBgToDataTransfer,
   takeWorkDirBgFromDataTransfer,
 } from '../lib/workDirDrag';
 import { ElectronWorkDirProps } from '../model';
 
-export const ElectronWorkDir = ({ onApplyBg, bgFilePath }: ElectronWorkDirProps) => {
+export const ElectronWorkDir = ({
+  onApplyBg,
+  bgFilePath,
+  fontFileId,
+  onApplyFont,
+  PptxPreview,
+  onPptxOpen,
+}: ElectronWorkDirProps) => {
   const workDir = useAtomValue(electronWorkDirAtom);
 
   if (!workDir) return <WorkDirPicker />;
@@ -40,6 +51,10 @@ export const ElectronWorkDir = ({ onApplyBg, bgFilePath }: ElectronWorkDirProps)
       dirPath={workDir}
       bgFilePath={bgFilePath}
       onApplyBg={onApplyBg}
+      fontFileId={fontFileId}
+      onApplyFont={onApplyFont}
+      PptxPreview={PptxPreview}
+      onPptxOpen={onPptxOpen}
     />
   );
 };
@@ -94,7 +109,15 @@ const WorkDirPicker = () => (
   </div>
 );
 
-const WorkDirBrowser = ({ dirPath, bgFilePath, onApplyBg }: ElectronWorkDirProps & { dirPath: string }) => {
+const WorkDirBrowser = ({
+  dirPath,
+  bgFilePath,
+  onApplyBg,
+  fontFileId,
+  onApplyFont,
+  PptxPreview,
+  onPptxOpen,
+}: ElectronWorkDirProps & { dirPath: string }) => {
   const subPath = useAtomValue(electronWorkDirSubPathAtom);
   const [refreshi, setRefreshi] = useState(0);
   const [isFileDropTarget, setIsFileDropTarget] = useState(false);
@@ -116,24 +139,36 @@ const WorkDirBrowser = ({ dirPath, bgFilePath, onApplyBg }: ElectronWorkDirProps
   }, [pack, subPath]);
 
   const acceptDroppedFiles = async (dropped: File[]) => {
-    const targetDirPath = await saveDroppedWorkDirFiles(dirPath, dropped);
+    const workDirFiles: File[] = [];
+    const fontFiles: File[] = [];
+
+    for (const file of dropped) (isDroppedFontFile(file) ? fontFiles : workDirFiles).push(file);
+
+    // A failed font must not cancel saving the media files of the same drop.
+    const fontSaves = await Promise.allSettled(fontFiles.map(file => addFileToMyFiles(file, MyFileType.Font)));
+
+    for (const fontSave of fontSaves)
+      if (fontSave.status === 'fulfilled') onApplyFont?.(fontSave.value);
+
+    const targetDirPath = workDirFiles.length ? await saveDroppedWorkDirFiles(dirPath, workDirFiles) : null;
     setRefreshi(it => it + 1);
 
     // Follow a homogeneous drop into its single preset folder; a mixed drop stays put.
     if (targetDirPath) electronWorkDirSubPathAtom.set(targetDirPath.slice(dirPath.length + 1));
+
+    const failedFontSave = fontSaves.find(fontSave => fontSave.status === 'rejected');
+    if (failedFontSave) throw failedFontSave.reason;
   };
 
-  const markFileDragOver = (event: DragEvent<HTMLDivElement>) => {
-    // Cancel every file dragover, otherwise the browser rejects the drop.
-    event.preventDefault();
-    if (dataTransferHasFiles(event.dataTransfer)) setIsFileDropTarget(true);
+  const markDragOver = (event: DragEvent<HTMLDivElement>) => {
+    if (markFileDragOver(event)) setIsFileDropTarget(true);
   };
 
   // Root-level folders of the workDir only — the JESMYL_PRO sentinel is never browsable.
   const folderOptions = (pack?.folders ?? []).filter(folder => folder !== electronAppName).map(makeFolderOption);
 
   return (
-    <div className="full-size flex flex-col">
+    <div className="full-size flex flex-col custom-align-items">
       <div className="flex gap-1 p-1 shrink-0">
         <div className="flex-1 min-w-0">
           <Dropdown
@@ -142,6 +177,16 @@ const WorkDirBrowser = ({ dirPath, bgFilePath, onApplyBg }: ElectronWorkDirProps
             onSelectId={electronWorkDirSubPathAtom.set}
           />
         </div>
+
+        {!onApplyFont || (
+          <div className="flex items-center gap-1 shrink-0">
+            <span className="text-xs">{translateBase(BaseLocaleKey.Font)}</span>
+            <MyFilesFontFamilySelector
+              fileId={fontFileId}
+              onSelect={onApplyFont}
+            />
+          </div>
+        )}
 
         <Button
           icon="FolderOpen"
@@ -155,8 +200,8 @@ const WorkDirBrowser = ({ dirPath, bgFilePath, onApplyBg }: ElectronWorkDirProps
           'flex-1 overflow-auto p-1 grid [grid-template-columns:repeat(auto-fill,minmax(120px,1fr))] gap-1 content-start',
           isFileDropTarget && 'outline-2 outline-x3 -outline-offset-2',
         )}
-        onDragEnter={markFileDragOver}
-        onDragOver={markFileDragOver}
+        onDragEnter={markDragOver}
+        onDragOver={markDragOver}
         onDragLeave={event => {
           if (event.currentTarget.contains(event.relatedTarget as Node | null)) return;
 
@@ -172,19 +217,23 @@ const WorkDirBrowser = ({ dirPath, bgFilePath, onApplyBg }: ElectronWorkDirProps
           if (takeWorkDirBgFromDataTransfer(dataTransfer) || !dataTransfer.files.length) return;
 
           // Snapshot the FileList synchronously — it is neutered once the drop handler returns.
-          void acceptDroppedFiles(Array.from(dataTransfer.files));
+          acceptDroppedFiles(Array.from(dataTransfer.files)).catch(error => toast(`${error}`, makeToastKOMoodConfig()));
         }}
       >
-        <WorkDirNoBgTile
-          isNoBgApplied={!bgFilePath}
-          onApplyBg={onApplyBg}
-        />
+        {!onApplyBg || (
+          <WorkDirNoBgTile
+            isNoBgApplied={!bgFilePath}
+            onApplyBg={onApplyBg}
+          />
+        )}
         {currentPack?.files.map(file => (
           <WorkDirFileTile
             key={file.path}
             file={file}
             bgFilePath={bgFilePath}
             onApplyBg={onApplyBg}
+            onPptxOpen={onPptxOpen}
+            PptxPreview={PptxPreview}
           />
         ))}
       </div>
@@ -192,16 +241,23 @@ const WorkDirBrowser = ({ dirPath, bgFilePath, onApplyBg }: ElectronWorkDirProps
   );
 };
 
-const OversizedFilePreview = ({ file }: { file: ElectronWorkDirFile }) => (
-  <Button
-    asSpan
-    icon="File02"
-    withoutAnimation
-    title={file.name}
-  />
-);
+const renderPreview = (
+  file: ElectronWorkDirFile,
+  src: string | nil,
+  PptxPreview: ElectronWorkDirProps['PptxPreview'],
+) => {
+  if (file.kind === 'pptx')
+    return PptxPreview ? (
+      <PptxPreview file={file} />
+    ) : (
+      <Button
+        asSpan
+        icon="File02"
+        withoutAnimation
+        title={file.name}
+      />
+    );
 
-const renderPreview = (file: ElectronWorkDirFile, src: string | nil) => {
   if (file.kind === 'audio')
     return (
       <Button
@@ -235,7 +291,7 @@ const renderPreview = (file: ElectronWorkDirFile, src: string | nil) => {
   );
 };
 
-const workDirTileClass = 'aspect-square flex flex-col gap-1 bg-x2 border border-x5 rounded p-1';
+const workDirTileClass = 'aspect-square flex flex-col gap-1 bg-x2 border border-x5 rounded p-1 custom-align-items';
 
 /** First grid cell — always draggable/clickable: applies the empty path, clearing the broadcast background. */
 const WorkDirNoBgTile = ({
@@ -266,30 +322,42 @@ const WorkDirFileTile = ({
   file,
   bgFilePath,
   onApplyBg,
+  onPptxOpen,
+  PptxPreview,
 }: {
   file: ElectronWorkDirFile;
-  bgFilePath?: string;
+  bgFilePath?: string | nil;
   onApplyBg?: (filePath: string) => void;
+  onPptxOpen?: (filePath: string) => void;
+  PptxPreview?: ElectronWorkDirProps['PptxPreview'];
 }) => {
   const isAudio = file.kind === 'audio';
-  const isOversized = file.size > electronWorkDirFileMaxBytes;
-  const isBgUsable = !isAudio && !isOversized && onApplyBg != null;
+  const isPptx = file.kind === 'pptx';
+  const isBgUsable = !isAudio && !isPptx && onApplyBg != null;
+  const isPptxOpenable = isPptx && onPptxOpen != null;
+  const isClickable = isBgUsable || isPptxOpenable;
   const isBgApplied = file.path === bgFilePath;
-  const src = useWorkDirFileSrc(isAudio || isOversized ? '' : file.path);
+  const src = useWorkDirFileSrc(isAudio || isPptx ? '' : file.path);
 
-  const applyBg = () => onApplyBg?.(file.path);
+  const onClick = isPptx
+    ? isPptxOpenable
+      ? () => onPptxOpen?.(file.path)
+      : undefined
+    : isBgUsable
+      ? () => onApplyBg?.(file.path)
+      : undefined;
 
   return (
     <div
-      className={twJoin(workDirTileClass, isBgApplied && 'ring-2 ring-x7', isBgUsable && 'pointer')}
-      onClick={isBgUsable ? applyBg : undefined}
+      className={twJoin(workDirTileClass, isBgApplied && 'ring-2 ring-x7', isClickable && 'pointer')}
+      onClick={onClick}
     >
       <div
         className="relative flex-1 min-h-0 flex center overflow-hidden rounded"
         draggable={isBgUsable}
         onDragStart={isBgUsable ? event => putWorkDirBgToDataTransfer(event.dataTransfer, file) : undefined}
       >
-        {isOversized ? <OversizedFilePreview file={file} /> : renderPreview(file, src)}
+        {renderPreview(file, src, PptxPreview)}
         <span className="absolute bottom-0 right-1 text-[10px] text-x7 bg-background/70 rounded px-1">{file.kind}</span>
       </div>
 

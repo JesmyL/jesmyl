@@ -31,7 +31,7 @@ export const BibleLiveControlled = memo(function BibleTr({
         />
       )}
       <BibleBroadcastControlled
-        head={<BroadcastWelcomeQrSwitchButton toggleAppIcon="Book02" />}
+        head={<BroadcastWelcomeQrSwitchButton />}
         headTitle={headTitle}
       />
     </>

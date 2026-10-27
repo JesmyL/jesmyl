@@ -1,6 +1,6 @@
-export type ElectronWorkDirFileKind = 'image' | 'video' | 'audio';
+export type ElectronWorkDirFileKind = 'image' | 'video' | 'audio' | 'pptx';
 
-/** Files above this size are never loaded as base64 — the main RPC returns nil and the UI shows a name tile instead. */
+/** Base64 reads above this size are refused by the main RPC — media streams through the `workdir://` protocol instead. */
 export const electronWorkDirFileMaxBytes = 20 * 1024 * 1024;
 
 export type ElectronWorkDirFile = {
@@ -20,6 +20,8 @@ export type ElectronBasicTsjrpcModel = {
   selectDir: (args: { create?: string }) => string | nil;
   readWorkDir: (args: { dirPath: string }) => ElectronWorkDirFolderPack | nil;
   readWorkDirFileBase64: (args: { filePath: string }) => string | nil;
+  /** Custom-protocol URL streamed by the main process — large videos never travel as base64. */
+  takeWorkDirFileUrl: (args: { filePath: string }) => string | nil;
   createWorkDirFolder: (args: { dirPath: string; name: string }) => string | nil;
   /** Ensures each named subfolder exists inside a work dir; returns true once all are created. */
   ensureWorkDirFolders: (args: { dirPath: string; names: string[] }) => boolean | nil;

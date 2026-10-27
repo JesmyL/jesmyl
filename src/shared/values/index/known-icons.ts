@@ -174,6 +174,7 @@ export const knownStameskaIconNames = {
   PlusSign: 0,
   PlusSignCircle: 0,
   PlusSignSquare: 0,
+  Presentation01: 0,
   Printer: 0,
   Previous: 0,
   PropertyEdit: 0,

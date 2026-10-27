@@ -8,6 +8,7 @@ import { BrutalScreen } from '#shared/ui/brutal-screen/BrutalScreen';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { isElectronApp } from '#shared/tsjrpc.electron/tsjrpc.electron.client';
 import { ScheduleWidgetAlarm } from '#widgets/schedule/alarm/Alarm';
 import { routingApps } from '$app/lib/configs';
 import { IndexAppFace } from '$index/entities/AppFace/ui/AppFace';
@@ -36,7 +37,7 @@ export const IndexOtherPage = () => {
   const appList = favouriteApps
     .concat(appNames.filter(appName => !favouriteApps.includes(appName)))
     .map(appName => {
-      if (appName === 'index' || routingApps[appName] == null || auth == null) return null;
+      if (appName === 'index' || routingApps[appName] == null || auth == null || (!isElectronApp && appName === 'presentations')) return null;
 
       return (
         <React.Fragment key={appName}>

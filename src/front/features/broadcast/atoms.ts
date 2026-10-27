@@ -1,8 +1,9 @@
+import { isElectronApp } from '#shared/tsjrpc.electron/tsjrpc.electron.client';
 import { complectIDB } from '$index/shared/state';
 import { Atom, atom } from 'atomaric';
-import { ScheduleWidgetWid, ScheduleWidgetWidDef } from 'shared/api';
-import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
-import { BroadcastViewApp } from './Broadcast.model';
+import { ScheduleWidgetWidDef } from 'shared/api';
+import { PresentationBroadcastLiveData } from 'shared/model/presentations';
+import { BroadcastLiveData, BroadcastViewApp } from './Broadcast.model';
 
 let isCanShowTextBroadcastAtom: Atom<boolean>;
 export const takeIsCanShowTextBroadcastAtom = () => (isCanShowTextBroadcastAtom ??= atom(false));
@@ -15,12 +16,15 @@ export const useScreenBroadcastConfigsValue = () => complectIDB.useValue.screenB
 
 export const broadcastCurrentTextAppAtom = atom((): BroadcastViewApp => 'cm', {
   storageKey: 'index:broadcastCurrentTextApp',
-  do: (set, get) => ({ switch: () => set(get() === 'cm' ? 'bible' : 'cm') }),
+  unzipValue: (value: BroadcastViewApp): BroadcastViewApp =>
+    value === 'presentations' && !isElectronApp ? 'cm' : value,
 });
 
 export const broadcastNextLiveDataAtom = atom(
-  (): { schw: ScheduleWidgetWid; data: IndexSchWBroadcastLiveDataValue } => ({
+  (): BroadcastLiveData => ({
     data: { fio: '', isHide: false },
     schw: ScheduleWidgetWidDef,
   }),
 );
+
+export const broadcastPresentationsLiveDataAtom = atom<PresentationBroadcastLiveData | nil>(null);

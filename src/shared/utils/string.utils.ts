@@ -3,6 +3,9 @@ import { slavicLowerLettersStr } from './cm/com/const';
 import { lazyInit } from './lazyInit';
 import { objectKeys } from './object.utils';
 
+/** Lowercased extension after the last dot — the whole lowercased name when it has no dot. */
+export const takeFileExtension = (fileName: string) => fileName.slice(fileName.lastIndexOf('.') + 1).toLowerCase();
+
 export const textToUpperCase = <Str extends string>(text: Str | nil) => (text?.toUpperCase() ?? '') as Uppercase<Str>;
 export const textToLowerCase = <Str extends string>(text: Str | nil) => (text?.toLowerCase() ?? '') as Lowercase<Str>;
 export const textToCapitalizeCase = <Str extends string>(text: Str) =>

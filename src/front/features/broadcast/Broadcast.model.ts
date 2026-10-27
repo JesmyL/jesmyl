@@ -1,3 +1,6 @@
+import { ScheduleWidgetWid } from 'shared/api';
+import { BroadcastLiveApp, IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
+
 export type BroadcastScreenProps = {
   configi?: number;
   win: Window;
@@ -6,4 +9,9 @@ export type BroadcastScreenProps = {
   forceViewApp?: BroadcastViewApp;
 };
 
-export type BroadcastViewApp = 'cm' | 'bible';
+export type BroadcastViewApp = BroadcastLiveApp;
+
+export type BroadcastLiveData = {
+  schw: ScheduleWidgetWid;
+  data: IndexSchWBroadcastLiveDataValue;
+};

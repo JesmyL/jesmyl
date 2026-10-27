@@ -1,6 +1,10 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { electronAppClientEventKey, electronAppInterfaceWindowKey, electronAppServerEventKey } from './const';
-import { ElectronAppWindowInvokeApiBox, ElectronAppWindowInvokeDataWithTool } from './model';
+import {
+  electronAppClientEventKey,
+  electronAppInterfaceWindowKey,
+  electronAppServerEventKey,
+} from '../../shared/const/electron';
+import type { ElectronAppWindowInvokeApiBox, ElectronAppWindowInvokeDataWithTool } from './model';
 
 const box: ElectronAppWindowInvokeApiBox = {
   invoke: args => ipcRenderer.invoke(electronAppClientEventKey, args),

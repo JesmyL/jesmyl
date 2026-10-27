@@ -3,11 +3,13 @@ import { electronPresentationTsjrpcClientBase } from '#basis/tsjrpc.electron/pre
 import { broadcastCurrentTextAppAtom } from '#features/broadcast/atoms';
 import { useScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
 import { scheduleFollowBroadcastSlideAtom } from '#features/broadcast/initial-slide-context';
+import { BroadcastWelcomeQrSwitchButton } from '#features/broadcast/ui/WelcomeQrSwitchButton';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { BibleLiveControlled } from '$bible/features/Live/ui/LiveBible';
 import { CmBroadcastFollowInitialSlide } from '$cm/features/broadcast';
 import { indexIDB, useAuth } from '$index/shared/state';
 import { schLiveTsjrpcClient } from '$index/shared/tsjrpc';
+import { PresentationsBroadcastControlled } from '$presentations/widgets/broadcast';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
@@ -20,7 +22,7 @@ import { CmScheduleWidgetBroadcastLiveCm } from './LiveCm';
 export const CmScheduleWidgetBroadcast = ({ schw }: { schw: ScheduleWidgetWid | und }) => {
   const auth = useAuth();
   const windows = useScreenBroadcastWindows();
-  const isCm = useAtomValue(broadcastCurrentTextAppAtom) === 'cm';
+  const viewApp = useAtomValue(broadcastCurrentTextAppAtom);
   const [isCantTranslateLive, setIsCantTranslateLive] = useState(true);
   const schedule = useLiveQuery(() => schw && indexIDB.db.schs.get(schw), [schw]);
 
@@ -48,20 +50,22 @@ export const CmScheduleWidgetBroadcast = ({ schw }: { schw: ScheduleWidgetWid | 
   if (schedule == null)
     return <div className="flex center full-size text-xKO">{translateBase(BaseLocaleKey.ScheduleNotFound)}</div>;
 
-  return isCm ? (
+  return viewApp === 'cm' ? (
     <CmScheduleWidgetBroadcastLiveCm
       isCantTranslateLive={isCantTranslateLive}
       fio={userName}
       headTitle={schedule.title}
       schw={schedule.w}
     />
-  ) : (
+  ) : viewApp === 'bible' ? (
     <BibleLiveControlled
       isCantTranslateLive={isCantTranslateLive}
       fio={userName}
       headTitle={schedule.title}
       schw={schedule.w}
     />
+  ) : (
+    <PresentationsBroadcastControlled head={<BroadcastWelcomeQrSwitchButton />} />
   );
 };
 

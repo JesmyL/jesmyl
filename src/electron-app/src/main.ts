@@ -6,13 +6,15 @@ import hostConfig from '../../../host-config.json';
 import { electronAppClientEventKey, electronAppName, electronAppWinListHolder } from './const';
 import { makeElectronDownHostUrl } from './lib';
 import { ElectronAppWindowInvokeProps } from './model';
-import { electronAppBasicTsjrpcBase } from './tsjrpc/bases/basic.server.base';
+import { electronAppBasicTsjrpcBase, registerWorkDirFileProtocol } from './tsjrpc/bases/basic.server.base';
+import { electronAppPresentationsTsjrpcBase } from './tsjrpc/bases/presentations.server.base';
 import { electronAppPresentationTsjrpcBase } from './tsjrpc/bases/presentation.server.base';
 import { tsjrpcElectronAppBaseNext } from './tsjrpc/init/tsjrpc.base.electron';
-import { takeElectronAppWebPreferences } from './webPreferences';
+import { takeElectronAppPartition, takeElectronAppWebPreferences } from './webPreferences';
 
 const gotTheLock = app.requestSingleInstanceLock();
 const isTestMode = process.env.JESMYL_TEST_RUNNER === 'true';
+const sessionPartition = takeElectronAppPartition(isTestMode);
 
 if (!gotTheLock && !isTestMode) {
   app.quit();
@@ -34,6 +36,8 @@ if (!gotTheLock && !isTestMode) {
   let isQuittingForUpdate = false;
 
   app.whenReady().then(async () => {
+    registerWorkDirFileProtocol(sessionPartition);
+
     if (isProd) {
       try {
         autoUpdater.logger = console;
@@ -91,9 +95,7 @@ if (!gotTheLock && !isTestMode) {
       y,
       backgroundColor: '#000000',
       icon: path.join(__dirname, '../assets/img/ico-512x512.png'),
-      webPreferences: isTestMode
-        ? takeElectronAppWebPreferences('persist:jesmyl_test')
-        : takeElectronAppWebPreferences(),
+      webPreferences: takeElectronAppWebPreferences(sessionPartition),
     }));
 
     manage(win);
@@ -157,4 +159,5 @@ if (!gotTheLock && !isTestMode) {
 }
 
 electronAppBasicTsjrpcBase.$$register();
+electronAppPresentationsTsjrpcBase.$$register();
 electronAppPresentationTsjrpcBase.$$register();

@@ -15,6 +15,7 @@ import { BroadcastScreenProps } from './Broadcast.model';
 import { BroadcastTextScreen } from './BroadcastTextScreen';
 import { AlertLineSlideText } from './controls/alert-line/AlertLineSlideText';
 import { isShowBroadcastTextAtom, useBroadcastInitialSlideValue } from './initial-slide-context';
+import { PresentationBroadcastScreen } from './ui/PresentationScreen';
 
 export const BroadcastScreen = (props: BroadcastScreenProps) => {
   const app = useAtomValue(broadcastCurrentTextAppAtom);
@@ -25,6 +26,7 @@ export const BroadcastScreen = (props: BroadcastScreenProps) => {
   const config = useCmBroadcastScreenConfig(props.configi ?? 0);
 
   const isShowInitialSlide = !(props.isTech || !initialSlide);
+  const viewApp = forceViewApp ?? props.forceViewApp ?? app;
 
   return (
     <>
@@ -36,8 +38,10 @@ export const BroadcastScreen = (props: BroadcastScreenProps) => {
         $isShowTranslatedText={isShowTranslatedText && !isShowInitialSlide}
       >
         <BroadcastTextScreen key="BroadcastTextScreen">
-          {(forceViewApp ?? props.forceViewApp ?? app) === 'bible' ? (
+          {viewApp === 'bible' ? (
             <BibleBroadcastScreenCurrentScreen {...props} />
+          ) : viewApp === 'presentations' ? (
+            <PresentationBroadcastScreen />
           ) : (
             <CmBroadcastSlidesContext textCase={config?.case}>
               {isTrackBroadcast ? (
