@@ -7,7 +7,9 @@ export const BibleBroadcastWorkDir = () => {
   return (
     <ElectronWorkDir
       bgFilePath={currentConfig?.bgFilePath}
+      fontFileId={currentConfig?.fontFileId}
       onApplyBg={filePath => bibleBroadcastUpdateCurrentConfig({ bgFilePath: filePath, withBg: !!filePath })}
+      onApplyFont={fontFileId => bibleBroadcastUpdateCurrentConfig({ fontFileId })}
     />
   );
 };

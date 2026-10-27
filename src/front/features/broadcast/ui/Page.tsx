@@ -1,3 +1,4 @@
+import { electronPresentationTsjrpcClientBase } from '#basis/tsjrpc.electron/presentation.cli.base';
 import { BibleBroadcastSlide } from '$bible/entities/broadcast';
 import { CmBroadcastFollowInitialSlide } from '$cm/features/broadcast/ui/FollowInitialSlide';
 import { CmBroadcastLiveScreen } from '$cm/features/broadcast/ui/Screen';
@@ -38,3 +39,5 @@ export const PresentationPage = () => {
     </div>
   );
 };
+
+electronPresentationTsjrpcClientBase.$$register();

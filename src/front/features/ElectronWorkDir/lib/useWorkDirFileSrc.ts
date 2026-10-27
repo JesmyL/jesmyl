@@ -14,7 +14,7 @@ export const useWorkDirFileSrc = (filePath: string) => {
       .then(src => {
         if (isActive && src) setResolved({ filePath, src });
       })
-      .catch(() => {});
+      .catch(error => console.error('[useWorkDirFileSrc]', error));
 
     return () => {
       isActive = false;

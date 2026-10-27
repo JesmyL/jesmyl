@@ -10,11 +10,13 @@ import { electronAppBasicTsjrpcBase, registerWorkDirFileProtocol } from './tsjrp
 import { electronAppPresentationsTsjrpcBase } from './tsjrpc/bases/presentations.server.base';
 import { electronAppPresentationTsjrpcBase } from './tsjrpc/bases/presentation.server.base';
 import { tsjrpcElectronAppBaseNext } from './tsjrpc/init/tsjrpc.base.electron';
-import { takeElectronAppPartition, takeElectronAppWebPreferences } from './webPreferences';
+import { setElectronAppSessionPartition, takeElectronAppPartition, takeElectronAppWebPreferences } from './webPreferences';
 
 const gotTheLock = app.requestSingleInstanceLock();
 const isTestMode = process.env.JESMYL_TEST_RUNNER === 'true';
 const sessionPartition = takeElectronAppPartition(isTestMode);
+
+setElectronAppSessionPartition(sessionPartition);
 
 if (!gotTheLock && !isTestMode) {
   app.quit();

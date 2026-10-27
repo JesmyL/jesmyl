@@ -1,6 +1,6 @@
 import { BrowserWindow, Display, screen } from 'electron';
 import { electronAppWinListHolder } from '../../const';
-import { takeElectronAppWebPreferences } from '../../webPreferences';
+import { takeElectronAppSessionPartition, takeElectronAppWebPreferences } from '../../webPreferences';
 import { TsjrpcElectronAppBase } from '../init/tsjrpc.base.electron';
 import { electronPresentationTsjrpcAppServerMethods } from '../methods/presentation.server.methods';
 import { ElectronPresentationTsjrpcModel } from '../model';
@@ -71,7 +71,7 @@ const createSlideshowWindow = async (display: Display | undefined, host: string,
     kiosk: true,
     show: false,
     backgroundColor: '#000000',
-    webPreferences: takeElectronAppWebPreferences(),
+    webPreferences: takeElectronAppWebPreferences(takeElectronAppSessionPartition()),
   }));
 
   let timeout: NodeJS.Timeout;

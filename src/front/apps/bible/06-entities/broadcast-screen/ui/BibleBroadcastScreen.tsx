@@ -1,9 +1,14 @@
 import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
 import { useBroadcastBackgroundNode } from '#features/broadcast/complect/hooks/useBroadcastBackgroundNode';
+import { useFontFileDrop } from '#features/ElectronWorkDir/lib/useFontFileDrop';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useBibleBroadcastScreenWrapperStyle } from '$bible/entities/broadcast';
+import {
+  bibleBroadcastUpdateCurrentConfig,
+  useBibleBroadcastScreenWrapperStyle,
+} from '$bible/entities/broadcast';
 import { useRef, useState } from 'react';
 import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
+import { twJoin } from 'tailwind-merge';
 import { useApplyScreenFontFamilyEffect } from 'x/my-files';
 import { BibleBroadcastScreenAddressContainer } from '../sub-ui/AddressContainer';
 import { BibleBroadcastScreenAddressPanel } from '../sub-ui/AddressPanel';
@@ -29,13 +34,20 @@ export const BibleBroadcastScreenScreen = (props: Props) => {
     withBg: props.bibleConfig?.withBg,
   });
 
-  useApplyScreenFontFamilyEffect(props.bibleConfig?.bgFileId, props.win);
+  useApplyScreenFontFamilyEffect(props.bibleConfig?.fontFileId, props.win);
+  const { isFileDragOver, dropTargetProps } = useFontFileDrop(fontFileId =>
+    bibleBroadcastUpdateCurrentConfig({ fontFileId }),
+  );
 
   return (
     <div
-      className="relative full-size bg-black white-pre-line"
+      className={twJoin(
+        'relative full-size bg-black white-pre-line',
+        isFileDragOver && 'outline-2 outline-x3 -outline-offset-2',
+      )}
       style={wrapperStyle}
       ref={wrapperRef}
+      {...dropTargetProps}
     >
       {props.isTech && (
         <>

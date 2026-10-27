@@ -24,10 +24,12 @@ export const MyFilesFontFamilySelector = ({ fileId, onSelect }: Props) => {
       ]}
       undTitle={translateBase(BaseLocaleKey.ByDefault)}
       onSelectId={fileId =>
-        applyFontFamilyFromMyFiles(window, fileId).then(isLoaded => {
-          if (!isLoaded) throw translateBase(BaseLocaleKey.Error);
-          onSelect(fileId);
-        })
+        applyFontFamilyFromMyFiles(window, fileId)
+          .catch(() => false)
+          .then(isLoaded => {
+            if (!isLoaded) throw translateBase(BaseLocaleKey.Error);
+            onSelect(fileId);
+          })
       }
     />
   );

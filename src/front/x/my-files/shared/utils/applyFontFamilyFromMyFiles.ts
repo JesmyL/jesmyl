@@ -1,8 +1,13 @@
 import { bundledFontFamilies, MyFileId } from '../model/common';
-import { myFilesIDB } from '../state/idb';
+import { takeFontFileBuffer } from './fontStorage';
 
 export const takeMyFileFontFamily = (fileId: MyFileId) =>
-  typeof fileId === 'number' ? (bundledFontFamilies.get(fileId)?.title ?? `${fileId}`) : fileId;
+  typeof fileId === 'number' ? (bundledFontFamilies.get(fileId)?.title ?? `${fileId}`) : `font-${fileId}`;
+
+const reportFontFamilyFailure = (family: string, reason: unknown) => {
+  console.warn(`Failed to load font family "${family}"`, reason);
+  return false;
+};
 
 /** Resolves `true` when the family is ready to render, `false` when it could not be loaded. */
 export const applyFontFamilyFromMyFiles = async (win: Window | nil, fileId: MyFileId | nil) => {
@@ -16,18 +21,19 @@ export const applyFontFamilyFromMyFiles = async (win: Window | nil, fileId: MyFi
   const src =
     typeof fileId === 'number'
       ? bundledFontFamilies.get(fileId)?.src
-      : await myFilesIDB.tb.files.get(fileId).then(font => font?.file.arrayBuffer());
+      : await takeFontFileBuffer(fileId);
 
   if (src == null) return false;
 
-  return new FontFace(family, typeof src === 'string' ? `url(${src})` : src)
-    .load()
-    .then(face => {
-      win.document.fonts.add(face);
-      return true;
-    })
-    .catch(reason => {
-      console.warn(`Failed to load font family "${family}"`, reason);
-      return false;
-    });
+  try {
+    return new FontFace(family, typeof src === 'string' ? `url(${src})` : src)
+      .load()
+      .then(face => {
+        win.document.fonts.add(face);
+        return true;
+      })
+      .catch(reason => reportFontFamilyFailure(family, reason));
+  } catch (reason) {
+    return reportFontFamilyFailure(family, reason);
+  }
 };

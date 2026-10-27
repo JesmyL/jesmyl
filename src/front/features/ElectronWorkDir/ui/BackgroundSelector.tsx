@@ -8,7 +8,7 @@ import { useWorkDirPack } from '../lib/useWorkDirPack';
 
 interface Props {
   bgFilePath?: string;
-  onSelect: (filePath: string) => void;
+  onSelect: (filePath: string | und) => void;
 }
 
 /** Compact Electron background picker — the WorkDir's image/video files, without the full folder browser. */

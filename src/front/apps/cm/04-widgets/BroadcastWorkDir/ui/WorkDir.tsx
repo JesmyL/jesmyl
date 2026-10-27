@@ -8,7 +8,9 @@ export const CmBroadcastWorkDir = () => {
   return (
     <ElectronWorkDir
       bgFilePath={currentConfig?.bgFilePath}
+      fontFileId={currentConfig?.fontFileId}
       onApplyBg={filePath => updateCmConfig({ bgFilePath: filePath, withBg: !!filePath })}
+      onApplyFont={fontFileId => updateCmConfig({ fontFileId })}
     />
   );
 };

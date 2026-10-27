@@ -3,11 +3,13 @@ import { makeBroadcastTextStroke } from '#features/broadcast/complect/defaults';
 import { takeScreenBroadcastBackgroundStyles } from '#features/broadcast/complect/hooks/background-styles';
 import { useBroadcastBackgroundNode } from '#features/broadcast/complect/hooks/useBroadcastBackgroundNode';
 import { ScreenTranslateCurrentPositionConfigurators } from '#features/broadcast/complect/position/Position';
+import { useFontFileDrop } from '#features/ElectronWorkDir/lib/useFontFileDrop';
 import { CmBroadcastShowChordedSlideMode } from '#shared/model/cm/Cm.model';
 import { HorizontalDirection } from '#shared/model/Direction';
 import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
 import { cmBroadcastDefaultConfig } from '$cm/shared/const/broadcast';
+import { useCmBroadcastUpdateCurrentConfig } from '$cm/shared/lib/broadcast';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -16,6 +18,7 @@ import { useRef } from 'react';
 import { CmBroadcastScreenConfig } from 'shared/model/cm/broadcast';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
+import { twJoin } from 'tailwind-merge';
 import { useApplyScreenFontFamilyEffect } from 'x/my-files';
 import { useCmBroadcastScreenStyle } from '../lib/get-style';
 import { CmBroadcastSubScreen } from './SubScreen';
@@ -52,6 +55,8 @@ export const CmBroadcastScreen = (props: Props) => {
   });
 
   useApplyScreenFontFamilyEffect(props.cmConfig?.fontFileId, props.win);
+  const updateConfig = useCmBroadcastUpdateCurrentConfig();
+  const { isFileDragOver, dropTargetProps } = useFontFileDrop(fontFileId => updateConfig({ fontFileId }));
   let nextSlideNode = null;
 
   if (props.cmConfig?.subs?.next) {
@@ -76,9 +81,13 @@ export const CmBroadcastScreen = (props: Props) => {
 
   return (
     <div
-      className="relative full-size bg-black overflow-hidden"
+      className={twJoin(
+        'relative full-size bg-black overflow-hidden',
+        isFileDragOver && 'outline-2 outline-x3 -outline-offset-2',
+      )}
       style={takeScreenBroadcastBackgroundStyles(props.cmConfig)}
       ref={wrapperRef}
+      {...dropTargetProps}
     >
       {background}
       {props.isTech && props.cmConfig && (

@@ -1,12 +1,10 @@
 import { translateBase } from '#basis/locale';
-import { convertFileToBase64 } from '#shared/lib/convertFileToBase64';
 import { defaultPreventer } from '#shared/lib/event-funcs';
-import md5 from 'md5';
 import { ChangeEvent, useRef, useState } from 'react';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { twMerge } from 'tailwind-merge';
 import { MyFileBox } from 'x/my-files/shared/model/common';
-import { myFilesIDB } from 'x/my-files/shared/state/idb';
+import { addFileToMyFiles } from 'x/my-files/shared/utils/addFileToMyFiles';
 import { takeFileType } from '../lib/takeFileType';
 
 export const MyFilesUploader = ({
@@ -28,16 +26,9 @@ export const MyFilesUploader = ({
 
     const fileBoxes = await Promise.all(
       Array.from(event.target?.files ?? []).map(async file => {
-        const prevFileBox = await myFilesIDB.tb.files.get({ 'file.name': file.name });
+        const type = takeFileType(file);
 
-        if (prevFileBox?.file.size === file.size) return prevFileBox;
-
-        const id = md5(await convertFileToBase64(file));
-        const box = { file, id, type: takeFileType(file.type) };
-
-        myFilesIDB.tb.files.put(box);
-
-        return box;
+        return { file, id: await addFileToMyFiles(file, type), type };
       }),
     );
 
