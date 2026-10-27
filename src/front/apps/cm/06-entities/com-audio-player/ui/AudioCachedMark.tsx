@@ -6,6 +6,7 @@ import { CmAudioSrc } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { emptyFunc } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
+import { CmComAudioPlayerSrcState } from '../model';
 import {
   cmComAudioPlayerCacheSrc,
   cmComAudioPlayerUncacheSrc,
@@ -31,15 +32,15 @@ export const CmComAudioPlayerCacheButton = ({ src, comName, className }: ButtonP
     <TheIconLoading
       isLoading={isLoading}
       icon="CloudDownload"
-      iconKind={state === 'cached' ? 'SolidRounded' : undefined}
-      className={twMerge('pointer', state === 'error' && 'text-xKO', className)}
+      iconKind={state === CmComAudioPlayerSrcState.Cached ? 'SolidRounded' : undefined}
+      className={twMerge('pointer', state === CmComAudioPlayerSrcState.Error && 'text-xKO', className)}
       onClick={async event => {
         event.stopPropagation();
         if (isLoading) return;
 
         setIsLoading(true);
         try {
-          if (state !== 'cached') {
+          if (state !== CmComAudioPlayerSrcState.Cached) {
             if (await cmComAudioPlayerCacheSrc(src).catch(emptyFunc)) await cmComAudioPlayerCacheToast([src], comName);
           } else if (await confirm(translateBase(BaseLocaleKey.CmCacheDeleteDescription))) {
             await cmComAudioPlayerUncacheSrc(src, comName);

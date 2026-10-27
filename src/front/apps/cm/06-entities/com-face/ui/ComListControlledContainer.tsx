@@ -1,9 +1,9 @@
 import { ContextMenu } from '#shared/components/ui/context-menu';
-import { useCmComLastOpenComw } from '$cm/entities/com';
 import { ReactNode, RefObject, useState } from 'react';
 import { CmComWid } from 'shared/api';
 import { checkIsNaN } from 'shared/utils/checkIs';
 import { cmComFaceCurrentComwIdPrefix } from '../const/ids';
+import { useCmComFaceCurrentComw } from '../lib/useCurrentComw';
 import { StyledCmComFaceList } from '../style/StyledComList';
 import { CmComFaceListProps } from '../model/model';
 import { CmComFaceContextMenu } from './ComFaceContextMenu';
@@ -17,7 +17,7 @@ interface Props extends CmComFaceListProps {
 export const CmComFaceListControlledContainer = (props: Props) => {
   const [selectedComw, setSelectedComw] = useState<CmComWid | null>(null);
   const [isSelected, setIsSelected] = useState(false);
-  const lastOpenComw = useCmComLastOpenComw();
+  const currentComw = useCmComFaceCurrentComw(props);
 
   const onPoinertDown = (event: { target: unknown }) => {
     if (props.selectable === false) return;
@@ -43,7 +43,7 @@ export const CmComFaceListControlledContainer = (props: Props) => {
         <ContextMenu.Trigger>
           <CmComFaceListPreviousSibling />
           <StyledCmComFaceList
-            $ccomw={lastOpenComw}
+            $ccomw={currentComw}
             $accentComw={isSelected ? selectedComw : null}
             $comTitles={props.titles}
             className={props.className}

@@ -9,6 +9,7 @@ import { Bool } from 'shared/enums';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { emptyFunc } from 'shared/utils';
 import { toast } from 'sonner';
+import { CmComAudioPlayerCacheState, CmComAudioPlayerSrcState } from '../model';
 
 /**
  * Browser Cache Storage bucket holding tracks cached through the manual cloud button.
@@ -17,7 +18,7 @@ import { toast } from 'sonner';
 export const cmComAudioPlayerCacheName = 'audio-cache';
 
 /** Per-track cache state: `cached` plays from storage; `error` marks the last failed attempt. Absence is "not cached". */
-export const cmComAudioPlayerSrcStatesAtom = atom<PRecord<CmAudioSrc, 'cached' | 'error'>>({});
+export const cmComAudioPlayerSrcStatesAtom = atom<PRecord<CmAudioSrc, CmComAudioPlayerSrcState>>({});
 
 /** Srcs present in Cache Storage, mirrored reactively so the "cached" tracklist reacts to cache/uncache actions. */
 export const cmComAudioPlayerCachedSrcsAtom = atom<Set<CmAudioSrc>>(new Set());
@@ -39,7 +40,7 @@ const takeCmComAudioPlayerCacheUrls = (src: CmAudioSrc) => [
 /** In-flight cache jobs keyed by src, so concurrent requests for the same track share one fetch. */
 const inFlightCacheJobs = new Map<CmAudioSrc, Promise<Bool>>();
 
-const setCmComAudioPlayerSrcState = (src: CmAudioSrc, state: 'cached' | 'error') =>
+const setCmComAudioPlayerSrcState = (src: CmAudioSrc, state: CmComAudioPlayerSrcState) =>
   cmComAudioPlayerSrcStatesAtom.set(prev => (prev[src] === state ? prev : { ...prev, [src]: state }));
 
 const clearCmComAudioPlayerSrcStates = (srcs: CmAudioSrc[]) =>
@@ -108,7 +109,7 @@ export const isCmComAudioPlayerSrcCached = async (src: CmAudioSrc): Promise<Bool
   const cachedResponse = await takeCmComAudioPlayerCachedResponse(src);
 
   if (cachedResponse) {
-    setCmComAudioPlayerSrcState(src, 'cached');
+    setCmComAudioPlayerSrcState(src, CmComAudioPlayerSrcState.Cached);
     return Bool.True;
   }
 
@@ -295,12 +296,12 @@ export const cmComAudioPlayerCacheSrc = (src: CmAudioSrc): Promise<Bool> => {
 
       const cache = await caches.open(cmComAudioPlayerCacheName);
       await putCmComAudioPlayerTrack(cache, takeCmComAudioPlayerCacheUrl(src));
-      setCmComAudioPlayerSrcState(src, 'cached');
+      setCmComAudioPlayerSrcState(src, CmComAudioPlayerSrcState.Cached);
       addCmComAudioPlayerCachedSrc(src);
 
       return Bool.True;
     } catch (error) {
-      setCmComAudioPlayerSrcState(src, 'error');
+      setCmComAudioPlayerSrcState(src, CmComAudioPlayerSrcState.Error);
       throw error;
     }
   });
@@ -338,7 +339,7 @@ export const cmComAudioPlayerUncacheSrc = async (src: CmAudioSrc, comName: strin
   }
 };
 
-/** Drops a com's tracks from the cache (used when the com is un-favourited or its bulk cloud is switched off). */
+/** Drops a com's tracks from the cache (used by the bulk cache/uncache control). */
 export const cmComAudioPlayerUncacheCom = async (comw: CmComWid) => {
   try {
     const com = await cmIDB.tb.coms.get(comw);
@@ -395,18 +396,19 @@ export const useCmComAudioPlayerSrcState = (src: CmAudioSrc) => {
 };
 
 /** Aggregated cache state of a com's tracks, for the bulk cache tool. */
-export const useCmComAudioPlayerComCacheState = (srcs: CmAudioSrc[] | nil): 'none' | 'some' | 'all' => {
+export const useCmComAudioPlayerComCacheState = (srcs: CmAudioSrc[] | nil): CmComAudioPlayerCacheState => {
   const states = useAtomValue(cmComAudioPlayerSrcStatesAtom);
 
   useEffect(() => {
     srcs?.forEach(hydrateCmComAudioPlayerSrc);
   }, [srcs]);
 
-  const cachedCount = srcs?.reduce((count, src) => count + (states[src] === 'cached' ? 1 : 0), 0) ?? 0;
+  const cachedCount =
+    srcs?.reduce((count, src) => count + (states[src] === CmComAudioPlayerSrcState.Cached ? 1 : 0), 0) ?? 0;
 
-  if (!srcs?.length || !cachedCount) return 'none';
+  if (!srcs?.length || !cachedCount) return CmComAudioPlayerCacheState.None;
 
-  return cachedCount === srcs.length ? 'all' : 'some';
+  return cachedCount === srcs.length ? CmComAudioPlayerCacheState.All : CmComAudioPlayerCacheState.Some;
 };
 
 /** Whether the whole bucket was already reconciled in this session, so remounts don't re-read it. */

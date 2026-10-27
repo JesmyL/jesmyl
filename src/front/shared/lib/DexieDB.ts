@@ -3,13 +3,19 @@ import Dexie, { EntityTable, type Transaction } from 'dexie';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useCallback } from 'react';
 import { checkIsArray, checkIsFunction } from 'shared/utils/checkIs';
-import { forEachObjectEntries, mapObjectEntries, objectLength } from 'shared/utils/object.utils';
+import { forEachObjectEntries, mapObjectEntries } from 'shared/utils/object.utils';
 
 const keyvalues = '%keyvalues%';
 
 export type DexiedValueSetter<Store, K extends keyof Store, RetVal = void> = (
   value: Store[K] | ((val: Store[K]) => Store[K]),
 ) => RetVal;
+
+export type DexieSchemaExtra = [
+  version: number,
+  stores: Record<string, string | null>,
+  upgrade?: (transaction: Transaction) => PromiseLike<unknown> | void,
+];
 
 export class DexieDB<Store> {
   db: Dexie &
@@ -43,6 +49,7 @@ export class DexieDB<Store> {
     }>,
     version = 1,
     upgrade?: (transaction: Transaction) => PromiseLike<unknown>,
+    schemaExtras?: DexieSchemaExtra[],
   ) {
     this.tb = this.db = new Dexie(storageName) as never;
 
@@ -150,6 +157,18 @@ export class DexieDB<Store> {
     const versionedDb = this.db.version(version).stores(stores);
     if (upgrade) versionedDb.upgrade(upgrade);
 
+    /**
+     * Legacy stores are dropped only through Dexie schema steps (`{ storeName: null }`).
+     * A parallel native `indexedDB.open` with a version bump is forbidden here: it races Dexie's
+     * own upgrade transaction and aborts it (AbortError), after which every query on this database
+     * hangs and the app renders an empty shell. Unknown stores left by removed features are simply
+     * ignored by Dexie, so a declaration step is enough.
+     */
+    schemaExtras?.forEach(([extraVersion, extraStores, extraUpgrade]) => {
+      const extraVersionedDb = this.db.version(extraVersion).stores(extraStores);
+      if (extraUpgrade) extraVersionedDb.upgrade(extraUpgrade);
+    });
+
     if ('lastModifiedAt' in defaults) {
       (async () => {
         type WithLastModifiedAt = { lastModifiedAt(set?: number): Promise<number> };
@@ -185,43 +204,6 @@ export class DexieDB<Store> {
 
         this.resetLastModifiedAt = (() => update(0)) as never;
       })();
-    }
-
-    if (typeof window !== 'undefined') {
-      setTimeout(() => {
-        try {
-          const openRequest = indexedDB.open(storageName);
-          openRequest.onsuccess = event => {
-            const dbInstance = (event.target as IDBOpenDBRequest).result;
-            const currentVersion = dbInstance.version;
-            const updates = Array.from(dbInstance.objectStoreNames).filter(tableName => !(tableName in stores));
-
-            if (objectLength(updates)) {
-              dbInstance.close();
-
-              const upgradeRequest = indexedDB.open(storageName, currentVersion + 1);
-              upgradeRequest.onupgradeneeded = e => {
-                const upgradeDb = (e.target as IDBOpenDBRequest).result;
-                updates.forEach(tableName => {
-                  if (upgradeDb.objectStoreNames.contains(tableName)) {
-                    upgradeDb.deleteObjectStore(tableName);
-                  }
-                });
-              };
-              upgradeRequest.onsuccess = e => {
-                (e.target as IDBOpenDBRequest).result.close();
-              };
-            } else {
-              dbInstance.close();
-            }
-          };
-          openRequest.onerror = e => {
-            console.error('Ошибка проверки структуры таблиц через нативный indexedDB:', e);
-          };
-        } catch (e) {
-          console.error('Не удалось запустить очистку старых таблиц:', e);
-        }
-      }, 500);
     }
   }
 

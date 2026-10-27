@@ -1,6 +1,7 @@
 import { translateBase } from '#basis/locale';
 import { useCmComCurrent } from '$cm/entities/com';
 import {
+  CmComAudioPlayerCacheState,
   cmComAudioPlayerCacheSrc,
   cmComAudioPlayerUncacheCom,
   cmComAudioPlayerCacheToast,
@@ -22,14 +23,17 @@ export const CmComToolCacheTracks = () => {
 
   if (!ccom || !srcs?.length) return <CmComTool icon="CloudDownload" />;
 
-  const isCached = cacheState !== 'none';
+  const isCached = cacheState !== CmComAudioPlayerCacheState.None;
 
   return (
     <CmComTool
       title={translateBase(it => it[BaseLocaleKey.CmMarkComTool][MenuComToolName.CacheTracks], { v: +isCached })}
       icon={isCached ? 'CloudSavingDone01' : 'CloudDownload'}
-      iconKind={cacheState === 'all' ? 'SolidRounded' : undefined}
-      iconClassName={twMerge(isCached && 'text-xOK', cacheState === 'some' && 'text-x7')}
+      iconKind={cacheState === CmComAudioPlayerCacheState.All ? 'SolidRounded' : undefined}
+      iconClassName={twMerge(
+        isCached && 'text-xOK',
+        cacheState === CmComAudioPlayerCacheState.Some && 'text-x7',
+      )}
       onClick={() =>
         isCached
           ? void cmComAudioPlayerUncacheCom(ccom.wid)

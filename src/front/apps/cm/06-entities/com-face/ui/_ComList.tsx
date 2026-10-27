@@ -2,7 +2,7 @@ import { translateBase } from '#basis/locale';
 import { FaceItem } from '#basis/ui/FaceItem';
 import { isIOS } from '#shared/lib/device-differences';
 import { useListInfiniteScrollController } from '#shared/lib/hooks/useListInfiniteScrollController';
-import { CmComNumber, useCmComLastOpenComw } from '$cm/entities/com';
+import { CmComNumber } from '$cm/entities/com';
 import { CmComAudioPlayerCacheMarks } from '$cm/entities/com-audio-player';
 import { useCmComSetListLimitsExtracterContext } from '$cm/entities/index';
 import { DragEvent, memo, useCallback, useRef, useState } from 'react';
@@ -15,6 +15,7 @@ import {
   cmComFaceItemDescriptionClassName,
 } from '../const/ids';
 import { useCmComFaceListClickListener } from '../lib/useComListClickListener';
+import { useCmComFaceCurrentComw } from '../lib/useCurrentComw';
 import { useCmComFaceScrollToCurrentComFace } from '../lib/useScrollToCurrentComFace';
 import { CmComFaceListProps } from '../model/model';
 import { CmComFaceListControlledContainer } from './ComListControlledContainer';
@@ -61,18 +62,18 @@ const CmComFaceListItem = memo(function CmComFaceListItem(props: ComListItemProp
 
 export const CmComFaceListComList = (props: CmComFaceListProps) => {
   const listRef = useRef<HTMLDivElement>(null);
-  const lastOpenComw = useCmComLastOpenComw();
+  const currentComw = useCmComFaceCurrentComw(props);
   const [dropTargetComw, setDropTargetComw] = useState<CmComWid | nil>(null);
   const { importantDropOnCom } = props;
   const { limits, updateLimits } = useListInfiniteScrollController(
     listRef,
     props.list,
-    props.isPutCcomFaceOff ? (_, comi) => comi === 0 : com => com.w === lastOpenComw,
-    [lastOpenComw],
+    props.isPutCcomFaceOff ? (_, comi) => comi === 0 : com => com.w === currentComw,
+    [currentComw],
   );
 
   useCmComSetListLimitsExtracterContext().current = updateLimits;
-  useCmComFaceScrollToCurrentComFace(listRef, props, [lastOpenComw]);
+  useCmComFaceScrollToCurrentComFace(listRef, props, [currentComw]);
   useCmComFaceListClickListener(listRef, props.importantOnClick, props.list);
 
   const isDropEnabled = importantDropOnCom != null;

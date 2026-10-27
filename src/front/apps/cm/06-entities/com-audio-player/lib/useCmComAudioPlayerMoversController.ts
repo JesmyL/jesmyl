@@ -23,6 +23,13 @@ import {
 const currentButtonElemAccentClassName = 'text-x7';
 const windowDocument = window.document;
 
+const enum MarkTimePosition {
+  PrePrev,
+  Prev,
+  Current,
+  Next,
+}
+
 export const useCmComAudioPlayerMoversController = (
   src: CmAudioSrc,
   com: CmCom,
@@ -45,10 +52,7 @@ export const useCmComAudioPlayerMoversController = (
 
     const titleNode = titleRef.current;
     const selectorToTitlePropsDict: PRecord<number, { title: string; ord?: CmComOrder | nil }> = {};
-    const timePositions$ = { prev: 0, current: 0, next: 0, preprev: 0 } as never as Record<
-      'prev' | 'current' | 'next' | 'preprev',
-      CmComAudioMarkPackTime
-    >;
+    const timePositions$ = [0, 0, 0, 0] as never as Record<MarkTimePosition, CmComAudioMarkPackTime>;
 
     let lastMarkTime = 0;
     let prevButtonElem: Element | nil = null;
@@ -60,10 +64,10 @@ export const useCmComAudioPlayerMoversController = (
         : () => {
             const actualMarkTime =
               preSwitchTime !== 0 &&
-              takeCmComAudioPlayerCurrentTime() < timePositions$.next &&
-              takeCmComAudioPlayerCurrentTime() > timePositions$.next - preSwitchTime
-                ? timePositions$.next
-                : timePositions$.current;
+              takeCmComAudioPlayerCurrentTime() < timePositions$[MarkTimePosition.Next] &&
+              takeCmComAudioPlayerCurrentTime() > timePositions$[MarkTimePosition.Next] - preSwitchTime
+                ? timePositions$[MarkTimePosition.Next]
+                : timePositions$[MarkTimePosition.Current];
 
             if (isInitialButtonClassNameNeedSet || lastMarkTime !== actualMarkTime) {
               isInitialButtonClassNameNeedSet = false;
@@ -105,10 +109,10 @@ export const useCmComAudioPlayerMoversController = (
 
       if (checkIsNil(timePositions$)) return currentMarkTimei;
 
-      timePositions$.preprev = (markTimes[currentMarkTimei - 2] ?? 0) as CmComAudioMarkPackTime;
-      timePositions$.prev = (markTimes[currentMarkTimei - 1] ?? 0) as CmComAudioMarkPackTime;
-      timePositions$.current = (markTimes[currentMarkTimei] ?? 0) as CmComAudioMarkPackTime;
-      timePositions$.next = (markTimes[currentMarkTimei + 1] ?? 0) as CmComAudioMarkPackTime;
+      timePositions$[MarkTimePosition.PrePrev] = (markTimes[currentMarkTimei - 2] ?? 0) as CmComAudioMarkPackTime;
+      timePositions$[MarkTimePosition.Prev] = (markTimes[currentMarkTimei - 1] ?? 0) as CmComAudioMarkPackTime;
+      timePositions$[MarkTimePosition.Current] = (markTimes[currentMarkTimei] ?? 0) as CmComAudioMarkPackTime;
+      timePositions$[MarkTimePosition.Next] = (markTimes[currentMarkTimei + 1] ?? 0) as CmComAudioMarkPackTime;
 
       if (nextRef.current !== null) {
         nextRef.current.disabled = currentMarkTimei === markTimes.length - 1;
@@ -130,16 +134,18 @@ export const useCmComAudioPlayerMoversController = (
           cmComAudioPlayerSwitchIsPlay(true);
 
           cmComAudioPlayerUpdateCurrentTime(
-            Math.abs(timePositions$.current - timePositions$.prev) < 1 ? timePositions$.preprev : timePositions$.prev,
+            Math.abs(timePositions$[MarkTimePosition.Current] - timePositions$[MarkTimePosition.Prev]) < 1
+              ? timePositions$[MarkTimePosition.PrePrev]
+              : timePositions$[MarkTimePosition.Prev],
           );
         }),
         addEventListenerPipe(repeatRef.current, 'click', () => {
           cmComAudioPlayerSwitchIsPlay(true);
-          cmComAudioPlayerUpdateCurrentTime(timePositions$.current);
+          cmComAudioPlayerUpdateCurrentTime(timePositions$[MarkTimePosition.Current]);
         }),
         addEventListenerPipe(nextRef.current, 'click', () => {
           cmComAudioPlayerSwitchIsPlay(true);
-          cmComAudioPlayerUpdateCurrentTime(timePositions$.next);
+          cmComAudioPlayerUpdateCurrentTime(timePositions$[MarkTimePosition.Next]);
         }),
         cmComAudioPlayerAddEventListenerPipe('timeupdate', updatePoints),
         cmComAudioPlayerAddEventListenerPipe('ended', () => {
