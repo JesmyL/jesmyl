@@ -31,11 +31,13 @@ export const vitePWAOptions = {
         // A @font-face src is fetched only when its family is rendered, so fonts stay out of
         // the precache and enter this bucket one requested family at a time.
         urlPattern: ({ url }) =>
-          url.origin === self.location.origin && url.pathname.startsWith('/resource/') && url.pathname.endsWith('.ttf'),
+          url.origin === self.location.origin &&
+          url.pathname.startsWith('/resource/') &&
+          /\.(ttf|otf|woff2)$/.test(url.pathname),
         handler: 'CacheFirst',
         options: {
           cacheName: 'resource-fonts-v2',
-          // Unversioned srcs: bound staleness so a replaced .ttf is refetched within a week.
+          // Unversioned srcs: bound staleness so a replaced font file is refetched within a week.
           expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 7, purgeOnQuotaError: true },
         },
       },
