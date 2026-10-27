@@ -997,4 +997,5 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.CmAllCategoryName]: 'Барлық әндер',
   [BaseLocaleKey.CmEditorCategoryEdit]: 'Санатты өңдеу',
   [BaseLocaleKey.CmEditorCategoryKindLocked]: 'Түрін өзгертуге болмайды: санатта әндер бар',
+  [BaseLocaleKey.CmEditorRemovedCats]: 'Жойылған санаттар',
 });

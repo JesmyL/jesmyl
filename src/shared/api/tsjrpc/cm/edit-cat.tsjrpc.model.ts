@@ -7,5 +7,7 @@ export type CmEditCatTsjrpcModel = {
   create: (args: { n: string; k: CmCatKind }) => IExportableCat;
   rename: (args: { catw: CmCatWid; n: string }) => IExportableCat;
   remove: (args: { catw: CmCatWid }) => IExportableCat;
+  restore: (args: { catw: CmCatWid }) => IExportableCat;
+  takeRemovedCats: () => IExportableCat[];
   setKind: (args: { catw: CmCatWid; k: CmCatKind }) => IExportableCat;
 };

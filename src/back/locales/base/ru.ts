@@ -1017,4 +1017,5 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.CmAllCategoryName]: 'Все песни',
   [BaseLocaleKey.CmEditorCategoryEdit]: 'Редактировать категорию',
   [BaseLocaleKey.CmEditorCategoryKindLocked]: 'Вид нельзя изменить: в категории есть песни',
+  [BaseLocaleKey.CmEditorRemovedCats]: 'Удалённые категории',
 });

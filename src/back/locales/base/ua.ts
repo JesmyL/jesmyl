@@ -994,4 +994,5 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.CmAllCategoryName]: 'Усі пісні',
   [BaseLocaleKey.CmEditorCategoryEdit]: 'Редагувати категорію',
   [BaseLocaleKey.CmEditorCategoryKindLocked]: 'Вид не можна змінити: у категорії є пісні',
+  [BaseLocaleKey.CmEditorRemovedCats]: 'Видалені категорії',
 });

@@ -926,4 +926,5 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.CmAllCategoryName]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorCategoryEdit]: LocaleSimpleString;
   [BaseLocaleKey.CmEditorCategoryKindLocked]: LocaleSimpleString;
+  [BaseLocaleKey.CmEditorRemovedCats]: LocaleSimpleString;
 };

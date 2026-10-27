@@ -913,4 +913,5 @@ export const enum BaseLocaleKey {
   CmAllCategoryName = 906,
   CmEditorCategoryEdit = 907,
   CmEditorCategoryKindLocked = 908,
+  CmEditorRemovedCats = 917,
 }

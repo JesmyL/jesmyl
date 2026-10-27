@@ -93,6 +93,30 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
           return { value: cat, description: 'Удалена категория' };
         },
 
+        restore: async ({ catw }, { auth }) => {
+          if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
+
+          const cat = await takeCatOrThrow(catw);
+
+          if (!cat.isRemoved) throw `Категория "${cat.n}" не была удалена`;
+
+          cat.isRemoved = Bool.False;
+          cat.m = Date.now();
+
+          await dbUpdate(catDB, { m: cat.m, isRemoved: cat.isRemoved }, eq(catDB.w, cat.w));
+          cmShareServerTsjrpcMethods.editedCat({ cat }, null);
+
+          return { value: cat, description: 'Восстановлена категория' };
+        },
+
+        takeRemovedCats: async (_, { auth }) => {
+          if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
+
+          return {
+            value: (await db.select().from(catDB).where(eq(catDB.isRemoved, Bool.True))).map(exportableCatFromRow),
+          };
+        },
+
         setKind: async ({ catw, k }, { auth }) => {
           if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
 
