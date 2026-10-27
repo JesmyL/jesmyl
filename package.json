@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "vite --host --mode test",
+    "start": "vite --mode test",
     "build": "vite build",
     "serve": "vite preview",
     "lint": "tsc --project ./tsconfig.json --noEmit && eslint . --fix",

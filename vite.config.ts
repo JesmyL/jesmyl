@@ -1,10 +1,11 @@
 import tailwindcss from '@tailwindcss/vite';
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
+import basicSsl from '@vitejs/plugin-basic-ssl';
 import react from '@vitejs/plugin-react';
 import { attrStylerVitePlugin } from 'attr-styler';
 import dns from 'dns';
 import { regExpertVitePlugin } from 'regexpert';
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import eslint from 'vite-plugin-eslint';
 import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
@@ -20,10 +21,14 @@ const tsConfig = { ...tsconf };
 const alias: Record<string, string> = {};
 
 Object.entries(tsConfig.compilerOptions.paths).forEach(([aliasKey, [path]]) => {
-  alias[aliasKey.slice(0, -2)] = `/src${path.slice(1, -2)}`;
+  const isGlob = aliasKey.endsWith('/*');
+
+  alias[isGlob ? aliasKey.slice(0, -2) : aliasKey] = isGlob ? `/src${path.slice(1, -2)}` : `/src${path.slice(1)}`;
 });
 
-export default defineConfig(() => {
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
+
   return {
     esbuild: {
       pure: ['console.log'],
@@ -79,7 +84,7 @@ export default defineConfig(() => {
         },
       },
     },
-    server: { port: 3627 },
+    server: { port: 3627, host: true },
     test: {
       globals: true,
       environment: 'jsdom',
@@ -91,6 +96,7 @@ export default defineConfig(() => {
       exclude: [...configDefaults.exclude, 'src/electron-app/**'],
     },
     plugins: [
+      env.VITE_IS_HTTPS === '1' && basicSsl(),
       constEnumVitePlugin(),
       regExpertVitePlugin(),
       TanStackRouterVite({

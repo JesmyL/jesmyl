@@ -12,15 +12,17 @@ type Environment = {
 const isTest = import.meta.env.MODE === 'test';
 const initialUrl = new URL(location.href);
 const localhost = 'localhost';
+const isHttps = initialUrl.protocol === 'https:';
 
 const postfix = import.meta.env.VITE_SOKI_POSTFIX;
+const devHost = import.meta.env.VITE_DNS || initialUrl.hostname;
 
 const sokiLink = isTest
-  ? `ws://${import.meta.env.VITE_DNS || localhost}${postfix}`
+  ? `${isHttps ? 'wss' : 'ws'}://${devHost}${postfix}`
   : `wss://${hostConfig.host}${postfix}`;
 
 /** Local back dev server port (src/back/startExpressRouting/index.ts); production uses the host. */
-const backHttpUrl = isTest ? `http://${import.meta.env.VITE_DNS || localhost}:4446` : hostConfig.url;
+const backHttpUrl = isTest ? `${isHttps ? 'https' : 'http'}://${devHost}:4446` : hostConfig.url;
 
 export const environment: Environment = {
   isTest,

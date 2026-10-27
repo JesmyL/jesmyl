@@ -4,7 +4,6 @@ import { tsjrpcBaseClientNext } from '#basis/tsjrpc/TsjrpcBase.client';
 import { addEventListenerPipe } from '#shared/lib/hookEffectPipe';
 import { authIDB, indexDeviceEmojiAtom, indexDeviceIdAtom } from '$index/shared/state';
 import md5 from 'md5';
-import { makeRegExp } from 'regexpert';
 import { SokiError, TsjrpcClientTool, TsjrpcFromClientEvent, TsjrpcFromServerEvent } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { Eventer } from 'shared/utils';
@@ -129,7 +128,7 @@ export class SokiTrip {
   }
 
   private urls: string[] = [];
-  private getCurrentUrl = () => window.location.href.replace(makeRegExp('/^https?:/'), 'https:');
+  private getCurrentUrl = () => window.location.href;
 
   pushCurrentUrl() {
     this.urls.push(this.getCurrentUrl());
