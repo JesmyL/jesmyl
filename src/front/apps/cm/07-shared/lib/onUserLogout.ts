@@ -1,5 +1,10 @@
 import { cmComCommentCurrentComw2OpenAltiDictAtom } from '$cm/entities/com-comment';
-import { cmComFavoriteComwsAtom, cmComSelectedComwsAtom, cmComTopToolsAtom } from '$cm/entities/index';
+import {
+  cmComFavouriteCacheReset,
+  cmComFavoriteComwsAtom,
+  cmComSelectedComwsAtom,
+  cmComTopToolsAtom,
+} from '$cm/entities/index';
 import { cmIDB } from '$cm/ext';
 import { purgeCmEditorCache } from '$cm/shared/lib/cmEditorCache';
 import { emptyFunc } from 'shared/utils';
@@ -9,6 +14,7 @@ export const cmOnUserLogout = async () => {
   cmComSelectedComwsAtom.reset();
   cmComCommentCurrentComw2OpenAltiDictAtom.reset();
   cmComFavoriteComwsAtom.reset();
+  cmComFavouriteCacheReset();
 
   cmIDB.tb.comCommentBlocks.clear();
   cmIDB.tb.localComCommentBlocks.clear();

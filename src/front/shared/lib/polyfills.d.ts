@@ -58,6 +58,11 @@ declare global {
   interface Navigator {
     presentation: Presentation;
   }
+
+  interface MediaSession {
+    /** Supported by Android Chrome, but not declared by the DOM lib yet. */
+    setActionHandler(action: 'like', handler: MediaSessionActionHandler | null): void;
+  }
 }
 
 export {};
