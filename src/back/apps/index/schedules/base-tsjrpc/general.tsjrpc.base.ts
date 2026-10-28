@@ -296,6 +296,14 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
           }`;
         }),
 
+        toggleIsAppInform: modifySchedule(false, async sch => {
+          sch.appInform = sch.appInform === 0 ? undefined : 0;
+
+          return `В расписании ${await scheduleTitleInBrackets(sch)} уведомления в приложении ${
+            sch.appInform === 0 ? 'отключены' : 'включены'
+          }`;
+        }),
+
         remove: modifySchedule(true, async sch => {
           sch.isRemoved = 1;
 

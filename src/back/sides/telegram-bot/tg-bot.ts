@@ -52,19 +52,31 @@ export class JesmylTelegramBot {
 
   register() {}
 
-  getChat() {
+  get isStarted() {
+    return this._bot.isStarted;
+  }
+
+  async getChat() {
+    if (!this._bot.isStarted) return null;
+
     return this._bot.bot.getChat(this.chatId);
   }
 
-  forwardMessage(fromChatId: TgBot.ChatId, messageId: number, options?: TgBot.ForwardMessageOptions) {
+  async forwardMessage(fromChatId: TgBot.ChatId, messageId: number, options?: TgBot.ForwardMessageOptions) {
+    if (!this._bot.isStarted) return null;
+
     return this._bot.bot.forwardMessage(this.chatId, fromChatId, messageId, options);
   }
 
-  sendPhoto(photo: string | Stream | Buffer, options?: TgBot.SendPhotoOptions, fileOptions?: TgBot.FileOptions) {
+  async sendPhoto(photo: string | Stream | Buffer, options?: TgBot.SendPhotoOptions, fileOptions?: TgBot.FileOptions) {
+    if (!this._bot.isStarted) return null;
+
     return this._bot.bot.sendPhoto(this.chatId, photo, { parse_mode: 'HTML', ...options }, fileOptions);
   }
 
   async sendMediaBased(message: TgBot.Message, options?: TgBot.SendPhotoOptions, fileOptions?: TgBot.FileOptions) {
+    if (!this._bot.isStarted) return null;
+
     const [actionName, field] = message.photo
       ? (['sendPhoto', message.photo[0].file_id] as const)
       : message.video
@@ -123,11 +135,15 @@ export class JesmylTelegramBot {
     // );
   }
 
-  deleteMessage(messageId: number, chatId?: number) {
+  async deleteMessage(messageId: number, chatId?: number) {
+    if (!this._bot.isStarted) return false;
+
     return this._bot.bot.deleteMessage(chatId ?? this.chatId, messageId);
   }
 
   async editMessageText(messageId: number, text: string, keyboard?: SendMessageOptions) {
+    if (!this._bot.isStarted) return;
+
     try {
       await this._bot.bot
         .editMessageText(text, {
@@ -158,9 +174,15 @@ export class JesmylTelegramBot {
     }
   }
 
-  getAdmins = () => this._bot.bot.getChatAdministrators(this.chatId);
+  getAdmins = () => {
+    if (!this._bot.isStarted) return Promise.resolve<TgBot.ChatMember[]>([]);
 
-  postMessage(text: string, options?: TgBot.SendMessageOptions, chatId?: number) {
+    return this._bot.bot.getChatAdministrators(this.chatId);
+  };
+
+  async postMessage(text: string, options?: TgBot.SendMessageOptions, chatId?: number) {
+    if (!this._bot.isStarted) return null;
+
     const message = text.replace(makeRegExp('/<((anonymous|computed)>)/g'), '&lt;$1');
     const messageOptions = {
       parse_mode: 'HTML',
@@ -172,7 +194,9 @@ export class JesmylTelegramBot {
     return this._bot.bot.sendMessage(chatId ?? this.chatId, message, messageOptions);
   }
 
-  getUserData(id: number) {
+  async getUserData(id: number) {
+    if (!this._bot.isStarted) return null;
+
     return this._bot.bot.getChatMember(this.chatId, id).catch(emptyFunc);
   }
 

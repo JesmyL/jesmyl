@@ -6,6 +6,7 @@
   "scripts": {
     "start": "vite --mode test",
     "build": "vite build",
+    "gen-vapid": "tsx do/generate-vapid-keys.ts",
     "serve": "vite preview",
     "lint": "tsc --project ./tsconfig.json --noEmit && eslint . --fix",
     "tg-dev": "nodemon tg-bot.mjs",
@@ -85,6 +86,7 @@
     "tsjrpc": "^0.0.26",
     "vaul": "^1.1.2",
     "vite-plugin-pwa": "^0.21.1",
+    "web-push": "^3.6.7",
     "web-vitals": "^0.2.4",
     "workbox-background-sync": "^5.1.4",
     "workbox-broadcast-update": "^5.1.4",
@@ -120,6 +122,7 @@
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@types/react-transition-group": "^4.4.5",
+    "@types/web-push": "^3.6.4",
     "@types/ws": "^8.5.3",
     "@vitejs/plugin-react": "^4.3.4",
     "drizzle-kit": "^0.31.10",

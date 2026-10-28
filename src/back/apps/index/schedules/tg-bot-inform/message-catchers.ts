@@ -17,6 +17,7 @@ export const makeScheduleWidgetJoinTitle = (
   day: IScheduleWidgetDay,
   eventi: number,
   collectSecrets: false | string[],
+  tag: typeof ScheduleWidgetCleans.putInTgTag = ScheduleWidgetCleans.putInTgTag,
 ): string => {
   const titles: string[] = [];
 
@@ -27,13 +28,13 @@ export const makeScheduleWidgetJoinTitle = (
 
     const eventTimeMin = ScheduleWidgetCleans.takeEventTm(event, schedule.types[event.type]);
     const titleInner = schedule.types[event.type].title + (event.topic ? ': ' + event.topic : '');
-    const title = ScheduleWidgetCleans.putInTgTag('b', titleInner);
+    const title = tag('b', titleInner);
 
     if (eventTimeMin === 0) check(eventi + 1);
 
     if (event.secret) {
       if (collectSecrets) collectSecrets.push(title);
-      else titles.unshift(ScheduleWidgetCleans.putInTgTag('tg-spoiler', title));
+      else titles.unshift(tag('tg-spoiler', title));
 
       return;
     }

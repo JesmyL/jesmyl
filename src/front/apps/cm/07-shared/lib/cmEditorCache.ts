@@ -1,6 +1,6 @@
 /**
  * Browser Cache Storage bucket for the rights-gated CmRedactor chunks.
- * Keep in sync with the `cm-editor-cache` runtimeCaching entry in vite-pwa.options.ts.
+ * Keep in sync with the `cm-editor-cache` runtime route in src/sw.ts.
  */
 export const cmEditorCacheName = 'cm-editor-cache';
 

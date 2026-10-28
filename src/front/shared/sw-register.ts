@@ -10,3 +10,11 @@ if ('serviceWorker' in navigator) {
     onNeedRefresh: () => checkIsThereNewSWAtom.set(true),
   });
 }
+
+export const closeAllAppNotifications = async () => {
+  if (!('serviceWorker' in navigator)) return;
+
+  const registration = await navigator.serviceWorker.ready;
+
+  (await registration.getNotifications()).forEach(notification => notification.close());
+};

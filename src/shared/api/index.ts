@@ -1,6 +1,7 @@
 export * from './complect/apps';
 export * from './complect/enums';
 export * from './complect/hostConfig';
+export * from './complect/push.model';
 export * from './complect/schedule-widget';
 export * from './complect/soki.model';
 export * from './complect/tsjrpc.master.model';

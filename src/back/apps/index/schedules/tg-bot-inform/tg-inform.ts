@@ -26,6 +26,7 @@ import { convertMd2HTMLMaker } from 'shared/utils/tg-replaces';
 import { takeScheduleWidgetTiny } from '../schedule.tiny';
 import { onScheduleDayEventIsNeedTgInformSetEvent, onScheduleUserTgInformSetEvent } from '../specific-modify-events';
 import { makeScheduleWidgetJoinTitle } from './message-catchers';
+import { sendSchedulePush } from './web-push';
 
 const getSchedule = async (scheduleScalar: ScheduleWidgetWid | IScheduleWidget) =>
   checkIsNumber(scheduleScalar) ? await takeScheduleWidgetTiny({ w: scheduleScalar }, false) : scheduleScalar;
@@ -37,6 +38,7 @@ const subscribeQueryDataNamePrefix = 'sch-wdgt-sub:';
 const unsubOptions = {} as Record<ScheduleWidgetWid, SendMessageOptions>;
 
 const convertMd2HTML = convertMd2HTMLMaker(true);
+const plainTgTag: typeof ScheduleWidgetCleans.putInTgTag = (_tag, text) => text;
 
 const openDayScheduleKey: SendMessageOptions = {
   parse_mode: 'HTML',
@@ -63,7 +65,6 @@ class TgInformer {
     if (checkIsNil(invokeDayi) || !indexScheduleCheckIsDayIsPast(schedule, invokeDayi)) jobs[schedule.w]?.cancel();
 
     if (
-      schedule.tgInform === 0 ||
       schedule.days.length === 0 ||
       indexScheduleCheckIsDayIsPast(schedule, (schedule.days.length - 1) as ScheduleWidgetDayi) ||
       (invokeDayi !== undefined && indexScheduleCheckIsDayIsPast(schedule, invokeDayi))
@@ -161,17 +162,25 @@ class TgInformer {
       const event = schedule.days[dayi].list[eventi];
       const timeToEvent = Math.ceil((eventStartMs - Date.now()) / howMillisecondsInMin);
       const isWithDelay = event.tgInform !== 0 && timeToEvent > 0;
+      const leadTimeTitle = isWithDelay ? 'Через ' + timeToEvent + 'м.' : '';
+      const isTgInformEnabled = schedule.tgInform !== 0;
+      const isAppInformEnabled = schedule.appInform !== 0;
+      const isTgSendAvailable = isTgInformEnabled && jesmylTgBot.isStarted;
 
       const secrets: string[] = [];
 
-      const makeText = (isJustCollectSecrets: boolean) => {
+      const makeTextParts = (
+        collectSecrets: false | string[],
+        tag: typeof ScheduleWidgetCleans.putInTgTag = ScheduleWidgetCleans.putInTgTag,
+        convertDsc: typeof convertMd2HTML = convertMd2HTML,
+      ) => {
         let nextEventTitle = '';
         let attsText = '';
         let delayTitlePrefix = '';
-        const eventTitle = makeScheduleWidgetJoinTitle(schedule, day, eventi, isJustCollectSecrets && secrets);
+        const joinedTitle = makeScheduleWidgetJoinTitle(schedule, day, eventi, collectSecrets, tag);
 
         if (isWithDelay) {
-          delayTitlePrefix = 'Через ' + timeToEvent + 'м. ';
+          delayTitlePrefix = leadTimeTitle + ' ';
         } else {
           let timedEventi = eventi;
           let nextTimedEventi = -1;
@@ -234,34 +243,41 @@ class TgInformer {
               schedule,
               day,
               timedEventi + 1,
-              isJustCollectSecrets && secrets,
+              collectSecrets,
+              tag,
             );
 
             nextEventTitle =
               nextEventJoinedTitle &&
-              newPointLineMarker +
-                ScheduleWidgetCleans.putInTgTag('i', `${nextEventJoinedTitle} - ${labelTimeTo}`) +
-                doubleNl;
+              newPointLineMarker + tag('i', `${nextEventJoinedTitle} - ${labelTimeTo}`) + doubleNl;
           }
         }
 
-        return eventTitle
-          ? delayTitlePrefix +
-              eventTitle +
-              doubleNl +
-              (event.tgInform === 0 && event.dsc
-                ? newPointLineMarker +
-                  ScheduleWidgetCleans.putInTgTag(event.secret ? 'i' : 'code', convertMd2HTML(event.dsc)) +
-                  doubleNl
-                : '') +
-              attsText +
-              nextEventTitle +
-              newPointLineMarker +
-              ScheduleWidgetCleans.putInTgTag('u', ScheduleWidgetCleans.putInTgTag('i', schedule.title))
-          : null;
+        if (!joinedTitle) return null;
+
+        return {
+          joinedTitle,
+          heading: delayTitlePrefix + joinedTitle,
+          dscText:
+            event.tgInform === 0 && event.dsc
+              ? newPointLineMarker + tag(event.secret ? 'i' : 'code', convertDsc(event.dsc)) + doubleNl
+              : '',
+          attsText,
+          nextEventTitle,
+          scheduleTitle: newPointLineMarker + tag('u', tag('i', schedule.title)),
+        };
       };
 
-      const text = makeText(true);
+      const makeText = (collectSecrets: false | string[]) => {
+        const parts = makeTextParts(collectSecrets);
+
+        return (
+          parts &&
+          parts.heading + doubleNl + parts.dscText + parts.attsText + parts.nextEventTitle + parts.scheduleTitle
+        );
+      };
+
+      const text = makeText(secrets);
 
       const options: SendMessageOptions = (unsubOptions[schedule.w] ??= {
         reply_markup: {
@@ -276,24 +292,24 @@ class TgInformer {
         },
       });
 
-      if (tgChatId !== null && secrets.length) {
+      if (isTgSendAvailable && tgChatId !== null && secrets.length) {
         const text = makeText(false);
 
         if (text)
           try {
             const admins = await jesmylTgBot.bot.getChatAdministrators(tgChatId);
-            admins.forEach(admin => {
-              if (admin.user.is_bot) return;
-
-              jesmylTgBot.bot.sendMessage(admin.user.id, text, { parse_mode: 'HTML' });
-            });
+            await Promise.allSettled(
+              admins
+                .filter(admin => !admin.user.is_bot)
+                .map(admin => jesmylTgBot.sendMessage(admin.user.id, text, tglogger)),
+            );
           } catch (_error) {
             //
           }
       }
 
       let sendUserMessage = async (tgId: number) => {
-        if (text === null) return;
+        if (!isTgSendAvailable || text === null) return;
 
         try {
           if (tgChatId !== null) {
@@ -308,7 +324,7 @@ class TgInformer {
       };
 
       try {
-        if (text)
+        if (isTgSendAvailable && text)
           if (tgChatId !== null) {
             const message = await jesmylTgBot.sendMessage(tgChatId, text, tglogger, openDayScheduleKey);
 
@@ -334,6 +350,31 @@ class TgInformer {
           continue;
 
         if (text) sendUserMessage(user.tgId);
+      }
+
+      const pushUserIds = schedule.ctrl.users
+        .filter(
+          user =>
+            scheduleWidgetUserRights.checkIsHasRights(user.R, ScheduleWidgetUserRoleRight.Read) &&
+            !(
+              event.secret &&
+              !scheduleWidgetUserRights.checkIsHasRights(user.R, ScheduleWidgetUserRoleRight.ReadSpecials)
+            ),
+        )
+        .map(user => user.id);
+
+      if (isAppInformEnabled && pushUserIds.length) {
+        const eventTypeTitle = schedule.types[event.type]?.title ?? '';
+        const pushParts = makeTextParts([], plainTgTag, dsc => dsc);
+        const pushTitle = schedule.title || eventTypeTitle;
+        const pushBody = pushParts ? (pushParts.heading + doubleNl + pushParts.dscText).trim() : '';
+
+        void sendSchedulePush(pushUserIds, {
+          title: pushTitle,
+          body: pushBody,
+          url: `/!other/cm/schs?schw=${schedule.w}`,
+          tag: `sch-${schedule.w}-${dayi}-${event.mi}`,
+        }).catch(error => console.error('Web push schedule inform error', error));
       }
 
       setTimeout(() => this.inform(schedule.w));

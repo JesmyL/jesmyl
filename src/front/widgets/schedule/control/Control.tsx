@@ -25,7 +25,7 @@ export const ScheduleWidgetControl = () => {
   const tgInformTimesItems = [
     { title: translateBase(BaseLocaleKey.ScheduleInformOnlyByStart), id: 0 },
     ...[5, 10, 15, 30].map(time => ({
-      title: translateBase(BaseLocaleKey.ScheduleInformTelegramBefore, { num: time }),
+      title: translateBase(BaseLocaleKey.ScheduleInformBefore, { n: time }),
       id: time,
     })),
   ];
@@ -96,17 +96,23 @@ export const ScheduleWidgetControl = () => {
                   <TheIconSendButton
                     className="mb-2"
                     icon={rights.schedule.tgInform === 0 ? 'NotificationOff01' : 'Notification01'}
-                    postfix={
-                      rights.schedule.tgInform === 0
-                        ? translateBase(BaseLocaleKey.ScheduleTelegramInformOff)
-                        : rights.schedule.tgInformTime
-                          ? translateBase(BaseLocaleKey.ScheduleTelegramBeforeAndStart, {
-                              num: rights.schedule.tgInformTime,
-                            })
-                          : translateBase(BaseLocaleKey.ScheduleTelegramInformOnlyStart)
-                    }
+                    postfix={translateBase(BaseLocaleKey.ScheduleInformStatus, {
+                      v: rights.schedule.tgInform !== 0,
+                      n: rights.schedule.tgInformTime,
+                    })}
                     onSend={() =>
                       schGeneralTsjrpcClient.toggleIsTgInform({
+                        props: scheduleScopeProps,
+                        value: undefined,
+                      })
+                    }
+                  />
+                  <TheIconSendButton
+                    className="mb-2"
+                    icon={rights.schedule.appInform === 0 ? 'NotificationOff01' : 'Notification01'}
+                    postfix={translateBase(BaseLocaleKey.ScheduleAppInform)}
+                    onSend={() =>
+                      schGeneralTsjrpcClient.toggleIsAppInform({
                         props: scheduleScopeProps,
                         value: undefined,
                       })

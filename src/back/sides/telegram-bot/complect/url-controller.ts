@@ -69,6 +69,9 @@ export const tgBotUrlController = async (
 
   const refreshDescription = async () => {
     const chat = await targetBot.getChat();
+
+    if (!chat) return knownUrls;
+
     const knownUrlsSet: Set<string> = new Set();
 
     chat.description?.replace(domainReg, (all, address) => {
@@ -127,7 +130,7 @@ export const tgBotUrlController = async (
       tgBot: adminBot,
       tg: {
         ...botOptions,
-        reply_to_message_id: forwardedSentMessage.message_id,
+        reply_to_message_id: forwardedSentMessage?.message_id,
       },
     });
 

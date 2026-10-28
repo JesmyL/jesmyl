@@ -74,6 +74,7 @@ export type IScheduleWidget = NullifyOptionals<{
   games?: IScheduleWidgetTeamGames;
   lists: IScheduleWidgetLists;
   tgInform?: Bool;
+  appInform?: Bool;
   tgChatReqs?: string;
   tgInformTime: number;
   isRemoved?: Bool;

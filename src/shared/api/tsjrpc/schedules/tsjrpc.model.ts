@@ -45,6 +45,7 @@ export type SchGeneralTsjrpcModel = {
 
   setTgChatRequisites: Callback<string>;
   toggleIsTgInform: Callback<void>;
+  toggleIsAppInform: Callback<void>;
   setTgInformTime: Callback<number>;
 
   setIsTgInformMe: (args: { props: ScheduleScopeProps; type: Bool }) => IScheduleWidget;

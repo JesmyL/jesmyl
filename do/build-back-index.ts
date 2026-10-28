@@ -3,8 +3,7 @@ import { build } from 'esbuild';
 export const buildBackIndexFile = async () => {
   return Promise.all(
     [
-      // uncomment on back init
-      // 'initializeBack.cjs',
+      'initializeBack.cjs',
       'back.index.cjs',
       'drizzle.schema.cjs',
       'drizzle.config.cjs',
@@ -26,7 +25,7 @@ export const buildBackIndexFile = async () => {
         minifySyntax: true,
 
         charset: 'utf8',
-        external: ['node-schedule', 'ws', 'postgres', 'drizzle-orm', 'drizzle-kit', './.env.json'],
+        external: ['node-schedule', 'web-push', 'ws', 'postgres', 'drizzle-orm', 'drizzle-kit', './.env.json'],
         dropLabels: ['DEV', 'TEST'],
       });
 

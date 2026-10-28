@@ -1,10 +1,13 @@
 import { useConnectionState } from '#basis/lib/useConnectionState';
 import { translateBase } from '#basis/locale';
+import { closeAllAppNotifications } from '#shared/sw-register';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { useAuth, useIndexSchedules, useUserInfoDict } from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
+import { useEffect } from 'react';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { emptyFunc } from 'shared/utils';
 import { useScheduleCurrentSchwContext, useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { ScheduleWidget } from '../ScheduleWidget';
 import { schUsersTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
@@ -21,6 +24,12 @@ export const ScheduleWidgetPage = () => {
   const myUserId = auth.login ? byLogin.get(auth.login)?.id : null;
 
   useFixActualSchw(schw);
+
+  useEffect(() => {
+    if (!schw) return;
+
+    void closeAllAppNotifications().catch(emptyFunc);
+  }, [schw]);
 
   return (
     <>

@@ -18,16 +18,31 @@ import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { constantsConfigurator } from 'shared/const/cm/constants.def';
 import { howMillisecondsInMin } from 'shared/const/ms';
 import { randomItem, randomOf } from 'shared/randoms';
-import { declension, wait } from 'shared/utils';
+import { declension, emptyFunc, wait } from 'shared/utils';
 import { checkIsStartsWith } from 'shared/utils/checkIs';
 import { takeUserAuthName } from 'shared/utils/user.utils';
 import { sentEmailOTPFileStorage } from '../../file-stores';
 import { constantsConfigFileStore } from '../../schedules/file-stores';
+import { sendSchedulePush } from '../../schedules/tg-bot-inform/web-push';
 import { resetUserTiny } from '../../tinies/userTiny';
 import { emailSentOTPLetters } from '../const/emailSentOTPLetters';
 
 const minutesUntilExpire = 5;
-const expireOTP = (otp: number) => sentEmailOTPFileStorage.setValue(verifies => verifies.filter(it => it.otp !== otp));
+const minutesUntilEmail = 2;
+const emailTimeouts = new Map<number, TimeOut>();
+const otpPushTitleTemplate = 'Код верификации - $c';
+
+const cancelOtpEmail = (otp: number) => {
+  const emailTimeout = emailTimeouts.get(otp);
+
+  if (emailTimeout) clearTimeout(emailTimeout);
+  emailTimeouts.delete(otp);
+};
+
+const expireOTP = (otp: number) => {
+  cancelOtpEmail(otp);
+  sentEmailOTPFileStorage.setValue(verifies => verifies.filter(it => it.otp !== otp));
+};
 const checkIsOTPTimeStampExpired = (timeStamp: number) =>
   timeStamp < Date.now() - howMillisecondsInMin * minutesUntilExpire;
 
@@ -85,6 +100,24 @@ const makeMailtoButton = ({
   buttonText: string;
 }) =>
   `<a href="mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}"><button>${buttonText}</button></a>`;
+
+const takeOtpPushUserId = async (email: string, auth: UserAuth | nil) => {
+  const emailLogin = makeLoginFromEmail(email);
+  const userByEmail = (
+    await db
+      .select({ id: userDB.id })
+      .from(userDB)
+      .where(or(eq(userDB.l, emailLogin), arrayOverlaps(userDB.ls, [emailLogin])))
+      .limit(1)
+  ).at(0);
+
+  if (userByEmail) return userByEmail.id;
+  if (!auth?.login) return null;
+
+  return (
+    (await db.select({ id: userDB.id }).from(userDB).where(eq(userDB.l, auth.login)).limit(1)).at(0)?.id ?? null
+  );
+};
 
 const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = async (
   { email },
@@ -148,48 +181,56 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
       declension(minutesUntilExpire, 'минуту', 'минуты', 'минут')
     } код станет недействительным${randomBibleText}`;
 
-  let logScope = PostJRPCMessageScope.Support;
-
   const html = makeText();
+  const pushUserId = await takeOtpPushUserId(email, auth);
 
-  try {
-    await sendEmailMessage(EmailerAuthConfigKey.Space, {
-      to: email,
-      subject: randomItem(subjects),
-      html,
-    });
-  } catch (e) {
-    logScope = PostJRPCMessageScope.Error;
-    tglogger.error(`Произошла ошибка\n\n${e}`);
+  if (pushUserId !== null)
+    await sendSchedulePush([pushUserId], {
+      title: otpPushTitleTemplate.replace('$c', `${otp}`),
+      body: '',
+      url: '/',
+      tag: 'otp',
+    }).catch(emptyFunc);
 
-    const sendMailtoButton = (scope: EmailerAuthConfigKey) =>
-      postJRPCMessage(
-        `${makeMailtoButton({
-          email,
+  emailTimeouts.set(
+    otp,
+    setTimeout(async () => {
+      emailTimeouts.delete(otp);
+
+      const pending = sentEmailOTPFileStorage.getValue().find(it => it.otp === otp);
+      if (!pending || checkIsOTPTimeStampExpired(pending.ts)) return;
+
+      try {
+        await sendEmailMessage(EmailerAuthConfigKey.Space, {
+          to: email,
           subject: randomItem(subjects),
-          text: makeText(false),
-          buttonText: 'СФОРМИРОВАТЬ ПИСЬМО',
-        })}\n\n\n\n\n${html}`,
-        {
-          tgBot: logTelegramBot,
-          scope: PostJRPCMessageScope.Error,
-        },
-        scope,
-      );
+          html,
+        });
+      } catch (e) {
+        tglogger.error(`Произошла ошибка\n\n${e}`);
 
-    try {
-      await sendMailtoButton(EmailerAuthConfigKey.Space);
-    } catch {
-      tglogger.error(`Произошла вторичная ошибка\n\n${e}`);
-
-      await sendMailtoButton(EmailerAuthConfigKey.Official);
-    }
-  }
+        await postJRPCMessage(
+          `${makeMailtoButton({
+            email,
+            subject: randomItem(subjects),
+            text: makeText(false),
+            buttonText: 'СФОРМИРОВАТЬ ПИСЬМО',
+          })}\n\n\n\n\n${html}`,
+          {
+            tgBot: logTelegramBot,
+            scope: PostJRPCMessageScope.Error,
+            dashMessage: 'Ошибка отправки OTP-письма',
+            login: auth?.login,
+          },
+        );
+      }
+    }, howMillisecondsInMin * minutesUntilEmail),
+  );
 
   return {
     value: { email },
     description: `Запрос ОТП кода на E-mail ${email}\n\n\n${html}`,
-    logScope,
+    logScope: PostJRPCMessageScope.Support,
   };
 };
 
@@ -224,6 +265,8 @@ export const otpTSJRPCMethods = {
     if (!from.auth?.login) throw 'Ошибка привязки - неизвестный профиль';
     if (from.auth.login !== auth.login) throw 'Ошибка привязки - другой аккаунт';
     if (!from.auth.email) throw 'Ошибка привязки - e-mail не определён';
+
+    cancelOtpEmail(otp);
 
     const newLogin = makeLoginFromEmail(from.auth.email);
 
@@ -261,6 +304,8 @@ export const otpTSJRPCMethods = {
     if (from == null) throw 'Не верный код';
     if (checkIsOTPTimeStampExpired(from.ts)) throw 'Время кода истекло';
     if (!from.auth.email) throw 'Ошибка привязки - e-mail не определён';
+
+    cancelOtpEmail(otp);
 
     const emailAuth = makeAuthFromEmail(from.auth.email, from.auth);
     const loginByEmail = makeLoginFromEmail(from.auth.email);

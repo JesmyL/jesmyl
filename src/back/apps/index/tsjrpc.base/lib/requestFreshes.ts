@@ -13,6 +13,7 @@ import {
   IScheduleWidget,
   IScheduleWidgetUser,
   Langi,
+  LocalSokiAuth,
   ScheduleWidgetRegType,
   scheduleWidgetRegTypeRights,
   scheduleWidgetUserRights,
@@ -36,10 +37,17 @@ import { indexServerTsjrpcShareMethods } from '../../tsjrpc.methods';
 import { makeUserAccessRights } from './makeUserAccessRights';
 
 /** Словарь редактора привязан к нумерации `EditorLocaleKey`: старые фронты его не получают. */
-export const editorLocaleMinVersion = 1314;
-
+export const editorLocaleMinVersion = 1319;
 /** Словарь базы привязан к нумерации `BaseLocaleKey`: старые фронты его не получают. */
-export const baseLocaleMinVersion = 1314;
+export const baseLocaleMinVersion = 1319;
+
+export const throwIfNoEditorLocaleAccess = async (auth: LocalSokiAuth | nil) => {
+  try {
+    await throwIfNoUserScopeAccessRight(auth, 'cm', 'EDIT', 'R');
+  } catch {
+    await throwIfNoUserScopeAccessRight(auth, 'dash', 'DASH', 'R');
+  }
+};
 
 export const indexTSJRPCBaseRequestFreshes = {
   requestFreshes: async (
@@ -77,7 +85,7 @@ export const indexTSJRPCBaseRequestFreshes = {
 
       if (visitInfo.version >= editorLocaleMinVersion) {
         try {
-          await throwIfNoUserScopeAccessRight(auth, 'cm', 'EDIT', 'R');
+          await throwIfNoEditorLocaleAccess(auth);
 
           const editorFileStorage = langLocaleEditorFileStoragesLazy()[visitInfo.langi ?? Langi.Ru];
           const editorMod = editorFileStorage.fileModifiedAt();
@@ -117,6 +125,7 @@ export const indexTSJRPCBaseRequestFreshes = {
           tgChatReqs: PgCheckFieldMode.RemoveIfNull,
           withTech: `=${Bool.False}`,
           tgInform: `=${Bool.True}`,
+          appInform: `=${Bool.True}`,
           prevStart: `=0`,
         }),
       })

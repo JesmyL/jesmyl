@@ -1,10 +1,29 @@
 import { backConfig } from 'back/config/backConfig';
+import { insertDashMessage } from 'back/dash/visits';
 import TgBot from 'node-telegram-bot-api';
-import Mail from 'nodemailer/lib/mailer';
-import { Do } from 'shared/enums';
-import { sendEmailMessage } from '../emailer/lib/sendEmailMessage';
-import { EmailerAuthConfigKey } from '../emailer/model';
+import { makeRegExp } from 'regexpert';
+import { UserLogin } from 'shared/api';
+import { DashMessageKind } from 'shared/model/index/visitsDashboard';
+import { emptyFunc } from 'shared/utils';
 import { JesmylTelegramBot } from './tg-bot';
+
+const methodCodeReg = makeRegExp('/<code>([^<]*)<\\/code>/');
+const htmlTagReg = makeRegExp('/<[^>]*>/g');
+const secretCodeReg = makeRegExp('/\\b\\d{5,6}\\b|[\\w.+-]+@[\\w.-]+\\.[\\w.-]+/g');
+const whitespaceReg = makeRegExp('/\\s+/g');
+
+const takeSupportDashMessage = (html: string) => {
+  const method = html.match(methodCodeReg)?.[1];
+
+  if (method) return method.slice(0, 100);
+
+  return html
+    .replace(htmlTagReg, ' ')
+    .replace(secretCodeReg, '***')
+    .replace(whitespaceReg, ' ')
+    .trim()
+    .slice(0, 200);
+};
 
 export const enum PostJRPCMessageScope {
   Changes,
@@ -19,17 +38,17 @@ export const enum PostJRPCMessageScope {
   Visit,
 }
 
-const scopeTitleDict: Record<PostJRPCMessageScope, string> = {
-  [PostJRPCMessageScope.Changes]: 'Changes',
-  [PostJRPCMessageScope.Credit]: 'Credit',
-  [PostJRPCMessageScope.Control]: 'Control',
-  [PostJRPCMessageScope.Error]: 'Error',
-  [PostJRPCMessageScope.Gul94i]: 'Gul94i',
-  [PostJRPCMessageScope.Gul94iAdmin]: 'Gul94iAdmin',
-  [PostJRPCMessageScope.Log]: 'Log',
-  [PostJRPCMessageScope.Prod]: 'Prod',
-  [PostJRPCMessageScope.Support]: 'Support',
-  [PostJRPCMessageScope.Visit]: 'Visit',
+const dashKindByScope: Record<PostJRPCMessageScope, DashMessageKind> = {
+  [PostJRPCMessageScope.Changes]: DashMessageKind.Changes,
+  [PostJRPCMessageScope.Credit]: DashMessageKind.Log,
+  [PostJRPCMessageScope.Control]: DashMessageKind.Log,
+  [PostJRPCMessageScope.Error]: DashMessageKind.Errors,
+  [PostJRPCMessageScope.Gul94i]: DashMessageKind.Log,
+  [PostJRPCMessageScope.Gul94iAdmin]: DashMessageKind.Log,
+  [PostJRPCMessageScope.Log]: DashMessageKind.Log,
+  [PostJRPCMessageScope.Prod]: DashMessageKind.Log,
+  [PostJRPCMessageScope.Support]: DashMessageKind.Support,
+  [PostJRPCMessageScope.Visit]: DashMessageKind.VisitError,
 };
 
 export const postJRPCMessage = async (
@@ -37,23 +56,20 @@ export const postJRPCMessage = async (
   options: {
     tgBot: JesmylTelegramBot;
     scope?: PostJRPCMessageScope;
+    dashMessage?: string;
+    login?: UserLogin | nil;
 
     tg?: TgBot.SendMessageOptions & { chatId?: number };
-    email?: Mail.Options;
   },
-  emailKey = EmailerAuthConfigKey.Self,
 ) => {
   if (backConfig.isTest) return;
 
-  if (Do.It)
-    await sendEmailMessage(emailKey, {
-      isSameTo: true,
-      subject: `SYSTEM: ${new Date().toLocaleDateString('ru', dateConfig)} (${scopeTitleDict[options.scope ?? options.tgBot.scope]})`,
-      html,
-      ...options.email,
-    });
+  const kind = dashKindByScope[options.scope ?? options.tgBot.scope];
+  const dashMessage = options.dashMessage ?? (kind === DashMessageKind.Support ? takeSupportDashMessage(html) : html);
 
-  //   await options.tgBot.postMessage(text, options.tg, options.tg?.chatId);
+  insertDashMessage(dashMessage, null, kind, options.login ?? null).catch(emptyFunc);
+
+  if (!options.tgBot.isStarted) return;
+
+  await options.tgBot.postMessage(html, options.tg, options.tg?.chatId).catch(emptyFunc);
 };
-
-const dateConfig = { day: '2-digit', year: 'numeric', month: '2-digit', weekday: 'short' } as const;

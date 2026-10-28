@@ -10,6 +10,7 @@ import { ScheduleWidgetTopicTitle } from '#widgets/schedule/complect/TopicTitle'
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { ScheduleWidgetDayEventAtts } from '#widgets/schedule/events/atts/DayEventAtts';
 import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
+import { CmExternalComsListLink } from '$cm/entities/external/ui/CmExternalComsListLink';
 import styled from '@emotion/styled';
 import { ReactNode, useMemo } from 'react';
 import {
@@ -203,12 +204,15 @@ export function ScheduleWidgetDayEvent(props: Props) {
               topicBox={props.event}
             />
           </div>
-          {(props.isForceCanRedact ?? isCanRedactEvent)
-            ? isExpand || isRedact
-              ? editIcon
-              : (props.event.dsc || objectLength(props.event.atts) !== 0) && <LazyIcon icon="ArrowDown01" />
-            : props.isForceExpand ||
-              (isCanExpandEvent ? isExpand ? <LazyIcon icon="ArrowUp01" /> : <LazyIcon icon="ArrowDown01" /> : null)}
+          <div className="right-part flex items-center gap-2">
+            {props.redact || !props.event.atts?.['[cm]:coms'] || <CmExternalComsListLink schw={props.dayScopeProps.schw} />}
+            {(props.isForceCanRedact ?? isCanRedactEvent)
+              ? isExpand || isRedact
+                ? editIcon
+                : (props.event.dsc || objectLength(props.event.atts) !== 0) && <LazyIcon icon="ArrowDown01" />
+              : props.isForceExpand ||
+                (isCanExpandEvent ? isExpand ? <LazyIcon icon="ArrowUp01" /> : <LazyIcon icon="ArrowDown01" /> : null)}
+          </div>
         </div>
         {(isExpandEvent || props.isForceExpand) && (
           <StyledContent className="no-scrollbar">

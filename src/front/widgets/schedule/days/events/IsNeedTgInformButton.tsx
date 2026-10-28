@@ -15,8 +15,8 @@ export const DayEventIsNeedTgInformButton = ({ disabled, isNeedInform, onSend }:
       icon={isNeedInform ? 'NotificationOff01' : 'Notification01'}
       postfix={
         isNeedInform
-          ? translateBase(BaseLocaleKey.ScheduleTelegramInformWontBe)
-          : translateBase(BaseLocaleKey.ScheduleTelegramInformWillBe)
+          ? translateBase(BaseLocaleKey.ScheduleInformWontBe)
+          : translateBase(BaseLocaleKey.ScheduleInformWillBe)
       }
       onSend={() => onSend(isNeedInform ? 1 : 0)}
     />

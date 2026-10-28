@@ -12,8 +12,11 @@ import {
 } from './model';
 import { FreeAnswerCallbackQueryOptions, JesmylTelegramBot } from './tg-bot';
 
+const botIsNotStartedMessage = 'Бот @jesmylbot не запущен';
+
 export class JesmylTelegramBotWrapper {
   bot!: TgBot;
+  private botStarted = false;
   private fromOptionsOnCallbackQueryCallback: Record<string, { cb: JTgBotCallbackQueryWithoutBot; chatId: number }> =
     {};
   private chatCallbackQueryCallbacks: Record<string, JTgBotCallbackQueryWithoutBot> = {};
@@ -33,6 +36,7 @@ export class JesmylTelegramBotWrapper {
     return;
 
     this.bot = new TgBot(token, options);
+    this.botStarted = true;
 
     this.bot.on('message', async (message, metadata) => {
       this._message = message;
@@ -102,7 +106,11 @@ export class JesmylTelegramBotWrapper {
     });
   }
 
-  invokeMessageCatcherItem = (cb: TgBotWrapperMessageCatcher) => cb(this._message, this.bot);
+  invokeMessageCatcherItem = (cb: TgBotWrapperMessageCatcher) => {
+    if (!this.botStarted) return;
+
+    cb(this._message, this.bot);
+  };
   invokeMessageCallbacks = (cb: JTgBotChatMessageCallbackWithoutBot) => cb(this._message, this._metadata);
 
   invokeCallbackQueryCatcherItem = (cb: TgBotWrapperCallbackCatcher) => {
@@ -122,25 +130,37 @@ export class JesmylTelegramBotWrapper {
     return { register: () => {}, off: () => this.callbackCatchers.delete(catcher) };
   }
 
-  sendMessage(userOrId: User | number, text: string, logger: TgLogger, options?: TgBot.SendMessageOptions | null) {
-    return new Promise<{ ok: false; value: string } | { ok: true; value: TgBot.Message }>(res => {
-      this.bot
-        .sendMessage(checkIsNumber(userOrId) ? userOrId : userOrId.id, text, {
+  async sendMessage(
+    userOrId: User | number,
+    text: string,
+    logger: TgLogger,
+    options?: TgBot.SendMessageOptions | null,
+  ): Promise<{ ok: false; value: string } | { ok: true; value: TgBot.Message }> {
+    if (!this.botStarted) return { ok: false, value: botIsNotStartedMessage };
+
+    try {
+      return {
+        ok: true,
+        value: await this.bot.sendMessage(checkIsNumber(userOrId) ? userOrId : userOrId.id, text, {
           parse_mode: 'HTML',
           ...options,
-        })
-        .then(message => res({ ok: true, value: message }))
-        .catch(error => {
-          logger.error(
-            `Попытка отправки сообщения неизвестному пользователю\n\n<code>${JSON.stringify(
-              userOrId,
-              null,
-              1,
-            )}</code>\n\n${text}\n\n${error}`,
-          );
-          res({ ok: false, value: 'Бот @jesmylbot не запущен' });
-        });
-    });
+        }),
+      };
+    } catch (error) {
+      logger.error(
+        `Попытка отправки сообщения неизвестному пользователю\n\n<code>${JSON.stringify(
+          userOrId,
+          null,
+          1,
+        )}</code>\n\n${text}\n\n${error}`,
+      );
+
+      return { ok: false, value: botIsNotStartedMessage };
+    }
+  }
+
+  get isStarted() {
+    return this.botStarted;
   }
 
   listenPersonalMessages = (cb: EventerCallback<TgBot.Message>) => {

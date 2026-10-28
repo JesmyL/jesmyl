@@ -18,14 +18,14 @@ export const ScheduleWidgetMyUserTgInform = ({
   return rights.myUser.tgInform === 0 ? (
     <TheIconSendButton
       icon="NotificationOff01"
-      postfix={translateBase(BaseLocaleKey.ScheduleDontInformMeTelegram)}
+      postfix={translateBase(BaseLocaleKey.ScheduleDontInformMe)}
       className="mb-2"
       onSend={() => schGeneralTsjrpcClient.setIsTgInformMe({ props: scheduleScopeProps, type: 1 })}
     />
   ) : (
     <TheIconSendButton
       icon="Notification01"
-      postfix={translateBase(BaseLocaleKey.ScheduleInformMeTelegram)}
+      postfix={translateBase(BaseLocaleKey.ScheduleInformMe)}
       className="mb-2"
       onSend={() => schGeneralTsjrpcClient.setIsTgInformMe({ props: scheduleScopeProps, type: 0 })}
     />

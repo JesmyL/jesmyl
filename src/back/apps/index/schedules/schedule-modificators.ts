@@ -102,6 +102,7 @@ export const modifySchedule =
           isRemoved: updates.isRemoved ? Bool.True : Bool.False,
           withTech: updates.withTech ? Bool.True : Bool.False,
           tgInform: updates.tgInform === 0 ? Bool.False : Bool.True,
+          appInform: (updates.appInform ?? sch.appInform) === 0 ? Bool.False : Bool.True,
           tgChatReqs: updates.tgChatReqs || '',
           m: mod,
         },

@@ -77,6 +77,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
       };
     };
   } => {
+    // Dashboard tables (visits, visitDays, dashErrors, dashReads) are intentionally absent: dashboard telemetry is never pulled or pushed.
     return {
       'apps/cm/': {
         audioLinkMap: {
@@ -425,6 +426,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
               prevStart: und,
               tgChatReqs: und,
               tgInform: und,
+              appInform: und,
               tgInformTime: und,
               withTech: und,
               ctrl: und,
@@ -444,6 +446,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
                     withTech: `=${Bool.False}`,
                     isRemoved: `=${Bool.False}`,
                     tgInform: `=${Bool.True}`,
+                    appInform: `=${Bool.True}`,
                     games: 'len=0',
                     tgChatReqs: 'len=0',
                   }),
@@ -463,6 +466,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
               w: extractNumber(schwStr),
               isRemoved: +!!sch.isRemoved,
               withTech: +!!sch.withTech,
+              appInform: +!!(sch.appInform ?? Bool.True),
               tgChatReqs: sch.tgChatReqs || '',
             };
 

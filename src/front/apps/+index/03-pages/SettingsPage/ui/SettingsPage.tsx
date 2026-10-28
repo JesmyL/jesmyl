@@ -6,6 +6,7 @@ import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { ScheduleWidgetAppInformButton } from '#widgets/schedule/app-inform/AppInform';
 import { indexIDB, indexIsPlayAnimationsAtom, indexIsShowPlayerInFooterAtom } from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
 import React from 'react';
@@ -100,6 +101,7 @@ export function IndexSettingsPage() {
       onClick={indexIsPlayAnimationsAtom.do.toggle}
       box={<IconCheckbox valueAtom={indexIsPlayAnimationsAtom} />}
     />,
+    <ScheduleWidgetAppInformButton key="app-inform" />,
     <BrutalItem
       key="fonts"
       iconNode={<LazyIcon icon="Text" />}

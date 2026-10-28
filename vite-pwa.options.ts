@@ -1,57 +1,18 @@
 import { VitePWAOptions } from 'vite-plugin-pwa';
-import { cmEditorCacheName } from './src/front/apps/cm/07-shared/lib/cmEditorCache';
 
 export const vitePWAOptions = {
   injectRegister: 'auto',
-  strategies: 'generateSW',
+  strategies: 'injectManifest',
   registerType: 'prompt',
+  srcDir: 'src',
+  filename: 'sw.ts',
   manifestFilename: 'app-manifest-v2.json' as const,
-  workbox: {
-    cleanupOutdatedCaches: true,
-    skipWaiting: false,
-    clientsClaim: false,
-    navigateFallback: '/index.html',
+  injectManifest: {
     globPatterns: ['**/*.{js,wasm,css,html}'],
     manifestTransforms: [
       // `cm-edit-` chunks are built only from the rights-gated CmRedactor slice
       // (see chunkFileNames in vite.config.ts), so they must not be pre-downloaded on install.
       manifest => ({ manifest: manifest.filter(({ url }) => !url.startsWith('assets/cm-edit-')) }),
-    ],
-    runtimeCaching: [
-      {
-        // Same-origin only, mirroring src/service-worker.ts. The name is kept in sync with
-        // `cmComAudioPlayerCacheName` in $cm/entities/com-audio-player (that module pulls front app code).
-        urlPattern: ({ url }) => url.origin === self.location.origin && url.pathname.startsWith('/track/'),
-        handler: 'CacheFirst',
-        options: {
-          cacheName: 'audio-cache',
-        },
-      },
-      {
-        // A @font-face src is fetched only when its family is rendered, so fonts stay out of
-        // the precache and enter this bucket one requested family at a time.
-        urlPattern: ({ url }) =>
-          url.origin === self.location.origin &&
-          url.pathname.startsWith('/resource/') &&
-          /\.(ttf|otf|woff2)$/.test(url.pathname),
-        handler: 'CacheFirst',
-        options: {
-          cacheName: 'resource-fonts-v2',
-          // Unversioned srcs: bound staleness so a replaced font file is refetched within a week.
-          expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 7, purgeOnQuotaError: true },
-        },
-      },
-      {
-        // Editor assets enter the cache only on the first real request (CmRedactor visit
-        // or the rights-gated bootstrap import), never at service-worker install time.
-        // The bucket name is shared with the front purge logic (cmEditorCache.ts).
-        urlPattern: ({ url }) => url.origin === self.location.origin && url.pathname.startsWith('/assets/cm-edit-'),
-        handler: 'CacheFirst',
-        options: {
-          cacheName: cmEditorCacheName,
-          expiration: { maxEntries: 100, purgeOnQuotaError: true },
-        },
-      },
     ],
   },
   manifest: {

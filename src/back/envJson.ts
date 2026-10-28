@@ -40,6 +40,10 @@ export const lazyEnvJson = (filePostfix: '' | `.${string}` = '') => {
     SECURE_KEY: '',
 
     isProd: false,
+
+    VAPID_PUBLIC_KEY: '',
+    VAPID_PRIVATE_KEY: '',
+    VAPID_SUBJECT: '',
   };
 
   if (!fs.existsSync(envFilePath)) {

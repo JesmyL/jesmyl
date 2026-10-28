@@ -113,13 +113,13 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
               !scheduleWidgetUserRights.checkIsHasRights(user.R, ScheduleWidgetUserRoleRight.Read) ? (
                 <TheIconButton
                   icon="NotificationOff01"
-                  postfix={translateBase(BaseLocaleKey.ScheduleUserNotReceiveTelegram)}
+                  postfix={translateBase(BaseLocaleKey.ScheduleUserNotReceiveInform)}
                   disabled
                 />
               ) : (
                 <TheIconButton
                   icon="Notification01"
-                  postfix={translateBase(BaseLocaleKey.ScheduleUserReceiveTelegram)}
+                  postfix={translateBase(BaseLocaleKey.ScheduleUserReceiveInform)}
                   disabled
                 />
               )}
