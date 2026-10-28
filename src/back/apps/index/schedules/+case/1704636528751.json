@@ -2,9 +2,9 @@
   "title": "Молодёжка",
   "topic": "",
   "dsc": "",
-  "start": 1764450000000,
-  "prevStart": 1761426000000,
-  "tgInformTime": 15,
+  "start": 1793134800000,
+  "prevStart": 1764450000000,
+  "tgInformTime": 30,
   "ctrl": {
     "cats": ["Основное"],
     "defu": 21,
@@ -14,17 +14,17 @@
       { "mi": 1, "title": "" }
     ],
     "users": [
-      { "R": 127, "id": 1, "mi": 0, "tgId": 958383738, "tgInform": 1 },
+      { "R": 2047, "id": 1, "mi": 0, "tgId": 958383738, "tgInform": 1 },
       { "R": 127, "id": 3, "mi": 1, "tgId": 370756745, "tgInform": 1 },
       { "R": 43, "id": 5, "mi": 2, "tgId": 521630606, "tgInform": 0 },
-      { "R": 47, "id": 2, "mi": 4, "tgId": 1086988826, "tgInform": 1 }
+      { "R": 2047, "id": 2, "mi": 4, "tgId": 1086988826, "tgInform": 1 }
     ],
     "comsRights": { "users": [5] }
   },
   "days": [
     {
       "mi": 0,
-      "wup": 17,
+      "wup": 14.2,
       "list": [
         {
           "mi": 0,
@@ -32,8 +32,7 @@
           "atts": {},
           "rate": { "0": [0, ""], "4": [5, "Хорошо общаться с мужем 🥰\nи вкусно кофе ☕️"] },
           "type": 0,
-          "tgAlert": 1,
-          "tgInform": 0
+          "tgAlert": 1
         },
         {
           "mi": 1,
@@ -64,7 +63,7 @@
           "tgAlert": 1,
           "tgInform": 0
         },
-        { "mi": 3, "type": 3, "tgInform": 0 }
+        { "mi": 3, "type": 3 }
       ]
     }
   ],
