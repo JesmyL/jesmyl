@@ -1,5 +1,5 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -16,7 +16,7 @@ import { CmComOrderOnClickBetweenData } from '$cm+editor/shared/model/Orders';
 import { TheCmComOrder, useCmComPinchFontSize } from '$cm/ext';
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 
 export const CmEditorComTabComOrders = ({ ccom }: { ccom: EditableCom }) => {
   const [newBlockAdderPopupCom, setNewBlockAdderPopupCom] = useState<EditableCom | false>(false);
@@ -89,14 +89,14 @@ export const CmEditorComTabComOrders = ({ ccom }: { ccom: EditableCom }) => {
                     icon={ord.isVisible ? 'View' : 'ViewOffSlash'}
                     confirm={
                       <>
-                        {translateBase(
+                        {translateEditorBase(
                           it => {
                             const leadOrd = ord.me.leadOrd;
-                            if (leadOrd == null) return it[BaseLocaleKey.CmEditorLinkPartShow];
+                            if (leadOrd == null) return it[EditorLocaleKey.CmEditorLinkPartShow];
 
                             return leadOrd.top._v?.[ord.me.anchorInheritIndex ?? 0] == null
-                              ? it[BaseLocaleKey.CmEditorLinkPartHide]
-                              : it[BaseLocaleKey.CmEditorLinkPartShow];
+                              ? it[EditorLocaleKey.CmEditorLinkPartHide]
+                              : it[EditorLocaleKey.CmEditorLinkPartShow];
                           },
                           {
                             n: '' + (ord.me.anchorInheritIndex + 2),

@@ -1,5 +1,5 @@
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
-import { takeBaseLanguageAtom, takeDynamicLanguageAtom } from '#basis/state/locale';
+import { takeBaseLanguageAtom, takeEditorLanguageAtom, takeDynamicLanguageAtom } from '#basis/state/locale';
 import { TsjrpcBaseClient } from '#basis/tsjrpc/TsjrpcBase.client';
 import { rootAppModalTextContentAtom } from '#shared/lib/atoms/rootAppModalTextContentAtom';
 import { makeToastKOMoodConfig, makeToastOKMoodConfig } from '#shared/ui/modal';
@@ -53,16 +53,18 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
           await indexIDB.updateLastModifiedAt(mod);
         },
 
-        baseLocConf: async ({ base, mod }) => {
+        baseLocConf: async ({ base }) => {
           takeBaseLanguageAtom().set(base);
           localeIsLoadingAtom.do.increment(-1);
-          await indexIDB.updateLastModifiedAt(mod);
         },
 
-        dynLocConf: async ({ mod, dyns }) => {
+        editorLocConf: async ({ editor }) => {
+          takeEditorLanguageAtom().set(editor);
+        },
+
+        dynLocConf: async ({ dyns }) => {
           dyns.forEach(config => takeDynamicLanguageAtom(config[DynLocaleKey.Langi]).set(config));
           localeIsLoadingAtom.do.increment(-dyns.length);
-          await indexIDB.updateLastModifiedAt(mod);
         },
       },
     });

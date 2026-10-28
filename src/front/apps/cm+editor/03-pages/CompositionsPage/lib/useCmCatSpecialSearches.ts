@@ -1,4 +1,4 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { cmIDB } from '$cm/ext';
@@ -6,7 +6,7 @@ import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmComTextSquareBracketsMode } from 'shared/api';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { itIt } from 'shared/utils';
 import { checkIsArray, checkIsNumber } from 'shared/utils/checkIs';
 import { slavicLowerLettersStr } from 'shared/utils/cm/com/const';
@@ -73,11 +73,11 @@ export const useCmEditorCompositionsCatSpecialSearches = (): Record<
   return useMemo(
     () => ({
       '@audioLess': {
-        title: translateBase(BaseLocaleKey.CmEditorNoAudioComs),
+        title: translateEditorBase(EditorLocaleKey.CmEditorNoAudioComs),
         map: async coms => coms.filter(com => !com.audio?.length),
       },
       '@lineLen:': {
-        title: translateBase(BaseLocaleKey.CmEditorLineLengthMore, { n: '' + maxAvailableComLineLength }),
+        title: translateEditorBase(EditorLocaleKey.CmEditorLineLengthMore, { n: '' + maxAvailableComLineLength }),
         map: async (coms, term) => {
           const maxLength = +term.split(':')[1] || maxAvailableComLineLength;
 
@@ -85,7 +85,7 @@ export const useCmEditorCompositionsCatSpecialSearches = (): Record<
         },
       },
       '@repeatsMatch:': {
-        title: translateBase(BaseLocaleKey.CmEditorRepeatsByRegExp),
+        title: translateEditorBase(EditorLocaleKey.CmEditorRepeatsByRegExp),
         map: async (coms, term) => {
           try {
             const regStr = term.slice(term.indexOf(':') + 1) || '/~/i';
@@ -104,7 +104,7 @@ export const useCmEditorCompositionsCatSpecialSearches = (): Record<
         },
       },
       '@matchInRepeatedText:': {
-        title: translateBase(BaseLocaleKey.CmEditorMatchInRepeated),
+        title: translateEditorBase(EditorLocaleKey.CmEditorMatchInRepeated),
         map: async (coms, term) => {
           try {
             const regStr = term.slice(term.indexOf(':') + 1) || '/\\/\\//i';
@@ -119,7 +119,7 @@ export const useCmEditorCompositionsCatSpecialSearches = (): Record<
         },
       },
       '@filterPositionsUnequalChordsCounts': {
-        title: translateBase(BaseLocaleKey.CmEditorChordsMismatch),
+        title: translateEditorBase(EditorLocaleKey.CmEditorChordsMismatch),
         map: async coms => {
           return coms.filter(com =>
             com.ords?.some(
@@ -139,7 +139,7 @@ export const useCmEditorCompositionsCatSpecialSearches = (): Record<
         },
       },
       '@withUnknownChords': {
-        title: translateBase(BaseLocaleKey.CmEditorUnknownChords),
+        title: translateEditorBase(EditorLocaleKey.CmEditorUnknownChords),
         isRerenderOnInput: true,
         map: async coms => {
           const knownChordsSetLocal = await knownChordsSet();
@@ -158,7 +158,7 @@ export const useCmEditorCompositionsCatSpecialSearches = (): Record<
         },
       },
       '@incorrect-ЁЕ': {
-        title: translateBase(BaseLocaleKey.CmEditorIncorrectYoYe),
+        title: translateEditorBase(EditorLocaleKey.CmEditorIncorrectYoYe),
         isRerenderOnInput: true,
         map: async coms => {
           const reg = await eeIncorrectWordsReg();

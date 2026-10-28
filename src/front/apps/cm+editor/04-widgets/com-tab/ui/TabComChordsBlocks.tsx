@@ -1,5 +1,6 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
-import { translateBase } from '#basis/locale';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
+import { translateEditorBase } from '#basis/locale';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { CmEditorChordBlockRedactor } from '$cm+editor/entities/chord';
@@ -11,7 +12,6 @@ import { cmComIsChordHardLevelAtom } from '$cm/entities/index';
 import { useAtomValue } from 'atomaric';
 import React from 'react';
 import { makeRegExp } from 'regexpert';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { arrayByLength } from 'shared/utils/object.utils';
 import { CmEditorComTabChordHardLevelSelector } from '../sub-ui/ChordHardLevelSelector';
 import {
@@ -52,7 +52,7 @@ export const CmEditorComTabChordsBlocks = ({ ccom }: { ccom: EditableCom }) => {
         {checkAccess('cm', 'COM_CH', 'C') && (
           <TheIconButton
             icon="PlusSignCircle"
-            confirm={translateBase(BaseLocaleKey.CmEditInsertBlockX, { x: 'b' })}
+            confirm={translateEditorBase(EditorLocaleKey.CmEditInsertBlockX, { x: 'b' })}
             onClick={() =>
               cmEditComClientTsjrpcMethods.insertChordBlock({
                 value: '',
@@ -95,7 +95,7 @@ export const CmEditorComTabChordsBlocks = ({ ccom }: { ccom: EditableCom }) => {
                 {checkAccess('cm', 'COM_CH', 'D') && (
                   <TheIconButton
                     icon="Cancel01"
-                    confirm={translateBase(BaseLocaleKey.DeleteX, { x: `\n\n${text}` })}
+                    confirm={translateEditorBase(EditorLocaleKey.DeleteX, { x: `\n\n${text}` })}
                     onClick={() =>
                       cmEditComClientTsjrpcMethods.removeChordBlock({
                         comw: ccom.wid,
@@ -117,7 +117,7 @@ export const CmEditorComTabChordsBlocks = ({ ccom }: { ccom: EditableCom }) => {
             {checkAccess('cm', 'COM_CH', 'C') && (
               <TheIconButton
                 icon="PlusSignCircle"
-                confirm={translateBase(BaseLocaleKey.CmEditInsertBlockX, { x: 'h' })}
+                confirm={translateEditorBase(EditorLocaleKey.CmEditInsertBlockX, { x: 'h' })}
                 onClick={() =>
                   cmEditComClientTsjrpcMethods.insertChordBlock({
                     value: '',

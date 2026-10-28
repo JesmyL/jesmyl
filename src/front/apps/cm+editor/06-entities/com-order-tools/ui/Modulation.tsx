@@ -1,4 +1,4 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
@@ -6,7 +6,7 @@ import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { TheCmComOrder } from '$cm/ext';
 import { Atom, atom } from 'atomaric';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { aSharpToBChord, bToASharpChord } from 'shared/utils/cm/com/const';
 import { arrayByLength } from 'shared/utils/object.utils';
 import { CmEditorComOrderToolsProps } from '../model';
@@ -33,12 +33,12 @@ export const CmEditorComOrderToolsModulation = ({
     <>
       <BottomPopupItem
         icon="Flash"
-        title={translateBase(BaseLocaleKey.CmEditorModulationValue)}
+        title={translateEditorBase(EditorLocaleKey.CmEditorModulationValue)}
         onClick={isModalOpenAtom.do.toggle}
       />
 
       <Modal openAtom={isModalOpenAtom}>
-        <ModalHeader>{translateBase(BaseLocaleKey.CmEditorModulationValueSetting)}</ModalHeader>
+        <ModalHeader>{translateEditorBase(EditorLocaleKey.CmEditorModulationValueSetting)}</ModalHeader>
         <ModalBody>
           <TheCmComOrder
             ord={ord}

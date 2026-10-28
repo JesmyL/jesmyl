@@ -1,9 +1,9 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { DisabledArea } from '#shared/ui/DisabledArea';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { CmEditorComOrderToolsProps } from '../model';
 
 export const CmEditorComOrderToolsMoveBlock = (props: CmEditorComOrderToolsProps) => {
@@ -12,7 +12,7 @@ export const CmEditorComOrderToolsMoveBlock = (props: CmEditorComOrderToolsProps
   return (
     <DisabledArea
       disabled={isDisabled}
-      disabledReason={translateBase(BaseLocaleKey.CmEditorNextIsContinuation)}
+      disabledReason={translateEditorBase(EditorLocaleKey.CmEditorNextIsContinuation)}
       onClick={async () => {
         props.onClose(false);
         let isFoundTargetOrd = !props.ord.isAnchor;
@@ -22,7 +22,7 @@ export const CmEditorComOrderToolsMoveBlock = (props: CmEditorComOrderToolsProps
           buttonTitle: (
             <span className="flex gap-2">
               {props.ord.isAnchor && <LazyIcon icon="Link02" />}
-              {translateBase(BaseLocaleKey.CmEditorBlockWillBeHere, { h: props.ord.me.header() })}
+              {translateEditorBase(EditorLocaleKey.CmEditorBlockWillBeHere, { h: props.ord.me.header() })}
             </span>
           ),
           checkIsShowButton: ({ ordAbove, ordBelow }) => {
@@ -62,7 +62,7 @@ export const CmEditorComOrderToolsMoveBlock = (props: CmEditorComOrderToolsProps
       {({ onClick, className }) => (
         <BottomPopupItem
           icon="ArrowDataTransferDiagonal"
-          title={translateBase(BaseLocaleKey.CmEditorMoveBlock)}
+          title={translateEditorBase(EditorLocaleKey.CmEditorMoveBlock)}
           className={className}
           onClick={onClick}
         />

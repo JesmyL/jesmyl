@@ -1,11 +1,11 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { useConfirm } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { StyledLoadingSpinner } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { useState } from 'react';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { CmEditorComOrderToolsProps } from '../model';
 
 export const CmEditorComOrderToolsOrderVisibility = ({
@@ -29,11 +29,11 @@ export const CmEditorComOrderToolsOrderVisibility = ({
       }
       title={
         ord.isVisible
-          ? translateBase(BaseLocaleKey.CmEditorHideBlock)
-          : translateBase(BaseLocaleKey.CmEditorShowBlock)
+          ? translateEditorBase(EditorLocaleKey.CmEditorHideBlock)
+          : translateEditorBase(EditorLocaleKey.CmEditorShowBlock)
       }
       onClick={async () => {
-        if (await confirm(translateBase(BaseLocaleKey.CmEditorHideBlockConfirm, { h: ord.me.header() }))) {
+        if (await confirm(translateEditorBase(EditorLocaleKey.CmEditorHideBlockConfirm, { h: ord.me.header() }))) {
           setIsLoading(true);
 
           if (onEdit) await onEdit();

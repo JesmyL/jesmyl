@@ -1,4 +1,5 @@
 import { DeviceId, Langi } from 'shared/api/complect/enums';
+import { PushSubscriptionPayload } from 'shared/api/complect/push.model';
 import {
   LocalSokiAuth,
   SokiAuthLogin,
@@ -20,6 +21,10 @@ export type IndexTsjrpcModel = {
   }) => void;
   getDeviceId: () => DeviceId;
   getDeviceEmoji: () => string;
+
+  getPushVapidPublicKey: () => string;
+  subscribePush: (args: { subscription: PushSubscriptionPayload }) => void;
+  unsubscribePush: (args: { endpoint: string }) => void;
 
   authMeByTelegramNativeButton: (args: { user: TelegramNativeAuthUserData }) => { token: string; auth: LocalSokiAuth };
   authMeByTelegramMiniButton: (args: { user: TelegramNativeAuthUserData }) => { token: string; auth: LocalSokiAuth };
@@ -80,5 +85,6 @@ export type IndexTsjrpcModel = {
   updateConstConfig: (args: { config: Partial<ConstantsConfig> }) => void;
 
   reqLocaleBaseConfig: () => void;
+  reqLocaleEditorConfig: () => void;
   reqLocaleDynConfig: (args: { langi: Langi }) => void;
 };

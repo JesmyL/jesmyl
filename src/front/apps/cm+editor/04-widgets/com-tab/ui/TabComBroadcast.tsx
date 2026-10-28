@@ -1,4 +1,5 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { Button } from '#shared/components';
 import { propsOfClicker } from '#shared/lib/clicker/propsOfClicker';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
@@ -17,7 +18,6 @@ import {
   CmComTextSquareBracketsMode,
 } from 'shared/api';
 import { Bool } from 'shared/enums';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmBroadcastMonolineSlideOrdStrId, CmComNewlinerSymbolFreeUpperCaseLine } from 'shared/model/cm/broadcast';
 import { incrementNumber, nagativeNumber } from 'shared/utils';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
@@ -58,11 +58,11 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
       const ordLineId = makeCmBroadcastMonolineSlideOrdLineStrId(ord.wid, linei, repeati, samei);
 
       if (lines.length > manyLinesLen) {
-        warns[ordLineId] = ['text-x3 bg-xKO', translateBase(BaseLocaleKey.ManyLines)];
+        warns[ordLineId] = ['text-x3 bg-xKO', translateEditorBase(EditorLocaleKey.ManyLines)];
       } else if (lines.length > maxLinesLen) {
-        warns[ordLineId] = ['text-x1 bg-x3 opacity-50', translateBase(BaseLocaleKey.MaximumLinesCount)];
+        warns[ordLineId] = ['text-x1 bg-x3 opacity-50', translateEditorBase(EditorLocaleKey.MaximumLinesCount)];
       } else if (lines.length < fewLinesLen) {
-        warns[ordLineId] = ['text-x3 bg-orange-500 opacity-60', translateBase(BaseLocaleKey.FewLines)];
+        warns[ordLineId] = ['text-x3 bg-orange-500 opacity-60', translateEditorBase(EditorLocaleKey.FewLines)];
       }
     });
 
@@ -130,7 +130,7 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
                       })
                     }
                   >
-                    {translateBase(BaseLocaleKey.CmEditConfigStringNumber, { n: lineConfigi + 1 })}
+                    {translateEditorBase(EditorLocaleKey.CmEditConfigStringNumber, { n: lineConfigi + 1 })}
                   </Button>
                 </div>
               );

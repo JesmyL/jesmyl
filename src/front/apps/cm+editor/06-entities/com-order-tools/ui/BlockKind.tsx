@@ -1,4 +1,4 @@
-import { translateBase, translateDynamic } from '#basis/locale';
+import { translateDynamic, translateEditorBase } from '#basis/locale';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
@@ -6,8 +6,8 @@ import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { TheCmComOrder } from '$cm/ext';
 import { Atom, atom } from 'atomaric';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { comBlockKinds } from 'shared/values/cm/block-kinds/BlockKind';
 import { CmEditorComOrderToolsProps } from '../model';
 
@@ -21,12 +21,12 @@ export const CmEditorComOrderToolsBlockKind = ({ com, ord, ordi }: CmEditorComOr
     <>
       <BottomPopupItem
         icon="Cube"
-        title={translateBase(BaseLocaleKey.CmEditorBlockKind)}
+        title={translateEditorBase(EditorLocaleKey.CmEditorBlockKind)}
         onClick={isModalOpenAtom.do.toggle}
       />
 
       <Modal openAtom={isModalOpenAtom}>
-        <ModalHeader>{translateBase(BaseLocaleKey.CmEditorBlockKind)}</ModalHeader>
+        <ModalHeader>{translateEditorBase(EditorLocaleKey.CmEditorBlockKind)}</ModalHeader>
         <ModalBody>
           <TheCmComOrder
             ord={ord}

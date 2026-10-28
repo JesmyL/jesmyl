@@ -1,5 +1,7 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
-import { translateBase } from '#basis/locale';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
+import { translateBase, translateEditorBase } from '#basis/locale';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Button } from '#shared/components';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
@@ -22,7 +24,6 @@ import { makeRegExp } from 'regexpert';
 import { CmComIntensityLevel } from 'shared/api';
 import { cmComIntensityLevelTitleDict } from 'shared/const/cm/cmComDriveLevelTitleDict';
 import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { emptyFunc } from 'shared/utils';
 import { cmComLanguages } from 'shared/utils/cm/com/const';
@@ -68,7 +69,7 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
         label={
           <>
             <LazyIcon icon="Ruler" />
-            {translateBase(BaseLocaleKey.CmSize)}
+            {translateEditorBase(EditorLocaleKey.CmSize)}
           </>
         }
         id={ccom.meterSize ?? CmComMetricNum.Four}
@@ -79,7 +80,7 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
         label={
           <>
             <LazyIcon icon="SpeedTrain01" />
-            {translateBase(BaseLocaleKey.CmIntensity)}
+            {translateEditorBase(EditorLocaleKey.CmIntensity)}
           </>
         }
         id={ccom.top.d ?? CmComIntensityLevel.Medium}
@@ -90,7 +91,7 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
         label={
           <>
             <LazyIcon icon="Flag03" />
-            {translateBase(BaseLocaleKey.Language)}
+            {translateEditorBase(EditorLocaleKey.Language)}
           </>
         }
         id={ccom.langi}
@@ -114,7 +115,7 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
           <TheIconButton
             icon="Delete01"
             className="text-xKO"
-            confirm={<>{translateBase(BaseLocaleKey.DeleteX, { x: ccom.name })}</>}
+            confirm={<>{translateEditorBase(EditorLocaleKey.DeleteX, { x: ccom.name })}</>}
             postfix={translateBase(BaseLocaleKey.Delete)}
             onClick={() => {
               removedCompositionsAtom.set(prev => ({ ...prev, [ccom.wid]: ccom.name }));
@@ -128,7 +129,7 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
                   icon="Code"
                   onClick={openAtom.do.toggle}
                 >
-                  {translateBase(BaseLocaleKey.LookJSON)}
+                  {translateEditorBase(EditorLocaleKey.LookJSON)}
                 </Button>
                 <FullContent openAtom={openAtom}>
                   {isOpen =>

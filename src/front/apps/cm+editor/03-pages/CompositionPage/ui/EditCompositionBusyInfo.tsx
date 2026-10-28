@@ -1,4 +1,4 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmEditorClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
@@ -8,7 +8,7 @@ import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { CmComWid } from 'shared/api';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 
 export const CmEditorCompositionBusyInfo = ({ comw }: { comw: CmComWid }) => {
   const deviceId = useAtomValue(indexDeviceIdAtom);
@@ -27,12 +27,12 @@ export const CmEditorCompositionBusyInfo = ({ comw }: { comw: CmComWid }) => {
   const comBusies = busies.filter(busy => busy.comw === comw);
 
   if (comBusies.length < 2)
-    return <div className="text-xOK">{translateBase(BaseLocaleKey.CmNoEditorsMore)}</div>;
+    return <div className="text-xOK">{translateEditorBase(EditorLocaleKey.CmNoEditorsMore)}</div>;
 
   if (comBusies[0].deviceId === deviceId) {
     return (
       <div className="text-xKO nowrap flex gap-2">
-        {translateBase(BaseLocaleKey.CmEditsToo, {
+        {translateEditorBase(EditorLocaleKey.CmEditsToo, {
           m: comBusies.length > 3,
           l: comBusies
             .slice(1)
@@ -46,7 +46,7 @@ export const CmEditorCompositionBusyInfo = ({ comw }: { comw: CmComWid }) => {
   return (
     <StyledCmEditorCompositionIsThereOtherFirstRedactorUserDetect className="text-xKO flex gap-2">
       <LazyIcon icon="InformationCircle" />
-      {translateBase(BaseLocaleKey.CmEdits, { f: comBusies[0].fio })}
+      {translateEditorBase(EditorLocaleKey.CmEdits, { f: comBusies[0].fio })}
     </StyledCmEditorCompositionIsThereOtherFirstRedactorUserDetect>
   );
 };

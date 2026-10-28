@@ -1,5 +1,5 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
@@ -9,7 +9,7 @@ import { CmEditorComAudioControlledList } from '$cm+editor/widgets/com-audio';
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmAudioSrc, CmMp3Rule, HttpNumLeadLink } from 'shared/api';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model';
 
 export const CmEditorComTabAudio = ({ ccom }: { ccom: EditableCom }) => {
@@ -29,7 +29,7 @@ export const CmEditorComTabAudio = ({ ccom }: { ccom: EditableCom }) => {
 
   return (
     <>
-      <h2>{translateBase(BaseLocaleKey.CmEditorNewBoundAudio)}</h2>
+      <h2>{translateEditorBase(EditorLocaleKey.CmEditorNewBoundAudio)}</h2>
       {ccom.audio?.length ? (
         <CmEditorComAudioControlledList
           srcs={ccom.audio}
@@ -41,11 +41,11 @@ export const CmEditorComTabAudio = ({ ccom }: { ccom: EditableCom }) => {
           }}
         />
       ) : (
-        <div>{translateBase(BaseLocaleKey.CmEditorNewNoTracks)}</div>
+        <div>{translateEditorBase(EditorLocaleKey.CmEditorNewNoTracks)}</div>
       )}
       {!removedHrefs.length || (
         <>
-          <h2>{translateBase(BaseLocaleKey.CmEditRemovedAudios)}</h2>
+          <h2>{translateEditorBase(EditorLocaleKey.CmEditRemovedAudios)}</h2>
           <CmEditorComAudioControlledList
             srcs={removedHrefs}
             icon="PlusSignCircle"
@@ -59,7 +59,7 @@ export const CmEditorComTabAudio = ({ ccom }: { ccom: EditableCom }) => {
       {checkAccess('cm', 'COM_AUDIO', 'C') &&
         (openAddBlock ? (
           <>
-            <h2>{translateBase(BaseLocaleKey.CmEditAddAudio)}</h2>
+            <h2>{translateEditorBase(EditorLocaleKey.CmEditAddAudio)}</h2>
             {
               <ObserveUrlResource
                 onSuccess={({ html, rule }) => {

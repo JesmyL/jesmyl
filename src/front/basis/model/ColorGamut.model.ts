@@ -1,11 +1,12 @@
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { UsedBaseLocaleKey } from 'shared/model/+locale/base';
 
 export const colorGamutVars = ['x1', 'x2', 'x3', 'x4', 'x5', 'x6', 'x7', 'x8', 'xOK', 'xKO'] as const;
 
 export type ColorGamutVar = (typeof colorGamutVars)[number];
 export type ColorGamut = Record<ColorGamutVar, string>;
 export type ColorGamutModes = { light: ColorGamut; dark: ColorGamut };
-export type ColorGamutPalette = ColorGamutModes & { localeKey: BaseLocaleKey };
+export type ColorGamutPalette = ColorGamutModes & { localeKey: UsedBaseLocaleKey };
 
 export const builtInColorGamuts: ColorGamutPalette[] = [
   {

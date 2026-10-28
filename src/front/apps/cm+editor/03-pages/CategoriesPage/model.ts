@@ -1,6 +1,7 @@
-import { translateBase } from '#basis/locale';
+import { translateBase, translateEditorBase } from '#basis/locale';
 import { CmCatKind } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 
 export const enum CmEditorCategoriesModal {
   none,
@@ -10,12 +11,12 @@ export const enum CmEditorCategoriesModal {
 
 export const cmEditorCategoriesPageKindCodes = [CmCatKind.list, CmCatKind.dict];
 
-const catKindLocaleKeys: Record<CmCatKind, BaseLocaleKey> = {
-  [CmCatKind.dict]: BaseLocaleKey.Collections,
-  [CmCatKind.list]: BaseLocaleKey.Lists,
+const catKindTitles: Record<CmCatKind, () => string> = {
+  [CmCatKind.dict]: () => translateEditorBase(EditorLocaleKey.Collections),
+  [CmCatKind.list]: () => translateBase(BaseLocaleKey.Lists),
 };
 
-export const takeCmEditorCategoriesPageKindTitle = (kind: CmCatKind) => translateBase(catKindLocaleKeys[kind]);
+export const takeCmEditorCategoriesPageKindTitle = (kind: CmCatKind) => catKindTitles[kind]();
 
 export const takeCmEditorCategoriesPageKindItems = () =>
   cmEditorCategoriesPageKindCodes.map(kind => ({

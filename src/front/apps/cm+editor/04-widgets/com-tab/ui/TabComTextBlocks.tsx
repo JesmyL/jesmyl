@@ -1,5 +1,5 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { Button } from '#shared/components';
 import { Modal } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -10,12 +10,12 @@ import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.ts
 import { cmEditorComTextsEditsHistoryAtom } from '$cm+editor/shared/state/atoms';
 import React, { useReducer } from 'react';
 import { makeRegExp } from 'regexpert';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { toast } from 'sonner';
 import {
   CmEditorComTabTextBlockPrevValueButton,
   CmEditorComTabTextBlockPrevValueUpdateModal,
 } from '../sub-ui/TextBlockPrevValueHistory';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { CmEditorComTabTextBlockRedactor } from '../sub-ui/TextBlockRedactor';
 import { CmEditorComTabTextBlockWordLetterLowerer } from '../sub-ui/TextBlockWordLetterLowerer';
 
@@ -56,7 +56,7 @@ export const CmEditorComTabTextBlocks = ({ ccom }: { ccom: EditableCom }) => {
       {checkAccess('cm', 'COM_TXT', 'C') && (
         <TheIconButton
           icon="PlusSignCircle"
-          confirm={translateBase(BaseLocaleKey.CmEditorInsertBlockStart)}
+          confirm={translateEditorBase(EditorLocaleKey.CmEditorInsertBlockStart)}
           onClick={() =>
             cmEditComClientTsjrpcMethods.insertTextBlock({
               value: '',
@@ -84,7 +84,7 @@ export const CmEditorComTabTextBlocks = ({ ccom }: { ccom: EditableCom }) => {
                   <Button
                     icon="Code"
                     onClick={() => {
-                      toast(translateBase(BaseLocaleKey.CmEditSquareBracketsHint));
+                      toast(translateEditorBase(EditorLocaleKey.CmEditSquareBracketsHint));
                     }}
                   />
                 )}
@@ -98,7 +98,7 @@ export const CmEditorComTabTextBlocks = ({ ccom }: { ccom: EditableCom }) => {
                 {checkAccess('cm', 'COM_TXT', 'D') && (
                   <TheIconButton
                     icon="Cancel01"
-                    confirm={translateBase(BaseLocaleKey.CmEditIsRemoveTextBlock, { t: text })}
+                    confirm={translateEditorBase(EditorLocaleKey.CmEditIsRemoveTextBlock, { t: text })}
                     onClick={() =>
                       cmEditComClientTsjrpcMethods.removeTextBlock({
                         comw: ccom.wid,
@@ -119,7 +119,7 @@ export const CmEditorComTabTextBlocks = ({ ccom }: { ccom: EditableCom }) => {
             {checkAccess('cm', 'COM_TXT', 'C') && (
               <TheIconButton
                 icon="PlusSignCircle"
-                confirm={translateBase(BaseLocaleKey.CmEditorInsertBlockHere)}
+                confirm={translateEditorBase(EditorLocaleKey.CmEditorInsertBlockHere)}
                 onClick={() =>
                   cmEditComClientTsjrpcMethods.insertTextBlock({
                     value: '',

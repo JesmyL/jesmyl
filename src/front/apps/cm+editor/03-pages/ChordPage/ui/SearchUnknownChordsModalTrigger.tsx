@@ -1,4 +1,4 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { ButtonGroup } from '#shared/components/ui/button-group';
 import { getParentNodeWithClassName } from '#shared/lib/getParentNodeWithClassName';
@@ -12,7 +12,7 @@ import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useMemo, useRef } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmCom } from 'shared/const/cm/Com';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { arrayByLength } from 'shared/utils/object.utils';
 
 let isOpenAtom: Atom<boolean>;
@@ -88,7 +88,7 @@ export const CmEditorChordSearchUnknownChordsModalTrigger = () => {
       />
 
       <Modal openAtom={isOpenAtom}>
-        <ModalHeader>{translateBase(BaseLocaleKey.CmUnknownChordsCount, { n: unknownChords.length })}</ModalHeader>
+        <ModalHeader>{translateEditorBase(EditorLocaleKey.CmUnknownChordsCount, { n: unknownChords.length })}</ModalHeader>
 
         <StyledModalBody
           $lastClickedChord={lastClickedChord}

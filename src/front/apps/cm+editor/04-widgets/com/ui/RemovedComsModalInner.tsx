@@ -1,4 +1,4 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
@@ -6,7 +6,7 @@ import { CmComFaceList, TheCmCom } from '$cm/ext';
 import { useQuery } from '@tanstack/react-query';
 import { Atom, atom } from 'atomaric';
 import { CmComWid, IExportableCom } from 'shared/api';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 
 let openComwAtom: Atom<CmComWid | null>;
 
@@ -23,13 +23,13 @@ export const CmEditorComRemovedComsModalInner = () => {
       <TheIconSendButton
         icon="PlusSignCircle"
         className="text-xOK"
-        confirm={translateBase(BaseLocaleKey.CmEditBackup)}
+        confirm={translateEditorBase(EditorLocaleKey.CmEditBackup)}
         onSend={() => cmEditComClientTsjrpcMethods.bringBackToLife({ comw: com.w })}
       />
       <TheIconSendButton
         icon="CancelCircleHalfDot"
         className="text-xKO"
-        confirm={translateBase(BaseLocaleKey.CmEditDestroy)}
+        confirm={translateEditorBase(EditorLocaleKey.CmEditDestroy)}
         onSend={() => cmEditComClientTsjrpcMethods.destroy({ comw: com.w })}
       />
     </div>
@@ -37,7 +37,7 @@ export const CmEditorComRemovedComsModalInner = () => {
 
   return (
     <>
-      <ModalHeader>{translateBase(BaseLocaleKey.CmEditRemovedComs)}</ModalHeader>
+      <ModalHeader>{translateEditorBase(EditorLocaleKey.CmEditRemovedComs)}</ModalHeader>
       <ModalBody>
         <CmComFaceList
           list={icoms}

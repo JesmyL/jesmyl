@@ -1,10 +1,10 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { Modal } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { WithAtom } from '#shared/ui/WithAtom';
 import { cmComSelectedComwsAtom } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { checkIsEq } from 'shared/utils/checkIsEq';
 import { CmEditorMeetingEventEditProps } from '../model/model';
 import { CmEditorMeetingEventEditsHistoryModalInner } from './EventEditsHistoryModal';
@@ -23,7 +23,7 @@ export const CmEditorMeetingEventEdits = (
             <>
               <BottomPopupItem
                 icon="Sent"
-                title={translateBase(BaseLocaleKey.CmEditorSendSelected)}
+                title={translateEditorBase(EditorLocaleKey.CmEditorSendSelected)}
                 onClick={isOpenSendModalAtom.do.toggle}
               />
               <Modal openAtom={isOpenSendModalAtom}>
@@ -42,7 +42,7 @@ export const CmEditorMeetingEventEdits = (
           {isOpenHistoryModalAtom => (
             <>
               <BottomPopupItem
-                title={translateBase(BaseLocaleKey.CmEditorDayHistory)}
+                title={translateEditorBase(EditorLocaleKey.CmEditorDayHistory)}
                 icon="WorkHistory"
                 onClick={isOpenHistoryModalAtom.do.toggle}
               />

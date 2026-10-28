@@ -1,5 +1,5 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { Button } from '#shared/components';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -8,7 +8,7 @@ import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-
 import { CmComFaceList, CmComJoinGroupList, CmComWithComListSearchFilterInput } from '$cm/ext';
 import { Atom, atom } from 'atomaric';
 import { CmComWid } from 'shared/api';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { itIt } from 'shared/utils';
 
 let searchAtom: Atom<string>;
@@ -25,9 +25,9 @@ export const CmEditorComTabComRefs = ({ ccom }: { ccom: EditableCom }) => {
       <Modal openAtom={otherRefGroupAtom}>
         {withComw => (
           <>
-            <ModalHeader>{translateBase(BaseLocaleKey.CmEditorOtherGroup)}</ModalHeader>
+            <ModalHeader>{translateEditorBase(EditorLocaleKey.CmEditorOtherGroup)}</ModalHeader>
             <ModalBody>
-              <div>{translateBase(BaseLocaleKey.CmEditorComInOtherGroup)}</div>
+              <div>{translateEditorBase(EditorLocaleKey.CmEditorComInOtherGroup)}</div>
               <CmComJoinGroupList comw={withComw} />
             </ModalBody>
             <ModalFooter>
@@ -42,7 +42,7 @@ export const CmEditorComTabComRefs = ({ ccom }: { ccom: EditableCom }) => {
                   otherRefGroupAtom.reset();
                 }}
               >
-                {translateBase(BaseLocaleKey.CmEditorMoveOutGroup)}
+                {translateEditorBase(EditorLocaleKey.CmEditorMoveOutGroup)}
               </Button>
             </ModalFooter>
           </>
@@ -52,7 +52,7 @@ export const CmEditorComTabComRefs = ({ ccom }: { ccom: EditableCom }) => {
       <CmComJoinGroupList
         comw={ccom.wid}
         emptyNode={
-          <div className="my-5 text-x7 w-full text-center">{translateBase(BaseLocaleKey.CmEditorNoReferences)}</div>
+          <div className="my-5 text-x7 w-full text-center">{translateEditorBase(EditorLocaleKey.CmEditorNoReferences)}</div>
         }
         children={(comRefList, allRefs) =>
           checkAccess('cm', 'COM_REF', 'C') && (
@@ -109,7 +109,7 @@ export const CmEditorComTabComRefs = ({ ccom }: { ccom: EditableCom }) => {
                 return (
                   <>
                     <TheIconButton
-                      confirm={translateBase(BaseLocaleKey.CmEditorRemoveReference)}
+                      confirm={translateEditorBase(EditorLocaleKey.CmEditorRemoveReference)}
                       icon="Delete02"
                       className="text-xKO"
                       onClick={() =>

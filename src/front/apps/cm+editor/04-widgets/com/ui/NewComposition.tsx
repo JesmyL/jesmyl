@@ -1,4 +1,5 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
@@ -20,7 +21,6 @@ import { CmAudioSrc, CmMp3Rule, HttpNumLeadLink } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { cmDefaultCom } from 'shared/const/cm/def.com';
 import { Bool } from 'shared/enums';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itIt } from 'shared/utils';
 import { chordsBlockIncorrectMessage } from 'shared/utils/cm/com/chordsBlockIncorrectMessage';
 import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
@@ -73,11 +73,11 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
     setTextAsValue(text);
   };
 
-  const noTitlePrefix = (x: 't' | 'c' | 'o') => translateBase(BaseLocaleKey.CmEditorNewNoParsed, { x });
+  const noTitlePrefix = (x: 't' | 'c' | 'o') => translateEditorBase(EditorLocaleKey.CmEditorNewNoParsed, { x });
   const errorNodes = mapObjectEntries(
     {
-      [translateBase(BaseLocaleKey.IncorrectName)]: newICom.n && !nameIncorrects.errors?.at(0)?.message,
-      [translateBase(BaseLocaleKey.CmEditorNewNoAudio)]: !innerHTML || objectLength(bindedLinks),
+      [translateEditorBase(EditorLocaleKey.IncorrectName)]: newICom.n && !nameIncorrects.errors?.at(0)?.message,
+      [translateEditorBase(EditorLocaleKey.CmEditorNewNoAudio)]: !innerHTML || objectLength(bindedLinks),
       [noTitlePrefix('t')]: objectLength(newICom.t?.filter(itIt)),
       [noTitlePrefix('c')]: objectLength(newICom.c?.filter(itIt)),
       [noTitlePrefix('o')]: objectLength(newICom.o),
@@ -105,7 +105,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
         className="new-composition p-2"
         onClick={propagationStopper}
       >
-        <h2 className="title">{translateBase(BaseLocaleKey.CmEditorNewCom)}</h2>
+        <h2 className="title">{translateEditorBase(EditorLocaleKey.CmEditorNewCom)}</h2>
 
         <CmEditorComCreateNameChange
           defaultName={displayName}
@@ -137,7 +137,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
           defaultValue={externalText}
           className="my-2 w-full h-full text-(--text-color) border-(--text-color) border-2 border-dashed resize-none"
           multiline
-          placeholder={translateBase(BaseLocaleKey.CmEditorNewStartWrite)}
+          placeholder={translateEditorBase(EditorLocaleKey.CmEditorNewStartWrite)}
           onInput={setTextAsValue}
         />
 
@@ -157,12 +157,12 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
             setParseVersion(prev => prev + 1);
           }}
         >
-          {translateBase(BaseLocaleKey.CmEditorNewParseTextHeap)}
+          {translateEditorBase(EditorLocaleKey.CmEditorNewParseTextHeap)}
         </TheButton>
 
         {innerHTML && (
           <>
-            <h2>{translateBase(BaseLocaleKey.CmEditorNewBoundAudio)}</h2>
+            <h2>{translateEditorBase(EditorLocaleKey.CmEditorNewBoundAudio)}</h2>
             {bindedLinks.length ? (
               <CmEditorComAudioControlledList
                 srcs={bindedLinks}
@@ -174,10 +174,10 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
                 }}
               />
             ) : (
-              <div>{translateBase(BaseLocaleKey.CmEditorNewNoTracks)}</div>
+              <div>{translateEditorBase(EditorLocaleKey.CmEditorNewNoTracks)}</div>
             )}
 
-            <h2 id="header-new-audio">{translateBase(BaseLocaleKey.CmEditorNewNewAudios)}</h2>
+            <h2 id="header-new-audio">{translateEditorBase(EditorLocaleKey.CmEditorNewNewAudios)}</h2>
             <CmEditorComAudioControlledList
               srcs={hrefs}
               icon="PlusSignCircle"
@@ -193,7 +193,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
         {newICom.t && (
           <CmEditorComCreateComTextableListRedactor
             key={parseVersion}
-            title={translateBase(BaseLocaleKey.Texts)}
+            title={translateEditorBase(EditorLocaleKey.Texts)}
             corrects={textsErrors}
             list={newICom.t}
             onInput={(value, texti) => setNewICom(prev => ({ ...prev, t: newICom.t?.with(texti, value) }))}
@@ -203,7 +203,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
         {newICom.c && (
           <CmEditorComCreateComTextableListRedactor
             key={parseVersion}
-            title={translateBase(BaseLocaleKey.CmChords)}
+            title={translateEditorBase(EditorLocaleKey.CmChords)}
             corrects={chordsErrors}
             list={newICom.c}
             onInput={(value, texti) => setNewICom(prev => ({ ...prev, c: newICom.c?.with(texti, value) }))}
@@ -212,7 +212,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
 
         {newICom.o && (
           <>
-            <h2>{translateBase(BaseLocaleKey.CmOrderBlocks)}</h2>
+            <h2>{translateEditorBase(EditorLocaleKey.CmOrderBlocks)}</h2>
             <CmComOrderList
               chordVisibleVariant={ChordVisibleVariant.None}
               com={newCom}
@@ -236,7 +236,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
         <SendButton
           id="public-new-com-button"
           className="mb-10"
-          title={translateBase(BaseLocaleKey.CmEditorNewPublishCom)}
+          title={translateEditorBase(EditorLocaleKey.CmEditorNewPublishCom)}
           disabled={
             !!errorNodes.length ||
             !!parseErrors.length ||

@@ -5,6 +5,7 @@ import { Langi } from 'shared/api';
 import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
 import { LocaleBase } from 'shared/model/+locale/base';
 import { LocaleDynamic } from 'shared/model/+locale/dynamic';
+import { LocaleCmEditor } from 'shared/model/+locale/editor';
 import { extractNumber } from 'shared/utils';
 import { checkIsEq } from 'shared/utils/checkIsEq';
 import { lazyInit } from 'shared/utils/lazyInit';
@@ -17,6 +18,10 @@ import { localeDynamicEn } from './dynamic/en';
 import { localeDynamicKz } from './dynamic/kz';
 import { localeDynamicRu } from './dynamic/ru';
 import { localeDynamicUa } from './dynamic/ua';
+import { localeEditorEn } from './editor/en';
+import { localeEditorKz } from './editor/kz';
+import { localeEditorRu } from './editor/ru';
+import { localeEditorUa } from './editor/ua';
 
 const log = (scope: string, langi: SKey<Langi>) =>
   tglogger.log(`Изменён набор ${scope} переводов - ${localeDynamicRu[DynLocaleKey.Lang][langi]}`);
@@ -63,6 +68,28 @@ export const langLocaleBaseFileStoragesLazy = lazyInit(() => {
 
     if (!checkIsEq(fileStorage.getValue(), config)) {
       log('базовых', langi);
+      fileStorage.setValue(config);
+    }
+  });
+
+  return dict;
+});
+
+export const langLocaleEditorFileStoragesLazy = lazyInit(() => {
+  const dict = {} as { [L in Langi]: FileStore<LocaleCmEditor> };
+
+  const langLocaleEditorDict: { [L in Langi]: LocaleCmEditor } = {
+    [Langi.Ru]: localeEditorRu,
+    [Langi.Ua]: localeEditorUa,
+    [Langi.Kz]: localeEditorKz,
+    [Langi.En]: localeEditorEn,
+  };
+
+  forEachObjectEntries(langLocaleEditorDict, (langi, config) => {
+    const fileStorage = (dict[langi] ??= new FileStore(`/locales/editor/${langi}.json`, {} as typeof config));
+
+    if (!checkIsEq(fileStorage.getValue(), config)) {
+      log('редакторских', langi);
       fileStorage.setValue(config);
     }
   });

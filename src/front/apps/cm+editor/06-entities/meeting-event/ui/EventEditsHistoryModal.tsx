@@ -1,5 +1,5 @@
 import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
-import { languageSystemCode, translateBase } from '#basis/locale';
+import { languageSystemCode, translateBase, translateEditorBase } from '#basis/locale';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -10,6 +10,7 @@ import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
 import { ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { emptyFunc } from 'shared/utils';
 import { checkIsNaN } from 'shared/utils/checkIs';
 import { makeDateLabel } from 'shared/utils/makeDateLabel';
@@ -76,7 +77,7 @@ export const CmEditorMeetingEventEditsHistoryModalInner = ({
                 <TheIconSendButton
                   icon="Delete02"
                   className="text-xKO"
-                  confirm={translateBase(BaseLocaleKey.CmEditorRemoveRecord)}
+                  confirm={translateEditorBase(EditorLocaleKey.CmEditorRemoveRecord)}
                   onSend={async () => {
                     const { w } = await cmEditComExternalsClientTsjrpcMethods.removeSchEvHistoryItem({
                       schw,
@@ -90,7 +91,7 @@ export const CmEditorMeetingEventEditsHistoryModalInner = ({
               </h3>
               {pack.fio && (
                 <div>
-                  {translateBase(BaseLocaleKey.CmEditorUpdatedBy)} <span className="text-x7">{pack.fio}</span>
+                  {translateEditorBase(EditorLocaleKey.CmEditorUpdatedBy)} <span className="text-x7">{pack.fio}</span>
                 </div>
               )}
               <CmComFaceList
@@ -103,7 +104,7 @@ export const CmEditorMeetingEventEditsHistoryModalInner = ({
         {historyPacks.length > limit && (
           <div className="flex center w-full">
             <TheButton onClick={() => setLimit(lim => lim + 10)}>
-              {translateBase(BaseLocaleKey.CmEditorShowMore)}
+              {translateEditorBase(EditorLocaleKey.CmEditorShowMore)}
             </TheButton>
           </div>
         )}

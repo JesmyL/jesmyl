@@ -1,4 +1,4 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { bibleTranslateLanguage } from '$bible/shared/const/consts';
 import { makeBibleTbcvPrefix } from '$bible/shared/lib/tbcv.parser';
 import { bibleTBCVTranslatesIDB } from '$bible/shared/state/bibleIDB';
@@ -8,7 +8,7 @@ import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { memo, useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { EeStorePack, Langi } from 'shared/api';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 import { objectEntries, objectKeys } from 'shared/utils/object.utils';
 
@@ -28,7 +28,7 @@ export const CmEditorEERulesListComputer = memo(function ListComputer({
   const cats = useEditableCats();
   const coms = useEditableComs();
   const [storeWords, setStoreWords] = useState<string[]>([]);
-  const [etap, setEtap] = useState<string>(() => translateBase(BaseLocaleKey.CmEditorPreparation));
+  const [etap, setEtap] = useState<string>(() => translateEditorBase(EditorLocaleKey.CmEditorPreparation));
   const ignoredWordsSet = cmEditorIDB.useValue.ignoredEESet();
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export const CmEditorEERulesListComputer = memo(function ListComputer({
     };
 
     etap(
-      translateBase(BaseLocaleKey.CmEditorReadTexts),
+      translateEditorBase(EditorLocaleKey.CmEditorReadTexts),
       async () => {
         const texts: string[] = [
           cats?.map(col => col.name) ?? [],
@@ -63,37 +63,37 @@ export const CmEditorEERulesListComputer = memo(function ListComputer({
         ].flat(5);
 
         etap(
-          translateBase(BaseLocaleKey.CmEditorMonolith),
+          translateEditorBase(EditorLocaleKey.CmEditorMonolith),
           () => {
             const text = texts.join(' ');
 
             etap(
-              translateBase(BaseLocaleKey.CmEditorToLower),
+              translateEditorBase(EditorLocaleKey.CmEditorToLower),
               () => {
                 const lower = text.toLowerCase();
 
                 etap(
-                  translateBase(BaseLocaleKey.CmEditorTrimNonSlavic),
+                  translateEditorBase(EditorLocaleKey.CmEditorTrimNonSlavic),
                   () => {
                     const normSlavic = lower.replace(makeRegExp(`/[^${slavicLowerLettersStr}]+/gi`), ' ');
 
                     etap(
-                      translateBase(BaseLocaleKey.CmEditorReplaceYoWithYe),
+                      translateEditorBase(EditorLocaleKey.CmEditorReplaceYoWithYe),
                       () => {
                         const norm = normSlavic.replace(makeRegExp('/ё/g'), 'е');
 
                         etap(
-                          translateBase(BaseLocaleKey.CmEditorToWordList),
+                          translateEditorBase(EditorLocaleKey.CmEditorToWordList),
                           () => {
                             const splits = norm.split(' ');
 
                             etap(
-                              translateBase(BaseLocaleKey.CmEditorFilterUnique),
+                              translateEditorBase(EditorLocaleKey.CmEditorFilterUnique),
                               () => {
                                 const spaceds = Array.from(new Set([...storeWords, ...splits]));
 
                                 etap(
-                                  translateBase(BaseLocaleKey.CmEditorPickWordsWithYe),
+                                  translateEditorBase(EditorLocaleKey.CmEditorPickWordsWithYe),
                                   () => {
                                     const words: string[] = [];
                                     let wordi = 0;
@@ -117,12 +117,12 @@ export const CmEditorEERulesListComputer = memo(function ListComputer({
 
                                       if (!wordsList.length) {
                                         etap(
-                                          translateBase(BaseLocaleKey.CmEditorSortWords),
+                                          translateEditorBase(EditorLocaleKey.CmEditorSortWords),
                                           () => {
                                             listBox.list = words.reverse();
 
                                             etap(
-                                              translateBase(BaseLocaleKey.CmEditorRenderList, {
+                                              translateEditorBase(EditorLocaleKey.CmEditorRenderList, {
                                                 n: '' + words.length,
                                               }),
                                               () => setUpdates(num => num + 1),
@@ -136,7 +136,7 @@ export const CmEditorEERulesListComputer = memo(function ListComputer({
                                       wordsList.forEach(add);
 
                                       etap(
-                                        translateBase(BaseLocaleKey.CmEditorWordChecked, { w: wordsList[0] }),
+                                        translateEditorBase(EditorLocaleKey.CmEditorWordChecked, { w: wordsList[0] }),
                                         addWord,
                                       );
                                     };

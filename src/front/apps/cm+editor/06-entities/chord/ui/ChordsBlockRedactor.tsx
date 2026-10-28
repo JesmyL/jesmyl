@@ -1,11 +1,11 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { CmEditorTextCorrectMessages } from '$cm+editor/entities/text';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmComIsChordHardLevelAtom } from '$cm/entities/index';
 import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { chordsBlockIncorrectMessage } from 'shared/utils/cm/com/chordsBlockIncorrectMessage';
 
 interface Props {
@@ -37,7 +37,7 @@ export const CmEditorChordBlockRedactor = ({ text, texti, ccom, isDisabled, notE
       {notEqLenInLine && (
         <CmEditorTextCorrectMessages
           corrects={{
-            errors: [{ message: translateBase(BaseLocaleKey.CmChordLengthMismatch, { n: notEqLenInLine }) }],
+            errors: [{ message: translateEditorBase(EditorLocaleKey.CmChordLengthMismatch, { n: notEqLenInLine }) }],
           }}
         />
       )}

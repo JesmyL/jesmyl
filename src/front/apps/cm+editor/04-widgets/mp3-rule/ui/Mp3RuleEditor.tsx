@@ -1,10 +1,10 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useCmMp3Rules } from '$cm+editor/shared/lib/useCmMp3Rules';
 import { ReactNode, useState } from 'react';
 import { StrRegExp, makeRegExp } from 'regexpert';
 import { CmMp3Rule } from 'shared/api';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { CmEditorMp3RuleTextLine } from './TextLine';
 
 export const CmEditorMp3RuleEditor = (
@@ -36,7 +36,7 @@ export const CmEditorMp3RuleEditor = (
     <>
       <div className="flex flex-col m-5">
         <CmEditorMp3RuleTextLine
-          label={translateBase(BaseLocaleKey.CmEditorUrlColon)}
+          label={translateEditorBase(EditorLocaleKey.CmEditorUrlColon)}
           isRedact={isRedact}
           text={url}
           error={errorMessage}
@@ -45,27 +45,27 @@ export const CmEditorMp3RuleEditor = (
               const url = new URL(value);
               const unnecessary = value.replace(url.origin, '');
               if (props.newRule && mp3Rules?.some(rule => rule.url === url.origin))
-                setErrorMessage(translateBase(BaseLocaleKey.CmEditorUrlAlreadyExists));
+                setErrorMessage(translateEditorBase(EditorLocaleKey.CmEditorUrlAlreadyExists));
               else if (url.protocol !== 'https:')
-                setErrorMessage(translateBase(BaseLocaleKey.CmEditorUrlMustBeHttps));
+                setErrorMessage(translateEditorBase(EditorLocaleKey.CmEditorUrlMustBeHttps));
               else if (unnecessary) {
-                setErrorMessage(translateBase(BaseLocaleKey.CmEditorUrlMustBeRoot, { u: unnecessary }));
+                setErrorMessage(translateEditorBase(EditorLocaleKey.CmEditorUrlMustBeRoot, { u: unnecessary }));
               } else setErrorMessage('');
             } catch (_e) {
-              setErrorMessage(translateBase(BaseLocaleKey.CmEditorInvalidUrl));
+              setErrorMessage(translateEditorBase(EditorLocaleKey.CmEditorInvalidUrl));
             }
             setUrl(value);
           }}
         />
 
         <CmEditorMp3RuleTextLine
-          label={translateBase(BaseLocaleKey.CmEditorRedirect)}
+          label={translateEditorBase(EditorLocaleKey.CmEditorRedirect)}
           isRedact={isRedact}
           text={redirect}
           error={redirectError}
           setText={value => {
             setRedirectError(
-              mp3Rules?.some(rule => rule.url === value) ? '' : translateBase(BaseLocaleKey.CmEditorRedirectKnown),
+              mp3Rules?.some(rule => rule.url === value) ? '' : translateEditorBase(EditorLocaleKey.CmEditorRedirectKnown),
             );
 
             setRedirect(value);
@@ -73,21 +73,21 @@ export const CmEditorMp3RuleEditor = (
         />
 
         <CmEditorMp3RuleTextLine
-          label={translateBase(BaseLocaleKey.CmEditorQueryMp3)}
+          label={translateEditorBase(EditorLocaleKey.CmEditorQueryMp3)}
           isRedact={isRedact}
           text={query}
           setText={setQuery}
         />
 
         <CmEditorMp3RuleTextLine
-          label={translateBase(BaseLocaleKey.CmEditorAttributeUrlMp3)}
+          label={translateEditorBase(EditorLocaleKey.CmEditorAttributeUrlMp3)}
           isRedact={isRedact}
           text={attr}
           setText={setAttr}
         />
 
         <CmEditorMp3RuleTextLine
-          label={translateBase(BaseLocaleKey.CmEditorAttributeText)}
+          label={translateEditorBase(EditorLocaleKey.CmEditorAttributeText)}
           isRedact={isRedact}
           text={textQuery}
           setText={setTextQuery}
@@ -95,7 +95,7 @@ export const CmEditorMp3RuleEditor = (
 
         {textQuery && (
           <div className="w-full">
-            {translateBase(BaseLocaleKey.CmEditorHtmlMode)}
+            {translateEditorBase(EditorLocaleKey.CmEditorHtmlMode)}
             {isRedact ? (
               <input
                 type="checkbox"
@@ -109,7 +109,7 @@ export const CmEditorMp3RuleEditor = (
         )}
 
         <CmEditorMp3RuleTextLine
-          label={translateBase(BaseLocaleKey.CmEditorReplaceUrlRegExp)}
+          label={translateEditorBase(EditorLocaleKey.CmEditorReplaceUrlRegExp)}
           isRedact={isRedact}
           text={repReg}
           error={repRegError}
@@ -128,7 +128,7 @@ export const CmEditorMp3RuleEditor = (
         />
 
         <CmEditorMp3RuleTextLine
-          label={translateBase(BaseLocaleKey.CmEditorReplaceUrlText)}
+          label={translateEditorBase(EditorLocaleKey.CmEditorReplaceUrlText)}
           isRedact={isRedact}
           text={repText}
           setText={setRepText}

@@ -1,8 +1,8 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { useConfirm } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { CmEditorComOrderToolsProps } from '../model';
 
 export const CmEditorComOrderToolsChangeTonType = ({
@@ -18,17 +18,17 @@ export const CmEditorComOrderToolsChangeTonType = ({
         icon="Grid"
         title={
           ord.isBemoledSwitch
-            ? translateBase(BaseLocaleKey.CmEditorRemoveTonalitySwitch)
-            : translateBase(BaseLocaleKey.CmEditorSetTonalitySwitch)
+            ? translateEditorBase(EditorLocaleKey.CmEditorRemoveTonalitySwitch)
+            : translateEditorBase(EditorLocaleKey.CmEditorSetTonalitySwitch)
         }
         onClick={async () => {
           const is = await confirm(
             <>
-              {translateBase(BaseLocaleKey.CmEditorTonalityTypeWillBe)}{' '}
+              {translateEditorBase(EditorLocaleKey.CmEditorTonalityTypeWillBe)}{' '}
               <span className="text-x7">
                 {ord.isBemoledSwitch
-                  ? translateBase(BaseLocaleKey.CmEditorSharp)
-                  : translateBase(BaseLocaleKey.CmEditorFlat)}
+                  ? translateEditorBase(EditorLocaleKey.CmEditorSharp)
+                  : translateEditorBase(EditorLocaleKey.CmEditorFlat)}
               </span>
             </>,
           );

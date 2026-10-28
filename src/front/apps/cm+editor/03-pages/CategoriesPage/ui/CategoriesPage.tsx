@@ -1,5 +1,7 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
-import { translateBase } from '#basis/locale';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
+import { translateBase, translateEditorBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
@@ -18,7 +20,6 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { atom } from 'atomaric';
 import { useMemo, useState } from 'react';
 import { CmCatKind, CmCatWid } from 'shared/api';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import {
   CmEditorCategoriesModal,
   cmEditorCategoriesPageKindCodes,
@@ -41,7 +42,7 @@ export const CmEditorCategoriesPage = () => {
             <>
               <PageCmEditorContainer
                 className="cm-editor-categories"
-                headTitle={translateBase(BaseLocaleKey.CmEditorCategories)}
+                headTitle={translateEditorBase(EditorLocaleKey.CmEditorCategories)}
                 onMoreClick={isCanUpdate ? isMoreOpenAtom.set : undefined}
                 content={
                   <>
@@ -63,12 +64,12 @@ export const CmEditorCategoriesPage = () => {
                 <BottomPopup onClose={isMoreOpenAtom.reset}>
                   <BottomPopupItem
                     icon="PlusSignCircle"
-                    title={translateBase(BaseLocaleKey.CmEditorCategoryCreate)}
+                    title={translateEditorBase(EditorLocaleKey.CmEditorCategoryCreate)}
                     onClick={() => modalAtom.set(CmEditorCategoriesModal.create)}
                   />
                   <BottomPopupItem
                     icon="FileRemove"
-                    title={translateBase(BaseLocaleKey.CmEditorRemovedCats)}
+                    title={translateEditorBase(EditorLocaleKey.CmEditorRemovedCats)}
                     onClick={() => modalAtom.set(CmEditorCategoriesModal.removed)}
                   />
                 </BottomPopup>
@@ -116,17 +117,17 @@ const CmEditorCatCreateModal = ({ onClose }: { onClose: () => void }) => {
 
   return (
     <>
-      <ModalHeader>{translateBase(BaseLocaleKey.CmEditorCategoryCreate)}</ModalHeader>
+      <ModalHeader>{translateEditorBase(EditorLocaleKey.CmEditorCategoryCreate)}</ModalHeader>
       <ModalBody>
         <div className="flex flex-col gap-2">
           <TextInput
             autoFocus
-            placeholder={translateBase(BaseLocaleKey.CmEditorCategoryTitle)}
+            placeholder={translateEditorBase(EditorLocaleKey.CmEditorCategoryTitle)}
             defaultValue={name}
             onInput={setName}
           />
           <Dropdown
-            label={translateBase(BaseLocaleKey.CmEditorCategoryKind)}
+            label={translateEditorBase(EditorLocaleKey.CmEditorCategoryKind)}
             id={kind}
             items={takeCmEditorCategoriesPageKindItems()}
             onSelectId={setKind}
@@ -160,7 +161,7 @@ const CmEditorRemovedCatsModalInner = () => {
 
   return (
     <>
-      <ModalHeader>{translateBase(BaseLocaleKey.CmEditorRemovedCats)}</ModalHeader>
+      <ModalHeader>{translateEditorBase(EditorLocaleKey.CmEditorRemovedCats)}</ModalHeader>
       <ModalBody>
         {icats?.map(cat => (
           <div
@@ -172,7 +173,7 @@ const CmEditorRemovedCatsModalInner = () => {
             <TheIconSendButton
               icon="PlusSignCircle"
               className="text-xOK"
-              confirm={translateBase(BaseLocaleKey.CmComeBack)}
+              confirm={translateEditorBase(EditorLocaleKey.CmComeBack)}
               onSend={() => restore(cat.w)}
             />
           </div>
@@ -216,7 +217,7 @@ const CmEditorCatRow = ({ cat, isCanUpdate }: { cat: CmEditorCat; isCanUpdate: b
     <div className="my-3 pb-3 border-b border-x3 flex flex-wrap gap-2 items-center">
       <span className="font-bold">{cat.name}</span>
       <span className="text-x7">{takeCmEditorCategoriesPageKindTitle(cat.kind)}</span>
-      <span className="text-x7">{translateBase(BaseLocaleKey.CmEditorCategoryComsCount, { c: cat.comws.length })}</span>
+      <span className="text-x7">{translateEditorBase(EditorLocaleKey.CmEditorCategoryComsCount, { c: cat.comws.length })}</span>
 
       {cat.wid === CmCatWid.all || !isCanUpdate || (
         <TheIconButton
@@ -227,11 +228,11 @@ const CmEditorCatRow = ({ cat, isCanUpdate }: { cat: CmEditorCat; isCanUpdate: b
 
       <Modal openAtom={isEditOpenAtom}>
         <ModalHeader className="flex w-full justify-between">
-          <span>{translateBase(BaseLocaleKey.CmEditorCategoryEdit)}</span>
+          <span>{translateEditorBase(EditorLocaleKey.CmEditorCategoryEdit)}</span>
           <TheIconButton
             icon="Delete02"
             className="text-xKO"
-            confirm={translateBase(BaseLocaleKey.DeleteX, { x: cat.name })}
+            confirm={translateEditorBase(EditorLocaleKey.DeleteX, { x: cat.name })}
             onClick={remove}
           />
         </ModalHeader>
@@ -239,20 +240,20 @@ const CmEditorCatRow = ({ cat, isCanUpdate }: { cat: CmEditorCat; isCanUpdate: b
           <div className="flex flex-col gap-2">
             <TextInput
               autoFocus
-              placeholder={translateBase(BaseLocaleKey.CmEditorCategoryTitle)}
+              placeholder={translateEditorBase(EditorLocaleKey.CmEditorCategoryTitle)}
               defaultValue={storedName}
               onInput={setName}
             />
 
             {isEmpty ? (
               <Dropdown
-                label={translateBase(BaseLocaleKey.CmEditorCategoryKind)}
+                label={translateEditorBase(EditorLocaleKey.CmEditorCategoryKind)}
                 id={kind}
                 items={takeCmEditorCategoriesPageKindItems()}
                 onSelectId={setKind}
               />
             ) : (
-              <span className="text-x7">{translateBase(BaseLocaleKey.CmEditorCategoryKindLocked)}</span>
+              <span className="text-x7">{translateEditorBase(EditorLocaleKey.CmEditorCategoryKindLocked)}</span>
             )}
           </div>
         </ModalBody>
@@ -262,7 +263,7 @@ const CmEditorCatRow = ({ cat, isCanUpdate }: { cat: CmEditorCat; isCanUpdate: b
             disabled={!name.trim()}
             onClick={save}
           >
-            {translateBase(BaseLocaleKey.CmEditorApply)}
+            {translateEditorBase(EditorLocaleKey.CmEditorApply)}
           </Button>
         </ModalFooter>
       </Modal>

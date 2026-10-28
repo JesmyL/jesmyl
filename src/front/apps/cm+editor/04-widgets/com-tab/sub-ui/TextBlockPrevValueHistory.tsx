@@ -1,10 +1,10 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { Card } from '#shared/components/ui/card';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { atom, Atom, useAtomValue } from 'atomaric';
 import { CmComWid } from 'shared/api';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { twMerge } from 'tailwind-merge';
 
 type Props = {
@@ -39,7 +39,7 @@ export const CmEditorComTabTextBlockPrevValueUpdateModal = (
 
   return (
     <Modal openAtom={openHistoryAtom}>
-      <ModalHeader>{translateBase(BaseLocaleKey.CmEditInsertPreviousText)}</ModalHeader>
+      <ModalHeader>{translateEditorBase(EditorLocaleKey.CmEditInsertPreviousText)}</ModalHeader>
       <ModalBody>
         {texti != null &&
           history?.[texti]?.map((text, txti) => {
@@ -56,14 +56,14 @@ export const CmEditorComTabTextBlockPrevValueUpdateModal = (
                       openHistoryAtom.reset();
                     }}
                   >
-                    {translateBase(BaseLocaleKey.CmEditReplaceText)}
+                    {translateEditorBase(EditorLocaleKey.CmEditReplaceText)}
                   </Button>
                 </Card.Footer>
               </Card.Root>
             );
           })}
       </ModalBody>
-      <ModalFooter>{translateBase(BaseLocaleKey.CmEditWillClearOnInsert)}</ModalFooter>
+      <ModalFooter>{translateEditorBase(EditorLocaleKey.CmEditWillClearOnInsert)}</ModalFooter>
     </Modal>
   );
 };

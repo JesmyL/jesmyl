@@ -1,6 +1,6 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { useConnectionState } from '#basis/lib/useConnectionState';
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { Skeleton } from '#shared/components';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -15,7 +15,7 @@ import { Link, useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { Suspense, useEffect, useState } from 'react';
 import { CmComWid } from 'shared/api';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { checkIsNaN } from 'shared/utils/checkIs';
 import { objectEntries } from 'shared/utils/object.utils';
 import { useCmEditorCompositionTrySendAudioMarks } from '../api/useCmComEditorTrySendAudioMarks';
@@ -64,10 +64,10 @@ export const CmEditorCompositionPage = ({
         headTitle={removedComs[ccomw]}
         content={
           <div className="flex column">
-            <h2 className="text-xKO">{translateBase(BaseLocaleKey.CmComRemoved)}</h2>
+            <h2 className="text-xKO">{translateEditorBase(EditorLocaleKey.CmComRemoved)}</h2>
             <TheIconButton
               icon="MapsRefresh"
-              postfix={translateBase(BaseLocaleKey.CmComeBack)}
+              postfix={translateEditorBase(EditorLocaleKey.CmComeBack)}
               className="text-xOK"
               onClick={() => cmEditComClientTsjrpcMethods.bringBackToLife({ comw: ccomw })}
             />

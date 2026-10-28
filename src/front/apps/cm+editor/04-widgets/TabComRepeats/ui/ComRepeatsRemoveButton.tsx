@@ -1,4 +1,4 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { Modal, ModalBody, ModalHeader, useConfirm } from '#shared/ui/modal';
@@ -9,7 +9,7 @@ import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-edit
 import { useAtomValue } from 'atomaric';
 import { makeRegExp } from 'regexpert';
 import { CmComOrder } from 'shared/const/cm/order/Order';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { checkIsNotNumber } from 'shared/utils/checkIs';
 import { deepClone } from 'shared/utils/clone';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
@@ -41,8 +41,8 @@ export const CmEditorTabComRepeatsRemoveButton = ({ ord, textLinei, wordi }: Pro
               if (isChordBlock) {
                 if (
                   await confirm(
-                    translateBase(BaseLocaleKey.CmEditorResetRepeats, { h: start.ord.me.header() || '' }),
-                    translateBase(BaseLocaleKey.CmEditorReset),
+                    translateEditorBase(EditorLocaleKey.CmEditorResetRepeats, { h: start.ord.me.header() || '' }),
+                    translateEditorBase(EditorLocaleKey.CmEditorReset),
                   )
                 ) {
                   cmEditComOrderClientTsjrpcMethods.removeRepeats({
@@ -59,7 +59,7 @@ export const CmEditorTabComRepeatsRemoveButton = ({ ord, textLinei, wordi }: Pro
           />
 
           <Modal openAtom={isOpenModalAtom}>
-            <ModalHeader>{translateBase(BaseLocaleKey.CmEditorResetBounds)}</ModalHeader>
+            <ModalHeader>{translateEditorBase(EditorLocaleKey.CmEditorResetBounds)}</ModalHeader>
 
             <ModalBody>
               {ord.regions
@@ -140,7 +140,7 @@ export const CmEditorTabComRepeatsRemoveButton = ({ ord, textLinei, wordi }: Pro
                           isOpenModalAtom.reset();
                         }}
                       >
-                        {translateBase(BaseLocaleKey.CmEditorReset)}
+                        {translateEditorBase(EditorLocaleKey.CmEditorReset)}
                       </TheButton>
                     </div>
                   );

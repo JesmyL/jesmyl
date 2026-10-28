@@ -1,7 +1,7 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { CmEditorComOrderToolsProps } from '../model';
 
 export const CmEditorComOrderToolsEmptyHeader = (props: CmEditorComOrderToolsProps) => {
@@ -11,8 +11,8 @@ export const CmEditorComOrderToolsEmptyHeader = (props: CmEditorComOrderToolsPro
         icon="Message01"
         title={
           props.ord.isEmptyHeader
-            ? translateBase(BaseLocaleKey.CmEditorRestoreBlockName)
-            : translateBase(BaseLocaleKey.CmEditorRemoveBlockName)
+            ? translateEditorBase(EditorLocaleKey.CmEditorRestoreBlockName)
+            : translateEditorBase(EditorLocaleKey.CmEditorRemoveBlockName)
         }
         onClick={async () => {
           await cmEditComOrderClientTsjrpcMethods.toggleTitleVisibility({

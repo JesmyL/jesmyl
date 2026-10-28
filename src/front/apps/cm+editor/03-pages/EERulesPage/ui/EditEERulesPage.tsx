@@ -1,4 +1,4 @@
-import { translateBase } from '#basis/locale';
+import { translateBase, translateEditorBase } from '#basis/locale';
 import { Badge } from '#shared/components/ui/badge';
 import { Button } from '#shared/components/ui/button';
 import { ButtonGroup } from '#shared/components/ui/button-group';
@@ -17,6 +17,7 @@ import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { EeStorePack } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { objectKeys } from 'shared/utils/object.utils';
 import { CmEditorEERulesListComputer } from './EERulesListComputer';
 
@@ -56,14 +57,14 @@ export const CmEditorEERulesPage = () => {
   return (
     <PageCmEditorContainer
       className="e-e-rules-editor"
-      headTitle={translateBase(BaseLocaleKey.CmEditorYoYeRules)}
+      headTitle={translateEditorBase(EditorLocaleKey.CmEditorYoYeRules)}
       head={
         <TheIconSendButton
           icon="Sent"
           disabled={!editedWords.length}
           className="m-2"
           confirm={
-            `${translateBase(BaseLocaleKey.CmEditorSendWords, { n: '' + editedWords.length })}: ` +
+            `${translateEditorBase(EditorLocaleKey.CmEditorSendWords, { n: '' + editedWords.length })}: ` +
             `${editedWords.join(', ')}`
           }
           onSend={() => cmEditorClientTsjrpcMethods.setEEWords({ words: editedWordsRef.current })}
@@ -77,7 +78,7 @@ export const CmEditorEERulesPage = () => {
               className="m-2"
               onClick={() => setIsShowListComputer(true)}
             >
-              {translateBase(BaseLocaleKey.CmEditorCheck)}
+              {translateEditorBase(EditorLocaleKey.CmEditorCheck)}
             </Button>
             <TheIconButton
               icon="SearchVisual"
@@ -85,7 +86,7 @@ export const CmEditorEERulesPage = () => {
             />
           </div>
           <IconCheckbox
-            postfix={translateBase(BaseLocaleKey.CmEditorIncludeBibleWords)}
+            postfix={translateEditorBase(EditorLocaleKey.CmEditorIncludeBibleWords)}
             checked={isCheckBible}
             onChange={isCheckBibleAtom.set}
           />

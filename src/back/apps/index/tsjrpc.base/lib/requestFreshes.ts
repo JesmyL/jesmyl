@@ -1,7 +1,12 @@
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
+import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { scheduleDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
-import { langLocaleBaseFileStoragesLazy, langLocaleDynamicFileStoragesLazy } from 'back/locales/file-storages';
+import {
+  langLocaleBaseFileStoragesLazy,
+  langLocaleDynamicFileStoragesLazy,
+  langLocaleEditorFileStoragesLazy,
+} from 'back/locales/file-storages';
 import { and, eq, gt } from 'drizzle-orm';
 import { makePgCheckedSelectSqlRaw, PgCheckFieldMode } from 'p/d';
 import {
@@ -30,12 +35,18 @@ import { takeUserTiny } from '../../tinies/userTiny';
 import { indexServerTsjrpcShareMethods } from '../../tsjrpc.methods';
 import { makeUserAccessRights } from './makeUserAccessRights';
 
+/** Словарь редактора привязан к нумерации `EditorLocaleKey`: старые фронты его не получают. */
+export const editorLocaleMinVersion = 1314;
+
+/** Словарь базы привязан к нумерации `BaseLocaleKey`: старые фронты его не получают. */
+export const baseLocaleMinVersion = 1314;
+
 export const indexTSJRPCBaseRequestFreshes = {
   requestFreshes: async (
     { lastModfiedAt, iconPacks: userIconPacks, iconsMd5Hash: userIconsMd5Hash },
     { client, auth, visitInfo },
   ) => {
-    if (!visitInfo || visitInfo.version < 1312) return;
+    if (!visitInfo || visitInfo.version < baseLocaleMinVersion) return;
 
     /** @deprecated */
     lastModfiedAt = Math.trunc(lastModfiedAt);
@@ -62,6 +73,24 @@ export const indexTSJRPCBaseRequestFreshes = {
 
       if (items.length) {
         indexServerTsjrpcShareMethods.dynLocConf({ dyns: items, mod: maxMod }, client);
+      }
+
+      if (visitInfo.version >= editorLocaleMinVersion) {
+        try {
+          await throwIfNoUserScopeAccessRight(auth, 'cm', 'EDIT', 'R');
+
+          const editorFileStorage = langLocaleEditorFileStoragesLazy()[visitInfo.langi ?? Langi.Ru];
+          const editorMod = editorFileStorage.fileModifiedAt();
+
+          if (editorMod > lastModfiedAt) {
+            indexServerTsjrpcShareMethods.editorLocConf(
+              { editor: editorFileStorage.getValue(), mod: editorMod },
+              client,
+            );
+          }
+        } catch {
+          // Фронт без права на редактирование не получает словарь редактора.
+        }
       }
     }
 

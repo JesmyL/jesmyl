@@ -1,10 +1,11 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
-import { translateBase } from '#basis/locale';
+import { translateBase, translateEditorBase } from '#basis/locale';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContainer';
 import { Link } from '@tanstack/react-router';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 
 export const CmEditorPage = () => {
   const checkAccess = useCheckUserAccessRightsInScope();
@@ -53,7 +54,7 @@ export const CmEditorPage = () => {
                     kind="TwotoneRounded"
                   />
                 }
-                title={translateBase(BaseLocaleKey.CmEditorCategories)}
+                title={translateEditorBase(EditorLocaleKey.CmEditorCategories)}
                 idPostfix="categories"
               />
             </Link>
@@ -70,7 +71,7 @@ export const CmEditorPage = () => {
                     kind="TwotoneRounded"
                   />
                 }
-                title={translateBase(BaseLocaleKey.CmChords)}
+                title={translateEditorBase(EditorLocaleKey.CmChords)}
                 idPostfix="chord"
               />
             </Link>
@@ -84,7 +85,7 @@ export const CmEditorPage = () => {
                     kind="TwotoneRounded"
                   />
                 }
-                title={translateBase(BaseLocaleKey.CmEditorMp3)}
+                title={translateEditorBase(EditorLocaleKey.CmEditorMp3)}
                 idPostfix="mp3Rules"
               />
             </Link>
@@ -98,7 +99,7 @@ export const CmEditorPage = () => {
                     kind="TwotoneRounded"
                   />
                 }
-                title={translateBase(BaseLocaleKey.CmEditorYoYeRules)}
+                title={translateEditorBase(EditorLocaleKey.CmEditorYoYeRules)}
                 idPostfix="e-e"
               />
             </Link>

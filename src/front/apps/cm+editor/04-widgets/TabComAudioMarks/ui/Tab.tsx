@@ -1,4 +1,4 @@
-import { translateBase } from '#basis/locale';
+import { translateBase, translateEditorBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { ButtonGroup } from '#shared/components/ui/button-group';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
@@ -28,6 +28,7 @@ import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { CmComAudioMarkEditPackValue, CmComAudioMarkPackTime, CmComOrderWidNever, CmAudioTail } from 'shared/api';
 import { Bool } from 'shared/enums';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { CmBroadcastMonolineSlide } from 'shared/model/cm/broadcast';
 import { TextCase } from 'shared/model/common';
 import { convertSecondsInStrTime, iife, wait } from 'shared/utils';
@@ -84,7 +85,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
 
     const addTime = (value: CmComAudioMarkEditPackValue) => {
       if (!editSrc || takeCmComAudioPlayerCurrentTime() < 0.001) {
-        toast(translateBase(BaseLocaleKey.CmEditorComNotPlayed), makeToastKOMoodConfig());
+        toast(translateEditorBase(EditorLocaleKey.CmEditorComNotPlayed), makeToastKOMoodConfig());
         return;
       }
 
@@ -161,7 +162,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
               onClick={() => {
                 const time = markTimes.findLast(findInctorrectTime);
                 if (!time) {
-                  toast(translateBase(BaseLocaleKey.CmEditorNoIncorrectTime));
+                  toast(translateEditorBase(EditorLocaleKey.CmEditorNoIncorrectTime));
                   return;
                 }
 
@@ -306,7 +307,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
             if (checkIsNumber(otherNlIndex) && otherNlIndex > -1) {
               innerNode = isShowOtherMarks && (
                 <span className="text-x7">
-                  {nameSpaceTitleList[otherNlIndex] || translateBase(BaseLocaleKey.CmEditorOtherSet)}
+                  {nameSpaceTitleList[otherNlIndex] || translateEditorBase(EditorLocaleKey.CmEditorOtherSet)}
                 </span>
               );
             } else {
@@ -337,7 +338,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
           <IconCheckbox
             checked={isShowOtherMarks}
             onChange={setIsShowOtherMarks}
-            postfix={translateBase(BaseLocaleKey.CmEditorShowOtherMarks)}
+            postfix={translateEditorBase(EditorLocaleKey.CmEditorShowOtherMarks)}
           />
         </div>
 

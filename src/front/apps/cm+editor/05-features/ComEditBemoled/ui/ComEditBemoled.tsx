@@ -1,7 +1,7 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { takeCmComToggledTonType, TonType } from 'shared/const/cm/enums';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 
 export const CmEditorComEditBemoled = (props: {
   value: TonType | nil;
@@ -10,13 +10,13 @@ export const CmEditorComEditBemoled = (props: {
   <TheIconButton
     icon="Grid"
     confirm={
-      <>{props.value ? translateBase(BaseLocaleKey.CmEditorComFlat) : translateBase(BaseLocaleKey.CmEditorComSharp)}</>
+      <>{props.value ? translateEditorBase(EditorLocaleKey.CmEditorComFlat) : translateEditorBase(EditorLocaleKey.CmEditorComSharp)}</>
     }
     postfix={
       <>
-        {translateBase(BaseLocaleKey.CmEditorTonalityTypeIs)}{' '}
+        {translateEditorBase(EditorLocaleKey.CmEditorTonalityTypeIs)}{' '}
         <span className="text-x7">
-          {props.value ? translateBase(BaseLocaleKey.CmEditorFlat) : translateBase(BaseLocaleKey.CmEditorSharp)}
+          {props.value ? translateEditorBase(EditorLocaleKey.CmEditorFlat) : translateEditorBase(EditorLocaleKey.CmEditorSharp)}
         </span>
       </>
     }

@@ -1,10 +1,15 @@
 import { cmShareServerTsjrpcMethods } from 'back/apps/cm/tsjrpc.shares';
 import { makeTwiceKnownName } from 'back/complect/makeTwiceKnownName';
+import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { userDB, userRoleDB } from 'back/drizzle.schema';
 import { db, dbUpdate } from 'back/drizzle/drizzle.db';
 import { hostRootDir } from 'back/envJson';
 import { jsonParseSecure } from 'back/json-secure';
-import { langLocaleBaseFileStoragesLazy, langLocaleDynamicFileStoragesLazy } from 'back/locales/file-storages';
+import {
+  langLocaleBaseFileStoragesLazy,
+  langLocaleDynamicFileStoragesLazy,
+  langLocaleEditorFileStoragesLazy,
+} from 'back/locales/file-storages';
 import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
 import { supportTelegramAuthorizations } from 'back/sides/telegram-bot/prod/authorize';
@@ -40,7 +45,8 @@ import { indexTSJRPCBaseGetIconExistsPacks } from './lib/getIconExistsPacks';
 import { indexAuthByTgUser } from './lib/makeAuthFromUser';
 import { makeUserAccessRights } from './lib/makeUserAccessRights';
 import { otpTSJRPCMethods } from './lib/otp.methods';
-import { indexTSJRPCBaseRequestFreshes } from './lib/requestFreshes';
+import { indexPushMethods } from './lib/push.methods';
+import { indexTSJRPCBaseRequestFreshes, editorLocaleMinVersion, baseLocaleMinVersion } from './lib/requestFreshes';
 import { indexTSJRPCBaseUpdateUserAccessRight } from './lib/updateUserAccessRight';
 
 const deviceIdPostfixSymbols = '!@#$%^&*;.,?/|\\+=-'.split('');
@@ -70,6 +76,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
       },
       methods: {
         ...otpTSJRPCMethods,
+        ...indexPushMethods,
         ...indexTSJRPCBaseUpdateUserAccessRight,
         ...indexTSJRPCBaseRequestFreshes,
         ...indexTSJRPCBaseGetIconExistsPacks,
@@ -318,12 +325,29 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         },
 
         reqLocaleBaseConfig: (_, { visitInfo, client }) => {
-          const baseFileStorage = langLocaleBaseFileStoragesLazy()[visitInfo?.langi ?? Langi.Ru];
+          if (!visitInfo || visitInfo.version < baseLocaleMinVersion) return;
+
+          const baseFileStorage = langLocaleBaseFileStoragesLazy()[visitInfo.langi ?? Langi.Ru];
 
           if (!client) throw 'Client not found';
 
           indexServerTsjrpcShareMethods.baseLocConf(
             { base: baseFileStorage.getValue(), mod: baseFileStorage.fileModifiedAt() },
+            client,
+          );
+        },
+
+        reqLocaleEditorConfig: async (_, { auth, visitInfo, client }) => {
+          if (!visitInfo || visitInfo.version < editorLocaleMinVersion) return;
+
+          await throwIfNoUserScopeAccessRight(auth, 'cm', 'EDIT', 'R');
+
+          if (!client) throw 'Client not found';
+
+          const editorFileStorage = langLocaleEditorFileStoragesLazy()[visitInfo.langi ?? Langi.Ru];
+
+          indexServerTsjrpcShareMethods.editorLocConf(
+            { editor: editorFileStorage.getValue(), mod: editorFileStorage.fileModifiedAt() },
             client,
           );
         },

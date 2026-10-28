@@ -1,12 +1,12 @@
-import { translateBase, translateDynamic } from '#basis/locale';
+import { translateDynamic, translateEditorBase } from '#basis/locale';
 import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { CmEditorComOrderAddTextableBlockAnchorTitles } from '$cm+editor/features/com-order';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { useEffect, useState } from 'react';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { comBlockKinds } from 'shared/values/cm/block-kinds/BlockKind';
 import { KindBlock } from 'shared/values/cm/block-kinds/KindBlock';
 import { cmEditorComAddOrderNewOrderMakeEtapQueue } from '../lib/consts';
@@ -37,7 +37,7 @@ export const CmEditorComAddOrderAdditionsEtapsModalInner = ({ com, onClose, firs
     <ModalFooter>
       <TheIconButton
         icon="ArrowRight01"
-        prefix={translateBase(BaseLocaleKey.CmEditorNextStage)}
+        prefix={translateEditorBase(EditorLocaleKey.CmEditorNextStage)}
         disabled={
           etap === CmEditorComAddOrderNewOrderMakeEtap.Text
             ? selectedTexti == null
@@ -54,7 +54,7 @@ export const CmEditorComAddOrderAdditionsEtapsModalInner = ({ com, onClose, firs
     case CmEditorComAddOrderNewOrderMakeEtap.Text:
       return (
         <>
-          <ModalHeader>{translateBase(BaseLocaleKey.CmEditorNewBlockText)}</ModalHeader>
+          <ModalHeader>{translateEditorBase(EditorLocaleKey.CmEditorNewBlockText)}</ModalHeader>
           <ModalBody>
             {com?.texts?.map((text, texti) => {
               return (
@@ -81,7 +81,7 @@ export const CmEditorComAddOrderAdditionsEtapsModalInner = ({ com, onClose, firs
     case CmEditorComAddOrderNewOrderMakeEtap.Chord:
       return (
         <>
-          <ModalHeader>{translateBase(BaseLocaleKey.CmEditorChordBlock)}</ModalHeader>
+          <ModalHeader>{translateEditorBase(EditorLocaleKey.CmEditorChordBlock)}</ModalHeader>
           <ModalBody>
             {com?.chords?.map((chord, chordi) => {
               return (
@@ -109,7 +109,7 @@ export const CmEditorComAddOrderAdditionsEtapsModalInner = ({ com, onClose, firs
 
       return (
         <>
-          <ModalHeader>{translateBase(BaseLocaleKey.CmEditorNewBlockType)}</ModalHeader>
+          <ModalHeader>{translateEditorBase(EditorLocaleKey.CmEditorNewBlockType)}</ModalHeader>
           <ModalBody>
             {comBlockKinds.kinds.map(styleBlock => {
               if (selectedTexti == null ? styleBlock.isBlockForTextableOnly : styleBlock.isBlockForChordedOnly)

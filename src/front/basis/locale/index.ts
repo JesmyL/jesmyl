@@ -1,4 +1,4 @@
-import { takeBaseLanguageAtom, takeDynamicLanguageAtom } from '#basis/state/locale';
+import { takeBaseLanguageAtom, takeEditorLanguageAtom, takeDynamicLanguageAtom } from '#basis/state/locale';
 import { atom, useAtomValue } from 'atomaric';
 import { makeRegExp } from 'regexpert';
 import { Langi } from 'shared/api';
@@ -6,6 +6,7 @@ import { langCodeDict } from 'shared/const/+locale';
 import { LocaleDynamic } from 'shared/model/+locale/dynamic';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { setBaseLocaleProvider, translateBase } from 'shared/utils/locale/base';
+import { setCmEditorLocaleProvider, translateEditorBase } from 'shared/utils/locale/editor';
 import {
   DefinedTranslateFunction,
   NEXTcb,
@@ -54,8 +55,9 @@ if (checkIsNil(lang)) {
 export const languageSystemCode = langSystemCodeDict[applicationLangi];
 
 setBaseLocaleProvider(() => takeBaseLanguageAtom().get());
+setCmEditorLocaleProvider(() => takeEditorLanguageAtom().get());
 
-export { translateBase };
+export { translateBase, translateEditorBase };
 
 export const useTranslateBase = () => {
   const dict = useAtomValue(takeBaseLanguageAtom());

@@ -1,10 +1,10 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useEffect, useState } from 'react';
 import { CmMp3ContainsPageResult } from 'shared/api';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { itInvokeIt, itIt } from 'shared/utils';
 import { cmEditorClientTsjrpcMethods } from '../lib/cm-editor.tsjrpc.methods';
 import { useCmMp3Rules } from '../lib/useCmMp3Rules';
@@ -26,10 +26,10 @@ export const ObserveUrlResource = ({
     try {
       const theUrl = new URL(url);
       if (mp3Rules && !mp3Rules.some(u => new URL(u.url).origin === theUrl.origin)) {
-        setErrorMessage(translateBase(BaseLocaleKey.CmEditorUnknownSource));
+        setErrorMessage(translateEditorBase(EditorLocaleKey.CmEditorUnknownSource));
       } else setErrorMessage('');
     } catch (_e) {
-      setErrorMessage(translateBase(BaseLocaleKey.CmEditorInvalidUrl));
+      setErrorMessage(translateEditorBase(EditorLocaleKey.CmEditorInvalidUrl));
     }
   }, [url, mp3Rules]);
 
@@ -39,13 +39,13 @@ export const ObserveUrlResource = ({
         <TextInput
           className="url-observer-input-wrapper w-[50%]"
           st-mood="2"
-          placeholder={translateBase(BaseLocaleKey.CmEditorUrl)}
+          placeholder={translateEditorBase(EditorLocaleKey.CmEditorUrl)}
           defaultValue={url}
           onInput={setUrl}
         />
         <SendButton
           className="url-observer-send-button"
-          title={translateBase(BaseLocaleKey.CmEditorObserveUrl)}
+          title={translateEditorBase(EditorLocaleKey.CmEditorObserveUrl)}
           disabled={!url || !!errorMessage}
           onSuccess={onSuccess}
           onSend={() => cmEditorClientTsjrpcMethods.getResourceHTMLString({ src: url })}
@@ -53,7 +53,7 @@ export const ObserveUrlResource = ({
       </div>
       {errorMessage && <div className="text-xKO">{errorMessage}</div>}
 
-      <h2>{translateBase(BaseLocaleKey.CmEditorKnownResources)}</h2>
+      <h2>{translateEditorBase(EditorLocaleKey.CmEditorKnownResources)}</h2>
       {mp3Rules?.map(rule => {
         return (
           (!availableWithTextQuery || rule.textQuery) && (

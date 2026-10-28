@@ -1,12 +1,12 @@
-import { translateBase, translateDynamic } from '#basis/locale';
+import { translateDynamic, translateEditorBase } from '#basis/locale';
 import { Modal } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { CmComOrderOnClickBetweenData } from '$cm+editor/shared/model/Orders';
 import { Atom, atom } from 'atomaric';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { CmEditorComAddOrderNewOrderMakeEtap } from '../model';
 import { CmEditorComAddOrderAdditionsEtapsModalInner } from './Etaps';
 
@@ -25,12 +25,12 @@ export const CmEditorComAddOrderRedactorAdditions = ({ com, setClickBetweenOrds 
     <>
       <BottomPopupItem
         icon="Text"
-        title={translateBase(BaseLocaleKey.CmEditorTextBlock)}
+        title={translateEditorBase(EditorLocaleKey.CmEditorTextBlock)}
         onClick={() => selectFirstEtapAtom.set(CmEditorComAddOrderNewOrderMakeEtap.Text)}
       />
       <BottomPopupItem
         icon="Option"
-        title={translateBase(BaseLocaleKey.CmEditorChordedBlock)}
+        title={translateEditorBase(EditorLocaleKey.CmEditorChordedBlock)}
         onClick={() => selectFirstEtapAtom.set(CmEditorComAddOrderNewOrderMakeEtap.Chord)}
       />
 
@@ -50,7 +50,7 @@ export const CmEditorComAddOrderRedactorAdditions = ({ com, setClickBetweenOrds 
               setClickBetweenOrds({
                 buttonTitle: (
                   <>
-                    {translateBase(BaseLocaleKey.CmEditorNewBlock)} <span className="text-x7">{orderTitle}</span>
+                    {translateEditorBase(EditorLocaleKey.CmEditorNewBlock)} <span className="text-x7">{orderTitle}</span>
                   </>
                 ),
                 checkIsShowButton: ({ ordAbove }) => {

@@ -1,6 +1,6 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 
 interface Props {
   texti?: number;
@@ -22,7 +22,7 @@ export const CmEditorComOrderAddTextableBlockAnchorTitles = ({ texti, com, chord
     return (
       <>
         {textPosition}
-        <span className="text-xKO">{translateBase(BaseLocaleKey.CmEditorNoBlockReferences)}</span>
+        <span className="text-xKO">{translateEditorBase(EditorLocaleKey.CmEditorNoBlockReferences)}</span>
       </>
     );
 

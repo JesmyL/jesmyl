@@ -1,5 +1,7 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
-import { translateBase } from '#basis/locale';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
+import { translateBase, translateEditorBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { TextInput } from '#shared/ui/TextInput';
@@ -13,7 +15,6 @@ import { useNavigate, useSearch } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { ChordPack, ChordTrack } from 'shared/api';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { checkIsEq } from 'shared/utils/checkIsEq';
 import { deepClone } from 'shared/utils/clone';
@@ -63,9 +64,9 @@ export const CmEditorChordPage = () => {
       isNewChord
         ? correctChordRegsLazy().regExp.exec(newChordName)
           ? chords[newChordName] || redactableChords[newChordName]
-            ? translateBase(BaseLocaleKey.CmChordExists)
+            ? translateEditorBase(EditorLocaleKey.CmChordExists)
             : ''
-          : translateBase(BaseLocaleKey.CmIncorrectChord)
+          : translateEditorBase(EditorLocaleKey.CmIncorrectChord)
         : '',
     );
   }, [newChordName, redactableChords, chords, isNewChord, currentChordName]);
@@ -90,7 +91,7 @@ export const CmEditorChordPage = () => {
     <StyledCmEditorChordPageContainer
       className="chord-redactor"
       contentClass={`chord-redactor-content p-2 ${isNewChord ? 'chord-addition' : ''}`}
-      headTitle={translateBase(BaseLocaleKey.CmChords)}
+      headTitle={translateEditorBase(EditorLocaleKey.CmChords)}
       head={
         (checkAccess('cm', 'CHORD', 'U') || checkAccess('cm', 'CHORD', 'C')) && (
           <div className="flex gap-2">
@@ -99,9 +100,9 @@ export const CmEditorChordPage = () => {
             <TheIconButton
               icon="Sent"
               disabled={!objectLength(chordsToSend)}
-              disabledReason={translateBase(BaseLocaleKey.NoChanges)}
+              disabledReason={translateEditorBase(EditorLocaleKey.NoChanges)}
               className="m-2"
-              confirm={translateBase(BaseLocaleKey.ToSendSomething, { s: objectKeys(chordsToSend).join('; ') })}
+              confirm={translateEditorBase(EditorLocaleKey.ToSendSomething, { s: objectKeys(chordsToSend).join('; ') })}
               onClick={async () => {
                 await cmEditorClientTsjrpcMethods.setChords({ chords: chordsToSend });
                 chordsToSendAtom.set({});
@@ -148,7 +149,7 @@ export const CmEditorChordPage = () => {
                     navigate({ to: '.', search: { newChordName: undefined } });
                   }}
                 >
-                  {translateBase(BaseLocaleKey.BackToEdit)}
+                  {translateEditorBase(EditorLocaleKey.BackToEdit)}
                 </Button>
               </>
             ) : currentChordName ? (
@@ -157,7 +158,7 @@ export const CmEditorChordPage = () => {
                 <CmChordCard chordName={currentChordName} />
               </>
             ) : (
-              <div>{translateBase(BaseLocaleKey.CmSelectChordEdit)}</div>
+              <div>{translateEditorBase(EditorLocaleKey.CmSelectChordEdit)}</div>
             )}
           </div>
           {checkAccess('cm', 'CHORD', 'U') && (
@@ -201,13 +202,13 @@ export const CmEditorChordPage = () => {
                       ? translateBase(BaseLocaleKey.Create)
                       : redactableChord
                         ? isExists
-                          ? translateBase(BaseLocaleKey.CmComeBackChord)
-                          : translateBase(BaseLocaleKey.CmDeleteChord)
+                          ? translateEditorBase(EditorLocaleKey.CmComeBackChord)
+                          : translateEditorBase(EditorLocaleKey.CmDeleteChord)
                         : translateBase(BaseLocaleKey.Redact)}
                   </TheButton>
                 </>
               ) : (
-                <div>{translateBase(BaseLocaleKey.CmSelectChordEdit)}</div>
+                <div>{translateEditorBase(EditorLocaleKey.CmSelectChordEdit)}</div>
               )}
             </div>
           )}

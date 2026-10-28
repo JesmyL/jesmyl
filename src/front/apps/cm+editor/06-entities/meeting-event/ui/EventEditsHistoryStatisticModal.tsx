@@ -1,5 +1,5 @@
 import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
-import { translateBase } from '#basis/locale';
+import { translateBase, translateEditorBase } from '#basis/locale';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
@@ -7,6 +7,7 @@ import { CmComFaceList } from '$cm/ext';
 import { useMemo } from 'react';
 import { CmComWid, ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { emptyFunc } from 'shared/utils';
 import { checkIsNaN } from 'shared/utils/checkIs';
 import { objectKeys } from 'shared/utils/object.utils';
@@ -39,7 +40,7 @@ export const CmEditorMeetingEventEditsHistoryStatisticModalInner = ({ dayi, schw
       <ModalHeader className="flex justify-between">
         <span className="flex gap-2">
           <LazyIcon icon="TradeUp" />
-          {translateBase(BaseLocaleKey.CmEditorStatistics)}
+          {translateEditorBase(EditorLocaleKey.CmEditorStatistics)}
         </span>
         <span>{totalCount}</span>
       </ModalHeader>

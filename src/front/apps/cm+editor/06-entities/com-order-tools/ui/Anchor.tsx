@@ -1,7 +1,7 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { CmEditorComOrderToolsProps } from '../model';
 
 export const CmEditorComOrderToolsAnchor = ({ com, ord, onClose, setClickBetweenOrds }: CmEditorComOrderToolsProps) => {
@@ -9,13 +9,13 @@ export const CmEditorComOrderToolsAnchor = ({ com, ord, onClose, setClickBetween
     <>
       <BottomPopupItem
         icon="Link02"
-        title={translateBase(BaseLocaleKey.CmEditorLinkToBlock, { h: ord.me.header() })}
+        title={translateEditorBase(EditorLocaleKey.CmEditorLinkToBlock, { h: ord.me.header() })}
         onClick={() => {
           onClose(false);
           let isAboveOrdAfterTarget = false;
 
           setClickBetweenOrds({
-            buttonTitle: <>{translateBase(BaseLocaleKey.CmEditorLinkToBlock, { h: ord.me.header() })}</>,
+            buttonTitle: <>{translateEditorBase(EditorLocaleKey.CmEditorLinkToBlock, { h: ord.me.header() })}</>,
             onClick: async ({ aboveLeadOrdw }) => {
               if (aboveLeadOrdw == null) return;
 

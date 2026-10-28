@@ -1,7 +1,7 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { CmEditorComOrderToolsProps } from '../model';
 
 export const CmEditorComOrderToolsHiddenOnMin = (props: CmEditorComOrderToolsProps) => {
@@ -11,8 +11,8 @@ export const CmEditorComOrderToolsHiddenOnMin = (props: CmEditorComOrderToolsPro
         icon="Link02"
         title={
           props.ord.isOpened
-            ? translateBase(BaseLocaleKey.CmEditorHideInCollapsed)
-            : translateBase(BaseLocaleKey.CmEditorShowInCollapsed)
+            ? translateEditorBase(EditorLocaleKey.CmEditorHideInCollapsed)
+            : translateEditorBase(EditorLocaleKey.CmEditorShowInCollapsed)
         }
         onClick={async () => {
           await cmEditComOrderClientTsjrpcMethods.toggleVisibilityInMiniMode({

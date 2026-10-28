@@ -1,4 +1,4 @@
-import { translateBase } from '#basis/locale';
+import { translateEditorBase } from '#basis/locale';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
@@ -8,7 +8,7 @@ import { CmComOrderList, useCmComMapFromIComWithoutComFixes } from '$cm/ext';
 import { Atom, atom } from 'atomaric';
 import { useState } from 'react';
 import { IExportableCom } from 'shared/api';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { chordBemoleEquivalent } from 'shared/utils/cm/com/const';
 import { arrayByLength } from 'shared/utils/object.utils';
 import { twMerge } from 'tailwind-merge';
@@ -35,11 +35,11 @@ export const CmEditorComEditTransposition = ({
       <TheIconButton
         onClick={isOpenModalAtom.do.toggle}
         icon="Notification01"
-        postfix={<>{translateBase(BaseLocaleKey.CmEditorComTonalityLabel, { t: com.getFixedTonica() })}</>}
+        postfix={<>{translateEditorBase(EditorLocaleKey.CmEditorComTonalityLabel, { t: com.getFixedTonica() })}</>}
       />
 
       <Modal openAtom={isOpenModalAtom}>
-        <ModalHeader>{translateBase(BaseLocaleKey.CmEditorComKey)}</ModalHeader>
+        <ModalHeader>{translateEditorBase(EditorLocaleKey.CmEditorComKey)}</ModalHeader>
 
         <ModalBody>
           {arrayByLength(12, (i, len) => {

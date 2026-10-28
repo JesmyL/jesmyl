@@ -1,5 +1,7 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
-import { translateBase } from '#basis/locale';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
+import { translateBase, translateEditorBase } from '#basis/locale';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -12,7 +14,6 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import React, { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmCatKind } from 'shared/api';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsNil } from 'shared/utils/checkIs';
 
 export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => {
@@ -24,7 +25,7 @@ export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => 
 
   return (
     <>
-      <div className="bg-x2">{translateBase(BaseLocaleKey.Collections)}</div>
+      <div className="bg-x2">{translateEditorBase(EditorLocaleKey.Collections)}</div>
       {cats.map(cat => {
         return (
           cat.kind === CmCatKind.dict && (
@@ -55,10 +56,10 @@ export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => 
                 <TheIconButton
                   icon="Cancel01"
                   postfix={translateBase(BaseLocaleKey.Delete)}
-                  confirm={translateBase(BaseLocaleKey.CmEditClearCollectionNumber, { n: cat.name })}
+                  confirm={translateEditorBase(EditorLocaleKey.CmEditClearCollectionNumber, { n: cat.name })}
                   className="pointer text-xKO ml-5 mb-2"
                   disabled={!checkAccess('cm', 'COM_CAT', 'U')}
-                  disabledReason={translateBase(BaseLocaleKey.Denied)}
+                  disabledReason={translateEditorBase(EditorLocaleKey.Denied)}
                   onClick={() =>
                     cmEditCatClientTsjrpcMethods.removeNativeComNum({
                       comw: ccom.wid,

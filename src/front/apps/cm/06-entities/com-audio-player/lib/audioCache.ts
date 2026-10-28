@@ -7,13 +7,14 @@ import { useEffect } from 'react';
 import { CmComWid, CmAudioSrc, IExportableCom, parseCmAudioTail, parseHttpNumLeadLink } from 'shared/api';
 import { Bool } from 'shared/enums';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { UsedBaseLocaleKey } from 'shared/model/+locale/base';
 import { emptyFunc } from 'shared/utils';
 import { toast } from 'sonner';
 import { CmComAudioPlayerCacheState, CmComAudioPlayerSrcState } from '../model';
 
 /**
  * Browser Cache Storage bucket holding tracks cached through the manual cloud button.
- * Keep in sync with the `audio-cache` runtimeCaching entry in vite-pwa.options.ts.
+ * Keep in sync with the `audio-cache` runtime route in src/sw.ts.
  */
 export const cmComAudioPlayerCacheName = 'audio-cache';
 
@@ -239,8 +240,8 @@ const takeCmComAudioPlayerCacheSizeReport = async (trackBytes: number) => {
 const showCmComAudioPlayerCacheSizeToast = async (
   trackBytes: number,
   comName: string,
-  noQuotaKey: BaseLocaleKey,
-  quotaKey: BaseLocaleKey,
+  noQuotaKey: UsedBaseLocaleKey,
+  quotaKey: UsedBaseLocaleKey,
 ) => {
   if (typeof caches === 'undefined') return;
 

@@ -1,10 +1,11 @@
-import { translateBase } from '#basis/locale';
+import { translateBase, translateEditorBase } from '#basis/locale';
 import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { CmComFaceList, CmComMoveSelectedButton, cmComSelectedComwsAtom } from '$cm/ext';
 import { Atom, useAtomValue } from 'atomaric';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { emptyFunc } from 'shared/utils';
 import { checkIsEq } from 'shared/utils/checkIsEq';
 import { CmEditorMeetingEventEditProps } from '../model/model';
@@ -20,7 +21,7 @@ export const CmEditorMeetingEventSendComsModalInner = ({
 
   return (
     <>
-      <ModalHeader>{translateBase(BaseLocaleKey.CmEditorSendingToEvent)}</ModalHeader>
+      <ModalHeader>{translateEditorBase(EditorLocaleKey.CmEditorSendingToEvent)}</ModalHeader>
       <ModalBody>
         <CmComFaceList
           list={selectedComws}
@@ -34,7 +35,7 @@ export const CmEditorMeetingEventSendComsModalInner = ({
           icon="Sent"
           prefix={translateBase(BaseLocaleKey.Send)}
           disabled={checkIsEq(selectedComws, packComws)}
-          disabledReason={translateBase(BaseLocaleKey.CmEditorListLoaded)}
+          disabledReason={translateEditorBase(EditorLocaleKey.CmEditorListLoaded)}
           onSuccess={openAtom.reset}
           onSend={() =>
             cmEditComExternalsClientTsjrpcMethods.addComwsInSchEvHistory({
