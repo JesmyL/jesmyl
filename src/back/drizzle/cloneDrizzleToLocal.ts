@@ -38,6 +38,7 @@ export const cloneDrizzleToLocal = async () => {
   try {
     if (!(await isServerDbReachable())) return;
 
+    // Dashboard tables (visits, visitDays, dashErrors, dashReads) are intentionally omitted: they are local telemetry and must never be cloned.
     const tables = [
       mkConfig(userDB, table => dbUpdate(table, { m: Date.now() }, 'ANYWHERE!')),
 

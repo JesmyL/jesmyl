@@ -34,6 +34,7 @@ import { Route as CmLiSelImport } from './tree/cm/li/sel'
 import { Route as CmLiFavImport } from './tree/cm/li/fav'
 import { Route as CmLiEventsImport } from './tree/cm/li/events'
 import { Route as CmEditChordImport } from './tree/cm/edit/chord'
+import { Route as otherAppNameDashboardImport } from './tree/!other.$appName/dashboard'
 import { Route as otherAppNameSettingsIndexImport } from './tree/!other.$appName/settings/index'
 import { Route as otherAppNameSchsIndexImport } from './tree/!other.$appName/schs/index'
 import { Route as otherAppNameAuthIndexImport } from './tree/!other.$appName/auth/index'
@@ -396,6 +397,12 @@ const CmEditChordRoute = CmEditChordImport.update({
   getParentRoute: () => CmEditRouteLazyRoute,
 } as any)
 
+const otherAppNameDashboardRoute = otherAppNameDashboardImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => otherAppNameRouteRoute,
+} as any)
+
 const StoragesIRackwIndexLazyRoute = StoragesIRackwIndexLazyImport.update({
   id: '/i/$rackw/',
   path: '/i/$rackw/',
@@ -693,6 +700,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/presentations/'
       preLoaderRoute: typeof PresentationsIndexLazyImport
       parentRoute: typeof PresentationsRouteLazyImport
+    }
+    '/!other/$appName/dashboard': {
+      id: '/!other/$appName/dashboard'
+      path: '/dashboard'
+      fullPath: '/!other/$appName/dashboard'
+      preLoaderRoute: typeof otherAppNameDashboardImport
+      parentRoute: typeof otherAppNameRouteImport
     }
     '/cm/edit/chord': {
       id: '/cm/edit/chord'
@@ -1159,6 +1173,7 @@ const StoragesRouteLazyRouteWithChildren =
   StoragesRouteLazyRoute._addFileChildren(StoragesRouteLazyRouteChildren)
 
 interface otherAppNameRouteRouteChildren {
+  otherAppNameDashboardRoute: typeof otherAppNameDashboardRoute
   otherAppNameIndexRoute: typeof otherAppNameIndexRoute
   otherAppNameSettingsConsoleRoute: typeof otherAppNameSettingsConsoleRoute
   otherAppNameSettingsRightsRoute: typeof otherAppNameSettingsRightsRoute
@@ -1173,6 +1188,7 @@ interface otherAppNameRouteRouteChildren {
 }
 
 const otherAppNameRouteRouteChildren: otherAppNameRouteRouteChildren = {
+  otherAppNameDashboardRoute: otherAppNameDashboardRoute,
   otherAppNameIndexRoute: otherAppNameIndexRoute,
   otherAppNameSettingsConsoleRoute: otherAppNameSettingsConsoleRoute,
   otherAppNameSettingsRightsRoute: otherAppNameSettingsRightsRoute,
@@ -1212,6 +1228,7 @@ export interface FileRoutesByFullPath {
   '/gamer/': typeof GamerIndexLazyRoute
   '/presentation': typeof PresentationIndexLazyRoute
   '/presentations/': typeof PresentationsIndexLazyRoute
+  '/!other/$appName/dashboard': typeof otherAppNameDashboardRoute
   '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
@@ -1272,6 +1289,7 @@ export interface FileRoutesByTo {
   '/gamer': typeof GamerIndexLazyRoute
   '/presentation': typeof PresentationIndexLazyRoute
   '/presentations': typeof PresentationsIndexLazyRoute
+  '/!other/$appName/dashboard': typeof otherAppNameDashboardRoute
   '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
@@ -1340,6 +1358,7 @@ export interface FileRoutesById {
   '/gamer/': typeof GamerIndexLazyRoute
   '/presentation/': typeof PresentationIndexLazyRoute
   '/presentations/': typeof PresentationsIndexLazyRoute
+  '/!other/$appName/dashboard': typeof otherAppNameDashboardRoute
   '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
@@ -1409,6 +1428,7 @@ export interface FileRouteTypes {
     | '/gamer/'
     | '/presentation'
     | '/presentations/'
+    | '/!other/$appName/dashboard'
     | '/cm/edit/chord'
     | '/cm/li/events'
     | '/cm/li/fav'
@@ -1468,6 +1488,7 @@ export interface FileRouteTypes {
     | '/gamer'
     | '/presentation'
     | '/presentations'
+    | '/!other/$appName/dashboard'
     | '/cm/edit/chord'
     | '/cm/li/events'
     | '/cm/li/fav'
@@ -1534,6 +1555,7 @@ export interface FileRouteTypes {
     | '/gamer/'
     | '/presentation/'
     | '/presentations/'
+    | '/!other/$appName/dashboard'
     | '/cm/edit/chord'
     | '/cm/li/events'
     | '/cm/li/fav'
@@ -1711,6 +1733,7 @@ export const routeTree = rootRoute
     "/!other/$appName": {
       "filePath": "!other.$appName/route.tsx",
       "children": [
+        "/!other/$appName/dashboard",
         "/!other/$appName/",
         "/!other/$appName/settings/console",
         "/!other/$appName/settings/rights",
@@ -1781,6 +1804,10 @@ export const routeTree = rootRoute
     "/presentations/": {
       "filePath": "presentations/index.lazy.tsx",
       "parent": "/presentations"
+    },
+    "/!other/$appName/dashboard": {
+      "filePath": "!other.$appName/dashboard.tsx",
+      "parent": "/!other/$appName"
     },
     "/cm/edit/chord": {
       "filePath": "cm/edit/chord.tsx",

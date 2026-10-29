@@ -1,6 +1,6 @@
-import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
+import { insertDashMessage, insertVisit } from 'back/dash/visits';
+import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { ServerTSJRPCTool, tsjrpcBaseServerNext } from 'back/tsjrpc.base.server';
-import { userAuthStringified, userVisitStringified } from 'back/utils';
 import { DrizzleQueryError } from 'drizzle-orm';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 import { makeRegExp } from 'regexpert';
@@ -13,7 +13,10 @@ import {
   TsjrpcFromServerEvent,
   UserAuth,
 } from 'shared/api';
-import { setSharedPolyfills } from 'shared/utils';
+import { DashMessageKind } from 'shared/model/index/visitsDashboard';
+import { howMillisecondsInMin } from 'shared/const/ms';
+import { emptyFunc, Eventer, setSharedPolyfills } from 'shared/utils';
+import { escapeHtmlLazy } from 'shared/utils/string.utils';
 import {
   checkIsFunction,
   checkIsNotUndefined,
@@ -30,6 +33,8 @@ import { SokiServerClientSelector } from './model';
 setSharedPolyfills();
 ErrorCatcher.logAllErrors();
 
+const errorsPerSocketPerMinute = 20;
+
 export class SokiServer {
   private clients = new Set<WebSocket>();
   auths = new Map<WebSocket, LocalSokiAuth>();
@@ -38,6 +43,45 @@ export class SokiServer {
   private abortedRequestIdsSet = new Set<string>();
   private sockets = new Set<WebSocket>();
   private isAliveBySocket = new WeakMap<WebSocket, boolean>();
+  private errorRateLimits = new WeakMap<WebSocket, { ts: number; count: number }>();
+  readonly onOnlineCountChangeEvent = Eventer.createValue<number>();
+
+  get onlineCount() {
+    return this.visits.size;
+  }
+
+  get onlineLogins() {
+    const logins = new Set<SokiAuthLogin>();
+    let anon = 0;
+
+    this.visits.forEach((_, client) => {
+      const login = this.auths.get(client)?.login;
+
+      if (login) logins.add(login);
+      else anon++;
+    });
+
+    return { logins: [...logins], anon };
+  }
+
+  private notifyOnlineCount() {
+    this.onOnlineCountChangeEvent.invoke(this.onlineCount);
+  }
+
+  private checkErrorRate(client: WebSocket) {
+    const now = Date.now();
+    const rate = this.errorRateLimits.get(client);
+
+    if (!rate || now - rate.ts >= howMillisecondsInMin) {
+      this.errorRateLimits.set(client, { ts: now, count: 1 });
+      return true;
+    }
+
+    if (rate.count >= errorsPerSocketPerMinute) return false;
+
+    rate.count++;
+    return true;
+  }
 
   start() {
     const ws = new WebSocketServer({ noServer: true }).on('connection', client => {
@@ -47,12 +91,14 @@ export class SokiServer {
 
       client.on('close', () => {
         const auth = this.auths.get(client);
+        const wasOnline = this.visits.size;
 
         this.sockets.delete(client);
         this.clients.delete(client);
         this.visits.delete(client);
         this.auths.delete(client);
 
+        if (this.visits.size !== wasOnline) this.notifyOnlineCount();
         if (checkIsUndefined(auth?.login)) return;
         this.clientsByLogin.get(auth.login)?.delete(client);
       });
@@ -68,14 +114,24 @@ export class SokiServer {
         if (checkIsNotUndefined(event.token)) {
           if (!event.stopAll) this.clients.add(client);
 
-          const printVisit = (details?: string) => {
+          const printVisit = (login: SokiAuthLogin | nil) => {
             if (checkIsNotUndefined(event.visitInfo)) {
-              this.visits.set(client, event.visitInfo);
+              const previousOnline = this.visits.size;
+              const visitInfo = event.visitInfo;
 
-              if (!this.isLocalhost(event.visitInfo.urls[0])) {
-                tglogger.visit(
-                  `${event.visitInfo.deviceEmoji || '??'} ${details || event.visitInfo.deviceId || 'Не авторизованный'}\n\n${userVisitStringified(event.visitInfo)}\n\n`,
-                );
+              this.visits.set(client, visitInfo);
+              if (this.visits.size !== previousOnline) this.notifyOnlineCount();
+
+              if (!this.isLocalhost(visitInfo.urls[0])) {
+                if (!login) insertVisit(null, visitInfo).catch(emptyFunc);
+                else
+                  takeUserTiny({ l: login }, false)
+                    .then(user => {
+                      if (user?.r === 'TOP') return;
+
+                      insertVisit(login, visitInfo).catch(emptyFunc);
+                    })
+                    .catch(emptyFunc);
               }
             }
           };
@@ -83,7 +139,7 @@ export class SokiServer {
           if (checkIsNull(event.token)) {
             this.send({ requestId: event.requestId }, client);
 
-            printVisit();
+            printVisit(null);
 
             return;
           }
@@ -99,7 +155,7 @@ export class SokiServer {
 
           const auth = jwt.decode(event.token) as UserAuth | nil;
 
-          printVisit(userAuthStringified(auth));
+          printVisit(auth?.login);
 
           if (auth) {
             this.auths.set(client, auth);
@@ -118,10 +174,17 @@ export class SokiServer {
         const visitInfo = this.visits.get(client);
 
         if (checkIsNotUndefined(event.errorMessage)) {
-          if (!this.isLocalhost(visitInfo?.urls[0]))
-            tglogger.userErrors(
-              `${event.errorMessage}\n\n${userAuthStringified(auth)}\n\n${userVisitStringified(visitInfo)}`,
-            );
+          if (
+            auth?.login &&
+            !this.isLocalhost(visitInfo?.urls[0]) &&
+            this.checkErrorRate(client)
+          )
+            insertDashMessage(
+              escapeHtmlLazy()(event.errorMessage),
+              visitInfo,
+              DashMessageKind.VisitError,
+              auth?.login,
+            ).catch(emptyFunc);
         }
 
         if (checkIsUndefined(event.invoke)) return;

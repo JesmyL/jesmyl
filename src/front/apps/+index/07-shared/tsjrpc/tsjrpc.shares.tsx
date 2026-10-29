@@ -9,7 +9,7 @@ import { IndexTsjrpcSharesModel } from 'shared/api/tsjrpc/index/tsjrpc.methods.m
 import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
-import { indexIDB, indexUserAccessRightsAtom, lastUpdatedIconsMd5HashAtom } from '../state';
+import { indexDashMessageVersionAtom, indexIDB, indexUserAccessRightsAtom, indexVisitsOnlineAtom, lastUpdatedIconsMd5HashAtom } from '../state';
 
 export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<IndexTsjrpcSharesModel> {
   constructor() {
@@ -51,6 +51,14 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
         constConfig: async ({ config, mod }) => {
           constantsConfigAtom.set(prev => ({ ...prev, ...config }));
           await indexIDB.updateLastModifiedAt(mod);
+        },
+
+        visitsOnline: async ({ count }) => {
+          indexVisitsOnlineAtom.set(count);
+        },
+
+        dashMessage: async () => {
+          indexDashMessageVersionAtom.set(version => version + 1);
         },
 
         baseLocConf: async ({ base }) => {

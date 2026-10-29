@@ -1,6 +1,5 @@
 import { cmShareServerTsjrpcMethods } from 'back/apps/cm/tsjrpc.shares';
 import { makeTwiceKnownName } from 'back/complect/makeTwiceKnownName';
-import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { userDB, userRoleDB } from 'back/drizzle.schema';
 import { db, dbUpdate } from 'back/drizzle/drizzle.db';
 import { hostRootDir } from 'back/envJson';
@@ -29,11 +28,11 @@ import { switchCRUDAccesRightValue } from 'shared/utils/index/utils';
 import { forEachObjectEntries, objectKeys, objectLength } from 'shared/utils/object.utils';
 import { textToUpperCase } from 'shared/utils/string.utils';
 import {
-  accessRightTitlesFileStore,
   appVersionFileStore,
   indexStameskaIconsFileStore,
   nounsFileStorage,
   pronounsFileStorage,
+  takeAccessRightTitles,
   valuesFileStore,
 } from '../file-stores';
 import { schGeneralTsjrpcBaseServer } from '../schedules/base-tsjrpc/general.tsjrpc.base';
@@ -46,8 +45,14 @@ import { indexAuthByTgUser } from './lib/makeAuthFromUser';
 import { makeUserAccessRights } from './lib/makeUserAccessRights';
 import { otpTSJRPCMethods } from './lib/otp.methods';
 import { indexPushMethods } from './lib/push.methods';
-import { indexTSJRPCBaseRequestFreshes, editorLocaleMinVersion, baseLocaleMinVersion } from './lib/requestFreshes';
+import {
+  indexTSJRPCBaseRequestFreshes,
+  editorLocaleMinVersion,
+  baseLocaleMinVersion,
+  throwIfNoEditorLocaleAccess,
+} from './lib/requestFreshes';
 import { indexTSJRPCBaseUpdateUserAccessRight } from './lib/updateUserAccessRight';
+import { indexTSJRPCBaseVisitsDashboard } from './lib/visitsDashboard';
 
 const deviceIdPostfixSymbols = '!@#$%^&*;.,?/|\\+=-'.split('');
 
@@ -80,6 +85,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         ...indexTSJRPCBaseUpdateUserAccessRight,
         ...indexTSJRPCBaseRequestFreshes,
         ...indexTSJRPCBaseGetIconExistsPacks,
+        ...indexTSJRPCBaseVisitsDashboard,
 
         updateUserAccessRole: async ({ login, role }, { auth: userAuth }) => {
           const auth = takeLogginedAuthOrThrow(userAuth);
@@ -201,7 +207,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         getFreshAppVersion: async () => ({ value: appVersionFileStore.getValue().num }),
         getIndexValues: async () => ({ value: valuesFileStore.getValue() }),
 
-        getAccessRightTitles: async () => ({ value: accessRightTitlesFileStore.getValue() }),
+        getAccessRightTitles: async () => ({ value: takeAccessRightTitles() }),
         getUserInfoDict: async () => {
           const userInfoDict: PRecord<UserLogin, UserInfoUnsecure> = {};
 
@@ -340,7 +346,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         reqLocaleEditorConfig: async (_, { auth, visitInfo, client }) => {
           if (!visitInfo || visitInfo.version < editorLocaleMinVersion) return;
 
-          await throwIfNoUserScopeAccessRight(auth, 'cm', 'EDIT', 'R');
+          await throwIfNoEditorLocaleAccess(auth);
 
           if (!client) throw 'Client not found';
 

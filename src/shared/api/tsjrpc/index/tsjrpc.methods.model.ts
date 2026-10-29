@@ -4,6 +4,7 @@ import { LocaleDynamic } from 'shared/model/+locale/dynamic';
 import { LocaleCmEditor } from 'shared/model/+locale/editor';
 import { ConstantsConfig } from 'shared/model/constantsConfig';
 import { IndexAccessScopeRules } from 'shared/model/index/access-rights';
+import { DashMessage } from 'shared/model/index/visitsDashboard';
 import { toast } from 'sonner';
 import { StameskaIconKind, StameskaIconPack } from 'stameska-icon/utils';
 
@@ -27,6 +28,10 @@ export type IndexTsjrpcSharesModel = {
   }) => void;
 
   constConfig: (args: { config: Partial<ConstantsConfig>; mod: number }) => unknown;
+
+  visitsOnline: (args: { count: number }) => unknown;
+
+  dashMessage: (args: { message: DashMessage }) => unknown;
 
   baseLocConf: (args: { base: LocaleBase<Langi>; mod: number }) => unknown;
   editorLocConf: (args: { editor: LocaleCmEditor; mod: number }) => unknown;

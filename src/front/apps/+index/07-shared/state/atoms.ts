@@ -43,5 +43,7 @@ export const indexUserAccessRightsAtom = atom<IndexAccessScopeRules>(
 );
 export const indexOpenAccessRoleRedactorAtom = atom<UserAccessRole | null>(null);
 export const indexIsBindEmailOpenAtom = atom(false);
+export const indexVisitsOnlineAtom = atom<number | null>(null);
+export const indexDashMessageVersionAtom = atom(0);
 
 export const indexFavouriteAppsAtom = atom<SokiAppName[]>([], 'index:favouriteApps');

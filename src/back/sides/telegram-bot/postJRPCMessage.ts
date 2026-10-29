@@ -1,11 +1,16 @@
 import { backConfig } from 'back/config/backConfig';
 import { insertDashMessage } from 'back/dash/visits';
+import { sendEmailMessage } from 'back/sides/emailer/lib/sendEmailMessage';
+import { EmailerAuthConfigKey } from 'back/sides/emailer/model';
 import TgBot from 'node-telegram-bot-api';
 import { makeRegExp } from 'regexpert';
 import { UserLogin } from 'shared/api';
 import { DashMessageKind } from 'shared/model/index/visitsDashboard';
 import { emptyFunc } from 'shared/utils';
 import { JesmylTelegramBot } from './tg-bot';
+
+const dateConfig = { day: '2-digit', year: 'numeric', month: '2-digit', weekday: 'short' } as const;
+const changesScopeTitle = 'Changes';
 
 const methodCodeReg = makeRegExp('/<code>([^<]*)<\\/code>/');
 const htmlTagReg = makeRegExp('/<[^>]*>/g');
@@ -68,6 +73,13 @@ export const postJRPCMessage = async (
   const dashMessage = options.dashMessage ?? (kind === DashMessageKind.Support ? takeSupportDashMessage(html) : html);
 
   insertDashMessage(dashMessage, null, kind, options.login ?? null).catch(emptyFunc);
+
+  if (kind === DashMessageKind.Changes)
+    await sendEmailMessage(EmailerAuthConfigKey.Self, {
+      isSameTo: true,
+      subject: `SYSTEM: ${new Date().toLocaleDateString('ru', dateConfig)} (${changesScopeTitle})`,
+      html,
+    });
 
   if (!options.tgBot.isStarted) return;
 

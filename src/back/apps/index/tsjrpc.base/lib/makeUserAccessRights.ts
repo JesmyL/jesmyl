@@ -1,6 +1,6 @@
 import { SokiAuthLogin } from 'shared/api';
 import { IndexAccessScopeRules } from 'shared/model/index/access-rights';
-import { accessRightTitlesFileStore } from '../../file-stores';
+import { takeAccessRightTitles } from '../../file-stores';
 import { takeUserRoleTiny } from '../../tinies/userRoleTiny';
 import { takeUserTiny } from '../../tinies/userTiny';
 
@@ -14,7 +14,7 @@ export const makeUserAccessRights = async (login: SokiAuthLogin | nil) => {
   let userRightsResult: IndexAccessScopeRules = {};
 
   if (userRole) {
-    const titles = accessRightTitlesFileStore.getValue();
+    const titles = takeAccessRightTitles();
 
     if (userRole === 'TOP') {
       for (const scopeName in titles) {

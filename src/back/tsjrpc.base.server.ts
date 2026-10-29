@@ -1,12 +1,13 @@
 import { DrizzleQueryError } from 'drizzle-orm';
 import { SokiVisit, UserAuth } from 'shared/api';
+import { DashMessageKind } from 'shared/model/index/visitsDashboard';
 import { emptyFunc } from 'shared/utils';
 import { checkIsFunction } from 'shared/utils/checkIs';
 import { makeTSJRPCBaseMaker } from 'tsjrpc';
 import { WebSocket } from 'ws';
+import { insertDashMessage } from './dash/visits';
 import { backConfig } from './config/backConfig';
 import { jesmylChangesBot } from './sides/telegram-bot/control/jesmylChangesBot';
-import { tglogger } from './sides/telegram-bot/log/log-bot';
 import { postJRPCMessage } from './sides/telegram-bot/postJRPCMessage';
 import type { ServerTSJRPCFeedback } from './tsjrpc.model';
 import { userAuthStringified, userVisitStringified } from './utils';
@@ -32,9 +33,12 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
         if (error instanceof DrizzleQueryError)
           errorMessage = `<b>${error.cause?.message ?? error.stack ?? ''}</b>\n\n${error}`;
 
-        tglogger.userErrors(
+        insertDashMessage(
           `${scope}.${method}()\n\n${errorMessage}\n\n${userAuthStringified(auth)}\n\n${userVisitStringified(visitInfo)}\n\n\nАргументы:\n${JSON.stringify(args)}`,
-        );
+          visitInfo,
+          DashMessageKind.Errors,
+          auth?.login,
+        ).catch(emptyFunc);
       },
   feedbackOnEach: backConfig.isTest
     ? // ? props => console.info({ ...props, tool: { ...props.tool, client: 'HIDDEN' } })
@@ -67,6 +71,7 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
             tgBot: jesmylChangesBot,
             tg: { parse_mode: 'HTML' },
             scope: feedback.logScope,
+            login: tool.auth?.login,
           },
         );
       },

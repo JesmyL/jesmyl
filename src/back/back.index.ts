@@ -6,6 +6,7 @@ import { bibleTsjrpcBaseServer } from './apps/bible/tsjrpc';
 import { cmServerTsjrpcBase } from './apps/cm/tsjrpc.base';
 import { startCrTgAlarm } from './apps/index/crTgAlarm';
 import { initSchedulePushInform } from './apps/index/schedules/app-inform/schedule-informer';
+import { initVisitsDigest } from './apps/index/schedules/visits-digest/visits-digest';
 import { indexServerTsjrpcBase } from './apps/index/tsjrpc.base';
 import { questionerAdminServerTsjrpcBase } from './apps/q/tsjrpc/admin.tsjrpc.base';
 import { questionerUserServerTsjrpcBase } from './apps/q/tsjrpc/user.tsjrpc.base';
@@ -19,11 +20,11 @@ import { localeDynamicUa } from './locales/dynamic/ua';
 import { baseMessagesCatcher } from './sides/telegram-bot/complect/message-catchers';
 
 iife(async () => {
-  if (Do.It) await import('./initBack').then(m => m.initBack());
+  if (!backConfig.isTest) await import('./initBack').then(m => m.initBack());
 
-  if (!Do.It) if (backConfig.isTest) await import('./drizzle/cloneDrizzleToLocal').then(m => m.cloneDrizzleToLocal());
+  if (backConfig.isTest) await import('./drizzle/cloneDrizzleToLocal').then(m => m.cloneDrizzleToLocal());
 
-  if (Do.It) await import('./drizzle/drizzleInitiator').then(m => m.drizzleInitiator());
+  if (!backConfig.isTest) await import('./drizzle/drizzleInitiator').then(m => m.drizzleInitiator());
 
   const ws = sokiServer.start();
   if (Do.It) await import('./startExpressRouting').then(m => m.startExpressRouting(ws));
@@ -40,6 +41,8 @@ iife(async () => {
   baseMessagesCatcher.register();
 
   startCrTgAlarm();
+
+  initVisitsDigest();
 });
 
 const langLocales = {

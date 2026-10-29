@@ -19,7 +19,7 @@ const dynamicLangAtoms: { [L in Langi]?: Atom<LocaleDynamic<L>> } = {};
 const baseLocaleKeysCount = BaseLocaleKey.ScheduleInvite + 1;
 
 /** Нумерация `EditorLocaleKey` непрерывная: словарь другой длины собран под другой набор ключей. */
-const editorLocaleKeysCount = EditorLocaleKey.Language + 1;
+const editorLocaleKeysCount = EditorLocaleKey.VisitsAnonSummary + 1;
 
 const checkValue = (value: LocaleBase<Langi> | LocaleDynamic<Langi>, onRequest: () => void) => {
   if (!objectLength(value)) {
@@ -43,12 +43,15 @@ export const takeBaseLanguageAtom = lazyInit(() => {
   return confAtom;
 });
 
-/** Словарь редактора запрашивается только при наличии права на редактирование `cm`. */
+/** Словарь редактора запрашивается только при наличии права на редактирование `cm` или на дашборд. */
 export const takeEditorLanguageAtom = lazyInit(() => {
   const confAtom = atom({}, 'loc:E') as never as Atom<LocaleCmEditor>;
   const cachedEditorLocale = confAtom.get();
+  const rights = indexUserAccessRightsAtom.get();
+  const hasEditorAccess =
+    checkUserScopeAccessRight(null, rights, 'cm', 'EDIT') || checkUserScopeAccessRight(null, rights, 'dash', 'DASH');
 
-  if (!checkUserScopeAccessRight(null, indexUserAccessRightsAtom.get(), 'cm', 'EDIT')) return confAtom;
+  if (!hasEditorAccess) return confAtom;
 
   if (!objectLength(cachedEditorLocale)) {
     indexTsjrpcClientMethods.reqLocaleEditorConfig();
