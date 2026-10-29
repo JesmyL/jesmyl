@@ -201,7 +201,6 @@ export const localeEditorRu = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsSupport]: 'Поддержка',
   [EditorLocaleKey.VisitsLog]: 'Лог',
   [EditorLocaleKey.VisitsErrors]: 'Ошибки',
-  [EditorLocaleKey.VisitsChanges]: 'Изменения',
   [EditorLocaleKey.VisitsAnonymous]: 'аноним',
   [EditorLocaleKey.VisitsMarkAllRead]: 'Отметить прочитанным',
   [EditorLocaleKey.VisitsOlderMessages]: 'Загрузить более старые',

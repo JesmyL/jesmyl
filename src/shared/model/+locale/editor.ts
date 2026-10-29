@@ -187,7 +187,6 @@ export type LocaleCmEditor = {
   [EditorLocaleKey.VisitsSupport]: LocaleSimpleString;
   [EditorLocaleKey.VisitsLog]: LocaleSimpleString;
   [EditorLocaleKey.VisitsErrors]: LocaleSimpleString;
-  [EditorLocaleKey.VisitsChanges]: LocaleSimpleString;
   [EditorLocaleKey.VisitsAnonymous]: LocaleSimpleString;
   [EditorLocaleKey.VisitsMarkAllRead]: LocaleSimpleString;
   [EditorLocaleKey.VisitsOlderMessages]: LocaleSimpleString;

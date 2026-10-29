@@ -186,7 +186,6 @@ export const enum EditorLocaleKey {
   VisitsSupport = 181,
   VisitsLog = 182,
   VisitsErrors = 183,
-  VisitsChanges = 184,
   VisitsAnonymous = 185,
   VisitsMarkAllRead = 186,
   VisitsOlderMessages = 187,

@@ -24,7 +24,6 @@ const messageTabs = [
   { kind: DashMessageKind.Errors, title: EditorLocaleKey.VisitsErrors },
   { kind: DashMessageKind.Support, title: EditorLocaleKey.VisitsSupport },
   { kind: DashMessageKind.Log, title: EditorLocaleKey.VisitsLog },
-  { kind: DashMessageKind.Changes, title: EditorLocaleKey.VisitsChanges },
 ] as const;
 
 const messageSummaryMaxLength = 80;
@@ -34,7 +33,6 @@ const whitespaceReg = makeRegExp('/\\s+/g');
 const unreadBadgeClassName: Partial<Record<DashMessageKind, string>> = {
   [DashMessageKind.VisitError]: 'bg-red-500/15 text-red-500',
   [DashMessageKind.Errors]: 'bg-red-500/15 text-red-500',
-  [DashMessageKind.Changes]: 'bg-green-500/15 text-green-500',
   [DashMessageKind.Log]: 'bg-blue-500/15 text-blue-500',
   [DashMessageKind.Support]: 'bg-orange-500/15 text-orange-500',
 };

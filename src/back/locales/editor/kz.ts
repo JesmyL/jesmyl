@@ -200,7 +200,6 @@ export const localeEditorKz = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsSupport]: 'Қолдау',
   [EditorLocaleKey.VisitsLog]: 'Лог',
   [EditorLocaleKey.VisitsErrors]: 'Қателер',
-  [EditorLocaleKey.VisitsChanges]: 'Өзгерістер',
   [EditorLocaleKey.VisitsAnonymous]: 'аноним',
   [EditorLocaleKey.VisitsMarkAllRead]: 'Оқылды деп белгілеу',
   [EditorLocaleKey.VisitsOlderMessages]: 'Ескірек хабарламаларды жүктеу',
