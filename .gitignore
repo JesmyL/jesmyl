@@ -6,6 +6,7 @@ node_modules
 .pnp.js
 
 /src/back/file-stores
+/src/back/dev-certs
 *.cjs
 /src/back/.env.mode
 /src/back/.env.json

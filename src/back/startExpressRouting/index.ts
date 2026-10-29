@@ -6,8 +6,9 @@ import fs from 'fs';
 import http from 'http';
 import https from 'https';
 import md5 from 'md5';
+import net from 'net';
 import path from 'path';
-import { Readable, pipeline } from 'node:stream';
+import { type Duplex, Readable, pipeline } from 'node:stream';
 import { makeRegExp } from 'regexpert';
 import { CmComWid, HttpLink, HttpNumLeadLink, ScheduleWidgetWid, hostConfig } from 'shared/api';
 import { pullCmAudiosExpressRoutePath, pullFilesExpressSecretQueryName } from 'shared/api/pullFiles.utils';
@@ -20,6 +21,7 @@ import { vitePWAOptions } from '../../../vite-pwa.options';
 import * as secret from '../../../do/secret.md5.json';
 import { takeComwTiny } from '../apps/cm/com.tiny';
 import { takeAudioHttpLink, takeAudioLinkByTail, takeAudioTailFromRequestPath } from '../audio/md5LinkRedirectDict';
+import { backConfig } from '../config/backConfig';
 import { db } from '../drizzle/drizzle.db';
 import { catDB, comDB } from '../drizzle.schema';
 import { hostRootDir, lazyEnvJson } from '../envJson';
@@ -385,10 +387,18 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
   });
 
   const { subHost } = lazyEnvJson();
+  const port = +(process.env.PORT || 4446);
+  const httpsPort = backConfig.isTest ? port : 443;
+
+  /** Локальный самоподписанный серт (localhost + LAN-IP): `openssl req -x509 -nodes -newkey rsa:2048 -days 3650 -keyout privkey.pem -out fullchain.pem -subj /CN=localhost -addext subjectAltName=DNS:localhost,IP:192.168.1.59` */
+  const devCertDir = `${hostRootDir}/dev-certs`;
 
   const readCert = (fileName: string, host = hostConfig.host) => {
     try {
-      return fs.readFileSync(makeCertBotFilePath(fileName, host), 'utf8');
+      return fs.readFileSync(
+        backConfig.isTest ? `${devCertDir}/${fileName}.pem` : makeCertBotFilePath(fileName, host),
+        'utf8',
+      );
     } catch (_e) {
       //
     }
@@ -396,6 +406,17 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
 
   const key = readCert('privkey');
   const cert = readCert('fullchain');
+
+  const upgradeHandler = (request: http.IncomingMessage, socket: Duplex, head: Buffer) => {
+    const pathname = request.url ? new URL(request.url, 'http://localhost').pathname : '';
+    if (backConfig.isTest || pathname === '/websocket/' || pathname === '/websocket') {
+      wsServer.handleUpgrade(request, socket, head, ws => {
+        wsServer.emit('connection', ws, request);
+      });
+    } else {
+      socket.destroy();
+    }
+  };
 
   if (key && cert) {
     const baseContext = createSecureContext({ key, cert });
@@ -407,14 +428,15 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
     if (subHost && subKey && subCert)
       sniContexts.set(subHost.toLowerCase(), createSecureContext({ key: subKey, cert: subCert }));
 
-    http
-      .createServer((req, res) => {
-        res.writeHead(301, { Location: `https://${req.headers.host}${req.url}` });
-        res.end();
-      })
-      .listen(80, '0.0.0.0', () => tglogger.log('HTTP редирект запущен на порту 80'));
+    if (!backConfig.isTest)
+      http
+        .createServer((req, res) => {
+          res.writeHead(301, { Location: `https://${req.headers.host}${req.url}` });
+          res.end();
+        })
+        .listen(80, '0.0.0.0', () => tglogger.log('HTTP редирект запущен на порту 80'));
 
-    https
+    const httpsServer = https
       .createServer(
         {
           key,
@@ -425,28 +447,34 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
         },
         app,
       )
-      .on('upgrade', (request, socket, head) => {
-        const pathname = request.url ? new URL(request.url, 'http://localhost').pathname : '';
-        if (pathname === '/websocket/' || pathname === '/websocket') {
-          wsServer.handleUpgrade(request, socket, head, ws => {
-            wsServer.emit('connection', ws, request);
-          });
-        } else {
-          socket.destroy();
-        }
-      })
-      .listen(443, '0.0.0.0', () => tglogger.log('HTTPS запущен на порту 443'));
-  } else {
-    const port = process.env.PORT || 4446;
+      .on('upgrade', upgradeHandler);
 
+    if (!backConfig.isTest)
+      httpsServer.listen(httpsPort, '0.0.0.0', () => tglogger.log(`HTTPS запущен на порту ${httpsPort}`));
+    else {
+      // Тест: общий порт для http и https. Первый байт 0x16 — TLS ClientHello, иначе обычный HTTP.
+      const httpServer = http.createServer(app).on('upgrade', upgradeHandler);
+
+      net
+        .createServer(socket => {
+          socket.on('error', emptyFunc);
+          socket.once('data', chunk => {
+            const isTls = chunk[0] === 0x16;
+
+            // TLS-сокет приостанавливают, иначе возвращённый байт теряется до обёртки TLSSocket.
+            if (isTls) socket.pause();
+
+            socket.unshift(chunk);
+            (isTls ? httpsServer : httpServer).emit('connection', socket);
+          });
+        })
+        .listen(port, '0.0.0.0', () => tglogger.log(`HTTP+HTTPS запущен на порту ${port}`));
+    }
+  } else {
     http
       .createServer(app)
-      .on('upgrade', (request, socket, head) => {
-        wsServer.handleUpgrade(request, socket, head, ws => {
-          wsServer.emit('connection', ws, request);
-        });
-      })
-      .listen(+port, '0.0.0.0', () => console.info(`WS запущен локально`));
+      .on('upgrade', upgradeHandler)
+      .listen(port, '0.0.0.0', () => console.info(`WS запущен локально`));
   }
 
   process.on('uncaughtException', err => {

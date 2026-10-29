@@ -15,11 +15,8 @@ import { objectLength } from 'shared/utils/object.utils';
 
 const dynamicLangAtoms: { [L in Langi]?: Atom<LocaleDynamic<L>> } = {};
 
-/** Мёртвые ключи тоже доставляются — пустыми `''`-текстами в конце словаря. */
-const deprecatedBaseLocaleKeysCount = 2;
-
 /** Нумерация `BaseLocaleKey` непрерывная: словарь другой длины собран под другой набор ключей. */
-const baseLocaleKeysCount = BaseLocaleKey.NumberSymbols + 1 + deprecatedBaseLocaleKeysCount;
+const baseLocaleKeysCount = BaseLocaleKey.ScheduleInvite + 1;
 
 /** Нумерация `EditorLocaleKey` непрерывная: словарь другой длины собран под другой набор ключей. */
 const editorLocaleKeysCount = EditorLocaleKey.Language + 1;

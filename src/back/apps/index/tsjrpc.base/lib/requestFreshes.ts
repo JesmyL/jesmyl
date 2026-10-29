@@ -37,9 +37,9 @@ import { indexServerTsjrpcShareMethods } from '../../tsjrpc.methods';
 import { makeUserAccessRights } from './makeUserAccessRights';
 
 /** Словарь редактора привязан к нумерации `EditorLocaleKey`: старые фронты его не получают. */
-export const editorLocaleMinVersion = 1319;
+export const editorLocaleMinVersion = 1321;
 /** Словарь базы привязан к нумерации `BaseLocaleKey`: старые фронты его не получают. */
-export const baseLocaleMinVersion = 1319;
+export const baseLocaleMinVersion = 1324;
 
 export const throwIfNoEditorLocaleAccess = async (auth: LocalSokiAuth | nil) => {
   try {
