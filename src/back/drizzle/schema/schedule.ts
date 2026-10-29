@@ -1,11 +1,13 @@
-import { bigint, integer, jsonb, pgTable, serial, smallint, text } from 'p/d';
+import { bigint, jsonb, pgTable, serial, smallint, text } from 'p/d';
 import type {
   IScheduleWidget,
   IScheduleWidgetCtrl,
   IScheduleWidgetDay,
   IScheduleWidgetLists,
+  IScheduleWidgetPeriod,
   IScheduleWidgetTeamGames,
   ScheduleWidgetAppAttCustomized,
+  ScheduleAppInform,
   ScheduleWidgetDayListItemTypeBox,
   ScheduleWidgetWid,
 } from 'shared/api';
@@ -30,18 +32,15 @@ export const scheduleDB = pgTable('schedule', {
 
   isRemoved: smallint('isRemoved').notNull().$type<Bool>().default(Bool.False),
   withTech: smallint('withTech').notNull().$type<Bool>().default(Bool.False),
-  tgInform: smallint('tgInform').$type<Bool>().default(Bool.True),
-  appInform: smallint('appInform').$type<Bool>().default(Bool.True),
+  appInform: smallint('appInform').$type<ScheduleAppInform>().default(1),
 
   start: bigint('start', { mode: 'number' }).notNull().default(0),
   prevStart: bigint('prevStart', { mode: 'number' }).default(0),
-
-  tgInformTime: integer('tgInformTime').notNull().default(0),
+  period: jsonb('period').$type<IScheduleWidgetPeriod>(),
 
   title: text('title').notNull().default(''),
   topic: text('topic').notNull().default(''),
   dsc: text('dsc').notNull().default(''),
-  tgChatReqs: text('tgChatReqs').notNull().default(''),
 
   days: jsonb('days').$type<IScheduleWidgetDay[]>().notNull().default(emptyJSONArraySQL),
   types: jsonb('types').$type<ScheduleWidgetDayListItemTypeBox[]>().notNull().default(emptyJSONArraySQL),

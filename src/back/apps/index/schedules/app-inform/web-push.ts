@@ -1,4 +1,4 @@
-import { pushSubscriptionsDB } from 'back/drizzle.schema';
+import { pushSubscriptionsDB, userDB } from 'back/drizzle.schema';
 import { db, dbDelete } from 'back/drizzle/drizzle.db';
 import { lazyEnvJson } from 'back/envJson';
 import { eq, inArray } from 'drizzle-orm';
@@ -30,25 +30,43 @@ export const sendSchedulePush = async (userIds: UserId[], payload: SchedulePushP
   const actualUserIds = [...new Set(userIds)];
   if (actualUserIds.length === 0) return;
 
+  const users = await db
+    .select({ id: userDB.id, mutedUntil: userDB.mutedUntil, isSilent: userDB.isSilent })
+    .from(userDB)
+    .where(inArray(userDB.id, actualUserIds));
+
   const subscriptions = await db
     .select()
     .from(pushSubscriptionsDB)
     .where(inArray(pushSubscriptionsDB.userId, actualUserIds));
 
-  if (subscriptions.length === 0) return;
+  const now = Date.now();
+  const usersById = new Map(users.map(user => [user.id, user] as const));
+
+  const actualSubscriptions = subscriptions.flatMap(subscription => {
+    const user = usersById.get(subscription.userId);
+
+    return user != null && (user.mutedUntil == null || user.mutedUntil <= now)
+      ? [{ subscription, isSilent: user.isSilent }]
+      : [];
+  });
+
+  if (actualSubscriptions.length === 0) return;
 
   const vapidDetails = takeVapidDetails();
-  const body = JSON.stringify({ ...payload, body: payload.body.slice(0, pushBodyMaxLength) });
+  const makeBody = (silent: boolean) =>
+    JSON.stringify({ ...payload, silent, body: payload.body.slice(0, pushBodyMaxLength) });
+  const bodies: [string, string] = [makeBody(false), makeBody(true)];
 
   await Promise.allSettled(
-    subscriptions.map(async subscription => {
+    actualSubscriptions.map(async ({ subscription, isSilent }) => {
       try {
         await webpush.sendNotification(
           {
             endpoint: subscription.endpoint,
             keys: { p256dh: subscription.p256dh, auth: subscription.auth },
           },
-          body,
+          bodies[isSilent],
           { vapidDetails, TTL: 3600 },
         );
       } catch (error) {

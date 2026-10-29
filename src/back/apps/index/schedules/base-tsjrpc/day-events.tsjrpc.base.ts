@@ -13,12 +13,7 @@ import { SchDayEventsTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.mo
 import { takeNextMi, withInsertedBeforei } from 'shared/utils';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { objectLength } from 'shared/utils/object.utils';
-import {
-  modifyScheduleDay,
-  throwIfNoExternalMutationAuth,
-  throwIfNoScheduleComsListRedact,
-} from '../schedule-modificators';
-import { onScheduleDayEventIsNeedTgInformSetEvent } from '../specific-modify-events';
+import { modifyScheduleDay, throwIfNoScheduleComsListRedact } from '../schedule-modificators';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
 const inEventTypeTtileOfDay = (sch: IScheduleWidget, props: ScheduleDayEventScopeProps) => {
@@ -31,16 +26,6 @@ const inEventTypeTtileOfDay = (sch: IScheduleWidget, props: ScheduleDayEventScop
   );
 };
 
-onScheduleDayEventIsNeedTgInformSetEvent.listen(async ({ dayEventProps, value, isNeedRefreshTgInformTime }) => {
-  return (
-    await modifyEvent((event, { props }, sch) => {
-      event.tgInform = value;
-
-      return `${inEventTypeTtileOfDay(sch, props)} установлено ${value ? 'напомнить' : 'не напоминать'} в TG`;
-    }, isNeedRefreshTgInformTime)({ props: dayEventProps }, { auth: undefined, client: null, visitInfo: undefined })
-  ).value;
-});
-
 const modifyEvent = <Props extends { props: ScheduleDayEventScopeProps }>(
   modifier: (
     event: IScheduleWidgetDayEvent,
@@ -49,9 +34,9 @@ const modifyEvent = <Props extends { props: ScheduleDayEventScopeProps }>(
     day: IScheduleWidgetDay,
     tool: ServerTSJRPCTool,
   ) => PromiseOr<string | null>,
-  isNeedRefreshTgInformTime?: boolean,
+  isNeedRefreshInformTime?: boolean,
 ) =>
-  modifyScheduleDay<Props>(isNeedRefreshTgInformTime || false, (day, props, sch, tool) => {
+  modifyScheduleDay<Props>(isNeedRefreshInformTime || false, (day, props, sch, tool) => {
     const event = day.list.find(event => event.mi === props.props.eventMi);
     if (event == null) throw new Error('day event not found');
 
@@ -157,21 +142,6 @@ export const schDayEventsTsjrpcBaseServer =
 
             return `${inEventTypeTtileOfDay(sch, props)} установлено время продолжительности - ${value}`;
           }, true),
-
-          setIsNeedTgInform: async ({ props: dayEventProps, value }, tool) => {
-            throwIfNoExternalMutationAuth(tool);
-
-            const sch = await onScheduleDayEventIsNeedTgInformSetEvent.invoke({
-              dayEventProps,
-              value,
-              isNeedRefreshTgInformTime: true,
-            });
-
-            return {
-              value: sch,
-              description: `${inEventTypeTtileOfDay(sch, dayEventProps)} установлено ${value ? 'напомнить' : 'не напоминать'} в TG`,
-            };
-          },
 
           toggleIsSecret: modifyEvent((event, { props }, sch) => {
             if (event.secret) delete event.secret;

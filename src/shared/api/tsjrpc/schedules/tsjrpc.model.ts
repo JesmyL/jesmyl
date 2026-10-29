@@ -4,6 +4,7 @@ import {
   IScheduleWidgetDayEvent,
   IScheduleWidgetExportableTeam,
   IScheduleWidgetComsRights,
+  IScheduleWidgetPeriod,
   ScheduleAttachmentTypeScopeProps,
   ScheduleDayEventAttachmentScopeProps,
   ScheduleDayEventScopeProps,
@@ -25,6 +26,8 @@ import {
   ScheduleWidgetPhotoKey,
   ScheduleWidgetUserMi,
   ScheduleWidgetWid,
+  ScheduleAppInform,
+  UserId,
 } from 'shared/api';
 
 type Callback<Value> = (args: { props: ScheduleScopeProps; value: Value }) => IScheduleWidget;
@@ -41,19 +44,17 @@ export type SchGeneralTsjrpcModel = {
   setTopic: Callback<string>;
   setDescription: Callback<string>;
   setStartTime: Callback<number>;
+  setSchedulePeriod: (args: { props: ScheduleScopeProps; period: IScheduleWidgetPeriod | nil }) => IScheduleWidget;
   setFirstDayAsTech: Callback<1 | und>;
 
-  setTgChatRequisites: Callback<string>;
-  toggleIsTgInform: Callback<void>;
-  toggleIsAppInform: Callback<void>;
-  setTgInformTime: Callback<number>;
-
-  setIsTgInformMe: (args: { props: ScheduleScopeProps; type: Bool }) => IScheduleWidget;
+  setAppInform: Callback<ScheduleAppInform>;
 };
 
 export type SchUsersTsjrpcMethods = {
   addUsersByExcel: (args: { props: ScheduleScopeProps; users: { fio: string }[] }) => IScheduleWidget;
   addMe: (args: { props: ScheduleScopeProps; place: string }) => IScheduleWidget;
+  addMeByInvite: (args: { props: ScheduleScopeProps; inviteHash: string }) => IScheduleWidget;
+  removeMe: (args: { props: ScheduleScopeProps }) => IScheduleWidget;
   setUserRights: (args: { props: ScheduleUserScopeProps; R: number }) => IScheduleWidget;
   addUserListUnitMembership: (args: { props: ScheduleUserListMemberScopeProps; value: number }) => IScheduleWidget;
   removeUserListUnitMembership: (args: { props: ScheduleUserListMemberScopeProps }) => IScheduleWidget;
@@ -156,7 +157,6 @@ export type SchDaysTsjrpcMethods = {
 export type SchDayEventsTsjrpcMethods = {
   setTopic: (args: { props: ScheduleDayEventScopeProps; value: string }) => IScheduleWidget;
   setDescription: (args: { props: ScheduleDayEventScopeProps; value: string }) => IScheduleWidget;
-  setIsNeedTgInform: (args: { props: ScheduleDayEventScopeProps; value: Bool }) => IScheduleWidget;
   setTm: (args: { props: ScheduleDayEventScopeProps; value: number }) => IScheduleWidget;
   toggleIsSecret: (args: { props: ScheduleDayEventScopeProps; value: void }) => IScheduleWidget;
 
@@ -247,6 +247,20 @@ export type SchDayEventsTsjrpcMethods = {
     comment: string;
     userName: string;
   }) => IScheduleWidget;
+};
+
+export type SchEventCommentsTsjrpcMethods = {
+  setEventComment: (args: {
+    schw: ScheduleWidgetWid;
+    eventMi: ScheduleWidgetDayEventMi;
+    text: string;
+  }) => void;
+  dropEventComment: (args: { schw: ScheduleWidgetWid; eventMi: ScheduleWidgetDayEventMi }) => void;
+  takeEventComments: (args: { schw: ScheduleWidgetWid; eventMi: ScheduleWidgetDayEventMi }) => {
+    userId: UserId;
+    text: string;
+    createdAt: number;
+  }[];
 };
 
 export type SchEventTypesTsjrpcMethods = {

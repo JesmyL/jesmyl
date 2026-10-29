@@ -36,7 +36,7 @@ export function ScheduleWidgetListUnit(props: Props) {
 
   return (
     <>
-      <div className="mt-5">
+      <div className="mt-3 ml-3 pl-3 border-l border-x4/30">
         <ExpandableContent
           HeaderNode={ExpHeader}
           title={title}
@@ -66,7 +66,7 @@ export function ScheduleWidgetListUnit(props: Props) {
             />
           )}
 
-          <div className="mx-5">
+          <div className="mx-2">
             <ScheduleWidgetUserList
               title={cat.titles[0]}
               filter={user => user.li?.[cati] === -unit.mi}
@@ -92,4 +92,9 @@ export function ScheduleWidgetListUnit(props: Props) {
 
 const ExpHeader = styled.div`
   color: var(--color--3);
+  font-weight: 600;
+
+  &:hover {
+    color: var(--color--4);
+  }
 `;

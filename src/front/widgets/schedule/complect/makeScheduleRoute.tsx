@@ -7,7 +7,7 @@ import { ScheduleCurrentSchwContext } from './lib/contexts';
 
 export const makeScheduleRoute = (
   getRoute: () => {
-    useSearch: () => Partial<ScheduleDayEventAttachmentScopeProps & { isOpenSingleDay: true }>;
+    useSearch: () => Partial<ScheduleDayEventAttachmentScopeProps & { isOpenSingleDay: true; inviteHash: string }>;
   },
   RouteComponent: () => React.ReactNode,
 ) => {
@@ -38,7 +38,7 @@ export const makeScheduleRoute = (
     if (search.schw != null)
       return (
         <ScheduleCurrentSchwContext value={search.schw}>
-          <ScheduleWidgetPage />
+          <ScheduleWidgetPage inviteHash={search.inviteHash} />
         </ScheduleCurrentSchwContext>
       );
 
@@ -49,12 +49,13 @@ export const makeScheduleRoute = (
     component: AttRouteComponent,
     validateSearch: (
       search: Record<string, unknown>,
-    ): Partial<ScheduleDayEventAttachmentScopeProps & { isOpenSingleDay: true }> => {
+    ): Partial<ScheduleDayEventAttachmentScopeProps & { isOpenSingleDay: true; inviteHash: string }> => {
       return {
         dayi: checkIsNaN(+search.dayi!) ? undefined : (+search.dayi! as never),
         schw: checkIsNaN(+search.schw!) ? undefined : (+search.schw! as never),
         eventMi: checkIsNaN(+search.eventMi!) ? undefined : (+search.eventMi! as never),
         attKey: `${search.attKey}`.includes(']:') ? (`${search.attKey}` as never) : undefined,
+        inviteHash: typeof search.inviteHash === 'string' ? search.inviteHash : undefined,
         isOpenSingleDay: search.isOpenSingleDay ? true : undefined,
       };
     },

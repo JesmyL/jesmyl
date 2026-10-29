@@ -1,11 +1,9 @@
 import {
   IScheduleWidget,
   IScheduleWidgetDayEvent,
-  ScheduleDayEventScopeProps,
   ScheduleDayScopeProps,
   ScheduleScopeProps,
   ScheduleWidgetDayListItemTypeBox,
-  UserId,
 } from 'shared/api';
 import { Eventer } from 'shared/utils';
 
@@ -15,24 +13,6 @@ export const onScheduleDayEventListSetEvent = Eventer.createValue<
     list: OmitOwn<IScheduleWidgetDayEvent, 'mi'>[];
   },
   Promise<IScheduleWidget>
->();
-
-export const onScheduleDayEventIsNeedTgInformSetEvent = Eventer.createValue<
-  {
-    dayEventProps: ScheduleDayEventScopeProps;
-    value: Bool;
-    isNeedRefreshTgInformTime: boolean;
-  },
-  Promise<IScheduleWidget>
->();
-
-export const onScheduleUserTgInformSetEvent = Eventer.createValue<
-  {
-    schProps: ScheduleScopeProps;
-    isNotInform: Bool;
-    userId: UserId;
-  },
-  Promise<{ value: IScheduleWidget; description: string | null }>
 >();
 
 export const onScheduleDayBeginTimeSetEvent = Eventer.createValue<

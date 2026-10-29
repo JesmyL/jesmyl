@@ -30,17 +30,14 @@ export function ScheduleWidgetStartTimeText({ schedule, date: topDate }: Props) 
       return true;
     });
   const timeDate = new Date(firstWup);
+  const isWithTime = timeDate.getHours() !== 0 || timeDate.getMinutes() !== 0;
 
   return (
     <>
       {!schedule.start || (
         <div>
-          {translateBase(BaseLocaleKey.ScheduleStart)}: {makeDateLabel(date, languageSystemCode)}
-          {!firstWup ||
-            ', ' +
-              timeDate.getHours().toString().padStart(2, '0') +
-              ':' +
-              timeDate.getMinutes().toString().padStart(2, '0')}
+          {translateBase(BaseLocaleKey.ScheduleStart)}:{' '}
+          {makeDateLabel(isWithTime ? timeDate : date, languageSystemCode, isWithTime)}
         </div>
       )}
     </>

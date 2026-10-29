@@ -2,6 +2,7 @@ import { translateBase } from '#basis/locale';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { useAuth, useUserInfoDict } from '$index/shared/state';
 import { useMemo } from 'react';
+import { ScheduleWidgetRegType, scheduleWidgetRegTypeRights } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ScheduleWidgetTopicTitle } from '../complect/TopicTitle';
 import { ScheduleWidgetDay, ScheduleWidgetDayProps } from '../days/Day';
@@ -13,6 +14,10 @@ export function ScheduleAlarmDay(props: ScheduleWidgetDayProps) {
   const { byLogin } = useUserInfoDict();
   const scheduleScopeProps = useMemo(() => ({ schw: props.schedule.w }), [props.schedule.w]);
   const myUserId = auth.login ? byLogin.get(auth.login)?.id : null;
+  const isSwPublic = scheduleWidgetRegTypeRights.checkIsHasRights(
+    props.schedule.ctrl.type,
+    ScheduleWidgetRegType.Public,
+  );
 
   return (
     <ScheduleWidgetContextWrapper
@@ -26,7 +31,7 @@ export function ScheduleAlarmDay(props: ScheduleWidgetDayProps) {
           topicBox={props.schedule}
         />
       </h3>
-      {auth.login && !props.schedule.ctrl.users.some(user => user.id === myUserId) && (
+      {isSwPublic && auth.login && !props.schedule.ctrl.users.some(user => user.id === myUserId) && (
         <SendButton
           title={translateBase(BaseLocaleKey.ScheduleWantCommentEvents)}
           className="mt-10"

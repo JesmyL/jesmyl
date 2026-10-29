@@ -13,6 +13,8 @@ import {
   ScheduleScopeProps,
   ScheduleWidgetDayEventMi,
   ScheduleWidgetDayi,
+  ScheduleWidgetRegType,
+  scheduleWidgetRegTypeRights,
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
@@ -20,9 +22,9 @@ import { Bool } from 'shared/enums';
 import { checkIsEq } from 'shared/utils/checkIsEq';
 import { deepClone } from 'shared/utils/clone';
 import { objectKeys, objectLength } from 'shared/utils/object.utils';
-import { takeUserTiny } from '../tinies/userTiny';
+import { takeUserLoginsByIds, takeUserTiny } from '../tinies/userTiny';
+import { schedulePushInformer } from './app-inform/schedule-informer';
 import { takeScheduleWidgetTiny } from './schedule.tiny';
-import { scheduleTgInformer } from './tg-bot-inform/tg-inform';
 import { schServerTsjrpcShareMethods } from './tsjrpc.shares';
 
 const uncheckedKeysSet = new Set<keyof IScheduleWidget>(['w', 'm']);
@@ -73,7 +75,7 @@ export const throwIfNoScheduleComsListRedact = async (
 
 export const modifySchedule =
   <Props extends { props: ScheduleScopeProps }>(
-    isNeedRefreshTgInformTime: boolean,
+    isNeedRefreshInformTime: boolean,
     modifier: (sch: IScheduleWidget, props: Props, tool: ServerTSJRPCTool) => PromiseOr<string | null>,
   ) =>
   async (props: Props, tool: ServerTSJRPCTool) => {
@@ -101,23 +103,27 @@ export const modifySchedule =
           ...updates,
           isRemoved: updates.isRemoved ? Bool.True : Bool.False,
           withTech: updates.withTech ? Bool.True : Bool.False,
-          tgInform: updates.tgInform === 0 ? Bool.False : Bool.True,
-          appInform: (updates.appInform ?? sch.appInform) === 0 ? Bool.False : Bool.True,
-          tgChatReqs: updates.tgChatReqs || '',
+          appInform: updates.appInform ?? sch.appInform ?? 1,
           m: mod,
         },
         eq(scheduleDB.w, props.props.schw),
       );
 
-      schServerTsjrpcShareMethods.editedSchedule({ sch }, null);
-      if (isNeedRefreshTgInformTime) scheduleTgInformer.inform(sch.w);
+      if (scheduleWidgetRegTypeRights.checkIsHasRights(sch.ctrl.type, ScheduleWidgetRegType.Public))
+        schServerTsjrpcShareMethods.editedSchedule({ sch }, null);
+      else {
+        const logins = await takeUserLoginsByIds(sch.ctrl.users.map(user => user.id));
+        schServerTsjrpcShareMethods.editedSchedule({ sch }, { logins });
+      }
+
+      if (isNeedRefreshInformTime) schedulePushInformer.inform(sch.w);
     }
 
     return { value: sch, description };
   };
 
 export const modifyScheduleDay = <Props extends { props: ScheduleDayScopeProps }>(
-  isNeedRefreshTgInformTime: boolean,
+  isNeedRefreshInformTime: boolean,
   modifier: (
     day: IScheduleWidgetDay,
     props: Props,
@@ -125,7 +131,7 @@ export const modifyScheduleDay = <Props extends { props: ScheduleDayScopeProps }
     tool: ServerTSJRPCTool,
   ) => PromiseOr<string | null>,
 ) =>
-  modifySchedule<Props>(isNeedRefreshTgInformTime, (sch, props, tool) => {
+  modifySchedule<Props>(isNeedRefreshInformTime, (sch, props, tool) => {
     const day = sch.days[props.props.dayi];
     if (!day) throw new Error('День не найден');
     return modifier(day, props, sch, tool);

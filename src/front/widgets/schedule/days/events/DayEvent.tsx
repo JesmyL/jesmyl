@@ -10,7 +10,6 @@ import { ScheduleWidgetTopicTitle } from '#widgets/schedule/complect/TopicTitle'
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { ScheduleWidgetDayEventAtts } from '#widgets/schedule/events/atts/DayEventAtts';
 import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
-import { CmExternalComsListLink } from '$cm/entities/external/ui/CmExternalComsListLink';
 import styled from '@emotion/styled';
 import { ReactNode, useMemo } from 'react';
 import {
@@ -205,7 +204,6 @@ export function ScheduleWidgetDayEvent(props: Props) {
             />
           </div>
           <div className="right-part flex items-center gap-2">
-            {props.redact || !props.event.atts?.['[cm]:coms'] || <CmExternalComsListLink schw={props.dayScopeProps.schw} />}
             {(props.isForceCanRedact ?? isCanRedactEvent)
               ? isExpand || isRedact
                 ? editIcon
@@ -220,11 +218,9 @@ export function ScheduleWidgetDayEvent(props: Props) {
             {isRedact ? (
               rights.isCanRedactEventContent && (
                 <DayEventRedactControls
-                  isPastEvent={isPrevEvent || isCurrentEvent}
                   eventTopic={props.event.topic}
                   eventTypeTitle={eventType.title}
                   isSecret={props.event.secret}
-                  tgInform={props.event.tgInform}
                   dayEventScopeProps={dayEventScopeProps}
                   eventTm={eventTm}
                 />

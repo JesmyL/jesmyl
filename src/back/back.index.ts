@@ -5,8 +5,7 @@ import { iife } from 'shared/utils';
 import { bibleTsjrpcBaseServer } from './apps/bible/tsjrpc';
 import { cmServerTsjrpcBase } from './apps/cm/tsjrpc.base';
 import { startCrTgAlarm } from './apps/index/crTgAlarm';
-import { scheduleWidgetMessageCatcher } from './apps/index/schedules/tg-bot-inform/message-catchers';
-import { initTgScheduleInform } from './apps/index/schedules/tg-bot-inform/tg-inform';
+import { initSchedulePushInform } from './apps/index/schedules/app-inform/schedule-informer';
 import { indexServerTsjrpcBase } from './apps/index/tsjrpc.base';
 import { questionerAdminServerTsjrpcBase } from './apps/q/tsjrpc/admin.tsjrpc.base';
 import { questionerUserServerTsjrpcBase } from './apps/q/tsjrpc/user.tsjrpc.base';
@@ -36,10 +35,9 @@ iife(async () => {
   questionerUserServerTsjrpcBase.$$register();
   indexServerTsjrpcBase.$$register();
 
-  initTgScheduleInform();
+  initSchedulePushInform();
 
   baseMessagesCatcher.register();
-  scheduleWidgetMessageCatcher.register();
 
   startCrTgAlarm();
 });

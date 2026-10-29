@@ -7,6 +7,7 @@ import {
   UserInfoUnsecure,
   UserLogin,
 } from 'shared/api/complect/soki.model';
+import { Bool } from 'shared/enums';
 import { ConstantsConfig } from 'shared/model/constantsConfig';
 import { IndexAppAccessRightTitles, UserAccessRole, UserAccessRoleInfo } from 'shared/model/index/access-rights';
 import { IndexValues } from 'shared/model/index/other';
@@ -25,6 +26,8 @@ export type IndexTsjrpcModel = {
   getPushVapidPublicKey: () => string;
   subscribePush: (args: { subscription: PushSubscriptionPayload }) => void;
   unsubscribePush: (args: { endpoint: string }) => void;
+  getPushSettings: () => { mutedUntil: number | nil; isSilent: Bool };
+  updatePushSettings: (args: { mutedUntil: number | nil; isSilent: Bool }) => void;
 
   authMeByTelegramNativeButton: (args: { user: TelegramNativeAuthUserData }) => { token: string; auth: LocalSokiAuth };
   authMeByTelegramMiniButton: (args: { user: TelegramNativeAuthUserData }) => { token: string; auth: LocalSokiAuth };

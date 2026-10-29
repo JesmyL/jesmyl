@@ -20,7 +20,7 @@ const takeActualUser = async (
   user: LegacyScheduleWidgetUser,
   sch: IScheduleWidget,
 ): Promise<IScheduleWidgetUser | nil> => {
-  const { mi, R, li, tgId, tgInform } = user;
+  const { mi, R, li } = user;
   let id = user.id;
 
   if (id == null) {
@@ -39,13 +39,24 @@ const takeActualUser = async (
     id = userTiny.id;
   }
 
-  return { mi, id, R, li, tgId, tgInform };
+  return { mi, id, R, li };
 };
 
 export const migrateScheduleUsers = async (sch: IScheduleWidget) => {
   const users = sch.ctrl.users as LegacyScheduleWidgetUser[];
 
-  if (!users.some(user => user.id == null || 'login' in user || 'fio' in user || 'nick' in user)) return false;
+  if (
+    !users.some(
+      user =>
+        user.id == null ||
+        'login' in user ||
+        'fio' in user ||
+        'nick' in user ||
+        'tgId' in user ||
+        'tgInform' in user,
+    )
+  )
+    return false;
 
   const actualUsers: IScheduleWidgetUser[] = [];
 

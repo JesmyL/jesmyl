@@ -52,12 +52,20 @@ const StoragesRouteLazyImport = createFileRoute('/storages')()
 const QRouteLazyImport = createFileRoute('/q')()
 const PresentationsRouteLazyImport = createFileRoute('/presentations')()
 const GamerRouteLazyImport = createFileRoute('/gamer')()
-const ScheduleDayIndexLazyImport = createFileRoute('/schedule-day/')()
 const PresentationsIndexLazyImport = createFileRoute('/presentations/')()
 const PresentationIndexLazyImport = createFileRoute('/presentation/')()
 const GamerIndexLazyImport = createFileRoute('/gamer/')()
 const CmEditRouteLazyImport = createFileRoute('/cm/edit')()
 const StoragesIIndexLazyImport = createFileRoute('/storages/i/')()
+const ScheduleUsersSchwIndexLazyImport = createFileRoute(
+  '/schedule-users/$schw/',
+)()
+const ScheduleToolsSchwIndexLazyImport = createFileRoute(
+  '/schedule-tools/$schw/',
+)()
+const ScheduleManageSchwIndexLazyImport = createFileRoute(
+  '/schedule-manage/$schw/',
+)()
 const ScheduleDaySchwIndexLazyImport = createFileRoute('/schedule-day/$schw/')()
 const QRIndexLazyImport = createFileRoute('/q/r/')()
 const QAIndexLazyImport = createFileRoute('/q/a/')()
@@ -140,14 +148,6 @@ const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any)
-
-const ScheduleDayIndexLazyRoute = ScheduleDayIndexLazyImport.update({
-  id: '/schedule-day/',
-  path: '/schedule-day/',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./tree/schedule-day/index.lazy').then((d) => d.Route),
-)
 
 const PresentationsIndexLazyRoute = PresentationsIndexLazyImport.update({
   id: '/',
@@ -238,6 +238,35 @@ const StoragesIIndexLazyRoute = StoragesIIndexLazyImport.update({
 } as any).lazy(() =>
   import('./tree/storages/i/index.lazy').then((d) => d.Route),
 )
+
+const ScheduleUsersSchwIndexLazyRoute = ScheduleUsersSchwIndexLazyImport.update(
+  {
+    id: '/schedule-users/$schw/',
+    path: '/schedule-users/$schw/',
+    getParentRoute: () => rootRoute,
+  } as any,
+).lazy(() =>
+  import('./tree/schedule-users/$schw/index.lazy').then((d) => d.Route),
+)
+
+const ScheduleToolsSchwIndexLazyRoute = ScheduleToolsSchwIndexLazyImport.update(
+  {
+    id: '/schedule-tools/$schw/',
+    path: '/schedule-tools/$schw/',
+    getParentRoute: () => rootRoute,
+  } as any,
+).lazy(() =>
+  import('./tree/schedule-tools/$schw/index.lazy').then((d) => d.Route),
+)
+
+const ScheduleManageSchwIndexLazyRoute =
+  ScheduleManageSchwIndexLazyImport.update({
+    id: '/schedule-manage/$schw/',
+    path: '/schedule-manage/$schw/',
+    getParentRoute: () => rootRoute,
+  } as any).lazy(() =>
+    import('./tree/schedule-manage/$schw/index.lazy').then((d) => d.Route),
+  )
 
 const ScheduleDaySchwIndexLazyRoute = ScheduleDaySchwIndexLazyImport.update({
   id: '/schedule-day/$schw/',
@@ -665,13 +694,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PresentationsIndexLazyImport
       parentRoute: typeof PresentationsRouteLazyImport
     }
-    '/schedule-day/': {
-      id: '/schedule-day/'
-      path: '/schedule-day'
-      fullPath: '/schedule-day'
-      preLoaderRoute: typeof ScheduleDayIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
     '/cm/edit/chord': {
       id: '/cm/edit/chord'
       path: '/chord'
@@ -810,6 +832,27 @@ declare module '@tanstack/react-router' {
       path: '/schedule-day/$schw'
       fullPath: '/schedule-day/$schw'
       preLoaderRoute: typeof ScheduleDaySchwIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/schedule-manage/$schw/': {
+      id: '/schedule-manage/$schw/'
+      path: '/schedule-manage/$schw'
+      fullPath: '/schedule-manage/$schw'
+      preLoaderRoute: typeof ScheduleManageSchwIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/schedule-tools/$schw/': {
+      id: '/schedule-tools/$schw/'
+      path: '/schedule-tools/$schw'
+      fullPath: '/schedule-tools/$schw'
+      preLoaderRoute: typeof ScheduleToolsSchwIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/schedule-users/$schw/': {
+      id: '/schedule-users/$schw/'
+      path: '/schedule-users/$schw'
+      fullPath: '/schedule-users/$schw'
+      preLoaderRoute: typeof ScheduleUsersSchwIndexLazyImport
       parentRoute: typeof rootRoute
     }
     '/storages/i/': {
@@ -1169,7 +1212,6 @@ export interface FileRoutesByFullPath {
   '/gamer/': typeof GamerIndexLazyRoute
   '/presentation': typeof PresentationIndexLazyRoute
   '/presentations/': typeof PresentationsIndexLazyRoute
-  '/schedule-day': typeof ScheduleDayIndexLazyRoute
   '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
@@ -1190,6 +1232,9 @@ export interface FileRoutesByFullPath {
   '/q/a': typeof QAIndexLazyRoute
   '/q/r': typeof QRIndexLazyRoute
   '/schedule-day/$schw': typeof ScheduleDaySchwIndexLazyRoute
+  '/schedule-manage/$schw': typeof ScheduleManageSchwIndexLazyRoute
+  '/schedule-tools/$schw': typeof ScheduleToolsSchwIndexLazyRoute
+  '/schedule-users/$schw': typeof ScheduleUsersSchwIndexLazyRoute
   '/storages/i': typeof StoragesIIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
@@ -1227,7 +1272,6 @@ export interface FileRoutesByTo {
   '/gamer': typeof GamerIndexLazyRoute
   '/presentation': typeof PresentationIndexLazyRoute
   '/presentations': typeof PresentationsIndexLazyRoute
-  '/schedule-day': typeof ScheduleDayIndexLazyRoute
   '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
@@ -1248,6 +1292,9 @@ export interface FileRoutesByTo {
   '/q/a': typeof QAIndexLazyRoute
   '/q/r': typeof QRIndexLazyRoute
   '/schedule-day/$schw': typeof ScheduleDaySchwIndexLazyRoute
+  '/schedule-manage/$schw': typeof ScheduleManageSchwIndexLazyRoute
+  '/schedule-tools/$schw': typeof ScheduleToolsSchwIndexLazyRoute
+  '/schedule-users/$schw': typeof ScheduleUsersSchwIndexLazyRoute
   '/storages/i': typeof StoragesIIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
@@ -1293,7 +1340,6 @@ export interface FileRoutesById {
   '/gamer/': typeof GamerIndexLazyRoute
   '/presentation/': typeof PresentationIndexLazyRoute
   '/presentations/': typeof PresentationsIndexLazyRoute
-  '/schedule-day/': typeof ScheduleDayIndexLazyRoute
   '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
@@ -1314,6 +1360,9 @@ export interface FileRoutesById {
   '/q/a/': typeof QAIndexLazyRoute
   '/q/r/': typeof QRIndexLazyRoute
   '/schedule-day/$schw/': typeof ScheduleDaySchwIndexLazyRoute
+  '/schedule-manage/$schw/': typeof ScheduleManageSchwIndexLazyRoute
+  '/schedule-tools/$schw/': typeof ScheduleToolsSchwIndexLazyRoute
+  '/schedule-users/$schw/': typeof ScheduleUsersSchwIndexLazyRoute
   '/storages/i/': typeof StoragesIIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
@@ -1360,7 +1409,6 @@ export interface FileRouteTypes {
     | '/gamer/'
     | '/presentation'
     | '/presentations/'
-    | '/schedule-day'
     | '/cm/edit/chord'
     | '/cm/li/events'
     | '/cm/li/fav'
@@ -1381,6 +1429,9 @@ export interface FileRouteTypes {
     | '/q/a'
     | '/q/r'
     | '/schedule-day/$schw'
+    | '/schedule-manage/$schw'
+    | '/schedule-tools/$schw'
+    | '/schedule-users/$schw'
     | '/storages/i'
     | '/!other/$appName/settings/console'
     | '/!other/$appName/settings/rights'
@@ -1417,7 +1468,6 @@ export interface FileRouteTypes {
     | '/gamer'
     | '/presentation'
     | '/presentations'
-    | '/schedule-day'
     | '/cm/edit/chord'
     | '/cm/li/events'
     | '/cm/li/fav'
@@ -1438,6 +1488,9 @@ export interface FileRouteTypes {
     | '/q/a'
     | '/q/r'
     | '/schedule-day/$schw'
+    | '/schedule-manage/$schw'
+    | '/schedule-tools/$schw'
+    | '/schedule-users/$schw'
     | '/storages/i'
     | '/!other/$appName/settings/console'
     | '/!other/$appName/settings/rights'
@@ -1481,7 +1534,6 @@ export interface FileRouteTypes {
     | '/gamer/'
     | '/presentation/'
     | '/presentations/'
-    | '/schedule-day/'
     | '/cm/edit/chord'
     | '/cm/li/events'
     | '/cm/li/fav'
@@ -1502,6 +1554,9 @@ export interface FileRouteTypes {
     | '/q/a/'
     | '/q/r/'
     | '/schedule-day/$schw/'
+    | '/schedule-manage/$schw/'
+    | '/schedule-tools/$schw/'
+    | '/schedule-users/$schw/'
     | '/storages/i/'
     | '/!other/$appName/settings/console'
     | '/!other/$appName/settings/rights'
@@ -1536,8 +1591,10 @@ export interface RootRouteChildren {
   StoragesRouteLazyRoute: typeof StoragesRouteLazyRouteWithChildren
   otherAppNameRouteRoute: typeof otherAppNameRouteRouteWithChildren
   PresentationIndexLazyRoute: typeof PresentationIndexLazyRoute
-  ScheduleDayIndexLazyRoute: typeof ScheduleDayIndexLazyRoute
   ScheduleDaySchwIndexLazyRoute: typeof ScheduleDaySchwIndexLazyRoute
+  ScheduleManageSchwIndexLazyRoute: typeof ScheduleManageSchwIndexLazyRoute
+  ScheduleToolsSchwIndexLazyRoute: typeof ScheduleToolsSchwIndexLazyRoute
+  ScheduleUsersSchwIndexLazyRoute: typeof ScheduleUsersSchwIndexLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -1551,8 +1608,10 @@ const rootRouteChildren: RootRouteChildren = {
   StoragesRouteLazyRoute: StoragesRouteLazyRouteWithChildren,
   otherAppNameRouteRoute: otherAppNameRouteRouteWithChildren,
   PresentationIndexLazyRoute: PresentationIndexLazyRoute,
-  ScheduleDayIndexLazyRoute: ScheduleDayIndexLazyRoute,
   ScheduleDaySchwIndexLazyRoute: ScheduleDaySchwIndexLazyRoute,
+  ScheduleManageSchwIndexLazyRoute: ScheduleManageSchwIndexLazyRoute,
+  ScheduleToolsSchwIndexLazyRoute: ScheduleToolsSchwIndexLazyRoute,
+  ScheduleUsersSchwIndexLazyRoute: ScheduleUsersSchwIndexLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -1575,8 +1634,10 @@ export const routeTree = rootRoute
         "/storages",
         "/!other/$appName",
         "/presentation/",
-        "/schedule-day/",
-        "/schedule-day/$schw/"
+        "/schedule-day/$schw/",
+        "/schedule-manage/$schw/",
+        "/schedule-tools/$schw/",
+        "/schedule-users/$schw/"
       ]
     },
     "/": {
@@ -1721,9 +1782,6 @@ export const routeTree = rootRoute
       "filePath": "presentations/index.lazy.tsx",
       "parent": "/presentations"
     },
-    "/schedule-day/": {
-      "filePath": "schedule-day/index.lazy.tsx"
-    },
     "/cm/edit/chord": {
       "filePath": "cm/edit/chord.tsx",
       "parent": "/cm/edit"
@@ -1802,6 +1860,15 @@ export const routeTree = rootRoute
     },
     "/schedule-day/$schw/": {
       "filePath": "schedule-day/$schw/index.lazy.tsx"
+    },
+    "/schedule-manage/$schw/": {
+      "filePath": "schedule-manage/$schw/index.lazy.tsx"
+    },
+    "/schedule-tools/$schw/": {
+      "filePath": "schedule-tools/$schw/index.lazy.tsx"
+    },
+    "/schedule-users/$schw/": {
+      "filePath": "schedule-users/$schw/index.lazy.tsx"
     },
     "/storages/i/": {
       "filePath": "storages/i/index.lazy.tsx",

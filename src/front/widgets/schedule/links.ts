@@ -3,6 +3,7 @@ import { ScheduleWidgetWid } from 'shared/api';
 
 type Props = {
   inviteSch?: ScheduleWidgetWid;
+  inviteHash?: string;
 };
 
 export const schLinkAction = new LinkAppActionFabric<Props>('*/schs', '/!other/cm/schs');

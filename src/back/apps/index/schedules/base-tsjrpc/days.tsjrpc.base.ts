@@ -23,7 +23,6 @@ onScheduleDayBeginTimeSetEvent.listen(async ({ dayProps, strWup }) => {
     await modifyScheduleDay(true, day => {
       const wup = +strWup.replace(makeRegExp('/:/'), '.');
       if (isNaN(wup)) throw new Error(`time ${strWup} is invalid`);
-      day.list.forEach(event => delete event.tgInform);
       day.wup = wup;
 
       return null;

@@ -424,10 +424,8 @@ export const pullPushDirFilesDictLazy = lazyInit(
               dsc: und,
               start: und,
               prevStart: und,
-              tgChatReqs: und,
-              tgInform: und,
+              period: und,
               appInform: und,
-              tgInformTime: und,
               withTech: und,
               ctrl: und,
               days: und,
@@ -445,10 +443,8 @@ export const pullPushDirFilesDictLazy = lazyInit(
                     prevStart: '=0',
                     withTech: `=${Bool.False}`,
                     isRemoved: `=${Bool.False}`,
-                    tgInform: `=${Bool.True}`,
                     appInform: `=${Bool.True}`,
                     games: 'len=0',
-                    tgChatReqs: 'len=0',
                   }),
                 })
                 .from(scheduleDB)
@@ -466,8 +462,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
               w: extractNumber(schwStr),
               isRemoved: +!!sch.isRemoved,
               withTech: +!!sch.withTech,
-              appInform: +!!(sch.appInform ?? Bool.True),
-              tgChatReqs: sch.tgChatReqs || '',
+              appInform: sch.appInform ?? 1,
             };
 
             await db.insert(scheduleDB).values(values).onConflictDoUpdate({ target: scheduleDB.w, set: values });

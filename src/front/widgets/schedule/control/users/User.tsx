@@ -47,37 +47,40 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
   const rights = useScheduleWidgetRightsContext();
 
   const userAuth = rights.userInfoById.get(user.id)?.uauth;
+  const appInform = rights.schedule.appInform ?? 0;
+  const willReceiveInform =
+    appInform !== 0 &&
+    scheduleWidgetUserRights.checkIsHasRights(
+      user.R ?? rights.schedule.ctrl.defu,
+      ScheduleWidgetUserRoleRight.Read,
+    );
   const userName =
     userAuth?.nick === undefined
       ? takeUserAuthName(userAuth) || <span className="text-x7 italic">{translateBase(BaseLocaleKey.Link)}</span>
       : `${userAuth.fio && userAuth.fio !== userAuth.nick ? `${userAuth.fio} (${userAuth.nick})` : userAuth.nick} `;
+  const roleTitle =
+    balance < 0
+      ? user.R == null
+        ? translateBase(BaseLocaleKey.ScheduleNewUser)
+        : translateBase(BaseLocaleKey.ScheduleInBlock)
+      : scheduleWidgetUserRights.texts[balance]?.role?.[0] || translateBase(BaseLocaleKey.ScheduleUnknown);
 
   const userNode = (
-    <div className="flex gap-2 between my-2">
-      {!rights.isCanRedactUsers ? (
-        userName
-      ) : (
-        <>
-          <span className="flex gap-2">
-            {userName}
-            {balance !== undefined && (
-              <span className="flex gap-2 text-x7">
-                {balance < 0 ? (
-                  <LazyIcon icon="UserRemove02" />
-                ) : (
-                  balance
-                )}
-              </span>
-            )}
-          </span>
-          <span className="flex gap-2">
-            <LazyIcon
-              icon="Edit02"
-              className="pointer flex between w-full"
-              onClick={() => isRedactModalOpenAtom.set(user.mi)}
-            />
-          </span>
-        </>
+    <div className="flex gap-2 items-center my-2">
+      <ScheduleWidgetUserFace user={user} />
+      <span className="flex flex-1 flex-col min-w-0 leading-tight">
+        <span className="flex gap-2 items-center">
+          <span className="ellipsis">{userName}</span>
+          {balance >= 0 || <LazyIcon icon="UserRemove02" className="text-x7" />}
+        </span>
+        <span className="text-x7 text-[0.7em] ellipsis">{roleTitle}</span>
+      </span>
+      {!rights.isCanRedactUsers || (
+        <LazyIcon
+          icon="Edit02"
+          className="pointer"
+          onClick={() => isRedactModalOpenAtom.set(user.mi)}
+        />
       )}
     </div>
   );
@@ -92,13 +95,7 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
         <ModalHeader>
           <div className="flex between gap-2">
             <span>
-              {userName}
-              {balance < 0
-                ? user.R == null
-                  ? translateBase(BaseLocaleKey.ScheduleNewUser)
-                  : translateBase(BaseLocaleKey.ScheduleInBlock)
-                : scheduleWidgetUserRights.texts[balance]?.role?.[0] ||
-                  translateBase(BaseLocaleKey.ScheduleUnknown)}
+              {userName} {roleTitle}
             </span>
             <span className="flex gap-2">
               <ScheduleWidgetUserTakePhoto user={user} />
@@ -107,24 +104,23 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
         </ModalHeader>
         <ModalBody>
           <ScheduleWidgetUserEdit user={user} />
-          {user.tgId != null && (
-            <div className="mt-5">
-              {user.tgInform === 0 ||
-              !scheduleWidgetUserRights.checkIsHasRights(user.R, ScheduleWidgetUserRoleRight.Read) ? (
-                <TheIconButton
-                  icon="NotificationOff01"
-                  postfix={translateBase(BaseLocaleKey.ScheduleUserNotReceiveInform)}
-                  disabled
-                />
-              ) : (
-                <TheIconButton
-                  icon="Notification01"
-                  postfix={translateBase(BaseLocaleKey.ScheduleUserReceiveInform)}
-                  disabled
-                />
-              )}
+          <div className="mt-5">
+            <div className="text-x7">
+              {translateBase(BaseLocaleKey.ScheduleInformStatus, {
+                v: appInform !== 0,
+                n: appInform >= 5 ? appInform : 0,
+              })}
             </div>
-          )}
+            <TheIconButton
+              icon={willReceiveInform ? 'Notification01' : 'NotificationOff01'}
+              postfix={translateBase(
+                willReceiveInform
+                  ? BaseLocaleKey.ScheduleUserReceiveInform
+                  : BaseLocaleKey.ScheduleUserNotReceiveInform,
+              )}
+              disabled
+            />
+          </div>
           <div className="flex center w-full mt-5">
             <ScheduleWidgetUserPhoto user={user} />
           </div>
@@ -133,5 +129,29 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
 
       {asUserPlusPrefix === undefined ? userNode : asUserPlusPrefix(userNode, user, balance)}
     </>
+  );
+};
+
+const ScheduleWidgetUserFace = ({ user }: { user: IScheduleWidgetUser }) => {
+  const rights = useScheduleWidgetRightsContext();
+  const tgAva = rights.userInfoById.get(user.id)?.uauth.tgAva;
+
+  return (
+    <span className="grid place-items-center size-9 shrink-0 rounded-full overflow-hidden bg-x3 text-x7 ring-1 ring-x4">
+      {!tgAva || (
+        <img
+          src={tgAva}
+          alt=""
+          className="size-full object-cover"
+        />
+      )}
+      {tgAva || (
+        <ScheduleWidgetUserPhoto
+          user={user}
+          className="size-full object-cover"
+          or={<LazyIcon icon="User" />}
+        />
+      )}
+    </span>
   );
 };

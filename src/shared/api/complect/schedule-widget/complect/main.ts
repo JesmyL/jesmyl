@@ -40,6 +40,28 @@ export type ScheduleWidgetPhotoKey =
   | `tg.${ScheduleWidgetUserTgId}`
   | `login.${SokiAuthLogin}`;
 
+/** Minutes before the start for an extra push; `0` — off, `1` — only at the start. */
+export const scheduleAppInformValues = [0, 1, 5, 10, 15, 30] as const;
+export type ScheduleAppInform = (typeof scheduleAppInformValues)[number];
+export const checkIsScheduleAppInform = (value: unknown): value is ScheduleAppInform =>
+  scheduleAppInformValues.some(minutes => minutes === value);
+
+export const enum SchedulePeriodKind {
+  Once = 0,
+  Weekly = 1,
+  MonthDay = 2,
+  WeekdayOfMonth = 3,
+}
+
+export type SchedulePeriodWeeki = 1 | 2 | 3 | 4 | 5;
+export type SchedulePeriodWeekday = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
+export type IScheduleWidgetPeriod =
+  | { kind: SchedulePeriodKind.Once }
+  | { kind: SchedulePeriodKind.Weekly }
+  | { kind: SchedulePeriodKind.MonthDay; dayi: number }
+  | { kind: SchedulePeriodKind.WeekdayOfMonth; weeki: SchedulePeriodWeeki; dayi: SchedulePeriodWeekday };
+
 export interface IScheduleWidgetLists {
   cats: IScheduleWidgetListCat[];
   units: IScheduleWidgetListUnit[];
@@ -63,6 +85,7 @@ export type IScheduleWidget = NullifyOptionals<{
   m: number;
   start: number;
   prevStart?: number;
+  period?: IScheduleWidgetPeriod;
   title: string;
   topic: string;
   dsc: string;
@@ -73,10 +96,7 @@ export type IScheduleWidget = NullifyOptionals<{
   ctrl: IScheduleWidgetCtrl;
   games?: IScheduleWidgetTeamGames;
   lists: IScheduleWidgetLists;
-  tgInform?: Bool;
-  appInform?: Bool;
-  tgChatReqs?: string;
-  tgInformTime: number;
+  appInform?: ScheduleAppInform;
   isRemoved?: Bool;
 }>;
 
@@ -131,7 +151,6 @@ export interface IScheduleWidgetDayEvent {
   atts?: ScheduleWidgetDayEventAttValues;
   secret?: 1 | 0;
   rate?: Record<ScheduleWidgetUserMi, [number, string]>;
-  tgInform?: 1 | 0;
 }
 
 export type ScheduleWidgetDayEventAttValues = Record<ScheduleWidgetAttKey, ScheduleWidgetDayEventAttValue>;
@@ -210,8 +229,6 @@ export interface IScheduleWidgetUser {
   id: UserId;
   R?: number;
   li?: Record<number, ScheduleWidgetUserUnitMi>;
-  tgId?: ScheduleWidgetUserTgId;
-  tgInform?: Bool;
 }
 
 export type AttKey = SokiAppName | 'SCH';

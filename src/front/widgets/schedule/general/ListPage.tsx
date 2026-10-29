@@ -1,3 +1,4 @@
+import { FooterPlacementManager } from '#basis/lib/FooterPlacementManager';
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { useConnectionState } from '#basis/lib/useConnectionState';
 import { languageSystemCode, translateBase } from '#basis/locale';
@@ -18,13 +19,14 @@ export const ScheduleWidgetListPage = () => {
   const connectionNode = useConnectionState();
   const navigate = useNavigate();
   const appName = useAppNameContext();
+  const lastVisitedSchedule = schedules?.find(schedule => schedule.w === FooterPlacementManager.lastVisitedSchw);
 
   schLinkAction.useOnAction(({ props }) => {
     if (props.inviteSch) {
       navigate({
         to: '/!other/$appName/schs',
         params: { appName },
-        search: { schw: props.inviteSch },
+        search: { schw: props.inviteSch, ...(props.inviteHash ? { inviteHash: props.inviteHash } : null) },
       });
 
       return true;
@@ -40,10 +42,22 @@ export const ScheduleWidgetListPage = () => {
       head={<span className="flex gap-2 m-2">{connectionNode}</span>}
       content={
         <>
+          {lastVisitedSchedule && (
+            <Link
+              to="/!other/$appName/schs"
+              params={{ appName }}
+              search={{ schw: lastVisitedSchedule.w }}
+              className="pointer flex items-center gap-2 py-2 mb-1 px-2 rounded-sm bg-x2 font-bold"
+            >
+              <LazyIcon icon="Clock01" />
+              {translateBase(BaseLocaleKey.ScheduleLastOpened)}
+              <span className="ml-auto text-xs font-normal ellipsis">{lastVisitedSchedule.title}</span>
+            </Link>
+          )}
           {schedules
             ?.sort((a, b) => b.start - a.start)
             .map(schedule => {
-              if (!schedule.start) return null;
+              if (!schedule.start || schedule.w === lastVisitedSchedule?.w) return null;
 
               return (
                 <Link

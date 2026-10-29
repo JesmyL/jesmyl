@@ -1,5 +1,4 @@
 export * from '../../../../model/constantsConfig';
-export * from './complect/attInformCm';
 export * from './complect/basic';
 export * from './complect/chord-card';
 export * from './complect/ee-store';

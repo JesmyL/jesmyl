@@ -1,7 +1,7 @@
 import { howMillisecondsInDay } from 'shared/const/ms';
 import { textToCapitalizeCase } from './string.utils';
 
-export const makeDateLabel = (inputDate: number | Date | string, langCode = 'ru') => {
+export const makeDateLabel = (inputDate: number | Date | string, langCode = 'ru', isWithTime = true) => {
   const date = new Date(inputDate);
   const now = new Date();
 
@@ -13,23 +13,17 @@ export const makeDateLabel = (inputDate: number | Date | string, langCode = 'ru'
   if (Math.abs(diffInDays) <= 3) {
     const rtf = new Intl.RelativeTimeFormat(langCode, { numeric: 'auto' });
     const relative = rtf.format(diffInDays, 'day');
+    const dateText = date.toLocaleDateString(langCode, {
+      ...(isWithTime ? { minute: '2-digit', hour: '2-digit' } : null),
+      day: 'numeric',
+      month: 'long',
+    });
 
-    return (
-      textToCapitalizeCase(relative) +
-      date
-        .toLocaleDateString(langCode, {
-          minute: '2-digit',
-          hour: '2-digit',
-          day: 'numeric',
-          month: 'long',
-        })
-        .slice(-8)
-    );
+    return textToCapitalizeCase(relative) + (isWithTime ? dateText.slice(-8) : ` ${dateText}`);
   }
 
   return date.toLocaleDateString(langCode, {
-    minute: '2-digit',
-    hour: '2-digit',
+    ...(isWithTime ? { minute: '2-digit', hour: '2-digit' } : null),
     weekday: 'short',
     day: 'numeric',
     month: 'long',

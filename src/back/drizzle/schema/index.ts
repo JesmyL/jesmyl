@@ -1,6 +1,7 @@
 export { audioLinkDB } from './audioLink';
 export { catDB } from './cat';
 export { comDB } from './com';
+export { eventCommentsDB } from './eventComment';
 export { questionerBlankDB, questionerUserAnswerDB } from './questioner';
 export { pushSubscriptionsDB } from './pushSubscription';
 export { sch2ComDB } from './sch2Com';

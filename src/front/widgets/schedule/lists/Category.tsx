@@ -35,51 +35,60 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
 
   return (
     <>
-      <ExpandableContent
-        title={
-          <>
-            <LazyIcon icon={cat.icon} /> {title}
-          </>
-        }
-        postfix={isExpand =>
-          isExpand &&
-          rights.isCanTotalRedact && (
-            <div className="flex gap-2">
-              <div className="ellipsis max-w-20">{cat.title.toLowerCase()}</div>
-              {!rights.schedule.lists?.units.some(unit => !unit.title) && (
-                <TheIconSendButton
-                  icon="PlusSign"
-                  confirm={translateBase(BaseLocaleKey.ScheduleCreateNewX, { t: cat.title })}
-                  onSend={() => schListsTsjrpcClient.createUnit({ props: catScopeProps, cati })}
-                />
-              )}
-              <LazyIcon
-                icon="Edit02"
-                onClick={isModalOpenAtom.do.toggle}
-              />
-            </div>
-          )
-        }
+      <div
+        className="sch-lists-card rounded-2xl border border-x4/30 bg-x2/60 p-3 mb-3 shadow-[0_18px_40px_-30px_rgb(0_0_0_/_0.7)] backdrop-blur-sm transition-colors hover:border-xOK/40"
+        style={{ animationDelay: `${cati * 45}ms` }}
       >
-        {isExpand => (
-          <div className="mx-5">
-            {isExpand &&
-              rights.schedule.lists?.units.map(unit => {
-                if (unit.cati !== cati) return null;
-
-                return (
-                  <ScheduleWidgetListUnit
-                    key={unit.mi}
-                    cat={cat}
-                    cati={cati}
-                    unit={unit}
-                    shortTitles={shortTitles}
+        <ExpandableContent
+          title={
+            <span className="flex items-center gap-2">
+              <span className="grid place-items-center size-8 rounded-xl bg-x4/15 text-x3">
+                <LazyIcon icon={cat.icon} />
+              </span>
+              <span className="text-base font-extrabold tracking-tight">{title}</span>
+            </span>
+          }
+          postfix={isExpand =>
+            isExpand &&
+            rights.isCanTotalRedact && (
+              <div className="flex gap-2 text-xs text-x7">
+                <div className="ellipsis max-w-20">{cat.title.toLowerCase()}</div>
+                {!rights.schedule.lists?.units.some(unit => !unit.title) && (
+                  <TheIconSendButton
+                    icon="PlusSign"
+                    confirm={translateBase(BaseLocaleKey.ScheduleCreateNewX, { t: cat.title })}
+                    onSend={() => schListsTsjrpcClient.createUnit({ props: catScopeProps, cati })}
                   />
-                );
-              })}
-          </div>
-        )}
-      </ExpandableContent>
+                )}
+                <LazyIcon
+                  icon="Edit02"
+                  className="pointer"
+                  onClick={isModalOpenAtom.do.toggle}
+                />
+              </div>
+            )
+          }
+        >
+          {isExpand => (
+            <div className="mx-2 mt-2">
+              {isExpand &&
+                rights.schedule.lists?.units.map(unit => {
+                  if (unit.cati !== cati) return null;
+
+                  return (
+                    <ScheduleWidgetListUnit
+                      key={unit.mi}
+                      cat={cat}
+                      cati={cati}
+                      unit={unit}
+                      shortTitles={shortTitles}
+                    />
+                  );
+                })}
+            </div>
+          )}
+        </ExpandableContent>
+      </div>
 
       <Modal openAtom={isModalOpenAtom}>
         <ModalHeader className="flex gap-2">{title}</ModalHeader>

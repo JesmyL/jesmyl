@@ -3,7 +3,10 @@ import { makeRegExp } from 'regexpert';
 import {
   IScheduleWidget,
   IScheduleWidgetUser,
+  packScheduleWidgetInviteLink,
   ScheduleUserScopeProps,
+  ScheduleWidgetRegType,
+  scheduleWidgetRegTypeRights,
   ScheduleWidgetUserMi,
   scheduleWidgetUserRights,
   UserId,
@@ -85,6 +88,9 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
         addMe: modifySchedule(false, async (sch, { place }, { auth }) => {
           if (auth?.login == null) throw new Error('Необходимо авторизоваться');
 
+          if (!scheduleWidgetRegTypeRights.checkIsHasRights(sch.ctrl.type, ScheduleWidgetRegType.Public))
+            throw new Error('В частное расписание можно попасть только по QR-приглашению');
+
           const userTiny = await takeUserTiny({ l: auth.login });
 
           if (sch.ctrl.users.some(user => user.id === userTiny.id)) throw new Error('user exists');
@@ -92,13 +98,49 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
           sch.ctrl.users.push({
             mi: takeNextMi(sch.ctrl.users, ScheduleWidgetUserMi.def),
             id: userTiny.id,
-            tgId: auth.tgId,
           });
 
           return (
             `В расписании ${scheduleTitleInBrackets(sch)} новый участник  ` +
             `${place}: ${takeUserAuthName(auth) || '?'}`
           );
+        }),
+
+        addMeByInvite: modifySchedule(false, async (sch, { inviteHash }, { auth }) => {
+          if (auth?.login == null) throw new Error('Необходимо авторизоваться');
+
+          const userTiny = await takeUserTiny({ l: auth.login });
+
+          if (sch.ctrl.users.some(user => user.id === userTiny.id)) return null;
+
+          if (!sch.ctrl.users.some(user => packScheduleWidgetInviteLink(sch.w, user.mi) === inviteHash))
+            throw new Error('Приглашение недействительно');
+
+          sch.ctrl.users.push({
+            mi: takeNextMi(sch.ctrl.users, ScheduleWidgetUserMi.def),
+            id: userTiny.id,
+          });
+
+          return (
+            `В расписании ${scheduleTitleInBrackets(sch)} новый участник ` +
+            `по QR-приглашению: ${takeUserAuthName(auth) || '?'}`
+          );
+        }),
+
+        removeMe: modifySchedule(false, async (sch, _props, { auth }) => {
+          if (auth?.login == null) throw new Error('Необходимо авторизоваться');
+
+          const userTiny = await takeUserTiny({ l: auth.login });
+          const user = sch.ctrl.users.find(({ id }) => id === userTiny.id);
+
+          if (user === undefined) throw new Error('Вы не являетесь участником');
+
+          sch.ctrl.users = sch.ctrl.users.filter(({ id }) => id !== userTiny.id);
+          sch.ctrl.roles.forEach(role => {
+            if (role.userMi === user.mi) delete role.userMi;
+          });
+
+          return `Вы покинули расписание ${scheduleTitleInBrackets(sch)}`;
         }),
 
         addUserListUnitMembership: modifyUser(async (user, { props, value }, sch) => {

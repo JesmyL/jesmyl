@@ -3,6 +3,7 @@ import {
   SchAttachmentTypesTsjrpcMethods,
   SchDayEventsTsjrpcMethods,
   SchDaysTsjrpcMethods,
+  SchEventCommentsTsjrpcMethods,
   SchEventTypesTsjrpcMethods,
   SchGamesTsjrpcMethods,
   SchGeneralTsjrpcModel,
@@ -35,6 +36,15 @@ export const schDayEventsTsjrpcClient = new (class SchDayEvents extends TsjrpcCl
     });
   }
 })();
+
+export const schEventCommentsTsjrpcClient =
+  new (class SchEventComments extends TsjrpcClient<SchEventCommentsTsjrpcMethods> {
+    constructor() {
+      super({
+        scope: 'SchEventComments',
+      });
+    }
+  })();
 
 export const schEventTypesTsjrpcClient = new (class SchEventTypes extends TsjrpcClient<SchEventTypesTsjrpcMethods> {
   constructor() {

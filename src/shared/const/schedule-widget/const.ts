@@ -10,7 +10,6 @@ export const takeDefaultScheduleWidget: () => IScheduleWidget = () => ({
   days: [],
   tatts: [],
   types: [],
-  tgInformTime: 5,
   ctrl: { cats: [], roles: [], type: ScheduleWidgetRegType.Private, users: [], defu: ScheduleWidgetUserRoleRight.Read },
   games: { criterias: [], list: [] },
   lists: { cats: [], units: [] },

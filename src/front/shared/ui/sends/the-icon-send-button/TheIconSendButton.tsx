@@ -7,6 +7,7 @@ import { SendButtonContentMakerProps } from '../send-button-content-maker/maker.
 interface Props<Value> extends SendButtonContentMakerProps<Value> {
   icon: KnownStameskaIconName;
   className?: string;
+  iconClassName?: string;
   prefix?: null | React.ReactNode;
   postfix?: null | React.ReactNode;
   disabledReason?: string;

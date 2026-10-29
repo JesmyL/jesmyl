@@ -6,13 +6,13 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
 import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
-import styled from '@emotion/styled';
 import { ReactNode } from 'react';
 import { IScheduleWidgetDayEvent, ScheduleDayEventScopeProps } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { emptyAsyncFunc, itNNull } from 'shared/utils';
 import { objectValues } from 'shared/utils/object.utils';
 import { twMerge } from 'tailwind-merge';
+import { ScheduleWidgetEventComments } from './DayEventComments';
 
 const ratePoints = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5] as const;
 const defRate: [number, string] = [0, ''];
@@ -31,7 +31,7 @@ export function ScheduleWidgetDayEventRating(props: {
     <>
       <LazyIcon icon="Favourite" />
       {translateBase(BaseLocaleKey.ScheduleEventRating)}
-      <StyledReitingDisplay>{ratingSum}</StyledReitingDisplay>
+      <span className="w-6 text-center">{ratingSum}</span>
     </>,
   );
   const [otherRatesTitleNode, isOtherRatesTitleExpand] = useIsExpand(
@@ -105,18 +105,20 @@ export function ScheduleWidgetDayEventRating(props: {
       <div className="text-x3 my-2">{titleNode}</div>
       {isExpand && (
         <div className="ml-5 my-2">
-          <div className="flex my-2">
+          <div className="flex gap-0 my-2">
             {ratePoints.map(ratePoint => {
-              const isFill =
-                ratePoint === 0 ? myRate[0] === 0 : ratePoint < 0 ? myRate[0] <= ratePoint : myRate[0] >= ratePoint;
+              const isSelected = ratePoint === myRate[0];
+              const isFill = ratePoint === 0 ? isSelected : ratePoint < 0 ? myRate[0] <= ratePoint : myRate[0] >= ratePoint;
 
               return (
                 <TheIconSendButton
                   key={ratePoint}
-                  className={
-                    (ratePoint < 0 ? 'text-xKO' : ratePoint > 0 ? 'text-xOK' : 'text-x3') +
-                    (isFill ? '' : ' opacity-50')
-                  }
+                  className={twMerge(
+                    'flex-max gap-0.5 transition-transform duration-150',
+                    ratePoint < 0 ? 'text-xKO' : ratePoint > 0 ? 'text-xOK' : 'text-x3',
+                    isSelected ? 'scale-125' : isFill ? 'opacity-100' : 'opacity-40',
+                  )}
+                  iconClassName="p-0! size-5! border-0! bg-transparent! shadow-none!"
                   icon={ratePoint < 0 ? 'Heartbreak' : ratePoint === 0 ? 'HelpCircle' : 'Favourite'}
                   onSend={async () =>
                     ratePoint !== myRate[0] &&
@@ -130,37 +132,24 @@ export function ScheduleWidgetDayEventRating(props: {
                 />
               );
             })}
-            <StyledReitingDisplay
-              className={'ml-2' + (myRate[0] === 0 ? ' text-x3' : myRate[0] < 0 ? ' text-xKO' : ' text-xOK')}
+            <span
+              className={twMerge(
+                'w-8 text-center font-bold ml-2',
+                myRate[0] === 0 ? 'text-x3' : myRate[0] < 0 ? 'text-xKO' : 'text-xOK',
+              )}
             >
               {myRate[0]}
-            </StyledReitingDisplay>
+            </span>
           </div>
-          <StrongEditableField
-            icon="Message01"
-            value={myRate[1]}
-            title={translateBase(BaseLocaleKey.Comment)}
-            className="my-2"
-            isRedact
-            isSelfRedact
-            multiline
-            onSend={value =>
-              schDayEventsTsjrpcClient.setRateComment({
-                props: props.dayEventScopeProps,
-                userMi: myUser.mi,
-                comment: value,
-                userName: takeScheduleWidgetUserName(rights, myUser) || '??',
-              })
-            }
+
+          <ScheduleWidgetEventComments
+            schw={rights.schedule.w}
+            eventMi={props.event.mi}
           />
+
           {ratingNode}
         </div>
       )}
     </>
   );
 }
-
-const StyledReitingDisplay = styled.span`
-  width: 1.5em;
-  text-align: center;
-`;

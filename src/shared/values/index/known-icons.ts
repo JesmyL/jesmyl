@@ -235,6 +235,8 @@ export const knownStameskaIconNames = {
   ViewOff: 0,
   ViewOffSlash: 0,
   Voice: 0,
+  VolumeHigh: 0,
+  VolumeOff: 0,
   WindowsOld: 0,
   WorkHistory: 0,
 } satisfies PRecord<StameskaIconName, 0>;

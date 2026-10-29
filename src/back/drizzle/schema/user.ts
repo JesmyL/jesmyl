@@ -1,8 +1,8 @@
 import { JsonSecureString } from 'back/json-secure';
 import { sql } from 'drizzle-orm';
-import { bigint, jsonb, pgTable, serial, text } from 'p/d';
+import { bigint, jsonb, pgTable, serial, smallint, text } from 'p/d';
 import { UserAuth, UserInfo, UserLogin } from 'shared/api';
-import { Do } from 'shared/enums';
+import { Bool, Do } from 'shared/enums';
 import { IndexAccessScopeRules, UserAccessRole } from 'shared/model/index/access-rights';
 import { iife, itIt } from 'shared/utils';
 import { db } from '../drizzle.db';
@@ -24,6 +24,9 @@ export const userDB = pgTable('users', {
   rights: jsonb('rules').$type<IndexAccessScopeRules>().notNull(),
 
   r: text('role').$type<UserAccessRole>(),
+
+  mutedUntil: bigint('mutedUntil', { mode: 'number' }),
+  isSilent: smallint('isSilent').$type<Bool>().notNull().default(Bool.False),
 });
 
 if (!Do.It) itIt<UserInfo>(userDB.$inferSelect);

@@ -86,7 +86,7 @@ export function AppFooter({ children }: { children: () => React.ReactNode[]; app
 
         <FooterTrack className="other-track min-w-20">
           <AppFooterItem
-            icon="CircleArrowRight02"
+            icon="Smile"
             title={translateBase(BaseLocaleKey.Inoe)}
             to={`/!other/${(appName === '!other' ? place : appName) as never}`}
             idPostfix="other"

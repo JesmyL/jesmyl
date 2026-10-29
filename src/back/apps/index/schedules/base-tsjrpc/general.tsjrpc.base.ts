@@ -6,7 +6,12 @@ import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeA
 import {
   IScheduleWidget,
   IScheduleWidgetComsRights,
+  IScheduleWidgetPeriod,
+  SchedulePeriodKind,
+  SchedulePeriodWeekday,
+  SchedulePeriodWeeki,
   ScheduleScopeProps,
+  checkIsScheduleAppInform,
   ScheduleWidgetCleans,
   ScheduleWidgetDayEventMi,
   ScheduleWidgetDayi,
@@ -28,15 +33,14 @@ import { checkIsEq } from 'shared/utils/checkIsEq';
 import { deepClone } from 'shared/utils/clone';
 import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
-import { takeUserAuthName } from 'shared/utils/user.utils';
 import { schLiveTsjrpcServer } from '../live.tsjrpc';
 import { modifySchedule, throwIfNoScheduleTotalRedact } from '../schedule-modificators';
 import { schServerTsjrpcShareMethods } from '../tsjrpc.shares';
 import { takeScheduleWidgetTiny } from '../schedule.tiny';
-import { onScheduleUserTgInformSetEvent } from '../specific-modify-events';
 import { schAttachmentTypesTsjrpcBaseServer } from './attachment-types.tsjrpc.base';
 import { schDayEventsTsjrpcBaseServer } from './day-events.tsjrpc.base';
 import { schDaysTsjrpcBaseServer } from './days.tsjrpc.base';
+import { schEventCommentsTsjrpcBaseServer } from './event-comments.tsjrpc.base';
 import { schEventTypesTsjrpcBaseServer } from './event-types.tsjrpc.base';
 import { schGamesTsjrpcBaseServer } from './games.tsjrpc.base';
 import { schListsTsjrpcBaseServer } from './lists.tsjrpc.base';
@@ -100,6 +104,46 @@ const parseComsRights = (value: unknown): IScheduleWidgetComsRights | nil => {
   return comsRights;
 };
 
+const schedulePeriodWeekis = [1, 2, 3, 4, 5] as const;
+const schedulePeriodWeekdays = [0, 1, 2, 3, 4, 5, 6] as const;
+
+const checkIsSchedulePeriodWeeki = (value: unknown): value is SchedulePeriodWeeki =>
+  schedulePeriodWeekis.some(weeki => weeki === value);
+
+const checkIsSchedulePeriodWeekday = (value: unknown): value is SchedulePeriodWeekday =>
+  schedulePeriodWeekdays.some(weekday => weekday === value);
+
+const parseSchedulePeriod = (value: unknown): IScheduleWidgetPeriod | nil => {
+  if (value == null) return null;
+  if (!checkIsObject(value)) throw new Error('Периодичность расписания: ожидался объект');
+
+  const kind = value.kind;
+
+  if (kind === SchedulePeriodKind.Once) return { kind: SchedulePeriodKind.Once };
+  if (kind === SchedulePeriodKind.Weekly) return { kind: SchedulePeriodKind.Weekly };
+
+  if (kind === SchedulePeriodKind.MonthDay) {
+    const dayi = value.dayi;
+    if (!checkIsNumber(dayi) || dayi < 1 || dayi > 31)
+      throw new Error('Периодичность расписания: день месяца должен быть от 1 до 31');
+
+    return { kind, dayi };
+  }
+
+  if (kind === SchedulePeriodKind.WeekdayOfMonth) {
+    const weeki = value.weeki;
+    const dayi = value.dayi;
+    if (!checkIsSchedulePeriodWeeki(weeki))
+      throw new Error('Периодичность расписания: неделя месяца должна быть от 1 до 5');
+    if (!checkIsSchedulePeriodWeekday(dayi))
+      throw new Error('Периодичность расписания: день недели должен быть от 0 до 6');
+
+    return { kind, weeki, dayi };
+  }
+
+  throw new Error(`Периодичность расписания: недопустимый тип ${kind}`);
+};
+
 const takeComsRightsUserIds = (comsRights: IScheduleWidgetComsRights | nil) => {
   const userIds = new Set(comsRights?.users);
 
@@ -114,30 +158,6 @@ const takeComsRightsUserIds = (comsRights: IScheduleWidgetComsRights | nil) => {
   return [...userIds];
 };
 
-onScheduleUserTgInformSetEvent.listen(async ({ isNotInform, schProps, userId }) => {
-  let description = '';
-
-  const { value: sch } = await modifySchedule(false, async sch => {
-    const user = sch.ctrl.users.find(user => user.id === userId);
-    if (user == null) throw new Error('user not found');
-    user.tgInform = isNotInform;
-
-    const userTiny = await takeUserTiny({ id: userId }, false);
-    const userAuth = userTiny?.uauth;
-
-    description =
-      `В расписании ${await scheduleTitleInBrackets(sch)} участник ${takeUserAuthName(userAuth) || '?'} ` +
-      `${isNotInform ? 'отключил' : 'включил'} TG-напоминания`;
-
-    return description;
-  })({ props: schProps }, { auth: undefined, client: null, visitInfo: undefined });
-
-  return {
-    value: sch,
-    description,
-  };
-});
-
 export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBaseServer<SchGeneralTsjrpcModel> {
   constructor() {
     const updateScheduleValue = <
@@ -146,9 +166,9 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
     >(
       key: Key,
       text: (sch: IScheduleWidget, props: Props) => PromiseOr<string | null>,
-      isNeedRefreshTgInformTime?: boolean,
+      isNeedRefreshInformTime?: boolean,
     ) =>
-      modifySchedule<Props>(isNeedRefreshTgInformTime || false, async (sch, props) => {
+      modifySchedule<Props>(isNeedRefreshInformTime || false, async (sch, props) => {
         sch[key] = props.value;
 
         return await text(sch, props);
@@ -171,7 +191,6 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
             days: [],
             tatts: [],
             types: [],
-            tgInformTime: 5,
             start: 0,
             ctrl: {
               cats: ['Основное'],
@@ -222,12 +241,11 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
             {
               mi: ScheduleWidgetUserMi.def,
               id: authUser.id,
-              tgId: auth.tgId,
               R: scheduleWidgetUserRights.getAllRights(),
             },
           ];
 
-          await db.insert(scheduleDB).values({ ...sch, isRemoved: Bool.False, withTech: Bool.False, tgChatReqs: '' });
+          await db.insert(scheduleDB).values({ ...sch, isRemoved: Bool.False, withTech: Bool.False });
 
           return {
             value: sch,
@@ -253,20 +271,6 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
             `В расписании ${await scheduleTitleInBrackets(sch)} первый день сделан ${sch.withTech ? 'техническим' : 'обычным'}`,
           true,
         ),
-        setTgChatRequisites: updateScheduleValue(
-          'tgChatReqs',
-          async sch =>
-            `В расписании ${await scheduleTitleInBrackets(sch)} изменены реквизиты TG-чата: ${sch.tgChatReqs}`,
-          true,
-        ),
-        setTgInformTime: updateScheduleValue(
-          'tgInformTime',
-          async sch =>
-            `В расписании ${await scheduleTitleInBrackets(sch)} TG-напоминания будут ` +
-            `${sch.tgInformTime ? `за ${sch.tgInformTime} минут` : 'только в начале события'} `,
-          true,
-        ),
-
         setStartTime: modifySchedule(true, async (sch, { value }) => {
           sch.prevStart = sch.start;
           sch.start = value;
@@ -277,31 +281,25 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
           );
         }),
 
-        setIsTgInformMe: async ({ props: schProps, type: isNotInform }, tool) => {
-          const auth = takeLogginedAuthOrThrow(tool.auth);
-          const authUser = await takeUserTiny({ l: auth.login });
+        setSchedulePeriod: modifySchedule(true, async (sch, { period }) => {
+          sch.period = parseSchedulePeriod(period);
 
-          return onScheduleUserTgInformSetEvent.invoke({
-            schProps,
-            isNotInform,
-            userId: authUser.id,
-          });
-        },
-
-        toggleIsTgInform: modifySchedule(true, async sch => {
-          sch.tgInform = sch.tgInform === 0 ? undefined : 0;
-
-          return `В расписании ${await scheduleTitleInBrackets(sch)} TG-напоминания ${
-            sch.tgInform === 0 ? 'отключены' : 'включены'
-          }`;
+          return `В расписании ${await scheduleTitleInBrackets(sch)} изменена периодичность`;
         }),
 
-        toggleIsAppInform: modifySchedule(false, async sch => {
-          sch.appInform = sch.appInform === 0 ? undefined : 0;
+        setAppInform: modifySchedule(true, async (sch, { value }) => {
+          if (!checkIsScheduleAppInform(value)) throw new Error(`Недопустимый интервал напоминания: ${value}`);
 
-          return `В расписании ${await scheduleTitleInBrackets(sch)} уведомления в приложении ${
-            sch.appInform === 0 ? 'отключены' : 'включены'
-          }`;
+          sch.appInform = value;
+
+          return (
+            `В расписании ${await scheduleTitleInBrackets(sch)} уведомления в приложении ` +
+            (value === 0
+              ? 'отключены'
+              : value === 1
+                ? 'включены (только в начале)'
+                : `включены (за ${value} мин. и в начале)`)
+          );
         }),
 
         remove: modifySchedule(true, async sch => {
@@ -421,6 +419,7 @@ export const scheduleTitleInBrackets = async (schScalar: IScheduleWidget | Sched
 
 schDaysTsjrpcBaseServer.$$register();
 schDayEventsTsjrpcBaseServer.$$register();
+schEventCommentsTsjrpcBaseServer.$$register();
 schGamesTsjrpcBaseServer.$$register();
 schListsTsjrpcBaseServer.$$register();
 schRolesTsjrpcBaseServer.$$register();

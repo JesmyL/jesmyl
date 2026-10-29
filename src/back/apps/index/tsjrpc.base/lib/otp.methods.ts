@@ -23,7 +23,7 @@ import { checkIsStartsWith } from 'shared/utils/checkIs';
 import { takeUserAuthName } from 'shared/utils/user.utils';
 import { sentEmailOTPFileStorage } from '../../file-stores';
 import { constantsConfigFileStore } from '../../schedules/file-stores';
-import { sendSchedulePush } from '../../schedules/tg-bot-inform/web-push';
+import { sendSchedulePush } from '../../schedules/app-inform/web-push';
 import { resetUserTiny } from '../../tinies/userTiny';
 import { emailSentOTPLetters } from '../const/emailSentOTPLetters';
 

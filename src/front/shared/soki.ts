@@ -36,10 +36,6 @@ export class SokiTrip {
 
   constructor() {
     this.onBeforeAuthorizeEvent.listen(() => this.sendRegistrationToken());
-
-    addEventListenerPipe(document, 'visibilitychange', () => {
-      if (document.visibilityState === 'visible') this.checkLiveness();
-    });
     addEventListenerPipe(window, 'online', this.checkLiveness);
   }
 

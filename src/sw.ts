@@ -5,15 +5,23 @@ import { ExpirationPlugin } from 'workbox-expiration';
 import { cleanupOutdatedCaches, createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching';
 import { NavigationRoute, registerRoute } from 'workbox-routing';
 import { CacheFirst } from 'workbox-strategies';
-import type { SchedulePushPayload } from 'shared/api/complect/push.model';
-import { checkIsObject, checkIsString } from 'shared/utils/checkIs';
+import type { PushNotificationAction, SchedulePushPayload } from 'shared/api/complect/push.model';
+import { checkIsArray, checkIsObject, checkIsString } from 'shared/utils/checkIs';
 
 declare const self: ServiceWorkerGlobalScope;
+
+declare global {
+  // `actions` exists in browsers but is missing in the bundled webworker lib typings
+  interface NotificationOptions {
+    actions?: { action: string; title: string }[];
+  }
+}
 
 const defaultNotificationTitle = 'JesmyL';
 const defaultPushPayload: SchedulePushPayload = { title: defaultNotificationTitle, body: '', url: '/' };
 const notificationIcon = '/android-chrome-192x192.png';
 const fontFileReg = /\.(ttf|otf|woff2)$/;
+const maxNotificationActionsCount = 2;
 
 precacheAndRoute(self.__WB_MANIFEST);
 cleanupOutdatedCaches();
@@ -49,6 +57,21 @@ registerRoute(
   }),
 );
 
+const checkIsFilledString = (value: unknown): value is string => checkIsString(value) && !!value;
+
+const takePushActions = (value: unknown): PushNotificationAction[] =>
+  !checkIsArray<unknown>(value)
+    ? []
+    : value
+        .filter(
+          (action): action is PushNotificationAction =>
+            checkIsObject(action) &&
+            checkIsFilledString(action.action) &&
+            checkIsFilledString(action.title) &&
+            checkIsFilledString(action.url),
+        )
+        .slice(0, maxNotificationActionsCount);
+
 const takePushPayload = (event: PushEvent): SchedulePushPayload => {
   let data: unknown;
 
@@ -65,6 +88,8 @@ const takePushPayload = (event: PushEvent): SchedulePushPayload => {
     body: checkIsString(data.body) ? data.body : '',
     url: checkIsString(data.url) ? data.url : '/',
     tag: checkIsString(data.tag) ? data.tag : undefined,
+    silent: data.silent === true ? true : undefined,
+    actions: takePushActions(data.actions),
   };
 };
 
@@ -75,9 +100,11 @@ self.addEventListener('push', event => {
     self.registration.showNotification(payload.title, {
       body: payload.body,
       tag: payload.tag,
+      silent: payload.silent,
       icon: notificationIcon,
       badge: notificationIcon,
-      data: { url: payload.url },
+      data: { url: payload.url, actions: payload.actions },
+      actions: payload.actions?.map(action => ({ action: action.action, title: action.title })),
     }),
   );
 });
@@ -85,7 +112,12 @@ self.addEventListener('push', event => {
 self.addEventListener('notificationclick', event => {
   event.notification.close();
 
-  const url = checkIsString(event.notification.data?.url) ? event.notification.data.url : '/';
+  const notificationData: unknown = event.notification.data;
+  const data = checkIsObject(notificationData) ? notificationData : null;
+  const notificationUrl = data?.url;
+  const url =
+    takePushActions(data?.actions).find(action => action.action === event.action)?.url ??
+    (checkIsString(notificationUrl) ? notificationUrl : '/');
   const absoluteUrl = new URL(url, self.location.origin).href;
 
   event.waitUntil(

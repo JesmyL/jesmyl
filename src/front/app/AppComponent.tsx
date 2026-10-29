@@ -150,6 +150,7 @@ const FirstNaver = ({ onSet, loc }: { onSet: (is: false) => void; loc: ParsedLoc
   schLinkAction.register();
 
   useEffect(() => {
+    FooterPlacementManager.registerVisitedUrl(window.location.href);
     onHrefData(window.location.href);
   }, [onHrefData]);
 
