@@ -2,23 +2,22 @@
   "title": "Малые группы",
   "topic": "",
   "dsc": "",
-  "start": 1843851600000,
-  "prevStart": 1749157200000,
-  "tgInformTime": 5,
+  "start": 1793134800000,
+  "prevStart": 1843851600000,
   "ctrl": {
     "cats": ["Основное"],
     "defu": 5,
     "type": 3,
     "roles": [{ "mi": 0, "icon": "Teacher", "title": "Координатор", "userMi": 0 }],
-    "users": [{ "R": 127, "id": 1, "mi": 0, "tgId": 958383738 }],
+    "users": [{ "R": 127, "id": 1, "mi": 0 }],
     "comsRights": { "events": { "0": { "6": [2] } } }
   },
   "days": [
     {
       "mi": 0,
-      "wup": 19,
+      "wup": 18.34,
       "list": [
-        { "mi": 7, "atts": { "[cm]:coms": {} }, "rate": { "0": [-3, ""] }, "type": 2 },
+        { "mi": 7, "atts": { "[cm]:coms": {} }, "rate": { "0": [-2, ""] }, "type": 2 },
         { "mi": 5, "atts": { "[cm]:coms": {} }, "type": 1 },
         { "mi": 6, "atts": { "[cm]:coms": {} }, "type": 0 }
       ]

@@ -3,13 +3,12 @@
   "topic": "",
   "dsc": "",
   "start": 1745701200000,
-  "tgInformTime": 5,
   "ctrl": {
     "cats": ["Основное"],
     "defu": 5,
     "type": 1,
     "roles": [{ "mi": 0, "icon": "Teacher", "title": "Координатор", "userMi": 0 }],
-    "users": [{ "R": 127, "id": 1, "mi": 0, "tgId": 958383738 }]
+    "users": [{ "R": 127, "id": 1, "mi": 0 }]
   },
   "days": [],
   "games": { "list": [], "criterias": [{ "sorts": {}, "title": "Сила" }] },

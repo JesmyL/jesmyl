@@ -4,15 +4,14 @@
   "dsc": "",
   "start": 1769634000000,
   "prevStart": 1738098000000,
-  "tgInformTime": 5,
   "ctrl": {
     "cats": ["Основное"],
     "defu": 47,
     "type": 1,
     "roles": [{ "mi": 0, "icon": "Teacher", "title": "Координатор", "userMi": 0 }],
     "users": [
-      { "R": 127, "id": 1, "mi": 0, "tgId": 958383738, "tgInform": 1 },
-      { "R": 95, "id": 2, "mi": 1, "tgId": 1086988826 }
+      { "R": 127, "id": 1, "mi": 0 },
+      { "R": 95, "id": 2, "mi": 1 }
     ]
   },
   "days": [

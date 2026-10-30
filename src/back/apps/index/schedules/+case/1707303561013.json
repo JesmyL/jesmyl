@@ -4,16 +4,15 @@
   "dsc": "",
   "start": 1740171600000,
   "prevStart": 1735765200000,
-  "tgInformTime": 10,
   "ctrl": {
     "cats": ["Основное"],
     "defu": 5,
     "type": 13,
     "roles": [{ "mi": 0, "icon": "Github", "user": 0, "title": "Координатор" }],
     "users": [
-      { "R": 127, "id": 1, "mi": 0, "tgId": 958383738, "tgInform": 1 },
-      { "R": 21, "id": 2, "mi": 1, "tgId": 1086988826, "tgInform": 1 },
-      { "R": 127, "id": 3, "mi": 2, "tgId": 370756745 }
+      { "R": 127, "id": 1, "mi": 0 },
+      { "R": 21, "id": 2, "mi": 1 },
+      { "R": 127, "id": 3, "mi": 2 }
     ]
   },
   "days": [
