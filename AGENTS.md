@@ -59,6 +59,7 @@
 - In this project, the term `songs` is not used — the correct name is `coms` (short for "compositions"). Name variables, types, files and identifiers accordingly.
 - Removing an entry from `BaseLocaleKey` (locale keys): no `@deprecated` marking anymore — if a key is no longer referenced anywhere in the code, remove it cleanly from `_BaseLocaleKey.ts` and all `src/back/locales/base/{ru,en,kz,ua,...}.ts` files (and bump the locale delivery guard if indices shifted, per the rule below).
 - Inside useLiveQuery the callback must contain no extra logic and must return raw Dexie values only (or undefined to skip querying when there is nothing to fetch); never wrap/transform results inside — do it outside via useMemo (e.g. new CmCat(icat)).
+- NEVER modify, remove, or revert any code, files, or config beyond exactly what the user explicitly asked for. Only touch what the task requires. Before deleting or altering anything not directly requested, stop and ask the user. (Никогда не изменяй, не удаляй и не откатывай код/файлы/конфиги сверх того, что пользователь явно попросил.)
 
 ## Assistant reply formatting
 
