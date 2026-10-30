@@ -44,20 +44,19 @@ export const takeSchedulePeriodNextStart = (
   if (period == null || period.kind === SchedulePeriodKind.Once) return null;
 
   const start = new Date(schedule.start);
-  const lowerBound = Math.max(now, schedule.start);
   const acceptTime = (date: Date) => {
     date.setHours(start.getHours(), start.getMinutes(), start.getSeconds(), start.getMilliseconds());
     return date;
   };
 
   if (period.kind === SchedulePeriodKind.Weekly) {
-    const next = acceptTime(new Date(lowerBound));
+    const next = acceptTime(new Date(now));
     next.setDate(next.getDate() + ((start.getDay() - next.getDay() + 7) % 7));
-    if (next.getTime() <= now || next.getTime() < schedule.start) next.setDate(next.getDate() + 7);
+    if (next.getTime() <= now) next.setDate(next.getDate() + 7);
     return next.getTime();
   }
 
-  const lowerDate = new Date(lowerBound);
+  const lowerDate = new Date(now);
   let year = lowerDate.getFullYear();
   let month = lowerDate.getMonth();
 
@@ -69,7 +68,7 @@ export const takeSchedulePeriodNextStart = (
         : 1 + ((period.dayi - firstWeekday + 7) % 7) + (period.weeki - 1) * 7;
     const next = acceptTime(new Date(year, month, dayi));
 
-    if (next.getMonth() === month && next.getTime() > now && next.getTime() >= schedule.start) return next.getTime();
+    if (next.getMonth() === month && next.getTime() > now) return next.getTime();
 
     if (++month === 12) {
       month = 0;

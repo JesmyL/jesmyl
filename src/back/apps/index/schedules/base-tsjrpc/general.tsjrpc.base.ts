@@ -245,7 +245,7 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
             },
           ];
 
-          await db.insert(scheduleDB).values({ ...sch, isRemoved: Bool.False, withTech: Bool.False });
+          await db.insert(scheduleDB).values({ ...sch, isRemoved: Bool.False, withTech: Bool.False, isPaused: Bool.False });
 
           return {
             value: sch,
@@ -269,6 +269,11 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
           'withTech',
           async sch =>
             `В расписании ${await scheduleTitleInBrackets(sch)} первый день сделан ${sch.withTech ? 'техническим' : 'обычным'}`,
+          true,
+        ),
+        setPaused: updateScheduleValue(
+          'isPaused',
+          async sch => `В расписании ${await scheduleTitleInBrackets(sch)} ${sch.isPaused ? 'отключено' : 'включено'}`,
           true,
         ),
         setStartTime: modifySchedule(true, async (sch, { value }) => {

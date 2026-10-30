@@ -850,6 +850,13 @@ export const localeBaseKz = convertObjectToArray<LocaleBaseDelivered<Langi.Kz>>(
   [BaseLocaleKey.ScheduleMyRole]: 'Менің рөлім',
   [BaseLocaleKey.ScheduleLeave]: 'Шығу',
   [BaseLocaleKey.ScheduleLeaveConfirm]: 'Іс-шарадан шығу керек пе?',
+  [BaseLocaleKey.SchedulePassedPlural]: 'Өткен іс-шаралар',
+  [BaseLocaleKey.SchedulePeriodEachWeekday]: 'Әр $d',
+  [BaseLocaleKey.ScheduleNearest]: 'Келесі',
+  [BaseLocaleKey.ScheduleDisable]: 'Өшіру',
+  [BaseLocaleKey.ScheduleEnable]: 'Қосу',
+  [BaseLocaleKey.SchedulePausedPlural]: 'Өшірілгендер',
+  [BaseLocaleKey.ScheduleMoreThanYear]: 'Бір жылдан астам',
 
   [BaseLocaleKey.NumberSymbols]: '$n; $declension{{$n}{таңба}{таңба}{таңба}}',
 

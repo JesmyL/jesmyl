@@ -91,6 +91,7 @@ export type IScheduleWidget = NullifyOptionals<{
   dsc: string;
   days: IScheduleWidgetDay[];
   withTech?: Bool;
+  isPaused?: Bool;
   types: ScheduleWidgetDayListItemTypeBox[];
   tatts: ScheduleWidgetAppAttCustomized[];
   ctrl: IScheduleWidgetCtrl;

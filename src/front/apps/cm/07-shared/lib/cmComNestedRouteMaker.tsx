@@ -52,8 +52,6 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>({
 
       metronomeCurrentMeterSizeAtom.set(meterSize);
       metronomeCurrentBpmAtom.set(beatsPerMinute);
-
-      return () => cmComLastOpenSchwAtom.set(null);
     }, [beatsPerMinute, comw, meterSize, schw]);
 
     const render = (node: React.ReactNode) =>

@@ -6,11 +6,13 @@ import {
   indexScheduleGetDayEventTimes,
   indexScheduleGetDayStartMs,
   IScheduleWidget,
+  SchedulePeriodKind,
   ScheduleWidgetCleans,
   ScheduleWidgetDayi,
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
   ScheduleWidgetWid,
+  takeSchedulePeriodNextStart,
 } from 'shared/api';
 import { howMillisecondsInMin } from 'shared/const/ms';
 import { checkIsNumber } from 'shared/utils/checkIs';
@@ -37,14 +39,19 @@ class SchedulePushInformer {
 
     this.cancelJobs(schedule.w);
 
+    if (schedule.isPaused) return;
+
     const now = Date.now();
     const appInform = schedule.appInform ?? 0;
+    const period = schedule.period;
+    const isPeriodic = period != null && period.kind !== SchedulePeriodKind.Once;
+    const periodicDelta = isPeriodic ? this.takePeriodicDelta(schedule, now) : null;
 
     for (let i = 0; i < schedule.days.length; i++) {
       const dayi = i as ScheduleWidgetDayi;
       const day = schedule.days[dayi];
 
-      if (!day.list.length || indexScheduleCheckIsDayIsPast(schedule, dayi)) continue;
+      if (!day.list.length || (!isPeriodic && indexScheduleCheckIsDayIsPast(schedule, dayi))) continue;
 
       const times = indexScheduleGetDayEventTimes(schedule, day);
       const wakeupMs = ScheduleWidgetCleans.computeDayWakeUpTime(day.wup, 'number');
@@ -56,16 +63,37 @@ class SchedulePushInformer {
           howMillisecondsInMin;
         const eventStartMs = dayStartMs + wakeupMs + times[eventi] * howMillisecondsInMin - eventTimeMs;
 
-        if (eventStartMs <= now) continue;
+        this.informEvent(schedule, dayi, eventi, eventStartMs, now, appInform, false);
 
-        this.setJob(schedule.w, dayi, eventi, eventStartMs, false);
-
-        const leadStartMs = eventStartMs - appInform * howMillisecondsInMin;
-
-        if (appInform >= 5 && leadStartMs > now) this.setJob(schedule.w, dayi, eventi, leadStartMs, true);
+        if (periodicDelta) this.informEvent(schedule, dayi, eventi, eventStartMs + periodicDelta, now, appInform, true);
       }
     }
   };
+
+  private takePeriodicDelta(schedule: IScheduleWidget, now: number) {
+    const nextStart = takeSchedulePeriodNextStart(schedule, now);
+    if (nextStart == null) return null;
+
+    return new Date(nextStart).setHours(0, 0, 0, 0) - new Date(schedule.start).setHours(0, 0, 0, 0);
+  }
+
+  private informEvent(
+    schedule: IScheduleWidget,
+    dayi: ScheduleWidgetDayi,
+    eventi: number,
+    startMs: number,
+    now: number,
+    appInform: number,
+    isPeriodic: boolean,
+  ) {
+    if (startMs <= now) return;
+
+    this.setJob(schedule.w, dayi, eventi, startMs, false, isPeriodic);
+
+    const leadStartMs = startMs - appInform * howMillisecondsInMin;
+
+    if (appInform >= 5 && leadStartMs > now) this.setJob(schedule.w, dayi, eventi, leadStartMs, true, isPeriodic);
+  }
 
   private cancelJobs(schw: ScheduleWidgetWid) {
     const prefix = `${schw}-`;
@@ -84,8 +112,9 @@ class SchedulePushInformer {
     eventi: number,
     startMs: number,
     isLead: boolean,
+    isPeriodic = false,
   ) {
-    const key = `${schw}-${dayi}-${eventi}${isLead ? 'l' : ''}`;
+    const key = `${schw}-${dayi}-${eventi}${isLead ? 'l' : ''}${isPeriodic ? 'p' : ''}`;
 
     jobs[key]?.cancel();
     jobs[key] = nodeSchedule.scheduleJob(new Date(startMs), () => void this.send(schw, dayi, eventi, isLead));
@@ -94,7 +123,7 @@ class SchedulePushInformer {
   private send = async (schw: ScheduleWidgetWid, dayi: ScheduleWidgetDayi, eventi: number, isLead: boolean) => {
     const schedule = await takeSchedule(schw);
     const event = schedule?.days[dayi]?.list[eventi];
-    if (schedule == null || event == null) return;
+    if (schedule == null || schedule.isPaused || event == null) return;
 
     const appInform = schedule.appInform ?? 0;
 
@@ -105,7 +134,8 @@ class SchedulePushInformer {
 
           return (
             scheduleWidgetUserRights.checkIsHasRights(rights, ScheduleWidgetUserRoleRight.Read) &&
-            (!event.secret || scheduleWidgetUserRights.checkIsHasRights(rights, ScheduleWidgetUserRoleRight.ReadSpecials))
+            (!event.secret ||
+              scheduleWidgetUserRights.checkIsHasRights(rights, ScheduleWidgetUserRoleRight.ReadSpecials))
           );
         })
         .map(user => user.id);
@@ -116,10 +146,9 @@ class SchedulePushInformer {
           ? `/cm/li/events?schw=${schedule.w}&dayi=${dayi}&eventMi=${event.mi}`
           : null;
         const eventTitle = eventTypeTitle + (event.topic ? `: ${event.topic}` : '');
-        const body = [
-          comsUrl ? `${eventTitle} ● ${pushGoToComsTitle}` : eventTitle,
-          event.dsc,
-        ].filter(Boolean).join('\n');
+        const body = [comsUrl ? `${eventTitle} ● ${pushGoToComsTitle}` : eventTitle, event.dsc]
+          .filter(Boolean)
+          .join('\n');
 
         await sendSchedulePush(userIds, {
           title: schedule.title || eventTypeTitle,

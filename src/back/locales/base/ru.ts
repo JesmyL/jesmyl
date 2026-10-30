@@ -850,6 +850,13 @@ export const localeBaseRu = convertObjectToArray<LocaleBaseDelivered<Langi.Ru>>(
   [BaseLocaleKey.ScheduleMyRole]: 'Моя роль',
   [BaseLocaleKey.ScheduleLeave]: 'Покинуть',
   [BaseLocaleKey.ScheduleLeaveConfirm]: 'Покинуть мероприятие?',
+  [BaseLocaleKey.SchedulePassedPlural]: 'Прошедшие',
+  [BaseLocaleKey.SchedulePeriodEachWeekday]: 'Каждый $d',
+  [BaseLocaleKey.ScheduleNearest]: 'Следующее',
+  [BaseLocaleKey.ScheduleDisable]: 'Отключить',
+  [BaseLocaleKey.ScheduleEnable]: 'Включить',
+  [BaseLocaleKey.SchedulePausedPlural]: 'Отключённые',
+  [BaseLocaleKey.ScheduleMoreThanYear]: 'Больше года',
 
   [BaseLocaleKey.NumberSymbols]: '$n; $declension{{$n}{символ}{символа}{символов}}',
 

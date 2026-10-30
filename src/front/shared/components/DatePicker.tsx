@@ -1,6 +1,5 @@
 import { languageSystemCode, translateBase } from '#basis/locale';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
-import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover';
 import { useState } from 'react';
 import { Matcher } from 'react-day-picker';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
@@ -9,6 +8,7 @@ import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { twMerge } from 'tailwind-merge';
 import { Button } from './ui/button';
 import { Calendar } from './ui/calendar';
+import { Popover } from './ui/popover';
 
 export const DatePicker = (props: {
   initValue: string | number | Date | nil;
@@ -29,11 +29,11 @@ export const DatePicker = (props: {
   });
 
   return (
-    <Popover
+    <Popover.Root
       open={open}
       onOpenChange={setOpen}
     >
-      <PopoverTrigger asChild>
+      <Popover.Trigger asChild>
         <Button
           variant="outline"
           id="date"
@@ -47,8 +47,11 @@ export const DatePicker = (props: {
             isLoading={isLoading}
           />
         </Button>
-      </PopoverTrigger>
-      <PopoverContent align="start">
+      </Popover.Trigger>
+      <Popover.Content
+        align="start"
+        className="p-0"
+      >
         <Calendar
           mode="single"
           selected={date}
@@ -76,7 +79,7 @@ export const DatePicker = (props: {
             setIsLoading(false);
           }}
         />
-      </PopoverContent>
-    </Popover>
+      </Popover.Content>
+    </Popover.Root>
   );
 };

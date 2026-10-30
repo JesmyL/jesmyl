@@ -3,9 +3,11 @@ import { useAppNameContext } from '#basis/state/contexts';
 import { FullContentValue } from '#shared/ui/fullscreen-content/FullContent';
 import { useFullContent } from '#shared/ui/fullscreen-content/useFullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { cmComLastOpenSchwAtom } from '$cm/entities/index';
 import { useIndexSchedules } from '$index/shared/state';
 import styled from '@emotion/styled';
 import { Link } from '@tanstack/react-router';
+import { useAtomValue } from 'atomaric';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import {
   IScheduleWidget,
@@ -66,6 +68,11 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
   const now = Date.now();
   const [isFullOpen, setIsFullOpen] = useState(false);
   const appName = useAppNameContext();
+  const lastVisitedSchw = useAtomValue(cmComLastOpenSchwAtom);
+  const lastVisitedSchedule =
+    observeSchw === undefined || checkIsNaN(observeSchw)
+      ? schedules?.find(({ w, isPaused }) => w === lastVisitedSchw && !isPaused)
+      : undefined;
 
   const [updates, setUpdates] = useState<null | number>(null);
   useEffect(() => {
@@ -91,7 +98,9 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
   };
 
   const scheduleBoxes = useMemo(() => {
-    return (schedule ? [schedule] : [...(schedules ?? [])].sort((a, b) => a.start - b.start))
+    return (
+      schedule ? [schedule] : [...(schedules ?? [])].filter(sch => !sch.isPaused).sort((a, b) => a.start - b.start)
+    )
       .map(sch => {
         const lastFullDayIndex = findLastIndex(sch.days, day => day.list.length) ?? -1;
         const days = sch.days.slice(0, lastFullDayIndex + 1) ?? [];
@@ -408,9 +417,9 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
         onClick={fullValue && (() => setIsFullOpen(true))}
       >
         <Link
-          to={observeSchedule === undefined ? '.' : `/!other/$appName/schs`}
+          to={observeSchedule || lastVisitedSchedule ? `/!other/$appName/schs` : '.'}
           params={{ appName }}
-          search={{ schw: observeSchedule && observeSchedule.sch.w }}
+          search={{ schw: observeSchedule?.sch.w ?? lastVisitedSchedule?.w }}
         >
           <div className="flex items-center">
             <LazyIcon
@@ -427,6 +436,12 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
                   />
                   <span className="italic">{translateBase(BaseLocaleKey.ScheduleEventPassed)}</span>
                 </div>
+              ) : lastVisitedSchedule ? (
+                <ScheduleWidgetTopicTitle
+                  titleBox={lastVisitedSchedule}
+                  altTitle={translateBase(BaseLocaleKey.ScheduleEvent)}
+                  topicBox={lastVisitedSchedule}
+                />
               ) : (
                 <>{translateBase(BaseLocaleKey.ScheduleEventsNotFound)}</>
               ))}

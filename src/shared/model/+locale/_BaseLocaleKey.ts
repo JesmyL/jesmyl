@@ -775,4 +775,11 @@ export const enum BaseLocaleKey {
   ScheduleMyRole = 753,
   ScheduleLeave = 754,
   ScheduleLeaveConfirm = 755,
+  SchedulePassedPlural = 756,
+  SchedulePeriodEachWeekday = 757,
+  ScheduleNearest = 758,
+  ScheduleDisable = 759,
+  ScheduleEnable = 760,
+  SchedulePausedPlural = 761,
+  ScheduleMoreThanYear = 762,
 }

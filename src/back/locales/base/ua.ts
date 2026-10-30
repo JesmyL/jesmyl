@@ -850,6 +850,13 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.ScheduleMyRole]: 'Моя роль',
   [BaseLocaleKey.ScheduleLeave]: 'Покинути',
   [BaseLocaleKey.ScheduleLeaveConfirm]: 'Покинути захід?',
+  [BaseLocaleKey.SchedulePassedPlural]: 'Минулі заходи',
+  [BaseLocaleKey.SchedulePeriodEachWeekday]: 'Кожен $d',
+  [BaseLocaleKey.ScheduleNearest]: 'Наступне',
+  [BaseLocaleKey.ScheduleDisable]: 'Вимкнути',
+  [BaseLocaleKey.ScheduleEnable]: 'Увімкнути',
+  [BaseLocaleKey.SchedulePausedPlural]: 'Вимкнені',
+  [BaseLocaleKey.ScheduleMoreThanYear]: 'Понад рік',
 
   [BaseLocaleKey.NumberSymbols]: '$n; $declension{{$n}{символ}{символи}{символів}}',
 

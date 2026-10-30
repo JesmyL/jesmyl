@@ -29,6 +29,6 @@ export const cmComPlayerIsTextSlidesAtom = atom(false);
 export const cmComLaterComwListAtom = atom<CmComWid[]>([], 'cm:laterComwList');
 export const cmComSelectedComwsAtom = atom<CmComWid[]>([], 'cm:selectedComws');
 export const cmComLastOpenComwAtom = atom<CmComWid | und>(undefined, 'cm:lastOpenComw');
-export const cmComLastOpenSchwAtom = atom<ScheduleWidgetWid | nil>(null);
+export const cmComLastOpenSchwAtom = atom<ScheduleWidgetWid | nil>(null, 'cm:lastOpenSchw');
 
 export const cmComWidNumberDictAtom = atom<PRecord<CmComWid, { i: number; n: string }>>({});

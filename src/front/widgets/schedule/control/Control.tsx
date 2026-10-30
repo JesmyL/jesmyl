@@ -13,10 +13,12 @@ import {
   ScheduleAppInform,
   SchedulePeriodKind,
   SchedulePeriodWeekday,
+  ScheduleWidgetCleans,
   scheduleAppInformValues,
   takeSchedulePeriodNextStart,
 } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { howMillisecondsInHour, howMillisecondsInMin } from 'shared/const/ms';
 import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { ScheduleWidgetCustomAttachments } from '../atts/custom/CustomAttachments';
@@ -63,6 +65,26 @@ export const ScheduleWidgetControlContent = () => {
   const startDate = useMemo(() => new Date(schedule.start || Date.now()), [schedule.start]);
   const todayStart = useMemo(() => new Date().setHours(0, 0, 0, 0), []);
   const nextStart = useMemo(() => takeSchedulePeriodNextStart(schedule), [schedule]);
+  const nextStartAtWakeUp = useMemo(() => {
+    if (nextStart == null) return null;
+
+    const wakeUpMs = ScheduleWidgetCleans.computeDayWakeUpTime(
+      (schedule.withTech ? schedule.days[1] : schedule.days[0])?.wup ?? 0,
+      'number',
+    );
+
+    if (!wakeUpMs) return nextStart;
+
+    const date = new Date(nextStart);
+    date.setHours(
+      Math.trunc(wakeUpMs / howMillisecondsInHour),
+      Math.trunc((wakeUpMs % howMillisecondsInHour) / howMillisecondsInMin),
+      0,
+      0,
+    );
+
+    return date.getTime();
+  }, [nextStart, schedule]);
 
   if (!rights.isCanRedact)
     return (
@@ -80,6 +102,7 @@ export const ScheduleWidgetControlContent = () => {
   const weekdayWeeki =
     weekdayPeriod?.weeki ?? schedulePeriodWeekis[Math.min(4, Math.ceil(startDate.getDate() / 7) - 1)];
   const weekdayDayi = weekdayPeriod?.dayi ?? schedulePeriodWeekdays[startDate.getDay()];
+  const pauseActionKey = schedule.isPaused ? BaseLocaleKey.ScheduleEnable : BaseLocaleKey.ScheduleDisable;
 
   return (
     <>
@@ -89,11 +112,11 @@ export const ScheduleWidgetControlContent = () => {
 
       <div>
         {isPeriodic ? (
-          !nextStart || (
+          !nextStartAtWakeUp || (
             <div className="flex items-center gap-2 my-2">
               <LazyIcon icon="Calendar03" />
-              <span>{translateBase(BaseLocaleKey.ScheduleStart)}:</span>
-              <span className="font-bold">{makeDateLabel(nextStart, languageSystemCode)}</span>
+              <span>{translateBase(BaseLocaleKey.ScheduleNearest)}:</span>
+              <span className="font-bold">{makeDateLabel(nextStartAtWakeUp, languageSystemCode)}</span>
             </div>
           )
         ) : (
@@ -124,7 +147,12 @@ export const ScheduleWidgetControlContent = () => {
         <Dropdown
           id={period?.kind ?? null}
           items={[
-            { id: SchedulePeriodKind.Weekly, title: translateBase(BaseLocaleKey.SchedulePeriodWeekly) },
+            {
+              id: SchedulePeriodKind.Weekly,
+              title: translateBase(BaseLocaleKey.SchedulePeriodEachWeekday, {
+                d: takeScheduleWeekdayTitle(schedulePeriodWeekdays[startDate.getDay()]),
+              }),
+            },
             {
               id: SchedulePeriodKind.MonthDay,
               title: translateBase(BaseLocaleKey.SchedulePeriodMonthDay, { d: monthDayi }),
@@ -236,15 +264,6 @@ export const ScheduleWidgetControlContent = () => {
             onSend={() => schDaysTsjrpcClient.addDay({ props: scheduleScopeProps })}
           />
         )}
-        {checkAccess('sch', 'SCH', 'D') && (
-          <TheIconSendButton
-            className="text-xKO"
-            icon="Delete02"
-            confirm={translateBase(BaseLocaleKey.ScheduleRemoveConfirm)}
-            postfix={translateBase(BaseLocaleKey.ScheduleRemove)}
-            onSend={() => schGeneralTsjrpcClient.remove({ props: scheduleScopeProps })}
-          />
-        )}
       </div>
 
       <div>
@@ -252,6 +271,18 @@ export const ScheduleWidgetControlContent = () => {
         <ScheduleWidgetRegisterType />
         {rights.isCanTotalRedact && (
           <>
+            <TheIconSendButton
+              icon={schedule.isPaused ? 'Play' : 'Pause'}
+              postfix={translateBase(pauseActionKey)}
+              confirm={translateBase(pauseActionKey)}
+              className="mb-2"
+              onSend={() =>
+                schGeneralTsjrpcClient.setPaused({
+                  props: scheduleScopeProps,
+                  value: schedule.isPaused ? undefined : 1,
+                })
+              }
+            />
             <TheIconSendButton
               icon={rights.schedule.withTech ? 'CheckmarkSquare02' : 'Square'}
               postfix={translateBase(BaseLocaleKey.ScheduleFirstIsTechDay)}
@@ -289,6 +320,16 @@ export const ScheduleWidgetControlContent = () => {
           </>
         )}
       </div>
+
+      {checkAccess('sch', 'SCH', 'D') && (
+        <TheIconSendButton
+          className="text-xKO"
+          icon="Delete02"
+          confirm={translateBase(BaseLocaleKey.ScheduleRemoveConfirm)}
+          postfix={translateBase(BaseLocaleKey.ScheduleRemove)}
+          onSend={() => schGeneralTsjrpcClient.remove({ props: scheduleScopeProps })}
+        />
+      )}
     </>
   );
 };

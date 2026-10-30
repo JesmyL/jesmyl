@@ -32,6 +32,7 @@ export const scheduleDB = pgTable('schedule', {
 
   isRemoved: smallint('isRemoved').notNull().$type<Bool>().default(Bool.False),
   withTech: smallint('withTech').notNull().$type<Bool>().default(Bool.False),
+  isPaused: smallint('isPaused').notNull().$type<Bool>().default(Bool.False),
   appInform: smallint('appInform').$type<ScheduleAppInform>().default(1),
 
   start: bigint('start', { mode: 'number' }).notNull().default(0),

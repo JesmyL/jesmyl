@@ -1,4 +1,3 @@
-import { FooterPlacementManager } from '#basis/lib/FooterPlacementManager';
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { useConnectionState } from '#basis/lib/useConnectionState';
 import { languageSystemCode, translateBase } from '#basis/locale';
@@ -7,6 +6,8 @@ import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContaine
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useIndexSchedules } from '$index/shared/state';
 import { Link, useNavigate } from '@tanstack/react-router';
+import { IScheduleWidget, takeSchedulePeriodNextStart } from 'shared/api';
+import { howMillisecondsInDay } from 'shared/const/ms';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { schLinkAction } from '../links';
@@ -19,7 +20,6 @@ export const ScheduleWidgetListPage = () => {
   const connectionNode = useConnectionState();
   const navigate = useNavigate();
   const appName = useAppNameContext();
-  const lastVisitedSchedule = schedules?.find(schedule => schedule.w === FooterPlacementManager.lastVisitedSchw);
 
   schLinkAction.useOnAction(({ props }) => {
     if (props.inviteSch) {
@@ -35,6 +35,52 @@ export const ScheduleWidgetListPage = () => {
     return false;
   });
 
+  const now = Date.now();
+  const takeNearestStart = (schedule: IScheduleWidget) => takeSchedulePeriodNextStart(schedule, now) ?? schedule.start;
+  const futureSchedules = schedules
+    ?.filter(schedule => !schedule.isPaused && schedule.start && takeNearestStart(schedule) >= now)
+    .sort((a, b) => takeNearestStart(a) - takeNearestStart(b));
+  const pastSchedules = schedules
+    ?.filter(schedule => !schedule.isPaused && schedule.start && takeNearestStart(schedule) < now)
+    .sort((a, b) => b.start - a.start);
+  const pausedSchedules = schedules?.filter(schedule => schedule.isPaused);
+
+  const makeScheduleNodes = (list?: IScheduleWidget[], icon: KnownStameskaIconName = 'Calendar03') =>
+    list?.map(schedule => {
+      const start = takeNearestStart(schedule);
+      const days = Math.ceil((start - now) / howMillisecondsInDay);
+
+      return (
+        <Link
+          key={schedule.w}
+          to="/!other/$appName/schs"
+          params={{ appName }}
+          search={{ schw: schedule.w }}
+          className="pointer grid grid-rows-2 grid-cols-13 gap-x-1 py-2 border-[#aaa7]! border-b-[.5px]!"
+        >
+          <div className="row-span-2 flex center">
+            <LazyIcon icon={icon} />
+          </div>
+
+          <div className="col-span-12 font-bold">
+            {schedule.title}
+            {schedule.topic ? `: ${schedule.topic}` : ''}
+          </div>
+
+          <div className="col-span-12 text-xs">
+            {makeDateLabel(start, languageSystemCode)}
+            {days > 0 && (
+              <div>
+                {days > 365
+                  ? translateBase(BaseLocaleKey.ScheduleMoreThanYear)
+                  : translateBase(BaseLocaleKey.ScheduleBeforeDays, { num: days })}
+              </div>
+            )}
+          </div>
+        </Link>
+      );
+    });
+
   return (
     <PageContainerConfigurer
       className="ScheduleWidgetPage ScheduleWidgetListPage"
@@ -42,45 +88,22 @@ export const ScheduleWidgetListPage = () => {
       head={<span className="flex gap-2 m-2">{connectionNode}</span>}
       content={
         <>
-          {lastVisitedSchedule && (
-            <Link
-              to="/!other/$appName/schs"
-              params={{ appName }}
-              search={{ schw: lastVisitedSchedule.w }}
-              className="pointer flex items-center gap-2 py-2 mb-1 px-2 rounded-sm bg-x2 font-bold"
-            >
-              <LazyIcon icon="Clock01" />
-              {translateBase(BaseLocaleKey.ScheduleLastOpened)}
-              <span className="ml-auto text-xs font-normal ellipsis">{lastVisitedSchedule.title}</span>
-            </Link>
+          {makeScheduleNodes(futureSchedules)}
+          {!pastSchedules?.length || (
+            <>
+              <hr />
+              <div className="text-xs text-x3 italic mt-2">{translateBase(BaseLocaleKey.SchedulePassedPlural)}</div>
+              {makeScheduleNodes(pastSchedules)}
+            </>
           )}
-          {schedules
-            ?.sort((a, b) => b.start - a.start)
-            .map(schedule => {
-              if (!schedule.start || schedule.w === lastVisitedSchedule?.w) return null;
-
-              return (
-                <Link
-                  key={schedule.w}
-                  to="/!other/$appName/schs"
-                  params={{ appName }}
-                  search={{ schw: schedule.w }}
-                  className="pointer grid grid-rows-2 grid-cols-13 gap-x-1 py-2 border-[#aaa7]! border-b-[.5px]!"
-                >
-                  <div className="row-span-2 flex center">
-                    <LazyIcon icon="Calendar03" />
-                  </div>
-
-                  <div className="col-span-12 font-bold">
-                    {schedule.title}
-                    {schedule.topic ? `: ${schedule.topic}` : ''}
-                  </div>
-
-                  <div className="col-span-12 text-xs">{makeDateLabel(schedule.start, languageSystemCode)}</div>
-                </Link>
-              );
-            })}
           {checkAccess('sch', 'SCH', 'C') && <ScheduleCreateWidgetButton />}
+          {!pausedSchedules?.length || (
+            <>
+              <hr />
+              <div className="text-xs text-x3 italic mt-2">{translateBase(BaseLocaleKey.SchedulePausedPlural)}</div>
+              <div className="text-x3">{makeScheduleNodes(pausedSchedules, 'Pause')}</div>
+            </>
+          )}
         </>
       }
     />

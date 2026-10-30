@@ -1,10 +1,10 @@
-import { FooterPlacementManager } from '#basis/lib/FooterPlacementManager';
 import { useConnectionState } from '#basis/lib/useConnectionState';
 import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { closeAllAppNotifications } from '#shared/sw-register';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
+import { cmComLastOpenSchwAtom } from '$cm/entities/index';
 import { useAuth, useIndexSchedules, useUserInfoDict } from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
@@ -34,7 +34,7 @@ export const ScheduleWidgetPage = ({ inviteHash }: { inviteHash?: string }) => {
   useFixActualSchw(schw);
 
   useEffect(() => {
-    if (schedule) FooterPlacementManager.lastVisitedSchw = schedule.w;
+    if (schedule) cmComLastOpenSchwAtom.set(schedule.w);
   }, [schedule]);
 
   useEffect(() => {
