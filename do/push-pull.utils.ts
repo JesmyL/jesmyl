@@ -22,6 +22,7 @@ import {
   UserInfo,
   UserLogin,
 } from 'shared/api';
+import { Bool } from 'shared/enums';
 import { UserAccessRoleStoraged } from 'shared/model/index/access-rights';
 import { QuestionerBlank, QuestionerBlankWid } from 'shared/model/q';
 import { QuestionerUserAnswer } from 'shared/model/q/answer';
@@ -67,7 +68,7 @@ const T = <Type, FileName extends string>() => 1 as never as { F: FileName; T: T
 
 export const pullPushFileDirNameNet = {
   'apps/index/': {
-    'users/': T<UserInfo & { id: UserId }, UserLogin>(),
+    'users/': T<UserInfo & { id: UserId; isSilent?: Bool; mutedUntil?: number | nil }, UserLogin>(),
 
     'schedules/': T<OmitOwn<IScheduleWidget, 'm' | 'w'>, `${ScheduleWidgetWid}`>(),
 

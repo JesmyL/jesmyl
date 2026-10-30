@@ -358,6 +358,8 @@ export const pullPushDirFilesDictLazy = lazyInit(
                   u: makePgCheckedSelectSqlRaw(userDB, {
                     ls: 'len=0',
                     rights: 'len=0',
+                    isSilent: `=${Bool.False}`,
+                    mutedUntil: PgCheckFieldMode.RemoveIfNull,
                     r: PgCheckFieldMode.RemoveIfNull,
                     m: PgCheckFieldMode.Remove,
                   }),
@@ -374,7 +376,13 @@ export const pullPushDirFilesDictLazy = lazyInit(
             }),
 
           PUSH: async ({ id, ...user }) => {
-            const values = { ...user, ls: user.ls ?? [], rights: user.rights ?? {} };
+            const values = {
+              ...user,
+              ls: user.ls ?? [],
+              rights: user.rights ?? {},
+              mutedUntil: user.mutedUntil ?? null,
+              isSilent: user.isSilent ?? Bool.False,
+            };
 
             await db
               .insert(userDB)
@@ -441,6 +449,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
                 .select({
                   s: makePgCheckedSelectSqlRaw(scheduleDB, {
                     prevStart: '=0',
+                    period: PgCheckFieldMode.RemoveIfNull,
                     withTech: `=${Bool.False}`,
                     isRemoved: `=${Bool.False}`,
                     appInform: `=${Bool.True}`,
@@ -448,9 +457,9 @@ export const pullPushDirFilesDictLazy = lazyInit(
                   }),
                 })
                 .from(scheduleDB)
-            ).map(({ s: { m, w, id, ...sch } }) => {
+            ).map(({ s: { m, w, id, period, ...sch } }) => {
               return {
-                data: { ...schKeyOrdering, ...sch },
+                data: { ...schKeyOrdering, ...sch, ...(period == null ? {} : { period }) },
                 file: `${w}`,
                 name: sch.title,
               };
@@ -460,6 +469,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
             const values = {
               ...sch,
               w: extractNumber(schwStr),
+              period: sch.period ?? null,
               isRemoved: +!!sch.isRemoved,
               withTech: +!!sch.withTech,
               appInform: sch.appInform ?? 1,
