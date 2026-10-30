@@ -137,7 +137,7 @@ const ScheduleWidgetUserFace = ({ user }: { user: IScheduleWidgetUser }) => {
   const tgAva = rights.userInfoById.get(user.id)?.uauth.tgAva;
 
   return (
-    <span className="grid place-items-center size-9 shrink-0 rounded-full overflow-hidden bg-x3 text-x7 ring-1 ring-x4">
+    <span className="grid place-items-center size-9 shrink-0 rounded-full overflow-hidden bg-x5 text-x7 ring-1 ring-x4">
       {!tgAva || (
         <img
           src={tgAva}

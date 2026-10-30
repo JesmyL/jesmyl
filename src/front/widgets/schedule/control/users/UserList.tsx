@@ -67,7 +67,7 @@ export function ScheduleWidgetUserList({
 
   return (
     <>
-      {!withoutTitle || <div className="my-2">{expandNode}</div>}
+      {withoutTitle || <div className="my-2">{expandNode}</div>}
       {isExpand && (
         <div className="my-5 ml-2">
           {users.length ? (
