@@ -1,14 +1,15 @@
 import { FileStore } from 'back/complect/FileStore';
 import { NounPronsType } from 'back/complect/model';
 import { DeviceId, LocalSokiAuth } from 'shared/api';
+import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
 import { IndexValues } from 'shared/model/index/other';
 import { stameskaIconPack } from 'stameska-icon/pack';
-import * as rightTitlesFromFile from './rightTitles.json';
+import rightTitlesFromFile from './rightTitles.json';
 
 export const nounsFileStorage = new FileStore<NounPronsType>('/apps/index/nouns.json', { words: {} });
 export const pronounsFileStorage = new FileStore<NounPronsType>('/apps/index/pronouns.json', { words: {} });
 
-export const takeAccessRightTitles = () => rightTitlesFromFile;
+export const takeAccessRightTitles = (): IndexAppAccessRightTitles => rightTitlesFromFile;
 
 export const indexStameskaIconsFileStore = new FileStore<typeof stameskaIconPack>('/stameska-icons', null as never);
 

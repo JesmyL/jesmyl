@@ -26,6 +26,8 @@ export function IndexAccessRightsUpdateTable({
   return (
     <>
       {mapObjectEntries(rightTitles, (scope, { info, ...rightTitles }) => {
+        if (!info) return;
+
         return (
           <div
             key={scope}
