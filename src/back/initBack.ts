@@ -203,7 +203,7 @@ MemoryHigh=500M`,
 
   if (isInitialize) {
     if (!fs.existsSync(`${hostRootDir}/node_modules`)) {
-      await runCommand(`npm i --prefix /var/www/${hostConfig.host}/`);
+      await runCommand(`npm i --prefix ${hostRootDir}/`);
     }
 
     if (indexStameskaIconsFileStore.getValue() == null) indexStameskaIconsFileStore.setValue(stameskaIconPack);

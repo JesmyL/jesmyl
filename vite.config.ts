@@ -1,9 +1,9 @@
 import tailwindcss from '@tailwindcss/vite';
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
-import basicSsl from '@vitejs/plugin-basic-ssl';
 import react from '@vitejs/plugin-react';
 import { attrStylerVitePlugin } from 'attr-styler';
 import dns from 'dns';
+import { readFileSync } from 'fs';
 import { regExpertVitePlugin } from 'regexpert';
 import { defineConfig, loadEnv } from 'vite';
 import eslint from 'vite-plugin-eslint';
@@ -28,6 +28,7 @@ Object.entries(tsConfig.compilerOptions.paths).forEach(([aliasKey, [path]]) => {
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
+  const isHttps = env.VITE_IS_HTTPS === '1';
 
   return {
     esbuild: {
@@ -84,7 +85,17 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
-    server: { port: 3627, host: true },
+    server: {
+      port: 3627,
+      host: true,
+      // Тот же mkcert-серт, что и у бэка: браузеры уже доверяют локальному CA, промптов нет.
+      ...(isHttps && {
+        https: {
+          key: readFileSync('src/back/dev-certs/privkey.pem'),
+          cert: readFileSync('src/back/dev-certs/fullchain.pem'),
+        },
+      }),
+    },
     test: {
       globals: true,
       environment: 'jsdom',
@@ -96,7 +107,6 @@ export default defineConfig(({ mode }) => {
       exclude: [...configDefaults.exclude, 'src/electron-app/**'],
     },
     plugins: [
-      env.VITE_IS_HTTPS === '1' && basicSsl(),
       constEnumVitePlugin(),
       regExpertVitePlugin(),
       TanStackRouterVite({

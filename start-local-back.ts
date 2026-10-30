@@ -1,4 +1,5 @@
 import { exec } from 'child_process';
+import { checkIsEndsWith } from './src/shared/utils/checkIs';
 import { buildBackIndexFile } from './do/build-back-index';
 
 const errorsToPass = new Set([
@@ -6,7 +7,11 @@ const errorsToPass = new Set([
 ]);
 
 (async () => {
-  const [backIndexFilePath] = await buildBackIndexFile();
+  const backIndexFilePath = (await buildBackIndexFile()).find(fileName =>
+    checkIsEndsWith(fileName, 'back.index.cjs'),
+  );
+
+  if (!backIndexFilePath) throw new Error('Собранный back.index.cjs не найден');
 
   const proc = exec(`node ./${backIndexFilePath}`);
 

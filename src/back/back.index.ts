@@ -1,7 +1,7 @@
 import { Langi } from 'shared/api';
 import { CmComOrders } from 'shared/const/cm/Com/parents/20-Orders';
 import { Do } from 'shared/enums';
-import { iife } from 'shared/utils';
+import { iife, wait } from 'shared/utils';
 import { bibleTsjrpcBaseServer } from './apps/bible/tsjrpc';
 import { cmServerTsjrpcBase } from './apps/cm/tsjrpc.base';
 import { startCrTgAlarm } from './apps/index/crTgAlarm';
@@ -22,9 +22,7 @@ import { baseMessagesCatcher } from './sides/telegram-bot/complect/message-catch
 iife(async () => {
   if (!backConfig.isTest) await import('./initBack').then(m => m.initBack());
 
-  if (backConfig.isTest) await import('./drizzle/cloneDrizzleToLocal').then(m => m.cloneDrizzleToLocal());
-
-  if (!backConfig.isTest) await import('./drizzle/drizzleInitiator').then(m => m.drizzleInitiator());
+  if (!Do.It) if (backConfig.isTest) await import('./drizzle/cloneDrizzleToLocal').then(m => m.cloneDrizzleToLocal());
 
   const ws = sokiServer.start();
   if (Do.It) await import('./startExpressRouting').then(m => m.startExpressRouting(ws));
@@ -43,6 +41,9 @@ iife(async () => {
   startCrTgAlarm();
 
   initVisitsDigest();
+
+  await wait(5000);
+  await import('./drizzle/drizzleInitiator').then(m => m.drizzleInitiator());
 });
 
 const langLocales = {
