@@ -13,14 +13,11 @@ import {
   ScheduleAppInform,
   SchedulePeriodKind,
   SchedulePeriodWeekday,
-  ScheduleWidgetCleans,
   scheduleAppInformValues,
-  takeSchedulePeriodNextStart,
 } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
-import { howMillisecondsInHour, howMillisecondsInMin } from 'shared/const/ms';
-import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
+import { ScheduleWidgetStartTimeText } from '#widgets/schedule/complect/StartTimeText';
 import { ScheduleWidgetCustomAttachments } from '../atts/custom/CustomAttachments';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
@@ -56,6 +53,14 @@ const takeSchedulePeriodByKind = (kind: SchedulePeriodKind, date: Date): ISchedu
   return { kind: SchedulePeriodKind.Weekly };
 };
 
+const takeNearestWeekdayTime = (weekday: number, timeFrom: Date) => {
+  const date = new Date();
+  date.setDate(date.getDate() + (weekday + 7 - date.getDay()) % 7);
+  date.setHours(timeFrom.getHours(), timeFrom.getMinutes(), timeFrom.getSeconds(), timeFrom.getMilliseconds());
+
+  return date.getTime();
+};
+
 export const ScheduleWidgetControlContent = () => {
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
@@ -64,28 +69,6 @@ export const ScheduleWidgetControlContent = () => {
   const schedule = rights.schedule;
   const startDate = useMemo(() => new Date(schedule.start || Date.now()), [schedule.start]);
   const todayStart = useMemo(() => new Date().setHours(0, 0, 0, 0), []);
-  const nextStart = useMemo(() => takeSchedulePeriodNextStart(schedule), [schedule]);
-  const nextStartAtWakeUp = useMemo(() => {
-    if (nextStart == null) return null;
-
-    const wakeUpMs = ScheduleWidgetCleans.computeDayWakeUpTime(
-      (schedule.withTech ? schedule.days[1] : schedule.days[0])?.wup ?? 0,
-      'number',
-    );
-
-    if (!wakeUpMs) return nextStart;
-
-    const date = new Date(nextStart);
-    date.setHours(
-      Math.trunc(wakeUpMs / howMillisecondsInHour),
-      Math.trunc((wakeUpMs % howMillisecondsInHour) / howMillisecondsInMin),
-      0,
-      0,
-    );
-
-    return date.getTime();
-  }, [nextStart, schedule]);
-
   if (!rights.isCanRedact)
     return (
       <>
@@ -98,10 +81,8 @@ export const ScheduleWidgetControlContent = () => {
   const isPeriodic = period != null && period.kind !== SchedulePeriodKind.Once;
   const monthDayPeriod = period?.kind === SchedulePeriodKind.MonthDay ? period : null;
   const weekdayPeriod = period?.kind === SchedulePeriodKind.WeekdayOfMonth ? period : null;
-  const monthDayi = monthDayPeriod?.dayi ?? startDate.getDate();
-  const weekdayWeeki =
-    weekdayPeriod?.weeki ?? schedulePeriodWeekis[Math.min(4, Math.ceil(startDate.getDate() / 7) - 1)];
-  const weekdayDayi = weekdayPeriod?.dayi ?? schedulePeriodWeekdays[startDate.getDay()];
+  const selectedPeriodKind: SchedulePeriodKind | null =
+    period == null || period.kind === SchedulePeriodKind.Once ? null : period.kind;
   const pauseActionKey = schedule.isPaused ? BaseLocaleKey.ScheduleEnable : BaseLocaleKey.ScheduleDisable;
 
   return (
@@ -112,13 +93,7 @@ export const ScheduleWidgetControlContent = () => {
 
       <div>
         {isPeriodic ? (
-          !nextStartAtWakeUp || (
-            <div className="flex items-center gap-2 my-2">
-              <LazyIcon icon="Calendar03" />
-              <span>{translateBase(BaseLocaleKey.ScheduleNearest)}:</span>
-              <span className="font-bold">{makeDateLabel(nextStartAtWakeUp, languageSystemCode)}</span>
-            </div>
-          )
+          <ScheduleWidgetStartTimeText schedule={schedule} />
         ) : (
           <div className="flex items-center gap-2 my-2">
             <LazyIcon icon="Calendar03" />
@@ -144,36 +119,55 @@ export const ScheduleWidgetControlContent = () => {
             />
           </div>
         )}
-        <Dropdown
-          id={period?.kind ?? null}
+        <Dropdown<SchedulePeriodKind | null>
+          id={selectedPeriodKind}
           items={[
-            {
-              id: SchedulePeriodKind.Weekly,
-              title: translateBase(BaseLocaleKey.SchedulePeriodEachWeekday, {
-                d: takeScheduleWeekdayTitle(schedulePeriodWeekdays[startDate.getDay()]),
-              }),
-            },
-            {
-              id: SchedulePeriodKind.MonthDay,
-              title: translateBase(BaseLocaleKey.SchedulePeriodMonthDay, { d: monthDayi }),
-            },
+            { id: SchedulePeriodKind.Weekly, title: translateBase(BaseLocaleKey.SchedulePeriodEveryWeek) },
+            { id: SchedulePeriodKind.MonthDay, title: translateBase(BaseLocaleKey.SchedulePeriodMonthly) },
             {
               id: SchedulePeriodKind.WeekdayOfMonth,
-              title: translateBase(BaseLocaleKey.SchedulePeriodWeekdayOfMonth, {
-                n: weekdayWeeki,
-                d: takeScheduleWeekdayTitle(weekdayDayi),
-              }),
+              title: translateBase(BaseLocaleKey.SchedulePeriodWeekdayOfMonthKind),
             },
           ]}
           nullTitle={translateBase(BaseLocaleKey.ScheduleInformDisabled)}
           label={translateBase(BaseLocaleKey.SchedulePeriodicity)}
-          onSelectId={kind =>
-            schGeneralTsjrpcClient.setSchedulePeriod({
+          onSelectId={id => {
+            if (id == null)
+              return schGeneralTsjrpcClient.setSchedulePeriod({ props: scheduleScopeProps, period: null });
+
+            if (period?.kind === id) return;
+
+            return schGeneralTsjrpcClient.setSchedulePeriod({
               props: scheduleScopeProps,
-              period: kind == null ? null : takeSchedulePeriodByKind(kind, startDate),
-            })
-          }
+              period: takeSchedulePeriodByKind(id, startDate),
+            });
+          }}
         />
+        {period?.kind !== SchedulePeriodKind.Weekly || (
+          <Dropdown
+            id={startDate.getDay()}
+            items={schedulePeriodWeekdays.map(weekday => ({
+              id: weekday,
+              title: takeScheduleWeekdayTitle(weekday),
+            }))}
+            onSelectId={weekday => {
+              if (startDate.getDay() === weekday && period?.kind === SchedulePeriodKind.Weekly) return;
+
+              const setWeeklyPeriod = () => {
+                if (period?.kind === SchedulePeriodKind.Weekly) return;
+
+                return schGeneralTsjrpcClient.setSchedulePeriod({
+                  props: scheduleScopeProps,
+                  period: { kind: SchedulePeriodKind.Weekly },
+                });
+              };
+
+              return schGeneralTsjrpcClient
+                .setStartTime({ props: scheduleScopeProps, value: takeNearestWeekdayTime(weekday, startDate) })
+                .then(setWeeklyPeriod);
+            }}
+          />
+        )}
         {!monthDayPeriod || (
           <TextInput
             type="number"

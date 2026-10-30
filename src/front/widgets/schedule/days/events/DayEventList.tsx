@@ -28,9 +28,10 @@ type Props = {
   isForceExpand?: boolean;
   dayi: ScheduleWidgetDayi;
   dayScopeProps: ScheduleDayScopeProps;
+  periodShiftMs?: number;
 };
 
-export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand, dayScopeProps }: Props) {
+export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand, dayScopeProps, periodShiftMs }: Props) {
   const [isShowPeriodsNotTs, setIsShowTsNotPeriods] = useState(false);
   const [isReplacementInProcess, setIsReplacementInProcess] = useState(false);
   const rights = useScheduleWidgetRightsContext();
@@ -160,6 +161,7 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
                   eventTimes={times}
                   secretTime={secretTime}
                   isShowPeriodsNotTs={isShowPeriodsNotTs}
+                  periodShiftMs={periodShiftMs}
                   onClickOnTs={() => setIsShowTsNotPeriods(isNIs)}
                   bottomContent={isRedact =>
                     isRedact &&

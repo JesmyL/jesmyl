@@ -6,7 +6,7 @@ import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContaine
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useIndexSchedules } from '$index/shared/state';
 import { Link, useNavigate } from '@tanstack/react-router';
-import { IScheduleWidget, takeSchedulePeriodNextStart } from 'shared/api';
+import { IScheduleWidget, takeScheduleNearestStartMs } from 'shared/api';
 import { howMillisecondsInDay } from 'shared/const/ms';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { makeDateLabel } from 'shared/utils/makeDateLabel';
@@ -36,7 +36,7 @@ export const ScheduleWidgetListPage = () => {
   });
 
   const now = Date.now();
-  const takeNearestStart = (schedule: IScheduleWidget) => takeSchedulePeriodNextStart(schedule, now) ?? schedule.start;
+  const takeNearestStart = (schedule: IScheduleWidget) => takeScheduleNearestStartMs(schedule, now);
   const futureSchedules = schedules
     ?.filter(schedule => !schedule.isPaused && schedule.start && takeNearestStart(schedule) >= now)
     .sort((a, b) => takeNearestStart(a) - takeNearestStart(b));

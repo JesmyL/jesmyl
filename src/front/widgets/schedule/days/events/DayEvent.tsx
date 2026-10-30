@@ -43,6 +43,7 @@ interface Props {
   redact: boolean | nil;
   isPastDay: boolean;
   isLastEvent: boolean;
+  periodShiftMs?: number;
   bottomContent: (isRedact: boolean) => ReactNode;
   className?: string;
   isForceExpand?: boolean;
@@ -79,7 +80,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
     wakeupMs,
     props.dayi,
     props.eventTimes[props.eventi],
-  );
+  ) + (props.periodShiftMs ?? 0);
   const eventStartMs = eventFinishMs - eventTm * howMillisecondsInMin;
   let isPrevEvent = now > eventFinishMs;
 

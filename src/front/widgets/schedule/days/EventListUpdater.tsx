@@ -11,7 +11,9 @@ import {
   ScheduleWidgetCleans,
   ScheduleWidgetDayEventMi,
   ScheduleWidgetDayi,
+  checkIsSchedulePeriodic,
   indexScheduleGetDayEventTimes,
+  takeScheduleCurrentPeriodShiftMs,
 } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { emptyFunc, itNNull, retNull } from 'shared/utils';
@@ -47,6 +49,7 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
             return;
           }
 
+          const periodShiftMs = checkIsSchedulePeriodic(schedule) ? takeScheduleCurrentPeriodShiftMs(schedule) : 0;
           const { dayWup, list, newTypes } = ScheduleWidgetCleans.preparedText2DayList(text, schedule);
 
           const theDay = {
@@ -124,6 +127,7 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
                     day={theDay}
                     dayi={dayi}
                     isPastDay={false}
+                    periodShiftMs={periodShiftMs}
                     event={event}
                     eventTimes={times}
                     eventi={eventi}

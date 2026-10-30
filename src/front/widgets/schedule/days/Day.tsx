@@ -8,6 +8,7 @@ import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { useMemo, useState } from 'react';
 import {
+  checkIsSchedulePeriodic,
   indexScheduleCheckIsDayIsPast,
   indexScheduleGetDayStartMs,
   IScheduleWidget,
@@ -15,6 +16,7 @@ import {
   ScheduleDayScopeProps,
   ScheduleScopeProps,
   ScheduleWidgetDayi,
+  takeScheduleCurrentPeriodShiftMs,
 } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { isNIs } from 'shared/utils';
@@ -55,7 +57,9 @@ export const ScheduleWidgetDay = ({
   openFullDayAtom ??= atom<number | null>(null);
 
   const date = new Date(indexScheduleGetDayStartMs(schedule, dayi));
-  const isPastDay = indexScheduleCheckIsDayIsPast(schedule, dayi);
+  const isPeriodic = checkIsSchedulePeriodic(schedule);
+  const isPastDay = !isPeriodic && indexScheduleCheckIsDayIsPast(schedule, dayi);
+  const periodShiftMs = isPeriodic ? takeScheduleCurrentPeriodShiftMs(schedule) : 0;
   const title = textToCapitalizeCase(date.toLocaleDateString(languageSystemCode, { weekday: 'long' }));
   const times: number[] = [];
   const [isShowDay, setIsShowDay] = useState(!isPastDay);
@@ -176,6 +180,7 @@ export const ScheduleWidgetDay = ({
               dayScopeProps={dayScopeProps}
               isPastDay={isPastDay}
               isForceExpand={isPrint || isForceOpen}
+              periodShiftMs={periodShiftMs}
             />
           </>
         )}

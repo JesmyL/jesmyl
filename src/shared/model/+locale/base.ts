@@ -778,6 +778,9 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.ScheduleEnable]: LocaleSimpleString;
   [BaseLocaleKey.SchedulePausedPlural]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleMoreThanYear]: LocaleSimpleString;
+  [BaseLocaleKey.SchedulePeriodEveryWeek]: LocaleSimpleString;
+  [BaseLocaleKey.SchedulePeriodMonthly]: LocaleSimpleString;
+  [BaseLocaleKey.SchedulePeriodWeekdayOfMonthKind]: LocaleSimpleString;
 };
 
 type DeprecatedBaseLocaleKey =

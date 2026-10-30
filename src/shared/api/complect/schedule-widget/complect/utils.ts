@@ -9,7 +9,7 @@ import {
   ScheduleWidgetUserRoleRight,
   UserId,
 } from 'shared/api';
-import { howMillisecondsInDay, howMillisecondsInMin } from 'shared/const/ms';
+import { howMillisecondsInDay, howMillisecondsInHour, howMillisecondsInMin } from 'shared/const/ms';
 import { checkIsNumber } from 'shared/utils/checkIs';
 
 export const checkIsCanRedactScheduleComsList = (
@@ -77,6 +77,69 @@ export const takeSchedulePeriodNextStart = (
   }
 
   return null;
+};
+
+export const takeScheduleNearestStartMs = (schedule: IScheduleWidget, now = Date.now()): number => {
+  const nextStart = takeSchedulePeriodNextStart(schedule, now) ?? schedule.start;
+  const wakeUpMs = ScheduleWidgetCleans.computeDayWakeUpTime(
+    (schedule.withTech ? schedule.days[1] : schedule.days[0])?.wup ?? 0,
+    'number',
+  );
+  if (!wakeUpMs) return nextStart;
+
+  const date = new Date(nextStart);
+  date.setHours(
+    Math.trunc(wakeUpMs / howMillisecondsInHour),
+    Math.trunc((wakeUpMs % howMillisecondsInHour) / howMillisecondsInMin),
+    0,
+    0,
+  );
+
+  return date.getTime();
+};
+
+export const checkIsSchedulePeriodic = (schedule: Pick<IScheduleWidget, 'period'>) =>
+  schedule.period != null && schedule.period.kind !== SchedulePeriodKind.Once;
+
+export const takeScheduleCurrentPeriodShiftMs = (
+  schedule: Pick<IScheduleWidget, 'start' | 'period'>,
+  now = Date.now(),
+): number => {
+  const start = new Date(schedule.start);
+  const period = schedule.period;
+  if (period == null || period.kind === SchedulePeriodKind.Once || schedule.start >= now) return 0;
+
+  if (period.kind === SchedulePeriodKind.Weekly) {
+    const weekMs = howMillisecondsInDay * 7;
+    return Math.trunc((now - schedule.start) / weekMs) * weekMs;
+  }
+
+  // month-based: walk the months around now, tracking the latest period start within [schedule.start, now]
+  const anchor = new Date(now);
+  anchor.setMonth(anchor.getMonth() - 14);
+  let year = anchor.getFullYear();
+  let month = anchor.getMonth();
+  let lastMs = schedule.start;
+
+  for (let monthi = 0; monthi < 26; monthi++) {
+    const firstWeekday = new Date(year, month, 1).getDay();
+    const dayi =
+      period.kind === SchedulePeriodKind.MonthDay
+        ? period.dayi
+        : 1 + ((period.dayi - firstWeekday + 7) % 7) + (period.weeki - 1) * 7;
+    const next = new Date(year, month, dayi);
+    next.setHours(start.getHours(), start.getMinutes(), start.getSeconds(), start.getMilliseconds());
+    const nextMs = next.getTime();
+    if (nextMs > now) break;
+    // skip months where the day doesn't exist and candidates predating the schedule start
+    if (nextMs >= schedule.start && next.getMonth() === month) lastMs = nextMs;
+    if (++month === 12) {
+      month = 0;
+      year++;
+    }
+  }
+
+  return lastMs - schedule.start;
 };
 
 export const indexScheduleGetDayStartMs = (schedule: IScheduleWidget, dayi: ScheduleWidgetDayi) => {

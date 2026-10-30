@@ -3,7 +3,13 @@ import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import styled from '@emotion/styled';
 import { useEffect, useMemo, useState } from 'react';
-import { IScheduleWidget, ScheduleScopeProps, ScheduleWidgetDayi, ScheduleWidgetWidDef } from 'shared/api';
+import {
+  checkIsSchedulePeriodic,
+  IScheduleWidget,
+  ScheduleScopeProps,
+  ScheduleWidgetDayi,
+  ScheduleWidgetWidDef,
+} from 'shared/api';
 import { howMillisecondsInMin } from 'shared/const/ms';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { makeDateLabel } from 'shared/utils/makeDateLabel';
@@ -28,7 +34,10 @@ export function ScheduleWidget({
     () => ({ schw: schedule?.w ?? ScheduleWidgetWidDef }),
     [schedule?.w],
   );
-  const prevDate = schedule?.prevStart == null ? null : new Date(schedule.prevStart);
+  const prevDate =
+    schedule && !checkIsSchedulePeriodic(schedule) && schedule.prevStart != null
+      ? new Date(schedule.prevStart)
+      : null;
 
   const date = useMemo(() => new Date(schedule?.start || Date.now()), [schedule?.start]);
 

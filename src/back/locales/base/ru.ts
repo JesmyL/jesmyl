@@ -857,6 +857,9 @@ export const localeBaseRu = convertObjectToArray<LocaleBaseDelivered<Langi.Ru>>(
   [BaseLocaleKey.ScheduleEnable]: 'Включить',
   [BaseLocaleKey.SchedulePausedPlural]: 'Отключённые',
   [BaseLocaleKey.ScheduleMoreThanYear]: 'Больше года',
+  [BaseLocaleKey.SchedulePeriodEveryWeek]: 'Каждую неделю',
+  [BaseLocaleKey.SchedulePeriodMonthly]: 'Раз в месяц',
+  [BaseLocaleKey.SchedulePeriodWeekdayOfMonthKind]: 'День недели месяца',
 
   [BaseLocaleKey.NumberSymbols]: '$n; $declension{{$n}{символ}{символа}{символов}}',
 
