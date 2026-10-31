@@ -21,7 +21,7 @@
     "el-test": "npm run el-compile && npm run test --prefix src/electron-app",
     "el-build": "npm run el-install && npm run el-gen-config && npm run el-bump && npx electron-builder --config builder.config.json --projectDir src/electron-app -c.extraMetadata.main=dist/main.cjs --linux && npx electron-builder --config builder.config.json --projectDir src/electron-app -c.extraMetadata.main=dist/main.cjs --win",
     "el-start": "npm run el-compile && electron src/electron-app/dist/main.cjs",
-    "el-deploy": "tsx src/electron-app/src/deploy-info.ts && if npx tsx src/electron-app/src/has-server-down.ts; then npm run el-test; else echo '-- no update files on server yet, skipping el-test --'; fi && npm run el-build && tsx src/electron-app/src/deploy.ts"
+    "el-deploy": "tsx src/electron-app/src/deploy-info.ts && if npx tsx src/electron-app/src/has-server-down.ts; then npm run el-test; else echo '-- no update files on server yet, skipping el-test --'; fi && npm run el-build && tsx src/electron-app/src/smoke-built-app.ts && tsx src/electron-app/src/deploy.ts"
   },
   "browserslist": {
     "production": [
