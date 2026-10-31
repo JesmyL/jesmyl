@@ -20,14 +20,22 @@ const whitespaceReg = makeRegExp('/\\s+/g');
 const takeSupportDashMessage = (html: string) => {
   const method = html.match(methodCodeReg)?.[1];
 
-  if (method) return method.slice(0, 100);
+  if (!method)
+    return html
+      .replace(htmlTagReg, ' ')
+      .replace(secretCodeReg, '***')
+      .replace(whitespaceReg, ' ')
+      .trim()
+      .slice(0, 200);
 
-  return html
+  const description = html
+    .replace(methodCodeReg, ' ')
     .replace(htmlTagReg, ' ')
     .replace(secretCodeReg, '***')
     .replace(whitespaceReg, ' ')
-    .trim()
-    .slice(0, 200);
+    .trim();
+
+  return `${method} ${description}`.trim().slice(0, 200);
 };
 
 export const enum PostJRPCMessageScope {
