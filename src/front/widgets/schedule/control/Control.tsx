@@ -69,7 +69,14 @@ export const ScheduleWidgetControlContent = () => {
   const schedule = rights.schedule;
   const startDate = useMemo(() => new Date(schedule.start || Date.now()), [schedule.start]);
   const todayStart = useMemo(() => new Date().setHours(0, 0, 0, 0), []);
-  if (!rights.isCanRedact)
+  const isCanControl =
+    rights.isCanRedact ||
+    rights.isCanAddDays ||
+    rights.isCanAddEvents ||
+    rights.isCanRedactEventContent ||
+    rights.isCanRedactComsList;
+
+  if (!isCanControl)
     return (
       <>
         <ModalHeader>{translateBase(BaseLocaleKey.ScheduleMembers)}</ModalHeader>
@@ -92,162 +99,166 @@ export const ScheduleWidgetControlContent = () => {
       </ModalHeader>
 
       <div>
-        {isPeriodic ? (
-          <ScheduleWidgetStartTimeText schedule={schedule} />
-        ) : (
-          <div className="flex items-center gap-2 my-2">
-            <LazyIcon icon="Calendar03" />
-            <span>{translateBase(BaseLocaleKey.ScheduleStart)}</span>
-            <DatePicker
-              initValue={schedule.start || null}
-              disabled={[date => date.getTime() < todayStart]}
-              onSelect={date => {
-                if (!date) return null;
+        {!rights.isCanRedact || (
+          <>
+            {isPeriodic ? (
+              <ScheduleWidgetStartTimeText schedule={schedule} />
+            ) : (
+              <div className="flex items-center gap-2 my-2">
+                <LazyIcon icon="Calendar03" />
+                <span>{translateBase(BaseLocaleKey.ScheduleStart)}</span>
+                <DatePicker
+                  initValue={schedule.start || null}
+                  disabled={[date => date.getTime() < todayStart]}
+                  onSelect={date => {
+                    if (!date) return null;
 
-                if (schedule.start) {
-                  const prevStart = new Date(schedule.start);
-                  date.setHours(
-                    prevStart.getHours(),
-                    prevStart.getMinutes(),
-                    prevStart.getSeconds(),
-                    prevStart.getMilliseconds(),
-                  );
-                }
+                    if (schedule.start) {
+                      const prevStart = new Date(schedule.start);
+                      date.setHours(
+                        prevStart.getHours(),
+                        prevStart.getMinutes(),
+                        prevStart.getSeconds(),
+                        prevStart.getMilliseconds(),
+                      );
+                    }
 
-                return schGeneralTsjrpcClient.setStartTime({ props: scheduleScopeProps, value: date.getTime() });
-              }}
-            />
-          </div>
-        )}
-        <Dropdown<SchedulePeriodKind | null>
-          id={selectedPeriodKind}
-          items={[
-            { id: SchedulePeriodKind.Weekly, title: translateBase(BaseLocaleKey.SchedulePeriodEveryWeek) },
-            { id: SchedulePeriodKind.MonthDay, title: translateBase(BaseLocaleKey.SchedulePeriodMonthly) },
-            {
-              id: SchedulePeriodKind.WeekdayOfMonth,
-              title: translateBase(BaseLocaleKey.SchedulePeriodWeekdayOfMonthKind),
-            },
-          ]}
-          nullTitle={translateBase(BaseLocaleKey.ScheduleInformDisabled)}
-          label={translateBase(BaseLocaleKey.SchedulePeriodicity)}
-          onSelectId={id => {
-            if (id == null)
-              return schGeneralTsjrpcClient.setSchedulePeriod({ props: scheduleScopeProps, period: null });
+                    return schGeneralTsjrpcClient.setStartTime({ props: scheduleScopeProps, value: date.getTime() });
+                  }}
+                />
+              </div>
+            )}
+            <Dropdown<SchedulePeriodKind | null>
+              id={selectedPeriodKind}
+              items={[
+                { id: SchedulePeriodKind.Weekly, title: translateBase(BaseLocaleKey.SchedulePeriodEveryWeek) },
+                { id: SchedulePeriodKind.MonthDay, title: translateBase(BaseLocaleKey.SchedulePeriodMonthly) },
+                {
+                  id: SchedulePeriodKind.WeekdayOfMonth,
+                  title: translateBase(BaseLocaleKey.SchedulePeriodWeekdayOfMonthKind),
+                },
+              ]}
+              nullTitle={translateBase(BaseLocaleKey.ScheduleInformDisabled)}
+              label={translateBase(BaseLocaleKey.SchedulePeriodicity)}
+              onSelectId={id => {
+                if (id == null)
+                  return schGeneralTsjrpcClient.setSchedulePeriod({ props: scheduleScopeProps, period: null });
 
-            if (period?.kind === id) return;
-
-            return schGeneralTsjrpcClient.setSchedulePeriod({
-              props: scheduleScopeProps,
-              period: takeSchedulePeriodByKind(id, startDate),
-            });
-          }}
-        />
-        {period?.kind !== SchedulePeriodKind.Weekly || (
-          <Dropdown
-            id={startDate.getDay()}
-            items={schedulePeriodWeekdays.map(weekday => ({
-              id: weekday,
-              title: takeScheduleWeekdayTitle(weekday),
-            }))}
-            onSelectId={weekday => {
-              if (startDate.getDay() === weekday && period?.kind === SchedulePeriodKind.Weekly) return;
-
-              const setWeeklyPeriod = () => {
-                if (period?.kind === SchedulePeriodKind.Weekly) return;
+                if (period?.kind === id) return;
 
                 return schGeneralTsjrpcClient.setSchedulePeriod({
                   props: scheduleScopeProps,
-                  period: { kind: SchedulePeriodKind.Weekly },
+                  period: takeSchedulePeriodByKind(id, startDate),
                 });
-              };
-
-              return schGeneralTsjrpcClient
-                .setStartTime({ props: scheduleScopeProps, value: takeNearestWeekdayTime(weekday, startDate) })
-                .then(setWeeklyPeriod);
-            }}
-          />
-        )}
-        {!monthDayPeriod || (
-          <TextInput
-            type="number"
-            min={1}
-            max={31}
-            defaultValue={`${monthDayPeriod.dayi}`}
-            className="my-2 w-20"
-            onChanged={value => {
-              const dayi = Math.trunc(+value);
-              if (dayi < 1 || dayi > 31) return;
-
-              return schGeneralTsjrpcClient.setSchedulePeriod({
-                props: scheduleScopeProps,
-                period: { kind: SchedulePeriodKind.MonthDay, dayi },
-              });
-            }}
-          />
-        )}
-        {!weekdayPeriod || (
-          <div className="flex gap-2 my-2">
-            <Dropdown
-              id={weekdayPeriod.weeki}
-              items={schedulePeriodWeekis.map(weeki => ({ id: weeki, title: `${weeki}` }))}
-              onSelectId={weeki =>
-                schGeneralTsjrpcClient.setSchedulePeriod({
-                  props: scheduleScopeProps,
-                  period: { ...weekdayPeriod, weeki },
-                })
-              }
+              }}
             />
-            <Dropdown
-              id={weekdayPeriod.dayi}
-              items={schedulePeriodWeekdays.map(dayi => ({ id: dayi, title: takeScheduleWeekdayTitle(dayi) }))}
-              onSelectId={dayi =>
-                schGeneralTsjrpcClient.setSchedulePeriod({
-                  props: scheduleScopeProps,
-                  period: { ...weekdayPeriod, dayi },
-                })
-              }
+            {period?.kind !== SchedulePeriodKind.Weekly || (
+              <Dropdown
+                id={startDate.getDay()}
+                items={schedulePeriodWeekdays.map(weekday => ({
+                  id: weekday,
+                  title: takeScheduleWeekdayTitle(weekday),
+                }))}
+                onSelectId={weekday => {
+                  if (startDate.getDay() === weekday && period?.kind === SchedulePeriodKind.Weekly) return;
+
+                  const setWeeklyPeriod = () => {
+                    if (period?.kind === SchedulePeriodKind.Weekly) return;
+
+                    return schGeneralTsjrpcClient.setSchedulePeriod({
+                      props: scheduleScopeProps,
+                      period: { kind: SchedulePeriodKind.Weekly },
+                    });
+                  };
+
+                  return schGeneralTsjrpcClient
+                    .setStartTime({ props: scheduleScopeProps, value: takeNearestWeekdayTime(weekday, startDate) })
+                    .then(setWeeklyPeriod);
+                }}
+              />
+            )}
+            {!monthDayPeriod || (
+              <TextInput
+                type="number"
+                min={1}
+                max={31}
+                defaultValue={`${monthDayPeriod.dayi}`}
+                className="my-2 w-20"
+                onChanged={value => {
+                  const dayi = Math.trunc(+value);
+                  if (dayi < 1 || dayi > 31) return;
+
+                  return schGeneralTsjrpcClient.setSchedulePeriod({
+                    props: scheduleScopeProps,
+                    period: { kind: SchedulePeriodKind.MonthDay, dayi },
+                  });
+                }}
+              />
+            )}
+            {!weekdayPeriod || (
+              <div className="flex gap-2 my-2">
+                <Dropdown
+                  id={weekdayPeriod.weeki}
+                  items={schedulePeriodWeekis.map(weeki => ({ id: weeki, title: `${weeki}` }))}
+                  onSelectId={weeki =>
+                    schGeneralTsjrpcClient.setSchedulePeriod({
+                      props: scheduleScopeProps,
+                      period: { ...weekdayPeriod, weeki },
+                    })
+                  }
+                />
+                <Dropdown
+                  id={weekdayPeriod.dayi}
+                  items={schedulePeriodWeekdays.map(dayi => ({ id: dayi, title: takeScheduleWeekdayTitle(dayi) }))}
+                  onSelectId={dayi =>
+                    schGeneralTsjrpcClient.setSchedulePeriod({
+                      props: scheduleScopeProps,
+                      period: { ...weekdayPeriod, dayi },
+                    })
+                  }
+                />
+              </div>
+            )}
+            <StrongEditableField
+              fieldKey="title"
+              value={schedule}
+              isRedact
+              icon="SchoolReportCard"
+              title={translateBase(BaseLocaleKey.ScheduleHeader)}
+              onSend={value => schGeneralTsjrpcClient.rename({ props: scheduleScopeProps, value })}
             />
-          </div>
-        )}
-        <StrongEditableField
-          fieldKey="title"
-          value={schedule}
-          isRedact
-          icon="SchoolReportCard"
-          title={translateBase(BaseLocaleKey.ScheduleHeader)}
-          onSend={value => schGeneralTsjrpcClient.rename({ props: scheduleScopeProps, value })}
-        />
-        <StrongEditableField
-          fieldKey="topic"
-          value={schedule}
-          isRedact
-          icon="Bookmark03"
-          title={translateBase(BaseLocaleKey.ScheduleTopic)}
-          onSend={value => schGeneralTsjrpcClient.setTopic({ props: scheduleScopeProps, value })}
-        />
-        <StrongEditableField
-          fieldKey="dsc"
-          value={schedule}
-          isRedact
-          multiline
-          textClassName=" "
-          icon="File02"
-          title={translateBase(BaseLocaleKey.Description)}
-          onSend={value => schGeneralTsjrpcClient.setDescription({ props: scheduleScopeProps, value })}
-        />
-        <ScheduleWidgetEventTypeList
-          postfix={
-            <>
-              {translateBase(BaseLocaleKey.ScheduleEventTemplates)} <LazyIcon icon="ArrowRight01" />
-            </>
-          }
-          icon="Shapes"
-          schedule={schedule}
-        />
-        <ScheduleWidgetCustomAttachments tatts={schedule.tatts} />
-        {!schedule.days.length && !schedule.tatts.length && !schedule.types.length && (
-          <ScheduleWidgetCopy schw={schedule.w} />
+            <StrongEditableField
+              fieldKey="topic"
+              value={schedule}
+              isRedact
+              icon="Bookmark03"
+              title={translateBase(BaseLocaleKey.ScheduleTopic)}
+              onSend={value => schGeneralTsjrpcClient.setTopic({ props: scheduleScopeProps, value })}
+            />
+            <StrongEditableField
+              fieldKey="dsc"
+              value={schedule}
+              isRedact
+              multiline
+              textClassName=" "
+              icon="File02"
+              title={translateBase(BaseLocaleKey.Description)}
+              onSend={value => schGeneralTsjrpcClient.setDescription({ props: scheduleScopeProps, value })}
+            />
+            <ScheduleWidgetEventTypeList
+              postfix={
+                <>
+                  {translateBase(BaseLocaleKey.ScheduleEventTemplates)} <LazyIcon icon="ArrowRight01" />
+                </>
+              }
+              icon="Shapes"
+              schedule={schedule}
+            />
+            <ScheduleWidgetCustomAttachments tatts={schedule.tatts} />
+            {!schedule.days.length && !schedule.tatts.length && !schedule.types.length && (
+              <ScheduleWidgetCopy schw={schedule.w} />
+            )}
+          </>
         )}
         {!schedule.start || !rights.isCanAddDays || (
           <TheIconSendButton

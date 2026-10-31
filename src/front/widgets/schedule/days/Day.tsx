@@ -66,10 +66,11 @@ export const ScheduleWidgetDay = ({
   const rights = useScheduleWidgetRightsContext();
   const { editIcon, isRedact } = useIsRedactArea({
     redactable: true,
-    canRedact: rights.isCanRedact,
+    canRedact: rights.isCanRedact || rights.isCanAddEvents,
     isShowDoneButton: true,
     icon: 'MapsEditing',
   });
+  const isDayInfoRedact = isRedact && rights.isCanRedact;
   const [print, setPrint] = useState(defaultPrint);
   const dayScopeProps: ScheduleDayScopeProps = useMemo(
     () => ({ ...scheduleScopeProps, dayi }),
@@ -136,21 +137,21 @@ export const ScheduleWidgetDay = ({
           <>
             {rights.isCanReadTitles && (
               <div className="day-info">
-                {(isRedact || day.topic) && (
+                {(isDayInfoRedact || day.topic) && (
                   <StrongEditableField
                     value={day}
                     fieldKey="topic"
-                    isRedact={isRedact}
+                    isRedact={isDayInfoRedact}
                     icon="Bookmark03"
                     title={translateBase(BaseLocaleKey.ScheduleDayTopic)}
                     onSend={value => schDaysTsjrpcClient.setTopic({ props: dayScopeProps, value })}
                   />
                 )}
-                {(isRedact || day.dsc) && (
+                {(isDayInfoRedact || day.dsc) && (
                   <StrongEditableField
                     value={day}
                     fieldKey="dsc"
-                    isRedact={isRedact}
+                    isRedact={isDayInfoRedact}
                     multiline
                     textClassName=" "
                     icon="File02"

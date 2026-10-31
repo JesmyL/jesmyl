@@ -8,6 +8,7 @@ import { makeRegExp } from 'regexpert';
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleScopeProps, ScheduleWidgetDayi } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { useScheduleDayScopePropsContext } from '../complect/lib/contexts';
+import { useScheduleWidgetRightsContext } from '../contexts';
 import { schDaysTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetEventListUpdater } from './EventListUpdater';
 import { ScheduleWidgetPrintableDay } from './PrintableDay';
@@ -25,19 +26,22 @@ export function ScheduleWidgetDayEditPanel({ day, dayi, schedule, scheduleScopeP
   isOpenDayListUpdaterAtom ??= atom(false);
 
   const dayScopeProps = useScheduleDayScopePropsContext();
+  const rights = useScheduleWidgetRightsContext();
 
   return (
     <>
-      <StrongInputDateTimeExtracter
-        value={day.wup?.toFixed?.(2).replace(makeRegExp('/\\./'), ' ') || ''}
-        icon="Clock01"
-        title={translateBase(BaseLocaleKey.ScheduleDayStart)}
-        takeDate="NO"
-        takeTime="hour-min"
-        onSend={async (isChanged, value) =>
-          isChanged && schDaysTsjrpcClient.setBeginTime({ props: dayScopeProps, value })
-        }
-      />
+      {!rights.isCanRedact || (
+        <StrongInputDateTimeExtracter
+          value={day.wup?.toFixed?.(2).replace(makeRegExp('/\\./'), ' ') || ''}
+          icon="Clock01"
+          title={translateBase(BaseLocaleKey.ScheduleDayStart)}
+          takeDate="NO"
+          takeTime="hour-min"
+          onSend={async (isChanged, value) =>
+            isChanged && schDaysTsjrpcClient.setBeginTime({ props: dayScopeProps, value })
+          }
+        />
+      )}
       <TheIconButton
         icon="Printer"
         className="flex-max my-2"
@@ -57,23 +61,27 @@ export function ScheduleWidgetDayEditPanel({ day, dayi, schedule, scheduleScopeP
           })
         }
       />
-      <TheIconButton
-        icon="CalendarUpload02"
-        postfix={translateBase(BaseLocaleKey.ScheduleUploadText)}
-        disabled={day.list.length > 0}
-        disabledReason={translateBase(BaseLocaleKey.ScheduleDayMustBeEmpty)}
-        onClick={isOpenDayListUpdaterAtom.do.toggle}
-      />
+      {!rights.isCanAddEvents || (
+        <>
+          <TheIconButton
+            icon="CalendarUpload02"
+            postfix={translateBase(BaseLocaleKey.ScheduleUploadText)}
+            disabled={day.list.length > 0}
+            disabledReason={translateBase(BaseLocaleKey.ScheduleDayMustBeEmpty)}
+            onClick={isOpenDayListUpdaterAtom.do.toggle}
+          />
 
-      <FullContent openAtom={isOpenDayListUpdaterAtom}>
-        <ScheduleWidgetEventListUpdater
-          day={day}
-          dayi={dayi}
-          schedule={schedule}
-          onClose={isOpenDayListUpdaterAtom.reset}
-          scheduleScopeProps={scheduleScopeProps}
-        />
-      </FullContent>
+          <FullContent openAtom={isOpenDayListUpdaterAtom}>
+            <ScheduleWidgetEventListUpdater
+              day={day}
+              dayi={dayi}
+              schedule={schedule}
+              onClose={isOpenDayListUpdaterAtom.reset}
+              scheduleScopeProps={scheduleScopeProps}
+            />
+          </FullContent>
+        </>
+      )}
     </>
   );
 }

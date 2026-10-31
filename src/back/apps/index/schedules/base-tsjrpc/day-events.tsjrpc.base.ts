@@ -1,4 +1,4 @@
-import { TsjrpcBaseServer, ServerTSJRPCTool } from 'back/tsjrpc.base.server';
+import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import {
   IScheduleWidget,
   IScheduleWidgetDay,
@@ -13,7 +13,11 @@ import { SchDayEventsTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.mo
 import { takeNextMi, withInsertedBeforei } from 'shared/utils';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { objectLength } from 'shared/utils/object.utils';
-import { modifyScheduleDay, throwIfNoScheduleComsListRedact } from '../schedule-modificators';
+import {
+  modifyScheduleDay,
+  throwIfNoScheduleComsListRedact,
+  throwIfNoScheduleEventContentRedact,
+} from '../schedule-modificators';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
 const inEventTypeTtileOfDay = (sch: IScheduleWidget, props: ScheduleDayEventScopeProps) => {
@@ -127,23 +131,31 @@ export const schDayEventsTsjrpcBaseServer =
       super({
         scope: 'SchDayEvents',
         methods: {
-          setTopic: modifyEvent((event, { props, value }, sch) => {
+          setTopic: modifyEvent(async (event, { props, value }, sch, _day, tool) => {
+            await throwIfNoScheduleEventContentRedact(sch, tool.auth);
+
             event.topic = value;
 
             return `${inEventTypeTtileOfDay(sch, props)} установлена тема "${value}"`;
           }),
-          setDescription: modifyEvent((event, { props, value }, sch) => {
+          setDescription: modifyEvent(async (event, { props, value }, sch, _day, tool) => {
+            await throwIfNoScheduleEventContentRedact(sch, tool.auth);
+
             event.dsc = value;
 
             return `${inEventTypeTtileOfDay(sch, props)} установлено описание - "${value}"`;
           }),
-          setTm: modifyEvent((event, { props, value }, sch) => {
+          setTm: modifyEvent(async (event, { props, value }, sch, _day, tool) => {
+            await throwIfNoScheduleEventContentRedact(sch, tool.auth);
+
             event.tm = value;
 
             return `${inEventTypeTtileOfDay(sch, props)} установлено время продолжительности - ${value}`;
           }, true),
 
-          toggleIsSecret: modifyEvent((event, { props }, sch) => {
+          toggleIsSecret: modifyEvent(async (event, { props }, sch, _day, tool) => {
+            await throwIfNoScheduleEventContentRedact(sch, tool.auth);
+
             if (event.secret) delete event.secret;
             else event.secret = 1;
 

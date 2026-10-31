@@ -17,6 +17,7 @@ import {
 } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { emptyFunc, itNNull, retNull } from 'shared/utils';
+import { useScheduleWidgetRightsContext } from '../contexts';
 import { schDaysTsjrpcClient, schEventTypesTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetDayEvent } from './events/DayEvent';
 
@@ -32,6 +33,7 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
   const [value, setValue] = useState('');
   const [node, setNode] = useState<React.ReactNode>(null);
   const [errorText, setErrorText] = useState('');
+  const rights = useScheduleWidgetRightsContext();
   const dayScopeProps = useMemo(() => ({ ...scheduleScopeProps, dayi }), [dayi, scheduleScopeProps]);
 
   useEffect(() => {
@@ -93,7 +95,7 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
                 </>
               )}
 
-              {day.wup !== dayWup && (
+              {day.wup !== dayWup && rights.isCanRedact && (
                 <SendButton
                   title={translateBase(BaseLocaleKey.ScheduleDayStartTime, {
                     t: ScheduleWidgetCleans.computeDayWakeUpTime(dayWup, 'string'),
@@ -159,7 +161,7 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
         }, 300),
       )
       .effect();
-  }, [day, dayScopeProps, dayi, onClose, schedule, scheduleScopeProps, value]);
+  }, [day, dayScopeProps, dayi, onClose, rights.isCanRedact, schedule, scheduleScopeProps, value]);
 
   return (
     <div className="mt-10">

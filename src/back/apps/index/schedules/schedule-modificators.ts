@@ -44,6 +44,52 @@ export const throwIfNoScheduleTotalRedact = async (sch: IScheduleWidget, auth: L
     throw new Error('Нет прав на изменение прав участников расписания');
 };
 
+const takeAuthScheduleUserRights = async (sch: IScheduleWidget, auth: LocalSokiAuth | nil) => {
+  const authUser = await takeUserTiny({ l: takeLogginedAuthOrThrow(auth).login }, false);
+
+  return (authUser && sch.ctrl.users.find(user => user.id === authUser.id)?.R) ?? sch.ctrl.defu;
+};
+
+const makeThrowIfNoScheduleRights =
+  (ruleKey: ScheduleWidgetUserRoleRight, message: string) => async (sch: IScheduleWidget, auth: LocalSokiAuth | nil) => {
+    const R = await takeAuthScheduleUserRights(sch, auth);
+
+    if (
+      (scheduleWidgetUserRights.texts.find(({ id }) => id === ruleKey)?.individual
+        ? scheduleWidgetUserRights.checkIsHasIndividualRights(R, ruleKey)
+        : scheduleWidgetUserRights.checkIsHasRights(R, ruleKey)) ||
+      scheduleWidgetUserRights.checkIsHasRights(R, ScheduleWidgetUserRoleRight.TotalRedact)
+    )
+      return;
+
+    throw message;
+  };
+
+export const throwIfNoScheduleRedact = makeThrowIfNoScheduleRights(
+  ScheduleWidgetUserRoleRight.Redact,
+  'Нет прав на редактирование',
+);
+
+export const throwIfNoScheduleUsersRedact = makeThrowIfNoScheduleRights(
+  ScheduleWidgetUserRoleRight.RedactUsers,
+  'Нет прав на редактирование участников',
+);
+
+export const throwIfNoScheduleDaysAdd = makeThrowIfNoScheduleRights(
+  ScheduleWidgetUserRoleRight.AddDays,
+  'Нет прав на добавление дней',
+);
+
+export const throwIfNoScheduleEventsAdd = makeThrowIfNoScheduleRights(
+  ScheduleWidgetUserRoleRight.AddEvents,
+  'Нет прав на добавление событий',
+);
+
+export const throwIfNoScheduleEventContentRedact = makeThrowIfNoScheduleRights(
+  ScheduleWidgetUserRoleRight.RedactEventContent,
+  'Нет прав на редактирование событий',
+);
+
 export const throwIfNoScheduleComsListRedact = async (
   sch: IScheduleWidget,
   auth: LocalSokiAuth | nil,

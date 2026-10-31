@@ -1,4 +1,4 @@
-import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
+import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { makeRegExp } from 'regexpert';
 import {
   IScheduleWidget,
@@ -9,6 +9,8 @@ import {
   scheduleWidgetRegTypeRights,
   ScheduleWidgetUserMi,
   scheduleWidgetUserRights,
+  ScheduleWidgetUserRoleRight,
+  SokiAuthLogin,
   UserId,
 } from 'shared/api';
 import { SchUsersTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
@@ -16,7 +18,7 @@ import { takeNextMi } from 'shared/utils';
 import { objectLength } from 'shared/utils/object.utils';
 import { takeUserAuthName } from 'shared/utils/user.utils';
 import { takeAllUsersTiny, takeUserTiny } from '../../tinies/userTiny';
-import { modifySchedule, throwIfNoScheduleTotalRedact } from '../schedule-modificators';
+import { modifySchedule, throwIfNoScheduleTotalRedact, throwIfNoScheduleUsersRedact } from '../schedule-modificators';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
 const noteSuffixReg = makeRegExp('/\\s*\\([^)]*\\)\\s*$/');
@@ -34,21 +36,22 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
         user: IScheduleWidgetUser,
         props: Props,
         sch: IScheduleWidget,
+        tool: ServerTSJRPCTool,
       ) => PromiseOr<string | null>,
     ) =>
       modifySchedule<Props>(false, async (sch, props, tool) => {
-        await throwIfNoScheduleTotalRedact(sch, tool.auth);
+        await throwIfNoScheduleUsersRedact(sch, tool.auth);
 
         const user = sch.ctrl.users.find(user => user.mi === props.props.userMi);
         if (user === undefined) throw new Error('User not found');
-        return modifier(user, props, sch);
+        return modifier(user, props, sch, tool);
       });
 
     super({
       scope: 'SchUsers',
       methods: {
         addUsersByExcel: modifySchedule(false, async (sch, { users }, tool) => {
-          await throwIfNoScheduleTotalRedact(sch, tool.auth);
+          await throwIfNoScheduleUsersRedact(sch, tool.auth);
 
           const allUsers = await takeAllUsersTiny();
           const userIdByTitle = new Map<string, UserId>();
@@ -83,6 +86,23 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
           return (
             `В расписании ${scheduleTitleInBrackets(sch)} добавлены участники списком из Excel: ` +
             `${users.map(u => u.fio).join(', ')}`
+          );
+        }),
+        addUserByQr: modifySchedule(false, async (sch, { login }, tool) => {
+          await throwIfNoScheduleUsersRedact(sch, tool.auth);
+
+          const userTiny = await takeUserTiny({ l: login as SokiAuthLogin });
+
+          if (sch.ctrl.users.some(user => user.id === userTiny.id)) throw new Error('user exists');
+
+          sch.ctrl.users.push({
+            mi: takeNextMi(sch.ctrl.users, ScheduleWidgetUserMi.def),
+            id: userTiny.id,
+          });
+
+          return (
+            `В расписании ${scheduleTitleInBrackets(sch)} новый участник по QR: ` +
+            (takeUserAuthName(userTiny.uauth) || login)
           );
         }),
         addMe: modifySchedule(false, async (sch, { place }, { auth }) => {
@@ -164,7 +184,16 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
           );
         }),
 
-        setUserRights: modifyUser((user, { R }, sch) => {
+        setUserRights: modifyUser(async (user, { R }, sch, tool) => {
+          if (
+            scheduleWidgetUserRights.checkIsHasRights(
+              user.R ?? sch.ctrl.defu,
+              ScheduleWidgetUserRoleRight.TotalRedact,
+            ) ||
+            scheduleWidgetUserRights.checkIsHasRights(R, ScheduleWidgetUserRoleRight.TotalRedact)
+          )
+            await throwIfNoScheduleTotalRedact(sch, tool.auth);
+
           user.R = R;
 
           return (

@@ -29,6 +29,12 @@ export const ScheduleWidgetPage = ({ inviteHash }: { inviteHash?: string }) => {
   const auth = useAuth();
   const { byLogin } = useUserInfoDict();
   const myUserId = auth.login ? byLogin.get(auth.login)?.id : null;
+  const isCanControl =
+    rights.isCanRedact ||
+    rights.isCanAddDays ||
+    rights.isCanAddEvents ||
+    rights.isCanRedactEventContent ||
+    rights.isCanRedactComsList;
   const [isInviteJoinInProcess, setIsInviteJoinInProcess] = useState(false);
 
   useFixActualSchw(schw);
@@ -83,7 +89,7 @@ export const ScheduleWidgetPage = ({ inviteHash }: { inviteHash?: string }) => {
                     params={{ schw: `${schedule.w}` }}
                   />
                 </Button>
-                {!rights.isCanRedact || (
+                {!isCanControl || (
                   <Button
                     asChild
                     icon="PropertyEdit"

@@ -1,6 +1,7 @@
 import {
   IScheduleWidget,
   IScheduleWidgetDayEvent,
+  LocalSokiAuth,
   ScheduleDayScopeProps,
   ScheduleScopeProps,
   ScheduleWidgetDayListItemTypeBox,
@@ -11,6 +12,7 @@ export const onScheduleDayEventListSetEvent = Eventer.createValue<
   {
     dayProps: ScheduleDayScopeProps;
     list: OmitOwn<IScheduleWidgetDayEvent, 'mi'>[];
+    auth: LocalSokiAuth | nil;
   },
   Promise<IScheduleWidget>
 >();
@@ -19,6 +21,7 @@ export const onScheduleDayBeginTimeSetEvent = Eventer.createValue<
   {
     dayProps: ScheduleDayScopeProps;
     strWup: string;
+    auth: LocalSokiAuth | nil;
   },
   Promise<IScheduleWidget>
 >();

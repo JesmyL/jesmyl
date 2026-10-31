@@ -3,30 +3,41 @@ import { makeRegExp } from 'regexpert';
 import { ScheduleWidgetDayEventMi, ScheduleWidgetDayEventMiDef, ScheduleWidgetDayi } from 'shared/api';
 import { SchDaysTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
 import { takeNextMi, withInsertedBeforei } from 'shared/utils';
-import { modifySchedule, modifyScheduleDay, throwIfNoExternalMutationAuth } from '../schedule-modificators';
+import {
+  modifySchedule,
+  modifyScheduleDay,
+  throwIfNoExternalMutationAuth,
+  throwIfNoScheduleDaysAdd,
+  throwIfNoScheduleEventsAdd,
+  throwIfNoScheduleRedact,
+} from '../schedule-modificators';
 import { onScheduleDayBeginTimeSetEvent, onScheduleDayEventListSetEvent } from '../specific-modify-events';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
-onScheduleDayEventListSetEvent.listen(async ({ list, dayProps }) => {
+onScheduleDayEventListSetEvent.listen(async ({ list, dayProps, auth }) => {
   return (
-    await modifyScheduleDay(true, day => {
+    await modifyScheduleDay(true, async (day, _props, sch) => {
+      await throwIfNoScheduleEventsAdd(sch, auth);
+
       let miniMi = 0;
       day.list = list.map(event => ({ ...event, mi: miniMi++ as ScheduleWidgetDayEventMi }));
 
       return null;
-    })({ props: dayProps }, { auth: undefined, client: null, visitInfo: undefined })
+    })({ props: dayProps }, { auth: auth ?? undefined, client: null, visitInfo: undefined })
   ).value;
 });
 
-onScheduleDayBeginTimeSetEvent.listen(async ({ dayProps, strWup }) => {
+onScheduleDayBeginTimeSetEvent.listen(async ({ dayProps, strWup, auth }) => {
   return (
-    await modifyScheduleDay(true, day => {
+    await modifyScheduleDay(true, async (day, _props, sch) => {
+      await throwIfNoScheduleRedact(sch, auth);
+
       const wup = +strWup.replace(makeRegExp('/:/'), '.');
       if (isNaN(wup)) throw new Error(`time ${strWup} is invalid`);
       day.wup = wup;
 
       return null;
-    })({ props: dayProps }, { auth: undefined, client: null, visitInfo: undefined })
+    })({ props: dayProps }, { auth: auth ?? undefined, client: null, visitInfo: undefined })
   ).value;
 });
 
@@ -35,7 +46,9 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
     super({
       scope: 'SchDays',
       methods: {
-        addDay: modifySchedule(true, sch => {
+        addDay: modifySchedule(true, async (sch, _props, tool) => {
+          await throwIfNoScheduleDaysAdd(sch, tool.auth);
+
           sch.days.push({
             list: [],
             i: takeNextMi(sch.days, 0 as ScheduleWidgetDayi, 'i'),
@@ -49,7 +62,7 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
           throwIfNoExternalMutationAuth(tool);
 
           return {
-            value: await onScheduleDayBeginTimeSetEvent.invoke({ dayProps: props, strWup: strTm }),
+            value: await onScheduleDayBeginTimeSetEvent.invoke({ dayProps: props, strWup: strTm, auth: tool.auth }),
             description: `В расписании ${scheduleTitleInBrackets(props.schw)}, в ${props.dayi + 1} дне установлено время начала - ${strTm}`,
           };
         },
@@ -57,22 +70,28 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
           throwIfNoExternalMutationAuth(tool);
 
           return {
-            value: await onScheduleDayEventListSetEvent.invoke({ dayProps, list }),
+            value: await onScheduleDayEventListSetEvent.invoke({ dayProps, list, auth: tool.auth }),
             description: `В расписании ${scheduleTitleInBrackets(dayProps.schw)}, в ${dayProps.dayi + 1} дне установлено расписание из текста`,
           };
         },
 
-        setTopic: modifyScheduleDay(false, (day, { value, props }, sch) => {
+        setTopic: modifyScheduleDay(false, async (day, { value, props }, sch, tool) => {
+          await throwIfNoScheduleRedact(sch, tool.auth);
+
           day.topic = value;
 
           return `В расписании ${scheduleTitleInBrackets(sch)}, в ${props.dayi + 1} дне установлена тема "${value}"`;
         }),
-        setDescription: modifyScheduleDay(false, (day, { value, props }, sch) => {
+        setDescription: modifyScheduleDay(false, async (day, { value, props }, sch, tool) => {
+          await throwIfNoScheduleRedact(sch, tool.auth);
+
           day.dsc = value;
 
           return `В расписании ${scheduleTitleInBrackets(sch)}, в ${props.dayi + 1} дне установлено описание "${value}"`;
         }),
-        addEvent: modifyScheduleDay(true, (day, { value, props }, sch) => {
+        addEvent: modifyScheduleDay(true, async (day, { value, props }, sch, tool) => {
+          await throwIfNoScheduleEventsAdd(sch, tool.auth);
+
           day.list.push({
             type: value,
             mi: takeNextMi(day.list, ScheduleWidgetDayEventMiDef),
@@ -84,7 +103,9 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
           );
         }),
 
-        removeEvent: modifyScheduleDay(true, (day, { value, props }, sch) => {
+        removeEvent: modifyScheduleDay(true, async (day, { value, props }, sch, tool) => {
+          await throwIfNoScheduleEventsAdd(sch, tool.auth);
+
           const eventi = day.list.findIndex(event => event.mi === value.eventMi);
           if (eventi < 0) throw new Error('event not found');
           day.list.splice(eventi, 1);
@@ -92,7 +113,9 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
           return `В расписании ${scheduleTitleInBrackets(sch)}, из ${props.dayi + 1} дня удалено событие ${value}`;
         }),
 
-        moveEvent: modifyScheduleDay(true, (day, { value: { eventMi, beforei }, props }) => {
+        moveEvent: modifyScheduleDay(true, async (day, { value: { eventMi, beforei }, props }, sch, tool) => {
+          await throwIfNoScheduleEventsAdd(sch, tool.auth);
+
           const eventi = day.list.findIndex(event => event.mi === eventMi);
           if (eventi < 0) throw new Error('event not found');
 
