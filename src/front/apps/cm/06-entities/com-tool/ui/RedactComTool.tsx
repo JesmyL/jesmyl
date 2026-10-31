@@ -1,6 +1,6 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { translateBase } from '#basis/locale';
-import { cmComLastOpenSchwAtom, useCmComLastOpenComw } from '$cm/entities/com';
+import { cmComOpenedFromEventSchwAtom, useCmComLastOpenComw } from '$cm/entities/com';
 import { useAtomValue } from 'atomaric';
 import { lazy, Suspense } from 'react';
 import { MenuComToolName } from 'shared/api';
@@ -14,7 +14,7 @@ const CmEditorEditComTool = lazy(() =>
 export default function CmComToolRedact() {
   const checkAccess = useCheckUserAccessRightsInScope();
   const comw = useCmComLastOpenComw();
-  const schw = useAtomValue(cmComLastOpenSchwAtom);
+  const schw = useAtomValue(cmComOpenedFromEventSchwAtom);
 
   if (!checkAccess('cm', 'EDIT')) return;
 

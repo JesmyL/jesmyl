@@ -129,26 +129,23 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
 
   const [node, fullValue, observeSchedule]: [ReactNode, FullContentValue | und, (typeof scheduleBoxes)[number] | und] =
     useMemo(() => {
+      const isObserveSchwSet = observeSchw !== undefined && !checkIsNaN(observeSchw);
+
       let node = null;
       let fullValue: FullContentValue | und;
-      let schBox;
+      const schBox = isObserveSchwSet ? scheduleBoxes.find(wr => wr.sch.w === observeSchw) : undefined;
 
-      if (observeSchw !== undefined && !checkIsNaN(observeSchw)) {
-        schBox = scheduleBoxes.find(wr => wr.sch.w === observeSchw);
-        if (schBox === undefined)
-          node = <span className="text-xKO">{translateBase(BaseLocaleKey.ScheduleEventNotFound)}</span>;
-        else if (schBox.days.length === 0)
-          node = (
-            <div className={isJustShowAllDay ? 'full-size flex center column' : undefined}>
-              <ScheduleWidgetTopicTitle
-                titleBox={schBox.sch!}
-                altTitle={translateBase(BaseLocaleKey.ScheduleEvent)}
-                topicBox={schBox.sch}
-              />
-              <div className="italic">{translateBase(BaseLocaleKey.ScheduleComposing)}</div>
-            </div>
-          );
-      }
+      if (schBox !== undefined && schBox.days.length === 0)
+        node = (
+          <div className={isJustShowAllDay ? 'full-size flex center column' : undefined}>
+            <ScheduleWidgetTopicTitle
+              titleBox={schBox.sch!}
+              altTitle={translateBase(BaseLocaleKey.ScheduleEvent)}
+              topicBox={schBox.sch}
+            />
+            <div className="italic">{translateBase(BaseLocaleKey.ScheduleComposing)}</div>
+          </div>
+        );
 
       if (node === null) {
         const filter: (box: (typeof scheduleBoxes)[number]) => boolean = box => {
@@ -389,6 +386,9 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
           );
         }
       }
+
+      if (isObserveSchwSet && node === null && schBox === undefined)
+        node = <span className="text-xKO">{translateBase(BaseLocaleKey.ScheduleEventNotFound)}</span>;
 
       if (!fullValue) setIsFullOpen(false);
 

@@ -4,6 +4,7 @@ import {
   CmComCurrentComPackContext,
   cmComLastOpenComwAtom,
   cmComLastOpenSchwAtom,
+  cmComOpenedFromEventSchwAtom,
   CmComOpenRouteProps,
   CmComWithComListSearchFilterInput,
   CmComWithSearchedWords,
@@ -48,7 +49,10 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>({
 
     useEffect(() => {
       if (comw) cmComLastOpenComwAtom.set(comw);
-      if (schw) cmComLastOpenSchwAtom.set(schw);
+      if (schw) {
+        cmComLastOpenSchwAtom.set(schw);
+        cmComOpenedFromEventSchwAtom.set(schw);
+      } else cmComOpenedFromEventSchwAtom.set(null);
 
       metronomeCurrentMeterSizeAtom.set(meterSize);
       metronomeCurrentBpmAtom.set(beatsPerMinute);
