@@ -22,6 +22,7 @@ import { takeCatTermAtom } from './Cat';
 
 interface Props<Path extends keyof FileRoutesByPath> {
   isIgnoreSearch?: boolean;
+  isIgnoreLastOpenSchw?: boolean;
   path: Path;
   RouteComponent: () => JSX.Element;
   useComwList: () => CmComWid[];
@@ -36,6 +37,7 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>({
   useComwList,
   BroadcastComponent,
   isIgnoreSearch,
+  isIgnoreLastOpenSchw,
 }: Props<Path>) => {
   const ComRouteComponent = () => {
     const { comw, tran, schw } = useSearch({ from: path }) as CmComOpenRouteProps;
@@ -50,7 +52,7 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>({
     useEffect(() => {
       if (comw) cmComLastOpenComwAtom.set(comw);
       if (schw) {
-        cmComLastOpenSchwAtom.set(schw);
+        if (!isIgnoreLastOpenSchw) cmComLastOpenSchwAtom.set(schw);
         cmComOpenedFromEventSchwAtom.set(schw);
       } else cmComOpenedFromEventSchwAtom.set(null);
 
