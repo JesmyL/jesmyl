@@ -24,12 +24,7 @@ export const CmMeetingEvent = ({ dayi, eventMi, schw }: ScheduleDayEventPathProp
         <Link
           ref={linkRef}
           to="."
-          search={prev => ({
-            ...prev,
-            dayi: undefined,
-            eventMi: undefined,
-            attKey: undefined,
-          })}
+          search={prev => ({ ...prev, dayi: undefined, eventMi: undefined, attKey: undefined, schw: undefined })}
         >
           {children}
         </Link>

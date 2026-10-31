@@ -25,7 +25,7 @@ export const makeCmEventNestedRoute = <Path extends keyof FileRoutesByPath>(prop
 
     return (
       <>
-        {checkIsNotNil(schw) && checkIsNotNil(dayi) ? (
+        {checkIsNotNil(schw) ? (
           <CmMeetingEvent
             dayi={dayi}
             eventMi={eventMi}

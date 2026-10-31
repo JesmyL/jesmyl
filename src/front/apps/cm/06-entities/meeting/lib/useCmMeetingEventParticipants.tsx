@@ -1,10 +1,11 @@
 import { CmComFaceList, cmIDB } from '$cm/ext';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { IScheduleWidget, ScheduleWidgetDayi } from 'shared/api';
+import { checkIsNotNil } from 'shared/utils/checkIs';
 import { CmMeetingControls } from '../ui/Controls';
 import { CmMeetingEventModLabel } from '../ui/ModLabel';
 
-export const useCmMeetingEventParticipants = (schedule: IScheduleWidget | nil, dayi: ScheduleWidgetDayi) => {
+export const useCmMeetingEventParticipants = (schedule: IScheduleWidget | nil, dayi?: ScheduleWidgetDayi) => {
   const schw = schedule?.w;
   const dayiSet = new Set();
 
@@ -25,9 +26,9 @@ export const useCmMeetingEventParticipants = (schedule: IScheduleWidget | nil, d
   let headTitle: React.ReactNode = schedule?.title;
 
   const firstEvent = eventBoxes?.at(0)?.events.at(0);
-  const eventPack = firstEvent && pack?.pack[dayi]?.[firstEvent.mi];
+  const eventPack = checkIsNotNil(dayi) && firstEvent ? pack?.pack[dayi]?.[firstEvent.mi] : null;
 
-  if (isOnlyEvent && schedule && eventPack) {
+  if (isOnlyEvent && schedule && firstEvent && checkIsNotNil(dayi) && eventPack) {
     controls = (
       <CmMeetingControls
         comws={eventPack.s}
