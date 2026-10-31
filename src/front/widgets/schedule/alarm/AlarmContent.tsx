@@ -1,4 +1,4 @@
-import { translateBase } from '#basis/locale';
+import { languageSystemCode, translateBase } from '#basis/locale';
 import { useAppNameContext } from '#basis/state/contexts';
 import { FullContentValue } from '#shared/ui/fullscreen-content/FullContent';
 import { useFullContent } from '#shared/ui/fullscreen-content/useFullContent';
@@ -22,6 +22,7 @@ import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itNNull } from 'shared/utils';
 import { checkIsArray, checkIsFunction, checkIsNaN } from 'shared/utils/checkIs';
 import { twMerge } from 'tailwind-merge';
+import { makeScheduleTimeLeftLabel } from '../makeScheduleTimeLeftLabel';
 import { ScheduleWidgetTopicTitle } from '../complect/TopicTitle';
 import { ScheduleAlarmDay } from './AlarmDay';
 import { ScheduleWidgetAlarmInfoContent } from './InfoContent';
@@ -326,7 +327,6 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
         if (willSchBox) {
           const nowDate = new Date();
           const startDate = new Date(willSchBox.startMs);
-          const msTo = willSchBox.startMs - now;
 
           if (startDate.getDate() === nowDate.getDate()) {
             if (willSchBox.sch.withTech)
@@ -363,25 +363,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
                 altTitle={translateBase(BaseLocaleKey.ScheduleEvent)}
                 topicBox={willSchBox.sch}
               />
-              {startDate.getDate() === nowDate.getDate() ? (
-                msTo / howMillisecondsInHour < 1 ? (
-                  <>{translateBase(BaseLocaleKey.ScheduleLessThanHour)}</>
-                ) : (
-                  <>
-                    {translateBase(BaseLocaleKey.ScheduleBeforeHours, {
-                      num: Math.floor(msTo / howMillisecondsInHour),
-                    })}
-                  </>
-                )
-              ) : startDate.getDate() === nowDate.getDate() + 1 && startDate.getFullYear() === nowDate.getFullYear() ? (
-                <>{translateBase(BaseLocaleKey.ScheduleStartTomorrow)}</>
-              ) : (
-                <>
-                  {translateBase(BaseLocaleKey.ScheduleBeforeDays, {
-                    num: Math.floor(msTo / howMillisecondsInDay),
-                  })}
-                </>
-              )}
+              {makeScheduleTimeLeftLabel(willSchBox.startMs, now, languageSystemCode)}
             </div>
           );
         }

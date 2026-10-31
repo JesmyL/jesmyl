@@ -7,10 +7,10 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useIndexSchedules } from '$index/shared/state';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { IScheduleWidget, takeScheduleNearestStartMs } from 'shared/api';
-import { howMillisecondsInDay } from 'shared/const/ms';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { makeDateLabel } from 'shared/utils/makeDateLabel';
 import { schLinkAction } from '../links';
+import { makeScheduleTimeLeftLabel } from '../makeScheduleTimeLeftLabel';
 import { ScheduleCreateWidgetButton } from './CreateButton';
 
 export const ScheduleWidgetListPage = () => {
@@ -48,7 +48,8 @@ export const ScheduleWidgetListPage = () => {
   const makeScheduleNodes = (list?: IScheduleWidget[], icon: KnownStameskaIconName = 'Calendar03') =>
     list?.map(schedule => {
       const start = takeNearestStart(schedule);
-      const days = Math.ceil((start - now) / howMillisecondsInDay);
+      const dateLabel = makeDateLabel(start, languageSystemCode);
+      const timeLeftLabel = start > now ? makeScheduleTimeLeftLabel(start, now, languageSystemCode) : null;
 
       return (
         <Link
@@ -68,14 +69,8 @@ export const ScheduleWidgetListPage = () => {
           </div>
 
           <div className="col-span-12 text-xs">
-            {makeDateLabel(start, languageSystemCode)}
-            {days > 0 && (
-              <div>
-                {days > 365
-                  ? translateBase(BaseLocaleKey.ScheduleMoreThanYear)
-                  : translateBase(BaseLocaleKey.ScheduleBeforeDays, { num: days })}
-              </div>
-            )}
+            {timeLeftLabel !== dateLabel && dateLabel}
+            {!timeLeftLabel || <div>{timeLeftLabel}</div>}
           </div>
         </Link>
       );
