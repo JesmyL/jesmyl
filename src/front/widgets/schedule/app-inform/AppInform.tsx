@@ -13,16 +13,12 @@ export function ScheduleWidgetAppInformButton() {
 
   if (!auth.login || isSubscribed === null) return null;
 
-  const isOn = isSubscribed === Bool.True;
-
   return (
     <BrutalItem
-      iconNode={<LazyIcon icon={isOn ? 'NotificationOff01' : 'Notification01'} />}
-      title={translateBase(
-        isOn ? BaseLocaleKey.ScheduleDontInformMeApp : BaseLocaleKey.ScheduleInformMeApp,
-      )}
+      iconNode={<LazyIcon icon="Notification01" />}
+      title={translateBase(BaseLocaleKey.PushNotifications)}
       onClick={toggle}
-      box={<IconCheckbox checked={isOn} />}
+      box={<IconCheckbox checked={isSubscribed === Bool.True} />}
     />
   );
 }

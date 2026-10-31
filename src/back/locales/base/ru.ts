@@ -813,8 +813,6 @@ export const localeBaseRu = convertObjectToArray<LocaleBaseDelivered<Langi.Ru>>(
   [BaseLocaleKey.Oops]: 'Упс... Что-то пошло не по плану...',
   [BaseLocaleKey.UpdateHint]: 'Можно принудительно обновить версию приложения',
   [BaseLocaleKey.Cached]: 'Кэш',
-  [BaseLocaleKey.ScheduleDontInformMeApp]: 'Не оповещать меня в приложении',
-  [BaseLocaleKey.ScheduleInformMeApp]: 'Оповещать меня в приложении',
   [BaseLocaleKey.SchedulePushPermissionDenied]:
     'Уведомления запрещены. Разрешите их в настройках браузера или телефона: приложение → Уведомления',
   [BaseLocaleKey.SchedulePushSubscribeError]: 'Не удалось включить уведомления. Попробуйте ещё раз',
@@ -862,6 +860,7 @@ export const localeBaseRu = convertObjectToArray<LocaleBaseDelivered<Langi.Ru>>(
   [BaseLocaleKey.SchedulePeriodMonthly]: 'Раз в месяц',
   [BaseLocaleKey.SchedulePeriodWeekdayOfMonthKind]: 'День недели месяца',
   [BaseLocaleKey.ScheduleUserAdded]: 'Пользователь добавлен в расписание',
+  [BaseLocaleKey.PushNotifications]: 'Push-уведомления',
 
   [BaseLocaleKey.NumberSymbols]: '$n; $declension{{$n}{символ}{символа}{символов}}',
 

@@ -813,8 +813,6 @@ export const localeBaseKz = convertObjectToArray<LocaleBaseDelivered<Langi.Kz>>(
   [BaseLocaleKey.Oops]: 'Ой... Бірдеңе жоспардан тыс кетті...',
   [BaseLocaleKey.UpdateHint]: 'Қосымша нұсқасын мәжбүрлеп жаңартуға болады',
   [BaseLocaleKey.Cached]: 'Кэш',
-  [BaseLocaleKey.ScheduleDontInformMeApp]: 'Қолданбада маған хабарламау',
-  [BaseLocaleKey.ScheduleInformMeApp]: 'Қолданбада маған хабарлау',
   [BaseLocaleKey.SchedulePushPermissionDenied]:
     'Хабарламаларға тыйым салынған. Оларға браузер немесе телефон параметрлерінде рұқсат беріңіз: қолданба → Хабарламалар',
   [BaseLocaleKey.SchedulePushSubscribeError]: 'Хабарламаларды қосу мүмкін болмады. Қайталап көріңіз',
@@ -862,6 +860,7 @@ export const localeBaseKz = convertObjectToArray<LocaleBaseDelivered<Langi.Kz>>(
   [BaseLocaleKey.SchedulePeriodMonthly]: 'Айына бір рет',
   [BaseLocaleKey.SchedulePeriodWeekdayOfMonthKind]: 'Айдың апта күні',
   [BaseLocaleKey.ScheduleUserAdded]: 'Пайдаланушы кестеге қосылды',
+  [BaseLocaleKey.PushNotifications]: 'Push хабарламалары',
 
   [BaseLocaleKey.NumberSymbols]: '$n; $declension{{$n}{таңба}{таңба}{таңба}}',
 

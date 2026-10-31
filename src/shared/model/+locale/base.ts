@@ -443,8 +443,6 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.ScheduleBroadcastNotStarted]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleBroadcastFinished]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleChooseStreamer]: LocaleSimpleString;
-  [BaseLocaleKey.ScheduleDontInformMeApp]: LocaleSimpleString;
-  [BaseLocaleKey.ScheduleInformMeApp]: LocaleSimpleString;
   [BaseLocaleKey.SchedulePushPermissionDenied]: LocaleSimpleString;
   [BaseLocaleKey.SchedulePushSubscribeError]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleAppInform]: LocaleSimpleString;
@@ -783,6 +781,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.SchedulePeriodMonthly]: LocaleSimpleString;
   [BaseLocaleKey.SchedulePeriodWeekdayOfMonthKind]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleUserAdded]: LocaleSimpleString;
+  [BaseLocaleKey.PushNotifications]: LocaleSimpleString;
 };
 
 type DeprecatedBaseLocaleKey =

@@ -813,8 +813,6 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.Oops]: 'Упс... Щось пішло не за планом...',
   [BaseLocaleKey.UpdateHint]: 'Можна примусово оновити версію додатка',
   [BaseLocaleKey.Cached]: 'Кеш',
-  [BaseLocaleKey.ScheduleDontInformMeApp]: 'Не повідомляти мене в застосунку',
-  [BaseLocaleKey.ScheduleInformMeApp]: 'Повідомляти мене в застосунку',
   [BaseLocaleKey.SchedulePushPermissionDenied]:
     'Сповіщення заборонено. Дозвольте їх у налаштуваннях браузера або телефона: застосунок → Сповіщення',
   [BaseLocaleKey.SchedulePushSubscribeError]: 'Не вдалося увімкнути сповіщення. Спробуйте ще раз',
@@ -862,6 +860,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.SchedulePeriodMonthly]: 'Раз на місяць',
   [BaseLocaleKey.SchedulePeriodWeekdayOfMonthKind]: 'День тижня місяця',
   [BaseLocaleKey.ScheduleUserAdded]: 'Користувача додано до розкладу',
+  [BaseLocaleKey.PushNotifications]: 'Push-повідомлення',
 
   [BaseLocaleKey.NumberSymbols]: '$n; $declension{{$n}{символ}{символи}{символів}}',
 

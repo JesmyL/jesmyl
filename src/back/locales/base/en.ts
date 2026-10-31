@@ -810,8 +810,6 @@ export const localeBaseEn = convertObjectToArray<LocaleBaseDelivered<Langi.En>>(
   [BaseLocaleKey.Oops]: 'Oops... Something went wrong...',
   [BaseLocaleKey.UpdateHint]: 'You can force-update the app version',
   [BaseLocaleKey.Cached]: 'Cached',
-  [BaseLocaleKey.ScheduleDontInformMeApp]: 'Do not notify me in the app',
-  [BaseLocaleKey.ScheduleInformMeApp]: 'Notify me in the app',
   [BaseLocaleKey.SchedulePushPermissionDenied]:
     'Notifications are blocked. Allow them in your browser or phone settings: app → Notifications',
   [BaseLocaleKey.SchedulePushSubscribeError]: 'Could not enable notifications. Try again',
@@ -859,6 +857,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBaseDelivered<Langi.En>>(
   [BaseLocaleKey.SchedulePeriodMonthly]: 'Every month',
   [BaseLocaleKey.SchedulePeriodWeekdayOfMonthKind]: 'Weekday of month',
   [BaseLocaleKey.ScheduleUserAdded]: 'User added to the schedule',
+  [BaseLocaleKey.PushNotifications]: 'Push notifications',
 
   [BaseLocaleKey.NumberSymbols]: '$n; $declension{{$n}{symbol}{symbols}{symbols}}',
 

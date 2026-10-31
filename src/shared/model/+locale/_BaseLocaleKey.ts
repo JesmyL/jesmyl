@@ -731,8 +731,6 @@ export const enum BaseLocaleKey {
   Oops = 714,
   UpdateHint = 715,
   Cached = 716,
-  ScheduleDontInformMeApp = 717,
-  ScheduleInformMeApp = 718,
   SchedulePushPermissionDenied = 719,
   SchedulePushSubscribeError = 720,
   ScheduleAppInform = 721,
@@ -787,4 +785,5 @@ export const enum BaseLocaleKey {
   SchedulePeriodMonthly = 765,
   SchedulePeriodWeekdayOfMonthKind = 766,
   ScheduleUserAdded = 767,
+  PushNotifications = 768,
 }
