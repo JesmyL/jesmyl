@@ -28,42 +28,28 @@ export const useCmComFaceScrollToCurrentComFace = (
     const comwi = props.list.findIndex(com => com.w === currentComw);
     if (comwi < 0) return;
 
-    const container = findElementScrollParent(listNode);
-    if (!container) return;
+    /**
+     * The slice is empty until the limits effect re-renders it, so before the rows mount the only differing ancestor
+     * may be a non-scrollable wrapper: the scroll parent is resolved below, once the real scroller overflows.
+     */
+    let container: Element | nil = null;
+    /** The pre-position is a one-shot: it waits until both the scroll parent and the mounted rows are known. */
+    let isPrePositioned = false;
 
-    const scrollDeltaToCentre = (node: Element) => {
+    const scrollDeltaToCentre = (scrollContainer: Element, node: Element) => {
       const nodeRect = node.getBoundingClientRect();
 
-      return nodeRect.top - container.getBoundingClientRect().top - (container.clientHeight - nodeRect.height) / 2;
+      return nodeRect.top - scrollContainer.getBoundingClientRect().top - (scrollContainer.clientHeight - nodeRect.height) / 2;
     };
 
-    const smoothScrollTo = (top: number) => container.scrollTo({ top, behavior: 'smooth' });
+    const smoothScrollTo = (scrollContainer: Element, top: number) =>
+      scrollContainer.scrollTo({ top, behavior: 'smooth' });
 
     /** The target of the last scroll command: while it stays put, the smooth animation is in flight and left alone. */
     let lastTargetTop: number | nil = null;
     /** The deviation of the previous frame: while it shrinks, the smooth animation makes progress. */
     let prevAbsDelta: number | nil = null;
     let stalledFrames = 0;
-
-    /**
-     * Phase 1: pre-position instantly to the estimated offset, so the virtualized window mounts the target row.
-     * Must stay instant and unconditional: a smooth jump would be interrupted by the same re-slice it must survive.
-     */
-    const firstRow = listNode.firstElementChild;
-    const secondRow = listNode.children[1];
-    if (firstRow) {
-      const firstComwi = props.list.findIndex(
-        com => com.w === +firstRow.id.slice(cmComFaceCurrentComwIdPrefix.length),
-      );
-      const rowHeight =
-        firstRow instanceof HTMLElement && secondRow instanceof HTMLElement
-          ? secondRow.offsetTop - firstRow.offsetTop
-          : firstRow.getBoundingClientRect().height;
-
-      if (firstComwi >= 0 && rowHeight) {
-        container.scrollTop = container.scrollTop + scrollDeltaToCentre(firstRow) + (comwi - firstComwi) * rowHeight;
-      }
-    }
 
     const selector = `#${cmComFaceCurrentComwIdPrefix}${currentComw}`;
     let frame = 0;
@@ -74,10 +60,36 @@ export const useCmComFaceScrollToCurrentComFace = (
     const confirmScroll = () => {
       frame++;
 
+      if (!container && listNode.firstElementChild) container = findElementScrollParent(listNode);
+
+      /**
+       * Phase 1: pre-position instantly to the estimated offset, so the virtualized window mounts the target row.
+       * Must stay instant and unconditional: a smooth jump would be interrupted by the same re-slice it must survive.
+       */
+      if (container && !isPrePositioned) {
+        const firstRow = listNode.firstElementChild;
+        const secondRow = listNode.children[1];
+        if (firstRow) {
+          const firstComwi = props.list.findIndex(
+            com => com.w === +firstRow.id.slice(cmComFaceCurrentComwIdPrefix.length),
+          );
+          const rowHeight =
+            firstRow instanceof HTMLElement && secondRow instanceof HTMLElement
+              ? secondRow.offsetTop - firstRow.offsetTop
+              : firstRow.getBoundingClientRect().height;
+
+          if (firstComwi >= 0 && rowHeight) {
+            container.scrollTop =
+              container.scrollTop + scrollDeltaToCentre(container, firstRow) + (comwi - firstComwi) * rowHeight;
+            isPrePositioned = true;
+          }
+        }
+      }
+
       const node = listNode.querySelector<HTMLElement>(selector);
 
-      if (node) {
-        const delta = scrollDeltaToCentre(node);
+      if (container && node) {
+        const delta = scrollDeltaToCentre(container, node);
         const absDelta = Math.abs(delta);
         const targetTop = container.scrollTop + delta;
         /** The window renders fresh rows when it re-slices, so the same com-face gets a new node. */
@@ -109,7 +121,7 @@ export const useCmComFaceScrollToCurrentComFace = (
             stalledFrames = 0;
           } else if (isSmoothAttempt) {
             /** Phase 2: the row is mounted — polish with a smooth scroll; re-aim when a re-slice shifts the target. */
-            smoothScrollTo(targetTop);
+            smoothScrollTo(container, targetTop);
             lastTargetTop = targetTop;
             prevAbsDelta = absDelta;
             stalledFrames = 0;
