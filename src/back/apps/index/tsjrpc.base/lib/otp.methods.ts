@@ -28,7 +28,7 @@ import { resetUserTiny } from '../../tinies/userTiny';
 import { emailSentOTPLetters } from '../const/emailSentOTPLetters';
 
 const minutesUntilExpire = 5;
-const minutesUntilEmail = 2;
+const minutesUntilEmail = 1;
 const emailTimeouts = new Map<number, TimeOut>();
 const otpPushTitleTemplate = 'Код верификации - $c';
 

@@ -3,7 +3,6 @@ import { insertDashMessage } from 'back/dash/visits';
 import { sendEmailMessage } from 'back/sides/emailer/lib/sendEmailMessage';
 import { EmailerAuthConfigKey } from 'back/sides/emailer/model';
 import TgBot from 'node-telegram-bot-api';
-import { makeRegExp } from 'regexpert';
 import { UserLogin } from 'shared/api';
 import { DashMessageKind } from 'shared/model/index/visitsDashboard';
 import { emptyFunc } from 'shared/utils';
@@ -11,32 +10,6 @@ import { JesmylTelegramBot } from './tg-bot';
 
 const dateConfig = { day: '2-digit', year: 'numeric', month: '2-digit', weekday: 'short' } as const;
 const changesScopeTitle = 'Changes';
-
-const methodCodeReg = makeRegExp('/<code>([^<]*)<\\/code>/');
-const htmlTagReg = makeRegExp('/<[^>]*>/g');
-const secretCodeReg = makeRegExp('/\\b\\d{5,6}\\b|[\\w.+-]+@[\\w.-]+\\.[\\w.-]+/g');
-const whitespaceReg = makeRegExp('/\\s+/g');
-
-const takeSupportDashMessage = (html: string) => {
-  const method = html.match(methodCodeReg)?.[1];
-
-  if (!method)
-    return html
-      .replace(htmlTagReg, ' ')
-      .replace(secretCodeReg, '***')
-      .replace(whitespaceReg, ' ')
-      .trim()
-      .slice(0, 200);
-
-  const description = html
-    .replace(methodCodeReg, ' ')
-    .replace(htmlTagReg, ' ')
-    .replace(secretCodeReg, '***')
-    .replace(whitespaceReg, ' ')
-    .trim();
-
-  return `${method} ${description}`.trim().slice(0, 200);
-};
 
 export const enum PostJRPCMessageScope {
   Changes,
@@ -78,7 +51,7 @@ export const postJRPCMessage = async (
   if (backConfig.isTest) return;
 
   const kind = dashKindByScope[options.scope ?? options.tgBot.scope];
-  const dashMessage = options.dashMessage ?? (kind === DashMessageKind.Support ? takeSupportDashMessage(html) : html);
+  const dashMessage = options.dashMessage ?? html;
 
   insertDashMessage(dashMessage, null, kind, options.login ?? null).catch(emptyFunc);
 
