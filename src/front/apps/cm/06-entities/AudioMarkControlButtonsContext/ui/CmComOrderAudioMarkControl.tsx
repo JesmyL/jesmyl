@@ -1,6 +1,7 @@
 import { Button } from '#shared/components/ui/button';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import {
+  cmComAudioPlayerIsFromPlayerPageAtom,
   cmComAudioPlayerPlaySrcAtom,
   cmComAudioPlayerSwitchIsPlay,
   cmComAudioPlayerUpdateCurrentTime,
@@ -82,6 +83,7 @@ const Child = ({ com, isHideShortTime, isNeedCompute, mapNode, preTimeAtom, chil
             className={twMerge('relative mx-[.2em] max-w-[80vw]', className)}
             onClick={event => {
               event.stopPropagation();
+              cmComAudioPlayerIsFromPlayerPageAtom.set(false);
               cmComAudioPlayerUpdateCurrentTime(+time - takeMinusTime());
               cmComAudioPlayerSwitchIsPlay(true);
             }}

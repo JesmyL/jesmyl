@@ -19,9 +19,16 @@ import {
   cmComAudioPlayerUpdateCurrentTime,
   takeCmComAudioPlayerCurrentTime,
 } from '../state/current-play-com';
+import { cmComAudioPlayerIsFromPlayerPageAtom } from '../state/atoms';
 
 const currentButtonElemAccentClassName = 'text-x7';
 const windowDocument = window.document;
+
+/** A mark jump is a player-page-independent restart: an ended track must not walk on to the next com. */
+const playFromMarks = () => {
+  cmComAudioPlayerIsFromPlayerPageAtom.set(false);
+  cmComAudioPlayerSwitchIsPlay(true);
+};
 
 const enum MarkTimePosition {
   PrePrev,
@@ -131,7 +138,7 @@ export const useCmComAudioPlayerMoversController = (
     return hookEffectPipe()
       .pipe(
         addEventListenerPipe(prevRef.current, 'click', () => {
-          cmComAudioPlayerSwitchIsPlay(true);
+          playFromMarks();
 
           cmComAudioPlayerUpdateCurrentTime(
             Math.abs(timePositions$[MarkTimePosition.Current] - timePositions$[MarkTimePosition.Prev]) < 1
@@ -140,11 +147,11 @@ export const useCmComAudioPlayerMoversController = (
           );
         }),
         addEventListenerPipe(repeatRef.current, 'click', () => {
-          cmComAudioPlayerSwitchIsPlay(true);
+          playFromMarks();
           cmComAudioPlayerUpdateCurrentTime(timePositions$[MarkTimePosition.Current]);
         }),
         addEventListenerPipe(nextRef.current, 'click', () => {
-          cmComAudioPlayerSwitchIsPlay(true);
+          playFromMarks();
           cmComAudioPlayerUpdateCurrentTime(timePositions$[MarkTimePosition.Next]);
         }),
         cmComAudioPlayerAddEventListenerPipe('timeupdate', updatePoints),

@@ -21,6 +21,7 @@ export {
 } from '$cm/entities/com';
 export {
   CmComAudioPlayer,
+  cmComAudioPlayerIsFromPlayerPageAtom,
   cmComAudioPlayerIsPlayAtom,
   cmComAudioPlayerSwitchIsPlay,
   cmComAudioPlayerUpdateCurrentTime,

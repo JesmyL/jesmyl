@@ -27,6 +27,7 @@ import {
   cmComAudioPlayerFilteredComsAtom,
   cmComAudioPlayerFindNextCom,
   cmComAudioPlayerGoToAdjacentCom,
+  cmComAudioPlayerIsFromPlayerPageAtom,
   cmComAudioPlayerIsPlayAtom,
   cmComAudioPlayerMarkManualPick,
   cmComAudioPlayerPlaySrcAtom,
@@ -466,7 +467,7 @@ const CmPlayerPageContent = ({
 
     /** Shuffle has no sequential fallback: the next com may only come from the random list. */
     if (isShuffle) {
-      void cmComAudioPlayerGoToAdjacentCom(CmComAudioPlayerAdjacentDirection.Next);
+      void cmComAudioPlayerGoToAdjacentCom(CmComAudioPlayerAdjacentDirection.Next, true);
       return;
     }
 
@@ -475,7 +476,7 @@ const CmPlayerPageContent = ({
   }, [icoms, hasIncomingEntry, incomingEntryComw, isShuffle, src, com, currentComw]);
 
   const goToAdjacentCom = (direction: CmComAudioPlayerAdjacentDirection) =>
-    void cmComAudioPlayerGoToAdjacentCom(direction);
+    void cmComAudioPlayerGoToAdjacentCom(direction, true);
 
   return (
     <PageContainerConfigurer
@@ -513,6 +514,7 @@ const CmPlayerPageContent = ({
                             key={variant}
                             className={twMerge(variantClass, variant === displaySrc && variantActiveClass)}
                             onClick={() => {
+                              cmComAudioPlayerIsFromPlayerPageAtom.set(true);
                               cmComAudioPlayerSetSrc(variant);
                               cmComAudioPlayerSetMediaTitle(com.name);
                               if (cmComAudioPlayerIsPlayAtom.get()) cmComAudioPlayerSwitchIsPlay(true);
@@ -552,6 +554,7 @@ const CmPlayerPageContent = ({
                 <StyledCmComAudioPlayerPlayButton
                   src={displaySrc}
                   $isPlaying={isPlay && !isPlayOtherSrc}
+                  isFromPlayerPage
                   className={mainControlClass}
                 />
 
@@ -614,6 +617,7 @@ const CmPlayerPageContent = ({
               withoutCacheMarks={openComListMode === 'sel'}
               importantOnClick={({ com }) => {
                 cmComAudioPlayerMarkManualPick();
+                cmComAudioPlayerIsFromPlayerPageAtom.set(true);
                 cmComAudioPlayerSetCurrentComw(com.w);
                 cmComAudioPlayerSetSrc(com.al?.[0] ?? null);
                 cmComAudioPlayerSetMediaTitle(com.n);

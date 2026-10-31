@@ -12,6 +12,7 @@ import {
   cmComAudioPlayerSetSrc,
   cmComAudioPlayerSwitchIsPlay,
 } from '../state/current-play-com';
+import { cmComAudioPlayerIsFromPlayerPageAtom } from '../state/atoms';
 import '../lib/mediaSession';
 import { CmComAudioPlayerMediaSessionMeta } from './CmComAudioPlayerMediaSessionMeta';
 import { CmComAudioPlayerPlayButton } from './ComPlayerPlayButton';
@@ -62,6 +63,8 @@ export const CmComAudioPlayer = ({ links, timeRender, addRender, className }: Pr
                     'opacity-100 text-[var(--color--5)] bg-[var(--color--7)] scale-[1.08] shadow-[0_4px_10px_-4px_var(--color--7)]',
                 )}
                 onClick={() => {
+                  cmComAudioPlayerIsFromPlayerPageAtom.set(false);
+
                   cmComAudioPlayerSetSrc(variant);
                   if (isPlay) cmComAudioPlayerSwitchIsPlay(true);
                 }}

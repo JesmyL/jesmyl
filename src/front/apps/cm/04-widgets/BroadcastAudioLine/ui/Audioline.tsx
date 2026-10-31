@@ -6,6 +6,7 @@ import { useCmComCurrent } from '$cm/entities/com';
 import {
   CmComAudioPlayerCacheMarks,
   CmComAudioPlayerPlayButton,
+  cmComAudioPlayerIsFromPlayerPageAtom,
   cmComAudioPlayerSetSrc,
   CmComAudioPlayerTrack,
 } from '$cm/entities/com-audio-player';
@@ -63,6 +64,7 @@ export const CmBroadcastAudioLine = ({ topNode }: { topNode: (nodes?: ReactNode)
           className={broadcastSrc === src ? 'text-x7' : ''}
           onClick={() => {
             cmPlayerBroadcastComwAtom.set(com.wid);
+            cmComAudioPlayerIsFromPlayerPageAtom.set(false);
             cmComAudioPlayerSetSrc(src);
             cmPlayerBroadcastAudioSrcAtom.set(src);
 

@@ -8,6 +8,7 @@ import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/shared/state/com';
 import {
+  cmComAudioPlayerIsFromPlayerPageAtom,
   cmComAudioPlayerIsPlayAtom,
   cmComAudioPlayerSwitchIsPlay,
   cmComAudioPlayerUpdateCurrentTime,
@@ -116,6 +117,7 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
           <Button
             icon="PlayCircle"
             onClick={() => {
+              cmComAudioPlayerIsFromPlayerPageAtom.set(false);
               cmComAudioPlayerUpdateCurrentTime(currentTime);
               cmComAudioPlayerSwitchIsPlay(true);
             }}

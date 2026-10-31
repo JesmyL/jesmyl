@@ -15,6 +15,7 @@ import {
   CmBroadcastShowNlNameSpaceSelector,
   CmComAudioPlayer,
   CmComAudioPlayerMarksMovers,
+  cmComAudioPlayerIsFromPlayerPageAtom,
   cmComAudioPlayerSwitchIsPlay,
   cmComAudioPlayerUpdateCurrentTime,
   cmComAudioPlayerUpdatePlaybackRate,
@@ -166,6 +167,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
                   return;
                 }
 
+                cmComAudioPlayerIsFromPlayerPageAtom.set(false);
                 cmComAudioPlayerUpdateCurrentTime(time);
                 cmComAudioPlayerSwitchIsPlay(true);
               }}

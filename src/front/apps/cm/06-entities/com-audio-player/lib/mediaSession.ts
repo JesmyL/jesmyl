@@ -9,6 +9,7 @@ import {
   takeCmComAudioPlayerDuration,
   takeCmComAudioPlayerPlaybackRate,
 } from '../state/current-play-com';
+import { cmComAudioPlayerIsFromPlayerPageAtom } from '../state/atoms';
 import { CmComAudioPlayerAdjacentDirection } from '../model';
 import { cmComAudioPlayerGoToAdjacentCom, takeCmComAudioPlayerPlayedComw } from './adjacent-coms';
 
@@ -37,10 +38,16 @@ if (mediaSession) {
   });
   mediaSession.setActionHandler('pause', () => cmComAudioPlayerSwitchIsPlay(false));
   mediaSession.setActionHandler('previoustrack', () =>
-    void cmComAudioPlayerGoToAdjacentCom(CmComAudioPlayerAdjacentDirection.Prev).catch(retNull),
+    void cmComAudioPlayerGoToAdjacentCom(
+      CmComAudioPlayerAdjacentDirection.Prev,
+      cmComAudioPlayerIsFromPlayerPageAtom.get(),
+    ).catch(retNull),
   );
   mediaSession.setActionHandler('nexttrack', () =>
-    void cmComAudioPlayerGoToAdjacentCom(CmComAudioPlayerAdjacentDirection.Next).catch(retNull),
+    void cmComAudioPlayerGoToAdjacentCom(
+      CmComAudioPlayerAdjacentDirection.Next,
+      cmComAudioPlayerIsFromPlayerPageAtom.get(),
+    ).catch(retNull),
   );
 
   try {

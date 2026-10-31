@@ -19,7 +19,7 @@ import {
   cmComAudioPlayerSwitchIsPlay,
   takeCmComAudioPlayerCurrentTime,
 } from '../state/current-play-com';
-import { cmComAudioPlayerCurrentComwAtom } from '../state/atoms';
+import { cmComAudioPlayerCurrentComwAtom, cmComAudioPlayerIsFromPlayerPageAtom } from '../state/atoms';
 import { CmComAudioPlayerAdjacentDirection, CmComAudioPlayerPickKind } from '../model';
 import { isCmComAudioPlayerComCached, takeCmComAudioPlayerCachedSrcs } from './audioCache';
 import {
@@ -90,9 +90,16 @@ const takePlayedComw = (coms: IExportableCom[]) => {
 /** The com heard right now, resolved exactly like an advance: the playing src within the tracklist, else the last opened com. */
 export const takeCmComAudioPlayerPlayedComw = async () => takePlayedComw(await takeCmComAudioPlayerTracklistComs());
 
-const playCom = (comw: CmComWid, name: string, src: CmAudioSrc, shouldPlay: boolean) => {
+const playCom = (
+  comw: CmComWid,
+  name: string,
+  src: CmAudioSrc,
+  shouldPlay: boolean,
+  isFromPlayerPage: boolean,
+) => {
   lastPickKind = CmComAudioPlayerPickKind.Advance;
   cmComAudioPlayerSetCurrentComw(comw);
+  cmComAudioPlayerIsFromPlayerPageAtom.set(isFromPlayerPage);
   cmComAudioPlayerSetSrc(src);
   cmComAudioPlayerSetMediaTitle(name);
   if (shouldPlay) cmComAudioPlayerSwitchIsPlay(true);
@@ -120,6 +127,8 @@ export const cmComAudioPlayerFindNextCom = (currentComw: CmComWid | und, coms: I
 type AdvanceOptions = {
   isAuto?: boolean;
   isError?: boolean;
+  /** Origin of a manual step; an auto walk keeps the origin of the session that started it. */
+  isFromPlayerPage?: boolean;
 };
 
 /** The audio element may already be paused, so `SwitchIsPlay(false)` alone would leave the UI showing "pause". */
@@ -155,10 +164,13 @@ cmComAudioPlayerAddEventListenerPipe('timeupdate', () => {
  */
 const advance = async (
   direction: CmComAudioPlayerAdjacentDirection,
-  { isAuto = false, isError = false }: AdvanceOptions = {},
+  { isAuto = false, isError = false, isFromPlayerPage = false }: AdvanceOptions = {},
 ) => {
   if (isAdvancing) return;
   if (isAuto && cmComAudioPlayerPlaySrcAtom.get() == null) return;
+
+  /** An auto walk continues the session that started it; a manual step declares its own origin. */
+  const originIsFromPlayerPage = isAuto ? cmComAudioPlayerIsFromPlayerPageAtom.get() : isFromPlayerPage;
 
   /** A manual step is a fresh start; an endless run of auto-advances stops instead of allocating a walk over everything. */
   if (!isAuto) {
@@ -203,7 +215,7 @@ const advance = async (
         return;
       }
 
-      playCom(itemCom.w, itemCom.n, item.l, shouldPlay);
+      playCom(itemCom.w, itemCom.n, item.l, shouldPlay, originIsFromPlayerPage);
       void cmComAudioPlayerPrepareNextRandomCom().catch(retNull);
 
       return;
@@ -224,18 +236,24 @@ const advance = async (
       return;
     }
 
-    playCom(targetCom.w, targetCom.n, src, shouldPlay);
+    playCom(targetCom.w, targetCom.n, src, shouldPlay, originIsFromPlayerPage);
   } finally {
     isAdvancing = false;
   }
 };
 
 /** Plays the neighbouring com in the resolved tracklist — usable from MediaSession, outside the page. */
-export const cmComAudioPlayerGoToAdjacentCom = (direction: CmComAudioPlayerAdjacentDirection) => advance(direction);
+export const cmComAudioPlayerGoToAdjacentCom = (
+  direction: CmComAudioPlayerAdjacentDirection,
+  isFromPlayerPage = false,
+) => advance(direction, { isFromPlayerPage });
 
-cmComAudioPlayerEndedTickAtom.subscribe(
-  isEnded => isEnded && void advance(CmComAudioPlayerAdjacentDirection.Next, { isAuto: true }).catch(retNull),
-);
+cmComAudioPlayerEndedTickAtom.subscribe(isEnded => {
+  /** Only a player-page session walks on: any other player stops at the end of the com. */
+  if (!isEnded || !cmComAudioPlayerIsFromPlayerPageAtom.get()) return;
+
+  void advance(CmComAudioPlayerAdjacentDirection.Next, { isAuto: true }).catch(retNull);
+});
 /**
  * Only an auto-picked com is swapped for the next one on error. A manual pick is the user's explicit
  * choice: the error is surfaced in place and the player stops — the com never enters the prev-list.
