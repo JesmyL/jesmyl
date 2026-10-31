@@ -34,7 +34,7 @@ export const bibleTbcvEncode = (
 
 export const bibleTbcvDecode = (tbcvString: BibleTbcvKey): IDecodedTBCV => {
   if (checkIsNotString(tbcvString) || tbcvString.length !== 4 || !REVERSE_TRANSLATION_MAP[tbcvString.charAt(0)]) {
-    throw new Error(`Некорректный формат TBCV ключа: "${tbcvString}"`);
+    throw `Некорректный формат TBCV ключа: "${tbcvString}"`;
   }
 
   const tChar = tbcvString.charAt(0);

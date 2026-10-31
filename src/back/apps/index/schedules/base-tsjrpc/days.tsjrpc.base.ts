@@ -33,7 +33,7 @@ onScheduleDayBeginTimeSetEvent.listen(async ({ dayProps, strWup, auth }) => {
       await throwIfNoScheduleRedact(sch, auth);
 
       const wup = +strWup.replace(makeRegExp('/:/'), '.');
-      if (isNaN(wup)) throw new Error(`time ${strWup} is invalid`);
+      if (isNaN(wup)) throw `time ${strWup} is invalid`;
       day.wup = wup;
 
       return null;
@@ -107,7 +107,7 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
           await throwIfNoScheduleEventsAdd(sch, tool.auth);
 
           const eventi = day.list.findIndex(event => event.mi === value.eventMi);
-          if (eventi < 0) throw new Error('event not found');
+          if (eventi < 0) throw 'event not found';
           day.list.splice(eventi, 1);
 
           return `В расписании ${scheduleTitleInBrackets(sch)}, из ${props.dayi + 1} дня удалено событие ${value}`;
@@ -117,7 +117,7 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
           await throwIfNoScheduleEventsAdd(sch, tool.auth);
 
           const eventi = day.list.findIndex(event => event.mi === eventMi);
-          if (eventi < 0) throw new Error('event not found');
+          if (eventi < 0) throw 'event not found';
 
           day.list = withInsertedBeforei(day.list, beforei, eventi);
 

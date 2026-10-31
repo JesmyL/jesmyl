@@ -167,7 +167,7 @@ export const electronAppBasicTsjrpcBase =
 
               try {
                 const buffer = Buffer.from(base64, 'base64');
-                if (buffer.byteLength > workDirDropFileMaxBytes) throw new Error('File is too large');
+                if (buffer.byteLength > workDirDropFileMaxBytes) throw 'File is too large';
 
                 fs.writeFileSync(path.resolve(resolvedDirPath, cleanName), buffer);
                 savedCount++;
@@ -337,7 +337,7 @@ const renameMediaFileToMd5 = async (filePath: string, attempt = 0) => {
     if (attempt === 0) {
       const sizeBefore = fs.statSync(filePath).size;
       await delay(md5RenameRetryDelayMs);
-      if (fs.statSync(filePath).size !== sizeBefore) throw new Error('File is still being written');
+      if (fs.statSync(filePath).size !== sizeBefore) throw 'File is still being written';
     }
 
     const ext = path.extname(originalName).slice(1);

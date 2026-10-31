@@ -63,10 +63,8 @@ export const lazyEnvJson = (filePostfix: '' | `.${string}` = '') => {
   });
 
   if (emptyFields.length) {
-    throw new Error(
-      makeRedLogText(
-        `Заполните переменные окружения (${emptyFields.join(', ')}) в файле '${envFilePath}' и запустите скрипт заново.`,
-      ),
+    throw makeRedLogText(
+      `Заполните переменные окружения (${emptyFields.join(', ')}) в файле '${envFilePath}' и запустите скрипт заново.`,
     );
   }
 

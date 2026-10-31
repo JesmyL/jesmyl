@@ -41,7 +41,7 @@ export const throwIfNoScheduleTotalRedact = async (sch: IScheduleWidget, auth: L
     schUser == null ||
     !scheduleWidgetUserRights.checkIsHasRights(schUser.R ?? sch.ctrl.defu, ScheduleWidgetUserRoleRight.TotalRedact)
   )
-    throw new Error('Нет прав на изменение прав участников расписания');
+    throw 'Нет прав на изменение прав участников расписания';
 };
 
 const takeAuthScheduleUserRights = async (sch: IScheduleWidget, auth: LocalSokiAuth | nil) => {
@@ -115,7 +115,7 @@ export const throwIfNoScheduleComsListRedact = async (
     await throwIfNoUserScopeAccessRight(loggedAuth, 'cm', 'EVENT', 'U');
   } catch (error) {
     if (typeof error !== 'string') throw error;
-    throw new Error('Нет прав на изменение списка композиций события');
+    throw 'Нет прав на изменение списка композиций события';
   }
 };
 
@@ -180,6 +180,6 @@ export const modifyScheduleDay = <Props extends { props: ScheduleDayScopeProps }
 ) =>
   modifySchedule<Props>(isNeedRefreshInformTime, (sch, props, tool) => {
     const day = sch.days[props.props.dayi];
-    if (!day) throw new Error('День не найден');
+    if (!day) throw 'День не найден';
     return modifier(day, props, sch, tool);
   });

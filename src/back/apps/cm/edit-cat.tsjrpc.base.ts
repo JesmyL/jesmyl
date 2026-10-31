@@ -140,8 +140,8 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
 const parseCatName = (n: string) => {
   const name = n.trim();
 
-  if (!name) throw new Error('Название категории не может быть пустым');
-  if (name.length > 256) throw new Error('Название категории слишком длинное');
+  if (!name) throw 'Название категории не может быть пустым';
+  if (name.length > 256) throw 'Название категории слишком длинное';
 
   return name;
 };
@@ -149,7 +149,7 @@ const parseCatName = (n: string) => {
 const takeCatOrThrow = async (catw: CmCatWid) => {
   const [row] = await db.select().from(catDB).where(eq(catDB.w, catw)).limit(1);
 
-  if (!row) throw new Error('Cat is not found');
+  if (!row) throw 'Cat is not found';
 
   return exportableCatFromRow(row);
 };

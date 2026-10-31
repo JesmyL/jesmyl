@@ -31,7 +31,7 @@ export const schLiveTsjrpcServer = new (class SchLive extends TsjrpcBaseServer<S
       scope: 'SchLive',
       methods: {
         next: async ({ schw, data }, { auth }) => {
-          if (auth?.login == null) throw new Error('Не зарегистрирован');
+          if (auth?.login == null) throw 'Не зарегистрирован';
 
           theLiveData[schw] ??= {};
           theLiveData[schw][auth.login] = data;
@@ -70,7 +70,7 @@ export const schLiveTsjrpcServer = new (class SchLive extends TsjrpcBaseServer<S
         },
 
         reset: async ({ schw }, { auth }) => {
-          if (auth?.login == null) throw new Error('Не зарегистрирован');
+          if (auth?.login == null) throw 'Не зарегистрирован';
 
           theLiveData[schw] ??= {};
           delete theLiveData[schw][auth.login];

@@ -34,7 +34,7 @@ export const schAttachmentTypesTsjrpcBaseServer =
       ) =>
         modifySchedule<Props>(false, (sch, props) => {
           const tatt = sch.tatts.find(tatt => tatt.mi === props.props.tattMi);
-          if (tatt == null) throw new Error('attachment type not found');
+          if (tatt == null) throw 'attachment type not found';
 
           return modifier(tatt, props, sch);
         });

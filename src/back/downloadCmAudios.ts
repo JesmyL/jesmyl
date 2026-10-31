@@ -12,11 +12,11 @@ export const downloadCmAudios = async () => {
     `${hostConfig.url}${pullCmAudiosExpressRoutePath}?${pullFilesExpressSecretQueryName}=${secret.secret}`,
   );
 
-  if (!response.ok) throw new Error(`Не удалось получить список аудио с сервера: ${response.status}`);
+  if (!response.ok) throw `Не удалось получить список аудио с сервера: ${response.status}`;
 
   const audios = await response.json();
 
-  if (!checkIsObject(audios)) throw new Error('Сервер вернул некорректный список аудио');
+  if (!checkIsObject(audios)) throw 'Сервер вернул некорректный список аудио';
 
   for (const [rawLink, title] of objectEntries(audios)) {
     if (!checkIsString(title)) continue;

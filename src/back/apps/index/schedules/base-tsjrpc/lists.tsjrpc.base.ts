@@ -21,7 +21,7 @@ export const schListsTsjrpcBaseServer = new (class SchLists extends TsjrpcBaseSe
     ) =>
       modifySchedule<Props>(false, (sch, props) => {
         const cat = sch.lists.cats[props.props.cati];
-        if (cat == null) throw new Error('category not found');
+        if (cat == null) throw 'category not found';
         return modifier(cat, props, sch);
       });
 
@@ -30,7 +30,7 @@ export const schListsTsjrpcBaseServer = new (class SchLists extends TsjrpcBaseSe
     ) =>
       modifySchedule<Props>(false, (sch, props) => {
         const unit = sch.lists.units.find(unit => unit.mi === props.props.unitMi);
-        if (unit == null) throw new Error('The list unit not found');
+        if (unit == null) throw 'The list unit not found';
         return modifier(unit, props, sch);
       });
 

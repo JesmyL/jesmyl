@@ -113,7 +113,7 @@ type FillPaint = {
 const round = (value: number) => Math.round(value * 100) / 100;
 
 const takeDesignScale = ({ width, height }: SlideSize) => {
-  if (!(width > 0) || !(height > 0)) throw new Error(`Invalid presentation slide size: ${width}x${height}`);
+  if (!(width > 0) || !(height > 0)) throw `Invalid presentation slide size: ${width}x${height}`;
 
   return Math.min(designSlideWidth / width, designSlideHeight / height);
 };
@@ -437,9 +437,9 @@ const isPresentationFilePath = (filePath: string) =>
 /** Resolves a renderer-supplied WorkDir path — arbitrary filesystem paths are rejected by the allowed-root check. */
 const takePresentationPath = (inputPath: string) => {
   const filePath = parseAllowedWorkDirPath(inputPath);
-  if (!filePath) throw new Error(`Presentation path is outside the allowed WorkDir: ${inputPath}`);
+  if (!filePath) throw `Presentation path is outside the allowed WorkDir: ${inputPath}`;
 
-  if (!isPresentationFilePath(filePath)) throw new Error(`Invalid presentation file path: ${inputPath}`);
+  if (!isPresentationFilePath(filePath)) throw `Invalid presentation file path: ${inputPath}`;
 
   let isFile = false;
 
@@ -449,7 +449,7 @@ const takePresentationPath = (inputPath: string) => {
     // Missing file — reported by the guard below with the same descriptive error.
   }
 
-  if (!isFile) throw new Error(`Presentation not found: ${inputPath}`);
+  if (!isFile) throw `Presentation not found: ${inputPath}`;
 
   return filePath;
 };

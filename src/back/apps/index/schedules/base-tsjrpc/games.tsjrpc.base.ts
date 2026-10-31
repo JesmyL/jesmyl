@@ -20,7 +20,7 @@ export const schGamesTsjrpcBaseServer = new (class SchGames extends TsjrpcBaseSe
     ) =>
       modifySchedule<Props>(false, (sch, props) => {
         const game = sch.games?.list.find(game => game.mi === props.props.gameMi);
-        if (game == null) throw new Error('game not found');
+        if (game == null) throw 'game not found';
 
         return modifier(game, props, sch);
       });
@@ -30,7 +30,7 @@ export const schGamesTsjrpcBaseServer = new (class SchGames extends TsjrpcBaseSe
     ) =>
       modifySchedule<Props>(false, (sch, props) => {
         const criteria = sch.games?.criterias[props.props.criteriai];
-        if (criteria == null) throw new Error('criteria not found');
+        if (criteria == null) throw 'criteria not found';
 
         return modifier(criteria, props, sch);
       });

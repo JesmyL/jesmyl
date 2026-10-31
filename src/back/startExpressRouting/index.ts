@@ -479,7 +479,7 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
 
   process.on('uncaughtException', err => {
     console.error('Критическая ошибка:', err);
-    tglogger.systemError([err.message, err.cause, err.stack].filter(itIt).join('\n\n\n'));
+    tglogger.systemError([err?.message ?? err, err?.cause, err?.stack].filter(itIt).join('\n\n\n'));
   });
 
   process.on('unhandledRejection', reason => {

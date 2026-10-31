@@ -38,9 +38,9 @@ export const cmEditComOrderServerTsjrpcOutside = {
     const targetOrdi = com.o.findIndex(o => o.w === targetOrdw);
     const insertAfterOrdi = com.o.findIndex(o => o.w === insertAfterOrdw);
 
-    if (targetOrdi < 0) throw new Error('Целевой порядковый блок не найден');
-    if (insertAfterOrdi < 0) throw new Error('Опорный порядковый блок не найден');
-    if (insertAfterOrdi < targetOrdi) throw new Error('Целевой порядковый блок должен быть выше опорного');
+    if (targetOrdi < 0) throw 'Целевой порядковый блок не найден';
+    if (insertAfterOrdi < 0) throw 'Опорный порядковый блок не найден';
+    if (insertAfterOrdi < targetOrdi) throw 'Целевой порядковый блок должен быть выше опорного';
 
     com.o.splice(insertAfterOrdi + 1, 0, {
       w: getNextOrdWid(com.o),
@@ -61,7 +61,7 @@ export const cmEditComOrderServerTsjrpcOutside = {
       ? -1
       : com.o.findIndex(o => o.w === insertAfterOrdwOrFirst);
 
-    if (movableOrdi < 0) throw new Error('Целевой порядковый блок не найден');
+    if (movableOrdi < 0) throw 'Целевой порядковый блок не найден';
 
     const [ord] = com.o.splice(movableOrdi, 1);
     com.o.splice(insertAfterOrdi + (movableOrdi < insertAfterOrdi ? 0 : 1), 0, ord);

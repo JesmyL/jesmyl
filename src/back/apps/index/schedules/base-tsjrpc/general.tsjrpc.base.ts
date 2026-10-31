@@ -50,13 +50,13 @@ import { schUsersTsjrpcBaseServer } from './users.tsjrpc.base';
 import { takeUserLoginsByIds, takeUserTiny } from '../../tinies/userTiny';
 
 const parseComsRightsUserIds = (users: unknown): UserId[] => {
-  if (!checkIsArray(users)) throw new Error('Права на списки композиций: участники должны быть массивом');
+  if (!checkIsArray(users)) throw 'Права на списки композиций: участники должны быть массивом';
 
   const userIds = new Set<number>();
 
   for (const userId of users) {
     if (!checkIsNumber(userId) || userId <= 0)
-      throw new Error('Права на списки композиций: участники должны быть положительными идентификаторами');
+      throw 'Права на списки композиций: участники должны быть положительными идентификаторами';
 
     userIds.add(userId);
   }
@@ -68,14 +68,14 @@ const parseComsRightsIdsRecord = <Key extends number, Value>(
   record: unknown,
   parseValue: (value: unknown) => Value,
 ): Record<Key, Value> => {
-  if (!checkIsObject(record)) throw new Error('Права на списки композиций: ожидался объект');
+  if (!checkIsObject(record)) throw 'Права на списки композиций: ожидался объект';
 
   const result = {} as Record<Key, Value>;
 
   forEachObjectEntries(record, (key, value) => {
     const numericKey = +key;
     if (isNaN(numericKey) || numericKey < 0)
-      throw new Error(`Права на списки композиций: ключ "${key}" не является числом`);
+      throw `Права на списки композиций: ключ "${key}" не является числом`;
 
     result[numericKey as Key] = parseValue(value);
   });
@@ -85,7 +85,7 @@ const parseComsRightsIdsRecord = <Key extends number, Value>(
 
 const parseComsRights = (value: unknown): IScheduleWidgetComsRights | nil => {
   if (value == null) return null;
-  if (!checkIsObject(value)) throw new Error('Права на списки композиций: ожидался объект');
+  if (!checkIsObject(value)) throw 'Права на списки композиций: ожидался объект';
 
   const comsRights: IScheduleWidgetComsRights = {};
 
@@ -115,7 +115,7 @@ const checkIsSchedulePeriodWeekday = (value: unknown): value is SchedulePeriodWe
 
 const parseSchedulePeriod = (value: unknown): IScheduleWidgetPeriod | nil => {
   if (value == null) return null;
-  if (!checkIsObject(value)) throw new Error('Периодичность расписания: ожидался объект');
+  if (!checkIsObject(value)) throw 'Периодичность расписания: ожидался объект';
 
   const kind = value.kind;
 
@@ -125,7 +125,7 @@ const parseSchedulePeriod = (value: unknown): IScheduleWidgetPeriod | nil => {
   if (kind === SchedulePeriodKind.MonthDay) {
     const dayi = value.dayi;
     if (!checkIsNumber(dayi) || dayi < 1 || dayi > 31)
-      throw new Error('Периодичность расписания: день месяца должен быть от 1 до 31');
+      throw 'Периодичность расписания: день месяца должен быть от 1 до 31';
 
     return { kind, dayi };
   }
@@ -134,14 +134,14 @@ const parseSchedulePeriod = (value: unknown): IScheduleWidgetPeriod | nil => {
     const weeki = value.weeki;
     const dayi = value.dayi;
     if (!checkIsSchedulePeriodWeeki(weeki))
-      throw new Error('Периодичность расписания: неделя месяца должна быть от 1 до 5');
+      throw 'Периодичность расписания: неделя месяца должна быть от 1 до 5';
     if (!checkIsSchedulePeriodWeekday(dayi))
-      throw new Error('Периодичность расписания: день недели должен быть от 0 до 6');
+      throw 'Периодичность расписания: день недели должен быть от 0 до 6';
 
     return { kind, weeki, dayi };
   }
 
-  throw new Error(`Периодичность расписания: недопустимый тип ${kind}`);
+  throw `Периодичность расписания: недопустимый тип ${kind}`;
 };
 
 const takeComsRightsUserIds = (comsRights: IScheduleWidgetComsRights | nil) => {
@@ -293,7 +293,7 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
         }),
 
         setAppInform: modifySchedule(true, async (sch, { value }) => {
-          if (!checkIsScheduleAppInform(value)) throw new Error(`Недопустимый интервал напоминания: ${value}`);
+          if (!checkIsScheduleAppInform(value)) throw `Недопустимый интервал напоминания: ${value}`;
 
           sch.appInform = value;
 
@@ -416,7 +416,7 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
 export const scheduleTitleInBrackets = async (schScalar: IScheduleWidget | ScheduleWidgetWid) => {
   if (checkIsNumber(schScalar)) {
     const sch = await takeScheduleWidgetTiny({ w: schScalar }, false);
-    if (!sch) throw new Error('schedule not found');
+    if (!sch) throw 'schedule not found';
     return `"${sch.title}"`;
   }
   return `"${schScalar.title}"`;

@@ -43,7 +43,7 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
         await throwIfNoScheduleUsersRedact(sch, tool.auth);
 
         const user = sch.ctrl.users.find(user => user.mi === props.props.userMi);
-        if (user === undefined) throw new Error('User not found');
+        if (user === undefined) throw 'User not found';
         return modifier(user, props, sch, tool);
       });
 
@@ -79,7 +79,7 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
             actualUsers.push({ mi: ++lastUserMi, id: userId });
           });
 
-          if (unknownTitles.length) throw new Error(`Не найдены пользователи: ${unknownTitles.join(', ')}`);
+          if (unknownTitles.length) throw `Не найдены пользователи: ${unknownTitles.join(', ')}`;
 
           sch.ctrl.users.push(...actualUsers);
 
@@ -106,14 +106,14 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
           );
         }),
         addMe: modifySchedule(false, async (sch, { place }, { auth }) => {
-          if (auth?.login == null) throw new Error('Необходимо авторизоваться');
+          if (auth?.login == null) throw 'Необходимо авторизоваться';
 
           if (!scheduleWidgetRegTypeRights.checkIsHasRights(sch.ctrl.type, ScheduleWidgetRegType.Public))
-            throw new Error('В частное расписание можно попасть только по QR-приглашению');
+            throw 'В частное расписание можно попасть только по QR-приглашению';
 
           const userTiny = await takeUserTiny({ l: auth.login });
 
-          if (sch.ctrl.users.some(user => user.id === userTiny.id)) throw new Error('user exists');
+          if (sch.ctrl.users.some(user => user.id === userTiny.id)) throw 'user exists';
 
           sch.ctrl.users.push({
             mi: takeNextMi(sch.ctrl.users, ScheduleWidgetUserMi.def),
@@ -127,14 +127,14 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
         }),
 
         addMeByInvite: modifySchedule(false, async (sch, { inviteHash }, { auth }) => {
-          if (auth?.login == null) throw new Error('Необходимо авторизоваться');
+          if (auth?.login == null) throw 'Необходимо авторизоваться';
 
           const userTiny = await takeUserTiny({ l: auth.login });
 
           if (sch.ctrl.users.some(user => user.id === userTiny.id)) return null;
 
           if (!sch.ctrl.users.some(user => packScheduleWidgetInviteLink(sch.w, user.mi) === inviteHash))
-            throw new Error('Приглашение недействительно');
+            throw 'Приглашение недействительно';
 
           sch.ctrl.users.push({
             mi: takeNextMi(sch.ctrl.users, ScheduleWidgetUserMi.def),
@@ -148,12 +148,12 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
         }),
 
         removeMe: modifySchedule(false, async (sch, _props, { auth }) => {
-          if (auth?.login == null) throw new Error('Необходимо авторизоваться');
+          if (auth?.login == null) throw 'Необходимо авторизоваться';
 
           const userTiny = await takeUserTiny({ l: auth.login });
           const user = sch.ctrl.users.find(({ id }) => id === userTiny.id);
 
-          if (user === undefined) throw new Error('Вы не являетесь участником');
+          if (user === undefined) throw 'Вы не являетесь участником';
 
           if (
             scheduleWidgetUserRights.checkIsHasRights(

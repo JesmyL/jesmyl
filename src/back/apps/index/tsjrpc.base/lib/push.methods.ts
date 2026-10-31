@@ -21,31 +21,31 @@ const takeValidPushEndpoint = (endpoint: string) => {
   try {
     url = new URL(endpoint);
   } catch {
-    throw new Error('Некорректная push-подписка: неверный endpoint');
+    throw 'Некорректная push-подписка: неверный endpoint';
   }
 
   if (url.protocol !== 'https:' || !pushServiceHostsReg.test(url.hostname))
-    throw new Error('Некорректная push-подписка: недопустимый push-сервис');
+    throw 'Некорректная push-подписка: недопустимый push-сервис';
 
   return endpoint;
 };
 
 const takeCheckedEndpoint = (endpoint: unknown) => {
   if (!checkIsString(endpoint) || !endpoint)
-    throw new Error('Некорректная push-подписка: не указан endpoint');
+    throw 'Некорректная push-подписка: не указан endpoint';
 
   return endpoint;
 };
 
 const parsePushSubscription = (subscription: unknown): PushSubscriptionPayload => {
   if (!checkIsObject(subscription) || !checkIsString(subscription.endpoint) || !subscription.endpoint)
-    throw new Error('Некорректная push-подписка: не указан endpoint');
+    throw 'Некорректная push-подписка: не указан endpoint';
 
   const endpoint = takeValidPushEndpoint(subscription.endpoint);
   const keys = subscription.keys;
 
   if (!checkIsObject(keys) || !checkIsString(keys.p256dh) || !checkIsString(keys.auth))
-    throw new Error('Некорректная push-подписка: отсутствуют ключи шифрования');
+    throw 'Некорректная push-подписка: отсутствуют ключи шифрования';
 
   return {
     endpoint,

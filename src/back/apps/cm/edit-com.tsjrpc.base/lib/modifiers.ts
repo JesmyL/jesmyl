@@ -33,7 +33,7 @@ export const modifyCom =
 
     const com = await selectPgCheckedExportableCom(props.comw, {});
 
-    if (!com) throw new Error(`Песня не найдена`);
+    if (!com) throw `Песня не найдена`;
     const comName = com.n;
     const comClone = deepClone(com);
 

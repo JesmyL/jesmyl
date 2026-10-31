@@ -163,7 +163,7 @@ const evictOldestCmComAudioPlayerCacheSrcs = async (cache: Cache) => {
 const putCmComAudioPlayerTrack = async (cache: Cache, url: string) => {
   const put = async () => {
     const response = await fetch(url);
-    if (!response.ok) throw new Error(`Audio cache fetch failed: ${response.status} ${url}`);
+    if (!response.ok) throw `Audio cache fetch failed: ${response.status} ${url}`;
 
     await cache.put(url, response);
   };

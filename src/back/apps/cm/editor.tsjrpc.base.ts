@@ -62,7 +62,7 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
 
           mp3ResourcesFileStorage.modifyValueWithAutoSave(list => {
             const index = list.findIndex(r => r.w === rule.w);
-            if (index < 0) throw new Error('rule not found');
+            if (index < 0) throw 'rule not found';
             list.splice(index, 1, rule);
           });
 

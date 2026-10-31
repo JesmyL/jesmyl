@@ -20,7 +20,7 @@ export const sendEmailMessage = async (key: EmailerAuthConfigKey, options: Optio
   const authDict = emailerConfigFileStorage.getValue();
   const auth = authDict[key] ?? objectValues(authDict).find(Boolean);
 
-  if (!auth) throw new Error(`Почтовый аккаунт не настроен: ключ "${key}" отсутствует и запасных аккаунтов нет`);
+  if (!auth) throw `Почтовый аккаунт не настроен: ключ "${key}" отсутствует и запасных аккаунтов нет`;
   const { promise, reject, resolve } = Promise.withResolvers<SMTPTransport.SentMessageInfo>();
 
   const transporter = (transporters[auth.user] ??= nodemailer.createTransport({

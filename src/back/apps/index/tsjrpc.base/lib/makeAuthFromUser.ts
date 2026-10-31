@@ -11,7 +11,7 @@ const makeAuthFromUser = async (user: OmitOwn<TelegramBot.User, 'is_bot'>) => {
   try {
     await prodTelegramBot.tryIsUserMember(user.id);
   } catch (_error) {
-    throw new Error('Не состоит в канале');
+    throw 'Не состоит в канале';
   }
 
   return {

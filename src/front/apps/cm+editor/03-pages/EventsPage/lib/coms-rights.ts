@@ -4,7 +4,7 @@ import { CmEditorEventsComsRightsScope } from '../model';
 
 const takeKey = <Key extends number>(value: unknown, title: string): Key => {
   if (typeof value !== 'number' || !Number.isFinite(value) || value < 0)
-    throw new Error(`${title} must be a non-negative finite number, received ${String(value)}`);
+    throw `${title} must be a non-negative finite number, received ${String(value)}`;
 
   return value as Key;
 };

@@ -12,10 +12,8 @@ const takeVapidDetails = () => {
   const { VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY, VAPID_SUBJECT } = lazyEnvJson();
 
   if (!VAPID_PUBLIC_KEY || !VAPID_PRIVATE_KEY)
-    throw new Error(
-      'VAPID-ключи не заданы. Сгенерируйте их командой `npm run gen-vapid` и заполните ' +
-        'VAPID_PUBLIC_KEY / VAPID_PRIVATE_KEY в файле .env.json сервера.',
-    );
+    throw 'VAPID-ключи не заданы. Сгенерируйте их командой `npm run gen-vapid` и заполните ' +
+      'VAPID_PUBLIC_KEY / VAPID_PRIVATE_KEY в файле .env.json сервера.';
 
   return {
     subject: VAPID_SUBJECT,

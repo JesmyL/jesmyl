@@ -22,7 +22,7 @@ export class FileStore<Value> {
   ) {
     this.filePath = `${this.options?.baseDir ?? initialFileDir}${path}`;
     this.value = defaultValue;
-    if (registeredPaths.has(path)) throw new Error(`The path ${path} was registered again`);
+    if (registeredPaths.has(path)) throw `The path ${path} was registered again`;
     registeredPaths.add(path);
 
     this.getValue = () => {

@@ -35,9 +35,7 @@ const readEnumValues = (declaration: ts.EnumDeclaration, source: ts.SourceFile, 
       literal = `${-Number(initializer.operand.text)}`;
     } else {
       const line = source.getLineAndCharacterOfPosition(initializer.getStart(source)).line + 1;
-      throw new Error(
-        `[const-enum] Unsupported initializer of ${declaration.name.text}.${member.name.getText(source)} in ${file}:${line}`,
-      );
+      throw `[const-enum] Unsupported initializer of ${declaration.name.text}.${member.name.getText(source)} in ${file}:${line}`;
     }
 
     values.set(member.name.getText(source), literal);

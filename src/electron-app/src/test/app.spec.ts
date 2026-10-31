@@ -48,7 +48,7 @@ test('Запуск приложения и проверка главного о�
     window = await electronApp.firstWindow({ timeout: 5000 });
   } catch (_) {
     await electronApp.close();
-    throw new Error('❌ КРИТИЧЕСКАЯ ОШИБКА: Главное окно Electron не было создано!');
+    throw '❌ КРИТИЧЕСКАЯ ОШИБКА: Главное окно Electron не было создано!';
   }
 
   expect(window).toBeTruthy();
@@ -80,7 +80,7 @@ test('Запуск приложения и проверка главного о�
 
   // Падаем только если апдейтер явно выдал ошибку или бэкенд не ответил
   if (isUpdaterError || finalLogs.length === 0) {
-    throw new Error(`❌ ТЕСТ ОБНОВЛЕНИЙ ПРОВАЛЕН. Логи: ${finalLogs}`);
+    throw `❌ ТЕСТ ОБНОВЛЕНИЙ ПРОВАЛЕН. Логи: ${finalLogs}`;
   }
 
   console.info('✅ Связь с бэкендом обновлений успешно подтверждена!');

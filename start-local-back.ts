@@ -11,7 +11,7 @@ const errorsToPass = new Set([
     checkIsEndsWith(fileName, 'back.index.cjs'),
   );
 
-  if (!backIndexFilePath) throw new Error('Собранный back.index.cjs не найден');
+  if (!backIndexFilePath) throw 'Собранный back.index.cjs не найден';
 
   const proc = exec(`node ./${backIndexFilePath}`);
 

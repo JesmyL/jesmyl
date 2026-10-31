@@ -26,23 +26,23 @@ const takeEventCommentAuthor = async (
     takeScheduleWidgetTiny({ w: schw }),
   ]);
 
-  if (!authUser) throw new Error('Пользователь не найден');
+  if (!authUser) throw 'Пользователь не найден';
 
   const event = sch.days.flatMap(day => day.list).find(event => event.mi === eventMi);
-  if (event == null) throw new Error('Событие не найдено');
+  if (event == null) throw 'Событие не найдено';
 
   const schUser = sch.ctrl.users.find(user => user.id === authUser.id);
   const isSwPublic = scheduleWidgetRegTypeRights.checkIsHasRights(sch.ctrl.type, ScheduleWidgetRegType.Public);
 
-  if (!isSwPublic && schUser == null) throw new Error('Нет доступа к расписанию');
+  if (!isSwPublic && schUser == null) throw 'Нет доступа к расписанию';
 
   const userRights = schUser?.R ?? sch.ctrl.defu;
 
   if (!scheduleWidgetUserRights.checkIsHasRights(userRights, ScheduleWidgetUserRoleRight.Read))
-    throw new Error('Нет прав на комментирование событий расписания');
+    throw 'Нет прав на комментирование событий расписания';
 
   if (event.secret && !scheduleWidgetUserRights.checkIsHasRights(userRights, ScheduleWidgetUserRoleRight.ReadSpecials))
-    throw new Error('Нет прав на комментирование скрытого события');
+    throw 'Нет прав на комментирование скрытого события';
 
   return { userId: authUser.id, userRights };
 };
@@ -55,7 +55,7 @@ export const schEventCommentsTsjrpcBaseServer =
         methods: {
           setEventComment: async ({ schw, eventMi, text }, tool) => {
             const commentText = text.trim();
-            if (!commentText) throw new Error('Комментарий не может быть пустым');
+            if (!commentText) throw 'Комментарий не может быть пустым';
 
             const { userId } = await takeEventCommentAuthor(schw, eventMi, tool);
 
@@ -76,7 +76,7 @@ export const schEventCommentsTsjrpcBaseServer =
               eq(eventCommentsDB.userId, userId),
             );
 
-            if (where == null) throw new Error('Не удалось определить комментарий');
+            if (where == null) throw 'Не удалось определить комментарий';
 
             await dbDelete(eventCommentsDB, where);
           },

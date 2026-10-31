@@ -4,7 +4,7 @@ import { translateBaseDefine } from './translate';
 type CmEditorLocale = LocaleCmEditor;
 
 let takeCmEditorLocale: () => CmEditorLocale = () => {
-  throw new Error('setCmEditorLocaleProvider was never called');
+  throw 'setCmEditorLocaleProvider was never called';
 };
 
 // Provider must be registered before any module-scope translateEditorBase call.

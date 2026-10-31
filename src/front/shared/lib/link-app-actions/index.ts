@@ -29,8 +29,8 @@ export class LinkAppActionFabric<Props extends Record<string, unknown> = Record<
     path?: `/${string}`,
   ) {
     if (!actionFor.startsWith('*/')) return;
-    if (path === undefined) throw new Error(`${actionFor} action does not have path parameter`);
-    if (registededPathsMap.has(actionFor)) throw new Error(`the action for ${actionFor} was registered`);
+    if (path === undefined) throw `${actionFor} action does not have path parameter`;
+    if (registededPathsMap.has(actionFor)) throw `the action for ${actionFor} was registered`;
 
     registededPathsMap.set(actionFor, path);
   }

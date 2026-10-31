@@ -14,7 +14,7 @@ const modifyRole = <Props extends { props: ScheduleRoleScopeProps }>(
 ) =>
   modifySchedule<Props>(false, (sch, props) => {
     const role = sch.ctrl.roles.find(role => role.mi === props.props.roleMi);
-    if (role == null) throw new Error('role not found');
+    if (role == null) throw 'role not found';
     return modifier(role, props, sch);
   });
 

@@ -5,7 +5,7 @@ import { translateBaseDefine } from './translate';
 type BaseLocale = LocaleBase<Langi>;
 
 let takeBaseLocale: () => BaseLocale = () => {
-  throw new Error('setBaseLocaleProvider was never called');
+  throw 'setBaseLocaleProvider was never called';
 };
 
 // Provider must be registered before any module-scope translateBase call.

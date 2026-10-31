@@ -46,11 +46,11 @@ export const downloadFileMd5Rename = async (
 
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error(`Ошибка сети: ${response.status} ${response.statusText}`);
+      throw `Ошибка сети: ${response.status} ${response.statusText}`;
     }
 
     if (!response.body) {
-      throw new Error('Тело ответа пустое или отсутствует.');
+      throw 'Тело ответа пустое или отсутствует.';
     }
 
     let ext = path.extname(new URL(url).pathname).replace('.', '');
@@ -85,7 +85,7 @@ export const downloadFileMd5Rename = async (
       if (!targetTitle) targetTitle = cleanText(currentTags.title);
 
       const stripResult = nodeID3.removeTags(tempPath);
-      if (stripResult !== true) throw new Error(`ID3v2 strip failed: ${stripResult}`);
+      if (stripResult !== true) throw `ID3v2 strip failed: ${stripResult}`;
 
       // nodeID3 снимает только ID3v2 — обрезаем хвостовой ID3v1 (128 байт) до подсчета MD5
       const fileHandle = await fs.promises.open(tempPath, 'r+');
@@ -139,9 +139,6 @@ export const downloadFileMd5Rename = async (
     if (fileStream) fileStream.destroy();
     fs.rmSync(tempPath, { force: true });
 
-    if (error instanceof Error) {
-      throw new Error(`[downloadFileMd5Rename] ${error.message}`);
-    }
-    throw error;
+    throw `[downloadFileMd5Rename] ${error instanceof Error ? error.message : error}`;
   }
 };

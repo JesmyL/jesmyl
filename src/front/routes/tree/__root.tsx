@@ -30,7 +30,7 @@ function ErrorComponent({ error }: { error: Error }) {
           <Button
             icon="MessageQuestion"
             onClick={() => {
-              toast(`${error.message}\n\n${error.stack}`);
+              toast(`${error?.message ?? error}\n\n${error?.stack ?? ''}`);
               console.info(error);
             }}
           />

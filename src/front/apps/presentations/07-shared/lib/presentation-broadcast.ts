@@ -13,7 +13,7 @@ import { presentationProjectorTool } from 'shared/model/electron';
 export const openPresentationFile = async (filePath: string) => {
   const slides = await electronPresentationsTsjrpcClientMethods.openPresentation({ filePath }, presentationsTool);
 
-  if (!slides) throw new Error(`Presentation "${filePath}" is unavailable`);
+  if (!slides) throw `Presentation "${filePath}" is unavailable`;
 
   presentationsCurrentFilePathAtom.set(filePath);
   presentationsCurrentSlidesAtom.set(slides);
