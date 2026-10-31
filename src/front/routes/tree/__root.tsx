@@ -10,10 +10,14 @@ import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { toast } from 'sonner';
 
 const AppComponent = React.lazy(() => import('$app/AppComponent').then(m => ({ default: m.AppComponent })));
+const NotFoundPage = React.lazy(() =>
+  import('$index/pages/NotFoundPage').then(m => ({ default: m.IndexNotFoundPage })),
+);
 
 export const Route = createRootRoute({
   component: () => (environment.isPresentationMode ? <Outlet /> : <AppComponent />),
   errorComponent: ErrorComponent,
+  notFoundComponent: NotFoundPage,
 });
 
 function ErrorComponent({ error }: { error: Error }) {
