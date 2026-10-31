@@ -1,4 +1,5 @@
 import { useConnectionState } from '#basis/lib/useConnectionState';
+import { useAppNameContext } from '#basis/state/contexts';
 import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { closeAllAppNotifications } from '#shared/sw-register';
@@ -27,6 +28,7 @@ export const ScheduleWidgetPage = ({ inviteHash }: { inviteHash?: string }) => {
     scheduleWidgetRegTypeRights.checkIsHasRights(schedule.ctrl.type, ScheduleWidgetRegType.Public);
   const connectionNode = useConnectionState();
   const auth = useAuth();
+  const appName = useAppNameContext();
   const { byLogin } = useUserInfoDict();
   const myUserId = auth.login ? byLogin.get(auth.login)?.id : null;
   const isCanControl =
@@ -85,8 +87,9 @@ export const ScheduleWidgetPage = ({ inviteHash }: { inviteHash?: string }) => {
                   className="size-8 rounded-full"
                 >
                   <Link
-                    to="/schedule-tools/$schw"
-                    params={{ schw: `${schedule.w}` }}
+                    to="/!other/$appName/schs/tool"
+                    params={{ appName }}
+                    search={{ schw: schedule.w }}
                   />
                 </Button>
                 {!isCanControl || (
@@ -97,8 +100,9 @@ export const ScheduleWidgetPage = ({ inviteHash }: { inviteHash?: string }) => {
                     className="size-8 rounded-full"
                   >
                     <Link
-                      to="/schedule-manage/$schw"
-                      params={{ schw: `${schedule.w}` }}
+                      to="/!other/$appName/schs/manage"
+                      params={{ appName }}
+                      search={{ schw: schedule.w }}
                     />
                   </Button>
                 )}

@@ -1,4 +1,5 @@
 import { translateBase } from '#basis/locale';
+import { useAppNameContext } from '#basis/state/contexts';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { makeToastOKMoodConfig } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
@@ -39,6 +40,7 @@ const takeQrAuthLogin = (text: string) => {
 };
 
 export function ScheduleUsersPage({ schedule }: { schedule: IScheduleWidget }) {
+  const appName = useAppNameContext();
   const scheduleScopeProps: ScheduleScopeProps = useMemo(() => ({ schw: schedule.w }), [schedule.w]);
   const [termAtom] = useState(() => atom(''));
   const [isMoreOpen, setIsMoreOpen] = useState(false);
@@ -57,8 +59,9 @@ export function ScheduleUsersPage({ schedule }: { schedule: IScheduleWidget }) {
         backButtonRender={(linkRef, children) => (
           <Link
             ref={linkRef}
-            to="/schedule-manage/$schw"
-            params={{ schw: `${schedule.w}` }}
+            to="/!other/$appName/schs/manage"
+            params={{ appName }}
+            search={{ schw: schedule.w }}
           >
             {children}
           </Link>

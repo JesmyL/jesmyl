@@ -26,6 +26,7 @@
 - `.opencode/opencode.jsonc` sets `instructions: .opencode/tools/philosophy.md` — before writing code you MUST load the matching skill: `frontend-philosophy` for UI work, `code-philosophy` for logic/backend. See `.opencode/README.md` for agent/profile details.
 - Never make git commits yourself. At the end of your work you may suggest a commit message, but never run `git commit` (or push/reset) on your own initiative — only when the user explicitly asks for that exact operation.
 - Any change to locales (text edits included, not just inserting, reordering or renumbering keys) requires raising the matching delivery guard — `baseLocaleMinVersion` for base-locale changes and `editorLocaleMinVersion` for editor-locale changes, both in `src/back/apps/index/tsjrpc.base/lib/requestFreshes.ts` — to `num` from `src/shared/values/+version.json` plus 1 (otherwise stale fronts keep the old locale texts).
+- Pages that belong in the `!other/$appName` area must live there: never create root-level routes like `/schedule-users/1704636528751` — place such pages under `src/front/routes/tree/!other.$appName/...` instead.
 
 ### Code writing rules
 

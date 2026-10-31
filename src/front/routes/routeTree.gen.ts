@@ -35,6 +35,7 @@ import { Route as CmLiFavImport } from './tree/cm/li/fav'
 import { Route as CmLiEventsImport } from './tree/cm/li/events'
 import { Route as CmEditChordImport } from './tree/cm/edit/chord'
 import { Route as otherAppNameDashboardImport } from './tree/!other.$appName/dashboard'
+import { Route as otherAppNameSchsRouteImport } from './tree/!other.$appName/schs/route'
 import { Route as otherAppNameSettingsIndexImport } from './tree/!other.$appName/settings/index'
 import { Route as otherAppNameSchsIndexImport } from './tree/!other.$appName/schs/index'
 import { Route as otherAppNameAuthIndexImport } from './tree/!other.$appName/auth/index'
@@ -58,16 +59,6 @@ const PresentationIndexLazyImport = createFileRoute('/presentation/')()
 const GamerIndexLazyImport = createFileRoute('/gamer/')()
 const CmEditRouteLazyImport = createFileRoute('/cm/edit')()
 const StoragesIIndexLazyImport = createFileRoute('/storages/i/')()
-const ScheduleUsersSchwIndexLazyImport = createFileRoute(
-  '/schedule-users/$schw/',
-)()
-const ScheduleToolsSchwIndexLazyImport = createFileRoute(
-  '/schedule-tools/$schw/',
-)()
-const ScheduleManageSchwIndexLazyImport = createFileRoute(
-  '/schedule-manage/$schw/',
-)()
-const ScheduleDaySchwIndexLazyImport = createFileRoute('/schedule-day/$schw/')()
 const QRIndexLazyImport = createFileRoute('/q/r/')()
 const QAIndexLazyImport = createFileRoute('/q/a/')()
 const PresentationsIIndexLazyImport = createFileRoute('/presentations/i/')()
@@ -94,6 +85,18 @@ const StoragesIRackwCardiIndexLazyImport = createFileRoute(
   '/storages/i/$rackw/$cardi/',
 )()
 const CmEditComsComwIndexLazyImport = createFileRoute('/cm/edit/coms/$comw/')()
+const otherAppNameSchsUsersIndexLazyImport = createFileRoute(
+  '/!other/$appName/schs/users/',
+)()
+const otherAppNameSchsToolIndexLazyImport = createFileRoute(
+  '/!other/$appName/schs/tool/',
+)()
+const otherAppNameSchsManageIndexLazyImport = createFileRoute(
+  '/!other/$appName/schs/manage/',
+)()
+const otherAppNameSchsDayIndexLazyImport = createFileRoute(
+  '/!other/$appName/schs/day/',
+)()
 const CmEditComsComwTabIndexLazyImport = createFileRoute(
   '/cm/edit/coms/$comw/$tab/',
 )()
@@ -240,43 +243,6 @@ const StoragesIIndexLazyRoute = StoragesIIndexLazyImport.update({
   import('./tree/storages/i/index.lazy').then((d) => d.Route),
 )
 
-const ScheduleUsersSchwIndexLazyRoute = ScheduleUsersSchwIndexLazyImport.update(
-  {
-    id: '/schedule-users/$schw/',
-    path: '/schedule-users/$schw/',
-    getParentRoute: () => rootRoute,
-  } as any,
-).lazy(() =>
-  import('./tree/schedule-users/$schw/index.lazy').then((d) => d.Route),
-)
-
-const ScheduleToolsSchwIndexLazyRoute = ScheduleToolsSchwIndexLazyImport.update(
-  {
-    id: '/schedule-tools/$schw/',
-    path: '/schedule-tools/$schw/',
-    getParentRoute: () => rootRoute,
-  } as any,
-).lazy(() =>
-  import('./tree/schedule-tools/$schw/index.lazy').then((d) => d.Route),
-)
-
-const ScheduleManageSchwIndexLazyRoute =
-  ScheduleManageSchwIndexLazyImport.update({
-    id: '/schedule-manage/$schw/',
-    path: '/schedule-manage/$schw/',
-    getParentRoute: () => rootRoute,
-  } as any).lazy(() =>
-    import('./tree/schedule-manage/$schw/index.lazy').then((d) => d.Route),
-  )
-
-const ScheduleDaySchwIndexLazyRoute = ScheduleDaySchwIndexLazyImport.update({
-  id: '/schedule-day/$schw/',
-  path: '/schedule-day/$schw/',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./tree/schedule-day/$schw/index.lazy').then((d) => d.Route),
-)
-
 const QRIndexLazyRoute = QRIndexLazyImport.update({
   id: '/r/',
   path: '/r/',
@@ -403,6 +369,12 @@ const otherAppNameDashboardRoute = otherAppNameDashboardImport.update({
   getParentRoute: () => otherAppNameRouteRoute,
 } as any)
 
+const otherAppNameSchsRouteRoute = otherAppNameSchsRouteImport.update({
+  id: '/schs',
+  path: '/schs',
+  getParentRoute: () => otherAppNameRouteRoute,
+} as any)
+
 const StoragesIRackwIndexLazyRoute = StoragesIRackwIndexLazyImport.update({
   id: '/i/$rackw/',
   path: '/i/$rackw/',
@@ -436,9 +408,9 @@ const otherAppNameSettingsIndexRoute = otherAppNameSettingsIndexImport.update({
 } as any)
 
 const otherAppNameSchsIndexRoute = otherAppNameSchsIndexImport.update({
-  id: '/schs/',
-  path: '/schs/',
-  getParentRoute: () => otherAppNameRouteRoute,
+  id: '/',
+  path: '/',
+  getParentRoute: () => otherAppNameSchsRouteRoute,
 } as any)
 
 const otherAppNameAuthIndexRoute = otherAppNameAuthIndexImport.update({
@@ -512,6 +484,49 @@ const CmEditComsComwIndexLazyRoute = CmEditComsComwIndexLazyImport.update({
 } as any).lazy(() =>
   import('./tree/cm/edit/coms/$comw/index.lazy').then((d) => d.Route),
 )
+
+const otherAppNameSchsUsersIndexLazyRoute = otherAppNameSchsUsersIndexLazyImport
+  .update({
+    id: '/users/',
+    path: '/users/',
+    getParentRoute: () => otherAppNameSchsRouteRoute,
+  } as any)
+  .lazy(() =>
+    import('./tree/!other.$appName/schs/users/index.lazy').then((d) => d.Route),
+  )
+
+const otherAppNameSchsToolIndexLazyRoute = otherAppNameSchsToolIndexLazyImport
+  .update({
+    id: '/tool/',
+    path: '/tool/',
+    getParentRoute: () => otherAppNameSchsRouteRoute,
+  } as any)
+  .lazy(() =>
+    import('./tree/!other.$appName/schs/tool/index.lazy').then((d) => d.Route),
+  )
+
+const otherAppNameSchsManageIndexLazyRoute =
+  otherAppNameSchsManageIndexLazyImport
+    .update({
+      id: '/manage/',
+      path: '/manage/',
+      getParentRoute: () => otherAppNameSchsRouteRoute,
+    } as any)
+    .lazy(() =>
+      import('./tree/!other.$appName/schs/manage/index.lazy').then(
+        (d) => d.Route,
+      ),
+    )
+
+const otherAppNameSchsDayIndexLazyRoute = otherAppNameSchsDayIndexLazyImport
+  .update({
+    id: '/day/',
+    path: '/day/',
+    getParentRoute: () => otherAppNameSchsRouteRoute,
+  } as any)
+  .lazy(() =>
+    import('./tree/!other.$appName/schs/day/index.lazy').then((d) => d.Route),
+  )
 
 const StoragesIRackwSumIndexRoute = StoragesIRackwSumIndexImport.update({
   id: '/i/$rackw/sum/',
@@ -701,6 +716,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PresentationsIndexLazyImport
       parentRoute: typeof PresentationsRouteLazyImport
     }
+    '/!other/$appName/schs': {
+      id: '/!other/$appName/schs'
+      path: '/schs'
+      fullPath: '/!other/$appName/schs'
+      preLoaderRoute: typeof otherAppNameSchsRouteImport
+      parentRoute: typeof otherAppNameRouteImport
+    }
     '/!other/$appName/dashboard': {
       id: '/!other/$appName/dashboard'
       path: '/dashboard'
@@ -841,34 +863,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QRIndexLazyImport
       parentRoute: typeof QRouteLazyImport
     }
-    '/schedule-day/$schw/': {
-      id: '/schedule-day/$schw/'
-      path: '/schedule-day/$schw'
-      fullPath: '/schedule-day/$schw'
-      preLoaderRoute: typeof ScheduleDaySchwIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/schedule-manage/$schw/': {
-      id: '/schedule-manage/$schw/'
-      path: '/schedule-manage/$schw'
-      fullPath: '/schedule-manage/$schw'
-      preLoaderRoute: typeof ScheduleManageSchwIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/schedule-tools/$schw/': {
-      id: '/schedule-tools/$schw/'
-      path: '/schedule-tools/$schw'
-      fullPath: '/schedule-tools/$schw'
-      preLoaderRoute: typeof ScheduleToolsSchwIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/schedule-users/$schw/': {
-      id: '/schedule-users/$schw/'
-      path: '/schedule-users/$schw'
-      fullPath: '/schedule-users/$schw'
-      preLoaderRoute: typeof ScheduleUsersSchwIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
     '/storages/i/': {
       id: '/storages/i/'
       path: '/i'
@@ -920,10 +914,10 @@ declare module '@tanstack/react-router' {
     }
     '/!other/$appName/schs/': {
       id: '/!other/$appName/schs/'
-      path: '/schs'
-      fullPath: '/!other/$appName/schs'
+      path: '/'
+      fullPath: '/!other/$appName/schs/'
       preLoaderRoute: typeof otherAppNameSchsIndexImport
-      parentRoute: typeof otherAppNameRouteImport
+      parentRoute: typeof otherAppNameSchsRouteImport
     }
     '/!other/$appName/settings/': {
       id: '/!other/$appName/settings/'
@@ -980,6 +974,34 @@ declare module '@tanstack/react-router' {
       fullPath: '/storages/i/$rackw/sum'
       preLoaderRoute: typeof StoragesIRackwSumIndexImport
       parentRoute: typeof StoragesRouteLazyImport
+    }
+    '/!other/$appName/schs/day/': {
+      id: '/!other/$appName/schs/day/'
+      path: '/day'
+      fullPath: '/!other/$appName/schs/day'
+      preLoaderRoute: typeof otherAppNameSchsDayIndexLazyImport
+      parentRoute: typeof otherAppNameSchsRouteImport
+    }
+    '/!other/$appName/schs/manage/': {
+      id: '/!other/$appName/schs/manage/'
+      path: '/manage'
+      fullPath: '/!other/$appName/schs/manage'
+      preLoaderRoute: typeof otherAppNameSchsManageIndexLazyImport
+      parentRoute: typeof otherAppNameSchsRouteImport
+    }
+    '/!other/$appName/schs/tool/': {
+      id: '/!other/$appName/schs/tool/'
+      path: '/tool'
+      fullPath: '/!other/$appName/schs/tool'
+      preLoaderRoute: typeof otherAppNameSchsToolIndexLazyImport
+      parentRoute: typeof otherAppNameSchsRouteImport
+    }
+    '/!other/$appName/schs/users/': {
+      id: '/!other/$appName/schs/users/'
+      path: '/users'
+      fullPath: '/!other/$appName/schs/users'
+      preLoaderRoute: typeof otherAppNameSchsUsersIndexLazyImport
+      parentRoute: typeof otherAppNameSchsRouteImport
     }
     '/cm/edit/coms/$comw/': {
       id: '/cm/edit/coms/$comw/'
@@ -1172,7 +1194,29 @@ const StoragesRouteLazyRouteChildren: StoragesRouteLazyRouteChildren = {
 const StoragesRouteLazyRouteWithChildren =
   StoragesRouteLazyRoute._addFileChildren(StoragesRouteLazyRouteChildren)
 
+interface otherAppNameSchsRouteRouteChildren {
+  otherAppNameSchsIndexRoute: typeof otherAppNameSchsIndexRoute
+  otherAppNameSchsDayIndexLazyRoute: typeof otherAppNameSchsDayIndexLazyRoute
+  otherAppNameSchsManageIndexLazyRoute: typeof otherAppNameSchsManageIndexLazyRoute
+  otherAppNameSchsToolIndexLazyRoute: typeof otherAppNameSchsToolIndexLazyRoute
+  otherAppNameSchsUsersIndexLazyRoute: typeof otherAppNameSchsUsersIndexLazyRoute
+}
+
+const otherAppNameSchsRouteRouteChildren: otherAppNameSchsRouteRouteChildren = {
+  otherAppNameSchsIndexRoute: otherAppNameSchsIndexRoute,
+  otherAppNameSchsDayIndexLazyRoute: otherAppNameSchsDayIndexLazyRoute,
+  otherAppNameSchsManageIndexLazyRoute: otherAppNameSchsManageIndexLazyRoute,
+  otherAppNameSchsToolIndexLazyRoute: otherAppNameSchsToolIndexLazyRoute,
+  otherAppNameSchsUsersIndexLazyRoute: otherAppNameSchsUsersIndexLazyRoute,
+}
+
+const otherAppNameSchsRouteRouteWithChildren =
+  otherAppNameSchsRouteRoute._addFileChildren(
+    otherAppNameSchsRouteRouteChildren,
+  )
+
 interface otherAppNameRouteRouteChildren {
+  otherAppNameSchsRouteRoute: typeof otherAppNameSchsRouteRouteWithChildren
   otherAppNameDashboardRoute: typeof otherAppNameDashboardRoute
   otherAppNameIndexRoute: typeof otherAppNameIndexRoute
   otherAppNameSettingsConsoleRoute: typeof otherAppNameSettingsConsoleRoute
@@ -1180,7 +1224,6 @@ interface otherAppNameRouteRouteChildren {
   otherAppNameSettingsConstantLazyRoute: typeof otherAppNameSettingsConstantLazyRoute
   otherAppNameActionsIndexRoute: typeof otherAppNameActionsIndexRoute
   otherAppNameAuthIndexRoute: typeof otherAppNameAuthIndexRoute
-  otherAppNameSchsIndexRoute: typeof otherAppNameSchsIndexRoute
   otherAppNameSettingsIndexRoute: typeof otherAppNameSettingsIndexRoute
   otherAppNameActionsDownIndexRoute: typeof otherAppNameActionsDownIndexRoute
   otherAppNameActionsFilesIndexRoute: typeof otherAppNameActionsFilesIndexRoute
@@ -1188,6 +1231,7 @@ interface otherAppNameRouteRouteChildren {
 }
 
 const otherAppNameRouteRouteChildren: otherAppNameRouteRouteChildren = {
+  otherAppNameSchsRouteRoute: otherAppNameSchsRouteRouteWithChildren,
   otherAppNameDashboardRoute: otherAppNameDashboardRoute,
   otherAppNameIndexRoute: otherAppNameIndexRoute,
   otherAppNameSettingsConsoleRoute: otherAppNameSettingsConsoleRoute,
@@ -1195,7 +1239,6 @@ const otherAppNameRouteRouteChildren: otherAppNameRouteRouteChildren = {
   otherAppNameSettingsConstantLazyRoute: otherAppNameSettingsConstantLazyRoute,
   otherAppNameActionsIndexRoute: otherAppNameActionsIndexRoute,
   otherAppNameAuthIndexRoute: otherAppNameAuthIndexRoute,
-  otherAppNameSchsIndexRoute: otherAppNameSchsIndexRoute,
   otherAppNameSettingsIndexRoute: otherAppNameSettingsIndexRoute,
   otherAppNameActionsDownIndexRoute: otherAppNameActionsDownIndexRoute,
   otherAppNameActionsFilesIndexRoute: otherAppNameActionsFilesIndexRoute,
@@ -1228,6 +1271,7 @@ export interface FileRoutesByFullPath {
   '/gamer/': typeof GamerIndexLazyRoute
   '/presentation': typeof PresentationIndexLazyRoute
   '/presentations/': typeof PresentationsIndexLazyRoute
+  '/!other/$appName/schs': typeof otherAppNameSchsRouteRouteWithChildren
   '/!other/$appName/dashboard': typeof otherAppNameDashboardRoute
   '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/li/events': typeof CmLiEventsRoute
@@ -1248,10 +1292,6 @@ export interface FileRoutesByFullPath {
   '/presentations/i': typeof PresentationsIIndexLazyRoute
   '/q/a': typeof QAIndexLazyRoute
   '/q/r': typeof QRIndexLazyRoute
-  '/schedule-day/$schw': typeof ScheduleDaySchwIndexLazyRoute
-  '/schedule-manage/$schw': typeof ScheduleManageSchwIndexLazyRoute
-  '/schedule-tools/$schw': typeof ScheduleToolsSchwIndexLazyRoute
-  '/schedule-users/$schw': typeof ScheduleUsersSchwIndexLazyRoute
   '/storages/i': typeof StoragesIIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
@@ -1259,7 +1299,7 @@ export interface FileRoutesByFullPath {
   '/!other/$appName/settings/constant': typeof otherAppNameSettingsConstantLazyRoute
   '/!other/$appName/actions': typeof otherAppNameActionsIndexRoute
   '/!other/$appName/auth': typeof otherAppNameAuthIndexRoute
-  '/!other/$appName/schs': typeof otherAppNameSchsIndexRoute
+  '/!other/$appName/schs/': typeof otherAppNameSchsIndexRoute
   '/!other/$appName/settings': typeof otherAppNameSettingsIndexRoute
   '/cm/edit/coms': typeof CmEditComsIndexLazyRoute
   '/gamer/i/memory-giant': typeof GamerIMemoryGiantIndexLazyRoute
@@ -1268,6 +1308,10 @@ export interface FileRoutesByFullPath {
   '/!other/$appName/actions/files': typeof otherAppNameActionsFilesIndexRoute
   '/!other/$appName/settings/noun_prons': typeof otherAppNameSettingsNounpronsIndexRoute
   '/storages/i/$rackw/sum': typeof StoragesIRackwSumIndexRoute
+  '/!other/$appName/schs/day': typeof otherAppNameSchsDayIndexLazyRoute
+  '/!other/$appName/schs/manage': typeof otherAppNameSchsManageIndexLazyRoute
+  '/!other/$appName/schs/tool': typeof otherAppNameSchsToolIndexLazyRoute
+  '/!other/$appName/schs/users': typeof otherAppNameSchsUsersIndexLazyRoute
   '/cm/edit/coms/$comw': typeof CmEditComsComwIndexLazyRoute
   '/storages/i/$rackw/$cardi': typeof StoragesIRackwCardiIndexLazyRoute
   '/storages/i/$rackw/edit': typeof StoragesIRackwEditIndexLazyRoute
@@ -1309,10 +1353,6 @@ export interface FileRoutesByTo {
   '/presentations/i': typeof PresentationsIIndexLazyRoute
   '/q/a': typeof QAIndexLazyRoute
   '/q/r': typeof QRIndexLazyRoute
-  '/schedule-day/$schw': typeof ScheduleDaySchwIndexLazyRoute
-  '/schedule-manage/$schw': typeof ScheduleManageSchwIndexLazyRoute
-  '/schedule-tools/$schw': typeof ScheduleToolsSchwIndexLazyRoute
-  '/schedule-users/$schw': typeof ScheduleUsersSchwIndexLazyRoute
   '/storages/i': typeof StoragesIIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
@@ -1329,6 +1369,10 @@ export interface FileRoutesByTo {
   '/!other/$appName/actions/files': typeof otherAppNameActionsFilesIndexRoute
   '/!other/$appName/settings/noun_prons': typeof otherAppNameSettingsNounpronsIndexRoute
   '/storages/i/$rackw/sum': typeof StoragesIRackwSumIndexRoute
+  '/!other/$appName/schs/day': typeof otherAppNameSchsDayIndexLazyRoute
+  '/!other/$appName/schs/manage': typeof otherAppNameSchsManageIndexLazyRoute
+  '/!other/$appName/schs/tool': typeof otherAppNameSchsToolIndexLazyRoute
+  '/!other/$appName/schs/users': typeof otherAppNameSchsUsersIndexLazyRoute
   '/cm/edit/coms/$comw': typeof CmEditComsComwIndexLazyRoute
   '/storages/i/$rackw/$cardi': typeof StoragesIRackwCardiIndexLazyRoute
   '/storages/i/$rackw/edit': typeof StoragesIRackwEditIndexLazyRoute
@@ -1358,6 +1402,7 @@ export interface FileRoutesById {
   '/gamer/': typeof GamerIndexLazyRoute
   '/presentation/': typeof PresentationIndexLazyRoute
   '/presentations/': typeof PresentationsIndexLazyRoute
+  '/!other/$appName/schs': typeof otherAppNameSchsRouteRouteWithChildren
   '/!other/$appName/dashboard': typeof otherAppNameDashboardRoute
   '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/li/events': typeof CmLiEventsRoute
@@ -1378,10 +1423,6 @@ export interface FileRoutesById {
   '/presentations/i/': typeof PresentationsIIndexLazyRoute
   '/q/a/': typeof QAIndexLazyRoute
   '/q/r/': typeof QRIndexLazyRoute
-  '/schedule-day/$schw/': typeof ScheduleDaySchwIndexLazyRoute
-  '/schedule-manage/$schw/': typeof ScheduleManageSchwIndexLazyRoute
-  '/schedule-tools/$schw/': typeof ScheduleToolsSchwIndexLazyRoute
-  '/schedule-users/$schw/': typeof ScheduleUsersSchwIndexLazyRoute
   '/storages/i/': typeof StoragesIIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
@@ -1398,6 +1439,10 @@ export interface FileRoutesById {
   '/!other/$appName/actions/files/': typeof otherAppNameActionsFilesIndexRoute
   '/!other/$appName/settings/noun_prons/': typeof otherAppNameSettingsNounpronsIndexRoute
   '/storages/i/$rackw/sum/': typeof StoragesIRackwSumIndexRoute
+  '/!other/$appName/schs/day/': typeof otherAppNameSchsDayIndexLazyRoute
+  '/!other/$appName/schs/manage/': typeof otherAppNameSchsManageIndexLazyRoute
+  '/!other/$appName/schs/tool/': typeof otherAppNameSchsToolIndexLazyRoute
+  '/!other/$appName/schs/users/': typeof otherAppNameSchsUsersIndexLazyRoute
   '/cm/edit/coms/$comw/': typeof CmEditComsComwIndexLazyRoute
   '/storages/i/$rackw/$cardi/': typeof StoragesIRackwCardiIndexLazyRoute
   '/storages/i/$rackw/edit/': typeof StoragesIRackwEditIndexLazyRoute
@@ -1428,6 +1473,7 @@ export interface FileRouteTypes {
     | '/gamer/'
     | '/presentation'
     | '/presentations/'
+    | '/!other/$appName/schs'
     | '/!other/$appName/dashboard'
     | '/cm/edit/chord'
     | '/cm/li/events'
@@ -1448,10 +1494,6 @@ export interface FileRouteTypes {
     | '/presentations/i'
     | '/q/a'
     | '/q/r'
-    | '/schedule-day/$schw'
-    | '/schedule-manage/$schw'
-    | '/schedule-tools/$schw'
-    | '/schedule-users/$schw'
     | '/storages/i'
     | '/!other/$appName/settings/console'
     | '/!other/$appName/settings/rights'
@@ -1459,7 +1501,7 @@ export interface FileRouteTypes {
     | '/!other/$appName/settings/constant'
     | '/!other/$appName/actions'
     | '/!other/$appName/auth'
-    | '/!other/$appName/schs'
+    | '/!other/$appName/schs/'
     | '/!other/$appName/settings'
     | '/cm/edit/coms'
     | '/gamer/i/memory-giant'
@@ -1468,6 +1510,10 @@ export interface FileRouteTypes {
     | '/!other/$appName/actions/files'
     | '/!other/$appName/settings/noun_prons'
     | '/storages/i/$rackw/sum'
+    | '/!other/$appName/schs/day'
+    | '/!other/$appName/schs/manage'
+    | '/!other/$appName/schs/tool'
+    | '/!other/$appName/schs/users'
     | '/cm/edit/coms/$comw'
     | '/storages/i/$rackw/$cardi'
     | '/storages/i/$rackw/edit'
@@ -1508,10 +1554,6 @@ export interface FileRouteTypes {
     | '/presentations/i'
     | '/q/a'
     | '/q/r'
-    | '/schedule-day/$schw'
-    | '/schedule-manage/$schw'
-    | '/schedule-tools/$schw'
-    | '/schedule-users/$schw'
     | '/storages/i'
     | '/!other/$appName/settings/console'
     | '/!other/$appName/settings/rights'
@@ -1528,6 +1570,10 @@ export interface FileRouteTypes {
     | '/!other/$appName/actions/files'
     | '/!other/$appName/settings/noun_prons'
     | '/storages/i/$rackw/sum'
+    | '/!other/$appName/schs/day'
+    | '/!other/$appName/schs/manage'
+    | '/!other/$appName/schs/tool'
+    | '/!other/$appName/schs/users'
     | '/cm/edit/coms/$comw'
     | '/storages/i/$rackw/$cardi'
     | '/storages/i/$rackw/edit'
@@ -1555,6 +1601,7 @@ export interface FileRouteTypes {
     | '/gamer/'
     | '/presentation/'
     | '/presentations/'
+    | '/!other/$appName/schs'
     | '/!other/$appName/dashboard'
     | '/cm/edit/chord'
     | '/cm/li/events'
@@ -1575,10 +1622,6 @@ export interface FileRouteTypes {
     | '/presentations/i/'
     | '/q/a/'
     | '/q/r/'
-    | '/schedule-day/$schw/'
-    | '/schedule-manage/$schw/'
-    | '/schedule-tools/$schw/'
-    | '/schedule-users/$schw/'
     | '/storages/i/'
     | '/!other/$appName/settings/console'
     | '/!other/$appName/settings/rights'
@@ -1595,6 +1638,10 @@ export interface FileRouteTypes {
     | '/!other/$appName/actions/files/'
     | '/!other/$appName/settings/noun_prons/'
     | '/storages/i/$rackw/sum/'
+    | '/!other/$appName/schs/day/'
+    | '/!other/$appName/schs/manage/'
+    | '/!other/$appName/schs/tool/'
+    | '/!other/$appName/schs/users/'
     | '/cm/edit/coms/$comw/'
     | '/storages/i/$rackw/$cardi/'
     | '/storages/i/$rackw/edit/'
@@ -1613,10 +1660,6 @@ export interface RootRouteChildren {
   StoragesRouteLazyRoute: typeof StoragesRouteLazyRouteWithChildren
   otherAppNameRouteRoute: typeof otherAppNameRouteRouteWithChildren
   PresentationIndexLazyRoute: typeof PresentationIndexLazyRoute
-  ScheduleDaySchwIndexLazyRoute: typeof ScheduleDaySchwIndexLazyRoute
-  ScheduleManageSchwIndexLazyRoute: typeof ScheduleManageSchwIndexLazyRoute
-  ScheduleToolsSchwIndexLazyRoute: typeof ScheduleToolsSchwIndexLazyRoute
-  ScheduleUsersSchwIndexLazyRoute: typeof ScheduleUsersSchwIndexLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -1630,10 +1673,6 @@ const rootRouteChildren: RootRouteChildren = {
   StoragesRouteLazyRoute: StoragesRouteLazyRouteWithChildren,
   otherAppNameRouteRoute: otherAppNameRouteRouteWithChildren,
   PresentationIndexLazyRoute: PresentationIndexLazyRoute,
-  ScheduleDaySchwIndexLazyRoute: ScheduleDaySchwIndexLazyRoute,
-  ScheduleManageSchwIndexLazyRoute: ScheduleManageSchwIndexLazyRoute,
-  ScheduleToolsSchwIndexLazyRoute: ScheduleToolsSchwIndexLazyRoute,
-  ScheduleUsersSchwIndexLazyRoute: ScheduleUsersSchwIndexLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -1655,11 +1694,7 @@ export const routeTree = rootRoute
         "/q",
         "/storages",
         "/!other/$appName",
-        "/presentation/",
-        "/schedule-day/$schw/",
-        "/schedule-manage/$schw/",
-        "/schedule-tools/$schw/",
-        "/schedule-users/$schw/"
+        "/presentation/"
       ]
     },
     "/": {
@@ -1733,6 +1768,7 @@ export const routeTree = rootRoute
     "/!other/$appName": {
       "filePath": "!other.$appName/route.tsx",
       "children": [
+        "/!other/$appName/schs",
         "/!other/$appName/dashboard",
         "/!other/$appName/",
         "/!other/$appName/settings/console",
@@ -1740,7 +1776,6 @@ export const routeTree = rootRoute
         "/!other/$appName/settings/constant",
         "/!other/$appName/actions/",
         "/!other/$appName/auth/",
-        "/!other/$appName/schs/",
         "/!other/$appName/settings/",
         "/!other/$appName/actions/down/",
         "/!other/$appName/actions/files/",
@@ -1804,6 +1839,17 @@ export const routeTree = rootRoute
     "/presentations/": {
       "filePath": "presentations/index.lazy.tsx",
       "parent": "/presentations"
+    },
+    "/!other/$appName/schs": {
+      "filePath": "!other.$appName/schs/route.tsx",
+      "parent": "/!other/$appName",
+      "children": [
+        "/!other/$appName/schs/",
+        "/!other/$appName/schs/day/",
+        "/!other/$appName/schs/manage/",
+        "/!other/$appName/schs/tool/",
+        "/!other/$appName/schs/users/"
+      ]
     },
     "/!other/$appName/dashboard": {
       "filePath": "!other.$appName/dashboard.tsx",
@@ -1885,18 +1931,6 @@ export const routeTree = rootRoute
       "filePath": "q/r/index.lazy.tsx",
       "parent": "/q"
     },
-    "/schedule-day/$schw/": {
-      "filePath": "schedule-day/$schw/index.lazy.tsx"
-    },
-    "/schedule-manage/$schw/": {
-      "filePath": "schedule-manage/$schw/index.lazy.tsx"
-    },
-    "/schedule-tools/$schw/": {
-      "filePath": "schedule-tools/$schw/index.lazy.tsx"
-    },
-    "/schedule-users/$schw/": {
-      "filePath": "schedule-users/$schw/index.lazy.tsx"
-    },
     "/storages/i/": {
       "filePath": "storages/i/index.lazy.tsx",
       "parent": "/storages"
@@ -1927,7 +1961,7 @@ export const routeTree = rootRoute
     },
     "/!other/$appName/schs/": {
       "filePath": "!other.$appName/schs/index.tsx",
-      "parent": "/!other/$appName"
+      "parent": "/!other/$appName/schs"
     },
     "/!other/$appName/settings/": {
       "filePath": "!other.$appName/settings/index.tsx",
@@ -1960,6 +1994,22 @@ export const routeTree = rootRoute
     "/storages/i/$rackw/sum/": {
       "filePath": "storages/i/$rackw/sum/index.tsx",
       "parent": "/storages"
+    },
+    "/!other/$appName/schs/day/": {
+      "filePath": "!other.$appName/schs/day/index.lazy.tsx",
+      "parent": "/!other/$appName/schs"
+    },
+    "/!other/$appName/schs/manage/": {
+      "filePath": "!other.$appName/schs/manage/index.lazy.tsx",
+      "parent": "/!other/$appName/schs"
+    },
+    "/!other/$appName/schs/tool/": {
+      "filePath": "!other.$appName/schs/tool/index.lazy.tsx",
+      "parent": "/!other/$appName/schs"
+    },
+    "/!other/$appName/schs/users/": {
+      "filePath": "!other.$appName/schs/users/index.lazy.tsx",
+      "parent": "/!other/$appName/schs"
     },
     "/cm/edit/coms/$comw/": {
       "filePath": "cm/edit/coms/$comw/index.lazy.tsx",

@@ -1,4 +1,5 @@
 import { translateBase } from '#basis/locale';
+import { useAppNameContext } from '#basis/state/contexts';
 import { useIsExpand } from '#shared/ui/expand/useIsExpand';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
@@ -11,11 +12,13 @@ import { ScheduleWidgetUser } from './User';
 
 export function ScheduleWidgetUsersLink() {
   const rights = useScheduleWidgetRightsContext();
+  const appName = useAppNameContext();
 
   return (
     <Link
-      to="/schedule-users/$schw"
-      params={{ schw: `${rights.schedule.w}` }}
+      to="/!other/$appName/schs/users"
+      params={{ appName }}
+      search={{ schw: rights.schedule.w }}
       className="flex gap-2 items-center my-3 pointer"
     >
       <span className="grid place-items-center size-9 rounded-xl bg-x4/20 text-xOK ring-1 ring-xOK/30">

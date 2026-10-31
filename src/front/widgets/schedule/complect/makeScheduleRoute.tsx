@@ -2,12 +2,25 @@ import { appAttsStore } from '#basis/lib/appScheduleAttrsStorage';
 import { ScheduleDayEventAttachmentScopeProps, ScheduleWidgetWidDef } from 'shared/api';
 import { checkIsNaN } from 'shared/utils/checkIs';
 import { ScheduleSingleAlarmDay } from '../alarm/SingleAlarmDay';
-import { ScheduleWidgetPage } from '../pages/ScheduleWidgetPage';
-import { ScheduleCurrentSchwContext } from './lib/contexts';
+
+type ScheduleRouteSearch = Partial<
+  ScheduleDayEventAttachmentScopeProps & { isOpenSingleDay: true; inviteHash: string }
+>;
+
+export const validateScheduleSearch = (search: Record<string, unknown>): ScheduleRouteSearch => {
+  return {
+    dayi: checkIsNaN(+search.dayi!) ? undefined : (+search.dayi! as never),
+    schw: checkIsNaN(+search.schw!) ? undefined : (+search.schw! as never),
+    eventMi: checkIsNaN(+search.eventMi!) ? undefined : (+search.eventMi! as never),
+    attKey: `${search.attKey}`.includes(']:') ? (`${search.attKey}` as never) : undefined,
+    inviteHash: typeof search.inviteHash === 'string' ? search.inviteHash : undefined,
+    isOpenSingleDay: search.isOpenSingleDay ? true : undefined,
+  };
+};
 
 export const makeScheduleRoute = (
   getRoute: () => {
-    useSearch: () => Partial<ScheduleDayEventAttachmentScopeProps & { isOpenSingleDay: true; inviteHash: string }>;
+    useSearch: () => ScheduleRouteSearch;
   },
   RouteComponent: () => React.ReactNode,
 ) => {
@@ -35,29 +48,11 @@ export const makeScheduleRoute = (
           />
         );
 
-    if (search.schw != null)
-      return (
-        <ScheduleCurrentSchwContext value={search.schw}>
-          <ScheduleWidgetPage inviteHash={search.inviteHash} />
-        </ScheduleCurrentSchwContext>
-      );
-
     return <RouteComponent />;
   };
 
   return {
     component: AttRouteComponent,
-    validateSearch: (
-      search: Record<string, unknown>,
-    ): Partial<ScheduleDayEventAttachmentScopeProps & { isOpenSingleDay: true; inviteHash: string }> => {
-      return {
-        dayi: checkIsNaN(+search.dayi!) ? undefined : (+search.dayi! as never),
-        schw: checkIsNaN(+search.schw!) ? undefined : (+search.schw! as never),
-        eventMi: checkIsNaN(+search.eventMi!) ? undefined : (+search.eventMi! as never),
-        attKey: `${search.attKey}`.includes(']:') ? (`${search.attKey}` as never) : undefined,
-        inviteHash: typeof search.inviteHash === 'string' ? search.inviteHash : undefined,
-        isOpenSingleDay: search.isOpenSingleDay ? true : undefined,
-      };
-    },
+    validateSearch: validateScheduleSearch,
   };
 };
