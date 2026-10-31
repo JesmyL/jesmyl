@@ -9,7 +9,7 @@ import { CmComBlockKindKey } from 'shared/values/cm/block-kinds/BlockKind.model'
 
 export const localeDynamicUa = convertObjectToArray<LocaleDynamic<Langi.Ua>>({
   [DynLocaleKey.Langi]: Langi.Ua,
-  [DynLocaleKey.Version]: 0,
+  [DynLocaleKey.Version]: 1,
 
   [DynLocaleKey.Lang]: convertObjectToArray({
     [Langi.Ru]: 'Російська мова',
@@ -176,8 +176,8 @@ export const localeDynamicUa = convertObjectToArray<LocaleDynamic<Langi.Ua>>({
     [BibleTitleCodei.Откр]: 'Об',
   }),
 
-  ...dynamicLocaleTemplate(
-    DynLocaleKey.BibleChapterNum,
-    ['$b', '$c'],
-  )`${SWITCH('$b').CASE(BibleTitleCodei.Пс)`Псалом $c`.DEFAULT`Глава $c`}`,
+  ...dynamicLocaleTemplate(DynLocaleKey.BibleChapterNum, [
+    '$b',
+    '$c',
+  ])`${SWITCH('$b').CASE(BibleTitleCodei.Пс)`Псалом $c`.DEFAULT`Глава $c`}`,
 });
