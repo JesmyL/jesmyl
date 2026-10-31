@@ -17,11 +17,6 @@ import {
   useCmComIComList,
 } from '$cm/entities/com';
 import {
-  CmComToolFavorite,
-  CmComToolIsComToolIconItemsContext,
-  CmComToolNameContext,
-} from '$cm/entities/com-tool';
-import {
   CmComAudioPlayerAdjacentDirection,
   cmComAudioPlayerCurrentComwAtom,
   cmComAudioPlayerFilteredComsAtom,
@@ -45,6 +40,7 @@ import {
   useCmComAudioPlayerDuration,
 } from '$cm/entities/com-audio-player';
 import { CmComFaceList } from '$cm/entities/com-face';
+import { CmComToolFavorite, CmComToolIsComToolIconItemsContext, CmComToolNameContext } from '$cm/entities/com-tool';
 import { CmComListPackKindSelector } from '$cm/entities/ComListPackKindSelector';
 import { cmComLastOpenComwAtom } from '$cm/entities/index';
 import { CmComAudioPlayerMarksMovers } from '$cm/ext';
@@ -61,11 +57,14 @@ import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { atom, useAtomValue } from 'atomaric';
-import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactNode, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { CmComWid, IExportableCom, MenuComToolName, parseCmAudioSrc } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { convertSecondsInStrTime, retNull } from 'shared/utils';
+import { lazyInit } from 'shared/utils/lazyInit';
 import { twMerge } from 'tailwind-merge';
+
+const termAtom = lazyInit(() => atom(''));
 
 const controlClass =
   'inline-flex items-center justify-center text-[var(--color--3)] bg-transparent border-0 align-middle [transition:transform_.16s_ease,opacity_.16s_ease,color_.16s_ease] active:scale-[0.88]';
@@ -96,6 +95,8 @@ const StyledPlayer = styled.div`
 /** Travel speed in px per second and the hold between the passes of the endless loop. */
 const comNameMarqueeSpeed = 40;
 const comNameMarqueePause = 1;
+/** The loop turns off only when the name fits with this much slack, so iOS resize and font bursts cannot toggle it rapidly. */
+const comNameMarqueeHysteresis = 8;
 
 /** The endless cycle: the strip slides its whole shift, holds on the last frame, then jumps back to a seamless start. */
 const comNameMarquee = keyframes`
@@ -116,8 +117,13 @@ const comNameMarqueeEasing = (shift: number) => {
  * The slide takes `shift / speed` seconds, so the cycle and the pause share both follow from the measured shift.
  * The first pass waits one beat before it starts, like every hold between the passes; the strip rests at
  * the 0% frame meanwhile, since the animation has no `from` block.
+ * The strip lies absolutely over the line, out of the flow: it feeds no intrinsic width to the line or any
+ * ancestor, so both branches measure the very same widths and the overflow decision cannot oscillate.
  */
 const StyledComName = styled.div<{ $shift: number }>`
+  position: absolute;
+  inset-block: 0;
+  left: 0;
   display: flex;
   width: max-content;
   --marquee-shift: -${props => props.$shift}px;
@@ -192,7 +198,8 @@ const PlayerComName = ({ name }: { name: string }) => {
   const [isOverflowing, setIsOverflowing] = useState(false);
   const [shift, setShift] = useState(0);
 
-  useEffect(() => {
+  /** Measured before paint: the first painted frame is already the marquee, never a flashing single copy. */
+  useLayoutEffect(() => {
     let isCurrent = true;
 
     const measure = () => {
@@ -202,8 +209,16 @@ const PlayerComName = ({ name }: { name: string }) => {
       const firstCopy = firstCopyRef.current;
       if (!line || !firstCopy) return;
 
-      /** A fitting name needs no duplicate: keep the single copy and stop the loop. */
-      const isNameOverflowing = firstCopy.offsetWidth > line.clientWidth;
+      /**
+       * Fractional rect widths, never the rounded `offsetWidth`/`clientWidth` pair: a name that fits
+       * within a fraction of a pixel of the line must not read as overflowing. A fitting name needs no
+       * duplicate: keep the single copy and stop the loop. The slack applies only on the way back, in the
+       * same fractional units, so a running loop stops when a later measure proves the name fits with room
+       * to spare.
+       */
+      const isNameOverflowing =
+        firstCopy.getBoundingClientRect().width >
+        line.getBoundingClientRect().width - (isOverflowing ? comNameMarqueeHysteresis : 0);
       setIsOverflowing(isNameOverflowing);
 
       if (!isNameOverflowing) {
@@ -238,16 +253,21 @@ const PlayerComName = ({ name }: { name: string }) => {
   return (
     <div
       ref={lineRef}
-      className={`mt-[0.35rem] text-[1.7rem] font-extrabold leading-[1.08] tracking-[-0.01em] ${isOverflowing ? 'overflow-hidden whitespace-nowrap' : 'truncate'}`}
+      className={`relative mt-[0.35rem] text-[1.7rem] font-extrabold leading-[1.08] tracking-[-0.01em] ${isOverflowing ? 'overflow-hidden whitespace-nowrap' : 'truncate'}`}
     >
-      {isOverflowing ? (
+      {/**
+       * The sizer copy is the only in-flow content in both branches: the line's width and height never
+       * depend on whether the strip is rendered, so a synchronous re-measure cannot flip the decision back.
+       */}
+      <span
+        ref={firstCopyRef}
+        className={isOverflowing ? 'invisible' : undefined}
+      >
+        {name}
+      </span>
+      {!isOverflowing || (
         <StyledComName $shift={shift}>
-          <span
-            ref={firstCopyRef}
-            className="mr-[3em]"
-          >
-            {name}
-          </span>
+          <span className="mr-[3em]">{name}</span>
           <span
             ref={secondCopyRef}
             aria-hidden
@@ -256,8 +276,6 @@ const PlayerComName = ({ name }: { name: string }) => {
             {name}
           </span>
         </StyledComName>
-      ) : (
-        <span ref={firstCopyRef}>{name}</span>
       )}
     </div>
   );
@@ -269,7 +287,6 @@ export const CmPlayerPage = () => {
   const allIComs = useCmComAllIComList();
   const debouncedOpenComListMode = useDebounceValue(useAtomValue(cmOpenComListModeAtom));
   const cachedSrcs = useCmComAudioPlayerCachedSrcs();
-  const termAtom = useMemo(() => atom(''), []);
 
   const baseIComs = useMemo(
     () =>
@@ -288,7 +305,7 @@ export const CmPlayerPage = () => {
   return (
     <CmComWithComListSearchFilterInput
       comws={baseComws}
-      termAtom={termAtom}
+      termAtom={termAtom()}
     >
       {({ inputNode, searchedComs }) => (
         <CmPlayerPageContent
@@ -338,9 +355,7 @@ const CmPlayerPageContent = ({
   /** URL `coml` (md5-tail link) is preferred over the legacy `comw` hint and is resolved within the visible list. */
   const incomingEntryComw = useMemo(
     () =>
-      incomingComl == null
-        ? (incomingComw ?? null)
-        : (icoms.find(com => com.al?.includes(incomingComl))?.w ?? null),
+      incomingComl == null ? (incomingComw ?? null) : (icoms.find(com => com.al?.includes(incomingComl))?.w ?? null),
     [icoms, incomingComl, incomingComw],
   );
   const hasIncomingEntry = incomingComl != null || incomingComw != null;
