@@ -34,7 +34,12 @@ function ErrorComponent({ error }: { error: Error }) {
           <Button
             icon="MessageQuestion"
             onClick={() => {
-              toast(`${error?.message ?? error}\n\n${error?.stack ?? ''}`);
+              const fullText = `${error?.message ?? error}\n\n${error?.stack ?? ''}`;
+              const isTruncated = fullText.length > 200;
+
+              toast(fullText.slice(0, 200), {
+                action: isTruncated ? { label: 'Подробнее', onClick: () => toast(fullText) } : undefined,
+              });
               console.info(error);
             }}
           />
