@@ -857,9 +857,11 @@ export const localeBaseKz = convertObjectToArray<LocaleBaseDelivered<Langi.Kz>>(
   [BaseLocaleKey.ScheduleEnable]: 'Қосу',
   [BaseLocaleKey.SchedulePausedPlural]: 'Өшірілгендер',
   [BaseLocaleKey.ScheduleMoreThanYear]: 'Бір жылдан астам',
+  [BaseLocaleKey.ScheduleAddUserByQr]: 'Пайдаланушыны QR арқылы қосу',
   [BaseLocaleKey.SchedulePeriodEveryWeek]: 'Апта сайын',
   [BaseLocaleKey.SchedulePeriodMonthly]: 'Айына бір рет',
   [BaseLocaleKey.SchedulePeriodWeekdayOfMonthKind]: 'Айдың апта күні',
+  [BaseLocaleKey.ScheduleUserAdded]: 'Пайдаланушы кестеге қосылды',
 
   [BaseLocaleKey.NumberSymbols]: '$n; $declension{{$n}{таңба}{таңба}{таңба}}',
 

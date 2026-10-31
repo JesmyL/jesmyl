@@ -857,9 +857,11 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.ScheduleEnable]: 'Увімкнути',
   [BaseLocaleKey.SchedulePausedPlural]: 'Вимкнені',
   [BaseLocaleKey.ScheduleMoreThanYear]: 'Понад рік',
+  [BaseLocaleKey.ScheduleAddUserByQr]: 'Додати користувача за QR',
   [BaseLocaleKey.SchedulePeriodEveryWeek]: 'Щотижня',
   [BaseLocaleKey.SchedulePeriodMonthly]: 'Раз на місяць',
   [BaseLocaleKey.SchedulePeriodWeekdayOfMonthKind]: 'День тижня місяця',
+  [BaseLocaleKey.ScheduleUserAdded]: 'Користувача додано до розкладу',
 
   [BaseLocaleKey.NumberSymbols]: '$n; $declension{{$n}{символ}{символи}{символів}}',
 

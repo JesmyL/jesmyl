@@ -93,7 +93,7 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
 
           const userTiny = await takeUserTiny({ l: login as SokiAuthLogin });
 
-          if (sch.ctrl.users.some(user => user.id === userTiny.id)) throw new Error('user exists');
+          if (sch.ctrl.users.some(user => user.id === userTiny.id)) throw 'Пользователь уже в расписании';
 
           sch.ctrl.users.push({
             mi: takeNextMi(sch.ctrl.users, ScheduleWidgetUserMi.def),
@@ -154,6 +154,14 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
           const user = sch.ctrl.users.find(({ id }) => id === userTiny.id);
 
           if (user === undefined) throw new Error('Вы не являетесь участником');
+
+          if (
+            scheduleWidgetUserRights.checkIsHasRights(
+              user.R ?? sch.ctrl.defu,
+              ScheduleWidgetUserRoleRight.TotalRedact,
+            )
+          )
+            throw 'Управляющий не может покинуть расписание';
 
           sch.ctrl.users = sch.ctrl.users.filter(({ id }) => id !== userTiny.id);
           sch.ctrl.roles.forEach(role => {

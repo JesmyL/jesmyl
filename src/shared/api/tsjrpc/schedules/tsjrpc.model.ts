@@ -53,6 +53,7 @@ export type SchGeneralTsjrpcModel = {
 
 export type SchUsersTsjrpcMethods = {
   addUsersByExcel: (args: { props: ScheduleScopeProps; users: { fio: string }[] }) => IScheduleWidget;
+  addUserByQr: (args: { props: ScheduleScopeProps; login: string }) => IScheduleWidget;
   addMe: (args: { props: ScheduleScopeProps; place: string }) => IScheduleWidget;
   addMeByInvite: (args: { props: ScheduleScopeProps; inviteHash: string }) => IScheduleWidget;
   removeMe: (args: { props: ScheduleScopeProps }) => IScheduleWidget;

@@ -854,9 +854,11 @@ export const localeBaseEn = convertObjectToArray<LocaleBaseDelivered<Langi.En>>(
   [BaseLocaleKey.ScheduleEnable]: 'Enable',
   [BaseLocaleKey.SchedulePausedPlural]: 'Disabled',
   [BaseLocaleKey.ScheduleMoreThanYear]: 'More than a year',
+  [BaseLocaleKey.ScheduleAddUserByQr]: 'Add user by QR',
   [BaseLocaleKey.SchedulePeriodEveryWeek]: 'Every week',
   [BaseLocaleKey.SchedulePeriodMonthly]: 'Every month',
   [BaseLocaleKey.SchedulePeriodWeekdayOfMonthKind]: 'Weekday of month',
+  [BaseLocaleKey.ScheduleUserAdded]: 'User added to the schedule',
 
   [BaseLocaleKey.NumberSymbols]: '$n; $declension{{$n}{symbol}{symbols}{symbols}}',
 

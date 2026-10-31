@@ -782,7 +782,9 @@ export const enum BaseLocaleKey {
   ScheduleEnable = 760,
   SchedulePausedPlural = 761,
   ScheduleMoreThanYear = 762,
+  ScheduleAddUserByQr = 763,
   SchedulePeriodEveryWeek = 764,
   SchedulePeriodMonthly = 765,
   SchedulePeriodWeekdayOfMonthKind = 766,
+  ScheduleUserAdded = 767,
 }

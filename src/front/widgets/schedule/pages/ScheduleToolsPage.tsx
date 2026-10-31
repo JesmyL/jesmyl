@@ -82,13 +82,15 @@ function ScheduleWidgetMyParticipation() {
         icon="User"
         postfix={`${translateBase(BaseLocaleKey.ScheduleMyRole)}: ${roleTitle}`}
       />
-      <TheIconSendButton
-        className="text-xKO my-2"
-        icon="UserRemove01"
-        postfix={translateBase(BaseLocaleKey.ScheduleLeave)}
-        confirm={translateBase(BaseLocaleKey.ScheduleLeaveConfirm)}
-        onSend={() => schUsersTsjrpcClient.removeMe({ props: scheduleScopeProps })}
-      />
+      {!rights.isCanTotalRedact && (
+        <TheIconSendButton
+          className="text-xKO my-2"
+          icon="UserRemove01"
+          postfix={translateBase(BaseLocaleKey.ScheduleLeave)}
+          confirm={translateBase(BaseLocaleKey.ScheduleLeaveConfirm)}
+          onSend={() => schUsersTsjrpcClient.removeMe({ props: scheduleScopeProps })}
+        />
+      )}
     </>
   );
 }
