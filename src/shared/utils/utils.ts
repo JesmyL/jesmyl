@@ -58,9 +58,7 @@ export const sliceStringIfStartsWith = <Value extends string, Start extends stri
 ): Value extends `${Start}${infer S}` ? S : Value =>
   checkIsStartsWith(value, start) ? (value.slice(start.length) as never) : (value as never);
 
-type SameArgs<A, B> = (<T>() => T extends A ? 1 : 2) extends <T>() => T extends B ? 1 : 2
-  ? true
-  : false;
+type SameArgs<A, B> = (<T>() => T extends A ? 1 : 2) extends <T>() => T extends B ? 1 : 2 ? true : false;
 
 export const declension = <Two extends string, Five extends string | undefined>(
   num: number,

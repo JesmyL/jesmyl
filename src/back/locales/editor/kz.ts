@@ -143,7 +143,7 @@ export const localeEditorKz = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.CmEditorFretNumber]: '$n; лад',
   [EditorLocaleKey.CmEditorInterpretationEdit]: 'Іс-шара үшін интерпретацияны өңдеу',
   [EditorLocaleKey.CmEditorIncludeBibleWords]: 'кібілі сөздерді қосу',
-  ...editorLocaleTemplate(EditorLocaleKey.CmEditorSendWords)`$n; ${FUNCTION('dec')('$n', 'сөз', 'сөз', 'сөз')} жіберу`,
+  ...editorLocaleTemplate(EditorLocaleKey.CmEditorSendWords)`$n; ${FUNCTION('dec')('$n', 'сөз')} жіберу`,
   [EditorLocaleKey.CmEditorLinkPartHide]: '$h; сілтемесінің $n;-бөлігін көрінбейтін ету керек пе?',
   [EditorLocaleKey.CmEditorLinkPartShow]: '$h; сілтемесінің $n;-бөлігін көрінетін ету керек пе?',
   [EditorLocaleKey.CmEditorAppliqueDestroyed]: 'Бұл әрекет осы блоктағы аппликатураның жойылуына әкеледі.',

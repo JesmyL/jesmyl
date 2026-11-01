@@ -56,6 +56,18 @@ describe('stringTemplater', () => {
     expect(`${FUNCTION('dec')('$n', 'one', 'more')}`).toBe('$dec{{$n}{one}{more}}');
   });
 
+  it('stringTemplater:FUNCTION dec throws on duplicated forms', () => {
+    expect(() => stringTemplater(STR`${FUNCTION('dec')('$n', 'сөз', 'сөз', 'сөз')}`, { n: 1 })).toThrow(
+      'declension: duplicated word forms',
+    );
+  });
+
+  it('stringTemplater:FUNCTION dec allows partial repetition of forms', () => {
+    expect(stringTemplater(STR`$n ${FUNCTION('dec')('$n', 'раз', 'раза', 'раз')}`, { n: 5 })).toBe('5 раз');
+    expect(stringTemplater(STR`$n ${FUNCTION('dec')('$n', 'раз', 'раза', 'раз')}`, { n: 11 })).toBe('11 раз');
+    expect(stringTemplater(STR`$n ${FUNCTION('dec')('$n', 'song', 'songs', 'songs')}`, { n: 5 })).toBe('5 songs');
+  });
+
   it('stringTemplater:custom functions', () => {
     expect(
       stringTemplater('Сумма $arg и $arg1 равна $sum{{$arg}{$arg1}}', {
