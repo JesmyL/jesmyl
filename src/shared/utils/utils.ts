@@ -58,15 +58,24 @@ export const sliceStringIfStartsWith = <Value extends string, Start extends stri
 ): Value extends `${Start}${infer S}` ? S : Value =>
   checkIsStartsWith(value, start) ? (value.slice(start.length) as never) : (value as never);
 
-export const declension = (num: number, one?: string, two?: string, five?: string) => {
-  if (num % 1) return two!;
+type SameArgs<A, B> = (<T>() => T extends A ? 1 : 2) extends <T>() => T extends B ? 1 : 2
+  ? true
+  : false;
+
+export const declension = <Two extends string, Five extends string | undefined>(
+  num: number,
+  one: string,
+  two: Two,
+  ...five: SameArgs<Two, Five> extends true ? [never] : [Five?]
+): string => {
+  if (num % 1) return two;
   let absNum = Math.abs(num) % 100;
 
-  if (absNum > 10 && absNum < 20) return five ?? two!;
+  if (absNum > 10 && absNum < 20) return five[0] ?? two;
 
   absNum %= 10;
 
-  return absNum > 1 && absNum < 5 ? two! : absNum === 1 ? one! : (five ?? two!);
+  return absNum > 1 && absNum < 5 ? two : absNum === 1 ? one : (five[0] ?? two);
 };
 
 export const convertSecondsInStrTime = (seconds: number) =>
