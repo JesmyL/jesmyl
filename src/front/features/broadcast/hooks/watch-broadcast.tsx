@@ -102,6 +102,9 @@ const styles = css`
   body {
     margin: 0;
     padding: 0;
+    width: 100%;
+    overflow: hidden;
+    scrollbar-gutter: auto;
     user-select: none;
 
     * {
@@ -122,5 +125,13 @@ const styles = css`
       filter: blur(0px);
       opacity: 1;
     }
+  }
+
+  ::-webkit-scrollbar,
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-thumb {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
   }
 `;
