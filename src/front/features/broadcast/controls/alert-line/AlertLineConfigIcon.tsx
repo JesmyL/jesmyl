@@ -15,7 +15,7 @@ export default function AlertLineConfigIcon({ config, isSelected, onClick }: Pro
 
   return (
     <StypedIconContainer
-      className="pointer"
+      className="pointer px-[5px] py-[2px]"
       onClick={onClick}
       $color={config.color}
       $bg={background}
@@ -27,8 +27,6 @@ export default function AlertLineConfigIcon({ config, isSelected, onClick }: Pro
 }
 
 const StypedIconContainer = styled.div<{ $color: string; $bg: string | und; $sel: boolean | und }>`
-  padding: 2px 5px;
-
   ${props => css`
     --icon-color: ${props.$color};
     color: ${props.$color};

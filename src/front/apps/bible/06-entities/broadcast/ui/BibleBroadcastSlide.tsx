@@ -1,6 +1,5 @@
 import { BibleBroadcastScreenScreen } from '$bible/entities/broadcast-screen';
 import { BibleAddressTextContext, BibleTextMapBlocksContentContext } from '$bible/shared/contexts/texts';
-import styled from '@emotion/styled';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 
 export const BibleBroadcastSlide = ({
@@ -9,7 +8,7 @@ export const BibleBroadcastSlide = ({
   addressText,
 }: Required<IndexSchWBroadcastLiveDataValue>['bible']) => {
   return (
-    <Container className="flex center full-size">
+    <div className="flex center full-size overflow-hidden m-auto">
       <BibleTextMapBlocksContentContext value={texts}>
         <BibleAddressTextContext value={addressText}>
           <BibleBroadcastScreenScreen
@@ -19,11 +18,6 @@ export const BibleBroadcastSlide = ({
           />
         </BibleAddressTextContext>
       </BibleTextMapBlocksContentContext>
-    </Container>
+    </div>
   );
 };
-
-const Container = styled.div`
-  overflow: hidden;
-  margin: auto;
-`;

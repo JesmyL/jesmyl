@@ -1,73 +1,44 @@
-import { css } from '@emotion/react';
-import styled from '@emotion/styled';
 import { IIncorrects } from 'shared/model/cm/Incorrects';
 
 const classNamePostfix = '-correct-block';
+const baseClassName = 'my-[15px] rounded-[10px] p-2.5 whitespace-pre-line';
+const errorClassName = `${baseClassName} bg-[rgba(255,0,0,0.3)] text-[red]`;
+const warningClassName = `${baseClassName} bg-[rgba(255,165,0,0.3)] text-[orange]`;
+const unknownClassName = `${baseClassName} bg-[rgba(0,255,255,0.3)] text-[cadetblue]`;
 
 export const CmEditorTextCorrectMessages = ({ corrects }: { corrects: IIncorrects }) => {
   return (
     <>
       {corrects.errors?.map(({ message }, correcti) => {
         return (
-          <StyledBox
-            className={`error${classNamePostfix}`}
+          <div
+            className={`error${classNamePostfix} ${errorClassName}`}
             key={correcti}
-            $isError
           >
             {message}
-          </StyledBox>
+          </div>
         );
       })}
       {corrects.warnings?.map(({ message }, correcti) => {
         return (
-          <StyledBox
-            className={`warning${classNamePostfix}`}
+          <div
+            className={`warning${classNamePostfix} ${warningClassName}`}
             key={correcti}
-            $isWarning
           >
             {message}
-          </StyledBox>
+          </div>
         );
       })}
       {corrects.unknowns?.map(({ message }, correcti) => {
         return (
-          <StyledBox
-            className={`unknown${classNamePostfix}`}
+          <div
+            className={`unknown${classNamePostfix} ${unknownClassName}`}
             key={correcti}
-            $isUnknown
           >
             {message}
-          </StyledBox>
+          </div>
         );
       })}
     </>
   );
 };
-
-const StyledBox = styled.div<{ $isError?: boolean; $isWarning?: boolean; $isUnknown?: boolean }>`
-  margin: 15px 0;
-  border-radius: 10px;
-  padding: 10px;
-  white-space: pre-line;
-
-  ${props =>
-    props.$isError &&
-    css`
-      background-color: rgba(255, 0, 0, 0.3);
-      color: red;
-    `}
-
-  ${props =>
-    props.$isWarning &&
-    css`
-      background-color: rgba(255, 165, 0, 0.3);
-      color: orange;
-    `}
-
-    ${props =>
-    props.$isUnknown &&
-    css`
-      background-color: rgba(0, 255, 255, 0.3);
-      color: cadetblue;
-    `}
-`;

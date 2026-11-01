@@ -115,22 +115,25 @@ function Camera({ close, user }: Props & { close: () => void }) {
         />
         <div className="flex gap-2 column center">
           {src ? (
-            <StyledImg
+            <img
               src={src}
               alt=""
+              className="max-h-full max-w-full"
             />
           ) : (
             <ScheduleWidgetUserPhoto user={user} />
           )}
           <StyledVideoWrapper ref={videoWrapperRef}>
-            <StyledVideo
+            <video
               ref={videoRef}
               onPlay={defaultPreventer}
+              className="max-h-[40dvh]"
             />
           </StyledVideoWrapper>
         </div>
         <div className="flex half-width between">
-          <StyledActionButton
+          <TheIconButton
+            className="[--icon-scale:3]"
             icon="CheckmarkBadge01"
             disabled={!src}
             onClick={async () => {
@@ -139,7 +142,8 @@ function Camera({ close, user }: Props & { close: () => void }) {
               close();
             }}
           />
-          <StyledActionButton
+          <TheIconButton
+            className="[--icon-scale:3]"
             icon="Camera01"
             onClick={() => {
               if (videoRef.current === null || canvasRef.current === null || videoWrapperRef.current === null) return;
@@ -186,19 +190,6 @@ function Camera({ close, user }: Props & { close: () => void }) {
     </>
   );
 }
-
-const StyledImg = styled.img`
-  max-width: 100%;
-  max-height: 100%;
-`;
-
-const StyledVideo = styled.video`
-  max-height: 40dvh;
-`;
-
-const StyledActionButton = styled(TheIconButton)`
-  --icon-scale: 3;
-`;
 
 const StyledVideoWrapper = styled.div`
   position: relative;

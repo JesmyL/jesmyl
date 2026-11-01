@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { checkIsNaN } from 'shared/utils/checkIs';
+import { twJoin } from 'tailwind-merge';
 import {
   gamerMemoryGiantBoardImageisAtom,
   gamerMemoryGiantCurrentKeyNumberAtom,
@@ -61,7 +62,12 @@ export const GamerMemoryGiantBoard = (props: { win: Window; minusWinHeight?: num
               imageis?.length ?? 0,
             );
             return (
-              <StyledBoard $shownImageiSet={shownImageiSet}>
+              <div
+                className={twJoin(
+                  'flex flex-wrap justify-center gap-[1cqmin]',
+                  shownImageiSet.size > 1 && 'pointer-events-none',
+                )}
+              >
                 {imageis?.map((index, indexi) => {
                   const imageMd5 = images[index];
 
@@ -72,17 +78,23 @@ export const GamerMemoryGiantBoard = (props: { win: Window; minusWinHeight?: num
                         $isShown={isShowAll || shownImageiSet.has(indexi)}
                         $isGuessed={guessedImageiSet.has(indexi)}
                       >
-                        <StyledCardFrontSide
+                        <GamerMemoryGiantImageCardByMd5
+                          className="card-front transition-opacity duration-300 relative opacity-0 z-[2]"
                           imageMd5={imageMd5}
                           size={cardSize}
                           onClick={() => gamerMemoryGiantShownImageisAtom.do.toggle(indexi)}
                         />
-                        <StyledCardBackSide $cardSize={cardSize}>{indexi + 1}</StyledCardBackSide>
+                        <StyledCardBackSide
+                          className="absolute bg-black top-0 left-0 w-full h-full opacity-100 z-[1] [transform:rotateY(180deg)] flex justify-center items-center rounded-[3%] transition-colors duration-300"
+                          $cardSize={cardSize}
+                        >
+                          {indexi + 1}
+                        </StyledCardBackSide>
                       </StyledCard>
                     )
                   );
                 })}
-              </StyledBoard>
+              </div>
             );
           }}
         </GamerMemoryGiantWinResizes>
@@ -91,29 +103,7 @@ export const GamerMemoryGiantBoard = (props: { win: Window; minusWinHeight?: num
   );
 };
 
-const StyledCardFrontSide = styled(GamerMemoryGiantImageCardByMd5)`
-  transition: opacity 0.3s;
-  position: relative;
-  opacity: 0;
-  z-index: 2;
-`;
-
 const StyledCardBackSide = styled.div<{ $cardSize: number }>`
-  transition: color 0.3s;
-  position: absolute;
-  background-color: black;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 1;
-  z-index: 1;
-  transform: rotateY(180deg);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 3%;
-
   ${props => css`
     border: solid calc(${props.$cardSize}px / 20) white;
     font-size: calc(${props.$cardSize}px / 2);
@@ -137,7 +127,7 @@ const StyledCard = styled.div<{ $isShown: boolean; $isGuessed: boolean }>`
       ? css`
           transform: rotateY(0);
 
-          ${StyledCardFrontSide} {
+          & .card-front {
             opacity: 1;
           }
 
@@ -151,19 +141,6 @@ const StyledCard = styled.div<{ $isShown: boolean; $isGuessed: boolean }>`
             color: white;
           }
         `}
-`;
-
-const StyledBoard = styled.div<{ $shownImageiSet: Set<number> }>`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1cqmin;
-
-  ${props =>
-    props.$shownImageiSet.size > 1 &&
-    css`
-      pointer-events: none;
-    `}
 `;
 
 function calculateCardSize(containerWidth: number, containerHeight: number, cardCount: number): number {

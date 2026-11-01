@@ -1,13 +1,13 @@
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import styled from '@emotion/styled';
 import { withInsertedBeforei } from 'shared/utils';
 import { cmComSelectedComwsAtom } from '../state/atoms';
 
 export const CmComMoveSelectedButton = ({ comi }: { comi: number }) => {
   return (
     !comi || (
-      <MoveComButton
+      <TheIconButton
         icon="ArrowDataTransferVertical"
+        className="relative -top-5"
         onClick={() => {
           cmComSelectedComwsAtom.set(prev => {
             return withInsertedBeforei(prev, comi - 1, comi);
@@ -17,8 +17,3 @@ export const CmComMoveSelectedButton = ({ comi }: { comi: number }) => {
     )
   );
 };
-
-const MoveComButton = styled(TheIconButton)`
-  position: relative;
-  top: -20px;
-`;

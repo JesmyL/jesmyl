@@ -1,6 +1,5 @@
 import { ModalBody } from '#shared/ui/modal';
 import { TextInput } from '#shared/ui/TextInput';
-import styled from '@emotion/styled';
 import { useState } from 'react';
 import { EeStorePack } from 'shared/api';
 import { CmEditorEERulesWord } from './EERulesWord';
@@ -21,7 +20,7 @@ export const CmEditorEERulesWordSearchModalInner = ({
   const [word, setWord] = useState('');
 
   return (
-    <StyledModalBody>
+    <ModalBody className="min-h-[30vmax]">
       <TextInput
         value={word}
         onInput={setWord}
@@ -37,10 +36,6 @@ export const CmEditorEERulesWordSearchModalInner = ({
           editedWordsRef={editedWordsRef as never}
         />
       )}
-    </StyledModalBody>
+    </ModalBody>
   );
 };
-
-const StyledModalBody = styled(ModalBody)`
-  min-height: 30vmax;
-`;

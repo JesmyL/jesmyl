@@ -3,7 +3,7 @@ import { useIsRememberExpand } from '#shared/ui/expand/useIsRememberExpand';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { ReactNode } from 'react';
 import { toast } from 'sonner';
-import { StyledIndexConsoleCoderResultName } from '../style/styles';
+import { indexConsoleCoderResultNameClassName } from '../style/styles';
 
 interface Props {
   shortValue: string;
@@ -26,7 +26,7 @@ export const IndexConsoleCoderValueExpandable = ({ shortValue, fullValue, name, 
       >
         {name != null && (
           <span>
-            <StyledIndexConsoleCoderResultName>{name}: </StyledIndexConsoleCoderResultName>
+            <span className={indexConsoleCoderResultNameClassName}>{name}: </span>
           </span>
         )}
         {isExpand

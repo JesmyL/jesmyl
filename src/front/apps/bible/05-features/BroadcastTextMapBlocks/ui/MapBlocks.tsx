@@ -1,5 +1,4 @@
 import { BibleBroadcastTextMapBlock } from '$bible/shared/model/base';
-import styled from '@emotion/styled';
 
 export const BibleBroadcastTextMapBlocks = ({
   blocks,
@@ -25,11 +24,11 @@ export const BibleBroadcastTextMapBlocks = ({
       {blocks.map(({ texts, head }, headi) => {
         return (
           <Elem key={headi}>
-            {head && <StyledHead>{head}</StyledHead>}
+            {head && <h3 className="text-white/50 my-[0.7em]">{head}</h3>}
             {texts?.map(({ text, address }, texti) => {
               return (
                 <Elem key={texti}>
-                  {address && <StyledAddress>{address}</StyledAddress>}
+                  {address && <div className="my-[0.5em]">{address}</div>}
                   <span dangerouslySetInnerHTML={{ __html: text }} />
                 </Elem>
               );
@@ -40,12 +39,3 @@ export const BibleBroadcastTextMapBlocks = ({
     </>
   );
 };
-
-const StyledAddress = styled.div`
-  margin-block: 0.5em;
-`;
-
-const StyledHead = styled.h3`
-  color: rgba(255, 255, 255, 0.5);
-  margin-block: 0.7em;
-`;

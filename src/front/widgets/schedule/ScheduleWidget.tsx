@@ -1,7 +1,6 @@
 import { translateBase } from '#basis/locale';
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
-import styled from '@emotion/styled';
 import { useEffect, useMemo, useState } from 'react';
 import {
   checkIsSchedulePeriodic,
@@ -88,9 +87,9 @@ export function ScheduleWidget({
   }
 
   const prevDateNode = prevDate && (
-    <StyledPrevDateText className={schedule && prevDate.getTime() > schedule.start ? 'text-xKO' : undefined}>
+    <div className={'opacity-70 text-[0.8em]' + (schedule && prevDate.getTime() > schedule.start ? ' text-xKO' : '')}>
       {translateBase(BaseLocaleKey.SchedulePrevious, { d: makeDateLabel(prevDate) })}
-    </StyledPrevDateText>
+    </div>
   );
 
   if (blockContent)
@@ -122,7 +121,7 @@ export function ScheduleWidget({
       scheduleScopeProps={scheduleScopeProps}
     >
       <AppDialogProvider title="schedule">
-        <StyledWidget className="schedule-widget">
+        <div className="schedule-widget p-[5px] transition-[margin] duration-300 [&.expand]:mb-[50px]">
           <div className="my-5">
             {rights.isCanRead && (
               <>
@@ -171,26 +170,8 @@ export function ScheduleWidget({
               </>
             )}
           </div>
-        </StyledWidget>
+        </div>
       </AppDialogProvider>
     </ScheduleWidgetContextWrapper>
   );
 }
-
-const StyledWidget = styled.div`
-  transition: margin 0.3s;
-  padding: 5px;
-
-  &.expand {
-    margin-bottom: 50px;
-  }
-
-  .icon-scale-05 {
-    --icon-scale: 0.5;
-  }
-`;
-
-const StyledPrevDateText = styled.div`
-  opacity: 0.7;
-  font-size: 0.8em;
-`;

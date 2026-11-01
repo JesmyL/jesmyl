@@ -1,5 +1,4 @@
 import { isTouchDevice } from '#shared/lib/device-differences';
-import styled from '@emotion/styled';
 import { memo } from 'react';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { metronomeCurrentBpmAtom } from '../lib/atoms';
@@ -15,17 +14,10 @@ export const MetronomeTouchBpmButton = memo(function MetronomeTouchBpmButton() {
   };
 
   return (
-    <StyledTapButton
-      className={'w-20 rounded-full! aspect-1/1'}
+    <div
+      className="w-20 rounded-full! aspect-1/1 bg-x7"
       onMouseDown={isTouchDevice ? undefined : touchBpm}
       onTouchStart={isTouchDevice ? touchBpm : undefined}
     />
   );
 });
-
-const StyledTapButton = styled.div`
-  --size: 30cqmin;
-
-  background-color: var(--color--7);
-  border-radius: var(--size);
-`;

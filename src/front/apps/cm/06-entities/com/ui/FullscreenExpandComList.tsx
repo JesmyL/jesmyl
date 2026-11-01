@@ -15,7 +15,7 @@ export function CmComFullscreenExpandList({ comws }: { comws: CmComWid[] }) {
   const alts = useAtomValue(cmComCommentRegisteredAltKeysAtom);
 
   return (
-    <ExpandContent className="com-expand-content h-full">
+    <ExpandContent className="com-expand-content h-full overflow-auto">
       <RolledContent speedKfAtom={cmComSpeedRollKfAtom}>
         <div className="pt-[50vh]">
           {comws.map(comw => {
@@ -51,8 +51,6 @@ export function CmComFullscreenExpandList({ comws }: { comws: CmComWid[] }) {
 }
 
 const ExpandContent = styled.div`
-  overflow: auto;
-
   .com-ord-list {
     width: 100%;
   }

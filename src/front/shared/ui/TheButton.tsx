@@ -1,19 +1,22 @@
-import { css } from '@emotion/react';
-import styled from '@emotion/styled';
 import { HTMLAttributes } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { ConfirmContent } from './modal';
 
-const xColors = ['x2', 'x3', 'x5'] as const;
+const xColorBorders = {
+  x2: 'border-x2',
+  x3: 'border-x3',
+  x5: 'border-x5',
+};
 
 type Props = {
-  color?: (typeof xColors)[number];
+  color?: keyof typeof xColorBorders;
 };
 
 export function TheButton({
   disabled,
   confirm,
   onClick,
+  color,
   ...props
 }: Props &
   HTMLAttributes<HTMLDivElement> & {
@@ -25,9 +28,14 @@ export function TheButton({
       confirm={onClick !== undefined && (confirm === true ? props.children : confirm)}
       content={onConfirm => {
         return (
-          <StyledButton
+          <div
             {...props}
-            className={twMerge('the-button pointer', props.className, disabled && 'disabled')}
+            className={twMerge(
+              'the-button pointer inline-block relative rounded-[2em] px-[2.2em] py-[0.5em] border-4',
+              xColorBorders[color ?? 'x2'],
+              props.className,
+              disabled && 'disabled',
+            )}
             onClick={async event => {
               if (onClick && (await onConfirm())) onClick(event);
             }}
@@ -37,19 +45,3 @@ export function TheButton({
     />
   );
 }
-
-const StyledButton = styled.div<Props>`
-  display: inline-block;
-  position: relative;
-  border-radius: 2em;
-  padding: 0.5em 2.2em;
-
-  ${props =>
-    props.color && xColors.includes(props.color)
-      ? css`
-          border: var(--color--${props.color[1]}) 4px solid;
-        `
-      : css`
-          border: var(--color--2) 4px solid;
-        `}
-`;

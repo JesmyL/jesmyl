@@ -33,7 +33,7 @@ export function ScheduleWidgetLists() {
 
   const [modalNode, screen] = useFullContent(() => {
     return (
-      <StyledListsBoard>
+      <StyledListsBoard className="min-h-full px-4 pt-4 pb-20">
         <div className="flex items-center gap-3 mb-5">
           <span className="grid place-items-center size-12 rounded-2xl bg-x4/20 text-xOK ring-1 ring-xOK/30">
             <LazyIcon
@@ -89,8 +89,6 @@ export function ScheduleWidgetLists() {
 }
 
 const StyledListsBoard = styled.div`
-  min-height: 100%;
-  padding: 1rem 1rem 5rem;
   background:
     radial-gradient(120% 60% at 6% -8%, color-mix(in oklab, var(--color--4) 30%, transparent), transparent 62%),
     linear-gradient(180deg, var(--color--1), var(--color--2) 55%, var(--color--1));

@@ -1,21 +1,5 @@
 import styled from '@emotion/styled';
 
-export const StyledModalFooter = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-`;
-
-export const StyledModalBody = styled.div`
-  max-height: 80vh;
-  overflow-x: hidden;
-  overflow-y: auto;
-`;
-
-export const StyledModalHeader = styled.div`
-  margin: 10px 0;
-`;
-
 export const StyledModalScreen = styled.div`
   --icon-color: var(--color--3);
   display: inline-block;

@@ -10,7 +10,12 @@ import { StyledCmComFaceList } from '../style/StyledComList';
 export const CmComFaceListPreviousSibling = memo(() => {
   const selectedComws = useAtomValue(cmComSelectedComwsAtom);
 
-  return <CmComFaceStyledListPrevious $selectedComws={selectedComws} />;
+  return (
+    <CmComFaceStyledListPrevious
+      className="hidden"
+      $selectedComws={selectedComws}
+    />
+  );
 });
 
 const selectedComwMapper = (comw: CmComWid, comwi: number) => {
@@ -26,8 +31,6 @@ const selectedComwMapper = (comw: CmComWid, comwi: number) => {
 };
 
 export const CmComFaceStyledListPrevious = styled.div<{ $selectedComws: CmComWid[] }>`
-  display: none;
-
   + ${StyledCmComFaceList} {
     ${props => props.$selectedComws.map(selectedComwMapper)}
   }

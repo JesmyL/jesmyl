@@ -5,7 +5,6 @@ import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { SendableDropdown } from '#shared/ui/sends/dropdown/SendableDropdown';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { useMemo, useState } from 'react';
 import { AttTranslatorType, attTranslatorTypes, IScheduleWidget, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
@@ -145,16 +144,16 @@ export function ScheduleWidgetEventType(props: {
       {props.isRedact || !props.typeBox.title ? (
         innerNode
       ) : (
-        <SelectItem
+        <StrongDiv
           className={
-            'schedule-event-type-select-item' +
+            'rounded-[3px] schedule-event-type-select-item' +
             (props.onItemSelectSend ? (props.isRedact ? '' : props.typeBox.title ? ' pointer ' : ' disabled ') : '') +
             (props.isRedact ? '' : ' bg-x5 p-2 my-2')
           }
           onSend={async () => props.onItemSelectSend?.(props.typei)}
         >
           {innerNode}
-        </SelectItem>
+        </StrongDiv>
       )}
 
       {props.isRedact || (
@@ -182,7 +181,3 @@ export function ScheduleWidgetEventType(props: {
     </div>
   );
 }
-
-const SelectItem = styled(StrongDiv)`
-  border-radius: 3px;
-`;

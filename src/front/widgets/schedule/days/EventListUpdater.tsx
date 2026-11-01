@@ -2,7 +2,6 @@ import { translateBase } from '#basis/locale';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TextInput } from '#shared/ui/TextInput';
-import styled from '@emotion/styled';
 import { useEffect, useMemo, useState } from 'react';
 import {
   IScheduleWidget,
@@ -121,8 +120,9 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
                   );
 
                 return (
-                  <StyledEvent
+                  <ScheduleWidgetDayEvent
                     key={eventi}
+                    className="mt-[5px]"
                     schedule={theSchedule}
                     dayScopeProps={dayScopeProps}
                     bottomContent={retNull}
@@ -180,7 +180,3 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
     </div>
   );
 };
-
-const StyledEvent = styled(ScheduleWidgetDayEvent)`
-  margin-top: 5px;
-`;

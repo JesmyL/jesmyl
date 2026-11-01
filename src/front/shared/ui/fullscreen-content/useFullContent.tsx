@@ -3,6 +3,7 @@ import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import styled from '@emotion/styled';
 import { MouseEvent, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { Eventer, EventerListeners } from 'shared/utils';
+import { twMerge } from 'tailwind-merge';
 import { Portal } from '../Portal';
 import { LazyIcon } from '../the-icon/LazyIcon';
 
@@ -52,7 +53,7 @@ export function useFullContent<PassValue>(
     mode && (
       <Portal>
         <ContainerWrapper
-          className={mode}
+          className={`${mode} absolute top-0 left-0 z-[999] w-screen h-full`}
           onClick={mode === 'closable' ? onClose : undefined}
           {...swiper}
         >
@@ -63,7 +64,14 @@ export function useFullContent<PassValue>(
               onClick={onClose}
             />
           )}
-          <Container className={altClassName ?? 'pt-5'}>{content?.(() => setOpenMode(null), passValue)}</Container>
+          <div
+            className={twMerge(
+              'absolute top-0 left-0 bg-(--current-bg) w-screen h-full overflow-y-auto',
+              altClassName ?? 'pt-5',
+            )}
+          >
+            {content?.(() => setOpenMode(null), passValue)}
+          </div>
         </ContainerWrapper>
       </Portal>
     ),
@@ -76,29 +84,10 @@ export function useFullContent<PassValue>(
 }
 
 const ContainerWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  width: 100vw;
-  height: 100%;
-
-  &:not(.closable) {
-    > .close-button {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      z-index: 100;
-    }
+  &:not(.closable) > .close-button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
   }
-`;
-
-const Container = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: var(--current-bg);
-  width: 100vw;
-  height: 100%;
-  overflow-y: auto;
 `;

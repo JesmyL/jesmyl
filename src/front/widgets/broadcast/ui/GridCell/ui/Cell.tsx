@@ -36,7 +36,7 @@ export const ResizableGridCell = <TabId extends number>({
             )}
           >
             {tabOrder && (tabOrder.length > 1 || config.forceShownTabIdSet.has(tabOrder[0])) && (
-              <div className="flex gap-1 border-b bg-muted/30 px-2 h-9 w-full items-end overflow-x-auto select-none z-10 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+              <div className="flex custom-align-items gap-1 border-b bg-muted/30 px-2 h-9 w-full items-end overflow-x-auto select-none z-10 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                 {tabOrder.map((tabId, tabIdi) => {
                   const tabConfig = config.tabs[tabId];
 
@@ -82,7 +82,9 @@ export const ResizableGridCell = <TabId extends number>({
               </div>
             )}
 
-            <div className="absolute inset-0 pointer-events-none flex items-end">{provided.placeholder}</div>
+            <div className="absolute inset-0 pointer-events-none flex custom-align-items items-end">
+              {provided.placeholder}
+            </div>
           </div>
         );
       }}

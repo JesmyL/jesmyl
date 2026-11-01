@@ -4,7 +4,6 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmEditorClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { comEditorBusiesAtom } from '$cm+editor/shared/state/com';
 import { indexDeviceIdAtom } from '$index/shared/state';
-import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { CmComWid } from 'shared/api';
@@ -44,11 +43,9 @@ export const CmEditorCompositionBusyInfo = ({ comw }: { comw: CmComWid }) => {
   }
 
   return (
-    <StyledCmEditorCompositionIsThereOtherFirstRedactorUserDetect className="text-xKO flex gap-2">
+    <div className="text-xKO flex gap-2 com-editors-busy">
       <LazyIcon icon="InformationCircle" />
       {translateEditorBase(EditorLocaleKey.CmEdits, { f: comBusies[0].fio })}
-    </StyledCmEditorCompositionIsThereOtherFirstRedactorUserDetect>
+    </div>
   );
 };
-
-export const StyledCmEditorCompositionIsThereOtherFirstRedactorUserDetect = styled.div``;

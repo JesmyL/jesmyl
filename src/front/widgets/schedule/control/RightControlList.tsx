@@ -1,6 +1,5 @@
 import { translateBase } from '#basis/locale';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import styled from '@emotion/styled';
 import { ScheduleWidgetRightsCtrl, ScheduleWidgetRightTexts } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 
@@ -55,9 +54,9 @@ export function ScheduleWidgetRightControlList({
             <div>
               <div>{type.title}</div>
               {type.description && (!isDescriptionsCollect || isCan) && (
-                <Desc className="text-x4 ml-2">
+                <div className="text-x4 ml-2 text-[0.7em]">
                   {isHas ? type.description[0] : type.description[1] || type.description[0]}
-                </Desc>
+                </div>
               )}
             </div>
 
@@ -77,7 +76,3 @@ export function ScheduleWidgetRightControlList({
     </>
   );
 }
-
-const Desc = styled.div`
-  font-size: 0.7em;
-`;

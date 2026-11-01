@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 
@@ -53,15 +52,10 @@ export const IndexConsoleCodeExecutionScreen = ({ onError, onLog }: Props) => {
   }, [code]);
 
   return (
-    <Textarea
-      className="w-full h-[50%] bg-x2 mt-5"
+    <textarea
+      className="w-full h-[30vh] bg-x2 mt-5 resize-none"
       onChange={event => setCode(event.target.value)}
       value={code}
     />
   );
 };
-
-const Textarea = styled.textarea`
-  height: 30vh;
-  resize: none;
-`;

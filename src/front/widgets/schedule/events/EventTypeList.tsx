@@ -3,7 +3,6 @@ import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import styled from '@emotion/styled';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode, useMemo } from 'react';
 import { IScheduleWidget, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
@@ -100,7 +99,10 @@ export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCount
             const typei = types.indexOf(typeBox);
 
             return (
-              <StyledItem key={typei}>
+              <div
+                key={typei}
+                className="mb-5"
+              >
                 <ScheduleWidgetEventType
                   onSelect={isModalOpenAtom.reset}
                   schedule={schedule}
@@ -116,7 +118,7 @@ export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCount
                       : translateBase(BaseLocaleKey.ScheduleNotUsed)}
                   </div>
                 ) : null}
-              </StyledItem>
+              </div>
             );
           })}
           {sortedTypes.length === 1 && typesToAdd}
@@ -131,7 +133,3 @@ export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCount
     </>
   );
 };
-
-const StyledItem = styled.div`
-  margin-bottom: 20px;
-`;

@@ -133,6 +133,7 @@ export const ScreenTranslateCurrentPositionConfigurators = ({
         <PositionConfiguratorsResizersHalfWrapperFixer prop="horz" />
       )}
       <Rect
+        className="absolute z-[100] box-content"
         $top={top}
         $left={left}
         $width={width}
@@ -183,9 +184,6 @@ const Rect = styled.div<{
   $fixedResizerLines: FixedResizerLines | null;
   $config: ScreenBroadcastPositionConfig;
 }>`
-  position: absolute;
-  z-index: 100;
-  box-sizing: content-box;
   border: 2px dotted transparent;
 
   ${props => !props.$isCantMove && !props.$fixedResizerLines && 'cursor: move;'}

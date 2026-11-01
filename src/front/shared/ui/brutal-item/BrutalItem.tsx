@@ -12,7 +12,7 @@ type Props = {
 
 export function BrutalItem({ onClick, iconNode, title, box, description, idPostfix }: Props) {
   const inner = (
-    <Item className="pointer flex items-center between relative w-full">
+    <Item className="pointer flex items-center between relative w-full mt-[7px] rounded-[10px] bg-x2 h-[60px]">
       <div className="nowrap over-hidden flex items-center center">
         <div className="m-5">{iconNode}</div>
         <div className="ellipsis inline-block">{title}</div>
@@ -42,15 +42,6 @@ export function BrutalItem({ onClick, iconNode, title, box, description, idPostf
 }
 
 const Item = styled.div`
-  --brutal-item-height: 60px;
-  --brutal-item-gap-v: 7px;
-
-  margin-top: var(--brutal-item-gap-v);
-  border-radius: 10px;
-  background-color: var(--color--2);
-  width: 100%;
-  height: var(--brutal-item-height);
-
   > .item-description {
     display: flex;
     position: absolute;

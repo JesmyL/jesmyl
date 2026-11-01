@@ -97,13 +97,11 @@ export function AppFooter({ children }: { children: () => React.ReactNode[]; app
   );
 }
 
-const StyledFooterTrack = styled.div``;
-
 const FooterTrack: FC<{ className?: string; children?: React.ReactNode }> = props => (
-  <StyledFooterTrack
+  <div
     {...props}
     className={twMerge(
-      'relative flex custom-align-items justify-around bg-x1 rounded-[50px] p-(--py) h-(--track-h) @container overflow-hidden',
+      'footer-track relative flex custom-align-items justify-around bg-x1 rounded-[50px] p-(--py) h-(--track-h) @container overflow-hidden',
       props.className,
     )}
   />
@@ -120,7 +118,7 @@ const StyledActiveBackground = styled.div`
     0
   );
 
-  ${StyledFooterTrack}:not(:has(.footer-item.active)) & {
+  .footer-track:not(:has(.footer-item.active)) & {
     --kf: calc(var(--childs-count) + 1);
   }
 `;

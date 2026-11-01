@@ -1,9 +1,7 @@
-import { StyledPhaseContainerConfigurerHead } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { CmEditorComListEditMore } from '$cm+editor/features/com';
 import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContainer';
 import { CmComFaceList, CmComWithComListSearchFilterInput, useCmComAllWidList } from '$cm/ext';
-import styled from '@emotion/styled';
 import { useNavigate } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
@@ -33,7 +31,7 @@ export const CmEditorCompositionsPage = () => {
       >
         {({ inputNode, searchedComs, catNumberSearch }) => {
           return (
-            <StyledPageCmEditorContainer
+            <PageCmEditorContainer
               className="edit-compositions"
               headClass="flex between w-full"
               head={inputNode}
@@ -85,9 +83,3 @@ export const CmEditorCompositionsPage = () => {
     </>
   );
 };
-
-const StyledPageCmEditorContainer = styled(PageCmEditorContainer)`
-  ${StyledPhaseContainerConfigurerHead} {
-    width: 100%;
-  }
-`;

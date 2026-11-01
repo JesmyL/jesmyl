@@ -35,6 +35,7 @@ export const BroadcastScreen = (props: BroadcastScreenProps) => {
       <StyledNextSiblingVisibiliter
         hidden={isShowInitialSlide}
         key="StyledNextSiblingVisibiliter"
+        className="bg-black h-full w-full"
         $isShowTranslatedText={isShowTranslatedText && !isShowInitialSlide}
       >
         <BroadcastTextScreen key="BroadcastTextScreen">
@@ -56,12 +57,13 @@ export const BroadcastScreen = (props: BroadcastScreenProps) => {
 
       {isShowInitialSlide && (
         <>
-          <StyledBlackBoard
+          <div
             key="StyledInitialSlide"
+            className="bg-black h-full w-full"
             hidden={props.isPreview}
           >
             {initialSlide}
-          </StyledBlackBoard>
+          </div>
 
           {props.isPreview && (
             <StyledInfo
@@ -91,12 +93,6 @@ const globalsNode = (
   />
 );
 
-const StyledBlackBoard = styled.div`
-  background: #000;
-  height: 100%;
-  width: 100%;
-`;
-
 const transparent = 'transparent !important';
 
 const invisibleCss = css`
@@ -108,7 +104,7 @@ const invisibleCss = css`
   }
 `;
 
-const StyledNextSiblingVisibiliter = styled(StyledBlackBoard)<{ $isShowTranslatedText: boolean }>`
+const StyledNextSiblingVisibiliter = styled.div<{ $isShowTranslatedText: boolean }>`
   ${props => props.$isShowTranslatedText || invisibleCss}
 `;
 

@@ -10,10 +10,13 @@ export const CmBroadcastFollowInitialSlide = ({ schw }: { schw: ScheduleWidgetWi
   const [wrapperRef, contentRef] = useBibleBroadcastScreenFontSizeAdapter(text, 0);
 
   return (
-    <StyledSlide className="full-size flex center column [container-type:size]">
-      <StyledQRCode text={`${hostConfig.url}/!other/cm/schs?schw=${schw}&now=${Date.now()}&follow=desktop-link`} />
-      <StyledTextWrapper
-        className="w-full"
+    <div className="full-size flex center column [container-type:size] [--qr-height:40cqmin] text-white text-[3em]">
+      <StyledQRCode
+        className="h-(--qr-height) max-h-(--qr-height)"
+        text={`${hostConfig.url}/!other/cm/schs?schw=${schw}&now=${Date.now()}&follow=desktop-link`}
+      />
+      <div
+        className="w-full h-(--qr-height) px-[1em]"
         ref={wrapperRef}
       >
         <h1
@@ -22,27 +25,12 @@ export const CmBroadcastFollowInitialSlide = ({ schw }: { schw: ScheduleWidgetWi
         >
           {text}
         </h1>
-      </StyledTextWrapper>
-    </StyledSlide>
+      </div>
+    </div>
   );
 };
 
-const StyledTextWrapper = styled.div`
-  height: var(--qr-height);
-  padding-inline: 1em;
-`;
-
-const StyledSlide = styled.div`
-  --qr-height: 40cqmin;
-
-  color: white;
-  font-size: 3em;
-`;
-
 const StyledQRCode = styled(QRCode)`
-  height: var(--qr-height);
-  max-height: var(--qr-height);
-
   &.qr-code {
     filter: contrast(10) invert(1);
   }

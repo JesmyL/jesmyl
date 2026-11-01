@@ -7,6 +7,11 @@ import { createRoot } from 'react-dom/client';
 import { makeRegExp } from 'regexpert';
 import { TWProvider } from './TWProvider';
 
+const copyMainDocumentStyles = (target: Document) =>
+  document
+    .querySelectorAll('link[rel="stylesheet"], style')
+    .forEach(styleNode => target.head.appendChild(target.importNode(styleNode, true)));
+
 const replacements: Record<string, string> = {
   0: 'z',
   1: 'o',
@@ -39,6 +44,8 @@ export const renderComponentInNewWindow = ({
   const win = window.open(url, target, features);
 
   if (win) {
+    copyMainDocumentStyles(win.document);
+
     const cache = createCache({
       key: target.toLowerCase().replace(makeRegExp('/[^a-z]/g'), all => replacements[all] || all),
       container: win.document.head,

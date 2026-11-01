@@ -44,7 +44,7 @@ export function ScheduleWidgetPrintableDay(props: ScheduleWidgetDayProps & { win
       }}
     >
       <StyledForPrint
-        className="for-print canvas"
+        className="for-print canvas p-[30px] text-[20px]"
         ref={page}
       >
         <ScheduleWidgetDay
@@ -57,9 +57,6 @@ export function ScheduleWidgetPrintableDay(props: ScheduleWidgetDayProps & { win
 }
 
 const StyledForPrint = styled.div`
-  padding: 30px;
-  font-size: 20px;
-
   .ScheduleWidgetDay {
     margin-top: 0;
 

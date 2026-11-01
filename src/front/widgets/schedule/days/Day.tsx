@@ -119,7 +119,7 @@ export const ScheduleWidgetDay = ({
             />
           )}
         </div>
-        <div className="edit-day-panel absolute top-0 right-0 mt-4 flex gap-2">
+        <div className="edit-day-panel absolute top-0 right-0 mt-4 flex gap-2 z-[2]">
           {isPastDay ? (
             <>
               <LazyIcon
@@ -136,7 +136,7 @@ export const ScheduleWidgetDay = ({
         {isShowDay && (
           <>
             {rights.isCanReadTitles && (
-              <div className="day-info">
+              <div className="day-info my-4">
                 {(isDayInfoRedact || day.topic) && (
                   <StrongEditableField
                     value={day}
@@ -227,13 +227,7 @@ export const StyledScheduleWidgetDay = styled.div`
     font-size: 1.5rem;
   }
 
-  > .edit-day-panel {
-    z-index: 2;
-  }
-
   > .day-info {
-    margin: 1rem 0;
-
     .day-topic {
       color: var(--color--7);
       font-size: 1.2rem;

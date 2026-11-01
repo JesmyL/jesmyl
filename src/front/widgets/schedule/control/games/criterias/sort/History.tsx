@@ -1,6 +1,4 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { css } from '@emotion/react';
-import styled from '@emotion/styled';
 import { useState } from 'react';
 import { IScheduleWidgetUser } from 'shared/api';
 import { HistoryAdder } from './model';
@@ -77,15 +75,15 @@ export function ScheduleWidgetTeamsCriteriaSorterScreenHistory({
     setCorrect(correct);
   };
 
+  const isRedoDisabled = !history.length || point === null || history.length - 1 <= point;
+  const isUndoDisabled = !history.length || (!isRedoDisabled && point === 0);
+  const navClassName = 'pointer scale-200';
+
   return (
-    <StyledHistory
-      className="flex gap-2 between w-[50%]"
-      $historyLength={history.length}
-      $point={point}
-    >
-      <StyledUndo
+    <div className="flex gap-2 between w-[50%]">
+      <LazyIcon
         icon="LinkBackward"
-        className="pointer"
+        className={navClassName + (isUndoDisabled ? ' opacity-40 pointer-events-none' : '')}
         onClick={() => {
           const newPoint = point === null ? history.length - 1 : point - 1;
           setPoint(newPoint);
@@ -95,56 +93,15 @@ export function ScheduleWidgetTeamsCriteriaSorterScreenHistory({
           setHistory([...history, { start, end, users: sortedUsers }]);
         }}
       />
-      <StyledRedo
+      <LazyIcon
         icon="LinkForward"
-        className="pointer"
+        className={navClassName + (isRedoDisabled ? ' opacity-40 pointer-events-none' : '')}
         onClick={() => {
           const newPoint = point === null ? history.length - 1 : point + 1;
           setPoint(newPoint);
           setItem(newPoint);
         }}
       />
-    </StyledHistory>
+    </div>
   );
 }
-
-const navCss = css`
-  scale: 2;
-`;
-
-const StyledUndo = styled(LazyIcon)<{ icon: 'LinkBackward' }>`
-  ${navCss}
-`;
-
-const StyledRedo = styled(LazyIcon)<{ icon: 'LinkForward' }>`
-  ${navCss}
-`;
-
-const disabledButtonCss = css`
-  opacity: 0.4;
-  pointer-events: none;
-`;
-
-const StyledHistory = styled.div<{ $historyLength: number; $point: number | null }>`
-  ${props => {
-    return !props.$historyLength
-      ? css`
-          ${StyledUndo}, ${StyledRedo} {
-            ${disabledButtonCss}
-          }
-        `
-      : props.$point === null || props.$historyLength - 1 <= props.$point
-        ? css`
-            ${StyledRedo} {
-              ${disabledButtonCss}
-            }
-          `
-        : props.$point === 0
-          ? css`
-              ${StyledUndo} {
-                ${disabledButtonCss}
-              }
-            `
-          : css``;
-  }}
-`;

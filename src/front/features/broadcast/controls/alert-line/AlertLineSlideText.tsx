@@ -18,22 +18,28 @@ export const AlertLineSlideText = () => {
   const text = alertLineText || config.text;
 
   return (
-    <StyledAlertLineContainer style={{ ...styles, backgroundColor: '' }}>
+    <div
+      className="absolute overflow-hidden h-full w-full top-0 left-0"
+      style={{ ...styles, backgroundColor: '' }}
+    >
       <StyledAlertLine
         $speed={config.speed}
+        className="absolute flex w-fit"
         style={{
           top: `${top}%`,
           ...(withBg ? { background: bg, backgroundColor: bgColor } : {}),
           ...makeBroadcastTextStroke(styles),
         }}
       >
-        <StyledItem>{text}</StyledItem>
-        <StyledItem>{text}</StyledItem>
-        <StyledItem>{text}</StyledItem>
+        <StyledItem className={itemClass}>{text}</StyledItem>
+        <StyledItem className={itemClass}>{text}</StyledItem>
+        <StyledItem className={itemClass}>{text}</StyledItem>
       </StyledAlertLine>
-    </StyledAlertLineContainer>
+    </div>
   );
 };
+
+const itemClass = 'min-w-[100vw] px-[0.75em] py-[0.05em] whitespace-nowrap';
 
 const anim = keyframes`
   0% {
@@ -47,26 +53,10 @@ const anim = keyframes`
 const StyledAlertLine = styled.div<{ $speed: number }>`
   --animation-time: ${props => props.$speed}s;
 
-  position: absolute;
-
-  display: flex;
-  width: fit-content;
   -webkit-transform-style: preserve-3d; /* Фикс возможного глюка с морганием в Сафари */
 `;
 
 const StyledItem = styled.div`
-  min-width: 100vw;
-  padding: 0.05em 0.75em;
-  white-space: nowrap;
   animation: ${anim} var(--animation-time) linear infinite;
   -webkit-backface-visibility: hidden; /* Фикс возможного глюка с морганием в Сафари */
-`;
-
-const StyledAlertLineContainer = styled.div`
-  position: absolute;
-  overflow: hidden;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
 `;

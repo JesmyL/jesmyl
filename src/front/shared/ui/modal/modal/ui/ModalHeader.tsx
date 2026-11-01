@@ -1,4 +1,4 @@
-import { StyledModalHeader } from '../style/styled';
+import { twMerge } from 'tailwind-merge';
 
 interface Props {
   children: React.ReactNode;
@@ -6,5 +6,5 @@ interface Props {
 }
 
 export function ModalHeader({ children, className }: Props) {
-  return <StyledModalHeader className={className}>{children}</StyledModalHeader>;
+  return <div className={twMerge('my-2.5', className)}>{children}</div>;
 }

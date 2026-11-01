@@ -160,7 +160,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
       <StyledScheduleWidgetDayEvent
         className={
           (props.className || '') +
-          ' day-event relative' +
+          ' day-event relative rounded-[0.5rem] bg-x2 p-[0.7rem] w-full overflow-hidden' +
           (props.isPastDay ? '' : isPrevEvent ? ' past' : '') +
           (timeToTitle ? ' mb-5' : '') +
           (isInGroup ? ' in-group' : '') +
@@ -338,12 +338,6 @@ const StyledContent = styled.div`
 `;
 
 export const StyledScheduleWidgetDayEvent = styled.div`
-  border-radius: 0.5rem;
-  background-color: var(--color--2);
-  padding: 0.7rem;
-  width: 100%;
-  overflow: hidden;
-
   &.past {
     filter: grayscale(0.7);
   }

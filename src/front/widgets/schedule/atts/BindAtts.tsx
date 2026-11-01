@@ -3,7 +3,6 @@ import { StrongDiv } from '#basis/ui/strong-control/StrongDiv';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { Modal, ModalBody, ModalFooter } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { ReactNode } from 'react';
 import {
@@ -114,8 +113,8 @@ export const ScheduleWidgetBindAtts = ({
           onClick={isModalOpenAtom.do.toggle}
         />
       </div>
-      <StyledBoxes
-        className="flex gap-2 no-scrollbar pr-2"
+      <div
+        className="flex gap-2 no-scrollbar pr-2 w-full overflow-x-auto overflow-y-hidden"
         onTouchStart={propagationStopper}
       >
         {attEntries?.length ? (
@@ -137,13 +136,7 @@ export const ScheduleWidgetBindAtts = ({
         ) : (
           <span className="text-x7">{translateBase(BaseLocaleKey.ScheduleNoAttachments)}</span>
         )}
-      </StyledBoxes>
+      </div>
     </>
   );
 };
-
-const StyledBoxes = styled.div`
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-`;

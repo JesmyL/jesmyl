@@ -1,13 +1,12 @@
-import styled from '@emotion/styled';
 import QRCodeGenerator from 'qrcode';
 import { HTMLAttributes } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 export function QRCode({ text, ...props }: HTMLAttributes<HTMLCanvasElement> & { text: string }) {
   return (
-    <StyledCanvas
+    <canvas
       {...props}
-      className={twMerge('qr-code power up', props.className)}
+      className={twMerge('qr-code power up contrast-[10] dark:invert', props.className)}
       ref={element => {
         if (!element) return;
 
@@ -22,11 +21,3 @@ export function QRCode({ text, ...props }: HTMLAttributes<HTMLCanvasElement> & {
     />
   );
 }
-
-const StyledCanvas = styled.canvas`
-  filter: contrast(10);
-
-  html.dark & {
-    filter: contrast(10) invert(1);
-  }
-`;

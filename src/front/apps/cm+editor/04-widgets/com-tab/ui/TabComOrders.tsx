@@ -14,7 +14,6 @@ import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { CmComOrderOnClickBetweenData } from '$cm+editor/shared/model/Orders';
 import { TheCmComOrder, useCmComPinchFontSize } from '$cm/ext';
-import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 
@@ -42,8 +41,9 @@ export const CmEditorComTabComOrders = ({ ccom }: { ccom: EditableCom }) => {
   );
 
   return (
-    <StyledOrdersRedactor
+    <div
       ref={ref}
+      className="[--icon-color:var(--color--7)]"
       style={{ fontSize }}
     >
       {clickBetweenData && clickBetweenData.checkIsShowButton(zeroProps) && (
@@ -179,10 +179,6 @@ export const CmEditorComTabComOrders = ({ ccom }: { ccom: EditableCom }) => {
           />
         </BottomPopup>
       )}
-    </StyledOrdersRedactor>
+    </div>
   );
 };
-
-const StyledOrdersRedactor = styled.div`
-  --icon-color: var(--color--7);
-`;

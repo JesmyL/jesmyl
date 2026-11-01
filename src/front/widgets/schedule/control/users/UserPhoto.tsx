@@ -1,9 +1,9 @@
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { getScheduleWidgetUserPhotoStorageKey } from '#widgets/schedule/storage';
 import { indexIDB } from '$index/shared/state';
-import styled from '@emotion/styled';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { IScheduleWidgetUser } from 'shared/api';
+import { twMerge } from 'tailwind-merge';
 
 interface Props {
   user: IScheduleWidgetUser;
@@ -25,10 +25,10 @@ export function ScheduleWidgetUserPhoto({ user, justRenderItOnEmpty, className, 
   return (
     <>
       {src ? (
-        <StyledImg
+        <img
           src={src}
           alt=""
-          className={className}
+          className={twMerge('max-h-full max-w-full', className)}
         />
       ) : (
         or
@@ -36,8 +36,3 @@ export function ScheduleWidgetUserPhoto({ user, justRenderItOnEmpty, className, 
     </>
   );
 }
-
-const StyledImg = styled.img`
-  max-width: 100%;
-  max-height: 100%;
-`;

@@ -1,6 +1,5 @@
 import { Script } from '#shared/ui/tags/Script';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
-import styled from '@emotion/styled';
 import { useNavigate } from '@tanstack/react-router';
 import { useEffect, useRef, useState } from 'react';
 import { TelegramNativeAuthUserData } from 'shared/api';
@@ -42,14 +41,10 @@ export const IndexAuthorizeTgNativeAuth = () => {
         onLoad={setIsScriptLoaded}
       />
 
-      <IWrapper
+      <div
         ref={tgNativeRef}
-        className="flex"
+        className="flex h-[2.2em]"
       />
     </>
   );
 };
-
-const IWrapper = styled.div`
-  height: 2.2em;
-`;

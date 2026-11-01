@@ -1,4 +1,4 @@
-import { StyledModalFooter } from '../style/styled';
+import { twMerge } from 'tailwind-merge';
 
 interface Props {
   children: React.ReactNode;
@@ -6,5 +6,5 @@ interface Props {
 }
 
 export function ModalFooter({ children, className }: Props) {
-  return <StyledModalFooter className={className}>{children}</StyledModalFooter>;
+  return <div className={twMerge('flex justify-end mt-2.5', className)}>{children}</div>;
 }

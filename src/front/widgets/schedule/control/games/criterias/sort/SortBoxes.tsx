@@ -3,7 +3,6 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
-import styled from '@emotion/styled';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { IScheduleWidgetUser, ScheduleWidgetUserMi } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
@@ -163,10 +162,10 @@ export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes = function SortBox
           />
         </div>
 
-        <StyledUserNames className="w-full">
-          <span>{takeScheduleWidgetUserName(rights, currUser)}</span>
-          <span>{takeScheduleWidgetUserName(rights, insertUser)}</span>
-        </StyledUserNames>
+        <div className="w-full grid grid-cols-2">
+          <span className="text-center">{takeScheduleWidgetUserName(rights, currUser)}</span>
+          <span className="text-center">{takeScheduleWidgetUserName(rights, insertUser)}</span>
+        </div>
 
         <div className="flex around w-full">
           <ScheduleWidgetTeamsCriteriaSorterScreenSortBoxPhoto
@@ -193,18 +192,3 @@ export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes = function SortBox
     </>
   );
 };
-
-const StyledUserNames = styled.div`
-  display: grid;
-  grid-template-areas: 'left right';
-  grid-template-columns: 1fr 1fr;
-
-  > * {
-    grid-area: left;
-    text-align: center;
-
-    + * {
-      grid-area: right;
-    }
-  }
-`;

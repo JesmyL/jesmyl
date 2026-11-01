@@ -1,7 +1,6 @@
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
-import styled from '@emotion/styled';
 import { memo, useReducer, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { EeStorePack } from 'shared/api';
@@ -39,9 +38,9 @@ export const CmEditorEERulesWord = memo(function CmEditorEERulesWord({
   const isVariated = checkIsArray(trackState) ? trackState.includes(0) : !trackState;
 
   return (
-    <StyledTable className="my-5">
+    <table className="my-5 text-[1.5em]">
       <tbody>
-        <StyledWordTr>
+        <tr className="h-[3em]">
           {parts.map((part, parti) => (
             <th
               key={parti}
@@ -87,18 +86,19 @@ export const CmEditorEERulesWord = memo(function CmEditorEERulesWord({
               />
             </th>
           )}
-        </StyledWordTr>
+        </tr>
         <tr className={isIgnored ? 'disabled' : ''}>
           {parts.map((part, parti) => (
             <td
               key={parti}
               style={textAlignStyle}
             >
-              <StyledCheckboxesTd>
+              <div className="flex custom-align-items flex-col items-end justify-between [&>*]:my-[.2em]">
                 {part.endsWith('е') &&
                   radioTitles.map((type, typei) => (
-                    <StyledIconCheckbox
+                    <IconCheckbox
                       key={typei}
+                      className="text-[.5em]"
                       checked={typesLine[parti] === typei}
                       disabled={typesLine[parti] === typei}
                       prefix={type}
@@ -139,35 +139,11 @@ export const CmEditorEERulesWord = memo(function CmEditorEERulesWord({
                       }}
                     />
                   ))}
-              </StyledCheckboxesTd>
+              </div>
             </td>
           ))}
         </tr>
       </tbody>
-    </StyledTable>
+    </table>
   );
 });
-
-const StyledIconCheckbox = styled(IconCheckbox)`
-  font-size: 0.5em;
-`;
-
-const StyledCheckboxesTd = styled.div`
-  display: flex;
-  align-items: flex-end;
-  flex-direction: column;
-  justify-content: space-between;
-
-  > * {
-    --mb: 0.2em;
-    margin: var(--mb) 0 var(--mb) 0;
-  }
-`;
-
-const StyledTable = styled.table`
-  font-size: 1.5em;
-`;
-
-const StyledWordTr = styled.tr`
-  height: 3em;
-`;

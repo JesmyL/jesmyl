@@ -3,11 +3,11 @@ import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditab
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { Modal } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
-import { useMemo } from 'react';
+import { HTMLAttributes, useMemo } from 'react';
 import { IScheduleWidgetListCat, IScheduleWidgetListUnit, ScheduleWidgetUserCati } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { twMerge } from 'tailwind-merge';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
 import { ScheduleWidgetUserList } from '../control/users/UserList';
@@ -90,11 +90,9 @@ export function ScheduleWidgetListUnit(props: Props) {
   );
 }
 
-const ExpHeader = styled.div`
-  color: var(--color--3);
-  font-weight: 600;
-
-  &:hover {
-    color: var(--color--4);
-  }
-`;
+const ExpHeader = (props: HTMLAttributes<HTMLDivElement>) => (
+  <div
+    {...props}
+    className={twMerge('text-x3 font-semibold hover:text-x4', props.className)}
+  />
+);

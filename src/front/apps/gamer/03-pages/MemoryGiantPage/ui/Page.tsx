@@ -12,7 +12,6 @@ import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { WithAtomValue } from '#shared/ui/WithAtomValue';
 import { gamerIDB } from '$gamer/shared/state/gamerIDB';
-import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import md5Func from 'md5';
@@ -99,9 +98,9 @@ export const GamerMemoryGiantPage = () => {
               setWin(
                 renderComponentInNewWindow({
                   reactNode: win => (
-                    <StyledContainer>
+                    <div className="bg-black w-screen h-screen flex items-center justify-center">
                       <GamerMemoryGiantBoard win={win} />
-                    </StyledContainer>
+                    </div>
                   ),
                   target: 'gamer/memory-giant/board',
                 }),
@@ -185,12 +184,3 @@ export const GamerMemoryGiantPage = () => {
     />
   );
 };
-
-const StyledContainer = styled.div`
-  background-color: black;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;

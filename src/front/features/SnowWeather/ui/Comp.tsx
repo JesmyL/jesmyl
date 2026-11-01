@@ -23,7 +23,7 @@ export const SnowWeather = memo(
     if (nodes[count]) return nodes[count];
 
     return (nodes[count] ??= (
-      <StyledSnowWeather className="relative top-0 left-0 w-[100vw] h-[100vh] overflow-hidden z-100000000">
+      <StyledSnowWeather className="relative top-0 left-0 w-[100vw] h-[100vh] overflow-hidden z-100000000 pointer-events-none">
         {arrayByLength(count, i => (
           <div
             key={i}
@@ -63,8 +63,6 @@ const animations = arrayByLength(
 );
 
 const StyledSnowWeather = styled.div`
-  pointer-events: none;
-
   * {
     border-radius: 50%;
     pointer-events: none;

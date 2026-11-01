@@ -1,12 +1,12 @@
 import { CopyTextButton } from '#shared/ui/CopyTextButton';
 import { checkIsNaN, checkIsNumber, checkIsRegExp, checkIsString } from 'shared/utils/checkIs';
-import { StyledIndexConsoleCoderResultName } from '../style/styles';
+import { indexConsoleCoderResultNameClassName } from '../style/styles';
 
 export const IndexConsoleCoderResultSimple = ({ name, value }: { value: unknown; name?: string | number }) => (
   <span className="flex gap-2">
     {name == null ? null : (
       <span>
-        <StyledIndexConsoleCoderResultName>{name}: </StyledIndexConsoleCoderResultName>
+        <span className={indexConsoleCoderResultNameClassName}>{name}: </span>
       </span>
     )}
     {value instanceof Error ? (

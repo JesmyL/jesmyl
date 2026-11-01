@@ -1,7 +1,6 @@
 import { translateBase } from '#basis/locale';
 import { ScreenBroadcastConfig } from '#features/broadcast/model';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import styled from '@emotion/styled';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { twMerge } from 'tailwind-merge';
 
@@ -21,8 +20,8 @@ export const ScreenBroadcastFace = ({
   className,
 }: ScreenBroadcastFaceProps) => {
   return (
-    <Face
-      className={twMerge('inline-flex gap-2 between pointer ml-2', className)}
+    <div
+      className={twMerge('inline-flex gap-2 between pointer ml-2 px-[10px] py-[3px] rounded-[5px] text-x1 min-w-[70px]', className)}
       onClick={putOnClick(configi)}
     >
       <span>{config.title}</span>
@@ -33,13 +32,6 @@ export const ScreenBroadcastFace = ({
           onClick={putOnClose(configi)}
         />
       )}
-    </Face>
+    </div>
   );
 };
-
-const Face = styled.div`
-  padding: 3px 10px;
-  border-radius: 5px;
-  color: var(--color--1);
-  min-width: 70px;
-`;

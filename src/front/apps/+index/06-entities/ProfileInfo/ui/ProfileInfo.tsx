@@ -2,7 +2,6 @@ import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { IndexUserMoreBindEmailModal } from '$index/entities/UserMore/ui/BindEmail';
 import { IndexUserMore } from '$index/entities/UserMore/ui/UserMore';
 import { indexIsBindEmailOpenAtom } from '$index/shared/state';
-import styled from '@emotion/styled';
 import { useState } from 'react';
 import { LocalSokiAuth } from 'shared/api';
 import { takeUserAuthName } from 'shared/utils/user.utils';
@@ -18,9 +17,10 @@ export const IndexProfileInfo = ({ auth }: { auth: LocalSokiAuth }) => {
         className="flex center gap-2"
         onClick={setIsUserMoreOpen}
       >
-        <Name className="ellipsis">{takeUserAuthName(auth)}</Name>
+        <div className="ellipsis">{takeUserAuthName(auth)}</div>
         {isShowAva && auth.tgAva && (
-          <Ava
+          <img
+            className="h-[2em] w-[2em] min-h-[2em] min-w-[2em] max-h-[2em] max-w-[2em] rounded-full border-0 inline-block align-middle"
             src={auth.tgAva}
             onError={() => setIsShowAva(false)}
           />
@@ -28,7 +28,7 @@ export const IndexProfileInfo = ({ auth }: { auth: LocalSokiAuth }) => {
       </div>
       {isUserMoreOpen && (
         <BottomPopup
-          title={<Name className="ellipsis">{takeUserAuthName(auth)}</Name>}
+          title={<div className="ellipsis">{takeUserAuthName(auth)}</div>}
           onClose={setIsUserMoreOpen}
         >
           <IndexUserMore onClose={setIsUserMoreOpen} />
@@ -38,23 +38,3 @@ export const IndexProfileInfo = ({ auth }: { auth: LocalSokiAuth }) => {
     </>
   );
 };
-
-const size = '2em';
-
-const Ava = styled.img`
-  height: ${size};
-  width: ${size};
-
-  min-height: ${size};
-  min-width: ${size};
-
-  max-height: ${size};
-  max-width: ${size};
-
-  border-radius: 50%;
-  border: 0;
-  display: inline-block;
-  vertical-align: middle;
-`;
-
-const Name = styled.div``;

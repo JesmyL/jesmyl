@@ -94,6 +94,11 @@ export const useWatchScreenBroadcast = () => {
 };
 
 const styles = css`
+  html,
+  body {
+    background: #000;
+  }
+
   body {
     margin: 0;
     padding: 0;

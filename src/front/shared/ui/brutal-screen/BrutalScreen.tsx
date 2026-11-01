@@ -1,11 +1,15 @@
 import styled from '@emotion/styled';
 import { HtmlHTMLAttributes, PropsWithChildren } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 export function BrutalScreen(props: PropsWithChildren<HtmlHTMLAttributes<HTMLDivElement>>) {
   return (
     <Screen
-      className="flex column custom-align-items"
       {...props}
+      className={twMerge(
+        'flex column custom-align-items my-5 rounded-[10px] bg-x2 pb-2.5 w-full h-full min-h-[120px] overflow-auto',
+        props.className,
+      )}
     >
       {props.children}
     </Screen>
@@ -13,18 +17,6 @@ export function BrutalScreen(props: PropsWithChildren<HtmlHTMLAttributes<HTMLDiv
 }
 
 const Screen = styled.div`
-  --brutal-screen-gap-v: 20px;
-
-  margin: var(--brutal-screen-gap-v) 0;
-  border-radius: 10px;
-  background-color: var(--color--2);
-  padding-bottom: 10px;
-  width: 100%;
-
-  height: 100%;
-  min-height: 120px;
-  overflow: auto;
-
   &::-webkit-scrollbar {
     display: none;
   }

@@ -2,7 +2,6 @@ import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { NewWindow } from '#shared/ui/tags/NewWindow';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { useAuth } from '$index/shared/state';
-import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { markdownBroadcastAtom } from './atoms';
 import { ScheduleWidgetMarkdownBroadcastWindow } from './Window';
@@ -54,15 +53,11 @@ export const ScheduleWidgetMarkdownBroadcast = ({ md = '' }: Props) => {
       >
         <ScheduleWidgetMarkdownBroadcastWindow />
       </NewWindow>
-      <StyledTextRedactor
+      <textarea
+        className="h-full w-full"
         onChange={event => setMarkdown(event.currentTarget.value)}
         value={markdown}
       />
     </>
   );
 };
-
-const StyledTextRedactor = styled.textarea`
-  width: 100%;
-  height: 100%;
-`;

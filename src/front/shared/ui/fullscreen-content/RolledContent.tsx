@@ -64,7 +64,10 @@ export const RolledContent = ({
       {...props}
       onClick={() => setIsRolling(itNIt)}
       ref={containerRef}
-      className={twMerge('roll-controled-container w-full h-full', props.className)}
+      className={twMerge(
+        'roll-controled-container w-full h-full p-0 transition-[padding] duration-300',
+        props.className,
+      )}
     >
       <div className={'roll-controls pointer flex column center' + (isRolling ? ' open' : '')}>
         <LazyIcon
@@ -91,9 +94,6 @@ export const RolledContent = ({
 };
 
 const RollContent = styled.div`
-  transition: padding 0.3s;
-  padding: 0;
-
   [st-fullscreen] {
     padding-top: 30%;
   }

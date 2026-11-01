@@ -516,7 +516,7 @@ const CmPlayerPageContent = ({
               ref={playerRef}
               className={playerClass}
             >
-              <div className="flex items-start justify-between gap-3">
+              <div className="flex custom-align-items items-start justify-between gap-3">
                 <div className="min-w-0">
                   <div className="flex items-center gap-[0.5rem] min-h-[1.9rem]">
                     <span className="opacity-62 text-[0.7rem] font-bold tracking-[0.34em] uppercase">

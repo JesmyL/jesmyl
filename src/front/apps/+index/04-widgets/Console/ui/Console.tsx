@@ -2,7 +2,6 @@
 import { translateBase } from '#basis/locale';
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
-import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { IndexConsoleCoderResultLine } from '../sub-ui/line';
@@ -48,12 +47,12 @@ export const IndexConsolePage = () => {
           className="h-full"
           onTouchStart={eventStopper}
         >
-          <Line>
+          <div className="[overflow-wrap:anywhere]">
             <IndexConsoleCoderResultLine
               value={logs}
               scope="Console."
             />
-          </Line>
+          </div>
           <IndexConsoleCodeExecutionScreen
             onError={error => console[scope](new Error('' + error))}
             onLog={console[scope]}
@@ -63,7 +62,3 @@ export const IndexConsolePage = () => {
     />
   );
 };
-
-const Line = styled.div`
-  overflow-wrap: anywhere;
-`;

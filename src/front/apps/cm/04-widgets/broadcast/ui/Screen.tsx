@@ -99,7 +99,7 @@ export const CmBroadcastScreen = (props: Props) => {
       {nextSlideNode}
       <StyledFontSizeContain
         key={props.freshSlideKey}
-        className="inline-flex white-pre-children"
+        className="inline-flex white-pre-children leading-none"
         style={style}
         html={(isBlindMode && props.isChorded) || checkIsArray(props.html) ? undefined : props.html}
         content={
@@ -153,8 +153,6 @@ const lineFlyAnimation = keyframes`
 `;
 
 const StyledFontSizeContain = styled(FontSizeContain)`
-  line-height: 1;
-
   &:not(:has(.fragmented-slide-line)) {
     animation: ${simpleAnimation} 0.5s ease-in-out;
   }

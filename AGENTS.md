@@ -51,6 +51,7 @@
 - Never write `cursor: pointer;` in CSS/styles — use the `.pointer` utility class on the element instead.
 - Never use raw `addEventListener`/`removeEventListener` — use the project's own `addEventListenerPipe` event/subscription system instead.
 - Small styles — via Tailwind utility classes; complex `@keyframes` (e.g. `playingPulse`) — keep in `styled` from `@emotion/styled`, not in the global Tailwind entry.
+- Decide between Tailwind classes and emotion `styled.*\`\`` (or `css\`\``) by the FINAL production bundle size: prefer `styled.*\`\`` when its raw CSS is smaller than the Tailwind utilities that would be generated — e.g. complex computed arbitrary values like `[--size:min(calc(100vw/10),70px)]`, or many descendant-variant classes like `[&_.button]:…`, which each emit extra generated CSS.
 - Locale strings: always write user-facing text translations via `translateBase` / `translateDynamic` — never inline raw text.
 - Do not add translations for a new locale key if the text is identical in all languages — just keep the single same value in each locale file (no need to invent per-language variants).
 - Do not add new locale texts when existing keys can be reused — search the existing BaseLocaleKey entries first and only add a new key if no existing text fits.

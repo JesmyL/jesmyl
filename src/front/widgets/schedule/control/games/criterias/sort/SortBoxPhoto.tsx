@@ -1,7 +1,8 @@
 import { ScheduleWidgetUserTakePhoto } from '#widgets/schedule/control/users/TakePhoto';
 import { ScheduleWidgetUserPhoto } from '#widgets/schedule/control/users/UserPhoto';
-import styled from '@emotion/styled';
 import { IScheduleWidgetUser } from 'shared/api';
+
+const photoAreaClassName = 'flex center min-h-[300px] w-[200px] max-w-[47vw]';
 
 interface Props {
   user: IScheduleWidgetUser;
@@ -14,27 +15,17 @@ export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxPhoto = function Sort
       className="h-full"
       onClick={onClick}
     >
-      <StyledPhotoArea className="flex center h-full pointer">
+      <div className={photoAreaClassName + ' h-full pointer'}>
         <ScheduleWidgetUserPhoto
           className="w-full"
           user={user}
           or={
-            <StyledPhotoArea className="flex center border">
+            <div className={photoAreaClassName + ' border border-x4'}>
               <ScheduleWidgetUserTakePhoto user={user} />
-            </StyledPhotoArea>
+            </div>
           }
         />
-      </StyledPhotoArea>
+      </div>
     </div>
   );
 };
-
-const StyledPhotoArea = styled.div`
-  min-height: 300px;
-  max-width: 47vw;
-  width: 200px;
-
-  .border {
-    border: solid var(--color--4) 1px;
-  }
-`;

@@ -5,7 +5,6 @@ import { useWatchScreenBroadcast } from '#features/broadcast/hooks/watch-broadca
 import { useScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
 import { ScreenBroadcastConfig } from '#features/broadcast/model';
 import { Button } from '#shared/components';
-import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ScreenBroadcastFace } from './Face';
@@ -38,7 +37,7 @@ export const ScreenBroadcastFaceLine = <Config,>(props: Props<Config>) => {
 
   return (
     <div className="mt-5">
-      <ConfigLine className="mb-2 no-scrollbar children-middle">
+      <div className="mb-2 no-scrollbar children-middle overflow-x-scroll whitespace-nowrap">
         {configs.map((config, configi, configa) => {
           return (
             <ScreenBroadcastFace
@@ -59,12 +58,7 @@ export const ScreenBroadcastFaceLine = <Config,>(props: Props<Config>) => {
         {!configs.length && (
           <div className="text-x1 bg-xKO w-full ml-3 pl-2">{translateBase(BaseLocaleKey.NoConfigs)}</div>
         )}
-      </ConfigLine>
+      </div>
     </div>
   );
 };
-
-const ConfigLine = styled.div`
-  overflow-x: scroll;
-  white-space: nowrap;
-`;

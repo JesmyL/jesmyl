@@ -19,10 +19,7 @@ import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { checkIsNaN } from 'shared/utils/checkIs';
 import { objectEntries } from 'shared/utils/object.utils';
 import { useCmEditorCompositionTrySendAudioMarks } from '../api/useCmComEditorTrySendAudioMarks';
-import {
-  CmEditorCompositionBusyInfo,
-  StyledCmEditorCompositionIsThereOtherFirstRedactorUserDetect,
-} from './EditCompositionBusyInfo';
+import { CmEditorCompositionBusyInfo } from './EditCompositionBusyInfo';
 
 export const CmEditorCompositionPage = ({
   tab,
@@ -159,7 +156,7 @@ export const CmEditorCompositionPage = ({
 const StyledOutlet = styled.div``;
 
 const StyledContainer = styled(PageCmEditorContainer)`
-  &:has(${StyledCmEditorCompositionIsThereOtherFirstRedactorUserDetect}) ${StyledOutlet} {
+  &:has(.com-editors-busy) ${StyledOutlet} {
     opacity: 0.3;
   }
 

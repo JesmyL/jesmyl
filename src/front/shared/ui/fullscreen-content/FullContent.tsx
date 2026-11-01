@@ -66,9 +66,14 @@ export const FullContent = <Value, TrustValue extends Value>(
             onClick={openAtom.reset}
           />
         )}
-        <StyledContainer className={twMerge('p-5', props.containerClassName)}>
+        <div
+          className={twMerge(
+            'absolute top-0 left-0 bg-(--current-bg) w-screen h-full overflow-y-auto p-5',
+            props.containerClassName,
+          )}
+        >
           {typeof props.children === 'function' ? props.children(value as never) : props.children}
-        </StyledContainer>
+        </div>
       </Swiped>
     </Portal>
   );
@@ -96,6 +101,7 @@ const Swiped = ({ close, ...props }: { close: () => void } & HTMLAttributes<HTML
   return (
     <StyledContainerWrapper
       {...props}
+      className={twMerge('absolute top-0 left-0 w-screen h-full', props.className)}
       {...(focusedInput ? {} : swiper)}
     />
   );
@@ -104,26 +110,10 @@ const Swiped = ({ close, ...props }: { close: () => void } & HTMLAttributes<HTML
 const StyledCloseButton = styled(TheIconButton)``;
 
 const StyledContainerWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100%;
-
   > ${StyledCloseButton} {
     position: fixed;
     top: 10px;
     right: 10px;
     z-index: 1000000;
   }
-`;
-
-const StyledContainer = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: var(--current-bg);
-  width: 100vw;
-  height: 100%;
-  overflow-y: auto;
 `;

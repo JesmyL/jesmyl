@@ -3,8 +3,6 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
-import { css } from '@emotion/react';
-import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import React, { useState } from 'react';
 import { useScheduleGameContext } from '../lib/contexts';
@@ -28,8 +26,11 @@ export const ScheduleWidgetTeamGamePrintTeamsButton = function PrintTeamsButton(
           isOpenPrintAtom.set(true);
         }}
       />
-      <StyledFullContent openAtom={isOpenPrintAtom}>
-        <StyledButtons className="flex w-full around">
+      <FullContent<boolean, boolean>
+        openAtom={isOpenPrintAtom}
+        className="[--current-bg:white] text-black"
+      >
+        <div className="flex w-full around print:hidden!">
           <TheIconButton
             icon="DashboardSquareRemove"
             disabled={cols < 2}
@@ -40,7 +41,7 @@ export const ScheduleWidgetTeamGamePrintTeamsButton = function PrintTeamsButton(
             disabled={game.teams.length <= cols}
             onClick={() => setCols(cols + 1)}
           />
-        </StyledButtons>
+        </div>
         {game.teams.map((team, teami) => {
           return (
             <React.Fragment key={team.mi}>
@@ -56,25 +57,7 @@ export const ScheduleWidgetTeamGamePrintTeamsButton = function PrintTeamsButton(
             </React.Fragment>
           );
         })}
-      </StyledFullContent>
+      </FullContent>
     </>
   );
 };
-
-const hideOnPrintCss = css`
-  @media print {
-    & {
-      display: none !important;
-    }
-  }
-`;
-
-const StyledButtons = styled.div`
-  ${hideOnPrintCss}
-`;
-
-const StyledFullContent = styled(FullContent<boolean, boolean>)`
-  --current-bg: white;
-
-  color: black;
-`;

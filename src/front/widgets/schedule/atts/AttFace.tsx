@@ -2,7 +2,6 @@ import { translateBase } from '#basis/locale';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import styled from '@emotion/styled';
 import { Atom, atom } from 'atomaric';
 import { ReactNode } from 'react';
 import { ScheduleWidgetAttKey, scheduleWidgetUserRights } from 'shared/api';
@@ -45,9 +44,10 @@ export function ScheduleWidgetAttFace({
 
   return (
     <>
-      <Tatt
+      <div
         className={
-          'relative flex center column strong-size bg-x5' + (isCanRedact && tatt?.isCustomize ? ' text-x7 pointer' : '')
+          'relative flex center column strong-size bg-x5 rounded-[3px] [--strong-size:90px]' +
+          (isCanRedact && tatt?.isCustomize ? ' text-x7 pointer' : '')
         }
         onClick={isCanRedact && tatt?.isCustomize ? () => tattOnRedactAtom.set(attKey) : undefined}
       >
@@ -60,7 +60,7 @@ export function ScheduleWidgetAttFace({
         {isRedact && isCanRedact && (
           <TheIconSendButton
             icon="Cancel01"
-            className="close-button"
+            className="absolute right-0 top-0"
             confirm={
               <>
                 {isLink
@@ -86,7 +86,7 @@ export function ScheduleWidgetAttFace({
             <div className="text-xKO">{translateBase(BaseLocaleKey.ScheduleUnknownShort)}</div>
           </>
         )}
-      </Tatt>
+      </div>
       {!tatt || (
         <Modal
           openAtom={tattOnRedactAtom}
@@ -107,16 +107,3 @@ export function ScheduleWidgetAttFace({
     </>
   );
 }
-
-const Tatt = styled.div`
-  --strong-size: 90px;
-
-  position: relative;
-  border-radius: 3px;
-
-  .close-button {
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
-`;

@@ -82,7 +82,7 @@ export const DayEventKnownAtt = (props: ScheduleDayEventKnownAttProps) => {
         notateNode = (
           <LazyIcon
             icon="View"
-            className="text-x3 icon-scale-05"
+            className="text-x3 [--icon-scale:0.5]"
           />
         );
 
@@ -101,7 +101,7 @@ export const DayEventKnownAtt = (props: ScheduleDayEventKnownAttProps) => {
         notateNode = (
           <LazyIcon
             icon="Link02"
-            className="text-x3 icon-scale-05"
+            className="text-x3 [--icon-scale:0.5]"
           />
         );
 
@@ -113,7 +113,7 @@ export const DayEventKnownAtt = (props: ScheduleDayEventKnownAttProps) => {
             <div className="flex ml-5 mb-2">
               <LazyIcon
                 icon="Link02"
-                className="text-x3 icon-scale-05"
+                className="text-x3 [--icon-scale:0.5]"
               />
               <ScheduleWidgetTopicTitle
                 titleBox={props.schedule.types[event.type]}

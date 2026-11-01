@@ -3,7 +3,6 @@ import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { TheButton } from '#shared/ui/TheButton';
 import { cmComSelectedComwsAtom } from '$cm/entities/com';
 import { CmComFaceList } from '$cm/entities/com-face';
-import styled from '@emotion/styled';
 import { useNavigate } from '@tanstack/react-router';
 import { Atom, useAtomValue } from 'atomaric';
 import { CmComWid } from 'shared/api';
@@ -51,9 +50,9 @@ export const CmComSharedListActionInterpretator = ({
               >
                 {translateBase(BaseLocaleKey.CmAddToSelectedList)}
               </TheButton>
-              <StyledButtonDescription>
+              <div className="text-[0.9em] opacity-70 -mt-[0.5em]">
                 {translateBase(BaseLocaleKey.CmWillAdd, { c: addComsCount })}
-              </StyledButtonDescription>
+              </div>
 
               <TheButton
                 disabled={lessComsCount === 0 && addComsCount === 0}
@@ -65,9 +64,9 @@ export const CmComSharedListActionInterpretator = ({
                 {translateBase(BaseLocaleKey.CmChangeSelectedList)}
               </TheButton>
 
-              <StyledButtonDescription>
+              <div className="text-[0.9em] opacity-70 -mt-[0.5em]">
                 {translateBase(BaseLocaleKey.CmWillLost, { c: lessComsCount })}
-              </StyledButtonDescription>
+              </div>
             </div>
           </>
         )}
@@ -75,9 +74,3 @@ export const CmComSharedListActionInterpretator = ({
     </>
   );
 };
-
-const StyledButtonDescription = styled.div`
-  font-size: 0.9em;
-  opacity: 0.7;
-  margin-top: -0.5em;
-`;
