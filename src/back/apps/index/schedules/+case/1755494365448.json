@@ -9,7 +9,10 @@
     "defu": 43,
     "type": 3,
     "roles": [{ "mi": 0, "icon": "Teacher", "title": "Координатор", "userMi": 0 }],
-    "users": [{ "R": 127, "id": 1, "mi": 0 }]
+    "users": [
+      { "R": 2047, "id": 1, "mi": 0 },
+      { "R": 127, "id": 2, "mi": 1 }
+    ]
   },
   "days": [
     {

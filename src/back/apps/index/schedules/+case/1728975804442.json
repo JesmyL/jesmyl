@@ -1,9 +1,9 @@
 {
-  "title": "Пасторская конференция",
+  "title": "Конференции",
   "topic": "",
   "dsc": "",
-  "start": 1780088400000,
-  "prevStart": 1772312400000,
+  "start": 1793394000000,
+  "prevStart": 1780088400000,
   "ctrl": {
     "cats": ["Основное"],
     "defu": 21,
@@ -20,7 +20,7 @@
   "days": [
     {
       "mi": 0,
-      "wup": 18,
+      "wup": 11,
       "list": [
         { "mi": 0, "tm": 30, "atts": {}, "type": 0, "tgAlert": 1, "tgInform": 0 },
         { "mi": 4, "type": 4, "tgInform": 0 },
