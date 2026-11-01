@@ -215,4 +215,7 @@ export const localeEditorKz = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsAveragePeriod]: '$l - $c күніне орташа',
   [EditorLocaleKey.VisitsVisitErrors]: 'Визиты',
   [EditorLocaleKey.VisitsAnonSummary]: '$u бірегей, $v визит',
+  [EditorLocaleKey.VisitsVersions]: 'Визиттер нұсқалар бойынша',
+  [EditorLocaleKey.VisitsAllVersions]: 'Барлық уақыт бойынша нұсқалар бойынша визиттер',
+  [EditorLocaleKey.VisitsMinVersions]: 'Күндер бойынша ең төменгі нұсқалар',
 });

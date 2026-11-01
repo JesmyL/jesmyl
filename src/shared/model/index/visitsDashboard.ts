@@ -38,6 +38,8 @@ export type VisitsDashboardDayStat = {
   date: string;
   total: number;
   maxOnline: number;
+  versions: PRecord<number, number>;
+  minVersion: number | null;
 };
 
 export type VisitsDashboard = {
@@ -50,6 +52,8 @@ export type VisitsDashboard = {
   anonVisits: number;
   anonUniq: number;
   hours: number[];
+  versions: PRecord<number, number>;
+  todayMinVersion: number | null;
   dayStats: VisitsDashboardDayStat[];
   messages: DashMessage[];
   messagesHasMore: boolean;

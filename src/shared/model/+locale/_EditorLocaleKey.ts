@@ -201,4 +201,7 @@ export const enum EditorLocaleKey {
   VisitsAveragePeriod = 197,
   VisitsVisitErrors = 198,
   VisitsAnonSummary = 199,
+  VisitsVersions = 200,
+  VisitsAllVersions = 201,
+  VisitsMinVersions = 202,
 }

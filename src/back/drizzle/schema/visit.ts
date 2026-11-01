@@ -31,6 +31,8 @@ export const visitDayDB = pgTable('visitDays', {
   uniq: integer('uniq').notNull(),
   visitors: jsonb('visitors').$type<PRecord<UserLogin, number>>().notNull().default(emptyJSONObjectSQL),
   hours: jsonb('hours').$type<number[]>().notNull(),
+  versions: jsonb('versions').$type<PRecord<number, number>>().notNull().default(emptyJSONObjectSQL),
+  minVersion: integer('minVersion'),
   maxOnline: integer('maxOnline').notNull().default(0),
 
   createdAt: bigint('createdAt', { mode: 'number' })

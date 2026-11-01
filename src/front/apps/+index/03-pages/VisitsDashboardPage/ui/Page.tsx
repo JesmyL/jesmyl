@@ -17,6 +17,7 @@ import {
   VisitsDashboard,
   VisitsDashboardDayStat,
 } from 'shared/model/index/visitsDashboard';
+import { mapObjectEntries } from 'shared/utils/object.utils';
 import { twMerge } from 'tailwind-merge';
 
 const messageTabs = [
@@ -131,18 +132,52 @@ const takeMessageSummary = (html: string) => {
   return text.length > messageSummaryMaxLength ? `${text.slice(0, messageSummaryMaxLength)}…` : text;
 };
 
+type VisitsVersionRow = { version: string; count: number };
+
+const makeVersionRows = (versionsList: PRecord<number, number>[]): VisitsVersionRow[] => {
+  const counts: PRecord<number, number> = {};
+
+  versionsList.forEach(versions =>
+    mapObjectEntries(versions, (version, count) => {
+      const num = Number(version);
+      counts[num] = (counts[num] ?? 0) + (count ?? 0);
+    }),
+  );
+
+  return mapObjectEntries(counts, (version, count) => ({ version, count: count ?? 0 })).sort(
+    (a, b) => b.count - a.count || Number(b.version) - Number(a.version),
+  );
+};
+
+const makeMinVersionRows = (dayStats: VisitsDashboardDayStat[]): VisitsVersionRow[] => {
+  const days: PRecord<number, number> = {};
+
+  dayStats.forEach(({ minVersion }) => {
+    if (minVersion !== null) days[minVersion] = (days[minVersion] ?? 0) + 1;
+  });
+
+  return makeVersionRows([days]).sort((a, b) => Number(a.version) - Number(b.version));
+};
+
 const hoursInDay = 24;
-const chartBarWidth = 8;
-const chartBarGap = 4;
-const chartSlotWidth = chartBarWidth + chartBarGap;
-const chartWidth = hoursInDay * chartSlotWidth;
-const chartHeight = 100;
-const historyBarWidth = 10;
-const historyBarGap = 4;
-const historySlotWidth = historyBarWidth + historyBarGap;
-const historyChartHeight = 100;
+const chartPlotHeight = 100;
+const axisTickTargetCount = 5;
+const hourSlotWidth = 12;
+const historySlotWidth = 14;
 
 const takeHourLabel = (hour: number) => `${`${hour}`.padStart(2, '0')}:00`;
+
+const makeCountAxis = (maxCount: number) => {
+  const roughStep = Math.max(1, maxCount / axisTickTargetCount);
+  const magnitude = 10 ** Math.floor(Math.log10(roughStep));
+  const normalized = roughStep / magnitude;
+  const step = (normalized <= 1 ? 1 : normalized <= 2 ? 2 : normalized <= 5 ? 5 : 10) * magnitude;
+  const max = Math.max(step, Math.ceil(maxCount / step) * step);
+
+  return { max, ticks: Array.from({ length: Math.round(max / step) + 1 }, (_, index) => index * step) };
+};
+
+type VisitsBar = { label: string; count: number; info: string };
 
 const ChartTooltip = ({ leftPercent, text }: { leftPercent: number; text: string }) => (
   <div
@@ -168,110 +203,115 @@ const useCloseChartTooltip = (close: () => void) => {
   );
 };
 
-const VisitsHoursChart = ({ hours }: { hours: number[] }) => {
-  const [selectedHour, setSelectedHour] = useState<number | null>(null);
-  const max = Math.max(...hours, 1);
-  const mid = Math.round(max / 2);
+const VisitsBarsChart = ({
+  bars,
+  slotWidth,
+  minWidth = 240,
+  labelStep = 1,
+}: {
+  bars: VisitsBar[];
+  slotWidth: number;
+  minWidth?: number;
+  labelStep?: number;
+}) => {
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const chartWidth = Math.max(bars.length * slotWidth, minWidth);
+  const slotCenter = chartWidth / Math.max(bars.length, 1);
+  const barWidth = slotWidth - 4;
+  const maxCount = Math.max(...bars.map(bar => bar.count), 1);
+  const { max, ticks } = makeCountAxis(maxCount);
+  const selectedBar = selectedIndex === null ? null : bars[selectedIndex];
+  const selectedLeftPercent = selectedIndex === null ? 0 : ((selectedIndex + 0.5) / Math.max(bars.length, 1)) * 100;
 
-  useCloseChartTooltip(() => setSelectedHour(null));
+  useCloseChartTooltip(() => setSelectedIndex(null));
 
   return (
-    <div className="min-w-0">
-      <div className="flex min-w-0 gap-1">
-        <div className="flex h-32 w-6 shrink-0 flex-col justify-between text-right text-[10px] text-x4/70 sm:h-40">
-          <span>{max}</span>
-          <span>{mid}</span>
-          <span>0</span>
-        </div>
-        <div className="min-w-0 flex-1">
+    <div className="flex min-w-0 gap-1">
+      <div className="relative h-32 w-6 shrink-0 text-right text-[10px] text-x4/70 sm:h-40">
+        {ticks.map(tick => (
+          <span
+            key={tick}
+            className="absolute right-0 -translate-y-1/2"
+            style={{ top: `${(1 - tick / max) * 100}%` }}
+          >
+            {tick}
+          </span>
+        ))}
+      </div>
+      <div className="min-w-0 flex-1 overflow-x-auto">
+        <div
+          className="mx-auto"
+          style={{ width: `${chartWidth}px` }}
+        >
           <div className="relative">
             <svg
-              viewBox={`0 0 ${chartWidth} ${chartHeight + 6}`}
+              viewBox={`0 0 ${chartWidth} ${chartPlotHeight}`}
               preserveAspectRatio="none"
               className="h-32 w-full rounded-lg bg-x2/40 sm:h-40"
             >
-              {[0, chartHeight / 2, chartHeight].map(y => (
-                <line
-                  key={y}
-                  x1={0}
-                  y1={y}
-                  x2={chartWidth}
-                  y2={y}
-                  className="stroke-x4/20"
-                  strokeWidth={1}
-                />
-              ))}
               <line
-                x1={0}
+                x1={0.5}
                 y1={0}
-                x2={0}
-                y2={chartHeight}
+                x2={0.5}
+                y2={chartPlotHeight}
                 className="stroke-x4/40"
                 strokeWidth={1}
               />
-              {Array.from({ length: hoursInDay }, (_, hour) => {
-                const count = hours[hour] ?? 0;
-                const height = (count / max) * chartHeight;
+              {ticks.map(tick => {
+                const y = chartPlotHeight - (tick / max) * chartPlotHeight;
+
+                return (
+                  <line
+                    key={tick}
+                    x1={0}
+                    y1={y}
+                    x2={chartWidth}
+                    y2={y}
+                    className={tick ? 'stroke-x4/20' : 'stroke-x4/40'}
+                    strokeWidth={1}
+                  />
+                );
+              })}
+              {bars.map((bar, index) => {
+                const height = (bar.count / max) * chartPlotHeight;
 
                 return (
                   <rect
-                    key={hour}
-                    x={hour * chartSlotWidth + chartBarGap / 2}
-                    y={chartHeight - height}
-                    width={chartBarWidth}
+                    key={index}
+                    x={(index + 0.5) * slotCenter - barWidth / 2}
+                    y={chartPlotHeight - height}
+                    width={barWidth}
                     height={height}
                     className="pointer fill-chart-2/45"
                     onClick={event => {
                       event.stopPropagation();
-                      setSelectedHour(selectedHour === hour ? null : hour);
+                      setSelectedIndex(selectedIndex === index ? null : index);
                     }}
                   >
-                    <title>{count}</title>
+                    <title>{bar.count}</title>
                   </rect>
                 );
               })}
-              {Array.from({ length: hoursInDay }, (_, hour) =>
-                hour % 3 === 0 || hour === 23 ? (
-                  <line
-                    key={`tick-${hour}`}
-                    x1={hour * chartSlotWidth + chartSlotWidth / 2}
-                    y1={chartHeight}
-                    x2={hour * chartSlotWidth + chartSlotWidth / 2}
-                    y2={chartHeight + 5}
-                    className="stroke-x4/40"
-                    strokeWidth={1}
-                  />
-                ) : null,
-              )}
             </svg>
-            {selectedHour === null || (
+            {!selectedBar || (
               <ChartTooltip
-                leftPercent={((selectedHour * chartSlotWidth + chartSlotWidth / 2) / chartWidth) * 100}
-                text={translateEditorBase(EditorLocaleKey.VisitsHourPeriod, {
-                  f: takeHourLabel(selectedHour),
-                  t: takeHourLabel(selectedHour === hoursInDay - 1 ? hoursInDay : selectedHour + 1),
-                  c: hours[selectedHour] ?? 0,
-                })}
+                leftPercent={selectedLeftPercent}
+                text={selectedBar.info}
               />
             )}
           </div>
-          <div className="mt-1 grid grid-cols-[repeat(24,minmax(0,1fr))] text-[10px] text-x4/70">
-            {Array.from({ length: hoursInDay }, (_, hour) => {
-              const isLabeled = hour % 3 === 0 || hour === 23;
-              const isDenseLabel = hour % 6 === 0 || hour === 23;
-
-              return (
+          <div className="relative mt-1 h-4 text-[10px] text-x4/70">
+            {bars.map((bar, index) =>
+              index % labelStep || !bar.label ? null : (
                 <span
-                  key={hour}
-                  className={twMerge(
-                    'text-center',
-                    !isLabeled ? 'invisible' : isDenseLabel ? undefined : 'max-sm:hidden',
-                  )}
+                  key={index}
+                  className="absolute max-w-16 -translate-x-1/2 truncate"
+                  style={{ left: `${((index + 0.5) / Math.max(bars.length, 1)) * 100}%` }}
                 >
-                  {isLabeled ? `${hour}`.padStart(2, '0') : ''}
+                  {bar.label}
                 </span>
-              );
-            })}
+              ),
+            )}
           </div>
         </div>
       </div>
@@ -279,88 +319,20 @@ const VisitsHoursChart = ({ hours }: { hours: number[] }) => {
   );
 };
 
-const VisitsBucketsChart = ({
-  buckets,
-  makeInfo,
-}: {
-  buckets: VisitsHistoryBucket[];
-  makeInfo: (bucket: VisitsHistoryBucket) => string;
-}) => {
-  const [selectedBucket, setSelectedBucket] = useState<number | null>(null);
-  const max = Math.max(...buckets.map(bucket => bucket.count), 1);
-  const labelStep = Math.max(1, Math.ceil(buckets.length / 12));
-  const chartWidth = Math.max(buckets.length * historySlotWidth, 240);
-  const bucketSlotWidth = chartWidth / Math.max(buckets.length, 1);
-  const selectedBucketInfo = selectedBucket === null ? null : buckets[selectedBucket];
-  const selectedBucketLeftPercent =
-    selectedBucket === null ? 0 : ((selectedBucket + 0.5) / Math.max(buckets.length, 1)) * 100;
-
-  useCloseChartTooltip(() => setSelectedBucket(null));
+const VisitsVersionBars = ({ rows }: { rows: VisitsVersionRow[] }) => {
+  const maxCount = rows.at(0)?.count ?? 1;
 
   return (
-    <div className="min-w-0">
-      <div className="max-w-full overflow-x-auto">
-        <div
-          className="mx-auto"
-          style={{ width: `${chartWidth}px` }}
-        >
-          <div className="relative">
-            <svg
-              viewBox={`0 0 ${chartWidth} ${historyChartHeight + 6}`}
-              preserveAspectRatio="none"
-              className="h-32 w-full rounded-lg bg-x2/40 sm:h-40"
-            >
-              {buckets.map((bucket, index) => {
-                const height = (bucket.count / max) * historyChartHeight;
-
-                return (
-                  <rect
-                    key={`${bucket.label}-${index}`}
-                    x={index * bucketSlotWidth + (bucketSlotWidth - historyBarWidth) / 2}
-                    y={historyChartHeight - height}
-                    width={historyBarWidth}
-                    height={height}
-                    className="pointer fill-chart-2/45"
-                    onClick={event => {
-                      event.stopPropagation();
-                      setSelectedBucket(selectedBucket === index ? null : index);
-                    }}
-                  >
-                    <title>{bucket.count}</title>
-                  </rect>
-                );
-              })}
-              <line
-                x1={0}
-                y1={historyChartHeight}
-                x2={chartWidth}
-                y2={historyChartHeight}
-                className="stroke-x4/40"
-                strokeWidth={1}
-              />
-            </svg>
-            {!selectedBucketInfo || (
-              <ChartTooltip
-                leftPercent={selectedBucketLeftPercent}
-                text={makeInfo(selectedBucketInfo)}
-              />
-            )}
+    <div className="flex min-w-0 flex-col gap-1">
+      {rows.map(row => (
+        <div key={row.version} className="flex min-w-0 items-center gap-2 rounded-lg px-2 py-1 even:bg-x2/40">
+          <span className="w-14 shrink-0 text-sm text-x3">{row.version}</span>
+          <div className="h-1 min-w-0 flex-1 overflow-hidden rounded-full bg-x2/60">
+            <div className="h-full rounded-full bg-chart-2/45" style={{ width: `${(row.count / maxCount) * 100}%` }} />
           </div>
-          <div
-            className="mt-1 grid text-[10px] text-x4/70"
-            style={{ gridTemplateColumns: `repeat(${Math.max(buckets.length, 1)}, minmax(0, 1fr))` }}
-          >
-            {buckets.map((bucket, index) => (
-              <span
-                key={`${bucket.label}-${index}`}
-                className={twMerge('truncate text-center', index % labelStep && 'invisible')}
-              >
-                {bucket.label}
-              </span>
-            ))}
-          </div>
+          <span className="shrink-0 text-xs font-semibold text-chart-2/80">{row.count}</span>
         </div>
-      </div>
+      ))}
     </div>
   );
 };
@@ -520,6 +492,31 @@ const DashboardContent = ({ dashboard }: { dashboard: VisitsDashboard }) => {
   const [averagePeriod, setAveragePeriod] = useState<VisitsHistoryPeriod>(VisitsHistoryPeriod.Week);
   const historyBuckets = makeHistoryBuckets(dashboard.dayStats, historyPeriod);
   const averageBuckets = makeAverageBuckets(dashboard.dayStats, averagePeriod);
+  const versionRows = makeVersionRows([dashboard.versions]);
+  const allTimeVersionRows = makeVersionRows([
+    ...dashboard.dayStats.map(stat => stat.versions),
+    dashboard.versions,
+  ]);
+  const minVersionRows = makeMinVersionRows(dashboard.dayStats);
+  const hourBars: VisitsBar[] = dashboard.hours.map((count, hour) => ({
+    label: hour % 3 === 0 || hour === hoursInDay - 1 ? `${hour}`.padStart(2, '0') : '',
+    count,
+    info: translateEditorBase(EditorLocaleKey.VisitsHourPeriod, {
+      f: takeHourLabel(hour),
+      t: takeHourLabel(hour === hoursInDay - 1 ? hoursInDay : hour + 1),
+      c: count,
+    }),
+  }));
+  const historyBars: VisitsBar[] = historyBuckets.map(bucket => ({
+    label: bucket.label,
+    count: bucket.count,
+    info: translateEditorBase(EditorLocaleKey.VisitsHistoryCount, { l: bucket.label, c: bucket.count }),
+  }));
+  const averageBars: VisitsBar[] = averageBuckets.map(bucket => ({
+    label: bucket.label,
+    count: bucket.count,
+    info: translateEditorBase(EditorLocaleKey.VisitsAveragePeriod, { l: bucket.label, c: bucket.count.toFixed(1) }),
+  }));
 
   return (
     <div className="mx-auto flex w-full max-w-6xl min-w-0 flex-col gap-3 pt-2 sm:gap-4">
@@ -606,7 +603,37 @@ const DashboardContent = ({ dashboard }: { dashboard: VisitsDashboard }) => {
 
       <section className="rounded-2xl border border-x2/60 bg-x1/50 p-2 sm:p-3">
         <h2 className="mb-2 text-sm font-medium text-x3">{translateEditorBase(EditorLocaleKey.VisitsTodayByHour)}</h2>
-        <VisitsHoursChart hours={dashboard.hours} />
+        <VisitsBarsChart
+          bars={hourBars}
+          slotWidth={hourSlotWidth}
+        />
+      </section>
+
+      <section className="rounded-2xl border border-x2/60 bg-x1/50 p-2 sm:p-3">
+        <h2 className="mb-2 text-sm font-medium text-x3">{translateEditorBase(EditorLocaleKey.VisitsVersions)}</h2>
+        {versionRows.length === 0 ? (
+          <div className="text-sm text-x4">{translateBase(BaseLocaleKey.EmptyList)}</div>
+        ) : (
+          <VisitsVersionBars rows={versionRows} />
+        )}
+      </section>
+
+      <section className="rounded-2xl border border-x2/60 bg-x1/50 p-2 sm:p-3">
+        <h2 className="mb-2 text-sm font-medium text-x3">{translateEditorBase(EditorLocaleKey.VisitsAllVersions)}</h2>
+        {allTimeVersionRows.length === 0 ? (
+          <div className="text-sm text-x4">{translateBase(BaseLocaleKey.EmptyList)}</div>
+        ) : (
+          <VisitsVersionBars rows={allTimeVersionRows} />
+        )}
+      </section>
+
+      <section className="rounded-2xl border border-x2/60 bg-x1/50 p-2 sm:p-3">
+        <h2 className="mb-2 text-sm font-medium text-x3">{translateEditorBase(EditorLocaleKey.VisitsMinVersions)}</h2>
+        {minVersionRows.length === 0 ? (
+          <div className="text-sm text-x4">{translateBase(BaseLocaleKey.EmptyList)}</div>
+        ) : (
+          <VisitsVersionBars rows={minVersionRows} />
+        )}
       </section>
 
       <section className="rounded-2xl border border-x2/60 bg-x1/50 p-2 sm:p-3">
@@ -628,15 +655,11 @@ const DashboardContent = ({ dashboard }: { dashboard: VisitsDashboard }) => {
         {historyBuckets.length === 0 ? (
           <div className="text-sm text-x4">{translateBase(BaseLocaleKey.EmptyList)}</div>
         ) : (
-          <VisitsBucketsChart
+          <VisitsBarsChart
             key={historyPeriod}
-            buckets={historyBuckets}
-            makeInfo={bucket =>
-              translateEditorBase(EditorLocaleKey.VisitsHistoryCount, {
-                l: bucket.label,
-                c: bucket.count,
-              })
-            }
+            bars={historyBars}
+            slotWidth={historySlotWidth}
+            labelStep={Math.max(1, Math.ceil(historyBars.length / 12))}
           />
         )}
       </section>
@@ -660,15 +683,11 @@ const DashboardContent = ({ dashboard }: { dashboard: VisitsDashboard }) => {
         {averageBuckets.length === 0 ? (
           <div className="text-sm text-x4">{translateBase(BaseLocaleKey.EmptyList)}</div>
         ) : (
-          <VisitsBucketsChart
+          <VisitsBarsChart
             key={`average-${averagePeriod}`}
-            buckets={averageBuckets}
-            makeInfo={bucket =>
-              translateEditorBase(EditorLocaleKey.VisitsAveragePeriod, {
-                l: bucket.label,
-                c: bucket.count.toFixed(1),
-              })
-            }
+            bars={averageBars}
+            slotWidth={historySlotWidth}
+            labelStep={Math.max(1, Math.ceil(averageBars.length / 12))}
           />
         )}
       </section>

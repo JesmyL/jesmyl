@@ -32,6 +32,7 @@
 
 - Write optimal code: reuse what already exists — search hard for an existing implementation (`shared/`, utils) before writing a new one.
 - Prefer built-ins over hand-rolled code — before writing a helper, check for a native one (`Array.isArray`, `Object.hasOwn`, `structuredClone`, `at`, `flat`, etc.) and only then for an existing util in `shared/utils`.
+- Whenever data is transmitted for humans to read (e-mails, digests, notifications, admin UIs), never show raw logins/ids — display a person's readable identity choosing the first non-empty value in the priority order: fio | nick | email | login.
 - Keep code local and minimal — the final bundle should contain as few characters as possible.
 - Everything that ends up in the frontend bundle must be as small as possible — this is the core philosophy.
 - Class fields that are not part of the public API must be `private`/`protected` — never expose a field that only the class itself reads or writes.

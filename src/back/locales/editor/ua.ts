@@ -212,4 +212,7 @@ export const localeEditorUa = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsAveragePeriod]: '$l - $c у середньому за день',
   [EditorLocaleKey.VisitsVisitErrors]: 'Визиты',
   [EditorLocaleKey.VisitsAnonSummary]: '$u унікальних, $v відвідувань',
+  [EditorLocaleKey.VisitsVersions]: 'Візити за версіями',
+  [EditorLocaleKey.VisitsAllVersions]: 'Візити за версіями за весь час',
+  [EditorLocaleKey.VisitsMinVersions]: 'Мінімальні версії за днями',
 });
