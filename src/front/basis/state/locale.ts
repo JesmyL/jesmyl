@@ -1,4 +1,4 @@
-import { appInitEvent, localeIsLoadingAtom } from '$app/store/triggers';
+import { appInitEvent, localeIsBlurringAtom, localeIsLoadingAtom } from '$app/store/triggers';
 import { indexUserAccessRightsAtom } from '$index/shared/state/atoms';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { Atom, atom } from 'atomaric';
@@ -12,8 +12,18 @@ import { LocaleCmEditor } from 'shared/model/+locale/editor';
 import { checkUserScopeAccessRight } from 'shared/utils/index/utils';
 import { lazyInit } from 'shared/utils/lazyInit';
 import { objectLength } from 'shared/utils/object.utils';
+import { loadLocaleCache, saveLocaleCache } from './locale.storage';
 
 const dynamicLangAtoms: { [L in Langi]?: Atom<LocaleDynamic<L>> } = {};
+
+/** Отметка свежести локальных словарей: сервер досылает только изменившееся после неё. */
+export const localeLastModifiedAtAtom = atom(0, 'app:localesModifiedAt');
+
+const requestFreshLocales = (lastModifiedAt = localeLastModifiedAtAtom.get()) =>
+  indexTsjrpcClientMethods.requestFreshLocales({ lastModifiedAt });
+
+/** Пустой или устаревший кэш отменяет отметку: сервер обязан прислать словари целиком. */
+const requestFullLocales = () => requestFreshLocales(0);
 
 /** Нумерация `BaseLocaleKey` непрерывная: словарь другой длины собран под другой набор ключей. */
 const baseLocaleKeysCount = BaseLocaleKey.ScheduleInvite + 1;
@@ -21,44 +31,91 @@ const baseLocaleKeysCount = BaseLocaleKey.ScheduleInvite + 1;
 /** Нумерация `EditorLocaleKey` непрерывная: словарь другой длины собран под другой набор ключей. */
 const editorLocaleKeysCount = EditorLocaleKey.VisitsAnonSummary + 1;
 
+let pendingLocaleCacheLoads = 0;
+let isAppInitInvoked = false;
+
+appInitEvent.listen(() => {
+  isAppInitInvoked = true;
+});
+
+/** App init may already be over while Cache Storage is still being read: then run the fallback immediately. */
+const runOnAppInit = (cb: () => void) => (isAppInitInvoked ? cb() : appInitEvent.listenFirst(cb));
+
+/** Cached JSON is untrusted: only plain objects make it into the locale atoms. */
+const isLocaleDict = <Value extends object>(value: unknown): value is Value =>
+  typeof value === 'object' && value !== null;
+
+const releaseLocaleCacheLoad = () => {
+  if (--pendingLocaleCacheLoads) return;
+
+  localeIsBlurringAtom.set(false);
+};
+
 const checkValue = (value: LocaleBase<Langi> | LocaleDynamic<Langi>, onRequest: () => void) => {
   if (!objectLength(value)) {
-    appInitEvent.listen(onRequest);
+    runOnAppInit(onRequest);
     localeIsLoadingAtom.do.increment();
   }
 };
 
+/**
+ * Hydrates a memory-only locale atom from Cache Storage and persists every later server fresh.
+ * The server fallback runs only after the cache read settles, so a cached dictionary never races a request.
+ */
+const hydrateLocaleAtom = <Value extends object>(
+  key: string,
+  confAtom: Atom<Value>,
+  applyValue: (value: Value) => void,
+) => {
+  pendingLocaleCacheLoads++;
+
+  void loadLocaleCache(key)
+    .then(cached => {
+      if (isLocaleDict<Value>(cached) && objectLength(cached) && !objectLength(confAtom.get())) {
+        confAtom.set(cached);
+      }
+
+      applyValue(confAtom.get());
+      confAtom.subscribe(value => void saveLocaleCache(key, value));
+    })
+    .catch(() => {})
+    .finally(releaseLocaleCacheLoad);
+};
+
 export const takeBaseLanguageAtom = lazyInit(() => {
-  const confAtom = atom({}, 'loc:B') as never as Atom<LocaleNameSpaceConfigs['B']>;
-  const cachedBaseLocale = confAtom.get();
+  const confAtom = atom({}) as never as Atom<LocaleNameSpaceConfigs['B']>;
 
-  checkValue(cachedBaseLocale, () => indexTsjrpcClientMethods.reqLocaleBaseConfig());
+  hydrateLocaleAtom('B', confAtom, cachedBaseLocale => {
+    checkValue(cachedBaseLocale, requestFullLocales);
 
-  // Кэш, собранный до перенумерации `BaseLocaleKey`, отдаёт старые тексты по старым индексам:
-  // обновляем его в фоне, не блокируя приложение устаревшим словарём.
-  if (objectLength(cachedBaseLocale) && objectLength(cachedBaseLocale) !== baseLocaleKeysCount) {
-    appInitEvent.listen(() => indexTsjrpcClientMethods.reqLocaleBaseConfig());
-  }
+    // Кэш, собранный до перенумерации `BaseLocaleKey`, отдаёт старые тексты по старым индексам:
+    // обновляем его в фоне, не блокируя приложение устаревшим словарём.
+    const cachedKeysCount = objectLength(cachedBaseLocale);
+    if (cachedKeysCount && cachedKeysCount !== baseLocaleKeysCount) {
+      runOnAppInit(requestFullLocales);
+    }
+  });
 
   return confAtom;
 });
 
 /** Словарь редактора запрашивается только при наличии права на редактирование `cm` или на дашборд. */
 export const takeEditorLanguageAtom = lazyInit(() => {
-  const confAtom = atom({}, 'loc:E') as never as Atom<LocaleCmEditor>;
-  const cachedEditorLocale = confAtom.get();
-  const rights = indexUserAccessRightsAtom.get();
-  const hasEditorAccess =
-    checkUserScopeAccessRight(null, rights, 'cm', 'EDIT') || checkUserScopeAccessRight(null, rights, 'dash', 'DASH');
+  const confAtom = atom({}) as never as Atom<LocaleCmEditor>;
 
-  if (!hasEditorAccess) return confAtom;
+  hydrateLocaleAtom('E', confAtom, cachedEditorLocale => {
+    const rights = indexUserAccessRightsAtom.get();
+    const hasEditorAccess =
+      checkUserScopeAccessRight(null, rights, 'cm', 'EDIT') ||
+      checkUserScopeAccessRight(null, rights, 'dash', 'DASH');
 
-  if (!objectLength(cachedEditorLocale)) {
-    indexTsjrpcClientMethods.reqLocaleEditorConfig();
-  } else if (objectLength(cachedEditorLocale) !== editorLocaleKeysCount) {
-    // Кэш, собранный до перенумерации `EditorLocaleKey`, отдаёт старые тексты по старым индексам.
-    indexTsjrpcClientMethods.reqLocaleEditorConfig();
-  }
+    if (!hasEditorAccess) return;
+
+    if (objectLength(cachedEditorLocale) !== editorLocaleKeysCount) {
+      // Пустой или собранный до перенумерации `EditorLocaleKey` кэш отдаёт устаревшие тексты.
+      requestFullLocales();
+    }
+  });
 
   return confAtom;
 });
@@ -67,10 +124,12 @@ export const takeDynamicLanguageAtom = <L extends Langi>(langi: L) => {
   const confAtomCheck = dynamicLangAtoms[langi];
   if (confAtomCheck) return confAtomCheck;
 
-  const confAtom = atom({} as LocaleDynamic<L>, `loc:D${langi}`);
+  const confAtom = atom({} as LocaleDynamic<L>);
   dynamicLangAtoms[langi] = confAtom as never;
 
-  checkValue(confAtom.get(), () => indexTsjrpcClientMethods.reqLocaleDynConfig({ langi }));
+  hydrateLocaleAtom(`D${langi}`, confAtom, cachedDynamicLocale =>
+    checkValue(cachedDynamicLocale, requestFullLocales),
+  );
 
   return confAtom;
 };

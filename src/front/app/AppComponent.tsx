@@ -28,7 +28,7 @@ import { toast } from 'sonner';
 import { appInitialInvokes } from './app-initial-invokes';
 import { AppFooter } from './AppFooter';
 import { routingApps } from './lib/configs';
-import { localeIsLoadingAtom } from './store/triggers';
+import { localeIsBlurringAtom, localeIsLoadingAtom } from './store/triggers';
 
 configureAtomaric({ useSyncExternalStore, keyPathSeparator: '/' });
 appInitialInvokes();
@@ -49,6 +49,7 @@ export const AppComponent = () => {
   const hideAppFooter = useAtomValue(hideAppFooterAtom);
   const isFullscreen = useAtomValue(isFullscreenAtom);
   const currentLangi = useAtomValue(currentLangiAtom);
+  const localeIsBlurring = useAtomValue(localeIsBlurringAtom);
 
   useEffect(() => {
     const unauthListener = soki.onTokenInvalidEvent.listen(() => {
@@ -77,7 +78,9 @@ export const AppComponent = () => {
   return (
     <>
       <div
-        className="above-container"
+        className={`above-container transition-all duration-300 ease-out ${
+          localeIsBlurring ? 'pointer-events-none blur-[8px] opacity-0' : 'opacity-100'
+        }`}
         st-hide-footer-menu={hideAppFooter ? '' : undefined}
       >
         <div

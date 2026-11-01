@@ -93,4 +93,6 @@ export type IndexTsjrpcModel = {
   reqLocaleBaseConfig: () => void;
   reqLocaleEditorConfig: () => void;
   reqLocaleDynConfig: (args: { langi: Langi }) => void;
+
+  requestFreshLocales: (args: { lastModifiedAt: number }) => void;
 };

@@ -45,6 +45,7 @@ import { indexAuthByTgUser } from './lib/makeAuthFromUser';
 import { makeUserAccessRights } from './lib/makeUserAccessRights';
 import { otpTSJRPCMethods } from './lib/otp.methods';
 import { indexPushMethods } from './lib/push.methods';
+import { indexTSJRPCBaseRequestFreshLocales } from './lib/requestFreshLocales';
 import {
   indexTSJRPCBaseRequestFreshes,
   editorLocaleMinVersion,
@@ -84,6 +85,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         ...indexPushMethods,
         ...indexTSJRPCBaseUpdateUserAccessRight,
         ...indexTSJRPCBaseRequestFreshes,
+        ...indexTSJRPCBaseRequestFreshLocales,
         ...indexTSJRPCBaseGetIconExistsPacks,
         ...indexTSJRPCBaseVisitsDashboard,
 

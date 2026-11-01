@@ -2,17 +2,11 @@ import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { scheduleDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
-import {
-  langLocaleBaseFileStoragesLazy,
-  langLocaleDynamicFileStoragesLazy,
-  langLocaleEditorFileStoragesLazy,
-} from 'back/locales/file-storages';
 import { and, eq, gt } from 'drizzle-orm';
 import { makePgCheckedSelectSqlRaw, PgCheckFieldMode } from 'p/d';
 import {
   IScheduleWidget,
   IScheduleWidgetUser,
-  Langi,
   LocalSokiAuth,
   ScheduleWidgetRegType,
   scheduleWidgetRegTypeRights,
@@ -23,7 +17,6 @@ import {
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { Bool } from 'shared/enums';
 import { itNNil } from 'shared/utils';
-import { checkIsNotNil } from 'shared/utils/checkIs';
 import { objectKeys, objectLength } from 'shared/utils/object.utils';
 import { knownStameskaIconNames, knownStameskaIconNamesMd5Hash } from 'shared/values/index/known-icons';
 import { StameskaIconPack } from 'stameska-icon/utils';
@@ -64,43 +57,6 @@ export const indexTSJRPCBaseRequestFreshes = {
     const userInfo = login ? await takeUserTiny({ l: login }, false) : null;
     const userId = userInfo?.id;
     const someScheduleUser = (user: IScheduleWidgetUser) => user.id === userId;
-
-    if (lastModfiedAt && checkIsNotNil(visitInfo)) {
-      const baseFileStorage = langLocaleBaseFileStoragesLazy()[visitInfo.langi ?? Langi.Ru];
-      const { items, maxMod } = (await langLocaleDynamicFileStoragesLazy()).getFreshItems(lastModfiedAt);
-
-      if (
-        baseFileStorage.fileModifiedAt() > lastModfiedAt ||
-        (checkIsNotNil(visitInfo.prevLangi) && visitInfo.prevLangi !== visitInfo.langi)
-      ) {
-        indexServerTsjrpcShareMethods.baseLocConf(
-          { base: baseFileStorage.getValue(), mod: baseFileStorage.fileModifiedAt() },
-          client,
-        );
-      }
-
-      if (items.length) {
-        indexServerTsjrpcShareMethods.dynLocConf({ dyns: items, mod: maxMod }, client);
-      }
-
-      if (visitInfo.version >= editorLocaleMinVersion) {
-        try {
-          await throwIfNoEditorLocaleAccess(auth);
-
-          const editorFileStorage = langLocaleEditorFileStoragesLazy()[visitInfo.langi ?? Langi.Ru];
-          const editorMod = editorFileStorage.fileModifiedAt();
-
-          if (editorMod > lastModfiedAt) {
-            indexServerTsjrpcShareMethods.editorLocConf(
-              { editor: editorFileStorage.getValue(), mod: editorMod },
-              client,
-            );
-          }
-        } catch {
-          // Фронт без права на редактирование не получает словарь редактора.
-        }
-      }
-    }
 
     if (login && client) {
       if (userInfo && userInfo.m > lastModfiedAt) {

@@ -1,3 +1,4 @@
+import { localeLastModifiedAtAtom } from '#basis/state/locale';
 import { soki } from '#shared/soki';
 import { schTsjrpcBaseClient } from '#widgets/schedule/tsjrpc/tsjrpc.base';
 import { bibleInitialInvokes } from '$bible/shared/lib';
@@ -103,6 +104,8 @@ export const appInitialInvokes = () => {
       iconPacks,
       iconsMd5Hash: lastUpdatedIconsMd5HashAtom.get(),
     });
+
+    void indexTsjrpcClientMethods.requestFreshLocales({ lastModifiedAt: localeLastModifiedAtAtom.get() });
   };
 
   soki.onBeforeAuthorizeEvent.listen(() => indexIDB.remove.lastModifiedAt());

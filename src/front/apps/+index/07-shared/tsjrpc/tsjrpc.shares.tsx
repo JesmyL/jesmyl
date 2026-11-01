@@ -1,5 +1,10 @@
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
-import { takeBaseLanguageAtom, takeEditorLanguageAtom, takeDynamicLanguageAtom } from '#basis/state/locale';
+import {
+  localeLastModifiedAtAtom,
+  takeBaseLanguageAtom,
+  takeEditorLanguageAtom,
+  takeDynamicLanguageAtom,
+} from '#basis/state/locale';
 import { TsjrpcBaseClient } from '#basis/tsjrpc/TsjrpcBase.client';
 import { rootAppModalTextContentAtom } from '#shared/lib/atoms/rootAppModalTextContentAtom';
 import { makeToastKOMoodConfig, makeToastOKMoodConfig } from '#shared/ui/modal';
@@ -10,6 +15,9 @@ import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
 import { indexDashMessageVersionAtom, indexIDB, indexUserAccessRightsAtom, indexVisitsOnlineAtom, lastUpdatedIconsMd5HashAtom } from '../state';
+
+/** Каждый пришедший словарь несёт свою отметку свежести: храним самую позднюю. */
+const updateLocaleModifiedAt = (mod: number) => localeLastModifiedAtAtom.set(prev => Math.max(prev, mod));
 
 export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<IndexTsjrpcSharesModel> {
   constructor() {
@@ -61,17 +69,20 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
           indexDashMessageVersionAtom.set(version => version + 1);
         },
 
-        baseLocConf: async ({ base }) => {
+        baseLocConf: async ({ base, mod }) => {
           takeBaseLanguageAtom().set(base);
+          updateLocaleModifiedAt(mod);
           localeIsLoadingAtom.do.increment(-1);
         },
 
-        editorLocConf: async ({ editor }) => {
+        editorLocConf: async ({ editor, mod }) => {
           takeEditorLanguageAtom().set(editor);
+          updateLocaleModifiedAt(mod);
         },
 
-        dynLocConf: async ({ dyns }) => {
+        dynLocConf: async ({ dyns, mod }) => {
           dyns.forEach(config => takeDynamicLanguageAtom(config[DynLocaleKey.Langi]).set(config));
+          updateLocaleModifiedAt(mod);
           localeIsLoadingAtom.do.increment(-dyns.length);
         },
       },
