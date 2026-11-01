@@ -337,4 +337,165 @@ describe('stringTemplater:concepts', () => {
       expect(stringTemplater(str, { var1: 9, var2: 4 })).toBe('F');
     });
   });
+
+  describe('escaping special chars', () => {
+    it('static text is untouched', () => {
+      expect(stringTemplater(STR`plain {braces} 100% %7B %25`, {})).toBe('plain {braces} 100% %7B %25');
+      expect(stringTemplater('static %7B {200%} %{x}%', {})).toBe('static %7B {200%} %{x}%');
+    });
+
+    it('static text around concepts is untouched', () => {
+      const str = STR`{static} %7B 100% ${IF('$cond').THEN`{then}`}`;
+
+      expect(stringTemplater(str, { cond: 1 })).toBe('{static} %7B 100% {then}');
+      expect(stringTemplater(str, { cond: 0 })).toBe('{static} %7B 100% ');
+    });
+
+    it('IF branches', () => {
+      const thenStr = STR`${IF('$cond').THEN`{then} 100% %7B`}`;
+      const elseStr = STR`${IF('$cond').THEN`T`.ELSE`}else{ 50% %7D`}`;
+
+      expect(stringTemplater(thenStr, { cond: 1 })).toBe('{then} 100% %7B');
+      expect(stringTemplater(thenStr, { cond: 0 })).toBe('');
+      expect(stringTemplater(elseStr, { cond: 1 })).toBe('T');
+      expect(stringTemplater(elseStr, { cond: 0 })).toBe('}else{ 50% %7D');
+    });
+
+    it('nested concepts in branch texts', () => {
+      const str = STR`${IF('$cond').THEN`{${FN('$wrap', '{100%}')}}`.ELSE`{${FN('$wrap', '}else{')}}`}`;
+
+      expect(stringTemplater(str, { cond: 1, wrap: (text: string) => text })).toBe('{{100%}}');
+      expect(stringTemplater(str, { cond: 0, wrap: (text: string) => text })).toBe('{}else{}');
+    });
+
+    it('SWITCH cases and branches', () => {
+      const str = STR`${SWITCH('$cond').CASE('{')`left {right}`.CASE('%')`percent 50%`.DEFAULT`def}`}`;
+
+      expect(stringTemplater(str, { cond: '{' })).toBe('left {right}');
+      expect(stringTemplater(str, { cond: '%' })).toBe('percent 50%');
+      expect(stringTemplater(str, { cond: 'x' })).toBe('def}');
+    });
+
+    it('GENERATE segments', () => {
+      const str = GENERATE<'a' | 'b'>().NEXT('a')`seg {one} $v %`.NEXT('b')`seg }two{`.toString(['$v']);
+      const ret = stringTemplater(str, {
+        v: 'V',
+        NEXT: (key, value, index) => `${key}-${value}/${index}`,
+      });
+
+      expect(ret).toEqual(['a-seg {one} V %/0', 'b-seg }two{/1']);
+    });
+
+    describe('nested invocations', () => {
+      it('escapes each level exactly once', () => {
+        const str = STR`${IF('$o').THEN`${IF('$i').THEN`{%}`}`}`;
+
+        expect(str).toBe('$IF{{$o}{$IF{{$i}{%7B%25%7D}}}}');
+      });
+
+      it('GENERATE spliced as an arg keeps its texts single-escaped', () => {
+        const gen = GENERATE<'a'>().NEXT('a')`{100%}`;
+
+        expect(STR`x${gen as never}`).toBe('x$GENERATE{{a}{%7B100%25%7D}}');
+      });
+
+      it('inner texts that look escaped are decoded only once', () => {
+        const str = STR`${IF('$o').THEN`${IF('$i').THEN`%2525 %257B %7B`.ELSE`%2525`}`}`;
+
+        expect(stringTemplater(str, { o: 1, i: 1 })).toBe('%2525 %257B %7B');
+        expect(stringTemplater(str, { o: 1, i: 0 })).toBe('%2525');
+      });
+
+      it('IF inside IF: both branches', () => {
+        const str = STR`${IF('$o')
+          .THEN`O{then} % %7B ${IF('$i').THEN`I{then} % %7B %25`.ELSE`I}else{ % %7D %25`}%7D`
+          .ELSE`O}else{ % %7D ${IF('$i').THEN`I{then} % %7B %25`.ELSE`I}else{ % %7D %25`}%7B`}`;
+
+        expect(stringTemplater(str, { o: 1, i: 1 })).toBe('O{then} % %7B I{then} % %7B %25%7D');
+        expect(stringTemplater(str, { o: 1, i: 0 })).toBe('O{then} % %7B I}else{ % %7D %25%7D');
+        expect(stringTemplater(str, { o: 0, i: 1 })).toBe('O}else{ % %7D I{then} % %7B %25%7B');
+        expect(stringTemplater(str, { o: 0, i: 0 })).toBe('O}else{ % %7D I}else{ % %7D %25%7B');
+      });
+
+      it('SWITCH inside IF: both branches', () => {
+        const str = STR`<${IF('$o')
+          .THEN`O{${SWITCH('$s').CASE('{')`S{left}`.CASE('%')`S%50`.DEFAULT`S}def`}}`
+          .ELSE`O}${SWITCH('$s').CASE('}')`S}right}`.DEFAULT`S%7B`}`}`;
+
+        expect(stringTemplater(str, { o: 1, s: '{' })).toBe('<O{S{left}}');
+        expect(stringTemplater(str, { o: 1, s: '%' })).toBe('<O{S%50}');
+        expect(stringTemplater(str, { o: 1, s: 'x' })).toBe('<O{S}def}');
+        expect(stringTemplater(str, { o: 0, s: '}' })).toBe('<O}S}right}');
+        expect(stringTemplater(str, { o: 0, s: 'x' })).toBe('<O}S%7B');
+      });
+
+      it('IF inside SWITCH: cases and default', () => {
+        const str = STR`${SWITCH('$s')
+          .CASE('{')`C{${IF('$o').THEN`T{%}`.ELSE`F}%{`}}`
+          .CASE('%')`C% ${IF('$o').THEN`T%7B`.ELSE`F%25`}`
+          .DEFAULT`D} 100%`}`;
+
+        expect(stringTemplater(str, { s: '{', o: 1 })).toBe('C{T{%}}');
+        expect(stringTemplater(str, { s: '{', o: 0 })).toBe('C{F}%{}');
+        expect(stringTemplater(str, { s: '%', o: 1 })).toBe('C% T%7B');
+        expect(stringTemplater(str, { s: '%', o: 0 })).toBe('C% F%25');
+        expect(stringTemplater(str, { s: 'z' })).toBe('D} 100%');
+      });
+
+      it('three levels of IF nesting', () => {
+        const l3 = IF('$c').THEN`3{then}% %7B`.ELSE`3}else{% %25`;
+        const l2 = IF('$b').THEN`2{ ${l3}}`.ELSE`2} ${l3}`;
+        const str = STR`1{ ${IF('$a').THEN`A{ ${l2}}`.ELSE`A} ${l2}`}`;
+
+        expect(stringTemplater(str, { a: 1, b: 1, c: 1 })).toBe('1{ A{ 2{ 3{then}% %7B}}');
+        expect(stringTemplater(str, { a: 1, b: 1, c: 0 })).toBe('1{ A{ 2{ 3}else{% %25}}');
+        expect(stringTemplater(str, { a: 1, b: 0, c: 1 })).toBe('1{ A{ 2} 3{then}% %7B}');
+        expect(stringTemplater(str, { a: 0, b: 1, c: 1 })).toBe('1{ A} 2{ 3{then}% %7B}');
+        expect(stringTemplater(str, { a: 0, b: 0, c: 0 })).toBe('1{ A} 2} 3}else{% %25');
+      });
+
+      it('IF inside SWITCH inside IF', () => {
+        const inner = IF('$i').THEN`i{%7B}`.ELSE`i}%25{`;
+        const str = STR`${IF('$o')
+          .THEN`O{${SWITCH('$s').CASE('%')`S{${inner}}`.DEFAULT`S}${inner}`}}`
+          .ELSE`O}${SWITCH('$s').CASE('%')`s{${inner}}`.DEFAULT`s`}`}`;
+
+        expect(stringTemplater(str, { o: 1, s: '%', i: 1 })).toBe('O{S{i{%7B}}}');
+        expect(stringTemplater(str, { o: 1, s: '%', i: 0 })).toBe('O{S{i}%25{}}');
+        expect(stringTemplater(str, { o: 1, s: 'x', i: 0 })).toBe('O{S}i}%25{}');
+        expect(stringTemplater(str, { o: 0, s: '%', i: 1 })).toBe('O}s{i{%7B}}');
+        expect(stringTemplater(str, { o: 0, s: 'x', i: 1 })).toBe('O}s');
+      });
+
+      it('SWITCH inside FN args', () => {
+        const str = STR`${FN('$wrap', SWITCH('$s').CASE('{')`S{`.DEFAULT`S}`, '|')}`;
+
+        expect(stringTemplater(str, { s: '{', wrap: (...args: string[]) => args.join('') })).toBe('S{|');
+        expect(stringTemplater(str, { s: 'x', wrap: (...args: string[]) => args.join('') })).toBe('S}|');
+      });
+
+      it('IF inside FN args', () => {
+        const inner = IF('$i').THEN`i{t%}`.ELSE`i}e%7B`;
+        const str = STR`${FN('$wrap', '{', IF('$o').THEN`${inner}`.ELSE`${inner}%25`, '}')}`;
+
+        expect(stringTemplater(str, { o: 1, i: 1, wrap: (...args: string[]) => args.join('|') })).toBe(
+          '{|i{t%}|}',
+        );
+        expect(stringTemplater(str, { o: 0, i: 0, wrap: (...args: string[]) => args.join('|') })).toBe(
+          '{|i}e%7B%25|}',
+        );
+      });
+
+      it('IF inside GENERATE segments', () => {
+        const str = GENERATE<'a' | 'b'>()
+          .NEXT('a')`A{ ${IF('$o').THEN`t{%}`.ELSE`e}%7B`}`
+          .NEXT('b')`B} ${IF('$o').THEN`${IF('$i').THEN`deep{`.ELSE`deep}`}`}`
+          .toString(['$o', '$i']);
+        const NEXT = (key: string, value: string, index: number) => `${key}:${value}:${index}`;
+
+        expect(stringTemplater(str, { o: 1, i: 1, NEXT })).toEqual(['a:A{ t{%}:0', 'b:B} deep{:1']);
+        expect(stringTemplater(str, { o: 0, i: 0, NEXT })).toEqual(['a:A{ e}%7B:0', 'b:B} :1']);
+      });
+    });
+  });
 });

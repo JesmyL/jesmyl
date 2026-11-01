@@ -1,9 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { makeRegExp } from 'regexpert';
 import { checkIsUndefined } from '../checkIs';
+import { lazyInit } from '../lazyInit';
 import { objectKeys } from '../object.utils';
-import { strTplArgSeparator } from './const';
+import { strTplArgSeparator, strTplEncodeDict } from './const';
 import { StringTemplaterGenKey, StringTemplaterInterpolation, StringTemplaterVals, VarKey } from './model';
+
+const escapeTplChars = lazyInit(() => {
+  const regexp = makeRegExp(`/[${objectKeys(strTplEncodeDict).join('')}]/g`);
+
+  return (str: string) =>
+    str.replace(regexp, char => strTplEncodeDict[char as keyof typeof strTplEncodeDict]);
+});
 
 const enum ConceptKey {
   Condition = 30,
@@ -77,7 +85,8 @@ const takeConceptValue = <const C extends Concept<ConceptKey, TypeKey>>(
   return concept as never;
 };
 
-const stringifyCondition = (cond: AnyCondition) => (cond instanceof Concept ? stringifyConcept(cond) : cond);
+const stringifyCondition = (cond: AnyCondition) =>
+  cond instanceof Concept ? stringifyConcept(cond) : escapeTplChars()(`${cond}`);
 
 const stringifyConcept: (concept: AnyConcept) => string = concept => {
   if (!(concept instanceof Concept) || !concept.k) return '???';
@@ -88,10 +97,15 @@ const stringifyConcept: (concept: AnyConcept) => string = concept => {
       const ifElse = takeConceptValue(concept);
       return `${key}${stringifyCondition(ifElse.c)}}{${ifElse.th}}${ifElse.e ? `{${ifElse.e}}` : ''}}`;
     }
+    case TypeKey.Generate: {
+      const cond = takeConceptValue(concept);
+
+      /** GENERATE texts are escaped when NEXT is invoked, so the serialized args must not be escaped again */
+      return `${key}${cond.c.join(strTplArgSeparator)}}}`;
+    }
     case TypeKey.Or:
     case TypeKey.And:
     case TypeKey.Fn:
-    case TypeKey.Generate:
     case TypeKey.Util: {
       const cond = takeConceptValue(concept);
       return `${key}${cond.c.map(stringifyCondition).join(strTplArgSeparator)}}}`;
@@ -119,9 +133,18 @@ const stringifyConcept: (concept: AnyConcept) => string = concept => {
   return '';
 };
 
-const stringifyTemplate = (tpl: TemplateStringsArray, args: TplArg[]) => {
-  return tpl.map((str, stri) => `${str}${args[stri] ? stringifyConcept(args[stri] as never) : ''}`).join('');
+const stringifyTemplate = (tpl: TemplateStringsArray, args: TplArg[], escapeRaw: boolean) => {
+  return tpl
+    .map((str, stri) => {
+      const text = escapeRaw ? escapeTplChars()(str) : str;
+
+      return `${text}${args[stri] ? stringifyConcept(args[stri] as never) : ''}`;
+    })
+    .join('');
 };
+
+/** Concept texts become args of the serialized construction, so their raw parts must be escaped */
+const stringifyConceptTemplate = (tpl: TemplateStringsArray, args: TplArg[]) => stringifyTemplate(tpl, args, true);
 
 ///////////////////////////////////////////
 ///////////////////////////////////////////
@@ -208,7 +231,7 @@ const IF = (
   ELSE: IfElseStructConcept['ELSE'];
 } => {
   const ELSE = (template: TemplateStringsArray, ...args: TplArg[]) => {
-    concept.e = stringifyTemplate(template, args);
+    concept.e = stringifyConceptTemplate(template, args);
     delete (concept as any).ELSE;
     return concept;
   };
@@ -218,7 +241,7 @@ const IF = (
   return {
     ELSE,
     THEN: (template, ...args) => {
-      concept.th = stringifyTemplate(template, args);
+      concept.th = stringifyConceptTemplate(template, args);
       return concept;
     },
   };
@@ -261,12 +284,12 @@ const SWITCH = <Key extends string>(cond: `$${Key}`) => {
   const CASE: CaseCb<Key, never> =
     cond =>
     (template, ...args) => {
-      concept.cs.push([cond as AnyCondition, stringifyTemplate(template, args)]);
+      concept.cs.push([cond as AnyCondition, stringifyConceptTemplate(template, args)]);
       return concept;
     };
 
   const DEFAULT: DefaultCb<Key, never> = (template, ...args) => {
-    concept.cs.push([stringifyTemplate(template, args)]);
+    concept.cs.push([stringifyConceptTemplate(template, args)]);
     delete (concept as any).CASE;
     return concept;
   };
@@ -309,7 +332,7 @@ const GENERATE = <GenKey extends string = string>() => {
   const NEXT: NextCb<Key> =
     key =>
     (template, ...args) => {
-      concept.c.push(key, stringifyTemplate(template, args));
+      concept.c.push(key, stringifyConceptTemplate(template, args));
       return concept;
     };
 
@@ -370,11 +393,11 @@ const STR = <
     ) => StrInterpolation<StrVals<Interp>, TemplateScalar, StringTemplaterGenKey<Interp>>
   : string => {
   if (isTemplateStringsArray(templateScalar)) {
-    return stringifyTemplate(templateScalar, args) as never;
+    return stringifyTemplate(templateScalar, args, false) as never;
   }
 
   return ((template: TemplateStringsArray, ...args: TplArg[]) => {
-    const result = stringifyTemplate(template, args);
+    const result = stringifyTemplate(template, args, false);
 
     checkVarUsage(result, templateScalar);
 

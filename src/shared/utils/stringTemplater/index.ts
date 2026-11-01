@@ -2,9 +2,17 @@
 import { makeRegExp } from 'regexpert';
 import { checkIsFunction, checkIsNotFunction, checkIsNumber, checkIsStartsWith, checkIsString } from '../checkIs';
 import { checkIsEq } from '../checkIsEq';
+import { lazyInit } from '../lazyInit';
+import { mapObjectEntries, objectFromEntries, objectKeys } from '../object.utils';
 import { declension } from '../utils';
 import * as concepts from './concepts';
-import { stringTemplaterSrartSymbolCharCode, strTplArgLastEdge, strTplArgSeparator, strTplSysLen } from './const';
+import {
+  stringTemplaterSrartSymbolCharCode,
+  strTplArgLastEdge,
+  strTplArgSeparator,
+  strTplEncodeDict,
+  strTplSysLen,
+} from './const';
 import { StringTemplaterGenKey } from './model';
 
 export * from './concepts';
@@ -13,6 +21,13 @@ const BOX_REGEXP = makeRegExp('/\\$(\\w+){({[^{}]*})+}/g');
 const VAR_EXACT_REGEXP = makeRegExp('/^\\$(\\w+);?$/');
 const VAR_GLOBAL_REGEXP = makeRegExp('/\\$(\\w+);?/g');
 const ESCAPE_INPUT_REGEXP = makeRegExp('/\\$;/g');
+
+const unescapeTplChars = lazyInit(() => {
+  const decodeDict = objectFromEntries(mapObjectEntries(strTplEncodeDict, (key, value) => [value, key]));
+  const regexp = makeRegExp(`/${objectKeys(decodeDict).join('|')}/g`);
+
+  return (str: string) => str.replace(regexp, escaped => decodeDict[escaped as keyof typeof decodeDict]);
+});
 
 const TOKENS_REGEXP = makeRegExp(`/[\\u${stringTemplaterSrartSymbolCharCode.toString(16)}-\\u{10FFFF}]/gu`);
 
@@ -92,7 +107,7 @@ export const stringTemplater: <
         }
       }
 
-      return replaceSymbolsAndVars(val);
+      return replaceSymbolsAndVars(unescapeTplChars()(val));
     }
 
     while (checkIsFunction(val)) val = val();
