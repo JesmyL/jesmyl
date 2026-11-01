@@ -32,6 +32,9 @@ const validTextedChordLines = [
   'C7b9',
   'Cm7b5.-F7b9',
   'Em9/D',
+  'D2',
+  'G2',
+  'A2/E',
 ];
 
 const invalidTextedChordLines = [

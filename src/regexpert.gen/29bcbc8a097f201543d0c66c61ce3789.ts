@@ -49,7 +49,7 @@ namespace N29bcbc8a097f201543d0c66c61ce3789_1 {
   type U34 = `${string}${`#` | ''}` | `${string}`;
 
   export interface I extends Record<
-    `/^(?:\\|?\\.*-?(?<simpleChord>(?:(?:[ACDFG]#?|[EH]))m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)?|(?:[5679]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?(?<bassChord>/(?:[ACDFG]#?|[EH]))?(?<repeats>(?:(?:\\.+-?|-)(?<simpleChord>(?:(?:[ACDFG]#?|[EH]))m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)?|(?:[5679]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?(?:/(?:[ACDFG]#?|[EH]))?|\\.?-\\.)*)\\|?|\\.)$/`,
+    `/^(?:\\|?\\.*-?(?<simpleChord>(?:(?:[ACDFG]#?|[EH]))m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)?|(?:[2-79]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?(?<bassChord>/(?:[ACDFG]#?|[EH]))?(?<repeats>(?:(?:\\.+-?|-)(?<simpleChord>(?:(?:[ACDFG]#?|[EH]))m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)?|(?:[2-79]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?(?:/(?:[ACDFG]#?|[EH]))?|\\.?-\\.)*)\\|?|\\.)$/`,
     {
       $0: $0;
       simpleChord?: $simpleChord;
@@ -104,7 +104,7 @@ namespace N29bcbc8a097f201543d0c66c61ce3789_2 {
   type U29 = `${string}13`;
 
   export interface I extends Record<
-    `/^(?<simpleChord>(?:(?:[ACDFG]#?|[EH]))m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)?|(?:[5679]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?(?:/(?<simpleChord>(?:(?:[ACDFG]#?|[EH]))m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)?|(?:[5679]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?)?$/`,
+    `/^(?<simpleChord>(?:(?:[ACDFG]#?|[EH]))m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)?|(?:[2-79]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?(?:/(?<simpleChord>(?:(?:[ACDFG]#?|[EH]))m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)?|(?:[2-79]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?)?$/`,
     {
       $0: $0;
       simpleChord: $simpleChord;
@@ -157,7 +157,7 @@ namespace N29bcbc8a097f201543d0c66c61ce3789_3 {
   type U29 = `${string}13`;
 
   export interface I extends Record<
-    `/^(?<simpleChord>(?:(?:[ACDFG]#?|[EH])|B)m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)?|(?:[5679]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?(?:/(?<simpleChord>(?:(?:[ACDFG]#?|[EH])|B)m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)?|(?:[5679]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?)?$/`,
+    `/^(?<simpleChord>(?:(?:[ACDFG]#?|[EH])|B)m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)?|(?:[2-79]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?(?:/(?<simpleChord>(?:(?:[ACDFG]#?|[EH])|B)m?7?)(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:9|11|13)|\\d{0,2}sus(?:2|4)?|(?:[2-79]|1[13])(?:/\\d{1,2})?)?(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))?)?$/`,
     {
       $0: $0;
       simpleChord: $simpleChord;

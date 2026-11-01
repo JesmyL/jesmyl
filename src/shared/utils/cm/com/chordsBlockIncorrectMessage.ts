@@ -4,7 +4,7 @@ import { textedChordRegsLazy } from './const';
 
 export const chordsBlockIncorrectMessage = (value: string | und, isHardChords: Bool): IIncorrects => {
   const incorrectChords: string[] = [];
-  const hardChords: string[] = [];
+  const complexChords: string[] = [];
 
   const textWithIncorrects = (value || '')
     .trim()
@@ -19,10 +19,15 @@ export const chordsBlockIncorrectMessage = (value: string | und, isHardChords: B
       }
 
       if (!isHardChords) {
-        const { hardModificators } = textedChordRegsLazy().transform(match);
+        const {
+          hardModificators,
+          lightModificators,
+          hardModificators_lastRepeat,
+          lightModificators_lastRepeat,
+        } = textedChordRegsLazy().transform(match);
 
-        if (hardModificators) {
-          hardChords.push(chord);
+        if (hardModificators || lightModificators || hardModificators_lastRepeat || lightModificators_lastRepeat) {
+          complexChords.push(chord);
           return `{${chord}}`;
         }
       }
@@ -38,9 +43,9 @@ export const chordsBlockIncorrectMessage = (value: string | und, isHardChords: B
     message += `Аккорд${few ? 'ы' : ''} "${incorrectChords.join('; ')}" не верно написан${few ? 'ы' : ''}:\n\n`;
   }
 
-  if (hardChords.length) {
-    const few = hardChords.length > 1;
-    message += `Аккорд${few ? 'ы' : ''} "${hardChords.join('; ')}" слишком сложны${few ? 'е' : 'й'}:\n\n`;
+  if (complexChords.length) {
+    const few = complexChords.length > 1;
+    message += `Аккорд${few ? 'ы' : ''} "${complexChords.join('; ')}" слишком сложны${few ? 'е' : 'й'}:\n\n`;
   }
 
   if (!message) return {};
