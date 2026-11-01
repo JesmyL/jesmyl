@@ -1,7 +1,20 @@
 // @vitest-environment node
 import { describe, expect } from 'vitest';
 
-import { AND, FN, GENERATE, IF, isUtil, OR, STR, stringTemplater, SWITCH, toNUM, toSTR } from '.';
+import {
+  AND,
+  functionMaker,
+  FUNCTION,
+  GENERATE,
+  IF,
+  isUtil,
+  OR,
+  STR,
+  stringTemplater,
+  SWITCH,
+  toNUM,
+  toSTR,
+} from '.';
 import { itIt } from '../utils';
 import { StringTemplaterInterpolation } from './model';
 import { stringTemplaterSrartSymbolCharCode } from './const';
@@ -26,13 +39,21 @@ describe('stringTemplater', () => {
       'Я люблю !',
     );
 
-    expect(stringTemplater('Лежит $num $declension{{$num}{яблоко}{яблока}{яблок}}))', { num: 8 })).toBe(
+    expect(stringTemplater('Лежит $num $dec{{$num}{яблоко}{яблока}{яблок}}))', { num: 8 })).toBe(
       'Лежит 8 яблок))',
     );
 
     expect(
-      stringTemplater(STR`Лежит $num ${FN('$declension', '$num', 'яблоко', 'яблока', 'яблок')}`, { num: 81 }),
+      stringTemplater(STR`Лежит $num ${FUNCTION('dec')('$num', 'яблоко', 'яблока', 'яблок')}`, { num: 81 }),
     ).toBe('Лежит 81 яблоко');
+  });
+
+  it('stringTemplater:FUNCTION serialization and resolution', () => {
+    const serialized = STR`${FUNCTION('dec')('$n', 'one', 'more')}`;
+
+    expect(serialized).toBe('$dec{{$n}{one}{more}}');
+    expect(stringTemplater(serialized, { n: 1 })).toBe('one');
+    expect(`${FUNCTION('dec')('$n', 'one', 'more')}`).toBe('$dec{{$n}{one}{more}}');
   });
 
   it('stringTemplater:custom functions', () => {
@@ -131,7 +152,8 @@ describe('stringTemplater', () => {
   });
 });
 
-const funcConcept = FN('$func');
+const fn = functionMaker({ sum: 0, wrap: 0, func: 0, inv: 0, noInv: 0 });
+const funcConcept = fn('func')();
 let indexForCheck = 0;
 const func = () => indexForCheck++;
 const checkFunc = () => expect(indexForCheck).toBe(0);
@@ -207,7 +229,7 @@ describe('stringTemplater:concepts', () => {
   });
 
   it('SWITCH', () => {
-    const str = STR`ret-$;sw ${SWITCH('$cond').CASE(FN('$inv'))`${FN('$noInv')}`.CASE('3')`$sw`.CASE('NO')`${funcConcept}`}`;
+    const str = STR`ret-$;sw ${SWITCH('$cond').CASE(fn('inv')())`${fn('noInv')()}`.CASE('3')`$sw`.CASE('NO')`${funcConcept}`}`;
 
     let i = 0;
 
@@ -256,8 +278,8 @@ describe('stringTemplater:concepts', () => {
     expect(JSON.stringify(ret)).toBe(JSON.stringify([['%-SIMPLE TEXT/%[0]'], ['*-TOO/*[1]']]));
   });
 
-  it('FN', () => {
-    const str = STR` ${FN('$sum', 3, 4, 5, 6)} `;
+  it('function', () => {
+    const str = STR` ${fn('sum')(3, 4, 5, 6)} `;
 
     expect(
       stringTemplater(str, {
@@ -266,8 +288,8 @@ describe('stringTemplater:concepts', () => {
     ).toBe(' 18 ');
   });
 
-  it('FN', () => {
-    const str = STR` ${FN('$sum', 3, 4, 5, 6)} `;
+  it('function', () => {
+    const str = STR` ${fn('sum')(3, 4, 5, 6)} `;
 
     expect(
       stringTemplater(str, {
@@ -277,7 +299,7 @@ describe('stringTemplater:concepts', () => {
   });
 
   it('toSTR, toNUM', () => {
-    const str = STR` ${FN('$sum', toNUM(3), toNUM(3))} ${toSTR('$obj')} ${toSTR('$NaN')} `;
+    const str = STR` ${fn('sum')(toNUM(3), toNUM(3))} ${toSTR('$obj')} ${toSTR('$NaN')} `;
 
     expect(
       stringTemplater(str, {
@@ -362,7 +384,7 @@ describe('stringTemplater:concepts', () => {
     });
 
     it('nested concepts in branch texts', () => {
-      const str = STR`${IF('$cond').THEN`{${FN('$wrap', '{100%}')}}`.ELSE`{${FN('$wrap', '}else{')}}`}`;
+      const str = STR`${IF('$cond').THEN`{${fn('wrap')('{100%}')}}`.ELSE`{${fn('wrap')('}else{')}}`}`;
 
       expect(stringTemplater(str, { cond: 1, wrap: (text: string) => text })).toBe('{{100%}}');
       expect(stringTemplater(str, { cond: 0, wrap: (text: string) => text })).toBe('{}else{}');
@@ -467,16 +489,16 @@ describe('stringTemplater:concepts', () => {
         expect(stringTemplater(str, { o: 0, s: 'x', i: 1 })).toBe('O}s');
       });
 
-      it('SWITCH inside FN args', () => {
-        const str = STR`${FN('$wrap', SWITCH('$s').CASE('{')`S{`.DEFAULT`S}`, '|')}`;
+      it('SWITCH inside function args', () => {
+        const str = STR`${fn('wrap')(SWITCH('$s').CASE('{')`S{`.DEFAULT`S}`, '|')}`;
 
         expect(stringTemplater(str, { s: '{', wrap: (...args: string[]) => args.join('') })).toBe('S{|');
         expect(stringTemplater(str, { s: 'x', wrap: (...args: string[]) => args.join('') })).toBe('S}|');
       });
 
-      it('IF inside FN args', () => {
+      it('IF inside function args', () => {
         const inner = IF('$i').THEN`i{t%}`.ELSE`i}e%7B`;
-        const str = STR`${FN('$wrap', '{', IF('$o').THEN`${inner}`.ELSE`${inner}%25`, '}')}`;
+        const str = STR`${fn('wrap')('{', IF('$o').THEN`${inner}`.ELSE`${inner}%25`, '}')}`;
 
         expect(stringTemplater(str, { o: 1, i: 1, wrap: (...args: string[]) => args.join('|') })).toBe(
           '{|i{t%}|}',

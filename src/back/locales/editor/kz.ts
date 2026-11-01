@@ -2,7 +2,7 @@ import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { LocaleCmEditor } from 'shared/model/+locale/editor';
 import { editorLocaleTemplate } from 'shared/utils/locale/templates';
 import { convertObjectToArray } from 'shared/utils/object.utils';
-import { IF, SWITCH } from 'shared/utils/stringTemplater';
+import { FUNCTION, IF, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeEditorKz = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.LocaleVersion]: 0,
@@ -143,7 +143,7 @@ export const localeEditorKz = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.CmEditorFretNumber]: '$n; лад',
   [EditorLocaleKey.CmEditorInterpretationEdit]: 'Іс-шара үшін интерпретацияны өңдеу',
   [EditorLocaleKey.CmEditorIncludeBibleWords]: 'кібілі сөздерді қосу',
-  [EditorLocaleKey.CmEditorSendWords]: '$n; $declension{{$n}{сөз}{сөз}{сөз}} жіберу',
+  ...editorLocaleTemplate(EditorLocaleKey.CmEditorSendWords)`$n; ${FUNCTION('dec')('$n', 'сөз', 'сөз', 'сөз')} жіберу`,
   [EditorLocaleKey.CmEditorLinkPartHide]: '$h; сілтемесінің $n;-бөлігін көрінбейтін ету керек пе?',
   [EditorLocaleKey.CmEditorLinkPartShow]: '$h; сілтемесінің $n;-бөлігін көрінетін ету керек пе?',
   [EditorLocaleKey.CmEditorAppliqueDestroyed]: 'Бұл әрекет осы блоктағы аппликатураның жойылуына әкеледі.',

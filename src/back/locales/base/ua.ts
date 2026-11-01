@@ -5,7 +5,7 @@ import { LocaleBaseDelivered } from 'shared/model/+locale/base';
 import { BibleTranslateName } from 'shared/model/bible';
 import { baseLocaleTemplate } from 'shared/utils/locale/templates';
 import { convertObjectToArray } from 'shared/utils/object.utils';
-import { GENERATE, IF, isUtil, SWITCH } from 'shared/utils/stringTemplater';
+import { FUNCTION, GENERATE, IF, isUtil, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>({
   [BaseLocaleKey.Langi]: Langi.Ua,
@@ -56,8 +56,8 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.CmForEachBlock]: 'Для кожного блоку "$n;"',
   [BaseLocaleKey.CmCanSelectMaximumCount]: `Можно вибрати максимум $s пісень`,
   [BaseLocaleKey.CmWatchedCount]: 'Перегляди пісень (заг. $c;)',
-  [BaseLocaleKey.CmWillAdd]: `Додасться $c $declension{{$c}{пісня}{пісні}{пісень}}`,
-  [BaseLocaleKey.CmWillLost]: `Втратиться $c $declension{{$c}{пісня}{пісні}{пісень}}`,
+  ...baseLocaleTemplate(BaseLocaleKey.CmWillAdd)`Додасться $c ${FUNCTION('dec')('$c', 'пісня', 'пісні', 'пісень')}`,
+  ...baseLocaleTemplate(BaseLocaleKey.CmWillLost)`Втратиться $c ${FUNCTION('dec')('$c', 'пісня', 'пісні', 'пісень')}`,
   [BaseLocaleKey.CmTwiceClickPrevious]: 'подвійний клік&nbsp;-\nпопередня пісня',
   [BaseLocaleKey.CmTwiceClickNext]: 'подвійний клік&nbsp;-\nнаступна пісня',
   [BaseLocaleKey.CmClickNextSlide]: 'клік&nbsp;-\nнаступний слайд',
@@ -231,7 +231,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.QuestionerCommentRequiredFor]: 'Коментар "$t;" є обовʼязковим',
   [BaseLocaleKey.QuestionerSortValuesIn]: 'Потрібно відсортувати значення в пункті "$t;"',
   [BaseLocaleKey.QuestionerRestoreIn]: 'Потрібно відновити всі пропущені слова в пункті "$t;"',
-  [BaseLocaleKey.QuestionerVariantsNumber]: '$n; $declension{{$n}{варіант}{варіанти}{варіантів}}',
+  ...baseLocaleTemplate(BaseLocaleKey.QuestionerVariantsNumber)`$n; ${FUNCTION('dec')('$n', 'варіант', 'варіанти', 'варіантів')}`,
 
   [BaseLocaleKey.Bible]: 'Біблія',
   [BaseLocaleKey.BibleChapter]: 'Глава',
@@ -322,13 +322,12 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.ScheduleEndOfDay]: 'кінець дня',
   [BaseLocaleKey.ScheduleLessThanHour]: 'до початку менше години',
   [BaseLocaleKey.ScheduleStartTomorrow]: 'початок завтра',
-  [BaseLocaleKey.ScheduleAfterMinutes]: 'через $num; $declension{{$num}{хвилину}{хвилини}{хвилин}}',
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleAfterMinutes)`через $num; ${FUNCTION('dec')('$num', 'хвилину', 'хвилини', 'хвилин')}`,
   [BaseLocaleKey.ScheduleAtTime]: 'о $tm;',
-  [BaseLocaleKey.ScheduleBeforeHours]: 'до початку $num; $declension{{$num}{годину}{години}{годин}}',
-  [BaseLocaleKey.ScheduleBeforeDays]: 'до початку $num; $declension{{$num}{день}{дні}{днів}}',
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleBeforeHours)`до початку $num; ${FUNCTION('dec')('$num', 'годину', 'години', 'годин')}`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleBeforeDays)`до початку $num; ${FUNCTION('dec')('$num', 'день', 'дні', 'днів')}`,
   [BaseLocaleKey.ScheduleThroughMinutes]: 'Через $num;хв.',
-  [BaseLocaleKey.ScheduleMinutesLeft]:
-    'залишил$declension{{$num}{ася}{ося}{ося}} $num; $declension{{$num}{хвилина}{хвилини}{хвилин}}',
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleMinutesLeft)`залишил${FUNCTION('dec')('$num', 'ася', 'ося', 'ося')} $num; ${FUNCTION('dec')('$num', 'хвилина', 'хвилини', 'хвилин')}`,
   [BaseLocaleKey.ScheduleWillParticipate]: 'Буду брати участь',
   [BaseLocaleKey.ScheduleByLink]: 'за посиланням',
   [BaseLocaleKey.ScheduleByScheduleButton]: 'за кнопкою в розкладі',
@@ -455,7 +454,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.ScheduleContentUnavailable]: 'Вміст недоступний',
   [BaseLocaleKey.ScheduleSourceRemoved]: 'Джерело видалено',
   [BaseLocaleKey.ScheduleAddEventTemplate]: 'Додати шаблон події',
-  [BaseLocaleKey.ScheduleUsedCount]: ' вик. $num; $declension{{$num}{раз}{рази}{разів}}',
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleUsedCount)` вик. $num; ${FUNCTION('dec')('$num', 'раз', 'рази', 'разів')}`,
   [BaseLocaleKey.ScheduleNotUsed]: ' не використовується',
   [BaseLocaleKey.ScheduleTemplateRedact]: '- Редагування шаблону',
   [BaseLocaleKey.ScheduleAttachmentRedact]: '- Редагування вкладення',
@@ -557,8 +556,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.StoragesFromExcelTitle]: 'Формування карток з Excel файлу',
   [BaseLocaleKey.StoragesMatchFields]: 'Проведіть асоціації для полів:',
   [BaseLocaleKey.StoragesFormCards]: 'Сформувати картки',
-  [BaseLocaleKey.StoragesPartialFormed]:
-    'Не всі рядки з файлу були перетворені на картки. Коректно вдалося сформувати $n; $declension{{$n}{картку}{картки}{карток}}',
+  ...baseLocaleTemplate(BaseLocaleKey.StoragesPartialFormed)`Не всі рядки з файлу були перетворені на картки. Коректно вдалося сформувати $n; ${FUNCTION('dec')('$n', 'картку', 'картки', 'карток')}`,
   [BaseLocaleKey.StoragesMetadata]: 'Мета-дані',
   [BaseLocaleKey.StoragesRemoveMetadataConfirm]: 'Видалити мета-інформацію?',
   [BaseLocaleKey.StoragesNewStatus]: 'Новий статус',
@@ -771,7 +769,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.NumberSeconds]: '$n сек.',
   [BaseLocaleKey.Detailed]: 'Детальніше',
   [BaseLocaleKey.FontSize]: 'Розмір шрифту',
-  [BaseLocaleKey.LookedNumberTimes]: 'Переглянули $n; $declension{{$n}{раз}{рази}{разів}}',
+  ...baseLocaleTemplate(BaseLocaleKey.LookedNumberTimes)`Переглянули $n; ${FUNCTION('dec')('$n', 'раз', 'рази', 'разів')}`,
   [BaseLocaleKey.ToAdd]: 'Додати',
   [BaseLocaleKey.NumberDay]: '$n;-й день',
   [BaseLocaleKey.SavedLocally]: 'Збережено локально',
@@ -862,7 +860,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.ScheduleUserAdded]: 'Користувача додано до розкладу',
   [BaseLocaleKey.PushNotifications]: 'Push-повідомлення',
 
-  [BaseLocaleKey.NumberSymbols]: '$n; $declension{{$n}{символ}{символи}{символів}}',
+  ...baseLocaleTemplate(BaseLocaleKey.NumberSymbols)`$n; ${FUNCTION('dec')('$n', 'символ', 'символи', 'символів')}`,
 
   [BaseLocaleKey.PresentationsShowSlide]: '',
   [BaseLocaleKey.PresentationsDropFile]: '',

@@ -40,9 +40,7 @@ const isUtilConceptResultDict: Record<keyof typeof concepts.isUtil, (arg1: unkno
   LTE: (arg1, arg2) => (arg1 as number) <= (arg2 as number),
 };
 
-const defaultFunctions: Record<string, Function> = {
-  declension,
-};
+export const FUNCTION = concepts.functionMaker({ dec: declension });
 
 const invokeIfEmptyFunc = (value: unknown) => {
   if (checkIsFunction(value)) return value();
@@ -118,7 +116,7 @@ export const stringTemplater: <
     const { all, key } = box;
     const args = all.slice(key.length + strTplSysLen, -strTplArgLastEdge.length);
 
-    let func: unknown = topArgs[key] ?? defaultFunctions[key];
+    let func: unknown = topArgs[key] ?? concepts.functionRegistry[key];
 
     if (checkIsNotFunction(func) && checkIsStartsWith(key, 'is')) {
       const prop = key.slice(2) as keyof typeof isUtilConceptResultDict;

@@ -5,7 +5,7 @@ import { LocaleBaseDelivered } from 'shared/model/+locale/base';
 import { BibleTranslateName } from 'shared/model/bible';
 import { baseLocaleTemplate } from 'shared/utils/locale/templates';
 import { convertObjectToArray } from 'shared/utils/object.utils';
-import { GENERATE, IF, isUtil, SWITCH } from 'shared/utils/stringTemplater';
+import { FUNCTION, GENERATE, IF, isUtil, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeBaseEn = convertObjectToArray<LocaleBaseDelivered<Langi.En>>({
   [BaseLocaleKey.Langi]: Langi.En,
@@ -56,8 +56,8 @@ export const localeBaseEn = convertObjectToArray<LocaleBaseDelivered<Langi.En>>(
   [BaseLocaleKey.CmForEachBlock]: 'For each "$n;" block',
   [BaseLocaleKey.CmCanSelectMaximumCount]: `You can select at most $s songs`,
   [BaseLocaleKey.CmWatchedCount]: 'Song views (total $c;)',
-  [BaseLocaleKey.CmWillAdd]: `Will add $c $declension{{$c}{song}{songs}{songs}}`,
-  [BaseLocaleKey.CmWillLost]: `Will lose $c $declension{{$c}{song}{songs}{songs}}`,
+  ...baseLocaleTemplate(BaseLocaleKey.CmWillAdd)`Will add $c ${FUNCTION('dec')('$c', 'song', 'songs', 'songs')}`,
+  ...baseLocaleTemplate(BaseLocaleKey.CmWillLost)`Will lose $c ${FUNCTION('dec')('$c', 'song', 'songs', 'songs')}`,
   [BaseLocaleKey.CmTwiceClickPrevious]: 'double click&nbsp;-\nprevious song',
   [BaseLocaleKey.CmTwiceClickNext]: 'double click&nbsp;-\nnext song',
   [BaseLocaleKey.CmClickNextSlide]: 'click&nbsp;-\nnext slide',
@@ -229,7 +229,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBaseDelivered<Langi.En>>(
   [BaseLocaleKey.QuestionerCommentRequiredFor]: 'The comment "$t;" is required',
   [BaseLocaleKey.QuestionerSortValuesIn]: 'You need to sort the values in the point "$t;"',
   [BaseLocaleKey.QuestionerRestoreIn]: 'You need to restore all missing words in the point "$t;"',
-  [BaseLocaleKey.QuestionerVariantsNumber]: '$n; $declension{{$n}{option}{options}{options}}',
+  ...baseLocaleTemplate(BaseLocaleKey.QuestionerVariantsNumber)`$n; ${FUNCTION('dec')('$n', 'option', 'options', 'options')}`,
 
   [BaseLocaleKey.Bible]: 'Bible',
   [BaseLocaleKey.BibleChapter]: 'Chapter',
@@ -321,12 +321,12 @@ export const localeBaseEn = convertObjectToArray<LocaleBaseDelivered<Langi.En>>(
   [BaseLocaleKey.ScheduleEndOfDay]: 'end of day',
   [BaseLocaleKey.ScheduleLessThanHour]: 'less than an hour to start',
   [BaseLocaleKey.ScheduleStartTomorrow]: 'starts tomorrow',
-  [BaseLocaleKey.ScheduleAfterMinutes]: 'in $num; $declension{{$num}{minute}{minutes}{minutes}}',
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleAfterMinutes)`in $num; ${FUNCTION('dec')('$num', 'minute', 'minutes', 'minutes')}`,
   [BaseLocaleKey.ScheduleAtTime]: 'at $tm;',
-  [BaseLocaleKey.ScheduleBeforeHours]: '$num; $declension{{$num}{hour}{hours}{hours}} to start',
-  [BaseLocaleKey.ScheduleBeforeDays]: '$num; $declension{{$num}{day}{days}{days}} to start',
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleBeforeHours)`$num; ${FUNCTION('dec')('$num', 'hour', 'hours', 'hours')} to start`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleBeforeDays)`$num; ${FUNCTION('dec')('$num', 'day', 'days', 'days')} to start`,
   [BaseLocaleKey.ScheduleThroughMinutes]: 'In $num; min.',
-  ...baseLocaleTemplate(BaseLocaleKey.ScheduleMinutesLeft)`$num; $declension{{$num}{minute}{minutes}{minutes}} left`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleMinutesLeft)`$num; ${FUNCTION('dec')('$num', 'minute', 'minutes', 'minutes')} left`,
   [BaseLocaleKey.ScheduleWillParticipate]: 'I will participate',
   [BaseLocaleKey.ScheduleByLink]: 'via link',
   [BaseLocaleKey.ScheduleByScheduleButton]: 'via the button in the schedule',
@@ -453,7 +453,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBaseDelivered<Langi.En>>(
   [BaseLocaleKey.ScheduleContentUnavailable]: 'Content unavailable',
   [BaseLocaleKey.ScheduleSourceRemoved]: 'Source removed',
   [BaseLocaleKey.ScheduleAddEventTemplate]: 'Add event template',
-  [BaseLocaleKey.ScheduleUsedCount]: ' used $num; $declension{{$num}{time}{times}{times}}',
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleUsedCount)` used $num; ${FUNCTION('dec')('$num', 'time', 'times', 'times')}`,
   [BaseLocaleKey.ScheduleNotUsed]: ' not used',
   [BaseLocaleKey.ScheduleTemplateRedact]: '- Template editing',
   [BaseLocaleKey.ScheduleAttachmentRedact]: '- Attachment editing',
@@ -555,8 +555,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBaseDelivered<Langi.En>>(
   [BaseLocaleKey.StoragesFromExcelTitle]: 'Creating cards from an Excel file',
   [BaseLocaleKey.StoragesMatchFields]: 'Match the fields:',
   [BaseLocaleKey.StoragesFormCards]: 'Create cards',
-  [BaseLocaleKey.StoragesPartialFormed]:
-    'Not all rows from the file were converted into cards. Successfully created $n; $declension{{$n}{card}{cards}{cards}}',
+  ...baseLocaleTemplate(BaseLocaleKey.StoragesPartialFormed)`Not all rows from the file were converted into cards. Successfully created $n; ${FUNCTION('dec')('$n', 'card', 'cards', 'cards')}`,
   [BaseLocaleKey.StoragesMetadata]: 'Metadata',
   [BaseLocaleKey.StoragesRemoveMetadataConfirm]: 'Delete the metadata?',
   [BaseLocaleKey.StoragesNewStatus]: 'New status',
@@ -768,7 +767,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBaseDelivered<Langi.En>>(
   [BaseLocaleKey.NumberSeconds]: '$n sec.',
   [BaseLocaleKey.Detailed]: 'Details',
   [BaseLocaleKey.FontSize]: 'Font size',
-  [BaseLocaleKey.LookedNumberTimes]: 'Viewed $n; $declension{{$n}{time}{times}{times}}',
+  ...baseLocaleTemplate(BaseLocaleKey.LookedNumberTimes)`Viewed $n; ${FUNCTION('dec')('$n', 'time', 'times', 'times')}`,
   [BaseLocaleKey.ToAdd]: 'Add',
   [BaseLocaleKey.NumberDay]: 'Day $n',
   [BaseLocaleKey.SavedLocally]: 'Saved locally',
@@ -859,7 +858,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBaseDelivered<Langi.En>>(
   [BaseLocaleKey.ScheduleUserAdded]: 'User added to the schedule',
   [BaseLocaleKey.PushNotifications]: 'Push notifications',
 
-  [BaseLocaleKey.NumberSymbols]: '$n; $declension{{$n}{symbol}{symbols}{symbols}}',
+  ...baseLocaleTemplate(BaseLocaleKey.NumberSymbols)`$n; ${FUNCTION('dec')('$n', 'symbol', 'symbols', 'symbols')}`,
 
   [BaseLocaleKey.PresentationsShowSlide]: '',
   [BaseLocaleKey.PresentationsDropFile]: '',

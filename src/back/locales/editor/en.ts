@@ -2,16 +2,19 @@ import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { LocaleCmEditor } from 'shared/model/+locale/editor';
 import { editorLocaleTemplate } from 'shared/utils/locale/templates';
 import { convertObjectToArray } from 'shared/utils/object.utils';
-import { IF, SWITCH } from 'shared/utils/stringTemplater';
+import { FUNCTION, IF, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeEditorEn = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.LocaleVersion]: 0,
-  [EditorLocaleKey.CmChordLengthMismatch]: 'The number of chords per line differs between difficulty versions on line $n',
+  [EditorLocaleKey.CmChordLengthMismatch]:
+    'The number of chords per line differs between difficulty versions on line $n',
   [EditorLocaleKey.CmSize]: 'Meter',
   [EditorLocaleKey.CmIntensity]: 'Intensity',
   [EditorLocaleKey.CmEditSquareBracketsHint]:
     'Text in [square brackets] is not shown in slides, but is converted to (text in parentheses) in song texts. Use [[two opening brackets] for a line break. There must be a space before "[" and nothing after "]"',
-  ...editorLocaleTemplate(EditorLocaleKey.CmEditIsRemoveTextBlock, ['$t'])`Delete${IF('$t').ELSE` the new`} block?\n\n$t`,
+  ...editorLocaleTemplate(EditorLocaleKey.CmEditIsRemoveTextBlock, [
+    '$t',
+  ])`Delete${IF('$t').ELSE` the new`} block?\n\n$t`,
   [EditorLocaleKey.CmEditRemovedComs]: 'Removed songs',
   [EditorLocaleKey.CmEditBackup]: 'Restore this song',
   [EditorLocaleKey.CmEditDestroy]: 'Destroy this song',
@@ -140,7 +143,7 @@ export const localeEditorEn = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.CmEditorFretNumber]: 'Lad $n;',
   [EditorLocaleKey.CmEditorInterpretationEdit]: 'Editing the interpretation for the event',
   [EditorLocaleKey.CmEditorIncludeBibleWords]: 'include Bible words',
-  [EditorLocaleKey.CmEditorSendWords]: 'Send $n; $declension{{$n}{word}{words}{words}}',
+  ...editorLocaleTemplate(EditorLocaleKey.CmEditorSendWords)`Send $n; ${FUNCTION('dec')('$n', 'word', 'words')}`,
   [EditorLocaleKey.CmEditorLinkPartHide]: 'Make part $n; of the link to $h; invisible?',
   [EditorLocaleKey.CmEditorLinkPartShow]: 'Make part $n; of the link to $h; visible?',
   [EditorLocaleKey.CmEditorAppliqueDestroyed]: 'This action will destroy the chord fingering in this block.',

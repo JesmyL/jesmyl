@@ -2,7 +2,7 @@ import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { LocaleCmEditor } from 'shared/model/+locale/editor';
 import { editorLocaleTemplate } from 'shared/utils/locale/templates';
 import { convertObjectToArray } from 'shared/utils/object.utils';
-import { IF, SWITCH } from 'shared/utils/stringTemplater';
+import { FUNCTION, IF, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeEditorRu = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.LocaleVersion]: 0,
@@ -144,7 +144,7 @@ export const localeEditorRu = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.CmEditorFretNumber]: 'Лад $n;',
   [EditorLocaleKey.CmEditorInterpretationEdit]: 'Редактирование интерпритации для мероприятия',
   [EditorLocaleKey.CmEditorIncludeBibleWords]: 'включать библейские слова',
-  [EditorLocaleKey.CmEditorSendWords]: 'Отправить $n; $declension{{$n}{слово}{слова}{слов}}',
+  ...editorLocaleTemplate(EditorLocaleKey.CmEditorSendWords)`Отправить $n; ${FUNCTION('dec')('$n', 'слово', 'слова', 'слов')}`,
   [EditorLocaleKey.CmEditorLinkPartHide]: 'Сделать $n;-ю часть ссылки на $h; невидимой?',
   [EditorLocaleKey.CmEditorLinkPartShow]: 'Сделать $n;-ю часть ссылки на $h; видимой?',
   [EditorLocaleKey.CmEditorAppliqueDestroyed]: 'Это действие повлечёт за собой уничтожение аппликатуры в данном блоке.',

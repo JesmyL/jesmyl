@@ -5,7 +5,7 @@ import { LocaleBaseDelivered } from 'shared/model/+locale/base';
 import { BibleTranslateName } from 'shared/model/bible';
 import { baseLocaleTemplate } from 'shared/utils/locale/templates';
 import { convertObjectToArray } from 'shared/utils/object.utils';
-import { GENERATE, IF, isUtil, SWITCH } from 'shared/utils/stringTemplater';
+import { FUNCTION, GENERATE, IF, isUtil, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeBaseKz = convertObjectToArray<LocaleBaseDelivered<Langi.Kz>>({
   [BaseLocaleKey.Langi]: Langi.Kz,
@@ -56,8 +56,8 @@ export const localeBaseKz = convertObjectToArray<LocaleBaseDelivered<Langi.Kz>>(
   [BaseLocaleKey.CmForEachBlock]: 'Әрбір "$n;" блогы үшін',
   [BaseLocaleKey.CmCanSelectMaximumCount]: `Ең көбі $s ән таңдауға болады`,
   [BaseLocaleKey.CmWatchedCount]: 'Әндерді көру саны (жалпы $c;)',
-  [BaseLocaleKey.CmWillAdd]: `Қосылады: $c $declension{{$c}{ән}{ән}{ән}}`,
-  [BaseLocaleKey.CmWillLost]: `Жоғалады: $c $declension{{$c}{ән}{ән}{ән}}`,
+  ...baseLocaleTemplate(BaseLocaleKey.CmWillAdd)`Қосылады: $c ${FUNCTION('dec')('$c', 'ән', 'ән', 'ән')}`,
+  ...baseLocaleTemplate(BaseLocaleKey.CmWillLost)`Жоғалады: $c ${FUNCTION('dec')('$c', 'ән', 'ән', 'ән')}`,
   [BaseLocaleKey.CmTwiceClickPrevious]: 'екі рет басу&nbsp;-\nалдыңғы ән',
   [BaseLocaleKey.CmTwiceClickNext]: 'екі рет басу&nbsp;-\nкелесі ән',
   [BaseLocaleKey.CmClickNextSlide]: 'басу&nbsp;-\nкелесі слайд',
@@ -231,7 +231,7 @@ export const localeBaseKz = convertObjectToArray<LocaleBaseDelivered<Langi.Kz>>(
   [BaseLocaleKey.QuestionerCommentRequiredFor]: '"$t;" түсініктемесі міндетті',
   [BaseLocaleKey.QuestionerSortValuesIn]: '"$t;" тармағындағы мәндерді сұрыптау керек',
   [BaseLocaleKey.QuestionerRestoreIn]: '"$t;" тармағындағы барлық жетіспейтін сөздерді қалпына келтіру керек',
-  [BaseLocaleKey.QuestionerVariantsNumber]: '$n; $declension{{$n}{нұсқа}{нұсқа}{нұсқа}}',
+  ...baseLocaleTemplate(BaseLocaleKey.QuestionerVariantsNumber)`$n; ${FUNCTION('dec')('$n', 'нұсқа', 'нұсқа', 'нұсқа')}`,
 
   [BaseLocaleKey.Bible]: 'Киелі кітап',
   [BaseLocaleKey.BibleChapter]: 'Тарау',
@@ -322,12 +322,12 @@ export const localeBaseKz = convertObjectToArray<LocaleBaseDelivered<Langi.Kz>>(
   [BaseLocaleKey.ScheduleEndOfDay]: 'күннің соңы',
   [BaseLocaleKey.ScheduleLessThanHour]: 'басталуына бір сағаттан аз',
   [BaseLocaleKey.ScheduleStartTomorrow]: 'ертең басталады',
-  [BaseLocaleKey.ScheduleAfterMinutes]: '$num; $declension{{$num}{минут}{минут}{минут}} кейін',
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleAfterMinutes)`$num; ${FUNCTION('dec')('$num', 'минут', 'минут', 'минут')} кейін`,
   [BaseLocaleKey.ScheduleAtTime]: '$tm; кезінде',
-  [BaseLocaleKey.ScheduleBeforeHours]: 'басталуына $num; $declension{{$num}{сағат}{сағат}{сағат}}',
-  [BaseLocaleKey.ScheduleBeforeDays]: 'басталуына $num; $declension{{$num}{күн}{күн}{күн}}',
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleBeforeHours)`басталуына $num; ${FUNCTION('dec')('$num', 'сағат', 'сағат', 'сағат')}`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleBeforeDays)`басталуына $num; ${FUNCTION('dec')('$num', 'күн', 'күн', 'күн')}`,
   [BaseLocaleKey.ScheduleThroughMinutes]: '$num;мин. кейін',
-  ...baseLocaleTemplate(BaseLocaleKey.ScheduleMinutesLeft)`$num; $declension{{$num}{минут}{минут}{минут}} қалды`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleMinutesLeft)`$num; ${FUNCTION('dec')('$num', 'минут', 'минут', 'минут')} қалды`,
   [BaseLocaleKey.ScheduleWillParticipate]: 'Қатысамын',
   [BaseLocaleKey.ScheduleByLink]: 'сілтеме бойынша',
   [BaseLocaleKey.ScheduleByScheduleButton]: 'кестедегі түйме арқылы',
@@ -454,7 +454,7 @@ export const localeBaseKz = convertObjectToArray<LocaleBaseDelivered<Langi.Kz>>(
   [BaseLocaleKey.ScheduleContentUnavailable]: 'Мазмұн қолжетімсіз',
   [BaseLocaleKey.ScheduleSourceRemoved]: 'Дереккөз жойылды',
   [BaseLocaleKey.ScheduleAddEventTemplate]: 'Оқиға үлгісін қосу',
-  [BaseLocaleKey.ScheduleUsedCount]: ' қолдан. $num; $declension{{$num}{рет}{рет}{рет}}',
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleUsedCount)` қолдан. $num; ${FUNCTION('dec')('$num', 'рет', 'рет', 'рет')}`,
   [BaseLocaleKey.ScheduleNotUsed]: ' қолданылмайды',
   [BaseLocaleKey.ScheduleTemplateRedact]: '- Үлгіні өңдеу',
   [BaseLocaleKey.ScheduleAttachmentRedact]: '- Қосымшаны өңдеу',
@@ -556,8 +556,7 @@ export const localeBaseKz = convertObjectToArray<LocaleBaseDelivered<Langi.Kz>>(
   [BaseLocaleKey.StoragesFromExcelTitle]: 'Excel файлынан карточкалар қалыптастыру',
   [BaseLocaleKey.StoragesMatchFields]: 'Өрістер үшін сәйкестіктерді жүргізіңіз:',
   [BaseLocaleKey.StoragesFormCards]: 'Карточкаларды құру',
-  [BaseLocaleKey.StoragesPartialFormed]:
-    'Файлдағы барлық жолдар карточкаларға айналдырылмады. Дұрыс құрылғаны $n; $declension{{$n}{карточка}{карточка}{карточка}}',
+  ...baseLocaleTemplate(BaseLocaleKey.StoragesPartialFormed)`Файлдағы барлық жолдар карточкаларға айналдырылмады. Дұрыс құрылғаны $n; ${FUNCTION('dec')('$n', 'карточка', 'карточка', 'карточка')}`,
   [BaseLocaleKey.StoragesMetadata]: 'Мета-деректер',
   [BaseLocaleKey.StoragesRemoveMetadataConfirm]: 'Мета-ақпаратты жою керек пе?',
   [BaseLocaleKey.StoragesNewStatus]: 'Жаңа мәртебе',
@@ -862,7 +861,7 @@ export const localeBaseKz = convertObjectToArray<LocaleBaseDelivered<Langi.Kz>>(
   [BaseLocaleKey.ScheduleUserAdded]: 'Пайдаланушы кестеге қосылды',
   [BaseLocaleKey.PushNotifications]: 'Push хабарламалары',
 
-  [BaseLocaleKey.NumberSymbols]: '$n; $declension{{$n}{таңба}{таңба}{таңба}}',
+  ...baseLocaleTemplate(BaseLocaleKey.NumberSymbols)`$n; ${FUNCTION('dec')('$n', 'таңба', 'таңба', 'таңба')}`,
 
   [BaseLocaleKey.PresentationsShowSlide]: '',
   [BaseLocaleKey.PresentationsDropFile]: '',

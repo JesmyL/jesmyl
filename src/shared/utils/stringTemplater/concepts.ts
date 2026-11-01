@@ -23,7 +23,7 @@ const enum ConceptKey {
 const enum TypeKey {
   And,
   Or,
-  Fn,
+  Function,
   IfElse,
   Switch,
   Util,
@@ -71,7 +71,7 @@ type ConceptValueMap = {
   [TypeKey.And]: AndConditionConcept;
   [TypeKey.Or]: OrConditionConcept;
 
-  [TypeKey.Fn]: FunctionConcept;
+  [TypeKey.Function]: FunctionConcept;
   [TypeKey.Util]: UtilConcept;
 };
 
@@ -85,7 +85,7 @@ const takeConceptValue = <const C extends Concept<ConceptKey, TypeKey>>(
   return concept as never;
 };
 
-const stringifyCondition = (cond: AnyCondition) =>
+const stringifyCondition = (cond: FunctionArg) =>
   cond instanceof Concept ? stringifyConcept(cond) : escapeTplChars()(`${cond}`);
 
 const stringifyConcept: (concept: AnyConcept) => string = concept => {
@@ -105,7 +105,7 @@ const stringifyConcept: (concept: AnyConcept) => string = concept => {
     }
     case TypeKey.Or:
     case TypeKey.And:
-    case TypeKey.Fn:
+    case TypeKey.Function:
     case TypeKey.Util: {
       const cond = takeConceptValue(concept);
       return `${key}${cond.c.map(stringifyCondition).join(strTplArgSeparator)}}}`;
@@ -193,16 +193,34 @@ const OR = makeCondition('OR');
 ///////////////////////////////////////////
 ///////////////////////////////////////////
 
-class FunctionConcept extends Concept<ConceptKey.Func, TypeKey.Fn> {
+class FunctionConcept extends Concept<ConceptKey.Func, TypeKey.Function> {
   constructor(
-    k: VarKey,
+    key: string,
     public c: any[],
   ) {
-    super(k.slice(1), ConceptKey.Func, TypeKey.Fn);
+    super(key, ConceptKey.Func, TypeKey.Function);
+  }
+
+  toString() {
+    return stringifyConcept(this);
   }
 }
 
-const FN = (vara: VarKey, ...args: any[]) => new FunctionConcept(vara, args);
+type FunctionArg = AnyCondition | TplArg;
+
+type FunctionArgs<Fn> = Fn extends (...args: infer Params) => unknown
+  ? { [I in keyof Params]: Params[I] | FunctionArg }
+  : FunctionArg[];
+
+const functionRegistry: Record<string, unknown> = {};
+
+const functionMaker = <const Dict extends Record<string, unknown>>(dict: Dict) => {
+  Object.assign(functionRegistry, dict);
+
+  return <Key extends keyof Dict & string>(key: Key) =>
+    (...args: FunctionArgs<Dict[Key]>) =>
+      new FunctionConcept(key, args);
+};
 
 ///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
@@ -462,4 +480,4 @@ const isUtil = makeUtils({
 ///////////////////////////////////////////
 ///////////////////////////////////////////
 
-export { AND, FN, GENERATE, IF, isUtil, OR, STR, SWITCH, toNUM, toSTR };
+export { AND, functionMaker, functionRegistry, GENERATE, IF, isUtil, OR, STR, SWITCH, toNUM, toSTR };
