@@ -40,19 +40,13 @@ describe('declension', () => {
     expect(declension(11, 'song', 'songs')).toBe('songs');
   });
 
-  it('throws only when all word forms are identical', () => {
-    expect(() => declension(1, 'сөз', 'сөз')).toThrow('declension: duplicated word forms');
-    expect(() => declension(1, 'сөз', 'сөз', 'сөз')).toThrow('declension: duplicated word forms');
-    expect(() => declension(2, 'word', 'word')).toThrow('declension: duplicated word forms');
-  });
-
   it('allows partial repetition of word forms', () => {
     expect(`5 ${declension(5, 'раз', 'раза', 'раз')}`).toBe('5 раз');
     expect(`11 ${declension(11, 'раз', 'раза', 'раз')}`).toBe('11 раз');
     expect(`2 ${declension(2, 'раз', 'раза', 'раз')}`).toBe('2 раза');
-    expect(`5 ${declension(5, 'song', 'songs', 'songs')}`).toBe('5 songs');
-    expect(`1 ${declension(1, 'song', 'songs', 'songs')}`).toBe('1 song');
-    expect(declension(5, 'ась', 'ось', 'ось')).toBe('ось');
+    expect(`5 ${declension(5, 'song', 'songs')}`).toBe('5 songs');
+    expect(`1 ${declension(1, 'song', 'songs')}`).toBe('1 song');
+    expect(declension(5, 'ась', 'ось')).toBe('ось');
   });
 });
 

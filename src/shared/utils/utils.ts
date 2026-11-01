@@ -63,17 +63,17 @@ type SameArgs<A, B> = (<T>() => T extends A ? 1 : 2) extends <T>() => T extends 
 export const declension = <Two extends string, Five extends string | undefined>(
   num: number,
   one: string,
-  two: Two,
+  two?: Two,
   ...five: SameArgs<Two, Five> extends true ? [never] : [Five?]
 ): string => {
-  if (num % 1) return two;
+  if (num % 1) return two ?? one;
   let absNum = Math.abs(num) % 100;
 
-  if (absNum > 10 && absNum < 20) return five[0] ?? two;
+  if (absNum > 10 && absNum < 20) return five[0] ?? two ?? one;
 
   absNum %= 10;
 
-  return absNum > 1 && absNum < 5 ? two : absNum === 1 ? one : (five[0] ?? two);
+  return absNum > 1 && absNum < 5 ? (two ?? one) : absNum === 1 ? one : (five[0] ?? two ?? one);
 };
 
 export const convertSecondsInStrTime = (seconds: number) =>

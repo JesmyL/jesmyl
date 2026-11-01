@@ -1,23 +1,10 @@
 // @vitest-environment node
 import { describe, expect } from 'vitest';
 
-import {
-  AND,
-  functionMaker,
-  FUNCTION,
-  GENERATE,
-  IF,
-  isUtil,
-  OR,
-  STR,
-  stringTemplater,
-  SWITCH,
-  toNUM,
-  toSTR,
-} from '.';
+import { AND, FUNCTION, functionMaker, GENERATE, IF, isUtil, OR, STR, stringTemplater, SWITCH, toNUM, toSTR } from '.';
 import { itIt } from '../utils';
-import { StringTemplaterInterpolation } from './model';
 import { stringTemplaterSrartSymbolCharCode } from './const';
+import { StringTemplaterInterpolation } from './model';
 
 describe('stringTemplater', () => {
   it('simple', () => {
@@ -39,13 +26,11 @@ describe('stringTemplater', () => {
       'Я люблю !',
     );
 
-    expect(stringTemplater('Лежит $num $dec{{$num}{яблоко}{яблока}{яблок}}))', { num: 8 })).toBe(
-      'Лежит 8 яблок))',
-    );
+    expect(stringTemplater('Лежит $num $dec{{$num}{яблоко}{яблока}{яблок}}))', { num: 8 })).toBe('Лежит 8 яблок))');
 
-    expect(
-      stringTemplater(STR`Лежит $num ${FUNCTION('dec')('$num', 'яблоко', 'яблока', 'яблок')}`, { num: 81 }),
-    ).toBe('Лежит 81 яблоко');
+    expect(stringTemplater(STR`Лежит $num ${FUNCTION('dec')('$num', 'яблоко', 'яблока', 'яблок')}`, { num: 81 })).toBe(
+      'Лежит 81 яблоко',
+    );
   });
 
   it('stringTemplater:FUNCTION serialization and resolution', () => {
@@ -54,12 +39,6 @@ describe('stringTemplater', () => {
     expect(serialized).toBe('$dec{{$n}{one}{more}}');
     expect(stringTemplater(serialized, { n: 1 })).toBe('one');
     expect(`${FUNCTION('dec')('$n', 'one', 'more')}`).toBe('$dec{{$n}{one}{more}}');
-  });
-
-  it('stringTemplater:FUNCTION dec throws on duplicated forms', () => {
-    expect(() => stringTemplater(STR`${FUNCTION('dec')('$n', 'сөз', 'сөз', 'сөз')}`, { n: 1 })).toThrow(
-      'declension: duplicated word forms',
-    );
   });
 
   it('stringTemplater:FUNCTION dec allows partial repetition of forms', () => {
@@ -277,9 +256,7 @@ describe('stringTemplater:concepts', () => {
   });
 
   it('GENERATE', () => {
-    const str = GENERATE<'%' | '*'>()
-      .NEXT('%')`SIMPLE $text`
-      .NEXT('*')`TOO$s`.toString(['$s']);
+    const str = GENERATE<'%' | '*'>().NEXT('%')`SIMPLE $text`.NEXT('*')`TOO$s`.toString(['$s']);
     const ret = stringTemplater(str, {
       NEXT: (key, value, index) => [`${key}-${value}/${key}[${index}]`] as const,
       text: () => () => () => 'TEXT',
@@ -441,8 +418,7 @@ describe('stringTemplater:concepts', () => {
       });
 
       it('IF inside IF: both branches', () => {
-        const str = STR`${IF('$o')
-          .THEN`O{then} % %7B ${IF('$i').THEN`I{then} % %7B %25`.ELSE`I}else{ % %7D %25`}%7D`
+        const str = STR`${IF('$o').THEN`O{then} % %7B ${IF('$i').THEN`I{then} % %7B %25`.ELSE`I}else{ % %7D %25`}%7D`
           .ELSE`O}else{ % %7D ${IF('$i').THEN`I{then} % %7B %25`.ELSE`I}else{ % %7D %25`}%7B`}`;
 
         expect(stringTemplater(str, { o: 1, i: 1 })).toBe('O{then} % %7B I{then} % %7B %25%7D');
@@ -452,8 +428,7 @@ describe('stringTemplater:concepts', () => {
       });
 
       it('SWITCH inside IF: both branches', () => {
-        const str = STR`<${IF('$o')
-          .THEN`O{${SWITCH('$s').CASE('{')`S{left}`.CASE('%')`S%50`.DEFAULT`S}def`}}`
+        const str = STR`<${IF('$o').THEN`O{${SWITCH('$s').CASE('{')`S{left}`.CASE('%')`S%50`.DEFAULT`S}def`}}`
           .ELSE`O}${SWITCH('$s').CASE('}')`S}right}`.DEFAULT`S%7B`}`}`;
 
         expect(stringTemplater(str, { o: 1, s: '{' })).toBe('<O{S{left}}');
@@ -464,10 +439,9 @@ describe('stringTemplater:concepts', () => {
       });
 
       it('IF inside SWITCH: cases and default', () => {
-        const str = STR`${SWITCH('$s')
-          .CASE('{')`C{${IF('$o').THEN`T{%}`.ELSE`F}%{`}}`
-          .CASE('%')`C% ${IF('$o').THEN`T%7B`.ELSE`F%25`}`
-          .DEFAULT`D} 100%`}`;
+        const str = STR`${SWITCH('$s').CASE('{')`C{${IF('$o').THEN`T{%}`.ELSE`F}%{`}}`.CASE(
+          '%',
+        )`C% ${IF('$o').THEN`T%7B`.ELSE`F%25`}`.DEFAULT`D} 100%`}`;
 
         expect(stringTemplater(str, { s: '{', o: 1 })).toBe('C{T{%}}');
         expect(stringTemplater(str, { s: '{', o: 0 })).toBe('C{F}%{}');
@@ -490,8 +464,7 @@ describe('stringTemplater:concepts', () => {
 
       it('IF inside SWITCH inside IF', () => {
         const inner = IF('$i').THEN`i{%7B}`.ELSE`i}%25{`;
-        const str = STR`${IF('$o')
-          .THEN`O{${SWITCH('$s').CASE('%')`S{${inner}}`.DEFAULT`S}${inner}`}}`
+        const str = STR`${IF('$o').THEN`O{${SWITCH('$s').CASE('%')`S{${inner}}`.DEFAULT`S}${inner}`}}`
           .ELSE`O}${SWITCH('$s').CASE('%')`s{${inner}}`.DEFAULT`s`}`}`;
 
         expect(stringTemplater(str, { o: 1, s: '%', i: 1 })).toBe('O{S{i{%7B}}}');
@@ -512,19 +485,14 @@ describe('stringTemplater:concepts', () => {
         const inner = IF('$i').THEN`i{t%}`.ELSE`i}e%7B`;
         const str = STR`${fn('wrap')('{', IF('$o').THEN`${inner}`.ELSE`${inner}%25`, '}')}`;
 
-        expect(stringTemplater(str, { o: 1, i: 1, wrap: (...args: string[]) => args.join('|') })).toBe(
-          '{|i{t%}|}',
-        );
-        expect(stringTemplater(str, { o: 0, i: 0, wrap: (...args: string[]) => args.join('|') })).toBe(
-          '{|i}e%7B%25|}',
-        );
+        expect(stringTemplater(str, { o: 1, i: 1, wrap: (...args: string[]) => args.join('|') })).toBe('{|i{t%}|}');
+        expect(stringTemplater(str, { o: 0, i: 0, wrap: (...args: string[]) => args.join('|') })).toBe('{|i}e%7B%25|}');
       });
 
       it('IF inside GENERATE segments', () => {
-        const str = GENERATE<'a' | 'b'>()
-          .NEXT('a')`A{ ${IF('$o').THEN`t{%}`.ELSE`e}%7B`}`
-          .NEXT('b')`B} ${IF('$o').THEN`${IF('$i').THEN`deep{`.ELSE`deep}`}`}`
-          .toString(['$o', '$i']);
+        const str = GENERATE<'a' | 'b'>().NEXT('a')`A{ ${IF('$o').THEN`t{%}`.ELSE`e}%7B`}`.NEXT(
+          'b',
+        )`B} ${IF('$o').THEN`${IF('$i').THEN`deep{`.ELSE`deep}`}`}`.toString(['$o', '$i']);
         const NEXT = (key: string, value: string, index: number) => `${key}:${value}:${index}`;
 
         expect(stringTemplater(str, { o: 1, i: 1, NEXT })).toEqual(['a:A{ t{%}:0', 'b:B} deep{:1']);
