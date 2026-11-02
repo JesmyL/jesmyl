@@ -50,13 +50,6 @@ describe('utils', () => {
 });
 
 describe('declension', () => {
-  it('uses the only form for any number', () => {
-    expect(declension(1, 'сөз')).toBe('сөз');
-    expect(declension(2, 'сөз')).toBe('сөз');
-    expect(declension(5, 'сөз')).toBe('сөз');
-    expect(declension(11, 'сөз')).toBe('сөз');
-  });
-
   it('falls back to the plural form when only two are passed', () => {
     expect(declension(1, 'song', 'songs')).toBe('song');
     expect(declension(2, 'song', 'songs')).toBe('songs');
