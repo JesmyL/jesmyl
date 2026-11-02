@@ -2,6 +2,8 @@ import { translateBase } from '#basis/locale';
 import { useAppNameContext } from '#basis/state/contexts';
 import { LinkAppActionFabric } from '#shared/lib/link-app-actions';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
+import IconConfigurator from '#shared/ui/configurators/Icon';
+import { makeToastOKMoodConfig } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { QrReader } from '#shared/ui/qr-code/QrReader';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -10,6 +12,7 @@ import { Atom, atom } from 'atomaric';
 import { hostConfig } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsStartsWith } from 'shared/utils/checkIs';
+import { toast } from 'sonner';
 
 let isOpenAtom: Atom<boolean>;
 
@@ -53,6 +56,38 @@ export function IndexActionsPage() {
               idPostfix="down"
             />
           </Link>
+
+          <IconConfigurator
+            key="pick-icon"
+            className="w-full"
+            icon="SearchVisual"
+            header={translateBase(BaseLocaleKey.ConfigPickIcon)}
+            keepOpen
+            onSend={async icon => {
+              toast(
+                <span className="flex items-center gap-2">
+                  <LazyIcon icon={icon} />
+                  {icon}
+                </span>,
+                {
+                  ...makeToastOKMoodConfig(),
+                  action: {
+                    label: translateBase(BaseLocaleKey.Copy),
+                    onClick: () => {
+                      navigator.clipboard.writeText(icon);
+                      toast(translateBase(BaseLocaleKey.ConfigTextCopied), makeToastOKMoodConfig());
+                    },
+                  },
+                },
+              );
+            }}
+            trigger={
+              <BrutalItem
+                iconNode={<LazyIcon icon="SearchVisual" />}
+                title={translateBase(BaseLocaleKey.ConfigPickIcon)}
+              />
+            }
+          />
 
           <QrReader
             openAtom={isOpenAtom}

@@ -504,6 +504,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.Alert]: LocaleSimpleString;
   [BaseLocaleKey.Slides]: LocaleSimpleString;
   [BaseLocaleKey.CopyTextFailed]: LocaleSimpleString;
+  [BaseLocaleKey.Copy]: LocaleSimpleString;
   [BaseLocaleKey.ShareFailed]: LocaleSimpleString;
   [BaseLocaleKey.CardNotFound]: LocaleSimpleString;
   [BaseLocaleKey.Error]: LocaleSimpleString;
@@ -662,6 +663,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.ConfigLetterHeight]: LocaleSimpleString;
   [BaseLocaleKey.ConfigStroke]: LocaleSimpleString;
   [BaseLocaleKey.ConfigChangeIcon]: LocaleSimpleString;
+  [BaseLocaleKey.ConfigPickIcon]: LocaleSimpleString;
   [BaseLocaleKey.ConfigScreens]: LocaleSimpleString;
   [BaseLocaleKey.ConfigTextColor]: LocaleSimpleString;
   [BaseLocaleKey.ConfigVisibility]: LocaleSimpleString;

@@ -786,4 +786,6 @@ export const enum BaseLocaleKey {
   SchedulePeriodWeekdayOfMonthKind = 766,
   ScheduleUserAdded = 767,
   PushNotifications = 768,
+  ConfigPickIcon = 769,
+  Copy = 770,
 }

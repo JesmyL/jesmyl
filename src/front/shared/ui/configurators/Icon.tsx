@@ -23,6 +23,8 @@ interface Props {
   header: ReactNode;
   used?: (KnownStameskaIconName | und)[];
   onSend: (icon: KnownStameskaIconName) => Promise<unknown>;
+  keepOpen?: boolean;
+  trigger?: ReactNode;
   className?: string;
 }
 
@@ -41,14 +43,16 @@ export default function IconConfigurator(props: Props) {
 
   return (
     <>
-      <div className={props.className}>
-        <Button
-          onClick={isOpenModalAtom.do.toggle}
-          isLoading={loadingIcon != null}
-        >
-          {props.iconNode ?? <LazyIcon icon={props.icon ?? 'HelpSquare'} />}
-          {translateBase(BaseLocaleKey.ConfigChangeIcon)}
-        </Button>
+      <div
+        className={props.className}
+        onClick={isOpenModalAtom.do.toggle}
+      >
+        {props.trigger ?? (
+          <Button isLoading={loadingIcon != null}>
+            {props.iconNode ?? <LazyIcon icon={props.icon ?? 'HelpSquare'} />}
+            {translateBase(BaseLocaleKey.ConfigChangeIcon)}
+          </Button>
+        )}
       </div>
 
       <Modal openAtom={isOpenModalAtom}>
@@ -116,7 +120,7 @@ const ModalInner = (props: Props) => {
                 className={twMerge('p-2 pointer', (props.icon === icon || usedSet.has(icon)) && 'text-x7')}
                 withoutAnimation
                 onClick={async () => {
-                  isOpenModalAtom.set(false);
+                  if (!props.keepOpen) isOpenModalAtom.set(false);
                   iconOnLoadAtom.set(icon);
 
                   try {
