@@ -91,6 +91,7 @@ export const ScheduleWidgetControlContent = () => {
   const selectedPeriodKind: SchedulePeriodKind | null =
     period == null || period.kind === SchedulePeriodKind.Once ? null : period.kind;
   const pauseActionKey = schedule.isPaused ? BaseLocaleKey.ScheduleEnable : BaseLocaleKey.ScheduleDisable;
+  const appInform = schedule.appInform ?? 0;
 
   return (
     <>
@@ -322,6 +323,12 @@ export const ScheduleWidgetControlContent = () => {
                 />
               )}
             />
+            <div className="text-x7 mb-2">
+              {translateBase(BaseLocaleKey.ScheduleInformStatus, {
+                v: appInform !== 0,
+                n: appInform >= 5 ? appInform : 0,
+              })}
+            </div>
           </>
         )}
       </div>

@@ -111,4 +111,29 @@ export const indexPushMethods = {
       eq(userDB.l, auth.login),
     );
   },
+
+  getUserPushInfo: async ({ login }, tool) => {
+    takeLogginedAuthOrThrow(tool.auth);
+
+    const [user] = await db
+      .select({
+        mutedUntil: userDB.mutedUntil,
+        isSilent: userDB.isSilent,
+        subscriptionEndpoint: pushSubscriptionsDB.endpoint,
+      })
+      .from(userDB)
+      .leftJoin(pushSubscriptionsDB, eq(pushSubscriptionsDB.userId, userDB.id))
+      .where(eq(userDB.l, login))
+      .limit(1);
+
+    if (user == null) throw 'Пользователь не найден';
+
+    return {
+      value: {
+        isSilent: user.isSilent,
+        hasSubscription: user.subscriptionEndpoint == null ? Bool.False : Bool.True,
+        isMuted: user.mutedUntil != null && user.mutedUntil > Date.now() ? Bool.True : Bool.False,
+      },
+    };
+  },
 } satisfies ServerTsjrpcSatisfy<IndexTsjrpcModel>;

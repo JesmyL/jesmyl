@@ -15,6 +15,12 @@ import { VisitsDashboard, DashMessageKind, VisitsDashboardMessagesArgs } from 's
 import { CRUDOperation } from 'shared/utils/index/utils';
 import { StameskaIconPack } from 'stameska-icon/utils';
 
+export interface UserPushInfo {
+  isSilent: Bool;
+  hasSubscription: Bool;
+  isMuted: Bool;
+}
+
 export type IndexTsjrpcModel = {
   requestFreshes: (args: {
     lastModfiedAt: number;
@@ -29,6 +35,7 @@ export type IndexTsjrpcModel = {
   unsubscribePush: (args: { endpoint: string }) => void;
   getPushSettings: () => { mutedUntil: number | nil; isSilent: Bool };
   updatePushSettings: (args: { mutedUntil: number | nil; isSilent: Bool }) => void;
+  getUserPushInfo: (args: { login: SokiAuthLogin }) => UserPushInfo;
 
   authMeByTelegramNativeButton: (args: { user: TelegramNativeAuthUserData }) => { token: string; auth: LocalSokiAuth };
   authMeByTelegramMiniButton: (args: { user: TelegramNativeAuthUserData }) => { token: string; auth: LocalSokiAuth };

@@ -4,15 +4,19 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ScheduleUserScopePropsContext, useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
+import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { Atom, atom } from 'atomaric';
-import { ReactNode, useMemo } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 import {
   IScheduleWidgetUser,
   ScheduleUserScopeProps,
   ScheduleWidgetUserMi,
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
+  UserLogin,
 } from 'shared/api';
+import { UserPushInfo } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
+import { Bool } from 'shared/enums';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { takeUserAuthName } from 'shared/utils/user.utils';
 import { ScheduleWidgetUserTakePhoto } from './TakePhoto';
@@ -46,7 +50,9 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
 
   const rights = useScheduleWidgetRightsContext();
 
-  const userAuth = rights.userInfoById.get(user.id)?.uauth;
+  const userInfo = rights.userInfoById.get(user.id);
+  const userAuth = userInfo?.uauth;
+  const userLogin = userInfo?.l;
   const appInform = rights.schedule.appInform ?? 0;
   const willReceiveInform =
     appInform !== 0 &&
@@ -104,23 +110,10 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
         </ModalHeader>
         <ModalBody>
           <ScheduleWidgetUserEdit user={user} />
-          <div className="mt-5">
-            <div className="text-x7">
-              {translateBase(BaseLocaleKey.ScheduleInformStatus, {
-                v: appInform !== 0,
-                n: appInform >= 5 ? appInform : 0,
-              })}
-            </div>
-            <TheIconButton
-              icon={willReceiveInform ? 'Notification01' : 'NotificationOff01'}
-              postfix={translateBase(
-                willReceiveInform
-                  ? BaseLocaleKey.ScheduleUserReceiveInform
-                  : BaseLocaleKey.ScheduleUserNotReceiveInform,
-              )}
-              disabled
-            />
-          </div>
+          <ScheduleWidgetUserInform
+            userLogin={userLogin}
+            willReceiveInform={willReceiveInform}
+          />
           <div className="flex center w-full mt-5">
             <ScheduleWidgetUserPhoto user={user} />
           </div>
@@ -129,6 +122,58 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
 
       {asUserPlusPrefix === undefined ? userNode : asUserPlusPrefix(userNode, user, balance)}
     </>
+  );
+};
+
+interface InformProps {
+  userLogin: UserLogin | nil;
+  willReceiveInform: boolean;
+}
+
+const ScheduleWidgetUserInform = ({ userLogin, willReceiveInform }: InformProps) => {
+  const [pushInfo, setPushInfo] = useState<UserPushInfo | nil>(null);
+
+  useEffect(() => {
+    if (userLogin == null) return;
+
+    let isMounted = true;
+
+    void indexTsjrpcClientMethods
+      .getUserPushInfo({ login: userLogin })
+      .then(info => {
+        if (isMounted) setPushInfo(info);
+      })
+      .catch(() => null);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [userLogin]);
+
+  const isInformReceivable =
+    pushInfo == null
+      ? willReceiveInform
+      : willReceiveInform && pushInfo.hasSubscription === Bool.True && pushInfo.isMuted === Bool.False;
+
+  return (
+    <div className="mt-5">
+      <TheIconButton
+        icon={isInformReceivable ? 'Notification01' : 'NotificationOff01'}
+        postfix={translateBase(
+          isInformReceivable ? BaseLocaleKey.ScheduleUserReceiveInform : BaseLocaleKey.ScheduleUserNotReceiveInform,
+        )}
+        disabled
+      />
+      {!pushInfo || (
+        <TheIconButton
+          icon={pushInfo.isSilent === Bool.True ? 'VolumeOff' : 'VolumeHigh'}
+          postfix={translateBase(
+            pushInfo.isSilent === Bool.True ? BaseLocaleKey.ScheduleInformSoundOff : BaseLocaleKey.ScheduleInformSoundOn,
+          )}
+          disabled
+        />
+      )}
+    </div>
   );
 };
 
