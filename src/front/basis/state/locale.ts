@@ -4,8 +4,6 @@ import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { Atom, atom } from 'atomaric';
 import { Langi } from 'shared/api';
 import { LocaleNameSpaceConfigs } from 'shared/model/+locale';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
-import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { LocaleBase } from 'shared/model/+locale/base';
 import { LocaleDynamic } from 'shared/model/+locale/dynamic';
 import { LocaleCmEditor } from 'shared/model/+locale/editor';
@@ -22,14 +20,8 @@ export const localeLastModifiedAtAtom = atom(0, 'app:localesModifiedAt');
 const requestFreshLocales = (lastModifiedAt = localeLastModifiedAtAtom.get()) =>
   indexTsjrpcClientMethods.requestFreshLocales({ lastModifiedAt });
 
-/** Пустой или устаревший кэш отменяет отметку: сервер обязан прислать словари целиком. */
+/** Отсутствующий кэш нельзя вылечить разницей отметок: сервер обязан прислать словари целиком. */
 const requestFullLocales = () => requestFreshLocales(0);
-
-/** Нумерация `BaseLocaleKey` непрерывная: словарь другой длины собран под другой набор ключей. */
-const baseLocaleKeysCount = BaseLocaleKey.ScheduleInvite + 1;
-
-/** Нумерация `EditorLocaleKey` непрерывная: словарь другой длины собран под другой набор ключей. */
-const editorLocaleKeysCount = EditorLocaleKey.VisitsAnonSummary + 1;
 
 let pendingLocaleCacheLoads = 0;
 let isAppInitInvoked = false;
@@ -85,16 +77,7 @@ const hydrateLocaleAtom = <Value extends object>(
 export const takeBaseLanguageAtom = lazyInit(() => {
   const confAtom = atom({}) as never as Atom<LocaleNameSpaceConfigs['B']>;
 
-  hydrateLocaleAtom('B', confAtom, cachedBaseLocale => {
-    checkValue(cachedBaseLocale, requestFullLocales);
-
-    // Кэш, собранный до перенумерации `BaseLocaleKey`, отдаёт старые тексты по старым индексам:
-    // обновляем его в фоне, не блокируя приложение устаревшим словарём.
-    const cachedKeysCount = objectLength(cachedBaseLocale);
-    if (cachedKeysCount && cachedKeysCount !== baseLocaleKeysCount) {
-      runOnAppInit(requestFullLocales);
-    }
-  });
+  hydrateLocaleAtom('B', confAtom, cachedBaseLocale => checkValue(cachedBaseLocale, requestFullLocales));
 
   return confAtom;
 });
@@ -109,12 +92,8 @@ export const takeEditorLanguageAtom = lazyInit(() => {
       checkUserScopeAccessRight(null, rights, 'cm', 'EDIT') ||
       checkUserScopeAccessRight(null, rights, 'dash', 'DASH');
 
-    if (!hasEditorAccess) return;
-
-    if (objectLength(cachedEditorLocale) !== editorLocaleKeysCount) {
-      // Пустой или собранный до перенумерации `EditorLocaleKey` кэш отдаёт устаревшие тексты.
-      requestFullLocales();
-    }
+    // Отметка свежести переживает потерю кэша: без словаря её разница скроет словарь от сервера.
+    if (hasEditorAccess && !objectLength(cachedEditorLocale)) runOnAppInit(requestFullLocales);
   });
 
   return confAtom;
