@@ -23,7 +23,6 @@ interface Props {
   header: ReactNode;
   used?: (KnownStameskaIconName | und)[];
   onSend: (icon: KnownStameskaIconName) => Promise<unknown>;
-  keepOpen?: boolean;
   trigger?: ReactNode;
   className?: string;
 }
@@ -120,7 +119,6 @@ const ModalInner = (props: Props) => {
                 className={twMerge('p-2 pointer', (props.icon === icon || usedSet.has(icon)) && 'text-x7')}
                 withoutAnimation
                 onClick={async () => {
-                  if (!props.keepOpen) isOpenModalAtom.set(false);
                   iconOnLoadAtom.set(icon);
 
                   try {

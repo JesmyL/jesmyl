@@ -80,7 +80,7 @@ const makeFolderOption = (folder: string): DropdownItem<string> => ({
 
 /**
  * Picks a directory and establishes it as the WorkDir: uses the chosen folder when it is already named
- * `electronAppName`, otherwise creates `<chosen>/electronAppName` inside it, ensures the preset folders
+ * `jesmylProAppName`, otherwise creates `<chosen>/jesmylProAppName` inside it, ensures the preset folders
  * and switches the app to it (watching is handled by the browser view).
  */
 const establishWorkDir = async () => {

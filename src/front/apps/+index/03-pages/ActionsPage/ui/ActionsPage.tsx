@@ -79,7 +79,6 @@ export function IndexActionsPage() {
             className="w-full"
             icon="SearchVisual"
             header={translateBase(BaseLocaleKey.ConfigPickIcon)}
-            keepOpen
             onSend={async icon => {
               toast(
                 <span className="flex items-center gap-2">
