@@ -2,6 +2,7 @@ import { FooterPlacementManager } from '#basis/lib/FooterPlacementManager';
 import { useFingersActions } from '#basis/lib/global-listeners/useFingersActions';
 import { useGlobalColorGamutSetter } from '#basis/lib/global-listeners/useGlobalColorGamutSetter';
 import { useGlobalFontFamilySetter } from '#basis/lib/global-listeners/useGlobalFontFamilySetter';
+import { useGlobalThemeColorSetter } from '#basis/lib/global-listeners/useGlobalThemeColorSetter';
 import { currentLangiAtom, translateBase } from '#basis/locale';
 import { currentAppNameAtom } from '#basis/state/currentAppNameAtom';
 import { hideAppFooterAtom } from '#basis/state/hideAppFooterAtom';
@@ -91,6 +92,7 @@ export const AppComponent = () => {
   useFingersActions();
   useGlobalColorGamutSetter();
   useGlobalFontFamilySetter();
+  useGlobalThemeColorSetter();
 
   useEffect(() => soki.pushCurrentUrl(), [loc.href]);
 

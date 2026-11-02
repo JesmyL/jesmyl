@@ -1,4 +1,5 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { scrollIntoViewOfContainer } from '#shared/lib/utils';
 import { cmIDB } from '$cm/ext';
 import { takeCmComTrackCurrentTimeMark } from '$cm/shared/lib/takeCmComTrackCurrentTimeMark';
 import { useCmComAudioMarkSlides } from '$cm/shared/lib/useCmComAudioMarkSlides';
@@ -97,10 +98,9 @@ export const useCmComAudioPlayerMoversController = (
                   ? document.querySelector(`${ordSelector} [solid-ord-linei="${selector[1] ?? 0}"]`)
                   : null;
 
-                (lineElem ?? buttonElem ?? document.querySelector(ordSelector))?.scrollIntoView({
-                  block: 'center',
-                  behavior: 'smooth',
-                });
+                const elem = lineElem ?? buttonElem ?? document.querySelector(ordSelector);
+
+                if (elem) scrollIntoViewOfContainer(elem, 'smooth');
               }
 
               prevButtonElem?.classList.remove(currentButtonElemAccentClassName);

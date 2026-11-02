@@ -5,16 +5,10 @@
   style="background: #000000 !important; background-color: #000000 !important"
 >
   <head>
-    <script>
-      const bgColor = localStorage.getItem('atom\\index:isDarkMode')?.startsWith('[true') ? '#000' : '#fff';
-
-      document.documentElement.style.setProperty('background', bgColor, 'important');
-      document.documentElement.style.setProperty('background-color', bgColor, 'important');
-    </script>
     <meta charset="utf-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover"
     />
     <meta
       name="description"
@@ -46,6 +40,14 @@
       name="theme-color"
       content="#587455"
     />
+
+    <script>
+      const bgColor = localStorage.getItem('atom\\index:isDarkMode')?.startsWith('[true') ? '#000' : '#fff';
+
+      document.documentElement.style.setProperty('background', bgColor, 'important');
+      document.documentElement.style.setProperty('background-color', bgColor, 'important');
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', bgColor);
+    </script>
 
     <link
       rel="apple-touch-icon"

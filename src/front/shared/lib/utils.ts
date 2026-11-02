@@ -128,6 +128,29 @@ export const findElementScrollParent = (element: Element | nil): Element['parent
   return element as never;
 };
 
+/** Scrolls only the nearest overflowed ancestor: never the document, so the page itself never jumps. */
+export const scrollIntoViewOfContainer = (elem: Element, behavior: ScrollBehavior = 'auto') => {
+  let parent = elem.parentElement;
+
+  while (parent !== null && parent !== parent.ownerDocument.body) {
+    const { overflowY } = getComputedStyle(parent);
+
+    if ((overflowY === 'auto' || overflowY === 'scroll') && parent.scrollHeight > parent.clientHeight) {
+      const elemRect = elem.getBoundingClientRect();
+      const parentRect = parent.getBoundingClientRect();
+
+      parent.scrollTo({
+        top: parent.scrollTop + elemRect.top - parentRect.top - (parent.clientHeight - elemRect.height) / 2,
+        behavior,
+      });
+
+      return;
+    }
+
+    parent = parent.parentElement;
+  }
+};
+
 export const setInputHeightByContent = (inputNode: HTMLInputElement | HTMLTextAreaElement) => {
   inputNode.style.height = '1px';
   inputNode.style.transition = 'height .2s linear';

@@ -1,6 +1,7 @@
 import { translateBase, translateEditorBase } from '#basis/locale';
 import { Button } from '#shared/components/ui/button';
 import { ButtonGroup } from '#shared/components/ui/button-group';
+import { scrollIntoViewOfContainer } from '#shared/lib/utils';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { makeToastKOMoodConfig, Modal } from '#shared/ui/modal';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
@@ -86,7 +87,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
           const elem = document.querySelector(`[com-audio-mark-time-selector="${pinTime}"],[data-cancel-button]`);
 
           if (elem) {
-            elem?.scrollIntoView({ block: 'center' });
+            scrollIntoViewOfContainer(elem);
             break;
           }
           await wait(timer);
