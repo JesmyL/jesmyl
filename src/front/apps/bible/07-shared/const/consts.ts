@@ -2,7 +2,7 @@ import { translateBase } from '#basis/locale';
 import { Langi } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { BibleTranslateName } from 'shared/model/bible';
-import { forEachObjectEntries, objectKeys } from 'shared/utils/object.utils';
+import { objectKeys } from 'shared/utils/object.utils';
 import { BibleBooki } from '../model/base';
 
 export const bibleTranslateLanguage: Record<BibleTranslateName, Langi> = {
@@ -12,11 +12,8 @@ export const bibleTranslateLanguage: Record<BibleTranslateName, Langi> = {
   [BibleTranslateName.kzb]: Langi.Kz,
 };
 
-export const translateDescriptions = {} as Record<BibleTranslateName, string>;
-
-forEachObjectEntries(bibleTranslateLanguage, tName => {
-  translateDescriptions[tName] = translateBase(it => it[BaseLocaleKey.BibleTranslate][tName]);
-});
+export const translateBibleTranslateDescription = (tName: BibleTranslateName): string =>
+  translateBase(it => it[BaseLocaleKey.BibleTranslate][tName]);
 
 export const bibleTranslateFilter: Record<BibleTranslateName, (booki: BibleBooki) => boolean> = {
   [BibleTranslateName.kas]: booki => booki < 39,
@@ -25,4 +22,4 @@ export const bibleTranslateFilter: Record<BibleTranslateName, (booki: BibleBooki
   [BibleTranslateName.kzb]: () => false,
 };
 
-export const bibleAllTranslates = objectKeys(translateDescriptions);
+export const bibleAllTranslates = objectKeys(bibleTranslateLanguage);

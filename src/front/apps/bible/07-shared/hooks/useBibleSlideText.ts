@@ -12,7 +12,7 @@ import {
 } from 'shared/utils/object.utils';
 import { textToUpperCase } from 'shared/utils/string.utils';
 import { takeBibleLangBooks } from '../const/bibleTitles';
-import { bibleTranslateLanguage, translateDescriptions } from '../const/consts';
+import { bibleTranslateLanguage, translateBibleTranslateDescription } from '../const/consts';
 import { bibleTbcvEncode, makeBibleTbcvPrefix } from '../lib/tbcv.parser';
 import {
   BibleBroadcastAnyAddress,
@@ -143,7 +143,7 @@ const makeSlideSingleAddressMapBlocks = (
     return showTranslates.length > 1
       ? {
           texts,
-          head: `${translateDescriptions[tName]} (${textToUpperCase(tName)})`,
+          head: `${translateBibleTranslateDescription(tName)} (${textToUpperCase(tName)})`,
         }
       : { texts };
   });
@@ -206,7 +206,7 @@ const makeSlideJoinedAddressMapBlocks = (
 
   return showTranslates.map(tName => {
     return {
-      head: `${translateDescriptions[tName]} (${textToUpperCase(tName)})`,
+      head: `${translateBibleTranslateDescription(tName)} (${textToUpperCase(tName)})`,
       texts: pasteText(tName),
     };
   });

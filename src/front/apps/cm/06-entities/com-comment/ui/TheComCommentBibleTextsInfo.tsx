@@ -5,7 +5,7 @@ import {
   bibleMyTranslatesAtom,
   BibleTranslateModulesRedactButton,
   takeBibleLangBooks,
-  translateDescriptions,
+  translateBibleTranslateDescription,
 } from '$bible/ext';
 import { useAtomValue } from 'atomaric';
 import React from 'react';
@@ -44,7 +44,7 @@ export function TheCmComCommentBibleTextsInfo() {
             return (
               <React.Fragment key={tName}>
                 <br />
-                <span className="text-x7">{tName}</span> - {translateDescriptions[tName]}
+                <span className="text-x7">{tName}</span> - {translateBibleTranslateDescription(tName)}
               </React.Fragment>
             );
           })}

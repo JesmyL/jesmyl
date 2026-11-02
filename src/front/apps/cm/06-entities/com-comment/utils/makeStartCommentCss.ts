@@ -1,5 +1,5 @@
 import { translateBase } from '#basis/locale';
-import { takeBibleLangBooks, translateDescriptions } from '$bible/ext';
+import { takeBibleLangBooks, translateBibleTranslateDescription } from '$bible/ext';
 import { bibleTbcvEncode, makeBibleTbcvPrefix } from '$bible/shared/lib/tbcv.parser';
 import { bibleTBCVTranslatesIDB } from '$bible/shared/state/bibleIDB';
 import { makeRegExp } from 'regexpert';
@@ -94,7 +94,7 @@ export const cmComCommentMakeStartCommentCss = async (
 
         const fromVersei = +addr.verseFrom - 1;
         const fullBibleTitle = takeBibleLangBooks(langi)[booki]?.full || bookTitle;
-        let text = `\n${fullBibleTitle} ${addr.chapter}:${addr.verseFrom}${addr.verseTo ? `-${addr.verseTo}` : ''} ${tNameUpper} (${translateDescriptions[tName]})`;
+        let text = `\n${fullBibleTitle} ${addr.chapter}:${addr.verseFrom}${addr.verseTo ? `-${addr.verseTo}` : ''} ${tNameUpper} (${translateBibleTranslateDescription(tName)})`;
 
         if (addr.verseTo) {
           const toVersei = +addr.verseTo - 1;
@@ -135,7 +135,7 @@ export const cmComCommentMakeStartCommentCss = async (
         if (checkIsNil(book))
           return `\n${tNameUpper}:${translateBase(BaseLocaleKey.BibleBookAbsent, {
             b: fullBibleTitle,
-            t: `${tNameUpper} ${translateDescriptions[tName] || ''}`.trim(),
+            t: `${tNameUpper} ${translateBibleTranslateDescription(tName)}`.trim(),
           })} ${addr.chapter}:${addr.verseDiapason}`;
 
         const chapter = await bibleTBCVTranslatesIDB.tb.list

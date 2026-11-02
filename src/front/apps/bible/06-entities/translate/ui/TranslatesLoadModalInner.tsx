@@ -2,7 +2,7 @@ import { translateBase } from '#basis/locale';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { bibleAllTranslates, translateDescriptions } from '$bible/shared/const/consts';
+import { bibleAllTranslates, translateBibleTranslateDescription } from '$bible/shared/const/consts';
 import { bibleTsjrpcClient } from '$bible/shared/lib/tsjrpc';
 import { removeBibleTranslate } from '$bible/shared/lib/utils';
 import { bibleMyTranslatesAtom } from '$bible/shared/state/atoms';
@@ -24,7 +24,7 @@ export const BibleTranslateLoadModalInner = () => {
         <h3 className="my-2 font-bold">{translateBase(BaseLocaleKey.BibleLoadedTranslations)}</h3>
         {myTranslates.map(tName => {
           const isUnremovable = myTranslates.length < 2;
-          const title = `${translateDescriptions[tName]} (${textToUpperCase(tName)})`;
+          const title = `${translateBibleTranslateDescription(tName)} (${textToUpperCase(tName)})`;
 
           return (
             <TheIconButton
@@ -42,7 +42,7 @@ export const BibleTranslateLoadModalInner = () => {
         <h3 className="my-2 font-bold">{translateBase(BaseLocaleKey.BibleLoadModules)}</h3>
         {bibleAllTranslates.map(tName => {
           if (myTranslates.includes(tName)) return null;
-          const title = `${translateDescriptions[tName]} (${textToUpperCase(tName)})`;
+          const title = `${translateBibleTranslateDescription(tName)} (${textToUpperCase(tName)})`;
 
           return (
             <TheIconSendButton
