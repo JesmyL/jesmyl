@@ -6,6 +6,8 @@ export interface CmComFaceInheritProps {
   /** The com the caller plays: the player page's current com is not necessarily the last opened one. */
   currentComw?: CmComWid | nil;
   isPutCcomFaceOff?: boolean;
-  /** Hides the per-track cloud download toggles, e.g. in the selected list where downloading is not allowed. */
-  withoutCacheMarks?: boolean;
+  /** Shows the per-track cloud cache buttons instead of the row like button, e.g. in the player page list. */
+  withCacheMarks?: boolean;
+  /** Renders no like button and no cache marks for a row, e.g. in the views-rating list. */
+  withoutLikeMark?: boolean;
 }

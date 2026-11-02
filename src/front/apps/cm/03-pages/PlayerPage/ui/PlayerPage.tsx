@@ -629,7 +629,7 @@ const CmPlayerPageContent = ({
               key={openComListMode}
               list={comws}
               currentComw={activeComw}
-              withoutCacheMarks={openComListMode === 'sel'}
+              withCacheMarks
               importantOnClick={({ com }) => {
                 cmComAudioPlayerMarkManualPick();
                 cmComAudioPlayerIsFromPlayerPageAtom.set(true);

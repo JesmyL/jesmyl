@@ -2,8 +2,10 @@ import { translateBase } from '#basis/locale';
 import { FaceItem } from '#basis/ui/FaceItem';
 import { isIOS } from '#shared/lib/device-differences';
 import { useListInfiniteScrollController } from '#shared/lib/hooks/useListInfiniteScrollController';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { CmComNumber } from '$cm/entities/com';
 import { CmComAudioPlayerCacheMarks } from '$cm/entities/com-audio-player';
+import { useCmComFavouriteList } from '$cm/entities/com-favourite';
 import { useCmComSetListLimitsExtracterContext } from '$cm/entities/index';
 import { DragEvent, memo, useCallback, useRef, useState } from 'react';
 import { CmComWid, IExportableCom } from 'shared/api';
@@ -13,6 +15,7 @@ import {
   cmComFaceCurrentComwIdPrefix,
   cmComFaceItemAudioMarksClassName,
   cmComFaceItemDescriptionClassName,
+  cmComFaceItemLikeMarkClassName,
 } from '../const/ids';
 import { useCmComFaceListClickListener } from '../lib/useComListClickListener';
 import { useCmComFaceCurrentComw } from '../lib/useCurrentComw';
@@ -26,15 +29,26 @@ interface ComListItemProps {
   isDropTarget: boolean;
   isDropEnabled: boolean;
   comDescription: CmComFaceListProps['comDescription'];
-  withoutCacheMarks: boolean | nil;
+  withoutLikeMark: boolean | nil;
+  withCacheMarks: boolean | nil;
   onDragOver: (com: IExportableCom, event: DragEvent<HTMLDivElement>) => void;
   onDragLeave: (com: IExportableCom, event: DragEvent<HTMLDivElement>) => void;
   onDrop: (com: IExportableCom, comi: number, event: DragEvent<HTMLDivElement>) => void;
 }
 
 const CmComFaceListItem = memo(function CmComFaceListItem(props: ComListItemProps) {
-  const { com, comi, isDropTarget, isDropEnabled, comDescription, withoutCacheMarks, onDragOver, onDragLeave, onDrop } =
-    props;
+  const {
+    com,
+    comi,
+    isDropTarget,
+    isDropEnabled,
+    comDescription,
+    withoutLikeMark,
+    withCacheMarks,
+    onDragOver,
+    onDragLeave,
+    onDrop,
+  } = props;
 
   return (
     <FaceItem.Root
@@ -49,16 +63,35 @@ const CmComFaceListItem = memo(function CmComFaceListItem(props: ComListItemProp
         {com.n || <span className="text-xKO">{translateBase(BaseLocaleKey.CmUnknown)}</span>}
       </FaceItem.Title>
       {!comDescription || <div className={cmComFaceItemDescriptionClassName}>{comDescription(com, comi)}</div>}
-      {withoutCacheMarks || (
-        <CmComAudioPlayerCacheMarks
-          srcs={com.al}
-          comName={com.n}
-          className={cmComFaceItemAudioMarksClassName}
-        />
-      )}
+      {withoutLikeMark ||
+        (withCacheMarks ? (
+          <CmComAudioPlayerCacheMarks
+            srcs={com.al}
+            comName={com.n}
+            className={cmComFaceItemAudioMarksClassName}
+          />
+        ) : (
+          <CmComFaceLikeMark comw={com.w} />
+        ))}
     </FaceItem.Root>
   );
 });
+
+const CmComFaceLikeMark = ({ comw }: { comw: CmComWid }) => {
+  const { isFavourite, toggleFavourite } = useCmComFavouriteList();
+
+  return (
+    <LazyIcon
+      icon="Favourite"
+      kind={isFavourite(comw) ? 'SolidRounded' : undefined}
+      className={`pointer ${cmComFaceItemLikeMarkClassName}`}
+      onClick={event => {
+        event.stopPropagation();
+        toggleFavourite(comw);
+      }}
+    />
+  );
+};
 
 export const CmComFaceListComList = (props: CmComFaceListProps) => {
   const listRef = useRef<HTMLDivElement>(null);
@@ -112,7 +145,8 @@ export const CmComFaceListComList = (props: CmComFaceListProps) => {
           isDropTarget={dropTargetComw === com.w}
           isDropEnabled={isDropEnabled}
           comDescription={props.comDescription}
-          withoutCacheMarks={props.withoutCacheMarks}
+          withoutLikeMark={props.withoutLikeMark}
+          withCacheMarks={props.withCacheMarks}
           onDragOver={onItemDragOver}
           onDragLeave={onItemDragLeave}
           onDrop={onItemDrop}

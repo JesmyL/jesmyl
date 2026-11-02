@@ -25,7 +25,6 @@ export const CmEditorMeetingEventSendComsModalInner = ({
       <ModalBody>
         <CmComFaceList
           list={selectedComws}
-          withoutCacheMarks
           importantOnClick={emptyFunc}
           comDescription={(_, comi) => <CmComMoveSelectedButton comi={comi} />}
         />
