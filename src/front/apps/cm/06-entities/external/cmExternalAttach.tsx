@@ -1,7 +1,7 @@
 import { translateBase } from '#basis/locale';
 import { useAppNameContext } from '#basis/state/contexts';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { ScheduleWidgetAppAtts } from '#widgets/schedule/ScheduleWidget.model';
+import { ScheduleWidgetAppAtt, ScheduleWidgetAppAtts } from '#widgets/schedule/ScheduleWidget.model';
 import { makeCmEventNestedRoute } from '$cm/shared/lib';
 import { Link, useSearch } from '@tanstack/react-router';
 import {
@@ -15,7 +15,7 @@ import { extractNumber, sliceStringIfEndsWith } from 'shared/utils';
 import { useCmMeetingComwList } from '../meeting/lib/useCmMeetingComwList';
 import { CmExternalComListAtt } from './ui/CmExternalComListAtt';
 
-export const cmExternalOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
+export const makeCmExternalOwnAppAtts = (): ScheduleWidgetAppAtts<'cm', CmComBindAttach> => ({
   '[cm]:coms': {
     icon: 'Playlist02',
     title: translateBase(BaseLocaleKey.CmComs),
@@ -31,9 +31,9 @@ export const cmExternalOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> 
         </>
       );
     },
-    ExtRoute: _props => route && <route.ComRouteComponent />,
+    ExtRoute: extRoute,
   },
-};
+});
 
 const path = '/!other/$appName/schs/';
 
@@ -42,6 +42,8 @@ const route = makeCmEventNestedRoute({
   RouteComponent: () => <>Error 6517923985</>,
   useComwListPack,
 });
+
+const extRoute: ScheduleWidgetAppAtt['ExtRoute'] = _props => route && <route.ComRouteComponent />;
 
 function useComwListPack() {
   const { dayi, eventMi, schw } = useSearch({ from: path });

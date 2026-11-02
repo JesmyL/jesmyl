@@ -1,4 +1,4 @@
-import { appAttsStore } from '#basis/lib/appScheduleAttrsStorage';
+import { makeAppAttsStore } from '#basis/lib/appScheduleAttrsStorage';
 import { IScheduleWidget } from 'shared/api';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
@@ -36,5 +36,5 @@ export const makeAttStorage = (schedule?: IScheduleWidget): [ScheduleWidgetAppAt
       ExtRoute: () => <></>,
     };
   });
-  return [{ ...appAttsStore, ...makeScheduleOwnAtts(), ...atts }, attRefs];
+  return [{ ...makeAppAttsStore(), ...makeScheduleOwnAtts(), ...atts }, attRefs];
 };

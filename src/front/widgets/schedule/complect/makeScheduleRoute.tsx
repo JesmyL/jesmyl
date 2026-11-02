@@ -1,4 +1,4 @@
-import { appAttsStore } from '#basis/lib/appScheduleAttrsStorage';
+import { makeAppAttsStore } from '#basis/lib/appScheduleAttrsStorage';
 import { ScheduleDayEventAttachmentScopeProps, ScheduleWidgetWidDef } from 'shared/api';
 import { checkIsNaN } from 'shared/utils/checkIs';
 import { ScheduleSingleAlarmDay } from '../alarm/SingleAlarmDay';
@@ -26,7 +26,7 @@ export const makeScheduleRoute = (
 ) => {
   const AttRouteComponent = () => {
     const search = getRoute().useSearch();
-    const AttRoute = appAttsStore[search.attKey as never]?.ExtRoute;
+    const AttRoute = makeAppAttsStore()[search.attKey as never]?.ExtRoute;
 
     if (search.isOpenSingleDay && search.schw != null) {
       return (

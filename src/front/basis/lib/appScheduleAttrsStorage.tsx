@@ -1,3 +1,3 @@
-import { cmExternalOwnAppAtts } from '$cm/entities/external/cmExternalAttach';
+import { makeCmExternalOwnAppAtts } from '$cm/entities/external/cmExternalAttach';
 
-export const appAttsStore = { ...cmExternalOwnAppAtts };
+export const makeAppAttsStore = makeCmExternalOwnAppAtts;
