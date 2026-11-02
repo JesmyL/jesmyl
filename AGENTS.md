@@ -25,6 +25,7 @@
 
 - `.opencode/opencode.jsonc` sets `instructions: .opencode/tools/philosophy.md` — before writing code you MUST load the matching skill: `frontend-philosophy` for UI work, `code-philosophy` for logic/backend. See `.opencode/README.md` for agent/profile details.
 - Never make git commits yourself. At the end of your work you may suggest a commit message, but never run `git commit` (or push/reset) on your own initiative — only when the user explicitly asks for that exact operation.
+- Commit messages must always be written in English.
 - Locale keys (`EditorLocaleKey`/`DynLocaleKey`/`BaseLocaleKey`): only ADD new numeric keys — never bump `editorLocaleMinVersion`/`baseLocaleMinVersion` (in `src/back/apps/index/tsjrpc.base/lib/requestFreshes.ts`) anymore; those delivery guards stay untouched. For visual clarity, group new keys next to related existing entries in the dictionaries (`localeEditorRu`/`localeEditorEn`/...).
 - Route placement applies to ALL route areas, not just `!other/$appName`: every page must live in the proper area of `src/front/routes/tree/` matching its app/feature slice — never create root-level routes for pages belonging to a specific area, e.g. `/schedule-users/1704636528751` goes under `src/front/routes/tree/!other.$appName/...` (substitute the correct area for each case).
 
@@ -73,6 +74,7 @@
 - Translation is sentence-by-sentence: each English sentence is immediately followed by its Russian translation.
 - Grouping several English sentences into a paragraph IS allowed, BUT each English sentence within it must still be immediately followed by its Russian translation in parentheses — no sentence may appear without its translation right after it.
 - When the user writes "zapiwi" (запиши), persist the instruction into this AGENTS.md so it applies to all future sessions.
+- Clarifying questions asked via the question tool must also be bilingual: English text followed immediately by the Russian translation in parentheses, same as assistant replies.
 - When the user writes "upor9do4i locales" (or "upor9do4i translates" / "упорядочи локали"): remove empty locales (keys whose translation is `''`) and any `@deprecated` keys (entries marked `@deprecated #version`) — but only keys that are not referenced anywhere in the code; group translations; renumber the `const enum BaseLocaleKey` entries sequentially from 0 to the last one; and in `indexTSJRPCBaseRequestFreshes` replace the literal `#` in `visitInfo.version < #` with the HARDCODED number read from `src/shared/values/+version.json` (`num` field) plus 1 (e.g. num=12 → `visitInfo.version < 13`).
 - When the user writes "prepare commit" (or variants like "prigotov' commit" / "podgotov' komit"): inspect the changes made in the currently open dialog-tab (the OpenCode session/tab where the conversation is happening, not a specific tab number), stage ONLY the specific hunks/changes (selective staging, e.g. `git add -p`) — never whole files, so unrelated changes in the same files stay out of the commit — and write the commit message in that same tab's chat. Never commit — only stage and propose the message (per the no-commit rule above).
 - Example: Done. (Готово.)
