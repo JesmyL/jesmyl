@@ -28,7 +28,8 @@ export const useAuth = () => authIDB.useValue.auth();
 
 export const indexIsPlayAnimationsAtom = atom(false, 'index:isPlayAnimations');
 export const indexIsShowPlayerInFooterAtom = atom(true, 'index:isShowPlayerInFooter');
-export const indexIsDarkModeAtom = atom(false, 'index:isDarkMode');
+export const darkMediaQuery = '(prefers-color-scheme: dark)';
+export const indexIsDarkModeAtom = atom(window.matchMedia(darkMediaQuery).matches, 'index:isDarkMode');
 
 export const indexAppUserInfoDictAtom = atom<PRecord<UserLogin, UserInfoUnsecure> | null>(null);
 export const indexAppUserRoleInfoDictAtom = atom<PRecord<UserAccessRole, UserAccessRoleInfo> | null>(null);

@@ -1,9 +1,10 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { indexIsDarkModeAtom } from '$index/shared/state';
+import { darkMediaQuery, indexIsDarkModeAtom } from '$index/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 
 const classList = document.querySelector('html')?.classList;
+const darkMedia = window.matchMedia(darkMediaQuery);
 const minTouches = 3;
 const maxTouches = 3;
 
@@ -16,6 +17,14 @@ export const useFingersActions = () => {
   }, [isDarkMode]);
 
   useEffect(() => {
+    return hookEffectPipe()
+      .pipe(
+        addEventListenerPipe(darkMedia, 'change', ({ matches }) => indexIsDarkModeAtom.set(matches)),
+      )
+      .effect();
+  }, []);
+
+  useEffect(() => {
     let timeout: TimeOut;
 
     return hookEffectPipe()
@@ -24,7 +33,7 @@ export const useFingersActions = () => {
           if (event.touches.length === 4) {
             timeout = setTimeout(() => window.navigator.clipboard.writeText(window.location.href), 500);
           } else if (event.touches.length >= minTouches && event.touches.length <= maxTouches) {
-            timeout = setTimeout(indexIsDarkModeAtom.do.toggle, 500);
+            timeout = setTimeout(() => indexIsDarkModeAtom.do.toggle(), 500);
           } else {
             clearTimeout(timeout);
           }
@@ -33,8 +42,7 @@ export const useFingersActions = () => {
           if (event.touches.length < minTouches || event.touches.length > maxTouches) clearTimeout(timeout);
         }),
         addEventListenerPipe(document.body, 'keyup', event => {
-          if (event.code === 'Space' && event.ctrlKey && event.altKey && event.shiftKey)
-            indexIsDarkModeAtom.do.toggle();
+          if (event.code === 'Space' && event.ctrlKey && event.altKey && event.shiftKey) indexIsDarkModeAtom.do.toggle();
         }),
       )
       .effect();

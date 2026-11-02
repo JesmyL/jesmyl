@@ -23,7 +23,8 @@ import { langCodeDict, langCodeLoadingTitleDict } from 'shared/const/+locale';
 import { CmComOrders } from 'shared/const/cm/Com/parents/20-Orders';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { extractNumber, iife } from 'shared/utils';
-import { forEachObjectEntries } from 'shared/utils/object.utils';
+import { checkIsNumber } from 'shared/utils/checkIs';
+import { forEachObjectEntries, objectLength } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
 import { appInitialInvokes } from './app-initial-invokes';
 import { AppFooter } from './AppFooter';
@@ -34,10 +35,28 @@ configureAtomaric({ useSyncExternalStore, keyPathSeparator: '/' });
 appInitialInvokes();
 
 const forceUpdateAtom = atom(0);
+const appStartedAt = Date.now();
 
-takeBaseLanguageAtom().subscribe(() => forceUpdateAtom.do.increment());
+/** `Langi`/`LocaleVersion` sit at the head of every dictionary array, so those indices never count as texts. */
+const hasLocaleTexts = (dict: Record<string, string | number | object | nil>) =>
+  Object.values(dict).some(
+    (value, index) =>
+      index > BaseLocaleKey.LocaleVersion && !checkIsNumber(value) && objectLength(value) > 0,
+  );
+
+/** Right after boot any fresh dictionary remounts the app; later only a textless push does. */
+const isNeedForceUpdate = (dict: Record<string, string | number | object | nil>) =>
+  Date.now() - appStartedAt < 20_000 || !hasLocaleTexts(dict);
+
+takeBaseLanguageAtom().subscribe(base => {
+  if (!isNeedForceUpdate(base)) return;
+  forceUpdateAtom.do.increment();
+});
 forEachObjectEntries(langCodeDict, langiStr =>
-  takeDynamicLanguageAtom(extractNumber(langiStr)).subscribe(() => forceUpdateAtom.do.increment()),
+  takeDynamicLanguageAtom(extractNumber(langiStr)).subscribe(dyn => {
+    if (!isNeedForceUpdate(dyn)) return;
+    forceUpdateAtom.do.increment();
+  }),
 );
 
 export const AppComponent = () => {

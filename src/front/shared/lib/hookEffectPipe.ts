@@ -8,7 +8,7 @@ class EffectPipeMember {
   }
 }
 
-type Elem = HTMLElement | typeof globalThis | Window | Document | nil;
+type Elem = HTMLElement | typeof globalThis | Window | Document | MediaQueryList | nil;
 type EventListenerOptions = Parameters<(typeof window)['addEventListener']>[2];
 
 type EventMapForElement<T extends Elem> = T extends HTMLElement
@@ -17,9 +17,11 @@ type EventMapForElement<T extends Elem> = T extends HTMLElement
     ? WindowEventMap
     : T extends Document
       ? DocumentEventMap
-      : T extends typeof globalThis
-        ? Record<string, any>
-        : never;
+      : T extends MediaQueryList
+        ? MediaQueryListEventMap
+        : T extends typeof globalThis
+          ? Record<string, any>
+          : never;
 
 export const addEventListenerPipe = <
   T extends NonNullable<Elem>,
