@@ -3,7 +3,13 @@ import { describe, expect } from 'vitest';
 
 import { checkIsEq } from './checkIsEq';
 import { deepClone } from './clone';
-import { declension } from './utils';
+import {
+  convertSecondsInStrTime,
+  declension,
+  extractNumber,
+  sliceStringIfEndsWith,
+  sliceStringIfStartsWith,
+} from './utils';
 
 describe('utils', () => {
   it('checkIsEq', () => {
@@ -18,6 +24,28 @@ describe('utils', () => {
 
     expect(a.a.b.c.d === b.a.b.c.d).toBe(false);
     expect(checkIsEq(a.a.b.c.d, b.a.b.c.d)).toBe(true);
+  });
+
+  // ADD THIS TESTS
+  it('convertSecondsInStrTime', () => {
+    expect(convertSecondsInStrTime(0)).toBe('00:00');
+    expect(convertSecondsInStrTime(59)).toBe('00:59');
+    expect(convertSecondsInStrTime(60)).toBe('01:00');
+    expect(convertSecondsInStrTime(754)).toBe('12:34');
+  });
+
+  it('sliceStringIfEndsWith / sliceStringIfStartsWith', () => {
+    expect(sliceStringIfEndsWith('file.test.ts', '.ts')).toBe('file.test');
+    expect(sliceStringIfEndsWith('abc', 'x')).toBe('abc');
+    expect(sliceStringIfStartsWith('prefix-name', 'prefix-')).toBe('name');
+    expect(sliceStringIfStartsWith('abc', 'x')).toBe('abc');
+  });
+
+  it('extractNumber', () => {
+    expect(extractNumber('42')).toBe(42);
+    expect(extractNumber('3.14')).toBe(3.14);
+    expect(extractNumber('abc')).toBe('abc');
+    expect(extractNumber(7)).toBe(7);
   });
 });
 
@@ -47,6 +75,16 @@ describe('declension', () => {
     expect(`5 ${declension(5, 'song', 'songs')}`).toBe('5 songs');
     expect(`1 ${declension(1, 'song', 'songs')}`).toBe('1 song');
     expect(declension(5, 'ась', 'ось')).toBe('ось');
+  });
+
+  it('mirrors the type-block argument combinations', () => {
+    expect(declension(1, '1', '2', '3')).toBe('1');
+    // @ts-expect-error five must be undefined when it equals two
+    declension(1, '1', '2', '2');
+    // @ts-expect-error two must be undefined when it equals one and five is omitted
+    declension(1, '1', '1');
+    expect(declension(1, '1', '1', '3')).toBe('1');
+    expect(declension(1, '3', '1', '3')).toBe('3');
   });
 });
 

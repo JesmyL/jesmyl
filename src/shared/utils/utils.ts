@@ -60,20 +60,20 @@ export const sliceStringIfStartsWith = <Value extends string, Start extends stri
 
 type SameArgs<A, B> = (<T>() => T extends A ? 1 : 2) extends <T>() => T extends B ? 1 : 2 ? true : false;
 
-export const declension = <Two extends string, Five extends string | undefined>(
+export const declension = <One extends string, Two extends string | und, Five extends string | und>(
   num: number,
-  one: string,
-  two?: Two,
-  ...five: SameArgs<Two, Five> extends true ? [never] : [Five?]
+  one: One,
+  two?: [SameArgs<One, Two>, undefined] extends [true, Five] ? undefined : Two,
+  five?: SameArgs<Two, Five> extends true ? undefined : Five,
 ): string => {
   if (num % 1) return two ?? one;
   let absNum = Math.abs(num) % 100;
 
-  if (absNum > 10 && absNum < 20) return five[0] ?? two ?? one;
+  if (absNum > 10 && absNum < 20) return five ?? two ?? one;
 
   absNum %= 10;
 
-  return absNum > 1 && absNum < 5 ? (two ?? one) : absNum === 1 ? one : (five[0] ?? two ?? one);
+  return absNum > 1 && absNum < 5 ? (two ?? one) : absNum === 1 ? one : (five ?? two ?? one);
 };
 
 export const convertSecondsInStrTime = (seconds: number) =>
