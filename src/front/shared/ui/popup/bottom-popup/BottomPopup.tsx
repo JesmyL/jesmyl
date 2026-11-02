@@ -46,7 +46,7 @@ export const BottomPopup = ({ children, onClose, isPreventCloseOnClick, id, titl
       onClose={() => onClose(false)}
     >
       <Drawer.Content
-        className="h-[100vh] w-full"
+        className="max-h-[85dvh] w-full"
         id={id}
       >
         <Drawer.Close>

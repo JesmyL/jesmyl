@@ -35,6 +35,7 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
 
   return (
     <DropdownMenu.Root
+      modal={false}
       onOpenChange={setDropped}
       open={isDropped}
     >

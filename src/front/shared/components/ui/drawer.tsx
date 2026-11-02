@@ -65,7 +65,7 @@ export const Drawer = {
             `data-[vaul-drawer-direction=bottom]:inset-x-0
              data-[vaul-drawer-direction=bottom]:bottom-0
              data-[vaul-drawer-direction=bottom]:mt-24
-             data-[vaul-drawer-direction=bottom]:max-h-[100vh]
+             data-[vaul-drawer-direction=bottom]:max-h-[100dvh]
              data-[vaul-drawer-direction=bottom]:rounded-t-lg
              data-[vaul-drawer-direction=bottom]:border-t`,
 

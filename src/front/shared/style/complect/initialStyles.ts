@@ -6,6 +6,7 @@ export const initialStyles = css`
   #root {
     overscroll-behavior: none;
     height: 100vh;
+    height: 100dvh;
   }
 
   * {
