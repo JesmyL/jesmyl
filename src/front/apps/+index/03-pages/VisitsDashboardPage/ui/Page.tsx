@@ -7,7 +7,7 @@ import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAtomValue } from 'atomaric';
 import { makeRegExp } from 'regexpert';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import {
@@ -167,13 +167,10 @@ const makeCountAxis = (maxCount: number) => {
   return { max, ticks: Array.from({ length: Math.round(max / step) + 1 }, (_, index) => index * step) };
 };
 
-type VisitsBar = { label: string; count: number; info: string };
+type VisitsBar = { label: string; fullLabel?: string; count: number; info: string };
 
-const ChartTooltip = ({ leftPercent, text }: { leftPercent: number; text: string }) => (
-  <div
-    className="pointer-events-none absolute top-1 z-10 max-w-60 -translate-x-1/2 rounded-lg border border-x2/60 bg-x1/95 px-2 py-1 text-[10px] text-x3 shadow-md"
-    style={{ left: `${Math.min(92, Math.max(8, leftPercent))}%` }}
-  >
+const ChartTooltip = ({ text }: { text: string }) => (
+  <div className="pointer-events-none absolute top-1 left-1/2 z-10 max-w-60 -translate-x-1/2 rounded-lg border border-x2/60 bg-x1/95 px-2 py-1 text-[10px] text-x3 shadow-md">
     {text}
   </div>
 );
@@ -204,16 +201,39 @@ const VisitsBarsChart = ({
   minWidth?: number;
   labelStep?: number;
 }) => {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
+  const [hoverIndices, setHoverIndices] = useState<number[]>([]);
+  const multiTouchRef = useRef(false);
   const chartWidth = Math.max(bars.length * slotWidth, minWidth);
   const slotCenter = chartWidth / Math.max(bars.length, 1);
   const barWidth = slotWidth - 4;
   const maxCount = Math.max(...bars.map(bar => bar.count), 1);
   const { max, ticks } = makeCountAxis(maxCount);
-  const selectedBar = selectedIndex === null ? null : bars[selectedIndex];
-  const selectedLeftPercent = selectedIndex === null ? 0 : ((selectedIndex + 0.5) / Math.max(bars.length, 1)) * 100;
+  const shownIndices = hoverIndices.length ? hoverIndices : selectedIndices;
+  const shownBars = shownIndices.map(index => bars[index]);
+  const shownSum = shownBars.reduce((sum, bar) => sum + bar.count, 0);
+  const tooltipText =
+    shownBars.length > 1
+      ? `${shownBars.map(bar => bar.fullLabel || bar.label).join(' + ')} — ${Number.isInteger(shownSum) ? shownSum : shownSum.toFixed(1)}`
+      : shownBars[0]?.info;
 
-  useCloseChartTooltip(() => setSelectedIndex(null));
+  useCloseChartTooltip(() => setSelectedIndices([]));
+
+  const hoverBarAtTouch = (event: React.TouchEvent<SVGSVGElement>) => {
+    event.stopPropagation();
+
+    if (!bars.length) return;
+
+    const rect = event.currentTarget.getBoundingClientRect();
+    const indices = Array.from(event.touches, touch =>
+      Math.min(
+        Math.max(Math.floor(((touch.clientX - rect.left) / rect.width) * bars.length), 0),
+        bars.length - 1,
+      ),
+    );
+
+    setHoverIndices([...new Set(indices)]);
+  };
 
   return (
     <div className="flex min-w-0 gap-1">
@@ -237,7 +257,22 @@ const VisitsBarsChart = ({
             <svg
               viewBox={`0 0 ${chartWidth} ${chartPlotHeight}`}
               preserveAspectRatio="none"
-              className="h-32 w-full rounded-lg bg-x2/40 sm:h-40"
+              className="h-32 w-full touch-none rounded-lg bg-x2/40 sm:h-40"
+              onTouchStart={event => {
+                multiTouchRef.current = event.touches.length > 1;
+                hoverBarAtTouch(event);
+              }}
+              onTouchMove={hoverBarAtTouch}
+              onTouchEnd={event => {
+                event.stopPropagation();
+
+                if (hoverIndices.length > 1) {
+                  setSelectedIndices(hoverIndices);
+                  multiTouchRef.current = false;
+                }
+
+                setHoverIndices([]);
+              }}
             >
               <line
                 x1={0.5}
@@ -264,38 +299,63 @@ const VisitsBarsChart = ({
               })}
               {bars.map((bar, index) => {
                 const height = (bar.count / max) * chartPlotHeight;
+                const x = (index + 0.5) * slotCenter - barWidth / 2;
+                const extensionClassName = hoverIndices.includes(index)
+                  ? 'pointer fill-chart-2/25'
+                  : selectedIndices.includes(index)
+                    ? 'pointer fill-chart-2/20'
+                    : 'pointer fill-chart-2/10';
+                const onClick = (event: React.MouseEvent) => {
+                  event.stopPropagation();
+
+                  if (multiTouchRef.current) {
+                    multiTouchRef.current = false;
+
+                    return;
+                  }
+
+                  setSelectedIndices(indices =>
+                    indices.includes(index)
+                      ? indices.filter(selectedIndex => selectedIndex !== index)
+                      : [...indices, index],
+                  );
+                };
 
                 return (
-                  <rect
+                  <g
                     key={index}
-                    x={(index + 0.5) * slotCenter - barWidth / 2}
-                    y={chartPlotHeight - height}
-                    width={barWidth}
-                    height={height}
-                    className="pointer fill-chart-2/45"
-                    onClick={event => {
-                      event.stopPropagation();
-                      setSelectedIndex(selectedIndex === index ? null : index);
-                    }}
+                    onMouseEnter={() => setHoverIndices([index])}
+                    onMouseLeave={() => setHoverIndices([])}
                   >
                     <title>{bar.count}</title>
-                  </rect>
+                    <rect
+                      x={x}
+                      y={0}
+                      width={barWidth}
+                      height={chartPlotHeight}
+                      className={extensionClassName}
+                      onClick={onClick}
+                    />
+                    <rect
+                      x={x}
+                      y={chartPlotHeight - height}
+                      width={barWidth}
+                      height={height}
+                      className="pointer fill-chart-2/45"
+                      onClick={onClick}
+                    />
+                  </g>
                 );
               })}
             </svg>
-            {!selectedBar || (
-              <ChartTooltip
-                leftPercent={selectedLeftPercent}
-                text={selectedBar.info}
-              />
-            )}
+            {!tooltipText || <ChartTooltip text={tooltipText} />}
           </div>
-          <div className="relative mt-1 h-4 text-[10px] text-x4/70">
+          <div className="relative mt-1 h-12 text-[10px] text-x4/70">
             {bars.map((bar, index) =>
               index % labelStep || !bar.label ? null : (
                 <span
                   key={index}
-                  className="absolute max-w-16 -translate-x-1/2 truncate"
+                  className="absolute top-0 origin-top-right -translate-x-full leading-none -rotate-[35deg] whitespace-nowrap"
                   style={{ left: `${((index + 0.5) / Math.max(bars.length, 1)) * 100}%` }}
                 >
                   {bar.label}
@@ -512,15 +572,21 @@ const DashboardContent = ({ dashboard }: { dashboard: VisitsDashboard }) => {
           },
         ],
   );
-  const hourBars: VisitsBar[] = dashboard.hours.map((count, hour) => ({
-    label: hour % 3 === 0 || hour === hoursInDay - 1 ? `${hour}`.padStart(2, '0') : '',
-    count,
-    info: translateEditorBase(EditorLocaleKey.VisitsHourPeriod, {
-      f: takeHourLabel(hour),
-      t: takeHourLabel(hour === hoursInDay - 1 ? hoursInDay : hour + 1),
-      c: count,
-    }),
-  }));
+  const hourBars: VisitsBar[] = dashboard.hours.map((count, hour) => {
+    const fromHourLabel = takeHourLabel(hour);
+    const toHourLabel = takeHourLabel(hour === hoursInDay - 1 ? hoursInDay : hour + 1);
+
+    return {
+      label: hour % 3 === 0 || hour === hoursInDay - 1 ? `${hour}`.padStart(2, '0') : '',
+      fullLabel: `${fromHourLabel}–${toHourLabel}`,
+      count,
+      info: translateEditorBase(EditorLocaleKey.VisitsHourPeriod, {
+        f: fromHourLabel,
+        t: toHourLabel,
+        c: count,
+      }),
+    };
+  });
   const historyBars: VisitsBar[] = historyBuckets.map(bucket => ({
     label: bucket.label,
     count: bucket.count,
