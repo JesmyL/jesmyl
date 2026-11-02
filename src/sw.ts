@@ -1,6 +1,7 @@
 /// <reference lib="webworker" />
 /// <reference types="vite-plugin-pwa/client" />
 
+import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { cleanupOutdatedCaches, createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching';
 import { NavigationRoute, registerRoute } from 'workbox-routing';
@@ -25,6 +26,7 @@ const maxNotificationActionsCount = 2;
 
 precacheAndRoute(self.__WB_MANIFEST);
 cleanupOutdatedCaches();
+clientsClaim();
 
 registerRoute(new NavigationRoute(createHandlerBoundToURL('/index.html')));
 
@@ -137,5 +139,5 @@ self.addEventListener('notificationclick', event => {
 });
 
 self.addEventListener('message', messageEvent => {
-  if (messageEvent.data === 'SKIP_WAITING') return self.skipWaiting();
+  if (messageEvent.data?.type === 'SKIP_WAITING') return self.skipWaiting();
 });
