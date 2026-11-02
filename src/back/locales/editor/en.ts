@@ -190,7 +190,7 @@ export const localeEditorEn = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.Denied]: 'Forbidden',
   [EditorLocaleKey.Language]: 'Language',
 
-  [EditorLocaleKey.VisitsDashboard]: 'Visits dashboard',
+  [EditorLocaleKey.VisitsDashboard]: 'Dashboard',
   [EditorLocaleKey.VisitsOnline]: 'Online',
   [EditorLocaleKey.VisitsToday]: 'Visits today',
   [EditorLocaleKey.VisitsUnique]: 'Unique visitors',

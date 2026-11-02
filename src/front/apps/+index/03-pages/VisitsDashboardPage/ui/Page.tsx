@@ -145,18 +145,8 @@ const makeVersionRows = (versionsList: PRecord<number, number>[]): VisitsVersion
   );
 
   return mapObjectEntries(counts, (version, count) => ({ version, count: count ?? 0 })).sort(
-    (a, b) => b.count - a.count || Number(b.version) - Number(a.version),
+    (a, b) => Number(a.version) - Number(b.version),
   );
-};
-
-const makeMinVersionRows = (dayStats: VisitsDashboardDayStat[]): VisitsVersionRow[] => {
-  const days: PRecord<number, number> = {};
-
-  dayStats.forEach(({ minVersion }) => {
-    if (minVersion !== null) days[minVersion] = (days[minVersion] ?? 0) + 1;
-  });
-
-  return makeVersionRows([days]).sort((a, b) => Number(a.version) - Number(b.version));
 };
 
 const hoursInDay = 24;
@@ -319,24 +309,6 @@ const VisitsBarsChart = ({
   );
 };
 
-const VisitsVersionBars = ({ rows }: { rows: VisitsVersionRow[] }) => {
-  const maxCount = rows.at(0)?.count ?? 1;
-
-  return (
-    <div className="flex min-w-0 flex-col gap-1">
-      {rows.map(row => (
-        <div key={row.version} className="flex min-w-0 items-center gap-2 rounded-lg px-2 py-1 even:bg-x2/40">
-          <span className="w-14 shrink-0 text-sm text-x3">{row.version}</span>
-          <div className="h-1 min-w-0 flex-1 overflow-hidden rounded-full bg-x2/60">
-            <div className="h-full rounded-full bg-chart-2/45" style={{ width: `${(row.count / maxCount) * 100}%` }} />
-          </div>
-          <span className="shrink-0 text-xs font-semibold text-chart-2/80">{row.count}</span>
-        </div>
-      ))}
-    </div>
-  );
-};
-
 const DashboardMessages = () => {
   const [activeKind, setActiveKind] = useState<DashMessageKind>(DashMessageKind.Errors);
   const [openMessageIds, setOpenMessageIds] = useState<Set<number>>(() => new Set());
@@ -351,13 +323,20 @@ const DashboardMessages = () => {
       }),
     initialPageParam: 0,
     getNextPageParam: lastPage =>
-      lastPage.messagesHasMore ? (lastPage.messages.at(-1)?.id ?? 0) : undefined,
+      lastPage.messagesHasMore
+        ? (lastPage.messages.at(-1)?.id ?? 0)
+        : lastPage.visitsHasMore
+          ? (lastPage.visits.at(-1)?.id ?? 0)
+          : undefined,
     refetchInterval: 15_000,
     staleTime: 0,
   });
 
   const firstPage = messagesQuery.data?.pages[0];
+  const isVisitErrorKind = activeKind === DashMessageKind.VisitError;
   const messages = messagesQuery.data ? messagesQuery.data.pages.flatMap(page => page.messages) : [];
+  const visits = messagesQuery.data ? messagesQuery.data.pages.flatMap(page => page.visits) : [];
+  const isEmpty = isVisitErrorKind ? visits.length === 0 : messages.length === 0;
   const messageReads = firstPage?.messageReads ?? {};
   const unreadCounts = firstPage?.unreadCounts ?? {};
 
@@ -399,7 +378,7 @@ const DashboardMessages = () => {
               onClick={() => setActiveKind(tab.kind)}
             >
               {translateEditorBase(tab.title)}
-              {!unreadCount || (
+              {!unreadCount || tab.kind === DashMessageKind.VisitError || (
                 <span
                   className={twMerge(
                     'rounded-full px-1.5 text-[10px]',
@@ -412,19 +391,43 @@ const DashboardMessages = () => {
             </button>
           );
         })}
-        <button
-          className="pointer rounded-lg px-2 py-1 text-xs text-x4 hover:text-x3"
-          onClick={() => markAllRead(activeKind)}
-        >
-          {translateEditorBase(EditorLocaleKey.VisitsMarkAllRead)}
-        </button>
+        {isVisitErrorKind || (
+          <button
+            className="pointer rounded-lg px-2 py-1 text-xs text-x4 hover:text-x3"
+            onClick={() => markAllRead(activeKind)}
+          >
+            {translateEditorBase(EditorLocaleKey.VisitsMarkAllRead)}
+          </button>
+        )}
       </div>
 
-      {messages.length === 0 ? (
+      {isEmpty ? (
         <div className="text-sm text-x4">{translateBase(BaseLocaleKey.EmptyList)}</div>
       ) : (
         <div className="flex min-w-0 max-h-96 w-full flex-col gap-2 overflow-y-auto">
-          {messages.map(message => {
+          {isVisitErrorKind
+            ? visits.map(visit => (
+                <article
+                  key={visit.id}
+                  className="w-full max-w-full min-w-0 rounded-xl border border-x2/50 bg-x2/20 p-2"
+                >
+                  <span className="flex min-w-0 max-w-full flex-wrap items-center gap-x-2 gap-y-0.5 text-xs">
+                    <span className="shrink-0 text-x4/80">
+                      {new Date(visit.createdAt).toLocaleString('ru', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                      })}
+                    </span>
+                    <span className="min-w-0 truncate font-medium text-x3">{takeUserName(visit.user)}</span>
+                    <span className="shrink-0 text-x4/80">v{visit.v}</span>
+                  </span>
+                  <div className="min-w-0 max-w-full truncate text-xs text-x4">{visit.url}</div>
+                </article>
+              ))
+            : messages.map(message => {
             const isUnread = message.createdAt > (messageReads[activeKind] ?? 0);
             const isOpen = openMessageIds.has(message.id);
 
@@ -493,11 +496,22 @@ const DashboardContent = ({ dashboard }: { dashboard: VisitsDashboard }) => {
   const historyBuckets = makeHistoryBuckets(dashboard.dayStats, historyPeriod);
   const averageBuckets = makeAverageBuckets(dashboard.dayStats, averagePeriod);
   const versionRows = makeVersionRows([dashboard.versions]);
-  const allTimeVersionRows = makeVersionRows([
-    ...dashboard.dayStats.map(stat => stat.versions),
-    dashboard.versions,
-  ]);
-  const minVersionRows = makeMinVersionRows(dashboard.dayStats);
+  const versionBars: VisitsBar[] = versionRows.map(row => ({
+    label: row.version,
+    count: row.count,
+    info: `${row.version} — ${row.count}`,
+  }));
+  const minVersionBars: VisitsBar[] = dashboard.dayStats.flatMap(stat =>
+    stat.minVersion === null
+      ? []
+      : [
+          {
+            label: stat.date.slice(5),
+            count: stat.minVersion,
+            info: `${stat.date} — v${stat.minVersion}`,
+          },
+        ],
+  );
   const hourBars: VisitsBar[] = dashboard.hours.map((count, hour) => ({
     label: hour % 3 === 0 || hour === hoursInDay - 1 ? `${hour}`.padStart(2, '0') : '',
     count,
@@ -611,28 +625,26 @@ const DashboardContent = ({ dashboard }: { dashboard: VisitsDashboard }) => {
 
       <section className="rounded-2xl border border-x2/60 bg-x1/50 p-2 sm:p-3">
         <h2 className="mb-2 text-sm font-medium text-x3">{translateEditorBase(EditorLocaleKey.VisitsVersions)}</h2>
-        {versionRows.length === 0 ? (
+        {versionBars.length === 0 ? (
           <div className="text-sm text-x4">{translateBase(BaseLocaleKey.EmptyList)}</div>
         ) : (
-          <VisitsVersionBars rows={versionRows} />
-        )}
-      </section>
-
-      <section className="rounded-2xl border border-x2/60 bg-x1/50 p-2 sm:p-3">
-        <h2 className="mb-2 text-sm font-medium text-x3">{translateEditorBase(EditorLocaleKey.VisitsAllVersions)}</h2>
-        {allTimeVersionRows.length === 0 ? (
-          <div className="text-sm text-x4">{translateBase(BaseLocaleKey.EmptyList)}</div>
-        ) : (
-          <VisitsVersionBars rows={allTimeVersionRows} />
+          <VisitsBarsChart
+            bars={versionBars}
+            slotWidth={historySlotWidth}
+          />
         )}
       </section>
 
       <section className="rounded-2xl border border-x2/60 bg-x1/50 p-2 sm:p-3">
         <h2 className="mb-2 text-sm font-medium text-x3">{translateEditorBase(EditorLocaleKey.VisitsMinVersions)}</h2>
-        {minVersionRows.length === 0 ? (
+        {minVersionBars.length === 0 ? (
           <div className="text-sm text-x4">{translateBase(BaseLocaleKey.EmptyList)}</div>
         ) : (
-          <VisitsVersionBars rows={minVersionRows} />
+          <VisitsBarsChart
+            bars={minVersionBars}
+            slotWidth={historySlotWidth}
+            labelStep={Math.max(1, Math.ceil(minVersionBars.length / 12))}
+          />
         )}
       </section>
 

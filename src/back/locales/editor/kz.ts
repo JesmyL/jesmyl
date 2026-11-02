@@ -192,7 +192,7 @@ export const localeEditorKz = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.Denied]: 'Тыйым салынған',
   [EditorLocaleKey.Language]: 'Тіл',
 
-  [EditorLocaleKey.VisitsDashboard]: 'Визиттер дашборды',
+  [EditorLocaleKey.VisitsDashboard]: 'Дашборд',
   [EditorLocaleKey.VisitsOnline]: 'Онлайн',
   [EditorLocaleKey.VisitsToday]: 'Бүгін визиттер',
   [EditorLocaleKey.VisitsUnique]: 'Бірегей келушілер',

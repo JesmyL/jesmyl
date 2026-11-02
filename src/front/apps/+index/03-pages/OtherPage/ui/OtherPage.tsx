@@ -1,6 +1,6 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { useConnectionState } from '#basis/lib/useConnectionState';
-import { translateBase, translateEditorBase } from '#basis/locale';
+import { translateBase } from '#basis/locale';
 import { appNames } from '#basis/model/App.model';
 import { useAppNameContext } from '#basis/state/contexts';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
@@ -20,7 +20,6 @@ import { Link } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import React from 'react';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
-import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { itNNull } from 'shared/utils';
 
 let isAboutOpenAtom: Atom<boolean>;
@@ -31,7 +30,6 @@ export const IndexOtherPage = () => {
   const currentAppName = useAppNameContext();
   const linkParams = { appName: currentAppName };
   const checkAccess = useCheckUserAccessRightsInScope();
-  const hasDashAccess = checkAccess('dash', 'DASH');
   const favouriteApps = useAtomValue(indexFavouriteAppsAtom);
 
   const auth = useAuth();
@@ -90,19 +88,6 @@ export const IndexOtherPage = () => {
               idPostfix="settings"
             />
           </Link>
-          {!hasDashAccess || (
-            <Link
-              to="/!other/$appName/dashboard"
-              params={linkParams}
-              className="w-full"
-            >
-              <BrutalItem
-                iconNode={<LazyIcon icon="DashboardSpeed01" />}
-                title={translateEditorBase(EditorLocaleKey.VisitsDashboard)}
-                idPostfix="visits-dashboard"
-              />
-            </Link>
-          )}
           <Link
             to="/!other/$appName/actions"
             params={linkParams}

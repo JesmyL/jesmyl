@@ -34,7 +34,6 @@ import { Route as CmLiSelImport } from './tree/cm/li/sel'
 import { Route as CmLiFavImport } from './tree/cm/li/fav'
 import { Route as CmLiEventsImport } from './tree/cm/li/events'
 import { Route as CmEditChordImport } from './tree/cm/edit/chord'
-import { Route as otherAppNameDashboardImport } from './tree/!other.$appName/dashboard'
 import { Route as otherAppNameSchsRouteImport } from './tree/!other.$appName/schs/route'
 import { Route as otherAppNameSettingsIndexImport } from './tree/!other.$appName/settings/index'
 import { Route as otherAppNameSchsIndexImport } from './tree/!other.$appName/schs/index'
@@ -43,6 +42,7 @@ import { Route as otherAppNameActionsIndexImport } from './tree/!other.$appName/
 import { Route as CmLiCatCatwImport } from './tree/cm/li/cat.$catw'
 import { Route as otherAppNameSettingsRightsImport } from './tree/!other.$appName/settings/rights'
 import { Route as otherAppNameSettingsConsoleImport } from './tree/!other.$appName/settings/console'
+import { Route as otherAppNameActionsDashImport } from './tree/!other.$appName/actions/dash'
 import { Route as StoragesIRackwSumIndexImport } from './tree/storages/i/$rackw/sum/index'
 import { Route as otherAppNameSettingsNounpronsIndexImport } from './tree/!other.$appName/settings/noun_prons/index'
 import { Route as otherAppNameActionsFilesIndexImport } from './tree/!other.$appName/actions/files/index'
@@ -363,12 +363,6 @@ const CmEditChordRoute = CmEditChordImport.update({
   getParentRoute: () => CmEditRouteLazyRoute,
 } as any)
 
-const otherAppNameDashboardRoute = otherAppNameDashboardImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => otherAppNameRouteRoute,
-} as any)
-
 const otherAppNameSchsRouteRoute = otherAppNameSchsRouteImport.update({
   id: '/schs',
   path: '/schs',
@@ -458,6 +452,12 @@ const otherAppNameSettingsConsoleRoute =
     path: '/settings/console',
     getParentRoute: () => otherAppNameRouteRoute,
   } as any)
+
+const otherAppNameActionsDashRoute = otherAppNameActionsDashImport.update({
+  id: '/actions/dash',
+  path: '/actions/dash',
+  getParentRoute: () => otherAppNameRouteRoute,
+} as any)
 
 const StoragesIRackwEditIndexLazyRoute =
   StoragesIRackwEditIndexLazyImport.update({
@@ -723,13 +723,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof otherAppNameSchsRouteImport
       parentRoute: typeof otherAppNameRouteImport
     }
-    '/!other/$appName/dashboard': {
-      id: '/!other/$appName/dashboard'
-      path: '/dashboard'
-      fullPath: '/!other/$appName/dashboard'
-      preLoaderRoute: typeof otherAppNameDashboardImport
-      parentRoute: typeof otherAppNameRouteImport
-    }
     '/cm/edit/chord': {
       id: '/cm/edit/chord'
       path: '/chord'
@@ -869,6 +862,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/storages/i'
       preLoaderRoute: typeof StoragesIIndexLazyImport
       parentRoute: typeof StoragesRouteLazyImport
+    }
+    '/!other/$appName/actions/dash': {
+      id: '/!other/$appName/actions/dash'
+      path: '/actions/dash'
+      fullPath: '/!other/$appName/actions/dash'
+      preLoaderRoute: typeof otherAppNameActionsDashImport
+      parentRoute: typeof otherAppNameRouteImport
     }
     '/!other/$appName/settings/console': {
       id: '/!other/$appName/settings/console'
@@ -1217,8 +1217,8 @@ const otherAppNameSchsRouteRouteWithChildren =
 
 interface otherAppNameRouteRouteChildren {
   otherAppNameSchsRouteRoute: typeof otherAppNameSchsRouteRouteWithChildren
-  otherAppNameDashboardRoute: typeof otherAppNameDashboardRoute
   otherAppNameIndexRoute: typeof otherAppNameIndexRoute
+  otherAppNameActionsDashRoute: typeof otherAppNameActionsDashRoute
   otherAppNameSettingsConsoleRoute: typeof otherAppNameSettingsConsoleRoute
   otherAppNameSettingsRightsRoute: typeof otherAppNameSettingsRightsRoute
   otherAppNameSettingsConstantLazyRoute: typeof otherAppNameSettingsConstantLazyRoute
@@ -1232,8 +1232,8 @@ interface otherAppNameRouteRouteChildren {
 
 const otherAppNameRouteRouteChildren: otherAppNameRouteRouteChildren = {
   otherAppNameSchsRouteRoute: otherAppNameSchsRouteRouteWithChildren,
-  otherAppNameDashboardRoute: otherAppNameDashboardRoute,
   otherAppNameIndexRoute: otherAppNameIndexRoute,
+  otherAppNameActionsDashRoute: otherAppNameActionsDashRoute,
   otherAppNameSettingsConsoleRoute: otherAppNameSettingsConsoleRoute,
   otherAppNameSettingsRightsRoute: otherAppNameSettingsRightsRoute,
   otherAppNameSettingsConstantLazyRoute: otherAppNameSettingsConstantLazyRoute,
@@ -1272,7 +1272,6 @@ export interface FileRoutesByFullPath {
   '/presentation': typeof PresentationIndexLazyRoute
   '/presentations/': typeof PresentationsIndexLazyRoute
   '/!other/$appName/schs': typeof otherAppNameSchsRouteRouteWithChildren
-  '/!other/$appName/dashboard': typeof otherAppNameDashboardRoute
   '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
@@ -1293,6 +1292,7 @@ export interface FileRoutesByFullPath {
   '/q/a': typeof QAIndexLazyRoute
   '/q/r': typeof QRIndexLazyRoute
   '/storages/i': typeof StoragesIIndexLazyRoute
+  '/!other/$appName/actions/dash': typeof otherAppNameActionsDashRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
   '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
@@ -1333,7 +1333,6 @@ export interface FileRoutesByTo {
   '/gamer': typeof GamerIndexLazyRoute
   '/presentation': typeof PresentationIndexLazyRoute
   '/presentations': typeof PresentationsIndexLazyRoute
-  '/!other/$appName/dashboard': typeof otherAppNameDashboardRoute
   '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
@@ -1354,6 +1353,7 @@ export interface FileRoutesByTo {
   '/q/a': typeof QAIndexLazyRoute
   '/q/r': typeof QRIndexLazyRoute
   '/storages/i': typeof StoragesIIndexLazyRoute
+  '/!other/$appName/actions/dash': typeof otherAppNameActionsDashRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
   '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
@@ -1403,7 +1403,6 @@ export interface FileRoutesById {
   '/presentation/': typeof PresentationIndexLazyRoute
   '/presentations/': typeof PresentationsIndexLazyRoute
   '/!other/$appName/schs': typeof otherAppNameSchsRouteRouteWithChildren
-  '/!other/$appName/dashboard': typeof otherAppNameDashboardRoute
   '/cm/edit/chord': typeof CmEditChordRoute
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
@@ -1424,6 +1423,7 @@ export interface FileRoutesById {
   '/q/a/': typeof QAIndexLazyRoute
   '/q/r/': typeof QRIndexLazyRoute
   '/storages/i/': typeof StoragesIIndexLazyRoute
+  '/!other/$appName/actions/dash': typeof otherAppNameActionsDashRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
   '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
@@ -1474,7 +1474,6 @@ export interface FileRouteTypes {
     | '/presentation'
     | '/presentations/'
     | '/!other/$appName/schs'
-    | '/!other/$appName/dashboard'
     | '/cm/edit/chord'
     | '/cm/li/events'
     | '/cm/li/fav'
@@ -1495,6 +1494,7 @@ export interface FileRouteTypes {
     | '/q/a'
     | '/q/r'
     | '/storages/i'
+    | '/!other/$appName/actions/dash'
     | '/!other/$appName/settings/console'
     | '/!other/$appName/settings/rights'
     | '/cm/li/cat/$catw'
@@ -1534,7 +1534,6 @@ export interface FileRouteTypes {
     | '/gamer'
     | '/presentation'
     | '/presentations'
-    | '/!other/$appName/dashboard'
     | '/cm/edit/chord'
     | '/cm/li/events'
     | '/cm/li/fav'
@@ -1555,6 +1554,7 @@ export interface FileRouteTypes {
     | '/q/a'
     | '/q/r'
     | '/storages/i'
+    | '/!other/$appName/actions/dash'
     | '/!other/$appName/settings/console'
     | '/!other/$appName/settings/rights'
     | '/cm/li/cat/$catw'
@@ -1602,7 +1602,6 @@ export interface FileRouteTypes {
     | '/presentation/'
     | '/presentations/'
     | '/!other/$appName/schs'
-    | '/!other/$appName/dashboard'
     | '/cm/edit/chord'
     | '/cm/li/events'
     | '/cm/li/fav'
@@ -1623,6 +1622,7 @@ export interface FileRouteTypes {
     | '/q/a/'
     | '/q/r/'
     | '/storages/i/'
+    | '/!other/$appName/actions/dash'
     | '/!other/$appName/settings/console'
     | '/!other/$appName/settings/rights'
     | '/cm/li/cat/$catw'
@@ -1769,8 +1769,8 @@ export const routeTree = rootRoute
       "filePath": "!other.$appName/route.tsx",
       "children": [
         "/!other/$appName/schs",
-        "/!other/$appName/dashboard",
         "/!other/$appName/",
+        "/!other/$appName/actions/dash",
         "/!other/$appName/settings/console",
         "/!other/$appName/settings/rights",
         "/!other/$appName/settings/constant",
@@ -1851,10 +1851,6 @@ export const routeTree = rootRoute
         "/!other/$appName/schs/users/"
       ]
     },
-    "/!other/$appName/dashboard": {
-      "filePath": "!other.$appName/dashboard.tsx",
-      "parent": "/!other/$appName"
-    },
     "/cm/edit/chord": {
       "filePath": "cm/edit/chord.tsx",
       "parent": "/cm/edit"
@@ -1934,6 +1930,10 @@ export const routeTree = rootRoute
     "/storages/i/": {
       "filePath": "storages/i/index.lazy.tsx",
       "parent": "/storages"
+    },
+    "/!other/$appName/actions/dash": {
+      "filePath": "!other.$appName/actions/dash.tsx",
+      "parent": "/!other/$appName"
     },
     "/!other/$appName/settings/console": {
       "filePath": "!other.$appName/settings/console.tsx",

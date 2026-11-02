@@ -191,7 +191,7 @@ export const localeEditorRu = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.Denied]: 'Заперщено',
   [EditorLocaleKey.Language]: 'Язык',
 
-  [EditorLocaleKey.VisitsDashboard]: 'Дашборд визитов',
+  [EditorLocaleKey.VisitsDashboard]: 'Дашборд',
   [EditorLocaleKey.VisitsOnline]: 'Онлайн',
   [EditorLocaleKey.VisitsToday]: 'Визитов сегодня',
   [EditorLocaleKey.VisitsUnique]: 'Уникальных посетителей',

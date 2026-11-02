@@ -22,6 +22,14 @@ export type DashMessage = {
   isSystem: boolean;
 };
 
+export type DashVisit = {
+  id: number;
+  createdAt: number;
+  v: number;
+  url: string;
+  user: DashMessageUser;
+};
+
 export type VisitsDashboardMessagesArgs = {
   kind: DashMessageKind;
   beforeId: number | null;
@@ -57,6 +65,8 @@ export type VisitsDashboard = {
   dayStats: VisitsDashboardDayStat[];
   messages: DashMessage[];
   messagesHasMore: boolean;
+  visits: DashVisit[];
+  visitsHasMore: boolean;
   messageReads: PRecord<DashMessageKind, number>;
   unreadCounts: PRecord<DashMessageKind, number>;
 };

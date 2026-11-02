@@ -29,7 +29,7 @@ const hoursInDay = 24;
 const messagesPageSize = 20;
 const errorPushTitle = 'Новая ошибка';
 const errorPushSystemAuthor = 'Система';
-const errorPushUrl = '/!other/index/dashboard';
+const errorPushUrl = '/!other/index/actions/dash';
 const errorPushTextMaxLength = 100;
 const errorPushArgsMarker = 'Аргументы:';
 const localhostUrlReg = makeRegExp('/^[^?]+?\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}:\\d{3,5}/');
@@ -380,29 +380,42 @@ export const takeVisitsDashboard = async (
   const now = Date.now();
   const dayStart = takeMskDayStartMs(now);
   const messageKindCondition = messageKindFilter(messagesArgs.kind);
+  const isVisitErrorKind = messagesArgs.kind === DashMessageKind.VisitError;
 
-  const [todayRows, messageRows, reads, dayRows] = await Promise.all([
+  const [todayRows, visitRows, messageRows, reads, dayRows] = await Promise.all([
     db
       .select({ id: visitDB.id, l: visitDB.l, deviceId: visitDB.deviceId, createdAt: visitDB.createdAt, v: visitDB.v })
       .from(visitDB)
       .where(gte(visitDB.createdAt, dayStart)),
-    db
-      .select({
-        id: dashErrorDB.id,
-        kind: dashErrorDB.kind,
-        l: dashErrorDB.l,
-        m: dashErrorDB.m,
-        visit: dashErrorDB.visit,
-        createdAt: dashErrorDB.createdAt,
-      })
-      .from(dashErrorDB)
-      .where(
-        messagesArgs.beforeId === null
-          ? messageKindCondition
-          : and(messageKindCondition, lt(dashErrorDB.id, sql`${messagesArgs.beforeId}`)),
-      )
-      .orderBy(desc(dashErrorDB.id))
-      .limit(messagesPageSize + 1),
+    isVisitErrorKind
+      ? db
+          .select({ id: visitDB.id, l: visitDB.l, url: visitDB.url, v: visitDB.v, createdAt: visitDB.createdAt })
+          .from(visitDB)
+          .where(
+            messagesArgs.beforeId === null ? undefined : lt(visitDB.id, sql`${messagesArgs.beforeId}`),
+          )
+          .orderBy(desc(visitDB.id))
+          .limit(messagesPageSize + 1)
+      : Promise.resolve([]),
+    isVisitErrorKind
+      ? Promise.resolve([])
+      : db
+          .select({
+            id: dashErrorDB.id,
+            kind: dashErrorDB.kind,
+            l: dashErrorDB.l,
+            m: dashErrorDB.m,
+            visit: dashErrorDB.visit,
+            createdAt: dashErrorDB.createdAt,
+          })
+          .from(dashErrorDB)
+          .where(
+            messagesArgs.beforeId === null
+              ? messageKindCondition
+              : and(messageKindCondition, lt(dashErrorDB.id, sql`${messagesArgs.beforeId}`)),
+          )
+          .orderBy(desc(dashErrorDB.id))
+          .limit(messagesPageSize + 1),
     takeDashReads(login),
     db
       .select({
@@ -427,6 +440,17 @@ export const takeVisitsDashboard = async (
   );
 
   const onlineUsers = await Promise.all(online.logins.map(takeUserInfo));
+
+  const visitsHasMore = visitRows.length > messagesPageSize;
+  const visits = await Promise.all(
+    visitRows.slice(0, messagesPageSize).map(async visit => ({
+      id: visit.id,
+      createdAt: visit.createdAt,
+      v: visit.v,
+      url: visit.url,
+      user: await takeUserInfo(visit.l),
+    })),
+  );
 
   const messagesHasMore = messageRows.length > messagesPageSize;
   const pageRows = messageRows.slice(0, messagesPageSize);
@@ -470,6 +494,8 @@ export const takeVisitsDashboard = async (
     dayStats: dayRows,
     messages,
     messagesHasMore,
+    visits,
+    visitsHasMore,
     messageReads: reads,
     unreadCounts,
   };

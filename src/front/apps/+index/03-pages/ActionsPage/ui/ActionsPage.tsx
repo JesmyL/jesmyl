@@ -1,4 +1,5 @@
-import { translateBase } from '#basis/locale';
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { translateBase, translateEditorBase } from '#basis/locale';
 import { useAppNameContext } from '#basis/state/contexts';
 import { LinkAppActionFabric } from '#shared/lib/link-app-actions';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
@@ -11,6 +12,7 @@ import { Link } from '@tanstack/react-router';
 import { Atom, atom } from 'atomaric';
 import { hostConfig } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { checkIsStartsWith } from 'shared/utils/checkIs';
 import { toast } from 'sonner';
 
@@ -21,6 +23,7 @@ export function IndexActionsPage() {
 
   const onHrefData = LinkAppActionFabric.useOnHrefData();
   const appName = useAppNameContext();
+  const checkAccess = useCheckUserAccessRightsInScope();
 
   return (
     <PageContainerConfigurer
@@ -56,6 +59,20 @@ export function IndexActionsPage() {
               idPostfix="down"
             />
           </Link>
+
+          {!checkAccess('dash', 'DASH') || (
+            <Link
+              to="/!other/$appName/actions/dash"
+              params={{ appName }}
+              className="w-full"
+            >
+              <BrutalItem
+                iconNode={<LazyIcon icon="DashboardSpeed01" />}
+                title={translateEditorBase(EditorLocaleKey.VisitsDashboard)}
+                idPostfix="visits-dashboard"
+              />
+            </Link>
+          )}
 
           <IconConfigurator
             key="pick-icon"

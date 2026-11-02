@@ -187,7 +187,7 @@ export const localeEditorUa = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.Denied]: 'Заборонено',
   [EditorLocaleKey.Language]: 'Мова',
 
-  [EditorLocaleKey.VisitsDashboard]: 'Дашборд візитів',
+  [EditorLocaleKey.VisitsDashboard]: 'Дашборд',
   [EditorLocaleKey.VisitsOnline]: 'Онлайн',
   [EditorLocaleKey.VisitsToday]: 'Візитів сьогодні',
   [EditorLocaleKey.VisitsUnique]: 'Унікальних відвідувачів',
