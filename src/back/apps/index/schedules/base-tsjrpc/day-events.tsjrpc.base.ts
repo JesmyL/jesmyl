@@ -162,6 +162,15 @@ export const schDayEventsTsjrpcBaseServer =
             return `${inEventTypeTtileOfDay(sch, props)} установлен признак секретности`;
           }),
 
+          setIsNeedAppInform: modifyEvent(async (event, { props, value }, sch, _day, tool) => {
+            await throwIfNoScheduleEventContentRedact(sch, tool.auth);
+
+            if (value) event.noAppInform = 1;
+            else delete event.noAppInform;
+
+            return `${inEventTypeTtileOfDay(sch, props)} уведомление в приложении ${value ? 'отключено' : 'включено'}`;
+          }, true),
+
           addAttachment: modifyEvent(async (event, { props, attKey, defaultValue }, sch, _day, tool) => {
             await throwIfNoComsListRedact(attKey, props, sch, tool);
 

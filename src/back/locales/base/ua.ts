@@ -821,6 +821,8 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   ...baseLocaleTemplate(BaseLocaleKey.ScheduleInformStatus)`${IF('$v').THEN`Нагадувати ${IF('$n').THEN`за $n хв. і `.ELSE`лише `}на початку`.ELSE`Нагадування вимкнено`}`,
   [BaseLocaleKey.ScheduleInformOnlyByStart]: 'Нагадувати лише на початку',
   [BaseLocaleKey.ScheduleInformBefore]: 'Нагадувати за $n хв.',
+  [BaseLocaleKey.ScheduleEventAppInformWillBe]: 'Сповіщення буде за $n хвилин',
+  [BaseLocaleKey.ScheduleEventAppInformWontBe]: 'Сповіщення не буде',
   [BaseLocaleKey.ScheduleInformDisabled]: 'Вимкнено',
   [BaseLocaleKey.ScheduleUserNotReceiveInform]: 'Учасник не отримує повідомлення',
   [BaseLocaleKey.ScheduleUserReceiveInform]: 'Учасник отримує повідомлення',

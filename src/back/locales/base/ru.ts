@@ -839,6 +839,8 @@ export const localeBaseRu = convertObjectToArray<LocaleBaseDelivered<Langi.Ru>>(
   )`${IF('$v').THEN`Напоминать ${IF('$n').THEN`за $n мин. и `.ELSE`только `}в начале`.ELSE`Напоминания отключены`}`,
   [BaseLocaleKey.ScheduleInformOnlyByStart]: 'Напоминать только в начале',
   [BaseLocaleKey.ScheduleInformBefore]: 'Напоминать за $n мин.',
+  [BaseLocaleKey.ScheduleEventAppInformWillBe]: 'Оповещение будет за $n минут',
+  [BaseLocaleKey.ScheduleEventAppInformWontBe]: 'Оповещение не будет',
   [BaseLocaleKey.ScheduleInformDisabled]: 'Выключено',
   [BaseLocaleKey.ScheduleUserNotReceiveInform]: 'Участник не получает уведомления',
   [BaseLocaleKey.ScheduleUserReceiveInform]: 'Участник получает уведомления',

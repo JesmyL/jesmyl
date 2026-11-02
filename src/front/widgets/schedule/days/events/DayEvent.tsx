@@ -222,6 +222,9 @@ export function ScheduleWidgetDayEvent(props: Props) {
                   eventTopic={props.event.topic}
                   eventTypeTitle={eventType.title}
                   isSecret={props.event.secret}
+                  noAppInform={props.event.noAppInform}
+                  appInform={props.schedule.appInform ?? 1}
+                  isPastEvent={isPrevEvent || isCurrentEvent}
                   dayEventScopeProps={dayEventScopeProps}
                   eventTm={eventTm}
                 />

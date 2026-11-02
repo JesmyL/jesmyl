@@ -819,6 +819,8 @@ export const localeBaseEn = convertObjectToArray<LocaleBaseDelivered<Langi.En>>(
   ...baseLocaleTemplate(BaseLocaleKey.ScheduleInformStatus)`${IF('$v').THEN`Notify ${IF('$n').THEN`$n min. before and `.ELSE`only `}at the start`.ELSE`Reminders are off`}`,
   [BaseLocaleKey.ScheduleInformOnlyByStart]: 'Notify only at the start',
   [BaseLocaleKey.ScheduleInformBefore]: 'Notify $n min. before',
+  [BaseLocaleKey.ScheduleEventAppInformWillBe]: 'Notification will be $n minutes before',
+  [BaseLocaleKey.ScheduleEventAppInformWontBe]: 'No notification',
   [BaseLocaleKey.ScheduleInformDisabled]: 'Off',
   [BaseLocaleKey.ScheduleUserNotReceiveInform]: 'The member does not receive notifications',
   [BaseLocaleKey.ScheduleUserReceiveInform]: 'The member receives notifications',

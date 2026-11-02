@@ -58,9 +58,10 @@ class SchedulePushInformer {
       const dayStartMs = indexScheduleGetDayStartMs(schedule, dayi);
 
       for (let eventi = 0; eventi < day.list.length; eventi++) {
-        const eventTimeMs =
-          ScheduleWidgetCleans.takeEventTm(day.list[eventi], schedule.types[day.list[eventi].type]) *
-          howMillisecondsInMin;
+        const event = day.list[eventi];
+        if (event.noAppInform === 1) continue;
+
+        const eventTimeMs = ScheduleWidgetCleans.takeEventTm(event, schedule.types[event.type]) * howMillisecondsInMin;
         const eventStartMs = dayStartMs + wakeupMs + times[eventi] * howMillisecondsInMin - eventTimeMs;
 
         this.informEvent(schedule, dayi, eventi, eventStartMs, now, appInform, false);

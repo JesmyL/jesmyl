@@ -788,4 +788,6 @@ export const enum BaseLocaleKey {
   PushNotifications = 768,
   ConfigPickIcon = 769,
   Copy = 770,
+  ScheduleEventAppInformWillBe = 771,
+  ScheduleEventAppInformWontBe = 772,
 }

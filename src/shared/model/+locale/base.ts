@@ -744,6 +744,8 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.ScheduleInformStatus]: StringTemplaterInterpolation<{ n: number; v: boolean }>;
   [BaseLocaleKey.ScheduleInformOnlyByStart]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleInformBefore]: StringTemplaterInterpolation<{ n: number }>;
+  [BaseLocaleKey.ScheduleEventAppInformWillBe]: StringTemplaterInterpolation<{ n: number }>;
+  [BaseLocaleKey.ScheduleEventAppInformWontBe]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleInformDisabled]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleUserNotReceiveInform]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleUserReceiveInform]: LocaleSimpleString;

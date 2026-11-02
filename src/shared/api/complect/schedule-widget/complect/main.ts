@@ -151,6 +151,7 @@ export interface IScheduleWidgetDayEvent {
   tm?: number;
   atts?: ScheduleWidgetDayEventAttValues;
   secret?: 1 | 0;
+  noAppInform?: 1 | 0;
   rate?: Record<ScheduleWidgetUserMi, [number, string]>;
 }
 

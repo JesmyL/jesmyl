@@ -822,6 +822,8 @@ export const localeBaseKz = convertObjectToArray<LocaleBaseDelivered<Langi.Kz>>(
   ...baseLocaleTemplate(BaseLocaleKey.ScheduleInformStatus)`${IF('$v').THEN`Еске салу ${IF('$n').THEN`$n мин. бұрын және `.ELSE`тек `}басында`.ELSE`Еске салу өшірілген`}`,
   [BaseLocaleKey.ScheduleInformOnlyByStart]: 'Тек басында еске салу',
   [BaseLocaleKey.ScheduleInformBefore]: '$n мин. бұрын еске салу',
+  [BaseLocaleKey.ScheduleEventAppInformWillBe]: 'Хабарлама $n минут бұрын болады',
+  [BaseLocaleKey.ScheduleEventAppInformWontBe]: 'Хабарлама болмайды',
   [BaseLocaleKey.ScheduleInformDisabled]: 'Өшірілген',
   [BaseLocaleKey.ScheduleUserNotReceiveInform]: 'Қатысушы хабарлама алмайды',
   [BaseLocaleKey.ScheduleUserReceiveInform]: 'Қатысушы хабарлама алады',

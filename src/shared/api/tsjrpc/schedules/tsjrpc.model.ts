@@ -160,6 +160,7 @@ export type SchDayEventsTsjrpcMethods = {
   setTopic: (args: { props: ScheduleDayEventScopeProps; value: string }) => IScheduleWidget;
   setDescription: (args: { props: ScheduleDayEventScopeProps; value: string }) => IScheduleWidget;
   setTm: (args: { props: ScheduleDayEventScopeProps; value: number }) => IScheduleWidget;
+  setIsNeedAppInform: (args: { props: ScheduleDayEventScopeProps; value: Bool }) => IScheduleWidget;
   toggleIsSecret: (args: { props: ScheduleDayEventScopeProps; value: void }) => IScheduleWidget;
 
   // attachments
