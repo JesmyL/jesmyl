@@ -63,7 +63,7 @@ type SameArgs<A, B> = (<T>() => T extends A ? 1 : 2) extends <T>() => T extends 
 export const declension = <One extends string, Two extends string | und, Five extends string | und>(
   num: number,
   one: One,
-  two: [SameArgs<One, Two>, undefined] extends [true, Five] ? never : Two,
+  two?: [SameArgs<One, Two>, undefined] extends [true, Five] ? never : Two,
   five?: SameArgs<Two, Five> extends true ? undefined : Five,
 ): string => {
   if (num % 1) return two ?? one;
