@@ -24,8 +24,9 @@ import {
   useCmComMarkTextValuesMaker,
 } from '$cm/ext';
 import styled from '@emotion/styled';
+import { useNavigate, useSearch } from '@tanstack/react-router';
 import { atom, useAtomValue } from 'atomaric';
-import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { CmComAudioMarkEditPackValue, CmComAudioMarkPackTime, CmComOrderWidNever, CmAudioTail } from 'shared/api';
 import { Bool } from 'shared/enums';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
@@ -45,17 +46,34 @@ import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import { CmEditorTabComAudioMarksShowSlideListButton } from './ShowSlideListButton';
 
-const srcOnEditAtom = lazyInit(() => atom<null | CmAudioTail>(null, 'cm+editor:srcOnMarkEdit'));
 const preSwitchTimeAtom = lazyInit(() => atom(-1, 'cm+editor:comAudioPreSwitchTime'));
 const pinTimeAtom = lazyInit(() => atom<CmComAudioMarkPackTime | null>(null));
 const playbackRateAtom = lazyInit(() => atom(1));
 
 export const CmEditorTabComAudioMarks = iife(() => {
   const Child = ({ ccom }: { ccom: EditableCom }) => {
-    const editSrc = useAtomValue(srcOnEditAtom());
+    const navigate = useNavigate();
+    const { src: editSrc } = useSearch({ from: '/cm/edit/coms/$comw/$tab/' });
     const { slideIdTimeSetDict, markTimes } = useCmComMarkTextValuesMaker(ccom, editSrc, TextCase.AsIs);
     const pinTime = useAtomValue(pinTimeAtom());
     const playbackRate = useAtomValue(playbackRateAtom());
+
+    const setEditSrc = useCallback(
+      (src: CmAudioTail | nil) =>
+        navigate({
+          to: '.',
+          replace: true,
+          search: prev => {
+            if (src != null) return { ...(prev as object), src } as object;
+
+            const nextSearch = { ...prev };
+            delete nextSearch.src;
+
+            return nextSearch;
+          },
+        }),
+      [navigate],
+    );
 
     useEffect(() => {
       cmComAudioPlayerUpdatePlaybackRate(playbackRate);
@@ -100,16 +118,13 @@ export const CmEditorTabComAudioMarks = iife(() => {
     };
 
     useEffect(() => {
-      if (!ccom.audio?.length) {
-        srcOnEditAtom().reset();
+      if (ccom.audio?.length) {
+        if (editSrc == null || !ccom.audio.includes(editSrc)) setEditSrc(ccom.audio[0]);
         return;
       }
 
-      if (editSrc == null || !ccom.audio.includes(editSrc)) {
-        srcOnEditAtom().set(ccom.audio[0]);
-        return;
-      }
-    }, [ccom.audio, editSrc]);
+      if (editSrc != null) setEditSrc(null);
+    }, [ccom.audio, editSrc, setEditSrc]);
 
     return (
       <div className="mt-10">
@@ -120,7 +135,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
               <Button
                 key={i}
                 variant={src === editSrc ? 'secondary' : 'link'}
-                onClick={() => srcOnEditAtom().set(src)}
+                onClick={() => setEditSrc(src)}
               >
                 {i + 1}
               </Button>

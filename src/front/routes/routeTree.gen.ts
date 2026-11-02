@@ -47,6 +47,7 @@ import { Route as StoragesIRackwSumIndexImport } from './tree/storages/i/$rackw/
 import { Route as otherAppNameSettingsNounpronsIndexImport } from './tree/!other.$appName/settings/noun_prons/index'
 import { Route as otherAppNameActionsFilesIndexImport } from './tree/!other.$appName/actions/files/index'
 import { Route as otherAppNameActionsDownIndexImport } from './tree/!other.$appName/actions/down/index'
+import { Route as CmEditComsComwTabIndexImport } from './tree/cm/edit/coms/$comw/$tab/index'
 
 // Create Virtual Routes
 
@@ -96,9 +97,6 @@ const otherAppNameSchsManageIndexLazyImport = createFileRoute(
 )()
 const otherAppNameSchsDayIndexLazyImport = createFileRoute(
   '/!other/$appName/schs/day/',
-)()
-const CmEditComsComwTabIndexLazyImport = createFileRoute(
-  '/cm/edit/coms/$comw/$tab/',
 )()
 
 // Create/Update Routes
@@ -555,13 +553,11 @@ const otherAppNameActionsDownIndexRoute =
     getParentRoute: () => otherAppNameRouteRoute,
   } as any)
 
-const CmEditComsComwTabIndexLazyRoute = CmEditComsComwTabIndexLazyImport.update(
-  {
-    id: '/coms/$comw/$tab/',
-    path: '/coms/$comw/$tab/',
-    getParentRoute: () => CmEditRouteLazyRoute,
-  } as any,
-).lazy(() =>
+const CmEditComsComwTabIndexRoute = CmEditComsComwTabIndexImport.update({
+  id: '/coms/$comw/$tab/',
+  path: '/coms/$comw/$tab/',
+  getParentRoute: () => CmEditRouteLazyRoute,
+} as any).lazy(() =>
   import('./tree/cm/edit/coms/$comw/$tab/index.lazy').then((d) => d.Route),
 )
 
@@ -1028,7 +1024,7 @@ declare module '@tanstack/react-router' {
       id: '/cm/edit/coms/$comw/$tab/'
       path: '/coms/$comw/$tab'
       fullPath: '/cm/edit/coms/$comw/$tab'
-      preLoaderRoute: typeof CmEditComsComwTabIndexLazyImport
+      preLoaderRoute: typeof CmEditComsComwTabIndexImport
       parentRoute: typeof CmEditRouteLazyImport
     }
   }
@@ -1063,7 +1059,7 @@ interface CmEditRouteLazyRouteChildren {
   CmEditIndexLazyRoute: typeof CmEditIndexLazyRoute
   CmEditComsIndexLazyRoute: typeof CmEditComsIndexLazyRoute
   CmEditComsComwIndexLazyRoute: typeof CmEditComsComwIndexLazyRoute
-  CmEditComsComwTabIndexLazyRoute: typeof CmEditComsComwTabIndexLazyRoute
+  CmEditComsComwTabIndexRoute: typeof CmEditComsComwTabIndexRoute
 }
 
 const CmEditRouteLazyRouteChildren: CmEditRouteLazyRouteChildren = {
@@ -1075,7 +1071,7 @@ const CmEditRouteLazyRouteChildren: CmEditRouteLazyRouteChildren = {
   CmEditIndexLazyRoute: CmEditIndexLazyRoute,
   CmEditComsIndexLazyRoute: CmEditComsIndexLazyRoute,
   CmEditComsComwIndexLazyRoute: CmEditComsComwIndexLazyRoute,
-  CmEditComsComwTabIndexLazyRoute: CmEditComsComwTabIndexLazyRoute,
+  CmEditComsComwTabIndexRoute: CmEditComsComwTabIndexRoute,
 }
 
 const CmEditRouteLazyRouteWithChildren = CmEditRouteLazyRoute._addFileChildren(
@@ -1315,7 +1311,7 @@ export interface FileRoutesByFullPath {
   '/cm/edit/coms/$comw': typeof CmEditComsComwIndexLazyRoute
   '/storages/i/$rackw/$cardi': typeof StoragesIRackwCardiIndexLazyRoute
   '/storages/i/$rackw/edit': typeof StoragesIRackwEditIndexLazyRoute
-  '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabIndexLazyRoute
+  '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -1376,7 +1372,7 @@ export interface FileRoutesByTo {
   '/cm/edit/coms/$comw': typeof CmEditComsComwIndexLazyRoute
   '/storages/i/$rackw/$cardi': typeof StoragesIRackwCardiIndexLazyRoute
   '/storages/i/$rackw/edit': typeof StoragesIRackwEditIndexLazyRoute
-  '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabIndexLazyRoute
+  '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabIndexRoute
 }
 
 export interface FileRoutesById {
@@ -1446,7 +1442,7 @@ export interface FileRoutesById {
   '/cm/edit/coms/$comw/': typeof CmEditComsComwIndexLazyRoute
   '/storages/i/$rackw/$cardi/': typeof StoragesIRackwCardiIndexLazyRoute
   '/storages/i/$rackw/edit/': typeof StoragesIRackwEditIndexLazyRoute
-  '/cm/edit/coms/$comw/$tab/': typeof CmEditComsComwTabIndexLazyRoute
+  '/cm/edit/coms/$comw/$tab/': typeof CmEditComsComwTabIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -2024,7 +2020,7 @@ export const routeTree = rootRoute
       "parent": "/storages"
     },
     "/cm/edit/coms/$comw/$tab/": {
-      "filePath": "cm/edit/coms/$comw/$tab/index.lazy.tsx",
+      "filePath": "cm/edit/coms/$comw/$tab/index.tsx",
       "parent": "/cm/edit"
     }
   }
