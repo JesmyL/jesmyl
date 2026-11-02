@@ -1,10 +1,11 @@
 import { spawn } from 'child_process';
 import { chmodSync, existsSync } from 'fs';
 import path from 'path';
+import { electronAppName } from './lib';
 
 const electronAppDir = path.resolve(import.meta.dirname, '..');
 const releaseDir = path.join(electronAppDir, 'release-builds');
-const appImagePath = path.join(releaseDir, 'JESMYL_PRO.AppImage');
+const appImagePath = path.join(releaseDir, `${electronAppName}.AppImage`);
 const asarPath = path.join(releaseDir, 'linux-unpacked/resources/app.asar');
 const distPath = path.join(electronAppDir, 'dist/main.cjs');
 const electronBinary = path.join(electronAppDir, 'node_modules/.bin/electron');
@@ -37,7 +38,8 @@ const takeLaunchTarget = () => {
   throw `❌ Нет собранного приложения: ${appImagePath} / ${asarPath} / ${distPath}`;
 };
 
-const isInPath = (name: string) => !!process.env.PATH?.split(path.delimiter).find(dir => existsSync(path.join(dir, name)));
+const isInPath = (name: string) =>
+  !!process.env.PATH?.split(path.delimiter).find(dir => existsSync(path.join(dir, name)));
 
 const target = takeLaunchTarget();
 const needsXvfb = !process.env.DISPLAY;
@@ -82,8 +84,7 @@ const settle = (isOk: boolean, message: string) => {
   process.exitCode = isOk ? 0 : 1;
 };
 
-const takeFailureLine = () =>
-  logs.split('\n').find(line => FAIL_REGEXP.test(line) && !BENIGN_REGEXP.test(line));
+const takeFailureLine = () => logs.split('\n').find(line => FAIL_REGEXP.test(line) && !BENIGN_REGEXP.test(line));
 
 const onOutput = (data: Buffer) => {
   logs += data.toString();
@@ -99,7 +100,10 @@ const onOutput = (data: Buffer) => {
 child.stdout?.on('data', onOutput);
 child.stderr?.on('data', onOutput);
 
-const timeoutTimer = setTimeout(() => settle(false, '❌ Собранное приложение не запустилось за отведённое время!'), TIMEOUT_MS);
+const timeoutTimer = setTimeout(
+  () => settle(false, '❌ Собранное приложение не запустилось за отведённое время!'),
+  TIMEOUT_MS,
+);
 
 child.on('error', error =>
   settle(false, `❌ Не удалось запустить ${command}: ${String(error)}${needsXvfb ? ' (проверьте xvfb)' : ''}`),
@@ -108,5 +112,8 @@ child.on('exit', (code, signal) => {
   const isOk = code === 0;
   const exitReason = signal ? `по сигналу ${signal}` : `с кодом ${code}`;
 
-  settle(isOk, isOk ? '✅ Приложение запустилось и завершилось без ошибок.' : `❌ Собранное приложение завершилось ${exitReason}!`);
+  settle(
+    isOk,
+    isOk ? '✅ Приложение запустилось и завершилось без ошибок.' : `❌ Собранное приложение завершилось ${exitReason}!`,
+  );
 });

@@ -6,9 +6,9 @@ import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useAtomValue } from 'atomaric';
+import { electronAppName } from 'electron-app/src/lib';
 import { DragEvent, useEffect, useState } from 'react';
 import { ElectronWorkDirFile } from 'shared/api/tsjrpc.electtron/basic';
-import { electronAppName } from 'shared/const/electron';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { objectValues } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
@@ -147,8 +147,7 @@ const WorkDirBrowser = ({
     // A failed font must not cancel saving the media files of the same drop.
     const fontSaves = await Promise.allSettled(fontFiles.map(file => addFileToMyFiles(file, MyFileType.Font)));
 
-    for (const fontSave of fontSaves)
-      if (fontSave.status === 'fulfilled') onApplyFont?.(fontSave.value);
+    for (const fontSave of fontSaves) if (fontSave.status === 'fulfilled') onApplyFont?.(fontSave.value);
 
     const targetDirPath = workDirFiles.length ? await saveDroppedWorkDirFiles(dirPath, workDirFiles) : null;
     setRefreshi(it => it + 1);

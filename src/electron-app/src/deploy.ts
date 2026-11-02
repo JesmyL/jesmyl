@@ -1,6 +1,6 @@
 import { exec } from 'child_process';
 import { hostConfig } from '../../../freshHostConfig';
-import { makeElectronDownHostUrl } from './lib';
+import { electronAppName, makeElectronDownHostUrl } from './lib';
 
 async function runDeploy(): Promise<void> {
   const { host, ip } = hostConfig;
@@ -20,7 +20,7 @@ async function runDeploy(): Promise<void> {
   console.info('🚀 Начинаем отправку файлов Electron на удаленный сервер...', targetDir);
   try {
     await execAsync(`scp ${buildFolder}/latest*.yml ${buildFolder}/*.exe ${buildFolder}/*.AppImage ${targetRemoteDir}`);
-    console.info('✅ Деплой Electron успешно завершен!', targetDir);
+    console.info('✅ Деплой Electron успешно завершен!', `${targetDir}/${electronAppName}.{ext}`);
   } catch (error) {
     console.error('❌ Ошибка во время деплоя:', error);
     process.exit(1);

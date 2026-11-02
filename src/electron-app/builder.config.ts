@@ -1,6 +1,5 @@
 import { lazyEnvJson } from '../back/envJson';
-import { electronAppName } from './src/const';
-import { makeElectronDownHostUrl } from './src/lib';
+import { electronAppName, makeElectronDownHostUrl } from './src/lib';
 
 const downUrl = `https://${makeElectronDownHostUrl(lazyEnvJson().host)}`;
 const icon = 'assets/img/ico-512x512.png';

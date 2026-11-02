@@ -1,24 +1,108 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import windowStateKeeper from 'electron-window-state';
+import { mkdtempSync, rmSync } from 'fs';
+import { tmpdir } from 'os';
 import path from 'path';
 import hostConfig from '../../../host-config.json';
-import { electronAppClientEventKey, electronAppName, electronAppWinListHolder } from './const';
-import { makeElectronDownHostUrl } from './lib';
+import { electronAppClientEventKey, electronAppSmokeArg, electronAppWinListHolder } from './const';
+import { electronAppName, makeElectronDownHostUrl } from './lib';
 import { ElectronAppWindowInvokeProps } from './model';
 import { electronAppBasicTsjrpcBase, registerWorkDirFileProtocol } from './tsjrpc/bases/basic.server.base';
-import { electronAppPresentationsTsjrpcBase } from './tsjrpc/bases/presentations.server.base';
 import { electronAppPresentationTsjrpcBase } from './tsjrpc/bases/presentation.server.base';
+import { electronAppPresentationsTsjrpcBase } from './tsjrpc/bases/presentations.server.base';
 import { tsjrpcElectronAppBaseNext } from './tsjrpc/init/tsjrpc.base.electron';
-import { setElectronAppSessionPartition, takeElectronAppPartition, takeElectronAppWebPreferences } from './webPreferences';
+import { verifyDownloadedUpdate } from './update-verification';
+import {
+  setElectronAppSessionPartition,
+  takeElectronAppPartition,
+  takeElectronAppWebPreferences,
+} from './webPreferences';
 
-const gotTheLock = app.requestSingleInstanceLock();
+const isSmokeRun = process.argv.includes(electronAppSmokeArg);
 const isTestMode = process.env.JESMYL_TEST_RUNNER === 'true';
 const sessionPartition = takeElectronAppPartition(isTestMode);
 
 setElectronAppSessionPartition(sessionPartition);
 
-if (!gotTheLock && !isTestMode) {
+/** Единая настройка фида обновлений для обычного запуска и smoke-самопроверки. */
+const applyElectronUpdaterConfig = (host: string) => {
+  autoUpdater.logger = console;
+
+  if (!app.isPackaged) autoUpdater.forceDevUpdateConfig = true;
+
+  autoUpdater.setFeedURL({ provider: 'generic', url: makeElectronDownHostUrl(host, true) });
+  autoUpdater.autoInstallOnAppQuit = false;
+};
+
+if (isSmokeRun) {
+  const smokeUserDataDir = mkdtempSync(path.join(tmpdir(), 'jesmyl-smoke-'));
+
+  app.setPath('userData', smokeUserDataDir);
+  app.setPath('sessionData', smokeUserDataDir);
+  app.disableHardwareAcceleration();
+
+  const removeSmokeUserData = () => {
+    try {
+      rmSync(smokeUserDataDir, { recursive: true, force: true });
+    } catch {
+      // Временная папка — ОС уберёт её сама.
+    }
+  };
+
+  let isSmokeSettled = false;
+
+  const settleSmoke = (exitCode: number, message: string) => {
+    if (isSmokeSettled) return;
+
+    isSmokeSettled = true;
+    removeSmokeUserData();
+
+    if (exitCode === 0) console.info(message);
+    else console.error(message);
+
+    app.exit(exitCode);
+  };
+
+  process.on('unhandledRejection', reason => {
+    settleSmoke(1, `❌ ${electronAppName} smoke: необработанная ошибка — ${String(reason)}`);
+  });
+
+  app
+    .whenReady()
+    .then(() => {
+      applyElectronUpdaterConfig(hostConfig.host);
+
+      autoUpdater.on('error', error => {
+        settleSmoke(1, `❌ ${electronAppName} smoke: апдейтер не смог запуститься — ${String(error)}`);
+      });
+
+      autoUpdater.once('update-available', () => {
+        settleSmoke(
+          0,
+          `✅ ${electronAppName} smoke: приложение готово, проверка обновлений работает (обновление доступно)`,
+        );
+      });
+
+      autoUpdater.once('update-not-available', () => {
+        settleSmoke(0, `✅ ${electronAppName} smoke: приложение готово, проверка обновлений работает (обновлений нет)`);
+      });
+
+      autoUpdater.once('update-downloaded', () => {
+        settleSmoke(
+          0,
+          `✅ ${electronAppName} smoke: приложение готово, проверка обновлений работает (обновление скачано)`,
+        );
+      });
+
+      autoUpdater.checkForUpdatesAndNotify().catch(error => {
+        settleSmoke(1, `❌ ${electronAppName} smoke: проверка обновлений не запустилась — ${String(error)}`);
+      });
+    })
+    .catch(error => {
+      settleSmoke(1, `❌ ${electronAppName} smoke: ошибка запуска приложения — ${String(error)}`);
+    });
+} else if (!app.requestSingleInstanceLock() && !isTestMode) {
   app.quit();
 } else {
   app.on('second-instance', () => {
@@ -30,8 +114,8 @@ if (!gotTheLock && !isTestMode) {
     }
   });
 
-  const host = hostConfig.host;
   const isProd = app.isPackaged || process.env.NODE_ENV === 'production';
+  const host = hostConfig.host;
   const url = isProd ? `https://${host}` : 'http://localhost:3627';
 
   let isUpdateDownloaded = false;
@@ -54,7 +138,15 @@ if (!gotTheLock && !isTestMode) {
         });
 
         autoUpdater.autoInstallOnAppQuit = false;
-        autoUpdater.on('update-downloaded', () => (isUpdateDownloaded = true));
+        autoUpdater.on('update-downloaded', event => {
+          verifyDownloadedUpdate(event)
+            .then(() => {
+              isUpdateDownloaded = true;
+            })
+            .catch(error => {
+              console.error(`❌ Обновление v${event.version} отклонено: проверка перед установкой не пройдена.`, error);
+            });
+        });
 
         setTimeout(() => {
           autoUpdater.checkForUpdatesAndNotify().catch(() => {});

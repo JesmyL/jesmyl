@@ -1,6 +1,6 @@
+import { electronAppName } from 'electron-app/src/lib';
 import fs from 'fs';
 import { hostConfig } from 'shared/api';
-import { electronAppName } from 'shared/const/electron';
 import { Do } from 'shared/enums';
 import { checkIsStartsWith } from 'shared/utils/checkIs';
 import { checkIsEq } from 'shared/utils/checkIsEq';
