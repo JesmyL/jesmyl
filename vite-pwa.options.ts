@@ -1,12 +1,14 @@
 import { VitePWAOptions } from 'vite-plugin-pwa';
 
+const manifestFilename = 'app-manifest-v2.json';
+
 export const vitePWAOptions = {
   injectRegister: 'auto',
   strategies: 'injectManifest',
   registerType: 'prompt',
   srcDir: 'src',
   filename: 'sw.ts',
-  manifestFilename: 'app-manifest-v2.json' as const,
+  manifestFilename,
   injectManifest: {
     globPatterns: ['**/*.{js,wasm,css,html}'],
     manifestTransforms: [
@@ -19,7 +21,10 @@ export const vitePWAOptions = {
     name: 'Jesus my Lord',
     short_name: 'JesmyL',
     description: 'Сборник приложений',
+    id: '/',
+    scope: '/',
     prefer_related_applications: false,
+    related_applications: [{ platform: 'webapp', url: `/${manifestFilename}`, id: '/' }],
     start_url: '/',
     display: 'standalone',
     theme_color: '#587455',
@@ -52,6 +57,7 @@ export const vitePWAOptions = {
         url: '/cm',
       },
     ],
+    handle_links: 'preferred',
     launch_handler: {
       client_mode: 'focus-existing',
     },
