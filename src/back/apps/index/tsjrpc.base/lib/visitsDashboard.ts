@@ -1,36 +1,33 @@
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { sokiServer } from 'back/complect/soki/SokiServer';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
-import { markDashMessagesRead, takeVisitsDashboard, updateVisitDayMaxOnline } from 'back/dash/visits';
+import { markDashMessagesRead, sendCurrentDashReport, takeVisitsDashboard, updateVisitDayOnline } from 'back/dash/visits';
 import { onDashMessageStoredEvent } from 'back/dash/events';
-import { SokiAuthLogin } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { emptyFunc } from 'shared/utils';
+import { WebSocket } from 'ws';
 import { indexServerTsjrpcShareMethods } from '../../tsjrpc.methods';
 
-const dashLogins = new Set<SokiAuthLogin>();
+const dashWatchers = new Set<WebSocket>();
 
-sokiServer.onOnlineCountChangeEvent.listen(count => {
-  indexServerTsjrpcShareMethods
-    .visitsOnline({ count }, (_, auth) => !!auth?.login && dashLogins.has(auth.login))
-    .catch(emptyFunc);
+sokiServer.onOnlineCountChangeEvent.listen(({ count, login, isEnter }) => {
+  indexServerTsjrpcShareMethods.visitsOnline({ count, login, isEnter }, dashWatchers).catch(emptyFunc);
 
-  updateVisitDayMaxOnline(count).catch(emptyFunc);
+  updateVisitDayOnline(count).catch(emptyFunc);
 });
 
+sokiServer.onClientCloseEvent.listen(client => dashWatchers.delete(client));
+
 onDashMessageStoredEvent.listen(message => {
-  indexServerTsjrpcShareMethods
-    .dashMessage({ message }, (_, auth) => !!auth?.login && dashLogins.has(auth.login))
-    .catch(emptyFunc);
+  indexServerTsjrpcShareMethods.dashMessage({ message }, dashWatchers).catch(emptyFunc);
 });
 
 export const indexTSJRPCBaseVisitsDashboard = {
-  getVisitsDashboard_v1: async ({ messages } = {}, { auth }) => {
+  getVisitsDashboard_v1: async ({ messages } = {}, { auth, client }) => {
     await throwIfNoUserScopeAccessRight(auth, 'dash', 'DASH');
 
     if (!auth?.login) throw 'Нет прав на это действие';
-
-    dashLogins.add(auth.login);
+    if (client) dashWatchers.add(client);
 
     const { logins, anon } = sokiServer.onlineLogins;
 
@@ -49,5 +46,13 @@ export const indexTSJRPCBaseVisitsDashboard = {
     if (!auth?.login) throw 'Нет прав на это действие';
 
     return { value: await markDashMessagesRead(auth.login, kind) };
+  },
+
+  sendDashEmailReport_v1: async (_, { auth }) => {
+    await throwIfNoUserScopeAccessRight(auth, 'dash', 'DASH');
+
+    if (!auth?.login) throw 'Нет прав на это действие';
+
+    return { value: await sendCurrentDashReport(auth.login) };
   },
 } satisfies ServerTsjrpcSatisfy<IndexTsjrpcModel>;

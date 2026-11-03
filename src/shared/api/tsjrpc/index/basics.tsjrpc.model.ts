@@ -51,6 +51,7 @@ export type IndexTsjrpcModel = {
   getIndexValues: () => IndexValues;
   getVisitsDashboard_v1: (args?: { messages?: VisitsDashboardMessagesArgs }) => VisitsDashboard;
   markDashMessagesRead_v1: (args: { kind: DashMessageKind }) => PRecord<DashMessageKind, number>;
+  sendDashEmailReport_v1: () => string;
 
   getAccessRightTitles: () => IndexAppAccessRightTitles;
   getUserInfoDict: () => PRecord<UserLogin, UserInfoUnsecure>;

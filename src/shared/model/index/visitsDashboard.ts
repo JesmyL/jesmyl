@@ -50,6 +50,10 @@ export type VisitsDashboardDayStat = {
   minVersion: number | null;
 };
 
+export const noOnlineSample = -1;
+
+export type VisitsDashboardOnlineHours = { min: number[]; max: number[] };
+
 export type VisitsDashboard = {
   online: number;
   onlineUsers: DashMessageUser[];
@@ -60,6 +64,7 @@ export type VisitsDashboard = {
   anonVisits: number;
   anonUniq: number;
   hours: number[];
+  onlineHours: VisitsDashboardOnlineHours;
   versions: PRecord<number, number>;
   todayMinVersion: number | null;
   dayStats: VisitsDashboardDayStat[];

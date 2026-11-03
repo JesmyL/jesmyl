@@ -1,4 +1,5 @@
 import { Langi } from 'shared/api/complect/enums';
+import { SokiAuthLogin } from 'shared/api/complect/soki.model';
 import { LocaleBase } from 'shared/model/+locale/base';
 import { LocaleDynamic } from 'shared/model/+locale/dynamic';
 import { LocaleCmEditor } from 'shared/model/+locale/editor';
@@ -29,7 +30,11 @@ export type IndexTsjrpcSharesModel = {
 
   constConfig: (args: { config: Partial<ConstantsConfig>; mod: number }) => unknown;
 
-  visitsOnline: (args: { count: number }) => unknown;
+  visitsOnline: (args: {
+    count: number;
+    login: SokiAuthLogin | nil;
+    isEnter: boolean;
+  }) => unknown;
 
   dashMessage: (args: { message: DashMessage }) => unknown;
 

@@ -18,8 +18,35 @@ type StringTemplaterInterpolationTail<Keys extends string, GenKey extends string
         | ([Exclude<Keys, Key>] extends [never] ? `${GenKey}$${Key}` : never);
     }[Keys];
 
+type UnionToIntersection<Union> = (Union extends unknown ? (arg: Union) => void : never) extends (
+  arg: infer Intersection,
+) => void
+  ? Intersection
+  : never;
+
+type StringTemplaterLastKey<Keys extends string> = UnionToIntersection<
+  Keys extends unknown ? (arg: Keys) => void : never
+> extends (arg: infer Key) => void
+  ? Key
+  : never;
+
+type StringTemplaterKeysWithin3<Keys extends string, Acc extends readonly unknown[] = []> = [Keys] extends [never]
+  ? true
+  : Acc['length'] extends 3
+    ? false
+    : StringTemplaterKeysWithin3<Exclude<Keys, StringTemplaterLastKey<Keys>>, [...Acc, unknown]>;
+
+// Enumerating every placeholder order grows factorially: from 4 keys on its union is big enough
+// to exhaust the checker, so such values are checked by presence of each placeholder instead.
+type StringTemplaterInterpolationLooseTail<Keys extends string> = [Keys] extends [never]
+  ? unknown
+  : `${string}$${StringTemplaterLastKey<Keys> & string}${string}` &
+      StringTemplaterInterpolationLooseTail<Exclude<Keys, StringTemplaterLastKey<Keys>>>;
+
 export type StringTemplaterInterpolation<Vals extends object, GenKey extends string = string> =
-  StringTemplaterInterpolationTail<keyof Vals & string, GenKey> extends infer Tail
+  (StringTemplaterKeysWithin3<keyof Vals & string> extends true
+    ? StringTemplaterInterpolationTail<keyof Vals & string, GenKey>
+    : StringTemplaterInterpolationLooseTail<keyof Vals & string>) extends infer Tail
     ? Tail extends string
       ? Tail & StringTemplaterMeta<Vals, GenKey>
       : never

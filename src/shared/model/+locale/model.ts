@@ -17,4 +17,4 @@ export type LocaleStrOrInterpolationRecord<All extends string | number, T extend
 > &
   Record<`${T}`, StringTemplaterInterpolation<Vals>>;
 
-export type LocaleSimpleString = `${Uppercase<string> | Lowercase<string>}${string}`;
+export type LocaleSimpleString = string;

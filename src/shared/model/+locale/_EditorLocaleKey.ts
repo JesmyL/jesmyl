@@ -204,4 +204,8 @@ export const enum EditorLocaleKey {
   VisitsVersions = 200,
   VisitsAllVersions = 201,
   VisitsMinVersions = 202,
+  VisitsSendReport = 203,
+  VisitsReportSent = 204,
+  VisitsOnlineByHour = 205,
+  VisitsOnlineHourPeriod = 206,
 }

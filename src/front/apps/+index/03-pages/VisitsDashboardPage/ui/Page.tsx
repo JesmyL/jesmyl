@@ -1,6 +1,7 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { translateBase, translateEditorBase } from '#basis/locale';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { makeToastKOMoodConfig, makeToastOKMoodConfig } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { indexDashMessageVersionAtom, indexVisitsOnlineAtom } from '$index/shared/state';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
@@ -8,6 +9,7 @@ import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-quer
 import { useAtomValue } from 'atomaric';
 import { makeRegExp } from 'regexpert';
 import { useEffect, useRef, useState } from 'react';
+import { toast } from 'sonner';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import {
@@ -16,6 +18,7 @@ import {
   DashMessageUser,
   VisitsDashboard,
   VisitsDashboardDayStat,
+  noOnlineSample,
 } from 'shared/model/index/visitsDashboard';
 import { mapObjectEntries } from 'shared/utils/object.utils';
 import { twMerge } from 'tailwind-merge';
@@ -132,6 +135,10 @@ const takeMessageSummary = (html: string) => {
   return text.length > messageSummaryMaxLength ? `${text.slice(0, messageSummaryMaxLength)}…` : text;
 };
 
+const uniqById = <T extends { id: number }>(items: T[]) => [
+  ...new Map(items.map(item => [item.id, item])).values(),
+];
+
 type VisitsVersionRow = { version: string; count: number };
 
 const makeVersionRows = (versionsList: PRecord<number, number>[]): VisitsVersionRow[] => {
@@ -154,8 +161,39 @@ const chartPlotHeight = 100;
 const axisTickTargetCount = 5;
 const hourSlotWidth = 12;
 const historySlotWidth = 14;
+const chartLabelFontSize = 10;
+/** Upper-bound advance of a label glyph (digits, dashes, colons) in em. */
+const chartLabelGlyphRatio = 0.62;
+/** Kept in sync with the `-rotate-[35deg]` class of the label row. */
+const chartLabelTiltCosine = Math.cos((35 * Math.PI) / 180);
+
+// Labels are right-anchored at their slot center and tilted leftwards, so the
+// horizontal projection of the first one has to fit inside the chart box.
+const takeChartLabelInset = (label: string | nil, slotCenter: number) =>
+  label
+    ? Math.max(
+        0,
+        Math.ceil(
+          label.length * chartLabelFontSize * chartLabelGlyphRatio * chartLabelTiltCosine -
+            slotCenter / 2 +
+            1,
+        ),
+      )
+    : 0;
 
 const takeHourLabel = (hour: number) => `${`${hour}`.padStart(2, '0')}:00`;
+
+const makeHourBarLabels = (hour: number) => {
+  const from = takeHourLabel(hour);
+  const to = takeHourLabel(hour === hoursInDay - 1 ? hoursInDay : hour + 1);
+
+  return {
+    label: hour % 3 === 0 || hour === hoursInDay - 1 ? `${hour}`.padStart(2, '0') : '',
+    fullLabel: `${from}–${to}`,
+    from,
+    to,
+  };
+};
 
 const makeCountAxis = (maxCount: number) => {
   const roughStep = Math.max(1, maxCount / axisTickTargetCount);
@@ -167,7 +205,14 @@ const makeCountAxis = (maxCount: number) => {
   return { max, ticks: Array.from({ length: Math.round(max / step) + 1 }, (_, index) => index * step) };
 };
 
-type VisitsBar = { label: string; fullLabel?: string; count: number; info: string };
+type VisitsBar = {
+  label: string;
+  fullLabel?: string;
+  count: number;
+  minCount?: number;
+  maxCount?: number;
+  info: string;
+};
 
 const ChartTooltip = ({ text }: { text: string }) => (
   <div className="pointer-events-none absolute top-1 left-1/2 z-10 max-w-60 -translate-x-1/2 rounded-lg border border-x2/60 bg-x1/95 px-2 py-1 text-[10px] text-x3 shadow-md">
@@ -204,10 +249,15 @@ const VisitsBarsChart = ({
   const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
   const [hoverIndices, setHoverIndices] = useState<number[]>([]);
   const multiTouchRef = useRef(false);
-  const chartWidth = Math.max(bars.length * slotWidth, minWidth);
-  const slotCenter = chartWidth / Math.max(bars.length, 1);
+  const plotWidth = Math.max(bars.length * slotWidth, minWidth);
+  const slotCenter = plotWidth / Math.max(bars.length, 1);
+  const firstShownLabel = bars.find(
+    (bar, index) => index % labelStep === 0 && bar.label.length > 0,
+  )?.label;
+  const labelInset = takeChartLabelInset(firstShownLabel, slotCenter);
+  const chartWidth = plotWidth + labelInset;
   const barWidth = slotWidth - 4;
-  const maxCount = Math.max(...bars.map(bar => bar.count), 1);
+  const maxCount = Math.max(...bars.map(bar => bar.maxCount ?? bar.count), 1);
   const { max, ticks } = makeCountAxis(maxCount);
   const shownIndices = hoverIndices.length ? hoverIndices : selectedIndices;
   const shownBars = shownIndices.map(index => bars[index]);
@@ -225,12 +275,15 @@ const VisitsBarsChart = ({
     if (!bars.length) return;
 
     const rect = event.currentTarget.getBoundingClientRect();
-    const indices = Array.from(event.touches, touch =>
+    const takeIndexAt = (clientX: number) =>
       Math.min(
-        Math.max(Math.floor(((touch.clientX - rect.left) / rect.width) * bars.length), 0),
+        Math.max(
+          Math.floor((((clientX - rect.left) / rect.width) * chartWidth - labelInset) / slotCenter),
+          0,
+        ),
         bars.length - 1,
-      ),
-    );
+      );
+    const indices = Array.from(event.touches, touch => takeIndexAt(touch.clientX));
 
     setHoverIndices([...new Set(indices)]);
   };
@@ -275,9 +328,9 @@ const VisitsBarsChart = ({
               }}
             >
               <line
-                x1={0.5}
+                x1={labelInset + 0.5}
                 y1={0}
-                x2={0.5}
+                x2={labelInset + 0.5}
                 y2={chartPlotHeight}
                 className="stroke-x4/40"
                 strokeWidth={1}
@@ -288,7 +341,7 @@ const VisitsBarsChart = ({
                 return (
                   <line
                     key={tick}
-                    x1={0}
+                    x1={labelInset}
                     y1={y}
                     x2={chartWidth}
                     y2={y}
@@ -298,8 +351,9 @@ const VisitsBarsChart = ({
                 );
               })}
               {bars.map((bar, index) => {
-                const height = (bar.count / max) * chartPlotHeight;
-                const x = (index + 0.5) * slotCenter - barWidth / 2;
+                const barCount = bar.maxCount ?? bar.count;
+                const height = (barCount / max) * chartPlotHeight;
+                const x = labelInset + (index + 0.5) * slotCenter - barWidth / 2;
                 const extensionClassName = hoverIndices.includes(index)
                   ? 'pointer fill-chart-2/25'
                   : selectedIndices.includes(index)
@@ -327,7 +381,7 @@ const VisitsBarsChart = ({
                     onMouseEnter={() => setHoverIndices([index])}
                     onMouseLeave={() => setHoverIndices([])}
                   >
-                    <title>{bar.count}</title>
+                    <title>{barCount}</title>
                     <rect
                       x={x}
                       y={0}
@@ -336,14 +390,35 @@ const VisitsBarsChart = ({
                       className={extensionClassName}
                       onClick={onClick}
                     />
-                    <rect
-                      x={x}
-                      y={chartPlotHeight - height}
-                      width={barWidth}
-                      height={height}
-                      className="pointer fill-chart-2/45"
-                      onClick={onClick}
-                    />
+                    {bar.maxCount == null ? (
+                      <rect
+                        x={x}
+                        y={chartPlotHeight - height}
+                        width={barWidth}
+                        height={height}
+                        className="pointer fill-chart-2/45"
+                        onClick={onClick}
+                      />
+                    ) : (
+                      <>
+                        <rect
+                          x={x}
+                          y={chartPlotHeight - height}
+                          width={barWidth}
+                          height={height}
+                          className="pointer fill-chart-2/70"
+                          onClick={onClick}
+                        />
+                        <rect
+                          x={x}
+                          y={chartPlotHeight - ((bar.minCount ?? 0) / max) * chartPlotHeight}
+                          width={barWidth}
+                          height={((bar.minCount ?? 0) / max) * chartPlotHeight}
+                          className="pointer fill-chart-2/30"
+                          onClick={onClick}
+                        />
+                      </>
+                    )}
                   </g>
                 );
               })}
@@ -356,7 +431,7 @@ const VisitsBarsChart = ({
                 <span
                   key={index}
                   className="absolute top-0 origin-top-right -translate-x-full leading-none -rotate-[35deg] whitespace-nowrap"
-                  style={{ left: `${((index + 0.5) / Math.max(bars.length, 1)) * 100}%` }}
+                  style={{ left: `${labelInset + (index + 0.5) * slotCenter}px` }}
                 >
                   {bar.label}
                 </span>
@@ -374,6 +449,7 @@ const DashboardMessages = () => {
   const [openMessageIds, setOpenMessageIds] = useState<Set<number>>(() => new Set());
   const queryClient = useQueryClient();
   const dashMessageVersion = useAtomValue(indexDashMessageVersionAtom);
+  const isVisitErrorKind = activeKind === DashMessageKind.VisitError;
 
   const messagesQuery = useInfiniteQuery({
     queryKey: ['visitsDashboardMessages', activeKind],
@@ -382,20 +458,19 @@ const DashboardMessages = () => {
         messages: { kind: activeKind, beforeId: pageParam || null },
       }),
     initialPageParam: 0,
-    getNextPageParam: lastPage =>
-      lastPage.messagesHasMore
-        ? (lastPage.messages.at(-1)?.id ?? 0)
-        : lastPage.visitsHasMore
-          ? (lastPage.visits.at(-1)?.id ?? 0)
-          : undefined,
+    getNextPageParam: lastPage => {
+      const activeList = isVisitErrorKind ? lastPage.visits : lastPage.messages;
+      const hasMore = isVisitErrorKind ? lastPage.visitsHasMore : lastPage.messagesHasMore;
+
+      return hasMore ? activeList.at(-1)?.id : undefined;
+    },
     refetchInterval: 15_000,
     staleTime: 0,
   });
 
   const firstPage = messagesQuery.data?.pages[0];
-  const isVisitErrorKind = activeKind === DashMessageKind.VisitError;
-  const messages = messagesQuery.data ? messagesQuery.data.pages.flatMap(page => page.messages) : [];
-  const visits = messagesQuery.data ? messagesQuery.data.pages.flatMap(page => page.visits) : [];
+  const messages = uniqById(messagesQuery.data?.pages.flatMap(page => page.messages) ?? []);
+  const visits = uniqById(messagesQuery.data?.pages.flatMap(page => page.visits) ?? []);
   const isEmpty = isVisitErrorKind ? visits.length === 0 : messages.length === 0;
   const messageReads = firstPage?.messageReads ?? {};
   const unreadCounts = firstPage?.unreadCounts ?? {};
@@ -547,6 +622,33 @@ const DashboardMessages = () => {
   );
 };
 
+const DashboardEmailReportButton = () => {
+  const [isSending, setIsSending] = useState(false);
+
+  const sendReport = async () => {
+    setIsSending(true);
+
+    try {
+      const email = await indexTsjrpcClientMethods.sendDashEmailReport_v1();
+      toast(translateEditorBase(EditorLocaleKey.VisitsReportSent, { e: email }), makeToastOKMoodConfig());
+    } catch (error) {
+      toast('' + error, makeToastKOMoodConfig());
+    } finally {
+      setIsSending(false);
+    }
+  };
+
+  return (
+    <button
+      className="pointer rounded-lg border border-x2/60 bg-x1/60 px-3 py-1 text-xs text-x4 hover:text-x3 disabled:opacity-50"
+      disabled={isSending}
+      onClick={sendReport}
+    >
+      {translateEditorBase(EditorLocaleKey.VisitsSendReport)}
+    </button>
+  );
+};
+
 const DashboardContent = ({ dashboard }: { dashboard: VisitsDashboard }) => {
   const online = useAtomValue(indexVisitsOnlineAtom) ?? dashboard.online;
   const [isOnlineOpen, setIsOnlineOpen] = useState(false);
@@ -573,17 +675,36 @@ const DashboardContent = ({ dashboard }: { dashboard: VisitsDashboard }) => {
         ],
   );
   const hourBars: VisitsBar[] = dashboard.hours.map((count, hour) => {
-    const fromHourLabel = takeHourLabel(hour);
-    const toHourLabel = takeHourLabel(hour === hoursInDay - 1 ? hoursInDay : hour + 1);
+    const { from, to, ...labels } = makeHourBarLabels(hour);
 
     return {
-      label: hour % 3 === 0 || hour === hoursInDay - 1 ? `${hour}`.padStart(2, '0') : '',
-      fullLabel: `${fromHourLabel}–${toHourLabel}`,
+      ...labels,
       count,
       info: translateEditorBase(EditorLocaleKey.VisitsHourPeriod, {
-        f: fromHourLabel,
-        t: toHourLabel,
+        f: from,
+        t: to,
         c: count,
+      }),
+    };
+  });
+  const onlineHourBars: VisitsBar[] = Array.from({ length: hoursInDay }, (_, hour) => {
+    const { from, to, ...labels } = makeHourBarLabels(hour);
+    const maxCount = dashboard.onlineHours.max[hour] ?? noOnlineSample;
+    const minCount = dashboard.onlineHours.min[hour] ?? noOnlineSample;
+    const isSampled = maxCount >= 0;
+    const minOnline = isSampled ? minCount : 0;
+    const maxOnline = isSampled ? maxCount : 0;
+
+    return {
+      ...labels,
+      count: maxOnline,
+      minCount: minOnline,
+      maxCount: maxOnline,
+      info: translateEditorBase(EditorLocaleKey.VisitsOnlineHourPeriod, {
+        f: from,
+        t: to,
+        n: minOnline,
+        x: maxOnline,
       }),
     };
   });
@@ -690,6 +811,14 @@ const DashboardContent = ({ dashboard }: { dashboard: VisitsDashboard }) => {
       </section>
 
       <section className="rounded-2xl border border-x2/60 bg-x1/50 p-2 sm:p-3">
+        <h2 className="mb-2 text-sm font-medium text-x3">{translateEditorBase(EditorLocaleKey.VisitsOnlineByHour)}</h2>
+        <VisitsBarsChart
+          bars={onlineHourBars}
+          slotWidth={hourSlotWidth}
+        />
+      </section>
+
+      <section className="rounded-2xl border border-x2/60 bg-x1/50 p-2 sm:p-3">
         <h2 className="mb-2 text-sm font-medium text-x3">{translateEditorBase(EditorLocaleKey.VisitsVersions)}</h2>
         {versionBars.length === 0 ? (
           <div className="text-sm text-x4">{translateBase(BaseLocaleKey.EmptyList)}</div>
@@ -771,6 +900,10 @@ const DashboardContent = ({ dashboard }: { dashboard: VisitsDashboard }) => {
       </section>
 
       <DashboardMessages />
+
+      <div className="flex justify-end">
+        <DashboardEmailReportButton />
+      </div>
     </div>
   );
 };

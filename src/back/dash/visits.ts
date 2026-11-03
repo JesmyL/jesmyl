@@ -1,12 +1,13 @@
+import { appVersionFileStore } from 'back/apps/index/file-stores';
+import { sendSchedulePush } from 'back/apps/index/schedules/app-inform/web-push';
+import { takeUserRoleTiny } from 'back/apps/index/tinies/userRoleTiny';
+import { takeAllUsersTiny, takeUserTiny } from 'back/apps/index/tinies/userTiny';
+import { backConfig } from 'back/config/backConfig';
 import { dashErrorDB, dashReadDB, visitDayDB, visitDB } from 'back/drizzle.schema';
 import { db, dbDelete, dbUpdate, dbUpsert } from 'back/drizzle/drizzle.db';
-import { appVersionFileStore } from 'back/apps/index/file-stores';
-import { takeAllUsersTiny, takeUserTiny } from 'back/apps/index/tinies/userTiny';import { takeUserRoleTiny } from 'back/apps/index/tinies/userRoleTiny';
-import { sendSchedulePush } from 'back/apps/index/schedules/app-inform/web-push';
-import { backConfig } from 'back/config/backConfig';
 import { sendEmailMessage } from 'back/sides/emailer/lib/sendEmailMessage';
 import { EmailerAuthConfigKey } from 'back/sides/emailer/model';
-import { and, count, desc, eq, gt, gte, inArray, lt, lte, max as sqlMax, sql } from 'drizzle-orm';
+import { and, count, desc, eq, gt, gte, inArray, lt, lte, sql, max as sqlMax } from 'drizzle-orm';
 import { makeRegExp } from 'regexpert';
 import { DeviceId, SokiVisit, UserLogin } from 'shared/api';
 import { howMillisecondsInDay, howMillisecondsInHour } from 'shared/const/ms';
@@ -14,12 +15,14 @@ import { IndexAccessScopeRules, UserAccessRole } from 'shared/model/index/access
 import {
   DashMessageKind,
   DashMessageUser,
+  noOnlineSample,
   VisitsDashboard,
   VisitsDashboardMessagesArgs,
+  VisitsDashboardOnlineHours,
 } from 'shared/model/index/visitsDashboard';
-import { emptyFunc } from 'shared/utils';
+import { declension, emptyFunc } from 'shared/utils';
 import { checkUserScopeAccessRight } from 'shared/utils/index/utils';
-import { mapObjectEntries, objectLength } from 'shared/utils/object.utils';
+import { mapObjectEntries, objectKeys, objectLength } from 'shared/utils/object.utils';
 import { escapeHtmlLazy } from 'shared/utils/string.utils';
 import { takeUserAuthName } from 'shared/utils/user.utils';
 import { onDashMessageStoredEvent } from './events';
@@ -52,6 +55,12 @@ const takeMskDayStartMs = (timeStamp: number) => {
   const shifted = timeStamp + mskShiftMs;
   return shifted - (shifted % howMillisecondsInDay) - mskShiftMs;
 };
+
+const makeOnlineHoursArray = () => Array<number>(hoursInDay).fill(noOnlineSample);
+const makeOnlineHours = (min: number[] | nil, max: number[] | nil): VisitsDashboardOnlineHours => ({
+  min: min ?? makeOnlineHoursArray(),
+  max: max ?? makeOnlineHoursArray(),
+});
 
 const messageKindFilter = (kind: DashMessageKind) => eq(dashErrorDB.kind, kind);
 
@@ -134,6 +143,15 @@ const sendDashErrorPush = async (summary: string, login: UserLogin | nil) => {
 
 type VisitRow = { id: number; l: UserLogin | null; deviceId: DeviceId | null; createdAt: number; v: number };
 
+const takeTodayVisitRows = (now: number) =>
+  db
+    .select({ id: visitDB.id, l: visitDB.l, deviceId: visitDB.deviceId, createdAt: visitDB.createdAt, v: visitDB.v })
+    .from(visitDB)
+    .where(gte(visitDB.createdAt, takeMskDayStartMs(now)));
+
+const takeMinVersionRows = () =>
+  db.select({ date: visitDayDB.date, minVersion: visitDayDB.minVersion }).from(visitDayDB).orderBy(visitDayDB.date);
+
 const makeDayStats = (date: string, rows: VisitRow[]) => {
   const visitors: PRecord<UserLogin, number> = {};
   const anonDeviceIds = new Set<DeviceId>();
@@ -169,52 +187,108 @@ const makeDayStats = (date: string, rows: VisitRow[]) => {
   };
 };
 
-const makeHoursChart = (hours: number[]) => {
-  const barWidth = 20;
-  const barGap = 4;
-  const chartHeight = 120;
-  const max = Math.max(...hours, 1);
-  const bars = hours
-    .map((count, hour) => {
-      const height = Math.round((count / max) * chartHeight);
-      const x = hour * (barWidth + barGap);
+const takeRuDate = (date: string) =>
+  new Date(date).toLocaleDateString('ru-RU', { timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric' });
+const takeRuTime = (timeStamp: number) =>
+  new Date(timeStamp + mskShiftMs).toLocaleTimeString('ru-RU', {
+    timeZone: 'UTC',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
 
-      return (
-        `<rect x="${x}" y="${chartHeight - height}" width="${barWidth}" height="${height}" fill="#e07a3f"><title>${hour}:00 — ${count}</title></rect>` +
-        `<text x="${x + barWidth / 2}" y="${chartHeight + 14}" font-size="9" text-anchor="middle" fill="#777">${hour}</text>`
-      );
-    })
-    .join('');
+type ChartBar = { label: number | string; count: number };
 
-  return `<svg width="${hoursInDay * (barWidth + barGap)}" height="${chartHeight + 20}" xmlns="http://www.w3.org/2000/svg">${bars}</svg>`;
+const statsBorderStyle = 'border:1px solid #ddd';
+const statsHeadStyle = `${statsBorderStyle};font-size:12px;color:#777`;
+const statsCellStyle = `${statsBorderStyle};text-align:center`;
+const takeStatsCount = (count: number, isZeroBlank = false) => (count === 0 ? (isZeroBlank ? '' : '—') : `${count}`);
+
+const makeStatsTable = (bars: ChartBar[], isVertical = false, isZeroBlank = false) => {
+  const head = (label: number | string) => `<th style="${statsHeadStyle}">${label}</th>`;
+  const cell = (count: number) => `<td style="${statsCellStyle}"><b>${takeStatsCount(count, isZeroBlank)}</b></td>`;
+  const rows = isVertical
+    ? bars.map(({ label, count }) => `<tr>${head(label)}${cell(count)}</tr>`).join('')
+    : `<tr>${bars.map(({ label }) => head(label)).join('')}</tr>` +
+      `<tr>${bars.map(({ count }) => cell(count)).join('')}</tr>`;
+
+  return `<table cellspacing="0" cellpadding="4" style="border-collapse:collapse">${rows}</table>`;
 };
 
-const sendVisitsDigest = async (stats: ReturnType<typeof makeDayStats>) => {
-  const visitors = (
+const makeStatsRows = (bars: ChartBar[], isZeroBlank = false) => makeStatsTable(bars, true, isZeroBlank);
+
+const makeDayStatsHtml = async (stats: ReturnType<typeof makeDayStats>) => {
+  const visitorRows = (
     await Promise.all(
       mapObjectEntries(stats.visitors, async (login, count) => {
         const name = takeUserAuthName((await takeUserTiny({ l: login }, false))?.uauth) || login;
 
-        return `<li><b>${escapeHtmlLazy()(name)}</b> — ${count}</li>`;
+        return `<tr><td style="${statsBorderStyle}">${escapeHtmlLazy()(name)}</td><td style="${statsCellStyle}"><b>${count}</b></td></tr>`;
       }),
     )
   ).join('');
+  const anonVisitsText = `${stats.anonVisits} ${declension(stats.anonVisits, 'визит', 'визита', 'визитов')}`;
+  const anonRow = `<tr><td style="${statsBorderStyle}">Анонимные</td><td style="${statsCellStyle}"><b>${stats.anonUniq} уник. / ${anonVisitsText}</b></td></tr>`;
+  const visitorsTable = `<table cellspacing="0" cellpadding="4" style="border-collapse:collapse">${
+    (visitorRows || `<tr><td style="${statsCellStyle}" colspan="2">—</td></tr>`) + anonRow
+  }</table>`;
+  const minVersionStats = (await takeMinVersionRows()).flatMap(({ date, minVersion }) =>
+    minVersion === null ? [] : [{ label: date.slice(5).replace('-', '.'), count: minVersion }],
+  );
   const minVersionText =
     stats.minVersion === null
       ? '—'
-      : `${stats.minVersion} (отставание: ${Math.max(0, appVersionFileStore.getValue().num - stats.minVersion)})`;
+      : `${stats.minVersion} (отставание: ${Math.max(0, appVersionFileStore.getValue().num - stats.minVersion)}; текущая: ${appVersionFileStore.getValue().num})`;
+  const versionsTable = makeStatsRows(
+    objectKeys(stats.versions)
+      .map(Number)
+      .sort((a, b) => a - b)
+      .map(label => ({ label, count: stats.versions[label] ?? 0 })),
+  );
+  const currentHour = new Date(Date.now() + mskShiftMs).getUTCHours();
+  const hourBars = stats.hours
+    .map((count, hour) => ({ label: `${hour}:00`, count }))
+    .filter((_, hour) => stats.date !== takeMskDayKey(Date.now()) || hour <= currentHour);
+
+  return (
+    `<h2>Визиты за ${takeRuDate(stats.date)}</h2>` +
+    `<p>Всего визитов: <b>${stats.total}</b></p>` +
+    `<p>Уникальных посетителей: <b>${stats.uniq}</b></p>` +
+    `<p>Минимальная версия за день: <b>${minVersionText}</b></p>` +
+    `<h3>Визиты по посетителям</h3>${visitorsTable}` +
+    `<h3>Визиты по часам (МСК)</h3>${makeStatsRows(hourBars, true)}` +
+    `<h3>Версии</h3>${versionsTable}` +
+    (minVersionStats.length < 2
+      ? ''
+      : `<h3>Минимальные версии по дням</h3>${makeStatsRows(minVersionStats.slice(-10))}`)
+  );
+};
+
+const sendVisitsDigest = async (stats: ReturnType<typeof makeDayStats>) =>
+  sendEmailMessage(EmailerAuthConfigKey.Self, {
+    isSameTo: true,
+    subject: `JesmyL-отчет ${takeRuDate(stats.date)}`,
+    html: await makeDayStatsHtml(stats),
+  });
+
+export const sendCurrentDashReport = async (login: UserLogin) => {
+  const email = (await takeUserTiny({ l: login }, false))?.uauth.email;
+
+  if (!email) throw 'E-mail не привязан к профилю';
+
+  if (backConfig.isTest) return email;
+
+  const now = Date.now();
+  const date = takeMskDayKey(now);
+  const stats = makeDayStats(date, await takeTodayVisitRows(now));
 
   await sendEmailMessage(EmailerAuthConfigKey.Self, {
     isSameTo: true,
-    subject: `Визиты за ${stats.date}`,
-    html:
-      `<h2>Визиты за ${stats.date}</h2>` +
-      `<p>Всего визитов: <b>${stats.total}</b></p>` +
-      `<p>Уникальных посетителей: <b>${stats.uniq}</b></p>` +
-      `<p>Минимальная версия за день: <b>${minVersionText}</b></p>` +
-      `<h3>Посещения по посетителям</h3><ul>${visitors || '<li>—</li>'}</ul>` +
-      `<h3>Посещения по часам (МСК)</h3>${makeHoursChart(stats.hours)}`,
+    to: email,
+    subject: `JesmyL-отчет (промежуточный) ${takeRuDate(date)}, ${takeRuTime(now)}`,
+    html: await makeDayStatsHtml(stats),
   });
+
+  return email;
 };
 
 export const insertVisit = (login: UserLogin | nil, visitInfo: SokiVisit) =>
@@ -265,10 +339,7 @@ export const insertDashMessage = (
     })
     .catch(emptyFunc);
 
-  if (
-    (kind === DashMessageKind.Errors || kind === DashMessageKind.VisitError) &&
-    !isLocalhostVisit(visitInfo)
-  )
+  if ((kind === DashMessageKind.Errors || kind === DashMessageKind.VisitError) && !isLocalhostVisit(visitInfo))
     write.then(() => sendDashErrorPush(takeErrorPushSummary(message), login)).catch(emptyFunc);
 
   return write;
@@ -277,13 +348,29 @@ export const insertDashMessage = (
 export const deleteOldDashMessages = () =>
   dbDelete(dashErrorDB, lt(dashErrorDB.createdAt, Date.now() - howMillisecondsInDay * 60));
 
-export const updateVisitDayMaxOnline = async (online: number) => {
-  const date = takeMskDayKey(Date.now());
+export const updateVisitDayOnline = async (online: number) => {
+  const now = Date.now();
+  const date = takeMskDayKey(now);
+  const hour = new Date(now + mskShiftMs).getUTCHours();
   const existing = (
-    await db.select({ maxOnline: visitDayDB.maxOnline }).from(visitDayDB).where(eq(visitDayDB.date, date)).limit(1)
+    await db
+      .select({
+        maxOnline: visitDayDB.maxOnline,
+        hoursOnlineMin: visitDayDB.hoursOnlineMin,
+        hoursOnlineMax: visitDayDB.hoursOnlineMax,
+      })
+      .from(visitDayDB)
+      .where(eq(visitDayDB.date, date))
+      .limit(1)
   ).at(0);
 
   if (!existing) {
+    const hoursOnlineMin = makeOnlineHoursArray();
+    const hoursOnlineMax = makeOnlineHoursArray();
+
+    hoursOnlineMin[hour] = online;
+    hoursOnlineMax[hour] = online;
+
     await db
       .insert(visitDayDB)
       .values({
@@ -293,12 +380,28 @@ export const updateVisitDayMaxOnline = async (online: number) => {
         visitors: {},
         hours: Array<number>(hoursInDay).fill(0),
         maxOnline: online,
+        hoursOnlineMin,
+        hoursOnlineMax,
       })
       .onConflictDoNothing();
     return;
   }
 
-  if (online > existing.maxOnline) await dbUpdate(visitDayDB, { maxOnline: online }, eq(visitDayDB.date, date));
+  const hoursOnlineMin = existing.hoursOnlineMin ?? makeOnlineHoursArray();
+  const hoursOnlineMax = existing.hoursOnlineMax ?? makeOnlineHoursArray();
+
+  if (hoursOnlineMin[hour] < 0 || online < hoursOnlineMin[hour]) hoursOnlineMin[hour] = online;
+  if (hoursOnlineMax[hour] < 0 || online > hoursOnlineMax[hour]) hoursOnlineMax[hour] = online;
+
+  await dbUpdate(
+    visitDayDB,
+    {
+      maxOnline: Math.max(existing.maxOnline, online),
+      hoursOnlineMin,
+      hoursOnlineMax,
+    },
+    eq(visitDayDB.date, date),
+  );
 };
 
 export const markDashMessagesRead = async (login: UserLogin, kind: DashMessageKind) => {
@@ -344,19 +447,34 @@ export const flushVisits = async (isNeedSendDigest: boolean) => {
       else rowsByDate.set(date, [row]);
     });
 
-    const existingMaxOnlineByDate = new Map(
+    const existingOnlineByDate = new Map(
       (
         await db
-          .select({ date: visitDayDB.date, maxOnline: visitDayDB.maxOnline })
+          .select({
+            date: visitDayDB.date,
+            maxOnline: visitDayDB.maxOnline,
+            hoursOnlineMin: visitDayDB.hoursOnlineMin,
+            hoursOnlineMax: visitDayDB.hoursOnlineMax,
+          })
           .from(visitDayDB)
           .where(inArray(visitDayDB.date, [...rowsByDate.keys()]))
-      ).map(row => [row.date, row.maxOnline]),
+      ).map(row => [row.date, row] as const),
     );
 
     for (const [date, dateRows] of rowsByDate) {
       const { anonVisits: _anonVisits, anonUniq: _anonUniq, ...dayStats } = makeDayStats(date, dateRows);
+      const existingOnline = existingOnlineByDate.get(date);
 
-      await dbUpsert(visitDayDB, { ...dayStats, maxOnline: existingMaxOnlineByDate.get(date) ?? 0 }, ['date']);
+      await dbUpsert(
+        visitDayDB,
+        {
+          ...dayStats,
+          maxOnline: existingOnline?.maxOnline ?? 0,
+          hoursOnlineMin: existingOnline?.hoursOnlineMin ?? null,
+          hoursOnlineMax: existingOnline?.hoursOnlineMax ?? null,
+        },
+        ['date'],
+      );
     }
 
     if (isNeedSendDigest) {
@@ -378,22 +496,16 @@ export const takeVisitsDashboard = async (
   messagesArgs: VisitsDashboardMessagesArgs = { kind: DashMessageKind.Errors, beforeId: null },
 ): Promise<VisitsDashboard> => {
   const now = Date.now();
-  const dayStart = takeMskDayStartMs(now);
   const messageKindCondition = messageKindFilter(messagesArgs.kind);
   const isVisitErrorKind = messagesArgs.kind === DashMessageKind.VisitError;
 
-  const [todayRows, visitRows, messageRows, reads, dayRows] = await Promise.all([
-    db
-      .select({ id: visitDB.id, l: visitDB.l, deviceId: visitDB.deviceId, createdAt: visitDB.createdAt, v: visitDB.v })
-      .from(visitDB)
-      .where(gte(visitDB.createdAt, dayStart)),
+  const [todayRows, visitRows, messageRows, reads, dayRows, onlineHoursRows] = await Promise.all([
+    takeTodayVisitRows(now),
     isVisitErrorKind
       ? db
           .select({ id: visitDB.id, l: visitDB.l, url: visitDB.url, v: visitDB.v, createdAt: visitDB.createdAt })
           .from(visitDB)
-          .where(
-            messagesArgs.beforeId === null ? undefined : lt(visitDB.id, sql`${messagesArgs.beforeId}`),
-          )
+          .where(messagesArgs.beforeId === null ? undefined : lt(visitDB.id, sql`${messagesArgs.beforeId}`))
           .orderBy(desc(visitDB.id))
           .limit(messagesPageSize + 1)
       : Promise.resolve([]),
@@ -428,7 +540,14 @@ export const takeVisitsDashboard = async (
       .from(visitDayDB)
       .where(lt(visitDayDB.date, takeMskDayKey(now)))
       .orderBy(visitDayDB.date),
+    db
+      .select({ hoursOnlineMin: visitDayDB.hoursOnlineMin, hoursOnlineMax: visitDayDB.hoursOnlineMax })
+      .from(visitDayDB)
+      .where(eq(visitDayDB.date, takeMskDayKey(now)))
+      .limit(1),
   ]);
+
+  const onlineHoursRow = onlineHoursRows.at(0);
 
   const stats = makeDayStats(takeMskDayKey(now), todayRows);
 
@@ -489,6 +608,7 @@ export const takeVisitsDashboard = async (
     anonVisits: stats.anonVisits,
     anonUniq: stats.anonUniq,
     hours: stats.hours,
+    onlineHours: makeOnlineHours(onlineHoursRow?.hoursOnlineMin, onlineHoursRow?.hoursOnlineMax),
     versions: stats.versions,
     todayMinVersion: stats.minVersion,
     dayStats: dayRows,

@@ -44,7 +44,12 @@ export class SokiServer {
   private sockets = new Set<WebSocket>();
   private isAliveBySocket = new WeakMap<WebSocket, boolean>();
   private errorRateLimits = new WeakMap<WebSocket, { ts: number; count: number }>();
-  readonly onOnlineCountChangeEvent = Eventer.createValue<number>();
+  readonly onOnlineCountChangeEvent = Eventer.createValue<{
+    count: number;
+    login: SokiAuthLogin | nil;
+    isEnter: boolean;
+  }>();
+  readonly onClientCloseEvent = Eventer.createValue<WebSocket>();
 
   get onlineCount() {
     return this.visits.size;
@@ -64,8 +69,8 @@ export class SokiServer {
     return { logins: [...logins], anon };
   }
 
-  private notifyOnlineCount() {
-    this.onOnlineCountChangeEvent.invoke(this.onlineCount);
+  private notifyOnlineCount(login: SokiAuthLogin | nil = null, isEnter = true) {
+    this.onOnlineCountChangeEvent.invoke({ count: this.onlineCount, login, isEnter });
   }
 
   private checkErrorRate(client: WebSocket) {
@@ -98,7 +103,9 @@ export class SokiServer {
         this.visits.delete(client);
         this.auths.delete(client);
 
-        if (this.visits.size !== wasOnline) this.notifyOnlineCount();
+        this.onClientCloseEvent.invoke(client);
+
+        if (this.visits.size !== wasOnline) this.notifyOnlineCount(auth?.login ?? null, false);
         if (checkIsUndefined(auth?.login)) return;
         this.clientsByLogin.get(auth.login)?.delete(client);
       });
@@ -120,7 +127,7 @@ export class SokiServer {
               const visitInfo = event.visitInfo;
 
               this.visits.set(client, visitInfo);
-              if (this.visits.size !== previousOnline) this.notifyOnlineCount();
+              if (this.visits.size !== previousOnline) this.notifyOnlineCount(login);
 
               if (!this.isLocalhost(visitInfo.urls[0])) {
                 if (!login) insertVisit(null, visitInfo).catch(emptyFunc);

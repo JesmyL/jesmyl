@@ -205,4 +205,8 @@ export type LocaleCmEditor = {
   [EditorLocaleKey.VisitsVersions]: LocaleSimpleString;
   [EditorLocaleKey.VisitsAllVersions]: LocaleSimpleString;
   [EditorLocaleKey.VisitsMinVersions]: LocaleSimpleString;
+  [EditorLocaleKey.VisitsSendReport]: LocaleSimpleString;
+  [EditorLocaleKey.VisitsReportSent]: StringTemplaterInterpolation<{ e: string }>;
+  [EditorLocaleKey.VisitsOnlineByHour]: LocaleSimpleString;
+  [EditorLocaleKey.VisitsOnlineHourPeriod]: StringTemplaterInterpolation<{ f: string; t: string; n: number; x: number }>;
 };

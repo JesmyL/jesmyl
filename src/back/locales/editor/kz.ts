@@ -220,4 +220,8 @@ export const localeEditorKz = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsVersions]: 'Визиттер нұсқалар бойынша',
   [EditorLocaleKey.VisitsAllVersions]: 'Барлық уақыт бойынша нұсқалар бойынша визиттер',
   [EditorLocaleKey.VisitsMinVersions]: 'Күндер бойынша ең төменгі нұсқалар',
+  [EditorLocaleKey.VisitsSendReport]: 'Есепті e-mail-ға жіберу',
+  [EditorLocaleKey.VisitsReportSent]: 'Отправлено на $e',
+  [EditorLocaleKey.VisitsOnlineByHour]: 'Онлайн по часам',
+  [EditorLocaleKey.VisitsOnlineHourPeriod]: '$f-$t - мин $n — макс $x',
 });
