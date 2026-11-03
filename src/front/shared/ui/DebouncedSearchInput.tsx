@@ -1,4 +1,5 @@
 import { isNumberSearchAtom } from '#basis/state/isNumberSearchAtom';
+import { usePastedLinkNavigation } from '#shared/lib/link-app-actions/usePastedLinkNavigation';
 import { atom, Atom, useAtomValue } from 'atomaric';
 import { useEffect, useId } from 'react';
 import { twMerge } from 'tailwind-merge';
@@ -23,6 +24,11 @@ export const DebouncedSearchInput = ({ debounce = 300, className = '', placehold
   const debouncedTermAtom = props.debouncedTermAtom ?? props.termAtom ?? (defaultTermAtoms[id] ??= atom(''));
 
   const iconName = isNumberSearch ? 'GridTable' : 'SearchVisual';
+  const { onPaste, appActionNavNode } = usePastedLinkNavigation(undefined, () => {
+    clearTimeout(timeouts[id]);
+    termAtom.set('');
+    if (debouncedTermAtom !== termAtom) debouncedTermAtom.set('');
+  });
 
   useEffect(
     () => () => {
@@ -48,6 +54,7 @@ export const DebouncedSearchInput = ({ debounce = 300, className = '', placehold
             value={term}
             className="input"
             placeholder={placeholder}
+            onPaste={onPaste}
             onFocus={event => event.currentTarget.select()}
             onChange={event => {
               const term = event.currentTarget.value;
@@ -61,6 +68,7 @@ export const DebouncedSearchInput = ({ debounce = 300, className = '', placehold
           />
         )}
       </WithAtomValue>
+      {appActionNavNode}
     </label>
   );
 };

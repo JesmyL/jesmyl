@@ -1,6 +1,7 @@
 import { Input } from '#shared/components/ui/input';
 import { Textarea } from '#shared/components/ui/textarea';
 import { propagationStopper } from '#shared/lib/event-funcs';
+import { usePastedLinkNavigation } from '#shared/lib/link-app-actions/usePastedLinkNavigation';
 import { AllHTMLAttributes, useEffect, useRef, useState } from 'react';
 import { checkIsFunction } from 'shared/utils/checkIs';
 
@@ -32,9 +33,14 @@ export const TextInput = ({
 }: Props) => {
   const Comp = multiline ? Textarea : Input;
   const [firstValue, setFirstValue] = useState(`${props.defaultValue ?? props.value}`);
+  const { onPaste, appActionNavNode } = usePastedLinkNavigation(props.onPaste, () => {
+    onInput?.('');
+    setFirstValue('');
+  });
 
   const attrs: AllHTMLAttributes<HTMLInputElement & HTMLTextAreaElement> = {
     ...props,
+    onPaste,
     onKeyDown: onChanged
       ? event => {
           props.onKeyDown?.(event);
@@ -84,9 +90,13 @@ export const TextInput = ({
     <label>
       {label}
       {node}
+      {appActionNavNode}
     </label>
   ) : (
-    node
+    <>
+      {node}
+      {appActionNavNode}
+    </>
   );
 };
 

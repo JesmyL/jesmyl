@@ -105,7 +105,7 @@ export const searchRate = <
     const toEn = transcriptRuToEnText(wordLower);
     const similarRu = transcriptSimilarEnToRuText(word);
 
-    const variants = new Set([wordLower, toRu, toEn, similarRu]);
+    const variants = new Set([wordLower, toRu, toEn, similarRu].map(escapeRegExpSymbols));
 
     const regPattern = internationalWordRegInnerLazy()(
       `(?:${Array.from(variants).join('|')})`,
