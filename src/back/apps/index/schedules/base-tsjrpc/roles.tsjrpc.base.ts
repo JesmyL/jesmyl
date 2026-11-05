@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { title } from 'process';
 import { IScheduleWidget, IScheduleWidgetRole, ScheduleRoleScopeProps } from 'shared/api';
@@ -14,7 +16,7 @@ const modifyRole = <Props extends { props: ScheduleRoleScopeProps }>(
 ) =>
   modifySchedule<Props>(false, (sch, props) => {
     const role = sch.ctrl.roles.find(role => role.mi === props.props.roleMi);
-    if (role == null) throw 'role not found';
+    if (role == null) throw backLocaleError(BackLocaleKey.RoleNotFound);
     return modifier(role, props, sch);
   });
 

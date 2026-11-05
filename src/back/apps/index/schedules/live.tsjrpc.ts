@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { TsjrpcServerMethods } from 'back/tsjrpc.server';
 import { ScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
@@ -31,7 +33,7 @@ export const schLiveTsjrpcServer = new (class SchLive extends TsjrpcBaseServer<S
       scope: 'SchLive',
       methods: {
         next: async ({ schw, data }, { auth }) => {
-          if (auth?.login == null) throw 'Не зарегистрирован';
+          if (auth?.login == null) throw backLocaleError(BackLocaleKey.NotRegistered);
 
           theLiveData[schw] ??= {};
           theLiveData[schw][auth.login] = data;
@@ -70,7 +72,7 @@ export const schLiveTsjrpcServer = new (class SchLive extends TsjrpcBaseServer<S
         },
 
         reset: async ({ schw }, { auth }) => {
-          if (auth?.login == null) throw 'Не зарегистрирован';
+          if (auth?.login == null) throw backLocaleError(BackLocaleKey.NotRegistered);
 
           theLiveData[schw] ??= {};
           delete theLiveData[schw][auth.login];

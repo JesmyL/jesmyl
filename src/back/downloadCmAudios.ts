@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { parseHttpNumLeadLink } from 'shared/api';
 import { pullCmAudiosExpressRoutePath, pullFilesExpressSecretQueryName } from 'shared/api/pullFiles.utils';
 import { checkIsObject, checkIsString } from 'shared/utils/checkIs';
@@ -12,11 +14,11 @@ export const downloadCmAudios = async () => {
     `${hostConfig.url}${pullCmAudiosExpressRoutePath}?${pullFilesExpressSecretQueryName}=${secret.secret}`,
   );
 
-  if (!response.ok) throw `Не удалось получить список аудио с сервера: ${response.status}`;
+  if (!response.ok) throw backLocaleError(BackLocaleKey.AudioListFetchFailed, { s: response.status });
 
   const audios = await response.json();
 
-  if (!checkIsObject(audios)) throw 'Сервер вернул некорректный список аудио';
+  if (!checkIsObject(audios)) throw backLocaleError(BackLocaleKey.AudioListInvalid);
 
   for (const [rawLink, title] of objectEntries(audios)) {
     if (!checkIsString(title)) continue;

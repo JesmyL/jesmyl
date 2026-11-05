@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { userExtDB } from 'back/drizzle.schema';
 import { dbUpdate } from 'back/drizzle/drizzle.db';
 import { upsertUser2ComProps } from 'back/drizzle/ex/user2Com.utils';
@@ -26,7 +28,7 @@ export const cmUserStoreTsjrpcBaseServer = new (class CmUserStore extends Tsjrpc
           await Promise.all(
             mapObjectEntries(fav, async (comw, is) => {
               const user2ComResult = await upsertUser2ComProps(authLogin, extractNumber(comw), { isFav: !!is });
-              if (!user2ComResult || checkIsNil(user2ComResult.cmFavComMod)) throw 'Error 7817612365515263';
+              if (!user2ComResult || checkIsNil(user2ComResult.cmFavComMod)) throw backLocaleError(BackLocaleKey.CmUserStoreUpdateFailed);
 
               mod = Math.max(user2ComResult.cmFavComMod, mod);
             }),

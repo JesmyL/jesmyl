@@ -1,4 +1,5 @@
 import { FileStore } from 'back/complect/FileStore';
+import { translateBackTexts } from 'back/locales/back';
 import { jesmylTgBot } from 'back/sides/telegram-bot/bot';
 import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { postJRPCMessage, PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
@@ -7,6 +8,7 @@ import nodeSchedule from 'node-schedule';
 import { howMillisecondsInDay } from 'shared/const/ms';
 import { declension, itIt, itNNaN } from 'shared/utils';
 import { checkIsArray } from 'shared/utils/checkIs';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 
 type CrAlarm = {
   hours: number;
@@ -189,7 +191,7 @@ export const startCrTgAlarm = () => {
       const minutesStr = query.data.split(':')[1];
 
       if (!minutesStr) {
-        answer('Ошибка 719451256');
+        answer(translateBackTexts(null, BackLocaleKey.ErrorWithNumber, { n: 719451256 }));
         return;
       }
 
@@ -206,7 +208,7 @@ export const startCrTgAlarm = () => {
       const hoursStr = query.data.split(':')[1];
 
       if (!hoursStr) {
-        answer('Ошибка 189274994');
+        answer(translateBackTexts(null, BackLocaleKey.ErrorWithNumber, { n: 189274994 }));
         return;
       }
 

@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { db, dbUpdate } from 'back/drizzle/drizzle.db';
 import { questionerBlankDB, questionerUserAnswerDB } from 'back/drizzle/schema/questioner';
 import { eq, gt } from 'drizzle-orm';
@@ -112,7 +114,7 @@ const getAnswers = async (blankw: QuestionerBlankWid): Promise<QuestionerUserAns
 
 const pushAnswer = async (blankw: QuestionerBlankWid, answer: QuestionerUserAnswer): Promise<string> => {
   const blank = await getBlank(blankw);
-  if (blank == null) throw `Blank ${blankw} not found`;
+  if (blank == null) throw backLocaleError(BackLocaleKey.QBlankNotFound);
 
   forEachObjectEntries(answer.a, (templateId, answerValue) => {
     if (answerValue == null) return;

@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { makeRegExp } from 'regexpert';
@@ -22,7 +24,7 @@ export const cmEditComOrderServerTsjrpcBase =
           ...cmEditComOrderServerTsjrpcOutside,
 
           setKind: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, getCmComOrd, { kind, newTypeTitle }) => {
-            if (kind == null) throw 'Неизвестный тип';
+            if (kind == null) throw backLocaleError(BackLocaleKey.CmComOrderUnknownKind);
 
             ord.k = kind;
 
@@ -55,7 +57,7 @@ export const cmEditComOrderServerTsjrpcBase =
             const cmOrd = getCmComOrd();
             const inhi = cmOrd.me.anchorInheritIndex;
 
-            if (checkIsNil(inhi) || checkIsNil(cmOrd.me.leadOrd)) throw 'Продолжение блока не найдено';
+            if (checkIsNil(inhi) || checkIsNil(cmOrd.me.leadOrd)) throw backLocaleError(BackLocaleKey.CmComOrderContinuationNotFound);
 
             const isVisible = cmOrd.isVisible;
             leadOrd._v ??= [];
@@ -108,7 +110,7 @@ export const cmEditComOrderServerTsjrpcBase =
               if (checkIsNotNil(ord.a)) {
                 const targetOrd = getCmComOrds().find(o => o.wid === ord.a)?.me.source?.top;
 
-                if (!targetOrd) throw 'Блок не найден';
+                if (!targetOrd) throw backLocaleError(BackLocaleKey.CmComOrderBlockNotFound);
                 ord = targetOrd;
               }
 
@@ -120,10 +122,10 @@ export const cmEditComOrderServerTsjrpcBase =
           ),
 
           trimOverPositions: modifyOrd(ModifyOrdParent.TargetOrSelf, 'COM_APPS', (ord, getCmComOrd, _, __, com) => {
-            if (checkIsNil(com.t)) throw 'В песне нет текстов';
+            if (checkIsNil(com.t)) throw backLocaleError(BackLocaleKey.CmComNoTexts);
 
-            if (checkIsNil(ord.t) || !com.t[ord.t]) throw 'Текста нет';
-            if (checkIsNil(ord.p)) throw 'Аппликатура не обнаружена';
+            if (checkIsNil(ord.t) || !com.t[ord.t]) throw backLocaleError(BackLocaleKey.CmComTextMissing);
+            if (checkIsNil(ord.p)) throw backLocaleError(BackLocaleKey.CmComApplikaturaMissing);
 
             const textLinesCount = objectLength(com.t[ord.t].split(makeRegExp('/\n/')));
             if (textLinesCount < objectLength(ord.p)) ord.p.length = textLinesCount;

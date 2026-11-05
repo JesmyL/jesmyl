@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import nodemailer from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
@@ -20,7 +22,7 @@ export const sendEmailMessage = async (key: EmailerAuthConfigKey, options: Optio
   const authDict = emailerConfigFileStorage.getValue();
   const auth = authDict[key] ?? objectValues(authDict).find(Boolean);
 
-  if (!auth) throw `Почтовый аккаунт не настроен: ключ "${key}" отсутствует и запасных аккаунтов нет`;
+  if (!auth) throw backLocaleError(BackLocaleKey.MailAccountNotConfigured, { k: key });
   const { promise, reject, resolve } = Promise.withResolvers<SMTPTransport.SentMessageInfo>();
 
   const transporter = (transporters[auth.user] ??= nodemailer.createTransport({

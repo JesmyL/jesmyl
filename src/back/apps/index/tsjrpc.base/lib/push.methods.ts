@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { db, dbDelete, dbUpdate } from 'back/drizzle/drizzle.db';
 import { pushSubscriptionsDB, userDB } from 'back/drizzle.schema';
@@ -21,31 +23,31 @@ const takeValidPushEndpoint = (endpoint: string) => {
   try {
     url = new URL(endpoint);
   } catch {
-    throw 'Некорректная push-подписка: неверный endpoint';
+    throw backLocaleError(BackLocaleKey.PushEndpointInvalid);
   }
 
   if (url.protocol !== 'https:' || !pushServiceHostsReg.test(url.hostname))
-    throw 'Некорректная push-подписка: недопустимый push-сервис';
+    throw backLocaleError(BackLocaleKey.PushServiceInvalid);
 
   return endpoint;
 };
 
 const takeCheckedEndpoint = (endpoint: unknown) => {
   if (!checkIsString(endpoint) || !endpoint)
-    throw 'Некорректная push-подписка: не указан endpoint';
+    throw backLocaleError(BackLocaleKey.PushEndpointMissing);
 
   return endpoint;
 };
 
 const parsePushSubscription = (subscription: unknown): PushSubscriptionPayload => {
   if (!checkIsObject(subscription) || !checkIsString(subscription.endpoint) || !subscription.endpoint)
-    throw 'Некорректная push-подписка: не указан endpoint';
+    throw backLocaleError(BackLocaleKey.PushEndpointMissing);
 
   const endpoint = takeValidPushEndpoint(subscription.endpoint);
   const keys = subscription.keys;
 
   if (!checkIsObject(keys) || !checkIsString(keys.p256dh) || !checkIsString(keys.auth))
-    throw 'Некорректная push-подписка: отсутствуют ключи шифрования';
+    throw backLocaleError(BackLocaleKey.PushKeysMissing);
 
   return {
     endpoint,
@@ -126,7 +128,7 @@ export const indexPushMethods = {
       .where(eq(userDB.l, login))
       .limit(1);
 
-    if (user == null) throw 'Пользователь не найден';
+    if (user == null) throw backLocaleError(BackLocaleKey.UserNotFound);
 
     return {
       value: {

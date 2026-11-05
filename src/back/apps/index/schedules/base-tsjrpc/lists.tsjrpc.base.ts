@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import {
   IScheduleWidget,
@@ -21,7 +23,7 @@ export const schListsTsjrpcBaseServer = new (class SchLists extends TsjrpcBaseSe
     ) =>
       modifySchedule<Props>(false, (sch, props) => {
         const cat = sch.lists.cats[props.props.cati];
-        if (cat == null) throw 'category not found';
+        if (cat == null) throw backLocaleError(BackLocaleKey.ListCategoryNotFound);
         return modifier(cat, props, sch);
       });
 
@@ -30,7 +32,7 @@ export const schListsTsjrpcBaseServer = new (class SchLists extends TsjrpcBaseSe
     ) =>
       modifySchedule<Props>(false, (sch, props) => {
         const unit = sch.lists.units.find(unit => unit.mi === props.props.unitMi);
-        if (unit == null) throw 'The list unit not found';
+        if (unit == null) throw backLocaleError(BackLocaleKey.ListUnitNotFound);
         return modifier(unit, props, sch);
       });
 

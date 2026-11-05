@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { hostConfig, LocalSokiAuth, SokiAuthLogin, SokiVisit } from 'shared/api';
 import { appVersionFileStore } from './apps/index/file-stores';
 
@@ -15,7 +17,7 @@ export const userAuthStringified = (auth: LocalSokiAuth | nil) =>
   `<code>${auth ? JSON.stringify(auth, null, 1) : ''}</code></div>`;
 
 export const takeLogginedAuthOrThrow = (auth: LocalSokiAuth | nil): LocalSokiAuth & { login: SokiAuthLogin } => {
-  if (!auth?.login) throw 'Не авторизован';
+  if (!auth?.login) throw backLocaleError(BackLocaleKey.NotAuthorized);
 
   return auth as never;
 };

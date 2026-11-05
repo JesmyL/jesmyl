@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { makeRegExp } from 'regexpert';
 import { ScheduleWidgetDayEventMi, ScheduleWidgetDayEventMiDef, ScheduleWidgetDayi } from 'shared/api';
@@ -33,7 +35,7 @@ onScheduleDayBeginTimeSetEvent.listen(async ({ dayProps, strWup, auth }) => {
       await throwIfNoScheduleRedact(sch, auth);
 
       const wup = +strWup.replace(makeRegExp('/:/'), '.');
-      if (isNaN(wup)) throw `time ${strWup} is invalid`;
+      if (isNaN(wup)) throw backLocaleError(BackLocaleKey.TimeInvalid, { t: strWup });
       day.wup = wup;
 
       return null;
@@ -107,7 +109,7 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
           await throwIfNoScheduleEventsAdd(sch, tool.auth);
 
           const eventi = day.list.findIndex(event => event.mi === value.eventMi);
-          if (eventi < 0) throw 'event not found';
+          if (eventi < 0) throw backLocaleError(BackLocaleKey.EventNotFound);
           day.list.splice(eventi, 1);
 
           return `В расписании ${scheduleTitleInBrackets(sch)}, из ${props.dayi + 1} дня удалено событие ${value}`;
@@ -117,7 +119,7 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
           await throwIfNoScheduleEventsAdd(sch, tool.auth);
 
           const eventi = day.list.findIndex(event => event.mi === eventMi);
-          if (eventi < 0) throw 'event not found';
+          if (eventi < 0) throw backLocaleError(BackLocaleKey.EventNotFound);
 
           day.list = withInsertedBeforei(day.list, beforei, eventi);
 

@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { takeCmAudioKeyFromLink } from 'back/audio/md5LinkRedirectDict';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
@@ -158,8 +160,8 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
 
           const [com] = await db.select({ n: comDB.n, is: comDB.isRemoved }).from(comDB).where(whereComw);
 
-          if (!com) throw 'Неизвестная песня';
-          if (!com.is) throw 'Сначала песню нужно удалить';
+          if (!com) throw backLocaleError(BackLocaleKey.CmComUnknown);
+          if (!com.is) throw backLocaleError(BackLocaleKey.CmComMustDeleteFirst);
 
           await dbDelete(comDB, whereComw);
 

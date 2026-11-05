@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { makeTwiceKnownName } from 'back/complect/makeTwiceKnownName';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import {
@@ -20,7 +22,7 @@ export const schGamesTsjrpcBaseServer = new (class SchGames extends TsjrpcBaseSe
     ) =>
       modifySchedule<Props>(false, (sch, props) => {
         const game = sch.games?.list.find(game => game.mi === props.props.gameMi);
-        if (game == null) throw 'game not found';
+        if (game == null) throw backLocaleError(BackLocaleKey.GameNotFound);
 
         return modifier(game, props, sch);
       });
@@ -30,7 +32,7 @@ export const schGamesTsjrpcBaseServer = new (class SchGames extends TsjrpcBaseSe
     ) =>
       modifySchedule<Props>(false, (sch, props) => {
         const criteria = sch.games?.criterias[props.props.criteriai];
-        if (criteria == null) throw 'criteria not found';
+        if (criteria == null) throw backLocaleError(BackLocaleKey.CriteriaNotFound);
 
         return modifier(criteria, props, sch);
       });

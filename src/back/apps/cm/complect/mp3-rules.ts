@@ -1,5 +1,7 @@
+import { backLocaleError } from 'back/locales/back';
 import https from 'https';
 import { CmMp3ContainsPageResult } from 'shared/api';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { cmEditorTsjrpcBaseServer } from '../editor.tsjrpc.base';
 import { mp3ResourcesFileStorage } from '../file-stores';
 
@@ -23,8 +25,8 @@ const fetch = (url: string) => {
           });
         },
       )
-      .on('error', error => {
-        reject(`Ошибка 512535123\n${error}`);
+      .on('error', () => {
+        reject(backLocaleError(BackLocaleKey.ErrorWithNumber, { n: 512535123 }));
       });
   });
 };
@@ -44,7 +46,7 @@ export const cmGetResourceHTMLString: typeof cmEditorTsjrpcBaseServer.getResourc
 
       fetch(userUrl.toString())
         .then(html => resolve({ value: { rule, html } }))
-        .catch(error => reject(`Ошибка 97377213\n${error}`));
+        .catch(() => reject(backLocaleError(BackLocaleKey.ErrorWithNumber, { n: 97377213 })));
     } else reject('Ошибка. Этот ресурс неизвестен');
   });
 };

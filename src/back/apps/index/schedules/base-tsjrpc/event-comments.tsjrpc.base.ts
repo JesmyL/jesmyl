@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { eventCommentsDB } from 'back/drizzle.schema';
 import { db, dbDelete } from 'back/drizzle/drizzle.db';
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
@@ -26,23 +28,23 @@ const takeEventCommentAuthor = async (
     takeScheduleWidgetTiny({ w: schw }),
   ]);
 
-  if (!authUser) throw 'Пользователь не найден';
+  if (!authUser) throw backLocaleError(BackLocaleKey.UserNotFound);
 
   const event = sch.days.flatMap(day => day.list).find(event => event.mi === eventMi);
-  if (event == null) throw 'Событие не найдено';
+  if (event == null) throw backLocaleError(BackLocaleKey.EventNotFound);
 
   const schUser = sch.ctrl.users.find(user => user.id === authUser.id);
   const isSwPublic = scheduleWidgetRegTypeRights.checkIsHasRights(sch.ctrl.type, ScheduleWidgetRegType.Public);
 
-  if (!isSwPublic && schUser == null) throw 'Нет доступа к расписанию';
+  if (!isSwPublic && schUser == null) throw backLocaleError(BackLocaleKey.ScheduleAccessDenied);
 
   const userRights = schUser?.R ?? sch.ctrl.defu;
 
   if (!scheduleWidgetUserRights.checkIsHasRights(userRights, ScheduleWidgetUserRoleRight.Read))
-    throw 'Нет прав на комментирование событий расписания';
+    throw backLocaleError(BackLocaleKey.EventCommentForbidden);
 
   if (event.secret && !scheduleWidgetUserRights.checkIsHasRights(userRights, ScheduleWidgetUserRoleRight.ReadSpecials))
-    throw 'Нет прав на комментирование скрытого события';
+    throw backLocaleError(BackLocaleKey.SecretEventCommentForbidden);
 
   return { userId: authUser.id, userRights };
 };
@@ -55,7 +57,7 @@ export const schEventCommentsTsjrpcBaseServer =
         methods: {
           setEventComment: async ({ schw, eventMi, text }, tool) => {
             const commentText = text.trim();
-            if (!commentText) throw 'Комментарий не может быть пустым';
+            if (!commentText) throw backLocaleError(BackLocaleKey.CommentEmpty);
 
             const { userId } = await takeEventCommentAuthor(schw, eventMi, tool);
 
@@ -76,7 +78,7 @@ export const schEventCommentsTsjrpcBaseServer =
               eq(eventCommentsDB.userId, userId),
             );
 
-            if (where == null) throw 'Не удалось определить комментарий';
+            if (where == null) throw backLocaleError(BackLocaleKey.CommentDetectFailed);
 
             await dbDelete(eventCommentsDB, where);
           },

@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { scheduleDB } from 'back/drizzle.schema';
 import { dbUpdate } from 'back/drizzle/drizzle.db';
@@ -41,7 +43,7 @@ export const throwIfNoScheduleTotalRedact = async (sch: IScheduleWidget, auth: L
     schUser == null ||
     !scheduleWidgetUserRights.checkIsHasRights(schUser.R ?? sch.ctrl.defu, ScheduleWidgetUserRoleRight.TotalRedact)
   )
-    throw 'Нет прав на изменение прав участников расписания';
+    throw backLocaleError(BackLocaleKey.NoRightsChangeScheduleMembers);
 };
 
 const takeAuthScheduleUserRights = async (sch: IScheduleWidget, auth: LocalSokiAuth | nil) => {
@@ -67,27 +69,27 @@ const makeThrowIfNoScheduleRights =
 
 export const throwIfNoScheduleRedact = makeThrowIfNoScheduleRights(
   ScheduleWidgetUserRoleRight.Redact,
-  'Нет прав на редактирование',
+  backLocaleError(BackLocaleKey.NoRightsScheduleRedact),
 );
 
 export const throwIfNoScheduleUsersRedact = makeThrowIfNoScheduleRights(
   ScheduleWidgetUserRoleRight.RedactUsers,
-  'Нет прав на редактирование участников',
+  backLocaleError(BackLocaleKey.NoRightsScheduleUsersRedact),
 );
 
 export const throwIfNoScheduleDaysAdd = makeThrowIfNoScheduleRights(
   ScheduleWidgetUserRoleRight.AddDays,
-  'Нет прав на добавление дней',
+  backLocaleError(BackLocaleKey.NoRightsScheduleAddDays),
 );
 
 export const throwIfNoScheduleEventsAdd = makeThrowIfNoScheduleRights(
   ScheduleWidgetUserRoleRight.AddEvents,
-  'Нет прав на добавление событий',
+  backLocaleError(BackLocaleKey.NoRightsScheduleAddEvents),
 );
 
 export const throwIfNoScheduleEventContentRedact = makeThrowIfNoScheduleRights(
   ScheduleWidgetUserRoleRight.RedactEventContent,
-  'Нет прав на редактирование событий',
+  backLocaleError(BackLocaleKey.NoRightsScheduleEventContentRedact),
 );
 
 export const throwIfNoScheduleComsListRedact = async (
@@ -115,7 +117,7 @@ export const throwIfNoScheduleComsListRedact = async (
     await throwIfNoUserScopeAccessRight(loggedAuth, 'cm', 'EVENT', 'U');
   } catch (error) {
     if (typeof error !== 'string') throw error;
-    throw 'Нет прав на изменение списка композиций события';
+    throw backLocaleError(BackLocaleKey.NoRightsChangeEventComs);
   }
 };
 
@@ -180,6 +182,6 @@ export const modifyScheduleDay = <Props extends { props: ScheduleDayScopeProps }
 ) =>
   modifySchedule<Props>(isNeedRefreshInformTime, (sch, props, tool) => {
     const day = sch.days[props.props.dayi];
-    if (!day) throw 'День не найден';
+    if (!day) throw backLocaleError(BackLocaleKey.DayNotFound);
     return modifier(day, props, sch, tool);
   });

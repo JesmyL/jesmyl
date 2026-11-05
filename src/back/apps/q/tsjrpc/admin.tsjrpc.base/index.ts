@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { takeUserLoginsByIds, takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
@@ -188,7 +190,7 @@ export const questionerAdminServerTsjrpcBase =
 
               if (allSymbolsSet.has(symbol)) {
                 if (template.text.includes(symbol)) {
-                  throw 'Этот символ уже исрользуется в тексте';
+                  throw backLocaleError(BackLocaleKey.QSymbolAlreadyUsed);
                 }
                 allSymbolsSet.delete(symbol);
               } else allSymbolsSet.add(symbol);
@@ -276,8 +278,9 @@ function updateBlank<Args extends QuestionerBlankSelector>(
     const authUser = await takeUserTiny({ l: auth.login });
     const blank = await questionerBlanksStore.getItem(args.blankw);
 
-    if (!blank) throw `Blank ${args.blankw} not found`;
-    if (!adminRoles.has(blank.team[authUser.id]?.r)) throw 'Нет прав на это действие 63412393';
+    if (!blank) throw backLocaleError(BackLocaleKey.QBlankNotFound);
+    if (!adminRoles.has(blank.team[authUser.id]?.r))
+      throw backLocaleError(BackLocaleKey.NoAccessWithNumber, { n: 63412393 });
 
     updater(blank, args);
     blank.m = Date.now();
@@ -297,7 +300,7 @@ function updateTemplate<Args extends QuestionerTemplateSelector>(
 ): (args: Args, tool: ServerTSJRPCTool) => void {
   return updateBlank((blank, args) => {
     const template = blank.tmp[args.templateId];
-    if (template == null) throw `The template ${args.templateId} of blank ${blank.title} is not found`;
+    if (template == null) throw backLocaleError(BackLocaleKey.QTemplateNotFound, { t: args.templateId, n: blank.title });
 
     updater(template, args, blank);
   });

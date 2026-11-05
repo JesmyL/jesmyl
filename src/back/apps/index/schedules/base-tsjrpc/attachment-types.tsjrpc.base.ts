@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import {
   IScheduleWidget,
@@ -34,7 +36,7 @@ export const schAttachmentTypesTsjrpcBaseServer =
       ) =>
         modifySchedule<Props>(false, (sch, props) => {
           const tatt = sch.tatts.find(tatt => tatt.mi === props.props.tattMi);
-          if (tatt == null) throw 'attachment type not found';
+          if (tatt == null) throw backLocaleError(BackLocaleKey.AttachmentTypeNotFound);
 
           return modifier(tatt, props, sch);
         });

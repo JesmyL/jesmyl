@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { tokenSecretFileStore } from 'back/complect/soki/file-stores';
 import { PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
 import { prodTelegramBot } from 'back/sides/telegram-bot/prod/prod-bot';
@@ -11,7 +13,7 @@ const makeAuthFromUser = async (user: OmitOwn<TelegramBot.User, 'is_bot'>) => {
   try {
     await prodTelegramBot.tryIsUserMember(user.id);
   } catch (_error) {
-    throw 'Не состоит в канале';
+    throw backLocaleError(BackLocaleKey.NotInChannel);
   }
 
   return {

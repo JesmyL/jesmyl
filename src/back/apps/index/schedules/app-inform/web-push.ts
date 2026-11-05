@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { pushSubscriptionsDB, userDB } from 'back/drizzle.schema';
 import { db, dbDelete } from 'back/drizzle/drizzle.db';
 import { lazyEnvJson } from 'back/envJson';
@@ -12,8 +14,7 @@ const takeVapidDetails = () => {
   const { VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY, VAPID_SUBJECT } = lazyEnvJson();
 
   if (!VAPID_PUBLIC_KEY || !VAPID_PRIVATE_KEY)
-    throw 'VAPID-ключи не заданы. Сгенерируйте их командой `npm run gen-vapid` и заполните ' +
-      'VAPID_PUBLIC_KEY / VAPID_PRIVATE_KEY в файле .env.json сервера.';
+    throw backLocaleError(BackLocaleKey.VapidKeysMissing);
 
   return {
     subject: VAPID_SUBJECT,

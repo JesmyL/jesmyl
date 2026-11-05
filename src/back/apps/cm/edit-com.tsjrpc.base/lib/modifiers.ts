@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { comDB } from 'back/drizzle.schema';
 import { dbUpdate } from 'back/drizzle/drizzle.db';
@@ -33,7 +35,7 @@ export const modifyCom =
 
     const com = await selectPgCheckedExportableCom(props.comw, {});
 
-    if (!com) throw `Песня не найдена`;
+    if (!com) throw backLocaleError(BackLocaleKey.CmComNotFound);
     const comName = com.n;
     const comClone = deepClone(com);
 

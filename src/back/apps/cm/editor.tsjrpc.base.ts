@@ -1,4 +1,4 @@
-import { translateBackTexts } from 'back/locales/back';
+import { backLocaleError, translateBackTexts } from 'back/locales/back';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { comDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
@@ -112,7 +112,7 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
                 .map(it => it.w);
               break;
             default:
-              throw 'unknown smart search filter';
+              throw backLocaleError(BackLocaleKey.CmSmartSearchUnknownFilter);
           }
 
           return { value: { comws } };
@@ -129,7 +129,7 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
 
           mp3ResourcesFileStorage.modifyValueWithAutoSave(list => {
             const index = list.findIndex(r => r.w === rule.w);
-            if (index < 0) throw 'rule not found';
+            if (index < 0) throw backLocaleError(BackLocaleKey.CmEditorMp3RuleNotFound);
             list.splice(index, 1, rule);
           });
 

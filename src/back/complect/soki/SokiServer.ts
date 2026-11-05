@@ -1,3 +1,5 @@
+import { backLocaleError, localizeBackLocaleErrorPayload } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { insertDashMessage, insertVisit } from 'back/dash/visits';
 import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { ServerTSJRPCTool, tsjrpcBaseServerNext } from 'back/tsjrpc.base.server';
@@ -272,7 +274,10 @@ export class SokiServer {
 
     if (error) {
       console.info(error);
-      errorMessage = error instanceof DrizzleQueryError ? 'Ошибка сервера' : `${error}`;
+
+      const rawErrorMessage =
+        error instanceof DrizzleQueryError ? backLocaleError(BackLocaleKey.ServerError) : `${error}`;
+      errorMessage = localizeBackLocaleErrorPayload(rawErrorMessage, tool.visitInfo?.langi);
     }
 
     this.send(

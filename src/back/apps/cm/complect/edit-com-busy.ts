@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
 import { CmEditorTsjrpcModel } from 'shared/api/tsjrpc/cm/editor.tsjrpc.model';
@@ -10,7 +12,7 @@ export const cmEditComBusyTsjrpcMethods = {
     const { auth, client, visitInfo } = tool;
 
     if (!(client instanceof WebSocket)) return;
-    if (!auth || !auth.fio || !auth.login || !visitInfo) throw 'Авторизация не действительна';
+    if (!auth || !auth.fio || !auth.login || !visitInfo) throw backLocaleError(BackLocaleKey.AuthInvalid);
 
     const comBusy: ComEditBusy = {
       comw,

@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
 import { comDB, user2ComDB, userDB } from 'back/drizzle.schema';
 import { db, dbUpdate } from 'back/drizzle/drizzle.db';
@@ -70,7 +72,7 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
         }),
 
         takeFreshComAudioMarksPack_v1: async ({ mod, comw }) => {
-          if (checkIsNil(mod)) throw 'Ошибка 51712343778';
+          if (checkIsNil(mod)) throw backLocaleError(BackLocaleKey.CmOperationFailed);
 
           const marksHolder = (
             await db.select({ marks: comDB.am, m: comDB.amMod }).from(comDB).where(eq(comDB.w, comw)).limit(1)

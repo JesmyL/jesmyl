@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { makeRegExp } from 'regexpert';
 import {
@@ -43,7 +45,7 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
         await throwIfNoScheduleUsersRedact(sch, tool.auth);
 
         const user = sch.ctrl.users.find(user => user.mi === props.props.userMi);
-        if (user === undefined) throw 'User not found';
+        if (user === undefined) throw backLocaleError(BackLocaleKey.UserNotFound);
         return modifier(user, props, sch, tool);
       });
 
@@ -79,7 +81,7 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
             actualUsers.push({ mi: ++lastUserMi, id: userId });
           });
 
-          if (unknownTitles.length) throw `Не найдены пользователи: ${unknownTitles.join(', ')}`;
+          if (unknownTitles.length) throw backLocaleError(BackLocaleKey.UsersNotFoundByTitles, { n: unknownTitles.join(', ') });
 
           sch.ctrl.users.push(...actualUsers);
 
@@ -93,7 +95,7 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
 
           const userTiny = await takeUserTiny({ l: login as SokiAuthLogin });
 
-          if (sch.ctrl.users.some(user => user.id === userTiny.id)) throw 'Пользователь уже в расписании';
+          if (sch.ctrl.users.some(user => user.id === userTiny.id)) throw backLocaleError(BackLocaleKey.UserAlreadyInSchedule);
 
           sch.ctrl.users.push({
             mi: takeNextMi(sch.ctrl.users, ScheduleWidgetUserMi.def),
@@ -106,14 +108,14 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
           );
         }),
         addMe: modifySchedule(false, async (sch, { place }, { auth }) => {
-          if (auth?.login == null) throw 'Необходимо авторизоваться';
+          if (auth?.login == null) throw backLocaleError(BackLocaleKey.AuthRequired);
 
           if (!scheduleWidgetRegTypeRights.checkIsHasRights(sch.ctrl.type, ScheduleWidgetRegType.Public))
-            throw 'В частное расписание можно попасть только по QR-приглашению';
+            throw backLocaleError(BackLocaleKey.PrivateScheduleQrOnly);
 
           const userTiny = await takeUserTiny({ l: auth.login });
 
-          if (sch.ctrl.users.some(user => user.id === userTiny.id)) throw 'user exists';
+          if (sch.ctrl.users.some(user => user.id === userTiny.id)) throw backLocaleError(BackLocaleKey.UserAlreadyInSchedule);
 
           sch.ctrl.users.push({
             mi: takeNextMi(sch.ctrl.users, ScheduleWidgetUserMi.def),
@@ -127,14 +129,14 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
         }),
 
         addMeByInvite: modifySchedule(false, async (sch, { inviteHash }, { auth }) => {
-          if (auth?.login == null) throw 'Необходимо авторизоваться';
+          if (auth?.login == null) throw backLocaleError(BackLocaleKey.AuthRequired);
 
           const userTiny = await takeUserTiny({ l: auth.login });
 
           if (sch.ctrl.users.some(user => user.id === userTiny.id)) return null;
 
           if (!sch.ctrl.users.some(user => packScheduleWidgetInviteLink(sch.w, user.mi) === inviteHash))
-            throw 'Приглашение недействительно';
+            throw backLocaleError(BackLocaleKey.InviteInvalid);
 
           sch.ctrl.users.push({
             mi: takeNextMi(sch.ctrl.users, ScheduleWidgetUserMi.def),
@@ -148,12 +150,12 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
         }),
 
         removeMe: modifySchedule(false, async (sch, _props, { auth }) => {
-          if (auth?.login == null) throw 'Необходимо авторизоваться';
+          if (auth?.login == null) throw backLocaleError(BackLocaleKey.AuthRequired);
 
           const userTiny = await takeUserTiny({ l: auth.login });
           const user = sch.ctrl.users.find(({ id }) => id === userTiny.id);
 
-          if (user === undefined) throw 'Вы не являетесь участником';
+          if (user === undefined) throw backLocaleError(BackLocaleKey.NotParticipant);
 
           if (
             scheduleWidgetUserRights.checkIsHasRights(
@@ -161,7 +163,7 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
               ScheduleWidgetUserRoleRight.TotalRedact,
             )
           )
-            throw 'Управляющий не может покинуть расписание';
+            throw backLocaleError(BackLocaleKey.ManagerCannotLeave);
 
           sch.ctrl.users = sch.ctrl.users.filter(({ id }) => id !== userTiny.id);
           sch.ctrl.roles.forEach(role => {

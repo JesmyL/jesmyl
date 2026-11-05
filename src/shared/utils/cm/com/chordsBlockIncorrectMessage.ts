@@ -2,7 +2,7 @@ import { makeRegExp } from 'regexpert';
 import { IIncorrects } from 'shared/model/cm/Incorrects';
 import { textedChordRegsLazy } from './const';
 
-export const chordsBlockIncorrectMessage = (value: string | und, isHardChords: Bool): IIncorrects => {
+export const takeChordsBlockIncorrects = (value: string | und, isHardChords: Bool) => {
   const incorrectChords: string[] = [];
   const complexChords: string[] = [];
 
@@ -35,6 +35,12 @@ export const chordsBlockIncorrectMessage = (value: string | und, isHardChords: B
       return chord;
     })
     .join('');
+
+  return { incorrectChords, complexChords, textWithIncorrects };
+};
+
+export const chordsBlockIncorrectMessage = (value: string | und, isHardChords: Bool): IIncorrects => {
+  const { incorrectChords, complexChords, textWithIncorrects } = takeChordsBlockIncorrects(value, isHardChords);
 
   let message = '';
 

@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { userDB } from 'back/drizzle.schema';
 import { dbUpdate } from 'back/drizzle/drizzle.db';
@@ -11,7 +13,7 @@ import { makeUserAccessRights } from './makeUserAccessRights';
 
 export const indexTSJRPCBaseUpdateUserAccessRight = {
   updateUserAccessRight: async ({ login, rule, scope, operation }) => {
-    if (scope === 'general') throw 'Эти права доступа менять нельзя';
+    if (scope === 'general') throw backLocaleError(BackLocaleKey.AccessRightImmutable);
 
     const { rights: userRights } = (await takeUserTiny({ l: login })) ?? {};
 

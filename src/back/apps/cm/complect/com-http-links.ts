@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { HttpLink, HttpNumLeadLink, HttpNumLeadLinkKey } from 'shared/api';
 import { checkIsStartsWith } from 'shared/utils/checkIs';
 import { objectEntries } from 'shared/utils/object.utils';
@@ -49,7 +51,7 @@ export const makeCmComHttpLinkFromNumLead = (numLeadLink: HttpLink | HttpNumLead
   if (checkIsStartsWith(numLeadLink, 'http')) return numLeadLink;
 
   const prefix = `${parseFloat(numLeadLink)}~` as const;
-  if (numLeadToHttpLinks[prefix] === undefined) throw `Unknown link prefix ${prefix}`;
+  if (numLeadToHttpLinks[prefix] === undefined) throw backLocaleError(BackLocaleKey.AudioLinkPrefixUnknown, { p: prefix });
 
   let postfix = numLeadLink.slice(prefix.length);
 

@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { takeUserRoleTiny } from 'back/apps/index/tinies/userRoleTiny';
 import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { LocalSokiAuth, SokiAuthLogin } from 'shared/api';
@@ -49,7 +51,7 @@ export const throwIfNoUserScopeAccessRight = async <
     if (checkUserScopeAccessRight(roleInfo?.r, userInfo.rights, scope, rule, operation)) return false;
   } while (Bool.False);
 
-  throw 'Нет прав на это действие';
+  throw backLocaleError(BackLocaleKey.NoAccess);
 };
 
 export const checkWhatOfUserScopeOperationAccessRight = async <

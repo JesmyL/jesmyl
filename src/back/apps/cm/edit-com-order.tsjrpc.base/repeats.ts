@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { CmComTextSquareBracketsMode, OrderRepeats, SpecialOrderRepeats } from 'shared/api';
 import { CmEditComOrderTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-order.tsjrpc.model';
@@ -94,7 +96,7 @@ export const cmEditComOrderServerTsjrpcRepeats = {
         const comOrd = ords.find(ord => ord.wid === ordw);
         const ord = comOrd?.me.leadOrd?.me.source?.top ?? comOrd?.me.source?.top;
 
-        if (!comOrd || !ord) throw 'Блок не найден';
+        if (!comOrd || !ord) throw backLocaleError(BackLocaleKey.CmComOrderBlockNotFound);
 
         const inhi = comOrd.me.anchorInheritIndex;
 

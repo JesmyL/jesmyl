@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { catDB } from 'back/drizzle.schema';
 import { db, dbUpdate } from 'back/drizzle/drizzle.db';
@@ -19,7 +21,7 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
       methods: {
         toggleComExistence: modifyCat(async (cat, { comw }, { auth }) => {
           if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
-          if (cat.k !== CmCatKind.list) throw 'Категория не является списком';
+          if (cat.k !== CmCatKind.list) throw backLocaleError(BackLocaleKey.CmCatNotList);
 
           const stackSet = new Set(cat.s);
 
@@ -47,7 +49,7 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
         setNativeComNum: modifyCat(async (cat, { comw, value }, { auth }) => {
           if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
 
-          if (cat.k !== CmCatKind.dict) throw 'Категория не является сборником';
+          if (cat.k !== CmCatKind.dict) throw backLocaleError(BackLocaleKey.CmCatNotDict);
 
           cat.d = { ...cat.d, [comw]: value };
 
@@ -98,7 +100,7 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
 
           const cat = await takeCatOrThrow(catw);
 
-          if (!cat.isRemoved) throw `Категория "${cat.n}" не была удалена`;
+          if (!cat.isRemoved) throw backLocaleError(BackLocaleKey.CmCatNotRemoved, { n: cat.n });
 
           cat.isRemoved = Bool.False;
           cat.m = Date.now();
@@ -122,7 +124,7 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
 
           const cat = await takeCatOrThrow(catw);
 
-          if (cat.s?.length || objectLength(cat.d)) throw `Вид категории "${cat.n}" нельзя изменить: в ней есть песни`;
+          if (cat.s?.length || objectLength(cat.d)) throw backLocaleError(BackLocaleKey.CmCatKindLocked, { n: cat.n });
 
           cat.k = k;
           cat.m = Date.now();
@@ -140,8 +142,8 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
 const parseCatName = (n: string) => {
   const name = n.trim();
 
-  if (!name) throw 'Название категории не может быть пустым';
-  if (name.length > 256) throw 'Название категории слишком длинное';
+  if (!name) throw backLocaleError(BackLocaleKey.CmCatNameEmpty);
+  if (name.length > 256) throw backLocaleError(BackLocaleKey.CmCatNameTooLong);
 
   return name;
 };
@@ -149,7 +151,7 @@ const parseCatName = (n: string) => {
 const takeCatOrThrow = async (catw: CmCatWid) => {
   const [row] = await db.select().from(catDB).where(eq(catDB.w, catw)).limit(1);
 
-  if (!row) throw 'Cat is not found';
+  if (!row) throw backLocaleError(BackLocaleKey.CmCatNotFound);
 
   return exportableCatFromRow(row);
 };

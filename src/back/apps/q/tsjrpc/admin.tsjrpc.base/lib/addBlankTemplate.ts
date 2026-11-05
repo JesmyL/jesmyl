@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { questionerBlanksStore } from 'back/apps/q/db-stores';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import {
@@ -21,7 +23,7 @@ export const questionerTSJRPCAddBlankTemplate: typeof questionerAdminServerTsjrp
   if (await throwIfNoUserScopeAccessRight(auth, 'q', 'EDIT', 'R')) throw '';
 
   const blank = await questionerBlanksStore.getItem(blankw);
-  if (blank == null) throw 'Not Found';
+  if (blank == null) throw backLocaleError(BackLocaleKey.QBlankNotFound);
 
   let blankTmp: QuestionerTemplate;
 

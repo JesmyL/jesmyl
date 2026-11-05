@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { takeUserLoginsByIds, takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
@@ -36,7 +38,7 @@ import {
   StoragesNestedCellSelectors,
   StoragesRackColumn,
 } from 'shared/model/storages/rack.model';
-import { declension, itNNull, takeNextMi, withInsertedBeforei } from 'shared/utils';
+import { itNNull, takeNextMi, withInsertedBeforei } from 'shared/utils';
 import { checkIsArray, checkIsObject } from 'shared/utils/checkIs';
 import { makeDeepProxyObject } from 'shared/utils/makeDeepProxyObject';
 import { objectGroupBy, objectKeys, objectLength } from 'shared/utils/object.utils';
@@ -187,14 +189,9 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
           });
 
           if (unsavedCards) {
-            if (unsavedCards === cards.length) throw 'Не добавлено ни одной карточки';
+            if (unsavedCards === cards.length) throw backLocaleError(BackLocaleKey.NoCardsAdded, { n: unsavedCards });
 
-            throw declension(
-              unsavedCards,
-              `Не добавлена ${unsavedCards} карточка`,
-              `Не добавлено ${unsavedCards} карточки`,
-              `Не добавлено ${unsavedCards} карточек`,
-            );
+            throw backLocaleError(BackLocaleKey.NoCardsAdded, { n: unsavedCards });
           }
         }),
 
@@ -308,7 +305,7 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
         }),
 
         createDatesNestedCell: updateCell(cell => {
-          if (cell[0] !== StoragesColumnType.Dates) throw 'Cell type error 761564128398';
+          if (cell[0] !== StoragesColumnType.Dates) throw backLocaleError(BackLocaleKey.CellTypeError, { n: 761564128398 });
 
           cell[1] ??= { nst: [] };
           cell[1].nst ??= [];
@@ -419,9 +416,9 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
         ),
 
         setRackAsParent: updateRack((rack, { parentRackw }) => {
-          if (rack.statuses.length > 1) throw 'Уже существуют собственные статусы';
-          if (rack.dicts.length > 1) throw 'Уже существуют собственные словари';
-          if (rack.cols.length > 1) throw 'Уже существуют собственные спец. поля';
+          if (rack.statuses.length > 1) throw backLocaleError(BackLocaleKey.RackStatusesExist);
+          if (rack.dicts.length > 1) throw backLocaleError(BackLocaleKey.RackDictsExist);
+          if (rack.cols.length > 1) throw backLocaleError(BackLocaleKey.RackColsExist);
 
           rack.parent = parentRackw;
           const partialRack: Partial<StoragesRackTrail> = rack;
@@ -540,7 +537,7 @@ function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret exte
         onSet: (_, keys, key) => {
           if ((keys[0] ?? key) in rackCore) return true;
           if (!parentRack?.team[authUserId]?.role)
-            throw 'Нет прав на это действие (изменение в родительском стеллаже)';
+            throw backLocaleError(BackLocaleKey.NoParentRackEditRight);
           return true;
         },
       });
@@ -550,7 +547,7 @@ function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret exte
       if (parentRack != null) storagesDirStorage.saveItem(parentRack.w);
     });
 
-    if (updated == null) throw 'Error 10961237652345683910';
+    if (updated == null) throw backLocaleError(BackLocaleKey.StorageUpdateFailed);
     const { item, mod } = updated;
 
     let rack: StoragesRack = null!;
@@ -564,7 +561,7 @@ function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret exte
     if ('parent' in item) {
       parentRack ??= storagesDirStorage.getItem(item.parent);
       if (parentRack == null || 'parent' in parentRack)
-        throw 'Во время формирования дочернего стеллажа обнаружено наследование от другого дочернего стеллажа';
+        throw backLocaleError(BackLocaleKey.ChildRackInheritance);
       rack = { ...parentRack, ...item };
     } else rack = item;
 
@@ -584,7 +581,7 @@ function updateRackStatus<
 >(updater: (status: StoragesRackStatus, props: Props, rack: StoragesRack) => Ret) {
   return updateRack<Props, RetValue, Ret>((rack, props) => {
     const status = rack.statuses[props.statusi];
-    if (status == null) throw `There is no status by ${props.statusi} index`;
+    if (status == null) throw backLocaleError(BackLocaleKey.StatusIndexNotFound, { i: props.statusi });
     return updater(status, props, rack);
   });
 }
@@ -596,8 +593,8 @@ function updateRackCard<
 >(updater: (card: StoragesRackCard, props: Props, rack: StoragesRack) => Ret) {
   return updateRack<Props, RetValue, Ret>((rack, props) => {
     const card = rack.cards[props.cardi];
-    if (card == null) throw `Карточка не найдена`;
-    if (card.i !== props.cardi) throw `Карточка имеет некорректную ссылку`;
+    if (card == null) throw backLocaleError(BackLocaleKey.CardNotFound);
+    if (card.i !== props.cardi) throw backLocaleError(BackLocaleKey.CardLinkIncorrect);
     return updater(card, props, rack);
   });
 }
@@ -620,7 +617,7 @@ function updateCellOrNestedCell<
   ) => Ret,
 ) {
   return updateRackCard<Props, RetValue, Ret>((card, props, rack) => {
-    if (props.coli == null) throw 'Error: coli is missed in props';
+    if (props.coli == null) throw backLocaleError(BackLocaleKey.ColIndexMissed);
 
     if (props.nestedColi == null || props.nestedCellMi == null)
       return updater(
@@ -631,14 +628,14 @@ function updateCellOrNestedCell<
       );
 
     const column = rack.cols[props.coli];
-    if (column == null) throw 'Error 1920936712490123';
+    if (column == null) throw backLocaleError(BackLocaleKey.ColumnNotFound);
 
     card.row ??= [];
     const cardCell = card.row[props.coli];
-    if (cardCell == null || !checkIsObject(cardCell[1])) throw 'Error 1862531839123';
+    if (cardCell == null || !checkIsObject(cardCell[1])) throw backLocaleError(BackLocaleKey.CardCellInvalid);
 
     const rowHolder = cardCell[1]?.nst.find(it => it.mi === props.nestedCellMi);
-    if (!checkIsObject(rowHolder)) throw 'Error 192644527841210';
+    if (!checkIsObject(rowHolder)) throw backLocaleError(BackLocaleKey.RowHolderInvalid);
 
     return updater(
       { rowHolder, columni: props.nestedColi, colType: column.cols?.[props.nestedColi].t, colsHolder: column },
@@ -660,12 +657,12 @@ function updateCell<Props extends StoragesTsjrpcCellSelector, RetValue, Ret exte
 ) {
   return updateRackCard<Props, RetValue, Ret>((card, props, rack) => {
     const column = rack.cols[props.coli];
-    if (column == null) throw 'Error 8156124357234';
+    if (column == null) throw backLocaleError(BackLocaleKey.ColumnNotFound);
 
     card.row ??= [];
     const cell = (card.row[props.coli] ??= storagesColumnConfigDict[column.t].def());
 
-    if (column.t !== cell[0]) throw 'Incorrect card type 162535678729';
+    if (column.t !== cell[0]) throw backLocaleError(BackLocaleKey.CardTypeIncorrect);
 
     return updater(cell, props, column, card, rack);
   });
@@ -678,7 +675,7 @@ function updateRackSummary<
 >(updater: (status: StoragesRackSummary, props: Props, rack: StoragesRack) => Ret) {
   return updateRack<Props, RetValue, Ret>((rack, props) => {
     const summary = rack.sum?.find(sum => sum.mi === props.summaryMi);
-    if (summary == null) throw 'Сводка не найдена';
+    if (summary == null) throw backLocaleError(BackLocaleKey.SummaryNotFound);
     return updater(summary, props, rack);
   });
 }

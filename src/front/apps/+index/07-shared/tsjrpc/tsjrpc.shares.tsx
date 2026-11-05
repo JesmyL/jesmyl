@@ -1,3 +1,4 @@
+import { defaultQueryClient } from '#basis/config/queryClient';
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import {
   localeLastModifiedAtAtom,
@@ -10,8 +11,10 @@ import { rootAppModalTextContentAtom } from '#shared/lib/atoms/rootAppModalTextC
 import { makeToastKOMoodConfig, makeToastOKMoodConfig } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { localeIsLoadingAtom } from '$app/store/triggers';
+import type { InfiniteData } from '@tanstack/react-query';
 import { IndexTsjrpcSharesModel } from 'shared/api/tsjrpc/index/tsjrpc.methods.model';
 import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
+import { VisitsDashboard } from 'shared/model/index/visitsDashboard';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
 import { indexDashMessageVersionAtom, indexIDB, indexUserAccessRightsAtom, indexVisitsOnlineAtom, lastUpdatedIconsMd5HashAtom } from '../state';
@@ -65,7 +68,31 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
           indexVisitsOnlineAtom.set(count);
         },
 
-        dashMessage: async () => {
+        dashMessage: async ({ message }) => {
+          defaultQueryClient.setQueriesData<InfiniteData<VisitsDashboard, number>>(
+            { queryKey: ['visitsDashboardMessages', message.kind] },
+            data => {
+              const firstPage = data?.pages[0];
+
+              if (!firstPage || firstPage.messages.some(({ id }) => id === message.id)) return data;
+
+              return {
+                ...data,
+                pages: [
+                  {
+                    ...firstPage,
+                    messages: [message, ...firstPage.messages],
+                    unreadCounts: {
+                      ...firstPage.unreadCounts,
+                      [message.kind]: (firstPage.unreadCounts[message.kind] ?? 0) + 1,
+                    },
+                  },
+                  ...data.pages.slice(1),
+                ],
+              };
+            },
+          );
+
           indexDashMessageVersionAtom.set(version => version + 1);
         },
 

@@ -1,3 +1,5 @@
+import { backLocaleError, makeBackLocaleErrorDuoText } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { appVersionFileStore } from 'back/apps/index/file-stores';
 import { sendSchedulePush } from 'back/apps/index/schedules/app-inform/web-push';
 import { takeUserRoleTiny } from 'back/apps/index/tinies/userRoleTiny';
@@ -9,7 +11,7 @@ import { sendEmailMessage } from 'back/sides/emailer/lib/sendEmailMessage';
 import { EmailerAuthConfigKey } from 'back/sides/emailer/model';
 import { and, count, desc, eq, gt, gte, inArray, lt, lte, sql, max as sqlMax } from 'drizzle-orm';
 import { makeRegExp } from 'regexpert';
-import { DeviceId, SokiVisit, UserLogin } from 'shared/api';
+import { DeviceId, Langi, SokiVisit, UserLogin } from 'shared/api';
 import { howMillisecondsInDay, howMillisecondsInHour } from 'shared/const/ms';
 import { IndexAccessScopeRules, UserAccessRole } from 'shared/model/index/access-rights';
 import {
@@ -90,8 +92,9 @@ const isLocalhostVisit = (visitInfo: SokiVisit | nil) => {
   return !url || url.includes('localhost') || url.split(localhostUrlReg, 2).length > 1;
 };
 
+/** Короткая однострочная сводка сохранённого сообщения об ошибке для push: payload из backLocale заменяется читаемым Ru-текстом (`makeBackLocaleErrorDuoText`), вырезаются html/div/blockquote, отбрасывается всё после маркера аргументов, маскируются e-mail, схлопываются пробелы и текст усекается до `errorPushTextMaxLength` с многоточием. */
 const takeErrorPushSummary = (message: string) => {
-  const text = message
+  const text = (makeBackLocaleErrorDuoText(message, Langi.Ru) ?? message)
     .replace(pushDivReg, ' ')
     .replace(pushBlockquoteReg, ' ')
     .split(errorPushArgsMarker)[0]
@@ -263,32 +266,40 @@ const makeDayStatsHtml = async (stats: ReturnType<typeof makeDayStats>) => {
   );
 };
 
-const sendVisitsDigest = async (stats: ReturnType<typeof makeDayStats>) =>
-  sendEmailMessage(EmailerAuthConfigKey.Self, {
-    isSameTo: true,
-    subject: `JesmyL-отчет ${takeRuDate(stats.date)}`,
-    html: await makeDayStatsHtml(stats),
-  });
+const visitorLogLimit = 10;
 
-export const sendCurrentDashReport = async (login: UserLogin) => {
-  const email = (await takeUserTiny({ l: login }, false))?.uauth.email;
+const makeDayStatsText = async (stats: ReturnType<typeof makeDayStats>) => {
+  const visitors = (
+    await Promise.all(
+      mapObjectEntries(stats.visitors, async (login, count) => ({
+        name: escapeHtmlLazy()(takeUserAuthName((await takeUserTiny({ l: login }, false))?.uauth) || login),
+        count: count ?? 0,
+      })),
+    )
+  )
+    .sort((a, b) => b.count - a.count)
+    .slice(0, visitorLogLimit);
+  const currentVersion = appVersionFileStore.getValue().num;
+  const minVersionText =
+    stats.minVersion === null
+      ? '—'
+      : `${stats.minVersion} (отставание: ${Math.max(0, currentVersion - stats.minVersion)}; текущая: ${currentVersion})`;
+  const anonVisitsText = `${stats.anonVisits} ${declension(stats.anonVisits, 'визит', 'визита', 'визитов')}`;
+  const versionsText =
+    objectKeys(stats.versions)
+      .map(Number)
+      .sort((a, b) => a - b)
+      .map(version => `${version}: ${stats.versions[version]}`)
+      .join(', ') || '—';
 
-  if (!email) throw 'E-mail не привязан к профилю';
-
-  if (backConfig.isTest) return email;
-
-  const now = Date.now();
-  const date = takeMskDayKey(now);
-  const stats = makeDayStats(date, await takeTodayVisitRows(now));
-
-  await sendEmailMessage(EmailerAuthConfigKey.Self, {
-    isSameTo: true,
-    to: email,
-    subject: `JesmyL-отчет (промежуточный) ${takeRuDate(date)}, ${takeRuTime(now)}`,
-    html: await makeDayStatsHtml(stats),
-  });
-
-  return email;
+  return [
+    `Визиты за ${takeRuDate(stats.date)}`,
+    `Всего визитов: ${stats.total}. Уникальных посетителей: ${stats.uniq}`,
+    `Минимальная версия за день: ${minVersionText}`,
+    `Визиты по посетителям: ${visitors.map(({ name, count }) => `${name} — ${count}`).join(', ') || '—'}`,
+    `Анонимные: ${stats.anonUniq} уник. / ${anonVisitsText}`,
+    `Версии: ${versionsText}`,
+  ].join('\n');
 };
 
 export const insertVisit = (login: UserLogin | nil, visitInfo: SokiVisit) =>
@@ -343,6 +354,30 @@ export const insertDashMessage = (
     write.then(() => sendDashErrorPush(takeErrorPushSummary(message), login)).catch(emptyFunc);
 
   return write;
+};
+
+const sendVisitsDigest = async (stats: ReturnType<typeof makeDayStats>) =>
+  insertDashMessage(await makeDayStatsText(stats), null, DashMessageKind.Log, null);
+
+export const sendCurrentDashReport = async (login: UserLogin) => {
+  const email = (await takeUserTiny({ l: login }, false))?.uauth.email;
+
+  if (!email) throw backLocaleError(BackLocaleKey.EmailNotLinked);
+
+  if (backConfig.isTest) return email;
+
+  const now = Date.now();
+  const date = takeMskDayKey(now);
+  const stats = makeDayStats(date, await takeTodayVisitRows(now));
+
+  await sendEmailMessage(EmailerAuthConfigKey.Self, {
+    isSameTo: true,
+    to: email,
+    subject: `JesmyL-отчет (промежуточный) ${takeRuDate(date)}, ${takeRuTime(now)}`,
+    html: await makeDayStatsHtml(stats),
+  });
+
+  return email;
 };
 
 export const deleteOldDashMessages = () =>
@@ -405,7 +440,7 @@ export const updateVisitDayOnline = async (online: number) => {
 };
 
 export const markDashMessagesRead = async (login: UserLogin, kind: DashMessageKind) => {
-  if (!dashMessageKinds.some(readKind => readKind === kind)) throw 'Недопустимый тип сообщений';
+  if (!dashMessageKinds.some(readKind => readKind === kind)) throw backLocaleError(BackLocaleKey.DashMessageKindInvalid);
 
   const [maxRow] = await db
     .select({ max: sqlMax(dashErrorDB.createdAt) })

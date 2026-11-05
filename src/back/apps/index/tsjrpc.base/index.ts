@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { cmShareServerTsjrpcMethods } from 'back/apps/cm/tsjrpc.shares';
 import { makeTwiceKnownName } from 'back/complect/makeTwiceKnownName';
 import { userDB, userRoleDB } from 'back/drizzle.schema';
@@ -92,18 +94,18 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         updateUserAccessRole: async ({ login, role }, { auth: userAuth }) => {
           const auth = takeLogginedAuthOrThrow(userAuth);
 
-          if (auth.login === login) throw 'Нельзя поменять роль себе же';
+          if (auth.login === login) throw backLocaleError(BackLocaleKey.RoleSelfChangeForbidden);
 
           const yourUser = await takeUserTiny({ l: auth.login });
 
-          if (yourUser?.r !== 'TOP') throw 'Нет прав на это действие 55412304234670';
+          if (yourUser?.r !== 'TOP') throw backLocaleError(BackLocaleKey.NoAccessWithNumber, { n: 55412304234670 });
 
           const mod = Date.now();
           const where = eq(userDB.l, login);
 
           if (role) {
             const roleInfo = await takeUserRoleTiny({ n: role });
-            if (!roleInfo) throw 'Неизвестная роль';
+            if (!roleInfo) throw backLocaleError(BackLocaleKey.RoleNotFound);
             await dbUpdate(userDB, { r: role, m: mod }, where);
           } else await dbUpdate(userDB, { r: null, m: mod }, where);
 
@@ -119,7 +121,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
 
         addNewAccessRole: async ({ role }) => {
           const roleInfo = await takeUserRoleTiny({ n: role });
-          if (roleInfo) throw 'Такая роль уже существует';
+          if (roleInfo) throw backLocaleError(BackLocaleKey.RoleAlreadyExists);
 
           await db.insert(userRoleDB).values({ n: role });
 
@@ -130,11 +132,11 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
           const auth = takeLogginedAuthOrThrow(userAuth);
           const yourUser = await takeUserTiny({ l: auth.login });
 
-          if (yourUser?.r !== 'TOP') throw 'Нет прав на это действие 068234765';
+          if (yourUser?.r !== 'TOP') throw backLocaleError(BackLocaleKey.NoAccessWithNumber, { n: '068234765' });
 
           const roleRights = await takeUserRoleTiny({ n: role });
 
-          if (!roleRights) throw 'Нет такой роли';
+          if (!roleRights) throw backLocaleError(BackLocaleKey.RoleNotFound);
 
           roleRights.r ??= {};
           roleRights.r[scope] ??= {};
@@ -201,7 +203,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         authMeByTelegramBotNumber: async ({ secretNumber }, tool) => {
           const user = supportTelegramAuthorizations[secretNumber]?.().from;
 
-          if (user == null) throw 'Не верный код авторизации';
+          if (user == null) throw backLocaleError(BackLocaleKey.AuthCodeIncorrect);
 
           return await indexAuthByTgUser('через TG-код')({ user }, tool);
         },
@@ -277,7 +279,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
           }
           if (pron) {
             if (!pron.endsWith('й') && !pron.endsWith('йся'))
-              throw 'Прилагательное должно заканчиваться на `й` или `йся`';
+              throw backLocaleError(BackLocaleKey.AdjectiveEndingInvalid);
 
             const { words } = pronounsFileStorage.getValue();
             delete words[''];
@@ -337,7 +339,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
 
           const baseFileStorage = langLocaleBaseFileStoragesLazy()[visitInfo.langi ?? Langi.Ru];
 
-          if (!client) throw 'Client not found';
+          if (!client) throw backLocaleError(BackLocaleKey.ClientNotFound);
 
           indexServerTsjrpcShareMethods.baseLocConf(
             { base: baseFileStorage.getValue(), mod: baseFileStorage.fileModifiedAt() },
@@ -350,7 +352,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
 
           await throwIfNoEditorLocaleAccess(auth);
 
-          if (!client) throw 'Client not found';
+          if (!client) throw backLocaleError(BackLocaleKey.ClientNotFound);
 
           const editorFileStorage = langLocaleEditorFileStoragesLazy()[visitInfo.langi ?? Langi.Ru];
 
@@ -364,8 +366,8 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
           const conf = (await langLocaleDynamicFileStoragesLazy()).getItem(langi);
           const mod = (await langLocaleDynamicFileStoragesLazy()).getItemModTime(langi);
 
-          if (!client) throw 'Client not found';
-          if (!conf || !mod) throw 'Языковая конфигурация не найдена';
+          if (!client) throw backLocaleError(BackLocaleKey.ClientNotFound);
+          if (!conf || !mod) throw backLocaleError(BackLocaleKey.LangConfigNotFound);
 
           indexServerTsjrpcShareMethods.dynLocConf({ dyns: [conf], mod }, client);
         },

@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { getBibleTranslateTexts } from 'back/complect/lib/make-bible-texts';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { tokenSecretFileStore } from 'back/complect/soki/file-stores';
@@ -128,7 +130,7 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
   const { availEmailDomainZone } = constantsConfigFileStore.getValue();
   const availEmailDomainZoneError = constantsConfigurator.availEmailDomainZone.error?.(availEmailDomainZone, email);
 
-  if (availEmailDomainZoneError) throw `${email} - ${availEmailDomainZoneError}`;
+  if (availEmailDomainZoneError) throw backLocaleError(BackLocaleKey.EmailDomainInvalid, { e: email, r: `${availEmailDomainZoneError}` });
 
   const verifies = sentEmailOTPFileStorage.getValue();
   let userVerify = verifies.find(({ deviceId, auth: verifyAuth }) => {
@@ -138,7 +140,7 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
     );
   });
 
-  if (userVerify && !checkIsOTPTimeStampExpired(userVerify.ts)) throw `${email} - Запросите отправку кода чуть позже`;
+  if (userVerify && !checkIsOTPTimeStampExpired(userVerify.ts)) throw backLocaleError(BackLocaleKey.OtpRequestLater, { e: email });
 
   let otp;
   const oldOtpSet = new Set(verifies.map(it => it.otp));
@@ -245,7 +247,10 @@ export const otpTSJRPCMethods = {
         .limit(1)
     ).at(0);
 
-    if (userBinded) throw `E-mail уже привязан к ${userBinded.l === props.auth?.login ? 'вашему' : 'другому'} аккаунту`;
+    if (userBinded)
+      throw userBinded.l === props.auth?.login
+        ? backLocaleError(BackLocaleKey.EmailAlreadyBound)
+        : backLocaleError(BackLocaleKey.EmailAlreadyBoundOther);
 
     return await sendEmailOTP(args, props);
   },
@@ -260,17 +265,17 @@ export const otpTSJRPCMethods = {
     const verifies = sentEmailOTPFileStorage.getValue();
     const from = verifies.find(it => it.otp === otp);
 
-    if (!from) throw 'Не верный код';
-    if (checkIsOTPTimeStampExpired(from.ts)) throw 'Время кода истекло';
-    if (!from.auth?.login) throw 'Ошибка привязки - неизвестный профиль';
-    if (from.auth.login !== auth.login) throw 'Ошибка привязки - другой аккаунт';
-    if (!from.auth.email) throw 'Ошибка привязки - e-mail не определён';
+    if (!from) throw backLocaleError(BackLocaleKey.OtpIncorrect);
+    if (checkIsOTPTimeStampExpired(from.ts)) throw backLocaleError(BackLocaleKey.OtpExpired);
+    if (!from.auth?.login) throw backLocaleError(BackLocaleKey.OtpUnknownProfile);
+    if (from.auth.login !== auth.login) throw backLocaleError(BackLocaleKey.OtpOtherAccount);
+    if (!from.auth.email) throw backLocaleError(BackLocaleKey.OtpEmailMissing);
 
     cancelOtpEmail(otp);
 
     const newLogin = makeLoginFromEmail(from.auth.email);
 
-    if (newLogin === from.auth.login) throw 'Не возможно привязать почту к тому же аккаунту';
+    if (newLogin === from.auth.login) throw backLocaleError(BackLocaleKey.OtpSameAccount);
 
     const [user] = await db.select({ l: userDB.l, ls: userDB.ls }).from(userDB).where(eq(userDB.l, from.auth.login));
 
@@ -301,9 +306,9 @@ export const otpTSJRPCMethods = {
     const verifies = sentEmailOTPFileStorage.getValue();
     const from = verifies.find(it => it.otp === otp);
 
-    if (from == null) throw 'Не верный код';
-    if (checkIsOTPTimeStampExpired(from.ts)) throw 'Время кода истекло';
-    if (!from.auth.email) throw 'Ошибка привязки - e-mail не определён';
+    if (from == null) throw backLocaleError(BackLocaleKey.OtpIncorrect);
+    if (checkIsOTPTimeStampExpired(from.ts)) throw backLocaleError(BackLocaleKey.OtpExpired);
+    if (!from.auth.email) throw backLocaleError(BackLocaleKey.OtpEmailMissing);
 
     cancelOtpEmail(otp);
 

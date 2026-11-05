@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { comDB } from 'back/drizzle.schema';
 import { db, dbUpdate } from 'back/drizzle/drizzle.db';
@@ -88,7 +90,7 @@ export const cmEditComExternalsTsjrpcAudioMarks = {
     const linkMarks = comMarks[src];
 
     if (checkIsNil(linkMarks)) return { value: null };
-    if (checkIsNotNil(linkMarks[newTime])) throw 'Такое время уже зарегистрировано';
+    if (checkIsNotNil(linkMarks[newTime])) throw backLocaleError(BackLocaleKey.CmAudioMarkTimeExists);
 
     linkMarks[newTime] = linkMarks[time];
     delete linkMarks[time];

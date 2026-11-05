@@ -1,11 +1,14 @@
 import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
+import { backLocaleError } from 'back/locales/back';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
 import { CmComWid, IExportableCom } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
 import { trimTextLines } from 'shared/utils';
 import { checkIsEq } from 'shared/utils/checkIsEq';
+import { takeChordsBlockIncorrects } from 'shared/utils/cm/com/chordsBlockIncorrectMessage';
 import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 import { textLinesLengthIncorrects } from 'shared/utils/cm/com/textLinesLengthIncorrects';
 import { transformToClearText } from 'shared/utils/cm/com/transformToClearText';
@@ -15,6 +18,19 @@ import { modifyCom } from './lib/modifiers';
 
 export const cmEditComServerTsjrpcTextableBlocks = {
   changeChordBlock: modifyCom('COM_CH', (com, { texti, value, isHard }) => {
+    const { incorrectChords, complexChords } = takeChordsBlockIncorrects(value, isHard);
+
+    if (incorrectChords.length)
+      throw backLocaleError(BackLocaleKey.CmChordBlockIncorrectChords, {
+        c: incorrectChords.join(', '),
+        n: incorrectChords.length,
+      });
+    if (complexChords.length)
+      throw backLocaleError(BackLocaleKey.CmChordBlockComplexChords, {
+        c: complexChords.join(', '),
+        n: complexChords.length,
+      });
+
     let prev;
     const next = trimTextLines(value);
     com.c ??= [];

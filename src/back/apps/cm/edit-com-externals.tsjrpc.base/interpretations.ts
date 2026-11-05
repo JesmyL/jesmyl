@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
@@ -27,7 +29,7 @@ export const cmEditComExternalsTsjrpcInterpretations = () =>
 
       const cmOrd = getOrd();
 
-      if (!cmOrd) throw 'Не найдено';
+      if (!cmOrd) throw backLocaleError(BackLocaleKey.CmComOrderNotFound);
 
       const ordsIntp = (intp.o ??= {});
       const ordIntp = (ordsIntp[ordw] ??= {});
@@ -79,11 +81,11 @@ const updateInterptetation =
 
     const com = await selectPgCheckedExportableCom(props.comw, { id: PgCheckFieldMode.RemoveIfNull });
 
-    if (!com) throw 'Песня не найдена';
+    if (!com) throw backLocaleError(BackLocaleKey.CmComNotFound);
     const sch = await takeScheduleWidgetTiny({ w: props.schw });
-    if (!sch) throw 'Мероприятие не найдено';
+    if (!sch) throw backLocaleError(BackLocaleKey.ScheduleNotFound);
     const where = and(eq(sch2ComDB.schId, sch.id), eq(sch2ComDB.comId, com.id));
-    if (!where) throw 'Error 915253412316';
+    if (!where) throw backLocaleError(BackLocaleKey.CmOperationFailed);
 
     const sch2ComIntp = (await db.select({ intp: sch2ComDB.intp }).from(sch2ComDB).where(where).limit(1)).at(0);
     const updIntp = sch2ComIntp?.intp ?? {};

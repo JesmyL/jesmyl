@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
 import type { TSJRPCFeedbackEntry } from 'back/tsjrpc.model';
 import { CmComOrderWid, CmComOrderWidDef, CmComWid, IExportableCom, IExportableOrder } from 'shared/api';
@@ -44,7 +46,7 @@ export const modifyOrd = <Props extends { ordw: CmComOrderWid; comw: CmComWid }>
 
     let getCmComOrd = () => {
       const cmOrd = getCmComOrds()?.find(ord => ord.wid === props.ordw);
-      if (checkIsNil(cmOrd)) throw 'Порядковый блок не найден (при поиске по собственному ID)';
+      if (checkIsNil(cmOrd)) throw backLocaleError(BackLocaleKey.CmComOrderOwnBlockNotFound);
       const cmComOrd = cmOrd;
       getCmComOrd = () => cmComOrd;
       return cmOrd;
@@ -59,11 +61,11 @@ export const modifyOrd = <Props extends { ordw: CmComOrderWid; comw: CmComWid }>
     if (parent === ModifyOrdParent.WatchOrSelf || parent === ModifyOrdParent.Watch)
       ord ??= getCmComOrd().me.watchOrd?.me.source?.top;
 
-    if (!ord && parent > 10) throw `Не найден определённый родительский блок ${parent}`;
+    if (!ord && parent > 10) throw backLocaleError(BackLocaleKey.CmComOrderParentNotFound, { p: parent });
 
     ord ??= getCmComOrd().me.top;
 
-    if (checkIsNil(ord)) throw 'Порядковый блок не найден';
+    if (checkIsNil(ord)) throw backLocaleError(BackLocaleKey.CmComOrderNotFound);
 
     return await modifier(ord, getCmComOrd, props, tool, com, getCmCom, getCmComOrds);
   });

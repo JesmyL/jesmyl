@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { eq } from 'drizzle-orm';
 import { makeRegExp } from 'regexpert';
 import {
@@ -44,10 +46,10 @@ const takeAudioLinkKey = (md5: string, rows: readonly AudioLinkKeyRow[]): CmAudi
 
   let tailLength = 3;
   while (usedKeys.has(md5.slice(-tailLength))) tailLength++;
-  if (tailLength > md5.length) throw `Не удалось подобрать уникальный ключ для md5 "${md5}"`;
+  if (tailLength > md5.length) throw backLocaleError(BackLocaleKey.Md5KeyUniqueFailed, { m: md5 });
 
   const key = parseCmAudioTail(md5.slice(-tailLength));
-  if (!key) throw `Некорректный md5 "${md5}"`;
+  if (!key) throw backLocaleError(BackLocaleKey.Md5Incorrect, { m: md5 });
 
   return key;
 };
@@ -55,7 +57,7 @@ const takeAudioLinkKey = (md5: string, rows: readonly AudioLinkKeyRow[]): CmAudi
 const selectAudioLinksKeys = () => db.select({ key: audioLinkDB.key, md5: audioLinkDB.md5 }).from(audioLinkDB);
 
 const registerAudioLink = async (md5: string, link: HttpNumLeadLink): Promise<AudioLinkRow> => {
-  if (!audioMd5Reg.test(md5)) throw `Некорректный md5 "${md5}"`;
+  if (!audioMd5Reg.test(md5)) throw backLocaleError(BackLocaleKey.Md5Incorrect, { m: md5 });
 
   const key = takeAudioLinkKey(md5, await selectAudioLinksKeys());
   await dbUpsert(audioLinkDB, { key, md5, link }, ['key']);
@@ -82,7 +84,7 @@ const resolveDownloadedAudioLink = async (numLeadLink: HttpNumLeadLink, title?: 
   try {
     md5FileName = await downloadFileMd5Rename(audioSaveDir, makeCmComHttpLinkFromNumLead(numLeadLink), { title });
   } catch (error) {
-    throw `Не удалось скачать аудио "${numLeadLink}": ${error}`;
+    throw backLocaleError(BackLocaleKey.AudioDownloadFailed, { l: numLeadLink, e: `${error}` });
   }
 
   return registerAudioLink(takeMd5FromFileName(md5FileName), numLeadLink);
@@ -101,7 +103,7 @@ export const takeCmAudioKeyFromLink = async (link: CmAudioSrc, title?: string): 
 
     if (knownRow) return tail;
 
-    throw `Ключ аудио "${link}" отсутствует в таблице аудио-ссылок`;
+    throw backLocaleError(BackLocaleKey.AudioLinkKeyMissing, { l: link });
   }
 
   return downloadAndResolveCmAudioKey(makeCmComNumLeadLinkFromHttp(link), title);

@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { sokiServer } from 'back/complect/soki/SokiServer';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
@@ -26,7 +28,7 @@ export const indexTSJRPCBaseVisitsDashboard = {
   getVisitsDashboard_v1: async ({ messages } = {}, { auth, client }) => {
     await throwIfNoUserScopeAccessRight(auth, 'dash', 'DASH');
 
-    if (!auth?.login) throw 'Нет прав на это действие';
+    if (!auth?.login) throw backLocaleError(BackLocaleKey.NoAccess);
     if (client) dashWatchers.add(client);
 
     const { logins, anon } = sokiServer.onlineLogins;
@@ -43,7 +45,7 @@ export const indexTSJRPCBaseVisitsDashboard = {
   markDashMessagesRead_v1: async ({ kind }, { auth }) => {
     await throwIfNoUserScopeAccessRight(auth, 'dash', 'DASH');
 
-    if (!auth?.login) throw 'Нет прав на это действие';
+    if (!auth?.login) throw backLocaleError(BackLocaleKey.NoAccess);
 
     return { value: await markDashMessagesRead(auth.login, kind) };
   },
@@ -51,7 +53,7 @@ export const indexTSJRPCBaseVisitsDashboard = {
   sendDashEmailReport_v1: async (_, { auth }) => {
     await throwIfNoUserScopeAccessRight(auth, 'dash', 'DASH');
 
-    if (!auth?.login) throw 'Нет прав на это действие';
+    if (!auth?.login) throw backLocaleError(BackLocaleKey.NoAccess);
 
     return { value: await sendCurrentDashReport(auth.login) };
   },

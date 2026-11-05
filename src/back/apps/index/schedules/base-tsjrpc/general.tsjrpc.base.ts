@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { scheduleDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
@@ -50,13 +52,13 @@ import { schUsersTsjrpcBaseServer } from './users.tsjrpc.base';
 import { takeUserLoginsByIds, takeUserTiny } from '../../tinies/userTiny';
 
 const parseComsRightsUserIds = (users: unknown): UserId[] => {
-  if (!checkIsArray(users)) throw 'Права на списки композиций: участники должны быть массивом';
+  if (!checkIsArray(users)) throw backLocaleError(BackLocaleKey.ScheduleComsMembersNotArray);
 
   const userIds = new Set<number>();
 
   for (const userId of users) {
     if (!checkIsNumber(userId) || userId <= 0)
-      throw 'Права на списки композиций: участники должны быть положительными идентификаторами';
+      throw backLocaleError(BackLocaleKey.ScheduleComsMembersPositive);
 
     userIds.add(userId);
   }
@@ -68,14 +70,14 @@ const parseComsRightsIdsRecord = <Key extends number, Value>(
   record: unknown,
   parseValue: (value: unknown) => Value,
 ): Record<Key, Value> => {
-  if (!checkIsObject(record)) throw 'Права на списки композиций: ожидался объект';
+  if (!checkIsObject(record)) throw backLocaleError(BackLocaleKey.ScheduleComsObjectExpected);
 
   const result = {} as Record<Key, Value>;
 
   forEachObjectEntries(record, (key, value) => {
     const numericKey = +key;
     if (isNaN(numericKey) || numericKey < 0)
-      throw `Права на списки композиций: ключ "${key}" не является числом`;
+      throw backLocaleError(BackLocaleKey.ScheduleComsKeyNotNumber, { k: key });
 
     result[numericKey as Key] = parseValue(value);
   });
@@ -85,7 +87,7 @@ const parseComsRightsIdsRecord = <Key extends number, Value>(
 
 const parseComsRights = (value: unknown): IScheduleWidgetComsRights | nil => {
   if (value == null) return null;
-  if (!checkIsObject(value)) throw 'Права на списки композиций: ожидался объект';
+  if (!checkIsObject(value)) throw backLocaleError(BackLocaleKey.ScheduleComsObjectExpected);
 
   const comsRights: IScheduleWidgetComsRights = {};
 
@@ -115,7 +117,7 @@ const checkIsSchedulePeriodWeekday = (value: unknown): value is SchedulePeriodWe
 
 const parseSchedulePeriod = (value: unknown): IScheduleWidgetPeriod | nil => {
   if (value == null) return null;
-  if (!checkIsObject(value)) throw 'Периодичность расписания: ожидался объект';
+  if (!checkIsObject(value)) throw backLocaleError(BackLocaleKey.SchedulePeriodObjectExpected);
 
   const kind = value.kind;
 
@@ -125,7 +127,7 @@ const parseSchedulePeriod = (value: unknown): IScheduleWidgetPeriod | nil => {
   if (kind === SchedulePeriodKind.MonthDay) {
     const dayi = value.dayi;
     if (!checkIsNumber(dayi) || dayi < 1 || dayi > 31)
-      throw 'Периодичность расписания: день месяца должен быть от 1 до 31';
+      throw backLocaleError(BackLocaleKey.SchedulePeriodMonthDayRange);
 
     return { kind, dayi };
   }
@@ -134,14 +136,14 @@ const parseSchedulePeriod = (value: unknown): IScheduleWidgetPeriod | nil => {
     const weeki = value.weeki;
     const dayi = value.dayi;
     if (!checkIsSchedulePeriodWeeki(weeki))
-      throw 'Периодичность расписания: неделя месяца должна быть от 1 до 5';
+      throw backLocaleError(BackLocaleKey.SchedulePeriodWeekRange);
     if (!checkIsSchedulePeriodWeekday(dayi))
-      throw 'Периодичность расписания: день недели должен быть от 0 до 6';
+      throw backLocaleError(BackLocaleKey.SchedulePeriodWeekdayRange);
 
     return { kind, weeki, dayi };
   }
 
-  throw `Периодичность расписания: недопустимый тип ${kind}`;
+  throw backLocaleError(BackLocaleKey.SchedulePeriodKindInvalid, { k: `${kind}` });
 };
 
 const takeComsRightsUserIds = (comsRights: IScheduleWidgetComsRights | nil) => {
@@ -293,7 +295,7 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
         }),
 
         setAppInform: modifySchedule(true, async (sch, { value }) => {
-          if (!checkIsScheduleAppInform(value)) throw `Недопустимый интервал напоминания: ${value}`;
+          if (!checkIsScheduleAppInform(value)) throw backLocaleError(BackLocaleKey.ScheduleReminderIntervalInvalid, { v: value });
 
           sch.appInform = value;
 
@@ -416,7 +418,7 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
 export const scheduleTitleInBrackets = async (schScalar: IScheduleWidget | ScheduleWidgetWid) => {
   if (checkIsNumber(schScalar)) {
     const sch = await takeScheduleWidgetTiny({ w: schScalar }, false);
-    if (!sch) throw 'schedule not found';
+    if (!sch) throw backLocaleError(BackLocaleKey.ScheduleNotFound);
     return `"${sch.title}"`;
   }
   return `"${schScalar.title}"`;

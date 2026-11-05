@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
 import { throwIfNoScheduleComsListRedact } from 'back/apps/index/schedules/schedule-modificators';
 import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
@@ -142,11 +144,11 @@ export const cmEditComExternalsTsjrpcBaseServer =
               eq(schComHistoryDB.dayi, dayi),
               eq(schComHistoryDB.w, writedAt),
             );
-            if (checkIsNil(whereDelete)) throw '0761624561238993';
+            if (checkIsNil(whereDelete)) throw backLocaleError(BackLocaleKey.CmOperationFailed);
 
             const result = (await dbDelete(schComHistoryDB, whereDelete).returning({ w: schComHistoryDB.w })).at(0);
 
-            if (result?.w !== writedAt) throw 'Ошибка удаления';
+            if (result?.w !== writedAt) throw backLocaleError(BackLocaleKey.CmDeleteFailed);
 
             return {
               value: result,
@@ -169,7 +171,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
 
               if (comwRefGroup != null) {
                 if (comwRefGroup !== withComwRefGroup) {
-                  if (checkIsNil(comTiny) || checkIsNil(withComTiny)) throw 'Песня не найдена';
+                  if (checkIsNil(comTiny) || checkIsNil(withComTiny)) throw backLocaleError(BackLocaleKey.CmComNotFound);
 
                   refs[withComw] = comwRefGroup;
                   description += `Песни "${comTiny.n}" и "${withComTiny.n}" объединены в ссылочную группу`;
@@ -186,7 +188,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
                   description += ` и ${withComTiny ? `песней "${withComTiny.n}"` : '<s>неизвестной песней</s>'}`;
                 }
               } else {
-                if (comTiny == null || withComTiny == null) throw 'Песня не найдена';
+                if (comTiny == null || withComTiny == null) throw backLocaleError(BackLocaleKey.CmComNotFound);
 
                 if (withComwRefGroup != null) refs[comw] = withComwRefGroup;
                 else {
@@ -202,7 +204,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
               }
             });
 
-            if (refGroups == null) throw 'Ошибка 318294001';
+            if (refGroups == null) throw backLocaleError(BackLocaleKey.CmOperationFailed);
 
             cmShareServerTsjrpcMethods.refreshComWidRefDict(
               { refs: refGroups, mod },

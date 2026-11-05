@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import {
   IScheduleWidget,
@@ -42,7 +44,7 @@ const modifyEvent = <Props extends { props: ScheduleDayEventScopeProps }>(
 ) =>
   modifyScheduleDay<Props>(isNeedRefreshInformTime || false, (day, props, sch, tool) => {
     const event = day.list.find(event => event.mi === props.props.eventMi);
-    if (event == null) throw 'day event not found';
+    if (event == null) throw backLocaleError(BackLocaleKey.DayEventNotFound);
 
     return modifier(event, props, sch, day, tool);
   });
@@ -83,14 +85,14 @@ export const schDayEventsTsjrpcBaseServer =
           let att = event.atts[props.props.attKey] as ScheduleWidgetAppAttCustomizableValue;
 
           if (checkIsArray(att)) {
-            if (+att[0]! < 0) throw 'attachment type is anchor';
+            if (+att[0]! < 0) throw backLocaleError(BackLocaleKey.AttachmentTypeIsAnchor);
             const [dayi, eventMi] = att as unknown as [number, number];
 
             att = sch.days[dayi].list.find(event => event.mi === eventMi)?.atts?.[
               props.props.attKey
             ] as ScheduleWidgetAppAttCustomizableValue;
 
-            if (att == null) throw 'attachment anchor is invalid 84194422067';
+            if (att == null) throw backLocaleError(BackLocaleKey.AttachmentAnchorInvalid);
           }
 
           let itemi = null;
@@ -99,7 +101,7 @@ export const schDayEventsTsjrpcBaseServer =
           if (props.itemMi != null) {
             itemi = att[listField].findIndex(([, , mi]) => mi === props.itemMi);
 
-            if (itemi < 0) throw 'value not found 019988172';
+            if (itemi < 0) throw backLocaleError(BackLocaleKey.ValueNotFound);
           }
 
           const { list: newList, description } = modifier(att[listField] as never, props, itemi, sch);
@@ -121,9 +123,9 @@ export const schDayEventsTsjrpcBaseServer =
         ) => string | null,
       ) =>
         modifyKeyValueAttachmentValueList<Props, 'values'>('values', (values, props, itemi, sch) => {
-          if (itemi == null) throw 'Error 76521387462345';
+          if (itemi == null) throw backLocaleError(BackLocaleKey.ValueNotFound);
           const [, itemValue] = values[itemi];
-          if (!checkIsArray(itemValue)) throw 'att value list item not array type';
+          if (!checkIsArray(itemValue)) throw backLocaleError(BackLocaleKey.AttachmentValueNotArray);
 
           return { description: modifier(itemValue, props, values[itemi], sch) };
         });
@@ -209,7 +211,7 @@ export const schDayEventsTsjrpcBaseServer =
               }
 
               const item = values.find(([, , mi]) => mi === itemMi);
-              if (item == null) throw 'item not found 3187614431009';
+              if (item == null) throw backLocaleError(BackLocaleKey.ItemNotFound);
 
               if (key != null) item[0] = key;
               if (value != null) item[1] = value;
@@ -228,7 +230,7 @@ export const schDayEventsTsjrpcBaseServer =
             (values, { key, value, props }, _, sch) => {
               if (value === null) {
                 const index = values.findIndex(([, , mi]) => mi === key);
-                if (index < 0) throw 'value not found';
+                if (index < 0) throw backLocaleError(BackLocaleKey.ValueNotFound);
                 values.splice(index, 1);
               } else values.push([key, value, takeNextMi(values, 0 as number, '2')]);
 
@@ -273,7 +275,7 @@ export const schDayEventsTsjrpcBaseServer =
             'values',
             (values, { key, value, props }, _, sch) => {
               const item = values.find(item => item[0] === key);
-              if (item == null) throw 'item not found';
+              if (item == null) throw backLocaleError(BackLocaleKey.ItemNotFound);
               item[0] = value;
 
               return {
@@ -309,7 +311,7 @@ export const schDayEventsTsjrpcBaseServer =
           removeKeyValueAttachmentListItemValue: modifyKeyValueAttachmentListValue(
             (itemValue, { value, itemMi, props }, _, sch) => {
               const index = itemValue.findIndex(val => val === value);
-              if (index < 0) throw 'value not found 238716818';
+              if (index < 0) throw backLocaleError(BackLocaleKey.ValueNotFound);
               itemValue.splice(index, 1);
 
               return (
@@ -322,7 +324,7 @@ export const schDayEventsTsjrpcBaseServer =
           moveKeyValueAttachmentListItem: modifyKeyValueAttachmentListValue(
             (itemValue, { value, props }, item, sch) => {
               const index = itemValue.findIndex(val => val === value);
-              if (index < 0) throw 'value not found 238716818';
+              if (index < 0) throw backLocaleError(BackLocaleKey.ValueNotFound);
 
               item[1] = withInsertedBeforei(itemValue, index === 0 ? 2 : index - 1, index);
 

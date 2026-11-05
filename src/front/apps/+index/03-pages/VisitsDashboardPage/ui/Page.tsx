@@ -1,6 +1,8 @@
+import { makeBackLocaleErrorMessageDuoText, makeBackLocaleErrorMessageRuText } from '#basis/locale/backLocaleError';
+import { currentLangiAtom, translateBase, translateEditorBase } from '#basis/locale';
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
-import { translateBase, translateEditorBase } from '#basis/locale';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { soki } from '#shared/soki';
 import { makeToastKOMoodConfig, makeToastOKMoodConfig } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { indexDashMessageVersionAtom, indexVisitsOnlineAtom } from '$index/shared/state';
@@ -449,6 +451,7 @@ const DashboardMessages = () => {
   const [openMessageIds, setOpenMessageIds] = useState<Set<number>>(() => new Set());
   const queryClient = useQueryClient();
   const dashMessageVersion = useAtomValue(indexDashMessageVersionAtom);
+  const langi = useAtomValue(currentLangiAtom);
   const isVisitErrorKind = activeKind === DashMessageKind.VisitError;
 
   const messagesQuery = useInfiniteQuery({
@@ -593,13 +596,15 @@ const DashboardMessages = () => {
                     </span>
                     <span className="min-w-0 truncate font-medium text-x3">{takeMessageUserName(message)}</span>
                   </span>
-                  <span className="min-w-0 max-w-full truncate text-xs text-x4">{takeMessageSummary(message.m)}</span>
+                  <span className="min-w-0 max-w-full truncate text-xs text-x4">
+                    {takeMessageSummary(makeBackLocaleErrorMessageRuText(message.m))}
+                  </span>
                 </button>
                 {!isOpen || (
                   <div className="mt-2 w-full min-w-0 max-w-full overflow-x-auto border-t border-x2/50 pt-2">
                     <div
                       className="w-full min-w-0 max-w-full whitespace-pre-line break-words text-xs leading-relaxed text-x4 [overflow-wrap:anywhere] [&_a]:text-x7/80 [&_a]:underline [&_b]:text-x3 [&_blockquote]:border-l-2 [&_blockquote]:border-x2 [&_blockquote]:pl-2 [&_code]:text-x4 [&_p]:my-1"
-                      dangerouslySetInnerHTML={{ __html: message.m }}
+                      dangerouslySetInnerHTML={{ __html: makeBackLocaleErrorMessageDuoText(message.m, langi) }}
                     />
                   </div>
                 )}
@@ -909,12 +914,21 @@ const DashboardContent = ({ dashboard }: { dashboard: VisitsDashboard }) => {
 };
 
 const DashboardBody = () => {
+  const queryClient = useQueryClient();
   const { data } = useQuery({
     queryKey: ['visitsDashboard'],
     queryFn: () => indexTsjrpcClientMethods.getVisitsDashboard_v1({}),
     refetchInterval: 15_000,
     staleTime: 0,
   });
+
+  useEffect(() => {
+    // A reconnect replaces the server-side watcher socket, so the dashboard re-subscribes immediately.
+    return soki.listenOnConnectionOpenEvent(() => {
+      void queryClient.invalidateQueries({ queryKey: ['visitsDashboard'] });
+      void queryClient.invalidateQueries({ queryKey: ['visitsDashboardMessages'] });
+    });
+  }, [queryClient]);
 
   useEffect(() => () => indexVisitsOnlineAtom.set(null), []);
 

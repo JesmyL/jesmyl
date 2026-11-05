@@ -42,6 +42,7 @@
 - Use only `const enum`, never plain `enum`.
 - Performance: hoist regexps out of functions (build once via `lazyInit`), build char-class regexps from object keys (`objectKeys(dict).join('')`), and prefer a single `.replace` pass with a replacer dict over chained `.replace` calls.
 - Never wrap a single static regexp in `lazyInit(() => makeRegExp('...'))` — a module-scope `makeRegExp('...')` is already built once at load; keep `lazyInit` only where deferred building is genuinely required (e.g. regexps composed from object keys at runtime).
+- makeRegExp already caches all regexps — never hoist a static makeRegExp(...) call into a named module-scope constant; call makeRegExp inline where needed.
 - Reference example: `escapeHtmlLazy` in `src/shared/utils/string.utils.ts`.
 - Never write redundant null-coalescing like `rows[0]?.mod ?? null` — `null` and `undefined` are treated as the same thing; use the `nil` type everywhere instead of `null | undefined`.
 - If a type can be `nil`, its default value should be `null` (not `undefined`); prefer `null` over `undefined` wherever possible.
