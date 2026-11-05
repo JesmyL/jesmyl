@@ -198,6 +198,7 @@ export const localeEditorEn = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsSupport]: 'Support',
   [EditorLocaleKey.VisitsLog]: 'Log',
   [EditorLocaleKey.VisitsErrors]: 'Errors',
+  [EditorLocaleKey.VisitsChanges]: 'Changes',
   [EditorLocaleKey.VisitsAnonymous]: 'anonymous',
   [EditorLocaleKey.VisitsMarkAllRead]: 'Mark all read',
   [EditorLocaleKey.VisitsOlderMessages]: 'Load older messages',
@@ -219,4 +220,6 @@ export const localeEditorEn = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsReportSent]: 'Sent to $e',
   [EditorLocaleKey.VisitsOnlineByHour]: 'Online by hours',
   [EditorLocaleKey.VisitsOnlineHourPeriod]: '$f-$t - min $n — max $x',
+  [EditorLocaleKey.VisitsReportRecipients]: 'Report recipients',
+  [EditorLocaleKey.VisitsRecipientsSaved]: 'Recipients saved',
 });

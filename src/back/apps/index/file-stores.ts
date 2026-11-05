@@ -1,6 +1,6 @@
 import { FileStore } from 'back/complect/FileStore';
 import { NounPronsType } from 'back/complect/model';
-import { DeviceId, LocalSokiAuth } from 'shared/api';
+import { DeviceId, Langi, LocalSokiAuth } from 'shared/api';
 import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
 import { IndexValues } from 'shared/model/index/other';
 import { stameskaIconPack } from 'stameska-icon/pack';
@@ -19,3 +19,8 @@ export const valuesFileStore = new FileStore<IndexValues>('/values', {});
 export const sentEmailOTPFileStorage = new FileStore<
   { otp: number; ts: number; deviceId: DeviceId | nil; auth: LocalSokiAuth }[]
 >('/apps/index/sentEmailOTP', []);
+
+export const dashReportRecipientsFileStorage = new FileStore<PRecord<string, Langi>>(
+  '/apps/index/dashReportRecipients',
+  {},
+);

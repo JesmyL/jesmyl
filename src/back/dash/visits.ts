@@ -1,10 +1,8 @@
-import { backLocaleError, makeBackLocaleErrorDuoText } from 'back/locales/back';
+import { backLocaleError, backLocalePayload, localizeBackLocalePayloads, translateBackTexts } from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
-import { appVersionFileStore } from 'back/apps/index/file-stores';
+import { appVersionFileStore, dashReportRecipientsFileStorage } from 'back/apps/index/file-stores';
 import { sendSchedulePush } from 'back/apps/index/schedules/app-inform/web-push';
-import { takeUserRoleTiny } from 'back/apps/index/tinies/userRoleTiny';
 import { takeAllUsersTiny, takeUserTiny } from 'back/apps/index/tinies/userTiny';
-import { backConfig } from 'back/config/backConfig';
 import { dashErrorDB, dashReadDB, visitDayDB, visitDB } from 'back/drizzle.schema';
 import { db, dbDelete, dbUpdate, dbUpsert } from 'back/drizzle/drizzle.db';
 import { sendEmailMessage } from 'back/sides/emailer/lib/sendEmailMessage';
@@ -13,7 +11,6 @@ import { and, count, desc, eq, gt, gte, inArray, lt, lte, sql, max as sqlMax } f
 import { makeRegExp } from 'regexpert';
 import { DeviceId, Langi, SokiVisit, UserLogin } from 'shared/api';
 import { howMillisecondsInDay, howMillisecondsInHour } from 'shared/const/ms';
-import { IndexAccessScopeRules, UserAccessRole } from 'shared/model/index/access-rights';
 import {
   DashMessageKind,
   DashMessageUser,
@@ -22,8 +19,7 @@ import {
   VisitsDashboardMessagesArgs,
   VisitsDashboardOnlineHours,
 } from 'shared/model/index/visitsDashboard';
-import { declension, emptyFunc } from 'shared/utils';
-import { checkUserScopeAccessRight } from 'shared/utils/index/utils';
+import { emptyFunc } from 'shared/utils';
 import { mapObjectEntries, objectKeys, objectLength } from 'shared/utils/object.utils';
 import { escapeHtmlLazy } from 'shared/utils/string.utils';
 import { takeUserAuthName } from 'shared/utils/user.utils';
@@ -32,8 +28,6 @@ import { onDashMessageStoredEvent } from './events';
 const mskShiftMs = 3 * howMillisecondsInHour;
 const hoursInDay = 24;
 const messagesPageSize = 20;
-const errorPushTitle = 'Новая ошибка';
-const errorPushSystemAuthor = 'Система';
 const errorPushUrl = '/!other/index/actions/dash';
 const errorPushTextMaxLength = 100;
 const errorPushArgsMarker = 'Аргументы:';
@@ -51,6 +45,12 @@ const dashMessageKinds = [
   DashMessageKind.VisitError,
 ] as const;
 const emptyDashUser: DashMessageUser = { fio: null, nick: null, email: null };
+const changesEmailSubjectDateOptions = {
+  day: '2-digit',
+  year: 'numeric',
+  month: '2-digit',
+  weekday: 'short',
+} as const;
 
 const takeMskDayKey = (timeStamp: number) => new Date(timeStamp + mskShiftMs).toISOString().slice(0, 10);
 const takeMskDayStartMs = (timeStamp: number) => {
@@ -92,9 +92,9 @@ const isLocalhostVisit = (visitInfo: SokiVisit | nil) => {
   return !url || url.includes('localhost') || url.split(localhostUrlReg, 2).length > 1;
 };
 
-/** Короткая однострочная сводка сохранённого сообщения об ошибке для push: payload из backLocale заменяется читаемым Ru-текстом (`makeBackLocaleErrorDuoText`), вырезаются html/div/blockquote, отбрасывается всё после маркера аргументов, маскируются e-mail, схлопываются пробелы и текст усекается до `errorPushTextMaxLength` с многоточием. */
-const takeErrorPushSummary = (message: string) => {
-  const text = (makeBackLocaleErrorDuoText(message, Langi.Ru) ?? message)
+/** Короткая однострочная сводка сохранённого сообщения об ошибке для push: payload из backLocale заменяется читаемым текстом на языке получателя (`localizeBackLocalePayloads`), вырезаются html/div/blockquote, отбрасывается всё после маркера аргументов, маскируются e-mail, схлопываются пробелы и текст усекается до `errorPushTextMaxLength` с многоточием. */
+const takeErrorPushSummary = (message: string, langi: Langi) => {
+  const text = localizeBackLocalePayloads(message, langi)
     .replace(pushDivReg, ' ')
     .replace(pushBlockquoteReg, ' ')
     .split(errorPushArgsMarker)[0]
@@ -106,42 +106,23 @@ const takeErrorPushSummary = (message: string) => {
   return text.length > errorPushTextMaxLength ? `${text.slice(0, errorPushTextMaxLength)}…` : text;
 };
 
-const sendDashErrorPush = async (summary: string, login: UserLogin | nil) => {
-  if (backConfig.isTest) return;
-
+const sendDashErrorPush = async (message: string, login: UserLogin | nil) => {
   const author = await takeUserInfo(login ?? null);
-  const authorName = author.fio || author.nick || author.email || errorPushSystemAuthor;
-  const users = await takeAllUsersTiny();
-  const roleNamesSet = new Set<UserAccessRole>();
-
-  users.forEach(user => {
-    if (user.r) roleNamesSet.add(user.r);
-  });
-
-  const roleRights: PRecord<UserAccessRole, IndexAccessScopeRules | nil> = {};
-
-  await Promise.all(
-    [...roleNamesSet].map(async role => {
-      roleRights[role] = (await takeUserRoleTiny({ n: role }, false))?.r;
-    }),
-  );
-
-  const userIds = users
-    .filter(
-      user =>
-        user.r === 'TOP' ||
-        (user.r != null && checkUserScopeAccessRight(roleRights[user.r], user.rights, 'dash', 'DASH')),
-    )
-    .map(user => user.id);
+  const userIds = (await takeAllUsersTiny()).filter(user => user.r === 'TOP').map(user => user.id);
 
   if (userIds.length === 0) return;
 
-  await sendSchedulePush(userIds, {
-    title: `${errorPushTitle} - ${authorName}`,
-    body: summary,
+  await sendSchedulePush(userIds, langi => ({
+    title: `${translateBackTexts(langi, BackLocaleKey.DashErrorPushTitle)} - ${
+      author.fio ||
+      author.nick ||
+      author.email ||
+      translateBackTexts(langi, BackLocaleKey.DashErrorPushSystemAuthor)
+    }`,
+    body: takeErrorPushSummary(message, langi),
     url: errorPushUrl,
     tag: 'dash-error',
-  });
+  }));
 };
 
 type VisitRow = { id: number; l: UserLogin | null; deviceId: DeviceId | null; createdAt: number; v: number };
@@ -219,7 +200,7 @@ const makeStatsTable = (bars: ChartBar[], isVertical = false, isZeroBlank = fals
 
 const makeStatsRows = (bars: ChartBar[], isZeroBlank = false) => makeStatsTable(bars, true, isZeroBlank);
 
-const makeDayStatsHtml = async (stats: ReturnType<typeof makeDayStats>) => {
+const makeDayStatsHtml = async (stats: ReturnType<typeof makeDayStats>, langi: Langi | nil) => {
   const visitorRows = (
     await Promise.all(
       mapObjectEntries(stats.visitors, async (login, count) => {
@@ -229,8 +210,8 @@ const makeDayStatsHtml = async (stats: ReturnType<typeof makeDayStats>) => {
       }),
     )
   ).join('');
-  const anonVisitsText = `${stats.anonVisits} ${declension(stats.anonVisits, 'визит', 'визита', 'визитов')}`;
-  const anonRow = `<tr><td style="${statsBorderStyle}">Анонимные</td><td style="${statsCellStyle}"><b>${stats.anonUniq} уник. / ${anonVisitsText}</b></td></tr>`;
+  const anonVisitsText = translateBackTexts(langi, BackLocaleKey.VisitVisitCount, { n: stats.anonVisits });
+  const anonRow = `<tr><td style="${statsBorderStyle}">${translateBackTexts(langi, BackLocaleKey.VisitReportAnonymous)}</td><td style="${statsCellStyle}"><b>${translateBackTexts(langi, BackLocaleKey.VisitReportUniqVisits, { u: stats.anonUniq, v: anonVisitsText })}</b></td></tr>`;
   const visitorsTable = `<table cellspacing="0" cellpadding="4" style="border-collapse:collapse">${
     (visitorRows || `<tr><td style="${statsCellStyle}" colspan="2">—</td></tr>`) + anonRow
   }</table>`;
@@ -240,7 +221,11 @@ const makeDayStatsHtml = async (stats: ReturnType<typeof makeDayStats>) => {
   const minVersionText =
     stats.minVersion === null
       ? '—'
-      : `${stats.minVersion} (отставание: ${Math.max(0, appVersionFileStore.getValue().num - stats.minVersion)}; текущая: ${appVersionFileStore.getValue().num})`;
+      : translateBackTexts(langi, BackLocaleKey.VisitReportMinVersionDiff, {
+          m: stats.minVersion,
+          l: Math.max(0, appVersionFileStore.getValue().num - stats.minVersion),
+          c: appVersionFileStore.getValue().num,
+        });
   const versionsTable = makeStatsRows(
     objectKeys(stats.versions)
       .map(Number)
@@ -253,38 +238,38 @@ const makeDayStatsHtml = async (stats: ReturnType<typeof makeDayStats>) => {
     .filter((_, hour) => stats.date !== takeMskDayKey(Date.now()) || hour <= currentHour);
 
   return (
-    `<h2>Визиты за ${takeRuDate(stats.date)}</h2>` +
-    `<p>Всего визитов: <b>${stats.total}</b></p>` +
-    `<p>Уникальных посетителей: <b>${stats.uniq}</b></p>` +
-    `<p>Минимальная версия за день: <b>${minVersionText}</b></p>` +
-    `<h3>Визиты по посетителям</h3>${visitorsTable}` +
-    `<h3>Визиты по часам (МСК)</h3>${makeStatsRows(hourBars, true)}` +
-    `<h3>Версии</h3>${versionsTable}` +
+    `<h2>${translateBackTexts(langi, BackLocaleKey.VisitReportTitle, { d: takeRuDate(stats.date) })}</h2>` +
+    `<p>${translateBackTexts(langi, BackLocaleKey.VisitReportTotal, { n: `<b>${stats.total}</b>` })}</p>` +
+    `<p>${translateBackTexts(langi, BackLocaleKey.VisitReportUniq, { n: `<b>${stats.uniq}</b>` })}</p>` +
+    `<p>${translateBackTexts(langi, BackLocaleKey.VisitReportMinVersion, { v: `<b>${minVersionText}</b>` })}</p>` +
+    `<h3>${translateBackTexts(langi, BackLocaleKey.VisitReportByVisitors)}</h3>${visitorsTable}` +
+    `<h3>${translateBackTexts(langi, BackLocaleKey.VisitReportByHours)}</h3>${makeStatsRows(hourBars, true)}` +
+    `<h3>${translateBackTexts(langi, BackLocaleKey.VisitReportVersions)}</h3>${versionsTable}` +
     (minVersionStats.length < 2
       ? ''
-      : `<h3>Минимальные версии по дням</h3>${makeStatsRows(minVersionStats.slice(-10))}`)
+      : `<h3>${translateBackTexts(langi, BackLocaleKey.VisitReportMinVersionsByDays)}</h3>${makeStatsRows(minVersionStats.slice(-10))}`)
   );
 };
 
 const visitorLogLimit = 10;
 
-const makeDayStatsText = async (stats: ReturnType<typeof makeDayStats>) => {
-  const visitors = (
-    await Promise.all(
-      mapObjectEntries(stats.visitors, async (login, count) => ({
-        name: escapeHtmlLazy()(takeUserAuthName((await takeUserTiny({ l: login }, false))?.uauth) || login),
-        count: count ?? 0,
-      })),
-    )
-  )
-    .sort((a, b) => b.count - a.count)
-    .slice(0, visitorLogLimit);
+type DayStatsLogVisitor = { name: string; count: number };
+
+const makeDayStatsText = (
+  stats: ReturnType<typeof makeDayStats>,
+  visitors: DayStatsLogVisitor[],
+  langi: Langi,
+) => {
   const currentVersion = appVersionFileStore.getValue().num;
   const minVersionText =
     stats.minVersion === null
       ? '—'
-      : `${stats.minVersion} (отставание: ${Math.max(0, currentVersion - stats.minVersion)}; текущая: ${currentVersion})`;
-  const anonVisitsText = `${stats.anonVisits} ${declension(stats.anonVisits, 'визит', 'визита', 'визитов')}`;
+      : translateBackTexts(langi, BackLocaleKey.VisitReportMinVersionDiff, {
+          m: stats.minVersion,
+          l: Math.max(0, currentVersion - stats.minVersion),
+          c: currentVersion,
+        });
+  const anonVisitsText = translateBackTexts(langi, BackLocaleKey.VisitVisitCount, { n: stats.anonVisits });
   const versionsText =
     objectKeys(stats.versions)
       .map(Number)
@@ -293,13 +278,28 @@ const makeDayStatsText = async (stats: ReturnType<typeof makeDayStats>) => {
       .join(', ') || '—';
 
   return [
-    `Визиты за ${takeRuDate(stats.date)}`,
-    `Всего визитов: ${stats.total}. Уникальных посетителей: ${stats.uniq}`,
-    `Минимальная версия за день: ${minVersionText}`,
-    `Визиты по посетителям: ${visitors.map(({ name, count }) => `${name} — ${count}`).join(', ') || '—'}`,
-    `Анонимные: ${stats.anonUniq} уник. / ${anonVisitsText}`,
-    `Версии: ${versionsText}`,
+    translateBackTexts(langi, BackLocaleKey.VisitReportTitle, { d: takeRuDate(stats.date) }),
+    `${translateBackTexts(langi, BackLocaleKey.VisitReportTotal, { n: stats.total })}. ${translateBackTexts(langi, BackLocaleKey.VisitReportUniq, { n: stats.uniq })}`,
+    translateBackTexts(langi, BackLocaleKey.VisitReportMinVersion, { v: minVersionText }),
+    `${translateBackTexts(langi, BackLocaleKey.VisitReportByVisitors)}: ${visitors.map(({ name, count }) => `${name} — ${count}`).join(', ') || '—'}`,
+    `${translateBackTexts(langi, BackLocaleKey.VisitReportAnonymous)}: ${translateBackTexts(langi, BackLocaleKey.VisitReportUniqVisits, { u: stats.anonUniq, v: anonVisitsText })}`,
+    `${translateBackTexts(langi, BackLocaleKey.VisitReportVersions)}: ${versionsText}`,
   ].join('\n');
+};
+
+const makeDayStatsLogPayload = async (stats: ReturnType<typeof makeDayStats>) => {
+  const visitors = (
+    await Promise.all(
+      mapObjectEntries(stats.visitors, async (login, count) => ({
+        name: takeUserAuthName((await takeUserTiny({ l: login }, false))?.uauth) || login,
+        count: count ?? 0,
+      })),
+    )
+  )
+    .sort((a, b) => b.count - a.count)
+    .slice(0, visitorLogLimit);
+
+  return backLocalePayload(langi => makeDayStatsText(stats, visitors, langi));
 };
 
 export const insertVisit = (login: UserLogin | nil, visitInfo: SokiVisit) =>
@@ -317,7 +317,8 @@ export const insertDashMessage = (
   kind: DashMessageKind,
   login: UserLogin | nil,
 ) => {
-  const write = db
+  // Drizzle builders execute on every `then`/`catch`, so the insert runs through a single promise chain.
+  return db
     .insert(dashErrorDB)
     .values({
       m: message,
@@ -332,9 +333,7 @@ export const insertDashMessage = (
       visit: dashErrorDB.visit,
       createdAt: dashErrorDB.createdAt,
       l: dashErrorDB.l,
-    });
-
-  write
+    })
     .then(async ([row]) => {
       if (!row) return;
 
@@ -348,23 +347,34 @@ export const insertDashMessage = (
         isSystem: !row.l,
       });
     })
+    .then(() =>
+      (kind === DashMessageKind.Errors || kind === DashMessageKind.VisitError) && !isLocalhostVisit(visitInfo)
+        ? sendDashErrorPush(message, login)
+        : undefined,
+    )
     .catch(emptyFunc);
-
-  if ((kind === DashMessageKind.Errors || kind === DashMessageKind.VisitError) && !isLocalhostVisit(visitInfo))
-    write.then(() => sendDashErrorPush(takeErrorPushSummary(message), login)).catch(emptyFunc);
-
-  return write;
 };
 
-const sendVisitsDigest = async (stats: ReturnType<typeof makeDayStats>) =>
-  insertDashMessage(await makeDayStatsText(stats), null, DashMessageKind.Log, null);
+const sendVisitsDigest = async (stats: ReturnType<typeof makeDayStats>) => {
+  await insertDashMessage(await makeDayStatsLogPayload(stats), null, DashMessageKind.Log, null);
 
-export const sendCurrentDashReport = async (login: UserLogin) => {
+  await Promise.all(
+    mapObjectEntries(dashReportRecipientsFileStorage.getValue(), async (email, langi) => {
+      await sendEmailMessage(EmailerAuthConfigKey.Self, {
+        to: email,
+        subject: translateBackTexts(langi, BackLocaleKey.VisitDigestEmailSubject, {
+          d: takeRuDate(stats.date),
+        }),
+        html: await makeDayStatsHtml(stats, langi),
+      }).catch(emptyFunc);
+    }),
+  );
+};
+
+export const sendCurrentDashReport = async (login: UserLogin, langi: Langi | nil) => {
   const email = (await takeUserTiny({ l: login }, false))?.uauth.email;
 
   if (!email) throw backLocaleError(BackLocaleKey.EmailNotLinked);
-
-  if (backConfig.isTest) return email;
 
   const now = Date.now();
   const date = takeMskDayKey(now);
@@ -373,11 +383,34 @@ export const sendCurrentDashReport = async (login: UserLogin) => {
   await sendEmailMessage(EmailerAuthConfigKey.Self, {
     isSameTo: true,
     to: email,
-    subject: `JesmyL-отчет (промежуточный) ${takeRuDate(date)}, ${takeRuTime(now)}`,
-    html: await makeDayStatsHtml(stats),
+    subject: translateBackTexts(langi, BackLocaleKey.VisitReportEmailSubject, {
+      d: takeRuDate(date),
+      t: takeRuTime(now),
+    }),
+    html: await makeDayStatsHtml(stats, langi),
   });
 
   return email;
+};
+
+/** Changes are mirrored to the self mailbox that the visits report is sent from (`isSameTo`) and to every configured dash report recipient. */
+export const sendChangesEmail = async (html: string, langi: Langi | nil) => {
+  const subject = `SYSTEM: ${new Date().toLocaleDateString('ru', changesEmailSubjectDateOptions)} (Changes)`;
+
+  await Promise.all([
+    sendEmailMessage(EmailerAuthConfigKey.Self, {
+      isSameTo: true,
+      subject,
+      html: localizeBackLocalePayloads(html, langi),
+    }),
+    ...mapObjectEntries(dashReportRecipientsFileStorage.getValue(), (email, recipientLangi) =>
+      sendEmailMessage(EmailerAuthConfigKey.Self, {
+        to: email,
+        subject,
+        html: localizeBackLocalePayloads(html, recipientLangi),
+      }).catch(emptyFunc),
+    ),
+  ]);
 };
 
 export const deleteOldDashMessages = () =>

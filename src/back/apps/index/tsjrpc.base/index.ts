@@ -1,4 +1,4 @@
-import { backLocaleError } from 'back/locales/back';
+import { backLocaleError, backLocalePayload, translateBackTexts } from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { cmShareServerTsjrpcMethods } from 'back/apps/cm/tsjrpc.shares';
 import { makeTwiceKnownName } from 'back/complect/makeTwiceKnownName';
@@ -181,7 +181,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
 
           return {
             value: deviceId as never,
-            description: `Запрос DeviceId - ${deviceId}`,
+            description: backLocaleError(BackLocaleKey.DashRequestDeviceId, { d: deviceId }),
             logScope: PostJRPCMessageScope.Support,
           };
         },
@@ -191,21 +191,21 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
 
           return {
             value,
-            description: `Запрос DeviceEmoji - ${value}`,
+            description: backLocaleError(BackLocaleKey.DashRequestDeviceEmoji, { e: value }),
             logScope: PostJRPCMessageScope.Support,
           };
         },
 
-        authMeByTelegramNativeButton: indexAuthByTgUser('через TG-auth-native кнопку'),
-        authMeByTelegramMiniButton: indexAuthByTgUser('через TG-mini-icon кнопку'),
-        authMeByTelegramInScheduleDay: indexAuthByTgUser('в расписании дня'),
+        authMeByTelegramNativeButton: indexAuthByTgUser(BackLocaleKey.DashAuthViaTgNativeButton),
+        authMeByTelegramMiniButton: indexAuthByTgUser(BackLocaleKey.DashAuthViaTgMiniButton),
+        authMeByTelegramInScheduleDay: indexAuthByTgUser(BackLocaleKey.DashAuthInScheduleDay),
 
         authMeByTelegramBotNumber: async ({ secretNumber }, tool) => {
           const user = supportTelegramAuthorizations[secretNumber]?.().from;
 
           if (user == null) throw backLocaleError(BackLocaleKey.AuthCodeIncorrect);
 
-          return await indexAuthByTgUser('через TG-код')({ user }, tool);
+          return await indexAuthByTgUser(BackLocaleKey.DashAuthViaTgCode)({ user }, tool);
         },
 
         getFreshAppVersion: async () => ({ value: appVersionFileStore.getValue().num }),
@@ -293,7 +293,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         updateConstConfig: async ({ config }) => {
           const prevConfig = constantsConfigFileStore.getValue();
           const newConfig = { ...config };
-          const updates: string[] = [];
+          const updates: ({ title: string } | { unknownKey: string })[] = [];
           const was: Record<string, unknown> = {};
           const newValues: Record<string, unknown> = {};
 
@@ -302,7 +302,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
 
             if (configuration == null) {
               delete newConfig[key];
-              updates.push(`Неизвестный ключ (уже удалено) ${key}`);
+              updates.push({ unknownKey: key });
               was[key] = prevConfig[key];
               newValues[key] = null;
               return;
@@ -310,7 +310,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
 
             const checkedValue = (newConfig[key] = configuration.checked(value) as never);
 
-            updates.push(configuration.title);
+            updates.push({ title: configuration.title });
             was[key] = prevConfig[key];
             newValues[key] = checkedValue;
           });
@@ -331,7 +331,21 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
             null,
           );
 
-          return { description: `Константы\n\n${updates.join('\n')}`, was, new: newValues };
+          return {
+            description: backLocalePayload(langi =>
+              translateBackTexts(langi, BackLocaleKey.DashConstantsUpdated, {
+                l: updates
+                  .map(update =>
+                    'title' in update
+                      ? update.title
+                      : translateBackTexts(langi, BackLocaleKey.DashUnknownConfigKey, { k: update.unknownKey }),
+                  )
+                  .join('\n'),
+              }),
+            ),
+            was,
+            new: newValues,
+          };
         },
 
         reqLocaleBaseConfig: (_, { visitInfo, client }) => {

@@ -1,4 +1,4 @@
-import { backLocaleError } from 'back/locales/back';
+import { backLocaleError, translateBackTexts } from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { hostConfig, LocalSokiAuth, SokiAuthLogin, SokiVisit } from 'shared/api';
 import { appVersionFileStore } from './apps/index/file-stores';
@@ -13,7 +13,7 @@ export const userVisitStringified = (visitInfo: SokiVisit | nil) =>
     : '';
 
 export const userAuthStringified = (auth: LocalSokiAuth | nil) =>
-  `<div style='white-space:pre-line'>${auth ? `${auth.fio}${auth.nick && auth.tgId ? ` https://t.me/${auth.nick}` : ''}` : 'Неизвестный'}\n\n` +
+  `<div style='white-space:pre-line'>${auth ? `${auth.fio}${auth.nick && auth.tgId ? ` https://t.me/${auth.nick}` : ''}` : translateBackTexts(null, BackLocaleKey.SchUnknownRole)}\n\n` +
   `<code>${auth ? JSON.stringify(auth, null, 1) : ''}</code></div>`;
 
 export const takeLogginedAuthOrThrow = (auth: LocalSokiAuth | nil): LocalSokiAuth & { login: SokiAuthLogin } => {

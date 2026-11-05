@@ -1,4 +1,5 @@
-import { backLocaleError } from 'back/locales/back';
+import { backLocaleError, translateBackTexts } from 'back/locales/back';
+import { takeUserLangi } from 'back/complect/userLangiFileStore';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import {
@@ -19,7 +20,7 @@ import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 export const schListsTsjrpcBaseServer = new (class SchLists extends TsjrpcBaseServer<SchListsTsjrpcMethods> {
   constructor() {
     const modifyCategory = <Props extends { props: ScheduleListCategoryScopeProps }>(
-      modifier: (cat: IScheduleWidgetListCat, props: Props, sch: IScheduleWidget) => string | null,
+      modifier: (cat: IScheduleWidgetListCat, props: Props, sch: IScheduleWidget) => PromiseOr<string | null>,
     ) =>
       modifySchedule<Props>(false, (sch, props) => {
         const cat = sch.lists.cats[props.props.cati];
@@ -28,7 +29,7 @@ export const schListsTsjrpcBaseServer = new (class SchLists extends TsjrpcBaseSe
       });
 
     const modifyUnit = <Props extends { props: ScheduleUnitScopeProps }>(
-      modifier: (unit: IScheduleWidgetListUnit, props: Props, sch: IScheduleWidget) => string | null,
+      modifier: (unit: IScheduleWidgetListUnit, props: Props, sch: IScheduleWidget) => PromiseOr<string | null>,
     ) =>
       modifySchedule<Props>(false, (sch, props) => {
         const unit = sch.lists.units.find(unit => unit.mi === props.props.unitMi);
@@ -39,17 +40,22 @@ export const schListsTsjrpcBaseServer = new (class SchLists extends TsjrpcBaseSe
     super({
       scope: 'SchLists',
       methods: {
-        createCategory: modifySchedule(false, sch => {
+        createCategory: modifySchedule(false, async (sch, _props, { auth, visitInfo }) => {
+          const langi = takeUserLangi(auth?.login) ?? visitInfo?.langi;
+
           sch.lists.cats.push({
             title: '',
             icon: 'CheckList',
-            titles: ['Руководители', 'Участники'],
+            titles: [
+              translateBackTexts(langi, BackLocaleKey.SchListCatMentorsDefaultTitle),
+              translateBackTexts(langi, BackLocaleKey.SchListCatMembersDefaultTitle),
+            ],
           });
 
-          return `В расписании ${scheduleTitleInBrackets(sch)} добавлена новая категория списков`;
+          return backLocaleError(BackLocaleKey.SchListCatAdded, { t: await scheduleTitleInBrackets(sch) });
         }),
 
-        createUnit: modifySchedule(false, (sch, { cati }) => {
+        createUnit: modifySchedule(false, async (sch, { cati }) => {
           const mi = takeNextMi(sch.lists.units, 0 as number);
 
           sch.lists.units.push({
@@ -59,34 +65,39 @@ export const schListsTsjrpcBaseServer = new (class SchLists extends TsjrpcBaseSe
             title: `${sch.lists.cats[cati].title} ${mi}`,
           });
 
-          return `В расписании ${scheduleTitleInBrackets(sch)} добавлен новый список для категории ${
-            sch.lists.cats[cati].title
-          }`;
+          return backLocaleError(BackLocaleKey.SchListUnitAdded, {
+            t: await scheduleTitleInBrackets(sch),
+            c: sch.lists.cats[cati].title,
+          });
         }),
-        setCategoryTitle: modifyCategory((cat, { value, props }, sch) => {
+        setCategoryTitle: modifyCategory(async (cat, { value, props }, sch) => {
           cat.title = value;
 
-          return (
-            `В расписании ${scheduleTitleInBrackets(sch)} для ${props.cati + 1} ` +
-            `категории списков задано название "${value}"`
-          );
+          return backLocaleError(BackLocaleKey.SchListCatTitleSet, {
+            t: await scheduleTitleInBrackets(sch),
+            i: props.cati + 1,
+            v: value,
+          });
         }),
-        setCategoryMembersTitle: modifyCategory((cat, { value, props }, sch) => {
+        setCategoryMembersTitle: modifyCategory(async (cat, { value, props }, sch) => {
           cat.titles[1] = value;
 
-          return `В расписании ${scheduleTitleInBrackets(sch)} для ${
-            props.cati + 1
-          } категории списков задано название для участников: "${value}"`;
+          return backLocaleError(BackLocaleKey.SchListCatMembersTitleSet, {
+            t: await scheduleTitleInBrackets(sch),
+            i: props.cati + 1,
+            v: value,
+          });
         }),
-        setCategoryMentorsTitle: modifyCategory((cat, { value, props }, sch) => {
+        setCategoryMentorsTitle: modifyCategory(async (cat, { value, props }, sch) => {
           cat.titles[0] = value;
 
-          return (
-            `В расписании ${scheduleTitleInBrackets(sch)} для ${props.cati + 1} ` +
-            `категории списков задано название для наставников: "${value}"`
-          );
+          return backLocaleError(BackLocaleKey.SchListCatMentorsTitleSet, {
+            t: await scheduleTitleInBrackets(sch),
+            i: props.cati + 1,
+            v: value,
+          });
         }),
-        setCategoryIcon: modifyCategory((cat, { value, props }, sch) => {
+        setCategoryIcon: modifyCategory(async (cat, { value, props }, sch) => {
           indexServerTsjrpcShareMethods.updateKnownIconPacks(
             {
               actualIconPacks: { [value]: indexStameskaIconsFileStore.getValue()[value] },
@@ -98,26 +109,30 @@ export const schListsTsjrpcBaseServer = new (class SchLists extends TsjrpcBaseSe
 
           cat.icon = value;
 
-          return `В расписании ${scheduleTitleInBrackets(sch)} для ${
-            props.cati + 1
-          } категории списков задана иконка "${value}"`;
+          return backLocaleError(BackLocaleKey.SchListCatIconSet, {
+            t: await scheduleTitleInBrackets(sch),
+            i: props.cati + 1,
+            v: value,
+          });
         }),
 
-        setUnitTitle: modifyUnit((unit, { value, cati }, sch) => {
+        setUnitTitle: modifyUnit(async (unit, { value, cati }, sch) => {
           unit.title = value;
 
-          return (
-            `В расписании ${scheduleTitleInBrackets(sch)} для ` +
-            `задано название для списка ${sch.lists.cats[cati]}: "${value}"`
-          );
+          return backLocaleError(BackLocaleKey.SchListUnitTitleSet, {
+            t: await scheduleTitleInBrackets(sch),
+            c: sch.lists.cats[cati].title,
+            v: value,
+          });
         }),
-        setUnitDescription: modifyUnit((unit, { value, cati }, sch) => {
+        setUnitDescription: modifyUnit(async (unit, { value, cati }, sch) => {
           unit.dsc = value;
 
-          return (
-            `В расписании ${scheduleTitleInBrackets(sch)} для ` +
-            `задано описание для списка ${sch.lists.cats[cati]}: "${value}"`
-          );
+          return backLocaleError(BackLocaleKey.SchListUnitDescriptionSet, {
+            t: await scheduleTitleInBrackets(sch),
+            c: sch.lists.cats[cati].title,
+            v: value,
+          });
         }),
       },
     });

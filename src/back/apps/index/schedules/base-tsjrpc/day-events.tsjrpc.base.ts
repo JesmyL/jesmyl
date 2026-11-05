@@ -22,14 +22,14 @@ import {
 } from '../schedule-modificators';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
-const inEventTypeTtileOfDay = (sch: IScheduleWidget, props: ScheduleDayEventScopeProps) => {
+const eventDayIntr = async (sch: IScheduleWidget, props: ScheduleDayEventScopeProps) => {
   const eventTypei = sch.days[props.dayi]?.list.find(event => event.mi === props.eventMi)?.type;
-  if (eventTypei == null) return '[event type not found]';
 
-  return (
-    `В расписании ${scheduleTitleInBrackets(sch)} в событии ` +
-    `"${sch.types[eventTypei]?.title}" ${props.dayi + 1}-го дня`
-  );
+  return {
+    t: await scheduleTitleInBrackets(sch),
+    e: (eventTypei == null ? null : sch.types[eventTypei]?.title) ?? '?',
+    d: props.dayi + 1,
+  };
 };
 
 const modifyEvent = <Props extends { props: ScheduleDayEventScopeProps }>(
@@ -71,10 +71,10 @@ export const schDayEventsTsjrpcBaseServer =
           props: Props,
           itemi: number | null,
           sch: IScheduleWidget,
-        ) => {
+        ) => PromiseOr<{
           list?: Required<ScheduleWidgetAppAttCustomizableValue>[ListField];
           description: string | null;
-        },
+        }>,
       ) =>
         modifyEvent<Props>(async (event, props, sch, _day, tool) => {
           await throwIfNoComsListRedact(props.props.attKey, props.props, sch, tool);
@@ -104,7 +104,7 @@ export const schDayEventsTsjrpcBaseServer =
             if (itemi < 0) throw backLocaleError(BackLocaleKey.ValueNotFound);
           }
 
-          const { list: newList, description } = modifier(att[listField] as never, props, itemi, sch);
+          const { list: newList, description } = await modifier(att[listField] as never, props, itemi, sch);
 
           if (newList !== undefined) att[listField] = newList;
           if (!att[listField].length) delete att[listField];
@@ -120,14 +120,14 @@ export const schDayEventsTsjrpcBaseServer =
           props: Props,
           item: ScheduleWidgetAppAttCustomizableValueItem,
           sch: IScheduleWidget,
-        ) => string | null,
+        ) => PromiseOr<string | null>,
       ) =>
-        modifyKeyValueAttachmentValueList<Props, 'values'>('values', (values, props, itemi, sch) => {
+        modifyKeyValueAttachmentValueList<Props, 'values'>('values', async (values, props, itemi, sch) => {
           if (itemi == null) throw backLocaleError(BackLocaleKey.ValueNotFound);
           const [, itemValue] = values[itemi];
           if (!checkIsArray(itemValue)) throw backLocaleError(BackLocaleKey.AttachmentValueNotArray);
 
-          return { description: modifier(itemValue, props, values[itemi], sch) };
+          return { description: await modifier(itemValue, props, values[itemi], sch) };
         });
 
       super({
@@ -138,21 +138,30 @@ export const schDayEventsTsjrpcBaseServer =
 
             event.topic = value;
 
-            return `${inEventTypeTtileOfDay(sch, props)} установлена тема "${value}"`;
+            return backLocaleError(BackLocaleKey.SchEventTopicSet, {
+              ...(await eventDayIntr(sch, props)),
+              v: value,
+            });
           }),
           setDescription: modifyEvent(async (event, { props, value }, sch, _day, tool) => {
             await throwIfNoScheduleEventContentRedact(sch, tool.auth);
 
             event.dsc = value;
 
-            return `${inEventTypeTtileOfDay(sch, props)} установлено описание - "${value}"`;
+            return backLocaleError(BackLocaleKey.SchEventDescriptionSet, {
+              ...(await eventDayIntr(sch, props)),
+              v: value,
+            });
           }),
           setTm: modifyEvent(async (event, { props, value }, sch, _day, tool) => {
             await throwIfNoScheduleEventContentRedact(sch, tool.auth);
 
             event.tm = value;
 
-            return `${inEventTypeTtileOfDay(sch, props)} установлено время продолжительности - ${value}`;
+            return backLocaleError(BackLocaleKey.SchEventDurationSet, {
+              ...(await eventDayIntr(sch, props)),
+              v: value,
+            });
           }, true),
 
           toggleIsSecret: modifyEvent(async (event, { props }, sch, _day, tool) => {
@@ -161,7 +170,7 @@ export const schDayEventsTsjrpcBaseServer =
             if (event.secret) delete event.secret;
             else event.secret = 1;
 
-            return `${inEventTypeTtileOfDay(sch, props)} установлен признак секретности`;
+            return backLocaleError(BackLocaleKey.SchEventSecretToggled, await eventDayIntr(sch, props));
           }),
 
           setIsNeedAppInform: modifyEvent(async (event, { props, value }, sch, _day, tool) => {
@@ -170,7 +179,10 @@ export const schDayEventsTsjrpcBaseServer =
             if (value) event.noAppInform = 1;
             else delete event.noAppInform;
 
-            return `${inEventTypeTtileOfDay(sch, props)} уведомление в приложении ${value ? 'отключено' : 'включено'}`;
+            return backLocaleError(
+              value ? BackLocaleKey.SchEventAppInformOff : BackLocaleKey.SchEventAppInformOn,
+              await eventDayIntr(sch, props),
+            );
           }, true),
 
           addAttachment: modifyEvent(async (event, { props, attKey, defaultValue }, sch, _day, tool) => {
@@ -179,7 +191,10 @@ export const schDayEventsTsjrpcBaseServer =
             event.atts ??= {};
             event.atts[attKey] = defaultValue;
 
-            return `${inEventTypeTtileOfDay(sch, props)} добавлено вложение ${attKey}`;
+            return backLocaleError(BackLocaleKey.SchEventAttachmentAdded, {
+              ...(await eventDayIntr(sch, props)),
+              a: attKey,
+            });
           }),
 
           addAttachmentRef: modifyEvent(async (event, { props, attKey, attRef }, sch, _day, tool) => {
@@ -188,7 +203,11 @@ export const schDayEventsTsjrpcBaseServer =
             event.atts ??= {};
             event.atts[attKey] = attRef;
 
-            return `${inEventTypeTtileOfDay(sch, props)} добавлена ссылка на вложение ${attKey} ${attRef[0] + 1}-го дня`;
+            return backLocaleError(BackLocaleKey.SchEventAttachmentRefAdded, {
+              ...(await eventDayIntr(sch, props)),
+              a: attKey,
+              r: attRef[0] + 1,
+            });
           }),
 
           removeAttachment: modifyEvent(async (event, { props, attKey }, sch, _day, tool) => {
@@ -198,12 +217,15 @@ export const schDayEventsTsjrpcBaseServer =
             delete event.atts[attKey];
             if (!objectLength(event.atts)) delete event.atts;
 
-            return `${inEventTypeTtileOfDay(sch, props)} удалено вложение ${attKey}`;
+            return backLocaleError(BackLocaleKey.SchEventAttachmentRemoved, {
+              ...(await eventDayIntr(sch, props)),
+              a: attKey,
+            });
           }),
 
           updateCheckListAttachmentValue: modifyKeyValueAttachmentValueList(
             'list',
-            (values, { itemMi, key, value, props }, _, sch) => {
+            async (values, { itemMi, key, value, props }, _, sch) => {
               if (itemMi == null) {
                 if (key == null || value == null) return { description: null };
                 values.push([key, value, takeNextMi(values, 0 as number, '2')]);
@@ -217,17 +239,21 @@ export const schDayEventsTsjrpcBaseServer =
               if (value != null) item[1] = value;
 
               return {
-                description:
-                  `${inEventTypeTtileOfDay(sch, props)} ` +
-                  `${value === null ? 'удалён выполняемый пункт из вложения' : 'добавлен выполняемый пункт во вложение'} ` +
-                  `${props.attTitle ?? props.attKey} - ${JSON.stringify([key, value, itemMi])}`,
+                description: backLocaleError(
+                  value === null ? BackLocaleKey.SchEventCheckItemRemoved : BackLocaleKey.SchEventCheckItemAdded,
+                  {
+                    ...(await eventDayIntr(sch, props)),
+                    a: props.attTitle ?? props.attKey,
+                    v: JSON.stringify([key, value, itemMi]),
+                  },
+                ),
               };
             },
           ),
 
           putKeyValueAttachment: modifyKeyValueAttachmentValueList(
             'values',
-            (values, { key, value, props }, _, sch) => {
+            async (values, { key, value, props }, _, sch) => {
               if (value === null) {
                 const index = values.findIndex(([, , mi]) => mi === key);
                 if (index < 0) throw backLocaleError(BackLocaleKey.ValueNotFound);
@@ -235,109 +261,126 @@ export const schDayEventsTsjrpcBaseServer =
               } else values.push([key, value, takeNextMi(values, 0 as number, '2')]);
 
               return {
-                description:
-                  `${inEventTypeTtileOfDay(sch, props)} ${value === null ? 'удалено' : 'добавлено'} ` +
-                  `списочное значение во вложение ${props.attTitle ?? props.attKey} - ${JSON.stringify([key, value])}`,
+                description: backLocaleError(
+                  value === null ? BackLocaleKey.SchEventListValueRemoved : BackLocaleKey.SchEventListValueAdded,
+                  {
+                    ...(await eventDayIntr(sch, props)),
+                    a: props.attTitle ?? props.attKey,
+                    v: JSON.stringify([key, value]),
+                  },
+                ),
               };
             },
           ),
 
           setKeyValueAttachmentValue: modifyKeyValueAttachmentValueList(
             'values',
-            (values, { value, props }, itemi, sch) => {
+            async (values, { value, props }, itemi, sch) => {
               if (itemi == null) return { description: null };
               if (value === null) values.splice(itemi, 1);
               else values[itemi][1] = value;
 
               return {
-                description:
-                  `${inEventTypeTtileOfDay(sch, props)} изменено ` +
-                  `списочное значение во вложении ${props.attTitle ?? props.attKey} - ${JSON.stringify(value)}`,
+                description: backLocaleError(BackLocaleKey.SchEventListValueSet, {
+                  ...(await eventDayIntr(sch, props)),
+                  a: props.attTitle ?? props.attKey,
+                  v: JSON.stringify(value),
+                }),
               };
             },
           ),
 
           setKeyValueAttachmentKey: modifyKeyValueAttachmentValueList(
             'values',
-            (values, { value, props }, itemi, sch) => {
+            async (values, { value, props }, itemi, sch) => {
               if (itemi == null) return { description: null };
               values[itemi][0] = value;
 
               return {
-                description:
-                  `${inEventTypeTtileOfDay(sch, props)} установлен ключ ` +
-                  `списочного значения во вложении ${props.attTitle ?? props.attKey} - ${JSON.stringify(value)}`,
+                description: backLocaleError(BackLocaleKey.SchEventListKeySet, {
+                  ...(await eventDayIntr(sch, props)),
+                  a: props.attTitle ?? props.attKey,
+                  v: JSON.stringify(value),
+                }),
               };
             },
           ),
 
           changeKeyValueAttachmentKey: modifyKeyValueAttachmentValueList(
             'values',
-            (values, { key, value, props }, _, sch) => {
+            async (values, { key, value, props }, _, sch) => {
               const item = values.find(item => item[0] === key);
               if (item == null) throw backLocaleError(BackLocaleKey.ItemNotFound);
               item[0] = value;
 
               return {
-                description:
-                  `${inEventTypeTtileOfDay(sch, props)} изменён ключ ` +
-                  `списочного значения во вложении ${props.attTitle ?? props.attKey} - ${JSON.stringify([key, value])}`,
+                description: backLocaleError(BackLocaleKey.SchEventListKeyChanged, {
+                  ...(await eventDayIntr(sch, props)),
+                  a: props.attTitle ?? props.attKey,
+                  v: JSON.stringify([key, value]),
+                }),
               };
             },
           ),
 
           addKeyValueAttachmentListItem: modifyKeyValueAttachmentListValue(
-            (itemValue, { value, itemMi, props }, _, sch) => {
+            async (itemValue, { value, itemMi, props }, _, sch) => {
               itemValue.push(value);
 
-              return (
-                `${inEventTypeTtileOfDay(sch, props)} ${value === null ? 'удалено' : 'добавлено'} ` +
-                `списочное значение во вложение ${props.attTitle ?? props.attKey} - ${JSON.stringify([itemMi, value])}`
+              return backLocaleError(
+                value === null ? BackLocaleKey.SchEventListValueRemoved : BackLocaleKey.SchEventListValueAdded,
+                {
+                  ...(await eventDayIntr(sch, props)),
+                  a: props.attTitle ?? props.attKey,
+                  v: JSON.stringify([itemMi, value]),
+                },
               );
             },
           ),
 
           setKeyValueAttachmentListItemValue: modifyKeyValueAttachmentListValue(
-            (itemValue, { value, valuei, props, itemMi }, _, sch) => {
+            async (itemValue, { value, valuei, props, itemMi }, _, sch) => {
               itemValue[valuei] = value;
 
-              return (
-                `${inEventTypeTtileOfDay(sch, props)} изменено ` +
-                `списочное значение во вложении ${props.attTitle ?? props.attKey} - ${JSON.stringify([itemMi, value])}`
-              );
+              return backLocaleError(BackLocaleKey.SchEventListValueSet, {
+                ...(await eventDayIntr(sch, props)),
+                a: props.attTitle ?? props.attKey,
+                v: JSON.stringify([itemMi, value]),
+              });
             },
           ),
 
           removeKeyValueAttachmentListItemValue: modifyKeyValueAttachmentListValue(
-            (itemValue, { value, itemMi, props }, _, sch) => {
+            async (itemValue, { value, itemMi, props }, _, sch) => {
               const index = itemValue.findIndex(val => val === value);
               if (index < 0) throw backLocaleError(BackLocaleKey.ValueNotFound);
               itemValue.splice(index, 1);
 
-              return (
-                `${inEventTypeTtileOfDay(sch, props)} удалено ` +
-                `списочное значение из вложения ${props.attTitle ?? props.attKey} - ${JSON.stringify([itemMi, value])}`
-              );
+              return backLocaleError(BackLocaleKey.SchEventListValueRemoved, {
+                ...(await eventDayIntr(sch, props)),
+                a: props.attTitle ?? props.attKey,
+                v: JSON.stringify([itemMi, value]),
+              });
             },
           ),
 
           moveKeyValueAttachmentListItem: modifyKeyValueAttachmentListValue(
-            (itemValue, { value, props }, item, sch) => {
+            async (itemValue, { value, props }, item, sch) => {
               const index = itemValue.findIndex(val => val === value);
               if (index < 0) throw backLocaleError(BackLocaleKey.ValueNotFound);
 
               item[1] = withInsertedBeforei(itemValue, index === 0 ? 2 : index - 1, index);
 
-              return (
-                `${inEventTypeTtileOfDay(sch, props)} изменён ` +
-                `порядок в списочном значении во вложении ${props.attTitle ?? props.attKey}`
-              );
+              return backLocaleError(BackLocaleKey.SchEventListOrderChanged, {
+                ...(await eventDayIntr(sch, props)),
+                a: props.attTitle ?? props.attKey,
+              });
             },
           ),
 
           transferKeyValueAttachment: modifyKeyValueAttachmentValueList(
             'values',
-            (values, { grabbedItemMi, targetItemMi, props }, _, sch) => {
+            async (values, { grabbedItemMi, targetItemMi, props }, _, sch) => {
               if (grabbedItemMi == null) return { description: null };
 
               return {
@@ -346,27 +389,36 @@ export const schDayEventsTsjrpcBaseServer =
                   targetItemMi == null ? values.length : values.findIndex(item => targetItemMi === item[2]),
                   values.findIndex(item => grabbedItemMi === item[2]),
                 ),
-                description:
-                  `${inEventTypeTtileOfDay(sch, props)} изменён ` +
-                  `порядок в списочном значении во вложении ${props.attTitle ?? props.attKey}`,
+                description: backLocaleError(BackLocaleKey.SchEventListOrderChanged, {
+                  ...(await eventDayIntr(sch, props)),
+                  a: props.attTitle ?? props.attKey,
+                }),
               };
             },
           ),
 
-          setRatePoint: modifyEvent((event, { props, ratePoint, userMi, userName }, sch) => {
+          setRatePoint: modifyEvent(async (event, { props, ratePoint, userMi, userName }, sch) => {
             event.rate ??= {} as never;
             event.rate[userMi] ??= [ratePoint, ''];
             event.rate[userMi][0] = ratePoint;
 
-            return `${inEventTypeTtileOfDay(sch, props)} участником ${userName} поставлена оценка - (${ratePoint})`;
+            return backLocaleError(BackLocaleKey.SchEventRatePoint, {
+              ...(await eventDayIntr(sch, props)),
+              u: userName,
+              p: ratePoint,
+            });
           }),
 
-          setRateComment: modifyEvent((event, { comment, userMi, props, userName }, sch) => {
+          setRateComment: modifyEvent(async (event, { comment, userMi, props, userName }, sch) => {
             event.rate ??= {} as never;
             event.rate[userMi] ??= [0, comment];
             event.rate[userMi][1] = comment;
 
-            return `${inEventTypeTtileOfDay(sch, props)} участником ${userName} оставлен комментарий - "${comment}"`;
+            return backLocaleError(BackLocaleKey.SchEventRateComment, {
+              ...(await eventDayIntr(sch, props)),
+              u: userName,
+              c: comment,
+            });
           }),
         },
       });

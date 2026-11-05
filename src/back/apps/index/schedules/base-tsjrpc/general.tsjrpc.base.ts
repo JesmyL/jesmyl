@@ -1,4 +1,4 @@
-import { backLocaleError } from 'back/locales/back';
+import { backLocaleError, translateBackTexts } from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { scheduleDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
@@ -251,47 +251,61 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
 
           return {
             value: sch,
-            description: `Создано новое расписание ${await scheduleTitleInBrackets(sch)}`,
+            description: backLocaleError(BackLocaleKey.SchCreated, { t: await scheduleTitleInBrackets(sch) }),
           };
         },
 
         rename: updateScheduleValue(
           'title',
-          async sch => `Расписание ${await scheduleTitleInBrackets(sch)} переименовано`,
+          async sch => backLocaleError(BackLocaleKey.SchRenamed, { t: await scheduleTitleInBrackets(sch) }),
         ),
         setTopic: updateScheduleValue(
           'topic',
-          async sch => `В расписании ${await scheduleTitleInBrackets(sch)} изменена тема: ${sch.topic}`,
+          async sch =>
+            backLocaleError(BackLocaleKey.SchTopicChanged, {
+              t: await scheduleTitleInBrackets(sch),
+              v: sch.topic,
+            }),
         ),
         setDescription: updateScheduleValue(
           'dsc',
-          async sch => `В расписании ${await scheduleTitleInBrackets(sch)} изменено описание: ${sch.dsc}`,
+          async sch =>
+            backLocaleError(BackLocaleKey.SchDescriptionChanged, {
+              t: await scheduleTitleInBrackets(sch),
+              v: sch.dsc,
+            }),
         ),
         setFirstDayAsTech: updateScheduleValue(
           'withTech',
           async sch =>
-            `В расписании ${await scheduleTitleInBrackets(sch)} первый день сделан ${sch.withTech ? 'техническим' : 'обычным'}`,
+            backLocaleError(
+              sch.withTech ? BackLocaleKey.SchFirstDayTech : BackLocaleKey.SchFirstDayNormal,
+              { t: await scheduleTitleInBrackets(sch) },
+            ),
           true,
         ),
         setPaused: updateScheduleValue(
           'isPaused',
-          async sch => `В расписании ${await scheduleTitleInBrackets(sch)} ${sch.isPaused ? 'отключено' : 'включено'}`,
+          async sch =>
+            backLocaleError(sch.isPaused ? BackLocaleKey.SchPausedDisabled : BackLocaleKey.SchPausedEnabled, {
+              t: await scheduleTitleInBrackets(sch),
+            }),
           true,
         ),
         setStartTime: modifySchedule(true, async (sch, { value }) => {
           sch.prevStart = sch.start;
           sch.start = value;
 
-          return (
-            `В расписании ${await scheduleTitleInBrackets(sch)} установлена дата начала - ` +
-            `${makeDateLabel(sch.start)}`
-          );
+          return backLocaleError(BackLocaleKey.SchStartTimeSet, {
+            t: await scheduleTitleInBrackets(sch),
+            d: makeDateLabel(sch.start),
+          });
         }),
 
         setSchedulePeriod: modifySchedule(true, async (sch, { period }) => {
           sch.period = parseSchedulePeriod(period);
 
-          return `В расписании ${await scheduleTitleInBrackets(sch)} изменена периодичность`;
+          return backLocaleError(BackLocaleKey.SchPeriodChanged, { t: await scheduleTitleInBrackets(sch) });
         }),
 
         setAppInform: modifySchedule(true, async (sch, { value }) => {
@@ -299,20 +313,16 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
 
           sch.appInform = value;
 
-          return (
-            `В расписании ${await scheduleTitleInBrackets(sch)} уведомления в приложении ` +
-            (value === 0
-              ? 'отключены'
-              : value === 1
-                ? 'включены (только в начале)'
-                : `включены (за ${value} мин. и в начале)`)
-          );
+          return backLocaleError(BackLocaleKey.SchAppInformDisabled, {
+            t: await scheduleTitleInBrackets(sch),
+            m: value,
+          });
         }),
 
         remove: modifySchedule(true, async sch => {
           sch.isRemoved = 1;
 
-          return `Расписание ${await scheduleTitleInBrackets(sch)} удалено`;
+          return backLocaleError(BackLocaleKey.SchRemoved, { t: await scheduleTitleInBrackets(sch) });
         }),
 
         copySchedule: modifySchedule(false, async (sch, { schedule }) => {
@@ -320,13 +330,15 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
           const to = await scheduleTitleInBrackets(sch);
           Object.assign(sch, schedule, { title: sch.title });
 
-          return `Расписание ${from} скопировано в ${to} `;
+          return backLocaleError(BackLocaleKey.SchCopied, { f: from, t: to });
         }),
 
         setScheduleRegisterType: modifySchedule(false, async (sch, { type }) => {
           sch.ctrl.type = type;
 
-          if (!checkIsNumber(type)) return `В расписании <b>${await scheduleTitleInBrackets(sch)}</b> изменение типа`;
+          const t = await scheduleTitleInBrackets(sch);
+
+          if (!checkIsNumber(type)) return backLocaleError(BackLocaleKey.SchRegTypeChanged, { t });
 
           const isSwPublic = scheduleWidgetRegTypeRights.checkIsHasIndividualRights(type, ScheduleWidgetRegType.Public);
 
@@ -349,9 +361,8 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
               item => item.id === ScheduleWidgetRegType.HideContent,
             )!;
 
-            return (
-              `В расписании <b>${await scheduleTitleInBrackets(sch)}</b> изменение типа:` +
-              `\n\n${ScheduleWidgetCleans.putInTgTag(isSwPublic ? '' : 's', publicRule.title)}` +
+            const l =
+              `${ScheduleWidgetCleans.putInTgTag(isSwPublic ? '' : 's', publicRule.title)}` +
               `\n${ScheduleWidgetCleans.putInTgTag(
                 isSwPublic && isSwBeforeRegistration ? '' : 's',
                 beforeRegistrationRule.title,
@@ -359,19 +370,24 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
               `\n${ScheduleWidgetCleans.putInTgTag(
                 isSwPublic && isSwBeforeRegistration && isSwHideContent ? '' : 's',
                 hideContentRule.title,
-              )}`
-            );
+              )}`;
+
+            return backLocaleError(BackLocaleKey.SchRegTypeChanged, { t, l });
           } catch (_error) {
-            return `В расписании <b>${await scheduleTitleInBrackets(sch)}</b> изменение типа`;
+            return backLocaleError(BackLocaleKey.SchRegTypeChanged, { t });
           }
         }),
         setDefaultUserRights: modifySchedule(false, async (sch, { R }) => {
           sch.ctrl.defu = R;
 
-          return (
-            `В расписании ${await scheduleTitleInBrackets(sch)} для новых участников установлены права по умолчанию: ` +
-            (scheduleWidgetUserRights.texts[scheduleWidgetUserRights.rightsBalance(R)].role?.[0] ?? 'Неизвестный')
-          );
+          const r =
+            scheduleWidgetUserRights.texts[scheduleWidgetUserRights.rightsBalance(R)].role?.[0] ??
+            translateBackTexts(null, BackLocaleKey.SchUnknownRole);
+
+          return backLocaleError(BackLocaleKey.SchDefaultRightsSet, {
+            t: await scheduleTitleInBrackets(sch),
+            r,
+          });
         }),
         setComsRights: async (props, tool) => {
           let affectedUserIds: UserId[] = [];
@@ -398,7 +414,9 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
               ];
               isComsRightsChanged = !checkIsEq(prevComsRights, comsRights);
 
-              return `В расписании ${await scheduleTitleInBrackets(sch)} обновлены права на списки композиций`;
+              return backLocaleError(BackLocaleKey.SchComsRightsUpdated, {
+                t: await scheduleTitleInBrackets(sch),
+              });
             },
           )(props, tool);
 

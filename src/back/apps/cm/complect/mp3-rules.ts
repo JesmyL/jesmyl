@@ -47,6 +47,6 @@ export const cmGetResourceHTMLString: typeof cmEditorTsjrpcBaseServer.getResourc
       fetch(userUrl.toString())
         .then(html => resolve({ value: { rule, html } }))
         .catch(() => reject(backLocaleError(BackLocaleKey.ErrorWithNumber, { n: 97377213 })));
-    } else reject('Ошибка. Этот ресурс неизвестен');
+    } else reject(backLocaleError(BackLocaleKey.CmMp3ResourceUnknown));
   });
 };

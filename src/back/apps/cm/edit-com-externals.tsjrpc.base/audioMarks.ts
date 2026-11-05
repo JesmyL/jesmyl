@@ -32,7 +32,7 @@ export const cmEditComExternalsTsjrpcAudioMarks = {
       let firstOrdw;
 
       if (checkIsNil(comMarks[src])) {
-        description = `Создан новый пак аудио-маркеров для трека ${src}`;
+        description = backLocaleError(BackLocaleKey.CmAudioMarksPackCreated, { s: src });
 
         const comTiny = (
           await db
@@ -43,7 +43,7 @@ export const cmEditComExternalsTsjrpcAudioMarks = {
         ).at(0);
 
         if (comTiny) {
-          description += `\n\nпесня:\n${comTiny.n}`;
+          description = backLocaleError(BackLocaleKey.CmAudioMarksPackCreatedWithCom, { s: src, n: comTiny.n });
           const ordw = comTiny.o?.[0].w;
 
           if (checkIsNotNil(ordw))

@@ -1,7 +1,7 @@
 import { Langi } from 'shared/api';
 import { CmComOrders } from 'shared/const/cm/Com/parents/20-Orders';
 import { Do } from 'shared/enums';
-import { iife, wait } from 'shared/utils';
+import { emptyFunc, iife, wait } from 'shared/utils';
 import { bibleTsjrpcBaseServer } from './apps/bible/tsjrpc';
 import { cmServerTsjrpcBase } from './apps/cm/tsjrpc.base';
 import { startCrTgAlarm } from './apps/index/crTgAlarm';
@@ -11,6 +11,7 @@ import { indexServerTsjrpcBase } from './apps/index/tsjrpc.base';
 import { questionerAdminServerTsjrpcBase } from './apps/q/tsjrpc/admin.tsjrpc.base';
 import { questionerUserServerTsjrpcBase } from './apps/q/tsjrpc/user.tsjrpc.base';
 import { storagesServerTsjrpcBase } from './apps/storages/tsjrpc.base';
+import { initUserLangiFileStore } from './complect/userLangiFileStore';
 import { sokiServer } from './complect/soki/SokiServer';
 import { backConfig } from './config/backConfig';
 import { localeDynamicEn } from './locales/dynamic/en';
@@ -35,6 +36,7 @@ iife(async () => {
   indexServerTsjrpcBase.$$register();
 
   initSchedulePushInform();
+  initUserLangiFileStore().catch(emptyFunc);
 
   baseMessagesCatcher.register();
 

@@ -2,11 +2,13 @@ import { backLocaleError, localizeBackLocaleErrorPayload } from 'back/locales/ba
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { insertDashMessage, insertVisit } from 'back/dash/visits';
 import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
+import { saveUserLangi, takeUserLangi } from 'back/complect/userLangiFileStore';
 import { ServerTSJRPCTool, tsjrpcBaseServerNext } from 'back/tsjrpc.base.server';
 import { DrizzleQueryError } from 'drizzle-orm';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 import { makeRegExp } from 'regexpert';
 import {
+  Langi,
   LocalSokiAuth,
   SokiAuthLogin,
   SokiError,
@@ -55,6 +57,10 @@ export class SokiServer {
 
   get onlineCount() {
     return this.visits.size;
+  }
+
+  takeClientLangi(client: WebSocket): Langi | nil {
+    return this.visits.get(client)?.langi ?? takeUserLangi(this.auths.get(client)?.login);
   }
 
   get onlineLogins() {
@@ -129,6 +135,7 @@ export class SokiServer {
               const visitInfo = event.visitInfo;
 
               this.visits.set(client, visitInfo);
+              if (login) saveUserLangi(login, visitInfo.langi);
               if (this.visits.size !== previousOnline) this.notifyOnlineCount(login);
 
               if (!this.isLocalhost(visitInfo.urls[0])) {

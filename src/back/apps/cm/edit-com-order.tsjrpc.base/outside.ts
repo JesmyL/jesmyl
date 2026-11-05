@@ -30,7 +30,7 @@ export const cmEditComOrderServerTsjrpcOutside = {
 
       com.o.splice(afterOrdi + 1, 0, ord);
 
-      return `добавлен новый порядковый блок ${orderTitle}`;
+      return backLocaleError(BackLocaleKey.CmComOrdInserted, { b: orderTitle });
     },
   ),
 
@@ -50,7 +50,7 @@ export const cmEditComOrderServerTsjrpcOutside = {
       cre: (await checkWhatOfUserScopeOperationAccessRight(auth, 'cm', 'COM_ORD')).D ? undefined : Date.now(),
     });
 
-    return `создана ссылка ${orderTitle}`;
+    return backLocaleError(BackLocaleKey.CmComOrdRefCreated, { b: orderTitle });
   }),
 
   moveOrdAfter: modifyCom('COM_ORD', async (com, { insertAfterOrdwOrFirst, ordw, orderTitle }, { auth }) => {
@@ -68,6 +68,6 @@ export const cmEditComOrderServerTsjrpcOutside = {
     const [ord] = com.o.splice(movableOrdi, 1);
     com.o.splice(insertAfterOrdi + (movableOrdi < insertAfterOrdi ? 0 : 1), 0, ord);
 
-    return `перемещён порядковый блок ${orderTitle}`;
+    return backLocaleError(BackLocaleKey.CmComOrdMoved, { b: orderTitle });
   }),
 } satisfies ServerTsjrpcSatisfy<CmEditComOrderTsjrpcModel>;

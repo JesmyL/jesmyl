@@ -1,11 +1,10 @@
-import { backLocaleError } from 'back/locales/back';
-import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { takeCmAudioKeyFromLink } from 'back/audio/md5LinkRedirectDict';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { comDB } from 'back/drizzle.schema';
 import { db, dbDelete } from 'back/drizzle/drizzle.db';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
+import { backLocaleError } from 'back/locales/back';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import type { TSJRPCFeedbackDiff, TSJRPCFeedbackEntry } from 'back/tsjrpc.model';
 import { eq } from 'drizzle-orm';
@@ -14,6 +13,7 @@ import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model
 import { cmComIntensityLevelTitleDict } from 'shared/const/cm/cmComDriveLevelTitleDict';
 import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
 import { Bool } from 'shared/enums';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { itNNil } from 'shared/utils';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { cmComLanguages } from 'shared/utils/cm/com/const';
@@ -33,35 +33,41 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         ...cmEditComServerTsjrpcTextableBlocks,
 
         rename: modifyCom('COM_MAIN', (com, { value }) =>
-          simpleUpdateReverse(`переименована на "${value}"`, (com.n = value)),
+          simpleUpdateReverse(backLocaleError(BackLocaleKey.CmComRenamed, { v: value }), (com.n = value)),
         ),
 
         setBpM: modifyCom('COM_MAIN', (com, { value }) => {
           const prev = com.bpm;
           const next = (com.bpm = takeCorrectMetronomeBpm(value));
 
-          return simpleUpdateReverse('изменено значение ударов в минуту', next, { was: prev, new: next });
+          return simpleUpdateReverse(backLocaleError(BackLocaleKey.CmComBpmSet), next, { was: prev, new: next });
         }),
 
         setMeterSize: modifyCom('COM_MAIN', (com, { value }) => {
           const was = cmComMetricNumTitles[com.s ?? 4];
           const next = (com.s = value);
 
-          return simpleUpdateReverse('размерность изменена', next, { was, new: cmComMetricNumTitles[next] });
+          return simpleUpdateReverse(backLocaleError(BackLocaleKey.CmComMeterSizeSet), next, {
+            was,
+            new: cmComMetricNumTitles[next],
+          });
         }),
 
         changeLanguage: modifyCom('COM_MAIN', (com, { value }) => {
           const was = com.l == null ? null : cmComLanguages[com.l];
           const next = (com.l = value);
 
-          return simpleUpdateReverse('язык изменён', next, { was, new: cmComLanguages[next] });
+          return simpleUpdateReverse(backLocaleError(BackLocaleKey.CmComLanguageSet), next, {
+            was,
+            new: cmComLanguages[next],
+          });
         }),
 
         changeDrive: modifyCom('COM_MAIN', (com, { value }) => {
           const was = cmComIntensityLevelTitleDict[com.d ?? CmComIntensityLevel.Medium];
           const next = (com.d = value);
 
-          return simpleUpdateReverse('уровень интенсивности изменён', next, {
+          return simpleUpdateReverse(backLocaleError(BackLocaleKey.CmComDriveSet), next, {
             was,
             new: cmComIntensityLevelTitleDict[next],
           });
@@ -71,11 +77,14 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           const was = com.p;
           const next = (com.p = value);
 
-          return simpleUpdateReverse('тональность изменена', next, { was, new: next });
+          return simpleUpdateReverse(backLocaleError(BackLocaleKey.CmComTonSet), next, { was, new: next });
         }),
 
         makeBemoled: modifyCom('COM_MAIN', (com, { value }) =>
-          simpleUpdate((com.b = value), `теперь ${value ? 'бемольная' : 'диезная'}`),
+          simpleUpdate(
+            (com.b = value),
+            backLocaleError(value ? BackLocaleKey.CmComMadeFlat : BackLocaleKey.CmComMadeSharp),
+          ),
         ),
 
         toggleAudioLink: modifyCom('COM_AUDIO', async (com, { link }) => {
@@ -85,7 +94,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
             com.al = prev.filter(pLink => pLink !== link);
 
             return {
-              description: 'изменение аудио-ссылок: удалено',
+              description: backLocaleError(BackLocaleKey.CmComAudioLinkRemoved),
               was: prev,
               new: com.al,
             };
@@ -97,7 +106,9 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           com.al = isThereInPrev ? prev.filter(pLink => pLink !== key) : [...prev, key];
 
           return {
-            description: `изменение аудио-ссылок: ${isThereInPrev ? 'удалено' : 'добавлено'}`,
+            description: backLocaleError(
+              isThereInPrev ? BackLocaleKey.CmComAudioLinkRemoved : BackLocaleKey.CmComAudioLinkAdded,
+            ),
             was: prev,
             new: com.al,
           };
@@ -129,13 +140,15 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
 
           cmShareServerTsjrpcMethods.editedCom({ com, mod: w }, null);
 
-          return { value: com.w, description: `Добавлена новая песня "${com.n}"` };
+          return { value: com.w, description: backLocaleError(BackLocaleKey.CmComCreated, { v: com.n }) };
         },
 
-        remove: modifyCom(['COM', 'D'], com => simpleUpdate((com.isRemoved = Bool.True), `удалена`)),
+        remove: modifyCom(['COM', 'D'], com =>
+          simpleUpdate((com.isRemoved = Bool.True), backLocaleError(BackLocaleKey.CmComDeleted)),
+        ),
 
         bringBackToLife: modifyCom(['COM', 'C'], com =>
-          simpleUpdate((com.isRemoved = Bool.False), `(ранее удалённая) возвращена`),
+          simpleUpdate((com.isRemoved = Bool.False), backLocaleError(BackLocaleKey.CmComRestored)),
         ),
 
         takeRemovedComs: async (_, { auth }) => {
@@ -165,7 +178,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
 
           await dbDelete(comDB, whereComw);
 
-          return { value: com.n, description: `Песня ${com.n} уничтожена` };
+          return { value: com.n, description: backLocaleError(BackLocaleKey.CmComDestroyed, { v: com.n }) };
         },
       },
     });

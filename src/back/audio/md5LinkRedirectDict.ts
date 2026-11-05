@@ -1,14 +1,8 @@
 import { backLocaleError } from 'back/locales/back';
-import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { eq } from 'drizzle-orm';
 import { makeRegExp } from 'regexpert';
-import {
-  CmAudioSrc,
-  CmAudioTail,
-  HttpLink,
-  HttpNumLeadLink,
-  parseCmAudioTail,
-} from 'shared/api';
+import { CmAudioSrc, CmAudioTail, HttpLink, HttpNumLeadLink, parseCmAudioTail } from 'shared/api';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { downloadFileMd5Rename } from 'shared/utils/downloadFileMd5Rename';
 import { makeCmComHttpLinkFromNumLead, makeCmComNumLeadLinkFromHttp } from '../apps/cm/complect/com-http-links';
 import { audioLinkDB } from '../drizzle.schema';
@@ -70,10 +64,8 @@ export const downloadCmAudioFile = async (numLeadLink: HttpNumLeadLink, title?: 
   (await resolveDownloadedAudioLink(numLeadLink, title)).md5;
 
 /** Скачивает аудио при необходимости, регистрирует ссылку и возвращает её ключ. */
-const downloadAndResolveCmAudioKey = async (
-  numLeadLink: HttpNumLeadLink,
-  title?: string,
-): Promise<CmAudioTail> => (await resolveDownloadedAudioLink(numLeadLink, title)).key;
+const downloadAndResolveCmAudioKey = async (numLeadLink: HttpNumLeadLink, title?: string): Promise<CmAudioTail> =>
+  (await resolveDownloadedAudioLink(numLeadLink, title)).key;
 
 const resolveDownloadedAudioLink = async (numLeadLink: HttpNumLeadLink, title?: string): Promise<AudioLinkRow> => {
   const [knownRow] = await db.select().from(audioLinkDB).where(eq(audioLinkDB.link, numLeadLink)).limit(1);

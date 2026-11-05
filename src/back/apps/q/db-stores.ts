@@ -138,9 +138,15 @@ const pushAnswer = async (blankw: QuestionerBlankWid, answer: QuestionerUserAnsw
     a: answer.a,
   });
 
-  const fio = answer.fio ? `"${escapeHtmlLazy()(answer.fio)}"` : 'Анонимного пользователя';
+  const blankTitle = escapeHtmlLazy()(blank.title);
+  const description = answer.fio
+    ? backLocaleError(BackLocaleKey.DashPollAnswerFromUser, {
+        b: blankTitle,
+        f: `"${escapeHtmlLazy()(answer.fio)}"`,
+      })
+    : backLocaleError(BackLocaleKey.DashPollAnswerAnonymous, { b: blankTitle });
 
-  return `Получен ответ на опрос ${escapeHtmlLazy()(blank.title)} от ${fio}\n\n<blockquote expandable>${escapeHtmlLazy()(JSON.stringify(answer, null, 1))}</blockquote>`;
+  return `${description}\n\n<blockquote expandable>${escapeHtmlLazy()(JSON.stringify(answer, null, 1))}</blockquote>`;
 };
 
 export const questionerUserAnswersStore = {

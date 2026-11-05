@@ -195,6 +195,7 @@ export const localeEditorUa = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsSupport]: 'Підтримка',
   [EditorLocaleKey.VisitsLog]: 'Лог',
   [EditorLocaleKey.VisitsErrors]: 'Помилки',
+  [EditorLocaleKey.VisitsChanges]: 'Зміни',
   [EditorLocaleKey.VisitsAnonymous]: 'анонім',
   [EditorLocaleKey.VisitsMarkAllRead]: 'Позначити прочитаним',
   [EditorLocaleKey.VisitsOlderMessages]: 'Завантажити старіші',
@@ -216,4 +217,6 @@ export const localeEditorUa = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsReportSent]: 'Надіслано на $e',
   [EditorLocaleKey.VisitsOnlineByHour]: 'Онлайн за годинами',
   [EditorLocaleKey.VisitsOnlineHourPeriod]: '$f-$t - мін $n — макс $x',
+  [EditorLocaleKey.VisitsReportRecipients]: 'Отримувачі звіту',
+  [EditorLocaleKey.VisitsRecipientsSaved]: 'Список отримувачів збережено',
 });

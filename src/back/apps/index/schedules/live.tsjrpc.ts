@@ -1,4 +1,4 @@
-import { backLocaleError } from 'back/locales/back';
+import { backLocaleError, translateBackTexts } from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { TsjrpcServerMethods } from 'back/tsjrpc.server';
@@ -7,6 +7,7 @@ import { SchLiveTsjrpcModel, SchLiveTsjrpcSharesModel } from 'shared/api/tsjrpc/
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 import { itNNull } from 'shared/utils';
 import { mapObjectEntries } from 'shared/utils/object.utils';
+import { sokiServer } from 'back/complect/soki/SokiServer';
 import { WebSocket } from 'ws';
 
 const theLiveData = {} as PRecord<ScheduleWidgetWid, PRecord<SokiAuthLogin, IndexSchWBroadcastLiveDataValue>>;
@@ -38,11 +39,13 @@ export const schLiveTsjrpcServer = new (class SchLive extends TsjrpcBaseServer<S
           theLiveData[schw] ??= {};
           theLiveData[schw][auth.login] = data;
 
-          const streamers = mapObjectEntries(theLiveData[schw], (login, data) => {
-            return { fio: data?.fio ?? '*Завершена*', login };
-          });
-
           streamersWaiters[schw]?.forEach(client => {
+            const langi = sokiServer.takeClientLangi(client);
+
+            const streamers = mapObjectEntries(theLiveData[schw], (login, data) => {
+              return { fio: data?.fio ?? translateBackTexts(langi, BackLocaleKey.SchLiveStreamFinished), login };
+            });
+
             schLiveTsjrpcSharesServer.streamersList({ streamers } as never, client);
           });
           shareLiveData(schw, auth.login);

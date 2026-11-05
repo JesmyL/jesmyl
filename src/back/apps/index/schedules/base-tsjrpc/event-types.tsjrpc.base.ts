@@ -1,3 +1,5 @@
+import { backLocaleError, backLocalePayload, translateBackTexts } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { attTranslatorTypes } from 'shared/api';
 import { SchEventTypesTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
@@ -8,10 +10,10 @@ import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
 onScheduleEventTypesAddManyEvent.listen(async ({ schProps, typeList }) => {
   return (
-    await modifySchedule(false, sch => {
+    await modifySchedule(false, async sch => {
       sch.types = sch.types.concat(typeList);
 
-      return `В событии ${scheduleTitleInBrackets(sch)} добавлены новые события списком`;
+      return backLocaleError(BackLocaleKey.SchEventTypesAdded, { t: await scheduleTitleInBrackets(sch) });
     })(
       { props: schProps },
       {
@@ -29,75 +31,97 @@ export const schEventTypesTsjrpcBaseServer =
       super({
         scope: 'SchEventTypes',
         methods: {
-          create: modifySchedule(false, (sch, { title, tm }) => {
+          create: modifySchedule(false, async (sch, { title, tm }) => {
             sch.types.push({ title, tm });
 
-            return `В расписании ${scheduleTitleInBrackets(sch)} создан тип событий ${title} продолжительностью в ${tm} мин.`;
+            return backLocaleError(BackLocaleKey.SchEventTypeCreated, {
+              t: await scheduleTitleInBrackets(sch),
+              n: title,
+              m: tm,
+            });
           }),
-          setTitle: modifySchedule(false, (sch, { props, value: title, prevTitle }) => {
+          setTitle: modifySchedule(false, async (sch, { props, value: title, prevTitle }) => {
             sch.types[props.typei] ??= { title };
             sch.types[props.typei].title = title;
 
-            return `В расписании ${scheduleTitleInBrackets(sch)} для типа событий ${prevTitle} задано имя ${title}`;
+            return backLocaleError(BackLocaleKey.SchEventTypeTitleSet, {
+              t: await scheduleTitleInBrackets(sch),
+              p: prevTitle,
+              n: title,
+            });
           }),
 
-          setTm: modifySchedule(true, (sch, { props, tm }) => {
+          setTm: modifySchedule(true, async (sch, { props, tm }) => {
             sch.types[props.typei] ??= { title: '?', tm };
             sch.types[props.typei].tm = tm;
 
-            return (
-              `В расписании ${scheduleTitleInBrackets(sch)} для типа событий ` +
-              `${sch.types[props.typei]?.title ?? '?'} задано время проведения по умолчанию - ${tm} мин.`
-            );
+            return backLocaleError(BackLocaleKey.SchEventTypeTmSet, {
+              t: await scheduleTitleInBrackets(sch),
+              n: sch.types[props.typei]?.title ?? '?',
+              m: tm,
+            });
           }),
 
-          bindAttImagine: modifySchedule(false, (sch, { attTranslatorType, props }) => {
+          bindAttImagine: modifySchedule(false, async (sch, { attTranslatorType, props }) => {
             sch.types[props.typei] ??= { title: '?', atts: {} };
             const type = sch.types[props.typei];
             type.atts ??= {};
             type.atts[props.attKey] = [attTranslatorType] as never;
 
-            return (
-              `В расписании ${scheduleTitleInBrackets(sch)} к типу событий ` +
-              `${sch.types[props.typei]?.title ?? '?'} прикреплено обзорное вложение ${props.attKey} ` +
-              `с периодом обзроа - ${attTranslatorTypes.find(s => s.id === attTranslatorType)?.title ?? '??'}`
-            );
+            return backLocaleError(BackLocaleKey.SchEventTypeAttBound, {
+              t: await scheduleTitleInBrackets(sch),
+              n: sch.types[props.typei]?.title ?? '?',
+              a: props.attKey,
+              p: attTranslatorTypes.find(s => s.id === attTranslatorType)?.title ?? '??',
+            });
           }),
 
-          removeAttImagine: modifySchedule(false, (sch, { props }) => {
+          removeAttImagine: modifySchedule(false, async (sch, { props }) => {
             if (sch.types[props.typei] == null) return null;
             const type = sch.types[props.typei];
             if (type.atts == null) return null;
             delete type.atts[props.attKey];
             if (!objectLength(type.atts)) delete type.atts;
 
-            return (
-              `В расписании ${scheduleTitleInBrackets(sch)} из типа событий ` +
-              `${sch.types[props.typei]?.title ?? '?'} удалено обзорное вложение ${props.attKey}`
-            );
+            return backLocaleError(BackLocaleKey.SchEventTypeAttRemoved, {
+              t: await scheduleTitleInBrackets(sch),
+              n: sch.types[props.typei]?.title ?? '?',
+              a: props.attKey,
+            });
           }),
 
-          setAttImaginePeriod: modifySchedule(false, (sch, { props, value }) => {
+          setAttImaginePeriod: modifySchedule(false, async (sch, { props, value }) => {
             if (sch.types[props.typei] == null) return null;
             const type = sch.types[props.typei];
             if (type.atts == null) return null;
             type.atts[props.attKey][0] = value;
 
-            return (
-              `В расписании ${scheduleTitleInBrackets(sch)} в типе событий ` +
-              `${sch.types[props.typei]?.title ?? '?'} в обзорном вложении ${props.attKey} ` +
-              `установлен период обзора - ${attTranslatorTypes.find(s => s.id === value)?.title ?? '??'}`
-            );
+            return backLocaleError(BackLocaleKey.SchEventTypeAttPeriodSet, {
+              t: await scheduleTitleInBrackets(sch),
+              n: sch.types[props.typei]?.title ?? '?',
+              a: props.attKey,
+              p: attTranslatorTypes.find(s => s.id === value)?.title ?? '??',
+            });
           }),
 
           putMany: async ({ props: schProps, tatts: typeList }, tool) => {
             throwIfNoExternalMutationAuth(tool);
 
+            const scheduleTitle = await scheduleTitleInBrackets(schProps.schw);
+
             return {
               value: await onScheduleEventTypesAddManyEvent.invoke({ schProps, typeList }),
-              description:
-                `В расписание ${scheduleTitleInBrackets(schProps.schw)} добавлено несколько типов событий:\n` +
-                `${typeList.map(({ title, tm }) => `${title} (${tm} мин.)`).join(';\n')}`,
+              description: backLocalePayload(langi =>
+                translateBackTexts(langi, BackLocaleKey.SchEventTypesAddedMany, {
+                  t: scheduleTitle,
+                  l: typeList
+                    .map(
+                      ({ title, tm }) =>
+                        `${title} (${translateBackTexts(langi, BackLocaleKey.SchMinutesShort, { n: tm })})`,
+                    )
+                    .join(';\n'),
+                }),
+              ),
             };
           },
         },

@@ -1,10 +1,16 @@
-import { makeBackLocaleErrorMessageDuoText, makeBackLocaleErrorMessageRuText } from '#basis/locale/backLocaleError';
-import { currentLangiAtom, translateBase, translateEditorBase } from '#basis/locale';
+import {
+  makeBackLocaleErrorMessageDuoText,
+  makeBackLocaleErrorMessageRuText,
+  makeBackLocaleErrorMessageText,
+} from '#basis/locale/backLocaleError';
+import { currentLangiAtom, translateBase, translateDynamic, translateEditorBase } from '#basis/locale';
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { soki } from '#shared/soki';
 import { makeToastKOMoodConfig, makeToastOKMoodConfig } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
+import { TextInput } from '#shared/ui/TextInput';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { indexDashMessageVersionAtom, indexVisitsOnlineAtom } from '$index/shared/state';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -12,7 +18,10 @@ import { useAtomValue } from 'atomaric';
 import { makeRegExp } from 'regexpert';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
+import { Langi } from 'shared/api';
+import { langCodeDict } from 'shared/const/+locale';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
 import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import {
   DashMessage,
@@ -22,12 +31,14 @@ import {
   VisitsDashboardDayStat,
   noOnlineSample,
 } from 'shared/model/index/visitsDashboard';
-import { mapObjectEntries } from 'shared/utils/object.utils';
+import { mapObjectEntries, objectLength } from 'shared/utils/object.utils';
+import { extractNumber } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
 
 const messageTabs = [
   { kind: DashMessageKind.VisitError, title: EditorLocaleKey.VisitsVisitErrors },
   { kind: DashMessageKind.Errors, title: EditorLocaleKey.VisitsErrors },
+  { kind: DashMessageKind.Changes, title: EditorLocaleKey.VisitsChanges },
   { kind: DashMessageKind.Support, title: EditorLocaleKey.VisitsSupport },
   { kind: DashMessageKind.Log, title: EditorLocaleKey.VisitsLog },
 ] as const;
@@ -35,6 +46,7 @@ const messageTabs = [
 const messageSummaryMaxLength = 80;
 const htmlTagsReg = makeRegExp('/<[^>]*>/g');
 const whitespaceReg = makeRegExp('/\\s+/g');
+const takeLangiTitle = (langi: Langi) => translateDynamic(langi)(it => it[DynLocaleKey.Lang][langi]);
 
 const unreadBadgeClassName: Partial<Record<DashMessageKind, string>> = {
   [DashMessageKind.VisitError]: 'bg-red-500/15 text-red-500',
@@ -597,14 +609,23 @@ const DashboardMessages = () => {
                     <span className="min-w-0 truncate font-medium text-x3">{takeMessageUserName(message)}</span>
                   </span>
                   <span className="min-w-0 max-w-full truncate text-xs text-x4">
-                    {takeMessageSummary(makeBackLocaleErrorMessageRuText(message.m))}
+                    {takeMessageSummary(
+                      activeKind === DashMessageKind.Errors
+                        ? makeBackLocaleErrorMessageRuText(message.m)
+                        : makeBackLocaleErrorMessageText(message.m, langi),
+                    )}
                   </span>
                 </button>
                 {!isOpen || (
                   <div className="mt-2 w-full min-w-0 max-w-full overflow-x-auto border-t border-x2/50 pt-2">
                     <div
                       className="w-full min-w-0 max-w-full whitespace-pre-line break-words text-xs leading-relaxed text-x4 [overflow-wrap:anywhere] [&_a]:text-x7/80 [&_a]:underline [&_b]:text-x3 [&_blockquote]:border-l-2 [&_blockquote]:border-x2 [&_blockquote]:pl-2 [&_code]:text-x4 [&_p]:my-1"
-                      dangerouslySetInnerHTML={{ __html: makeBackLocaleErrorMessageDuoText(message.m, langi) }}
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          activeKind === DashMessageKind.Errors
+                            ? makeBackLocaleErrorMessageDuoText(message.m, langi)
+                            : makeBackLocaleErrorMessageText(message.m, langi),
+                      }}
                     />
                   </div>
                 )}
@@ -651,6 +672,111 @@ const DashboardEmailReportButton = () => {
     >
       {translateEditorBase(EditorLocaleKey.VisitsSendReport)}
     </button>
+  );
+};
+
+const DashboardReportRecipients = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [email, setEmail] = useState('');
+  const [langi, setLangi] = useState<Langi>(() => currentLangiAtom.get());
+  const [isSaving, setIsSaving] = useState(false);
+  const queryClient = useQueryClient();
+  const recipientsQuery = useQuery({
+    queryKey: ['dashReportRecipients'],
+    queryFn: () => indexTsjrpcClientMethods.getDashReportRecipients(),
+  });
+  const recipients = recipientsQuery.data ?? {};
+
+  const saveRecipients = async (nextRecipients: PRecord<string, Langi>) => {
+    setIsSaving(true);
+
+    try {
+      const saved = await indexTsjrpcClientMethods.setDashReportRecipients({ recipients: nextRecipients });
+      queryClient.setQueryData(['dashReportRecipients'], saved);
+      toast(translateEditorBase(EditorLocaleKey.VisitsRecipientsSaved), makeToastOKMoodConfig());
+    } catch (error) {
+      toast('' + error, makeToastKOMoodConfig());
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const addRecipient = () => {
+    const normalizedEmail = email.trim().toLowerCase();
+    if (!normalizedEmail) return;
+
+    setEmail('');
+    void saveRecipients({ ...recipients, [normalizedEmail]: langi });
+  };
+
+  const removeRecipient = (targetEmail: string) => {
+    const nextRecipients = { ...recipients };
+    delete nextRecipients[targetEmail];
+    void saveRecipients(nextRecipients);
+  };
+
+  return (
+    <>
+      <button
+        className="pointer mr-auto rounded-lg border border-x2/60 bg-x1/60 px-3 py-1 text-xs text-x4 hover:text-x3"
+        onClick={() => setIsOpen(isOpen => !isOpen)}
+      >
+        {translateEditorBase(EditorLocaleKey.VisitsReportRecipients)}
+      </button>
+      {!isOpen || (
+        <section className="basis-full rounded-2xl border border-x2/60 bg-x1/50 p-2 sm:p-3">
+          <div className="flex min-w-0 flex-col gap-1">
+            {mapObjectEntries(recipients, (recipientEmail, recipientLangi) => (
+              <div
+                key={recipientEmail}
+                className="flex min-w-0 items-center gap-2 rounded-lg px-2 py-1 even:bg-x2/40"
+              >
+                <span className="min-w-0 flex-1 truncate text-sm text-x3">{recipientEmail}</span>
+                <span className="shrink-0 text-xs text-x4">{takeLangiTitle(recipientLangi ?? Langi.Ru)}</span>
+                <button
+                  className="pointer shrink-0 text-xs text-x4 hover:text-x3"
+                  onClick={() => removeRecipient(recipientEmail)}
+                >
+                  {translateBase(BaseLocaleKey.Delete)}
+                </button>
+              </div>
+            ))}
+            {objectLength(recipients) || (
+              <div className="text-sm text-x4">{translateBase(BaseLocaleKey.EmptyList)}</div>
+            )}
+          </div>
+          <div className="mt-2 flex flex-wrap items-center gap-1 border-t border-x2/50 pt-2">
+            <TextInput
+              type="email"
+              value={email}
+              placeholder={translateBase(BaseLocaleKey.EmailLabel)}
+              className="min-w-0 flex-1"
+              onInput={setEmail}
+              onKeyDown={event => {
+                if (event.key === 'Enter') addRecipient();
+              }}
+            />
+            <Dropdown
+              className="h-9 rounded-md border border-ring bg-x1 px-2 text-sm text-x3"
+              id={langi}
+              onSelectId={setLangi}
+              items={mapObjectEntries(langCodeDict, langi => {
+                const langiId = extractNumber(langi);
+
+                return { id: langiId, title: takeLangiTitle(langiId) };
+              })}
+            />
+            <button
+              className="pointer rounded-lg border border-x2/60 bg-x1/60 px-3 py-1 text-xs text-x4 hover:text-x3 disabled:opacity-50"
+              disabled={isSaving || !email.trim()}
+              onClick={addRecipient}
+            >
+              {translateBase(BaseLocaleKey.ToAdd)}
+            </button>
+          </div>
+        </section>
+      )}
+    </>
   );
 };
 
@@ -906,7 +1032,8 @@ const DashboardContent = ({ dashboard }: { dashboard: VisitsDashboard }) => {
 
       <DashboardMessages />
 
-      <div className="flex justify-end">
+      <div className="flex flex-wrap items-center justify-end gap-2">
+        <DashboardReportRecipients />
         <DashboardEmailReportButton />
       </div>
     </div>

@@ -1,7 +1,8 @@
+import { takeUserLangi } from 'back/complect/userLangiFileStore';
 import { backConfig } from 'back/config/backConfig';
-import { insertDashMessage } from 'back/dash/visits';
+import { insertDashMessage, sendChangesEmail } from 'back/dash/visits';
 import TgBot from 'node-telegram-bot-api';
-import { UserLogin } from 'shared/api';
+import { Langi, UserLogin } from 'shared/api';
 import { DashMessageKind } from 'shared/model/index/visitsDashboard';
 import { emptyFunc } from 'shared/utils';
 import { JesmylTelegramBot } from './tg-bot';
@@ -39,6 +40,7 @@ export const postJRPCMessage = async (
     scope?: PostJRPCMessageScope;
     dashMessage?: string;
     login?: UserLogin | nil;
+    langi?: Langi | nil;
 
     tg?: TgBot.SendMessageOptions & { chatId?: number };
   },
@@ -48,7 +50,10 @@ export const postJRPCMessage = async (
   const kind = dashKindByScope[options.scope ?? options.tgBot.scope];
   const dashMessage = options.dashMessage ?? html;
 
-  insertDashMessage(dashMessage, null, kind, options.login ?? null).catch(emptyFunc);
+  insertDashMessage(dashMessage, null, kind, options.login).catch(emptyFunc);
+
+  if (kind === DashMessageKind.Changes)
+    sendChangesEmail(dashMessage, options.langi ?? takeUserLangi(options.login)).catch(emptyFunc);
 
   if (!options.tgBot.isStarted) return;
 

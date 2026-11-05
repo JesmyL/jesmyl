@@ -186,6 +186,7 @@ export type LocaleCmEditor = {
   [EditorLocaleKey.VisitsSupport]: LocaleSimpleString;
   [EditorLocaleKey.VisitsLog]: LocaleSimpleString;
   [EditorLocaleKey.VisitsErrors]: LocaleSimpleString;
+  [EditorLocaleKey.VisitsChanges]: LocaleSimpleString;
   [EditorLocaleKey.VisitsAnonymous]: LocaleSimpleString;
   [EditorLocaleKey.VisitsMarkAllRead]: LocaleSimpleString;
   [EditorLocaleKey.VisitsOlderMessages]: LocaleSimpleString;
@@ -207,4 +208,6 @@ export type LocaleCmEditor = {
   [EditorLocaleKey.VisitsReportSent]: StringTemplaterInterpolation<{ e: string }>;
   [EditorLocaleKey.VisitsOnlineByHour]: LocaleSimpleString;
   [EditorLocaleKey.VisitsOnlineHourPeriod]: StringTemplaterInterpolation<{ f: string; t: string; n: number; x: number }>;
+  [EditorLocaleKey.VisitsReportRecipients]: LocaleSimpleString;
+  [EditorLocaleKey.VisitsRecipientsSaved]: LocaleSimpleString;
 };

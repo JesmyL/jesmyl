@@ -57,7 +57,7 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
             wup: 7,
           });
 
-          return `В расписании ${scheduleTitleInBrackets(sch)} добавлен день`;
+          return backLocaleError(BackLocaleKey.SchDayAdded, { t: await scheduleTitleInBrackets(sch) });
         }),
 
         setBeginTime: async ({ props, value: strTm }, tool) => {
@@ -65,7 +65,11 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
 
           return {
             value: await onScheduleDayBeginTimeSetEvent.invoke({ dayProps: props, strWup: strTm, auth: tool.auth }),
-            description: `В расписании ${scheduleTitleInBrackets(props.schw)}, в ${props.dayi + 1} дне установлено время начала - ${strTm}`,
+            description: backLocaleError(BackLocaleKey.SchDayBeginTimeSet, {
+              t: await scheduleTitleInBrackets(props.schw),
+              d: props.dayi + 1,
+              v: strTm,
+            }),
           };
         },
         setEventList: async ({ props: dayProps, list }, tool) => {
@@ -73,7 +77,10 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
 
           return {
             value: await onScheduleDayEventListSetEvent.invoke({ dayProps, list, auth: tool.auth }),
-            description: `В расписании ${scheduleTitleInBrackets(dayProps.schw)}, в ${dayProps.dayi + 1} дне установлено расписание из текста`,
+            description: backLocaleError(BackLocaleKey.SchDayScheduleFromText, {
+              t: await scheduleTitleInBrackets(dayProps.schw),
+              d: dayProps.dayi + 1,
+            }),
           };
         },
 
@@ -82,14 +89,22 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
 
           day.topic = value;
 
-          return `В расписании ${scheduleTitleInBrackets(sch)}, в ${props.dayi + 1} дне установлена тема "${value}"`;
+          return backLocaleError(BackLocaleKey.SchDayTopicSet, {
+            t: await scheduleTitleInBrackets(sch),
+            d: props.dayi + 1,
+            v: value,
+          });
         }),
         setDescription: modifyScheduleDay(false, async (day, { value, props }, sch, tool) => {
           await throwIfNoScheduleRedact(sch, tool.auth);
 
           day.dsc = value;
 
-          return `В расписании ${scheduleTitleInBrackets(sch)}, в ${props.dayi + 1} дне установлено описание "${value}"`;
+          return backLocaleError(BackLocaleKey.SchDayDescriptionSet, {
+            t: await scheduleTitleInBrackets(sch),
+            d: props.dayi + 1,
+            v: value,
+          });
         }),
         addEvent: modifyScheduleDay(true, async (day, { value, props }, sch, tool) => {
           await throwIfNoScheduleEventsAdd(sch, tool.auth);
@@ -99,10 +114,11 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
             mi: takeNextMi(day.list, ScheduleWidgetDayEventMiDef),
           });
 
-          return (
-            `В расписании ${scheduleTitleInBrackets(sch)}, в ${props.dayi + 1} ` +
-            `дне добавлено событие ${sch.types[value]?.title}`
-          );
+          return backLocaleError(BackLocaleKey.SchDayEventAdded, {
+            t: await scheduleTitleInBrackets(sch),
+            d: props.dayi + 1,
+            e: sch.types[value]?.title ?? '?',
+          });
         }),
 
         removeEvent: modifyScheduleDay(true, async (day, { value, props }, sch, tool) => {
@@ -110,9 +126,13 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
 
           const eventi = day.list.findIndex(event => event.mi === value.eventMi);
           if (eventi < 0) throw backLocaleError(BackLocaleKey.EventNotFound);
-          day.list.splice(eventi, 1);
+          const [event] = day.list.splice(eventi, 1);
 
-          return `В расписании ${scheduleTitleInBrackets(sch)}, из ${props.dayi + 1} дня удалено событие ${value}`;
+          return backLocaleError(BackLocaleKey.SchDayEventRemoved, {
+            t: await scheduleTitleInBrackets(sch),
+            d: props.dayi + 1,
+            e: sch.types[event.type]?.title ?? '?',
+          });
         }),
 
         moveEvent: modifyScheduleDay(true, async (day, { value: { eventMi, beforei }, props }, sch, tool) => {
@@ -123,7 +143,10 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
 
           day.list = withInsertedBeforei(day.list, beforei, eventi);
 
-          return `В расписании ${scheduleTitleInBrackets(props.schw)}, в ${props.dayi + 1} дне перемещено событие`;
+          return backLocaleError(BackLocaleKey.SchDayEventMoved, {
+            t: await scheduleTitleInBrackets(props.schw),
+            d: props.dayi + 1,
+          });
         }),
       },
     });

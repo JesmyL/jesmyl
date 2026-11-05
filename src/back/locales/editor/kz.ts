@@ -200,6 +200,7 @@ export const localeEditorKz = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsSupport]: 'Қолдау',
   [EditorLocaleKey.VisitsLog]: 'Лог',
   [EditorLocaleKey.VisitsErrors]: 'Қателер',
+  [EditorLocaleKey.VisitsChanges]: 'Өзгерістер',
   [EditorLocaleKey.VisitsAnonymous]: 'аноним',
   [EditorLocaleKey.VisitsMarkAllRead]: 'Оқылды деп белгілеу',
   [EditorLocaleKey.VisitsOlderMessages]: 'Ескірек хабарламаларды жүктеу',
@@ -221,4 +222,6 @@ export const localeEditorKz = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsReportSent]: '$e-ге жіберілді',
   [EditorLocaleKey.VisitsOnlineByHour]: 'Сағат бойынша онлайн',
   [EditorLocaleKey.VisitsOnlineHourPeriod]: '$f-$t - мин $n — макс $x',
+  [EditorLocaleKey.VisitsReportRecipients]: 'Есеп алушылары',
+  [EditorLocaleKey.VisitsRecipientsSaved]: 'Алушылар тізімі сақталды',
 });

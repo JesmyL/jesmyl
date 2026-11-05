@@ -1,4 +1,5 @@
 import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
+import { translateBackTexts } from 'back/locales/back';
 import { makeCertBotFilePath } from 'back/utils';
 import express, { Request, Response } from 'express';
 import { eq } from 'drizzle-orm';
@@ -10,9 +11,10 @@ import net from 'net';
 import path from 'path';
 import { type Duplex, Readable, pipeline } from 'node:stream';
 import { makeRegExp } from 'regexpert';
-import { CmComWid, HttpLink, HttpNumLeadLink, ScheduleWidgetWid, hostConfig } from 'shared/api';
+import { CmComWid, HttpLink, HttpNumLeadLink, Langi, ScheduleWidgetWid, hostConfig } from 'shared/api';
 import { pullCmAudiosExpressRoutePath, pullFilesExpressSecretQueryName } from 'shared/api/pullFiles.utils';
 import { Bool } from 'shared/enums';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { emptyFunc, extractNumber, itIt } from 'shared/utils';
 import { checkIsString } from 'shared/utils/checkIs';
 import { createSecureContext, type SecureContext } from 'tls';
@@ -156,37 +158,58 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
     return isSearchBotReg.test(ua);
   };
 
+  const langiByLangCode: Record<string, Langi> = {
+    ru: Langi.Ru,
+    ua: Langi.Ua,
+    uk: Langi.Ua,
+    kz: Langi.Kz,
+    kk: Langi.Kz,
+    en: Langi.En,
+  };
+
+  const takeRequestLangi = (req: Request): Langi | nil => {
+    const acceptLanguage = req.get('accept-language');
+    if (!acceptLanguage) return null;
+
+    const langCode = acceptLanguage.split(',', 1)[0].split(makeRegExp('/[-_]/'), 1)[0].toLowerCase();
+
+    return langiByLangCode[langCode];
+  };
+
   const makeOgMeta = (ogProperty: string, content: string) =>
     `<meta property="og:${ogProperty}" content="${content.replace(makeRegExp('/"/g'), "'")}" />`;
 
-  const cmDescription = 'Приложение для вашего служения';
   const audioPathPrefix = '/audio/';
   const trackPathPrefix = '/track/';
 
   const makePage = ({
     bodyContent = '',
     title = 'JesmyL',
+    langi,
     ogDescription,
     ogAudio,
   }: {
     bodyContent?: string;
     title?: string;
-    ogDescription: string;
+    langi: Langi | nil;
+    ogDescription?: string;
     ogAudio?: {
       url: string;
       title: string;
     };
   }) => {
+    const description = ogDescription || translateBackTexts(langi, BackLocaleKey.OgAppDescription);
+
     return `<!DOCTYPE html>
 <html>
   <head>
     <title>${title}</title>
 
-    <meta name="description" content="${cmDescription}" />
+    <meta name="description" content="${description}" />
     <meta charset="UTF-8" />
 
     ${makeOgMeta('title', title)}
-    ${makeOgMeta('description', ogDescription)}
+    ${makeOgMeta('description', description)}
     ${makeOgMeta('image', `${hostConfig.url}/android-chrome-512x512.png`)}
     ${makeOgMeta('image:width', '512')}
     ${makeOgMeta('image:height', '512')}
@@ -206,6 +229,7 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
   };
 
   app.get(/^\/track\//, async (req: Request, res: Response) => {
+    const langi = takeRequestLangi(req);
     const requestedValue = takeAudioTailFromRequestPath(req.url.slice(trackPathPrefix.length));
 
     // Проксируется трек из таблицы аудио-ссылок либо сырая http(s)-ссылка; прочие протоколы отсекаются.
@@ -220,7 +244,11 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
         .status(200)
         .contentType('text/html')
         .send(
-          makePage({ ogDescription: 'Звуковая дорожка', ogAudio: { title: 'Звуковая дорожка', url: upstreamUrl } }),
+          makePage({
+            langi,
+            ogDescription: translateBackTexts(langi, BackLocaleKey.OgAudioTrack),
+            ogAudio: { title: translateBackTexts(langi, BackLocaleKey.OgAudioTrack), url: upstreamUrl },
+          }),
         );
       return;
     }
@@ -251,10 +279,12 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
   });
 
   app.get(/^[^?#]+\.(js|png|json|mp3)($|[?#])/, async (req: Request, res: Response) => {
+    const langi = takeRequestLangi(req);
+
     if (req.params[0] === 'mp3') {
       try {
         let externalUrl = req.url;
-        let ogDescription = 'Звуковая дорожка';
+        let ogDescription = translateBackTexts(langi, BackLocaleKey.OgAudioTrack);
 
         if (req.url.startsWith(audioPathPrefix)) {
           const [comwStr, num] = req.url.slice(audioPathPrefix.length).split(makeRegExp('/\\.mp3|_/')) as [
@@ -289,6 +319,7 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
 
         if (isRequestFromSearchBot(req)) {
           const customPage = makePage({
+            langi,
             ogDescription,
             ogAudio: { title: ogDescription, url: externalUrl },
           });
@@ -333,6 +364,7 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
 
   app.use(async (req: Request, res: Response) => {
     if (isRequestFromSearchBot(req)) {
+      const langi = takeRequestLangi(req);
       let descriptionFromSearchParams = '';
 
       try {
@@ -342,7 +374,9 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
           const schedule = await takeScheduleWidgetTiny({ w: +schwMatch[1] as ScheduleWidgetWid }, false);
 
           if (schedule) {
-            descriptionFromSearchParams += `\n\nМероприятие "${schedule.title}${schedule.topic ? `: ${schedule.topic}` : ''}"`;
+            descriptionFromSearchParams += `\n\n${translateBackTexts(langi, BackLocaleKey.OgSchedule, {
+              t: `${schedule.title}${schedule.topic ? `: ${schedule.topic}` : ''}`,
+            })}`;
           }
         }
       } catch (_e) {
@@ -374,7 +408,7 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
       res
         .type('text/html')
         .status(200)
-        .send(makePage({ ogDescription: descriptionFromSearchParams.trim() || cmDescription }));
+        .send(makePage({ langi, ogDescription: descriptionFromSearchParams.trim() }));
 
       return;
     }

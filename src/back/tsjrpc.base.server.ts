@@ -6,6 +6,7 @@ import { checkIsFunction } from 'shared/utils/checkIs';
 import { makeTSJRPCBaseMaker } from 'tsjrpc';
 import { WebSocket } from 'ws';
 import { insertDashMessage } from './dash/visits';
+import { checkIsBackLocalePayload } from './locales/back';
 import { backConfig } from './config/backConfig';
 import { jesmylChangesBot } from './sides/telegram-bot/control/jesmylChangesBot';
 import { postJRPCMessage } from './sides/telegram-bot/postJRPCMessage';
@@ -25,25 +26,23 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
   ServerTSJRPCTool,
   ServerTSJRPCBeforeEachTool
 >({
-  onErrorMessage: backConfig.isTest
-    ? emptyFunc
-    : ({ error, invoke: { method, scope, args }, tool: { auth, visitInfo } }) => {
-        let errorMessage = `${error}`;
+  onErrorMessage: ({ error, invoke: { method, scope, args }, tool: { auth, visitInfo } }) => {
+    let errorMessage = `${error}`;
 
-        if (error instanceof DrizzleQueryError)
-          errorMessage = `<b>${error.cause?.message ?? error.stack ?? ''}</b>\n\n${error}`;
+    if (error instanceof DrizzleQueryError)
+      errorMessage = `<b>${error.cause?.message ?? error.stack ?? ''}</b>\n\n${error}`;
 
-        insertDashMessage(
-          `${scope}.${method}()\n\n${errorMessage}\n\n${userAuthStringified(auth)}\n\n${userVisitStringified(visitInfo)}\n\n\nАргументы:\n${JSON.stringify(args)}`,
-          visitInfo,
-          DashMessageKind.Errors,
-          auth?.login,
-        ).catch(emptyFunc);
-      },
+    insertDashMessage(
+      `${scope}.${method}()\n\n${errorMessage}\n\n${userAuthStringified(auth)}\n\n${userVisitStringified(visitInfo)}\n\n\nАргументы:\n${JSON.stringify(args)}`,
+      visitInfo,
+      DashMessageKind.Errors,
+      auth?.login,
+    ).catch(emptyFunc);
+  },
   feedbackOnEach: backConfig.isTest
     ? // ? props => console.info({ ...props, tool: { ...props.tool, client: 'HIDDEN' } })
       emptyFunc
-    : props => {
+    : async props => {
         if (!props.feedback?.description) return;
 
         const {
@@ -52,10 +51,10 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
           tool,
         } = props;
 
-        const title = checkIsFunction(feedback.description) ? feedback.description(tool) : feedback.description;
+        const title = await (checkIsFunction(feedback.description) ? feedback.description(tool) : feedback.description);
         if (!title) return;
 
-        let text = `<code>${scope}.${method}</code>\n\n<b>${title}</b>`;
+        let text = `<code>${scope}.${method}</code>\n\n${checkIsBackLocalePayload(title) ? title : `<b>${title}</b>`}`;
         const { was, new: newV } = feedback;
         const wasText = stringifyDiffValue(was);
         const newText = stringifyDiffValue(newV);
@@ -72,6 +71,7 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
             tg: { parse_mode: 'HTML' },
             scope: feedback.logScope,
             login: tool.auth?.login,
+            langi: tool.visitInfo?.langi,
           },
         );
       },

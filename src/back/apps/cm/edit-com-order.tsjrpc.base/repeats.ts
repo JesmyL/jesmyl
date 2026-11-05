@@ -80,7 +80,7 @@ export const cmEditComOrderServerTsjrpcRepeats = {
       }
     }
 
-    return `сброшено значение повторений для блока ${getCmComOrd().me.header()}`;
+    return backLocaleError(BackLocaleKey.CmComOrdRepeatsReset, { b: getCmComOrd().me.header() });
   }),
 
   setRepeats_v1: modifyCom('COM_REP', (icom, { upd }) => {
@@ -145,7 +145,10 @@ export const cmEditComOrderServerTsjrpcRepeats = {
       });
 
     return {
-      description: `изменены повторения для блок${titles.length > 1 ? 'ов' : 'а'} ${titles.join(', ')}`,
+      description: backLocaleError(BackLocaleKey.CmComOrdRepeatsChanged, {
+        n: titles.length,
+        l: titles.join(', '),
+      }),
       was: wasTitles.join('\n\n'),
       new: newTitles.join('\n\n'),
     };
@@ -154,6 +157,6 @@ export const cmEditComOrderServerTsjrpcRepeats = {
   removeRepeats: modifyOrd(ModifyOrdParent.Self, 'COM_REP', (ord, getCmComOrd) => {
     delete ord.r;
 
-    return `убраны повторения в блоке ${getCmComOrd().me.header()}`;
+    return backLocaleError(BackLocaleKey.CmComOrdRepeatsRemoved, { b: getCmComOrd().me.header() });
   }),
 } satisfies ServerTsjrpcSatisfy<CmEditComOrderTsjrpcModel>;

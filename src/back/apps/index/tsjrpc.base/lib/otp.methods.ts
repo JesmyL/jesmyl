@@ -1,4 +1,4 @@
-import { backLocaleError } from 'back/locales/back';
+import { backLocaleError, translateBackTexts } from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { getBibleTranslateTexts } from 'back/complect/lib/make-bible-texts';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
@@ -14,25 +14,22 @@ import { postJRPCMessage, PostJRPCMessageScope } from 'back/sides/telegram-bot/p
 import { takeLogginedAuthOrThrow } from 'back/utils';
 import { arrayOverlaps, eq, or } from 'drizzle-orm';
 import jwt from 'jsonwebtoken';
-import { makeRegExp } from 'regexpert';
 import { UserAuth } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { constantsConfigurator } from 'shared/const/cm/constants.def';
 import { howMillisecondsInMin } from 'shared/const/ms';
 import { randomItem, randomOf } from 'shared/randoms';
-import { declension, emptyFunc, wait } from 'shared/utils';
+import { emptyFunc, wait } from 'shared/utils';
 import { checkIsStartsWith } from 'shared/utils/checkIs';
 import { takeUserAuthName } from 'shared/utils/user.utils';
 import { sentEmailOTPFileStorage } from '../../file-stores';
 import { constantsConfigFileStore } from '../../schedules/file-stores';
 import { sendSchedulePush } from '../../schedules/app-inform/web-push';
 import { resetUserTiny } from '../../tinies/userTiny';
-import { emailSentOTPLetters } from '../const/emailSentOTPLetters';
 
 const minutesUntilExpire = 5;
 const minutesUntilEmail = 1;
 const emailTimeouts = new Map<number, TimeOut>();
-const otpPushTitleTemplate = 'Код верификации - $c';
 
 const cancelOtpEmail = (otp: number) => {
   const emailTimeout = emailTimeouts.get(otp);
@@ -60,34 +57,32 @@ const getRandomBibleChapterText = () => {
   return randomItem(randomItem(bibleTexts.chapters)).join(' ');
 };
 
-const subjects = [
-  'Код верификации',
-  'Код для идентификации почты',
-  'Код для аутентификации почты',
-  'Одноразовый код авторизации',
-  'Секретный одноразовый код авторизации',
-  'Одноразовый код верификации',
-  'Одноразовый верификационный код',
-  'Номер-пароль для аутентификации',
-
-  ...['Аутентификационный', 'Авторизационный', 'Верификационный', 'Одноразовый', 'Секретный']
-    .map(pre => ['код', 'код-пароль', 'номер-пароль', 'пароль'].map(post => `${pre} ${post}`))
-    .flat(),
+const otpBibleChapterIntroKeys = [
+  BackLocaleKey.OtpBibleChapterIntro1,
+  BackLocaleKey.OtpBibleChapterIntro2,
+  BackLocaleKey.OtpBibleChapterIntro3,
+  BackLocaleKey.OtpBibleChapterIntro4,
+  BackLocaleKey.OtpBibleChapterIntro5,
+  BackLocaleKey.OtpBibleChapterIntro6,
+  BackLocaleKey.OtpBibleChapterIntro7,
+  BackLocaleKey.OtpBibleChapterIntro8,
+  BackLocaleKey.OtpBibleChapterIntro9,
+  BackLocaleKey.OtpBibleChapterIntro10,
+  BackLocaleKey.OtpBibleChapterIntro11,
+  BackLocaleKey.OtpBibleChapterIntro12,
 ];
 
-const randomBibleChapterTextingList = [
-  'Случайная глава из Писания',
-  'Случайный текст из Библии',
-  'Библейский текст',
-  'Текст из Библии, взятый случайным образом',
-  'Текст Писания для назидания (взят случайным образом)',
-  'Назидание из Библейского Писания случайно выбранной главы',
-  'Глава из Библейскго текста выбранная случайным образом',
-  'Назидательный текст Священного Библейского Писания',
-  'Взятый случайным образом текст из Библии',
-  'Текст Священного Писания',
-  'Библейский Священный текст в назидание',
-  'Текст для назидания',
+const otpEmailLetterKeys = [
+  BackLocaleKey.OtpLetter1,
+  BackLocaleKey.OtpLetter2,
+  BackLocaleKey.OtpLetter3,
+  BackLocaleKey.OtpLetter4,
+  BackLocaleKey.OtpLetter5,
+  BackLocaleKey.OtpLetter6,
+  BackLocaleKey.OtpLetter7,
+  BackLocaleKey.OtpLetter8,
+  BackLocaleKey.OtpLetter9,
+  BackLocaleKey.OtpLetter10,
 ];
 
 const makeMailtoButton = ({
@@ -127,6 +122,8 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
 ) => {
   await wait(5000);
 
+  const langi = visitInfo?.langi;
+  const subject = translateBackTexts(langi, BackLocaleKey.OtpEmailSubject);
   const { availEmailDomainZone } = constantsConfigFileStore.getValue();
   const availEmailDomainZoneError = constantsConfigurator.availEmailDomainZone.error?.(availEmailDomainZone, email);
 
@@ -162,7 +159,7 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
 
   sentEmailOTPFileStorage.saveValue();
 
-  const text = randomItem(emailSentOTPLetters.texts);
+  const letterKey = randomItem(otpEmailLetterKeys);
 
   const expire = () => {
     clearTimeout(timeout);
@@ -172,23 +169,25 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
   let randomBibleText = '';
 
   try {
-    randomBibleText = `\n\n\n${randomItem(randomBibleChapterTextingList)}:\n\n${getRandomBibleChapterText()}`;
+    randomBibleText = `\n\n\n${translateBackTexts(langi, randomItem(otpBibleChapterIntroKeys))}:\n\n${getRandomBibleChapterText()}`;
   } catch {
     //
   }
 
   const makeText = (asHtml = true) =>
-    `${text.replace(makeRegExp('/{c}/'), asHtml ? `<b style='font-size:1.5em'>${otp}</b>` : `${otp}`).replace(makeRegExp('/{n}/'), 'JesmyL')}\n\nЧерез ${minutesUntilExpire} ${
-      //
-      declension(minutesUntilExpire, 'минуту', 'минуты', 'минут')
-    } код станет недействительным${randomBibleText}`;
+    `${translateBackTexts(langi, letterKey, {
+      c: asHtml ? `<b style='font-size:1.5em'>${otp}</b>` : otp,
+      n: 'JesmyL',
+    })}\n\n${translateBackTexts(langi, BackLocaleKey.OtpEmailExpireTail, {
+      n: minutesUntilExpire,
+    })}${randomBibleText}`;
 
   const html = makeText();
   const pushUserId = await takeOtpPushUserId(email, auth);
 
   if (pushUserId !== null)
     await sendSchedulePush([pushUserId], {
-      title: otpPushTitleTemplate.replace('$c', `${otp}`),
+      title: translateBackTexts(langi, BackLocaleKey.OtpPushTitle, { c: otp }),
       body: '',
       url: '/',
       tag: 'otp',
@@ -205,7 +204,7 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
       try {
         await sendEmailMessage(EmailerAuthConfigKey.Space, {
           to: email,
-          subject: randomItem(subjects),
+          subject,
           html,
         });
       } catch (e) {
@@ -214,14 +213,14 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
         await postJRPCMessage(
           `${makeMailtoButton({
             email,
-            subject: randomItem(subjects),
+            subject,
             text: makeText(false),
-            buttonText: 'СФОРМИРОВАТЬ ПИСЬМО',
+            buttonText: translateBackTexts(null, BackLocaleKey.OtpTelegramMakeLetterButton),
           })}\n\n\n\n\n${html}`,
           {
             tgBot: logTelegramBot,
             scope: PostJRPCMessageScope.Error,
-            dashMessage: 'Ошибка отправки OTP-письма',
+            dashMessage: translateBackTexts(null, BackLocaleKey.OtpTelegramSendError),
             login: auth?.login,
           },
         );
@@ -231,7 +230,7 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
 
   return {
     value: { email },
-    description: `Запрос ОТП кода на E-mail ${email}\n\n\n${html}`,
+    description: `${backLocaleError(BackLocaleKey.DashOtpRequestEmail, { e: email })}\n\n\n${html}`,
     logScope: PostJRPCMessageScope.Support,
   };
 };
@@ -295,7 +294,7 @@ export const otpTSJRPCMethods = {
 
     return {
       value: { fioOrNick },
-      description: `Привязка E-mail ${from.auth.email} к аккаунту для ${fioOrNick}`,
+      description: backLocaleError(BackLocaleKey.DashOtpBindEmail, { e: from.auth.email, f: fioOrNick }),
       logScope: PostJRPCMessageScope.Support,
     };
   },
@@ -357,7 +356,10 @@ export const otpTSJRPCMethods = {
         auth,
         token: jwt.sign(auth, tokenSecretFileStore.getValue().token, { expiresIn: '200 D' }),
       },
-      description: `Авторизация по E-mail ${from.auth.email} (${takeUserAuthName(auth) || '???'})`,
+      description: backLocaleError(BackLocaleKey.DashOtpAuthEmail, {
+        e: from.auth.email,
+        f: takeUserAuthName(auth) || '???',
+      }),
       logScope: PostJRPCMessageScope.Support,
     };
   },

@@ -1,4 +1,4 @@
-import { backLocaleError } from 'back/locales/back';
+import { backLocaleError, translateBackTexts } from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { makeRegExp } from 'regexpert';
@@ -85,10 +85,10 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
 
           sch.ctrl.users.push(...actualUsers);
 
-          return (
-            `В расписании ${scheduleTitleInBrackets(sch)} добавлены участники списком из Excel: ` +
-            `${users.map(u => u.fio).join(', ')}`
-          );
+          return backLocaleError(BackLocaleKey.SchUsersAddedFromExcel, {
+            t: await scheduleTitleInBrackets(sch),
+            l: users.map(u => u.fio).join(', '),
+          });
         }),
         addUserByQr: modifySchedule(false, async (sch, { login }, tool) => {
           await throwIfNoScheduleUsersRedact(sch, tool.auth);
@@ -102,10 +102,10 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
             id: userTiny.id,
           });
 
-          return (
-            `В расписании ${scheduleTitleInBrackets(sch)} новый участник по QR: ` +
-            (takeUserAuthName(userTiny.uauth) || login)
-          );
+          return backLocaleError(BackLocaleKey.SchUserAddedByQr, {
+            t: await scheduleTitleInBrackets(sch),
+            u: takeUserAuthName(userTiny.uauth) || login,
+          });
         }),
         addMe: modifySchedule(false, async (sch, { place }, { auth }) => {
           if (auth?.login == null) throw backLocaleError(BackLocaleKey.AuthRequired);
@@ -122,10 +122,11 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
             id: userTiny.id,
           });
 
-          return (
-            `В расписании ${scheduleTitleInBrackets(sch)} новый участник  ` +
-            `${place}: ${takeUserAuthName(auth) || '?'}`
-          );
+          return backLocaleError(BackLocaleKey.SchUserAdded, {
+            t: await scheduleTitleInBrackets(sch),
+            p: place,
+            u: takeUserAuthName(auth) || '?',
+          });
         }),
 
         addMeByInvite: modifySchedule(false, async (sch, { inviteHash }, { auth }) => {
@@ -143,10 +144,10 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
             id: userTiny.id,
           });
 
-          return (
-            `В расписании ${scheduleTitleInBrackets(sch)} новый участник ` +
-            `по QR-приглашению: ${takeUserAuthName(auth) || '?'}`
-          );
+          return backLocaleError(BackLocaleKey.SchUserAddedByInvite, {
+            t: await scheduleTitleInBrackets(sch),
+            u: takeUserAuthName(auth) || '?',
+          });
         }),
 
         removeMe: modifySchedule(false, async (sch, _props, { auth }) => {
@@ -170,28 +171,30 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
             if (role.userMi === user.mi) delete role.userMi;
           });
 
-          return `Вы покинули расписание ${scheduleTitleInBrackets(sch)}`;
+          return backLocaleError(BackLocaleKey.SchYouLeft, { t: await scheduleTitleInBrackets(sch) });
         }),
 
         addUserListUnitMembership: modifyUser(async (user, { props, value }, sch) => {
           user.li ??= {};
           user.li[props.cati] = value;
 
-          return (
-            `В расписании ${scheduleTitleInBrackets(sch)} ${await takeUserName(user)} теперь ` +
-            (value < 0 ? sch.lists.cats[props.cati].titles[0] : sch.lists.cats[props.cati].titles[1]) +
-            ` в списке ${sch.lists.cats[props.cati]?.title}`
-          );
+          return backLocaleError(BackLocaleKey.SchUserListStatus, {
+            t: await scheduleTitleInBrackets(sch),
+            u: await takeUserName(user),
+            l: value < 0 ? sch.lists.cats[props.cati].titles[0] : sch.lists.cats[props.cati].titles[1],
+            c: sch.lists.cats[props.cati]?.title,
+          });
         }),
         removeUserListUnitMembership: modifyUser(async (user, { props }, sch) => {
           if (user.li == null) return null;
           delete user.li[props.cati];
           if (!objectLength(user.li)) delete user.li;
 
-          return (
-            `В расписании ${scheduleTitleInBrackets(sch)} ${await takeUserName(user)} ` +
-            `удалён из списка ${sch.lists.cats[props.cati]?.title}`
-          );
+          return backLocaleError(BackLocaleKey.SchUserRemovedFromList, {
+            t: await scheduleTitleInBrackets(sch),
+            u: await takeUserName(user),
+            c: sch.lists.cats[props.cati]?.title,
+          });
         }),
 
         setUserRights: modifyUser(async (user, { R }, sch, tool) => {
@@ -206,10 +209,12 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
 
           user.R = R;
 
-          return (
-            `В расписании ${scheduleTitleInBrackets(sch)} участнику выданы права ` +
-            (scheduleWidgetUserRights.texts[scheduleWidgetUserRights.rightsBalance(R)].role?.[1] ?? 'Неизвестного')
-          );
+          return backLocaleError(BackLocaleKey.SchUserRightsGranted, {
+            t: await scheduleTitleInBrackets(sch),
+            r:
+              scheduleWidgetUserRights.texts[scheduleWidgetUserRights.rightsBalance(R)].role?.[1] ??
+              translateBackTexts(null, BackLocaleKey.SchUnknownRoleGenitive),
+          });
         }),
       },
     });

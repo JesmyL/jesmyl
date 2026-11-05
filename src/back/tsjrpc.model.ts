@@ -5,6 +5,6 @@ export type TSJRPCFeedbackDiff = { was?: unknown; new?: unknown };
 export type TSJRPCFeedbackEntry = TSJRPCFeedbackDiff & { description?: nil | string };
 
 export type ServerTSJRPCFeedback = TSJRPCFeedbackDiff & {
-  description?: null | string | ((tool: ServerTSJRPCTool) => string);
+  description?: nil | PromiseOr<string> | ((tool: ServerTSJRPCTool) => PromiseOr<string>);
   logScope?: PostJRPCMessageScope;
 };

@@ -6,11 +6,17 @@ import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeA
 import { markDashMessagesRead, sendCurrentDashReport, takeVisitsDashboard, updateVisitDayOnline } from 'back/dash/visits';
 import { onDashMessageStoredEvent } from 'back/dash/events';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
+import { Langi } from 'shared/api';
+import { validEmailRegExp } from 'shared/const/index/regExp.validators';
 import { emptyFunc } from 'shared/utils';
+import { objectEntries } from 'shared/utils/object.utils';
 import { WebSocket } from 'ws';
+import { dashReportRecipientsFileStorage } from '../../file-stores';
 import { indexServerTsjrpcShareMethods } from '../../tsjrpc.methods';
 
 const dashWatchers = new Set<WebSocket>();
+const langis = [Langi.Ru, Langi.Ua, Langi.Kz, Langi.En] as const;
+const isLangi = (value: unknown): value is Langi => langis.some(langi => langi === value);
 
 sokiServer.onOnlineCountChangeEvent.listen(({ count, login, isEnter }) => {
   indexServerTsjrpcShareMethods.visitsOnline({ count, login, isEnter }, dashWatchers).catch(emptyFunc);
@@ -50,11 +56,36 @@ export const indexTSJRPCBaseVisitsDashboard = {
     return { value: await markDashMessagesRead(auth.login, kind) };
   },
 
-  sendDashEmailReport_v1: async (_, { auth }) => {
+  sendDashEmailReport_v1: async (_, { auth, visitInfo }) => {
     await throwIfNoUserScopeAccessRight(auth, 'dash', 'DASH');
 
     if (!auth?.login) throw backLocaleError(BackLocaleKey.NoAccess);
 
-    return { value: await sendCurrentDashReport(auth.login) };
+    return { value: await sendCurrentDashReport(auth.login, visitInfo?.langi) };
+  },
+
+  getDashReportRecipients: async (_, { auth }) => {
+    await throwIfNoUserScopeAccessRight(auth, 'dash', 'DASH');
+
+    return { value: dashReportRecipientsFileStorage.getValue() };
+  },
+
+  setDashReportRecipients: async ({ recipients }, { auth }) => {
+    await throwIfNoUserScopeAccessRight(auth, 'dash', 'DASH');
+
+    const parsedRecipients: PRecord<string, Langi> = {};
+
+    objectEntries(recipients).forEach(([email, langi]) => {
+      const normalizedEmail = email.trim().toLowerCase();
+
+      if (!normalizedEmail.match(validEmailRegExp)) throw backLocaleError(BackLocaleKey.EmailIncorrect);
+      if (!isLangi(langi)) throw `Invalid langi: ${langi}`;
+
+      parsedRecipients[normalizedEmail] = langi;
+    });
+
+    dashReportRecipientsFileStorage.setValue(parsedRecipients);
+
+    return { value: parsedRecipients };
   },
 } satisfies ServerTsjrpcSatisfy<IndexTsjrpcModel>;

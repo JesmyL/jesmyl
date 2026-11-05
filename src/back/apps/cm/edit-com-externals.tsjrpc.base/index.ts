@@ -1,8 +1,9 @@
-import { backLocaleError } from 'back/locales/back';
+import { backLocaleError, backLocalePayload, translateBackTexts } from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
 import { throwIfNoScheduleComsListRedact } from 'back/apps/index/schedules/schedule-modificators';
 import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
+import { takeUserLangi } from 'back/complect/userLangiFileStore';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { db, dbDelete, dbUpdate } from 'back/drizzle/drizzle.db';
 import { schComHistoryDB } from 'back/drizzle/schema/schComHistory';
@@ -82,12 +83,20 @@ export const cmEditComExternalsTsjrpcBaseServer =
               comws.map(async comw => {
                 const comTiny = await takeComwTiny({ w: comw }, false);
 
-                return comTiny ? `${takeCorrectComNumber(comTiny.i + 1)}. ${comTiny.n}` : `<s>Неизвестная песня</s>`;
+                return comTiny ? `${takeCorrectComNumber(comTiny.i + 1)}. ${comTiny.n}` : null;
               }),
             );
+            const scheduleTitle = `"${sch.title ?? '??'}"`;
 
             return {
-              description: `Обновлён список песен в расписании "${sch.title ?? '??'}":\n\n${comTitlesList.join('\n')}`,
+              description: backLocalePayload(langi =>
+                translateBackTexts(langi, BackLocaleKey.CmSchComsListUpdated, {
+                  s: scheduleTitle,
+                  l: comTitlesList
+                    .map(title => title ?? `<s>${translateBackTexts(langi, BackLocaleKey.CmComUnknown)}</s>`)
+                    .join('\n'),
+                }),
+              ),
             };
           },
 
@@ -107,7 +116,15 @@ export const cmEditComExternalsTsjrpcBaseServer =
             for (const { comws, dayi, eventMi, w, userId } of selPacks) {
               const user = await takeUserTiny({ id: userId }, false);
 
-              packs.push({ e: eventMi, fio: takeUserAuthName(user?.uauth) || '<Неизвестный>', w, s: comws, d: dayi });
+              packs.push({
+                e: eventMi,
+                fio:
+                  takeUserAuthName(user?.uauth) ||
+                  `<${translateBackTexts(takeUserLangi(auth?.login), BackLocaleKey.SchUnknownRole)}>`,
+                w,
+                s: comws,
+                d: dayi,
+              });
             }
 
             return { value: packs };
@@ -152,7 +169,9 @@ export const cmEditComExternalsTsjrpcBaseServer =
 
             return {
               value: result,
-              description: `Удалена пачка песен из истории события в расписании "${sch.title ?? '??'}"`,
+              description: backLocaleError(BackLocaleKey.CmSchComsHistoryBatchRemoved, {
+                s: `"${sch.title ?? '??'}"`,
+              }),
             };
           },
 
@@ -174,7 +193,10 @@ export const cmEditComExternalsTsjrpcBaseServer =
                   if (checkIsNil(comTiny) || checkIsNil(withComTiny)) throw backLocaleError(BackLocaleKey.CmComNotFound);
 
                   refs[withComw] = comwRefGroup;
-                  description += `Песни "${comTiny.n}" и "${withComTiny.n}" объединены в ссылочную группу`;
+                  description = backLocaleError(BackLocaleKey.CmComRefGroupMerged, {
+                    a: comTiny.n,
+                    b: withComTiny.n,
+                  });
                 } else {
                   const comJoinGroupMembersCount =
                     comwRefGroup == null
@@ -184,8 +206,10 @@ export const cmEditComExternalsTsjrpcBaseServer =
                   if (comJoinGroupMembersCount === 2) delete refs[comw];
                   delete refs[withComw];
 
-                  description += `Удалена ссылка между ${comTiny ? `песней "${comTiny.n}"` : '<s>неизвестной песней</s>'}`;
-                  description += ` и ${withComTiny ? `песней "${withComTiny.n}"` : '<s>неизвестной песней</s>'}`;
+                  description = backLocaleError(BackLocaleKey.CmComRefRemoved, {
+                    a: comTiny?.n ?? translateBackTexts(null, BackLocaleKey.CmComUnknown),
+                    b: withComTiny?.n ?? translateBackTexts(null, BackLocaleKey.CmComUnknown),
+                  });
                 }
               } else {
                 if (comTiny == null || withComTiny == null) throw backLocaleError(BackLocaleKey.CmComNotFound);
@@ -200,7 +224,10 @@ export const cmEditComExternalsTsjrpcBaseServer =
                   refs[comw] = refs[withComw] = minGroupId;
                 }
 
-                description += `Песни "${comTiny.n}" и "${withComTiny.n}" объединены в ссылочную группу`;
+                description = backLocaleError(BackLocaleKey.CmComRefGroupMerged, {
+                  a: comTiny.n,
+                  b: withComTiny.n,
+                });
               }
             });
 

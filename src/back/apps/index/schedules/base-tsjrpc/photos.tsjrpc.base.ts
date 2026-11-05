@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { ScheduleWidgetPhotoKey } from 'shared/api';
 import { SchPhotosTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
@@ -20,9 +22,11 @@ export const schPhotosTsjrpcBaseServer = new (class SchPhotos extends TsjrpcBase
 
           return {
             value,
-            description:
-              `Были отправлены фото для расписания ${scheduleTitleInBrackets(schw)}\n` +
-              `Загружено: ${value.loadedCount}\nНовых: ${value.addedCount}`,
+            description: backLocaleError(BackLocaleKey.SchPhotosUploaded, {
+              t: await scheduleTitleInBrackets(schw),
+              l: value.loadedCount,
+              n: value.addedCount,
+            }),
           };
         },
 
@@ -35,7 +39,10 @@ export const schPhotosTsjrpcBaseServer = new (class SchPhotos extends TsjrpcBase
 
           return {
             value: photos,
-            description: `Запрос списка фото для расписания ${scheduleTitleInBrackets(schw)}. Отправлено ${photos.length} шт`,
+            description: backLocaleError(BackLocaleKey.SchPhotosRequested, {
+              t: await scheduleTitleInBrackets(schw),
+              n: photos.length,
+            }),
           };
         },
       },

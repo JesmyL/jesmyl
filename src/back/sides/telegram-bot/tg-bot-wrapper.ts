@@ -1,4 +1,5 @@
 import TgBot, { BotCommand, InlineKeyboardButton, User } from 'node-telegram-bot-api';
+import { backConfig } from 'back/config/backConfig';
 import { Eventer, EventerCallback, EventerListeners } from 'shared/utils';
 import { checkIsNumber, checkIsString } from 'shared/utils/checkIs';
 import { TgLogger } from './log/log-bot';
@@ -136,7 +137,7 @@ export class JesmylTelegramBotWrapper {
     logger: TgLogger,
     options?: TgBot.SendMessageOptions | null,
   ): Promise<{ ok: false; value: string } | { ok: true; value: TgBot.Message }> {
-    if (!this.botStarted) return { ok: false, value: botIsNotStartedMessage };
+    if (!this.isStarted) return { ok: false, value: botIsNotStartedMessage };
 
     try {
       return {
@@ -160,7 +161,7 @@ export class JesmylTelegramBotWrapper {
   }
 
   get isStarted() {
-    return this.botStarted;
+    return this.botStarted && !backConfig.isTest;
   }
 
   listenPersonalMessages = (cb: EventerCallback<TgBot.Message>) => {

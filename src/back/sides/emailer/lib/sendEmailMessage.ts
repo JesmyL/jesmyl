@@ -1,3 +1,4 @@
+import { backConfig } from 'back/config/backConfig';
 import { backLocaleError } from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import nodemailer from 'nodemailer';
@@ -14,6 +15,8 @@ let sentCount = 0;
 let sentIncrementTimeOut: TimeOut;
 
 export const sendEmailMessage = async (key: EmailerAuthConfigKey, options: Options & { isSameTo?: boolean }) => {
+  if (backConfig.isTest) return;
+
   clearTimeout(sentIncrementTimeOut);
   sentIncrementTimeOut = setTimeout(() => (sentCount = 0), 1000);
 

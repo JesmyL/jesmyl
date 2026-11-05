@@ -1,7 +1,6 @@
 import { backLocaleError } from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
-import { title } from 'process';
 import { IScheduleWidget, IScheduleWidgetRole, ScheduleRoleScopeProps } from 'shared/api';
 import { SchRolesTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
 import { takeNextMi } from 'shared/utils';
@@ -12,7 +11,7 @@ import { modifySchedule } from '../schedule-modificators';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
 const modifyRole = <Props extends { props: ScheduleRoleScopeProps }>(
-  modifier: (role: IScheduleWidgetRole, props: Props, sch: IScheduleWidget) => string | null,
+  modifier: (role: IScheduleWidgetRole, props: Props, sch: IScheduleWidget) => PromiseOr<string | null>,
 ) =>
   modifySchedule<Props>(false, (sch, props) => {
     const role = sch.ctrl.roles.find(role => role.mi === props.props.roleMi);
@@ -25,24 +24,28 @@ export const schRolesTsjrpcBaseServer = new (class SchRoles extends TsjrpcBaseSe
     super({
       scope: 'SchRoles',
       methods: {
-        createRole: modifySchedule(false, sch => {
+        createRole: modifySchedule(false, async sch => {
           sch.ctrl.roles.push({ mi: takeNextMi(sch.ctrl.roles, 0 as number), title: 'Помощьник' });
 
-          return `В расписании ${scheduleTitleInBrackets(sch)} добавлена новая категория ролей`;
+          return backLocaleError(BackLocaleKey.SchRoleAdded, { t: await scheduleTitleInBrackets(sch) });
         }),
 
-        setRoleCategoryTitle: modifySchedule(false, (sch, { cati, title, prevTitle }) => {
+        setRoleCategoryTitle: modifySchedule(false, async (sch, { cati, title, prevTitle }) => {
           sch.ctrl.cats[cati] = title;
 
-          return `В расписании ${scheduleTitleInBrackets(sch)} категория ролей "${prevTitle}" переименована на "${title}"`;
+          return backLocaleError(BackLocaleKey.SchRolesCatRenamed, {
+            t: await scheduleTitleInBrackets(sch),
+            p: prevTitle,
+            n: title,
+          });
         }),
-        addRoleCategory: modifySchedule(false, sch => {
+        addRoleCategory: modifySchedule(false, async sch => {
           sch.ctrl.cats.push('');
 
-          return `В расписании ${scheduleTitleInBrackets(sch)} добавлена новая категория ролей`;
+          return backLocaleError(BackLocaleKey.SchRolesCatAdded, { t: await scheduleTitleInBrackets(sch) });
         }),
 
-        setRoleIcon: modifyRole((role, { value, roleTitle }, sch) => {
+        setRoleIcon: modifyRole(async (role, { value, roleTitle }, sch) => {
           indexServerTsjrpcShareMethods.updateKnownIconPacks(
             {
               actualIconPacks: { [value]: indexStameskaIconsFileStore.getValue()[value] },
@@ -54,27 +57,46 @@ export const schRolesTsjrpcBaseServer = new (class SchRoles extends TsjrpcBaseSe
 
           role.icon = value;
 
-          return `В расписании ${scheduleTitleInBrackets(sch)} для роли ${roleTitle} задана иконка ${value}`;
+          return backLocaleError(BackLocaleKey.SchRoleIconSet, {
+            t: await scheduleTitleInBrackets(sch),
+            r: roleTitle,
+            i: value,
+          });
         }),
-        setRoleTitle: modifyRole((role, { value, prevTitle }, sch) => {
+        setRoleTitle: modifyRole(async (role, { value, prevTitle }, sch) => {
           role.title = value;
 
-          return `В расписании ${scheduleTitleInBrackets(sch)} роль "${prevTitle}" переименована на "${title}"`;
+          return backLocaleError(BackLocaleKey.SchRoleRenamed, {
+            t: await scheduleTitleInBrackets(sch),
+            p: prevTitle,
+            n: value,
+          });
         }),
-        setRoleUser: modifyRole((role, { value, roleTitle, userName }, sch) => {
+        setRoleUser: modifyRole(async (role, { value, roleTitle, userName }, sch) => {
           role.userMi = value;
 
-          return `В расписании ${scheduleTitleInBrackets(sch)} за ролью ${roleTitle} закреплён участник ${userName}`;
+          return backLocaleError(BackLocaleKey.SchRoleUserSet, {
+            t: await scheduleTitleInBrackets(sch),
+            r: roleTitle,
+            u: userName,
+          });
         }),
-        setCategoryForRole: modifyRole((role, { value, roleTitle, catTitle }, sch) => {
+        setCategoryForRole: modifyRole(async (role, { value, roleTitle, catTitle }, sch) => {
           role.cati = value;
 
-          return `В расписании ${scheduleTitleInBrackets(sch)} роль ${roleTitle} теперь относится к категории "${catTitle}"`;
+          return backLocaleError(BackLocaleKey.SchRoleCategorySet, {
+            t: await scheduleTitleInBrackets(sch),
+            r: roleTitle,
+            c: catTitle,
+          });
         }),
-        makeFreeRole: modifyRole((role, { value }, sch) => {
+        makeFreeRole: modifyRole(async (role, { value }, sch) => {
           delete role.userMi;
 
-          return `В расписании ${scheduleTitleInBrackets(sch)} роль ${value} освобождена (стала вакантной)`;
+          return backLocaleError(BackLocaleKey.SchRoleFreed, {
+            t: await scheduleTitleInBrackets(sch),
+            v: value,
+          });
         }),
       },
     });

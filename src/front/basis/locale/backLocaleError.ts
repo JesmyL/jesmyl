@@ -62,6 +62,12 @@ export const makeBackLocaleErrorMessageDuoText = (message: string, langi: Langi)
     )}`;
   });
 
+/** Single-line body text in the viewer language (Log/Changes/Support); titles are escaped for `dangerouslySetInnerHTML`. */
+export const makeBackLocaleErrorMessageText = (message: string, langi: Langi) =>
+  replaceBackLocaleErrorPayload(message, payload =>
+    escapeHtmlLazy()(takeBackLocaleErrorTitleText(payload, langi)),
+  );
+
 /** Message summary always uses the Ru text. */
 export const makeBackLocaleErrorMessageRuText = (message: string) =>
   replaceBackLocaleErrorPayload(message, payload => takeBackLocaleErrorTitleText(payload, 0));

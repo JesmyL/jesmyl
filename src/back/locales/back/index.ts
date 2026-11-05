@@ -18,15 +18,21 @@ const backLocales: { [L in Langi]: Record<BackLocaleKey, string> } = {
 export const translateBackTexts = (
   langi: Langi | nil,
   key: BackLocaleKey,
-  interpolation?: Record<string, string | number>,
+  interpolation?: Record<string, string | number | boolean>,
 ) => {
   const text = translateBaseDefine(backLocales[langi ?? Langi.Ru] ?? backLocalesRu)(key);
 
   return interpolation ? stringTemplater(text, interpolation) : text;
 };
 
+const langiList = [Langi.Ru, Langi.Ua, Langi.Kz, Langi.En] as const;
+
+/** Self-contained localized payload: one text per language in the Langi order (Ru/Ua/Kz/En). */
+export const backLocalePayload = (makeText: (langi: Langi) => string) =>
+  JSON.stringify({ title: langiList.map(makeText) });
+
 /** Self-contained localized error payload: raw texts ordered by the Langi enum (Ru/Ua/Kz/En) plus interpolation values. */
-export const backLocaleError = (key: BackLocaleKey, interp?: Record<string, string | number>) =>
+export const backLocaleError = (key: BackLocaleKey, interp?: Record<string, string | number | boolean>) =>
   JSON.stringify({
     title: [backLocalesRu[key], backLocalesUa[key], backLocalesKz[key], backLocalesEn[key]],
     ...(interp ? { intr: interp } : null),
@@ -58,6 +64,9 @@ const parseBackLocaleErrorPayload = (str: string): BackLocaleErrorPayload | null
   return { title: [ru, ua, kz, en], intr };
 };
 
+/** True when the string is a self-contained localized payload (see `backLocalePayload`/`backLocaleError`). */
+export const checkIsBackLocalePayload = (str: string) => parseBackLocaleErrorPayload(str) !== null;
+
 const takeBackLocaleErrorTitleText = (payload: BackLocaleErrorPayload, titleIndex: number) =>
   payload.intr ? stringTemplater(payload.title[titleIndex], payload.intr) : payload.title[titleIndex];
 
@@ -68,6 +77,17 @@ export const localizeBackLocaleErrorPayload = (str: string, langi: Langi | nil):
 
   return takeBackLocaleErrorTitleText(payload, langi ?? Langi.Ru);
 };
+
+/** Replaces every embedded payload segment with its single text for the given language; returns the input unchanged when there is none. */
+export const localizeBackLocalePayloads = (str: string, langi: Langi | nil): string =>
+  str
+    .split('\n\n')
+    .map(segment => {
+      const payload = parseBackLocaleErrorPayload(segment);
+
+      return payload ? takeBackLocaleErrorTitleText(payload, langi ?? Langi.Ru) : segment;
+    })
+    .join('\n\n');
 
 /** Replaces the embedded payload segment (if any) with the text made by the caller; null when there is no payload. */
 const replaceBackLocaleErrorPayload = (

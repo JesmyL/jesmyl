@@ -1,4 +1,4 @@
-import { backLocaleError } from 'back/locales/back';
+import { backLocaleError, backLocalePayload, localizeBackLocaleErrorPayload, translateBackTexts } from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { comDB } from 'back/drizzle.schema';
@@ -41,6 +41,7 @@ export const modifyCom =
 
     const feedback = await mapper(com, props, tool);
     const description = checkIsString(feedback) ? feedback : feedback?.description;
+    const comNumber = description ? ((await takeComwTiny({ w: props.comw }, false))?.i ?? -1) + 1 : 0;
 
     const now = Date.now();
 
@@ -73,7 +74,9 @@ export const modifyCom =
       value: props.comw,
       ...(checkIsString(feedback) || !feedback ? {} : feedback),
       description: description
-        ? `Песня ${((await takeComwTiny({ w: props.comw }, false))?.i ?? -1) + 1}. "${comName}" - ${description}`
+        ? backLocalePayload(langi =>
+            `${translateBackTexts(langi, BackLocaleKey.CmComChanged, { i: comNumber, n: comName })} ${localizeBackLocaleErrorPayload(description, langi)}`,
+          )
         : null,
     };
   };

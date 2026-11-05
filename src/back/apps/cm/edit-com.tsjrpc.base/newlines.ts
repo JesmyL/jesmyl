@@ -1,3 +1,5 @@
+import { backLocaleError } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import {
   CmComLinei,
@@ -82,7 +84,7 @@ const retLabel = (comw: CmComWid) => {
 
   timers[comw] = setTimeout(() => delete timers[comw], howMillisecondsInMin * 5);
 
-  return 'настройка слайдов';
+  return backLocaleError(BackLocaleKey.CmComSlidesChanged);
 };
 
 const updateSetByHoldSet = (

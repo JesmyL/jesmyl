@@ -1,4 +1,4 @@
-import { backLocaleError } from 'back/locales/back';
+import { backLocaleError, backLocalePayload, translateBackTexts } from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import {
@@ -32,7 +32,7 @@ export const schAttachmentTypesTsjrpcBaseServer =
   new (class SchAttachmentTypes extends TsjrpcBaseServer<SchAttachmentTypesTsjrpcMethods> {
     constructor() {
       const modifyAttType = <Props extends { props: ScheduleAttachmentTypeScopeProps }>(
-        modifier: (tatt: ScheduleWidgetAppAttCustomized, props: Props, sch: IScheduleWidget) => string | null,
+        modifier: (tatt: ScheduleWidgetAppAttCustomized, props: Props, sch: IScheduleWidget) => PromiseOr<string | null>,
       ) =>
         modifySchedule<Props>(false, (sch, props) => {
           const tatt = sch.tatts.find(tatt => tatt.mi === props.props.tattMi);
@@ -44,26 +44,34 @@ export const schAttachmentTypesTsjrpcBaseServer =
       super({
         scope: 'SchAttachmentTypes',
         methods: {
-          create: modifySchedule(false, sch => {
+          create: modifySchedule(false, async sch => {
             sch.tatts.push({
               ...newTatt(),
               mi: takeNextMi(sch.tatts, ScheduleWidgetAttachmentTypeMi.def),
             });
 
-            return `${this.inSchTitle(sch)} создан тип вложений`;
+            return backLocaleError(BackLocaleKey.SchAttTypeCreated, { t: await scheduleTitleInBrackets(sch) });
           }),
 
-          setTitle: modifyAttType((tatt, { value, prevTitle }, sch) => {
+          setTitle: modifyAttType(async (tatt, { value, prevTitle }, sch) => {
             tatt.title = value;
 
-            return `${this.inSchTitle(sch)} тип вложений "${prevTitle}" переименован на "${value}"`;
+            return backLocaleError(BackLocaleKey.SchAttTypeTitleSet, {
+              t: await scheduleTitleInBrackets(sch),
+              p: prevTitle,
+              v: value,
+            });
           }),
-          setDescription: modifyAttType((tatt, { value, tattTitle }, sch) => {
+          setDescription: modifyAttType(async (tatt, { value, tattTitle }, sch) => {
             tatt.description = value;
 
-            return `${this.inSchTitle(sch)} описание типа вложений "${tattTitle}" изменено на "${value}"`;
+            return backLocaleError(BackLocaleKey.SchAttTypeDescriptionSet, {
+              t: await scheduleTitleInBrackets(sch),
+              a: tattTitle,
+              v: value,
+            });
           }),
-          setIcon: modifyAttType((tatt, { value, tattTitle }, sch) => {
+          setIcon: modifyAttType(async (tatt, { value, tattTitle }, sch) => {
             indexServerTsjrpcShareMethods.updateKnownIconPacks(
               {
                 actualIconPacks: { [value]: indexStameskaIconsFileStore.getValue()[value] },
@@ -74,68 +82,95 @@ export const schAttachmentTypesTsjrpcBaseServer =
 
             tatt.icon = value;
 
-            return `${this.inSchTitle(sch)} иконка типа вложений "${tattTitle}" изменена на "${value}"`;
+            return backLocaleError(BackLocaleKey.SchAttTypeIconSet, {
+              t: await scheduleTitleInBrackets(sch),
+              a: tattTitle,
+              v: value,
+            });
           }),
 
-          setUse: modifyAttType((tatt, { value, tattTitle }, sch) => {
+          setUse: modifyAttType(async (tatt, { value, tattTitle }, sch) => {
             tatt.use = value;
 
-            return `${this.inSchTitle(sch)} значение использований типа вложений "${tattTitle}" изменено на ${value}`;
+            return backLocaleError(BackLocaleKey.SchAttTypeUseSet, {
+              t: await scheduleTitleInBrackets(sch),
+              a: tattTitle,
+              v: value,
+            });
           }),
 
-          setRolesUses: modifyAttType((tatt, { value, tattTitle }, sch) => {
+          setRolesUses: modifyAttType(async (tatt, { value, tattTitle }, sch) => {
             tatt.roles = value;
 
-            return `${this.inSchTitle(sch)} значение использования ролей типа вложений "${tattTitle}" изменено на ${value}`;
+            return backLocaleError(BackLocaleKey.SchAttTypeRolesUseSet, {
+              t: await scheduleTitleInBrackets(sch),
+              a: tattTitle,
+              v: value,
+            });
           }),
 
-          setListsUses: modifyAttType((tatt, { value, tattTitle }, sch) => {
+          setListsUses: modifyAttType(async (tatt, { value, tattTitle }, sch) => {
             tatt.list = value;
 
-            return (
-              `${this.inSchTitle(sch)} значение использования списков типа вложений ` +
-              `"${tattTitle}" изменено на ${value}`
-            );
+            return backLocaleError(BackLocaleKey.SchAttTypeListsUseSet, {
+              t: await scheduleTitleInBrackets(sch),
+              a: tattTitle,
+              v: value,
+            });
           }),
 
-          setTitleValue: modifyAttType((tatt, { value, titlei, prevTitle, tattTitle }, sch) => {
+          setTitleValue: modifyAttType(async (tatt, { value, titlei, prevTitle, tattTitle }, sch) => {
             tatt.titles ??= [];
             tatt.titles[titlei] = value;
 
-            return (
-              `${this.inSchTitle(sch)} значение ${titlei + 1}-го заголовка типа вложений ` +
-              `"${tattTitle}", "${prevTitle}" изменено на "${value}"`
-            );
+            return backLocaleError(BackLocaleKey.SchAttTypeTitleValueSet, {
+              t: await scheduleTitleInBrackets(sch),
+              i: titlei + 1,
+              a: tattTitle,
+              p: prevTitle,
+              v: value,
+            });
           }),
 
-          createTitleValue: modifyAttType((tatt, { tattTitle, titlesCount }, sch) => {
+          createTitleValue: modifyAttType(async (tatt, { tattTitle, titlesCount }, sch) => {
             tatt.titles ??= [];
             tatt.titles.push('');
 
-            return `${this.inSchTitle(sch)} создан ${titlesCount + 1}-й заголовок для типа вложений "${tattTitle}"`;
+            return backLocaleError(BackLocaleKey.SchAttTypeTitleValueCreated, {
+              t: await scheduleTitleInBrackets(sch),
+              i: titlesCount + 1,
+              a: tattTitle,
+            });
           }),
 
-          setWhoCanLevel: modifyAttType((tatt, { rule, value, tattTitle }, sch) => {
+          setWhoCanLevel: modifyAttType(async (tatt, { rule, value, tattTitle }, sch) => {
             tatt[rule] = value;
 
             const balance = scheduleWidgetUserRights.rightsBalance(value);
             const id = scheduleWidgetUserRights.enumOrder[balance];
             const role = scheduleWidgetUserRights.texts.find(txt => txt.id === id)?.role?.[0];
+            const title = await scheduleTitleInBrackets(sch);
+            const descriptionKey =
+              rule === 'U' ? BackLocaleKey.SchAttTypeRedactLevelSet : BackLocaleKey.SchAttTypeReadLevelSet;
 
-            return (
-              `${this.inSchTitle(sch)} уровень доступа для ${rule === 'U' ? 'редактирования' : 'чтения'} ` +
-              `типа вложений "${tattTitle}" - ${
+            return backLocalePayload(langi => {
+              const level =
                 balance === 0
-                  ? 'имеют ВСЕ!'
-                  : balance === scheduleWidgetUserRights.enumOrder.length - 1
-                    ? `имеет только ${role}`
-                    : role
-                      ? `имеет ${role} и старше`
-                      : '???'
-              }`
-            );
+                  ? translateBackTexts(langi, BackLocaleKey.SchAttLevelAll)
+                  : role
+                    ? translateBackTexts(
+                        langi,
+                        balance === scheduleWidgetUserRights.enumOrder.length - 1
+                          ? BackLocaleKey.SchAttLevelOnly
+                          : BackLocaleKey.SchAttLevelAndOlder,
+                        { r: role },
+                      )
+                    : '???';
+
+              return translateBackTexts(langi, descriptionKey, { t: title, a: tattTitle, v: level });
+            });
           }),
-          toggleUserWhoCan: modifyAttType((tatt, { rule, userMi, tattTitle, userName }, sch) => {
+          toggleUserWhoCan: modifyAttType(async (tatt, { rule, userMi, tattTitle, userName }, sch) => {
             const set = new Set(tatt[rule]);
 
             if (set.has(userMi)) set.delete(userMi);
@@ -144,15 +179,21 @@ export const schAttachmentTypesTsjrpcBaseServer =
             if (set.size === 0) delete tatt[rule];
             else tatt[rule] = Array.from(set);
 
-            return (
-              `${this.inSchTitle(sch)} ${userName} ` +
-              `${tatt[rule]?.includes(userMi) ? 'добавлен в список' : 'удалён из списка'} ` +
-              `${rule === 'Rs' ? 'для чтения' : 'для редактирования'} вложений с типом "${tattTitle}"`
+            const isAdded = tatt[rule]?.includes(userMi);
+            const isRedact = rule !== 'Rs';
+
+            return backLocaleError(
+              isRedact
+                ? isAdded
+                  ? BackLocaleKey.SchAttTypeUserRedactAdded
+                  : BackLocaleKey.SchAttTypeUserRedactRemoved
+                : isAdded
+                  ? BackLocaleKey.SchAttTypeUserReadAdded
+                  : BackLocaleKey.SchAttTypeUserReadRemoved,
+              { t: await scheduleTitleInBrackets(sch), u: userName, a: tattTitle },
             );
           }),
         },
       });
     }
-
-    private inSchTitle = (sch: IScheduleWidget) => `В расписании ${scheduleTitleInBrackets(sch)}`;
   })();

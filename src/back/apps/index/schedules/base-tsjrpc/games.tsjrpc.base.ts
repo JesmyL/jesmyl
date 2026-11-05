@@ -18,7 +18,7 @@ import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 export const schGamesTsjrpcBaseServer = new (class SchGames extends TsjrpcBaseServer<SchGamesTsjrpcMethods> {
   constructor() {
     const modifyGame = <Props extends { props: ScheduleGameScopeProps }>(
-      modifier: (game: IScheduleWidgetTeamGame, props: Props, sch: IScheduleWidget) => string | null,
+      modifier: (game: IScheduleWidgetTeamGame, props: Props, sch: IScheduleWidget) => PromiseOr<string | null>,
     ) =>
       modifySchedule<Props>(false, (sch, props) => {
         const game = sch.games?.list.find(game => game.mi === props.props.gameMi);
@@ -28,7 +28,7 @@ export const schGamesTsjrpcBaseServer = new (class SchGames extends TsjrpcBaseSe
       });
 
     const modifyCriteria = <Props extends { props: ScheduleGameCriteriaScopeProps }>(
-      modifier: (criteria: IScheduleWidgetTeamCriteria, props: Props, sch: IScheduleWidget) => string | null,
+      modifier: (criteria: IScheduleWidgetTeamCriteria, props: Props, sch: IScheduleWidget) => PromiseOr<string | null>,
     ) =>
       modifySchedule<Props>(false, (sch, props) => {
         const criteria = sch.games?.criterias[props.props.criteriai];
@@ -40,7 +40,7 @@ export const schGamesTsjrpcBaseServer = new (class SchGames extends TsjrpcBaseSe
     super({
       scope: 'SchGames',
       methods: {
-        addGame: modifySchedule(false, sch => {
+        addGame: modifySchedule(false, async sch => {
           sch.games ??= { criterias: [], list: [] };
           sch.games.list.push({
             title: `Игра ${sch.games.list.length + 1}`,
@@ -48,10 +48,10 @@ export const schGamesTsjrpcBaseServer = new (class SchGames extends TsjrpcBaseSe
             teams: [],
           });
 
-          return `В расписании ${scheduleTitleInBrackets(sch)} добавлена новая игра`;
+          return backLocaleError(BackLocaleKey.SchGameAdded, { t: await scheduleTitleInBrackets(sch) });
         }),
 
-        setTeams: modifyGame((game, { value }, sch) => {
+        setTeams: modifyGame(async (game, { value }, sch) => {
           let mi = 0;
 
           game.teams = value.map(({ users }) => {
@@ -62,40 +62,45 @@ export const schGamesTsjrpcBaseServer = new (class SchGames extends TsjrpcBaseSe
             };
           });
 
-          return `В расписании ${scheduleTitleInBrackets(sch)} сформированы команды`;
+          return backLocaleError(BackLocaleKey.SchGameTeamsFormed, { t: await scheduleTitleInBrackets(sch) });
         }),
 
-        setTitle: modifyGame((game, { value, prevTitle }, sch) => {
+        setTitle: modifyGame(async (game, { value, prevTitle }, sch) => {
           game.title = value;
 
-          return `В расписании ${scheduleTitleInBrackets(sch)} игра "${prevTitle}" переименована на "${value}"`;
+          return backLocaleError(BackLocaleKey.SchGameRenamed, {
+            t: await scheduleTitleInBrackets(sch),
+            p: prevTitle,
+            v: value,
+          });
         }),
 
-        addCriteria: modifySchedule(false, sch => {
+        addCriteria: modifySchedule(false, async sch => {
           sch.games ??= { criterias: [], list: [] };
           sch.games.criterias.push({ title: `Критерий ${sch.games.criterias.length + 1}`, sorts: {} as never });
 
-          return `В расписании ${scheduleTitleInBrackets(sch)} добавлен новый критерий сортировки для игр`;
+          return backLocaleError(BackLocaleKey.SchGameCriteriaAdded, { t: await scheduleTitleInBrackets(sch) });
         }),
 
-        setCriteriaTitle: modifyCriteria((criteria, { value, prevTitle }, sch) => {
+        setCriteriaTitle: modifyCriteria(async (criteria, { value, prevTitle }, sch) => {
           criteria.title = value;
 
-          return (
-            `В расписании ${scheduleTitleInBrackets(sch)} критерий сортировки для игр ` +
-            `"${prevTitle}" переименован на "${value}"`
-          );
+          return backLocaleError(BackLocaleKey.SchGameCriteriaRenamed, {
+            t: await scheduleTitleInBrackets(sch),
+            p: prevTitle,
+            v: value,
+          });
         }),
-        setSortedDict: modifyCriteria((criteria, { value, criteriaTitle }, sch) => {
+        setSortedDict: modifyCriteria(async (criteria, { value, criteriaTitle }, sch) => {
           criteria.sorts = { ...criteria.sorts, ...value };
 
-          return (
-            `В расписании ${scheduleTitleInBrackets(sch)} для критерия сортировки игр ` +
-            `"${criteriaTitle}" отсортированы участники`
-          );
+          return backLocaleError(BackLocaleKey.SchGameCriteriaSorted, {
+            t: await scheduleTitleInBrackets(sch),
+            c: criteriaTitle,
+          });
         }),
 
-        toggleStrikedUser: modifySchedule(false, (sch, { userMi, userName }) => {
+        toggleStrikedUser: modifySchedule(false, async (sch, { userMi, userName }) => {
           sch.games ??= { criterias: [], list: [] };
           const userSet = new Set((sch.games.strikedUsers ??= []));
 
@@ -104,10 +109,11 @@ export const schGamesTsjrpcBaseServer = new (class SchGames extends TsjrpcBaseSe
 
           sch.games.strikedUsers = Array.from(userSet);
 
-          return (
-            `В расписании ${scheduleTitleInBrackets(sch)} участник ${userName} ` +
-            `${sch.games?.strikedUsers?.includes(userMi) ? 'исключён из списка' : 'включён в список'} игроков`
-          );
+          return backLocaleError(BackLocaleKey.SchGamePlayerIncluded, {
+            t: await scheduleTitleInBrackets(sch),
+            u: userName,
+            v: !sch.games.strikedUsers.includes(userMi),
+          });
         }),
       },
     });

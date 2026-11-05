@@ -1,4 +1,4 @@
-import { backLocaleError } from 'back/locales/back';
+import { backLocaleError, backLocalePayload, translateBackTexts } from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { tokenSecretFileStore } from 'back/complect/soki/file-stores';
 import { PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
@@ -25,7 +25,7 @@ const makeAuthFromUser = async (user: OmitOwn<TelegramBot.User, 'is_bot'>) => {
 };
 
 export const indexAuthByTgUser =
-  (title: string) =>
+  (titleKey: BackLocaleKey) =>
   async ({ user }: { user: TelegramNativeAuthUserData }, { visitInfo }: ServerTSJRPCTool) => {
     const auth = await makeAuthFromUser(user);
 
@@ -35,8 +35,14 @@ export const indexAuthByTgUser =
         token: jwt.sign(auth, tokenSecretFileStore.getValue().token, { expiresIn: '300 D' }),
       },
       description:
-        `Авторизация ${auth?.fio} (@${auth?.nick ?? '??'}) ${title}\n\n` +
-        `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>\n\n` +
+        backLocalePayload(langi =>
+          translateBackTexts(langi, BackLocaleKey.DashAuthorization, {
+            f: auth.fio,
+            n: auth.nick ?? '??',
+            t: translateBackTexts(langi, titleKey),
+          }),
+        ) +
+        `\n\n<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>\n\n` +
         `<blockquote expandable>${JSON.stringify(visitInfo, null, 1)}</blockquote>`,
       logScope: PostJRPCMessageScope.Support,
     };

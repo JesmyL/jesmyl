@@ -205,4 +205,7 @@ export const enum EditorLocaleKey {
   VisitsReportSent = 200,
   VisitsOnlineByHour = 201,
   VisitsOnlineHourPeriod = 202,
+  VisitsChanges = 203,
+  VisitsReportRecipients = 204,
+  VisitsRecipientsSaved = 205,
 }

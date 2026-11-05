@@ -47,7 +47,7 @@ export const cmEditComServerTsjrpcTextableBlocks = {
       com.c[texti] = next;
     }
 
-    return { description: 'изменён аккордный блок', was: prev, new: next };
+    return { description: backLocaleError(BackLocaleKey.CmChordBlockChanged), was: prev, new: next };
   }),
   changeTextBlock: modifyCom('COM_TXT', (com, { texti, value }) => {
     const incorrects = textLinesLengthIncorrects(value, constantsConfigFileStore.getValue().maxAvailableComLineLength);
@@ -60,7 +60,7 @@ export const cmEditComServerTsjrpcTextableBlocks = {
 
     com.t[texti] = clearValue;
 
-    return { description: 'изменён текстовый блок', was: prev, new: clearValue };
+    return { description: backLocaleError(BackLocaleKey.CmTextBlockChanged), was: prev, new: clearValue };
   }),
   textCaps: modifyCom('COM_TXT', (com, { texts }) => {
     const newTexts: string[] = [];
@@ -81,21 +81,21 @@ export const cmEditComServerTsjrpcTextableBlocks = {
 
     com.t = newTexts;
 
-    return `изменены текстовые блоки`;
+    return backLocaleError(BackLocaleKey.CmTextBlocksChanged);
   }),
 
   insertChordBlock: insertInTextableBlock('c', ['COM_CH', 'C'], ({ value }) => {
-    return `вставлен${value ? '' : ' новый'} аккордный блок ${value ? `:\n\n${value}` : ''}`;
+    return backLocaleError(BackLocaleKey.CmChordBlockInserted, { v: value ? `:\n\n${value}` : '' });
   }),
   insertTextBlock: insertInTextableBlock('t', ['COM_TXT', 'C'], ({ value }) => {
-    return `вставлен${value ? '' : ' новый'} текстовый блок${value ? `:\n\n${value}` : ''}`;
+    return backLocaleError(BackLocaleKey.CmTextBlockInserted, { v: value ? `:\n\n${value}` : '' });
   }),
 
   removeChordBlock: removeTextableBlock('c', ['COM_CH', 'D'], ({ value }) => {
-    return `удалён${value ? '' : ' новый'} аккордный блок ${value ? `:\n\n${value}` : ''}`;
+    return backLocaleError(BackLocaleKey.CmChordBlockRemoved, { v: value ? `:\n\n${value}` : '' });
   }),
   removeTextBlock: removeTextableBlock('t', ['COM_TXT', 'D'], ({ value }) => {
-    return `удалён${value ? '' : ' новый'} текстовый блок${value ? `:\n\n${value}` : ''}`;
+    return backLocaleError(BackLocaleKey.CmTextBlockRemoved, { v: value ? `:\n\n${value}` : '' });
   }),
 } satisfies ServerTsjrpcSatisfy<CmEditComTsjrpcModel>;
 

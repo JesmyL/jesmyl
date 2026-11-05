@@ -78,9 +78,7 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
                     return (
                       <div key={title}>
                         {title}{' '}
-                        <span className="text-x7">
-                          {translateBase(BaseLocaleKey.ScheduleMinuteShort, { n: tm })}
-                        </span>
+                        <span className="text-x7">{translateBase(BaseLocaleKey.ScheduleMinuteShort, { n: tm })}</span>
                       </div>
                     );
                   })}

@@ -28,13 +28,21 @@ export const cmEditComOrderServerTsjrpcBase =
 
             ord.k = kind;
 
-            return `название блока ${makeOrdTitle(getCmComOrd)} изменено на ${newTypeTitle}`;
+            return backLocaleError(BackLocaleKey.CmComOrdKindSet, {
+              b: makeOrdTitle(getCmComOrd),
+              v: newTypeTitle,
+            });
           }),
 
           bindChordBlock: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, getCmComOrd, { chordi }) => {
             ord.c = chordi;
 
-            return `к ${getCmComOrd().isAnchor ? 'ссылке на блок' : 'блоку'} ${makeOrdTitle(getCmComOrd)} прикреплён ${chordi + 1}-й блок Аккордов`;
+            return backLocaleError(
+              getCmComOrd().isAnchor
+                ? BackLocaleKey.CmComOrdRefChordAttached
+                : BackLocaleKey.CmComOrdChordAttached,
+              { b: makeOrdTitle(getCmComOrd), i: chordi + 1 },
+            );
           }),
 
           toggleVisibility: modifyOrd(ModifyOrdParent.Self, ['COM_ORD', 'D'], (ord, getCmComOrd) => {
@@ -50,7 +58,10 @@ export const cmEditComOrderServerTsjrpcBase =
 
             if (checkIsNil(ord.v)) delete ord.v;
 
-            return `порядковый блок ${makeOrdTitle(getCmComOrd)} сделан ${ord.v ? '' : 'не'}видимым`;
+            return backLocaleError(
+              ord.v ? BackLocaleKey.CmComOrdMadeVisible : BackLocaleKey.CmComOrdMadeInvisible,
+              { b: makeOrdTitle(getCmComOrd) },
+            );
           }),
 
           toggleAnchorInhVis: modifyOrd(ModifyOrdParent.Lead, 'COM_ORD', (leadOrd, getCmComOrd) => {
@@ -67,7 +78,12 @@ export const cmEditComOrderServerTsjrpcBase =
 
             if (removeEmptyRightValues(leadOrd._v, (it, size) => checkIsNil(it) || !size)) delete leadOrd._v;
 
-            return `часть ссылки на ${cmOrd.me.leadOrd.me.header()} сделана ${checkIsNil(leadOrd._v?.[inhi]) ? '' : 'не'}видимой`;
+            return backLocaleError(
+              checkIsNil(leadOrd._v?.[inhi])
+                ? BackLocaleKey.CmComOrdRefPartMadeVisible
+                : BackLocaleKey.CmComOrdRefPartMadeInvisible,
+              { b: cmOrd.me.leadOrd.me.header() },
+            );
           }),
 
           remove: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', async (ord, getCmComOrd, { ordw }, { auth }, com) => {
@@ -77,7 +93,10 @@ export const cmEditComOrderServerTsjrpcBase =
             )
               throw '';
 
-            const description = `${getCmComOrd().isAnchor ? 'удалена ссылка на' : 'удалён'} ${makeOrdTitle(getCmComOrd)}`;
+            const description = backLocaleError(
+              getCmComOrd().isAnchor ? BackLocaleKey.CmComOrdRefRemoved : BackLocaleKey.CmComOrdRemoved,
+              { b: makeOrdTitle(getCmComOrd) },
+            );
 
             com.o ??= [];
             com.o = com.o.filter(ord => ord.w !== ordw && ord.a !== ordw);
@@ -88,19 +107,28 @@ export const cmEditComOrderServerTsjrpcBase =
           setTexti: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, getCmComOrd, { texti }) => {
             ord.t = texti;
 
-            return `к порядковому блоку ${makeOrdTitle(getCmComOrd)} прикреплён ${texti + 1} текст`;
+            return backLocaleError(BackLocaleKey.CmComOrdTextAttached, {
+              b: makeOrdTitle(getCmComOrd),
+              i: texti + 1,
+            });
           }),
 
           toggleVisibilityInMiniMode: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, getCmComOrd) => {
             ord.o = ord.o ? undefined : 1;
 
-            return `ссылка на блок ${makeOrdTitle(getCmComOrd)} сделана ${ord.o ? 'видимой' : 'невидимой'} в мини-режиме`;
+            return backLocaleError(BackLocaleKey.CmComOrdMiniLinkVisible, {
+              b: makeOrdTitle(getCmComOrd),
+              v: !!ord.o,
+            });
           }),
 
           toggleTitleVisibility: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, getCmComOrd) => {
             ord.e = ord.e ? undefined : 1;
 
-            return `заголовок в порядковом блоке ${makeOrdTitle(getCmComOrd)} сделан ${ord.e ? 'видимым' : 'невидимым'}`;
+            return backLocaleError(BackLocaleKey.CmComOrdTitleVisible, {
+              b: makeOrdTitle(getCmComOrd),
+              v: !!ord.e,
+            });
           }),
 
           setPositionsLine: modifyOrd(
@@ -117,7 +145,11 @@ export const cmEditComOrderServerTsjrpcBase =
               ord.p ??= [];
               ord.p[linei] = Array.from(new Set(line)).sort((a, b) => a - b);
 
-              return `в блоке ${makeOrdTitle(getCmComOrd)} изменена аппликатура в ${linei + 1}-й строке: ${lineChangesText}`;
+              return backLocaleError(BackLocaleKey.CmComOrdApplikaturaChanged, {
+                b: makeOrdTitle(getCmComOrd),
+                i: linei + 1,
+                v: lineChangesText,
+              });
             },
           ),
 
@@ -130,19 +162,27 @@ export const cmEditComOrderServerTsjrpcBase =
             const textLinesCount = objectLength(com.t[ord.t].split(makeRegExp('/\n/')));
             if (textLinesCount < objectLength(ord.p)) ord.p.length = textLinesCount;
 
-            return `в блоке ${makeOrdTitle(getCmComOrd)} удалены лишние строки аппликатуры`;
+            return backLocaleError(BackLocaleKey.CmComOrdApplikaturaTrimmed, {
+              b: makeOrdTitle(getCmComOrd),
+            });
           }),
 
           setModulationValue: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, getCmComOrd, { value }) => {
             updateCmComOrderModulationValue(ord, value);
 
-            return `установлено значение модулирования блока ${makeOrdTitle(getCmComOrd)} - ${value}`;
+            return backLocaleError(BackLocaleKey.CmComOrdModulationSet, {
+              b: makeOrdTitle(getCmComOrd),
+              v: value,
+            });
           }),
 
           isBmSwitch: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, getCmComOrd) => {
             const isAdd = updateCmComOrderTonTypeSwitcherValue(ord);
 
-            return `${isAdd ? 'установлена' : 'снята'} смена тональности в блоке ${makeOrdTitle(getCmComOrd)}`;
+            return backLocaleError(
+              isAdd ? BackLocaleKey.CmComOrdTonSet : BackLocaleKey.CmComOrdTonRemoved,
+              { b: makeOrdTitle(getCmComOrd) },
+            );
           }),
         },
       });

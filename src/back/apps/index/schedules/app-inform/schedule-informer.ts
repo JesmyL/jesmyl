@@ -1,3 +1,5 @@
+import { translateBackTexts } from 'back/locales/back';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { scheduleDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
 import nodeSchedule from 'node-schedule';
@@ -19,9 +21,6 @@ import { checkIsNumber } from 'shared/utils/checkIs';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 import { takeScheduleWidgetTiny } from '../schedule.tiny';
 import { sendSchedulePush } from './web-push';
-
-const pushComsActionTitle = 'Список песен';
-const pushGoToComsTitle = 'Перейти к списку песен';
 
 const jobs: Record<string, nodeSchedule.Job> = {};
 
@@ -147,16 +146,34 @@ class SchedulePushInformer {
           ? `/cm/li/events?schw=${schedule.w}&dayi=${dayi}&eventMi=${event.mi}`
           : null;
         const eventTitle = eventTypeTitle + (event.topic ? `: ${event.topic}` : '');
-        const body = [comsUrl ? `${eventTitle} ● ${pushGoToComsTitle}` : eventTitle, event.dsc]
-          .filter(Boolean)
-          .join('\n');
 
-        await sendSchedulePush(userIds, {
-          title: schedule.title || eventTypeTitle,
-          body: isLead ? `Напоминание за ${appInform} мин. — ${body}` : body,
-          url: comsUrl ?? `/!other/cm/schs?schw=${schedule.w}`,
-          tag: `sch-${schedule.w}-${dayi}-${event.mi}`,
-          actions: comsUrl ? [{ action: 'coms', title: pushComsActionTitle, url: comsUrl }] : undefined,
+        await sendSchedulePush(userIds, langi => {
+          const body = [
+            comsUrl
+              ? `${eventTitle} ● ${translateBackTexts(langi, BackLocaleKey.SchedulePushGoToComsTitle)}`
+              : eventTitle,
+            event.dsc,
+          ]
+            .filter(Boolean)
+            .join('\n');
+
+          return {
+            title: schedule.title || eventTypeTitle,
+            body: isLead
+              ? `${translateBackTexts(langi, BackLocaleKey.SchedulePushReminderPrefix, { n: appInform })} ${body}`
+              : body,
+            url: comsUrl ?? `/!other/cm/schs?schw=${schedule.w}`,
+            tag: `sch-${schedule.w}-${dayi}-${event.mi}`,
+            actions: comsUrl
+              ? [
+                  {
+                    action: 'coms',
+                    title: translateBackTexts(langi, BackLocaleKey.SchedulePushComsActionTitle),
+                    url: comsUrl,
+                  },
+                ]
+              : undefined,
+          };
         }).catch(error => console.error('Web push schedule inform error', error));
       }
     }

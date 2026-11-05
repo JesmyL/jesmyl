@@ -1,16 +1,30 @@
+import { translateBase } from '#basis/locale';
 import { isLangiPickerOpenAtom } from '#basis/state/locale';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { makeToastKOMoodConfig, makeToastOKMoodConfig } from '#shared/ui/modal';
 import { darkMediaQuery, indexIsDarkModeAtom } from '$index/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { toast } from 'sonner';
 
 const classList = document.querySelector('html')?.classList;
 const darkMedia = window.matchMedia(darkMediaQuery);
 
+const copyHref = () => {
+  const write = window.navigator.clipboard?.writeText(window.location.href);
+  if (!write) return toast(translateBase(BaseLocaleKey.CopyTextFailed), makeToastKOMoodConfig());
+
+  write.then(
+    () => toast(translateBase(BaseLocaleKey.ConfigTextCopied), makeToastOKMoodConfig()),
+    () => toast(translateBase(BaseLocaleKey.CopyTextFailed), makeToastKOMoodConfig()),
+  );
+};
+
 const holds = [
-  { min: 3, max: 3, ms: 500, action: () => indexIsDarkModeAtom.do.toggle() },
-  { min: 4, max: 4, ms: 500, action: () => window.navigator.clipboard.writeText(window.location.href) },
-  { min: 10, max: Infinity, ms: 10_000, action: () => isLangiPickerOpenAtom.set(true) },
+  { fingers: 3, ms: 500, action: () => indexIsDarkModeAtom.do.toggle() },
+  { fingers: 4, ms: 500, action: copyHref },
+  { fingers: 5, ms: 10000, action: () => isLangiPickerOpenAtom.set(true) },
 ];
 
 export const useFingersActions = () => {
@@ -29,13 +43,10 @@ export const useFingersActions = () => {
 
   useEffect(() => {
     const holdTimeouts: TimeOut[] = [];
-    const wholeMin = Math.min(...holds.map(it => it.min));
 
     const updateHolds = ({ touches }: TouchEvent) => {
-      if (touches.length < wholeMin) return;
-
-      holds.forEach(({ min, max, ms, action }, holdi) => {
-        if (touches.length < min || touches.length > max) {
+      holds.forEach(({ fingers, ms, action }, holdi) => {
+        if (touches.length !== fingers) {
           clearTimeout(holdTimeouts[holdi]);
           holdTimeouts[holdi] = undefined;
           return;

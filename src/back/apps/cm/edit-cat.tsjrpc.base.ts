@@ -1,4 +1,4 @@
-import { backLocaleError } from 'back/locales/back';
+import { backLocaleError, translateBackTexts } from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { catDB } from 'back/drizzle.schema';
@@ -30,9 +30,10 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
 
           cat.s = Array.from(stackSet);
 
-          return `Категория "${cat.n}": ${cat.s?.includes(comw) ? 'добавлена' : 'удалена'} песня ${await getCmComNameInBrackets(
-            comw,
-          )}`;
+          return backLocaleError(
+            cat.s?.includes(comw) ? BackLocaleKey.CmCatComAdded : BackLocaleKey.CmCatComRemoved,
+            { c: cat.n, n: await getCmComNameInBrackets(comw) },
+          );
         }),
 
         removeNativeComNum: modifyCat(async (cat, { comw }, { auth }) => {
@@ -43,7 +44,10 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
 
           if (!objectLength(cat.d)) delete cat.d;
 
-          return `Из сборника "${cat.n}" удалён номер песни ${await getCmComNameInBrackets(comw)}`;
+          return backLocaleError(BackLocaleKey.CmCatNativeNumRemoved, {
+            c: cat.n,
+            n: await getCmComNameInBrackets(comw),
+          });
         }),
 
         setNativeComNum: modifyCat(async (cat, { comw, value }, { auth }) => {
@@ -53,7 +57,11 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
 
           cat.d = { ...cat.d, [comw]: value };
 
-          return `Для категории "${cat.n}" номер песни ${await getCmComNameInBrackets(comw)} установлен в значение ${value}`;
+          return backLocaleError(BackLocaleKey.CmCatNativeNumSet, {
+            c: cat.n,
+            n: await getCmComNameInBrackets(comw),
+            v: value,
+          });
         }),
 
         create: async ({ n, k }, { auth }) => {
@@ -65,7 +73,7 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
           await db.insert(catDB).values(cat);
           cmShareServerTsjrpcMethods.editedCat({ cat }, null);
 
-          return { value: cat, description: 'Создана категория' };
+          return { value: cat, description: backLocaleError(BackLocaleKey.CmCatCreated) };
         },
 
         rename: async ({ catw, n }, { auth }) => {
@@ -79,7 +87,7 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
           await dbUpdate(catDB, { m: cat.m, n: cat.n }, eq(catDB.w, cat.w));
           cmShareServerTsjrpcMethods.editedCat({ cat }, null);
 
-          return { value: cat, description: 'Переименована категория' };
+          return { value: cat, description: backLocaleError(BackLocaleKey.CmCatRenamed) };
         },
 
         remove: async ({ catw }, { auth }) => {
@@ -92,7 +100,7 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
           await dbUpdate(catDB, { m: cat.m, isRemoved: cat.isRemoved }, eq(catDB.w, cat.w));
           cmShareServerTsjrpcMethods.editedCat({ cat }, null);
 
-          return { value: cat, description: 'Удалена категория' };
+          return { value: cat, description: backLocaleError(BackLocaleKey.CmCatRemoved) };
         },
 
         restore: async ({ catw }, { auth }) => {
@@ -108,7 +116,7 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
           await dbUpdate(catDB, { m: cat.m, isRemoved: cat.isRemoved }, eq(catDB.w, cat.w));
           cmShareServerTsjrpcMethods.editedCat({ cat }, null);
 
-          return { value: cat, description: 'Восстановлена категория' };
+          return { value: cat, description: backLocaleError(BackLocaleKey.CmCatRestored) };
         },
 
         takeRemovedCats: async (_, { auth }) => {
@@ -132,7 +140,7 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
           await dbUpdate(catDB, { m: cat.m, k: cat.k }, eq(catDB.w, cat.w));
           cmShareServerTsjrpcMethods.editedCat({ cat }, null);
 
-          return { value: cat, description: 'Изменён вид категории' };
+          return { value: cat, description: backLocaleError(BackLocaleKey.CmCatKindSet) };
         },
       },
     });
@@ -158,7 +166,7 @@ const takeCatOrThrow = async (catw: CmCatWid) => {
 
 const getCmComNameInBrackets = async (comw: CmComWid) => {
   const com = await takeComwTiny({ w: comw }, false);
-  return com ? `${com.i + 1}. "${com.n}"` : '[Неизвестная песня]';
+  return com ? `${com.i + 1}. "${com.n}"` : translateBackTexts(null, BackLocaleKey.CmComUnknown);
 };
 
 function modifyCat<Props extends { catw: CmCatWid }, Tools>(

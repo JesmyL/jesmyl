@@ -1,7 +1,7 @@
-import { backLocaleError, translateBackTexts } from 'back/locales/back';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { comDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
+import { backLocaleError, translateBackTexts } from 'back/locales/back';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { and, asc, eq, sql } from 'drizzle-orm';
 import { CmComWid } from 'shared/api';
@@ -30,7 +30,10 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
           const modifiedAt = chordPackFileStore.fileModifiedAt();
           cmShareServerTsjrpcMethods.editedChords({ chords, modifiedAt }, null);
 
-          return { value: chords, description: `Изменены аккорды ${objectKeys(chords).join(', ')}` };
+          return {
+            value: chords,
+            description: backLocaleError(BackLocaleKey.CmEditorChordsChanged, { l: objectKeys(chords).join(', ') }),
+          };
         },
 
         setEEWords: async ({ words }, { auth }) => {
@@ -53,7 +56,10 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
             },
           );
 
-          return { value: words, description: `Изменены ё/е-правила в словах ${objectKeys(words).join(', ')}` };
+          return {
+            value: words,
+            description: backLocaleError(BackLocaleKey.CmEditorEEWordsChanged, { l: objectKeys(words).join(', ') }),
+          };
         },
 
         getResourceHTMLString: cmGetResourceHTMLString,
@@ -122,7 +128,7 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
 
           mp3ResourcesFileStorage.modifyValueWithAutoSave(srcs => srcs.push(rule));
 
-          return { description: `Добавлено MP3-правило` };
+          return { description: backLocaleError(BackLocaleKey.CmEditorMp3RuleAdded) };
         },
         setMp3Rule: async ({ rule }, { auth }) => {
           if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'MP3', 'U')) throw '';
@@ -133,7 +139,7 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
             list.splice(index, 1, rule);
           });
 
-          return { description: `Изменено MP3-правило` };
+          return { description: backLocaleError(BackLocaleKey.CmEditorMp3RuleChanged) };
         },
 
         requestFreshes: async ({ lastModfiedAt }, { client, auth }) => {

@@ -1,6 +1,4 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
-import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { translateBase, translateEditorBase } from '#basis/locale';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Button } from '#shared/components';
@@ -24,6 +22,8 @@ import { makeRegExp } from 'regexpert';
 import { CmComIntensityLevel } from 'shared/api';
 import { cmComIntensityLevelTitleDict } from 'shared/const/cm/cmComDriveLevelTitleDict';
 import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { emptyFunc } from 'shared/utils';
 import { cmComLanguages } from 'shared/utils/cm/com/const';

@@ -554,7 +554,8 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.StoragesFromExcelTitle]: 'Excel файлынан карточкалар қалыптастыру',
   [BaseLocaleKey.StoragesMatchFields]: 'Өрістер үшін сәйкестіктерді жүргізіңіз:',
   [BaseLocaleKey.StoragesFormCards]: 'Карточкаларды құру',
-  [BaseLocaleKey.StoragesPartialFormed]: 'Файлдағы барлық жолдар карточкаларға айналдырылмады. Дұрыс құрылғаны $n; карточка',
+  [BaseLocaleKey.StoragesPartialFormed]:
+    'Файлдағы барлық жолдар карточкаларға айналдырылмады. Дұрыс құрылғаны $n; карточка',
   [BaseLocaleKey.StoragesMetadata]: 'Мета-деректер',
   [BaseLocaleKey.StoragesRemoveMetadataConfirm]: 'Мета-ақпаратты жою керек пе?',
   [BaseLocaleKey.StoragesNewStatus]: 'Жаңа мәртебе',
@@ -751,7 +752,7 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.EmailCodeSent]: 'Код $e поштасына жіберілді',
   [BaseLocaleKey.EmailToBind]: 'E-mail байланыстыру',
   [BaseLocaleKey.EmailLabel]: 'E-mail',
-  ...baseLocaleTemplate(BaseLocaleKey.FromOf)`${IF(isUtil.NEQ('$f', '$o')).THEN`$o ішінен $f `}$o`,
+  ...baseLocaleTemplate(BaseLocaleKey.FromOf)`${IF(isUtil.NEQ('$f', '$o')).THEN`$o ішінен $f`.ELSE`$o`}`,
   [BaseLocaleKey.Favorite]: 'Таңдаулылар',
   [BaseLocaleKey.FavoriteNumberLimit]: `Лимит - $n таңдаулы`,
   [BaseLocaleKey.Selected]: 'Таңдалғандар',
@@ -817,7 +818,9 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
     'Хабарламаларға тыйым салынған. Оларға браузер немесе телефон параметрлерінде рұқсат беріңіз: қолданба → Хабарламалар',
   [BaseLocaleKey.SchedulePushSubscribeError]: 'Хабарламаларды қосу мүмкін болмады. Қайталап көріңіз',
 
-  ...baseLocaleTemplate(BaseLocaleKey.ScheduleInformStatus)`${IF('$v').THEN`Еске салу ${IF('$n').THEN`$n мин. бұрын және `.ELSE`тек `}басында`.ELSE`Еске салу өшірілген`}`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.ScheduleInformStatus,
+  )`${IF('$v').THEN`Еске салу ${IF('$n').THEN`$n мин. бұрын және `.ELSE`тек `}басында`.ELSE`Еске салу өшірілген`}`,
   [BaseLocaleKey.ScheduleInformOnlyByStart]: 'Тек басында еске салу',
   [BaseLocaleKey.ScheduleInformBefore]: '$n мин. бұрын еске салу',
   [BaseLocaleKey.ScheduleEventAppInformWillBe]: 'Хабарлама $n минут бұрын болады',
@@ -853,5 +856,4 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.PushNotifications]: 'Push хабарламалары',
 
   [BaseLocaleKey.NumberSymbols]: '$n; таңба',
-
 });
