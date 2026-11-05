@@ -28,6 +28,7 @@
 - Commit messages must always be written in English.
 - Locale keys (`EditorLocaleKey`/`DynLocaleKey`/`BaseLocaleKey`): only ADD new numeric keys — never bump `editorLocaleMinVersion`/`baseLocaleMinVersion` (in `src/back/apps/index/tsjrpc.base/lib/requestFreshes.ts`) anymore; those delivery guards stay untouched. Group new keys next to related existing entries ONLY in the dictionaries (`localeEditorRu`/`localeEditorEn`/... and `src/back/locales/base/{ru,en,kz,ua}.ts`), never in the `const enum`s: enum keys always go strictly in sequential order, so a new key is appended at the END with the next sequential value (never a big value between small ones).
 - Route placement applies to ALL route areas, not just `!other/$appName`: every page must live in the proper area of `src/front/routes/tree/` matching its app/feature slice — never create root-level routes for pages belonging to a specific area, e.g. `/schedule-users/1704636528751` goes under `src/front/routes/tree/!other.$appName/...` (substitute the correct area for each case).
+- TSJRPC method versioning: a method gets a `_1`/`_2`/`_3`... postfix ONLY when its request or response data type changed (breaking change). A brand-new method (e.g. `getDashReportRecipients`) must NOT have a `_1` postfix.
 
 ### Code writing rules
 
