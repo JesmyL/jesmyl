@@ -712,6 +712,8 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.OneForTwo]: '$o для $t',
   [BaseLocaleKey.NewVersion]: ' (Новая - v$v;)',
   [BaseLocaleKey.Settings]: 'Настройки',
+  [BaseLocaleKey.SystemLanguage]: 'Системный язык',
+  [BaseLocaleKey.AppLanguage]: 'Язык приложения',
   [BaseLocaleKey.AboutApplication]: 'О приложении',
   [BaseLocaleKey.OtherPrograms]: 'Другие программы',
   [BaseLocaleKey.Animations]: 'Анимации',

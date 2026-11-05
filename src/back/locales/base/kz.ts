@@ -700,6 +700,8 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.OneForTwo]: '$t үшін $o',
   [BaseLocaleKey.NewVersion]: ' (Жаңа - v$v;)',
   [BaseLocaleKey.Settings]: 'Баптаулар',
+  [BaseLocaleKey.SystemLanguage]: 'Жүйелік тіл',
+  [BaseLocaleKey.AppLanguage]: 'Қосымша тілі',
   [BaseLocaleKey.AboutApplication]: 'Қосымша туралы',
   [BaseLocaleKey.OtherPrograms]: 'Басқа бағдарламалар',
   [BaseLocaleKey.Animations]: 'Анимациялар',

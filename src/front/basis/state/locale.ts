@@ -1,4 +1,4 @@
-import { appInitEvent, localeIsBlurringAtom, localeIsLoadingAtom } from '$app/store/triggers';
+import { appInitEvent, localeForceUpdateAtom, localeIsBlurringAtom, localeIsLoadingAtom } from '$app/store/triggers';
 import { indexUserAccessRightsAtom } from '$index/shared/state/atoms';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { Atom, atom } from 'atomaric';
@@ -16,6 +16,8 @@ const dynamicLangAtoms: { [L in Langi]?: Atom<LocaleDynamic<L>> } = {};
 
 /** Отметка свежести локальных словарей: сервер досылает только изменившееся после неё. */
 export const localeLastModifiedAtAtom = atom(0, 'app:localesModifiedAt');
+
+export const isLangiPickerOpenAtom = atom(false);
 
 const requestFreshLocales = (lastModifiedAt = localeLastModifiedAtAtom.get()) =>
   indexTsjrpcClientMethods.requestFreshLocales({ lastModifiedAt });
@@ -63,8 +65,13 @@ const hydrateLocaleAtom = <Value extends object>(
 
   void loadLocaleCache(key)
     .then(cached => {
-      if (isLocaleDict<Value>(cached) && objectLength(cached) && !objectLength(confAtom.get())) {
+      const current = confAtom.get();
+
+      if (isLocaleDict<Value>(cached) && objectLength(cached) && !objectLength(current)) {
         confAtom.set(cached);
+      } else if (objectLength(current)) {
+        // A server fresh may arrive while the cache is still being read: the late subscription alone would lose it.
+        void saveLocaleCache(key, current);
       }
 
       applyValue(confAtom.get());
@@ -85,6 +92,11 @@ export const takeBaseLanguageAtom = lazyInit(() => {
 /** Словарь редактора запрашивается только при наличии права на редактирование `cm` или на дашборд. */
 export const takeEditorLanguageAtom = lazyInit(() => {
   const confAtom = atom({}) as never as Atom<LocaleCmEditor>;
+
+  // Тексты редактора читаются через нереактивный провайдер: свежий словарь должен перемонтировать дерево.
+  confAtom.subscribe(editor => {
+    if (objectLength(editor)) localeForceUpdateAtom.do.increment();
+  });
 
   hydrateLocaleAtom('E', confAtom, cachedEditorLocale => {
     const rights = indexUserAccessRightsAtom.get();

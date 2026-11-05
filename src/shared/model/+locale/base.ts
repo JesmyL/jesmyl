@@ -477,6 +477,8 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.OneForTwo]: StringTemplaterInterpolation<{ o: string; t: string }>;
   [BaseLocaleKey.NewVersion]: StringTemplaterInterpolation<{ v: number }>;
   [BaseLocaleKey.Settings]: LocaleSimpleString;
+  [BaseLocaleKey.SystemLanguage]: LocaleSimpleString;
+  [BaseLocaleKey.AppLanguage]: LocaleSimpleString;
   [BaseLocaleKey.AboutApplication]: LocaleSimpleString;
   [BaseLocaleKey.OtherPrograms]: LocaleSimpleString;
   [BaseLocaleKey.Animations]: LocaleSimpleString;

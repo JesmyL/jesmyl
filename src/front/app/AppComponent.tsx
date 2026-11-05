@@ -4,6 +4,7 @@ import { useGlobalColorGamutSetter } from '#basis/lib/global-listeners/useGlobal
 import { useGlobalFontFamilySetter } from '#basis/lib/global-listeners/useGlobalFontFamilySetter';
 import { useGlobalThemeColorSetter } from '#basis/lib/global-listeners/useGlobalThemeColorSetter';
 import { currentLangiAtom, translateBase } from '#basis/locale';
+import { LangiPickerModal } from '#basis/locale/LangiPickerModal';
 import { currentAppNameAtom } from '#basis/state/currentAppNameAtom';
 import { hideAppFooterAtom } from '#basis/state/hideAppFooterAtom';
 import { takeBaseLanguageAtom, takeDynamicLanguageAtom } from '#basis/state/locale';
@@ -18,7 +19,7 @@ import { WithAtomValue } from '#shared/ui/WithAtomValue';
 import { schLinkAction } from '#widgets/schedule/links';
 import { indexIDB } from '$index/shared/state';
 import { Outlet, ParsedLocation, useLocation, useNavigate } from '@tanstack/react-router';
-import { atom, configureAtomaric, useAtomValue } from 'atomaric';
+import { configureAtomaric, useAtomValue } from 'atomaric';
 import React, { useEffect, useState, useSyncExternalStore } from 'react';
 import { langCodeDict, langCodeLoadingTitleDict } from 'shared/const/+locale';
 import { CmComOrders } from 'shared/const/cm/Com/parents/20-Orders';
@@ -30,12 +31,11 @@ import { toast } from 'sonner';
 import { appInitialInvokes } from './app-initial-invokes';
 import { AppFooter } from './AppFooter';
 import { routingApps } from './lib/configs';
-import { localeIsBlurringAtom, localeIsLoadingAtom } from './store/triggers';
+import { localeForceUpdateAtom, localeIsBlurringAtom, localeIsLoadingAtom } from './store/triggers';
 
 configureAtomaric({ useSyncExternalStore, keyPathSeparator: '/' });
 appInitialInvokes();
 
-const forceUpdateAtom = atom(0);
 const appStartedAt = Date.now();
 
 /** `Langi`/`LocaleVersion` sit at the head of every dictionary array, so those indices never count as texts. */
@@ -51,17 +51,17 @@ const isNeedForceUpdate = (dict: Record<string, string | number | object | nil>)
 
 takeBaseLanguageAtom().subscribe(base => {
   if (!isNeedForceUpdate(base)) return;
-  forceUpdateAtom.do.increment();
+  localeForceUpdateAtom.do.increment();
 });
 forEachObjectEntries(langCodeDict, langiStr =>
   takeDynamicLanguageAtom(extractNumber(langiStr)).subscribe(dyn => {
     if (!isNeedForceUpdate(dyn)) return;
-    forceUpdateAtom.do.increment();
+    localeForceUpdateAtom.do.increment();
   }),
 );
 
 export const AppComponent = () => {
-  const num = useAtomValue(forceUpdateAtom);
+  const num = useAtomValue(localeForceUpdateAtom);
 
   const loc = useLocation();
   const [isNeedFirstNavigate, setIsNeedFirstNavigate] = useState(true);
@@ -164,6 +164,8 @@ export const AppComponent = () => {
           )}
         </WithAtomValue>
       </Modal>
+
+      <LangiPickerModal />
     </>
   );
 };

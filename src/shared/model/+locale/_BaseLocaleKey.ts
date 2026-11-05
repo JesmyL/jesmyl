@@ -770,4 +770,6 @@ export const enum BaseLocaleKey {
   ScheduleEventAppInformWillBe = 751,
   ScheduleEventAppInformWontBe = 752,
   CmSmartSearch = 753,
+  SystemLanguage = 754,
+  AppLanguage = 755,
 }
