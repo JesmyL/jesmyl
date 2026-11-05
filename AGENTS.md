@@ -65,6 +65,7 @@
 
 #### Locale / locale-key work
 
+- Write `@deprecated #version` markers ONLY above `const enum` keys (`BaseLocaleKey`/`EditorLocaleKey`/`DynLocaleKey` etc.) — never above dictionary text entries in the locale files.
 - When cleaning locales: remove every key that is not referenced anywhere in the code and every `@deprecated #version` entry; never give a locale entry an empty string value `''` (mark unused entries `@deprecated #version` instead).
 - Renumber locale `const enum`s (`BaseLocaleKey`/`EditorLocaleKey`/`DynLocaleKey`) sequentially from 0 with no gaps; never rename enum keys, only change their values; never touch `[BaseLocaleKey.Langi]: Langi.Ru` or `[BaseLocaleKey.LocaleVersion]: 0`.
 - Group same-meaning texts together, separated from other groups by a blank line.
