@@ -144,10 +144,10 @@ export function ScheduleWidgetDayEvent(props: Props) {
     <div className="absolute left-0 bottom-0 ml-5 text-xs">
       {props.isLastEvent
         ? translateBase(BaseLocaleKey.ScheduleMinutesLeft, {
-            num: Math.ceil((eventFinishMs - now) / howMillisecondsInMin),
+            n: Math.ceil((eventFinishMs - now) / howMillisecondsInMin),
           })
         : translateBase(BaseLocaleKey.ScheduleAfterMinutes, {
-            num: Math.ceil((eventFinishMs - now) / howMillisecondsInMin),
+            n: Math.ceil((eventFinishMs - now) / howMillisecondsInMin),
           })}
     </div>
   );

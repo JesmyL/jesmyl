@@ -148,7 +148,7 @@ export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes = function SortBox
               setSortedUsers(nextUser ? [nextUser] : []);
             }}
             confirm={translateBase(BaseLocaleKey.ScheduleUnknownMemberConfirm, {
-              fio: takeScheduleWidgetUserName(rights, currUser),
+              f: takeScheduleWidgetUserName(rights, currUser),
             })}
             className={sortedUsers.length > 1 ? 'opacity-0' : undefined}
           />
@@ -157,7 +157,7 @@ export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes = function SortBox
             icon="MessageQuestion"
             onClick={() => setUnknownUsers([...unknownUsers, insertUser.mi])}
             confirm={translateBase(BaseLocaleKey.ScheduleUnknownMemberConfirm, {
-              fio: takeScheduleWidgetUserName(rights, insertUser),
+              f: takeScheduleWidgetUserName(rights, insertUser),
             })}
           />
         </div>

@@ -15,6 +15,7 @@ import {
   SchedulePeriodWeekday,
   scheduleAppInformValues,
 } from 'shared/api';
+import { Bool } from 'shared/enums';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { ScheduleWidgetStartTimeText } from '#widgets/schedule/complect/StartTimeText';
@@ -90,7 +91,7 @@ export const ScheduleWidgetControlContent = () => {
   const weekdayPeriod = period?.kind === SchedulePeriodKind.WeekdayOfMonth ? period : null;
   const selectedPeriodKind: SchedulePeriodKind | null =
     period == null || period.kind === SchedulePeriodKind.Once ? null : period.kind;
-  const pauseActionKey = schedule.isPaused ? BaseLocaleKey.ScheduleEnable : BaseLocaleKey.ScheduleDisable;
+  const pauseAction = translateBase(BaseLocaleKey.ScheduleEnable, { v: schedule.isPaused ?? Bool.False });
   const appInform = schedule.appInform ?? 0;
 
   return (
@@ -279,8 +280,8 @@ export const ScheduleWidgetControlContent = () => {
           <>
             <TheIconSendButton
               icon={schedule.isPaused ? 'Play' : 'Pause'}
-              postfix={translateBase(pauseActionKey)}
-              confirm={translateBase(pauseActionKey)}
+              postfix={pauseAction}
+              confirm={pauseAction}
               className="mb-2"
               onSend={() =>
                 schGeneralTsjrpcClient.setPaused({

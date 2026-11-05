@@ -1,13 +1,13 @@
 import { Langi, MenuComToolName } from 'shared/api';
 import { CmAdditionalCatKind } from 'shared/const/cm/enums';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
-import { LocaleBaseDelivered } from 'shared/model/+locale/base';
+import { LocaleBase } from 'shared/model/+locale/base';
 import { BibleTranslateName } from 'shared/model/bible';
 import { baseLocaleTemplate } from 'shared/utils/locale/templates';
 import { convertObjectToArray } from 'shared/utils/object.utils';
 import { FUNCTION, GENERATE, IF, isUtil, SWITCH } from 'shared/utils/stringTemplater';
 
-export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>({
+export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.Langi]: Langi.Ua,
   [BaseLocaleKey.LocaleVersion]: 0,
 
@@ -56,8 +56,8 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.CmForEachBlock]: 'Для кожного блоку "$n;"',
   [BaseLocaleKey.CmCanSelectMaximumCount]: `Можно вибрати максимум $s пісень`,
   [BaseLocaleKey.CmWatchedCount]: 'Перегляди пісень (заг. $c;)',
-  ...baseLocaleTemplate(BaseLocaleKey.CmWillAdd)`Додасться $c ${FUNCTION('dec')('$c', 'пісня', 'пісні', 'пісень')}`,
-  ...baseLocaleTemplate(BaseLocaleKey.CmWillLost)`Втратиться $c ${FUNCTION('dec')('$c', 'пісня', 'пісні', 'пісень')}`,
+  ...baseLocaleTemplate(BaseLocaleKey.CmWillAdd)`Додасться $c піс${FUNCTION('dec')('$c', 'ня', 'ні', 'ень')}`,
+  ...baseLocaleTemplate(BaseLocaleKey.CmWillLost)`Втратиться $c піс${FUNCTION('dec')('$c', 'ня', 'ні', 'ень')}`,
   [BaseLocaleKey.CmTwiceClickPrevious]: 'подвійний клік&nbsp;-\nпопередня пісня',
   [BaseLocaleKey.CmTwiceClickNext]: 'подвійний клік&nbsp;-\nнаступна пісня',
   [BaseLocaleKey.CmClickNextSlide]: 'клік&nbsp;-\nнаступний слайд',
@@ -140,7 +140,6 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
     'У режимі мінімальної кількості акордів вони присутні в блоках, де вперше зустрічаються або змінюються (для однойменних)',
   [BaseLocaleKey.CmGoToComList]: 'До списку пісень',
   [BaseLocaleKey.CmComs]: 'Пісні',
-  [BaseLocaleKey.CmComsList]: 'Список пісень',
   [BaseLocaleKey.CmShowComments]: 'Показати коменти',
   [BaseLocaleKey.CmAudioCached]: 'Додано «$n»: $d МБ. Зайнято: $t МБ. Вільно: $f МБ.',
   [BaseLocaleKey.CmAudioCachedNoQuota]: 'Додано «$n»: $d МБ. Зайнято: $t МБ.',
@@ -183,8 +182,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.QuestionerHeaderWithType]: 'Заголовок ($t;)',
   [BaseLocaleKey.QuestionerFullNameMissing]: 'Не вписані Прізвище та Імʼя',
   [BaseLocaleKey.QuestionerFullName]: 'Прізвище Імʼя',
-  [BaseLocaleKey.QuestionerMakeVisible]: 'Зробити видимим',
-  [BaseLocaleKey.QuestionerMakeInvisible]: 'Зробити невидимим',
+  ...baseLocaleTemplate(BaseLocaleKey.QuestionerMakeVisible)`Зробити ${IF('$v').THEN`не`}видимим`,
   [BaseLocaleKey.QuestionerVisibleAll]: 'Видимий за всіх умов',
   [BaseLocaleKey.QuestionerVisibleAny]: 'Видимий хоча б за однієї з умов',
   [BaseLocaleKey.QuestionerAnd]: 'І',
@@ -231,7 +229,9 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.QuestionerCommentRequiredFor]: 'Коментар "$t;" є обовʼязковим',
   [BaseLocaleKey.QuestionerSortValuesIn]: 'Потрібно відсортувати значення в пункті "$t;"',
   [BaseLocaleKey.QuestionerRestoreIn]: 'Потрібно відновити всі пропущені слова в пункті "$t;"',
-  ...baseLocaleTemplate(BaseLocaleKey.QuestionerVariantsNumber)`$n; ${FUNCTION('dec')('$n', 'варіант', 'варіанти', 'варіантів')}`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.QuestionerVariantsNumber,
+  )`$n; варіант${FUNCTION('dec')('$n', '', 'и', 'ів')}`,
 
   [BaseLocaleKey.Bible]: 'Біблія',
   [BaseLocaleKey.BibleChapter]: 'Глава',
@@ -321,13 +321,20 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.ScheduleTechBreak]: 'Тех. перерва',
   [BaseLocaleKey.ScheduleEndOfDay]: 'кінець дня',
   [BaseLocaleKey.ScheduleLessThanHour]: 'до початку менше години',
-  [BaseLocaleKey.ScheduleStartTomorrow]: 'початок завтра',
-  ...baseLocaleTemplate(BaseLocaleKey.ScheduleAfterMinutes)`через $num; ${FUNCTION('dec')('$num', 'хвилину', 'хвилини', 'хвилин')}`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.ScheduleAfterMinutes,
+  )`через $n; хвилин${FUNCTION('dec')('$n', 'у', 'и', '')}`,
   [BaseLocaleKey.ScheduleAtTime]: 'о $tm;',
-  ...baseLocaleTemplate(BaseLocaleKey.ScheduleBeforeHours)`до початку $num; ${FUNCTION('dec')('$num', 'годину', 'години', 'годин')}`,
-  ...baseLocaleTemplate(BaseLocaleKey.ScheduleBeforeDays)`до початку $num; ${FUNCTION('dec')('$num', 'день', 'дні', 'днів')}`,
-  [BaseLocaleKey.ScheduleThroughMinutes]: 'Через $num;хв.',
-  ...baseLocaleTemplate(BaseLocaleKey.ScheduleMinutesLeft)`залишил${FUNCTION('dec')('$num', 'ася', 'ося', 'ося')} $num; ${FUNCTION('dec')('$num', 'хвилина', 'хвилини', 'хвилин')}`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.ScheduleBeforeHours,
+  )`до початку $n; годин${FUNCTION('dec')('$n', 'у', 'и', '')}`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.ScheduleBeforeDays,
+  )`до початку $n; ${FUNCTION('dec')('$n', 'день', 'дні', 'днів')}`,
+  [BaseLocaleKey.ScheduleThroughMinutes]: 'Через $n;хв.',
+  ...baseLocaleTemplate(
+    BaseLocaleKey.ScheduleMinutesLeft,
+  )`залишил${FUNCTION('dec')('$n', 'ася', 'ося', 'ося')} $n; хвилин${FUNCTION('dec')('$n', 'а', 'и', '')}`,
   [BaseLocaleKey.ScheduleWillParticipate]: 'Буду брати участь',
   [BaseLocaleKey.ScheduleByLink]: 'за посиланням',
   [BaseLocaleKey.ScheduleByScheduleButton]: 'за кнопкою в розкладі',
@@ -408,7 +415,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.ScheduleUndefinedMembers]: 'Невизначені учасники ($n; ос.)',
   [BaseLocaleKey.ScheduleDistribute]: 'Розподілити',
   [BaseLocaleKey.ScheduleMembersDistributed]: 'Учасників розподілено',
-  [BaseLocaleKey.ScheduleUnknownMemberConfirm]: '$fio; - невідомий учасник?',
+  [BaseLocaleKey.ScheduleUnknownMemberConfirm]: '$f; - невідомий учасник?',
   [BaseLocaleKey.ScheduleWhoHasAdvantage]: 'У кого перевага?',
   [BaseLocaleKey.ScheduleMemberOverride]: 'Перевизначення учасника ($t;)',
   [BaseLocaleKey.ScheduleMembersDistribution]: 'Розподіл учасників ($t;) $n;/$m;',
@@ -418,7 +425,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.SchedulePreparation]: 'підготовка',
   [BaseLocaleKey.ScheduleDayNumber]: '$n; день',
   [BaseLocaleKey.ScheduleDayNumberComma]: '$n; день, ',
-  [BaseLocaleKey.ScheduleDayWordNumber]: ', день $num;',
+  [BaseLocaleKey.ScheduleDayWordNumber]: ', день $n;',
   [BaseLocaleKey.ScheduleDayTopic]: 'Тема дня',
   [BaseLocaleKey.ScheduleDayDescription]: 'Опис дня',
   [BaseLocaleKey.ScheduleDayRating]: 'Рейтинг дня: $t;',
@@ -454,7 +461,9 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.ScheduleContentUnavailable]: 'Вміст недоступний',
   [BaseLocaleKey.ScheduleSourceRemoved]: 'Джерело видалено',
   [BaseLocaleKey.ScheduleAddEventTemplate]: 'Додати шаблон події',
-  ...baseLocaleTemplate(BaseLocaleKey.ScheduleUsedCount)` вик. $num; ${FUNCTION('dec')('$num', 'раз', 'рази', 'разів')}`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.ScheduleUsedCount,
+  )` вик. $n; раз${FUNCTION('dec')('$n', '', 'и', 'ів')}`,
   [BaseLocaleKey.ScheduleNotUsed]: ' не використовується',
   [BaseLocaleKey.ScheduleTemplateRedact]: '- Редагування шаблону',
   [BaseLocaleKey.ScheduleAttachmentRedact]: '- Редагування вкладення',
@@ -556,7 +565,9 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.StoragesFromExcelTitle]: 'Формування карток з Excel файлу',
   [BaseLocaleKey.StoragesMatchFields]: 'Проведіть асоціації для полів:',
   [BaseLocaleKey.StoragesFormCards]: 'Сформувати картки',
-  ...baseLocaleTemplate(BaseLocaleKey.StoragesPartialFormed)`Не всі рядки з файлу були перетворені на картки. Коректно вдалося сформувати $n; ${FUNCTION('dec')('$n', 'картку', 'картки', 'карток')}`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.StoragesPartialFormed,
+  )`Не всі рядки з файлу були перетворені на картки. Коректно вдалося сформувати $n; карт${FUNCTION('dec')('$n', 'ку', 'ки', 'ок')}`,
   [BaseLocaleKey.StoragesMetadata]: 'Мета-дані',
   [BaseLocaleKey.StoragesRemoveMetadataConfirm]: 'Видалити мета-інформацію?',
   [BaseLocaleKey.StoragesNewStatus]: 'Новий статус',
@@ -652,8 +663,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.ConfigPromptHeader]: 'Заповни',
   [BaseLocaleKey.ConfigAccept]: 'Прийняти',
   [BaseLocaleKey.ConfigTextCopied]: 'Текст скопійовано',
-  [BaseLocaleKey.ConfigPickFile]: 'Вибрати файл',
-  [BaseLocaleKey.ConfigPickFiles]: 'Вибрати файли',
+  ...baseLocaleTemplate(BaseLocaleKey.ConfigPickFile)`Вибрати файл${IF('$v').THEN`и`}`,
   [BaseLocaleKey.ConfigDate]: 'Дата',
   [BaseLocaleKey.ConfigTextCaseCapitalize]: 'Перше з великої',
   [BaseLocaleKey.ConfigTextCaseAsIs]: 'так Як є',
@@ -747,7 +757,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
     'Перейти в нього\nНатиснути кнопку "Авторизуватися" в закрепі\nВвести код з особистого повідомлення від бота сюди:',
   [BaseLocaleKey.TelegramStartBot]: 'Запустити бота',
   [BaseLocaleKey.TelegramAuthorizationNeeds]: 'Для авторизації потрібно',
-  [BaseLocaleKey.EmailBoundToCurrentAccount]: "$fio прив'язаний до поточного акаунта",
+  [BaseLocaleKey.EmailBoundToCurrentAccount]: "$f прив'язаний до поточного акаунта",
   [BaseLocaleKey.EmailCodeSent]: 'Код надіслано на пошту $e',
   [BaseLocaleKey.EmailToBind]: "Прив'язати E-mail",
   [BaseLocaleKey.EmailLabel]: 'E-mail',
@@ -771,7 +781,9 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.NumberSeconds]: '$n сек.',
   [BaseLocaleKey.Detailed]: 'Детальніше',
   [BaseLocaleKey.FontSize]: 'Розмір шрифту',
-  ...baseLocaleTemplate(BaseLocaleKey.LookedNumberTimes)`Переглянули $n; ${FUNCTION('dec')('$n', 'раз', 'рази', 'разів')}`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.LookedNumberTimes,
+  )`Переглянули $n; раз${FUNCTION('dec')('$n', '', 'и', 'ів')}`,
   [BaseLocaleKey.ToAdd]: 'Додати',
   [BaseLocaleKey.NumberDay]: '$n;-й день',
   [BaseLocaleKey.SavedLocally]: 'Збережено локально',
@@ -816,45 +828,35 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.SchedulePushPermissionDenied]:
     'Сповіщення заборонено. Дозвольте їх у налаштуваннях браузера або телефона: застосунок → Сповіщення',
   [BaseLocaleKey.SchedulePushSubscribeError]: 'Не вдалося увімкнути сповіщення. Спробуйте ще раз',
-  [BaseLocaleKey.ScheduleAppInform]: 'Сповіщення в застосунку',
 
-  ...baseLocaleTemplate(BaseLocaleKey.ScheduleInformStatus)`${IF('$v').THEN`Нагадувати ${IF('$n').THEN`за $n хв. і `.ELSE`лише `}на початку`.ELSE`Нагадування вимкнено`}`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.ScheduleInformStatus,
+  )`${IF('$v').THEN`Нагадувати ${IF('$n').THEN`за $n хв. і `.ELSE`лише `}на початку`.ELSE`Нагадування вимкнено`}`,
   [BaseLocaleKey.ScheduleInformOnlyByStart]: 'Нагадувати лише на початку',
   [BaseLocaleKey.ScheduleInformBefore]: 'Нагадувати за $n хв.',
   [BaseLocaleKey.ScheduleEventAppInformWillBe]: 'Сповіщення буде за $n хвилин',
   [BaseLocaleKey.ScheduleEventAppInformWontBe]: 'Сповіщення не буде',
   [BaseLocaleKey.ScheduleInformDisabled]: 'Вимкнено',
-  [BaseLocaleKey.ScheduleUserNotReceiveInform]: 'Учасник не отримує повідомлення',
-  [BaseLocaleKey.ScheduleUserReceiveInform]: 'Учасник отримує повідомлення',
-  [BaseLocaleKey.ScheduleDontInformMe]: 'Не нагадувати мені',
-  [BaseLocaleKey.ScheduleInformMe]: 'Нагадувати мені',
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleUserReceiveInform)`Учасник ${IF('$v').THEN`не `}отримує повідомлення`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleInformMe)`Н${IF('$v').THEN`е н`}агадувати мені`,
   [BaseLocaleKey.ScheduleInformMuteFor]: 'Вимкнути на час',
   [BaseLocaleKey.ScheduleInformMute1Hour]: '1 годину',
   [BaseLocaleKey.ScheduleInformMute4Hours]: '4 години',
   [BaseLocaleKey.ScheduleInformMute8Hours]: '8 годин',
   [BaseLocaleKey.ScheduleInformMute1Day]: '1 день',
   [BaseLocaleKey.ScheduleInformMute7Days]: '7 днів',
-  [BaseLocaleKey.ScheduleInformSoundOff]: 'Вимкнути звук',
-  [BaseLocaleKey.ScheduleInformSoundOn]: 'Увімкнути звук',
-  [BaseLocaleKey.ScheduleInformOff]: 'Вимкнути сповіщення',
-  [BaseLocaleKey.ScheduleInformOn]: 'Увімкнути сповіщення',
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleInformSoundOn)`${IF('$v').THEN`Уві`.ELSE`Ви`}мкнути звук`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleInformOn)`${IF('$v').THEN`Уві`.ELSE`Ви`}мкнути сповіщення`,
   [BaseLocaleKey.ScheduleInformUntil]: 'До $d',
   [BaseLocaleKey.ScheduleInformResume]: 'Увімкнути знову',
   [BaseLocaleKey.ScheduleInvite]: 'Запрошення',
   [BaseLocaleKey.SchedulePeriodicity]: 'Періодичність',
-  [BaseLocaleKey.SchedulePeriodWeekly]: 'Раз на тиждень',
-  [BaseLocaleKey.SchedulePeriodMonthDay]: 'Раз на місяць, $d-е число',
-  [BaseLocaleKey.SchedulePeriodWeekdayOfMonth]: '$n-й тиждень, $d',
-  [BaseLocaleKey.ScheduleLastOpened]: 'Останнє відкрите',
   [BaseLocaleKey.ScheduleMyParticipation]: 'Моя участь',
   [BaseLocaleKey.ScheduleMyRole]: 'Моя роль',
   [BaseLocaleKey.ScheduleLeave]: 'Покинути',
   [BaseLocaleKey.ScheduleLeaveConfirm]: 'Покинути захід?',
   [BaseLocaleKey.SchedulePassedPlural]: 'Минулі заходи',
-  [BaseLocaleKey.SchedulePeriodEachWeekday]: 'Кожен $d',
-  [BaseLocaleKey.ScheduleNearest]: 'Наступне',
-  [BaseLocaleKey.ScheduleDisable]: 'Вимкнути',
-  [BaseLocaleKey.ScheduleEnable]: 'Увімкнути',
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleEnable)`${IF('$v').THEN`Уві`.ELSE`Ви`}мкнути`,
   [BaseLocaleKey.SchedulePausedPlural]: 'Вимкнені',
   [BaseLocaleKey.ScheduleMoreThanYear]: 'Понад рік',
   [BaseLocaleKey.ScheduleAddUserByQr]: 'Додати користувача за QR',
@@ -864,8 +866,6 @@ export const localeBaseUa = convertObjectToArray<LocaleBaseDelivered<Langi.Ua>>(
   [BaseLocaleKey.ScheduleUserAdded]: 'Користувача додано до розкладу',
   [BaseLocaleKey.PushNotifications]: 'Push-повідомлення',
 
-  ...baseLocaleTemplate(BaseLocaleKey.NumberSymbols)`$n; ${FUNCTION('dec')('$n', 'символ', 'символи', 'символів')}`,
+  ...baseLocaleTemplate(BaseLocaleKey.NumberSymbols)`$n; символ${FUNCTION('dec')('$n', '', 'и', 'ів')}`,
 
-  [BaseLocaleKey.PresentationsShowSlide]: '',
-  [BaseLocaleKey.PresentationsDropFile]: '',
 });

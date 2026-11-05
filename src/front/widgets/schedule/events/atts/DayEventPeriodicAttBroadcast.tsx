@@ -49,7 +49,7 @@ export function ScheduleWidgetDayEventPeriodicBroadcast(props: {
 
           title =
             weekdayShort((date.getDay() + dayi) % 7) +
-            translateBase(BaseLocaleKey.ScheduleDayWordNumber, { num: dayi + 1 });
+            translateBase(BaseLocaleKey.ScheduleDayWordNumber, { n: dayi + 1 });
           break;
         }
         case AttTranslatorType.Today: {

@@ -13,7 +13,7 @@ export const IndexUserMoreBindEmailModal = ({ openAtom }: { openAtom: Atom<boole
       onSend={email => indexTsjrpcClientMethods.sendBindEmailOTP({ email })}
       onConfirm={async otp => {
         const { fioOrNick } = await indexTsjrpcClientMethods.bindEmailByOTP({ otp });
-        toast(translateBase(BaseLocaleKey.EmailBoundToCurrentAccount, { fio: fioOrNick }), makeToastOKMoodConfig());
+        toast(translateBase(BaseLocaleKey.EmailBoundToCurrentAccount, { f: fioOrNick }), makeToastOKMoodConfig());
         openAtom.set(false);
       }}
     />

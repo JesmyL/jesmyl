@@ -1,3 +1,4 @@
+import { Bool } from 'shared/enums';
 import { StringTemplaterInterpolation } from 'shared/utils/stringTemplater/model';
 import { EditorLocaleKey } from './_EditorLocaleKey';
 import { LocaleSimpleString } from './model';
@@ -37,7 +38,7 @@ export type LocaleCmEditor = {
   [EditorLocaleKey.CmSelectChordEdit]: LocaleSimpleString;
   [EditorLocaleKey.CmUnknownChordsCount]: StringTemplaterInterpolation<{ n: number }>;
   [EditorLocaleKey.CmNoEditorsMore]: LocaleSimpleString;
-  [EditorLocaleKey.CmEditsToo]: StringTemplaterInterpolation<{ m: boolean; l: string }>;
+  [EditorLocaleKey.CmEditsToo]: StringTemplaterInterpolation<{ m: boolean | Bool; l: string }>;
   [EditorLocaleKey.CmEdits]: StringTemplaterInterpolation<{ f: string }>;
   [EditorLocaleKey.CmComRemoved]: LocaleSimpleString;
   [EditorLocaleKey.CmComeBack]: LocaleSimpleString;
@@ -181,8 +182,6 @@ export type LocaleCmEditor = {
   [EditorLocaleKey.VisitsOnline]: LocaleSimpleString;
   [EditorLocaleKey.VisitsToday]: LocaleSimpleString;
   [EditorLocaleKey.VisitsUnique]: LocaleSimpleString;
-  [EditorLocaleKey.VisitsVisitors]: LocaleSimpleString;
-  [EditorLocaleKey.VisitsMessages]: LocaleSimpleString;
   [EditorLocaleKey.VisitsTodayByHour]: LocaleSimpleString;
   [EditorLocaleKey.VisitsSupport]: LocaleSimpleString;
   [EditorLocaleKey.VisitsLog]: LocaleSimpleString;
@@ -203,7 +202,6 @@ export type LocaleCmEditor = {
   [EditorLocaleKey.VisitsVisitErrors]: LocaleSimpleString;
   [EditorLocaleKey.VisitsAnonSummary]: StringTemplaterInterpolation<{ u: number; v: number }>;
   [EditorLocaleKey.VisitsVersions]: LocaleSimpleString;
-  [EditorLocaleKey.VisitsAllVersions]: LocaleSimpleString;
   [EditorLocaleKey.VisitsMinVersions]: LocaleSimpleString;
   [EditorLocaleKey.VisitsSendReport]: LocaleSimpleString;
   [EditorLocaleKey.VisitsReportSent]: StringTemplaterInterpolation<{ e: string }>;

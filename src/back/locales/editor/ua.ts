@@ -2,7 +2,7 @@ import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { LocaleCmEditor } from 'shared/model/+locale/editor';
 import { editorLocaleTemplate } from 'shared/utils/locale/templates';
 import { convertObjectToArray } from 'shared/utils/object.utils';
-import { FUNCTION, IF, SWITCH } from 'shared/utils/stringTemplater';
+import { FUNCTION, IF, isUtil, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeEditorUa = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.LocaleVersion]: 0,
@@ -11,7 +11,7 @@ export const localeEditorUa = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.CmIntensity]: 'Інтенсивність',
   [EditorLocaleKey.CmEditSquareBracketsHint]:
     'Текст у [квадратних дужках] не показується в слайдах, але зводиться до (тексту в круглих дужках) у тексті пісень. Використовуйте [[дві відкривальні дужки] для перенесення рядка. Перед "[" має бути пробіл, а після "]" не повинно бути нічого',
-  ...editorLocaleTemplate(EditorLocaleKey.CmEditIsRemoveTextBlock, ['$t'])`Видалити${IF('$t').ELSE` новий`} блок?\n\n$t`,
+  ...editorLocaleTemplate(EditorLocaleKey.CmEditIsRemoveTextBlock, ['$t'])`Видалити${IF(isUtil.EQ('$t', '')).THEN` новий`} блок?\n\n$t`,
   [EditorLocaleKey.CmEditRemovedComs]: 'Видалені пісні',
   [EditorLocaleKey.CmEditBackup]: 'Відновити цю пісню',
   [EditorLocaleKey.CmEditDestroy]: 'Знищити цю пісню',
@@ -140,7 +140,7 @@ export const localeEditorUa = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.CmEditorFretNumber]: 'Лад $n;',
   [EditorLocaleKey.CmEditorInterpretationEdit]: 'Редагування інтерпретації для заходу',
   [EditorLocaleKey.CmEditorIncludeBibleWords]: 'включати біблійні слова',
-  ...editorLocaleTemplate(EditorLocaleKey.CmEditorSendWords)`Надіслати $n; ${FUNCTION('dec')('$n', 'слово', 'слова', 'слів')}`,
+  ...editorLocaleTemplate(EditorLocaleKey.CmEditorSendWords)`Надіслати $n; сл${FUNCTION('dec')('$n', 'ово', 'ова', 'ів')}`,
   [EditorLocaleKey.CmEditorLinkPartHide]: 'Зробити $n;-у частину посилання на $h; невидимою?',
   [EditorLocaleKey.CmEditorLinkPartShow]: 'Зробити $n;-у частину посилання на $h; видимою?',
   [EditorLocaleKey.CmEditorAppliqueDestroyed]: 'Ця дія призведе до знищення аплікатури в цьому блоці.',
@@ -191,8 +191,6 @@ export const localeEditorUa = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsOnline]: 'Онлайн',
   [EditorLocaleKey.VisitsToday]: 'Візитів сьогодні',
   [EditorLocaleKey.VisitsUnique]: 'Унікальних відвідувачів',
-  [EditorLocaleKey.VisitsVisitors]: 'Відвідувачі',
-  [EditorLocaleKey.VisitsMessages]: 'Повідомлення',
   [EditorLocaleKey.VisitsTodayByHour]: 'Відвідування за сьогодні, за годинами',
   [EditorLocaleKey.VisitsSupport]: 'Підтримка',
   [EditorLocaleKey.VisitsLog]: 'Лог',
@@ -210,13 +208,12 @@ export const localeEditorUa = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsHistoryCount]: '$l - $c візитів',
   [EditorLocaleKey.VisitsAverage]: 'Середні відвідування',
   [EditorLocaleKey.VisitsAveragePeriod]: '$l - $c у середньому за день',
-  [EditorLocaleKey.VisitsVisitErrors]: 'Визиты',
+  [EditorLocaleKey.VisitsVisitErrors]: 'Візити',
   [EditorLocaleKey.VisitsAnonSummary]: '$u унікальних, $v відвідувань',
   [EditorLocaleKey.VisitsVersions]: 'Візити за версіями',
-  [EditorLocaleKey.VisitsAllVersions]: 'Візити за версіями за весь час',
   [EditorLocaleKey.VisitsMinVersions]: 'Мінімальні версії за днями',
   [EditorLocaleKey.VisitsSendReport]: 'Надіслати звіт на e-mail',
-  [EditorLocaleKey.VisitsReportSent]: 'Отправлено на $e',
-  [EditorLocaleKey.VisitsOnlineByHour]: 'Онлайн по часам',
+  [EditorLocaleKey.VisitsReportSent]: 'Надіслано на $e',
+  [EditorLocaleKey.VisitsOnlineByHour]: 'Онлайн за годинами',
   [EditorLocaleKey.VisitsOnlineHourPeriod]: '$f-$t - мін $n — макс $x',
 });

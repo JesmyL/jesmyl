@@ -35,7 +35,7 @@ export const ScheduleWidgetMyUserAppInform = () => {
 
   const title = isMuted
     ? translateBase(BaseLocaleKey.ScheduleInformUntil, { d: makeDateLabel(mutedUntil, languageSystemCode) })
-    : translateBase(willReceiveInform ? BaseLocaleKey.ScheduleInformMe : BaseLocaleKey.ScheduleDontInformMe);
+    : translateBase(BaseLocaleKey.ScheduleInformMe, { v: !willReceiveInform });
 
   const applyMuteUntil = (until: number) =>
     toastApplied(
@@ -48,13 +48,15 @@ export const ScheduleWidgetMyUserAppInform = () => {
   const switchSound = () =>
     toastApplied(
       toggleSilent(),
-      translateBase(isSilent === Bool.True ? BaseLocaleKey.ScheduleInformSoundOn : BaseLocaleKey.ScheduleInformSoundOff),
+      translateBase(BaseLocaleKey.ScheduleInformSoundOn, { v: isSilent }),
     );
 
   const switchNotifications = () =>
     toastApplied(
       toggle(),
-      translateBase(isSubscribed === Bool.True ? BaseLocaleKey.ScheduleInformOff : BaseLocaleKey.ScheduleInformOn),
+      translateBase(BaseLocaleKey.ScheduleInformOn, {
+        v: isSubscribed === Bool.True ? Bool.False : Bool.True,
+      }),
     );
 
   return (
@@ -95,19 +97,17 @@ export const ScheduleWidgetMyUserAppInform = () => {
             )}
             <DropdownMenu.Item onClick={switchSound}>
               <LazyIcon icon={isSilent === Bool.True ? 'VolumeHigh' : 'VolumeOff'} />
-              {translateBase(
-                isSilent === Bool.True ? BaseLocaleKey.ScheduleInformSoundOn : BaseLocaleKey.ScheduleInformSoundOff,
-              )}
+              {translateBase(BaseLocaleKey.ScheduleInformSoundOn, { v: isSilent })}
             </DropdownMenu.Item>
             <DropdownMenu.Item onClick={switchNotifications}>
               <LazyIcon icon="NotificationOff01" />
-              {translateBase(BaseLocaleKey.ScheduleInformOff)}
+              {translateBase(BaseLocaleKey.ScheduleInformOn, { v: Bool.False })}
             </DropdownMenu.Item>
           </>
         ) : (
           <DropdownMenu.Item onClick={switchNotifications}>
             <LazyIcon icon="Notification01" />
-            {translateBase(BaseLocaleKey.ScheduleInformOn)}
+            {translateBase(BaseLocaleKey.ScheduleInformOn, { v: Bool.True })}
           </DropdownMenu.Item>
         )}
       </DropdownMenu.Content>

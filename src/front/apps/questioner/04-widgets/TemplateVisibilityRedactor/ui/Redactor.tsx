@@ -31,9 +31,9 @@ export const QuestionerTemplateVisibilityRedactor = ({
         className={twMerge(template?.hidden && 'text-x7', 'my-5')}
         onClick={() => questionerAdminTsjrpcClient.switchTemplateHiddenSign({ blankw, templateId })}
       >
-        {template?.hidden
-          ? translateBase(BaseLocaleKey.QuestionerMakeVisible)
-          : translateBase(BaseLocaleKey.QuestionerMakeInvisible)}
+        {translateBase(BaseLocaleKey.QuestionerMakeVisible, {
+          v: template?.hidden !== 1,
+        })}
       </Button>
       {template && blank && !template.hidden && objectLength(blank.tmp) > 1 && (
         <QuestionerTemplateVisibilityRedactorModalBodyInner

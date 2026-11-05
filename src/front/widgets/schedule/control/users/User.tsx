@@ -160,7 +160,8 @@ const ScheduleWidgetUserInform = ({ userLogin, willReceiveInform }: InformProps)
       <TheIconButton
         icon={isInformReceivable ? 'Notification01' : 'NotificationOff01'}
         postfix={translateBase(
-          isInformReceivable ? BaseLocaleKey.ScheduleUserReceiveInform : BaseLocaleKey.ScheduleUserNotReceiveInform,
+          BaseLocaleKey.ScheduleUserReceiveInform,
+          { v: !isInformReceivable },
         )}
         disabled
       />
@@ -168,7 +169,8 @@ const ScheduleWidgetUserInform = ({ userLogin, willReceiveInform }: InformProps)
         <TheIconButton
           icon={pushInfo.isSilent === Bool.True ? 'VolumeOff' : 'VolumeHigh'}
           postfix={translateBase(
-            pushInfo.isSilent === Bool.True ? BaseLocaleKey.ScheduleInformSoundOff : BaseLocaleKey.ScheduleInformSoundOn,
+            BaseLocaleKey.ScheduleInformSoundOn,
+            { v: pushInfo.isSilent !== Bool.True },
           )}
           disabled
         />

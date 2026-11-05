@@ -114,7 +114,7 @@ export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCount
                   <div className={'text-right' + (usedCounts[typei] ? '' : ' text-xKO')}>
                     {typeBox.title}
                     {usedCounts[typei]
-                      ? translateBase(BaseLocaleKey.ScheduleUsedCount, { num: usedCounts[typei] })
+                      ? translateBase(BaseLocaleKey.ScheduleUsedCount, { n: usedCounts[typei] })
                       : translateBase(BaseLocaleKey.ScheduleNotUsed)}
                   </div>
                 ) : null}

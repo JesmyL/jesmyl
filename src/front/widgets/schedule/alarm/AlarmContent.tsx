@@ -200,7 +200,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
 
                 if (dayStartMs - now < howMillisecondsInHour) {
                   const minutesTo = Math.ceil((dayStartMs - now) / howMillisecondsInMin);
-                  timeMessage = translateBase(BaseLocaleKey.ScheduleAfterMinutes, { num: minutesTo });
+                  timeMessage = translateBase(BaseLocaleKey.ScheduleAfterMinutes, { n: minutesTo });
                 } else
                   timeMessage = translateBase(BaseLocaleKey.ScheduleAtTime, {
                     tm: ScheduleWidgetCleans.computeDayWakeUpTime(currDay.wup, 'string'),
@@ -295,7 +295,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
                         </div>
                         {nextEvent === null || nextEventType === null || (
                           <div className="flex gap-5">
-                            <span>{translateBase(BaseLocaleKey.ScheduleThroughMinutes, { num: minTo })}</span>
+                            <span>{translateBase(BaseLocaleKey.ScheduleThroughMinutes, { n: minTo })}</span>
                             {nextEventType === undefined ? (
                               <div>{translateBase(BaseLocaleKey.ScheduleEndOfDay)}</div>
                             ) : (

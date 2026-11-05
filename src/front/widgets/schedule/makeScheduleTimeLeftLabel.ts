@@ -14,7 +14,7 @@ export const makeScheduleTimeLeftLabel = (startMs: number, nowMs: number, langCo
 
   const startDate = new Date(startMs);
   if (isSameDay(startDate, new Date(nowMs)))
-    return translateBase(BaseLocaleKey.ScheduleBeforeHours, { num: Math.floor(msTo / howMillisecondsInHour) });
+    return translateBase(BaseLocaleKey.ScheduleBeforeHours, { n: Math.floor(msTo / howMillisecondsInHour) });
 
   const tomorrowDate = new Date(nowMs);
   tomorrowDate.setDate(tomorrowDate.getDate() + 1);
@@ -22,5 +22,5 @@ export const makeScheduleTimeLeftLabel = (startMs: number, nowMs: number, langCo
 
   if (msTo > howMillisecondsInYear) return translateBase(BaseLocaleKey.ScheduleMoreThanYear);
 
-  return translateBase(BaseLocaleKey.ScheduleBeforeDays, { num: Math.ceil(msTo / howMillisecondsInDay) });
+  return translateBase(BaseLocaleKey.ScheduleBeforeDays, { n: Math.ceil(msTo / howMillisecondsInDay) });
 };

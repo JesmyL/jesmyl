@@ -59,10 +59,20 @@
 - Do not add new locale texts when existing keys can be reused — search the existing BaseLocaleKey entries first and only add a new key if no existing text fits.
 - In translated text/locale keys, name interpolation placeholders with single letters — e.g. `$d`/`$t`/`$f` instead of `$track`/`$total`/`$free` — and map descriptive local variables to them at the call site (e.g. `Удалено: $d МБ. Занято: $t МБ. Свободно: $f МБ.`).
 - In conditional locale texts, maximally contract `IF(...).THEN\`...\`.ELSE\`...\` templates — move the shared part out of the branches and keep only the differing prefix/suffix inside them (e.g. `Уведомления в приложении: ${IF('$v').THEN\`в\`.ELSE\`от\`}ключены`, `App notifications: ${IF('$v').THEN\`en\`.ELSE\`dis\`}abled`).
+
+#### Locale / locale-key work
+
+- When cleaning locales: remove every key that is not referenced anywhere in the code and every `@deprecated #version` entry; never give a locale entry an empty string value `''` (mark unused entries `@deprecated #version` instead).
+- Renumber locale `const enum`s (`BaseLocaleKey`/`EditorLocaleKey`/`DynLocaleKey`) sequentially from 0 with no gaps; never rename enum keys, only change their values; never touch `[BaseLocaleKey.Langi]: Langi.Ru` or `[BaseLocaleKey.LocaleVersion]: 0`.
+- Group same-meaning texts together, separated from other groups by a blank line.
+- Prefer toggle texts (`IF`/`THEN`/`ELSE`) for interchangeable texts that differ in a small part; locale `IF` toggles must never have an empty `THEN` or `ELSE` branch — move the shared prefix/suffix outside the `IF` and invert the call-site boolean to drop the empty branch (e.g. `Н${IF('$v').THEN\`е н\`}апоминать мне`).
+- Locale boolean interpolation values are typed `boolean | Bool` — call sites pass raw boolean expressions directly; never write `cond ? Bool.True : Bool.False` conversions for locale interpolations.
+- Whenever locale texts change in a way that affects delivered locale dictionaries (merges, contractions, key changes), ALWAYS ask the user whether to bump `editorLocaleMinVersion`/`baseLocaleMinVersion` in `src/back/apps/index/tsjrpc.base/lib/requestFreshes.ts` — never bump them on your own initiative.
+- Contract words in `FUNCTION('dec')`/plural and `IF` constructions when the shared part is ~50% or more of the words; below that keep full words (e.g. `видим`/`невидим`, `song`/`songs` → `song${...'', 's'}` are contractible; do not contract pairs with less than half shared).
 - Never write blind type casts like `as CmAudioTail` (branded/type asserts on unverified data) — write proper types and parse/validate at the boundary so the casts become unnecessary.
 - Never use `throw new Error('...')` — always throw the plain string: `throw '...'`. Catch-sites must treat thrown values as strings, not Error instances.
 - In this project, the term `songs` is not used — the correct name is `coms` (short for "compositions"). Name variables, types, files and identifiers accordingly.
-- Unused locale entries (keys no longer referenced anywhere in the code): do NOT blank their texts to `''` — instead mark each unused entry as `@deprecated #version`, where `#version` is the current `num` value read from `src/shared/values/+version.json` (e.g. `@deprecated 12`).
+- Locale entries must NEVER be given an empty string value `''` (e.g. `[BaseLocaleKey.CmComReplaceConfirm]: '',` is forbidden): for any locale key whose text is no longer needed (unused/unreferenced), instead mark the entry as `@deprecated #version`, where `#version` is the current `num` value read from `src/shared/values/+version.json` (e.g. `@deprecated 12`).
 - Inside useLiveQuery the callback must contain no extra logic and must return raw Dexie values only (or undefined to skip querying when there is nothing to fetch); never wrap/transform results inside — do it outside via useMemo (e.g. new CmCat(icat)).
 - NEVER modify, remove, or revert any code, files, or config beyond exactly what the user explicitly asked for. Only touch what the task requires. Before deleting or altering anything not directly requested, stop and ask the user. (Никогда не изменяй, не удаляй и не откатывай код/файлы/конфиги сверх того, что пользователь явно попросил.)
 - After modifying any file, format it with eslint-prettier (e.g. `npx eslint <file> --fix`) before finishing the task.

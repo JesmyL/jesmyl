@@ -1,5 +1,6 @@
 import { Langi, MenuComToolName } from 'shared/api';
 import type { CmAdditionalCatKind } from 'shared/const/cm/enums';
+import { Bool } from 'shared/enums';
 import { StringTemplaterInterpolation } from 'shared/utils/stringTemplater/model';
 import { BibleTranslateName } from '../bible';
 import { BaseLocaleKey } from './_BaseLocaleKey';
@@ -131,8 +132,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.QuestionerHeaderWithType]: StringTemplaterInterpolation<{ t: string }>;
   [BaseLocaleKey.QuestionerFullNameMissing]: LocaleSimpleString;
   [BaseLocaleKey.QuestionerFullName]: LocaleSimpleString;
-  [BaseLocaleKey.QuestionerMakeVisible]: LocaleSimpleString;
-  [BaseLocaleKey.QuestionerMakeInvisible]: LocaleSimpleString;
+  [BaseLocaleKey.QuestionerMakeVisible]: StringTemplaterInterpolation<{ v: boolean | Bool }>;
   [BaseLocaleKey.QuestionerVisibleAll]: LocaleSimpleString;
   [BaseLocaleKey.QuestionerVisibleAny]: LocaleSimpleString;
   [BaseLocaleKey.QuestionerAnd]: LocaleSimpleString;
@@ -250,13 +250,12 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.ScheduleTechBreak]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleEndOfDay]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleLessThanHour]: LocaleSimpleString;
-  [BaseLocaleKey.ScheduleStartTomorrow]: LocaleSimpleString;
-  [BaseLocaleKey.ScheduleAfterMinutes]: StringTemplaterInterpolation<{ num: number }>;
+  [BaseLocaleKey.ScheduleAfterMinutes]: StringTemplaterInterpolation<{ n: number }>;
   [BaseLocaleKey.ScheduleAtTime]: StringTemplaterInterpolation<{ tm: string }>;
-  [BaseLocaleKey.ScheduleBeforeHours]: StringTemplaterInterpolation<{ num: number }>;
-  [BaseLocaleKey.ScheduleBeforeDays]: StringTemplaterInterpolation<{ num: number }>;
-  [BaseLocaleKey.ScheduleThroughMinutes]: StringTemplaterInterpolation<{ num: number }>;
-  [BaseLocaleKey.ScheduleMinutesLeft]: StringTemplaterInterpolation<{ num: number }>;
+  [BaseLocaleKey.ScheduleBeforeHours]: StringTemplaterInterpolation<{ n: number }>;
+  [BaseLocaleKey.ScheduleBeforeDays]: StringTemplaterInterpolation<{ n: number }>;
+  [BaseLocaleKey.ScheduleThroughMinutes]: StringTemplaterInterpolation<{ n: number }>;
+  [BaseLocaleKey.ScheduleMinutesLeft]: StringTemplaterInterpolation<{ n: number }>;
   [BaseLocaleKey.ScheduleWillParticipate]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleByLink]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleByScheduleButton]: LocaleSimpleString;
@@ -337,7 +336,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.ScheduleUndefinedMembers]: StringTemplaterInterpolation<{ n: number }>;
   [BaseLocaleKey.ScheduleDistribute]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleMembersDistributed]: LocaleSimpleString;
-  [BaseLocaleKey.ScheduleUnknownMemberConfirm]: StringTemplaterInterpolation<{ fio: string }>;
+  [BaseLocaleKey.ScheduleUnknownMemberConfirm]: StringTemplaterInterpolation<{ f: string }>;
   [BaseLocaleKey.ScheduleWhoHasAdvantage]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleMemberOverride]: StringTemplaterInterpolation<{ t: string }>;
   [BaseLocaleKey.ScheduleMembersDistribution]: StringTemplaterInterpolation<{ t: string; n: number; m: number }>;
@@ -347,7 +346,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.SchedulePreparation]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleDayNumber]: StringTemplaterInterpolation<{ n: number }>;
   [BaseLocaleKey.ScheduleDayNumberComma]: StringTemplaterInterpolation<{ n: number }>;
-  [BaseLocaleKey.ScheduleDayWordNumber]: StringTemplaterInterpolation<{ num: number }>;
+  [BaseLocaleKey.ScheduleDayWordNumber]: StringTemplaterInterpolation<{ n: number }>;
   [BaseLocaleKey.ScheduleDayTopic]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleDayDescription]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleDayRating]: StringTemplaterInterpolation<{ t: number }>;
@@ -383,7 +382,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.ScheduleContentUnavailable]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleSourceRemoved]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleAddEventTemplate]: LocaleSimpleString;
-  [BaseLocaleKey.ScheduleUsedCount]: StringTemplaterInterpolation<{ num: number }>;
+  [BaseLocaleKey.ScheduleUsedCount]: StringTemplaterInterpolation<{ n: number }>;
   [BaseLocaleKey.ScheduleNotUsed]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleTemplateRedact]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleAttachmentRedact]: LocaleSimpleString;
@@ -445,7 +444,6 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.ScheduleChooseStreamer]: LocaleSimpleString;
   [BaseLocaleKey.SchedulePushPermissionDenied]: LocaleSimpleString;
   [BaseLocaleKey.SchedulePushSubscribeError]: LocaleSimpleString;
-  [BaseLocaleKey.ScheduleAppInform]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleNoSignificantChars]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleMustNotBeEmpty]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleAlreadyExists]: StringTemplaterInterpolation<{ t: string }>;
@@ -534,7 +532,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.TelegramSteps]: LocaleSimpleString;
   [BaseLocaleKey.TelegramStartBot]: LocaleSimpleString;
   [BaseLocaleKey.TelegramAuthorizationNeeds]: LocaleSimpleString;
-  [BaseLocaleKey.EmailBoundToCurrentAccount]: StringTemplaterInterpolation<{ fio: string }>;
+  [BaseLocaleKey.EmailBoundToCurrentAccount]: StringTemplaterInterpolation<{ f: string }>;
   [BaseLocaleKey.EmailCodeSent]: StringTemplaterInterpolation<{ e: string }>;
   [BaseLocaleKey.EmailToBind]: LocaleSimpleString;
   [BaseLocaleKey.EmailLabel]: LocaleSimpleString;
@@ -679,8 +677,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.ConfigPromptHeader]: LocaleSimpleString;
   [BaseLocaleKey.ConfigAccept]: LocaleSimpleString;
   [BaseLocaleKey.ConfigTextCopied]: LocaleSimpleString;
-  [BaseLocaleKey.ConfigPickFile]: LocaleSimpleString;
-  [BaseLocaleKey.ConfigPickFiles]: LocaleSimpleString;
+  [BaseLocaleKey.ConfigPickFile]: StringTemplaterInterpolation<{ v: boolean | Bool }>;
   [BaseLocaleKey.ConfigDate]: LocaleSimpleString;
   [BaseLocaleKey.ConfigTextCaseCapitalize]: LocaleSimpleString;
   [BaseLocaleKey.ConfigTextCaseAsIs]: LocaleSimpleString;
@@ -737,47 +734,35 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.CmAudioUncached]: CmAudioCacheToastText;
   [BaseLocaleKey.CmAudioUncachedNoQuota]: CmAudioCacheToastText;
   [BaseLocaleKey.CmAllCategoryName]: LocaleSimpleString;
-  [BaseLocaleKey.CmComsList]: LocaleSimpleString;
   [BaseLocaleKey.Presentations]: LocaleSimpleString;
   [BaseLocaleKey.PresentationsDesktopOnly]: LocaleSimpleString;
   [BaseLocaleKey.NumberSymbols]: StringTemplaterInterpolation<{ n: number }>;
-  [BaseLocaleKey.ScheduleInformStatus]: StringTemplaterInterpolation<{ n: number; v: boolean }>;
+  [BaseLocaleKey.ScheduleInformStatus]: StringTemplaterInterpolation<{ n: number; v: boolean | Bool }>;
   [BaseLocaleKey.ScheduleInformOnlyByStart]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleInformBefore]: StringTemplaterInterpolation<{ n: number }>;
   [BaseLocaleKey.ScheduleEventAppInformWillBe]: StringTemplaterInterpolation<{ n: number }>;
   [BaseLocaleKey.ScheduleEventAppInformWontBe]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleInformDisabled]: LocaleSimpleString;
-  [BaseLocaleKey.ScheduleUserNotReceiveInform]: LocaleSimpleString;
-  [BaseLocaleKey.ScheduleUserReceiveInform]: LocaleSimpleString;
-  [BaseLocaleKey.ScheduleDontInformMe]: LocaleSimpleString;
-  [BaseLocaleKey.ScheduleInformMe]: LocaleSimpleString;
+  [BaseLocaleKey.ScheduleUserReceiveInform]: StringTemplaterInterpolation<{ v: boolean | Bool }>;
+  [BaseLocaleKey.ScheduleInformMe]: StringTemplaterInterpolation<{ v: boolean | Bool }>;
   [BaseLocaleKey.ScheduleInformMuteFor]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleInformMute1Hour]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleInformMute4Hours]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleInformMute8Hours]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleInformMute1Day]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleInformMute7Days]: LocaleSimpleString;
-  [BaseLocaleKey.ScheduleInformSoundOff]: LocaleSimpleString;
-  [BaseLocaleKey.ScheduleInformSoundOn]: LocaleSimpleString;
-  [BaseLocaleKey.ScheduleInformOff]: LocaleSimpleString;
-  [BaseLocaleKey.ScheduleInformOn]: LocaleSimpleString;
+  [BaseLocaleKey.ScheduleInformSoundOn]: StringTemplaterInterpolation<{ v: boolean | Bool }>;
+  [BaseLocaleKey.ScheduleInformOn]: StringTemplaterInterpolation<{ v: boolean | Bool }>;
   [BaseLocaleKey.ScheduleInformUntil]: StringTemplaterInterpolation<{ d: string }>;
   [BaseLocaleKey.ScheduleInformResume]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleInvite]: LocaleSimpleString;
   [BaseLocaleKey.SchedulePeriodicity]: LocaleSimpleString;
-  [BaseLocaleKey.SchedulePeriodWeekly]: LocaleSimpleString;
-  [BaseLocaleKey.SchedulePeriodMonthDay]: StringTemplaterInterpolation<{ d: number }>;
-  [BaseLocaleKey.SchedulePeriodWeekdayOfMonth]: StringTemplaterInterpolation<{ n: number; d: string }>;
-  [BaseLocaleKey.ScheduleLastOpened]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleMyParticipation]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleMyRole]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleLeave]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleLeaveConfirm]: LocaleSimpleString;
   [BaseLocaleKey.SchedulePassedPlural]: LocaleSimpleString;
-  [BaseLocaleKey.SchedulePeriodEachWeekday]: StringTemplaterInterpolation<{ d: string }>;
-  [BaseLocaleKey.ScheduleNearest]: LocaleSimpleString;
-  [BaseLocaleKey.ScheduleDisable]: LocaleSimpleString;
-  [BaseLocaleKey.ScheduleEnable]: LocaleSimpleString;
+  [BaseLocaleKey.ScheduleEnable]: StringTemplaterInterpolation<{ v: boolean | Bool }>;
   [BaseLocaleKey.SchedulePausedPlural]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleMoreThanYear]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleAddUserByQr]: LocaleSimpleString;
@@ -788,12 +773,4 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.PushNotifications]: LocaleSimpleString;
 };
 
-type DeprecatedBaseLocaleKey =
-  | BaseLocaleKey.PresentationsShowSlide
-  | BaseLocaleKey.PresentationsDropFile;
-
-/** Keys that still have a real translation (deprecated tails are delivered as `''` only). */
-export type UsedBaseLocaleKey = Exclude<BaseLocaleKey, DeprecatedBaseLocaleKey>;
-
-/** Dead locale keys are still delivered as trailing `''` texts, so the delivered dict extends `LocaleBase`. */
-export type LocaleBaseDelivered<L extends Langi> = LocaleBase<L> & Record<DeprecatedBaseLocaleKey, ''>;
+export type UsedBaseLocaleKey = BaseLocaleKey;

@@ -2,7 +2,7 @@ import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { LocaleCmEditor } from 'shared/model/+locale/editor';
 import { editorLocaleTemplate } from 'shared/utils/locale/templates';
 import { convertObjectToArray } from 'shared/utils/object.utils';
-import { FUNCTION, IF, SWITCH } from 'shared/utils/stringTemplater';
+import { IF, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeEditorKz = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.LocaleVersion]: 0,
@@ -145,7 +145,7 @@ export const localeEditorKz = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.CmEditorFretNumber]: '$n; лад',
   [EditorLocaleKey.CmEditorInterpretationEdit]: 'Іс-шара үшін интерпретацияны өңдеу',
   [EditorLocaleKey.CmEditorIncludeBibleWords]: 'кібілі сөздерді қосу',
-  ...editorLocaleTemplate(EditorLocaleKey.CmEditorSendWords)`$n; ${FUNCTION('dec')('$n', 'сөз', 'сөз')} жіберу`,
+  [EditorLocaleKey.CmEditorSendWords]: '$n; сөз жіберу',
   [EditorLocaleKey.CmEditorLinkPartHide]: '$h; сілтемесінің $n;-бөлігін көрінбейтін ету керек пе?',
   [EditorLocaleKey.CmEditorLinkPartShow]: '$h; сілтемесінің $n;-бөлігін көрінетін ету керек пе?',
   [EditorLocaleKey.CmEditorAppliqueDestroyed]: 'Бұл әрекет осы блоктағы аппликатураның жойылуына әкеледі.',
@@ -196,8 +196,6 @@ export const localeEditorKz = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsOnline]: 'Онлайн',
   [EditorLocaleKey.VisitsToday]: 'Бүгін визиттер',
   [EditorLocaleKey.VisitsUnique]: 'Бірегей келушілер',
-  [EditorLocaleKey.VisitsVisitors]: 'Келушілер',
-  [EditorLocaleKey.VisitsMessages]: 'Хабарламалар',
   [EditorLocaleKey.VisitsTodayByHour]: 'Бүгінгі визиттер, сағат бойынша',
   [EditorLocaleKey.VisitsSupport]: 'Қолдау',
   [EditorLocaleKey.VisitsLog]: 'Лог',
@@ -215,13 +213,12 @@ export const localeEditorKz = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsHistoryCount]: '$l - $c визит',
   [EditorLocaleKey.VisitsAverage]: 'Орташа визиттер',
   [EditorLocaleKey.VisitsAveragePeriod]: '$l - $c күніне орташа',
-  [EditorLocaleKey.VisitsVisitErrors]: 'Визиты',
+  [EditorLocaleKey.VisitsVisitErrors]: 'Визиттер',
   [EditorLocaleKey.VisitsAnonSummary]: '$u бірегей, $v визит',
   [EditorLocaleKey.VisitsVersions]: 'Визиттер нұсқалар бойынша',
-  [EditorLocaleKey.VisitsAllVersions]: 'Барлық уақыт бойынша нұсқалар бойынша визиттер',
   [EditorLocaleKey.VisitsMinVersions]: 'Күндер бойынша ең төменгі нұсқалар',
   [EditorLocaleKey.VisitsSendReport]: 'Есепті e-mail-ға жіберу',
-  [EditorLocaleKey.VisitsReportSent]: 'Отправлено на $e',
-  [EditorLocaleKey.VisitsOnlineByHour]: 'Онлайн по часам',
+  [EditorLocaleKey.VisitsReportSent]: '$e-ге жіберілді',
+  [EditorLocaleKey.VisitsOnlineByHour]: 'Сағат бойынша онлайн',
   [EditorLocaleKey.VisitsOnlineHourPeriod]: '$f-$t - мин $n — макс $x',
 });

@@ -30,7 +30,9 @@ export const FileInput = ({
         renderTrigger({ fileInputRef: inputRef })
       ) : (
         <Button onClick={() => inputRef.current?.click()}>
-          {attrs.multiple ? translateBase(BaseLocaleKey.ConfigPickFiles) : translateBase(BaseLocaleKey.ConfigPickFile)}
+          {translateBase(BaseLocaleKey.ConfigPickFile, {
+            v: attrs.multiple === true,
+          })}
         </Button>
       )}
     </>

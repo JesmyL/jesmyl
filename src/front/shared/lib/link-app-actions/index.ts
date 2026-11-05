@@ -74,7 +74,7 @@ export class LinkAppActionFabric<Props extends Record<string, unknown> = Record<
           actionAtom.set({ props, navigateFromRoot: navigate });
 
           if (actionFor.startsWith('*/'))
-            setTimeout(() => navigate({ to: registededPathsMap.get(actionFor) ?? '/' }), 200);
+            setTimeout(() => navigate({ to: registededPathsMap.get(actionFor) ?? '/cm/i' }), 200);
           else navigate({ to: `/${actionFor}/i` });
         } catch (error) {
           console.error(error);

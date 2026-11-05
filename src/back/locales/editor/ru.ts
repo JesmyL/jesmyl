@@ -2,16 +2,17 @@ import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { LocaleCmEditor } from 'shared/model/+locale/editor';
 import { editorLocaleTemplate } from 'shared/utils/locale/templates';
 import { convertObjectToArray } from 'shared/utils/object.utils';
-import { FUNCTION, IF, SWITCH } from 'shared/utils/stringTemplater';
+import { FUNCTION, IF, isUtil, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeEditorRu = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.LocaleVersion]: 0,
-  [EditorLocaleKey.CmChordLengthMismatch]: 'Не совпадает количество аккордов по строкам в версиях сложности в строке $n',
+  [EditorLocaleKey.CmChordLengthMismatch]:
+    'Не совпадает количество аккордов по строкам в версиях сложности в строке $n',
   [EditorLocaleKey.CmSize]: 'Размерность',
   [EditorLocaleKey.CmIntensity]: 'Интенсивность',
   [EditorLocaleKey.CmEditSquareBracketsHint]:
     'Текст в [квадратных скобках] не показывается в слайдах, но приводится к (тексту в круглых скобках) в тексте песен. Используйте [[две открывающие скобки] для переноса строки. Перед "[" должен быть пробел, а после "]" быть ничего не должно',
-  ...editorLocaleTemplate(EditorLocaleKey.CmEditIsRemoveTextBlock, ['$t'])`Удалить${IF('$t').ELSE` новый`} блок?\n\n$t`,
+  ...editorLocaleTemplate(EditorLocaleKey.CmEditIsRemoveTextBlock, ['$t'])`Удалить${IF(isUtil.EQ('$t', '')).THEN` новый`} блок?\n\n$t`,
   [EditorLocaleKey.CmEditRemovedComs]: 'Удалённые песни',
   [EditorLocaleKey.CmEditBackup]: 'Восстановить эту песню',
   [EditorLocaleKey.CmEditDestroy]: 'Уничтожить эту песню',
@@ -45,7 +46,7 @@ export const localeEditorRu = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.CmComeBackChord]: 'Вернуть аккорд',
   [EditorLocaleKey.CmDeleteChord]: 'Удалить аккорд',
   [EditorLocaleKey.CmChordExists]: 'Такой аккорд существует',
-  [EditorLocaleKey.CmIncorrectChord]: 'Не правильное написание аккорда',
+  [EditorLocaleKey.CmIncorrectChord]: 'Неправильное написание аккорда',
   [EditorLocaleKey.CmSelectChordEdit]: 'Выбери аккорд для редактирования',
   [EditorLocaleKey.CmUnknownChordsCount]: 'Неизвестные аккорды ($n;)',
   [EditorLocaleKey.CmNoEditorsMore]: 'Больше редактирующих нет',
@@ -142,9 +143,11 @@ export const localeEditorRu = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.CmEditorOtherSet]: 'Др. набор',
   [EditorLocaleKey.CmEditorShowOtherMarks]: 'Показывать другие метки',
   [EditorLocaleKey.CmEditorFretNumber]: 'Лад $n;',
-  [EditorLocaleKey.CmEditorInterpretationEdit]: 'Редактирование интерпритации для мероприятия',
+  [EditorLocaleKey.CmEditorInterpretationEdit]: 'Редактирование интерпретации для мероприятия',
   [EditorLocaleKey.CmEditorIncludeBibleWords]: 'включать библейские слова',
-  ...editorLocaleTemplate(EditorLocaleKey.CmEditorSendWords)`Отправить $n; ${FUNCTION('dec')('$n', 'слово', 'слова', 'слов')}`,
+  ...editorLocaleTemplate(
+    EditorLocaleKey.CmEditorSendWords,
+  )`Отправить $n; слов${FUNCTION('dec')('$n', 'о', 'а', '')}`,
   [EditorLocaleKey.CmEditorLinkPartHide]: 'Сделать $n;-ю часть ссылки на $h; невидимой?',
   [EditorLocaleKey.CmEditorLinkPartShow]: 'Сделать $n;-ю часть ссылки на $h; видимой?',
   [EditorLocaleKey.CmEditorAppliqueDestroyed]: 'Это действие повлечёт за собой уничтожение аппликатуры в данном блоке.',
@@ -152,7 +155,7 @@ export const localeEditorRu = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.CmEditorLineLengthMore]: 'Со строкой больше чем:элементов[$n;]',
   [EditorLocaleKey.CmEditorRepeatsByRegExp]: 'Ключи повторений по регулярке:/~/i',
   [EditorLocaleKey.CmEditorMatchInRepeated]: 'Поиск по блоку с повторениями:/\\/\\//i',
-  [EditorLocaleKey.CmEditorChordsMismatch]: 'Количество аккордов не равна аппликатуре',
+  [EditorLocaleKey.CmEditorChordsMismatch]: 'Количество аккордов не равно аппликатуре',
   [EditorLocaleKey.CmEditorUnknownChords]: 'С неизвестными аккордами',
   [EditorLocaleKey.CmEditorIncorrectYoYe]: 'Некорректные Ё-Е',
   [EditorLocaleKey.CmEditorPreparation]: 'Подготовка',
@@ -182,21 +185,19 @@ export const localeEditorRu = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.DeleteX]: 'Удалить $x',
   [EditorLocaleKey.NoChanges]: 'Изменений нет',
   [EditorLocaleKey.ToSendSomething]: 'Отправить $s',
-  [EditorLocaleKey.IncorrectName]: 'Некореектное название',
+  [EditorLocaleKey.IncorrectName]: 'Некорректное название',
   [EditorLocaleKey.Texts]: 'Тексты',
   [EditorLocaleKey.ManyLines]: 'Много строк',
   [EditorLocaleKey.MaximumLinesCount]: 'Максимальное количество строк',
   [EditorLocaleKey.FewLines]: 'Мало строк',
   [EditorLocaleKey.Collections]: 'Сборники',
-  [EditorLocaleKey.Denied]: 'Заперщено',
+  [EditorLocaleKey.Denied]: 'Запрещено',
   [EditorLocaleKey.Language]: 'Язык',
 
   [EditorLocaleKey.VisitsDashboard]: 'Дашборд',
   [EditorLocaleKey.VisitsOnline]: 'Онлайн',
   [EditorLocaleKey.VisitsToday]: 'Визитов сегодня',
   [EditorLocaleKey.VisitsUnique]: 'Уникальных посетителей',
-  [EditorLocaleKey.VisitsVisitors]: 'Посетители',
-  [EditorLocaleKey.VisitsMessages]: 'Сообщения',
   [EditorLocaleKey.VisitsTodayByHour]: 'Посещения за сегодня, по часам',
   [EditorLocaleKey.VisitsSupport]: 'Поддержка',
   [EditorLocaleKey.VisitsLog]: 'Лог',
@@ -217,7 +218,6 @@ export const localeEditorRu = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsVisitErrors]: 'Визиты',
   [EditorLocaleKey.VisitsAnonSummary]: '$u уникальных, $v посещений',
   [EditorLocaleKey.VisitsVersions]: 'Визиты по версиям',
-  [EditorLocaleKey.VisitsAllVersions]: 'Визиты по версиям за всё время',
   [EditorLocaleKey.VisitsMinVersions]: 'Минимальные версии по дням',
   [EditorLocaleKey.VisitsSendReport]: 'Отправить отчёт на e-mail',
   [EditorLocaleKey.VisitsReportSent]: 'Отправлено на $e',

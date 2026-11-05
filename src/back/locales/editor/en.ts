@@ -2,7 +2,7 @@ import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { LocaleCmEditor } from 'shared/model/+locale/editor';
 import { editorLocaleTemplate } from 'shared/utils/locale/templates';
 import { convertObjectToArray } from 'shared/utils/object.utils';
-import { FUNCTION, IF, SWITCH } from 'shared/utils/stringTemplater';
+import { FUNCTION, IF, isUtil, SWITCH } from 'shared/utils/stringTemplater';
 
 export const localeEditorEn = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.LocaleVersion]: 0,
@@ -14,7 +14,7 @@ export const localeEditorEn = convertObjectToArray<LocaleCmEditor>({
     'Text in [square brackets] is not shown in slides, but is converted to (text in parentheses) in song texts. Use [[two opening brackets] for a line break. There must be a space before "[" and nothing after "]"',
   ...editorLocaleTemplate(EditorLocaleKey.CmEditIsRemoveTextBlock, [
     '$t',
-  ])`Delete${IF('$t').ELSE` the new`} block?\n\n$t`,
+  ])`Delete${IF(isUtil.EQ('$t', '')).THEN` the new`} block?\n\n$t`,
   [EditorLocaleKey.CmEditRemovedComs]: 'Removed songs',
   [EditorLocaleKey.CmEditBackup]: 'Restore this song',
   [EditorLocaleKey.CmEditDestroy]: 'Destroy this song',
@@ -140,10 +140,10 @@ export const localeEditorEn = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.CmEditorNextStage]: 'Next stage',
   [EditorLocaleKey.CmEditorOtherSet]: 'Other set',
   [EditorLocaleKey.CmEditorShowOtherMarks]: 'Show other marks',
-  [EditorLocaleKey.CmEditorFretNumber]: 'Lad $n;',
+  [EditorLocaleKey.CmEditorFretNumber]: 'Fret $n;',
   [EditorLocaleKey.CmEditorInterpretationEdit]: 'Editing the interpretation for the event',
   [EditorLocaleKey.CmEditorIncludeBibleWords]: 'include Bible words',
-  ...editorLocaleTemplate(EditorLocaleKey.CmEditorSendWords)`Send $n; ${FUNCTION('dec')('$n', 'word', 'words')}`,
+  ...editorLocaleTemplate(EditorLocaleKey.CmEditorSendWords)`Send $n; word${FUNCTION('dec')('$n', '', 's')}`,
   [EditorLocaleKey.CmEditorLinkPartHide]: 'Make part $n; of the link to $h; invisible?',
   [EditorLocaleKey.CmEditorLinkPartShow]: 'Make part $n; of the link to $h; visible?',
   [EditorLocaleKey.CmEditorAppliqueDestroyed]: 'This action will destroy the chord fingering in this block.',
@@ -194,8 +194,6 @@ export const localeEditorEn = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsOnline]: 'Online',
   [EditorLocaleKey.VisitsToday]: 'Visits today',
   [EditorLocaleKey.VisitsUnique]: 'Unique visitors',
-  [EditorLocaleKey.VisitsVisitors]: 'Visitors',
-  [EditorLocaleKey.VisitsMessages]: 'Messages',
   [EditorLocaleKey.VisitsTodayByHour]: "Today's visits, by hour",
   [EditorLocaleKey.VisitsSupport]: 'Support',
   [EditorLocaleKey.VisitsLog]: 'Log',
@@ -203,7 +201,7 @@ export const localeEditorEn = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsAnonymous]: 'anonymous',
   [EditorLocaleKey.VisitsMarkAllRead]: 'Mark all read',
   [EditorLocaleKey.VisitsOlderMessages]: 'Load older messages',
-  [EditorLocaleKey.VisitsSystem]: 'Система',
+  [EditorLocaleKey.VisitsSystem]: 'System',
   [EditorLocaleKey.VisitsHourPeriod]: '$f-$t - $c visits',
   [EditorLocaleKey.VisitsHistory]: 'Visits history',
   [EditorLocaleKey.VisitsPeriodDay]: 'Days',
@@ -213,13 +211,12 @@ export const localeEditorEn = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsHistoryCount]: '$l - $c visits',
   [EditorLocaleKey.VisitsAverage]: 'Average visits',
   [EditorLocaleKey.VisitsAveragePeriod]: '$l - $c average per day',
-  [EditorLocaleKey.VisitsVisitErrors]: 'Визиты',
+  [EditorLocaleKey.VisitsVisitErrors]: 'Visits',
   [EditorLocaleKey.VisitsAnonSummary]: '$u unique, $v visits',
   [EditorLocaleKey.VisitsVersions]: 'Visits by version',
-  [EditorLocaleKey.VisitsAllVersions]: 'Visits by version, all time',
   [EditorLocaleKey.VisitsMinVersions]: 'Minimum versions by day',
   [EditorLocaleKey.VisitsSendReport]: 'Send report by e-mail',
-  [EditorLocaleKey.VisitsReportSent]: 'Отправлено на $e',
-  [EditorLocaleKey.VisitsOnlineByHour]: 'Онлайн по часам',
+  [EditorLocaleKey.VisitsReportSent]: 'Sent to $e',
+  [EditorLocaleKey.VisitsOnlineByHour]: 'Online by hours',
   [EditorLocaleKey.VisitsOnlineHourPeriod]: '$f-$t - min $n — max $x',
 });
