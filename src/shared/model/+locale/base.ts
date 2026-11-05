@@ -734,6 +734,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.CmAudioUncached]: CmAudioCacheToastText;
   [BaseLocaleKey.CmAudioUncachedNoQuota]: CmAudioCacheToastText;
   [BaseLocaleKey.CmAllCategoryName]: LocaleSimpleString;
+  [BaseLocaleKey.CmSmartSearch]: LocaleSimpleString;
   [BaseLocaleKey.Presentations]: LocaleSimpleString;
   [BaseLocaleKey.PresentationsDesktopOnly]: LocaleSimpleString;
   [BaseLocaleKey.NumberSymbols]: StringTemplaterInterpolation<{ n: number }>;

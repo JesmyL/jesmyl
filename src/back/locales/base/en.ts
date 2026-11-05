@@ -144,6 +144,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.CmAudioUncached]: 'Removed "$n": $d MB. Occupied: $t MB. Free: $f MB.',
   [BaseLocaleKey.CmAudioUncachedNoQuota]: 'Removed "$n": $d MB. Occupied: $t MB.',
   [BaseLocaleKey.CmAllCategoryName]: 'All songs',
+  [BaseLocaleKey.CmSmartSearch]: 'Smart search',
 
   [BaseLocaleKey.QuestionerAnswer]: 'Answer',
   [BaseLocaleKey.QuestionerEditor]: 'Editor',

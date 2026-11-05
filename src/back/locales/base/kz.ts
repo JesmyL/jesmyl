@@ -146,6 +146,7 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.CmAudioUncached]: 'Жойылды «$n»: $d МБ. Алынған: $t МБ. Бос: $f МБ.',
   [BaseLocaleKey.CmAudioUncachedNoQuota]: 'Жойылды «$n»: $d МБ. Алынған: $t МБ.',
   [BaseLocaleKey.CmAllCategoryName]: 'Барлық әндер',
+  [BaseLocaleKey.CmSmartSearch]: 'Ақылды іздеу',
 
   [BaseLocaleKey.QuestionerAnswer]: 'Жауап',
   [BaseLocaleKey.QuestionerEditor]: 'Редактор',

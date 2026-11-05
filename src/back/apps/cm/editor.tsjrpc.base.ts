@@ -1,6 +1,14 @@
+import { translateBackTexts } from 'back/locales/back';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
+import { comDB } from 'back/drizzle.schema';
+import { db } from 'back/drizzle/drizzle.db';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
+import { and, asc, eq, sql } from 'drizzle-orm';
+import { CmComWid } from 'shared/api';
 import { CmEditorTsjrpcModel } from 'shared/api/tsjrpc/cm/editor.tsjrpc.model';
+import { Bool } from 'shared/enums';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
+import { chordsBlockIncorrectMessage } from 'shared/utils/cm/com/chordsBlockIncorrectMessage';
 import { objectKeys } from 'shared/utils/object.utils';
 import { cmEditComBusyTsjrpcMethods } from './complect/edit-com-busy';
 import { cmGetResourceHTMLString } from './complect/mp3-rules';
@@ -50,6 +58,65 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
 
         getResourceHTMLString: cmGetResourceHTMLString,
         getMp3RulesList: async () => ({ value: mp3ResourcesFileStorage.getValue() }),
+        getSmartSearchFilters: async (_, { visitInfo }) => ({
+          value: {
+            filters: [
+              {
+                id: BackLocaleKey.CmSmartSearchNoSecondTextSplit,
+                title: translateBackTexts(visitInfo?.langi, BackLocaleKey.CmSmartSearchNoSecondTextSplit),
+              },
+              {
+                id: BackLocaleKey.CmSmartSearchNoTextSplits,
+                title: translateBackTexts(visitInfo?.langi, BackLocaleKey.CmSmartSearchNoTextSplits),
+              },
+              {
+                id: BackLocaleKey.CmSmartSearchIncorrectChords,
+                title: translateBackTexts(visitInfo?.langi, BackLocaleKey.CmSmartSearchIncorrectChords),
+              },
+            ],
+          },
+        }),
+        getSmartSearchComws: async ({ filterId }) => {
+          let comws: CmComWid[];
+
+          switch (filterId) {
+            case BackLocaleKey.CmSmartSearchNoSecondTextSplit:
+            case BackLocaleKey.CmSmartSearchNoTextSplits: {
+              const nlFilter =
+                filterId === BackLocaleKey.CmSmartSearchNoSecondTextSplit
+                  ? sql`(jsonb_path_exists(${comDB.nl}, '$[0] ? (@ != null)') and not jsonb_path_exists(${comDB.nl}, '$[1 to last] ? (@ != null)'))`
+                  : sql`(${comDB.nl} is null or not jsonb_path_exists(${comDB.nl}, '$[*] ? (@ != null)'))`;
+
+              comws = (
+                await db
+                  .select({ w: comDB.w })
+                  .from(comDB)
+                  .where(and(eq(comDB.isRemoved, Bool.False), nlFilter))
+                  .orderBy(asc(comDB.w))
+              ).map(it => it.w);
+              break;
+            }
+            case BackLocaleKey.CmSmartSearchIncorrectChords:
+              comws = (
+                await db
+                  .select({ w: comDB.w, c: comDB.c, c1: comDB.c1 })
+                  .from(comDB)
+                  .where(eq(comDB.isRemoved, Bool.False))
+                  .orderBy(asc(comDB.w))
+              )
+                .filter(
+                  ({ c, c1 }) =>
+                    c.some(block => chordsBlockIncorrectMessage(block, Bool.False).errors?.length) ||
+                    c1?.some(block => chordsBlockIncorrectMessage(block, Bool.True).errors?.length),
+                )
+                .map(it => it.w);
+              break;
+            default:
+              throw 'unknown smart search filter';
+          }
+
+          return { value: { comws } };
+        },
         addMp3Rule: async ({ rule }, { auth }) => {
           if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'MP3', 'U')) throw '';
 

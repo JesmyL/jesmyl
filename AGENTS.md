@@ -26,7 +26,7 @@
 - `.opencode/opencode.jsonc` sets `instructions: .opencode/tools/philosophy.md` — before writing code you MUST load the matching skill: `frontend-philosophy` for UI work, `code-philosophy` for logic/backend. See `.opencode/README.md` for agent/profile details.
 - Never make git commits yourself. At the end of your work you may suggest a commit message, but never run `git commit` (or push/reset) on your own initiative — only when the user explicitly asks for that exact operation.
 - Commit messages must always be written in English.
-- Locale keys (`EditorLocaleKey`/`DynLocaleKey`/`BaseLocaleKey`): only ADD new numeric keys — never bump `editorLocaleMinVersion`/`baseLocaleMinVersion` (in `src/back/apps/index/tsjrpc.base/lib/requestFreshes.ts`) anymore; those delivery guards stay untouched. For visual clarity, group new keys next to related existing entries in the dictionaries (`localeEditorRu`/`localeEditorEn`/...).
+- Locale keys (`EditorLocaleKey`/`DynLocaleKey`/`BaseLocaleKey`): only ADD new numeric keys — never bump `editorLocaleMinVersion`/`baseLocaleMinVersion` (in `src/back/apps/index/tsjrpc.base/lib/requestFreshes.ts`) anymore; those delivery guards stay untouched. Group new keys next to related existing entries ONLY in the dictionaries (`localeEditorRu`/`localeEditorEn`/... and `src/back/locales/base/{ru,en,kz,ua}.ts`), never in the `const enum`s: enum keys always go strictly in sequential order, so a new key is appended at the END with the next sequential value (never a big value between small ones).
 - Route placement applies to ALL route areas, not just `!other/$appName`: every page must live in the proper area of `src/front/routes/tree/` matching its app/feature slice — never create root-level routes for pages belonging to a specific area, e.g. `/schedule-users/1704636528751` goes under `src/front/routes/tree/!other.$appName/...` (substitute the correct area for each case).
 
 ### Code writing rules
@@ -46,6 +46,7 @@
 - Never write redundant null-coalescing like `rows[0]?.mod ?? null` — `null` and `undefined` are treated as the same thing; use the `nil` type everywhere instead of `null | undefined`.
 - If a type can be `nil`, its default value should be `null` (not `undefined`); prefer `null` over `undefined` wherever possible.
 - Export types/interfaces/consts ONLY from model files (`model.ts`); component/UI files export only their components.
+- `*.tsjrpc.model.ts` files declare only RPC method signatures — never export extra types/interfaces there (e.g. `export interface CmEditorSmartSearchFilter`); inline simple shapes into the signatures or put such types in other model files (`model.ts`).
 - Keep code maximally laconic: prefer compact literals (e.g. space-separated extension lists keyed by prefix) converted at runtime via `lazyInit`, over verbose hand-written dicts.
 - Reuse existing object utils instead of `Object.entries(...).map(...)` — e.g. `mapObjectEntries` from `shared/utils/object.utils`.
 - In JSX conditional rendering, avoid double negation (`!!cond && (<X/>)`): express a render-on-truthy condition as `!cond || (<X/>)` instead — when `cond` is truthy, `!cond` is `false` and the right side renders; when falsy, the expression short-circuits to `true`, which React renders as nothing. Same semantics, no `!!`.

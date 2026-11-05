@@ -1,5 +1,6 @@
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { CmEditorComListEditMore } from '$cm+editor/features/com';
+import { CmEditorSmartSearchFilterSelector } from '$cm+editor/shared/ui/CmEditorSmartSearchFilterSelector';
 import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContainer';
 import { CmComFaceList, CmComWithComListSearchFilterInput, useCmComAllWidList } from '$cm/ext';
 import { useNavigate } from '@tanstack/react-router';
@@ -28,6 +29,8 @@ export const CmEditorCompositionsPage = () => {
         termAtom={termAtom}
         // comsMapper={mapper}
         comws={comws}
+        withSmartSearch
+        smartNode={<CmEditorSmartSearchFilterSelector />}
       >
         {({ inputNode, searchedComs, catNumberSearch }) => {
           return (

@@ -146,6 +146,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.CmAudioUncached]: 'Видалено «$n»: $d МБ. Зайнято: $t МБ. Вільно: $f МБ.',
   [BaseLocaleKey.CmAudioUncachedNoQuota]: 'Видалено «$n»: $d МБ. Зайнято: $t МБ.',
   [BaseLocaleKey.CmAllCategoryName]: 'Усі пісні',
+  [BaseLocaleKey.CmSmartSearch]: 'Розумний пошук',
 
   [BaseLocaleKey.QuestionerAnswer]: 'Відповідь',
   [BaseLocaleKey.QuestionerEditor]: 'Редактор',

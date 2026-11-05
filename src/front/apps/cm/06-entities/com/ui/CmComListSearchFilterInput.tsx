@@ -1,5 +1,5 @@
 import { translateBase } from '#basis/locale';
-import { isNumberSearchAtom } from '#basis/state/isNumberSearchAtom';
+import { SearchMode, searchModeAtom, smartSearchComwsAtom, smartSearchFilterIdAtom } from '#basis/state/isNumberSearchAtom';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { useCmCatList } from '$cm/entities/cat';
 import { cmIDB } from '$cm/ext';
@@ -20,6 +20,8 @@ import { cmComWidNumberDictAtom } from '../state/atoms';
 export const CmComWithComListSearchFilterInput = (props: {
   comws: CmComWid[];
   termAtom: Atom<string>;
+  withSmartSearch?: boolean;
+  smartNode?: React.ReactNode;
   children: (props: {
     term: string;
     inputNode: React.ReactNode;
@@ -36,7 +38,11 @@ export const CmComWithComListSearchFilterInput = (props: {
   type CatNumberSearch = Parameters<typeof props.children>[0]['catNumberSearch'];
 
   const term = useAtomValue(props.termAtom).trim();
-  const isNumberSearch = useAtomValue(isNumberSearchAtom);
+  const searchMode = useAtomValue(searchModeAtom);
+  const smartComws = useAtomValue(smartSearchComwsAtom);
+  const smartFilterId = useAtomValue(smartSearchFilterIdAtom);
+  const isNumberSearch = searchMode === SearchMode.Number;
+  const isSmartSearch = props.withSmartSearch === true && searchMode === SearchMode.Smart;
   const cats = useCmCatList();
   const comwNumberDict = useAtomValue(cmComWidNumberDictAtom);
 
@@ -73,6 +79,11 @@ export const CmComWithComListSearchFilterInput = (props: {
       comws: [],
       founds: {},
     };
+
+    if (isSmartSearch) {
+      result.comws = smartFilterId == null ? [] : (smartComws ?? []);
+      return result;
+    }
 
     if (term === '404') return result;
 
@@ -151,7 +162,7 @@ export const CmComWithComListSearchFilterInput = (props: {
     }, result.founds);
 
     return result;
-  }, [comwNumberDict, icoms, isNumberSearch, props.comws, term]);
+  }, [comwNumberDict, icoms, isNumberSearch, isSmartSearch, props.comws, smartComws, smartFilterId, term]);
 
   const limitedComs = useMemo(() => {
     if (!term.length) return searchedComs.comws;
@@ -166,6 +177,8 @@ export const CmComWithComListSearchFilterInput = (props: {
         className="com-search debounced-searcher round-styled"
         debounce={500}
         termAtom={props.termAtom}
+        withSmartSearch={props.withSmartSearch}
+        smartNode={props.smartNode}
       />
     ),
     term,

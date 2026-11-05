@@ -1,4 +1,4 @@
-import { isNumberSearchAtom } from '#basis/state/isNumberSearchAtom';
+import { SearchMode, searchModeAtom } from '#basis/state/isNumberSearchAtom';
 import { usePastedLinkNavigation } from '#shared/lib/link-app-actions/usePastedLinkNavigation';
 import { atom, Atom, useAtomValue } from 'atomaric';
 import { useEffect, useId } from 'react';
@@ -12,23 +12,52 @@ interface Props {
   debounce?: number;
   placeholder?: string;
   className?: string;
+  withSmartSearch?: boolean;
+  smartNode?: React.ReactNode;
 }
 
 const timeouts: PRecord<string, TimeOut> = {};
 const defaultTermAtoms: PRecord<string, Atom<string>> = {};
 
-export const DebouncedSearchInput = ({ debounce = 300, className = '', placeholder, ...props }: Props) => {
+export const DebouncedSearchInput = ({
+  debounce = 300,
+  className = '',
+  placeholder,
+  withSmartSearch,
+  smartNode,
+  ...props
+}: Props) => {
   const id = useId();
-  const isNumberSearch = useAtomValue(isNumberSearchAtom);
+  const searchMode = useAtomValue(searchModeAtom);
+  const isSmartSearchAllowed = withSmartSearch === true;
+  const mode = isSmartSearchAllowed || searchMode !== SearchMode.Smart ? searchMode : SearchMode.Text;
+  const isNumberSearch = mode === SearchMode.Number;
   const termAtom = props.termAtom ?? (defaultTermAtoms[id] ??= atom(''));
   const debouncedTermAtom = props.debouncedTermAtom ?? props.termAtom ?? (defaultTermAtoms[id] ??= atom(''));
 
-  const iconName = isNumberSearch ? 'GridTable' : 'SearchVisual';
+  const iconName = mode === SearchMode.Smart ? 'Flash' : isNumberSearch ? 'GridTable' : 'SearchVisual';
   const { onPaste, appActionNavNode } = usePastedLinkNavigation(undefined, () => {
     clearTimeout(timeouts[id]);
     termAtom.set('');
     if (debouncedTermAtom !== termAtom) debouncedTermAtom.set('');
   });
+
+  const cycleSearchMode = () => {
+    const nextMode =
+      mode === SearchMode.Text
+        ? SearchMode.Number
+        : mode === SearchMode.Number && isSmartSearchAllowed
+          ? SearchMode.Smart
+          : SearchMode.Text;
+
+    if (nextMode === SearchMode.Smart) {
+      clearTimeout(timeouts[id]);
+      termAtom.set('');
+      if (debouncedTermAtom !== termAtom) debouncedTermAtom.set('');
+    }
+
+    searchModeAtom.set(nextMode);
+  };
 
   useEffect(
     () => () => {
@@ -39,35 +68,39 @@ export const DebouncedSearchInput = ({ debounce = 300, className = '', placehold
   );
 
   return (
-    <label className={twMerge('debounced-input flex gap-2', className)}>
+    <label className={twMerge('debounced-input flex min-w-0 gap-2', className)}>
       <LazyIcon
         className="pointer"
         icon={iconName}
-        onClick={isNumberSearchAtom.do.toggle}
+        onClick={cycleSearchMode}
       />
-      <WithAtomValue atom={termAtom}>
-        {term => (
-          <input
-            key={iconName}
-            id="debounced-input"
-            type={isNumberSearch ? 'tel' : 'text'}
-            value={term}
-            className="input"
-            placeholder={placeholder}
-            onPaste={onPaste}
-            onFocus={event => event.currentTarget.select()}
-            onChange={event => {
-              const term = event.currentTarget.value;
-              termAtom.set(term);
+      {mode === SearchMode.Smart && smartNode ? (
+        smartNode
+      ) : (
+        <WithAtomValue atom={termAtom}>
+          {term => (
+            <input
+              key={iconName}
+              id="debounced-input"
+              type={isNumberSearch ? 'tel' : 'text'}
+              value={term}
+              className="input"
+              placeholder={placeholder}
+              onPaste={onPaste}
+              onFocus={event => event.currentTarget.select()}
+              onChange={event => {
+                const term = event.currentTarget.value;
+                termAtom.set(term);
 
-              if (!debounce || debouncedTermAtom === termAtom) return;
+                if (!debounce || debouncedTermAtom === termAtom) return;
 
-              clearTimeout(timeouts[id]);
-              timeouts[id] = setTimeout(debouncedTermAtom.set, debounce, term);
-            }}
-          />
-        )}
-      </WithAtomValue>
+                clearTimeout(timeouts[id]);
+                timeouts[id] = setTimeout(debouncedTermAtom.set, debounce, term);
+              }}
+            />
+          )}
+        </WithAtomValue>
+      )}
       {appActionNavNode}
     </label>
   );

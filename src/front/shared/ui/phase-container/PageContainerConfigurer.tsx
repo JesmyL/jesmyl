@@ -57,8 +57,10 @@ export const PageContainerConfigurer = (props: PageContainerConfigurerProps) => 
               </StyledPhaseContainerConfigurerHeadTitle>
             )
           : backButtonNode}
-        <StyledPhaseContainerConfigurerHeadWithMoreIcon className={twMerge('head', props.headClass || 'flex between')}>
-          <StyledPhaseContainerConfigurerHead className="w-full">{props.head}</StyledPhaseContainerConfigurerHead>
+        <StyledPhaseContainerConfigurerHeadWithMoreIcon
+          className={twMerge('head min-w-0', props.headClass || 'flex between')}
+        >
+          <StyledPhaseContainerConfigurerHead className="w-full min-w-0">{props.head}</StyledPhaseContainerConfigurerHead>
           {props.onMoreClick && (
             <button className="pointer m-1">
               <LazyIcon

@@ -39,7 +39,7 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
       onOpenChange={setDropped}
       open={isDropped}
     >
-      <DropdownMenu.Trigger className="flex gap-2">
+      <DropdownMenu.Trigger className="flex min-w-0 gap-2">
         {props.triggerNode ? (
           props.triggerNode(isLoading)
         ) : (
@@ -47,15 +47,18 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
             {props.label}
             <Button
               asSpan
+              className="min-w-0 shrink"
               disabled={props.disabled}
             >
-              {selectedItem?.title ?? (
+              {selectedItem?.title == null ? (
                 <span className="not-selected">
                   {props.undTitle ??
                     props.nullTitle ??
                     props.placeholder ??
                     translateBase(BaseLocaleKey.ConfigNotSelected)}
                 </span>
+              ) : (
+                <span className="truncate">{selectedItem.title}</span>
               )}
 
               {error ? (

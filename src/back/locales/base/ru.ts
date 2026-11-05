@@ -146,6 +146,7 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.CmAudioUncached]: 'Удалено «$n»: $d МБ. Занято: $t МБ. Свободно: $f МБ.',
   [BaseLocaleKey.CmAudioUncachedNoQuota]: 'Удалено «$n»: $d МБ. Занято: $t МБ.',
   [BaseLocaleKey.CmAllCategoryName]: 'Все песни',
+  [BaseLocaleKey.CmSmartSearch]: 'Умный поиск',
 
   [BaseLocaleKey.QuestionerAnswer]: 'Ответ',
   [BaseLocaleKey.QuestionerEditor]: 'Редактор',

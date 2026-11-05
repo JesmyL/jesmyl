@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 export interface DropdownProps<Id, Item extends DropdownItem<Id>> {
   items: (Item | null)[];
   placeholder?: string;
-  id?: Id;
+  id?: Id | nil;
   onSelect?: (item: Item) => und | void | null | Promise<unknown>;
   onSelectId?: (item: Id) => und | void | null | Promise<unknown>;
   className?: string;
