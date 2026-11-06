@@ -1,4 +1,4 @@
-import { translateBase } from '#basis/locale';
+import { applicationLangi, translateBase } from '#basis/locale';
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { useEffect, useMemo, useState } from 'react';
@@ -88,7 +88,7 @@ export function ScheduleWidget({
 
   const prevDateNode = prevDate && (
     <div className={'opacity-70 text-[0.8em]' + (schedule && prevDate.getTime() > schedule.start ? ' text-xKO' : '')}>
-      {translateBase(BaseLocaleKey.SchedulePrevious, { d: makeDateLabel(prevDate) })}
+      {translateBase(BaseLocaleKey.SchedulePrevious, { d: makeDateLabel(prevDate, applicationLangi) })}
     </div>
   );
 

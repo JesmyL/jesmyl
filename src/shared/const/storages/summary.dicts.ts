@@ -1,10 +1,12 @@
+import { Langi } from 'shared/api';
+import { takeLangSystemCode } from 'shared/const/+locale';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { StoragesRackSummaryType } from 'shared/model/storages/list.model';
 import { translateBase } from 'shared/utils/locale/base';
 
 export const storagesSummaryTypePropsDict: Record<
   StoragesRackSummaryType,
-  { title: string; mapDateString: (dateTs: number) => string | null }
+  { title: string; mapDateString: (dateTs: number, langi?: Langi) => string | null }
 > = {
   [StoragesRackSummaryType.Total]: {
     get title() {
@@ -16,13 +18,14 @@ export const storagesSummaryTypePropsDict: Record<
     get title() {
       return translateBase(BaseLocaleKey.StoragesByMonth);
     },
-    mapDateString: ts => new Date(ts).toLocaleString('ru', { year: 'numeric', month: 'long' }),
+    mapDateString: (ts, langi = Langi.Ru) =>
+      new Date(ts).toLocaleString(takeLangSystemCode(langi), { year: 'numeric', month: 'long' }),
   },
   [StoragesRackSummaryType.ByYear]: {
     get title() {
       return translateBase(BaseLocaleKey.StoragesByYear);
     },
-    mapDateString: ts => new Date(ts).toLocaleString('ru', { year: 'numeric' }),
+    mapDateString: (ts, langi = Langi.Ru) => new Date(ts).toLocaleString(takeLangSystemCode(langi), { year: 'numeric' }),
   },
 };
 

@@ -1,6 +1,6 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { useConnectionState } from '#basis/lib/useConnectionState';
-import { languageSystemCode, translateBase } from '#basis/locale';
+import { applicationLangi, translateBase } from '#basis/locale';
 import { useAppNameContext } from '#basis/state/contexts';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -48,8 +48,8 @@ export const ScheduleWidgetListPage = () => {
   const makeScheduleNodes = (list?: IScheduleWidget[], icon: KnownStameskaIconName = 'Calendar03') =>
     list?.map(schedule => {
       const start = takeNearestStart(schedule);
-      const dateLabel = makeDateLabel(start, languageSystemCode);
-      const timeLeftLabel = start > now ? makeScheduleTimeLeftLabel(start, now, languageSystemCode) : null;
+      const dateLabel = makeDateLabel(start, applicationLangi);
+      const timeLeftLabel = start > now ? makeScheduleTimeLeftLabel(start, now, applicationLangi) : null;
 
       return (
         <Link

@@ -1,3 +1,5 @@
+import { Langi } from 'shared/api';
+import { takeLangSystemCode } from 'shared/const/+locale';
 import { StoragesRack } from 'shared/model/storages/list.model';
 import {
   StoragesCell,
@@ -36,6 +38,7 @@ export const storagesColumnConfigDict: {
       cell: StoragesCell<Type> | nil,
       column: StoragesRackColumn<Type>,
       rack: StoragesRack,
+      langi?: Langi,
     ) => string | nil;
     checkIsCellCanBeDelete?: (cell: StoragesCell<Type>) => boolean;
   };
@@ -54,17 +57,18 @@ export const storagesColumnConfigDict: {
     },
     retCorrectTypeValue: value =>
       checkIsNumber(value) || checkIsString(value) ? [StoragesColumnType.Date, +value] : [StoragesColumnType.Date],
-    makeStringValue: cell => (cell?.[1] == null ? null : new Date(cell[1]).toLocaleDateString('ru')),
+    makeStringValue: (cell, _column, _rack, langi = Langi.Ru) =>
+      cell?.[1] == null ? null : new Date(cell[1]).toLocaleDateString(takeLangSystemCode(langi)),
   },
   [StoragesColumnType.Dates]: {
     icon: 'Calendar02',
     typeTitle: 'Даты',
-    makeStringValue: cell => {
+    makeStringValue: (cell, _column, _rack, langi = Langi.Ru) => {
       if (cell?.[1].nst == null) return;
       const firstCell = cell[1].nst.find(cell => cell.ts != null);
       if (firstCell?.ts == null) return;
 
-      return new Date(firstCell.ts * 100000).toLocaleDateString('ru');
+      return new Date(firstCell.ts * 100000).toLocaleDateString(takeLangSystemCode(langi));
     },
     def: () => [StoragesColumnType.Dates, { nst: [] }],
     checkType: checkDate,

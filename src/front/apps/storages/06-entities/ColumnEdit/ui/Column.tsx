@@ -1,4 +1,4 @@
-import { translateBase } from '#basis/locale';
+import { applicationLangi, translateBase } from '#basis/locale';
 import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { storagesTsjrpcClient } from '$storages/shared/tsjrpc/basic.tsjrpc.methods';
@@ -37,6 +37,7 @@ export const TheStoragesColumnEditColumn = (props: Props) => {
                 card.row?.[props.coli] as never,
                 column as never,
                 props.rack,
+                applicationLangi,
               ),
             ),
           ),

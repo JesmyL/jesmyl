@@ -1,4 +1,4 @@
-import { languageSystemCode, translateBase } from '#basis/locale';
+import { applicationLangi, translateBase } from '#basis/locale';
 import { DropdownMenu } from '#shared/components';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -34,13 +34,13 @@ export const ScheduleWidgetMyUserAppInform = () => {
     isSubscribed === Bool.True && !isMuted && rights.isCanRead && rights.schedule.appInform !== 0;
 
   const title = isMuted
-    ? translateBase(BaseLocaleKey.ScheduleInformUntil, { d: makeDateLabel(mutedUntil, languageSystemCode) })
+    ? translateBase(BaseLocaleKey.ScheduleInformUntil, { d: makeDateLabel(mutedUntil, applicationLangi) })
     : translateBase(BaseLocaleKey.ScheduleInformMe, { v: !willReceiveInform });
 
   const applyMuteUntil = (until: number) =>
     toastApplied(
       setMutedUntil(until),
-      translateBase(BaseLocaleKey.ScheduleInformUntil, { d: makeDateLabel(until, languageSystemCode) }),
+      translateBase(BaseLocaleKey.ScheduleInformUntil, { d: makeDateLabel(until, applicationLangi) }),
     );
 
   const clearMute = () => toastApplied(setMutedUntil(null), translateBase(BaseLocaleKey.ScheduleInformResume));

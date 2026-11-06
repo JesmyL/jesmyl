@@ -10,6 +10,7 @@ import { EmailerAuthConfigKey } from 'back/sides/emailer/model';
 import { and, count, desc, eq, gt, gte, inArray, lt, lte, sql, max as sqlMax } from 'drizzle-orm';
 import { makeRegExp } from 'regexpert';
 import { DeviceId, Langi, SokiVisit, UserLogin } from 'shared/api';
+import { takeLangSystemCode } from 'shared/const/+locale';
 import { howMillisecondsInDay, howMillisecondsInHour } from 'shared/const/ms';
 import {
   DashMessageKind,
@@ -171,10 +172,15 @@ const makeDayStats = (date: string, rows: VisitRow[]) => {
   };
 };
 
-const takeRuDate = (date: string) =>
-  new Date(date).toLocaleDateString('ru-RU', { timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric' });
-const takeRuTime = (timeStamp: number) =>
-  new Date(timeStamp + mskShiftMs).toLocaleTimeString('ru-RU', {
+const takeLocalizedDate = (date: string, langi: Langi | nil = Langi.Ru) =>
+  new Date(date).toLocaleDateString(takeLangSystemCode(langi), {
+    timeZone: 'UTC',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+const takeLocalizedTime = (timeStamp: number, langi: Langi | nil = Langi.Ru) =>
+  new Date(timeStamp + mskShiftMs).toLocaleTimeString(takeLangSystemCode(langi), {
     timeZone: 'UTC',
     hour: '2-digit',
     minute: '2-digit',
@@ -238,7 +244,7 @@ const makeDayStatsHtml = async (stats: ReturnType<typeof makeDayStats>, langi: L
     .filter((_, hour) => stats.date !== takeMskDayKey(Date.now()) || hour <= currentHour);
 
   return (
-    `<h2>${translateBackTexts(langi, BackLocaleKey.VisitReportTitle, { d: takeRuDate(stats.date) })}</h2>` +
+    `<h2>${translateBackTexts(langi, BackLocaleKey.VisitReportTitle, { d: takeLocalizedDate(stats.date, langi) })}</h2>` +
     `<p>${translateBackTexts(langi, BackLocaleKey.VisitReportTotal, { n: `<b>${stats.total}</b>` })}</p>` +
     `<p>${translateBackTexts(langi, BackLocaleKey.VisitReportUniq, { n: `<b>${stats.uniq}</b>` })}</p>` +
     `<p>${translateBackTexts(langi, BackLocaleKey.VisitReportMinVersion, { v: `<b>${minVersionText}</b>` })}</p>` +
@@ -278,7 +284,7 @@ const makeDayStatsText = (
       .join(', ') || '—';
 
   return [
-    translateBackTexts(langi, BackLocaleKey.VisitReportTitle, { d: takeRuDate(stats.date) }),
+    translateBackTexts(langi, BackLocaleKey.VisitReportTitle, { d: takeLocalizedDate(stats.date, langi) }),
     `${translateBackTexts(langi, BackLocaleKey.VisitReportTotal, { n: stats.total })}. ${translateBackTexts(langi, BackLocaleKey.VisitReportUniq, { n: stats.uniq })}`,
     translateBackTexts(langi, BackLocaleKey.VisitReportMinVersion, { v: minVersionText }),
     `${translateBackTexts(langi, BackLocaleKey.VisitReportByVisitors)}: ${visitors.map(({ name, count }) => `${name} — ${count}`).join(', ') || '—'}`,
@@ -363,7 +369,7 @@ const sendVisitsDigest = async (stats: ReturnType<typeof makeDayStats>) => {
       await sendEmailMessage(EmailerAuthConfigKey.Self, {
         to: email,
         subject: translateBackTexts(langi, BackLocaleKey.VisitDigestEmailSubject, {
-          d: takeRuDate(stats.date),
+          d: takeLocalizedDate(stats.date, langi),
         }),
         html: await makeDayStatsHtml(stats, langi),
       }).catch(emptyFunc);
@@ -384,8 +390,8 @@ export const sendCurrentDashReport = async (login: UserLogin, langi: Langi | nil
     isSameTo: true,
     to: email,
     subject: translateBackTexts(langi, BackLocaleKey.VisitReportEmailSubject, {
-      d: takeRuDate(date),
-      t: takeRuTime(now),
+      d: takeLocalizedDate(date, langi),
+      t: takeLocalizedTime(now, langi),
     }),
     html: await makeDayStatsHtml(stats, langi),
   });
@@ -395,7 +401,7 @@ export const sendCurrentDashReport = async (login: UserLogin, langi: Langi | nil
 
 /** Changes are mirrored to the self mailbox that the visits report is sent from (`isSameTo`) and to every configured dash report recipient. */
 export const sendChangesEmail = async (html: string, langi: Langi | nil) => {
-  const subject = `SYSTEM: ${new Date().toLocaleDateString('ru', changesEmailSubjectDateOptions)} (Changes)`;
+  const subject = `SYSTEM: ${new Date().toLocaleDateString(takeLangSystemCode(langi), changesEmailSubjectDateOptions)} (Changes)`;
 
   await Promise.all([
     sendEmailMessage(EmailerAuthConfigKey.Self, {

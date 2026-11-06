@@ -3,7 +3,7 @@ import {
   makeBackLocaleErrorMessageRuText,
   makeBackLocaleErrorMessageText,
 } from '#basis/locale/backLocaleError';
-import { currentLangiAtom, translateBase, translateDynamic, translateEditorBase } from '#basis/locale';
+import { currentLangiAtom, languageSystemCode, translateBase, translateDynamic, translateEditorBase } from '#basis/locale';
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { soki } from '#shared/soki';
@@ -563,7 +563,7 @@ const DashboardMessages = () => {
                 >
                   <span className="flex min-w-0 max-w-full flex-wrap items-center gap-x-2 gap-y-0.5 text-xs">
                     <span className="shrink-0 text-x4/80">
-                      {new Date(visit.createdAt).toLocaleString('ru', {
+                      {new Date(visit.createdAt).toLocaleString(languageSystemCode, {
                         day: '2-digit',
                         month: '2-digit',
                         hour: '2-digit',
@@ -598,7 +598,7 @@ const DashboardMessages = () => {
                 >
                   <span className="flex min-w-0 max-w-full flex-wrap items-center gap-x-2 gap-y-0.5 text-xs">
                     <span className="shrink-0 text-x4/80">
-                      {new Date(message.createdAt).toLocaleString('ru', {
+                      {new Date(message.createdAt).toLocaleString(languageSystemCode, {
                         day: '2-digit',
                         month: '2-digit',
                         hour: '2-digit',

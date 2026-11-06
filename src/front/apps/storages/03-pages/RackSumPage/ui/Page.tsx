@@ -1,4 +1,4 @@
-import { translateBase } from '#basis/locale';
+import { applicationLangi, translateBase } from '#basis/locale';
 import { Accordion } from '#shared/components/ui/accordion';
 import { Button } from '#shared/components/ui/button';
 import { Modal, usePrompt } from '#shared/ui/modal';
@@ -43,7 +43,10 @@ export const StoragesRackSumPage = ({ rackw }: { rackw: StoragesRackWid }) => {
         <>
           <Accordion.Root type="multiple">
             {rack?.sum?.map((summary, summaryi) => {
-              const dateTitle = storagesSummaryTypePropsDict[summary.type].mapDateString(summary.date * 100000);
+              const dateTitle = storagesSummaryTypePropsDict[summary.type].mapDateString(
+                summary.date * 100000,
+                applicationLangi,
+              );
 
               return (
                 <Accordion.Item

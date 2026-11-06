@@ -2,7 +2,7 @@ import { takeBaseLanguageAtom, takeEditorLanguageAtom, takeDynamicLanguageAtom }
 import { atom, useAtomValue } from 'atomaric';
 import { makeRegExp } from 'regexpert';
 import { Langi } from 'shared/api';
-import { langCodeDict } from 'shared/const/+locale';
+import { langCodeDict, langSystemCodeDict } from 'shared/const/+locale';
 import { LocaleDynamic } from 'shared/model/+locale/dynamic';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { setBaseLocaleProvider, translateBase } from 'shared/utils/locale/base';
@@ -35,13 +35,6 @@ export const currentLangiAtom = atom(() => {
 
   return langDict[navLang] ?? Langi.Ru;
 }, 'app:langi');
-
-export const langSystemCodeDict: Record<Langi, string> = {
-  [Langi.Ru]: 'ru-RU',
-  [Langi.Ua]: 'uk-UA',
-  [Langi.Kz]: 'kk-KZ',
-  [Langi.En]: 'en-GB',
-};
 
 export let applicationLangi = currentLangiAtom.get();
 let lang = langCodeDict[applicationLangi];

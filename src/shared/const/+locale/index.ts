@@ -8,6 +8,15 @@ export const langCodeDict: Record<Langi, LangCode> = {
   [Langi.En]: 'en',
 };
 
+export const langSystemCodeDict: Record<Langi, string> = {
+  [Langi.Ru]: 'ru-RU',
+  [Langi.Ua]: 'uk-UA',
+  [Langi.Kz]: 'kk-KZ',
+  [Langi.En]: 'en-GB',
+};
+
+export const takeLangSystemCode = (langi?: Langi | nil) => langSystemCodeDict[langi!] || langSystemCodeDict[Langi.Ru];
+
 export const langCodeLoadingTitleDict: Record<Langi, string> = {
   [Langi.Ru]: 'Загрузка текстов',
   [Langi.Ua]: 'Завантаження текстів',

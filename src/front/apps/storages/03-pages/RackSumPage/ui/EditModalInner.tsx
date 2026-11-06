@@ -1,4 +1,4 @@
-import { translateBase } from '#basis/locale';
+import { applicationLangi, translateBase } from '#basis/locale';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { DatePicker } from '#shared/components/DatePicker';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
@@ -49,7 +49,10 @@ export const StoragesRackSumEditModalInner = ({
                 <DatePicker
                   initValue={summary.date * 100000}
                   className="my-5"
-                  dateTitle={storagesSummaryTypePropsDict[summary.type].mapDateString(summary.date * 100000)}
+                  dateTitle={storagesSummaryTypePropsDict[summary.type].mapDateString(
+                    summary.date * 100000,
+                    applicationLangi,
+                  )}
                   onSelect={async date => {
                     storagesTsjrpcClient.putAtRackSummary({
                       rackw,

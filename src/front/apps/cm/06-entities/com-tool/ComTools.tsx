@@ -1,4 +1,4 @@
-import { languageSystemCode, translateBase } from '#basis/locale';
+import { applicationLangi, translateBase } from '#basis/locale';
 import { Badge } from '#shared/components/ui/badge';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
@@ -131,8 +131,8 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
       </div>
       <div className="w-full opacity-50 text-center text-xs py-3 white-pre">
         {translateBase(BaseLocaleKey.CmAddOrModifiedLabel, {
-          w: makeDateLabel(ccom.wid, languageSystemCode),
-          m: makeDateLabel(ccom.mod, languageSystemCode),
+          w: makeDateLabel(ccom.wid, applicationLangi),
+          m: makeDateLabel(ccom.mod, applicationLangi),
         })}
       </div>
     </>

@@ -292,13 +292,13 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
             }),
           true,
         ),
-        setStartTime: modifySchedule(true, async (sch, { value }) => {
+        setStartTime: modifySchedule(true, async (sch, { value }, tool) => {
           sch.prevStart = sch.start;
           sch.start = value;
 
           return backLocaleError(BackLocaleKey.SchStartTimeSet, {
             t: await scheduleTitleInBrackets(sch),
-            d: makeDateLabel(sch.start),
+            d: makeDateLabel(sch.start, tool.visitInfo?.langi),
           });
         }),
 

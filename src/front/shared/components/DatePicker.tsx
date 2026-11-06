@@ -1,4 +1,4 @@
-import { languageSystemCode, translateBase } from '#basis/locale';
+import { applicationLangi, languageSystemCode, translateBase } from '#basis/locale';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { useState } from 'react';
 import { Matcher } from 'react-day-picker';
@@ -40,7 +40,7 @@ export const DatePicker = (props: {
           className={twMerge('w-48 justify-between font-normal', props.className)}
         >
           {date
-            ? (props.dateTitle ?? makeDateLabel(date, languageSystemCode))
+            ? (props.dateTitle ?? makeDateLabel(date, applicationLangi))
             : (props.placeholder ?? translateBase(BaseLocaleKey.ConfigDate))}
           <TheIconLoading
             icon="ArrowDown01"

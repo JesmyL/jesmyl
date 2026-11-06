@@ -1,4 +1,4 @@
-import { languageSystemCode, translateBase } from '#basis/locale';
+import { applicationLangi, translateBase } from '#basis/locale';
 import { useAppNameContext } from '#basis/state/contexts';
 import { FullContentValue } from '#shared/ui/fullscreen-content/FullContent';
 import { useFullContent } from '#shared/ui/fullscreen-content/useFullContent';
@@ -363,7 +363,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
                 altTitle={translateBase(BaseLocaleKey.ScheduleEvent)}
                 topicBox={willSchBox.sch}
               />
-              {makeScheduleTimeLeftLabel(willSchBox.startMs, now, languageSystemCode)}
+              {makeScheduleTimeLeftLabel(willSchBox.startMs, now, applicationLangi)}
             </div>
           );
         }

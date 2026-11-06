@@ -1,4 +1,5 @@
 import { translateBase } from '#basis/locale';
+import { Langi } from 'shared/api';
 import { howMillisecondsInDay, howMillisecondsInHour } from 'shared/const/ms';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { makeDateLabel } from 'shared/utils/makeDateLabel';
@@ -7,7 +8,7 @@ const howMillisecondsInYear = howMillisecondsInDay * 365;
 
 const isSameDay = (a: Date, b: Date) => a.toDateString() === b.toDateString();
 
-export const makeScheduleTimeLeftLabel = (startMs: number, nowMs: number, langCode?: string) => {
+export const makeScheduleTimeLeftLabel = (startMs: number, nowMs: number, langi = Langi.Ru) => {
   const msTo = startMs - nowMs;
 
   if (msTo < howMillisecondsInHour) return translateBase(BaseLocaleKey.ScheduleLessThanHour);
@@ -18,7 +19,7 @@ export const makeScheduleTimeLeftLabel = (startMs: number, nowMs: number, langCo
 
   const tomorrowDate = new Date(nowMs);
   tomorrowDate.setDate(tomorrowDate.getDate() + 1);
-  if (isSameDay(startDate, tomorrowDate)) return makeDateLabel(startMs, langCode);
+  if (isSameDay(startDate, tomorrowDate)) return makeDateLabel(startMs, langi);
 
   if (msTo > howMillisecondsInYear) return translateBase(BaseLocaleKey.ScheduleMoreThanYear);
 

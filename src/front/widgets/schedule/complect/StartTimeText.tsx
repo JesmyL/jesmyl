@@ -1,4 +1,4 @@
-import { languageSystemCode, translateBase } from '#basis/locale';
+import { applicationLangi, translateBase } from '#basis/locale';
 import { IScheduleWidget, ScheduleWidgetCleans } from 'shared/api';
 import { howMillisecondsInMin } from 'shared/const/ms';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
@@ -37,7 +37,7 @@ export function ScheduleWidgetStartTimeText({ schedule, date: topDate }: Props) 
       {!schedule.start || (
         <div>
           {translateBase(BaseLocaleKey.ScheduleStart)}:{' '}
-          {makeDateLabel(isWithTime ? timeDate : date, languageSystemCode, isWithTime)}
+          {makeDateLabel(isWithTime ? timeDate : date, applicationLangi, isWithTime)}
         </div>
       )}
     </>
