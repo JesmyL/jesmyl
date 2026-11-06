@@ -1,22 +1,40 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { cmComChordsErrorDict } from 'shared/model/cm/chords';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
+import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { StyledLoadingSpinner } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { CmComOrderLine, TheCmCom, TheCmComOrder, useCmComPinchFontSize } from '$cm/ext';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeRegExp } from 'regexpert';
+import { CmComWid } from 'shared/api';
+import { toast } from 'sonner';
 import { useCmEditorComTabUpdateLinePositions } from '../lib/useUpdateChordLinePositions';
 import { CmEditorComTabChordApplicationsStyledContent } from '../style/CmEditorTabComChordApplicationsStyledContent.styled';
 import { CmEditorComTabChordHardLevelSelector } from '../sub-ui/ChordHardLevelSelector';
+
+const toastedChordsErrorComwSet = new Set<CmComWid>();
 
 export const CmEditorComTabChordApplications = ({ ccom }: { ccom: EditableCom }) => {
   const { updateLinePositions, linesOnUpdateSet, ordLinePositionsOnSend } = useCmEditorComTabUpdateLinePositions();
   const checkAccess = useCheckUserAccessRightsInScope();
   const { fontSize, ref } = useCmComPinchFontSize();
+  const isAdmin = checkAccess('cm', 'COM_APPS', 'U');
 
-  if (!checkAccess('cm', 'COM_APPS', 'U'))
+  useEffect(() => {
+    if (!isAdmin) return;
+
+    const message = cmComChordsErrorDict[ccom.wid];
+
+    if (!message || toastedChordsErrorComwSet.has(ccom.wid)) return;
+
+    toast(message, makeToastKOMoodConfig());
+    toastedChordsErrorComwSet.add(ccom.wid);
+  }, [ccom.wid, isAdmin]);
+
+  if (!isAdmin)
     return (
       <TheCmCom
         comw={ccom.wid}

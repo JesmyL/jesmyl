@@ -1,5 +1,6 @@
 import { makeRegExp } from 'regexpert';
 import { CmCom } from 'shared/const/cm/Com';
+import { cmComChordsErrorDict, takeChordsErrorDictValue } from 'shared/model/cm/chords';
 import { comBlockKinds } from 'shared/values/cm/block-kinds/BlockKind';
 
 export class EditableComBase extends CmCom {
@@ -7,7 +8,11 @@ export class EditableComBase extends CmCom {
     super(...args);
     this.chords = this.top.c;
 
-    if (this.isHardChords && this.top.c1) {
+    if (cmComChordsErrorDict[this.wid] == null)
+      cmComChordsErrorDict[this.wid] = takeChordsErrorDictValue(this.top.c, this.top.c1);
+
+    if (cmComChordsErrorDict[this.wid]) this.chords = [];
+    else if (this.isHardChords && this.top.c1) {
       const chordHeap = this.top.c.map(chords => chords.split('\n').map(line => line.split(' ')));
 
       this.chords = this.top.c1.some((chordBlock, chordBlocki) => {

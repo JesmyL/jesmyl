@@ -4,6 +4,7 @@ import { cmComCommentRegisteredAltKeysAtom } from '$cm/entities/com-comment';
 import { cmComFavoriteComwsAtom, cmComTopToolsAtom } from '$cm/entities/index';
 import { ComsInSchEventComwsPack, ScheduleWidgetWid } from 'shared/api';
 import { CmShareTsjrpcModel } from 'shared/api/tsjrpc/cm/share.tsjrpc.model';
+import { cmComChordsErrorDict } from 'shared/model/cm/chords';
 import { extractNumber, itInvokeIt, itNumSort } from 'shared/utils';
 import { mapObjectEntries, objectValues } from 'shared/utils/object.utils';
 import { cmIDB } from '../state/cmIDB';
@@ -16,6 +17,8 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
       scope: 'CmShare',
       methods: {
         editedCom: async ({ com, mod }) => {
+          delete cmComChordsErrorDict[com.w];
+
           if (com.isRemoved) {
             await cmIDB.db.coms.where('w').equals(com.w).delete();
           } else {
@@ -27,6 +30,7 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
 
         refreshComList: async ({ coms, modifiedAt }) => {
           updateMod(modifiedAt);
+          coms.forEach(com => delete cmComChordsErrorDict[com.w]);
           await cmIDB.db.coms.bulkPut(coms);
           cmIDB.db.coms.where({ isRemoved: 1 }).delete();
         },

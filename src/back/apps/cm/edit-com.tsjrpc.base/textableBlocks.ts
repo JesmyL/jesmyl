@@ -40,12 +40,12 @@ export const cmEditComServerTsjrpcTextableBlocks = {
 
       prev = com.c1[texti];
       com.c1[texti] = next;
-
-      if (checkIsEq(com.c, com.c1)) com.c1 = null;
     } else {
       prev = com.c[texti];
       com.c[texti] = next;
     }
+
+    if (checkIsEq(com.c, com.c1)) com.c1 = null;
 
     return { description: backLocaleError(BackLocaleKey.CmChordBlockChanged), was: prev, new: next };
   }),
