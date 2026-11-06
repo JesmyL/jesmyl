@@ -1,27 +1,32 @@
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import {
+  currentLangiAtom,
+  languageSystemCode,
+  translateBase,
+  translateDynamic,
+  translateEditorBase,
+} from '#basis/locale';
 import {
   makeBackLocaleErrorMessageDuoText,
   makeBackLocaleErrorMessageRuText,
   makeBackLocaleErrorMessageText,
 } from '#basis/locale/backLocaleError';
-import { currentLangiAtom, languageSystemCode, translateBase, translateDynamic, translateEditorBase } from '#basis/locale';
-import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { otherFooterIconAtom, otherFooterIconNamesAtom } from '#basis/state/otherFooterIconAtom';
 import { Button } from '#shared/components/ui/button';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { soki } from '#shared/soki';
-import { makeToastKOMoodConfig, makeToastOKMoodConfig } from '#shared/ui/modal';
+import { TextInput } from '#shared/ui/TextInput';
 import IconConfigurator from '#shared/ui/configurators/Icon';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
+import { makeToastKOMoodConfig, makeToastOKMoodConfig, useConfirm } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { TextInput } from '#shared/ui/TextInput';
-import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { indexDashMessageVersionAtom, indexVisitsOnlineAtom } from '$index/shared/state';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAtomValue } from 'atomaric';
-import { makeRegExp } from 'regexpert';
 import { useEffect, useRef, useState } from 'react';
-import { toast } from 'sonner';
+import { makeRegExp } from 'regexpert';
 import { Langi } from 'shared/api';
 import { langCodeDict } from 'shared/const/+locale';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
@@ -35,8 +40,9 @@ import {
   VisitsDashboardDayStat,
   noOnlineSample,
 } from 'shared/model/index/visitsDashboard';
-import { mapObjectEntries, objectLength } from 'shared/utils/object.utils';
 import { extractNumber } from 'shared/utils';
+import { mapObjectEntries, objectLength } from 'shared/utils/object.utils';
+import { toast } from 'sonner';
 import { StameskaIconName } from 'stameska-icon/pack';
 import { twMerge } from 'tailwind-merge';
 
@@ -92,10 +98,7 @@ const takeHistoryBucket = (date: string, period: VisitsHistoryPeriod) => {
   return { key: date, label: date.slice(5) };
 };
 
-const makeHistoryBuckets = (
-  dayStats: VisitsDashboardDayStat[],
-  period: VisitsHistoryPeriod,
-): VisitsHistoryBucket[] => {
+const makeHistoryBuckets = (dayStats: VisitsDashboardDayStat[], period: VisitsHistoryPeriod): VisitsHistoryBucket[] => {
   const buckets = new Map<string, VisitsHistoryBucket>();
 
   dayStats.forEach(({ date, total }) => {
@@ -109,21 +112,14 @@ const makeHistoryBuckets = (
   return [...buckets.values()];
 };
 
-const makeAverageBuckets = (
-  dayStats: VisitsDashboardDayStat[],
-  period: VisitsHistoryPeriod,
-): VisitsHistoryBucket[] => {
+const makeAverageBuckets = (dayStats: VisitsDashboardDayStat[], period: VisitsHistoryPeriod): VisitsHistoryBucket[] => {
   if (dayStats.length === 0) return [];
 
   const totalsByDate = new Map(dayStats.map(({ date, total }) => [date, total]));
   const buckets = new Map<string, { label: string; total: number; days: number }>();
   const endTime = Date.parse(`${dayStats[dayStats.length - 1].date}T00:00:00Z`);
 
-  for (
-    let time = Date.parse(`${dayStats[0].date}T00:00:00Z`);
-    time <= endTime;
-    time += historyDayMs
-  ) {
+  for (let time = Date.parse(`${dayStats[0].date}T00:00:00Z`); time <= endTime; time += historyDayMs) {
     const date = new Date(time).toISOString().slice(0, 10);
     const { key, label } = takeHistoryBucket(date, period);
     const bucket = buckets.get(key);
@@ -154,9 +150,7 @@ const takeMessageSummary = (html: string) => {
   return text.length > messageSummaryMaxLength ? `${text.slice(0, messageSummaryMaxLength)}…` : text;
 };
 
-const uniqById = <T extends { id: number }>(items: T[]) => [
-  ...new Map(items.map(item => [item.id, item])).values(),
-];
+const uniqById = <T extends { id: number }>(items: T[]) => [...new Map(items.map(item => [item.id, item])).values()];
 
 type VisitsVersionRow = { version: string; count: number };
 
@@ -192,11 +186,7 @@ const takeChartLabelInset = (label: string | nil, slotCenter: number) =>
   label
     ? Math.max(
         0,
-        Math.ceil(
-          label.length * chartLabelFontSize * chartLabelGlyphRatio * chartLabelTiltCosine -
-            slotCenter / 2 +
-            1,
-        ),
+        Math.ceil(label.length * chartLabelFontSize * chartLabelGlyphRatio * chartLabelTiltCosine - slotCenter / 2 + 1),
       )
     : 0;
 
@@ -270,9 +260,7 @@ const VisitsBarsChart = ({
   const multiTouchRef = useRef(false);
   const plotWidth = Math.max(bars.length * slotWidth, minWidth);
   const slotCenter = plotWidth / Math.max(bars.length, 1);
-  const firstShownLabel = bars.find(
-    (bar, index) => index % labelStep === 0 && bar.label.length > 0,
-  )?.label;
+  const firstShownLabel = bars.find((bar, index) => index % labelStep === 0 && bar.label.length > 0)?.label;
   const labelInset = takeChartLabelInset(firstShownLabel, slotCenter);
   const chartWidth = plotWidth + labelInset;
   const barWidth = slotWidth - 4;
@@ -296,10 +284,7 @@ const VisitsBarsChart = ({
     const rect = event.currentTarget.getBoundingClientRect();
     const takeIndexAt = (clientX: number) =>
       Math.min(
-        Math.max(
-          Math.floor((((clientX - rect.left) / rect.width) * chartWidth - labelInset) / slotCenter),
-          0,
-        ),
+        Math.max(Math.floor((((clientX - rect.left) / rect.width) * chartWidth - labelInset) / slotCenter), 0),
         bars.length - 1,
       );
     const indices = Array.from(event.touches, touch => takeIndexAt(touch.clientX));
@@ -583,60 +568,58 @@ const DashboardMessages = () => {
                 </article>
               ))
             : messages.map(message => {
-            const isUnread = message.createdAt > (messageReads[activeKind] ?? 0);
-            const isOpen = openMessageIds.has(message.id);
+                const isUnread = message.createdAt > (messageReads[activeKind] ?? 0);
+                const isOpen = openMessageIds.has(message.id);
 
-            return (
-              <article
-                key={message.id}
-                className={twMerge(
-                  'relative w-full max-w-full min-w-0 rounded-xl border p-2',
-                  isUnread ? 'border-chart-2/20 bg-chart-2/10' : 'border-x2/50 bg-x2/20',
-                )}
-              >
-                {!isUnread || (
-                  <span className="absolute right-2 top-2 size-1.5 rounded-full bg-chart-2/70" />
-                )}
-                <button
-                  className="pointer flex w-full min-w-0 flex-col gap-1 text-left"
-                  onClick={() => toggleMessage(message.id)}
-                >
-                  <span className="flex min-w-0 max-w-full flex-wrap items-center gap-x-2 gap-y-0.5 text-xs">
-                    <span className="shrink-0 text-x4/80">
-                      {new Date(message.createdAt).toLocaleString(languageSystemCode, {
-                        day: '2-digit',
-                        month: '2-digit',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit',
-                      })}
-                    </span>
-                    <span className="min-w-0 truncate font-medium text-x3">{takeMessageUserName(message)}</span>
-                  </span>
-                  <span className="min-w-0 max-w-full truncate text-xs text-x4">
-                    {takeMessageSummary(
-                      activeKind === DashMessageKind.Errors
-                        ? makeBackLocaleErrorMessageRuText(message.m)
-                        : makeBackLocaleErrorMessageText(message.m, langi),
+                return (
+                  <article
+                    key={message.id}
+                    className={twMerge(
+                      'relative w-full max-w-full min-w-0 rounded-xl border p-2',
+                      isUnread ? 'border-chart-2/20 bg-chart-2/10' : 'border-x2/50 bg-x2/20',
                     )}
-                  </span>
-                </button>
-                {!isOpen || (
-                  <div className="mt-2 w-full min-w-0 max-w-full overflow-x-auto border-t border-x2/50 pt-2">
-                    <div
-                      className="w-full min-w-0 max-w-full whitespace-pre-line break-words text-xs leading-relaxed text-x4 [overflow-wrap:anywhere] [&_a]:text-x7/80 [&_a]:underline [&_b]:text-x3 [&_blockquote]:border-l-2 [&_blockquote]:border-x2 [&_blockquote]:pl-2 [&_code]:text-x4 [&_p]:my-1"
-                      dangerouslySetInnerHTML={{
-                        __html:
+                  >
+                    {!isUnread || <span className="absolute right-2 top-2 size-1.5 rounded-full bg-chart-2/70" />}
+                    <button
+                      className="pointer flex w-full min-w-0 flex-col gap-1 text-left"
+                      onClick={() => toggleMessage(message.id)}
+                    >
+                      <span className="flex min-w-0 max-w-full flex-wrap items-center gap-x-2 gap-y-0.5 text-xs">
+                        <span className="shrink-0 text-x4/80">
+                          {new Date(message.createdAt).toLocaleString(languageSystemCode, {
+                            day: '2-digit',
+                            month: '2-digit',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            second: '2-digit',
+                          })}
+                        </span>
+                        <span className="min-w-0 truncate font-medium text-x3">{takeMessageUserName(message)}</span>
+                      </span>
+                      <span className="min-w-0 max-w-full truncate text-xs text-x4">
+                        {takeMessageSummary(
                           activeKind === DashMessageKind.Errors
-                            ? makeBackLocaleErrorMessageDuoText(message.m, langi)
+                            ? makeBackLocaleErrorMessageRuText(message.m)
                             : makeBackLocaleErrorMessageText(message.m, langi),
-                      }}
-                    />
-                  </div>
-                )}
-              </article>
-            );
-          })}
+                        )}
+                      </span>
+                    </button>
+                    {!isOpen || (
+                      <div className="mt-2 w-full min-w-0 max-w-full overflow-x-auto border-t border-x2/50 pt-2">
+                        <div
+                          className="w-full min-w-0 max-w-full whitespace-pre-line break-words text-xs leading-relaxed text-x4 [overflow-wrap:anywhere] [&_a]:text-x7/80 [&_a]:underline [&_b]:text-x3 [&_blockquote]:border-l-2 [&_blockquote]:border-x2 [&_blockquote]:pl-2 [&_code]:text-x4 [&_p]:my-1"
+                          dangerouslySetInnerHTML={{
+                            __html:
+                              activeKind === DashMessageKind.Errors
+                                ? makeBackLocaleErrorMessageDuoText(message.m, langi)
+                                : makeBackLocaleErrorMessageText(message.m, langi),
+                          }}
+                        />
+                      </div>
+                    )}
+                  </article>
+                );
+              })}
         </div>
       )}
 
@@ -660,8 +643,16 @@ const DashboardEmailReportButton = () => {
     setIsSending(true);
 
     try {
-      const email = await indexTsjrpcClientMethods.sendDashEmailReport_v1();
-      toast(translateEditorBase(EditorLocaleKey.VisitsReportSent, { e: email }), makeToastOKMoodConfig());
+      const { sent, failed } = await indexTsjrpcClientMethods.sendDashEmailReport_v2();
+      if (!failed.length) {
+        toast(translateEditorBase(EditorLocaleKey.VisitsReportSent, { e: sent.join(', ') }), makeToastOKMoodConfig());
+        return;
+      }
+
+      toast(
+        translateEditorBase(EditorLocaleKey.VisitsReportNotSent, { e: failed.join(', ') }),
+        makeToastKOMoodConfig(),
+      );
     } catch (error) {
       toast('' + error, makeToastKOMoodConfig());
     } finally {
@@ -681,6 +672,7 @@ const DashboardEmailReportButton = () => {
 };
 
 const DashboardReportRecipients = () => {
+  const confirm = useConfirm();
   const [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [langi, setLangi] = useState<Langi>(() => currentLangiAtom.get());
@@ -691,31 +683,36 @@ const DashboardReportRecipients = () => {
     queryFn: () => indexTsjrpcClientMethods.getDashReportRecipients(),
   });
   const recipients = recipientsQuery.data ?? {};
+  const takeFreshestRecipients = () =>
+    queryClient.getQueryData<PRecord<string, Langi>>(['dashReportRecipients']) ?? recipients;
 
   const saveRecipients = async (nextRecipients: PRecord<string, Langi>) => {
+    if (isSaving) return false;
+
     setIsSaving(true);
 
     try {
       const saved = await indexTsjrpcClientMethods.setDashReportRecipients({ recipients: nextRecipients });
       queryClient.setQueryData(['dashReportRecipients'], saved);
       toast(translateEditorBase(EditorLocaleKey.VisitsRecipientsSaved), makeToastOKMoodConfig());
+      return true;
     } catch (error) {
       toast('' + error, makeToastKOMoodConfig());
+      return false;
     } finally {
       setIsSaving(false);
     }
   };
 
-  const addRecipient = () => {
+  const addRecipient = async () => {
     const normalizedEmail = email.trim().toLowerCase();
     if (!normalizedEmail) return;
 
-    setEmail('');
-    void saveRecipients({ ...recipients, [normalizedEmail]: langi });
+    if (await saveRecipients({ ...takeFreshestRecipients(), [normalizedEmail]: langi })) setEmail('');
   };
 
   const removeRecipient = (targetEmail: string) => {
-    const nextRecipients = { ...recipients };
+    const nextRecipients = { ...takeFreshestRecipients() };
     delete nextRecipients[targetEmail];
     void saveRecipients(nextRecipients);
   };
@@ -737,10 +734,30 @@ const DashboardReportRecipients = () => {
                 className="flex min-w-0 items-center gap-2 rounded-lg px-2 py-1 even:bg-x2/40"
               >
                 <span className="min-w-0 flex-1 truncate text-sm text-x3">{recipientEmail}</span>
-                <span className="shrink-0 text-xs text-x4">{takeLangiTitle(recipientLangi ?? Langi.Ru)}</span>
+                <Dropdown
+                  className="h-7 w-20 shrink-0 rounded-md border border-ring bg-x1 px-2 text-xs text-x4"
+                  disabled={isSaving}
+                  id={recipientLangi ?? Langi.Ru}
+                  onSelectId={nextLangi => saveRecipients({ ...takeFreshestRecipients(), [recipientEmail]: nextLangi })}
+                  items={mapObjectEntries(langCodeDict, langi => {
+                    const langiId = extractNumber(langi);
+
+                    return { id: langiId, title: takeLangiTitle(langiId) };
+                  })}
+                />
                 <button
-                  className="pointer shrink-0 text-xs text-x4 hover:text-x3"
-                  onClick={() => removeRecipient(recipientEmail)}
+                  className="pointer shrink-0 text-xs text-x4 hover:text-x3 disabled:opacity-50"
+                  disabled={isSaving}
+                  onClick={async () => {
+                    if (
+                      await confirm(
+                        translateEditorBase(EditorLocaleKey.VisitsReportRecipientRemoveConfirm, {
+                          e: recipientEmail,
+                        }),
+                      )
+                    )
+                      removeRecipient(recipientEmail);
+                  }}
                 >
                   {translateBase(BaseLocaleKey.Delete)}
                 </button>

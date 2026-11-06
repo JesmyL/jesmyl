@@ -222,8 +222,10 @@ export const localeEditorRu = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsMinVersions]: 'Минимальные версии по дням',
   [EditorLocaleKey.VisitsSendReport]: 'Отправить отчёт на e-mail',
   [EditorLocaleKey.VisitsReportSent]: 'Отправлено на $e',
+  [EditorLocaleKey.VisitsReportNotSent]: 'Не отправлено: $e',
   [EditorLocaleKey.VisitsOnlineByHour]: 'Онлайн по часам',
   [EditorLocaleKey.VisitsOnlineHourPeriod]: '$f-$t - мин $n — макс $x',
   [EditorLocaleKey.VisitsReportRecipients]: 'Получатели отчёта',
+  [EditorLocaleKey.VisitsReportRecipientRemoveConfirm]: 'Удалить получателя $e из списка?',
   [EditorLocaleKey.VisitsRecipientsSaved]: 'Список получателей сохранён',
 });

@@ -226,6 +226,7 @@ export const backLocalesEn: Record<BackLocaleKey, string> = {
     'Mail account is not configured: key "$k" is missing and there are no backup accounts',
   [BackLocaleKey.EmailIncorrect]: 'Incorrect e-mail',
   [BackLocaleKey.EmailNotLinked]: 'E-mail is not linked to the profile',
+  [BackLocaleKey.DashReportNoRecipients]: 'No dash report recipients configured',
   [BackLocaleKey.DashMessageKindInvalid]: 'Invalid message kind',
   [BackLocaleKey.DashErrorPushTitle]: 'New error',
   [BackLocaleKey.DashErrorPushSystemAuthor]: 'System',

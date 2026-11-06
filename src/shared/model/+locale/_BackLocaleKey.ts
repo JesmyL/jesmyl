@@ -430,4 +430,5 @@ export const enum BackLocaleKey {
   OtpLetter8 = 427,
   OtpLetter9 = 428,
   OtpLetter10 = 429,
+  DashReportNoRecipients = 430,
 }

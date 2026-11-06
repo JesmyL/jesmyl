@@ -218,8 +218,10 @@ export const localeEditorEn = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsMinVersions]: 'Minimum versions by day',
   [EditorLocaleKey.VisitsSendReport]: 'Send report by e-mail',
   [EditorLocaleKey.VisitsReportSent]: 'Sent to $e',
+  [EditorLocaleKey.VisitsReportNotSent]: 'Not sent to: $e',
   [EditorLocaleKey.VisitsOnlineByHour]: 'Online by hours',
   [EditorLocaleKey.VisitsOnlineHourPeriod]: '$f-$t - min $n — max $x',
   [EditorLocaleKey.VisitsReportRecipients]: 'Report recipients',
+  [EditorLocaleKey.VisitsReportRecipientRemoveConfirm]: 'Remove recipient $e from the list?',
   [EditorLocaleKey.VisitsRecipientsSaved]: 'Recipients saved',
 });

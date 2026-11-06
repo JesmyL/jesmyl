@@ -228,6 +228,7 @@ export const backLocalesKz: Record<BackLocaleKey, string> = {
   [BackLocaleKey.MailAccountNotConfigured]: 'Пошта аккаунты орнатылмаған: "$k" кілті жоқ және қосалқы аккаунттар жоқ',
   [BackLocaleKey.EmailIncorrect]: 'E-mail дұрыс емес',
   [BackLocaleKey.EmailNotLinked]: 'E-mail профильге байланбаған',
+  [BackLocaleKey.DashReportNoRecipients]: 'Есеп алушылары реттелмеген',
   [BackLocaleKey.DashMessageKindInvalid]: 'Рұқсат етілмеген хабарлама түрі',
   [BackLocaleKey.DashErrorPushTitle]: 'Жаңа қате',
   [BackLocaleKey.DashErrorPushSystemAuthor]: 'Жүйе',

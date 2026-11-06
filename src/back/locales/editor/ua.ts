@@ -215,8 +215,10 @@ export const localeEditorUa = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsMinVersions]: 'Мінімальні версії за днями',
   [EditorLocaleKey.VisitsSendReport]: 'Надіслати звіт на e-mail',
   [EditorLocaleKey.VisitsReportSent]: 'Надіслано на $e',
+  [EditorLocaleKey.VisitsReportNotSent]: 'Не надіслано: $e',
   [EditorLocaleKey.VisitsOnlineByHour]: 'Онлайн за годинами',
   [EditorLocaleKey.VisitsOnlineHourPeriod]: '$f-$t - мін $n — макс $x',
   [EditorLocaleKey.VisitsReportRecipients]: 'Отримувачі звіту',
+  [EditorLocaleKey.VisitsReportRecipientRemoveConfirm]: 'Видалити отримувача $e зі списку?',
   [EditorLocaleKey.VisitsRecipientsSaved]: 'Список отримувачів збережено',
 });

@@ -377,26 +377,39 @@ const sendVisitsDigest = async (stats: ReturnType<typeof makeDayStats>) => {
   );
 };
 
-export const sendCurrentDashReport = async (login: UserLogin, langi: Langi | nil) => {
-  const email = (await takeUserTiny({ l: login }, false))?.uauth.email;
+export const sendCurrentDashReport = async () => {
+  const recipients = dashReportRecipientsFileStorage.getValue();
 
-  if (!email) throw backLocaleError(BackLocaleKey.EmailNotLinked);
+  if (!objectLength(recipients)) throw backLocaleError(BackLocaleKey.DashReportNoRecipients);
 
   const now = Date.now();
   const date = takeMskDayKey(now);
   const stats = makeDayStats(date, await takeTodayVisitRows(now));
+  const sent: string[] = [];
+  const failed: string[] = [];
 
-  await sendEmailMessage(EmailerAuthConfigKey.Self, {
-    isSameTo: true,
-    to: email,
-    subject: translateBackTexts(langi, BackLocaleKey.VisitReportEmailSubject, {
-      d: takeLocalizedDate(date, langi),
-      t: takeLocalizedTime(now, langi),
-    }),
-    html: await makeDayStatsHtml(stats, langi),
-  });
+  (
+    await Promise.all(
+      mapObjectEntries(recipients, async (email, langi) => {
+        try {
+          await sendEmailMessage(EmailerAuthConfigKey.Self, {
+            to: email,
+            subject: translateBackTexts(langi, BackLocaleKey.VisitReportEmailSubject, {
+              d: takeLocalizedDate(date, langi),
+              t: takeLocalizedTime(now, langi),
+            }),
+            html: await makeDayStatsHtml(stats, langi),
+          });
 
-  return email;
+          return { email, isSent: true };
+        } catch {
+          return { email, isSent: false };
+        }
+      }),
+    )
+  ).forEach(({ email, isSent }) => (isSent ? sent : failed).push(email));
+
+  return { sent, failed };
 };
 
 /** Changes are mirrored to the self mailbox that the visits report is sent from (`isSameTo`) and to every configured dash report recipient. */

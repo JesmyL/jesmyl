@@ -229,6 +229,7 @@ export const backLocalesUa: Record<BackLocaleKey, string> = {
     'Поштовий акаунт не налаштовано: ключ "$k" відсутній і запасних акаунтів немає',
   [BackLocaleKey.EmailIncorrect]: 'Некоректний E-mail',
   [BackLocaleKey.EmailNotLinked]: "E-mail не прив'язано до профілю",
+  [BackLocaleKey.DashReportNoRecipients]: 'Не налаштовано отримувачів звіту',
   [BackLocaleKey.DashMessageKindInvalid]: 'Неприпустимий тип повідомлень',
   [BackLocaleKey.DashErrorPushTitle]: 'Нова помилка',
   [BackLocaleKey.DashErrorPushSystemAuthor]: 'Система',

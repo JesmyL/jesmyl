@@ -56,12 +56,12 @@ export const indexTSJRPCBaseVisitsDashboard = {
     return { value: await markDashMessagesRead(auth.login, kind) };
   },
 
-  sendDashEmailReport_v1: async (_, { auth, visitInfo }) => {
+  sendDashEmailReport_v2: async (_, { auth }) => {
     await throwIfNoUserScopeAccessRight(auth, 'dash', 'DASH');
 
     if (!auth?.login) throw backLocaleError(BackLocaleKey.NoAccess);
 
-    return { value: await sendCurrentDashReport(auth.login, visitInfo?.langi) };
+    return { value: await sendCurrentDashReport() };
   },
 
   getDashReportRecipients: async (_, { auth }) => {
