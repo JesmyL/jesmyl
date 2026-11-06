@@ -30,11 +30,6 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
       MenuComToolName.ChordHardLevel,
     )`${SWITCH('$v').CASE(0)`Прості акорди`.CASE(1)`Складні акорди`.DEFAULT`!Необхідно оновити додаток!`}`,
 
-    ...baseLocaleTemplate(
-      BaseLocaleKey.CmMarkComTool,
-      MenuComToolName.CacheTracks,
-    )`${IF('$v').THEN`Прибрати з кешу`.ELSE`Кешувати треки`}`,
-
     [MenuComToolName.FullscreenMode]: 'На весь екран',
     [MenuComToolName.ChordsVariant]: 'Показати акорди',
     [MenuComToolName.ShowTranslation]: 'Слайди',
@@ -47,6 +42,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
     [MenuComToolName.CopyCom]: 'Копіювати текст пісні',
     [MenuComToolName.EditCom]: 'Редагувати',
     [MenuComToolName.BemoledChords]: 'Бемольні/дієзні акорди',
+    [MenuComToolName.PlayerPlay]: 'Відтворити у плеєрі',
   },
   [BaseLocaleKey.CmShowPlayer]: 'Показувати плеєр',
   [BaseLocaleKey.CmListShared]: 'З вами поділилися списком',
@@ -114,6 +110,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.CmAudioPlaybackError]: 'Помилка відтворення аудіо',
   [BaseLocaleKey.CmChooseCom]: 'Виберіть пісню',
   [BaseLocaleKey.CmNoComTracks]: 'У пісні немає треків',
+  [BaseLocaleKey.CmComNotInList]: 'Пісні у списку "$l;" немає',
   [BaseLocaleKey.CmNoSlides]: 'Слайди не налаштовані',
   [BaseLocaleKey.CmFeatureUnavailable]: 'Функціонал недоступний',
   [BaseLocaleKey.CmCacheDeleteDescription]: 'Видалити трек з кешу?',

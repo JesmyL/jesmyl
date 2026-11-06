@@ -30,11 +30,6 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
       MenuComToolName.ChordHardLevel,
     )`${SWITCH('$v').CASE(0)`Simple chords`.CASE(1)`Hard chords`.DEFAULT`!The app needs to be updated!`}`,
 
-    ...baseLocaleTemplate(
-      BaseLocaleKey.CmMarkComTool,
-      MenuComToolName.CacheTracks,
-    )`${IF('$v').THEN`Remove from cache`.ELSE`Cache tracks`}`,
-
     [MenuComToolName.FullscreenMode]: 'Fullscreen',
     [MenuComToolName.ChordsVariant]: 'Show chords',
     [MenuComToolName.ShowTranslation]: 'Slides',
@@ -47,6 +42,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
     [MenuComToolName.CopyCom]: 'Copy song text',
     [MenuComToolName.EditCom]: 'Edit',
     [MenuComToolName.BemoledChords]: 'Flat/sharp chords',
+    [MenuComToolName.PlayerPlay]: 'Play in player',
   },
   [BaseLocaleKey.CmShowPlayer]: 'Show player',
   [BaseLocaleKey.CmListShared]: 'A list was shared with you',
@@ -112,6 +108,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.CmAudioPlaybackError]: 'Audio playback error',
   [BaseLocaleKey.CmChooseCom]: 'Select a song',
   [BaseLocaleKey.CmNoComTracks]: 'The song has no tracks',
+  [BaseLocaleKey.CmComNotInList]: 'No song in the "$l;" list',
   [BaseLocaleKey.CmNoSlides]: 'Slides are not configured',
   [BaseLocaleKey.CmFeatureUnavailable]: 'Feature is unavailable',
   [BaseLocaleKey.CmCacheDeleteDescription]: 'Remove track from cache?',

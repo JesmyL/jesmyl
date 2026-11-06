@@ -4,7 +4,7 @@ import ts from 'typescript';
 import type { Plugin } from 'vite';
 
 type EnumMemberValues = Map<string, string>;
-type EnumInfo = { file: string; values: EnumMemberValues };
+type EnumInfo = { file: string; values: EnumMemberValues; mtimeMs: number };
 type Edit = { start: number; end: number; text: string };
 
 const ignoredDirectoryNames = new Set(['node_modules', '.git', 'build']);
@@ -63,9 +63,17 @@ const readFileEnums = (file: string) => {
 
 const collectEnums = (root: string) => {
   const enums = new Map<string, EnumInfo>();
+  const files = new Set<string>();
 
   const scanFile = (file: string) => {
-    readFileEnums(file)?.forEach((values, name) => enums.set(name, { file, values }));
+    const fileEnums = readFileEnums(file);
+    if (!fileEnums) return;
+
+    files.add(file);
+
+    const mtimeMs = fs.statSync(file).mtimeMs;
+
+    fileEnums.forEach((values, name) => enums.set(name, { file, values, mtimeMs }));
   };
 
   const scanDirectory = (directory: string) => {
@@ -80,39 +88,49 @@ const collectEnums = (root: string) => {
 
   scanDirectory(path.join(root, 'src'));
 
-  return enums;
+  return { enums, files };
 };
 
 const takeEnumMemberLiteral = (
   enums: Map<string, EnumInfo>,
-  refreshedNames: Set<string>,
+  refreshedFiles: Set<string>,
   name: string,
   member: string,
 ) => {
-  let literal = enums.get(name)?.values.get(member);
+  const info = enums.get(name);
+  if (!info) return;
 
-  // The snapshot is collected once per dev server, so a member added afterwards is
-  // unknown here and its import would survive into the code of a module whose enum
-  // declaration is stripped. Re-read the declaring file on the first miss instead.
-  if (literal === undefined && enums.has(name) && !refreshedNames.has(name)) {
-    refreshedNames.add(name);
+  // The snapshot is collected once per dev server, while an enum file may be edited afterwards.
+  // A changed value, unlike an added member, is not a miss: the declaring file is re-read once
+  // per transform as soon as its mtime moves.
+  if (!refreshedFiles.has(info.file)) {
+    refreshedFiles.add(info.file);
 
-    const info = enums.get(name);
-    const values = info && readFileEnums(info.file)?.get(name);
+    try {
+      const mtimeMs = fs.statSync(info.file).mtimeMs;
 
-    if (info && values) {
-      info.values = values;
-      literal = values.get(member);
+      if (mtimeMs !== info.mtimeMs) {
+        const fileEnums = readFileEnums(info.file);
+
+        enums.forEach((enumInfo, enumName) => {
+          if (enumInfo.file !== info.file) return;
+
+          enumInfo.mtimeMs = mtimeMs;
+          enumInfo.values = fileEnums?.get(enumName) ?? new Map();
+        });
+      }
+    } catch (_error) {
+      // A vanished file keeps its last known values: the next transform retries.
     }
   }
 
-  return literal;
+  return info.values.get(member);
 };
 
 const rewriteConstEnums = (file: string, code: string, enums: Map<string, EnumInfo>) => {
   const source = ts.createSourceFile(file, code, ts.ScriptTarget.Latest, false);
   const edits: Edit[] = [];
-  const refreshedNames = new Set<string>();
+  const refreshedFiles = new Set<string>();
   const replaceNode = (node: ts.Node, text: string) => {
     edits.push({ start: node.getStart(source), end: node.getEnd(), text });
   };
@@ -124,7 +142,7 @@ const rewriteConstEnums = (file: string, code: string, enums: Map<string, EnumIn
     }
 
     if (ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.expression)) {
-      const literal = takeEnumMemberLiteral(enums, refreshedNames, node.expression.text, node.name.text);
+      const literal = takeEnumMemberLiteral(enums, refreshedFiles, node.expression.text, node.name.text);
       if (literal !== undefined) {
         replaceNode(node, literal);
         return;
@@ -134,7 +152,7 @@ const rewriteConstEnums = (file: string, code: string, enums: Map<string, EnumIn
     if (ts.isElementAccessExpression(node) && ts.isIdentifier(node.expression)) {
       const argument = node.argumentExpression;
       if (argument && (ts.isStringLiteral(argument) || ts.isNoSubstitutionTemplateLiteral(argument))) {
-        const literal = takeEnumMemberLiteral(enums, refreshedNames, node.expression.text, argument.text);
+        const literal = takeEnumMemberLiteral(enums, refreshedFiles, node.expression.text, argument.text);
         if (literal !== undefined) {
           replaceNode(node, literal);
           return;
@@ -175,6 +193,7 @@ const rewriteConstEnums = (file: string, code: string, enums: Map<string, EnumIn
 export const constEnumVitePlugin = (): Plugin => {
   let root = process.cwd();
   let enums: Map<string, EnumInfo> | null = null;
+  let enumFiles: Set<string> | null = null;
   let enumNamesRegExp: RegExp | null = null;
 
   return {
@@ -183,11 +202,24 @@ export const constEnumVitePlugin = (): Plugin => {
     configResolved(config) {
       root = config.root;
     },
+    handleHotUpdate({ file, server }) {
+      if (!enumFiles?.has(file)) return;
+
+      // An inlined value is a bare literal in modules the graph does not link to the enum file,
+      // so Vite cannot invalidate those importers itself: only a full graph reset refreshes them.
+      server.moduleGraph.invalidateAll();
+      server.ws.send({ type: 'full-reload' });
+    },
     transform(code, id) {
       const file = id.split('?')[0];
       if (!tsFileRegExp.test(file) || file.endsWith('.d.ts') || file.includes('node_modules')) return;
 
-      enums ??= collectEnums(root);
+      if (enums === null) {
+        const collected = collectEnums(root);
+        enums = collected.enums;
+        enumFiles = collected.files;
+      }
+
       if (!enums.size) return;
 
       enumNamesRegExp ??= new RegExp(

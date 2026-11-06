@@ -772,4 +772,5 @@ export const enum BaseLocaleKey {
   CmSmartSearch = 753,
   SystemLanguage = 754,
   AppLanguage = 755,
+  CmComNotInList = 756,
 }

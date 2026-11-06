@@ -3,14 +3,14 @@ import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmOpenComListModeAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { objectKeys } from 'shared/utils/object.utils';
+import { cmComListPackKindSelectorLocaleKeyDict } from '../model';
 
 const MODE_DICT = {
-  all: ['LeftToRightListBullet', 'TwotoneRounded', BaseLocaleKey.CmListsAll],
-  fav: ['Favourite', 'DuotoneRounded', BaseLocaleKey.Favorite],
-  sel: ['CheckmarkBadge01', 'DuotoneRounded', BaseLocaleKey.Selected],
-  cached: ['CloudDownload', 'TwotoneRounded', BaseLocaleKey.Cached],
+  all: ['LeftToRightListBullet', 'TwotoneRounded'],
+  fav: ['Favourite', 'DuotoneRounded'],
+  sel: ['CheckmarkBadge01', 'DuotoneRounded'],
+  cached: ['CloudDownload', 'TwotoneRounded'],
 } as const;
 
 export const CmComListPackKindSelector = () => {
@@ -28,7 +28,7 @@ export const CmComListPackKindSelector = () => {
       renderItem={({ node, id }) => (
         <>
           {node}
-          {translateBase(MODE_DICT[id][2])}
+          {translateBase(cmComListPackKindSelectorLocaleKeyDict[id])}
         </>
       )}
       hiddenArrow

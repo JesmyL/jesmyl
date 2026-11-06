@@ -18,8 +18,7 @@ export type LocaleBase<L extends Langi> = {
     | MenuComToolName.SelectedToggle
     | MenuComToolName.IsMiniAnchor
     | MenuComToolName.ChordHardLevel
-    | MenuComToolName.MarkCom
-    | MenuComToolName.CacheTracks,
+    | MenuComToolName.MarkCom,
     { v: string | number | boolean }
   >;
   [BaseLocaleKey.CmShowPlayer]: LocaleSimpleString;
@@ -774,6 +773,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.SchedulePeriodWeekdayOfMonthKind]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleUserAdded]: LocaleSimpleString;
   [BaseLocaleKey.PushNotifications]: LocaleSimpleString;
+  [BaseLocaleKey.CmComNotInList]: StringTemplaterInterpolation<{ l: string }>;
 };
 
 export type UsedBaseLocaleKey = BaseLocaleKey;

@@ -2,6 +2,7 @@ import { translateBase } from '#basis/locale';
 import { Slider } from '#shared/components/ui/slider';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
+import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { DocTitle } from '#shared/ui/tags/DocTitle';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -18,6 +19,7 @@ import {
 } from '$cm/entities/com';
 import {
   CmComAudioPlayerAdjacentDirection,
+  cmComAudioPlayerCachedSrcsLoadedAtom,
   cmComAudioPlayerCurrentComwAtom,
   cmComAudioPlayerFilteredComsAtom,
   cmComAudioPlayerFindNextCom,
@@ -41,7 +43,7 @@ import {
 } from '$cm/entities/com-audio-player';
 import { CmComFaceList } from '$cm/entities/com-face';
 import { CmComToolFavorite, CmComToolIsComToolIconItemsContext, CmComToolNameContext } from '$cm/entities/com-tool';
-import { CmComListPackKindSelector } from '$cm/entities/ComListPackKindSelector';
+import { CmComListPackKindSelector, cmComListPackKindSelectorLocaleKeyDict } from '$cm/entities/ComListPackKindSelector';
 import { cmComLastOpenComwAtom } from '$cm/entities/index';
 import { CmComAudioPlayerMarksMovers } from '$cm/ext';
 import { CmPlayerTextSlides } from '$cm/features/PlayerTextSlides';
@@ -62,6 +64,7 @@ import { CmComWid, IExportableCom, MenuComToolName, parseCmAudioSrc } from 'shar
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { convertSecondsInStrTime, retNull } from 'shared/utils';
 import { lazyInit } from 'shared/utils/lazyInit';
+import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 
 const termAtom = lazyInit(() => atom(''));
@@ -282,11 +285,14 @@ const PlayerComName = ({ name }: { name: string }) => {
 };
 
 export const CmPlayerPage = () => {
-  const favComws = useCmComIComList(useAtomValue(cmComFavoriteComwsAtom));
-  const selComws = useCmComIComList(useAtomValue(cmComSelectedComwsAtom));
+  const favWids = useAtomValue(cmComFavoriteComwsAtom);
+  const selWids = useAtomValue(cmComSelectedComwsAtom);
+  const favComws = useCmComIComList(favWids);
+  const selComws = useCmComIComList(selWids);
   const allIComs = useCmComAllIComList();
   const debouncedOpenComListMode = useDebounceValue(useAtomValue(cmOpenComListModeAtom));
   const cachedSrcs = useCmComAudioPlayerCachedSrcs();
+  const cachedSrcsLoaded = useAtomValue(cmComAudioPlayerCachedSrcsLoadedAtom);
 
   const baseIComs = useMemo(
     () =>
@@ -302,6 +308,23 @@ export const CmPlayerPage = () => {
   );
   const baseComws = useMemo(() => baseIComs.map(com => com.w), [baseIComs]);
 
+  /**
+   * The mode's own source may still be loading: `useCmComIComList` hides a pending query as `[]`, so an
+   * empty result for a requested non-empty wid list only proves that the query has not come back yet.
+   */
+  const isComListReady = useMemo(() => {
+    switch (debouncedOpenComListMode) {
+      case 'fav':
+        return favWids.length === 0 || favComws.length > 0;
+      case 'sel':
+        return selWids.length === 0 || selComws.length > 0;
+      case 'cached':
+        return allIComs !== undefined && cachedSrcsLoaded;
+      default:
+        return allIComs !== undefined;
+    }
+  }, [allIComs, cachedSrcsLoaded, debouncedOpenComListMode, favComws, favWids, selComws, selWids]);
+
   return (
     <CmComWithComListSearchFilterInput
       comws={baseComws}
@@ -310,8 +333,11 @@ export const CmPlayerPage = () => {
       {({ inputNode, searchedComs }) => (
         <CmPlayerPageContent
           baseIComs={baseIComs}
+          baseComws={baseComws}
+          listMode={debouncedOpenComListMode}
           searchedComs={searchedComs}
           inputNode={inputNode}
+          isComListReady={isComListReady}
         />
       )}
     </CmComWithComListSearchFilterInput>
@@ -320,14 +346,23 @@ export const CmPlayerPage = () => {
 
 const CmPlayerPageContent = ({
   baseIComs,
+  baseComws,
   searchedComs,
   inputNode,
+  listMode,
+  isComListReady,
 }: {
   baseIComs: IExportableCom[];
+  baseComws: CmComWid[];
   searchedComs: CmComWid[];
   inputNode: ReactNode;
+  listMode: keyof typeof cmComListPackKindSelectorLocaleKeyDict;
+  isComListReady: boolean;
 }) => {
   const openComListMode = useAtomValue(cmOpenComListModeAtom);
+  const comAbsentInListToastText = translateBase(BaseLocaleKey.CmComNotInList, {
+    l: translateBase(cmComListPackKindSelectorLocaleKeyDict[listMode]),
+  });
   const search = useSearch({ from: '/cm/player/' });
   const incomingComw = search.comw;
   const incomingComl = search.coml;
@@ -396,6 +431,8 @@ const CmPlayerPageContent = ({
   }, [com, displaySrc]);
 
   const hasSeededIncomingEntryRef = useRef(false);
+  /** Hinted com whose absence from the open list is only decidable once the live com list has settled. */
+  const [hintedComwToCheck, setHintedComwToCheck] = useState<CmComWid | null>(null);
 
   /** A URL `coml`/`comw` is only an entry hint: it seeds the page atom once, then is removed so the URL never drives playback. */
   useEffect(() => {
@@ -424,6 +461,8 @@ const CmPlayerPageContent = ({
     if (incomingEntryComw != null) {
       cmComAudioPlayerMarkManualPick();
       cmComAudioPlayerSetCurrentComw(incomingEntryComw);
+      setHintedComwToCheck(incomingEntryComw);
+
       return;
     }
 
@@ -436,12 +475,25 @@ const CmPlayerPageContent = ({
       .then(coms => {
         const comw = coms?.find(com => com.al?.includes(incomingComl))?.w;
 
-        if (comw != null) {
-          cmComAudioPlayerMarkManualPick();
-          cmComAudioPlayerSetCurrentComw(comw);
-        }
+        if (comw == null) return;
+
+        cmComAudioPlayerMarkManualPick();
+        cmComAudioPlayerSetCurrentComw(comw);
+        setHintedComwToCheck(comw);
       });
   }, [hasIncomingEntry, incomingEntryComw, incomingComl, navigate]);
+
+  /**
+   * A hint may arrive while the open mode's list is still loading: check its presence in the mode list
+   * itself (pre-search), only once that list is genuinely settled.
+   */
+  useEffect(() => {
+    if (hintedComwToCheck == null || !isComListReady) return;
+
+    setHintedComwToCheck(null);
+
+    if (!baseComws.includes(hintedComwToCheck)) toast(comAbsentInListToastText, makeToastKOMoodConfig());
+  }, [baseComws, comAbsentInListToastText, hintedComwToCheck, isComListReady]);
 
   /** Fresh marks must follow the current com: the player keeps the slides toggle alive while auto-advancing tracks. */
   useEffect(() => {

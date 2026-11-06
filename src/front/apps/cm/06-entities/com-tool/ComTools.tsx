@@ -27,7 +27,7 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
   const fontSize = useAtomValue(cmComFontSizeAtom);
   const chordVisibleVariant = useAtomValue(cmComChordVisibleVariantAtom);
   const comToolsNode = useCmComToolMigratableList();
-  const ifixedCom = useLiveQuery(() => ccom && cmIDB.tb.fixedComs.get(ccom.wid), [ccom?.wid]);
+  const ifixedCom = useLiveQuery(() => cmIDB.tb.fixedComs.get(ccom?.wid ?? 'XX'), [ccom?.wid]);
 
   const visitsCountQuery = useQuery({
     queryKey: ['cmTsjrpcClient.takeComwVisitsCount', ccom?.wid],

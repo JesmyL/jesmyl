@@ -24,6 +24,9 @@ export const cmComAudioPlayerSrcStatesAtom = atom<PRecord<CmAudioSrc, CmComAudio
 /** Srcs present in Cache Storage, mirrored reactively so the "cached" tracklist reacts to cache/uncache actions. */
 export const cmComAudioPlayerCachedSrcsAtom = atom<Set<CmAudioSrc>>(new Set());
 
+/** Whether the whole bucket was read once this session: an empty srcs set before that means "unknown", not "nothing cached". */
+export const cmComAudioPlayerCachedSrcsLoadedAtom = atom(false);
+
 const trackUrlPrefix = `${environment.backHttpUrl}/track/`;
 const mp3Extension = '.mp3';
 
@@ -422,7 +425,10 @@ export const useCmComAudioPlayerCachedSrcs = () => {
 
     cachedSrcsHydrated = true;
     void takeCmComAudioPlayerCachedSrcs().then(
-      srcs => cmComAudioPlayerCachedSrcsAtom.set(srcs),
+      srcs => {
+        cmComAudioPlayerCachedSrcsAtom.set(srcs);
+        cmComAudioPlayerCachedSrcsLoadedAtom.set(true);
+      },
       error => console.error('[cm audio cache]', error),
     );
   }, []);

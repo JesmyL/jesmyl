@@ -30,11 +30,6 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
       MenuComToolName.ChordHardLevel,
     )`${SWITCH('$v').CASE(0)`Простые аккорды`.CASE(1)`Сложные аккорды`.DEFAULT`!Нужно обновить приложение!`}`,
 
-    ...baseLocaleTemplate(
-      BaseLocaleKey.CmMarkComTool,
-      MenuComToolName.CacheTracks,
-    )`${IF('$v').THEN`Убрать из кэша`.ELSE`Кэшировать треки`}`,
-
     [MenuComToolName.FullscreenMode]: 'На весь экран',
     [MenuComToolName.ChordsVariant]: 'Показать аккорды',
     [MenuComToolName.ShowTranslation]: 'Слайды',
@@ -47,6 +42,7 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
     [MenuComToolName.CopyCom]: 'Копировать текст песни',
     [MenuComToolName.EditCom]: 'Редактировать',
     [MenuComToolName.BemoledChords]: 'Бемольные/диезные аккорды',
+    [MenuComToolName.PlayerPlay]: 'Воспроизвести в плеере',
   },
   [BaseLocaleKey.CmShowPlayer]: 'Показывать плеер',
   [BaseLocaleKey.CmListShared]: 'С вами поделились списком',
@@ -114,6 +110,7 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.CmAudioPlaybackError]: 'Ошибка воспроизведения аудио',
   [BaseLocaleKey.CmChooseCom]: 'Выберите песню',
   [BaseLocaleKey.CmNoComTracks]: 'В песне треков нет',
+  [BaseLocaleKey.CmComNotInList]: 'Песни в списке "$l;" нет',
   [BaseLocaleKey.CmNoSlides]: 'Слайды не настроены',
   [BaseLocaleKey.CmFeatureUnavailable]: 'Функционал не доступен',
   [BaseLocaleKey.CmCacheDeleteDescription]: 'Удалить трек из кэша?',

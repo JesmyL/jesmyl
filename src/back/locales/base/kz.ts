@@ -30,11 +30,6 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
       MenuComToolName.ChordHardLevel,
     )`${SWITCH('$v').CASE(0)`Оңай аккордтар`.CASE(1)`Күрделі аккордтар`.DEFAULT`!Қосымшаны жаңарту қажет!`}`,
 
-    ...baseLocaleTemplate(
-      BaseLocaleKey.CmMarkComTool,
-      MenuComToolName.CacheTracks,
-    )`${IF('$v').THEN`Кэштен алу`.ELSE`Тректерді кэштеу`}`,
-
     [MenuComToolName.FullscreenMode]: 'Толық экран',
     [MenuComToolName.ChordsVariant]: 'Аккордтарды көрсету',
     [MenuComToolName.ShowTranslation]: 'Слайдтар',
@@ -47,6 +42,7 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
     [MenuComToolName.CopyCom]: 'Ән мәтінін көшіру',
     [MenuComToolName.EditCom]: 'Редакциялау',
     [MenuComToolName.BemoledChords]: 'Бемольді/диезді аккордтар',
+    [MenuComToolName.PlayerPlay]: 'Ойнатқышта ойнату',
   },
   [BaseLocaleKey.CmShowPlayer]: 'Ойнатқышты көрсету',
   [BaseLocaleKey.CmListShared]: 'Сізбен тізім бөлісілді',
@@ -114,6 +110,7 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.CmAudioPlaybackError]: 'Аудионы ойнату қатесі',
   [BaseLocaleKey.CmChooseCom]: 'Әнді таңдаңыз',
   [BaseLocaleKey.CmNoComTracks]: 'Әнде тректер жоқ',
+  [BaseLocaleKey.CmComNotInList]: '"$l;" тізімінде ән жоқ',
   [BaseLocaleKey.CmNoSlides]: 'Слайдтар бапталмаған',
   [BaseLocaleKey.CmFeatureUnavailable]: 'Функционал қолжетімсіз',
   [BaseLocaleKey.CmCacheDeleteDescription]: 'Тректі кэштен жою?',
