@@ -13,6 +13,7 @@ import { IndexAppAccessRightTitles, UserAccessRole, UserAccessRoleInfo } from 's
 import { IndexValues } from 'shared/model/index/other';
 import { VisitsDashboard, DashMessageKind, VisitsDashboardMessagesArgs } from 'shared/model/index/visitsDashboard';
 import { CRUDOperation } from 'shared/utils/index/utils';
+import { StameskaIconName } from 'stameska-icon/pack';
 import { StameskaIconPack } from 'stameska-icon/utils';
 
 export interface UserPushInfo {
@@ -24,8 +25,9 @@ export interface UserPushInfo {
 export type IndexTsjrpcModel = {
   requestFreshes: (args: {
     lastModfiedAt: number;
-    iconPacks: KnownStameskaIconName[] | nil;
+    iconPacks: StameskaIconName[] | nil;
     iconsMd5Hash: string;
+    otherFooterIcon?: StameskaIconName | nil;
   }) => void;
   getDeviceId: () => DeviceId;
   getDeviceEmoji: () => string;
@@ -54,6 +56,10 @@ export type IndexTsjrpcModel = {
   sendDashEmailReport_v1: () => string;
   getDashReportRecipients: () => PRecord<string, Langi>;
   setDashReportRecipients: (args: { recipients: PRecord<string, Langi> }) => PRecord<string, Langi>;
+
+  getOtherFooterIcons: () => { iconNames: StameskaIconName[] };
+  updateOtherFooterIcons: (args: { iconNames: StameskaIconName[] }) => { iconNames: StameskaIconName[] };
+  updateOtherFooterIcon: (args: object) => { icon: StameskaIconName };
 
   getAccessRightTitles: () => IndexAppAccessRightTitles;
   getUserInfoDict: () => PRecord<UserLogin, UserInfoUnsecure>;
@@ -89,7 +95,7 @@ export type IndexTsjrpcModel = {
   getIconExistsPacks: (args: { page: number; pageSize: number; searchTerm: string }) => {
     packs: StameskaIconPack[];
   };
-  getIconPack: (args: { icon: KnownStameskaIconName }) => { pack: StameskaIconPack };
+  getIconPack: (args: { icon: StameskaIconName }) => { pack: StameskaIconPack };
 
   writeNounPron: (args: { noun?: string; pron?: string; level: number }) => void;
   getNounPron: (args: { noun?: string; pron?: string }) => {

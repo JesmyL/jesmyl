@@ -1,5 +1,6 @@
 import { DexieDB } from '#shared/lib/DexieDB';
 import { DeviceId, IScheduleWidget, ScheduleWidgetPhotoKey } from 'shared/api';
+import { StameskaIconName } from 'stameska-icon/pack';
 import { StameskaIconPack } from 'stameska-icon/utils';
 import { MyFileId } from 'x/my-files';
 
@@ -11,7 +12,7 @@ interface Storage {
 
   schs: IScheduleWidget[];
   schedulePhotos: { key: ScheduleWidgetPhotoKey; src: string }[];
-  iconPacks: { key: KnownStameskaIconName; pack: StameskaIconPack }[];
+  iconPacks: { key: StameskaIconName; pack: StameskaIconPack }[];
 }
 
 class IndexIDB extends DexieDB<Storage> {

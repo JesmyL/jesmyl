@@ -26,6 +26,7 @@ import { Bool } from 'shared/enums';
 import { UserAccessRoleStoraged } from 'shared/model/index/access-rights';
 import { QuestionerBlank, QuestionerBlankWid } from 'shared/model/q';
 import { QuestionerUserAnswer } from 'shared/model/q/answer';
+import { StameskaIconName } from 'stameska-icon/pack';
 
 export * from '../src/shared/utils';
 export * from '../src/shared/utils/object.utils';
@@ -76,6 +77,7 @@ export const pullPushFileDirNameNet = {
     nouns: T<NounPronsType, string>(),
     pronouns: T<NounPronsType, string>(),
     constantsConfig: T<ConstantsConfig, string>(),
+    otherFooterIcon: T<{ iconNames: StameskaIconName[]; icon: StameskaIconName | nil; m: number }, string>(),
   },
 
   'apps/cm/': {

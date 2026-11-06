@@ -45,6 +45,7 @@ import { indexServerTsjrpcShareMethods } from '../tsjrpc.methods';
 import { indexTSJRPCBaseGetIconExistsPacks } from './lib/getIconExistsPacks';
 import { indexAuthByTgUser } from './lib/makeAuthFromUser';
 import { makeUserAccessRights } from './lib/makeUserAccessRights';
+import { indexTSJRPCBaseOtherFooterIcons } from './lib/otherFooterIcons';
 import { otpTSJRPCMethods } from './lib/otp.methods';
 import { indexPushMethods } from './lib/push.methods';
 import { indexTSJRPCBaseRequestFreshLocales } from './lib/requestFreshLocales';
@@ -90,6 +91,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         ...indexTSJRPCBaseRequestFreshLocales,
         ...indexTSJRPCBaseGetIconExistsPacks,
         ...indexTSJRPCBaseVisitsDashboard,
+        ...indexTSJRPCBaseOtherFooterIcons,
 
         updateUserAccessRole: async ({ login, role }, { auth: userAuth }) => {
           const auth = takeLogginedAuthOrThrow(userAuth);

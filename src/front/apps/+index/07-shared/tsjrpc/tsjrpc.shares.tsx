@@ -1,5 +1,6 @@
 import { defaultQueryClient } from '#basis/config/queryClient';
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
+import { otherFooterIconAtom, otherFooterIconNamesAtom } from '#basis/state/otherFooterIconAtom';
 import {
   localeLastModifiedAtAtom,
   takeBaseLanguageAtom,
@@ -39,6 +40,10 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
 
           lastUpdatedIconsMd5HashAtom.set(iconsMd5Hash);
         },
+
+        otherFooterIcon: async ({ icon }) => otherFooterIconAtom.set(icon),
+
+        otherFooterIconNames: async ({ iconNames }) => otherFooterIconNamesAtom.set(iconNames),
 
         userModal: async props => rootAppModalTextContentAtom.set(props),
 

@@ -2,6 +2,7 @@ import { FooterPlacementManager } from '#basis/lib/FooterPlacementManager';
 import { translateBase } from '#basis/locale';
 import { AppName } from '#basis/model/App.model';
 import { CurrentAppFooterItemPlaceContext } from '#basis/state/App.contexts';
+import { otherFooterIconAtom } from '#basis/state/otherFooterIconAtom';
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { getParentNodeWithClassName } from '#shared/lib/getParentNodeWithClassName';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
@@ -22,6 +23,7 @@ const AppFooterSwipeable = React.lazy(() => import('#features/app-footer-swipeab
 export function AppFooter({ children }: { children: () => React.ReactNode[]; appName: AppName }) {
   const loc = useLocation();
   const currentAppPhase = useAtomValue(currentAppPhaseAtom);
+  const otherFooterIcon = useAtomValue(otherFooterIconAtom);
   const navigate = useNavigate();
   const footerRef = useRef<HTMLDivElement>(null);
 
@@ -86,7 +88,8 @@ export function AppFooter({ children }: { children: () => React.ReactNode[]; app
 
         <FooterTrack className="other-track min-w-20">
           <AppFooterItem
-            icon="CircleArrowRight02"
+            icon={otherFooterIcon ?? 'CircleArrowRight02'}
+            fallbackIcon="CircleArrowRight02"
             title={translateBase(BaseLocaleKey.Inoe)}
             to={`/!other/${(appName === '!other' ? place : appName) as never}`}
             idPostfix="other"

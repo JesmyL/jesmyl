@@ -23,26 +23,25 @@ export const indexTSJRPCBaseGetIconExistsPacks = {
       const exactIconName = nameBeats.join('').replace(postfixReplaceRegExp, '') as StameskaIconName;
 
       const stameskaIcons = indexStameskaIconsFileStore.getValue();
-      if (stameskaIcons[exactIconName] !== undefined) return { value: { packs: [stameskaIcons[exactIconName]] } };
+      if (stameskaIcons[exactIconName] !== undefined) iconPacks = [stameskaIcons[exactIconName]];
+      else
+        iconPacks = iconSearchCache[nameBeats.sort().join('')] ??= (() => {
+          const foundIconPacks: StameskaIconPack[] = [];
 
-      iconPacks = iconSearchCache[nameBeats.sort().join('')] ??= (() => {
-        const foundIconPacks: StameskaIconPack[] = [];
+          objectKeys(stameskaIcons).forEach(iconName => {
+            if (!nameBeats.some(beat => iconName.includes(beat))) return;
+            foundIconPacks.push(stameskaIcons[iconName]);
+          });
 
-        objectKeys(stameskaIcons).forEach(iconName => {
-          if (!nameBeats.some(beat => iconName.includes(beat))) return;
-          foundIconPacks.push(stameskaIcons[iconName]);
-        });
-
-        return foundIconPacks;
-      })();
+          return foundIconPacks;
+        })();
     }
+
+    const packs = iconPacks ?? objectValues(indexStameskaIconsFileStore.getValue());
 
     return {
       value: {
-        packs: (iconPacks ?? objectValues(indexStameskaIconsFileStore.getValue())).slice(
-          page * pageSize,
-          page * pageSize + pageSize,
-        ),
+        packs: packs.slice(page * pageSize, page * pageSize + pageSize),
       },
     };
   },

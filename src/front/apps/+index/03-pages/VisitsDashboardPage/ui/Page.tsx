@@ -5,10 +5,14 @@ import {
 } from '#basis/locale/backLocaleError';
 import { currentLangiAtom, languageSystemCode, translateBase, translateDynamic, translateEditorBase } from '#basis/locale';
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { otherFooterIconAtom, otherFooterIconNamesAtom } from '#basis/state/otherFooterIconAtom';
+import { Button } from '#shared/components/ui/button';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { soki } from '#shared/soki';
 import { makeToastKOMoodConfig, makeToastOKMoodConfig } from '#shared/ui/modal';
+import IconConfigurator from '#shared/ui/configurators/Icon';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TextInput } from '#shared/ui/TextInput';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { indexDashMessageVersionAtom, indexVisitsOnlineAtom } from '$index/shared/state';
@@ -33,6 +37,7 @@ import {
 } from 'shared/model/index/visitsDashboard';
 import { mapObjectEntries, objectLength } from 'shared/utils/object.utils';
 import { extractNumber } from 'shared/utils';
+import { StameskaIconName } from 'stameska-icon/pack';
 import { twMerge } from 'tailwind-merge';
 
 const messageTabs = [
@@ -780,6 +785,61 @@ const DashboardReportRecipients = () => {
   );
 };
 
+const fallbackOtherFooterIconNames = new Set<StameskaIconName>(['CircleArrowRight02']);
+
+const OtherFooterIconsConfigurator = () => {
+  const iconNames = useAtomValue(otherFooterIconNamesAtom);
+
+  useEffect(() => {
+    if (otherFooterIconNamesAtom.get().length) return;
+
+    indexTsjrpcClientMethods
+      .getOtherFooterIcons()
+      .then(({ iconNames }) => otherFooterIconNamesAtom.set(iconNames))
+      .catch(error => toast('' + error, makeToastKOMoodConfig()));
+  }, []);
+
+  const toggleIcon = async (icon: StameskaIconName) => {
+    const nextIconNames = new Set(iconNames);
+
+    if (nextIconNames.has(icon)) nextIconNames.delete(icon);
+    else nextIconNames.add(icon);
+
+    await indexTsjrpcClientMethods.updateOtherFooterIcons({ iconNames: [...nextIconNames] });
+  };
+
+  const rollIcon = async () => {
+    const { icon } = await indexTsjrpcClientMethods.updateOtherFooterIcon({});
+
+    otherFooterIconAtom.set(icon);
+  };
+
+  const otherFooterIconTitle = translateBase(BaseLocaleKey.OtherFooterIconTitle, {
+    n: translateBase(BaseLocaleKey.Inoe),
+  });
+
+  return (
+    <div className="flex items-center gap-2">
+      <IconConfigurator
+        disabledIconNames={fallbackOtherFooterIconNames}
+        header={otherFooterIconTitle}
+        trigger={
+          <Button>
+            <LazyIcon icon="CircleArrowRight02" />
+            {otherFooterIconTitle}
+          </Button>
+        }
+        selectedIconNames={new Set(iconNames)}
+        onToggle={toggleIcon}
+      />
+      <Button
+        icon="DiceFaces03"
+        onClick={rollIcon}
+      />
+    </div>
+  );
+};
+
 const DashboardContent = ({ dashboard }: { dashboard: VisitsDashboard }) => {
   const online = useAtomValue(indexVisitsOnlineAtom) ?? dashboard.online;
   const [isOnlineOpen, setIsOnlineOpen] = useState(false);
@@ -1034,6 +1094,7 @@ const DashboardContent = ({ dashboard }: { dashboard: VisitsDashboard }) => {
 
       <div className="flex flex-wrap items-center justify-end gap-2">
         <DashboardReportRecipients />
+        <OtherFooterIconsConfigurator />
         <DashboardEmailReportButton />
       </div>
     </div>

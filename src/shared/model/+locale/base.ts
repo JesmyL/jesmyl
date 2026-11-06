@@ -774,6 +774,9 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.ScheduleUserAdded]: LocaleSimpleString;
   [BaseLocaleKey.PushNotifications]: LocaleSimpleString;
   [BaseLocaleKey.CmComNotInList]: StringTemplaterInterpolation<{ l: string }>;
+  [BaseLocaleKey.OtherFooterIconUnknown]: StringTemplaterInterpolation<{ n: string }>;
+  [BaseLocaleKey.OtherFooterIconTitle]: StringTemplaterInterpolation<{ n: string }>;
+  [BaseLocaleKey.OtherFooterIconListEmpty]: LocaleSimpleString;
 };
 
 export type UsedBaseLocaleKey = BaseLocaleKey;

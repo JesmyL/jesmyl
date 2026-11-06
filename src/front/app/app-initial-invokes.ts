@@ -1,4 +1,5 @@
 import { localeLastModifiedAtAtom } from '#basis/state/locale';
+import { otherFooterIconAtom } from '#basis/state/otherFooterIconAtom';
 import { soki } from '#shared/soki';
 import { schTsjrpcBaseClient } from '#widgets/schedule/tsjrpc/tsjrpc.base';
 import { bibleInitialInvokes } from '$bible/shared/lib';
@@ -103,6 +104,7 @@ export const appInitialInvokes = () => {
       lastModfiedAt,
       iconPacks,
       iconsMd5Hash: lastUpdatedIconsMd5HashAtom.get(),
+      otherFooterIcon: otherFooterIconAtom.get(),
     });
 
     void indexTsjrpcClientMethods.requestFreshLocales({ lastModifiedAt: localeLastModifiedAtAtom.get() });

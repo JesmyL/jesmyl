@@ -7,14 +7,18 @@ import { ConstantsConfig } from 'shared/model/constantsConfig';
 import { IndexAccessScopeRules } from 'shared/model/index/access-rights';
 import { DashMessage } from 'shared/model/index/visitsDashboard';
 import { toast } from 'sonner';
+import { StameskaIconName } from 'stameska-icon/pack';
 import { StameskaIconKind, StameskaIconPack } from 'stameska-icon/utils';
 
 export type IndexTsjrpcSharesModel = {
   refreshAccessRights: (args: { rights: IndexAccessScopeRules; mod: number }) => unknown;
   updateKnownIconPacks: (args: {
-    actualIconPacks: PRecord<KnownStameskaIconName, StameskaIconPack | null>;
+    actualIconPacks: PRecord<StameskaIconName, StameskaIconPack | null>;
     iconsMd5Hash: string;
   }) => unknown;
+
+  otherFooterIcon: (args: { icon: StameskaIconName | nil }) => unknown;
+  otherFooterIconNames: (args: { iconNames: StameskaIconName[] }) => unknown;
 
   /** from v1041 */
   userModal: (args: { text: string; header?: string; footer?: string }) => void;

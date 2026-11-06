@@ -1,7 +1,8 @@
 import { indexIDB, indexIsPlayAnimationsAtom } from '$index/shared/state';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { HTMLAttributes, useEffect, useState } from 'react';
-import { emptyFunc, itInvokeIt } from 'shared/utils';
+import { itInvokeIt } from 'shared/utils';
+import { StameskaIconName } from 'stameska-icon/pack';
 import {
   makeStameskaIconSvgAttributeProps,
   makeStameskaIconSvgHTMLProp,
@@ -10,7 +11,8 @@ import {
 } from 'stameska-icon/utils';
 
 export type LazyIconProps = HTMLAttributes<HTMLOrSVGElement> & {
-  icon: KnownStameskaIconName;
+  icon: StameskaIconName;
+  fallbackIcon?: StameskaIconName;
   kind?: StameskaIconKind;
   withoutAnimation?: boolean;
   pack?: StameskaIconPack;
@@ -18,6 +20,7 @@ export type LazyIconProps = HTMLAttributes<HTMLOrSVGElement> & {
 
 export default function TheIconLazy({
   icon,
+  fallbackIcon,
   kind = 'StrokeRounded',
   withoutAnimation,
   className,
@@ -61,6 +64,7 @@ export default function TheIconLazy({
         withoutAnimation
         className={className}
         children={children}
+        fallbackIcon={fallbackIcon}
         {...props}
       />
     );
@@ -78,11 +82,11 @@ export default function TheIconLazy({
 }
 
 const cachedStaticProps: PRecord<
-  `${KnownStameskaIconName}/${StameskaIconKind}`,
+  `${StameskaIconName}/${StameskaIconKind}`,
   ReturnType<typeof makeStameskaIconSvgHTMLProp>
 > = {};
 
-const cachedPacks: PRecord<KnownStameskaIconName, StameskaIconPack> = {};
+const cachedPacks: PRecord<StameskaIconName, StameskaIconPack> = {};
 
 const packsUpdateListenersSet = new Set<() => void>();
 let createTimeout: TimeOut;
@@ -94,43 +98,72 @@ indexIDB.tb.iconPacks.hook('creating', () => {
   }, 1000);
 });
 
-const packFetches: PRecord<KnownStameskaIconName, Promise<{ pack: StameskaIconPack }>> = {};
+const packFetches: PRecord<StameskaIconName, Promise<{ pack: StameskaIconPack }>> = {};
 
-const WithoutStaticProps = ({ icon, className, kind = 'StrokeRounded', withoutAnimation, ...props }: LazyIconProps) => {
+const WithoutStaticProps = ({
+  icon,
+  fallbackIcon,
+  className,
+  kind = 'StrokeRounded',
+  withoutAnimation,
+  ...props
+}: LazyIconProps) => {
   const [staticIconProps, setStaticIconProps] = useState<ReturnType<typeof makeStameskaIconSvgHTMLProp>>();
 
   useEffect(() => {
     let fetchTimeout: TimeOut;
+    let isUnmounted = false;
+
+    const takePack = async (iconName: StameskaIconName) =>
+      cachedPacks[iconName] ?? (await indexIDB.tb.iconPacks.get(iconName))?.pack;
+
+    const applyPack = (iconName: StameskaIconName, pack: StameskaIconPack | nil) => {
+      if (!pack) return false;
+
+      cachedPacks[iconName] ??= pack;
+      const staticProps = (cachedStaticProps[`${iconName}/${kind}`] ??= makeStameskaIconSvgHTMLProp(pack, kind));
+
+      if (!isUnmounted) setStaticIconProps(staticProps);
+      return true;
+    };
+
+    const applyFallback = async () => {
+      if (fallbackIcon === undefined) return false;
+
+      return applyPack(fallbackIcon, await takePack(fallbackIcon));
+    };
+
+    const updateFromCachedPacks = async () => {
+      if (applyPack(icon, await takePack(icon))) return;
+
+      await applyFallback();
+    };
 
     (async () => {
-      const pack = icon && (await indexIDB.tb.iconPacks.get(icon))?.pack;
+      if (applyPack(icon, await takePack(icon))) return;
+
+      await applyFallback();
 
       fetchTimeout = setTimeout(async () => {
-        updatePack((await (packFetches[icon] ??= indexTsjrpcClientMethods.getIconPack({ icon }))).pack, emptyFunc);
+        if (applyPack(icon, (await (packFetches[icon] ??= indexTsjrpcClientMethods.getIconPack({ icon }))).pack))
+          return;
+
+        if (fallbackIcon !== undefined)
+          applyPack(
+            fallbackIcon,
+            (await (packFetches[fallbackIcon] ??= indexTsjrpcClientMethods.getIconPack({ icon: fallbackIcon }))).pack,
+          );
       }, 300);
 
-      const updatePack = (pack: StameskaIconPack | nil, elseCb: () => void) => {
-        if (pack) {
-          clearTimeout(fetchTimeout);
-          cachedPacks[icon] ??= pack;
-          cachedStaticProps[`${icon}/${kind}`] = makeStameskaIconSvgHTMLProp(pack, kind);
-        } else elseCb();
-
-        setStaticIconProps(makeStameskaIconSvgHTMLProp(pack!, kind));
-      };
-
-      updatePack(pack, () => {
-        if (icon)
-          packsUpdateListenersSet.add(async () => {
-            const pack = (await indexIDB.tb.iconPacks.get(icon))?.pack;
-
-            updatePack(pack, emptyFunc);
-          });
-      });
+      packsUpdateListenersSet.add(updateFromCachedPacks);
     })();
 
-    return () => clearTimeout(fetchTimeout);
-  }, [icon, kind]);
+    return () => {
+      isUnmounted = true;
+      clearTimeout(fetchTimeout);
+      packsUpdateListenersSet.delete(updateFromCachedPacks);
+    };
+  }, [icon, fallbackIcon, kind]);
 
   return (
     // eslint-disable-next-line @eslint-react/dom/no-dangerously-set-innerhtml-with-children

@@ -8,9 +8,9 @@ import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode } from 'react';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itIt } from 'shared/utils';
-import { toast } from 'sonner';
+import { StameskaIconName } from 'stameska-icon/pack';
 import { twMerge } from 'tailwind-merge';
-import { makeToastKOMoodConfig, Modal, ModalBody, ModalHeader } from '../modal';
+import { Modal, ModalBody, ModalHeader } from '../modal';
 import { TextInput } from '../TextInput';
 import { TheIconLoading } from '../the-icon/IconLoading';
 import { LazyIcon } from '../the-icon/LazyIcon';
@@ -18,11 +18,14 @@ import { LazyIcon } from '../the-icon/LazyIcon';
 const pageSize = 54;
 
 interface Props {
-  icon: KnownStameskaIconName;
+  icon?: KnownStameskaIconName;
   iconNode?: React.ReactNode;
   header: ReactNode;
   used?: (KnownStameskaIconName | und)[];
-  onSend: (icon: KnownStameskaIconName) => Promise<unknown>;
+  selectedIconNames?: Set<StameskaIconName>;
+  disabledIconNames?: Set<StameskaIconName>;
+  onSend?: (icon: KnownStameskaIconName) => Promise<unknown>;
+  onToggle?: (icon: KnownStameskaIconName) => Promise<unknown>;
   trigger?: ReactNode;
   className?: string;
 }
@@ -110,24 +113,35 @@ const ModalInner = (props: Props) => {
         <div className="flex flex-wrap justify-between">
           {iconPacks.map(pack => {
             const icon = pack[0] as KnownStameskaIconName;
+            const isDisabled = props.disabledIconNames?.has(icon);
 
             return (
               <LazyIcon
                 key={icon}
                 icon={icon}
                 pack={pack}
-                className={twMerge('p-2 pointer', (props.icon === icon || usedSet.has(icon)) && 'text-x7')}
+                className={twMerge(
+                  'p-2',
+                  !isDisabled && 'pointer',
+                  (props.icon === icon || usedSet.has(icon) || props.selectedIconNames?.has(icon)) && 'text-x7',
+                  isDisabled && 'opacity-40',
+                )}
                 withoutAnimation
-                onClick={async () => {
-                  iconOnLoadAtom.set(icon);
+                onClick={
+                  isDisabled
+                    ? undefined
+                    : async () => {
+                        iconOnLoadAtom.set(icon);
 
-                  try {
-                    await props.onSend(icon);
-                  } catch (error) {
-                    toast('' + error, makeToastKOMoodConfig());
-                  }
-                  iconOnLoadAtom.set(null);
-                }}
+                        try {
+                          await (props.onToggle ?? props.onSend)?.(icon);
+                        } catch {
+                          // Server errors are toasted once by the global soki error handler
+                        }
+
+                        iconOnLoadAtom.set(null);
+                      }
+                }
               />
             );
           })}

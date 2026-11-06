@@ -773,4 +773,7 @@ export const enum BaseLocaleKey {
   SystemLanguage = 754,
   AppLanguage = 755,
   CmComNotInList = 756,
+  OtherFooterIconUnknown = 757,
+  OtherFooterIconTitle = 758,
+  OtherFooterIconListEmpty = 759,
 }

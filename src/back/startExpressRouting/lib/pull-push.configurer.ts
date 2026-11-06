@@ -1,7 +1,7 @@
 import { exportableCatFromRow } from 'back/apps/cm/cat.db';
 import { takeComwTiny } from 'back/apps/cm/com.tiny';
 import { chordPackFileStore, eePackFileStore, mp3ResourcesFileStorage } from 'back/apps/cm/file-stores';
-import { nounsFileStorage, pronounsFileStorage } from 'back/apps/index/file-stores';
+import { nounsFileStorage, otherFooterIconFileStore, pronounsFileStorage } from 'back/apps/index/file-stores';
 import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
 import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
@@ -485,6 +485,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
         nouns: makeFileStoreConfig<'apps/index/', 'nouns'>()(nounsFileStorage),
         pronouns: makeFileStoreConfig<'apps/index/', 'pronouns'>()(pronounsFileStorage),
         constantsConfig: makeFileStoreConfig<'apps/index/', 'constantsConfig'>()(constantsConfigFileStore),
+        otherFooterIcon: makeFileStoreConfig<'apps/index/', 'otherFooterIcon'>()(otherFooterIconFileStore),
       },
 
       'apps/q/': {

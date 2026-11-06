@@ -15,19 +15,23 @@ import {
   SokiAuthLogin,
 } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
+import { howMillisecondsInDay } from 'shared/const/ms';
 import { Bool } from 'shared/enums';
 import { itNNil } from 'shared/utils';
 import { objectKeys, objectLength } from 'shared/utils/object.utils';
 import { knownStameskaIconNames, knownStameskaIconNamesMd5Hash } from 'shared/values/index/known-icons';
+import { StameskaIconName } from 'stameska-icon/pack';
 import { StameskaIconPack } from 'stameska-icon/utils';
 import { WebSocket } from 'ws';
-import { indexStameskaIconsFileStore } from '../../file-stores';
+import { indexStameskaIconsFileStore, otherFooterIconFileStore } from '../../file-stores';
 import { migrateScheduleUsersAndSave } from '../../schedules/migrate-schedule-users';
 import { schServerTsjrpcShareMethods } from '../../schedules/tsjrpc.shares';
 import { takeUserRoleTiny } from '../../tinies/userRoleTiny';
 import { takeUserTiny } from '../../tinies/userTiny';
 import { indexServerTsjrpcShareMethods } from '../../tsjrpc.methods';
+import { checkIsFreshClientVersion } from './checkIsFreshClientVersion';
 import { makeUserAccessRights } from './makeUserAccessRights';
+import { rotateOtherFooterIcon } from './otherFooterIcons';
 
 /** Словарь редактора привязан к нумерации `EditorLocaleKey`: старые фронты его не получают. */
 export const editorLocaleMinVersion = 1342;
@@ -44,7 +48,7 @@ export const throwIfNoEditorLocaleAccess = async (auth: LocalSokiAuth | nil) => 
 
 export const indexTSJRPCBaseRequestFreshes = {
   requestFreshes: async (
-    { lastModfiedAt, iconPacks: userIconPacks, iconsMd5Hash: userIconsMd5Hash },
+    { lastModfiedAt, iconPacks: userIconPacks, iconsMd5Hash: userIconsMd5Hash, otherFooterIcon },
     { client, auth, visitInfo },
   ) => {
     if (!visitInfo || visitInfo.version < baseLocaleMinVersion) return;
@@ -103,8 +107,8 @@ export const indexTSJRPCBaseRequestFreshes = {
     });
 
     if (userIconsMd5Hash !== knownStameskaIconNamesMd5Hash || !userIconPacks?.length || !!schedules.length) {
-      const userActualIconDict: PRecord<KnownStameskaIconName, StameskaIconPack | null> = {};
-      const knownIconNamesSet = new Set(objectKeys(knownStameskaIconNames));
+      const userActualIconDict: PRecord<StameskaIconName, StameskaIconPack | null> = {};
+      const knownIconNamesSet = new Set<StameskaIconName>(objectKeys(knownStameskaIconNames));
 
       userIconPacks?.forEach(iconName => {
         if (knownIconNamesSet.has(iconName)) {
@@ -160,6 +164,21 @@ export const indexTSJRPCBaseRequestFreshes = {
     }
 
     if (schedules.length) schServerTsjrpcShareMethods.refreshSchedules({ schs: schedules }, client);
+
+    const otherFooterIconStore = otherFooterIconFileStore.getValue();
+
+    if (otherFooterIconStore.iconNames.length && Date.now() - otherFooterIconStore.m >= howMillisecondsInDay)
+      rotateOtherFooterIcon();
+
+    if (
+      otherFooterIcon === undefined ||
+      otherFooterIcon === otherFooterIconStore.icon ||
+      !client ||
+      !checkIsFreshClientVersion(visitInfo)
+    )
+      return;
+
+    indexServerTsjrpcShareMethods.otherFooterIcon({ icon: otherFooterIconStore.icon }, client);
   },
 } satisfies ServerTsjrpcSatisfy<IndexTsjrpcModel>;
 

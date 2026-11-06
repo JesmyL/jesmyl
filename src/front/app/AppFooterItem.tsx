@@ -2,18 +2,20 @@ import { FooterPlacementManager } from '#basis/lib/FooterPlacementManager';
 import { useCurrentAppFooterItemPlaceContext } from '#basis/state/App.contexts';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { FileRoutesByPath } from '@tanstack/react-router';
+import { StameskaIconName } from 'stameska-icon/pack';
 import { twMerge } from 'tailwind-merge';
 
 interface Props {
   to: keyof FileRoutesByPath;
   idPostfix: string;
-  icon: KnownStameskaIconName;
+  icon: StameskaIconName;
+  fallbackIcon?: StameskaIconName;
   title: string;
   className?: string;
   children?: React.ReactNode;
 }
 
-export function AppFooterItem({ to, icon, title, className, children, idPostfix }: Props) {
+export function AppFooterItem({ to, icon, fallbackIcon, title, className, children, idPostfix }: Props) {
   const place = useCurrentAppFooterItemPlaceContext();
   const isActive = to === place || `${to}/` === place;
   const linkTo = !isActive && place ? FooterPlacementManager.makePlaceLink(to) : to;
@@ -30,6 +32,7 @@ export function AppFooterItem({ to, icon, title, className, children, idPostfix 
     >
       <LazyIcon
         icon={icon}
+        fallbackIcon={fallbackIcon}
         kind={isActive ? 'TwotoneRounded' : 'BulkRounded'}
       />
       <div className="title">{title}</div>
