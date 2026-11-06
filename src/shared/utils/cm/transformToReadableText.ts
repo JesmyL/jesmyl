@@ -57,7 +57,10 @@ const replaceInText = (levelHolder: CmComBracketLevelHolder, text: string) =>
     .replace(makeRegExp(`/\\( [${anyQuotesStr}]\\)|\\([${anyQuotesStr}] \\)/g`), '');
 
 const upperCasesLeadLettersText = (text: string) =>
-  text.replace(makeRegExp(`/(?:[${preps}]\\s|[${anyQuotesStr}])[${slavicLowerLettersStr}]/g`), textToUpperCase);
+  text.replace(
+    makeRegExp(`/(?:[${preps}]\\s|(?<![${slavicLowerLettersStr}])[${anyQuotesStr}])[${slavicLowerLettersStr}]/gi`),
+    textToUpperCase,
+  );
 
 const preps = '.!?';
 

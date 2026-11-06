@@ -60,4 +60,13 @@ describe('transformToReadableText', () => {
     `.trim(),
     ).toEqual(makeTexts(TextCase.Uppercase, CmComTextSquareBracketsMode.Remove));
   });
+
+  it('does not uppercase letters after in-word apostrophes, but does after opening quotes', () => {
+    const transform = (text: string) =>
+      cmTransformToReadableText({ level: 0 }, text, TextCase.AsIs, CmComTextSquareBracketsMode.Remove).text;
+
+    expect(transform(`сім'я`)).toBe(`Сім'я`);
+    expect(transform(`П'ять`)).toBe(`П'ять`);
+    expect(transform(`сказав "любов" і сім'я`)).toBe(`Сказав «Любов» і сім'я`);
+  });
 });
