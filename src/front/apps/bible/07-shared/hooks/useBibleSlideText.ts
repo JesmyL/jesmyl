@@ -98,6 +98,7 @@ export const useBibleSlideMapBlocks = (
       bibleTBCVTranslatesIDB.tb.list.where('k').startsWithAnyOf(showTranslatePrefixes).toArray();
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const verses = useLiveQuery(liveQuerySelector, [showTranslates.join('/'), biblei, chapteri, versei, joinAddress]);
 
   const tbcvTextDict = objectFromEntries(

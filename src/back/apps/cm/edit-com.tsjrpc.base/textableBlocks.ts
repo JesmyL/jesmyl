@@ -8,6 +8,7 @@ import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
 import { trimTextLines } from 'shared/utils';
 import { checkIsEq } from 'shared/utils/checkIsEq';
+import { deepClone } from 'shared/utils/clone';
 import { takeChordsBlockIncorrects } from 'shared/utils/cm/com/chordsBlockIncorrectMessage';
 import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 import { textLinesLengthIncorrects } from 'shared/utils/cm/com/textLinesLengthIncorrects';
@@ -156,7 +157,7 @@ function removeTextableBlock<Props extends { comw: CmComWid; removei: number }>(
 }
 
 const fillHardChords = (com: IExportableCom) => {
-  if (!com.c1) return (com.c1 = com.c.slice(0));
+  if (!com.c1) return (com.c1 = deepClone(com.c));
 
   const hardChords = com.c1;
   if (com.c1.length !== com.c.length) com.c.forEach((text, texti) => (hardChords[texti] ||= text));

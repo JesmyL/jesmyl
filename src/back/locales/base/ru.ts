@@ -227,9 +227,7 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.QuestionerCommentRequiredFor]: 'Комментарий "$t;" является обязательным',
   [BaseLocaleKey.QuestionerSortValuesIn]: 'Нужно отсортировать значения в пункте "$t;"',
   [BaseLocaleKey.QuestionerRestoreIn]: 'Нужно восстановить все недостающие слова в пункте "$t;"',
-  ...baseLocaleTemplate(
-    BaseLocaleKey.QuestionerVariantsNumber,
-  )`$n; вариант${FUNCTION('dec')('$n', '', 'а', 'ов')}`,
+  ...baseLocaleTemplate(BaseLocaleKey.QuestionerVariantsNumber)`$n; вариант${FUNCTION('dec')('$n', '', 'а', 'ов')}`,
 
   [BaseLocaleKey.Bible]: 'Библия',
   [BaseLocaleKey.BibleChapter]: 'Глава',
@@ -319,13 +317,9 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.ScheduleTechBreak]: 'Тех. перерыв',
   [BaseLocaleKey.ScheduleEndOfDay]: 'конец дня',
   [BaseLocaleKey.ScheduleLessThanHour]: 'до начала меньше часа',
-  ...baseLocaleTemplate(
-    BaseLocaleKey.ScheduleAfterMinutes,
-  )`через $n; минут${FUNCTION('dec')('$n', 'у', 'ы', '')}`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleAfterMinutes)`через $n; минут${FUNCTION('dec')('$n', 'у', 'ы', '')}`,
   [BaseLocaleKey.ScheduleAtTime]: 'в $tm;',
-  ...baseLocaleTemplate(
-    BaseLocaleKey.ScheduleBeforeHours,
-  )`до начала $n; час${FUNCTION('dec')('$n', '', 'а', 'ов')}`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleBeforeHours)`до начала $n; час${FUNCTION('dec')('$n', '', 'а', 'ов')}`,
   ...baseLocaleTemplate(
     BaseLocaleKey.ScheduleBeforeDays,
   )`до начала $n; ${FUNCTION('dec')('$n', 'день', 'дня', 'дней')}`,
@@ -783,9 +777,7 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.Detailed]: 'Подробнее',
   [BaseLocaleKey.FontSize]: 'Размер шрифта',
 
-  ...baseLocaleTemplate(
-    BaseLocaleKey.LookedNumberTimes,
-  )`Просмотрели $n; раз${FUNCTION('dec')('$n', '', 'а', '')}`,
+  ...baseLocaleTemplate(BaseLocaleKey.LookedNumberTimes)`Просмотрели $n; раз${FUNCTION('dec')('$n', '', 'а', '')}`,
 
   [BaseLocaleKey.ToAdd]: 'Добавить',
   [BaseLocaleKey.NumberDay]: '$n;-й день',
@@ -870,5 +862,4 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.PushNotifications]: 'Push-уведомления',
 
   ...baseLocaleTemplate(BaseLocaleKey.NumberSymbols)`$n; символ${FUNCTION('dec')('$n', '', 'а', 'ов')}`,
-
 });
