@@ -47,7 +47,7 @@
 - Reference example: `escapeHtmlLazy` in `src/shared/utils/string.utils.ts`.
 - Never write redundant null-coalescing like `rows[0]?.mod ?? null` — `null` and `undefined` are treated as the same thing; use the `nil` type everywhere instead of `null | undefined`.
 - If a type can be `nil`, its default value should be `null` (not `undefined`); prefer `null` over `undefined` wherever possible.
-- Export types/interfaces/consts ONLY from model files (`model.ts`); component/UI files export only their components.
+- Export types/interfaces/consts ONLY from model files (`model.ts`); component/UI files export only their components — except style/UI constants (e.g. `shadowStyle`), which never go into `model.ts` but into a `const.ts` file next to the component (or stay in the component file when unshared); `model.ts` exports only data-model types/interfaces/consts.
 - `*.tsjrpc.model.ts` files declare only RPC method signatures — never export extra types/interfaces there (e.g. `export interface CmEditorSmartSearchFilter`); inline simple shapes into the signatures or put such types in other model files (`model.ts`).
 - Keep code maximally laconic: prefer compact literals (e.g. space-separated extension lists keyed by prefix) converted at runtime via `lazyInit`, over verbose hand-written dicts.
 - Reuse existing object utils instead of `Object.entries(...).map(...)` — e.g. `mapObjectEntries` from `shared/utils/object.utils`.
@@ -56,7 +56,7 @@
 - Never write `cursor: pointer;` in CSS/styles — use the `.pointer` utility class on the element instead.
 - Never use raw `addEventListener`/`removeEventListener` — use the project's own `addEventListenerPipe` event/subscription system instead.
 - Small styles — via Tailwind utility classes; complex `@keyframes` (e.g. `playingPulse`) — keep in `styled` from `@emotion/styled`, not in the global Tailwind entry.
-- Decide between Tailwind classes and emotion `styled.*\`\`` (or `css\`\``) by the FINAL production bundle size: prefer `styled.*\`\`` when its raw CSS is smaller than the Tailwind utilities that would be generated — e.g. complex computed arbitrary values like `[--size:min(calc(100vw/10),70px)]`, or many descendant-variant classes like `[&_.button]:…`, which each emit extra generated CSS.
+- Decide between Tailwind classes and emotion `styled.*\`\``(or`css\`\``) by the FINAL production bundle size: prefer `styled.\*\`\``when its raw CSS is smaller than the Tailwind utilities that would be generated — e.g. complex computed arbitrary values like`[--size:min(calc(100vw/10),70px)]`, or many descendant-variant classes like `[&_.button]:…`, which each emit extra generated CSS.
 - Locale strings: always write user-facing text translations via `translateBase` / `translateDynamic` — never inline raw text.
 - Do not add translations for a new locale key if the text is identical in all languages — just keep the single same value in each locale file (no need to invent per-language variants).
 - Do not add new locale texts when existing keys can be reused — search the existing BaseLocaleKey entries first and only add a new key if no existing text fits.
