@@ -1,8 +1,9 @@
 import { translateBase } from '#basis/locale';
-import { JSX, TouchEventHandler, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { JSX, MouseEventHandler, TouchEventHandler, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { ChordTrack } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { chordNameToTracks } from 'shared/utils/cm/com/chordTrack';
+import { ChordInstrument } from 'shared/utils/cm/com/chordTrack.model';
 import { twMerge } from 'tailwind-merge';
 import '../style/ChordCard.scss';
 import { CmChordCardTracked } from './ChordCardTracked';
@@ -10,34 +11,38 @@ import { CmChordCardTracked } from './ChordCardTracked';
 type CarouselSize = { width: number; height: number; offsets: number[] };
 
 const swipeThresholdRatio = 0.2;
+const edgeTapRatio = 0.4;
 
 export const CmChordCard = ({
   chordName,
   resource,
   customContent,
+  instrument = ChordInstrument.Guitar,
   ...props
 }: {
   chordName: string;
   resource?: Record<string, ChordTrack>;
   customContent?: (card: JSX.Element | null) => JSX.Element;
   bottomPadding?: number;
+  instrument?: ChordInstrument;
 }) => {
   const tracks = useMemo(() => {
     if (resource) return null;
 
     try {
-      return chordNameToTracks(chordName);
+      return chordNameToTracks(chordName, undefined, instrument);
     } catch {
       return [];
     }
-  }, [chordName, resource]);
+  }, [chordName, resource, instrument]);
 
   const variantsCount = tracks?.length ?? 0;
   // Карусель открывается на среднем варианте; при малом их числе старт с первого, чтобы не «перепрыгивать» на последний.
-  const defaultVariantIndex = variantsCount < 3 ? 0 : 2;
+  const defaultVariantIndex = instrument === ChordInstrument.Guitar && variantsCount >= 3 ? 2 : 0;
 
-  const [selected, setSelected] = useState({ chordName, index: defaultVariantIndex });
-  const cursor = selected.chordName === chordName ? selected.index : defaultVariantIndex;
+  const [selected, setSelected] = useState({ chordName, instrument, index: defaultVariantIndex });
+  const cursor =
+    selected.chordName === chordName && selected.instrument === instrument ? selected.index : defaultVariantIndex;
   const variantIndex = variantsCount ? ((cursor % variantsCount) + variantsCount) % variantsCount : 0;
   const track = resource ? resource[chordName] : tracks?.[variantIndex];
 
@@ -91,7 +96,13 @@ export const CmChordCard = ({
 
   if (!track) return customContent ? customContent(null) : null;
 
-  const card = <CmChordCardTracked {...props} track={track} />;
+  const card = (
+    <CmChordCardTracked
+      {...props}
+      instrument={instrument}
+      track={track}
+    />
+  );
 
   if (!tracks || variantsCount < 2) return customContent ? customContent(card) : card;
 
@@ -125,36 +136,50 @@ export const CmChordCard = ({
     if (Math.abs(deltaY) > Math.abs(deltaX)) return;
 
     isSwipedRef.current = true;
-    setSelected({ chordName, index: cursor + (deltaX < 0 ? 1 : -1) });
+    setSelected({ chordName, instrument, index: cursor + (deltaX < 0 ? 1 : -1) });
   };
 
-  const selectVariant = (index: number) => {
+  const selectVariant = (index: number) => setSelected({ chordName, instrument, index });
+
+  // Зоны нажатия считаются по координате клика внутри самой карусели:
+  // отдельные absolute-слои поверх карточки промахивались из-за наложения/обрезки.
+  const onViewportClick: MouseEventHandler<HTMLDivElement> = event => {
+    // Клик после свайпа — это хвост жеста, а не отдельное нажатие.
     if (isSwipedRef.current) {
       isSwipedRef.current = false;
       return;
     }
 
-    setSelected({ chordName, index });
+    const { left, width } = event.currentTarget.getBoundingClientRect();
+    if (!width) return;
+
+    const tapRatio = (event.clientX - left) / width;
+
+    if (tapRatio < edgeTapRatio) selectVariant(cursor - 1);
+    else if (tapRatio > 1 - edgeTapRatio) selectVariant(cursor + 1);
   };
 
   const carousel = (
     <div className="inline-flex flex-col items-center gap-1">
       <div
         className={twMerge(
-          'relative touch-pan-y overflow-hidden',
+          'pointer relative touch-pan-y overflow-hidden',
           isResizeAnimated && '[transition:width_.26s_ease,height_.26s_ease]',
         )}
         style={{
           width: size?.width ?? 0,
           height: size?.height ?? 0,
         }}
+        onClick={onViewportClick}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
       >
         <div
           ref={trackRef}
-          className="relative flex items-start [transition:transform_.26s_ease]"
+          // `custom-align-items` снимает принудительный `align-items: center` у `.flex` из utilStyles,
+          // иначе ячейки центрируются по высоте самой высокой ячейки и низ активной карточки обрезается.
+          className="relative flex custom-align-items items-start [transition:transform_.26s_ease]"
           style={{ transform: `translateX(${-offset}px)` }}
         >
           {tracks.map((variantTrack, index) => (
@@ -168,21 +193,12 @@ export const CmChordCard = ({
             >
               <CmChordCardTracked
                 {...props}
+                instrument={instrument}
                 track={variantTrack}
               />
             </div>
           ))}
         </div>
-        <div
-          className="pointer absolute inset-y-0 left-0 w-[40%]"
-          aria-hidden
-          onClick={() => selectVariant(cursor - 1)}
-        />
-        <div
-          className="pointer absolute inset-y-0 right-0 w-[40%]"
-          aria-hidden
-          onClick={() => selectVariant(cursor + 1)}
-        />
       </div>
       <div className="flex items-center">
         {tracks.map((_, index) => (

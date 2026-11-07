@@ -1,22 +1,25 @@
 import React, { JSX, ReactNode } from 'react';
 import { ChordTrack } from 'shared/api';
+import { ChordInstrument, chordInstrumentOpenMidis } from 'shared/utils/cm/com/chordTrack.model';
 import '../style/ChordCard.scss';
 
-const stringsCount = 6;
 const leftMargin = 8;
-
-const strings: number[] = [];
-for (let i = 1; i <= stringsCount; i++) strings.push(i);
+// Базовая линия подписей ладов выше низа сетки на 3px, а цифры не имеют выносных элементов ниже неё,
+// поэтому за сетку выступает только круглая точка маркера лада (радиус 2.5px): 2px оставляют ей лишь касание края —
+// точка слегка срезается, но не висит в пустоте, и лад прижат к низу карточки.
+const ladNumberBand = 2;
 
 export const CmChordCardTracked = ({
   customContent,
   bottomPadding = 0,
   track,
+  instrument = ChordInstrument.Guitar,
   additions,
 }: {
   track?: ChordTrack | null;
   customContent?: (card: JSX.Element | null) => JSX.Element;
   bottomPadding?: number;
+  instrument?: ChordInstrument;
   additions?: (
     lads: number[],
     strings: number[],
@@ -30,6 +33,10 @@ export const CmChordCardTracked = ({
   ) => ReactNode;
 }) => {
   if (!track) return customContent ? customContent(null) : null;
+
+  const stringsCount = chordInstrumentOpenMidis[instrument].length;
+  const strings: number[] = [];
+  for (let stringPos = 1; stringPos <= stringsCount; stringPos++) strings.push(stringPos);
 
   const [baseLadStr, mutesStr] = ('' + track[0]).split('.');
   const baseLad = +baseLadStr;
@@ -53,7 +60,7 @@ export const CmChordCardTracked = ({
       className="chord-board"
       style={{
         width: stringLength,
-        height: betweenStr * stringsCount + bottomPadding,
+        height: betweenStr * stringsCount + Math.max(bottomPadding, ladNumberBand),
       }}
     >
       {isFLad ? (
@@ -138,7 +145,7 @@ export const CmChordCardTracked = ({
         if (trace < 0) {
           const [startStr, finishStr] = ('' + -trace).split('');
           const start = finishStr ? +startStr : 1;
-          const finish = trace === -1 ? 6 : finishStr ? +finishStr : +startStr;
+          const finish = trace === -1 ? stringsCount : finishStr ? +finishStr : +startStr;
 
           return (
             <polyline

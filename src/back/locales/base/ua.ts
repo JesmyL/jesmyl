@@ -132,6 +132,8 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.CmUnknownChord]: 'Невідомий акорд',
   [BaseLocaleKey.InvalidChordName]: 'Некоректна назва акорду $n',
   [BaseLocaleKey.CmPickChord]: 'Підібрати аккорд',
+  [BaseLocaleKey.CmGuitar]: 'Гітара',
+  [BaseLocaleKey.CmUkulele]: 'Укулеле',
   [BaseLocaleKey.CmMaximumChordsCount]: 'Максимальна кількість акордів',
   [BaseLocaleKey.CmMinimumChordsCount]: 'Текст з мінімальною кількістю акордів',
   [BaseLocaleKey.CmNoChordsText]: 'Текст без акордів',

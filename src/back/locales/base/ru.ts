@@ -132,6 +132,8 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.CmUnknownChord]: 'Неизвестный аккорд',
   [BaseLocaleKey.InvalidChordName]: 'Некорректное имя аккорда $n',
   [BaseLocaleKey.CmPickChord]: 'Подобрать аккорд',
+  [BaseLocaleKey.CmGuitar]: 'Гитара',
+  [BaseLocaleKey.CmUkulele]: 'Укулеле',
   [BaseLocaleKey.CmMaximumChordsCount]: 'Максимальное количество аккордов',
   [BaseLocaleKey.CmMinimumChordsCount]: 'Текст с минимальным количеством аккордов',
   [BaseLocaleKey.CmNoChordsText]: 'Текст без аккордов',

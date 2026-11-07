@@ -4,7 +4,12 @@ import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { chordDiezEquivalent } from 'shared/utils/cm/com/const';
 import { translateBase } from 'shared/utils/locale/base';
 
-import type { ChordFingering, ParsedChordName } from './chordTrack.model';
+import {
+  ChordInstrument,
+  chordInstrumentOpenMidis,
+  type ChordFingering,
+  type ParsedChordName,
+} from './chordTrack.model';
 
 const notePcs: Record<string, number> = {
   C: 0,
@@ -69,7 +74,6 @@ const qualityIntervals: Record<string, number[]> = {
   'maj7#5': [4, 8, 11],
 };
 
-const openMidis = [64, 59, 55, 50, 45, 40];
 const maxPosition = 12;
 const maxTracksCount = 5;
 
@@ -80,6 +84,13 @@ const parseNotePc = (note: string): number | null => {
 
   return pc === undefined ? null : pc;
 };
+
+/**
+ * Приводит буквы нот к верхнему регистру (`am7` → `Am7`, `bb` → `Bb`), не трогая
+ * бемоль `b`, диезы, цифры и модификаторы — только первый символ и первый после `/`.
+ */
+export const normalizeChordName = (name: string) =>
+  name.replace(makeRegExp('/(^|\\/)([a-z])/g'), (_, separator: string, note: string) => separator + note.toUpperCase());
 
 export const parseChordName = (name: string): ParsedChordName => {
   const match = name.match(makeRegExp('/^([A-H])([#b]?)(.*)$/'));
@@ -111,14 +122,14 @@ export const parseChordName = (name: string): ParsedChordName => {
   return { name: normalizeNote(rootNote) + tail, rootPc, intervals: [...intervals], bassPc };
 };
 
-const countRunsWeighted = (mask: number) => {
+const countRunsWeighted = (mask: number, stringsCount: number) => {
   let fingers = 0;
 
-  for (let stringIndex = 0; stringIndex < 6; stringIndex++) {
+  for (let stringIndex = 0; stringIndex < stringsCount; stringIndex++) {
     if (!(mask & (1 << stringIndex))) continue;
 
     let runLength = 1;
-    while (stringIndex + runLength < 6 && mask & (1 << (stringIndex + runLength))) runLength++;
+    while (stringIndex + runLength < stringsCount && mask & (1 << (stringIndex + runLength))) runLength++;
 
     fingers += runLength < 3 ? runLength : 1;
     stringIndex += runLength - 1;
@@ -134,8 +145,8 @@ const lowestBitIndex = (mask: number) => {
   return index;
 };
 
-const highestBitIndex = (mask: number) => {
-  let index = 5;
+const highestBitIndex = (mask: number, stringsCount: number) => {
+  let index = stringsCount - 1;
   while (!(mask & (1 << index))) index--;
 
   return index;
@@ -148,14 +159,17 @@ type ChordTrackVariant = {
   track: ChordTrack;
 };
 
-const findChordTracks = ({ rootPc, intervals, bassPc }: ParsedChordName): ChordTrack[] => {
+const findChordTracks = ({ rootPc, intervals, bassPc }: ParsedChordName, instrument: ChordInstrument): ChordTrack[] => {
+  const openMidis = chordInstrumentOpenMidis[instrument];
+  const stringsCount = openMidis.length;
+  const isGuitar = instrument === ChordInstrument.Guitar;
   const requiredIntervals = intervals.length > 3 ? intervals.filter(interval => interval % 12 !== 7) : intervals;
   const rootMask = 1 << rootPc;
   const requiredMask = requiredIntervals.reduce((mask, interval) => mask | (1 << (rootPc + interval) % 12), rootMask);
   const chordMask = intervals.reduce((mask, interval) => mask | (1 << (rootPc + interval) % 12), rootMask);
   const allowedMask = chordMask | (1 << bassPc);
-  const minPressedCount = requiredIntervals.length >= 2 ? 2 : 1;
-  const frets: number[] = [-1, -1, -1, -1, -1, -1];
+  const minPressedCount = requiredIntervals.length >= 2 && isGuitar ? 2 : 1;
+  const frets: number[] = new Array<number>(stringsCount).fill(-1);
 
   const bestVariants: ChordTrackVariant[] = [];
   const fingeringKeys = new Set<string>();
@@ -170,7 +184,7 @@ const findChordTracks = ({ rootPc, intervals, bassPc }: ParsedChordName): ChordT
     let maxPressed = 0;
     const fretMasks: number[] = [];
 
-    for (let stringIndex = 0; stringIndex < 6; stringIndex++) {
+    for (let stringIndex = 0; stringIndex < stringsCount; stringIndex++) {
       const fret = frets[stringIndex];
 
       if (fret < 0) {
@@ -199,7 +213,7 @@ const findChordTracks = ({ rootPc, intervals, bassPc }: ParsedChordName): ChordT
     const lowestPc = lowestMidi % 12;
     const minMask = fretMasks[minPressed] ?? 0;
     const barreLow = lowestBitIndex(minMask);
-    const barreHigh = highestBitIndex(minMask);
+    const barreHigh = highestBitIndex(minMask, stringsCount);
     let isBarre = false;
 
     if (barreLow !== barreHigh && barreHigh - barreLow + 1 >= 4) {
@@ -213,25 +227,27 @@ const findChordTracks = ({ rootPc, intervals, bassPc }: ParsedChordName): ChordT
       }
     }
 
-    let fingers = isBarre ? 1 : countRunsWeighted(minMask);
+    let fingers = isBarre ? 1 : countRunsWeighted(minMask, stringsCount);
 
-    if (bassPc !== rootPc ? lowestPc !== bassPc : lowestPc !== rootPc && !isBarre) return;
+    if (isGuitar && (bassPc !== rootPc ? lowestPc !== bassPc : lowestPc !== rootPc && !isBarre)) return;
 
     for (let fret = minPressed + 1; fret <= maxPressed; fret++) {
       const mask = fretMasks[fret];
-      if (mask) fingers += countRunsWeighted(mask);
+      if (mask) fingers += countRunsWeighted(mask, stringsCount);
     }
 
     if (fingers > 4) return;
 
     const baseFret = frets.includes(0) && minPressed <= 3 ? 0 : minPressed - 1;
-    const inversionPenalty = bassPc === rootPc && lowestPc !== rootPc ? 8 : 0;
-    const score = baseFret * 10 + fingers * 6 + muted * 6 + (6 - sounding) * 6 + (isBarre ? 2 : 0) + inversionPenalty;
+    const inversionPenalty = isGuitar && bassPc === rootPc && lowestPc !== rootPc ? 8 : 0;
+    const score =
+      baseFret * 10 + fingers * 6 + muted * 6 + (stringsCount - sounding) * 6 + (isBarre ? 2 : 0) + inversionPenalty;
 
     if (bestVariants.length === maxTracksCount && score >= bestVariants[maxTracksCount - 1].score) return;
 
     const mutes: number[] = [];
-    for (let stringIndex = 0; stringIndex < 6; stringIndex++) if (frets[stringIndex] < 0) mutes.push(stringIndex + 1);
+    for (let stringIndex = 0; stringIndex < stringsCount; stringIndex++)
+      if (frets[stringIndex] < 0) mutes.push(stringIndex + 1);
 
     const track: ChordTrack = [mutes.length ? Number(`${baseFret}.${mutes.join('')}`) : baseFret];
 
@@ -244,19 +260,21 @@ const findChordTracks = ({ rootPc, intervals, bassPc }: ParsedChordName): ChordT
       }
 
       if (isBarre && fret === minPressed) {
-        track.push(barreLow === 0 && barreHigh === 5 ? -6 : -((barreLow + 1) * 10 + (barreHigh + 1)));
+        track.push(
+          barreLow === 0 && barreHigh === stringsCount - 1 ? -stringsCount : -((barreLow + 1) * 10 + (barreHigh + 1)),
+        );
         continue;
       }
 
       const digits: number[] = [];
-      for (let stringIndex = 0; stringIndex < 6; stringIndex++) {
+      for (let stringIndex = 0; stringIndex < stringsCount; stringIndex++) {
         if (mask & (1 << stringIndex)) digits.push(stringIndex + 1);
       }
 
       track.push(Number(digits.join('')));
     }
 
-    const fingering = decodeChordTrack(track);
+    const fingering = decodeChordTrack(track, instrument);
     const key = fingeringKey(fingering);
     if (fingeringKeys.has(key)) return;
 
@@ -270,7 +288,7 @@ const findChordTracks = ({ rootPc, intervals, bassPc }: ParsedChordName): ChordT
   };
 
   const walk = (stringIndex: number, isOpenPosition: boolean, minFret: number, maxFret: number) => {
-    if (stringIndex === 6) {
+    if (stringIndex === stringsCount) {
       evaluate();
       return;
     }
@@ -337,10 +355,10 @@ const classicChordTracks: Record<string, ChordTrack> = {
 
 const classicThirdIndex = 2;
 
-const placeClassicThird = (tracks: ChordTrack[], classicTrack: ChordTrack) => {
-  const keys = new Set([fingeringKey(decodeChordTrack(classicTrack))]);
+const placeClassicThird = (tracks: ChordTrack[], classicTrack: ChordTrack, instrument: ChordInstrument) => {
+  const keys = new Set([fingeringKey(decodeChordTrack(classicTrack, instrument))]);
   const variants = tracks.filter(track => {
-    const key = fingeringKey(decodeChordTrack(track));
+    const key = fingeringKey(decodeChordTrack(track, instrument));
     if (keys.has(key)) return false;
 
     keys.add(key);
@@ -353,22 +371,28 @@ const placeClassicThird = (tracks: ChordTrack[], classicTrack: ChordTrack) => {
   return variants.slice(0, maxTracksCount);
 };
 
-export const chordNameToTracks = (name: string, classicTrack?: ChordTrack): ChordTrack[] => {
+export const chordNameToTracks = (
+  name: string,
+  classicTrack?: ChordTrack | nil,
+  instrument = ChordInstrument.Guitar,
+): ChordTrack[] => {
   const parsed = parseChordName(name);
-  const tracks = findChordTracks(parsed);
-  const classic = classicTrack ?? classicChordTracks[parsed.name];
+  const tracks = findChordTracks(parsed, instrument);
+  const classic = classicTrack ?? (instrument === ChordInstrument.Guitar ? classicChordTracks[parsed.name] : null);
 
-  return classic ? placeClassicThird(tracks, classic) : tracks;
+  return classic ? placeClassicThird(tracks, classic, instrument) : tracks;
 };
 
-export const chordNameToTrack = (name: string): ChordTrack | null => chordNameToTracks(name)[0] ?? null;
+export const chordNameToTrack = (name: string, instrument = ChordInstrument.Guitar): ChordTrack | nil =>
+  chordNameToTracks(name, null, instrument)[0];
 
-export const decodeChordTrack = (track: ChordTrack): ChordFingering => {
+export const decodeChordTrack = (track: ChordTrack, instrument = ChordInstrument.Guitar): ChordFingering => {
+  const stringsCount = chordInstrumentOpenMidis[instrument].length;
   const [trackBase, ...columns] = track;
   const [baseFretStr, mutesStr] = ('' + trackBase).split('.');
   const baseFret = +baseFretStr;
   const mutes = mutesStr ? mutesStr.split('').map(Number) : [];
-  const frets = [0, 0, 0, 0, 0, 0];
+  const frets = new Array<number>(stringsCount).fill(0);
 
   mutes.forEach(string => (frets[string - 1] = -1));
 
@@ -380,7 +404,7 @@ export const decodeChordTrack = (track: ChordTrack): ChordFingering => {
     if (value < 0) {
       const digits = ('' + -value).split('').map(Number);
       const start = digits.length > 1 ? digits[0] : 1;
-      const finish = value === -1 ? 6 : digits.length > 1 ? digits[1] : digits[0];
+      const finish = value === -1 ? stringsCount : digits.length > 1 ? digits[1] : digits[0];
 
       for (let string = start; string <= finish; string++) {
         if (frets[string - 1] >= 0) frets[string - 1] = fret;

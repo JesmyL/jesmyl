@@ -130,6 +130,8 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.CmUnknownChord]: 'Unknown chord',
   [BaseLocaleKey.InvalidChordName]: 'Invalid chord name $n',
   [BaseLocaleKey.CmPickChord]: 'Pick a chord',
+  [BaseLocaleKey.CmGuitar]: 'Guitar',
+  [BaseLocaleKey.CmUkulele]: 'Ukulele',
   [BaseLocaleKey.CmMaximumChordsCount]: 'Maximum number of chords',
   [BaseLocaleKey.CmMinimumChordsCount]: 'Text with the minimum number of chords',
   [BaseLocaleKey.CmNoChordsText]: 'Text without chords',

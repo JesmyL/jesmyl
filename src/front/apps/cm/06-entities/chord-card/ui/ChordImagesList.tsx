@@ -1,9 +1,16 @@
 import { CmCom } from 'shared/const/cm/Com';
 import { itIt } from 'shared/utils';
+import { ChordInstrument } from 'shared/utils/cm/com/chordTrack.model';
 import { CmChordCard } from './ChordCard';
 import { CmChordCardUndefined } from './UndefinedChordCard';
 
-export const CmChordCardImageList = ({ com }: { com: CmCom }) => {
+export const CmChordCardImageList = ({
+  com,
+  instrument = ChordInstrument.Guitar,
+}: {
+  com: CmCom;
+  instrument?: ChordInstrument;
+}) => {
   return (
     <div className="m-5 flex center column">
       {com?.usedChords &&
@@ -14,6 +21,7 @@ export const CmChordCardImageList = ({ com }: { com: CmCom }) => {
               <CmChordCard
                 key={chordName}
                 chordName={chordName}
+                instrument={instrument}
                 customContent={card => {
                   return (
                     <div

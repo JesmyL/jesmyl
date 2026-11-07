@@ -4,9 +4,11 @@ import chordTracksJson from 'back/apps/cm/+case/chordTracks.json';
 import type { ChordTrack } from 'shared/api';
 import { chordDiezEquivalent } from 'shared/utils/cm/com/const';
 
-import { chordNameToTrack, chordNameToTracks, decodeChordTrack, parseChordName } from './chordTrack';
+import { chordNameToTrack, chordNameToTracks, decodeChordTrack, normalizeChordName, parseChordName } from './chordTrack';
+import { ChordInstrument } from './chordTrack.model';
 
 const openMidis = [64, 59, 55, 50, 45, 40];
+const ukuleleOpenMidis = [69, 64, 60, 67];
 
 const pressedFrets = (track: ChordTrack) => decodeChordTrack(track).frets.map(fret => (fret > 0 ? fret : null));
 
@@ -35,6 +37,22 @@ const curated: Record<string, ChordTrack> = {
   Cmaj7: [0.6, 0, 4, 5],
   Dsus4: [0.56, 0, 3, 12],
 };
+
+describe('normalizeChordName', () => {
+  it.each([
+    ['am7', 'Am7'],
+    ['bb', 'Bb'],
+    ['c#m7b5', 'C#m7b5'],
+    ['em/g#', 'Em/G#'],
+    ['a#m7/bb', 'A#m7/Bb'],
+  ])('%s becomes %s', (name, normalized) => {
+    expect(normalizeChordName(name)).toBe(normalized);
+  });
+
+  it('makes lowercase input parseable', () => {
+    expect(parseChordName(normalizeChordName('em/g#')).name).toBe('Em/G#');
+  });
+});
 
 describe('chordNameToTrack', () => {
   it('encodes A#m as the lowest-scoring barre shape', () => {
@@ -206,6 +224,43 @@ describe('curated chord pack', () => {
     requiredPcs.forEach(pc => expect(soundingPcs).toContain(pc));
     [...soundingPcs].forEach(pc => expect(allowedPcs).toContain(pc));
     expect(bassPc(classic)).toBe(requiredBassPc);
+  });
+});
+
+const ukuleleClassicShapes: Record<string, number[]> = {
+  C: [3, 0, 0, 0],
+  F: [0, 1, 0, 2],
+  G: [2, 3, 2, 0],
+  Am: [0, 0, 0, 2],
+  C7: [1, 0, 0, 0],
+};
+
+const ukuleleFrets = (track: ChordTrack) => decodeChordTrack(track, ChordInstrument.Ukulele).frets;
+
+describe('ukulele chord tracks', () => {
+  it('keeps guitar as the default instrument', () => {
+    expect(chordNameToTracks('C', undefined, ChordInstrument.Guitar)).toEqual(chordNameToTracks('C'));
+  });
+
+  it.each(Object.entries(ukuleleClassicShapes))('%s exposes its canonical ukulele shape', (name, shape) => {
+    const variants = chordNameToTracks(name, undefined, ChordInstrument.Ukulele).map(ukuleleFrets);
+
+    expect(variants).toContainEqual(shape);
+  });
+
+  it.each(Object.keys(ukuleleClassicShapes))('%s ukulele variants sound the chord tones', name => {
+    const chordPcs = chordPitchClasses(name);
+
+    chordNameToTracks(name, undefined, ChordInstrument.Ukulele).forEach(track => {
+      const soundingPcs = new Set(
+        ukuleleFrets(track)
+          .map((fret, stringIndex) => (fret >= 0 ? ukuleleOpenMidis[stringIndex] + fret : null))
+          .filter((midi): midi is number => midi !== null)
+          .map(midi => midi % 12),
+      );
+
+      chordPcs.forEach(pc => expect(soundingPcs).toContain(pc));
+    });
   });
 });
 

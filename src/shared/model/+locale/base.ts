@@ -779,6 +779,8 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.OtherFooterIconListEmpty]: LocaleSimpleString;
   [BaseLocaleKey.InvalidChordName]: StringTemplaterInterpolation<{ n: string }>;
   [BaseLocaleKey.CmPickChord]: LocaleSimpleString;
+  [BaseLocaleKey.CmGuitar]: LocaleSimpleString;
+  [BaseLocaleKey.CmUkulele]: LocaleSimpleString;
 };
 
 export type UsedBaseLocaleKey = BaseLocaleKey;
