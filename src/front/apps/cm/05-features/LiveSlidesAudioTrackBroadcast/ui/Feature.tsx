@@ -7,9 +7,10 @@ import { useCmBroadcastScreenConfigs } from '$cm/shared/lib/broadcast';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { useAuth } from '$index/shared/state';
 import { useAtomValue } from 'atomaric';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { CmCom } from 'shared/const/cm/Com';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
+import { makeCmComNbspHtmlText } from 'shared/utils/cm/com/const';
 import { takeUserAuthName } from 'shared/utils/user.utils';
 
 export const CmLiveSlidesAudioTrackBroadcast = (props: LiveBroadcastAppProps & { com: CmCom }) => {
@@ -22,6 +23,10 @@ export const CmLiveSlidesAudioTrackBroadcast = (props: LiveBroadcastAppProps & {
   const windows = useScreenBroadcastWindows();
 
   const { html, nextHtml, audioSlides, slidei } = useCmComCurrentMarkValues(props.com, config.case);
+  const allSlideHtmls = useMemo(
+    () => audioSlides.map(slide => makeCmComNbspHtmlText(slide.text)),
+    [audioSlides],
+  );
 
   const fio = takeUserAuthName(useAuth());
   const currentSlide = audioSlides.at(slidei);
@@ -52,6 +57,7 @@ export const CmLiveSlidesAudioTrackBroadcast = (props: LiveBroadcastAppProps & {
           isChorded,
 
           nextText: nextHtml,
+          allSlideHtmls,
           isNextChorded,
           dir,
           chordedMode,
@@ -80,6 +86,7 @@ export const CmLiveSlidesAudioTrackBroadcast = (props: LiveBroadcastAppProps & {
     nameSpacei,
     windows,
     props.schw,
+    allSlideHtmls,
   ]);
 
   return <></>;

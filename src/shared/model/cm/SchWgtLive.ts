@@ -15,6 +15,7 @@ export interface CmBroadcastSchWgtLiveDataValue {
   html: string | string[];
   hash: string;
   nextText: string;
+  allSlideHtmls?: (string | string[])[];
   config: CmBroadcastScreenConfig;
   dir: HorizontalDirection;
   chordedMode: CmBroadcastShowChordedSlideMode;

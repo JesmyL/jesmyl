@@ -1,18 +1,10 @@
 import { CSSProperties, useLayoutEffect, useRef, useState } from 'react';
 import { checkIsArray, checkIsNotNaN } from 'shared/utils/checkIs';
 import { twMerge } from 'tailwind-merge';
+import { shadowStyle } from './constants';
 import { FontSizeContainProps } from './FontSizeContain.model';
 
-const shadowStyle: CSSProperties = {
-  position: 'absolute',
-  color: 'transparent',
-  pointerEvents: 'none',
-  WebkitTextStroke: 0,
-  WebkitTextStrokeWidth: 0,
-  WebkitTextStrokeColor: '0',
-};
-
-export function FontSizeContain({ className, content, html, subUpdates, style }: FontSizeContainProps) {
+export function FontSizeContain({ className, content, html, subUpdates, style, maxScale }: FontSizeContainProps) {
   const [childStyle, setChildStyle] = useState<CSSProperties | und>();
   const [isInit, setIsInit] = useState(true);
 
@@ -26,14 +18,15 @@ export function FontSizeContain({ className, content, html, subUpdates, style }:
         containerRef.current.clientHeight / shadowChildRef.current.clientHeight,
         containerRef.current.clientWidth / shadowChildRef.current.clientWidth,
       );
+      const limitedScale = maxScale !== undefined ? Math.min(scale, maxScale) : scale;
 
-      if (scale > 0 && Number.isFinite(scale) && checkIsNotNaN(scale))
+      if (limitedScale > 0 && Number.isFinite(limitedScale) && checkIsNotNaN(limitedScale))
         setChildStyle({
-          transform: `scale(${scale})`,
+          transform: `scale(${limitedScale})`,
           transformOrigin: style?.textAlign === 'left' ? 'left' : style?.textAlign === 'right' ? 'right' : 'center',
         });
     }
-  }, [content, html, subUpdates, isInit, style?.textAlign]);
+  }, [content, html, subUpdates, isInit, style?.textAlign, maxScale]);
 
   return (
     <div

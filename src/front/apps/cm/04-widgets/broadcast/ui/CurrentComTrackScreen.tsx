@@ -8,6 +8,7 @@ import { useCmBroadcastScreenConfig } from '$cm/shared/lib/broadcast';
 import { useCmComCurrentMarkValues } from '$cm/shared/lib/useCmComCurrentMarkValues';
 import { cmPlayerBroadcastComwAtom } from '$cm/shared/state/broadcast.atoms';
 import { useAtomValue } from 'atomaric';
+import { makeCmComNbspHtmlText } from 'shared/utils/cm/com/const';
 import { useCmBroadcastScreenWinResizeListen } from '../lib/win-resize-lesten';
 import { CmBroadcastScreen } from './Screen';
 
@@ -20,7 +21,10 @@ export const CmBroadcastCurrentComTrackScreen = (props: BroadcastScreenProps & P
 
   const comw = useAtomValue(cmPlayerBroadcastComwAtom);
   const com = useCmCom(comw);
-  const { html, nextHtml, isNextChorded, isChorded, minText } = useCmComCurrentMarkValues(com, currentConfig?.case);
+  const { html, nextHtml, isNextChorded, isChorded, minText, audioSlides } = useCmComCurrentMarkValues(
+    com,
+    currentConfig?.case,
+  );
   const switchDirection = useAtomValue(cmBroadcastSwitchBlockDirectionAtom);
 
   return (
@@ -35,6 +39,7 @@ export const CmBroadcastCurrentComTrackScreen = (props: BroadcastScreenProps & P
       isNextChorded={isNextChorded}
       freshSlideKey={minText ?? ''}
       slideSwitchDir={switchDirection}
+      allSlideHtmls={audioSlides.map(slide => makeCmComNbspHtmlText(slide.text))}
     />
   );
 };

@@ -8,6 +8,7 @@ import { useCmBroadcastSlidesContext } from '$cm/features/broadcast';
 import { useCmBroadcastScreenConfig } from '$cm/shared/lib/broadcast';
 import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
+import { makeCmComNbspHtmlText } from 'shared/utils/cm/com/const';
 import { useCmBroadcastScreenKeyDownListen } from '../lib/useCmBroadcastScreenKeyDownListen';
 import { useCmBroadcastScreenWinResizeListen } from '../lib/win-resize-lesten';
 import { CmBroadcastScreen } from './Screen';
@@ -51,6 +52,7 @@ export const CmBroadcastCurrentScreen = (props: BroadcastScreenProps & Partial<F
         subUpdates={`${currentConfigi}${forceUpdates}${getCurrentConfig(currentConfigi)?.proportion}`}
         freshSlideKey={slides[slidei]?.minText || hash || html}
         slideSwitchDir={switchDirection}
+        allSlideHtmls={slides.map(slide => makeCmComNbspHtmlText(slide?.text))}
       />
       {props.win !== window && (
         <Listen

@@ -14,13 +14,14 @@ import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useAtomValue } from 'atomaric';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { CmBroadcastScreenConfig } from 'shared/model/cm/broadcast';
 import { checkIsArray } from 'shared/utils/checkIs';
 import { makeCmComTextInnerHtmlProp } from 'shared/utils/cm/com/const';
 import { twJoin } from 'tailwind-merge';
 import { useApplyScreenFontFamilyEffect } from 'x/my-files';
 import { useCmBroadcastScreenStyle } from '../lib/get-style';
+import { CmBroadcastCommonScaleMeasurer } from './CommonScaleMeasurer';
 import { CmBroadcastSubScreen } from './SubScreen';
 
 type Props = BroadcastScreenProps &
@@ -33,20 +34,28 @@ type Props = BroadcastScreenProps &
     isNextChorded?: boolean;
     freshSlideKey: string;
     slideSwitchDir: HorizontalDirection;
+    allSlideHtmls?: (string | string[])[];
   };
 
 export const CmBroadcastScreen = (props: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const showChordedSlideMode = useAtomValue(cmShowChordedSlideModeAtom);
   const isBlindMode = showChordedSlideMode === CmBroadcastShowChordedSlideMode.Blind;
+  const [commonScale, setCommonScale] = useState<number | nil>(null);
+  const subUpdates = `${props.subUpdates}${props.cmConfig ? props.cmConfig.width + props.cmConfig.height : ''}`;
+  const maxScale = props.allSlideHtmls?.length ? (commonScale ?? undefined) : undefined;
 
-  const style = useCmBroadcastScreenStyle(props.isVisible, {
+  const baseScreenConfig = {
     ...cmBroadcastDefaultConfig,
     ...props.cmConfig,
     ...makeBroadcastTextStroke(props.cmConfig),
     ['--direction' as 'left']: props.slideSwitchDir,
-    ...(props.isChorded ? props.cmConfig?.subs?.chorded : null),
-  });
+  };
+  const style = useCmBroadcastScreenStyle(
+    props.isVisible,
+    props.isChorded ? { ...baseScreenConfig, ...props.cmConfig?.subs?.chorded } : baseScreenConfig,
+  );
+  const baseStyle = useCmBroadcastScreenStyle(props.isVisible, baseScreenConfig);
 
   const background = useBroadcastBackgroundNode({
     bgFileId: props.cmConfig?.bgFileId,
@@ -75,6 +84,7 @@ export const CmBroadcastScreen = (props: Props) => {
         parentConfig={props.cmConfig}
         isVisible={props.isVisible}
         isNextChorded={props.isNextChorded}
+        maxScale={maxScale}
       />
     );
   }
@@ -97,6 +107,15 @@ export const CmBroadcastScreen = (props: Props) => {
         />
       )}
       {nextSlideNode}
+      {props.allSlideHtmls?.length ? (
+        <CmBroadcastCommonScaleMeasurer
+          htmls={props.allSlideHtmls}
+          className="inline-flex white-pre-children leading-none"
+          style={baseStyle}
+          subUpdates={subUpdates}
+          onScale={setCommonScale}
+        />
+      ) : null}
       <StyledFontSizeContain
         key={props.freshSlideKey}
         className="inline-flex white-pre-children leading-none"
@@ -114,7 +133,8 @@ export const CmBroadcastScreen = (props: Props) => {
               ))
             : undefined
         }
-        subUpdates={`${props.subUpdates}${props.cmConfig ? props.cmConfig.width + props.cmConfig.height : ''}`}
+        subUpdates={subUpdates}
+        maxScale={maxScale}
       />
     </div>
   );

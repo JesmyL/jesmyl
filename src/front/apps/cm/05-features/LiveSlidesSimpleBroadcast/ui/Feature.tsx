@@ -6,9 +6,10 @@ import { useCmBroadcastSlidesContext } from '$cm/ext';
 import { useCmBroadcastScreenConfigs } from '$cm/shared/lib/broadcast';
 import { cmShowChordedSlideModeAtom } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { CmCom } from 'shared/const/cm/Com';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
+import { makeCmComNbspHtmlText } from 'shared/utils/cm/com/const';
 
 export const CmLiveSlidesSimpleBroadcast = (props: LiveBroadcastAppProps & { com: CmCom }) => {
   const config = useCmBroadcastScreenConfigs()[0];
@@ -19,6 +20,7 @@ export const CmLiveSlidesSimpleBroadcast = (props: LiveBroadcastAppProps & { com
   const windows = useScreenBroadcastWindows();
 
   const { slidei, html, nextSlidei, slides, nextHtml, slideId, hash } = useCmBroadcastSlidesContext();
+  const allSlideHtmls = useMemo(() => slides.map(slide => makeCmComNbspHtmlText(slide?.text)), [slides]);
 
   useEffect(() => {
     if (props.isCantTranslateLive || !props.com) return;
@@ -45,6 +47,7 @@ export const CmLiveSlidesSimpleBroadcast = (props: LiveBroadcastAppProps & { com
           isChorded: !!currentSlide?.ord.isChBlock(),
 
           nextText: nextHtml,
+          allSlideHtmls,
           isNextChorded: !!nextSlide?.ord.isChBlock(),
           dir,
           chordedMode,
@@ -72,6 +75,7 @@ export const CmLiveSlidesSimpleBroadcast = (props: LiveBroadcastAppProps & { com
     hash,
     props.com,
     windows,
+    allSlideHtmls,
   ]);
 
   return <></>;

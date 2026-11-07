@@ -6,4 +6,5 @@ export type FontSizeContainProps = {
   style?: CSSProperties;
   content?: ReactNode;
   html?: string | string[];
+  maxScale?: number;
 };

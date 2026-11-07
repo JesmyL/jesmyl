@@ -19,6 +19,7 @@ interface Props {
   parentConfig: CmBroadcastScreenConfig;
   isVisible: boolean;
   isNextChorded?: boolean;
+  maxScale?: number;
 }
 
 export const CmBroadcastSubScreen = (props: Props & Partial<FontSizeContainProps>) => {
@@ -47,6 +48,7 @@ export const CmBroadcastSubScreen = (props: Props & Partial<FontSizeContainProps
         style={style}
         html={props.text}
         subUpdates={'' + props.subUpdates + props.config.width + props.config.height}
+        maxScale={props.maxScale}
       />
       {props.isTech && props.config && (
         <ScreenTranslateCurrentPositionConfigurators
