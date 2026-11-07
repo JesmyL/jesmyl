@@ -776,4 +776,7 @@ export const enum BaseLocaleKey {
   OtherFooterIconUnknown = 757,
   OtherFooterIconTitle = 758,
   OtherFooterIconListEmpty = 759,
+
+  InvalidChordName = 760,
+  CmPickChord = 761,
 }

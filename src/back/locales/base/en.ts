@@ -128,6 +128,8 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.CmChordNumber]: 'Chord $n',
   [BaseLocaleKey.CmCreateNextChordRule]: 'Create a rule for the next chord',
   [BaseLocaleKey.CmUnknownChord]: 'Unknown chord',
+  [BaseLocaleKey.InvalidChordName]: 'Invalid chord name $n',
+  [BaseLocaleKey.CmPickChord]: 'Pick a chord',
   [BaseLocaleKey.CmMaximumChordsCount]: 'Maximum number of chords',
   [BaseLocaleKey.CmMinimumChordsCount]: 'Text with the minimum number of chords',
   [BaseLocaleKey.CmNoChordsText]: 'Text without chords',

@@ -66,6 +66,17 @@ export const correctChordRegsLazy = lazyInit(() =>
   ),
 );
 
+const bemoleChordLikeStr = `(?<simpleChord>(?:[A-H][#b]?)m?7?)${lightModificators}${hardModificators}?` as const;
+
+/** `correctChordRegsLazy`, но с бемолями в основе (`Bb`, `Dbm7`) — для ввода аккордов пользователем. */
+export const correctBemoleChordRegsLazy = lazyInit(() =>
+  makeNamedRegExp(
+    // regexpert:
+    // stringify $0
+    `/^${bemoleChordLikeStr}(?:/${escapeRegExpNames(bemoleChordLikeStr, '_bass')})?$/`,
+  ),
+);
+
 export const chordInterpretedRegsLazy = lazyInit(() =>
   makeNamedRegExp(
     // regexpert:

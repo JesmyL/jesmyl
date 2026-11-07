@@ -130,6 +130,8 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.CmChordNumber]: 'Аккорд $n',
   [BaseLocaleKey.CmCreateNextChordRule]: 'Келесі аккорд үшін ереже жасау',
   [BaseLocaleKey.CmUnknownChord]: 'Белгісіз аккорд',
+  [BaseLocaleKey.InvalidChordName]: 'Аккорд атауы қате $n',
+  [BaseLocaleKey.CmPickChord]: 'Аккорд табу',
   [BaseLocaleKey.CmMaximumChordsCount]: 'Аккордтардың maximalды саны',
   [BaseLocaleKey.CmMinimumChordsCount]: 'Аккордтардың минималды саны бар мәтін',
   [BaseLocaleKey.CmNoChordsText]: 'Аккордсыз мәтін',
