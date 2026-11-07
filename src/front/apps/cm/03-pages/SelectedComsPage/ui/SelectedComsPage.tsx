@@ -26,6 +26,7 @@ export function CmSelectedComs() {
           <CmComFaceList
             list={selectedComws}
             comDescription={(_comw, comi) => <CmComMoveSelectedButton comi={comi} />}
+            withoutLikeMark
           />
         </>
       }
