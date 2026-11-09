@@ -36,7 +36,7 @@
   { "key": "0bc", "md5": "b165c07317a70f27cbd9362dab7b50bc", "link": "1~20200701~~164457_62_65.mp3", "duration": 277 },
   { "key": "0c2", "md5": "9fbc766204e78b9c22d9223a65f540c2", "link": "1~20221008~~195505.mp3", "duration": 226 },
   { "key": "0ca", "md5": "53d01711dfa28d653663096573e080ca", "link": "1~20200701~~164549_12.mp3", "duration": 355 },
-  { "key": "0cf", "md5": "80f551a6fad873d10396c581f41270cf", "link": "1~20191101~~22415173.mp3", "duration": null },
+  { "key": "0cf", "md5": "80f551a6fad873d10396c581f41270cf", "link": "1~20191101~~22415173.mp3", "duration": 227 },
   { "key": "0d6", "md5": "97cd920cdac4ac31508451e5a33360d6", "link": "1~20200903~~225024.mp3", "duration": 293 },
   { "key": "0da", "md5": "ae0355bb0ea78d93a51395d59546b0da", "link": "1~20211221~~105711.mp3", "duration": 269 },
   { "key": "0ea", "md5": "294161dd5ab2f2159c7a2f432514c0ea", "link": "1~20210203~~230415.mp3", "duration": 228 },
@@ -155,10 +155,10 @@
   { "key": "34f", "md5": "b1d950fe94c8bda543a46edce294534f", "link": "1~20191116~~18253973.mp3", "duration": 98 },
   { "key": "35d", "md5": "8c19ac5dea0e8748558bd0ad6522d35d", "link": "1~20200701~~164457_62_31.mp3", "duration": 249 },
   { "key": "364", "md5": "2a591f9a7dee55e7cedbeddbcb0c7364", "link": "1~20200603~~14431728.mp3", "duration": 267 },
-  { "key": "365", "md5": "06943f04da2e67db138609b71c68f365", "link": "1~20200311~~2012493.mp3", "duration": null },
+  { "key": "365", "md5": "06943f04da2e67db138609b71c68f365", "link": "1~20200311~~2012493.mp3", "duration": 199 },
   { "key": "38dd", "md5": "d573716a950aef68dd3e958ef1d738dd", "link": "1~20201120~~085250.mp3", "duration": 150 },
   { "key": "398", "md5": "ece34a76cbb0fda92e6919a98aea0398", "link": "1~20210213~~135801.mp3", "duration": 192 },
-  { "key": "39e", "md5": "423d730c6dbf3c8a583d528e7e65939e", "link": "1~20200511~~23012451.mp3", "duration": null },
+  { "key": "39e", "md5": "423d730c6dbf3c8a583d528e7e65939e", "link": "1~20200511~~23012451.mp3", "duration": 170 },
   { "key": "3a2", "md5": "f1d68eeeaa5cfd33fbb5d9e8d46d53a2", "link": "1~20200416~~21422468.mp3", "duration": 275 },
   { "key": "3a4", "md5": "fd648e34d167c56ab6418d2e54a1c3a4", "link": "1~20200629~~20340965.mp3", "duration": 267 },
   {
@@ -200,7 +200,7 @@
     "duration": 255
   },
   { "key": "445", "md5": "f6a1278f3a5dbd7f8be18d5ab57fb445", "link": "1~20200613~~23300060.mp3", "duration": 312 },
-  { "key": "453", "md5": "816be8e55d59f5856617d837730a9453", "link": "1~20210924~~073724.mp3", "duration": null },
+  { "key": "453", "md5": "816be8e55d59f5856617d837730a9453", "link": "1~20210924~~073724.mp3", "duration": 166 },
   { "key": "457", "md5": "2f4061d79b2d1f1e68ce3ae226a17457", "link": "1~20200701~~164535_80.mp3", "duration": 213 },
   { "key": "459", "md5": "85966e84b0e3ee56ecbae387d20df459", "link": "1~20200701~~164140_58.mp3", "duration": 320 },
   { "key": "472", "md5": "64f94f28989417f45ceeac46ab51c472", "link": "1~20210203~~115612.mp3", "duration": 231 },
@@ -293,7 +293,7 @@
     "key": "6f4",
     "md5": "94dd38a0a5d32288d4d0b26dc87a46f4",
     "link": "2~z3tVfdmJzjG0CJ9SEZ4rjSpEibOfsKV5LTwpIsoi.mp3",
-    "duration": null
+    "duration": 201
   },
   { "key": "6f6", "md5": "705b6bc8a0a44f82f151aa73f76c66f6", "link": "1~20231025~~165320.mp3", "duration": 198 },
   { "key": "704", "md5": "84d572faf863a155cd7e90783753b704", "link": "1~20230122~~061135.mp3", "duration": 239 },
@@ -310,7 +310,7 @@
   { "key": "739", "md5": "b44d7b8b243910f47f742d4d735d8739", "link": "1~20200701~~164457_67_32.mp3", "duration": 265 },
   { "key": "760", "md5": "36668d2f3ca72c3753dfc2012d3a1760", "link": "4~2016072714552747.mp3", "duration": 213 },
   { "key": "763", "md5": "9ab3c7ee82d0ef980bf3d603c3e87763", "link": "1~20200701~~164515_83.mp3", "duration": 276 },
-  { "key": "766", "md5": "d4d7f6ad58f181b04a93375d7286b766", "link": "1~20190309~~13201796.mp3", "duration": null },
+  { "key": "766", "md5": "d4d7f6ad58f181b04a93375d7286b766", "link": "1~20190309~~13201796.mp3", "duration": 272 },
   { "key": "76a", "md5": "abe50ebf24b0bc8a3f96dbe5735a276a", "link": "1~20200701~~164457_16_63.mp3", "duration": 257 },
   { "key": "783", "md5": "774c98dd82ded363a408045c89420783", "link": "1~20200623~~12263061.mp3", "duration": 170 },
   { "key": "786", "md5": "c8fe11e558b8c83a1bd38b9adac6d786", "link": "1~20211130~~223420.mp3", "duration": 251 },
@@ -349,7 +349,7 @@
   { "key": "815", "md5": "96fb43467e2d4cc6b7734a2431317815", "link": "1~20220927~~125042.mp3", "duration": 257 },
   { "key": "829", "md5": "632d329505a6ffce0a583ece92d37829", "link": "1~20190310~~20095048.mp3", "duration": 374 },
   { "key": "839", "md5": "9ee37058a3bd11aedc346b42dac9b839", "link": "1~20210607~~084646.mp3", "duration": 194 },
-  { "key": "8493", "md5": "72703d6850bc6986a80b7fca9d708493", "link": "1~20200701~~164535_75_8.mp3", "duration": null },
+  { "key": "8493", "md5": "72703d6850bc6986a80b7fca9d708493", "link": "1~20200701~~164535_75_8.mp3", "duration": 308 },
   { "key": "84e", "md5": "633cd6ee558937a6761c183acfdef84e", "link": "1~20200701~~164548_63_45.mp3", "duration": 273 },
   { "key": "850", "md5": "82113272b4752421c4535a9d25867850", "link": "1~20200623~~1150506.mp3", "duration": 255 },
   { "key": "852", "md5": "29ce91ba09d45100273d01ec2f0c9852", "link": "1~20190816~~21175545.mp3", "duration": 323 },
@@ -447,7 +447,7 @@
     "key": "abd6",
     "md5": "fd831fb43cf68372031fda6b8c5cabd6",
     "link": "2~wIPBHAuDheVmYr2nlLEENrXLORLYokODiBOCDVmh.mp3",
-    "duration": null
+    "duration": 190
   },
   {
     "key": "ac5",
@@ -514,7 +514,7 @@
   { "key": "bf5", "md5": "88990d77f77a00f8ea12085ecf380bf5", "link": "1~20191025~~09161790.mp3", "duration": 187 },
   { "key": "bfa", "md5": "7345f4148f8f69b4b500613daa49abfa", "link": "1~20231103~~150531.mp3", "duration": 147 },
   { "key": "c04", "md5": "3b3423a40956fb39dfe457aa6faeec04", "link": "1~20220128~~195211.mp3", "duration": 191 },
-  { "key": "c08", "md5": "ca5518b524512816c35b305fd6438c08", "link": "1~20200506~~22271582.mp3", "duration": null },
+  { "key": "c08", "md5": "ca5518b524512816c35b305fd6438c08", "link": "1~20200506~~22271582.mp3", "duration": 341 },
   { "key": "c12", "md5": "9142e42059e640b28cef2d6620c84c12", "link": "1~20191113~~15555736.mp3", "duration": 362 },
   { "key": "c15", "md5": "c2e7eb3eb26f3e49361892f671974c15", "link": "1~20200623~~12053424.mp3", "duration": 246 },
   { "key": "c24", "md5": "3f73c95533096857374d23bedd323c24", "link": "1~20200519~~20393372.mp3", "duration": 164 },
@@ -599,7 +599,7 @@
     "key": "e5f",
     "md5": "55b005dc07c97b7754adc04f719d3e5f",
     "link": "2~DtXz5EqalU33khy2Tc6c24buWg03cFhMCzh1xtsv.m4a",
-    "duration": null
+    "duration": 213
   },
   { "key": "e62", "md5": "88a6dbdc3568ba1328ec8b2553ad9e62", "link": "1~20200701~~164536_88_57.mp3", "duration": 337 },
   { "key": "e7a", "md5": "f0c0a0cf78ec90c939241821bbd3ce7a", "link": "1~20220309~~113503.mp3", "duration": 249 },
@@ -608,7 +608,7 @@
     "key": "e89",
     "md5": "67072444d59bb1a30fa53d1623c64e89",
     "link": "2~rEN26cmwvLR94zY1rwinvyq8dPTI11Khp3haB13O.mp3",
-    "duration": null
+    "duration": 227
   },
   { "key": "e8a", "md5": "bb18b30528e4da86f01e6fe977b8ae8a", "link": "1~20190815~~13071941.mp3", "duration": 183 },
   { "key": "eaa", "md5": "e2bf7fcf2f273745b6373a593c0aeeaa", "link": "1~20200117~~02342965.mp3", "duration": 287 },
@@ -643,7 +643,7 @@
   { "key": "f96", "md5": "8dffef9538199dacc31ff88065232f96", "link": "1~20200701~~164547_28.mp3", "duration": 309 },
   { "key": "fa2", "md5": "408cb38846a2b033071b9f55d3d15fa2", "link": "1~20200629~~19373017.mp3", "duration": 115 },
   { "key": "fa5", "md5": "b4d0b9c538de95087cf528afc13d7fa5", "link": "1~20220105~~124259.mp3", "duration": 263 },
-  { "key": "fb0", "md5": "c49404635928c2ec4ef066b41b234fb0", "link": "1~20211007~~113908.mp3", "duration": null },
+  { "key": "fb0", "md5": "c49404635928c2ec4ef066b41b234fb0", "link": "1~20211007~~113908.mp3", "duration": 204 },
   { "key": "fb19", "md5": "d37ab3ba84eb83f661481eadc1cefb19", "link": "1~20200326~~01085797.mp3", "duration": 357 },
   { "key": "fbf", "md5": "5480e01ec37887f60a9107c26a385fbf", "link": "1~20191211~~12354655.mp3", "duration": 278 },
   { "key": "fc2", "md5": "5753b275a1df1df15b5661657cf38fc2", "link": "1~20210208~~130216.mp3", "duration": 537 },
