@@ -2,14 +2,13 @@ import { FooterPlacementManager } from '#basis/lib/FooterPlacementManager';
 import { useCurrentAppFooterItemPlaceContext } from '#basis/state/App.contexts';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { FileRoutesByPath } from '@tanstack/react-router';
-import { StameskaIconName } from 'stameska-icon/pack';
 import { twMerge } from 'tailwind-merge';
 
 interface Props {
   to: keyof FileRoutesByPath;
   idPostfix: string;
-  icon: StameskaIconName;
-  fallbackIcon?: StameskaIconName;
+  icon: KnownStameskaIconName;
+  fallbackIcon?: KnownStameskaIconName;
   title: string;
   className?: string;
   children?: React.ReactNode;

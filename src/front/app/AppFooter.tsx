@@ -88,7 +88,7 @@ export function AppFooter({ children }: { children: () => React.ReactNode[]; app
 
         <FooterTrack className="other-track min-w-20">
           <AppFooterItem
-            icon={otherFooterIcon ?? 'CircleArrowRight02'}
+            icon={(otherFooterIcon as never) ?? 'CircleArrowRight02'}
             fallbackIcon="CircleArrowRight02"
             title={translateBase(BaseLocaleKey.Inoe)}
             to={`/!other/${(appName === '!other' ? place : appName) as never}`}

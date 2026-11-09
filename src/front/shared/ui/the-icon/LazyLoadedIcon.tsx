@@ -11,7 +11,7 @@ import {
 } from 'stameska-icon/utils';
 
 export type LazyIconProps = HTMLAttributes<HTMLOrSVGElement> & {
-  icon: StameskaIconName;
+  icon: KnownStameskaIconName;
   fallbackIcon?: StameskaIconName;
   kind?: StameskaIconKind;
   withoutAnimation?: boolean;
