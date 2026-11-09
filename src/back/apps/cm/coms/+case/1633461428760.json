@@ -16,14 +16,7 @@
     "Dm E Am\nF G C-A7\nDm7 G C\nF Dm E-E7",
     "Am Dm7\nG C\nF Dm\nE Am",
     "Am F D Dm",
-    "Am F D Dm E"
-  ],
-  "c1": [
-    "Am Dm Am\nF-Dm E\nAm Dm Am\nF Dm E-E7",
-    "Dm E Am\nF G C-A7\nDm7 G C\nF Dm E-E7",
-    "Am Dm7\nG C\nF Dm\nE Am",
-    "Am F D Dm",
-    "Am F D Dm E"
+    "Am F D Dm\nAm F D Dm\nAm F D Dm\nAm F D Dm\nE"
   ],
   "o": [
     { "c": 3, "k": 15, "r": 4, "w": 0 },
