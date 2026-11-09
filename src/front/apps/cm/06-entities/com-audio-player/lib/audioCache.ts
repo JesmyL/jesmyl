@@ -105,6 +105,13 @@ export const takeCmComAudioPlayerCachedSrcs = async () => {
   );
 };
 
+/** Cheap single-track probe: a couple of direct `cache.match` lookups instead of the full bucket scan above. */
+export const takeCmComAudioPlayerIsSrcCached = async (src: CmAudioSrc) => {
+  if (typeof caches === 'undefined') return false;
+
+  return !!(await takeCmComAudioPlayerCachedResponse(src));
+};
+
 /** Whether a com has at least one audio src present in Cache Storage. */
 export const isCmComAudioPlayerComCached = (com: IExportableCom, cachedSrcs: Set<CmAudioSrc>) =>
   !!com.al?.some(src => cachedSrcs.has(src));

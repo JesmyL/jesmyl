@@ -37,6 +37,7 @@ import {
   cmComAudioPlayerUpdatePlaybackRate,
   isCmComAudioPlayerComCached,
   StyledCmComAudioPlayerPlayButton,
+  takeCmComAudioPlayerIsSrcCached,
   useCmComAudioPlayerCachedSrcs,
   useCmComAudioPlayerCurrentTime,
   useCmComAudioPlayerDuration,
@@ -60,7 +61,7 @@ import styled from '@emotion/styled';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { atom, useAtomValue } from 'atomaric';
 import { ReactNode, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { CmComWid, IExportableCom, MenuComToolName, parseCmAudioSrc } from 'shared/api';
+import { CmAudioSrc, CmComWid, IExportableCom, MenuComToolName, parseCmAudioSrc } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { convertSecondsInStrTime, retNull } from 'shared/utils';
 import { lazyInit } from 'shared/utils/lazyInit';
@@ -344,6 +345,27 @@ export const CmPlayerPage = () => {
   );
 };
 
+/**
+ * The player page owns the hinted entry's track resolution, so the caller navigates without waiting for a cache scan:
+ * only the entry's few tracks get cheap per-src probes, run concurrently. A cached track is preferred, exactly like
+ * the inline player tool used to pick it.
+ */
+const takeCmPlayerIncomingComl = async (audio: CmAudioSrc[]) => {
+  const cachedFlags = await Promise.all(audio.map(takeCmComAudioPlayerIsSrcCached));
+  const cachedIndex = cachedFlags.indexOf(true);
+
+  return cachedIndex === -1 ? audio[0] : audio[cachedIndex];
+};
+
+const startCmPlayerIncomingPlayback = async (icom: IExportableCom | nil) => {
+  const audio = icom?.al;
+  if (!icom || !audio?.length) return;
+
+  cmComAudioPlayerSetSrc(await takeCmPlayerIncomingComl(audio));
+  cmComAudioPlayerSetMediaTitle(icom.n);
+  cmComAudioPlayerSwitchIsPlay(true);
+};
+
 const CmPlayerPageContent = ({
   baseIComs,
   baseComws,
@@ -462,6 +484,10 @@ const CmPlayerPageContent = ({
       cmComAudioPlayerMarkManualPick();
       cmComAudioPlayerSetCurrentComw(incomingEntryComw);
       setHintedComwToCheck(incomingEntryComw);
+      void cmIDB.tb.coms
+        .get(incomingEntryComw)
+        .catch(retNull)
+        .then(startCmPlayerIncomingPlayback);
 
       return;
     }
@@ -473,13 +499,14 @@ const CmPlayerPageContent = ({
       .toArray()
       .catch(retNull)
       .then(coms => {
-        const comw = coms?.find(com => com.al?.includes(incomingComl))?.w;
+        const icom = coms?.find(com => com.al?.includes(incomingComl));
 
-        if (comw == null) return;
+        if (!icom) return;
 
         cmComAudioPlayerMarkManualPick();
-        cmComAudioPlayerSetCurrentComw(comw);
-        setHintedComwToCheck(comw);
+        cmComAudioPlayerSetCurrentComw(icom.w);
+        setHintedComwToCheck(icom.w);
+        void startCmPlayerIncomingPlayback(icom);
       });
   }, [hasIncomingEntry, incomingEntryComw, incomingComl, navigate]);
 

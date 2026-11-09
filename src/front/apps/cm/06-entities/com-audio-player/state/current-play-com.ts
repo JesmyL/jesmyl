@@ -104,20 +104,30 @@ const revokeCmComAudioPlayerTrackUrl = () => {
   trackObjectUrl = null;
 };
 
-/** Cache-first: a cached track plays from a local blob URL so it keeps working offline. */
+/**
+ * Cache-first with a fast start: the network URL plays at once, and the service worker answers `/track/`
+ * from `audio-cache` cache-first (a plain cached body, no range request), so sound starts after one round
+ * trip. The full cached blob then swaps in for the offline guarantee, keeping the playhead and play state.
+ */
 const applyCmComAudioPlayerSrc = async (src: CmAudioSrc, applyId: number) => {
-  const blob = await takeCmComAudioPlayerCachedBlob(src).catch(retNull);
-  if (applyId !== cmComAudioPlayerSrcApplyId || cmComAudioPlayerPlaySrcAtom.get() !== src) return;
+  const trackUrl = takeCmComAudioPlayerTrackUrl(src);
 
   revokeCmComAudioPlayerTrackUrl();
-
-  if (blob?.size) {
-    trackObjectUrl = URL.createObjectURL(blob);
-    audioElement.src = trackObjectUrl;
-  } else audioElement.src = takeCmComAudioPlayerTrackUrl(src);
-
+  audioElement.src = trackUrl;
   isCmComAudioPlayerSrcApplying = false;
   if (cmComAudioPlayerIsPlayAtom.get()) void audioElement.play().catch(() => cmComAudioPlayerIsPlayAtom.set(false));
+
+  const blob = await takeCmComAudioPlayerCachedBlob(src).catch(retNull);
+  if (!blob?.size || applyId !== cmComAudioPlayerSrcApplyId || audioElement.src !== trackUrl) return;
+
+  const currentTime = audioElement.currentTime;
+  const isPlaying = !audioElement.paused;
+
+  trackObjectUrl = URL.createObjectURL(blob);
+  audioElement.src = trackObjectUrl;
+  audioElement.currentTime = currentTime;
+
+  if (isPlaying) void audioElement.play().catch(() => cmComAudioPlayerIsPlayAtom.set(false));
 };
 
 export const cmComAudioPlayerSetSrc = (src: CmAudioSrc | null) => {

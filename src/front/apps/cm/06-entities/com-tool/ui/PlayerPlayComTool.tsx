@@ -5,9 +5,6 @@ import {
   cmComAudioPlayerIsFromPlayerPageAtom,
   cmComAudioPlayerMarkManualPick,
   cmComAudioPlayerSetCurrentComw,
-  cmComAudioPlayerSetSrc,
-  cmComAudioPlayerSwitchIsPlay,
-  takeCmComAudioPlayerCachedSrcs,
 } from '$cm/entities/com-audio-player';
 import { useNavigate } from '@tanstack/react-router';
 import { MenuComToolName } from 'shared/api';
@@ -15,9 +12,8 @@ import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { CmComTool } from '../ComTool';
 
 /**
- * Opens the player on the current com, preferring a track already cached for offline playback.
- * The entry starts playback right away and marks the session as player-page one, so the ended
- * track walks on to the next com of the list instead of stopping.
+ * Opens the player on the current com right away; the player page resolves the cached track itself and starts playback.
+ * The session is marked as a player-page one, so the ended track walks on to the next com of the list instead of stopping.
  */
 export const CmComToolPlayerPlay = () => {
   const ccom = useCmComCurrent();
@@ -28,20 +24,15 @@ export const CmComToolPlayerPlay = () => {
     <DisabledArea
       disabled={!audio?.length}
       disabledReason={translateBase(BaseLocaleKey.CmNoComTracks)}
-      onClick={() =>
-        void takeCmComAudioPlayerCachedSrcs().then(cachedSrcs => {
-          const coml = audio?.find(src => cachedSrcs.has(src)) ?? audio?.[0];
-          if (!ccom || !coml) return;
+      onClick={() => {
+        if (!ccom || !audio?.length) return;
 
-          cmComAudioPlayerMarkManualPick();
-          cmComAudioPlayerIsFromPlayerPageAtom.set(true);
-          cmComAudioPlayerSetCurrentComw(ccom.wid);
-          cmComAudioPlayerSetSrc(coml);
-          cmComAudioPlayerSwitchIsPlay(true);
+        cmComAudioPlayerMarkManualPick();
+        cmComAudioPlayerIsFromPlayerPageAtom.set(true);
+        cmComAudioPlayerSetCurrentComw(ccom.wid);
 
-          return navigate({ to: '/cm/player', search: { comw: ccom.wid, coml } });
-        })
-      }
+        return navigate({ to: '/cm/player', search: { comw: ccom.wid } });
+      }}
     >
       {({ className, onClick }) => (
         <CmComTool
