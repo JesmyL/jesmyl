@@ -476,6 +476,7 @@ export const backLocalesRu: Record<BackLocaleKey, string> = {
   [BackLocaleKey.SchAttLevelOnly]: 'имеет только $r',
   [BackLocaleKey.SchAttLevelAndOlder]: 'имеет $r и старше',
   [BackLocaleKey.SchLiveStreamFinished]: '*Завершена*',
+  [BackLocaleKey.SchLiveStreamStarted]: '$n начал трансляцию $t',
   [BackLocaleKey.OgSchedule]: 'Мероприятие "$t"',
   [BackLocaleKey.SchListCatMentorsDefaultTitle]: 'Руководители',
   [BackLocaleKey.SchListCatMembersDefaultTitle]: 'Участники',

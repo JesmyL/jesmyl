@@ -433,4 +433,5 @@ export const enum BackLocaleKey {
   DashReportNoRecipients = 430,
   CmSmartSearchTooFewSlides = 431,
   CmSmartSearchImpreciseMarkTimes = 432,
+  SchLiveStreamStarted = 433,
 }

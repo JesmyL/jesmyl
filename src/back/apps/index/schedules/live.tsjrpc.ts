@@ -1,18 +1,33 @@
-import { backLocaleError, translateBackTexts } from 'back/locales/back';
+import { backLocaleError, backLocalePayload, translateBackTexts } from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { TsjrpcServerMethods } from 'back/tsjrpc.server';
 import { ScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
 import { SchLiveTsjrpcModel, SchLiveTsjrpcSharesModel } from 'shared/api/tsjrpc/schedules/live.tsjrpc.model';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
-import { itNNull } from 'shared/utils';
+import { emptyFunc, itNNull } from 'shared/utils';
 import { mapObjectEntries } from 'shared/utils/object.utils';
 import { sokiServer } from 'back/complect/soki/SokiServer';
 import { WebSocket } from 'ws';
+import { insertDashMessage } from 'back/dash/visits';
+import { DashMessageKind } from 'shared/model/index/visitsDashboard';
+import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
 
 const theLiveData = {} as PRecord<ScheduleWidgetWid, PRecord<SokiAuthLogin, IndexSchWBroadcastLiveDataValue>>;
 const liveDataWatchers: PRecord<ScheduleWidgetWid, PRecord<SokiAuthLogin, Set<WebSocket>>> = {};
 const streamersWaiters: PRecord<ScheduleWidgetWid, Set<WebSocket>> = {};
+
+const logStreamStart = async (schw: ScheduleWidgetWid, login: SokiAuthLogin, name: string) => {
+  const sch = await takeScheduleWidgetTiny({ w: schw }, false);
+  if (sch == null) return;
+
+  await insertDashMessage(
+    backLocalePayload(langi => translateBackTexts(langi, BackLocaleKey.SchLiveStreamStarted, { n: name, t: `"${sch.title}"` })),
+    null,
+    DashMessageKind.Log,
+    login,
+  );
+};
 
 const shareLiveData = (schw: ScheduleWidgetWid, streamerLogin: SokiAuthLogin) => {
   const waiters = liveDataWatchers[schw]?.[streamerLogin];
@@ -35,6 +50,9 @@ export const schLiveTsjrpcServer = new (class SchLive extends TsjrpcBaseServer<S
       methods: {
         next: async ({ schw, data }, { auth }) => {
           if (auth?.login == null) throw backLocaleError(BackLocaleKey.NotRegistered);
+
+          if (data != null && theLiveData[schw]?.[auth.login] == null)
+            logStreamStart(schw, auth.login, data.fio || auth.login).catch(emptyFunc);
 
           theLiveData[schw] ??= {};
           theLiveData[schw][auth.login] = data;

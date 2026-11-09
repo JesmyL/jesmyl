@@ -465,6 +465,7 @@ export const backLocalesKz: Record<BackLocaleKey, string> = {
   [BackLocaleKey.SchAttLevelOnly]: 'тек $r-де бар',
   [BackLocaleKey.SchAttLevelAndOlder]: '$r және одан жоғарыларында бар',
   [BackLocaleKey.SchLiveStreamFinished]: '*Аяқталды*',
+  [BackLocaleKey.SchLiveStreamStarted]: '$n трансляциясын бастады $t',
   [BackLocaleKey.OgSchedule]: 'Іс-шара "$t"',
   [BackLocaleKey.SchListCatMentorsDefaultTitle]: 'Тәлімгерлер',
   [BackLocaleKey.SchListCatMembersDefaultTitle]: 'Қатысушылар',
