@@ -5,6 +5,7 @@ import { sendSchedulePush } from 'back/apps/index/schedules/app-inform/web-push'
 import { takeAllUsersTiny, takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { dashErrorDB, dashReadDB, visitDayDB, visitDB } from 'back/drizzle.schema';
 import { db, dbDelete, dbUpdate, dbUpsert } from 'back/drizzle/drizzle.db';
+import { emailerConfigFileStorage } from 'back/sides/emailer/file-stores';
 import { sendEmailMessage } from 'back/sides/emailer/lib/sendEmailMessage';
 import { EmailerAuthConfigKey } from 'back/sides/emailer/model';
 import { and, count, desc, eq, gt, gte, inArray, lt, lte, sql, max as sqlMax } from 'drizzle-orm';
@@ -415,6 +416,7 @@ export const sendCurrentDashReport = async () => {
 /** Changes are mirrored to the self mailbox that the visits report is sent from (`isSameTo`) and to every configured dash report recipient. */
 export const sendChangesEmail = async (html: string, langi: Langi | nil) => {
   const subject = `SYSTEM: ${new Date().toLocaleDateString(takeLangSystemCode(langi), changesEmailSubjectDateOptions)} (Changes)`;
+  const selfEmail = emailerConfigFileStorage.getValue()[EmailerAuthConfigKey.Self]?.user?.toLowerCase();
 
   await Promise.all([
     sendEmailMessage(EmailerAuthConfigKey.Self, {
@@ -423,11 +425,13 @@ export const sendChangesEmail = async (html: string, langi: Langi | nil) => {
       html: localizeBackLocalePayloads(html, langi),
     }),
     ...mapObjectEntries(dashReportRecipientsFileStorage.getValue(), (email, recipientLangi) =>
-      sendEmailMessage(EmailerAuthConfigKey.Self, {
-        to: email,
-        subject,
-        html: localizeBackLocalePayloads(html, recipientLangi),
-      }).catch(emptyFunc),
+      email.toLowerCase() === selfEmail
+        ? null
+        : sendEmailMessage(EmailerAuthConfigKey.Self, {
+            to: email,
+            subject,
+            html: localizeBackLocalePayloads(html, recipientLangi),
+          }).catch(emptyFunc),
     ),
   ]);
 };
