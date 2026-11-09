@@ -210,4 +210,5 @@ export const enum EditorLocaleKey {
   VisitsRecipientsSaved = 205,
   VisitsReportNotSent = 206,
   VisitsReportRecipientRemoveConfirm = 207,
+  CmEditorHardChordsComplexHint = 208,
 }

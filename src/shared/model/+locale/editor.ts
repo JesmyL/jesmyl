@@ -212,4 +212,5 @@ export type LocaleCmEditor = {
   [EditorLocaleKey.VisitsRecipientsSaved]: LocaleSimpleString;
   [EditorLocaleKey.VisitsReportNotSent]: StringTemplaterInterpolation<{ e: string }>;
   [EditorLocaleKey.VisitsReportRecipientRemoveConfirm]: StringTemplaterInterpolation<{ e: string }>;
+  [EditorLocaleKey.CmEditorHardChordsComplexHint]: LocaleSimpleString;
 };

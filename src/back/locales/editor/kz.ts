@@ -8,6 +8,8 @@ export const localeEditorKz = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.LocaleVersion]: 0,
   [EditorLocaleKey.CmChordLengthMismatch]:
     '$n жолындағы күрделілік нұсқаларындағы жолдар бойынша аккордтар саны сәйкес келмейді',
+  [EditorLocaleKey.CmEditorHardChordsComplexHint]:
+    'Өңдеу күрделі аккордтар тізімінде де қатар жүргізілуде. Дербес өңдеу үшін күрделі аккордтар тізіміне кез келген өзгеріс енгізу қажет.',
   [EditorLocaleKey.CmSize]: 'Өлшемділік',
   [EditorLocaleKey.CmIntensity]: 'Қарқындылық',
   [EditorLocaleKey.CmEditSquareBracketsHint]:

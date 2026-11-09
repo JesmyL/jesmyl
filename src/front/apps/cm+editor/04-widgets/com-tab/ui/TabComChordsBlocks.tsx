@@ -65,6 +65,11 @@ export const CmEditorComTabChordsBlocks = ({ ccom }: { ccom: EditableCom }) => {
         )}
         <CmEditorComTabChordHardLevelSelector />
       </div>
+      {(!isHardChords || !ccom.top.c1?.length) && (
+        <div className="my-2 text-sm text-[red]">
+          {translateEditorBase(EditorLocaleKey.CmEditorHardChordsComplexHint)}
+        </div>
+      )}
       {(textList?.length ? textList : ['']).map((text, texti) => {
         return (
           <div

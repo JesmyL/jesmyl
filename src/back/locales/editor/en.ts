@@ -8,6 +8,8 @@ export const localeEditorEn = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.LocaleVersion]: 0,
   [EditorLocaleKey.CmChordLengthMismatch]:
     'The number of chords per line differs between difficulty versions on line $n',
+  [EditorLocaleKey.CmEditorHardChordsComplexHint]:
+    'Editing happens in parallel in the complex chords list too. For independent editing, make any change in the complex chords list.',
   [EditorLocaleKey.CmSize]: 'Meter',
   [EditorLocaleKey.CmIntensity]: 'Intensity',
   [EditorLocaleKey.CmEditSquareBracketsHint]:

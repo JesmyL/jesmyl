@@ -6,7 +6,6 @@ import { CmComWid, IExportableCom } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
-import { trimTextLines } from 'shared/utils';
 import { checkIsEq } from 'shared/utils/checkIsEq';
 import { deepClone } from 'shared/utils/clone';
 import { takeChordsBlockIncorrects } from 'shared/utils/cm/com/chordsBlockIncorrectMessage';
@@ -33,7 +32,7 @@ export const cmEditComServerTsjrpcTextableBlocks = {
       });
 
     let prev;
-    const next = trimTextLines(value);
+    const next = trimChordBlock(value);
     com.c ??= [];
 
     if (isHard) {
@@ -155,6 +154,8 @@ function removeTextableBlock<Props extends { comw: CmComWid; removei: number }>(
     return dsc(props, tool);
   });
 }
+
+const trimChordBlock = (text: string) => text.split('\n').map(line => line.trim()).join('\n').trim();
 
 const fillHardChords = (com: IExportableCom) => {
   if (!com.c1) return (com.c1 = deepClone(com.c));

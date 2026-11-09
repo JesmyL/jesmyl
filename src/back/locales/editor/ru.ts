@@ -8,6 +8,8 @@ export const localeEditorRu = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.LocaleVersion]: 0,
   [EditorLocaleKey.CmChordLengthMismatch]:
     'Не совпадает количество аккордов по строкам в версиях сложности в строке $n',
+  [EditorLocaleKey.CmEditorHardChordsComplexHint]:
+    'Редактирование происходит параллельно и в списке сложных аккордов. Для независимого редактирования надо внести любое изменение в списке сложных аккордов.',
   [EditorLocaleKey.CmSize]: 'Размерность',
   [EditorLocaleKey.CmIntensity]: 'Интенсивность',
   [EditorLocaleKey.CmEditSquareBracketsHint]:
