@@ -84,6 +84,10 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
                 id: BackLocaleKey.CmSmartSearchTooFewSlides,
                 title: translateBackTexts(visitInfo?.langi, BackLocaleKey.CmSmartSearchTooFewSlides),
               },
+              {
+                id: BackLocaleKey.CmSmartSearchImpreciseMarkTimes,
+                title: translateBackTexts(visitInfo?.langi, BackLocaleKey.CmSmartSearchImpreciseMarkTimes),
+              },
             ],
           },
         }),
@@ -165,6 +169,23 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
                 .map(it => it.w);
               break;
             }
+            case BackLocaleKey.CmSmartSearchImpreciseMarkTimes:
+              comws = (
+                await db
+                  .select({ w: comDB.w, am: comDB.am })
+                  .from(comDB)
+                  .where(eq(comDB.isRemoved, Bool.False))
+                  .orderBy(asc(comDB.w))
+              )
+                .filter(
+                  ({ am }) =>
+                    am != null &&
+                    objectValues(am).some(src =>
+                      objectKeys(src).some(time => Math.round(+time * 100) % 10 !== 0),
+                    ),
+                )
+                .map(it => it.w);
+              break;
             default:
               throw backLocaleError(BackLocaleKey.CmSmartSearchUnknownFilter);
           }

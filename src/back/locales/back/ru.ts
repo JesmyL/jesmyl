@@ -6,6 +6,7 @@ export const backLocalesRu: Record<BackLocaleKey, string> = {
   [BackLocaleKey.CmSmartSearchNoTextSplits]: 'Без разбивок текстов на слайды',
   [BackLocaleKey.CmSmartSearchIncorrectChords]: 'Некорректные аккорды',
   [BackLocaleKey.CmSmartSearchTooFewSlides]: 'Мало слайдов на трек',
+  [BackLocaleKey.CmSmartSearchImpreciseMarkTimes]: 'Неточное время временных меток для слайдов',
   [BackLocaleKey.CmChordBlockIncorrectChords]: `Некорректны${FUNCTION('dec')('$n', 'й', 'е')} аккорд${FUNCTION('dec')('$n', '', 'ы')}: $c`,
   [BackLocaleKey.CmChordBlockComplexChords]: `Слишком сложны${FUNCTION('dec')('$n', 'й', 'е')} аккорд${FUNCTION('dec')('$n', '', 'ы')}: $c`,
   [BackLocaleKey.AudioListFetchFailed]: 'Не удалось получить список аудио с сервера: $s',
