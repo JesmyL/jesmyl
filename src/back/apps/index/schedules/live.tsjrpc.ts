@@ -16,13 +16,20 @@ import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny'
 const theLiveData = {} as PRecord<ScheduleWidgetWid, PRecord<SokiAuthLogin, IndexSchWBroadcastLiveDataValue>>;
 const liveDataWatchers: PRecord<ScheduleWidgetWid, PRecord<SokiAuthLogin, Set<WebSocket>>> = {};
 const streamersWaiters: PRecord<ScheduleWidgetWid, Set<WebSocket>> = {};
+const noSchwLoggedClients = new WeakSet<WebSocket>();
 
-const logStreamStart = async (schw: ScheduleWidgetWid, login: SokiAuthLogin, name: string) => {
-  const sch = await takeScheduleWidgetTiny({ w: schw }, false);
-  if (sch == null) return;
+const logStreamStart = async (schw: ScheduleWidgetWid | null, login: SokiAuthLogin | null, fio: string) => {
+  const sch = schw == null ? null : await takeScheduleWidgetTiny({ w: schw }, false);
+  if (schw != null && sch == null) return;
 
   await insertDashMessage(
-    backLocalePayload(langi => translateBackTexts(langi, BackLocaleKey.SchLiveStreamStarted, { n: name, t: `"${sch.title}"` })),
+    backLocalePayload(langi => {
+      const name = fio || login || translateBackTexts(langi, BackLocaleKey.SchLiveAnonymousName);
+
+      return sch == null
+        ? translateBackTexts(langi, BackLocaleKey.SchLiveStreamStartedNoSchw, { n: name })
+        : translateBackTexts(langi, BackLocaleKey.SchLiveStreamStarted, { n: name, t: `"${sch.title}"` });
+    }),
     null,
     DashMessageKind.Log,
     login,
@@ -48,11 +55,18 @@ export const schLiveTsjrpcServer = new (class SchLive extends TsjrpcBaseServer<S
     super({
       scope: 'SchLive',
       methods: {
-        next: async ({ schw, data }, { auth }) => {
-          if (auth?.login == null) throw backLocaleError(BackLocaleKey.NotRegistered);
+        next: async ({ schw, data }, { auth, client }) => {
+          if (schw == null || auth?.login == null) {
+            if (data != null && client != null && !noSchwLoggedClients.has(client)) {
+              noSchwLoggedClients.add(client);
+              logStreamStart(null, auth?.login ?? null, data.fio).catch(emptyFunc);
+            }
+
+            return;
+          }
 
           if (data != null && theLiveData[schw]?.[auth.login] == null)
-            logStreamStart(schw, auth.login, data.fio || auth.login).catch(emptyFunc);
+            logStreamStart(schw, auth.login, data.fio).catch(emptyFunc);
 
           theLiveData[schw] ??= {};
           theLiveData[schw][auth.login] = data;

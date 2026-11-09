@@ -469,6 +469,8 @@ export const backLocalesUa: Record<BackLocaleKey, string> = {
   [BackLocaleKey.SchAttLevelAndOlder]: 'має $r і старші',
   [BackLocaleKey.SchLiveStreamFinished]: '*Завершено*',
   [BackLocaleKey.SchLiveStreamStarted]: '$n розпочав трансляцію $t',
+  [BackLocaleKey.SchLiveStreamStartedNoSchw]: '$n розпочав трансляцію поза розкладом',
+  [BackLocaleKey.SchLiveAnonymousName]: 'Аноним',
   [BackLocaleKey.OgSchedule]: 'Захід "$t"',
   [BackLocaleKey.SchListCatMentorsDefaultTitle]: 'Керівники',
   [BackLocaleKey.SchListCatMembersDefaultTitle]: 'Учасники',

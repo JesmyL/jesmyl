@@ -477,6 +477,8 @@ export const backLocalesRu: Record<BackLocaleKey, string> = {
   [BackLocaleKey.SchAttLevelAndOlder]: 'имеет $r и старше',
   [BackLocaleKey.SchLiveStreamFinished]: '*Завершена*',
   [BackLocaleKey.SchLiveStreamStarted]: '$n начал трансляцию $t',
+  [BackLocaleKey.SchLiveStreamStartedNoSchw]: '$n начал трансляцию вне расписания',
+  [BackLocaleKey.SchLiveAnonymousName]: 'Аноним',
   [BackLocaleKey.OgSchedule]: 'Мероприятие "$t"',
   [BackLocaleKey.SchListCatMentorsDefaultTitle]: 'Руководители',
   [BackLocaleKey.SchListCatMembersDefaultTitle]: 'Участники',

@@ -434,4 +434,6 @@ export const enum BackLocaleKey {
   CmSmartSearchTooFewSlides = 431,
   CmSmartSearchImpreciseMarkTimes = 432,
   SchLiveStreamStarted = 433,
+  SchLiveStreamStartedNoSchw = 434,
+  SchLiveAnonymousName = 435,
 }

@@ -459,6 +459,8 @@ export const backLocalesEn: Record<BackLocaleKey, string> = {
   [BackLocaleKey.SchAttLevelAndOlder]: '$r and above have it',
   [BackLocaleKey.SchLiveStreamFinished]: '*Finished*',
   [BackLocaleKey.SchLiveStreamStarted]: '$n started the broadcast $t',
+  [BackLocaleKey.SchLiveStreamStartedNoSchw]: '$n started a broadcast outside a schedule',
+  [BackLocaleKey.SchLiveAnonymousName]: 'Anonymous',
   [BackLocaleKey.OgSchedule]: 'Schedule "$t"',
   [BackLocaleKey.SchListCatMentorsDefaultTitle]: 'Mentors',
   [BackLocaleKey.SchListCatMembersDefaultTitle]: 'Members',

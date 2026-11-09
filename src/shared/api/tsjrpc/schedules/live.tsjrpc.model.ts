@@ -3,7 +3,7 @@ import { SokiAuthLogin } from 'shared/api/complect/soki.model';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 
 export type SchLiveTsjrpcModel = {
-  next: (args: { schw: ScheduleWidgetWid; data: IndexSchWBroadcastLiveDataValue }) => void;
+  next: (args: { schw: ScheduleWidgetWid | null; data: IndexSchWBroadcastLiveDataValue }) => void;
   reset: (args: { schw: ScheduleWidgetWid }) => void;
   requestStreamers: (args: { schw: ScheduleWidgetWid }) => void;
   watch: (args: { schw: ScheduleWidgetWid; streamerLogin: SokiAuthLogin }) => void;

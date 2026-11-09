@@ -19,7 +19,8 @@ export class BroadcastConnectionDto {
   };
 
   static sendLiveData = async (liveData: { schw: ScheduleWidgetWid; data: IndexSchWBroadcastLiveDataValue }) => {
-    if (liveData.schw && liveData.schw !== ScheduleWidgetWidDef) schLiveTsjrpcClient.next(liveData);
+    const schw = liveData.schw && liveData.schw !== ScheduleWidgetWidDef ? liveData.schw : null;
+    schLiveTsjrpcClient.next({ schw, data: liveData.data });
   };
 
   focus = async () => {
