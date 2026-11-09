@@ -431,4 +431,5 @@ export const enum BackLocaleKey {
   OtpLetter9 = 428,
   OtpLetter10 = 429,
   DashReportNoRecipients = 430,
+  CmSmartSearchTooFewSlides = 431,
 }

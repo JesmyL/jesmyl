@@ -7,23 +7,21 @@ import { downloadFileMd5Rename } from 'shared/utils/downloadFileMd5Rename';
 import { makeCmComHttpLinkFromNumLead, makeCmComNumLeadLinkFromHttp } from '../apps/cm/complect/com-http-links';
 import { audioLinkDB } from '../drizzle.schema';
 import { db, dbUpsert } from '../drizzle/drizzle.db';
+import { audioExtensionsStr, audioSaveDir } from './audio.const';
 import { AudioLinkKeyRow, AudioLinkRow } from './md5LinkRedirectDict.model';
-
-const audioSaveDir = 'audio/';
-const audioExtensionsStr = 'mp3 m4a ogg wav';
-
-/** Расширения аудио-файлов, отбрасываемые при выделении md5 из имени; собирается один раз из компактного литерала. */
-const audioExtensionReg = makeRegExp(`/\\.(?:${audioExtensionsStr.split(' ').join('|')})$/i`);
+import { takeAudioFileDuration } from './takeAudioFileDuration';
 
 /** Полный md5-хэш аудио-файла. */
 const audioMd5Reg = makeRegExp('/^[0-9a-f]{32}$/i');
 
-const takeMd5FromFileName = (fileName: string) => fileName.replace(audioExtensionReg, '');
+const makeAudioExtensionReg = () => makeRegExp(`/\\.(?:${audioExtensionsStr.split(' ').join('|')})$/i`);
+
+const takeMd5FromFileName = (fileName: string) => fileName.replace(makeAudioExtensionReg(), '');
 
 /** Значение трека из URL запроса `/track/...`: query-строка отбрасывается, расширение — только у md5-хвоста. */
 export const takeAudioTailFromRequestPath = (requestPath: string) => {
   const [pathValue] = requestPath.split('?');
-  const extensionlessPathValue = pathValue.replace(audioExtensionReg, '');
+  const extensionlessPathValue = pathValue.replace(makeAudioExtensionReg(), '');
 
   return parseCmAudioTail(extensionlessPathValue) ? extensionlessPathValue : pathValue;
 };
@@ -54,9 +52,10 @@ const registerAudioLink = async (md5: string, link: HttpNumLeadLink): Promise<Au
   if (!audioMd5Reg.test(md5)) throw backLocaleError(BackLocaleKey.Md5Incorrect, { m: md5 });
 
   const key = takeAudioLinkKey(md5, await selectAudioLinksKeys());
-  await dbUpsert(audioLinkDB, { key, md5, link }, ['key']);
+  const duration = await takeAudioFileDuration(md5);
+  await dbUpsert(audioLinkDB, { key, md5, link, duration }, ['key']);
 
-  return { key, md5, link };
+  return { key, md5, link, duration };
 };
 
 /** Скачивает аудио при необходимости, регистрирует ссылку в таблице и возвращает md5-хэш файла. */

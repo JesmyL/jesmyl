@@ -5,6 +5,7 @@ export const backLocalesKz: Record<BackLocaleKey, string> = {
   [BackLocaleKey.CmSmartSearchNoSecondTextSplit]: 'Тек мәтіндер слайдтарға бірінші рет бөлінген',
   [BackLocaleKey.CmSmartSearchNoTextSplits]: 'Мәтіндер слайдтарға бөлінбеген',
   [BackLocaleKey.CmSmartSearchIncorrectChords]: 'Дұрыс емес аккордтар',
+  [BackLocaleKey.CmSmartSearchTooFewSlides]: 'Трекке слайдтар аз',
   [BackLocaleKey.CmChordBlockIncorrectChords]: 'Дұрыс емес аккордтар: $c',
   [BackLocaleKey.CmChordBlockComplexChords]: 'Тым күрделі аккордтар: $c',
   [BackLocaleKey.AudioListFetchFailed]: 'Серверден аудио тізімін алу мүмкін болмады: $s',

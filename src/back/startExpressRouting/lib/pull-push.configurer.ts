@@ -1,4 +1,5 @@
 import { exportableCatFromRow } from 'back/apps/cm/cat.db';
+import { makeCmComHttpLinkFromNumLead } from 'back/apps/cm/complect/com-http-links';
 import { takeComwTiny } from 'back/apps/cm/com.tiny';
 import { chordPackFileStore, eePackFileStore, mp3ResourcesFileStorage } from 'back/apps/cm/file-stores';
 import { nounsFileStorage, otherFooterIconFileStore, pronounsFileStorage } from 'back/apps/index/file-stores';
@@ -6,6 +7,8 @@ import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores'
 import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
 import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { mapBlankRow } from 'back/apps/q/db-stores';
+import { audioSaveDir } from 'back/audio/audio.const';
+import { takeAudioFileDuration, takeAudioFilePath } from 'back/audio/takeAudioFileDuration';
 import { FileStore } from 'back/complect/FileStore';
 import {
   audioLinkDB,
@@ -26,6 +29,7 @@ import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.sele
 import { selectUser2Com, upsertUser2ComProps } from 'back/drizzle/ex/user2Com.utils';
 import { jsonParseSecure } from 'back/json-secure';
 import { asc, desc, eq } from 'drizzle-orm';
+import path from 'node:path';
 import { makePgCheckedSelectSqlRaw, PgCheckFieldMode } from 'p/d';
 import { IExportableCom, IScheduleWidget, ScheduleWidgetWid, UserLogin } from 'shared/api';
 import {
@@ -40,6 +44,7 @@ import { Bool } from 'shared/enums';
 import { QuestionerBlankWid } from 'shared/model/q';
 import { QuestionerUserAnswer } from 'shared/model/q/answer';
 import { parseLegacyICat } from 'shared/utils/cm/cat/parseLegacyICat';
+import { downloadFileMd5Rename } from 'shared/utils/downloadFileMd5Rename';
 import { lazyInit } from 'shared/utils/lazyInit';
 
 const und = undefined;
@@ -87,8 +92,26 @@ export const pullPushDirFilesDictLazy = lazyInit(
             name: file,
           }),
 
-          PUSH: rows => {
+          PUSH: async rows => {
             if (!rows.length) return;
+
+            for (const row of rows) {
+              if (row.duration != null) continue;
+
+              let md5 = row.md5;
+
+              if (!takeAudioFilePath(md5)) {
+                try {
+                  md5 = path.parse(await downloadFileMd5Rename(audioSaveDir, makeCmComHttpLinkFromNumLead(row.link))).name;
+                } catch (error) {
+                  console.info(`[audioLinkMap] download failed for ${row.key}: ${error}`);
+                  continue;
+                }
+              }
+
+              row.duration = await takeAudioFileDuration(md5);
+            }
+
             return dbUpsert(audioLinkDB, rows, ['key']);
           },
         },

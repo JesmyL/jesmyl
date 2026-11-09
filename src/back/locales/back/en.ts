@@ -5,6 +5,7 @@ export const backLocalesEn: Record<BackLocaleKey, string> = {
   [BackLocaleKey.CmSmartSearchNoSecondTextSplit]: 'Only with first texts split into slides',
   [BackLocaleKey.CmSmartSearchNoTextSplits]: 'No texts split into slides',
   [BackLocaleKey.CmSmartSearchIncorrectChords]: 'Incorrect chords',
+  [BackLocaleKey.CmSmartSearchTooFewSlides]: 'Too few slides per track',
   [BackLocaleKey.CmChordBlockIncorrectChords]: `Incorrect chord${FUNCTION('dec')('$n', '', 's')}: $c`,
   [BackLocaleKey.CmChordBlockComplexChords]: `Too complex chord${FUNCTION('dec')('$n', '', 's')}: $c`,
   [BackLocaleKey.AudioListFetchFailed]: 'Failed to get the audio list from the server: $s',

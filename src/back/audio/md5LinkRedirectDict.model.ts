@@ -5,6 +5,8 @@ export type AudioLinkRow = {
   md5: string;
   /** Устаревшая numLead-ссылка либо полная http-ссылка из старого словаря. */
   link: HttpLink | HttpNumLeadLink;
+  /** Длительность аудио-файла в секундах; отсутствует, пока файл не был скачан локально. */
+  duration: number | nil;
 };
 
 export type AudioLinkKeyRow = Pick<AudioLinkRow, 'key' | 'md5'>;

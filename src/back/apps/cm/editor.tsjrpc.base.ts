@@ -3,13 +3,14 @@ import { comDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
 import { backLocaleError, translateBackTexts } from 'back/locales/back';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
-import { and, asc, eq, sql } from 'drizzle-orm';
+import { and, asc, eq, inArray, sql } from 'drizzle-orm';
 import { CmComWid } from 'shared/api';
 import { CmEditorTsjrpcModel } from 'shared/api/tsjrpc/cm/editor.tsjrpc.model';
+import { CmCom } from 'shared/const/cm/Com';
 import { Bool } from 'shared/enums';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { chordsBlockIncorrectMessage } from 'shared/utils/cm/com/chordsBlockIncorrectMessage';
-import { objectKeys } from 'shared/utils/object.utils';
+import { objectKeys, objectLength, objectValues } from 'shared/utils/object.utils';
 import { cmEditComBusyTsjrpcMethods } from './complect/edit-com-busy';
 import { cmGetResourceHTMLString } from './complect/mp3-rules';
 import { cmShareEditorServerTsjrpcMethods } from './editor.tsjrpc.shares';
@@ -79,6 +80,10 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
                 id: BackLocaleKey.CmSmartSearchIncorrectChords,
                 title: translateBackTexts(visitInfo?.langi, BackLocaleKey.CmSmartSearchIncorrectChords),
               },
+              {
+                id: BackLocaleKey.CmSmartSearchTooFewSlides,
+                title: translateBackTexts(visitInfo?.langi, BackLocaleKey.CmSmartSearchTooFewSlides),
+              },
             ],
           },
         }),
@@ -117,6 +122,49 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
                 )
                 .map(it => it.w);
               break;
+            case BackLocaleKey.CmSmartSearchTooFewSlides: {
+              const comRows = await db
+                .select({ w: comDB.w, nl: comDB.nl, am: comDB.am })
+                .from(comDB)
+                .where(eq(comDB.isRemoved, Bool.False))
+                .orderBy(asc(comDB.w));
+              const candidateWids = comRows
+                .filter(
+                  ({ nl, am }) =>
+                    nl?.[0] != null || (am != null && objectValues(am).some(src => objectLength(src))),
+                )
+                .map(({ w }) => w);
+              const candidateComRows = candidateWids.length
+                ? await db.select().from(comDB).where(inArray(comDB.w, candidateWids)).orderBy(asc(comDB.w))
+                : [];
+
+              comws = candidateComRows
+                .filter(comRow => {
+                  const { nl, am } = comRow;
+                  const markCounts = am ? objectValues(am).map(objectLength) : [];
+                  const hasMarks = markCounts.some(count => count > 0);
+
+                  if (nl?.[0] == null && !hasMarks) return false;
+
+                  try {
+                    const com = new CmCom(comRow, null, null, Bool.False);
+                    const expandLines = com.makeExpandLines(null);
+                    const slides1 = com.makeExpandSlides([1], true, undefined, expandLines).length;
+
+                    if (
+                      nl?.[0] != null &&
+                      com.makeExpandSlides([0], true, undefined, expandLines).length * 2 < slides1
+                    )
+                      return true;
+
+                    return hasMarks && Math.max(...markCounts) * 2 < slides1;
+                  } catch (_error) {
+                    return false;
+                  }
+                })
+                .map(it => it.w);
+              break;
+            }
             default:
               throw backLocaleError(BackLocaleKey.CmSmartSearchUnknownFilter);
           }
