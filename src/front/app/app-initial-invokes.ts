@@ -14,7 +14,12 @@ import {
   indexUserAccessRightsAtom,
   lastUpdatedIconsMd5HashAtom,
 } from '$index/shared/state';
-import { indexTsjrpcBaseClient, indexTsjrpcClientMethods, schLiveTsjrpcBaseClient } from '$index/shared/tsjrpc';
+import {
+  indexTsjrpcBaseClient,
+  indexTsjrpcClientMethods,
+  schLiveTsjrpcBaseClient,
+  textTransferTsjrpcBaseClient,
+} from '$index/shared/tsjrpc';
 import { questionerAdminTsjrpcClientBase } from '$q/shared/tsjrpc/admin.tsjrpc';
 import { storagesStoresSharesTsjrpcBaseClient } from '$storages/shared/tsjrpc/tsjrpc.base';
 import { DeviceId } from 'shared/api';
@@ -66,6 +71,7 @@ export const appInitialInvokes = () => {
   indexTsjrpcBaseClient.$$register();
   schTsjrpcBaseClient.$$register();
   schLiveTsjrpcBaseClient.$$register();
+  textTransferTsjrpcBaseClient.$$register();
   bibleTsjrpcBaseClient.$$register();
   cmShareTsjrpcBaseClient.$$register();
   storagesStoresSharesTsjrpcBaseClient.$$register();
@@ -83,17 +89,21 @@ export const appInitialInvokes = () => {
     const lastModfiedAt = await indexIDB.get.lastModifiedAt();
 
     try {
+      let isDeviceIdentityAssigned = false;
+
       const deviceId = indexDeviceIdAtom.get();
       if (deviceId === DeviceId.def) {
-        const deviceId = await indexTsjrpcClientMethods.getDeviceId();
-        indexDeviceIdAtom.set(deviceId);
+        indexDeviceIdAtom.set(await indexTsjrpcClientMethods.getDeviceId());
+        isDeviceIdentityAssigned = true;
       }
 
       const deviceEmoji = indexDeviceEmojiAtom.get();
       if (!deviceEmoji) {
-        const deviceEmoji = await indexTsjrpcClientMethods.getDeviceEmoji();
-        indexDeviceEmojiAtom.set(deviceEmoji);
+        indexDeviceEmojiAtom.set(await indexTsjrpcClientMethods.getDeviceEmoji());
+        isDeviceIdentityAssigned = true;
       }
+
+      if (isDeviceIdentityAssigned) void soki.refreshVisit();
     } catch (_e) {
       //
     }

@@ -712,6 +712,8 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.Interactive]: 'Interaction',
   [BaseLocaleKey.MyFiles]: 'My files',
   [BaseLocaleKey.Downloads]: 'Downloads',
+  [BaseLocaleKey.TextTransfer]: 'Text transfer',
+  [BaseLocaleKey.TextTransferPc]: 'PC',
   [BaseLocaleKey.Constants]: 'Constants',
   [BaseLocaleKey.OneForTwo]: '$o for $t',
   [BaseLocaleKey.NewVersion]: ' (New - v$v;)',

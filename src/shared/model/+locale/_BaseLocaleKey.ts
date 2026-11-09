@@ -782,4 +782,7 @@ export const enum BaseLocaleKey {
   CmPickChord = 761,
   CmGuitar = 762,
   CmUkulele = 763,
+
+  TextTransfer = 764,
+  TextTransferPc = 765,
 }

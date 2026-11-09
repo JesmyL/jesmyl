@@ -1,7 +1,15 @@
 import { cmSecureAtomLevel } from '#shared/const/values';
 import { atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { DeviceId, SokiAppName, SokiAuthLogin, UserInfoUnsecure, UserLogin } from 'shared/api';
+import {
+  DeviceId,
+  SokiAppName,
+  SokiAuthLogin,
+  TextTransferTsjrpcModel,
+  TextTransferWindow,
+  UserInfoUnsecure,
+  UserLogin,
+} from 'shared/api';
 import { IndexAccessScopeRules, UserAccessRole, UserAccessRoleInfo } from 'shared/model/index/access-rights';
 import { IndexSchWBroadcastLiveDataValue } from 'shared/model/index/Index.model';
 import { authIDB } from './auth-idb';
@@ -21,6 +29,14 @@ export const lastUpdatedIconsMd5HashAtom = atom('', 'index:lastUpdatedIconsMd5Ha
 
 export const liveDataAtom = atom<IndexSchWBroadcastLiveDataValue | null>(null);
 export const liveDataStreamersAtom = atom<{ fio: string; login: SokiAuthLogin }[] | null>(null);
+
+export const textTransferWindowsAtom = atom<TextTransferWindow[]>([]);
+export const textTransferCountAtom = atom(0);
+export const textTransferDevicesAtom = atom<Awaited<ReturnType<TextTransferTsjrpcModel['getDevices']>>>({
+  owner: '',
+  devices: [],
+});
+export const textTransferDevicesOpenAtom = atom(false);
 
 export const useIndexSchedules = () => useLiveQuery(() => indexIDB.db.schs.toArray());
 

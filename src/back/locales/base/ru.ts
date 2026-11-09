@@ -706,6 +706,8 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.Interactive]: 'Взаимодействие',
   [BaseLocaleKey.MyFiles]: 'Мои файлы',
   [BaseLocaleKey.Downloads]: 'Загрузки',
+  [BaseLocaleKey.TextTransfer]: 'Текст-передача',
+  [BaseLocaleKey.TextTransferPc]: 'ПК',
   [BaseLocaleKey.Constants]: 'Константы',
   [BaseLocaleKey.OneForTwo]: '$o для $t',
   [BaseLocaleKey.NewVersion]: ' (Новая - v$v;)',

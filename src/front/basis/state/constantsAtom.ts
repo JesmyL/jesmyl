@@ -18,4 +18,6 @@ const cmConstantsConfigAtom = atom((): ConstantsConfig | nil => null, {
 
 const cmVal = cmConstantsConfigAtom.get();
 if (cmVal) constantsConfigAtom.set(cmVal);
+/** Старые хранилища содержали урезанный набор ключей — дополняем его значениями по умолчанию. */
+constantsConfigAtom.set(prev => ({ ...constantsDefaultConfig, ...prev }));
 cmConstantsConfigAtom.reset();

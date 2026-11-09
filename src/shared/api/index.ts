@@ -10,3 +10,5 @@ export * from './complect/wide';
 export * from './tsjrpc/schedules/live.tsjrpc.model';
 export * from './tsjrpc/schedules/tsjrpc.model';
 export * from './tsjrpc/schedules/tsjrpc.shares.model';
+export * from './tsjrpc/index/textTransfer.model';
+export * from './tsjrpc/index/textTransfer.tsjrpc.model';

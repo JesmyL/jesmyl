@@ -2,6 +2,13 @@ export const enum DeviceId {
   def = '{DEVICE_ID}',
 }
 
+export const enum SokiDeviceType {
+  iPhone,
+  iPad,
+  Android,
+  Pc,
+}
+
 export const enum IsInvitedGuestCome {
   Ignored,
   WillBe,

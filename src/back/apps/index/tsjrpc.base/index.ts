@@ -41,6 +41,7 @@ import { schGeneralTsjrpcBaseServer } from '../schedules/base-tsjrpc/general.tsj
 import { constantsConfigFileStore } from '../schedules/file-stores';
 import { resetUserRoleTiny, takeUserRoleTiny } from '../tinies/userRoleTiny';
 import { resetUserTiny, takeUserTiny } from '../tinies/userTiny';
+import { textTransferTsjrpcServer } from '../text-transfer.tsjrpc';
 import { indexServerTsjrpcShareMethods } from '../tsjrpc.methods';
 import { indexTSJRPCBaseGetIconExistsPacks } from './lib/getIconExistsPacks';
 import { indexAuthByTgUser } from './lib/makeAuthFromUser';
@@ -393,3 +394,4 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
 })();
 
 schGeneralTsjrpcBaseServer.$$register();
+textTransferTsjrpcServer.$$register();

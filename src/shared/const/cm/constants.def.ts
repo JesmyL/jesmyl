@@ -44,6 +44,8 @@ export const constantsConfigurator: ConstantsConfigConfigurator = {
       str,
       checked: str,
       error: (value, checkValue) => {
+        if (!checkIsString(value)) return null;
+
         if (checkIsString(checkValue)) {
           const set = unzip(value);
 

@@ -701,6 +701,8 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.Interactive]: 'Өзра әрекеттесу',
   [BaseLocaleKey.MyFiles]: 'Менің файлдарым',
   [BaseLocaleKey.Downloads]: 'Жүктеулер',
+  [BaseLocaleKey.TextTransfer]: 'Мәтін тасымалы',
+  [BaseLocaleKey.TextTransferPc]: 'Компьютер',
   [BaseLocaleKey.Constants]: 'Константалар',
   [BaseLocaleKey.OneForTwo]: '$t үшін $o',
   [BaseLocaleKey.NewVersion]: ' (Жаңа - v$v;)',

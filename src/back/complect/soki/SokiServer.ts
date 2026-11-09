@@ -44,6 +44,7 @@ export class SokiServer {
   auths = new Map<WebSocket, LocalSokiAuth>();
   clientsByLogin = new Map<SokiAuthLogin, Set<WebSocket>>();
   private visits = new Map<WebSocket, SokiVisit>();
+  private clientIps = new Map<WebSocket, string>();
   private abortedRequestIdsSet = new Set<string>();
   private sockets = new Set<WebSocket>();
   private isAliveBySocket = new WeakMap<WebSocket, boolean>();
@@ -54,6 +55,12 @@ export class SokiServer {
     isEnter: boolean;
   }>();
   readonly onClientCloseEvent = Eventer.createValue<WebSocket>();
+  readonly onClientVisitChangeEvent = Eventer.createValue<WebSocket>();
+  readonly onClientAuthChangeEvent = Eventer.createValue<{
+    client: WebSocket;
+    previousLogin: SokiAuthLogin | nil;
+    login: SokiAuthLogin | nil;
+  }>();
 
   get onlineCount() {
     return this.visits.size;
@@ -61,6 +68,14 @@ export class SokiServer {
 
   takeClientLangi(client: WebSocket): Langi | nil {
     return this.visits.get(client)?.langi ?? takeUserLangi(this.auths.get(client)?.login);
+  }
+
+  takeClientVisit(client: WebSocket) {
+    return this.visits.get(client);
+  }
+
+  takeClientIp(client: WebSocket) {
+    return this.clientIps.get(client) ?? null;
   }
 
   get onlineLogins() {
@@ -97,8 +112,12 @@ export class SokiServer {
   }
 
   start() {
-    const ws = new WebSocketServer({ noServer: true }).on('connection', client => {
+    const ws = new WebSocketServer({ noServer: true }).on('connection', (client, req) => {
       this.sockets.add(client);
+      this.clientIps.set(
+        client,
+        ('' + (req.headers['x-forwarded-for'] ?? '')).split(',')[0].trim() || req.socket.remoteAddress || '',
+      );
       this.isAliveBySocket.set(client, true);
       client.on('pong', () => this.isAliveBySocket.set(client, true));
 
@@ -110,6 +129,7 @@ export class SokiServer {
         this.clients.delete(client);
         this.visits.delete(client);
         this.auths.delete(client);
+        this.clientIps.delete(client);
 
         this.onClientCloseEvent.invoke(client);
 
@@ -137,6 +157,7 @@ export class SokiServer {
               this.visits.set(client, visitInfo);
               if (login) saveUserLangi(login, visitInfo.langi);
               if (this.visits.size !== previousOnline) this.notifyOnlineCount(login);
+              this.onClientVisitChangeEvent.invoke(client);
 
               if (!this.isLocalhost(visitInfo.urls[0])) {
                 if (!login) insertVisit(null, visitInfo).catch(emptyFunc);
@@ -174,11 +195,19 @@ export class SokiServer {
           printVisit(auth?.login);
 
           if (auth) {
+            const previousLogin = this.auths.get(client)?.login ?? null;
+            const login = auth.login ?? null;
+
             this.auths.set(client, auth);
 
             if (auth.login) {
               if (!this.clientsByLogin.has(auth.login)) this.clientsByLogin.set(auth.login, new Set());
               this.clientsByLogin.get(auth.login)?.add(client);
+            }
+
+            if (previousLogin !== login) {
+              if (previousLogin != null) this.clientsByLogin.get(previousLogin)?.delete(client);
+              this.onClientAuthChangeEvent.invoke({ client, previousLogin, login });
             }
           }
 

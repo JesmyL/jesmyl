@@ -59,6 +59,17 @@ export function IndexActionsPage() {
               idPostfix="down"
             />
           </Link>
+          <Link
+            to="/!other/$appName/actions/text-transfer"
+            params={{ appName }}
+            className="w-full"
+          >
+            <BrutalItem
+              iconNode={<LazyIcon icon="ArrowDataTransferHorizontal" />}
+              title={translateBase(BaseLocaleKey.TextTransfer)}
+              idPostfix="text-transfer"
+            />
+          </Link>
 
           {!checkAccess('dash', 'DASH') || (
             <Link

@@ -6,7 +6,7 @@ import { authIDB, indexDeviceEmojiAtom, indexDeviceIdAtom } from '$index/shared/
 import md5 from 'md5';
 import { SokiError, TsjrpcClientTool, TsjrpcFromClientEvent, TsjrpcFromServerEvent } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
-import { Eventer } from 'shared/utils';
+import { emptyFunc, Eventer } from 'shared/utils';
 import { jversion } from 'shared/values';
 import { TSJRPCEvent } from 'tsjrpc';
 import { environment } from './environment';
@@ -47,21 +47,23 @@ export class SokiTrip {
     if (this.ws.readyState !== WebSocket.CONNECTING) this.start();
   };
 
+  private takeVisitInfo = () => ({
+    deviceId: indexDeviceIdAtom.get(),
+    deviceEmoji: indexDeviceEmojiAtom.get(),
+    version: jversion.num,
+    urls: this.urls.length ? this.urls : [this.getCurrentUrl()],
+    clientTm: Date.now(),
+    agent: navigator.userAgent,
+    langi: currentLangiAtom.get(),
+    prevLangi: takeBaseLanguageAtom().get()[BaseLocaleKey.Langi],
+  });
+
   private sendRegistrationToken = async () => {
     try {
       await this.send({
         token: await authIDB.get.token(),
         stopAll: environment.isPresentationMode || undefined,
-        visitInfo: {
-          deviceId: indexDeviceIdAtom.get(),
-          deviceEmoji: indexDeviceEmojiAtom.get(),
-          version: jversion.num,
-          urls: this.urls.length ? this.urls : [this.getCurrentUrl()],
-          clientTm: Date.now(),
-          agent: navigator.userAgent,
-          langi: currentLangiAtom.get(),
-          prevLangi: takeBaseLanguageAtom().get()[BaseLocaleKey.Langi],
-        },
+        visitInfo: this.takeVisitInfo(),
       });
 
       this.isTokenSent = true;
@@ -74,6 +76,12 @@ export class SokiTrip {
         this.onTokenInvalidEvent.invoke();
       }
     }
+  };
+
+  /** Re-sends the visit so the server learns the device identity assigned after the first registration. */
+  refreshVisit = async () => {
+    if (!this.isOpened) return;
+    await this.send({ token: await authIDB.get.token(), visitInfo: this.takeVisitInfo() }).catch(emptyFunc);
   };
 
   start() {

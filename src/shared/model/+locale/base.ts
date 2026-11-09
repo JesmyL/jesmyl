@@ -781,6 +781,8 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.CmPickChord]: LocaleSimpleString;
   [BaseLocaleKey.CmGuitar]: LocaleSimpleString;
   [BaseLocaleKey.CmUkulele]: LocaleSimpleString;
+  [BaseLocaleKey.TextTransfer]: LocaleSimpleString;
+  [BaseLocaleKey.TextTransferPc]: LocaleSimpleString;
 };
 
 export type UsedBaseLocaleKey = BaseLocaleKey;

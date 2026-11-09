@@ -5,7 +5,7 @@ export type ConstantsConfigConfiguratorItem<Type> = {
   checked: (value: unknown) => Type;
   str: (value: unknown) => string;
   title: string;
-  error?: (value: Type, checkValue: unknown) => string | nil;
+  error?: (value: Type | nil, checkValue: unknown) => string | nil;
 };
 
 export type ConstantsConfigConfigurator = Record<`>${string}`, 0> & {

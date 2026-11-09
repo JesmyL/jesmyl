@@ -713,6 +713,8 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.Interactive]: 'Взаємодія',
   [BaseLocaleKey.MyFiles]: 'Мої файли',
   [BaseLocaleKey.Downloads]: 'Завантаження',
+  [BaseLocaleKey.TextTransfer]: 'Передача тексту',
+  [BaseLocaleKey.TextTransferPc]: 'ПК',
   [BaseLocaleKey.Constants]: 'Константи',
   [BaseLocaleKey.OneForTwo]: '$o для $t',
   [BaseLocaleKey.NewVersion]: ' (Нова - v$v;)',
