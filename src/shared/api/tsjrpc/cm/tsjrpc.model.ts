@@ -1,3 +1,4 @@
+import { CmAudioTail } from 'shared/api';
 import { CmComAudioMarkPack, CmComWid, ICmComCommentBlock } from 'shared/api/complect/apps';
 import { ScheduleWidgetDayi, ScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
 
@@ -21,6 +22,7 @@ export type CmTsjrpcModel = {
     m: number;
   };
   getLinkLeadNumHost: (args: { num: number }) => { host: string | nil };
+  getAudioTailHost: (args: { tail: CmAudioTail }) => { host: string | nil };
 
   /** @deprecated */
   getSchEventComPackMod: (args: { schw: ScheduleWidgetWid; dayi: ScheduleWidgetDayi }) => { mod: number };

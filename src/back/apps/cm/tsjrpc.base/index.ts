@@ -1,5 +1,6 @@
 import { backLocaleError } from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
+import { takeAudioLinkHostByTail } from 'back/audio/md5LinkRedirectDict';
 import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
 import { comDB, user2ComDB, userDB } from 'back/drizzle.schema';
 import { db, dbUpdate } from 'back/drizzle/drizzle.db';
@@ -96,6 +97,7 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
         },
 
         getLinkLeadNumHost: ({ num }) => ({ value: { host: numLeadToHttpLinks[`${num}~`]?.split('/')[2] } }),
+        getAudioTailHost: async ({ tail }) => ({ value: { host: await takeAudioLinkHostByTail(tail) } }),
       },
     });
   }

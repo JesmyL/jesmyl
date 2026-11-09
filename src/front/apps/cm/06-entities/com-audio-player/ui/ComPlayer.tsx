@@ -3,8 +3,8 @@ import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'atomaric';
-import { CmAudioSrc } from 'shared/api';
-import { checkIsArray } from 'shared/utils/checkIs';
+import { CmAudioSrc, parseCmAudioTail, parseHttpNumLeadLink } from 'shared/api';
+import { checkIsArray, checkIsNil, checkIsNotNil } from 'shared/utils/checkIs';
 import { twMerge } from 'tailwind-merge';
 import {
   cmComAudioPlayerIsPlayAtom,
@@ -32,12 +32,29 @@ export const CmComAudioPlayer = ({ links, timeRender, addRender, className }: Pr
 
   const activeVarianti = playSrc ? variants.indexOf(playSrc) : -1;
   const src = activeVarianti < 0 ? variants[0] : variants[activeVarianti];
-  const linkLeadNum = parseInt(src, 10);
+  const numLeadLink = parseHttpNumLeadLink(src);
+  const audioTail = parseCmAudioTail(src);
+  const linkLeadNum = numLeadLink ? parseInt(numLeadLink, 10) : null;
 
   const linkHostQuery = useQuery({
     queryKey: ['cmTsjrpcClient.getLinkLeadNumHost', linkLeadNum],
-    queryFn: () => cmTsjrpcClient.getLinkLeadNumHost({ num: linkLeadNum }),
+    queryFn: () => {
+      if (linkLeadNum === null) throw 'numLead audio link expected';
+      return cmTsjrpcClient.getLinkLeadNumHost({ num: linkLeadNum });
+    },
+    enabled: linkLeadNum !== null,
   });
+
+  const tailHostQuery = useQuery({
+    queryKey: ['cmTsjrpcClient.getAudioTailHost', audioTail],
+    queryFn: () => {
+      if (checkIsNil(audioTail)) throw 'audio tail expected';
+      return cmTsjrpcClient.getAudioTailHost({ tail: audioTail });
+    },
+    enabled: checkIsNotNil(audioTail),
+  });
+
+  const host = linkHostQuery.data?.host ?? tailHostQuery.data?.host;
 
   return (
     <div className={twMerge('w-full', className)}>
@@ -48,9 +65,7 @@ export const CmComAudioPlayer = ({ links, timeRender, addRender, className }: Pr
           src={src}
           timeRender={timeRender}
         />
-        <div className="absolute pointers-none text-center w-full text-[.5rem] top-[2.2em]">
-          {linkHostQuery.data?.host}
-        </div>
+        <div className="absolute pointers-none text-center w-full text-[.5rem] top-[2.2em]">{host}</div>
 
         {variants.length > 1 && (
           <div className="ml-auto pr-px flex justify-center gap-1 pointer">

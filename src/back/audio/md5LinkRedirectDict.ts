@@ -134,6 +134,13 @@ export const takeAudioLinkByTail = async (requestedKey: string): Promise<HttpLin
   return knownRow?.link ?? null;
 };
 
+/** Хост аудио-ссылки по ключу таблицы; `nil`, если такого ключа нет. */
+export const takeAudioLinkHostByTail = async (tail: CmAudioTail): Promise<string | nil> => {
+  const link = await takeAudioLinkByTail(tail);
+
+  return link ? makeCmComHttpLinkFromNumLead(link).split('/')[2] : null;
+};
+
 /** Куда редиректить запрос аудио: ссылка по точному ключу таблицы; `nil` — ключ неизвестен. */
 export const takeCmComHttpLinkFromAudioRequest = async (requested: string): Promise<HttpLink | nil> => {
   const link = await takeAudioLinkByTail(requested);
