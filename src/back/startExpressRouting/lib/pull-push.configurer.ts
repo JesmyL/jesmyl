@@ -86,13 +86,18 @@ export const pullPushDirFilesDictLazy = lazyInit(
     return {
       'apps/cm/': {
         audioLinkMap: {
-          pull: async (file, _type) => ({
-            data: await db.select().from(audioLinkDB).orderBy(audioLinkDB.key),
-            file,
-            name: file,
-          }),
+          pull: async (file, _type) => {
+            const rows = await db.select().from(audioLinkDB).orderBy(audioLinkDB.key);
+            const data: typeof _type = {};
 
-          PUSH: async rows => {
+            for (const { key, ...row } of rows) data[key] = row;
+
+            return { data, file, name: file };
+          },
+
+          PUSH: async dict => {
+            const rows = mapObjectEntries(dict, (key, row) => ({ key, ...row }));
+
             if (!rows.length) return;
 
             for (const row of rows) {
@@ -102,12 +107,16 @@ export const pullPushDirFilesDictLazy = lazyInit(
 
               if (!takeAudioFilePath(md5)) {
                 try {
-                  md5 = path.parse(await downloadFileMd5Rename(audioSaveDir, makeCmComHttpLinkFromNumLead(row.link))).name;
+                  md5 = path.parse(
+                    await downloadFileMd5Rename(audioSaveDir, makeCmComHttpLinkFromNumLead(row.link)),
+                  ).name;
                 } catch (error) {
                   console.info(`[audioLinkMap] download failed for ${row.key}: ${error}`);
                   continue;
                 }
               }
+
+              row.md5 = md5;
 
               row.duration = await takeAudioFileDuration(md5);
             }
