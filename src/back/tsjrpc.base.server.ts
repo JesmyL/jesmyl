@@ -11,7 +11,7 @@ import { backConfig } from './config/backConfig';
 import { jesmylChangesBot } from './sides/telegram-bot/control/jesmylChangesBot';
 import { postJRPCMessage } from './sides/telegram-bot/postJRPCMessage';
 import type { ServerTSJRPCFeedback } from './tsjrpc.model';
-import { userAuthStringified, userVisitStringified } from './utils';
+import { dashAuthVisitSuffix } from './utils';
 import { stringifyDiffValue, makeDiffHtml } from './tsjrpc.diff';
 
 export type ServerTSJRPCTool = {
@@ -33,7 +33,7 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
       errorMessage = `<b>${error.cause?.message ?? error.stack ?? ''}</b>\n\n${error}`;
 
     insertDashMessage(
-      `${scope}.${method}()\n\n${errorMessage}\n\n${userAuthStringified(auth)}\n\n${userVisitStringified(visitInfo)}\n\n\nАргументы:\n${JSON.stringify(args)}`,
+      `${scope}.${method}()\n\n${errorMessage}${dashAuthVisitSuffix(auth, visitInfo)}\n\n\nАргументы:\n${JSON.stringify(args)}`,
       visitInfo,
       DashMessageKind.Errors,
       auth?.login,
@@ -60,20 +60,22 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
         const newText = stringifyDiffValue(newV);
         if (wasText !== newText && (wasText || newText)) text += `\n\n${makeDiffHtml(wasText ?? '', newText ?? '')}`;
 
-        postJRPCMessage(
+        const completeMessage = (suffix: string) =>
           tool.auth
             ? `${`${tool.auth.fio} ${tool.auth.nick && (!tool.auth.email || !tool.auth.email.startsWith(tool.auth.nick)) ? `https://t.me/${tool.auth.nick}` : ''}\n`}` +
                 text +
+                suffix +
                 `\n\n<blockquote expandable>${JSON.stringify(tool.auth, null, 1)}</blockquote>\n\n\nАргументы:\n${JSON.stringify(args)}`
-            : text,
-          {
-            tgBot: jesmylChangesBot,
-            tg: { parse_mode: 'HTML' },
-            scope: feedback.logScope,
-            login: tool.auth?.login,
-            langi: tool.visitInfo?.langi,
-          },
-        );
+            : text + suffix;
+
+        postJRPCMessage(completeMessage(''), {
+          tgBot: jesmylChangesBot,
+          tg: { parse_mode: 'HTML' },
+          scope: feedback.logScope,
+          login: tool.auth?.login,
+          langi: tool.visitInfo?.langi,
+          dashMessage: completeMessage(dashAuthVisitSuffix(tool.auth, tool.visitInfo)),
+        });
       },
   beforeEach: async ({ invoke: { method }, tool, beforeEachTools, defaultBeforeEachTool }) => {
     const userVersion = tool.visitInfo?.version ?? 0;

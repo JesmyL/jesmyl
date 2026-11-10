@@ -38,6 +38,7 @@ import {
   DashMessageUser,
   VisitsDashboard,
   VisitsDashboardDayStat,
+  dashMessageSectionSeparator,
   noOnlineSample,
 } from 'shared/model/index/visitsDashboard';
 import { extractNumber } from 'shared/utils';
@@ -570,6 +571,18 @@ const DashboardMessages = () => {
             : messages.map(message => {
                 const isUnread = message.createdAt > (messageReads[activeKind] ?? 0);
                 const isOpen = openMessageIds.has(message.id);
+                // Payload localization must see each section separately: the auth/visit suffix is glued to the payload by the separator.
+                const messageSections = message.m.split(dashMessageSectionSeparator);
+                const messageSummary = takeMessageSummary(
+                  activeKind === DashMessageKind.Errors
+                    ? makeBackLocaleErrorMessageRuText(messageSections[0])
+                    : makeBackLocaleErrorMessageText(messageSections[0], langi),
+                );
+                const messageSectionBodies = messageSections.map(
+                  activeKind === DashMessageKind.Errors
+                    ? section => makeBackLocaleErrorMessageDuoText(section, langi)
+                    : section => makeBackLocaleErrorMessageText(section, langi),
+                );
 
                 return (
                   <article
@@ -596,25 +609,19 @@ const DashboardMessages = () => {
                         </span>
                         <span className="min-w-0 truncate font-medium text-x3">{takeMessageUserName(message)}</span>
                       </span>
-                      <span className="min-w-0 max-w-full truncate text-xs text-x4">
-                        {takeMessageSummary(
-                          activeKind === DashMessageKind.Errors
-                            ? makeBackLocaleErrorMessageRuText(message.m)
-                            : makeBackLocaleErrorMessageText(message.m, langi),
-                        )}
-                      </span>
+                      <span className="min-w-0 max-w-full truncate text-xs text-x4">{messageSummary}</span>
                     </button>
                     {!isOpen || (
                       <div className="mt-2 w-full min-w-0 max-w-full overflow-x-auto border-t border-x2/50 pt-2">
-                        <div
-                          className="w-full min-w-0 max-w-full whitespace-pre-line break-words text-xs leading-relaxed text-x4 [overflow-wrap:anywhere] [&_a]:text-x7/80 [&_a]:underline [&_b]:text-x3 [&_blockquote]:border-l-2 [&_blockquote]:border-x2 [&_blockquote]:pl-2 [&_code]:text-x4 [&_p]:my-1"
-                          dangerouslySetInnerHTML={{
-                            __html:
-                              activeKind === DashMessageKind.Errors
-                                ? makeBackLocaleErrorMessageDuoText(message.m, langi)
-                                : makeBackLocaleErrorMessageText(message.m, langi),
-                          }}
-                        />
+                        <div className="w-full min-w-0 max-w-full whitespace-pre-line break-words text-xs leading-relaxed text-x4 [overflow-wrap:anywhere] [&_a]:text-x7/80 [&_a]:underline [&_b]:text-x3 [&_blockquote]:border-l-2 [&_blockquote]:border-x2 [&_blockquote]:pl-2 [&_code]:text-x4 [&_p]:my-1">
+                          {messageSectionBodies.map((section, sectionIndex) => (
+                            <div
+                              key={sectionIndex}
+                              className={sectionIndex ? 'mt-2 border-t border-x2/50 pt-2' : ''}
+                              dangerouslySetInnerHTML={{ __html: section }}
+                            />
+                          ))}
+                        </div>
                       </div>
                     )}
                   </article>

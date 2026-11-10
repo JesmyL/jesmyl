@@ -52,6 +52,9 @@ export type VisitsDashboardDayStat = {
 
 export const noOnlineSample = -1;
 
+/** Separates the human message text from the appended auth/visit info sections. */
+export const dashMessageSectionSeparator = '\n---\n';
+
 export type VisitsDashboardOnlineHours = { min: number[]; max: number[] };
 
 export type VisitsDashboard = {
