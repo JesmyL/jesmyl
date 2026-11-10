@@ -8,8 +8,8 @@ import {
 } from '#basis/locale';
 import {
   makeBackLocaleErrorMessageDuoText,
-  makeBackLocaleErrorMessageRuText,
   makeBackLocaleErrorMessageText,
+  makeChangesMessageHtml,
 } from '#basis/locale/backLocaleError';
 import { otherFooterIconAtom, otherFooterIconNamesAtom } from '#basis/state/otherFooterIconAtom';
 import { Button } from '#shared/components/ui/button';
@@ -42,6 +42,8 @@ import {
   noOnlineSample,
 } from 'shared/model/index/visitsDashboard';
 import { extractNumber } from 'shared/utils';
+import { checkIsNumber, checkIsObject } from 'shared/utils/checkIs';
+import { makeDiffSectionHtml } from 'shared/utils/textDiff';
 import { mapObjectEntries, objectLength } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
 import { StameskaIconName } from 'stameska-icon/pack';
@@ -144,6 +146,25 @@ const takeUserName = (user: Pick<DashMessageUser, 'fio' | 'nick' | 'email'>) =>
 
 const takeMessageUserName = (message: DashMessage) =>
   message.isSystem ? translateEditorBase(EditorLocaleKey.VisitsSystem) : takeUserName(message.user);
+
+/** Язык визита, из которого пришло сообщение: visitInfo хранится пропом `visit`, поэтому langi берётся из него, а не ищется по тексту. */
+const takeMessageVisitLangi = (message: DashMessage): Langi | nil => {
+  let visit: unknown;
+
+  // JSON.parse кидает на любой порче дампа, поэтому разбор ограничен try/catch и возвращает null вместо исключения.
+  try {
+    visit = JSON.parse(message.visit);
+  } catch {
+    return null;
+  }
+
+  if (!checkIsObject(visit)) return null;
+
+  // langi валиден только как целое из перечисления Langi, поэтому сначала проверяется число, затем диапазон значений.
+  const { langi } = visit;
+
+  return checkIsNumber(langi) && Number.isInteger(langi) && langi >= Langi.Ru && langi <= Langi.En ? langi : null;
+};
 
 const takeMessageSummary = (html: string) => {
   const text = html.replace(htmlTagsReg, ' ').replace(whitespaceReg, ' ').trim();
@@ -571,17 +592,23 @@ const DashboardMessages = () => {
             : messages.map(message => {
                 const isUnread = message.createdAt > (messageReads[activeKind] ?? 0);
                 const isOpen = openMessageIds.has(message.id);
-                // Payload localization must see each section separately: the auth/visit suffix is glued to the payload by the separator.
+                // Локализация payload'а должна видеть каждую секцию отдельно: суффикс авторизации/визита приклеен к payload'у разделителем.
                 const messageSections = message.m.split(dashMessageSectionSeparator);
+                // Язык визита берём из пропа `visit` (JSON visitInfo), а если его нет — язык текущего просмотра.
+                const messageVisitLangi = takeMessageVisitLangi(message) ?? langi;
+                // Новый Changes-конверт `{t,d}` разбирается типизированно; для legacy-строк остаются прежние пути (payload/секции).
                 const messageSummary = takeMessageSummary(
-                  activeKind === DashMessageKind.Errors
-                    ? makeBackLocaleErrorMessageRuText(messageSections[0])
-                    : makeBackLocaleErrorMessageText(messageSections[0], langi),
+                  makeChangesMessageHtml(messageSections[0], messageVisitLangi) ??
+                    makeBackLocaleErrorMessageText(messageSections[0], messageVisitLangi),
                 );
+                // Тело секций: конверт → готовая HTML-секция диффа → legacy payload (ошибки — с дублем текста).
                 const messageSectionBodies = messageSections.map(
-                  activeKind === DashMessageKind.Errors
-                    ? section => makeBackLocaleErrorMessageDuoText(section, langi)
-                    : section => makeBackLocaleErrorMessageText(section, langi),
+                  section =>
+                    makeChangesMessageHtml(section, messageVisitLangi) ??
+                    makeDiffSectionHtml(section) ??
+                    (activeKind === DashMessageKind.Errors
+                      ? makeBackLocaleErrorMessageDuoText(section, messageVisitLangi)
+                      : makeBackLocaleErrorMessageText(section, messageVisitLangi)),
                 );
 
                 return (
@@ -613,7 +640,7 @@ const DashboardMessages = () => {
                     </button>
                     {!isOpen || (
                       <div className="mt-2 w-full min-w-0 max-w-full overflow-x-auto border-t border-x2/50 pt-2">
-                        <div className="w-full min-w-0 max-w-full whitespace-pre-line break-words text-xs leading-relaxed text-x4 [overflow-wrap:anywhere] [&_a]:text-x7/80 [&_a]:underline [&_b]:text-x3 [&_blockquote]:border-l-2 [&_blockquote]:border-x2 [&_blockquote]:pl-2 [&_code]:text-x4 [&_p]:my-1">
+                        <div className="w-full min-w-0 max-w-full whitespace-pre-line break-words text-xs leading-relaxed text-x4 [overflow-wrap:anywhere] [&_a]:text-x7/80 [&_a]:underline [&_b]:text-x3 [&_blockquote]:border-l-2 [&_blockquote]:border-x2 [&_blockquote]:pl-2 [&_code]:text-x4 [&_p]:my-1 [&_s]:text-x4/60">
                           {messageSectionBodies.map((section, sectionIndex) => (
                             <div
                               key={sectionIndex}

@@ -1,8 +1,10 @@
 import { Langi } from 'shared/api';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { checkIsArray, checkIsObject, checkIsString } from 'shared/utils/checkIs';
+import { parseChangesMessage } from 'shared/utils/changesMessage';
 import { translateBaseDefine } from 'shared/utils/locale/translate';
 import { stringTemplater } from 'shared/utils/stringTemplater';
+import { escapeHtmlLazy } from 'shared/utils/string.utils';
 import { backLocalesEn } from './en';
 import { backLocalesKz } from './kz';
 import { backLocalesRu } from './ru';
@@ -27,16 +29,23 @@ export const translateBackTexts = (
 
 const langiList = [Langi.Ru, Langi.Ua, Langi.Kz, Langi.En] as const;
 
-/** Self-contained localized payload: one text per language in the Langi order (Ru/Ua/Kz/En). */
+/**
+ * Собирает самодостаточный locale-payload: тексты идут по порядку Langi (Ru/Ua/Kz/En),
+ * а необязательные значения подстановки хранятся один раз в общем объекте `intr`.
+ */
+const makeBackLocalePayloadJson = (title: readonly string[], intr?: Record<string, string | number | boolean>) =>
+  JSON.stringify({ title, ...(intr ? { intr } : null) });
+
+/** Локализованный payload: по одному тексту на язык в порядке Langi (Ru/Ua/Kz/En). */
 export const backLocalePayload = (makeText: (langi: Langi) => string) =>
-  JSON.stringify({ title: langiList.map(makeText) });
+  makeBackLocalePayloadJson(langiList.map(makeText));
 
 /** Self-contained localized error payload: raw texts ordered by the Langi enum (Ru/Ua/Kz/En) plus interpolation values. */
 export const backLocaleError = (key: BackLocaleKey, interp?: Record<string, string | number | boolean>) =>
-  JSON.stringify({
-    title: [backLocalesRu[key], backLocalesUa[key], backLocalesKz[key], backLocalesEn[key]],
-    ...(interp ? { intr: interp } : null),
-  });
+  makeBackLocalePayloadJson(
+    langiList.map(langi => backLocales[langi][key]),
+    interp,
+  );
 
 type BackLocaleErrorPayload = {
   title: [string, string, string, string];
@@ -67,8 +76,14 @@ const parseBackLocaleErrorPayload = (str: string): BackLocaleErrorPayload | null
 /** True when the string is a self-contained localized payload (see `backLocalePayload`/`backLocaleError`). */
 export const checkIsBackLocalePayload = (str: string) => parseBackLocaleErrorPayload(str) !== null;
 
-const takeBackLocaleErrorTitleText = (payload: BackLocaleErrorPayload, titleIndex: number) =>
-  payload.intr ? stringTemplater(payload.title[titleIndex], payload.intr) : payload.title[titleIndex];
+/** Текст заголовка после подстановки `intr`: все значения идут через общий шаблонизатор. */
+const takeBackLocaleErrorTitleText = (payload: BackLocaleErrorPayload, titleIndex: number) => {
+  const title = payload.title[titleIndex];
+
+  if (!payload.intr) return title;
+
+  return stringTemplater(title, payload.intr);
+};
 
 /** Translates the payload into the given language; returns the input unchanged when it is not a payload. */
 export const localizeBackLocaleErrorPayload = (str: string, langi: Langi | nil): string => {
@@ -88,6 +103,20 @@ export const localizeBackLocalePayloads = (str: string, langi: Langi | nil): str
       return payload ? takeBackLocaleErrorTitleText(payload, langi ?? Langi.Ru) : segment;
     })
     .join('\n\n');
+
+/**
+ * HTML письма для явного конверта Changes: заголовок `t` локализуется и экранируется,
+ * готовый HTML диффа `d` вставляется сырым внутри `<pre>`, чтобы письмо сохраняло переносы строк.
+ * `null` — сообщение не является конвертом, вызывающий код использует прежний путь.
+ */
+export const localizeChangesMessageHtml = (message: string, langi: Langi | nil) => {
+  const changes = parseChangesMessage(message);
+  if (!changes) return null;
+
+  const title = escapeHtmlLazy()(localizeBackLocaleErrorPayload(changes.t, langi));
+
+  return changes.d ? `${title}\n<pre style="white-space:pre-wrap">${changes.d}</pre>` : title;
+};
 
 /** Replaces the embedded payload segment (if any) with the text made by the caller; null when there is no payload. */
 const replaceBackLocaleErrorPayload = (

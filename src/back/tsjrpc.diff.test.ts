@@ -158,10 +158,13 @@ describe('makeDiffHtml', () => {
     expect(makeDiffHtml(was, newV)).toBe(`${preOpen}first oldnew\n${gap}\nlast oldnew${preClose}`);
   });
 
-  it('falls back to whole-middle blocks when the line count exceeds the line cap', () => {
+  it('diffs every line pair granularly when the line count is large', () => {
     const was = Array.from({ length: 600 }, () => 'aaaa').join('\n');
     const newV = Array.from({ length: 600 }, () => 'bbbb').join('\n');
 
-    expect(makeDiffHtml(was, newV)).toBe(`${preOpen}${was}${newV}${preClose}`);
+    // Каждая пара изменена сильнее порога, поэтому строки чередуются: удалённая «aaaa» и добавленная «bbbb».
+    expect(makeDiffHtml(was, newV)).toBe(
+      `${preOpen}${Array.from({ length: 600 }, () => 'aaaabbbb').join('\n')}${preClose}`,
+    );
   });
 });

@@ -56,7 +56,8 @@ import { checkIsEq } from 'shared/utils/checkIsEq';
 import { parseLegacyICat } from 'shared/utils/cm/cat/parseLegacyICat';
 import { downloadFileMd5Rename } from 'shared/utils/downloadFileMd5Rename';
 import { lazyInit } from 'shared/utils/lazyInit';
-import { escapeHtmlLazy } from 'shared/utils/string.utils';
+import { makeChangesMessage } from 'shared/utils/changesMessage';
+import { makeDiffMarkupHtml, stringifyDiffValue } from 'shared/utils/textDiff';
 
 const und = undefined;
 
@@ -235,34 +236,30 @@ export const pullPushDirFilesDictLazy = lazyInit(
             if (isComChanged) set.m = now;
             if (isAmChanged) set.amMod = now;
 
-            // На реальное изменение композиции готовим HTML-дифф для дашборда и почты.
+            // На реальное изменение композиции готовим единый locale-payload для дашборда и почты.
             if (isComChanged) {
-              const escapeHtml = escapeHtmlLazy();
-              const wasJson = escapeHtml(JSON.stringify(existing, null, 2));
-              const newJson = escapeHtml(
-                JSON.stringify(
-                  {
-                    ...com,
-                    w: comw,
-                    ...(isComChanged ? { m: now } : {}),
-                    ...(isAmChanged ? { amMod: now } : {}),
-                  },
-                  null,
-                  2,
-                ),
-              );
+              // Значения диффа строим через `stringifyDiffValue`: получаются строки pretty-JSON, по которым бэк сразу считает готовую HTML-разметку.
+              const wasText = stringifyDiffValue(existing);
+              // Новое состояние собираем поверх `existing`: jsonb отдаёт ключи в своём порядке, и такой же порядок в обеих сторонах диффа оставляет неизменённые строки на месте, а не превращает перестановку ключей в ложные удаления/добавления.
+              const newText = stringifyDiffValue({
+                ...existing,
+                ...set,
+                w: comw,
+                m: now,
+                ...(isAmChanged ? { amMod: now } : {}),
+              });
 
-              // Заголовок храним как самодостаточный locale-payload (ru/ua/kz/en): клиент и письма подставляют язык получателя, а имя песни кладём сырым — экранирует его потребитель.
+              // Дифф считается здесь и хранится готовым HTML: клиент и письмо только подставляют его, ничего не вычисляя.
+              const diffHtml = makeDiffMarkupHtml(wasText ?? '', newText ?? '');
+              // Заголовок — самодостаточный locale-payload (ru/ua/kz/en); дифф передаётся отдельным полем `d` явного конверта, а не подставляется в текст.
               const changesTitlePayload = backLocalePayload(langi =>
                 translateBackTexts(langi, BackLocaleKey.CmComSystemChange, { n: existing.n ?? com.n }),
               );
+              const changesMessage = makeChangesMessage(changesTitlePayload, diffHtml);
 
-              // Первым абзацем идёт payload заголовка (локализуется целиком как отдельный сегмент), дальше — общие для всех языков JSON-блоки was/new.
-              const html = `${changesTitlePayload}\n\nwas:\n<pre style="white-space:pre-wrap">${wasJson}</pre>\n\nnew:\n<pre style="white-space:pre-wrap">${newJson}</pre>`;
-
-              // Уведомления отправляем без ожидания, чтобы не задерживать запись в БД.
-              insertDashMessage(html, null, DashMessageKind.Changes, null).catch(emptyFunc);
-              sendChangesEmail(html, null).catch(emptyFunc);
+              // Уведомления отправляем без ожидания, чтобы не задерживать запись в БД; конверт сам несёт locale-payload заголовка и готовый HTML диффа.
+              insertDashMessage(changesMessage, null, DashMessageKind.Changes, null).catch(emptyFunc);
+              sendChangesEmail(changesMessage, null).catch(emptyFunc);
             }
 
             // Пишем только изменившиеся поля, не затирая остальные данные строки.

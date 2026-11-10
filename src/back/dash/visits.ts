@@ -1,4 +1,10 @@
-import { backLocaleError, backLocalePayload, localizeBackLocalePayloads, translateBackTexts } from 'back/locales/back';
+import {
+  backLocaleError,
+  backLocalePayload,
+  localizeBackLocalePayloads,
+  localizeChangesMessageHtml,
+  translateBackTexts,
+} from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { appVersionFileStore, dashReportRecipientsFileStorage } from 'back/apps/index/file-stores';
 import { sendSchedulePush } from 'back/apps/index/schedules/app-inform/web-push';
@@ -16,6 +22,7 @@ import { howMillisecondsInDay, howMillisecondsInHour } from 'shared/const/ms';
 import {
   DashMessageKind,
   DashMessageUser,
+  dashMessageSectionSeparator,
   noOnlineSample,
   VisitsDashboard,
   VisitsDashboardMessagesArgs,
@@ -24,6 +31,7 @@ import {
 import { emptyFunc } from 'shared/utils';
 import { mapObjectEntries, objectKeys, objectLength } from 'shared/utils/object.utils';
 import { escapeHtmlLazy } from 'shared/utils/string.utils';
+import { makeDiffSectionHtml } from 'shared/utils/textDiff';
 import { takeUserAuthName } from 'shared/utils/user.utils';
 import { onDashMessageStoredEvent } from './events';
 
@@ -413,16 +421,33 @@ export const sendCurrentDashReport = async () => {
   return { sent, failed };
 };
 
-/** Changes are mirrored to the self mailbox that the visits report is sent from (`isSameTo`) and to every configured dash report recipient. */
-export const sendChangesEmail = async (html: string, langi: Langi | nil) => {
+/**
+ * Changes are mirrored to the self mailbox that the visits report is sent from (`isSameTo`) and to every configured dash report recipient.
+ * Новый конверт `{t,d}` разбирается типизированно: заголовок локализуется и экранируется, готовый HTML диффа идёт в `<pre>`; tsjrpc-сообщения идут прежним секционным путём.
+ */
+export const sendChangesEmail = async (messageText: string, langi: Langi | nil) => {
   const subject = `SYSTEM: ${new Date().toLocaleDateString(takeLangSystemCode(langi), changesEmailSubjectDateOptions)} (Changes)`;
   const selfEmail = emailerConfigFileStorage.getValue()[EmailerAuthConfigKey.Self]?.user?.toLowerCase();
+
+  // Готовый HTML письма: новый конверт обрабатывается целиком, остальные сообщения — по секциям, чтобы суффикс авторизации/визита не склеивался с payload'ом.
+  const makeHtml = (targetLangi: Langi | nil) => {
+    const changesHtml = localizeChangesMessageHtml(messageText, targetLangi);
+    if (changesHtml !== null) return changesHtml;
+
+    // tsjrpc/legacy-сообщения: payload'ы локализуются по секциям, а старая дифф-секция `{"was":...}` размечается `makeDiffSectionHtml`.
+    const localized = messageText
+      .split(dashMessageSectionSeparator)
+      .map(section => localizeBackLocalePayloads(section, targetLangi))
+      .join(dashMessageSectionSeparator);
+
+    return makeDiffSectionHtml(localized, true) ?? localized;
+  };
 
   await Promise.all([
     sendEmailMessage(EmailerAuthConfigKey.Self, {
       isSameTo: true,
       subject,
-      html: localizeBackLocalePayloads(html, langi),
+      html: makeHtml(langi),
     }),
     ...mapObjectEntries(dashReportRecipientsFileStorage.getValue(), (email, recipientLangi) =>
       email.toLowerCase() === selfEmail
@@ -430,7 +455,7 @@ export const sendChangesEmail = async (html: string, langi: Langi | nil) => {
         : sendEmailMessage(EmailerAuthConfigKey.Self, {
             to: email,
             subject,
-            html: localizeBackLocalePayloads(html, recipientLangi),
+            html: makeHtml(recipientLangi),
           }).catch(emptyFunc),
     ),
   ]);

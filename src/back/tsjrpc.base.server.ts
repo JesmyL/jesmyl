@@ -1,6 +1,6 @@
 import { DrizzleQueryError } from 'drizzle-orm';
 import { SokiVisit, UserAuth } from 'shared/api';
-import { DashMessageKind } from 'shared/model/index/visitsDashboard';
+import { dashMessageSectionSeparator, DashMessageKind } from 'shared/model/index/visitsDashboard';
 import { emptyFunc } from 'shared/utils';
 import { checkIsFunction } from 'shared/utils/checkIs';
 import { makeTSJRPCBaseMaker } from 'tsjrpc';
@@ -11,7 +11,7 @@ import { backConfig } from './config/backConfig';
 import { dashKindByScope, PostJRPCMessageScope } from './dash/model';
 import type { ServerTSJRPCFeedback } from './tsjrpc.model';
 import { dashAuthVisitSuffix } from './utils';
-import { stringifyDiffValue, makeDiffHtml } from './tsjrpc.diff';
+import { stringifyDiffValue } from './tsjrpc.diff';
 
 export type ServerTSJRPCTool = {
   client: WebSocket | null;
@@ -53,11 +53,14 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
         const title = await (checkIsFunction(feedback.description) ? feedback.description(tool) : feedback.description);
         if (!title) return;
 
+        // Текст сообщения: вызов метода и заголовок (payload локализуется потребителем, иначе — жирным).
         let text = `<code>${scope}.${method}</code>\n\n${checkIsBackLocalePayload(title) ? title : `<b>${title}</b>`}`;
         const { was, new: newV } = feedback;
         const wasText = stringifyDiffValue(was);
         const newText = stringifyDiffValue(newV);
-        if (wasText !== newText && (wasText || newText)) text += `\n\n${makeDiffHtml(wasText ?? '', newText ?? '')}`;
+        // Дифф уходит отдельной структурной секцией `{ was, new }`: текст диффа рисует front, а не бэк.
+        if (wasText !== newText && (wasText || newText))
+          text += `${dashMessageSectionSeparator}${JSON.stringify({ was: wasText, new: newText })}`;
 
         const completeMessage = (suffix: string) =>
           tool.auth
@@ -71,7 +74,7 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
         const dashMessage = completeMessage(dashAuthVisitSuffix(tool.auth, tool.visitInfo));
         const kind = dashKindByScope[feedback.logScope ?? PostJRPCMessageScope.Changes];
 
-        // Пишем сообщение в дашборд; для изменений дополнительно рассылаем письмо на языке визита.
+        // Пишем сообщение в дашборд; для изменений дополнительно рассылаем письмо на языке визита; сообщение tsjrpc уже содержит готовую HTML-разметку.
         insertDashMessage(dashMessage, null, kind, tool.auth?.login).catch(emptyFunc);
 
         if (kind === DashMessageKind.Changes)
