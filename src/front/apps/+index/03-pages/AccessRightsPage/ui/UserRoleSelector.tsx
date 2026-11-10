@@ -1,8 +1,6 @@
 import { translateBase } from '#basis/locale';
-import { Button } from '#shared/components/ui/button';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
-import { usePrompt } from '#shared/ui/modal';
-import { indexAppUserRoleInfoDictAtom, indexOpenAccessRoleRedactorAtom } from '$index/shared/state';
+import { indexAppUserRoleInfoDictAtom } from '$index/shared/state';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useAtomValue } from 'atomaric';
 import { SokiAuthLogin, UserInfoUnsecure } from 'shared/api';
@@ -17,52 +15,19 @@ export const IndexAccessRightsUserRoleSelector = ({
   userLogin: SokiAuthLogin;
 }) => {
   const userRightsAndRoles = useAtomValue(indexAppUserRoleInfoDictAtom);
-  const prompt = usePrompt();
 
   if (!userRightsAndRoles) return;
 
+  // Селектор роли пользователя: показывает доступные роли и сохраняет выбранную на сервере.
   return (
-    <>
-      <div className="flex gap-3 mb-5 ml-3">
-        {translateBase(BaseLocaleKey.Role)}
-        <Dropdown
-          id={userInfo.r ?? null}
-          nullTitle={translateBase(BaseLocaleKey.WithoutRole)}
-          items={objectKeys(userRightsAndRoles).map(id => ({ id, title: id }))}
-          renderItem={({ node, id, afterClickAction }) => (
-            <div className="flex gap-2 w-max">
-              {node}
-              {id && id !== 'TOP' && (
-                <Button
-                  icon="Edit02"
-                  onClick={event => {
-                    event.stopPropagation();
-                    indexOpenAccessRoleRedactorAtom.set(id);
-                    afterClickAction();
-                  }}
-                />
-              )}
-            </div>
-          )}
-          onSelectId={role => indexTsjrpcClientMethods.updateUserAccessRole({ login: userLogin, role })}
-          addContent={
-            <Button
-              icon="PlusSign"
-              className="text-x7 w-max"
-              onClick={async () => {
-                const roleName = await prompt(
-                  translateBase(BaseLocaleKey.EnterRoleName),
-                  translateBase(BaseLocaleKey.NewRole),
-                );
-                if (!roleName) return;
-                return indexTsjrpcClientMethods.addNewAccessRole({ role: roleName as 'TOP' });
-              }}
-            >
-              {translateBase(BaseLocaleKey.Role)}
-            </Button>
-          }
-        />
-      </div>
-    </>
+    <div className="flex gap-3 mb-5 ml-3">
+      {translateBase(BaseLocaleKey.Role)}
+      <Dropdown
+        id={userInfo.r ?? null}
+        nullTitle={translateBase(BaseLocaleKey.WithoutRole)}
+        items={objectKeys(userRightsAndRoles).map(id => ({ id, title: id }))}
+        onSelectId={role => indexTsjrpcClientMethods.updateUserAccessRole({ login: userLogin, role })}
+      />
+    </div>
   );
 };

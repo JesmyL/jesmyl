@@ -123,11 +123,17 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         },
 
         addNewAccessRole: async ({ role }) => {
-          const roleInfo = await takeUserRoleTiny({ n: role });
-          if (roleInfo) throw backLocaleError(BackLocaleKey.RoleAlreadyExists);
+          // Прямой запрос вместо tiny-поиска: проба через кэш сохранила бы null-запись, которую resetTiny никогда не удалит.
+          const [existing] = await db
+            .select({ id: userRoleDB.id })
+            .from(userRoleDB)
+            .where(eq(userRoleDB.n, role))
+            .limit(1);
+          if (existing) throw backLocaleError(BackLocaleKey.RoleAlreadyExists);
 
           await db.insert(userRoleDB).values({ n: role });
 
+          // Tiny-кэш не был замусорен прямой пробой, поэтому этот запрос читает свежую строку из БД.
           return { value: { [role]: await takeUserRoleTiny({ n: role }) } };
         },
 
