@@ -26,7 +26,7 @@ import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { emptyFunc } from 'shared/utils';
-import { cmComLanguages } from 'shared/utils/cm/com/const';
+import { cmComLanguages, comNameExtraSymbolsStr } from 'shared/utils/cm/com/const';
 import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 import { mapObjectEntries } from 'shared/utils/object.utils';
 
@@ -34,7 +34,8 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
   const [name, setName] = useState('');
   const eeStore = cmEditorIDB.useValue.eeStore();
   const checkAccess = useCheckUserAccessRightsInScope();
-  const nameCorrects = takeTextBlockIncorrects(name, eeStore);
+  // Валидация имени кома: дополнительно разрешаем « — », запрещённое в текстовых блоках
+  const nameCorrects = takeTextBlockIncorrects(name, eeStore, comNameExtraSymbolsStr);
 
   const comNode = (
     <TheCmCom

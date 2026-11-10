@@ -8,6 +8,7 @@ import { backLocaleError } from 'back/locales/back';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import type { TSJRPCFeedbackDiff, TSJRPCFeedbackEntry } from 'back/tsjrpc.model';
 import { eq } from 'drizzle-orm';
+import { makeRegExp } from 'regexpert';
 import { CmComIntensityLevel, CmComWid, Langi } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
 import { cmComIntensityLevelTitleDict } from 'shared/const/cm/cmComDriveLevelTitleDict';
@@ -32,9 +33,12 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         ...cmEditComServerTsjrpcNewlines(),
         ...cmEditComServerTsjrpcTextableBlocks,
 
-        rename: modifyCom('COM_MAIN', (com, { value }) =>
-          simpleUpdateReverse(backLocaleError(BackLocaleKey.CmComRenamed, { v: value }), (com.n = value)),
-        ),
+        rename: modifyCom('COM_MAIN', (com, { value }) => {
+          // Нормализуем имя на границе входа: пробельный дефисный штрих (« - », « -- ») становится длинным тире « — » до записи в com.n
+          const n = value.replace(makeRegExp('/( -+) /g'), ' — ');
+
+          return simpleUpdateReverse(backLocaleError(BackLocaleKey.CmComRenamed, { v: n }), (com.n = n));
+        }),
 
         setBpM: modifyCom('COM_MAIN', (com, { value }) => {
           const prev = com.bpm;
@@ -129,6 +133,8 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
 
           const com = {
             ...newCom,
+            // Имя нормализуем на границе входа: пробельный дефисный штрих (« - », « -- ») становится « — » до вставки в базу
+            n: newCom.n.replace(makeRegExp('/( -+) /g'), ' — '),
             w,
             m: w,
             t: newCom.t?.map(text => transformToClearText(text)),

@@ -23,6 +23,7 @@ import { cmDefaultCom } from 'shared/const/cm/def.com';
 import { Bool } from 'shared/enums';
 import { itIt } from 'shared/utils';
 import { chordsBlockIncorrectMessage } from 'shared/utils/cm/com/chordsBlockIncorrectMessage';
+import { comNameExtraSymbolsStr } from 'shared/utils/cm/com/const';
 import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
 import { textLinesLengthIncorrects } from 'shared/utils/cm/com/textLinesLengthIncorrects';
 import { mapObjectEntries, objectLength } from 'shared/utils/object.utils';
@@ -44,7 +45,8 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
   const { maxAvailableComLineLength } = useAtomValue(constantsConfigAtom);
 
   const newCom = useMemo(() => new CmCom(newICom, null, null, Bool.False), [newICom]);
-  const nameIncorrects = takeTextBlockIncorrects(newICom.n, eeStore);
+  // Валидация имени нового кома: дополнительно разрешаем « — », запрещённое в текстовых блоках
+  const nameIncorrects = takeTextBlockIncorrects(newICom.n, eeStore, comNameExtraSymbolsStr);
 
   const [hrefs, setHrefs] = useState<HttpNumLeadLink[]>([]);
   const [bindedLinks, setBindedLinks] = useState<CmAudioSrc[]>([]);

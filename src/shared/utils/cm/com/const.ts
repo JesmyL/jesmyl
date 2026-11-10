@@ -29,6 +29,8 @@ export const displayableTextBlockSingleWritedSymbolsStr = `(),":;'?` as const;
 export const displayableTextBlockSymbolsStr = `-_.!${displayableTextBlockSingleWritedSymbolsStr}` as const;
 export const allDisplayableTextBlockSymbolsStr = `${displayableTextBlockSymbolsStr}@#$%^&*+={}[\\]<>\\\\ʼ` as const;
 export const displayableTextBlockCharsStr = `${displayableTextBlockSymbolsStr}${slavicLowerLettersStr}\\s` as const;
+// Допустимое только в названии кома, но запрещённое в текстовых блоках: длинное тире
+export const comNameExtraSymbolsStr = '—' as const;
 
 export const nbsp = '&nbsp;';
 export const comNbsp = `_` as const;

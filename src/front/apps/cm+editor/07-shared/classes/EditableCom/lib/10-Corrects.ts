@@ -19,6 +19,7 @@ export class EditableComCorrects extends EditableComBase {
       });
     });
 
-    return name.replace(makeRegExp(`/[^${slavicLowerLettersStr}!]+$/i`), '');
+    // Срезаем хвостовые не-славянские символы, но не съедаем завершающее « — » — теперь оно допустимо в названии кома
+    return name.replace(makeRegExp(`/(?:( — )|[^${slavicLowerLettersStr}!])+$/i`), '$1');
   }
 }

@@ -27,7 +27,11 @@ export const squareBracketsReplacers: Record<CmComTextSquareBracketsMode, <Text 
   [CmComTextSquareBracketsMode.Remove]: text => text.replace(bracketReplacerReg, '') as never,
 };
 
-export const takeTextBlockIncorrects = (text: string | und = '', eeStore: EeStorePack): IIncorrects => {
+export const takeTextBlockIncorrects = (
+  text: string | und = '',
+  eeStore: EeStorePack,
+  extraAvailSymbols = '',
+): IIncorrects => {
   let mistakes = '';
   const availSymbols = `${doubleQuotesStr}${singleQuotesStr}${replacableAvailableCharsStr}` as const;
   const levelHolder: CmComBracketLevelHolder = { level: 0 };
@@ -37,10 +41,14 @@ export const takeTextBlockIncorrects = (text: string | und = '', eeStore: EeStor
     (all, $1) => (all.endsWith(']') ? ')' : $1 + ' ('),
   );
 
-  const textWithIncorrects = text.replace(makeRegExp(`/[^${displayableTextBlockCharsStr}${availSymbols}]+/gi`), all => {
-    mistakes += all;
-    return `[${all}]`;
-  });
+  // Недопустимые символы: extraAvailSymbols расширяет набор для частных случаев (например, « — » в названии кома), не трогая текстовые блоки
+  const textWithIncorrects = text.replace(
+    makeRegExp(`/[^${displayableTextBlockCharsStr}${availSymbols}${extraAvailSymbols}]+/gi`),
+    all => {
+      mistakes += all;
+      return `[${all}]`;
+    },
+  );
 
   if (textWithIncorrects !== text) {
     return { errors: [{ message: `Присутствуют недопустимые символы: ${mistakes}\n\n${textWithIncorrects}\n\n` }] };
