@@ -6,6 +6,22 @@ import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { makePgCheckedSelectSqlRaw, PgCheckFieldMode } from '.';
 import { comDB } from '../schema';
 
+/**
+ * Значения по умолчанию для экспортируемой композиции: при push поля, совпадающие с этими значениями,
+ * не записываются в БД, чтобы не затирать осмысленные данные пустыми.
+ */
+export const exportableComDefaults = {
+  l: Langi.Ru,
+  s: CmComMetricNum.Four,
+  d: CmComIntensityLevel.Medium,
+  al: [],
+  nl: [],
+  c1: [],
+  b: Bool.False,
+  bpm: 0,
+  p: 0,
+} as const;
+
 export const makePgCheckedSelectExportableComSqlRaw = <Adds extends Parameters<typeof makePgCheckedSelectSqlRaw>[1]>(
   adds?: Adds,
 ) =>

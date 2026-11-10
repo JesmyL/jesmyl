@@ -1,4 +1,3 @@
-import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { SokiAuthLogin, UserId } from 'shared/api';
 import { objectKeys } from 'shared/utils/object.utils';
 import { takeUserTiny } from './userTiny';
@@ -19,10 +18,9 @@ export const migrateLoginKeyedTeam = async <Member extends object>(
 
     const userId = isNaN(+key) ? (await takeUserTiny({ l: key as SokiAuthLogin }, false))?.id : (+key as UserId);
 
+    // Пользователь по логину не найден — пишем ошибку в консоль и пропускаем участника, продолжая миграцию остальных.
     if (userId == null) {
-      tglogger.systemError(
-        `Migration of ${scope} dropped member login="${key}": ${JSON.stringify(member)}`,
-      );
+      console.error(`Migration of ${scope} dropped member login="${key}": ${JSON.stringify(member)}`);
       continue;
     }
 

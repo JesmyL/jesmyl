@@ -4,9 +4,7 @@ import { makeRegExp } from 'regexpert';
 import { SokiAuthLogin } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import { Stream } from 'stream';
-import { TgLogger } from './log/log-bot';
 import { JTgBotCallbackQuery, JTgBotChatMessageCallback } from './model';
-import { PostJRPCMessageScope } from './postJRPCMessage';
 import { JesmylTelegramBotWrapper } from './tg-bot-wrapper';
 
 const botName = 'jesmylbot';
@@ -14,13 +12,11 @@ const emojiesSet: Set<string> = new Set();
 
 export type FreeAnswerCallbackQueryOptions = OmitOwn<Partial<TgBot.AnswerCallbackQueryOptions>, 'callback_query_id'>;
 
+/** Бот конкретного чата: хранит chatId и уникальный префикс, а отправку делегирует обёртке. */
 export class JesmylTelegramBot {
   chatId: number;
-  logger: TgLogger;
-  private logAllAsJSON?: boolean;
   private _bot: JesmylTelegramBotWrapper;
   botName = botName;
-  scope: PostJRPCMessageScope;
   uniqPrefix: string;
   sendMessage: (
     userOrId: User | number,
@@ -28,29 +24,19 @@ export class JesmylTelegramBot {
     options?: TgBot.SendMessageOptions | null,
   ) => ReturnType<typeof this._bot.sendMessage>;
 
-  constructor(props: {
-    logAllAsJSON?: boolean;
-    chatId: number;
-    bot: JesmylTelegramBotWrapper;
-    logger: TgLogger;
-    uniqPrefix: string;
-    scope: PostJRPCMessageScope;
-  }) {
-    this.logger = props.logger;
+  /** Запоминает чат и обёртку, заранее привязывая HTML-разметку к каждой отправке. */
+  constructor(props: { chatId: number; bot: JesmylTelegramBotWrapper; uniqPrefix: string }) {
     this.chatId = props.chatId;
-    this.scope = props.scope;
-    this.logAllAsJSON = props.logAllAsJSON;
     this._bot = props.bot;
     this.sendMessage = (userOrId, text, options) =>
-      this._bot.sendMessage(userOrId, text, props.logger, { parse_mode: 'HTML', ...options });
+      this._bot.sendMessage(userOrId, text, { parse_mode: 'HTML', ...options });
 
-    if (emojiesSet.has(props.uniqPrefix)) throw Error(`ununique uniqPrefix ${props.uniqPrefix}`);
+    // Префикс должен быть уникальным в пределах процесса — иначе кнопки разных ботов перепутаются.
+    if (emojiesSet.has(props.uniqPrefix)) throw `ununique uniqPrefix ${props.uniqPrefix}`;
 
     emojiesSet.add(props.uniqPrefix);
     this.uniqPrefix = props.uniqPrefix;
   }
-
-  register() {}
 
   get isStarted() {
     return this._bot.isStarted;
@@ -109,30 +95,14 @@ export class JesmylTelegramBot {
     return this._bot.makeOptionsKeyboard(this, keyboard, false, keyPrefix);
   }
 
+  /** Ловля сообщений чата намеренно отключена: тело оставлено заглушкой, чтобы не терять точку расширения. */
   onChatMessages(_cb: JTgBotChatMessageCallback) {
-    // this._bot.registerChatMessagesCallback(
-    //   this,
-    //   this.chatId,
-    //   this.logAllAsJSON && this.logger
-    //     ? (bot, message, metadata) => {
-    //         this.logger.jsonCode({ message, metadata });
-    //         cb(bot, message, metadata);
-    //       }
-    //     : cb,
-    // );
+    // this._bot.registerChatMessagesCallback(this, this.chatId, cb);
   }
 
+  /** Ловля callback-запросов чата тоже отключена — по тем же причинам. */
   onChatQueries(_cb: JTgBotCallbackQuery) {
-    // this._bot.registerChatCallbackQueryCallback(
-    //   this,
-    //   this.chatId,
-    //   this.logAllAsJSON && this.logger
-    //     ? (bot, query, answer) => {
-    //         this.logger.jsonCode({ query });
-    //         cb(bot, query, answer);
-    //       }
-    //     : cb,
-    // );
+    // this._bot.registerChatCallbackQueryCallback(this, this.chatId, cb);
   }
 
   async deleteMessage(messageId: number, chatId?: number) {
@@ -141,36 +111,24 @@ export class JesmylTelegramBot {
     return this._bot.bot.deleteMessage(chatId ?? this.chatId, messageId);
   }
 
+  /** Правит текст сообщения в своём чате, перенося только inline-клавиатуру из переданных опций. */
   async editMessageText(messageId: number, text: string, keyboard?: SendMessageOptions) {
     if (!this._bot.isStarted) return;
 
     try {
-      await this._bot.bot
-        .editMessageText(text, {
-          chat_id: this.chatId,
-          message_id: messageId,
-          parse_mode: 'HTML',
-          reply_markup:
-            keyboard === undefined
-              ? undefined
-              : {
-                  inline_keyboard: (keyboard.reply_markup as InlineKeyboardMarkup)?.inline_keyboard,
-                },
-        })
-        .then(
-          this.logAllAsJSON
-            ? async message => {
-                if (message)
-                  if (message === true) return await this.logger.log(`Изменено сообщение в чате:\n\n` + text);
-                  else
-                    return await this.logger.log(
-                      `Изменено сообщение #${messageId} в чате ${message.chat.title}:\n\n` + text,
-                    );
-              }
-            : undefined,
-        );
+      await this._bot.bot.editMessageText(text, {
+        chat_id: this.chatId,
+        message_id: messageId,
+        parse_mode: 'HTML',
+        reply_markup:
+          keyboard === undefined
+            ? undefined
+            : {
+                inline_keyboard: (keyboard.reply_markup as InlineKeyboardMarkup)?.inline_keyboard,
+              },
+      });
     } catch (_error) {
-      //
+      // Сообщение могло быть уже удалено или не изменено — молча игнорируем эту штатную ошибку.
     }
   }
 
@@ -179,20 +137,6 @@ export class JesmylTelegramBot {
 
     return this._bot.bot.getChatAdministrators(this.chatId);
   };
-
-  async postMessage(text: string, options?: TgBot.SendMessageOptions, chatId?: number) {
-    if (!this._bot.isStarted) return null;
-
-    const message = text.replace(makeRegExp('/<((anonymous|computed)>)/g'), '&lt;$1');
-    const messageOptions = {
-      parse_mode: 'HTML',
-      ...options,
-    } as const;
-
-    if (this.logAllAsJSON) this.logger.jsonCode({ message, options: messageOptions });
-
-    return this._bot.bot.sendMessage(chatId ?? this.chatId, message, messageOptions);
-  }
 
   async getUserData(id: number) {
     if (!this._bot.isStarted) return null;

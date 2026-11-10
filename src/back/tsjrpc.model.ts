@@ -1,4 +1,4 @@
-import type { PostJRPCMessageScope } from './sides/telegram-bot/postJRPCMessage';
+import type { PostJRPCMessageScope } from './dash/model';
 import type { ServerTSJRPCTool } from './tsjrpc.base.server';
 
 export type TSJRPCFeedbackDiff = { was?: unknown; new?: unknown };

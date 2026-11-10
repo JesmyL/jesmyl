@@ -3,7 +3,6 @@ import { hostConfig } from 'shared/api';
 import { randomOf } from 'shared/randoms';
 import { declension } from 'shared/utils';
 import { jesmylTgBot } from '../bot';
-import { tglogger } from '../log/log-bot';
 import { JTgBotCallbackQuery } from '../model';
 
 export const supportTelegramAuthorizations: PRecord<number, () => CallbackQuery> = {};
@@ -26,8 +25,9 @@ const unsubscribedAlert = {
 export const authorizeTelegramCb: JTgBotCallbackQuery = async (prodBot, query, answer) => {
   const id = query.from.id;
 
+  // Единая отправка пользователю: при неудаче текст ошибки уходит в ответ на callback-запрос.
   const sendMessage = async (text: string, options?: SendMessageOptions) => {
-    const res = await jesmylTgBot.sendMessage(query.from, text, tglogger, options);
+    const res = await jesmylTgBot.sendMessage(query.from, text, options);
     if (!res.ok) answer({ text: res.value });
     return res;
   };
@@ -57,7 +57,8 @@ export const authorizeTelegramCb: JTgBotCallbackQuery = async (prodBot, query, a
         `\nКод: <code>${telegramAuthorizationUsers[id]}</code>`,
     );
 
-    prodBot.logger.codeRequest(`Повторный запрос кода авторизации${prefix}`);
+    // Повторная выдача уже существующего кода — просто фиксируем событие в консоли.
+    console.info(`Повторный запрос кода авторизации${prefix}`);
 
     return 'Код отправлен повторно';
   }
@@ -101,7 +102,8 @@ export const authorizeTelegramCb: JTgBotCallbackQuery = async (prodBot, query, a
     //
   }
 
-  prodBot.logger.codeRequest(`Запрос кода авторизации${prefix}`);
+  // Новый код успешно отправлен — фиксируем запрос авторизации в консоли.
+  console.info(`Запрос кода авторизации${prefix}`);
 
   return 'Код отправлен';
 };

@@ -1,4 +1,3 @@
-import { telegramAnonymousChatMessageService } from './complect/anonymousQuestionService';
 import { tgBotConfig } from './file-stores';
 import { JesmylTelegramBotWrapper } from './tg-bot-wrapper';
 
@@ -6,6 +5,7 @@ export const jesmylTgBot = new JesmylTelegramBotWrapper(tgBotConfig.getValue().t
   polling: true,
 });
 
+// Список команд, отображаемых в меню бота; подкоманды вынесенных сервисов больше не регистрируются.
 jesmylTgBot.setCommands([
   {
     command: '/start',
@@ -15,12 +15,6 @@ jesmylTgBot.setCommands([
     command: '/init',
     description: 'Инициализировать',
   },
-  telegramAnonymousChatMessageService({
-    id: 'gul94i',
-    chatTitle: 'Гулячи',
-    botAdminName: 'gul94iAdminTelegramBot',
-    botName: 'gul94iTelegramBot',
-  }),
 ]);
 
 jesmylTgBot.catchMessages((message, bot) => {

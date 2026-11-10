@@ -46,6 +46,7 @@ export const backLocalesKz: Record<BackLocaleKey, string> = {
   [BackLocaleKey.CmComDeleted]: 'жойылды',
   [BackLocaleKey.CmComRestored]: '(бұрын жойылған) қалпына келтірілді',
   [BackLocaleKey.CmComDestroyed]: '"$v" композициясы жойылды',
+  [BackLocaleKey.CmComSystemChange]: '"$n" әніне жүйелік өзгерту енгізілді',
   [BackLocaleKey.CmChordBlockChanged]: 'аккордтық блок өзгертілді',
   [BackLocaleKey.CmTextBlockChanged]: 'мәтіндік блок өзгертілді',
   [BackLocaleKey.CmTextBlocksChanged]: 'мәтіндік блоктар өзгертілді',

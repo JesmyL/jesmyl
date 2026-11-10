@@ -5,11 +5,10 @@ import { emptyFunc } from 'shared/utils';
 import { checkIsFunction } from 'shared/utils/checkIs';
 import { makeTSJRPCBaseMaker } from 'tsjrpc';
 import { WebSocket } from 'ws';
-import { insertDashMessage } from './dash/visits';
+import { insertDashMessage, sendChangesEmail } from './dash/visits';
 import { checkIsBackLocalePayload } from './locales/back';
 import { backConfig } from './config/backConfig';
-import { jesmylChangesBot } from './sides/telegram-bot/control/jesmylChangesBot';
-import { postJRPCMessage } from './sides/telegram-bot/postJRPCMessage';
+import { dashKindByScope, PostJRPCMessageScope } from './dash/model';
 import type { ServerTSJRPCFeedback } from './tsjrpc.model';
 import { dashAuthVisitSuffix } from './utils';
 import { stringifyDiffValue, makeDiffHtml } from './tsjrpc.diff';
@@ -68,14 +67,15 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
                 `\n\n<blockquote expandable>${JSON.stringify(tool.auth, null, 1)}</blockquote>\n\n\nАргументы:\n${JSON.stringify(args)}`
             : text + suffix;
 
-        postJRPCMessage(completeMessage(''), {
-          tgBot: jesmylChangesBot,
-          tg: { parse_mode: 'HTML' },
-          scope: feedback.logScope,
-          login: tool.auth?.login,
-          langi: tool.visitInfo?.langi,
-          dashMessage: completeMessage(dashAuthVisitSuffix(tool.auth, tool.visitInfo)),
-        });
+        // Формируем запись для дашборда и определяем её вид по scope обратной связи.
+        const dashMessage = completeMessage(dashAuthVisitSuffix(tool.auth, tool.visitInfo));
+        const kind = dashKindByScope[feedback.logScope ?? PostJRPCMessageScope.Changes];
+
+        // Пишем сообщение в дашборд; для изменений дополнительно рассылаем письмо на языке визита.
+        insertDashMessage(dashMessage, null, kind, tool.auth?.login).catch(emptyFunc);
+
+        if (kind === DashMessageKind.Changes)
+          sendChangesEmail(dashMessage, tool.visitInfo?.langi).catch(emptyFunc);
       },
   beforeEach: async ({ invoke: { method }, tool, beforeEachTools, defaultBeforeEachTool }) => {
     const userVersion = tool.visitInfo?.version ?? 0;

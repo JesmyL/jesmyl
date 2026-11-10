@@ -2,7 +2,6 @@ import TgBot, { BotCommand, InlineKeyboardButton, User } from 'node-telegram-bot
 import { backConfig } from 'back/config/backConfig';
 import { Eventer, EventerCallback, EventerListeners } from 'shared/utils';
 import { checkIsNumber, checkIsString } from 'shared/utils/checkIs';
-import { TgLogger } from './log/log-bot';
 import {
   JTgBotCallbackQuery,
   JTgBotCallbackQueryWithoutBot,
@@ -131,10 +130,10 @@ export class JesmylTelegramBotWrapper {
     return { register: () => {}, off: () => this.callbackCatchers.delete(catcher) };
   }
 
+  /** Отправляет сообщение пользователю с HTML-разметкой и возвращает результат без исключений наружу. */
   async sendMessage(
     userOrId: User | number,
     text: string,
-    logger: TgLogger,
     options?: TgBot.SendMessageOptions | null,
   ): Promise<{ ok: false; value: string } | { ok: true; value: TgBot.Message }> {
     if (!this.isStarted) return { ok: false, value: botIsNotStartedMessage };
@@ -148,13 +147,8 @@ export class JesmylTelegramBotWrapper {
         }),
       };
     } catch (error) {
-      logger.error(
-        `Попытка отправки сообщения неизвестному пользователю\n\n<code>${JSON.stringify(
-          userOrId,
-          null,
-          1,
-        )}</code>\n\n${text}\n\n${error}`,
-      );
+      // Пользователь недоступен: пишем текст и адресата в консоль и возвращаем ошибку, а не бросаем исключение.
+      console.error(`Попытка отправки сообщения неизвестному пользователю\n\n${text}`, userOrId, error);
 
       return { ok: false, value: botIsNotStartedMessage };
     }

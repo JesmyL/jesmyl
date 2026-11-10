@@ -4,7 +4,6 @@ import { Do } from 'shared/enums';
 import { emptyFunc, iife, wait } from 'shared/utils';
 import { bibleTsjrpcBaseServer } from './apps/bible/tsjrpc';
 import { cmServerTsjrpcBase } from './apps/cm/tsjrpc.base';
-import { startCrTgAlarm } from './apps/index/crTgAlarm';
 import { initSchedulePushInform } from './apps/index/schedules/app-inform/schedule-informer';
 import { initVisitsDigest } from './apps/index/schedules/visits-digest/visits-digest';
 import { indexServerTsjrpcBase } from './apps/index/tsjrpc.base';
@@ -18,8 +17,8 @@ import { localeDynamicEn } from './locales/dynamic/en';
 import { localeDynamicKz } from './locales/dynamic/kz';
 import { localeDynamicRu } from './locales/dynamic/ru';
 import { localeDynamicUa } from './locales/dynamic/ua';
-import { baseMessagesCatcher } from './sides/telegram-bot/complect/message-catchers';
 
+// Точка старта бэкенда: инициализация, регистрация TSJRPC-серверов и запуск фоновых задач.
 iife(async () => {
   if (!backConfig.isTest) await import('./initBack').then(m => m.initBack());
 
@@ -37,10 +36,6 @@ iife(async () => {
 
   initSchedulePushInform();
   initUserLangiFileStore().catch(emptyFunc);
-
-  baseMessagesCatcher.register();
-
-  startCrTgAlarm();
 
   initVisitsDigest();
 

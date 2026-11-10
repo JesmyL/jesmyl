@@ -1,7 +1,7 @@
 import { backLocaleError, backLocalePayload, translateBackTexts } from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { tokenSecretFileStore } from 'back/complect/soki/file-stores';
-import { PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
+import { PostJRPCMessageScope } from 'back/dash/model';
 import { prodTelegramBot } from 'back/sides/telegram-bot/prod/prod-bot';
 import { JesmylTelegramBot } from 'back/sides/telegram-bot/tg-bot';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';

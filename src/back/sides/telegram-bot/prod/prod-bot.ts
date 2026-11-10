@@ -1,26 +1,19 @@
-/* eslint-disable no-constant-condition */
 import { valuesFileStore } from 'back/apps/index/file-stores';
 import { backConfig } from 'back/config/backConfig';
 import { SendMessageOptions } from 'node-telegram-bot-api';
 import { hostConfig } from 'shared/api';
 import { jesmylTgBot } from '../bot';
-import { controlTelegramBot } from '../control/control-bot';
-import { jesmylChangesBot } from '../control/jesmylChangesBot';
-import { gul94iAdminTelegramBot, gul94iTelegramBot } from '../gul94i/gul94i-bot';
-import { tglogger } from '../log/log-bot';
-import { postJRPCMessage, PostJRPCMessageScope } from '../postJRPCMessage';
 import { JesmylTelegramBot } from '../tg-bot';
 import { authorizeTelegramCb } from './authorize';
 
+/** Бот продакшн-чата: отдельный логгер и scope ему больше не нужны — работает только отправка сообщений. */
 export const prodTelegramBot = new JesmylTelegramBot({
   bot: jesmylTgBot,
   chatId: backConfig.tgProdChatId,
-  logger: tglogger,
-  logAllAsJSON: true,
   uniqPrefix: '',
-  scope: PostJRPCMessageScope.Prod,
 });
 
+/** Набор кнопок под приветственным сообщением: единственная кнопка запускает авторизацию через Telegram. */
 export const prodStartOptions: SendMessageOptions = prodTelegramBot.makeSendMessageOptions([
   [
     {
@@ -43,6 +36,7 @@ const prodStartMessage = (botName: string) => `
 
 В дальнейшем начинай с пункта 3`;
 
+// Обработчик сообщений продакшн-чата: чистит сервисные сообщения и отвечает на `/start` приветствием с кнопкой авторизации.
 prodTelegramBot.onChatMessages((bot, message) => {
   if (message.new_chat_members) {
     bot.deleteMessage(message.message_id);
@@ -51,14 +45,7 @@ prodTelegramBot.onChatMessages((bot, message) => {
   if (!message.text) return;
 
   if (bot.messageCase('/start', message.text)) {
-    postJRPCMessage(prodStartMessage(bot.botName), { tgBot: bot, tg: prodStartOptions });
+    // Отправляем приветствие с кнопкой авторизации прямо в чат, откуда пришла команда.
+    bot.sendMessage(message.chat.id, prodStartMessage(bot.botName), prodStartOptions);
   }
 });
-
-if (!+!+'change message')
-  prodTelegramBot.editMessageText(551, prodStartMessage(prodTelegramBot.botName), prodStartOptions);
-
-gul94iTelegramBot.register();
-gul94iAdminTelegramBot.register();
-jesmylChangesBot.register();
-controlTelegramBot.register();

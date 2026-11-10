@@ -3,9 +3,6 @@ import { makeDiffHtml, stringifyDiffValue } from './tsjrpc.diff';
 
 const preOpen = '<pre style="white-space:pre-wrap">';
 const preClose = '</pre>';
-const removedOpen = '<span style="color:#c33;background:#fee">';
-const addedOpen = '<span style="color:#184;background:#efe">';
-const spanClose = '</span>';
 
 describe('stringifyDiffValue', () => {
   it('keeps strings as is', () => {
@@ -29,58 +26,52 @@ describe('stringifyDiffValue', () => {
 });
 
 describe('makeDiffHtml', () => {
-  it('colors only the changed word in the middle of a string', () => {
-    expect(makeDiffHtml('hello world foo', 'hello world bar')).toBe(
-      `${preOpen}hello world ${removedOpen}foo${spanClose}${addedOpen}bar${spanClose}${preClose}`,
-    );
+  it('keeps the changed word as plain removed-then-added text', () => {
+    expect(makeDiffHtml('hello world foo', 'hello world bar')).toBe(`${preOpen}hello world foobar${preClose}`);
   });
 
-  it('marks an insertion without coloring the surrounding text', () => {
-    expect(makeDiffHtml('abc', 'abXYc')).toBe(`${preOpen}ab${addedOpen}XY${spanClose}c${preClose}`);
+  it('renders an insertion without markup', () => {
+    expect(makeDiffHtml('abc', 'abXYc')).toBe(`${preOpen}abXYc${preClose}`);
   });
 
-  it('marks a deletion without coloring the surrounding text', () => {
-    expect(makeDiffHtml('abXYc', 'abc')).toBe(`${preOpen}ab${removedOpen}XY${spanClose}c${preClose}`);
+  it('renders a deletion without markup', () => {
+    expect(makeDiffHtml('abXYc', 'abc')).toBe(`${preOpen}abXYc${preClose}`);
   });
 
   it('interleaves equal and changed characters on substitution', () => {
-    expect(makeDiffHtml('cat', 'cut')).toBe(`${preOpen}c${removedOpen}a${spanClose}${addedOpen}u${spanClose}t${preClose}`);
-    expect(makeDiffHtml('foo hello bar', 'foo hallo bar')).toBe(
-      `${preOpen}foo h${removedOpen}e${spanClose}${addedOpen}a${spanClose}llo bar${preClose}`,
-    );
+    expect(makeDiffHtml('cat', 'cut')).toBe(`${preOpen}caut${preClose}`);
+    expect(makeDiffHtml('foo hello bar', 'foo hallo bar')).toBe(`${preOpen}foo heallo bar${preClose}`);
   });
 
   it('keeps word edits below the 60% threshold fine-grained', () => {
     expect(makeDiffHtml('foo hello world bar', 'foo hallo wurld bar')).toBe(
-      `${preOpen}foo h${removedOpen}e${spanClose}${addedOpen}a${spanClose}llo w${removedOpen}o${spanClose}${addedOpen}u${spanClose}rld bar${preClose}`,
+      `${preOpen}foo heallo wourld bar${preClose}`,
     );
   });
 
   it('replaces a whole word when 1 - equalChars / max(oldLen, newLen) reaches 0.6', () => {
-    // 'red' -> 'green': equalChars = 2 ('re'), max length = 5 -> 1 - 2 / 5 === 0.6
-    // 'four' -> 'five': equalChars = 1 ('f'), max length = 4 -> 0.75
+    // 'red' -> 'green': равных символов 2 ('re'), максимальная длина 5 -> 1 - 2 / 5 === 0.6
+    // 'four' -> 'five': равных символов 1 ('f'), максимальная длина 4 -> 0.75
     expect(makeDiffHtml('foo red bar one two three four', 'foo green bar one two three five')).toBe(
-      `${preOpen}foo ${removedOpen}red${spanClose}${addedOpen}green${spanClose} bar one two three ${removedOpen}four${spanClose}${addedOpen}five${spanClose}${preClose}`,
+      `${preOpen}foo redgreen bar one two three fourfive${preClose}`,
     );
   });
 
   it('replaces whole lines when a paired line is heavily changed despite common characters', () => {
-    // 'aXbcYd' -> 'eXfgYh': equalChars = 2 ('X', 'Y'), max length = 6 -> ~0.67
+    // 'aXbcYd' -> 'eXfgYh': равных символов 2 ('X', 'Y'), максимальная длина 6 -> ~0.67
     expect(makeDiffHtml('start\naXbcYd\nend', 'start\neXfgYh\nend')).toBe(
-      `${preOpen}start\n${removedOpen}aXbcYd${spanClose}${addedOpen}eXfgYh${spanClose}\nend${preClose}`,
+      `${preOpen}start\naXbcYdeXfgYh\nend${preClose}`,
     );
   });
 
   it('replaces whole lines at exactly the 60% line threshold (1 - equalChars / max(oldLen, newLen))', () => {
-    // 'aXbYd' -> 'eXfYh': equalChars = 2 ('X', 'Y'), max length = 5 -> 1 - 2 / 5 === 0.6
-    expect(makeDiffHtml('zero\naXbYd', 'ZERO\neXfYh')).toBe(
-      `${preOpen}${removedOpen}zero${spanClose}${addedOpen}ZERO${spanClose}\n${removedOpen}aXbYd${spanClose}${addedOpen}eXfYh${spanClose}${preClose}`,
-    );
+    // 'aXbYd' -> 'eXfYh': равных символов 2 ('X', 'Y'), максимальная длина 5 -> 1 - 2 / 5 === 0.6
+    expect(makeDiffHtml('zero\naXbYd', 'ZERO\neXfYh')).toBe(`${preOpen}zeroZERO\naXbYdeXfYh${preClose}`);
   });
 
   it('refines a line pair that stays under the 60% threshold', () => {
     expect(makeDiffHtml('zero\none two hello world\nend', 'ZERO\none two hallo wurld\nend')).toBe(
-      `${preOpen}${removedOpen}zero${spanClose}${addedOpen}ZERO${spanClose}\none two h${removedOpen}e${spanClose}${addedOpen}a${spanClose}llo w${removedOpen}o${spanClose}${addedOpen}u${spanClose}rld\nend${preClose}`,
+      `${preOpen}zeroZERO\none two heallo wourld\nend${preClose}`,
     );
   });
 
@@ -89,32 +80,37 @@ describe('makeDiffHtml', () => {
     const newV = '{\n  "name": "Ivan",\n  "email": "ivan@mail.com"\n}';
 
     expect(makeDiffHtml(was, newV)).toBe(
-      `${preOpen}{\n  "name": "Ivan",\n  "email": "ivan@mail.${removedOpen}ru${spanClose}${addedOpen}com${spanClose}"\n}${preClose}`,
+      `${preOpen}{\n  "name": "Ivan",\n  "email": "ivan@mail.rucom"\n}${preClose}`,
     );
   });
 
   it('escapes every segment', () => {
-    expect(makeDiffHtml('a<b', 'a>c')).toBe(
-      `${preOpen}a${removedOpen}&lt;b${spanClose}${addedOpen}&gt;c${spanClose}${preClose}`,
-    );
+    expect(makeDiffHtml('a<b', 'a>c')).toBe(`${preOpen}a&lt;b&gt;c${preClose}`);
   });
 
   it('treats UTF-16 code units as diff units', () => {
-    expect(makeDiffHtml('привет мир', 'привет год')).toBe(
-      `${preOpen}привет ${removedOpen}мир${spanClose}${addedOpen}год${spanClose}${preClose}`,
-    );
+    expect(makeDiffHtml('привет мир', 'привет год')).toBe(`${preOpen}привет миргод${preClose}`);
   });
 
   it('falls back to whole-middle blocks when the middle exceeds the LCS cap', () => {
     const was = 'a'.repeat(1600);
     const newV = 'b'.repeat(1600);
 
-    expect(makeDiffHtml(was, newV)).toBe(`${preOpen}${removedOpen}${was}${spanClose}${addedOpen}${newV}${spanClose}${preClose}`);
+    expect(makeDiffHtml(was, newV)).toBe(`${preOpen}${was}${newV}${preClose}`);
   });
 
   it('handles empty inputs', () => {
     expect(makeDiffHtml('', '')).toBe(`${preOpen}${preClose}`);
-    expect(makeDiffHtml('', 'abc')).toBe(`${preOpen}${addedOpen}abc${spanClose}${preClose}`);
+    expect(makeDiffHtml('', 'abc')).toBe(`${preOpen}abc${preClose}`);
+  });
+
+  it('emits no highlight markup or colors', () => {
+    // Дифф теперь отдаёт простой текст: цветных span'ов и их фонов быть не должно.
+    const html = makeDiffHtml('foo red bar', 'foo green bar');
+
+    expect(html).not.toContain('<span');
+    expect(html).not.toContain('#fee');
+    expect(html).not.toContain('#efe');
   });
 
   it('keeps the untouched gap between two separate line edits plain', () => {
@@ -122,44 +118,36 @@ describe('makeDiffHtml', () => {
     const newV = 'line ONE\nline two\nline three\nline FOUR';
 
     expect(makeDiffHtml(was, newV)).toBe(
-      `${preOpen}line ${removedOpen}one${spanClose}${addedOpen}ONE${spanClose}\nline two\nline three\nline ${removedOpen}four${spanClose}${addedOpen}FOUR${spanClose}${preClose}`,
+      `${preOpen}line oneONE\nline two\nline three\nline fourFOUR${preClose}`,
     );
   });
 
-  it('marks a pure line insertion as one added block', () => {
+  it('renders a pure line insertion as one block', () => {
     const was = 'alpha\nbeta\ngamma';
     const newV = 'alpha\ninserted\nbeta\ngamma';
 
-    expect(makeDiffHtml(was, newV)).toBe(
-      `${preOpen}alpha\n${addedOpen}inserted\n${spanClose}beta\ngamma${preClose}`,
-    );
+    expect(makeDiffHtml(was, newV)).toBe(`${preOpen}alpha\ninserted\nbeta\ngamma${preClose}`);
   });
 
-  it('marks a pure line deletion as one removed block', () => {
+  it('renders a pure line deletion as one block', () => {
     const was = 'alpha\ninserted\nbeta\ngamma';
     const newV = 'alpha\nbeta\ngamma';
 
-    expect(makeDiffHtml(was, newV)).toBe(
-      `${preOpen}alpha\n${removedOpen}inserted\n${spanClose}beta\ngamma${preClose}`,
-    );
+    expect(makeDiffHtml(was, newV)).toBe(`${preOpen}alpha\ninserted\nbeta\ngamma${preClose}`);
   });
 
   it('refines changed line pairs down to the changed characters', () => {
     const was = 'one\ntwo\nthree\nfour';
     const newV = 'one\nTWO\nTHREE\nfour';
 
-    expect(makeDiffHtml(was, newV)).toBe(
-      `${preOpen}one\n${removedOpen}two${spanClose}${addedOpen}TWO${spanClose}\n${removedOpen}three${spanClose}${addedOpen}THREE${spanClose}\nfour${preClose}`,
-    );
+    expect(makeDiffHtml(was, newV)).toBe(`${preOpen}one\ntwoTWO\nthreeTHREE\nfour${preClose}`);
   });
 
   it('treats extra lines of an uneven changed block as fully removed', () => {
     const was = 'one\ntwo\nthree\nfour';
     const newV = 'one\nTWO\nfour';
 
-    expect(makeDiffHtml(was, newV)).toBe(
-      `${preOpen}one\n${removedOpen}two\n${spanClose}${addedOpen}TWO${spanClose}${removedOpen}three${spanClose}\nfour${preClose}`,
-    );
+    expect(makeDiffHtml(was, newV)).toBe(`${preOpen}one\ntwo\nTWOthree\nfour${preClose}`);
   });
 
   it('keeps a long untouched gap plain even when it exceeds the char LCS cap', () => {
@@ -167,17 +155,13 @@ describe('makeDiffHtml', () => {
     const was = `first old\n${gap}\nlast old`;
     const newV = `first new\n${gap}\nlast new`;
 
-    expect(makeDiffHtml(was, newV)).toBe(
-      `${preOpen}first ${removedOpen}old${spanClose}${addedOpen}new${spanClose}\n${gap}\nlast ${removedOpen}old${spanClose}${addedOpen}new${spanClose}${preClose}`,
-    );
+    expect(makeDiffHtml(was, newV)).toBe(`${preOpen}first oldnew\n${gap}\nlast oldnew${preClose}`);
   });
 
   it('falls back to whole-middle blocks when the line count exceeds the line cap', () => {
     const was = Array.from({ length: 600 }, () => 'aaaa').join('\n');
     const newV = Array.from({ length: 600 }, () => 'bbbb').join('\n');
 
-    expect(makeDiffHtml(was, newV)).toBe(
-      `${preOpen}${removedOpen}${was}${spanClose}${addedOpen}${newV}${spanClose}${preClose}`,
-    );
+    expect(makeDiffHtml(was, newV)).toBe(`${preOpen}${was}${newV}${preClose}`);
   });
 });

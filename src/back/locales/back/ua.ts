@@ -46,6 +46,7 @@ export const backLocalesUa: Record<BackLocaleKey, string> = {
   [BackLocaleKey.CmComDeleted]: 'видалена',
   [BackLocaleKey.CmComRestored]: '(раніше видалена) відновлена',
   [BackLocaleKey.CmComDestroyed]: 'композицію "$v" знищено',
+  [BackLocaleKey.CmComSystemChange]: 'Системна зміна пісні "$n"',
   [BackLocaleKey.CmChordBlockChanged]: 'змінено акордний блок',
   [BackLocaleKey.CmTextBlockChanged]: 'змінено текстовий блок',
   [BackLocaleKey.CmTextBlocksChanged]: 'змінено текстові блоки',

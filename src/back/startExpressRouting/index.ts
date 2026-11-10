@@ -27,7 +27,6 @@ import { backConfig } from '../config/backConfig';
 import { db } from '../drizzle/drizzle.db';
 import { catDB, comDB } from '../drizzle.schema';
 import { hostRootDir, lazyEnvJson } from '../envJson';
-import { tglogger } from '../sides/telegram-bot/log/log-bot';
 import { pullFilesExpressRoute } from './pullFiles';
 import { pushFilesExpressRoute } from './pushFiles';
 
@@ -462,13 +461,14 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
     if (subHost && subKey && subCert)
       sniContexts.set(subHost.toLowerCase(), createSecureContext({ key: subKey, cert: subCert }));
 
+    // В продакшене поднимаем отдельный HTTP-сервер, который только перенаправляет все запросы на HTTPS.
     if (!backConfig.isTest)
       http
         .createServer((req, res) => {
           res.writeHead(301, { Location: `https://${req.headers.host}${req.url}` });
           res.end();
         })
-        .listen(80, '0.0.0.0', () => tglogger.log('HTTP редирект запущен на порту 80'));
+        .listen(80, '0.0.0.0', () => console.info('HTTP редирект запущен на порту 80'));
 
     const httpsServer = https
       .createServer(
@@ -483,12 +483,14 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
       )
       .on('upgrade', upgradeHandler);
 
+    // В продакшене HTTPS слушает собственный порт и сообщает о запуске в консоль.
     if (!backConfig.isTest)
-      httpsServer.listen(httpsPort, '0.0.0.0', () => tglogger.log(`HTTPS запущен на порту ${httpsPort}`));
+      httpsServer.listen(httpsPort, '0.0.0.0', () => console.info(`HTTPS запущен на порту ${httpsPort}`));
     else {
       // Тест: общий порт для http и https. Первый байт 0x16 — TLS ClientHello, иначе обычный HTTP.
       const httpServer = http.createServer(app).on('upgrade', upgradeHandler);
 
+      // Слушаем один порт и по первому байту решаем, отдать сокет HTTPS- или HTTP-серверу.
       net
         .createServer(socket => {
           socket.on('error', emptyFunc);
@@ -502,22 +504,25 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
             (isTls ? httpsServer : httpServer).emit('connection', socket);
           });
         })
-        .listen(port, '0.0.0.0', () => tglogger.log(`HTTP+HTTPS запущен на порту ${port}`));
+        .listen(port, '0.0.0.0', () => console.info(`HTTP+HTTPS запущен на порту ${port}`));
     }
   } else {
+    // Без сертификатов поднимаем обычный HTTP/WS-сервер на локальном порту.
     http
       .createServer(app)
       .on('upgrade', upgradeHandler)
       .listen(port, '0.0.0.0', () => console.info(`WS запущен локально`));
   }
 
+  // Непойманное исключение пишем в консоль: сначала краткая ошибка, затем сообщение, причина и стек.
   process.on('uncaughtException', err => {
     console.error('Критическая ошибка:', err);
-    tglogger.systemError([err?.message ?? err, err?.cause, err?.stack].filter(itIt).join('\n\n\n'));
+    console.error([err?.message ?? err, err?.cause, err?.stack].filter(itIt).join('\n\n\n'));
   });
 
+  // Необработанный промис логируем и не роняем процесс.
   process.on('unhandledRejection', reason => {
     console.error('Необработанный промис:', reason);
-    tglogger.systemError(`${reason}`);
+    console.error(`${reason}`);
   });
 };

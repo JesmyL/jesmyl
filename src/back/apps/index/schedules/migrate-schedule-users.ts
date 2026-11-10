@@ -1,6 +1,5 @@
 import { scheduleDB } from 'back/drizzle.schema';
 import { dbUpdate } from 'back/drizzle/drizzle.db';
-import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { eq } from 'drizzle-orm';
 import { IScheduleWidget, IScheduleWidgetUser, SokiAuthLogin } from 'shared/api';
 import { takeUserTiny } from '../tinies/userTiny';
@@ -11,8 +10,9 @@ type LegacyScheduleWidgetUser = IScheduleWidgetUser & {
   nick?: string;
 };
 
+/** Логирует причину, по которой участник расписания не был перенесён в новый формат. */
 const logDroppedMember = (sch: IScheduleWidget, user: LegacyScheduleWidgetUser, reason: string) =>
-  tglogger.systemError(
+  console.error(
     `Migration of schedule "${sch.title}" (w=${sch.w}) dropped member mi=${user.mi}, R=${user.R}: ${reason}`,
   );
 

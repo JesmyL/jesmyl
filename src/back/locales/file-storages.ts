@@ -1,6 +1,5 @@
 import { DirStorage } from 'back/complect/DirStorage';
 import { FileStore } from 'back/complect/FileStore';
-import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { Langi } from 'shared/api';
 import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
 import { LocaleBase } from 'shared/model/+locale/base';
@@ -23,8 +22,9 @@ import { localeEditorKz } from './editor/kz';
 import { localeEditorRu } from './editor/ru';
 import { localeEditorUa } from './editor/ua';
 
+/** Логирует смену набора переводов для указанного языка. */
 const log = (scope: string, langi: SKey<Langi>) =>
-  tglogger.log(`Изменён набор ${scope} переводов - ${localeDynamicRu[DynLocaleKey.Lang][langi]}`);
+  console.info(`Изменён набор ${scope} переводов - ${localeDynamicRu[DynLocaleKey.Lang][langi]}`);
 
 export const langLocaleDynamicFileStoragesLazy = lazyInit(async () => {
   const langLocaleDynamicDict: { [L in Langi]: LocaleDynamic<L> } = {

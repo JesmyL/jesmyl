@@ -46,6 +46,7 @@ export const backLocalesEn: Record<BackLocaleKey, string> = {
   [BackLocaleKey.CmComDeleted]: 'deleted',
   [BackLocaleKey.CmComRestored]: '(previously deleted) restored',
   [BackLocaleKey.CmComDestroyed]: 'composition "$v" destroyed',
+  [BackLocaleKey.CmComSystemChange]: 'System change of the song "$n"',
   [BackLocaleKey.CmChordBlockChanged]: 'chord block changed',
   [BackLocaleKey.CmTextBlockChanged]: 'text block changed',
   [BackLocaleKey.CmTextBlocksChanged]: 'text blocks changed',

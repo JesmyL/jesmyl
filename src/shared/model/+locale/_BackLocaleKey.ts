@@ -436,4 +436,5 @@ export const enum BackLocaleKey {
   SchLiveStreamStarted = 433,
   SchLiveStreamStartedNoSchw = 434,
   SchLiveAnonymousName = 435,
+  CmComSystemChange = 436,
 }

@@ -24,8 +24,6 @@ const diffChangeThreshold = 0.6;
 const diffLineRegExp = makeRegExp('/[^\\n]*\\n|[^\\n]+$/g');
 const diffWordChunkRegExp = makeRegExp('/\\s+|[^\\s]+/g');
 
-const diffSpanStarts = ['', '<span style="color:#c33;background:#fee">', '<span style="color:#184;background:#efe">'];
-
 const splitDiffLines = (text: string): string[] => text.match(diffLineRegExp) ?? [];
 
 const pushSegment = (segments: DiffSegment[], kind: DiffKind, text: string) => {
@@ -123,7 +121,7 @@ const makeLcsDiff = (a: string, b: string): DiffSegment[] => {
   return segments;
 };
 
-/** Equal line endings are structural, so they stay out of the ratio and outside the colored spans. */
+/** Одинаковые переводы строк структурны, поэтому они не участвуют в расчёте доли изменений. */
 const refineLinePair = (oldLine: string, newLine: string): DiffSegment[] => {
   const hasEqualLineEnding = oldLine.at(-1) === '\n' && newLine.at(-1) === '\n';
   const oldContent = hasEqualLineEnding ? oldLine.slice(0, -1) : oldLine;
@@ -223,13 +221,14 @@ export const makeDiffHtml = (was: string, newV: string): string => {
   while (suffixLen < minLen - prefixLen && was[was.length - 1 - suffixLen] === newV[newV.length - 1 - suffixLen])
     suffixLen++;
 
+  // Склеиваем изменённую середину без цветовых спанов и экранируем её как единый текст.
   const escapeHtml = escapeHtmlLazy();
-  const changed = makeHierarchicalDiff(
-    was.slice(prefixLen, was.length - suffixLen),
-    newV.slice(prefixLen, newV.length - suffixLen),
-  )
-    .map(([kind, text]) => (text ? `${diffSpanStarts[kind]}${escapeHtml(text)}${kind ? '</span>' : ''}` : ''))
-    .join('');
+  const changed = escapeHtml(
+    makeHierarchicalDiff(was.slice(prefixLen, was.length - suffixLen), newV.slice(prefixLen, newV.length - suffixLen))
+      .map(([, text]) => text)
+      .join(''),
+  );
+  // Общие начало и конец экранируем отдельно, чтобы не гонять через дифф неизменённые части.
   const prefix = escapeHtml(was.slice(0, prefixLen));
   const suffix = escapeHtml(was.slice(was.length - suffixLen));
 

@@ -25,9 +25,15 @@ import {
   userRoleDB,
 } from 'back/drizzle.schema';
 import { db, dbUpdate, dbUpsert } from 'back/drizzle/drizzle.db';
-import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
+import {
+  exportableComDefaults,
+  makePgCheckedSelectExportableComSqlRaw,
+  selectPgCheckedExportableCom,
+} from 'back/drizzle/ex/com.selectors';
 import { selectUser2Com, upsertUser2ComProps } from 'back/drizzle/ex/user2Com.utils';
 import { jsonParseSecure } from 'back/json-secure';
+import { backLocalePayload, translateBackTexts } from 'back/locales/back';
+import { insertDashMessage, sendChangesEmail } from 'back/dash/visits';
 import { asc, desc, eq } from 'drizzle-orm';
 import path from 'node:path';
 import { makePgCheckedSelectSqlRaw, PgCheckFieldMode } from 'p/d';
@@ -41,11 +47,16 @@ import {
   PullPushFileDirNameNet,
 } from 'shared/api/pullFiles.utils';
 import { Bool } from 'shared/enums';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
+import { DashMessageKind } from 'shared/model/index/visitsDashboard';
 import { QuestionerBlankWid } from 'shared/model/q';
 import { QuestionerUserAnswer } from 'shared/model/q/answer';
+import { emptyFunc } from 'shared/utils';
+import { checkIsEq } from 'shared/utils/checkIsEq';
 import { parseLegacyICat } from 'shared/utils/cm/cat/parseLegacyICat';
 import { downloadFileMd5Rename } from 'shared/utils/downloadFileMd5Rename';
 import { lazyInit } from 'shared/utils/lazyInit';
+import { escapeHtmlLazy } from 'shared/utils/string.utils';
 
 const und = undefined;
 
@@ -177,7 +188,86 @@ export const pullPushDirFilesDictLazy = lazyInit(
             }));
           },
 
-          PUSH: com => db.insert(comDB).values(com).onConflictDoUpdate({ target: comDB.w, set: com }),
+          /**
+           * Push одной композиции: если строки в БД нет — вставляем её целиком;
+           * если есть — пишем только реально изменившиеся поля и уведомляем об изменении.
+           */
+          PUSH: async (com, file) => {
+            // Имя файла — это `w` композиции, поэтому вытаскиваем числовой id из имени.
+            const comw = extractNumber(file);
+            const existing = await selectPgCheckedExportableCom(comw);
+
+            // Композиции ещё нет — вставляем новую строку (или обновляем при гонке по `w`).
+            if (!existing) {
+              const values = { ...com, w: comw };
+
+              return db.insert(comDB).values(values).onConflictDoUpdate({ target: comDB.w, set: values });
+            }
+
+            const now = Date.now();
+            const set: Partial<typeof comDB.$inferInsert> = { ...com, w: comw };
+            let isComChanged = false;
+            let isAmChanged = false;
+
+            // Служебные поля и `w` не обновляем: они не должны попадать в `set` из файла.
+            delete set.w;
+            delete set.isRemoved;
+            delete set.m;
+            delete set.amMod;
+
+            // Поля, равные дефолтным, не пишем — иначе можно затереть осмысленные данные пустыми.
+            forEachObjectEntries(exportableComDefaults, (key, defaultValue) => {
+              if (checkIsEq(set[key], defaultValue)) delete set[key];
+            });
+
+            // Сравниваем каждое присланное поле с текущей строкой: `am` — метки аудио, остальное — сама композиция.
+            forEachObjectEntries(set, (key, value) => {
+              if (checkIsEq(value, existing[key as never])) return;
+
+              if (key === 'am') isAmChanged = true;
+              else isComChanged = true;
+            });
+
+            // Ничего не поменялось — выходим, не трогая БД и не рассылая уведомления.
+            if (!isComChanged && !isAmChanged) return;
+
+            // Обновляем метку изменения композиции и/или метку аудио-меток.
+            if (isComChanged) set.m = now;
+            if (isAmChanged) set.amMod = now;
+
+            // На реальное изменение композиции готовим HTML-дифф для дашборда и почты.
+            if (isComChanged) {
+              const escapeHtml = escapeHtmlLazy();
+              const wasJson = escapeHtml(JSON.stringify(existing, null, 2));
+              const newJson = escapeHtml(
+                JSON.stringify(
+                  {
+                    ...com,
+                    w: comw,
+                    ...(isComChanged ? { m: now } : {}),
+                    ...(isAmChanged ? { amMod: now } : {}),
+                  },
+                  null,
+                  2,
+                ),
+              );
+
+              // Заголовок храним как самодостаточный locale-payload (ru/ua/kz/en): клиент и письма подставляют язык получателя, а имя песни кладём сырым — экранирует его потребитель.
+              const changesTitlePayload = backLocalePayload(langi =>
+                translateBackTexts(langi, BackLocaleKey.CmComSystemChange, { n: existing.n ?? com.n }),
+              );
+
+              // Первым абзацем идёт payload заголовка (локализуется целиком как отдельный сегмент), дальше — общие для всех языков JSON-блоки was/new.
+              const html = `${changesTitlePayload}\n\nwas:\n<pre style="white-space:pre-wrap">${wasJson}</pre>\n\nnew:\n<pre style="white-space:pre-wrap">${newJson}</pre>`;
+
+              // Уведомления отправляем без ожидания, чтобы не задерживать запись в БД.
+              insertDashMessage(html, null, DashMessageKind.Changes, null).catch(emptyFunc);
+              sendChangesEmail(html, null).catch(emptyFunc);
+            }
+
+            // Пишем только изменившиеся поля, не затирая остальные данные строки.
+            return db.insert(comDB).values({ ...com, w: comw }).onConflictDoUpdate({ target: comDB.w, set });
+          },
         },
 
         'user2Com/': {

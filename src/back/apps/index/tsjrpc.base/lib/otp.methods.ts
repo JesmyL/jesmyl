@@ -9,8 +9,7 @@ import { jsonParseSecure, jsonStringifySecure } from 'back/json-secure';
 import { makeAuthFromEmail, makeLoginFromEmail } from 'back/sides/emailer/lib/makeEmailLogin';
 import { sendEmailMessage } from 'back/sides/emailer/lib/sendEmailMessage';
 import { EmailerAuthConfigKey } from 'back/sides/emailer/model';
-import { logTelegramBot, tglogger } from 'back/sides/telegram-bot/log/log-bot';
-import { postJRPCMessage, PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
+import { PostJRPCMessageScope } from 'back/dash/model';
 import { takeLogginedAuthOrThrow } from 'back/utils';
 import { arrayOverlaps, eq, or } from 'drizzle-orm';
 import jwt from 'jsonwebtoken';
@@ -84,19 +83,6 @@ const otpEmailLetterKeys = [
   BackLocaleKey.OtpLetter9,
   BackLocaleKey.OtpLetter10,
 ];
-
-const makeMailtoButton = ({
-  text,
-  email,
-  subject,
-  buttonText,
-}: {
-  email: string;
-  subject: string;
-  text: string;
-  buttonText: string;
-}) =>
-  `<a href="mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}"><button>${buttonText}</button></a>`;
 
 const takeOtpPushUserId = async (email: string, auth: UserAuth | nil) => {
   const emailLogin = makeLoginFromEmail(email);
@@ -208,22 +194,8 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
           html,
         });
       } catch (e) {
-        tglogger.error(`Произошла ошибка\n\n${e}`);
-
-        await postJRPCMessage(
-          `${makeMailtoButton({
-            email,
-            subject,
-            text: makeText(false),
-            buttonText: translateBackTexts(null, BackLocaleKey.OtpTelegramMakeLetterButton),
-          })}\n\n\n\n\n${html}`,
-          {
-            tgBot: logTelegramBot,
-            scope: PostJRPCMessageScope.Error,
-            dashMessage: translateBackTexts(null, BackLocaleKey.OtpTelegramSendError),
-            login: auth?.login,
-          },
-        );
+        // Письмо не ушло — фиксируем адрес, ошибку и готовый HTML в консоли, не прерывая остальные отправки.
+        console.error(`Не удалось отправить письмо с одноразовым кодом на ${email}`, e, html);
       }
     }, howMillisecondsInMin * minutesUntilEmail),
   );

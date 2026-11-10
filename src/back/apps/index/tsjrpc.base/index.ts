@@ -11,8 +11,7 @@ import {
   langLocaleDynamicFileStoragesLazy,
   langLocaleEditorFileStoragesLazy,
 } from 'back/locales/file-storages';
-import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
-import { PostJRPCMessageScope } from 'back/sides/telegram-bot/postJRPCMessage';
+import { PostJRPCMessageScope } from 'back/dash/model';
 import { supportTelegramAuthorizations } from 'back/sides/telegram-bot/prod/authorize';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { takeLogginedAuthOrThrow } from 'back/utils';
@@ -61,16 +60,23 @@ import { indexTSJRPCBaseVisitsDashboard } from './lib/visitsDashboard';
 
 const deviceIdPostfixSymbols = '!@#$%^&*;.,?/|\\+=-'.split('');
 
+/**
+ * Следит за файлом версии приложения: при обновлении пишет номер версии в консоль
+ * и через небольшую задержку выдаёт права на выполнение файлам в каталоге `assets`.
+ */
 appVersionFileStore.watchFile(value => {
-  tglogger.log(`Version upgrade: ${value.num}`);
+  console.info(`Version upgrade: ${value.num}`);
 
   const command = `chmod +x ${hostRootDir}/assets/`;
 
   setTimeout(() => {
-    tglogger.log(command);
+    console.info(command);
 
+    // Результат выполнения chmod пишем в консоль: ошибку — через console.error, успех — через console.info.
     exec(command, (error, stdout, stderr) => {
-      tglogger[error ? 'error' : 'log'](`${command}\n\n${JSON.stringify({ error, stdout, stderr }, null, ' ')}`);
+      const log = `${command}\n\n${JSON.stringify({ error, stdout, stderr }, null, ' ')}`;
+      if (error) console.error(log);
+      else console.info(log);
     });
   }, 2000);
 });
