@@ -15,7 +15,7 @@ import {
   SokiAuthLogin,
 } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
-import { howMillisecondsInDay } from 'shared/const/ms';
+import { howMillisecondsInDay, howMillisecondsInMin } from 'shared/const/ms';
 import { Bool } from 'shared/enums';
 import { itNNil } from 'shared/utils';
 import { objectKeys, objectLength } from 'shared/utils/object.utils';
@@ -45,6 +45,10 @@ export const throwIfNoEditorLocaleAccess = async (auth: LocalSokiAuth | nil) => 
     await throwIfNoUserScopeAccessRight(auth, 'dash', 'DASH', 'R');
   }
 };
+
+/** Локальный (серверный) номер суток — смена значения означает переход через полночь. */
+const localDay = (ts: number) =>
+  Math.floor((ts - new Date(ts).getTimezoneOffset() * howMillisecondsInMin) / howMillisecondsInDay);
 
 export const indexTSJRPCBaseRequestFreshes = {
   requestFreshes: async (
@@ -167,7 +171,10 @@ export const indexTSJRPCBaseRequestFreshes = {
 
     const otherFooterIconStore = otherFooterIconFileStore.getValue();
 
-    if (otherFooterIconStore.iconNames.length && Date.now() - otherFooterIconStore.m >= howMillisecondsInDay)
+    if (
+      otherFooterIconStore.iconNames.length &&
+      localDay(Date.now()) !== localDay(otherFooterIconStore.m)
+    )
       rotateOtherFooterIcon();
 
     if (
