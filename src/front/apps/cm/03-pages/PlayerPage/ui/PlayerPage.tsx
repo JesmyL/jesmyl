@@ -42,7 +42,7 @@ import {
   useCmComAudioPlayerCurrentTime,
   useCmComAudioPlayerDuration,
 } from '$cm/entities/com-audio-player';
-import { CmComFaceList } from '$cm/entities/com-face';
+import { CmComFaceDescriptionVariant, CmComFaceList } from '$cm/entities/com-face';
 import { CmComToolFavorite, CmComToolIsComToolIconItemsContext, CmComToolNameContext } from '$cm/entities/com-tool';
 import { CmComListPackKindSelector, cmComListPackKindSelectorLocaleKeyDict } from '$cm/entities/ComListPackKindSelector';
 import { cmComLastOpenComwAtom } from '$cm/entities/index';
@@ -708,7 +708,7 @@ const CmPlayerPageContent = ({
               key={openComListMode}
               list={comws}
               currentComw={activeComw}
-              withCacheMarks
+              comDescription={CmComFaceDescriptionVariant.CacheButtons}
               importantOnClick={({ com }) => {
                 cmComAudioPlayerMarkManualPick();
                 cmComAudioPlayerIsFromPlayerPageAtom.set(true);

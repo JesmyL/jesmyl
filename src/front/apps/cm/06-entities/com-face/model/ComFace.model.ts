@@ -1,13 +1,20 @@
 import { ReactNode } from 'react';
 import { CmComWid, IExportableCom } from 'shared/api';
 
+// Перечисление взаимоисключающих вариантов описания хвоста строки списка композиций: набор меток, кнопки кэша либо ничего.
+export const enum CmComFaceDescriptionVariant {
+  Nothing,
+  FavouriteButtons,
+  CacheButtons,
+}
+
 export interface CmComFaceInheritProps {
-  comDescription?: (com: IExportableCom, comi: number) => ReactNode;
+  /**
+   * Хвост строки: либо функция рендера описания, либо вариант описания из CmComFaceDescriptionVariant; одновременно можно задать только одно.
+   * Если не передано — по умолчанию рендерится набор FavouriteButtons (метка-лайк).
+   */
+  comDescription?: CmComFaceDescriptionVariant | ((com: IExportableCom, comi: number) => ReactNode);
   /** The com the caller plays: the player page's current com is not necessarily the last opened one. */
   currentComw?: CmComWid | nil;
   isPutCcomFaceOff?: boolean;
-  /** Shows the per-track cloud cache buttons instead of the row like button, e.g. in the player page list. */
-  withCacheMarks?: boolean;
-  /** Renders no like button and no cache marks for a row, e.g. in the views-rating list. */
-  withoutLikeMark?: boolean;
 }

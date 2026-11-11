@@ -21,7 +21,7 @@ import styled from '@emotion/styled';
 import { FileRoutesByPath } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode, useEffect, useRef } from 'react';
-import { CmCatWid, CmComWid, IExportableCom } from 'shared/api';
+import { CmCatWid, CmComWid } from 'shared/api';
 import type { CmCat } from 'shared/const/cm/Cat';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { emptyFunc } from 'shared/utils';
@@ -33,7 +33,8 @@ interface Props {
   backButtonPath?: keyof FileRoutesByPath;
   withoutBackButton?: boolean;
   comws: CmComWid[];
-  comDescription?: (com: IExportableCom, comi: number) => ReactNode;
+  /** Хвост строки списка композиций: либо функция рендера описания, либо набор меток; при отсутствии значения по умолчанию применяется FavouriteButtons. */
+  comDescription?: Parameters<typeof CmComFaceList>[0]['comDescription'];
 }
 
 let isOpenRatingSortedComsAtom: Atom<boolean>;

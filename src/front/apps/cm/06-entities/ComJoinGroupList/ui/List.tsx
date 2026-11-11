@@ -1,6 +1,6 @@
 import { CmComFaceList, cmIDB } from '$cm/ext';
 import { useMemo } from 'react';
-import { CmComWid, CmComWidRefGroupDict, IExportableCom } from 'shared/api';
+import { CmComWid, CmComWidRefGroupDict } from 'shared/api';
 import { extractNumber, itIt } from 'shared/utils';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 
@@ -12,7 +12,8 @@ export const CmComJoinGroupList = ({
   emptyNode,
 }: {
   comw: CmComWid;
-  comDescription?: ((com: IExportableCom, comi: number) => React.ReactNode) | und;
+  /** Пробрасывается в список композиций: либо описание строки, либо набор меток; undefined сохраняет значение по умолчанию FavouriteButtons. */
+  comDescription?: Parameters<typeof CmComFaceList>[0]['comDescription'];
   children?: (comJoinsList: CmComWid[], allJoins: CmComWidRefGroupDict) => React.ReactNode;
   importantOnClick?: Parameters<typeof CmComFaceList>[0]['importantOnClick'];
   emptyNode?: React.ReactNode;

@@ -31,7 +31,7 @@ export {
 } from '$cm/entities/com-audio-player';
 export { CmComAudioPlayerMarksMovers } from '$cm/entities/com-audio-player/ui/ComPlayerMarksMovers';
 export { useCmComCommentBlockCss } from '$cm/entities/com-comment';
-export { CmComFaceList } from '$cm/entities/com-face';
+export { CmComFaceDescriptionVariant, CmComFaceList } from '$cm/entities/com-face';
 export { CmComOrderList, TheCmComOrder } from '$cm/entities/com-order';
 export { CmComOrderLine } from '$cm/entities/com-order-line';
 export { TheCmComOrderSolid } from '$cm/entities/com-order/ui/TheOrderSolid';

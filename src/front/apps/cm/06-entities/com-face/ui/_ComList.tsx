@@ -20,6 +20,7 @@ import {
 import { useCmComFaceListClickListener } from '../lib/useComListClickListener';
 import { useCmComFaceCurrentComw } from '../lib/useCurrentComw';
 import { useCmComFaceScrollToCurrentComFace } from '../lib/useScrollToCurrentComFace';
+import { CmComFaceDescriptionVariant } from '../model/ComFace.model';
 import { CmComFaceListProps } from '../model/model';
 import { CmComFaceListControlledContainer } from './ComListControlledContainer';
 
@@ -29,8 +30,6 @@ interface ComListItemProps {
   isDropTarget: boolean;
   isDropEnabled: boolean;
   comDescription: CmComFaceListProps['comDescription'];
-  withoutLikeMark: boolean | nil;
-  withCacheMarks: boolean | nil;
   onDragOver: (com: IExportableCom, event: DragEvent<HTMLDivElement>) => void;
   onDragLeave: (com: IExportableCom, event: DragEvent<HTMLDivElement>) => void;
   onDrop: (com: IExportableCom, comi: number, event: DragEvent<HTMLDivElement>) => void;
@@ -43,8 +42,6 @@ const CmComFaceListItem = memo(function CmComFaceListItem(props: ComListItemProp
     isDropTarget,
     isDropEnabled,
     comDescription,
-    withoutLikeMark,
-    withCacheMarks,
     onDragOver,
     onDragLeave,
     onDrop,
@@ -62,17 +59,20 @@ const CmComFaceListItem = memo(function CmComFaceListItem(props: ComListItemProp
       <FaceItem.Title>
         {com.n || <span className="text-xKO">{translateBase(BaseLocaleKey.CmUnknown)}</span>}
       </FaceItem.Title>
-      {!comDescription || <div className={cmComFaceItemDescriptionClassName}>{comDescription(com, comi)}</div>}
-      {withoutLikeMark ||
-        (withCacheMarks ? (
-          <CmComAudioPlayerCacheMarks
-            srcs={com.al}
-            comName={com.n}
-            className={cmComFaceItemAudioMarksClassName}
-          />
-        ) : (
-          <CmComFaceLikeMark comw={com.w} />
-        ))}
+      {/* Хвост строки: comDescription — либо функция описания, либо вариант описания из CmComFaceDescriptionVariant; undefined по умолчанию рендерит FavouriteButtons, а Nothing не рендерит ничего. */}
+      {typeof comDescription === 'function' ? (
+        <div className={cmComFaceItemDescriptionClassName}>{comDescription(com, comi)}</div>
+      ) : comDescription === CmComFaceDescriptionVariant.Nothing ? (
+        null
+      ) : comDescription === CmComFaceDescriptionVariant.CacheButtons ? (
+        <CmComAudioPlayerCacheMarks
+          srcs={com.al}
+          comName={com.n}
+          className={cmComFaceItemAudioMarksClassName}
+        />
+      ) : (
+        <CmComFaceLikeMark comw={com.w} />
+      )}
     </FaceItem.Root>
   );
 });
@@ -145,8 +145,6 @@ export const CmComFaceListComList = (props: CmComFaceListProps) => {
           isDropTarget={dropTargetComw === com.w}
           isDropEnabled={isDropEnabled}
           comDescription={props.comDescription}
-          withoutLikeMark={props.withoutLikeMark}
-          withCacheMarks={props.withCacheMarks}
           onDragOver={onItemDragOver}
           onDragLeave={onItemDragLeave}
           onDrop={onItemDrop}
