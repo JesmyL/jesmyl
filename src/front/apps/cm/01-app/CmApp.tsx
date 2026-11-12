@@ -5,6 +5,7 @@ import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { Metronome } from '#widgets/metronome';
+import { cmComAudioPlayerPreloadLastSrc } from '$cm/entities/com-audio-player';
 import { cmComSelectedComwsAtom } from '$cm/entities/index';
 import { CmComSharedListActionInterpretator } from '$cm/features/com';
 import { cmAppActions } from '$cm/shared/const';
@@ -90,3 +91,7 @@ export const RenderEditorOnce = memo(() => {
 });
 
 cmInitialInvokes();
+
+// Последний текущий трек ставим в общий audio-элемент сразу на старте приложения:
+// preload='auto' начинает буферизацию заранее, поэтому play на странице плеера стартует без задержки.
+void cmComAudioPlayerPreloadLastSrc();

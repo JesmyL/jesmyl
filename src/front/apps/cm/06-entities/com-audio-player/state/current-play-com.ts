@@ -10,13 +10,19 @@ import { takeCmComAudioPlayerCachedBlob, takeCmComAudioPlayerTrackUrl } from '..
 
 const audioElement = document.createElement('audio');
 
-audioElement.preload = 'none';
-audioElement.addEventListener('error', () =>
+// preload='auto' запускает буферизацию сразу при установке src (уже в момент выбора трека),
+// поэтому к нажатию play сеть и буфер уже частично готовы и звук стартует без задержки
+audioElement.preload = 'auto';
+// preload-ошибка (трек не закэширован, а сети нет) до нажатия play молчит: пользователь ещё не просил воспроизведение.
+// Тост показываем, только когда play был намерен — тогда ошибка действительно важна для пользователя.
+audioElement.addEventListener('error', () => {
+  if (!cmComAudioPlayerIsPlayAtom.get()) return;
+
   toast(
     translateBase(BaseLocaleKey.CmAudioPlaybackError),
     makeToastKOMoodConfig(),
-  ),
-);
+  );
+});
 
 const comPlayerDurationAtom = atom(0.01);
 const comPlayerCurrentTimeAtom = atom(0);
@@ -54,6 +60,10 @@ audioElement.addEventListener('ended', () => {
 });
 
 audioElement.addEventListener('error', () => {
+  // тик ошибки поднимает авто-переход (adjacent-coms), поэтому preload-ошибка до play его не запускает:
+  // тик ставим только если play был намерен
+  if (!cmComAudioPlayerIsPlayAtom.get()) return;
+
   cmComAudioPlayerErrorTickAtom.set(true);
 });
 
@@ -105,29 +115,29 @@ const revokeCmComAudioPlayerTrackUrl = () => {
 };
 
 /**
- * Cache-first with a fast start: the network URL plays at once, and the service worker answers `/track/`
- * from `audio-cache` cache-first (a plain cached body, no range request), so sound starts after one round
- * trip. The full cached blob then swaps in for the offline guarantee, keeping the playhead and play state.
+ * Сначала смотрим в кэш: закэшированный трек играем сразу из локального object URL —
+ * без обхода service worker и без перезагрузки src посреди воспроизведения.
+ * Если кэша нет — ставим сетевой URL, который благодаря preload='auto' начинает буферизацию немедленно.
+ * Устаревший apply (id не совпал) отбрасываем, чтобы не перебить более новый выбор трека.
+ * После применения src возобновляем воспроизведение, если пользователь уже нажал play:
+ * нажатие могло прийти, пока src ещё применялся, и тогда SwitchIsPlay вышел бы по флагу isCmComAudioPlayerSrcApplying.
  */
 const applyCmComAudioPlayerSrc = async (src: CmAudioSrc, applyId: number) => {
-  const trackUrl = takeCmComAudioPlayerTrackUrl(src);
+  // закэшированный трек играет сразу из локального object URL (без похода в SW и без перезагрузки на ходу);
+  // иначе сетевой URL начинает буферизацию сразу благодаря preload='auto'
+  const blob = await takeCmComAudioPlayerCachedBlob(src).catch(retNull);
 
-  revokeCmComAudioPlayerTrackUrl();
-  audioElement.src = trackUrl;
+  if (applyId !== cmComAudioPlayerSrcApplyId) return;
+
+  if (blob?.size) {
+    trackObjectUrl = URL.createObjectURL(blob);
+    audioElement.src = trackObjectUrl;
+  } else {
+    audioElement.src = takeCmComAudioPlayerTrackUrl(src);
+  }
+
   isCmComAudioPlayerSrcApplying = false;
   if (cmComAudioPlayerIsPlayAtom.get()) void audioElement.play().catch(() => cmComAudioPlayerIsPlayAtom.set(false));
-
-  const blob = await takeCmComAudioPlayerCachedBlob(src).catch(retNull);
-  if (!blob?.size || applyId !== cmComAudioPlayerSrcApplyId || audioElement.src !== trackUrl) return;
-
-  const currentTime = audioElement.currentTime;
-  const isPlaying = !audioElement.paused;
-
-  trackObjectUrl = URL.createObjectURL(blob);
-  audioElement.src = trackObjectUrl;
-  audioElement.currentTime = currentTime;
-
-  if (isPlaying) void audioElement.play().catch(() => cmComAudioPlayerIsPlayAtom.set(false));
 };
 
 export const cmComAudioPlayerSetSrc = (src: CmAudioSrc | null) => {
@@ -162,6 +172,18 @@ export const cmComAudioPlayerSwitchIsPlay = (isPlay: boolean = audioElement.paus
   }
 
   if (isCmComAudioPlayerSrcApplying) return;
+
+  // play после preload-ошибки: элемент уже в состоянии ошибки, поэтому прямой play() сразу бы упал.
+  // Перезапускаем загрузку src тем же путём, что и SetSrc; apply сам возобновит play (isPlayAtom уже true),
+  // а если ошибка повторится — она прозвучит громко, потому что play теперь намерен.
+  if (audioElement.error) {
+    const src = cmComAudioPlayerPlaySrcAtom.get();
+    if (src == null) return;
+
+    isCmComAudioPlayerSrcApplying = true;
+    void applyCmComAudioPlayerSrc(src, ++cmComAudioPlayerSrcApplyId);
+    return;
+  }
 
   audioElement.play().catch(() => cmComAudioPlayerIsPlayAtom.set(false));
 };

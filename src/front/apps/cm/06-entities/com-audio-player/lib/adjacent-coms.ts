@@ -90,6 +90,24 @@ const takePlayedComw = (coms: IExportableCom[]) => {
 /** The com heard right now, resolved exactly like an advance: the playing src within the tracklist, else the last opened com. */
 export const takeCmComAudioPlayerPlayedComw = async () => takePlayedComw(await takeCmComAudioPlayerTracklistComs());
 
+/**
+ * Предзагружает трек последнего текущего com на старте приложения: общий audio-элемент получает src
+ * и благодаря preload='auto' сразу начинает буферизацию, поэтому play в плеере стартует без задержки.
+ * Повторный вызов безопасен: `cmComAudioPlayerSetSrc` выходит сразу, если src не изменился.
+ */
+export const cmComAudioPlayerPreloadLastSrc = async () => {
+  const comw = cmComAudioPlayerCurrentComwAtom.get() ?? cmComLastOpenComwAtom.get();
+
+  if (comw == null) return;
+
+  const com = await cmIDB.tb.coms.get(comw).catch(retNull);
+  const src = com?.al?.[0];
+
+  if (!src) return;
+
+  cmComAudioPlayerSetSrc(src);
+};
+
 const playCom = (
   comw: CmComWid,
   name: string,

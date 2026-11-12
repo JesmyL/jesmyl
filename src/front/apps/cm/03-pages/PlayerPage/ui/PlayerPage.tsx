@@ -551,11 +551,14 @@ const CmPlayerPageContent = ({
     if (src) {
       const playingSrc = cmComAudioPlayerPlaySrcAtom.get();
       const srcToPlay = playingSrc && com.audio?.some(audioSrc => audioSrc === playingSrc) ? playingSrc : src;
+      // SetSrc всегда сбрасывает play, поэтому «играло ли» фиксируем ДО него:
+      // иначе возобновление после смены трека/варианта не сработает
+      const wasPlaying = cmComAudioPlayerIsPlayAtom.get();
 
       cmComAudioPlayerSetCurrentComw(com.wid);
       cmComAudioPlayerSetSrc(srcToPlay);
       cmComAudioPlayerSetMediaTitle(com.name);
-      if (cmComAudioPlayerIsPlayAtom.get()) cmComAudioPlayerSwitchIsPlay(true);
+      cmComAudioPlayerSwitchIsPlay(wasPlaying);
       return;
     }
 
@@ -609,9 +612,13 @@ const CmPlayerPageContent = ({
                             className={twMerge(variantClass, variant === displaySrc && variantActiveClass)}
                             onClick={() => {
                               cmComAudioPlayerIsFromPlayerPageAtom.set(true);
+                              // состояние play фиксируем до SetSrc (он его сбрасывает),
+                              // чтобы смена варианта на ходу не останавливала воспроизведение
+                              const wasPlaying = cmComAudioPlayerIsPlayAtom.get();
+
                               cmComAudioPlayerSetSrc(variant);
                               cmComAudioPlayerSetMediaTitle(com.name);
-                              if (cmComAudioPlayerIsPlayAtom.get()) cmComAudioPlayerSwitchIsPlay(true);
+                              cmComAudioPlayerSwitchIsPlay(wasPlaying);
                             }}
                           >
                             {varianti + 1}
