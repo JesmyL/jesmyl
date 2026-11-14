@@ -7,7 +7,12 @@ import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContaine
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ScheduleWidgetAppInformButton } from '#widgets/schedule/app-inform/AppInform';
-import { indexIDB, indexIsPlayAnimationsAtom, indexIsShowPlayerInFooterAtom } from '$index/shared/state';
+import {
+  indexIDB,
+  indexIsDarkModeAtom,
+  indexIsPlayAnimationsAtom,
+  indexIsShowPlayerInFooterAtom,
+} from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
 import React from 'react';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
@@ -89,6 +94,15 @@ export function IndexSettingsPage() {
       title={translateBase(BaseLocaleKey.Animations)}
       onClick={indexIsPlayAnimationsAtom.do.toggle}
       box={<IconCheckbox valueAtom={indexIsPlayAnimationsAtom} />}
+    />,
+    // Пункт «Инверсия темы»: клик по строке переключает атом indexIsDarkModeAtom,
+    // а чекбокс в правой части отображает его текущее значение из localStorage.
+    <BrutalItem
+      key="dark-mode"
+      iconNode={<LazyIcon icon="PaintBoard" />}
+      title={translateBase(BaseLocaleKey.DarkMode)}
+      onClick={indexIsDarkModeAtom.do.toggle}
+      box={<IconCheckbox valueAtom={indexIsDarkModeAtom} />}
     />,
     <ScheduleWidgetAppInformButton key="app-inform" />,
     <BrutalItem

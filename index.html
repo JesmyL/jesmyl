@@ -42,7 +42,10 @@
     />
 
     <script>
-      const bgColor = localStorage.getItem('atom\\index:isDarkMode')?.startsWith('[true') ? '#000' : '#fff';
+      // Фон до загрузки приложения: берём тему устройства, а при включённой инверсии темы — инвертируем её
+      const isDeviceDark = matchMedia('(prefers-color-scheme: dark)').matches;
+      const isThemeInverse = localStorage.getItem('atom\\index:isThemeInverse')?.startsWith('[true');
+      const bgColor = isDeviceDark !== isThemeInverse ? '#000' : '#fff';
 
       document.documentElement.style.setProperty('background', bgColor, 'important');
       document.documentElement.style.setProperty('background-color', bgColor, 'important');

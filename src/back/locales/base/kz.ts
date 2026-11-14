@@ -714,6 +714,7 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.Animations]: 'Анимациялар',
   [BaseLocaleKey.Font]: 'Қаріп',
   [BaseLocaleKey.ShowErrors]: 'Қателерді көрсету',
+  [BaseLocaleKey.DarkMode]: 'Тақырыптың инверсиясы',
   [BaseLocaleKey.ChapterEmpty]: 'Бөлім бос',
   [BaseLocaleKey.ActualVersion]: ' - Өзекті',
   [BaseLocaleKey.RefreshApplicationConfirm]:

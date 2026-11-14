@@ -483,6 +483,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.Animations]: LocaleSimpleString;
   [BaseLocaleKey.Font]: LocaleSimpleString;
   [BaseLocaleKey.ShowErrors]: LocaleSimpleString;
+  [BaseLocaleKey.DarkMode]: LocaleSimpleString;
   [BaseLocaleKey.ColorGamut]: LocaleSimpleString;
   [BaseLocaleKey.ColorGamutMeadow]: LocaleSimpleString;
   [BaseLocaleKey.ColorGamutInk]: LocaleSimpleString;

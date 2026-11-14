@@ -726,6 +726,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.Animations]: 'Анімації',
   [BaseLocaleKey.Font]: 'Шрифт',
   [BaseLocaleKey.ShowErrors]: 'Показати помилки',
+  [BaseLocaleKey.DarkMode]: 'Інверсія теми',
   [BaseLocaleKey.ChapterEmpty]: 'Розділ порожній',
   [BaseLocaleKey.ActualVersion]: ' - Актуальна',
   [BaseLocaleKey.RefreshApplicationConfirm]: "Переконайтеся в наявності інтернет-з'єднання! Оновити додаток?",

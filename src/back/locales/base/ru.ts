@@ -719,6 +719,7 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.Animations]: 'Анимации',
   [BaseLocaleKey.Font]: 'Шрифт',
   [BaseLocaleKey.ShowErrors]: 'Показать ошибки',
+  [BaseLocaleKey.DarkMode]: 'Инверсия темы',
   [BaseLocaleKey.ChapterEmpty]: 'Раздел пуст',
   [BaseLocaleKey.ActualVersion]: ' - Актуальная',
   [BaseLocaleKey.RefreshApplicationConfirm]: 'Убедитесь в наличии интернет-соединения! Обновить приложение?',

@@ -725,6 +725,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.Animations]: 'Animations',
   [BaseLocaleKey.Font]: 'Font',
   [BaseLocaleKey.ShowErrors]: 'Show errors',
+  [BaseLocaleKey.DarkMode]: 'Theme inversion',
   [BaseLocaleKey.ChapterEmpty]: 'Section is empty',
   [BaseLocaleKey.ActualVersion]: ' - Actual',
   [BaseLocaleKey.RefreshApplicationConfirm]: 'Make sure you have an internet connection! Update the app?',
