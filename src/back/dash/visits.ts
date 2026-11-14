@@ -29,11 +29,11 @@ import {
   VisitsDashboardOnlineHours,
 } from 'shared/model/index/visitsDashboard';
 import { emptyFunc } from 'shared/utils';
-import { mapObjectEntries, objectKeys, objectLength } from 'shared/utils/object.utils';
+import { mapObjectEntries, objectKeys, objectLength, objectValues } from 'shared/utils/object.utils';
 import { escapeHtmlLazy } from 'shared/utils/string.utils';
 import { makeDiffSectionHtml } from 'shared/utils/textDiff';
 import { takeUserAuthName } from 'shared/utils/user.utils';
-import { onDashMessageStoredEvent } from './events';
+import { onDashMessageStoredEvent, onVisitStoredEvent } from './events';
 
 const mskShiftMs = 3 * howMillisecondsInHour;
 const hoursInDay = 24;
@@ -146,7 +146,19 @@ const takeTodayVisitRows = (now: number) =>
 const takeMinVersionRows = () =>
   db.select({ date: visitDayDB.date, minVersion: visitDayDB.minVersion }).from(visitDayDB).orderBy(visitDayDB.date);
 
-const makeDayStats = (date: string, rows: VisitRow[]) => {
+type DayStats = {
+  date: string;
+  total: number;
+  uniq: number;
+  visitors: PRecord<UserLogin, number>;
+  hours: number[];
+  versions: PRecord<number, number>;
+  minVersion: number | null;
+  anonVisits: number;
+  anonUniq: number;
+};
+
+const makeDayStats = (date: string, rows: VisitRow[]): DayStats => {
   const visitors: PRecord<UserLogin, number> = {};
   const anonDeviceIds = new Set<DeviceId>();
   const versions: PRecord<number, number> = {};
@@ -180,6 +192,19 @@ const makeDayStats = (date: string, rows: VisitRow[]) => {
     anonUniq,
   };
 };
+
+/** Пересобирает статистику дня из сохранённой строки visitDayDB в форме `makeDayStats`: анонимные визиты восстанавливаются как разница между общими значениями дня и суммами по авторизованным посетителям. */
+const makeDayStatsFromRow = (row: typeof visitDayDB.$inferSelect): ReturnType<typeof makeDayStats> => ({
+  date: row.date,
+  total: row.total,
+  uniq: row.uniq,
+  visitors: row.visitors,
+  hours: row.hours,
+  versions: row.versions,
+  minVersion: row.minVersion,
+  anonVisits: row.total - objectValues(row.visitors).reduce<number>((sum, count) => sum + (count ?? 0), 0),
+  anonUniq: row.uniq - objectLength(row.visitors),
+});
 
 const takeLocalizedDate = (date: string, langi: Langi | nil = Langi.Ru) =>
   new Date(date).toLocaleDateString(takeLangSystemCode(langi), {
@@ -317,14 +342,29 @@ const makeDayStatsLogPayload = async (stats: ReturnType<typeof makeDayStats>) =>
   return backLocalePayload(langi => makeDayStatsText(stats, visitors, langi));
 };
 
+/** Вставляет визит и сразу рассылает сохранённый ряд в live-канал дашборда: `returning` отдаёт ровно те поля, что рендерит вкладка VisitError, а личность пользователя подтягивается через `takeUserInfo` (при сбое — пустой `emptyDashUser`). */
 export const insertVisit = (login: UserLogin | nil, visitInfo: SokiVisit) =>
-  db.insert(visitDB).values({
-    l: login ?? null,
-    deviceId: visitInfo.deviceId || null,
-    url: visitInfo.urls[0] ?? '',
-    agent: visitInfo.agent,
-    v: visitInfo.version,
-  });
+  db
+    .insert(visitDB)
+    .values({
+      l: login ?? null,
+      deviceId: visitInfo.deviceId || null,
+      url: visitInfo.urls[0] ?? '',
+      agent: visitInfo.agent,
+      v: visitInfo.version,
+    })
+    .returning({ id: visitDB.id, l: visitDB.l, url: visitDB.url, v: visitDB.v, createdAt: visitDB.createdAt })
+    .then(async ([row]) => {
+      if (!row) return;
+
+      onVisitStoredEvent.invoke({
+        id: row.id,
+        createdAt: row.createdAt,
+        v: row.v,
+        url: row.url,
+        user: await takeUserInfo(row.l).catch(() => emptyDashUser),
+      });
+    });
 
 export const insertDashMessage = (
   message: string,
@@ -384,6 +424,13 @@ const sendVisitsDigest = async (stats: ReturnType<typeof makeDayStats>) => {
       }).catch(emptyFunc);
     }),
   );
+};
+
+/** Отправляет дайджест по сохранённой статистике дня из visitDayDB: дни без реальных визитов (total = 0) пропускаются. */
+const sendVisitsDigestFromDayDB = async (date: string) => {
+  const dayRow = (await db.select().from(visitDayDB).where(eq(visitDayDB.date, date)).limit(1)).at(0);
+
+  if (dayRow && dayRow.total > 0) await sendVisitsDigest(makeDayStatsFromRow(dayRow));
 };
 
 export const sendCurrentDashReport = async () => {
@@ -550,7 +597,11 @@ export const flushVisits = async (isNeedSendDigest: boolean) => {
 
     const finishedRows = rows.filter(it => it.createdAt < takeMskDayStartMs(Date.now()));
 
-    if (finishedRows.length === 0) return;
+    // Если завершённых рядов нет, но нужен дайджест (ночной запуск), он строится из сохранённой статистики вчерашнего дня: стартовый flushVisits(false) мог уже слить и удалить эти ряды.
+    if (finishedRows.length === 0) {
+      if (isNeedSendDigest) await sendVisitsDigestFromDayDB(takeMskDayKey(Date.now() - howMillisecondsInDay));
+      return;
+    }
 
     const lastId = finishedRows.at(-1)!.id;
     const rowsByDate = new Map<string, VisitRow[]>();
@@ -593,11 +644,13 @@ export const flushVisits = async (isNeedSendDigest: boolean) => {
       );
     }
 
+    // Дайджест строится по вчерашним рядам, пока они есть в visitDB; если стартовый flushVisits(false) уже слил и удалил их, берётся сохранённая статистика дня из visitDayDB и дайджест отправляется по ней (только для реального дня с визитами).
     if (isNeedSendDigest) {
       const finishedDate = takeMskDayKey(Date.now() - howMillisecondsInDay);
       const yesterdayRows = rowsByDate.get(finishedDate);
 
       if (yesterdayRows) await sendVisitsDigest(makeDayStats(finishedDate, yesterdayRows));
+      else await sendVisitsDigestFromDayDB(finishedDate);
     }
 
     await dbDelete(visitDB, lte(visitDB.id, lastId));

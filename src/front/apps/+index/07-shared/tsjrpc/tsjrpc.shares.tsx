@@ -15,7 +15,7 @@ import { localeIsLoadingAtom } from '$app/store/triggers';
 import type { InfiniteData } from '@tanstack/react-query';
 import { IndexTsjrpcSharesModel } from 'shared/api/tsjrpc/index/tsjrpc.methods.model';
 import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
-import { VisitsDashboard } from 'shared/model/index/visitsDashboard';
+import { DashMessageKind, VisitsDashboard } from 'shared/model/index/visitsDashboard';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
 import { indexDashMessageVersionAtom, indexIDB, indexUserAccessRightsAtom, indexVisitsOnlineAtom, lastUpdatedIconsMd5HashAtom } from '../state';
@@ -99,6 +99,23 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
           );
 
           indexDashMessageVersionAtom.set(version => version + 1);
+        },
+
+        /** Живой визит вставляется в начало кэша вкладки VisitError с дедупликацией по id; версия сообщений не бампается, чтобы не дёргать рефетч всех вкладок из-за каждого визита. */
+        dashVisit: async ({ visit }) => {
+          defaultQueryClient.setQueriesData<InfiniteData<VisitsDashboard, number>>(
+            { queryKey: ['visitsDashboardMessages', DashMessageKind.VisitError] },
+            data => {
+              const firstPage = data?.pages[0];
+
+              if (!firstPage || firstPage.visits.some(({ id }) => id === visit.id)) return data;
+
+              return {
+                ...data,
+                pages: [{ ...firstPage, visits: [visit, ...firstPage.visits] }, ...data.pages.slice(1)],
+              };
+            },
+          );
         },
 
         baseLocConf: async ({ base, mod }) => {

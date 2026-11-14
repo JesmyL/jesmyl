@@ -5,7 +5,7 @@ import { LocaleDynamic } from 'shared/model/+locale/dynamic';
 import { LocaleCmEditor } from 'shared/model/+locale/editor';
 import { ConstantsConfig } from 'shared/model/constantsConfig';
 import { IndexAccessScopeRules } from 'shared/model/index/access-rights';
-import { DashMessage } from 'shared/model/index/visitsDashboard';
+import { DashMessage, DashVisit } from 'shared/model/index/visitsDashboard';
 import { toast } from 'sonner';
 import { StameskaIconName } from 'stameska-icon/pack';
 import { StameskaIconKind, StameskaIconPack } from 'stameska-icon/utils';
@@ -41,6 +41,9 @@ export type IndexTsjrpcSharesModel = {
   }) => unknown;
 
   dashMessage: (args: { message: DashMessage }) => unknown;
+
+  /** Live-ряд нового визита: дашборд вставляет его в начало вкладки VisitError без ожидания опроса. */
+  dashVisit: (args: { visit: DashVisit }) => unknown;
 
   baseLocConf: (args: { base: LocaleBase<Langi>; mod: number }) => unknown;
   editorLocConf: (args: { editor: LocaleCmEditor; mod: number }) => unknown;

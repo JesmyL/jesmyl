@@ -4,7 +4,7 @@ import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { sokiServer } from 'back/complect/soki/SokiServer';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { markDashMessagesRead, sendCurrentDashReport, takeVisitsDashboard, updateVisitDayOnline } from 'back/dash/visits';
-import { onDashMessageStoredEvent } from 'back/dash/events';
+import { onDashMessageStoredEvent, onVisitStoredEvent } from 'back/dash/events';
 import { IndexDashTsjrpcModel } from 'shared/api/tsjrpc/index/dash.tsjrpc.model';
 import { Langi, LocalSokiAuth, SokiAuthLogin, UserId } from 'shared/api';
 import { validEmailRegExp } from 'shared/const/index/regExp.validators';
@@ -67,6 +67,11 @@ sokiServer.onClientCloseEvent.listen(client => dashWatchers.delete(client));
 
 onDashMessageStoredEvent.listen(message => {
   indexServerTsjrpcShareMethods.dashMessage({ message }, dashWatchers).catch(emptyFunc);
+});
+
+/** Новый визит уходит в тот же набор наблюдателей, что и сообщения: дашборд вставляет ряд в начало вкладки VisitError без ожидания 15-секундного опроса. */
+onVisitStoredEvent.listen(visit => {
+  indexServerTsjrpcShareMethods.dashVisit({ visit }, dashWatchers).catch(emptyFunc);
 });
 
 /**

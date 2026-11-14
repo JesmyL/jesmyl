@@ -1,7 +1,6 @@
 import { backLocaleError, localizeBackLocaleErrorPayload } from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { insertDashMessage, insertVisit } from 'back/dash/visits';
-import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { saveUserLangi, takeUserLangi } from 'back/complect/userLangiFileStore';
 import { ServerTSJRPCTool, tsjrpcBaseServerNext } from 'back/tsjrpc.base.server';
 import { DrizzleQueryError } from 'drizzle-orm';
@@ -159,17 +158,9 @@ export class SokiServer {
               if (this.visits.size !== previousOnline) this.notifyOnlineCount(login);
               this.onClientVisitChangeEvent.invoke(client);
 
-              if (!this.isLocalhost(visitInfo.urls[0])) {
-                if (!login) insertVisit(null, visitInfo).catch(emptyFunc);
-                else
-                  takeUserTiny({ l: login }, false)
-                    .then(user => {
-                      if (user?.r === 'TOP') return;
-
-                      insertVisit(login, visitInfo).catch(emptyFunc);
-                    })
-                    .catch(emptyFunc);
-              }
+              // Логируем посещение всех нелокальных визитов, включая пользователей с ролью TOP.
+              if (!this.isLocalhost(visitInfo.urls[0]))
+                insertVisit(login, visitInfo).catch(emptyFunc);
             }
           };
 
