@@ -224,7 +224,8 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         getFreshAppVersion: async () => ({ value: appVersionFileStore.getValue().num }),
         getIndexValues: async () => ({ value: valuesFileStore.getValue() }),
 
-        getAccessRightTitles: async () => ({ value: takeAccessRightTitles() }),
+        // Заголовки прав доступа отдаём на языке подключения администратора.
+        getAccessRightTitles: async (_, { visitInfo }) => ({ value: takeAccessRightTitles(visitInfo?.langi) }),
         getUserInfoDict: async () => {
           const userInfoDict: PRecord<UserLogin, UserInfoUnsecure> = {};
 
