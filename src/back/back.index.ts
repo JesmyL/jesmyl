@@ -7,6 +7,7 @@ import { cmServerTsjrpcBase } from './apps/cm/tsjrpc.base';
 import { initSchedulePushInform } from './apps/index/schedules/app-inform/schedule-informer';
 import { initVisitsDigest } from './apps/index/schedules/visits-digest/visits-digest';
 import { indexServerTsjrpcBase } from './apps/index/tsjrpc.base';
+import { indexDashTsjrpcServer } from './apps/index/tsjrpc.base/dash.tsjrpc.base';
 import { questionerAdminServerTsjrpcBase } from './apps/q/tsjrpc/admin.tsjrpc.base';
 import { questionerUserServerTsjrpcBase } from './apps/q/tsjrpc/user.tsjrpc.base';
 import { storagesServerTsjrpcBase } from './apps/storages/tsjrpc.base';
@@ -33,6 +34,7 @@ iife(async () => {
   questionerAdminServerTsjrpcBase.$$register();
   questionerUserServerTsjrpcBase.$$register();
   indexServerTsjrpcBase.$$register();
+  indexDashTsjrpcServer.$$register();
 
   initSchedulePushInform();
   initUserLangiFileStore().catch(emptyFunc);

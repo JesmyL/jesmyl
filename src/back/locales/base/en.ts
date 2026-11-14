@@ -873,4 +873,8 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
 
   ...baseLocaleTemplate(BaseLocaleKey.NumberSymbols)`$n; symbol${FUNCTION('dec')('$n', '', 's')}`,
 
+  [BaseLocaleKey.PushTestSendTooltip]: 'Send test push',
+
+  // Название страницы и пункта меню «Пользователи».
+  [BaseLocaleKey.Users]: 'Users',
 });

@@ -472,4 +472,11 @@ export const backLocalesKz: Record<BackLocaleKey, string> = {
   [BackLocaleKey.OgSchedule]: 'Іс-шара "$t"',
   [BackLocaleKey.SchListCatMentorsDefaultTitle]: 'Тәлімгерлер',
   [BackLocaleKey.SchListCatMembersDefaultTitle]: 'Қатысушылар',
+  [BackLocaleKey.DashPushNoSubscriptions]: 'Пайдаланушының PUSH хабарламаларына жазылымы жоқ',
+  [BackLocaleKey.DashPushCheckText]: 'PUSH хабарламаларын тексеру',
+  // PUSH-тексеру мәтіндері фронтқа тек серверлік payload түрінде жетеді.
+  [BackLocaleKey.PushCheckSent]: 'Хабарлама жіберілді',
+  [BackLocaleKey.PushSubscriptionsAbsent]: 'PUSH хабарламаларына жазылымдар жоқ',
+  [BackLocaleKey.PushCheckSentToDevices]: `$n; құрылғыға жіберілді`,
+  [BackLocaleKey.PushCheckMuted]: 'Пайдаланушының PUSH хабарламалары өшірілген',
 };

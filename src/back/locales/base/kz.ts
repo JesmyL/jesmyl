@@ -862,4 +862,8 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.PushNotifications]: 'Push хабарламалары',
 
   [BaseLocaleKey.NumberSymbols]: '$n; таңба',
+  [BaseLocaleKey.PushTestSendTooltip]: 'Тестілік PUSH жіберу',
+
+  // Название страницы и пункта меню «Пользователи».
+  [BaseLocaleKey.Users]: 'Пайдаланушылар',
 });

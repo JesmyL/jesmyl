@@ -49,17 +49,6 @@ export function IndexSettingsPage() {
       </Link>,
 
       <Link
-        key="access-rights"
-        to="/!other/$appName/settings/rights"
-        params={{ appName }}
-      >
-        <BrutalItem
-          iconNode={<LazyIcon icon="UserGroup" />}
-          title={translateBase(BaseLocaleKey.AccessRights)}
-        />
-      </Link>,
-
-      <Link
         key="noun-prons"
         to="/!other/$appName/settings/noun_prons"
         params={{ appName }}

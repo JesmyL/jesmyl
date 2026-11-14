@@ -1,5 +1,4 @@
 import { translateBase } from '#basis/locale';
-import { Accordion } from '#shared/components/ui/accordion';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { Modal, ModalBody, ModalHeader, usePrompt } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
@@ -13,18 +12,21 @@ import {
   indexOpenAccessRoleRedactorAtom,
 } from '$index/shared/state/atoms';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc/tsjrpc.methods';
+import { useQuery } from '@tanstack/react-query';
 import { atom, useAtomValue } from 'atomaric';
 import { useEffect, useMemo, useState } from 'react';
-import type { UserInfoUnsecure } from 'shared/api/complect/soki.model';
+import type { UserInfoUnsecure, UserLogin } from 'shared/api/complect/soki.model';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsNotNil } from 'shared/utils/checkIs';
-import { checkUserScopeAccessRight } from 'shared/utils/index/utils';
+import { checkUserScopeAccessRight, makeTopAccessRights } from 'shared/utils/index/utils';
 import { objectEntries, objectKeys, objectLength } from 'shared/utils/object.utils';
 import { takeUserAuthName } from 'shared/utils/user.utils';
 import { twMerge } from 'tailwind-merge';
-import { IndexAccessRightsUpdateTable } from './AccessRightsUpdateTable';
-import { IndexAccessRightsUserRoleSelector } from './UserRoleSelector';
+import { IndexUserListAccessRightsUpdateTable } from './AccessRightsUpdateTable';
+import { IndexUserListAccessRightsUserPushCheck } from './UserPushCheck';
+import { IndexUserListAccessRightsUserRoleSelector } from './UserRoleSelector';
 
+// Собирает строку для поиска по пользователю: имя, логины, данные авторизации и роль.
 const takeUserSearchText = (userInfo: UserInfoUnsecure) =>
   [
     userInfo.l,
@@ -40,6 +42,7 @@ const takeUserSearchText = (userInfo: UserInfoUnsecure) =>
     .join(' ')
     .toLowerCase();
 
+// Сортирует пользователей так, чтобы сначала шли обладатели роли, а внутри группы — по имени.
 const compareUsersByRoleThenName = (
   [loginA, infoA]: [string, UserInfoUnsecure | nil],
   [loginB, infoB]: [string, UserInfoUnsecure | nil],
@@ -47,14 +50,23 @@ const compareUsersByRoleThenName = (
   Number(!infoA?.r) - Number(!infoB?.r) ||
   (takeUserAuthName(infoA?.uauth) || loginA).localeCompare(takeUserAuthName(infoB?.uauth) || loginB);
 
-export function IndexAccessRightsPage() {
+export function IndexUserListPage() {
   const userInfoDict = useAtomValue(indexAppUserInfoDictAtom);
   const roleInfoDict = useAtomValue(indexAppUserRoleInfoDictAtom);
+  // Заголовки скоупов и правил нужны для фабрикации полной карты прав роли TOP;
+  // ключ совпадает с запросом таблицы прав, поэтому данные берутся из её кэша без лишнего вызова.
+  const { data: accessRightTitles } = useQuery({
+    queryKey: ['getAccessRightTitles'],
+    queryFn: () => indexTsjrpcClientMethods.getAccessRightTitles(),
+  });
   const prompt = usePrompt();
   const [searchTermAtom] = useState(() => atom(''));
+  // Логин пользователя, для которого открыт нижний попап с правами и PUSH-проверкой.
+  const [selectedUserLoginAtom] = useState(() => atom<UserLogin | null>(null));
   // Флаг открытия нижнего попапа с дополнительными действиями по ролям.
   const [isMoreOpenAtom] = useState(() => atom(false));
   const searchTerm = useAtomValue(searchTermAtom).trim().toLowerCase();
+  // Отфильтрованный и отсортированный список пользователей пересчитывается только при смене данных или поиска.
   const userEntries = useMemo(
     () =>
       objectEntries(userInfoDict)
@@ -66,6 +78,7 @@ export function IndexAccessRightsPage() {
     [userInfoDict, searchTerm],
   );
 
+  // При входе на страницу подтягиваем пользователей и роли, чтобы список и таблицы прав были полными.
   useEffect(() => {
     (async () => {
       indexAppUserInfoDictAtom.set(await indexTsjrpcClientMethods.getUserInfoDict());
@@ -77,72 +90,43 @@ export function IndexAccessRightsPage() {
     <>
       <PageContainerConfigurer
         className="index-access-rights"
-        headTitle={translateBase(BaseLocaleKey.AccessRights)}
+        headTitle={translateBase(BaseLocaleKey.Users)}
         onMoreClick={isMoreOpenAtom.set}
         content={
           <>
+            {/* Поиск по пользователям: фильтрует список по имени, логинам и роли. */}
             <DebouncedSearchInput
               className="debounced-searcher round-styled mb-2"
               placeholder={translateBase(BaseLocaleKey.Search)}
               termAtom={searchTermAtom}
             />
 
-            <Accordion.Root
-              type="single"
-              collapsible
-            >
+            {/* Список пользователей: строка занимает всю ширину списка, содержимое центрируется текстом; клик открывает попап с правами и PUSH-проверкой. */}
+            <div className="flex flex-col gap-1">
               {userEntries.map(([userLogin, userInfo]) => {
                 if (!userInfo) return null;
 
                 return (
-                  <Accordion.Item
+                  <button
                     key={userLogin}
-                    value={userLogin}
+                    className="pointer block w-full rounded-lg px-2 py-2 text-center even:bg-x2/40"
+                    onClick={() => selectedUserLoginAtom.set(userLogin)}
                   >
-                    <Accordion.Trigger>
-                      <span className="flex gap-3">
-                        <span className={twMerge(objectLength(userInfo) < 2 && 'opacity-70')}>
-                          {takeUserAuthName(userInfo.uauth)}
-                        </span>
-                        {userInfo.r && <span className="text-x7">({userInfo.r})</span>}
-                      </span>
-                    </Accordion.Trigger>
-                    <Accordion.Content>
-                      <IndexAccessRightsUserRoleSelector
-                        userLogin={userLogin}
-                        userInfo={userInfo}
-                      />
-
-                      <div className="ml-3">
-                        <IndexAccessRightsUpdateTable
-                          takeIsChecked={(scope, rule, operation) =>
-                            checkUserScopeAccessRight(
-                              userInfo.r ? roleInfoDict?.[userInfo.r]?.r : null,
-                              userInfo.r === 'TOP' ? { ...userInfo.rights, general: { ALL: 15 } } : userInfo.rights,
-                              scope as never,
-                              rule,
-                              operation,
-                            )
-                          }
-                          takeRuleClassName={(scope, rule) =>
-                            twMerge(checkIsNotNil(userInfo.rights?.[scope as never]?.[rule]) && 'text-x7')
-                          }
-                          onChange={({ operation, rule, scope }) =>
-                            indexTsjrpcClientMethods.updateUserAccessRight({
-                              login: userLogin,
-                              operation,
-                              rule,
-                              scope,
-                            })
-                          }
-                        />
-                      </div>
-                    </Accordion.Content>
-                  </Accordion.Item>
+                    <span
+                      className={twMerge(
+                        'inline-block max-w-full truncate align-middle',
+                        objectLength(userInfo) < 2 && 'opacity-70',
+                      )}
+                    >
+                      {takeUserAuthName(userInfo.uauth)}
+                    </span>
+                    {userInfo.r && <span className="text-x7"> ({userInfo.r})</span>}
+                  </button>
                 );
               })}
-            </Accordion.Root>
+            </div>
 
+            {/* Редактор ролей доступен из нижнего попапа кнопки «ещё» в шапке страницы. */}
             <Modal
               openAtom={indexOpenAccessRoleRedactorAtom}
               className="z-1000"
@@ -153,7 +137,7 @@ export function IndexAccessRightsPage() {
                     <ModalHeader>{role}</ModalHeader>
                     {role && (
                       <ModalBody>
-                        <IndexAccessRightsUpdateTable
+                        <IndexUserListAccessRightsUpdateTable
                           onChange={({ operation, rule, scope }) =>
                             indexTsjrpcClientMethods.updateRoleAccessRight({ operation, role, rule, scope })
                           }
@@ -170,6 +154,53 @@ export function IndexAccessRightsPage() {
           </>
         }
       />
+
+      {/* Попап выбранного пользователя: селектор роли, таблица прав и PUSH-проверка его устройств. */}
+      <WithAtomTruthfulValue atom={selectedUserLoginAtom}>
+        {userLogin => {
+          const userInfo = userInfoDict?.[userLogin];
+          if (!userInfo) return null;
+
+          return (
+            <BottomPopup
+              title={takeUserAuthName(userInfo.uauth)}
+              onClose={selectedUserLoginAtom.reset}
+            >
+              <IndexUserListAccessRightsUserRoleSelector
+                userLogin={userLogin}
+                userInfo={userInfo}
+              />
+
+              <div className="ml-3">
+                <IndexUserListAccessRightsUpdateTable
+                  takeIsChecked={(scope, rule, operation) =>
+                    checkUserScopeAccessRight(
+                      userInfo.r ? roleInfoDict?.[userInfo.r]?.r : null,
+                      userInfo.r === 'TOP' ? makeTopAccessRights(accessRightTitles) : userInfo.rights,
+                      scope as never,
+                      rule,
+                      operation,
+                    )
+                  }
+                  takeRuleClassName={(scope, rule) =>
+                    twMerge(checkIsNotNil(userInfo.rights?.[scope as never]?.[rule]) && 'text-x7')
+                  }
+                  onChange={({ operation, rule, scope }) =>
+                    indexTsjrpcClientMethods.updateUserAccessRight({
+                      login: userLogin,
+                      operation,
+                      rule,
+                      scope,
+                    })
+                  }
+                />
+              </div>
+
+              <IndexUserListAccessRightsUserPushCheck userId={userInfo.id} />
+            </BottomPopup>
+          );
+        }}
+      </WithAtomTruthfulValue>
 
       {/* Нижний попап дополнительных действий: создание роли и переход к редактированию существующих. */}
       <WithAtomTruthfulValue atom={isMoreOpenAtom}>

@@ -868,4 +868,8 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.PushNotifications]: 'Push-уведомления',
 
   ...baseLocaleTemplate(BaseLocaleKey.NumberSymbols)`$n; символ${FUNCTION('dec')('$n', '', 'а', 'ов')}`,
+  [BaseLocaleKey.PushTestSendTooltip]: 'Отправить тестовый PUSH',
+
+  // Название страницы и пункта меню «Пользователи».
+  [BaseLocaleKey.Users]: 'Пользователи',
 });

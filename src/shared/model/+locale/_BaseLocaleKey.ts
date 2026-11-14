@@ -785,4 +785,9 @@ export const enum BaseLocaleKey {
 
   TextTransfer = 764,
   TextTransferPc = 765,
+
+  PushTestSendTooltip = 786,
+
+  // Отдельный ключ для названия страницы и пункта меню «Пользователи»: ключ прав доступа не трогаем.
+  Users = 804,
 }

@@ -783,6 +783,11 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.CmUkulele]: LocaleSimpleString;
   [BaseLocaleKey.TextTransfer]: LocaleSimpleString;
   [BaseLocaleKey.TextTransferPc]: LocaleSimpleString;
+
+  [BaseLocaleKey.PushTestSendTooltip]: LocaleSimpleString;
+
+  // Название страницы и пункта меню «Пользователи».
+  [BaseLocaleKey.Users]: LocaleSimpleString;
 };
 
 export type UsedBaseLocaleKey = BaseLocaleKey;

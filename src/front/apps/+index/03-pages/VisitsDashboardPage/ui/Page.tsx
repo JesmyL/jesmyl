@@ -22,7 +22,7 @@ import { makeToastKOMoodConfig, makeToastOKMoodConfig, useConfirm } from '#share
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { indexDashMessageVersionAtom, indexVisitsOnlineAtom } from '$index/shared/state';
-import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
+import { indexDashTsjrpcClient, indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
@@ -481,7 +481,7 @@ const DashboardMessages = () => {
   const messagesQuery = useInfiniteQuery({
     queryKey: ['visitsDashboardMessages', activeKind],
     queryFn: ({ pageParam }) =>
-      indexTsjrpcClientMethods.getVisitsDashboard_v1({
+      indexDashTsjrpcClient.getVisitsDashboard_v1({
         messages: { kind: activeKind, beforeId: pageParam || null },
       }),
     initialPageParam: 0,
@@ -509,7 +509,7 @@ const DashboardMessages = () => {
   }, [dashMessageVersion, queryClient]);
 
   const markAllRead = async (kind: DashMessageKind) => {
-    await indexTsjrpcClientMethods.markDashMessagesRead_v1({ kind });
+    await indexDashTsjrpcClient.markDashMessagesRead_v1({ kind });
     await messagesQuery.refetch();
   };
 
@@ -677,7 +677,7 @@ const DashboardEmailReportButton = () => {
     setIsSending(true);
 
     try {
-      const { sent, failed } = await indexTsjrpcClientMethods.sendDashEmailReport_v2();
+      const { sent, failed } = await indexDashTsjrpcClient.sendDashEmailReport_v2();
       if (!failed.length) {
         toast(translateEditorBase(EditorLocaleKey.VisitsReportSent, { e: sent.join(', ') }), makeToastOKMoodConfig());
         return;
@@ -714,7 +714,7 @@ const DashboardReportRecipients = () => {
   const queryClient = useQueryClient();
   const recipientsQuery = useQuery({
     queryKey: ['dashReportRecipients'],
-    queryFn: () => indexTsjrpcClientMethods.getDashReportRecipients(),
+    queryFn: () => indexDashTsjrpcClient.getDashReportRecipients(),
   });
   const recipients = recipientsQuery.data ?? {};
   const takeFreshestRecipients = () =>
@@ -726,7 +726,7 @@ const DashboardReportRecipients = () => {
     setIsSaving(true);
 
     try {
-      const saved = await indexTsjrpcClientMethods.setDashReportRecipients({ recipients: nextRecipients });
+      const saved = await indexDashTsjrpcClient.setDashReportRecipients({ recipients: nextRecipients });
       queryClient.setQueryData(['dashReportRecipients'], saved);
       toast(translateEditorBase(EditorLocaleKey.VisitsRecipientsSaved), makeToastOKMoodConfig());
       return true;
@@ -1156,7 +1156,7 @@ const DashboardBody = () => {
   const queryClient = useQueryClient();
   const { data } = useQuery({
     queryKey: ['visitsDashboard'],
-    queryFn: () => indexTsjrpcClientMethods.getVisitsDashboard_v1({}),
+    queryFn: () => indexDashTsjrpcClient.getVisitsDashboard_v1({}),
     refetchInterval: 15_000,
     staleTime: 0,
   });

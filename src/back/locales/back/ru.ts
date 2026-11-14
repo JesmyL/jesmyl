@@ -483,4 +483,11 @@ export const backLocalesRu: Record<BackLocaleKey, string> = {
   [BackLocaleKey.OgSchedule]: 'Мероприятие "$t"',
   [BackLocaleKey.SchListCatMentorsDefaultTitle]: 'Руководители',
   [BackLocaleKey.SchListCatMembersDefaultTitle]: 'Участники',
+  [BackLocaleKey.DashPushNoSubscriptions]: 'У пользователя нет подписок на PUSH-уведомления',
+  [BackLocaleKey.DashPushCheckText]: 'Проверка PUSH-уведомлений',
+  // Тексты PUSH-проверки: приходят на фронт только как payload от сервера.
+  [BackLocaleKey.PushCheckSent]: 'Уведомление отправлено',
+  [BackLocaleKey.PushSubscriptionsAbsent]: 'Нет подписок на PUSH-уведомления',
+  [BackLocaleKey.PushCheckSentToDevices]: `Отправлено на $n; устройств${FUNCTION('dec')('$n', 'о', 'а', '')}`,
+  [BackLocaleKey.PushCheckMuted]: 'У пользователя приглушены PUSH-уведомления',
 };

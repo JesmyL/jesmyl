@@ -437,4 +437,12 @@ export const enum BackLocaleKey {
   SchLiveStreamStartedNoSchw = 434,
   SchLiveAnonymousName = 435,
   CmComSystemChange = 436,
+  DashPushNoSubscriptions = 437,
+  DashPushCheckText = 438,
+
+  // Тексты PUSH-проверки переехали из base-локали: фронт получает их только готовым payload'ом от сервера.
+  PushCheckSent = 440,
+  PushSubscriptionsAbsent = 441,
+  PushCheckSentToDevices = 442,
+  PushCheckMuted = 443,
 }

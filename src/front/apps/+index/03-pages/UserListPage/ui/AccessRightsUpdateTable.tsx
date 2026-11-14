@@ -7,7 +7,7 @@ import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { accessRightsCRUDOperations, CRUDOperation } from 'shared/utils/index/utils';
 import { mapObjectEntries } from 'shared/utils/object.utils';
 
-export function IndexAccessRightsUpdateTable({
+export function IndexUserListAccessRightsUpdateTable({
   onChange,
   takeRuleClassName,
   takeIsChecked,

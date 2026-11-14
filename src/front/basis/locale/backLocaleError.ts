@@ -1,37 +1,13 @@
 import { Langi } from 'shared/api';
-import { checkIsArray, checkIsObject, checkIsString } from 'shared/utils/checkIs';
+import { checkIsString } from 'shared/utils/checkIs';
 import { parseChangesMessage } from 'shared/utils/changesMessage';
+import {
+  type BackLocaleErrorPayload,
+  parseBackLocaleErrorPayload,
+} from 'shared/utils/locale/backLocaleError';
 import { escapeHtmlLazy } from 'shared/utils/string.utils';
 import { stringTemplater } from 'shared/utils/stringTemplater';
 import { makeDiffSectionHtml } from 'shared/utils/textDiff';
-
-type BackLocaleErrorPayload = {
-  title: [string, string, string, string];
-  intr?: Record<string, unknown>;
-};
-
-/** Разбирает кандидата в payload; `null` означает, что это не валидный payload, и вызывающий код пробует следующее вхождение. */
-const parseBackLocaleErrorPayload = (str: string): BackLocaleErrorPayload | null => {
-  let parsed: unknown;
-
-  try {
-    parsed = JSON.parse(str);
-  } catch {
-    return null;
-  }
-
-  // Проверка формы: payload — объект ровно с четырьмя строками заголовка и необязательным объектом интерполяции.
-  if (!checkIsObject(parsed)) return null;
-
-  const { title, intr } = parsed;
-  if (!checkIsArray(title) || title.length !== 4) return null;
-
-  const [ru, ua, kz, en] = title;
-  if (!checkIsString(ru) || !checkIsString(ua) || !checkIsString(kz) || !checkIsString(en)) return null;
-  if (intr !== undefined && !checkIsObject(intr)) return null;
-
-  return { title: [ru, ua, kz, en], intr };
-};
 
 /** Метка, на которую при шаблонизации заменяется `$j` legacy-payload'а: готовая HTML-разметка диффа вставляется после неё, чтобы ни шаблонизатор, ни экранирование её не портили. */
 const diffHtmlPlaceholder = '\u0000diff-html\u0000';

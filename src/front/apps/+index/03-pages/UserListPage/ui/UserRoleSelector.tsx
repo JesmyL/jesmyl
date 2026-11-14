@@ -7,7 +7,7 @@ import { SokiAuthLogin, UserInfoUnsecure } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { objectKeys } from 'shared/utils/object.utils';
 
-export const IndexAccessRightsUserRoleSelector = ({
+export const IndexUserListAccessRightsUserRoleSelector = ({
   userInfo,
   userLogin,
 }: {

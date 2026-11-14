@@ -877,4 +877,8 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
 
   ...baseLocaleTemplate(BaseLocaleKey.NumberSymbols)`$n; символ${FUNCTION('dec')('$n', '', 'и', 'ів')}`,
 
+  [BaseLocaleKey.PushTestSendTooltip]: 'Надіслати тестовий PUSH',
+
+  // Название страницы и пункта меню «Пользователи».
+  [BaseLocaleKey.Users]: 'Користувачі',
 });

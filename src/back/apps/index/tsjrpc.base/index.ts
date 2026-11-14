@@ -56,7 +56,6 @@ import {
   throwIfNoEditorLocaleAccess,
 } from './lib/requestFreshes';
 import { indexTSJRPCBaseUpdateUserAccessRight } from './lib/updateUserAccessRight';
-import { indexTSJRPCBaseVisitsDashboard } from './lib/visitsDashboard';
 
 const deviceIdPostfixSymbols = '!@#$%^&*;.,?/|\\+=-'.split('');
 
@@ -97,7 +96,6 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         ...indexTSJRPCBaseRequestFreshes,
         ...indexTSJRPCBaseRequestFreshLocales,
         ...indexTSJRPCBaseGetIconExistsPacks,
-        ...indexTSJRPCBaseVisitsDashboard,
         ...indexTSJRPCBaseOtherFooterIcons,
 
         updateUserAccessRole: async ({ login, role }, { auth: userAuth }) => {

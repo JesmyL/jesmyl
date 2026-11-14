@@ -89,7 +89,10 @@ export const takeBaseLanguageAtom = lazyInit(() => {
   return confAtom;
 });
 
-/** Словарь редактора запрашивается только при наличии права на редактирование `cm` или на дашборд. */
+/**
+ * Словарь редактора запрашивается только при наличии права на редактирование `cm`, на дашборд
+ * или полного доступа `general.ALL`: страница пользователей использует `translateEditorBase(PushCheck)`.
+ */
 export const takeEditorLanguageAtom = lazyInit(() => {
   const confAtom = atom({}) as never as Atom<LocaleCmEditor>;
 
@@ -99,10 +102,12 @@ export const takeEditorLanguageAtom = lazyInit(() => {
   });
 
   hydrateLocaleAtom('E', confAtom, cachedEditorLocale => {
+    // Полный доступ `general.ALL` открывает страницу пользователей, которой тоже нужен словарь редактора.
     const rights = indexUserAccessRightsAtom.get();
     const hasEditorAccess =
       checkUserScopeAccessRight(null, rights, 'cm', 'EDIT') ||
-      checkUserScopeAccessRight(null, rights, 'dash', 'DASH');
+      checkUserScopeAccessRight(null, rights, 'dash', 'DASH') ||
+      checkUserScopeAccessRight(null, rights, 'general', 'ALL');
 
     // Отметка свежести переживает потерю кэша: без словаря её разница скроет словарь от сервера.
     if (hasEditorAccess && !objectLength(cachedEditorLocale)) runOnAppInit(requestFullLocales);

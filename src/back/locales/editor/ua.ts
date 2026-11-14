@@ -223,4 +223,5 @@ export const localeEditorUa = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsReportRecipients]: 'Отримувачі звіту',
   [EditorLocaleKey.VisitsReportRecipientRemoveConfirm]: 'Видалити отримувача $e зі списку?',
   [EditorLocaleKey.VisitsRecipientsSaved]: 'Список отримувачів збережено',
+  [EditorLocaleKey.PushCheck]: 'Перевірка PUSH-повідомлень',
 });

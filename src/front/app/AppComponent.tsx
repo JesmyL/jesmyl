@@ -26,6 +26,7 @@ import { CmComOrders } from 'shared/const/cm/Com/parents/20-Orders';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { extractNumber, iife } from 'shared/utils';
 import { checkIsNumber } from 'shared/utils/checkIs';
+import { localizeBackLocaleErrorPayload } from 'shared/utils/locale/backLocaleError';
 import { forEachObjectEntries, objectLength } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
 import { appInitialInvokes } from './app-initial-invokes';
@@ -80,7 +81,8 @@ export const AppComponent = () => {
     });
 
     const errorMessageListener = soki.onInvokeErrorMessageEvent.listen(errorMessage => {
-      toast(errorMessage, makeToastKOMoodConfig());
+      // Сервер может прислать нелокализованный payload, поэтому локализуем его на клиенте языком текущей сессии.
+      toast(localizeBackLocaleErrorPayload(errorMessage, currentLangiAtom.get()), makeToastKOMoodConfig());
     });
 
     return () => {

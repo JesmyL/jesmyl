@@ -85,6 +85,21 @@ export function IndexActionsPage() {
             </Link>
           )}
 
+          {/* Раздел «Пользователи»: управление правами пользователей, доступен только при полном доступе general.ALL. */}
+          {!checkAccess('general', 'ALL') || (
+            <Link
+              to="/!other/$appName/actions/users"
+              params={{ appName }}
+              className="w-full"
+            >
+              <BrutalItem
+                iconNode={<LazyIcon icon="UserGroup" />}
+                title={translateBase(BaseLocaleKey.Users)}
+                idPostfix="access-rights"
+              />
+            </Link>
+          )}
+
           <IconConfigurator
             key="pick-icon"
             className="w-full"

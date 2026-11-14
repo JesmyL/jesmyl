@@ -226,4 +226,5 @@ export const localeEditorEn = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsReportRecipients]: 'Report recipients',
   [EditorLocaleKey.VisitsReportRecipientRemoveConfirm]: 'Remove recipient $e from the list?',
   [EditorLocaleKey.VisitsRecipientsSaved]: 'Recipients saved',
+  [EditorLocaleKey.PushCheck]: 'PUSH notification check',
 });

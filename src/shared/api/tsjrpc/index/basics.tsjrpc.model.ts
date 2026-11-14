@@ -11,7 +11,6 @@ import { Bool } from 'shared/enums';
 import { ConstantsConfig } from 'shared/model/constantsConfig';
 import { IndexAppAccessRightTitles, UserAccessRole, UserAccessRoleInfo } from 'shared/model/index/access-rights';
 import { IndexValues } from 'shared/model/index/other';
-import { VisitsDashboard, DashMessageKind, VisitsDashboardMessagesArgs } from 'shared/model/index/visitsDashboard';
 import { CRUDOperation } from 'shared/utils/index/utils';
 import { StameskaIconName } from 'stameska-icon/pack';
 import { StameskaIconPack } from 'stameska-icon/utils';
@@ -51,11 +50,6 @@ export type IndexTsjrpcModel = {
 
   getFreshAppVersion: () => number;
   getIndexValues: () => IndexValues;
-  getVisitsDashboard_v1: (args?: { messages?: VisitsDashboardMessagesArgs }) => VisitsDashboard;
-  markDashMessagesRead_v1: (args: { kind: DashMessageKind }) => PRecord<DashMessageKind, number>;
-  sendDashEmailReport_v2: () => { sent: string[]; failed: string[] };
-  getDashReportRecipients: () => PRecord<string, Langi>;
-  setDashReportRecipients: (args: { recipients: PRecord<string, Langi> }) => PRecord<string, Langi>;
 
   getOtherFooterIcons: () => { iconNames: StameskaIconName[] };
   updateOtherFooterIcons: (args: { iconNames: StameskaIconName[] }) => { iconNames: StameskaIconName[] };

@@ -1,6 +1,6 @@
 import { IndexAccessScopeRules, IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
 import { checkIsArray } from '../checkIs';
-import { objectKeys } from '../object.utils';
+import { mapObjectEntries, objectFromEntries, objectKeys } from '../object.utils';
 
 const operations = {
   C: 0,
@@ -14,6 +14,21 @@ export const accessRightsCRUDOperations = objectKeys(operations);
 
 const isUser_HasNo_AccessRights = false;
 const isUser_Has_AccessRights = true;
+
+// Роль TOP всемогуща: сервер в makeUserAccessRights выдаёт 15 (все CRUD-операции)
+// для каждого правила каждого скоупа, кроме служебного info; повторяем ту же фабрикацию
+// на клиенте, чтобы чекбоксы прав отображались отмеченными.
+export const makeTopAccessRights = (rightTitles: IndexAppAccessRightTitles | nil): IndexAccessScopeRules =>
+  objectFromEntries(
+    mapObjectEntries(rightTitles, (scope, rules) => [
+      scope,
+      objectFromEntries(
+        objectKeys(rules)
+          .filter(rule => rule !== 'info')
+          .map(rule => [rule, 15] as const),
+      ),
+    ]),
+  );
 
 export const checkUserScopeAccessRight = <
   Scope extends keyof IndexAppAccessRightTitles,

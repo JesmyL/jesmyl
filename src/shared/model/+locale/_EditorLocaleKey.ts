@@ -211,4 +211,5 @@ export const enum EditorLocaleKey {
   VisitsReportNotSent = 206,
   VisitsReportRecipientRemoveConfirm = 207,
   CmEditorHardChordsComplexHint = 208,
+  PushCheck = 209,
 }

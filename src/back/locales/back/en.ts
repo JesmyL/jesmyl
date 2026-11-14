@@ -465,4 +465,11 @@ export const backLocalesEn: Record<BackLocaleKey, string> = {
   [BackLocaleKey.OgSchedule]: 'Schedule "$t"',
   [BackLocaleKey.SchListCatMentorsDefaultTitle]: 'Mentors',
   [BackLocaleKey.SchListCatMembersDefaultTitle]: 'Members',
+  [BackLocaleKey.DashPushNoSubscriptions]: 'User has no PUSH notification subscriptions',
+  [BackLocaleKey.DashPushCheckText]: 'PUSH notification check',
+  // PUSH-check texts arrive at the front only as a server-side payload.
+  [BackLocaleKey.PushCheckSent]: 'Notification sent',
+  [BackLocaleKey.PushSubscriptionsAbsent]: 'No PUSH notification subscriptions',
+  [BackLocaleKey.PushCheckSentToDevices]: `Sent to $n; device${FUNCTION('dec')('$n', '', 's')}`,
+  [BackLocaleKey.PushCheckMuted]: 'This user has pushes muted',
 };

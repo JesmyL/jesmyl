@@ -40,8 +40,8 @@ import { Route as otherAppNameSchsIndexImport } from './tree/!other.$appName/sch
 import { Route as otherAppNameAuthIndexImport } from './tree/!other.$appName/auth/index'
 import { Route as otherAppNameActionsIndexImport } from './tree/!other.$appName/actions/index'
 import { Route as CmLiCatCatwImport } from './tree/cm/li/cat.$catw'
-import { Route as otherAppNameSettingsRightsImport } from './tree/!other.$appName/settings/rights'
 import { Route as otherAppNameSettingsConsoleImport } from './tree/!other.$appName/settings/console'
+import { Route as otherAppNameActionsUsersImport } from './tree/!other.$appName/actions/users'
 import { Route as otherAppNameActionsTextTransferImport } from './tree/!other.$appName/actions/text-transfer'
 import { Route as otherAppNameActionsDashImport } from './tree/!other.$appName/actions/dash'
 import { Route as StoragesIRackwSumIndexImport } from './tree/storages/i/$rackw/sum/index'
@@ -437,20 +437,18 @@ const CmLiCatCatwRoute = CmLiCatCatwImport.update({
   getParentRoute: () => CmRouteRoute,
 } as any)
 
-const otherAppNameSettingsRightsRoute = otherAppNameSettingsRightsImport.update(
-  {
-    id: '/settings/rights',
-    path: '/settings/rights',
-    getParentRoute: () => otherAppNameRouteRoute,
-  } as any,
-)
-
 const otherAppNameSettingsConsoleRoute =
   otherAppNameSettingsConsoleImport.update({
     id: '/settings/console',
     path: '/settings/console',
     getParentRoute: () => otherAppNameRouteRoute,
   } as any)
+
+const otherAppNameActionsUsersRoute = otherAppNameActionsUsersImport.update({
+  id: '/actions/users',
+  path: '/actions/users',
+  getParentRoute: () => otherAppNameRouteRoute,
+} as any)
 
 const otherAppNameActionsTextTransferRoute =
   otherAppNameActionsTextTransferImport.update({
@@ -881,18 +879,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof otherAppNameActionsTextTransferImport
       parentRoute: typeof otherAppNameRouteImport
     }
+    '/!other/$appName/actions/users': {
+      id: '/!other/$appName/actions/users'
+      path: '/actions/users'
+      fullPath: '/!other/$appName/actions/users'
+      preLoaderRoute: typeof otherAppNameActionsUsersImport
+      parentRoute: typeof otherAppNameRouteImport
+    }
     '/!other/$appName/settings/console': {
       id: '/!other/$appName/settings/console'
       path: '/settings/console'
       fullPath: '/!other/$appName/settings/console'
       preLoaderRoute: typeof otherAppNameSettingsConsoleImport
-      parentRoute: typeof otherAppNameRouteImport
-    }
-    '/!other/$appName/settings/rights': {
-      id: '/!other/$appName/settings/rights'
-      path: '/settings/rights'
-      fullPath: '/!other/$appName/settings/rights'
-      preLoaderRoute: typeof otherAppNameSettingsRightsImport
       parentRoute: typeof otherAppNameRouteImport
     }
     '/cm/li/cat/$catw': {
@@ -1231,8 +1229,8 @@ interface otherAppNameRouteRouteChildren {
   otherAppNameIndexRoute: typeof otherAppNameIndexRoute
   otherAppNameActionsDashRoute: typeof otherAppNameActionsDashRoute
   otherAppNameActionsTextTransferRoute: typeof otherAppNameActionsTextTransferRoute
+  otherAppNameActionsUsersRoute: typeof otherAppNameActionsUsersRoute
   otherAppNameSettingsConsoleRoute: typeof otherAppNameSettingsConsoleRoute
-  otherAppNameSettingsRightsRoute: typeof otherAppNameSettingsRightsRoute
   otherAppNameSettingsConstantLazyRoute: typeof otherAppNameSettingsConstantLazyRoute
   otherAppNameActionsIndexRoute: typeof otherAppNameActionsIndexRoute
   otherAppNameAuthIndexRoute: typeof otherAppNameAuthIndexRoute
@@ -1247,8 +1245,8 @@ const otherAppNameRouteRouteChildren: otherAppNameRouteRouteChildren = {
   otherAppNameIndexRoute: otherAppNameIndexRoute,
   otherAppNameActionsDashRoute: otherAppNameActionsDashRoute,
   otherAppNameActionsTextTransferRoute: otherAppNameActionsTextTransferRoute,
+  otherAppNameActionsUsersRoute: otherAppNameActionsUsersRoute,
   otherAppNameSettingsConsoleRoute: otherAppNameSettingsConsoleRoute,
-  otherAppNameSettingsRightsRoute: otherAppNameSettingsRightsRoute,
   otherAppNameSettingsConstantLazyRoute: otherAppNameSettingsConstantLazyRoute,
   otherAppNameActionsIndexRoute: otherAppNameActionsIndexRoute,
   otherAppNameAuthIndexRoute: otherAppNameAuthIndexRoute,
@@ -1307,8 +1305,8 @@ export interface FileRoutesByFullPath {
   '/storages/i': typeof StoragesIIndexLazyRoute
   '/!other/$appName/actions/dash': typeof otherAppNameActionsDashRoute
   '/!other/$appName/actions/text-transfer': typeof otherAppNameActionsTextTransferRoute
+  '/!other/$appName/actions/users': typeof otherAppNameActionsUsersRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
-  '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
   '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
   '/!other/$appName/settings/constant': typeof otherAppNameSettingsConstantLazyRoute
   '/!other/$appName/actions': typeof otherAppNameActionsIndexRoute
@@ -1369,8 +1367,8 @@ export interface FileRoutesByTo {
   '/storages/i': typeof StoragesIIndexLazyRoute
   '/!other/$appName/actions/dash': typeof otherAppNameActionsDashRoute
   '/!other/$appName/actions/text-transfer': typeof otherAppNameActionsTextTransferRoute
+  '/!other/$appName/actions/users': typeof otherAppNameActionsUsersRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
-  '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
   '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
   '/!other/$appName/settings/constant': typeof otherAppNameSettingsConstantLazyRoute
   '/!other/$appName/actions': typeof otherAppNameActionsIndexRoute
@@ -1440,8 +1438,8 @@ export interface FileRoutesById {
   '/storages/i/': typeof StoragesIIndexLazyRoute
   '/!other/$appName/actions/dash': typeof otherAppNameActionsDashRoute
   '/!other/$appName/actions/text-transfer': typeof otherAppNameActionsTextTransferRoute
+  '/!other/$appName/actions/users': typeof otherAppNameActionsUsersRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
-  '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
   '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
   '/!other/$appName/settings/constant': typeof otherAppNameSettingsConstantLazyRoute
   '/!other/$appName/actions/': typeof otherAppNameActionsIndexRoute
@@ -1512,8 +1510,8 @@ export interface FileRouteTypes {
     | '/storages/i'
     | '/!other/$appName/actions/dash'
     | '/!other/$appName/actions/text-transfer'
+    | '/!other/$appName/actions/users'
     | '/!other/$appName/settings/console'
-    | '/!other/$appName/settings/rights'
     | '/cm/li/cat/$catw'
     | '/!other/$appName/settings/constant'
     | '/!other/$appName/actions'
@@ -1573,8 +1571,8 @@ export interface FileRouteTypes {
     | '/storages/i'
     | '/!other/$appName/actions/dash'
     | '/!other/$appName/actions/text-transfer'
+    | '/!other/$appName/actions/users'
     | '/!other/$appName/settings/console'
-    | '/!other/$appName/settings/rights'
     | '/cm/li/cat/$catw'
     | '/!other/$appName/settings/constant'
     | '/!other/$appName/actions'
@@ -1642,8 +1640,8 @@ export interface FileRouteTypes {
     | '/storages/i/'
     | '/!other/$appName/actions/dash'
     | '/!other/$appName/actions/text-transfer'
+    | '/!other/$appName/actions/users'
     | '/!other/$appName/settings/console'
-    | '/!other/$appName/settings/rights'
     | '/cm/li/cat/$catw'
     | '/!other/$appName/settings/constant'
     | '/!other/$appName/actions/'
@@ -1791,8 +1789,8 @@ export const routeTree = rootRoute
         "/!other/$appName/",
         "/!other/$appName/actions/dash",
         "/!other/$appName/actions/text-transfer",
+        "/!other/$appName/actions/users",
         "/!other/$appName/settings/console",
-        "/!other/$appName/settings/rights",
         "/!other/$appName/settings/constant",
         "/!other/$appName/actions/",
         "/!other/$appName/auth/",
@@ -1959,12 +1957,12 @@ export const routeTree = rootRoute
       "filePath": "!other.$appName/actions/text-transfer.tsx",
       "parent": "/!other/$appName"
     },
-    "/!other/$appName/settings/console": {
-      "filePath": "!other.$appName/settings/console.tsx",
+    "/!other/$appName/actions/users": {
+      "filePath": "!other.$appName/actions/users.tsx",
       "parent": "/!other/$appName"
     },
-    "/!other/$appName/settings/rights": {
-      "filePath": "!other.$appName/settings/rights.tsx",
+    "/!other/$appName/settings/console": {
+      "filePath": "!other.$appName/settings/console.tsx",
       "parent": "/!other/$appName"
     },
     "/cm/li/cat/$catw": {

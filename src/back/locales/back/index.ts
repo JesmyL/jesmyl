@@ -1,7 +1,14 @@
 import { Langi } from 'shared/api';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
-import { checkIsArray, checkIsObject, checkIsString } from 'shared/utils/checkIs';
 import { parseChangesMessage } from 'shared/utils/changesMessage';
+import {
+  type BackLocaleErrorPayload,
+  checkIsBackLocalePayload,
+  localizeBackLocaleErrorPayload,
+  localizeBackLocalePayloads,
+  parseBackLocaleErrorPayload,
+  takeBackLocaleErrorTitleText,
+} from 'shared/utils/locale/backLocaleError';
 import { translateBaseDefine } from 'shared/utils/locale/translate';
 import { stringTemplater } from 'shared/utils/stringTemplater';
 import { escapeHtmlLazy } from 'shared/utils/string.utils';
@@ -9,6 +16,9 @@ import { backLocalesEn } from './en';
 import { backLocalesKz } from './kz';
 import { backLocalesRu } from './ru';
 import { backLocalesUa } from './ua';
+
+// Payload-хелперы переехали в shared, но прежние импорты из `back/locales/back` продолжают работать.
+export { checkIsBackLocalePayload, localizeBackLocaleErrorPayload, localizeBackLocalePayloads };
 
 const backLocales: { [L in Langi]: Record<BackLocaleKey, string> } = {
   [Langi.Ru]: backLocalesRu,
@@ -46,63 +56,6 @@ export const backLocaleError = (key: BackLocaleKey, interp?: Record<string, stri
     langiList.map(langi => backLocales[langi][key]),
     interp,
   );
-
-type BackLocaleErrorPayload = {
-  title: [string, string, string, string];
-  intr?: Record<string, unknown>;
-};
-
-const parseBackLocaleErrorPayload = (str: string): BackLocaleErrorPayload | null => {
-  let parsed: unknown;
-
-  try {
-    parsed = JSON.parse(str);
-  } catch {
-    return null;
-  }
-
-  if (!checkIsObject(parsed)) return null;
-
-  const { title, intr } = parsed;
-  if (!checkIsArray(title) || title.length !== 4) return null;
-
-  const [ru, ua, kz, en] = title;
-  if (!checkIsString(ru) || !checkIsString(ua) || !checkIsString(kz) || !checkIsString(en)) return null;
-  if (intr !== undefined && !checkIsObject(intr)) return null;
-
-  return { title: [ru, ua, kz, en], intr };
-};
-
-/** True when the string is a self-contained localized payload (see `backLocalePayload`/`backLocaleError`). */
-export const checkIsBackLocalePayload = (str: string) => parseBackLocaleErrorPayload(str) !== null;
-
-/** Текст заголовка после подстановки `intr`: все значения идут через общий шаблонизатор. */
-const takeBackLocaleErrorTitleText = (payload: BackLocaleErrorPayload, titleIndex: number) => {
-  const title = payload.title[titleIndex];
-
-  if (!payload.intr) return title;
-
-  return stringTemplater(title, payload.intr);
-};
-
-/** Translates the payload into the given language; returns the input unchanged when it is not a payload. */
-export const localizeBackLocaleErrorPayload = (str: string, langi: Langi | nil): string => {
-  const payload = parseBackLocaleErrorPayload(str);
-  if (!payload) return str;
-
-  return takeBackLocaleErrorTitleText(payload, langi ?? Langi.Ru);
-};
-
-/** Replaces every embedded payload segment with its single text for the given language; returns the input unchanged when there is none. */
-export const localizeBackLocalePayloads = (str: string, langi: Langi | nil): string =>
-  str
-    .split('\n\n')
-    .map(segment => {
-      const payload = parseBackLocaleErrorPayload(segment);
-
-      return payload ? takeBackLocaleErrorTitleText(payload, langi ?? Langi.Ru) : segment;
-    })
-    .join('\n\n');
 
 /**
  * HTML письма для явного конверта Changes: заголовок `t` локализуется и экранируется,

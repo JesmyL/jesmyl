@@ -230,4 +230,5 @@ export const localeEditorRu = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsReportRecipients]: 'Получатели отчёта',
   [EditorLocaleKey.VisitsReportRecipientRemoveConfirm]: 'Удалить получателя $e из списка?',
   [EditorLocaleKey.VisitsRecipientsSaved]: 'Список получателей сохранён',
+  [EditorLocaleKey.PushCheck]: 'Проверка PUSH-уведомлений',
 });
