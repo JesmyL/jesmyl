@@ -7,6 +7,9 @@ export const cmEditorCacheName = 'cm-editor-cache';
 /** Editor chunks are built with this `assets/` prefix (see chunkFileNames in vite.config.ts). */
 const cmEditorChunkUrlMarker = '/assets/cm-edit-';
 
+/** Сообщение, которое клиент шлёт в service worker: закэшировать все закрытые правами чанки редактора. */
+export const cmEditorCacheMessageType = 'CACHE_CM_EDITOR_CHUNKS';
+
 let purgeJob: Promise<void> = Promise.resolve();
 
 /** Drops editor keys from an unrelated bucket, e.g. `cm-edit-` chunks precached by an older service-worker version. */

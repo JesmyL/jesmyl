@@ -4,7 +4,7 @@ import { soki } from '#shared/soki';
 import { schTsjrpcBaseClient } from '#widgets/schedule/tsjrpc/tsjrpc.base';
 import { bibleInitialInvokes } from '$bible/shared/lib';
 import { bibleTsjrpcBaseClient } from '$bible/shared/lib/tsjrpc';
-import { purgeCmEditorCache } from '$cm/shared/lib/cmEditorCache';
+import { cmEditorCacheMessageType, purgeCmEditorCache } from '$cm/shared/lib/cmEditorCache';
 import { cmShareTsjrpcBaseClient } from '$cm/shared/tsjrpc';
 import {
   authIDB,
@@ -25,12 +25,27 @@ import { storagesStoresSharesTsjrpcBaseClient } from '$storages/shared/tsjrpc/ts
 import { DeviceId } from 'shared/api';
 import { IndexAccessScopeRules } from 'shared/model/index/access-rights';
 import { checkUserScopeAccessRight } from 'shared/utils/index/utils';
+import { preloadUngatedLazyModules } from './lazy-preloads';
 import { appInitEvent } from './store/triggers';
 
 const hasCmEditRight = (rights: IndexAccessScopeRules) => checkUserScopeAccessRight(null, rights, 'cm', 'EDIT');
 
 let isCmEditorInvokesRun = false;
 let isCmEditorCachePurgeScheduled = false;
+
+/**
+ * Первая загрузка страницы ещё не управляется service worker, поэтому ждём `ready`
+ * и шлём сообщение активному воркеру: он скачает все `cm-edit-` чанки в кэш редактора.
+ */
+const cacheCmEditorChunksInServiceWorker = () => {
+  if (!('serviceWorker' in navigator)) return;
+
+  const message = { type: cmEditorCacheMessageType };
+
+  void navigator.serviceWorker.ready
+    .then(registration => (navigator.serviceWorker.controller ?? registration.active)?.postMessage(message))
+    .catch(() => null);
+};
 
 const runCmEditorInvokes = () => {
   if (isCmEditorInvokesRun) return;
@@ -48,12 +63,14 @@ const runCmEditorInvokes = () => {
 };
 
 /**
- * Editors preload the gated slice and the editor page chunk; non-editors drop its cached chunks
- * (bootstrap, revocation, logout).
+ * Редакторы прогревают закрытый правами слайс и чанк страницы редактора и просят service worker
+ * закэшировать все `cm-edit-` чанки; остальные сбрасывают их из кэша (бутстрап, отзыв прав, логаут).
  */
 const syncCmEditorAccess = (rights: IndexAccessScopeRules) => {
   if (hasCmEditRight(rights)) {
     isCmEditorCachePurgeScheduled = false;
+    // Права могли выдать повторно после очистки кэша — прогрев запускаем на каждое подтверждение.
+    cacheCmEditorChunksInServiceWorker();
     runCmEditorInvokes();
     return;
   }
@@ -78,6 +95,9 @@ export const appInitialInvokes = () => {
   questionerAdminTsjrpcClientBase.$$register();
 
   bibleInitialInvokes();
+
+  // Прогреваем ленивые модули без правовых ограничений сразу после старта приложения.
+  preloadUngatedLazyModules();
 
   syncCmEditorAccess(rights);
   // Rights may arrive after bootstrap (fresh login or server push `refreshAccessRights`),

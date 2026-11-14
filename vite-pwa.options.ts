@@ -11,11 +11,9 @@ export const vitePWAOptions = {
   manifestFilename,
   injectManifest: {
     globPatterns: ['**/*.{js,wasm,css,html}'],
-    manifestTransforms: [
-      // `cm-edit-` chunks are built only from the rights-gated CmRedactor slice
-      // (see chunkFileNames in vite.config.ts), so they must not be pre-downloaded on install.
-      manifest => ({ manifest: manifest.filter(({ url }) => !url.startsWith('assets/cm-edit-')) }),
-    ],
+    // `cm-edit-` чанки остаются в манифесте (см. chunkFileNames в vite.config.ts),
+    // но в precache на установке не попадают: src/sw.ts сам отделяет их от общего списка
+    // и скачивает только по запросу редактора, чтобы не-редакторы их не получали.
   },
   manifest: {
     name: 'Jesus my Lord',

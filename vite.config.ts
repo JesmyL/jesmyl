@@ -49,8 +49,8 @@ export default defineConfig(({ mode }) => {
             // from the manifest (which filters `cm-edit-`).
             if (chunkInfo.isEntry) return 'assets/[name]-[hash].js';
 
-            // Prefixed chunks are excluded from the precache manifest and cached on
-            // first actual CmRedactor visit instead (see vite-pwa.options.ts).
+            // Чанки с префиксом не попадают в precache при установке и кэшируются только
+            // по запросу редактора (см. src/sw.ts), поэтому остальные их вообще не скачивают.
             const isCmEditorChunk = chunkInfo.moduleIds.some(
               id => id.includes('apps/cm+editor/') || id.includes('routes/tree/cm/edit/'),
             );
