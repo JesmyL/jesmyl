@@ -64,6 +64,8 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
         <CmEditorComEditBpm
           def={ccom.beatsPerMinute}
           onChange={value => cmEditComClientTsjrpcMethods.setBpM({ comw: ccom.wid, value })}
+          onRemove={() => cmEditComClientTsjrpcMethods.setBpM({ comw: ccom.wid, value: null })}
+          isRemovable={ccom.bpm != null}
         />
       )}
       <Dropdown

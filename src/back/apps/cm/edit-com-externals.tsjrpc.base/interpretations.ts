@@ -13,6 +13,7 @@ import { CmComMod, CmComWid, IExportableCom, IExportableComInterpretation, Sched
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
 import { CmCom } from 'shared/const/cm/Com';
 import { Bool } from 'shared/enums';
+import { checkIsNil } from 'shared/utils/checkIs';
 import { checkIsEq } from 'shared/utils/checkIsEq';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { objectLength } from 'shared/utils/object.utils';
@@ -57,7 +58,18 @@ export const cmEditComExternalsTsjrpcInterpretations = () =>
       if (checkIsEq(com.b, intp.b)) delete intp.b;
     }),
 
+    /**
+     * BPM интерпретации: nil сбрасывает собственный override интерпретации,
+     * чтобы метроном снова унаследовал bpm самого кома (или дефолтные 120).
+     */
     bpmIntp: updateInterptetation((com, intp, { bpm }) => {
+      if (checkIsNil(bpm)) {
+        // nil — удаляем override, чтобы значение бралось из кома
+        delete intp.bpm;
+        return;
+      }
+
+      // Числовое значение нормализуем; совпавшее с bpm кома не храним как override
       intp.bpm = takeCorrectMetronomeBpm(bpm);
 
       if (takeCorrectMetronomeBpm(com.bpm) === takeCorrectMetronomeBpm(intp.bpm)) delete intp.bpm;

@@ -16,6 +16,7 @@ import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
 import { Bool } from 'shared/enums';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { itNNil } from 'shared/utils';
+import { checkIsNil } from 'shared/utils/checkIs';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
 import { cmComLanguages } from 'shared/utils/cm/com/const';
 import { textLinesLengthIncorrects } from 'shared/utils/cm/com/textLinesLengthIncorrects';
@@ -41,8 +42,9 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         setBpM: modifyCom('COM_MAIN', (com, { value }) => {
+          // nil снимает com-bpm: колонка nullable, поэтому метроном возвращается к дефолтным 120
           const prev = com.bpm;
-          const next = (com.bpm = takeCorrectMetronomeBpm(value));
+          const next = (com.bpm = checkIsNil(value) ? null : takeCorrectMetronomeBpm(value));
 
           return simpleUpdateReverse(backLocaleError(BackLocaleKey.CmComBpmSet), next, { was: prev, new: next });
         }),

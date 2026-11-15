@@ -58,6 +58,8 @@ export const CmEditorEditComEventInterpretationFullContentInner = ({
           <CmEditorComEditBpm
             def={com.beatsPerMinute}
             onChange={bpm => cmEditComExternalsClientTsjrpcMethods.bpmIntp({ comw: com.wid, bpm, schw })}
+            onRemove={() => cmEditComExternalsClientTsjrpcMethods.bpmIntp({ comw: com.wid, bpm: null, schw })}
+            isRemovable={com.intp?.bpm != null}
           />
 
           <CmEditorComEditTransposition

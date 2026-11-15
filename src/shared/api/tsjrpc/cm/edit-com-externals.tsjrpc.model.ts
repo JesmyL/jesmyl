@@ -31,7 +31,7 @@ export type CmEditComExternalsTsjrpcModel = {
   /** is bemoled interpretation value */
   bemoleIntp: (args: { schw: ScheduleWidgetWid; comw: CmComWid; val: TonType }) => void;
   /** com bpm interpretation */
-  bpmIntp: (args: { schw: ScheduleWidgetWid; comw: CmComWid; bpm: number }) => void;
+  bpmIntp: (args: { schw: ScheduleWidgetWid; comw: CmComWid; bpm: number | nil }) => void;
 
   getSchEvHistory: (args: { schw: ScheduleWidgetWid; dayi: ScheduleWidgetDayi }) => ScheduleComPackHistoryItem[];
   getSchEvHistoryStatistic: (args: { schw: ScheduleWidgetWid; dayi: ScheduleWidgetDayi }) => {

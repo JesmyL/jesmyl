@@ -23,7 +23,7 @@ export type CmEditComTsjrpcModel = {
 
   rename: SimpleComValueSetter<string>;
   destroy: (args: { comw: CmComWid }) => string;
-  setBpM: SimpleComValueSetter<number>;
+  setBpM: SimpleComValueSetter<number | nil>;
   setMeterSize: SimpleComValueSetter<CmComMetricNum>;
   changeLanguage: SimpleComValueSetter<number>;
   changeDrive: SimpleComValueSetter<CmComIntensityLevel>;
