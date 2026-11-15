@@ -498,6 +498,8 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.ChapterEmpty]: LocaleSimpleString;
   [BaseLocaleKey.ActualVersion]: LocaleSimpleString;
   [BaseLocaleKey.RefreshApplicationConfirm]: LocaleSimpleString;
+  [BaseLocaleKey.Update]: LocaleSimpleString;
+  [BaseLocaleKey.NewVersionAvailable]: StringTemplaterInterpolation<{ v: number }>;
   [BaseLocaleKey.RefreshOnFinish]: StringTemplaterInterpolation<{ c: number }>;
   [BaseLocaleKey.IncorrectCode]: LocaleSimpleString;
   [BaseLocaleKey.Configs]: LocaleSimpleString;

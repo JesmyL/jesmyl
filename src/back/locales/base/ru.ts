@@ -723,6 +723,8 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.ChapterEmpty]: 'Раздел пуст',
   [BaseLocaleKey.ActualVersion]: ' - Актуальная',
   [BaseLocaleKey.RefreshApplicationConfirm]: 'Убедитесь в наличии интернет-соединения! Обновить приложение?',
+  [BaseLocaleKey.Update]: 'Обновить',
+  [BaseLocaleKey.NewVersionAvailable]: 'Доступна новая версия приложения — v$v',
   [BaseLocaleKey.RefreshOnFinish]:
     'Этим действием вы полностью удалите внутренности приложения - оффлайн режим будет недоступен некоторое время. Для подтверждения данного действия введите код $c в поле ввода',
   [BaseLocaleKey.IncorrectCode]: 'Некорректный код',

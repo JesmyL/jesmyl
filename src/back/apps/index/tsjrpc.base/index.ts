@@ -1,4 +1,6 @@
 import { backLocaleError, backLocalePayload, translateBackTexts } from 'back/locales/back';
+import { translateBaseTexts } from 'back/locales/base';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { cmShareServerTsjrpcMethods } from 'back/apps/cm/tsjrpc.shares';
 import { makeTwiceKnownName } from 'back/complect/makeTwiceKnownName';
@@ -87,6 +89,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
       beforeEachTools: {
         getIndexValues: { minVersion: 0 },
         getFreshAppVersion: { minVersion: 0 },
+        getFreshAppVersion_1: { minVersion: 0 },
         getDeviceId: { minVersion: 0 },
       },
       methods: {
@@ -221,7 +224,17 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
           return await indexAuthByTgUser(BackLocaleKey.DashAuthViaTgCode)({ user }, tool);
         },
 
-        getFreshAppVersion: async () => ({ value: appVersionFileStore.getValue().num }),
+        // Текст тоста о новой версии формируем на сервере на языке визита,
+        // чтобы фронт показал готовую строку без собственного перевода.
+        getFreshAppVersion: async (_, { visitInfo }) => {
+          const num = appVersionFileStore.getValue().num;
+          const text = translateBaseTexts(visitInfo?.langi, BaseLocaleKey.NewVersionAvailable, { v: num });
+
+          return { value: { num, text } };
+        },
+
+        /** @deprecated Используй getFreshAppVersion */
+        getFreshAppVersion_1: async () => ({ value: appVersionFileStore.getValue().num }),
         getIndexValues: async () => ({ value: valuesFileStore.getValue() }),
 
         // Заголовки прав доступа отдаём на языке подключения администратора.

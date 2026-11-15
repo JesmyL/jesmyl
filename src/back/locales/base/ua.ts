@@ -730,6 +730,8 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.ChapterEmpty]: 'Розділ порожній',
   [BaseLocaleKey.ActualVersion]: ' - Актуальна',
   [BaseLocaleKey.RefreshApplicationConfirm]: "Переконайтеся в наявності інтернет-з'єднання! Оновити додаток?",
+  [BaseLocaleKey.Update]: 'Оновити',
+  [BaseLocaleKey.NewVersionAvailable]: 'Доступна нова версія додатка — v$v',
   [BaseLocaleKey.RefreshOnFinish]:
     'Цєю дією ви повністю видалите нутрощі додатка - офлайн-режим буде недоступний деякий час, для підтвердження цієї дії введіть код $c у поле введення',
   [BaseLocaleKey.IncorrectCode]: 'Некоректний код',

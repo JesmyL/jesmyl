@@ -729,6 +729,8 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.ChapterEmpty]: 'Section is empty',
   [BaseLocaleKey.ActualVersion]: ' - Actual',
   [BaseLocaleKey.RefreshApplicationConfirm]: 'Make sure you have an internet connection! Update the app?',
+  [BaseLocaleKey.Update]: 'Update',
+  [BaseLocaleKey.NewVersionAvailable]: 'A new app version is available — v$v',
   [BaseLocaleKey.RefreshOnFinish]:
     'This action will completely erase the app internals - offline mode will be unavailable for some time. To confirm this action enter the code $c in the input field',
   [BaseLocaleKey.IncorrectCode]: 'Incorrect code',

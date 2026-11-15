@@ -48,7 +48,9 @@ export type IndexTsjrpcModel = {
   authByEmailOTP: (args: { otp: number }) => { token: string; auth: LocalSokiAuth };
   bindEmailByOTP: (args: { otp: number }) => { fioOrNick: string };
 
-  getFreshAppVersion: () => number;
+  getFreshAppVersion: () => { num: number; text: string };
+  /** @deprecated Используй getFreshAppVersion */
+  getFreshAppVersion_1: () => number;
   getIndexValues: () => IndexValues;
 
   getOtherFooterIcons: () => { iconNames: StameskaIconName[] };

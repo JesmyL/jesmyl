@@ -46,7 +46,7 @@ export const IndexAppVersionLabel = ({ className }: { className?: string }) => {
     <div
       className={twMerge(
         'flex gap-2',
-        appVersion ? (jversion.num !== appVersion ? 'text-xKO' : 'text-x7') : '',
+        appVersion ? (jversion.num !== appVersion.num ? 'text-xKO' : 'text-x7') : '',
         className,
       )}
     >
@@ -54,10 +54,10 @@ export const IndexAppVersionLabel = ({ className }: { className?: string }) => {
       {isVersionLoading ? (
         <TheIconLoading />
       ) : appVersion ? (
-        jversion.num === appVersion ? (
+        jversion.num === appVersion.num ? (
           translateBase(BaseLocaleKey.ActualVersion)
         ) : (
-          translateBase(BaseLocaleKey.NewVersion, { v: appVersion })
+          translateBase(BaseLocaleKey.NewVersion, { v: appVersion.num })
         )
       ) : (
         ''

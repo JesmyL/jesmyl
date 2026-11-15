@@ -1,6 +1,9 @@
+import { translateBase } from '#basis/locale';
 import { localeLastModifiedAtAtom } from '#basis/state/locale';
 import { otherFooterIconAtom } from '#basis/state/otherFooterIconAtom';
 import { soki } from '#shared/soki';
+import { reloadSW } from '#shared/sw-register';
+import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { schTsjrpcBaseClient } from '#widgets/schedule/tsjrpc/tsjrpc.base';
 import { bibleInitialInvokes } from '$bible/shared/lib';
 import { bibleTsjrpcBaseClient } from '$bible/shared/lib/tsjrpc';
@@ -23,8 +26,11 @@ import {
 import { questionerAdminTsjrpcClientBase } from '$q/shared/tsjrpc/admin.tsjrpc';
 import { storagesStoresSharesTsjrpcBaseClient } from '$storages/shared/tsjrpc/tsjrpc.base';
 import { DeviceId } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { IndexAccessScopeRules } from 'shared/model/index/access-rights';
 import { checkUserScopeAccessRight } from 'shared/utils/index/utils';
+import { jversion } from 'shared/values';
+import { toast } from 'sonner';
 import { preloadUngatedLazyModules } from './lazy-preloads';
 import { appInitEvent } from './store/triggers';
 
@@ -82,6 +88,31 @@ const syncCmEditorAccess = (rights: IndexAccessScopeRules) => {
   void purgeCmEditorCache().catch(() => (isCmEditorCachePurgeScheduled = false));
 };
 
+/**
+ * Проверка новой версии приложения при старте: запрашиваем серверную версию с таймаутом в 20 секунд
+ * и, если она отличается от текущей, показываем тост с кнопкой принудительного обновления.
+ */
+const checkFreshAppVersion = async () => {
+  try {
+    // Таймаут срабатывает только вместе с aborter: soketi запускает отмену запроса лишь при наличии aborter.
+    const freshVersion = await indexTsjrpcClientMethods.getFreshAppVersion(undefined, {
+      aborter: new AbortController(),
+      timeout: 20_000,
+    });
+
+    if (freshVersion.num === jversion.num) return;
+
+    toast(freshVersion.text, {
+      ...makeToastKOMoodConfig(),
+      // Тост держится до действия пользователя: исчезнувшее уведомление об обновлении бесполезно.
+      duration: Infinity,
+      action: { label: translateBase(BaseLocaleKey.Update), onClick: reloadSW },
+    });
+  } catch (_e) {
+    // Неудачная проверка версии не должна мешать старту приложения.
+  }
+};
+
 export const appInitialInvokes = () => {
   const rights = indexUserAccessRightsAtom.get();
 
@@ -93,6 +124,9 @@ export const appInitialInvokes = () => {
   cmShareTsjrpcBaseClient.$$register();
   storagesStoresSharesTsjrpcBaseClient.$$register();
   questionerAdminTsjrpcClientBase.$$register();
+
+  // Версию сверяем сразу после регистрации клиентов: запрос уйдёт, как только откроется соединение.
+  void checkFreshAppVersion();
 
   bibleInitialInvokes();
 

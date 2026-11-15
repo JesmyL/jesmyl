@@ -719,6 +719,8 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.ActualVersion]: ' - Өзекті',
   [BaseLocaleKey.RefreshApplicationConfirm]:
     'Интернет байланысы бар екеніне көз жеткізіңіз! Қосымшаны жаңарту керек пе?',
+  [BaseLocaleKey.Update]: 'Жаңарту',
+  [BaseLocaleKey.NewVersionAvailable]: 'Қосымшаның жаңа нұсқасы қолжетімді — v$v',
   [BaseLocaleKey.RefreshOnFinish]:
     'Бұл әрекет арқылы сіз қолданбаның ішкі деректерін толығымен жоясыз - офлайн режим белгілі бір уақытқа қолжетімсіз болады, бұл әрекетті растау үшін енгізу өрісіне $c кодын енгізіңіз',
   [BaseLocaleKey.IncorrectCode]: 'Қате код',
