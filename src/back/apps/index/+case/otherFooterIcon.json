@@ -186,8 +186,6 @@
     "StartUp01",
     "Sunglasses",
     "Surprise",
-    "SuperMarioToad",
-    "SuperMario",
     "TeaPod",
     "TennisBall",
     "TongueWinkLeft",
@@ -218,8 +216,9 @@
     "TravelBag",
     "TropicalStormTracks01",
     "Tulip",
-    "Trulli"
+    "Trulli",
+    "SuperMarioToad"
   ],
-  "icon": "SuperMario",
-  "m": 1794355605070
+  "icon": "FrenchFries01",
+  "m": 1794716490394
 }

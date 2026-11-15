@@ -35,7 +35,7 @@
     "E\nF#m\nA H E\nE\nF#m\nA H E",
     "E F#m/E E\nE F#m/E E\nE F#m/E E\nE F#m/E E\nF#m H\nE H/D# A/C#\nF#m H",
     "E C#m\nA E\nE C#m\nA E",
-    "E E E E"
+    "E E E E E"
   ],
   "c1": [
     "E A/E E\nE A/E E\nE A/E E\nE A/E E\nF#m H\nE H/D# A/C#\nF#m H",
@@ -43,7 +43,7 @@
     "E\nF#m\nA H E\nE\nF#m\nA H E",
     "E F#m/E E\nE F#m/E E\nE F#m/E E\nE F#m/E E\nF#m H\nE H/D# A/C#\nF#m H",
     "E C#m\nA E\nE C#m\nA E",
-    "E Esus4 E Esus4"
+    "E Esus4 E Esus4 E"
   ],
   "o": [
     { "c": 5, "k": 15, "r": 2, "w": 9 },
@@ -63,7 +63,7 @@
       "w": 2
     },
     { "c": 1, "k": 94, "p": [[2], [2], [1, 8, 15]], "t": 1, "w": 3 },
-    { "c": 5, "k": 80, "w": 11, "cre": 1794138152071 },
+    { "c": 5, "k": 80, "w": 11 },
     {
       "c": 0,
       "k": 39,
@@ -80,7 +80,7 @@
       "w": 4
     },
     { "c": 2, "k": 94, "p": [[2], [2], [1, 8, 15], [3], [2], [1, 8, 11]], "t": 3, "w": 5 },
-    { "a": 11, "w": 12, "cre": 1794138159385 },
+    { "a": 11, "w": 12 },
     {
       "c": 3,
       "k": 39,
