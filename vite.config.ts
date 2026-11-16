@@ -88,7 +88,8 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 3627,
       host: true,
-      // Тот же mkcert-серт, что и у бэка: браузеры уже доверяют локальному CA, промптов нет.
+      // Тот же mkcert-серт, что и у бэка: клиенты, установившие локальный CA, доверяют ему без промптов.
+      // Серт покрывает localhost и 192.168.1.59, поэтому с телефона https открывается без предупреждений.
       ...(isHttps && {
         https: {
           key: readFileSync('src/back/dev-certs/privkey.pem'),
