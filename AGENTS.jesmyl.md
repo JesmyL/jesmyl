@@ -94,6 +94,11 @@ Project-specific instructions for the jesmyl repo — read together with the uni
 - Contract words in `FUNCTION('dec')`/plural and `IF` constructions when the shared part is ~50% or more of the words; below that keep full words (e.g. `видим`/`невидим`, `song`/`songs` → `song${...'', 's'}` are contractible; do not contract pairs with less than half shared).
 - Locale entries must NEVER be given an empty string value `''` (e.g. `[BaseLocaleKey.CmComReplaceConfirm]: '',` is forbidden): for any locale key whose text is no longer needed (unused/unreferenced), instead mark the entry as `@deprecated #version`, where `#version` is the current `num` value read from `src/shared/values/+version.json` (e.g. `@deprecated 12`).
 
+### Locale key comments
+
+- Doc comments belong ONLY above keys in the `const enum` key files: `_BaseLocaleKey.ts`, `_EditorLocaleKey.ts`, `_DynLocaleKey.ts`, `_BackLocaleKey.ts` in `src/shared/model/+locale/` (e.g. above `NewVersionAvailable = 812,`). Above EVERY such key entry there MUST be a doc comment `/** русский текст */` containing the RUSSIAN translation of that key's text (taken from the ru dictionary, e.g. `src/back/locales/base/ru.ts`). Keys marked `@deprecated` are exempt — no comment above them. Keep comments in sync when key texts change.
+- NEVER add these doc comments to the type dictionary files (`src/shared/model/+locale/base.ts`, `editor.ts`, `dynamic.ts` — the `LocaleBase`/`LocaleCmEditor`/`LocaleDynamic` types) and NEVER to the locale dictionaries (`src/back/locales/**` and any other `*.ts` translation files): comments there are prohibited, the enum key files are the single place for them.
+
 ## Command aliases
 
 - When the user writes "upor9do4i locales" (or "upor9do4i translates" / "упорядочи локали"): remove empty locales (keys whose translation is `''`) and any `@deprecated` keys (entries marked `@deprecated #version`) — but only keys that are not referenced anywhere in the code; group translations; renumber the `const enum BaseLocaleKey` entries sequentially from 0 to the last one; and in `indexTSJRPCBaseRequestFreshes` replace the literal `#` in `visitInfo.version < #` with the HARDCODED number read from `src/shared/values/+version.json` (`num` field) plus 1 (e.g. num=12 → `visitInfo.version < 13`).
