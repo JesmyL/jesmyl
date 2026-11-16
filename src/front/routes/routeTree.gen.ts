@@ -42,7 +42,7 @@ import { Route as otherAppNameActionsIndexImport } from './tree/!other.$appName/
 import { Route as CmLiCatCatwImport } from './tree/cm/li/cat.$catw'
 import { Route as otherAppNameSettingsConsoleImport } from './tree/!other.$appName/settings/console'
 import { Route as otherAppNameActionsUsersImport } from './tree/!other.$appName/actions/users'
-import { Route as otherAppNameActionsTextTransferImport } from './tree/!other.$appName/actions/text-transfer'
+import { Route as otherAppNameActionsTransferImport } from './tree/!other.$appName/actions/transfer'
 import { Route as otherAppNameActionsDashImport } from './tree/!other.$appName/actions/dash'
 import { Route as StoragesIRackwSumIndexImport } from './tree/storages/i/$rackw/sum/index'
 import { Route as otherAppNameSettingsNounpronsIndexImport } from './tree/!other.$appName/settings/noun_prons/index'
@@ -450,10 +450,10 @@ const otherAppNameActionsUsersRoute = otherAppNameActionsUsersImport.update({
   getParentRoute: () => otherAppNameRouteRoute,
 } as any)
 
-const otherAppNameActionsTextTransferRoute =
-  otherAppNameActionsTextTransferImport.update({
-    id: '/actions/text-transfer',
-    path: '/actions/text-transfer',
+const otherAppNameActionsTransferRoute =
+  otherAppNameActionsTransferImport.update({
+    id: '/actions/transfer',
+    path: '/actions/transfer',
     getParentRoute: () => otherAppNameRouteRoute,
   } as any)
 
@@ -872,11 +872,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof otherAppNameActionsDashImport
       parentRoute: typeof otherAppNameRouteImport
     }
-    '/!other/$appName/actions/text-transfer': {
-      id: '/!other/$appName/actions/text-transfer'
-      path: '/actions/text-transfer'
-      fullPath: '/!other/$appName/actions/text-transfer'
-      preLoaderRoute: typeof otherAppNameActionsTextTransferImport
+    '/!other/$appName/actions/transfer': {
+      id: '/!other/$appName/actions/transfer'
+      path: '/actions/transfer'
+      fullPath: '/!other/$appName/actions/transfer'
+      preLoaderRoute: typeof otherAppNameActionsTransferImport
       parentRoute: typeof otherAppNameRouteImport
     }
     '/!other/$appName/actions/users': {
@@ -1228,7 +1228,7 @@ interface otherAppNameRouteRouteChildren {
   otherAppNameSchsRouteRoute: typeof otherAppNameSchsRouteRouteWithChildren
   otherAppNameIndexRoute: typeof otherAppNameIndexRoute
   otherAppNameActionsDashRoute: typeof otherAppNameActionsDashRoute
-  otherAppNameActionsTextTransferRoute: typeof otherAppNameActionsTextTransferRoute
+  otherAppNameActionsTransferRoute: typeof otherAppNameActionsTransferRoute
   otherAppNameActionsUsersRoute: typeof otherAppNameActionsUsersRoute
   otherAppNameSettingsConsoleRoute: typeof otherAppNameSettingsConsoleRoute
   otherAppNameSettingsConstantLazyRoute: typeof otherAppNameSettingsConstantLazyRoute
@@ -1244,7 +1244,7 @@ const otherAppNameRouteRouteChildren: otherAppNameRouteRouteChildren = {
   otherAppNameSchsRouteRoute: otherAppNameSchsRouteRouteWithChildren,
   otherAppNameIndexRoute: otherAppNameIndexRoute,
   otherAppNameActionsDashRoute: otherAppNameActionsDashRoute,
-  otherAppNameActionsTextTransferRoute: otherAppNameActionsTextTransferRoute,
+  otherAppNameActionsTransferRoute: otherAppNameActionsTransferRoute,
   otherAppNameActionsUsersRoute: otherAppNameActionsUsersRoute,
   otherAppNameSettingsConsoleRoute: otherAppNameSettingsConsoleRoute,
   otherAppNameSettingsConstantLazyRoute: otherAppNameSettingsConstantLazyRoute,
@@ -1304,7 +1304,7 @@ export interface FileRoutesByFullPath {
   '/q/r': typeof QRIndexLazyRoute
   '/storages/i': typeof StoragesIIndexLazyRoute
   '/!other/$appName/actions/dash': typeof otherAppNameActionsDashRoute
-  '/!other/$appName/actions/text-transfer': typeof otherAppNameActionsTextTransferRoute
+  '/!other/$appName/actions/transfer': typeof otherAppNameActionsTransferRoute
   '/!other/$appName/actions/users': typeof otherAppNameActionsUsersRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
@@ -1366,7 +1366,7 @@ export interface FileRoutesByTo {
   '/q/r': typeof QRIndexLazyRoute
   '/storages/i': typeof StoragesIIndexLazyRoute
   '/!other/$appName/actions/dash': typeof otherAppNameActionsDashRoute
-  '/!other/$appName/actions/text-transfer': typeof otherAppNameActionsTextTransferRoute
+  '/!other/$appName/actions/transfer': typeof otherAppNameActionsTransferRoute
   '/!other/$appName/actions/users': typeof otherAppNameActionsUsersRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
@@ -1437,7 +1437,7 @@ export interface FileRoutesById {
   '/q/r/': typeof QRIndexLazyRoute
   '/storages/i/': typeof StoragesIIndexLazyRoute
   '/!other/$appName/actions/dash': typeof otherAppNameActionsDashRoute
-  '/!other/$appName/actions/text-transfer': typeof otherAppNameActionsTextTransferRoute
+  '/!other/$appName/actions/transfer': typeof otherAppNameActionsTransferRoute
   '/!other/$appName/actions/users': typeof otherAppNameActionsUsersRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
@@ -1509,7 +1509,7 @@ export interface FileRouteTypes {
     | '/q/r'
     | '/storages/i'
     | '/!other/$appName/actions/dash'
-    | '/!other/$appName/actions/text-transfer'
+    | '/!other/$appName/actions/transfer'
     | '/!other/$appName/actions/users'
     | '/!other/$appName/settings/console'
     | '/cm/li/cat/$catw'
@@ -1570,7 +1570,7 @@ export interface FileRouteTypes {
     | '/q/r'
     | '/storages/i'
     | '/!other/$appName/actions/dash'
-    | '/!other/$appName/actions/text-transfer'
+    | '/!other/$appName/actions/transfer'
     | '/!other/$appName/actions/users'
     | '/!other/$appName/settings/console'
     | '/cm/li/cat/$catw'
@@ -1639,7 +1639,7 @@ export interface FileRouteTypes {
     | '/q/r/'
     | '/storages/i/'
     | '/!other/$appName/actions/dash'
-    | '/!other/$appName/actions/text-transfer'
+    | '/!other/$appName/actions/transfer'
     | '/!other/$appName/actions/users'
     | '/!other/$appName/settings/console'
     | '/cm/li/cat/$catw'
@@ -1788,7 +1788,7 @@ export const routeTree = rootRoute
         "/!other/$appName/schs",
         "/!other/$appName/",
         "/!other/$appName/actions/dash",
-        "/!other/$appName/actions/text-transfer",
+        "/!other/$appName/actions/transfer",
         "/!other/$appName/actions/users",
         "/!other/$appName/settings/console",
         "/!other/$appName/settings/constant",
@@ -1953,8 +1953,8 @@ export const routeTree = rootRoute
       "filePath": "!other.$appName/actions/dash.tsx",
       "parent": "/!other/$appName"
     },
-    "/!other/$appName/actions/text-transfer": {
-      "filePath": "!other.$appName/actions/text-transfer.tsx",
+    "/!other/$appName/actions/transfer": {
+      "filePath": "!other.$appName/actions/transfer.tsx",
       "parent": "/!other/$appName"
     },
     "/!other/$appName/actions/users": {

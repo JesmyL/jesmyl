@@ -653,7 +653,7 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.ConfigPromptHeader]: 'Толтыр',
   [BaseLocaleKey.ConfigAccept]: 'Қабылдау',
   [BaseLocaleKey.ConfigTextCopied]: 'Мәтін көшірілді',
-  ...baseLocaleTemplate(BaseLocaleKey.ConfigPickFile)`Файл${IF('$v').THEN`дарды`} таңдау`,
+  ...baseLocaleTemplate(BaseLocaleKey.ConfigPickFile)`Файл${IF('$v').THEN`дарды`} таңдау${IF('$max').THEN` ($max МБ дейін)`}`,
   [BaseLocaleKey.ConfigDate]: 'Күні',
   [BaseLocaleKey.ConfigTextCaseCapitalize]: 'Біріншісі үлкен',
   [BaseLocaleKey.ConfigTextCaseAsIs]: 'сол Күйінде',
@@ -701,7 +701,7 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.Interactive]: 'Өзра әрекеттесу',
   [BaseLocaleKey.MyFiles]: 'Менің файлдарым',
   [BaseLocaleKey.Downloads]: 'Жүктеулер',
-  [BaseLocaleKey.TextTransfer]: 'Мәтін тасымалы',
+  [BaseLocaleKey.TextTransfer]: 'Трансфер',
   [BaseLocaleKey.TextTransferPc]: 'Компьютер',
   [BaseLocaleKey.Constants]: 'Константалар',
   [BaseLocaleKey.OneForTwo]: '$t үшін $o',
@@ -869,4 +869,13 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
 
   // Название страницы и пункта меню «Пользователи».
   [BaseLocaleKey.Users]: 'Пайдаланушылар',
+
+  // Трансфер: файл баптаулардағы көлем шегінен үлкен.
+  [BaseLocaleKey.TextTransferFileTooLarge]: 'Файл $s МБ-тан үлкен',
+
+  // Трансфер: файл таңдау батырмасының жанындағы бір файлды мәтінмен қатар жіберу туралы түсініктеме.
+  [BaseLocaleKey.TextTransferFileHint]: 'Мәтінмен қатар: бір файл ($s МБ дейін)',
+
+  // Трансфер: алынған файлды жүктеу батырмасы.
+  [BaseLocaleKey.Download]: 'Жүктеу',
 });

@@ -514,4 +514,7 @@ export const backLocalesUa: Record<BackLocaleKey, string> = {
   [BackLocaleKey.AccessRightRuleQEdit]: 'редактор',
   [BackLocaleKey.AccessRightRuleStoragesList]: 'список',
   [BackLocaleKey.AccessRightRuleDashDash]: 'дашборд візитів',
+  // Ошибки передачи файлов: показываются пользователю на его языке.
+  [BackLocaleKey.TextTransferFileTooLarge]: 'Файл занадто великий',
+  [BackLocaleKey.TextTransferFileCorrupted]: 'Файл пошкоджений',
 };

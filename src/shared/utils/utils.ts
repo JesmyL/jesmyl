@@ -85,6 +85,14 @@ export const convertSecondsInStrTime = (seconds: number) =>
     .toFixed(0)
     .padStart(2, '0');
 
+/** Человекочитаемый размер файла: байты, килобайты или мегабайты с одним знаком после запятой. */
+export const formatBytes = (bytes: number) => {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+
+  return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
+};
+
 export const withInsertedBeforei = <Item>(list: Item[], beforei: number, targeti: number) => {
   const fakeEvent = {} as Item;
   list = [...list];

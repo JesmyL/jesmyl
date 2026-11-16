@@ -511,4 +511,7 @@ export const backLocalesKz: Record<BackLocaleKey, string> = {
   [BackLocaleKey.AccessRightRuleQEdit]: 'редактор',
   [BackLocaleKey.AccessRightRuleStoragesList]: 'тізім',
   [BackLocaleKey.AccessRightRuleDashDash]: 'визиттер дашборды',
+  // Ошибки передачи файлов: показываются пользователю на его языке.
+  [BackLocaleKey.TextTransferFileTooLarge]: 'Файл тым үлкен',
+  [BackLocaleKey.TextTransferFileCorrupted]: 'Файл зақымдалған',
 };

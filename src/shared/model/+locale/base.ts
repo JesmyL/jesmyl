@@ -682,7 +682,7 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.ConfigPromptHeader]: LocaleSimpleString;
   [BaseLocaleKey.ConfigAccept]: LocaleSimpleString;
   [BaseLocaleKey.ConfigTextCopied]: LocaleSimpleString;
-  [BaseLocaleKey.ConfigPickFile]: StringTemplaterInterpolation<{ v: boolean | Bool }>;
+  [BaseLocaleKey.ConfigPickFile]: StringTemplaterInterpolation<{ v: boolean | Bool; max?: number }>;
   [BaseLocaleKey.ConfigDate]: LocaleSimpleString;
   [BaseLocaleKey.ConfigTextCaseCapitalize]: LocaleSimpleString;
   [BaseLocaleKey.ConfigTextCaseAsIs]: LocaleSimpleString;
@@ -792,6 +792,15 @@ export type LocaleBase<L extends Langi> = {
 
   // Название страницы и пункта меню «Пользователи».
   [BaseLocaleKey.Users]: LocaleSimpleString;
+
+  // Сообщение о превышении лимита объёма передаваемого файла.
+  [BaseLocaleKey.TextTransferFileTooLarge]: StringTemplaterInterpolation<{ s: number }>;
+
+  // Подсказка у кнопки выбора файла: параллельная передача одного файла с лимитом объёма.
+  [BaseLocaleKey.TextTransferFileHint]: StringTemplaterInterpolation<{ s: number }>;
+
+  // Кнопка скачивания полученного файла.
+  [BaseLocaleKey.Download]: LocaleSimpleString;
 };
 
 export type UsedBaseLocaleKey = BaseLocaleKey;

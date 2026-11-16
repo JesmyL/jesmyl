@@ -478,4 +478,8 @@ export const enum BackLocaleKey {
   AccessRightRuleQEdit = 472,
   AccessRightRuleStoragesList = 473,
   AccessRightRuleDashDash = 474,
+
+  // Ошибки передачи файлов: сервер сообщает о превышении лимита и повреждённом base64.
+  TextTransferFileTooLarge = 475,
+  TextTransferFileCorrupted = 476,
 }

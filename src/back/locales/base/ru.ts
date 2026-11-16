@@ -658,7 +658,7 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.ConfigPromptHeader]: 'Заполни',
   [BaseLocaleKey.ConfigAccept]: 'Принять',
   [BaseLocaleKey.ConfigTextCopied]: 'Текст скопирован',
-  ...baseLocaleTemplate(BaseLocaleKey.ConfigPickFile)`Выбрать файл${IF('$v').THEN`ы`}`,
+  ...baseLocaleTemplate(BaseLocaleKey.ConfigPickFile)`Выбрать файл${IF('$v').THEN`ы`}${IF('$max').THEN` (до $max МБ)`}`,
   [BaseLocaleKey.ConfigDate]: 'Дата',
   [BaseLocaleKey.ConfigTextCaseCapitalize]: 'Первое с большой',
   [BaseLocaleKey.ConfigTextCaseAsIs]: 'так Как есть',
@@ -706,7 +706,7 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.Interactive]: 'Взаимодействие',
   [BaseLocaleKey.MyFiles]: 'Мои файлы',
   [BaseLocaleKey.Downloads]: 'Загрузки',
-  [BaseLocaleKey.TextTransfer]: 'Текст-передача',
+  [BaseLocaleKey.TextTransfer]: 'Трансфер',
   [BaseLocaleKey.TextTransferPc]: 'ПК',
   [BaseLocaleKey.Constants]: 'Константы',
   [BaseLocaleKey.OneForTwo]: '$o для $t',
@@ -875,4 +875,13 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
 
   // Название страницы и пункта меню «Пользователи».
   [BaseLocaleKey.Users]: 'Пользователи',
+
+  // Трансфер: файл не проходит по лимиту объёма из настроек.
+  [BaseLocaleKey.TextTransferFileTooLarge]: 'Файл больше $s МБ',
+
+  // Трансфер: подсказка у кнопки выбора файла о параллельной передаче одного файла.
+  [BaseLocaleKey.TextTransferFileHint]: 'Параллельно с текстом: один файл (до $s МБ)',
+
+  // Трансфер: кнопка скачивания полученного файла.
+  [BaseLocaleKey.Download]: 'Скачать',
 });

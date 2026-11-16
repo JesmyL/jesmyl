@@ -522,4 +522,7 @@ export const backLocalesRu: Record<BackLocaleKey, string> = {
   [BackLocaleKey.AccessRightRuleQEdit]: 'редактор',
   [BackLocaleKey.AccessRightRuleStoragesList]: 'список',
   [BackLocaleKey.AccessRightRuleDashDash]: 'дашборд визитов',
+  // Ошибки передачи файлов: показываются пользователю на его языке.
+  [BackLocaleKey.TextTransferFileTooLarge]: 'Файл слишком большой',
+  [BackLocaleKey.TextTransferFileCorrupted]: 'Файл повреждён',
 };

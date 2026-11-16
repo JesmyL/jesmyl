@@ -60,7 +60,7 @@ export function IndexActionsPage() {
             />
           </Link>
           <Link
-            to="/!other/$appName/actions/text-transfer"
+            to="/!other/$appName/actions/transfer"
             params={{ appName }}
             className="w-full"
           >

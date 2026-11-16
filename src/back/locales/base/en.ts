@@ -664,7 +664,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.ConfigPromptHeader]: 'Fill in',
   [BaseLocaleKey.ConfigAccept]: 'Accept',
   [BaseLocaleKey.ConfigTextCopied]: 'Text copied',
-  ...baseLocaleTemplate(BaseLocaleKey.ConfigPickFile)`Choose file${IF('$v').THEN`s`}`,
+  ...baseLocaleTemplate(BaseLocaleKey.ConfigPickFile)`Choose file${IF('$v').THEN`s`}${IF('$max').THEN` (up to $max MB)`}`,
   [BaseLocaleKey.ConfigDate]: 'Date',
   [BaseLocaleKey.ConfigTextCaseCapitalize]: 'First letter capital',
   [BaseLocaleKey.ConfigTextCaseAsIs]: 'as Is',
@@ -712,7 +712,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.Interactive]: 'Interaction',
   [BaseLocaleKey.MyFiles]: 'My files',
   [BaseLocaleKey.Downloads]: 'Downloads',
-  [BaseLocaleKey.TextTransfer]: 'Text transfer',
+  [BaseLocaleKey.TextTransfer]: 'Transfer',
   [BaseLocaleKey.TextTransferPc]: 'PC',
   [BaseLocaleKey.Constants]: 'Constants',
   [BaseLocaleKey.OneForTwo]: '$o for $t',
@@ -880,4 +880,13 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
 
   // Название страницы и пункта меню «Пользователи».
   [BaseLocaleKey.Users]: 'Users',
+
+  // Трансфер: файл не проходит по лимиту объёма из настроек.
+  [BaseLocaleKey.TextTransferFileTooLarge]: 'File is larger than $s MB',
+
+  // Трансфер: подсказка у кнопки выбора файла о параллельной передаче одного файла.
+  [BaseLocaleKey.TextTransferFileHint]: 'Alongside the text: one file (up to $s MB)',
+
+  // Трансфер: кнопка скачивания полученного файла.
+  [BaseLocaleKey.Download]: 'Download',
 });

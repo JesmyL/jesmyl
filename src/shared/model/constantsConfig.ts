@@ -26,6 +26,9 @@ export type ConstantsConfigTypes = ConstantsConfigInfer<{
   maxComCommentWordLen: number;
   maxComCommentChordLen: number;
 
+  // Максимальный объём передаваемого файла в мегабайтах.
+  maxTransferFileSize: number;
+
   availEmailDomainZone: string;
 }>;
 

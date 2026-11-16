@@ -28,6 +28,8 @@ export const constantsConfigurator: ConstantsConfigConfigurator = {
   maxSelectedComsCount: numberZips(50, 'макс. выбр. песен'),
 
   '>index - общее': 0,
+  // Объём переданного через комнату файла храним в мегабайтах: число 10 означает лимит 10 МБ.
+  maxTransferFileSize: numberZips(10, 'макс. объём передаваемых файлов (МБ)'),
   availEmailDomainZone: iife(() => {
     const def = 'ru';
 

@@ -504,4 +504,7 @@ export const backLocalesEn: Record<BackLocaleKey, string> = {
   [BackLocaleKey.AccessRightRuleQEdit]: 'editor',
   [BackLocaleKey.AccessRightRuleStoragesList]: 'list',
   [BackLocaleKey.AccessRightRuleDashDash]: 'visits dashboard',
+  // Ошибки передачи файлов: показываются пользователю на его языке.
+  [BackLocaleKey.TextTransferFileTooLarge]: 'File is too large',
+  [BackLocaleKey.TextTransferFileCorrupted]: 'File is corrupted',
 };
