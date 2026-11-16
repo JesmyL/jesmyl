@@ -1,6 +1,6 @@
 import md5 from 'md5';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
-import { UsedBaseLocaleKey } from 'shared/model/+locale/base';
+import { NonInterpolatedBaseLocaleKey } from 'shared/model/+locale/base';
 import { translateBase } from 'shared/utils/locale/base';
 import { ScheduleWidgetUserMi, ScheduleWidgetWid } from './main';
 import { ScheduleWidgetRightsCtrl, ScheduleWidgetRightTexts } from './rights-constructor';
@@ -86,9 +86,9 @@ const rightTextFallbacks: Record<
 
 const makeRightText = (
   id: ScheduleWidgetUserRoleRight,
-  titleKey: UsedBaseLocaleKey,
-  roleKeys: [UsedBaseLocaleKey, UsedBaseLocaleKey],
-  descriptionKey: UsedBaseLocaleKey,
+  titleKey: NonInterpolatedBaseLocaleKey,
+  roleKeys: [NonInterpolatedBaseLocaleKey, NonInterpolatedBaseLocaleKey],
+  descriptionKey: NonInterpolatedBaseLocaleKey,
 ): ScheduleWidgetRightTexts<ScheduleWidgetUserRoleRight> => {
   const fallback = rightTextFallbacks[id];
 

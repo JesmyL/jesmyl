@@ -19,6 +19,14 @@ export type TemplateInterpolationKeys<Val> = keyof TemplateInterpolationVals<Val
 
 export type TemplateInterpolationGenKey<Val> = StringTemplaterGenKey<Val>;
 
+// Ключи словаря без метаданных подстановки: у остальных значений второй аргумент обязателен, поэтому в этот союз они не попадают.
+export type NoInterpolationKeys<Dict> = {
+  [Key in keyof Dict]: [StringTemplaterVals<Dict[Key]>] extends [never] ? Key : never;
+}[keyof Dict];
+
+// Форма второго аргумента: для значений с подстановкой кортеж `[never]` делает вызов без него невозможным, для остальных аргумент необязателен.
+export type TranslationArgs<Val> = [StringTemplaterVals<Val>] extends [never] ? [interpolation?: nil | void] : [never];
+
 export interface DefinedTranslateFunction<Dict extends object> {
   <
     const Val extends string,
@@ -30,7 +38,8 @@ export interface DefinedTranslateFunction<Dict extends object> {
     interpolation: Interpolation,
   ): (Interpolation extends { NEXT: NEXTcb<string, infer R> } ? R[] : string) | '';
 
-  <const Val extends LocaleSimpleString>(selector: (translates: Dict) => Val, interpolation?: nil | void): Val | '';
+  // Селекторный вызов без подстановки: селектор, возвращающий значение с метаданными подстановки, сюда не подходит.
+  <const Val extends LocaleSimpleString>(selector: (translates: Dict) => Val, ...args: TranslationArgs<Val>): Val | '';
 
   <
     Key extends keyof Dict,
@@ -42,5 +51,6 @@ export interface DefinedTranslateFunction<Dict extends object> {
     interpolation: Interpolation,
   ): (Interpolation extends { NEXT: NEXTcb<string, infer R> } ? R[] : string) | '';
 
-  <Key extends keyof Dict>(key: Key, interpolation?: nil | void): TranslateKeyResult<Dict, Key>;
+  // Вызов по ключу без подстановки допустим только для ключей, чьи значения не требуют подстановки.
+  <Key extends NoInterpolationKeys<Dict>>(key: Key, interpolation?: nil | void): TranslateKeyResult<Dict, Key>;
 }

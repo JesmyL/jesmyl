@@ -5,13 +5,14 @@ import { cmComLastOpenSchwAtom } from '$cm/entities/index';
 import { useAtomValue } from 'atomaric';
 import { ScheduleWidgetWidDef } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
-import { UsedBaseLocaleKey } from 'shared/model/+locale/base';
+import { NonInterpolatedBaseLocaleKey } from 'shared/model/+locale/base';
 import { BroadcastViewApp } from '../Broadcast.model';
 import { broadcastCurrentTextAppAtom } from '../atoms';
 import { isShowBroadcastInitialSlideAtom } from '../initial-slide-context';
 import { switchBroadcastApp } from '../lib/broadcast-live-data';
 
-const sourceAppConfigs: { app: BroadcastViewApp; icon: KnownStameskaIconName; title: UsedBaseLocaleKey }[] = [
+// Заголовки кнопок идут в translateBase без подстановки, поэтому типизируются ключами без её метаданных.
+const sourceAppConfigs: { app: BroadcastViewApp; icon: KnownStameskaIconName; title: NonInterpolatedBaseLocaleKey }[] = [
   { app: 'bible', icon: 'Book02', title: BaseLocaleKey.Bible },
   { app: 'cm', icon: 'BookOpen02', title: BaseLocaleKey.CmApp },
   { app: 'presentations', icon: 'Presentation01', title: BaseLocaleKey.Presentations },

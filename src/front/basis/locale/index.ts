@@ -10,6 +10,7 @@ import { setCmEditorLocaleProvider, translateEditorBase } from 'shared/utils/loc
 import {
   DefinedTranslateFunction,
   NEXTcb,
+  NoInterpolationKeys,
   TemplateInterpolationGenKey,
   TemplateInterpolationVals,
   TranslateKeyResult,
@@ -73,7 +74,7 @@ export function translateDynamic<
   interpolation: Interpolation,
 ): (Interpolation extends { NEXT: NEXTcb<string, infer R> } ? R[] : string) | '';
 
-export function translateDynamic<Key extends keyof DynamicLocale>(
+export function translateDynamic<Key extends NoInterpolationKeys<DynamicLocale>>(
   langi: Langi,
   key: Key,
   interpolation?: nil | void,

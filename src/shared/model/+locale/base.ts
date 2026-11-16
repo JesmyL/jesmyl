@@ -1,6 +1,7 @@
 import { Langi, MenuComToolName } from 'shared/api';
 import type { CmAdditionalCatKind } from 'shared/const/cm/enums';
 import { Bool } from 'shared/enums';
+import type { NoInterpolationKeys } from 'shared/utils/locale/model';
 import { StringTemplaterInterpolation } from 'shared/utils/stringTemplater/model';
 import { BibleTranslateName } from '../bible';
 import { BaseLocaleKey } from './_BaseLocaleKey';
@@ -794,3 +795,6 @@ export type LocaleBase<L extends Langi> = {
 };
 
 export type UsedBaseLocaleKey = BaseLocaleKey;
+
+// Ключи базовой локали, чьи тексты не требуют подстановки: подходят для translateBase без второго аргумента.
+export type NonInterpolatedBaseLocaleKey = NoInterpolationKeys<LocaleBase<Langi>>;
