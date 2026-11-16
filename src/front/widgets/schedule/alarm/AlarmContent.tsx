@@ -372,10 +372,13 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
       if (isObserveSchwSet && node === null && schBox === undefined)
         node = <span className="text-xKO">{translateBase(BaseLocaleKey.ScheduleEventNotFound)}</span>;
 
-      if (!fullValue) setIsFullOpen(false);
-
       return [node, fullValue, schBox];
     }, [observeSchw, scheduleBoxes, isJustShowAllDay, now]);
+
+  // закрываем полноэкранный просмотр, когда в нём нечего показывать; эффект вместо setState во время рендера, чтобы не зациклить перерендеры
+  useEffect(() => {
+    if (!fullValue) setIsFullOpen(false);
+  }, [fullValue]);
 
   const [fullNode] = useFullContent(fullValue, isFullOpen ? 'open' : null, setIsFullOpen);
 
