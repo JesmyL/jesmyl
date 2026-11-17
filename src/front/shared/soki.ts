@@ -189,23 +189,26 @@ export class SokiTrip {
       this.sendForce(requestId);
     } else this.onConnectionOpenEvent.listenFirst(() => this.sendForce(requestId));
 
+    // Единая точка отмены: запрос уже снят с ожидания — отмена устарела, и повторно ничего не отправляем.
+    const abortRequest = (reason: string) => {
+      if (this.requests[requestId] == null) return;
+
+      withResolvers.reject(reason);
+      delete this.requests[requestId];
+      this.send({ abort: requestId });
+    };
+
+    // Таймаут работает сам по себе: aborter нужен только для внешней отмены, а не для ограничения ожидания.
+    if (tool?.timeout != null) setTimeout(() => abortRequest('#aborted by timeout'), tool.timeout);
+
+    // Внешняя отмена: сигнал aborter обрывает ожидание, как только вызывающая сторона этого потребует.
     if (tool?.aborter != null) {
       const aborter = tool.aborter;
       const removeListener = () => aborter.signal.removeEventListener('abort', onAbort);
-      let reason = '#aborted';
-
       const onAbort = () => {
         removeListener();
-        withResolvers.reject(reason);
-        delete this.requests[requestId];
-        this.send({ abort: requestId });
+        abortRequest('#aborted');
       };
-
-      if (tool.timeout != null)
-        setTimeout(() => {
-          reason = '#aborted by timout';
-          onAbort();
-        }, tool.timeout);
 
       withResolvers.promise.then(removeListener).catch(removeListener);
       aborter.signal.addEventListener('abort', onAbort);

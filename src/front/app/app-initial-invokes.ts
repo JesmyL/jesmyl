@@ -95,9 +95,8 @@ const syncCmEditorAccess = (rights: IndexAccessScopeRules) => {
  */
 const checkFreshAppVersion = async () => {
   try {
-    // Таймаут срабатывает только вместе с aborter: soketi запускает отмену запроса лишь при наличии aborter.
-    const freshVersion = await indexTsjrpcClientMethods.getFreshAppVersion(undefined, {
-      aborter: new AbortController(),
+    // Таймаут ограничивает ожидание серверной версии, чтобы старт приложения не завис на молчащем соединении.
+    const freshVersion = await indexTsjrpcClientMethods.getFreshAppVersion_1(undefined, {
       timeout: 20_000,
     });
 
