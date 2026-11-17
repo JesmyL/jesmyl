@@ -474,12 +474,10 @@ export const backLocalesKz: Record<BackLocaleKey, string> = {
   [BackLocaleKey.SchListCatMembersDefaultTitle]: 'Қатысушылар',
   [BackLocaleKey.DashPushNoSubscriptions]: 'Пайдаланушының PUSH хабарламаларына жазылымы жоқ',
   [BackLocaleKey.DashPushCheckText]: 'PUSH хабарламаларын тексеру',
-  // PUSH-тексеру мәтіндері фронтқа тек серверлік payload түрінде жетеді.
   [BackLocaleKey.PushCheckSent]: 'Хабарлама жіберілді',
   [BackLocaleKey.PushSubscriptionsAbsent]: 'PUSH хабарламаларына жазылымдар жоқ',
   [BackLocaleKey.PushCheckSentToDevices]: `$n; құрылғыға жіберілді`,
   [BackLocaleKey.PushCheckMuted]: 'Пайдаланушының PUSH хабарламалары өшірілген',
-  // Заголовки прав доступа админки: отдаются на языке подключения администратора.
   [BackLocaleKey.AccessRightScopeGeneralTitle]: 'Басты қол жетімділік',
   [BackLocaleKey.AccessRightScopeCmTitle]: 'Жаңғырған әндер',
   [BackLocaleKey.AccessRightScopeSchTitle]: 'Кестелер',
@@ -511,7 +509,6 @@ export const backLocalesKz: Record<BackLocaleKey, string> = {
   [BackLocaleKey.AccessRightRuleQEdit]: 'редактор',
   [BackLocaleKey.AccessRightRuleStoragesList]: 'тізім',
   [BackLocaleKey.AccessRightRuleDashDash]: 'визиттер дашборды',
-  // Ошибки передачи файлов: показываются пользователю на его языке.
   [BackLocaleKey.TextTransferFileTooLarge]: 'Файл тым үлкен',
   [BackLocaleKey.TextTransferFileCorrupted]: 'Файл зақымдалған',
 };

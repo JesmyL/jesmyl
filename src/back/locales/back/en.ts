@@ -467,12 +467,10 @@ export const backLocalesEn: Record<BackLocaleKey, string> = {
   [BackLocaleKey.SchListCatMembersDefaultTitle]: 'Members',
   [BackLocaleKey.DashPushNoSubscriptions]: 'User has no PUSH notification subscriptions',
   [BackLocaleKey.DashPushCheckText]: 'PUSH notification check',
-  // PUSH-check texts arrive at the front only as a server-side payload.
   [BackLocaleKey.PushCheckSent]: 'Notification sent',
   [BackLocaleKey.PushSubscriptionsAbsent]: 'No PUSH notification subscriptions',
   [BackLocaleKey.PushCheckSentToDevices]: `Sent to $n; device${FUNCTION('dec')('$n', '', 's')}`,
   [BackLocaleKey.PushCheckMuted]: 'This user has pushes muted',
-  // Заголовки прав доступа админки: отдаются на языке подключения администратора.
   [BackLocaleKey.AccessRightScopeGeneralTitle]: 'Main access',
   [BackLocaleKey.AccessRightScopeCmTitle]: 'Songs of the revived',
   [BackLocaleKey.AccessRightScopeSchTitle]: 'Schedules',
@@ -504,7 +502,6 @@ export const backLocalesEn: Record<BackLocaleKey, string> = {
   [BackLocaleKey.AccessRightRuleQEdit]: 'editor',
   [BackLocaleKey.AccessRightRuleStoragesList]: 'list',
   [BackLocaleKey.AccessRightRuleDashDash]: 'visits dashboard',
-  // Ошибки передачи файлов: показываются пользователю на его языке.
   [BackLocaleKey.TextTransferFileTooLarge]: 'File is too large',
   [BackLocaleKey.TextTransferFileCorrupted]: 'File is corrupted',
 };

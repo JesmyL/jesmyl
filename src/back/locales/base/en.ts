@@ -878,25 +878,18 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
 
   [BaseLocaleKey.PushTestSendTooltip]: 'Send test push',
 
-  // Название страницы и пункта меню «Пользователи».
   [BaseLocaleKey.Users]: 'Users',
 
-  // Трансфер: файл не проходит по лимиту объёма из настроек.
   [BaseLocaleKey.TextTransferFileTooLarge]: 'File is larger than $s MB',
 
-  // Трансфер: подсказка у кнопки выбора файла о параллельной передаче одного файла.
   [BaseLocaleKey.TextTransferFileHint]: 'Alongside the text: one file (up to $s MB)',
 
-  // Трансфер: кнопка скачивания полученного файла.
   [BaseLocaleKey.Download]: 'Download',
 
-  // Database access is blocked by another tab.
   [BaseLocaleKey.DatabaseBlockedByAnotherTab]: 'Database access is blocked by another tab.',
 
-  // Invalid TBCV key format: $t is the original key value.
   [BaseLocaleKey.InvalidTbcvKeyFormat]: 'Invalid TBCV key format: "$t;"',
 
-  // Com intensity level titles keyed by CmComIntensityLevel.
   [BaseLocaleKey.CmIntensityTitle]: {
     [CmComIntensityLevel.TooSlow]: 'Very slow',
     [CmComIntensityLevel.Slow]: 'Slow',
@@ -905,7 +898,6 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
     [CmComIntensityLevel.TooFast]: 'Very fast',
   },
 
-  // Numeric parameter titles in the constants settings.
   [BaseLocaleKey.ConstantsMaxComCommentAlternativesCount]: 'max alternatives count',
   [BaseLocaleKey.ConstantsMaxComCommentBlockLen]: 'max block length',
   [BaseLocaleKey.ConstantsMaxComCommentChordLen]: 'max chord length',
@@ -918,17 +910,14 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.ConstantsMaxSelectedComsCount]: 'max selected songs',
   [BaseLocaleKey.ConstantsMaxTransferFileSize]: 'max transferred file size (MB)',
 
-  // Constants settings group titles.
   [BaseLocaleKey.ConstantsCmComments]: 'cm - comments',
   [BaseLocaleKey.ConstantsCmOther]: 'cm - other',
   [BaseLocaleKey.ConstantsIndexCommon]: 'index - general',
 
-  // Allowed E-mail domain zones configuration and its errors.
   [BaseLocaleKey.ConstantsEmailDomainZones]: 'E-mail domain zones',
   [BaseLocaleKey.ConstantsAllowedEmailDomainZones]: 'Allowed domain zones: $z',
   [BaseLocaleKey.ConstantsStringExpected]: 'String expected',
 
-  // Text block validation: invalid characters and unpaired quotes.
   ...baseLocaleTemplate(BaseLocaleKey.CmIncorrectSymbolsPresent)`There are invalid characters: $m\n\n$t`,
   ...baseLocaleTemplate(
     BaseLocaleKey.CmUnpairedQuotesWarning,

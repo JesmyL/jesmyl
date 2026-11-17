@@ -882,25 +882,18 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
 
   [BaseLocaleKey.PushTestSendTooltip]: 'Надіслати тестовий PUSH',
 
-  // Название страницы и пункта меню «Пользователи».
   [BaseLocaleKey.Users]: 'Користувачі',
 
-  // Трансфер: файл перевищує ліміт обсягу з налаштувань.
   [BaseLocaleKey.TextTransferFileTooLarge]: 'Файл більший за $s МБ',
 
-  // Трансфер: підказка біля кнопки вибору файлу про паралельну передачу одного файлу.
   [BaseLocaleKey.TextTransferFileHint]: 'Паралельно з текстом: один файл (до $s МБ)',
 
-  // Трансфер: кнопка завантаження отриманого файлу.
   [BaseLocaleKey.Download]: 'Завантажити',
 
-  // Доступ до бази даних заблоковано іншою вкладкою.
   [BaseLocaleKey.DatabaseBlockedByAnotherTab]: 'Доступ до бази даних заблоковано іншою вкладкою.',
 
-  // Помилка формату TBCV-ключа: $t - початкове значення ключа.
   [BaseLocaleKey.InvalidTbcvKeyFormat]: 'Некоректний формат TBCV ключа: "$t;"',
 
-  // Назви рівнів інтенсивності кома за ключами CmComIntensityLevel.
   [BaseLocaleKey.CmIntensityTitle]: {
     [CmComIntensityLevel.TooSlow]: 'Дуже повільна',
     [CmComIntensityLevel.Slow]: 'Повільна',
@@ -909,7 +902,6 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
     [CmComIntensityLevel.TooFast]: 'Дуже швидка',
   },
 
-  // Заголовки числових параметрів у налаштуваннях констант.
   [BaseLocaleKey.ConstantsMaxComCommentAlternativesCount]: 'макс. кількість альтернатив',
   [BaseLocaleKey.ConstantsMaxComCommentBlockLen]: 'макс. символів для блоку',
   [BaseLocaleKey.ConstantsMaxComCommentChordLen]: 'макс. символів для акорду',
@@ -922,17 +914,14 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.ConstantsMaxSelectedComsCount]: 'макс. вибраних пісень',
   [BaseLocaleKey.ConstantsMaxTransferFileSize]: 'макс. обсяг передаваних файлів (МБ)',
 
-  // Заголовки груп налаштувань констант.
   [BaseLocaleKey.ConstantsCmComments]: 'cm - коментарі',
   [BaseLocaleKey.ConstantsCmOther]: 'cm - інше',
   [BaseLocaleKey.ConstantsIndexCommon]: 'index - загальне',
 
-  // Конфігурація допустимих доменних зон E-mail та її помилки.
   [BaseLocaleKey.ConstantsEmailDomainZones]: 'E-mail доменні зони',
   [BaseLocaleKey.ConstantsAllowedEmailDomainZones]: 'Допустимі доменні зони: $z',
   [BaseLocaleKey.ConstantsStringExpected]: 'Очікується рядок',
 
-  // Перевірка текстового блоку: недопустимі символи та непарні лапки.
   ...baseLocaleTemplate(BaseLocaleKey.CmIncorrectSymbolsPresent)`Присутні недопустимі символи: $m\n\n$t`,
   ...baseLocaleTemplate(
     BaseLocaleKey.CmUnpairedQuotesWarning,

@@ -867,25 +867,18 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.NumberSymbols]: '$n; таңба',
   [BaseLocaleKey.PushTestSendTooltip]: 'Тестілік PUSH жіберу',
 
-  // Название страницы и пункта меню «Пользователи».
   [BaseLocaleKey.Users]: 'Пайдаланушылар',
 
-  // Трансфер: файл баптаулардағы көлем шегінен үлкен.
   [BaseLocaleKey.TextTransferFileTooLarge]: 'Файл $s МБ-тан үлкен',
 
-  // Трансфер: файл таңдау батырмасының жанындағы бір файлды мәтінмен қатар жіберу туралы түсініктеме.
   [BaseLocaleKey.TextTransferFileHint]: 'Мәтінмен қатар: бір файл ($s МБ дейін)',
 
-  // Трансфер: алынған файлды жүктеу батырмасы.
   [BaseLocaleKey.Download]: 'Жүктеу',
 
-  // Деректер базасына кіру басқа қойындымен құлыпталған.
   [BaseLocaleKey.DatabaseBlockedByAnotherTab]: 'Деректер базасына кіруге басқа қойынды кедергі болды.',
 
-  // TBCV кілтінің форматы қате: $t - кілттің бастапқы мәні.
   [BaseLocaleKey.InvalidTbcvKeyFormat]: 'TBCV кілтінің форматы дұрыс емес: "$t;"',
 
-  // Ком қарқындылығы деңгейлерінің атаулары: мәндер CmComIntensityLevel бойынша таңдалады.
   [BaseLocaleKey.CmIntensityTitle]: {
     [CmComIntensityLevel.TooSlow]: 'Өте баяу',
     [CmComIntensityLevel.Slow]: 'Баяу',
@@ -894,7 +887,6 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
     [CmComIntensityLevel.TooFast]: 'Өте жылдам',
   },
 
-  // Константалар баптауларындағы сандық параметрлердің тақырыптары.
   [BaseLocaleKey.ConstantsMaxComCommentAlternativesCount]: 'макс. альтернатив саны',
   [BaseLocaleKey.ConstantsMaxComCommentBlockLen]: 'блок үшін макс. таңба саны',
   [BaseLocaleKey.ConstantsMaxComCommentChordLen]: 'аккорд үшін макс. таңба саны',
@@ -907,17 +899,14 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.ConstantsMaxSelectedComsCount]: 'макс. таңдалған ән саны',
   [BaseLocaleKey.ConstantsMaxTransferFileSize]: 'жіберілетін файлдардың макс. көлемі (МБ)',
 
-  // Константалар баптаулары топтарының тақырыптары.
   [BaseLocaleKey.ConstantsCmComments]: 'cm - пікірлер',
   [BaseLocaleKey.ConstantsCmOther]: 'cm - басқа',
   [BaseLocaleKey.ConstantsIndexCommon]: 'index - жалпы',
 
-  // E-mail домендік аймақтарының конфигурациясы және оның қателері.
   [BaseLocaleKey.ConstantsEmailDomainZones]: 'E-mail домендік аймақтары',
   [BaseLocaleKey.ConstantsAllowedEmailDomainZones]: 'Рұқсат етілген домендік аймақтар: $z',
   [BaseLocaleKey.ConstantsStringExpected]: 'Жол күтілуде',
 
-  // Мәтіндік блокты тексеру: жарамсыз таңбалар және жұптаспаған тырнақшалар.
   ...baseLocaleTemplate(BaseLocaleKey.CmIncorrectSymbolsPresent)`Жарамсыз таңбалар бар: $m\n\n$t`,
   ...baseLocaleTemplate(
     BaseLocaleKey.CmUnpairedQuotesWarning,

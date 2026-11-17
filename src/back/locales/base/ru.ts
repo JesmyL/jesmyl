@@ -873,25 +873,18 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   ...baseLocaleTemplate(BaseLocaleKey.NumberSymbols)`$n; символ${FUNCTION('dec')('$n', '', 'а', 'ов')}`,
   [BaseLocaleKey.PushTestSendTooltip]: 'Отправить тестовый PUSH',
 
-  // Название страницы и пункта меню «Пользователи».
   [BaseLocaleKey.Users]: 'Пользователи',
 
-  // Трансфер: файл не проходит по лимиту объёма из настроек.
   [BaseLocaleKey.TextTransferFileTooLarge]: 'Файл больше $s МБ',
 
-  // Трансфер: подсказка у кнопки выбора файла о параллельной передаче одного файла.
   [BaseLocaleKey.TextTransferFileHint]: 'Параллельно с текстом: один файл (до $s МБ)',
 
-  // Трансфер: кнопка скачивания полученного файла.
   [BaseLocaleKey.Download]: 'Скачать',
 
-  // Доступ к базе данных заблокирован другой вкладкой.
   [BaseLocaleKey.DatabaseBlockedByAnotherTab]: 'Доступ к базе данных заблокирован другой вкладкой.',
 
-  // Ошибка формата TBCV-ключа: $t - исходное значение ключа.
   [BaseLocaleKey.InvalidTbcvKeyFormat]: 'Некорректный формат TBCV ключа: "$t;"',
 
-  // Названия уровней интенсивности кома по ключам CmComIntensityLevel.
   [BaseLocaleKey.CmIntensityTitle]: {
     [CmComIntensityLevel.TooSlow]: 'Очень медленная',
     [CmComIntensityLevel.Slow]: 'Медленная',
@@ -900,7 +893,6 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
     [CmComIntensityLevel.TooFast]: 'Очень быстрая',
   },
 
-  // Заголовки числовых параметров в настройках констант.
   [BaseLocaleKey.ConstantsMaxComCommentAlternativesCount]: 'макс. кол-во альтернатив',
   [BaseLocaleKey.ConstantsMaxComCommentBlockLen]: 'макс. символов для блока',
   [BaseLocaleKey.ConstantsMaxComCommentChordLen]: 'макс. символов для аккорда',
@@ -913,17 +905,14 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.ConstantsMaxSelectedComsCount]: 'макс. выбранных песен',
   [BaseLocaleKey.ConstantsMaxTransferFileSize]: 'макс. объём передаваемых файлов (МБ)',
 
-  // Заголовки групп настроек констант.
   [BaseLocaleKey.ConstantsCmComments]: 'cm - комменты',
   [BaseLocaleKey.ConstantsCmOther]: 'cm - другое',
   [BaseLocaleKey.ConstantsIndexCommon]: 'index - общее',
 
-  // Конфигурация допустимых доменных зон E-mail и её ошибки.
   [BaseLocaleKey.ConstantsEmailDomainZones]: 'E-mail доменные зоны',
   [BaseLocaleKey.ConstantsAllowedEmailDomainZones]: 'Допустимые доменные зоны: $z',
   [BaseLocaleKey.ConstantsStringExpected]: 'Ожидается строка',
 
-  // Проверка текстового блока: недопустимые символы и непарные кавычки.
   ...baseLocaleTemplate(BaseLocaleKey.CmIncorrectSymbolsPresent)`Присутствуют недопустимые символы: $m\n\n$t`,
   ...baseLocaleTemplate(
     BaseLocaleKey.CmUnpairedQuotesWarning,

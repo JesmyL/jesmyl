@@ -98,6 +98,9 @@ Project-specific instructions for the jesmyl repo — read together with the uni
 
 - Doc comments belong ONLY above keys in the `const enum` key files: `_BaseLocaleKey.ts`, `_EditorLocaleKey.ts`, `_DynLocaleKey.ts`, `_BackLocaleKey.ts` in `src/shared/model/+locale/` (e.g. above `NewVersionAvailable = 812,`). Above EVERY such key entry there MUST be a doc comment `/** русский текст */` containing the RUSSIAN translation of that key's text (taken from the ru dictionary, e.g. `src/back/locales/base/ru.ts`). Keys marked `@deprecated` are exempt — no comment above them. Keep comments in sync when key texts change.
 - NEVER add these doc comments to the type dictionary files (`src/shared/model/+locale/base.ts`, `editor.ts`, `dynamic.ts` — the `LocaleBase`/`LocaleCmEditor`/`LocaleDynamic` types) and NEVER to the locale dictionaries (`src/back/locales/**` and any other `*.ts` translation files): comments there are prohibited, the enum key files are the single place for them.
+- NEVER write inline comments (e.g. `// Трансфер: кнопка скачивания полученного файла.`) inside the locale dictionary files themselves (`ru.ts`, `en.ts`, etc. under `src/back/locales/**` and any other translation files) — such comments are unnecessary there and forbidden.
+- ALL explanations for locale texts must be written only as doc comments (`/** ... */`) above the keys in the `const enum` key files (`_BaseLocaleKey.ts`, `_EditorLocaleKey.ts`, `_DynLocaleKey.ts`, `_BackLocaleKey.ts` in `src/shared/model/+locale/`).
+- In documentation (docs), render the translations themselves in Russian in **bold** font, while all explanations/clarifications go in *italic*.
 
 ## Command aliases
 

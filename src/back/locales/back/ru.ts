@@ -485,12 +485,10 @@ export const backLocalesRu: Record<BackLocaleKey, string> = {
   [BackLocaleKey.SchListCatMembersDefaultTitle]: 'Участники',
   [BackLocaleKey.DashPushNoSubscriptions]: 'У пользователя нет подписок на PUSH-уведомления',
   [BackLocaleKey.DashPushCheckText]: 'Проверка PUSH-уведомлений',
-  // Тексты PUSH-проверки: приходят на фронт только как payload от сервера.
   [BackLocaleKey.PushCheckSent]: 'Уведомление отправлено',
   [BackLocaleKey.PushSubscriptionsAbsent]: 'Нет подписок на PUSH-уведомления',
   [BackLocaleKey.PushCheckSentToDevices]: `Отправлено на $n; устройств${FUNCTION('dec')('$n', 'о', 'а', '')}`,
   [BackLocaleKey.PushCheckMuted]: 'У пользователя приглушены PUSH-уведомления',
-  // Заголовки прав доступа админки: отдаются на языке подключения администратора.
   [BackLocaleKey.AccessRightScopeGeneralTitle]: 'Главный доступ',
   [BackLocaleKey.AccessRightScopeCmTitle]: 'Песни возрождённых',
   [BackLocaleKey.AccessRightScopeSchTitle]: 'Расписания',
@@ -522,7 +520,6 @@ export const backLocalesRu: Record<BackLocaleKey, string> = {
   [BackLocaleKey.AccessRightRuleQEdit]: 'редактор',
   [BackLocaleKey.AccessRightRuleStoragesList]: 'список',
   [BackLocaleKey.AccessRightRuleDashDash]: 'дашборд визитов',
-  // Ошибки передачи файлов: показываются пользователю на его языке.
   [BackLocaleKey.TextTransferFileTooLarge]: 'Файл слишком большой',
   [BackLocaleKey.TextTransferFileCorrupted]: 'Файл повреждён',
 };
