@@ -56,7 +56,8 @@ export const ScheduleWidgetBindAtts = ({
   const [appAtts, attRefs] = useScheduleWidgetAppAttsContext();
   const appAttList = objectEntries(appAtts);
   const rights = useScheduleWidgetRightsContext();
-  const myUserR = rights.myUser?.R ?? rights.schedule.ctrl.defu;
+  // Берём эффективные права текущего пользователя из контекста: у TOP-пользователя сайта они полные.
+  const myUserR = rights.myUserR;
 
   const attEntries = objectEntries(atts);
 

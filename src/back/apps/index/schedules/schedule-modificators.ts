@@ -35,8 +35,14 @@ export const throwIfNoExternalMutationAuth = (tool: ServerTSJRPCTool) => {
   if (tool.client != null) takeLogginedAuthOrThrow(tool.auth);
 };
 
+// Проверяет право на полное редактирование расписания: TOP-пользователь сайта проходит всегда,
+// остальным нужно быть участником расписания с правом TotalRedact.
 export const throwIfNoScheduleTotalRedact = async (sch: IScheduleWidget, auth: LocalSokiAuth | nil) => {
   const authUser = await takeUserTiny({ l: takeLogginedAuthOrThrow(auth).login }, false);
+
+  // TOP-пользователь сайта имеет полный доступ к расписанию даже без членства в нём.
+  if (authUser?.r === 'TOP') return;
+
   const schUser = authUser && sch.ctrl.users.find(user => user.id === authUser.id);
 
   if (
@@ -46,8 +52,13 @@ export const throwIfNoScheduleTotalRedact = async (sch: IScheduleWidget, auth: L
     throw backLocaleError(BackLocaleKey.NoRightsChangeScheduleMembers);
 };
 
+// Вычисляет права пользователя в расписании: TOP-пользователь сайта получает все права,
+// остальные — права своей роли в расписании или права по умолчанию.
 const takeAuthScheduleUserRights = async (sch: IScheduleWidget, auth: LocalSokiAuth | nil) => {
   const authUser = await takeUserTiny({ l: takeLogginedAuthOrThrow(auth).login }, false);
+
+  // TOP-пользователь сайта получает максимальный уровень прав, даже если его нет в списке участников расписания.
+  if (authUser?.r === 'TOP') return scheduleWidgetUserRights.getAllRights();
 
   return (authUser && sch.ctrl.users.find(user => user.id === authUser.id)?.R) ?? sch.ctrl.defu;
 };

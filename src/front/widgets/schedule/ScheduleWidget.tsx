@@ -76,7 +76,8 @@ export function ScheduleWidget({
         );
     }
   } else {
-    if (rights.myUser.R === undefined || rights.myUser.R === 0) {
+    // TOP-пользователь сайта видит содержимое всегда, остальные без прав получают заглушку запроса доступа.
+    if (!rights.isTopUser && (rights.myUser.R === undefined || rights.myUser.R === 0)) {
       if (!rights.isSwPublic || rights.isSwHideContent)
         blockContent = <div className="text-x7">{translateBase(BaseLocaleKey.ScheduleRequestAccepted)}</div>;
     } else if (!rights.isCanRead) {

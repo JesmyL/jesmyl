@@ -81,7 +81,8 @@ export function ScheduleWidgetCustomAtt(props: {
 
   const whoCani = useAtomValue(whoCaniAtom);
   const whoCan = whoCanUnits[whoCani];
-  const userR = rights.myUser?.R ?? rights.schedule.ctrl.defu;
+  // Берём эффективные права текущего пользователя из контекста: у TOP-пользователя сайта они полные.
+  const userR = rights.myUserR;
   const myBalance = scheduleWidgetUserRights.rightsBalance(userR);
   const isCanRedact = scheduleWidgetUserRights.checkIsCan(userR, props.tatt.U);
 
@@ -355,7 +356,10 @@ export function ScheduleWidgetCustomAtt(props: {
               R={props.tatt[whoCan.rule]}
               isReverse
               isHidden={type => !!type.individual}
-              isDisabled={type => myBalance < scheduleWidgetUserRights.rightLevel(type.id) + 2}
+              // TOP-пользователь сайта может выставить любой уровень доступа вложения, остальные — не выше своего баланса прав.
+              isDisabled={
+                rights.isTopUser ? undefined : type => myBalance < scheduleWidgetUserRights.rightLevel(type.id) + 2
+              }
               onSend={value =>
                 schAttachmentTypesTsjrpcClient.setWhoCanLevel({
                   props: attachmentTypeScopeProps,

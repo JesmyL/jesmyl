@@ -3,8 +3,8 @@ import { Button } from '#shared/components/ui/button';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
-import { takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
 import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
+import { takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
 import { ReactNode } from 'react';
 import {
   customAttUseRights,
@@ -63,7 +63,8 @@ export function ScheduleKeyValueListAtt({
   let exclusiveRoles: IScheduleWidgetRole[] | und;
   let exclusiveGames: IScheduleWidgetTeamGame[] | und;
 
-  const userR = rights.myUser?.R ?? rights.schedule.ctrl.defu;
+  // Берём эффективные права текущего пользователя из контекста: у TOP-пользователя сайта они полные.
+  const userR = rights.myUserR ?? rights.schedule.ctrl.defu;
 
   if (isRedact) {
     checkboxes = customAttUseRights.checkIsHasIndividualRights(att.use, CustomAttUseRights.Checkboxes) && (
@@ -172,9 +173,7 @@ export function ScheduleKeyValueListAtt({
       );
     } else
       insertionNode = itemNode || (
-        <div className="my-10 italic">
-          {translateBase(BaseLocaleKey.ScheduleNothingToInsert, { t: att.title })}
-        </div>
+        <div className="my-10 italic">{translateBase(BaseLocaleKey.ScheduleNothingToInsert, { t: att.title })}</div>
       );
   }
 

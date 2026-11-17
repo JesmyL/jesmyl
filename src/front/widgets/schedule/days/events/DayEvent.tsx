@@ -58,8 +58,10 @@ export function ScheduleWidgetDayEvent(props: Props) {
   const rights = useScheduleWidgetRightsContext();
   const eventType = props.schedule.types[props.event.type];
   const myUserId = rights.myUser?.id;
+  // TOP-пользователь сайта всегда может редактировать список композиций события, остальным нужно право на это.
   const isCanRedactComsList =
-    myUserId != null && checkIsCanRedactScheduleComsList(props.schedule, myUserId, props.dayi, props.event.mi);
+    rights.isTopUser ||
+    (myUserId != null && checkIsCanRedactScheduleComsList(props.schedule, myUserId, props.dayi, props.event.mi));
   const isCanRedactEvent = rights.isCanRedactEventContent || isCanRedactComsList;
   const { editIcon, isRedact, isSelfRedact, setIsSelfRedact } = useIsRedactArea({
     redactable: true,
@@ -116,9 +118,12 @@ export function ScheduleWidgetDayEvent(props: Props) {
 
   const [, isExpand, switchIsExpand] = useIsRememberExpand(JSON.stringify(dayEventScopeProps));
 
+  // Раскрывать событие может TOP-пользователь сайта даже без членства в расписании,
+  // участник с правом чтения заголовков или владелец композиций события; в режиме редактирования раскрытие запрещено.
   const isCanExpandEvent =
     props.isForceExpand ??
-    (((rights.myUser && rights.isCanReadTitles) ||
+    ((rights.isTopUser ||
+      (rights.myUser && rights.isCanReadTitles) ||
       (props.event.atts && objectEntries(props.event.atts).some(item => item[0] === '[cm]:coms'))) &&
       !props.redact);
 
@@ -182,8 +187,9 @@ export function ScheduleWidgetDayEvent(props: Props) {
           <div className="left-part flex gap-2">
             <span
               className={'time-mark' + timerClassNamePlus}
+              // Переключение режима времени — локальный просмотр, поэтому доступно TOP-пользователю сайта и участникам расписания.
               onClick={
-                rights.isCanReadSpecials && rights.myUser && !props.redact
+                rights.isCanReadSpecials && (rights.myUser || rights.isTopUser) && !props.redact
                   ? event => {
                       event.stopPropagation();
                       props.onClickOnTs();
@@ -298,6 +304,8 @@ export function ScheduleWidgetDayEvent(props: Props) {
                   schedule={props.schedule}
                   isPrevEvent={isPrevEvent || props.isPastDay}
                 />
+                {/* Оценки события привязаны к индексу участника расписания (myUser.mi),
+                    поэтому блок оценок доступен только участникам; TOP-пользователь-участник проходит по своим правам. */}
                 {rights.isCanReadTitles && rights.myUser && !props.isForceHideRating && (
                   <ScheduleWidgetDayEventRating
                     dayEventScopeProps={dayEventScopeProps}

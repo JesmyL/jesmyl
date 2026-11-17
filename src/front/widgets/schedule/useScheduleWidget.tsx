@@ -24,6 +24,10 @@ export const [ScheduleWidgetAppAttsContext, useScheduleWidgetAppAttsContext] = c
 
 export interface ScheduleWidgetRights extends ScheduleWidgetUserRights, ScheduleWidgetScheduleWidgetRegType {
   myUser: IScheduleWidgetUser | undefined;
+  /** Эффективные права текущего пользователя в расписании; у TOP-пользователя сайта — все права. */
+  myUserR: number;
+  /** Признак TOP-пользователя сайта: ему в расписании разрешены все действия. */
+  isTopUser: boolean;
   schedule: IScheduleWidget;
   auth: LocalSokiAuth;
   userInfoById: Map<UserId, UserInfoUnsecure>;
@@ -52,6 +56,10 @@ export const useScheduleWidgetRights = (schedule: IScheduleWidget | nil, rights?
 
   return useMemo((): ScheduleWidgetRights => {
     if (rights !== undefined) return rights;
+
+    // TOP-пользователь сайта получает полный доступ к расписанию без привязки к выданным ролям.
+    const isTopUser = auth.login ? userInfo.byLogin.get(auth.login)?.r === 'TOP' : false;
+
     if (schedule == null)
       return {
         auth,
@@ -70,6 +78,8 @@ export const useScheduleWidgetRights = (schedule: IScheduleWidget | nil, rights?
         isSwPublic: false,
         isSwPrivate: false,
         myUser: undefined,
+        myUserR: ScheduleWidgetUserRoleRight.Read,
+        isTopUser,
         schedule: takeDefaultScheduleWidget(),
         userInfoById: userInfo.byId,
         userInfoByLogin: userInfo.byLogin,
@@ -87,7 +97,10 @@ export const useScheduleWidgetRights = (schedule: IScheduleWidget | nil, rights?
       ScheduleWidgetRegType.HideContent,
     );
 
-    const myUserR = myUser?.R ?? schedule.ctrl.defu;
+    // Привилегии текущего пользователя: TOP-пользователь сайта получает все права, остальные — свои роли или права по умолчанию.
+    const myUserR = isTopUser
+      ? scheduleWidgetUserRights.getAllRights()
+      : (myUser?.R ?? schedule.ctrl.defu);
 
     const isCanRead =
       (isSwPublic && !isSwHideContent) ||
@@ -128,6 +141,8 @@ export const useScheduleWidgetRights = (schedule: IScheduleWidget | nil, rights?
     return {
       auth,
       myUser,
+      myUserR,
+      isTopUser,
       isCanTotalRedact,
       isCanRead,
       isCanReadSpecials,

@@ -24,10 +24,13 @@ export function ScheduleWidgetDayEventAtts(props: {
 }) {
   const [appAtts] = useScheduleWidgetAppAttsContext();
   const rights = useScheduleWidgetRightsContext();
-  const userR = rights.myUser?.R ?? rights.schedule.ctrl.defu;
+  // Эффективные права текущего пользователя; TOP-пользователь сайта получает полный доступ к вложениям.
+  const userR = rights.myUserR;
   const myUserId = rights.myUser?.id;
+  // TOP-пользователь сайта всегда может редактировать список композиций события, остальным нужно право на это.
   const isCanRedactComsList =
-    myUserId != null && checkIsCanRedactScheduleComsList(props.schedule, myUserId, props.dayi, props.event.mi);
+    rights.isTopUser ||
+    (myUserId != null && checkIsCanRedactScheduleComsList(props.schedule, myUserId, props.dayi, props.event.mi));
   const atts = objectEntries(props.event.atts);
 
   objectEntries(props.typeBox.atts).forEach(attEntry => {

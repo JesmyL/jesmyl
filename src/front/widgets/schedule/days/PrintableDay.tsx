@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { ScheduleWidgetUserRoleRight } from 'shared/api';
 import { ScheduleWidgetContextWrapper } from '../general/ContextWrapper';
 import { useScheduleWidgetRights } from '../useScheduleWidget';
 import { ScheduleWidgetDay, ScheduleWidgetDayProps } from './Day';
@@ -31,6 +32,10 @@ export function ScheduleWidgetPrintableDay(props: ScheduleWidgetDayProps & { win
       scheduleScopeProps={scheduleScopeProps}
       rights={{
         ...rights,
+        // Для печати все редактируемые возможности принудительно отключаются,
+        // а TOP-признак и права участника нейтрализуются, чтобы в окне печати не появлялись элементы редактирования.
+        isTopUser: false,
+        myUserR: ScheduleWidgetUserRoleRight.Read,
         isCanRead: true,
         isCanTotalRedact: false,
         isCanReadSpecials: false,

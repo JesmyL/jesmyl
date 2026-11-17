@@ -36,7 +36,8 @@ export function ScheduleWidgetAttFace({
   tattOnRedactAtom ??= atom<ScheduleWidgetAttKey | null>(null);
 
   const rights = useScheduleWidgetRightsContext();
-  const myUserR = rights.myUser?.R ?? rights.schedule.ctrl.defu;
+  // Берём эффективные права текущего пользователя из контекста: у TOP-пользователя сайта они полные.
+  const myUserR = rights.myUserR;
 
   if (!scheduleWidgetUserRights.checkIsCan(myUserR, tatt?.R)) return null;
 

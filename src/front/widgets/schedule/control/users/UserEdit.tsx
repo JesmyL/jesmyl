@@ -22,7 +22,8 @@ export function ScheduleWidgetUserEdit({ user }: { user: IScheduleWidgetUser }) 
 
   return (
     <>
-      {rights.myUser && (
+      {/* Права участника может менять TOP-пользователь сайта даже без собственного участия в расписании. */}
+      {(rights.myUser || rights.isTopUser) && (
         <ScheduleWidgetRightControlList
           rightCtrl={scheduleWidgetUserRights}
           R={user.R}
@@ -31,7 +32,7 @@ export function ScheduleWidgetUserEdit({ user }: { user: IScheduleWidgetUser }) 
           }
           isCantEdit={
             !rights.isCanRedactUsers ||
-            rights.myUser.mi === user.mi ||
+            rights.myUser?.mi === user.mi ||
             (!rights.isCanTotalRedact &&
               scheduleWidgetUserRights.checkIsHasRights(user.R, ScheduleWidgetUserRoleRight.TotalRedact))
           }
