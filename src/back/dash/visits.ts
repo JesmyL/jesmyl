@@ -137,11 +137,22 @@ const sendDashErrorPush = async (message: string, login: UserLogin | nil) => {
 
 type VisitRow = { id: number; l: UserLogin | null; deviceId: DeviceId | null; createdAt: number; v: number };
 
-const takeTodayVisitRows = (now: number) =>
-  db
-    .select({ id: visitDB.id, l: visitDB.l, deviceId: visitDB.deviceId, createdAt: visitDB.createdAt, v: visitDB.v })
-    .from(visitDB)
-    .where(gte(visitDB.createdAt, takeMskDayStartMs(now)));
+/** Возвращает набор логинов пользователей с ролью TOP: их визиты не попадают в статистику и дайджесты дашборда. */
+const takeTopLogins = async () =>
+  new Set((await takeAllUsersTiny()).filter(user => user.r === 'TOP').map(user => user.l));
+
+const takeTodayVisitRows = async (now: number) => {
+  // Сегодняшние визиты читаются параллельно со списком TOP-логинов; затем строки TOP-пользователей отсеиваются в памяти, чтобы не попасть в статистику.
+  const [rows, topLogins] = await Promise.all([
+    db
+      .select({ id: visitDB.id, l: visitDB.l, deviceId: visitDB.deviceId, createdAt: visitDB.createdAt, v: visitDB.v })
+      .from(visitDB)
+      .where(gte(visitDB.createdAt, takeMskDayStartMs(now))),
+    takeTopLogins(),
+  ]);
+
+  return rows.filter(({ l }) => !l || !topLogins.has(l));
+};
 
 const takeMinVersionRows = () =>
   db.select({ date: visitDayDB.date, minVersion: visitDayDB.minVersion }).from(visitDayDB).orderBy(visitDayDB.date);
@@ -342,29 +353,34 @@ const makeDayStatsLogPayload = async (stats: ReturnType<typeof makeDayStats>) =>
   return backLocalePayload(langi => makeDayStatsText(stats, visitors, langi));
 };
 
-/** Вставляет визит и сразу рассылает сохранённый ряд в live-канал дашборда: `returning` отдаёт ровно те поля, что рендерит вкладка VisitError, а личность пользователя подтягивается через `takeUserInfo` (при сбое — пустой `emptyDashUser`). */
+/** Вставляет визит и сразу рассылает сохранённый ряд в live-канал дашборда: визиты TOP-пользователей пропускаются, `returning` отдаёт ровно те поля, что рендерит вкладка VisitError, а личность пользователя подтягивается через `takeUserInfo` (при сбое — пустой `emptyDashUser`). */
 export const insertVisit = (login: UserLogin | nil, visitInfo: SokiVisit) =>
-  db
-    .insert(visitDB)
-    .values({
-      l: login ?? null,
-      deviceId: visitInfo.deviceId || null,
-      url: visitInfo.urls[0] ?? '',
-      agent: visitInfo.agent,
-      v: visitInfo.version,
-    })
-    .returning({ id: visitDB.id, l: visitDB.l, url: visitDB.url, v: visitDB.v, createdAt: visitDB.createdAt })
-    .then(async ([row]) => {
-      if (!row) return;
+  // Сначала проверяется роль: визиты пользователей с ролью TOP не логируются, чтобы не попадать в статистику и дайджесты.
+  (login ? takeUserTiny({ l: login }, false) : Promise.resolve(null)).then(user => {
+    if (user?.r === 'TOP') return;
 
-      onVisitStoredEvent.invoke({
-        id: row.id,
-        createdAt: row.createdAt,
-        v: row.v,
-        url: row.url,
-        user: await takeUserInfo(row.l).catch(() => emptyDashUser),
+    return db
+      .insert(visitDB)
+      .values({
+        l: login ?? null,
+        deviceId: visitInfo.deviceId || null,
+        url: visitInfo.urls[0] ?? '',
+        agent: visitInfo.agent,
+        v: visitInfo.version,
+      })
+      .returning({ id: visitDB.id, l: visitDB.l, url: visitDB.url, v: visitDB.v, createdAt: visitDB.createdAt })
+      .then(async ([row]) => {
+        if (!row) return;
+
+        onVisitStoredEvent.invoke({
+          id: row.id,
+          createdAt: row.createdAt,
+          v: row.v,
+          url: row.url,
+          user: await takeUserInfo(row.l).catch(() => emptyDashUser),
+        });
       });
-    });
+  });
 
 export const insertDashMessage = (
   message: string,
@@ -570,11 +586,19 @@ export const updateVisitDayOnline = async (online: number) => {
 export const markDashMessagesRead = async (login: UserLogin, kind: DashMessageKind) => {
   if (!dashMessageKinds.some(readKind => readKind === kind)) throw backLocaleError(BackLocaleKey.DashMessageKindInvalid);
 
-  const [maxRow] = await db
+  // Максимум по сообщениям вида читается всегда: он же служит маркером прочтения для вкладок со списком сообщений.
+  const [maxMessageRow] = await db
     .select({ max: sqlMax(dashErrorDB.createdAt) })
     .from(dashErrorDB)
     .where(messageKindFilter(kind));
-  const lastReadAt = maxRow?.max ?? Date.now();
+  // Вкладка VisitError показывает визиты из visitDB, поэтому для неё берётся ещё и максимум по визитам.
+  const maxVisitRow =
+    kind === DashMessageKind.VisitError
+      ? (await db.select({ max: sqlMax(visitDB.createdAt) }).from(visitDB)).at(0)
+      : null;
+  // Итоговый маркер — самый поздний элемент вида; если данных нет ни там, ни там, отметка ставится на текущее время.
+  const lastItemAt = Math.max(maxMessageRow?.max ?? 0, maxVisitRow?.max ?? 0);
+  const lastReadAt = lastItemAt > 0 ? lastItemAt : Date.now();
   const reads = { ...(await takeDashReads(login)), [kind]: lastReadAt };
 
   await dbUpsert(dashReadDB, { l: login, reads }, ['l']);
@@ -590,10 +614,14 @@ export const flushVisits = async (isNeedSendDigest: boolean) => {
   isFlushing = true;
 
   try {
-    const rows = await db
-      .select({ id: visitDB.id, l: visitDB.l, deviceId: visitDB.deviceId, createdAt: visitDB.createdAt, v: visitDB.v })
-      .from(visitDB)
-      .orderBy(visitDB.id);
+    // Завершённые ряды и набор TOP-логинов читаются параллельно; TOP-строки не участвуют в агрегации, но удаляются вместе с остальными завершёнными рядами.
+    const [rows, topLogins] = await Promise.all([
+      db
+        .select({ id: visitDB.id, l: visitDB.l, deviceId: visitDB.deviceId, createdAt: visitDB.createdAt, v: visitDB.v })
+        .from(visitDB)
+        .orderBy(visitDB.id),
+      takeTopLogins(),
+    ]);
 
     const finishedRows = rows.filter(it => it.createdAt < takeMskDayStartMs(Date.now()));
 
@@ -606,7 +634,10 @@ export const flushVisits = async (isNeedSendDigest: boolean) => {
     const lastId = finishedRows.at(-1)!.id;
     const rowsByDate = new Map<string, VisitRow[]>();
 
+    // В агрегацию попадают только строки без TOP-логина; анонимные визиты остаются всегда.
     finishedRows.forEach(row => {
+      if (row.l && topLogins.has(row.l)) return;
+
       const date = takeMskDayKey(row.createdAt);
       const dateRows = rowsByDate.get(date);
 
@@ -614,17 +645,20 @@ export const flushVisits = async (isNeedSendDigest: boolean) => {
       else rowsByDate.set(date, [row]);
     });
 
+    // Онлайн-данные запрашиваются только для дат, где остались учитываемые ряды.
     const existingOnlineByDate = new Map(
       (
-        await db
-          .select({
-            date: visitDayDB.date,
-            maxOnline: visitDayDB.maxOnline,
-            hoursOnlineMin: visitDayDB.hoursOnlineMin,
-            hoursOnlineMax: visitDayDB.hoursOnlineMax,
-          })
-          .from(visitDayDB)
-          .where(inArray(visitDayDB.date, [...rowsByDate.keys()]))
+        rowsByDate.size === 0
+          ? []
+          : await db
+              .select({
+                date: visitDayDB.date,
+                maxOnline: visitDayDB.maxOnline,
+                hoursOnlineMin: visitDayDB.hoursOnlineMin,
+                hoursOnlineMax: visitDayDB.hoursOnlineMax,
+              })
+              .from(visitDayDB)
+              .where(inArray(visitDayDB.date, [...rowsByDate.keys()]))
       ).map(row => [row.date, row] as const),
     );
 
@@ -758,10 +792,17 @@ export const takeVisitsDashboard = async (
 
   await Promise.all(
     dashMessageKinds.map(async kind => {
-      const [countRow] = await db
-        .select({ count: count() })
-        .from(dashErrorDB)
-        .where(and(messageKindFilter(kind), gt(dashErrorDB.createdAt, reads[kind] ?? 0)));
+      // Вкладка VisitError показывает визиты из visitDB, поэтому её счётчик считается по visitDB, а остальные виды — по сообщениям dashErrorDB.
+      const [countRow] =
+        kind === DashMessageKind.VisitError
+          ? await db
+              .select({ count: count() })
+              .from(visitDB)
+              .where(gt(visitDB.createdAt, reads[kind] ?? 0))
+          : await db
+              .select({ count: count() })
+              .from(dashErrorDB)
+              .where(and(messageKindFilter(kind), gt(dashErrorDB.createdAt, reads[kind] ?? 0)));
 
       unreadCounts[kind] = countRow?.count ?? 0;
     }),

@@ -81,16 +81,22 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
 
               if (!firstPage || firstPage.messages.some(({ id }) => id === message.id)) return data;
 
+              // Счётчик вкладки VisitError считается по визитам из visitDB, поэтому сообщения этого вида его не увеличивают.
+              const unreadCounts =
+                message.kind === DashMessageKind.VisitError
+                  ? firstPage.unreadCounts
+                  : {
+                      ...firstPage.unreadCounts,
+                      [message.kind]: (firstPage.unreadCounts[message.kind] ?? 0) + 1,
+                    };
+
               return {
                 ...data,
                 pages: [
                   {
                     ...firstPage,
                     messages: [message, ...firstPage.messages],
-                    unreadCounts: {
-                      ...firstPage.unreadCounts,
-                      [message.kind]: (firstPage.unreadCounts[message.kind] ?? 0) + 1,
-                    },
+                    unreadCounts,
                   },
                   ...data.pages.slice(1),
                 ],
@@ -112,7 +118,18 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
 
               return {
                 ...data,
-                pages: [{ ...firstPage, visits: [visit, ...firstPage.visits] }, ...data.pages.slice(1)],
+                pages: [
+                  {
+                    ...firstPage,
+                    visits: [visit, ...firstPage.visits],
+                    // Живой визит сразу увеличивает счётчик непрочитанных вкладки VisitError: визиты помечаются прочитанными только вручную.
+                    unreadCounts: {
+                      ...firstPage.unreadCounts,
+                      [DashMessageKind.VisitError]: (firstPage.unreadCounts[DashMessageKind.VisitError] ?? 0) + 1,
+                    },
+                  },
+                  ...data.pages.slice(1),
+                ],
               };
             },
           );

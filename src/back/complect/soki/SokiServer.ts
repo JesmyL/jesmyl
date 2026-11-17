@@ -1,6 +1,7 @@
 import { backLocaleError, localizeBackLocaleErrorPayload } from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { insertDashMessage, insertVisit } from 'back/dash/visits';
+import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { saveUserLangi, takeUserLangi } from 'back/complect/userLangiFileStore';
 import { ServerTSJRPCTool, tsjrpcBaseServerNext } from 'back/tsjrpc.base.server';
 import { DrizzleQueryError } from 'drizzle-orm';
@@ -43,6 +44,8 @@ export class SokiServer {
   auths = new Map<WebSocket, LocalSokiAuth>();
   clientsByLogin = new Map<SokiAuthLogin, Set<WebSocket>>();
   private visits = new Map<WebSocket, SokiVisit>();
+  // Клиенты с ролью TOP: их визиты продолжают храниться в `visits` (нужны для рассылок), но не участвуют в онлайне.
+  private topClients = new Set<WebSocket>();
   private clientIps = new Map<WebSocket, string>();
   private abortedRequestIdsSet = new Set<string>();
   private sockets = new Set<WebSocket>();
@@ -61,8 +64,33 @@ export class SokiServer {
     login: SokiAuthLogin | nil;
   }>();
 
+  /** Считает онлайновые визиты без TOP-клиентов: набор `topClients` заполняется асинхронно при проверке роли, поэтому сам счётчик остаётся синхронным. */
+  private takeOnlineVisitsCount() {
+    let count = 0;
+
+    this.visits.forEach((_, client) => {
+      if (this.topClients.has(client)) return;
+      count++;
+    });
+
+    return count;
+  }
+
+  /** Уточняет роль клиента перед учётом визита: TOP-пользователи помечаются в `topClients`, остальные снимаются с пометки. `takeUserTiny` кэширует пользователей в памяти, поэтому повторная проверка того же логина не ходит в БД. */
+  private async syncClientTopRole(client: WebSocket, login: SokiAuthLogin | nil) {
+    if (!login) {
+      this.topClients.delete(client);
+      return;
+    }
+
+    const user = await takeUserTiny({ l: login }, false);
+
+    if (user?.r === 'TOP') this.topClients.add(client);
+    else this.topClients.delete(client);
+  }
+
   get onlineCount() {
-    return this.visits.size;
+    return this.takeOnlineVisitsCount();
   }
 
   takeClientLangi(client: WebSocket): Langi | nil {
@@ -81,7 +109,10 @@ export class SokiServer {
     const logins = new Set<SokiAuthLogin>();
     let anon = 0;
 
+    // TOP-клиенты пропускаются целиком: анонимом TOP-пользователь быть не может, поэтому их визиты не попадают ни в логины, ни в анонимный счётчик.
     this.visits.forEach((_, client) => {
+      if (this.topClients.has(client)) return;
+
       const login = this.auths.get(client)?.login;
 
       if (login) logins.add(login);
@@ -122,17 +153,19 @@ export class SokiServer {
 
       client.on('close', () => {
         const auth = this.auths.get(client);
-        const wasOnline = this.visits.size;
+        const wasOnline = this.takeOnlineVisitsCount();
 
         this.sockets.delete(client);
         this.clients.delete(client);
         this.visits.delete(client);
+        this.topClients.delete(client);
         this.auths.delete(client);
         this.clientIps.delete(client);
 
         this.onClientCloseEvent.invoke(client);
 
-        if (this.visits.size !== wasOnline) this.notifyOnlineCount(auth?.login ?? null, false);
+        // Счётчик онлайна сравнивается без TOP-клиентов, поэтому событие уходит только при реальном изменении учтённого числа.
+        if (this.takeOnlineVisitsCount() !== wasOnline) this.notifyOnlineCount(auth?.login ?? null, false);
         if (checkIsUndefined(auth?.login)) return;
         this.clientsByLogin.get(auth.login)?.delete(client);
       });
@@ -148,26 +181,32 @@ export class SokiServer {
         if (checkIsNotUndefined(event.token)) {
           if (!event.stopAll) this.clients.add(client);
 
-          const printVisit = (login: SokiAuthLogin | nil) => {
-            if (checkIsNotUndefined(event.visitInfo)) {
-              const previousOnline = this.visits.size;
-              const visitInfo = event.visitInfo;
+          const printVisit = async (login: SokiAuthLogin | nil) => {
+            const previousOnline = this.takeOnlineVisitsCount();
 
+            // Роль уточняется до записи визита: TOP-клиент не должен попасть в счётчик онлайна даже на время одной рассылки.
+            await this.syncClientTopRole(client, login);
+
+            const visitInfo = event.visitInfo;
+
+            if (checkIsNotUndefined(visitInfo)) {
               this.visits.set(client, visitInfo);
               if (login) saveUserLangi(login, visitInfo.langi);
-              if (this.visits.size !== previousOnline) this.notifyOnlineCount(login);
               this.onClientVisitChangeEvent.invoke(client);
 
-              // Логируем посещение всех нелокальных визитов, включая пользователей с ролью TOP.
-              if (!this.isLocalhost(visitInfo.urls[0]))
-                insertVisit(login, visitInfo).catch(emptyFunc);
+              // Логируем все нелокальные визиты; визиты пользователей с ролью TOP отсеиваются внутри insertVisit.
+              if (!this.isLocalhost(visitInfo.urls[0])) insertVisit(login, visitInfo).catch(emptyFunc);
             }
+
+            // Счётчик онлайна сравнивается без TOP-клиентов: событие уходит только при реальном изменении учтённого числа, `isEnter` отражает направление изменения.
+            const online = this.takeOnlineVisitsCount();
+            if (online !== previousOnline) this.notifyOnlineCount(login, online > previousOnline);
           };
 
           if (checkIsNull(event.token)) {
             this.send({ requestId: event.requestId }, client);
 
-            printVisit(null);
+            await printVisit(null).catch(emptyFunc);
 
             return;
           }
@@ -183,7 +222,7 @@ export class SokiServer {
 
           const auth = jwt.decode(event.token) as UserAuth | nil;
 
-          printVisit(auth?.login);
+          await printVisit(auth?.login).catch(emptyFunc);
 
           if (auth) {
             const previousLogin = this.auths.get(client)?.login ?? null;

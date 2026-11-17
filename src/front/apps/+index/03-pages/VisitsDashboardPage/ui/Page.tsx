@@ -501,6 +501,8 @@ const DashboardMessages = () => {
   const isEmpty = isVisitErrorKind ? visits.length === 0 : messages.length === 0;
   const messageReads = firstPage?.messageReads ?? {};
   const unreadCounts = firstPage?.unreadCounts ?? {};
+  // Вкладка VisitError показывает визиты, поэтому отметка прочтения визитов — то же время вида VisitError из dashReadDB.
+  const visitReadAt = messageReads[DashMessageKind.VisitError] ?? 0;
 
   useEffect(() => {
     if (!dashMessageVersion) return;
@@ -528,6 +530,7 @@ const DashboardMessages = () => {
     <section className="min-w-0 max-w-full rounded-2xl border border-x2/60 bg-x1/50 p-2 sm:p-3">
       <div className="mb-2 flex flex-wrap items-center gap-1">
         {messageTabs.map(tab => {
+          // Счётчик непрочитанных приходит с бэка: для вкладки VisitError он посчитан по visitDB, для остальных видов — по сообщениям.
           const unreadCount = unreadCounts[tab.kind] ?? 0;
 
           return (
@@ -540,7 +543,7 @@ const DashboardMessages = () => {
               onClick={() => setActiveKind(tab.kind)}
             >
               {translateEditorBase(tab.title)}
-              {!unreadCount || tab.kind === DashMessageKind.VisitError || (
+              {!unreadCount || (
                 <span
                   className={twMerge(
                     'rounded-full px-1.5 text-[10px]',
@@ -553,14 +556,13 @@ const DashboardMessages = () => {
             </button>
           );
         })}
-        {isVisitErrorKind || (
-          <button
-            className="pointer rounded-lg px-2 py-1 text-xs text-x4 hover:text-x3"
-            onClick={() => markAllRead(activeKind)}
-          >
-            {translateEditorBase(EditorLocaleKey.VisitsMarkAllRead)}
-          </button>
-        )}
+        {/* Ручная отметка прочитанным доступна всем вкладкам, включая VisitError: бэкенд сдвигает маркер сразу и по сообщениям, и по визитам. */}
+        <button
+          className="pointer rounded-lg px-2 py-1 text-xs text-x4 hover:text-x3"
+          onClick={() => markAllRead(activeKind)}
+        >
+          {translateEditorBase(EditorLocaleKey.VisitsMarkAllRead)}
+        </button>
       </div>
 
       {isEmpty ? (
@@ -568,27 +570,36 @@ const DashboardMessages = () => {
       ) : (
         <div className="flex min-w-0 max-h-96 w-full flex-col gap-2 overflow-y-auto">
           {isVisitErrorKind
-            ? visits.map(visit => (
-                <article
-                  key={visit.id}
-                  className="w-full max-w-full min-w-0 rounded-xl border border-x2/50 bg-x2/20 p-2"
-                >
-                  <span className="flex min-w-0 max-w-full flex-wrap items-center gap-x-2 gap-y-0.5 text-xs">
-                    <span className="shrink-0 text-x4/80">
-                      {new Date(visit.createdAt).toLocaleString(languageSystemCode, {
-                        day: '2-digit',
-                        month: '2-digit',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit',
-                      })}
+            ? visits.map(visit => {
+                // Визит не прочитан, если он новее отметки прочтения вида VisitError — так же, как у сообщений.
+                const isUnread = visit.createdAt > visitReadAt;
+
+                return (
+                  <article
+                    key={visit.id}
+                    className={twMerge(
+                      'relative w-full max-w-full min-w-0 rounded-xl border p-2',
+                      isUnread ? 'border-chart-2/20 bg-chart-2/10' : 'border-x2/50 bg-x2/20',
+                    )}
+                  >
+                    {!isUnread || <span className="absolute right-2 top-2 size-1.5 rounded-full bg-chart-2/70" />}
+                    <span className="flex min-w-0 max-w-full flex-wrap items-center gap-x-2 gap-y-0.5 text-xs">
+                      <span className="shrink-0 text-x4/80">
+                        {new Date(visit.createdAt).toLocaleString(languageSystemCode, {
+                          day: '2-digit',
+                          month: '2-digit',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          second: '2-digit',
+                        })}
+                      </span>
+                      <span className="min-w-0 truncate font-medium text-x3">{takeUserName(visit.user)}</span>
+                      <span className="shrink-0 text-x4/80">v{visit.v}</span>
                     </span>
-                    <span className="min-w-0 truncate font-medium text-x3">{takeUserName(visit.user)}</span>
-                    <span className="shrink-0 text-x4/80">v{visit.v}</span>
-                  </span>
-                  <div className="min-w-0 max-w-full truncate text-xs text-x4">{visit.url}</div>
-                </article>
-              ))
+                    <div className="min-w-0 max-w-full truncate text-xs text-x4">{visit.url}</div>
+                  </article>
+                );
+              })
             : messages.map(message => {
                 const isUnread = message.createdAt > (messageReads[activeKind] ?? 0);
                 const isOpen = openMessageIds.has(message.id);
