@@ -1,4 +1,4 @@
-import { Langi, MenuComToolName } from 'shared/api';
+import { CmComIntensityLevel, Langi, MenuComToolName } from 'shared/api';
 import { CmAdditionalCatKind } from 'shared/const/cm/enums';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { LocaleBase } from 'shared/model/+locale/base';
@@ -893,4 +893,48 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
 
   // Трансфер: кнопка завантаження отриманого файлу.
   [BaseLocaleKey.Download]: 'Завантажити',
+
+  // Доступ до бази даних заблоковано іншою вкладкою.
+  [BaseLocaleKey.DatabaseBlockedByAnotherTab]: 'Доступ до бази даних заблоковано іншою вкладкою.',
+
+  // Помилка формату TBCV-ключа: $t - початкове значення ключа.
+  [BaseLocaleKey.InvalidTbcvKeyFormat]: 'Некоректний формат TBCV ключа: "$t;"',
+
+  // Назви рівнів інтенсивності кома за ключами CmComIntensityLevel.
+  [BaseLocaleKey.CmIntensityTitle]: {
+    [CmComIntensityLevel.TooSlow]: 'Дуже повільна',
+    [CmComIntensityLevel.Slow]: 'Повільна',
+    [CmComIntensityLevel.Medium]: 'Середня',
+    [CmComIntensityLevel.Fast]: 'Швидка',
+    [CmComIntensityLevel.TooFast]: 'Дуже швидка',
+  },
+
+  // Заголовки числових параметрів у налаштуваннях констант.
+  [BaseLocaleKey.ConstantsMaxComCommentAlternativesCount]: 'макс. кількість альтернатив',
+  [BaseLocaleKey.ConstantsMaxComCommentBlockLen]: 'макс. символів для блоку',
+  [BaseLocaleKey.ConstantsMaxComCommentChordLen]: 'макс. символів для акорду',
+  [BaseLocaleKey.ConstantsMaxComCommentHeadLen]: 'макс. символів для шапки',
+  [BaseLocaleKey.ConstantsMaxComCommentLineLen]: 'макс. символів для рядка',
+  [BaseLocaleKey.ConstantsMaxComCommentWordLen]: 'макс. символів для слова',
+  [BaseLocaleKey.ConstantsMaxComLineLength]: 'макс. довжина рядка в пісні',
+  [BaseLocaleKey.ConstantsMaxFavouritesCount]: 'макс. обраних пісень',
+  [BaseLocaleKey.ConstantsMaxLaterComsCount]: 'макс. останніх пісень',
+  [BaseLocaleKey.ConstantsMaxSelectedComsCount]: 'макс. вибраних пісень',
+  [BaseLocaleKey.ConstantsMaxTransferFileSize]: 'макс. обсяг передаваних файлів (МБ)',
+
+  // Заголовки груп налаштувань констант.
+  [BaseLocaleKey.ConstantsCmComments]: 'cm - коментарі',
+  [BaseLocaleKey.ConstantsCmOther]: 'cm - інше',
+  [BaseLocaleKey.ConstantsIndexCommon]: 'index - загальне',
+
+  // Конфігурація допустимих доменних зон E-mail та її помилки.
+  [BaseLocaleKey.ConstantsEmailDomainZones]: 'E-mail доменні зони',
+  [BaseLocaleKey.ConstantsAllowedEmailDomainZones]: 'Допустимі доменні зони: $z',
+  [BaseLocaleKey.ConstantsStringExpected]: 'Очікується рядок',
+
+  // Перевірка текстового блоку: недопустимі символи та непарні лапки.
+  ...baseLocaleTemplate(BaseLocaleKey.CmIncorrectSymbolsPresent)`Присутні недопустимі символи: $m\n\n$t`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.CmUnpairedQuotesWarning,
+  )`У тексті є непарна кількість лапок.\nПотрібно додати $n ${IF('$o').THEN`відкривальн`.ELSE`закривальн`}${FUNCTION('dec')('$n', 'у лапку', 'і лапки', 'их лапок')}`,
 });

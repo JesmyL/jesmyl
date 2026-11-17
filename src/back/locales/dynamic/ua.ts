@@ -36,6 +36,26 @@ export const localeDynamicUa = convertObjectToArray<LocaleDynamic<Langi.Ua>>({
     [CmComBlockKindKey.PlusPlusShift]: ':ПРОДОВЖЕННЯ З ЗМІЩЕННЯМ ТА ВІДСТУПОМ:',
   },
 
+  [DynLocaleKey.CmComKindTags]: {
+    [CmComBlockKindKey.Enter]: ['вступ'],
+    [CmComBlockKindKey.One]: ['куплет', 'купліт', 'куплєт'],
+    [CmComBlockKindKey.PTwo]: [
+      'передприспів',
+      'перед приспів',
+      'предприпів',
+      'пред припів',
+      'передприпів',
+      'перед припів',
+    ],
+    [CmComBlockKindKey.Two]: ['приспів', 'припів'],
+    [CmComBlockKindKey.Bridge]: ['бридж', 'брідж', 'міст'],
+    [CmComBlockKindKey.Play]: ['програш'],
+    [CmComBlockKindKey.Modulation]: ['модуляція'],
+    [CmComBlockKindKey.Final]: ['фінал', 'фiнал', 'кінець', 'кінцівка', 'концівка'],
+    [CmComBlockKindKey.Thirdo]: ['заспів', 'запів'],
+    [CmComBlockKindKey.Insert]: ['вставка'],
+  },
+
   [DynLocaleKey.BibleTitleFull]: convertObjectToArray({
     [BibleTitleCodei.aБыт]: 'Буття',
     [BibleTitleCodei.Исх]: 'Вихід',

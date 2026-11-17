@@ -4,7 +4,7 @@ import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useAtomValue } from 'atomaric';
-import { constantsConfigurator, constantsDefaultConfig } from 'shared/const/cm/constants.def';
+import { constantsConfigurator, constantsDefaultConfig, constantsSectionTitleKeys } from 'shared/const/cm/constants.def';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsNumber, checkIsStartsWith } from 'shared/utils/checkIs';
 import { mapObjectEntries } from 'shared/utils/object.utils';
@@ -25,14 +25,14 @@ export const IndexConstantsPage = () => {
                   key={key}
                   className="bold underline mt-15"
                 >
-                  {key.slice(1)}
+                  {translateBase(constantsSectionTitleKeys[key])}
                 </div>
               );
 
             return (
               <InputWithLoadingIcon
                 key={key}
-                label={configItem.title}
+                label={translateBase(configItem.title)}
                 icon="RightToLeftListTriangle"
                 placeholder={'' + constantsDefaultConfig[key]}
                 defaultValue={configItem.str(constants[key])}

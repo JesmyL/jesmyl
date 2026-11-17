@@ -1,4 +1,4 @@
-import { Langi, MenuComToolName } from 'shared/api';
+import { CmComIntensityLevel, Langi, MenuComToolName } from 'shared/api';
 import type { CmAdditionalCatKind } from 'shared/const/cm/enums';
 import { Bool } from 'shared/enums';
 import type { NoInterpolationKeys } from 'shared/utils/locale/model';
@@ -801,6 +801,42 @@ export type LocaleBase<L extends Langi> = {
 
   // Кнопка скачивания полученного файла.
   [BaseLocaleKey.Download]: LocaleSimpleString;
+
+  // Сообщение в консоль, когда IndexedDB заблокирована другой вкладкой.
+  [BaseLocaleKey.DatabaseBlockedByAnotherTab]: LocaleSimpleString;
+
+  // Ошибка декодирования TBCV-ключа: $t - исходное значение ключа.
+  [BaseLocaleKey.InvalidTbcvKeyFormat]: StringTemplaterInterpolation<{ t: string }>;
+
+  // Названия уровней интенсивности кома по ключам CmComIntensityLevel.
+  [BaseLocaleKey.CmIntensityTitle]: LocaleStrRecord<CmComIntensityLevel>;
+
+  // Ограничения из настроек констант: заголовки числовых параметров комментариев, песен и передачи файлов.
+  [BaseLocaleKey.ConstantsMaxComCommentAlternativesCount]: LocaleSimpleString;
+  [BaseLocaleKey.ConstantsMaxComCommentBlockLen]: LocaleSimpleString;
+  [BaseLocaleKey.ConstantsMaxComCommentChordLen]: LocaleSimpleString;
+  [BaseLocaleKey.ConstantsMaxComCommentHeadLen]: LocaleSimpleString;
+  [BaseLocaleKey.ConstantsMaxComCommentLineLen]: LocaleSimpleString;
+  [BaseLocaleKey.ConstantsMaxComCommentWordLen]: LocaleSimpleString;
+  [BaseLocaleKey.ConstantsMaxComLineLength]: LocaleSimpleString;
+  [BaseLocaleKey.ConstantsMaxFavouritesCount]: LocaleSimpleString;
+  [BaseLocaleKey.ConstantsMaxLaterComsCount]: LocaleSimpleString;
+  [BaseLocaleKey.ConstantsMaxSelectedComsCount]: LocaleSimpleString;
+  [BaseLocaleKey.ConstantsMaxTransferFileSize]: LocaleSimpleString;
+
+  // Заголовки групп настроек констант.
+  [BaseLocaleKey.ConstantsCmComments]: LocaleSimpleString;
+  [BaseLocaleKey.ConstantsCmOther]: LocaleSimpleString;
+  [BaseLocaleKey.ConstantsIndexCommon]: LocaleSimpleString;
+
+  // Конфигурация допустимых доменных зон E-mail и её ошибки.
+  [BaseLocaleKey.ConstantsEmailDomainZones]: LocaleSimpleString;
+  [BaseLocaleKey.ConstantsAllowedEmailDomainZones]: StringTemplaterInterpolation<{ z: string }>;
+  [BaseLocaleKey.ConstantsStringExpected]: LocaleSimpleString;
+
+  // Проверка текстового блока: недопустимые символы и непарные кавычки.
+  [BaseLocaleKey.CmIncorrectSymbolsPresent]: StringTemplaterInterpolation<{ m: string; t: string }>;
+  [BaseLocaleKey.CmUnpairedQuotesWarning]: StringTemplaterInterpolation<{ n: number; o: boolean | Bool }>;
 };
 
 export type UsedBaseLocaleKey = BaseLocaleKey;

@@ -1,11 +1,20 @@
+import type { BaseLocaleKey } from './+locale/_BaseLocaleKey';
+import type { NonInterpolatedBaseLocaleKey } from './+locale/base';
+
+/** Локализуемая ошибка значения конфигурации: ключ базовой локали и подстановка `$z` (пустая строка, если подстановка не нужна). */
+export type ConstantsConfigError = {
+  key: BaseLocaleKey;
+  z: string;
+};
+
 export type ConstantsConfigConfiguratorItem<Type> = {
   /** default value */
   def: Type;
 
   checked: (value: unknown) => Type;
   str: (value: unknown) => string;
-  title: string;
-  error?: (value: Type | nil, checkValue: unknown) => string | nil;
+  title: NonInterpolatedBaseLocaleKey;
+  error?: (value: Type | nil, checkValue: unknown) => ConstantsConfigError | nil;
 };
 
 export type ConstantsConfigConfigurator = Record<`>${string}`, 0> & {

@@ -26,3 +26,6 @@ export const translateBaseTexts = <K extends BaseLocaleKey>(
 
   return interpolation ? stringTemplater(text, interpolation) : text;
 };
+
+/** Словарь базовых переводов выбранного языка: нужен для ключей-записей, которые не сводятся к строке. Язык обязателен, подстановки другого языка нет. */
+export const takeBaseLocaleDict = (langi: Langi) => baseLocales[langi] ?? baseLocales[Langi.Ru];

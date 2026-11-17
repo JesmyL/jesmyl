@@ -6,6 +6,7 @@ import { langCodeDict, langSystemCodeDict } from 'shared/const/+locale';
 import { LocaleDynamic } from 'shared/model/+locale/dynamic';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { setBaseLocaleProvider, translateBase } from 'shared/utils/locale/base';
+import { setAllDynamicLocalesProvider, setDynamicLocaleProvider } from 'shared/utils/locale/dynamic';
 import { setCmEditorLocaleProvider, translateEditorBase } from 'shared/utils/locale/editor';
 import {
   DefinedTranslateFunction,
@@ -49,6 +50,11 @@ if (checkIsNil(lang)) {
 export const languageSystemCode = langSystemCodeDict[applicationLangi];
 
 setBaseLocaleProvider(() => takeBaseLanguageAtom().get());
+setDynamicLocaleProvider(() => takeDynamicLanguageAtom(currentLangiAtom.get()).get());
+// Словари всех языков нужны для распознавания тегов, не зависящих от текущего языка интерфейса.
+setAllDynamicLocalesProvider(() =>
+  [Langi.Ru, Langi.Ua, Langi.Kz, Langi.En].map(langi => takeDynamicLanguageAtom(langi).get()),
+);
 setCmEditorLocaleProvider(() => takeEditorLanguageAtom().get());
 
 export { translateBase, translateEditorBase };

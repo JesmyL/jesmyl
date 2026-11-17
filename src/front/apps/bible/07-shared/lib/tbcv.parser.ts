@@ -1,6 +1,8 @@
 import { bibleTbcvKeyTranslateDict } from 'shared/const/bible/tbcv';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { BibleTbcvKey, BibleTranslateName } from 'shared/model/bible';
 import { checkIsNotString } from 'shared/utils/checkIs';
+import { translateBase } from 'shared/utils/locale/base';
 import { objectEntries } from 'shared/utils/object.utils';
 import { BibleBooki, BibleChapteri, BibleVersei } from '../model/base';
 
@@ -33,8 +35,9 @@ export const bibleTbcvEncode = (
 };
 
 export const bibleTbcvDecode = (tbcvString: BibleTbcvKey): IDecodedTBCV => {
+  // Ключ обязан быть строкой из четырёх символов с известным кодом перевода, иначе формат неверен.
   if (checkIsNotString(tbcvString) || tbcvString.length !== 4 || !REVERSE_TRANSLATION_MAP[tbcvString.charAt(0)]) {
-    throw `Некорректный формат TBCV ключа: "${tbcvString}"`;
+    throw translateBase(BaseLocaleKey.InvalidTbcvKeyFormat, { t: tbcvString });
   }
 
   const tChar = tbcvString.charAt(0);

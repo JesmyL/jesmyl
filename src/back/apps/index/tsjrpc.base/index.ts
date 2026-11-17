@@ -320,7 +320,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         updateConstConfig: async ({ config }) => {
           const prevConfig = constantsConfigFileStore.getValue();
           const newConfig = { ...config };
-          const updates: ({ title: string } | { unknownKey: string })[] = [];
+          const updates: ({ title: BaseLocaleKey } | { unknownKey: string })[] = [];
           const was: Record<string, unknown> = {};
           const newValues: Record<string, unknown> = {};
 
@@ -364,7 +364,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
                 l: updates
                   .map(update =>
                     'title' in update
-                      ? update.title
+                      ? translateBaseTexts(langi, update.title)
                       : translateBackTexts(langi, BackLocaleKey.DashUnknownConfigKey, { k: update.unknownKey }),
                   )
                   .join('\n'),

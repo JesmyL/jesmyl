@@ -2,7 +2,9 @@
 import Dexie, { EntityTable, type Transaction } from 'dexie';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useCallback } from 'react';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsArray, checkIsFunction } from 'shared/utils/checkIs';
+import { translateBase } from 'shared/utils/locale/base';
 import { forEachObjectEntries, mapObjectEntries } from 'shared/utils/object.utils';
 
 const keyvalues = '%keyvalues%';
@@ -60,8 +62,9 @@ export class DexieDB<Store> {
       }
     });
 
+    // База заблокирована другой вкладкой: сообщаем об этом в консоль через базовый словарь.
     this.db.on('blocked', () => {
-      console.error('Доступ к базе данных заблокирован другой вкладкой.');
+      console.error(translateBase(BaseLocaleKey.DatabaseBlockedByAnotherTab));
     });
 
     const returnIfKeyInDefaults = <Cb>(key: keyof Store | string | symbol, cb: Cb) => {

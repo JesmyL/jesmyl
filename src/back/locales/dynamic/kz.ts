@@ -36,6 +36,19 @@ export const localeDynamicKz = convertObjectToArray<LocaleDynamic<Langi.Kz>>({
     [CmComBlockKindKey.PlusPlusShift]: ':ЫҒЫСУМЕН ЖӘНЕ ШЕГІНІСПЕН ЖАЛҒАСТЫРУ:',
   },
 
+  [DynLocaleKey.CmComKindTags]: {
+    [CmComBlockKindKey.Enter]: ['кіріспе'],
+    [CmComBlockKindKey.One]: ['куплет', 'шумақ'],
+    [CmComBlockKindKey.PTwo]: ['қайырма алды'],
+    [CmComBlockKindKey.Two]: ['қайырма', 'қайырма әуен'],
+    [CmComBlockKindKey.Bridge]: ['көпір'],
+    [CmComBlockKindKey.Play]: ['орындау бөлімі', 'аспаптық бөлім'],
+    [CmComBlockKindKey.Modulation]: ['модуляция', 'тональдық ауысу'],
+    [CmComBlockKindKey.Final]: ['финал', 'қорытынды'],
+    [CmComBlockKindKey.Thirdo]: ['ән бастауы'],
+    [CmComBlockKindKey.Insert]: ['кірістіру'],
+  },
+
   [DynLocaleKey.BibleTitleFull]: convertObjectToArray({
     [BibleTitleCodei.aБыт]: 'Жаратылыстың басталуы',
     [BibleTitleCodei.Исх]: 'Мысырдан шығу',

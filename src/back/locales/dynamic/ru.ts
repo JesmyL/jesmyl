@@ -36,6 +36,19 @@ export const localeDynamicRu = convertObjectToArray<LocaleDynamic<Langi.Ru>>({
     [CmComBlockKindKey.PlusPlusShift]: ':ПРОДОЛЖЕНИЕ СО СМЕЩЕНИЕМ И ОТСТУПОМ:',
   },
 
+  [DynLocaleKey.CmComKindTags]: {
+    [CmComBlockKindKey.Enter]: ['вступление', 'вступ', 'интро'],
+    [CmComBlockKindKey.One]: ['куплет'],
+    [CmComBlockKindKey.PTwo]: ['предприпев', 'пред припев', 'передприпев'],
+    [CmComBlockKindKey.Two]: ['припев'],
+    [CmComBlockKindKey.Bridge]: ['мост', 'бридж'],
+    [CmComBlockKindKey.Play]: ['проигрыш'],
+    [CmComBlockKindKey.Modulation]: ['модуляция'],
+    [CmComBlockKindKey.Final]: ['финал', 'конец', 'концовка'],
+    [CmComBlockKindKey.Thirdo]: ['запев'],
+    [CmComBlockKindKey.Insert]: ['вставка'],
+  },
+
   [DynLocaleKey.BibleTitleFull]: convertObjectToArray({
     [BibleTitleCodei.aБыт]: 'Бытие',
     [BibleTitleCodei.Исх]: 'Исход',

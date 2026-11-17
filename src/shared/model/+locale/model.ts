@@ -11,6 +11,8 @@ export type LocaleNumStrRecord<T extends string | number, Value extends string |
 > &
   Value[];
 
+export type LocaleStrArrRecord<T extends string | number> = Partial<Record<`${T}`, LocaleSimpleString[]>>;
+
 export type LocaleStrOrInterpolationRecord<All extends string | number, T extends All, Vals extends object> = Record<
   `${Exclude<All, T>}`,
   LocaleSimpleString

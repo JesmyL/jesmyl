@@ -1,4 +1,4 @@
-import { Langi, MenuComToolName } from 'shared/api';
+import { CmComIntensityLevel, Langi, MenuComToolName } from 'shared/api';
 import { CmAdditionalCatKind } from 'shared/const/cm/enums';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { LocaleBase } from 'shared/model/+locale/base';
@@ -878,4 +878,48 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
 
   // Трансфер: алынған файлды жүктеу батырмасы.
   [BaseLocaleKey.Download]: 'Жүктеу',
+
+  // Деректер базасына кіру басқа қойындымен құлыпталған.
+  [BaseLocaleKey.DatabaseBlockedByAnotherTab]: 'Деректер базасына кіруге басқа қойынды кедергі болды.',
+
+  // TBCV кілтінің форматы қате: $t - кілттің бастапқы мәні.
+  [BaseLocaleKey.InvalidTbcvKeyFormat]: 'TBCV кілтінің форматы дұрыс емес: "$t;"',
+
+  // Ком қарқындылығы деңгейлерінің атаулары: мәндер CmComIntensityLevel бойынша таңдалады.
+  [BaseLocaleKey.CmIntensityTitle]: {
+    [CmComIntensityLevel.TooSlow]: 'Өте баяу',
+    [CmComIntensityLevel.Slow]: 'Баяу',
+    [CmComIntensityLevel.Medium]: 'Орташа',
+    [CmComIntensityLevel.Fast]: 'Жылдам',
+    [CmComIntensityLevel.TooFast]: 'Өте жылдам',
+  },
+
+  // Константалар баптауларындағы сандық параметрлердің тақырыптары.
+  [BaseLocaleKey.ConstantsMaxComCommentAlternativesCount]: 'макс. альтернатив саны',
+  [BaseLocaleKey.ConstantsMaxComCommentBlockLen]: 'блок үшін макс. таңба саны',
+  [BaseLocaleKey.ConstantsMaxComCommentChordLen]: 'аккорд үшін макс. таңба саны',
+  [BaseLocaleKey.ConstantsMaxComCommentHeadLen]: 'тақырып үшін макс. таңба саны',
+  [BaseLocaleKey.ConstantsMaxComCommentLineLen]: 'жол үшін макс. таңба саны',
+  [BaseLocaleKey.ConstantsMaxComCommentWordLen]: 'сөз үшін макс. таңба саны',
+  [BaseLocaleKey.ConstantsMaxComLineLength]: 'әндегі жолдың макс. ұзындығы',
+  [BaseLocaleKey.ConstantsMaxFavouritesCount]: 'макс. таңдаулы ән саны',
+  [BaseLocaleKey.ConstantsMaxLaterComsCount]: 'макс. соңғы ән саны',
+  [BaseLocaleKey.ConstantsMaxSelectedComsCount]: 'макс. таңдалған ән саны',
+  [BaseLocaleKey.ConstantsMaxTransferFileSize]: 'жіберілетін файлдардың макс. көлемі (МБ)',
+
+  // Константалар баптаулары топтарының тақырыптары.
+  [BaseLocaleKey.ConstantsCmComments]: 'cm - пікірлер',
+  [BaseLocaleKey.ConstantsCmOther]: 'cm - басқа',
+  [BaseLocaleKey.ConstantsIndexCommon]: 'index - жалпы',
+
+  // E-mail домендік аймақтарының конфигурациясы және оның қателері.
+  [BaseLocaleKey.ConstantsEmailDomainZones]: 'E-mail домендік аймақтары',
+  [BaseLocaleKey.ConstantsAllowedEmailDomainZones]: 'Рұқсат етілген домендік аймақтар: $z',
+  [BaseLocaleKey.ConstantsStringExpected]: 'Жол күтілуде',
+
+  // Мәтіндік блокты тексеру: жарамсыз таңбалар және жұптаспаған тырнақшалар.
+  ...baseLocaleTemplate(BaseLocaleKey.CmIncorrectSymbolsPresent)`Жарамсыз таңбалар бар: $m\n\n$t`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.CmUnpairedQuotesWarning,
+  )`Мәтінде тырнақшалардың жұптаспаған саны бар.\n$n ${IF('$o').THEN`ашылатын`.ELSE`жабылатын`} тырнақшаны қосу қажет`,
 });

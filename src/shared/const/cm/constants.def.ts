@@ -1,10 +1,12 @@
 import { makeRegExp } from 'regexpert';
 import { ConstantsConfig, ConstantsConfigConfigurator, ConstantsConfigConfiguratorItem } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import type { NonInterpolatedBaseLocaleKey } from 'shared/model/+locale/base';
 import { iife } from 'shared/utils';
 import { checkIsNaN, checkIsNotNumber, checkIsStartsWith, checkIsString } from 'shared/utils/checkIs';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 
-const numberZips = (def: number, title: string) =>
+const numberZips = (def: number, title: NonInterpolatedBaseLocaleKey) =>
   ({
     title,
     def,
@@ -12,24 +14,31 @@ const numberZips = (def: number, title: string) =>
     checked: strNum => (checkIsNaN(+`${strNum}`) ? def : +`${strNum}`),
   }) satisfies Partial<ConstantsConfigConfiguratorItem<number>>;
 
+/** Заголовки разделов конфигурации: отображаемый текст берётся из базовой локали по ключу группы. */
+export const constantsSectionTitleKeys: Record<string, NonInterpolatedBaseLocaleKey> = {
+  '>cmComments': BaseLocaleKey.ConstantsCmComments,
+  '>cmOther': BaseLocaleKey.ConstantsCmOther,
+  '>indexCommon': BaseLocaleKey.ConstantsIndexCommon,
+};
+
 export const constantsConfigurator: ConstantsConfigConfigurator = {
-  '>cm - комменты': 0,
-  maxComCommentAlternativesCount: numberZips(3, 'макс. кол-во альтернатив'),
-  maxComCommentBlockLen: numberZips(100, 'макс. смиволов для блока'),
-  maxComCommentChordLen: numberZips(5, 'макс. смиволов для аккордя'),
-  maxComCommentHeadLen: numberZips(300, 'макс. смиволов для шапки'),
-  maxComCommentLineLen: numberZips(20, 'макс. смиволов для строки'),
-  maxComCommentWordLen: numberZips(10, 'макс. смиволов для слова'),
+  '>cmComments': 0,
+  maxComCommentAlternativesCount: numberZips(3, BaseLocaleKey.ConstantsMaxComCommentAlternativesCount),
+  maxComCommentBlockLen: numberZips(100, BaseLocaleKey.ConstantsMaxComCommentBlockLen),
+  maxComCommentChordLen: numberZips(5, BaseLocaleKey.ConstantsMaxComCommentChordLen),
+  maxComCommentHeadLen: numberZips(300, BaseLocaleKey.ConstantsMaxComCommentHeadLen),
+  maxComCommentLineLen: numberZips(20, BaseLocaleKey.ConstantsMaxComCommentLineLen),
+  maxComCommentWordLen: numberZips(10, BaseLocaleKey.ConstantsMaxComCommentWordLen),
 
-  '>cm - другое': 0,
-  maxAvailableComLineLength: numberZips(47, 'макс. длина строки в песне'),
-  maxFavouritesCount: numberZips(30, 'макс. лайк-песен'),
-  maxLaterComsVizitedCount: numberZips(4, 'макс. последних песен'),
-  maxSelectedComsCount: numberZips(50, 'макс. выбр. песен'),
+  '>cmOther': 0,
+  maxAvailableComLineLength: numberZips(47, BaseLocaleKey.ConstantsMaxComLineLength),
+  maxFavouritesCount: numberZips(30, BaseLocaleKey.ConstantsMaxFavouritesCount),
+  maxLaterComsVizitedCount: numberZips(4, BaseLocaleKey.ConstantsMaxLaterComsCount),
+  maxSelectedComsCount: numberZips(50, BaseLocaleKey.ConstantsMaxSelectedComsCount),
 
-  '>index - общее': 0,
+  '>indexCommon': 0,
   // Объём переданного через комнату файла храним в мегабайтах: число 10 означает лимит 10 МБ.
-  maxTransferFileSize: numberZips(10, 'макс. объём передаваемых файлов (МБ)'),
+  maxTransferFileSize: numberZips(10, BaseLocaleKey.ConstantsMaxTransferFileSize),
   availEmailDomainZone: iife(() => {
     const def = 'ru';
 
@@ -41,7 +50,7 @@ export const constantsConfigurator: ConstantsConfigConfigurator = {
     const str = (str: unknown) => (checkIsString(str) ? Array.from(unzip(str)).join(' ') : def);
 
     return {
-      title: 'E-mail доменные зоны',
+      title: BaseLocaleKey.ConstantsEmailDomainZones,
       def,
       str,
       checked: str,
@@ -53,10 +62,10 @@ export const constantsConfigurator: ConstantsConfigConfigurator = {
 
           return set.has(checkValue.split('.').at(-1) || '')
             ? null
-            : `Допустимые доменные зоны - .${Array.from(set).join(', .')}`;
+            : { key: BaseLocaleKey.ConstantsAllowedEmailDomainZones, z: `.${Array.from(set).join(', .')}` };
         }
 
-        return 'String expected!';
+        return { key: BaseLocaleKey.ConstantsStringExpected, z: '' };
       },
     } satisfies ConstantsConfigConfigurator['availEmailDomainZone'];
   }),

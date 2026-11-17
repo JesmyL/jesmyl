@@ -1,4 +1,4 @@
-import { Langi, MenuComToolName } from 'shared/api';
+import { CmComIntensityLevel, Langi, MenuComToolName } from 'shared/api';
 import { CmAdditionalCatKind } from 'shared/const/cm/enums';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { LocaleBase } from 'shared/model/+locale/base';
@@ -889,4 +889,48 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
 
   // Трансфер: кнопка скачивания полученного файла.
   [BaseLocaleKey.Download]: 'Download',
+
+  // Database access is blocked by another tab.
+  [BaseLocaleKey.DatabaseBlockedByAnotherTab]: 'Database access is blocked by another tab.',
+
+  // Invalid TBCV key format: $t is the original key value.
+  [BaseLocaleKey.InvalidTbcvKeyFormat]: 'Invalid TBCV key format: "$t;"',
+
+  // Com intensity level titles keyed by CmComIntensityLevel.
+  [BaseLocaleKey.CmIntensityTitle]: {
+    [CmComIntensityLevel.TooSlow]: 'Very slow',
+    [CmComIntensityLevel.Slow]: 'Slow',
+    [CmComIntensityLevel.Medium]: 'Medium',
+    [CmComIntensityLevel.Fast]: 'Fast',
+    [CmComIntensityLevel.TooFast]: 'Very fast',
+  },
+
+  // Numeric parameter titles in the constants settings.
+  [BaseLocaleKey.ConstantsMaxComCommentAlternativesCount]: 'max alternatives count',
+  [BaseLocaleKey.ConstantsMaxComCommentBlockLen]: 'max block length',
+  [BaseLocaleKey.ConstantsMaxComCommentChordLen]: 'max chord length',
+  [BaseLocaleKey.ConstantsMaxComCommentHeadLen]: 'max header length',
+  [BaseLocaleKey.ConstantsMaxComCommentLineLen]: 'max line length',
+  [BaseLocaleKey.ConstantsMaxComCommentWordLen]: 'max word length',
+  [BaseLocaleKey.ConstantsMaxComLineLength]: 'max line length in a song',
+  [BaseLocaleKey.ConstantsMaxFavouritesCount]: 'max favourite songs',
+  [BaseLocaleKey.ConstantsMaxLaterComsCount]: 'max recent songs',
+  [BaseLocaleKey.ConstantsMaxSelectedComsCount]: 'max selected songs',
+  [BaseLocaleKey.ConstantsMaxTransferFileSize]: 'max transferred file size (MB)',
+
+  // Constants settings group titles.
+  [BaseLocaleKey.ConstantsCmComments]: 'cm - comments',
+  [BaseLocaleKey.ConstantsCmOther]: 'cm - other',
+  [BaseLocaleKey.ConstantsIndexCommon]: 'index - general',
+
+  // Allowed E-mail domain zones configuration and its errors.
+  [BaseLocaleKey.ConstantsEmailDomainZones]: 'E-mail domain zones',
+  [BaseLocaleKey.ConstantsAllowedEmailDomainZones]: 'Allowed domain zones: $z',
+  [BaseLocaleKey.ConstantsStringExpected]: 'String expected',
+
+  // Text block validation: invalid characters and unpaired quotes.
+  ...baseLocaleTemplate(BaseLocaleKey.CmIncorrectSymbolsPresent)`There are invalid characters: $m\n\n$t`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.CmUnpairedQuotesWarning,
+  )`The text contains an unpaired number of quotes.\nAdd $n ${IF('$o').THEN`open`.ELSE`clos`}ing quote${FUNCTION('dec')('$n', '', 's')}`,
 });

@@ -36,6 +36,19 @@ export const localeDynamicEn = convertObjectToArray<LocaleDynamic<Langi.En>>({
     [CmComBlockKindKey.PlusPlusShift]: ':CONTINUATION WITH SHIFT AND INDENT:',
   },
 
+  [DynLocaleKey.CmComKindTags]: {
+    [CmComBlockKindKey.Enter]: ['intro', 'opening'],
+    [CmComBlockKindKey.One]: ['verse'],
+    [CmComBlockKindKey.PTwo]: ['pre-chorus', 'prechorus'],
+    [CmComBlockKindKey.Two]: ['chorus'],
+    [CmComBlockKindKey.Bridge]: ['bridge'],
+    [CmComBlockKindKey.Play]: ['interlude', 'play'],
+    [CmComBlockKindKey.Modulation]: ['modulation', 'key change'],
+    [CmComBlockKindKey.Final]: ['final', 'ending', 'outro'],
+    [CmComBlockKindKey.Thirdo]: ['starting verse'],
+    [CmComBlockKindKey.Insert]: ['insert'],
+  },
+
   [DynLocaleKey.BibleTitleFull]: convertObjectToArray({
     [BibleTitleCodei.aБыт]: 'Genesis',
     [BibleTitleCodei.Исх]: 'Exodus',

@@ -1,7 +1,12 @@
 import { makeRegExp } from 'regexpert';
 import { CmCom } from 'shared/const/cm/Com';
 import { cmComChordsErrorDict, takeChordsErrorDictValue } from 'shared/model/cm/chords';
+import { slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 import { comBlockKinds } from 'shared/values/cm/block-kinds/BlockKind';
+
+// Приводит текст и теги к одному виду для сравнения: оставляет только славянские строчные буквы.
+const normalizeBlockTitle = (text: string) =>
+  text.toLowerCase().replace(makeRegExp(`/[^${slavicLowerLettersStr}]/g`), '');
 
 export class EditableComBase extends CmCom {
   constructor(...args: ConstructorParameters<typeof CmCom>) {
@@ -27,8 +32,14 @@ export class EditableComBase extends CmCom {
 
   static takeStyleByTitle(text: string) {
     if (!text) return;
-    const preparedText = text.toLowerCase().replace(makeRegExp('/[^а-я]/g'), '').trim();
-    return comBlockKinds?.kinds.find(style => style.tags?.some(tag => preparedText.startsWith(tag)));
+    const preparedText = normalizeBlockTitle(text);
+
+    return comBlockKinds?.kinds.find(style =>
+      style.tags?.().some(tag => {
+        const preparedTag = normalizeBlockTitle(tag);
+        return preparedTag !== '' && preparedText.startsWith(preparedTag);
+      }),
+    );
   }
 
   transposedHardChords = (delta?: number) => {

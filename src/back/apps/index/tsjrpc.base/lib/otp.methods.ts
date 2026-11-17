@@ -1,4 +1,5 @@
 import { backLocaleError, translateBackTexts } from 'back/locales/back';
+import { translateBaseTexts } from 'back/locales/base';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { getBibleTranslateTexts } from 'back/complect/lib/make-bible-texts';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
@@ -113,7 +114,11 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
   const { availEmailDomainZone } = constantsConfigFileStore.getValue();
   const availEmailDomainZoneError = constantsConfigurator.availEmailDomainZone.error?.(availEmailDomainZone, email);
 
-  if (availEmailDomainZoneError) throw backLocaleError(BackLocaleKey.EmailDomainInvalid, { e: email, r: `${availEmailDomainZoneError}` });
+  if (availEmailDomainZoneError)
+    throw backLocaleError(BackLocaleKey.EmailDomainInvalid, {
+      e: email,
+      r: translateBaseTexts(langi, availEmailDomainZoneError.key, { z: availEmailDomainZoneError.z }),
+    });
 
   const verifies = sentEmailOTPFileStorage.getValue();
   let userVerify = verifies.find(({ deviceId, auth: verifyAuth }) => {

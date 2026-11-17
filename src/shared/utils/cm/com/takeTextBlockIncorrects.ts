@@ -2,7 +2,8 @@ import { makeRegExp } from 'regexpert';
 import { CmComBracketLevelHolder, CmComTextSquareBracketsMode, EeStorePack } from 'shared/api';
 import { IIncorrects } from 'shared/model/cm/Incorrects';
 import { TextCase } from 'shared/model/common';
-import { declension } from 'shared/utils/utils';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
+import { translateBase } from 'shared/utils/locale/base';
 import { cmTransformToReadableText } from '../transformToReadableText';
 import {
   displayableTextBlockCharsStr,
@@ -27,10 +28,21 @@ export const squareBracketsReplacers: Record<CmComTextSquareBracketsMode, <Text 
   [CmComTextSquareBracketsMode.Remove]: text => text.replace(bracketReplacerReg, '') as never,
 };
 
+/** Переводчик базовой локали: ключ и значения подстановки; бэк передаёт сюда свой русский словарь. */
+type IncorrectsTranslate = (key: BaseLocaleKey, interpolation: Record<string, string | number | boolean>) => string;
+
+const translateIncorrects: IncorrectsTranslate = (key, interpolation) =>
+  translateBase(it => {
+    // Ключи проверок строковые: записи словаря сюда не попадают, и пустая строка страхует от смены типа ключа.
+    const text = it[key];
+    return typeof text === 'string' ? text : '';
+  }, interpolation);
+
 export const takeTextBlockIncorrects = (
   text: string | und = '',
   eeStore: EeStorePack,
   extraAvailSymbols = '',
+  translate: IncorrectsTranslate = translateIncorrects,
 ): IIncorrects => {
   let mistakes = '';
   const availSymbols = `${doubleQuotesStr}${singleQuotesStr}${replacableAvailableCharsStr}` as const;
@@ -51,20 +63,24 @@ export const takeTextBlockIncorrects = (
   );
 
   if (textWithIncorrects !== text) {
-    return { errors: [{ message: `Присутствуют недопустимые символы: ${mistakes}\n\n${textWithIncorrects}\n\n` }] };
+    return {
+      errors: [
+        {
+          message: translate(BaseLocaleKey.CmIncorrectSymbolsPresent, { m: mistakes, t: textWithIncorrects }) + '\n\n',
+        },
+      ],
+    };
   }
 
   const { level } = cmTransformToReadableText(levelHolder, text, TextCase.Capitalize, CmComTextSquareBracketsMode.AsIs);
 
   if (level) {
-    const pre = level < 0 ? 'открывающ' : 'закрывающ';
     const absLevel = Math.abs(level);
-    const text = declension(absLevel, `${pre}ую кавычку`, `${pre}их кавычки`, `${pre}их кавычек`);
 
     return {
       warnings: [
         {
-          message: `В тексте присутствует непарное количество кавычек.\nНеобходимо добавить ${absLevel} ${text}\n\n`,
+          message: translate(BaseLocaleKey.CmUnpairedQuotesWarning, { n: absLevel, o: level < 0 }) + '\n\n',
         },
       ],
     };

@@ -1,6 +1,7 @@
 import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { backLocaleError } from 'back/locales/back';
+import { translateBaseTexts } from 'back/locales/base';
 import { ServerTSJRPCTool } from 'back/tsjrpc.base.server';
 import { CmComWid, IExportableCom } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
@@ -62,8 +63,9 @@ export const cmEditComServerTsjrpcTextableBlocks = {
 
     return { description: backLocaleError(BackLocaleKey.CmTextBlockChanged), was: prev, new: clearValue };
   }),
-  textCaps: modifyCom('COM_TXT', (com, { texts }) => {
+  textCaps: modifyCom('COM_TXT', (com, { texts }, tool) => {
     const newTexts: string[] = [];
+    const langi = tool.visitInfo?.langi;
 
     texts.forEach((newText, newTexti) => {
       const lenIncorrects = textLinesLengthIncorrects(
@@ -73,7 +75,9 @@ export const cmEditComServerTsjrpcTextableBlocks = {
 
       if (lenIncorrects?.errors?.length) throw lenIncorrects.errors[0].message;
 
-      const textIncorrects = takeTextBlockIncorrects(newText, eePackFileStore.getValue());
+      const textIncorrects = takeTextBlockIncorrects(newText, eePackFileStore.getValue(), '', (key, interpolation) =>
+        translateBaseTexts(langi, key, interpolation),
+      );
       if (textIncorrects?.errors?.length) throw textIncorrects.errors[0].message;
 
       newTexts[newTexti] = transformToClearText(newText);

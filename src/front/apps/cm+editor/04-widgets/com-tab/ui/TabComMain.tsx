@@ -20,7 +20,6 @@ import { TheCmCom } from '$cm/ext';
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmComIntensityLevel } from 'shared/api';
-import { cmComIntensityLevelTitleDict } from 'shared/const/cm/cmComDriveLevelTitleDict';
 import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
@@ -87,7 +86,16 @@ export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
           </>
         }
         id={ccom.top.d ?? CmComIntensityLevel.Medium}
-        items={mapObjectEntries(cmComIntensityLevelTitleDict, (id, title) => ({ id: +id, title }))}
+        items={[
+          CmComIntensityLevel.TooSlow,
+          CmComIntensityLevel.Slow,
+          CmComIntensityLevel.Medium,
+          CmComIntensityLevel.Fast,
+          CmComIntensityLevel.TooFast,
+        ].map(level => ({
+          id: level,
+          title: translateBase(it => it[BaseLocaleKey.CmIntensityTitle]?.[level]),
+        }))}
         onSelectId={value => cmEditComClientTsjrpcMethods.changeDrive({ comw: ccom.wid, value })}
       />
       <Dropdown

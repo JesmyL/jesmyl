@@ -5,16 +5,17 @@ import { comDB } from 'back/drizzle.schema';
 import { db, dbDelete } from 'back/drizzle/drizzle.db';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';
 import { backLocaleError } from 'back/locales/back';
+import { takeBaseLocaleDict } from 'back/locales/base';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import type { TSJRPCFeedbackDiff, TSJRPCFeedbackEntry } from 'back/tsjrpc.model';
 import { eq } from 'drizzle-orm';
 import { makeRegExp } from 'regexpert';
 import { CmComIntensityLevel, CmComWid, Langi } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
-import { cmComIntensityLevelTitleDict } from 'shared/const/cm/cmComDriveLevelTitleDict';
 import { cmComMetricNumTitles } from 'shared/const/cm/com-metric-nums';
 import { Bool } from 'shared/enums';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { itNNil } from 'shared/utils';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { takeCorrectMetronomeBpm } from 'shared/utils/cm';
@@ -70,12 +71,12 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         changeDrive: modifyCom('COM_MAIN', (com, { value }) => {
-          const was = cmComIntensityLevelTitleDict[com.d ?? CmComIntensityLevel.Medium];
+          const was = takeDriveTitle(com.d ?? CmComIntensityLevel.Medium);
           const next = (com.d = value);
 
           return simpleUpdateReverse(backLocaleError(BackLocaleKey.CmComDriveSet), next, {
             was,
-            new: cmComIntensityLevelTitleDict[next],
+            new: takeDriveTitle(next),
           });
         }),
 
@@ -194,6 +195,10 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
 })();
 
 export * from './lib/modifiers';
+
+// Дифф уведомления общий для всех получателей, поэтому, как и соседние сырые значения (язык, размерность), берём русский заголовок.
+const takeDriveTitle = (level: CmComIntensityLevel) =>
+  takeBaseLocaleDict(null)[BaseLocaleKey.CmIntensityTitle][level];
 
 const simpleUpdate = (_result: unknown, description: string, diff?: TSJRPCFeedbackDiff): TSJRPCFeedbackEntry => ({
   description,

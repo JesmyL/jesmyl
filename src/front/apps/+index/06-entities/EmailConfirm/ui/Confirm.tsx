@@ -47,7 +47,11 @@ export const IndexEmailConfirm = ({
           }}
         />
       </div>
-      {availEmailDomainZoneError && <div className="text-xKO">{availEmailDomainZoneError}</div>}
+      {availEmailDomainZoneError && (
+        <div className="text-xKO">
+          {translateBase(availEmailDomainZoneError.key, { z: availEmailDomainZoneError.z })}
+        </div>
+      )}
 
       <div className="flex gap-3">
         <TextInput

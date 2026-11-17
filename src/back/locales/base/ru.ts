@@ -1,4 +1,4 @@
-import { Langi, MenuComToolName } from 'shared/api';
+import { CmComIntensityLevel, Langi, MenuComToolName } from 'shared/api';
 import { CmAdditionalCatKind } from 'shared/const/cm/enums';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { LocaleBase } from 'shared/model/+locale/base';
@@ -884,4 +884,48 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
 
   // Трансфер: кнопка скачивания полученного файла.
   [BaseLocaleKey.Download]: 'Скачать',
+
+  // Доступ к базе данных заблокирован другой вкладкой.
+  [BaseLocaleKey.DatabaseBlockedByAnotherTab]: 'Доступ к базе данных заблокирован другой вкладкой.',
+
+  // Ошибка формата TBCV-ключа: $t - исходное значение ключа.
+  [BaseLocaleKey.InvalidTbcvKeyFormat]: 'Некорректный формат TBCV ключа: "$t;"',
+
+  // Названия уровней интенсивности кома по ключам CmComIntensityLevel.
+  [BaseLocaleKey.CmIntensityTitle]: {
+    [CmComIntensityLevel.TooSlow]: 'Очень медленная',
+    [CmComIntensityLevel.Slow]: 'Медленная',
+    [CmComIntensityLevel.Medium]: 'Средняя',
+    [CmComIntensityLevel.Fast]: 'Быстрая',
+    [CmComIntensityLevel.TooFast]: 'Очень быстрая',
+  },
+
+  // Заголовки числовых параметров в настройках констант.
+  [BaseLocaleKey.ConstantsMaxComCommentAlternativesCount]: 'макс. кол-во альтернатив',
+  [BaseLocaleKey.ConstantsMaxComCommentBlockLen]: 'макс. символов для блока',
+  [BaseLocaleKey.ConstantsMaxComCommentChordLen]: 'макс. символов для аккорда',
+  [BaseLocaleKey.ConstantsMaxComCommentHeadLen]: 'макс. символов для шапки',
+  [BaseLocaleKey.ConstantsMaxComCommentLineLen]: 'макс. символов для строки',
+  [BaseLocaleKey.ConstantsMaxComCommentWordLen]: 'макс. символов для слова',
+  [BaseLocaleKey.ConstantsMaxComLineLength]: 'макс. длина строки в песне',
+  [BaseLocaleKey.ConstantsMaxFavouritesCount]: 'макс. избранных песен',
+  [BaseLocaleKey.ConstantsMaxLaterComsCount]: 'макс. последних песен',
+  [BaseLocaleKey.ConstantsMaxSelectedComsCount]: 'макс. выбранных песен',
+  [BaseLocaleKey.ConstantsMaxTransferFileSize]: 'макс. объём передаваемых файлов (МБ)',
+
+  // Заголовки групп настроек констант.
+  [BaseLocaleKey.ConstantsCmComments]: 'cm - комменты',
+  [BaseLocaleKey.ConstantsCmOther]: 'cm - другое',
+  [BaseLocaleKey.ConstantsIndexCommon]: 'index - общее',
+
+  // Конфигурация допустимых доменных зон E-mail и её ошибки.
+  [BaseLocaleKey.ConstantsEmailDomainZones]: 'E-mail доменные зоны',
+  [BaseLocaleKey.ConstantsAllowedEmailDomainZones]: 'Допустимые доменные зоны: $z',
+  [BaseLocaleKey.ConstantsStringExpected]: 'Ожидается строка',
+
+  // Проверка текстового блока: недопустимые символы и непарные кавычки.
+  ...baseLocaleTemplate(BaseLocaleKey.CmIncorrectSymbolsPresent)`Присутствуют недопустимые символы: $m\n\n$t`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.CmUnpairedQuotesWarning,
+  )`В тексте присутствует непарное количество кавычек.\nНеобходимо добавить $n ${IF('$o').THEN`открывающ`.ELSE`закрывающ`}${FUNCTION('dec')('$n', 'ую кавычку', 'их кавычки', 'их кавычек')}`,
 });

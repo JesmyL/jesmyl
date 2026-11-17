@@ -15,4 +15,6 @@ export const enum DynLocaleKey {
   BibleTitleShort = 5,
   /** Глава $c */
   BibleChapterNum = 6,
+  /** Теги названий блоков песни: вступление, куплет, припев и т. д. */
+  CmComKindTags = 7,
 }
