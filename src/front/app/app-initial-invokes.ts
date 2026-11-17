@@ -90,7 +90,8 @@ const syncCmEditorAccess = (rights: IndexAccessScopeRules) => {
 
 /**
  * Проверка новой версии приложения при старте: запрашиваем серверную версию с таймаутом в 20 секунд
- * и, если она отличается от текущей, показываем тост с кнопкой принудительного обновления.
+ * и, если она отличается от текущей и известна, показываем тост с кнопкой принудительного обновления.
+ * Нулевой num означает, что информации о версии нет, поэтому тост в этом случае не показываем.
  */
 const checkFreshAppVersion = async () => {
   try {
@@ -100,7 +101,8 @@ const checkFreshAppVersion = async () => {
       timeout: 20_000,
     });
 
-    if (freshVersion.num === jversion.num) return;
+    // Совпадение версий или нулевой num (нет данных о версии) — повода для тоста нет.
+    if (freshVersion.num === jversion.num || freshVersion.num === 0) return;
 
     toast(freshVersion.text, {
       ...makeToastKOMoodConfig(),
