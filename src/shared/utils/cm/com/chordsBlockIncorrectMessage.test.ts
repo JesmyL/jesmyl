@@ -6,7 +6,7 @@ import { chordsBlockIncorrectMessage } from 'shared/utils/cm/com/chordsBlockInco
 const takeMessage = (value: string, isHardChords: Bool) =>
   chordsBlockIncorrectMessage(value, isHardChords).errors?.[0].message;
 
-const lightModificatedChords = ['Dsus2', 'D2', 'Cadd9', 'Cdim', 'Caug', 'Dmaj9', 'C5', 'C6', 'C+'];
+const lightModificatedChords = ['Dsus2', 'Cadd9', 'Cdim', 'Caug', 'Dmaj9', 'C5', 'C6', 'C+'];
 const hardModificatedChords = ['G7#9', 'Am7b5', 'C7b9'];
 const lightModificatedRepeatChords = ['|C..F.-Dsus2|'];
 const hardModificatedRepeatChords = ['C..Fb7'];
@@ -40,7 +40,7 @@ describe('chordsBlockIncorrectMessage', () => {
     expect(takeMessage('Dsus2/G', Bool.False)).toContain('Аккорд "Dsus2/G" слишком сложн');
   });
 
-  it.each(['|C..F.-Am|', 'C..F7'])('accepts simple chord %s in simple mode', chord => {
+  it.each(['|C..F.-Am|', 'C..F7', 'D2'])('accepts simple chord %s in simple mode', chord => {
     expect(chordsBlockIncorrectMessage(chord, Bool.False)).toEqual({});
   });
 

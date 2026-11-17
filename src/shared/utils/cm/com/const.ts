@@ -5,12 +5,16 @@ import { textToUpperCase } from 'shared/utils/string.utils';
 
 export const hardModificators =
   `(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))` as const;
-export const lightModificators = `(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:7|9|11|13)|\\d{0,2}dim7?|\\d{0,2}add(?:2|9|11|13)|\\d{0,2}sus(?:2|4)?|(?:[2-79]|1[13])(?:/\\d{1,2})?)?`;
+export const lightModificators = `(?<lightModificators>\\+|aug|\\d{0,2}(?:min|maj)(?:[79]|1[13])|\\d{0,2}dim7?|\\d{0,2}add(?:[249]|1[13])|\\d{0,2}sus(?:2|4)?|(?:[2-79]|1[13])(?:/\\d{1,2})?)?`;
 export const chordLeadLetter = `(?:[ACDFG]#?|[EH])`;
+// Простые модификаторы аккорда: после основы допускаются `m`, `2`, `4` и `7`,
+// поэтому `Dm7`, `D2` и `D4` — простые аккорды, а `Dsus2` и `Dadd9` остаются сложными.
+const simpleChordModificators = `m?[247]?` as const;
+
 export const chordLikeStr =
-  `(?<simpleChord>(?:${chordLeadLetter})m?7?)${lightModificators}${hardModificators}?` as const;
+  `(?<simpleChord>(?:${chordLeadLetter})${simpleChordModificators})${lightModificators}${hardModificators}?` as const;
 export const chordInterpretedLikeStr =
-  `(?<simpleChord>(?:${chordLeadLetter}|B)m?7?)${lightModificators}${hardModificators}?` as const;
+  `(?<simpleChord>(?:${chordLeadLetter}|B)${simpleChordModificators})${lightModificators}${hardModificators}?` as const;
 
 export const doubleQuotesStr = '«»„“”' as const;
 export const singleQuotesStr = '’`‘’' as const;
@@ -68,7 +72,8 @@ export const correctChordRegsLazy = lazyInit(() =>
   ),
 );
 
-const bemoleChordLikeStr = `(?<simpleChord>(?:[A-H][#b]?)m?7?)${lightModificators}${hardModificators}?` as const;
+const bemoleChordLikeStr =
+  `(?<simpleChord>(?:[A-H][#b]?)${simpleChordModificators})${lightModificators}${hardModificators}?` as const;
 
 /** `correctChordRegsLazy`, но с бемолями в основе (`Bb`, `Dbm7`) — для ввода аккордов пользователем. */
 export const correctBemoleChordRegsLazy = lazyInit(() =>
