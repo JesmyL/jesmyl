@@ -10,12 +10,13 @@ import {
   CmComTextSquareBracketsMode,
 } from 'shared/api';
 import { makeCmComAudioMarkTitleEmptySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
+import { defaultTextCase } from 'shared/const/textCase';
 import { CmBroadcastMonolineSlide, CmBroadcastSlideLine } from 'shared/model/cm/broadcast';
 import { TextCase } from 'shared/model/common';
 import { incrementNumber } from 'shared/utils';
 import { comNbsp, makeSymbolFreeUpperCaseSlavicText } from 'shared/utils/cm/com/const';
 import { makeCmBroadcastMonolineSlideOrdLineStrId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
-import { makeCmComOrderRepeatedText } from 'shared/utils/cm/order';
+import { makeCmComOrderRepeatedText, takeRepeatOccurrenceText } from 'shared/utils/cm/order';
 import { CmComOrder } from '../../order/Order';
 import { CmComChords } from './30-Chords';
 
@@ -44,7 +45,15 @@ export class CmComTexts extends CmComChords {
     );
   }
 
+  private _el: PRecord<TextCase, CmBroadcastSlideLine[]> = {};
+
   makeExpandLines = (textCase: TextCase | nil) => {
+    const cacheKey = textCase ?? defaultTextCase;
+    const cached = this._el[cacheKey];
+
+    // Готовый разбор кома переиспользуется: за один рендер его запрашивают несколько виджетов
+    if (cached) return cached;
+
     try {
       const comOrders = this.ordersWithFinalChordedOrd();
       let totalLinei = -1;
@@ -91,7 +100,7 @@ export class CmComTexts extends CmComChords {
         });
       }
 
-      return slides;
+      return (this._el[cacheKey] = slides);
     } catch (_e) {
       return [];
     }
@@ -287,7 +296,13 @@ export class CmComTexts extends CmComChords {
             const before =
               i !== startSlashes.length && isNlStart ? `\n${setDiapasoniNum(leadMark, Diapasoni.Repeat, repeati)}` : '';
 
-            repeatedContent += `${before}${flagedContent} `;
+            // Пунктуация конца повторяемого фрагмента зависит от номера повторения: `.` во всех
+            // повторениях, кроме последнего, становится `,`; `,` или `;` в последнем повторении
+            // становятся `.`; `!`, `?` и любые другие символы не меняются.
+            const occurrencei = startSlashes.length - i;
+            const occurrenceText = makeRepeatOccurrenceText(flagedContent, occurrencei, startSlashes.length);
+
+            repeatedContent += `${before}${occurrenceText} `;
           }
 
           repeatedContent = repeatedContent.replace(startEndFlagReg, '');
@@ -323,6 +338,40 @@ const digitDiapasons = [
 
 const padStart = (num: number) => `${num}`.padStart(StartDigits.it, '0');
 const allStartDigits = digitDiapasons[Diapasoni.Last];
+
+/**
+ * Исправляет пунктуацию повторяемого фрагмента в конкретном повторении: последняя непустая
+ * строка фрагмента получает пунктуацию по номеру повторения. Служебные префиксы строк
+ * и хвостовые пробелы сохраняются, пустые строки в конце фрагмента пропускаются.
+ */
+const makeRepeatOccurrenceText = (text: string, occurrencei: number, repeatsCount: number) => {
+  // Пунктуация зависит от повторения только начиная со второго повторения
+  if (repeatsCount < 2) return text;
+
+  // Идём по строкам с конца без split: нужна только последняя непустая строка
+  let lineEnd = text.length;
+
+  while (lineEnd > 0) {
+    const lineStart = text.lastIndexOf('\n', lineEnd - 1) + 1;
+    // Служебный префикс есть у всех строк, кроме самой первой
+    const contentStart = lineStart ? lineStart + allStartDigits : 0;
+    const lineText = text.slice(contentStart, lineEnd);
+
+    if (lineText.trim()) {
+      const fixedLineText = takeRepeatOccurrenceText(lineText, occurrencei, repeatsCount);
+
+      // Пунктуация не изменилась — сразу возвращаем исходный текст без сборки строки
+      if (fixedLineText === lineText) return text;
+
+      return `${text.slice(0, contentStart)}${fixedLineText}${text.slice(lineEnd)}`;
+    }
+
+    if (!lineStart) return text;
+    lineEnd = lineStart - 1;
+  }
+
+  return text;
+};
 
 const sliceDiapasoniNum = <Dia extends Diapasoni>(
   line: string | nil,
