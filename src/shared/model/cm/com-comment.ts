@@ -60,11 +60,16 @@ export type CmComCommentConstructorRulePropsDict = Partial<
 >;
 
 export const enum CmComCommentConstructorRuleType {
-  Head,
-  Block,
-  Line,
-  Word,
-  Chord,
+  /** Правило для заголовка */
+  Head = 0,
+  /** Правило для блока */
+  Block = 1,
+  /** Правило для строки */
+  Line = 2,
+  /** Правило для слова */
+  Word = 3,
+  /** Правило для аккорда */
+  Chord = 4,
 }
 
 export type CmComCommentConstructorRuleKindByPropsType<Key extends CmComCommentTextDetectorRuleProps | und> =

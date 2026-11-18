@@ -13,7 +13,9 @@ export const enum CmAdditionalCatKind {
 
 /** тип тональности */
 export const enum TonType {
+  /** Диезная тональность */
   Diezed = 0,
+  /** Бемольная тональность */
   Bemoled = 1,
 }
 

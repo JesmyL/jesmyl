@@ -2,10 +2,10 @@ import { checkIsNotNil } from '../checkIs';
 import { comNbsp } from './com/const';
 
 export const enum CmComOrdRepeatSlashPlacement {
-  /** / */
-  Before,
-  /** \ */
-  After,
+  /** Слэш `/` перед повторяемым текстом */
+  Before = 0,
+  /** Слэш `\` после повторяемого текста */
+  After = 1,
 }
 
 const slashDict: Record<CmComOrdRepeatSlashPlacement, string> = {

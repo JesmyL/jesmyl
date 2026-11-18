@@ -1,9 +1,10 @@
+/** Тип сообщения дашборда; число сохраняется в БД, поэтому значения фиксированы. */
 export const enum DashMessageKind {
-  Support,
-  Log,
-  Errors,
-  Changes,
-  VisitError,
+  Support = 0,
+  Log = 1,
+  Errors = 2,
+  Changes = 3,
+  VisitError = 4,
 }
 
 export type DashMessageUser = {

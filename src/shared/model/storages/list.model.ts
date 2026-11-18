@@ -2,16 +2,21 @@ import { UserId } from 'shared/api';
 import { StoragesCell, StoragesColumnType, StoragesDictItemi, StoragesRackColumn } from './rack.model';
 
 export const enum StoragesRackWid {
+  /** Идентификатор таблицы по умолчанию — используется, когда таблица ещё не выбрана */
   def = 0,
 }
 
 export const enum StoragesRackSummaryMi {
+  /** Минимальный идентификатор строки итогов таблицы */
   min = 1,
 }
 
 export const enum StoragesRackSummaryType {
+  /** Общий итог по всем карточкам */
   Total = 81,
+  /** Итог с группировкой по месяцам */
   ByMonth = 41,
+  /** Итог с группировкой по годам */
   ByYear = 97,
 }
 
@@ -32,9 +37,12 @@ export type StoragesRackCard<DictItem extends string | StoragesDictItemi = Stora
 };
 
 export const enum StoragesRackMemberRole {
+  /** Пользователь, запросивший доступ к таблице — без прав на редактирование */
   Requester = 0,
-  Creator,
-  Admin,
+  /** Создатель таблицы — полный доступ */
+  Creator = 1,
+  /** Администратор таблицы — управление содержимым и участниками */
+  Admin = 2,
 }
 
 export type StoragesRackMember = {

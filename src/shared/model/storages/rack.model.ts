@@ -1,25 +1,36 @@
 import { StoragesColumnUiDict, StoragesColumnUiListKey } from './ui.model';
 
 export const enum StoragesColumnType {
+  /** Одна дата */
   Date = 12,
+  /** Набор дат во вложенных ячейках */
   Dates = 77,
+  /** Список значений из словаря */
   List = 62,
+  /** Число с метрикой */
   Number = 93,
+  /** Строковое значение из словаря */
   String = 30,
+  /** Произвольный текст */
   Text = 35,
+  /** Ссылка, начинающаяся с https:// */
   Link = 74,
+  /** Вычисляемое значение по формуле */
   Formula = 88,
 }
 
 export const enum StoragesNestedCellMi {
+  /** Минимальный идентификатор вложенной ячейки */
   min = 1,
 }
 
 export const enum StoragesDicti {
+  /** Индекс словаря по умолчанию — первый в списке словарей таблицы */
   zIndex = 0,
 }
 
 export const enum StoragesDictItemi {
+  /** Индекс элемента словаря по умолчанию — первый в списке */
   zIndex = 0,
 }
 

@@ -232,10 +232,14 @@ export const enum CmComNewlinerStrConfig {
 }
 
 export const enum CmComTextSquareBracketsMode {
+  /** Оставить квадратные скобки без изменений */
   AsIs = 0,
-  BrBrackets,
-  NlBrackets,
-  Remove,
+  /** Заменить квадратные скобки на круглые с переносом строки через `</br>` */
+  BrBrackets = 1,
+  /** Заменить квадратные скобки на круглые с переносом строки через `\n` */
+  NlBrackets = 2,
+  /** Удалить квадратные скобки вместе с содержимым */
+  Remove = 3,
 }
 
 export type CmComBracketLevelHolder = { level: number };

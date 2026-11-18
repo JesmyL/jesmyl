@@ -7,12 +7,15 @@ export type ScheduleWidgetWid = NumberBrand<'ScheduleWidgetWid'>;
 export const ScheduleWidgetWidDef = 1 as ScheduleWidgetWid;
 
 export const enum ScheduleWidgetUserMi {
+  /** Стартовый идентификатор участника расписания */
   def = 0,
 }
 export const enum ScheduleWidgetTeamMi {
+  /** Стартовый идентификатор команды */
   def = 1,
 }
 export const enum ScheduleWidgetTeamGameMi {
+  /** Стартовый идентификатор командной игры */
   def = 0,
 }
 export type ScheduleWidgetDayEventMi = NumberBrand<'ScheduleWidgetDayEventMi'>;
@@ -21,17 +24,21 @@ export const ScheduleWidgetDayEventMiDef = 1 as ScheduleWidgetDayEventMi;
 export type ScheduleWidgetDayi = NumberBrand<'ScheduleWidgetDayi'>;
 
 export const enum ScheduleWidgetAttachmentTypeMi {
+  /** Стартовый идентификатор типа вложения */
   def = 0,
 }
 
 export const enum ScheduleWidgetUserCati {
+  /** Стартовый идентификатор категории списка участника */
   def = 0,
 }
 export const enum ScheduleWidgetUserUnitMi {
+  /** Стартовый идентификатор единицы списка участника */
   def = 1,
 }
 
 export const enum ScheduleWidgetUserTgId {
+  /** Стартовый идентификатор Telegram-пользователя */
   def = 1,
 }
 
@@ -47,9 +54,13 @@ export const checkIsScheduleAppInform = (value: unknown): value is ScheduleAppIn
   scheduleAppInformValues.some(minutes => minutes === value);
 
 export const enum SchedulePeriodKind {
+  /** Разовое мероприятие без периодичности */
   Once = 0,
+  /** Еженедельное повторение по дням недели */
   Weekly = 1,
+  /** Повторение по числу месяца */
   MonthDay = 2,
+  /** Повторение по дню недели конкретной недели месяца */
   WeekdayOfMonth = 3,
 }
 
@@ -202,8 +213,10 @@ export interface IScheduleWidgetTeam extends IScheduleWidgetExportableTeam {
 }
 
 export const enum IScheduleWidgetTeamGameStrikedMemberState {
+  /** Участник вычеркнут из игры */
   Removed = 1,
-  Exists,
+  /** Участник присутствует в игре */
+  Exists = 2,
 }
 
 export interface IScheduleWidgetTeamGame {
