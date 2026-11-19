@@ -78,20 +78,26 @@ export const saveFontFile = async (file: File, fileId: string, base64: string) =
 
 /** Font bytes from the platform store, falling back to the IDB copy saved before platform persistence existed. */
 export const takeFontFileBuffer = async (fileId: string): Promise<BufferSource | nil> => {
-  const stored = await myFilesIDB.tb.files.get(fileId);
-  if (!stored) return null;
+  // Чтение записи из IDB: сбой соединения (например, сразу после обновления service worker)
+  // не должен прерывать загрузку шрифта — считаем запись отсутствующей и идём к резервным источникам.
+  const stored = await myFilesIDB.tb.files.get(fileId).catch(() => null);
 
+  // Платформенное хранилище: в PWA файл лежит в Cache Storage по md5-адресу и не требует записи IDB,
+  // в Electron — в WorkDir, где имя файла берётся из записи IDB.
   try {
     const buffer = isElectronApp
-      ? await takeWorkDirFontFileBuffer(takeFontFileName(stored.file, fileId))
+      ? stored
+        ? await takeWorkDirFontFileBuffer(takeFontFileName(stored.file, fileId))
+        : null
       : typeof caches === 'undefined'
         ? null
         : await takeCachedFontFileBuffer(fileId);
 
     if (buffer) return buffer;
   } catch {
-    // Fall through to the IDB copy.
+    // Переходим к резервной копии из IDB.
   }
 
-  return stored.file.arrayBuffer();
+  // Последний резерв — байты файла, сохранённые прямо в записи IDB.
+  return stored ? stored.file.arrayBuffer() : null;
 };
