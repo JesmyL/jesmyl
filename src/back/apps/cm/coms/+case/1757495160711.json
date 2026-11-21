@@ -21,7 +21,7 @@
     "|A| A| E| E| H| H| A| A|"
   ],
   "c1": [
-    "C#m7 A E/C\nC#m7 A H\nC#m7 A E\nF#m7sus4-E/G# Hsus4-H",
+    "C#m7 A E/G#\nC#m7 A H\nC#m7 A E\nF#m7sus4-E/G# Hsus4-H",
     "A2 E H C#m7\nA2 E C#m7 H\nE/G# A2 H C#m7\nA2 E H A2",
     "E Esus E\nEsus E Emaj7\nC#m7 A2 E\nA2 H E",
     "E Esus E\nEsus E Emaj7\nE/G# A2 E/H\nF#m7 E H",
@@ -116,8 +116,7 @@
         [0, 3, 5]
       ],
       "t": 4,
-      "w": 18,
-      "cre": 1794587831231
+      "w": 18
     }
   ],
   "am": {
