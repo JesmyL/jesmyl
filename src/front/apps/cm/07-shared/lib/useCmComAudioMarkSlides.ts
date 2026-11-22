@@ -1,9 +1,12 @@
 import { useMemo } from 'react';
 import { CmAudioSlide, CmComAudioMarkPackTime, CmAudioSrc, Langi } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
-import { makeCmComAudioMarkTitleEmptySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
+import {
+  makeCmComAudioMarkTitleBySelector,
+  makeCmComAudioMarkTitleEmptySelector,
+} from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { TextCase } from 'shared/model/common';
-import { checkIsString } from 'shared/utils/checkIs';
+import { checkIsArray, checkIsNil, checkIsString } from 'shared/utils/checkIs';
 import { makeSymbolFreeUpperCaseSlavicText } from 'shared/utils/cm/com/const';
 import { makeCmComOrderRepeatedText } from 'shared/utils/cm/order';
 import { useCmComMarkTextValuesMaker } from './useCmComMarkTextValuesMaker';
@@ -25,48 +28,70 @@ export const useCmComAudioMarkSlides = (
   const { audioSlides, markTimes } = useMemo(() => {
     const audioSlides: CmAudioSlide[] = [];
     const markTimes: CmComAudioMarkPackTime[] = [];
+    const markPairs: { audioSlide: CmAudioSlide; time: CmComAudioMarkPackTime }[] = [];
+
+    if (!com) return { markTimes, audioSlides };
 
     for (let timei = wholeMarkTimes.length - 1; timei >= 0; timei--) {
       const time = wholeMarkTimes[timei];
+      const selector = srcMarks?.[time];
 
-      let audioSlide: CmAudioSlide;
+      if (checkIsString(selector)) {
+        if (selector === '-') continue;
 
-      if (checkIsString(srcMarks?.[time])) {
-        if (srcMarks[time] === '-') continue;
-
-        audioSlide = {
-          text: makeCmComAudioMarkTitleEmptySelector(srcMarks[time], srcMarks, time, langi),
+        markPairs.push({
           time,
-          timei,
-          isChorded: !srcMarks[time],
-        };
-      } else {
-        const slide = timeSlideDict[time];
-        if (!slide) continue;
+          audioSlide: {
+            text: makeCmComAudioMarkTitleEmptySelector(selector, srcMarks, time, langi),
+            time,
+            timei,
+            isChorded: !selector,
+          },
+        });
 
-        audioSlide = {
-          slide,
-          text: slide.lines.join('\n'),
-          time,
-          timei,
-          isChorded: slide.ord.isChBlock(),
-        };
+        continue;
       }
 
-      if (audioSlide) {
-        const prevSlide = audioSlides.at(0);
+      if (checkIsNil(selector)) continue;
+      if (!checkIsArray(selector)) continue;
 
-        if (prevSlide) prevSlide.minText ??= makeSymbolFreeUpperCaseSlavicText(prevSlide.text);
-        audioSlide.minText ??= makeSymbolFreeUpperCaseSlavicText(audioSlide.text);
+      const slide = timeSlideDict[time];
 
-        if (prevSlide?.minText === audioSlide.minText) {
-          audioSlide.rem = (prevSlide.rem ??= 1) + 1;
-          (audioSlide.r = prevSlide.r ??= { r: 1 }).r++;
-        }
+      markPairs.push({
+        time,
+        audioSlide: slide
+          ? {
+              slide,
+              text: slide.lines.join('\n'),
+              time,
+              timei,
+              isChorded: slide.ord.isChBlock(),
+            }
+          : {
+              text: makeCmComAudioMarkTitleBySelector(time, com, selector, srcMarks).title,
+              time,
+              timei,
+              isChorded: false,
+            },
+      });
+    }
 
-        audioSlides.unshift(audioSlide);
-        markTimes.unshift(time);
+    markPairs.sort((left, right) => left.time - right.time);
+
+    for (let pairi = markPairs.length - 1; pairi >= 0; pairi--) {
+      const { audioSlide, time } = markPairs[pairi];
+      const prevSlide = audioSlides.at(0);
+
+      if (prevSlide) prevSlide.minText ??= makeSymbolFreeUpperCaseSlavicText(prevSlide.text);
+      audioSlide.minText ??= makeSymbolFreeUpperCaseSlavicText(audioSlide.text);
+
+      if (prevSlide?.minText === audioSlide.minText) {
+        audioSlide.rem = (prevSlide.rem ??= 1) + 1;
+        (audioSlide.r = prevSlide.r ??= { r: 1 }).r++;
       }
+
+      audioSlides.unshift(audioSlide);
+      markTimes.unshift(time);
     }
 
     audioSlides.forEach(slide => {
@@ -74,7 +99,7 @@ export const useCmComAudioMarkSlides = (
     });
 
     return { markTimes, audioSlides };
-  }, [langi, srcMarks, timeSlideDict, wholeMarkTimes]);
+  }, [com, langi, srcMarks, timeSlideDict, wholeMarkTimes]);
 
   return { audioSlides, markTimes, timeSlideDict };
 };

@@ -122,11 +122,11 @@ export const useCmComAudioPlayerMoversController = (
       timePositions$[MarkTimePosition.Next] = (markTimes[currentMarkTimei + 1] ?? 0) as CmComAudioMarkPackTime;
 
       if (nextRef.current !== null) {
-        nextRef.current.disabled = currentMarkTimei === markTimes.length - 1;
+        nextRef.current.disabled = currentMarkTimei >= markTimes.length - 1;
       }
 
       if (prevRef.current !== null) {
-        prevRef.current.disabled = currentMarkTimei === 0;
+        prevRef.current.disabled = currentMarkTimei <= 0;
       }
 
       updateMarkBlockView();
@@ -138,6 +138,8 @@ export const useCmComAudioPlayerMoversController = (
     return hookEffectPipe()
       .pipe(
         addEventListenerPipe(prevRef.current, 'click', () => {
+          if (!markTimes.length) return;
+
           playFromMarks();
 
           cmComAudioPlayerUpdateCurrentTime(
@@ -151,6 +153,8 @@ export const useCmComAudioPlayerMoversController = (
           cmComAudioPlayerUpdateCurrentTime(timePositions$[MarkTimePosition.Current]);
         }),
         addEventListenerPipe(nextRef.current, 'click', () => {
+          if (!markTimes.length) return;
+
           playFromMarks();
           cmComAudioPlayerUpdateCurrentTime(timePositions$[MarkTimePosition.Next]);
         }),

@@ -78,6 +78,12 @@ audioElement.addEventListener('timeupdate', () => {
  * (or never move while paused) unless a seek updates it synchronously too.
  */
 export const cmComAudioPlayerUpdateCurrentTime = (time: number) => {
+  if (isCmComAudioPlayerSrcApplying) {
+    cmComAudioPlayerPendingSeekTime = time;
+    comPlayerCurrentTimeAtom.set(time);
+    return;
+  }
+
   audioElement.currentTime = time;
   comPlayerCurrentTimeAtom.set(time);
 };
@@ -104,6 +110,7 @@ export const cmComAudioPlayerSetMediaTitle = (title: string | nil) => cmComAudio
 
 let trackObjectUrl: string | nil = null;
 let isCmComAudioPlayerSrcApplying = false;
+let cmComAudioPlayerPendingSeekTime: number | nil = null;
 /** Monotonic id of the latest `cmComAudioPlayerSetSrc` call; a slower in-flight apply with an older id must not win. */
 let cmComAudioPlayerSrcApplyId = 0;
 
@@ -134,6 +141,11 @@ const applyCmComAudioPlayerSrc = async (src: CmAudioSrc, applyId: number) => {
     audioElement.src = trackObjectUrl;
   } else {
     audioElement.src = takeCmComAudioPlayerTrackUrl(src);
+  }
+
+  if (cmComAudioPlayerPendingSeekTime != null) {
+    audioElement.currentTime = cmComAudioPlayerPendingSeekTime;
+    cmComAudioPlayerPendingSeekTime = null;
   }
 
   isCmComAudioPlayerSrcApplying = false;
