@@ -32,6 +32,8 @@ import {
 
 /** Coms whose audio failed to load; they are skipped when picking the next/prev one. */
 export const cmComAudioPlayerComsWithErrorAtom = atom<Set<CmComWid>>(new Set());
+/** An automatic error-recovery walk is in progress: the loading spinner stays hidden until playback progresses again. */
+export const cmComAudioPlayerIsErrorRecoveryAtom = atom(false);
 export const cmComAudioPlayerFilteredComsAtom = atom<IExportableCom[] | nil>(null);
 
 /** The only way the player moves to another com: page atom and last-open memory. */
@@ -49,6 +51,7 @@ let lastPickKind = CmComAudioPlayerPickKind.Advance;
 /** A direct user pick (list click, URL entry): an error is shown in place instead of searching further. */
 export const cmComAudioPlayerMarkManualPick = () => {
   lastPickKind = CmComAudioPlayerPickKind.Manual;
+  cmComAudioPlayerIsErrorRecoveryAtom.set(false);
 };
 
 export const isCmComAudioPlayerManualPick = () => lastPickKind === CmComAudioPlayerPickKind.Manual;
@@ -151,6 +154,7 @@ type AdvanceOptions = {
 
 /** The audio element may already be paused, so `SwitchIsPlay(false)` alone would leave the UI showing "pause". */
 const stopPlayer = () => {
+  cmComAudioPlayerIsErrorRecoveryAtom.set(false);
   cmComAudioPlayerIsPlayAtom.set(false);
   cmComAudioPlayerSwitchIsPlay(false);
 };
@@ -174,6 +178,7 @@ cmComAudioPlayerAddEventListenerPipe('timeupdate', () => {
 
   autoAdvanceChain = 0;
   autoErrorChain = 0;
+  cmComAudioPlayerIsErrorRecoveryAtom.set(false);
 });
 
 /**
@@ -194,6 +199,7 @@ const advance = async (
   if (!isAuto) {
     autoAdvanceChain = 0;
     autoErrorChain = 0;
+    cmComAudioPlayerIsErrorRecoveryAtom.set(false);
   } else if (++autoAdvanceChain > maxAutoAdvanceChain || (isError && ++autoErrorChain > maxAutoErrorChain)) {
     stopPlayer();
     return;
@@ -295,5 +301,6 @@ cmComAudioPlayerErrorTickAtom.subscribe(isError => {
     return;
   }
 
+  cmComAudioPlayerIsErrorRecoveryAtom.set(true);
   void advance(CmComAudioPlayerAdjacentDirection.Next, { isAuto: true, isError: true }).catch(retNull);
 });

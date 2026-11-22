@@ -31,6 +31,7 @@ export const cmComAudioPlayerPlaySrcAtom = atom<CmAudioSrc | null>(null);
 export const cmComAudioPlayerEndedTickAtom = atom(false);
 export const cmComAudioPlayerErrorTickAtom = atom(false);
 export const cmComAudioPlayerIsPlayAtom = atom(false);
+export const cmComAudioPlayerIsSrcLoadingAtom = atom(false);
 
 /** Resolvable track title shown on the media session (lock screen); falls back to a title derived from the play src. */
 export const cmComAudioPlayerMediaTitleAtom = atom<string | nil>(null);
@@ -59,7 +60,18 @@ audioElement.addEventListener('ended', () => {
   cmComAudioPlayerEndedTickAtom.set(true);
 });
 
+audioElement.addEventListener('canplay', () => cmComAudioPlayerIsSrcLoadingAtom.set(false));
+audioElement.addEventListener('playing', () => cmComAudioPlayerIsSrcLoadingAtom.set(false));
+audioElement.addEventListener('waiting', () => {
+  if (cmComAudioPlayerIsPlayAtom.get()) cmComAudioPlayerIsSrcLoadingAtom.set(true);
+});
+audioElement.addEventListener('pause', () => {
+  if (!isCmComAudioPlayerSrcApplying) cmComAudioPlayerIsSrcLoadingAtom.set(false);
+});
+
 audioElement.addEventListener('error', () => {
+  cmComAudioPlayerIsSrcLoadingAtom.set(false);
+
   // тик ошибки поднимает авто-переход (adjacent-coms), поэтому preload-ошибка до play его не запускает:
   // тик ставим только если play был намерен
   if (!cmComAudioPlayerIsPlayAtom.get()) return;
@@ -149,7 +161,11 @@ const applyCmComAudioPlayerSrc = async (src: CmAudioSrc, applyId: number) => {
   }
 
   isCmComAudioPlayerSrcApplying = false;
-  if (cmComAudioPlayerIsPlayAtom.get()) void audioElement.play().catch(() => cmComAudioPlayerIsPlayAtom.set(false));
+  if (cmComAudioPlayerIsPlayAtom.get())
+    void audioElement.play().catch(() => {
+      cmComAudioPlayerIsPlayAtom.set(false);
+      if (!isCmComAudioPlayerSrcApplying) cmComAudioPlayerIsSrcLoadingAtom.set(false);
+    });
 };
 
 export const cmComAudioPlayerSetSrc = (src: CmAudioSrc | null) => {
@@ -165,11 +181,13 @@ export const cmComAudioPlayerSetSrc = (src: CmAudioSrc | null) => {
 
   if (src == null) {
     isCmComAudioPlayerSrcApplying = false;
+    cmComAudioPlayerIsSrcLoadingAtom.set(false);
     audioElement.removeAttribute('src');
     return;
   }
 
   isCmComAudioPlayerSrcApplying = true;
+  cmComAudioPlayerIsSrcLoadingAtom.set(true);
   void applyCmComAudioPlayerSrc(src, applyId);
 };
 
@@ -193,9 +211,13 @@ export const cmComAudioPlayerSwitchIsPlay = (isPlay: boolean = audioElement.paus
     if (src == null) return;
 
     isCmComAudioPlayerSrcApplying = true;
+    cmComAudioPlayerIsSrcLoadingAtom.set(true);
     void applyCmComAudioPlayerSrc(src, ++cmComAudioPlayerSrcApplyId);
     return;
   }
 
-  audioElement.play().catch(() => cmComAudioPlayerIsPlayAtom.set(false));
+  audioElement.play().catch(() => {
+    cmComAudioPlayerIsPlayAtom.set(false);
+    if (!isCmComAudioPlayerSrcApplying) cmComAudioPlayerIsSrcLoadingAtom.set(false);
+  });
 };
