@@ -214,4 +214,5 @@ export type LocaleCmEditor = {
   [EditorLocaleKey.VisitsReportRecipientRemoveConfirm]: StringTemplaterInterpolation<{ e: string }>;
   [EditorLocaleKey.CmEditorHardChordsComplexHint]: LocaleSimpleString;
   [EditorLocaleKey.PushCheck]: LocaleSimpleString;
+  [EditorLocaleKey.CmEditBroadcastCopyNl]: StringTemplaterInterpolation<{ t: string }>;
 };

@@ -7,6 +7,7 @@ import { WithAtom } from '#shared/ui/WithAtom';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { cmBroadcastCurrentNameSpaceiAtom, CmBroadcastShowNlNameSpaceSelector } from '$cm/ext';
+import { CmEditorComTabComBroadcastCopyNL } from './TabComBroadcastCopyNL';
 import { useAtomValue } from 'atomaric';
 import React, { useMemo, useState } from 'react';
 import {
@@ -78,6 +79,10 @@ export const CmEditorComTabComBroadcast = ({ ccom }: { ccom: EditableCom }) => {
   return (
     <React.Fragment key={nameSpacei}>
       <CmBroadcastShowNlNameSpaceSelector />
+      <CmEditorComTabComBroadcastCopyNL
+        com={com}
+        nameSpacei={nameSpacei}
+      />
       <WithAtom init={false}>
         {openAtom => (
           <>

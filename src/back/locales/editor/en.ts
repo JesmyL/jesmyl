@@ -227,4 +227,5 @@ export const localeEditorEn = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsReportRecipientRemoveConfirm]: 'Remove recipient $e from the list?',
   [EditorLocaleKey.VisitsRecipientsSaved]: 'Recipients saved',
   [EditorLocaleKey.PushCheck]: 'PUSH notification check',
+  ...editorLocaleTemplate(EditorLocaleKey.CmEditBroadcastCopyNl, ['$t'])`Copy from "$t"`,
 });

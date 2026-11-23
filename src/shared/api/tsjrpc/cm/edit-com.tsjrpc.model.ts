@@ -72,4 +72,6 @@ export type CmEditComTsjrpcModel = {
     wordi: CmComNewlinerWordi;
     spacei: number;
   }) => void;
+
+  copyNL: (args: { comw: CmComWid; fromSpacei: number; toSpacei: number }) => void;
 };

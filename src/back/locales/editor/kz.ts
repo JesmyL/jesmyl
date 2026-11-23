@@ -229,4 +229,5 @@ export const localeEditorKz = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.VisitsReportRecipientRemoveConfirm]: 'Алушыны $e тізімнен жою?',
   [EditorLocaleKey.VisitsRecipientsSaved]: 'Алушылар тізімі сақталды',
   [EditorLocaleKey.PushCheck]: 'PUSH хабарламаларын тексеру',
+  ...editorLocaleTemplate(EditorLocaleKey.CmEditBroadcastCopyNl, ['$t'])`«$t» ішінен көшіру`,
 });

@@ -422,4 +422,6 @@ export const enum EditorLocaleKey {
   CmEditorHardChordsComplexHint = 208,
   /** Проверка PUSH-уведомлений */
   PushCheck = 209,
+  /** Копировать из «$t» */
+  CmEditBroadcastCopyNl = 210,
 }

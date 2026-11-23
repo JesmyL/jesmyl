@@ -26,7 +26,7 @@ import {
   takeCmComNewlinerLineFullConfig,
   takeCmComNewlinerRepeatFullConfig,
 } from 'shared/utils/cm/com/newliner';
-import { arrayByLength, objectLength } from 'shared/utils/object.utils';
+import { arrayByLength, forEachObjectEntries, objectLength } from 'shared/utils/object.utils';
 import { removeEmptyRightValues } from 'shared/utils/removeEmptyRightValues';
 import { modifyCom } from './lib/modifiers';
 
@@ -70,6 +70,28 @@ export const cmEditComServerTsjrpcNewlines = () =>
     removeNL_v1: updateNewlinerLineSet(({ repeati }, itRepeati, set) => {
       if (repeati != null && itRepeati !== repeati) return;
       set.clear();
+    }),
+
+    copyNL: modifyCom('COM_TR', (com, { fromSpacei, toSpacei }) => {
+      const fromSpace = com.nl?.[fromSpacei];
+      if (!fromSpace) return null;
+
+      const toSpace = com.nl?.[toSpacei];
+      const missingOrdws: CmComOrderWid[] = [];
+
+      forEachObjectEntries(fromSpace, ordw => {
+        const ordwNumber = +ordw as CmComOrderWid;
+        if (toSpace?.[ordwNumber] == null) missingOrdws.push(ordwNumber);
+      });
+
+      if (!missingOrdws.length) return null;
+
+      const nl = (com.nl ??= []);
+      const nextSpace = (nl[toSpacei] ??= {});
+
+      for (const ordw of missingOrdws) nextSpace[ordw] = fromSpace[ordw];
+
+      return retLabel(com.w);
     }),
   }) satisfies ServerTsjrpcSatisfy<CmEditComTsjrpcModel>;
 
