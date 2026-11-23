@@ -8,7 +8,7 @@ import customESLintConfigs from './custom-eslint.mjs';
 
 export default tseslint.config(
   ...customESLintConfigs(),
-  { ignores: ['dist', 'build', '**/*.js', 'src/**/the-icon/icons'] },
+  { ignores: ['**/dist/', '**/build/', '**/release-builds/', '**/test-results/', '**/*.js', '**/the-icon/icons'] },
   {
     extends: [js.configs.recommended, tseslint.configs.recommended, eslintReact.configs['recommended-typescript']],
     files: ['**/*.{ts,tsx}'],
