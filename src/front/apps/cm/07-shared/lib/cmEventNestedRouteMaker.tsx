@@ -21,7 +21,7 @@ type Search = ScheduleDayEventPathProps & CmComOpenRouteProps;
 export const makeCmEventNestedRoute = <Path extends keyof FileRoutesByPath>(props: Props<Path>) => {
   const EventRouteComponent = () => {
     const { schw: paramSchw } = useParams({ from: props.path }) as SValRecord<{ schw?: ScheduleWidgetWid }>;
-    const { dayi, eventMi, schw = paramSchw } = useSearch({ from: props.path }) as ScheduleDayEventPathProps;
+    const { dayi, eventMi, schw = paramSchw } = useSearch({ from: props.path }) as Search;
 
     return (
       <>

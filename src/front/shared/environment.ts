@@ -17,9 +17,7 @@ const isHttps = initialUrl.protocol === 'https:';
 const postfix = import.meta.env.VITE_SOKI_POSTFIX;
 const devHost = import.meta.env.VITE_DNS || initialUrl.hostname;
 
-const sokiLink = isTest
-  ? `${isHttps ? 'wss' : 'ws'}://${devHost}${postfix}`
-  : `wss://${hostConfig.host}${postfix}`;
+const sokiLink = isTest ? `${isHttps ? 'wss' : 'ws'}://${devHost}${postfix}` : `wss://${hostConfig.host}${postfix}`;
 
 /** Local back dev server port (src/back/startExpressRouting/index.ts); production uses the host. */
 const backHttpUrl = isTest ? `${isHttps ? 'https' : 'http'}://${devHost}:4446` : hostConfig.url;

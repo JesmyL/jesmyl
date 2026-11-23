@@ -32,9 +32,7 @@ export const liveDataAtom = atom<IndexSchWBroadcastLiveDataValue | null>(null);
 export const liveDataStreamersAtom = atom<{ fio: string; login: SokiAuthLogin }[] | null>(null);
 
 export const textTransferWindowsAtom = atom<TextTransferWindow[]>([]);
-// Последние метаданные файлов каждого устройства, полученные серверной рассылкой комнаты.
 export const textTransferFilesAtom = atom<TextTransferFile[]>([]);
-// Прогресс скачивания одного файла: loaded — принято кусков, count — всего кусков.
 export const textTransferDownloadAtom = atom<{ deviceId: DeviceId; name: string; loaded: number; count: number } | null>(
   null,
 );

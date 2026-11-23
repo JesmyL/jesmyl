@@ -1,6 +1,5 @@
-import { backLocaleError } from 'back/locales/back';
-import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
+import { backLocaleError } from 'back/locales/back';
 import {
   CmComLinei,
   CmComNewlinerRepeati,
@@ -17,6 +16,7 @@ import { CmCom } from 'shared/const/cm/Com';
 import { CmComOrder } from 'shared/const/cm/order/Order';
 import { howMillisecondsInMin } from 'shared/const/ms';
 import { Bool } from 'shared/enums';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { TextCase } from 'shared/model/common';
 import { absoluteNumber, multipliedNumber, nagativeNumber } from 'shared/utils';
 import { checkIsNotNil } from 'shared/utils/checkIs';

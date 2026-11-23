@@ -36,14 +36,12 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         ...cmEditComServerTsjrpcTextableBlocks,
 
         rename: modifyCom('COM_MAIN', (com, { value }) => {
-          // Нормализуем имя на границе входа: пробельный дефисный штрих (« - », « -- ») становится длинным тире « — » до записи в com.n
           const n = value.replace(makeRegExp('/( -+) /g'), ' — ');
 
           return simpleUpdateReverse(backLocaleError(BackLocaleKey.CmComRenamed, { v: n }), (com.n = n));
         }),
 
         setBpM: modifyCom('COM_MAIN', (com, { value }) => {
-          // nil снимает com-bpm: колонка nullable, поэтому метроном возвращается к дефолтным 120
           const prev = com.bpm;
           const next = (com.bpm = checkIsNil(value) ? null : takeCorrectMetronomeBpm(value));
 
@@ -70,13 +68,15 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           });
         }),
 
-        changeDrive: modifyCom('COM_MAIN', (com, { value }) => {
-          const was = takeDriveTitle(com.d ?? CmComIntensityLevel.Medium);
+        changeDrive: modifyCom('COM_MAIN', (com, { value }, { visitInfo }) => {
+          if (!visitInfo) throw '';
+
+          const was = takeDriveTitle(com.d ?? CmComIntensityLevel.Medium, visitInfo.langi);
           const next = (com.d = value);
 
           return simpleUpdateReverse(backLocaleError(BackLocaleKey.CmComDriveSet), next, {
             was,
-            new: takeDriveTitle(next),
+            new: takeDriveTitle(next, visitInfo.langi),
           });
         }),
 
@@ -136,7 +136,6 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
 
           const com = {
             ...newCom,
-            // Имя нормализуем на границе входа: пробельный дефисный штрих (« - », « -- ») становится « — » до вставки в базу
             n: newCom.n.replace(makeRegExp('/( -+) /g'), ' — '),
             w,
             m: w,
@@ -196,9 +195,8 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
 
 export * from './lib/modifiers';
 
-// Дифф уведомления общий для всех получателей, поэтому, как и соседние сырые значения (язык, размерность), берём русский заголовок.
-const takeDriveTitle = (level: CmComIntensityLevel) =>
-  takeBaseLocaleDict(null)[BaseLocaleKey.CmIntensityTitle][level];
+const takeDriveTitle = (level: CmComIntensityLevel, langi: Langi) =>
+  takeBaseLocaleDict(langi)[BaseLocaleKey.CmIntensityTitle][level];
 
 const simpleUpdate = (_result: unknown, description: string, diff?: TSJRPCFeedbackDiff): TSJRPCFeedbackEntry => ({
   description,

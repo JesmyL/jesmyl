@@ -1,6 +1,6 @@
 import { takeWorkDirBgFromDataTransfer, workDirNoBgDragValue } from '#features/ElectronWorkDir/lib/workDirDrag';
 import { CmComListPackKindSelector } from '$cm/entities/ComListPackKindSelector';
-import { CmComFaceList, cmIDB } from '$cm/ext';
+import { CmComFaceDescriptionVariant, CmComFaceList, cmIDB } from '$cm/ext';
 import { useCmBroadcastScreenComNavigationComws, useCmBroadcastSlidesContext } from '$cm/features/broadcast';
 import styled from '@emotion/styled';
 import { DragEvent, useCallback } from 'react';
@@ -34,6 +34,7 @@ export const CmBroadcastGridTabList = () => {
       <StyledComFaceList
         list={comws}
         titles={comPack.titles}
+        comDescription={CmComFaceDescriptionVariant.CacheButtons}
         importantDropOnCom={dropWorkDirBgOnCom}
         importantOnClick={({ defaultClick }) => {
           setSlidei(0);

@@ -35,7 +35,6 @@ export const CmMeetingControls = ({
   const checkAccess = useCheckUserAccessRightsInScope();
   const isCanReadHistory = checkAccess('cm', 'EVENT', 'R');
   const myUserId = auth.login ? byLogin.get(auth.login)?.id : null;
-  // TOP-пользователь сайта всегда может редактировать список композиций события, остальным нужно право на это.
   const isCanRedactComsList =
     (auth.login ? byLogin.get(auth.login)?.r === 'TOP' : false) ||
     (myUserId != null && checkIsCanRedactScheduleComsList(sch, myUserId, dayi, eventMi));

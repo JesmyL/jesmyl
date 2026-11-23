@@ -147,11 +147,9 @@ const takeUserName = (user: Pick<DashMessageUser, 'fio' | 'nick' | 'email'>) =>
 const takeMessageUserName = (message: DashMessage) =>
   message.isSystem ? translateEditorBase(EditorLocaleKey.VisitsSystem) : takeUserName(message.user);
 
-/** Язык визита, из которого пришло сообщение: visitInfo хранится пропом `visit`, поэтому langi берётся из него, а не ищется по тексту. */
 const takeMessageVisitLangi = (message: DashMessage): Langi | nil => {
   let visit: unknown;
 
-  // JSON.parse кидает на любой порче дампа, поэтому разбор ограничен try/catch и возвращает null вместо исключения.
   try {
     visit = JSON.parse(message.visit);
   } catch {
@@ -160,7 +158,6 @@ const takeMessageVisitLangi = (message: DashMessage): Langi | nil => {
 
   if (!checkIsObject(visit)) return null;
 
-  // langi валиден только как целое из перечисления Langi, поэтому сначала проверяется число, затем диапазон значений.
   const { langi } = visit;
 
   return checkIsNumber(langi) && Number.isInteger(langi) && langi >= Langi.Ru && langi <= Langi.En ? langi : null;
@@ -501,7 +498,6 @@ const DashboardMessages = () => {
   const isEmpty = isVisitErrorKind ? visits.length === 0 : messages.length === 0;
   const messageReads = firstPage?.messageReads ?? {};
   const unreadCounts = firstPage?.unreadCounts ?? {};
-  // Вкладка VisitError показывает визиты, поэтому отметка прочтения визитов — то же время вида VisitError из dashReadDB.
   const visitReadAt = messageReads[DashMessageKind.VisitError] ?? 0;
 
   useEffect(() => {
@@ -530,7 +526,6 @@ const DashboardMessages = () => {
     <section className="min-w-0 max-w-full rounded-2xl border border-x2/60 bg-x1/50 p-2 sm:p-3">
       <div className="mb-2 flex flex-wrap items-center gap-1">
         {messageTabs.map(tab => {
-          // Счётчик непрочитанных приходит с бэка: для вкладки VisitError он посчитан по visitDB, для остальных видов — по сообщениям.
           const unreadCount = unreadCounts[tab.kind] ?? 0;
 
           return (
@@ -556,7 +551,6 @@ const DashboardMessages = () => {
             </button>
           );
         })}
-        {/* Ручная отметка прочитанным доступна всем вкладкам, включая VisitError: бэкенд сдвигает маркер сразу и по сообщениям, и по визитам. */}
         <button
           className="pointer rounded-lg px-2 py-1 text-xs text-x4 hover:text-x3"
           onClick={() => markAllRead(activeKind)}
@@ -571,7 +565,6 @@ const DashboardMessages = () => {
         <div className="flex min-w-0 max-h-96 w-full flex-col gap-2 overflow-y-auto">
           {isVisitErrorKind
             ? visits.map(visit => {
-                // Визит не прочитан, если он новее отметки прочтения вида VisitError — так же, как у сообщений.
                 const isUnread = visit.createdAt > visitReadAt;
 
                 return (
@@ -603,16 +596,12 @@ const DashboardMessages = () => {
             : messages.map(message => {
                 const isUnread = message.createdAt > (messageReads[activeKind] ?? 0);
                 const isOpen = openMessageIds.has(message.id);
-                // Локализация payload'а должна видеть каждую секцию отдельно: суффикс авторизации/визита приклеен к payload'у разделителем.
                 const messageSections = message.m.split(dashMessageSectionSeparator);
-                // Язык визита берём из пропа `visit` (JSON visitInfo), а если его нет — язык текущего просмотра.
                 const messageVisitLangi = takeMessageVisitLangi(message) ?? langi;
-                // Новый Changes-конверт `{t,d}` разбирается типизированно; для legacy-строк остаются прежние пути (payload/секции).
                 const messageSummary = takeMessageSummary(
                   makeChangesMessageHtml(messageSections[0], messageVisitLangi) ??
                     makeBackLocaleErrorMessageText(messageSections[0], messageVisitLangi),
                 );
-                // Тело секций: конверт → готовая HTML-секция диффа → legacy payload (ошибки — с дублем текста).
                 const messageSectionBodies = messageSections.map(
                   section =>
                     makeChangesMessageHtml(section, messageVisitLangi) ??
@@ -1173,7 +1162,6 @@ const DashboardBody = () => {
   });
 
   useEffect(() => {
-    // A reconnect replaces the server-side watcher socket, so the dashboard re-subscribes immediately.
     return soki.listenOnConnectionOpenEvent(() => {
       void queryClient.invalidateQueries({ queryKey: ['visitsDashboard'] });
       void queryClient.invalidateQueries({ queryKey: ['visitsDashboardMessages'] });
