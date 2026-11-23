@@ -7,7 +7,8 @@
 
 ## Code writing rules
 
-- Every code block must carry a comment describing how that specific block is supposed to work; before making any corrections inside a block, always consult its comment first — if the comment contradicts the new changes, ask the user how to proceed (update the comment, or keep it). These code-block comments must be written in Russian.
+- Write code comments ONLY where the user gave specific clarifications about changes that are not obvious from the code itself; such a comment must record exactly that clarification. Do NOT write comments anywhere else (no Russian-language block comments).
+- When performing any work, read such clarification comments and take them into account. Any other comments are not authoritative and must not be relied upon. If an existing comment contradicts the new task (edits), ask the user how to proceed in that specific situation instead of silently changing or removing it.
 
 ## OpenCode house rules
 

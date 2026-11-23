@@ -6,8 +6,10 @@ Read this file before editing any of those JSON files.
 ## Progress
 
 - Correction passes are incremental, processed in batches of 20 songs sorted by the `w` field ascending.
-- DONE: songs ranked 1–200 by `w` (batches 1-20, 21-40, 41-60, 61-80, 81-100, 101-120, 121-140, 141-160, 161-180, 181-200) are fully corrected (punctuation + case rules applied, edge-whitespace trimmed).
-- NEXT: continue from rank 201 by `w` ascending.
+- DONE: songs ranked 1–547 by `w` (all songs) are fully corrected (punctuation + case rules applied, edge-whitespace trimmed). Last batches: 461-480, 481-500, 501-520, 521-540, 541-547.
+- NEXT: corpus fully corrected; re-check passes only if requested.
+
+> **USER DECISIONS ARE FINAL:** once the user settles an ambiguous case (via a question answer), later correction passes must NEVER revert or re-litigate it. Re-check passes may fix things against the written rules, but never against a recorded user decision. All such decisions are recorded in §9 "Settled decisions" and override every rule above.
 
 ## 1. Scope
 
@@ -43,16 +45,17 @@ Apply in every correction pass, on every file:
 
 ## 4. Language routing
 
-| `l` | Language | Action |
-|-----|----------|--------|
-| absent or `0` | Russian | Apply Russian rules |
-| `1` | Ukrainian | Apply Ukrainian rules (the `укр.` variants below) |
-| `2`, `3` | Kazakh, English | Skip the file |
+| `l`           | Language        | Action                                            |
+| ------------- | --------------- | ------------------------------------------------- |
+| absent or `0` | Russian         | Apply Russian rules                               |
+| `1`           | Ukrainian       | Apply Ukrainian rules (the `укр.` variants below) |
+| `2`, `3`      | Kazakh, English | Skip the file                                     |
 
 - [ ] Also skip a file whose text is in Latin script, regardless of `l`.
 
 ## 5. Punctuation
 
+- [ ] **Punctuation is fully editable: add, remove, or rearrange marks freely per grammar — misplaced commas may be relocated, ungrammatical ones removed. Only words, spaces and line breaks must stay in place.**
 - [ ] Add or fix `.` `;` `,` `!` `?` where the grammar requires it.
 - [ ] Attach each punctuation mark to the preceding word — no space before it.
 - [ ] Leave existing dashes exactly as they are, including spacing: `слово- слово` stays `слово- слово`.
@@ -62,10 +65,24 @@ Apply in every correction pass, on every file:
 
 ## 6. Quotes
 
-- [ ] The only allowed quote character is straight double `"`.
-- [ ] Replace `„` `“` `«` `»` `‘` `’` `'` with `"` where they actually function as quotes.
-- [ ] Never add new quotes where none existed.
+Canonical example for the whole convention: `src/back/apps/cm/coms/+case/1652432279310.json`.
+
+- [ ] Default quote character in lyrics (`t`) is straight double `"`.
+- [ ] Replace `„` `“` `«` `»` `‘` `’` `'` with `"` where they actually function as quotes — in `t` only, subject to §6.2.
+- [ ] Never add new quotes where none existed, except the cross-block markers of §6.2.
 - [ ] Word-internal apostrophes (e.g. укр. `м'ята`, `п'ять`) are not quotes — they are part of the word and stay as-is.
+
+### 6.1 Exception — guillemets « » in names (`n`)
+
+- [ ] Song names (`n`) MUST KEEP `«` `»` quotes exactly as authored. Do NOT replace them with straight `"` in `n`.
+- [ ] Straight `"` is required only in lyrics (`t`). The guillemet style in `n` is the author's style and is never normalised.
+- [ ] Example: `"n": "Ты говоришь: «Люблю!»"` — the `« … »` pair stays, a quote pass must never turn it into `"Люблю!"`.
+
+### 6.2 Exception — cross-block quote markers
+
+- [ ] When a quotation opens in one `t` block and closes in a different `t` block, the author's marker convention is used and must be preserved, and inserted where the convention calls for it: the marker `(" )` goes in the block where the quotation BEGINS, and the marker `( ")` goes in the block where it ENDS.
+- [ ] Canonical example, `1652432279310.json`: `t[0]` contains `…призываю: "о,(" ) Властитель души.` and `t[2]` contains `…будь до конца.( ")"`.
+- [ ] These markers are INTENTIONAL. NEVER remove them as artifacts, never treat them as broken punctuation, and never "repair" them into a single plain `"` pair.
 
 ## 7. Case — names (`n`)
 
@@ -81,11 +98,10 @@ Everything is lowercase — including sentence-initial words and words after `.`
 
 ### 8.1 Uppercase — God / Christ names and titles
 
-**General principle:** ANY noun used as a title of God or Christ is uppercase — even when it is not in the lists below (e.g. `Лев`, `Ходатай`, `Первосвященник`, `Судья` / `Судьёй`, `Искупитель`, `Мессия`, `Трон`, `Сторож`, `Советник`). The lists are examples, not a closed set. A word that only *describes* God in a predicate stays lowercase — see `Всемогущий` in §8.2.
+**General principle:** ANY noun used as a title of God or Christ is uppercase — even when it is not in the lists below (e.g. `Лев`, `Ходатай`, `Первосвященник`, `Судья` / `Судьёй`, `Искупитель`, `Мессия`, `Сторож`, `Советник`). The lists are examples, not a closed set. A word that only _describes_ God in a predicate stays lowercase — see `Всемогущий` in §8.2. Exception: `трон` / `престол` are never titles — always lowercase, see §8.5.
 
 - [ ] `Бог`, `Господь`, `Господин`, `Господ`, `Иисус` / `Ісус`, `Христос`, `Спаситель`, `Агнец`, `Отец`, `Отче`, `Творец`, `Вседержитель`, `Сын`.
 - [ ] `Мессия`, `Искупитель`, `Ходатай`, `Первосвященник`, `Судья` / `Судьёй`, `Лев` (of Christ — `Лев иудейский` keeps `иудейский` lowercase).
-- [ ] `Трон` when it is God's throne (`к Трону идущих`).
 - [ ] `Сторож`, `Советник` as titles of Christ (`Сторож души и Советник`).
 - [ ] `Царь` when it refers to Christ (`Царь иудейский` — `иудейский` stays lowercase).
 - [ ] `Пастырь` / `Пастир`, `Друг` (of Christ), `Утешитель` / `Втішитель`, `Вождь` (of Christ), `Наставник`, `Путеводитель` (Christ vocatives).
@@ -127,6 +143,7 @@ Adjectives describing God or Christ stay **lowercase** unless they are listed he
 - [ ] Pronouns about human listeners: укр. `ти` / `твої` / `твій`.
 - [ ] Metaphorical `свет`.
 - [ ] `аллилуйя`, `нет`, `врата`, `земля` (soil / ground / homeland), `родина`, `батьківщину`, `ангелы`, `храм` / `храмі`.
+- [ ] `трон` / `престол` — always lowercase in lyrics, in every inflection, Russian and Ukrainian (`Трон`, `Трона`, `Трону`, `Троном`, `Троне`, `Троні`, `Престол`, `Престола`, `Престолу`, `Престолом`, укр. `Престол` / `Трон` etc.) — God's throne is never a title.
 - [ ] `Земля` as the planet — astronomical proper name, uppercase (`в космосе Земля`); the soil / ground / homeland senses keep `земля` lowercase.
 - [ ] `один` — unlike `Сам`.
 - [ ] Words inside similes, e.g. `пастух` in `как пастух`.
@@ -141,34 +158,46 @@ Adjectives describing God or Christ stay **lowercase** unless they are listed he
 
 ### Settled decisions (apply directly, do not re-ask)
 
-| Phrase | Decision |
-|--------|----------|
-| `благодать` (+ its pronouns) | lowercase |
-| `один дух` where the referent is the Holy Spirit | `Дух` uppercase |
-| `Церковь` as the universal body | uppercase |
-| `имя Своё` given to people | lowercase |
-| heavenly / metaphorical `свет` | lowercase |
-| `сторож души и советник` (titles of Christ) | `Сторож`, `Советник` uppercase |
-| `Небо` / `Небеса` as God's dwelling | uppercase (`граждане Неба`, `ключи от Неба`) |
-| `Святилище` as God's dwelling (`во Святилище Твоё`) | uppercase, same rule as `Небо` |
-| adjectives about God / Christ inside a title phrase | lowercase — noun capitalized, adjective not (`Лоза святая`, `Царь иудейский`); only `Божий` and `Небесный` (`Отец Небесный`, `Царство Небесное`) are uppercase |
-| `Земля` as the planet (astronomical proper name, `в космосе Земля`) | uppercase; soil / ground / homeland stay `земля` lowercase |
-| `Бог великий и всемогущий` | `всемогущий` lowercase as predicate; uppercase only as a standalone title |
-| spaced dash `слово - слово` inside a name (`n`) | em-dash `слово — слово`, surrounding spaces stripped |
-| personified `Любовь` as God Himself (`к нам Любовь с небес пришла`) | uppercase; abstract `любовь` as an attribute stays lowercase |
-| `Дитя`, `Младенец`, `Мальчик` (titles of the infant Christ) | uppercase |
-| `в Небесах` (heavenly realm, Eph 1:3 sense) | uppercase, same rule as `Небо` / `Небеса` |
-| `дух оживи во мне` (human spirit revived in me) | lowercase, human spirit |
-| `небо — есть заветный край` (heaven as God's dwelling) | uppercase `Небо` |
-| `осанна` | lowercase, like `аллилуйя` (liturgical exclamation, never capitalized) |
-| `Кто-то` referring to God (knocking at the door imagery) | UPPERCASE; an indefinite pronoun about a person stays lowercase |
+| Phrase                                                                        | Decision                                                                                                                                                                                            |
+| ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `благодать` (+ its pronouns)                                                  | lowercase                                                                                                                                                                                           |
+| `один дух` where the referent is the Holy Spirit                              | `Дух` uppercase                                                                                                                                                                                     |
+| `Церковь` as the universal body                                               | uppercase                                                                                                                                                                                           |
+| `имя Своё` given to people                                                    | lowercase                                                                                                                                                                                           |
+| heavenly / metaphorical `свет`                                                | lowercase                                                                                                                                                                                           |
+| `сторож души и советник` (titles of Christ)                                   | `Сторож`, `Советник` uppercase                                                                                                                                                                      |
+| `Небо` / `Небеса` as God's dwelling                                           | uppercase (`граждане Неба`, `ключи от Неба`)                                                                                                                                                        |
+| `Святилище` as God's dwelling (`во Святилище Твоё`)                           | uppercase, same rule as `Небо`                                                                                                                                                                      |
+| adjectives about God / Christ inside a title phrase                           | lowercase — noun capitalized, adjective not (`Лоза святая`, `Царь иудейский`); only `Божий` and `Небесный` (`Отец Небесный`, `Царство Небесное`) are uppercase                                      |
+| `Земля` as the planet (astronomical proper name, `в космосе Земля`)           | uppercase; soil / ground / homeland stay `земля` lowercase                                                                                                                                          |
+| `Бог великий и всемогущий`                                                    | `всемогущий` lowercase as predicate; uppercase only as a standalone title                                                                                                                           |
+| spaced dash `слово - слово` inside a name (`n`)                               | em-dash `слово — слово`, surrounding spaces stripped                                                                                                                                                |
+| personified `Любовь` as God Himself (`к нам Любовь с небес пришла`)           | uppercase; abstract `любовь` as an attribute stays lowercase                                                                                                                                        |
+| `Дитя`, `Младенец`, `Мальчик` (titles of the infant Christ)                   | uppercase                                                                                                                                                                                           |
+| `в Небесах` (heavenly realm, Eph 1:3 sense)                                   | uppercase, same rule as `Небо` / `Небеса`                                                                                                                                                           |
+| `дух оживи во мне` (human spirit revived in me)                               | lowercase, human spirit                                                                                                                                                                             |
+| `небо — есть заветный край` (heaven as God's dwelling)                        | uppercase `Небо`                                                                                                                                                                                    |
+| `осанна`                                                                      | lowercase, like `аллилуйя` (liturgical exclamation, never capitalized)                                                                                                                              |
+| `трон` / `престол` (+ all inflections, укр. forms)                            | ALWAYS lowercase — God's throne is not a title (user decision)                                                                                                                                      |
+| `Кто-то` referring to God (knocking at the door imagery)                      | UPPERCASE; an indefinite pronoun about a person stays lowercase                                                                                                                                     |
+| `"Путь"` in quotes in the song context (`и ты не называй его "путь"`)         | lowercase — not every biblical word is a title; judge by usage, and here it functions as an ordinary noun, not a title of Christ                                                                    |
+| `Спасшему` (participle-title of Christ, `Спасшему нас там славу мы воздадим`) | uppercase, like other titles of Christ                                                                                                                                                              |
+| quoted `"я люблю тебя"` spoken by a human speaker                             | lowercase — judged by speaker, not by the quote's presence; a human addressee/speaker keeps the ordinary lowercase pronoun                                                                          |
+| ungrammatical comma (e.g. `как велика,\nлюбовь Отца ко мне`)                  | punctuation is fully editable — add, remove, or rearrange marks freely per grammar; misplaced commas may be relocated, ungrammatical ones removed; only words, spaces and line breaks stay in place |
+| `Распятая Любовь` / `Воскресшая Любовь` (Love = God Himself)                  | uppercase `Любовь`, both in `n` and in lyrics                                                                                                                                                       |
+| `Его верная Рука` (God's hand)                                                | `Рука` uppercase — kept as authored (user decision)                                                                                                                                                 |
+| `Царь славы`, `мира Князь`                                                    | title noun uppercase, genitive noun lowercase (`славы`, `мира` stay lowercase)                                                                                                                      |
+| `как я люблю тебя` (direct speech to God about loving Him)                    | lowercase (user decision)                                                                                                                                                                           |
+| `«Люблю!»` and any `«` `»` pair in a name (`n`)                               | guillemets KEPT exactly as authored — `n` never gets straight `"`; straight `"` is only for lyrics (`t`)                                                                                            |
+| cross-block quote markers `(" )` (quote begins) / `( ")` (quote ends) in `t`  | INTENTIONAL author convention — preserve and insert per §6.2, never remove as artifacts                                                                                                             |
+| any case already settled here                                                 | FINAL — re-check passes must never revert or re-litigate a recorded user decision; fix against the written rules only where no user decision exists                                                 |
 
 ## 10. Per-file verification
 
 - [ ] JSON still parses.
 - [ ] Diff touches only `n` and `t` string contents.
-- [ ] Word count, space count, and `\n` count are unchanged in every edited phrase.
+- [ ] Word count, space count, and `\n` count are unchanged in every edited phrase — the only permitted exception is the §6.2 cross-block quote markers.
 - [ ] No word's letters changed — only punctuation and case.
-- [ ] No stray non-straight quote characters remain where quotes occur.
+- [ ] Quotes follow §6: straight `"` in lyrics (`t`), authored `«` `»` kept in names (`n`), and the §6.2 cross-block markers `(" )` / `( ")` preserved wherever they occur.
 - [ ] `n` and every `\n`-line of every `t` string have no leading/trailing whitespace (§3.1).
 - [ ] Nothing staged, nothing committed.

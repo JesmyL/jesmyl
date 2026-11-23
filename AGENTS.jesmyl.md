@@ -71,6 +71,15 @@ Project-specific instructions for the jesmyl repo — read together with the uni
 - After modifying any file, format it with eslint-prettier (e.g. `npx eslint <file> --fix`) before finishing the task.
 - When correcting song (com) texts in `src/back/apps/cm/coms/+case/`, first read the rules in `AGENTS.com-corrects.md`.
 - Never write clever one-liner parsing tricks (e.g. `[...str.matchAll(regex)].at(-1)`, negative-lookahead chains) when a plain readable approach (`lastIndexOf`, `slice`, `parseInt`) solves it — prefer the simplest direct solution.
+- Never write template boilerplate like "Комментарий (по-русски):" as a code-comment prefix. Code-block comments must be written directly in Russian, stating how the block works — no meta prefixes or labels.
+- Never use raw HTML controls in JSX — always use the project's own components instead: `<input>` → `TextInput` (`#shared/ui/TextInput`); `<textarea>` → `TextInput` with `multiline`; `<select>` → `Dropdown` (`#shared/ui/dropdown`); `<input type=checkbox>` / radio → `IconCheckbox` (`#shared/ui/the-icon/IconCheckbox`, `isRadio`); buttons → `Button` / `TheButton` (`#shared/ui/TheButton`) / `TheIconButton` for icon-only buttons; `<input type=file>` → `FileInput` (`#shared/ui/FileInput`); `alert()` → `toast(...)` (sonner); `prompt()`/confirm dialogs → `Modal` / `ConfirmContent` / `usePrompt` from `#shared/ui/modal`.
+- Raw HTML elements are acceptable ONLY inside the UI-kit components themselves (e.g. inside `TextInput`, `FileInput`, `DebouncedSearchInput`) and for hidden/native-typed inputs (file/color/range in configurators) — not in regular feature code.
+- All enums whose values cross device boundaries (server / client / other-client), i.e. transmitted via HTTP/WebSocket, must have explicit concrete values assigned (not just enumerated keys) and doc comments (`/** ... */`) describing each value.
+- Every `.ts`/`.tsx` file must be at most 150 lines — if it is larger, split the logic: for `.tsx` files break the component into small components per the FSD system; for lib-files the file must consist of functions and be exported via an `index.ts` from a file (folder) named after the functionality.
+
+## Communications
+
+- All communications between app parts must happen via tsjrpc exchange over the appropriate transport; plain HTTP requests (frontend `fetch`/`axios`, express routes serving app APIs) must not be used — expose a tsjrpc method and call it through the tsjrpc client instead.
 
 ## Locale rules
 
