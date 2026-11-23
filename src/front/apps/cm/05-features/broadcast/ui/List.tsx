@@ -76,7 +76,6 @@ const List = styled.div<{ $querySelector: string }>`
     margin: auto;
     max-width: 100vw;
     padding-right: var(--main-gap);
-    white-space: normal;
   }
 
   ${props => props.$querySelector} {

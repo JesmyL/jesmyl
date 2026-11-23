@@ -99,7 +99,10 @@ const OrdersWithAdaptiveFontSize = ({ content, com }: { content: ReactNode; com:
   }, []);
 
   return (
-    <div ref={wrapperRef}>
+    <div
+      ref={wrapperRef}
+      className="w-full"
+    >
       <div
         className="w-max"
         ref={contentRef}

@@ -2,6 +2,12 @@ import { useLayoutEffect, useRef, useState } from 'react';
 
 const metric = 'px';
 
+// на время замера отключаем мягкий перенос у текста песни — правила ниже перебивают
+// наследуемый nowrap замера, напрямую нацеленный на строки и аккордные блоки
+const measureStyle = document.createElement('style');
+measureStyle.innerText = `[data-fs-measure] [ord-linei]{white-space:nowrap!important}[data-fs-measure] .chords-block{white-space:pre!important}`;
+document.head.appendChild(measureStyle);
+
 export const useBibleBroadcastScreenFontSizeAdapter = (
   content: string,
   subUpdater: string | number,
@@ -20,6 +26,10 @@ export const useBibleBroadcastScreenFontSizeAdapter = (
 
     if (!wrapper || !container || !content) return;
 
+    let lastWrapperWidth = 0;
+    let lastContentWidth = 0;
+    let lastContentHeight = 0;
+
     const adjustFontSize = () => {
       if (isAdjusting.current) return;
       isAdjusting.current = true;
@@ -34,10 +44,24 @@ export const useBibleBroadcastScreenFontSizeAdapter = (
 
       const currentFontSize = containerStyle.fontSize.endsWith(metric) ? parseFloat(containerStyle.fontSize) : 16;
 
-      const cWidth = container.clientWidth;
+      // на время замера строки становятся неразрывными — иначе перенос зажимает ширину по экрану и шрифт растёт бесконечно;
+      // маркер data-fs-measure включает глобальные правила замера у строк и аккордных блоков, перебивающие их собственный перенос
+      if (isCheckWidthOnly) {
+        containerStyle.whiteSpace = 'nowrap';
+        container.setAttribute('data-fs-measure', '');
+      }
+
+      const resetMeasure = () => {
+        containerStyle.whiteSpace = '';
+        container.removeAttribute('data-fs-measure');
+      };
+
+      const contentWidth = () => (isCheckWidthOnly ? container.scrollWidth : container.clientWidth);
+      const cWidth = contentWidth();
       const cHeight = container.clientHeight;
 
       if (!cWidth || !cHeight || !wWidth || !wHeight) {
+        if (isCheckWidthOnly) resetMeasure();
         isAdjusting.current = false;
         return;
       }
@@ -59,8 +83,8 @@ export const useBibleBroadcastScreenFontSizeAdapter = (
       containerStyle.fontSize = newFontSize + metric;
 
       // Первичная грубая коррекция на случай, если вылетели одиночные слова
-      if (container.clientWidth > wWidth || (!isCheckWidthOnly && container.clientHeight > wHeight)) {
-        const overflowWidthRatio = wWidth / container.clientWidth;
+      if (contentWidth() > wWidth || (!isCheckWidthOnly && container.clientHeight > wHeight)) {
+        const overflowWidthRatio = wWidth / contentWidth();
         const overflowHeightRatio = wHeight / container.clientHeight;
         const finalRatio = isCheckWidthOnly ? overflowWidthRatio : Math.min(overflowWidthRatio, overflowHeightRatio);
 
@@ -73,7 +97,7 @@ export const useBibleBroadcastScreenFontSizeAdapter = (
       // Благодаря ШАГу 1 этот цикл сработает всего 2-4 раза, что займет менее 0.1 миллисекунды.
       let limit = 20; // Защита от бесконечного цикла
       while (
-        container.clientWidth <= wWidth &&
+        contentWidth() <= wWidth &&
         (isCheckWidthOnly || container.clientHeight <= wHeight) &&
         newFontSize < 500 &&
         limit-- > 0
@@ -88,6 +112,11 @@ export const useBibleBroadcastScreenFontSizeAdapter = (
       newFontSize -= 1;
       containerStyle.fontSize = newFontSize + metric;
 
+      if (isCheckWidthOnly) resetMeasure();
+      lastWrapperWidth = wrapper.clientWidth;
+      lastContentWidth = container.clientWidth;
+      lastContentHeight = container.clientHeight;
+
       // 2. Включаем готовность, когда подгон завершен.
       // Перенос в requestAnimationFrame гарантирует, что стейт обновится после применения стилей.
       requestAnimationFrame(() => {
@@ -97,9 +126,15 @@ export const useBibleBroadcastScreenFontSizeAdapter = (
     };
 
     const resizeObserver = new ResizeObserver(() => {
-      if (!isAdjusting.current) {
-        adjustFontSize();
-      }
+      if (isAdjusting.current) return;
+      // в режиме подгона по ширине игнорируем срабатывания от собственных изменений размеров подгонки —
+      // иначе наблюдатель гоняет расчёт по кругу и раздувает шрифт
+      const isSameLayout =
+        wrapper.clientWidth === lastWrapperWidth &&
+        container.clientWidth === lastContentWidth &&
+        container.clientHeight === lastContentHeight;
+      if (isCheckWidthOnly && isSameLayout) return;
+      adjustFontSize();
     });
 
     resizeObserver.observe(wrapper);
