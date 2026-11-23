@@ -31,10 +31,10 @@ export const CmEditorTabComAudioMarksShowSlideListButton = ({
           <Modal openAtom={openSlidesAtom}>
             <ModalHeader>{ccom.name}</ModalHeader>
             <ModalBody>
-              {audioSlides.map(({ text, timei }) => (
+              {audioSlides.map(({ text, timei }, slidei) => (
                 <div
                   key={timei}
-                  className={twMerge('pre-text my-5', currentMarkTimei === timei && 'text-x7')}
+                  className={twMerge('pre-text my-5', currentMarkTimei === slidei && 'text-x7')}
                   {...makeCmComTextInnerHtmlProp(text)}
                 />
               ))}

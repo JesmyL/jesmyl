@@ -1,10 +1,7 @@
 import { useMemo } from 'react';
 import { CmAudioSlide, CmComAudioMarkPackTime, CmAudioSrc, Langi } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
-import {
-  makeCmComAudioMarkTitleBySelector,
-  makeCmComAudioMarkTitleEmptySelector,
-} from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
+import { makeCmComAudioMarkTitleEmptySelector } from 'shared/const/cm/order/makeCmComAudioMarkTitleBySelector';
 import { TextCase } from 'shared/model/common';
 import { checkIsArray, checkIsNil, checkIsString } from 'shared/utils/checkIs';
 import { makeSymbolFreeUpperCaseSlavicText } from 'shared/utils/cm/com/const';
@@ -56,23 +53,17 @@ export const useCmComAudioMarkSlides = (
       if (!checkIsArray(selector)) continue;
 
       const slide = timeSlideDict[time];
+      if (!slide) continue;
 
       markPairs.push({
         time,
-        audioSlide: slide
-          ? {
-              slide,
-              text: slide.lines.join('\n'),
-              time,
-              timei,
-              isChorded: slide.ord.isChBlock(),
-            }
-          : {
-              text: makeCmComAudioMarkTitleBySelector(time, com, selector, srcMarks).title,
-              time,
-              timei,
-              isChorded: false,
-            },
+        audioSlide: {
+          slide,
+          text: slide.lines.join('\n'),
+          time,
+          timei,
+          isChorded: slide.ord.isChBlock(),
+        },
       });
     }
 
