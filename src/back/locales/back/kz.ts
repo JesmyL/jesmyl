@@ -474,6 +474,7 @@ export const backLocalesKz: Record<BackLocaleKey, string> = {
   [BackLocaleKey.SchListCatMembersDefaultTitle]: 'Қатысушылар',
   [BackLocaleKey.DashPushNoSubscriptions]: 'Пайдаланушының PUSH хабарламаларына жазылымы жоқ',
   [BackLocaleKey.DashPushCheckText]: 'PUSH хабарламаларын тексеру',
+  [BackLocaleKey.NoRightsScheduleRemoteControlsRead]: 'Кесте пульттерін қарауға рұқсат жоқ',
   [BackLocaleKey.PushCheckSent]: 'Хабарлама жіберілді',
   [BackLocaleKey.PushSubscriptionsAbsent]: 'PUSH хабарламаларына жазылымдар жоқ',
   [BackLocaleKey.PushCheckSentToDevices]: `$n; құрылғыға жіберілді`,

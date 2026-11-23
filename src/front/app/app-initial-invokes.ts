@@ -1,6 +1,9 @@
 import { translateBase } from '#basis/locale';
 import { localeLastModifiedAtAtom } from '#basis/state/locale';
+import { requestRemoteLocalesIfStale } from '#features/broadcast/remote/remote-locale';
 import { otherFooterIconAtom } from '#basis/state/otherFooterIconAtom';
+import { registerRemoteBroadcastClientBase } from '#basis/tsjrpc.electron/remote-broadcast.cli.base';
+import { registerRemoteBroadcastRelay } from '#basis/tsjrpc.electron/remote-broadcast.relay';
 import { soki } from '#shared/soki';
 import { reloadSW } from '#shared/sw-register';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
@@ -20,7 +23,7 @@ import {
 import {
   indexTsjrpcBaseClient,
   indexTsjrpcClientMethods,
-  schLiveTsjrpcBaseClient,
+  registerSchLiveTsjrpcBaseClient,
   textTransferTsjrpcBaseClient,
 } from '$index/shared/tsjrpc';
 import { questionerAdminTsjrpcClientBase } from '$q/shared/tsjrpc/admin.tsjrpc';
@@ -39,10 +42,6 @@ const hasCmEditRight = (rights: IndexAccessScopeRules) => checkUserScopeAccessRi
 let isCmEditorInvokesRun = false;
 let isCmEditorCachePurgeScheduled = false;
 
-/**
- * Первая загрузка страницы ещё не управляется service worker, поэтому ждём `ready`
- * и шлём сообщение активному воркеру: он скачает все `cm-edit-` чанки в кэш редактора.
- */
 const cacheCmEditorChunksInServiceWorker = () => {
   if (!('serviceWorker' in navigator)) return;
 
@@ -68,14 +67,9 @@ const runCmEditorInvokes = () => {
   });
 };
 
-/**
- * Редакторы прогревают закрытый правами слайс и чанк страницы редактора и просят service worker
- * закэшировать все `cm-edit-` чанки; остальные сбрасывают их из кэша (бутстрап, отзыв прав, логаут).
- */
 const syncCmEditorAccess = (rights: IndexAccessScopeRules) => {
   if (hasCmEditRight(rights)) {
     isCmEditorCachePurgeScheduled = false;
-    // Права могли выдать повторно после очистки кэша — прогрев запускаем на каждое подтверждение.
     cacheCmEditorChunksInServiceWorker();
     runCmEditorInvokes();
     return;
@@ -88,50 +82,43 @@ const syncCmEditorAccess = (rights: IndexAccessScopeRules) => {
   void purgeCmEditorCache().catch(() => (isCmEditorCachePurgeScheduled = false));
 };
 
-/**
- * Проверка новой версии приложения при старте: запрашиваем серверную версию с таймаутом в 20 секунд
- * и, если она отличается от текущей и известна, показываем тост с кнопкой принудительного обновления.
- * Нулевой num означает, что информации о версии нет, поэтому тост в этом случае не показываем.
- */
 const checkFreshAppVersion = async () => {
   try {
-    // Таймаут ограничивает ожидание серверной версии, чтобы старт приложения не завис на молчащем соединении.
     const freshVersion = await indexTsjrpcClientMethods.getFreshAppVersion_1(undefined, {
       timeout: 20_000,
     });
 
-    // Совпадение версий или нулевой num (нет данных о версии) — повода для тоста нет.
     if (freshVersion.num === jversion.num || freshVersion.num === 0) return;
 
     toast(freshVersion.text, {
       ...makeToastKOMoodConfig(),
-      // Тост держится до действия пользователя: исчезнувшее уведомление об обновлении бесполезно.
       duration: Infinity,
       action: { label: translateBase(BaseLocaleKey.Update), onClick: reloadSW },
     });
   } catch (_e) {
-    // Неудачная проверка версии не должна мешать старту приложения.
+    //
   }
 };
 
 export const appInitialInvokes = () => {
   const rights = indexUserAccessRightsAtom.get();
 
+  registerRemoteBroadcastClientBase();
+  registerRemoteBroadcastRelay();
+
   indexTsjrpcBaseClient.$$register();
   schTsjrpcBaseClient.$$register();
-  schLiveTsjrpcBaseClient.$$register();
+  registerSchLiveTsjrpcBaseClient();
   textTransferTsjrpcBaseClient.$$register();
   bibleTsjrpcBaseClient.$$register();
   cmShareTsjrpcBaseClient.$$register();
   storagesStoresSharesTsjrpcBaseClient.$$register();
   questionerAdminTsjrpcClientBase.$$register();
 
-  // Версию сверяем сразу после регистрации клиентов: запрос уйдёт, как только откроется соединение.
   void checkFreshAppVersion();
 
   bibleInitialInvokes();
 
-  // Прогреваем ленивые модули без правовых ограничений сразу после старта приложения.
   preloadUngatedLazyModules();
 
   syncCmEditorAccess(rights);
@@ -173,6 +160,7 @@ export const appInitialInvokes = () => {
     });
 
     void indexTsjrpcClientMethods.requestFreshLocales({ lastModifiedAt: localeLastModifiedAtAtom.get() });
+    void requestRemoteLocalesIfStale();
   };
 
   soki.onBeforeAuthorizeEvent.listen(() => indexIDB.remove.lastModifiedAt());

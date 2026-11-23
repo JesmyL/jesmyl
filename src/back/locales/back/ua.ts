@@ -477,6 +477,7 @@ export const backLocalesUa: Record<BackLocaleKey, string> = {
   [BackLocaleKey.SchListCatMembersDefaultTitle]: 'Учасники',
   [BackLocaleKey.DashPushNoSubscriptions]: 'У користувача немає підписок на PUSH-повідомлення',
   [BackLocaleKey.DashPushCheckText]: 'Перевірка PUSH-повідомлень',
+  [BackLocaleKey.NoRightsScheduleRemoteControlsRead]: 'Немає прав на перегляд пультів розкладу',
   [BackLocaleKey.PushCheckSent]: 'Повідомлення надіслано',
   [BackLocaleKey.PushSubscriptionsAbsent]: 'Немає підписок на PUSH-повідомлення',
   [BackLocaleKey.PushCheckSentToDevices]: `Надіслано на $n; пристро${FUNCTION('dec')('$n', 'й', 'ї', 'їв')}`,

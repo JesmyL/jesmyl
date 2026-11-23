@@ -11,7 +11,9 @@ import { ElectronAppWindowInvokeProps } from './model';
 import { electronAppBasicTsjrpcBase, registerWorkDirFileProtocol } from './tsjrpc/bases/basic.server.base';
 import { electronAppPresentationTsjrpcBase } from './tsjrpc/bases/presentation.server.base';
 import { electronAppPresentationsTsjrpcBase } from './tsjrpc/bases/presentations.server.base';
+import { electronAppRemoteBroadcastTsjrpcBase } from './tsjrpc/bases/remote-broadcast.server.base';
 import { tsjrpcElectronAppBaseNext } from './tsjrpc/init/tsjrpc.base.electron';
+import { startRemoteBroadcastLanIpWatcher } from './remote/server';
 import { verifyDownloadedUpdate } from './update-verification';
 import {
   setElectronAppSessionPartition,
@@ -25,7 +27,6 @@ const sessionPartition = takeElectronAppPartition(isTestMode);
 
 setElectronAppSessionPartition(sessionPartition);
 
-/** Единая настройка фида обновлений для обычного запуска и smoke-самопроверки. */
 const applyElectronUpdaterConfig = (host: string) => {
   autoUpdater.logger = console;
 
@@ -46,7 +47,7 @@ if (isSmokeRun) {
     try {
       rmSync(smokeUserDataDir, { recursive: true, force: true });
     } catch {
-      // Временная папка — ОС уберёт её сама.
+      //
     }
   };
 
@@ -116,21 +117,9 @@ if (isSmokeRun) {
 
   const isProd = app.isPackaged || process.env.NODE_ENV === 'production';
   const host = hostConfig.host;
-  /**
-   * Схема dev-URL: по умолчанию dev идёт по HTTPS — локальный vite-сервер на 3627 отдаёт mkcert-серты
-   * (VITE_IS_HTTPS=1 в .env.test). Отключить HTTPS можно явно флагом JESMYL_DEV_IS_HTTPS=0,
-   * тогда будет обычный http (в т.ч. для доступа с мобильных по LAN). В проде всегда боевой HTTPS-хост.
-   */
   const isDevHttps = process.env.JESMYL_DEV_IS_HTTPS !== '0';
   const url = isProd ? `https://${host}` : `${isDevHttps ? 'https' : 'http'}://localhost:3627`;
 
-  /**
-   * Самоподписанный mkcert-серт принимаем только в dev и только когда dev реально идёт по HTTPS
-   * (по умолчанию так и есть, пока явно не выставлен JESMYL_DEV_IS_HTTPS=0):
-   * без этого окно упирается в ошибку сертификата и грузит пустую error-страницу, где localStorage недоступен.
-   * В проде и при dev-http обработчик не регистрируется — настоящий сертификат проверяется по-настоящему.
-   * Регистрируется до win.loadURL, чтобы сработать на первую же загрузку.
-   */
   if (!isProd && isDevHttps) {
     app.on('certificate-error', (event, _webContents, _url, _error, _certificate, callback) => {
       event.preventDefault();
@@ -143,6 +132,8 @@ if (isSmokeRun) {
 
   app.whenReady().then(async () => {
     registerWorkDirFileProtocol(sessionPartition);
+
+    startRemoteBroadcastLanIpWatcher();
 
     if (isProd) {
       try {
@@ -251,11 +242,8 @@ if (isSmokeRun) {
       },
     );
 
-    // В dev (не prod) сразу открываем DevTools — ориентируемся на isProd, так как dev может идти и по http, и по https.
     if (!isProd) win.webContents.openDevTools();
 
-    // После успешной загрузки страницы проставляем версию расширения в localStorage.
-    // Если загрузка всё же сорвалась (dev-сервер не поднят), инъекция отклонится — гасим промис, чтобы не было unhandled rejection.
     win.webContents.on('did-finish-load', async () => {
       win.webContents
         .executeJavaScript(
@@ -280,3 +268,4 @@ if (isSmokeRun) {
 electronAppBasicTsjrpcBase.$$register();
 electronAppPresentationsTsjrpcBase.$$register();
 electronAppPresentationTsjrpcBase.$$register();
+electronAppRemoteBroadcastTsjrpcBase.$$register();

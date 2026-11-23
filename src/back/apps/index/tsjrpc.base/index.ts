@@ -51,6 +51,7 @@ import { indexTSJRPCBaseOtherFooterIcons } from './lib/otherFooterIcons';
 import { otpTSJRPCMethods } from './lib/otp.methods';
 import { indexPushMethods } from './lib/push.methods';
 import { indexTSJRPCBaseRequestFreshLocales } from './lib/requestFreshLocales';
+import { indexTSJRPCBaseRequestFreshRemoteLocales } from './lib/requestFreshRemoteLocales';
 import {
   indexTSJRPCBaseRequestFreshes,
   editorLocaleMinVersion,
@@ -61,10 +62,6 @@ import { indexTSJRPCBaseUpdateUserAccessRight } from './lib/updateUserAccessRigh
 
 const deviceIdPostfixSymbols = '!@#$%^&*;.,?/|\\+=-'.split('');
 
-/**
- * Следит за файлом версии приложения: при обновлении пишет номер версии в консоль
- * и через небольшую задержку выдаёт права на выполнение файлам в каталоге `assets`.
- */
 appVersionFileStore.watchFile(value => {
   console.info(`Version upgrade: ${value.num}`);
 
@@ -73,7 +70,6 @@ appVersionFileStore.watchFile(value => {
   setTimeout(() => {
     console.info(command);
 
-    // Результат выполнения chmod пишем в консоль: ошибку — через console.error, успех — через console.info.
     exec(command, (error, stdout, stderr) => {
       const log = `${command}\n\n${JSON.stringify({ error, stdout, stderr }, null, ' ')}`;
       if (error) console.error(log);
@@ -98,6 +94,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         ...indexTSJRPCBaseUpdateUserAccessRight,
         ...indexTSJRPCBaseRequestFreshes,
         ...indexTSJRPCBaseRequestFreshLocales,
+        ...indexTSJRPCBaseRequestFreshRemoteLocales,
         ...indexTSJRPCBaseGetIconExistsPacks,
         ...indexTSJRPCBaseOtherFooterIcons,
 
@@ -130,7 +127,6 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         },
 
         addNewAccessRole: async ({ role }) => {
-          // Прямой запрос вместо tiny-поиска: проба через кэш сохранила бы null-запись, которую resetTiny никогда не удалит.
           const [existing] = await db
             .select({ id: userRoleDB.id })
             .from(userRoleDB)
@@ -140,7 +136,6 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
 
           await db.insert(userRoleDB).values({ n: role });
 
-          // Tiny-кэш не был замусорен прямой пробой, поэтому этот запрос читает свежую строку из БД.
           return { value: { [role]: await takeUserRoleTiny({ n: role }) } };
         },
 
@@ -224,20 +219,16 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
           return await indexAuthByTgUser(BackLocaleKey.DashAuthViaTgCode)({ user }, tool);
         },
 
-        // Текст тоста о новой версии формируем на сервере на языке визита,
-        // чтобы фронт показал готовую строку без собственного перевода.
-        getFreshAppVersion: async (_, { visitInfo }) => {
+        getFreshAppVersion: async () => ({ value: appVersionFileStore.getValue().num }),
+
+        getFreshAppVersion_1: async (_, { visitInfo }) => {
           const num = appVersionFileStore.getValue().num;
           const text = translateBaseTexts(visitInfo?.langi, BaseLocaleKey.NewVersionAvailable, { v: num });
 
           return { value: { num, text } };
         },
-
-        /** @deprecated Используй getFreshAppVersion */
-        getFreshAppVersion_1: async () => ({ value: appVersionFileStore.getValue().num }),
         getIndexValues: async () => ({ value: valuesFileStore.getValue() }),
 
-        // Заголовки прав доступа отдаём на языке подключения администратора.
         getAccessRightTitles: async (_, { visitInfo }) => ({ value: takeAccessRightTitles(visitInfo?.langi) }),
         getUserInfoDict: async () => {
           const userInfoDict: PRecord<UserLogin, UserInfoUnsecure> = {};

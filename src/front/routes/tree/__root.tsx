@@ -1,13 +1,10 @@
-import { translateBase } from '#basis/locale';
-import { currentAppNameAtom } from '#basis/state/currentAppNameAtom';
-import { Button } from '#shared/components';
+import { ErrorComponent } from '#routes/ErrorComponent';
 import { environment } from '#shared/environment';
-import { IndexAppVersionLabel } from '$index/entities/AppVersionLabel/ui/Label';
-import { createRootRoute, Link, Outlet } from '@tanstack/react-router';
-import { useAtomValue } from 'atomaric';
-import React from 'react';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
-import { toast } from 'sonner';
+import { createRootRoute, Outlet } from '@tanstack/react-router';
+import { configureAtomaric } from 'atomaric';
+import React, { useSyncExternalStore } from 'react';
+
+configureAtomaric({ useSyncExternalStore, keyPathSeparator: '/' });
 
 const AppComponent = React.lazy(() => import('$app/AppComponent').then(m => ({ default: m.AppComponent })));
 const NotFoundPage = React.lazy(() =>
@@ -15,40 +12,13 @@ const NotFoundPage = React.lazy(() =>
 );
 
 export const Route = createRootRoute({
-  component: () => (environment.isPresentationMode ? <Outlet /> : <AppComponent />),
+  component: RootComponent,
   errorComponent: ErrorComponent,
   notFoundComponent: NotFoundPage,
 });
 
-function ErrorComponent({ error }: { error: Error }) {
-  const appName = useAtomValue(currentAppNameAtom);
+function RootComponent() {
+  if (environment.isPresentationMode) return <Outlet />;
 
-  return (
-    <div className="flex justify-center flex-col ites-center w-full h-full gap-3 text-center">
-      <div>
-        <b className="flex items-center gap-3 w-full justify-center">
-          {translateBase(BaseLocaleKey.Oops)}
-          <Link to={`/!other/${appName && appName !== 'index' ? appName : 'cm'}` as never}>
-            <Button icon="Home03" />
-          </Link>
-          <Button
-            icon="MessageQuestion"
-            onClick={() => {
-              const fullText = `${error?.message ?? error}\n\n${error?.stack ?? ''}`;
-              const isTruncated = fullText.length > 200;
-
-              toast(fullText.slice(0, 200), {
-                action: isTruncated ? { label: 'Подробнее', onClick: () => toast(fullText) } : undefined,
-              });
-              console.info(error);
-            }}
-          />
-        </b>
-        <div>{translateBase(BaseLocaleKey.UpdateHint)}</div>
-      </div>
-      <div className="flex gap-3 h-10">
-        <IndexAppVersionLabel />
-      </div>
-    </div>
-  );
+  return <AppComponent />;
 }

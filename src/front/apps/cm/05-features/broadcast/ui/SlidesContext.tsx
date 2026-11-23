@@ -35,7 +35,10 @@ export const CmBroadcastSlidesContext = ({
     return new CmCom(icom ?? cmDefaultCom(), fix, schIntp, Bool.False);
   }, [fix, icom, nameSpacei, schIntp]);
 
-  const { slidei, slideId } = useAtomValue(cmBroadcastCurrentSlideiAtom);
+  const { comw: slideComw, slidei, slideId } = useAtomValue(cmBroadcastCurrentSlideiAtom);
+  const isSlideOfCurrentCom = com?.wid != null && slideComw === com.wid;
+  const currentSlidePos = isSlideOfCurrentCom ? slidei : 0;
+  const currentSlideId = isSlideOfCurrentCom ? slideId : null;
   const showChordedSlideMode = useAtomValue(cmShowChordedSlideModeAtom);
   const slides = useMemo(
     () => com?.makeExpandSlides([nameSpacei, 0], false, textCase) ?? [],
@@ -45,21 +48,21 @@ export const CmBroadcastSlidesContext = ({
     showChordedSlideMode === CmBroadcastShowChordedSlideMode.Hide ||
     showChordedSlideMode === CmBroadcastShowChordedSlideMode.Pass;
 
-  let currentSlidei = slidei;
+  let currentSlidei = currentSlidePos;
 
-  if (slideId) {
-    const checkIsHasCurrentSlideId = () => slides.at(currentSlidei)?.ids.has(slideId!);
+  if (currentSlideId) {
+    const checkIsHasCurrentSlideId = () => slides.at(currentSlidei)?.ids.has(currentSlideId!);
 
     if (!checkIsHasCurrentSlideId()) {
-      currentSlidei = slidei - 1;
+      currentSlidei = currentSlidePos - 1;
 
       if (!checkIsHasCurrentSlideId()) {
-        currentSlidei = slidei + 1;
+        currentSlidei = currentSlidePos + 1;
 
         if (!checkIsHasCurrentSlideId()) {
           currentSlidei = slides.findIndex(checkIsHasCurrentSlideId);
 
-          if (!checkIsHasCurrentSlideId()) currentSlidei = slidei;
+          if (!checkIsHasCurrentSlideId()) currentSlidei = currentSlidePos;
         }
       }
     }
@@ -76,11 +79,6 @@ export const CmBroadcastSlidesContext = ({
     const nextSlide = slides.at(nextSlidei);
     if (nextSlide && nextSlide.ord.isChBlock()) nextSlidei = findSlideOrdRealTextIndex(slides, nextSlidei);
   }
-
-  useEffect(() => {
-    if (com?.wid == null) return;
-    cmBroadcastCurrentSlideiAtom.reset();
-  }, [com?.wid]);
 
   useEffect(() => {
     const nextd = window.document.getElementById(`broadcast-window-slidei-${currentSlidei}`);
@@ -101,7 +99,7 @@ export const CmBroadcastSlidesContext = ({
       hash: slides.at(currentSlidei)?.minText ?? '',
       slidei: currentSlidei,
       nextSlidei,
-      slideId: slides.at(currentSlidei)?.id ?? slideId,
+      slideId: slides.at(currentSlidei)?.id ?? currentSlideId,
       toSlide: dir => state.setSlidei(currentSlidei + dir),
       setSlidei: (newSlidei: number) => {
         const isRtL = currentSlidei > newSlidei;
@@ -118,10 +116,14 @@ export const CmBroadcastSlidesContext = ({
           isRtL ? HorizontalDirection.RightToLeft : HorizontalDirection.LeftToRight,
         );
 
-        cmBroadcastCurrentSlideiAtom.set({ slidei: newSlidei, slideId: slides.at(newSlidei)?.id ?? slideId });
+        cmBroadcastCurrentSlideiAtom.set({
+          comw: com?.wid ?? null,
+          slidei: newSlidei,
+          slideId: slides.at(newSlidei)?.id ?? currentSlideId,
+        });
       },
     }),
-    [currentSlidei, isHiddenChordsMode, nextSlidei, slideId, slides],
+    [com?.wid, currentSlidei, currentSlideId, isHiddenChordsMode, nextSlidei, slides],
   );
 
   return (

@@ -3,14 +3,14 @@ import { BroadcastGridNumberNetPack } from '#widgets/broadcast/model/TabConfig';
 import { BibleBroadcastKeyListenScope, BibleBroadcastTabId } from '$bible/shared/model/broadcast';
 import { atom } from 'atomaric';
 
-const electronTabIdSet = new Set<BibleBroadcastTabId>([BibleBroadcastTabId.WorkDir]);
+const electronTabIdSet = new Set<BibleBroadcastTabId>([BibleBroadcastTabId.WorkDir, BibleBroadcastTabId.RemoteControl]);
 
 export const bibleBroadcastGridTabsAtom = makeBroadcastGridNetElectronTabIdFreeAtom(
   electronTabIdSet,
   [
     [BibleBroadcastTabId.Preview, BibleBroadcastTabId.Slide],
     [BibleBroadcastTabId.List],
-    [BibleBroadcastTabId.Control, BibleBroadcastTabId.Alert],
+    [BibleBroadcastTabId.Control, BibleBroadcastTabId.Alert, BibleBroadcastTabId.RemoteControl],
     //
     [BibleBroadcastTabId.Configs, BibleBroadcastTabId.WorkDir],
     [BibleBroadcastTabId.Search],

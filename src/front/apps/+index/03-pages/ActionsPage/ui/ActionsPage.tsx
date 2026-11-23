@@ -1,6 +1,7 @@
 import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { translateBase, translateEditorBase } from '#basis/locale';
 import { useAppNameContext } from '#basis/state/contexts';
+import { parseScannedRemoteControlScreen } from '#features/broadcast/remote/control-link';
 import { LinkAppActionFabric } from '#shared/lib/link-app-actions';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import IconConfigurator from '#shared/ui/configurators/Icon';
@@ -8,7 +9,7 @@ import { makeToastOKMoodConfig } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { QrReader } from '#shared/ui/qr-code/QrReader';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { Link } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { Atom, atom } from 'atomaric';
 import { hostConfig } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
@@ -22,6 +23,7 @@ export function IndexActionsPage() {
   isOpenAtom ??= atom(false);
 
   const onHrefData = LinkAppActionFabric.useOnHrefData();
+  const navigate = useNavigate();
   const appName = useAppNameContext();
   const checkAccess = useCheckUserAccessRightsInScope();
 
@@ -85,7 +87,6 @@ export function IndexActionsPage() {
             </Link>
           )}
 
-          {/* Раздел «Пользователи»: управление правами пользователей, доступен только при полном доступе general.ALL. */}
           {!checkAccess('general', 'ALL') || (
             <Link
               to="/!other/$appName/actions/users"
@@ -134,6 +135,20 @@ export function IndexActionsPage() {
           <QrReader
             openAtom={isOpenAtom}
             onReadData={value => {
+              const scanned = parseScannedRemoteControlScreen(value);
+
+              if (scanned != null) {
+                isOpenAtom.set(false);
+
+                if (new URL(scanned.screenUrl).origin !== location.origin) {
+                  location.assign(scanned.screenUrl);
+                  return;
+                }
+
+                navigate({ to: '/remote/cm' });
+                return;
+              }
+
               if (checkIsStartsWith(value, hostConfig.url)) {
                 onHrefData(value);
                 isOpenAtom.set(false);

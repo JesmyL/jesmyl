@@ -21,6 +21,10 @@ import { localeEditorEn } from './editor/en';
 import { localeEditorKz } from './editor/kz';
 import { localeEditorRu } from './editor/ru';
 import { localeEditorUa } from './editor/ua';
+import { localeRemoteEn } from './remote/en';
+import { localeRemoteKz } from './remote/kz';
+import { localeRemoteRu } from './remote/ru';
+import { localeRemoteUa } from './remote/ua';
 
 /** Логирует смену набора переводов для указанного языка. */
 const log = (scope: string, langi: SKey<Langi>) =>
@@ -68,6 +72,28 @@ export const langLocaleBaseFileStoragesLazy = lazyInit(() => {
 
     if (!checkIsEq(fileStorage.getValue(), config)) {
       log('базовых', langi);
+      fileStorage.setValue(config);
+    }
+  });
+
+  return dict;
+});
+
+export const langLocaleRemoteFileStoragesLazy = lazyInit(() => {
+  const dict = {} as { [L in Langi]: FileStore<Record<number, string>> };
+
+  const langLocaleRemoteDict: { [L in Langi]: Record<number, string> } = {
+    [Langi.Ru]: localeRemoteRu,
+    [Langi.Ua]: localeRemoteUa,
+    [Langi.Kz]: localeRemoteKz,
+    [Langi.En]: localeRemoteEn,
+  };
+
+  forEachObjectEntries(langLocaleRemoteDict, (langi, config) => {
+    const fileStorage = (dict[langi] ??= new FileStore(`/locales/remote/${langi}.json`, {}));
+
+    if (!checkIsEq(fileStorage.getValue(), config)) {
+      log('удалённых', langi);
       fileStorage.setValue(config);
     }
   });

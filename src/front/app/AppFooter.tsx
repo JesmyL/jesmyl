@@ -20,7 +20,16 @@ import { currentAppPhaseAtom } from './store/atoms';
 
 const AppFooterSwipeable = React.lazy(() => import('#features/app-footer-swipeable'));
 
-export function AppFooter({ children }: { children: () => React.ReactNode[]; appName: AppName }) {
+export function AppFooter({
+  children,
+  onItemNavigate,
+  isOtherHidden = false,
+}: {
+  children: () => React.ReactNode[];
+  appName: AppName | 'remote';
+  onItemNavigate?: (to: string) => void;
+  isOtherHidden?: boolean;
+}) {
   const loc = useLocation();
   const currentAppPhase = useAtomValue(currentAppPhaseAtom);
   const otherFooterIcon = useAtomValue(otherFooterIconAtom);
@@ -57,6 +66,7 @@ export function AppFooter({ children }: { children: () => React.ReactNode[]; app
 
       const nav = () => {
         currentAppPhaseAtom.set('');
+        onItemNavigate?.(to);
         navigate({ to });
       };
 
@@ -67,7 +77,7 @@ export function AppFooter({ children }: { children: () => React.ReactNode[]; app
     return hookEffectPipe()
       .pipe(addEventListenerPipe(footerRef.current, isTouchDevice ? 'touchstart' : 'mousedown', onAction))
       .effect();
-  }, [navigate]);
+  }, [navigate, onItemNavigate]);
 
   return (
     <CurrentAppFooterItemPlaceContext value={`/${appName}/${place}/`}>
@@ -75,6 +85,7 @@ export function AppFooter({ children }: { children: () => React.ReactNode[]; app
         ref={footerRef}
         className="footer-menu grid absolute bottom-(--footer-bottom) pt-[10px] opacity-(--footer-opacity) transition-(--fullscreen-transition) w-[100vw] h-(--footer-height) gap-[2vw] px-[2vw]"
         $childsCount={childList.length}
+        $isOtherHidden={isOtherHidden}
       >
         <AppFooterSwipeable
           Div={FooterTrack}
@@ -86,15 +97,17 @@ export function AppFooter({ children }: { children: () => React.ReactNode[]; app
           />
         </AppFooterSwipeable>
 
-        <FooterTrack className="other-track min-w-20">
-          <AppFooterItem
-            icon={(otherFooterIcon as never) ?? 'CircleArrowRight02'}
-            fallbackIcon="CircleArrowRight02"
-            title={translateBase(BaseLocaleKey.Inoe)}
-            to={`/!other/${(appName === '!other' ? place : appName) as never}`}
-            idPostfix="other"
-          />
-        </FooterTrack>
+        {isOtherHidden || (
+          <FooterTrack className="other-track min-w-20">
+            <AppFooterItem
+              icon={(otherFooterIcon as never) ?? 'CircleArrowRight02'}
+              fallbackIcon="CircleArrowRight02"
+              title={translateBase(BaseLocaleKey.Inoe)}
+              to={`/!other/${(appName === '!other' ? place : appName) as never}`}
+              idPostfix="other"
+            />
+          </FooterTrack>
+        )}
       </StyledFooter>
     </CurrentAppFooterItemPlaceContext>
   );
@@ -126,7 +139,10 @@ const StyledActiveBackground = styled.div`
   }
 `;
 
-const StyledFooter = styled('div', { shouldForwardProp: prop => !prop.startsWith('$') })<{ $childsCount: number }>`
+const StyledFooter = styled('div', { shouldForwardProp: prop => !prop.startsWith('$') })<{
+  $childsCount: number;
+  $isOtherHidden: boolean;
+}>`
   --py: calc(var(--spacing) * 1);
   --track-h: calc(var(--spacing) * 14 + var(--py));
   --item-s: calc(var(--track-h) - var(--py) * 2);
@@ -134,7 +150,7 @@ const StyledFooter = styled('div', { shouldForwardProp: prop => !prop.startsWith
 
   ${props => css`
     --childs-count: ${props.$childsCount};
-    grid-template-columns: 1fr 80px;
+    grid-template-columns: ${props.$isOtherHidden ? '1fr' : '1fr 80px'};
   `}
 
   ${[1, 2, 3, 4].map(

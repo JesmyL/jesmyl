@@ -1,4 +1,5 @@
 import { translateBase } from '#basis/locale';
+import { RemoteBroadcastTabTitle } from '#features/broadcast/remote/ui/RemoteBroadcastTabTitle';
 import { BroadcastGridTabDict } from '#widgets/broadcast/model/TabConfig';
 import { BibleBroadcastTabId } from '$bible/shared/model/broadcast';
 import React from 'react';
@@ -69,5 +70,10 @@ export const bibleBroadcastTabConfigDict: BroadcastGridTabDict<BibleBroadcastTab
   [BibleBroadcastTabId.WorkDir]: {
     title: () => translateBase(BaseLocaleKey.Folder),
     Comp: React.lazy(() => import('$bible/widgets/BroadcastWorkDir').then(m => ({ default: m.BibleBroadcastWorkDir }))),
+  },
+
+  [BibleBroadcastTabId.RemoteControl]: {
+    title: () => React.createElement(RemoteBroadcastTabTitle),
+    Comp: React.lazy(() => import('#features/broadcast/controls/QrControl').then(m => ({ default: m.QrControl }))),
   },
 };

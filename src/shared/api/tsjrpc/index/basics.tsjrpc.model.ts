@@ -9,6 +9,7 @@ import {
 } from 'shared/api/complect/soki.model';
 import { Bool } from 'shared/enums';
 import { ConstantsConfig } from 'shared/model/constantsConfig';
+import { LocaleBase } from 'shared/model/+locale/base';
 import { IndexAppAccessRightTitles, UserAccessRole, UserAccessRoleInfo } from 'shared/model/index/access-rights';
 import { IndexValues } from 'shared/model/index/other';
 import { CRUDOperation } from 'shared/utils/index/utils';
@@ -48,9 +49,8 @@ export type IndexTsjrpcModel = {
   authByEmailOTP: (args: { otp: number }) => { token: string; auth: LocalSokiAuth };
   bindEmailByOTP: (args: { otp: number }) => { fioOrNick: string };
 
-  getFreshAppVersion: () => { num: number; text: string };
-  /** @deprecated Используй getFreshAppVersion */
-  getFreshAppVersion_1: () => number;
+  getFreshAppVersion: () => number;
+  getFreshAppVersion_1: () => { num: number; text: string };
   getIndexValues: () => IndexValues;
 
   getOtherFooterIcons: () => { iconNames: StameskaIconName[] };
@@ -107,4 +107,12 @@ export type IndexTsjrpcModel = {
   reqLocaleDynConfig: (args: { langi: Langi }) => void;
 
   requestFreshLocales: (args: { lastModifiedAt: number }) => void;
+  requestFreshRemoteLocales: (args: { langi?: Langi; mod: number }) => {
+    texts: Record<number, string>;
+    mod: number;
+  } | null;
+  requestFreshBaseLocalesFor: (args: { langi: Langi; lastModifiedAt: number }) => {
+    base: LocaleBase<Langi>;
+    mod: number;
+  } | null;
 };

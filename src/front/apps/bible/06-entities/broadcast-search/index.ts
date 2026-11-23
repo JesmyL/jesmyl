@@ -1,5 +1,7 @@
 export * from './lib/results';
+export * from './lib/search';
 export * from './state/atoms';
+export * from './ui/model';
 export * from './sub-ui/AddressInput';
 export * from './sub-ui/Input';
 export * from './sub-ui/InputPanel';

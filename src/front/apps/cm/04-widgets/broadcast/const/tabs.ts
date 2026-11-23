@@ -1,4 +1,5 @@
 import { translateBase } from '#basis/locale';
+import { RemoteBroadcastTabTitle } from '#features/broadcast/remote/ui/RemoteBroadcastTabTitle';
 import { BroadcastGridTabDict } from '#widgets/broadcast/model/TabConfig';
 import { CmBroadcastTabId } from '$cm/shared/model/broadcast';
 import React from 'react';
@@ -42,5 +43,9 @@ export const cmBroadcastTabConfigDict: BroadcastGridTabDict<CmBroadcastTabId> = 
   [CmBroadcastTabId.WorkDir]: {
     title: () => translateBase(BaseLocaleKey.Folder),
     Comp: React.lazy(() => import('$cm/widgets/BroadcastWorkDir').then(m => ({ default: m.CmBroadcastWorkDir }))),
+  },
+  [CmBroadcastTabId.RemoteControl]: {
+    title: () => React.createElement(RemoteBroadcastTabTitle),
+    Comp: React.lazy(() => import('#features/broadcast/controls/QrControl').then(m => ({ default: m.QrControl }))),
   },
 };

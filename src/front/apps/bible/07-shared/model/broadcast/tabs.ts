@@ -9,4 +9,5 @@ export const enum BibleBroadcastTabId {
   Control = 68,
   Alert = 61,
   WorkDir = 83,
+  RemoteControl = 52,
 }

@@ -28,11 +28,6 @@ const maxNotificationActionsCount = 2;
 const cmEditorAssetUrlMarker = 'assets/cm-edit-';
 const precacheManifest = self.__WB_MANIFEST;
 
-/**
- * `cm-edit-` чанки собираются только из редакторского слайса (см. chunkFileNames в vite.config.ts),
- * поэтому на установке их не precache-им: они кэшируются отдельно и только по запросу редактора,
- * чтобы пользователи без права `cm/EDIT` их вообще не скачивали.
- */
 const cmEditorPrecacheUrls = precacheManifest.flatMap(entry =>
   typeof entry !== 'string' && entry.url.includes(cmEditorAssetUrlMarker) ? [entry.url] : [],
 );
@@ -43,7 +38,7 @@ precacheAndRoute(
 cleanupOutdatedCaches();
 clientsClaim();
 
-registerRoute(new NavigationRoute(createHandlerBoundToURL('/index.html')));
+registerRoute(new NavigationRoute(createHandlerBoundToURL('/index.html'), { denylist: [/^\/remote(?:\/|\?|$)/] }));
 
 registerRoute(
   props =>
@@ -74,21 +69,11 @@ registerRoute(
   }),
 );
 
-/**
- * Складывает все `cm-edit-` чанки из манифеста в кэш `cm-editor-cache` — тот же,
- * из которого их отдаёт CacheFirst-маршрут выше. Кэшируем чистый URL без revision-параметра
- * Workbox, иначе страница не нашла бы их в кэше офлайн. После этого убираем из кэша чанки
- * прошлых деплоев, которых нет в текущем манифесте, — иначе хэшированные имена копятся вечно.
- * Ошибки логируем, а не глотаем.
- */
 const cacheCmEditorChunks = async () => {
-  // Пустой манифест — нечего кэшировать; одновременно это защищает кэш от полной зачистки.
   if (!cmEditorPrecacheUrls.length) return;
 
   const cache = await caches.open(cmEditorCacheName);
   const editorUrls = cmEditorPrecacheUrls.map(url => new URL(url, self.registration.scope).href);
-  // Уже закэшированные чанки не перекачиваем: повторный старт приложения не должен
-  // снова тянуть весь редакторский слайс.
   const uncachedUrls = (
     await Promise.all(editorUrls.map(async url => ((await cache.match(url)) ? null : url)))
   ).filter(checkIsNotNil);
@@ -99,8 +84,6 @@ const cacheCmEditorChunks = async () => {
       console.error(`Failed to cache cm-editor chunk: ${uncachedUrls[index]}`, result.reason);
   });
 
-  // Новый деплой меняет хэши в именах чанков, поэтому удаляем каждый ключ, которого нет
-  // в текущем манифесте: сравниваем абсолютные URL так же, как выше в `cache.match`.
   const editorUrlSet = new Set(editorUrls);
   const staleRequests = (await cache.keys()).filter(({ url }) => !editorUrlSet.has(url));
 
@@ -192,7 +175,5 @@ self.addEventListener('message', messageEvent => {
 
   if (type === 'SKIP_WAITING') return self.skipWaiting();
 
-  // Редактор просит заранее положить закрытые правами чанки в кэш: после этого
-  // страница песен открывается офлайн даже при первом заходе в редактор.
   if (type === cmEditorCacheMessageType) messageEvent.waitUntil(cacheCmEditorChunks());
 });

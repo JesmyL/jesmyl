@@ -3,6 +3,7 @@ import { useWatchScreenBroadcast } from '#features/broadcast/hooks/watch-broadca
 import { useScreenBroadcastWindows } from '#features/broadcast/hooks/windows';
 import { useUpdateScreenBroadcastConfig } from '#features/broadcast/hooks/with-config';
 import { isShowBroadcastInitialSlideAtom, isShowBroadcastTextAtom } from '#features/broadcast/initial-slide-context';
+import { isEditableEventTarget } from '#shared/lib/event-funcs';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { useEffect } from 'react';
@@ -27,6 +28,8 @@ export const useBroadcastListeners = (win: Window, configi: number, isCanBlurBro
           timeout = setTimeout(resize);
         }),
         addEventListenerPipe(win, 'keydown', async event => {
+          if (isEditableEventTarget(event)) return;
+
           switch (event.code) {
             case 'F5':
             case 'Enter':

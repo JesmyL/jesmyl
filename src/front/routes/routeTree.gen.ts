@@ -14,13 +14,18 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './tree/__root'
 import { Route as TunerRouteImport } from './tree/tuner/route'
+import { Route as RemoteRouteImport } from './tree/remote/route'
 import { Route as CmRouteImport } from './tree/cm/route'
 import { Route as BibleRouteImport } from './tree/bible/route'
 import { Route as IndexImport } from './tree/index'
 import { Route as TunerIndexImport } from './tree/tuner/index'
+import { Route as RemoteIndexImport } from './tree/remote/index'
 import { Route as CmIndexImport } from './tree/cm/index'
 import { Route as BibleIndexImport } from './tree/bible/index'
 import { Route as TunerIImport } from './tree/tuner/i'
+import { Route as RemoteIImport } from './tree/remote/i'
+import { Route as RemoteCmImport } from './tree/remote/cm'
+import { Route as RemoteBibleImport } from './tree/remote/bible'
 import { Route as QIImport } from './tree/q/i'
 import { Route as BibleTranImport } from './tree/bible/tran'
 import { Route as BibleSearchImport } from './tree/bible/search'
@@ -134,6 +139,12 @@ const TunerRouteRoute = TunerRouteImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const RemoteRouteRoute = RemoteRouteImport.update({
+  id: '/remote',
+  path: '/remote',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const CmRouteRoute = CmRouteImport.update({
   id: '/cm',
   path: '/cm',
@@ -180,6 +191,12 @@ const TunerIndexRoute = TunerIndexImport.update({
   getParentRoute: () => TunerRouteRoute,
 } as any)
 
+const RemoteIndexRoute = RemoteIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => RemoteRouteRoute,
+} as any)
+
 const CmIndexRoute = CmIndexImport.update({
   id: '/',
   path: '/',
@@ -202,6 +219,24 @@ const TunerIRoute = TunerIImport.update({
   id: '/i',
   path: '/i',
   getParentRoute: () => TunerRouteRoute,
+} as any)
+
+const RemoteIRoute = RemoteIImport.update({
+  id: '/i',
+  path: '/i',
+  getParentRoute: () => RemoteRouteRoute,
+} as any)
+
+const RemoteCmRoute = RemoteCmImport.update({
+  id: '/cm',
+  path: '/cm',
+  getParentRoute: () => RemoteRouteRoute,
+} as any)
+
+const RemoteBibleRoute = RemoteBibleImport.update({
+  id: '/bible',
+  path: '/bible',
+  getParentRoute: () => RemoteRouteRoute,
 } as any)
 
 const QIRoute = QIImport.update({
@@ -592,6 +627,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CmRouteImport
       parentRoute: typeof rootRoute
     }
+    '/remote': {
+      id: '/remote'
+      path: '/remote'
+      fullPath: '/remote'
+      preLoaderRoute: typeof RemoteRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/tuner': {
       id: '/tuner'
       path: '/tuner'
@@ -662,6 +704,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QIImport
       parentRoute: typeof QRouteLazyImport
     }
+    '/remote/bible': {
+      id: '/remote/bible'
+      path: '/bible'
+      fullPath: '/remote/bible'
+      preLoaderRoute: typeof RemoteBibleImport
+      parentRoute: typeof RemoteRouteImport
+    }
+    '/remote/cm': {
+      id: '/remote/cm'
+      path: '/cm'
+      fullPath: '/remote/cm'
+      preLoaderRoute: typeof RemoteCmImport
+      parentRoute: typeof RemoteRouteImport
+    }
+    '/remote/i': {
+      id: '/remote/i'
+      path: '/i'
+      fullPath: '/remote/i'
+      preLoaderRoute: typeof RemoteIImport
+      parentRoute: typeof RemoteRouteImport
+    }
     '/tuner/i': {
       id: '/tuner/i'
       path: '/i'
@@ -689,6 +752,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/cm/'
       preLoaderRoute: typeof CmIndexImport
       parentRoute: typeof CmRouteImport
+    }
+    '/remote/': {
+      id: '/remote/'
+      path: '/'
+      fullPath: '/remote/'
+      preLoaderRoute: typeof RemoteIndexImport
+      parentRoute: typeof RemoteRouteImport
     }
     '/tuner/': {
       id: '/tuner/'
@@ -1118,6 +1188,24 @@ const CmRouteRouteChildren: CmRouteRouteChildren = {
 const CmRouteRouteWithChildren =
   CmRouteRoute._addFileChildren(CmRouteRouteChildren)
 
+interface RemoteRouteRouteChildren {
+  RemoteBibleRoute: typeof RemoteBibleRoute
+  RemoteCmRoute: typeof RemoteCmRoute
+  RemoteIRoute: typeof RemoteIRoute
+  RemoteIndexRoute: typeof RemoteIndexRoute
+}
+
+const RemoteRouteRouteChildren: RemoteRouteRouteChildren = {
+  RemoteBibleRoute: RemoteBibleRoute,
+  RemoteCmRoute: RemoteCmRoute,
+  RemoteIRoute: RemoteIRoute,
+  RemoteIndexRoute: RemoteIndexRoute,
+}
+
+const RemoteRouteRouteWithChildren = RemoteRouteRoute._addFileChildren(
+  RemoteRouteRouteChildren,
+)
+
 interface TunerRouteRouteChildren {
   TunerIRoute: typeof TunerIRoute
   TunerIndexRoute: typeof TunerIndexRoute
@@ -1264,6 +1352,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bible': typeof BibleRouteRouteWithChildren
   '/cm': typeof CmRouteRouteWithChildren
+  '/remote': typeof RemoteRouteRouteWithChildren
   '/tuner': typeof TunerRouteRouteWithChildren
   '/gamer': typeof GamerRouteLazyRouteWithChildren
   '/presentations': typeof PresentationsRouteLazyRouteWithChildren
@@ -1274,10 +1363,14 @@ export interface FileRoutesByFullPath {
   '/bible/search': typeof BibleSearchRoute
   '/bible/tran': typeof BibleTranRoute
   '/q/i': typeof QIRoute
+  '/remote/bible': typeof RemoteBibleRoute
+  '/remote/cm': typeof RemoteCmRoute
+  '/remote/i': typeof RemoteIRoute
   '/tuner/i': typeof TunerIRoute
   '/cm/edit': typeof CmEditRouteLazyRouteWithChildren
   '/bible/': typeof BibleIndexRoute
   '/cm/': typeof CmIndexRoute
+  '/remote/': typeof RemoteIndexRoute
   '/tuner/': typeof TunerIndexRoute
   '/gamer/': typeof GamerIndexLazyRoute
   '/presentation': typeof PresentationIndexLazyRoute
@@ -1338,9 +1431,13 @@ export interface FileRoutesByTo {
   '/bible/search': typeof BibleSearchRoute
   '/bible/tran': typeof BibleTranRoute
   '/q/i': typeof QIRoute
+  '/remote/bible': typeof RemoteBibleRoute
+  '/remote/cm': typeof RemoteCmRoute
+  '/remote/i': typeof RemoteIRoute
   '/tuner/i': typeof TunerIRoute
   '/bible': typeof BibleIndexRoute
   '/cm': typeof CmIndexRoute
+  '/remote': typeof RemoteIndexRoute
   '/tuner': typeof TunerIndexRoute
   '/gamer': typeof GamerIndexLazyRoute
   '/presentation': typeof PresentationIndexLazyRoute
@@ -1397,6 +1494,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/bible': typeof BibleRouteRouteWithChildren
   '/cm': typeof CmRouteRouteWithChildren
+  '/remote': typeof RemoteRouteRouteWithChildren
   '/tuner': typeof TunerRouteRouteWithChildren
   '/gamer': typeof GamerRouteLazyRouteWithChildren
   '/presentations': typeof PresentationsRouteLazyRouteWithChildren
@@ -1407,10 +1505,14 @@ export interface FileRoutesById {
   '/bible/search': typeof BibleSearchRoute
   '/bible/tran': typeof BibleTranRoute
   '/q/i': typeof QIRoute
+  '/remote/bible': typeof RemoteBibleRoute
+  '/remote/cm': typeof RemoteCmRoute
+  '/remote/i': typeof RemoteIRoute
   '/tuner/i': typeof TunerIRoute
   '/cm/edit': typeof CmEditRouteLazyRouteWithChildren
   '/bible/': typeof BibleIndexRoute
   '/cm/': typeof CmIndexRoute
+  '/remote/': typeof RemoteIndexRoute
   '/tuner/': typeof TunerIndexRoute
   '/gamer/': typeof GamerIndexLazyRoute
   '/presentation/': typeof PresentationIndexLazyRoute
@@ -1469,6 +1571,7 @@ export interface FileRouteTypes {
     | '/'
     | '/bible'
     | '/cm'
+    | '/remote'
     | '/tuner'
     | '/gamer'
     | '/presentations'
@@ -1479,10 +1582,14 @@ export interface FileRouteTypes {
     | '/bible/search'
     | '/bible/tran'
     | '/q/i'
+    | '/remote/bible'
+    | '/remote/cm'
+    | '/remote/i'
     | '/tuner/i'
     | '/cm/edit'
     | '/bible/'
     | '/cm/'
+    | '/remote/'
     | '/tuner/'
     | '/gamer/'
     | '/presentation'
@@ -1542,9 +1649,13 @@ export interface FileRouteTypes {
     | '/bible/search'
     | '/bible/tran'
     | '/q/i'
+    | '/remote/bible'
+    | '/remote/cm'
+    | '/remote/i'
     | '/tuner/i'
     | '/bible'
     | '/cm'
+    | '/remote'
     | '/tuner'
     | '/gamer'
     | '/presentation'
@@ -1599,6 +1710,7 @@ export interface FileRouteTypes {
     | '/'
     | '/bible'
     | '/cm'
+    | '/remote'
     | '/tuner'
     | '/gamer'
     | '/presentations'
@@ -1609,10 +1721,14 @@ export interface FileRouteTypes {
     | '/bible/search'
     | '/bible/tran'
     | '/q/i'
+    | '/remote/bible'
+    | '/remote/cm'
+    | '/remote/i'
     | '/tuner/i'
     | '/cm/edit'
     | '/bible/'
     | '/cm/'
+    | '/remote/'
     | '/tuner/'
     | '/gamer/'
     | '/presentation/'
@@ -1670,6 +1786,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BibleRouteRoute: typeof BibleRouteRouteWithChildren
   CmRouteRoute: typeof CmRouteRouteWithChildren
+  RemoteRouteRoute: typeof RemoteRouteRouteWithChildren
   TunerRouteRoute: typeof TunerRouteRouteWithChildren
   GamerRouteLazyRoute: typeof GamerRouteLazyRouteWithChildren
   PresentationsRouteLazyRoute: typeof PresentationsRouteLazyRouteWithChildren
@@ -1683,6 +1800,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BibleRouteRoute: BibleRouteRouteWithChildren,
   CmRouteRoute: CmRouteRouteWithChildren,
+  RemoteRouteRoute: RemoteRouteRouteWithChildren,
   TunerRouteRoute: TunerRouteRouteWithChildren,
   GamerRouteLazyRoute: GamerRouteLazyRouteWithChildren,
   PresentationsRouteLazyRoute: PresentationsRouteLazyRouteWithChildren,
@@ -1705,6 +1823,7 @@ export const routeTree = rootRoute
         "/",
         "/bible",
         "/cm",
+        "/remote",
         "/tuner",
         "/gamer",
         "/presentations",
@@ -1738,6 +1857,15 @@ export const routeTree = rootRoute
         "/cm/li/",
         "/cm/player/",
         "/cm/li/cat/$catw"
+      ]
+    },
+    "/remote": {
+      "filePath": "remote/route.tsx",
+      "children": [
+        "/remote/bible",
+        "/remote/cm",
+        "/remote/i",
+        "/remote/"
       ]
     },
     "/tuner": {
@@ -1816,6 +1944,18 @@ export const routeTree = rootRoute
       "filePath": "q/i.tsx",
       "parent": "/q"
     },
+    "/remote/bible": {
+      "filePath": "remote/bible.tsx",
+      "parent": "/remote"
+    },
+    "/remote/cm": {
+      "filePath": "remote/cm.tsx",
+      "parent": "/remote"
+    },
+    "/remote/i": {
+      "filePath": "remote/i.tsx",
+      "parent": "/remote"
+    },
     "/tuner/i": {
       "filePath": "tuner/i.tsx",
       "parent": "/tuner"
@@ -1842,6 +1982,10 @@ export const routeTree = rootRoute
     "/cm/": {
       "filePath": "cm/index.tsx",
       "parent": "/cm"
+    },
+    "/remote/": {
+      "filePath": "remote/index.tsx",
+      "parent": "/remote"
     },
     "/tuner/": {
       "filePath": "tuner/index.tsx",

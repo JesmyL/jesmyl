@@ -37,7 +37,13 @@ export const IndexOtherPage = () => {
   const appList = favouriteApps
     .concat(appNames.filter(appName => !favouriteApps.includes(appName)))
     .map(appName => {
-      if (appName === 'index' || routingApps[appName] == null || auth == null || (!isElectronApp && appName === 'presentations')) return null;
+      if (
+        appName === 'index' ||
+        routingApps[appName] == null ||
+        auth == null ||
+        (!isElectronApp && appName === 'presentations')
+      )
+        return null;
 
       return (
         <React.Fragment key={appName}>

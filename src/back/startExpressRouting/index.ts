@@ -1,4 +1,7 @@
 import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
+import { checkIsScheduleUserAllowed } from 'back/apps/index/schedules/schedule-modificators';
+import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
+import { tokenSecretFileStore } from 'back/complect/soki/file-stores';
 import { translateBackTexts } from 'back/locales/back';
 import { makeCertBotFilePath } from 'back/utils';
 import express, { Request, Response } from 'express';
@@ -6,12 +9,22 @@ import { eq } from 'drizzle-orm';
 import fs from 'fs';
 import http from 'http';
 import https from 'https';
+import jwt from 'jsonwebtoken';
 import md5 from 'md5';
 import net from 'net';
 import path from 'path';
 import { type Duplex, Readable, pipeline } from 'node:stream';
 import { makeRegExp } from 'regexpert';
-import { CmComWid, HttpLink, HttpNumLeadLink, Langi, ScheduleWidgetWid, hostConfig } from 'shared/api';
+import {
+  CmComWid,
+  HttpLink,
+  HttpNumLeadLink,
+  Langi,
+  ScheduleWidgetWid,
+  UserAuth,
+  hostConfig,
+  remoteAuthCheckRoutePath,
+} from 'shared/api';
 import { pullCmAudiosExpressRoutePath, pullFilesExpressSecretQueryName } from 'shared/api/pullFiles.utils';
 import { Bool } from 'shared/enums';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
@@ -49,7 +62,6 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
   app.use('/assets', express.static(`${hostRootDir}/assets`));
   app.use('/sounds', express.static(`${hostRootDir}/sounds`));
   app.use('/resource', express.static(`${hostRootDir}/resource`));
-  // Отсутствующий ресурс не должен проваливаться в SPA-fallback: SW закеширует ответ 200 с index.html.
   app.use('/resource', (_req, res) => res.sendStatus(404));
 
   const makeDownRoute = <Route extends `/down${string}`>(route: Route) => {
@@ -118,6 +130,64 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
   pullFilesExpressRoute(app);
   pushFilesExpressRoute(app);
 
+  app.options(remoteAuthCheckRoutePath, (_req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Cache-Control', 'no-store');
+    res.sendStatus(204);
+  });
+
+  app.post(remoteAuthCheckRoutePath, async (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Cache-Control', 'no-store');
+
+    const body = req.body as { token?: unknown; schw?: unknown } | nil;
+    const token = body?.token;
+    if (!checkIsString(token)) {
+      res.json({ ok: false });
+      return;
+    }
+
+    const schwScalar = body?.schw;
+    const schw =
+      typeof schwScalar === 'number' && Number.isInteger(schwScalar) && schwScalar > 0
+        ? (schwScalar as ScheduleWidgetWid)
+        : null;
+
+    try {
+      jwt.verify(token, tokenSecretFileStore.getValue().token, { algorithms: ['HS256'] });
+
+      const auth = jwt.decode(token) as UserAuth | nil;
+      if (!auth?.login) {
+        res.json({ ok: false });
+        return;
+      }
+
+      const user = await takeUserTiny({ l: auth.login });
+      if (!user) {
+        res.json({ ok: false });
+        return;
+      }
+
+      const sch = schw == null ? null : await takeScheduleWidgetTiny({ w: schw }, false);
+      const isScheduleAllowed = sch != null && (await checkIsScheduleUserAllowed(sch, auth));
+
+      res.json({
+        ok: true,
+        user: {
+          login: user.l,
+          fio: user.uauth?.fio,
+          nick: user.uauth?.nick,
+          email: user.uauth?.email,
+        },
+        isScheduleAllowed,
+      });
+    } catch {
+      res.json({ ok: false });
+    }
+  });
+
   app.get(pullCmAudiosExpressRoutePath, async (req, res) => {
     if (
       !checkIsString(req.query[pullFilesExpressSecretQueryName]) ||
@@ -133,7 +203,6 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
 
       for (const { al, n } of coms) {
         for (const audioValue of al ?? []) {
-          // `com.al` хранит хвосты md5; исходная ссылка берётся из таблицы аудио-ссылок.
           const link = await takeAudioLinkByTail(audioValue);
 
           if (!link) {
@@ -231,7 +300,6 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
     const langi = takeRequestLangi(req);
     const requestedValue = takeAudioTailFromRequestPath(req.url.slice(trackPathPrefix.length));
 
-    // Проксируется трек из таблицы аудио-ссылок либо сырая http(s)-ссылка; прочие протоколы отсекаются.
     const upstreamUrl = await takeAudioHttpLink(requestedValue);
     if (!upstreamUrl) {
       res.sendStatus(404);
@@ -423,7 +491,6 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
   const port = +(process.env.PORT || 4446);
   const httpsPort = backConfig.isTest ? port : 443;
 
-  /** Локальный самоподписанный серт (localhost + LAN-IP): `openssl req -x509 -nodes -newkey rsa:2048 -days 3650 -keyout privkey.pem -out fullchain.pem -subj /CN=localhost -addext subjectAltName=DNS:localhost,IP:192.168.1.59` */
   const devCertDir = `${hostRootDir}/dev-certs`;
 
   const readCert = (fileName: string, host = hostConfig.host) => {
@@ -461,7 +528,6 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
     if (subHost && subKey && subCert)
       sniContexts.set(subHost.toLowerCase(), createSecureContext({ key: subKey, cert: subCert }));
 
-    // В продакшене поднимаем отдельный HTTP-сервер, который только перенаправляет все запросы на HTTPS.
     if (!backConfig.isTest)
       http
         .createServer((req, res) => {
@@ -483,21 +549,17 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
       )
       .on('upgrade', upgradeHandler);
 
-    // В продакшене HTTPS слушает собственный порт и сообщает о запуске в консоль.
     if (!backConfig.isTest)
       httpsServer.listen(httpsPort, '0.0.0.0', () => console.info(`HTTPS запущен на порту ${httpsPort}`));
     else {
-      // Тест: общий порт для http и https. Первый байт 0x16 — TLS ClientHello, иначе обычный HTTP.
       const httpServer = http.createServer(app).on('upgrade', upgradeHandler);
 
-      // Слушаем один порт и по первому байту решаем, отдать сокет HTTPS- или HTTP-серверу.
       net
         .createServer(socket => {
           socket.on('error', emptyFunc);
           socket.once('data', chunk => {
             const isTls = chunk[0] === 0x16;
 
-            // TLS-сокет приостанавливают, иначе возвращённый байт теряется до обёртки TLSSocket.
             if (isTls) socket.pause();
 
             socket.unshift(chunk);
@@ -507,20 +569,17 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
         .listen(port, '0.0.0.0', () => console.info(`HTTP+HTTPS запущен на порту ${port}`));
     }
   } else {
-    // Без сертификатов поднимаем обычный HTTP/WS-сервер на локальном порту.
     http
       .createServer(app)
       .on('upgrade', upgradeHandler)
       .listen(port, '0.0.0.0', () => console.info(`WS запущен локально`));
   }
 
-  // Непойманное исключение пишем в консоль: сначала краткая ошибка, затем сообщение, причина и стек.
   process.on('uncaughtException', err => {
     console.error('Критическая ошибка:', err);
     console.error([err?.message ?? err, err?.cause, err?.stack].filter(itIt).join('\n\n\n'));
   });
 
-  // Необработанный промис логируем и не роняем процесс.
   process.on('unhandledRejection', reason => {
     console.error('Необработанный промис:', reason);
     console.error(`${reason}`);

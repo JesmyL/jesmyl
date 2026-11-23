@@ -1,6 +1,5 @@
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import {
-  langLocaleBaseFileStoragesLazy,
   langLocaleDynamicFileStoragesLazy,
   langLocaleEditorFileStoragesLazy,
 } from 'back/locales/file-storages';
@@ -9,6 +8,7 @@ import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { checkIsNotNil } from 'shared/utils/checkIs';
 import { indexServerTsjrpcShareMethods } from '../../tsjrpc.methods';
 import { baseLocaleMinVersion, throwIfNoEditorLocaleAccess } from './requestFreshes';
+import { takeFreshBaseLocalePayload } from './takeFreshBaseLocalePayload';
 
 export const indexTSJRPCBaseRequestFreshLocales = {
   requestFreshLocales: async ({ lastModifiedAt }, { client, auth, visitInfo }) => {
@@ -16,15 +16,10 @@ export const indexTSJRPCBaseRequestFreshLocales = {
 
     const langi = visitInfo.langi ?? Langi.Ru;
     const langiChanged = checkIsNotNil(visitInfo.prevLangi) && visitInfo.prevLangi !== visitInfo.langi;
-    const baseFileStorage = langLocaleBaseFileStoragesLazy()[langi];
     const { items, maxMod } = (await langLocaleDynamicFileStoragesLazy()).getFreshItems(lastModifiedAt);
+    const basePayload = takeFreshBaseLocalePayload(langi, lastModifiedAt, langiChanged);
 
-    if (baseFileStorage.fileModifiedAt() > lastModifiedAt || langiChanged) {
-      indexServerTsjrpcShareMethods.baseLocConf(
-        { base: baseFileStorage.getValue(), mod: baseFileStorage.fileModifiedAt() },
-        client,
-      );
-    }
+    if (basePayload) indexServerTsjrpcShareMethods.baseLocConf(basePayload, client);
 
     if (items.length) indexServerTsjrpcShareMethods.dynLocConf({ dyns: items, mod: maxMod }, client);
 

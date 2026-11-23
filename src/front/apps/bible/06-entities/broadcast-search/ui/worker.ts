@@ -28,6 +28,7 @@ const takebibleChapters = async (tName: BibleTranslateName) => {
 
 self.onmessage = async (event: MessageEvent<IBibleBroadcastSearchRequest>) => {
   const {
+    token = 0,
     term: searchTerm,
     booki: currentBooki,
     chapteri: currentChapteri,
@@ -104,7 +105,7 @@ self.onmessage = async (event: MessageEvent<IBibleBroadcastSearchRequest>) => {
     .flat(2)
     .slice(0, maxItems + 1);
 
-  const postEvent: BibleBroadcastSearchResponse = { list, splitReg };
+  const postEvent: BibleBroadcastSearchResponse = { token, list, splitReg, term: searchTerm };
   self.postMessage(postEvent);
 };
 

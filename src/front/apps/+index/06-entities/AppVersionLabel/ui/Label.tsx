@@ -27,7 +27,7 @@ export const IndexAppVersionLabel = ({ className }: { className?: string }) => {
 
   const { data: appVersion, isLoading: isVersionLoading } = useQuery({
     queryKey: ['indexAppVersion'],
-    queryFn: () => indexTsjrpcClientMethods.getFreshAppVersion(),
+    queryFn: () => indexTsjrpcClientMethods.getFreshAppVersion_1(),
   });
 
   const connectionStateNode = useConnectionState();

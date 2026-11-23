@@ -1,5 +1,5 @@
 import { Atom } from 'atomaric';
-import { NamedExoticComponent } from 'react';
+import { NamedExoticComponent, ReactNode } from 'react';
 
 export type BroadcastGridTabConfig<TabId extends number> = {
   forceShownTabIdSet: Set<TabId>;
@@ -13,7 +13,7 @@ export type BroadcastGridTabDict<TabId extends number> = Record<
   TabId,
   {
     Comp: NamedExoticComponent<object>;
-    title: () => string;
+    title: () => ReactNode;
     htmlTitle?: () => string;
   }
 >;

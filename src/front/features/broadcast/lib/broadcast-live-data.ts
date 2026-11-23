@@ -12,6 +12,8 @@ export const sendBroadcastLiveData = (liveData: BroadcastLiveData) => {
 };
 
 export const switchBroadcastApp = (app: BroadcastViewApp) => {
+  if (broadcastCurrentTextAppAtom.get() === app) return;
+
   broadcastCurrentTextAppAtom.set(app);
 
   const live = broadcastNextLiveDataAtom.get();

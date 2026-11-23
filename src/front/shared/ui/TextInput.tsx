@@ -14,6 +14,7 @@ type Props = OmitOwn<
   multiline?: boolean;
   strongDefaultValue?: boolean;
   selectOnFocus?: boolean;
+  isStopPropagation?: boolean;
   type?: 'text' | 'tel' | 'email' | 'number';
   label?: React.ReactNode;
   inputRef?:
@@ -28,6 +29,7 @@ export const TextInput = ({
   label,
   strongDefaultValue,
   selectOnFocus,
+  isStopPropagation,
   inputRef,
   ...props
 }: Props) => {
@@ -41,13 +43,17 @@ export const TextInput = ({
   const attrs: AllHTMLAttributes<HTMLInputElement & HTMLTextAreaElement> = {
     ...props,
     onPaste,
-    onKeyDown: onChanged
+    onKeyDown: event => {
+      if (isStopPropagation) event.stopPropagation();
+      props.onKeyDown?.(event);
+      if (onChanged) propagationStopper(event);
+    },
+    onChange: onInput
       ? event => {
-          props.onKeyDown?.(event);
-          propagationStopper(event);
+          if (isStopPropagation) event.stopPropagation();
+          onInput(event.currentTarget.value);
         }
-      : props.onKeyDown,
-    onChange: onInput ? event => onInput(event.currentTarget.value) : undefined,
+      : undefined,
     onFocus: selectOnFocus
       ? event => {
           props.onFocus?.(event);

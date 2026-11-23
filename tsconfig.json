@@ -70,6 +70,8 @@
 
       "$tuner/*": ["./front/apps/tuner/*"],
 
+      "$remote/*": ["./front/apps/remote/*"],
+
       "$index/app/*": ["./front/apps/+index/01-app/*"],
       "$index/processes/*": ["./front/apps/+index/02-processes/*"],
       "$index/pages/*": ["./front/apps/+index/03-pages/*"],

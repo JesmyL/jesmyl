@@ -1,4 +1,5 @@
 import { useBroadcastListeners } from '#features/broadcast/complect/config-line/hooks/listeners';
+import { isEditableEventTarget } from '#shared/lib/event-funcs';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { useCmBroadcastScreenComNavigations, useCmBroadcastSlidesContext } from '$cm/features/broadcast';
@@ -14,6 +15,8 @@ export const useCmBroadcastScreenKeyDownListen = (win: Window, configi: number) 
     return hookEffectPipe()
       .pipe(
         addEventListenerPipe(win, 'keydown', async event => {
+          if (isEditableEventTarget(event)) return;
+
           switch (event.code) {
             case 'ArrowUp':
               if (!event.ctrlKey) return;

@@ -5,7 +5,7 @@ import { attrStylerVitePlugin } from 'attr-styler';
 import dns from 'dns';
 import { readFileSync } from 'fs';
 import { regExpertVitePlugin } from 'regexpert';
-import { defineConfig, loadEnv } from 'vite';
+import { createLogger, defineConfig, loadEnv, Plugin } from 'vite';
 import eslint from 'vite-plugin-eslint';
 import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
@@ -16,7 +16,37 @@ import { vitePWAOptions } from './vite-pwa.options';
 
 dns.setDefaultResultOrder('verbatim');
 
+const devLogger = createLogger();
+const logViteError = devLogger.error.bind(devLogger);
+
+devLogger.error = (message, options) => {
+  const error = options?.error;
+  const isDeadProxyError =
+    error != null &&
+    message.includes('proxy') &&
+    (error.message.includes('ECONNREFUSED') || error.message.includes('ECONNRESET'));
+
+  if (isDeadProxyError) return;
+
+  logViteError(message, options);
+};
+
 const tsConfig = { ...tsconf };
+
+const stripPwaFromPult = (): Plugin => ({
+  name: 'strip-pwa-from-pult',
+  enforce: 'post',
+  transformIndexHtml: {
+    order: 'post',
+    handler(html, ctx) {
+      if (!ctx.filename.endsWith('pult.html')) return html;
+
+      return html
+        .replace(/<link rel="manifest"[^>]*>/g, '')
+        .replace(/<script id="vite-plugin-pwa:[^"]*"[^>]*><\/script>/g, '');
+    },
+  },
+});
 
 const alias: Record<string, string> = {};
 
@@ -26,11 +56,12 @@ Object.entries(tsConfig.compilerOptions.paths).forEach(([aliasKey, [path]]) => {
   alias[isGlob ? aliasKey.slice(0, -2) : aliasKey] = isGlob ? `/src${path.slice(1, -2)}` : `/src${path.slice(1)}`;
 });
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const isHttps = env.VITE_IS_HTTPS === '1';
 
   return {
+    customLogger: devLogger,
     esbuild: {
       pure: ['console.log'],
       legalComments: 'none',
@@ -42,6 +73,10 @@ export default defineConfig(({ mode }) => {
       cssMinify: true,
       sourcemap: false,
       rollupOptions: {
+        input: {
+          main: 'index.html',
+          pult: 'pult.html',
+        },
         output: {
           chunkFileNames(chunkInfo) {
             // The entry chunk must always be pre-cached: a static import pulling editor
@@ -49,8 +84,6 @@ export default defineConfig(({ mode }) => {
             // from the manifest (which filters `cm-edit-`).
             if (chunkInfo.isEntry) return 'assets/[name]-[hash].js';
 
-            // Чанки с префиксом не попадают в precache при установке и кэшируются только
-            // по запросу редактора (см. src/sw.ts), поэтому остальные их вообще не скачивают.
             const isCmEditorChunk = chunkInfo.moduleIds.some(
               id => id.includes('apps/cm+editor/') || id.includes('routes/tree/cm/edit/'),
             );
@@ -88,12 +121,20 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 3627,
       host: true,
-      // Тот же mkcert-серт, что и у бэка: клиенты, установившие локальный CA, доверяют ему без промптов.
-      // Серт покрывает localhost и 192.168.1.59, поэтому с телефона https открывается без предупреждений.
+      cors: true,
       ...(isHttps && {
         https: {
           key: readFileSync('src/back/dev-certs/privkey.pem'),
           cert: readFileSync('src/back/dev-certs/fullchain.pem'),
+        },
+      }),
+      ...(command === 'serve' && {
+        proxy: {
+          '/remote': {
+            target: `ws://localhost:${env.REMOTE_BROADCAST_DEV_PORT || 4738}`,
+            ws: true,
+            bypass: (_request, response) => (response == null ? undefined : '/index.html'),
+          },
         },
       }),
     },
@@ -122,6 +163,7 @@ export default defineConfig(({ mode }) => {
         failOnError: true,
       }),
       VitePWA(vitePWAOptions),
+      stripPwaFromPult(),
       tailwindcss(),
       react({
         jsxImportSource: '@emotion/react',

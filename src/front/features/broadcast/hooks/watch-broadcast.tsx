@@ -7,90 +7,92 @@ import { css, Global } from '@emotion/react';
 import { useCallback } from 'react';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { toast } from 'sonner';
-import { useScreenBroadcastConfigsValue } from '../atoms';
+import { getScreenBroadcastConfigsValue, useScreenBroadcastConfigsValue } from '../atoms';
+import { BroadcastViewApp } from '../Broadcast.model';
 import { useCurrentForceViweAppContext } from '../Broadcast.contexts';
 import { BroadcastScreen } from '../BroadcastScreen';
 import { BroadcastConnectionDto } from '../lib/connection.dto';
-import { useGetScreenBroadcastConfig } from './configs';
-import { setScreenBroadcastWindows, useScreenBroadcastWindows } from './windows';
+import { ScreenBroadcastConfig } from '../model';
+import { getScreenBroadcastWindows, setScreenBroadcastWindows } from './windows';
+
+export const watchScreenBroadcast = async (configs?: ScreenBroadcastConfig[], forceViewApp?: BroadcastViewApp) => {
+  const configsValue = configs ?? (await getScreenBroadcastConfigsValue());
+  const windows = getScreenBroadcastWindows();
+
+  if (configsValue.length === windows.length) return;
+
+  const newWindows = [...windows];
+
+  const watch = (windowi: number) =>
+    renderComponentInNewWindow({
+      target: `cm/broadcast/${windowi}`,
+      reactNode: win => {
+        newWindows[windowi] = {
+          win,
+          blur: () => win.document.exitFullscreen(),
+          focus: () => {
+            if (win.innerWidth === win.screen.width && win.innerHeight === win.screen.height) return;
+            win.focus();
+            win.document.body.requestFullscreen();
+          },
+          send: BroadcastConnectionDto.sendLiveData,
+        };
+
+        win.document.title = configsValue[windowi]?.title ?? win.document.title;
+
+        const closeWin = () => win.close();
+
+        win.onfocus = () => window.focus();
+
+        window.addEventListener('unload', closeWin);
+
+        win.addEventListener('unload', () => {
+          window.removeEventListener('unload', closeWin);
+          const newWindows = [...windows];
+
+          newWindows[windowi] = null;
+          setScreenBroadcastWindows(newWindows);
+        });
+
+        return (
+          <>
+            <BroadcastScreen
+              configi={windowi}
+              win={win}
+              forceViewApp={forceViewApp}
+            />
+            <Global styles={styles} />
+          </>
+        );
+      },
+    });
+
+  const len = configsValue.length - windows.length;
+
+  for (let windowi = 0; windowi < len; windowi++) {
+    if (windowi === 0 && electronClientApi) {
+      try {
+        newWindows[windowi] = await new BroadcastConnectionDto(windowi + 1).init();
+
+        continue;
+      } catch (_) {
+        toast(
+          translateBase(BaseLocaleKey.BroadcastPresentModeFailed),
+          makeToastKOMoodConfig(),
+        );
+      }
+    }
+    watch(windowi);
+  }
+
+  setScreenBroadcastWindows(newWindows);
+};
 
 export const useWatchScreenBroadcast = () => {
-  const getCurrentConfig = useGetScreenBroadcastConfig();
-  const windows = useScreenBroadcastWindows();
   const configs = useScreenBroadcastConfigsValue();
   const forceViewApp = useCurrentForceViweAppContext();
 
-  const watchBroadcast = useCallback(async () => {
-    if (configs.length === windows.length) return;
-
-    const newWindows = [...windows];
-
-    const watch = (windowi: number) =>
-      renderComponentInNewWindow({
-        target: `cm/broadcast/${windowi}`,
-        reactNode: win => {
-          newWindows[windowi] = {
-            win,
-            blur: () => win.document.exitFullscreen(),
-            focus: () => {
-              if (win.innerWidth === win.screen.width && win.innerHeight === win.screen.height) return;
-              win.focus();
-              win.document.body.requestFullscreen();
-            },
-            send: BroadcastConnectionDto.sendLiveData,
-          };
-
-          win.document.title = getCurrentConfig(windowi)?.title ?? win.document.title;
-
-          const closeWin = () => win.close();
-
-          win.onfocus = () => window.focus();
-
-          window.addEventListener('unload', closeWin);
-
-          win.addEventListener('unload', () => {
-            window.removeEventListener('unload', closeWin);
-            const newWindows = [...windows];
-
-            newWindows[windowi] = null;
-            setScreenBroadcastWindows(newWindows);
-          });
-
-          return (
-            <>
-              <BroadcastScreen
-                configi={windowi}
-                win={win}
-                forceViewApp={forceViewApp}
-              />
-              <Global styles={styles} />
-            </>
-          );
-        },
-      });
-
-    const len = configs.length - windows.length;
-
-    for (let windowi = 0; windowi < len; windowi++) {
-      if (windowi === 0 && electronClientApi) {
-        try {
-          newWindows[windowi] = await new BroadcastConnectionDto(windowi + 1).init();
-
-          continue;
-        } catch (_) {
-          toast(
-            translateBase(BaseLocaleKey.BroadcastPresentModeFailed),
-            makeToastKOMoodConfig(),
-          );
-        }
-      }
-      watch(windowi);
-    }
-
-    setScreenBroadcastWindows(newWindows);
-  }, [configs.length, forceViewApp, getCurrentConfig, windows]);
-
-  return watchBroadcast;
+  return useCallback(() => watchScreenBroadcast(configs, forceViewApp), [configs, forceViewApp]);
 };
 
 const styles = css`

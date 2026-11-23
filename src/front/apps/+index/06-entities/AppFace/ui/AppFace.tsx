@@ -15,6 +15,8 @@ interface Props {
 export const IndexAppFace = ({ config: { appName, icon, title }, favouriteApps }: Props) => {
   const currentAppName = useAppNameContext();
 
+  if (appName === 'remote') return null;
+
   return (
     <div className="mx-5 my-1 flex between">
       <Link

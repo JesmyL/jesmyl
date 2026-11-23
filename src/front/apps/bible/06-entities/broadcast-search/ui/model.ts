@@ -4,6 +4,7 @@ import { StrRegExp } from 'regexpert';
 import { BibleTranslateName } from 'shared/model/bible';
 
 export interface IBibleBroadcastSearchRequest {
+  token?: number;
   term: string;
   booki: BibleBooki;
   chapteri: BibleChapteri;
@@ -12,4 +13,9 @@ export interface IBibleBroadcastSearchRequest {
   maxItems: number;
 }
 
-export type BibleBroadcastSearchResponse = { list: BibleBroadcastSingleAddress[]; splitReg: StrRegExp };
+export type BibleBroadcastSearchResponse = {
+  token?: number;
+  list: BibleBroadcastSingleAddress[];
+  splitReg: StrRegExp;
+  term: string;
+};

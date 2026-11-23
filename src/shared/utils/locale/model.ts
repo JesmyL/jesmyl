@@ -21,7 +21,7 @@ export type TemplateInterpolationGenKey<Val> = StringTemplaterGenKey<Val>;
 
 // Ключи словаря без метаданных подстановки: у остальных значений второй аргумент обязателен, поэтому в этот союз они не попадают.
 export type NoInterpolationKeys<Dict> = {
-  [Key in keyof Dict]: [StringTemplaterVals<Dict[Key]>] extends [never] ? Key : never;
+  [Key in keyof Dict]-?: [StringTemplaterVals<NonNullable<Dict[Key]>>] extends [never] ? Key : never;
 }[keyof Dict];
 
 // Форма второго аргумента: для значений с подстановкой кортеж `[never]` делает вызов без него невозможным, для остальных аргумент необязателен.

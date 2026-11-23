@@ -787,31 +787,37 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.CmUkulele]: LocaleSimpleString;
   [BaseLocaleKey.TextTransfer]: LocaleSimpleString;
   [BaseLocaleKey.TextTransferPc]: LocaleSimpleString;
-
+  [BaseLocaleKey.RemoteControlStart]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlStop]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlScanQr]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlBuildMissing]?: LocaleSimpleString;
   [BaseLocaleKey.PushTestSendTooltip]: LocaleSimpleString;
+  [BaseLocaleKey.ScheduleRightReadRemoteControls]: LocaleSimpleString;
+  [BaseLocaleKey.ScheduleRightReadRemoteControlsRole]: LocaleSimpleString;
+  [BaseLocaleKey.ScheduleRightReadRemoteControlsRoleGen]: LocaleSimpleString;
+  [BaseLocaleKey.ScheduleRightReadRemoteControlsDescription]: LocaleSimpleString;
 
-  // Название страницы и пункта меню «Пользователи».
   [BaseLocaleKey.Users]: LocaleSimpleString;
 
-  // Сообщение о превышении лимита объёма передаваемого файла.
+  [BaseLocaleKey.RemoteControlHttpsBlocked]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlOpenHttp]?: LocaleSimpleString;
+
+  [BaseLocaleKey.RemoteControlCertHost]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlTlsEnabled]?: StringTemplaterInterpolation<{ h: string }>;
+  [BaseLocaleKey.RemoteControlCertInvalid]?: StringTemplaterInterpolation<{ h: string }>;
+
   [BaseLocaleKey.TextTransferFileTooLarge]: StringTemplaterInterpolation<{ s: number }>;
 
-  // Подсказка у кнопки выбора файла: параллельная передача одного файла с лимитом объёма.
   [BaseLocaleKey.TextTransferFileHint]: StringTemplaterInterpolation<{ s: number }>;
 
-  // Кнопка скачивания полученного файла.
   [BaseLocaleKey.Download]: LocaleSimpleString;
 
-  // Сообщение в консоль, когда IndexedDB заблокирована другой вкладкой.
   [BaseLocaleKey.DatabaseBlockedByAnotherTab]: LocaleSimpleString;
 
-  // Ошибка декодирования TBCV-ключа: $t - исходное значение ключа.
   [BaseLocaleKey.InvalidTbcvKeyFormat]: StringTemplaterInterpolation<{ t: string }>;
 
-  // Названия уровней интенсивности кома по ключам CmComIntensityLevel.
   [BaseLocaleKey.CmIntensityTitle]: LocaleStrRecord<CmComIntensityLevel>;
 
-  // Ограничения из настроек констант: заголовки числовых параметров комментариев, песен и передачи файлов.
   [BaseLocaleKey.ConstantsMaxComCommentAlternativesCount]: LocaleSimpleString;
   [BaseLocaleKey.ConstantsMaxComCommentBlockLen]: LocaleSimpleString;
   [BaseLocaleKey.ConstantsMaxComCommentChordLen]: LocaleSimpleString;
@@ -824,22 +830,68 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.ConstantsMaxSelectedComsCount]: LocaleSimpleString;
   [BaseLocaleKey.ConstantsMaxTransferFileSize]: LocaleSimpleString;
 
-  // Заголовки групп настроек констант.
   [BaseLocaleKey.ConstantsCmComments]: LocaleSimpleString;
   [BaseLocaleKey.ConstantsCmOther]: LocaleSimpleString;
   [BaseLocaleKey.ConstantsIndexCommon]: LocaleSimpleString;
 
-  // Конфигурация допустимых доменных зон E-mail и её ошибки.
   [BaseLocaleKey.ConstantsEmailDomainZones]: LocaleSimpleString;
   [BaseLocaleKey.ConstantsAllowedEmailDomainZones]: StringTemplaterInterpolation<{ z: string }>;
   [BaseLocaleKey.ConstantsStringExpected]: LocaleSimpleString;
 
-  // Проверка текстового блока: недопустимые символы и непарные кавычки.
   [BaseLocaleKey.CmIncorrectSymbolsPresent]: StringTemplaterInterpolation<{ m: string; t: string }>;
   [BaseLocaleKey.CmUnpairedQuotesWarning]: StringTemplaterInterpolation<{ n: number; o: boolean | Bool }>;
+
+  [BaseLocaleKey.RemoteControlTlsCertHost]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlTlsCertHostHint]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlTlsActive]: StringTemplaterInterpolation<{ h: string }>;
+  [BaseLocaleKey.RemoteControlTlsCertNotFound]: StringTemplaterInterpolation<{ h: string }>;
+
+  [BaseLocaleKey.RemoteSearchByBible]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControl]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlPort]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlClients]?: StringTemplaterInterpolation<{ n: number }>;
+  [BaseLocaleKey.RemoteControlConnected]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlDisconnected]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlReconnecting]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlHideText]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlShowText]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlPortBusy]?: StringTemplaterInterpolation<{ p: number }>;
+  [BaseLocaleKey.RemoteControlPortBusyPrompt]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlNoLan]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlUnknownError]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlBook]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlVerse]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlAvailableList]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlEmptyList]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlConnect]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlListLoadError]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlBanned]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlControllersList]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlNoControllers]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlBan]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlUnban]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlBannedList]?: LocaleSimpleString;
+  [BaseLocaleKey.CmConnectToRemoteControl]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlNotFound]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlAppTitle]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteNoTranslationLine1]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteNoTranslationLine3]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteNoTranslationNoTarget]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlActiveBroadcasts]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlNoActiveBroadcasts]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteOnScreenNow]?: StringTemplaterInterpolation<{ a: string }>;
+  [BaseLocaleKey.RemoteSwitchApp]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlTranslation]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlJoinVerses]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlVersionMismatch]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlPendingApproval]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlLoginRequired]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlLogin]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlApproveRequest]?: StringTemplaterInterpolation<{ n: string }>;
+  [BaseLocaleKey.RemoteControlApprove]?: LocaleSimpleString;
+  [BaseLocaleKey.RemoteControlPendingList]?: LocaleSimpleString;
 };
 
 export type UsedBaseLocaleKey = BaseLocaleKey;
 
-// Ключи базовой локали, чьи тексты не требуют подстановки: подходят для translateBase без второго аргумента.
 export type NonInterpolatedBaseLocaleKey = NoInterpolationKeys<LocaleBase<Langi>>;

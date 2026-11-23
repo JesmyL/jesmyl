@@ -15,7 +15,7 @@ type Props = {
 };
 
 export default function AppFooterSwipeable(props: Props) {
-  const favouriteApps = useAtomValue(indexFavouriteAppsAtom);
+  const favouriteApps: SokiAppName[] = useAtomValue(indexFavouriteAppsAtom);
   const navigate = useNavigate();
 
   if (favouriteApps.length < 2) return <props.Div>{props.children}</props.Div>;

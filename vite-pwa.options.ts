@@ -11,9 +11,7 @@ export const vitePWAOptions = {
   manifestFilename,
   injectManifest: {
     globPatterns: ['**/*.{js,wasm,css,html}'],
-    // `cm-edit-` чанки остаются в манифесте (см. chunkFileNames в vite.config.ts),
-    // но в precache на установке не попадают: src/sw.ts сам отделяет их от общего списка
-    // и скачивает только по запросу редактора, чтобы не-редакторы их не получали.
+    globIgnores: ['**/pult.html', '**/assets/pult-*.js'],
   },
   manifest: {
     name: 'Jesus my Lord',

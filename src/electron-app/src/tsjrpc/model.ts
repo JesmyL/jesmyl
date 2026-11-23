@@ -3,4 +3,5 @@ export * from '../../../shared/api/tsjrpc.electtron/basic';
 export * from '../../../shared/api/tsjrpc.electtron/presentation';
 export * from '../../../shared/api/tsjrpc.electtron/presentation.base';
 export * from '../../../shared/api/tsjrpc.electtron/presentations';
+export * from '../../../shared/api/tsjrpc.electtron/remote-broadcast';
 export * from '../../../shared/model/index/Index.model';

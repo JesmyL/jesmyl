@@ -46,21 +46,24 @@ export const BottomPopup = ({ children, onClose, isPreventCloseOnClick, id, titl
       onClose={() => onClose(false)}
     >
       <Drawer.Content
-        className="max-h-[85dvh] w-full"
+        className="max-h-[85dvh] w-full min-h-0"
         id={id}
       >
-        <Drawer.Close>
-          <Drawer.Header>
-            <Drawer.Title className="flex gap-3 ml-7">
-              {title}
-              <LazyIcon icon="Cancel01" />
-            </Drawer.Title>
-            <Drawer.Description></Drawer.Description>
-          </Drawer.Header>
-        </Drawer.Close>
+        <Drawer.Header className="shrink-0">
+          <div className="flex items-center gap-3 ml-7 min-w-0">
+            <Drawer.Title className="min-w-0 flex-1 text-wrap">{title}</Drawer.Title>
+            <Drawer.Close className="shrink-0">
+              <LazyIcon
+                icon="Cancel01"
+                className="shrink-0"
+              />
+            </Drawer.Close>
+          </div>
+          <Drawer.Description></Drawer.Description>
+        </Drawer.Header>
 
         <div
-          className="w-full overflow-scroll"
+          className="w-full flex-1 min-h-0 overflow-scroll"
           st-no-scrollbar=""
         >
           <BottomPopupOnCloseContext value={isPreventCloseOnClick ? emptyFunc : () => setTimeout(onClose, 100, false)}>

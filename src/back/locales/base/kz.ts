@@ -532,6 +532,10 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.ScheduleRightRedactComsListRole]: 'Композициялар редакторы',
   [BaseLocaleKey.ScheduleRightRedactComsListRoleGen]: 'Композициялар редакторының',
   [BaseLocaleKey.ScheduleRightRedactComsListDescription]: 'Оқиғалардағы композициялар тізімін өзгерту',
+  [BaseLocaleKey.ScheduleRightReadRemoteControls]: 'Пульттерге қол жеткізу',
+  [BaseLocaleKey.ScheduleRightReadRemoteControlsRole]: 'Пульт операторы',
+  [BaseLocaleKey.ScheduleRightReadRemoteControlsRoleGen]: 'Пульт операторының',
+  [BaseLocaleKey.ScheduleRightReadRemoteControlsDescription]: 'Кестенің қолжетімді пульттерінің тізімін қарау',
 
   [BaseLocaleKey.BroadcastFollowInPhone]: 'Экрандағы мәтіндерді өз телефоныңыздан бақылаңыз',
   [BaseLocaleKey.BroadcastPresentModeFailed]: 'Презентация режимін қосу мүмкін болмады',
@@ -864,8 +868,9 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.ScheduleUserAdded]: 'Пайдаланушы кестеге қосылды',
   [BaseLocaleKey.PushNotifications]: 'Push хабарламалары',
 
-  [BaseLocaleKey.NumberSymbols]: '$n; таңба',
   [BaseLocaleKey.PushTestSendTooltip]: 'Тестілік PUSH жіберу',
+
+  [BaseLocaleKey.NumberSymbols]: '$n; таңба',
 
   [BaseLocaleKey.Users]: 'Пайдаланушылар',
 
@@ -911,4 +916,7 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   ...baseLocaleTemplate(
     BaseLocaleKey.CmUnpairedQuotesWarning,
   )`Мәтінде тырнақшалардың жұптаспаған саны бар.\n$n ${IF('$o').THEN`ашылатын`.ELSE`жабылатын`} тырнақшаны қосу қажет`,
+  [BaseLocaleKey.RemoteControlTlsActive]: 'Пульт https/wss арқылы жұмыс істеп тұр: $h',
+  [BaseLocaleKey.RemoteControlTlsCertNotFound]:
+    '$h сертификатының файлдары табылмады: <certDir>/$h/privkey.pem және fullchain.pem файлдарын тексеріңіз.',
 });

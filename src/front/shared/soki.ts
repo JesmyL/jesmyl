@@ -11,6 +11,11 @@ import { jversion } from 'shared/values';
 import { TSJRPCEvent } from 'tsjrpc';
 import { environment } from './environment';
 
+export const takeSokiVisitDeviceInfo = () => ({
+  deviceEmoji: indexDeviceEmojiAtom.get(),
+  agent: navigator.userAgent,
+});
+
 export class SokiTrip {
   private ws: WebSocket = null!;
   private isTokenSent = false;
@@ -22,8 +27,10 @@ export class SokiTrip {
       reject: (reason?: string) => void;
       promise: Promise<unknown>;
       event: string;
+      eventHash: string;
     }
   > = {};
+  private requestIdsByEventHash: PRecord<string, string> = {};
 
   private isOpened = false;
   private reconnectDelay = 500;
@@ -49,11 +56,10 @@ export class SokiTrip {
 
   private takeVisitInfo = () => ({
     deviceId: indexDeviceIdAtom.get(),
-    deviceEmoji: indexDeviceEmojiAtom.get(),
+    ...takeSokiVisitDeviceInfo(),
     version: jversion.num,
     urls: this.urls.length ? this.urls : [this.getCurrentUrl()],
     clientTm: Date.now(),
-    agent: navigator.userAgent,
     langi: currentLangiAtom.get(),
     prevLangi: takeBaseLanguageAtom().get()[BaseLocaleKey.Langi],
   });
@@ -95,6 +101,7 @@ export class SokiTrip {
 
       Object.values(this.requests).forEach(request => request?.reject('#closed'));
       this.requests = {};
+      this.requestIdsByEventHash = {};
 
       setTimeout(() => this.start(), this.reconnectDelay);
       this.reconnectDelay = Math.min(this.reconnectDelay * 2, 10_000);
@@ -106,13 +113,14 @@ export class SokiTrip {
       try {
         const event: TsjrpcFromServerEvent = JSON.parse(data);
 
-        if (this.requests[event.requestId] !== undefined) {
+        const request = this.requests[event.requestId];
+        if (request !== undefined) {
           console.info(event);
           if (event.errorMessage && !event.errorMessage.startsWith('#'))
             this.onInvokeErrorMessageEvent.invoke(event.errorMessage);
 
-          this.requests[event.requestId]!.action(event);
-          delete this.requests[event.requestId];
+          this.forgetRequest(event.requestId, request.eventHash);
+          request.action(event);
         }
 
         if (event.invoke === undefined) return;
@@ -143,6 +151,11 @@ export class SokiTrip {
     return this.onConnectionOpenEvent.listen(cb);
   };
 
+  private forgetRequest = (requestId: string, eventHash: string) => {
+    delete this.requests[requestId];
+    if (this.requestIdsByEventHash[eventHash] === requestId) delete this.requestIdsByEventHash[eventHash];
+  };
+
   private sendForce = (requestId: string) => {
     const event = this.requests[requestId]?.event;
     if (event == null) return;
@@ -165,13 +178,21 @@ export class SokiTrip {
     event: OmitOwn<TsjrpcFromClientEvent, 'requestId'>,
     tool?: TsjrpcClientTool | nil | void,
   ): Promise<unknown> => {
-    const strEvent = JSON.stringify(event);
-    const requestId = md5(strEvent);
-
-    if (this.requests[requestId] != null) {
-      return this.requests[requestId].promise as never;
+    if (event.abort != null) {
+      if (this.ws.readyState === this.ws.OPEN) this.ws.send(JSON.stringify(event));
+      return Promise.resolve();
     }
 
+    const strEvent = JSON.stringify(event);
+    const eventHash = md5(strEvent);
+    const pendingRequestId = this.requestIdsByEventHash[eventHash];
+
+    if (pendingRequestId != null) {
+      const pendingRequest = this.requests[pendingRequestId];
+      if (pendingRequest != null) return pendingRequest.promise as never;
+    }
+
+    const requestId = md5(`${strEvent}${Math.random()}`);
     const fullEvent = `${strEvent.slice(0, -1)},"requestId":"${requestId}"}`;
     const withResolvers = Promise.withResolvers();
 
@@ -182,26 +203,25 @@ export class SokiTrip {
       },
       reject: withResolvers.reject,
       event: fullEvent,
+      eventHash,
       promise: withResolvers.promise,
     };
+    this.requestIdsByEventHash[eventHash] = requestId;
 
     if (this.ws.readyState === this.ws.OPEN && (this.isTokenSent || 'token' in event)) {
       this.sendForce(requestId);
     } else this.onConnectionOpenEvent.listenFirst(() => this.sendForce(requestId));
 
-    // Единая точка отмены: запрос уже снят с ожидания — отмена устарела, и повторно ничего не отправляем.
     const abortRequest = (reason: string) => {
       if (this.requests[requestId] == null) return;
 
       withResolvers.reject(reason);
-      delete this.requests[requestId];
+      this.forgetRequest(requestId, eventHash);
       this.send({ abort: requestId });
     };
 
-    // Таймаут работает сам по себе: aborter нужен только для внешней отмены, а не для ограничения ожидания.
     if (tool?.timeout != null) setTimeout(() => abortRequest('#aborted by timeout'), tool.timeout);
 
-    // Внешняя отмена: сигнал aborter обрывает ожидание, как только вызывающая сторона этого потребует.
     if (tool?.aborter != null) {
       const aborter = tool.aborter;
       const removeListener = () => aborter.signal.removeEventListener('abort', onAbort);

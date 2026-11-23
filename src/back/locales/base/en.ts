@@ -543,6 +543,10 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.ScheduleRightRedactComsListRole]: 'Coms list editor',
   [BaseLocaleKey.ScheduleRightRedactComsListRoleGen]: 'Coms list editor',
   [BaseLocaleKey.ScheduleRightRedactComsListDescription]: 'Changing coms lists in events',
+  [BaseLocaleKey.ScheduleRightReadRemoteControls]: 'Access to remotes',
+  [BaseLocaleKey.ScheduleRightReadRemoteControlsRole]: 'Remote operator',
+  [BaseLocaleKey.ScheduleRightReadRemoteControlsRoleGen]: 'Remote operator',
+  [BaseLocaleKey.ScheduleRightReadRemoteControlsDescription]: 'Viewing the list of available schedule remotes',
 
   [BaseLocaleKey.BroadcastFollowInPhone]: 'Follow the texts on the screen from your phone',
   [BaseLocaleKey.BroadcastPresentModeFailed]: 'Failed to connect the presentation mode',
@@ -874,9 +878,9 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.ScheduleUserAdded]: 'User added to the schedule',
   [BaseLocaleKey.PushNotifications]: 'Push notifications',
 
-  ...baseLocaleTemplate(BaseLocaleKey.NumberSymbols)`$n; symbol${FUNCTION('dec')('$n', '', 's')}`,
-
   [BaseLocaleKey.PushTestSendTooltip]: 'Send test push',
+
+  ...baseLocaleTemplate(BaseLocaleKey.NumberSymbols)`$n; symbol${FUNCTION('dec')('$n', '', 's')}`,
 
   [BaseLocaleKey.Users]: 'Users',
 
@@ -922,4 +926,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   ...baseLocaleTemplate(
     BaseLocaleKey.CmUnpairedQuotesWarning,
   )`The text contains an unpaired number of quotes.\nAdd $n ${IF('$o').THEN`open`.ELSE`clos`}ing quote${FUNCTION('dec')('$n', '', 's')}`,
+  [BaseLocaleKey.RemoteControlTlsActive]: 'The remote is running over https/wss: $h',
+  [BaseLocaleKey.RemoteControlTlsCertNotFound]:
+    'Certificate files for $h were not found: check <certDir>/$h/privkey.pem and fullchain.pem.',
 });

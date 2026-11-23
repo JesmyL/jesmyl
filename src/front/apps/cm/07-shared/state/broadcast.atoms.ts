@@ -1,13 +1,13 @@
 import { makeBroadcastGridNetElectronTabIdFreeAtom } from '#widgets/broadcast/lib/makeBroadcastGridNetElectronTabIdFree';
 import { BroadcastGridNumberNetPack } from '#widgets/broadcast/model/TabConfig';
 import { atom } from 'atomaric';
-import { CmComWidDef, CmAudioTail } from 'shared/api';
+import { CmAudioTail, CmComWidDef } from 'shared/api';
 import { CmBroadcastTabId } from '../model/broadcast';
 
 export const cmPlayerBroadcastComwAtom = atom(CmComWidDef);
 export const cmPlayerBroadcastAudioSrcAtom = atom<CmAudioTail | null>(null);
 
-const electronTabIdSet = new Set<CmBroadcastTabId>([CmBroadcastTabId.WorkDir]);
+const electronTabIdSet = new Set<CmBroadcastTabId>([CmBroadcastTabId.WorkDir, CmBroadcastTabId.RemoteControl]);
 
 export const cmBroadcastGridTabsAtom = makeBroadcastGridNetElectronTabIdFreeAtom(
   electronTabIdSet,
@@ -16,7 +16,7 @@ export const cmBroadcastGridTabsAtom = makeBroadcastGridNetElectronTabIdFreeAtom
     [CmBroadcastTabId.Preview],
     [CmBroadcastTabId.Alert],
     //
-    [CmBroadcastTabId.Configs, CmBroadcastTabId.WorkDir],
+    [CmBroadcastTabId.Configs, CmBroadcastTabId.WorkDir, CmBroadcastTabId.RemoteControl],
     [CmBroadcastTabId.Slides],
     [CmBroadcastTabId.Dropdowns],
   ],

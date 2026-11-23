@@ -7,13 +7,15 @@ interface Props {
   text: string;
   openAtom: Atom<boolean>;
   copyText?: string;
+  isRenderHere?: boolean;
 }
 
-export const QrCodeFullScreen = ({ text, copyText, openAtom }: Props) => {
+export const QrCodeFullScreen = ({ text, copyText, openAtom, isRenderHere }: Props) => {
   return (
     <FullContent
       closable
       openAtom={openAtom}
+      isRenderHere={isRenderHere}
       containerClassName="p-0 flex center column gap-2 full-size"
     >
       <QRCode

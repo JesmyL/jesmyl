@@ -24,9 +24,7 @@ export const [ScheduleWidgetAppAttsContext, useScheduleWidgetAppAttsContext] = c
 
 export interface ScheduleWidgetRights extends ScheduleWidgetUserRights, ScheduleWidgetScheduleWidgetRegType {
   myUser: IScheduleWidgetUser | undefined;
-  /** Эффективные права текущего пользователя в расписании; у TOP-пользователя сайта — все права. */
   myUserR: number;
-  /** Признак TOP-пользователя сайта: ему в расписании разрешены все действия. */
   isTopUser: boolean;
   schedule: IScheduleWidget;
   auth: LocalSokiAuth;
@@ -48,6 +46,7 @@ export const defScheduleWidgetUserRights: ScheduleWidgetUserRights = {
   isCanAddEvents: false,
   isCanRedactEventContent: false,
   isCanRedactComsList: false,
+  isCanReadRemoteControls: false,
 };
 
 export const useScheduleWidgetRights = (schedule: IScheduleWidget | nil, rights?: ScheduleWidgetRights) => {
@@ -57,7 +56,6 @@ export const useScheduleWidgetRights = (schedule: IScheduleWidget | nil, rights?
   return useMemo((): ScheduleWidgetRights => {
     if (rights !== undefined) return rights;
 
-    // TOP-пользователь сайта получает полный доступ к расписанию без привязки к выданным ролям.
     const isTopUser = auth.login ? userInfo.byLogin.get(auth.login)?.r === 'TOP' : false;
 
     if (schedule == null)
@@ -73,6 +71,7 @@ export const useScheduleWidgetRights = (schedule: IScheduleWidget | nil, rights?
         isCanAddEvents: false,
         isCanRedactEventContent: false,
         isCanRedactComsList: false,
+        isCanReadRemoteControls: false,
         isSwBeforeRegistration: false,
         isSwHideContent: false,
         isSwPublic: false,
@@ -97,7 +96,6 @@ export const useScheduleWidgetRights = (schedule: IScheduleWidget | nil, rights?
       ScheduleWidgetRegType.HideContent,
     );
 
-    // Привилегии текущего пользователя: TOP-пользователь сайта получает все права, остальные — свои роли или права по умолчанию.
     const myUserR = isTopUser
       ? scheduleWidgetUserRights.getAllRights()
       : (myUser?.R ?? schedule.ctrl.defu);
@@ -137,6 +135,10 @@ export const useScheduleWidgetRights = (schedule: IScheduleWidget | nil, rights?
       myUserR,
       ScheduleWidgetUserRoleRight.RedactComsList,
     );
+    const isCanReadRemoteControls = scheduleWidgetUserRights.checkIsHasIndividualRights(
+      myUserR,
+      ScheduleWidgetUserRoleRight.ReadRemoteControls,
+    );
 
     return {
       auth,
@@ -153,6 +155,7 @@ export const useScheduleWidgetRights = (schedule: IScheduleWidget | nil, rights?
       isCanAddEvents,
       isCanRedactEventContent,
       isCanRedactComsList,
+      isCanReadRemoteControls,
       isSwBeforeRegistration,
       isSwHideContent,
       isSwPublic,

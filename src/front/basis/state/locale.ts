@@ -1,6 +1,6 @@
 import { appInitEvent, localeForceUpdateAtom, localeIsBlurringAtom, localeIsLoadingAtom } from '$app/store/triggers';
 import { indexUserAccessRightsAtom } from '$index/shared/state/atoms';
-import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
+import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc/tsjrpc.methods';
 import { Atom, atom } from 'atomaric';
 import { Langi } from 'shared/api';
 import { LocaleNameSpaceConfigs } from 'shared/model/+locale';

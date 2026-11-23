@@ -6,59 +6,36 @@ import { ScheduleWidgetUserMi, ScheduleWidgetWid } from './main';
 import { ScheduleWidgetRightsCtrl, ScheduleWidgetRightTexts } from './rights-constructor';
 
 export const enum ScheduleWidgetUserRoleRight {
-  /** Без прав на мероприятие */
   Free = 0,
-  /** Полный доступ: выдача прав и просмотр специальной информации */
   TotalRedact = 1,
-  /** Базовый доступ и чтение расписания */
   Read = 2,
-  /** Редактирование содержимого мероприятия */
   Redact = 3,
-  /** Чтение тем и описаний */
   ReadTitles = 4,
-  /** Доступ к специальным событиям */
   ReadSpecials = 5,
-  /** Редактирование участников и выдача прав */
   RedactUsers = 6,
-  /** Добавление дней в расписание */
   AddDays = 7,
-  /** Добавление событий в дни расписания */
   AddEvents = 8,
-  /** Изменение темы, времени и описания событий */
   RedactEventContent = 9,
-  /** Изменение списка композиций в событиях */
   RedactComsList = 10,
+  ReadRemoteControls = 11,
 }
 
 export const enum CustomAttUseTaleId {
-  /** Дробный маркер идентификатора роли */
   Roles = 0,
-  /** Дробный маркер идентификатора списка */
   Lists = 0.1,
-  /** Дробный маркер идентификатора участника */
   Users = 0.2,
-  /** Дробный маркер идентификатора командной игры */
   Games = 0.3,
 }
 
 export const enum CustomAttUseRights {
-  /** Доступ к заголовкам */
   Titles = 1,
-  /** Доступ к выполняемым пунктам */
   Checkboxes = 2,
-  /** Доступ к ролям */
   Roles = 3,
-  /** Доступ к спискам */
   Lists = 4,
-  /** Доступ к выполняемым пунктам заголовков */
   CheckTitles = 5,
-  /** Доступ к участникам */
   Users = 6,
-  /** Доступ к выполняемым пунктам участников */
   CheckUsers = 7,
-  /** Доступ к командным играм */
   Games = 8,
-  /** Доступ к выполняемым пунктам командных игр */
   CheckGames = 9,
 }
 
@@ -80,6 +57,7 @@ const rightsOrder = [
   ScheduleWidgetUserRoleRight.AddEvents,
   ScheduleWidgetUserRoleRight.RedactEventContent,
   ScheduleWidgetUserRoleRight.RedactComsList,
+  ScheduleWidgetUserRoleRight.ReadRemoteControls,
 ];
 
 const rightTextFallbacks: Record<
@@ -105,6 +83,11 @@ const rightTextFallbacks: Record<
     title: 'Редактирование композиций',
     role: ['Редактор композиций', 'Редактора композиций'],
     description: 'Изменение списка композиций в событиях',
+  },
+  [ScheduleWidgetUserRoleRight.ReadRemoteControls]: {
+    title: 'Доступ к пультам',
+    role: ['Оператор пульта', 'Оператора пульта'],
+    description: 'Просмотр списка доступных пультов расписания',
   },
 };
 
@@ -194,6 +177,12 @@ const textList: ScheduleWidgetRightTexts<ScheduleWidgetUserRoleRight>[] = [
     BaseLocaleKey.ScheduleRightRedactComsList,
     [BaseLocaleKey.ScheduleRightRedactComsListRole, BaseLocaleKey.ScheduleRightRedactComsListRoleGen],
     BaseLocaleKey.ScheduleRightRedactComsListDescription,
+  ),
+  makeRightText(
+    ScheduleWidgetUserRoleRight.ReadRemoteControls,
+    BaseLocaleKey.ScheduleRightReadRemoteControls,
+    [BaseLocaleKey.ScheduleRightReadRemoteControlsRole, BaseLocaleKey.ScheduleRightReadRemoteControlsRoleGen],
+    BaseLocaleKey.ScheduleRightReadRemoteControlsDescription,
   ),
 ];
 

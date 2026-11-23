@@ -24,11 +24,8 @@ export const useCmBroadcastScreenComNavigationComws = () => {
   const comPack = useCmComCurrentComPackContext();
 
   const cachedComws = useMemo(
-    () =>
-      openListMode === 'cached'
-        ? (allIComs?.filter(com => isCmComAudioPlayerComCached(com, cachedSrcs)).map(com => com.w) ?? [])
-        : [],
-    [openListMode, allIComs, cachedSrcs],
+    () => allIComs?.filter(com => isCmComAudioPlayerComCached(com, cachedSrcs)).map(com => com.w) ?? [],
+    [allIComs, cachedSrcs],
   );
 
   return {
@@ -41,6 +38,10 @@ export const useCmBroadcastScreenComNavigationComws = () => {
           : openListMode === 'cached'
             ? cachedComws
             : comPack.comws,
+    allIComs,
+    favComws,
+    selComws,
+    cachedComws,
   };
 };
 

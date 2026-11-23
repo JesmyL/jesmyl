@@ -536,6 +536,10 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.ScheduleRightRedactComsListRole]: 'Редактор композиций',
   [BaseLocaleKey.ScheduleRightRedactComsListRoleGen]: 'Редактора композиций',
   [BaseLocaleKey.ScheduleRightRedactComsListDescription]: 'Изменение списка композиций в событиях',
+  [BaseLocaleKey.ScheduleRightReadRemoteControls]: 'Доступ к пультам',
+  [BaseLocaleKey.ScheduleRightReadRemoteControlsRole]: 'Оператор пульта',
+  [BaseLocaleKey.ScheduleRightReadRemoteControlsRoleGen]: 'Оператора пульта',
+  [BaseLocaleKey.ScheduleRightReadRemoteControlsDescription]: 'Просмотр списка доступных пультов расписания',
 
   [BaseLocaleKey.BroadcastFollowInPhone]: 'Следите за текстами на экране у себя в телефоне',
   [BaseLocaleKey.BroadcastPresentModeFailed]: 'Не удалось подключить режим презентации',
@@ -870,8 +874,9 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.ScheduleUserAdded]: 'Пользователь добавлен в расписание',
   [BaseLocaleKey.PushNotifications]: 'Push-уведомления',
 
-  ...baseLocaleTemplate(BaseLocaleKey.NumberSymbols)`$n; символ${FUNCTION('dec')('$n', '', 'а', 'ов')}`,
   [BaseLocaleKey.PushTestSendTooltip]: 'Отправить тестовый PUSH',
+
+  ...baseLocaleTemplate(BaseLocaleKey.NumberSymbols)`$n; символ${FUNCTION('dec')('$n', '', 'а', 'ов')}`,
 
   [BaseLocaleKey.Users]: 'Пользователи',
 
@@ -917,4 +922,7 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   ...baseLocaleTemplate(
     BaseLocaleKey.CmUnpairedQuotesWarning,
   )`В тексте присутствует непарное количество кавычек.\nНеобходимо добавить $n ${IF('$o').THEN`открывающ`.ELSE`закрывающ`}${FUNCTION('dec')('$n', 'ую кавычку', 'их кавычки', 'их кавычек')}`,
+  [BaseLocaleKey.RemoteControlTlsActive]: 'Пульт работает по https/wss: $h',
+  [BaseLocaleKey.RemoteControlTlsCertNotFound]:
+    'Файлы сертификата для $h не найдены: проверьте <certDir>/$h/privkey.pem и fullchain.pem.',
 });

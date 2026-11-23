@@ -19,8 +19,8 @@ import { WithAtomValue } from '#shared/ui/WithAtomValue';
 import { schLinkAction } from '#widgets/schedule/links';
 import { indexIDB } from '$index/shared/state';
 import { Outlet, ParsedLocation, useLocation, useNavigate } from '@tanstack/react-router';
-import { configureAtomaric, useAtomValue } from 'atomaric';
-import React, { useEffect, useState, useSyncExternalStore } from 'react';
+import { useAtomValue } from 'atomaric';
+import React, { useEffect, useState } from 'react';
 import { langCodeDict, langCodeLoadingTitleDict } from 'shared/const/+locale';
 import { CmComOrders } from 'shared/const/cm/Com/parents/20-Orders';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
@@ -34,7 +34,6 @@ import { AppFooter } from './AppFooter';
 import { routingApps } from './lib/configs';
 import { localeForceUpdateAtom, localeIsBlurringAtom, localeIsLoadingAtom } from './store/triggers';
 
-configureAtomaric({ useSyncExternalStore, keyPathSeparator: '/' });
 appInitialInvokes();
 
 const appStartedAt = Date.now();
@@ -81,7 +80,6 @@ export const AppComponent = () => {
     });
 
     const errorMessageListener = soki.onInvokeErrorMessageEvent.listen(errorMessage => {
-      // Сервер может прислать нелокализованный payload, поэтому локализуем его на клиенте языком текущей сессии.
       toast(localizeBackLocaleErrorPayload(errorMessage, currentLangiAtom.get()), makeToastKOMoodConfig());
     });
 
@@ -149,7 +147,7 @@ export const AppComponent = () => {
         checkIsOpen={num => num > 0}
         containerClassName="flex justify-center items-center w-full h-full"
       >
-        {langCodeLoadingTitleDict[currentLangi] ?? 'Texts is loading'}
+        {langCodeLoadingTitleDict[currentLangi]}
       </FullContent>
 
       <Modal

@@ -13,6 +13,7 @@ export const isBroadcastTextVisibleAtom = atom(true);
 
 export const useScreenBroadcastConfigsSet = () => complectIDB.useSet.screenBroadcastConfigs();
 export const useScreenBroadcastConfigsValue = () => complectIDB.useValue.screenBroadcastConfigs();
+export const getScreenBroadcastConfigsValue = () => complectIDB.get.screenBroadcastConfigs();
 
 export const broadcastCurrentTextAppAtom = atom((): BroadcastViewApp => 'cm', {
   storageKey: 'index:broadcastCurrentTextApp',

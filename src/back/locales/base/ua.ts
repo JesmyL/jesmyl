@@ -544,6 +544,10 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.ScheduleRightRedactComsListRole]: 'Редактор композицій',
   [BaseLocaleKey.ScheduleRightRedactComsListRoleGen]: 'Редактора композицій',
   [BaseLocaleKey.ScheduleRightRedactComsListDescription]: 'Зміна списку композицій у подіях',
+  [BaseLocaleKey.ScheduleRightReadRemoteControls]: 'Доступ до пультів',
+  [BaseLocaleKey.ScheduleRightReadRemoteControlsRole]: 'Оператор пульта',
+  [BaseLocaleKey.ScheduleRightReadRemoteControlsRoleGen]: 'Оператора пульта',
+  [BaseLocaleKey.ScheduleRightReadRemoteControlsDescription]: 'Перегляд списку доступних пультів розкладу',
 
   [BaseLocaleKey.BroadcastFollowInPhone]: 'Слідкуйте за текстами на екрані у себе в телефоні',
   [BaseLocaleKey.BroadcastPresentModeFailed]: 'Не вдалося підключити режим презентації',
@@ -878,9 +882,9 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.ScheduleUserAdded]: 'Користувача додано до розкладу',
   [BaseLocaleKey.PushNotifications]: 'Push-повідомлення',
 
-  ...baseLocaleTemplate(BaseLocaleKey.NumberSymbols)`$n; символ${FUNCTION('dec')('$n', '', 'и', 'ів')}`,
-
   [BaseLocaleKey.PushTestSendTooltip]: 'Надіслати тестовий PUSH',
+
+  ...baseLocaleTemplate(BaseLocaleKey.NumberSymbols)`$n; символ${FUNCTION('dec')('$n', '', 'и', 'ів')}`,
 
   [BaseLocaleKey.Users]: 'Користувачі',
 
@@ -926,4 +930,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   ...baseLocaleTemplate(
     BaseLocaleKey.CmUnpairedQuotesWarning,
   )`У тексті є непарна кількість лапок.\nПотрібно додати $n ${IF('$o').THEN`відкривальн`.ELSE`закривальн`}${FUNCTION('dec')('$n', 'у лапку', 'і лапки', 'их лапок')}`,
+  [BaseLocaleKey.RemoteControlTlsActive]: 'Пульт працює через https/wss: $h',
+  [BaseLocaleKey.RemoteControlTlsCertNotFound]:
+    'Файли сертифіката для $h не знайдено: перевірте <certDir>/$h/privkey.pem і fullchain.pem.',
 });

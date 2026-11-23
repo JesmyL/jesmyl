@@ -485,6 +485,7 @@ export const backLocalesRu: Record<BackLocaleKey, string> = {
   [BackLocaleKey.SchListCatMembersDefaultTitle]: 'Участники',
   [BackLocaleKey.DashPushNoSubscriptions]: 'У пользователя нет подписок на PUSH-уведомления',
   [BackLocaleKey.DashPushCheckText]: 'Проверка PUSH-уведомлений',
+  [BackLocaleKey.NoRightsScheduleRemoteControlsRead]: 'Нет прав на просмотр пультов расписания',
   [BackLocaleKey.PushCheckSent]: 'Уведомление отправлено',
   [BackLocaleKey.PushSubscriptionsAbsent]: 'Нет подписок на PUSH-уведомления',
   [BackLocaleKey.PushCheckSentToDevices]: `Отправлено на $n; устройств${FUNCTION('dec')('$n', 'о', 'а', '')}`,

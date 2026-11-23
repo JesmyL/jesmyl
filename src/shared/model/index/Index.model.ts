@@ -20,6 +20,17 @@ export type IndexSchWBroadcastLiveDataValue = {
   markdown?: string;
 };
 
+export const enum RemoteBroadcastOs {
+  /** Other: другая ОС. */
+  Other = 0,
+  /** Win: Windows. */
+  Win = 1,
+  /** Linux: Linux. */
+  Linux = 2,
+  /** Mac: macOS. */
+  Mac = 3,
+}
+
 export interface IndexStateError {
   message?: string | nil;
   scope?: IndexErrorScope;

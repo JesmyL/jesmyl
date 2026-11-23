@@ -6,4 +6,5 @@ export const enum CmBroadcastTabId {
   Dropdowns = 42,
   Alert = 23,
   WorkDir = 12,
+  RemoteControl = 92,
 }

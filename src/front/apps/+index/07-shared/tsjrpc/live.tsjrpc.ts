@@ -1,7 +1,10 @@
 import { TsjrpcClient } from '#basis/tsjrpc/Tsjrpc.client';
 import { TsjrpcBaseClient } from '#basis/tsjrpc/TsjrpcBase.client';
-import { SchLiveTsjrpcModel, SchLiveTsjrpcSharesModel } from 'shared/api';
+import { atom } from 'atomaric';
+import { RemotePublishedControl, SchLiveTsjrpcModel, SchLiveTsjrpcSharesModel } from 'shared/api';
 import { liveDataAtom, liveDataStreamersAtom } from '../state';
+
+const liveDataPublishedRemoteControlsAtom = atom<RemotePublishedControl[] | null>(null);
 
 export const schLiveTsjrpcClient = new (class SchLive extends TsjrpcClient<SchLiveTsjrpcModel> {
   constructor() {
@@ -19,7 +22,16 @@ export const schLiveTsjrpcBaseClient =
         methods: {
           updateData: async ({ data: liveData }) => liveDataAtom.set(liveData),
           streamersList: async ({ streamers }) => liveDataStreamersAtom.set(streamers),
+          publishedRemoteControlsList: async ({ controls }) => liveDataPublishedRemoteControlsAtom.set(controls),
         },
       });
     }
   })();
+
+let isSchLiveTsjrpcBaseClientRegistered = false;
+export const registerSchLiveTsjrpcBaseClient = () => {
+  if (isSchLiveTsjrpcBaseClientRegistered) return;
+
+  isSchLiveTsjrpcBaseClientRegistered = true;
+  schLiveTsjrpcBaseClient.$$register();
+};

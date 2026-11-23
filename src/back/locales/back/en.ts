@@ -467,6 +467,7 @@ export const backLocalesEn: Record<BackLocaleKey, string> = {
   [BackLocaleKey.SchListCatMembersDefaultTitle]: 'Members',
   [BackLocaleKey.DashPushNoSubscriptions]: 'User has no PUSH notification subscriptions',
   [BackLocaleKey.DashPushCheckText]: 'PUSH notification check',
+  [BackLocaleKey.NoRightsScheduleRemoteControlsRead]: 'No permission to view schedule remotes',
   [BackLocaleKey.PushCheckSent]: 'Notification sent',
   [BackLocaleKey.PushSubscriptionsAbsent]: 'No PUSH notification subscriptions',
   [BackLocaleKey.PushCheckSentToDevices]: `Sent to $n; device${FUNCTION('dec')('$n', '', 's')}`,
