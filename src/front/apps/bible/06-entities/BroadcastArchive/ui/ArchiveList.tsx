@@ -30,10 +30,11 @@ export const BibleBroadcastArchiveList = memo(function BibleBroadcastArchive({ l
       {children(
         list.map((item, itemi) => {
           const address = makeBibleJoinedAddressText(langi, item, 'short');
+          const key = (Array.isArray(item) ? '#' : '') + address;
 
           return (
             <div
-              key={address}
+              key={key}
               data-archive-itemi={itemi}
               className={twJoin(
                 bibleBroadcastArchiveStopClassName,
