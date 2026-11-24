@@ -1,14 +1,16 @@
 import { probeRemoteControlReachability } from '#features/broadcast/remote/connection';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { RemoteBroadcastPublishedControl } from 'shared/api/tsjrpc.electtron/remote-broadcast';
+import { useCallback, useEffect, useState } from 'react';
+import { RemotePublishedControlScoped } from 'shared/api/remote-controls';
+
+const makeTarget = (control: RemotePublishedControlScoped) => `${control.ip}:${control.port}`;
 
 export const usePublishedRemoteControls = (
-  requestControls: () => Promise<RemoteBroadcastPublishedControl[]>,
+  requestControls: () => Promise<RemotePublishedControlScoped[]>,
 ) => {
-  const [controls, setControls] = useState<RemoteBroadcastPublishedControl[] | null>(null);
+  const [controls, setControls] = useState<RemotePublishedControlScoped[] | null>(null);
   const [isLoadFailed, setIsLoadFailed] = useState(false);
   const [reachability, setReachability] = useState<{
-    controls: RemoteBroadcastPublishedControl[];
+    controls: RemotePublishedControlScoped[];
     targets: Set<string>;
   } | null>(null);
 
@@ -28,7 +30,7 @@ export const usePublishedRemoteControls = (
     if (controls == null) return;
 
     let isActual = true;
-    const targets = controls.map(control => `${control.ip}:${control.port}`);
+    const targets = controls.map(makeTarget);
 
     void Promise.all(
       targets.map(async target => ({ target, isReachable: await probeRemoteControlReachability(target) })),
@@ -46,11 +48,7 @@ export const usePublishedRemoteControls = (
     };
   }, [controls]);
 
-  const reachableControls = useMemo(() => {
-    if (controls == null || reachability?.controls !== controls) return controls;
+  const reachableTargets = reachability?.controls === controls ? reachability.targets : null;
 
-    return controls.filter(control => reachability.targets.has(`${control.ip}:${control.port}`));
-  }, [controls, reachability]);
-
-  return { controls: reachableControls, isLoadFailed, reload };
+  return { controls, isLoadFailed, reload, reachableTargets };
 };

@@ -7,6 +7,7 @@ import { switchBroadcastApp } from '#features/broadcast/lib/broadcast-live-data'
 import { translateBase } from '#basis/locale';
 import { isElectronApp } from '#shared/tsjrpc.electron/tsjrpc.electron.client';
 import { soki, takeSokiVisitDeviceInfo } from '#shared/soki';
+import { reloadSW } from '#shared/sw-register';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { schLiveTsjrpcClient } from '$index/shared/tsjrpc';
 import { atom } from 'atomaric';
@@ -484,7 +485,7 @@ export const applyRemoteBroadcastCommand = (command: RemoteBroadcastCommand) => 
           ...makeToastKOMoodConfig(),
           id: remoteBroadcastVersionMismatchToastId,
           duration: Infinity,
-          action: { label: translateBase(BaseLocaleKey.Update), onClick: () => location.reload() },
+          action: { label: translateBase(BaseLocaleKey.Update), onClick: reloadSW },
         });
 
       resetRemoteBroadcastSnapshotMarkers();

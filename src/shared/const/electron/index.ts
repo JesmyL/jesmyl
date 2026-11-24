@@ -5,6 +5,8 @@ export const electronAppClientEventKey = 'el-client-tsjrpc-invoke';
 export const remoteBroadcastDefaultPort = 4738;
 export const remoteBroadcastPath = 'remote';
 export const remoteBroadcastSecretCodeSearchParam = 'from-list';
+export const remoteBroadcastUserNameSearchParam = 'fio';
+export const remoteBroadcastAskNameSearchParam = 'ask-name';
 
 export const parseRemoteControlTarget = (value: string): { ip: string; port: number } | nil => {
   const separatori = value.lastIndexOf(':');

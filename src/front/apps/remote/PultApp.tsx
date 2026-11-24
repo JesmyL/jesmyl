@@ -8,7 +8,7 @@ import { TheRemote } from '$remote/TheRemote';
 import { createRootRoute, createRoute, createRouter, Navigate, Outlet, RouterProvider } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import React from 'react';
-import { remoteBroadcastSecretCodeSearchParam } from 'shared/const/electron';
+import { remoteBroadcastAskNameSearchParam, remoteBroadcastSecretCodeSearchParam, remoteBroadcastUserNameSearchParam } from 'shared/const/electron';
 import { Toaster } from 'sonner';
 
 const rootRoute = createRootRoute({ component: PultRoot });
@@ -69,7 +69,17 @@ function RemoteRedirect() {
   return (
     <Navigate
       to="/remote/cm"
-      search={prev => ({ 'from-list': prev['from-list'] })}
+      search={prev => ({
+        ...(prev[remoteBroadcastSecretCodeSearchParam] == null
+          ? {}
+          : { [remoteBroadcastSecretCodeSearchParam]: prev[remoteBroadcastSecretCodeSearchParam] }),
+        ...(prev[remoteBroadcastUserNameSearchParam] == null
+          ? {}
+          : { [remoteBroadcastUserNameSearchParam]: prev[remoteBroadcastUserNameSearchParam] }),
+        ...(prev[remoteBroadcastAskNameSearchParam] == null
+          ? {}
+          : { [remoteBroadcastAskNameSearchParam]: prev[remoteBroadcastAskNameSearchParam] }),
+      })}
     />
   );
 }
@@ -80,6 +90,8 @@ function RemoteCm() {
   return (
     <TheRemote
       fromList={search[remoteBroadcastSecretCodeSearchParam]}
+      userName={search[remoteBroadcastUserNameSearchParam]}
+      askName={search[remoteBroadcastAskNameSearchParam]}
       appName="cm"
     />
   );
@@ -91,6 +103,8 @@ function RemoteBible() {
   return (
     <TheRemote
       fromList={search[remoteBroadcastSecretCodeSearchParam]}
+      userName={search[remoteBroadcastUserNameSearchParam]}
+      askName={search[remoteBroadcastAskNameSearchParam]}
       appName="bible"
     />
   );

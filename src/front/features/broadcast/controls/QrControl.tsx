@@ -1,5 +1,6 @@
 import { makeRemoteControlLink } from '#features/broadcast/remote/control-link';
 import { useTranslateRemote } from '#features/broadcast/remote/remote-locale';
+import { takeRemoteBroadcastDeviceName } from '#features/broadcast/remote/device';
 import {
   approveRemoteControlDevice,
   banRemoteControlDevice,
@@ -12,31 +13,17 @@ import {
 import { Button } from '#shared/components/ui/button';
 import { CopyTextButton } from '#shared/ui/CopyTextButton';
 import { usePrompt } from '#shared/ui/modal';
-import { useConfirm } from '#shared/ui/modal/confirm/lib/useConfirm';
 import { QRCode } from '#shared/ui/qr-code/QRCode';
 import { TextInput } from '#shared/ui/TextInput';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { isElectronApp } from '#shared/tsjrpc.electron/tsjrpc.electron.client';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
-import {
-  ElectronRemoteBroadcastInfo,
-  RemoteBroadcastErrorKind,
-  RemoteBroadcastPendingDevice,
-} from 'shared/api/tsjrpc.electtron/remote-broadcast';
+import { ElectronRemoteBroadcastInfo, RemoteBroadcastErrorKind } from 'shared/api/tsjrpc.electtron/remote-broadcast';
 import { RemoteLocaleKey } from 'shared/model/+locale/_RemoteLocaleKey';
-import { takeUserAuthName } from 'shared/utils/user.utils';
 
 const remoteBroadcastAutoConnectAttempts = 10;
 const remoteBroadcastAutoConnectDelayMs = 1500;
-
-type RemoteBroadcastNamedDevice = Pick<
-  RemoteBroadcastPendingDevice,
-  'deviceId' | 'name' | 'fio' | 'nick' | 'email' | 'login'
->;
-
-const takeRemoteBroadcastDeviceName = (device: RemoteBroadcastNamedDevice) =>
-  device.name || takeUserAuthName(device) || device.deviceId;
 
 export const QrControl = () => {
   if (!isElectronApp) return null;
@@ -129,39 +116,6 @@ const RemoteBroadcastPanel = () => {
     return () => clearTimeout(timeout);
   }, [autoConnectAttempti, info.isOn, isAutoConnectExhausted, isInfoLoaded]);
 
-  const confirm = useConfirm();
-  const [isConfirmingPendingDevice, setIsConfirmingPendingDevice] = useState(false);
-  const confirmedPendingDeviceIdsRef = useRef(new Set<string>());
-
-  useEffect(() => {
-    const pending = info.pending ?? [];
-
-    for (const deviceId of confirmedPendingDeviceIdsRef.current) {
-      if (!pending.some(device => device.deviceId === deviceId))
-        confirmedPendingDeviceIdsRef.current.delete(deviceId);
-    }
-
-    if (isConfirmingPendingDevice) return;
-
-    const next = pending.find(device => !confirmedPendingDeviceIdsRef.current.has(device.deviceId));
-    if (next == null) return;
-
-    confirmedPendingDeviceIdsRef.current.add(next.deviceId);
-    setIsConfirmingPendingDevice(true);
-
-    void confirm(
-      <div>
-        {tRemote(RemoteLocaleKey.ApproveRequest, {
-          n: takeRemoteBroadcastDeviceName(next),
-        })}
-      </div>,
-    )
-      .then(isApproved =>
-        isApproved ? approveRemoteControlDevice(next.deviceId) : banRemoteControlDevice(next.deviceId),
-      )
-      .finally(() => setIsConfirmingPendingDevice(false));
-  }, [confirm, info.pending, isConfirmingPendingDevice, tRemote]);
-
   const commitPort = () => {
     if (isPending) return;
 
@@ -204,13 +158,15 @@ const RemoteBroadcastPanel = () => {
         <span className={info.isOn ? 'text-x3' : 'text-xKO'}>
           {tRemote(info.isOn ? RemoteLocaleKey.Connected : RemoteLocaleKey.Disconnected)}
         </span>
-        <Button
-          size="sm"
-          disabled={isPending}
-          onClick={restartAutoConnect}
-        >
-          {tRemote(RemoteLocaleKey.Connect)}
-        </Button>
+        {info.isOn || (
+          <Button
+            size="sm"
+            disabled={isPending}
+            onClick={restartAutoConnect}
+          >
+            {tRemote(RemoteLocaleKey.Connect)}
+          </Button>
+        )}
       </div>
 
       <label className="flex gap-2 items-center">
@@ -255,12 +211,6 @@ const RemoteBroadcastPanel = () => {
           )}
         </div>
       )}
-
-      <div>
-        {tRemote(RemoteLocaleKey.Clients, {
-          n: info.clients,
-        })}
-      </div>
 
       <RemoteBroadcastPending pending={info.pending ?? []} />
       <RemoteBroadcastControllers controllers={info.controllers ?? []} />
@@ -324,7 +274,13 @@ const RemoteBroadcastControllers = ({ controllers }: { controllers: ElectronRemo
               className="truncate flex-1"
               title={controller.deviceId}
             >
-              {takeRemoteBroadcastDeviceName(controller)}
+              {(() => {
+                const shownName = takeRemoteBroadcastDeviceName(controller);
+
+                return controller.promptName != null && controller.promptName !== shownName
+                  ? `${shownName} (${controller.promptName})`
+                  : shownName;
+              })()}
             </span>
             <span className="opacity-60 whitespace-nowrap">{new Date(controller.since).toLocaleTimeString()}</span>
             <button

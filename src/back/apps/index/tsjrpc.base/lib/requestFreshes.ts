@@ -88,6 +88,7 @@ export const indexTSJRPCBaseRequestFreshes = {
           games: PgCheckFieldMode.RemoveIfNull,
           withTech: `=${Bool.False}`,
           isPaused: `=${Bool.False}`,
+          isRemoteControlsAllowed: `=${Bool.False}`,
           appInform: `=${Bool.True}`,
           prevStart: `=0`,
         }),

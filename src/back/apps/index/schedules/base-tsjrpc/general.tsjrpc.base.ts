@@ -247,7 +247,13 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
             },
           ];
 
-          await db.insert(scheduleDB).values({ ...sch, isRemoved: Bool.False, withTech: Bool.False, isPaused: Bool.False });
+          await db.insert(scheduleDB).values({
+            ...sch,
+            isRemoved: Bool.False,
+            withTech: Bool.False,
+            isPaused: Bool.False,
+            isRemoteControlsAllowed: Bool.False,
+          });
 
           return {
             value: sch,
@@ -289,6 +295,15 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
           async sch =>
             backLocaleError(sch.isPaused ? BackLocaleKey.SchPausedDisabled : BackLocaleKey.SchPausedEnabled, {
               t: await scheduleTitleInBrackets(sch),
+            }),
+          true,
+        ),
+        setIsRemoteControlsAllowed: updateScheduleValue(
+          'isRemoteControlsAllowed',
+          async sch =>
+            backLocaleError(BackLocaleKey.SchRemoteControlsAllowed, {
+              t: await scheduleTitleInBrackets(sch),
+              v: sch.isRemoteControlsAllowed ?? false,
             }),
           true,
         ),

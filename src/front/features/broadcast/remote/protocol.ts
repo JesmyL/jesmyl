@@ -54,6 +54,7 @@ const parsePublishedControl = (value: unknown): RemoteBroadcastPublishedControl 
     ip,
     port,
     ...(fio == null ? {} : { fio }),
+    ...(typeof value.isConnectable === 'boolean' ? { isConnectable: value.isConnectable } : {}),
     ...(secretCode == null ? {} : { secretCode }),
   };
 };
@@ -372,6 +373,13 @@ export const parseRemoteBroadcastServerMessage = (value: unknown): IncomingRemot
     value.v >= 0
   )
     return { k: RemoteBroadcastMessageKind.Version, version: value.v };
+
+  if (
+    value.k === RemoteBroadcastMessageKind.Scheme &&
+    typeof value.g === 'number' &&
+    Number.isFinite(value.g)
+  )
+    return { k: RemoteBroadcastMessageKind.Scheme, gamuti: value.g };
 
   if (value.k === RemoteBroadcastMessageKind.Controls) {
     if (!Array.isArray(value.controls)) return null;

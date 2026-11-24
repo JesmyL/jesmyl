@@ -1,11 +1,11 @@
 import { RemoteLocaleKey } from 'shared/model/+locale/_RemoteLocaleKey';
 
-export const localeRemoteUa: Record<Exclude<RemoteLocaleKey, RemoteLocaleKey.VersionMismatch>, string> = {
+export const localeRemoteUa: Record<Exclude<RemoteLocaleKey, RemoteLocaleKey.VersionMismatch | RemoteLocaleKey.Clients>, string> = {
   [RemoteLocaleKey.Control]: 'Дистанційне керування',
   [RemoteLocaleKey.Connected]: 'Підключено',
   [RemoteLocaleKey.Disconnected]: 'Відключено',
   [RemoteLocaleKey.Reconnecting]: 'Перепідключення…',
-  [RemoteLocaleKey.Banned]: 'Пристрій заблоковано для керування трансляцією з цього комп’ютера.',
+  [RemoteLocaleKey.Banned]: 'Пристрій заблоковано',
   [RemoteLocaleKey.NoLan]: 'Не вдалося визначити локальну IP-адресу. Перевірте підключення до мережі.',
   [RemoteLocaleKey.UnknownError]: 'Не вдалося запустити сервер пульта. Спробуйте ще раз.',
   [RemoteLocaleKey.NotFound]: 'За цією адресою трансляцію не знайдено',
@@ -30,7 +30,6 @@ export const localeRemoteUa: Record<Exclude<RemoteLocaleKey, RemoteLocaleKey.Ver
   [RemoteLocaleKey.ApproveRequest]: 'Підключення неавторизованого пристрою $n — дозволити?',
   [RemoteLocaleKey.Approve]: 'Дозволити',
   [RemoteLocaleKey.PendingList]: 'Очікують підтвердження',
-  [RemoteLocaleKey.Clients]: 'Підключено: $n',
   [RemoteLocaleKey.Port]: 'Порт',
   [RemoteLocaleKey.PortBusy]: 'Порт $p уже зайнятий. Виберіть інший порт.',
   [RemoteLocaleKey.PortBusyPrompt]: 'Порт зайнятий — вкажіть новий',
@@ -48,4 +47,5 @@ export const localeRemoteUa: Record<Exclude<RemoteLocaleKey, RemoteLocaleKey.Ver
   [RemoteLocaleKey.SwitchApp]: 'Переключити',
   [RemoteLocaleKey.SearchByBible]: 'Пошук по Біблії',
   [RemoteLocaleKey.VersionsNotEqual]: '$a !== $b',
+  [RemoteLocaleKey.NewPultVersionAvailable]: 'Доступна нова версія пульта',
 };

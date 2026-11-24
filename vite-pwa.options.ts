@@ -10,8 +10,7 @@ export const vitePWAOptions = {
   filename: 'sw.ts',
   manifestFilename,
   injectManifest: {
-    globPatterns: ['**/*.{js,wasm,css,html}'],
-    globIgnores: ['**/pult.html', '**/assets/pult-*.js'],
+    globPatterns: ['**/*.{js,wasm,css,html}', 'pult-assets.json'],
   },
   manifest: {
     name: 'Jesus my Lord',

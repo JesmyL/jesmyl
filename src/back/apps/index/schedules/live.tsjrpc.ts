@@ -1,24 +1,21 @@
+import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
+import { sokiServer } from 'back/complect/soki/SokiServer';
+import { insertDashMessage } from 'back/dash/visits';
 import { backLocaleError, backLocalePayload, translateBackTexts } from 'back/locales/back';
-import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { TsjrpcServerMethods } from 'back/tsjrpc.server';
-import { RemotePublishedControl, ScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
+import { takeLogginedAuthOrThrow } from 'back/utils';
+import { RemotePublishedControl, RemotePublishedControlScoped, ScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
 import { SchLiveTsjrpcModel, SchLiveTsjrpcSharesModel } from 'shared/api/tsjrpc/schedules/live.tsjrpc.model';
-import {
-  parseRemoteControlTarget,
-  remoteBroadcastPath,
-  remoteBroadcastSecretCodeLength,
-} from 'shared/const/electron';
+import { parseRemoteControlTarget, remoteBroadcastPath, remoteBroadcastSecretCodeLength } from 'shared/const/electron';
+import { Bool } from 'shared/enums';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { IndexSchWBroadcastLiveDataValue, RemoteBroadcastOs } from 'shared/model/index/Index.model';
+import { DashMessageKind } from 'shared/model/index/visitsDashboard';
 import { emptyFunc, itNNull } from 'shared/utils';
 import { mapObjectEntries } from 'shared/utils/object.utils';
-import { sokiServer } from 'back/complect/soki/SokiServer';
-import { WebSocket } from 'ws';
-import { insertDashMessage } from 'back/dash/visits';
-import { DashMessageKind } from 'shared/model/index/visitsDashboard';
-import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
-import { takeLogginedAuthOrThrow } from 'back/utils';
 import { takeUserAuthName } from 'shared/utils/user.utils';
+import { WebSocket } from 'ws';
 import { takeUserTiny } from '../tinies/userTiny';
 
 const theLiveData = {} as PRecord<ScheduleWidgetWid, PRecord<SokiAuthLogin, IndexSchWBroadcastLiveDataValue>>;
@@ -30,7 +27,7 @@ const remoteControls = {} as PRecord<
   SokiAuthLogin,
   { ip: string; port: number; deviceEmoji: string; agent: string; os: RemoteBroadcastOs; secretCode?: string }
 >;
-const publishedRemoteControlsWaiters = new Set<WebSocket>();
+const publishedRemoteControlsWaiters = new Map<WebSocket, ScheduleWidgetWid | nil>();
 const remoteControlPublisherByClient = new WeakMap<WebSocket, SokiAuthLogin>();
 const remoteControlPublisherByLogin: PRecord<SokiAuthLogin, WebSocket> = {};
 const remoteControlCloseGraceMs = 90_000;
@@ -81,18 +78,26 @@ const parseRemoteControlOs = (value: unknown): RemoteBroadcastOs =>
 const parseRemoteControlSecretCode = (value: unknown): string | nil =>
   typeof value === 'string' && value.length === remoteBroadcastSecretCodeLength ? value : null;
 
-export const takePublishedRemoteControls = async (): Promise<RemotePublishedControl[]> => {
+export const takePublishedRemoteControls = async (
+  schw: ScheduleWidgetWid | nil,
+): Promise<RemotePublishedControlScoped[]> => {
+  const sch = schw == null ? null : await takeScheduleWidgetTiny({ w: schw }, false);
+  const isAllowed = schw == null || sch?.isRemoteControlsAllowed === Bool.True;
+
   const controls = await Promise.all(
     mapObjectEntries(remoteControls, async (login, control) => {
       if (control == null) return null;
 
       const user = await takeUserTiny({ l: login }, false);
+      const isConnected = schw == null || theLiveData[schw]?.[login] != null;
 
       return {
         fio: takeUserAuthName(user?.uauth) || login,
         ip: control.ip,
         port: control.port,
         ...(control.secretCode == null ? {} : { secretCode: control.secretCode }),
+        // В списке разрешены только экраны, сейчас подключённые к расписанию, у которого в настройках разрешено подключение пультов
+        isConnectable: isAllowed && isConnected,
       };
     }),
   );
@@ -100,18 +105,44 @@ export const takePublishedRemoteControls = async (): Promise<RemotePublishedCont
   return controls.filter(itNNull).sort((a, b) => a.fio.localeCompare(b.fio));
 };
 
+const takeLegacyPublishedRemoteControls = async (): Promise<RemotePublishedControl[]> => {
+  const controls = await takePublishedRemoteControls(null);
+
+  return controls.map(({ fio, ip, port, secretCode }) => ({
+    fio,
+    ip,
+    port,
+    ...(secretCode == null ? {} : { secretCode }),
+  }));
+};
+
 const sharePublishedRemoteControls = async () => {
   if (publishedRemoteControlsWaiters.size === 0) return;
 
-  const controls = await takePublishedRemoteControls();
+  const controlsBySchw = new Map(
+    await Promise.all(
+      Array.from(new Set(publishedRemoteControlsWaiters.values()), async schw => {
+        return [schw, await takePublishedRemoteControls(schw)] as const;
+      }),
+    ),
+  );
 
-  for (const client of publishedRemoteControlsWaiters) {
+  for (const [client, schw] of publishedRemoteControlsWaiters) {
     try {
-      schLiveTsjrpcSharesServer.publishedRemoteControlsList({ controls }, client);
+      schLiveTsjrpcSharesServer.publishedRemoteControlsList({ controls: controlsBySchw.get(schw) ?? [] }, client);
     } catch (_error) {
       publishedRemoteControlsWaiters.delete(client);
     }
   }
+};
+
+const registerPublishedRemoteControlsWaiter = (client: WebSocket | nil, schw: ScheduleWidgetWid | nil) => {
+  if (client == null) return;
+
+  const isNewWaiter = !publishedRemoteControlsWaiters.has(client);
+  publishedRemoteControlsWaiters.set(client, schw);
+
+  if (isNewWaiter) client.once('close', () => publishedRemoteControlsWaiters.delete(client));
 };
 
 const logStreamStart = async (schw: ScheduleWidgetWid | null, login: SokiAuthLogin | null, fio: string) => {
@@ -248,12 +279,17 @@ export const schLiveTsjrpcServer = new (class SchLive extends TsjrpcBaseServer<S
         requestPublishedRemoteControls_1: async (_args, { auth, client }) => {
           if (auth?.login == null) return { value: [] };
 
-          if (client != null && !publishedRemoteControlsWaiters.has(client)) {
-            publishedRemoteControlsWaiters.add(client);
-            client.once('close', () => publishedRemoteControlsWaiters.delete(client));
-          }
+          registerPublishedRemoteControlsWaiter(client, null);
 
-          return { value: await takePublishedRemoteControls() };
+          return { value: await takeLegacyPublishedRemoteControls() };
+        },
+
+        requestPublishedRemoteControls_2: async ({ schw }, { auth, client }) => {
+          if (auth?.login == null) return { value: [] };
+
+          registerPublishedRemoteControlsWaiter(client, schw);
+
+          return { value: await takePublishedRemoteControls(schw) };
         },
 
         reset: async ({ schw }, { auth }) => {

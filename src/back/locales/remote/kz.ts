@@ -1,11 +1,11 @@
 import { RemoteLocaleKey } from 'shared/model/+locale/_RemoteLocaleKey';
 
-export const localeRemoteKz: Record<Exclude<RemoteLocaleKey, RemoteLocaleKey.VersionMismatch>, string> = {
+export const localeRemoteKz: Record<Exclude<RemoteLocaleKey, RemoteLocaleKey.VersionMismatch | RemoteLocaleKey.Clients>, string> = {
   [RemoteLocaleKey.Control]: 'Қашықтан басқару',
   [RemoteLocaleKey.Connected]: 'Қосылды',
   [RemoteLocaleKey.Disconnected]: 'Ажыратылды',
   [RemoteLocaleKey.Reconnecting]: 'Қайта қосылуда…',
-  [RemoteLocaleKey.Banned]: 'Бұл құрылғы осы компьютерден трансляцияны басқарудан бұғатталған.',
+  [RemoteLocaleKey.Banned]: 'Бұл құрылғы бұғатталған',
   [RemoteLocaleKey.NoLan]: 'Жергілікті IP мекенжайын анықтау мүмкін болмады. Желіге қосылуды тексеріңіз.',
   [RemoteLocaleKey.UnknownError]: 'Пульт серверін іске қосу мүмкін болмады. Қайталап көріңіз.',
   [RemoteLocaleKey.NotFound]: 'Бұл мекенжайда трансляция табылмады',
@@ -30,7 +30,6 @@ export const localeRemoteKz: Record<Exclude<RemoteLocaleKey, RemoteLocaleKey.Ver
   [RemoteLocaleKey.ApproveRequest]: 'Авторизацияланбаған $n құрылғысы қосылуда — рұқсат бересіз бе?',
   [RemoteLocaleKey.Approve]: 'Рұқсат беру',
   [RemoteLocaleKey.PendingList]: 'Растауды күтуде',
-  [RemoteLocaleKey.Clients]: 'Қосылған: $n',
   [RemoteLocaleKey.Port]: 'Порт',
   [RemoteLocaleKey.PortBusy]: '$p порты бос емес. Басқа порт таңдаңыз.',
   [RemoteLocaleKey.PortBusyPrompt]: 'Порт бос емес — жаңасын көрсетіңіз',
@@ -48,4 +47,5 @@ export const localeRemoteKz: Record<Exclude<RemoteLocaleKey, RemoteLocaleKey.Ver
   [RemoteLocaleKey.SwitchApp]: 'Ауыстыру',
   [RemoteLocaleKey.SearchByBible]: 'Киелі кітап бойынша іздеу',
   [RemoteLocaleKey.VersionsNotEqual]: '$a !== $b',
+  [RemoteLocaleKey.NewPultVersionAvailable]: 'Пульттің жаңа нұсқасы қолжетімді',
 };

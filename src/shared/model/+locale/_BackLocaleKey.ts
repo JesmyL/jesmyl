@@ -482,4 +482,8 @@ export const enum BackLocaleKey {
 
   TextTransferFileTooLarge = 475,
   TextTransferFileCorrupted = 476,
+  /** В расписании $t разрешено или запрещено подключение пультов */
+  SchRemoteControlsAllowed = 477,
+  /** @deprecated 1366 */
+  SchRemoteControlsDisallowed = 478,
 }

@@ -7,7 +7,7 @@ export const enum RemoteLocaleKey {
   Disconnected = 2,
   /** Переподключение… */
   Reconnecting = 3,
-  /** Устройство заблокировано для управления трансляцией с этого компьютера. */
+  /** Устройство заблокировано */
   Banned = 4,
   /** Не удалось определить локальный IP-адрес. Проверьте подключение к сети. */
   NoLan = 5,
@@ -59,7 +59,7 @@ export const enum RemoteLocaleKey {
   Approve = 28,
   /** Ожидают подтверждения */
   PendingList = 29,
-  /** Подключено: $n */
+  /** @deprecated 1368 */
   Clients = 30,
   /** Порт */
   Port = 31,
@@ -95,4 +95,6 @@ export const enum RemoteLocaleKey {
   SearchByBible = 46,
   /** $a !== $b — версии экрана и пульта */
   VersionsNotEqual = 47,
+  /** Доступна новая версия пульта */
+  NewPultVersionAvailable = 48,
 }

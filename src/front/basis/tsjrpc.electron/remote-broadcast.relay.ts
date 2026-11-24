@@ -1,14 +1,16 @@
 import { currentLangiAtom } from '#basis/locale';
+import { takeEffectiveGamutIndex } from '#basis/model/ColorGamut.model';
 import { localeLastModifiedAtAtom, takeBaseLanguageAtom } from '#basis/state/locale';
+import { syncPultFrontFiles } from '#basis/tsjrpc.electron/pult-front-sync';
 import { electronRemoteBroadcastTsjrpcClientMethods } from '#basis/tsjrpc.electron/remote-broadcast.cli.methods';
+import { broadcastNextLiveDataAtom } from '#features/broadcast/atoms';
 import { applyRemoteLocaleDict, remoteLocaleAtom } from '#features/broadcast/remote/remote-locale';
 import { isElectronApp } from '#shared/tsjrpc.electron/tsjrpc.electron.client';
+import { indexIDB } from '$index/shared/state';
 import { indexTsjrpcClientMethods, schLiveTsjrpcClient } from '$index/shared/tsjrpc';
-import { Langi } from 'shared/api';
-import {
-  RemoteBroadcastPublishedControl,
-  RemoteLocalePayload,
-} from 'shared/api/tsjrpc.electtron/remote-broadcast';
+import { liveQuery } from 'dexie';
+import { Langi, ScheduleWidgetWidDef } from 'shared/api';
+import { RemoteBroadcastPublishedControl, RemoteLocalePayload } from 'shared/api/tsjrpc.electtron/remote-broadcast';
 import { emptyFunc } from 'shared/utils';
 import { objectLength } from 'shared/utils/object.utils';
 
@@ -32,6 +34,12 @@ const pushInstalledLocales = () =>
   void electronRemoteBroadcastTsjrpcClientMethods
     .sendInstalledLocales(makeInstalledLocalesPayload(currentLangiAtom.get()), mainWindowTool)
     .catch(emptyFunc);
+
+const pushScreenScheme = async () => {
+  const gamuti = takeEffectiveGamutIndex(await indexIDB.get.appColorGamutIndex());
+
+  void electronRemoteBroadcastTsjrpcClientMethods.sendScreenScheme({ gamuti }, mainWindowTool).catch(emptyFunc);
+};
 
 export const handlePultLocalesRequest = async ({
   langi,
@@ -77,10 +85,16 @@ export const handlePultLocalesRequest = async ({
 
 export const handlePublishedControlsRequest = async () => {
   const share = (controls: RemoteBroadcastPublishedControl[]) =>
-    void electronRemoteBroadcastTsjrpcClientMethods.sharePublishedControls({ controls }, mainWindowTool).catch(emptyFunc);
+    void electronRemoteBroadcastTsjrpcClientMethods
+      .sharePublishedControls({ controls }, mainWindowTool)
+      .catch(emptyFunc);
 
   try {
-    const controls = await schLiveTsjrpcClient.requestPublishedRemoteControls_1(undefined, { timeout: 8_000 });
+    const { schw } = broadcastNextLiveDataAtom.get();
+    const controls = await schLiveTsjrpcClient.requestPublishedRemoteControls_2(
+      { schw: schw && schw !== ScheduleWidgetWidDef ? schw : null },
+      { timeout: 8_000 },
+    );
 
     share(controls);
   } catch {
@@ -95,8 +109,11 @@ export const registerRemoteBroadcastRelay = () => {
 
   isRemoteBroadcastRelayRegistered = true;
 
+  liveQuery(async () => indexIDB.get.appColorGamutIndex()).subscribe(pushScreenScheme);
+  pushScreenScheme();
   takeBaseLanguageAtom().subscribe(pushInstalledLocales);
   remoteLocaleAtom.subscribe(pushInstalledLocales);
   currentLangiAtom.subscribe(pushInstalledLocales);
   pushInstalledLocales();
+  void syncPultFrontFiles();
 };

@@ -366,6 +366,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.ScheduleFirstIsTechDay]: 'Перший - технічний день',
   [BaseLocaleKey.ScheduleMakeFirstDayUsual]: 'Зробити перший день звичайним?',
   [BaseLocaleKey.ScheduleFirstDayPrep]: 'Зробити перший день підготовчим?',
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleAllowRemoteControls)`${IF('$v').THEN`Заборонити`.ELSE`Дозволити`} підключення пультів`,
   [BaseLocaleKey.ScheduleDefaultRights]: 'Права за замовчуванням',
   [BaseLocaleKey.ScheduleSmallFontStatements]: 'Чинні твердження дрібним шрифтом',
   [BaseLocaleKey.ScheduleNewUser]: ' - Новий',

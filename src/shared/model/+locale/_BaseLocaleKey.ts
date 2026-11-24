@@ -956,6 +956,10 @@ export const enum BaseLocaleKey {
 
   /** @deprecated 1363 */
   RemoteControlPortBusyPrompt = 861,
+  /** Разрешить или запретить подключение пультов */
+  ScheduleAllowRemoteControls = 862,
+  /** @deprecated 1366 */
+  ScheduleDisallowRemoteControls = 863,
   /** Удалить файлы /down */
   DownFilesRemoveAllButton = 864,
   /** Подтверди удаление $c */

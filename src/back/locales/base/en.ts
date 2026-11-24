@@ -365,6 +365,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.ScheduleFirstIsTechDay]: 'The first is a tech day',
   [BaseLocaleKey.ScheduleMakeFirstDayUsual]: 'Make the first day regular?',
   [BaseLocaleKey.ScheduleFirstDayPrep]: 'Make the first day preparatory?',
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleAllowRemoteControls)`${IF('$v').THEN`Disallow`.ELSE`Allow`} remote control connections`,
   [BaseLocaleKey.ScheduleDefaultRights]: 'Default rights',
   [BaseLocaleKey.ScheduleSmallFontStatements]: 'The statements in small print apply',
   [BaseLocaleKey.ScheduleNewUser]: ' - New',

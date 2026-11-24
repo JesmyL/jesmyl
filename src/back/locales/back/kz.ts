@@ -311,6 +311,8 @@ export const backLocalesKz: Record<BackLocaleKey, string> = {
   [BackLocaleKey.SchFirstDayNormal]: '$t кестесінде бірінші күн қалыпты етілді',
   [BackLocaleKey.SchPausedDisabled]: '$t кестесі өшірілді',
   [BackLocaleKey.SchPausedEnabled]: '$t кестесі қосылды',
+  [BackLocaleKey.SchRemoteControlsAllowed]: STR`$t кестесінде пульттерді қосуға ${IF('$v').THEN`рұқсат берілді`.ELSE`тыйым салынды`}`,
+  [BackLocaleKey.SchRemoteControlsDisallowed]: '$t кестесінде пульттерді қосуға тыйым салынды',
   [BackLocaleKey.SchStartTimeSet]: '$t кестесінде басталу күні орнатылды - $d',
   [BackLocaleKey.SchPeriodChanged]: '$t кестесінде мерзімділік өзгертілді',
   [BackLocaleKey.SchAppInformDisabled]: STR`$t кестесінде қосымшадағы хабарламалар ${IF('$m').THEN`қосылды (${IF(isUtil.GT('$m', '1')).THEN`$m мин. бұрын және `.ELSE`тек `}басында)`.ELSE`өшірілді`}`,

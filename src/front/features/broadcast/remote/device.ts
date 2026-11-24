@@ -1,5 +1,11 @@
 import { DeviceId } from 'shared/api';
+import { RemoteBroadcastPendingDevice } from 'shared/api/tsjrpc.electtron/remote-broadcast';
 import { RemoteBroadcastOs } from 'shared/model/index/Index.model';
+import { takeUserAuthName } from 'shared/utils/user.utils';
+
+// Для авторизованных пользователей auth-имя (fio/nick/email/login) важнее имени из prompt
+export const takeRemoteBroadcastDeviceName = (device: RemoteBroadcastPendingDevice) =>
+  takeUserAuthName(device) || device.name || device.deviceId;
 
 export const takeRemoteBroadcastOs = (): RemoteBroadcastOs => {
   const source = navigator.platform || navigator.userAgent;
@@ -29,6 +35,10 @@ const takeStoredAtomValue = (key: string): string | nil => {
 
 const makeRandomDeviceId = () =>
   Array.from(crypto.getRandomValues(new Uint8Array(16)), byte => byte.toString(16).padStart(2, '0')).join('');
+
+let sessionId: string | nil = null;
+
+export const takeRemoteBroadcastSessionId = () => (sessionId ??= makeRandomDeviceId());
 
 export const takeRemoteBroadcastDeviceId = () => {
   const stored = takeStoredAtomValue(storedDeviceIdKey);

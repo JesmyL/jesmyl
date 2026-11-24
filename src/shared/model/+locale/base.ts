@@ -285,6 +285,8 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.ScheduleFirstIsTechDay]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleMakeFirstDayUsual]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleFirstDayPrep]: LocaleSimpleString;
+  [BaseLocaleKey.ScheduleAllowRemoteControls]: StringTemplaterInterpolation<{ v: boolean | Bool }>;
+  [BaseLocaleKey.ScheduleDisallowRemoteControls]?: LocaleSimpleString;
   [BaseLocaleKey.ScheduleDefaultRights]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleSmallFontStatements]: LocaleSimpleString;
   [BaseLocaleKey.ScheduleNewUser]: LocaleSimpleString;

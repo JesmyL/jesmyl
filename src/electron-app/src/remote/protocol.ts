@@ -323,6 +323,7 @@ export const parseRemoteBroadcastClientMessage = (value: unknown): RemoteBroadca
     if (deviceId == null) return null;
 
     const version = parseVersion(value.version);
+    const session = parseDeviceId(value.session);
 
     const jesmylToken = parseJesmylToken(value.jesmylToken);
     const viaQr = parseViaQr(value.viaQr);
@@ -342,6 +343,7 @@ export const parseRemoteBroadcastClientMessage = (value: unknown): RemoteBroadca
       ...(viaQr == null ? {} : { viaQr }),
       ...(secretCode == null ? {} : { secretCode }),
       ...(name == null ? {} : { name }),
+      ...(session == null ? {} : { session }),
       ...(version == null ? {} : { version }),
       ...(langi == null ? {} : { langi }),
     };

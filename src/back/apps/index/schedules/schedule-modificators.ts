@@ -172,6 +172,7 @@ export const modifySchedule =
           isRemoved: updates.isRemoved ? Bool.True : Bool.False,
           withTech: updates.withTech ? Bool.True : Bool.False,
           isPaused: updates.isPaused ? Bool.True : Bool.False,
+          isRemoteControlsAllowed: updates.isRemoteControlsAllowed ?? sch.isRemoteControlsAllowed ?? Bool.False,
           appInform: updates.appInform ?? sch.appInform ?? 1,
           m: mod,
         },

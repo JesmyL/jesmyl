@@ -58,6 +58,21 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
     });
   });
 
+  app.get('/pult.html', (_req, res) => {
+    res.setHeader('Cache-Control', 'no-cache');
+    res.sendFile(path.join(hostRootDir, 'pult.html'), (err: Error) => {
+      if (err && !res.headersSent) res.status(404).send('File not found');
+    });
+  });
+
+  app.get('/pult-assets.json', (_req, res) => {
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.sendFile(path.join(hostRootDir, 'pult-assets.json'), (err: Error) => {
+      if (err && !res.headersSent) res.status(404).send('File not found');
+    });
+  });
+
   app.use(express.json());
   app.use('/assets', express.static(`${hostRootDir}/assets`));
   app.use('/sounds', express.static(`${hostRootDir}/sounds`));

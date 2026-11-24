@@ -3,6 +3,7 @@ import { useFingersActions } from '#basis/lib/global-listeners/useFingersActions
 import { useGlobalColorGamutSetter } from '#basis/lib/global-listeners/useGlobalColorGamutSetter';
 import { useGlobalFontFamilySetter } from '#basis/lib/global-listeners/useGlobalFontFamilySetter';
 import { useGlobalThemeColorSetter } from '#basis/lib/global-listeners/useGlobalThemeColorSetter';
+import { useRemoteBroadcastPendingApprovals } from '#basis/lib/global-listeners/useRemoteBroadcastPendingApprovals';
 import { currentLangiAtom, translateBase } from '#basis/locale';
 import { LangiPickerModal } from '#basis/locale/LangiPickerModal';
 import { currentAppNameAtom } from '#basis/state/currentAppNameAtom';
@@ -93,6 +94,7 @@ export const AppComponent = () => {
   useGlobalColorGamutSetter();
   useGlobalFontFamilySetter();
   useGlobalThemeColorSetter();
+  useRemoteBroadcastPendingApprovals();
 
   useEffect(() => soki.pushCurrentUrl(), [loc.href]);
 

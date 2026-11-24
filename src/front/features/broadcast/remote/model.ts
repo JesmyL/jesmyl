@@ -15,6 +15,8 @@ export const remoteBroadcastVersionMismatchToastId = 'remoteBroadcastVersionMism
 
 export const remoteDeviceNameAtom = atom('', 'remote:deviceName');
 
+export const remoteGamutIndexAtom = atom<number | nil>(null);
+
 export const remoteBibleSearchMinTermLength = 3;
 
 export const enum RemoteBroadcastSearchKind {
@@ -46,6 +48,7 @@ export type IncomingRemoteBroadcastMessage =
   | { k: RemoteBroadcastMessageKind.Error; error: RemoteBroadcastErrorKind }
   | { k: RemoteBroadcastMessageKind.Token; token: string }
   | { k: RemoteBroadcastMessageKind.Version; version: number }
+  | { k: RemoteBroadcastMessageKind.Scheme; gamuti: number }
   | { k: RemoteBroadcastMessageKind.Controls; controls: RemoteBroadcastPublishedControl[] }
   | {
       k: RemoteBroadcastMessageKind.Locale;

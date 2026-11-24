@@ -309,6 +309,8 @@ export const backLocalesEn: Record<BackLocaleKey, string> = {
   [BackLocaleKey.SchFirstDayNormal]: 'First day made regular in schedule $t',
   [BackLocaleKey.SchPausedDisabled]: 'Schedule $t disabled',
   [BackLocaleKey.SchPausedEnabled]: 'Schedule $t enabled',
+  [BackLocaleKey.SchRemoteControlsAllowed]: STR`Remote control connections are ${IF('$v').THEN`allowed`.ELSE`disallowed`} in schedule $t`,
+  [BackLocaleKey.SchRemoteControlsDisallowed]: 'Remote control connections are disallowed in schedule $t',
   [BackLocaleKey.SchStartTimeSet]: 'Start date set in schedule $t - $d',
   [BackLocaleKey.SchPeriodChanged]: 'Periodicity changed in schedule $t',
   [BackLocaleKey.SchAppInformDisabled]: STR`In-app notifications ${IF('$m').THEN`enabled in schedule $t (${IF(isUtil.GT('$m', '1')).THEN`$m min. before and `.ELSE`only `}at the start)`.ELSE`disabled in schedule $t`}`,

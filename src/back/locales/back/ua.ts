@@ -312,6 +312,8 @@ export const backLocalesUa: Record<BackLocaleKey, string> = {
   [BackLocaleKey.SchFirstDayNormal]: 'У розкладі $t перший день зроблено звичайним',
   [BackLocaleKey.SchPausedDisabled]: 'У розкладі $t вимкнено',
   [BackLocaleKey.SchPausedEnabled]: 'У розкладі $t увімкнено',
+  [BackLocaleKey.SchRemoteControlsAllowed]: STR`У розкладі $t ${IF('$v').THEN`дозволено`.ELSE`заборонено`} підключення пультів`,
+  [BackLocaleKey.SchRemoteControlsDisallowed]: 'У розкладі $t заборонено підключення пультів',
   [BackLocaleKey.SchStartTimeSet]: 'У розкладі $t встановлено дату початку - $d',
   [BackLocaleKey.SchPeriodChanged]: 'У розкладі $t змінено періодичність',
   [BackLocaleKey.SchAppInformDisabled]: STR`У розкладі $t сповіщення в застосунку ${IF('$m').THEN`увімкнено (${IF(isUtil.GT('$m', '1')).THEN`за $m хв. і `.ELSE`лише `}на початку)`.ELSE`вимкнено`}`,

@@ -92,6 +92,9 @@ export const ScheduleWidgetControlContent = () => {
   const selectedPeriodKind: SchedulePeriodKind | null =
     period == null || period.kind === SchedulePeriodKind.Once ? null : period.kind;
   const pauseAction = translateBase(BaseLocaleKey.ScheduleEnable, { v: schedule.isPaused ?? Bool.False });
+  const remoteControlsAllowedAction = translateBase(BaseLocaleKey.ScheduleAllowRemoteControls, {
+    v: schedule.isRemoteControlsAllowed ?? Bool.False,
+  });
   const appInform = schedule.appInform ?? 0;
 
   return (
@@ -303,6 +306,18 @@ export const ScheduleWidgetControlContent = () => {
                 schGeneralTsjrpcClient.setFirstDayAsTech({
                   props: scheduleScopeProps,
                   value: rights.schedule.withTech ? undefined : 1,
+                })
+              }
+            />
+            <TheIconSendButton
+              icon={schedule.isRemoteControlsAllowed ? 'CheckmarkSquare02' : 'Square'}
+              postfix={remoteControlsAllowedAction}
+              confirm={remoteControlsAllowedAction}
+              className="mb-2"
+              onSend={() =>
+                schGeneralTsjrpcClient.setIsRemoteControlsAllowed({
+                  props: scheduleScopeProps,
+                  value: schedule.isRemoteControlsAllowed ? undefined : 1,
                 })
               }
             />

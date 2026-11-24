@@ -1,11 +1,11 @@
 import { RemoteLocaleKey } from 'shared/model/+locale/_RemoteLocaleKey';
 
-export const localeRemoteEn: Record<Exclude<RemoteLocaleKey, RemoteLocaleKey.VersionMismatch>, string> = {
+export const localeRemoteEn: Record<Exclude<RemoteLocaleKey, RemoteLocaleKey.VersionMismatch | RemoteLocaleKey.Clients>, string> = {
   [RemoteLocaleKey.Control]: 'Remote control',
   [RemoteLocaleKey.Connected]: 'Connected',
   [RemoteLocaleKey.Disconnected]: 'Disconnected',
   [RemoteLocaleKey.Reconnecting]: 'Reconnecting…',
-  [RemoteLocaleKey.Banned]: 'This device is blocked from controlling the broadcast from this computer.',
+  [RemoteLocaleKey.Banned]: 'This device is blocked',
   [RemoteLocaleKey.NoLan]: 'Could not determine the local IP address. Check the network connection.',
   [RemoteLocaleKey.UnknownError]: 'Could not start the remote server. Try again.',
   [RemoteLocaleKey.NotFound]: 'No broadcast found at this address',
@@ -30,7 +30,6 @@ export const localeRemoteEn: Record<Exclude<RemoteLocaleKey, RemoteLocaleKey.Ver
   [RemoteLocaleKey.ApproveRequest]: 'An unauthorized device $n is connecting — allow it?',
   [RemoteLocaleKey.Approve]: 'Allow',
   [RemoteLocaleKey.PendingList]: 'Waiting for confirmation',
-  [RemoteLocaleKey.Clients]: 'Connected: $n',
   [RemoteLocaleKey.Port]: 'Port',
   [RemoteLocaleKey.PortBusy]: 'Port $p is busy. Choose another port.',
   [RemoteLocaleKey.PortBusyPrompt]: 'Port is busy — enter a new one',
@@ -48,4 +47,5 @@ export const localeRemoteEn: Record<Exclude<RemoteLocaleKey, RemoteLocaleKey.Ver
   [RemoteLocaleKey.SwitchApp]: 'Switch',
   [RemoteLocaleKey.SearchByBible]: 'Search by Bible',
   [RemoteLocaleKey.VersionsNotEqual]: '$a !== $b',
+  [RemoteLocaleKey.NewPultVersionAvailable]: 'A new pult version is available',
 };

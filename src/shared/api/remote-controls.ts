@@ -5,4 +5,6 @@ export type RemotePublishedControl = {
   secretCode?: string;
 };
 
+export type RemotePublishedControlScoped = RemotePublishedControl & { isConnectable: boolean };
+
 export const remoteAuthCheckRoutePath = '/auth-check';

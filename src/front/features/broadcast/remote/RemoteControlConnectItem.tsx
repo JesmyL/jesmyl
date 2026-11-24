@@ -3,11 +3,12 @@ import { RemoteControlConnectPopup } from '#features/broadcast/remote/RemoteCont
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { WithAtomTruthfulValue } from '#shared/ui/WithAtomTruthfulValue';
 import { Atom, atom } from 'atomaric';
+import { ScheduleWidgetWid } from 'shared/api';
 import { RemoteLocaleKey } from 'shared/model/+locale/_RemoteLocaleKey';
 
 let isOpenAtom: Atom<boolean>;
 
-export const RemoteControlConnectItem = () => {
+export const RemoteControlConnectItem = ({ schw }: { schw: ScheduleWidgetWid | nil }) => {
   const tRemote = useTranslateRemote();
 
   isOpenAtom ??= atom(false);
@@ -24,7 +25,10 @@ export const RemoteControlConnectItem = () => {
       />
 
       <WithAtomTruthfulValue atom={isOpenAtom}>
-        <RemoteControlConnectPopup onClose={isOpenAtom.reset} />
+        <RemoteControlConnectPopup
+          onClose={isOpenAtom.reset}
+          schw={schw}
+        />
       </WithAtomTruthfulValue>
     </>
   );

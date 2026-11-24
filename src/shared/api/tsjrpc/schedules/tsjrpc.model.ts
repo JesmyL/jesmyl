@@ -47,6 +47,7 @@ export type SchGeneralTsjrpcModel = {
   setSchedulePeriod: (args: { props: ScheduleScopeProps; period: IScheduleWidgetPeriod | nil }) => IScheduleWidget;
   setFirstDayAsTech: Callback<1 | und>;
   setPaused: Callback<1 | und>;
+  setIsRemoteControlsAllowed: Callback<1 | und>;
 
   setAppInform: Callback<ScheduleAppInform>;
 };

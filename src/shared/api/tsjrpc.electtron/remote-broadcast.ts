@@ -35,6 +35,8 @@ export const enum RemoteBroadcastMessageKind {
   Name = 7,
   /** Список доступных пультов */
   Controls = 8,
+  /** Цветовая схема экрана (эффективный индекс гаммы) */
+  Scheme = 9,
 }
 
 export const enum RemoteBroadcastComListKind {
@@ -179,6 +181,8 @@ export type RemoteBroadcastClientMessage =
       viaQr?: boolean;
       secretCode?: string;
       name?: string;
+      /** Идентификатор сессии страницы пульта — живёт от открытия страницы до её закрытия */
+      session?: string;
       langi?: number;
     }
   | { k: RemoteBroadcastMessageKind.Command; c: RemoteBroadcastCommand }
@@ -191,6 +195,7 @@ export type RemoteBroadcastPublishedControl = {
   ip: string;
   port: number;
   secretCode?: string;
+  isConnectable?: boolean;
 };
 
 export type RemoteBroadcastServerMessage =
@@ -198,6 +203,7 @@ export type RemoteBroadcastServerMessage =
   | { k: RemoteBroadcastMessageKind.Error; e: RemoteBroadcastErrorKind }
   | { k: RemoteBroadcastMessageKind.Token; t: string }
   | { k: RemoteBroadcastMessageKind.Version; v: number }
+  | { k: RemoteBroadcastMessageKind.Scheme; g: number }
   | { k: RemoteBroadcastMessageKind.Controls; controls: RemoteBroadcastPublishedControl[] }
   | {
       k: RemoteBroadcastMessageKind.Locale;
@@ -227,6 +233,8 @@ export type RemoteBroadcastController = RemoteBroadcastUserIdentity & {
   deviceId: string;
   since: number;
   name?: string;
+  /** Имя, которым пользователь представился через prompt на пульте при входе по QR-коду */
+  promptName?: string;
 };
 
 export type RemoteBroadcastPendingDevice = {
@@ -253,6 +261,9 @@ export type ElectronRemoteBroadcastInfo = {
   banned: RemoteBroadcastPendingDevice[];
 };
 
+/** Файл фронта пульта для передачи из PWA-кэша сайта в electron */
+export type PultFrontFile = { path: string; base64: string };
+
 export type ElectronRemoteBroadcastTsjrpcModel = {
   start: () => ElectronRemoteBroadcastInfo;
   stop: () => ElectronRemoteBroadcastInfo;
@@ -263,9 +274,11 @@ export type ElectronRemoteBroadcastTsjrpcModel = {
   unbanRemoteControl: (args: { deviceId: string }) => ElectronRemoteBroadcastInfo;
   approveRemoteControl: (args: { deviceId: string }) => ElectronRemoteBroadcastInfo;
   sendSnapshot: (args: { snapshot: RemoteBroadcastSnapshotDelta }) => void;
+  sendScreenScheme: (args: { gamuti: number }) => void;
   sendInstalledLocales: (args: RemoteLocalePayload) => void;
   sharePultLocales: (args: RemoteLocalePayload) => void;
   sharePublishedControls: (args: { controls: RemoteBroadcastPublishedControl[] }) => void;
+  sharePultFrontFiles: (args: { version: number; files: PultFrontFile[] }) => void;
 };
 
 export type ElectronRemoteBroadcastBaseTsjrpcModel = {

@@ -1,6 +1,10 @@
 import { TheRemote } from '$remote/TheRemote';
 import { createFileRoute } from '@tanstack/react-router';
-import { remoteBroadcastSecretCodeSearchParam } from 'shared/const/electron';
+import {
+  remoteBroadcastAskNameSearchParam,
+  remoteBroadcastSecretCodeSearchParam,
+  remoteBroadcastUserNameSearchParam,
+} from 'shared/const/electron';
 
 export const Route = createFileRoute('/remote/cm')({
   component: RouteComponent,
@@ -12,6 +16,8 @@ function RouteComponent() {
   return (
     <TheRemote
       fromList={search[remoteBroadcastSecretCodeSearchParam]}
+      userName={search[remoteBroadcastUserNameSearchParam]}
+      askName={search[remoteBroadcastAskNameSearchParam]}
       appName="cm"
     />
   );

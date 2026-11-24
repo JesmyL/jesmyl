@@ -30,24 +30,27 @@ import {
   remoteBroadcastPath,
   remoteBroadcastSecretCodeLength,
 } from '../../../shared/const/electron';
-import { jversion } from '../../../shared/values';
 import { electronRemoteBroadcastTsjrpcAppServerMethods } from '../tsjrpc/methods/remote-broadcast.server.methods';
 import { clearControlsCache, clearControlsRelay, forgetControlsClient, handlePultControlsRequest } from './controls';
+import { setPultFrontCacheSynced, takeCachedFrontRoot, takeCachedFrontVersion } from './front-cache';
 import { clearLocaleRelay, forgetLocaleClient, handlePultLocaleRequest } from './locales';
 import { signRemoteBroadcastJwt, verifyRemoteBroadcastJwt } from './jwt';
 import { parseRemoteBroadcastClientMessage } from './protocol';
+import { takeGamuti } from './screen-scheme';
 
 type RemoteBroadcastConfig = {
   port: number;
   secret: string;
   certHost: string | nil;
   deviceNames: Record<string, string>;
+  devicePromptNames: Record<string, string>;
   approvedDeviceIds: string[];
   bannedDevices: RemoteBroadcastPendingDevice[];
 };
 
 const configFileName = 'remote-broadcast.json';
 const maxClientMessageBytes = 64 * 1024;
+const maxSessionEntries = 500;
 const defaultCertDir = '/etc/letsencrypt/live';
 const secretLength = 64;
 const makeConnectSecretCode = () => crypto.randomBytes(remoteBroadcastSecretCodeLength / 2).toString('hex');
@@ -92,6 +95,16 @@ type RemoteBroadcastPendingHello = {
 const pendingHellos = new Map<WebSocket, RemoteBroadcastPendingHello>();
 const pendingNameHellos = new Map<WebSocket, RemoteBroadcastHelloMessage>();
 const deviceNames = new Map<string, string>();
+const devicePromptNames = new Map<string, string>();
+const presentedSessions = new Map<string, string>();
+const approvedSessions = new Map<string, string>();
+
+const evictOldestSession = (sessions: Map<string, string>) => {
+  if (sessions.size < maxSessionEntries) return;
+
+  const oldest = sessions.keys().next().value;
+  if (oldest != null) sessions.delete(oldest);
+};
 const authorizedDeviceIdentities = new Map<string, RemoteBroadcastUserIdentity>();
 const bannedDevices = new Map<string, RemoteBroadcastPendingDevice>();
 const approvedDeviceIds = new Set<string>();
@@ -140,6 +153,7 @@ const saveConfig = () => {
   config = {
     ...config,
     deviceNames: Object.fromEntries(deviceNames),
+    devicePromptNames: Object.fromEntries(devicePromptNames),
     approvedDeviceIds: Array.from(approvedDeviceIds),
     bannedDevices: Array.from(bannedDevices.values()),
   };
@@ -180,6 +194,8 @@ const parsePersistedBannedDevices = (value: unknown): RemoteBroadcastPendingDevi
 const applyPersistedRemoteBroadcastState = (value: RemoteBroadcastConfig) => {
   deviceNames.clear();
   for (const [deviceId, name] of Object.entries(value.deviceNames)) deviceNames.set(deviceId, name);
+  devicePromptNames.clear();
+  for (const [deviceId, name] of Object.entries(value.devicePromptNames)) devicePromptNames.set(deviceId, name);
   approvedDeviceIds.clear();
   for (const deviceId of value.approvedDeviceIds) approvedDeviceIds.add(deviceId);
   bannedDevices.clear();
@@ -201,6 +217,7 @@ const takeConfig = (): RemoteBroadcastConfig => {
         secret?: unknown;
         certHost?: unknown;
         deviceNames?: unknown;
+        devicePromptNames?: unknown;
         approvedDeviceIds?: unknown;
         bannedDevices?: unknown;
       };
@@ -221,6 +238,16 @@ const takeConfig = (): RemoteBroadcastConfig => {
           }
         }
 
+        const devicePromptNamesConfig: Record<string, string> = {};
+
+        if (typeof candidate.devicePromptNames === 'object' && candidate.devicePromptNames !== null) {
+          for (const [deviceId, name] of Object.entries(candidate.devicePromptNames)) {
+            if (typeof name !== 'string' || name.length === 0) continue;
+
+            devicePromptNamesConfig[deviceId] = name;
+          }
+        }
+
         const approvedDeviceIdsConfig = Array.isArray(candidate.approvedDeviceIds)
           ? candidate.approvedDeviceIds.filter(
               (deviceId): deviceId is string => typeof deviceId === 'string' && deviceId.length > 0,
@@ -232,6 +259,7 @@ const takeConfig = (): RemoteBroadcastConfig => {
           secret,
           certHost,
           deviceNames: deviceNamesConfig,
+          devicePromptNames: devicePromptNamesConfig,
           approvedDeviceIds: approvedDeviceIdsConfig,
           bannedDevices: parsePersistedBannedDevices(candidate.bannedDevices),
         };
@@ -242,6 +270,7 @@ const takeConfig = (): RemoteBroadcastConfig => {
           hasLegacyToken ||
           certHost !== candidate.certHost ||
           candidate.deviceNames === undefined ||
+          candidate.devicePromptNames === undefined ||
           candidate.approvedDeviceIds === undefined ||
           candidate.bannedDevices === undefined
         )
@@ -259,6 +288,7 @@ const takeConfig = (): RemoteBroadcastConfig => {
     secret: makeConfigSecret(),
     certHost: null,
     deviceNames: {},
+    devicePromptNames: {},
     approvedDeviceIds: [],
     bannedDevices: [],
   };
@@ -441,7 +471,10 @@ const takeFrontBuildRoot = () => {
   const configured = process.env.JESMYL_REMOTE_FRONT_BUILD;
   if (configured) return path.resolve(configured);
 
-  return app.isPackaged ? path.join(process.resourcesPath, 'front-build') : path.resolve(__dirname, '../../../build');
+  const cachedRoot = takeCachedFrontRoot();
+  if (fs.existsSync(path.join(cachedRoot, 'pult.html'))) return cachedRoot;
+
+  return path.resolve(__dirname, '../../../build');
 };
 
 const checkIsBuildReady = (buildRoot = takeFrontBuildRoot()) => fs.existsSync(path.join(buildRoot, 'pult.html'));
@@ -450,8 +483,7 @@ const fallbackHtml = `<!doctype html>
 <html lang="ru">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JesmyL</title></head>
 <body style="margin:0;padding:24px;font:16px/1.5 sans-serif;background:#111;color:#eee">
-<b>Пульт доступен только в собранном приложении.</b>
-<p>The remote control page is available only in the built desktop app.</p>
+<b>Пульт ещё не загружен. Подключитесь к интернету и перезапустите приложение.</b>
 </body></html>`;
 
 const writeHtml = (response: http.ServerResponse, html: string) => {
@@ -562,6 +594,8 @@ const broadcastMessage = (message: RemoteBroadcastServerMessage) => {
   }
 };
 
+export const broadcastScreenScheme = () => broadcastMessage({ k: RemoteBroadcastMessageKind.Scheme, g: takeGamuti() });
+
 const notifyFrontInfo = () => {
   void electronRemoteBroadcastTsjrpcAppServerMethods
     .info({ info: takeSafeRemoteBroadcastInfo() }, { toWinNum: 0, winNum: 0 })
@@ -627,7 +661,8 @@ const authorizeHello = (
 
   if (isVerifiedIdentity && identity?.login != null) authorizedDeviceIdentities.set(deviceId, identityFields);
 
-  sendClientMessage(ws, { k: RemoteBroadcastMessageKind.Version, v: jversion.num });
+  sendClientMessage(ws, { k: RemoteBroadcastMessageKind.Version, v: takeCachedFrontVersion() });
+  sendClientMessage(ws, { k: RemoteBroadcastMessageKind.Scheme, g: takeGamuti() });
 
   const currentDevice = clientDevices.get(ws);
 
@@ -675,6 +710,26 @@ const attachVerifiedRemoteBroadcastIdentity = async (ws: WebSocket, message: Rem
   notifyFrontInfo();
 };
 
+const attachPendingRemoteBroadcastIdentity = async (ws: WebSocket, message: RemoteBroadcastHelloMessage) => {
+  if (message.jesmylToken == null) return;
+
+  const outcome = await verifyJesmylTokenWithRetry(message.jesmylToken, message.deviceId, ws, {
+    isIgnoreUnavailableBackoff: true,
+  });
+
+  if (outcome?.kind !== 'verified') return;
+
+  const pendingHello = pendingHellos.get(ws);
+
+  if (pendingHello == null) {
+    await attachVerifiedRemoteBroadcastIdentity(ws, message);
+    return;
+  }
+
+  pendingHellos.set(ws, { ...pendingHello, identity: outcome.user, isVerifiedIdentity: true });
+  notifyFrontInfo();
+};
+
 const takeAuthorizedDeviceIdentity = (message: RemoteBroadcastHelloMessage): RemoteBroadcastUserIdentity | nil => {
   if (message.token == null) return null;
 
@@ -703,6 +758,12 @@ const takePendingDevices = (): RemoteBroadcastPendingDevice[] => {
   return Array.from(pendingByDeviceId.values());
 };
 
+const isPresentedSession = (message: RemoteBroadcastHelloMessage) =>
+  message.session != null && presentedSessions.get(message.deviceId) === message.session;
+
+const isApprovedSession = (message: RemoteBroadcastHelloMessage) =>
+  message.session != null && approvedSessions.get(message.deviceId) === message.session;
+
 const handleNamedHello = async (ws: WebSocket, message: RemoteBroadcastHelloMessage) => {
   const hasSecretCode = message.secretCode != null;
 
@@ -727,26 +788,9 @@ const handleNamedHello = async (ws: WebSocket, message: RemoteBroadcastHelloMess
   }
 
   const storedIdentity = takeAuthorizedDeviceIdentity(message);
-  let verifiedIdentity: RemoteBroadcastUserIdentity | nil = null;
 
-  if (
-    storedIdentity == null &&
-    message.secretCode == null &&
-    !approvedDeviceIds.has(message.deviceId) &&
-    message.jesmylToken != null
-  ) {
-    const outcome = await verifyJesmylTokenWithRetry(message.jesmylToken, message.deviceId, ws, {
-      isIgnoreUnavailableBackoff: true,
-    });
-
-    if (ws.readyState !== ws.OPEN) return;
-
-    if (outcome?.kind === 'verified') verifiedIdentity = outcome.user;
-  }
-
-  const authorizedIdentity = storedIdentity ?? verifiedIdentity;
-
-  if (message.secretCode == null && !approvedDeviceIds.has(message.deviceId) && authorizedIdentity == null) {
+  if (message.secretCode == null && !isApprovedSession(message)) {
+    // QR-подключения без from-list всегда требуют подтверждения на экране — подтверждение требуется один раз за сессию страницы пульта; переподключения той же сессии не переспрашивают
     pendingHellos.set(ws, {
       message,
       identity: message.user ?? null,
@@ -754,12 +798,14 @@ const handleNamedHello = async (ws: WebSocket, message: RemoteBroadcastHelloMess
     });
     notifyFrontInfo();
     sendClientMessage(ws, { k: RemoteBroadcastMessageKind.Error, e: RemoteBroadcastErrorKind.PendingApproval });
+
+    if (message.jesmylToken != null) void attachPendingRemoteBroadcastIdentity(ws, message);
     return;
   }
 
-  authorizeHello(ws, message, authorizedIdentity ?? message.user ?? undefined, authorizedIdentity != null);
+  authorizeHello(ws, message, storedIdentity ?? message.user ?? undefined, storedIdentity != null);
 
-  if (message.jesmylToken != null && verifiedIdentity == null) void attachVerifiedRemoteBroadcastIdentity(ws, message);
+  if (message.jesmylToken != null && storedIdentity == null) void attachVerifiedRemoteBroadcastIdentity(ws, message);
 };
 
 const handleClientMessage = async (ws: WebSocket, data: RawData) => {
@@ -809,6 +855,11 @@ const handleClientMessage = async (ws: WebSocket, data: RawData) => {
       }
 
       deviceNames.set(pendingHello.deviceId, message.name);
+      devicePromptNames.set(pendingHello.deviceId, message.name);
+      if (pendingHello.session != null) {
+        evictOldestSession(presentedSessions);
+        presentedSessions.set(pendingHello.deviceId, pendingHello.session);
+      }
       saveConfig();
       await handleNamedHello(ws, { ...pendingHello, name: message.name });
       return;
@@ -818,6 +869,7 @@ const handleClientMessage = async (ws: WebSocket, data: RawData) => {
     if (device == null) return;
 
     deviceNames.set(device.deviceId, message.name);
+    devicePromptNames.set(device.deviceId, message.name);
     saveConfig();
     clientDevices.set(ws, { ...device, name: message.name });
     notifyFrontInfo();
@@ -846,15 +898,24 @@ const handleClientMessage = async (ws: WebSocket, data: RawData) => {
     true,
   );
 
-  const name = deviceNames.get(deviceId) ?? null;
+  const helloName = message.name?.trim() || null;
 
-  if (name == null) {
+  if (
+    helloName == null ||
+    (message.secretCode == null && !clientDevices.has(ws) && !isPresentedSession(message))
+  ) {
+    // QR-вход (без from-list) всегда требует свежего представления: имя хранится на пульте и переспрашивается при каждом входе
     pendingNameHellos.set(ws, message);
     sendClientMessage(ws, { k: RemoteBroadcastMessageKind.Error, e: RemoteBroadcastErrorKind.NameRequired });
     return;
   }
 
-  await handleNamedHello(ws, { ...message, name });
+  if (helloName !== deviceNames.get(deviceId)) {
+    deviceNames.set(deviceId, helloName);
+    saveConfig();
+  }
+
+  await handleNamedHello(ws, { ...message, name: helloName });
 };
 
 const handleHttpRequest = (request: http.IncomingMessage, response: http.ServerResponse) => {
@@ -1003,6 +1064,9 @@ export const startRemoteBroadcast = (): Promise<ElectronRemoteBroadcastInfo> => 
       lastError = takeLanIp() ? RemoteBroadcastErrorKind.None : RemoteBroadcastErrorKind.NoLanAddress;
 
       notifyFrontInfo();
+      setPultFrontCacheSynced(version =>
+        broadcastMessage({ k: RemoteBroadcastMessageKind.Version, v: version }),
+      );
       resolve(takeSafeRemoteBroadcastInfo());
     });
   }).catch(error => {
@@ -1038,6 +1102,9 @@ export const stopRemoteBroadcast = (isKeepBans = false): ElectronRemoteBroadcast
   if (!isKeepBans) {
     bannedDevices.clear();
     approvedDeviceIds.clear();
+    presentedSessions.clear();
+    approvedSessions.clear();
+    pendingNameHellos.clear();
     saveAccessLists();
   }
 
@@ -1141,15 +1208,23 @@ const takeControllers = () => {
     if (known.name == null && device.name != null) known.name = device.name;
   }
 
-  return Array.from(controllerByDeviceId.values(), ({ deviceId, since, login, fio, nick, email, name }) => ({
-    deviceId,
-    since,
-    ...(name == null ? {} : { name }),
-    ...(login == null ? {} : { login }),
-    ...(fio == null ? {} : { fio }),
-    ...(nick == null ? {} : { nick }),
-    ...(email == null ? {} : { email }),
-  }));
+  return Array.from(
+    controllerByDeviceId.values(),
+    ({ deviceId, since, login, fio, nick, email, name }) => {
+      const promptName = devicePromptNames.get(deviceId);
+
+      return {
+        deviceId,
+        since,
+        ...(name == null ? {} : { name }),
+        ...(promptName == null ? {} : { promptName }),
+        ...(login == null ? {} : { login }),
+        ...(fio == null ? {} : { fio }),
+        ...(nick == null ? {} : { nick }),
+        ...(email == null ? {} : { email }),
+      };
+    },
+  );
 };
 
 export const takeRemoteBroadcastInfo = (): ElectronRemoteBroadcastInfo => {
@@ -1211,7 +1286,10 @@ export const banRemoteControl = (deviceId: string): ElectronRemoteBroadcastInfo 
 };
 
 export const unbanRemoteControl = (deviceId: string): ElectronRemoteBroadcastInfo => {
+  if (!deviceId) return takeRemoteBroadcastInfo();
+
   bannedDevices.delete(deviceId);
+  approvedDeviceIds.add(deviceId);
   saveAccessLists();
   notifyFrontInfo();
 
@@ -1228,6 +1306,10 @@ export const approveRemoteControl = (deviceId: string): ElectronRemoteBroadcastI
     if (message.deviceId !== deviceId) continue;
 
     pendingHellos.delete(client);
+    if (message.session != null) {
+      evictOldestSession(approvedSessions);
+      approvedSessions.set(message.deviceId, message.session);
+    }
     authorizeHello(client, message, identity ?? undefined, isVerifiedIdentity);
   }
 

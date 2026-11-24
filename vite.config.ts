@@ -33,6 +33,43 @@ devLogger.error = (message, options) => {
 
 const tsConfig = { ...tsconf };
 
+const pultAssetsVersion = (JSON.parse(readFileSync('src/shared/values/+version.json', 'utf-8')) as { num: number }).num;
+
+const emitPultAssets = (): Plugin => ({
+  name: 'emit-pult-assets',
+  generateBundle(_options, bundle) {
+    const entryChunk = Object.values(bundle).find(item => {
+      return item.type === 'chunk' && item.isEntry && item.name === 'pult';
+    });
+
+    if (entryChunk?.type !== 'chunk') return;
+
+    const files = new Set<string>(['/pult.html']);
+    const pendingChunks = [entryChunk];
+
+    while (pendingChunks.length > 0) {
+      const chunk = pendingChunks.pop();
+      if (chunk == null || files.has(`/${chunk.fileName}`)) continue;
+
+      files.add(`/${chunk.fileName}`);
+
+      for (const fileName of [...chunk.imports, ...chunk.dynamicImports]) {
+        const imported = bundle[fileName];
+        if (imported?.type === 'chunk') pendingChunks.push(imported);
+      }
+
+      for (const fileName of chunk.viteMetadata?.importedCss ?? []) files.add(`/${fileName}`);
+      for (const fileName of chunk.viteMetadata?.importedAssets ?? []) files.add(`/${fileName}`);
+    }
+
+    this.emitFile({
+      type: 'asset',
+      fileName: 'pult-assets.json',
+      source: JSON.stringify({ version: pultAssetsVersion, files: Array.from(files) }),
+    });
+  },
+});
+
 const stripPwaFromPult = (): Plugin => ({
   name: 'strip-pwa-from-pult',
   enforce: 'post',
@@ -163,6 +200,7 @@ export default defineConfig(({ mode, command }) => {
         failOnError: true,
       }),
       VitePWA(vitePWAOptions),
+      emitPultAssets(),
       stripPwaFromPult(),
       tailwindcss(),
       react({

@@ -1,23 +1,23 @@
 import { currentLangiAtom } from '#basis/locale';
-import { resetRemoteManualApp, remoteManualAppAtom } from '#features/broadcast/remote/app-switch-intent';
+import { remoteManualAppAtom, resetRemoteManualApp } from '#features/broadcast/remote/app-switch-intent';
 import { useRemoteBroadcastTranslate } from '#features/broadcast/remote/locale';
-import {
-  remoteLocaleAtom,
-  requestRemoteLocalesIfStale,
-  useTranslateRemote,
-} from '#features/broadcast/remote/remote-locale';
 import {
   RemoteBroadcastBibleStep,
   RemoteBroadcastSearchScope,
   remoteBibleSearchMinTermLength,
   remoteDeviceNameAtom,
 } from '#features/broadcast/remote/model';
+import {
+  remoteLocaleAtom,
+  requestRemoteLocalesIfStale,
+  useTranslateRemote,
+} from '#features/broadcast/remote/remote-locale';
 import { Button } from '#shared/components/ui/button';
 import { DropdownMenu } from '#shared/components/ui/dropdown-menu';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
-import { makeToastOKMoodConfig, usePrompt } from '#shared/ui/modal';
+import { makeToastKOMoodConfig, makeToastOKMoodConfig, usePrompt } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { QrReader } from '#shared/ui/qr-code/QrReader';
@@ -38,9 +38,11 @@ import {
   RemoteBroadcastSnapshot,
 } from 'shared/api/tsjrpc.electtron/remote-broadcast';
 import {
+  remoteBroadcastAskNameSearchParam,
   remoteBroadcastSearchTermMaxLength,
   remoteBroadcastSecretCodeSearchParam,
   remoteBroadcastUserIdentityFieldMaxLength,
+  remoteBroadcastUserNameSearchParam,
 } from 'shared/const/electron';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { RemoteLocaleKey } from 'shared/model/+locale/_RemoteLocaleKey';
@@ -55,8 +57,7 @@ import { closeRemoteBroadcastConnection, takeRemoteBroadcastConnection } from '.
 import { parseScannedRemoteControlScreen } from './control-link';
 
 const panelClassName = 'rounded-md p-2 flex column gap-2 w-full custom-align-items flex-1 min-h-0';
-const itemButtonClassName =
-  'pointer rounded-sm bg-x1 text-x3 px-2 py-1 text-left text-sm shrink-0 break-word';
+const itemButtonClassName = 'pointer rounded-sm bg-x1 text-x3 px-2 py-1 text-left text-sm shrink-0 break-word';
 const itemTextLineHeight = '1.25rem';
 const itemVerticalPadding = '.25rem';
 const itemMinHeightStyle = {
@@ -363,12 +364,16 @@ export const RemoteBroadcastPage = ({
   remote,
   viaQr,
   fromList,
+  userName,
+  askName,
   appName,
   onTargetUnreachable,
 }: {
   remote?: string | nil;
   viaQr?: boolean;
   fromList?: string | nil;
+  userName?: string | nil;
+  askName?: string;
   appName?: RemoteBroadcastApp;
   onTargetUnreachable?: () => void;
 }) => (
@@ -376,6 +381,8 @@ export const RemoteBroadcastPage = ({
     target={remote ?? null}
     viaQr={viaQr === true}
     fromList={fromList}
+    userName={userName}
+    askName={askName}
     appName={appName}
     onTargetUnreachable={onTargetUnreachable}
   />
@@ -385,18 +392,27 @@ const RemoteBroadcastRemote = ({
   target,
   viaQr,
   fromList,
+  userName,
+  askName,
   appName,
   onTargetUnreachable,
 }: {
   target?: string | nil;
   viaQr: boolean;
   fromList?: string | nil;
+  userName?: string | nil;
+  askName?: string;
   appName?: RemoteBroadcastApp;
   onTargetUnreachable?: () => void;
 }) => {
   const t = useRemoteBroadcastTranslate();
   const tRemote = useTranslateRemote();
-  const connection = takeRemoteBroadcastConnection(target, viaQr, fromList);
+  const isAskName = askName === '1';
+  const connection = takeRemoteBroadcastConnection(
+    target,
+    isAskName || userName == null ? null : fromList,
+    isAskName ? '' : (userName ?? null),
+  );
   const {
     snapshot,
     isConnected,
@@ -409,9 +425,19 @@ const RemoteBroadcastRemote = ({
     hasJesmylToken,
   } = useSyncExternalStore(connection.subscribe, connection.readState);
 
+  const isVersionToastShownRef = useRef(false);
+
   useEffect(() => {
-    if (serverVersion != null && jversion.num < serverVersion) location.reload();
-  }, [serverVersion]);
+    if (serverVersion == null || serverVersion === jversion.num || isVersionToastShownRef.current) return;
+
+    isVersionToastShownRef.current = true;
+
+    toast(tRemote(RemoteLocaleKey.NewPultVersionAvailable), {
+      ...makeToastKOMoodConfig(),
+      duration: Infinity,
+      action: { label: t(BaseLocaleKey.Update), onClick: () => location.reload() },
+    });
+  }, [serverVersion, t, tRemote]);
 
   const manualApp = useAtomValue(remoteManualAppAtom);
   const setManualApp = useAtomSet(remoteManualAppAtom);
@@ -441,6 +467,12 @@ const RemoteBroadcastRemote = ({
   }, [langi]);
 
   useEffect(() => {
+    if (!isAskName || snapshot == null) return;
+
+    navigate({ to: '/remote/cm', replace: true, search: {} });
+  }, [isAskName, navigate, snapshot]);
+
+  useEffect(() => {
     if (!isNameRequired) {
       namePromptRunRef.current = false;
       setIsNamePromptDismissed(false);
@@ -452,11 +484,7 @@ const RemoteBroadcastRemote = ({
     namePromptRunRef.current = true;
 
     void (async () => {
-      const name = await prompt(
-        tRemote(RemoteLocaleKey.PresentYourself),
-        undefined,
-        remoteDeviceNameAtom.get(),
-      );
+      const name = await prompt(tRemote(RemoteLocaleKey.PresentYourself), undefined, remoteDeviceNameAtom.get());
       const trimmedName = name?.trim().slice(0, remoteBroadcastUserIdentityFieldMaxLength);
 
       if (!trimmedName) {
@@ -470,7 +498,10 @@ const RemoteBroadcastRemote = ({
       if (!connection.sendName(trimmedName)) {
         namePromptRunRef.current = false;
         setIsNamePromptDismissed(true);
+        return;
       }
+
+      connection.setNameOverride(trimmedName);
     })();
   }, [
     connection,
@@ -501,11 +532,6 @@ const RemoteBroadcastRemote = ({
     onTargetUnreachable?.();
   }, [target, isNoTranslation, onTargetUnreachable]);
 
-  const selectConnection = (secretCode?: string | nil) => {
-    connection.setSecretCode(secretCode ?? null);
-    connection.retry();
-  };
-
   const selectScannedRemote = (value: string) => {
     const scanned = parseScannedRemoteControlScreen(value);
     if (scanned == null) return;
@@ -513,11 +539,16 @@ const RemoteBroadcastRemote = ({
     isRemoteConnectQrOpenAtom.set(false);
 
     if (new URL(scanned.screenUrl).origin !== location.origin) {
-      location.assign(scanned.screenUrl);
+      location.assign(
+        `${scanned.screenUrl}${scanned.screenUrl.includes('?') ? '&' : '?'}${remoteBroadcastAskNameSearchParam}=1`,
+      );
       return;
     }
 
-    selectConnection(scanned.secretCode);
+    connection.setSecretCode(null);
+    connection.setNameOverride('');
+    connection.retry();
+    navigate({ to: '/remote/cm', replace: true, search: { [remoteBroadcastAskNameSearchParam]: '1' } });
   };
 
   const retryConnect = () => connection.retry();
@@ -588,7 +619,17 @@ const RemoteBroadcastRemote = ({
     navigate({
       to: activeApp === 'bible' ? '/remote/bible' : '/remote/cm',
       replace: true,
-      search: prev => ({ 'from-list': prev[remoteBroadcastSecretCodeSearchParam] }),
+      search: prev => ({
+        ...(prev[remoteBroadcastSecretCodeSearchParam] == null
+          ? {}
+          : { [remoteBroadcastSecretCodeSearchParam]: prev[remoteBroadcastSecretCodeSearchParam] }),
+        ...(prev[remoteBroadcastUserNameSearchParam] == null
+          ? {}
+          : { [remoteBroadcastUserNameSearchParam]: prev[remoteBroadcastUserNameSearchParam] }),
+        ...(prev[remoteBroadcastAskNameSearchParam] == null
+          ? {}
+          : { [remoteBroadcastAskNameSearchParam]: prev[remoteBroadcastAskNameSearchParam] }),
+      }),
     });
   }, [activeApp, appName, manualApp, navigate]);
 
@@ -598,7 +639,17 @@ const RemoteBroadcastRemote = ({
     navigate({
       to: appName === 'bible' ? '/remote/bible' : '/remote/cm',
       replace: true,
-      search: prev => ({ 'from-list': prev[remoteBroadcastSecretCodeSearchParam] }),
+      search: prev => ({
+        ...(prev[remoteBroadcastSecretCodeSearchParam] == null
+          ? {}
+          : { [remoteBroadcastSecretCodeSearchParam]: prev[remoteBroadcastSecretCodeSearchParam] }),
+        ...(prev[remoteBroadcastUserNameSearchParam] == null
+          ? {}
+          : { [remoteBroadcastUserNameSearchParam]: prev[remoteBroadcastUserNameSearchParam] }),
+        ...(prev[remoteBroadcastAskNameSearchParam] == null
+          ? {}
+          : { [remoteBroadcastAskNameSearchParam]: prev[remoteBroadcastAskNameSearchParam] }),
+      }),
     });
   }, [viaQr, isConnected, snapshot, appName, navigate]);
   const cm = activeApp === 'cm' ? (snapshot?.cm ?? null) : null;
@@ -699,6 +750,7 @@ const RemoteBroadcastRemote = ({
         </span>
         <Button
           size="sm"
+          variant="destructive"
           onClick={() => changeApp(activeApp)}
         >
           {tRemote(RemoteLocaleKey.SwitchApp)}
@@ -714,6 +766,12 @@ const RemoteBroadcastRemote = ({
         headTitle={tRemote(RemoteLocaleKey.AppTitle)}
         head={
           <div className="flex items-center gap-1">
+            {isConnected || snapshot == null || (
+              <LazyIcon
+                icon="Alert01"
+                className="text-xKO"
+              />
+            )}
             {snapshot == null || (
               <TheIconButton
                 icon={snapshot.isHide ? 'View' : 'ViewOff'}
@@ -936,10 +994,7 @@ const BibleRemotePanel = ({
   useEffect(() => setSearchTerm(''), [bible.booki, bible.chapteri, bible.translationName]);
 
   useEffect(() => {
-    if (
-      searchScope !== RemoteBroadcastSearchScope.Bible ||
-      trimmedSearchTerm.length < remoteBibleSearchMinTermLength
-    ) {
+    if (searchScope !== RemoteBroadcastSearchScope.Bible || trimmedSearchTerm.length < remoteBibleSearchMinTermLength) {
       if (lastSentSearchTermRef.current === '') return;
 
       lastSentSearchTermRef.current = '';
@@ -1083,7 +1138,6 @@ const BibleRemotePanel = ({
       },
     });
     setSearchTerm('');
-    setSearchScope(RemoteBroadcastSearchScope.Chapter);
     setJoinVerseisMap({});
   };
 

@@ -313,6 +313,8 @@ export const backLocalesRu: Record<BackLocaleKey, string> = {
   [BackLocaleKey.SchFirstDayNormal]: 'В расписании $t первый день сделан обычным',
   [BackLocaleKey.SchPausedDisabled]: 'В расписании $t отключено',
   [BackLocaleKey.SchPausedEnabled]: 'В расписании $t включено',
+  [BackLocaleKey.SchRemoteControlsAllowed]: STR`В расписании $t ${IF('$v').THEN`разрешено`.ELSE`запрещено`} подключение пультов`,
+  [BackLocaleKey.SchRemoteControlsDisallowed]: 'В расписании $t запрещено подключение пультов',
   [BackLocaleKey.SchStartTimeSet]: 'В расписании $t установлена дата начала - $d',
   [BackLocaleKey.SchPeriodChanged]: 'В расписании $t изменена периодичность',
   [BackLocaleKey.SchAppInformDisabled]: STR`В расписании $t уведомления в приложении ${IF('$m').THEN`включены (${IF(isUtil.GT('$m', '1')).THEN`за $m мин. и `.ELSE`только `}в начале)`.ELSE`отключены`}`,

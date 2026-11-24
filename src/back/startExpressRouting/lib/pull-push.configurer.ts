@@ -555,6 +555,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
               appInform: und,
               withTech: und,
               isPaused: und,
+              isRemoteControlsAllowed: und,
               ctrl: und,
               days: und,
               games: und,
@@ -572,6 +573,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
                     period: PgCheckFieldMode.RemoveIfNull,
                     withTech: `=${Bool.False}`,
                     isPaused: `=${Bool.False}`,
+                    isRemoteControlsAllowed: `=${Bool.False}`,
                     isRemoved: `=${Bool.False}`,
                     appInform: `=${Bool.True}`,
                     games: 'len=0',
@@ -594,6 +596,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
               isRemoved: +!!sch.isRemoved,
               withTech: +!!sch.withTech,
               isPaused: +!!sch.isPaused,
+              isRemoteControlsAllowed: +!!sch.isRemoteControlsAllowed,
               appInform: sch.appInform ?? 1,
             };
 

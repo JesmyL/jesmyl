@@ -18,8 +18,13 @@ import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { lazyInit } from 'shared/utils/lazyInit';
 import { jversion } from 'shared/values';
 import { isSameRemoteControlHost } from './control-link';
-import { saveRemoteBroadcastJwt, takeRemoteBroadcastDeviceId, takeRemoteBroadcastJwt } from './device';
-import { remoteDeviceNameAtom } from './model';
+import {
+  saveRemoteBroadcastJwt,
+  takeRemoteBroadcastDeviceId,
+  takeRemoteBroadcastJwt,
+  takeRemoteBroadcastSessionId,
+} from './device';
+import { remoteDeviceNameAtom, remoteGamutIndexAtom } from './model';
 import { parseRemoteBroadcastServerMessage } from './protocol';
 import { applyRemoteLocaleMessage, remoteLocaleAtom } from './remote-locale';
 
@@ -37,6 +42,7 @@ type RemoteBroadcastConnectionState = {
 
 const remoteBroadcastMaxConnectAttempts = 3;
 const remoteBroadcastReconnectDelay = 1500;
+const remoteBroadcastBannedReconnectDelay = 5000;
 const remoteBroadcastAuthTokenWaitMs = 1500;
 const remoteBroadcastControlsTimeout = 5000;
 const remoteBroadcastEmptyLocaleResendDelay = 2000;
@@ -125,18 +131,17 @@ class RemoteBroadcastConnection {
   private lastBible: RemoteBroadcastSnapshot['bible'] = null;
   private requestedApp: RemoteBroadcastApp | nil = null;
   private isPanelRecoverySent = false;
-  private isAuthorized = false;
   private isLocaleRequestSent = false;
   private lastEmptyLocaleAt = 0;
   private controlsRequest: RemoteBroadcastControlsRequest | nil = null;
-  private viaQr: boolean;
   private secretCode: string | nil;
+  private nameOverride: string | nil = null;
   private readonly stopLangiSubscription: () => void;
 
-  constructor(target: string | nil, viaQr: boolean, secretCode: string | nil) {
+  constructor(target: string | nil, secretCode: string | nil, nameOverride: string | nil = null) {
     this.target = target;
-    this.viaQr = viaQr;
     this.secretCode = secretCode;
+    this.nameOverride = nameOverride;
     this.host = target ?? location.host;
     this.endpoints = makeRemoteBroadcastEndpoints(target);
     this.stopLangiSubscription = currentLangiAtom.subscribe(() => this.requestLocales());
@@ -153,13 +158,6 @@ class RemoteBroadcastConnection {
   };
 
   readState = () => this.state;
-
-  markViaQr = () => {
-    if (this.viaQr || this.isAuthorized) return;
-
-    this.viaQr = true;
-    if (this.socket?.readyState === WebSocket.OPEN) void this.sendHello();
-  };
 
   readLastBible = () => this.lastBible;
 
@@ -188,6 +186,10 @@ class RemoteBroadcastConnection {
 
   setSecretCode(secretCode: string | nil) {
     this.secretCode = secretCode;
+  }
+
+  setNameOverride(name: string | nil) {
+    this.nameOverride = name;
   }
 
   requestControls = () => {
@@ -275,7 +277,6 @@ class RemoteBroadcastConnection {
     this.failedAttempts = 0;
     this.isOpenedOnce = false;
     this.isBannedNow = false;
-    this.isAuthorized = false;
     this.isSnapshotFresh = false;
     this.isPanelRecoverySent = false;
     this.lastBible = null;
@@ -333,13 +334,13 @@ class RemoteBroadcastConnection {
     else if (socket.readyState === WebSocket.OPEN) socket.close();
   }
 
-  private scheduleReconnect() {
+  private scheduleReconnect(delay = remoteBroadcastReconnectDelay) {
     if (this.isDisposed || this.reconnectTimeout !== null) return;
 
     this.reconnectTimeout = setTimeout(() => {
       this.reconnectTimeout = null;
       this.connect();
-    }, remoteBroadcastReconnectDelay);
+    }, delay);
   }
 
   private handleAttemptFailure() {
@@ -392,7 +393,7 @@ class RemoteBroadcastConnection {
     const deviceId = takeRemoteBroadcastDeviceId();
     const jwt = takeRemoteBroadcastJwt(this.host);
     const { token: jesmylToken, user } = await takeJesmylAuthIdentity();
-    const name = remoteDeviceNameAtom.get().trim();
+    const name = (this.nameOverride != null ? this.nameOverride : remoteDeviceNameAtom.get()).trim();
 
     if (this.isDisposed || this.socket !== socket || socket.readyState !== WebSocket.OPEN) return;
 
@@ -403,11 +404,11 @@ class RemoteBroadcastConnection {
         JSON.stringify({
           k: RemoteBroadcastMessageKind.Hello,
           deviceId,
+          session: takeRemoteBroadcastSessionId(),
           version: jversion.num,
           ...(jwt == null ? {} : { token: jwt }),
           ...(jesmylToken == null ? {} : { jesmylToken }),
           ...(user == null ? {} : { user }),
-          ...(this.viaQr ? { viaQr: true } : {}),
           ...(this.secretCode == null ? {} : { secretCode: this.secretCode }),
           ...(name ? { name } : {}),
           langi: currentLangiAtom.get(),
@@ -499,7 +500,10 @@ class RemoteBroadcastConnection {
       if (activeSocket === socket) {
         this.socket = null;
         this.clearControlsRequest('#closed');
-        if (this.isBannedNow) return;
+        if (this.isBannedNow) {
+          this.scheduleReconnect(remoteBroadcastBannedReconnectDelay);
+          return;
+        }
         if (this.state.isNameRequired) this.patchState({ isNameRequired: false });
 
         this.handleAttemptFailure();
@@ -532,7 +536,6 @@ class RemoteBroadcastConnection {
         this.failedAttempts = 0;
 
         this.requestedApp = null;
-        this.isAuthorized = false;
         this.isSnapshotFresh = false;
         this.isPanelRecoverySent = false;
         this.isLocaleRequestSent = false;
@@ -568,9 +571,9 @@ class RemoteBroadcastConnection {
 
         switch (message.k) {
           case RemoteBroadcastMessageKind.State:
-            this.isAuthorized = true;
-            this.viaQr = false;
             this.secretCode = null;
+            this.isBannedNow = false;
+            this.patchState({ isBanned: false });
             if (
               this.state.error === RemoteBroadcastErrorKind.PendingApproval ||
               this.state.error === RemoteBroadcastErrorKind.NameRequired
@@ -586,6 +589,9 @@ class RemoteBroadcastConnection {
           case RemoteBroadcastMessageKind.Version:
             this.patchState({ serverVersion: message.version });
             this.sendLocaleRequest();
+            break;
+          case RemoteBroadcastMessageKind.Scheme:
+            remoteGamutIndexAtom.set(message.gamuti);
             break;
           case RemoteBroadcastMessageKind.Locale:
             applyRemoteLocaleMessage(message);
@@ -689,19 +695,19 @@ const makeTargetKey = (target: string | nil) =>
 
 export const takeRemoteBroadcastConnection = (
   target: string | nil,
-  viaQr = false,
   secretCode: string | nil = null,
+  nameOverride?: string | nil,
 ) => {
   const key = makeTargetKey(target);
   const connections = remoteBroadcastConnectionsLazy();
   const knownConnection = connections.get(key);
   if (knownConnection != null) {
-    if (viaQr) knownConnection.markViaQr();
-    if (secretCode != null) knownConnection.setSecretCode(secretCode);
+    knownConnection.setSecretCode(secretCode);
+    knownConnection.setNameOverride(nameOverride);
     return knownConnection;
   }
 
-  const connection = new RemoteBroadcastConnection(target, viaQr, secretCode);
+  const connection = new RemoteBroadcastConnection(target, secretCode, nameOverride ?? null);
   connections.set(key, connection);
 
   return connection;

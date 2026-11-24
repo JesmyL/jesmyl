@@ -19,12 +19,19 @@ export type SchLiveTsjrpcModel = {
   }) => void;
   unpublishRemoteControl_1: () => void;
   requestPublishedRemoteControls_1: () => { fio: string; ip: string; port: number; secretCode?: string }[];
+  requestPublishedRemoteControls_2: (args: { schw: ScheduleWidgetWid | nil }) => {
+    fio: string;
+    ip: string;
+    port: number;
+    secretCode?: string;
+    isConnectable: boolean;
+  }[];
 };
 
 export type SchLiveTsjrpcSharesModel = {
   updateData: (args: { data: IndexSchWBroadcastLiveDataValue | null }) => void;
   streamersList: (args: { streamers: { fio: string; login: SokiAuthLogin }[] }) => void;
   publishedRemoteControlsList: (args: {
-    controls: { fio: string; ip: string; port: number; secretCode?: string }[];
+    controls: { fio: string; ip: string; port: number; secretCode?: string; isConnectable: boolean }[];
   }) => void;
 };

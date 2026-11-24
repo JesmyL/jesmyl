@@ -3,6 +3,7 @@ import {
   remoteBroadcastPath,
   remoteBroadcastSecretCodeLength,
   remoteBroadcastSecretCodeSearchParam,
+  remoteBroadcastUserNameSearchParam,
 } from 'shared/const/electron';
 
 export const isSameRemoteControlHost = (target: string) =>
@@ -47,10 +48,10 @@ export const isSameLanHost = (remote: string) => {
 
 export const makeRemoteControlLink = (serverUrl: string) => `${serverUrl}/${remoteBroadcastPath}`;
 
-export const makeRemoteScreenLink = (remote: string, secretCode?: string | nil) =>
+export const makeRemoteScreenLink = (remote: string, secretCode?: string | nil, fio?: string) =>
   `http://${remote}/${remoteBroadcastPath}${
     secretCode == null ? '' : `?${remoteBroadcastSecretCodeSearchParam}=${secretCode}`
-  }`;
+  }${fio == null ? '' : `${secretCode == null ? '?' : '&'}${remoteBroadcastUserNameSearchParam}=${encodeURIComponent(fio)}`}`;
 
 const remoteControlPagePaths = ['', '/cm', '/bible'];
 

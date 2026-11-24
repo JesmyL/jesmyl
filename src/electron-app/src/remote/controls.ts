@@ -20,7 +20,12 @@ const sendControls = (ws: WebSocket, controls: RemoteBroadcastPublishedControl[]
     k: RemoteBroadcastMessageKind.Controls,
     controls: includeSecretCodes
       ? controls
-      : controls.map(control => ({ fio: control.fio, ip: control.ip, port: control.port })),
+      : controls.map(control => ({
+          fio: control.fio,
+          ip: control.ip,
+          port: control.port,
+          ...(control.isConnectable == null ? {} : { isConnectable: control.isConnectable }),
+        })),
   };
 
   try {

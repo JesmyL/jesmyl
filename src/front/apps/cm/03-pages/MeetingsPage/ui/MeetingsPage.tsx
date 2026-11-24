@@ -26,7 +26,7 @@ export const CmMeetingsPage = ({ schw }: { schw?: ScheduleWidgetWid }) => {
         <>
           {isOpenTools && (
             <BottomPopup onClose={setIsOpenTools}>
-              <RemoteControlConnectItem />
+              <RemoteControlConnectItem schw={schw ?? null} />
             </BottomPopup>
           )}
           {visibleSchedules?.map(schedule => (

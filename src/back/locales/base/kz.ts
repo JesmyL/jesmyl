@@ -356,6 +356,7 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.ScheduleFirstIsTechDay]: 'Біріншісі - техникалық күн',
   [BaseLocaleKey.ScheduleMakeFirstDayUsual]: 'Бірінші күнді қарапайым ету керек пе?',
   [BaseLocaleKey.ScheduleFirstDayPrep]: 'Бірінші күнді дайындық күні ету керек пе?',
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleAllowRemoteControls)`Пульттерді қосуға ${IF('$v').THEN`тыйым салу`.ELSE`рұқсат беру`}`,
   [BaseLocaleKey.ScheduleDefaultRights]: 'Әдепкі құқықтар',
   [BaseLocaleKey.ScheduleSmallFontStatements]: 'Кішкентай қаріппен жазылған тұжырымдар күшінде',
   [BaseLocaleKey.ScheduleNewUser]: ' - Жаңа',

@@ -3,19 +3,33 @@ import { usePublishedRemoteControls } from '#features/broadcast/remote/usePublis
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { schLiveTsjrpcClient } from '$index/shared/tsjrpc';
+import { authIDB } from '$index/shared/state/auth-idb';
 import { useNavigate } from '@tanstack/react-router';
-import { parseRemoteControlTarget, remoteBroadcastSecretCodeSearchParam } from 'shared/const/electron';
+import { useCallback } from 'react';
+import { ScheduleWidgetWid } from 'shared/api';
+import {
+  parseRemoteControlTarget,
+  remoteBroadcastSecretCodeSearchParam,
+  remoteBroadcastUserNameSearchParam,
+} from 'shared/const/electron';
 import { RemoteLocaleKey } from 'shared/model/+locale/_RemoteLocaleKey';
 import { takeUserAuthName } from 'shared/utils/user.utils';
 import { makeRemoteScreenLink } from './control-link';
 
-const requestRemoteControls = () =>
-  schLiveTsjrpcClient.requestPublishedRemoteControls_1(undefined, { timeout: 10_000 });
+const requestRemoteControls = (schw: ScheduleWidgetWid | nil) =>
+  schLiveTsjrpcClient.requestPublishedRemoteControls_2({ schw }, { timeout: 10_000 });
 
-export const RemoteControlConnectPopup = ({ onClose }: { onClose: () => void }) => {
+export const RemoteControlConnectPopup = ({
+  onClose,
+  schw,
+}: {
+  onClose: () => void;
+  schw: ScheduleWidgetWid | nil;
+}) => {
   const tRemote = useTranslateRemote();
   const navigate = useNavigate();
-  const { controls, isLoadFailed } = usePublishedRemoteControls(requestRemoteControls);
+  const requestControls = useCallback(() => requestRemoteControls(schw), [schw]);
+  const { controls, isLoadFailed, reachableTargets } = usePublishedRemoteControls(requestControls);
 
   return (
     <BottomPopup
@@ -30,36 +44,45 @@ export const RemoteControlConnectPopup = ({ onClose }: { onClose: () => void }) 
         controls.map(control => {
           const target = `${control.ip}:${control.port}`;
           const name = takeUserAuthName(control) || target;
+          const isDisabled = !control.isConnectable || (reachableTargets != null && !reachableTargets.has(target));
 
           return (
             <BottomPopupItem
               key={target}
               icon="ComputerPhoneSync"
+              className={isDisabled ? 'opacity-50 pointer-events-none' : ''}
               titleNode={
                 <span className="flex column min-w-0">
                   <span className="truncate">{name}</span>
                   {name === target || <span className="text-xs opacity-60 truncate">{target}</span>}
                 </span>
               }
-              onClick={() => {
-                if (parseRemoteControlTarget(target) == null) return;
+              onClick={
+                isDisabled
+                  ? undefined
+                  : async () => {
+                      if (parseRemoteControlTarget(target) == null) return;
 
-                const link = makeRemoteScreenLink(target, control.secretCode);
+                      const auth = await authIDB.get.auth();
+                      const fio = takeUserAuthName(auth);
+                      const link = makeRemoteScreenLink(target, control.secretCode, fio || undefined);
 
-                if (new URL(link).origin === location.origin) {
-                  navigate({
-                    to: '/remote/cm',
-                    search: {
-                      ...(control.secretCode == null
-                        ? {}
-                        : { [remoteBroadcastSecretCodeSearchParam]: control.secretCode }),
-                    },
-                  });
-                  return;
-                }
+                      if (new URL(link).origin === location.origin) {
+                        navigate({
+                          to: '/remote/cm',
+                          search: {
+                            ...(control.secretCode == null
+                              ? {}
+                              : { [remoteBroadcastSecretCodeSearchParam]: control.secretCode }),
+                            ...(fio ? { [remoteBroadcastUserNameSearchParam]: fio } : {}),
+                          },
+                        });
+                        return;
+                      }
 
-                location.assign(link);
-              }}
+                      location.assign(link);
+                    }
+              }
             />
           );
         })
