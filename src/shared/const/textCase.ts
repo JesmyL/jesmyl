@@ -1,7 +1,7 @@
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { TextCase } from 'shared/model/common';
 
-export const defaultTextCase = TextCase.Capitalize;
+export const defaultTextCase = TextCase.AsIs;
 
 export const textCaseTitles: Record<
   TextCase,
