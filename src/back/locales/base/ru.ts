@@ -925,4 +925,8 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.RemoteControlTlsActive]: 'Пульт работает по https/wss: $h',
   [BaseLocaleKey.RemoteControlTlsCertNotFound]:
     'Файлы сертификата для $h не найдены: проверьте <certDir>/$h/privkey.pem и fullchain.pem.',
+
+  [BaseLocaleKey.DownFilesRemoveAllButton]: 'Удалить файлы /down',
+  [BaseLocaleKey.DownFilesRemoveConfirm]: 'Подтверди удаление $c',
+  [BaseLocaleKey.DownFilesRemoved]: 'Файлы /down удалены',
 });

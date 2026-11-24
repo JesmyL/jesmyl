@@ -929,4 +929,8 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.RemoteControlTlsActive]: 'The remote is running over https/wss: $h',
   [BaseLocaleKey.RemoteControlTlsCertNotFound]:
     'Certificate files for $h were not found: check <certDir>/$h/privkey.pem and fullchain.pem.',
+
+  [BaseLocaleKey.DownFilesRemoveAllButton]: 'Delete /down files',
+  [BaseLocaleKey.DownFilesRemoveConfirm]: 'Confirm deletion $c',
+  [BaseLocaleKey.DownFilesRemoved]: '/down files removed',
 });

@@ -11,6 +11,7 @@ export type IndexDashTsjrpcModel = {
   getVisitsDashboard_v1: (args?: { messages?: VisitsDashboardMessagesArgs }) => VisitsDashboard;
   markDashMessagesRead_v1: (args: { kind: DashMessageKind }) => PRecord<DashMessageKind, number>;
   sendDashEmailReport_v2: () => { sent: string[]; failed: string[] };
+  removeAllDownFiles: () => void;
   getDashReportRecipients: () => PRecord<string, Langi>;
   setDashReportRecipients: (args: { recipients: PRecord<string, Langi> }) => PRecord<string, Langi>;
   getDashPushTestUsers: () => {

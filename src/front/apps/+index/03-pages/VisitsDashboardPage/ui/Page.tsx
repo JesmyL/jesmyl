@@ -48,6 +48,7 @@ import { mapObjectEntries, objectLength } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
 import { StameskaIconName } from 'stameska-icon/pack';
 import { twMerge } from 'tailwind-merge';
+import { IndexVisitsDashboardDownFilesRemoveButton } from './DownFilesRemoveButton';
 
 const messageTabs = [
   { kind: DashMessageKind.VisitError, title: EditorLocaleKey.VisitsVisitErrors },
@@ -1146,6 +1147,7 @@ const DashboardContent = ({ dashboard }: { dashboard: VisitsDashboard }) => {
       <div className="flex flex-wrap items-center justify-end gap-2">
         <DashboardReportRecipients />
         <OtherFooterIconsConfigurator />
+        <IndexVisitsDashboardDownFilesRemoveButton />
         <DashboardEmailReportButton />
       </div>
     </div>

@@ -1,3 +1,6 @@
+import fs from 'fs';
+import path from 'path';
+import { hostRootDir } from 'back/envJson';
 import { backLocaleError, translateBackTexts } from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
@@ -110,6 +113,16 @@ export const indexTSJRPCBaseVisitsDashboard = {
     if (!auth?.login) throw backLocaleError(BackLocaleKey.NoAccess);
 
     return { value: await sendCurrentDashReport() };
+  },
+
+  removeAllDownFiles: async (_, { auth }) => {
+    await throwIfNoUserScopeAccessRight(auth, 'dash', 'DASH');
+
+    const downDir = `${hostRootDir}/down`;
+
+    fs.readdirSync(downDir).forEach(fileName =>
+      fs.rmSync(path.join(downDir, fileName), { force: true, recursive: true }),
+    );
   },
 
   getDashReportRecipients: async (_, { auth }) => {

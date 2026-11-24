@@ -933,4 +933,8 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.RemoteControlTlsActive]: 'Пульт працює через https/wss: $h',
   [BaseLocaleKey.RemoteControlTlsCertNotFound]:
     'Файли сертифіката для $h не знайдено: перевірте <certDir>/$h/privkey.pem і fullchain.pem.',
+
+  [BaseLocaleKey.DownFilesRemoveAllButton]: 'Видалити файли /down',
+  [BaseLocaleKey.DownFilesRemoveConfirm]: 'Підтверди видалення $c',
+  [BaseLocaleKey.DownFilesRemoved]: 'Файли /down видалено',
 });

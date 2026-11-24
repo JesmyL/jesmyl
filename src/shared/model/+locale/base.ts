@@ -890,6 +890,10 @@ export type LocaleBase<L extends Langi> = {
   [BaseLocaleKey.RemoteControlApproveRequest]?: StringTemplaterInterpolation<{ n: string }>;
   [BaseLocaleKey.RemoteControlApprove]?: LocaleSimpleString;
   [BaseLocaleKey.RemoteControlPendingList]?: LocaleSimpleString;
+
+  [BaseLocaleKey.DownFilesRemoveAllButton]: LocaleSimpleString;
+  [BaseLocaleKey.DownFilesRemoveConfirm]: StringTemplaterInterpolation<{ c: number }>;
+  [BaseLocaleKey.DownFilesRemoved]: LocaleSimpleString;
 };
 
 export type UsedBaseLocaleKey = BaseLocaleKey;

@@ -919,4 +919,8 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.RemoteControlTlsActive]: 'Пульт https/wss арқылы жұмыс істеп тұр: $h',
   [BaseLocaleKey.RemoteControlTlsCertNotFound]:
     '$h сертификатының файлдары табылмады: <certDir>/$h/privkey.pem және fullchain.pem файлдарын тексеріңіз.',
+
+  [BaseLocaleKey.DownFilesRemoveAllButton]: '/down файлдарын жою',
+  [BaseLocaleKey.DownFilesRemoveConfirm]: '$c жоюды растаңыз',
+  [BaseLocaleKey.DownFilesRemoved]: '/down файлдары жойылды',
 });
