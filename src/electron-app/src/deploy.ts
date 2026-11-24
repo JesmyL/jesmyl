@@ -19,6 +19,7 @@ async function runDeploy(): Promise<void> {
 
   console.info('🚀 Начинаем отправку файлов Electron на удаленный сервер...', targetDir);
   try {
+    await execAsync(`ssh root@${ip} "mkdir -p /var/www/${targetDir}"`);
     await execAsync(`scp ${buildFolder}/latest*.yml ${buildFolder}/*.exe ${buildFolder}/*.AppImage ${targetRemoteDir}`);
     console.info('✅ Деплой Electron успешно завершен!', `${targetDir}/${electronAppName}.{ext}`);
   } catch (error) {

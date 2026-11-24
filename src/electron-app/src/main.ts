@@ -21,6 +21,8 @@ import {
   takeElectronAppWebPreferences,
 } from './webPreferences';
 
+for (const stream of [process.stdout, process.stderr]) stream.on('error', () => {});
+
 const isSmokeRun = process.argv.includes(electronAppSmokeArg);
 const isTestMode = process.env.JESMYL_TEST_RUNNER === 'true';
 const sessionPartition = takeElectronAppPartition(isTestMode);
