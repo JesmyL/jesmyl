@@ -1,4 +1,4 @@
-# AGENTS.com-corrects.md
+# README.com-corrects.md
 
 Rules for correcting song-text data files in `src/back/apps/cm/coms/+case/`.
 Read this file before editing any of those JSON files.

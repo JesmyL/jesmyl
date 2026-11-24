@@ -2,8 +2,8 @@
 
 ## Project instructions
 
-- This repository keeps project-specific instruction files named `AGENTS.*.md` (e.g. `AGENTS.jesmyl.md`). Always read and follow ALL `AGENTS.*.md` files applicable to the project you are working in — they extend these universal rules.
-- New instructions must always be persisted into the appropriate `AGENTS.*.md` file: project-specific instructions go into the project-specific file (e.g. `AGENTS.jesmyl.md`), universal ones into `AGENTS.md`.
+- When working with code in this repository, orient by the project-specific instruction files named `README.*.md` (e.g. `README.jesmyl.md`): always read ALL `README.*.md` files applicable to the project you are working in and adhere to what is described in them — they extend these universal rules.
+- New instructions must always be persisted into the appropriate `README.*.md` file: project-specific instructions go into the project-specific file (e.g. `README.jesmyl.md`), universal ones into `AGENTS.md`.
 
 ## Code writing rules
 
@@ -21,7 +21,7 @@
 - Apply this to every piece/chunk of text in the reply, not just the first paragraph.
 - Translation is sentence-by-sentence: each English sentence is immediately followed by its Russian translation.
 - Grouping several English sentences into a paragraph IS allowed, BUT each English sentence within it must still be immediately followed by its Russian translation in parentheses — no sentence may appear without its translation right after it.
-- When the user writes "zapiwi" (запиши), persist the instruction into the appropriate `AGENTS.*.md` file so it applies to all future sessions: project-specific instructions go into the project-specific file (e.g. `AGENTS.jesmyl.md`), universal ones into `AGENTS.md`.
+- When the user writes "zapiwi" (запиши), persist the instruction into the appropriate `README.*.md` file so it applies to all future sessions: project-specific instructions go into the project-specific file (e.g. `README.jesmyl.md`), universal ones into `AGENTS.md`.
 - Clarifying questions asked via the question tool must also be bilingual — both the question text AND every answer option (variant): English text followed immediately by the Russian translation in parentheses, same as assistant replies.
 - EVERY answer option (variant) must carry its Russian duplicate in both places — in the label itself and in the description; the Russian duplicate in the label is mandatory, not only in the description, because labels are rendered as the short clickable choices. No answer option may be left English-only, and no option may be skipped or added without its Russian duplicate.
 - Tab/session titles (the tabs OpenCode shows) must be written in Russian.

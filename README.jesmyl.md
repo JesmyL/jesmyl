@@ -1,6 +1,12 @@
-# AGENTS.jesmyl.md
+# README.jesmyl.md
 
-Project-specific instructions for the jesmyl repo — read together with the universal `AGENTS.md` and every other `AGENTS.*.md` file of this project.
+Project-specific instructions for the jesmyl repo — read together with the universal `AGENTS.md` and every other `README.*.md` file of this project.
+
+## Feature docs
+
+- This repo keeps per-feature docs named `README.<feature>.md` (e.g. `README.broadcast-remote-control.md`).
+- When working on a feature, ALWAYS pay attention to the `README.<feature>.md` whose `<feature>` matches the feature you are working on, and follow the rules recorded there.
+- When a task clarifies or changes a feature's behavior, persist those clarifications into that feature's README.
 
 ## Commands
 
@@ -69,7 +75,7 @@ Project-specific instructions for the jesmyl repo — read together with the uni
 - NEVER modify, remove, or revert any code, files, or config beyond exactly what the user explicitly asked for. Only touch what the task requires. Before deleting or altering anything not directly requested, stop and ask the user. (Никогда не изменяй, не удаляй и не откатывай код/файлы/конфиги сверх того, что пользователь явно попросил.)
 - No crutches: do not scan or regex-search formed/serialized text for magic markers (JSON fragments, placeholder bytes, separators) to recover structure. If data is structured, store, pass, and parse it as an explicit structure (typed fields/JSON envelope); if a format needs scanning to work, that is a signal to redesign the format, not to add another scanner.
 - After modifying any file, format it with eslint-prettier (e.g. `npx eslint <file> --fix`) before finishing the task.
-- When correcting song (com) texts in `src/back/apps/cm/coms/+case/`, first read the rules in `AGENTS.com-corrects.md`.
+- When correcting song (com) texts in `src/back/apps/cm/coms/+case/`, first read the rules in `README.com-corrects.md`.
 - Never write clever one-liner parsing tricks (e.g. `[...str.matchAll(regex)].at(-1)`, negative-lookahead chains) when a plain readable approach (`lastIndexOf`, `slice`, `parseInt`) solves it — prefer the simplest direct solution.
 - Never write template boilerplate like "Комментарий (по-русски):" as a code-comment prefix. Code-block comments must be written directly in Russian, stating how the block works — no meta prefixes or labels.
 - Never use raw HTML controls in JSX — always use the project's own components instead: `<input>` → `TextInput` (`#shared/ui/TextInput`); `<textarea>` → `TextInput` with `multiline`; `<select>` → `Dropdown` (`#shared/ui/dropdown`); `<input type=checkbox>` / radio → `IconCheckbox` (`#shared/ui/the-icon/IconCheckbox`, `isRadio`); buttons → `Button` / `TheButton` (`#shared/ui/TheButton`) / `TheIconButton` for icon-only buttons; `<input type=file>` → `FileInput` (`#shared/ui/FileInput`); `alert()` → `toast(...)` (sonner); `prompt()`/confirm dialogs → `Modal` / `ConfirmContent` / `usePrompt` from `#shared/ui/modal`.
@@ -109,7 +115,7 @@ Project-specific instructions for the jesmyl repo — read together with the uni
 - NEVER add these doc comments to the type dictionary files (`src/shared/model/+locale/base.ts`, `editor.ts`, `dynamic.ts` — the `LocaleBase`/`LocaleCmEditor`/`LocaleDynamic` types) and NEVER to the locale dictionaries (`src/back/locales/**` and any other `*.ts` translation files): comments there are prohibited, the enum key files are the single place for them.
 - NEVER write inline comments (e.g. `// Трансфер: кнопка скачивания полученного файла.`) inside the locale dictionary files themselves (`ru.ts`, `en.ts`, etc. under `src/back/locales/**` and any other translation files) — such comments are unnecessary there and forbidden.
 - ALL explanations for locale texts must be written only as doc comments (`/** ... */`) above the keys in the `const enum` key files (`_BaseLocaleKey.ts`, `_EditorLocaleKey.ts`, `_DynLocaleKey.ts`, `_BackLocaleKey.ts` in `src/shared/model/+locale/`).
-- In documentation (docs), render the translations themselves in Russian in **bold** font, while all explanations/clarifications go in *italic*.
+- In documentation (docs), render the translations themselves in Russian in **bold** font, while all explanations/clarifications go in _italic_.
 
 ## Command aliases
 
