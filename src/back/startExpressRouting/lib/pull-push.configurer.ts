@@ -259,7 +259,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
 
               // Уведомления отправляем без ожидания, чтобы не задерживать запись в БД; конверт сам несёт locale-payload заголовка и готовый HTML диффа.
               insertDashMessage(changesMessage, null, DashMessageKind.Changes, null).catch(emptyFunc);
-              sendChangesEmail(changesMessage, null).catch(emptyFunc);
+              sendChangesEmail(changesMessage).catch(emptyFunc);
             }
 
             // Пишем только изменившиеся поля, не затирая остальные данные строки.

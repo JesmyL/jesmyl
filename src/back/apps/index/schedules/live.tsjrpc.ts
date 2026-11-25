@@ -199,7 +199,7 @@ export const schLiveTsjrpcServer = new (class SchLive extends TsjrpcBaseServer<S
           theLiveData[schw][auth.login] = data;
 
           streamersWaiters[schw]?.forEach(client => {
-            const langi = sokiServer.takeClientLangi(client);
+            const langi = sokiServer.takeClientLangi(client) ?? undefined;
 
             const streamers = mapObjectEntries(theLiveData[schw], (login, data) => {
               return { fio: data?.fio ?? translateBackTexts(langi, BackLocaleKey.SchLiveStreamFinished), login };

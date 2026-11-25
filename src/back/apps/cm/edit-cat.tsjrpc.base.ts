@@ -166,7 +166,7 @@ const takeCatOrThrow = async (catw: CmCatWid) => {
 
 const getCmComNameInBrackets = async (comw: CmComWid) => {
   const com = await takeComwTiny({ w: comw }, false);
-  return com ? `${com.i + 1}. "${com.n}"` : translateBackTexts(null, BackLocaleKey.CmComUnknown);
+  return com ? `${com.i + 1}. "${com.n}"` : translateBackTexts(undefined, BackLocaleKey.CmComUnknown);
 };
 
 function modifyCat<Props extends { catw: CmCatWid }, Tools>(

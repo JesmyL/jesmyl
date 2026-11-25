@@ -1,6 +1,10 @@
 import { Langi } from 'shared/api';
-import { checkIsArray, checkIsObject, checkIsString } from '../checkIs';
+import { LocalePayloadKind } from 'shared/model/+locale/model';
+import { dashMessageSectionSeparator } from 'shared/model/index/visitsDashboard';
+import { checkIsArray, checkIsObject, checkIsStartsWith, checkIsString } from '../checkIs';
 import { stringTemplater } from '../stringTemplater';
+import { escapeHtmlLazy } from '../string.utils';
+import { type JsonString, jsonParse } from '../utils';
 
 /** Форма самодостаточного locale-payload: четыре заголовка в порядке Langi и необязательные значения подстановки. */
 export type BackLocaleErrorPayload = {
@@ -8,13 +12,16 @@ export type BackLocaleErrorPayload = {
   intr?: Record<string, unknown>;
 };
 
+const localeErrorPayloadPrefix = `${LocalePayloadKind.LocaleError} `;
+
 /** Разбирает строку как locale-payload; `null` значит, что это не payload и строку нужно оставить как есть. */
 export const parseBackLocaleErrorPayload = (str: string): BackLocaleErrorPayload | null => {
+  if (!checkIsStartsWith(str, localeErrorPayloadPrefix)) return null;
+
   let parsed: unknown;
 
-  // JSON.parse в try: обычные текстовые ошибки не являются payload и должны безопасно возвращать null.
   try {
-    parsed = JSON.parse(str);
+    parsed = jsonParse(str.slice(localeErrorPayloadPrefix.length) as JsonString<unknown>);
   } catch {
     return null;
   }
@@ -45,21 +52,50 @@ export const takeBackLocaleErrorTitleText = (payload: BackLocaleErrorPayload, ti
   return stringTemplater(title, payload.intr);
 };
 
+/** Метка вместо готового HTML диффа из `intr.j` на время шаблонизации и экранирования. */
+const diffHtmlPlaceholder = '\u0000diff-html\u0000';
+
+/** Заголовок payload для `innerHTML`: текст шаблона экранируется, а готовый HTML диффа из `intr.j` вставляется сырым. */
+export const takeBackLocaleErrorTitleHtml = (payload: BackLocaleErrorPayload, titleIndex: number) => {
+  if (!payload.intr) return escapeHtmlLazy()(payload.title[titleIndex]);
+
+  const { j, ...restIntr } = payload.intr;
+  const text = stringTemplater(payload.title[titleIndex], {
+    ...restIntr,
+    ...(checkIsString(j) ? { j: diffHtmlPlaceholder } : {}),
+  });
+  const escaped = escapeHtmlLazy()(text);
+
+  return checkIsString(j) ? escaped.replace(diffHtmlPlaceholder, () => j) : escaped;
+};
+
 /** Translates the payload into the given language; returns the input unchanged when it is not a payload. */
-export const localizeBackLocaleErrorPayload = (str: string, langi: Langi | nil): string => {
+export const localizeBackLocaleErrorPayload = (str: string, langi = Langi.Ru): string => {
   const payload = parseBackLocaleErrorPayload(str);
   if (!payload) return str;
 
-  return takeBackLocaleErrorTitleText(payload, langi ?? Langi.Ru);
+  return takeBackLocaleErrorTitleText(payload, langi);
 };
 
-/** Replaces every embedded payload segment with its single text for the given language; returns the input unchanged when there is none. */
-export const localizeBackLocalePayloads = (str: string, langi: Langi | nil): string =>
+/** Заменяет каждый встроенный payload текстом, который строит `makeReplacement`; текст вне payload остаётся как есть. */
+export const mapBackLocalePayloadSegments = (
+  str: string,
+  makeReplacement: (payload: BackLocaleErrorPayload) => string,
+): string =>
   str
-    .split('\n\n')
-    .map(segment => {
-      const payload = parseBackLocaleErrorPayload(segment);
+    .split(dashMessageSectionSeparator)
+    .map(section =>
+      section
+        .split('\n\n')
+        .map(segment => {
+          const payload = parseBackLocaleErrorPayload(segment);
 
-      return payload ? takeBackLocaleErrorTitleText(payload, langi ?? Langi.Ru) : segment;
-    })
-    .join('\n\n');
+          return payload ? makeReplacement(payload) : segment;
+        })
+        .join('\n\n'),
+    )
+    .join(dashMessageSectionSeparator);
+
+/** Replaces every embedded payload segment with its single text for the given language; returns the input unchanged when there is none. */
+export const localizeBackLocalePayloads = (str: string, langi = Langi.Ru): string =>
+  mapBackLocalePayloadSegments(str, payload => takeBackLocaleErrorTitleText(payload, langi));

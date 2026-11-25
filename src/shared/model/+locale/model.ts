@@ -20,3 +20,9 @@ export type LocaleStrOrInterpolationRecord<All extends string | number, T extend
   Record<`${T}`, StringTemplaterInterpolation<Vals>>;
 
 export type LocaleSimpleString = string;
+
+/** Вид locale-payload: числовой префикс отделяет payload от обычного текста ошибки. */
+export const enum LocalePayloadKind {
+  /** Локализованная ошибка: JSON с четырьмя заголовками по Langi и подстановками intr */
+  LocaleError = 1,
+}

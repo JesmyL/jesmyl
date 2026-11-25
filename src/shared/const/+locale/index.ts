@@ -15,7 +15,7 @@ export const langSystemCodeDict: Record<Langi, string> = {
   [Langi.En]: 'en-GB',
 };
 
-export const takeLangSystemCode = (langi?: Langi | nil) => langSystemCodeDict[langi!] || langSystemCodeDict[Langi.Ru];
+export const takeLangSystemCode = (langi = Langi.Ru) => langSystemCodeDict[langi];
 
 export const langCodeLoadingTitleDict: Record<Langi, string> = {
   [Langi.Ru]: 'Загрузка текстов',

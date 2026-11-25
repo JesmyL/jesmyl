@@ -16,12 +16,12 @@ const baseLocales: Record<Langi, LocaleBase<Langi>> = {
 };
 
 export const translateBaseTexts = <K extends BaseLocaleKey>(
-  langi: Langi | nil,
+  langi = Langi.Ru,
   key: K,
   interpolation?: Record<string, string | number | boolean>,
 ) => {
   // Текст берётся напрямую из словаря: функция сама решает, применять ли подстановку, и не зависит от типа ключа.
-  const text: unknown = baseLocales[langi ?? Langi.Ru][key];
+  const text: unknown = baseLocales[langi][key];
   if (!checkIsString(text)) return '';
 
   return interpolation ? stringTemplater(text, interpolation) : text;

@@ -33,20 +33,15 @@ import { mapObjectEntries, objectKeys, objectLength, objectValues } from 'shared
 import { escapeHtmlLazy } from 'shared/utils/string.utils';
 import { makeDiffSectionHtml } from 'shared/utils/textDiff';
 import { takeUserAuthName } from 'shared/utils/user.utils';
+import { takeErrorPushSummary } from './errorPush';
 import { onDashMessageStoredEvent, onVisitStoredEvent } from './events';
+import { makeDashMessageForViewer } from './messageLocalization';
 
 const mskShiftMs = 3 * howMillisecondsInHour;
 const hoursInDay = 24;
 const messagesPageSize = 20;
 const errorPushUrl = '/!other/index/actions/dash';
-const errorPushTextMaxLength = 100;
-const errorPushArgsMarker = 'Аргументы:';
 const localhostUrlReg = makeRegExp('/^[^?]+?\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}:\\d{3,5}/');
-const pushDivReg = makeRegExp('/<div[^>]*>[\\s\\S]*?<\\/div>/gi');
-const pushBlockquoteReg = makeRegExp('/<blockquote[^>]*>[\\s\\S]*?<\\/blockquote>/gi');
-const pushHtmlTagReg = makeRegExp('/<[^>]*>/g');
-const pushEmailReg = makeRegExp('/[\\w.+-]+@[\\w.-]+\\.[\\w.-]+/g');
-const pushWhitespaceReg = makeRegExp('/\\s+/g');
 const dashMessageKinds = [
   DashMessageKind.Support,
   DashMessageKind.Log,
@@ -100,20 +95,6 @@ const isLocalhostVisit = (visitInfo: SokiVisit | nil) => {
   const url = visitInfo?.urls[0];
 
   return !url || url.includes('localhost') || url.split(localhostUrlReg, 2).length > 1;
-};
-
-/** Короткая однострочная сводка сохранённого сообщения об ошибке для push: payload из backLocale заменяется читаемым текстом на языке получателя (`localizeBackLocalePayloads`), вырезаются html/div/blockquote, отбрасывается всё после маркера аргументов, маскируются e-mail, схлопываются пробелы и текст усекается до `errorPushTextMaxLength` с многоточием. */
-const takeErrorPushSummary = (message: string, langi: Langi) => {
-  const text = localizeBackLocalePayloads(message, langi)
-    .replace(pushDivReg, ' ')
-    .replace(pushBlockquoteReg, ' ')
-    .split(errorPushArgsMarker)[0]
-    .replace(pushEmailReg, '***')
-    .replace(pushHtmlTagReg, ' ')
-    .replace(pushWhitespaceReg, ' ')
-    .trim();
-
-  return text.length > errorPushTextMaxLength ? `${text.slice(0, errorPushTextMaxLength)}…` : text;
 };
 
 const sendDashErrorPush = async (message: string, login: UserLogin | nil) => {
@@ -217,14 +198,14 @@ const makeDayStatsFromRow = (row: typeof visitDayDB.$inferSelect): ReturnType<ty
   anonUniq: row.uniq - objectLength(row.visitors),
 });
 
-const takeLocalizedDate = (date: string, langi: Langi | nil = Langi.Ru) =>
+const takeLocalizedDate = (date: string, langi = Langi.Ru) =>
   new Date(date).toLocaleDateString(takeLangSystemCode(langi), {
     timeZone: 'UTC',
     day: 'numeric',
     month: 'long',
     year: 'numeric',
   });
-const takeLocalizedTime = (timeStamp: number, langi: Langi | nil = Langi.Ru) =>
+const takeLocalizedTime = (timeStamp: number, langi = Langi.Ru) =>
   new Date(timeStamp + mskShiftMs).toLocaleTimeString(takeLangSystemCode(langi), {
     timeZone: 'UTC',
     hour: '2-digit',
@@ -251,7 +232,7 @@ const makeStatsTable = (bars: ChartBar[], isVertical = false, isZeroBlank = fals
 
 const makeStatsRows = (bars: ChartBar[], isZeroBlank = false) => makeStatsTable(bars, true, isZeroBlank);
 
-const makeDayStatsHtml = async (stats: ReturnType<typeof makeDayStats>, langi: Langi | nil) => {
+const makeDayStatsHtml = async (stats: ReturnType<typeof makeDayStats>, langi = Langi.Ru) => {
   const visitorRows = (
     await Promise.all(
       mapObjectEntries(stats.visitors, async (login, count) => {
@@ -488,12 +469,12 @@ export const sendCurrentDashReport = async () => {
  * Changes are mirrored to the self mailbox that the visits report is sent from (`isSameTo`) and to every configured dash report recipient.
  * Новый конверт `{t,d}` разбирается типизированно: заголовок локализуется и экранируется, готовый HTML диффа идёт в `<pre>`; tsjrpc-сообщения идут прежним секционным путём.
  */
-export const sendChangesEmail = async (messageText: string, langi: Langi | nil) => {
+export const sendChangesEmail = async (messageText: string, langi = Langi.Ru) => {
   const subject = `SYSTEM: ${new Date().toLocaleDateString(takeLangSystemCode(langi), changesEmailSubjectDateOptions)} (Changes)`;
   const selfEmail = emailerConfigFileStorage.getValue()[EmailerAuthConfigKey.Self]?.user?.toLowerCase();
 
   // Готовый HTML письма: новый конверт обрабатывается целиком, остальные сообщения — по секциям, чтобы суффикс авторизации/визита не склеивался с payload'ом.
-  const makeHtml = (targetLangi: Langi | nil) => {
+  const makeHtml = (targetLangi = Langi.Ru) => {
     const changesHtml = localizeChangesMessageHtml(messageText, targetLangi);
     if (changesHtml !== null) return changesHtml;
 
@@ -697,6 +678,7 @@ export const takeVisitsDashboard = async (
   online: { count: number; logins: UserLogin[]; anon: number },
   login: UserLogin,
   messagesArgs: VisitsDashboardMessagesArgs = { kind: DashMessageKind.Errors, beforeId: null },
+  langi = Langi.Ru,
 ): Promise<VisitsDashboard> => {
   const now = Date.now();
   const messageKindCondition = messageKindFilter(messagesArgs.kind);
@@ -780,7 +762,7 @@ export const takeVisitsDashboard = async (
     pageRows.map(async message => ({
       id: message.id,
       kind: message.kind,
-      m: message.m,
+      m: makeDashMessageForViewer(message.m, message.kind, langi),
       visit: message.visit,
       createdAt: message.createdAt,
       user: await takeUserInfo(message.l),

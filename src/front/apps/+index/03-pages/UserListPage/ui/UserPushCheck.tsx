@@ -1,4 +1,4 @@
-import { currentLangiAtom, translateBase, translateEditorBase } from '#basis/locale';
+import { translateBase, translateEditorBase } from '#basis/locale';
 import { makeToastKOMoodConfig, makeToastOKMoodConfig } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { indexDashTsjrpcClient } from '$index/shared/tsjrpc';
@@ -6,7 +6,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { UserId } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
-import { localizeBackLocaleErrorPayload } from 'shared/utils/locale/backLocaleError';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 
@@ -43,12 +42,12 @@ export const IndexUserListAccessRightsUserPushCheck = ({ userId }: { userId: Use
       void queryClient.invalidateQueries({ queryKey: pushTestUsersQueryKey });
     },
     onError: error => {
-      // Серверные RPC-ошибки с payload уже показывает глобальный слушатель Soki с локализацией,
+      // Серверные RPC-ошибки уже приходят локализованными и показываются глобальным слушателем Soki,
       // поэтому здесь тостим только внутренние причины с '#', которые он пропускает, — так тост всегда один.
       const message = '' + error;
       if (!message.startsWith('#')) return;
 
-      toast(localizeBackLocaleErrorPayload(message, currentLangiAtom.get()), makeToastKOMoodConfig());
+      toast(message, makeToastKOMoodConfig());
     },
   });
 

@@ -215,6 +215,43 @@ export default () => [
       rules: { [`${pluginName}/${name}`]: 'error' },
     };
   }),
+
+  definePluginName('error-throw-format', pluginName => {
+    const name = 'check';
+
+    const serializedPayloadReg = /^\d*\s*\{/;
+
+    const rule = {
+      create(context) {
+        return {
+          ThrowStatement(node) {
+            const { argument } = node;
+
+            if (argument?.type === 'NewExpression' && argument.callee.type === 'Identifier' && argument.callee.name === 'Error') {
+              context.report({
+                node: argument,
+                message: `Запрещено бросать new Error(...): используйте backLocaleError(...) или throwFormatter(...)`,
+              });
+            }
+
+            if (argument?.type === 'Literal' && serializedPayloadReg.test(`${argument.value}`)) {
+              context.report({
+                node: argument,
+                message: `Запрещено бросать сериализованный locale-payload сырой строкой: используйте backLocaleError(...) или throwFormatter(...)`,
+              });
+            }
+          },
+        };
+      },
+    };
+
+    return {
+      files: [`**/*.{ts,tsx}`],
+      ignores: [`**/.opencode/**`],
+      plugins: { [pluginName]: { meta, rules: { [name]: rule } } },
+      rules: { [`${pluginName}/${name}`]: 'error' },
+    };
+  }),
 ];
 
 const makeExportedNamePrefixController = (appName, pathPart, fileNameMapper = it => it) => {

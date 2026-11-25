@@ -120,7 +120,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
                 e: eventMi,
                 fio:
                   takeUserAuthName(user?.uauth) ||
-                  `<${translateBackTexts(takeUserLangi(auth?.login), BackLocaleKey.SchUnknownRole)}>`,
+                  `<${translateBackTexts(takeUserLangi(auth?.login) ?? undefined, BackLocaleKey.SchUnknownRole)}>`,
                 w,
                 s: comws,
                 d: dayi,
@@ -207,8 +207,8 @@ export const cmEditComExternalsTsjrpcBaseServer =
                   delete refs[withComw];
 
                   description = backLocaleError(BackLocaleKey.CmComRefRemoved, {
-                    a: comTiny?.n ?? translateBackTexts(null, BackLocaleKey.CmComUnknown),
-                    b: withComTiny?.n ?? translateBackTexts(null, BackLocaleKey.CmComUnknown),
+                    a: comTiny?.n ?? translateBackTexts(undefined, BackLocaleKey.CmComUnknown),
+                    b: withComTiny?.n ?? translateBackTexts(undefined, BackLocaleKey.CmComUnknown),
                   });
                 }
               } else {

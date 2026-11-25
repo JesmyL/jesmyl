@@ -17,7 +17,7 @@ export const userVisitStringified = (visitInfo: SokiVisit | nil) =>
     : '';
 
 export const userAuthStringified = (auth: LocalSokiAuth | nil) =>
-  `<div style='white-space:pre-line'>${auth ? `${auth.fio}${auth.nick && auth.tgId ? ` https://t.me/${auth.nick}` : ''}` : translateBackTexts(null, BackLocaleKey.SchUnknownRole)}\n\n` +
+  `<div style='white-space:pre-line'>${auth ? `${auth.fio}${auth.nick && auth.tgId ? ` https://t.me/${auth.nick}` : ''}` : translateBackTexts(undefined, BackLocaleKey.SchUnknownRole)}\n\n` +
   `<code>${auth ? escapeHtmlLazy()(JSON.stringify(auth, null, 1)) : ''}</code></div>`;
 
 /** Appends the shared auth/visit info block to a dashboard message, separated by `dashMessageSectionSeparator`. */

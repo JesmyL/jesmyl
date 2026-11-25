@@ -1,12 +1,16 @@
-/* Симуляция реального рендер-пути сообщений Changes: строим явный конверт как бэк, прогоняем клиентские и почтовые функции. */
+/* Симуляция реального рендер-пути сообщений Changes: бэк отдаёт готовый текст, фронт только разворачивает конверт. */
 import { describe, expect, it } from 'vitest';
 import { Langi } from 'shared/api';
 import { backLocalePayload, localizeChangesMessageHtml, translateBackTexts } from 'back/locales/back';
+import { makeDashMessageForViewer } from 'back/dash/messageLocalization';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
-import { dashMessageSectionSeparator } from 'shared/model/index/visitsDashboard';
+import { LocalePayloadKind } from 'shared/model/+locale/model';
+import { DashMessageKind, dashMessageSectionSeparator } from 'shared/model/index/visitsDashboard';
+import { jsonStringify } from 'shared/utils';
 import { makeChangesMessage } from 'shared/utils/changesMessage';
+import { throwFormatter } from 'shared/utils/locale/throwFormatter';
 import { makeDiffMarkupHtml, makeDiffSectionHtml, stringifyDiffValue } from 'shared/utils/textDiff';
-import { makeBackLocaleErrorMessageText, makeChangesMessageHtml } from 'front/basis/locale/backLocaleError';
+import { makeDashboardMessageSectionHtml } from 'front/basis/locale/backLocaleError';
 
 const makeSong = () => ({
   id: 41,
@@ -79,37 +83,35 @@ const makePayload = (diffHtml: string, name: string) =>
     diffHtml,
   );
 
-/** Legacy-payload с сырым JSON диффа в `intr.j` — старые строки БД, которые обязаны остаться читаемыми. */
+/** Payload с сырым JSON диффа в `intr.j` — старые по содержанию строки, которые обязаны остаться читаемыми. */
 const makeLegacyPayload = (wasText: string | nil, newText: string | nil, name: string) =>
-  JSON.stringify({
-    title: [
-      'Системное изменение песни "$n"\n$j',
-      'Системна зміна пісні "$n"\n$j',
-      '"$n" әніне жүйелік өзгерту енгізілді\n$j',
-      'System change of the song "$n"\n$j',
-    ],
-    intr: { n: name, j: JSON.stringify({ was: wasText, new: newText }) },
-  });
+  throwFormatter(
+    LocalePayloadKind.LocaleError,
+    jsonStringify({
+      title: [
+        'Системное изменение песни "$n"\n$j',
+        'Системна зміна пісні "$n"\n$j',
+        '"$n" әніне жүйелік өзгерту енгізілді\n$j',
+        'System change of the song "$n"\n$j',
+      ],
+      intr: { n: name, j: JSON.stringify({ was: wasText, new: newText }) },
+    }),
+  );
 
 describe('real changes render path', () => {
-  it('renders backend-prebuilt diff HTML from the explicit envelope without recomputing it on the client', () => {
+  it('sends the localized envelope and keeps the prebuilt diff HTML intact on the front', () => {
     const { wasText, newText, name } = makeDiffParts();
-    // Бэк считает окончательный HTML один раз и кладёт его в поле `d` явного конверта.
     const diffHtml = makeDiffMarkupHtml(wasText ?? '', newText ?? '');
-    const payload = makePayload(diffHtml, name);
+    const serverMessage = makeDashMessageForViewer(makePayload(diffHtml, name), DashMessageKind.Changes, Langi.En);
+    const fromClient = makeDashboardMessageSectionHtml(serverMessage);
 
-    const fromClient = makeChangesMessageHtml(payload, Langi.En) ?? '';
-    const removed = countTag(fromClient, 's');
-    const added = countTag(fromClient, 'b');
-
-    // Клиент вставил ровно тот HTML, который посчитал бэк: повторного диффа нет.
     expect(fromClient).toContain(diffHtml);
-    expect(removed).toBeGreaterThan(0);
-    expect(added).toBeGreaterThan(0);
+    expect(countTag(fromClient, 's')).toBeGreaterThan(0);
+    expect(countTag(fromClient, 'b')).toBeGreaterThan(0);
     expect(fromClient).toContain('System change of the song "Тестовая песня"');
     expect(fromClient).not.toContain('{"was":');
     expect(fromClient).not.toContain('{"t":');
-    // Подсвечены отдельные короткие куски, а не весь JSON одним блоком.
+    expect(serverMessage).not.toContain('{"title"');
     expect(takeMaxSegmentLength(fromClient, 's')).toBeLessThan(200);
     expect(takeMaxSegmentLength(fromClient, 'b')).toBeLessThan(200);
   });
@@ -126,39 +128,44 @@ describe('real changes render path', () => {
     expect(emailHtml).not.toContain('<script>alert(1)</script>');
   });
 
-  it('keeps legacy payloads with raw JSON diff renderable', () => {
+  it('turns a legacy payload with raw JSON diff into ready HTML on the server', () => {
     const { wasText, newText, name } = makeDiffParts();
-    const fromLegacy = makeBackLocaleErrorMessageText(makeLegacyPayload(wasText, newText, name), Langi.En);
-
-    expect(countTag(fromLegacy, 's')).toBeGreaterThan(0);
-    expect(countTag(fromLegacy, 'b')).toBeGreaterThan(0);
-  });
-
-  it('keeps legacy diff sections and plain pre-formatted messages intact', () => {
-    const { wasText, newText } = makeDiffParts();
-    const legacySection = JSON.stringify({ was: wasText, new: newText });
-    const sectionHtml = makeDiffSectionHtml(legacySection);
-
-    expect(sectionHtml).not.toBeNull();
-    expect(countTag(sectionHtml ?? '', 's')).toBeGreaterThan(0);
-
-    const plainMessage = `Системное изменение песни "Тестовая песня"\nwas:\n<pre>${wasText}</pre>\nnew:\n<pre>${newText}</pre>`;
-    expect(makeBackLocaleErrorMessageText(plainMessage, Langi.En)).toBe(plainMessage);
-    expect(plainMessage).toContain('<pre>');
-  });
-
-  it('keeps the legacy section separator path working', () => {
-    const { wasText, newText, name } = makeDiffParts();
-    const payload = makePayload(makeDiffMarkupHtml(wasText ?? '', newText ?? ''), name);
-    const legacyMessage = `${payload}${dashMessageSectionSeparator}${JSON.stringify({ was: wasText, new: newText })}`;
-    const sections = legacyMessage.split(dashMessageSectionSeparator);
-    const body = sections.map(
-      section =>
-        makeChangesMessageHtml(section, Langi.En) ??
-        makeDiffSectionHtml(section) ??
-        makeBackLocaleErrorMessageText(section, Langi.En),
+    const serverMessage = makeDashMessageForViewer(
+      makeLegacyPayload(wasText, newText, name),
+      DashMessageKind.Changes,
+      Langi.En,
     );
 
+    expect(countTag(serverMessage, 's')).toBeGreaterThan(0);
+    expect(countTag(serverMessage, 'b')).toBeGreaterThan(0);
+    expect(serverMessage).not.toContain('{"title"');
+    expect(makeDashboardMessageSectionHtml(serverMessage)).toBe(serverMessage);
+  });
+
+  it('converts legacy diff sections and leaves plain pre-formatted messages intact', () => {
+    const { wasText, newText } = makeDiffParts();
+    const legacySection = JSON.stringify({ was: wasText, new: newText });
+    const sectionHtml = makeDashMessageForViewer(legacySection, DashMessageKind.Changes, Langi.En);
+
+    expect(makeDiffSectionHtml(legacySection)).not.toBeNull();
+    expect(countTag(sectionHtml, 's')).toBeGreaterThan(0);
+
+    const plainMessage = `Системное изменение песни "Тестовая песня"\nwas:\n<pre>${wasText}</pre>\nnew:\n<pre>${newText}</pre>`;
+    expect(makeDashMessageForViewer(plainMessage, DashMessageKind.Changes, Langi.En)).toBe(plainMessage);
+    expect(makeDashboardMessageSectionHtml(plainMessage)).toBe(plainMessage);
+  });
+
+  it('produces the ready Ru+viewer duo for Errors and keeps both legacy sections working', () => {
+    const { wasText, newText, name } = makeDiffParts();
+    const legacyMessage = `${makeLegacyPayload(wasText, newText, name)}${dashMessageSectionSeparator}${JSON.stringify({ was: wasText, new: newText })}`;
+
+    const errorMessage = makeDashMessageForViewer(legacyMessage, DashMessageKind.Errors, Langi.En);
+    const sections = errorMessage.split(dashMessageSectionSeparator);
+    const body = sections.map(makeDashboardMessageSectionHtml);
+
+    expect(errorMessage).toContain('System change of the song "Тестовая песня"');
+    expect(errorMessage).toContain('Системное изменение песни');
+    expect(errorMessage).not.toContain('{"title"');
     expect(body).toHaveLength(2);
     expect(countTag(body[0], 'b')).toBeGreaterThan(0);
     expect(countTag(body[1], 's')).toBeGreaterThan(0);

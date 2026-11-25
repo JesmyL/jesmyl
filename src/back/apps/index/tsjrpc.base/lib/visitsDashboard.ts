@@ -8,6 +8,7 @@ import { sokiServer } from 'back/complect/soki/SokiServer';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { markDashMessagesRead, sendCurrentDashReport, takeVisitsDashboard, updateVisitDayOnline } from 'back/dash/visits';
 import { onDashMessageStoredEvent, onVisitStoredEvent } from 'back/dash/events';
+import { makeDashMessageForViewer } from 'back/dash/messageLocalization';
 import { IndexDashTsjrpcModel } from 'shared/api/tsjrpc/index/dash.tsjrpc.model';
 import { Langi, LocalSokiAuth, SokiAuthLogin, UserId } from 'shared/api';
 import { validEmailRegExp } from 'shared/const/index/regExp.validators';
@@ -31,7 +32,7 @@ const takeUserPushSubscriptionsCount = (userId: UserId) =>
  * Собирает готовую подсказку точки подписок сразу на языке запрашивающего пользователя:
  * при отсутствии подписок отдаём отдельный текст, при mute добавляем к числу предупреждение, иначе — только число.
  */
-const makePushSubscriptionsTitle = (langi: Langi | nil, subscriptionsCount: number, isMuted: boolean) => {
+const makePushSubscriptionsTitle = (langi = Langi.Ru, subscriptionsCount: number, isMuted: boolean) => {
   if (subscriptionsCount === 0)
     return translateBackTexts(langi, BackLocaleKey.PushSubscriptionsAbsent);
 
@@ -69,7 +70,15 @@ sokiServer.onOnlineCountChangeEvent.listen(({ count, login, isEnter }) => {
 sokiServer.onClientCloseEvent.listen(client => dashWatchers.delete(client));
 
 onDashMessageStoredEvent.listen(message => {
-  indexServerTsjrpcShareMethods.dashMessage({ message }, dashWatchers).catch(emptyFunc);
+  // Каждому наблюдателю уходит своя готовая версия: язык берётся из его живого визита.
+  dashWatchers.forEach(client => {
+    indexServerTsjrpcShareMethods
+      .dashMessage(
+        { message: { ...message, m: makeDashMessageForViewer(message.m, message.kind, sokiServer.takeClientLangi(client) ?? undefined) } },
+        client,
+      )
+      .catch(emptyFunc);
+  });
 });
 
 /** Новый визит уходит в тот же набор наблюдателей, что и сообщения: дашборд вставляет ряд в начало вкладки VisitError без ожидания 15-секундного опроса. */
@@ -82,7 +91,7 @@ onVisitStoredEvent.listen(visit => {
  * поэтому в общий клиент и его модель не попадают. Гварды доступа остаются внутри каждого метода.
  */
 export const indexTSJRPCBaseVisitsDashboard = {
-  getVisitsDashboard_v1: async ({ messages } = {}, { auth, client }) => {
+  getVisitsDashboard_v1: async ({ messages } = {}, { auth, client, visitInfo }) => {
     await throwIfNoUserScopeAccessRight(auth, 'dash', 'DASH');
 
     if (!auth?.login) throw backLocaleError(BackLocaleKey.NoAccess);
@@ -95,6 +104,7 @@ export const indexTSJRPCBaseVisitsDashboard = {
         { count: sokiServer.onlineCount, logins, anon },
         auth.login,
         messages,
+        visitInfo?.langi,
       ),
     };
   },

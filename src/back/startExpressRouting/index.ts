@@ -274,7 +274,7 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
   }: {
     bodyContent?: string;
     title?: string;
-    langi: Langi | nil;
+    langi?: Langi;
     ogDescription?: string;
     ogAudio?: {
       url: string;
@@ -312,7 +312,7 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
   };
 
   app.get(/^\/track\//, async (req: Request, res: Response) => {
-    const langi = takeRequestLangi(req);
+    const langi = takeRequestLangi(req) ?? undefined;
     const requestedValue = takeAudioTailFromRequestPath(req.url.slice(trackPathPrefix.length));
 
     const upstreamUrl = await takeAudioHttpLink(requestedValue);
@@ -361,7 +361,7 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
   });
 
   app.get(/^[^?#]+\.(js|png|json|mp3)($|[?#])/, async (req: Request, res: Response) => {
-    const langi = takeRequestLangi(req);
+    const langi = takeRequestLangi(req) ?? undefined;
 
     if (req.params[0] === 'mp3') {
       try {
@@ -446,7 +446,7 @@ export const startExpressRouting = async (wsServer: WebSocketServer) => {
 
   app.use(async (req: Request, res: Response) => {
     if (isRequestFromSearchBot(req)) {
-      const langi = takeRequestLangi(req);
+      const langi = takeRequestLangi(req) ?? undefined;
       let descriptionFromSearchParams = '';
 
       try {

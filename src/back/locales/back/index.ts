@@ -1,14 +1,14 @@
 import { Langi } from 'shared/api';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
+import { LocalePayloadKind } from 'shared/model/+locale/model';
+import { jsonStringify } from 'shared/utils';
 import { parseChangesMessage } from 'shared/utils/changesMessage';
 import {
-  type BackLocaleErrorPayload,
   checkIsBackLocalePayload,
   localizeBackLocaleErrorPayload,
   localizeBackLocalePayloads,
-  parseBackLocaleErrorPayload,
-  takeBackLocaleErrorTitleText,
 } from 'shared/utils/locale/backLocaleError';
+import { throwFormatter } from 'shared/utils/locale/throwFormatter';
 import { translateBaseDefine } from 'shared/utils/locale/translate';
 import { stringTemplater } from 'shared/utils/stringTemplater';
 import { escapeHtmlLazy } from 'shared/utils/string.utils';
@@ -28,11 +28,11 @@ const backLocales: { [L in Langi]: Record<BackLocaleKey, string> } = {
 };
 
 export const translateBackTexts = (
-  langi: Langi | nil,
+  langi = Langi.Ru,
   key: BackLocaleKey,
   interpolation?: Record<string, string | number | boolean>,
 ) => {
-  const text = translateBaseDefine(backLocales[langi ?? Langi.Ru] ?? backLocalesRu)(key);
+  const text = translateBaseDefine(backLocales[langi])(key);
 
   return interpolation ? stringTemplater(text, interpolation) : text;
 };
@@ -44,7 +44,7 @@ const langiList = [Langi.Ru, Langi.Ua, Langi.Kz, Langi.En] as const;
  * а необязательные значения подстановки хранятся один раз в общем объекте `intr`.
  */
 const makeBackLocalePayloadJson = (title: readonly string[], intr?: Record<string, string | number | boolean>) =>
-  JSON.stringify({ title, ...(intr ? { intr } : null) });
+  throwFormatter(LocalePayloadKind.LocaleError, jsonStringify({ title, ...(intr ? { intr } : null) }));
 
 /** Локализованный payload: по одному тексту на язык в порядке Langi (Ru/Ua/Kz/En). */
 export const backLocalePayload = (makeText: (langi: Langi) => string) =>
@@ -62,7 +62,7 @@ export const backLocaleError = (key: BackLocaleKey, interp?: Record<string, stri
  * готовый HTML диффа `d` вставляется сырым внутри `<pre>`, чтобы письмо сохраняло переносы строк.
  * `null` — сообщение не является конвертом, вызывающий код использует прежний путь.
  */
-export const localizeChangesMessageHtml = (message: string, langi: Langi | nil) => {
+export const localizeChangesMessageHtml = (message: string, langi = Langi.Ru) => {
   const changes = parseChangesMessage(message);
   if (!changes) return null;
 
@@ -70,31 +70,3 @@ export const localizeChangesMessageHtml = (message: string, langi: Langi | nil) 
 
   return changes.d ? `${title}\n<pre style="white-space:pre-wrap">${changes.d}</pre>` : title;
 };
-
-/** Replaces the embedded payload segment (if any) with the text made by the caller; null when there is no payload. */
-const replaceBackLocaleErrorPayload = (
-  message: string,
-  makeReplacement: (payload: BackLocaleErrorPayload) => string,
-) => {
-  const segments = message.split('\n\n');
-
-  for (let index = 0; index < segments.length; index++) {
-    const payload = parseBackLocaleErrorPayload(segments[index]);
-    if (!payload) continue;
-
-    segments[index] = makeReplacement(payload);
-
-    return segments.join('\n\n');
-  }
-
-  return null;
-};
-
-/** Full message body: Ru text first, then the viewer-language text on a new line (collapsed when they match). */
-export const makeBackLocaleErrorDuoText = (str: string, langi: Langi | nil): string | null =>
-  replaceBackLocaleErrorPayload(str, payload => {
-    const ruText = takeBackLocaleErrorTitleText(payload, 0);
-    const viewerText = takeBackLocaleErrorTitleText(payload, langi ?? Langi.Ru);
-
-    return ruText === viewerText ? ruText : `${ruText}\n${viewerText}`;
-  });

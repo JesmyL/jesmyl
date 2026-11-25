@@ -397,7 +397,7 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
 
           const r =
             scheduleWidgetUserRights.texts[scheduleWidgetUserRights.rightsBalance(R)].role?.[0] ??
-            translateBackTexts(null, BackLocaleKey.SchUnknownRole);
+            translateBackTexts(undefined, BackLocaleKey.SchUnknownRole);
 
           return backLocaleError(BackLocaleKey.SchDefaultRightsSet, {
             t: await scheduleTitleInBrackets(sch),

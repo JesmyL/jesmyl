@@ -74,7 +74,7 @@ const accessRightTitleLocaleKeys: AccessRightTitleLocaleKeys = {
  * подставляя тексты серверной локали на язык подключения;
  * приведение к типу формы безопасно, потому что карта ключей типизирована по его scope/rule.
  */
-export const takeAccessRightTitles = (langi: Langi | nil): IndexAppAccessRightTitles =>
+export const takeAccessRightTitles = (langi = Langi.Ru): IndexAppAccessRightTitles =>
   objectFromEntries(
     mapObjectEntries(accessRightTitleLocaleKeys, (scope, { info, ...ruleKeys }) => [
       scope,

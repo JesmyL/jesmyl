@@ -213,7 +213,7 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
             t: await scheduleTitleInBrackets(sch),
             r:
               scheduleWidgetUserRights.texts[scheduleWidgetUserRights.rightsBalance(R)].role?.[1] ??
-              translateBackTexts(null, BackLocaleKey.SchUnknownRoleGenitive),
+              translateBackTexts(undefined, BackLocaleKey.SchUnknownRoleGenitive),
           });
         }),
       },

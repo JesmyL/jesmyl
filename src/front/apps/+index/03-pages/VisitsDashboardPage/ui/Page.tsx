@@ -6,11 +6,7 @@ import {
   translateDynamic,
   translateEditorBase,
 } from '#basis/locale';
-import {
-  makeBackLocaleErrorMessageDuoText,
-  makeBackLocaleErrorMessageText,
-  makeChangesMessageHtml,
-} from '#basis/locale/backLocaleError';
+import { makeChangesMessageHtml, makeDashboardMessageSectionHtml } from '#basis/locale/backLocaleError';
 import { otherFooterIconAtom, otherFooterIconNamesAtom } from '#basis/state/otherFooterIconAtom';
 import { Button } from '#shared/components/ui/button';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
@@ -42,8 +38,6 @@ import {
   noOnlineSample,
 } from 'shared/model/index/visitsDashboard';
 import { extractNumber } from 'shared/utils';
-import { checkIsNumber, checkIsObject } from 'shared/utils/checkIs';
-import { makeDiffSectionHtml } from 'shared/utils/textDiff';
 import { mapObjectEntries, objectLength } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
 import { StameskaIconName } from 'stameska-icon/pack';
@@ -148,24 +142,8 @@ const takeUserName = (user: Pick<DashMessageUser, 'fio' | 'nick' | 'email'>) =>
 const takeMessageUserName = (message: DashMessage) =>
   message.isSystem ? translateEditorBase(EditorLocaleKey.VisitsSystem) : takeUserName(message.user);
 
-const takeMessageVisitLangi = (message: DashMessage): Langi | nil => {
-  let visit: unknown;
-
-  try {
-    visit = JSON.parse(message.visit);
-  } catch {
-    return null;
-  }
-
-  if (!checkIsObject(visit)) return null;
-
-  const { langi } = visit;
-
-  return checkIsNumber(langi) && Number.isInteger(langi) && langi >= Langi.Ru && langi <= Langi.En ? langi : null;
-};
-
 const takeMessageSummary = (html: string) => {
-  const text = html.replace(htmlTagsReg, ' ').replace(whitespaceReg, ' ').trim();
+  const text = html.split('\n')[0].replace(htmlTagsReg, ' ').replace(whitespaceReg, ' ').trim();
 
   return text.length > messageSummaryMaxLength ? `${text.slice(0, messageSummaryMaxLength)}…` : text;
 };
@@ -473,7 +451,6 @@ const DashboardMessages = () => {
   const [openMessageIds, setOpenMessageIds] = useState<Set<number>>(() => new Set());
   const queryClient = useQueryClient();
   const dashMessageVersion = useAtomValue(indexDashMessageVersionAtom);
-  const langi = useAtomValue(currentLangiAtom);
   const isVisitErrorKind = activeKind === DashMessageKind.VisitError;
 
   const messagesQuery = useInfiniteQuery({
@@ -598,19 +575,10 @@ const DashboardMessages = () => {
                 const isUnread = message.createdAt > (messageReads[activeKind] ?? 0);
                 const isOpen = openMessageIds.has(message.id);
                 const messageSections = message.m.split(dashMessageSectionSeparator);
-                const messageVisitLangi = takeMessageVisitLangi(message) ?? langi;
                 const messageSummary = takeMessageSummary(
-                  makeChangesMessageHtml(messageSections[0], messageVisitLangi) ??
-                    makeBackLocaleErrorMessageText(messageSections[0], messageVisitLangi),
+                  makeChangesMessageHtml(messageSections[0]) ?? messageSections[0],
                 );
-                const messageSectionBodies = messageSections.map(
-                  section =>
-                    makeChangesMessageHtml(section, messageVisitLangi) ??
-                    makeDiffSectionHtml(section) ??
-                    (activeKind === DashMessageKind.Errors
-                      ? makeBackLocaleErrorMessageDuoText(section, messageVisitLangi)
-                      : makeBackLocaleErrorMessageText(section, messageVisitLangi)),
-                );
+                const messageSectionBodies = messageSections.map(makeDashboardMessageSectionHtml);
 
                 return (
                   <article

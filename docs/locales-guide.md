@@ -84,19 +84,21 @@ export const enum Langi {
 - Enum: `src/shared/model/+locale/_BackLocaleKey.ts` — коды ошибок и служебные тексты (push, письма, OG-мета).
 - Исходники: `src/back/locales/back/{ru,ua,kz,en}.ts`, сборка словаря — `src/back/locales/back/index.ts`.
 - Перевод: `translateBackTexts(langi: Langi | nil, key, interp?)`; `nil` → `Ru`.
-- **На фронт не доставляется.** Фронт видит серверные тексты только в виде уже переведённой строки (ошибка RPC) либо в виде payload с четырьмя вариантами (дашборд).
+- **На фронт не доставляется.** Фронт видит серверные тексты только в виде уже переведённой строки: ошибка RPC и сообщения дашборда приходят готовым текстом на языке зрителя, payload остаётся внутри бэкенда.
 
 ## 8. Формат payload ошибки
 
-`backLocaleError(key, interp?)` (`src/back/locales/back/index.ts`) возвращает **строку** с JSON:
+`backLocaleError(key, interp?)` (`src/back/locales/back/index.ts`) возвращает **строку** с числовым префиксом вида payload'а:
 
-```json
-{ "title": ["ru-текст", "ua-текст", "kz-текст", "en-текст"], "intr": { "n": 5 } }
+```text
+1 {"title":["ru-текст","ua-текст","kz-текст","en-текст"],"intr":{"n":5}}
 ```
 
+- `1` — `LocalePayloadKind.LocaleError` (`src/shared/model/+locale/model.ts`): числовой вид payload'а, который отделяет его от обычного текста ошибки.
+- Строку собирает `throwFormatter(kind, jsonStringify(payload))` (`src/shared/utils/locale/throwFormatter.ts`) по шаблону `${kind} ${json}`.
 - `title` индексируется числами `Langi`: `Ru = 0`, `Ua = 1`, `Kz = 2`, `En = 3`.
-- `intr` — значения интерполяции; шаблон разворачивается в момент показа через `stringTemplater`, поэтому `FUNCTION('dec')`/`IF` работают уже на принимающей стороне.
-- Бросать нужно строкой: `throw backLocaleError(...)`, не `new Error(...)`.
+- `intr` — значения интерполяции; шаблон разворачивается через `stringTemplater` на сервере перед отправкой, поэтому во фронт приходит уже готовый текст с выполненными `FUNCTION('dec')`/`IF`.
+- Бросать нужно строкой: `throw backLocaleError(...)`, не `new Error(...)`; правило ESLint `error-throw-format/check` запрещает `throw new Error(...)` и бросок сериализованного payload'а сырой строкой.
 
 Как payload живёт дальше:
 
@@ -105,10 +107,11 @@ export const enum Langi {
 | Ошибка RPC | `onErrorMessage` (`src/back/tsjrpc.base.server.ts`) пишет в дашборд исходную строку с payload и аргументами вызова |
 | Ответ клиенту | `SokiServer.sendInvokeEvent` (`src/back/complect/soki/SokiServer.ts`) заменяет payload на один текст на языке `visitInfo.langi` через `localizeBackLocaleErrorPayload` |
 | Хранение | `dashErrorDB` хранит сырой payload — язык зрителя на момент записи неизвестен |
-| Показ в дашборде | `src/front/basis/locale/backLocaleError.ts` + `src/front/apps/+index/03-pages/VisitsDashboardPage/ui/Page.tsx`: для `DashMessageKind.Errors` — две строки (`Ru`, затем язык зрителя), для остальных видов — одна строка на языке зрителя; краткая строка в списке сообщений всегда `Ru` |
-| Push об ошибке | `takeErrorPushSummary` (`src/back/dash/visits.ts`) разворачивает payload в `Ru` и обрезает до 100 символов |
+| Показ в дашборде | `makeDashMessageForViewer` (`src/back/dash/messageLocalization.ts`) готовит текст на языке запрашивающего (`visitInfo.langi`) ещё до отправки: для `DashMessageKind.Errors` — две строки (`Ru`, затем язык зрителя), для остальных видов — одна строка на языке зрителя. Фронт получает только готовый текст, payload'ов и JSON в нём нет |
+| Фронт дашборда | `src/front/basis/locale/backLocaleError.ts` + `src/front/apps/+index/03-pages/VisitsDashboardPage/ui/Page.tsx`: разворачивает только конверт Changes (экранирует готовый `t` и вставляет готовый HTML `d`), остальные секции показывает как есть; ничего не разбирает и не ищет payload'ы |
+| Push об ошибке | `takeErrorPushSummary` (`src/back/dash/errorPush.ts`) разворачивает payload в язык получателя и обрезает до 100 символов |
 
-Payload может быть встроен в более длинный текст: парсер (`parseBackLocaleErrorPayload` на обеих сторонах) разбивает сообщение по `\n\n` и ищет сегмент, который целиком является payload с массивом ровно из четырёх строк.
+Payload может быть встроен в более длинный текст: парсер (`parseBackLocaleErrorPayload`) разбивает сообщение по `\n\n`; сегмент, который начинается с префикса `1 ` и содержит JSON с массивом ровно из четырёх строк, считается payload'ом, остальные сегменты остаются обычным текстом. Парсер и `localize*`-функции живут в `src/shared/utils/locale/backLocaleError.ts` и используются только бэком (дашборд, push, ошибки RPC) — фронт их не импортирует.
 
 Дополнительно есть `backLocalePayload(makeText)` — тот же конверт без `intr`, для произвольных многоязычных текстов (используется в дневной сводке посещений).
 
@@ -118,8 +121,8 @@ Payload может быть встроен в более длинный текс
 | --- | --- | --- |
 | Интерфейс фронта | Выбранный пользователем; по умолчанию — из `navigator.language` | `currentLangiAtom` (`src/front/basis/locale/index.ts`), отправка — `src/front/shared/soki.ts` |
 | Ошибка RPC пользователю | Язык пользователя, перевод на сервере | `localizeBackLocaleErrorPayload(raw, tool.visitInfo?.langi)` |
-| Дашборд: `Errors` | `Ru` + язык зрителя | `makeBackLocaleErrorMessageDuoText` |
-| Дашборд: `Log`/`Changes`/`Support`/`VisitError` | Язык зрителя | `makeBackLocaleErrorMessageText` |
+| Дашборд: `Errors` | `Ru` + язык зрителя | `makeDashMessageForViewer` (`src/back/dash/messageLocalization.ts`) на сервере до отправки |
+| Дашборд: `Log`/`Changes`/`Support`/`VisitError` | Язык зрителя | там же; фронт получает готовый текст |
 | Письмо-отчёт о посещениях | Язык запросившего админа | `sendCurrentDashReport(auth.login, visitInfo?.langi)` (`src/back/apps/index/tsjrpc.base/lib/visitsDashboard.ts`) |
 | Письмо об изменениях (`Changes`) | Тема — язык инициатора (`visitInfo.langi`), тело — текст call-site (практически всегда `Ru`) | `sendChangesEmail(html, langi)` из `postJRPCMessage` |
 | OTP: письмо | Тема и хвост «код истечёт» — язык пользователя; основной текст письма — `Ru` | `src/back/apps/index/tsjrpc.base/lib/otp.methods.ts` |
@@ -214,6 +217,6 @@ Payload может быть встроен в более длинный текс
 | Текст редактора/дашборда | `src/shared/model/+locale/_EditorLocaleKey.ts`, `src/back/locales/editor/*.ts`, `src/shared/model/+locale/editor.ts` |
 | Названия блоков, книг, языков | `src/shared/model/+locale/_DynLocaleKey.ts`, `src/back/locales/dynamic/*.ts`, `src/shared/model/+locale/dynamic.ts` |
 | Серверная ошибка, push, письмо | `src/shared/model/+locale/_BackLocaleKey.ts`, `src/back/locales/back/*.ts` |
-| Показ ошибки в дашборде | `src/front/basis/locale/backLocaleError.ts`, `src/front/apps/+index/03-pages/VisitsDashboardPage/ui/Page.tsx` |
+| Показ ошибки в дашборде | `src/back/dash/messageLocalization.ts`, `src/front/basis/locale/backLocaleError.ts`, `src/front/apps/+index/03-pages/VisitsDashboardPage/ui/Page.tsx` |
 | Доставка словарей | `src/back/apps/index/tsjrpc.base/lib/requestFreshLocales.ts`, `src/back/locales/file-storages.ts`, `src/front/basis/state/locale.ts` |
 | Выбор языка пользователем | `src/front/basis/locale/index.ts`, `src/front/basis/locale/LangiPickerModal.tsx` |

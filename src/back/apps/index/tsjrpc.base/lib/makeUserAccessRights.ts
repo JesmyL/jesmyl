@@ -14,8 +14,8 @@ export const makeUserAccessRights = async (login: SokiAuthLogin | nil) => {
   let userRightsResult: IndexAccessScopeRules = {};
 
   if (userRole) {
-    // Здесь нужны только ключи структуры прав, поэтому язык не важен и передаём null.
-    const titles = takeAccessRightTitles(null);
+    // Здесь нужны только ключи структуры прав, поэтому язык не важен и остаётся по умолчанию.
+    const titles = takeAccessRightTitles();
 
     if (userRole === 'TOP') {
       for (const scopeName in titles) {
