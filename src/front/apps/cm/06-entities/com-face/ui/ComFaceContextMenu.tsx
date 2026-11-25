@@ -1,9 +1,11 @@
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { translateBase } from '#basis/locale';
 import { ContextMenu } from '#shared/components/ui/context-menu';
 import { useConfirm } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmComSelectedComwsAtom } from '$cm/entities/com';
 import { useCmComFavouriteList } from '$cm/entities/com-favourite';
+import { useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { CmComWid, MenuComToolName } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
@@ -14,14 +16,29 @@ interface Props {
 }
 
 export const CmComFaceContextMenu = ({ onClick, comWid }: Props) => {
+  const navigate = useNavigate();
+  const checkAccess = useCheckUserAccessRightsInScope();
   const { isFavourite, toggleFavourite } = useCmComFavouriteList();
   const isComMarked = isFavourite(comWid);
   const selectedComws = useAtomValue(cmComSelectedComwsAtom);
   const confirm = useConfirm();
   const comNum = selectedComws.indexOf(comWid) + 1;
+  const isCanEdit = checkAccess('cm', 'EDIT');
 
   return (
     <>
+      {!isCanEdit || (
+        <ContextMenu.Item
+          onClick={() => {
+            onClick(null);
+            navigate({ to: '/cm/edit/coms/$comw/$tab', params: { comw: `${comWid}`, tab: 'watch' } });
+          }}
+        >
+          <LazyIcon icon="PencilEdit02" />
+          {translateBase(it => it[BaseLocaleKey.CmMarkComTool][MenuComToolName.EditCom])}
+        </ContextMenu.Item>
+      )}
+
       <ContextMenu.Item
         onClick={() => {
           onClick(null);
