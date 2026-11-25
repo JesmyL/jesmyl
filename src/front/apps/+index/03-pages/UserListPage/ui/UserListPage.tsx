@@ -1,4 +1,5 @@
 import { translateBase } from '#basis/locale';
+import { QueryKey } from '#basis/model/QueryKey.model';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { Modal, ModalBody, ModalHeader, usePrompt } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
@@ -56,7 +57,7 @@ export function IndexUserListPage() {
   // Заголовки скоупов и правил нужны для фабрикации полной карты прав роли TOP;
   // ключ совпадает с запросом таблицы прав, поэтому данные берутся из её кэша без лишнего вызова.
   const { data: accessRightTitles } = useQuery({
-    queryKey: ['getAccessRightTitles'],
+    queryKey: [QueryKey.AccessRightTitles],
     queryFn: () => indexTsjrpcClientMethods.getAccessRightTitles(),
   });
   const prompt = usePrompt();

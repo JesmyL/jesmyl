@@ -1,4 +1,5 @@
 import { translateEditorBase } from '#basis/locale';
+import { QueryKey } from '#basis/model/QueryKey.model';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
@@ -14,7 +15,7 @@ export const CmEditorComRemovedComsModalInner = () => {
   openComwAtom ??= atom<CmComWid | null>(null);
 
   const { data: icoms } = useQuery({
-    queryKey: ['takeRemovedComs'],
+    queryKey: [QueryKey.TakeRemovedComs],
     queryFn: () => cmEditComClientTsjrpcMethods.takeRemovedComs(),
   });
 

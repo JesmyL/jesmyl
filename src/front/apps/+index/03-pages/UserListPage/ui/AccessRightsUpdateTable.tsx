@@ -1,4 +1,5 @@
 import { translateBase } from '#basis/locale';
+import { QueryKey } from '#basis/model/QueryKey.model';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useQuery } from '@tanstack/react-query';
@@ -17,7 +18,7 @@ export function IndexUserListAccessRightsUpdateTable({
   takeIsChecked: (scope: string, rule: string, operation: CRUDOperation) => boolean;
 }) {
   const { data: rightTitles } = useQuery({
-    queryKey: ['getAccessRightTitles'],
+    queryKey: [QueryKey.AccessRightTitles],
     queryFn: () => indexTsjrpcClientMethods.getAccessRightTitles(),
   });
 

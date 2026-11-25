@@ -1,4 +1,5 @@
 import { translateBase } from '#basis/locale';
+import { QueryKey } from '#basis/model/QueryKey.model';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { CmComFaceList } from '$cm/entities/com-face';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
@@ -14,7 +15,7 @@ interface Props {
 
 export const CmComRatingSortedComList = ({ comws }: Props) => {
   const { data: visits = {}, isLoading } = useQuery({
-    queryKey: ['CmRatingSortedComList visits'],
+    queryKey: [QueryKey.CmRatingSortedComListVisits],
     queryFn: () => cmTsjrpcClient.getComwVisits(),
   });
 

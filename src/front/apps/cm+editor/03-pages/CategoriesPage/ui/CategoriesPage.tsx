@@ -2,6 +2,7 @@ import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRi
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { translateBase, translateEditorBase } from '#basis/locale';
+import { QueryKey } from '#basis/model/QueryKey.model';
 import { Button } from '#shared/components/ui/button';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
@@ -27,7 +28,7 @@ import {
   takeCmEditorCategoriesPageKindTitle,
 } from '../model';
 
-const takeRemovedCatsQueryKey = ['takeRemovedCats'];
+const takeRemovedCatsQueryKey = [QueryKey.TakeRemovedCats];
 
 export const CmEditorCategoriesPage = () => {
   const cats = useEditableCats();

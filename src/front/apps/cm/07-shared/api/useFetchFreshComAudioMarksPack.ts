@@ -1,3 +1,4 @@
+import { QueryKey } from '#basis/model/QueryKey.model';
 import { useQuery } from '@tanstack/react-query';
 import { CmComWid } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
@@ -7,7 +8,7 @@ import { cmIDB } from '../state';
 
 export const useFetchFreshComAudioMarksPack = (comScalar: CmCom | CmComWid | nil) => {
   return useQuery({
-    queryKey: ['useFetchFreshComAudioMarksPack', checkIsNumber(comScalar) ? comScalar : comScalar?.wid],
+    queryKey: [QueryKey.CmFreshComAudioMarksPack, checkIsNumber(comScalar) ? comScalar : comScalar?.wid],
     enabled: checkIsNotNil(comScalar),
     staleTime: 10000,
     queryFn: async () => {

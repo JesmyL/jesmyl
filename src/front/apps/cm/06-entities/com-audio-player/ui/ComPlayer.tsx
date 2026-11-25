@@ -1,3 +1,4 @@
+import { QueryKey } from '#basis/model/QueryKey.model';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -37,7 +38,7 @@ export const CmComAudioPlayer = ({ links, timeRender, addRender, className }: Pr
   const linkLeadNum = numLeadLink ? parseInt(numLeadLink, 10) : null;
 
   const linkHostQuery = useQuery({
-    queryKey: ['cmTsjrpcClient.getLinkLeadNumHost', linkLeadNum],
+    queryKey: [QueryKey.CmGetLinkLeadNumHost, linkLeadNum],
     queryFn: () => {
       if (linkLeadNum === null) throw 'numLead audio link expected';
       return cmTsjrpcClient.getLinkLeadNumHost({ num: linkLeadNum });
@@ -46,7 +47,7 @@ export const CmComAudioPlayer = ({ links, timeRender, addRender, className }: Pr
   });
 
   const tailHostQuery = useQuery({
-    queryKey: ['cmTsjrpcClient.getAudioTailHost', audioTail],
+    queryKey: [QueryKey.CmGetAudioTailHost, audioTail],
     queryFn: () => {
       if (checkIsNil(audioTail)) throw 'audio tail expected';
       return cmTsjrpcClient.getAudioTailHost({ tail: audioTail });

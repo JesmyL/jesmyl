@@ -252,6 +252,40 @@ export default () => [
       rules: { [`${pluginName}/${name}`]: 'error' },
     };
   }),
+
+  definePluginName('query-key-enum', pluginName => {
+    const name = 'check';
+    const message = 'Строковые queryKey запрещены — используйте const enum QueryKey';
+
+    const checkValue = (context, node) => {
+      if (node == null) return;
+
+      if ((node.type === 'Literal' && typeof node.value === 'string') || node.type === 'TemplateLiteral') {
+        context.report({ node, message });
+        return;
+      }
+
+      if (node.type === 'ArrayExpression') node.elements.forEach(element => checkValue(context, element));
+    };
+
+    const rule = {
+      create(context) {
+        return {
+          Property(node) {
+            if (node.computed || node.key.type !== 'Identifier' || node.key.name !== 'queryKey') return;
+
+            checkValue(context, node.value);
+          },
+        };
+      },
+    };
+
+    return {
+      files: ['**/front/**/*.{ts,tsx}'],
+      plugins: { [pluginName]: { meta, rules: { [name]: rule } } },
+      rules: { [`${pluginName}/${name}`]: 'error' },
+    };
+  }),
 ];
 
 const makeExportedNamePrefixController = (appName, pathPart, fileNameMapper = it => it) => {

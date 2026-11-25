@@ -1,4 +1,5 @@
 import { translateBase, translateEditorBase } from '#basis/locale';
+import { QueryKey } from '#basis/model/QueryKey.model';
 import { makeToastKOMoodConfig, makeToastOKMoodConfig } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { indexDashTsjrpcClient } from '$index/shared/tsjrpc';
@@ -11,7 +12,7 @@ import { twMerge } from 'tailwind-merge';
 
 // Ключ запроса списка подписок попапа прав: единственный потребитель, поэтому кэш не делится с дашбордом.
 // Запрос ленивый (компонент монтируется только при открытии попапа) и всегда свежий благодаря staleTime 0.
-const pushTestUsersQueryKey = ['pushTestUsers'];
+const pushTestUsersQueryKey = [QueryKey.PushTestUsers];
 
 /**
  * PUSH-проверка одного пользователя: находит его строку в списке подписок

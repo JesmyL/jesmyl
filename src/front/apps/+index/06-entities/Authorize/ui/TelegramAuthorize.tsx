@@ -1,4 +1,5 @@
 import { translateBase } from '#basis/locale';
+import { QueryKey } from '#basis/model/QueryKey.model';
 import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TextInput } from '#shared/ui/TextInput';
@@ -17,7 +18,7 @@ export const IndexAuthorizeByTelegram = () => {
   const [isSendTgCode, setIsSendTgCode] = useState(false);
 
   const { data: values = {} } = useQuery({
-    queryKey: ['getIndexValues'],
+    queryKey: [QueryKey.GetIndexValues],
     queryFn: () => indexTsjrpcClientMethods.getIndexValues(),
   });
 

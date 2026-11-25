@@ -1,6 +1,7 @@
 import { useFingersActions } from '#basis/lib/global-listeners/useFingersActions';
 import { useConnectionState, useIsOnline } from '#basis/lib/useConnectionState';
 import { translateBase } from '#basis/locale';
+import { QueryKey } from '#basis/model/QueryKey.model';
 import { checkIsThereNewSWAtom, reloadSW } from '#shared/sw-register';
 import { makeToastKOMoodConfig, usePrompt } from '#shared/ui/modal';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
@@ -26,7 +27,7 @@ export const IndexAppVersionLabel = ({ className }: { className?: string }) => {
   const extVersion = useAtomValue(extVersionAtom);
 
   const { data: appVersion, isLoading: isVersionLoading } = useQuery({
-    queryKey: ['indexAppVersion'],
+    queryKey: [QueryKey.IndexAppVersion],
     queryFn: () => indexTsjrpcClientMethods.getFreshAppVersion_1(),
   });
 

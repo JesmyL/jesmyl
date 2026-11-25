@@ -1,4 +1,5 @@
 import { translateBase } from '#basis/locale';
+import { QueryKey } from '#basis/model/QueryKey.model';
 import { Button } from '#shared/components/ui/button';
 import { ButtonGroup } from '#shared/components/ui/button-group';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
@@ -26,7 +27,7 @@ export const IndexNounPronsRedactorWordRedactor = (props: {
   const isDisabled = term.trim().length < 3;
 
   const query = useQuery({
-    queryKey: ['IndexNounPronsRedactorWordRedactor', props.wordKey, debounceTerm],
+    queryKey: [QueryKey.IndexNounPronsRedactorWordRedactor, props.wordKey, debounceTerm],
     queryFn: () => indexTsjrpcClientMethods.getNounPron({ [props.wordKey]: debounceTerm }),
     enabled: () => debounceTerm.length > 2,
     staleTime: 0,

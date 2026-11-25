@@ -1,4 +1,5 @@
 import { defaultQueryClient } from '#basis/config/queryClient';
+import { QueryKey } from '#basis/model/QueryKey.model';
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
 import { otherFooterIconAtom, otherFooterIconNamesAtom } from '#basis/state/otherFooterIconAtom';
 import {
@@ -75,7 +76,7 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
 
         dashMessage: async ({ message }) => {
           defaultQueryClient.setQueriesData<InfiniteData<VisitsDashboard, number>>(
-            { queryKey: ['visitsDashboardMessages', message.kind] },
+            { queryKey: [QueryKey.VisitsDashboardMessages, message.kind] },
             data => {
               const firstPage = data?.pages[0];
 
@@ -110,7 +111,7 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
         /** Живой визит вставляется в начало кэша вкладки VisitError с дедупликацией по id; версия сообщений не бампается, чтобы не дёргать рефетч всех вкладок из-за каждого визита. */
         dashVisit: async ({ visit }) => {
           defaultQueryClient.setQueriesData<InfiniteData<VisitsDashboard, number>>(
-            { queryKey: ['visitsDashboardMessages', DashMessageKind.VisitError] },
+            { queryKey: [QueryKey.VisitsDashboardMessages, DashMessageKind.VisitError] },
             data => {
               const firstPage = data?.pages[0];
 

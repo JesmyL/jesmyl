@@ -1,10 +1,11 @@
+import { QueryKey } from '#basis/model/QueryKey.model';
 import { questionerUserTsjrpcClient } from '$q/shared/tsjrpc/user.tsjrpc';
 import { useQuery } from '@tanstack/react-query';
 import { QuestionerBlank, QuestionerBlankWid } from 'shared/model/q';
 
 export const useQuestionerUserAnswerDetailsQuery = (blankw: QuestionerBlankWid, adminBlank: QuestionerBlank | nil) => {
   return useQuery({
-    queryKey: ['useQuestionerUserAnswerDetailsQuery', blankw],
+    queryKey: [QueryKey.QuestionerUserAnswerDetails, blankw],
     queryFn: () => questionerUserTsjrpcClient.getUserBlank({ blankw }),
     enabled: () => adminBlank == null,
     refetchOnMount: true,

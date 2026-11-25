@@ -1,4 +1,5 @@
 import { applicationLangi, translateBase } from '#basis/locale';
+import { QueryKey } from '#basis/model/QueryKey.model';
 import { Badge } from '#shared/components/ui/badge';
 import { ChordVisibleVariant } from '#shared/model/cm/Cm.model';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
@@ -30,7 +31,7 @@ export const CmComToolList = ({ onClose }: { onClose: (is: false) => void }) => 
   const ifixedCom = useLiveQuery(() => cmIDB.tb.fixedComs.get(ccom?.wid ?? 'XX'), [ccom?.wid]);
 
   const visitsCountQuery = useQuery({
-    queryKey: ['cmTsjrpcClient.takeComwVisitsCount', ccom?.wid],
+    queryKey: [QueryKey.CmTakeComwVisitsCount, ccom?.wid],
     queryFn: () => cmTsjrpcClient.takeComwVisitsCount({ comw: ccom?.wid ?? CmComWidDef }),
     enabled: !!ccom?.wid,
   });

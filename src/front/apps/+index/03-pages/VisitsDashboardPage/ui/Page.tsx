@@ -7,6 +7,7 @@ import {
   translateEditorBase,
 } from '#basis/locale';
 import { makeChangesMessageHtml, makeDashboardMessageSectionHtml } from '#basis/locale/backLocaleError';
+import { QueryKey } from '#basis/model/QueryKey.model';
 import { otherFooterIconAtom, otherFooterIconNamesAtom } from '#basis/state/otherFooterIconAtom';
 import { Button } from '#shared/components/ui/button';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
@@ -454,7 +455,7 @@ const DashboardMessages = () => {
   const isVisitErrorKind = activeKind === DashMessageKind.VisitError;
 
   const messagesQuery = useInfiniteQuery({
-    queryKey: ['visitsDashboardMessages', activeKind],
+    queryKey: [QueryKey.VisitsDashboardMessages, activeKind],
     queryFn: ({ pageParam }) =>
       indexDashTsjrpcClient.getVisitsDashboard_v1({
         messages: { kind: activeKind, beforeId: pageParam || null },
@@ -481,7 +482,7 @@ const DashboardMessages = () => {
   useEffect(() => {
     if (!dashMessageVersion) return;
 
-    queryClient.invalidateQueries({ queryKey: ['visitsDashboardMessages'] });
+    queryClient.invalidateQueries({ queryKey: [QueryKey.VisitsDashboardMessages] });
   }, [dashMessageVersion, queryClient]);
 
   const markAllRead = async (kind: DashMessageKind) => {
@@ -682,12 +683,12 @@ const DashboardReportRecipients = () => {
   const [isSaving, setIsSaving] = useState(false);
   const queryClient = useQueryClient();
   const recipientsQuery = useQuery({
-    queryKey: ['dashReportRecipients'],
+    queryKey: [QueryKey.DashReportRecipients],
     queryFn: () => indexDashTsjrpcClient.getDashReportRecipients(),
   });
   const recipients = recipientsQuery.data ?? {};
   const takeFreshestRecipients = () =>
-    queryClient.getQueryData<PRecord<string, Langi>>(['dashReportRecipients']) ?? recipients;
+    queryClient.getQueryData<PRecord<string, Langi>>([QueryKey.DashReportRecipients]) ?? recipients;
 
   const saveRecipients = async (nextRecipients: PRecord<string, Langi>) => {
     if (isSaving) return false;
@@ -696,7 +697,7 @@ const DashboardReportRecipients = () => {
 
     try {
       const saved = await indexDashTsjrpcClient.setDashReportRecipients({ recipients: nextRecipients });
-      queryClient.setQueryData(['dashReportRecipients'], saved);
+      queryClient.setQueryData([QueryKey.DashReportRecipients], saved);
       toast(translateEditorBase(EditorLocaleKey.VisitsRecipientsSaved), makeToastOKMoodConfig());
       return true;
     } catch (error) {
@@ -1125,7 +1126,7 @@ const DashboardContent = ({ dashboard }: { dashboard: VisitsDashboard }) => {
 const DashboardBody = () => {
   const queryClient = useQueryClient();
   const { data } = useQuery({
-    queryKey: ['visitsDashboard'],
+    queryKey: [QueryKey.VisitsDashboard],
     queryFn: () => indexDashTsjrpcClient.getVisitsDashboard_v1({}),
     refetchInterval: 15_000,
     staleTime: 0,
@@ -1133,8 +1134,8 @@ const DashboardBody = () => {
 
   useEffect(() => {
     return soki.listenOnConnectionOpenEvent(() => {
-      void queryClient.invalidateQueries({ queryKey: ['visitsDashboard'] });
-      void queryClient.invalidateQueries({ queryKey: ['visitsDashboardMessages'] });
+      void queryClient.invalidateQueries({ queryKey: [QueryKey.VisitsDashboard] });
+      void queryClient.invalidateQueries({ queryKey: [QueryKey.VisitsDashboardMessages] });
     });
   }, [queryClient]);
 

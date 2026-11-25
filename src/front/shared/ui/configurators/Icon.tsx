@@ -1,5 +1,6 @@
 import { useIndexValuesQuery } from '#basis/api/useIndexValuesQuery';
 import { translateBase } from '#basis/locale';
+import { QueryKey } from '#basis/model/QueryKey.model';
 import { Button } from '#shared/components/ui/button';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
@@ -73,7 +74,7 @@ const ModalInner = (props: Props) => {
   const { data: { iconSearchLink } = {}, isLoading: isIconSearchLinkLoading } = useIndexValuesQuery();
 
   const { data: { packs: iconPacks = [] } = {}, isPending } = useQuery({
-    queryKey: ['IconConfigurator-iconsPage', page, searchTermDebounce],
+    queryKey: [QueryKey.IconConfiguratorIconsPage, page, searchTermDebounce],
     placeholderData: itIt,
     queryFn: () =>
       indexTsjrpcClientMethods.getIconExistsPacks({
