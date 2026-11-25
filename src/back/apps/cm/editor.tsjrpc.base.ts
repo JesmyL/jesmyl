@@ -88,6 +88,10 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
                 id: BackLocaleKey.CmSmartSearchImpreciseMarkTimes,
                 title: translateBackTexts(visitInfo?.langi, BackLocaleKey.CmSmartSearchImpreciseMarkTimes),
               },
+              {
+                id: BackLocaleKey.CmSmartSearchAnchorsAndAnchorPlus,
+                title: translateBackTexts(visitInfo?.langi, BackLocaleKey.CmSmartSearchAnchorsAndAnchorPlus),
+              },
             ],
           },
         }),
@@ -184,6 +188,27 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
                       objectKeys(src).some(time => Math.round(+time * 100) % 10 !== 0),
                     ),
                 )
+                .map(it => it.w);
+              break;
+            case BackLocaleKey.CmSmartSearchAnchorsAndAnchorPlus:
+              comws = (
+                await db
+                  .select()
+                  .from(comDB)
+                  .where(eq(comDB.isRemoved, Bool.False))
+                  .orderBy(asc(comDB.w))
+              )
+                .filter(comRow => {
+                  try {
+                    const ords = new CmCom(comRow, null, null, Bool.False).setOrders() ?? [];
+                    return (
+                      ords.some(ord => ord.me.isAnchorInherit) &&
+                      ords.some(ord => ord.me.isAnchorInheritPlus)
+                    );
+                  } catch (_error) {
+                    return false;
+                  }
+                })
                 .map(it => it.w);
               break;
             default:

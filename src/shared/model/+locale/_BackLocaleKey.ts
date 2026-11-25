@@ -486,4 +486,6 @@ export const enum BackLocaleKey {
   SchRemoteControlsAllowed = 477,
   /** @deprecated 1366 */
   SchRemoteControlsDisallowed = 478,
+  /** Песни с якорями и якорь+ */
+  CmSmartSearchAnchorsAndAnchorPlus = 479,
 }
