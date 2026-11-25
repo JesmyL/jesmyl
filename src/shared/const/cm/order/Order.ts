@@ -14,7 +14,6 @@ import {
 import { defaultTextCase } from 'shared/const/textCase';
 import { TextCase } from 'shared/model/common';
 import { checkIsNil, checkIsNumber, checkIsObject } from 'shared/utils/checkIs';
-import { cmComOrderCheckIsOrdVisibleInInterpretation } from 'shared/utils/cm/checkIs';
 import { makeSymbolFreeUpperCaseSlavicText } from 'shared/utils/cm/com/const';
 import { cmComNewlinerLineConfigToSet } from 'shared/utils/cm/com/newliner';
 import { cmComOrderMakeRegions } from 'shared/utils/cm/makeRegions';
@@ -105,13 +104,16 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   }
 
   get isVisible(): boolean {
-    if (this.me.isAnchorInheritPlus || this.me.isAnchorInherit) {
-      return (this.getLeadInheritance('v') ?? this.getWatchInheritance('v')) !== 0;
-    }
+    const v =
+      this.com.intp?.o?.[this.wid]?.v ??
+      (this.me.isAnchorInherit ? null : this.me.source?.top.v ?? this.top.v) ??
+      this.getLeadInheritance('v') ??
+      this.getWatchInheritance('v') ??
+      this.me.targetOrd?.top.v;
 
-    if (this.me.isInherit) return !(this.top.v === 0 || (this.me.leadOrd && !this.me.leadOrd.isVisible));
+    if (!checkIsNil(v)) return v !== 0;
 
-    return cmComOrderCheckIsOrdVisibleInInterpretation(this.top, this.com.intp);
+    return !(this.me.leadOrd && !this.me.leadOrd.isVisible);
   }
 
   private _isDisplayNone: boolean | nil;

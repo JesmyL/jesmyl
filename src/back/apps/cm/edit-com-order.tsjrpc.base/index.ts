@@ -74,7 +74,10 @@ export const cmEditComOrderServerTsjrpcBase =
             leadOrd._v ??= [];
             leadOrd._v[inhi] = undefined;
 
-            if (isVisible === getCmComOrd().isVisible) leadOrd._v[inhi] = isVisible ? 0 : 1;
+            if (isVisible === getCmComOrd().isVisible) {
+              leadOrd._v[inhi] = isVisible ? 0 : 1;
+              if (isVisible === getCmComOrd().isVisible) delete leadOrd._v[inhi];
+            }
 
             if (removeEmptyRightValues(leadOrd._v, (it, size) => checkIsNil(it) || !size)) delete leadOrd._v;
 
