@@ -35,10 +35,9 @@ export const cmEditComServerTsjrpcTextableBlocks = {
     let prev;
     const next = trimChordBlock(value);
     com.c ??= [];
+    com.c1 = fillHardChords(com);
 
     if (isHard) {
-      com.c1 = fillHardChords(com);
-
       prev = com.c1[texti];
       com.c1[texti] = next;
     } else {
@@ -112,14 +111,14 @@ function insertInTextableBlock<Props extends { value: string; comw: CmComWid; in
 ) {
   return modifyCom<Props>(rightsCheck, (com, props, tool) => {
     const modify = (coln: 'c' | 'c1' | 't', value: string) => com[coln]?.splice(props.insertToi, 0, value);
+    com.c1 = fillHardChords(com);
 
     if (coln === 'c') {
-      com.c1 = fillHardChords(com);
       modify('c1', props.isHard ? props.value : '');
       modify(coln, props.isHard ? '' : props.value);
-
-      if (checkIsEq(com.c, com.c1)) com.c1 = null;
     } else modify(coln, props.value);
+
+    if (checkIsEq(com.c, com.c1)) com.c1 = null;
 
     com.o?.forEach(ord => {
       if (ord[coln] != null && ord[coln] >= props.insertToi) ord[coln]++;
@@ -138,14 +137,14 @@ function removeTextableBlock<Props extends { comw: CmComWid; removei: number }>(
 ) {
   return modifyCom<Props>(rightsCheck, (com, props, tool) => {
     const modify = (coln: 'c' | 'c1' | 't') => com[coln]?.splice(props.removei, 1);
+    com.c1 = fillHardChords(com);
 
     if (coln === 'c') {
-      com.c1 = fillHardChords(com);
       modify('c1');
       modify(coln);
-
-      if (checkIsEq(com.c, com.c1)) com.c1 = null;
     } else modify(coln);
+
+    if (checkIsEq(com.c, com.c1)) com.c1 = null;
 
     com.o?.forEach(ord => {
       if (ord[coln] != null)
@@ -159,13 +158,21 @@ function removeTextableBlock<Props extends { comw: CmComWid; removei: number }>(
   });
 }
 
-const trimChordBlock = (text: string) => text.split('\n').map(line => line.trim()).join('\n').trim();
+const trimChordBlock = (text: string) =>
+  text
+    .split('\n')
+    .map(line => line.trim())
+    .join('\n')
+    .trim();
 
 const fillHardChords = (com: IExportableCom) => {
   if (!com.c1) return (com.c1 = deepClone(com.c));
 
-  const hardChords = com.c1;
-  if (com.c1.length !== com.c.length) com.c.forEach((text, texti) => (hardChords[texti] ||= text));
+  if (com.c1.length !== com.c.length) {
+    const hardChords = com.c1;
+    com.c.forEach((text, texti) => (hardChords[texti] ||= text));
+    com.c1.forEach((text, texti) => (com.c[texti] ||= text));
+  }
 
   return com.c1;
 };

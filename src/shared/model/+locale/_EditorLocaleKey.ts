@@ -418,7 +418,7 @@ export const enum EditorLocaleKey {
   VisitsReportNotSent = 206,
   /** Удалить получателя $e из списка? */
   VisitsReportRecipientRemoveConfirm = 207,
-  /** Редактирование происходит параллельно и в списке сложных аккордов. Для независимого редактирования надо внести любое изменение в списке сложных аккордов. */
+  /** @deprecated 1370 */
   CmEditorHardChordsComplexHint = 208,
   /** Проверка PUSH-уведомлений */
   PushCheck = 209,

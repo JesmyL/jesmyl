@@ -7,6 +7,8 @@ Project-specific instructions for the jesmyl repo — read together with the uni
 - This repo keeps per-feature docs named `README.<feature>.md` (e.g. `README.broadcast-remote-control.md`).
 - When working on a feature, ALWAYS pay attention to the `README.<feature>.md` whose `<feature>` matches the feature you are working on, and follow the rules recorded there.
 - When a task clarifies or changes a feature's behavior, persist those clarifications into that feature's README.
+- Never record removed UI texts or deprecated locale keys in feature READMEs (e.g. "key X is `@deprecated N`") — such bookkeeping lives only in the locale files themselves.
+- Feature READMEs (`README.<feature>.md`) must be written in Russian.
 
 ## Commands
 

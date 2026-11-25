@@ -7,8 +7,7 @@ import { FUNCTION, IF, isUtil, SWITCH } from 'shared/utils/stringTemplater';
 export const localeEditorUa = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.LocaleVersion]: 0,
   [EditorLocaleKey.CmChordLengthMismatch]: 'Не збігається кількість акордів по рядках у версіях складності в рядку $n',
-  [EditorLocaleKey.CmEditorHardChordsComplexHint]:
-    'Редагування відбувається паралельно і в списку складних аккордів. Для незалежного редагування треба внести будь-яку зміну в списку складних аккордів.',
+  [EditorLocaleKey.CmEditorHardChordsComplexHint]: '',
   [EditorLocaleKey.CmSize]: 'Розмірність',
   [EditorLocaleKey.CmIntensity]: 'Інтенсивність',
   [EditorLocaleKey.CmEditSquareBracketsHint]:
