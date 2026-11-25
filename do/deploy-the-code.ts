@@ -11,13 +11,9 @@ export const deployTheCode = async (
   back: { targetDir: string; loadToDirFiles: { [serverDir: string]: string[] } },
 ) => {
   if (process.argv.includes('-f')) {
-    const builtFiles = [`./${front.builtFolder}/*`];
-
-    console.info('Files to load: ', builtFiles);
-
     if (process.argv.includes('--IB')) {
       console.info('Sending ignored building');
-      await sendFilesOnServer(builtFiles, back);
+      await deployFrontFiles(front, back);
       console.info(`Front files sent without building`);
 
       return;
@@ -31,7 +27,7 @@ export const deployTheCode = async (
       await execAsync('npm run test');
       await execAsync('npm run build');
 
-      await sendFilesOnServer(builtFiles, back);
+      await deployFrontFiles(front, back);
       await sendFilesOnServer([`./${versionFilePath}`], back);
 
       await execAsync('rm -rf build');
@@ -63,9 +59,34 @@ export const deployTheCode = async (
   }
 };
 
-const sendFilesOnServer = (files: string[], back: { targetDir: string }) => {
+const getTargetHost = () => `root@${process.env.TARGET_IP || hostConfig.ip}`;
+
+const sendFilesOnServer = (files: string[], back: { targetDir: string }) =>
+  execAsync(`scp -r ${files.join(' ')} ${getTargetHost()}:/var/www/${back.targetDir}`);
+
+const deployFrontFiles = async (front: { builtFolder: string }, back: { targetDir: string }) => {
+  const builtDir = `./${front.builtFolder}`;
+  const entries = file_system.readdirSync(front.builtFolder, { withFileTypes: true });
+  const dirs = entries.filter(entry => entry.isDirectory()).map(entry => entry.name);
+  const files = entries.filter(entry => entry.isFile()).map(entry => `${builtDir}/${entry.name}`);
+
+  for (const dir of dirs) await swapServerFolder(dir, front, back);
+
+  if (!files.length) return;
+
+  await sendFilesOnServer(files, back);
+};
+
+const swapServerFolder = (
+  folder: string,
+  front: { builtFolder: string },
+  back: { targetDir: string },
+) => {
+  const host = getTargetHost();
+  const serverDir = `/var/www/${back.targetDir}`;
+
   return execAsync(
-    `scp -r ${files.join(' ')} root@${process.env.TARGET_IP || hostConfig.ip}:/var/www/${back.targetDir}`,
+    `ssh ${host} 'mkdir -p ${serverDir}/${folder}-tmp' && scp -r ./${front.builtFolder}/${folder}/. ${host}:${serverDir}/${folder}-tmp && ssh ${host} 'rm -rf ${serverDir}/${folder} && mv ${serverDir}/${folder}-tmp ${serverDir}/${folder}'`,
   );
 };
 
