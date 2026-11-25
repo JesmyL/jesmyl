@@ -2,7 +2,11 @@ import { translateBase } from '#basis/locale';
 import { RemoteControlConnectItem } from '#features/broadcast/remote/RemoteControlConnectItem';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
-import { CmMeetingSchPackFace } from '$cm/entities/meeting';
+import {
+  CmMeetingSchPackFace,
+  CmMeetingSelectedComsMenuItem,
+  CmMeetingSelectedComsPopup,
+} from '$cm/entities/meeting';
 import { indexIDB } from '$index/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo, useState } from 'react';
@@ -27,8 +31,10 @@ export const CmMeetingsPage = ({ schw }: { schw?: ScheduleWidgetWid }) => {
           {isOpenTools && (
             <BottomPopup onClose={setIsOpenTools}>
               <RemoteControlConnectItem schw={schw ?? null} />
+              <CmMeetingSelectedComsMenuItem />
             </BottomPopup>
           )}
+          <CmMeetingSelectedComsPopup />
           {visibleSchedules?.map(schedule => (
             <CmMeetingSchPackFace
               key={schedule.w}

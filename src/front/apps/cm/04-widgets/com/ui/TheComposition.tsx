@@ -8,6 +8,7 @@ import {
   CmComNumber,
   useCmCom,
   useCmComCurrentComPackContext,
+  useCmComInterpretationSchw,
   useCmComLastOpenComw,
 } from '$cm/entities/com';
 import { cmComAudioPlayerPlaySrcAtom, isCmComAudioPlayerOpenMoversAtom } from '$cm/entities/com-audio-player';
@@ -33,7 +34,7 @@ export function TheCmComComposition() {
   const [isOpenTools, setIsOpenTools] = useState(false);
 
   const comw = useCmComLastOpenComw();
-  const ccom = useCmCom(comw);
+  const ccom = useCmCom(comw, useCmComInterpretationSchw());
   const { laterComws, comListRef } = useCmComCompositionControls(ccom);
   const chordVisibleVariant = useAtomValue(cmComChordVisibleVariantAtom);
   const comToolsNode = useCmComToolMigratableTop();

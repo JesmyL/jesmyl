@@ -13,12 +13,12 @@ export const useCmComOrCurrent = (comw: CmComWid | und, interpretationSchw?: Sch
   return useCmCom(comw ?? ccomw, interpretationSchw);
 };
 
-export const useCmCom = (comw: CmComWid | und, interpretationSchw?: ScheduleWidgetWid): CmCom | und => {
+export const useCmCom = (comw: CmComWid | und, interpretationSchw?: ScheduleWidgetWid | nil): CmCom | und => {
   const icom = useLiveQuery(() => (comw ? cmIDB.tb.coms.get(comw) : und), [comw]);
   return useCmComMapFromICom(icom, interpretationSchw);
 };
 
-const useCmComMapFromICom = (icom: IExportableCom | und, interpretationSchw?: ScheduleWidgetWid) => {
+const useCmComMapFromICom = (icom: IExportableCom | und, interpretationSchw?: ScheduleWidgetWid | nil) => {
   const schIntp = useCurrentSchIntps(interpretationSchw);
   const ifixedCom = useComFixes(icom?.w);
   const isHardChords = useAtomValue(cmComIsChordHardLevelAtom);
@@ -57,7 +57,7 @@ const useComFixes = (comw?: CmComWid | nil) => {
   return useLiveQuery(() => (comw ? cmIDB.tb.fixedComs.get(comw) : und), [comw]);
 };
 
-const useCurrentSchIntps = (interpretationSchw?: ScheduleWidgetWid) => {
+const useCurrentSchIntps = (interpretationSchw?: ScheduleWidgetWid | nil) => {
   let schw = useAtomValue(cmComLastOpenSchwAtom);
   schw = interpretationSchw ?? schw;
 

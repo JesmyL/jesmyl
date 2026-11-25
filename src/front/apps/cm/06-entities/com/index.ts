@@ -1,3 +1,4 @@
+export * from './lib/com-interpretation-schw';
 export * from './lib/com-selections';
 export * from './lib/coms-selections';
 export * from './lib/current-com-list';

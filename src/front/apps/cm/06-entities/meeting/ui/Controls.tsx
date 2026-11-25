@@ -14,6 +14,7 @@ import {
   ScheduleWidgetDayi,
 } from 'shared/api';
 import { itNIt } from 'shared/utils';
+import { CmMeetingSelectedComsMenuItem, CmMeetingSelectedComsPopup } from './SelectedComsTools';
 
 const CmEditorMeetingEventEdits = lazy(() =>
   import('$cm+editor/entities/meeting-event/ui/EventEdits').then(m => ({ default: m.CmEditorMeetingEventEdits })),
@@ -78,8 +79,11 @@ export const CmMeetingControls = ({
               </Suspense>
             )}
           </CmComLocalListToolsPopup>
+          <CmMeetingSelectedComsMenuItem />
         </BottomPopup>
       )}
+
+      <CmMeetingSelectedComsPopup />
     </div>
   );
 };
