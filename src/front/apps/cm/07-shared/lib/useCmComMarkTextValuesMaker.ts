@@ -5,7 +5,7 @@ import { CmAudioSrc, CmComAudioMarkPackTime } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { CmBroadcastMonolineSlide, CmBroadcastMonolineSlideOrdStrId } from 'shared/model/cm/broadcast';
 import { TextCase } from 'shared/model/common';
-import { extractNumber } from 'shared/utils';
+import { extractNumber, itNumSort } from 'shared/utils';
 import { checkIsArray, checkIsNil, checkIsNotNil } from 'shared/utils/checkIs';
 import { convertCmBroadcastMonolineSlideOrdLineId } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
 import { forEachObjectEntries, objectKeys, objectLength } from 'shared/utils/object.utils';
@@ -19,7 +19,7 @@ export const useCmComMarkTextValuesMaker = (
 ) => {
   const marks = cmIDB.useAudioTrackMarks(com?.wid);
   const srcMarks = com && checkIsNotNil(src) ? marks?.marks?.[src] : null;
-  const markTimes = useMemo(() => objectKeys(srcMarks).map(extractNumber), [srcMarks]);
+  const markTimes = useMemo(() => objectKeys(srcMarks).map(extractNumber).sort(itNumSort), [srcMarks]);
   const nameSpacei = useAtomValue(cmBroadcastCurrentNameSpaceiAtom);
   const slides = useMemo(
     () => com?.makeExpandSlides(nameSpaceiVariants ?? [nameSpacei, 0], true, textCase) ?? [],

@@ -5,8 +5,8 @@ import { ModalBody, ModalFooter, ModalHeader, usePrompt } from '#shared/ui/modal
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom } from '$cm+editor/entities/com-audio';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
-import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/shared/state/com';
+import { cmEditorComAudioMarkTimeApply } from '../lib/cmEditorComAudioMarkTimeApply';
 import {
   cmComAudioPlayerIsFromPlayerPageAtom,
   cmComAudioPlayerIsPlayAtom,
@@ -44,7 +44,8 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
   );
 
   const trackMarks = cmIDB.useAudioTrackMarks(com.wid);
-  const selector = trackMarks?.marks?.[src]?.[time];
+  const editPacks = useAtomValue(cmComEditorAudioMarksEditPacksAtom);
+  const selector = trackMarks?.marks?.[src]?.[time] ?? editPacks[com.wid]?.[src]?.[time];
   const { title, isShortTime } = makeCmComAudioMarkTitleBySelector(time, com, selector, trackMarks?.marks?.[src]);
   const [currentTime, setCurrentTime] = useState(() => extractNumber(time));
   const isPlayState = useAtomValue(cmComAudioPlayerIsPlayAtom);
@@ -54,11 +55,7 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
 
   const addMaker = (add: number) => () => {
     setCurrentTime(prev => {
-      let result = (prev + add).toFixed(2);
-
-      if (result.endsWith('.00')) {
-        result = add > 0 ? `${result.slice(0, -3)}.10` : `${+result.slice(0, -3) - 1}.90`;
-      }
+      const result = (prev + add).toFixed(2);
 
       if (+result < 0) return prev;
 
@@ -144,11 +141,10 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
         <Button
           icon="CheckmarkCircle01"
           disabled={time === currentTime || currentTime < 0}
-          onClick={() =>
-            cmEditComExternalsClientTsjrpcMethods
-              .changeAudioMarkTime_v1({ newTime: currentTime, src, time, comw: com.wid })
-              .then(() => cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.reset())
-          }
+          onClick={async () => {
+            await cmEditorComAudioMarkTimeApply({ newTime: currentTime, src, time, comw: com.wid });
+            cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.reset();
+          }}
         >
           {translateEditorBase(EditorLocaleKey.CmEditorApply)}
         </Button>

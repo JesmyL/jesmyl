@@ -9,7 +9,11 @@ import { cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom } from '$cm+edito
 import { CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner } from '$cm+editor/features/com-audio';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/shared/state/com';
+import { useCmComAudioMarkChanging } from '$cm+editor/shared/lib/useCmComAudioMarkChanging';
+import {
+  cmComEditorAudioMarksEditPacksAtom,
+  startCmComAudioMarkDirectChange,
+} from '$cm+editor/shared/state/com';
 import {
   CmAudioMarkControlButtonsContext,
   cmBroadcastCurrentNameSpaceiAtom,
@@ -42,7 +46,7 @@ import {
   makeCmBroadcastMonolineSlideOrdLineId,
 } from 'shared/utils/cm/com/makeCmBroadcastMonolineSlideOrdId';
 import { lazyInit } from 'shared/utils/lazyInit';
-import { arrayByLength } from 'shared/utils/object.utils';
+import { arrayByLength, forEachObjectEntries } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import { CmEditorTabComAudioMarksShowSlideListButton } from './ShowSlideListButton';
@@ -81,27 +85,56 @@ export const CmEditorTabComAudioMarks = iife(() => {
     }, [playbackRate]);
 
     useEffect(() => {
+      let isCancelled = false;
+
       const scroll = async () => {
         await wait(100);
+        if (isCancelled) return;
+
         for (const timer of arrayByLength(10, () => 10)) {
-          const elem = document.querySelector(`[com-audio-mark-time-selector="${pinTime}"],[data-cancel-button]`);
+          const elem = document.querySelector(`[data-cancel-button],[com-audio-mark-time-selector="${pinTime}"]`);
 
           if (elem) {
-            scrollIntoViewOfContainer(elem);
+            scrollIntoViewOfContainer(elem, 'auto', true);
             break;
           }
           await wait(timer);
+          if (isCancelled) return;
         }
       };
 
       scroll();
 
       return () => {
-        scroll();
+        isCancelled = true;
       };
     }, [pinTime]);
 
     const { controls: audioMarkButtons, slides } = useCmAudioMarkControlButtonsContext() ?? {};
+
+    const renderedSlideIds = useMemo(
+      () =>
+        new Set(
+          slides?.slides?.filter(slide => slide.ord.wid !== CmComOrderWidNever).map(slide => slide.id) ?? [],
+        ),
+      [slides],
+    );
+
+    const anchorSlideId = useMemo(() => {
+      if (checkIsNil(pinTime)) return null;
+
+      const slideIdByTime = new Map<CmComAudioMarkPackTime, CmBroadcastMonolineSlide['id']>();
+      forEachObjectEntries(slideIdTimeSetDict, (slideId, times) => {
+        if (!renderedSlideIds.has(slideId)) return;
+        times?.forEach(time => slideIdByTime.set(time, slideId));
+      });
+
+      if (slideIdByTime.has(pinTime)) return null;
+
+      const anchorTime = markTimes.findLast(time => time < pinTime && slideIdByTime.has(time));
+
+      return checkIsNotNil(anchorTime) ? (slideIdByTime.get(anchorTime) ?? null) : null;
+    }, [markTimes, pinTime, renderedSlideIds, slideIdTimeSetDict]);
 
     const addTime = (value: CmComAudioMarkEditPackValue) => {
       if (!editSrc || takeCmComAudioPlayerCurrentTime() < 0.001) {
@@ -110,12 +143,12 @@ export const CmEditorTabComAudioMarks = iife(() => {
       }
 
       let fixedTime = +takeCmComAudioPlayerCurrentTime().toFixed(2);
-      if (Math.trunc(fixedTime) === fixedTime) fixedTime += 0.11;
       if (!findInctorrectTime(fixedTime)) fixedTime += 0.01;
 
       cmComEditorAudioMarksEditPacksAtom.do.putMarks(ccom.wid, editSrc, {
         [fixedTime]: value,
       });
+      scrollToNewAudioMark(fixedTime);
     };
 
     useEffect(() => {
@@ -156,7 +189,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
                 <div className="flex gap-5 w-full">
                   <Button
                     icon="PlusSign"
-                    onClick={() => addTime(convertSecondsInStrTime(takeCmComAudioPlayerCurrentTime()))}
+                    onMouseDown={() => addTime(convertSecondsInStrTime(takeCmComAudioPlayerCurrentTime()))}
                   />
                   <CmComAudioPlayerMarksMovers
                     src={src}
@@ -204,12 +237,12 @@ export const CmEditorTabComAudioMarks = iife(() => {
                     <>
                       <Button
                         icon="PlusSign"
-                        onClick={() => addTime(selector)}
+                        onMouseDown={() => addTime(selector)}
                         className="bg-x2!"
                       />
                       <div className="flex flex-wrap gap-x-1 gap-y-3 my-3">{audioMarkButtons?.idDict[id]}</div>
                     </>
-                  ) : slideIdTimeSetDict[id]?.has(pinTime) ? (
+                  ) : slideIdTimeSetDict[id]?.has(pinTime) || id === anchorSlideId ? (
                     <Button
                       icon="Cancel01"
                       className="text-xKO"
@@ -219,7 +252,8 @@ export const CmEditorTabComAudioMarks = iife(() => {
                   ) : (
                     <Button
                       icon="PinLocation01"
-                      onClick={() =>
+                      onClick={() => {
+                        const done = startCmComAudioMarkDirectChange(pinTime);
                         cmEditComExternalsClientTsjrpcMethods
                           .updateAudioMarks_v2({
                             comw: ccom.wid,
@@ -228,7 +262,8 @@ export const CmEditorTabComAudioMarks = iife(() => {
                             sel: selector,
                           })
                           .then(pinTimeAtom().reset)
-                      }
+                          .finally(done);
+                      }}
                     />
                   )}
                   <div
@@ -274,14 +309,19 @@ export const CmEditorTabComAudioMarks = iife(() => {
     const cache = useMemo((): CmBroadcastMonolineSlide[][] => (nameSpacei ? [] : []), [nameSpacei]);
     const [isShowOtherMarks, setIsShowOtherMarks] = useState(false);
     const key = `${nameSpacei}-${isShowOtherMarks}`;
+    const { src: editSrc } = useSearch({ from: '/cm/edit/coms/$comw/$tab/' });
+    const editPacks = useAtomValue(cmComEditorAudioMarksEditPacksAtom);
+    const pendingMarks = checkIsNotNil(editSrc) ? editPacks[ccom.wid]?.[editSrc] : null;
+    const isMarkChanging = useCmComAudioMarkChanging(ccom.wid, editSrc);
 
     return (
       <CmAudioMarkControlButtonsContext
         key={key}
         com={com}
         isNeedCompute
+        pendingMarks={pendingMarks}
         preTimeAtom={preSwitchTimeAtom()}
-        mapNode={(playNode, time, sel, isUnknownMark) => {
+        mapNode={(playNode, time, sel, isUnknownMark, isPending) => {
           const selStrId = checkIsString(sel) ? '' : convertCmBroadcastMonolineSlideOrdLineId(sel);
           let innerNode: ReactNode = (
             <>
@@ -299,9 +339,9 @@ export const CmEditorTabComAudioMarks = iife(() => {
                 />
               ) : (
                 <ButtonWithMeta
-                  icon="Settings01"
+                  icon={isPending || isMarkChanging(time) ? 'Loading03' : 'Settings01'}
                   data-meta={time}
-                  meta-dot-pos={`${time}`.at(-2)}
+                  meta-dot-pos={findInctorrectTime(time) ? 'x' : '.'}
                   onClick={() => cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.set(time)}
                 />
               )}
@@ -387,4 +427,18 @@ const ButtonWithMeta = styled(Button)<{ 'data-meta': string | number; 'meta-dot-
   }
 `;
 
-const findInctorrectTime = (time: number) => `${time}`.at(-2) !== '.';
+const findInctorrectTime = (time: number) => Math.round(time * 100) % 10 !== 0;
+
+const scrollToNewAudioMark = async (time: number) => {
+  await wait(100);
+
+  for (const timer of arrayByLength(10, () => 10)) {
+    const elem = document.querySelector(`[com-audio-mark-time-selector="${time}"]`);
+
+    if (elem) {
+      scrollIntoViewOfContainer(elem, 'auto', true);
+      break;
+    }
+    await wait(timer);
+  }
+};

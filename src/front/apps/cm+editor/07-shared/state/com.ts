@@ -1,17 +1,29 @@
 import { atom } from 'atomaric';
-import {
-  CmComAudioMarkEditPack,
-  CmComAudioMarkPack,
-  CmComAudioMarkPackTime,
-  CmComWid,
-  CmAudioTail,
-} from 'shared/api';
+import { CmAudioTail, CmComAudioMarkEditPack, CmComAudioMarkPack, CmComAudioMarkPackTime, CmComWid } from 'shared/api';
 import { ComEditBusy } from 'shared/api/tsjrpc/cm/editor.tsjrpc.shares.model';
 import { checkIsNil } from 'shared/utils/checkIs';
 import { forEachObjectEntries, objectKeys, objectLength } from 'shared/utils/object.utils';
 
 export const removedCompositionsAtom = atom<PRecord<CmComWid, string>>({});
 export const comEditorBusiesAtom = atom<ComEditBusy[] | nil>(null);
+export const cmComAudioMarksDirectChangeTimesAtom = atom<Set<CmComAudioMarkPackTime>>(new Set());
+export const cmComEditorAudioMarksSendPromiseAtom = atom<Promise<unknown> | null>(null);
+
+export const startCmComAudioMarkDirectChange = (time: CmComAudioMarkPackTime) => {
+  cmComAudioMarksDirectChangeTimesAtom.do.add(time);
+
+  return () => cmComAudioMarksDirectChangeTimesAtom.do.delete(time);
+};
+
+export const trackCmComEditorAudioMarksSend = (promise: Promise<unknown>) => {
+  const tracked = promise
+    .finally(() => {
+      if (cmComEditorAudioMarksSendPromiseAtom.get() === tracked) cmComEditorAudioMarksSendPromiseAtom.set(null);
+    })
+    .catch(() => null);
+
+  cmComEditorAudioMarksSendPromiseAtom.set(tracked);
+};
 
 export const cmComEditorAudioMarksEditPacksAtom = atom((): CmComAudioMarkEditPack => ({}), {
   do: (_set, _get, self) => ({

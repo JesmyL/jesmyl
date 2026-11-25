@@ -9,12 +9,14 @@ import {
   CmComAudioMarkPack,
   CmComAudioMarkPackTime,
   CmComAudioMarkPackTimeZero,
+  CmComAudioMarkSelector,
+  CmComOrderWid,
   CmComWid,
 } from 'shared/api';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
-import { CmBroadcastMonolineSlideSelectorId } from 'shared/model/cm/broadcast';
+import { makeRegExp } from 'regexpert';
 import { extractNumber, itNumSort } from 'shared/utils';
-import { checkIsNil, checkIsNotNil } from 'shared/utils/checkIs';
+import { checkIsArray, checkIsNil, checkIsNotNil, checkIsString } from 'shared/utils/checkIs';
 import { forEachObjectEntries, objectEntries, objectKeys, objectLength } from 'shared/utils/object.utils';
 
 export const cmEditComExternalsTsjrpcAudioMarks = {
@@ -29,7 +31,7 @@ export const cmEditComExternalsTsjrpcAudioMarks = {
     for (const [src, newPack] of packEntries) {
       if (!newPack) continue;
 
-      let firstOrdw;
+      let firstOrdw: SPRecord<CmComAudioMarkPackTime, CmComAudioMarkSelector> | nil = null;
 
       if (checkIsNil(comMarks[src])) {
         description = backLocaleError(BackLocaleKey.CmAudioMarksPackCreated, { s: src });
@@ -46,8 +48,13 @@ export const cmEditComExternalsTsjrpcAudioMarks = {
           description = backLocaleError(BackLocaleKey.CmAudioMarksPackCreatedWithCom, { s: src, n: comTiny.n });
           const ordw = comTiny.o?.[0].w;
 
-          if (checkIsNotNil(ordw))
-            firstOrdw = { [CmComAudioMarkPackTimeZero]: [ordw] as CmBroadcastMonolineSlideSelectorId };
+          if (checkIsNotNil(ordw)) {
+            const isFirstSlideMark = objectEntries(newPack).some(([, selector]) =>
+              isAudioMarkSelectorOnFirstSlide(selector, ordw),
+            );
+
+            firstOrdw = { [CmComAudioMarkPackTimeZero]: isFirstSlideMark ? '' : [ordw] };
+          }
         }
       }
 
@@ -65,7 +72,6 @@ export const cmEditComExternalsTsjrpcAudioMarks = {
         if (timeScalar === 0.11) timeScalar = 0;
 
         timeScalar = +timeScalar.toFixed(2);
-        if (timeScalar !== 0 && Math.trunc(timeScalar) === timeScalar) timeScalar += 0.11;
 
         time = timeScalar as CmComAudioMarkPackTime;
 
@@ -117,4 +123,16 @@ const updateComPack = async (comw: CmComWid, sortedMarksPack: CmComAudioMarkPack
 
   await dbUpdate(comDB, { am, amMod: Date.now() }, eq(comDB.w, comw));
   return am;
+};
+
+const isAudioMarkSelectorOnFirstSlide = (selector: CmComAudioMarkSelector | nil, ordw: CmComOrderWid) => {
+  if (checkIsArray(selector)) {
+    const [selectorOrdw, linei, repeati, samei] = selector;
+
+    return selectorOrdw === ordw && !linei && !repeati && !samei;
+  }
+
+  const match = checkIsString(selector) ? selector.match(makeRegExp('/^w(\\d+)l0$/')) : null;
+
+  return checkIsNotNil(match) && +match[1] === ordw;
 };

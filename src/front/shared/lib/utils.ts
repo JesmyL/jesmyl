@@ -129,7 +129,11 @@ export const findElementScrollParent = (element: Element | nil): Element['parent
 };
 
 /** Scrolls only the nearest overflowed ancestor: never the document, so the page itself never jumps. */
-export const scrollIntoViewOfContainer = (elem: Element, behavior: ScrollBehavior = 'auto') => {
+export const scrollIntoViewOfContainer = (
+  elem: Element,
+  behavior: ScrollBehavior = 'auto',
+  isCenterOnScreen = false,
+) => {
   let parent = elem.parentElement;
 
   while (parent !== null && parent !== parent.ownerDocument.body) {
@@ -138,9 +142,12 @@ export const scrollIntoViewOfContainer = (elem: Element, behavior: ScrollBehavio
     if ((overflowY === 'auto' || overflowY === 'scroll') && parent.scrollHeight > parent.clientHeight) {
       const elemRect = elem.getBoundingClientRect();
       const parentRect = parent.getBoundingClientRect();
+      const centerDelta = isCenterOnScreen
+        ? elemRect.top + elemRect.height / 2 - window.innerHeight / 2
+        : elemRect.top - parentRect.top - (parent.clientHeight - elemRect.height) / 2;
 
       parent.scrollTo({
-        top: parent.scrollTop + elemRect.top - parentRect.top - (parent.clientHeight - elemRect.height) / 2,
+        top: parent.scrollTop + centerDelta,
         behavior,
       });
 

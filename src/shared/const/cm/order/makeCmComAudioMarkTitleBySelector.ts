@@ -1,6 +1,7 @@
 import { CmAudioTail, CmComAudioMarkPack, CmComAudioMarkPackTime, CmComAudioMarkSelector, Langi } from 'shared/api';
 import { CmCom } from 'shared/const/cm/Com';
 import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
+import { extractNumber, itNumSort } from 'shared/utils';
 import { checkIsArray, checkIsNotNil } from 'shared/utils/checkIs';
 import { translateBaseDefine } from 'shared/utils/locale/translate';
 import { objectKeys } from 'shared/utils/object.utils';
@@ -20,9 +21,11 @@ export const makeCmComAudioMarkTitleEmptySelector = (
 
   if (!time) return takeTitle(langi, CmComBlockKindKey.Enter);
 
-  cMarks = checkIsNotNil(cMarks) ? (checkIsArray(cMarks) ? cMarks : objectKeys(cMarks)) : [];
+  cMarks = checkIsNotNil(cMarks)
+    ? (checkIsArray(cMarks) ? cMarks : objectKeys(cMarks)).map(extractNumber).sort(itNumSort)
+    : [];
 
-  if (+cMarks.at(-1)! === time) return takeTitle(langi, CmComBlockKindKey.Final);
+  if (cMarks.at(-1) === time) return takeTitle(langi, CmComBlockKindKey.Final);
 
   return takeTitle(langi, CmComBlockKindKey.Play);
 };
@@ -33,8 +36,8 @@ export const makeCmComAudioMarkTitleBySelector = (
   selector: CmComAudioMarkSelector | nil,
   comMarks: CmComAudioMarkPack[CmAudioTail] | nil,
 ) => {
-  const comMarkKeys = objectKeys(comMarks);
-  const isShortTime = Math.abs(time - +(comMarkKeys[comMarkKeys.indexOf(`${time}`) + 1] ?? 0)) < 1;
+  const comMarkKeys = objectKeys(comMarks).map(extractNumber).sort(itNumSort);
+  const isShortTime = Math.abs(time - (comMarkKeys[comMarkKeys.indexOf(time) + 1] ?? 0)) < 1;
 
   if (checkIsArray(selector)) {
     const { ord, visibleOrdi } = com.getOrd(selector[0]);

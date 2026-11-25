@@ -1,5 +1,5 @@
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/shared/state/com';
+import { cmComEditorAudioMarksEditPacksAtom, trackCmComEditorAudioMarksSend } from '$cm+editor/shared/state/com';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { extractNumber } from 'shared/utils';
@@ -14,7 +14,9 @@ export const useCmEditorCompositionTrySendAudioMarks = () => {
     const timeout = setTimeout(() => {
       forEachObjectEntries(marksOnLoad, (comw, marks) => {
         if (!objectLength(marks)) return;
-        cmEditComExternalsClientTsjrpcMethods.updateAudioMarks_v2({ comw: extractNumber(comw), marks });
+        trackCmComEditorAudioMarksSend(
+          cmEditComExternalsClientTsjrpcMethods.updateAudioMarks_v2({ comw: extractNumber(comw), marks }),
+        );
       });
     }, 200);
 
