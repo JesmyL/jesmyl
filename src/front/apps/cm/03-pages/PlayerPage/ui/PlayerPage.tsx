@@ -19,6 +19,7 @@ import {
 } from '$cm/entities/com';
 import {
   CmComAudioPlayerAdjacentDirection,
+  cmComAudioPlayerCachedSrcsAtom,
   cmComAudioPlayerCachedSrcsLoadedAtom,
   cmComAudioPlayerCurrentComwAtom,
   cmComAudioPlayerFilteredComsAtom,
@@ -37,7 +38,6 @@ import {
   cmComAudioPlayerUpdatePlaybackRate,
   isCmComAudioPlayerComCached,
   StyledCmComAudioPlayerPlayButton,
-  takeCmComAudioPlayerIsSrcCached,
   useCmComAudioPlayerCachedSrcs,
   useCmComAudioPlayerCurrentTime,
   useCmComAudioPlayerDuration,
@@ -346,22 +346,22 @@ export const CmPlayerPage = () => {
 };
 
 /**
- * The player page owns the hinted entry's track resolution, so the caller navigates without waiting for a cache scan:
- * only the entry's few tracks get cheap per-src probes, run concurrently. A cached track is preferred, exactly like
- * the inline player tool used to pick it.
+ * Выбор трека больше не ждёт проверки кэша — воспроизведение стартует сразу с первого трека;
+ * приоритет закэшированного применяется только когда состояние кэша уже загружено.
  */
-const takeCmPlayerIncomingComl = async (audio: CmAudioSrc[]) => {
-  const cachedFlags = await Promise.all(audio.map(takeCmComAudioPlayerIsSrcCached));
-  const cachedIndex = cachedFlags.indexOf(true);
+const takeCmPlayerIncomingComl = (audio: CmAudioSrc[]) => {
+  if (!cmComAudioPlayerCachedSrcsLoadedAtom.get()) return audio[0];
 
-  return cachedIndex === -1 ? audio[0] : audio[cachedIndex];
+  const cachedSrcs = cmComAudioPlayerCachedSrcsAtom.get();
+
+  return audio.find(src => cachedSrcs.has(src)) ?? audio[0];
 };
 
 const startCmPlayerIncomingPlayback = async (icom: IExportableCom | nil) => {
   const audio = icom?.al;
   if (!icom || !audio?.length) return;
 
-  cmComAudioPlayerSetSrc(await takeCmPlayerIncomingComl(audio));
+  cmComAudioPlayerSetSrc(takeCmPlayerIncomingComl(audio));
   cmComAudioPlayerSetMediaTitle(icom.n);
   cmComAudioPlayerSwitchIsPlay(true);
 };

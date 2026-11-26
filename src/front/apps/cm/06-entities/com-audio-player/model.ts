@@ -10,15 +10,7 @@ export const enum CmComAudioPlayerPickKind {
   Advance,
 }
 
-/** Per-track cache state: `Cached` plays from storage; `Error` marks the last failed attempt. */
+/** Marks the last failed manual download attempt of a track; absence means no error — cached/not-cached is the cached-srcs atom's job. */
 export const enum CmComAudioPlayerSrcState {
-  Cached,
   Error,
-}
-
-/** Aggregated cache state of a com's tracks, for the bulk cache tool. */
-export const enum CmComAudioPlayerCacheState {
-  None,
-  Some,
-  All,
 }

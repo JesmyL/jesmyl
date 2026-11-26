@@ -10,7 +10,7 @@ import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { UsedBaseLocaleKey } from 'shared/model/+locale/base';
 import { emptyFunc } from 'shared/utils';
 import { toast } from 'sonner';
-import { CmComAudioPlayerCacheState, CmComAudioPlayerSrcState } from '../model';
+import { CmComAudioPlayerSrcState } from '../model';
 
 /**
  * Browser Cache Storage bucket holding tracks cached through the manual cloud button.
@@ -18,7 +18,7 @@ import { CmComAudioPlayerCacheState, CmComAudioPlayerSrcState } from '../model';
  */
 export const cmComAudioPlayerCacheName = 'audio-cache';
 
-/** Per-track cache state: `cached` plays from storage; `error` marks the last failed attempt. Absence is "not cached". */
+/** Track download failure marker; absence means no error — cached/not-cached is the cached-srcs atom's job. */
 export const cmComAudioPlayerSrcStatesAtom = atom<PRecord<CmAudioSrc, CmComAudioPlayerSrcState>>({});
 
 /** Srcs present in Cache Storage, mirrored reactively so the "cached" tracklist reacts to cache/uncache actions. */
@@ -75,7 +75,8 @@ const takeCmComAudioPlayerCachedResponse = async (src: CmAudioSrc) => {
   return null;
 };
 
-const addCmComAudioPlayerCachedSrc = (src: CmAudioSrc) =>
+/** Mirrors one src into the cached-srcs atom, reconciling cache writes the SW performed outside it. */
+export const cmComAudioPlayerAddCachedSrc = (src: CmAudioSrc) =>
   cmComAudioPlayerCachedSrcsAtom.set(prev => (prev.has(src) ? prev : new Set(prev).add(src)));
 
 const deleteCmComAudioPlayerCachedSrcs = (srcs: CmAudioSrc[]) =>
@@ -105,28 +106,15 @@ export const takeCmComAudioPlayerCachedSrcs = async () => {
   );
 };
 
-/** Cheap single-track probe: a couple of direct `cache.match` lookups instead of the full bucket scan above. */
-export const takeCmComAudioPlayerIsSrcCached = async (src: CmAudioSrc) => {
-  if (typeof caches === 'undefined') return false;
-
-  return !!(await takeCmComAudioPlayerCachedResponse(src));
-};
-
 /** Whether a com has at least one audio src present in Cache Storage. */
 export const isCmComAudioPlayerComCached = (com: IExportableCom, cachedSrcs: Set<CmAudioSrc>) =>
   !!com.al?.some(src => cachedSrcs.has(src));
 
+/** Pure single-track probe: only reports whether the body is in Cache Storage, without touching any atom. */
 export const isCmComAudioPlayerSrcCached = async (src: CmAudioSrc): Promise<Bool> => {
   const cachedResponse = await takeCmComAudioPlayerCachedResponse(src);
 
-  if (cachedResponse) {
-    setCmComAudioPlayerSrcState(src, CmComAudioPlayerSrcState.Cached);
-    return Bool.True;
-  }
-
-  clearCmComAudioPlayerSrcStates([src]);
-
-  return Bool.False;
+  return cachedResponse ? Bool.True : Bool.False;
 };
 
 /** Reads the cached audio body so the player can play a local object URL instead of a SW range request. */
@@ -293,9 +281,9 @@ export const cmComAudioPlayerCacheToast = async (srcs: (CmAudioSrc | nil)[], com
 };
 
 /**
- * Downloads one track into the cache. A manual retry clears a previous `error` first (via the
- * cache miss in `isCmComAudioPlayerSrcCached`); a failed attempt marks the src as `error` so its
- * cloud renders the retry state.
+ * Downloads one track into the cache. A retry clears a previous `error` before attempting again,
+ * and the cache-hit path reconciles the cached-srcs atom; a failed attempt marks the src as `error`
+ * so its cloud renders the retry state.
  */
 export const cmComAudioPlayerCacheSrc = (src: CmAudioSrc): Promise<Bool> => {
   const inFlight = inFlightCacheJobs.get(src);
@@ -303,12 +291,21 @@ export const cmComAudioPlayerCacheSrc = (src: CmAudioSrc): Promise<Bool> => {
 
   const job = queueCmComAudioPlayerCacheTask(async (): Promise<Bool> => {
     try {
-      if (await isCmComAudioPlayerSrcCached(src)) return Bool.False;
+      const isCached = await isCmComAudioPlayerSrcCached(src);
+
+      if (isCached) {
+        // SW CacheFirst мог закэшировать трек вне атома: сверяем состояние перед отказом
+        cmComAudioPlayerAddCachedSrc(src);
+        clearCmComAudioPlayerSrcStates([src]);
+
+        return Bool.False;
+      }
+
+      clearCmComAudioPlayerSrcStates([src]); // повтор попытки сбрасывает прошлую ошибку
 
       const cache = await caches.open(cmComAudioPlayerCacheName);
       await putCmComAudioPlayerTrack(cache, takeCmComAudioPlayerCacheUrl(src));
-      setCmComAudioPlayerSrcState(src, CmComAudioPlayerSrcState.Cached);
-      addCmComAudioPlayerCachedSrc(src);
+      cmComAudioPlayerAddCachedSrc(src);
 
       return Bool.True;
     } catch (error) {
@@ -379,47 +376,6 @@ export const cmComAudioPlayerUncacheCom = async (comw: CmComWid) => {
   } catch (error) {
     console.error('[cm audio cache]', comw, error);
   }
-};
-
-/** srcs already reconciled with Cache Storage in this session, so remounts don't re-check (nor reset an `error` retry state). */
-const hydratedSrcs = new Set<CmAudioSrc>();
-
-/**
- * The state is runtime-only, so hydrate it from Cache Storage once per src; otherwise every
- * reload (incl. HMR) would show already-downloaded tracks as "not cached" until clicked again.
- */
-const hydrateCmComAudioPlayerSrc = (src: CmAudioSrc) => {
-  if (hydratedSrcs.has(src)) return;
-
-  hydratedSrcs.add(src);
-  void isCmComAudioPlayerSrcCached(src).catch(emptyFunc);
-};
-
-/** Reactive per-track cache state; `undefined` means "not cached". */
-export const useCmComAudioPlayerSrcState = (src: CmAudioSrc) => {
-  const state = useAtomValue(cmComAudioPlayerSrcStatesAtom)[src];
-
-  useEffect(() => {
-    hydrateCmComAudioPlayerSrc(src);
-  }, [src]);
-
-  return state;
-};
-
-/** Aggregated cache state of a com's tracks, for the bulk cache tool. */
-export const useCmComAudioPlayerComCacheState = (srcs: CmAudioSrc[] | nil): CmComAudioPlayerCacheState => {
-  const states = useAtomValue(cmComAudioPlayerSrcStatesAtom);
-
-  useEffect(() => {
-    srcs?.forEach(hydrateCmComAudioPlayerSrc);
-  }, [srcs]);
-
-  const cachedCount =
-    srcs?.reduce((count, src) => count + (states[src] === CmComAudioPlayerSrcState.Cached ? 1 : 0), 0) ?? 0;
-
-  if (!srcs?.length || !cachedCount) return CmComAudioPlayerCacheState.None;
-
-  return cachedCount === srcs.length ? CmComAudioPlayerCacheState.All : CmComAudioPlayerCacheState.Some;
 };
 
 /** Whether the whole bucket was already reconciled in this session, so remounts don't re-read it. */

@@ -1,17 +1,17 @@
 import { DrizzleQueryError } from 'drizzle-orm';
 import { SokiVisit, UserAuth } from 'shared/api';
-import { dashMessageSectionSeparator, DashMessageKind } from 'shared/model/index/visitsDashboard';
+import { DashMessageKind, dashMessageSectionSeparator } from 'shared/model/index/visitsDashboard';
 import { emptyFunc } from 'shared/utils';
 import { checkIsFunction } from 'shared/utils/checkIs';
 import { makeTSJRPCBaseMaker } from 'tsjrpc';
 import { WebSocket } from 'ws';
-import { insertDashMessage, sendChangesEmail } from './dash/visits';
-import { checkIsBackLocalePayload } from './locales/back';
 import { backConfig } from './config/backConfig';
 import { dashKindByScope, PostJRPCMessageScope } from './dash/model';
+import { insertDashMessage, sendChangesEmail } from './dash/visits';
+import { checkIsBackLocalePayload } from './locales/back';
+import { stringifyDiffValue } from './tsjrpc.diff';
 import type { ServerTSJRPCFeedback } from './tsjrpc.model';
 import { dashAuthVisitSuffix, dashUserNameLine } from './utils';
-import { stringifyDiffValue } from './tsjrpc.diff';
 
 export type ServerTSJRPCTool = {
   client: WebSocket | null;
@@ -72,8 +72,7 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
         // Пишем сообщение в дашборд; для изменений дополнительно рассылаем письмо на языке визита; сообщение tsjrpc уже содержит готовую HTML-разметку.
         insertDashMessage(dashMessage, null, kind, tool.auth?.login).catch(emptyFunc);
 
-        if (kind === DashMessageKind.Changes)
-          sendChangesEmail(dashMessage, tool.visitInfo?.langi).catch(emptyFunc);
+        if (kind === DashMessageKind.Changes) sendChangesEmail(dashMessage, tool.visitInfo?.langi).catch(emptyFunc);
       },
   beforeEach: async ({ invoke: { method }, tool, beforeEachTools, defaultBeforeEachTool }) => {
     const userVersion = tool.visitInfo?.version ?? 0;

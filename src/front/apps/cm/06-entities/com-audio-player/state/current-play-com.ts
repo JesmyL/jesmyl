@@ -6,7 +6,12 @@ import { CmAudioSrc } from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { retNull } from 'shared/utils';
 import { toast } from 'sonner';
-import { takeCmComAudioPlayerCachedBlob, takeCmComAudioPlayerTrackUrl } from '../lib/audioCache';
+import {
+  cmComAudioPlayerAddCachedSrc,
+  cmComAudioPlayerCachedSrcsAtom,
+  takeCmComAudioPlayerCachedBlob,
+  takeCmComAudioPlayerTrackUrl,
+} from '../lib/audioCache';
 
 const audioElement = document.createElement('audio');
 
@@ -16,6 +21,7 @@ audioElement.preload = 'auto';
 // preload-ошибка (трек не закэширован, а сети нет) до нажатия play молчит: пользователь ещё не просил воспроизведение.
 // Тост показываем, только когда play был намерен — тогда ошибка действительно важна для пользователя.
 audioElement.addEventListener('error', () => {
+  if (cmComAudioPlayerBlobPendingApplyId === cmComAudioPlayerSrcApplyId) return;
   if (!cmComAudioPlayerIsPlayAtom.get()) return;
 
   toast(
@@ -70,6 +76,8 @@ audioElement.addEventListener('pause', () => {
 });
 
 audioElement.addEventListener('error', () => {
+  if (cmComAudioPlayerBlobPendingApplyId === cmComAudioPlayerSrcApplyId) return;
+
   cmComAudioPlayerIsSrcLoadingAtom.set(false);
 
   // тик ошибки поднимает авто-переход (adjacent-coms), поэтому preload-ошибка до play его не запускает:
@@ -125,6 +133,7 @@ let isCmComAudioPlayerSrcApplying = false;
 let cmComAudioPlayerPendingSeekTime: number | nil = null;
 /** Monotonic id of the latest `cmComAudioPlayerSetSrc` call; a slower in-flight apply with an older id must not win. */
 let cmComAudioPlayerSrcApplyId = 0;
+let cmComAudioPlayerBlobPendingApplyId: number | null = null;
 
 const revokeCmComAudioPlayerTrackUrl = () => {
   if (!trackObjectUrl) return;
@@ -133,38 +142,86 @@ const revokeCmComAudioPlayerTrackUrl = () => {
   trackObjectUrl = null;
 };
 
+const isPlayAbortError = (error: unknown) =>
+  typeof error === 'object' && error != null && 'name' in error && error.name === 'AbortError';
+
 /**
- * Сначала смотрим в кэш: закэшированный трек играем сразу из локального object URL —
- * без обхода service worker и без перезагрузки src посреди воспроизведения.
- * Если кэша нет — ставим сетевой URL, который благодаря preload='auto' начинает буферизацию немедленно.
- * Устаревший apply (id не совпал) отбрасываем, чтобы не перебить более новый выбор трека.
- * После применения src возобновляем воспроизведение, если пользователь уже нажал play:
- * нажатие могло прийти, пока src ещё применялся, и тогда SwitchIsPlay вышел бы по флагу isCmComAudioPlayerSrcApplying.
+ * Известный закэшированный трек играется сразу из локального blob — без ожидания сети и без долгого спиннера
+ * на кнопке play. Неизвестный трек стартует сразу с сетевого URL (service worker отдаёт /track/ по CacheFirst),
+ * а фоновая проверка кэша подменяет src на blob, пока звук ещё не начался (currentTime === 0), не перебивая уже
+ * играющий поток. Устаревший apply (id не совпал) отбрасываем, чтобы не перебить более новый выбор. В сетевом
+ * пути, пока проверка кэша в полёте, оба error-листенера молчат: исход ошибки (тик и тост) сообщит её колбэк.
  */
-const applyCmComAudioPlayerSrc = async (src: CmAudioSrc, applyId: number) => {
-  // закэшированный трек играет сразу из локального object URL (без похода в SW и без перезагрузки на ходу);
-  // иначе сетевой URL начинает буферизацию сразу благодаря preload='auto'
-  const blob = await takeCmComAudioPlayerCachedBlob(src).catch(retNull);
+const applyCmComAudioPlayerSrc = (src: CmAudioSrc, applyId: number) => {
+  revokeCmComAudioPlayerTrackUrl();
 
-  if (applyId !== cmComAudioPlayerSrcApplyId) return;
+  const finishApply = () => {
+    if (cmComAudioPlayerPendingSeekTime != null) {
+      audioElement.currentTime = cmComAudioPlayerPendingSeekTime;
+      cmComAudioPlayerPendingSeekTime = null;
+    }
 
-  if (blob?.size) {
-    trackObjectUrl = URL.createObjectURL(blob);
-    audioElement.src = trackObjectUrl;
-  } else {
-    audioElement.src = takeCmComAudioPlayerTrackUrl(src);
+    isCmComAudioPlayerSrcApplying = false;
+    if (cmComAudioPlayerIsPlayAtom.get())
+      void audioElement.play().catch(playError => {
+        if (isPlayAbortError(playError)) return;
+
+        cmComAudioPlayerIsPlayAtom.set(false);
+        if (!isCmComAudioPlayerSrcApplying) cmComAudioPlayerIsSrcLoadingAtom.set(false);
+      });
+  };
+
+  if (cmComAudioPlayerCachedSrcsAtom.get().has(src)) {
+    void takeCmComAudioPlayerCachedBlob(src)
+      .catch(retNull)
+      .then(blob => {
+        if (applyId !== cmComAudioPlayerSrcApplyId) return;
+
+        if (blob?.size) {
+          trackObjectUrl = URL.createObjectURL(blob);
+          audioElement.src = trackObjectUrl;
+        } else {
+          audioElement.src = takeCmComAudioPlayerTrackUrl(src);
+        }
+
+        finishApply();
+      });
+
+    return;
   }
 
-  if (cmComAudioPlayerPendingSeekTime != null) {
-    audioElement.currentTime = cmComAudioPlayerPendingSeekTime;
-    cmComAudioPlayerPendingSeekTime = null;
-  }
+  audioElement.src = takeCmComAudioPlayerTrackUrl(src);
 
-  isCmComAudioPlayerSrcApplying = false;
-  if (cmComAudioPlayerIsPlayAtom.get())
-    void audioElement.play().catch(() => {
-      cmComAudioPlayerIsPlayAtom.set(false);
-      if (!isCmComAudioPlayerSrcApplying) cmComAudioPlayerIsSrcLoadingAtom.set(false);
+  finishApply();
+
+  cmComAudioPlayerBlobPendingApplyId = applyId;
+  void takeCmComAudioPlayerCachedBlob(src)
+    .catch(retNull)
+    .then(blob => {
+      if (cmComAudioPlayerBlobPendingApplyId === applyId) cmComAudioPlayerBlobPendingApplyId = null;
+      if (applyId !== cmComAudioPlayerSrcApplyId) return;
+
+      if (blob?.size && !audioElement.error && audioElement.currentTime === 0) {
+        cmComAudioPlayerAddCachedSrc(src);
+        revokeCmComAudioPlayerTrackUrl();
+        trackObjectUrl = URL.createObjectURL(blob);
+        audioElement.src = trackObjectUrl;
+        finishApply();
+
+        return;
+      }
+
+      if (!audioElement.error) return;
+
+      cmComAudioPlayerIsSrcLoadingAtom.set(false);
+
+      if (!cmComAudioPlayerIsPlayAtom.get()) return;
+
+      cmComAudioPlayerErrorTickAtom.set(true);
+      toast(
+        translateBase(BaseLocaleKey.CmAudioPlaybackError),
+        makeToastKOMoodConfig(),
+      );
     });
 };
 
@@ -188,7 +245,7 @@ export const cmComAudioPlayerSetSrc = (src: CmAudioSrc | null) => {
 
   isCmComAudioPlayerSrcApplying = true;
   cmComAudioPlayerIsSrcLoadingAtom.set(true);
-  void applyCmComAudioPlayerSrc(src, applyId);
+  applyCmComAudioPlayerSrc(src, applyId);
 };
 
 export const cmComAudioPlayerSwitchIsPlay = (isPlay: boolean = audioElement.paused) => {
@@ -212,11 +269,13 @@ export const cmComAudioPlayerSwitchIsPlay = (isPlay: boolean = audioElement.paus
 
     isCmComAudioPlayerSrcApplying = true;
     cmComAudioPlayerIsSrcLoadingAtom.set(true);
-    void applyCmComAudioPlayerSrc(src, ++cmComAudioPlayerSrcApplyId);
+    applyCmComAudioPlayerSrc(src, ++cmComAudioPlayerSrcApplyId);
     return;
   }
 
-  audioElement.play().catch(() => {
+  audioElement.play().catch(playError => {
+    if (isPlayAbortError(playError)) return;
+
     cmComAudioPlayerIsPlayAtom.set(false);
     if (!isCmComAudioPlayerSrcApplying) cmComAudioPlayerIsSrcLoadingAtom.set(false);
   });

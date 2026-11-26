@@ -1,12 +1,4 @@
 import {
-  backLocaleError,
-  backLocalePayload,
-  localizeBackLocalePayloads,
-  localizeChangesMessageHtml,
-  translateBackTexts,
-} from 'back/locales/back';
-import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
-import {
   appVersionFileStore,
   appVersionReleasesFileStore,
   dashReportRecipientsFileStorage,
@@ -15,6 +7,13 @@ import { sendSchedulePush } from 'back/apps/index/schedules/app-inform/web-push'
 import { takeAllUsersTiny, takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { dashErrorDB, dashReadDB, visitDayDB, visitDB } from 'back/drizzle.schema';
 import { db, dbDelete, dbUpdate, dbUpsert } from 'back/drizzle/drizzle.db';
+import {
+  backLocaleError,
+  backLocalePayload,
+  localizeBackLocalePayloads,
+  localizeChangesMessageHtml,
+  translateBackTexts,
+} from 'back/locales/back';
 import { emailerConfigFileStorage } from 'back/sides/emailer/file-stores';
 import { sendEmailMessage } from 'back/sides/emailer/lib/sendEmailMessage';
 import { EmailerAuthConfigKey } from 'back/sides/emailer/model';
@@ -23,12 +22,13 @@ import { makeRegExp } from 'regexpert';
 import { DeviceId, Langi, SokiVisit, UserLogin } from 'shared/api';
 import { takeLangSystemCode } from 'shared/const/+locale';
 import { howMillisecondsInDay, howMillisecondsInHour } from 'shared/const/ms';
+import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import {
   DashCounters,
   DashMessageKind,
-  DashMessageUser,
   dashMessageSectionSeparator,
   DashMessagesPage,
+  DashMessageUser,
   noOnlineSample,
   VisitsDashboard,
   VisitsDashboardMessagesArgs,
@@ -139,7 +139,10 @@ const takeTodayVisitRows = async (now: number) => {
 };
 
 const takeMinVersionRows = () =>
-  db.select({ date: visitDayDB.date, minVersion: visitDayDB.minVersion }).from(visitDayDB).orderBy(desc(visitDayDB.date));
+  db
+    .select({ date: visitDayDB.date, minVersion: visitDayDB.minVersion })
+    .from(visitDayDB)
+    .orderBy(desc(visitDayDB.date));
 
 type DayStats = {
   date: string;
@@ -352,11 +355,7 @@ const visitorLogLimit = 10;
 
 type DayStatsLogVisitor = { name: string; count: number };
 
-const makeDayStatsText = (
-  stats: ReturnType<typeof makeDayStats>,
-  visitors: DayStatsLogVisitor[],
-  langi: Langi,
-) => {
+const makeDayStatsText = (stats: ReturnType<typeof makeDayStats>, visitors: DayStatsLogVisitor[], langi: Langi) => {
   const currentVersion = appVersionFileStore.getValue().num;
   const minVersionText =
     stats.minVersion === null
@@ -630,7 +629,8 @@ export const updateVisitDayOnline = async (online: number) => {
 };
 
 export const markDashMessagesRead = async (login: UserLogin, kind: DashMessageKind) => {
-  if (!dashMessageKinds.some(readKind => readKind === kind)) throw backLocaleError(BackLocaleKey.DashMessageKindInvalid);
+  if (!dashMessageKinds.some(readKind => readKind === kind))
+    throw backLocaleError(BackLocaleKey.DashMessageKindInvalid);
 
   // Максимум по сообщениям вида читается всегда: он же служит маркером прочтения для вкладок со списком сообщений.
   const [maxMessageRow] = await db
@@ -663,7 +663,13 @@ export const flushVisits = async (isNeedSendDigest: boolean) => {
     // Завершённые ряды и набор TOP-логинов читаются параллельно; TOP-строки не участвуют в агрегации, но удаляются вместе с остальными завершёнными рядами.
     const [rows, topLogins] = await Promise.all([
       db
-        .select({ id: visitDB.id, l: visitDB.l, deviceId: visitDB.deviceId, createdAt: visitDB.createdAt, v: visitDB.v })
+        .select({
+          id: visitDB.id,
+          l: visitDB.l,
+          deviceId: visitDB.deviceId,
+          createdAt: visitDB.createdAt,
+          v: visitDB.v,
+        })
         .from(visitDB)
         .orderBy(visitDB.id),
       takeTopLogins(),
@@ -693,18 +699,17 @@ export const flushVisits = async (isNeedSendDigest: boolean) => {
 
     // Онлайн-данные запрашиваются только для дат, где остались учитываемые ряды.
     const existingOnlineByDate = new Map(
-      (
-        rowsByDate.size === 0
-          ? []
-          : await db
-              .select({
-                date: visitDayDB.date,
-                maxOnline: visitDayDB.maxOnline,
-                hoursOnlineMin: visitDayDB.hoursOnlineMin,
-                hoursOnlineMax: visitDayDB.hoursOnlineMax,
-              })
-              .from(visitDayDB)
-              .where(inArray(visitDayDB.date, [...rowsByDate.keys()]))
+      (rowsByDate.size === 0
+        ? []
+        : await db
+            .select({
+              date: visitDayDB.date,
+              maxOnline: visitDayDB.maxOnline,
+              hoursOnlineMin: visitDayDB.hoursOnlineMin,
+              hoursOnlineMax: visitDayDB.hoursOnlineMax,
+            })
+            .from(visitDayDB)
+            .where(inArray(visitDayDB.date, [...rowsByDate.keys()]))
       ).map(row => [row.date, row] as const),
     );
 
@@ -825,9 +830,7 @@ export const takeDashMessages = async (
           })
           .from(dashErrorDB)
           .where(
-            beforeId === null
-              ? messageKindCondition
-              : and(messageKindCondition, lt(dashErrorDB.id, sql`${beforeId}`)),
+            beforeId === null ? messageKindCondition : and(messageKindCondition, lt(dashErrorDB.id, sql`${beforeId}`)),
           )
           .orderBy(desc(dashErrorDB.id))
           .limit(messagesPageSize + 1),
