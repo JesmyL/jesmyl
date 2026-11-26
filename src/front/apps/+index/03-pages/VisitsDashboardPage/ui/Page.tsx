@@ -40,6 +40,7 @@ import {
 } from 'shared/model/index/visitsDashboard';
 import { extractNumber } from 'shared/utils';
 import { mapObjectEntries, objectLength } from 'shared/utils/object.utils';
+import { takeUserAuthName } from 'shared/utils/user.utils';
 import { toast } from 'sonner';
 import { StameskaIconName } from 'stameska-icon/pack';
 import { twMerge } from 'tailwind-merge';
@@ -141,7 +142,7 @@ const makeAverageBuckets = (dayStats: VisitsDashboardDayStat[], period: VisitsHi
 };
 
 const takeUserName = (user: Pick<DashMessageUser, 'fio' | 'nick' | 'email'>) =>
-  user.fio || user.nick || user.email || translateEditorBase(EditorLocaleKey.VisitsAnonymous);
+  takeUserAuthName(user) || translateEditorBase(EditorLocaleKey.VisitsAnonymous);
 
 const takeMessageUserName = (message: DashMessage) =>
   message.isSystem ? translateEditorBase(EditorLocaleKey.VisitsSystem) : takeUserName(message.user);

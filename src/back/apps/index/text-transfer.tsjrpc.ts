@@ -15,6 +15,7 @@ import {
 } from 'shared/api';
 import { lazyInit } from 'shared/utils/lazyInit';
 import { objectKeys } from 'shared/utils/object.utils';
+import { takeUserAuthName } from 'shared/utils/user.utils';
 import { WebSocket } from 'ws';
 import { sokiServer } from 'back/complect/soki/SokiServer';
 import { constantsConfigFileStore } from './schedules/file-stores';
@@ -345,7 +346,7 @@ export const textTransferTsjrpcServer = new (class TextTransfer extends TsjrpcBa
           if (auth?.login == null) throw backLocaleError(BackLocaleKey.NotRegistered);
           if (!(client instanceof WebSocket)) throw backLocaleError(BackLocaleKey.ClientNotFound);
 
-          const owner = auth.fio || auth.nick || auth.email || auth.login;
+          const owner = takeUserAuthName(auth);
           const room = textTransferRooms.get(auth.login);
           if (room == null) return { value: { owner, devices: [] } };
 

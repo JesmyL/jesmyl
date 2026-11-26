@@ -151,7 +151,7 @@ const logStreamStart = async (schw: ScheduleWidgetWid | null, login: SokiAuthLog
 
   await insertDashMessage(
     backLocalePayload(langi => {
-      const name = fio || login || translateBackTexts(langi, BackLocaleKey.SchLiveAnonymousName);
+      const name = takeUserAuthName({ fio, login }) || translateBackTexts(langi, BackLocaleKey.SchLiveAnonymousName);
 
       return sch == null
         ? translateBackTexts(langi, BackLocaleKey.SchLiveStreamStartedNoSchw, { n: name })

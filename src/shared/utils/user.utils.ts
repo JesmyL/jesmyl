@@ -1,8 +1,8 @@
 type UserAuthName = {
-  fio?: string;
-  nick?: string;
-  email?: string;
-  login?: string;
+  fio?: string | nil;
+  nick?: string | nil;
+  email?: string | nil;
+  login?: string | nil;
 };
 
 export const takeUserAuthName = (auth: UserAuthName | nil) =>

@@ -111,10 +111,7 @@ const sendDashErrorPush = async (message: string, login: UserLogin | nil) => {
 
   await sendSchedulePush(userIds, langi => ({
     title: `${translateBackTexts(langi, BackLocaleKey.DashErrorPushTitle)} - ${
-      author.fio ||
-      author.nick ||
-      author.email ||
-      translateBackTexts(langi, BackLocaleKey.DashErrorPushSystemAuthor)
+      takeUserAuthName(author) || translateBackTexts(langi, BackLocaleKey.DashErrorPushSystemAuthor)
     }`,
     body: takeErrorPushSummary(message, langi),
     url: errorPushUrl,
