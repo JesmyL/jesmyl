@@ -333,7 +333,7 @@ export const makeDiffSegments = (a: string, b: string): DiffSegment[] => {
   return segments;
 };
 
-/** HTML-разметка диффа: удалённое — красное зачёркнутое, добавленное — зелёное жирное; цвета инлайновые ради писем, остальной текст экранируется для `innerHTML`. Экспортируется, чтобы бэк готовил окончательный HTML и клиент/почта только подставляли его. */
+/** HTML-разметка диффа: удалённое — красное, добавленное — зелёное жирное; цвета инлайновые ради писем, остальной текст экранируется для `innerHTML`. Экспортируется, чтобы бэк готовил окончательный HTML и клиент/почта только подставляли его. */
 export const makeDiffMarkupHtml = (was: string, newV: string) => {
   const escapeHtml = escapeHtmlLazy();
 
@@ -341,7 +341,7 @@ export const makeDiffMarkupHtml = (was: string, newV: string) => {
   return makeDiffSegments(was, newV)
     .map(([kind, text]) =>
       kind === DiffKind.removed
-        ? `<s style="color:#b3261e;background:#ffe3e3;">${escapeHtml(text)}</s>`
+        ? `<span style="color:#b3261e;background:#ffe3e3;">${escapeHtml(text)}</span>`
         : kind === DiffKind.added
           ? `<b style="color:#0a7a3e;background:#e3f9e9;">${escapeHtml(text)}</b>`
           : escapeHtml(text),

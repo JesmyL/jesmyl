@@ -55,11 +55,11 @@ const makeSong = () => ({
   })),
 });
 
-const countTag = (html: string, tag: 's' | 'b') =>
+const countTag = (html: string, tag: 'span' | 'b') =>
   [...html.matchAll(new RegExp(`<${tag} style="[^"]*">([\\s\\S]*?)</${tag}>`, 'g'))].length;
 
 /** Самая длинная подсвеченная секция: цельный JSON-блок был бы в тысячи символов. */
-const takeMaxSegmentLength = (html: string, tag: 's' | 'b') =>
+const takeMaxSegmentLength = (html: string, tag: 'span' | 'b') =>
   Math.max(
     0,
     ...[...html.matchAll(new RegExp(`<${tag} style="[^"]*">([\\s\\S]*?)</${tag}>`, 'g'))].map(
@@ -106,13 +106,13 @@ describe('real changes render path', () => {
     const fromClient = makeDashboardMessageSectionHtml(serverMessage);
 
     expect(fromClient).toContain(diffHtml);
-    expect(countTag(fromClient, 's')).toBeGreaterThan(0);
+    expect(countTag(fromClient, 'span')).toBeGreaterThan(0);
     expect(countTag(fromClient, 'b')).toBeGreaterThan(0);
     expect(fromClient).toContain('System change of the song "Тестовая песня"');
     expect(fromClient).not.toContain('{"was":');
     expect(fromClient).not.toContain('{"t":');
     expect(serverMessage).not.toContain('{"title"');
-    expect(takeMaxSegmentLength(fromClient, 's')).toBeLessThan(200);
+    expect(takeMaxSegmentLength(fromClient, 'span')).toBeLessThan(200);
     expect(takeMaxSegmentLength(fromClient, 'b')).toBeLessThan(200);
   });
 
@@ -136,7 +136,7 @@ describe('real changes render path', () => {
       Langi.En,
     );
 
-    expect(countTag(serverMessage, 's')).toBeGreaterThan(0);
+    expect(countTag(serverMessage, 'span')).toBeGreaterThan(0);
     expect(countTag(serverMessage, 'b')).toBeGreaterThan(0);
     expect(serverMessage).not.toContain('{"title"');
     expect(makeDashboardMessageSectionHtml(serverMessage)).toBe(serverMessage);
@@ -148,7 +148,7 @@ describe('real changes render path', () => {
     const sectionHtml = makeDashMessageForViewer(legacySection, DashMessageKind.Changes, Langi.En);
 
     expect(makeDiffSectionHtml(legacySection)).not.toBeNull();
-    expect(countTag(sectionHtml, 's')).toBeGreaterThan(0);
+    expect(countTag(sectionHtml, 'span')).toBeGreaterThan(0);
 
     const plainMessage = `Системное изменение песни "Тестовая песня"\nwas:\n<pre>${wasText}</pre>\nnew:\n<pre>${newText}</pre>`;
     expect(makeDashMessageForViewer(plainMessage, DashMessageKind.Changes, Langi.En)).toBe(plainMessage);
@@ -168,6 +168,6 @@ describe('real changes render path', () => {
     expect(errorMessage).not.toContain('{"title"');
     expect(body).toHaveLength(2);
     expect(countTag(body[0], 'b')).toBeGreaterThan(0);
-    expect(countTag(body[1], 's')).toBeGreaterThan(0);
+    expect(countTag(body[1], 'span')).toBeGreaterThan(0);
   });
 });
