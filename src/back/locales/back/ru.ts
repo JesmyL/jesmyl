@@ -235,7 +235,6 @@ export const backLocalesRu: Record<BackLocaleKey, string> = {
   [BackLocaleKey.EmailNotLinked]: 'E-mail не привязан к профилю',
   [BackLocaleKey.DashReportNoRecipients]: 'Не настроены получатели отчёта',
   [BackLocaleKey.DashMessageKindInvalid]: 'Недопустимый тип сообщений',
-  [BackLocaleKey.DashErrorPushTitle]: 'Новая ошибка',
   [BackLocaleKey.DashErrorPushSystemAuthor]: 'Система',
   [BackLocaleKey.VisitReportEmailSubject]: 'JesmyL-отчет (промежуточный) $d, $t',
   [BackLocaleKey.VisitDigestEmailSubject]: 'JesmyL - отчёт за $d',

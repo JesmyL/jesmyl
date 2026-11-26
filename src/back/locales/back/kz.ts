@@ -234,7 +234,6 @@ export const backLocalesKz: Record<BackLocaleKey, string> = {
   [BackLocaleKey.EmailNotLinked]: 'E-mail профильге байланбаған',
   [BackLocaleKey.DashReportNoRecipients]: 'Есеп алушылары реттелмеген',
   [BackLocaleKey.DashMessageKindInvalid]: 'Рұқсат етілмеген хабарлама түрі',
-  [BackLocaleKey.DashErrorPushTitle]: 'Жаңа қате',
   [BackLocaleKey.DashErrorPushSystemAuthor]: 'Жүйе',
   [BackLocaleKey.VisitReportEmailSubject]: 'JesmyL есебі (аралық) $d, $t',
   [BackLocaleKey.VisitDigestEmailSubject]: 'JesmyL - $d есебі',

@@ -232,7 +232,6 @@ export const backLocalesEn: Record<BackLocaleKey, string> = {
   [BackLocaleKey.EmailNotLinked]: 'E-mail is not linked to the profile',
   [BackLocaleKey.DashReportNoRecipients]: 'No dash report recipients configured',
   [BackLocaleKey.DashMessageKindInvalid]: 'Invalid message kind',
-  [BackLocaleKey.DashErrorPushTitle]: 'New error',
   [BackLocaleKey.DashErrorPushSystemAuthor]: 'System',
   [BackLocaleKey.VisitReportEmailSubject]: 'JesmyL report (intermediate) $d, $t',
   [BackLocaleKey.VisitDigestEmailSubject]: 'JesmyL - report for $d',

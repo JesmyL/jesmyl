@@ -145,7 +145,7 @@ export const enum BackLocaleKey {
   OtpEmailExpireTail = 142,
   OtpTelegramMakeLetterButton = 143,
   OtpTelegramSendError = 144,
-  DashErrorPushTitle = 145,
+  /** Система */
   DashErrorPushSystemAuthor = 146,
   VisitReportEmailSubject = 147,
   VisitReportTitle = 148,
