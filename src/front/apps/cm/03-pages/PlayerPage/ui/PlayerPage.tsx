@@ -183,7 +183,7 @@ const PlayerTrack = () => {
         }}
       />
 
-      {duration <= 0 || !Number.isFinite(duration) || !Number.isFinite(currentTime) || (
+      {(duration > 0 && Number.isFinite(duration) && Number.isFinite(currentTime)) && (
         <TimeLabel time={`-${convertSecondsInStrTime(duration - currentTime)}`} />
       )}
     </>
@@ -269,7 +269,7 @@ const PlayerComName = ({ name }: { name: string }) => {
       >
         {name}
       </span>
-      {!isOverflowing || (
+      {isOverflowing && (
         <StyledComName $shift={shift}>
           <span className="mr-[3em]">{name}</span>
           <span
@@ -726,7 +726,7 @@ const CmPlayerPageContent = ({
               }}
             />
 
-            {!isTextSlides || !com || !audioSrc || (
+            {isTextSlides && com && audioSrc && (
               <CmPlayerTextSlides
                 com={com}
                 src={audioSrc}
