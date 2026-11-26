@@ -10,6 +10,7 @@
 - Write code comments ONLY where the user gave specific clarifications about changes that are not obvious from the code itself; such a comment must record exactly that clarification. Do NOT write comments anywhere else (no Russian-language block comments).
 - When performing any work, read such clarification comments and take them into account. Any other comments are not authoritative and must not be relied upon. If an existing comment contradicts the new task (edits), ask the user how to proceed in that specific situation instead of silently changing or removing it.
 - JSX conditional rendering: the inverted form `!number || <Jsx />` (negation first, `||` operator) is used ONLY for numeric conditions (e.g. `...list.length`) so that nothing is rendered instead of `0`; in all other cases use `value && <Jsx />`.
+- After performing any work, run `npm run format` for the files touched during that work, BEFORE conducting code review.
 
 ## OpenCode house rules
 
