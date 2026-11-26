@@ -6,4 +6,4 @@ type UserAuthName = {
 };
 
 export const takeUserAuthName = (auth: UserAuthName | nil) =>
-  auth?.fio || auth?.nick || auth?.email || auth?.login || '';
+  auth?.fio || auth?.nick || auth?.email || auth?.login?.slice(0, 7) || '';
