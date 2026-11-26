@@ -1,164 +1,66 @@
-import { translateBase, translateEditorBase } from '#basis/locale';
-import { Badge } from '#shared/components/ui/badge';
-import { Button } from '#shared/components/ui/button';
-import { ButtonGroup } from '#shared/components/ui/button-group';
+import { translateEditorBase } from '#basis/locale';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
-import { Dropdown } from '#shared/ui/dropdown/Dropdown';
-import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
-import { Modal } from '#shared/ui/modal';
-import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
-import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { CmEditorEERulesWord, CmEditorEERulesWordSearchModalInner } from '$cm+editor/features/e-e-rules';
-import { cmEditorClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
+import { sharedEeWordsAtom } from '$cm+editor/shared/state/eeWords';
 import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContainer';
-import { Atom, atom, useAtomValue } from 'atomaric';
+import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
-import { EeStorePack } from 'shared/api';
-import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { objectKeys } from 'shared/utils/object.utils';
-import { CmEditorEERulesListComputer } from './EERulesListComputer';
-
-const sizes = [10, 30, 50, 100];
-
-const listBox = { list: [] } as { list: string[] };
-
-let pageSizeAtom: Atom<number>;
-let currentPageAtom: Atom<number>;
-let isCheckBibleAtom: Atom<boolean>;
-let isOpenSearchWordAtom: Atom<boolean>;
-let eeEditedWordsAtom: Atom<EeStorePack>;
+import { useEeWordsTotal } from '$cm+editor/shared/lib/useEeWordsSlice';
+import { CmEditorEERulesPageContent } from './EERulesPageContent';
+import { CmEditorEERulesPageHead } from './EERulesPageHead';
+import {
+  cmEditorEERulesCurrentPageAtom,
+  cmEditorEERulesEditedWordsAtom,
+  cmEditorEERulesInitAtoms,
+  cmEditorEERulesIsCheckBibleAtom,
+  cmEditorEERulesPageSizeAtom,
+} from './EERulesPageState';
 
 export const CmEditorEERulesPage = () => {
-  eeEditedWordsAtom ??= atom({});
-  pageSizeAtom ??= atom(50);
-  currentPageAtom ??= atom(0);
-  isCheckBibleAtom ??= atom(false);
-  isOpenSearchWordAtom ??= atom(false);
+  cmEditorEERulesInitAtoms();
 
-  const pageSize = useAtomValue(pageSizeAtom);
-  const currentPage = useAtomValue(currentPageAtom);
-  const isCheckBible = useAtomValue(isCheckBibleAtom);
-  const eeStoreRef = useActualRef(cmEditorIDB.useValue.eeStore());
+  const pageSize = useAtomValue(cmEditorEERulesPageSizeAtom);
+  const currentPage = useAtomValue(cmEditorEERulesCurrentPageAtom);
+  const isCheckBible = useAtomValue(cmEditorEERulesIsCheckBibleAtom);
+  const sharedWords = useAtomValue(sharedEeWordsAtom);
+  const total = useEeWordsTotal();
 
   const [updates, setUpdates] = useState(0);
   const [isShowListComputer, setIsShowListComputer] = useState(false);
 
-  const editedWordsRef = useActualRef(useAtomValue(eeEditedWordsAtom));
+  const editedWordsRef = useActualRef(useAtomValue(cmEditorEERulesEditedWordsAtom));
   const ignoredWordsSetRef = useActualRef(cmEditorIDB.useValue.ignoredEESet());
 
   useEffect(() => setIsShowListComputer(false), [updates]);
 
   const editedWords = objectKeys(editedWordsRef.current);
-  const eeStoreKeys = objectKeys(eeStoreRef.current);
 
   return (
     <PageCmEditorContainer
       className="e-e-rules-editor"
       headTitle={translateEditorBase(EditorLocaleKey.CmEditorYoYeRules)}
       head={
-        <TheIconSendButton
-          icon="Sent"
-          disabled={!editedWords.length}
-          className="m-2"
-          confirm={
-            `${translateEditorBase(EditorLocaleKey.CmEditorSendWords, { n: '' + editedWords.length })}: ` +
-            `${editedWords.join(', ')}`
-          }
-          onSend={() => cmEditorClientTsjrpcMethods.setEEWords({ words: editedWordsRef.current })}
-          onSuccess={() => eeEditedWordsAtom.set({})}
+        <CmEditorEERulesPageHead
+          editedWords={editedWords}
+          editedWordsRef={editedWordsRef}
+          onSuccess={() => cmEditorEERulesEditedWordsAtom.set({})}
         />
       }
       content={
-        <>
-          <div className="flex gap-2">
-            <Button
-              className="m-2"
-              onClick={() => setIsShowListComputer(true)}
-            >
-              {translateEditorBase(EditorLocaleKey.CmEditorCheck)}
-            </Button>
-            <TheIconButton
-              icon="SearchVisual"
-              onClick={isOpenSearchWordAtom.do.toggle}
-            />
-          </div>
-          <IconCheckbox
-            postfix={translateEditorBase(EditorLocaleKey.CmEditorIncludeBibleWords)}
-            checked={isCheckBible}
-            onChange={isCheckBibleAtom.set}
-          />
-          {isShowListComputer ? (
-            <CmEditorEERulesListComputer
-              isCheckBible={isCheckBible}
-              setUpdates={setUpdates}
-              listBox={listBox}
-              eeStoreRef={eeStoreRef}
-            />
-          ) : (
-            !listBox.list.length || (
-              <>
-                <ButtonGroup.Root className="my-3">
-                  {sizes.map(size => (
-                    <Button
-                      key={size}
-                      disabled={pageSize === size}
-                      onClick={() => pageSizeAtom.set(size)}
-                    >
-                      {size}
-                    </Button>
-                  ))}
-                </ButtonGroup.Root>
-                <Badge className="mr-2 mb-2">
-                  {translateBase(BaseLocaleKey.Word)}: {eeStoreKeys.length} / {listBox.list.length} (
-                  {((eeStoreKeys.length / listBox.list.length) * 100).toFixed(3)}
-                  %)
-                </Badge>
-                <Dropdown
-                  onSelect={({ id }) => currentPageAtom.set(id)}
-                  items={Array(Math.ceil(listBox.list.length / pageSize))
-                    .fill(0)
-                    .map((_, page): DropdownItem<number> => {
-                      const words = listBox.list.slice(page * pageSize, page * pageSize + pageSize);
-
-                      return {
-                        title: (
-                          <span className={words.some(word => eeStoreRef.current[word] == null) ? '' : 'text-xOK'}>
-                            {words[0]}
-                          </span>
-                        ),
-                        id: page,
-                        disabled: currentPage === page,
-                      };
-                    })}
-                />
-                {listBox.list.slice(currentPage * pageSize, currentPage * pageSize + pageSize).map(word => {
-                  return (
-                    <CmEditorEERulesWord
-                      key={word}
-                      word={word}
-                      setEditedWords={eeEditedWordsAtom.set}
-                      ignoredWordsSetRef={ignoredWordsSetRef}
-                      eeStoreRef={eeStoreRef}
-                      editedWordsRef={editedWordsRef}
-                    />
-                  );
-                })}
-              </>
-            )
-          )}
-
-          <Modal openAtom={isOpenSearchWordAtom}>
-            <CmEditorEERulesWordSearchModalInner
-              setEditedWords={eeEditedWordsAtom.set}
-              eeStoreRef={eeStoreRef}
-              ignoredWordsSetRef={ignoredWordsSetRef}
-              editedWordsRef={editedWordsRef}
-            />
-          </Modal>
-        </>
+        <CmEditorEERulesPageContent
+          isShowListComputer={isShowListComputer}
+          setIsShowListComputer={setIsShowListComputer}
+          isCheckBible={isCheckBible}
+          pageSize={pageSize}
+          currentPage={currentPage}
+          total={total}
+          editedWordsRef={editedWordsRef}
+          ignoredWordsSetRef={ignoredWordsSetRef}
+          sharedWords={sharedWords}
+          setUpdates={setUpdates}
+        />
       }
     />
   );

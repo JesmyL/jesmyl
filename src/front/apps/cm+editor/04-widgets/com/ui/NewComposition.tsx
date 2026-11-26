@@ -9,7 +9,7 @@ import { TheButton } from '#shared/ui/TheButton';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { useCmExtractHrefsFromHTML } from '$cm+editor/shared/lib/useCmExtractHrefsFromHTML';
-import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
+import { useTextEeIncorrects, useTextsEeIncorrects } from '$cm+editor/shared/lib/useTextEeIncorrects';
 import { ObserveUrlResource } from '$cm+editor/shared/ui/ObserveUrlResource';
 import { CmEditorComAudioControlledList } from '$cm+editor/widgets/com-audio';
 import { CmComOrderList } from '$cm/ext';
@@ -22,9 +22,9 @@ import { CmCom } from 'shared/const/cm/Com';
 import { cmDefaultCom } from 'shared/const/cm/def.com';
 import { Bool } from 'shared/enums';
 import { itIt } from 'shared/utils';
-import { chordsBlockIncorrectMessage } from 'shared/utils/cm/com/chordsBlockIncorrectMessage';
+import { chordsBlockIncorrectMessage, takeChordsBlockIncorrects } from 'shared/utils/cm/com/chordsBlockIncorrectMessage';
 import { comNameExtraSymbolsStr } from 'shared/utils/cm/com/const';
-import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
+import { takeTextBlockLocalIncorrects } from 'shared/utils/cm/com/takeTextBlockLocalIncorrects';
 import { textLinesLengthIncorrects } from 'shared/utils/cm/com/textLinesLengthIncorrects';
 import { mapObjectEntries, objectLength } from 'shared/utils/object.utils';
 import { CmEditorComCreateNameChange } from './NameChangeWithCorrects';
@@ -41,12 +41,13 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
   const [mp3Rule, setMp3Rule] = useState<CmMp3Rule | und>();
   const [newICom, setNewICom] = useState(cmDefaultCom);
   const [parseErrors, setParseErrors] = useState<string[]>([]);
-  const eeStore = cmEditorIDB.useValue.eeStore();
   const { maxAvailableComLineLength } = useAtomValue(constantsConfigAtom);
 
   const newCom = useMemo(() => new CmCom(newICom, null, null, Bool.False), [newICom]);
+  const nameEeIncorrects = useTextEeIncorrects(newICom.n);
+  const textsEeIncorrects = useTextsEeIncorrects(newICom.t ?? []);
   // Валидация имени нового кома: дополнительно разрешаем « — », запрещённое в текстовых блоках
-  const nameIncorrects = takeTextBlockIncorrects(newICom.n, eeStore, comNameExtraSymbolsStr);
+  const nameIncorrects = takeTextBlockLocalIncorrects(newICom.n, comNameExtraSymbolsStr) ?? nameEeIncorrects;
 
   const [hrefs, setHrefs] = useState<HttpNumLeadLink[]>([]);
   const [bindedLinks, setBindedLinks] = useState<CmAudioSrc[]>([]);
@@ -97,9 +98,14 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
 
   const textsErrors =
     newICom.t?.map(
-      text => textLinesLengthIncorrects(text, maxAvailableComLineLength) ?? takeTextBlockIncorrects(text, eeStore),
+      (text, texti) =>
+        textLinesLengthIncorrects(text, maxAvailableComLineLength) ??
+        takeTextBlockLocalIncorrects(text) ??
+        textsEeIncorrects[texti] ?? {},
     ) ?? [];
   const chordsErrors = newICom.c?.map(text => chordsBlockIncorrectMessage(text, Bool.False)) ?? [];
+  const hasIncorrectChords =
+    newICom.c?.some(text => !!takeChordsBlockIncorrects(text, Bool.False).incorrectChords.length) ?? false;
 
   return (
     <>
@@ -198,7 +204,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
             title={translateEditorBase(EditorLocaleKey.Texts)}
             corrects={textsErrors}
             list={newICom.t}
-            onInput={(value, texti) => setNewICom(prev => ({ ...prev, t: newICom.t?.with(texti, value) }))}
+            onInput={(value, texti) => setNewICom(prev => ({ ...prev, t: prev.t?.with(texti, value) }))}
           />
         )}
 
@@ -208,7 +214,8 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
             title={translateEditorBase(EditorLocaleKey.CmChords)}
             corrects={chordsErrors}
             list={newICom.c}
-            onInput={(value, texti) => setNewICom(prev => ({ ...prev, c: newICom.c?.with(texti, value) }))}
+            onInput={(value, texti) => setNewICom(prev => ({ ...prev, c: prev.c?.with(texti, value) }))}
+            onBemoleFix={(texti, value) => setNewICom(prev => ({ ...prev, c: prev.c?.with(texti, value) }))}
           />
         )}
 
@@ -242,7 +249,7 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
           disabled={
             !!errorNodes.length ||
             !!parseErrors.length ||
-            chordsErrors.some(corrects => corrects.errors?.length) ||
+            hasIncorrectChords ||
             textsErrors.some(corrects => corrects.errors?.length)
           }
           onSend={() => cmEditComClientTsjrpcMethods.newCom({ value: { ...newICom, al: bindedLinks } })}

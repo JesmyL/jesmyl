@@ -3,7 +3,7 @@ import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.ts
 import { makeRegExp } from 'regexpert';
 import { itIt } from 'shared/utils';
 import { checkIsNil, checkIsNumber } from 'shared/utils/checkIs';
-import { chordDiezEquivalent, simpleBemoleChordReg_g } from 'shared/utils/cm/com/const';
+import { replaceBemoleChords } from 'shared/utils/cm/com/replaceBemoleChords';
 import { arrayByLength, objectKeys } from 'shared/utils/object.utils';
 import { EditableComOrder } from '../EditableComOrder';
 import { EditableComParseBlocks } from './lib/31-ParseBlocks';
@@ -18,7 +18,7 @@ export class EditableCom extends EditableComParseBlocks {
     const col = this.chords[coli];
     if (!col) return;
 
-    const val = col.replace(simpleBemoleChordReg_g, chord => chordDiezEquivalent()[chord] || chord);
+    const val = replaceBemoleChords(col);
 
     cmEditComClientTsjrpcMethods.changeChordBlock({
       texti: coli,

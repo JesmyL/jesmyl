@@ -1,7 +1,7 @@
 import { TsjrpcBaseClient } from '#basis/tsjrpc/TsjrpcBase.client';
 import { CmShareEditorTsjrpcModel } from 'shared/api/tsjrpc/cm/editor.tsjrpc.shares.model';
-import { cmEditorIDB } from '../state/cmEditorIDB';
 import { comEditorBusiesAtom } from '../state/com';
+import { sharedEeWordsAtom } from '../state/eeWords';
 
 export const cmShareEditorTsjrpcBaseClient =
   new (class CmShareEditorTsjrpcBaseClient extends TsjrpcBaseClient<CmShareEditorTsjrpcModel> {
@@ -9,15 +9,7 @@ export const cmShareEditorTsjrpcBaseClient =
       super({
         scope: 'CmShareEditor',
         methods: {
-          editedEEWords: async ({ words, modifiedAt }) => {
-            await cmEditorIDB.set.eeStore(prev => ({ ...prev, ...words }));
-            await cmEditorIDB.updateLastModifiedAt(modifiedAt);
-          },
-
-          refreshEEPack: async ({ pack, modifiedAt }) => {
-            await cmEditorIDB.set.eeStore(pack);
-            await cmEditorIDB.updateLastModifiedAt(modifiedAt);
-          },
+          editedEEWords: async ({ words }) => sharedEeWordsAtom.do.update(prev => ({ ...prev, ...words })),
 
           comBusies: async ({ busies }) => comEditorBusiesAtom.set(busies),
         },

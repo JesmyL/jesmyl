@@ -43,6 +43,7 @@ export const localeEditorUa = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.CmDeleteChord]: 'Видалити акорд',
   [EditorLocaleKey.CmChordExists]: 'Такий акорд існує',
   [EditorLocaleKey.CmIncorrectChord]: 'Неправильне написання акорду',
+  [EditorLocaleKey.CmEditorBemoleToDiez]: 'b->#',
   [EditorLocaleKey.CmSelectChordEdit]: 'Вибери акорд для редагування',
   [EditorLocaleKey.CmUnknownChordsCount]: 'Невідомі акорди ($n;)',
   [EditorLocaleKey.CmNoEditorsMore]: 'Більше ніхто не редагує',

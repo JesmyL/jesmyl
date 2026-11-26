@@ -14,7 +14,7 @@ import { CmEditorComEditBpm } from '$cm+editor/features/ComEditBpm';
 import { CmEditorComEditTransposition } from '$cm+editor/features/ComEditTransposition';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
+import { useTextEeIncorrects } from '$cm+editor/shared/lib/useTextEeIncorrects';
 import { removedCompositionsAtom } from '$cm+editor/shared/state/com';
 import { TheCmCom } from '$cm/ext';
 import { useState } from 'react';
@@ -26,15 +26,15 @@ import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { CmComMetricNum } from 'shared/model/cm/com-metric-nums';
 import { emptyFunc } from 'shared/utils';
 import { cmComLanguages, comNameExtraSymbolsStr } from 'shared/utils/cm/com/const';
-import { takeTextBlockIncorrects } from 'shared/utils/cm/com/takeTextBlockIncorrects';
+import { takeTextBlockLocalIncorrects } from 'shared/utils/cm/com/takeTextBlockLocalIncorrects';
 import { mapObjectEntries } from 'shared/utils/object.utils';
 
 export const CmEditorComTabMain = ({ ccom }: { ccom: EditableCom }) => {
   const [name, setName] = useState('');
-  const eeStore = cmEditorIDB.useValue.eeStore();
   const checkAccess = useCheckUserAccessRightsInScope();
+  const nameEeCorrects = useTextEeIncorrects(name);
   // Валидация имени кома: дополнительно разрешаем « — », запрещённое в текстовых блоках
-  const nameCorrects = takeTextBlockIncorrects(name, eeStore, comNameExtraSymbolsStr);
+  const nameCorrects = takeTextBlockLocalIncorrects(name, comNameExtraSymbolsStr) ?? nameEeCorrects;
 
   const comNode = (
     <TheCmCom

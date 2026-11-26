@@ -424,4 +424,6 @@ export const enum EditorLocaleKey {
   PushCheck = 209,
   /** Копировать из «$t» */
   CmEditBroadcastCopyNl = 210,
+  /** b-># */
+  CmEditorBemoleToDiez = 211,
 }

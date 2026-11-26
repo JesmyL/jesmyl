@@ -4,13 +4,14 @@ import { db } from 'back/drizzle/drizzle.db';
 import { backLocaleError, translateBackTexts } from 'back/locales/back';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { and, asc, eq, inArray, sql } from 'drizzle-orm';
-import { CmComWid } from 'shared/api';
+import { CmComWid, EeStorePack } from 'shared/api';
 import { CmEditorTsjrpcModel } from 'shared/api/tsjrpc/cm/editor.tsjrpc.model';
 import { CmCom } from 'shared/const/cm/Com';
 import { Bool } from 'shared/enums';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { chordsBlockIncorrectMessage } from 'shared/utils/cm/com/chordsBlockIncorrectMessage';
-import { objectKeys, objectLength, objectValues } from 'shared/utils/object.utils';
+import { eeTextIncorrects } from 'shared/utils/cm/com/eeTextIncorrects';
+import { forEachObjectEntries, objectKeys, objectLength, objectValues } from 'shared/utils/object.utils';
 import { cmEditComBusyTsjrpcMethods } from './complect/edit-com-busy';
 import { cmGetResourceHTMLString } from './complect/mp3-rules';
 import { cmShareEditorServerTsjrpcMethods } from './editor.tsjrpc.shares';
@@ -63,6 +64,44 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
           };
         },
 
+        checkTextEe: async ({ texts }) => {
+          const pack = eePackFileStore.getValue();
+
+          return { value: texts.map(text => eeTextIncorrects(text, pack)) };
+        },
+        getEEWords: async ({ words: requestedWords }) => {
+          const pack = eePackFileStore.getValue();
+          const words: EeStorePack = {};
+
+          requestedWords.forEach(word => {
+            if (pack[word] != null) words[word] = pack[word];
+          });
+
+          return { value: words };
+        },
+        searchEEWords: async ({ query, limit }) => {
+          const search = query.toLowerCase().replaceAll('ё', 'е');
+          const words: EeStorePack = {};
+          let total = 0;
+
+          forEachObjectEntries(eePackFileStore.getValue(), (word, code) => {
+            if (!word.includes(search)) return;
+            total++;
+
+            if (total <= limit) words[word] = code;
+          });
+
+          return { value: { words, total } };
+        },
+        getIncorrectEeWords: async () => {
+          const words: string[] = [];
+
+          forEachObjectEntries(eePackFileStore.getValue(), (word, code) => {
+            if (code === 2 || (Array.isArray(code) && code.includes(2))) words.push(word);
+          });
+
+          return { value: { words } };
+        },
         getResourceHTMLString: cmGetResourceHTMLString,
         getMp3RulesList: async () => ({ value: mp3ResourcesFileStorage.getValue() }),
         getSmartSearchFilters: async (_, { visitInfo }) => ({
@@ -236,24 +275,11 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
           return { description: backLocaleError(BackLocaleKey.CmEditorMp3RuleChanged) };
         },
 
-        requestFreshes: async ({ lastModfiedAt }, { client, auth }) => {
-          lastModfiedAt = Math.trunc(lastModfiedAt);
-
+        requestFreshes: async (_, { auth }) => {
           try {
             if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'EDIT', 'R')) throw '';
           } catch (_) {
             return;
-          }
-
-          const eePackModifiedAt = eePackFileStore.fileModifiedAt();
-          if (eePackModifiedAt > lastModfiedAt) {
-            cmShareEditorServerTsjrpcMethods.refreshEEPack(
-              {
-                modifiedAt: eePackModifiedAt,
-                pack: eePackFileStore.getValue(),
-              },
-              client,
-            );
           }
         },
       },

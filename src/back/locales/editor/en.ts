@@ -46,6 +46,7 @@ export const localeEditorEn = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.CmDeleteChord]: 'Delete chord',
   [EditorLocaleKey.CmChordExists]: 'Such a chord already exists',
   [EditorLocaleKey.CmIncorrectChord]: 'Incorrect chord spelling',
+  [EditorLocaleKey.CmEditorBemoleToDiez]: 'b->#',
   [EditorLocaleKey.CmSelectChordEdit]: 'Select a chord to edit',
   [EditorLocaleKey.CmUnknownChordsCount]: 'Unknown chords ($n;)',
   [EditorLocaleKey.CmNoEditorsMore]: 'No more editors',

@@ -19,6 +19,8 @@ export const CmEditorComTabTextBlockRedactor = ({ texti, text, ccom, disabled }:
       onInput={setValue}
       disabled={disabled}
       text={value}
+      comw={ccom.wid}
+      texti={texti}
     />
   );
 };

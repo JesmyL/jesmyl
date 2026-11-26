@@ -6,4 +6,7 @@ export interface IIncorrects {
 
 export interface IIncorrect {
   message: string;
+  word?: string;
+  wordOccurrence?: number;
+  correct?: string;
 }

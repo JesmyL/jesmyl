@@ -7,33 +7,22 @@ import { useEditableComs } from '$cm+editor/shared/lib/useEditableCom';
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { memo, useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
-import { EeStorePack, Langi } from 'shared/api';
+import { Langi } from 'shared/api';
 import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { slavicLowerLettersStr } from 'shared/utils/cm/com/const';
-import { objectEntries, objectKeys } from 'shared/utils/object.utils';
+import { objectEntries } from 'shared/utils/object.utils';
 
 type Props = {
   isCheckBible: boolean;
   setUpdates: React.Dispatch<React.SetStateAction<number>>;
   listBox: { list: string[] };
-  eeStoreRef: { current: EeStorePack };
 };
 
-export const CmEditorEERulesListComputer = memo(function ListComputer({
-  isCheckBible,
-  listBox,
-  setUpdates,
-  eeStoreRef,
-}: Props) {
+export const CmEditorEERulesListComputer = memo(function ListComputer({ isCheckBible, listBox, setUpdates }: Props) {
   const cats = useEditableCats();
   const coms = useEditableComs();
-  const [storeWords, setStoreWords] = useState<string[]>([]);
   const [etap, setEtap] = useState<string>(() => translateEditorBase(EditorLocaleKey.CmEditorPreparation));
   const ignoredWordsSet = cmEditorIDB.useValue.ignoredEESet();
-
-  useEffect(() => {
-    cmEditorIDB.get.eeStore().then(store => setStoreWords(objectKeys(store)));
-  }, []);
 
   useEffect(() => {
     let timeout: TimeOut;
@@ -90,7 +79,7 @@ export const CmEditorEERulesListComputer = memo(function ListComputer({
                             etap(
                               translateEditorBase(EditorLocaleKey.CmEditorFilterUnique),
                               () => {
-                                const spaceds = Array.from(new Set([...storeWords, ...splits]));
+                                const spaceds = Array.from(new Set(splits));
 
                                 etap(
                                   translateEditorBase(EditorLocaleKey.CmEditorPickWordsWithYe),
@@ -107,8 +96,7 @@ export const CmEditorEERulesListComputer = memo(function ListComputer({
                                       )
                                         return;
 
-                                      if (eeStoreRef.current[word] === undefined) words.push(word);
-                                      else words.unshift(word);
+                                      words.push(word);
                                     };
 
                                     const addWord = () => {
@@ -160,7 +148,7 @@ export const CmEditorEERulesListComputer = memo(function ListComputer({
     );
 
     return () => clearTimeout(timeout);
-  }, [cats, coms, eeStoreRef, ignoredWordsSet, isCheckBible, listBox, setUpdates, storeWords]);
+  }, [cats, coms, ignoredWordsSet, isCheckBible, listBox, setUpdates]);
 
   return <>{etap}</>;
 });

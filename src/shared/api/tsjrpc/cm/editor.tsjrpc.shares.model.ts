@@ -4,7 +4,6 @@ import { SokiAuthLogin } from 'shared/api/complect/soki.model';
 
 export type CmShareEditorTsjrpcModel = {
   editedEEWords: (args: { words: EeStorePack; modifiedAt: number }) => unknown;
-  refreshEEPack: (args: { pack: EeStorePack; modifiedAt: number }) => unknown;
   comBusies: (args: { busies: ComEditBusy[] }) => unknown;
 };
 

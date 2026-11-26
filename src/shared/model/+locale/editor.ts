@@ -215,4 +215,5 @@ export type LocaleCmEditor = {
   [EditorLocaleKey.CmEditorHardChordsComplexHint]: LocaleSimpleString;
   [EditorLocaleKey.PushCheck]: LocaleSimpleString;
   [EditorLocaleKey.CmEditBroadcastCopyNl]: StringTemplaterInterpolation<{ t: string }>;
+  [EditorLocaleKey.CmEditorBemoleToDiez]: LocaleSimpleString;
 };

@@ -8,6 +8,7 @@ import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model
 import { CmEditorTsjrpcModel } from 'shared/api/tsjrpc/cm/editor.tsjrpc.model';
 import { cmEditorComChordEditsHistoryAtom, cmEditorComTextsEditsHistoryAtom } from '../state/atoms';
 import { cmComEditorAudioMarksEditPacksAtom, comEditorBusiesAtom } from '../state/com';
+import { pushComChordBlockToBuffer, pushComTextBlockToBuffer } from './comBlockEditsBuffer';
 
 export const cmEditCatClientTsjrpcMethods = new (class CmEditCat extends TsjrpcClient<CmEditCatTsjrpcModel> {
   constructor() {
@@ -17,15 +18,12 @@ export const cmEditCatClientTsjrpcMethods = new (class CmEditCat extends TsjrpcC
   }
 })();
 
-const makeOnChangeBlock = (atom: typeof cmEditorComTextsEditsHistoryAtom, col: 'c' | 't') => {
+const makeOnChangeBlock = (col: 'c' | 't') => {
   return async ({ comw, texti }: { texti: number; comw: CmComWid }) => {
     const text = (await cmIDB.tb.coms.get(comw))?.[col]?.[texti];
-    if (!text) return;
 
-    atom.do.update(history => {
-      history[comw] ??= {};
-      history[comw][texti] = Array.from(new Set([text].concat(history[comw][texti] ?? [])));
-    });
+    if (col === 't') pushComTextBlockToBuffer(comw, texti, text);
+    else pushComChordBlockToBuffer(comw, texti, text);
   };
 };
 
@@ -38,11 +36,11 @@ export const cmEditComClientTsjrpcMethods = new (class CmEditCom extends TsjrpcC
     super({
       scope: 'CmEditCom',
       methods: {
-        changeTextBlock: { beforeSend: makeOnChangeBlock(cmEditorComTextsEditsHistoryAtom, 't') },
+        changeTextBlock: { beforeSend: makeOnChangeBlock('t') },
         insertTextBlock: { beforeSend: makeCleaner(cmEditorComTextsEditsHistoryAtom) },
         removeTextBlock: { beforeSend: makeCleaner(cmEditorComTextsEditsHistoryAtom) },
 
-        changeChordBlock: { beforeSend: makeOnChangeBlock(cmEditorComChordEditsHistoryAtom, 'c') },
+        changeChordBlock: { beforeSend: makeOnChangeBlock('c') },
         insertChordBlock: { beforeSend: makeCleaner(cmEditorComChordEditsHistoryAtom) },
         removeChordBlock: { beforeSend: makeCleaner(cmEditorComChordEditsHistoryAtom) },
       },

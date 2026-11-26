@@ -75,6 +75,8 @@ export const CmEditorComTabTextBlockWordLetterLowerer = ({ com, onUpdate }: { co
                 <CmEditorComTabRedactTextWithIncorrectMessage
                   defaultValue={(textValue = words.join(''))}
                   text={textValue}
+                  comw={com.wid}
+                  texti={itTexti}
                   onInput={value => setInitialTexts(initialTexts.with(itTexti, value.split(splitReg)))}
                   onChanged={emptyAsyncFunc}
                   className="[&_.stameska-icon]:hidden gap-0"

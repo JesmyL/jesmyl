@@ -1,6 +1,6 @@
 import { translateEditorBase } from '#basis/locale';
 import { constantsConfigAtom } from '#basis/state/constantsAtom';
-import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
+import { cmEditorClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { cmIDB } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
@@ -8,7 +8,7 @@ import { makeRegExp } from 'regexpert';
 import { CmComTextSquareBracketsMode } from 'shared/api';
 import { EditorLocaleKey } from 'shared/model/+locale/_EditorLocaleKey';
 import { itIt } from 'shared/utils';
-import { checkIsArray, checkIsNumber } from 'shared/utils/checkIs';
+import { checkIsNumber } from 'shared/utils/checkIs';
 import { slavicLowerLettersStr } from 'shared/utils/cm/com/const';
 import { takeTextLineOverLengthIndex } from 'shared/utils/cm/com/takeTextLineOverLengthIndex';
 import { objectKeys } from 'shared/utils/object.utils';
@@ -47,20 +47,11 @@ const knownChordsSet = delayedValueSetDefiner(
 );
 
 const eeIncorrectWordsReg = delayedValueSetDefiner(
-  () => cmEditorIDB.get.eeStore,
+  () => () => cmEditorClientTsjrpcMethods.getIncorrectEeWords().then(({ words }) => words),
   /^ееее$/,
-  value => {
+  words => {
     const notRuLetter = `([^${slavicLowerLettersStr}])`;
-    return new RegExp(
-      notRuLetter +
-        '(' +
-        objectKeys(value)
-          .filter(word => value[word] === 2 || (checkIsArray(value[word]) && value[word].includes(2)))
-          .join('|') +
-        ')' +
-        notRuLetter,
-      'ig',
-    );
+    return new RegExp(notRuLetter + '(' + words.join('|') + ')' + notRuLetter, 'ig');
   },
 );
 
