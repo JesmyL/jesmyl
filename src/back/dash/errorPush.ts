@@ -11,11 +11,11 @@ const pushBlockquoteReg = makeRegExp('/<blockquote[^>]*>[\\s\\S]*?<\\/blockquote
 const pushHtmlTagReg = makeRegExp('/<[^>]*>/g');
 const pushWhitespaceReg = makeRegExp('/\\s+/g');
 
-/** Короткая однострочная сводка сохранённого сообщения об ошибке для push: берётся только содержательная секция (конверт Changes или текст до `dashMessageSectionSeparator`), payload из backLocale заменяется читаемым текстом на языке получателя (`localizeBackLocalePayloads`), вырезаются html/div/blockquote, отбрасывается всё после маркера аргументов, схлопываются пробелы и текст усекается до `errorPushTextMaxLength` с многоточием. */
+/** Короткая однострочная сводка сохранённого сообщения об ошибке для push: берётся только содержательная секция (конверт Changes или текст до `dashMessageSectionSeparator` без первой строки с именем отправителя), payload из backLocale заменяется читаемым текстом на языке получателя (`localizeBackLocalePayloads`), вырезаются html/div/blockquote, отбрасывается всё после маркера аргументов, схлопываются пробелы и текст усекается до `errorPushTextMaxLength` с многоточием. */
 export const takeErrorPushSummary = (message: string, langi: Langi) => {
   const changes = parseChangesMessage(message);
   const text = localizeBackLocalePayloads(
-    changes ? changes.t : message.split(dashMessageSectionSeparator)[0],
+    changes ? changes.t : message.split(dashMessageSectionSeparator)[0].split('\n').slice(1).join('\n'),
     langi,
   )
     .replace(pushDivReg, ' ')

@@ -457,26 +457,29 @@ const DashboardMessages = () => {
   const messagesQuery = useInfiniteQuery({
     queryKey: [QueryKey.VisitsDashboardMessages, activeKind],
     queryFn: ({ pageParam }) =>
-      indexDashTsjrpcClient.getVisitsDashboard_v1({
-        messages: { kind: activeKind, beforeId: pageParam || null },
-      }),
+      indexDashTsjrpcClient.getDashMessages({ kind: activeKind, beforeId: pageParam || null }),
     initialPageParam: 0,
     getNextPageParam: lastPage => {
       const activeList = isVisitErrorKind ? lastPage.visits : lastPage.messages;
-      const hasMore = isVisitErrorKind ? lastPage.visitsHasMore : lastPage.messagesHasMore;
 
-      return hasMore ? activeList.at(-1)?.id : undefined;
+      return lastPage.hasMore ? activeList.at(-1)?.id : undefined;
     },
     refetchInterval: 15_000,
     staleTime: 0,
   });
 
-  const firstPage = messagesQuery.data?.pages[0];
+  const countersQuery = useQuery({
+    queryKey: [QueryKey.DashCounters],
+    queryFn: () => indexDashTsjrpcClient.getDashCounters(),
+    refetchInterval: 15_000,
+    staleTime: 0,
+  });
+
   const messages = uniqById(messagesQuery.data?.pages.flatMap(page => page.messages) ?? []);
   const visits = uniqById(messagesQuery.data?.pages.flatMap(page => page.visits) ?? []);
   const isEmpty = isVisitErrorKind ? visits.length === 0 : messages.length === 0;
-  const messageReads = firstPage?.messageReads ?? {};
-  const unreadCounts = firstPage?.unreadCounts ?? {};
+  const messageReads = countersQuery.data?.messageReads ?? {};
+  const unreadCounts = countersQuery.data?.unreadCounts ?? {};
   const visitReadAt = messageReads[DashMessageKind.VisitError] ?? 0;
 
   useEffect(() => {
@@ -487,7 +490,10 @@ const DashboardMessages = () => {
 
   const markAllRead = async (kind: DashMessageKind) => {
     await indexDashTsjrpcClient.markDashMessagesRead_v1({ kind });
-    await messagesQuery.refetch();
+    await Promise.all([
+      messagesQuery.refetch(),
+      queryClient.invalidateQueries({ queryKey: [QueryKey.DashCounters] }),
+    ]);
   };
 
   const toggleMessage = (messageId: number) => {
@@ -577,7 +583,7 @@ const DashboardMessages = () => {
                 const isOpen = openMessageIds.has(message.id);
                 const messageSections = message.m.split(dashMessageSectionSeparator);
                 const messageSummary = takeMessageSummary(
-                  makeChangesMessageHtml(messageSections[0]) ?? messageSections[0],
+                  makeChangesMessageHtml(messageSections[0]) ?? messageSections[0].split('\n').slice(1).join('\n'),
                 );
                 const messageSectionBodies = messageSections.map(makeDashboardMessageSectionHtml);
 
@@ -1127,7 +1133,7 @@ const DashboardBody = () => {
   const queryClient = useQueryClient();
   const { data } = useQuery({
     queryKey: [QueryKey.VisitsDashboard],
-    queryFn: () => indexDashTsjrpcClient.getVisitsDashboard_v1({}),
+    queryFn: () => indexDashTsjrpcClient.getVisitsDashboard_v2(),
     refetchInterval: 15_000,
     staleTime: 0,
   });
@@ -1136,6 +1142,8 @@ const DashboardBody = () => {
     return soki.listenOnConnectionOpenEvent(() => {
       void queryClient.invalidateQueries({ queryKey: [QueryKey.VisitsDashboard] });
       void queryClient.invalidateQueries({ queryKey: [QueryKey.VisitsDashboardMessages] });
+      void queryClient.invalidateQueries({ queryKey: [QueryKey.DashCounters] });
+      indexVisitsOnlineAtom.set(null);
     });
   }, [queryClient]);
 

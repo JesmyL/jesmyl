@@ -24,6 +24,7 @@ import { Langi, UserInfoUnsecure, UserLogin } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { constantsConfigurator } from 'shared/const/cm/constants.def';
 import { emojiList } from 'shared/const/emojiList';
+import { howMillisecondsInHour } from 'shared/const/ms';
 import { UserAccessRole, UserAccessRoleInfo } from 'shared/model/index/access-rights';
 import { randomItem } from 'shared/randoms';
 import { iife } from 'shared/utils';
@@ -32,6 +33,7 @@ import { forEachObjectEntries, objectKeys, objectLength } from 'shared/utils/obj
 import { textToUpperCase } from 'shared/utils/string.utils';
 import {
   appVersionFileStore,
+  appVersionReleasesFileStore,
   indexStameskaIconsFileStore,
   nounsFileStorage,
   pronounsFileStorage,
@@ -64,6 +66,10 @@ const deviceIdPostfixSymbols = '!@#$%^&*;.,?/|\\+=-'.split('');
 
 appVersionFileStore.watchFile(value => {
   console.info(`Version upgrade: ${value.num}`);
+
+  const releases = appVersionReleasesFileStore.getValue();
+  const date = new Date(Date.now() + 3 * howMillisecondsInHour).toISOString().slice(0, 10);
+  appVersionReleasesFileStore.setValue({ ...releases, [date]: Math.max(releases[date] ?? 0, value.num) });
 
   const command = `chmod +x ${hostRootDir}/assets/`;
 

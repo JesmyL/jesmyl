@@ -6,7 +6,14 @@ import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
 import { sokiServer } from 'back/complect/soki/SokiServer';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
-import { markDashMessagesRead, sendCurrentDashReport, takeVisitsDashboard, updateVisitDayOnline } from 'back/dash/visits';
+import {
+  markDashMessagesRead,
+  sendCurrentDashReport,
+  takeDashCounters,
+  takeDashMessages,
+  takeVisitsDashboard,
+  updateVisitDayOnline,
+} from 'back/dash/visits';
 import { onDashMessageStoredEvent, onVisitStoredEvent } from 'back/dash/events';
 import { makeDashMessageForViewer } from 'back/dash/messageLocalization';
 import { IndexDashTsjrpcModel } from 'shared/api/tsjrpc/index/dash.tsjrpc.model';
@@ -91,7 +98,7 @@ onVisitStoredEvent.listen(visit => {
  * поэтому в общий клиент и его модель не попадают. Гварды доступа остаются внутри каждого метода.
  */
 export const indexTSJRPCBaseVisitsDashboard = {
-  getVisitsDashboard_v1: async ({ messages } = {}, { auth, client, visitInfo }) => {
+  getVisitsDashboard_v2: async (_, { auth, client }) => {
     await throwIfNoUserScopeAccessRight(auth, 'dash', 'DASH');
 
     if (!auth?.login) throw backLocaleError(BackLocaleKey.NoAccess);
@@ -99,14 +106,21 @@ export const indexTSJRPCBaseVisitsDashboard = {
 
     const { logins, anon } = sokiServer.onlineLogins;
 
-    return {
-      value: await takeVisitsDashboard(
-        { count: sokiServer.onlineCount, logins, anon },
-        auth.login,
-        messages,
-        visitInfo?.langi,
-      ),
-    };
+    return { value: await takeVisitsDashboard({ count: sokiServer.onlineCount, logins, anon }) };
+  },
+
+  getDashMessages: async ({ kind, beforeId }, { auth, visitInfo }) => {
+    await throwIfNoUserScopeAccessRight(auth, 'dash', 'DASH');
+
+    return { value: await takeDashMessages({ kind, beforeId }, visitInfo?.langi) };
+  },
+
+  getDashCounters: async (_, { auth }) => {
+    await throwIfNoUserScopeAccessRight(auth, 'dash', 'DASH');
+
+    if (!auth?.login) throw backLocaleError(BackLocaleKey.NoAccess);
+
+    return { value: await takeDashCounters(auth.login) };
   },
 
   markDashMessagesRead_v1: async ({ kind }, { auth }) => {

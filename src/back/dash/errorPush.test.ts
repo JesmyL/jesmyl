@@ -9,7 +9,7 @@ import { takeErrorPushSummary } from './errorPush';
 const payload = backLocaleError(BackLocaleKey.CmComOrderParentNotFound, { p: 'Parent-1' });
 
 /** Сообщение ровно в том виде, в каком его сохраняет onErrorMessage: payload склеен с секцией auth/visit. */
-const errorMessage = `com.editCom()\n\n${payload}${dashMessageSectionSeparator}<div style='white-space:pre-line'>Auth\n\n<code>{"login":"auth"}</code></div>\n\nhttps://example.com\n\n<code>{"url":"https://example.com"}</code>\n\n\nАргументы:\n{"w":1}`;
+const errorMessage = `auth\ncom.editCom()\n\n${payload}${dashMessageSectionSeparator}https://example.com\n\n<code>{"url":"https://example.com"}</code>\n\n<code>{"login":"auth"}</code>\n\n\nАргументы:\n{"w":1}`;
 
 describe('takeErrorPushSummary', () => {
   it('localizes the embedded payload and drops the auth/visit envelope with raw JSON', () => {
@@ -38,8 +38,8 @@ describe('takeErrorPushSummary', () => {
     expect(body).not.toContain('diff');
   });
 
-  it('keeps a standalone payload readable', () => {
-    const body = takeErrorPushSummary(payload, Langi.Ru);
+  it('keeps an envelope-less payload readable and drops the sender name line', () => {
+    const body = takeErrorPushSummary(`auth\n${payload}`, Langi.Ru);
 
     expect(body).toBe('Не найден определённый родительский блок Parent-1');
   });

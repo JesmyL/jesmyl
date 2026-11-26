@@ -1,6 +1,12 @@
 import { Langi } from 'shared/api/complect/enums';
 import { UserId } from 'shared/api/complect/soki.model';
-import { DashMessageKind, VisitsDashboard, VisitsDashboardMessagesArgs } from 'shared/model/index/visitsDashboard';
+import {
+  DashCounters,
+  DashMessageKind,
+  DashMessagesPage,
+  VisitsDashboard,
+  VisitsDashboardMessagesArgs,
+} from 'shared/model/index/visitsDashboard';
 
 /**
  * Отдельная модель админского потока дашборда посещений.
@@ -8,7 +14,9 @@ import { DashMessageKind, VisitsDashboard, VisitsDashboardMessagesArgs } from 's
  * на эти методы в своём клиенте: доступ к потоку импортируют только админские экраны.
  */
 export type IndexDashTsjrpcModel = {
-  getVisitsDashboard_v1: (args?: { messages?: VisitsDashboardMessagesArgs }) => VisitsDashboard;
+  getVisitsDashboard_v2: () => VisitsDashboard;
+  getDashMessages: (args: VisitsDashboardMessagesArgs) => DashMessagesPage;
+  getDashCounters: () => DashCounters;
   markDashMessagesRead_v1: (args: { kind: DashMessageKind }) => PRecord<DashMessageKind, number>;
   sendDashEmailReport_v2: () => { sent: string[]; failed: string[] };
   removeAllDownFiles: () => void;

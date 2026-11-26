@@ -19,4 +19,5 @@ export const enum QueryKey {
   DashReportRecipients,
   TakeRemovedCats,
   QuestionerCheckAnswers,
+  DashCounters,
 }

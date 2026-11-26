@@ -20,9 +20,11 @@ import { DeviceId, Langi, SokiVisit, UserLogin } from 'shared/api';
 import { takeLangSystemCode } from 'shared/const/+locale';
 import { howMillisecondsInDay, howMillisecondsInHour } from 'shared/const/ms';
 import {
+  DashCounters,
   DashMessageKind,
   DashMessageUser,
   dashMessageSectionSeparator,
+  DashMessagesPage,
   noOnlineSample,
   VisitsDashboard,
   VisitsDashboardMessagesArgs,
@@ -674,46 +676,15 @@ export const flushVisits = async (isNeedSendDigest: boolean) => {
   }
 };
 
-export const takeVisitsDashboard = async (
-  online: { count: number; logins: UserLogin[]; anon: number },
-  login: UserLogin,
-  messagesArgs: VisitsDashboardMessagesArgs = { kind: DashMessageKind.Errors, beforeId: null },
-  langi = Langi.Ru,
-): Promise<VisitsDashboard> => {
+export const takeVisitsDashboard = async (online: {
+  count: number;
+  logins: UserLogin[];
+  anon: number;
+}): Promise<VisitsDashboard> => {
   const now = Date.now();
-  const messageKindCondition = messageKindFilter(messagesArgs.kind);
-  const isVisitErrorKind = messagesArgs.kind === DashMessageKind.VisitError;
 
-  const [todayRows, visitRows, messageRows, reads, dayRows, onlineHoursRows] = await Promise.all([
+  const [todayRows, dayRows, onlineHoursRows] = await Promise.all([
     takeTodayVisitRows(now),
-    isVisitErrorKind
-      ? db
-          .select({ id: visitDB.id, l: visitDB.l, url: visitDB.url, v: visitDB.v, createdAt: visitDB.createdAt })
-          .from(visitDB)
-          .where(messagesArgs.beforeId === null ? undefined : lt(visitDB.id, sql`${messagesArgs.beforeId}`))
-          .orderBy(desc(visitDB.id))
-          .limit(messagesPageSize + 1)
-      : Promise.resolve([]),
-    isVisitErrorKind
-      ? Promise.resolve([])
-      : db
-          .select({
-            id: dashErrorDB.id,
-            kind: dashErrorDB.kind,
-            l: dashErrorDB.l,
-            m: dashErrorDB.m,
-            visit: dashErrorDB.visit,
-            createdAt: dashErrorDB.createdAt,
-          })
-          .from(dashErrorDB)
-          .where(
-            messagesArgs.beforeId === null
-              ? messageKindCondition
-              : and(messageKindCondition, lt(dashErrorDB.id, sql`${messagesArgs.beforeId}`)),
-          )
-          .orderBy(desc(dashErrorDB.id))
-          .limit(messagesPageSize + 1),
-    takeDashReads(login),
     db
       .select({
         date: visitDayDB.date,
@@ -745,7 +716,60 @@ export const takeVisitsDashboard = async (
 
   const onlineUsers = await Promise.all(online.logins.map(takeUserInfo));
 
-  const visitsHasMore = visitRows.length > messagesPageSize;
+  return {
+    online: online.count,
+    onlineUsers,
+    onlineAnon: online.anon,
+    today: stats.total,
+    uniq: stats.uniq,
+    visitors: visitors.sort((a, b) => b.count - a.count),
+    anonVisits: stats.anonVisits,
+    anonUniq: stats.anonUniq,
+    hours: stats.hours,
+    onlineHours: makeOnlineHours(onlineHoursRow?.hoursOnlineMin, onlineHoursRow?.hoursOnlineMax),
+    versions: stats.versions,
+    todayMinVersion: stats.minVersion,
+    dayStats: dayRows,
+  };
+};
+
+export const takeDashMessages = async (
+  { kind, beforeId }: VisitsDashboardMessagesArgs,
+  langi = Langi.Ru,
+): Promise<DashMessagesPage> => {
+  const messageKindCondition = messageKindFilter(kind);
+  const isVisitErrorKind = kind === DashMessageKind.VisitError;
+
+  const [visitRows, messageRows] = await Promise.all([
+    isVisitErrorKind
+      ? db
+          .select({ id: visitDB.id, l: visitDB.l, url: visitDB.url, v: visitDB.v, createdAt: visitDB.createdAt })
+          .from(visitDB)
+          .where(beforeId === null ? undefined : lt(visitDB.id, sql`${beforeId}`))
+          .orderBy(desc(visitDB.id))
+          .limit(messagesPageSize + 1)
+      : Promise.resolve([]),
+    isVisitErrorKind
+      ? Promise.resolve([])
+      : db
+          .select({
+            id: dashErrorDB.id,
+            kind: dashErrorDB.kind,
+            l: dashErrorDB.l,
+            m: dashErrorDB.m,
+            visit: dashErrorDB.visit,
+            createdAt: dashErrorDB.createdAt,
+          })
+          .from(dashErrorDB)
+          .where(
+            beforeId === null
+              ? messageKindCondition
+              : and(messageKindCondition, lt(dashErrorDB.id, sql`${beforeId}`)),
+          )
+          .orderBy(desc(dashErrorDB.id))
+          .limit(messagesPageSize + 1),
+  ]);
+
   const visits = await Promise.all(
     visitRows.slice(0, messagesPageSize).map(async visit => ({
       id: visit.id,
@@ -756,7 +780,6 @@ export const takeVisitsDashboard = async (
     })),
   );
 
-  const messagesHasMore = messageRows.length > messagesPageSize;
   const pageRows = messageRows.slice(0, messagesPageSize);
   const messages = await Promise.all(
     pageRows.map(async message => ({
@@ -770,6 +793,13 @@ export const takeVisitsDashboard = async (
     })),
   );
 
+  const hasMore = (isVisitErrorKind ? visitRows : messageRows).length > messagesPageSize;
+
+  return { messages, visits, hasMore };
+};
+
+export const takeDashCounters = async (login: UserLogin): Promise<DashCounters> => {
+  const reads = await takeDashReads(login);
   const unreadCounts: PRecord<DashMessageKind, number> = {};
 
   await Promise.all(
@@ -790,25 +820,5 @@ export const takeVisitsDashboard = async (
     }),
   );
 
-  return {
-    online: online.count,
-    onlineUsers,
-    onlineAnon: online.anon,
-    today: stats.total,
-    uniq: stats.uniq,
-    visitors: visitors.sort((a, b) => b.count - a.count),
-    anonVisits: stats.anonVisits,
-    anonUniq: stats.anonUniq,
-    hours: stats.hours,
-    onlineHours: makeOnlineHours(onlineHoursRow?.hoursOnlineMin, onlineHoursRow?.hoursOnlineMax),
-    versions: stats.versions,
-    todayMinVersion: stats.minVersion,
-    dayStats: dayRows,
-    messages,
-    messagesHasMore,
-    visits,
-    visitsHasMore,
-    messageReads: reads,
-    unreadCounts,
-  };
+  return { messageReads: reads, unreadCounts };
 };

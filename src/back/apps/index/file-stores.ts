@@ -88,6 +88,7 @@ export const takeAccessRightTitles = (langi = Langi.Ru): IndexAppAccessRightTitl
 export const indexStameskaIconsFileStore = new FileStore<typeof stameskaIconPack>('/stameska-icons', null as never);
 
 export const appVersionFileStore = new FileStore<{ num: number }>('/+version.json', { num: 0 });
+export const appVersionReleasesFileStore = new FileStore<PRecord<string, number>>('/+versionReleases.json', {});
 export const valuesFileStore = new FileStore<IndexValues>('/values', {});
 
 export const sentEmailOTPFileStorage = new FileStore<

@@ -3,6 +3,7 @@ import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { hostConfig, LocalSokiAuth, SokiAuthLogin, SokiVisit } from 'shared/api';
 import { dashMessageSectionSeparator } from 'shared/model/index/visitsDashboard';
 import { escapeHtmlLazy } from 'shared/utils/string.utils';
+import { takeUserAuthName } from 'shared/utils/user.utils';
 import { appVersionFileStore } from './apps/index/file-stores';
 
 export const userVisitStringified = (visitInfo: SokiVisit | nil) =>
@@ -16,13 +17,23 @@ export const userVisitStringified = (visitInfo: SokiVisit | nil) =>
       )}\nРазница: ${Date.now() - visitInfo.clientTm}мс</code>`
     : '';
 
-export const userAuthStringified = (auth: LocalSokiAuth | nil) =>
-  `<div style='white-space:pre-line'>${auth ? `${auth.fio}${auth.nick && auth.tgId ? ` https://t.me/${auth.nick}` : ''}` : translateBackTexts(undefined, BackLocaleKey.SchUnknownRole)}\n\n` +
-  `<code>${auth ? escapeHtmlLazy()(JSON.stringify(auth, null, 1)) : ''}</code></div>`;
+/** Первая строка сообщения дашборда: имя отправителя или «Неизвестный», чтобы автор был виден до разворачивания auth-блока. */
+export const dashUserNameLine = (auth: LocalSokiAuth | nil) => {
+  if (!auth) return translateBackTexts(undefined, BackLocaleKey.SchUnknownRole);
 
-/** Appends the shared auth/visit info block to a dashboard message, separated by `dashMessageSectionSeparator`. */
+  const name = takeUserAuthName(auth) || translateBackTexts(undefined, BackLocaleKey.SchUnknownRole);
+  const tgLink = auth.nick && auth.tgId && auth.nick !== name ? ` https://t.me/${auth.nick}` : '';
+
+  return escapeHtmlLazy()(name + tgLink);
+};
+
+// Auth-блок без строки имени: имя всегда идёт первой строкой сообщения и не дублируется здесь.
+export const userAuthStringified = (auth: LocalSokiAuth | nil) =>
+  auth ? `<code>${escapeHtmlLazy()(JSON.stringify(auth, null, 1))}</code>` : '';
+
+/** Добавляет к сообщению дашборда блок visit/auth, отделённый `dashMessageSectionSeparator`. */
 export const dashAuthVisitSuffix = (auth: LocalSokiAuth | nil, visitInfo: SokiVisit | nil) =>
-  `${dashMessageSectionSeparator}${userAuthStringified(auth)}\n\n${userVisitStringified(visitInfo)}`;
+  `${dashMessageSectionSeparator}${userVisitStringified(visitInfo)}\n\n${userAuthStringified(auth)}`;
 
 export const takeLogginedAuthOrThrow = (auth: LocalSokiAuth | nil): LocalSokiAuth & { login: SokiAuthLogin } => {
   if (!auth?.login) throw backLocaleError(BackLocaleKey.NotAuthorized);

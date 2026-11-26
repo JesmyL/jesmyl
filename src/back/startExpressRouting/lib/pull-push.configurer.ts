@@ -10,6 +10,7 @@ import { mapBlankRow } from 'back/apps/q/db-stores';
 import { audioSaveDir } from 'back/audio/audio.const';
 import { takeAudioFileDuration, takeAudioFilePath } from 'back/audio/takeAudioFileDuration';
 import { FileStore } from 'back/complect/FileStore';
+import { insertDashMessage, sendChangesEmail } from 'back/dash/visits';
 import {
   audioLinkDB,
   catDB,
@@ -33,7 +34,6 @@ import {
 import { selectUser2Com, upsertUser2ComProps } from 'back/drizzle/ex/user2Com.utils';
 import { jsonParseSecure } from 'back/json-secure';
 import { backLocalePayload, translateBackTexts } from 'back/locales/back';
-import { insertDashMessage, sendChangesEmail } from 'back/dash/visits';
 import { asc, desc, eq } from 'drizzle-orm';
 import path from 'node:path';
 import { makePgCheckedSelectSqlRaw, PgCheckFieldMode } from 'p/d';
@@ -52,12 +52,13 @@ import { DashMessageKind } from 'shared/model/index/visitsDashboard';
 import { QuestionerBlankWid } from 'shared/model/q';
 import { QuestionerUserAnswer } from 'shared/model/q/answer';
 import { emptyFunc } from 'shared/utils';
+import { makeChangesMessage } from 'shared/utils/changesMessage';
 import { checkIsEq } from 'shared/utils/checkIsEq';
 import { parseLegacyICat } from 'shared/utils/cm/cat/parseLegacyICat';
 import { downloadFileMd5Rename } from 'shared/utils/downloadFileMd5Rename';
 import { lazyInit } from 'shared/utils/lazyInit';
-import { makeChangesMessage } from 'shared/utils/changesMessage';
 import { makeDiffMarkupHtml, stringifyDiffValue } from 'shared/utils/textDiff';
+import { takeUserAuthName } from 'shared/utils/user.utils';
 
 const und = undefined;
 
@@ -249,7 +250,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
                 ...(isAmChanged ? { amMod: now } : {}),
               });
 
-              // Дифф считается здесь и хранится готовым HTML: клиент и письмо только подставляют его, ничего не вычисляя.
+              // Дифф считается здесь и хранится готовым HTML: клиент только подставляет его, ничего не вычисляя.
               const diffHtml = makeDiffMarkupHtml(wasText ?? '', newText ?? '');
               // Заголовок — самодостаточный locale-payload (ru/ua/kz/en); дифф передаётся отдельным полем `d` явного конверта, а не подставляется в текст.
               const changesTitlePayload = backLocalePayload(langi =>
@@ -263,7 +264,10 @@ export const pullPushDirFilesDictLazy = lazyInit(
             }
 
             // Пишем только изменившиеся поля, не затирая остальные данные строки.
-            return db.insert(comDB).values({ ...com, w: comw }).onConflictDoUpdate({ target: comDB.w, set });
+            return db
+              .insert(comDB)
+              .values({ ...com, w: comw })
+              .onConflictDoUpdate({ target: comDB.w, set });
           },
         },
 
@@ -307,7 +311,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
                 return {
                   data,
                   file: login,
-                  name: fio || nick || email || login || '???',
+                  name: takeUserAuthName({ fio, nick, email, login }) || '???',
                 };
               }),
             );
@@ -490,7 +494,7 @@ export const pullPushDirFilesDictLazy = lazyInit(
               return {
                 data: u,
                 file: u.l,
-                name: fio || nick || email || u.l || '??',
+                name: takeUserAuthName({ fio, nick, email, login: u.l }) || '??',
               };
             }),
 

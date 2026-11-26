@@ -155,6 +155,7 @@ export const enum BackLocaleKey {
   VisitReportMinVersionDiff = 152,
   VisitReportByVisitors = 153,
   VisitReportByHours = 154,
+  /** Версии ($v) */
   VisitReportVersions = 155,
   VisitReportMinVersionsByDays = 156,
   VisitReportAnonymous = 157,
@@ -281,7 +282,7 @@ export const enum BackLocaleKey {
   SchPaymentReminderOnDay = 278,
   SchPaymentReminderTime = 279,
   SchNextReminder = 280,
-  /** @deprecated 1342 */
+  /** @deprecated 1372 */
   DashChangesEmailSubject = 281,
   OtpBibleChapterIntro1 = 282,
   OtpBibleChapterIntro2 = 283,
@@ -488,4 +489,18 @@ export const enum BackLocaleKey {
   SchRemoteControlsDisallowed = 478,
   /** Песни с якорями и якорь+ */
   CmSmartSearchAnchorsAndAnchorPlus = 479,
+  /** Онлайн по часам (МСК) */
+  VisitReportOnlineByHours = 480,
+  /** Время */
+  VisitReportOnlineTime = 481,
+  /** Мин. онлайн */
+  VisitReportOnlineMin = 482,
+  /** Макс. онлайн */
+  VisitReportOnlineMax = 483,
+  /** Актуальная версия */
+  VisitReportActualVersion = 484,
+  /** Дата */
+  VisitReportDate = 485,
+  /** Мин. версия */
+  VisitReportMinVersionColumn = 486,
 }

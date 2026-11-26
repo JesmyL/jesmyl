@@ -72,10 +72,15 @@ export type VisitsDashboard = {
   versions: PRecord<number, number>;
   todayMinVersion: number | null;
   dayStats: VisitsDashboardDayStat[];
+};
+
+export type DashMessagesPage = {
   messages: DashMessage[];
-  messagesHasMore: boolean;
   visits: DashVisit[];
-  visitsHasMore: boolean;
+  hasMore: boolean;
+};
+
+export type DashCounters = {
   messageReads: PRecord<DashMessageKind, number>;
   unreadCounts: PRecord<DashMessageKind, number>;
 };

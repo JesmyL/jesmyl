@@ -10,7 +10,7 @@ import { checkIsBackLocalePayload } from './locales/back';
 import { backConfig } from './config/backConfig';
 import { dashKindByScope, PostJRPCMessageScope } from './dash/model';
 import type { ServerTSJRPCFeedback } from './tsjrpc.model';
-import { dashAuthVisitSuffix } from './utils';
+import { dashAuthVisitSuffix, dashUserNameLine } from './utils';
 import { stringifyDiffValue } from './tsjrpc.diff';
 
 export type ServerTSJRPCTool = {
@@ -32,7 +32,7 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
       errorMessage = `<b>${error.cause?.message ?? error.stack ?? ''}</b>\n\n${error}`;
 
     insertDashMessage(
-      `${scope}.${method}()\n\n${errorMessage}${dashAuthVisitSuffix(auth, visitInfo)}\n\n\nАргументы:\n${JSON.stringify(args)}`,
+      `${dashUserNameLine(auth)}\n${scope}.${method}()\n\n${errorMessage}${dashAuthVisitSuffix(auth, visitInfo)}\n\n\nАргументы:\n${JSON.stringify(args)}`,
       visitInfo,
       DashMessageKind.Errors,
       auth?.login,
@@ -63,12 +63,7 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
           text += `${dashMessageSectionSeparator}${JSON.stringify({ was: wasText, new: newText })}`;
 
         const completeMessage = (suffix: string) =>
-          tool.auth
-            ? `${`${tool.auth.fio} ${tool.auth.nick && (!tool.auth.email || !tool.auth.email.startsWith(tool.auth.nick)) ? `https://t.me/${tool.auth.nick}` : ''}\n`}` +
-                text +
-                suffix +
-                `\n\n<blockquote expandable>${JSON.stringify(tool.auth, null, 1)}</blockquote>\n\n\nАргументы:\n${JSON.stringify(args)}`
-            : text + suffix;
+          `${dashUserNameLine(tool.auth)}\n` + text + suffix + `\n\n\nАргументы:\n${JSON.stringify(args)}`;
 
         // Формируем запись для дашборда и определяем её вид по scope обратной связи.
         const dashMessage = completeMessage(dashAuthVisitSuffix(tool.auth, tool.visitInfo));
